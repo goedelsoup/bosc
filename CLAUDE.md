@@ -36,8 +36,20 @@ tools so the agent inspects real data. Entry point is the `bosc` Typer CLI
 
 ## What "extract" must achieve
 
-The reference target is `data/extracted/roundabouts.*.opc.yaml`: extracts from
-the **financial-projections** section of the PRR bundle (~page 370 onward of
-`data/documents/aedg/PRR-01-bundle.ocr.pdf`). New extraction work should produce
-similarly faithful, reconcilable structured data — and `bosc reconcile` should
-pass (or surface a real discrepancy worth flagging to the County Engineer).
+The reference target is `data/extracted/roundabouts.*.opc.yaml`: the six Tetra
+Tech OPC estimates at 0-based PDF pages **317 (summary), 318-327 (detail)** of
+`data/documents/aedg/PRR-01-bundle.ocr.pdf` (printed sheets `pdf_page` 318-328).
+
+The extract stage is **implemented as a hybrid read** (`bosc.pipeline.extract`):
+OCR text layer (pypdf, hint only) + 300 DPI render (pypdfium2) → forced-tool-use
+vision extraction (`bosc.agent.extractor.StructuredExtractor`) → Pydantic-
+validated `EstimateExtraction` with provenance (`PageExtraction`). The OCR text
+layer is badly garbled (e.g. `$109,307.69` → `$108.307.89`); **never trust its
+digits — figures come from the image.** New extraction work should produce
+faithful, reconcilable data, and `bosc reconcile` should pass (or surface a real
+discrepancy worth flagging to the County Engineer).
+
+`bosc extract --detail` extracts full per-section line items (`DetailExtraction`,
+`LineItem`) and is checked with `analyze.reconcile_detail` (each section's line
+items must roll up to its subtotal). `Number` (`models._coerce_number_keep`)
+preserves int-vs-float for quantities/rates and tolerates the `~` marker.

@@ -19,6 +19,7 @@ from rich.table import Table
 
 from bosc import __version__
 from bosc.config import get_settings
+from bosc.documents import DEFAULT_DPI
 from bosc.logging import configure_logging
 from bosc.models import OPCSummary
 from bosc.pipeline import analyze, ingest
@@ -88,23 +89,58 @@ def ask(question: str) -> None:
 @app.command()
 def extract(
     doc_id: str = typer.Argument(..., help="A doc_id from `bosc ingest`."),
-    instructions: str = typer.Option(
-        "Extract the cost estimate summary as structured YAML.",
-        "--instructions",
-        "-i",
-        help="What to extract from the document.",
+    page: int | None = typer.Option(None, "--page", help="0-based PDF page index."),
+    pdf_page: int | None = typer.Option(
+        None, "--pdf-page", help="1-based printed sheet number (= page index + 1)."
     ),
+    dpi: int = typer.Option(DEFAULT_DPI, "--dpi", help="Render resolution for the vision read."),
+    detail: bool = typer.Option(
+        False, "--detail", "-d", help="Extract full line items, not just section subtotals."
+    ),
+    write: bool = typer.Option(False, "--write", "-w", help="Save the YAML under data/extracted."),
 ) -> None:
-    """Run an agentic extraction over an ingested document."""
+    """Extract one cost-estimate page (hybrid OCR-text + 300 DPI vision read)."""
+    from bosc.models import DetailExtraction, DetailPageExtraction, PageExtraction
+    from bosc.pipeline import analyze
     from bosc.pipeline import extract as extract_stage
+
+    if (page is None) == (pdf_page is None):
+        console.print("[red]Provide exactly one of --page (0-based) or --pdf-page (1-based).[/]")
+        raise typer.Exit(code=2)
+    page_index = page if page is not None else pdf_page - 1  # type: ignore[operator]
 
     docs = {d.doc_id: d for d in ingest.discover()}
     doc = docs.get(doc_id)
     if doc is None:
         console.print(f"[red]Unknown doc_id:[/] {doc_id}. Run `bosc ingest` to list ids.")
         raise typer.Exit(code=1)
-    text = asyncio.run(extract_stage.extract_document(doc, instructions))
-    console.print(text)
+
+    extraction: PageExtraction | DetailPageExtraction
+    if detail:
+        extraction = extract_stage.extract_detail_page(doc, page_index, dpi=dpi)
+    else:
+        extraction = extract_stage.extract_estimate_page(doc, page_index, dpi=dpi)
+
+    est = extraction.estimate
+    color = "green" if est.reconciles() else "yellow"
+    console.print(
+        f"[bold]{est.name}[/] — confidence [{color}]{est.confidence}[/], "
+        f"reconciles={est.reconciles()}, warnings={len(est.warnings)}"
+    )
+    for warning in est.warnings:
+        console.print(f"  [yellow]![/] {warning}")
+
+    # For detail extractions, show the line-item -> section-subtotal rollup.
+    if isinstance(est, DetailExtraction):
+        findings = analyze.reconcile_detail(est)
+        for f in findings:
+            console.print(f"[{'green' if f.ok else 'red'}]{f}[/]")
+
+    if write:
+        path = extract_stage.save_extraction(extraction)
+        console.print(f"[green]Saved[/] {path}")
+    else:
+        console.print(extraction.to_yaml())
 
 
 if __name__ == "__main__":

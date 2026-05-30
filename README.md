@@ -51,8 +51,38 @@ cp .env.example .env  # add your ANTHROPIC_API_KEY
 uv run bosc version
 uv run bosc ingest                                   # inventory data/documents
 uv run bosc reconcile roundabouts.summary.opc.yaml   # arithmetic checks (no API key needed)
+uv run bosc extract <doc_id> --pdf-page 319 --write  # hybrid vision extraction of one sheet
 uv run bosc ask "Which roundabout has the largest design fee, and why?"
 ```
+
+### Extracting a cost sheet (hybrid read)
+
+`bosc extract` reads one estimate page and writes a reviewed `*.opc.yaml`:
+
+1. **OCR text layer** (pypdf) — a cheap structural hint; its digits are unreliable.
+2. **300 DPI render** (pypdfium2) — the authoritative image.
+3. **Vision read** — a Claude model (`BOSC_EXTRACT_MODEL`) is forced via tool use
+   to populate an `EstimateExtraction`, reading figures off the image and using
+   the OCR text only as a hint. The result is Pydantic-validated and tagged with
+   a self-reported `confidence` plus any `warnings`.
+
+Pages are addressed by `--pdf-page` (1-based, the printed sheet number) or
+`--page` (0-based PDF index). In the reference bundle the six estimates are
+`--pdf-page 319..328`. After extraction, run `bosc reconcile` on the result to
+catch transcription errors arithmetically.
+
+**Summary vs. detail.** By default `extract` reads the section subtotals and
+totals. Add `--detail` (`-d`) to extract the full per-section **line items**
+(item number, description, quantity, unit, unit rate, extended amount) into a
+`*.detail.opc.yaml`:
+
+```bash
+uv run bosc extract <doc_id> --pdf-page 319 --detail --write
+```
+
+Detail extractions are immediately checked **line-item → section subtotal**: the
+extended amounts in each section must roll up to that section's subtotal, surfacing
+a misread quantity or rate right away.
 
 <details>
 <summary>Without mise (Homebrew)</summary>

@@ -17,6 +17,9 @@ dependencies = [
     "typer>=0.12",
     "rich>=13.7",
     "structlog>=24.1",
+    "pypdfium2>=5.8.0",
+    "pypdf>=6.12.2",
+    "pillow>=12.2.0",
 ]
 
 [project.optional-dependencies]
@@ -76,7 +79,7 @@ mypy_path = "src"
 packages = ["bosc"]
 
 [[tool.mypy.overrides]]
-module = ["claude_agent_sdk.*"]
+module = ["claude_agent_sdk.*", "pypdfium2.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]

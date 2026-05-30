@@ -12,11 +12,15 @@ Two complementary modes:
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
-from bosc.agent.client import ResearchAgent
 from bosc.config import Settings, get_settings
 from bosc.logging import get_logger
-from bosc.models import OPCSummary, SubEstimate
+from bosc.models import DetailExtraction, OPCSummary, SubEstimate
+
+if TYPE_CHECKING:
+    # Imported lazily at call time to avoid a bosc.agent <-> bosc.pipeline cycle.
+    from bosc.agent.client import ResearchAgent
 
 log = get_logger(__name__)
 
@@ -109,6 +113,44 @@ def reconcile(summary: OPCSummary) -> list[Finding]:
     return findings
 
 
+def reconcile_detail(extraction: DetailExtraction) -> list[Finding]:
+    """Check each section's line items sum to its section subtotal.
+
+    Skips sections with no extracted items (illegible detail but a known
+    subtotal) — there is nothing to roll up there.
+    """
+    findings: list[Finding] = []
+    subtotals = extraction.section_subtotals.model_dump()
+    for section, items in extraction.line_items.sections().items():
+        if not items:
+            continue
+        subtotal = subtotals.get(section)
+        if subtotal is None:
+            findings.append(
+                Finding(
+                    subject=f"{extraction.name}:{section}",
+                    check="line-item-rollup",
+                    ok=False,
+                    detail=f"{len(items)} line items but no section subtotal to check against",
+                )
+            )
+            continue
+        items_sum = extraction.section_item_total(section)
+        delta = items_sum - subtotal
+        findings.append(
+            Finding(
+                subject=f"{extraction.name}:{section}",
+                check="line-item-rollup",
+                ok=abs(delta) <= max(2, round(subtotal * 0.02)),
+                detail=f"items sum {items_sum:,.0f} vs section subtotal "
+                f"{subtotal:,} (delta {delta:,.0f}, {len(items)} items)",
+            )
+        )
+    failures = [f for f in findings if not f.ok]
+    log.info("analyze.reconciled_detail", checks=len(findings), failures=len(failures))
+    return findings
+
+
 async def research_question(
     question: str,
     *,
@@ -117,6 +159,8 @@ async def research_question(
     settings: Settings | None = None,
 ) -> str:
     """Ask the research agent a free-form question, optionally with extra context."""
+    from bosc.agent.client import ResearchAgent
+
     settings = settings or get_settings()
     agent = agent or ResearchAgent(settings=settings)
     prompt = f"{context}\n\nQuestion: {question}" if context else question
