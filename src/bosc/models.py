@@ -153,24 +153,19 @@ class OPCSummary(BaseModel):
 
 
 # ---------------------------------------------------------------------------
-# Extraction targets — what the vision extractor fills in for a single page.
+# Generic extraction target — a contractor-agnostic "Opinion of Probable Cost".
+#
+# An OPC is modeled as a title, a *dynamic* list of sections (each with line
+# items and a subtotal), a list of markup lines (contingency / inflation /
+# mobilization / ...), a construction subtotal, and a total. Nothing here is
+# specific to one contractor's section taxonomy or markup convention — that
+# knowledge lives in a format Profile (see bosc.profiles).
 # ---------------------------------------------------------------------------
 
 
-class EstimateExtraction(SubEstimate):
-    """A :class:`SubEstimate` read from one cost sheet, plus self-reported confidence.
-
-    This is the model the vision extractor is forced to populate (via tool use),
-    so the LLM tells us how sure it is and flags anything it could not read.
-    """
-
-    # Fields inherited from SubEstimate that are noise for a fresh page read
-    # (they belong to the assembled summary, not a single sheet). The extractor
-    # prunes these from the tool schema so the model can't misfile into them.
-    EXTRACTION_EXCLUDE: ClassVar[tuple[str, ...]] = ("pdf_page", "work", "note", "type", "notes")
-
-    confidence: Literal["high", "medium", "low"] = "medium"
-    warnings: list[str] = Field(default_factory=list)
+def _num(value: Any) -> float:
+    """A Number coerced to float, treating None / non-numeric as 0.0."""
+    return float(value) if isinstance(value, (int, float)) else 0.0
 
 
 class LineItem(BaseModel):
@@ -178,66 +173,90 @@ class LineItem(BaseModel):
 
     model_config = ConfigDict(extra="allow")
 
-    item_no: str | None = None  # ODOT code (e.g. 203E10000) or a custom_ tag
+    item_no: str | None = None  # contractor/agency item code, or a custom_ tag
     description: str
     quantity: Number = None
-    unit: str | None = None  # LS, CY, SY, FT, EACH, GAL, SF, AC
+    unit: str | None = None  # e.g. LS, CY, SY, FT, EACH, GAL, SF, AC
     unit_amount: Number = None  # per-unit dollars
     total_amount: Number = None  # extended dollars
     note: str | None = None  # e.g. "qty inferred from total"
 
 
-# The eleven estimate sections, in sheet order. Single source of truth.
-SECTION_NAMES: tuple[str, ...] = (
-    "roadway",
-    "erosion_control",
-    "drainage",
-    "pavement",
-    "water_work",
-    "lighting",
-    "traffic_control",
-    "landscaping",
-    "right_of_way",
-    "incidentals",
-    "design_survey_inspection",
-)
-
-
-class SectionLineItems(BaseModel):
-    """Line items grouped by estimate section (corridors omit several sections)."""
+class EstimateSection(BaseModel):
+    """One section of an estimate, named as printed on the sheet."""
 
     model_config = ConfigDict(extra="allow")
 
-    roadway: list[LineItem] = Field(default_factory=list)
-    erosion_control: list[LineItem] = Field(default_factory=list)
-    drainage: list[LineItem] = Field(default_factory=list)
-    pavement: list[LineItem] = Field(default_factory=list)
-    water_work: list[LineItem] = Field(default_factory=list)
-    lighting: list[LineItem] = Field(default_factory=list)
-    traffic_control: list[LineItem] = Field(default_factory=list)
-    landscaping: list[LineItem] = Field(default_factory=list)
-    right_of_way: list[LineItem] = Field(default_factory=list)
-    incidentals: list[LineItem] = Field(default_factory=list)
-    design_survey_inspection: list[LineItem] = Field(default_factory=list)
+    name: str  # the section name AS PRINTED (e.g. "ROADWAY", "Sitework")
+    line_items: list[LineItem] = Field(default_factory=list)
+    subtotal: Number = None
+    note: str | None = None
 
-    def sections(self) -> dict[str, list[LineItem]]:
-        """Map of section name -> its line items (only the known sections)."""
-        return {name: getattr(self, name) for name in SECTION_NAMES}
+    def items_total(self) -> float:
+        """Sum of line-item ``total_amount`` (0 if none / illegible)."""
+        return sum(_num(i.total_amount) for i in self.line_items)
+
+    @property
+    def key(self) -> str:
+        """A normalized key for cross-document comparison (lowercased, underscored)."""
+        return "_".join(self.name.lower().split())
 
 
-class DetailExtraction(EstimateExtraction):
-    """A full line-item extraction of one cost sheet (summary fields + line items)."""
+class MarkupLine(BaseModel):
+    """A markup/adjustment applied to the construction subtotal.
 
-    line_items: SectionLineItems = Field(default_factory=SectionLineItems)
+    Covers contingency, inflation, mobilization, escalation, etc. ``rate`` is the
+    fraction of the construction subtotal when the line is a percentage.
+    """
 
-    def section_item_total(self, section: str) -> float:
-        """Sum of line-item ``total_amount`` for one section (0 if none/illegible)."""
-        items: list[LineItem] = getattr(self.line_items, section, [])
-        return float(sum(i.total_amount for i in items if isinstance(i.total_amount, (int, float))))
+    model_config = ConfigDict(extra="allow")
+
+    label: str
+    rate: float | None = None  # e.g. 0.25 for a 25% line
+    amount: Number = None
 
 
-class BasePageExtraction(BaseModel):
-    """Provenance shared by summary and detail page extractions."""
+class Estimate(BaseModel):
+    """A contractor-agnostic Opinion of Probable Cost read from one sheet."""
+
+    model_config = ConfigDict(extra="allow")
+
+    # ``profile`` is set by the pipeline, not the model — hide it from the schema.
+    EXTRACTION_EXCLUDE: ClassVar[tuple[str, ...]] = ("profile",)
+
+    name: str
+    profile: str | None = None  # id of the format profile that produced this
+    sections: list[EstimateSection] = Field(default_factory=list)
+    construction_subtotal: Number = None
+    markups: list[MarkupLine] = Field(default_factory=list)
+    total: Number = None
+    confidence: Literal["high", "medium", "low"] = "medium"
+    warnings: list[str] = Field(default_factory=list)
+
+    def section(self, name: str) -> EstimateSection | None:
+        """Find a section by printed name or normalized key (case-insensitive)."""
+        want = "_".join(name.lower().split())
+        return next((s for s in self.sections if s.key == want), None)
+
+    def sections_total(self) -> float:
+        """Sum of section subtotals."""
+        return sum(_num(s.subtotal) for s in self.sections)
+
+    def markups_total(self) -> float:
+        """Sum of markup amounts."""
+        return sum(_num(m.amount) for m in self.markups)
+
+    def has_line_items(self) -> bool:
+        return any(s.line_items for s in self.sections)
+
+    def reconciles(self, tolerance: int = 2) -> bool:
+        """True if section subtotals roughly sum to the construction subtotal."""
+        target = _num(self.construction_subtotal)
+        return abs(self.sections_total() - target) <= max(tolerance, round(target * 0.02))
+
+
+class PageExtraction(BaseModel):
+    """One extracted estimate page, with provenance for review and audit."""
 
     model_config = ConfigDict(extra="allow")
 
@@ -246,20 +265,9 @@ class BasePageExtraction(BaseModel):
     page_index: int  # 0-based PDF page
     pdf_page: int  # 1-based, matches the printed sheet
     dpi: int
+    estimate: Estimate
     source_text_excerpt: str = ""
 
     def to_yaml(self) -> str:
         """Serialize to YAML for writing under data/extracted (review artifact)."""
         return yaml.safe_dump(self.model_dump(), sort_keys=False, allow_unicode=True)
-
-
-class PageExtraction(BasePageExtraction):
-    """A summary (section-subtotal) extraction of one page."""
-
-    estimate: EstimateExtraction
-
-
-class DetailPageExtraction(BasePageExtraction):
-    """A full line-item extraction of one page."""
-
-    estimate: DetailExtraction

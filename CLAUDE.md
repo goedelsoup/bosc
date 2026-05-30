@@ -40,16 +40,22 @@ The reference target is `data/extracted/roundabouts.*.opc.yaml`: the six Tetra
 Tech OPC estimates at 0-based PDF pages **317 (summary), 318-327 (detail)** of
 `data/documents/aedg/PRR-01-bundle.ocr.pdf` (printed sheets `pdf_page` 318-328).
 
-The extract stage is **implemented as a hybrid read** (`bosc.pipeline.extract`):
-OCR text layer (pypdf, hint only) + 300 DPI render (pypdfium2) → forced-tool-use
-vision extraction (`bosc.agent.extractor.StructuredExtractor`) → Pydantic-
-validated `EstimateExtraction` with provenance (`PageExtraction`). The OCR text
-layer is badly garbled (e.g. `$109,307.69` → `$108.307.89`); **never trust its
-digits — figures come from the image.** New extraction work should produce
-faithful, reconcilable data, and `bosc reconcile` should pass (or surface a real
-discrepancy worth flagging to the County Engineer).
+The extract stage is **implemented as a hybrid, profile-driven read**
+(`bosc.pipeline.extract`): OCR text layer (pypdf, hint only) + 300 DPI render
+(pypdfium2) → resolve a format `Profile` (`bosc.profiles`, auto-detected from the
+OCR text or `--profile`) → forced-tool-use vision extraction
+(`bosc.agent.extractor.StructuredExtractor`) → Pydantic-validated, contractor-
+agnostic `Estimate` (dynamic `sections` + `markups`) with provenance
+(`PageExtraction`). The OCR text layer is badly garbled (e.g. `$109,307.69` →
+`$108.307.89`); **never trust its digits — figures come from the image.**
 
-`bosc extract --detail` extracts full per-section line items (`DetailExtraction`,
-`LineItem`) and is checked with `analyze.reconcile_detail` (each section's line
-items must roll up to its subtotal). `Number` (`models._coerce_number_keep`)
-preserves int-vs-float for quantities/rates and tolerates the `~` marker.
+**Generality (important):** the extract entrypoint is not tied to one contractor.
+`extract_page(doc, i, kind="opc", profile="auto", detail=...)` dispatches by
+document kind, and within OPC by `Profile` (Tetra Tech is profile #1; `generic`
+is the fallback). The `Estimate` model and `analyze.reconcile_estimate` are
+format-agnostic — section taxonomy and markup rate come from the data/profile,
+**not hardcoded**. Add a contractor by registering a `Profile`; don't add fixed
+section fields. `bosc extract --detail` adds per-section `LineItem`s (rolled up
+by `reconcile_estimate`). `Number` (`models._coerce_number_keep`) preserves
+int-vs-float for quantities/rates and tolerates the `~` marker. `bosc reconcile`
+(legacy `OPCSummary`, 25% convention) still covers the assembled summary artifact.

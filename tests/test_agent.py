@@ -16,7 +16,7 @@ from bosc.agent import client as client_mod
 from bosc.agent import tools
 from bosc.agent.client import ResearchAgent
 from bosc.config import Settings
-from bosc.models import DetailExtraction, DetailPageExtraction
+from bosc.models import Estimate, PageExtraction
 from bosc.pipeline.extract import save_extraction
 
 
@@ -29,55 +29,51 @@ async def test_program_overview_reads_committed_summary() -> None:
     assert "checks pass" in text
 
 
-async def test_reconcile_detail_rejects_non_generated(
+async def test_reconcile_estimate_rejects_non_generated(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     settings = Settings(data_dir=tmp_path)
     settings.extracted_dir.mkdir(parents=True)
-    # A detail file not in the generated (top-level `estimate:`) shape.
-    (settings.extracted_dir / "foo.detail.opc.yaml").write_text("page_319:\n  total: 1\n")
+    # A file not in the generated (top-level `estimate:`) shape.
+    (settings.extracted_dir / "foo.opc.yaml").write_text("sub_estimates: []\n")
     monkeypatch.setattr(tools, "get_settings", lambda: settings)
-    out = await tools.reconcile_detail.handler({"filename": "foo.detail.opc.yaml"})
-    assert "not a generated detail extraction" in out["content"][0]["text"]
+    out = await tools.reconcile_estimate.handler({"filename": "foo.opc.yaml"})
+    assert "not a generated estimate extraction" in out["content"][0]["text"]
 
 
-async def test_reconcile_detail_happy_path(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+async def test_reconcile_estimate_happy_path(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     settings = Settings(data_dir=tmp_path)
     monkeypatch.setattr(tools, "get_settings", lambda: settings)
-    detail = DetailExtraction(
-        name="Test Roundabout",
-        construction_subtotal=21500,
-        total=26875,
-        section_subtotals={"roadway": 21500},
-        line_items={
-            "roadway": [
+    estimate = Estimate.model_validate(
+        {
+            "name": "Test Roundabout",
+            "sections": [
                 {
-                    "description": "a",
-                    "quantity": 1,
-                    "unit": "LS",
-                    "unit_amount": 20000,
-                    "total_amount": 20000,
+                    "name": "ROADWAY",
+                    "subtotal": 21500,
+                    "line_items": [
+                        {"description": "a", "total_amount": 20000},
+                        {"description": "b", "total_amount": 1500},
+                    ],
                 },
-                {
-                    "description": "b",
-                    "quantity": 3,
-                    "unit": "EACH",
-                    "unit_amount": 500,
-                    "total_amount": 1500,
-                },
-            ]
-        },
+            ],
+            "construction_subtotal": 21500,
+            "markups": [{"label": "Contingency", "rate": 0.25, "amount": 5375}],
+            "total": 26875,
+        }
     )
-    save_extraction(
-        DetailPageExtraction(
-            doc_id="d", source_path="/x", page_index=0, pdf_page=1, dpi=300, estimate=detail
+    path = save_extraction(
+        PageExtraction(
+            doc_id="d", source_path="/x", page_index=0, pdf_page=1, dpi=300, estimate=estimate
         ),
         settings=settings,
     )
-    out = await tools.reconcile_detail.handler({"filename": "test_roundabout.p1.detail.opc.yaml"})
+    out = await tools.reconcile_estimate.handler({"filename": path.name})
     text = out["content"][0]["text"]
     assert "line-item-rollup" in text
-    assert "OK" in text  # 21,500 items sum == subtotal
+    assert "XX" not in text  # everything ties out
 
 
 # --- ResearchAgent.converse ------------------------------------------------

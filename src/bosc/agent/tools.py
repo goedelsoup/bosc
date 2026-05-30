@@ -14,7 +14,7 @@ import yaml
 from claude_agent_sdk import create_sdk_mcp_server, tool
 
 from bosc.config import get_settings
-from bosc.models import DetailExtraction, OPCSummary
+from bosc.models import Estimate, OPCSummary
 from bosc.pipeline import analyze, ingest
 
 SERVER_NAME = "bosc"
@@ -111,13 +111,13 @@ async def program_overview(_args: dict[str, Any]) -> dict[str, Any]:
 
 
 @tool(
-    "reconcile_detail",
-    "Run line-item -> section-subtotal reconciliation over a generated "
-    "*.detail.opc.yaml extraction.",
+    "reconcile_estimate",
+    "Reconcile a generated estimate extraction (*.opc.yaml): line items -> section "
+    "subtotals -> construction subtotal + markups -> total.",
     {"filename": str},
 )
-async def reconcile_detail(args: dict[str, Any]) -> dict[str, Any]:
-    path = _resolve(args["filename"], "*.detail.opc.yaml")
+async def reconcile_estimate(args: dict[str, Any]) -> dict[str, Any]:
+    path = _resolve(args["filename"], "*.opc.yaml")
     if path is None:
         return _text(f"Not found: {args['filename']}")
     try:
@@ -125,11 +125,11 @@ async def reconcile_detail(args: dict[str, Any]) -> dict[str, Any]:
     except yaml.YAMLError as exc:
         return _text(f"{path.name} is not valid YAML: {str(exc).splitlines()[0]}")
     if not isinstance(data, dict) or "estimate" not in data:
-        return _text(f"{path.name} is not a generated detail extraction (no 'estimate' block).")
-    extraction = DetailExtraction.model_validate(data["estimate"])
-    findings = analyze.reconcile_detail(extraction)
+        return _text(f"{path.name} is not a generated estimate extraction (no 'estimate' block).")
+    estimate = Estimate.model_validate(data["estimate"])
+    findings = analyze.reconcile_estimate(estimate)
     if not findings:
-        return _text(f"{path.name}: no sections with line items to reconcile.")
+        return _text(f"{path.name}: nothing to reconcile (no subtotals/total present).")
     return _text("\n".join(str(f) for f in findings))
 
 
@@ -140,7 +140,7 @@ ALL_TOOLS = [
     read_extraction,
     reconcile_summary,
     program_overview,
-    reconcile_detail,
+    reconcile_estimate,
 ]
 ALLOWED_TOOL_NAMES = [f"mcp__{SERVER_NAME}__{t.name}" for t in ALL_TOOLS]
 

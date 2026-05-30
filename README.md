@@ -61,15 +61,31 @@ uv run bosc ask "Which roundabout has the largest design fee, and why?"
 
 1. **OCR text layer** (pypdf) — a cheap structural hint; its digits are unreliable.
 2. **300 DPI render** (pypdfium2) — the authoritative image.
-3. **Vision read** — a Claude model (`BOSC_EXTRACT_MODEL`) is forced via tool use
-   to populate an `EstimateExtraction`, reading figures off the image and using
-   the OCR text only as a hint. The result is Pydantic-validated and tagged with
-   a self-reported `confidence` plus any `warnings`.
+3. **Profile resolve** — a format `Profile` is auto-detected from the OCR text
+   (contractor name, document title) or set with `--profile`; it supplies the
+   prompt vocabulary and markup convention.
+4. **Vision read** — a Claude model (`BOSC_EXTRACT_MODEL`) is forced via tool use
+   to populate a contractor-agnostic `Estimate` (a title + dynamic `sections`,
+   each with line items and a subtotal + `markups` + construction subtotal +
+   total), reading figures off the image and using the OCR text only as a hint.
+   Pydantic-validated, tagged with `confidence`/`warnings`, and stamped with the
+   `profile` used.
+
+```bash
+uv run bosc extract <doc_id> --pdf-page 319                 # auto-detect profile
+uv run bosc extract <doc_id> --pdf-page 319 --profile tetratech --write
+```
 
 Pages are addressed by `--pdf-page` (1-based, the printed sheet number) or
 `--page` (0-based PDF index). In the reference bundle the six estimates are
 `--pdf-page 319..328`. After extraction, run `bosc reconcile` on the result to
 catch transcription errors arithmetically.
+
+**Generality.** Extraction dispatches by document `--kind` (`opc` today) and,
+within OPC, by contractor **profile** (`bosc/profiles.py`). The `Estimate` model
+and `analyze.reconcile_estimate` are format-agnostic — section taxonomy and
+markup rate come from the data/profile, not hardcoded. Add a contractor by
+registering a new `Profile`; no model changes.
 
 **Summary vs. detail.** By default `extract` reads the section subtotals and
 totals. Add `--detail` (`-d`) to extract the full per-section **line items**

@@ -7,31 +7,26 @@ The flow is **hybrid** (see the read-mode decision):
 1. Pull the page's embedded OCR text via :class:`PdfDocument` — a cheap
    *structural* hint (section names, item ordering). Its digits are unreliable.
 2. Render the page to a 300 DPI image — the *authoritative* source.
-3. Force a Claude model to read the image and populate an
-   :class:`EstimateExtraction` (tool use + Pydantic validation), using the OCR
-   text only as a hint.
-4. Wrap the result with provenance into a :class:`PageExtraction` and (option-
-   ally) write it to ``data/extracted`` for human review.
+3. Resolve a format :class:`~bosc.profiles.Profile` (explicit or auto-detected
+   from the OCR text), build its prompt, and force a Claude model to populate a
+   contractor-agnostic :class:`~bosc.models.Estimate` (tool use + validation).
+4. Wrap the result with provenance into a :class:`PageExtraction`.
 
-The reference sheets live at 0-based PDF pages 317 (summary) and 318-327 (the
-six detail estimates) of ``PRR-01-bundle.ocr.pdf``.
+Extraction is dispatched by *document kind* (``opc`` today) via
+:data:`EXTRACTORS`, leaving room for other public-records genres later.
 """
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from bosc import profiles
 from bosc.config import Settings, get_settings
 from bosc.documents import DEFAULT_DPI, PdfDocument
 from bosc.logging import get_logger
-from bosc.models import (
-    DetailExtraction,
-    DetailPageExtraction,
-    EstimateExtraction,
-    OPCSummary,
-    PageExtraction,
-)
+from bosc.models import Estimate, OPCSummary, PageExtraction
 from bosc.pipeline.ingest import SourceDocument
 
 if TYPE_CHECKING:
@@ -40,83 +35,9 @@ if TYPE_CHECKING:
 
 log = get_logger(__name__)
 
-# Sections an estimate sheet may contain (corridors omit several).
-_SECTIONS = (
-    "ROADWAY, EROSION_CONTROL, DRAINAGE, PAVEMENT, WATER_WORK, LIGHTING, "
-    "TRAFFIC_CONTROL, LANDSCAPING, RIGHT_OF_WAY, INCIDENTALS, DESIGN_SURVEY_INSPECTION"
-)
-
-# The sheet's bottom roll-up block is easy to miss; call it out explicitly.
-_BOTTOM_BLOCK = """\
-The sheet ENDS with a roll-up block (usually the last rows, lower area):
-CONSTRUCTION SUBTOTAL, then a CONTINGENCY AND INFLATION (25%) line, then TOTAL.
-Read all three:
-  * construction_subtotal: the sum of the section subtotals.
-  * contingency_inflation_25pct: the 25% line (~= construction_subtotal * 0.25).
-  * total: construction_subtotal + the 25% line (~= 1.25x the subtotal).
-`total` MUST be populated and MUST be greater than construction_subtotal. If the
-25% line is illegible, set contingency_inflation_25pct to 25% of the construction
-subtotal, set total accordingly, and add a warning that you inferred it. NEVER set
-total equal to construction_subtotal."""
-
-ESTIMATE_INSTRUCTIONS = f"""\
-You are reading ONE page of a Tetra Tech "Opinion of Probable Project Cost"
-sheet for the Project BOSC roadwork program. Read the cost table from the IMAGE,
-which is authoritative. An embedded OCR text layer may be provided as a hint, but
-its digits are frequently wrong — never trust a number from it; read every figure
-off the image.
-
-Record into the tool:
-  * name: the estimate / intersection title printed on the sheet.
-  * section_subtotals for each section present: {_SECTIONS}.
-    Omit sections that do not appear on this sheet (corridors lack several).
-  * construction_subtotal, contingency_inflation_25pct, and total (see below).
-
-{_BOTTOM_BLOCK}
-
-Rules:
-  * Dollar totals and section subtotals must be read carefully — high confidence.
-  * If a digit is genuinely illegible, give your best read AND add a warning
-    naming the field; do not silently guess.
-  * Never invent sections or line items. Prefer omission over fabrication.
-  * Set `confidence` (high/medium/low) for the page overall.
-"""
-
-DETAIL_INSTRUCTIONS = f"""\
-You are reading ONE page of a Tetra Tech "Opinion of Probable Project Cost"
-sheet for the Project BOSC roadwork program. Read the cost table from the IMAGE,
-which is authoritative. An embedded OCR text layer may be provided as a hint, but
-its digits are frequently wrong — never trust a number from it; read every figure
-off the image.
-
-Extract EVERY line item, grouped into `line_items` by section
-({_SECTIONS}). For each line item record:
-  * item_no: the ODOT item number (e.g. 203E10000), or a short `custom_*` tag
-    for non-standard / lump-sum lines that have no ODOT code.
-  * description, quantity, unit (LS, CY, SY, FT, EACH, GAL, SF, AC),
-    unit_amount (per-unit dollars), total_amount (extended dollars).
-
-Also record the roll-up figures: section_subtotals (the SUBTOTAL line under each
-section), then the bottom block below.
-
-{_BOTTOM_BLOCK}
-
-Rules:
-  * Dollar amounts are read off the image; do not trust OCR digits.
-  * For a lump-sum (LS) item: quantity = 1 and unit_amount = total_amount.
-  * If a quantity or unit rate was NOT printed and you inferred it from the
-    total, record your best value and add a `note` saying it was inferred;
-    never present an inferred figure as if printed.
-  * If a section's line items are illegible but its SUBTOTAL is readable, record
-    the section_subtotal, leave that section's items empty, and add a warning.
-  * Never invent items. Set overall `confidence` (high/medium/low).
-"""
-
-
-def output_path_for(doc: SourceDocument, kind: str, settings: Settings | None = None) -> Path:
-    """Where the extraction for ``doc`` should be written."""
-    settings = settings or get_settings()
-    return settings.extracted_dir / f"{doc.path.stem}.{kind}.opc.yaml"
+# Token budgets: detail extractions can carry dozens of line items.
+_SUMMARY_MAX_TOKENS = 4096
+_DETAIL_MAX_TOKENS = 8192
 
 
 def _read_page(
@@ -132,34 +53,48 @@ def _read_page(
             pdf.close()
 
 
-def extract_estimate_page(
+def extract_opc_page(
     doc: SourceDocument,
     page_index: int,
     *,
+    profile: str | None = None,
+    detail: bool = False,
     extractor: StructuredExtractor | None = None,
     pdf: PdfDocument | None = None,
     dpi: int = DEFAULT_DPI,
     settings: Settings | None = None,
 ) -> PageExtraction:
-    """Extract one page's summary (section subtotals + totals) into a PageExtraction.
+    """Extract one Opinion-of-Probable-Cost page into a validated :class:`PageExtraction`.
 
-    ``pdf`` and ``extractor`` are injectable for reuse across pages and for tests.
+    ``profile`` is a profile id, ``"auto"``/``None`` to auto-detect from the page,
+    and ``detail`` toggles full line-item extraction. ``pdf``/``extractor`` are
+    injectable for reuse across pages and for tests.
     """
     from bosc.agent.extractor import StructuredExtractor
 
     settings = settings or get_settings()
-    extractor = extractor or StructuredExtractor(settings=settings)
+    max_tokens = _DETAIL_MAX_TOKENS if detail else _SUMMARY_MAX_TOKENS
+    extractor = extractor or StructuredExtractor(settings=settings, max_tokens=max_tokens)
+
     text, image = _read_page(doc, page_index, dpi, pdf)
+    prof = profiles.resolve(profile, text)
 
     log.info(
-        "extract.page.start", doc_id=doc.doc_id, page_index=page_index, dpi=dpi, kind="summary"
+        "extract.page.start",
+        doc_id=doc.doc_id,
+        page_index=page_index,
+        dpi=dpi,
+        profile=prof.id,
+        detail=detail,
     )
     estimate = extractor.extract(
-        EstimateExtraction,
-        instructions=ESTIMATE_INSTRUCTIONS,
+        Estimate,
+        instructions=prof.prompt(detail=detail),
         image_png=image,
         context_text=text,
     )
+    estimate.profile = prof.id
+
     extraction = PageExtraction(
         doc_id=doc.doc_id,
         source_path=str(doc.path),
@@ -173,7 +108,9 @@ def extract_estimate_page(
         "extract.page.done",
         doc_id=doc.doc_id,
         page_index=page_index,
+        profile=prof.id,
         name=estimate.name,
+        sections=len(estimate.sections),
         confidence=estimate.confidence,
         reconciles=estimate.reconciles(),
         warnings=len(estimate.warnings),
@@ -181,66 +118,29 @@ def extract_estimate_page(
     return extraction
 
 
-def extract_detail_page(
-    doc: SourceDocument,
-    page_index: int,
-    *,
-    extractor: StructuredExtractor | None = None,
-    pdf: PdfDocument | None = None,
-    dpi: int = DEFAULT_DPI,
-    settings: Settings | None = None,
-    max_tokens: int = 8192,
-) -> DetailPageExtraction:
-    """Extract one page's full line items into a :class:`DetailPageExtraction`.
-
-    Uses a larger ``max_tokens`` budget than the summary path, since a sheet can
-    carry dozens of line items.
-    """
-    from bosc.agent.extractor import StructuredExtractor
-
-    settings = settings or get_settings()
-    extractor = extractor or StructuredExtractor(settings=settings, max_tokens=max_tokens)
-    text, image = _read_page(doc, page_index, dpi, pdf)
-
-    log.info("extract.page.start", doc_id=doc.doc_id, page_index=page_index, dpi=dpi, kind="detail")
-    estimate = extractor.extract(
-        DetailExtraction,
-        instructions=DETAIL_INSTRUCTIONS,
-        image_png=image,
-        context_text=text,
-    )
-    extraction = DetailPageExtraction(
-        doc_id=doc.doc_id,
-        source_path=str(doc.path),
-        page_index=page_index,
-        pdf_page=page_index + 1,
-        dpi=dpi,
-        estimate=estimate,
-        source_text_excerpt=text[:600],
-    )
-    item_count = sum(len(items) for items in estimate.line_items.sections().values())
-    log.info(
-        "extract.page.done",
-        doc_id=doc.doc_id,
-        page_index=page_index,
-        name=estimate.name,
-        confidence=estimate.confidence,
-        line_items=item_count,
-        warnings=len(estimate.warnings),
-    )
-    return extraction
+# Document-kind dispatch. Add other public-records genres here later.
+PageExtractor = Callable[..., PageExtraction]
+EXTRACTORS: dict[str, PageExtractor] = {"opc": extract_opc_page}
 
 
-def save_extraction(
-    extraction: PageExtraction | DetailPageExtraction, *, settings: Settings | None = None
-) -> Path:
+def extract_page(
+    doc: SourceDocument, page_index: int, *, kind: str = "opc", **kwargs: object
+) -> PageExtraction:
+    """Dispatch a page extraction to the handler for ``kind`` (default ``opc``)."""
+    if kind not in EXTRACTORS:
+        raise ValueError(f"unknown document kind {kind!r}; known: {sorted(EXTRACTORS)}")
+    return EXTRACTORS[kind](doc, page_index, **kwargs)
+
+
+def save_extraction(extraction: PageExtraction, *, settings: Settings | None = None) -> Path:
     """Write a page extraction to ``data/extracted`` as YAML; return the path.
 
-    Detail extractions get a ``.detail.opc.yaml`` suffix; summaries ``.opc.yaml``.
+    Files with line items get a ``.detail.opc.yaml`` suffix; subtotal-only ones
+    get ``.opc.yaml``.
     """
     settings = settings or get_settings()
     settings.extracted_dir.mkdir(parents=True, exist_ok=True)
-    kind = "detail.opc" if isinstance(extraction, DetailPageExtraction) else "opc"
+    kind = "detail.opc" if extraction.estimate.has_line_items() else "opc"
     slug = extraction.estimate.name.lower().replace("/", "-").replace(" ", "_")
     path = settings.extracted_dir / f"{slug}.p{extraction.pdf_page}.{kind}.yaml"
     path.write_text(extraction.to_yaml(), encoding="utf-8")
@@ -249,7 +149,7 @@ def save_extraction(
 
 
 def validate_summary(path: str | Path) -> OPCSummary:
-    """Load and validate a summary extraction, raising on schema violations."""
+    """Load and validate an assembled summary extraction (legacy Tetra Tech shape)."""
     summary = OPCSummary.from_yaml(path)
     log.info("extract.validated", path=str(path), sub_estimates=len(summary.sub_estimates))
     return summary

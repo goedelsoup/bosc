@@ -16,7 +16,7 @@ from typing import TYPE_CHECKING
 
 from bosc.config import Settings, get_settings
 from bosc.logging import get_logger
-from bosc.models import DetailExtraction, OPCSummary, SubEstimate
+from bosc.models import Estimate, OPCSummary, SubEstimate
 
 if TYPE_CHECKING:
     # Imported lazily at call time to avoid a bosc.agent <-> bosc.pipeline cycle.
@@ -113,41 +113,98 @@ def reconcile(summary: OPCSummary) -> list[Finding]:
     return findings
 
 
-def reconcile_detail(extraction: DetailExtraction) -> list[Finding]:
-    """Check each section's line items sum to its section subtotal.
+def _approx_ok(value: float, expected: float, *, rel: float = 0.02) -> bool:
+    return abs(value - expected) <= max(2, round(abs(expected) * rel))
 
-    Skips sections with no extracted items (illegible detail but a known
-    subtotal) — there is nothing to roll up there.
+
+def reconcile_estimate(estimate: Estimate) -> list[Finding]:
+    """Markup-aware reconciliation of a single generic :class:`Estimate`.
+
+    Checks, as far as the data allows (skipping missing figures):
+      * line items roll up to each section subtotal (where items were extracted);
+      * section subtotals roll up to the construction subtotal;
+      * each percentage markup equals its rate times the construction subtotal;
+      * construction subtotal + markups equals the total.
+
+    Nothing here assumes a particular section taxonomy or markup rate.
     """
     findings: list[Finding] = []
-    subtotals = extraction.section_subtotals.model_dump()
-    for section, items in extraction.line_items.sections().items():
-        if not items:
+    name = estimate.name
+
+    # 1. Line items -> section subtotal (only for sections with extracted items).
+    for section in estimate.sections:
+        if not section.line_items:
             continue
-        subtotal = subtotals.get(section)
-        if subtotal is None:
+        if section.subtotal is None:
             findings.append(
                 Finding(
-                    subject=f"{extraction.name}:{section}",
-                    check="line-item-rollup",
-                    ok=False,
-                    detail=f"{len(items)} line items but no section subtotal to check against",
+                    f"{name}:{section.key}",
+                    "line-item-rollup",
+                    False,
+                    f"{len(section.line_items)} line items but no section subtotal",
                 )
             )
             continue
-        items_sum = extraction.section_item_total(section)
-        delta = items_sum - subtotal
+        items_sum = section.items_total()
+        subtotal = float(section.subtotal)
         findings.append(
             Finding(
-                subject=f"{extraction.name}:{section}",
-                check="line-item-rollup",
-                ok=abs(delta) <= max(2, round(subtotal * 0.02)),
-                detail=f"items sum {items_sum:,.0f} vs section subtotal "
-                f"{subtotal:,} (delta {delta:,.0f}, {len(items)} items)",
+                f"{name}:{section.key}",
+                "line-item-rollup",
+                _approx_ok(items_sum, subtotal),
+                f"items sum {items_sum:,.0f} vs subtotal {subtotal:,.0f} "
+                f"(delta {items_sum - subtotal:,.0f}, {len(section.line_items)} items)",
             )
         )
+
+    construction_subtotal = estimate.construction_subtotal
+
+    # 2. Section subtotals -> construction subtotal.
+    if construction_subtotal is not None:
+        sections_sum = estimate.sections_total()
+        target = float(construction_subtotal)
+        findings.append(
+            Finding(
+                name,
+                "section-rollup",
+                _approx_ok(sections_sum, target),
+                f"sections sum {sections_sum:,.0f} vs construction_subtotal {target:,.0f} "
+                f"(delta {sections_sum - target:,.0f})",
+            )
+        )
+
+    # 3. Each percentage markup should equal rate * construction subtotal.
+    if isinstance(construction_subtotal, (int, float)):
+        for markup in estimate.markups:
+            if markup.rate is None or markup.amount is None:
+                continue
+            expected = construction_subtotal * markup.rate
+            stated = float(markup.amount)
+            findings.append(
+                Finding(
+                    f"{name}:{markup.label}",
+                    "markup-rate",
+                    _approx_ok(stated, expected),
+                    f"stated {stated:,.0f} vs {markup.rate:.0%} of subtotal {expected:,.0f} "
+                    f"(delta {stated - expected:,.0f})",
+                )
+            )
+
+    # 4. construction subtotal + markups -> total.
+    if construction_subtotal is not None and estimate.total is not None:
+        implied = float(construction_subtotal) + estimate.markups_total()
+        total = float(estimate.total)
+        findings.append(
+            Finding(
+                name,
+                "total",
+                _approx_ok(implied, total),
+                f"subtotal+markups {implied:,.0f} vs total {total:,.0f} (delta {implied - total:,.0f})",
+            )
+        )
+
     failures = [f for f in findings if not f.ok]
-    log.info("analyze.reconciled_detail", checks=len(findings), failures=len(failures))
+    log.info("analyze.reconciled_estimate", checks=len(findings), failures=len(failures))
     return findings
 
 

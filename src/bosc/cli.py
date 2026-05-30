@@ -120,6 +120,10 @@ def extract(
     pdf_page: int | None = typer.Option(
         None, "--pdf-page", help="1-based printed sheet number (= page index + 1)."
     ),
+    kind: str = typer.Option("opc", "--kind", help="Document kind to extract."),
+    profile: str = typer.Option(
+        "auto", "--profile", help="Format profile id, or 'auto' to detect from the page."
+    ),
     dpi: int = typer.Option(DEFAULT_DPI, "--dpi", help="Render resolution for the vision read."),
     detail: bool = typer.Option(
         False, "--detail", "-d", help="Extract full line items, not just section subtotals."
@@ -127,7 +131,6 @@ def extract(
     write: bool = typer.Option(False, "--write", "-w", help="Save the YAML under data/extracted."),
 ) -> None:
     """Extract one cost-estimate page (hybrid OCR-text + 300 DPI vision read)."""
-    from bosc.models import DetailExtraction, DetailPageExtraction, PageExtraction
     from bosc.pipeline import analyze
     from bosc.pipeline import extract as extract_stage
 
@@ -142,26 +145,21 @@ def extract(
         console.print(f"[red]Unknown doc_id:[/] {doc_id}. Run `bosc ingest` to list ids.")
         raise typer.Exit(code=1)
 
-    extraction: PageExtraction | DetailPageExtraction
-    if detail:
-        extraction = extract_stage.extract_detail_page(doc, page_index, dpi=dpi)
-    else:
-        extraction = extract_stage.extract_estimate_page(doc, page_index, dpi=dpi)
-
+    extraction = extract_stage.extract_page(
+        doc, page_index, kind=kind, profile=profile, detail=detail, dpi=dpi
+    )
     est = extraction.estimate
     color = "green" if est.reconciles() else "yellow"
     console.print(
-        f"[bold]{est.name}[/] — confidence [{color}]{est.confidence}[/], "
-        f"reconciles={est.reconciles()}, warnings={len(est.warnings)}"
+        f"[bold]{est.name}[/] [dim](profile: {est.profile})[/] — confidence "
+        f"[{color}]{est.confidence}[/], reconciles={est.reconciles()}, "
+        f"sections={len(est.sections)}, warnings={len(est.warnings)}"
     )
     for warning in est.warnings:
         console.print(f"  [yellow]![/] {warning}")
 
-    # For detail extractions, show the line-item -> section-subtotal rollup.
-    if isinstance(est, DetailExtraction):
-        findings = analyze.reconcile_detail(est)
-        for f in findings:
-            console.print(f"[{'green' if f.ok else 'red'}]{f}[/]")
+    for f in analyze.reconcile_estimate(est):
+        console.print(f"[{'green' if f.ok else 'red'}]{f}[/]")
 
     if write:
         path = extract_stage.save_extraction(extraction)
