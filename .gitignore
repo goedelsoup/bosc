@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# Tooling caches — centralized under .cache/ (configured in pyproject.toml)
+.cache/
+.coverage
+htmlcov/
+
+# uv
+uv.lock.bak
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+
+# ---------------------------------------------------------------------------
+# Data policy
+# ---------------------------------------------------------------------------
+# Source documents (scans, OCR PDFs, images) ARE versioned. Large binaries go
+# through Git LFS (see .gitattributes); the reviewed structured extractions
+# under data/extracted are the durable research artifact.
+# Only regenerable working files are ignored:
+data/cache/
+data/scratch/
+
+# Agent run logs / transcripts
+runs/
+*.log

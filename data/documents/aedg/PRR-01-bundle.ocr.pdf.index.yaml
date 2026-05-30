@@ -1,0 +1,204 @@
+# ============================================================================
+# NAVIGATION INDEX — Allen County / PAAC Public-Records Production (Parent PRR)
+# ============================================================================
+# Bundle: "Allen County -- Responsive Records -- Parent PRR.pdf"
+# Total pages: 328 | Producing body: Port Authority of Allen County (PAAC)
+# Searchable copy: Allen_County_PRR_searchable.pdf (OCR layer added pp.80-328)
+# Full text: Allen_County_PRR_full_text.txt
+#
+# PURPOSE: machine- and human-navigable map of the bundle. Page numbers are
+# 1-indexed PDF pages. "confidence" flags how the boundary was determined:
+#   native_text  = typed layer, reliable
+#   title_anchor = document title/stamp detected in OCR, reliable
+#   ocr_inferred = inferred from keyword runs, VERIFY before citing
+# ============================================================================
+
+bundle:
+  filename: "Allen County -- Responsive Records -- Parent PRR.pdf"
+  total_pages: 328
+  producing_body: "Port Authority of Allen County (PAAC)"
+  prepared_via: "Kofax Power PDF (scan workflow)"
+  structure: "Two parts — typed board minutes (1-79) + scanned exhibits (80-328)"
+  derived_files:
+    searchable_pdf: "Allen_County_PRR_searchable.pdf"
+    full_text: "Allen_County_PRR_full_text.txt"
+    exhibit_index: "Allen_County_PRR_exhibit_index.txt"
+    project_table: "Allen_County_Project_Master_Table.md"
+    roadwork_yaml: "BOSC_Tetra_Tech_OPC.yaml"
+    opc_line_items: "BOSC_OPC_Detailed_Line_Items.yaml"
+
+# ----------------------------------------------------------------------------
+# PART 1 — PAAC BOARD MINUTES  (pp. 1-79, native text, chronological)
+# ----------------------------------------------------------------------------
+part_1_minutes:
+  page_range: [1, 79]
+  layer: native_text
+  description: "Chronological Port Authority board meeting minutes, 5/2023 – 4/2026"
+  search_note: "Project threads recur across meetings: BOSC, Nadella, Gunsmoke, P&G, REV LNG, Amazon"
+  meetings:
+    - {page: 1,  date: "2023-05-18", confidence: native_text}
+    - {page: 4,  date: "2024-02-22", confidence: native_text}
+    - {page: 7,  date: "2024-03-21", confidence: native_text}
+    - {page: 11, date: "2024-04-18", confidence: native_text}
+    - {page: 15, date: "2024-05-16", confidence: native_text}
+    - {page: 20, date: "2024-06-13", confidence: native_text}
+    - {page: 23, date: "2024-07-11", confidence: native_text}
+    - {page: 24, date: "2024-07-18", confidence: native_text}
+    - {page: 26, date: "2024-08-15", confidence: native_text}
+    - {page: 27, date: "2024-08-22", confidence: native_text}
+    - {page: 30, date: "2024-10-24", confidence: native_text}
+    - {page: 33, date: "2025-02-27", confidence: native_text}
+    - {page: 35, date: "2025-06-13", confidence: native_text, note: "date out of sequence in source ordering"}
+    - {page: 38, date: "2025-03-27", confidence: native_text}
+    - {page: 42, date: "2025-05-01", confidence: native_text}
+    - {page: 45, date: "2025-05-29", confidence: native_text}
+    - {page: 47, date: "2025-06-26", confidence: native_text}
+    - {page: 50, date: "2025-07-02", confidence: native_text}
+    - {page: 52, date: "2025-07-29", confidence: native_text, note: "BOSC Roadwork Development Agreement w/ Bistrozzi approved"}
+    - {page: 54, date: "2025-08-07", confidence: native_text}
+    - {page: 57, date: "2025-08-28", confidence: native_text}
+    - {page: 59, date: "2025-09-25", confidence: native_text}
+    - {page: 62, date: "2025-10-23", confidence: native_text}
+    - {page: 64, date: "2025-11-20", confidence: native_text}
+    - {page: 67, date: "2025-12-17", confidence: native_text}
+    - {page: 68, date: "2026-02-13", confidence: native_text}
+    - {page: 71, date: "2026-02-26", confidence: native_text}
+    - {page: 74, date: "2026-03-06", confidence: native_text}
+    - {page: 76, date: "2026-03-30", confidence: native_text}
+    - {page: 77, date: "2026-04-23", confidence: native_text}
+
+# ----------------------------------------------------------------------------
+# PART 2 — SCANNED EXHIBITS  (pp. 80-328, OCR layer added)
+# ----------------------------------------------------------------------------
+part_2_exhibits:
+  page_range: [80, 328]
+  layer: ocr_added
+  description: "Recorded instruments, option/purchase agreements, assignments, and the roadwork cost package"
+
+  sections:
+
+    - id: retention_policy
+      title: "PAAC Public Records Availability + Retention & Destruction Policy"
+      page_range: [80, 90]
+      confidence: title_anchor
+      key_facts:
+        - "Adopted 2022-07-28"
+        - "ORC 4582.58 economic-development trade-secret carve-out embedded"
+        - "Legal-hold provision; correspondence on discretionary 'transitory' standard"
+        - "Minutes=permanent; Real property=permanent; Contracts=8yr; PRR requests=2yr"
+
+    # ---- SELLER PACKET A: BRENNEMAN BROTHERS ----
+    - id: brenneman_packet
+      title: "Brenneman Brothers — option, assignment, deed chain"
+      page_range: [91, 167]
+      confidence: title_anchor
+      parties: ["Brenneman Brothers", "PAAC", "Bistrozzi LLC", "Kiracofe (prior estate)"]
+      parcels: ["36-1200-03-001.000", "...001 through ...006"]
+      documents:
+        - {type: "Option to Purchase Agreement", page: 91, confidence: title_anchor}
+        - {type: "Closing/settlement + deed set", page_range: [92, 107], confidence: ocr_inferred}
+        - {type: "Fiduciary Deed (Kiracofe estate → Brenneman, rec. 2006)", page: 108, confidence: title_anchor, recorder_stamp: true}
+        - {type: "Easement / legal description pages", page_range: [109, 119], confidence: ocr_inferred}
+        - {type: "Fiduciary Deed (recorded)", page: 120, confidence: title_anchor, recorder_stamp: true}
+        - {type: "Warranty Deed set", page_range: [148, 151], confidence: title_anchor, recorder_stamp: true}
+        - {type: "Conveyance fee statements", page_range: [158, 159], confidence: title_anchor}
+        - {type: "Option to Purchase (Brenneman, assigned to Bistrozzi)", page: 165, confidence: title_anchor}
+        - {type: "Assignment of Option → Bistrozzi LLC (Vorys/Tangeman, eff. 7/3/25)", page: 168, confidence: ocr_inferred}
+
+    # ---- SELLER PACKET B: MILLER ----
+    - id: miller_packet
+      title: "Miller — option to purchase"
+      page_range: [193, 196]
+      confidence: title_anchor
+      parties: ["Miller", "PAAC"]
+      parcels: ["36-1200-03-002.000"]
+      documents:
+        - {type: "Option to Purchase Agreement", page: 193, confidence: title_anchor}
+        - {type: "Warranty Deed / closing", page_range: [197, 205], confidence: ocr_inferred}
+        - {type: "Assignment of Option → Bistrozzi", page: 200, confidence: ocr_inferred}
+
+    # ---- SELLER PACKET C: NEFF ----
+    - id: neff_packet
+      title: "Neff — deeds, option, assignment"
+      page_range: [242, 276]
+      confidence: title_anchor
+      parties: ["Neff", "PAAC", "Bistrozzi LLC"]
+      parcels: ["36-1200-02-001.000", "36-1200-02-001.001", "36-0100-03-002.000"]
+      documents:
+        - {type: "Warranty Deed (recorded)", page: 242, confidence: title_anchor, recorder_stamp: true}
+        - {type: "Warranty Deed (Neff, recorded)", page: 246, confidence: title_anchor, recorder_stamp: true}
+        - {type: "Option to Purchase (Neff → Bistrozzi)", page: 250, confidence: title_anchor}
+        - {type: "Warranty Deed (recorded)", page: 257, confidence: title_anchor, recorder_stamp: true}
+        - {type: "Option to Purchase (Neff/Bistrozzi)", page: 263, confidence: title_anchor}
+        - {type: "Assignment of Option → Bistrozzi", page: 264, confidence: ocr_inferred}
+        - {type: "Conveyance fee statements", page_range: [270, 278], confidence: title_anchor}
+
+    # ---- SELLER PACKET D: NEIGHBORS ----
+    - id: neighbors_packet
+      title: "Neighbors (Jim & Suzie) — purchase/sale agreement + deed"
+      page_range: [280, 295]
+      confidence: title_anchor
+      parties: ["Jim & Suzie Neighbors", "PAAC"]
+      price: 600000
+      documents:
+        - {type: "Real Estate Sale & Purchase Agreement", page: 280, confidence: title_anchor}
+        - {type: "Warranty Deed", page: 284, confidence: title_anchor}
+        - {type: "Closing/settlement", page_range: [281, 295], confidence: ocr_inferred}
+
+    # ---- ROADWORK / OPC BLOCK ----
+    - id: roadwork_block
+      title: "BOSC Roadwork Development Agreement + Tetra Tech cost package"
+      page_range: [296, 328]
+      confidence: title_anchor
+      parties: ["PAAC", "Bistrozzi LLC", "Tetra Tech"]
+      key_facts:
+        - "~$14.5M privately funded; dedicated to County on completion"
+        - "Substantial completion 9/1/27; final 12/31/27"
+      documents:
+        - {type: "Roadwork Development Agreement (PAAC ↔ Bistrozzi)", page: 296, confidence: title_anchor}
+        - {type: "Exhibit B — Roadwork Improvements (4 roundabouts + corridors)", page: 314, confidence: native_text}
+        - {type: "Exhibit C — Construction Schedule", page: 315, confidence: native_text}
+        - {type: "Exhibit D — Supporting Info / Company Contribution", page: 316, confidence: native_text}
+        - {type: "Tetra Tech OPC — summary", page: 318, confidence: title_anchor}
+        - {type: "OPC detail — Cole/Diller Roundabout", page: 319, confidence: title_anchor}
+        - {type: "OPC detail — Cole/Bluelick Roundabout", page: 321, confidence: title_anchor}
+        - {type: "OPC detail — Primary Access Entrance (Beery/Cole)", page: 323, confidence: title_anchor}
+        - {type: "OPC detail — Cole/West St (SR 115) Roundabout", page: 325, confidence: title_anchor}
+        - {type: "OPC detail — Cole Street Corridor", page: 327, confidence: title_anchor}
+        - {type: "OPC detail — Bluelick Road Corridor", page: 328, confidence: title_anchor}
+
+# ----------------------------------------------------------------------------
+# QUICK-NAV INDEXES (jump-to by interest)
+# ----------------------------------------------------------------------------
+indexes:
+  by_party:
+    Bistrozzi_LLC: [148, 165, 168, 200, 250, 257, 263, 264, 296]
+    Brenneman: [91, 108, 120, 148, 165, 168]
+    Neff: [242, 246, 250, 257, 263, 264]
+    Miller: [193]
+    Neighbors: [280, 284]
+    Vorys_Tangeman: [115, 165, 168]
+    Tetra_Tech: [296, 318, 319, 321, 323, 325, 327, 328]
+
+  by_instrument_type:
+    recorded_deeds: [108, 120, 148, 197, 199, 242, 246, 257, 284]
+    options: [91, 165, 193, 250, 263]
+    assignments_to_bistrozzi: [168, 200, 264]
+    conveyance_fee_statements: [158, 159, 179, 270, 278]
+    cost_estimates: [318, 319, 321, 323, 325, 327, 328]
+
+  by_investigative_thread:
+    mineral_subsurface_rights: {pages: [250, 263], note: "purchase contracts convey 'all mineral and other subsurface rights'"}
+    roundabout_program: {pages: [296, 314, 318], note: "Beery=primary entrance; Bluelick/SR115/Diller; corridors"}
+    retention_4582_58_carveout: {pages: [80], note: "statutory secrecy mechanism"}
+    parcel_assembly: {pages: [91, 242, 246], note: "Neff family 36-1200-02/03-001.x"}
+
+# ----------------------------------------------------------------------------
+# VERIFICATION FLAGS — boundaries to confirm before citing precisely
+# ----------------------------------------------------------------------------
+verify:
+  - "Assignment pages (168, 200, 264) detected via keyword run; confirm exact start/end visually."
+  - "Closing/settlement ranges are ocr_inferred fillers between titled docs; page counts approximate."
+  - "Easement vs. deed-legal-description distinction is fuzzy in OCR (word 'easement' recurs in deeds); the earlier broad 'EASEMENT' runs were discarded in favor of titled anchors."
+  - "Minutes meeting at p.35 (2025-06-13) appears out of date-sequence in source ordering — not an error in indexing."
+  - "Parcel numbers tie to American Township (36-12xx) and adjacent (36-01xx) series."

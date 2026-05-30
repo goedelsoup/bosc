@@ -1,0 +1,179 @@
+# Tetra Tech "Opinion of Probable Project Cost" — Project BOSC Roadwork
+# Source: PAAC PRR production, scanned exhibit pages 318-328 (searchable PDF).
+# Read by high-resolution visual inspection (300 DPI) to correct OCR errors.
+# All estimates: BASIS = CONCEPTUAL; Estimator RJS; Checked AMD; Date 7/11/2025 (sheet footer 7/17/2025).
+# File: "Conceptual OPC_Cole St.xlsx"
+#
+# NOTE ON CONFIDENCE: Dollar figures in the cost-summary table and the
+# section/construction subtotals and totals were read directly and are
+# high-confidence. Individual line-item QUANTITIES (and a few cent-level
+# digits) are from a degraded scan; treat quantities as approximate and
+# verify against Tetra Tech's native spreadsheet if precision is needed.
+
+meta:
+  program: "Project BOSC Roadwork (privately funded; BOSC Team deposit to PAAC; dedicated to County on completion)"
+  estimator: "Tetra Tech (RJS), checked AMD"
+  basis: "Conceptual"
+  date: "2025-07-11"
+  source_file: "Conceptual OPC_Cole St.xlsx"
+  pdf_pages: "318 (summary), 319-328 (detail)"
+  contingency_and_inflation_pct: 25
+  summary_construction_total: 14223081   # sum of the six line-item costs on the summary sheet
+  # The six summary line costs below are AFTER each sub-estimate's 25% contingency
+  # (i.e., they equal each sub-estimate's TOTAL), except where noted.
+
+# Standard section schema shared by all intersection (roundabout) estimates.
+# Each sub-estimate breaks into these sections; section subtotals roll up to a
+# Construction Subtotal, then +25% contingency = Total.
+section_schema:
+  - ROADWAY            # clearing/grubbing, excavation, embankment, subgrade, monument, topsoil, decorative walk
+  - EROSION_CONTROL
+  - DRAINAGE           # 6" shallow pipe underdrains w/ geotextile; drainage improvements (LS)
+  - PAVEMENT           # asphalt base/surface/intermediate, aggregate base, tack coat, curb & gutter, decorative reinforced concrete (truck apron)
+  - WATER_WORK
+  - LIGHTING
+  - TRAFFIC_CONTROL
+  - LANDSCAPING
+  - RIGHT_OF_WAY       # agricultural land (AC) + residential land (AC)
+  - INCIDENTALS        # maintaining traffic, construction layout/surveying, mobilization (each LS)
+  - DESIGN_SURVEY_INSPECTION  # design <15%>, survey, construction admin & inspection
+
+# ODOT item-number reference (from the canonical Diller sheet; identical across sheets)
+item_reference:
+  "201E11000": "Clearing and grubbing (LS)"
+  "203E10000": "Excavation, as per plan (CY)"
+  "203E20001": "Embankment, as per plan (CY)"
+  "204E10001": "Subgrade compaction, as per plan (SY)"
+  "623E38500": "Monument assembly, Type C (EACH)"
+  "653E10001": "Topsoil furnished and placed, as per plan (CY)"
+  "decorative_walk": "Decorative plain concrete walk, 6\" thick (splitter island), as per plan (SF)"
+  "605E11111": "6\" shallow pipe underdrains with geotextile fabric, as per plan (FT)"
+  "SPECIAL_drainage": "Drainage improvements (LS)"
+  "301E56000": "Asphalt concrete base, PG64-22 (449) (CY)"
+  "304E20000": "Aggregate base (CY)"
+  "407E10000": "Tack coat (GAL)"
+  "442E22100": "Asphalt concrete surface course, 12.5mm, Type A (449) (CY)"
+  "442E22400": "Asphalt concrete intermediate course, 19mm, Type A (449) (CY)"
+  "609E12001": "Combination curb and gutter, Type 2, as per plan (FT)"
+  "609E31000": "Combination curb and gutter, Type 9 (FT)"
+  "609E26000": "Curb, Type 6 (FT)"
+  "decorative_pavement": "Decorative reinforced concrete pavement, 6\" thick (truck apron), as per plan (SY)"
+  "614E11000": "Maintaining traffic (LS)"
+  "623E10000": "Construction layout stakes and surveying (LS)"
+  "624E10000": "Mobilization (LS)"
+
+sub_estimates:
+
+  - name: "Cole Street / Diller Road Roundabout"
+    pdf_page: 319
+    work: "Roundabout at Cole/Diller intersection"
+    construction_subtotal: 1228174
+    contingency_inflation_25pct: ~307043   # derived: total - subtotal
+    total: 1535218                          # summary sheet: $1,535,217.80
+    section_subtotals:
+      roadway: 109307            # ~$109,307.69
+      erosion_control: 85000     # ~$85,000.00 (read approx)
+      drainage: 120440           # ~$120,440.00 (6" underdrain 2,044 FT @ $10 = $20,440 + $100,000 LS)
+      pavement: 302631           # ~$302,631.80
+      water_work: 50000
+      lighting: 100000
+      traffic_control: 75000
+      landscaping: 20000
+      right_of_way: 8161         # agricultural 0.26 AC @ $20k + residential 0.07 AC @ $40k
+      incidentals: 120000        # 3 x LS ($50k + $20k + $50k)
+      design_survey_inspection: 272633  # design <15%> $192,633.60 + survey $20,000 + CA&I $60,000
+
+  - name: "Cole Street / Bluelick Road Roundabout"
+    pdf_page: 321
+    work: "Roundabout at Cole/Bluelick intersection"
+    construction_subtotal: 1363602
+    contingency_inflation_25pct: 340900
+    total: 1704502
+    section_subtotals:
+      roadway: 113984            # ~$113,983.82
+      erosion_control: 80000
+      drainage: 146440           # 2,144 FT @ $10 = $21,440 + $125,000 LS
+      pavement: 252402           # ~ read approx
+      water_work: 100000
+      lighting: 100000
+      traffic_control: 75000
+      landscaping: 20000
+      right_of_way: 12314        # ag 0.15 AC @ $20k + res 0.23 AC @ $40k
+      incidentals: 120000
+      design_survey_inspection: 373341  # design $213,361.20 + survey $30,000 + CA&I $80,000
+
+  - name: "Primary Access Entrance to Project Site (Roundabout)"
+    note: "Main BOSC facility entrance; at Beery Road & North Cole Street (per agreement narrative). Largest roundabout."
+    pdf_page: 323
+    construction_subtotal: 2122436
+    contingency_inflation_25pct: 530609
+    total: 2663045
+    section_subtotals:
+      roadway: 241889            # ~$241,888.02
+      erosion_control: 100000
+      drainage: 208200           # 5,820 FT @ $10 = $58,200 + $150,000 LS
+      pavement: 681232           # ~$681,231.77
+      water_work: 50000
+      lighting: 150000
+      traffic_control: 75000     # ~$75,694 read approx
+      landscaping: 20000
+      right_of_way: 275          # ~$275.48 (ag $0.00 + res 0.01 AC)
+      incidentals: 140000        # 3 x LS ($50k + $40k + $50k)
+      design_survey_inspection: 455078  # design $335,077.95 + survey $40,000 + CA&I $50,000(?)
+
+  - name: "Cole Street / West Street (SR 115) Roundabout"
+    note: "ODOT District One reviewing whether this roundabout is needed."
+    pdf_page: 325
+    construction_subtotal: 1799687
+    contingency_inflation_25pct: 449922
+    total: 2249609
+    section_subtotals:
+      roadway: 170516            # ~$170,515.69 read approx
+      erosion_control: 75000
+      drainage: 156010           # 3,101 FT @ $10 = $31,010 + $125,000 LS
+      pavement: 514322           # ~$514,322.35
+      water_work: 50000
+      lighting: 100000
+      traffic_control: 75000
+      landscaping: 20000
+      right_of_way: 13627        # ag 0.69 AC @ $20k + res $0.00
+      incidentals: 130000        # 3 x LS ($50k + $30k + $50k)
+      design_survey_inspection: 437212  # design $357,212 + survey $20,000 + CA&I $60,000
+
+  - name: "Cole Street Corridor"
+    type: "corridor (widening/rehab, not an intersection)"
+    pdf_page: 327
+    construction_subtotal: 3119840
+    contingency_inflation_25pct: 779960
+    total: 3899800                          # summary sheet: $3,899,799.82
+    section_subtotals:
+      roadway: 392686            # ~$392,685.01 (clearing/excav/embank/subgrade/topsoil; no monument)
+      erosion_control: 65000
+      drainage: 284040           # 18,404 FT @ $10 = $184,040 + $100,000 LS
+      pavement: 1777183          # ~$1,777,182.55 (no curb/decorative apron lines on corridor)
+      water_work: 65000          # appears bundled / read approx
+      incidentals: 90000         # 3 x LS ($30k + $15k + $45k)
+      design_survey_inspection: 441848  # design $346,848.90 + survey $30,000 + CA&I $65,000
+    notes: "Corridor sheets omit RIGHT_OF_WAY, LIGHTING, TRAFFIC_CONTROL, LANDSCAPING line sections present on roundabout sheets."
+
+  - name: "Bluelick Road Corridor"
+    type: "corridor (widening/rehab, not an intersection)"
+    pdf_page: 328
+    construction_subtotal: 1744725
+    contingency_inflation_25pct: 436181
+    total: 2180907                          # summary sheet: $2,180,906.63
+    section_subtotals:
+      roadway: 223596            # ~$223,595.65
+      erosion_control: 35000
+      drainage: 153400           # 10,340 FT @ $10 = $103,400 + $50,000 LS
+      pavement: 898471           # ~$898,471.25
+      water_work: 35000
+      incidentals: 60000         # 2-3 x LS ($20k + $5k + $25k read approx)
+      design_survey_inspection: 348858  # design $193,858.40 + survey $20,000 + CA&I $35,000
+
+# RECONCILIATION NOTES
+reconciliation:
+  diller_ocr_correction: "OCR earlier rendered Diller total as $4,535,217.80; the correct figure is $1,535,217.80 (leading digit is a 1, not a 4). Construction total of $14,223,081 only reconciles with the $1.535M figure."
+  agreement_vs_opc_bluelick: "Roadwork agreement narrative states $2.5M 'specifically budgeted' for the Bluelick & N. Cole roundabout. The OPC lists that roundabout at $1,704,502. The $2.5M likely bundles the Bluelick roundabout + Bluelick corridor work + contingency/ROW, or reflects a budgeting allowance distinct from the engineer's estimate. Flag for the County Engineer."
+  state_route_label: "Agreement and design-build minutes variously reference SR 115 and SR 65 for the Cole Street west roundabout. OPC labels it 'Cole Street / West Street (SR 115).' Confirm correct route designation."
+  quantities_caveat: "Line-item quantities transcribed from a degraded scan are approximate. Dollar totals/subtotals are high-confidence."

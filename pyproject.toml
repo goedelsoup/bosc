@@ -1,0 +1,89 @@
+[project]
+name = "bosc"
+version = "0.1.0"
+description = "Project BOSC — an agentic research platform for ingesting, extracting, and analyzing public-records source documents."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Proprietary" }
+authors = [{ name = "Shawnee Smart Systems" }]
+keywords = ["research", "agentic", "document-extraction", "claude", "bosc"]
+
+dependencies = [
+    "claude-agent-sdk>=0.1.0",
+    "anthropic>=0.40.0",
+    "pydantic>=2.7",
+    "pydantic-settings>=2.3",
+    "pyyaml>=6.0",
+    "typer>=0.12",
+    "rich>=13.7",
+    "structlog>=24.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "pytest>=8.2",
+    "pytest-asyncio>=0.23",
+    "types-PyYAML>=6.0",
+]
+
+[project.scripts]
+bosc = "bosc.cli:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/bosc"]
+
+# ---------------------------------------------------------------------------
+# Tooling
+# ---------------------------------------------------------------------------
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+cache-dir = ".cache/ruff"
+
+[tool.ruff.lint]
+select = [
+    "E", "F", "W",   # pyflakes / pycodestyle
+    "I",             # isort
+    "N",             # pep8-naming
+    "UP",            # pyupgrade
+    "B",             # bugbear
+    "C4",            # comprehensions
+    "SIM",           # simplify
+    "RUF",           # ruff-specific
+]
+ignore = ["E501"]  # line length handled by formatter
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101"]
+
+[tool.mypy]
+python_version = "3.11"
+cache_dir = ".cache/mypy"
+strict = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+plugins = ["pydantic.mypy"]
+mypy_path = "src"
+packages = ["bosc"]
+
+[[tool.mypy.overrides]]
+module = ["claude_agent_sdk.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "-ra -q"
+cache_dir = ".cache/pytest"
+
+[tool.bosc]
+# Application defaults can also be set here and read by bosc.config; env vars win.

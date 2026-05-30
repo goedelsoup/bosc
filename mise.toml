@@ -1,0 +1,40 @@
+# mise — dev toolchain for Project BOSC.
+#   mise install        # install pinned tools (python, uv, node, git-lfs)
+#   mise run setup      # bootstrap: deps, Git LFS, Claude Code CLI
+#   mise run check      # lint + format + types + tests
+#
+# Not using mise? See Brewfile for the Homebrew fallback.
+
+[tools]
+python = "3.11"
+uv = "latest"
+node = "lts"
+git-lfs = "latest"
+
+[env]
+# Keep uv's managed virtualenv in-project so mise and uv agree on the interpreter.
+UV_PROJECT_ENVIRONMENT = ".venv"
+
+[tasks.setup]
+description = "Install Python deps, initialize Git LFS, install the Claude Code CLI"
+run = [
+  "uv sync --extra dev",
+  "git lfs install --local",
+  "npm install -g @anthropic-ai/claude-code",
+]
+
+[tasks.check]
+description = "Lint, format-check, type-check, and test"
+run = [
+  "uv run ruff check .",
+  "uv run ruff format --check .",
+  "uv run mypy",
+  "uv run pytest",
+]
+
+[tasks.fmt]
+description = "Auto-fix lint issues and format"
+run = [
+  "uv run ruff check --fix .",
+  "uv run ruff format .",
+]
