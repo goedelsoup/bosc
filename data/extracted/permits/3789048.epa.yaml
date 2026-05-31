@@ -1,0 +1,48 @@
+doc_id: 3789048-78e92a14
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/permits/bistrozzi-permits/3789048.pdf
+kind: epa
+pages_read:
+- 0
+dpi: 150
+source_text_excerpt: " \n \n \nJuly 17, 2025 \n \nMr. Scott Ziance \nBistrozzi LLC\
+  \ \n52 East Gay Street \nColumbus, OH 43215 \n \nRE: Wetland Mitigation at its Project\
+  \ BOSC site located east of N. Cole Street in American \nTownship and Sugar Creek\
+  \ Township, Allen County. \nACCT: PMP-212 \nOhio EPA ID No.-  \n \nDear Mr. Ziance:\
+  \  \n \nThe Stream + Wetlands Foundation received on July 17, 2025,  a payment of\
+  \ $ 38,675 (check \n#208865). This payment is for the purchase of 0.7 acres of forested\
+  \ wetland credits at our Pearson \nMetropark Wetlands Mitigation Bank, for the Project\
+  \ BOSC site.  \nThis payment fulfills your financial obligation"
+action:
+  confidence: high
+  warnings:
+  - Ohio EPA ID No. field is blank — no permit number assigned or recorded on this
+    letter.
+  - This letter is from a mitigation bank (Stream and Wetlands Foundation), not directly
+    from Ohio EPA or USACE, though both agencies are CC'd.
+  - Contact firm EMH&T, LLC is inferred from the CC line (Christian Franczek), not
+    directly stated as the applicant's firm.
+  agency: Stream and Wetlands Foundation
+  program: Wetland Mitigation Bank Credit Purchase
+  permit_no: PMP-212
+  action: correspondence
+  action_date: '2025-07-17'
+  plans_received_date: null
+  expiration_date: null
+  applicant: Bistrozzi LLC
+  applicant_address: 52 East Gay Street, Columbus, OH 43215
+  contact_name: Scott Ziance
+  contact_email: null
+  contact_firm: EMH&T, LLC
+  project_name: Project BOSC
+  site_address: East of N. Cole Street, American Township and Sugar Creek Township,
+    Allen County, Ohio
+  affected_resource: Forested wetland credits (0.7 acres) — Pearson Metropark Wetlands
+    Mitigation Bank
+  parcel_ids: []
+  note: 'This is a payment receipt/confirmation letter from Stream + Wetlands Foundation
+    acknowledging receipt of $38,675 (check #208865) for the purchase of 0.7 acres
+    of forested wetland credits at the Pearson Metropark Wetlands Mitigation Bank.
+    Ohio EPA ID No. is blank/not assigned on the letter. CC''d to Christian Franczek
+    (EMH&T, LLC), Peter J. Krakowiak (U.S. Army Corps of Engineers), and Andrea Kibourne
+    (Ohio EPA). Letter signed by Vincent E. Messerly, P.E., President of Stream +
+    Wetlands Foundation.'

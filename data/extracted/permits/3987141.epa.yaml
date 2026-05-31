@@ -1,0 +1,50 @@
+doc_id: 3987141-63f8f8c2
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/permits/bistrozzi-permits/3987141.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+- 2
+dpi: 150
+source_text_excerpt: "r ✓1 Environmental C?3Jj/ß. Protection \nf Agency \n12/10/2025\
+  \ \nMichael Montfort \nBistrozzi LLC \n1700 K Street, N.W., Fifth Floor \nWashington,\
+  \ DC 20006-3817 \nRE: DRAFT AIR POLLUTION PERMIT-TO-INSTALL \nFacility ID: 0302022054\
+  \ \nPermit Number: P0138965 \nPermit Type: Initial Installation \nCounty: Allen\
+  \ \nDear Permit Holder: \nNo TOXIC REVIEW \nNo PSD \nYes SYNTHETIC MINOR TO AVOID\
+  \ MAJOR NSR \nNo CEMS \nYes MACT/GACT \nYes NSPS \nNo NESHAPS \nNo NETTING \nNo\
+  \ MAJOR NON-ATTAINMENT \nYcs MODELING SUBMITTED \nNo MAJOR GHG \nEPA.Ohio.gov \n\
+  Mike DeWine, Governor Jim Tressel, Lt. Governor John Logue, Director \nA draft of"
+action:
+  confidence: high
+  warnings:
+  - This is an Air Pollution Permit-to-Install (Division of Air Pollution Control),
+    not a Division of Surface Water or USACE surface-water permit — it does not fall
+    within the typical scope of DSW/404 actions.
+  - OCR rendered 'Yes' as 'Ycs' for MODELING SUBMITTED row — verified against image.
+  - Public notice references 114 generators (2,750 ekW) while permit strategy write-up
+    references 115 generators — minor discrepancy noted; both values captured in note.
+  agency: Ohio EPA
+  program: Air Pollution Permit-to-Install
+  permit_no: P0138965
+  action: correspondence
+  action_date: '2025-12-10'
+  plans_received_date: null
+  expiration_date: null
+  applicant: Bistrozzi LLC
+  applicant_address: 1700 K Street, N.W., Fifth Floor, Washington, DC 20006-3817
+  contact_name: Michael Montfort
+  contact_email: null
+  contact_firm: Bistrozzi LLC
+  project_name: Bistrozzi LLC Data Center – Initial Installation
+  site_address: N Cole Rd. and W Bluelick Rd., Lima, OH 45801
+  affected_resource: 114/115 diesel-fired emergency generators (2,750 ekW) at proposed
+    data center
+  parcel_ids: []
+  note: 'Draft Air Pollution Permit-to-Install for Initial Installation in Allen County.
+    Facility ID: 0302022054. Permit Type: Initial Installation. Draft issued for public
+    comment; not an authorization to begin construction. Synthetic Minor to avoid
+    Major NSR (NOx and CO limited to 235.62 TPY and 96.06 TPY respectively). MACT/GACT
+    and NSPS apply. Modeling submitted. Contact for questions: Alyse Wineland, Ohio
+    EPA DAPC, Northwest District Office, 347 North Dunbridge Rd., Bowling Green, OH
+    43402, (419)352-8461. Signed by Robert Hodanbosi, Chief, Division of Air Pollution
+    Control.'

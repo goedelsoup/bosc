@@ -1,0 +1,44 @@
+doc_id: 4074551-be6779ea
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/permits/bistrozzi-permits/4074551.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+- 2
+dpi: 150
+source_text_excerpt: '
+
+
+
+
+  '
+action:
+  confidence: high
+  warnings:
+  - No applicant mailing address printed on this page
+  - No contact name or contact firm visible
+  - No expiration date present
+  - Action date inferred from Invoice Sent Date (03/17/2026) as no explicit letter
+    date is shown
+  - OCR layer noted as unreliable; all values verified against image
+  agency: Ohio EPA
+  program: Surface Water Permit-to-Install
+  permit_no: DSWPTI-260294
+  action: application
+  action_date: '2026-03-17'
+  plans_received_date: null
+  expiration_date: null
+  applicant: BISTROZZI LLC
+  applicant_address: null
+  contact_name: null
+  contact_email: null
+  contact_firm: null
+  project_name: BOSC-1A Private Sanitary Sewer Improvement Plan
+  site_address: Allen County, Ohio
+  affected_resource: Private sanitary sewer
+  parcel_ids: []
+  note: 'EPR Status is DIVISION REVIEW IN PROGRESS. WF District: NWDO. Core ID: 658969.
+    Revenue ID: 1779509. Invoiced Amount: $10,593.50. Invoice Sent Date: 03/17/2026.
+    Payment Status: PAID. Invoice Paid Date: 03/25/2026. DSW Division; CDA Type: Surface
+    Water PTI Area; Place Type: Custom Defined Area. No applicant mailing address,
+    contact name, contact firm, or expiration date provided in the document.'

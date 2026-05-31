@@ -1,0 +1,52 @@
+doc_id: 4081897-029253f3
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/permits/dazzler-permits/4081897.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+- 2
+dpi: 150
+source_text_excerpt: "Application ID: 495265945; Pre-Application Request Form    \
+  \                                                                              \
+  \    Page 1.\n \nDSW 401 Water Quality Certification Pre-application\nDivision of\
+  \ Surface Water\n401 Water Quality Certification and Isolated Wetland Permiting\
+  \ Unit\nInstructions:\nFilling out a pre-application form is an informal first step\
+  \ in the Section 401 WQC and/or Isolated Wetland Permitting process. It provides\n\
+  the opportunity to present and discuss details of your project while it is in its\
+  \ early planning stages. At a minimum, you must indicate your\nmeeting"
+action:
+  confidence: high
+  warnings:
+  - Permit number field contains the Application ID (495265945) as no formal permit
+    number has been assigned at pre-application stage.
+  - 'Two agents listed: EMH&T (Heather Dardinger) and Vorys law firm (Scott Ziance,
+    Esq.); contact_firm set to EMH&T as primary technical consultant; Vorys noted
+    in note field.'
+  - Watershed name 'Ginat Creek' may be a transcription of 'Giant Creek' — copied
+    exactly as printed per instructions.
+  agency: Ohio EPA
+  program: 401 Water Quality Certification and Isolated Wetland Permit
+  permit_no: '495265945'
+  action: application
+  action_date: '2025-12-05'
+  plans_received_date: null
+  expiration_date: null
+  applicant: Tilted Gate LLC
+  applicant_address: 2801 Centerville Rd., 1st Floor (PMB160), Wilmington, DE 19808
+  contact_name: Heather Dardinger
+  contact_email: hdardinger@emht.com
+  contact_firm: EMH&T
+  project_name: Project Dazzler
+  site_address: Gallia Pike, Franklin Furnace, OH 45629
+  affected_resource: jurisdictional wetland, isolated wetlands, and a non-jurisdictional
+    pond
+  parcel_ids: []
+  note: 'Pre-application submittal for DSW 401 WQC and Level 3 Isolated Wetland Permit.
+    Applicant proposes a ~792-acre data center campus (two buildings, ~1.7M sq ft)
+    in Green Township, Scioto County, Ohio. PJD/AJD pending from USACE as of submission
+    date. Also seeking Ohio EPA concurrence on wetland ORAM scores. Authorization
+    also needed under Section 404/401 Individual Permit. Contact Scott Ziance (sjziance@vorys.com,
+    Vorys) is the applicant''s legal agent. Applicant signatory: Robert Milligan,
+    Director of Environmental. Corps District: Huntington. HUCs: 050901030106 (Ginat
+    Creek), 050901030107 (Grays Branch-Ohio River). Construction anticipated to commence
+    upon isolated wetland permit issuance in 2026, completion by 2030.'

@@ -1,0 +1,48 @@
+doc_id: 4081909-d5cb90af
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/permits/dazzler-permits/4081909.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+- 2
+dpi: 150
+source_text_excerpt: " \n \nEngineers, Surveyors, Planners, Scientists \n5500 New\
+  \ Albany Rd., Columbus, OH 43054 \np. 614.775.4500 f. 614.775.4800 \nemht.com \n\
+  Engineers, Surveyors, Planners, Scientists \n5500 New Albany Rd., Columbus, OH 43054\
+  \ \np. 614.775.4500 f. 614.775.4800 \nemht.com \n \nPROJECT DAZZLER \n20250390 \n\
+  Individual Section 404/401 Permit Application \nTilted Gate LLC \nApril 3, 2026\
+  \ \n \n\n    \nProposal for Section 404 & 401 Authorization \nTilted Gate LLC –\
+  \ Project Dazzler  i \nTABLE OF CONTENTS \n \n1.0 INTRODUCTION ......................................................................................................"
+action:
+  confidence: medium
+  warnings:
+  - No formal agency-issued permit number visible on cover — '20250390' is likely
+    the EMH&T internal project number, not an EPA/USACE permit number.
+  - Applicant address not provided on this cover page.
+  - Site address not explicitly stated on cover page; Scioto County inferred from
+    Exhibit 4A reference to 'Soil Survey of Scioto County'.
+  - Both USACE (Section 404) and Ohio EPA (Section 401) are target agencies; single
+    agency field cannot capture both.
+  - Action date is the document date on the cover; no agency receipt or issuance date
+    is present.
+  agency: U.S. Army Corps of Engineers / Ohio EPA
+  program: Section 404 / 401 Water Quality Certification
+  permit_no: '20250390'
+  action: application
+  action_date: '2026-04-03'
+  plans_received_date: null
+  expiration_date: null
+  applicant: Tilted Gate LLC
+  applicant_address: null
+  contact_name: null
+  contact_email: null
+  contact_firm: EMH&T
+  project_name: Project Dazzler
+  site_address: null
+  affected_resource: null
+  parcel_ids: []
+  note: Cover page of an Individual Section 404/401 Permit Application package prepared
+    by EMH&T (project number 20250390) on behalf of Tilted Gate LLC for Project Dazzler,
+    dated April 3, 2026. The document is a proposal/application — no permit number
+    issued yet; 20250390 appears to be the EMH&T internal project number. Site is
+    referenced in Scioto County based on Soil Survey exhibit reference.

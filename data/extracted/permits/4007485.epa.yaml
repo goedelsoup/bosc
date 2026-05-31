@@ -1,0 +1,50 @@
+doc_id: 4007485-b075b967
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/permits/bistrozzi-permits/4007485.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+- 2
+dpi: 150
+source_text_excerpt: " \n \n  \n50 W. Town Street \nSuite 700 \nColumbus, Ohio 43215\
+  \ U.S.A. \n  \n614 | 644 3020 \nepa.ohio.gov \n    \n The State of Ohio is an Equal\
+  \ Opportunity Employer and Provider of ADA Services \n \nFebruary 13, 2026 \n \n\
+  TRANSMITTED ELECTRONICALLY \n Re:  Project Bosc Lvl 2 IWP \nJill Tangeman Permit\
+  \ - Intermediate \nBistrozzi LLC Correspondence \n2801 Centervillle Rd. 401 Wetlands\
+  \ \nWilmington, DE 19808 Allen \njstangeman@vorys.com DSW401252260W \n \nRe: Level\
+  \ Two  Isolated Wetlands Permit (IWP) application comments \nProject Bosc Lvl 2\
+  \ IWP \nOhio EPA ID No. 252260W \n \nDear Jill Tangeman: \n \nOn December 9, 2025,\
+  \ t"
+action:
+  confidence: high
+  warnings:
+  - Applicant address contains apparent typo 'Centervillle' (triple-l) — copied exactly
+    as printed.
+  - Contact firm inferred as 'Vorys' from email domain 'vorys.com'; not explicitly
+    stated in letter.
+  - EMH&T (Melissa Darby) appears as a CC recipient and may be the engineering consultant
+    firm rather than the applicant contact firm.
+  agency: Ohio EPA
+  program: Isolated Wetland Permit
+  permit_no: DSW401252260W
+  action: comments
+  action_date: '2026-02-13'
+  plans_received_date: '2025-12-09'
+  expiration_date: null
+  applicant: Bistrozzi LLC
+  applicant_address: 2801 Centervillle Rd., Wilmington, DE 19808
+  contact_name: Jill Tangeman
+  contact_email: jstangeman@vorys.com
+  contact_firm: Vorys
+  project_name: Project Bosc Lvl 2 IWP
+  site_address: North of W. Bluelick Road, east of N. Cole Street, and west of State
+    Route 65, American Township and Sugar Creek Township, Allen County, Ohio
+  affected_resource: Isolated wetland (Wetland A) and forested buffer
+  parcel_ids: []
+  note: 'Application received December 9, 2025; administratively complete January
+    21, 2026 after January 6, 2026 subsequent submittal. Response to technical comments
+    received January 30, 2026. This letter provides additional technical comments;
+    applicant must respond by February 27, 2026. Project involves construction of
+    a data center facility. AEP 345 kV transmission line corridor alternatives analysis
+    flagged as inadequate. Contact: Joe Loucek, (330) 963-1258, Joseph.Loucek@epa.ohio.gov.
+    CC: Melissa Darby, EMH&T (mqueendarby@emht.com).'

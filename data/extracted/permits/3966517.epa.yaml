@@ -1,0 +1,48 @@
+doc_id: 3966517-2c600e18
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/permits/bistrozzi-permits/3966517.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+- 2
+dpi: 150
+source_text_excerpt: "  \n5500 New Albany Road, Columbus, OH 43054 • Phone 61 4.775.4500\
+  \ • Fax 614.775.4800 \nemht.com \n \n \nJanuary 6, 2026 \n \n \nMr. Joe Loucek \n\
+  Application Coordinator, 401/Wetlands/Mitigation Section \nOhio EPA  \n50 W. Town\
+  \ Street, Suite 700 \nColumbus, OH 43215 \n \n \nSubject: Response to Incomplete\
+  \ Level Two Isolated Wetland Application Notice \n Project BOSC, American Township\
+  \ and Sugar Creek To wnship, Allen County, Ohio \n DSW401252260W \n \n \nDear Mr.\
+  \ Loucek, \n \nOne December 23, 2025, EMH&T received an “Incomplete” notification\
+  \ for the Project Bosc Level 2 Isolated \nWetland Application (IWP) that was "
+action:
+  confidence: high
+  warnings:
+  - No applicant mailing address provided in the letter — only the applicant name
+    (Bistrozzi LLC) is mentioned in the body text.
+  - Contact email not listed; only a phone number (614-775-4525) is provided for Melissa
+    Queen Darby.
+  - The action field is set to 'correspondence' as this is a response letter to an
+    incomplete notice, not a direct permit action by the agency.
+  agency: Ohio EPA
+  program: Isolated Wetland Permit
+  permit_no: DSW401252260W
+  action: correspondence
+  action_date: '2026-01-06'
+  plans_received_date: null
+  expiration_date: null
+  applicant: Bistrozzi LLC
+  applicant_address: null
+  contact_name: Melissa Queen Darby
+  contact_email: null
+  contact_firm: EMH&T
+  project_name: Project BOSC
+  site_address: American Township and Sugar Creek Township, Allen County, Ohio
+  affected_resource: isolated wetland (Wetland A)
+  parcel_ids: []
+  note: 'This is a response letter from EMH&T (on behalf of applicant Bistrozzi LLC)
+    to Ohio EPA''s Incomplete notification (received December 23, 2025) for the Level
+    2 Isolated Wetland Permit application (submitted December 9, 2025). The response
+    addresses the requested revision to the on-site alternatives analysis for the
+    ~358-acre site (Project BOSC data center campus). Letter addressed to Mr. Joe
+    Loucek, Application Coordinator, 401/Wetlands/Mitigation Section, Ohio EPA, 50
+    W. Town Street, Suite 700, Columbus, OH 43215. Contact phone: 614-775-4525.'

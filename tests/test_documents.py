@@ -104,6 +104,14 @@ def test_deed_consideration_coercion() -> None:
     assert d.confidence == "medium"  # default from the _Extracted mixin
 
 
+def test_str_list_fields_tolerate_a_bare_string() -> None:
+    # The LLM sometimes returns a list field as a single string; wrap, don't fail.
+    d = Deed(grantors="Lone Grantor", warnings="one warning")
+    assert d.grantors == ["Lone Grantor"]
+    assert d.warnings == ["one warning"]
+    assert Deed(grantors="").grantors == []  # empty string -> empty list
+
+
 def test_npdes_basic_model() -> None:
     p = NpdesPermit(
         permit_no="2PH00006*LD", facility_name="American II WWTP", receiving_water="Pike Run"

@@ -1,0 +1,53 @@
+doc_id: 4081903-28ccb272
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/permits/dazzler-permits/4081903.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+- 2
+dpi: 150
+source_text_excerpt: "DEPARTMENT OF THE ARMY \nU.S. ARMY CORPS OF ENGINEERS, HUNTINGTON\
+  \ DISTRICT \n502 8TH STREET \nHUNTINGTON, WV 25701-2018 \n \nFebruary 5, 2026 \n\
+  Regulatory Division  \nNorth Branch \nLRH-2025-00939-OHR \n \nPRELIMINARY AND APPROVED\
+  \ JURISDICTIONAL DETERMINATIONS  \n \nRandy Barrera \nTilted Gate, LLC \n2801 Centerville\
+  \ Road \nWilmington, DE 19808 \n \nDear Randy Barrera: \n \nI refer to the Investigation\
+  \ of Waters of the United States for the Project Dazzler Property (report) \ncompleted\
+  \ on your behalf by EMH&T and received in this office on October 15, 2025, with\
+  \ revisions \nsubmitted on November 24, 2025 and Decem"
+action:
+  confidence: high
+  warnings:
+  - Expiration date of 5 years calculated from letter date (2026-02-05), not explicitly
+    stated as 2031-02-05.
+  - 'OCR note: address zip for USACE HQ reads 25701-2018; verified against image as
+    printed.'
+  agency: U.S. Army Corps of Engineers
+  program: Section 404 / Jurisdictional Determination
+  permit_no: LRH-2025-00939-OHR
+  action: correspondence
+  action_date: '2026-02-05'
+  plans_received_date: '2025-10-15'
+  expiration_date: '2031-02-05'
+  applicant: Randy Barrera, Tilted Gate, LLC
+  applicant_address: 2801 Centerville Road, Wilmington, DE 19808
+  contact_name: Katie Samples
+  contact_email: katie.e.samples@usace.army.mil
+  contact_firm: EMH&T
+  project_name: Project Dazzler Property
+  site_address: West of U.S. Route 52, east of the Ohio River, and south of County
+    Road 7 (Jr. Furnace Powellsville Road), Green Township, Scioto County, Ohio
+  affected_resource: Wetlands (23.18 acres, 6 wetlands), streams (14,306 linear feet,
+    8 streams including Ohio River), open water marina (6.52 acres); and non-jurisdictional
+    wetlands (36.15 acres, 43 wetlands), streams, swales, ditch, drainage feature,
+    and ponds
+  parcel_ids: []
+  note: 'Letter issues both a Preliminary JD (23.18 ac of 6 wetlands, 14,306 lf of
+    8 streams, 6.52 ac open water marina found potentially jurisdictional) and an
+    Approved JD (36.15 ac of 43 wetlands, 294 lf of 2 streams, 1,162 lf of 3 swales,
+    1,050 lf of 1 ditch, 197 lf of 1 drainage feature, 0.37 ac of 2 ponds found NON-jurisdictional).
+    Revisions received November 24, 2025 and December 19, 2025. Appeal deadline: April
+    6, 2026. Agency point of contact for appeal: Suzanne Chubb, Great Lakes and Ohio
+    River Division, suzanne.l.chubb@usace.army.mil. CC''d: Heather Dardiner (EMH&T),
+    Bryan Lombard (EMH&T), Rachel Secrest (Ohio EPA), Anna Kamnyev (Ohio EPA). Signed
+    by Teresa D. Spagna, Chief, North Branch. 914-acre study area; coordinates 38.606958
+    lat, -82.838389 lon.'

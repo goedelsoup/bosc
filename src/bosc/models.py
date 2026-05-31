@@ -63,6 +63,26 @@ def _coerce_number_keep(value: Any) -> Any:
 Number = Annotated[int | float | None, BeforeValidator(_coerce_number_keep)]
 
 
+def _as_str_list(value: Any) -> Any:
+    """Coerce a scalar into a single-element list of strings.
+
+    Models populated by the LLM occasionally return a free-text field (e.g.
+    ``warnings`` or ``grantors``) as a bare string instead of a list. Wrap it
+    rather than fail validation; an empty/whitespace string becomes ``[]``.
+    """
+    if value is None:
+        return []
+    if isinstance(value, str):
+        return [value] if value.strip() else []
+    if isinstance(value, list):
+        return [str(v) for v in value]
+    return value
+
+
+# A list[str] that tolerates a bare scalar (wraps it) — for LLM-populated fields.
+StrList = Annotated[list[str], BeforeValidator(_as_str_list)]
+
+
 class OPCMeta(BaseModel):
     """Top-level metadata block of an OPC extraction."""
 
@@ -288,7 +308,7 @@ class _Extracted(BaseModel):
     model_config = ConfigDict(extra="allow")
 
     confidence: Literal["high", "medium", "low"] = "medium"
-    warnings: list[str] = Field(default_factory=list)
+    warnings: StrList = Field(default_factory=list)
 
 
 class Deed(_Extracted):
@@ -297,10 +317,10 @@ class Deed(_Extracted):
     instrument_type: str | None = None  # e.g. "General Warranty Deed", "Quitclaim"
     instrument_no: str | None = None  # recorder instrument / document number
     recording_date: str | None = None  # ISO date if legible
-    grantors: list[str] = Field(default_factory=list)  # party conveying
-    grantees: list[str] = Field(default_factory=list)  # party receiving
+    grantors: StrList = Field(default_factory=list)  # party conveying
+    grantees: StrList = Field(default_factory=list)  # party receiving
     consideration: Number = None  # stated dollar consideration
-    parcel_ids: list[str] = Field(default_factory=list)  # auditor/parcel numbers
+    parcel_ids: StrList = Field(default_factory=list)  # auditor/parcel numbers
     county: str | None = None
     legal_description: str | None = None  # short excerpt / summary, not the full metes-and-bounds
     note: str | None = None
@@ -321,7 +341,7 @@ class NpdesPermit(_Extracted):
     discharge_address: str | None = None
     receiving_water: str | None = None
     stream_network: str | None = None  # downstream chain to a major water body
-    outfalls: list[str] = Field(default_factory=list)
+    outfalls: StrList = Field(default_factory=list)
     note: str | None = None
 
 
@@ -346,7 +366,7 @@ class BusinessFiling(_Extracted):
     organizer: str | None = None  # organizer / authorized representative / signatory
     organizer_address: str | None = None
     principal_address: str | None = None  # principal office, if stated
-    officers: list[str] = Field(default_factory=list)  # members/managers, if disclosed
+    officers: StrList = Field(default_factory=list)  # members/managers, if disclosed
     note: str | None = None
 
 
@@ -377,7 +397,7 @@ class EpaPermitAction(_Extracted):
     affected_resource: str | None = (
         None  # sanitary sewer | isolated wetland | receiving water | ...
     )
-    parcel_ids: list[str] = Field(default_factory=list)
+    parcel_ids: StrList = Field(default_factory=list)
     note: str | None = None
 
 

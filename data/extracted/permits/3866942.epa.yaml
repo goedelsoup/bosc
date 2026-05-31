@@ -1,0 +1,46 @@
+doc_id: 3866942-726944f5
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/permits/bistrozzi-permits/3866942.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: " \n Northwest District Office \n347 N. Dunbridge Road \nBowling\
+  \ Green, Ohio 43402 U.S.A. \n 419 | 352 8461 \nepa.ohio.gov \n    \n The State of\
+  \ Ohio is an Equal Opportunity Employer and Provider of ADA Services \n \nOctober\
+  \ 7, 2025 \nTransmitted Electronically \nMichael Montfort \nBistrozzi LLC \n1700\
+  \ K Street, NW, Fifth Floor \nWashington, DC 20006-3817 \nRe: Allen County \nBistrozzi\
+  \ LLC  \nFacility ID # 0302022054 \nP0138965 received on 10/06/2025 \nDear Michael\
+  \ Montfort: \nThis letter is to inform you that the Northwest District Office (NWDO)\
+  \ received your application for a \nPermit-to-Install or Permit-to-Inst"
+action:
+  confidence: high
+  warnings:
+  - This letter is from Ohio EPA's Division of Air Pollution Control (DAPC), not the
+    Division of Surface Water or U.S. Army Corps of Engineers. The program is PTI/PTIO
+    for air pollution sources, not a surface water or wetland permit.
+  - The contact email mark.barber@epa.ohio.gov belongs to the Ohio EPA reviewer/signatory
+    Mark Barber, not the applicant contact Michael Montfort.
+  - 'Facility ID # 0302022054 noted in Re: block.'
+  agency: Ohio EPA
+  program: Permit-to-Install / Permit-to-Install and Operate (PTI/PTIO) - Air Pollution
+    Control
+  permit_no: P0138965
+  action: application
+  action_date: '2025-10-07'
+  plans_received_date: '2025-10-06'
+  expiration_date: null
+  applicant: Bistrozzi LLC
+  applicant_address: 1700 K Street, NW, Fifth Floor, Washington, DC 20006-3817
+  contact_name: Michael Montfort
+  contact_email: mark.barber@epa.ohio.gov
+  contact_firm: Bistrozzi LLC
+  project_name: Bistrozzi LLC - Allen County Air Pollution Source
+  site_address: null
+  affected_resource: Air pollution source(s)
+  parcel_ids: []
+  note: 'Letter confirms application P0138965 is preliminarily and administratively
+    complete. Facility ID # 0302022054. Northwest District Office (NWDO) letter signed
+    by Mark Barber, Ohio EPA DAPC, reachable at 419.373.3131 or mark.barber@epa.ohio.gov.
+    NOTE: This is a Division of Air Pollution Control (DAPC) PTI/PTIO letter, NOT
+    a Division of Surface Water or USACE action.'

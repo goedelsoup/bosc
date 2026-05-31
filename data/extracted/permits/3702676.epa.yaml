@@ -1,0 +1,50 @@
+doc_id: 3702676-fa0b2423
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/permits/bistrozzi-permits/3702676.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+- 2
+dpi: 150
+source_text_excerpt: "Application ID: 445754445; Rev. 8/2014                     \
+  \                                                                     Page 1.\n\
+  \ \nApplication for Section 401 Water Quality Certification\nDivision of Surface\
+  \ Water\n401 Water Quality Certification and Isolated Wetland Permitting Unit\n\
+  Section 1: Applicant (Project Proponent) and Consultant/Agent Information\nApplicant\
+  \ (Project Proponent) Consultant/Agent\nCompany/Agency Name: Bistrozzi LLC EMH&T\n\
+  Address: 2801 Centerville Road, Wilmington, DE 19808 5500 New Albany Rd, New Albany,\
+  \ OH 43054\nContact Name/Title: Jill  Tangeman/Partner Bryan Lombar"
+action:
+  confidence: high
+  warnings:
+  - No permit number assigned yet — '445754445' is the Application ID, not a final
+    permit number.
+  - OCR notes HUC numbers as 041000070404 and 041000070501 — verified against image
+    as plausible but last digits may be uncertain.
+  - Contact name 'Jill Tangeman' listed under applicant column with email jstangeman@vorys.com,
+    suggesting she is from the law firm Vorys; contact_firm set to EMH&T as the consultant/agent
+    firm, but Vorys is also a relevant firm.
+  agency: Ohio EPA, Division of Surface Water
+  program: 401 Water Quality Certification
+  permit_no: '445754445'
+  action: application
+  action_date: '2025-07-02'
+  plans_received_date: null
+  expiration_date: null
+  applicant: Bistrozzi LLC
+  applicant_address: 2801 Centerville Road, Wilmington, DE 19808
+  contact_name: Jill Tangeman
+  contact_email: jstangeman@vorys.com
+  contact_firm: EMH&T
+  project_name: Project Bosc
+  site_address: 950 W Bluelick Rd, Lima, OH 45801
+  affected_resource: Wetlands (0.33 acres); Fill impacts to waters of the state —
+    Pike Run and Sugar Creek watersheds, Allen County, Ohio
+  parcel_ids: []
+  note: 'Application ID: 445754445. Construction start 07/31/2025, end 07/31/2027.
+    Project involves development of ~358-acre property with 3 data centers, substations,
+    stormwater basins, access roads, and utilities. Proposed impact type: Fill. USACE
+    District: Buffalo. Related permits: Individual 404 Permit, NPDES General Permit
+    (to be submitted 06/28/2025), Permit to Install (to be submitted 06/28/2025).
+    Consultant/Agent: Bryan Lombard, Senior Env Scientist, EMH&T, blombard@emht.com.
+    Total application fee: $365.00. Electronically submitted 07/02/2025.'

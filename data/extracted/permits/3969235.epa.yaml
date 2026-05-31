@@ -1,0 +1,53 @@
+doc_id: 3969235-be8abfc9
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/permits/bistrozzi-permits/3969235.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: " \n \n  \n50 W. Town Street \nSuite 700 \nColumbus, Ohio 43215\
+  \ U.S.A. \n  \n614 | 644 3020 \nepa.ohio.gov \n    \n The State of Ohio is an Equal\
+  \ Opportunity Employer and Provider of ADA Services \n \nJanuary 13, 2026 \n \n\
+  Transmitted Electronically \n \nJill Tangeman \nBistrozzi LLC \n2801 Centervillle\
+  \ Rd. \nWilmington, DE 19808 \njstangeman@vorys.com \n \nRe: Project Bosc Lvl 2\
+  \ IWP \nPermit - Intermediate \nCorrespondence \n401 Wetlands \nAllen \nDSW401252260W\
+  \ \n \nSubject: Incomplete Level Two Isolated Wetland Application \nProject Bosc\
+  \ Lvl 2 IWP \nOhio EPA ID No. 252260W \n \nDear Jill Tangeman: \n \nOn December\
+  \ 9, 2025, the"
+action:
+  confidence: high
+  warnings:
+  - 'Applicant address contains a likely OCR/typo: ''2801 Centervillle Rd.'' has triple-l;
+    copied exactly as printed.'
+  - OCR and letter body state the application was found incomplete on 'December 23,
+    2026' — this is almost certainly a typo for December 23, 2025 given the surrounding
+    dates.
+  - 'The Re: block lists both ''Permit - Intermediate Correspondence'' and ''401 Wetlands''
+    — program recorded as Isolated Wetland Permit per subject line and body text.'
+  - Contact firm inferred as Vorys from the email domain jstangeman@vorys.com; not
+    explicitly stated in the letter.
+  agency: Ohio EPA
+  program: Isolated Wetland Permit
+  permit_no: DSW401252260W
+  action: incomplete
+  action_date: '2026-01-13'
+  plans_received_date: '2025-12-09'
+  expiration_date: null
+  applicant: Bistrozzi LLC
+  applicant_address: 2801 Centervillle Rd., Wilmington, DE 19808
+  contact_name: Jill Tangeman
+  contact_email: jstangeman@vorys.com
+  contact_firm: Vorys
+  project_name: Project Bosc Lvl 2 IWP
+  site_address: North of W. Bluelick Road, east of N. Cole Street, and west of State
+    Route 65, American Township and Sugar Creek Township, Allen County, Ohio
+  affected_resource: Isolated wetland (Category 2 forested wetland)
+  parcel_ids: []
+  note: Letter notifies applicant that the Level Two Isolated Wetland Permit application
+    remains INCOMPLETE as of January 13, 2026 — a second incomplete notice following
+    the applicant's January 6, 2026 response to the original December 23, 2025 incomplete
+    determination. Ohio EPA ID No. 252260W. Project is to construct a data center
+    facility (coordinates 40.795845, -84.123601). EMH&T (Melissa Darby, mqueendarby@emht.com)
+    is copied as the engineering firm. The OCR reads "December 23, 2026" for the first
+    incomplete determination date, which is clearly a typo for December 23, 2025 based
+    on context.

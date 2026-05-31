@@ -1,0 +1,51 @@
+doc_id: 3974496-87e86b1e
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/permits/bistrozzi-permits/3974496.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+- 2
+dpi: 150
+source_text_excerpt: "Application ID: 495612045; Rev. 8/2014                     \
+  \                                                                     Page 1.\n\
+  \ \nApplication for Section 401 Water Quality Certification\nDivision of Surface\
+  \ Water\n401 Water Quality Certification and Isolated Wetland Permitting Unit\n\
+  Section 1: Applicant (Project Proponent) and Consultant/Agent Information\nApplicant\
+  \ (Project Proponent) Consultant/Agent\nCompany/Agency Name: Bistrozzi LLC EMH&T\n\
+  Address: 2801 Centervillle Rd., Wilmington, DE 19808 5500 New Albany Road, Columbus,\
+  \ OH 43054\nContact Name/Title: Jill Tangeman/Partner Melissa Darby"
+action:
+  confidence: high
+  warnings:
+  - Applicant address on form reads '2801 Centervillle Rd.' (triple-l) — likely typo
+    for 'Centerville'; recorded as printed.
+  - OCR shows 'jstangeman@vorys.com' for applicant contact — Jill Tangeman appears
+    to be with Vorys law firm acting as agent/partner, not the engineering firm.
+  - 'Permit number field: no new permit number assigned yet (application stage); prior
+    IWP Ohio EPA ID No. 251760W and Application ID 495612045 noted as reference numbers.'
+  agency: Ohio EPA, Division of Surface Water
+  program: 401 Water Quality Certification / Isolated Wetland Permit (Level 2)
+  permit_no: 'Ohio EPA ID No. 251760W (prior Level 1 IWP referenced); Application
+    ID: 495612045'
+  action: application
+  action_date: '2026-01-19'
+  plans_received_date: null
+  expiration_date: null
+  applicant: Bistrozzi LLC
+  applicant_address: 2801 Centerville Rd., Wilmington, DE 19808
+  contact_name: Jill Tangeman
+  contact_email: jstangeman@vorys.com
+  contact_firm: EMH&T
+  project_name: Project Bosc Lvl 2 IWP
+  site_address: 950 W. Bluelick Rd., Lima, OH 45801
+  affected_resource: Isolated wetlands — 1.86 acres of forested Modified Category
+    2 isolated wetland (Wetland A), plus 0.33 acre of Category 1 isolated wetland
+    previously authorized; Sugar Creek and Pike Run watersheds, Allen County, Ohio
+  parcel_ids: []
+  note: 'This is a Level 2 Isolated Wetland Permit / 401 WQC application. The applicant
+    previously received Level 1 IWP Ohio EPA ID No. 251760W (issued August 12, 2025)
+    for 0.29 ac forested + 0.04 ac non-forested Category 1 isolated wetland impacts.
+    This application adds 1.86 ac of forested Modified Category 2 wetland impact for
+    an overhead high-voltage electrical corridor. Total proposed impact: 2.19 ac.
+    Construction start: 11/10/2025; end: 11/12/2027. USACE District: Buffalo. Consultant/Agent:
+    Melissa Darby, EMH&T, mqueendarby@emht.com, (614) 775-4525.'

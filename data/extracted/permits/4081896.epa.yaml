@@ -1,0 +1,52 @@
+doc_id: 4081896-24646826
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/permits/dazzler-permits/4081896.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+- 2
+dpi: 150
+source_text_excerpt: " \n \nEngineers, Surveyors, Planners, Scientists \n5500 New\
+  \ Albany Rd., Columbus, OH 43054 \np. 614.775.4500 f. 614.775.4800 \nemht.com \n\
+  Engineers, Surveyors, Planners, Scientists \n5500 New Albany Rd., Columbus, OH 43054\
+  \ \np. 614.775.4500 f. 614.775.4800 \nemht.com \n \nPROJECT DAZZLER \nInvestigation\
+  \ of Waters of the United States \nTilted Gate LLC \nRevised January 7, 2026 \n\
+  \ \n20250390 \n\n \n \nProject Dazzler \nInvestigation of Waters of the United States\
+  \ \nTABLE OF CONTENTS \n1.0 INTRODUCTION .............................................................................................................\
+  \ 1 \n2.0 "
+action:
+  confidence: medium
+  warnings:
+  - No permit number present — this is a delineation/investigation report, not a formal
+    permit issuance letter.
+  - No applicant mailing address provided in the document.
+  - Action date is the revised report date (January 7, 2026); no formal agency letter
+    date is present.
+  - Agency identified as USACE Huntington District based on document text, not a letterhead.
+  - Contact name for EMH&T project manager not specified in the visible text.
+  agency: U.S. Army Corps of Engineers
+  program: Section 404 / Waters of the United States Investigation (Jurisdictional
+    Determination)
+  permit_no: null
+  action: application
+  action_date: '2026-01-07'
+  plans_received_date: null
+  expiration_date: null
+  applicant: Tilted Gate LLC
+  applicant_address: null
+  contact_name: null
+  contact_email: null
+  contact_firm: EMH&T (Engineers, Surveyors, Planners, Scientists)
+  project_name: Project Dazzler
+  site_address: West of U.S. Route 52, east of the Ohio River, south of County Road
+    7 (Jr. Furnace Powellsville Road), Green Township, Scioto County, Ohio
+  affected_resource: 'Waters of the United States, including wetlands, streams, ponds,
+    and other surface water features; Ginat Creek subbasin (HUC: 05090103-01-06) and
+    Grays Branch-Ohio River subbasin (HUC: 05090103-01-07)'
+  parcel_ids: []
+  note: 'Approximately 914-acre subject property. EMH&T performed delineation of Waters
+    of the United States on behalf of Tilted Gate LLC. Applicant is requesting an
+    Approved Jurisdictional Determination for potentially non-jurisdictional features
+    and a Preliminary Jurisdictional Determination for jurisdictional resources. Regulated
+    by USACE Huntington District. EMH&T project number: 20250390. Document is a revised
+    report dated January 7, 2026; no permit number assigned at this stage.'

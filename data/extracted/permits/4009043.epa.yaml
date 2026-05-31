@@ -1,0 +1,47 @@
+doc_id: 4009043-854fb743
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/permits/bistrozzi-permits/4009043.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+dpi: 150
+source_text_excerpt: "  \n5500 New Albany Road, Columbus, OH 43054 • Phone 61 4.775.4500\
+  \ • Fax 614.775.4800 \nemht.com \n \n \nJanuary 30, 2026 \n \n \nMr. Joe Loucek\
+  \ \nApplication Coordinator, 401/Wetlands/Mitigation Section \nOhio EPA  \n50 W.\
+  \ Town Street, Suite 700 \nColumbus, OH 43215 \n \n \nSubject: Additional Information\
+  \ for IWP 2 Applicati on \n Project BOSC, American Township and Sugar Creek To wnship,\
+  \ Allen County, Ohio \n DSW401252260W \n \n \nDear Mr. Loucek, \n \nOn January 21,\
+  \ 2026, EMH&T received a “Complete” no tification for the Project Bosc Level 2 Isolated\
+  \ \nWetland Application (IWP) that was submitted on December 9, 2"
+action:
+  confidence: high
+  warnings:
+  - Applicant address for Bistrozzi LLC is not provided in the letter.
+  - contact_email not listed; only a phone number (614-775-4525) is provided for Melissa
+    Queen Darby.
+  - The permit number in the OCR reads 'DSW401252260W' — verified against image as
+    printed.
+  agency: Ohio EPA
+  program: Isolated Wetland Permit
+  permit_no: DSW401252260W
+  action: correspondence
+  action_date: '2026-01-30'
+  plans_received_date: '2025-12-09'
+  expiration_date: null
+  applicant: Bistrozzi LLC
+  applicant_address: null
+  contact_name: Melissa Queen Darby
+  contact_email: null
+  contact_firm: EMH&T
+  project_name: Project BOSC
+  site_address: American Township and Sugar Creek Township, Allen County, Ohio
+  affected_resource: isolated wetland (category 2 forested wetland)
+  parcel_ids: []
+  note: 'Letter from EMH&T to Mr. Joe Loucek (Application Coordinator, 401/Wetlands/Mitigation
+    Section, Ohio EPA) providing additional information in response to a "Complete"
+    notification received January 21, 2026 for the Project BOSC Level 2 Isolated Wetland
+    Permit application. The additional information addresses practicable on-site alternatives,
+    specifically: (1) why existing 138 kV corridors cannot be upgraded to 345 kV,
+    and (2) why the preferred transmission route cannot be shifted to minimize impacts
+    to the category 2 forested wetland in Area 3. Construction of the data center
+    facility is currently underway with footers already poured.'

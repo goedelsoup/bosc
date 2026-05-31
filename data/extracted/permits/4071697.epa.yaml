@@ -1,0 +1,53 @@
+doc_id: 4071697-ffe16f18
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/permits/dazzler-permits/4071697.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+- 2
+dpi: 150
+source_text_excerpt: " \n \nEngineers, Surveyors, Planners, Scientists \n5500 New\
+  \ Albany Rd., Columbus, OH 43054 \np. 614.775.4500 f. 614.775.4800 \nemht.com \n\
+  Engineers, Surveyors, Planners, Scientists \n5500 New Albany Rd., Columbus, OH 43054\
+  \ \np. 614.775.4500 f. 614.775.4800 \nemht.com \n \nPROJECT DAZZLER \nInvestigation\
+  \ of Waters of the United States \nTilted Gate LLC \nRevised January 7, 2026 \n\
+  \ \n20250390 \n\n \n \nProject Dazzler \nInvestigation of Waters of the United States\
+  \ \nTABLE OF CONTENTS \n1.0 INTRODUCTION .............................................................................................................\
+  \ 1 \n2.0 "
+action:
+  confidence: medium
+  warnings:
+  - No formal permit number printed — '20250390' appears to be EMH&T's internal project
+    number, not a USACE permit or action number.
+  - No agency letterhead or formal permit action letter present; this is a delineation
+    report/study, not a permit issuance or correspondence letter.
+  - Applicant mailing address not provided in the visible text.
+  - Contact name (individual) not identified in the visible text.
+  - Action date is the report revision date (January 7, 2026), not a formal agency
+    action date.
+  agency: U.S. Army Corps of Engineers
+  program: Section 404 / Waters of the United States Investigation (Jurisdictional
+    Determination)
+  permit_no: '20250390'
+  action: application
+  action_date: '2026-01-07'
+  plans_received_date: null
+  expiration_date: null
+  applicant: Tilted Gate LLC
+  applicant_address: null
+  contact_name: null
+  contact_email: null
+  contact_firm: EMH&T
+  project_name: Project Dazzler
+  site_address: West of U.S. Route 52, east of the Ohio River, south of County Road
+    7 (Jr. Furnace Powellsville Road), Green Township, Scioto County, Ohio
+  affected_resource: Waters of the United States, including wetlands, streams, ponds,
+    and other surface water features; approximately 914-acre property in Green Township,
+    Scioto County, Ohio
+  parcel_ids: []
+  note: This is a delineation report (Investigation of Waters of the United States)
+    prepared by EMH&T for Tilted Gate LLC, revised January 7, 2026. The applicant
+    is requesting an Approved Jurisdictional Determination for potentially non-jurisdictional
+    features and a Preliminary Jurisdictional Determination for jurisdictional resources.
+    Regulated by the USACE Huntington District. Field investigations conducted June
+    17–19, July 30–31, and August 13, 18, and 26, 2025.

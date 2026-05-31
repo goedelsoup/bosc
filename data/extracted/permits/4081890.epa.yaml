@@ -1,0 +1,50 @@
+doc_id: 4081890-79b0ac93
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/permits/dazzler-permits/4081890.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+- 2
+dpi: 150
+source_text_excerpt: "Application ID: 537676645; Rev. 8/2014                     \
+  \                                                                     Page 1.\n\
+  \ \nApplication for Section 401 Water Quality Certification\nDivision of Surface\
+  \ Water\n401 Water Quality Certification and Isolated Wetland Permitting Unit\n\
+  Section 1: Applicant (Project Proponent) and Consultant/Agent Information\nApplicant\
+  \ (Project Proponent) Consultant/Agent\nCompany/Agency Name: Tilted Gate LLC EMH&T\n\
+  Address: 2801 Centerville Rd., 1st Floor (PMB160), Wilmington,\nDE 19808\n5500 New\
+  \ Albany Road, Columbus, OH 43054\nContact Name/Title: Randy Barrera/"
+action:
+  confidence: high
+  warnings:
+  - Permit number field populated with USACE Individual 404 Public Notice Number (LRH-2025-00939OHR)
+    as no Ohio EPA 401 WQC permit number has been assigned yet — this is a new application.
+  - OCR notes 'Ginat Creek' for HUC 050901030106 — may be 'Gnat Creek'; verify spelling
+    against image.
+  - Application ID 537676645 is a form tracking number, not a permit number.
+  agency: Ohio EPA, Division of Surface Water
+  program: 401 Water Quality Certification
+  permit_no: LRH-2025-00939OHR
+  action: application
+  action_date: '2026-04-14'
+  plans_received_date: '2026-04-14'
+  expiration_date: null
+  applicant: Tilted Gate LLC
+  applicant_address: 2801 Centerville Rd., 1st Floor (PMB160), Wilmington, DE 19808
+  contact_name: Heather Dardinger
+  contact_email: hdardinger@emht.com
+  contact_firm: EMH&T
+  project_name: Project Dazzler
+  site_address: Gallia Pike & Braunlin Road, Franklin Furnace, OH 45629
+  affected_resource: Wetlands (3.12 acres), Ginat Creek watershed (HUC 050901030106),
+    Grays Branch-Ohio River watershed (HUC 050901030107)
+  parcel_ids: []
+  note: 'Application ID: 537676645. Applicant contact: Randy Barrera (randybarrera@google.com),
+    DC Project Lead, (323) 365-0517. Signatory: Robert Milligan, Director of Environmental
+    (signed electronically by EMHTEnvDept on 04/14/2026). Pre-application reviewer:
+    Graves; pre-filing meeting request submittal: 12/05/2025. Proposed impact type:
+    Fill. Also includes Isolated Wetland Permit (Level 3, submitted 02/13/2026), Individual
+    404 Permit (Public Notice LRH-2025-00939OHR), and NPDES General Permit (to be
+    submitted 04/03/2026). USACE District: Huntington. Construction start: 07/01/2026;
+    end: 06/30/2031. Total fees: $1,760.00. Property is 792 acres in Green Township,
+    Scioto County, Ohio.'
