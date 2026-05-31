@@ -1,0 +1,39 @@
+doc_id: oepa-2PH00007-american-bath-fact-sheet-db712afb
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/oepa/oepa-2PH00007-american-bath-fact-sheet.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+dpi: 150
+source_text_excerpt: " \nFact Sheet for NPDES Permit Renewal, American Bath WWTP,\
+  \ 2024 \nPage 1 of 33 \n \nNational Pollutant Discharge Elimination System (NPDES)\
+  \ Permit Program \n \nFACT SHEET \n \nRegarding an NPDES Permit to Discharge to\
+  \ Waters of the State of Ohio \nfor American Bath Wastewater Treatment Plant (WWTP)\
+  \ \n \nPublic Notice No.: 196911 Ohio EPA Permit No.: 2PH00007*MD \nPublic Notice\
+  \ Date: March 1, 2024 Application No.: OH0023841 \nComment Period Ends: March 31,\
+  \ 2024 \n \n Name and Address of Facility Where \nName and Address of Applicant:\
+  \ Discharge Occurs:                  \nAllen County Board of Commissioners Amer"
+permit:
+  confidence: high
+  warnings: []
+  facility_name: American Bath WWTP
+  permit_no: 2PH00007*MD
+  permit_action: renewal
+  applicant: Allen County Board of Commissioners, 301 North Main Street, P.O. Box
+    1243, Lima, OH 45802
+  application_no: OH0023841
+  public_notice_no: '196911'
+  public_notice_date: '2024-03-01'
+  comment_period_end: '2024-03-31'
+  facility_address: American Bath WWTP, 3226 N. Cole Street, Lima, OH 45801, Allen
+    County
+  discharge_address: null
+  receiving_water: Pike Run
+  stream_network: Ottawa River to Auglaize River to Maumee River to Lake Erie
+  outfalls:
+  - '001'
+  note: null

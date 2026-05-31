@@ -1,0 +1,45 @@
+doc_id: oepa-2PH00006-american-ii-permit-657b06a3
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/oepa/oepa-2PH00006-american-ii-permit.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+dpi: 150
+source_text_excerpt: "Ohio EPA Permit No.: 2PH00006*LD \nApplication No: OH0037338\
+  \ \n \nAction Date: June 17, 2025 \nEffective Date: August 1, 2025 \nExpiration\
+  \ Date: July 31, 2030 \n \nOhio Environmental Protection Agency \nAuthorization\
+  \ to Discharge Under the \nNational Pollutant Discharge Elimination System \n \n\
+  In compliance with the provisions of the Federal Water Pollution Control Act, as\
+  \ amended (33 U.S.C. \n1251 et. seq., hereinafter referred to as the \"Act\"), and\
+  \ the Ohio Water Pollution Control Act (Ohio \nRevised Code Section 6111), \n \n\
+  Allen County Board of Commissioners \n \nis authorized by the Ohio Environmental\
+  \ Pro"
+permit:
+  confidence: high
+  warnings:
+  - No public notice number found in document
+  - No comment period end date found in document
+  - Action Date (June 17, 2025) used as public_notice_date; this is the permit action
+    date, not necessarily a formal public notice date
+  - No downstream stream network chain stated beyond Dug Run
+  facility_name: American II Wastewater Treatment Plant
+  permit_no: 2PH00006*LD
+  permit_action: renewal
+  applicant: Allen County Board of Commissioners
+  application_no: OH0037338
+  public_notice_no: null
+  public_notice_date: '2025-06-17'
+  comment_period_end: null
+  facility_address: 4140 Diller Road, Lima, Ohio, Allen County
+  discharge_address: null
+  receiving_water: Dug Run at River Mile 3.1
+  stream_network: null
+  outfalls:
+  - 2PH00006001
+  note: 'Permit effective August 1, 2025; expires July 31, 2030. Two discharge periods:
+    Initial (first 36 months) and Final (month 37 through expiration), with toxicity
+    limits added in Final period. Design flow 1.2 MGD.'

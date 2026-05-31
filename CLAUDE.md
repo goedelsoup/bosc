@@ -36,9 +36,11 @@ tools so the agent inspects real data. Entry point is the `bosc` Typer CLI
 
 ## What "extract" must achieve
 
-The reference target is `data/extracted/roundabouts.*.opc.yaml`: the six Tetra
+The reference target is `data/extracted/aedg/roundabouts.*.opc.yaml`: the six Tetra
 Tech OPC estimates at 0-based PDF pages **317 (summary), 318-327 (detail)** of
 `data/documents/aedg/PRR-01-bundle.ocr.pdf` (printed sheets `pdf_page` 318-328).
+The extracted tree **mirrors `data/documents/` by collection** — an artifact lands
+under the same first-level collection as its source (`recorder/`, `oepa/`, `aedg/`).
 
 The extract stage is **implemented as a hybrid, profile-driven read**
 (`bosc.pipeline.extract`): OCR text layer (pypdf, hint only) + 300 DPI render

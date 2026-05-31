@@ -1,0 +1,41 @@
+doc_id: oepa-2PK00002-shawnee-ii-fact-sheet-2023-cc3a6769
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+dpi: 150
+source_text_excerpt: " \nFact Sheet for NPDES Permit Modification, Shawnee II WWTP,\
+  \ 2023 \n-1- \n \nNational Pollutant Discharge Elimination System (NPDES) Permit\
+  \ Program \n \nFACT SHEET \n \nRegarding a Modification to an NPDES Permit to Discharge\
+  \ to Waters of the State of Ohio \nfor the Shawnee II Wastewater Treatment Works\
+  \ \n \nPublic Notice No.: 183565  Ohio EPA Permit No.:  2PK00002*L D \nPublic Notice\
+  \ Date: May 12, 2023  Application No.:  OH0023850 \nComment Period Ends: June 11,\
+  \ 2023 \n Name and Address of Facility Where \nName and Address of Applicant:  Discharge\
+  \ Occurs:                  \n \n     \nReceiving Water:  Ottawa "
+permit:
+  confidence: high
+  warnings: []
+  facility_name: Shawnee II Wastewater Treatment Works (Shawnee II WWTP)
+  permit_no: 2PK00002*LD
+  permit_action: modification
+  applicant: Allen County Board of Commissioners, 4140 Diller Rd, Lima, Ohio 45807
+  application_no: OH0023850
+  public_notice_no: '183565'
+  public_notice_date: '2023-05-12'
+  comment_period_end: '2023-06-11'
+  facility_address: Shawnee II WWTP, 3640 Spencerville Road, Lima, Ohio 45805, Allen
+    County
+  discharge_address: null
+  receiving_water: Ottawa River
+  stream_network: Auglaize River to Maumee River to Lake Erie
+  outfalls:
+  - '001'
+  note: The permit number in the OCR reads "2PK00002*L D" (with a space), but the
+    image clearly shows "2PK00002*LD" without a space. Outfall 001 is referenced in
+    the facility description text. The stream network begins from the Ottawa River
+    (receiving water) continuing to Auglaize River to Maumee River to Lake Erie.

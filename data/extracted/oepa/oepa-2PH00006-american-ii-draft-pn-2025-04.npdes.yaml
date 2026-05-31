@@ -1,0 +1,46 @@
+doc_id: oepa-2PH00006-american-ii-draft-pn-2025-04-608aa924
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+dpi: 150
+source_text_excerpt: "2/NW  Application No.:  OH0037338 \n  Ohio EPA Permit No.: \
+  \ 2PH00006*LD \n \nNational Pollutant Discharge Elimination System (NPDES) Permit\
+  \ Program \n \nPUBLIC NOTICE \n \nNPDES Permit to Discharge to State Waters \n \n\
+  Ohio Environmental Protection Agency \nPermits Section \n50 West Town St., Suite\
+  \ 700 \nP. O. Box 1049 \nColumbus, Ohio 43216-1049 \n(614) 644-2001 \n \nPublic\
+  \ Notice No.: 211697 \nDate of Issue of Public Notice: 4/28/2025 \nName and Address\
+  \ of Applicant: Allen County Board of Commissioners, 4140 Diller Road, Lima, \n\
+  OH, 45807 \n \n \nName and Address of Facility \nWhere Discharge Occurs: American\
+  \ II W"
+permit:
+  confidence: high
+  warnings:
+  - Comment period end date (2025-05-28) is calculated as 30 days after public notice
+    date; not explicitly printed.
+  - Stream network beyond Dug Run not stated in document.
+  - permit_action inferred as 'renewal' based on the document referencing a 'timely
+    submitted NPDES permit renewal application'.
+  facility_name: American II Wastewater Treatment Plant
+  permit_no: 2PH00006*LD
+  permit_action: renewal
+  applicant: Allen County Board of Commissioners, 4140 Diller Road, Lima, OH, 45807
+  application_no: OH0037338
+  public_notice_no: '211697'
+  public_notice_date: '2025-04-28'
+  comment_period_end: '2025-05-28'
+  facility_address: 4140 Diller Road, Lima, OH, 45807, Allen County
+  discharge_address: null
+  receiving_water: Dug Run at River Mile 3.1
+  stream_network: null
+  outfalls:
+  - '001'
+  note: 'Comment period end is 30 days after public notice date (2025-04-28), calculated
+    as 2025-05-28. Stream network downstream of Dug Run not stated. Nature of business:
+    Municipal Wastewater Treatment Plant. Design flow: 1.2 MGD. Outfall station number
+    listed as 2PH00006001.'

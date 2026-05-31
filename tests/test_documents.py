@@ -153,6 +153,26 @@ def test_save_doc_extraction_filename(tmp_path: Path) -> None:
         permit=NpdesPermit(permit_no="2PH00006"),
     )
     path = save_doc_extraction(extraction, settings=settings)
+    # Source lives outside data/documents -> lands at the extracted root.
+    assert path.parent == settings.extracted_dir
     assert path.name == "oepa-2PH00006-american-ii-permit.npdes.yaml"
     data = yaml.safe_load(path.read_text())
     assert data["permit"]["permit_no"] == "2PH00006"
+
+
+def test_save_doc_extraction_mirrors_collection(tmp_path: Path) -> None:
+    """A source under documents/<collection> lands under extracted/<collection>."""
+    settings = Settings(data_dir=tmp_path)
+    src = settings.documents_dir / "recorder" / "202511180011830-amazon-deed.pdf"
+    src.parent.mkdir(parents=True)
+    src.write_bytes(b"%PDF-fake")
+    extraction = DeedExtraction(
+        doc_id="d",
+        source_path=str(src),
+        kind="deed",
+        dpi=200,
+        deed=Deed(instrument_no="202511180011830"),
+    )
+    path = save_doc_extraction(extraction, settings=settings)
+    assert path.parent == settings.extracted_dir / "recorder"
+    assert path.name == "202511180011830-amazon-deed.deed.yaml"

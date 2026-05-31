@@ -25,13 +25,24 @@ def _text(payload: str) -> dict[str, Any]:
     return {"content": [{"type": "text", "text": payload}]}
 
 
-def _resolve(filename: str | None, pattern: str) -> Path | None:
-    """Resolve a filename within data/extracted, or the sole match for a glob."""
+def _resolve(filename: str | None, pattern: str = "*.yaml") -> Path | None:
+    """Resolve an extraction within data/extracted (now a collection tree).
+
+    A ``filename`` may be a path relative to ``extracted`` (``recorder/foo.yaml``)
+    or a bare basename matched anywhere in the tree. With no filename, the first
+    ``pattern`` match (recursive) is returned.
+    """
     extracted = get_settings().extracted_dir
+    if not extracted.exists():
+        return None
     if filename:
-        path = extracted / Path(filename).name
-        return path if path.exists() else None
-    matches = sorted(extracted.glob(pattern)) if extracted.exists() else []
+        direct = extracted / filename
+        if direct.is_file():
+            return direct
+        name = Path(filename).name
+        matches = sorted(p for p in extracted.rglob(name) if p.is_file())
+        return matches[0] if matches else None
+    matches = sorted(extracted.rglob(pattern))
     return matches[0] if matches else None
 
 
@@ -50,21 +61,23 @@ async def list_documents(_args: dict[str, Any]) -> dict[str, Any]:
 @tool("list_extractions", "List available structured extraction files.", {})
 async def list_extractions(_args: dict[str, Any]) -> dict[str, Any]:
     extracted = get_settings().extracted_dir
-    files = sorted(extracted.glob("*.yaml")) if extracted.exists() else []
+    files = sorted(extracted.rglob("*.yaml")) if extracted.exists() else []
     if not files:
         return _text("No extractions found under data/extracted.")
-    return _text("\n".join(f"- {f.name}" for f in files))
+    # Show the collection-relative path so the agent sees provenance (recorder/...).
+    return _text("\n".join(f"- {f.relative_to(extracted)}" for f in files))
 
 
 @tool(
     "read_extraction",
-    "Read the raw text of an extraction file under data/extracted by filename.",
+    "Read the raw text of an extraction file under data/extracted by name or "
+    "collection-relative path (e.g. 'recorder/202511180011830-amazon-deed.deed.yaml').",
     {"filename": str},
 )
 async def read_extraction(args: dict[str, Any]) -> dict[str, Any]:
-    path = get_settings().extracted_dir / Path(args["filename"]).name
-    if not path.exists():
-        return _text(f"Not found: {path.name}")
+    path = _resolve(args["filename"])
+    if path is None:
+        return _text(f"Not found: {args['filename']}")
     return _text(path.read_text(encoding="utf-8"))
 
 
@@ -74,9 +87,9 @@ async def read_extraction(args: dict[str, Any]) -> dict[str, Any]:
     {"filename": str},
 )
 async def reconcile_summary(args: dict[str, Any]) -> dict[str, Any]:
-    path = get_settings().extracted_dir / Path(args["filename"]).name
-    if not path.exists():
-        return _text(f"Not found: {path.name}")
+    path = _resolve(args["filename"])
+    if path is None:
+        return _text(f"Not found: {args['filename']}")
     summary = OPCSummary.from_yaml(path)
     findings = analyze.reconcile(summary)
     return _text("\n".join(str(f) for f in findings))

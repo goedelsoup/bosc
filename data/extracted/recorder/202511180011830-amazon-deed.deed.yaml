@@ -1,0 +1,51 @@
+doc_id: 202511180011830-amazon-deed-c4b3f00e
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/recorder/port-authority/202511180011830-amazon-deed.pdf
+kind: deed
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+dpi: 200
+source_text_excerpt: '
+
+
+
+
+
+
+
+
+
+
+  '
+deed:
+  confidence: high
+  warnings:
+  - Consideration amount not expressly stated in the deed body; conveyance fee of
+    $7,580.90 is noted on the face but does not directly equate to a stated purchase
+    price.
+  instrument_type: Limited Warranty Deed
+  instrument_no: '202511180011830'
+  recording_date: '2025-11-18'
+  grantors:
+  - THE PORT AUTHORITY OF ALLEN COUNTY, OHIO
+  grantees:
+  - Amazon.com Services LLC
+  consideration: null
+  parcel_ids:
+  - 46-1300-04-001.005
+  county: Allen
+  legal_description: 'Part of 46-1300-04-001.005; Combination Split-Prop ROW Parcel
+    – 26.033 acres; located in the Southeast Quarter of Section 13, Town 4 South,
+    Range 6 East, Shawnee Township, Allen County, Ohio. Property address: Jay Begg
+    Parkway, Lima, OH 45804. Prior instrument: OR Volume 2010, Page 08947.'
+  note: 'Consideration not explicitly stated; deed recites "good and valuable consideration."
+    Conveyance fee stamp shows $7,580.90. Deed executed October 24, 2025 by Drew Fields,
+    Vice Chairman. Instrument prepared by Rex Huffman, Spitler Huffman LLP. Legal
+    description prepared by DGL Consulting Engineers, LLC (Ronald J. Lumbrezer, Ohio
+    PS #8029). Subject to Permitted Exceptions in Exhibit B including plat recorded
+    Vol. 2021, Pg. 12186 and a Storm Water Drainage and Detention Easement Agreement
+    dated November 4, 2025.'

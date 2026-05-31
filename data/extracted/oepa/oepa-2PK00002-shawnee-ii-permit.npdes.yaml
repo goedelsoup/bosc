@@ -1,0 +1,47 @@
+doc_id: oepa-2PK00002-shawnee-ii-permit-cf1f5f79
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/oepa/oepa-2PK00002-shawnee-ii-permit.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+dpi: 150
+source_text_excerpt: "Form EPA  4429 \nO hio Environmental Protection Agency \nModification\
+  \ of National Pollutant Discharge \nElimination System (NPDES) Permit \nAction Date:\
+  \  May 5, 2023 \nExisting Permit No.:  2PK00002*KD \nProposed Effective Date:  July\
+  \ 1, 2023\nApplication No.: OH0023850 \nEntity Name:  Shawnee II WWTP \nFacility\
+  \ Location:  3640 Spencerville Road, Lima, OH 45805, Allen County \nIn accordance\
+  \ with Rule 3745-33-04 (D) of the Ohio Administrative Code (formerly Ohio EPA \n\
+  Regulation EP-31-06), the above referenced NPDES Permit is hereby modified as follows:\
+  \ \nRevision \n1) I\nncluded Antidegradation Paragraph\n2)"
+permit:
+  confidence: high
+  warnings:
+  - No public notice number found in document
+  - No comment period end date stated
+  - Facility address on cover page lists 'Lima, OH 45805' but permit body states 'Shawnee
+    Township, Ohio' — same physical address
+  - Downstream stream network beyond Ottawa River not specified in document
+  facility_name: Shawnee II WWTP
+  permit_no: 2PK00002*LD
+  permit_action: modification
+  applicant: Allen County Board of Commissioners
+  application_no: OH0023850
+  public_notice_no: null
+  public_notice_date: '2023-05-05'
+  comment_period_end: null
+  facility_address: 3640 Spencerville Road, Lima, OH 45805, Allen County
+  discharge_address: 3640 Spencerville Road, Shawnee Township, Ohio, Allen County
+  receiving_water: Ottawa River
+  stream_network: null
+  outfalls:
+  - 2PK00002001
+  note: 'Existing permit 2PK00002*KD modified; new permit number 2PK00002*LD effective
+    July 1, 2023. Modification includes Antidegradation Paragraph, added Final Effluent
+    table for outfall 2PK00002001 effective after plant upgrades, and Schedule of
+    Compliance marked complete. Expiration date: October 31, 2025. Action date (public
+    notice date) is May 5, 2023; no separate public notice number or comment period
+    end date is stated.'

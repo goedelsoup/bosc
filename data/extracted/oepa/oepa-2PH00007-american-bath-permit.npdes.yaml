@@ -1,0 +1,49 @@
+doc_id: oepa-2PH00007-american-bath-permit-ee3f178f
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/oepa/oepa-2PH00007-american-bath-permit.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+dpi: 150
+source_text_excerpt: "Ohio EPA Permit No.: 2PH00007*MD \nApplication No: OH0023841\
+  \ \nAction Date: April 4, 2024  \nEffective Date: May 1, 2024\nExpiration Date:\
+  \ April 30, 2029\nOhio Environmental Protection Agency \nAuthorization to Discharge\
+  \ Under the \nNational Pollutant Discharge Elimination System \nIn compliance with\
+  \ the provisions of the Federal Water Pollution Control Act, as amended (33 U.S.C.\
+  \ \n1251 et. seq., hereinafter referred to as the \"Act\"), and the Ohio Water Pollution\
+  \ Control Act (Ohio \nRevised Code Section 6111), \nAllen County Board of Commissioners\
+  \ \nis authorized by the Ohio Environmental Protection Agenc"
+permit:
+  confidence: high
+  warnings:
+  - No public notice date or comment period end date found in the document.
+  - Permit action 'modification' inferred from '*MD' suffix in permit number — not
+    explicitly stated as such.
+  - Stream network downstream of Pike Run not explicitly stated; Maumee Watershed
+    referenced obliquely.
+  facility_name: American Bath wastewater treatment works
+  permit_no: 2PH00007*MD
+  permit_action: modification
+  applicant: Allen County Board of Commissioners
+  application_no: OH0023841
+  public_notice_no: null
+  public_notice_date: null
+  comment_period_end: null
+  facility_address: 3226 N. Cole St., Lima, Ohio, Allen County
+  discharge_address: null
+  receiving_water: Pike Run
+  stream_network: null
+  outfalls:
+  - 2PH00007001
+  - 2PH00007300
+  - 2PH00007581
+  note: 'Action Date: 2024-04-04; Effective Date: 2024-05-01; Expiration Date: 2029-04-30.
+    Permit action inferred as modification from the "*MD" suffix. No public notice
+    date or comment period end found in the document. Outfall 2PH00007300 is SSO monitoring;
+    2PH00007581 is sludge monitoring. Note in permit references Maumee Watershed Nutrient
+    TMDL (Part II, Item Z), suggesting Pike Run is a tributary of the Maumee watershed,
+    but no explicit downstream chain is stated in this document.'

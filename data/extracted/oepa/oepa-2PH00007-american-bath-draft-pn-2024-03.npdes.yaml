@@ -1,0 +1,50 @@
+doc_id: oepa-2PH00007-american-bath-draft-pn-2024-03-8a4c8d0e
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+dpi: 150
+source_text_excerpt: "02/NW    Application No.:  OH0023841 \n  Ohio EPA Permit No.:\
+  \  2PH00007*MD \nNational Pollutant Discharge Elimination System (NPDES) Permit\
+  \ Program \n \nPUBLIC NOTICE \n \nNPDES Permit to Discharge to State Waters \n \n\
+  Ohio Environmental Protection Agency \nPermits Section \n50 West Town St., Suite\
+  \ 700 \nP. O. Box 1049 \nColumbus, Ohio 43216-1049 \n(614) 644-2001 \n \nPublic\
+  \ Notice No. 196911 \nDate of Issue of Public Notice: March-01-2024 \nName and Address\
+  \ of Applicant: Allen County Board of Commissioners, 3230 N. Cole St., Lima, \n\
+  OH, 45801       \n \n \nName and Address of Facility \nWhere Discharge Occurs: Ame"
+permit:
+  confidence: high
+  warnings:
+  - Permit action inferred as 'renewal' based on document context referencing a renewal
+    application, but the permit number suffix '*MD' may indicate a modification —
+    verify with issuing agency.
+  - Comment period end date (2024-03-31) is inferred as 30 days after public notice
+    date; not explicitly stated on this page.
+  - Stream network downstream of Pike Run not specified in the document.
+  - Facility address and discharge address appear to be the same location (3226 N.
+    Cole St.) while applicant address is 3230 N. Cole St.
+  facility_name: American Bath WWTP
+  permit_no: 2PH00007*MD
+  permit_action: renewal
+  applicant: Allen County Board of Commissioners, 3230 N. Cole St., Lima, OH, 45801
+  application_no: OH0023841
+  public_notice_no: '196911'
+  public_notice_date: '2024-03-01'
+  comment_period_end: '2024-03-31'
+  facility_address: 3226 N. Cole St., Lima, OH, 45801, Allen County
+  discharge_address: 3226 N. Cole St., Lima, OH, 45801, Allen County
+  receiving_water: Pike Run
+  stream_network: null
+  outfalls:
+  - '001'
+  note: 'Outfall identifier is also referenced as 2PH00007001 in the permit body.
+    Comment period end is inferred as 30 days after public notice date (2024-03-01),
+    yielding 2024-03-31. Nature of Business: POTW. Permit action labeled as renewal
+    based on context (NPDES renewal application referenced in document); the permit
+    number suffix *MD may indicate modification — flagged in warnings. Stream network
+    downstream of Pike Run not stated in document.'

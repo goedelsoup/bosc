@@ -1,0 +1,42 @@
+doc_id: oepa-2PK00002-shawnee-ii-draft-pn-2026-03-40c10b1b
+source_path: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+dpi: 150
+source_text_excerpt: "2/NW  Application No.:  OH0023850 \n  Ohio EPA Permit No.: \
+  \ 2PK00002*MD \n \nNational Pollutant Discharge Elimination System (NPDES) Permit\
+  \ Program \n \nPUBLIC NOTICE \n \nNPDES Permit to Discharge to State Waters \n \n\
+  Ohio Environmental Protection Agency \nPermits Section \n50 West Town St., Suite\
+  \ 700 \nP. O. Box 1049 \nColumbus, Ohio 43216-1049 \n(614) 644-2001 \n \nPublic\
+  \ Notice No.: 219931 \nDate of Issue of Public Notice: 3/24/2026 \nName and Address\
+  \ of Applicant: Allen County Sanitary Engineering Department, 3640 \nSpencerville\
+  \ Road, Lima, OH, 45805 \n \n \nName and Address of Facility \nWhere Discharge Occurs"
+permit:
+  confidence: high
+  warnings:
+  - Comment period end date (2026-04-23) is calculated as 30 days after public notice
+    date (2026-03-24); not explicitly stated in the document.
+  - Public notice date year is 2026 — verify this is not a typo for 2024 or 2025.
+  - Permit action inferred as 'renewal' based on document referencing a renewal application;
+    not explicitly labeled as such on the permit face.
+  facility_name: Shawnee II WWTP
+  permit_no: 2PK00002*MD
+  permit_action: renewal
+  applicant: Allen County Sanitary Engineering Department
+  application_no: OH0023850
+  public_notice_no: '219931'
+  public_notice_date: '2026-03-24'
+  comment_period_end: '2026-04-23'
+  facility_address: 3640 Spencerville Road, Lima, OH 45805, Allen County
+  discharge_address: Ottawa River at River Mile 32.5
+  receiving_water: Ottawa River
+  stream_network: Ottawa River
+  outfalls:
+  - '001'
+  note: null

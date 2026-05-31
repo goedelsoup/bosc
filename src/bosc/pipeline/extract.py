@@ -141,17 +141,38 @@ def extract_page(
     return EXTRACTORS[kind](doc, page_index, **kwargs)
 
 
+def _collection_dir(source_path: str, settings: Settings) -> Path:
+    """Sub-directory of ``extracted`` mirroring the source's collection.
+
+    The extracted tree parallels ``data/documents``: an artifact lands under the
+    same first-level collection as its source (e.g. ``recorder``, ``oepa``),
+    mirroring :func:`ingest.discover` (``collection = rel.parts[0]``). Sources that
+    sit directly under ``documents`` — or outside it entirely (tests) — map to the
+    root of ``extracted``. The directory is created.
+    """
+    target = settings.extracted_dir
+    try:
+        rel = Path(source_path).resolve().relative_to(settings.documents_dir.resolve())
+    except ValueError:
+        rel = None
+    if rel is not None and len(rel.parts) > 1:
+        target = target / rel.parts[0]
+    target.mkdir(parents=True, exist_ok=True)
+    return target
+
+
 def save_extraction(extraction: PageExtraction, *, settings: Settings | None = None) -> Path:
     """Write a page extraction to ``data/extracted`` as YAML; return the path.
 
-    Files with line items get a ``.detail.opc.yaml`` suffix; subtotal-only ones
-    get ``.opc.yaml``.
+    The file lands under a collection sub-directory mirroring its source (see
+    :func:`_collection_dir`). Files with line items get a ``.detail.opc.yaml``
+    suffix; subtotal-only ones get ``.opc.yaml``.
     """
     settings = settings or get_settings()
-    settings.extracted_dir.mkdir(parents=True, exist_ok=True)
+    target = _collection_dir(extraction.source_path, settings)
     kind = "detail.opc" if extraction.estimate.has_line_items() else "opc"
     slug = extraction.estimate.name.lower().replace("/", "-").replace(" ", "_")
-    path = settings.extracted_dir / f"{slug}.p{extraction.pdf_page}.{kind}.yaml"
+    path = target / f"{slug}.p{extraction.pdf_page}.{kind}.yaml"
     path.write_text(extraction.to_yaml(), encoding="utf-8")
     log.info("extract.saved", path=str(path))
     return path
@@ -328,11 +349,15 @@ def extract_document(doc: SourceDocument, *, kind: str, **kwargs: object) -> Doc
 
 
 def save_doc_extraction(extraction: DocExtraction, *, settings: Settings | None = None) -> Path:
-    """Write a document-level extraction to ``data/extracted`` as ``<stem>.<kind>.yaml``."""
+    """Write a document-level extraction under its collection sub-directory.
+
+    The artifact mirrors its source's collection (see :func:`_collection_dir`),
+    named ``<stem>.<kind>.yaml``.
+    """
     settings = settings or get_settings()
-    settings.extracted_dir.mkdir(parents=True, exist_ok=True)
+    target = _collection_dir(extraction.source_path, settings)
     stem = Path(extraction.source_path).stem
-    path = settings.extracted_dir / f"{stem}.{extraction.kind}.yaml"
+    path = target / f"{stem}.{extraction.kind}.yaml"
     path.write_text(extraction.to_yaml(), encoding="utf-8")
     log.info("extract.saved", path=str(path))
     return path

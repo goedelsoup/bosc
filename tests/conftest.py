@@ -13,4 +13,4 @@ EXTRACTED = REPO_ROOT / "data" / "extracted"
 @pytest.fixture
 def summary_path() -> Path:
     """Path to the committed roundabouts summary extraction."""
-    return EXTRACTED / "roundabouts.summary.opc.yaml"
+    return EXTRACTED / "aedg" / "roundabouts.summary.opc.yaml"
