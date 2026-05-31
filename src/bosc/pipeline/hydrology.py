@@ -10,7 +10,8 @@ from __future__ import annotations
 from bosc.config import Settings, get_settings
 from bosc.hydrology.assimilative import assimilative_findings, check_assimilative
 from bosc.hydrology.balance import build_water_balance
-from bosc.hydrology.model import AssimilativeCheck, HydroFinding, WaterBalance
+from bosc.hydrology.model import AssimilativeCheck, HydroFinding, StormRunoff, WaterBalance
+from bosc.hydrology.stormwater import run_storm_scenario
 from bosc.logging import get_logger
 
 log = get_logger(__name__)
@@ -37,3 +38,18 @@ def run_baseline(
         violations=sum(1 for f in findings if not f.ok),
     )
     return balance, checks, findings
+
+
+def run_storm(
+    *,
+    return_period_yr: int = 25,
+    settings: Settings | None = None,
+    live: bool = True,
+) -> tuple[StormRunoff, list[HydroFinding]]:
+    """Pre- vs post-development design-storm runoff over the campus footprint.
+
+    The stormwater counterpart to :func:`run_baseline`: how paving the corridor
+    changes peak flow and runoff volume for a NOAA Atlas-14 design storm.
+    """
+    settings = settings or get_settings()
+    return run_storm_scenario(return_period_yr=return_period_yr, settings=settings, live=live)

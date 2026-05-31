@@ -54,6 +54,7 @@ class Settings(BaseSettings):
     hydro_fixtures_dir: Path | None = None
     nwis_base_url: str = "https://waterservices.usgs.gov/nwis"
     nwis_sites: list[str] = Field(default_factory=lambda: list(_DEFAULT_NWIS_SITES))
+    noaa_atlas14_base_url: str = "https://hdsc.nws.noaa.gov/cgi-bin/new/cgi_readH5.py"
 
     # --- Paths -------------------------------------------------------------
     data_dir: Path = _REPO_ROOT / "data"

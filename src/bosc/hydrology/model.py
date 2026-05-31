@@ -206,6 +206,58 @@ DILUTION_VIOLATION = 1.0
 DILUTION_TIGHT = 10.0
 
 
+class DesignStorm(BaseModel):
+    """A design rainfall event (return period x duration -> depth)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    return_period_yr: int
+    duration_hr: float
+    depth: ProvenancedValue  # inches, source typically connector (NOAA Atlas-14)
+
+
+class Hydrograph(BaseModel):
+    """A Tier-0 runoff hydrograph (SCS unit-hydrograph convolution)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    times_hr: list[float]
+    flows_cfs: list[float]
+    peak_cfs: float
+    time_to_peak_hr: float
+    volume_acft: float
+    runoff_depth_in: float
+    curve_number: float
+    tier: Literal["tier0"] = "tier0"
+
+
+class StormRunoff(BaseModel):
+    """Pre- vs post-development runoff for a design storm over one footprint.
+
+    The headline stormwater impact: paving a pervious footprint raises the curve
+    number, so the same storm yields a higher peak and more volume. The extra
+    volume is the screening-grade detention deficit (the volume a basin must hold
+    to keep post-development discharge at the pre-development rate).
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    name: str
+    area: ProvenancedValue  # acres
+    hsg: ProvenancedValue  # hydrologic soil group as a coded value (A=1..D=4) + citation
+    storm: DesignStorm
+    pre: Hydrograph
+    post: Hydrograph
+
+    @property
+    def peak_increase_cfs(self) -> float:
+        return self.post.peak_cfs - self.pre.peak_cfs
+
+    @property
+    def volume_increase_acft(self) -> float:
+        return self.post.volume_acft - self.pre.volume_acft
+
+
 @dataclass(frozen=True)
 class HydroFinding:
     """One hydrology observation. Mirrors :class:`bosc.pipeline.analyze.Finding`."""

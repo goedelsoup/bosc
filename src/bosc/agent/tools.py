@@ -201,6 +201,32 @@ async def hydrology_balance(_args: dict[str, Any]) -> dict[str, Any]:
 
 
 @tool(
+    "stormwater_runoff",
+    "Tier-0 pre- vs post-development design-storm runoff for the data-center campus: "
+    "SCS curve-number method with live NOAA Atlas-14 rainfall. Reports the peak-flow "
+    "and runoff-volume increase from paving the footprint (the detention deficit).",
+    {},
+)
+async def stormwater_runoff(_args: dict[str, Any]) -> dict[str, Any]:
+    from bosc.pipeline import hydrology as hydro_stage
+
+    runoff, findings = hydro_stage.run_storm()
+    lines = [
+        f"{runoff.name}: {runoff.area.value:,.0f} ac footprint [{runoff.area.source}]",
+        f"Design storm: {runoff.storm.return_period_yr}-yr 24-hr, "
+        f"{runoff.storm.depth.value:.2f} in [{runoff.storm.depth.source}]",
+        f"  pre-development  CN {runoff.pre.curve_number:.0f}: "
+        f"peak {runoff.pre.peak_cfs:,.0f} cfs, {runoff.pre.volume_acft:,.0f} ac-ft",
+        f"  post-development CN {runoff.post.curve_number:.0f}: "
+        f"peak {runoff.post.peak_cfs:,.0f} cfs, {runoff.post.volume_acft:,.0f} ac-ft",
+        "",
+    ]
+    lines.extend(str(f) for f in findings)
+    lines.append("\n(Tier-0 SCS; HSG + land cover are cited assumptions, rainfall is live NOAA.)")
+    return _text("\n".join(lines))
+
+
+@tool(
     "reconcile_estimate",
     "Reconcile a generated estimate extraction (*.opc.yaml): line items -> section "
     "subtotals -> construction subtotal + markups -> total.",
@@ -234,6 +260,7 @@ ALL_TOOLS = [
     timeline,
     entities,
     hydrology_balance,
+    stormwater_runoff,
 ]
 ALLOWED_TOOL_NAMES = [f"mcp__{SERVER_NAME}__{t.name}" for t in ALL_TOOLS]
 

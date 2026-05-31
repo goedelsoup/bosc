@@ -1,0 +1,37 @@
+# SCS Curve Numbers by land cover (NLCD class) and Hydrologic Soil Group (A/B/C/D),
+# antecedent moisture condition II (average). Source: USDA NRCS TR-55 Table 2-2,
+# mapped to NLCD 2021 classes (the same mapping Periplus used). These are reference
+# parameters, NOT document-derived figures — a hydrology input tagged `assumption`
+# unless a site-specific CN is provided.
+#
+# CN runoff: S = 1000/CN - 10 (in); higher CN => more runoff, less infiltration.
+# Note 100 (open water) and the high-intensity-developed values are near-impervious.
+
+amc:
+  # Antecedent moisture adjustments from AMC-II (table values) to dry/wet.
+  dry_I: "4.2 * CN / (10 - 0.058 * CN)"     # documented form, applied in code
+  wet_III: "23 * CN / (10 + 0.13 * CN)"
+
+classes:
+  11: {label: "Open Water", A: 100, B: 100, C: 100, D: 100}
+  21: {label: "Developed, Open Space", A: 49, B: 69, C: 79, D: 84}
+  22: {label: "Developed, Low Intensity", A: 61, B: 75, C: 83, D: 87}
+  23: {label: "Developed, Medium Intensity", A: 77, B: 85, C: 90, D: 92}
+  24: {label: "Developed, High Intensity", A: 89, B: 92, C: 94, D: 95}
+  31: {label: "Barren Land", A: 77, B: 86, C: 91, D: 94}
+  41: {label: "Deciduous Forest", A: 30, B: 55, C: 70, D: 77}
+  42: {label: "Evergreen Forest", A: 30, B: 55, C: 70, D: 77}
+  43: {label: "Mixed Forest", A: 30, B: 55, C: 70, D: 77}
+  52: {label: "Shrub/Scrub", A: 35, B: 56, C: 70, D: 77}
+  71: {label: "Grassland/Herbaceous", A: 39, B: 61, C: 74, D: 80}
+  81: {label: "Pasture/Hay", A: 39, B: 61, C: 74, D: 80}
+  82: {label: "Cultivated Crops", A: 67, B: 78, C: 85, D: 89}
+  90: {label: "Woody Wetlands", A: 30, B: 58, C: 71, D: 78}
+  95: {label: "Emergent Herbaceous Wetlands", A: 30, B: 58, C: 71, D: 78}
+
+# Convenience aliases for the pre/post development narrative on the BOSC corridor.
+aliases:
+  cropland: 82        # documented prior use (e.g. "Neff Farms Inc")
+  pasture: 81
+  developed_campus: 24  # data-center campus: near-impervious
+  open_space: 21

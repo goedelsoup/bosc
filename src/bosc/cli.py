@@ -168,6 +168,63 @@ def hydro(
 
 
 @app.command()
+def storm(
+    return_period: int = typer.Option(
+        25, "--return-period", help="Design storm return period (yr)."
+    ),
+    offline: bool = typer.Option(
+        False, "--offline", help="Use cached/fixture rainfall only; no NOAA fetch."
+    ),
+) -> None:
+    """Tier-0 pre- vs post-development design-storm runoff for the campus footprint."""
+    from bosc.config import Settings
+    from bosc.pipeline import hydrology as hydro_stage
+
+    settings = get_settings()
+    if offline:
+        settings = Settings(hydro_offline=True)
+    runoff, findings = hydro_stage.run_storm(
+        return_period_yr=return_period, settings=settings, live=True
+    )
+
+    tag = {"document": "doc", "connector": "live", "assumption": "assume", "derived": "calc"}
+    console.print(
+        f"[bold]{runoff.name}[/]  {runoff.area.value:,.0f} ac "
+        f"[dim]({tag[runoff.area.source]})[/]  "
+        f"storm {runoff.storm.return_period_yr}-yr 24-hr "
+        f"{runoff.storm.depth.value:.2f} in [dim]({tag[runoff.storm.depth.source]})[/]"
+    )
+    table = Table("case", "land cover", "CN", "peak (cfs)", "volume (ac-ft)")
+    table.add_row(
+        "pre-development",
+        "cropland",
+        f"{runoff.pre.curve_number:.0f}",
+        f"{runoff.pre.peak_cfs:,.0f}",
+        f"{runoff.pre.volume_acft:,.0f}",
+    )
+    table.add_row(
+        "post-development",
+        "impervious campus",
+        f"{runoff.post.curve_number:.0f}",
+        f"{runoff.post.peak_cfs:,.0f}",
+        f"{runoff.post.volume_acft:,.0f}",
+    )
+    console.print(table)
+
+    for f in findings:
+        console.print(f"[{'green' if f.ok else 'red'}]{f}[/]")
+    rainfall_src = (
+        "live NOAA Atlas-14"
+        if runoff.storm.depth.source == "connector"
+        else ("cited NOAA Atlas-14 depth (offline)")
+    )
+    console.print(
+        f"\n[dim]Tier-0 SCS screening. HSG {('ABCD'[int(runoff.hsg.value) - 1])} and land cover "
+        f"are cited assumptions; footprint is document-sourced; rainfall is {rainfall_src}.[/]"
+    )
+
+
+@app.command()
 def ask(
     question: str,
     no_tools: bool = typer.Option(

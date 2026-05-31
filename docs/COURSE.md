@@ -195,10 +195,22 @@ assumption|derived`. (`bosc.hydrology`, see [the plan](../../.claude/plans/splen
    **American Bath → Pike Run 0.01:1**, **American II → Dug Run 0.42:1** dilution (both
    `violation`; the American II fact sheet states the acute ratio itself as 1.3:1).
    Shawnee II → Ottawa mainstem has no cited 7Q10 and is **skipped, not invented**.
-9. **SCS-CN stormwater perturbation.** `[open]` — Increment 2. Fill the `stormwater` seam:
-   SCS Type-II rainfall + CN runoff + unit-hydrograph/Muskingum-Cunge, with NOAA Atlas-14
-   design storms and SSURGO/NLCD land cover (live connectors). A storm transiently
-   collapses the dilution ratio Increment 1 established.
+9. **SCS-CN stormwater runoff.** `[done]` — Increment 2. `bosc storm` (+ agent
+   `stormwater_runoff` tool) runs the Tier-0 SCS chain (`bosc.hydrology.solver`:
+   Type-II rainfall → curve-number excess → SCS unit-hydrograph convolution; plus a
+   Muskingum-Cunge routing module) for a **pre- vs post-development** design storm over
+   the campus footprint. Rainfall is **live NOAA Atlas-14** (point query, offline cache +
+   cited fallback); the footprint is document-sourced (recorded Bistrozzi parcels, ~340
+   ac); land cover (prior use "Neff Farms" → cropland; campus → impervious) and HSG (Allen
+   County → C) are cited assumptions; curve numbers from the cited TR-55 table
+   (`cn-lookup.yaml`). Finding: paving the footprint lifts the **25-yr 24-hr peak ~373 →
+   482 cfs (+109)** and runoff volume **~75 → 100 ac-ft** (+25 ac-ft of detention to hold
+   post-development discharge to the pre-development rate).
+   *Scope note:* this is the steady-state low-flow check's complement, not a coupling — a
+   design storm is a different flow regime than 7Q10, so the storm does **not** "collapse
+   the 7Q10 dilution"; the `stormwater` node seam stays inert until a wet-weather scenario
+   couples event runoff into the balance. Live **SSURGO** HSG deferred (endpoint 404 at
+   build; HSG is the cited assumption above).
 10. **Scenario diffing.** `[open]` — Increment 3. Baseline vs data-center-buildout (the
    one-knob cooling consumptive-fraction lever, currently a cited 0-cfs assumption) →
    committed `data/scenarios/*.yaml`; dossier integration.
