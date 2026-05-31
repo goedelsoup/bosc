@@ -271,3 +271,80 @@ class PageExtraction(BaseModel):
     def to_yaml(self) -> str:
         """Serialize to YAML for writing under data/extracted (review artifact)."""
         return yaml.safe_dump(self.model_dump(), sort_keys=False, allow_unicode=True)
+
+
+# ---------------------------------------------------------------------------
+# Other document kinds — deeds and NPDES permits.
+#
+# Unlike OPC sheets (one estimate per page), these are *document-level*
+# extractions read across several pages. Each kind is a self-contained model
+# plus a thin provenance wrapper sharing :class:`DocExtraction`.
+# ---------------------------------------------------------------------------
+
+
+class _Extracted(BaseModel):
+    """Mixin: self-reported confidence + warnings for any extracted document."""
+
+    model_config = ConfigDict(extra="allow")
+
+    confidence: Literal["high", "medium", "low"] = "medium"
+    warnings: list[str] = Field(default_factory=list)
+
+
+class Deed(_Extracted):
+    """A recorded land instrument (deed, easement, etc.)."""
+
+    instrument_type: str | None = None  # e.g. "General Warranty Deed", "Quitclaim"
+    instrument_no: str | None = None  # recorder instrument / document number
+    recording_date: str | None = None  # ISO date if legible
+    grantors: list[str] = Field(default_factory=list)  # party conveying
+    grantees: list[str] = Field(default_factory=list)  # party receiving
+    consideration: Number = None  # stated dollar consideration
+    parcel_ids: list[str] = Field(default_factory=list)  # auditor/parcel numbers
+    county: str | None = None
+    legal_description: str | None = None  # short excerpt / summary, not the full metes-and-bounds
+    note: str | None = None
+
+
+class NpdesPermit(_Extracted):
+    """An Ohio EPA NPDES discharge permit / fact sheet."""
+
+    facility_name: str | None = None
+    permit_no: str | None = None  # Ohio EPA permit no, e.g. 2PH00006*LD
+    permit_action: str | None = None  # renewal | modification | new | draft
+    applicant: str | None = None
+    application_no: str | None = None  # e.g. OH0037338
+    public_notice_no: str | None = None
+    public_notice_date: str | None = None
+    comment_period_end: str | None = None
+    facility_address: str | None = None
+    discharge_address: str | None = None
+    receiving_water: str | None = None
+    stream_network: str | None = None  # downstream chain to a major water body
+    outfalls: list[str] = Field(default_factory=list)
+    note: str | None = None
+
+
+class DocExtraction(BaseModel):
+    """Provenance shared by document-level extractions."""
+
+    model_config = ConfigDict(extra="allow")
+
+    doc_id: str
+    source_path: str
+    kind: str
+    pages_read: list[int] = Field(default_factory=list)  # 0-based pages the model saw
+    dpi: int
+    source_text_excerpt: str = ""
+
+    def to_yaml(self) -> str:
+        """Serialize to YAML for writing under data/extracted (review artifact)."""
+        return yaml.safe_dump(self.model_dump(), sort_keys=False, allow_unicode=True)
+
+
+class DeedExtraction(DocExtraction):
+    deed: Deed
+
+
+class NpdesExtraction(DocExtraction):
+    permit: NpdesPermit

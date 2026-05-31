@@ -120,24 +120,20 @@ def extract(
     pdf_page: int | None = typer.Option(
         None, "--pdf-page", help="1-based printed sheet number (= page index + 1)."
     ),
-    kind: str = typer.Option("opc", "--kind", help="Document kind to extract."),
+    kind: str = typer.Option("opc", "--kind", help="Document kind: opc | deed | npdes."),
     profile: str = typer.Option(
-        "auto", "--profile", help="Format profile id, or 'auto' to detect from the page."
+        "auto", "--profile", help="OPC format profile id, or 'auto' to detect from the page."
     ),
-    dpi: int = typer.Option(DEFAULT_DPI, "--dpi", help="Render resolution for the vision read."),
+    dpi: int = typer.Option(0, "--dpi", help="Render DPI; 0 uses the per-kind default."),
     detail: bool = typer.Option(
-        False, "--detail", "-d", help="Extract full line items, not just section subtotals."
+        False, "--detail", "-d", help="OPC: extract full line items, not just section subtotals."
     ),
     write: bool = typer.Option(False, "--write", "-w", help="Save the YAML under data/extracted."),
 ) -> None:
-    """Extract one cost-estimate page (hybrid OCR-text + 300 DPI vision read)."""
+    """Extract a document: an OPC cost page (--page), or a deed/NPDES document."""
+    from bosc.models import DeedExtraction, NpdesExtraction
     from bosc.pipeline import analyze
     from bosc.pipeline import extract as extract_stage
-
-    if (page is None) == (pdf_page is None):
-        console.print("[red]Provide exactly one of --page (0-based) or --pdf-page (1-based).[/]")
-        raise typer.Exit(code=2)
-    page_index = page if page is not None else pdf_page - 1  # type: ignore[operator]
 
     docs = {d.doc_id: d for d in ingest.discover()}
     doc = docs.get(doc_id)
@@ -145,8 +141,48 @@ def extract(
         console.print(f"[red]Unknown doc_id:[/] {doc_id}. Run `bosc ingest` to list ids.")
         raise typer.Exit(code=1)
 
+    # Document-level kinds (deed, npdes) read across pages — no --page needed.
+    if kind in extract_stage.DOC_EXTRACTORS:
+        dpi_kw = {"dpi": dpi} if dpi > 0 else {}
+        doc_extraction = extract_stage.extract_document(doc, kind=kind, **dpi_kw)
+        if isinstance(doc_extraction, DeedExtraction):
+            d = doc_extraction.deed
+            console.print(
+                f"[bold]Deed[/] {d.instrument_type or '?'} no={d.instrument_no or '?'} — "
+                f"grantors={d.grantors} grantees={d.grantees} "
+                f"parcels={len(d.parcel_ids)} [dim](confidence {d.confidence})[/]"
+            )
+            warns = d.warnings
+        elif isinstance(doc_extraction, NpdesExtraction):
+            p = doc_extraction.permit
+            console.print(
+                f"[bold]NPDES[/] {p.permit_no or '?'} — {p.facility_name or '?'} "
+                f"applicant={p.applicant or '?'} receiving={p.receiving_water or '?'} "
+                f"[dim](confidence {p.confidence})[/]"
+            )
+            warns = p.warnings
+        else:  # pragma: no cover - defensive
+            warns = []
+        for warning in warns:
+            console.print(f"  [yellow]![/] {warning}")
+        if write:
+            console.print(f"[green]Saved[/] {extract_stage.save_doc_extraction(doc_extraction)}")
+        else:
+            console.print(doc_extraction.to_yaml())
+        return
+
+    if kind != "opc":
+        known = ", ".join(["opc", *sorted(extract_stage.DOC_EXTRACTORS)])
+        console.print(f"[red]Unknown --kind {kind!r}.[/] Known: {known}.")
+        raise typer.Exit(code=2)
+
+    if (page is None) == (pdf_page is None):
+        console.print("[red]Provide exactly one of --page (0-based) or --pdf-page (1-based).[/]")
+        raise typer.Exit(code=2)
+    page_index = page if page is not None else pdf_page - 1  # type: ignore[operator]
+
     extraction = extract_stage.extract_page(
-        doc, page_index, kind=kind, profile=profile, detail=detail, dpi=dpi
+        doc, page_index, kind=kind, profile=profile, detail=detail, dpi=dpi or DEFAULT_DPI
     )
     est = extraction.estimate
     color = "green" if est.reconciles() else "yellow"

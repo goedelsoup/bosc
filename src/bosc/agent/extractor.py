@@ -90,22 +90,27 @@ class StructuredExtractor:
         *,
         instructions: str,
         image_png: bytes | None = None,
+        images: list[bytes] | None = None,
         context_text: str = "",
         tool_name: str = "record_extraction",
     ) -> T:
-        """Return a validated ``target`` instance read from the supplied page."""
-        content: list[dict[str, Any]] = []
-        if image_png is not None:
-            content.append(
-                {
-                    "type": "image",
-                    "source": {
-                        "type": "base64",
-                        "media_type": _MEDIA_TYPE,
-                        "data": base64.standard_b64encode(image_png).decode("ascii"),
-                    },
-                }
-            )
+        """Return a validated ``target`` read from one or more page images + text.
+
+        Pass a single page via ``image_png`` or multiple (document-level reads)
+        via ``images``; both are sent in order ahead of the text block.
+        """
+        page_images = ([image_png] if image_png is not None else []) + (images or [])
+        content: list[dict[str, Any]] = [
+            {
+                "type": "image",
+                "source": {
+                    "type": "base64",
+                    "media_type": _MEDIA_TYPE,
+                    "data": base64.standard_b64encode(img).decode("ascii"),
+                },
+            }
+            for img in page_images
+        ]
         text = instructions + (_OCR_HINT_HEADER + context_text if context_text else "")
         content.append({"type": "text", "text": text})
 
