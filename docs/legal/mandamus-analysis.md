@@ -127,10 +127,13 @@ acknowledgment (not production), the §149.43(B) violation persisted and the $1,
 
 ### 6. Two cracks worth noting
 
-- **Date discrepancy.** The complaint (¶5) and Ex. A say **April 14**; the cure
-  notice (Ex. F) and first supplement say the original was **April 13**. Trivial, but
-  a careful respondent will pick at it; reconcile to one date (the Gmail header on
-  Ex. A reads Apr 14, 2026 15:31 -0400).
+- **Date — reconciled to April 14.** The operative date is **April 14, 2026**: the
+  Ex. A Gmail transmission header reads `Tue, Apr 14, 2026 15:31 -0400`, and for
+  public-records purposes the **date of service** (transmission) is what starts the
+  clock, not a draft date. The "April 13" references in the first supplement (Ex. B)
+  and the cure notice (Ex. F) are scrivener errors carried from the drafting day;
+  they should be corrected to the 14th in the filing itself before it is used.
+  (This is the date adopted in the committee testimony, and throughout this memo.)
 - **Scope mismatch.** The county's acknowledgment counts **four** requests; the
   complaint litigates **three**. The `Downloads/Requests/` campaign in fact spans
   more (zoning amendment #6172-2026, township SIU communications, a moratorium
@@ -352,7 +355,7 @@ campaign · **[DEF]** defense/DoD nexus. Confidence: `[v]` verified (corpus/web/
 | 2026-04-03 | [DEF·broad] `[v]` | Tilted Gate LLC files §404/401 permit for Project Dazzler (Scioto, ~792 ac / 1.7M sf) ([DCD](https://www.datacenterdynamics.com/en/news/google-confirmed-as-company-behind-500000-sq-ft-data-center-in-scioto-county-ohio/)) |
 | 2026-04-06 | [BOSC] `[v]` | **Bistrozzi Addition LLC** registered (Doc 202609704236; Vorys/Ziance; CT Corp agent) — *3 weeks after* Google reveal; Google "introduces itself to Allen County" |
 | 2026-04-07 | [BOSC] `[v]` | **BOSC-1A Private Sanitary Sewer** permit approved (SWPTI-260294 / DSW-6756) |
-| **2026-04-14** | [BOSC] `[v]` | **Original PRR** served (Ex. A) — 5 categories incl. Category 1 *Google Public Sector* and Category 4 *DoD/federal* comms (cf. [DEF]); *(filing elsewhere says Apr 13 — reconcile)* |
+| **2026-04-14** | [BOSC] `[v]` | **Original PRR** served (Ex. A; Gmail header `Apr 14, 2026 15:31 -0400` = the operative service date) — 5 categories incl. Category 1 *Google Public Sector* and Category 4 *DoD/federal* comms (cf. [DEF]) |
 | 2026-04-15 | [BOSC] `[v]` | Supplement 1 (Ex. B): Bistrozzi Addition LLC, Vorys Sater, Scott Ziance, Hannah Bragg |
 | 2026-04-20 | [BOSC] `[v]` | Supplement 2 (Ex. C): forcemain, Shawnee II Phase 2 capacity discrepancy, CMS audit logs, Tilted Gate LLC, EMH&T; Category 5 names the **JSMC industrial zone** (cf. [DEF]) |
 | 2026-04-29 | [BOSC·LAW] `[v]` | County acknowledges "four (4) requests… **forwarded to legal counsel**," no schedule (Ex. E) — behavior consistent w/ §9.66(D) caution |
@@ -379,7 +382,8 @@ would answer**, not a finding — and, per §II, do not advance it as fact in te
 
 - **As a filing:** procedurally clean (the (C)(2) affirmation alone puts it ahead of
   most pro se actions), correctly routed, ripe on the merits, with a fixed-at-cap
-  $1,000 damages claim + costs. Fix the Apr 13/14 date and pin the request universe.
+  $1,000 damages claim + costs. Date reconciled to **April 14** (service date per the
+  Ex. A header); still pin the request universe (the county's "four" vs the pleaded three).
 - **As a legal matter:** the merits of *delay = constructive denial* are strong; the
   contest is **§9.66(D)**, and the winning move is the **withholding-log demand** plus
   the **pre-March-20-2026 / non-"assistance" carve-outs**, not a blanket production
