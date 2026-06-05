@@ -265,6 +265,75 @@ who the customer is**, and §9.66(D) is the statute pulling the other way. That 
 frame that makes a single resident's records fight legislatively relevant — it is a live
 instance of the disclosure gap the whole slate is circling.
 
+### The hearing record undercuts §9.66(D)'s own premise
+
+§9.66(D) rests on an unstated assumption: that economic-development information of this
+class is **categorically confidential**, and that the confidentiality serves a **public
+development interest** strong enough to override R.C. 149.43 and even criminalize
+disclosure. The same committee's own hearing record — the **hyperscalers and developers
+testifying under oath-equivalent on 2026-06-04** — contradicts both halves of that premise
+in their own words. This is not advocacy gloss; it is the regulated industry, on the
+legislative record, describing what it actually treats as secret and why. (Transcripts and
+indices: `data/extracted/legal/bosc-committee-hearing-2026-06-04-{am,pm,pm2}.*`; machine-
+transcribed on-device, timestamps are `mm:ss` and should be verified against the audio
+before quotation in a filing.)
+
+**1. The confidentiality is not industry-universal — some operators publish the very data
+§9.66(D) shields.** Asked point-blank by **Sen. Blackshear** whether there was "a reason
+*not* to publicly disclose electric and water usage" (`pm`, ~62:00), the panel *split*:
+
+- **Microsoft** (Daniel Brown): "**No reason.** Historically it has been proprietary
+  information, especially on electricity usage, but Microsoft will report those in our
+  sustainability reports yearly."
+- **Google** (Liz Schwab): "We report all of our operational electricity and water use in
+  our annual sustainability report."
+- **Amazon Web Services** (Craig Sunderman): reports water "**site-by-site**" annually.
+
+A statute that declares an entire category of records confidential as a matter of law is
+hard to defend when the category's largest actors voluntarily publish the same figures.
+Where the legislature has classified information that the affected parties themselves treat
+as disclosable, the **public-records presumption of openness** (which R.C. 149.43 directs
+courts to construe liberally, with exemptions narrowly) should reassert itself.
+
+**2. Where confidentiality *is* asserted, the interest is commercial, not the public
+development interest §9.66(D) invokes.** AWS, on the energy figures it does guard, was
+candid about *why*: that data is "**fairly sensitive market-share information**… you can
+directly tie it back to **cloud market share, which** … **we compete on vigorously**"
+(`pm`, ~63:37). That is an ordinary **trade-secret / competitive-position** interest —
+already addressed by existing, narrowly-tailored public-records law (R.C. 1333.61 trade
+secret; the 149.43 trade-secret line of cases) and by **aggregation**, which Meta's own
+witness proposed as the middle path ("system level as opposed to building by building").
+§9.66(D) is therefore **substantially overbroad** relative to the interest the industry
+actually asserts: it sweeps in the county's own work product, intergovernmental records,
+and the existence of the NDAs themselves to protect what reduces, on the record, to one
+operator's reluctance to reveal a competitive data point it could instead aggregate.
+
+**3. The opacity §9.66(D) protects can defeat even the developer's own knowledge of who
+benefits.** The disclosure gap is not hypothetical. **Vantage Data Centers** — a
+colocation developer — testified (`pm2`, ~31:51) that its tenants own the compute
+("enterprise, cloud, or AI customers") and that, asked who captures the sales-and-use tax
+abatement, it **could not say**: "I am not a tax policy expert… **I do not know** whether
+we directly take advantage and then it's passed through as part of the financing, or
+whether it's taken advantage by the tenants themselves." When even the subsidized party
+cannot trace the public subsidy to its ultimate beneficiary, a confidentiality statute that
+locks the *public* out of that same question does not protect a development interest — it
+**forecloses accountability** for one. By contrast, the Bitcoin miner **MARA** volunteered
+the converse (`pm2`, ~11:38): "the one question I didn't see come up that I thought was
+very pertinent is **who has access to this data?** … we don't have customers in Bitcoin" —
+a witness independently identifying *who-is-the-customer* as the pertinent unasked question.
+
+**Why this matters to the filing.** None of this changes the **temporal (§1.48)** or
+**categorical ("submitted… from an applicant")** wedges in the cure notice — those remain
+the load-bearing arguments. But the hearing record supplies a **public-interest overlay** a
+court can weigh in construing §9.66(D) narrowly and in assessing the equities of mandamus:
+the General Assembly's own fact-finding body heard the regulated industry concede that the
+shielded information is (a) voluntarily disclosed by its largest members, (b) protected, when
+at all, by an ordinary commercial interest that aggregation satisfies, and (c) capable of
+hiding the beneficiary of a public subsidy from the developer itself. That is precisely the
+posture in which a reviewing court should resolve doubt **toward disclosure**, and in which
+the **record-by-record withholding log** (not blanket confidentiality) is the proportionate
+remedy.
+
 ### Presenting this draft as evidence to the General Assembly
 
 The most strategically significant use of this document may not be the courthouse at
