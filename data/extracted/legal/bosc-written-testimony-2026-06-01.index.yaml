@@ -1,0 +1,154 @@
+# ============================================================================
+# INDEX — Cory Parent WRITTEN testimony, Ohio Select Committee on Data Centers
+# ============================================================================
+# The companion submission to the 2026-06-04 oral testimony (the "six
+# recommendations + sources" referenced there). A reviewed extraction over the
+# raw PDF in data/documents/legal. Figures originate in the witness's own
+# footnotes (1-14); 'status' tags how well each is independently corroborated.
+
+source:
+  pdf: documents/legal/bosc-written-testimony-2026-06-01.pdf
+  full_text: extracted/legal/bosc-written-testimony-2026-06-01.md
+  dated: "2026-06-01"
+  delivered_orally: "2026-06-04"
+  pages: 8
+  type: "written interested-party testimony"
+  companion_deck: "Parent - Testimony Documentation - Select Committee on Data Centers - Google Slides.pdf (in ~/Downloads; not yet ingested)"
+
+forum:
+  body: "Ohio General Assembly — Select Committee on Data Centers"
+  co_chairs: ["Holmes", "Chavez"]
+  witness: "Cory Parent — Allen County resident; cloud infrastructure engineer (regulated industries)"
+  posture: "interested party"
+  thesis: "Beneficial-ownership disclosure is the foundational fix — every other safeguard depends on knowing who the customer is."
+
+# ----------------------------------------------------------------------------
+# Argument structure
+# ----------------------------------------------------------------------------
+sections:
+  - title: "The Gap — Ohio subsidizes developers it cannot name"
+    summary: >-
+      Abatements (Dept. of Development), public water/power, and infrastructure go to entities
+      that never disclose ultimate ownership. The BOSC case stated directly: ~$500M, ~15 months
+      under an NDA with a Delaware shell, developer identity withheld, and key engineering specs
+      redacted from a public environmental permit as proprietary.
+    ties: ["mandamus-analysis.md (the records fight)", "watch-items: Bistrozzi Addition LLC / Tilted Gate"]
+  - title: "A common definition the whole code can use"
+    summary: >-
+      Only RC definition of 'computer data center' is R.C. 122.175(A)(2) — program-bound, no
+      size/load/function. Proposed constitutional amendment uses a >25 MW peak/aggregate-load
+      threshold. Recommends one capacity-based, technology-neutral, ownership-aggregating
+      definition across the Code.
+  - title: "Why disclosure is the foundational fix"
+    summary: >-
+      Cost causation (PUCO tariff, HB 706), OCC anti-speculation forecasting, and PJM's
+      NDA-with-identity-sharing reform all depend on knowing who the load is. The 25 MW threshold
+      can't aggregate to a common owner without disclosure; hyperscale routes around per-parcel
+      ceilings by design. 'Cloaked in secrecy.'
+  - title: "What ownership hides — the government-cloud premium"
+    summary: >-
+      GovCloud runs ~20-30% above commercial; FedRAMP + DoD impact-level ladder (IL4/5/6).
+      IL5/IL6 require dedicated, isolated infra + U.S.-persons staffing -> NOT the shared capacity
+      an abatement forecast assumes. Ohio's defense footprint (Wright-Patterson) makes high-auth
+      hosting realistic. Such a facility may be capacity the community is STRUCTURALLY BARRED from
+      using, and a sealed enclave that exports value rather than seeding a local cluster.
+    ties: ["mandamus-analysis.md §III-IV [DEF] strand", "bosc-committee-testimony-2026-06-04 (oral defense Q&A)"]
+  - title: "Two-state contrast (the stakes)"
+    summary: >-
+      Ohio: 13 deals through Sep 2024 (~$5.1B) -> 356 jobs, $31.6M payroll vs ~$281.9M revenue
+      loss (~$1M/job w/ local sales tax). Virginia/Loudoun (taxes equipment as business personal
+      property): ~38% of general fund from data centers on ~4% of parcels, residential rate cut
+      every year for a decade. No Ohio community benefits agreement yet exists.
+  - title: "Technical caution — the sales-tax exemption forecast"
+    summary: >-
+      Exempted equipment refreshes on a 3-5 yr cycle; AI-class per-rack cost up an order of
+      magnitude. Foregone-revenue figures scored on initial fit-out will understate the realized
+      exemption substantially and compound each refresh.
+    ties: ["mandamus-analysis.md §II (122.175 tax-exemption pause)"]
+  - title: "Where the bills get it right / stop short"
+    summary: >-
+      HB 706 (Thomas/Rader) strongest vehicle; HB 646 study commission risks capture without
+      independent facility-level data; EFIA addresses speculation. All incomplete without
+      disclosure. HB 706 should stay on the state side of the FERC/Federal Power Act line.
+  - title: "Disclosure and Standing"
+    summary: >-
+      Witness filed local zoning comment before these facts were public; discloses a recently
+      incorporated govtech startup whose thesis is transparency. Recommendations rest on
+      public-record structural facts.
+
+# ----------------------------------------------------------------------------
+# The six recommendations
+# ----------------------------------------------------------------------------
+recommendations:
+  - "1. Condition any public incentive/abatement/infrastructure commitment on disclosure of the developer's beneficial owner + controlling parent (cf. Corporate Transparency Act; Ohio procurement). The foundational fix."
+  - "2. Advance HB 706 anchored in retail service terms, aligned with FERC's PJM framework."
+  - "3. Use HB 646's commission to close the water-visibility gap (Director Mertz) — facility-level water metering/reporting — and a load standard on local grid headroom, not a flat MW figure."
+  - "4. Require near-real-time facility-level WUE/PUE reporting + disclosure of federal authorization posture (FedRAMP/DoD impact level, government-hosted equipment/capacity)."
+  - "5. Build on forecasting/anti-speculation work so investment rests on demonstrated need; protect existing consumers from stranded costs."
+  - "6. Treat each abatement as a negotiation: condition incentives on enforceable community benefits (employment, resource use, local investment)."
+
+# ----------------------------------------------------------------------------
+# Bills / instruments referenced
+# ----------------------------------------------------------------------------
+legislation:
+  - "HB 706 (Reps. David Thomas & Tristan Rader) — cost-causation consumer protection; extends AEP Ohio tariff statewide"
+  - "HB 646 — data-center study commission"
+  - "HB 695 (Reps. Brian Stewart & Adam Bird, Mar 2026) — prohibit certain local officials from signing economic-development NDAs"
+  - "Electricity Forecast Integrity Act (EFIA) — anti-speculation forecasting"
+  - "Proposed constitutional amendment (Ohio Prohibition of Construction of a Data Center Amendment, 2026; §36a, Art. II) — >25 MW threshold"
+  - "PUCO data center tariff (AEP Ohio) — cost causation, PUCO-confirmed"
+  - "R.C. 122.175 — data-center sales/use tax exemption + the only RC 'computer data center' definition"
+
+# ----------------------------------------------------------------------------
+# Key figures — corroboration status
+# ----------------------------------------------------------------------------
+claims:
+  - claim: "American Township: ~$500M data center, ~15 months under NDA with a Delaware shell; permit specs redacted as proprietary"
+    status: verified
+    note: "Corpus + reporting; the redacted-permit point ties to the Shawnee II / SWPTI permit discrepancy in the PRR (Ex. C)."
+  - claim: "GovCloud capacity runs ~20-30% above commercial rates"
+    status: witness-sourced
+    note: "Footnote 6: AWS GovCloud m5.large = 26% premium; BCG up to 30% for sovereign cloud. Plausible, third-party sourced."
+  - claim: "Google Distributed Cloud achieved DoD IL6 (May 2025); air-gapped appliance holds IL5; AF Rapid Sustainment Office an early customer"
+    status: verified
+    note: "Footnotes 7-8; corroborates the [DEF] strand and the oral testimony's IL-6 statement."
+  - claim: "13 Ohio data-center deals through Sep 2024 (~$5.1B): 356 jobs, $31.6M payroll vs ~$281.9M revenue loss"
+    status: witness-sourced
+    note: "Footnote 9: Policy Matters Ohio Jan 2025; ODOD data. ~$1M/job with local sales-tax losses."
+  - claim: "Loudoun County VA draws ~38% of general fund from data centers on ~4% of commercial parcels"
+    status: witness-sourced
+    note: "Footnote 10: Loudoun County official data; Policy Matters Ohio; WOUB."
+  - claim: "Ohio provided ~$554.9M in data-center sales-tax exemptions in 2024; no tangible personal property tax"
+    status: witness-sourced
+    note: "Footnote 11. Consistent with the statewide exemption-cost story (DeWine pause; ~$1.6B cumulative)."
+  - claim: "AI racks 40-120+ kW; GPU servers ~$200k-$450k (H100) to >$500k (B200); 3-5 yr refresh"
+    status: industry-consensus
+    note: "Footnote 12. Ties to the BOSC cooling-basis (liquid cooling; 36 cooling towers)."
+  - claim: "No community benefits agreement has been negotiated for any Ohio data center"
+    status: witness-assertion
+    note: "Footnote 10; as of submission. NDA-governed negotiations present finalized terms."
+
+entities_named:
+  - "Wright-Patterson Air Force Base; Air Force Rapid Sustainment Office; GDIT; Google Public Sector (Exercise Mobility Guardian 2025)"
+  - "PUCO; Ohio Consumers' Counsel; PJM; FERC"
+  - "Department of Development; Ohio Tax Credit Authority; FinCEN"
+  - "Reps. Thomas & Rader (HB 706); Reps. Stewart & Bird (HB 695); Director Mertz (water)"
+  - "Loudoun County, Virginia (comparison)"
+
+# ----------------------------------------------------------------------------
+# Cross-references + significance
+# ----------------------------------------------------------------------------
+cross_references:
+  - "bosc-committee-testimony-2026-06-04.index.yaml — the oral delivery of this submission (the '6 recommendations + sources' at 05:08)"
+  - "docs/legal/mandamus-analysis.md — the records fight that produced the disclosure evidence; §II legislative-evidence thesis"
+  - "docs/HYDROLOGY.md — recommendation 3 (facility-level water metering / grid-headroom load standard) is the policy form of the BOSC water-loop findings"
+
+significance: >-
+  This is the substantive core of the 'present the draft as evidence to the General Assembly'
+  move: a disciplined, heavily-sourced interested-party submission that (1) names the BOSC NDA/
+  shell-company gap as the motivating case, (2) reframes the defense-cloud angle as an economic-
+  disclosure problem (who can even USE the facility) rather than a speculation, holding the same
+  'site-level end use is unknown' discipline as the corpus, and (3) lands six concrete legislative
+  asks. Notably advances beyond the oral testimony: the two-state fiscal contrast (Ohio vs
+  Loudoun), the refresh-cycle critique of the exemption forecast, the HB 646 capture risk, and the
+  FERC/state-line note on HB 706. The companion Google Slides deck is a candidate next ingest.
