@@ -480,6 +480,11 @@ it (the §1.48 wedge). Tags: **[LAW]** statute/legislature · **[BOSC]** project
 campaign · **[DEF]** defense/DoD nexus. Confidence: `[v]` verified (corpus/web/filing) ·
 `[i]` inference/approximate · `[?]` event known to have occurred, exact date unknown.
 
+> Many `[BOSC]` resolution events below are now corroborated at the page level against the
+> Commissioners' own published minutes — `data/extracted/commissioners/minutes/` (634 meetings,
+> 28 BOSC / 8 Bistrozzi page-hits). E.g. Res #417-25 (NDA) `M052725.pdf:3`, #304-25 (CRA) `M041725.pdf:1,5`,
+> #548-25 (CRA) `M071025.pdf:4`; the deferred forcemain resolutions #113-26/#136-26 sit at `M021926.pdf:3`/`M022626.pdf:3`.
+
 | Date | | Event |
 |------|---|-------|
 | 1996 | [BOSC] `[v]` | Federal CWA consent decree, *U.S. & Ohio v. Allen Co. BOCC* (N.D. Ohio 3:96 CV 7134) — Shawnee II driver; still governs SSO obligations |
@@ -552,4 +557,6 @@ HB 184 / HB 695 and §9.66(D) ([Policy Matters Ohio](https://policymattersohio.o
 data-center tax-exemption pause ([The Hill](https://thehill.com/homenews/state-watch/5900974-data-center-tax-exemption-ohio-mike-dewine/));
 Google Lima project ([DatacenterDynamics](https://www.datacenterdynamics.com/en/news/google-confirmed-as-company-behind-500m-data-center-in-lima-ohio/),
 [LimaOhio.com](https://www.limaohio.com/top-stories/2026/03/16/google-officially-behind-data-center-project/));
-*Henderson v. Washington Court House*, 2026-Ohio-110. Full case texts not independently verified._
+*Henderson v. Washington Court House*, 2026-Ohio-110. Full case texts not independently verified.
+Primary corpus for the `[BOSC]` resolution strand: `data/extracted/commissioners/minutes/` (Allen County
+Commissioners agendas + minutes, 2024–2026)._
