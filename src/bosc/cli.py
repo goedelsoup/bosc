@@ -6,6 +6,7 @@ Commands:
     bosc reconcile <file>       # arithmetic checks over a summary extraction
     bosc ask "<question>"       # ask the research agent
     bosc extract <doc-id> ...   # run an agentic extraction (seam for your data)
+    bosc site build             # stage the GitHub Pages site under web/
 """
 
 from __future__ import annotations
@@ -563,6 +564,48 @@ def extract(
         console.print(f"[green]Saved[/] {path}")
     else:
         console.print(extraction.to_yaml())
+
+
+site_app = typer.Typer(
+    name="site",
+    help="Generate / preview the GitHub Pages site from the corpus.",
+    no_args_is_help=True,
+    add_completion=False,
+)
+app.add_typer(site_app, name="site")
+
+
+@site_app.command("build")
+def site_build() -> None:
+    """Stage the static site under web/ from data/extracted + docs (regenerable)."""
+    from bosc.site import build_site
+
+    result = build_site()
+    console.print(
+        f"[green]Built[/] {result.web_dir} — {result.n_records} records "
+        f"({len(result.record_pages)} kind pages), {result.n_events} timeline events, "
+        f"{result.n_entities} entities, {result.narrative_files} narrative/artifact files."
+    )
+    available = sum(1 for e in result.exhibits if e.available)
+    if result.exhibits:
+        console.print(
+            f"[dim]exhibits: {available}/{len(result.exhibits)} available (rest need `git lfs pull`)[/]"
+        )
+    console.print("[dim]Next:[/] uv run mkdocs serve   [dim](or `bosc site serve`)[/]")
+
+
+@site_app.command("serve")
+def site_serve(
+    build: bool = typer.Option(True, "--build/--no-build", help="Rebuild web/ before serving."),
+) -> None:
+    """Build (unless --no-build) then run `mkdocs serve` for a local preview."""
+    import subprocess
+
+    if build:
+        from bosc.site import build_site
+
+        build_site()
+    raise typer.Exit(subprocess.call(["uv", "run", "mkdocs", "serve"]))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,42 @@
+# Curated exhibits — primary-source PDFs published as downloadable files on the
+# site. `source` is relative to data/documents (Git-LFS-tracked). For a large
+# bundle, `pages` (0-based inclusive range) slices just those sheets so the full
+# document is never republished. A source that isn't pulled locally is listed as
+# "unavailable" rather than failing the build. Edit freely — this is the allowlist.
+exhibits:
+  - slug: mutual-nda-bistrozzi-county
+    title: "Mutual NDA — Bistrozzi LLC ↔ Allen County"
+    source: legal/prr-production-2026-06-05/NDA.pdf
+    caption: "Resolution #417-25 (May 27, 2025); executed for Bistrozzi by Scott J. Ziance (Vorys), July 1, 2025."
+
+  - slug: cra-abatement-agreement
+    title: "Community Reinvestment Area (CRA) agreement"
+    source: legal/prr-production-2026-06-05/CRA.pdf
+    caption: "75% abatement instrument produced in the 2026-06-05 PRR batch."
+
+  - slug: prr-response-letter-1
+    title: "PRR response letter #1 (cover)"
+    source: legal/prr-production-2026-06-05/Letter-Record Request Response 1.pdf
+    caption: "Brittany N. Woods, Clerk of the Board — June 5, 2026; the first rolling response."
+
+  - slug: bistrozzi-air-permit-data-center
+    title: 'Ohio EPA air permit — "Bistrozzi LLC Data Center"'
+    source: permits/bistrozzi-permits/3987141.pdf
+    pages: "0-2"
+    caption: "Draft Permit-to-Install P0138965 naming the data-center facility (first 3 pp.)."
+
+  - slug: sos-bistrozzi-addition-llc
+    title: "Secretary of State filing — Bistrozzi Addition LLC"
+    source: permits/bistrozzi-permits/sos-bistrozzi-addition-llc-2026-04-08.pdf
+    caption: "Delaware foreign-LLC registration; organizer Scott J. Ziance, agent C T Corporation."
+
+  - slug: opc-roadwork-estimates-tetratech
+    title: "OPC roadwork estimates (Tetra Tech)"
+    source: aedg/PRR-01-bundle.ocr.pdf
+    pages: "317-327"
+    caption: "The six roundabout Opinions of Probable Cost (summary + detail sheets) sliced from the PRR-01 bundle."
+
+  - slug: bosc-testimony-deck
+    title: "BOSC testimony deck (2026-06-01)"
+    source: legal/bosc-testimony-deck-2026-06-01.pdf
+    caption: "Slides accompanying the written testimony to the select committee."

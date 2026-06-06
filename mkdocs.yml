@@ -1,0 +1,87 @@
+# MkDocs configuration for the BOSC public-records site.
+#
+# The docs tree (`web/`) is GENERATED — run `bosc site build` first, which stages
+# it from data/extracted + docs/ and the cross-document layer. Then `mkdocs serve`
+# (or `bosc site serve`) previews it; `mkdocs build` writes `site/`. Both web/ and
+# site/ are git-ignored and regenerable.
+#
+# Visibility: this is a PRIVATE / unlisted draft. Nothing auto-publishes — the
+# Pages workflow is manual (workflow_dispatch). Review before going public.
+
+site_name: Project BOSC — the public record
+site_description: >-
+  A browsable, citable view of the BOSC public-records corpus: primary documents
+  read from scans into structured data, plus the cross-document analysis.
+docs_dir: web
+site_dir: site
+use_directory_urls: false   # 1:1 source-path → URL keeps the mirrored cross-links predictable
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - content.code.copy
+    - search.highlight
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+extra_css:
+  - assets/extra.css
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Home: index.md
+  - Dossier:
+      - The Dossier: docs/DOSSIER.md
+      - Research course: docs/COURSE.md
+  - Legal:
+      - Mandamus analysis: docs/legal/mandamus-analysis.md
+      - Proponent analysis: docs/legal/proponent-analysis.md
+      - PRR production (2026-06-05): data/extracted/legal/bosc-prr-production-2026-06-05.analysis.md
+      - Web-vendor audit: data/extracted/legal/allen-county-web-vendor-audit.md
+      - County-level sites: data/extracted/legal/allen-county-level-sites.md
+      - Written testimony (2026-06-01): data/extracted/legal/bosc-written-testimony-2026-06-01.md
+      - Testimony deck: data/extracted/legal/bosc-testimony-deck-2026-06-01.md
+      - Committee testimony (2026-06-04): data/extracted/legal/bosc-committee-testimony-2026-06-04.transcript.md
+      - Hearing — morning: data/extracted/legal/bosc-committee-hearing-2026-06-04-am.transcript.md
+      - Hearing — afternoon: data/extracted/legal/bosc-committee-hearing-2026-06-04-pm.transcript.md
+      - Hearing — afternoon (cont.): data/extracted/legal/bosc-committee-hearing-2026-06-04-pm2.transcript.md
+  - Records:
+      - Overview: records/index.md
+      - Deeds: records/deeds.md
+      - Permits — Ohio EPA / USACE: records/permits-epa.md
+      - Permits — NPDES: records/permits-npdes.md
+      - Business filings — SoS: records/permits-sos.md
+      - Engineering plans: records/plans.md
+      - Cost estimates (OPC): records/opc.md
+  - Timeline: timeline.md
+  - Entity graph: entities.md
+  - Exhibits: exhibits.md
+  - Hydrology: docs/HYDROLOGY.md

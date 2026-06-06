@@ -1,0 +1,59 @@
+# Build & deploy the BOSC site to GitHub Pages — MANUAL ONLY.
+#
+# This workflow never runs on push. It is `workflow_dispatch` (a button in the
+# Actions tab) so nothing publishes until you explicitly trigger it — the site is
+# a private/unlisted draft for now.
+#
+# NOTE ON VISIBILITY: GitHub Pages served from a PRIVATE repo is only access-
+# controlled on GitHub Pro / Team / Enterprise. On a free account, enabling Pages
+# makes the built site publicly reachable. Confirm your plan/visibility before
+# running the deploy job.
+
+name: Pages (manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: "Deploy to GitHub Pages after building (else build-only)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true   # pulls the curated exhibit PDFs so they can be published
+      - uses: astral-sh/setup-uv@v5
+      - name: Install (with docs extra)
+        run: uv sync --extra docs
+      - name: Generate the site source (web/)
+        run: uv run bosc site build
+      - name: Build the static site (site/)
+        run: uv run mkdocs build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    # Only deploys when you tick the "deploy" input; otherwise the run is build-only.
+    if: ${{ inputs.deploy }}
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

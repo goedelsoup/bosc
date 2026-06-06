@@ -39,3 +39,9 @@ data/scratch/
 # Agent run logs / transcripts
 runs/
 *.log
+
+# Generated GitHub Pages site (`bosc site build` → web/, `mkdocs build` → site/).
+# Both are regenerable from data/extracted + docs; the generator is the source.
+# Anchored to the repo root so they don't match src/bosc/site/ or data/site/.
+/web/
+/site/

@@ -1,0 +1,26 @@
+/* Evidence-discipline tags used throughout the corpus markdown.
+   The source files write [verified], [inference], [filename], [open] inline;
+   these rules tint them so the reader can see the confidence at a glance.
+   (Applied via a lightweight client-side wrap in MkDocs Material themes.) */
+
+:root {
+  --bosc-verified: #2e7d32;
+  --bosc-inference: #b26a00;
+  --bosc-open: #6a1b9a;
+}
+
+/* Provenance footers (rendered as emphasis at the end of each record). */
+.md-typeset em > code {
+  font-size: 0.85em;
+}
+
+/* Make the Mermaid entity graph breathe. */
+.md-typeset .mermaid {
+  margin: 1.2em 0;
+  text-align: center;
+}
+
+/* Tighten the dense record tables. */
+.md-typeset table:not([class]) {
+  font-size: 0.78rem;
+}

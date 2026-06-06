@@ -4,7 +4,27 @@
 |-----------|-----------|----------|
 | `documents/` | No (git-ignored) | Raw source material: PRR PDF bundles, scans, images. Immutable inputs. |
 | `extracted/` | **Yes** | Reviewed, structured extractions (`*.opc.yaml`). The durable artifact. |
+| `site/` | **Yes** | Site config — currently `exhibits.yaml`, the curated PDF allowlist. |
 | `cache/`, `scratch/` | No | Regenerable intermediate working files. |
+
+## Publishing (GitHub Pages)
+
+`bosc site build` stages a [MkDocs](https://www.mkdocs.org/) source tree under
+`web/` from `extracted/` + the repo `docs/` + the cross-document layer (timeline,
+entity graph); `mkdocs build` turns it into `site/`. Both `web/` and `site/` are
+git-ignored and fully regenerable — the generator (`src/bosc/site/`) is the source.
+
+```bash
+uv sync --extra docs       # install the MkDocs toolchain
+bosc site build            # generate web/
+bosc site serve            # rebuild + local preview (mkdocs serve)
+```
+
+Curated source PDFs are published as **Exhibits**; edit
+[`site/exhibits.yaml`](site/exhibits.yaml) to add/remove them (page-range slices
+are cut from large bundles, so the full file is never republished). Deployment is
+**manual** (`.github/workflows/pages.yml`, `workflow_dispatch`) — the site is a
+private/unlisted draft until you choose to publish.
 
 ## Extraction file conventions
 

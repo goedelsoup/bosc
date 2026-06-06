@@ -35,6 +35,12 @@ dev = [
     "pytest-asyncio>=0.23",
     "types-PyYAML>=6.0",
 ]
+# Static-site publishing (the `bosc site` command + `mkdocs`); not needed at runtime.
+docs = [
+    "mkdocs>=1.6",
+    "mkdocs-material>=9.5",
+    "pymdown-extensions>=10.7",
+]
 
 [project.scripts]
 bosc = "bosc.cli:app"
