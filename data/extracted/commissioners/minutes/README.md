@@ -26,8 +26,17 @@ Raw PDFs are the immutable source under
 ## Shape
 
 - **634 meetings** = 322 agendas (`A*`) + 308 minutes (`M*`); 2,283 OCR pages.
-- `meeting_date` is parsed from the filename (`A011624` → 2024-01-16) — mostly 2024–2026; a few
-  out-of-range values are parse artifacts, treat the filename as ground truth.
+- The corpus is **cleanly 2024–2026** — there are **no 2023 (or earlier) meetings** (verified via
+  filename date, OCR-extracted date, and the WordPress `/uploads/YYYY/MM/` source path). For the
+  June 2023 / Oct 2023 Commissioners minutes, see the two backfilled files in `raw/` and the wider
+  2023 coverage gap noted there.
+- `meeting_date` is parsed from the filename (`A011624` → 2024-01-16, format `[AM]MMDDYY`); the
+  **filename is the meeting date** (the `/uploads/` path is *when posted*, which lags for minutes —
+  not a meeting date). Three filenames carry a typo extra digit and mis-parse to a bogus old year —
+  **treat these as their real dates**, not as 2002/2022:
+  - `A0101024.pdf` → **Oct 10, 2024** (intended `A101024`; not 2002)
+  - `A0404024.pdf` → **Apr 4, 2024** (intended `A040424`; not 2002)
+  - `M0115226.pdf` → **Jan 15, 2026** (intended `M011526`; not 2022)
 - **139 meetings carry ≥1 BOSC-relevant reference.** Pre-extracted ref counts:
 
   | ref_type | n | | ref_type | n |
