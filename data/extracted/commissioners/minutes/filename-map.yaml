@@ -1,0 +1,97 @@
+# Canonical-name / date map for malformed minutes & agenda filenames.
+#
+# The source binaries under data/documents/commissioners/minutes/raw/ keep their
+# AS-RECEIVED names (chain of custody). This map records the corpus-canonical
+# name (M<MMDDYY>.pdf minutes / A<MMDDYY>.pdf agenda, "-Special" for special
+# sessions) and the meeting date VERIFIED from each file's own content, so the
+# indexer can pair them without renaming evidence. Produced by the corpus
+# completeness audit — see ../../legal/corpus-completeness-audit.md §2.
+#
+# evidence: native_text = PDF text layer (pdftotext) | ocr = tesseract on a 200dpi
+#           render of page 1 | filename = unambiguous date already in the name.
+meta:
+  subject: Commissioners minutes/agenda filename normalization
+  generated_at: 2026-06-06
+  source_dir: data/documents/commissioners/minutes/raw/
+  method: per-file date read from page 1 (text layer or OCR); collisions checked
+  policy: non-destructive — originals kept in place; this is an alias layer only
+
+aliases:
+  - file: A0101024.pdf
+    canonical: A101024-Special.pdf
+    date: 2024-10-10
+    type: agenda
+    session: special
+    evidence: native_text
+    note: 7-digit date typo (stray leading zero).
+  - file: A0404024.pdf
+    canonical: A040424.pdf
+    date: 2024-04-04
+    type: agenda
+    session: regular
+    evidence: native_text
+    note: 7-digit date typo. Pairs the otherwise-orphan M040424 minutes.
+  - file: A20524-Special.pdf
+    canonical: A020524-Special.pdf
+    date: 2024-02-05
+    type: agenda
+    session: special
+    evidence: native_text
+    note: 5-digit date (dropped leading zero).
+  - file: A22124-Special-1.pdf
+    canonical: A022124-Special.pdf
+    date: 2024-02-21
+    type: agenda
+    session: special
+    evidence: native_text
+    note: 5-digit date; trailing "-1" disambiguator in the original.
+  - file: A22824-Special.pdf
+    canonical: A022824-Special.pdf
+    date: 2024-02-28
+    type: agenda
+    session: special
+    evidence: native_text
+  - file: M0115226.pdf
+    canonical: M011526.pdf
+    date: 2026-01-15
+    type: minutes
+    session: general
+    evidence: ocr
+    note: 7-digit date typo; image-only scan, date read by OCR ("January 15, 2026").
+  - file: Board-of-Commissioners-General-Session-September-9-2025-Meeting-Minutes.pdf
+    canonical: M090925.pdf
+    date: 2025-09-09
+    type: minutes
+    session: general
+    evidence: ocr
+    note: Likely the county's as-received long-form name; date confirmed by OCR.
+  - file: CANCELLED-MEETING.pdf
+    canonical: A012926-CANCELLED.pdf
+    date: 2026-01-29
+    type: notice
+    session: cancelled
+    evidence: native_text
+    note: >
+      Cancellation notice for the 2026-01-29 agenda meeting (next meeting 2026-02-03).
+      Not an agenda/minutes record; explains the absence of a 2026-01-29 meeting.
+
+removed:
+  - file: ACC-M102423.pdf
+    reason: byte-identical duplicate of M102423.pdf (md5 992aaac38da7c920b0cb0a5f27bc548a)
+    action: git rm (the canonical M102423.pdf is retained)
+
+refiled:   # not meeting records — moved out of minutes/raw/
+  - file: Govt.-Structure-Org-Chart-1.pdf
+    to: data/documents/commissioners/reference/
+    what: county government org chart (reference handout)
+  - file: Mayors-and-Zoning-Persons.pdf
+    to: data/documents/commissioners/reference/
+    what: contact list
+  - file: Township-Trustees-Fiscal-Officers.pdf
+    to: data/documents/commissioners/reference/
+    what: contact list
+
+gaps_closed:   # apparent minutes/agenda gaps explained by the above
+  - {date: 2024-04-04, by: A0404024.pdf, was: "minutes present, agenda appeared missing"}
+  - {date: 2025-09-09, by: Board-of-Commissioners-General-Session-September-9-2025-Meeting-Minutes.pdf, was: "agenda present, minutes appeared missing"}
+  - {date: 2026-01-29, by: CANCELLED-MEETING.pdf, was: "no meeting — cancelled"}
