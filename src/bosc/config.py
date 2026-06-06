@@ -99,6 +99,12 @@ class Settings(BaseSettings):
         return self.data_dir / "reference"
 
     @property
+    def people_dir(self) -> Path:
+        """Curated per-individual profiles (markdown + frontmatter) — the entity
+        graph's hand-written detail store. Committed."""
+        return self.data_dir / "people"
+
+    @property
     def scenarios_dir(self) -> Path:
         """Reviewed hydrology scenario artifacts (committed). Reserved for Increment 3."""
         return self.data_dir / "scenarios"

@@ -87,8 +87,13 @@ def _mermaid(graph: EntityGraph) -> list[str]:
     return lines
 
 
-def render_entities(graph: EntityGraph) -> str:
-    """Render the entity graph: Mermaid diagram + entity & relationship tables."""
+def render_entities(graph: EntityGraph, *, profile_slugs: dict[str, str] | None = None) -> str:
+    """Render the entity graph: Mermaid diagram + entity & relationship tables.
+
+    ``profile_slugs`` maps an entity key to a published person-profile slug; matching
+    entities link their name to ``people/<slug>.md`` (the curated detail store).
+    """
+    profile_slugs = profile_slugs or {}
     lines = [
         "# Entity graph",
         "",
@@ -111,8 +116,10 @@ def render_entities(graph: EntityGraph) -> str:
     for ent in sorted(graph.entities.values(), key=lambda e: (e.kind, e.key)):
         roles = ", ".join(f"{r} x{n}" for r, n in ent.roles.most_common())
         signals = ", ".join(sorted(ent.signals)) or "—"
+        slug = profile_slugs.get(ent.key)
+        name = f"[{_esc(ent.display)}](people/{slug}.md)" if slug else _esc(ent.display)
         lines.append(
-            f"| {_esc(ent.display)} | {_esc(ent.kind)} | {_esc(ent.classification)} "
+            f"| {name} | {_esc(ent.kind)} | {_esc(ent.classification)} "
             f"| {_esc(roles)} | {_esc(signals)} |"
         )
     lines += [

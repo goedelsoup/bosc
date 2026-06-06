@@ -789,6 +789,44 @@ def parcels(
     raise typer.Exit(1)
 
 
+@app.command(name="people")
+def people() -> None:
+    """List the curated individual profiles (the entity graph's detail store).
+
+    Shows which individuals are tracked, which get expanded research (and so render
+    on the site), and whether each resolves to a node in the entity graph.
+    """
+    from bosc.people import load_people
+    from bosc.pipeline.corpus import load_corpus
+    from bosc.pipeline.entities import build_entity_graph
+
+    settings = get_settings()
+    profiles = load_people(settings.people_dir)
+    if not profiles:
+        console.print(
+            f"[yellow]No profiles[/] under {settings.people_dir}. "
+            "Add `data/people/<slug>.md` files with a frontmatter header."
+        )
+        return
+
+    egraph = build_entity_graph(load_corpus(settings))
+
+    table = Table("Individual", "Expanded", "In graph", "Roles", "Sources")
+    for prof in profiles:
+        in_graph = "✓" if egraph.get(prof.entity_key) is not None else "—"
+        expanded = "[green]✓[/]" if prof.expanded else "[dim]—[/]"
+        roles = ", ".join(prof.front.roles) or "—"
+        table.add_row(prof.name, expanded, in_graph, roles, str(len(prof.front.sources)))
+    console.print(table)
+
+    n_expanded = sum(1 for p in profiles if p.expanded)
+    console.print(
+        f"\n[bold]{len(profiles)}[/] tracked individuals — "
+        f"[green]{n_expanded}[/] with expanded research (published to the site), "
+        f"{len(profiles) - n_expanded} tracked-only."
+    )
+
+
 site_app = typer.Typer(
     name="site",
     help="Generate / preview the GitHub Pages site from the corpus.",

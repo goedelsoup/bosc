@@ -16,11 +16,13 @@ from pathlib import Path
 
 from bosc.config import Settings, get_settings
 from bosc.logging import get_logger
+from bosc.people import load_people
 from bosc.pipeline.corpus import load_corpus
 from bosc.pipeline.entities import build_entity_graph
 from bosc.pipeline.timeline import build_timeline
 from bosc.site import exhibits as exhibits_mod
 from bosc.site import graph as graph_mod
+from bosc.site import people as people_mod
 from bosc.site import records as records_mod
 
 log = get_logger(__name__)
@@ -40,6 +42,8 @@ class BuildResult:
     n_entities: int = 0
     n_relationships: int = 0
     exhibits: list[exhibits_mod.Exhibit] = field(default_factory=list)
+    people_pages: list[people_mod.PersonPage] = field(default_factory=list)
+    n_people_tracked: int = 0
 
 
 def _mirror_tree(
@@ -177,7 +181,17 @@ def build_site(settings: Settings | None = None, web_dir: Path | None = None) ->
     result.n_entities = len(egraph.entities)
     result.n_relationships = len(egraph.relationships)
     (web / "timeline.md").write_text(graph_mod.render_timeline(events), encoding="utf-8")
-    (web / "entities.md").write_text(graph_mod.render_entities(egraph), encoding="utf-8")
+
+    # Curated individual profiles — the entity graph's detail store. Only the
+    # expanded-research ones are published; the graph deep-links to those.
+    people = load_people(settings.people_dir)
+    result.n_people_tracked = len(people)
+    profile_slugs = {
+        p.entity_key: p.slug for p in people if p.expanded and egraph.get(p.entity_key) is not None
+    }
+    (web / "entities.md").write_text(
+        graph_mod.render_entities(egraph, profile_slugs=profile_slugs), encoding="utf-8"
+    )
 
     # 4. Per-kind record pages + their index.
     pages = records_mod.render_record_pages(settings.extracted_dir, web / "records")
@@ -190,7 +204,17 @@ def build_site(settings: Settings | None = None, web_dir: Path | None = None) ->
     (web / "exhibits.md").write_text(exhibits_mod.render_exhibits(exhibits), encoding="utf-8")
     result.exhibits = exhibits
 
-    # 6. Landing page (written last; it reports the counts gathered above).
+    # 6. Individual profiles — render only the expanded-research ones, plus an index.
+    people_dst = web / "people"
+    people_dst.mkdir(parents=True, exist_ok=True)
+    people_pages = people_mod.render_people_pages(people, people_dst, egraph=egraph)
+    (people_dst / "index.md").write_text(
+        people_mod.render_people_index(people_pages, tracked=result.n_people_tracked),
+        encoding="utf-8",
+    )
+    result.people_pages = people_pages
+
+    # 7. Landing page (written last; it reports the counts gathered above).
     (web / "index.md").write_text(_render_home(result), encoding="utf-8")
 
     log.info(
