@@ -1,0 +1,35 @@
+# Allen County (OH) Board of Elections — source PDF provenance
+# Each file below was downloaded verbatim from the canonical Dropbox link that the
+# Allen County BOE results post links to. As-of capture date: 2026-06-06.
+# Posting page for 2024/2019: https://allen.boe.ohio.gov/category/election-results/
+# Posting page for 2026 primary: https://allen.boe.ohio.gov/2026/05/21/official-results-may-5-2026-primary-election/
+# Posting page for 2024 general: https://allen.boe.ohio.gov/2024/11/18/official-results-november-5-2024-general/
+# Posting page for 2019 general: https://allen.boe.ohio.gov/2019/11/25/official-results-2019-general-election/
+# Files retain the BOE's original filenames except 2026 most-populous, which were
+# renamed for brevity (original long names preserved here). Checksums in SHA256SUMS.txt.
+#
+# Filename notes (as-received -> local):
+#   2024_GEN_PRECINCT_0FFICIAL.pdf (BOE typo, zero for O) -> 2024_GEN_PRECINCT_OFFICIAL.pdf
+#   "May-5-2026-Allen-Cty.-Primary-Special-Election-Official-Canvass-Most-Populous-Candidate-Races.pdf"
+#       -> 2026_PRIMARY_MOST_POPULOUS_CANDIDATES.pdf
+#   "May-5-2026-Allen-County-Primary-Special-Election-Official-Canvass-Most-Populous-Questions-and-Issues.pdf"
+#       -> 2026_PRIMARY_MOST_POPULOUS_ISSUES.pdf
+# These are reference copies, NOT data/documents evidence; the canonical source name
+# is recorded in the source_url column below. Byte content is unaltered (see checksums).
+
+local_filename	source_url
+2024_Gen_Audit_Results.pdf	https://www.dropbox.com/scl/fi/hospb1wpr10bav35hidrl/2024_Gen_Audit_Results.pdf?rlkey=mk9xw3bihdq0p4zerfiteecpf
+2024_GEN_SUMMARY_OFFICIAL.pdf	https://www.dropbox.com/scl/fi/br9hti9sdc4gx722wo4t8/2024_GEN_SUMMARY_OFFICIAL.pdf?rlkey=8nvqqehvgxu299nzrfdt5j93t
+2024_GEN_PRECINCT_OFFICIAL.pdf	https://www.dropbox.com/scl/fi/phehe496hqh0brkwwt5o0/2024_GEN_PRECINCT_0FFICIAL.pdf?rlkey=q1lkfe30r18uxcm9rtsa5bvni
+2024_SOVC_OFFICIAL.pdf	https://www.dropbox.com/scl/fi/vjkuoxakxks3bqtoocbmv/2024_SOVC_OFFICIAL.pdf?rlkey=vyiqxlj04so59mgrczjc53gch
+2024_GEN_OFFICIAL_CANDIDATES_MOST_POPULOUS.pdf	https://www.dropbox.com/scl/fi/qvfftcshkybwut7p6k4bn/2024_GEN_OFFICIAL_CANDIDATES_MOST_POPULOUS.pdf?rlkey=dtgxqhjeih080ltgz0fp27lsc
+2024_GEN_OFFICIAL_QUESTIONS-ISSUES_MOST_POPULOUS.pdf	https://www.dropbox.com/scl/fi/boiy9tam5zygd3iy6rlz9/2024_GEN_OFFICIAL_QUESTIONS-ISSUES_MOST_POPULOUS.pdf?rlkey=rsvp6x63qt6zv10vrouk2a506
+2026_PRIMARY_SUMMARY_OFFICIAL.pdf	https://www.dropbox.com/scl/fi/9v6yoqdme68qxf27fcxyg/2026_PRIMARY_SUMMARY_OFFICIAL.pdf?rlkey=vpdfzkky8uhilez5azvqvncmi
+2026_PRIMARY_SOVC_OFFICIAL.pdf	https://www.dropbox.com/scl/fi/rn5th06sg4syllb774i2x/2026_PRIMARY_SOVC_OFFICIAL.pdf?rlkey=r416wljldh13bsf8vri5x5q7k
+2026_PRIMARY_MOST_POPULOUS_CANDIDATES.pdf	https://www.dropbox.com/scl/fi/ekhur5bd2trttkg9dt4h1/May-5-2026-Allen-Cty.-Primary-Special-Election-Official-Canvass-Most-Populous-Candidate-Races.pdf?rlkey=nvasrrbxi2yfl2vljei2kpcxd
+2026_PRIMARY_MOST_POPULOUS_ISSUES.pdf	https://www.dropbox.com/scl/fi/rkxa1hv93z27n93og7q48/May-5-2026-Allen-County-Primary-Special-Election-Official-Canvass-Most-Populous-Questions-and-Issues.pdf?rlkey=mnf24td02rpb49d5l4qtw7ohk
+G2019_Audit.pdf	https://www.dropbox.com/s/laxgbc41ht7vlx7/G2019_Audit.pdf
+G2019_OFFICIAL_SUMMARY.pdf	https://www.dropbox.com/s/xt2eorrpydx7h7s/G2019_OFFICIAL_SUMMARY.pdf
+G2019_OFFICIAL_PRECINCT.pdf	https://www.dropbox.com/s/38dtfsp41lcktvl/G2019_OFFICIAL_PRECINCT.pdf
+G2019_Official_Overlaps.pdf	https://www.dropbox.com/s/8930qujgt0uey9o/G2019_Official_Overlaps.pdf
+G2019_Recount_PandoraGilboaSchoolBoard.pdf	https://www.dropbox.com/s/8x2ltnibw9cmqy0/G2019_Recount_PandoraGilboaSchoolBoard.pdf
