@@ -1,0 +1,29 @@
+{
+  "params": {
+    "_service": "get_facilities",
+    "output": "JSON",
+    "p_huc": "04100008",
+    "p_act": "Y"
+  },
+  "fetched_at": "2026-06-06T13:45:11.143595+00:00",
+  "payload": {
+    "Results": {
+      "Message": "Success",
+      "Version": "CWA v2017-10-13 1325",
+      "QueryRows": "37",
+      "IndianCountryRows": "0",
+      "SVRows": "4",
+      "CVRows": "14",
+      "V3Rows": "24",
+      "FEARows": "0",
+      "InfFEARows": "9",
+      "INSPRows": "34",
+      "BioCVRows": "0",
+      "BioV3Rows": "1",
+      "VioLast4QRows": "16",
+      "TotalPenalties": "$0",
+      "BadSystemIDs": null,
+      "QueryID": "501"
+    }
+  }
+}

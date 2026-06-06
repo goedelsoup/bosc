@@ -55,6 +55,10 @@ class Settings(BaseSettings):
     nwis_base_url: str = "https://waterservices.usgs.gov/nwis"
     nwis_sites: list[str] = Field(default_factory=lambda: list(_DEFAULT_NWIS_SITES))
     noaa_atlas14_base_url: str = "https://hdsc.nws.noaa.gov/cgi-bin/new/cgi_readH5.py"
+    # EPA ECHO Clean Water Act REST services (NPDES facility inventory).
+    echo_base_url: str = "https://echodata.epa.gov/echo"
+    echo_max_retries: int = 5  # backoff retries on a 429 throttle
+    echo_retry_base_s: float = 5.0  # first backoff wait; doubles each attempt
 
     # --- Paths -------------------------------------------------------------
     data_dir: Path = _REPO_ROOT / "data"
@@ -78,6 +82,11 @@ class Settings(BaseSettings):
     def hydro_cache_dir(self) -> Path:
         """Cached live-connector responses (NWIS, etc.). Regenerable, not committed."""
         return self.cache_dir / "hydrology"
+
+    @property
+    def reference_dir(self) -> Path:
+        """Authoritative external reference data (committed). e.g. ECHO NPDES pulls."""
+        return self.data_dir / "reference"
 
     @property
     def scenarios_dir(self) -> Path:

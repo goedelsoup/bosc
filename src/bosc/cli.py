@@ -566,6 +566,55 @@ def extract(
         console.print(extraction.to_yaml())
 
 
+@app.command(name="npdes")
+def npdes(
+    offline: bool = typer.Option(
+        False, "--offline", help="Use cached ECHO responses only; never touch the network."
+    ),
+    out_dir: str | None = typer.Option(
+        None, "--out", help="Output directory (default: data/reference/echo)."
+    ),
+) -> None:
+    """Pull the Maumee-watershed NPDES inventory from EPA ECHO -> deduplicated CSVs.
+
+    Queries the seven Maumee HUC-8 subbasins, deduplicates by FRS Registry ID, and
+    writes a POTW-only CSV, an all-dischargers CSV, and a per-HUC count manifest.
+    """
+    from bosc.config import Settings
+    from bosc.hydrology.connectors import echo
+
+    settings = get_settings()
+    if offline:
+        settings = Settings(hydro_offline=True)
+    target = Path(out_dir) if out_dir else settings.reference_dir / "echo"
+
+    results = echo.fetch_maumee(settings=settings)
+
+    table = Table("HUC-8", "subbasin", "reported", "pulled", "POTWs")
+    for res in results:
+        n_potw = sum(1 for f in res.facilities if f.is_potw)
+        table.add_row(
+            res.huc8, res.name, str(res.reported_count), str(len(res.facilities)), str(n_potw)
+        )
+    console.print(table)
+
+    deduped = echo.deduplicate(results)
+    n_potw = sum(1 for f in deduped if f.is_potw)
+    raw = sum(len(r.facilities) for r in results)
+    console.print(
+        f"\n[bold]{raw}[/] rows across 7 HUC-8s -> [bold]{len(deduped)}[/] facilities after "
+        f"FRS dedup ([green]{n_potw} POTW[/], {len(deduped) - n_potw} non-POTW)."
+    )
+
+    paths = echo.write_inventory(results, target)
+    for label, path in paths.items():
+        console.print(f"[green]Wrote[/] {label}: {path}")
+    console.print(
+        "[dim]Gaps: ECHO CWA search has no CWNS column; not every NPDES ID geocodes to a "
+        "HUC (WATERS); 4 subbasins cross into IN/MI — cross-check state lists.[/]"
+    )
+
+
 site_app = typer.Typer(
     name="site",
     help="Generate / preview the GitHub Pages site from the corpus.",

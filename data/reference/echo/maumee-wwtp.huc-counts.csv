@@ -1,0 +1,11 @@
+huc8,name,reported_count,rows_pulled,potw_rows_pulled
+04100003,St. Joseph,360,360,19
+04100004,St. Marys,275,275,14
+04100005,Upper Maumee,178,178,8
+04100006,Tiffin,45,45,19
+04100007,Auglaize,90,90,35
+04100008,Blanchard,37,37,14
+04100009,Lower Maumee,72,72,20
+
+TOTAL_RAW,,,1057,
+TOTAL_DEDUPED,,,1006,129
