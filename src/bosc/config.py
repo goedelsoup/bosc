@@ -105,6 +105,12 @@ class Settings(BaseSettings):
         return self.data_dir / "people"
 
     @property
+    def entities_dir(self) -> Path:
+        """Curated candidate-entity inventories (YAML) not derived from the corpus
+        (e.g. cloud-consumer candidates). Committed."""
+        return self.data_dir / "entities"
+
+    @property
     def scenarios_dir(self) -> Path:
         """Reviewed hydrology scenario artifacts (committed). Reserved for Increment 3."""
         return self.data_dir / "scenarios"

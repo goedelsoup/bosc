@@ -102,6 +102,9 @@ def render_entities(graph: EntityGraph, *, profile_slugs: dict[str, str] | None 
         "filings. Nodes carrying a shell-adjacent **signal** (shared agent, "
         "out-of-state formation) are highlighted.",
         "",
+        "See also the curated [cloud-consumer candidates](candidates.md) — corridor "
+        "operations marked on demand-fit only (not corpus-derived, not customers).",
+        "",
         _SIGNALS_NOTE,
         "",
         "## Graph",

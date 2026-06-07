@@ -14,12 +14,14 @@ import shutil
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from bosc.candidates import load_cloud_consumer_candidates
 from bosc.config import Settings, get_settings
 from bosc.logging import get_logger
 from bosc.people import load_people
 from bosc.pipeline.corpus import load_corpus
 from bosc.pipeline.entities import build_entity_graph
 from bosc.pipeline.timeline import build_timeline
+from bosc.site import candidates as candidates_mod
 from bosc.site import exhibits as exhibits_mod
 from bosc.site import graph as graph_mod
 from bosc.site import people as people_mod
@@ -44,6 +46,7 @@ class BuildResult:
     exhibits: list[exhibits_mod.Exhibit] = field(default_factory=list)
     people_pages: list[people_mod.PersonPage] = field(default_factory=list)
     n_people_tracked: int = 0
+    n_candidates: int = 0
 
 
 def _mirror_tree(
@@ -215,6 +218,14 @@ def build_site(settings: Settings | None = None, web_dir: Path | None = None) ->
         encoding="utf-8",
     )
     result.people_pages = people_pages
+
+    # 6b. Curated candidate-entity inventory (cloud-consumer candidates), if present.
+    inventory = load_cloud_consumer_candidates(settings.entities_dir)
+    if inventory is not None:
+        (web / "candidates.md").write_text(
+            candidates_mod.render_candidates(inventory, egraph=egraph), encoding="utf-8"
+        )
+        result.n_candidates = len(inventory.entities)
 
     # 7. Landing page. Written as home.md (not index.md): the CustomMill theme owns
     # the root index.html as its SPA shell (the iframe frame), so the landing content
