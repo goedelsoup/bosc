@@ -230,7 +230,48 @@ overclaim. `[verified: data/reference/usaspending/awards.yaml]`
 
 ---
 
-## 6. Roadwork — privately-funded public infrastructure
+## 6. The public ledger — what the abatement costs vs. what it returns
+
+The data center runs on a **15-year, 75% real-property tax abatement** (Allen County
+CRA No. 1, Res #548-25 of 2025-07-10; CRA designation #003-99003-396), granted to
+**Bistrozzi LLC** — a Delaware shell c/o Vorys (Scott Ziance) — whose CRA **§13(A)**
+assurance is that its **parent is a publicly-traded Fortune 100 company**. `[verified:
+data/extracted/legal/prr-mandamus/cra-agreement.cra.yaml]`
+
+**What the public gives.** 75% of the property tax on the ~$500M improvement, 15 years
+per building — a screening **~$84–129M in abated property tax**, i.e. roughly
+**$1.7–2.6M of abatement per promised job** (the CRA estimates **~50** permanent jobs,
+**~$4M** annual payroll, from a current **zero**). The dollar range is a stated
+assumption (Ohio commercial effective-rate band on the 35% assessed value), **not** a
+cited Allen County millage `[inference: assumption]` — yet even so it screens *worse*
+than the relator's own Ohio comparable of ~$1M/job of revenue loss. Regenerate with
+`bosc ledger`.
+
+**What the public bears alongside** (already quantified by the other threads):
+
+- **Toxics:** 3 of 12 county toxic water dischargers sit on the Ottawa at Lima, the
+  reach with ~zero assimilative capacity (7Q10 0.2 cfs, 1Q10 0).
+- **Water:** a ~4.85 cfs consumptive cooling draw — **3×** the Ottawa's summer 30Q10,
+  **24×** the annual 7Q10, arriving in the May–Oct ET-deficit window.
+- **Roadwork drainage:** $1.07M of roundabout drainage budgeted with only 1 of 6
+  estimates itemized and no detention sized.
+- **Federal nexus:** the corridor's defense anchor (JSMC operator GDLS, ~$34B all-time
+  federal awards; parent GD Corp ~$299B).
+- **Air:** 114 diesel emergency gensets (~313 MW backup), permitted **synthetic-minor**
+  to stay just under major-source NSR review.
+
+**What the public can't see — by the County's own choices.** The two figures that would
+actually answer *"is this a good deal?"* are both withheld: the County's **cost-benefit
+analysis** (PRR request item 4, withheld under R.C. 149.43 / 9.66 as "being reviewed by
+legal counsel") and the **School District Compensation Agreement** dollar amounts
+(non-public; only the 25% statutory floor is disclosed). And CRA **§22 indemnifies the
+County's attorney fees** for defending exactly that kind of withholding — a private
+subsidy for public secrecy. `[verified: cra-agreement.cra.yaml +
+bosc-prr-production-2026-06-05.response-index.yaml]`
+
+---
+
+## 7. Roadwork — privately-funded public infrastructure
 
 Six Tetra Tech Opinions of Probable Cost (~**$14.2M**) cover roundabouts and
 corridor work at Cole/Diller, Cole/Bluelick, the Primary Access Entrance (Beery &
@@ -257,7 +298,7 @@ a sizing of the roundabouts' hydraulics (the corpus carries no footprint area).
 
 ---
 
-## 7. Project Dazzler — the parallel Tilted Gate thread
+## 8. Project Dazzler — the parallel Tilted Gate thread
 
 **Tilted Gate LLC** (Delaware; CSC agent; Montfort organizer; principals **Randy
 Barrera** and **Timothy Chadwick**) is running a *separate* project, **"Project
@@ -275,7 +316,7 @@ the AEDG release (not yet in the corpus). `[open]`
 
 ---
 
-## 8. The professional network
+## 9. The professional network
 
 A consistent advisory team sits behind the entities `[verified: entity graph]`:
 
@@ -297,7 +338,7 @@ A consistent advisory team sits behind the entities `[verified: entity graph]`:
 
 ---
 
-## 9. Chronology (selected milestones)
+## 10. Chronology (selected milestones)
 
 `[verified: bosc timeline]`
 
@@ -320,7 +361,7 @@ A consistent advisory team sits behind the entities `[verified: entity graph]`:
 
 ---
 
-## 10. Open questions & gaps `[open]`
+## 11. Open questions & gaps `[open]`
 
 - **Beneficial ownership.** Public records give registered agents and organizers,
   never the human principal behind the Delaware shells. The cluster is *plumbing*.
@@ -341,7 +382,7 @@ A consistent advisory team sits behind the entities `[verified: entity graph]`:
 
 ---
 
-## 11. Method & provenance
+## 12. Method & provenance
 
 Every claim here derives from a committed artifact under `data/extracted/**`,
 produced by the `ingest → extract → analyze` pipeline (hybrid OCR+vision or

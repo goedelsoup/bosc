@@ -133,6 +133,59 @@ def entities() -> None:
 
 
 @app.command()
+def ledger(
+    offline: bool = typer.Option(
+        False, "--offline", help="Use committed/fixture data only; never fetch."
+    ),
+) -> None:
+    """Public-subsidy vs. public-benefit ledger for the data-center CRA abatement."""
+    from bosc import ledger as ledger_mod
+    from bosc.config import Settings
+
+    settings = Settings(hydro_offline=True) if offline else get_settings()
+    pl = ledger_mod.build_ledger(settings)
+    ft = pl.foregone_tax
+
+    console.print(
+        f"[bold]CRA abatement[/]: {ft.abatement_pct:g}% / {ft.term_years}-yr real-property "
+        f"exemption on a ${ft.capital_usd:,} data center for ~{pl.benefit.jobs} jobs "
+        f"(~${pl.benefit.annual_payroll_usd:,}/yr payroll)."
+    )
+    cost = Table("public cost (abated property tax)", "low", "high")
+    cost.add_row(
+        "annual full tax (if not abated)",
+        f"${ft.annual_full_tax_low:,}",
+        f"${ft.annual_full_tax_high:,}",
+    )
+    cost.add_row("annual abated (75%)", f"${ft.annual_abated_low:,}", f"${ft.annual_abated_high:,}")
+    cost.add_row(
+        f"abated over {ft.term_years} yr", f"${ft.term_abated_low:,}", f"${ft.term_abated_high:,}"
+    )
+    cost.add_row(
+        "per promised job",
+        f"${pl.benefit.abatement_per_job_low:,}",
+        f"${pl.benefit.abatement_per_job_high:,}",
+    )
+    console.print(cost)
+    console.print(
+        "[dim]Effective rate is a stated assumption (Ohio commercial band), not a cited Allen "
+        "County millage — a screening range. [inference: assumption][/]"
+    )
+
+    console.print("\n[bold]Public burdens carried alongside (cross-thread)[/]")
+    for b in pl.burdens:
+        console.print(f"  [yellow]•[/] [{b.thread}] {b.headline}")
+
+    console.print("\n[bold red]Withheld — the deciding figures the public can't see[/]")
+    for w in pl.withheld:
+        console.print(f"  [red]✗[/] {w.what} [dim]({w.why_withheld})[/]")
+
+    console.print("\n[bold]Findings[/]")
+    for f in pl.findings:
+        console.print(f"  - {f}")
+
+
+@app.command()
 def hydro(
     offline: bool = typer.Option(
         False, "--offline", help="Don't fetch live streamflow; use cached/fixture data only."

@@ -1,0 +1,95 @@
+kind: cra_agreement
+subject: Allen County CRA No. 1 Agreement with Bistrozzi LLC (data-center tax abatement)
+
+provenance:
+  source_path: data/documents/legal/prr-mandamus/prr-production-2026-06-05/CRA.pdf
+  produced_in: Allen County public-records production 2026-06-05 (response item 3)
+  pages: "Res #548-25 pp.1-2; CRA Agreement pp.3-12; Exhibit A project-site map p.13"
+  content_verified: '2026-06-07'   # terms read from the page images, not the filename
+  evidence: scan + native text (county-produced PDF)
+
+parties:
+  county: Allen County, Ohio — Board of County Commissioners
+  commissioners: [Cory Noonan, Beth Seibert, Brian Winegardner]
+  clerk: Brittany N. Woods
+  company: BISTROZZI LLC (a Delaware limited liability company)
+  company_counsel: Vorys, Sater, Seymour and Pease LLP — Scott J. Ziance (sjziance@vorys.com)
+
+authorization:
+  cra_resolution: {number: '304-25', date: '2025-04-17', action: created Allen County CRA No. 1}
+  approval_resolution: {number: '548-25', date: '2025-07-10', action: approved + authorized the CRA Agreement}
+  cra_designation_number: '003-99003-396'   # assigned by the Ohio Dept. of Development 2025-06-02
+  effective_date: '2025-07-10'
+  company_signed: '2025-08-28'
+  statute: "R.C. 3735.65-3735.70 (the CRA Act)"
+
+abatement:
+  type: real property tax exemption
+  percent: 75
+  term_years: 15            # per Building (§3)
+  scope: >-
+    Per new Building at the Project Site (real property — buildings/structures). The
+    project total may exceed 15 years across phases, but no single Building exceeds 15.
+  commencement_window: "no Exemption commences after tax lien date 2040-01-01 (§3)"
+  end_window: "no Exemption extends beyond tax lien date 2054-01-01 (§3)"
+  agreement_termination: "Dec 31 of the later of 2055 or the year after the last Exemption (§21)"
+  real_property_only: true  # the abatement is on real property; equipment is personal property (not the subject here)
+
+company_estimates:   # good-faith estimates per R.C. 3735.671(B)(8) (§2) — explicitly NOT binding caps
+  capital_investment_usd: ~500000000   # "approximately five hundred million dollars" by ~2030-12-31
+  jobs: ~50            # "approximately fifty (50) permanent, full-time" by ~2030-12-31
+  annual_payroll_usd: ~4000000   # aggregate annual payroll by ~2030-12-31
+  current_employees: 0
+  note: >-
+    Jobs/payroll may be employed by the Company or its Affiliates (common-control group);
+    the Parties acknowledge actuals may differ significantly from these estimates.
+
+school_compensation:
+  required: true
+  statute: "R.C. 5709.82(B)(1); R.C. 3735.671"
+  school_district: Elida Local School District
+  jvsd: Apollo Career Center (JVSD)
+  school_board_authorization: {resolution: '5-25-2', date: '2025-05-20'}
+  amounts_public: false   # the School District Compensation Agreement $ are NOT in this document
+  statutory_floor: >-
+    R.C. 3735.671(A)(2) — the County estimated the compensation equals/exceeds 25% of the
+    foregone taxes (Res #494-25, 2025-06-24); the actual dollar terms are in a separate,
+    non-public School District Compensation Agreement.
+
+project_site:
+  township: American Township, Allen County, Ohio
+  zoning: M-2
+  conditional_use_permit: '2025-02-04'   # Township Board of Zoning Appeals
+  intended_use: data center(s) + associated office/utility/support buildings (§13(C))
+  exhibit_a: Project Site map (p.13) — the campus footprint
+
+beneficiary_assurance:   # §13 Assurances the County "materially relies upon"
+  parent_is_fortune_100: true
+  quote: >-
+    "The Company's parent is a Fortune 100 Company that is publicly traded and
+    headquartered in the United States." [§13(A)]
+  company_us_based: true   # §13(B)
+  note: >-
+    The developer's own disclosed assurance about its parent — it does NOT name the parent
+    in this document. Cross-refs the real-party-in-interest thread (entities + USASpending).
+
+notable_clauses:
+  public_records_indemnity:   # §22
+    summary: >-
+      The Agreement is a public record (R.C. 149.43), but the Company INDEMNIFIES the County
+      and pays its attorney fees if, in a public-records action, the County withheld a
+      Company/Project record it otherwise could have disclosed.
+    significance: >-
+      A private incentive for the County to withhold Company/Project records — directly
+      relevant to the PRR/mandamus fight (see corpus-completeness-audit.md / the production index).
+  rc_9_66_covenants: "§19 — no false statements for economic-development assistance; no delinquent taxes/moneys to the State."
+  transfer: "§14 — assignable to Affiliates / financing parties / successors without County approval (the data-center legal/financing structure)."
+  contest_valuation: "§6 — the Company may still contest property valuation under R.C. 5715.13/5715.19."
+
+relevance:
+  tags: [verified, legal, cra, tax-abatement, public-subsidy, real-party-in-interest]
+  note: >-
+    The public-subsidy instrument: a 15-year / 75% real-property abatement on a ~$500M
+    data center for ~50 jobs. Foundation for the public-ledger analysis (public cost vs
+    public benefit). The §13(A) Fortune-100 parent assurance and the §22 public-records
+    indemnity are independently notable for the ownership and records threads.
