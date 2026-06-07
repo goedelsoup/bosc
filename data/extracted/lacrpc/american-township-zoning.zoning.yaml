@@ -1,0 +1,149 @@
+kind: zoning
+subject: American Township (Allen County, OH) Zoning Resolution — the land-use basis for the BOSC/Google data-center site
+
+provenance:
+  sources:
+    - data/documents/lacrpc/February 2026 American Township Zoning Resolution_202603191409369887.pdf
+  source_pages_0based:                # native text-layer PDF (pypdf extract_text); page N = printed sheet N+1
+    cover_amendment_block: 0
+    definitions_data_center: 20       # printed p.21
+    definitions_hyperscale: 24        # printed p.25
+    m1_conditional_uses: 61           # printed p.62 (10.2)
+    article_11_m2: [63, 64, 65]       # printed pp.64-66
+    official_schedule_tables: [77, 78] # printed pp.78-79 (15.1)
+  content_verified: '2026-06-07'      # read from the document's own text layer
+  evidence: LACRPC CivicPlus DocumentCenter (id 184), pulled 2026-06-06 — see data/documents/lacrpc/MANIFEST.yaml
+
+thesis: >-
+  The BOSC/Google data-center site (≈950 W. Bluelick Rd area, American Township — see
+  seller-land-packets.land.yaml) sits in American Township's unincorporated jurisdiction, which zones
+  the heaviest industrial land as M-2 General Manufacturing. The CURRENT American Township Zoning
+  Resolution (last amended/adopted 2026-02-09) (a) carries free-standing DEFINITIONS of both "Data
+  Center" and "Hyperscale Data Center," and (b) lists "hyper-data centers" / "electronic data storage
+  facilities" as a CONDITIONAL use in the M-2 district -- requiring a Board of Zoning Appeals
+  conditional-use certificate after a PUBLIC HEARING, not a permitted-by-right use. The amendment
+  cycle that produced this text (cover lists 2025-09-08 and 2026-02-09 adoptions) brackets the deal
+  timeline (RDA effective 2025-09-15; land assignment to Bistrozzi 2025-07). [the resolution text is
+  document; the "amended FOR this project" causation is inference -- the PDF has no per-amendment log.]
+
+document:
+  title: "THE AMERICAN TOWNSHIP ZONING RESOLUTION — ALLEN COUNTY, OHIO"
+  prepared_by: "American Township Zoning Commission; adopted by American Township Board of Trustees"
+  administration: "American Township Administration Building, 102 Pioneer Rd., Lima, Ohio 45807"
+  enabling_law: "Ohio Revised Code Chapter 519 (township zoning)"
+  pages: 241
+  amended_and_adopted_by_trustees:   # verbatim from the cover block (source: document)
+    - '2021-02-11'
+    - '2024-01-08'
+    - '2024-08-28'
+    - '2025-09-08'   # within the BOSC deal window
+    - '2026-02-09'   # most recent; the file's content_verified_date
+  note: >-
+    The PDF contains NO record-of-amendments / change-log page, so which specific amendment introduced
+    the data-center language cannot be content-verified from this document. The definitions and the
+    M-2 conditional-use entry are present in the current (2026-02-09) consolidated text. [verified that
+    the language is present; NOT verified which amendment added it.]
+
+definitions:                          # source: document, transcribed verbatim (printed pp.21, 25)
+  data_center: >-
+    "Data Center: A physical location that stores computing machines and their related hardware
+    equipment. Contains the computing infrastructure that IT systems require, such as servers, data
+    storage drives, and network equipment. It is the physical facility that stores any company's
+    digital data."
+  hyperscale_data_center: >-
+    "Hyperscale Data Center: A massive data center that provides extreme scalability capabilities and
+    engineered for large scale workloads within an optimized network infrastructure, streamlined
+    network connectivity and minimized latency."
+
+district_m2_general_manufacturing:    # Article 11 (printed pp.64-66)
+  purpose: >-
+    "The purpose of the M-2 General Manufacturing District is to encourage the development of
+    manufacturing facilities of a moderate and heavy nature." (11.0)
+  permitted_uses_11_1:                # by-right
+    - "Any permitted use established within the M-1 District (excludes B-1 & B-2 uses)"
+    - "Grain elevators, concrete plants and the manufacture, storage and sale of related products"
+    - "Metal fabrication and casting plants"
+    - "Utility Grid Solar Energy Systems (less than 50 megawatts)"
+    - "Manufacturing/assembly/distribution of new automobiles, trucks, boats, household goods, farm + construction equipment, plastic & metal products"
+    - "Carpentry, woodworking and machine shops; large-scale home/house furnishings production over 50,000 SF"
+    - "Accessory buildings/uses incidental to a principal permitted use (principal building required first)"
+  conditional_uses_11_2:              # BZA conditional-use certificate AFTER A PUBLIC HEARING
+    requires: "Approval of the Township Board of Zoning Appeals after a public hearing"
+    the_data_center_entry_11_2_4: >-
+      "Any industrial, manufacturing, storage uses (to include but not limited to electronic data
+      storage facilities, hyper-data centers, data mining facilities, lithium battery manufacturing
+      facilities or plants, or computer chip manufacturing & distribution establishment(s) and those
+      not specifically mentioned above but deemed as acceptable use of the land by the Board of Zoning
+      Appeals)." (11.2.4)
+    other_conditional: ["meat/poultry/game processing (11.2.1)", "chemical plants not emitting corrosive/toxic fumes beyond premises (11.2.2)", "barrow pits (11.2.3)", "one medical/adult-use cannabis retail dispensary (11.2.5)"]
+  prohibited_uses_11_3:
+    catchall: "Uses not specifically authorized by the express terms of this Article shall be prohibited"
+    enumerated: ["junk yards / dumping / salvage / landfill / waste-disposal sites", "habitated RVs/campers", "outdoor junk/inoperable-vehicle accumulation", "trash/debris accumulation (nuisance per se)", "uses dangerous/injurious/noxious to surrounding areas", "amusement arcades / adult-entertainment", "ORC Ch. 3796 marijuana cultivators/processors"]
+
+dimensional_standards_official_schedule_15_1:   # printed pp.78-79
+  with_central_water_public_sewer:    # the configuration a data center on the County sanitary loop would use
+    min_lot_size_sqft: 20000
+    frontage_width_ft: 100
+    max_structure_height_ft: 50       # <-- a hyperscale data center is height-capped at 50 ft in M-2
+    rear_setback_ft: 30               # footnotes (D,G)
+  with_private_well_septic:
+    min_lot_size_sqft: 108900         # 2.5 acres
+    max_structure_height_ft: 50
+  road_setback_11_8: >-
+    No portion of a building closer than fifty-five (55) feet to the section line / center of nearest
+    road pavement, EXCEPT State and County Roads which require ninety (90) feet. Plus an ODOT
+    new-/changed-highway provision: within 300 ft of a proposed highway centerline (or 500 ft of an
+    intersection), the Zoning Inspector must notify the ODOT Director and withhold the permit for up to
+    120 days. (11.8; cross Section 21.4)
+  screening_11_9: >-
+    For non-residential uses abutting an R-District: a 6-ft solid wall/fence, OR a 15-ft-wide strip
+    planted with an evergreen hedge/shrubs ≥4 ft at planting. (11.9)
+
+m1_contrast:                          # why the district matters — M-1 caps data centers, M-2 does not
+  m1_conditional_10_2_2: >-
+    In the M-1 (Light Manufacturing) district, data centers are a conditional use but EXPLICITLY
+    capped: "Electronic Data Storage Centers, Data Mining Facilities, Electronic Media Storage Device
+    Centers (Data center not to exceed 10,000 square feet); excluding 'hyperscale data centers'."
+    (10.2.2) -- i.e. a hyperscale data center is impermissible in M-1 and only reachable in M-2.
+
+comprehensive_plan_note:
+  doc: data/documents/lacrpc/American Township Comprehensive Plan (PDF).pdf
+  content_verified_date: '2009-01'    # cover (per MANIFEST.yaml)
+  status: >-
+    The American Township Comprehensive Plan predates the project by ~16 years (Jan 2009) and its
+    future-land-use designations are presented on MAP IMAGES, not an extractable text layer; the
+    site-specific designation for the Bluelick Rd / I-75 vicinity could not be content-verified from
+    the text. Whether the M-2 data-center use is consistent with the 2009 future-land-use plan is an
+    OPEN question requiring map review. [not extracted; honest null.]
+
+bosc_relevance: >-
+  Establishes the local land-use mechanism for the data center: a HYPERSCALE data center is a
+  conditional use in M-2 General Manufacturing, gated on a Board of Zoning Appeals conditional-use
+  certificate after a public hearing -- a discrete public-records event (application, staff report,
+  hearing notice, BZA decision) that should exist for the BOSC site. The records-completeness
+  question: did the County/Township produce the M-2 rezoning and/or BZA conditional-use-certificate
+  records for the site, and do they name the end user? The 50-ft M-2 height cap and the 90-ft
+  State/County-road setback are also concrete constraints to check against the site plan.
+
+open_questions:
+  - "Is the BOSC site already mapped M-2, or was it rezoned to M-2 (and when / by what township resolution)? Not answerable from the resolution text — needs the Official Zoning Map + rezoning record."
+  - "Has a BZA conditional-use certificate under 11.2.4 issued for the site? Hearing-notice + decision records?"
+  - "Which amendment (2025-09-08 vs 2026-02-09 vs earlier) added the Data Center / Hyperscale definitions and 11.2.4 — needs the township amendment resolutions (not in this PDF)."
+  - "2009 comp-plan future-land-use designation for the site (map review)."
+
+cross_refs:
+  - data/extracted/aedg/seller-land-packets.land.yaml          # the site parcels (American Township)
+  - data/extracted/aedg/roadwork-development-agreement.rda.yaml # County/PAAC/Bistrozzi RDA, eff. 2025-09-15
+  - data/extracted/aedg/paac-board-minutes.minutes.yaml        # BOSC = Bistrozzi = Google
+  - data/extracted/lacrpc/collection-index.yaml               # the full LACRPC corpus catalog
+  - data/documents/lacrpc/MANIFEST.yaml                        # provenance for all 36 LACRPC documents
+
+relevance:
+  tags: [verified, zoning, american-township, m-2, hyperscale-data-center, conditional-use, bza, land-use]
+  note: >-
+    American Township M-2 General Manufacturing is the data center's zoning home. The CURRENT
+    resolution (amended/adopted through 2026-02-09) defines "Data Center" and "Hyperscale Data Center"
+    and makes "hyper-data centers" a CONDITIONAL use in M-2 (11.2.4) requiring a BZA conditional-use
+    certificate after a public hearing; M-1 caps data centers at 10,000 SF and bars hyperscale (10.2.2).
+    M-2 structures are height-capped at 50 ft. The amendment timeline brackets the deal [inference].
+    A BZA conditional-use proceeding for the site should exist as public record — a completeness hook.

@@ -1,0 +1,149 @@
+kind: collection_index
+subject: LACRPC Comprehensive Planning / Land Use / Zoning corpus — relevance-tiered catalog of all 36 documents
+
+provenance:
+  source_manifest: data/documents/lacrpc/MANIFEST.yaml   # authoritative per-document provenance (URL, sha256, bytes, content_verified_date)
+  source_page: https://www.lacrpc.com/182/Comprehensive-Planning-Land-Use-Zoning
+  retrieved: '2026-06-06'
+  content_verified: '2026-06-07'
+  evidence: LACRPC (Lima-Allen County Regional Planning Commission), CivicPlus DocumentCenter
+
+purpose: >-
+  The LACRPC corpus is 36 documents: every Allen County township/village comprehensive plan and zoning
+  resolution plus the county-wide land-use regulations. Most are GENERAL planning reference for
+  jurisdictions other than the data-center site. This index tiers them by BOSC relevance so the
+  load-bearing few (American Township; the receiving-WWTP townships; the county-wide regs that bind the
+  site) are separated from the bulk reference set. Dates/sizes are transcribed from MANIFEST.yaml
+  (content_verified from each document's own text layer; null = image-only scan or no date on cover).
+
+tier_1_site_and_use:                 # the data center's own jurisdiction
+  - file: February 2026 American Township Zoning Resolution_202603191409369887.pdf
+    manifest_id: 184
+    jurisdiction: American Township
+    type: zoning_resolution
+    content_verified_date: '2026-02-09'
+    relevance: >-
+      THE site's zoning. M-2 General Manufacturing defines + conditionally permits hyperscale data
+      centers (BZA conditional-use after public hearing). Deep-extracted → american-township-zoning.zoning.yaml.
+  - file: American Township Comprehensive Plan (PDF).pdf
+    manifest_id: 167
+    jurisdiction: American Township
+    type: comprehensive_plan
+    content_verified_date: '2009-01'
+    relevance: >-
+      The site's long-range land-use plan (predates project ~16 yr). Future-land-use is map-image only;
+      site-specific designation NOT text-extractable — open question (plan-consistency of the M-2 use).
+
+tier_2_binding_county_regs_and_receiving_townships:
+  - file: Subdivision_Regs2013.pdf
+    manifest_id: 353
+    jurisdiction: Allen County (county-wide)
+    type: regulation
+    content_verified_date: '2013-05-01'
+    relevance: "Binds the site's land division/plat (the land assembly split/combined parcels); referenced by the zoning resolution's PUD/access provisions."
+  - file: SWMSC-Regs-Final-12.1.16.pdf
+    manifest_id: 346
+    jurisdiction: Allen County (county-wide)
+    type: regulation
+    content_verified_date: '2016-12-01'
+    relevance: "Stormwater Management & Sediment Control Regs — binds site stormwater/runoff; hydrology-axis nexus (Ottawa watershed, edge-of-field)."
+  - file: 2023-final-IDREGS-with-dates.pdf
+    manifest_id: 347
+    jurisdiction: Allen County (county-wide)
+    type: regulation
+    content_verified_date: '2023-04-21'
+    relevance: "Illicit Discharge regulations (MS4/NPDES stormwater nexus) — the clean-water-connection prohibition echoed on the Indianbrook as-built."
+  - file: Allen County Access Management Plan December 2024 (PDF).pdf
+    manifest_id: 157
+    jurisdiction: Allen County (county-wide)
+    type: management_plan
+    content_verified_date: '2024-12-17'
+    relevance: "Access/driveway standards for the corridor — ties to the Roadwork Development Agreement (roundabouts, Beery/Bluelick access)."
+  - file: Land Division Process Brochures (2023) (PDF).pdf
+    manifest_id: 153
+    jurisdiction: Allen County
+    type: brochure
+    content_verified_date: null
+    relevance: "Procedural overview of lot splits/combinations — context for the land-assembly mechanics."
+  - file: Shawnee Twp Zoning (PDF).pdf
+    manifest_id: 190
+    jurisdiction: Shawnee Township
+    type: zoning_resolution
+    content_verified_date: '2021-08-12'
+    relevance: "Township hosting Shawnee No.2 WWTP (2PK00002), a BOSC-1A receiving plant — secondary land-use context, not the site."
+  - file: Shawnee Township Comprehensive Plan (PDF).pdf
+    manifest_id: 162
+    jurisdiction: Shawnee Township
+    type: comprehensive_plan
+    content_verified_date: '2009-10'
+    relevance: "Long-range plan for the Shawnee No.2 receiving-plant township."
+  - file: Bath Twp Zoning (PDF).pdf
+    manifest_id: 194
+    jurisdiction: Bath Township
+    type: zoning_resolution
+    content_verified_date: '2023-05-05'
+    relevance: "Township hosting American Bath (2PH00007); also the Bluelick Rd Underpass project area (RDA/road context)."
+  - file: Bath Township Comprehensive Plan (PDF).pdf
+    manifest_id: 170
+    jurisdiction: Bath Township
+    type: comprehensive_plan
+    content_verified_date: '2017-05'
+    relevance: "Long-range plan for the American Bath receiving-plant township."
+
+tier_3_general_reference:            # other jurisdictions' plans/zoning + personnel rosters — corpus completeness, not site-specific
+  comprehensive_plans:
+    - {file: Village of Lafayette Comprehensive Plan (PDF).pdf, id: 158, jurisdiction: Village of Lafayette, date: '2012-10'}
+    - {file: Harrod 2020 to 2040 Comprehensive Plan (PDF).pdf, id: 159, jurisdiction: Village of Harrod, date: null}
+    - {file: Village of Elida Comprehensive Plan (PDF).pdf, id: 160, jurisdiction: Village of Elida, date: '2021-12'}   # Elida LSD = the school district over the site
+    - {file: Richland Township 2040 Comprehensive Plan (PDF).pdf, id: 161, jurisdiction: Richland Township, date: '2019-05'}
+    - {file: 2040 Cairo Comprehensive Plan (PDF).pdf, id: 163, jurisdiction: Village of Cairo, date: '2015-08'}
+    - {file: Spencer-Spencerville Comprehensive Plan (PDF).pdf, id: 164, jurisdiction: Spencer Twp / Village of Spencerville, date: '2010'}
+    - {file: City of Lima Vision 2040 Plan (PDF).pdf, id: 165, jurisdiction: City of Lima, date: null}
+    - {file: Perry Township Comprehensive Plan (PDF).pdf, id: 166, jurisdiction: Perry Township, date: '2015-04'}
+    - {file: Bluffton Beyond Tomorrow Plan (PDF).pdf, id: 168, jurisdiction: Village of Bluffton, date: null}
+    - {file: Auglaize Township Comprehensive Plan (PDF).pdf, id: 169, jurisdiction: Auglaize Township, date: '2017-06'}
+    - {file: AmandaFINAL24_202602051230309488.pdf, id: 171, jurisdiction: Amanda Township, date: null}   # cover horizon "2045"
+  zoning_resolutions:
+    - {file: Jackson Twp Zoning (PDF).pdf, id: 181, jurisdiction: Jackson Township, date: '1997-11'}
+    - {file: Auglaize Twp Zoning (PDF).pdf, id: 182, jurisdiction: Auglaize Township, date: '2016-04'}
+    - {file: Amanda Twp Zoning (PDF).pdf, id: 183, jurisdiction: Amanda Township, date: '2012-03-28'}
+    - {file: Sugar Creek Township Zoning (PDF).pdf, id: 185, jurisdiction: Sugar Creek Township, date: '2024-03-04'}
+    - {file: Village of Beaverdam Zoning (PDF).pdf, id: 186, jurisdiction: Village of Beaverdam, date: null}   # image-only scan
+    - {file: Spencer Twp Zoning (PDF).pdf, id: 188, jurisdiction: Spencer Township, date: null}
+    - {file: Village of Spencerville Zoning (PDF).pdf, id: 189, jurisdiction: Village of Spencerville, date: null}
+    - {file: Marion Township Zoning (PDF).pdf, id: 191, jurisdiction: Marion Township, date: '2024-01-18'}
+    - {file: Richland Twp Zoning (PDF).pdf, id: 192, jurisdiction: Richland Township, date: '2023-11'}
+    - {file: Perry Twp Zoning (PDF).pdf, id: 193, jurisdiction: Perry Township, date: null}
+    - {file: City of Lima Zoning (PDF).pdf, id: 195, jurisdiction: City of Lima, date: null}   # image-only scan
+    - {file: Village of Cairo Ordinance 388-Zoning Ord Updated Oct 2025 FINAL.pdf, id: 374, jurisdiction: Village of Cairo, date: null}   # filename says Oct 2025
+  rosters_and_personnel:
+    - {file: Zoning Inspectors (PDF).pdf, id: 156, what: "Allen County zoning persons roster", date: '2025-04-08'}
+    - {file: Township Trustees and Fiscal Officers (PDF).pdf, id: 196, what: "2025 township trustees & fiscal officers roster", date: '2025-01-23'}
+
+counts:
+  total_documents: 36
+  tier_1: 2
+  tier_2: 9
+  tier_3: 25
+  deep_extracted: 1   # american-township-zoning.zoning.yaml
+  note: >-
+    Only American Township's zoning is deep-extracted (the site's use basis). Tier-2 docs are
+    identified as binding/receiving-area context and are available for targeted reads if a specific
+    question arises (e.g. SWMSC for a stormwater claim, Subdivision Regs for the lot-split chain).
+    Tier-3 is catalogued for corpus completeness; no per-document read was performed and none is
+    claimed. [no silent caps: 35 of 36 documents are indexed-only, not content-read.]
+
+cross_refs:
+  - data/extracted/lacrpc/american-township-zoning.zoning.yaml
+  - data/documents/lacrpc/MANIFEST.yaml
+  - data/extracted/aedg/seller-land-packets.land.yaml
+  - data/extracted/regulatory/wastewater-enforcement-history.yaml   # Shawnee No.2 / American Bath receiving plants
+  - data/reference/hydrology/ottawa-lima-tmdl.yaml                  # the watershed the SWMSC/IDREGS feed
+
+relevance:
+  tags: [verified, lacrpc, zoning, comprehensive-plan, land-use, collection-index]
+  note: >-
+    Catalog of all 36 LACRPC planning/zoning documents, tiered: Tier-1 = American Township (the site,
+    deep-extracted); Tier-2 = county-wide regs binding the site + the Shawnee/Bath townships hosting
+    the BOSC-1A receiving WWTPs; Tier-3 = 25 other-jurisdiction plans/zoning + personnel rosters held
+    as reference. Provenance for every file is in MANIFEST.yaml.
