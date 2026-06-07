@@ -85,6 +85,14 @@ This corpus is the **primary source** behind several artifacts already in the re
   Res **#417-25** (NDA) `M052725.pdf:3` · **#304-25** (CRA created) `M041725.pdf:1,5` ·
   **#494-25** (school notice) `M062425.pdf:9` · **#548-25** (CRA) `M071025.pdf:4` ·
   **#113-26 / #136-26** (forcemain feasibility — the *deferred* Category-B items) `M021926.pdf:3` / `M022626.pdf:3`.
+  ⚠️ The verbatim titles of these two differ from the "forcemain feasibility" label — #113-26 is the
+  **Shawnee Oaks** Sewer System contract and #135-26/#136-26 is the **Hamlet of Hume WPCLF $2M** loan;
+  the BOSC CMAR procurement is #137-26/#138-26. See the `reconciliation_note` in
+  [`../bosc-resolution-ledger.yaml`](../bosc-resolution-ledger.yaml).
+- [`../bosc-resolution-ledger.yaml`](../bosc-resolution-ledger.yaml) — the Project BOSC **resolution
+  ledger + event timeline** extracted from this OCR bundle (NDA #417-25, CRA #548-25, RDA #588-25,
+  Sanitary Sewer Developer Agreement #575-25/#975-25, pump-station/forcemain #469-25→#713-25→CMAR
+  #137-26/#138-26, BOSC Fund #612-25), plus the 2025-05-27 ORC 121.22(G)(8) econ-dev executive session.
 - [`../../legal/allen-county-web-vendor-audit.md`](../../legal/web-vendor-audit/allen-county-web-vendor-audit.md)
   — these minutes were scraped from `commissioners.allencountyohio.com`, the CorpComm-built site whose
   CMS custody is the subject of PRR **item 16**. The corpus is the public face of the very record the

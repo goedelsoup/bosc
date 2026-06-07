@@ -1,0 +1,147 @@
+kind: resolution_ledger
+subject: Allen County Commissioners — Project BOSC resolution ledger + event timeline (from the Board's own minutes)
+
+provenance:
+  source_index: data/extracted/commissioners/minutes/   # parquet OCR bundle (meeting-pages, 2,283 pp, 2024-2026)
+  source_raw: data/documents/commissioners/minutes/raw/  # the authoritative PDFs (filename = meeting date, [AM]MMDDYY)
+  method: >-
+    Windowed keyword extraction over the committed OCR text layer (meeting-pages.parquet), then each
+    resolution number + title transcribed and cross-checked against the agenda (A*) and minutes (M*)
+    pages. Resolution NUMBERS, TITLES, dates, and movers are high-confidence (they appear verbatim in
+    the formal resolution lists). Narrative discussion text is OCR-approximate.
+  content_verified: '2026-06-07'
+  caveat: >-
+    The OCR text layer is machine-extracted and approximate (e.g. "Commissures" for "Commissioners").
+    Dollar figures in DISCUSSION items are OCR-approximate — verify against the source PDF before
+    quoting in a filing. Coverage is 2024-2026 only (the 2023 raw backfill is not yet OCR'd/indexed).
+
+thesis: >-
+  The Allen County Board of Commissioners' OWN public minutes contain the full legislative spine of
+  Project BOSC -- the NDA, the CRA, the Sanitary Sewer Developer Agreement and its amendment, the
+  Roadway Development Agreement, the BOSC Fund, and the pump-station/forcemain engineering and CMAR
+  procurement. This matters directly to the records case: the county DEFERRED PRR items 5-15 (the
+  wastewater-works universe) to the Sanitary Engineer and WITHHELD item 4 (cost-benefit), yet the
+  authorizing resolutions for exactly those works sit in the producing body's own record. The
+  legislative acts plainly exist where the request was directed. [resolutions are document; the
+  "production gap" framing cross-refs the completeness audit.]
+
+codename_phases:                      # the project's evolution in the County record
+  microsoft_perry_township_2024: >-
+    Through 2024 the data-center discussions concern a MICROSOFT project in PERRY TOWNSHIP (codename
+    Nadella elsewhere in the corpus): "Microsoft Data Center Project in Perry Township -- sewer lines
+    will need to be extended" (2024-08-20, M082024); Norm Capps asks the Commissioners' encouragement
+    for "a proposed Microsoft Data Center" (2024-08-22, M082224); "60% of the jobs in the data center
+    would be skilled trades" + Microsoft/Apollo partnerships (2024-09-12, M091224).
+  bosc_american_township_2025: >-
+    By Feb 2025 the live project is a CRA "for a potential Data Center in American Township" (2025-02-14
+    special) -- i.e. Project BOSC / Bistrozzi LLC. (Microsoft/Nadella was terminated 2024-10-24 per the
+    PAAC minutes.) NOTE: the County's INTERNAL IT "Data Center" (Brian Mauk / Keith Cheney / Nutanix /
+    backup storage) is a DIFFERENT thing and is excluded from this ledger.
+
+resolutions:                          # res # | date | file | verbatim title | mover | thread
+  - {res: '417-25', date: '2025-05-27', file: M052725.pdf, title: "Enter into a Mutual Non-Disclosure Agreement with Bistrozzi, LLC.", mover: Seibert, vote: unanimous, thread: nda}
+  - {res: '469-25', date: '2025-06-12', file: M061225.pdf, title: "Authorize the Clerk of Board to post notice and advertise for Professional Engineering Services for the Project BOSC Pump Station and Forcemain Project.", mover: Winegardner, vote: unanimous, thread: wastewater}
+  - {res: '494-25', date: '2025-06-24', file: M062425.pdf, title: "Authorize notice to the Elida Local School District and Apollo Career Center that the Commissioners seek to enter into a Community Reinvestment Area Agreement with Bistrozzi, LLC and will consider the same on July 10, 2025.", thread: cra_school_notice}
+  - {res: '548-25', date: '2025-07-10', file: M071025.pdf, title: "Enter into a Community Reinvestment Area Agreement in Community Reinvestment Area No. 1 with Bistrozzi, LLC.", mover: Seibert, vote: unanimous, thread: cra}
+  - {res: '575-25', date: '2025-07-24', file: M072425.pdf, title: "Enter into a Sanitary Sewer Developer Agreement with Project BOSC Developer.", mover: Seibert, vote: unanimous, thread: wastewater}
+  - {res: '588-25', date: '2025-07-31', file: M073125.pdf, title: "Enter into a Roadway Development Agreement with the Allen County Port Authority and Bistrozzi LLC. (Project BOSC Developer).", mover: Noonan, note: "Noonan moved to NOT request a hearing", thread: roadwork}
+  - {res: '612-25', date: '2025-08-14', file: M081425.pdf, title: "Establish the Project Bosc Fund.", thread: finance}
+  - {res: '713-25', date: '2025-09-18', file: M091825.pdf, title: "Enter into a contract with MS Consultants, Inc. to provide professional engineering services for the Project BOSC Pump Station and Forcemain Project.", mover: Winegardner, vote: unanimous, thread: wastewater}
+  - {res: '715-25', date: '2025-09-18', file: M091825.pdf, title: "Supplemental appropriation for the BOSC Fund 5040.", thread: finance}
+  - {res: '974-25', date: '2025-12-18', file: M121825.pdf, title: "Enter into an agreement with AEP-Ohio Power and grant easement to upgrade electrical services for conversion to three-phase power to Indian Brook [Indianbrook] Pump Station.", mover: Noonan, thread: wastewater}
+  - {res: '975-25', date: '2025-12-23', file: M122325-1.pdf, title: "Approve the First Amendment to the Sanitary Sewer Development Agreement with Project BOSC Developer.", mover: Winegardner, vote: unanimous, note: "TABLED 2025-12-18 (Seibert), approved 2025-12-23; funds to be placed into a Star Ohio account", thread: wastewater}
+  - {res: '994-25', date: '2025-12-23', file: M122325-1.pdf, title: "Authorize the Allen County Engineer's Office to enter into contract with EMH&T, Inc. for surveying, engineering and plan preparation for the Bixe[l?] ... project.", thread: roadwork, note: "EMH&T = the engineer-of-record thread (PRR item 19)"}
+  - {res: '51-26', date: '2026-01-29', file: A012926.pdf, title: "Authorization to deposit Project Funds into the county Star Ohio Pooled Account.", thread: finance}
+  - {res: '137-26', date: '2026-02-26', file: M022626.pdf, title: "Authorize the Engineer to post RFQ electronically for Construction Manager at Risk (CMAR) Services for the BOSC Pump Station and Forcemain Project.", thread: wastewater}
+  - {res: '138-26', date: '2026-02-26', file: M022626.pdf, title: "Approve Evaluation Committee to review the CMAR RFQ for the BOSC Pump Station and Forcemain Project.", thread: wastewater}
+
+adjacent_wastewater_resolutions:      # the County sanitary universe the data-center load lands on (PRR items 5-15 context)
+  - {res: '220-24', date: '2024-03-21', title: "Apply for / enter a cooperative agreement for construction of the Shawnee II Phase II WWTP improvements project.", thread: shawnee_ii}
+  - {res: '251-24', date: '2024-03-28', title: "Approve GMP Amendment No. 3 with Peterson Construction Company (final guaranteed maximum price) for the Shawnee II Phase 2 POTW Improvement Project.", thread: shawnee_ii}
+  - {res: '331-24', date: '2024-04-23', title: "Accept Permanent Easement from Verne L. Bellinger for the U.S. 30 Rest Area force main relocation.", thread: forcemain}
+  - {res: '533-24', date: '2024-06-25', title: "Award to Degen Excavating Company for the Stewart & Bible Roads Low Pressure Force Main Project, Bath Township.", thread: forcemain}
+  - {res: '679-24', date: '2024-08-22', title: "Task Order No. 5 with MS Consultants for additional engineering design for the potential POTW Expansion Project.", thread: shawnee_ii}
+  - {res: '739-24', date: '2024-09-12', title: "Accept Temporary Easement for the new Biosolids Handling Facility, Shawnee II WWTP Phase 2 Improvements.", thread: shawnee_ii}
+  - {res: '113-26', date: '2026-02-19', title: "Enter into contract with Garman/Miller & Associates, Inc. DBA Access Engineering Services for the Shawnee Oaks Sewer System Project.", thread: shawnee_oaks}
+  - {res: '135-26', date: '2026-02-26', title: "Authorize the Sanitary Engineer to apply for/accept a Water Pollution Control Loan Fund (WPCLF) loan on behalf of the Hamlet of Hume for construction of wastewater facilities, designating a dedicated repayment source.", thread: hume}
+  - {res: '136-26', date: '2026-02-26', title: "Authorize [the WPCLF application] — a $2,000,000 principal-forgiveness loan, Hamlet of Hume.", thread: hume, figure: "$2M principal-forgiveness"}
+
+narrative_events:                     # dated, sourced; no resolution number
+  - {date: '2024-06-06', file: M060624.pdf, event: "Cindy Leis (AEDG) overview of the AEDG / Allen County Port Authority partnership; 'Discussion on proposed Data Center project -- Zoning Resolutions will need to be amended to include Data Centers prior to project moving forward' + Access Management discussion.", significance: "Verifies the data-center ZONING AMENDMENT was project-driven -- corroborates lacrpc/american-township-zoning.zoning.yaml (was inference, now county-minuted)."}
+  - {date: '2025-02-14', file: M021425-Special.pdf, event: "CRA Discussion -- John Willamowski Jr., Rachael Gilroy, Kathy Henry, Keith Cheney, Cindy Leis, Jon Stock (via phone), Rex Huffman (via phone). 'Possible CRA for an area of land for a potential Data Center in American Township'; Jon Stock walks the Board through CRA process + required Housing Study; target creation 'February 27'."}
+  - {date: '2025-04-15', file: M041525.pdf, event: "Revised CRA sent to Cindy Leis and John Stock for review."}
+  - {date: '2025-05-20', file: M052025.pdf, event: "Asst. Prosecutor John Willamowski Jr. requests a meeting with the Commissioners to discuss the CRA process prior to meeting with Project BOSC Attorney John Stock."}
+  - {date: '2025-05-22', file: M052225.pdf, event: "Board reviews a proposed Non-Disclosure Agreement with 'a company proposing a CRA in Allen County for a data center'; discussion on Elida Schools agreeing to accept PILOT."}
+  - {date: '2025-06-03', file: M060325.pdf, event: "Commissioner Cory Noonan gives an overview of a meeting with constituents regarding Project BOSC."}
+  - {date: '2025-07-29', file: M072925.pdf, event: "Project BOSC Developer Agreement noted as approved the prior week (Res #575-25)."}
+  - {date: '2025-11-20', file: M112025.pdf, event: "County Engineer Brion Rhodes discusses potential concerns with the Project BOSC Development Project."}
+  - {date: '2026-01-13', file: M011326.pdf, event: "Discussion on General Permits for Discharges from Data Centers -- 'the State is lumping Wastewaters from Data Centers into a [general permit]'.", significance: "Ties to the OEPA/TMDL discharge thread (maumee-tmdl-responsiveness; new-discharger rule)."}
+  - {date: '2026-02-03', file: M020326.pdf, event: "Sanitary Engineer Brad Niemeyer and Treasurer Krista Bohn request authority to deposit Project BOSC funds into the county's Star Ohio Pooled Account."}
+  - {date: '2026-02-17', file: M021726.pdf, event: "Project BOSC: '$32M will be put toward the pump station from the developer'; general discussion on capital permit/tap fees.", figure: "$32,000,000 developer pump-station contribution (OCR-approximate; verify)"}
+
+executive_sessions:
+  cra_econdev_session: >-
+    2025-05-27 (M052725): the Board entered EXECUTIVE SESSION "for consideration of a CRA Agreement
+    pursuant to ORC 121.22(G)(8)" -- the open-meetings ECONOMIC-DEVELOPMENT confidentiality exemption
+    (trade secrets / to consider confidential economic-development info). Present: Cindy Leis (AEDG),
+    John Stock, John Willamowski Jr. This is the OPEN-MEETINGS analog of the records-withholding stack
+    (NDA §6 / CRA §22 / RDA §9.13 / R.C. 4582.58): the Board deliberated the BOSC CRA non-publicly.
+    [verified from the minutes; the "analog of the records shield" framing is inference.]
+  routine_note: >-
+    The large majority of the Board's executive sessions in the OCR'd range are routine personnel /
+    compensation matters under ORC 121.22(G)(1) (or (G)(2) property acquisition); the (G)(8) CRA
+    session is the BOSC-specific one. (A full executive-session log across 269 hits is a follow-up.)
+
+key_figures:                          # OCR-approximate where noted; verify against source PDFs
+  developer_pump_station_usd: 32000000     # "$32M ... toward the pump station from the developer" (2026-02-17)
+  hume_wpclf_principal_forgiveness_usd: 2000000   # Res #135-26/#136-26 (2026-02-26)
+  cmar_loan: "$1,000,000 at 0% interest; project adds 200+ homes and moves Cridersville customers to Shawnee (2026-02-26)"
+  cridersville_treatment_usd_per_yr: 102000   # the county's annual Cridersville wastewater-treatment bill (recurring driver)
+  cridersville_feasibility_study_usd: 161000  # 2026-02-19 feasibility study to reroute Cridersville customers
+
+new_actors:                           # surfaced here; candidates for data/people/
+  - {name: "Jon (John) Stock", role: "Project BOSC Attorney — developer-side CRA counsel (overview of CRA process + Housing Study)", note: "distinct from Vorys' Ziance/Tangeman; works with Willamowski Jr.", added_to_people: true}
+  - {name: "Krista Bohn", role: "Allen County Treasurer — Star Ohio / BOSC Fund deposits", added_to_people: false}
+  - {name: "Norm Capps", role: "advocated County encouragement for the Microsoft (Perry Twp) data center, 2024-08", added_to_people: false}
+  - {name: "Verne L. Bellinger", role: "easement grantor — US-30 Rest Area force main relocation (Res #331-24)", added_to_people: false}
+  - {name: "Rachael Gilroy", role: "Allen County Auditor (CRA / housing-study discussions)", added_to_people: false}
+
+records_relevance: >-
+  Concrete rebuttal to the PRR production posture: items 5-15 (BOSC pump-station/forcemain RFP+bids,
+  Shawnee II Phase 2, MS Consultants forcemain feasibility) were DEFERRED to the Sanitary Engineer,
+  but the authorizing resolutions are in the Commissioners' own minutes -- #469-25 (advertise for PE),
+  #575-25 (Sanitary Sewer Developer Agreement), #713-25 (MS Consultants contract), #975-25 (first
+  amendment), #137-26/#138-26 (CMAR RFQ + evaluation committee). The CRA/NDA/RDA legislative acts are
+  #417-25 / #548-25 / #588-25. The producing body legislated all of it.
+
+reconciliation_note: >-
+  DISCREPANCY to resolve, flagged not guessed: the completeness audit and the minutes README
+  characterize "#113-26 / #136-26" as "the forcemain-feasibility items the county pushed to the
+  Sanitary Engineer" (M021926.pdf:3 / M022626.pdf:3). The VERBATIM resolution titles read differently
+  -- #113-26 (2026-02-19) = "Garman/Miller & Associates ... for the Shawnee Oaks Sewer System
+  Project"; #135-26 / #136-26 (2026-02-26) = the WPCLF $2M principal-forgiveness loan "on behalf of
+  the Hamlet of Hume." The BOSC pump-station/forcemain procurement is #137-26 / #138-26 (CMAR RFQ +
+  evaluation committee, 2026-02-26), and a separate $161,000 Cridersville-reroute feasibility study
+  was approved 2026-02-19. The earlier label appears to conflate adjacent sanitary items; the
+  verbatim titles above are authoritative. Re-verify all three against the source PDFs and correct the
+  audit/README characterization.
+
+cross_refs:
+  - data/extracted/legal/corpus-completeness-audit.md                       # the deferral/withholding map this rebuts
+  - data/extracted/legal/prr-mandamus/mutual-nda-bistrozzi.nda.yaml         # NDA = Res #417-25
+  - data/extracted/legal/prr-mandamus/cra-agreement.cra.yaml                # CRA = Res #548-25
+  - data/extracted/aedg/roadwork-development-agreement.rda.yaml             # RDA = County Res #588-25
+  - data/extracted/regulatory/wastewater-enforcement-history.yaml          # Shawnee II / receiving-plant history
+  - data/extracted/lacrpc/american-township-zoning.zoning.yaml             # zoning amendment (2024-06-06 minutes corroborate)
+  - data/reference/hydrology/maumee-tmdl-responsiveness.yaml               # data-center discharge general permit (2026-01-13)
+  - data/extracted/commissioners/minutes/                                  # the OCR index this is built from
+
+relevance:
+  tags: [verified, commissioners, resolutions, bosc, wastewater, cra, nda, rda, records, timeline]
+  note: >-
+    Project BOSC's legislative spine from the Allen County Commissioners' own minutes (2024-2026):
+    NDA #417-25, CRA #548-25, Sanitary Sewer Developer Agreement #575-25 (amended #975-25), RDA
+    #588-25, BOSC Fund #612-25/#715-25, pump-station/forcemain engineering #469-25→#713-25 and CMAR
+    #137-26/#138-26. The 2024-06-06 minutes corroborate that the data-center zoning amendment was
+    project-driven; the 2025-05-27 ORC 121.22(G)(8) executive session is the open-meetings analog of
+    the records shield. Figures ($32M developer pump station, $2M Hume WPCLF) are OCR-approximate.
