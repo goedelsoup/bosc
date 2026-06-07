@@ -17,12 +17,14 @@ from pathlib import Path
 _LAYER_LABELS = {
     "campus": "Campus footprint (recorded Bistrozzi parcels)",
     "jsmc": "JSMC / Lima Army Tank Plant (United States-owned)",
+    "wwtp": "County WWTP discharge points (NPDES)",
     "floodway": "FEMA regulatory floodway (Zone AE)",
     "floodplain": "FEMA 1%-annual-chance floodplain (Zone A/AE)",
 }
 _LAYER_COLORS = {
     "campus": "#3f51b5",
     "jsmc": "#6d4c41",
+    "wwtp": "#00897b",
     "floodway": "#d32f2f",
     "floodplain": "#1976d2",
 }
@@ -40,12 +42,21 @@ _MAP_HTML = """
     var el = document.getElementById("bosc-map");
     if (!el) { return setTimeout(init, 200); }
     var map = L.map(el);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    var osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19, attribution: "&copy; OpenStreetMap contributors"
-    }).addTo(map);
+    });
+    var aerial = L.tileLayer(
+      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+      { maxZoom: 19, attribution: "Imagery &copy; Esri" }
+    );
+    osm.addTo(map);
+    L.control.layers({ "Street (OSM)": osm, "Aerial (Esri)": aerial }).addTo(map);
     fetch("assets/gis-findings.geojson").then(function (r) { return r.json(); }).then(function (fc) {
       var layer = L.geoJSON(fc, {
         style: function (f) { return STYLES[f.properties.layer] || { color: "#555", weight: 1 }; },
+        pointToLayer: function (f, latlng) {
+          return L.circleMarker(latlng, { radius: 7, color: "#00695c", weight: 2, fillColor: "#26a69a", fillOpacity: 0.9 });
+        },
         onEachFeature: function (f, l) { if (f.properties && f.properties.label) l.bindPopup(f.properties.label); }
       }).addTo(map);
       try { map.fitBounds(layer.getBounds(), { padding: [20, 20] }); }

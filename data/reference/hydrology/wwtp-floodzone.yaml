@@ -1,0 +1,47 @@
+note: ECHO coordinates are the facility location, a proxy for the NPDES outfall; the
+  actual outfall discharges at the receiving stream and is likely closer to the mapped
+  floodplain than the facility centroid.
+citation: 'Facility coordinates: EPA ECHO (data/reference/echo/maumee-wwtp.potw.yaml).
+  Flood zones: City of Lima GIS FEMA DFIRM 39003C, point-in-polygon + buffered.'
+plants:
+- name: American II WWTP
+  npdes: OH0037338
+  receiving_water: Dug Run
+  lat: 40.78016
+  lon: -84.17824
+  in_sfha_zones: []
+  zones_by_buffer:
+    50:
+    - AE
+    150:
+    - AE
+    - AE (FLOODWAY)
+    400:
+    - AE
+    - AE (FLOODWAY)
+- name: American-Bath WWTP
+  npdes: OH0023841
+  receiving_water: Pike Run
+  lat: 40.78226
+  lon: -84.12803
+  in_sfha_zones: []
+  zones_by_buffer:
+    50: []
+    150: []
+    400:
+    - AE
+- name: Shawnee No 2 WWTP
+  npdes: OH0023850
+  receiving_water: Ottawa River
+  lat: 40.72264
+  lon: -84.17776
+  in_sfha_zones: []
+  zones_by_buffer:
+    50:
+    - AE
+    150:
+    - AE
+    - AE (FLOODWAY)
+    400:
+    - AE
+    - AE (FLOODWAY)

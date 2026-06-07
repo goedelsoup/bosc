@@ -287,14 +287,16 @@ def query_floodzones(
     where: str = "1=1",
     *,
     rings: list[list[list[float]]] | None = None,
+    point: tuple[float, float] | None = None,
     distance_m: float | None = None,
     settings: Settings | None = None,
 ) -> list[FloodZone]:
-    """Flood-hazard polygons matching ``where`` and (optionally) intersecting ``rings``.
+    """Flood-hazard polygons matching ``where`` and (optionally) a WGS84 geometry.
 
-    ``rings`` is WGS84 (lon/lat) polygon rings; the service reprojects from
-    ``inSR=4326``. ``distance_m`` adds a buffer so "within N metres of the footprint"
-    can be answered. Paged to completion.
+    Pass ``rings`` (polygon, lon/lat) or ``point`` (``(lon, lat)``); the service
+    reprojects from ``inSR=4326``. A truthy ``distance_m`` buffers the geometry so
+    "within N metres" can be answered (omit/0 = exact intersect — ArcGIS rejects a
+    literal ``distance=0``). Paged to completion.
     """
     settings = settings or get_settings()
     spatial: dict[str, Any] = {}
@@ -305,9 +307,18 @@ def query_floodzones(
             "inSR": "4326",
             "spatialRel": "esriSpatialRelIntersects",
         }
-        if distance_m is not None:
-            spatial["distance"] = distance_m
-            spatial["units"] = "esriSRUnit_Meter"
+    elif point is not None:
+        spatial = {
+            "geometry": json.dumps(
+                {"x": point[0], "y": point[1], "spatialReference": {"wkid": 4326}}
+            ),
+            "geometryType": "esriGeometryPoint",
+            "inSR": "4326",
+            "spatialRel": "esriSpatialRelIntersects",
+        }
+    if spatial and distance_m:
+        spatial["distance"] = distance_m
+        spatial["units"] = "esriSRUnit_Meter"
     out: list[FloodZone] = []
     offset = 0
     while True:
@@ -364,6 +375,14 @@ def footprint_floodzones(
     rings = _polygon_rings(footprint_path)
     dist = distance_m if distance_m else None
     return query_floodzones(rings=rings, distance_m=dist, settings=settings)
+
+
+def point_floodzones(
+    lon: float, lat: float, *, distance_m: float = 0.0, settings: Settings | None = None
+) -> list[FloodZone]:
+    """Flood-hazard polygons at (or within ``distance_m`` of) a WGS84 point."""
+    dist = distance_m if distance_m else None
+    return query_floodzones(point=(lon, lat), distance_m=dist, settings=settings)
 
 
 def write_floodzone_catalog(classes: list[FloodZoneClass], out_dir: Path) -> Path:

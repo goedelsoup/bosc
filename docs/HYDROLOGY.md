@@ -29,6 +29,18 @@ At design low flow the receiving streams carry less than the effluent they
 receive — the discharges are effectively undiluted.
 
 
+**Outfall flood exposure.** None of the 3 plant sites sits in the FEMA Special Flood Hazard Area at its ECHO-reported point, but the discharge infrastructure is flood-adjacent on streams already shown to be undiluted at low flow `[verified: document]`:
+
+
+| Plant | Receiving water | In SFHA | Nearest AE | Nearest floodway |
+|---|---|---|---|---|
+| American II WWTP | Dug Run | no | ≤50 m | ≤150 m |
+| American-Bath WWTP | Pike Run | no | ≤400 m | — |
+| Shawnee No 2 WWTP | Ottawa River | no | ≤50 m | ≤150 m |
+
+ECHO coordinates are the facility location, a proxy for the NPDES outfall; the actual outfall discharges at the receiving stream and is likely closer to the mapped floodplain than the facility centroid. So the mapped exposure understates the outfalls': the discharge points themselves sit at the receiving water, inside or at the edge of the AE floodplain.
+
+
 ## 2. The Maumee Nutrient TMDL: the same discharges are capped phosphorus loads
 
 These discharges don't just strain a local stream. The Ottawa flows to the

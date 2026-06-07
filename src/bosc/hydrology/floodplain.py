@@ -63,6 +63,65 @@ def load_campus_floodzone(*, settings: Settings | None = None) -> CampusFloodzon
     return CampusFloodzone.model_validate(data)
 
 
+class WwtpFloodzone(BaseModel):
+    """A WWTP discharge point's FEMA flood exposure (point-in-polygon + buffered)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    name: str
+    npdes: str
+    receiving_water: str | None = None
+    lat: float
+    lon: float
+    in_sfha_zones: list[str]  # SFHA zones at the facility point (empty = not in SFHA)
+    zones_by_buffer: dict[int, list[str]]  # buffer metres -> distinct SFHA zone labels
+
+    @property
+    def in_sfha(self) -> bool:
+        return bool(self.in_sfha_zones)
+
+    def nearest_buffer(self, *, contains: str = "") -> int | None:
+        """Smallest buffer (m) at which a zone (optionally matching ``contains``) appears."""
+        for b in sorted(self.zones_by_buffer):
+            if any(contains.upper() in z.upper() for z in self.zones_by_buffer[b]):
+                return b
+        return None
+
+
+class WwtpFloodzones(BaseModel):
+    """The committed WWTP-outfall flood-exposure finding."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    note: str
+    citation: str
+    plants: list[WwtpFloodzone]
+
+
+def load_wwtp_floodzones(*, settings: Settings | None = None) -> WwtpFloodzones | None:
+    """Load the committed WWTP-outfall flood-exposure finding, or ``None`` if absent."""
+    settings = settings or get_settings()
+    path = settings.data_dir / "reference" / "hydrology" / "wwtp-floodzone.yaml"
+    if not path.is_file():
+        return None
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    plants = [
+        WwtpFloodzone(
+            name=p["name"],
+            npdes=p["npdes"],
+            receiving_water=p.get("receiving_water"),
+            lat=float(p["lat"]),
+            lon=float(p["lon"]),
+            in_sfha_zones=list(p.get("in_sfha_zones") or []),
+            zones_by_buffer={int(k): list(v) for k, v in (p.get("zones_by_buffer") or {}).items()},
+        )
+        for p in (data.get("plants") or [])
+    ]
+    return WwtpFloodzones(
+        note=data.get("note", ""), citation=data.get("citation", ""), plants=plants
+    )
+
+
 def write_campus_floodzone(
     in_parcels: list[FloodZone],
     nearby: list[FloodZone],

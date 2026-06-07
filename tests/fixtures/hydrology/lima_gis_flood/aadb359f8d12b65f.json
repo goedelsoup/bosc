@@ -1,0 +1,85 @@
+{
+  "params": {
+    "f": "json",
+    "returnGeometry": "false",
+    "where": "1=1",
+    "outFields": "OBJECTID,FLD_ZONE,ZONE_SUBTY,SFHA_TF,STATIC_BFE,DFIRM_ID,SOURCE_CIT",
+    "resultOffset": 0,
+    "resultRecordCount": 10000,
+    "orderByFields": "OBJECTID",
+    "geometry": "{\"x\": -84.17776, \"y\": 40.72264, \"spatialReference\": {\"wkid\": 4326}}",
+    "geometryType": "esriGeometryPoint",
+    "inSR": "4326",
+    "spatialRel": "esriSpatialRelIntersects",
+    "distance": 50,
+    "units": "esriSRUnit_Meter"
+  },
+  "fetched_at": "2026-06-07T01:50:36.531144+00:00",
+  "payload": {
+    "displayFieldName": "DFIRM_ID",
+    "fieldAliases": {
+      "OBJECTID": "FID",
+      "FLD_ZONE": "FLD_ZONE",
+      "ZONE_SUBTY": "ZONE_SUBTY",
+      "SFHA_TF": "SFHA_TF",
+      "STATIC_BFE": "STATIC_BFE",
+      "DFIRM_ID": "DFIRM_ID",
+      "SOURCE_CIT": "SOURCE_CIT"
+    },
+    "fields": [
+      {
+        "name": "OBJECTID",
+        "type": "esriFieldTypeOID",
+        "alias": "FID"
+      },
+      {
+        "name": "FLD_ZONE",
+        "type": "esriFieldTypeString",
+        "alias": "FLD_ZONE",
+        "length": 17
+      },
+      {
+        "name": "ZONE_SUBTY",
+        "type": "esriFieldTypeString",
+        "alias": "ZONE_SUBTY",
+        "length": 57
+      },
+      {
+        "name": "SFHA_TF",
+        "type": "esriFieldTypeString",
+        "alias": "SFHA_TF",
+        "length": 1
+      },
+      {
+        "name": "STATIC_BFE",
+        "type": "esriFieldTypeDouble",
+        "alias": "STATIC_BFE"
+      },
+      {
+        "name": "DFIRM_ID",
+        "type": "esriFieldTypeString",
+        "alias": "DFIRM_ID",
+        "length": 6
+      },
+      {
+        "name": "SOURCE_CIT",
+        "type": "esriFieldTypeString",
+        "alias": "SOURCE_CIT",
+        "length": 21
+      }
+    ],
+    "features": [
+      {
+        "attributes": {
+          "OBJECTID": 5,
+          "FLD_ZONE": "AE",
+          "ZONE_SUBTY": " ",
+          "SFHA_TF": "T",
+          "STATIC_BFE": -9999,
+          "DFIRM_ID": "39003C",
+          "SOURCE_CIT": "39003C_FIS5"
+        }
+      }
+    ]
+  }
+}

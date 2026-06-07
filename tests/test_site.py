@@ -57,8 +57,8 @@ def test_gis_findings_geojson_is_valid() -> None:
     fc = json.loads(path.read_text(encoding="utf-8"))
     assert fc["type"] == "FeatureCollection"
     layers = {f["properties"]["layer"] for f in fc["features"]}
-    assert {"campus", "jsmc", "floodway", "floodplain"} <= layers
-    # Every feature has geometry and a coordinate ring.
+    assert {"campus", "jsmc", "wwtp", "floodway", "floodplain"} <= layers
+    # Every feature has non-empty geometry (polygons for areas, points for WWTPs).
     for f in fc["features"]:
-        assert f["geometry"]["type"] in ("Polygon", "MultiPolygon")
+        assert f["geometry"]["type"] in ("Polygon", "MultiPolygon", "Point")
         assert f["geometry"]["coordinates"]

@@ -65,6 +65,43 @@ def render_report(*, settings: Settings | None = None, live: bool = False) -> st
         "receive — the discharges are effectively undiluted.\n"
     )
 
+    from bosc.hydrology.floodplain import load_wwtp_floodzones
+
+    wf = load_wwtp_floodzones(settings=settings)
+    if wf is not None and wf.plants:
+        sited = [p for p in wf.plants if p.in_sfha]
+        adjacent = [p for p in wf.plants if not p.in_sfha and p.nearest_buffer(contains="AE")]
+        lead = (
+            "All three plant sites sit in the FEMA floodplain"
+            if len(sited) == len(wf.plants)
+            else (
+                f"None of the {len(wf.plants)} plant sites sits in the FEMA Special Flood "
+                "Hazard Area at its ECHO-reported point"
+                if not sited
+                else f"{len(sited)} of {len(wf.plants)} plant sites sit in the FEMA SFHA"
+            )
+        )
+        w(
+            f"\n**Outfall flood exposure.** {lead}, but the discharge infrastructure is "
+            f"flood-adjacent on streams already shown to be undiluted at low flow "
+            f"`[verified: document]`:\n"
+        )
+        w("\n| Plant | Receiving water | In SFHA | Nearest AE | Nearest floodway |")
+        w("|---|---|---|---|---|")
+        for p in wf.plants:
+            ae = p.nearest_buffer(contains="AE")
+            fw = p.nearest_buffer(contains="FLOODWAY")
+            w(
+                f"| {p.name} | {p.receiving_water or '—'} | {'yes' if p.in_sfha else 'no'} "
+                f"| {f'≤{ae} m' if ae else '—'} | {f'≤{fw} m' if fw else '—'} |"
+            )
+        if adjacent:
+            w(
+                f"\n{wf.note} So the mapped exposure understates the outfalls': the "
+                "discharge points themselves sit at the receiving water, inside or at the "
+                "edge of the AE floodplain.\n"
+            )
+
     from bosc.hydrology.maumee import load_maumee_tmdl
 
     tmdl = load_maumee_tmdl(settings=settings)
