@@ -92,10 +92,12 @@ nav:
   - Curated entities:
       - Cloud-consumer candidates: candidates.md
       - Defense contractors: defense-contractors.md
+      - RSEI toxic-release inventory: rsei.md
   - Exhibits: exhibits.md
   - Reference data:
       - Maumee NPDES inventory (ECHO): data/reference/echo/README.md
       - Allen County parcels (CAMA): data/reference/allen-gis/README.md
       - Lima zoning districts: data/reference/lima-gis/README.md
+      - RSEI (EPA toxic-release): data/reference/rsei/README.md
       - Hydrology: docs/HYDROLOGY.md
       - Economics: docs/ECONOMICS.md

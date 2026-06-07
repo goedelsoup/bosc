@@ -615,6 +615,54 @@ def npdes(
     )
 
 
+@app.command(name="rsei")
+def rsei_cmd(
+    fips: str = typer.Option(
+        None, "--fips", help="County FIPS to reduce to (default: settings.rsei_fips, Allen=39003)."
+    ),
+    offline: bool = typer.Option(
+        False, "--offline", help="Use cached RSEI tables only; never download."
+    ),
+    out_dir: str | None = typer.Option(
+        None, "--out", help="Output directory (default: data/reference/rsei)."
+    ),
+) -> None:
+    """Reduce the EPA RSEI Public Data Set to one county's toxic-release inventory.
+
+    Joins elements -> release -> submission -> facility (+ chemical, media) and rolls
+    up each facility's population-weighted RSEI Score (cancer/non-cancer split),
+    Hazard, and pounds released. Bulk tables cache under data/cache/rsei (~340 MB on
+    first run); the committed artifact is a small per-county YAML.
+    """
+    from bosc import rsei
+    from bosc.config import Settings
+
+    settings = get_settings()
+    if offline:
+        settings = Settings(rsei_offline=True)
+    target = Path(out_dir) if out_dir else settings.reference_dir / "rsei"
+
+    inv = rsei.build_inventory(settings, fips=fips)
+
+    table = Table("#", "facility", "RSEI Score", "cancer %", "pounds", "years")
+    for i, f in enumerate(inv.facilities[:15], 1):
+        cpct = f"{100 * f.cancer_score / f.score:.0f}%" if f.score else "-"
+        yrs = f"{f.first_year}-{f.last_year}" if f.first_year else "-"
+        table.add_row(str(i), f.name[:40], f"{f.score:,.0f}", cpct, f"{f.pounds:,.0f}", yrs)
+    console.print(table)
+    console.print(
+        f"\n[bold]{inv.meta['facility_count']}[/] {inv.county_name} facilities "
+        f"([green]{inv.meta['scored_facility_count']} with a modeled Score[/])."
+    )
+
+    path = rsei.write_inventory(inv, target)
+    console.print(f"[green]Wrote[/] {path}")
+    console.print(
+        "[dim]Score is EPA's modeled, population-weighted Risk-Screening Score "
+        "(unitless, comparative only). Pounds are reported TRI releases.[/]"
+    )
+
+
 @app.command(name="lsc")
 def lsc(
     ga: str = typer.Option(

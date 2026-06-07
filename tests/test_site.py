@@ -42,6 +42,14 @@ def test_build_site_stages_expected_pages(tmp_path: Path) -> None:
     # The entity graph page carries a Mermaid diagram.
     assert "```mermaid" in (web / "entities.md").read_text(encoding="utf-8")
 
+    # The RSEI toxic-release inventory page is staged with the ranked facilities.
+    rsei_page = web / "rsei.md"
+    assert rsei_page.is_file()
+    rsei_body = rsei_page.read_text(encoding="utf-8")
+    assert "RSEI toxic-release inventory" in rsei_body
+    assert "GENERAL DYNAMICS LAND SYSTEMS" in rsei_body
+    assert result.n_rsei_facilities >= 40
+
     # The GIS findings map page + its committed GeoJSON asset are staged.
     gis = web / "gis-map.md"
     assert gis.is_file()

@@ -25,12 +25,14 @@ from bosc.people import load_people
 from bosc.pipeline.corpus import load_corpus
 from bosc.pipeline.entities import build_entity_graph
 from bosc.pipeline.timeline import build_timeline
+from bosc.rsei import load_inventory as load_rsei_inventory
 from bosc.site import candidates as candidates_mod
 from bosc.site import exhibits as exhibits_mod
 from bosc.site import gismap as gismap_mod
 from bosc.site import graph as graph_mod
 from bosc.site import people as people_mod
 from bosc.site import records as records_mod
+from bosc.site import rsei as rsei_mod
 
 log = get_logger(__name__)
 
@@ -53,6 +55,7 @@ class BuildResult:
     n_people_tracked: int = 0
     n_candidates: int = 0
     n_defense_contractors: int = 0
+    n_rsei_facilities: int = 0
 
 
 def _mirror_tree(
@@ -241,6 +244,14 @@ def build_site(settings: Settings | None = None, web_dir: Path | None = None) ->
             encoding="utf-8",
         )
         result.n_defense_contractors = len(defense.defense_contractors)
+
+    # 6b-ii. RSEI toxic-release inventory (data/reference/rsei/inventory.yaml).
+    rsei_inv = load_rsei_inventory(settings.reference_dir)
+    if rsei_inv is not None:
+        (web / "rsei.md").write_text(
+            rsei_mod.render_rsei(rsei_inv, egraph=egraph), encoding="utf-8"
+        )
+        result.n_rsei_facilities = len(rsei_inv.facilities)
 
     # 6c. GIS findings map — copy the committed GeoJSON as a static asset, render the
     # Leaflet page (it fetches the asset client-side).

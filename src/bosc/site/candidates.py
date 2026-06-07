@@ -134,7 +134,16 @@ def _render_parcel_scan(scan: DefenseLandScan) -> list[str]:
                 f"| {_parcel_field(r, 'situs_address')} | {_parcel_field(r, 'acres')} "
                 f"| {mkt_s} | {_parcel_field(r, 'tax_district')} |"
             )
-        lines.append("")
+        lines += [
+            "",
+            '!!! tip "Independent corroboration — EPA RSEI"',
+            "    EPA's RSEI Public Data Set lists **US ARMY JSMC / GENERAL DYNAMICS LAND "
+            "SYSTEMS** (NAICS 336992, military armored vehicles) as a TRI reporter at "
+            "this footprint — Allen County's **#3** toxic-release Score. That is an "
+            "independent federal dataset naming GDLS at the JSMC; see the "
+            "[RSEI inventory](rsei.md).",
+            "",
+        ]
     return lines
 
 

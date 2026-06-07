@@ -152,6 +152,19 @@ Flood Hazard Area, but Zone AE (1%-annual-chance) floodplain and regulatory
 corridor the post-development stormwater increase drains toward (see
 [hydrology](HYDROLOGY.md)). `[verified: data/reference/hydrology/campus-floodzone.yaml]`
 
+**Toxic-release baseline (EPA RSEI).** The corridor sits in a long-industrial county.
+EPA's Risk-Screening Environmental Indicators set ranks **45** Allen County TRI
+facilities by modeled, population-weighted Score; the top emitters are **INEOS USA**,
+the **WHEMCO-Ohio foundry**, and — notably for the defense thread — the **JSMC /
+General Dynamics Land Systems** plant at **#3** (~3.6 M Score, 99% cancer-weighted,
+chiefly nickel compounds, reported 1988–1993). That is an independent federal dataset
+naming **GDLS at the JSMC**, corroborating the
+[defense-contractor scan](../data/reference/allen-gis/README.md)'s reading of the
+Army-owned footprint. Several RSEI facilities also carry NPDES permits that join to
+the [Maumee NPDES inventory](../data/reference/echo/README.md), and the per-facility
+*water* release bucket ties into the dilution analysis above. `[verified:
+data/reference/rsei/inventory.yaml]`
+
 ---
 
 ## 6. Roadwork — privately-funded public infrastructure

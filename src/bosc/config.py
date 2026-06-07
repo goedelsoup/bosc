@@ -81,6 +81,13 @@ class Settings(BaseSettings):
         "https://colgis.cityhall.lima.oh.us/server/rest/services/"
         "CitywideMaps/Lima_Zoning/MapServer/4"
     )
+    # EPA RSEI Public Data Set (AWS Open Data s3://epa-rsei-pds). Bulk relational
+    # tables; `bosc rsei` reduces them to one county's toxic-release inventory.
+    rsei_base_url: str = "https://epa-rsei-pds.s3.amazonaws.com"
+    rsei_version: str = "v234"
+    rsei_fips: str = "39003"  # Allen County, OH
+    rsei_offline: bool = False  # serve cached tables only; never download
+    rsei_request_timeout_s: float = 300.0  # elements.csv.gz is ~250 MB
 
     # --- Paths -------------------------------------------------------------
     data_dir: Path = _REPO_ROOT / "data"
@@ -104,6 +111,11 @@ class Settings(BaseSettings):
     def hydro_cache_dir(self) -> Path:
         """Cached live-connector responses (NWIS, etc.). Regenerable, not committed."""
         return self.cache_dir / "hydrology"
+
+    @property
+    def rsei_cache_dir(self) -> Path:
+        """Cached EPA RSEI bulk tables (the big .gz files). Regenerable, not committed."""
+        return self.cache_dir / "rsei"
 
     @property
     def reference_dir(self) -> Path:
