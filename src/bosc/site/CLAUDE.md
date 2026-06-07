@@ -14,5 +14,10 @@ then `render.py` renders it to plain multipage HTML under `site/` (Python-Markdo
 - Exhibits are driven by [`data/site/exhibits.yaml`](../../../data/site/README.md)
   (page-range slices, never whole bundles). The sidebar nav + site metadata live
   in `nav.yaml` (`nav.py` loads it); the page shell is `templates/base.html`;
-  static assets live in `assets/` (`site.css`, `extra.css`, `mermaid-init.js`).
+  static assets live in `assets/` (`site.css`, `extra.css`, `mermaid-init.js`,
+  `search.js`).
+- **Search is client-side and dependency-free.** `render.py` writes
+  `assets/search-index.json` (one entry per page: title + URL + plain-text excerpt)
+  as it renders; `assets/search.js` fetches it and does an all-terms substring match.
+  No lunr, no CDN — keep it that way so the static host needs nothing.
 - Deployment is **manual** (`workflow_dispatch`) — the site is an unlisted draft.

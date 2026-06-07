@@ -20,6 +20,8 @@ just serves the files. Both ``web/`` and ``site/`` are git-ignored and regenerab
 
 from __future__ import annotations
 
+import html as _html
+import json
 import re
 import shutil
 from dataclasses import dataclass
@@ -66,6 +68,18 @@ class RenderResult:
     site_dir: Path
     pages: int = 0
     assets: int = 0
+
+
+_TAG_RE = re.compile(r"<[^>]+>")
+_WS_RE = re.compile(r"\s+")
+_SEARCH_EXCERPT = 1800  # plain-text chars per page kept in the client search index
+
+
+def _plain_text(html: str) -> str:
+    """Strip tags + entities from rendered HTML to indexable plain text."""
+    text = _TAG_RE.sub(" ", html)
+    text = _html.unescape(text)
+    return _WS_RE.sub(" ", text).strip()
 
 
 def _rewrite_target(url: str) -> str:
@@ -147,6 +161,7 @@ def render_site(
     md = markdown.Markdown(extensions=_MD_EXTENSIONS, extension_configs=_MD_EXTENSION_CONFIGS)
 
     result = RenderResult(site_dir=site)
+    search_index: list[dict[str, str]] = []
     for path in sorted(web.rglob("*")):
         if not path.is_file():
             continue
@@ -174,12 +189,27 @@ def render_site(
                 ),
                 encoding="utf-8",
             )
+            search_index.append(
+                {
+                    "title": page_title,
+                    "url": out_rel.as_posix(),
+                    "text": _plain_text(body)[:_SEARCH_EXCERPT],
+                }
+            )
             result.pages += 1
         else:
             out = site / rel
             out.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(path, out)
             result.assets += 1
+
+    # Client-side search index — site-root-relative URLs; search.js prefixes each
+    # with the page's path-to-root at query time.
+    assets = site / "assets"
+    assets.mkdir(parents=True, exist_ok=True)
+    (assets / "search-index.json").write_text(
+        json.dumps(search_index, separators=(",", ":")), encoding="utf-8"
+    )
 
     log.info("site.rendered", site=str(site), pages=result.pages, assets=result.assets)
     return result

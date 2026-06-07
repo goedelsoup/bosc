@@ -58,3 +58,32 @@ def test_render_site_emits_html(tmp_path: Path) -> None:
     assert (site / "assets" / "extra.css").is_file()
     assert (site / "assets" / "site.css").is_file()
     assert (site / "assets" / "gis-findings.geojson").is_file()
+
+    # The search box + script are wired into every page.
+    assert 'id="bosc-search"' in index_html
+    assert "assets/search.js" in index_html
+    assert (site / "assets" / "search.js").is_file()
+
+
+def test_render_builds_search_index(tmp_path: Path) -> None:
+    import json
+
+    settings = Settings(data_dir=REPO_ROOT / "data")
+    web = tmp_path / "web"
+    site = tmp_path / "site"
+    build_site(settings, web_dir=web)
+    result = render_site(web, site)
+
+    idx_path = site / "assets" / "search-index.json"
+    assert idx_path.is_file()
+    idx = json.loads(idx_path.read_text(encoding="utf-8"))
+    # One entry per rendered page, each with a site-root-relative URL + indexable text.
+    assert len(idx) == result.pages
+    assert all({"title", "url", "text"} <= set(e) for e in idx)
+    assert all(not e["url"].endswith(".md") for e in idx)
+    by_url = {e["url"]: e for e in idx}
+    assert "rsei.html" in by_url
+    # Body text is indexed (so search can match content, not just titles).
+    assert "GENERAL DYNAMICS" in by_url["rsei.html"]["text"].upper()
+    # The landing page is indexed at the root, not as home.html.
+    assert "index.html" in by_url and "home.html" not in by_url

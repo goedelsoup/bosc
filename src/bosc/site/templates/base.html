@@ -8,11 +8,16 @@
   <link rel="stylesheet" href="{{ root }}assets/site.css" />
   <link rel="stylesheet" href="{{ root }}assets/extra.css" />
 </head>
-<body>
+<body data-root="{{ root }}">
   <input type="checkbox" id="bosc-nav-toggle" class="nav-toggle" hidden />
   <header class="topbar">
     <label for="bosc-nav-toggle" class="nav-burger" aria-label="Toggle navigation">☰</label>
     <a class="brand" href="{{ root }}index.html">{{ site_name }}</a>
+    <div class="search">
+      <input type="search" id="bosc-search" placeholder="Search…" autocomplete="off"
+             aria-label="Search the site" spellcheck="false" />
+      <div id="bosc-search-results" class="search-results" hidden></div>
+    </div>
   </header>
   <div class="layout">
     <nav class="sidebar" aria-label="Site navigation">
@@ -32,5 +37,6 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <script src="{{ root }}assets/mermaid-init.js"></script>
+  <script src="{{ root }}assets/search.js" defer></script>
 </body>
 </html>
