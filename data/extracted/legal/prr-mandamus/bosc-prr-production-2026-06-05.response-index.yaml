@@ -53,7 +53,14 @@ request_response:
       ask: NDA / confidentiality / common-interest agreements w/ AEDG, Bistrozzi, Google, Vorys/Ziance re American Twp facility.
       status: produced
       produced: Mutual NDA (NDA.pdf) — Resolution #417-25 (2025-05-27); executed 2025-07-01 (Ziance) / Winegardner.
-      significance: Direct confirmation of NDA-by-default pattern (memo §III). Pre-2026-03-20 record -> §1.48 wedge applies; county produced it.
+      full_extraction: data/extracted/legal/prr-mandamus/mutual-nda-bistrozzi.nda.yaml
+      significance: >
+        Direct confirmation of NDA-by-default pattern (memo §III). Pre-2026-03-20 record -> §1.48 wedge applies;
+        county produced it. The produced NDA's §6 is the contractual records-withholding engine: the County agreed
+        that before answering ANY public-records request touching Bistrozzi material it would (i) give the developer
+        >=10 business days' prior written notice to seek a protective order, (ii) disclose only the bare legal
+        minimum, and (iii) affirmatively seek confidential treatment. Originated by Assistant Prosecutor John
+        Willamowski Jr. (county counsel). See mutual-nda-bistrozzi.nda.yaml#public_records_clause.
     - n: 2
       category: A
       ask: County <-> DoD / federal contractor / General Dynamics (GDIT, GDLS) comms re American Twp facility or the American Twp–Shawnee Twp corridor.
@@ -130,6 +137,19 @@ new_findings:
   - id: cms-custody-confirmed
     finding: County (item 16) expressly disclaims managing its own website; CMS audit logs therefore sit with the web vendor (CorpComm Group, Inc.).
     implication: Confirms the records-custody point in data/extracted/legal/web-vendor-audit/allen-county-web-vendor-audit.{md,yaml}. A §149.43 request for CMS logs implicates the third-party processor.
+  - id: nda-section-6-notice-mechanism
+    finding: >
+      The produced NDA's §6 obligates the County (as Recipient) to give Bistrozzi at least 10 business
+      days' prior written notice before disclosing Confidential Information pursuant to any "public record
+      request or other governmental demand" ("Process"), to disclose only what the law requires, and to
+      request/seek confidential treatment — i.e. to help the developer pursue a protective order. The NDA
+      was requested by Assistant Prosecutor John Willamowski Jr. and recorded JR510 PAGE027.
+    implication: >
+      Identifies a CONTRACTUAL cause for the ~7-week production delay independent of the §9.66(D) review:
+      a self-imposed developer-notification step. It makes the County the developer's notice agent/advocate
+      for nondisclosure, paralleling the CRA §22 public-records indemnity — a second private incentive to
+      withhold. §6 does not override R.C. 149.43 (it still requires disclosing what the law requires), so
+      it manufactures delay/adversarial posture, not a lawful exemption. See mutual-nda-bistrozzi.nda.yaml.
   - id: nine-66-distinction
     finding: CRA §19 "R.C. 9.66 Covenants" is the pre-existing clawback/false-statement covenant, NOT the new §9.66(D) confidentiality provision (HB 184). Only item 4's response invokes the (D) shield.
     implication: Keep §9.66 (covenant) and §9.66(D) (confidentiality) distinct in any filing.
@@ -191,6 +211,7 @@ sanitary_pages_edit_history:
   full_profile: data/extracted/legal/web-vendor-audit/allen-county-level-sites.md
 
 cross_refs:
+  - data/extracted/legal/prr-mandamus/mutual-nda-bistrozzi.nda.yaml   # item 1 — full NDA terms incl. §6 records-notice clause
   - docs/legal/mandamus-analysis.md            # §I.5 leverage; §II §9.66(D); §III opacity; §IV timeline
   - data/extracted/legal/web-vendor-audit/allen-county-web-vendor-audit.md   # item 16 custody tie-in
   - data/extracted/legal/web-vendor-audit/allen-county-level-sites.md        # county-level site profiles + item-16 edit-history table

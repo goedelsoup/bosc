@@ -1,0 +1,133 @@
+kind: nda
+subject: Mutual Non-Disclosure Agreement, Allen County Board of Commissioners <-> Bistrozzi LLC
+
+provenance:
+  source_path: data/documents/legal/prr-mandamus/prr-production-2026-06-05/NDA.pdf
+  produced_in: Allen County public-records production 2026-06-05 (response item 1)
+  pages: "Res #417-25 p.1 (recorder-stamped); Mutual NDA pp.2-5 (terms pp.2-3, signature blocks pp.4-5)"
+  recorder_stamp: "JR510 PAGE027"   # recorded with the Allen County Recorder (distinct book/page from the CRA's JR511)
+  content_verified: '2026-06-07'   # terms read from the page images, not the OCR layer or filename
+  evidence: scan (county-produced PDF)
+
+authorization:                       # Resolution #417-25 (NDA.pdf p.1)
+  resolution: '417-25'
+  date: '2025-05-27'
+  body: Allen County Board of County Commissioners (regular session)
+  title: >-
+    Board of County Commissioners, Allen County, Ohio enters into a Mutual
+    Non-Disclosure Agreement with Bistrozzi, LLC.
+  members_present: [Beth Seibert, Cory Noonan, Brian Winegardner]
+  moved_by: Seibert
+  seconded_by: Winegardner
+  vote: {Noonan: 'yes', Winegardner: 'yes', Seibert: 'yes'}
+  signing_authority: Brian Winegardner (Board President) authorized to sign on behalf of the Board
+  clerk: Brittany N. Woods
+  requested_by: >-
+    Assistant Prosecutor John Willamowski Jr. — per the recitals, "correspondence has been
+    received from Assistant Prosecutor John Willamowski Jr., requesting the Board enter into a
+    Mutual Non-Disclosure Agreement with Bistrozzi, LLC." (the County's own counsel originated the NDA)
+  stated_purpose: >-
+    To exchange confidential information to evaluate whether to enter into a Community
+    Reinvestment Area Agreement, and -- if the parties enter into the CRA -- to fulfill each
+    party's confidentiality obligations to the extent set forth in the NDA. (ties the NDA
+    directly to the CRA at cra-agreement.cra.yaml)
+
+parties:
+  company: >-
+    BISTROZZI LLC -- defined as "for itself and its parent, subsidiaries and affiliates"
+    ("Company"). The agreement's confidentiality runs to an unnamed parent + affiliate group
+    (cross-refs the Fortune-100 parent assurance in cra-agreement.cra.yaml §13(A) and the
+    real-party-in-interest thread).
+  participant: Allen County Board of Commissioners ("Participant")
+  company_counsel: Vorys, Sater, Seymour and Pease LLP -- Scott J. Ziance (sjziance@vorys.com)
+
+execution:
+  effective_date_rule: "the date the last party signs (§1)"
+  signatures:
+    - party: Bistrozzi LLC (Company)
+      signatory: Scott J. Ziance
+      title: Its Authorized Signatory
+      affiliation: Vorys, Sater, Seymour and Pease LLP (Company counsel)
+      date: '2025-07-01'           # handwritten on the executed counterpart (p.5)
+    - party: Allen County Board of Commissioners (Participant)
+      signatory: Brian Winegardner
+      title: President, Board of Commissioners
+      date: null                   # signature present; no handwritten date on the produced copy
+  effective_date_resolved: '2025-07-01'   # last visible signature (Ziance); Winegardner date left blank
+  note: >-
+    p.4 is the Participant-signed / Company-blank counterpart; p.5 is the fully executed
+    counterpart (Ziance signed 2025-07-01). The NDA predates the CRA approval (Res #548-25,
+    2025-07-10) and its execution (2025-08-26) -- the confidentiality wrapper went on first.
+
+terms:
+  purpose: >-
+    (a) evaluate whether to enter into a CRA Agreement; (b) if the parties enter into a CRA,
+    fulfill each party's confidentiality obligations to the extent incorporated therein (§Purpose).
+  confidential_information: >-
+    Broadly defined (§2) -- tangible/intangible, oral/visual/electronic, incl. trade secrets,
+    financial, technical (research, development, procedures, algorithms, data, designs, know-how),
+    and business information (operations, planning, marketing, products, negotiations, proposals);
+    includes information learned during facility tours/site visits.
+  duty: "Recipient protects with no less than a reasonable degree of care; use only for the Purpose (§§3-4)."
+  recipient_primary_obligor: "Recipient liable as primary obligor for breaches by its Authorized Personnel, with or without its knowledge (§4)."
+  term: "Remains in effect until terminated by either party on 30 days' prior written notice; survives as to info disclosed before termination (§8)."
+  duty_duration: "A Recipient's duty to protect expires 3 years from the date of disclosure; on request, return or destroy all Confidential Information -- unless retention is required by State public record laws (§9)."
+  no_obligation_to_exchange: "§10 -- imposes no obligation to actually exchange information or proceed with any deal."
+  no_ip_transfer: "§11 -- no IP rights conveyed beyond the limited rights to carry out the Purpose."
+  equitable_relief: "§12 -- improper disclosure may be irreparable; injunctive relief available."
+  assignment: >-
+    §13 -- NOT assignable by the Participant (the County) without the Company's prior written
+    consent; the Company may assign or transfer in its sole discretion. (asymmetric -- mirrors
+    CRA §14's affiliate/financing assignability running to the Company's side)
+  governing_law: "Ohio law; exclusive venue = state or federal courts in Allen County, Ohio (§16)."
+  notices:                           # §17
+    county:
+      - "President of the Board: bwinegardner@allencountyohio.com"
+      - "Allen County Prosecutor: prosecutor@allencountyohio.com"
+    company: "Bistrozzi LLC c/o Vorys, Sater, Seymour and Pease LLP, 52 East Gay Street, Columbus, OH 43215, Attn: Scott J. Ziance (sjziance@vorys.com), with copy to same."
+
+public_records_clause:               # §6 -- the operative mechanism behind the records-withholding thesis
+  section: '6'
+  carve_out: >-
+    The confidentiality obligation does not apply to information §6(f) "required to be disclosed by
+    operation of law, court order, public record request or other governmental demand" ("Process").
+  county_obligations_when_recipient: >-
+    PROVIDED THAT where the Participant (the County) is the Recipient, the County agrees to
+    (i) give the Company PRIOR WRITTEN NOTICE of such Process -- "at least 10 business days" --
+    sufficient to allow the Company to seek a protective order or other remedy; (ii) disclose only
+    such information as is required by law; and (iii) request and seek confidential treatment for
+    any Confidential Information so disclosed, to the extent allowed by law.
+  litigation_carveout: >-
+    Separately, the NDA imposes no obligation on a Recipient as to Confidential Information disclosed
+    during litigation between Company and Participant, to the extent relevant to the subject of the
+    litigation.
+  state_public_record_laws_defined: >-
+    "the public record laws generally applicable to public entities in the State of Ohio, including
+    any exemptions thereto, and any public record laws applicable to the Allen County Board of
+    Commissioners."
+  significance: >-
+    This is the contractual engine of the records delay. By signing §6 the County bound itself, before
+    answering any R.C. 149.43 request touching Bistrozzi material, to (1) tip off the developer at
+    least 10 business days in advance, (2) narrow its own production to the bare legal minimum, and
+    (3) affirmatively pursue confidential treatment / a protective order on the developer's behalf.
+    It converts a neutral records custodian into the developer's notice agent and advocate for
+    nondisclosure -- a private incentive to withhold that parallels the CRA §22 public-records
+    indemnity (cra-agreement.cra.yaml). The ~7-week production delay (request 2026-04-14 ->
+    first batch 2026-06-05) is the predictable output of a built-in 10-business-day developer-notice
+    step layered on top of the §9.66(D) review. Note: §6 still requires the County to disclose what
+    the law requires; it cannot lawfully convert a public record into a secret -- but it manufactures
+    delay and an adversarial posture toward the requester.
+
+cross_refs:
+  - data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-05.response-index.yaml   # item 1 = this NDA
+  - data/extracted/legal/prr-mandamus/cra-agreement.cra.yaml                               # the CRA this NDA wrapped (§22 indemnity parallel)
+  - docs/legal/mandamus-analysis.md                                                        # §I.5 leverage; §III opacity
+
+relevance:
+  tags: [verified, legal, nda, confidentiality, public-records, records-withholding, real-party-in-interest]
+  note: >-
+    The Mutual NDA the County produced as item 1. Originated by Assistant Prosecutor John
+    Willamowski Jr., authorized by Res #417-25 (2025-05-27), executed by Scott J. Ziance (Vorys,
+    for Bistrozzi LLC) on 2025-07-01, recorded JR510 PAGE027. Its §6 is the contractual
+    notice-to-developer-before-disclosure mechanism that underwrites the withholding thesis; its
+    "parent, subsidiaries and affiliates" definition feeds the real-party-in-interest thread.
