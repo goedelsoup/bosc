@@ -1,0 +1,102 @@
+# Near-field TMDLs in the Maumee watershed (the LOCAL, receiving-water-specific
+# regulatory baselines) + the WWTP phosphorus-removal cost evaluation.
+#
+# The far-field Maumee Watershed Nutrient TMDL (maumee-tmdl-budget.yaml) sits on
+# top of six older, stream-specific "near-field" TMDLs. The one that governs the
+# Lima municipal loop's actual receiving water is the OTTAWA RIVER (LIMA AREA)
+# TMDL (US EPA-approved 2014-04-15). Its impairment finding -- excess algae and
+# diel DO swings "exacerbated by chronic low flow conditions" -- is an
+# INDEPENDENT regulatory confirmation of the low-flow dilution failure the
+# assimilative screen flags (assimilative.py / low-flow-7q10.yaml).
+#
+# Every figure transcribed VERBATIM from the cited source pages; unread values
+# OMITTED, not guessed. tagged source: document.
+
+source: document
+
+# ---- Appendix 5: the six near-field TMDLs ----
+nearfield_tmdls:
+  citation: >-
+    Ohio EPA, Maumee Watershed Nutrient TMDL (final, 2023), Appendix 5 "Near-Field TMDL Reports in
+    the Maumee Watershed" -- data/documents/maumee-tmdl/Appendix-5-Nearfield-TMDLs-Final.pdf.
+  note: >-
+    Six approved near-field (stream aquatic-life-use) TP TMDLs underlie the far-field Maumee TMDL.
+    Appendix 5 also warns that near-field impairments exist that NO TMDL has addressed yet.
+  reports:
+    - {name: Upper Auglaize River Watershed, approved: '2004-09-23', tp_tmdls: 8, npdes_permits: 2}
+    - {name: Blanchard River Watershed, approved: '2009-07-02', tp_tmdls: 15, npdes_permits: 24}
+    - {name: Powell Creek Watershed, approved: '2009-06-18', tp_tmdls: 11, npdes_permits: 2}
+    - {name: Swan Creek Watershed, approved: '2010-01-06', tp_tmdls: 4, npdes_permits: 5}
+    - {name: Maumee River (lower) Tributaries + Lake Erie Tributaries, approved: '2012-09-25', tp_tmdls: 1, npdes_permits: 5}
+    - {name: Ottawa River Watershed (Lima Area), approved: '2014-04-15', tp_tmdls: 7, npdes_permits: 10}
+
+# ---- The Ottawa River (Lima Area) TMDL -- the loop's own receiving water ----
+ottawa_lima_tmdl:
+  approved: '2014-04-15'
+  scope: "Ottawa River mainstem + tributaries (Lima area); 7 phosphorus TMDLs; 10 NPDES permits"
+  major_sources: ["agriculture", "combined sewer overflows (CSOs)", "point-source discharges"]
+  impairment_finding: >-
+    "the enrichment and excess algal production caused diel high and low dissolved oxygen (DO)
+    fluctuations (and sometimes high pH values) that were exacerbated by chronic low flow conditions"
+  significance: >-
+    The Lima loop's receiving water was already TP-impaired and TMDL-allocated a DECADE before the
+    BOSC/Google project, and the regulator expressly tied the impairment to CHRONIC LOW FLOW -- the
+    same dilution failure the assimilative screen flags (the streams can't dilute the loads they
+    already carry). A new data-center sanitary load enters a receiving water with two stacked TMDLs
+    (Ottawa 2014 + Maumee 2023) and a documented low-flow dilution deficit. [the stacked-burden
+    framing is inference; the 2014 approval, scope, and impairment quote are document.]
+  prior_wlas:   # Appendix 5 Table A5.1, Ottawa (Lima) project-area rows only (TP WLA as stated)
+    units: "as published -- most Ottawa (Lima) facilities in kg/day"
+    facilities:
+      - {facility: 'Lima WWTP', npdes: '2PE00000', tp_wla: 5.33, unit: kg/day}
+      - {facility: 'Shawnee No 2 WWTP', npdes: '2PK00002', tp_wla: 2.31, unit: kg/day}
+      - {facility: 'Cridersville WWTP', npdes: '2PB00048', tp_wla: 0.61, unit: kg/day}
+      - {facility: 'Columbus Grove WWTP', npdes: '2PC00004', tp_wla: 2.16, unit: kg/day}
+      - {facility: 'Ada WWTP', npdes: '2PB00050', tp_wla: 0.85, unit: kg/day}
+      - {facility: 'PCS Nitrogen Ohio LP', npdes: '2IF00004', tp_wla: 1.25, unit: kg/day, type: industrial}
+      - {facility: 'Chemtrade Logistics Inc', npdes: '2IF00008', tp_wla: 0.30, unit: kg/day, type: industrial}
+      - {facility: 'Lima Refinery', npdes: '2IG00001', tp_wla: 1.58, unit: kg/day, type: industrial}
+      - {facility: 'National Lime & Stone Co Lima Plant No 1', npdes: '2IJ00013', tp_wla: 0.11, unit: kg/day, type: industrial}
+    cross_metric_caveat: >-
+      These 2014 Ottawa (Lima) daily WLAs and the 2023 Maumee TMDL's spring-season-averaged
+      daily-equivalents (maumee-tmdl-wla.yaml) are DIFFERENT regulatory instruments on DIFFERENT
+      bases -- do not subtract them. (e.g. Shawnee No.2: 2014 Ottawa = 2.31 kg/day; 2023 Maumee
+      spring-equiv = 4.9 kg/day.) The point is the stacking of two TMDLs on one receiving water,
+      not an arithmetic delta.
+    not_in_ottawa_tmdl: >-
+      American-Bath (2PH00007) and American No.2 (2PH00006) -- two of the WWTPs slated to receive
+      BOSC-1A flow -- are NOT in the 2014 Ottawa (Lima) TMDL; they discharge to Pike Run / Dug Run
+      and received their FIRST TP WLA only in the 2023 Maumee TMDL.
+
+# ---- Appendix 6: WWTP phosphorus-removal cost evaluation (qualitative; charts not text-extractable) ----
+cost_evaluation:
+  citation: >-
+    Ohio EPA, Maumee Watershed Nutrient TMDL, Appendix 6 "Cost Evaluation for Phosphorus Removal at
+    Wastewater Treatment Facilities" -- prepared by TETRA TECH for Ohio EPA, 2022-12-21
+    (data/documents/maumee-tmdl/Appendix-6-Cost-Evaluation-for-Phosphorus-Removal-Final.pdf).
+  author_note: >-
+    Prepared by Tetra Tech -- the SAME contractor that produced the BOSC roundabout OPC
+    (roundabouts.summary.opc.yaml) and the $14.5M roadwork cost basis.
+  load_concentration: >-
+    "20 percent of NPDES-permitted treatment facilities account for more than 85 percent of the
+    point source waste load allocation" -- the load concentrates in the major municipal WWTPs.
+  method: "CapdetWorks planning-level model; 2022 dollars; 3% interest, 20-yr amortization; incremental capital + O&M."
+  facility_groups:
+    group_1: ">10 mgd, existing 1.0 mg/L TP limit -> target 0.5 mg/L"
+    group_2: "1-10 mgd, existing 1.0 mg/L TP limit -> target 0.5 mg/L"
+    group_3: "0.5-1.0 mgd, NO existing TP limit -> target 1.0 mg/L"
+  key_findings:
+    - "Group 1/2: a second chemical-addition point is the most cost-effective upgrade (capital ~negligible); cloth filtration is far more expensive; chemical addition carries the highest O&M."
+    - "Group 3 (no current TP limit): retrofitting an activated-sludge unit to A/O is cheapest; A2O (P+N removal) is notably more expensive."
+  bosc_relevance: >-
+    American-Bath / American No.2 are small plants with NO current TP limit (Group-3 profile): taking
+    new BOSC-1A flow plus a first-time 2023 TMDL TP WLA implies Group-3-type capital + O&M upgrade
+    costs to add phosphorus removal -- a public/ratepayer cost the incentive package does not surface.
+    Exact $/gpd curves are in the appendix's figures (charts), not transcribed here. [inference]
+
+cross_refs:
+  - data/reference/hydrology/maumee-tmdl-budget.yaml       # the far-field watershed budget this sits under
+  - data/reference/hydrology/maumee-tmdl-wla.yaml          # the 2023 per-facility WLAs
+  - data/reference/hydrology/low-flow-7q10.yaml            # the chronic-low-flow dilution failure the Ottawa TMDL names
+  - data/reference/rsei/toxic-discharge-screen.yaml        # PCS Nitrogen / Lima Refinery / Chemtrade as Ottawa dischargers
+  - data/documents/maumee-tmdl/
