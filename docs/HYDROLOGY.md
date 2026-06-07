@@ -163,6 +163,29 @@ Buildout adds **4.85 cfs** of net consumptive draw — **24.3x** the Ottawa Rive
 does not have — even the low estimate is tens of times the 7Q10.
 
 
+### The seasonal pinch: the draw lands when the river is lowest
+
+The annual-7Q10 multiple understates the constraint. The growing season (**MAY-OCT**, where reference ET exceeds precipitation — §3) is exactly when the Ottawa sits at its summer design low flow, with no rainfall buffer. Reading the same consumptive draw against the *cited seasonal* floor:
+
+
+| month | ET0 − precip (mm/d) | Ottawa low flow | draw ÷ low flow |
+|---|--:|---|--:|
+| JAN | -1.19 | 0.2 cfs (7Q10 annual) | 24.3× |
+| FEB | -0.73 | 0.2 cfs (7Q10 annual) | 24.3× |
+| MAR | -0.38 | 0.2 cfs (7Q10 annual) | 24.3× |
+| APR | -0.18 | 0.2 cfs (7Q10 annual) | 24.3× |
+| MAY 🔴 | +0.14 | 1.6 cfs (30Q10 summer) | 3× |
+| JUN 🔴 | +1.33 | 1.6 cfs (30Q10 summer) | 3× |
+| JUL 🔴 | +2.07 | 1.6 cfs (30Q10 summer) | 3× |
+| AUG 🔴 | +1.78 | 1.6 cfs (30Q10 summer) | 3× |
+| SEP 🔴 | +1.41 | 1.6 cfs (30Q10 summer) | 3× |
+| OCT 🔴 | +0.56 | 1.6 cfs (30Q10 summer) | 3× |
+| NOV | -0.70 | 0.2 cfs (7Q10 annual) | 24.3× |
+| DEC | -1.26 | 0.2 cfs (7Q10 annual) | 24.3× |
+
+In the **MAY-OCT** window the draw is **3×** the cited summer 30Q10 (1.6 cfs) — vs 24.3× the annual 7Q10. And the summer 30Q10 is the *generous* floor: the Ottawa's absolute design low flow is **1Q10 = 0 cfs** `[verified: document]`, so in the driest growing-season weeks there is no flow to draw against at all. The cooling draw peaks against supply precisely when the atmosphere is also taking the most.
+
+
 
 ## 5. Tier-1 escalation (EPA SWMM)
 

@@ -162,6 +162,18 @@ any consumptive cooling draw coincide with minimum river supply (see the
 [hydrology report §3–4](HYDROLOGY.md)). `[derived: FAO-56 Penman-Monteith over
 data/reference/hydrology/nasa-power-climatology.yaml]`
 
+**The seasonal pinch, quantified.** Screening the sourced data-center cooling draw
+(**~4.85 cfs** net consumptive, central estimate) against the Ottawa's *cited
+seasonal* low flow — not just the annual 7Q10 — sharpens the conclusion. Across the
+**May–Oct** growing season (exactly the months reference ET exceeds precipitation),
+the draw is **~3×** the cited **summer 30Q10 (1.6 cfs)**; the annual-7Q10 figure
+(**~24×**, 0.2 cfs) understates the in-season constraint by reading against a floor
+that does not apply in summer. And 30Q10 is the *generous* seasonal floor — the
+Ottawa's absolute design low flow is **1Q10 = 0 cfs**, so in the driest growing-season
+weeks there is no flow to draw against at all. The cooling draw peaks against supply
+precisely when the atmosphere is also taking the most. `[derived: cooling basis vs
+cited 30Q10/7Q10/1Q10, data/reference/hydrology/low-flow-7q10.yaml]`
+
 **Floodplain.** The recorded campus parcels sit *just outside* the FEMA Special
 Flood Hazard Area, but Zone AE (1%-annual-chance) floodplain and regulatory
 **floodway** (FEMA DFIRM 39003C) come within **~50 m** of the footprint — a no-rise

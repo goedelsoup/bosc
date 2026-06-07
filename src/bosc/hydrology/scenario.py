@@ -22,13 +22,15 @@ from bosc.hydrology.assimilative import check_assimilative
 from bosc.hydrology.balance import _OTTAWA_AT_LIMA, build_water_balance
 from bosc.hydrology.connectors.nwis import DISCHARGE_CFS, fetch_streamflow
 from bosc.hydrology.cooling import derive_cooling_basis
-from bosc.hydrology.lowflow import low_flow_for
+from bosc.hydrology.lowflow import low_flow_context, low_flow_for
 from bosc.hydrology.model import (
     CoolingBasis,
+    MonthlyWithdrawal,
     ProvenancedValue,
     Scenario,
     ScenarioDiff,
     ScenarioResult,
+    SeasonalWithdrawal,
 )
 from bosc.hydrology.units import mgd_to_cfs
 from bosc.logging import get_logger
@@ -145,6 +147,81 @@ def diff(baseline: ScenarioResult, scenario: ScenarioResult) -> ScenarioDiff:
         consumptive_increase_cfs=round(increase, 3),
         ottawa_7q10_cfs=q7,
         multiple_of_7q10=round(multiple, 1) if multiple is not None else None,
+    )
+
+
+def evaluate_seasonal(
+    consumptive_cfs: float,
+    *,
+    receiving_water: str = "Ottawa River",
+    settings: Settings | None = None,
+) -> SeasonalWithdrawal | None:
+    """Screen a constant consumptive draw against the Ottawa's *seasonal* low flow.
+
+    The growing season is the months where reference ET0 exceeds precipitation (from
+    the committed NASA POWER normals + FAO-56 ET0). In those months the draw is read
+    against the cited **summer 30Q10**; otherwise against the annual **7Q10**. All
+    low-flow figures are cited; nothing is interpolated to a per-month statistic we do
+    not have. Returns ``None`` if the climate/ET inputs are absent.
+    """
+    settings = settings or get_settings()
+    from bosc.hydrology import climate, et
+
+    clim = climate.load_climatology(settings=settings)
+    precip = clim.get("PRECTOTCORR") if clim is not None else None
+    if clim is None or precip is None:
+        return None
+    et0 = et.penman_monteith_et0(clim)
+
+    q7 = low_flow_for(receiving_water, settings=settings)
+    ctx = low_flow_context(receiving_water, settings=settings)
+    annual_7q10 = q7.value if q7 is not None else None
+    if annual_7q10 is None:
+        return None
+    summer_30q10 = ctx.get("thirty_q10_summer_cfs")
+    one_q10 = ctx.get("one_q10_cfs")
+
+    months: list[MonthlyWithdrawal] = []
+    growing: list[str] = []
+    for m in et._MONTHS:
+        e = et0.monthly_mm_day[m]
+        p = precip.monthly[m]
+        net = round(e - p, 3)
+        is_growing = net > 0
+        if is_growing:
+            growing.append(m)
+        # Growing-season months use the cited summer design low flow if available.
+        if is_growing and summer_30q10 is not None:
+            floor, basis = summer_30q10, "30Q10 summer"
+        else:
+            floor, basis = annual_7q10, "7Q10 annual"
+        multiple = round(consumptive_cfs / floor, 1) if floor and floor > 0 else None
+        months.append(
+            MonthlyWithdrawal(
+                month=m,
+                growing_season=is_growing,
+                et0_mm_day=round(e, 2),
+                precip_mm_day=round(p, 2),
+                net_atmospheric_mm_day=net,
+                low_flow_cfs=floor,
+                low_flow_basis=basis,
+                consumptive_cfs=round(consumptive_cfs, 3),
+                multiple=multiple,
+            )
+        )
+
+    return SeasonalWithdrawal(
+        scenario="buildout",
+        consumptive_cfs=round(consumptive_cfs, 3),
+        months=months,
+        growing_season_months=growing,
+        annual_7q10_cfs=annual_7q10,
+        summer_30q10_cfs=summer_30q10,
+        one_q10_cfs=one_q10,
+        annual_multiple=round(consumptive_cfs / annual_7q10, 1) if annual_7q10 > 0 else None,
+        summer_multiple=(
+            round(consumptive_cfs / summer_30q10, 1) if summer_30q10 and summer_30q10 > 0 else None
+        ),
     )
 
 

@@ -74,3 +74,37 @@ def test_report_renders_all_sections(hydro_settings: Settings) -> None:
     assert "24.3" in md  # the sourced-basis headline multiple (power x WUE central)
     assert "sourced" in md  # the cooling basis derivation is shown
     assert "[verified" in md and "[inference" in md  # provenance legend in use
+    assert "draw lands when the river is lowest" in md  # the seasonal screen
+
+
+def test_seasonal_growing_season_is_may_oct(hydro_settings: Settings) -> None:
+    sw = scenario.evaluate_seasonal(4.851, settings=hydro_settings)
+    assert sw is not None
+    # The growing season is exactly the months reference ET exceeds precipitation.
+    assert sw.growing_season_months == ["MAY", "JUN", "JUL", "AUG", "SEP", "OCT"]
+    for m in sw.months:
+        assert m.growing_season == (m.net_atmospheric_mm_day > 0)
+
+
+def test_seasonal_multiples_use_cited_floors(hydro_settings: Settings) -> None:
+    """The seasonal multiple uses the cited summer 30Q10; annual uses the 7Q10."""
+    sw = scenario.evaluate_seasonal(4.851, settings=hydro_settings)
+    assert sw is not None
+    assert sw.annual_7q10_cfs == pytest.approx(0.2)
+    assert sw.summer_30q10_cfs == pytest.approx(1.6)
+    assert sw.one_q10_cfs == pytest.approx(0.0)
+    assert sw.annual_multiple == pytest.approx(24.3, abs=0.1)
+    assert sw.summer_multiple == pytest.approx(3.0, abs=0.1)
+    # Growing-season months read against the 30Q10; off-season against the 7Q10.
+    for m in sw.months:
+        if m.growing_season:
+            assert m.low_flow_basis == "30Q10 summer" and m.low_flow_cfs == pytest.approx(1.6)
+        else:
+            assert m.low_flow_basis == "7Q10 annual" and m.low_flow_cfs == pytest.approx(0.2)
+
+
+def test_seasonal_no_fabricated_monthly_statistic(hydro_settings: Settings) -> None:
+    """Only the two cited low-flow bands appear — no invented per-month statistic."""
+    sw = scenario.evaluate_seasonal(4.851, settings=hydro_settings)
+    assert sw is not None
+    assert {m.low_flow_basis for m in sw.months} == {"30Q10 summer", "7Q10 annual"}

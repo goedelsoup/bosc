@@ -293,6 +293,16 @@ def scenario(
             f"low flow ({q7:g} cfs)"
             + (f"; live flow now {live_flow:,.0f} cfs." if live_flow else ".")
         )
+    # Seasonal screen: the same draw against the growing-season design low flow.
+    sw = scenario_stage.evaluate_seasonal(build.consumptive_loss.value, settings=settings)
+    if sw is not None and sw.summer_multiple is not None and sw.growing_season_months:
+        win = f"{sw.growing_season_months[0]}-{sw.growing_season_months[-1]}"
+        console.print(
+            f"\n[bold]Seasonal pinch[/] — in the [bold]{win}[/] growing season "
+            f"(ET > precip), the draw is [bold red]{sw.summer_multiple:g}x[/] the cited summer "
+            f"30Q10 ({sw.summer_30q10_cfs:g} cfs), vs {sw.annual_multiple:g}x the annual 7Q10. "
+            f"The absolute floor is 1Q10 = {sw.one_q10_cfs:g} cfs — no flow to draw against."
+        )
     console.print(
         "\n[dim]Cooling basis derived from the air permit + FM-2 discharge (see provenance "
         "tags); the Ottawa 7Q10 is document-cited (Ohio EPA 2IG00001). Tier-0 screening.[/]"

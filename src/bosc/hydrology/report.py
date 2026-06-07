@@ -127,6 +127,42 @@ def _render_drainage_audit(emit: Callable[[str], None], settings: Settings) -> N
     )
 
 
+def _render_seasonal_withdrawal(
+    emit: Callable[[str], None], settings: Settings, consumptive_cfs: float
+) -> None:
+    """The cooling draw read against the Ottawa's growing-season (May-Oct) low flow."""
+    from bosc.hydrology import scenario
+
+    sw = scenario.evaluate_seasonal(consumptive_cfs, settings=settings)
+    if sw is None or not sw.growing_season_months:
+        return
+
+    win = f"{sw.growing_season_months[0]}-{sw.growing_season_months[-1]}"
+    emit(
+        "\n### The seasonal pinch: the draw lands when the river is lowest\n\n"
+        "The annual-7Q10 multiple understates the constraint. The growing season "
+        f"(**{win}**, where reference ET exceeds precipitation — §3) is exactly when the "
+        "Ottawa sits at its summer design low flow, with no rainfall buffer. Reading the "
+        "same consumptive draw against the *cited seasonal* floor:\n"
+    )
+    emit("\n| month | ET0 - precip (mm/d) | Ottawa low flow | draw ÷ low flow |")
+    emit("|---|--:|---|--:|")
+    for r in sw.months:
+        net = f"{r.net_atmospheric_mm_day:+.2f}"
+        floor = f"{r.low_flow_cfs:g} cfs ({r.low_flow_basis})"
+        mult = f"{r.multiple:g}x" if r.multiple is not None else "—"
+        mark = " 🔴" if r.growing_season else ""
+        emit(f"| {r.month}{mark} | {net} | {floor} | {mult} |")
+    emit(
+        f"\nIn the **{win}** window the draw is **{sw.summer_multiple:g}x** the cited "
+        f"summer 30Q10 ({sw.summer_30q10_cfs:g} cfs) — vs {sw.annual_multiple:g}x the annual "
+        f"7Q10. And the summer 30Q10 is the *generous* floor: the Ottawa's absolute design "
+        f"low flow is **1Q10 = {sw.one_q10_cfs:g} cfs** `[verified: document]`, so in the "
+        "driest growing-season weeks there is no flow to draw against at all. The cooling "
+        "draw peaks against supply precisely when the atmosphere is also taking the most.\n"
+    )
+
+
 def render_report(*, settings: Settings | None = None, live: bool = False) -> str:
     """Build the full hydrology markdown dossier (offline-deterministic by default)."""
     settings = settings or get_settings()
@@ -351,6 +387,9 @@ def render_report(*, settings: Settings | None = None, live: bool = False) -> st
             f"(1Q10 = 0 cfs); a data center's cooling draw competes for water the river\n"
             f"does not have — even the low estimate is tens of times the 7Q10.\n"
         )
+
+    _render_seasonal_withdrawal(w, settings, build.consumptive_loss.value)
+
     w("\n\n## 5. Tier-1 escalation (EPA SWMM)\n")
     w(
         "`bosc tier1` runs the real EPA SWMM5 engine on the footprint under the design\n"

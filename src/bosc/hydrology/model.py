@@ -322,6 +322,51 @@ class ScenarioDiff(BaseModel):
     multiple_of_7q10: float | None = None
 
 
+class MonthlyWithdrawal(BaseModel):
+    """One month: the cooling draw vs the season-appropriate cited low flow.
+
+    The consumptive draw is constant year-round; what changes by month is the
+    receiving stream's *available* low flow and whether rainfall offsets atmospheric
+    demand. In the growing season the draw is read against the cited summer design low
+    flow (30Q10), not the annual 7Q10 — and arrives when reference ET exceeds precip,
+    so there is no rainfall buffer.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    month: str  # JAN..DEC
+    growing_season: bool  # ET0 > precip this month
+    et0_mm_day: float
+    precip_mm_day: float
+    net_atmospheric_mm_day: float  # ET0 - precip (positive = deficit, no rainfall buffer)
+    low_flow_cfs: float  # the cited design low flow applied this month
+    low_flow_basis: str  # "30Q10 summer" | "7Q10 annual"
+    consumptive_cfs: float  # the scenario's net consumptive draw (constant)
+    multiple: float | None  # consumptive / low_flow (None when the floor is 0)
+
+
+class SeasonalWithdrawal(BaseModel):
+    """The cooling draw screened month-by-month against the Ottawa's seasonal low flow.
+
+    Bridges the climate baseline (reference ET vs precip) and the cooling scenario: the
+    annual-7Q10 multiple understates the growing-season pinch, when the river sits at its
+    summer design low flow *and* ET exceeds precip. All low-flow figures are cited
+    (`data/reference/hydrology/low-flow-7q10.yaml`); no monthly statistic is fabricated.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    scenario: str
+    consumptive_cfs: float
+    months: list[MonthlyWithdrawal]
+    growing_season_months: list[str]
+    annual_7q10_cfs: float
+    summer_30q10_cfs: float | None = None
+    one_q10_cfs: float | None = None  # absolute design low flow (often 0)
+    annual_multiple: float | None = None  # draw / annual 7Q10
+    summer_multiple: float | None = None  # draw / summer 30Q10 — the seasonal headline
+
+
 class StormPlanInventory(BaseModel):
     """Document-grounded drainage facts read off the campus grading & storm plan.
 

@@ -57,3 +57,18 @@ def low_flow_for(
 ) -> ProvenancedValue | None:
     """Look up the cited 7Q10 for one receiving water, or ``None`` if uncited."""
     return load_low_flows(settings=settings).get(_normalize(receiving_water))
+
+
+def low_flow_context(receiving_water: str, *, settings: Settings | None = None) -> dict[str, Any]:
+    """Return the cited ``context`` block (1Q10, summer 30Q10, ...) for a stream, or ``{}``."""
+    settings = settings or get_settings()
+    path = _reference_path(settings)
+    if not path.is_file():
+        return {}
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    target = _normalize(receiving_water)
+    for name, entry in (data.get("streams") or {}).items():
+        if _normalize(str(name)) == target and isinstance(entry, dict):
+            ctx = entry.get("context")
+            return dict(ctx) if isinstance(ctx, dict) else {}
+    return {}
