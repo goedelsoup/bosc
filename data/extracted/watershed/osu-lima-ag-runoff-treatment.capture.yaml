@@ -80,10 +80,23 @@ relevance:
     the basin is additive. Cross-refs the ECHO Maumee discharger inventory
     (data/reference/echo/) and HYDROLOGY's "burden already maxed" finding.
 
+# PAAC spending against the grant. The Port Authority parent-PRR bundle records
+# disbursements/spending tied to the ASWCD-OSU agricultural-runoff grant across
+# multiple grant years. Tracked here as a source; the per-year figures are NOT yet
+# transcribed — they must be read from the page image (OCR digits are unreliable),
+# so nothing is recorded until the relator supplies them or they are extracted.
+grant_spending:
+  primary_source: data/documents/aedg/PRR-01-bundle.ocr.pdf
+  source_index: data/documents/aedg/PRR-01-bundle.ocr.pdf.index.yaml
+  producing_body: Port Authority of Allen County (PAAC)
+  status: pending-transcription
+  years: []   # relator flagged additional grant years ("the other three years") — figures pending
+
 resolved_followups:
   - "[verified: CV 2025-09-28] Funding source = Great Lakes Restoration Initiative (GLRI), subaward through Ohio EPA; OSU portion $327,450; term 2023-2025; Lead PI V. Shedekar (Rehner, Suniga, Lipschitz)."
 
 open_followups:
+  - "[pending-transcription] PAAC spending against the ASWCD-OSU grant across grant years — recorded in the parent-PRR bundle (data/documents/aedg/PRR-01-bundle.ocr.pdf); per-year figures to transcribe from the page image (one year noted; relator flagged the other three). Wire into grant_spending.years."
   - "[pending-doc] ALLENSWCD-FDFARM22 grant agreement / GLRI award instrument itself (deliverables, match, reporting) — funding *program* now known (GLRI/Ohio EPA), the signed instrument is not yet in hand"
   - "[pending-doc] OSU grant application & conceptual design package (the engineering basis for the BMPs)"
   - "[pending-doc] Load-reduction estimate table referenced on the page but not transcribed"
