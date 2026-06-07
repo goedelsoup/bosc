@@ -1,0 +1,111 @@
+kind: records_policy
+subject: Port Authority of Allen County — Public Records Availability + Retention & Destruction Policy
+
+provenance:
+  source_path: data/documents/aedg/PRR-01-bundle.ocr.pdf
+  bundle: "Allen County -- Responsive Records -- Parent PRR.pdf (producing body: Port Authority of Allen County)"
+  pages: "index pp.80-90 (= bundle 0-based 79-89): Availability Policy p.80; Retention/Destruction Policy pp.81-82; Schedule pp.83-90"
+  content_verified: '2026-06-07'
+  evidence: scan (PAAC public-records production)
+
+availability_policy:               # p.80
+  adopted: '2022-07-28'
+  accepted_by:
+    name: Cynthia Leis
+    title: Executive Director, Port Authority of Allen County
+    signature_date: '2022-07-28'
+  record_definition: "R.C. 149.011(G) — fixed medium + under jurisdiction of a public office + documents office activities."
+  copy_cost: "$0.27 per sheet"
+  broad_request_denial: >-
+    Reserves the right to deny a request that "broadly asks a public office to search for records
+    containing selected information" (e.g. "any and all records containing any reference whatsoever");
+    a request must be "specific" and particularly describe what is sought; no duty to create a
+    non-existent record. (R.C. 149.43(A)(1)(v) cited)
+  non_records_listed: ["attorney-client privileged information", "taxpayer records (Ohio Dept. of Taxation / municipal corporations)", "federal tax returns / IRS return information"]
+
+retention_policy:                  # pp.81-82
+  adopted: '2022-07-28'            # schedule itself dated "Adopted May 2022"
+  statutes: ["R.C. 149.011", "R.C. 149.43(A)(1)", "R.C. 149.351 (no unauthorized destruction)", "R.C. 149.381 (schedule approval / Ohio History Connection)", "R.C. 149.412 (records commission)", "R.C. 149.40 (creation only as necessary)"]
+  econ_dev_trade_secret_carveout:  # the ORC 4582.58 shield — central to the withholding thesis
+    statute: "R.C. 4582.58"
+    text: >-
+      "Financial and proprietary information, including trade secrets, submitted to the Authority
+      (or a nonprofit corporation engaged by the Authority to provide economic development services)
+      by or on behalf of an employer in connection with the relocation, location, expansion,
+      improvement, or preservation of the business of that employer is not a public record subject
+      to ORC 149.43. Any other information submitted by such an employer under those circumstances
+      is not a public record subject to ORC 149.43 until that employer commits in writing to proceed
+      with the relocation, location, expansion, improvement, or preservation."
+    significance: >-
+      A statutory non-record shield for developer-submitted financial/proprietary/trade-secret info,
+      AND for "any other information" the employer submits — withheld until the employer commits in
+      writing to proceed. The parenthetical "nonprofit corporation engaged by the Authority to provide
+      economic development services" is AEDG: information routed through AEDG (the entity that served
+      the CRA notices and whose President is also the Authority's Executive Director) falls inside the
+      shield. This is the front-end counterpart to the back-end NDA §6 / RDA §9.13 / CRA §22
+      records-withholding mechanisms: keep the developer's submissions out of "records" status to
+      begin with.
+  legal_hold: >-
+    "In the event of a lawsuit or threatened lawsuit a legal hold will be announced by legal counsel
+    for the Board identifying relevant records. Records subject to a legal hold shall be retained
+    until the legal hold has been removed." (relevant to spoliation given the BOSC mandamus posture)
+  records_commission: "Chairperson, fiscal officer of the Board, and legal representative (R.C. 149.412), absent an agreement delegating to the Allen County records commission."
+
+schedule_highlights:               # pp.83-90 — Schedule of Record Retention and Disposition
+  public_records_requests: "2 years"
+  contracts: "8 years after termination (incl. economic-development contracts) -- covers the RDA + CRA"
+  grant_files: "as required by grant; if unspecified, 5 years after audit + resolution of any litigation/claims/audit findings"
+  correspondence: >-
+    Substantive messages retained per content; messages "of transitory importance or of no substantive
+    content shall be deleted when of no further administrative value" (a discretionary email-deletion gap)
+  drafts_transient_records: "retain until of no further administrative value (discretionary)"
+  permanent: ["Minutes of Meetings", "Resolutions of Board", "Organizational Records", "Real Property Records", "Maps/Plats", "Records Retention Forms (RC-1/2/3)"]
+  financial_records: "7 years following audit"
+  bid_records_successful: "statute of limitations per R.C. 2305.06, or 8 years after contract expiration"
+  bid_records_unsuccessful: "2 years after award / decision not to award"
+
+org_findings:
+  no_employees:
+    finding: >-
+      Personnel Records schedule entry: "Having no employees, the Authority has not adopted a policy
+      pertaining to personnel records..." — the Port Authority of Allen County has NO staff of its own.
+    implication: >-
+      The Authority must be administered by an external entity. Combined with Cynthia Leis signing the
+      records policy as the Authority's Executive Director while also serving as AEDG President/CEO, the
+      day-to-day operation (incl. records custody for the $14.5M roadwork deal it signed) runs through
+      AEDG. [inference from the no-employees entry + the dual signature]
+  no_maritime_plan: "Plan for Development entry: 'Having no maritime facilities, the Authority has no plan for development pursuant to R.C. 4582.32' (a financing/economic-development port authority, not a port)."
+
+key_finding_leis_dual_role:
+  finding: >-
+    Cynthia "Cindy" Leis appears in TWO capacities in this corpus: (1) President/CEO of the Allen
+    Economic Development Group (AEDG) -- who drafted/served the CRA school-district notices
+    (school-district-notice-letters.notice.yaml, leisc@aedg.org); and (2) Executive Director of the
+    Port Authority of Allen County -- who signed this public-records policy (2022-07-28) and whose
+    Authority signed the $14.5M Roadwork Development Agreement.
+  significance: >-
+    The same person leads the economic-development nonprofit that receives developer submissions
+    shielded under R.C. 4582.58 AND directs the public body that (a) is the producing custodian of
+    this PRR bundle, (b) entered the $14.5M roadwork deal with Bistrozzi, and (c) bound itself to the
+    >=5-business-day developer-notice records clause (RDA §9.13). A single locus of control spanning
+    the shield (AEDG-as-recipient) and the custodian (PAAC-as-producer) -- directly material to the
+    "who is driving the deal and the withholding" map. [verified: both signatures/roles appear in the
+    corpus; the conflict characterization is inference]
+
+cross_refs:
+  - data/extracted/legal/prr-mandamus/school-district-notice-letters.notice.yaml   # Leis as AEDG President/CEO
+  - data/extracted/aedg/roadwork-development-agreement.rda.yaml                     # the PAAC-signed $14.5M deal + §9.13 records clause
+  - data/extracted/legal/prr-mandamus/mutual-nda-bistrozzi.nda.yaml                # NDA §6 (back-end withholding)
+  - data/extracted/legal/prr-mandamus/cra-agreement.cra.yaml                       # CRA §22 indemnity
+  - data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-05.response-index.yaml
+  - data/extracted/legal/corpus-completeness-audit.md
+
+relevance:
+  tags: [verified, aedg, port-authority, public-records, records-withholding, records-retention, leis, conflict-of-interest]
+  note: >-
+    The PAAC records policy (adopted 2022-07-28) embeds the R.C. 4582.58 economic-development
+    trade-secret shield (developer info routed via AEDG is non-record until the employer commits in
+    writing), a discretionary "transitory" correspondence-deletion standard, a 2-year retention for
+    PRR requests, and a legal-hold provision. It also establishes that PAAC has no employees and that
+    Cynthia Leis directs BOTH AEDG and the Port Authority -- the single locus of control over both the
+    front-end shield and the back-end records custody for the Bistrozzi deal.

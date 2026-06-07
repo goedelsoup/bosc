@@ -1,0 +1,171 @@
+kind: roadwork_agreement
+subject: BOSC Roadwork Development Agreement — Port Authority of Allen County / Allen County / Bistrozzi LLC
+
+provenance:
+  source_path: data/documents/aedg/PRR-01-bundle.ocr.pdf
+  bundle: "Allen County -- Responsive Records -- Parent PRR.pdf (328 pp.; producing body: Port Authority of Allen County)"
+  pages: >-
+    Agreement pp.296-312 (index 1-indexed; = bundle 0-based 295-311); Exhibit A (Property) p.313;
+    Exhibit B (Roadwork Improvements) p.314; Exhibit C (Construction Schedule) p.315;
+    Exhibit D (Supporting Information) p.316. The Tetra Tech OPC that Exhibit D incorporates
+    follows at pp.317-328 (already extracted as roundabouts.*.opc.yaml).
+  content_verified: '2026-06-07'   # terms read from the page images, not the garbled OCR layer
+  evidence: scan with OCR layer added (PAAC public-records production)
+
+parties:
+  authority: >-
+    PORT AUTHORITY OF ALLEN COUNTY ("Authority") — a port authority/body corporate and politic,
+    144 S. Main St., Suite 200, Lima, OH 45801. Designs and constructs the Roadwork Improvements.
+  county: ALLEN COUNTY, OHIO ("County") — Ohio county government; accepts dedication + maintains the roads.
+  company: >-
+    BISTROZZI LLC ("Company") — a Delaware LLC, address 52 East Gay Street, Columbus, OH (the Vorys
+    address), "together with any permitted successors, assigns or transferees." Funds the work.
+  company_counsel: Vorys, Sater, Seymour and Pease — Jill S. Tangeman, Esq. (jstangeman@vorys.com)
+  authority_counsel: Rex H. Huffman, 932 Dixie Hwy, Rossford, OH 43460
+  county_counsel: John R. Willamowski, Jr., Assistant Prosecuting Attorney, Allen County (also notice copy)
+  county_engineer: Brion E. Rhodes, P.E., P.S. — Allen County Engineer (brhodes@allencountyohio.com)
+  primary_contacts:                # §4.3
+    authority: Todd Audet
+    county: Brad Niemeyer
+    company: null                  # left blank on the produced copy
+
+authorization:
+  authority_resolution: {number: 'O.729-25', date: '2025-07-29', body: Port Authority of Allen County Board of Directors}   # §2.1
+  county_resolution: {number: '588-25', date: '2025-07-31', body: Allen County Board of County Commissioners}               # §2.2 (NEW — not in the CRA/NDA timeline)
+  fiscal_certificates:
+    - {body: Port Authority of Allen County, statute: "R.C. 5705.41 / 5705.44", dated: '2025-08-19'}
+    - {body: Allen County, Ohio, statute: "R.C. 5705.41 / 5705.44", dated: '2025-09-12'}
+
+execution:
+  effective_date: '2025-09-15'     # typed onto the title page; also the last signature date
+  signatures:
+    - {party: Port Authority of Allen County (Board), title: Board Chair, date: '2025-08-19'}
+    - {party: Bistrozzi LLC, title: Authorized Representative, date: '2025-09-15'}     # signature illegible; Vorys/Tangeman per notice block
+    - {party: Allen County, Ohio, signatory: Cory Noonan, title: Commissioner, date: '2025-08-13'}
+
+project_recital:                   # WITNESSETH / recitals (Article I incorporates them as material terms, §9.1)
+  property: "real property in American Township, Allen County (Exhibit A)"
+  project: >-
+    develop, construct (in one or more phases) and operate "one or more data center(s)" plus
+    administrative/accessory/support buildings, utility buildings, and related site improvements.
+  roadwork_purpose: "public-road improvements near the Property to support construction/operation of the data center(s)."
+  grant_funding_anticipated: >-
+    State of Ohio Roadwork Development (629) Grant and Ohio Dept. of Development Jobs & Commerce Grant
+    (collectively "Roadwork Development Grants"), with the Authority as eligible grantee.
+
+financial_terms:
+  company_contribution_usd: 14500000      # §3.2(a) — one-time payment due within 30 business days of Effective Date
+  contribution_basis: >-
+    "inclusive of all project costs including any admin and legal fees" (§3.2a). The roadwork is at
+    no cost to the Company beyond this Contribution.
+  cost_basis_document: >-
+    Exhibit D: the Parties relied on "the attached itemized cost estimate from Tetra Tech which the
+    Parties received on or about July 17, 2025." That estimate is the OPC at bundle pp.317-328
+    (extracted as data/extracted/aedg/roundabouts.summary.opc.yaml: construction total $14,223,081).
+    The $14.5M Contribution ~= the OPC construction total + ~$277K headroom for admin/legal.
+  exhibit_d_typo: >-
+    Exhibit D states the Tetra Tech estimate as "$14,500.00" — a source typo for $14,500,000.00
+    (it equals the Company's Contribution and reconciles with the OPC's ~$14.22M construction total).
+    [verbatim transcription; flagged, not corrected in source]
+  grant_refund_mechanism:          # §5.5 Overpayment Amount
+    summary: >-
+      After completion, the Authority certifies Total Cost. If Total Cost < (Company's Contribution +
+      Roadwork Grant Funds + Additional Grant Funds), the Authority pays the difference (the
+      "Overpayment Amount") back to the Company within 60 days; grant funds received after itemization
+      are likewise refunded to the Company.
+    significance: >-
+      Public grant money (the 629 / Jobs & Commerce grants) effectively backfills and can REFUND the
+      private Contribution — so the headline "$14.5M private contribution" may be net-reduced by public
+      grants flowing to the Company. The true public/private cost split turns on grant awards not in
+      this document. [inference — flagged; depends on grant amounts]
+  interest: "§5.2 — Authority may hold the Contribution in an interest-bearing account; interest funds Authority operations, not refunded."
+
+roadwork_scope:                    # Exhibit B (built per ODOT SHAMM, AASHTO 2018, MUTCD 2009, ODOT C&MS, ODOT L&D Vol.1)
+  primary_access:
+    - "Roundabout at North Cole Road & Beery Road (primary access entrance to the Property)"
+  traffic_and_rehab:
+    - "Roundabout at North Cole Road & Bluelick Road"
+    - "Roundabout at North Cole Road & SR 115"
+    - "North Cole Road rehabilitation"
+    - "Bluelick Road rehabilitation"
+    - "Roundabout at North Cole Road & Diller Road"
+  beery_road_carveout: >-
+    §3.1(a): the Roadwork Improvements do NOT include any changes to Beery Road, including bridge
+    replacement. §3.1(g): the Company separately reserves the right to design/engineer/construct the
+    road improvements at Cole Street & Beery Road itself on 15 days' notice.
+  ordering: "§3.1(a) — built in the ranked Exhibit-B order until the Company's Contribution is expended; the Authority is not obligated to complete all if funds run short."
+  dedication: >-
+    §3.1(h) — each completed Roadway Improvement is dedicated to the County for public use and the
+    County maintains it thereafter (an ongoing public maintenance cost beyond the one-time build).
+
+schedule:                          # Exhibit C
+  substantial_completion_by: '2027-09-01'
+  final_completion_by: '2027-12-31'
+
+property:                          # Exhibit A — the assembled data-center campus parcels
+  former_owner_neff_farms_inc:
+    - {parcel: '36-0100-03-002.000', address: 'Cole Street, Lima, OH 45807', prior_instrument: 'OR 2018 Page 2723'}
+    - {parcel: '36-1200-02-001.001', address: '4110 N. Cole Street, Lima, OH 45801', prior_instrument: 'OR 2018 Page 2723 + OR 2018 Page 7339', note: 'the permitted Project BOSC address'}
+  former_owner_brenneman_trusts:
+    trustees: >-
+      Kyle C. & Sarah N. Brenneman (Kyle C. Brenneman Living Trust dtd 2023-03-30) and Keaton A. &
+      Kristen M. Brenneman (Keaton A. Brenneman Living Trust dtd 2023-03-02)
+    parcels: ['36-1200-03-001.001', '36-1200-03-001.000', '36-1200-03-001.002', '36-1200-03-001.003', '36-1200-03-001.004', '36-1200-03-001.005', '36-1200-03-001.006']
+    address: 'West Bluelick Road / 950 West Bluelick Road, Lima, OH 45801'
+    prior_instrument: 'OR 2024 Page 3900 + OR 2024 Page 6115'
+  former_owner_pike_run_farms_llc:
+    - {parcel: '36-1200-03-002.000', address: 'West Bluelick Road, Lima, OH 45801', prior_instrument: 'OR 2024 Page 981'}
+  note: >-
+    Three seller groups assembled the campus: Neff (incl. 4110 N. Cole), the Brenneman family trusts
+    (7 parcels), and Pike Run Farms. The bundle's seller packets (Brenneman pp.91-167, Miller,
+    Neff pp.242-276, Neighbors pp.280-295) document the option/assignment chain to Bistrozzi —
+    not yet extracted.
+
+records_withholding_clause:        # §9.13 Confidential Information — a THIRD developer-notice mechanism
+  section: '9.13'
+  public_record_acknowledged: "The Company acknowledges the Agreement is a public record subject to disclosure under Ohio public records law."
+  authority_obligations: >-
+    The Authority agrees to (a) give the Company written notice AT LEAST FIVE (5) BUSINESS DAYS prior
+    to responding to ALL records requests related to the Company or Project; (b) reasonably cooperate
+    with the Company in responding; (c) disclose only records required to be disclosed under Ohio
+    public records law; and (d) redact, omit, or refuse to provide records not required to be disclosed.
+  exemptions_cited: "R.C. 122.36, 122.75, 149.433, 149.45, 718.13, 1333.61 et seq., 5703.21, 5711.101"
+  savings_clause: "'Nothing in this Agreement shall be interpreted as contrary to the Ohio Public Records Act (R.C. 149.43).'"
+  significance: >-
+    The THIRD contractual records-withholding mechanism in this deal, after the NDA §6 (>=10 business
+    days' developer notice; mutual-nda-bistrozzi.nda.yaml) and the CRA §22 public-records indemnity
+    (cra-agreement.cra.yaml). Here the Authority (a separate public body from the Commissioners) binds
+    itself to a >=5-business-day developer-notice-and-cooperate-on-redaction routine before answering
+    ANY request touching the Company/Project. Same engine, second custodian — corroborates the
+    systemic delay/withholding thesis in bosc-prr-production-2026-06-05.response-index.yaml.
+
+notable_clauses:
+  no_procurement: >-
+    §9.17 — "The performance of any obligations under this Agreement does not require the Company to
+    submit any bid or otherwise participate in any procurement process of the Authority." (The Company
+    pays $14.5M and is exempted from competitive procurement; the Authority selects the road contractors
+    via design-build bidding under §3.1(c).)
+  assignment: "§9.3 — the Company may assign to any Affiliate / merger successor / asset purchaser / public-offering successor / financing party (incl. R.C. Ch. 4582) WITHOUT Authority approval; the Authority may not assign without the Company's consent."
+  no_third_party_beneficiaries: "§9.20 — only the Authority and Company are parties; no third-party (e.g., affected residents) may enforce."
+  jury_waiver: "§9.15 — both parties waive jury trial for any claim arising under or connected to the Agreement."
+  anti_corruption: "§9.16 — anti-bribery / 'Anything of Value' covenant binding the Authority and its agents."
+  no_cross_default: "§8.3 — default under any other Project agreement is not automatically a default here."
+
+cross_refs:
+  - data/extracted/aedg/roundabouts.summary.opc.yaml      # Exhibit D's Tetra Tech OPC (the $14.5M cost basis)
+  - data/extracted/aedg/roundabouts.detail.opc.yaml
+  - data/extracted/legal/prr-mandamus/cra-agreement.cra.yaml             # the tax-abatement leg (§22 records indemnity)
+  - data/extracted/legal/prr-mandamus/mutual-nda-bistrozzi.nda.yaml      # the NDA leg (§6 records-notice)
+  - data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-05.response-index.yaml
+  - src/bosc/ledger.py                                     # public-ledger: the $14.5M contribution + grant refund + perpetual road maintenance
+
+relevance:
+  tags: [verified, aedg, roadwork, port-authority, public-subsidy, records-withholding, land-assembly, public-ledger]
+  note: >-
+    The public-cost counterpart to the CRA. PAAC + County will build 4 roundabouts + 2 road rehabs
+    (~$14.5M, basis = the Tetra Tech OPC) to serve the Bistrozzi data-center campus, funded by a
+    $14.5M Company Contribution that public Roadwork Development (629) + ODOD Jobs & Commerce grants
+    may refund (§5.5), then dedicate the roads to the County for perpetual maintenance. Surfaces a
+    third records-withholding clause (§9.13), a no-competitive-procurement carve-out (§9.17), two new
+    resolutions (PAAC O.729-25; County 588-25), and new actors (Audet, Niemeyer, Huffman, Tangeman,
+    Rhodes). Effective 2025-09-15.
