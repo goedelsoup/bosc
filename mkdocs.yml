@@ -84,12 +84,15 @@ nav:
       - Engineering:
           - Plans: records/plans.md
           - Cost estimates (OPC): records/opc.md
-  - Timeline: timeline.md
-  - Entity graph: entities.md
-  - Cloud-consumer candidates: candidates.md
-  - Individuals: people/index.md
+  - Analysis:
+      - Timeline: timeline.md
+      - Entity graph: entities.md
+      - Individuals: people/index.md
+  - Curated entities:
+      - Cloud-consumer candidates: candidates.md
+      - Defense contractors: defense-contractors.md
   - Exhibits: exhibits.md
   - Reference data:
       - Maumee NPDES inventory (ECHO): data/reference/echo/README.md
-  - Hydrology: docs/HYDROLOGY.md
-  - Economics: docs/ECONOMICS.md
+      - Hydrology: docs/HYDROLOGY.md
+      - Economics: docs/ECONOMICS.md
