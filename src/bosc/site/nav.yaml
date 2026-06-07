@@ -1,54 +1,19 @@
-# MkDocs configuration for the BOSC public-records site.
+# Navigation + site metadata for the BOSC public-records site.
 #
-# The docs tree (`web/`) is GENERATED — run `bosc site build` first, which stages
-# it from data/extracted + docs/ and the cross-document layer. Then `mkdocs serve`
-# (or `bosc site serve`) previews it; `mkdocs build` writes `site/`. Both web/ and
-# site/ are git-ignored and regenerable.
+# Single source of truth for the sidebar nav (was the `nav:` block of the old
+# mkdocs.yml). `bosc.site.nav.load_nav` reads it; `bosc.site.render` turns it into
+# the sidebar on every page. Targets are repo-root-relative `*.md` paths into the
+# generated `web/` tree — the renderer rewrites `.md` -> `.html` (and the landing
+# page `home.md` -> `index.html`) and prefixes each with the page's path-to-root.
 #
-# Visibility: this is a PRIVATE / unlisted draft. Nothing auto-publishes — the
-# Pages workflow is manual (workflow_dispatch). Review before going public.
+# The nav is hand-maintained while build scripts reorganize the corpus, so a
+# moved/renamed extraction silently orphans a link; `tests/test_site_nav.py`
+# guards that every target here resolves in the built site.
 
 site_name: Project BOSC — the public record
 site_description: >-
   A browsable, citable view of the BOSC public-records corpus: primary documents
   read from scans into structured data, plus the cross-document analysis.
-docs_dir: web
-site_dir: site
-use_directory_urls: false   # 1:1 source-path → URL keeps the mirrored cross-links predictable
-
-theme:
-  name: custommill
-  # CustomMill owns the root index.html as its SPA shell; the landing content is
-  # rendered to home.md (-> home.html) and the frame loads it via theme.home.
-  home: home.html
-  main_color: "#3f51b5"   # indigo, matching the prior palette
-  toc_depth: 3
-
-extra:
-  history_buttons: false
-
-extra_css:
-  - assets/extra.css
-
-extra_javascript:
-  # CustomMill (unlike Material) doesn't bundle Mermaid; load it + our init so the
-  # entity-graph diagram still renders.
-  - https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js
-  - assets/mermaid-init.js
-
-markdown_extensions:
-  - admonition
-  - attr_list
-  - md_in_html
-  - tables
-  - toc:
-      permalink: true
-  - pymdownx.details
-  - pymdownx.superfences:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
 
 nav:
   - Home: home.md

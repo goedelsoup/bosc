@@ -4,8 +4,8 @@ Orchestrates the generator: wipe ``web/``, mirror the curated narrative markdown
 and the whole ``data/extracted`` artifact tree at repo-relative paths (so the
 existing cross-links resolve unchanged), then write the generated pages —
 landing, per-kind record pages, timeline, entity graph, exhibits. ``web/`` is
-fully regenerable; this module is the source of truth. MkDocs (``mkdocs.yml``,
-``docs_dir: web``) turns it into ``site/``.
+fully regenerable; this module is the source of truth. :mod:`bosc.site.render`
+turns ``web/`` into the static HTML ``site/``.
 """
 
 from __future__ import annotations
@@ -273,9 +273,8 @@ def build_site(settings: Settings | None = None, web_dir: Path | None = None) ->
             gismap_mod.render_gis_map(findings_geojson), encoding="utf-8"
         )
 
-    # 7. Landing page. Written as home.md (not index.md): the CustomMill theme owns
-    # the root index.html as its SPA shell (the iframe frame), so the landing content
-    # must live at its own URL that the frame loads (see theme.home in mkdocs.yml).
+    # 7. Landing page, staged as home.md; bosc.site.render renders it to the root
+    # index.html so the site's home URL is `/`.
     (web / "home.md").write_text(_render_home(result), encoding="utf-8")
 
     log.info(

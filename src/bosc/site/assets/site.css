@@ -1,0 +1,227 @@
+/* BOSC site layout — plain multipage docs chrome (replaces the old MkDocs theme).
+   Page-body typography/evidence-tag rules live in extra.css; this file owns the
+   shell: topbar, sidebar nav, content column, and the on-this-page TOC. */
+
+:root {
+  --bosc-indigo: #3f51b5;
+  --bosc-indigo-dark: #303f9f;
+  --bosc-ink: #1a1a1a;
+  --bosc-muted: #5b5b5b;
+  --bosc-rule: #e2e2e6;
+  --bosc-bg: #ffffff;
+  --bosc-sidebar-bg: #fafafb;
+  --bosc-link: #2d3fa0;
+  --sidebar-w: 18rem;
+  --toc-w: 15rem;
+  --topbar-h: 3.25rem;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  color: var(--bosc-ink);
+  background: var(--bosc-bg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* ---- Topbar ---- */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: var(--topbar-h);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1rem;
+  background: var(--bosc-indigo);
+  color: #fff;
+}
+.topbar .brand {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.02rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.nav-burger {
+  display: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  user-select: none;
+}
+
+/* ---- Three-column layout ---- */
+.layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) minmax(0, 1fr) var(--toc-w);
+  align-items: start;
+  max-width: 90rem;
+  margin: 0 auto;
+}
+
+/* ---- Sidebar nav ---- */
+.sidebar {
+  position: sticky;
+  top: var(--topbar-h);
+  height: calc(100vh - var(--topbar-h));
+  overflow-y: auto;
+  padding: 1rem 0.75rem 3rem;
+  border-right: 1px solid var(--bosc-rule);
+  background: var(--bosc-sidebar-bg);
+  font-size: 0.9rem;
+}
+.sidebar ul { list-style: none; margin: 0; padding: 0; }
+.sidebar ul ul { margin-left: 0.6rem; border-left: 1px solid var(--bosc-rule); padding-left: 0.4rem; }
+.sidebar .nav-section-title {
+  display: block;
+  margin: 0.7rem 0 0.2rem;
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--bosc-muted);
+}
+.sidebar .nav-leaf a {
+  display: block;
+  padding: 0.18rem 0.5rem;
+  border-radius: 4px;
+  color: var(--bosc-ink);
+  text-decoration: none;
+}
+.sidebar .nav-leaf a:hover { background: #ececed; }
+.sidebar .nav-leaf.active > a {
+  background: var(--bosc-indigo);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ---- Content column ---- */
+.content {
+  min-width: 0;
+  padding: 1.5rem 2.5rem 5rem;
+}
+.content .md-typeset { max-width: 52rem; }
+.md-typeset h1 { font-size: 1.9rem; line-height: 1.2; margin-top: 0.2rem; }
+.md-typeset h2 { margin-top: 2rem; padding-bottom: 0.2rem; border-bottom: 1px solid var(--bosc-rule); }
+.md-typeset a { color: var(--bosc-link); }
+.md-typeset code {
+  background: #f3f3f5;
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+  font-size: 0.88em;
+}
+.md-typeset pre {
+  background: #f6f8fa;
+  border: 1px solid var(--bosc-rule);
+  border-radius: 6px;
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+}
+.md-typeset pre code { background: none; padding: 0; }
+.md-typeset table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+}
+.md-typeset th, .md-typeset td {
+  border: 1px solid var(--bosc-rule);
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+  vertical-align: top;
+}
+.md-typeset th { background: #f3f3f5; }
+.md-typeset img { max-width: 100%; height: auto; }
+.md-typeset blockquote {
+  margin: 1rem 0;
+  padding: 0.2rem 1rem;
+  border-left: 3px solid var(--bosc-indigo);
+  color: var(--bosc-muted);
+}
+/* Heading permalinks (toc extension) — show on hover. */
+.md-typeset .headerlink {
+  margin-left: 0.4rem;
+  color: var(--bosc-rule);
+  text-decoration: none;
+  opacity: 0;
+}
+.md-typeset h1:hover .headerlink,
+.md-typeset h2:hover .headerlink,
+.md-typeset h3:hover .headerlink,
+.md-typeset h4:hover .headerlink { opacity: 1; }
+
+/* ---- Admonitions (python-markdown `admonition` + pymdownx `details`) ---- */
+.md-typeset .admonition, .md-typeset details {
+  margin: 1.2rem 0;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--bosc-rule);
+  border-left: 4px solid var(--bosc-indigo);
+  border-radius: 4px;
+  background: #f8f9fc;
+}
+.md-typeset .admonition-title, .md-typeset summary {
+  font-weight: 700;
+  margin: 0 0 0.4rem;
+  cursor: default;
+}
+.md-typeset details summary { cursor: pointer; }
+.md-typeset .admonition.warning, .md-typeset details.warning { border-left-color: #d32f2f; background: #fdf4f4; }
+.md-typeset .admonition.note, .md-typeset details.note { border-left-color: #1976d2; background: #f3f8fd; }
+.md-typeset .admonition.tip, .md-typeset details.tip { border-left-color: #2e7d32; background: #f3faf4; }
+.md-typeset .admonition > :last-child, .md-typeset details > :last-child { margin-bottom: 0; }
+
+/* ---- On-this-page TOC ---- */
+.toc {
+  position: sticky;
+  top: var(--topbar-h);
+  max-height: calc(100vh - var(--topbar-h));
+  overflow-y: auto;
+  padding: 1.5rem 1rem 3rem;
+  font-size: 0.85rem;
+}
+.toc .toc-title {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--bosc-muted);
+  margin-bottom: 0.4rem;
+}
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc ul ul { margin-left: 0.7rem; }
+.toc a {
+  display: block;
+  padding: 0.12rem 0;
+  color: var(--bosc-muted);
+  text-decoration: none;
+}
+.toc a:hover { color: var(--bosc-link); }
+
+/* ---- Responsive ---- */
+@media (max-width: 1100px) {
+  .layout { grid-template-columns: var(--sidebar-w) minmax(0, 1fr); }
+  .toc { display: none; }
+}
+@media (max-width: 800px) {
+  .nav-burger { display: inline-block; }
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  .sidebar {
+    position: fixed;
+    top: var(--topbar-h);
+    left: 0;
+    width: min(20rem, 85vw);
+    z-index: 15;
+    transform: translateX(-100%);
+    transition: transform 0.18s ease;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.12);
+  }
+  .nav-toggle:checked ~ .layout .sidebar { transform: translateX(0); }
+  .content { padding: 1.25rem 1.25rem 4rem; }
+}

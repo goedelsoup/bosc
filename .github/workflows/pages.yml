@@ -38,10 +38,8 @@ jobs:
       - uses: astral-sh/setup-uv@v5
       - name: Install (with docs extra)
         run: uv sync --extra docs
-      - name: Generate the site source (web/)
+      - name: Build the static site (stages web/, renders site/)
         run: uv run bosc site build
-      - name: Build the static site (site/)
-        run: uv run mkdocs build
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site

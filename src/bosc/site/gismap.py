@@ -29,7 +29,7 @@ _LAYER_COLORS = {
     "floodplain": "#1976d2",
 }
 
-# Inlined so only this page pays for Leaflet (CustomMill loads each page in a frame).
+# Inlined so only this page pays for the Leaflet CDN load.
 _MAP_HTML = """
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

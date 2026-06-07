@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% if not is_home %}{{ page_title }} · {% endif %}{{ site_name }}</title>
+  <meta name="description" content="{{ site_description }}" />
+  <link rel="stylesheet" href="{{ root }}assets/site.css" />
+  <link rel="stylesheet" href="{{ root }}assets/extra.css" />
+</head>
+<body>
+  <input type="checkbox" id="bosc-nav-toggle" class="nav-toggle" hidden />
+  <header class="topbar">
+    <label for="bosc-nav-toggle" class="nav-burger" aria-label="Toggle navigation">☰</label>
+    <a class="brand" href="{{ root }}index.html">{{ site_name }}</a>
+  </header>
+  <div class="layout">
+    <nav class="sidebar" aria-label="Site navigation">
+      {{ nav_html }}
+    </nav>
+    <main class="content">
+      <article class="md-typeset">
+        {{ content }}
+      </article>
+    </main>
+    {% if toc and toc.strip() %}
+    <aside class="toc" aria-label="On this page">
+      <div class="toc-title">On this page</div>
+      {{ toc }}
+    </aside>
+    {% endif %}
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="{{ root }}assets/mermaid-init.js"></script>
+</body>
+</html>

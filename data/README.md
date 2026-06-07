@@ -9,15 +9,16 @@
 
 ## Publishing (GitHub Pages)
 
-`bosc site build` stages a [MkDocs](https://www.mkdocs.org/) source tree under
-`web/` from `extracted/` + the repo `docs/` + the cross-document layer (timeline,
-entity graph); `mkdocs build` turns it into `site/`. Both `web/` and `site/` are
-git-ignored and fully regenerable — the generator (`src/bosc/site/`) is the source.
+`bosc site build` stages a markdown source tree under `web/` from `extracted/` +
+the repo `docs/` + the cross-document layer (timeline, entity graph), then renders
+it to plain multipage HTML under `site/` (Python-Markdown + Jinja2 — no MkDocs).
+Both `web/` and `site/` are git-ignored and fully regenerable — the generator
+(`src/bosc/site/`) is the source.
 
 ```bash
-uv sync --extra docs       # install the MkDocs toolchain
-bosc site build            # generate web/
-bosc site serve            # rebuild + local preview (mkdocs serve)
+uv sync --extra docs       # install the renderer (markdown + jinja2)
+bosc site build            # stage web/ and render site/
+bosc site serve            # rebuild + local preview at http://localhost:8000
 ```
 
 Curated source PDFs are published as **Exhibits**; edit

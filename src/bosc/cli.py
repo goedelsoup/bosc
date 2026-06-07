@@ -1142,35 +1142,61 @@ app.add_typer(site_app, name="site")
 
 @site_app.command("build")
 def site_build() -> None:
-    """Stage the static site under web/ from data/extracted + docs (regenerable)."""
-    from bosc.site import build_site
+    """Stage web/ from data/extracted + docs, then render the static HTML site/ (regenerable)."""
+    from bosc.site import build_site, render_site
 
     result = build_site()
+    rendered = render_site(result.web_dir, result.web_dir.parent / "site")
     console.print(
         f"[green]Built[/] {result.web_dir} — {result.n_records} records "
         f"({len(result.record_pages)} kind pages), {result.n_events} timeline events, "
         f"{result.n_entities} entities, {result.narrative_files} narrative/artifact files."
+    )
+    console.print(
+        f"[green]Rendered[/] {rendered.site_dir} — {rendered.pages} HTML pages, "
+        f"{rendered.assets} assets copied."
     )
     available = sum(1 for e in result.exhibits if e.available)
     if result.exhibits:
         console.print(
             f"[dim]exhibits: {available}/{len(result.exhibits)} available (rest need `git lfs pull`)[/]"
         )
-    console.print("[dim]Next:[/] uv run mkdocs serve   [dim](or `bosc site serve`)[/]")
+    console.print(
+        "[dim]Next:[/] bosc site serve   [dim](local preview at http://localhost:8000)[/]"
+    )
 
 
 @site_app.command("serve")
 def site_serve(
-    build: bool = typer.Option(True, "--build/--no-build", help="Rebuild web/ before serving."),
+    build: bool = typer.Option(True, "--build/--no-build", help="Rebuild the site before serving."),
+    port: int = typer.Option(8000, "--port", help="Port for the local preview server."),
 ) -> None:
-    """Build (unless --no-build) then run `mkdocs serve` for a local preview."""
-    import subprocess
+    """Build (unless --no-build) then serve the static site/ for a local preview."""
+    import functools
+    import http.server
+    import socketserver
 
+    from bosc.config import get_settings
+
+    site_dir = get_settings().data_dir.parent / "site"
     if build:
-        from bosc.site import build_site
+        from bosc.site import build_site, render_site
 
-        build_site()
-    raise typer.Exit(subprocess.call(["uv", "run", "mkdocs", "serve"]))
+        result = build_site()
+        render_site(result.web_dir, site_dir)
+    if not site_dir.is_dir():
+        console.print("[red]No site/ to serve.[/] Run without --no-build first.")
+        raise typer.Exit(1)
+
+    handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(site_dir))
+    console.print(
+        f"[green]Serving[/] {site_dir} at [bold]http://localhost:{port}[/] (Ctrl-C to stop)"
+    )
+    with socketserver.TCPServer(("", port), handler) as httpd:
+        try:
+            httpd.serve_forever()
+        except KeyboardInterrupt:
+            console.print("\n[dim]stopped[/]")
 
 
 if __name__ == "__main__":
