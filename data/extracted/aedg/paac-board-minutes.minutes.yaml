@@ -1,0 +1,178 @@
+kind: paac_minutes
+subject: Port Authority of Allen County (PAAC) Board of Directors minutes — May 2023 to April 2026
+
+provenance:
+  source_path: data/documents/aedg/PRR-01-bundle.ocr.pdf
+  bundle: "Allen County -- Responsive Records -- Parent PRR.pdf (producing body: PAAC)"
+  pages: "index pp.1-79 (= bundle 0-based 0-78), Part 1 of the bundle"
+  layer: native_text   # typed minutes; text layer is reliable here (unlike the scanned exhibits)
+  content_verified: '2026-06-07'   # read from the native PDF text layer
+  evidence: native typed minutes (PAAC public-records production)
+  note: >-
+    Chronological PAAC board minutes. Figures/dates transcribed from the typed layer; meeting
+    locations are the AEDG Conference Room throughout (the Authority operates out of AEDG -- it has
+    no employees, see paac-records-policy.policy.yaml). Names carry OCR/typo variants (e.g.
+    "Vesttrozzi LLC" p.69 = Bistrozzi LLC; "Bistrozzi Inc" p.62 = Bistrozzi LLC; "Williamowski" =
+    Willamowski; "Microsoft"/"Nadella" per below).
+
+headline_findings:
+  bosc_is_google:
+    finding: >-
+      Project BOSC = Bistrozzi LLC = a GOOGLE data center. Confirmed in the PAAC's own minutes:
+      (1) 2026-03-30 (p.76): "Cindy Leis reported on N. Cole Street roadway improvements tied to the
+      Google data center project and shared Google's first public update on area well concerns";
+      (2) 2026-04-23 (p.78): "All project expenses are funded through Google's contribution" and
+      "reimbursed from the Google project fund" and "the $11 million Project BOSC fund for roadway
+      improvements." Bistrozzi is the land-holding/contracting entity; Google is the end user.
+    significance: >-
+      Independent primary-source confirmation (from the Authority that signed the $14.5M roadwork
+      deal) that BOSC/Bistrozzi = Google -- corroborating the County's own "Bistrozzi/Google Data
+      center facility" phrasing in bosc-prr-production-2026-06-05.response-index.yaml (item 2/19).
+      Google only went public on the well concerns ~2026-03, ~3 years after the project began (2023-05).
+  nadella_is_microsoft:
+    finding: >-
+      Project Nadella = a MICROSOFT data center at Perry Industrial Park (Perry Township). Microsoft
+      reps attended the Perry Township zoning meetings (2024-08-27/28) and a community event at Perry
+      School (2024-09-12) [p.28]. The County amended Perry Township zoning to ADD "data center" as a
+      permitted use to enable it [pp.13-14, 22, 26]. The Microsoft agreement was TERMINATED 2024-10-24
+      ("Motion to terminate the agreement with Microsoft after Rex reviews") [p.29].
+    significance: >-
+      A SECOND, earlier data-center play (codename Nadella = Microsoft CEO Satya Nadella). Shows the
+      Allen County / AEDG / PAAC data-center playbook -- quiet rezoning-to-add-data-centers, codenamed
+      prospects -- predates BOSC's public phase. Microsoft walked; Google (BOSC) proceeded.
+  school_pilot_amount_disclosed:
+    finding: >-
+      The Elida school compensation amount -- withheld as "non-public" in the CRA / school-notice
+      docs (cra-agreement.cra.yaml, school-district-notice-*.yaml) -- appears as a PROPOSED figure in
+      these minutes: an "additional compensation agreement in the amount of $200,000 per year"
+      (2025-02-27, p.35), restated as a "School District PILOT ... annual payment in the amount of
+      $250,000/year to the Elida School District" (2025-03-27 p.38; 2025-05-01 p.43).
+    significance: >-
+      Concrete dollar figures ($200K -> $250K/yr to Elida) for the school compensation the executed
+      agreement keeps secret. PROPOSED amounts in PAAC minutes, not the final executed terms -- but a
+      direct lead for the public-ledger thread (src/bosc/ledger.py) and the withholding narrative.
+  eagle_bridge_award_vs_budget:
+    finding: >-
+      The actual North Cole Street roundabout design-build award to Eagle Bridge is ~$3.52M
+      (2026-04-23, p.78), against the $14.5M Company Contribution / Tetra Tech OPC budget. Plan
+      review (Kimley-Horn $25K), construction oversight (Bockrath $294,988.50), ROW acquisition
+      (West Erie Realty $108,100), criteria engineer (DGL $31,360) are additional. By 2026-03-30 the
+      "BOSC project Star account ... holds $1.17 million and has earned $68,686 in interest" (p.76);
+      the 2026-04-23 minutes call it "the $11 million Project BOSC fund."
+    significance: >-
+      The $14.5M contribution materially exceeds early actual awards -- supporting the RDA §5.5
+      overpayment-refund analysis (roadwork-development-agreement.rda.yaml): real cost may land well
+      below the contribution, with the difference (plus any 629/ODOD grants) refundable to Google.
+      The $14.5M vs "$11M fund" vs "$1.17M in the Star account" figures should be reconciled against
+      the actual fund ledger [FOLLOWUP -- do not reconcile by inference].
+
+codename_decoder:           # project codename -> real party / site (the single most useful output)
+  - {codename: "Project BOSC", site: "American Township / American Business Park (4110 N. Cole St)", real_party: "Bistrozzi LLC = GOOGLE data center", counsel: "Jill S. Tangeman / Scott Ziance (Vorys)", status: "active; land assigned to Bistrozzi 2025-07-02 + Neighbors 2026-02-13"}
+  - {codename: "Project Nadella", site: "Perry Industrial Park (Heitz/Perry Township)", real_party: "MICROSOFT data center", status: "TERMINATED 2024-10-24"}
+  - {codename: "Project Gunsmoke", site: "Commerce Gateway Park", real_party: "Ohio Logistics IV, LTD (Chuck Bills) -- 2x100,000 SF spec warehouse", status: "active; $995K land + $1M PAAC grant + $500K loan + capital lease"}
+  - {codename: "P&G", site: "Thayer Road", real_party: "Procter & Gamble warehouse + roundabout", status: "active; ODOD grant $2,236,050 (SBIG20249498); Vernon Nagel design-build"}
+  - {codename: "REV LNG / OH RNG Interconnect, LLC", site: "Shawnee Industrial Park", real_party: "LNG/RNG (Dominion -> Enbridge Gas)", status: "closed 14.5 ac / $111,042"}
+  - {codename: "Project Last Mile / Project Sloane", site: "Gateway Shawnee (Jay Begg Pkwy)", real_party: "VanTrust Real Estate / VTRE Development LLC", status: "active; ~25 ac @ $38K/ac; Kimley-Horn + EMH&T"}
+  - {codename: "Project Amazon", site: "Gateway Shawnee / Jay Begg Pkwy (tied to VTRE)", real_party: "Amazon -- warehouse (per VTRE/Jay Begg tie-in)", status: "active 2026; soil work for Jay Begg extension; VTRE reimbursement", note: "consistent with the Amazon-conveyance-is-warehouse finding (instr 202511180011830), NOT the data center"}
+  - {codename: "Thor Equities", site: "Perry Industrial Park (remainder, N of power line)", real_party: "data-center developer (also doing a Van Wert data center; brought by AEP)", status: "1-yr LOI 2025-03-27 @ $50K/ac"}
+  - {codename: "Project Murphy", site: "Commerce Parkway", real_party: "Murphy Tractor / Murfin, Inc.", status: "active; 15.838 ac @ $40K/ac"}
+  - {codename: "Project PRSM", site: "465 E. Breese Rd (Capps property)", real_party: "PRSM Group", status: "LOI $3.5M / 99.6 ac; option assigned 2025-09-25"}
+  - {codename: "Rockefeller Lake", site: "Allen County Home", real_party: "Geyde Lima, LLC -- residential (120 townhouses) + TIF", status: "MOU 2025-05-29"}
+  - {codename: "Memorial Hall", site: "downtown Lima (130 W. Elm)", real_party: "PAAC-led ~$25M hotel/revitalization (state One-Time Strategic Community Investment grant)", status: "active; Freytag (design), Weigand (CMR), Argus (dev services)"}
+  - {codename: "Lakeview Farms / Novus Foods", real_party: "Novus Foods, LLC", status: "capital-lease financing 2025-09"}
+  - {codename: "Ambrose Road Extension", site: "Delphos", real_party: "Vanamatic / City of Delphos cost-share", status: "active; Vernon Nagel $781,353"}
+
+bosc_google_timeline:
+  - {date: 2023-05-18, page: 3, event: "Project BOSC first appears -- prospect wants 400-600 ac in 'American Industrial Park'. Options: Neff 202.57 ac, Miller 55 ac, Brenneman 81 ac. Realtor Larry Vandemark (Oakridge)."}
+  - {date: 2024-02-22, page: 6, event: "Buyer agreements received; Miller + Brenneman agree to sign rezoning petition. Phil Buell authorized to execute option + right-of-entry (pending Huffman review)."}
+  - {date: 2024-03-21, page: 9, event: "4 landowners / 351 ac. Jill Tangeman (Vorys) named owners' representative for rezoning. 40-ac Sugar Creek parcel excluded."}
+  - {date: 2024-04-18, page: 13, event: "Soil borings; 'when the rezoning petition is submitted, the use of the site will be disclosed but not the name of the company.' Working with Elida School + 'Yes4Elida' committee."}
+  - {date: 2024-08-22, page: 28, event: "Working with Tetra Tech (recommended by Todd Audet) for access layouts SR65/SR115/N. Cole; $5,000 budget."}
+  - {date: 2024-10-24, page: 32, event: "Conditional Use Permit process for Neff property begins (Leis, Huffman, Tangeman + zoning inspector). Gracelys withdrew; access refocused to main N. Cole point."}
+  - {date: 2025-02-27, page: 35, event: "Prospect requests a CRA: 75% / 15-yr abatement; 'additional compensation agreement in the amount of $200,000 per year' to Elida; delayed past the May Elida levy. Neighbors PSA $600,000 (appraised $300K)."}
+  - {date: 2025-03-27, page: 39, event: "CRA application to ODOD 2025-04-17; Vorys drafted CRA for prosecutor Williamowski + BOCC; School District PILOT $250,000/yr proposed (Elida board 2025-05-20). Water/sanitary/TIS underway."}
+  - {date: 2025-05-29, page: 45, event: "Approved Tetra Tech proposal for N. Cole Street conceptual layouts, $16,000."}
+  - {date: 2025-06-26, page: 47, event: "Motion authorizing PAAC Chair to execute the Roadwork Cooperative Agreement w/ BOSC. CRA language approved by BOCC 6/24; school notice 6/25; final CRA on/after 7/10. Options-to-BOSC assignment deferred to a Special Meeting."}
+  - {date: 2025-07-02, page: 50, event: "(Special) Public comment: Trisha Gross + Heather Davis ask when public will learn if data center is 'storage or cloud services' + for transparency; Buell deflects. Approved Assignment of Options to Bistrozzi LLC: Brenneman Brothers, Neff Farms Inc, Pike Run Farms."}
+  - {date: 2025-07-29, page: 52, event: "Approved the Roadwork Development Agreement w/ Bistrozzi LLC (Res O.729-25). ~$14.5M into a PAAC account; $2.5M earmarked Bluelick/Cole roundabout; ROW included; roads dedicated to County. Guests: Brion Rhodes (Co. Engineer), Rex Huffman, Mackenzi Klemann (Lima News)."}
+  - {date: 2025-08-07, page: 54, event: "Public comment: Heather Davis (American Twp resident) -- community feels excluded; Leis describes roundabout phasing (Beery/Cole first, equipment via US-30)."}
+  - {date: 2025-10-23, page: 62, event: "Authorized Neighbors Real Estate Sale & Purchase Contract; on closing PAAC assigns to Bistrozzi."}
+  - {date: 2026-02-13, page: 69, event: "Neighbors environmental studies complete; Assignment & Assumption to Bistrozzi LLC; closing 2026-02-13. N. Cole roundabouts design-build: 3 RFQs (1/30), 2 responsive, RFP due 2/27 (SR65/Cole + Cole/Bluelick)."}
+  - {date: 2026-02-26, page: 72, event: "BOSC design-build teams Eagle Bridge + Vernon Nagel; subcommittee to score (executive session). Board notes 'public-record requirements' re scoring."}
+  - {date: 2026-03-06, page: 74, event: "(Special) Cole St corridor residents (Heather Davis, David Streeter, Mike Lugibihl/Swiss Country Market) object: transparency, no public traffic studies, Bluelick/Cole roundabout could eliminate Swiss Country Market farm stand. Eagle Bridge ranked top; authorized to negotiate."}
+  - {date: 2026-03-30, page: 76, event: "Leis ties N. Cole improvements to 'the Google data center project'; 'Google's first public update on area well concerns'; public well-issue contact email. ROW (West Erie Realty $108,100), Kimley-Horn 60% plan review ($25K), Bockrath oversight ($294,988.50). BOSC Star acct holds $1.17M, $68,686 interest."}
+  - {date: 2026-04-23, page: 78, event: "(Special) Eagle Bridge construction award ~$3.52M; DGL criteria engineer $31,360; 'All project expenses funded through Google's contribution'; 'the $11 million Project BOSC fund for roadway improvements.' Media: Craig Kelly (Lima News), Todd Cummins (WLIO)."}
+
+transparency_record:        # documents the opacity the records campaign targets
+  - "2024-04-18 (p.13): rezoning petition would disclose the USE but NOT the company name."
+  - "2024-04-02 / Perry (p.13): Tangeman disclosed client is a 'data center' but not the company."
+  - "2025-07-02 (p.50): residents asked when the public would learn storage-vs-cloud + for transparency; chair deflected ('as the company reaches a certain point...')."
+  - "2025-08-07 (p.54): resident says community 'feels excluded from the development process.'"
+  - "2026-03-06 (p.74): corridor residents cite lack of publicly shared traffic studies; 3-minute limit, 'not intended as a Q&A.'"
+  - "2026-03-30 (p.76): Google's FIRST public update on area well concerns -- ~3 years after the project started; well-issue email set up."
+  - "2026-03-30 (p.78): PAAC entered executive session citing ORC 4582.58(B) (the econ-dev trade-secret shield) -- active use of the shield to keep deliberations non-public."
+
+well_concerns:
+  finding: >-
+    2026-03-30 (p.76): the Google data center prompted "area well concerns" -- Google issued its
+    first public update and PAAC/Google set up a public contact email for residents to report well
+    issues. 2025-05-01 (p.43): a City of Lima / Allen County Water District water-service agreement
+    and a City of Lima / AC Sanitary sanitary-service agreement were underway for BOSC.
+  significance: >-
+    Primary-source link between the data center and residential groundwater impacts -- feeds the
+    hydrology / water-balance thread (cooling withdrawal, low-flow, well drawdown). Residents on
+    private wells near a high-consumption cooling load is exactly the assimilative-capacity concern.
+
+key_actors:
+  paac_board: ["Phil Buell (Chair)", "Drew Fields (Vice Chair from 2025-08)", "Eric Pohjala (Treas/Sec 2024-2025)", "Tim Buit (Treas/Sec from 2025-08)", "Joe Guagenti", "Ron Meyer(s)", "Sam Halker (apptd 2024-10)", "Paul Swartz", "Barry Hardy (left 2024-06)", "Maria Sanko"]
+  aedg: ["Cynthia 'Cindy' Leis -- AEDG Business Development Director -> President/CEO (by 2024-08); also PAAC Executive Director (dual role, see leis-aedg-paac-dual-role)", "Dave Stratton -- AEDG President/CEO -> Greater Lima Region (GLR) President/CEO", "Rose Franklin (Project Manager)", "Tim Fitzpatrick", "Jena Shafer", "Tracy Hollar / Tina Mathews"]
+  legal: ["Rex Huffman (PAAC legal counsel; Rossford OH)", "Leah Thorsen", "Joe Riley", "James Grandowicz", "Jill S. Tangeman (Vorys -- Bistrozzi/BOSC + Nadella counsel)", "John Williamowski Jr. (Allen Co. Asst. Prosecutor)"]
+  consultants_engineers: ["Todd Audet (Strategic Infrastructure Solutions LLC -- BOSC/Nadella/P&G; RDA primary contact; 2026 contract $250/hr)", "Brion Rhodes (Allen County Engineer)", "Tetra Tech (BOSC OPC + N. Cole layouts)", "EMH&T", "Kimley-Horn", "CEC", "Bockrath & Associates", "DGL Consulting Engineers", "Eagle Bridge (winning N. Cole design-build ~$3.52M)", "Vernon Nagel (P&G + Ambrose)", "Rea & Associates (Cody Niese, Amanda Davis, Jared Cottrell)"]
+
+meeting_index:              # date | bundle page (1-indexed) | type
+  meetings:
+  - {date: 2023-05-18, page: 1}
+  - {date: 2024-02-22, page: 4}
+  - {date: 2024-03-21, page: 7}
+  - {date: 2024-04-18, page: 11}
+  - {date: 2024-05-16, page: 15}
+  - {date: 2024-06-13, page: 20}
+  - {date: 2024-07-18, page: 24}
+  - {date: 2024-08-22, page: 27}
+  - {date: 2024-10-24, page: 30}
+  - {date: 2025-02-27, page: 33}
+  - {date: 2025-03-27, page: 38}
+  - {date: 2025-05-01, page: 42}
+  - {date: 2025-05-29, page: 45}
+  - {date: 2025-06-26, page: 47}
+  - {date: 2025-07-02, page: 50, type: special}
+  - {date: 2025-07-29, page: 52}
+  - {date: 2025-08-07, page: 54}
+  - {date: 2025-08-28, page: 57}
+  - {date: 2025-09-25, page: 59}
+  - {date: 2025-10-23, page: 62}
+  - {date: 2025-11-20, page: 64}
+  - {date: 2026-02-13, page: 68}
+  - {date: 2026-02-26, page: 71}
+  - {date: 2026-03-06, page: 74, type: special}
+  - {date: 2026-03-30, page: 76}
+  - {date: 2026-04-23, page: 79, type: special}
+  not_in_bundle_referenced: ["2024-01-18", "2024-02-05", "2024-07-22", "2024-09-26", "2025-01-22/23", "2026-01-22", "2026-03-13 (SOQ subcmte)", "2026-03-18"]
+
+cross_refs:
+  - data/extracted/aedg/roadwork-development-agreement.rda.yaml             # the RDA approved here 2025-07-29 (Res O.729-25)
+  - data/extracted/aedg/roundabouts.summary.opc.yaml                        # the Tetra Tech OPC behind the $14.5M
+  - data/extracted/aedg/paac-records-policy.policy.yaml                     # PAAC has no employees; Leis dual-role; 4582.58 shield
+  - data/extracted/legal/prr-mandamus/cra-agreement.cra.yaml               # the CRA (school comp withheld; $200K/$250K proposed here)
+  - data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-05.response-index.yaml  # County's "Bistrozzi/Google" phrasing
+  - data/extracted/recorder/202511180011830-amazon-deed.deed.yaml          # Amazon = warehouse, tied to VTRE/Jay Begg here
+
+relevance:
+  tags: [verified, aedg, port-authority, minutes, codename-decoder, bosc, google, microsoft, transparency, public-ledger, land-assembly, water]
+  note: >-
+    The PAAC board minutes (2023-05 to 2026-04) -- the codename decoder for the whole corpus.
+    Confirms BOSC=Bistrozzi=Google and Nadella=Microsoft (terminated), documents the land assembly
+    and its assignment to Bistrozzi, discloses the proposed $200K->$250K/yr Elida school PILOT,
+    surfaces the Eagle Bridge ~$3.52M actual roundabout award vs the $14.5M budget, records the
+    public's transparency complaints and the Google data-center well concerns, and rosters every
+    actor. Native typed text -- reliable citations by meeting date + bundle page.
