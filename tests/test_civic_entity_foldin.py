@@ -76,6 +76,50 @@ def test_foldin_links_corridor_parties_and_skips_residents(tmp_path: Path) -> No
     assert "american-township/meetings/meeting-summaries.yaml" in bist.sources
 
 
+def test_foldin_links_principal_named_only_in_prose_and_skips_self(tmp_path: Path) -> None:
+    # The roster lists committee members + the body itself; the project principal
+    # (Google) is named only in the grounded prose — as in the real LACRPC 2026-04-23
+    # minutes. Google must still link, and the body naming itself must NOT self-loop.
+    settings = Settings(data_dir=tmp_path)
+    p = settings.extracted_dir / "lacrpc" / "meetings" / "meeting-summaries.yaml"
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(
+        yaml.safe_dump(
+            {
+                "meta": {"slug": "lacrpc"},
+                "meetings": [
+                    {
+                        "date": "2026-04-23",
+                        "parties": [
+                            "Doug Post, Amanda Township",  # one-off official -> excluded
+                            "LACRPC (Lima-Allen County Regional Planning Commission)",  # self
+                        ],
+                        "corridor_relevance": "Presentation discussed project BOSC (Google "
+                        "data center), phased investment and a payment to Elida Schools.",
+                        "summary": "Open discussion about data centers.",
+                    }
+                ],
+            }
+        ),
+        "utf-8",
+    )
+    graph = build_entity_graph(Corpus(), enrich_subdivisions=True, settings=settings)
+    sub = graph.get("Lacrpc")
+    assert sub is not None
+    google = graph.get("Google")
+    assert google is not None
+    assert any(
+        r.rel == "discussed_at" and r.src == google.key and r.dst == sub.key
+        for r in graph.relationships
+    )
+    # No self-loop from the body naming itself, and the one-off official is excluded.
+    assert not any(
+        r.rel == "discussed_at" and r.src == sub.key and r.dst == sub.key
+        for r in graph.relationships
+    )
+    assert graph.get("Doug Post") is None
+
+
 def test_foldin_is_opt_in(tmp_path: Path) -> None:
     settings = _seed(tmp_path, [{"date": "2026-02-09", "parties": ["Bistrozzi LLC"]}])
     # Without the flag, the meeting summaries are not read at all.
