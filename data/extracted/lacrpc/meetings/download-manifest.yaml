@@ -1,0 +1,558 @@
+meta:
+  subject: lacrpc meeting-document download manifest
+  slug: lacrpc
+  source_page: https://www.lacrpc.com/AgendaCenter
+  dest_dir: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/lacrpc/meetings
+  generated_at: '2026-06-08'
+  policy: non-destructive — originals keep as-received names; this is an alias/provenance
+    layer only.
+  date_evidence: listing — dates are parsed from the records-page link text/filename,
+    NOT content-verified. OCR of each file is the verification step.
+  counts:
+    total: 41
+    downloaded: 40
+    skipped_existing: 1
+    conflicts: 0
+    errors: 0
+documents:
+- filename: 20260422 AAC Agenda and Meeting Notice-cancelled.docx
+  canonical: 2026-04-22-agenda.docx
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_04222026-267
+  body: Administrative Affairs Committee (AAC)
+  kind: agenda
+  date: '2026-04-22'
+  title: CANCELLED - Administrative Affairs Committee (AAC)
+  sha256: 40821496432e7139d3f398c6e25b960883cf4e74fdd49d1dd25eedc7ce21cb8d
+  bytes: 303343
+  content_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  fetched_at: '2026-06-08T18:39:11.095017+00:00'
+  status: downloaded
+  note: null
+- filename: 20260421 CAC Agenda and Meeting Notice.docx
+  canonical: 2026-04-21-agenda.docx
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_04212026-269
+  body: Citizens Advisory Committee (CAC)
+  kind: agenda
+  date: '2026-04-21'
+  title: Citizens Advisory Committee (CAC) Meeting Agenda (PDF)
+  sha256: b7cfeca02da9bf6570523813152f5732e4b8ff263c3d322b9cc766258e797a18
+  bytes: 305545
+  content_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  fetched_at: '2026-06-08T18:39:11.448623+00:00'
+  status: downloaded
+  note: null
+- filename: 20260120 CAC Agenda and Meeting Notice.jpg
+  canonical: 2026-01-20-agenda.jpg
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_01202026-268
+  body: Citizens Advisory Committee (CAC)
+  kind: agenda
+  date: '2026-01-20'
+  title: Citizens Advisory Committee (CAC) Meeting Agenda (PDF)
+  sha256: 5b689e68981642f68aa2ea8252a638aa39355443dcb0bd2a7be35a90953f934e
+  bytes: 805008
+  content_type: image/jpeg
+  fetched_at: '2026-06-08T18:39:11.909816+00:00'
+  status: downloaded
+  note: null
+- filename: _01202026-268.doc
+  canonical: 2026-01-20-minutes.doc
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_01202026-268
+  body: Citizens Advisory Committee (CAC)
+  kind: minutes
+  date: '2026-01-20'
+  title: null
+  sha256: 5954c0c398943941089529405e8bba0a5eba3d3d3a6b37a571b65446ce9b38c2
+  bytes: 91136
+  content_type: application/msword
+  fetched_at: '2026-06-08T18:39:12.148279+00:00'
+  status: downloaded
+  note: null
+- filename: 20260120 CAC Agenda and Meeting Notice.docx
+  canonical: 2026-01-20-agenda.docx
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_01202026-241
+  body: Citizens Advisory Committee (CAC)
+  kind: agenda
+  date: '2026-01-20'
+  title: Citizens Advisory Committee (CAC) Meeting Agenda (PDF)
+  sha256: 92137de79b8a8e08b1c8f5041c777271ca2d0734c3792104565b6ab4cd5b5492
+  bytes: 304939
+  content_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  fetched_at: '2026-06-08T18:39:12.509604+00:00'
+  status: downloaded
+  note: null
+- filename: 20260416 CDC Agenda and Meeting Notice.docx
+  canonical: 2026-04-16-agenda.docx
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_04162026-273
+  body: Community Development Committee (CDC)
+  kind: agenda
+  date: '2026-04-16'
+  title: Community Development Committee (CDC) Regular Meeting and Notice Agenda (PDF)
+  sha256: 3bbaeda63e3ddacebfa6b1ac9c80ba4cdd30f2c45215ef2104ff871efe6d87d0
+  bytes: 303815
+  content_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  fetched_at: '2026-06-08T18:39:12.880601+00:00'
+  status: downloaded
+  note: null
+- filename: 20260115 CDC Agenda and Meeting Notice.pdf
+  canonical: 2026-01-15-agenda.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_01152026-242
+  body: Community Development Committee (CDC)
+  kind: agenda
+  date: '2026-01-15'
+  title: Community Development Committee (CDC) Meeting Agenda (PDF)
+  sha256: 550bf9f43594ce7adcd8c6c0ad6ac71aab182072d907ae136e38dae00ca2ac9e
+  bytes: 174564
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:13.148033+00:00'
+  status: downloaded
+  note: null
+- filename: _01152026-242.pdf
+  canonical: 2026-01-15-minutes.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_01152026-242
+  body: Community Development Committee (CDC)
+  kind: minutes
+  date: '2026-01-15'
+  title: null
+  sha256: 3a05e834cf569df859edfebc7ae6cf2331f7fc6efde5418f06b7ce9c46dd9648
+  bytes: 92868
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:13.514559+00:00'
+  status: downloaded
+  note: null
+- filename: 20260310 DCC Agenda and Meeting Notice.docx
+  canonical: 2026-03-10-agenda.docx
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_03102026-263
+  body: Developmental Controls Committee (DCC)
+  kind: agenda
+  date: '2026-03-10'
+  title: Developmental Controls Committee (DCC) Agenda and Meeting Notice (PDF)
+  sha256: 25661c378f0e34c3a456f854a6c5250a73a21467a1c7c04783e08701e6082477
+  bytes: 303841
+  content_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  fetched_at: '2026-06-08T18:39:13.930419+00:00'
+  status: downloaded
+  note: null
+- filename: 20260224 DCC Agenda and Meeting Notice.docx
+  canonical: 2026-02-24-agenda.docx
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_02242026-259
+  body: Developmental Controls Committee (DCC)
+  kind: agenda
+  date: '2026-02-24'
+  title: Developmental Controls Committee (DCC) - Cancelled (PDF)
+  sha256: ab08836b0246c3072f21f9ac3efd3b6dcd6d44e5c3254fe9eb4a26f52c2794e9
+  bytes: 304263
+  content_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  fetched_at: '2026-06-08T18:39:14.239130+00:00'
+  status: downloaded
+  note: null
+- filename: _02242026-259.pdf
+  canonical: 2026-02-24-minutes.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_02242026-259
+  body: Developmental Controls Committee (DCC)
+  kind: minutes
+  date: '2026-02-24'
+  title: null
+  sha256: b0c68cbf11c3b72474c0c6e20618a7696383c4ba595fe06f708d9729e0dd38f8
+  bytes: 100450
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:14.642517+00:00'
+  status: downloaded
+  note: null
+- filename: 20260210 Minutes cancelled signed.pdf
+  canonical: 2026-02-10-agenda.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_02102026-266
+  body: Developmental Controls Committee (DCC)
+  kind: agenda
+  date: '2026-02-10'
+  title: Developmental Controls Committee (DCC) - Cancelled (PDF)
+  sha256: 9cb534ee38bdabaf90831dce4b7cecbe1b4973439cf20ed4c41a9d60afbbeed2
+  bytes: 42456
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:14.938723+00:00'
+  status: downloaded
+  note: null
+- filename: _02102026-266.pdf
+  canonical: 2026-02-10-minutes.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_02102026-266
+  body: Developmental Controls Committee (DCC)
+  kind: minutes
+  date: '2026-02-10'
+  title: null
+  sha256: 9cb534ee38bdabaf90831dce4b7cecbe1b4973439cf20ed4c41a9d60afbbeed2
+  bytes: 42456
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:15.160351+00:00'
+  status: downloaded
+  note: null
+- filename: 20260127 Minutes cancelled signed.pdf
+  canonical: 2026-01-27-agenda.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_01272026-262
+  body: Developmental Controls Committee (DCC)
+  kind: agenda
+  date: '2026-01-27'
+  title: Developmental Controls Committee (DCC) - Cancelled (PDF)
+  sha256: 3c573971033ed988c6b7ca63c97debd60505d35e28bb9e6efbff9e6f91ecc58b
+  bytes: 41661
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:15.734363+00:00'
+  status: downloaded
+  note: null
+- filename: _01272026-262.pdf
+  canonical: 2026-01-27-minutes.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_01272026-262
+  body: Developmental Controls Committee (DCC)
+  kind: minutes
+  date: '2026-01-27'
+  title: null
+  sha256: 3c573971033ed988c6b7ca63c97debd60505d35e28bb9e6efbff9e6f91ecc58b
+  bytes: 41661
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:16.035099+00:00'
+  status: downloaded
+  note: null
+- filename: 20260113 Minutes cancelled signed.pdf
+  canonical: 2026-01-13-agenda.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_01132026-261
+  body: Developmental Controls Committee (DCC)
+  kind: agenda
+  date: '2026-01-13'
+  title: Developmental Controls Committee (DCC) - Cancelled (PDF)
+  sha256: 870873a911e2b21e40c8594977f135bb5f08d7b40a05b30686237e20c3a05d04
+  bytes: 20484
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:16.227513+00:00'
+  status: downloaded
+  note: null
+- filename: _01132026-261.pdf
+  canonical: 2026-01-13-minutes.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_01132026-261
+  body: Developmental Controls Committee (DCC)
+  kind: minutes
+  date: '2026-01-13'
+  title: null
+  sha256: 870873a911e2b21e40c8594977f135bb5f08d7b40a05b30686237e20c3a05d04
+  bytes: 20484
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:16.465646+00:00'
+  status: downloaded
+  note: null
+- filename: 20260521 EC Agenda and Meeting Notice.docx
+  canonical: 2026-05-21-agenda.docx
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_05212026-274
+  body: Executive Committee (EC)
+  kind: agenda
+  date: '2026-05-21'
+  title: Executive Committee (EC) Regular Meeting and Notice Agenda (PDF)
+  sha256: 8be997bd53a5546e7526004fb27cbd63271279fc37484234b94a248604c83b5b
+  bytes: 304847
+  content_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  fetched_at: '2026-06-08T18:39:16.735431+00:00'
+  status: downloaded
+  note: null
+- filename: 20260423 EC Agenda and Meeting Notice.docx
+  canonical: 2026-04-23-agenda.docx
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_04232026-272
+  body: Executive Committee (EC)
+  kind: agenda
+  date: '2026-04-23'
+  title: Executive Committee (EC) Regular Meeting and Notice Agenda (PDF)
+  sha256: 53cbcf3a32196ad3452c8f00cc888b062ffbf85807934449ce97b93abc2aedad
+  bytes: 305305
+  content_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  fetched_at: '2026-06-08T18:39:17.138460+00:00'
+  status: downloaded
+  note: null
+- filename: _04232026-272.pdf
+  canonical: 2026-04-23-minutes.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_04232026-272
+  body: Executive Committee (EC)
+  kind: minutes
+  date: '2026-04-23'
+  title: null
+  sha256: 0c6354fa311767a5cf8a58b1f5eafcc165274c1a38084ef91109d840f2a550bc
+  bytes: 270960
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:17.485854+00:00'
+  status: downloaded
+  note: null
+- filename: 20260326 EC Agenda and Meeting Notice.docx
+  canonical: 2026-03-26-agenda.docx
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_03262026-271
+  body: Executive Committee (EC)
+  kind: agenda
+  date: '2026-03-26'
+  title: Executive Committee (EC) Regular Meeting and Notice Agenda (PDF)
+  sha256: 86a7b010780effaffa14ef32be0ad5503b80f46eeed8c5820dd72469474e3a99
+  bytes: 305317
+  content_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  fetched_at: '2026-06-08T18:39:17.850979+00:00'
+  status: downloaded
+  note: null
+- filename: _03262026-271.pdf
+  canonical: 2026-03-26-minutes.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_03262026-271
+  body: Executive Committee (EC)
+  kind: minutes
+  date: '2026-03-26'
+  title: null
+  sha256: 084996c799f6671e52ef75d77211b8b676a37e65a60b133d83d8660142fd03ef
+  bytes: 209789
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:18.176821+00:00'
+  status: downloaded
+  note: null
+- filename: 20260226 EC Agenda and Meeting Notice.docx
+  canonical: 2026-02-26-agenda.docx
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_02262026-254
+  body: Executive Committee (EC)
+  kind: agenda
+  date: '2026-02-26'
+  title: Executive Committee (EC) Regular Meeting and Notice Agenda (PDF)
+  sha256: 33c2379bd9ed2b4042b7d51a4243a4219cf41f039fc511e5495eb65d27a30d05
+  bytes: 305349
+  content_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  fetched_at: '2026-06-08T18:39:18.540706+00:00'
+  status: downloaded
+  note: null
+- filename: _02262026-254.pdf
+  canonical: 2026-02-26-minutes.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_02262026-254
+  body: Executive Committee (EC)
+  kind: minutes
+  date: '2026-02-26'
+  title: null
+  sha256: bc765fe9954b85c78b897e64bbdd511ceafe97a751c2d8f9c37dbc06b9d6bceb
+  bytes: 185072
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:18.819199+00:00'
+  status: downloaded
+  note: null
+- filename: 20260122 EC Agenda and Meeting Notice.docx
+  canonical: 2026-01-22-agenda.docx
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_01222026-253
+  body: Executive Committee (EC)
+  kind: agenda
+  date: '2026-01-22'
+  title: Executive Committee (EC) Regular Meeting and Notice Agenda (PDF)
+  sha256: eefb6fe0f58a74c92cd25fdbd48d8f098fd6efc8e609a96ee8c38cc2ed1af0fa
+  bytes: 304966
+  content_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  fetched_at: '2026-06-08T18:39:19.148393+00:00'
+  status: downloaded
+  note: null
+- filename: _01222026-253.pdf
+  canonical: 2026-01-22-minutes.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_01222026-253
+  body: Executive Committee (EC)
+  kind: minutes
+  date: '2026-01-22'
+  title: null
+  sha256: 8ec06f5faa23dd6e77befd7fd781aa03d52d3f0801b1ebc98614b6d52cb433c2
+  bytes: 185062
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:19.427243+00:00'
+  status: downloaded
+  note: null
+- filename: 20260521 MPOPC Agenda and Meeting Notice.docx
+  canonical: 2026-05-21-agenda.docx
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_05212026-275
+  body: MPO Policy Committee (MPOPC)
+  kind: agenda
+  date: '2026-05-21'
+  title: MPO Policy Committee (MPOPC)
+  sha256: 78daa1050ebf49950cdbdbe2df57e8c8a92567c9b527f3b54e048c381320eb75
+  bytes: 305388
+  content_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  fetched_at: '2026-06-08T18:39:19.839995+00:00'
+  status: downloaded
+  note: null
+- filename: 20260421 TAC Agenda and Meeting Notice.docx
+  canonical: 2026-04-21-agenda.docx
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_04212026-270
+  body: Transportation Advisory Committee (TAC)
+  kind: agenda
+  date: '2026-04-21'
+  title: Transportation Advisory Committee (TAC) Regular Meeting and Notice Agenda
+    (PDF)
+  sha256: bc53c630478df364580caa833a94bbcc83ccb632832931de1bdb27cc93684ec7
+  bytes: 306636
+  content_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  fetched_at: '2026-06-08T18:39:20.315326+00:00'
+  status: downloaded
+  note: null
+- filename: 20260224 TAC Agenda and Meeting Notice.docx
+  canonical: 2026-02-24-agenda.docx
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_02242026-265
+  body: Transportation Advisory Committee (TAC)
+  kind: agenda
+  date: '2026-02-24'
+  title: Transportation Advisory Committee (TAC) Regular Meeting and Notice Agenda
+    (PDF)
+  sha256: b5ce8789cd63dccf79ad0b0a5d5758e9f35769fa5cc572faa50df935915aebb7
+  bytes: 306161
+  content_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  fetched_at: '2026-06-08T18:39:20.739250+00:00'
+  status: downloaded
+  note: null
+- filename: _02242026-265.docx
+  canonical: 2026-02-24-minutes.docx
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_02242026-265
+  body: Transportation Advisory Committee (TAC)
+  kind: minutes
+  date: '2026-02-24'
+  title: null
+  sha256: b0ceb5901018e612713c60a625d816a9b7154d904440050b1372d4c42469faaa
+  bytes: 58367
+  content_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  fetched_at: '2026-06-08T18:39:20.984527+00:00'
+  status: downloaded
+  note: null
+- filename: 20260120 TAC Agenda and Meeting Notice.docx
+  canonical: 2026-01-20-agenda.docx
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_01202026-264
+  body: Transportation Advisory Committee (TAC)
+  kind: agenda
+  date: '2026-01-20'
+  title: Transportation Advisory Committee (TAC) Regular Meeting and Notice Agenda
+    (PDF)
+  sha256: 292c9702e8aafdf9fc832ea9a4cb7e76135f551f3510af2054acb9e8f13b9061
+  bytes: 305756
+  content_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  fetched_at: '2026-06-08T18:39:21.441288+00:00'
+  status: downloaded
+  note: null
+- filename: _01202026-264.pdf
+  canonical: 2026-01-20-minutes.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_01202026-264
+  body: Transportation Advisory Committee (TAC)
+  kind: minutes
+  date: '2026-01-20'
+  title: null
+  sha256: 7ce9692175247d56c1f0c00f2f5f7cd1eb2f82b3a70f0e9d473a270aed42454f
+  bytes: 131617
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:21.724230+00:00'
+  status: downloaded
+  note: null
+- filename: 20260521 MPOPC Agenda and Meeting Notice.docx
+  canonical: 2026-05-21-agenda.docx
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_05212026-279
+  body: Transportation Coordinating Committee (TCC)
+  kind: agenda
+  date: '2026-05-21'
+  title: Transportation Coordinating Committee (TCC) Regular Meeting Agenda and Notice
+    (PDF)
+  sha256: 78daa1050ebf49950cdbdbe2df57e8c8a92567c9b527f3b54e048c381320eb75
+  bytes: 305388
+  content_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  fetched_at: '2026-06-08T18:39:22.023312+00:00'
+  status: skipped_existing
+  note: null
+- filename: 20260423 TCC Agenda and Meeting Notice.pdf
+  canonical: 2026-04-23-agenda.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_04232026-278
+  body: Transportation Coordinating Committee (TCC)
+  kind: agenda
+  date: '2026-04-23'
+  title: Transportation Coordinating Committee (TCC) Regular Meeting Agenda and Notice
+    (PDF)
+  sha256: fe8147f207e493e907febd56262326d54114a224aedde6d1b5fa521bb775ed66
+  bytes: 284235
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:22.329437+00:00'
+  status: downloaded
+  note: null
+- filename: _04232026-278.pdf
+  canonical: 2026-04-23-minutes.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_04232026-278
+  body: Transportation Coordinating Committee (TCC)
+  kind: minutes
+  date: '2026-04-23'
+  title: null
+  sha256: 455cb7ed3591f5f25120c15b03e048ca33d7ad19d4ddd5fe096b25dac4be80a0
+  bytes: 168607
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:22.625717+00:00'
+  status: downloaded
+  note: null
+- filename: 20260326 TCC Agenda and Meeting Notice-cancelled.pdf
+  canonical: 2026-03-26-agenda.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_03262026-277
+  body: Transportation Coordinating Committee (TCC)
+  kind: agenda
+  date: '2026-03-26'
+  title: CANCELLED - Transportation Coordinating Committee (TCC) Regular Meeting Agenda
+    and Notice (PDF)
+  sha256: e28eecd13f48f39ea4b71ab8639943e2809cb95b99dfbad2b2fa3793b6a021b2
+  bytes: 250462
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:23.105190+00:00'
+  status: downloaded
+  note: null
+- filename: _03262026-277.pdf
+  canonical: 2026-03-26-minutes.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_03262026-277
+  body: Transportation Coordinating Committee (TCC)
+  kind: minutes
+  date: '2026-03-26'
+  title: null
+  sha256: d63f905a8f193e130543368ab83ddea6a2f0e6ca71dca03f4710e28dd51b4409
+  bytes: 19352
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:23.528065+00:00'
+  status: downloaded
+  note: null
+- filename: 20260226 TCC Agenda and Meeting Notice.pdf
+  canonical: 2026-02-26-agenda.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_02262026-276
+  body: Transportation Coordinating Committee (TCC)
+  kind: agenda
+  date: '2026-02-26'
+  title: Transportation Coordinating Committee (TCC) Regular Meeting Agenda and Notice
+    (PDF)
+  sha256: f9626eea20021457bd38f0e06a6b87a068fd943a72536157717168db5ff8a1e5
+  bytes: 284347
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:23.899992+00:00'
+  status: downloaded
+  note: null
+- filename: _02262026-276.pdf
+  canonical: 2026-02-26-minutes.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_02262026-276
+  body: Transportation Coordinating Committee (TCC)
+  kind: minutes
+  date: '2026-02-26'
+  title: null
+  sha256: 45d1856f2c3b3ec7cea48bbe0434e296d5611f7dae9410199db6043affdda154
+  bytes: 160722
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:24.305123+00:00'
+  status: downloaded
+  note: null
+- filename: 20260122 TCC Agenda and Meeting Notice.docx
+  canonical: 2026-01-22-agenda.docx
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_01222026-257
+  body: Transportation Coordinating Committee (TCC)
+  kind: agenda
+  date: '2026-01-22'
+  title: Transportation Coordinating Committee (TCC) Regular Meeting Agenda and Notice
+    (PDF)
+  sha256: cda2dad5c9d3595f564a7dabfcc2d4b4154e457e349178370bc56281eadc9e59
+  bytes: 304983
+  content_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  fetched_at: '2026-06-08T18:39:24.703214+00:00'
+  status: downloaded
+  note: null
+- filename: _01222026-257.pdf
+  canonical: 2026-01-22-minutes.pdf
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_01222026-257
+  body: Transportation Coordinating Committee (TCC)
+  kind: minutes
+  date: '2026-01-22'
+  title: null
+  sha256: 889d2465b47148141d4b3eafbc0f0fd718c7e89b4fb6e11c4dae13e14d938503
+  bytes: 172386
+  content_type: application/pdf
+  fetched_at: '2026-06-08T18:39:25.065730+00:00'
+  status: downloaded
+  note: null
