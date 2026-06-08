@@ -1808,5 +1808,47 @@ def subdivisions_audit(
     )
 
 
+@subdivisions_app.command("summarize")
+def subdivisions_summarize(
+    slug: str = typer.Argument(..., help="Body to summarize corridor-relevant meetings for."),
+    limit: int | None = typer.Option(None, "--limit", help="Cap how many meetings to summarize."),
+    ocr: bool = typer.Option(True, "--ocr/--no-ocr", help="OCR scanned PDFs while reading text."),
+) -> None:
+    """Summarize a body's corridor meetings: extract what was decided (LLM analyze stage).
+
+    For each indexed meeting that names the project (datacenter/bosc/bistrozzi/google),
+    reads the file's text and extracts a grounded structured summary (motions, parties,
+    parcels, dollar figures), writing meeting-summaries.yaml. Requires ANTHROPIC_API_KEY.
+    """
+    from bosc.civic import load_registry
+    from bosc.civic.summarize import summarize_corridor_meetings, write_summaries
+
+    settings = get_settings()
+    reg = load_registry(settings)
+    body = reg.get(slug)
+    if body is None:
+        console.print(f"[red]No such subdivision:[/] {slug}")
+        raise typer.Exit(1)
+
+    report = summarize_corridor_meetings(body, settings=settings, limit=limit, ocr=ocr)
+    if not report.entries and not report.skipped:
+        console.print(
+            f"[yellow]No corridor-relevant meetings indexed for {slug}[/] — run "
+            f"[bold]bosc subdivisions index {slug}[/] first."
+        )
+        raise typer.Exit(1)
+
+    table = Table("date", "kind", "corridor relevance")
+    for e in sorted(report.entries, key=lambda e: e.date or ""):
+        table.add_row(e.date or "—", e.kind, e.summary.corridor_relevance[:70])
+    console.print(table)
+    out = write_summaries(
+        report, settings.extracted_dir / slug / "meetings" / "meeting-summaries.yaml"
+    )
+    console.print(f"[green]{len(report.entries)}[/] meetings summarized → {out}")
+    if report.skipped:
+        console.print(f"[dim]{len(report.skipped)} skipped (no extractable text).[/]")
+
+
 if __name__ == "__main__":
     app()

@@ -130,3 +130,34 @@ class StructuredExtractor:
         result = target.model_validate(_first_tool_input(message, tool_name))
         log.info("extractor.extracted", model=self.model, target=target.__name__)
         return result
+
+    def extract_from_text(
+        self,
+        target: type[T],
+        *,
+        instructions: str,
+        text: str,
+        tool_name: str = "record_extraction",
+    ) -> T:
+        """Force the model to populate ``target`` from a text document (no image).
+
+        For already-clean text (e.g. extracted meeting minutes) rather than a page
+        render — same forced-tool-use + schema-validation contract as :meth:`extract`.
+        """
+        content = [{"type": "text", "text": f"{instructions}\n\n--- Document text ---\n{text}"}]
+        message = self.client.messages.create(
+            model=self.model,
+            max_tokens=self.max_tokens,
+            tools=[
+                {
+                    "name": tool_name,
+                    "description": f"Record the extracted {target.__name__}.",
+                    "input_schema": _tool_schema(target),
+                }
+            ],
+            tool_choice={"type": "tool", "name": tool_name},
+            messages=[{"role": "user", "content": content}],
+        )
+        result = target.model_validate(_first_tool_input(message, tool_name))
+        log.info("extractor.extracted_text", model=self.model, target=target.__name__)
+        return result

@@ -36,8 +36,20 @@ _TERMS: dict[str, str] = {
 _COMPILED: dict[str, re.Pattern[str]] = {k: re.compile(v, re.IGNORECASE) for k, v in _TERMS.items()}
 
 
+# Project-specific subjects — naming one of these (not a generic township topic or
+# an ambiguous name like hume/amazon) is what makes a meeting corridor-relevant for
+# the timeline and the summarization pass. (timeline.py keeps a mirrored copy to
+# avoid a pipeline->civic import.)
+CORRIDOR_SUBJECTS = frozenset({"bosc", "bistrozzi", "datacenter", "google"})
+
+
 def scan_text(text: str) -> list[str]:
     """Sorted corridor-topic slugs whose pattern appears in ``text`` (empty if none)."""
     if not text:
         return []
     return sorted(slug for slug, pat in _COMPILED.items() if pat.search(text))
+
+
+def is_corridor_relevant(hits: list[str]) -> bool:
+    """True if ``hits`` includes a project-specific subject (timeline/summary-worthy)."""
+    return any(h in CORRIDOR_SUBJECTS for h in hits)
