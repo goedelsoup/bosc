@@ -143,6 +143,33 @@ def summarize_corridor_meetings(
     return SummaryReport(slug=subdivision.slug, entries=entries, skipped=skipped)
 
 
+def load_committed_summaries(
+    settings: Settings | None = None,
+) -> list[tuple[str, dict[str, Any]]]:
+    """Read every committed ``<slug>/meetings/meeting-summaries.yaml``.
+
+    Returns ``(slug, meeting)`` pairs across all bodies, sorted by ``(slug, date)``;
+    each ``meeting`` is the flat committed shape written by :func:`write_summaries`
+    (``date``/``kind``/``filename``/``hits`` + the :class:`MeetingSummary` fields).
+    Shared by the timeline (event-detail enrichment) and the site meetings page so
+    neither re-parses the artifact independently.
+    """
+    settings = settings or get_settings()
+    out: list[tuple[str, dict[str, Any]]] = []
+    for path in sorted(settings.extracted_dir.glob("*/meetings/meeting-summaries.yaml")):
+        try:
+            data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        except yaml.YAMLError:
+            continue
+        if not isinstance(data, dict):
+            continue
+        slug = str(data.get("meta", {}).get("slug", path.parent.parent.name))
+        meetings = [m for m in data.get("meetings", []) if isinstance(m, dict)]
+        meetings.sort(key=lambda m: str(m.get("date") or ""))
+        out.extend((slug, m) for m in meetings)
+    return out
+
+
 def write_summaries(report: SummaryReport, out_path: Path) -> Path:
     """Write the meeting-summaries YAML (reviewed corridor-evidence artifact)."""
     out_path.parent.mkdir(parents=True, exist_ok=True)

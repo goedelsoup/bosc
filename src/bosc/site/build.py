@@ -19,6 +19,7 @@ from bosc.candidates import (
     load_defense_contractors,
     load_defense_scan,
 )
+from bosc.civic.summarize import load_committed_summaries
 from bosc.config import Settings, get_settings
 from bosc.gleif import load_inventory as load_lei_inventory
 from bosc.logging import get_logger
@@ -32,6 +33,7 @@ from bosc.site import exhibits as exhibits_mod
 from bosc.site import gismap as gismap_mod
 from bosc.site import gleif as gleif_mod
 from bosc.site import graph as graph_mod
+from bosc.site import meetings as meetings_mod
 from bosc.site import people as people_mod
 from bosc.site import records as records_mod
 from bosc.site import rsei as rsei_mod
@@ -59,6 +61,7 @@ class BuildResult:
     n_defense_contractors: int = 0
     n_rsei_facilities: int = 0
     n_lei_records: int = 0
+    n_meeting_summaries: int = 0
 
 
 def _mirror_tree(
@@ -216,6 +219,14 @@ def build_site(settings: Settings | None = None, web_dir: Path | None = None) ->
     }
     (web / "entities.md").write_text(
         graph_mod.render_entities(egraph, profile_slugs=profile_slugs), encoding="utf-8"
+    )
+
+    # Subdivision corridor-meeting summaries — the readable detail behind the
+    # timeline's subdivision_meeting events. Always written (nav links it).
+    meeting_summaries = load_committed_summaries(settings)
+    result.n_meeting_summaries = len(meeting_summaries)
+    (web / "meetings.md").write_text(
+        meetings_mod.render_meetings(meeting_summaries), encoding="utf-8"
     )
 
     # 4. Per-kind record pages + their index.

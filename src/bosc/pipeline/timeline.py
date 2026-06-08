@@ -309,6 +309,17 @@ def _zoning_events(settings: Settings) -> list[TimelineEvent]:
 _CORRIDOR_SUBJECTS = frozenset({"bosc", "bistrozzi", "datacenter", "google"})
 
 
+def _summary_detail(meeting: dict[str, Any]) -> str:
+    """Grounded one-line detail from a committed meeting summary: relevance + figures."""
+    rel = re.sub(r"\s+", " ", str(meeting.get("corridor_relevance") or "")).strip()
+    figs = [re.sub(r"\s+", " ", str(f)).strip() for f in meeting.get("dollar_figures", [])]
+    figs = [f for f in figs if f]
+    if figs:
+        joined = "; ".join(figs)
+        rel = f"{rel} · figures: {joined}" if rel else f"figures: {joined}"
+    return rel
+
+
 def _subdivision_meeting_events(settings: Settings) -> list[TimelineEvent]:
     """Subdivision meetings that name the corridor project in their minutes/agendas.
 
@@ -316,7 +327,9 @@ def _subdivision_meeting_events(settings: Settings) -> list[TimelineEvent]:
     ``bosc subdivisions index``) and surfaces only meetings whose text hit a
     project-specific subject (``_CORRIDOR_SUBJECTS``) — routine township business
     stays in the index as searchable corpus but off the chronology. Agenda + minutes
-    for the same meeting collapse via a shared ``ref``.
+    for the same meeting collapse via a shared ``ref``. When a meeting has a committed
+    summary (``meeting-summaries.yaml``), its grounded relevance + dollar figures
+    become the event detail; otherwise the detail is the raw hit set.
     """
     events: list[TimelineEvent] = []
     for index_path in sorted(settings.extracted_dir.glob("*/meetings/meeting-index.yaml")):
@@ -324,6 +337,10 @@ def _subdivision_meeting_events(settings: Settings) -> list[TimelineEvent]:
         slug = str(data.get("meta", {}).get("slug", index_path.parent.parent.name))
         rel = f"{slug}/meetings/meeting-index.yaml"
         name = slug.replace("-", " ").title()
+        summaries = _load_yaml(index_path.parent / "meeting-summaries.yaml")
+        by_file = {
+            str(m.get("filename")): m for m in summaries.get("meetings", []) if isinstance(m, dict)
+        }
         for d in data.get("documents", []):
             if not isinstance(d, dict):
                 continue
@@ -333,6 +350,8 @@ def _subdivision_meeting_events(settings: Settings) -> list[TimelineEvent]:
             if not corridor or not date:
                 continue
             body = str(d.get("body") or name)
+            summary = by_file.get(str(d.get("filename")))
+            detail = (_summary_detail(summary) if summary else "") or ", ".join(hits)
             events.append(
                 TimelineEvent(
                     date=str(date),
@@ -341,7 +360,7 @@ def _subdivision_meeting_events(settings: Settings) -> list[TimelineEvent]:
                     source=rel,
                     ref=f"mtg-{slug}-{date}-{body}",
                     parties=(body,),
-                    detail=", ".join(hits),  # full hit set retained for context
+                    detail=detail,
                 )
             )
     return events
