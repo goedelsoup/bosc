@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import re
 
-from bosc.pipeline.entities import EntityGraph
+from bosc.pipeline.entities import RELATION_CLASS_ORDER, EntityGraph
 from bosc.pipeline.timeline import TimelineEvent
 
 # Evidence-discipline note reused verbatim from the dossier's framing.
@@ -20,8 +20,46 @@ _SIGNALS_NOTE = (
     "    A shared registered agent or an out-of-state (`delaware`) formation is "
     "*common-control plumbing* read from public records — **not** a statement "
     "about beneficial ownership. Treat flagged signals as leads to verify, not "
-    "conclusions."
+    "conclusions. A **relation class** (below) is likewise an editorial reading of "
+    "an already-verified party — never a new claim, and never a new node."
 )
+
+# Relation-class display labels + one-line definitions, in proximity order. Kept in
+# sync with the controlled vocabulary in bosc.pipeline.entities (RELATION_CLASS_ORDER)
+# and the self-documenting overlay (data/entities/profiles/relation-classes.yaml).
+_RELATION_CLASS_LABELS: dict[str, str] = {
+    "bosc_relation": "Project BOSC",
+    "direct_approval": "Direct approval",
+    "direct_manage": "Direct management",
+    "direct_beneficiary": "Direct beneficiary",
+    "possible_end_user": "End user",
+    "environmental_beneficiary": "Environmental beneficiary",
+    "govt_relation": "Government relation",
+}
+_RELATION_CLASS_DEFS: dict[str, str] = {
+    "bosc_relation": "Project BOSC itself — its developer + campus entities.",
+    "direct_approval": "A body that voted for / permitted the project.",
+    "direct_manage": "Builds, operates, or finances the campus, its utilities, or the deal vehicle.",
+    "direct_beneficiary": "Named recipient of the public benefit (abatement, captured revenue).",
+    "possible_end_user": "The data-center customer the campus serves (confidence stated in the basis).",
+    "environmental_beneficiary": "A receiving water / body bearing the project's externality.",
+    "govt_relation": "A known tie to another government entity.",
+}
+# Muted fills for the Mermaid diagram, one per relation class.
+_RELATION_CLASS_FILL: dict[str, str] = {
+    "bosc_relation": "#cde4ff",
+    "direct_approval": "#d7f0d0",
+    "direct_manage": "#fff2c9",
+    "direct_beneficiary": "#ffe0c2",
+    "possible_end_user": "#e6d6ff",
+    "environmental_beneficiary": "#c9eee7",
+    "govt_relation": "#eaeaea",
+}
+
+
+def _relation_label(cls: str | None) -> str:
+    """Short display label for a relation class, or an em dash."""
+    return _RELATION_CLASS_LABELS.get(cls or "", "—")
 
 
 def _esc(text: str) -> str:
@@ -63,15 +101,23 @@ def _node_id(key: str, seen: dict[str, str]) -> str:
 
 
 def _mermaid(graph: EntityGraph) -> list[str]:
-    """A Mermaid ``graph LR`` of the entity graph, signal-flagged nodes styled."""
+    """A Mermaid ``graph LR`` of the entity graph.
+
+    Nodes are filled by **relation class** when classified; otherwise a shell-adjacent
+    **signal** keeps the pink flag. (Relation class takes precedence so the proximity
+    grouping reads at a glance; the Entities table still carries every signal.)
+    """
     ids: dict[str, str] = {}
     lines = ["```mermaid", "graph LR"]
     flagged: list[str] = []
+    by_class: dict[str, list[str]] = {}
     for key, ent in sorted(graph.entities.items()):
         nid = _node_id(key, ids)
         label = ent.display.replace('"', "'")
         lines.append(f'  {nid}["{label}"]')
-        if ent.signals:
+        if ent.relation_class in _RELATION_CLASS_FILL:
+            by_class.setdefault(ent.relation_class or "", []).append(nid)
+        elif ent.signals:
             flagged.append(nid)
     for r in graph.relationships:
         if r.src not in graph.entities or r.dst not in graph.entities:
@@ -83,6 +129,12 @@ def _mermaid(graph: EntityGraph) -> list[str]:
     if flagged:
         lines.append("  classDef flagged fill:#fde,stroke:#c39;")
         lines.append("  class " + ",".join(flagged) + " flagged;")
+    for cls in RELATION_CLASS_ORDER:
+        nids = by_class.get(cls)
+        if not nids:
+            continue
+        lines.append(f"  classDef {cls} fill:{_RELATION_CLASS_FILL[cls]},stroke:#667;")
+        lines.append(f"  class {','.join(nids)} {cls};")
     lines.append("```")
     return lines
 
@@ -140,8 +192,9 @@ def render_entities(graph: EntityGraph, *, profile_slugs: dict[str, str] | None 
             "corridor's federal defense nexus — **General Dynamics Land Systems** "
             "(~$33.6 B) and parent **General Dynamics Corp** (~$299 B) — and the "
             "corridor land recipient **Amazon.com Services LLC** (~$0.7 M; a "
-            "*warehouse*, not the data center). The data-center end-user attribution "
-            "remains open; Google ties only to the separate Scioto Project Dazzler.",
+            "*warehouse*, not the data center). The data-center end user is **Google** "
+            "(PAAC/LACRPC minutes; see the Dossier) — kept off the graph as a fabricated "
+            "edge, so its federal figures never read as a Lima-campus obligation.",
             "",
         ]
     lines += [
@@ -151,10 +204,11 @@ def render_entities(graph: EntityGraph, *, profile_slugs: dict[str, str] | None 
         "",
         *_mermaid(graph),
         "",
+        *_relation_section(graph, profile_slugs),
         "## Entities",
         "",
-        "| Entity | Kind | Classification | Roles | Signals | Federal $ |",
-        "|---|---|---|---|---|---|",
+        "| Entity | Kind | Classification | Relation to BOSC | Roles | Signals | Federal $ |",
+        "|---|---|---|---|---|---|---|",
     ]
     for ent in sorted(graph.entities.values(), key=lambda e: (e.kind, e.key)):
         roles = ", ".join(f"{r} x{n}" for r, n in ent.roles.most_common())
@@ -168,7 +222,7 @@ def render_entities(graph: EntityGraph, *, profile_slugs: dict[str, str] | None 
         fed = f"${ent.federal_obligations:,.0f}" if ent.federal_obligations is not None else "—"
         lines.append(
             f"| {name} | {_esc(ent.kind)} | {_esc(ent.classification)} "
-            f"| {_esc(roles)} | {_esc(signals)} | {fed} |"
+            f"| {_relation_label(ent.relation_class)} | {_esc(roles)} | {_esc(signals)} | {fed} |"
         )
     lines += [
         "",
@@ -180,9 +234,57 @@ def render_entities(graph: EntityGraph, *, profile_slugs: dict[str, str] | None 
     for r in graph.relationships:
         src = graph.entities[r.src].display if r.src in graph.entities else r.src
         dst = graph.entities[r.dst].display if r.dst in graph.entities else r.dst
+        rel = r.rel
+        if r.relation_class:
+            rel += f" · {_RELATION_CLASS_LABELS.get(r.relation_class, r.relation_class)}"
         lines.append(
-            f"| {_esc(src)} | {_esc(r.rel)} | {_esc(dst)} | {_esc(r.date or '—')} "
+            f"| {_esc(src)} | {_esc(rel)} | {_esc(dst)} | {_esc(r.date or '—')} "
             f"| {_esc(r.ref or '—')} |"
         )
     lines.append("")
     return "\n".join(lines)
+
+
+def _relation_section(graph: EntityGraph, profile_slugs: dict[str, str]) -> list[str]:
+    """The 'By relation to Project BOSC' grouped section + legend.
+
+    Empty (returns ``[]``) when no entity is classified — so the pure corpus graph
+    renders exactly as before. A trailing 'Not yet classified' group keeps the gap
+    auditable (negative-evidence discipline).
+    """
+    classified = [e for e in graph.entities.values() if e.relation_class]
+    if not classified:
+        return []
+    legend = ['!!! note "Relation classes"']
+    for cls in RELATION_CLASS_ORDER:
+        legend.append(f"    - **{_RELATION_CLASS_LABELS[cls]}** — {_RELATION_CLASS_DEFS[cls]}")
+    out = ["## By relation to Project BOSC", "", *legend, ""]
+    for cls in RELATION_CLASS_ORDER:
+        members = sorted(
+            (e for e in graph.entities.values() if e.relation_class == cls),
+            key=lambda e: e.key,
+        )
+        if not members:
+            continue
+        out += [f"### {_RELATION_CLASS_LABELS[cls]}", ""]
+        for ent in members:
+            slug = profile_slugs.get(ent.key)
+            name = (
+                f"[{_esc(ent.display)}](people/{slug}.md)" if slug else f"**{_esc(ent.display)}**"
+            )
+            basis = f" — {_esc(ent.relation_basis)}" if ent.relation_basis else ""
+            out.append(f"- {name}{basis}")
+        out.append("")
+    unclassified = sorted(
+        (e for e in graph.entities.values() if not e.relation_class), key=lambda e: e.key
+    )
+    if unclassified:
+        names = ", ".join(_esc(e.display) for e in unclassified)
+        out += [
+            "### Not yet classified",
+            "",
+            f"{len(unclassified)} parties carry no relation class yet "
+            f"(the overlay is grown deliberately, not auto-assigned): {names}.",
+            "",
+        ]
+    return out

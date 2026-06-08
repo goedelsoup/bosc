@@ -1,0 +1,97 @@
+meta:
+  subject: Relation-class overlay — how each corpus-verified party relates to Project BOSC
+  compiled: 2026-06
+  marker: relation_class
+  what_this_is: >-
+    An editorial classification layered on the corpus-built entity graph: for parties
+    (and a few edges) ALREADY resolved from documents, the NATURE of their connection
+    to Project BOSC — direct approval / management / beneficiary, environmental
+    beneficiary, end-user, or a tie to another government body.
+  what_this_is_not: >-
+    NOT a license to add parties. Every `key` / `(src, rel, dst)` below must already
+    exist in the graph; any that does not is dropped with a warning, so the overlay
+    can never introduce a node. The data-center end-user (Google) is held as an
+    annotation here, not wired with a fabricated end-user edge — the prose
+    (docs/DOSSIER.md) carries the confirmed reading.
+  classes:
+    bosc_relation: Project BOSC itself / its developer + campus entities
+    direct_approval: A body that voted/permitted the project (commissioners, agency action)
+    direct_manage: Builds/operates/finances the campus, its utilities, or the deal vehicle
+    direct_beneficiary: Named recipient of the public benefit (abatement, captured revenue)
+    possible_end_user: The data-center customer the campus serves (confidence in the basis)
+    environmental_beneficiary: A receiving water / body bearing the project's externality
+    govt_relation: A known tie to another government entity
+
+# Classify an existing entity by its canonical key (a friendly variant or literal
+# key both resolve via the graph's name resolver).
+entities:
+  - key: BISTROZZI
+    relation_class: bosc_relation
+    basis: "Developer/land-assembler of the campus; grantee on the corridor deeds, applicant on the EPA/air permits (DOSSIER §2-§4)"
+  - key: BISTROZZI ADDITION
+    relation_class: bosc_relation
+    basis: "Sibling Bistrozzi shell; grantee of the Pieper/Beery Road parcel (DOSSIER §11)"
+  - key: ALLEN COUNTY BOARD OF COMMISSIONERS
+    relation_class: direct_approval
+    basis: "Granted the 15-yr/75% CRA abatement (Res #548-25) and approved the roadwork (Res 588-25) (DOSSIER §6-§7)"
+  - key: ALLEN ECONOMIC DEVELOPMENT GROUP
+    relation_class: direct_manage
+    basis: "Coordinated the abatement and drafted/served the school-district notices (Cindy Leis, President/CEO) (DOSSIER §6)"
+  - key: PORT AUTHORITY OF ALLEN COUNTY
+    relation_class: direct_manage
+    basis: "Financing/land vehicle; signed the $14.5M Roadwork Development Agreement; no employees (DOSSIER §6-§7)"
+  - key: CINDY LEIS
+    relation_class: direct_manage
+    basis: "Runs both AEDG and the Port Authority — single locus of control over the econ-dev shield + records custody"
+  - key: EMH&T
+    relation_class: direct_manage
+    basis: "Civil engineer of record on the campus site plan and the corridor work (DOSSIER §4, §9)"
+  - key: TURNER CONSTRUCTION
+    relation_class: direct_manage
+    basis: "General contractor on the BOSC-1A private sanitary sewer (DOSSIER §5)"
+  - key: GOOGLE
+    relation_class: possible_end_user
+    basis: "Named as the project's end user in the AEDG release ('reveal Google as the business entity behind Project Bosc', 2026-03-16) + the PAAC and LACRPC minutes (DOSSIER §1, §6, §8); held as a graph annotation rather than a fabricated end-user edge — the prose treats it as confirmed."
+  - key: DUG RUN
+    relation_class: environmental_beneficiary
+    basis: "American II WWTP receiving water; undiluted at 7Q10 (HYDROLOGY)"
+  - key: PIKE RUN
+    relation_class: environmental_beneficiary
+    basis: "American Bath WWTP receiving water; undiluted at 7Q10 (HYDROLOGY)"
+  - key: OTTAWA RIVER
+    relation_class: environmental_beneficiary
+    basis: "Shawnee II WWTP + Lima abstraction reach; 7Q10 0.2 cfs / 1Q10 0 (HYDROLOGY)"
+  - key: ALLEN COUNTY SANITARY ENGINEERING DEPARTMENT
+    relation_class: govt_relation
+    basis: "County operator of Shawnee II WWTP (NPDES 2PK00002)"
+  - key: AMERICAN TOWNSHIP
+    relation_class: govt_relation
+    basis: "Township jurisdiction over the corridor; subdivision-meeting body"
+  - key: PERRY TOWNSHIP
+    relation_class: govt_relation
+    basis: "Corridor township; subdivision-meeting body"
+  - key: LACRPC
+    relation_class: govt_relation
+    basis: "Lima-Allen County Regional Planning Commission; minutes name 'project BOSC (Google data center)'"
+  - key: UNITED STATES
+    relation_class: govt_relation
+    basis: "Federal owner of the JSMC land (GDLS operator); defense thread (DOSSIER §5)"
+
+# Classify a specific edge by (src, rel, dst). Used for the environmental-externality
+# channel, where the discharge edge itself carries the relation.
+edges:
+  - src: "npdes:2PH00006"
+    rel: discharges_to
+    dst: Dug Run
+    relation_class: environmental_beneficiary
+    basis: "Ohio EPA fact sheet 2PH00006 (American II WWTP → Dug Run)"
+  - src: "npdes:2PH00007"
+    rel: discharges_to
+    dst: Pike Run
+    relation_class: environmental_beneficiary
+    basis: "Ohio EPA fact sheet 2PH00007 (American Bath WWTP → Pike Run)"
+  - src: "npdes:2PK00002"
+    rel: discharges_to
+    dst: Ottawa River
+    relation_class: environmental_beneficiary
+    basis: "Ohio EPA fact sheet 2PK00002 (Shawnee II WWTP → Ottawa River)"

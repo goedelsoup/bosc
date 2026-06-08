@@ -19,8 +19,8 @@ from __future__ import annotations
 
 import re
 from collections import Counter, defaultdict
-from dataclasses import dataclass, field
-from typing import Any
+from dataclasses import dataclass, field, replace
+from typing import Any, Literal, get_args
 
 import yaml
 
@@ -179,6 +179,22 @@ def classify(raw: str) -> tuple[str, str, tuple[str, ...]]:
     return "individual", "individual", signals
 
 
+# How a corpus-verified party relates to Project BOSC — an editorial classification
+# layered onto the graph (see enrich_with_relation_classes). Ordered by proximity to
+# the project for grouped rendering. This is a reading of an ALREADY-verified party,
+# never a license to add one (Google stays an annotation, off-graph).
+RelationClass = Literal[
+    "bosc_relation",  # Project BOSC itself / its campus facilities
+    "direct_approval",  # a body that voted/permitted the project
+    "direct_manage",  # operates/builds the campus or its forcemains/sewer linkage
+    "direct_beneficiary",  # named recipient of the public benefit (abatement, revenue)
+    "possible_end_user",  # demand-fit only; connection unestablished (rare on-graph)
+    "environmental_beneficiary",  # a receiving water / body bearing the externality
+    "govt_relation",  # known tie to another government entity
+]
+RELATION_CLASS_ORDER: tuple[str, ...] = get_args(RelationClass)
+
+
 @dataclass
 class Entity:
     """A resolved party, merged from one or more raw name variants."""
@@ -195,6 +211,8 @@ class Entity:
     lei: str | None = None  # GLEIF Legal Entity Identifier, when verified (opt-in enrichment)
     uei: str | None = None  # USASpending Unique Entity Identifier, when verified
     federal_obligations: float | None = None  # all-time federal prime-award $ (USASpending)
+    relation_class: str | None = None  # editorial relation to BOSC (opt-in overlay)
+    relation_basis: str | None = None  # cited basis for the relation_class
 
     @property
     def display(self) -> str:
@@ -208,12 +226,14 @@ class Relationship:
 
     src: str
     # conveyed_to | operates | discharges_to | registered_agent | organized_by |
-    # represented_by | affiliated_with | principal_of | owned_by | tenant_of
+    # represented_by | affiliated_with | principal_of | owned_by | tenant_of | discussed_at
     rel: str
     dst: str
     date: str = ""
     ref: str = ""  # instrument / permit number
     source: str = ""
+    relation_class: str = ""  # editorial relation to BOSC (opt-in overlay)
+    relation_basis: str = ""  # cited basis for the relation_class
 
 
 @dataclass
@@ -265,6 +285,7 @@ def build_entity_graph(
     enrich_rsei: bool = False,
     enrich_federal: bool = False,
     enrich_subdivisions: bool = False,
+    enrich_relation_classes: bool = False,
     settings: Settings | None = None,
 ) -> EntityGraph:
     """Resolve entities and relationships across deeds, NPDES permits, SoS filings.
@@ -449,6 +470,10 @@ def build_entity_graph(
         enrich_with_rsei_ownership(graph, settings=settings)
     if enrich_federal:
         enrich_with_federal_awards(graph, settings=settings)
+    # Run last: the relation-class overlay classifies nodes/edges that every prior
+    # enrichment may have added, and only ones that already exist.
+    if enrich_relation_classes:
+        enrich_with_relation_classes(graph, settings=settings)
     return graph
 
 
@@ -886,4 +911,81 @@ def enrich_with_federal_awards(
         ent.uei = rec.uei
         ent.federal_obligations = rec.total_obligations
         ent.sources.add(_USASPENDING_SOURCE)
+    return graph
+
+
+_RELATION_CLASSES_SOURCE = "data/entities/profiles/relation-classes.yaml"
+
+
+def enrich_with_relation_classes(
+    graph: EntityGraph, *, settings: Settings | None = None
+) -> EntityGraph:
+    """Stamp a curated relation-class onto EXISTING graph nodes/edges (committed overlay).
+
+    Reads ``data/entities/profiles/relation-classes.yaml`` — an *editorial* reading of
+    how each already-resolved party relates to Project BOSC (direct approval/manage/
+    beneficiary, environmental beneficiary, government relation, ...). This is purely
+    additive annotation: every ``key`` / ``(src, rel, dst)`` it names must already exist
+    in the graph, and any that doesn't is **dropped with a warning** — so the overlay can
+    never introduce a node (Google stays an annotation, off-graph). Unknown class strings
+    are rejected. Idempotent; no-op if the overlay is absent.
+    """
+    settings = settings or get_settings()
+    path = settings.entities_dir / "profiles" / "relation-classes.yaml"
+    if not path.is_file():
+        return graph
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+
+    def _valid(cls: str, where: str) -> bool:
+        if cls not in RELATION_CLASS_ORDER:
+            log.warning("entities.relation_class.unknown", value=cls, where=where)
+            return False
+        return True
+
+    def _resolve_key(name: str) -> str:
+        """Canonical graph key for a name/variant/literal key, or normalized fallback."""
+        ent = graph.get(name)
+        return ent.key if ent is not None else normalize_name(name)
+
+    for item in data.get("entities") or []:
+        cls = str(item.get("relation_class", ""))
+        ent = graph.get(str(item.get("key", "")))
+        if ent is None:
+            log.warning("entities.relation_class.missing_entity", key=item.get("key"))
+            continue
+        if not _valid(cls, f"entity {item.get('key')}"):
+            continue
+        ent.relation_class = cls
+        ent.relation_basis = str(item.get("basis", "")) or None
+
+    # Edges are frozen dataclasses — rebuild the list, replacing matched ones.
+    edge_overlays = data.get("edges") or []
+    if edge_overlays:
+        wanted: dict[tuple[str, str, str], tuple[str, str]] = {}
+        for item in edge_overlays:
+            cls = str(item.get("relation_class", ""))
+            if not _valid(cls, f"edge {item.get('src')}-{item.get('rel')}-{item.get('dst')}"):
+                continue
+            ekey = (
+                _resolve_key(str(item.get("src", ""))),
+                str(item.get("rel", "")),
+                _resolve_key(str(item.get("dst", ""))),
+            )
+            wanted[ekey] = (cls, str(item.get("basis", "")))
+        matched: set[tuple[str, str, str]] = set()
+        rebuilt: list[Relationship] = []
+        for r in graph.relationships:
+            ekey = (r.src, r.rel, r.dst)
+            if ekey in wanted:
+                cls, basis = wanted[ekey]
+                rebuilt.append(replace(r, relation_class=cls, relation_basis=basis))
+                matched.add(ekey)
+            else:
+                rebuilt.append(r)
+        graph.relationships = rebuilt
+        for ekey in wanted.keys() - matched:
+            log.warning("entities.relation_class.missing_edge", edge=ekey)
+
+    classified = sum(1 for e in graph.entities.values() if e.relation_class)
+    log.info("entities.relation_classes", classified=classified)
     return graph
