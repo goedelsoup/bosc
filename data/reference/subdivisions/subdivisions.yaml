@@ -1,0 +1,480 @@
+meta:
+  subject: Allen County, Ohio political subdivisions — public-meeting records registry
+  description: >-
+    The county's townships, municipalities, and meeting-holding special districts,
+    each with the verbatim governing-body meeting cadence and contact carried in the
+    committed county rosters, plus a `publishing:` block recording where (and on what
+    platform) the body posts its minutes/agendas online. The grounded roster facts
+    are immutable source; the `publishing:` block is filled by the discovery pass
+    (`bosc subdivisions discover`) and carries its own `discovered:` provenance.
+  grounded_sources:
+    # Verbatim facts (name, type, governing body, meeting cadence, office) come from
+    # these committed county-published rosters — never from outside knowledge.
+    - id: township-trustees-fiscal-officers
+      file: data/documents/commissioners/reference/Township-Trustees-Fiscal-Officers.pdf
+      title: 2025 Allen County Township Trustees & Fiscal Officers
+      asof: "2025-04-02"
+    - id: mayors-and-zoning-persons
+      file: data/documents/commissioners/reference/Mayors-and-Zoning-Persons.pdf
+      title: Mayors in Allen County / Allen County Zoning Persons
+      asof: "2024-07-12"
+    - id: govt-structure-org-chart
+      file: data/documents/commissioners/reference/Govt.-Structure-Org-Chart-1.pdf
+      title: Allen County Government (org chart, boards & commissions)
+  caveats:
+    - "Meeting cadence is transcribed verbatim from the roster; it is the standing
+      schedule, not a guarantee any given date met (cancellations/special meetings
+      are resolved against the actual posted records)."
+    - "`publishing.platform: unknown` WITH a `discovered:` block = the body was looked
+      at but its CMS wasn't fingerprinted (or its site blocked the fetch). `unknown`
+      WITHOUT a `discovered:` block = not yet looked. Neither ever means the body
+      withholds records, and a null `records_url` is never evidence of withholding."
+    - "`platform: request_only` = no online posting was found (records-request route);
+      `platform: facebook` = the only web presence is a Facebook page. Beware the
+      same-named-township trap: several decoy sites belong to other Ohio counties
+      (notes record the specific decoys ruled out)."
+    - "A `discovered:` block records a live-web finding with its date; the underlying
+      site can move (Shawnee Twp already migrated shawneetownship.com -> .gov).
+      Re-run discovery to refresh."
+    - "Bluffton and Delphos straddle county lines (Bluffton: Allen/Hancock;
+      Delphos: Allen/Van Wert). They are included as Allen County seats of record."
+
+# platform vocabulary (publishing.platform):
+#   civicplus      CivicPlus / CivicEngage "Agenda Center" (structured agendas+minutes)
+#   granicus       Granicus / Legistar / GovAccess meeting portal
+#   boarddocs      Diligent BoardDocs (go.boarddocs.com)
+#   civicclerk     CivicClerk meeting portal (now CivicPlus)
+#   revize         Revize municipal CMS
+#   wordpress      WordPress site (typically PDF links on a "minutes" page)
+#   wix            Wix site builder
+#   squarespace    Squarespace site builder
+#   govoffice      GovOffice / govoffice.com
+#   facebook       Posts to a Facebook page only (no records page found)
+#   request_only   No online posting found; obtain via public-records request
+#   unknown        Not yet discovered, or CMS not fingerprinted / site blocked the fetch
+
+subdivisions:
+  # --- Townships (12) — grounded in township-trustees-fiscal-officers --------
+  - slug: amanda-township
+    name: Amanda Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "2nd & 4th Wednesday, 8:00 PM"
+    office: "690 S. Conant Road, Spencerville, OH 45887"
+    grounded_from: township-trustees-fiscal-officers
+    publishing:
+      website: https://amandatownship.wordpress.com/
+      records_url: https://amandatownship.wordpress.com/minutes2/
+      platform: wordpress
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: "Self-hosted WordPress; 'Minutes' page. 690 S. Conant Rd confirms the Allen County body."
+
+  - slug: american-township
+    name: American Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "2nd & last Monday, 7:30 PM"
+    office: "102 Pioneer Road, Elida, OH 45807"
+    grounded_from: township-trustees-fiscal-officers
+    publishing:
+      website: https://www.amertwp.us/
+      records_url: https://www.amertwp.us/trustee-minutes
+      platform: wix
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: "Wix site ('Proudly created with Wix.com'); trustee minutes page."
+
+  - slug: auglaize-township
+    name: Auglaize Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "1st & 3rd Monday, 7:30 PM"
+    office: "7726 Bellefontaine Road, Harrod, OH 45850"
+    grounded_from: township-trustees-fiscal-officers
+    publishing:
+      website: https://auglaizetwpallencooh.gov/
+      records_url: https://auglaizetwpallencooh.gov/agendasandminutes
+      platform: unknown
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: "Official Allen County .gov with an 'Agendas & Minutes' page; CMS not fingerprinted."
+
+  - slug: bath-township
+    name: Bath Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "1st & 3rd Tuesday, 7:00 PM"
+    office: "2880 Ada Road, Lima, OH 45801"
+    grounded_from: township-trustees-fiscal-officers
+    publishing:
+      website: https://www.bathtwp.com/
+      records_url: https://www.bathtwp.com/meeting-minutes-2026/
+      platform: wordpress
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: "WordPress (managed by PK Design Solutions); per-year 'Meeting Minutes' page."
+
+  - slug: jackson-township
+    name: Jackson Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "1st & 3rd Tuesday, 7:00 PM"
+    office: "225 E. Sugar Street, Lafayette, OH 45854"
+    grounded_from: township-trustees-fiscal-officers
+    publishing:
+      website: null
+      records_url: null
+      platform: request_only
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: >-
+          No official site or Facebook page found for the Allen County body.
+          Records-request only. Decoys ruled out: Jackson Twp in Stark / Clermont /
+          Wood counties.
+
+  - slug: marion-township
+    name: Marion Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "2nd & 4th Monday, 7:00 PM"
+    office: "5405 Kiggins Road, Delphos, OH 45833"
+    grounded_from: township-trustees-fiscal-officers
+    publishing:
+      website: null
+      records_url: null
+      platform: request_only
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: "No official site (mariontwp.org is Marion County, OH — a decoy). Records-request only."
+
+  - slug: monroe-township
+    name: Monroe Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "2nd & 4th Monday, 7:00 PM"
+    office: "8500 Slabtown Road, Columbus Grove, OH 45830"
+    grounded_from: township-trustees-fiscal-officers
+    publishing:
+      website: null
+      records_url: null
+      platform: request_only
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: >-
+          No official site (monroetwp-oh.gov is Clermont County — a decoy).
+          Records-request only; meetings are covered by the Lima News.
+
+  - slug: perry-township
+    name: Perry Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "1st & 3rd Tuesday, 6:30 PM"
+    office: "2408 E. Breese Road, Lima, OH 45806"
+    grounded_from: township-trustees-fiscal-officers
+    publishing:
+      website: https://perryallenohio.com/
+      records_url: https://perryallenohio.com/administration-trustees/meeting-archives/
+      platform: wordpress
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: "WordPress; trustee 'Meeting Archives' page. Linked from the official allencountyohio.com townships index."
+
+  - slug: richland-township
+    name: Richland Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "2nd & 4th Tuesday, 8:00 PM"
+    office: "8435 N. Dixie Highway, Bluffton, OH 45817"
+    grounded_from: township-trustees-fiscal-officers
+    publishing:
+      website: null
+      records_url: null
+      platform: facebook
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: >-
+          No official site; active Facebook page
+          (facebook.com/pages/Richland-Township-Allen-County-Ohio). Decoys ruled out:
+          Richland Twp in Michigan / Belmont County, OH.
+
+  - slug: shawnee-township
+    name: Shawnee Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "2nd & 4th Monday, 7:00 PM"
+    office: "2530 Ft. Amanda Road, Lima, OH 45804"
+    grounded_from: township-trustees-fiscal-officers
+    publishing:
+      website: https://www.shawneetownshipohio.gov/
+      records_url: https://www.shawneetownshipohio.gov/meeting-minutes/
+      platform: wordpress
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: "WordPress; migrated from shawneetownship.com -> shawneetownshipohio.gov (301)."
+
+  - slug: spencer-township
+    name: Spencer Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "1st Tuesday, 7:30 PM"
+    office: "13080 Kolter Road, Spencerville, OH 45887"
+    grounded_from: township-trustees-fiscal-officers
+    publishing:
+      website: null
+      records_url: null
+      platform: request_only
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: >-
+          No official site or Facebook page (spencertownship.org is Lucas County — a
+          decoy). Records-request only.
+
+  - slug: sugar-creek-township
+    name: Sugar Creek Township
+    type: township
+    governing_body: Board of Trustees
+    meeting_schedule: "2nd Tuesday, 8:00 PM"
+    office: "4130 W. Lincoln Highway, Gomer, OH 45809"
+    grounded_from: township-trustees-fiscal-officers
+    publishing:
+      website: null
+      records_url: null
+      platform: facebook
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: >-
+          No official site; active Facebook page (facebook.com/sugarcreektwpallencounty).
+          Decoy ruled out: Sugarcreek Twp, Greene County, OH.
+
+  # --- Municipalities (cities + villages) — grounded in mayors-and-zoning-persons
+  - slug: lima
+    name: City of Lima
+    type: city
+    governing_body: City Council
+    meeting_schedule: "1st & 4th Monday, 7:00 PM"
+    office: "50 Town Square, Lima, OH 45801"
+    grounded_from: mayors-and-zoning-persons
+    publishing:
+      website: https://www.limaohio.gov/
+      records_url: https://www.limaohio.gov/AgendaCenter
+      platform: civicplus
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: >-
+          CivicPlus/CivicEngage Agenda Center (also reachable at
+          oh-lima.civicplus.com); structured agendas+minutes for Council,
+          Planning Commission, BZA, Design Review, and other boards.
+
+  - slug: delphos
+    name: City of Delphos
+    type: city
+    governing_body: City Council
+    meeting_schedule: "1st & 3rd Monday, 7:00 PM"
+    office: "608 N. Canal Street, Delphos, OH 45833"
+    grounded_from: mayors-and-zoning-persons
+    note: "Straddles Allen/Van Wert counties."
+    publishing:
+      website: https://www.cityofdelphos.com/
+      records_url: null
+      platform: unknown
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: >-
+          Drupal city site with a City Council Meetings page (per-meeting), but it
+          WAF-blocks the connector (HTTP 403) and the agenda/minutes columns are
+          largely blank. Homepage confirmed via browser fetch.
+
+  - slug: beaverdam
+    name: Village of Beaverdam
+    type: village
+    governing_body: Village Council
+    meeting_schedule: "1st & 3rd Tuesday, 7:00 PM"
+    office: "101 W. Main Street, Beaverdam, OH 45808"
+    grounded_from: mayors-and-zoning-persons
+    publishing:
+      website: https://www.beaverdamoh.com/
+      records_url: https://www.beaverdamoh.com/government/minutes.php
+      platform: revize
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: "Revize CMS; government 'Minutes' page (PDF council minutes by year; agendas not posted)."
+
+  - slug: bluffton
+    name: Village of Bluffton
+    type: village
+    governing_body: Village Council
+    meeting_schedule: "2nd & 4th Monday, 7:00 PM"
+    office: "154 N. Main Street, Bluffton, OH 45817"
+    grounded_from: mayors-and-zoning-persons
+    note: "Straddles Allen/Hancock counties."
+    publishing:
+      website: https://www.bluffton-ohio.com/
+      records_url: https://www.bluffton-ohio.com/council-meeting-packets-archive
+      platform: unknown
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: >-
+          Council records (minutes .doc + packet/agenda PDFs) on a Duda/cdn-website
+          CDN; reachable from the /council page, not the homepage. No CMS signature.
+
+  - slug: cairo
+    name: Village of Cairo
+    type: village
+    governing_body: Village Council
+    meeting_schedule: "2nd Monday, 7:00 PM"
+    office: "P.O. Box 198, Cairo, OH 45820"
+    grounded_from: mayors-and-zoning-persons
+    publishing:
+      website: https://cairooh.org/
+      records_url: https://cairooh.org/meeting-minutes/
+      platform: wordpress
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: "WordPress; 'Meeting Minutes' page under Resident Resources."
+
+  - slug: elida
+    name: Village of Elida
+    type: village
+    governing_body: Village Council
+    meeting_schedule: "2nd & 4th Tuesday, 7:30 PM"
+    office: "406 E. Main Street, Elida, OH 45807"
+    grounded_from: mayors-and-zoning-persons
+    publishing:
+      website: https://voelida.com/
+      records_url: https://voelida.com/meeting-minutes/
+      platform: wordpress
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: "WordPress; 'Meeting Minutes' page (approved council minutes as .docx). Agendas not posted."
+
+  - slug: harrod
+    name: Village of Harrod
+    type: village
+    governing_body: Village Council
+    meeting_schedule: "1st Tuesday, 7:00 PM"
+    office: "P.O. Box 234, Harrod, OH 45850"
+    grounded_from: mayors-and-zoning-persons
+    publishing:
+      website: null
+      records_url: null
+      platform: facebook
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: >-
+          No active official site (villageofharrod.wordpress.com last updated 2016);
+          active Facebook page 'VILLAGE OF HARROD OHIO'. Records-request only.
+
+  - slug: lafayette
+    name: Village of Lafayette
+    type: village
+    governing_body: Village Council
+    meeting_schedule: "1st Thursday after 1st Monday, 7:30 PM (Community Building)"
+    office: "P.O. Box 7199, Lafayette, OH 45854"
+    grounded_from: mayors-and-zoning-persons
+    publishing:
+      website: https://lafayetteoh.com/
+      records_url: null
+      platform: unknown
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: "JS-rendered site-builder shell; no CMS signature and no records page exposed in the served HTML."
+
+  - slug: spencerville
+    name: Village of Spencerville
+    type: village
+    governing_body: Village Council
+    meeting_schedule: "1st & 3rd Monday, 6:00 PM"
+    office: "116 S. Broadway Street, Spencerville, OH 45887"
+    grounded_from: mayors-and-zoning-persons
+    publishing:
+      website: https://spencervilleoh.com/
+      records_url: https://spencervilleoh.com/council%20minutes.htm
+      platform: unknown
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: >-
+          Static .htm site with a 'council minutes' page; no CMS signature. Needs a
+          browser User-Agent to pass the site's 406 bot-block.
+
+  # --- Meeting-holding special / econ-dev districts in the BOSC thread -------
+  - slug: allen-county-port-authority
+    name: Allen Economic Development Group / Port Authority (AEDG)
+    type: special_district
+    governing_body: Board of Directors
+    meeting_schedule: null
+    grounded_from: null
+    note: >-
+      The econ-dev shield central to the BOSC thread (Leis runs AEDG and the Port
+      Authority). PAAC board minutes already partially extracted under
+      data/extracted/aedg/paac-board-minutes.minutes.yaml.
+    publishing:
+      website: https://www.aedg.org/
+      records_url: null
+      platform: unknown
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: >-
+          AEDG/Port Authority site WAF-blocks the connector (HTTP 403); no board
+          minutes/agendas/packets are posted on the site or on allencoport.org.
+          Board records are request-only.
+
+  - slug: lacrpc
+    name: Lima-Allen County Regional Planning Commission (LACRPC)
+    type: special_district
+    governing_body: Commission
+    meeting_schedule: null
+    grounded_from: null
+    note: "Source of the township comprehensive plans / zoning under data/documents/lacrpc/."
+    publishing:
+      website: https://www.lacrpc.com/
+      records_url: https://www.lacrpc.com/AgendaCenter
+      platform: civicplus
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: >-
+          CivicPlus/CivicEngage Agenda Center at /AgendaCenter (Minutes/Agenda
+          ViewFile URLs); not linked from the homepage, so a homepage probe finds
+          0 candidates — go straight to /AgendaCenter.
+
+  - slug: allen-county-sanitary-engineer
+    name: Allen County Sanitary Engineering Department
+    type: county_department
+    governing_body: Board of County Commissioners (sanitary district)
+    meeting_schedule: null
+    grounded_from: govt-structure-org-chart
+    note: "County sewer/water authority behind the BOSC sanitary economics thread."
+    publishing:
+      website: https://allencountyohio.com/sanitary-engineering/
+      records_url: null
+      platform: wordpress
+      discovered:
+        asof: "2026-06-08"
+        method: web
+        note: >-
+          Department page on the county WordPress site; no board-records page —
+          sanitary governance appears in the County Commissioners' minutes
+          (data/extracted/commissioners/).

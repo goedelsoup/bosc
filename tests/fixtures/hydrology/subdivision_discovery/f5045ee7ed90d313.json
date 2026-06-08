@@ -1,0 +1,9 @@
+{
+  "params": {"url": "https://example-township.test/"},
+  "fetched_at": "2026-06-08T00:00:00+00:00",
+  "payload": {
+    "html": "<!DOCTYPE html><html><head><link rel='stylesheet' href='/wp-content/themes/twp/style.css'></head><body><nav><a href='/about'>About</a><a href='/meeting-minutes/'>Meeting Minutes</a><a href='/agendas'>Agendas</a></nav><footer>Powered by WordPress</footer></body></html>",
+    "final_url": "https://example-township.test/",
+    "status_code": 200
+  }
+}

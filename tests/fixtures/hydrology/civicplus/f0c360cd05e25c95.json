@@ -1,0 +1,9 @@
+{
+  "params": {"url": "https://lima.test/AgendaCenter"},
+  "fetched_at": "2026-06-08T00:00:00+00:00",
+  "payload": {
+    "final_url": "https://lima.test/AgendaCenter",
+    "status_code": 200,
+    "html": "<div class=\"agendaCenter\"><h2 id=\"catTitle1\">City Council Agendas and Minutes</h2><div id=\"cat1\"><table><tr class=\"catAgendaRow\"><td><h3 class=\"noMargin\" id=\"h405062024-853\"><a id=\"_05062024-853\" name=\"_05062024-853\"></a><strong aria-label=\"Agenda for May 6, 2024\">May 6, 2024</strong> &thinsp;&mdash;&thinsp;Posted May 2, 2024</h3><p><a id=\"05062024-853\" href=\"/AgendaCenter/ViewFile/Agenda/_05062024-853\" target=\"_blank\">City Council Agenda &amp; Docket for May 6, 2024 Regular Meeting</a></p><p><a href=\"/AgendaCenter/ViewFile/Minutes/_05062024-853\" target=\"_blank\">City Council Minutes for May 6, 2024</a></p></td></tr><tr class=\"catAgendaRow\"><td><h3 class=\"noMargin\" id=\"h404222024-852\"><strong aria-label=\"Agenda for April 22, 2024\">April 22, 2024</strong></h3><p><a href=\"/AgendaCenter/ViewFile/Agenda/_04222024-852\" target=\"_blank\">City Council Agenda for April 22, 2024</a></p></td></tr></table></div><h2 id=\"catTitle4\">City Planning Commission Agendas &amp; Minutes</h2><div id=\"cat4\"><table><tr class=\"catAgendaRow\"><td><h3 class=\"noMargin\" id=\"h403112024-848\"><strong aria-label=\"Agenda for March 11, 2024\">March 11, 2024</strong></h3><p><a href=\"/AgendaCenter/ViewFile/Minutes/_03112024-848\" target=\"_blank\">Planning Commission Minutes March 11, 2024</a></p></td></tr></table></div><h2>Land Bank Committee</h2><div id=\"cat10\"><table><tr class=\"catAgendaRow\"><td><h3 class=\"noMargin\"><strong aria-label=\"Agenda for January 9, 2026\">January 9, 2026</strong></h3><p><a href=\"/AgendaCenter/ViewFile/Agenda/_01092026-900\" target=\"_blank\">Land Bank Agenda Jan 9 2026</a></p></td></tr></table></div></div>"
+  }
+}

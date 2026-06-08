@@ -300,6 +300,43 @@ def _zoning_events(settings: Settings) -> list[TimelineEvent]:
     return events
 
 
+def _subdivision_meeting_events(settings: Settings) -> list[TimelineEvent]:
+    """Subdivision meetings whose minutes/agendas touch the corridor thread.
+
+    Reads every committed ``<slug>/meetings/meeting-index.yaml`` (built by
+    ``bosc subdivisions index`` from the downloaded documents) and surfaces only the
+    meetings whose text carried a corridor topic/subject ``hit`` — the rest stay in
+    the index as searchable corpus but don't flood the chronology. Agenda + minutes
+    for the same meeting collapse via a shared ``ref``.
+    """
+    events: list[TimelineEvent] = []
+    for index_path in sorted(settings.extracted_dir.glob("*/meetings/meeting-index.yaml")):
+        data = _load_yaml(index_path)
+        slug = str(data.get("meta", {}).get("slug", index_path.parent.parent.name))
+        rel = f"{slug}/meetings/meeting-index.yaml"
+        name = slug.replace("-", " ").title()
+        for d in data.get("documents", []):
+            if not isinstance(d, dict) or not d.get("hits"):
+                continue
+            date = d.get("date_verified") or d.get("date_listing")
+            if not date:
+                continue
+            body = str(d.get("body") or name)
+            hits = ", ".join(str(h) for h in d.get("hits", []))
+            events.append(
+                TimelineEvent(
+                    date=str(date),
+                    category="subdivision_meeting",
+                    title=f"{body} — {d.get('kind', 'meeting')} (corridor topics: {hits})",
+                    source=rel,
+                    ref=f"mtg-{slug}-{date}-{body}",
+                    parties=(body,),
+                    detail=hits,
+                )
+            )
+    return events
+
+
 def build_timeline(
     corpus: Corpus | None = None, *, include_curated: bool = True
 ) -> list[TimelineEvent]:
@@ -321,7 +358,11 @@ def build_timeline(
     )
     if include_curated:
         settings = get_settings()
-        events += _commissioners_events(settings) + _zoning_events(settings)
+        events += (
+            _commissioners_events(settings)
+            + _zoning_events(settings)
+            + _subdivision_meeting_events(settings)
+        )
     events = _dedup(events)
     events.sort(key=lambda e: e.sort_key)
     log.info("timeline.built", events=len(events))
