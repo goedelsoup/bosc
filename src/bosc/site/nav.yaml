@@ -23,6 +23,7 @@ nav:
   - Legal:
       - Proponent analysis: docs/legal/proponent-analysis.md
       - PRR & mandamus:
+          - Withholding map & source instruments: data/extracted/legal/prr-mandamus/README.md
           - Mandamus analysis: docs/legal/mandamus-analysis.md
           - PRR production (2026-06-05): data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-05.analysis.md
           - Corpus completeness audit: data/extracted/legal/corpus-completeness-audit.md
@@ -49,10 +50,13 @@ nav:
       - Engineering:
           - Plans: records/plans.md
           - Cost estimates (OPC): records/opc.md
+      - County governance:
+          - Commissioners minutes & resolutions: data/extracted/commissioners/README.md
   - Analysis:
       - Timeline: timeline.md
       - Entity graph: entities.md
       - GIS findings map: gis-map.md
+      - Water balance (assimilative screen): data/extracted/commissioners/bosc-water-balance.analysis.md
       - Individuals: people/index.md
   - Curated entities:
       - Cloud-consumer candidates: candidates.md
