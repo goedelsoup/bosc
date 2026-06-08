@@ -1,0 +1,21 @@
+meta:
+  subject: shawnee-township meeting-completeness audit
+  slug: shawnee-township
+  schedule: 2nd & 4th Monday, 7:00 PM
+  method: expected meeting dates from the standing cadence vs. ingested meeting-index
+    dates, bounded to the ingested span.
+  caveat: A missing date is a CANDIDATE to verify/request, not proof of withholding
+    — cadences change and meetings get cancelled.
+  span:
+  - '2026-01-02'
+  - '2026-05-11'
+  expected: 9
+  present: 8
+  coverage: 0.889
+  missing_count: 1
+  special_count: 2
+missing:
+- '2026-04-27'
+special_meetings:
+- '2026-01-02'
+- '2026-01-15'

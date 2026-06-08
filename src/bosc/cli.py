@@ -1755,5 +1755,58 @@ def subdivisions_index(
     console.print(f"[green]Index[/] {out}")
 
 
+@subdivisions_app.command("audit")
+def subdivisions_audit(
+    slug: str | None = typer.Argument(None, help="Body to audit (default: all ingested)."),
+) -> None:
+    """Audit ingested minutes against the standing cadence → missing-meeting worklist.
+
+    For each body with a meeting index, compares the dates we have against the dates
+    its grounded meeting schedule should have produced over the ingested span, and
+    writes completeness-audit.yaml (the `missing:` list is a records-request worklist).
+    """
+    from bosc.civic import load_registry
+    from bosc.civic.audit import audit_body, write_audit
+
+    settings = get_settings()
+    reg = load_registry(settings)
+    bodies = [reg.get(slug)] if slug else reg.subdivisions
+    if slug and bodies[0] is None:
+        console.print(f"[red]No such subdivision:[/] {slug}")
+        raise typer.Exit(1)
+
+    table = Table("slug", "schedule", "span", "expected", "present", "coverage", "missing")
+    audited = 0
+    for body in bodies:
+        if body is None:
+            continue
+        report = audit_body(body, settings=settings)
+        if report is None:  # not ingested
+            continue
+        audited += 1
+        write_audit(
+            report, settings.extracted_dir / body.slug / "meetings" / "completeness-audit.yaml"
+        )
+        cov = "—" if not report.parsed else f"{report.coverage:.0%}"
+        span = f"{report.span_start}..{report.span_end}" if report.span_start else "—"
+        table.add_row(
+            body.slug,
+            (report.schedule or "—")[:24],
+            span,
+            str(report.expected) if report.parsed else "—",
+            str(report.present) if report.parsed else "—",
+            cov,
+            str(len(report.missing)),
+        )
+    if not audited:
+        console.print("[yellow]No ingested bodies to audit[/] — download + index one first.")
+        raise typer.Exit(1)
+    console.print(table)
+    console.print(
+        "[dim]missing = scheduled dates not ingested (records-request candidates; "
+        "verify — cadences change and meetings get cancelled).[/]"
+    )
+
+
 if __name__ == "__main__":
     app()
