@@ -1,0 +1,108 @@
+kind: backfill_audit
+subject: Allen County Commissioners — 2023 minutes/agenda backfill (the pre-BOSC baseline year)
+
+provenance:
+  source_raw: data/documents/commissioners/minutes/raw/   # the 299-file 2023 backfill (153 agendas + 146 minutes)
+  scope: "All 299 calendar-2023 documents (filename [AM]MMDDYY ending '23'), which the parquet index does NOT cover (index = 2024-2026 only)."
+  method: >-
+    Agendas (153 A* files) carry a native text layer -- read directly with pypdf. Minutes (146 M* files)
+    are image-only scans -- OCR'd ad-hoc with pdftoppm (200 DPI) + tesseract for this mining pass
+    (145/146 produced text; M121123-Special.pdf produced none -- blank/short scan). The OCR was used
+    only to SEARCH the 2023 minutes; it is NOT committed and does NOT update the meeting-pages parquet.
+  content_verified: '2026-06-07'
+  caveat: >-
+    Ad-hoc OCR is approximate and uncommitted; the authoritative re-index (folding 2023 into the
+    parquet bundle) remains the external pipeline task noted in
+    data/extracted/commissioners/minutes/README.md. Resolution numbers/titles here are from the
+    native-text AGENDAS (high-confidence); minutes were searched, not transcribed.
+
+headline_finding: >-
+  THE COUNTY'S COMPLETE 2023 RECORD IS SILENT ON THE DATA CENTER. Across all 153 agendas (native text)
+  and 145/146 OCR'd minutes, there are ZERO references to "data center", Microsoft, Nadella, Bistrozzi,
+  Project BOSC, hyperscale, or Google, and ZERO economic-development executive sessions under ORC
+  121.22(G)(8). The data-center project does not enter the Commissioners' public record until 2024
+  (Microsoft/Perry Township) and 2025 (BOSC/American Township) -- see bosc-resolution-ledger.yaml. The
+  silence is consistent with the project being held off the public record in 2023 (the PAAC codename
+  era began mid-2023 per paac-board-minutes.minutes.yaml). [the absence is verified by search; the
+  "deliberately held off-record" reading is inference.]
+
+negative_controls:                    # terms checked that did NOT yield project content
+  data_center: 0
+  microsoft: 0
+  nadella: 0
+  bistrozzi: 0
+  project_bosc: 0
+  google: 0
+  general_dynamics: 0
+  econdev_executive_session_G8: 0
+  amazon_note: >-
+    "Amazon" appears in 6 minutes but ALL are mundane retail/IT: Amazon gift cards for a Garner Program
+    test (M033023); purchases of "miscellaneous IT items from Amazon" for Juvenile / Common Pleas Court
+    (M042023/M042723/M052323); and Res #350-23 registering an "Amazon Business Account for the
+    Commissioner's Office" (M050423). NONE relate to the Amazon warehouse / VTRE / data-center corridor.
+    [confirms the warehouse project is also absent from the 2023 county record.]
+
+precursor_threads:                    # what the 2023 record DOES contain -- the infrastructure/econ-dev BOSC later plugs into
+  shawnee_ii_phase_2:                 # the receiving-plant expansion, active a year+ before BOSC
+    resolutions:
+      - {res: '202-23', date: '2023-03-16', title: "Warrant of transfer from Sanitary Engineering Surplus Fund 5035 to the Shawnee II Capital Fund 5401."}
+      - {res: '228-23', date: '2023-03-23', title: "Memorandum of Understanding with the Allen County Sanitary Engineering Department re allocation of monies for the Shawnee II Phase 2 POTW Improvement Project."}
+      - {res: '383-23', date: '2023-05-18', title: "Warrant of transfer from the General Fund 1001 to the Shawnee II Fund 5401."}
+      - {res: '395-23', date: '2023-05-18', title: "Grant easement to American Electric Power for electrical services for the Phase II Shawnee II Wastewater Treatment Plant."}
+    also: "Early bid packages (UV; generator/transfer switch) and Peterson Construction GMP work referenced on Jan-Feb 2023 agendas; year-end engineering design services (Dec 2023). Continues into 2024 as #220-24/#251-24/#739-24 (see bosc-resolution-ledger.yaml)."
+  aedg_econdev_contract:              # the annual machinery, now traced to 2023
+    note: "Same annual AEDG contract renewed as #45-24 (2024) and #62-25 (2025). The AEDG econ-dev/CRA apparatus that fronts the developer shield is a standing County arrangement, not a BOSC creation."
+    list:
+      - {res: '42-23', date: '2023-01-19', title: "Renew a contract with Allen Economic Development Group for Enterprise Zone / Community Reinvestment Area Technical Assistance (2023)."}
+      - {res: '43-23', date: '2023-01-19', title: "Renew an agreement with the Allen Economic Development Group for the provision of Economic Development Services."}
+  routine_abatement_pipeline:         # context: BOSC/Nutrien are part of a steady abatement stream
+    - {res: '74-23', date: '2023-01-26', title: "Enter into an Enterprise Zone Agreement (AEDG tax-abatement)."}
+    - {res: '171-23', date: '2023-03-07', title: "Assignment of an Enterprise Zone Agreement with 571 Commerce Holdings, LLC."}
+    - {res: '354-23', date: '2023-05-04', title: "Enter into an Enterprise Zone Agreement with Rode's Meats, LLC."}
+    - {res: '600-23', date: '2023-08-24', title: "Enter into an Enterprise Zone Agreement with Diamond Manufacturing of Bluffton, LTD."}
+  emht_and_stormwater:
+    note: "EMH&T (later the BOSC engineer-of-record, Res #994-25 / PRR item 19) was already on County contract in 2023 for stormwater."
+    list:
+      - {res: '254-23', date: '2023-03-28', title: "MOU with the Allen Soil and Water Conservation District for the MS4 Stormwater Program."}
+      - {res: '326-23', date: '2023-04-25', title: "Contract with EMH&T, Inc. for professional services to update the Allen County Stormwater Management Plan."}
+      - {res: '553-23', date: '2023-07-27', title: "Set public hearings on the Stormwater Management Plan Update (per Ohio EPA)."}
+      - {res: '651-23', date: '2023-09-07', title: "Submit the Updated Stormwater Program SWMP to the Ohio EPA Division of Surface Water."}
+  hamlet_of_hume_sewer_origin:        # the corridor sewer project's start, in 2023 (OCR'd minutes)
+    note: "Confirms the Hamlet of Hume sewer project began in 2023 (Access Engineering), predating BOSC; later WPCLF $2M #135-26/#136-26 (see closed-deliberation-and-corridor.yaml)."
+    list:
+      - {date: '2023-02-14', file: M021423.pdf, event: "Update on Hamlet of Hume; issues near McClain Rd; planning to study the area."}
+      - {date: '2023-05-09', file: M050923.pdf, event: "Hamlet of Hume design contract approved by the Commissioners; preliminary engineering started by Access Engineering."}
+      - {date: '2023-11-30', file: M113023.pdf, event: "Access Engineering to submit a preliminary design report before year-end."}
+  biosolids:
+    - {res: '882-23', date: '2023-12-05', title: "Enter into a Process Wastewater Biosolids Agreement with the City of Lima."}
+
+records_relevance: >-
+  Two uses. (1) Timeline/transparency: the 2023 silence sets the baseline -- the data center is wholly
+  absent from the County's 2023 public record, so the project's 2023 groundwork (PAAC codename era)
+  happened outside the Commissioners' minutes. (2) Wastewater thread: the Shawnee II Phase 2 expansion
+  and the Hamlet of Hume sewer were already underway in 2023, which matters to the PRR items 5-15
+  capacity questions -- the receiving system was being built out before the data-center load was
+  publicly acknowledged.
+
+followups:
+  - "Authoritative re-index: fold the 299 2023 files into the meeting-pages/meeting-refs parquet via the external OCR pipeline (this pass used ad-hoc, uncommitted OCR)."
+  - "M121123-Special.pdf produced no OCR text (blank/short scan) -- inspect the source PDF directly."
+  - "Pre-2023 (2022 and earlier) is not in raw/ -- the AEDG annual contract and Shawnee II planning likely extend further back."
+
+cross_refs:
+  - data/extracted/commissioners/bosc-resolution-ledger.yaml             # 2024-2026 spine this baselines
+  - data/extracted/commissioners/closed-deliberation-and-corridor.yaml   # the (G)(8) sessions absent in 2023
+  - data/extracted/aedg/paac-board-minutes.minutes.yaml                  # the PAAC codename era (2023 mid-year start)
+  - data/extracted/regulatory/wastewater-enforcement-history.yaml        # Shawnee II capacity history
+  - data/extracted/commissioners/minutes/README.md                      # the coverage note this addresses
+
+relevance:
+  tags: [verified, commissioners, 2023, backfill, baseline, silence, shawnee-ii, aedg, hamlet-of-hume, precursor]
+  note: >-
+    2023 backfill of the Allen County Commissioners record (153 native-text agendas + 146 ad-hoc-OCR'd
+    minutes). KEY: the entire 2023 record is silent on the data center (0 data-center/Microsoft/BOSC/
+    Bistrozzi/Google hits; 0 (G)(8) econ-dev executive sessions; Amazon hits are retail only). What
+    2023 contains is the precursor machinery -- Shawnee II Phase 2 (#202/#228/#383/#395-23), the annual
+    AEDG EZ/CRA contract (#42/#43-23), a routine abatement pipeline, EMH&T already on contract
+    (#326-23), and the Hamlet of Hume sewer originating via Access Engineering. The data center enters
+    the County record only in 2024 (Microsoft/Perry) -> 2025 (BOSC/American Twp).
