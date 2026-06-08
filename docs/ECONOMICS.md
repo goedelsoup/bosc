@@ -7,6 +7,11 @@
 > `[open]` (a question, not a finding). The spine is civil/land/hydrology; this is
 > the second axis — **what the campus consumes, and what the public gives it** —
 > not a claim about who benefits.
+>
+> **Localized baseline.** For the quantitative ground beneath this — Allen County's
+> employment by industry, its export-orientation, and the employment trend — see the
+> generated [localized economic baseline](../economics-baseline.md) (BLS QCEW), the
+> place the ~50 promised jobs and the 75% abatement actually land.
 
 ## 1. The load — what the campus draws
 

@@ -31,3 +31,13 @@ def hydro_settings() -> Settings:
         hydro_offline=True,
         hydro_fixtures_dir=FIXTURES / "hydrology",
     )
+
+
+@pytest.fixture
+def econ_settings() -> Settings:
+    """Offline economics settings: real repo data dir, connector fixtures, no network."""
+    return Settings(
+        data_dir=REPO_ROOT / "data",
+        econ_offline=True,
+        econ_fixtures_dir=FIXTURES / "economics",
+    )

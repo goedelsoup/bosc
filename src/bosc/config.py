@@ -120,6 +120,27 @@ class Settings(BaseSettings):
     usaspending_offline: bool = False  # serve cached API responses only; never fetch
     usaspending_request_timeout_s: float = 60.0
 
+    # --- Economics (localized baselines: Census population, BLS employment) -----
+    # The "what the campus consumes / what the place is" axis beyond utility draw.
+    # Census ACS works keyless at low volume; BLS QCEW open data needs no key. Same
+    # offline/cache/fixture discipline as hydrology, via a generalized `cached_get`.
+    census_base_url: str = "https://api.census.gov/data"
+    census_api_key: str = ""  # optional; ACS works keyless at low volume
+    qcew_base_url: str = "https://data.bls.gov/cew/data/api"
+    bea_base_url: str = "https://apps.bea.gov/api/data"
+    econ_fips: str = "39003"  # Allen County, OH (state 39 + county 003)
+    econ_offline: bool = False  # serve cached/fixture responses only; never fetch
+    econ_request_timeout_s: float = 60.0
+    econ_fixtures_dir: Path | None = None  # committed connector fixtures (tests/CI)
+
+    # --- Documents library -------------------------------------------------
+    # The full source corpus (~5 GB) is too large to republish on a static host,
+    # so the Documents page is a complete *catalog* with direct downloads only for
+    # the curated exhibits. Set this to an external mirror base URL (Archive.org /
+    # S3 / Drive) to light up a direct per-file download link for every document;
+    # empty means catalog-only (the default).
+    documents_mirror_base_url: str = ""
+
     # --- Paths -------------------------------------------------------------
     data_dir: Path = _REPO_ROOT / "data"
 
@@ -147,6 +168,11 @@ class Settings(BaseSettings):
     def rsei_cache_dir(self) -> Path:
         """Cached EPA RSEI bulk tables (the big .gz files). Regenerable, not committed."""
         return self.cache_dir / "rsei"
+
+    @property
+    def econ_cache_dir(self) -> Path:
+        """Cached economics-connector responses (Census, BLS QCEW). Not committed."""
+        return self.cache_dir / "economics"
 
     @property
     def gleif_cache_dir(self) -> Path:

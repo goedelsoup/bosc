@@ -1,0 +1,503 @@
+fips: '39003'
+area_name: Allen County, Ohio
+latest:
+  fips: '39003'
+  area_name: Allen County, Ohio
+  year: 2023
+  total_employment:
+    value: 49577.0
+    unit: jobs
+    source: connector
+    citation: BLS QCEW 2023 annual averages, area 39003
+    confidence: high
+    asof: null
+  establishments:
+    value: 2564.0
+    unit: establishments
+    source: connector
+    citation: BLS QCEW 2023 annual averages, area 39003
+    confidence: high
+    asof: null
+  sectors:
+  - naics: '62'
+    sector_name: Health Care & Social Assistance
+    annual_avg_employment:
+      value: 9495.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    establishments:
+      value: 312.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    location_quotient:
+      value: 1.38
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+  - naics: 31-33
+    sector_name: Manufacturing
+    annual_avg_employment:
+      value: 8661.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    establishments:
+      value: 133.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    location_quotient:
+      value: 2.08
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+  - naics: 44-45
+    sector_name: Retail Trade
+    annual_avg_employment:
+      value: 5357.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    establishments:
+      value: 385.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    location_quotient:
+      value: 1.07
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+  - naics: '72'
+    sector_name: Accommodation & Food Services
+    annual_avg_employment:
+      value: 4567.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    establishments:
+      value: 229.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    location_quotient:
+      value: 1.01
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+  - naics: '56'
+    sector_name: Administrative & Support & Waste Management
+    annual_avg_employment:
+      value: 3186.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    establishments:
+      value: 139.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    location_quotient:
+      value: 1.05
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+  - naics: '42'
+    sector_name: Wholesale Trade
+    annual_avg_employment:
+      value: 2486.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    establishments:
+      value: 143.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    location_quotient:
+      value: 1.26
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+  - naics: '23'
+    sector_name: Construction
+    annual_avg_employment:
+      value: 1999.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    establishments:
+      value: 210.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    location_quotient:
+      value: 0.78
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+  - naics: '81'
+    sector_name: Other Services (except Public Administration)
+    annual_avg_employment:
+      value: 1702.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    establishments:
+      value: 236.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    location_quotient:
+      value: 1.15
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+  - naics: '54'
+    sector_name: Professional, Scientific & Technical Services
+    annual_avg_employment:
+      value: 1634.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    establishments:
+      value: 182.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    location_quotient:
+      value: 0.47
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+  - naics: 48-49
+    sector_name: Transportation & Warehousing
+    annual_avg_employment:
+      value: 1104.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    establishments:
+      value: 86.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    location_quotient:
+      value: 0.53
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+  - naics: '61'
+    sector_name: Educational Services
+    annual_avg_employment:
+      value: 901.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    establishments:
+      value: 28.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    location_quotient:
+      value: 0.89
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+  - naics: '52'
+    sector_name: Finance & Insurance
+    annual_avg_employment:
+      value: 898.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    establishments:
+      value: 134.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    location_quotient:
+      value: 0.44
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+  - naics: '71'
+    sector_name: Arts, Entertainment & Recreation
+    annual_avg_employment:
+      value: 495.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    establishments:
+      value: 38.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    location_quotient:
+      value: 0.61
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+  - naics: '51'
+    sector_name: Information
+    annual_avg_employment:
+      value: 361.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    establishments:
+      value: 34.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    location_quotient:
+      value: 0.37
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+  - naics: '55'
+    sector_name: Management of Companies & Enterprises
+    annual_avg_employment:
+      value: 319.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    establishments:
+      value: 20.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    location_quotient:
+      value: 0.39
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+  - naics: '53'
+    sector_name: Real Estate & Rental & Leasing
+    annual_avg_employment:
+      value: 293.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    establishments:
+      value: 85.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    location_quotient:
+      value: 0.38
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+  - naics: '22'
+    sector_name: Utilities
+    annual_avg_employment:
+      value: 118.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    establishments:
+      value: 7.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    location_quotient:
+      value: 0.63
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+  - naics: '11'
+    sector_name: Agriculture, Forestry, Fishing & Hunting
+    annual_avg_employment:
+      value: 0.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    establishments:
+      value: 22.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    location_quotient:
+      value: 0.0
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+  - naics: '21'
+    sector_name: Mining, Quarrying, Oil & Gas Extraction
+    annual_avg_employment:
+      value: 0.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    establishments:
+      value: 3.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    location_quotient:
+      value: 0.0
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+  - naics: '99'
+    sector_name: '99'
+    annual_avg_employment:
+      value: 0.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    establishments:
+      value: 3.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+    location_quotient:
+      value: 0.0
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39003
+      confidence: high
+      asof: null
+  source: BLS QCEW (annual averages, private ownership by NAICS sector)
+trend:
+- year: 2018
+  total_employment:
+    value: 50828.0
+    unit: jobs
+    source: connector
+    citation: BLS QCEW 2018 annual averages, area 39003
+    confidence: high
+    asof: null
+- year: 2023
+  total_employment:
+    value: 49577.0
+    unit: jobs
+    source: connector
+    citation: BLS QCEW 2023 annual averages, area 39003
+    confidence: high
+    asof: null
+population: null
+note: Employment from BLS QCEW (keyless open data). Location quotient = county sector
+  share / national share (export-orientation; the county-level proxy for an import/export
+  ratio). Population-over-time needs a Census key.
