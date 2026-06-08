@@ -95,11 +95,25 @@ class DownloadReport(BaseModel):
         return sum(1 for d in self.docs if d.status == "error")
 
 
-def derive_filename(url: str, *, content_disposition: str | None = None) -> str:
+# Fallback extensions when the name carries none (CivicPlus ViewFile URLs like
+# /AgendaCenter/ViewFile/Minutes/_05062024-853 have no extension but serve a PDF).
+_CONTENT_EXT = {
+    "application/pdf": ".pdf",
+    "application/msword": ".doc",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": ".docx",
+    "text/html": ".html",
+}
+
+
+def derive_filename(
+    url: str, *, content_disposition: str | None = None, content_type: str | None = None
+) -> str:
     """As-received filename: Content-Disposition, else the URL path basename.
 
     Percent-decoded and path-stripped; spaces/odd chars collapsed but the stem is
-    preserved verbatim. Never returns an empty or path-bearing name.
+    preserved verbatim. If the result has no extension, one is appended from
+    ``content_type`` so extensionless CivicPlus downloads index as the PDFs they are.
+    Never returns an empty or path-bearing name.
     """
     name = ""
     if content_disposition and (m := _CD_FILENAME.search(content_disposition)):
@@ -107,6 +121,9 @@ def derive_filename(url: str, *, content_disposition: str | None = None) -> str:
     if not name:
         name = unquote(urlparse(url).path).rsplit("/", 1)[-1]
     name = _SAFE.sub("_", name.replace("/", "_")).strip(" .") or "document"
+    if "." not in name and content_type:
+        ct = content_type.split(";", 1)[0].strip().lower()
+        name += _CONTENT_EXT.get(ct, "")
     return name
 
 
@@ -195,7 +212,7 @@ def _download_one(
         return base
 
     digest = hashlib.sha256(content).hexdigest()
-    filename = derive_filename(doc.url, content_disposition=disposition)
+    filename = derive_filename(doc.url, content_disposition=disposition, content_type=ctype)
     target = dest / filename
     status = "downloaded"
     if target.exists():

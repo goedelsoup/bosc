@@ -160,6 +160,13 @@ def extract_text(path: Path, *, ocr: bool = False) -> tuple[str, str]:
     + OCRs it (``method='ocr'``); otherwise such a file returns ``("", "none")``.
     """
     suffix = path.suffix.lower()
+    if suffix not in {".pdf", ".docx", ".htm", ".html"}:
+        # Extensionless downloads (CivicPlus ViewFile) are real PDFs — sniff the magic.
+        try:
+            if path.read_bytes()[:5].startswith(b"%PDF"):
+                suffix = ".pdf"
+        except OSError:
+            pass
     if suffix == ".pdf":
         text, method = _pdf_text(path), "pdf_text"
         if not text.strip() and ocr:
@@ -230,6 +237,7 @@ def index_meetings(
     entries = manifest.get("documents", []) if isinstance(manifest, dict) else []
 
     indexed: list[IndexedDoc] = []
+    seen: set[str] = set()
     for entry in entries:
         if (
             not isinstance(entry, dict)
@@ -237,13 +245,20 @@ def index_meetings(
             or not entry.get("filename")
         ):
             continue
-        path = docs_dir / str(entry["filename"])
+        # One on-disk file per index row: the same bytes can be served at two
+        # provenance URLs (CivicPlus serves an id at both /Agenda/ and /Minutes/),
+        # which the manifest records as two entries pointing at one written file.
+        filename = str(entry["filename"])
+        if filename in seen:
+            continue
+        seen.add(filename)
+        path = docs_dir / filename
         text, method = extract_text(path, ocr=ocr) if path.exists() else ("", "none")
         listing = entry.get("date")
         verified, evidence = _verify_date(text, listing, method)
         indexed.append(
             IndexedDoc(
-                filename=str(entry["filename"]),
+                filename=filename,
                 kind=str(entry.get("kind", "other")),
                 body=entry.get("body"),
                 date_listing=listing,

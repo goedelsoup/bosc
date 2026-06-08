@@ -1,0 +1,661 @@
+meta:
+  subject: lima meeting index (text-verified dates + corridor hits)
+  slug: lima
+  generated_at: '2026-06-08'
+  text_extraction: 'PDF text layer (pypdf) / DOCX / HTML — NO OCR. An image-only scanned
+    PDF has text_method: none (date unverified, text unscanned); those need an OCR
+    pass not wired here.'
+  date_evidence: date_verified is the listing date CONFIRMED in the file's own text;
+    null means unconfirmed (date_listing still stands).
+  counts:
+    total: 52
+    text_extracted: 41
+    date_verified: 36
+    with_corridor_hits: 15
+documents:
+- filename: 2024-05-06.pdf
+  kind: agenda
+  body: City Council
+  date_listing: '2024-05-06'
+  date_verified: null
+  date_evidence: listing
+  text_method: pdf_text
+  char_count: 24184
+  hits:
+  - tax_abatement
+  title: City Council Agenda and Docket for May 6, 2024 Regular Council Meeting
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_05062024-853
+  sha256: 751a1d1131eabef4c71f6c7034911ccfba90a444b8b928063d7e8f5c78f47d6a
+- filename: 2024-04-22.pdf
+  kind: agenda
+  body: City Council
+  date_listing: '2024-04-22'
+  date_verified: '2024-04-22'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 23385
+  hits:
+  - pump_station
+  - rezoning
+  - tax_abatement
+  title: City Council Agenda and Docket for April 22, 2024 Regular Council Meeting
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_04222024-852
+  sha256: 60b5d96d23101e6b18eaa008675ed8e16bb019804d1844861414b621f0921098
+- filename: _04222024-852.pdf
+  kind: minutes
+  body: City Council
+  date_listing: '2024-04-22'
+  date_verified: '2024-04-22'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 24433
+  hits:
+  - rezoning
+  - tax_abatement
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_04222024-852
+  sha256: 2bc081619ec39207f0fa7b59c89cc3876ad8569ce7d4edfccf5991c756a0419d
+- filename: 2024-04-09.pdf
+  kind: agenda
+  body: City Council
+  date_listing: '2024-04-09'
+  date_verified: '2024-04-09'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 6149
+  hits:
+  - pump_station
+  - tax_abatement
+  title: City Council Agenda and Docket for April 9, 2024 Regular Council Meeting
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_04092024-850
+  sha256: 87219ed6911a508e7713972bd4ff55a22f42657cb52a4c1c215c38cca3a94a0e
+- filename: _04092024-850.pdf
+  kind: minutes
+  body: City Council
+  date_listing: '2024-04-09'
+  date_verified: '2024-04-09'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 18692
+  hits:
+  - pump_station
+  - rezoning
+  - tax_abatement
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_04092024-850
+  sha256: 3e0fdb54dc61a5e2ca9a10d2f56f22fff7ccc2641a1e0425ca88799006d1a47f
+- filename: 2024-03-25.pdf
+  kind: agenda
+  body: City Council
+  date_listing: '2024-03-25'
+  date_verified: '2024-03-25'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 108239
+  hits: []
+  title: City Council Agenda and Docket for March 25, 2024 Regular Council Meeting
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_03252024-849
+  sha256: ec32151f06fed9a7d43697e1f23c2b92aa5f47843b837d83be318d8ccae22724
+- filename: _03252024-849.pdf
+  kind: minutes
+  body: City Council
+  date_listing: '2024-03-25'
+  date_verified: '2024-03-25'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 22303
+  hits: []
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_03252024-849
+  sha256: 36936af9278ffa12cddfdbe0d2eb007c0f99561d74f2c3b04ac70178721b607c
+- filename: 2024-03-11.pdf
+  kind: agenda
+  body: City Council
+  date_listing: '2024-03-11'
+  date_verified: '2024-03-11'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 4880
+  hits: []
+  title: City Council Agenda and Docket for March 11, 2024 Regular Council Meeting
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_03112024-848
+  sha256: e5b0958fec4424d69ff54071c2195769db20aba6f7135c0028e6178719cc7453
+- filename: _03112024-848.pdf
+  kind: minutes
+  body: City Council
+  date_listing: '2024-03-11'
+  date_verified: null
+  date_evidence: listing
+  text_method: pdf_text
+  char_count: 33088
+  hits: []
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_03112024-848
+  sha256: 9c9afbd6ccfc65c2a1686cc46f422267ef553c23e4a5c37fddb2617dae834b01
+- filename: 2024-02-26.pdf
+  kind: agenda
+  body: City Council
+  date_listing: '2024-02-26'
+  date_verified: null
+  date_evidence: listing
+  text_method: pdf_text
+  char_count: 2507
+  hits: []
+  title: City Council Agenda and Docket for February 26, 2024 Regular Council Meeting
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_02262024-847
+  sha256: f35c99976192a0413909c5195886fbb61be8c7ff573b72eb658895fe090f865d
+- filename: _02262024-847.pdf
+  kind: minutes
+  body: City Council
+  date_listing: '2024-02-26'
+  date_verified: '2024-02-26'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 21629
+  hits:
+  - tax_abatement
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_02262024-847
+  sha256: a5acf88e3744562838f2640e13d408ac6533a69d3bdc61501d4ffa1becddb138
+- filename: 2024-02-05.pdf
+  kind: agenda
+  body: City Council
+  date_listing: '2024-02-05'
+  date_verified: '2024-02-05'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 74082
+  hits: []
+  title: City Council Agenda and Docket for February 5, 2024 Regular Council Meeting
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_02052024-844
+  sha256: 409120bdf0f459c9c2dc18c42b11bb9e35cb1cbe217f18d305ba8792c6128c3a
+- filename: _02052024-844.pdf
+  kind: minutes
+  body: City Council
+  date_listing: '2024-02-05'
+  date_verified: '2024-02-05'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 10779
+  hits: []
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_02052024-844
+  sha256: 5ffc1be06ed336b045af0c188bcbff141644cc4c8eeb09d9dcc1c6b6797eb54a
+- filename: 2024-01-22.pdf
+  kind: agenda
+  body: City Council
+  date_listing: '2024-01-22'
+  date_verified: '2024-01-22'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 32563
+  hits:
+  - rezoning
+  title: City Council Agenda and Docket for January 22, 2024 Regular Council Meeting
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_01222024-840
+  sha256: 7bd89ea26730a9ce07e72f4a20852ee19687e81f310274708df20179c5443896
+- filename: _01222024-840.pdf
+  kind: minutes
+  body: City Council
+  date_listing: '2024-01-22'
+  date_verified: null
+  date_evidence: listing
+  text_method: pdf_text
+  char_count: 24720
+  hits: []
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_01222024-840
+  sha256: cecdf583cbd479cde203205384b3bf14ca9490a4aaee9f69fc696f7507c219f2
+- filename: 2024-01-02.pdf
+  kind: agenda
+  body: City Council
+  date_listing: '2024-01-02'
+  date_verified: '2024-01-02'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 3528
+  hits: []
+  title: City Council Agenda and Docket for January 2, 2024 Regular Council Meeting
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_01022024-826
+  sha256: 44ff81c50d4243e75e4994a9e4bf69e936e163c32650fbae6d1121502c24dba2
+- filename: _01022024-826.pdf
+  kind: minutes
+  body: City Council
+  date_listing: '2024-01-02'
+  date_verified: '2024-01-02'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 17973
+  hits:
+  - solar
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_01022024-826
+  sha256: 78e94ae0c1dd2b5e0158f28cbd9836750c83e88f7170d4f32f1cc0e300ec2874
+- filename: 2023.11.08 BOA Agenda.doc
+  kind: agenda
+  body: Board of Adjustment
+  date_listing: '2023-11-08'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Board of Adjustment agenda for November 8th, 2023
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_11082023-836
+  sha256: 65d3d206029e481e6ba350f3b0dd50494f6bc4344b45dc1b1fbaa8e1f7b0d158
+- filename: _11082023-836.pdf
+  kind: minutes
+  body: Board of Adjustment
+  date_listing: '2023-11-08'
+  date_verified: '2023-11-08'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 26632
+  hits:
+  - rezoning
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_11082023-836
+  sha256: 64c1e026001207ca0abfd3f7bb0c6967224f9e1f21be8866df45cfa9d6642220
+- filename: 2023.10.25 BOA Agenda.doc
+  kind: agenda
+  body: Board of Adjustment
+  date_listing: '2023-10-25'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Board of Adjustment agenda for October 25th, 2023
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_10252023-835
+  sha256: 9a2735cb96cc34a39ad4f6f403cfed003e394f2ad4352b0e2d52515617aaea00
+- filename: _10252023-835.pdf
+  kind: minutes
+  body: Board of Adjustment
+  date_listing: '2023-10-25'
+  date_verified: '2023-10-25'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 18192
+  hits:
+  - rezoning
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_10252023-835
+  sha256: a13130fc60f59e11e453d5cb50d6cfb027bcc667f27821388b340504c16d782b
+- filename: 2023.08.23 BOA Agenda.doc
+  kind: agenda
+  body: Board of Adjustment
+  date_listing: '2023-08-23'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Board of Adjustment agenda for August 23rd, 2023
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_08232023-834
+  sha256: 8f319fdbf1529629ebf71ddb4eda95485980ecba3056b5f2c6779fe05c5dd447
+- filename: _08232023-834.pdf
+  kind: minutes
+  body: Board of Adjustment
+  date_listing: '2023-08-23'
+  date_verified: '2023-08-23'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 3012
+  hits: []
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_08232023-834
+  sha256: 59ffbe506ceb01e25c1fa92f236706e404f9b97509f6eb74e9567577638d46ec
+- filename: 2023.06.28 Agenda.doc
+  kind: agenda
+  body: Board of Adjustment
+  date_listing: '2023-06-28'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Board of Adjustment agenda for June 28th, 2023.
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_06282023-808
+  sha256: a3444f8a472255386cbe0b3b20b162dceba31d8c398d7c1693d5fc45e72452e6
+- filename: _06282023-808.docx
+  kind: minutes
+  body: Board of Adjustment
+  date_listing: '2023-06-28'
+  date_verified: '2023-06-28'
+  date_evidence: docx
+  text_method: docx
+  char_count: 9796
+  hits: []
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_06282023-808
+  sha256: 8ba8ee15ee8cf82cdf7a499b96217bef7de680f75b59fc7b768c24edce680774
+- filename: August 20 2025 BBA Agenda.pdf
+  kind: agenda
+  body: Board of Building and Appeals
+  date_listing: '2025-08-20'
+  date_verified: '2025-08-20'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 2993
+  hits: []
+  title: Board of Building Appeals Meeting | August 20, 2025
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_08202025-879
+  sha256: 9235c86da96042e1474b3e37a3462a0111cf933fcc3d9e9b6794fe13dc9d74b5
+- filename: _08202025-879.docx
+  kind: minutes
+  body: Board of Building and Appeals
+  date_listing: '2025-08-20'
+  date_verified: '2025-08-20'
+  date_evidence: docx
+  text_method: docx
+  char_count: 12277
+  hits: []
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_08202025-879
+  sha256: b0dddc231619140a565cfff9785c2cf4ca4e670628d5a82fcaaf2a725f86b97b
+- filename: June 18 2025 BBA Agenda.pdf
+  kind: agenda
+  body: Board of Building and Appeals
+  date_listing: '2025-06-18'
+  date_verified: '2025-06-18'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 2929
+  hits: []
+  title: Board of Building Appeals Meeting | June 18, 2025
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_06182025-878
+  sha256: 0b95fc27186f34011b07fd510b5d167c2eb93697cf60c6b7b7adc32fa4825074
+- filename: _06182025-878.pdf
+  kind: minutes
+  body: Board of Building and Appeals
+  date_listing: '2025-06-18'
+  date_verified: '2025-06-18'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 5963
+  hits: []
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_06182025-878
+  sha256: 3132c5bf82c4473cb6cd382321a48edddd5c79d36ce8a96accd89ced4cf26d31
+- filename: March 19 2025 BBA Agenda.pdf
+  kind: agenda
+  body: Board of Building and Appeals
+  date_listing: '2025-03-19'
+  date_verified: '2025-03-19'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 2932
+  hits: []
+  title: Board of Building Appeals Meeting | March 19, 2025
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_03192025-862
+  sha256: 848eeb7699e6d1ab107ceb51fc5f875161c4206f51faa647a4cba0415b33d362
+- filename: _03192025-862.pdf
+  kind: minutes
+  body: Board of Building and Appeals
+  date_listing: '2025-03-19'
+  date_verified: '2025-03-19'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 6030
+  hits: []
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_03192025-862
+  sha256: 1e22d8d97659dff940548fb899f56e646676e74464b13b9f02b67d70f929e88c
+- filename: January 15 2025 BBA Agenda.pdf
+  kind: agenda
+  body: Board of Building and Appeals
+  date_listing: '2025-01-15'
+  date_verified: '2025-01-15'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 6005
+  hits: []
+  title: Board of Building Appeals Meeting | January 15, 2025
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_01152025-861
+  sha256: 9fbed300823895570f3759f549a9992bd6388b0bfc964a57cfeacc4ddf943aa0
+- filename: _01152025-861.pdf
+  kind: minutes
+  body: Board of Building and Appeals
+  date_listing: '2025-01-15'
+  date_verified: '2025-01-15'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 9726
+  hits: []
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_01152025-861
+  sha256: bfb40d7c654cae8d9611b62d4cb3bb8869fe60c122ce57ebdd1d44444f752c0a
+- filename: 2023.11.29 CPC Agenda.doc
+  kind: agenda
+  body: City Planning Commission
+  date_listing: '2023-11-29'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: City Planning Commission meeting on November 29th, 2023
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_11292023-837
+  sha256: c1db9aefa7c1ab75786541d819b026327cf6fc5b11357b0453546e421d23d86b
+- filename: 2023.09.27 CPC Agenda.doc
+  kind: agenda
+  body: City Planning Commission
+  date_listing: '2023-09-27'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: City Planning Commission meeting on September 27th, 2023
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_09272023-838
+  sha256: dca63af5ae8bf2979666b207d0d8f25fc61d5871dc4b601cfbfeafee82bb7e61
+- filename: _09272023-838.docx
+  kind: minutes
+  body: City Planning Commission
+  date_listing: '2023-09-27'
+  date_verified: '2023-09-27'
+  date_evidence: docx
+  text_method: docx
+  char_count: 29421
+  hits:
+  - rezoning
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_09272023-838
+  sha256: 8b967e63f6e77f4f509a0d8ef37ba7b72547ab33db90d24ebeb7d73878e21ea2
+- filename: 2023.08.23 CPC Agenda.doc
+  kind: agenda
+  body: City Planning Commission
+  date_listing: '2023-08-23'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: City Planning Commission meeting on August 23rd, 2023
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_08232023-839
+  sha256: 3530242b23e68fbdef19e5b105f0225100da6bdd0ae376744869299e64761b0a
+- filename: _08232023-839.docx
+  kind: minutes
+  body: City Planning Commission
+  date_listing: '2023-08-23'
+  date_verified: '2023-08-23'
+  date_evidence: docx
+  text_method: docx
+  char_count: 19006
+  hits:
+  - easement
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_08232023-839
+  sha256: 51a32a1df881dde5764d726a5d951983edd903136a2b76cafb62accb32823fa7
+- filename: 2023.05.24 Agenda.doc
+  kind: agenda
+  body: City Planning Commission
+  date_listing: '2023-05-24'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: City Planning Commission meeting on May 24th, 2023.
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_05242023-811
+  sha256: 4dc0c35588587ba5c0a6e515da4d2da5ec645f181371f831adf7f83e23b2ba40
+- filename: _05242023-811.docx
+  kind: minutes
+  body: City Planning Commission
+  date_listing: '2023-05-24'
+  date_verified: '2023-05-24'
+  date_evidence: docx
+  text_method: docx
+  char_count: 29408
+  hits:
+  - rezoning
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_05242023-811
+  sha256: 4db60be1c7b91cb2c6c03efc259553956bf3aebf7da116a72688aae3eaae86e2
+- filename: 2023.02.08 Agenda.doc
+  kind: agenda
+  body: City Planning Commission
+  date_listing: '2023-02-08'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: City Planning Commission meeting on February 8th, 2023.
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_02082023-810
+  sha256: 6f11158868127ac14dbd383c041efc33cd06c909edf9ea967ebce85c08e180d8
+- filename: _02082023-810.pdf
+  kind: minutes
+  body: City Planning Commission
+  date_listing: '2023-02-08'
+  date_verified: '2023-02-08'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 3948
+  hits:
+  - easement
+  - rezoning
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_02082023-810
+  sha256: 1ba610ae042b1d903c97534221fb6c1258287d38227250e2f9897126740c41f3
+- filename: 2023.01.11 Agenda.doc
+  kind: agenda
+  body: City Planning Commission
+  date_listing: '2023-01-11'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: City Planning Commission meeting on January 11th, 2023.
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_01112023-809
+  sha256: d48ec4c2b1c7b8b2a2387a28bf6b7001fdf77033444f270de64953f3f8ca231f
+- filename: _01112023-809.pdf
+  kind: minutes
+  body: City Planning Commission
+  date_listing: '2023-01-11'
+  date_verified: '2023-01-11'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 3211
+  hits:
+  - rezoning
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_01112023-809
+  sha256: 2144c98e44722222c641b9ed7a48ff25b40a13922f2c8896a4f165c4b5dc447d
+- filename: September 2020 Minutes.pdf
+  kind: agenda
+  body: Design Review Board
+  date_listing: '2020-09-10'
+  date_verified: '2020-09-10'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 5624
+  hits: []
+  title: Design Review Board | September 10, 2020
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_09102020-708
+  sha256: a3d7a3ac777c34269b80d196b4c10dfef2b1ae31dfe05a57bf82cfbb928b6a86
+- filename: _09102020-708.pdf
+  kind: minutes
+  body: Design Review Board
+  date_listing: '2020-09-10'
+  date_verified: '2020-09-10'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 5624
+  hits: []
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_09102020-708
+  sha256: a3d7a3ac777c34269b80d196b4c10dfef2b1ae31dfe05a57bf82cfbb928b6a86
+- filename: July 2020 DRB Minutes.pdf
+  kind: agenda
+  body: Design Review Board
+  date_listing: '2020-07-09'
+  date_verified: '2020-07-09'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 2516
+  hits: []
+  title: Design Review Board | July 9, 2020 Meeting Minutes
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_07092020-707
+  sha256: e06c5d6950ec382501e326ef5b7681fd949f0f3e461b7b36858269c964133441
+- filename: _07092020-707.pdf
+  kind: minutes
+  body: Design Review Board
+  date_listing: '2020-07-09'
+  date_verified: '2020-07-09'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 2516
+  hits: []
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_07092020-707
+  sha256: e06c5d6950ec382501e326ef5b7681fd949f0f3e461b7b36858269c964133441
+- filename: Land Bank Agenda 01.22.2026.pdf
+  kind: agenda
+  body: Land Bank Committee
+  date_listing: '2026-01-22'
+  date_verified: '2026-01-22'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 603
+  hits: []
+  title: City of Lima Land Bank Agenda
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_01222026-870
+  sha256: 2c8d83bb2516fbdd3c222184e952557b79ba75dbaa21a81896ea72c3eb33aac9
+- filename: 01_2026_02_13_Agenda.pdf
+  kind: agenda
+  body: Traffic Commission
+  date_listing: '2026-02-13'
+  date_verified: null
+  date_evidence: listing
+  text_method: pdf_text
+  char_count: 1137
+  hits: []
+  title: Traffic Commission Meeting | February 13, 2026
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_02132026-877
+  sha256: 089b8707affbc00d1625a71867c8c4b3f13210e60a2907611591c85f12a5a167
+- filename: _03042020-669.pdf
+  kind: minutes
+  body: Urban Forest Commision
+  date_listing: '2020-03-04'
+  date_verified: '2020-03-04'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 2261
+  hits: []
+  title: null
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_03042020-669
+  sha256: c6a2de56d2672fcf19deef5a81bb88c393ac73a80e5644dfa59f49c548f2c0de
+- filename: 03042020.pdf
+  kind: agenda
+  body: Urban Forest Commision
+  date_listing: '2020-03-04'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: PDF
+  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_03042020-669
+  sha256: 267a6ac165860618a4e63c62bbcd267914510d705b22c14bf2de8bfeb5b3a64e

@@ -1,0 +1,147 @@
+meta:
+  subject: lacrpc corridor meeting summaries
+  slug: lacrpc
+  method: structured extraction (forced tool use) over the meeting text; model records
+    only what the minutes state — no inference.
+  summarized: 3
+  skipped_no_text: []
+meetings:
+- date: '2026-01-15'
+  kind: minutes
+  filename: _01152026-242.pdf
+  hits:
+  - amazon
+  - datacenter
+  - tax_abatement
+  summary: At the January 15, 2026 Community Development Committee meeting of the
+    Lima-Allen County Regional Planning Commission, staff noted during the Year in
+    Review that "a data center is coming" and that expanded transit service may help
+    address transportation needs for the anticipated increase in employment. The Allen
+    Economic Development Group update also referenced development activity including
+    a "Cole Street data center" among several ongoing projects in Allen County. No
+    formal action related to the data center was taken at this meeting.
+  corridor_relevance: 'The meeting connects to the corridor project through two passing
+    references: a statement that "a data center is coming" and may drive transit demand,
+    and a listing of "Cole Street data center" as a recent area development in the
+    AEDG update.'
+  decisions:
+  - 'Motion 01 (01-15-2026) CDC: Mr. Nelson made the motion to approve the agenda;
+    seconded by Mr. Vandemark, the motion carried.'
+  - 'Motion 02 (01-15-2026) CDC: Mr. Suever made the motion to approve the CDC minutes
+    of October 16, 2025; seconded by Mr. Vandemark, the motion carried.'
+  - 'Motion 03 (01-15-2026) CDC: Mr. Nelson made the motion to adjourn; seconded by
+    Mr. Fitzpatrick, the motion carried.'
+  parties:
+  - Tim Fitzpatrick – Allen County
+  - Mitch Kingsley – Village of Bluffton
+  - Rob Nelson – City of Lima
+  - Ben Suever – Village of Spencerville
+  - John Vandemark – Village of Cairo
+  - Megan Kinnear – Staff
+  - Melissa Reed – Staff
+  - Mr. Wildermuth – ACRTA
+  - Allen Economic Development Group (AEDG)
+  - Lima-Allen County Regional Planning Commission (LACRPC)
+  - JobsOhio
+  - Charles River
+  - Amazon
+  - Target
+  - P&G
+  - Ohio Logistics
+  parcels: []
+  dollar_figures: []
+- date: '2026-03-26'
+  kind: minutes
+  filename: _03262026-271.pdf
+  hits:
+  - datacenter
+  summary: The Executive Committee of the Lima-Allen County Regional Planning Commission
+    held its regular session on March 26, 2026, covering routine financial, administrative,
+    and bylaws business. During the Director's Report, a brief discussion took place
+    regarding "the data center," with mention that a meeting presented by Regional
+    Growth Partnership at the Ohio Job and Family Services Center was scheduled for
+    March 30th and was expected to feature a positive presentation regarding data
+    centers. No formal action was taken specifically on the data center matter.
+  corridor_relevance: The meeting references "the data center" during the Director's
+    Report and notes an upcoming March 30th informational meeting presented by Regional
+    Growth Partnership at the Ohio Job and Family Services Center to discuss the data
+    center.
+  decisions:
+  - 'Motion 17 (03-26-2026) EC: Agenda approved as submitted (Schierloh/Post).'
+  - 'Motion 18 (03-26-2026) EC: EC minutes of February 26, 2026 approved (Post/Cox).'
+  - 'Motion 19 (03-26-2026) EC: Budget revenue, budget expense reports, and payment
+    of bills, payroll, and OPERS approved as presented (Post/Kingsley).'
+  - 'Motion 20 (03-26-2026) EC: DCC Committee Report accepted, including acceptance
+    of street vacation request by Elite Builders within Zurmehly Subdivision in Shawnee
+    Township (Post/Gilden).'
+  - 'Motion 21 (03-26-2026) EC: Director''s Report accepted (Post/Cox).'
+  - 'Motion (03-26-2026) EC: Decided not to consider a virtual meeting policy (Schierloh/Cox).'
+  - 'Bylaws Committee recommendations accepted for discussion: DCC meeting frequency
+    changed to 1st and 3rd Tuesdays; EC, TCC, and TAC meeting frequency changed from
+    monthly to at least quarterly; AAC to be removed with functions transferred to
+    EC; TCC renamed MPOPC; CAC and CDC combined into CDAC; TAC renamed Technical Advisory
+    Committee.'
+  - April 13, 2026 set as last date for comments, concerns, and other nominations
+    on committee slate.
+  - 'Motion 23 (03-26-2026) EC: Motion to adjourn carried (Post/Cox).'
+  parties:
+  - Kevin Cox, Perry Township
+  - Jerry Gilden, Marion Township
+  - Mitch Kingsley, Village of Bluffton
+  - Tan Kohli, City of Lima
+  - Doug Post, Amanda Township
+  - Chuck Schierloh, City of Lima
+  - Elizabeth Gordon, Hancock (Guest)
+  - Rebecca Phillips (Staff)
+  - Melissa Reed (Staff)
+  - Elite Builders
+  - Regional Growth Partnership
+  - Mr. Willamowski
+  - Mr. Suever
+  - Brad Baxter (Secretary)
+  - Ian Kohli (RPC President)
+  parcels: []
+  dollar_figures: []
+- date: '2026-04-23'
+  kind: minutes
+  filename: _04232026-272.pdf
+  hits:
+  - bosc
+  - datacenter
+  - google
+  summary: The Developmental Controls Committee (DCC) held a presentation-only session
+    on April 21, 2026, focused on an open discussion about data centers, specifically
+    Project BOSC (identified in the text as a Google data center). Committee members
+    raised numerous questions and discussed pros and cons, with LACRPC positioning
+    itself as a resource for further information. Key figures shared included an initial
+    $250,000 payment to Elida Schools, an estimated 30–50 jobs in the first phase,
+    and a projected $1.5 billion total investment across all three phases.
+  corridor_relevance: The DCC's April 21, 2026 presentation explicitly discussed "project
+    BOSC (Google data center)," covering job creation, phased investment totals, and
+    a payment to Elida Schools, directly connecting this meeting to the hyperscale
+    data center corridor project.
+  decisions:
+  - 'Motion 27 (04-23-2026) EC: Mr. Baxter made the motion to accept the Community
+    Development Committee Report. Seconded by Mr. Cox, the motion carried.'
+  - 'Motion 28 (04-23-2026) EC: Mr. Baxter made the motion to accept the Developmental
+    Controls Committee Report. Seconded by Ms. Seibert, the motion carried.'
+  parties:
+  - Brad Baxter, Bath Township
+  - Kevin Cox, Perry Township
+  - Jerry Gilden, Marion Township
+  - Ian Kohli, City of Lima
+  - Doug Post, Amanda Township
+  - Brion Rhodes, Allen County
+  - Chuck Schierloh, City of Lima
+  - Beth Seibert, Allen County
+  - Ben Suever, Village of Spencerville
+  - Elizabeth Gordon, Hancock
+  - Ross Harmon
+  - Rebecca Phillips, LACRPC Staff
+  - Melissa Reed, LACRPC Staff
+  - LACRPC (Lima-Allen County Regional Planning Commission)
+  - Elida Schools
+  parcels: []
+  dollar_figures:
+  - $250,000 given to Elida Schools (initially)
+  - 1.5 billion invested if all three phases go through

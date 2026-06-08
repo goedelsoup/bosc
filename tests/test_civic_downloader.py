@@ -47,6 +47,19 @@ def test_derive_filename_prefers_disposition_then_basename() -> None:
     )
 
 
+def test_derive_filename_appends_extension_from_content_type() -> None:
+    # CivicPlus ViewFile URLs carry no extension but serve a PDF.
+    assert (
+        derive_filename(
+            "https://x.gov/AgendaCenter/ViewFile/Minutes/_05062024-853",
+            content_type="application/pdf",
+        )
+        == "_05062024-853.pdf"
+    )
+    # An existing extension is left untouched.
+    assert derive_filename("https://x.gov/a/m.pdf", content_type="application/pdf") == "m.pdf"
+
+
 def _fake_fetcher(payloads: dict[str, bytes]):  # type: ignore[no-untyped-def]
     def fetch(url: str, settings: Settings) -> tuple[bytes, str | None, str | None]:
         return payloads[url], "application/pdf", None

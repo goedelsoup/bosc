@@ -124,6 +124,42 @@ def test_index_meetings_unconfirmed_date_when_absent(tmp_path: Path) -> None:
     assert doc.date == "2026-01-06"  # falls back to listing
 
 
+def test_index_dedupes_one_file_served_at_two_urls(tmp_path: Path) -> None:
+    # CivicPlus serves one id at both /Agenda/ and /Minutes/; the downloader writes
+    # the file once (second entry is skipped_existing) but the manifest records both
+    # provenance URLs. The index represents the on-disk file ONCE.
+    settings = Settings(data_dir=tmp_path)
+    docs_dir = settings.documents_dir / "bath-township" / "meetings"
+    _make_docx(docs_dir / "notice.docx", "Routine meeting notice, January 6, 2026")
+    manifest = {
+        "meta": {"slug": "bath-township"},
+        "documents": [
+            {
+                "filename": "notice.docx",
+                "kind": "agenda",
+                "date": "2026-01-06",
+                "sha256": "abc",
+                "source_url": "https://x.test/Agenda/_01062026-1",
+                "status": "downloaded",
+            },
+            {
+                "filename": "notice.docx",
+                "kind": "agenda",
+                "date": "2026-01-06",
+                "sha256": "abc",
+                "source_url": "https://x.test/Agenda/_01062026-2",
+                "status": "skipped_existing",
+            },
+        ],
+    }
+    man_dir = settings.extracted_dir / "bath-township" / "meetings"
+    man_dir.mkdir(parents=True, exist_ok=True)
+    (man_dir / "download-manifest.yaml").write_text(yaml.safe_dump(manifest), encoding="utf-8")
+    report = index_meetings(_body(), settings=settings)
+    assert len(report.docs) == 1
+    assert report.docs[0].filename == "notice.docx"
+
+
 def test_subdivision_meeting_events_surface_only_corridor_hits(tmp_path: Path) -> None:
     settings = Settings(data_dir=tmp_path)
     idx = {

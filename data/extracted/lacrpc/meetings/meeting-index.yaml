@@ -1,0 +1,510 @@
+meta:
+  subject: lacrpc meeting index (text-verified dates + corridor hits)
+  slug: lacrpc
+  generated_at: '2026-06-08'
+  text_extraction: 'PDF text layer (pypdf) / DOCX / HTML — NO OCR. An image-only scanned
+    PDF has text_method: none (date unverified, text unscanned); those need an OCR
+    pass not wired here.'
+  date_evidence: date_verified is the listing date CONFIRMED in the file's own text;
+    null means unconfirmed (date_listing still stands).
+  counts:
+    total: 40
+    text_extracted: 38
+    date_verified: 16
+    with_corridor_hits: 4
+documents:
+- filename: 20260422 AAC Agenda and Meeting Notice-cancelled.docx
+  kind: agenda
+  body: Administrative Affairs Committee (AAC)
+  date_listing: '2026-04-22'
+  date_verified: null
+  date_evidence: listing
+  text_method: docx
+  char_count: 21275
+  hits: []
+  title: CANCELLED - Administrative Affairs Committee (AAC)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_04222026-267
+  sha256: 40821496432e7139d3f398c6e25b960883cf4e74fdd49d1dd25eedc7ce21cb8d
+- filename: 20260421 CAC Agenda and Meeting Notice.docx
+  kind: agenda
+  body: Citizens Advisory Committee (CAC)
+  date_listing: '2026-04-21'
+  date_verified: null
+  date_evidence: listing
+  text_method: docx
+  char_count: 53451
+  hits: []
+  title: Citizens Advisory Committee (CAC) Meeting Agenda (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_04212026-269
+  sha256: b7cfeca02da9bf6570523813152f5732e4b8ff263c3d322b9cc766258e797a18
+- filename: 20260120 CAC Agenda and Meeting Notice.jpg
+  kind: agenda
+  body: Citizens Advisory Committee (CAC)
+  date_listing: '2026-01-20'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Citizens Advisory Committee (CAC) Meeting Agenda (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_01202026-268
+  sha256: 5b689e68981642f68aa2ea8252a638aa39355443dcb0bd2a7be35a90953f934e
+- filename: _01202026-268.doc
+  kind: minutes
+  body: Citizens Advisory Committee (CAC)
+  date_listing: '2026-01-20'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: null
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_01202026-268
+  sha256: 5954c0c398943941089529405e8bba0a5eba3d3d3a6b37a571b65446ce9b38c2
+- filename: 20260120 CAC Agenda and Meeting Notice.docx
+  kind: agenda
+  body: Citizens Advisory Committee (CAC)
+  date_listing: '2026-01-20'
+  date_verified: null
+  date_evidence: listing
+  text_method: docx
+  char_count: 53045
+  hits: []
+  title: Citizens Advisory Committee (CAC) Meeting Agenda (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_01202026-241
+  sha256: 92137de79b8a8e08b1c8f5041c777271ca2d0734c3792104565b6ab4cd5b5492
+- filename: 20260416 CDC Agenda and Meeting Notice.docx
+  kind: agenda
+  body: Community Development Committee (CDC)
+  date_listing: '2026-04-16'
+  date_verified: null
+  date_evidence: listing
+  text_method: docx
+  char_count: 36977
+  hits: []
+  title: Community Development Committee (CDC) Regular Meeting and Notice Agenda (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_04162026-273
+  sha256: 3bbaeda63e3ddacebfa6b1ac9c80ba4cdd30f2c45215ef2104ff871efe6d87d0
+- filename: 20260115 CDC Agenda and Meeting Notice.pdf
+  kind: agenda
+  body: Community Development Committee (CDC)
+  date_listing: '2026-01-15'
+  date_verified: null
+  date_evidence: listing
+  text_method: pdf_text
+  char_count: 1520
+  hits: []
+  title: Community Development Committee (CDC) Meeting Agenda (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_01152026-242
+  sha256: 550bf9f43594ce7adcd8c6c0ad6ac71aab182072d907ae136e38dae00ca2ac9e
+- filename: _01152026-242.pdf
+  kind: minutes
+  body: Community Development Committee (CDC)
+  date_listing: '2026-01-15'
+  date_verified: null
+  date_evidence: listing
+  text_method: pdf_text
+  char_count: 6260
+  hits:
+  - amazon
+  - datacenter
+  - tax_abatement
+  title: null
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_01152026-242
+  sha256: 3a05e834cf569df859edfebc7ae6cf2331f7fc6efde5418f06b7ce9c46dd9648
+- filename: 20260310 DCC Agenda and Meeting Notice.docx
+  kind: agenda
+  body: Developmental Controls Committee (DCC)
+  date_listing: '2026-03-10'
+  date_verified: null
+  date_evidence: listing
+  text_method: docx
+  char_count: 35073
+  hits: []
+  title: Developmental Controls Committee (DCC) Agenda and Meeting Notice (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_03102026-263
+  sha256: 25661c378f0e34c3a456f854a6c5250a73a21467a1c7c04783e08701e6082477
+- filename: 20260224 DCC Agenda and Meeting Notice.docx
+  kind: agenda
+  body: Developmental Controls Committee (DCC)
+  date_listing: '2026-02-24'
+  date_verified: null
+  date_evidence: listing
+  text_method: docx
+  char_count: 35193
+  hits: []
+  title: Developmental Controls Committee (DCC) - Cancelled (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_02242026-259
+  sha256: ab08836b0246c3072f21f9ac3efd3b6dcd6d44e5c3254fe9eb4a26f52c2794e9
+- filename: _02242026-259.pdf
+  kind: minutes
+  body: Developmental Controls Committee (DCC)
+  date_listing: '2026-02-24'
+  date_verified: '2026-02-24'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 3442
+  hits:
+  - rezoning
+  title: null
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_02242026-259
+  sha256: b0c68cbf11c3b72474c0c6e20618a7696383c4ba595fe06f708d9729e0dd38f8
+- filename: 20260210 Minutes cancelled signed.pdf
+  kind: agenda
+  body: Developmental Controls Committee (DCC)
+  date_listing: '2026-02-10'
+  date_verified: '2026-02-10'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 943
+  hits: []
+  title: Developmental Controls Committee (DCC) - Cancelled (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_02102026-266
+  sha256: 9cb534ee38bdabaf90831dce4b7cecbe1b4973439cf20ed4c41a9d60afbbeed2
+- filename: _02102026-266.pdf
+  kind: minutes
+  body: Developmental Controls Committee (DCC)
+  date_listing: '2026-02-10'
+  date_verified: '2026-02-10'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 943
+  hits: []
+  title: null
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_02102026-266
+  sha256: 9cb534ee38bdabaf90831dce4b7cecbe1b4973439cf20ed4c41a9d60afbbeed2
+- filename: 20260127 Minutes cancelled signed.pdf
+  kind: agenda
+  body: Developmental Controls Committee (DCC)
+  date_listing: '2026-01-27'
+  date_verified: '2026-01-27'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 977
+  hits: []
+  title: Developmental Controls Committee (DCC) - Cancelled (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_01272026-262
+  sha256: 3c573971033ed988c6b7ca63c97debd60505d35e28bb9e6efbff9e6f91ecc58b
+- filename: _01272026-262.pdf
+  kind: minutes
+  body: Developmental Controls Committee (DCC)
+  date_listing: '2026-01-27'
+  date_verified: '2026-01-27'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 977
+  hits: []
+  title: null
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_01272026-262
+  sha256: 3c573971033ed988c6b7ca63c97debd60505d35e28bb9e6efbff9e6f91ecc58b
+- filename: 20260113 Minutes cancelled signed.pdf
+  kind: agenda
+  body: Developmental Controls Committee (DCC)
+  date_listing: '2026-01-13'
+  date_verified: '2026-01-13'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 339
+  hits: []
+  title: Developmental Controls Committee (DCC) - Cancelled (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_01132026-261
+  sha256: 870873a911e2b21e40c8594977f135bb5f08d7b40a05b30686237e20c3a05d04
+- filename: _01132026-261.pdf
+  kind: minutes
+  body: Developmental Controls Committee (DCC)
+  date_listing: '2026-01-13'
+  date_verified: '2026-01-13'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 339
+  hits: []
+  title: null
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_01132026-261
+  sha256: 870873a911e2b21e40c8594977f135bb5f08d7b40a05b30686237e20c3a05d04
+- filename: 20260521 EC Agenda and Meeting Notice.docx
+  kind: agenda
+  body: Executive Committee (EC)
+  date_listing: '2026-05-21'
+  date_verified: null
+  date_evidence: listing
+  text_method: docx
+  char_count: 34530
+  hits: []
+  title: Executive Committee (EC) Regular Meeting and Notice Agenda (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_05212026-274
+  sha256: 8be997bd53a5546e7526004fb27cbd63271279fc37484234b94a248604c83b5b
+- filename: 20260423 EC Agenda and Meeting Notice.docx
+  kind: agenda
+  body: Executive Committee (EC)
+  date_listing: '2026-04-23'
+  date_verified: null
+  date_evidence: listing
+  text_method: docx
+  char_count: 35410
+  hits: []
+  title: Executive Committee (EC) Regular Meeting and Notice Agenda (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_04232026-272
+  sha256: 53cbcf3a32196ad3452c8f00cc888b062ffbf85807934449ce97b93abc2aedad
+- filename: _04232026-272.pdf
+  kind: minutes
+  body: Executive Committee (EC)
+  date_listing: '2026-04-23'
+  date_verified: '2026-04-23'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 9737
+  hits:
+  - bosc
+  - datacenter
+  - google
+  title: null
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_04232026-272
+  sha256: 0c6354fa311767a5cf8a58b1f5eafcc165274c1a38084ef91109d840f2a550bc
+- filename: 20260326 EC Agenda and Meeting Notice.docx
+  kind: agenda
+  body: Executive Committee (EC)
+  date_listing: '2026-03-26'
+  date_verified: null
+  date_evidence: listing
+  text_method: docx
+  char_count: 35516
+  hits: []
+  title: Executive Committee (EC) Regular Meeting and Notice Agenda (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_03262026-271
+  sha256: 86a7b010780effaffa14ef32be0ad5503b80f46eeed8c5820dd72469474e3a99
+- filename: _03262026-271.pdf
+  kind: minutes
+  body: Executive Committee (EC)
+  date_listing: '2026-03-26'
+  date_verified: '2026-03-26'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 7206
+  hits:
+  - datacenter
+  title: null
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_03262026-271
+  sha256: 084996c799f6671e52ef75d77211b8b676a37e65a60b133d83d8660142fd03ef
+- filename: 20260226 EC Agenda and Meeting Notice.docx
+  kind: agenda
+  body: Executive Committee (EC)
+  date_listing: '2026-02-26'
+  date_verified: null
+  date_evidence: listing
+  text_method: docx
+  char_count: 36354
+  hits: []
+  title: Executive Committee (EC) Regular Meeting and Notice Agenda (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_02262026-254
+  sha256: 33c2379bd9ed2b4042b7d51a4243a4219cf41f039fc511e5495eb65d27a30d05
+- filename: _02262026-254.pdf
+  kind: minutes
+  body: Executive Committee (EC)
+  date_listing: '2026-02-26'
+  date_verified: '2026-02-26'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 5960
+  hits: []
+  title: null
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_02262026-254
+  sha256: bc765fe9954b85c78b897e64bbdd511ceafe97a751c2d8f9c37dbc06b9d6bceb
+- filename: 20260122 EC Agenda and Meeting Notice.docx
+  kind: agenda
+  body: Executive Committee (EC)
+  date_listing: '2026-01-22'
+  date_verified: null
+  date_evidence: listing
+  text_method: docx
+  char_count: 36188
+  hits: []
+  title: Executive Committee (EC) Regular Meeting and Notice Agenda (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_01222026-253
+  sha256: eefb6fe0f58a74c92cd25fdbd48d8f098fd6efc8e609a96ee8c38cc2ed1af0fa
+- filename: _01222026-253.pdf
+  kind: minutes
+  body: Executive Committee (EC)
+  date_listing: '2026-01-22'
+  date_verified: '2026-01-22'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 6243
+  hits: []
+  title: null
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_01222026-253
+  sha256: 8ec06f5faa23dd6e77befd7fd781aa03d52d3f0801b1ebc98614b6d52cb433c2
+- filename: 20260521 MPOPC Agenda and Meeting Notice.docx
+  kind: agenda
+  body: MPO Policy Committee (MPOPC)
+  date_listing: '2026-05-21'
+  date_verified: null
+  date_evidence: listing
+  text_method: docx
+  char_count: 36329
+  hits: []
+  title: MPO Policy Committee (MPOPC)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_05212026-275
+  sha256: 78daa1050ebf49950cdbdbe2df57e8c8a92567c9b527f3b54e048c381320eb75
+- filename: 20260421 TAC Agenda and Meeting Notice.docx
+  kind: agenda
+  body: Transportation Advisory Committee (TAC)
+  date_listing: '2026-04-21'
+  date_verified: null
+  date_evidence: listing
+  text_method: docx
+  char_count: 37227
+  hits: []
+  title: Transportation Advisory Committee (TAC) Regular Meeting and Notice Agenda
+    (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_04212026-270
+  sha256: bc53c630478df364580caa833a94bbcc83ccb632832931de1bdb27cc93684ec7
+- filename: 20260224 TAC Agenda and Meeting Notice.docx
+  kind: agenda
+  body: Transportation Advisory Committee (TAC)
+  date_listing: '2026-02-24'
+  date_verified: null
+  date_evidence: listing
+  text_method: docx
+  char_count: 36735
+  hits: []
+  title: Transportation Advisory Committee (TAC) Regular Meeting and Notice Agenda
+    (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_02242026-265
+  sha256: b5ce8789cd63dccf79ad0b0a5d5758e9f35769fa5cc572faa50df935915aebb7
+- filename: _02242026-265.docx
+  kind: minutes
+  body: Transportation Advisory Committee (TAC)
+  date_listing: '2026-02-24'
+  date_verified: null
+  date_evidence: listing
+  text_method: docx
+  char_count: 62477
+  hits: []
+  title: null
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_02242026-265
+  sha256: b0ceb5901018e612713c60a625d816a9b7154d904440050b1372d4c42469faaa
+- filename: 20260120 TAC Agenda and Meeting Notice.docx
+  kind: agenda
+  body: Transportation Advisory Committee (TAC)
+  date_listing: '2026-01-20'
+  date_verified: null
+  date_evidence: listing
+  text_method: docx
+  char_count: 36537
+  hits: []
+  title: Transportation Advisory Committee (TAC) Regular Meeting and Notice Agenda
+    (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_01202026-264
+  sha256: 292c9702e8aafdf9fc832ea9a4cb7e76135f551f3510af2054acb9e8f13b9061
+- filename: _01202026-264.pdf
+  kind: minutes
+  body: Transportation Advisory Committee (TAC)
+  date_listing: '2026-01-20'
+  date_verified: '2026-01-20'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 4308
+  hits: []
+  title: null
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_01202026-264
+  sha256: 7ce9692175247d56c1f0c00f2f5f7cd1eb2f82b3a70f0e9d473a270aed42454f
+- filename: 20260423 TCC Agenda and Meeting Notice.pdf
+  kind: agenda
+  body: Transportation Coordinating Committee (TCC)
+  date_listing: '2026-04-23'
+  date_verified: null
+  date_evidence: listing
+  text_method: pdf_text
+  char_count: 1720
+  hits: []
+  title: Transportation Coordinating Committee (TCC) Regular Meeting Agenda and Notice
+    (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_04232026-278
+  sha256: fe8147f207e493e907febd56262326d54114a224aedde6d1b5fa521bb775ed66
+- filename: _04232026-278.pdf
+  kind: minutes
+  body: Transportation Coordinating Committee (TCC)
+  date_listing: '2026-04-23'
+  date_verified: '2026-04-23'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 5760
+  hits: []
+  title: null
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_04232026-278
+  sha256: 455cb7ed3591f5f25120c15b03e048ca33d7ad19d4ddd5fe096b25dac4be80a0
+- filename: 20260326 TCC Agenda and Meeting Notice-cancelled.pdf
+  kind: agenda
+  body: Transportation Coordinating Committee (TCC)
+  date_listing: '2026-03-26'
+  date_verified: null
+  date_evidence: listing
+  text_method: pdf_text
+  char_count: 753
+  hits: []
+  title: CANCELLED - Transportation Coordinating Committee (TCC) Regular Meeting Agenda
+    and Notice (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_03262026-277
+  sha256: e28eecd13f48f39ea4b71ab8639943e2809cb95b99dfbad2b2fa3793b6a021b2
+- filename: _03262026-277.pdf
+  kind: minutes
+  body: Transportation Coordinating Committee (TCC)
+  date_listing: '2026-03-26'
+  date_verified: '2026-03-26'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 230
+  hits: []
+  title: null
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_03262026-277
+  sha256: d63f905a8f193e130543368ab83ddea6a2f0e6ca71dca03f4710e28dd51b4409
+- filename: 20260226 TCC Agenda and Meeting Notice.pdf
+  kind: agenda
+  body: Transportation Coordinating Committee (TCC)
+  date_listing: '2026-02-26'
+  date_verified: null
+  date_evidence: listing
+  text_method: pdf_text
+  char_count: 1548
+  hits: []
+  title: Transportation Coordinating Committee (TCC) Regular Meeting Agenda and Notice
+    (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_02262026-276
+  sha256: f9626eea20021457bd38f0e06a6b87a068fd943a72536157717168db5ff8a1e5
+- filename: _02262026-276.pdf
+  kind: minutes
+  body: Transportation Coordinating Committee (TCC)
+  date_listing: '2026-02-26'
+  date_verified: '2026-02-26'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 4476
+  hits: []
+  title: null
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_02262026-276
+  sha256: 45d1856f2c3b3ec7cea48bbe0434e296d5611f7dae9410199db6043affdda154
+- filename: 20260122 TCC Agenda and Meeting Notice.docx
+  kind: agenda
+  body: Transportation Coordinating Committee (TCC)
+  date_listing: '2026-01-22'
+  date_verified: null
+  date_evidence: listing
+  text_method: docx
+  char_count: 35433
+  hits: []
+  title: Transportation Coordinating Committee (TCC) Regular Meeting Agenda and Notice
+    (PDF)
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Agenda/_01222026-257
+  sha256: cda2dad5c9d3595f564a7dabfcc2d4b4154e457e349178370bc56281eadc9e59
+- filename: _01222026-257.pdf
+  kind: minutes
+  body: Transportation Coordinating Committee (TCC)
+  date_listing: '2026-01-22'
+  date_verified: '2026-01-22'
+  date_evidence: ocr
+  text_method: ocr
+  char_count: 5317
+  hits: []
+  title: null
+  source_url: https://www.lacrpc.com/AgendaCenter/ViewFile/Minutes/_01222026-257
+  sha256: 889d2465b47148141d4b3eafbc0f0fd718c7e89b4fb6e11c4dae13e14d938503
