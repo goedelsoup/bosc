@@ -199,6 +199,7 @@ def build_site(settings: Settings | None = None, web_dir: Path | None = None) ->
         enrich_lei=True,
         enrich_rsei=True,
         enrich_federal=True,
+        enrich_subdivisions=True,
         settings=settings,
     )
     result.n_events = len(events)

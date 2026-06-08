@@ -264,6 +264,7 @@ def build_entity_graph(
     enrich_lei: bool = False,
     enrich_rsei: bool = False,
     enrich_federal: bool = False,
+    enrich_subdivisions: bool = False,
     settings: Settings | None = None,
 ) -> EntityGraph:
     """Resolve entities and relationships across deeds, NPDES permits, SoS filings.
@@ -438,6 +439,8 @@ def build_entity_graph(
                 graph.entities[ent_key].signals.add("shared_agent")
 
     log.info("entities.built", entities=len(graph.entities), relationships=len(graph.relationships))
+    if enrich_subdivisions:
+        _subdivision_meeting_entities(graph, settings=settings)
     if enrich_parcels:
         enrich_with_parcel_owners(graph, settings=settings)
     if enrich_lei:
@@ -447,6 +450,110 @@ def build_entity_graph(
     if enrich_federal:
         enrich_with_federal_awards(graph, settings=settings)
     return graph
+
+
+# --- Subdivision meeting participants (opt-in fold-in) ---------------------
+
+# Curated corridor actors. A meeting party is folded in ONLY if it already resolves
+# to a corpus entity or names one of these — a generic org suffix is deliberately
+# not enough, because corridor-flagged meetings also transact routine township
+# business (road-sealing, marketing, excavating vendors) that isn't the project.
+_CORRIDOR_ACTORS = (
+    "GOOGLE",
+    "AMAZON",
+    "BISTROZZI",
+    "HUME",
+    "TURNER CONSTRUCTION",
+    "GENERAL DYNAMICS",
+    "ECONOMIC DEVELOPMENT",  # AEDG
+    "PORT AUTHORITY",
+    "LEIS",  # Cindy Leis runs AEDG + the Port Authority
+)
+# The econ-dev shield appears under many meeting spellings; collapse to stable keys.
+_CANONICAL_ACTORS: tuple[tuple[str, str], ...] = (
+    ("ECONOMIC DEVELOPMENT", "ALLEN ECONOMIC DEVELOPMENT GROUP"),
+    ("PORT AUTHORITY", "PORT AUTHORITY OF ALLEN COUNTY"),
+)
+_FORCE_GOV = {sub_key for _, sub_key in _CANONICAL_ACTORS}
+
+
+def _clean_party(raw: str) -> str:
+    """Strip a parenthetical and any trailing role/affiliation after a dash.
+
+    "Paul Basinger (Trustee)" -> "Paul Basinger";
+    "Cindy Leis - Allen Economic Development Group" -> "Cindy Leis".
+    """
+    no_paren = re.sub(r"\s*\([^)]*\)", "", raw)
+    head = re.split(r"\s+[\u2013\u2014-]\s+", no_paren, maxsplit=1)[0]
+    return re.sub(r"\s+", " ", head).strip()
+
+
+def _corridor_key(name: str, graph: EntityGraph) -> str | None:
+    """Graph key to fold a meeting party under, or ``None`` to skip it.
+
+    Matches on the normalized key (so an incidental affiliation in a person's name
+    doesn't misfire). Canonicalizes the econ-dev shield's spellings; otherwise keeps
+    the party only if it already resolves to a corpus entity or names a curated
+    corridor actor.
+    """
+    key = normalize_name(name)
+    if not key:
+        return None
+    for needle, canon in _CANONICAL_ACTORS:
+        if needle in key:
+            return canon
+    if key in graph.entities or any(a in key for a in _CORRIDOR_ACTORS):
+        return key
+    return None
+
+
+def _subdivision_meeting_entities(graph: EntityGraph, *, settings: Settings | None = None) -> None:
+    """Fold corridor-relevant meeting participants into the graph (opt-in).
+
+    Reads every committed ``<slug>/meetings/meeting-summaries.yaml`` and, per corridor
+    party, merges it into the graph (enriching a known entity with the meeting as a
+    source) and links it to the subdivision body via one ``discussed_at`` edge —
+    connecting township actors to the corridor network. One-off residents/vendors stay
+    in the summaries, not the graph (see :func:`_corridor_key`); the per-party meeting
+    count lives in the entity's ``roles``.
+    """
+    settings = settings or get_settings()
+    seen_edges: set[tuple[str, str]] = set()
+    for path in sorted(settings.extracted_dir.glob("*/meetings/meeting-summaries.yaml")):
+        try:
+            data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        except yaml.YAMLError:
+            continue
+        if not isinstance(data, dict):
+            continue
+        slug = str(data.get("meta", {}).get("slug", path.parent.parent.name))
+        rel = f"{slug}/meetings/meeting-summaries.yaml"
+        sub_name = slug.replace("-", " ").title()
+        sub_key = normalize_name(sub_name)
+        sub_registered = False
+        for meeting in data.get("meetings", []):
+            if not isinstance(meeting, dict):
+                continue
+            date = str(meeting.get("date") or "")
+            for raw in meeting.get("parties", []):
+                name = _clean_party(str(raw))
+                key = _corridor_key(name, graph)
+                if not key:
+                    continue
+                if not sub_registered:
+                    graph._register(sub_name, role="meeting_body", source=rel)
+                    sub = graph.entities[sub_key]
+                    sub.kind, sub.classification = "government", "government_local"
+                    sub_registered = True
+                graph._register(name, role="meeting_participant", source=rel, key=key)
+                if key in _FORCE_GOV:
+                    ent = graph.entities[key]
+                    ent.kind, ent.classification = "government", "government_local"
+                if (key, sub_key) not in seen_edges:
+                    seen_edges.add((key, sub_key))
+                    graph.relationships.append(
+                        Relationship(key, "discussed_at", sub_key, date=date, ref=date, source=rel)
+                    )
 
 
 def enrich_with_parcel_owners(
