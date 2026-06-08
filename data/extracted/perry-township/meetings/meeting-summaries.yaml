@@ -1,0 +1,2824 @@
+meta:
+  subject: perry-township corridor meeting summaries
+  slug: perry-township
+  method: structured extraction (forced tool use) over the meeting text; model records
+    only what the minutes state — no inference.
+  summarized: 29
+  skipped_no_text: []
+meetings:
+- date: '2023-12-05'
+  kind: minutes
+  filename: PERRY-MINUTES-2023.12-05.pdf
+  hits:
+  - google
+  summary: At the December 5, 2023 Perry Township Trustees regular meeting, routine
+    township business was conducted including equipment purchases, personnel matters,
+    and zoning updates. During the guest comments portion, resident Doug Mooney asked
+    whether the trustees had heard anything about Google coming to Lima; the trustees
+    responded that they had not. No corridor-related action, discussion, or information
+    was presented beyond this single exchange.
+  corridor_relevance: The meeting is flagged solely because guest Doug Mooney asked
+    the trustees if they had heard anything about "Google coming to Lima," to which
+    the trustees replied they had not — no further corridor-related business was discussed
+    or acted upon.
+  decisions:
+  - Jack Neal made a motion to accept the meeting minutes from November 21, 2023,
+    2nd Kevin Cox — approved.
+  - Jack Neal made a motion to pay bills of $44,581.76, 2nd Kevin Cox — approved.
+  - Kevin Cox made a motion to accept bank reconciliation for November 2023, 2nd Jack
+    Neal — approved.
+  - Kevin Cox made a motion to approve a longevity raise of $.05 per hour for Corey
+    Lehman, 2nd Jack Neal — approved.
+  - Kevin Cox made a motion to hold the year-end meeting on 12/29/23 at 1:00 PM and
+    year-end evaluations from 8:00AM to 11:30 AM, 2nd Jack Neal — approved.
+  - 'Kevin Cox made motion for Resolution #2023.1205-01 to purchase a 2023 U.S. Fire
+    Custom Pumper from U.S. Fire Pump for the Fire Department at a cost of $685,902
+    — Neal YES, Cox YES, Kessen NO.'
+  - 'Kevin Cox made motion for Resolution #2023.1205-02 to have Allen County Budget
+    Commission approve expenditure of remaining unallocated ARPA funds in the amount
+    of $242,639.74 to be used towards the purchase of a fire truck and dump truck
+    — Neal YES, Cox YES, Kessen YES.'
+  - Kevin Cox made a motion to add account code 2273-760-740 to budget and move $242,639.74
+    to this account from 2273-519-000, 2nd Jack Neal — approved.
+  - 'Kevin Cox made motion for Resolution #2023.1205-03 to transfer $115,000 from
+    the General Fund to the Road and Bridge Fund 2031, 2nd Jack Neal — approved.'
+  - Kevin Cox made a motion to approve the Election Lease Agreement for 2024, 2nd
+    Jack Neal — approved.
+  - Kevin Cox made motion to approve single bathroom in outbuilding at 2070 Bowman
+    Road subject to sewer and water approval by Health Dept., 2nd Jack Neal — approved.
+  - Kevin Cox made motion to approve purchase request for estimated $140,000 for new
+    dump truck, 2nd Jack Neal — approved.
+  - Jack Neal made motion to sell Engine 4 on GovDeals.com for $15K, 2nd Kevin Cox
+    — approved.
+  - Kevin Cox made motion to approve $1,445 for the purchase of Rapid Intervention
+    Team Bottle, 2nd Jack Neal — approved.
+  - Kevin Cox made a motion to accept resignation of Dana Daughtery effective 12/5/23,
+    2nd Jack Neal — approved.
+  - Kevin Cox made a motion to hire Jason Helton as a part-time EMT Basic at the applicable
+    rate, 2nd Jack Neal — approved.
+  - Jack Neal made a motion to reinstate 10 months service credit to Ethan Hull, 2nd
+    Kevin Cox — approved.
+  - Trustees will discuss and make action at next meeting regarding granting 4 weeks
+    vacation to Kevin Rader based on overall service per the handbook.
+  - Kevin Cox made a motion to adjourn at 9:22PM, 2nd Jack Neal — approved.
+  parties:
+  - Greg Kessen (Chairman, Trustee)
+  - Jack Neal (Trustee)
+  - Kevin Cox (Trustee)
+  - Sandy Hofacker (Fiscal Officer)
+  - Larry Sidener (Guest)
+  - Joe Mays (Guest)
+  - John Brewster (Zoning Inspector)
+  - Kayla Campbell (Legal Counsel)
+  - Chris Stombaugh (Fiscal Officer candidate)
+  - Christine Stombaugh
+  - Jenny Young (Guest)
+  - Bill Young (Guest)
+  - Doug Mooney (Guest)
+  - Bob Phillips (Police Chief)
+  - Corey Lehman (Road Dept.)
+  - Kevin Rader (Fire Dept.)
+  - Jason Smedley (Guest)
+  - Natalie Scott
+  - Reinecke
+  - Shelley Corp.
+  - Matt Pickering (ODOT)
+  - Signs Ohio
+  - Dana Daughtery
+  - Jason Helton
+  - Ethan Hall / Ethan Hull
+  - U.S. Fire Pump
+  - Kalida Truck
+  - Judge Terry Kohlreiser
+  parcels:
+  - 1807 Zeits
+  - 2070 Bowman Road
+  - Hanthorn Road (pond application)
+  - Colony Mobile Home Park
+  - Creps Road
+  - Schooler Road
+  - Lennox (house across from Ben Hefner's primary residence)
+  dollar_figures:
+  - $44,581.76 (bills)
+  - $.05 per hour (longevity raise for Corey Lehman)
+  - $685,902 (2023 U.S. Fire Custom Pumper)
+  - $242,639.74 (remaining unallocated ARPA funds)
+  - $115,000 (transfer from General Fund to Road and Bridge Fund 2031)
+  - $140,000 (estimated purchase of new dump truck)
+  - $65K (quote from Kalida Truck for dump bed)
+  - $15K (Engine 4 listing on GovDeals.com)
+  - $1,445 (Rapid Intervention Team Bottle)
+  - $33K (dispatch contract, next year)
+  - $255 (Toys for Tots)
+- date: '2024-04-02'
+  kind: minutes
+  filename: PERRY-MINUTES-2024.0402.doc.pdf
+  hits:
+  - datacenter
+  - pipeline
+  - setback
+  - solar
+  - tax_abatement
+  summary: At the April 2, 2024 Perry Township Trustees regular meeting, attorney
+    Jill Hageman, representing an unnamed Fortune 500 data center company through
+    Allen Economic Development, gave a presentation on a proposed hyperscale data
+    center project to be located south of Breese Road and east of St. Johns Road,
+    encompassing approximately 350 acres. The company intends to build 7–8 warehouse-style
+    buildings over a 6–8 year construction timeline, employing roughly 30–50 people
+    per building, and has stated it will not accept tax abatements that impact the
+    local school district. Residents raised concerns about taxes, property values,
+    emissions, water usage, and transparency, while the company's representatives
+    indicated the project name would be released once environmental studies return
+    favorable results and the zoning process advances.
+  corridor_relevance: This meeting is directly connected to the corridor project because
+    attorney Jill Hageman appeared on behalf of an unnamed Fortune 500 data center
+    client, facilitated by Allen Economic Development, to present a proposal for a
+    hyperscale data center on approximately 350 acres in Perry Township south of Breese
+    Road and east of St. Johns Road.
+  decisions:
+  - Kevin Cox made a motion to accept the corrected meeting minutes from March 5,
+    2024, 2nd by Greg Kessen, roll call.
+  - Greg Kessen made a motion to accept the corrected meeting minutes from the Special
+    Meeting held March 29, 2024, 2nd by Kevin Cox, roll call.
+  - Kevin Cox made a motion to pay bills of $106,498.28, 2nd Greg Kessen, roll call.
+  - Kevin Cox made a motion to approve the bank reconciliation for February 2024,
+    2nd Greg Kessen, roll call.
+  - Kevin Cox made a motion to approve the credit card policy updated as of 3/29/24,
+    2nd Greg Kessen, roll call.
+  - Kevin Cox made a motion to accept the resignation letter from Jodi Phillips, 2nd
+    Greg Kessen, roll call.
+  - Kevin Cox made a motion to accept the resignation letter from Bob Phillips, 2nd
+    Greg Kessen, roll call.
+  - Greg Kessen moved for Resolution 2024.0402-01 to approve the 2024 Road Program
+    contracted in the amount of $133,339.87, 2nd Kevin Cox, roll call.
+  - Greg Kessen made a motion to approve the contract for Reclamite Sealing in the
+    amount of $22,160.40, 2nd Kevin Cox, roll call.
+  - Kevin Cox made a motion to accept the estimate from Suever Sweeping out of Delphos
+    for $4,495.00 for crack patching on Creps, Osman, Ditzler and Kerr Road to Wonnell,
+    2nd Greg Kessen, roll call.
+  - Kevin Cox made a motion to approve a pay raise to $18.00 per hour for Nick Myers
+    based on his certification as a Level 1 Paramedic, with back pay retroactive to
+    March 14th, 2nd Greg Kessen, roll call.
+  - Kevin Cox made a motion to hire Gage Stemen as a part-time Level 2 EMT and volunteer
+    firefighter at the rate of $14.50 per hour, 2nd Greg Kessen, roll call.
+  - Kevin Cox made a motion to go into Executive Session for Personnel at 9:23 PM
+    with John Iten, 2nd Greg Kessen, roll call.
+  - Kevin Cox made a motion to come out of Executive Session at 9:43 PM, 2nd Greg
+    Kessen, roll call.
+  - Kevin Cox made a motion to hire John Iten as Interim Police Chief at $24 per hour
+    not to exceed 100 hours per month, 2nd Greg Kessen, roll call.
+  - Greg Kessen made a motion to go into Executive Session for Zoning with John Brewster
+    at 9:46 PM, 2nd Greg Kessen, roll call.
+  - Kevin Cox made a motion to come out of Executive Session at 9:59 PM, 2nd Greg
+    Kessen, roll call. No action taken.
+  - Kevin Cox made a motion to adjourn at 10:00 PM, 2nd Greg Kessen, roll call.
+  parties:
+  - Larry Sidener (Chairperson, Perry Township Trustee)
+  - Kevin Cox (Perry Township Trustee)
+  - Greg Kessen (Perry Township Trustee)
+  - Christina Stombaugh (Fiscal Officer)
+  - Jill Hageman (Attorney, Columbus, Ohio — representing unnamed data center client)
+  - Deanna Cook (Attorney — Allen Economic Development / land use and zoning)
+  - Allen Economic Development (AEDG)
+  - Allen County Port Authority
+  - Dave Stratton
+  - Cindy Leis
+  - Marc Sidener
+  - Kelly Schooler (Dr. — Perry Schools)
+  - Ron Clementz
+  - Linda Hoersten
+  - Mark Hoersten
+  - Norm Capps
+  - Jeff Carolus
+  - Denny Phalen
+  - Kayla Rogers (Asst. Allen County Prosecutor)
+  - John Brewster (Zoning Inspector)
+  - Bob Phillips (Police Chief — resigned)
+  - Jodi Phillips (resigned)
+  - John Iten (hired as Interim Police Chief)
+  - Corey Lehman (Road Supervisor)
+  - Kevin Rader (Fire Chief)
+  - Nick Myers
+  - Gage Stemen
+  - Paul Curtis
+  - Pavement Technologies
+  - Suever Sweeping (Delphos)
+  - Allen County Engineers
+  - Dominion (NKA Enbridge)
+  - AEP
+  - National Deputy Sheriff's Association
+  - Motorola
+  - Jason Stombaugh
+  - Dave Bailey
+  - George Clementz
+  - Frank Clemetz
+  - Deb Sidener
+  - Hazel Lambert
+  - Tammy Cornwell
+  - Mark Cornwell
+  - Scott Stombaugh
+  - Brandon Cornwel
+  - Adam Haunharst
+  - Brooke Hedges
+  - Jodi Phillips
+  - Mike and Betty Perry Counts
+  - Tara Reynolds Bales
+  - Cody Dagle
+  - Herb Williams
+  - Janet Lauf
+  - Joe McDonnell
+  - Tammy McDonnell
+  - Mike Lehman
+  - Sasha Weight
+  - Brian Nartker (Health Department)
+  - Crown
+  parcels:
+  - 3201 Yoder Road
+  - 1807 Zeits Avenue
+  - 1511 Lennox Avenue
+  - South of Breese Road and East of St. Johns (proposed 350-acre data center site)
+  - State Route 65 (Crown property)
+  - 117 (new bank — Signs Ohio variance request)
+  dollar_figures:
+  - $106,498.28 (bills approved)
+  - $133,339.87 (2024 Road Program — Resolution 2024.0402-01)
+  - $22,160.40 (Reclamite Sealing contract — Pavement Technologies)
+  - $4,495.00 (crack patching estimate — Suever Sweeping)
+  - $18.00 per hour (Nick Myers pay raise — Level 1 Paramedic)
+  - $14.50 per hour (Gage Stemen — part-time EMT/volunteer firefighter)
+  - $17,513 (cost of radios replaced in 2023)
+  - $2,487 (remaining balance in line item 252 after 2023 radios)
+  - $57,479.90 (cost of radios to be replaced in 2024)
+  - $50,000 (grant and insurance claim coverage toward 2024 radios)
+  - $4,792.70 (remaining balance after grant/insurance for 2024 radios)
+  - $2,245.97 (shortfall in line item 252)
+  - $17,000 (supplemental appropriation needed to cover shortfall)
+  - $24 per hour (John Iten — Interim Police Chief, not to exceed 100 hours per month)
+- date: '2024-04-16'
+  kind: minutes
+  filename: PERRY-MINUTES-2024.0416.pdf
+  hits:
+  - datacenter
+  - easement
+  summary: At the April 16, 2024 Perry Township Trustees meeting, two residents —
+    Cathy Clementz and Gary Shaw — raised questions about the data center project
+    during the public comment portion. Cathy Clementz stated she had been researching
+    data centers and asked about maximum decibel noise levels at certain distances,
+    to which the Trustees replied they had no further information on sound issues
+    yet. Gary Shaw asked whether the data center would have its own electrical substation
+    or would cause power issues for residents, and it was noted that lawyers at a
+    prior meeting forum stated it would most likely have its own substation.
+  corridor_relevance: This meeting is connected to the corridor project because community
+    members directly questioned the Trustees about the data center's noise levels
+    and power infrastructure, reflecting ongoing public concern about the hyperscale
+    data center development in the area.
+  decisions: []
+  parties:
+  - Frank Clementz
+  - Cathy Clementz
+  - Gary Shaw
+  - Larry Sidener
+  - Kevin Cox
+  - Greg Kessen
+  parcels: []
+  dollar_figures: []
+- date: '2024-05-07'
+  kind: minutes
+  filename: PERRY-MINUTES-2024.0507.docx.pdf
+  hits:
+  - datacenter
+  - rezoning
+  - solar
+  summary: At the May 7, 2024 Perry Township Trustees regular meeting, residents and
+    trustees raised questions about a potential data center project in the area. Trustee
+    Larry Sidener reported taking a drive to New Albany to observe existing data centers,
+    noting significant construction, equipment, and two power substations. Discussion
+    included whether to pursue zoning amendments or rezoning in connection with the
+    project, with trustees ultimately deciding not to make any zoning amendments at
+    this time, and a suggestion was made for a meeting among Cindy Leis, Kayla, Jill,
+    John, and Larry to discuss next steps.
+  corridor_relevance: This meeting is connected to the data-center corridor project
+    through resident and trustee questions about "the data center," discussion of
+    potential zoning amendments/rezoning, and a reference to AEDG and regional planning
+    contacts involved in the process.
+  decisions:
+  - Greg Kessen made a motion to accept the corrected meeting minutes from April 16,
+    2024, 2nd Kevin Cox, rollcall.
+  - Kevin Cox made a motion to pay bills of $150,074.83, 2nd Greg Kessen, rollcall.
+  - Kevin Cox made a motion to approve the estimate from Blacktop Sealing Inc. for
+    $10,670 for crack filling, sealing and striping the parking lot between the Administration
+    Building and the Fire Building, Greg Kessen 2nd, roll call.
+  - Greg Kessen made a motion to accept the zoning permit receipts for April 2024
+    in the amount of $2,331.00, Kevin Cox 2nd, roll call.
+  - Trustees are not currently going to make any zoning amendments.
+  - Kevin Cox made a motion to hire Caitlin Stover at $15/hour as Administrative Assistant,
+    Greg Kessen 2nd, roll call.
+  - Greg Kessen made a motion to add Caitlin Stover as a user on the Township credit
+    card, Kevin Cox 2nd, roll call.
+  - Kevin Cox made a motion to hire Justin Roberts as EMT and Volunteer Firefighter
+    at the applicable rate, Greg Kessen 2nd, roll call.
+  - Larry Sidener made a motion to go into Executive Session at 8:48 PM, Greg Kessen
+    2nd, roll call.
+  - Greg Kessen made a motion to come out of Executive Session at 9:34 PM, Kevin Cox
+    2nd, roll call. No action taken.
+  - Greg Kessen made a motion to appropriate $50,000 from the Ohio Dept of Commerce
+    Grant to the Fire Fund Telephone Budget Line Item to replace the MARCS radios,
+    Kevin Cox 2nd, roll call.
+  - Greg Kessen made a motion to accept a 2024 Hydrant Preventative Maintenance Agreement
+    with Colony Mobile Home and Eastwood Estates, Kevin Cox 2nd, roll call.
+  - Greg Kessen made motion to adjourn at 9:42 PM, 2nd by Kevin Cox, rollcall.
+  parties:
+  - Larry Sidener, Chairperson/Trustee
+  - Kevin Cox, Trustee
+  - Greg Kessen, Trustee
+  - Christina Stombaugh, Fiscal Officer
+  - Cassie Betts
+  - Andrew Klaus
+  - Zach Stewart, VFIS Insurance
+  - Tim Jackson
+  - William Dickerson
+  - Jeff Carolus
+  - Jason Stombaugh
+  - Cathy Clementz
+  - Jim Clemetz
+  - Joe Mays
+  - Dave Stombaugh
+  - Brooke Hedges
+  - Corlisa Tyson
+  - Romaine Jackson
+  - John Iten, Interim Police Chief
+  - Corey Lehman, Road Supervisor
+  - John Brewster, Zoning Inspector
+  - Kayla Rogers
+  - Cindy Leis, AEDG
+  - Adam, Regional Planning
+  - Kevin Rader, Fire Chief
+  - Caitlin Stover
+  - Justin Roberts
+  - Sandy Hofacker
+  - Commercial Communications
+  - Blacktop Sealing Inc.
+  - Colony Mobile Home
+  - Eastwood Estates
+  - TASC
+  - RD Jones Excavating Corp
+  - Ohio Dept of Commerce
+  - Allen County Dispatchers
+  - OPATA
+  parcels:
+  - 1511 Lennox
+  - State Route 65 (house fire property)
+  - Amherst between McClain and State Route 65
+  - Amherst and Dixon (log jam)
+  - Breese Road (camper property)
+  dollar_figures:
+  - $150,074.83 (bills to be paid)
+  - $3 million (total coverage for buildings and contents)
+  - $500 (deductible)
+  - $5,000 (personal property coverage per employee, no deductible)
+  - $850 (premium increase, approximately 2%)
+  - $11,319.36 (estimate from Commercial Communications for three portable radios
+    and one base unit)
+  - $3,800 (budgeted for one radio, line item 72)
+  - $3,411 (amount to cover portable radios from line item 72)
+  - $389 (remaining in telephone fund after portable radios)
+  - $7,908.86 (cost of portable radios)
+  - $5,000 (requested move from ammo line item 78)
+  - $2,908.86
+  - $2,519.86
+  - $2,000 (replacement taser, line item 83)
+  - $519.86
+  - $10,670.00 (estimate for sealing and striping parking lot)
+  - $10,670 (motion amount, Blacktop Sealing Inc.)
+  - $2,331.00 (zoning permit receipts for April 2024)
+  - $15/hr (Caitlin Stover starting rate)
+  - $2/hour (additional if paramedic license obtained)
+  - $13,400 (overtime prevented year-to-date by part-time staff)
+  - $88,400 (savings year-to-date)
+  - $50,000 (appropriated from Ohio Dept of Commerce Grant for MARCS radios)
+- date: '2024-05-21'
+  kind: minutes
+  filename: PERRY-MINUTES-2024.0521.docx.pdf
+  hits:
+  - datacenter
+  - hume
+  - pipeline
+  - rezoning
+  - setback
+  - solar
+  - tax_abatement
+  summary: At the May 21, 2024 Perry Township Trustees meeting, representatives from
+    AEDG and associated legal counsel presented the case for a hyperscale data center
+    proposed for a site between Breese and Hume Road, already zoned I-2, seeking the
+    township to initiate a zoning amendment to permit data centers. Projected tax
+    revenue figures were shared, including an estimated $125,000 annually to Perry
+    Township and nearly $400,000 to Perry Schools per building, with a 6-building
+    project potentially generating over $2.4 million for schools and approximately
+    $750,000 for the township. The Trustees discussed the zoning amendment process
+    at length but no vote on the data center zoning matter was taken; Chairperson
+    Larry Sidener declined to call for a vote that evening.
+  corridor_relevance: This meeting directly addresses the proposed hyperscale data
+    center (a Fortune 500 company's project) on a site between Breese and Hume Road
+    in Perry Township, with presenters requesting the township initiate I-2 zoning
+    amendments to permit data centers and trustees deliberating whether to begin that
+    process.
+  decisions:
+  - Greg made a motion to accept the meeting minutes from May 7th, 2024; 2nd Kevin
+    Cox; rollcall passed.
+  - Kevin Cox made a motion to pay bills of $73,000.59; 2nd Greg Kessen; rollcall
+    passed.
+  - Greg Kessen made a motion to accept the April Bank Reconciliation for 2024; 2nd
+    Kevin Cox; rollcall passed.
+  - Greg Kessen made a motion to accept the updated credit card policy; 2nd Kevin
+    Cox; rollcall passed.
+  - Greg Kessen made a motion to have a budget meeting on June 18th at 6:30 PM; 2nd
+    Kevin Cox; rollcall passed.
+  - Larry Sidener made a motion to rescind the Friday morning workshops; 2nd Greg
+    Kessen; Larry Sidener YES, Kevin Cox NO, Greg Kessen YES; motion passed.
+  - Greg Kessen made a motion to approve the purchase request for the MARCS radios
+    from Commercial Communications in the amount of $3,411; 2nd Kevin Cox; rollcall
+    passed.
+  - Greg Kessen made motion to adjourn at 9:23 PM; 2nd Kevin Cox; rollcall passed.
+  - No vote was called on the data center zoning amendment; Larry Sidener stated he
+    is not calling for a vote tonight.
+  parties:
+  - Larry Sidener, Chairperson/Trustee, Perry Township
+  - Kevin Cox, Trustee, Perry Township
+  - Greg Kessen, Trustee, Perry Township
+  - Christina Stombaugh, Fiscal Officer, Perry Township
+  - Cindy Leis, AEDG
+  - Jill Hageman, Attorney for Fortune 500 company (data center)
+  - Kayla Rogers (role not specified, legal/planning)
+  - Dave Stratton (role not specified)
+  - Rex Huffman, Lawyer, formerly represented Allen County Port Authority, from Bowling
+    Green in Wood County
+  - John Brewster, Zoning Inspector, Perry Township
+  - Rich and Monica Patton, residents (6336 St Johns Rd)
+  - Vivian Wilson, resident (Breese Road)
+  - Dave Shepherd, resident
+  - Nancy Jones, resident (5000 Greeley Chapel)
+  - Kelly Schooler
+  - Frank Clementz
+  - Jim Clementz
+  - Jeff Carolus
+  - Brandon Cornwell
+  - Paul Basinger
+  - John Iten, Interim Police Chief
+  - Corey Lehman, Road Supervisor
+  - Kevin Rader, Fire Chief
+  - Mike Reynolds (referenced as property seller on Breese Road)
+  - Commercial Communications (MARCS radio vendor)
+  parcels:
+  - Site between Breese and Hume Road, zoned I-2
+  - 358 acres (optioned by data center company)
+  - 6336 St Johns Rd (Patton property)
+  - 5000 Greeley Chapel (Nancy Jones residence)
+  - 4315 McPheron Rd (new house construction)
+  - I-2 parcels (referenced generally for zoning amendment)
+  - Addresses between Greeley Chapel and Bowman Road on 4th Street (list of 7 addresses
+    presented by Dave Shepherd, not individually named in minutes)
+  dollar_figures:
+  - $50 – $75 million (estimated market value per data center building)
+  - $125,000 annually (estimated tax to Perry Township per building per year)
+  - almost $400,000 (estimated tax to Perry Schools per building per year)
+  - over $2.4 million (estimated tax to Perry Schools for 6-building project)
+  - about $750,000 (estimated tax to Perry Township for 6-building project)
+  - $73,000.59 (bills approved for payment)
+  - $3,411 (purchase request for MARCS radios from Commercial Communications)
+  - $10,000 - $15,000 (estimated cost of new septic system, Patton property)
+  - $36,000 (insurance money held by Perry Township, Patton property)
+  - $1,000 (disaster relief grant approved for fire department payroll funds)
+- date: '2024-06-04'
+  kind: minutes
+  filename: PERRY-MINUTES-2024.0604.docx.pdf
+  hits:
+  - annexation
+  - datacenter
+  - hume
+  - rezoning
+  - setback
+  - tax_abatement
+  summary: The June 4, 2024 Perry Township Trustees regular meeting was dominated
+    by extensive public comment and trustee discussion regarding a proposed data center
+    (referred to as a "data plant" or "data center") on I-2 industrially zoned land
+    in the township, with residents and officials both supporting and opposing the
+    project. The central question before the trustees was whether to initiate a zoning
+    text amendment to add data centers as a permitted use within I-2 General Industry
+    zones. Trustees Larry Sidener and Greg Kessen both stated they wished to defer
+    any decision until at least the next meeting, pending the return of the zoning
+    inspector and further research. The meeting also addressed routine township business
+    including bills, insurance payments, road maintenance, and banking options.
+  corridor_relevance: This meeting directly concerns the proposed hyperscale data
+    center project, as trustees, residents, landowners, and regional officials debated
+    whether to amend Perry Township's I-2 zoning text to permit data centers, with
+    Rex Huffman of the Port Authority of Allen County and Wood County, Cindy Leis,
+    and Lima Mayor Sharetta Smith among those advocating for the zoning amendment
+    process to begin.
+  decisions:
+  - Kevin Cox made a motion to accept the meeting minutes from May 21, 2024; Greg
+    Kessen 2nd; rollcall.
+  - Greg Kessen made a motion to pay bills of $73,701.00; Kevin Cox 2nd; rollcall.
+  - Greg Kessen made a motion to pay VFIS Insurance of $38,372.00; Kevin Cox 2nd;
+    rollcall.
+  - Motion to adjourn at 8:59 PM; 2nd by Kevin Cox; rollcall.
+  - Trustees Larry Sidener and Greg Kessen both stated they want to wait until at
+    least the next meeting before making a decision on the zoning amendment for data
+    centers (no formal vote taken on zoning amendment).
+  parties:
+  - Larry Sidener, Chairman/Trustee, Perry Township
+  - Kevin Cox, Trustee, Perry Township
+  - Greg Kessen, Trustee, Perry Township
+  - Christina Stombaugh, Fiscal Officer, Perry Township
+  - John Iten, Interim Police Chief, Perry Township
+  - Corey Lehman, Road Supervisor, Perry Township
+  - John Brewster, Zoning Inspector, Perry Township
+  - Kevin Rader, Fire Chief, Perry Township
+  - Audrey Daniel, Chase Bank
+  - Beth Siebert, Allen County Commissioner / Allen Economic Development Board / Lima
+    Allen County Regional Planning Commission
+  - Sharetta Smith, Mayor of Lima / Allen County Economic Development Board / Regional
+    Planning
+  - Rex Huffman, Port Authority of Allen County and Wood County
+  - Cindy Leis
+  - Adam Haunhurst, Lima Allen County Regional Planning Commission (LACRPC), Zoning
+    Official
+  - Keith Horner
+  - Dave Stratton
+  - Jim Cira
+  - Nick Heitz
+  - Lisa Heitz
+  - Jennifer Golden
+  - Michele Kohlhorst
+  - Laura Schaub
+  - Toby Schaub
+  - Tom Dickson
+  - Kathy Dickson
+  - Brandon Cornwell
+  - Jeff Carolus
+  - Mark Sidener
+  - Jim Clementz
+  - Janet Lauf
+  - Mark Hoersten
+  - Linda Hoersten
+  - Wally Schooler
+  - Jason Stombaugh
+  - Sasha Weight
+  - Chuck Weight
+  - Vivian Wilson
+  - Dave Sheperd (Shepperd)
+  - Kathy Clementz
+  - Ron Spencer
+  - Norm Capps
+  - Frank Clemetz
+  - Mike Reynolds
+  - Cheryl (Sheryl) Kirkendall
+  - Deb Sidener
+  - John Davis
+  - Jill Hageman (mentioned by Mark Sidener)
+  parcels:
+  - 1250 East Hume Road (Toby Schaub residence)
+  - 1250 E. Breese Road (Vivian Wilson residence)
+  - 210 Amherst Road (property subject to insurance funds/compliance release)
+  - State Route 65 and Hume Road area (proposed data center site)
+  - Greeley Chapel Road (Jim Cira and Mark Hoersten properties)
+  - State Route 65 (Nick & Lisa Heitz property, approximately 17 years owned, already
+    zoned I-2 Industrial)
+  dollar_figures:
+  - $73,701.00 (bills payment)
+  - $38,372.00 (VFIS Insurance payment)
+  - $100,000 or more for 6 months CD at 4.49% interest rate (Chase Bank)
+  - 100% tax abatement (referenced by Mark Sidener as what the company will seek)
+- date: '2024-06-18'
+  kind: minutes
+  filename: PERRY-MINUTES-2024.0618.docx.pdf
+  hits:
+  - datacenter
+  - hume
+  - rezoning
+  - solar
+  - tax_abatement
+  summary: The June 18, 2024 Perry Township Trustees regular meeting was dominated
+    by public discussion of a proposed hyperscale data center on approximately 358
+    acres of industrially-zoned land in the township, with residents and officials
+    debating noise, property taxes, zoning language changes, and potential tax abatements.
+    Zoning Inspector John Brewster announced a June 27th zoning commission meeting
+    to begin discussions on adding "data centers" as a permitted use under industrial
+    zoning, with public comment hearings to follow at a later date. Allen Economic
+    Development Group (AEDG) representatives Dave Stratton and Cindy Leis addressed
+    residents, clarifying that the company's identity cannot yet be disclosed, that
+    no tax abatement has been agreed upon, and that any abatement would include a
+    PILOT agreement to keep school revenue whole. Community members raised concerns
+    about noise, road impacts, acreage (figures cited ranged from 350 to 800 acres),
+    conflicts of interest, eminent domain, and the identity of the unnamed company,
+    with one resident referencing "Apple" by name.
+  corridor_relevance: This meeting connects directly to the corridor project because
+    it centers on a proposed data center development on industrially-zoned Perry Township
+    land, with AEDG officials, the zoning inspector, trustees, and numerous residents
+    debating the process for amending zoning language to permit data centers and the
+    project's community impacts.
+  decisions:
+  - Zoning Inspector John Brewster scheduled a zoning commission meeting for Thursday,
+    June 27th at 6:30 PM at the Township Administration Building to discuss possibly
+    adding data centers to industrial zoning; public is welcome but no public comments
+    or questions will be taken at that meeting.
+  - Trustees indicated there will be two future public comment meetings before any
+    final decision.
+  - Larry Sidener stated he would check into whether his son's farming relationship
+    with South Warsaw Farms constitutes an ethics violation.
+  - Trustees agreed to look into the traffic/parking issue at the Pepsi plant on Greeley
+    Chapel and 4th Street.
+  - Greg Kessen stated the roads department and police may be able to close Charledon
+    Road between 8th and 9th on Saturday, July 6th from 4 PM to approximately 10 or
+    11 PM for a private party; Kevin Cox stated that would not be out of line.
+  parties:
+  - Larry Sidener, Chairperson/Trustee, Perry Township
+  - Kevin Cox, Trustee, Perry Township
+  - Greg Kessen, Trustee, Perry Township
+  - Christina Stombaugh, Fiscal Officer, Perry Township
+  - John Iten, Interim Police Chief, Perry Township
+  - Corey Lehman, Road Supervisor, Perry Township (absent)
+  - John Brewster, Zoning Inspector, Perry Township
+  - Kevin Rader, Fire Chief, Perry Township
+  - Dave Shepherd, resident/guest
+  - Mike Mathys, resident/guest
+  - Loretta Hicks, resident/guest
+  - Michele Kohlhorst, resident/guest
+  - Jennifer Golden, resident/guest
+  - Tammy McDonnell, resident/guest
+  - Joe McDonnell, resident/guest
+  - Adam Haunhorst, Regional Planning
+  - Lynn Bodine, resident/guest
+  - Lisa Heitz, resident/guest
+  - Nick Heitz, resident/guest
+  - Norm Capps, resident/guest
+  - Ron Spencer, guest (does not live in township)
+  - Yvonne Mars, resident/guest
+  - Scott Floyd, resident/guest
+  - Don Jones, resident/guest
+  - Nancy Jones, resident/guest
+  - Mike Reynolds, resident/guest
+  - Laura Kessen, resident/guest
+  - Steve Hunt, resident/guest
+  - Paul Holloway, resident/guest
+  - Emily Holloway, resident/guest
+  - Laken Warris, resident/guest
+  - Brayton VanVorce, resident/guest
+  - Cal Klickman, resident/guest
+  - Ryan Klickman, resident/guest
+  - Andrew Klaus, resident/guest (stated he worked at a data center construction site
+    in New Albany)
+  - Cassie Betts, resident/guest
+  - Wallace Schooler, resident/guest
+  - Rheeta Burrell, resident/guest
+  - Kelly Schooler, resident/guest
+  - Tom Ewing, resident/guest
+  - Marc Pescosolido, resident/guest (stated he is on the school board for Apollo)
+  - Vivian Wilson, resident/guest
+  - Ginger Hollar, resident/guest
+  - Ronald Wieterman, resident/guest
+  - Janet Lauf, resident/guest (stated her land is part of the industrial area)
+  - Melissa Busick, resident/guest
+  - Paul Busick, resident/guest
+  - Sharon Mueller, resident/guest
+  - Joe Wireman, resident/guest
+  - Cathy Clementz, resident/guest
+  - Frank Clementz, resident/guest
+  - Eric Pohjala, resident/guest
+  - Jason Stombaugh, resident/guest
+  - Craig Shaw, resident/guest
+  - Scott Stombaugh, resident/guest
+  - Chris Kirkendall, resident/guest
+  - Kim Kirkendall, resident/guest
+  - Bob Phillips, resident/guest
+  - Todd Gardner, resident/guest
+  - Greg Parranto, resident/guest (stated he is a doctor and former commercial realtor)
+  - Katherine Dickson, resident/guest
+  - Sasha Weigt, resident/guest
+  - Chuck Weigt, resident/guest
+  - Mark Sidener, resident/guest (Larry Sidener's son)
+  - Melissa Holloway, resident/guest
+  - Tom Holloway, resident/guest
+  - Luke Tavianao, resident/guest
+  - Dave Stratton, Allen Economic Development Group (AEDG)
+  - Cindy Leis, Allen Economic Development Group (AEDG)
+  - Rex Huffman, Wood County (stated he spends a lot of time in Allen County)
+  - Jill (referenced but not further identified, stated to have made a prior presentation
+    about the opportunity)
+  - South Warsaw Farms (referenced in conflict-of-interest discussion)
+  parcels:
+  - Heitz and Reynolds properties (referenced as the proposed site, described as right
+    in Vivian Wilson's backyard)
+  - Janet Lauf's land (stated to be part of the industrial area, not for sale; family
+    has owned since 1962)
+  - Property on Greeley Chapel owned by Kim Kirkendall's mother (stated by trustees
+    to not be zoned industrial)
+  - Land on Charledon between 8th and 9th (Laken Warris)
+  dollar_figures:
+  - $30,000 – saved in overtime by fire department full time staff and chief covering
+    at time and a half
+  - $2,000 – saved by adjusting full timers' schedules to cover vacations
+  - $30,000 – amount Ronald Wieterman stated he just paid for tile work on his property
+    across from the proposed site
+  - $80 per week – property tax paid by Marc Pescosolido
+  - $90,000 – $100,000 – amount one mill generates, per Greg Kessen
+  - 75% tax abatement for 10 years – scenario cited by Dave Stratton (not agreed upon)
+  - 100% tax abatement – referenced by Larry Sidener as what New Albany has; Cindy
+    Leis stated Allen County has not agreed to 100% tax abatement on any project
+- date: '2024-07-02'
+  kind: minutes
+  filename: PERRY-MINUTES-2024.0702.docx.pdf
+  hits:
+  - datacenter
+  - google
+  - hume
+  - rezoning
+  - tax_abatement
+  summary: At the July 2, 2024 Perry Township Trustees regular meeting, Zoning Inspector
+    John Brewster reported that the June 27th Zoning Board meeting passed a zoning
+    amendment to add "data center" to the zoning language, and that the amendment
+    is now at Regional Planning, which has 20–30 days to issue a recommendation before
+    the process continues through public hearings and trustee ruling — potentially
+    concluding as late as November. Several residents commented on the proposed data
+    center, including expressions of support from the Northwest Perry Revitalization
+    Group, concerns about land acquisition affecting homeowners, and questions about
+    abatements and infrastructure impacts. Trustees also clarified that a potential
+    railroad spur at Hume Road has no connection to the proposed data center.
+  corridor_relevance: This meeting directly addresses the data-center corridor project
+    through the Zoning Inspector's update on the zoning amendment adding "data center"
+    language — now forwarded to Regional Planning — and through extensive public comment
+    both supporting and questioning the project's impacts on land, taxes, noise, and
+    public safety staffing.
+  decisions:
+  - 'Resolution 2024.0702-01: Greg Kessen made a resolution to appropriate insurance
+    funds being held to be released in Fiscal Year 2024 in the amount of $61,003.33
+    from Fund 9001-892 and reallocated to Fund 9001-785-599-0000; 2nd Kevin Cox.'
+  - 'Resolution 2024.0702-02: Greg Kessen made a resolution to appropriate an additional
+    $18,000 to Revenue Fund 1000-533-000, Liquor Permit Fees, for an error on the
+    2024 budget; 2nd Kevin Cox.'
+  - Greg Kessen made a motion to accept the budget meeting minutes from June 18, 2024;
+    2nd Kevin Cox.
+  - Kevin Cox made a motion to accept the meeting minutes from June 18, 2024; 2nd
+    Greg Kessen.
+  - Greg Kessen made a motion to pay bills in the amount of $67,381.08; 2nd Kevin
+    Cox.
+  - Larry Sidener made a motion to hire John Iten as Police Chief at salary of $2,000/month;
+    2nd Kevin Cox.
+  - Kevin Cox made a motion to hire John Sprague as a part time EMS and volunteer
+    fire fighter at the applicable rate; 2nd Greg Kessen.
+  - Kevin Cox made a motion to go into Executive Session at 8:27 PM with John Brewster
+    for insurance release; 2nd Greg Kessen.
+  - Kevin Cox made a motion to come out of Executive Session at 8:57 PM; 2nd Greg
+    Kessen. No action taken.
+  - Kevin Cox made motion to adjourn at 8:59 PM; 2nd Greg Kessen.
+  - The June 27th Zoning Board meeting passed the zoning amendment to add 'data center'
+    to the language; amendment is now at Regional Planning.
+  parties:
+  - Larry Sidener (Chairperson, Perry Township Trustee)
+  - Greg Kessen (Perry Township Trustee)
+  - Kevin Cox (Perry Township Trustee)
+  - Christina Stombaugh (Fiscal Officer)
+  - Nick Adams (Road Department)
+  - John Iten (Police Chief / Interim Police Chief)
+  - Bobby Phillips (retired Police Chief)
+  - Corey Lehman (Road Supervisor)
+  - John Brewster (Zoning Inspector)
+  - Kevin Rader (Fire Chief)
+  - Wagner (bay door repair)
+  - Caityn Stover (paramedic exam passer)
+  - Jacob Aldrich (paramedic exam passer)
+  - John Sprague (part time EMS / volunteer fire fighter)
+  - Coslisa Tyson (guest)
+  - Jeff Carolus (guest / alternate, Zoning Appeals Board)
+  - Mary Williamson (Northwest Perry Revitalization Group)
+  - Vivian Wilson (guest)
+  - Sasha Weigt (guest)
+  - Harold Golden (guest)
+  - Jennifer Golden (guest)
+  - Rex Huffman (referenced speaker, Wood County)
+  - Don Jones (guest)
+  - Nancy Jones (guest)
+  - Melissa Holloway (guest)
+  - Chuck Weigt (guest)
+  - Jason Stombaugh (guest)
+  - Jim Clemetz (guest)
+  - Bryon Rhodes (Allen County)
+  - John Husted (referenced)
+  - Allen County Port Authority
+  - Miller Auto
+  - Stolly Insurance
+  - Northwest Perry Revitalization Group
+  - BCI (Bureau of Criminal Investigation)
+  - VFIS (insurance provider)
+  - Allen County Clerk of Courts
+  parcels: []
+  dollar_figures:
+  - $9,171.90 (flail mower purchase order)
+  - $800–$1,000 (estimated cost to fix computer issues if owned)
+  - $995 (100 feet of 5-inch fire hose)
+  - $3,980.00 (approximately, for four sections of 5-inch fire hose)
+  - $61,003.33 (insurance funds appropriated, Resolution 2024.0702-01, from Fund 9001-892
+    reallocated to Fund 9001-785-599-0000)
+  - $18,000 (additional appropriation to Revenue Fund 1000-533-000, Resolution 2024.0702-02)
+  - $2,000 (original budgeted amount for Liquor Permit Fees — stated as an error)
+  - $20,000 (correct budgeted amount for Liquor Permit Fees)
+  - $67,381.08 (bills payment motion)
+  - $2,000/month (John Iten Police Chief salary)
+- date: '2024-07-16'
+  kind: minutes
+  filename: PERRY-MINUTES-2024.0716.docx.pdf
+  hits:
+  - datacenter
+  - rezoning
+  - solar
+  - tax_abatement
+  summary: At the July 16, 2024 Perry Township Trustees meeting, the Zoning Inspector
+    reported that rezoning variance applications for the Henderson and Cira properties
+    (approximately 70 acres each) from Agricultural to I-2 Industrial were submitted
+    by the property owners and would follow the same process as the data center zoning
+    change. Cindy Leis, representing the unnamed company, confirmed the company remains
+    interested in the site and indicated the company's name may be revealed during
+    upcoming public hearings, with a community open house planned at a future date.
+    Community members raised questions about noise levels, tax abatements, and incentives
+    related to the proposed data center, with trustees and Cindy Leis providing explanations
+    about the abatement review process.
+  corridor_relevance: This meeting directly addresses the hyperscale data center corridor
+    project through discussion of related rezoning applications for the Henderson
+    and Cira properties, a status update from project representative Cindy Leis confirming
+    continued company interest, and community Q&A on noise, taxes, and abatements
+    tied to the proposed data center.
+  decisions:
+  - Motion to purchase 3 Kenwood Portable Radios for $8,077.62 from Commercial Communications
+    — approved (Greg Kessen / Kevin Cox)
+  - Resolution 2024.0716-01 to authorize Allen County Commissioners to accept proposal
+    and enter into contract for County and Township Roads Resurfacing 2024 Project
+    and appropriate Township funds and issue a warrant for Township shares in the
+    amount of $42,012.83 — approved (Greg Kessen / Kevin Cox)
+  - Motion to accept corrected meeting minutes from July 2, 2024 — approved (Kevin
+    Cox / Greg Kessen)
+  - Motion to accept Special Budget Meeting minutes from July 2, 2024 — approved (Greg
+    Kessen / Kevin Cox)
+  - Motion to pay bills of $56,154.37 — approved (Greg Kessen / Kevin Cox)
+  - 'Motion to reaffirm Resolution #2024.0702-03 for 2025 Budget as approved in July
+    2, 2024 Budget Hearing — approved (Greg Kessen / Kevin Cox)'
+  - Motion to accept June Bank Reconciliation — approved (Kevin Cox / Greg Kessen)
+  - Motion to add appropriation Fund 9001-785-599-0000 to pay out insurance holds
+    — approved (Greg Kessen / Kevin Cox)
+  - Motion to pay indigent funeral expenses of $750 to Bayliff and Son Funeral Home
+    in Cridersville — approved (Kevin Cox / Greg Kessen)
+  - Motion to accept June Zoning Receipts in the amount of $321.00 — approved (Greg
+    Kessen / Kevin Cox)
+  - Motion to accept purchase request for hose in the amount of $3,980.00 — approved
+    (Kevin Cox / Greg Kessen)
+  - Motion to approve purchase request for a Thermal Imaging Camera in the amount
+    of $3,500 covered by donations from VFW and Guardian — approved (Kevin Cox / Greg
+    Kessen)
+  - Motion to reschedule August 6th Trustees Meeting to August 13th — approved (Larry
+    Sidener / Kevin Cox)
+  - Motion to cancel August 20th Trustees Meeting — approved (Greg Kessen / Kevin
+    Cox)
+  - Tabled discussion on purchase of new cruiser due to budget considerations
+  - Zoning variance applications for Henderson and Cira properties to rezone from
+    Agricultural to I-2 Industrial to go to Zoning Board then to Regional Planning,
+    following same process as the data center change
+  parties:
+  - Larry Sidener, Chairperson/Trustee
+  - Kevin Cox, Trustee
+  - Greg Kessen, Trustee
+  - Christina Stombaugh, Fiscal Officer
+  - John Iten, Police Chief (absent)
+  - Corey Lehman, Road Supervisor (absent)
+  - Nick Adams, present for Corey
+  - John Brewster, Zoning Inspector
+  - Kevin Rader, Fire Chief
+  - Norm Capps
+  - Jason Stombaugh
+  - Loretta Hicks
+  - Patty Dyer
+  - Joe Wireman
+  - Cindy Leis
+  - Paul Cox
+  - Jim Clementz
+  - Dave Stombaugh
+  - Nicholas Myers
+  - Cathy Clementz
+  - Frank Clementz
+  - Bryon Rhodes, Allen County Engineers
+  - Bayliff and Son Funeral Home
+  - Commercial Communications
+  - Guardian of Lima
+  - VFW
+  - Medicount
+  - Ohio Means Jobs
+  - Atlantic
+  parcels:
+  - Henderson property — approximately 70 acres, Agricultural to I-2 Industrial rezoning
+    requested
+  - Cira property — approximately 70 acres, Agricultural to I-2 Industrial rezoning
+    requested
+  - 4190 Osman Road (cross over / catch basin)
+  - Breese Road (hydrant out of service)
+  - Hanthorn Road (hydrant out of service)
+  - Amherst Road (speed limit signs)
+  dollar_figures:
+  - $42,012.83 — Township share of County and Township Roads Resurfacing 2024 Project
+    (Resolution 2024.0716-01)
+  - $56,154.37 — bills approved for payment
+  - $750 — indigent funeral expenses to Bayliff and Son Funeral Home in Cridersville
+  - $8,077.62 — 3 Kenwood Portable Radios from Commercial Communications
+  - $321.00 — June Zoning Receipts
+  - $3,980.00 — purchase request for hose (line item 270)
+  - $3,500.00 — Thermal Imaging Camera (covered by donations)
+  - $2,750 — donation from Guardian of Lima toward Thermal Imaging Camera
+  - $1,000 — donation from VFW toward Thermal Imaging Camera
+  - $250 — extra donation amount to be directed or reimbursed to Guardian
+  - $935 — GovDeals payment for expired Personal Protective Equipment
+  - $69,000 — year-to-date savings from grants and donations (Fire Department)
+- date: '2024-08-13'
+  kind: minutes
+  filename: PERRY-MINUTES-2024.0813.docx.pdf
+  hits:
+  - datacenter
+  - hume
+  - rezoning
+  summary: At the August 13, 2024 Perry Township Trustees meeting, Zoning Inspector
+    John Brewster presented the Regional Planning recommendation to add data centers
+    to I-1 zoning (from 7/18/2024), and the board set a public hearing for September
+    5th at 6PM to discuss the amendment. Cindy Leis read an email from the data center
+    client identifying the proposed data center as Microsoft, with an open house tentatively
+    scheduled for September 12th at Perry School Cafeteria. The trustees also noted
+    a Zoning Board meeting on August 28th to discuss the rezoning of the CIRA and
+    Henderson properties, with planned access to the site from State Route 65, Hume
+    Road, and a secondary entrance on Greeley at the CIRA property.
+  corridor_relevance: This meeting directly addresses the data-center corridor project
+    through the Regional Planning recommendation to add data centers to I-1 zoning,
+    the scheduling of a public hearing, identification of the client as Microsoft,
+    and discussion of site access routes involving the CIRA and Henderson properties.
+  decisions:
+  - Greg Kessen made a motion to set a special meeting for a public hearing discussing
+    adding data centers to zoning on Thursday, September 5th at 6PM, Kevin Cox 2nd
+    — Roll Call (approved)
+  - Greg Kessen made a motion to accept the resignation of Brad Butterfield from the
+    Zoning Commission Board, 2nd Kevin Cox — Roll Call (approved)
+  - Kevin Cox made a motion to accept the meeting minutes from July 16, 2024, 2nd
+    Greg Kessen — Roll Call (approved)
+  - Greg Kessen made a motion to pay bills in the amount of $123,988.51, 2nd Kevin
+    Cox — Roll Call (approved)
+  - Greg Kessen made a motion to approve the payment of $750 to Hanson-Neely Allison
+    Funeral and Cremation Services from Perry Township Indigent Fund Account, 2nd
+    Kevin Cox — Roll Call (approved)
+  - Greg Kessen made a motion to pay Miller Brothers for repairs and maintenance in
+    the amount of $3,577, 2nd Kevin Cox — Roll Call (approved)
+  - Kevin Cox made a motion to approve July Bank Reconciliation for 2024, 2nd Greg
+    Kessen — Roll Call (approved)
+  - Kevin Cox made a motion to accept the resignation of Luke Korwin immediately,
+    2nd Greg Kessen — Roll Call (approved)
+  - Kevin Cox made a motion to accept the resignation of Ethan Hull as of August 26th,
+    2024, 2nd Greg Kessen — Roll Call (approved)
+  - Kevin Cox made a motion to rehire Luke Korwin as part-time basic EMT and volunteer
+    fire at the applicable rate, 2nd Greg Kessen — Roll Call (approved)
+  - Kevin Cox made a motion to rehire Ethan Hull as part-time basic EMT and volunteer
+    fire at the applicable rate, 2nd Greg Kessen — Roll Call (approved)
+  - Kevin Cox made a motion to approve the purchase request for 3 sets of turn-out
+    gear at the cost of $10,575.00, 2nd Greg Kessen — Roll Call (approved)
+  - Trustee Cox asked to table the opioid settlement email for now to follow up with
+    Commissioner Beth Seibert and Attorney Kayla Campbell
+  - 'New truck purchase request (~$220,000) tabled — Chris and Greg to research minutes
+    re: prior motion on ARPA funds'
+  - Board approved Chief Rader placing egress route papers where needed in the township
+    hall
+  parties:
+  - Larry Sidener (Chairperson/Trustee)
+  - Greg Kessen (Trustee)
+  - Kevin Cox (Trustee)
+  - Christina Stombaugh (Fiscal Officer)
+  - John Iten (Police Chief)
+  - Corey Lehman (Road Supervisor)
+  - John Brewster (Zoning Inspector)
+  - Kevin Rader (Fire Chief)
+  - Brad Butterfield (Zoning Board member, resigned)
+  - Kayla Campbell (Attorney)
+  - Beth Seibert (Commissioner)
+  - Blain Brock (Attorney)
+  - Toby Watson
+  - Luke Korwin
+  - Ethan Hull
+  - Norm Capps (guest)
+  - Cindy Leis (guest)
+  - Loretta Hicks (guest)
+  - Dick Acoutis (guest)
+  - Ginger Hollar (guest)
+  - Chuck Weigt (guest)
+  - Ron Spencer (guest)
+  - Deb Sidener (guest)
+  - Dewayne Scott (guest)
+  - Joe Wireman (guest)
+  - Sharon Mullin (guest)
+  - Frank Clementz (guest)
+  - Paul Holloway (guest)
+  - Emily Holloway (guest)
+  - Angela Snyder (guest)
+  - Dave Stombaugh (guest)
+  - Patty Dyer (guest)
+  - Mark Hoerston (guest)
+  - Melissa Hollway (guest)
+  - Hanson-Neely Allison Funeral and Cremation Services
+  - Miller Brothers
+  - Microsoft (identified as proposed data center client)
+  - Regional Planning
+  - Allen County Engineer
+  - ODOT
+  - North Central Ohio Solid Waste District
+  - Perry Township Fire Department
+  - Perry Township Police Department
+  parcels:
+  - CIRA property
+  - Henderson properties
+  - Phalen property
+  - House on Lenox (to be demolished)
+  - Amherst and Dickson (road location)
+  - Osman and Creps (road/drain location)
+  - Musket Trail (residence of Perry Spradlin)
+  - State Route 65
+  - Hume Road
+  - Greeley (secondary entrance location)
+  dollar_figures:
+  - $750 (indigent burial funds for Perry Spradlin — Hanson-Neely Allison Funeral
+    and Cremation Services)
+  - $8,000 to $10,000 cheaper (Chevy Tahoe vs. Dodge Durango)
+  - $500 per piece (body cameras)
+  - $3,500 (digital speed camera, stationary)
+  - $10,000 (digital speed camera, on wheels)
+  - $220,000 (approximate cost of new truck)
+  - $125,000 (ARPA funds remaining)
+  - $95,000 (remaining amount after ARPA funds)
+  - $560.02 (payroll reimbursement check from Auxiliary — fire)
+  - $988.41 (reimbursement check from Public Safety for Eclipse, covering 75% of cost)
+  - $10,575 (3 sets of turn-out gear)
+  - $25,000 (available in Line Item 274 — small equipment)
+  - $123,988.51 (bills payment)
+  - $3,577 (Miller Brothers repairs and maintenance)
+  - $10,000 (insurance hold release — Phalen property)
+- date: '2024-09-03'
+  kind: minutes
+  filename: PERRY-MINUTES-2024.0903.docx.pdf
+  hits:
+  - datacenter
+  - rezoning
+  summary: The Perry Township Trustees held their regular meeting on September 3,
+    2024, during which the upcoming data center public hearings and a Microsoft open
+    house were discussed. The Zoning Board delayed its decision on rezoning two properties
+    until after the Microsoft open house scheduled for September 12th at Perry Elementary
+    cafeteria. The Trustees also retained attorney Blaine Brock specifically for zoning
+    purposes and held two executive sessions for legal zoning discussion, reflecting
+    the active public hearing process tied to the proposed data center.
+  corridor_relevance: The meeting directly references two public hearings related
+    to a proposed data center (Trustees Public Hearing on September 5th and a Zoning
+    Public Hearing on September 16th), a Microsoft open house on September 12th, and
+    the Zoning Board's decision to delay its rezoning recommendation until after that
+    open house.
+  decisions:
+  - Zoning Board left rezoning of 2 properties open until September 16th at 6 PM,
+    wanting to wait until after the Microsoft open house on September 12th
+  - Kevin Cox made a motion to appoint 2 people to the Zoning Commission — no 2nd,
+    motion failed
+  - Greg Kessen made a motion to hire Attorney Blaine Brock for 6 hours per month
+    for $1,000 for zoning purposes only, 2nd Kevin Cox, roll call (passed)
+  - Larry Sidener made a motion to go into Executive Session at 8:24 PM for legal
+    personnel with Blaine Brock, 2nd Greg Kessen, roll call
+  - Kevin Cox made a motion to come out of Executive Session at 8:46 PM, 2nd Greg
+    Kessen, roll call
+  - Larry Sidener made a motion to go into Executive Session at 8:51 PM with Blaine
+    Brock and John Brewster for legal zoning discussion, 2nd Kevin Cox, roll call
+  - Kevin Cox made a motion to come out of Executive Session at 9:04 PM, 2nd Greg
+    Kessen, roll call
+  - Kevin Cox made a motion to pay bills of $92,319.85, 2nd Greg Kessen, roll call
+  - Greg Kessen made a motion to accept the corrected meeting minutes from August
+    13, 2024, 2nd Kevin Cox, roll call
+  - Greg Kessen made a motion to decline pursuing the National Opioids Settlement
+    with Kroger, 2nd Kevin Cox, roll call
+  - Kevin Cox made a motion to purchase 8 black banquet tables from Sam's Club, 2nd
+    Greg Kessen, roll call
+  - Greg Kessen made a motion to purchase a refrigerator for the administration offices,
+    not to exceed $750, 2nd Kevin Cox, roll call
+  - Greg Kessen made a motion to sell the road department's 2005 GMC 3500 on GovDeals,
+    2nd Kevin Cox, roll call
+  - Greg Kessen made a motion to spend ARPA funds to fund the purchase request for
+    the 2024 Freightliner from Stoops Freightliner in the amount of $111,111.00 and
+    Kalida Trucking for outfitting the truck when it comes in for the amount of $108,900.00,
+    the General Fund will cover the balance needed to purchase, 2nd Kevin Cox, roll
+    call
+  - Greg Kessen made a motion to hire Jacob Aldrich at the applicable rate of $17.75
+    conditional with passing OP&F physical and Fire Fighter One, 2nd Kevin Cox, roll
+    call
+  parties:
+  - Larry Sidener (Chairperson, Perry Township Trustee)
+  - Kevin Cox (Perry Township Trustee)
+  - Greg Kessen (Perry Township Trustee)
+  - Christina Stombaugh (Fiscal Officer)
+  - John Brewster (Zoning Inspector)
+  - Corey Lehman (Road Supervisor)
+  - Kevin Rader (Fire Chief)
+  - John Iten (Police Chief, absent)
+  - Blaine Brock (Attorney)
+  - Jacob Aldrich (part-time fire department employee / paramedic)
+  - Frank Clementz (guest)
+  - Cindy Leis (guest)
+  - Janet Lauf (guest)
+  - Chuck Weigt (guest)
+  - Jeff Carolus (guest)
+  - Jim Clemetz (guest)
+  - Chandra Zink (guest)
+  - Cathy Craig (guest)
+  - Craig Craig (guest)
+  - Dave Stombaugh (guest)
+  - Jason Stombaugh (guest)
+  - Norm Capps (zoning board applicant / guest)
+  - Sharon Mullins (guest)
+  - Loretta Hicks (guest)
+  - Sandy Fleishans (guest)
+  - Jerry Hunt
+  - Beth Siebert
+  - Kayla Campbell
+  - Bob Davis
+  - Gerald (painting contractor, unnamed last name)
+  - Microsoft
+  - Stoops Freightliner
+  - Kalida Trucking
+  - Sam's Club
+  - Kroger (National Opioids Settlement)
+  - Regional Planning
+  parcels:
+  - 4429 McClain Road
+  - 1511 Lenox
+  - Greeley Chapel (Senior Citizens Home application)
+  - Yoder Road (property referenced by Greg Kessen)
+  - Amherst Road
+  - Perry Chapel
+  - Bowman Road
+  - Breese
+  dollar_figures:
+  - $84.98 (banquet tables, Sam's Club, white)
+  - $84.98 (banquet tables, online, black)
+  - $220.00 (7.5 cubic feet refrigerator, Sam's Club)
+  - $379 (9.7 cubic feet refrigerator, Lowes or Menards)
+  - $400 - $600 (standard size 18–20 cubic feet refrigerator)
+  - $10,000 (hoped sale price for 2005 GMC on GovDeals)
+  - $40,000 (price increase in 2027 due to emissions)
+  - $15,000 (TASC cards spent this year due to turnover, fire department)
+  - $3,000 (OP&F cost, fire department)
+  - $3,000 (uniforms, fire department)
+  - $3,500 (training for another full-time employee, fire department)
+  - $17.75 (applicable rate for Jacob Aldrich)
+  - $20/hour (Alger part-time paramedic rate)
+  - $15.50/hour (next lowest paying fire department part-time rate)
+  - $3,500 (speed camera quotes)
+  - $92,319.85 (bills payment motion)
+  - $1,000 per month (Attorney Blaine Brock, 6 hours/month, zoning purposes)
+  - $111,111.00 (2024 Freightliner from Stoops Freightliner, ARPA funds)
+  - $108,900.00 (Kalida Trucking for outfitting the truck)
+  - $750 (not to exceed, refrigerator for administration offices)
+- date: '2024-09-05'
+  kind: minutes
+  filename: PERRY-MINUTES-2024.0905-DATA-CENTER-PUBLIC-HEARING.docx.pdf
+  hits:
+  - amazon
+  - datacenter
+  - google
+  - hume
+  - rezoning
+  - solar
+  - tax_abatement
+  summary: Perry Township Trustees held a special public hearing on September 5, 2024
+    to consider amending the township zoning resolution to add "data centers" as a
+    permitted use. After public comment and trustee deliberation, the board voted
+    unanimously to modify the recommendation from I-1 to I-2 industrial zoning and
+    adopt the data center language under section 11.1.6 "for the purpose of storing
+    and saving computer data on servers and similar equipment." The meeting also referenced
+    two properties currently undergoing rezoning from Agricultural to I-2 for the
+    same project, and noted that Microsoft has been in contact with AEP regarding
+    power commitments.
+  corridor_relevance: This meeting directly concerns the hyperscale data center corridor
+    project, with trustees amending Perry Township's zoning resolution to add data
+    center language to I-2 industrial zoning, and references to Microsoft as the named
+    company and two parcels being rezoned from Agricultural to I-2 for the same project.
+  decisions:
+  - Larry Sidener made a motion to modify and adopt the zoning language from the recommendation
+    of I-1, modifying to I-2 zoning under 11.1.6 'for the purpose of storing and saving
+    computer data on servers and similar equipment'; 2nd Kevin Cox; Larry Sidener-YES,
+    Kevin Cox-YES, Greg Kessen-YES (unanimous approval)
+  - Greg Kessen made motion to adjourn at 7:00, second by Kevin Cox
+  parties:
+  - Larry Sidener – Chairperson, Perry Township Trustee
+  - Greg Kessen – Perry Township Trustee
+  - Kevin Cox – Perry Township Trustee
+  - Christina Stombaugh – Fiscal Officer
+  - Adam Haunhurst – Planning Engineer, Lima Allen County Regional Planning
+  - John Brewster – Perry Township Zoning Inspector
+  - Chuck Weigt – Zoning Appeals Board
+  - Dave Stratton – Allen Economic Development Group
+  - Kelly Schooler – Perry School Superintendent
+  - Blain Brock
+  - Cindy Leis
+  - Jay Smith – resident, 6587 Santa Fe Rd
+  - Frank Clementz – resident, 5525 St Johns Rd
+  - Cathy Clementz – resident
+  - Janet Lauf – resident, 1642 E Hume Rd
+  - Nancy Johns – resident, 5000 Greeley Chapel
+  - Loretta Hicks – resident, 4466 St Johns
+  - Sharon Mullins
+  - Microsoft
+  - AEP
+  - Jon Husted – Ohio Lieutenant Governor
+  parcels:
+  - Two properties in the process of rezoning from Agricultural to I-2 for the purpose
+    of the same project (no parcel numbers specified)
+  dollar_figures:
+  - 25,000 homes had a 3% higher electric bills (referenced in resident discussion
+    about West Virginia documentary)
+- date: '2024-09-17'
+  kind: minutes
+  filename: PERRY-MINUTES-2024.0917.docx.pdf
+  hits:
+  - datacenter
+  - hume
+  - rezoning
+  summary: The Perry Township Trustees held a regular meeting on September 17, 2024,
+    during which the Zoning Inspector reported that the Zoning Board recommended rezoning
+    both parcels in question in full, with a trustee public hearing set for October
+    1st to address a noted clerical error in the motion's wording. Multiple community
+    members offered public comment expressing concern about or support for a data
+    center project, referencing lost farmland, promised economic benefits, and public
+    transparency. The trustees entered executive session with Microsoft representatives,
+    Attorney Blain Brock, and Fiscal Officer Christina Stombaugh, after which no action
+    was taken.
+  corridor_relevance: This meeting directly addresses the data center corridor project
+    through the Zoning Board's recommendation to rezone both parcels in question,
+    public comments both opposing and questioning the data center, a resident's public
+    records request for all data center-related communications, and an executive session
+    held with Microsoft representatives.
+  decisions:
+  - Zoning Board recommended to rezone both parcels in question in full (reported
+    by John Brewster; clerical error noted, to be corrected before October 1st trustee
+    public hearing).
+  - Trustee public hearing set for October 1st at the regular trustee meeting with
+    Trustee Greg Kessen.
+  - Lexie Purdy signed a statement to authorize tear down of the house at 1511 Lennox.
+  - 'Resolution #2024.0917-01: Supplemental appropriation increase of $30,000 to Gas
+    Tax, Machinery and Equipment Fund (2021-760-740-0000). LARRY SIDENER-YES, KEVIN
+    COX-YES, GREG KESSEN-ABSENT.'
+  - 'Resolution 2024.0917-02: Transfer $50,000 to Gas Tax Fund Transfer In (2021-931-0000)
+    from General Fund Transfer Out (1000-910-0000), not to be repaid, to cover cost
+    of new plow truck. LARRY SIDENER-YES, KEVIN COX-YES, GREG KESSEN-ABSENT.'
+  - 'Resolution 2024.0917-03: Increase appropriations for ARPA Fund (2273-760-740)
+    in the amount of $1,214.05, with revenue budget adjustment of $10.18. LARRY SIDENER-YES,
+    KEVIN COX-YES, GREG KESSEN-ABSENT.'
+  - 'Resolution 2024.0917-04: Increase estimated revenue budget for Gas Tax Transfer
+    in the amount of $81,000 and increase appropriations by $81,000 in Gas Tax Fund,
+    Machinery and Equipment Account (2021-760-740-0000) for purchase request to Kalida
+    Truck Equipment. KEVIN COX-YES, LARRY SIDENER-YES, GREG KESSEN-ABSENT.'
+  - 'Resolution 2024-0917-05: Accepting the amounts and rates as determined by the
+    Budget Commission and authorizing the necessary tax levies and certifying them
+    to the County Auditor. LARRY SIDENER-YES, KEVIN COX-YES, GREG KESSEN-ABSENT.'
+  - 'Resolution 2024.0917-06: Approve agreement to appropriate remaining ARPA funds
+    in the 2024 budget in the amount of $122,214.05 for purchase of 2024 Freightliner
+    1085D Plus Cab and Chassis, Dump Bed and Plow Package. LARRY SIDENER-YES, KEVIN
+    COX-YES, GREG KESSEN-ABSENT.'
+  - Motion to accept corrected meeting minutes from September 3, 2024. LARRY SIDENER-YES,
+    KEVIN COX-YES, GREG KESSEN-ABSENT.
+  - Motion to accept corrected meeting minutes from the Public Hearing on September
+    5th, 2024. LARRY SIDENER-YES, KEVIN COX-YES, GREG KESSEN-ABSENT.
+  - Motion to pay bills in the amount of $121,180.69. KEVIN COX-YES, LARRY SIDENER-YES,
+    GREG KESSEN-ABSENT.
+  - Motion to approve bank reconciliation for August 2024. KEVIN COX-YES, LARRY SIDENER-YES,
+    GREG KESSEN-ABSENT.
+  - Motion to accept yearly contract and pay Now Marketing Group in the amount of
+    $2,500 for up to 30 hours of support for the Perry Township website. LARRY SIDENER-YES,
+    KEVIN COX-YES, GREG KESSEN-ABSENT.
+  - Motion to create a new payroll fund (1000-130-141) for legal council and funding
+    the account in the amount of $4,000.00. LARRY SIDENER-YES, KEVIN COX-YES, GREG
+    KESSEN-ABSENT.
+  - Motion to accept the resignation from Steven Freed. LARRY SIDENER-YES, KEVIN COX-YES,
+    GREG KESSEN-ABSENT.
+  - Motion to hire Jacqueline Gibson as a part-time EMT Basic at the applicable rate.
+    LARRY SIDENER-YES, KEVIN COX-YES, GREG KESSEN-ABSENT.
+  - Motion to hire Chayce Holcomb as a volunteer firefighter and part-time EMT Basic
+    at the applicable rate. LARRY SIDENER-YES, KEVIN COX-YES, GREG KESSEN-ABSENT.
+  - Motion to hire Keagen Farris as full-time shift worker pending passing a background
+    check, OP&F physical and Advance EMT, one year after passing the course at the
+    applicable rate. LARRY SIDENER-YES, KEVIN COX-YES, GREG KESSEN-ABSENT.
+  - 'Executive session for personnel at 8:35 PM; came out at 8:57 PM. Action taken:
+    Trustees gave permission to Chief Rader to move forward at looking at staffing
+    options to present the Board of Trustees.'
+  - Executive session with Microsoft representatives, Attorney Blain Brock, and Fiscal
+    Officer Christina Stombaugh at 8:59 PM; came out at 10:15 PM. No action taken.
+  - Motion to adjourn at 10:16 PM. LARRY SIDENER-YES, KEVIN COX-YES, GREG KESSEN-ABSENT.
+  parties:
+  - Larry Sidener (Chairperson, Trustee)
+  - Kevin Cox (Trustee)
+  - Greg Kessen (Trustee, absent)
+  - Christina Stombaugh (Fiscal Officer)
+  - John Iten (Police Chief, absent)
+  - Corey Lehman (Road Supervisor, absent)
+  - John Brewster (Zoning Inspector)
+  - Blain Brock (Attorney)
+  - Kevin Rader (Fire Chief)
+  - Lexie Purdy
+  - Steven Freed
+  - Jacqueline Gibson
+  - Chase Holcomb / Chayce Holcomb
+  - Keagen Farris
+  - Lydia Purdy
+  - Loretta Hicks
+  - Sharon Mullins
+  - Jason Stombaugh
+  - Dave Stombaugh
+  - Nick Myers
+  - Cindy Leis
+  - Nick and Lisa Heitz
+  - Janet Lauf
+  - Jim Clemetz
+  - Chuck Weigt
+  - Frank & Cathy Clementz
+  - Tom & Michelle Graham
+  - Brooke Hedges
+  - Craig Craig
+  - Microsoft representatives
+  - Now Marketing Group
+  - Kalida Truck Equipment
+  - Stoops
+  - Allen County Fair
+  - Regional Planning
+  parcels:
+  - 1511 Lennox (house address)
+  dollar_figures:
+  - $30,000 (supplemental appropriation increase to Gas Tax, Machinery and Equipment
+    Fund)
+  - $50,000 (transfer to Gas Tax Fund Transfer In from General Fund Transfer Out for
+    new plow truck)
+  - $1,214.05 (increase in appropriations for ARPA Fund)
+  - $10.18 (revenue budget adjustment for ARPA Fund interest)
+  - $81,000 (increase in estimated revenue budget for Gas Tax Transfer; increase in
+    appropriations in Gas Tax Fund, Machinery and Equipment Account for Kalida Truck
+    Equipment)
+  - $122,214.05 (remaining ARPA funds appropriated for 2024 Freightliner 1085D Plus
+    Cab and Chassis, Dump Bed and Plow Package)
+  - $121,180.69 (bills to be paid)
+  - $2,500 (yearly contract with Now Marketing Group for up to 30 hours of website
+    support)
+  - $4,000.00 (new payroll fund for legal council)
+- date: '2024-10-01'
+  kind: minutes
+  filename: PERRY-MINUTES-2024.1001.docx.pdf
+  hits:
+  - datacenter
+  - pipeline
+  - rezoning
+  summary: The October 1, 2024 Perry Township Trustees meeting included discussion
+    by Zoning Inspector John Brewster regarding access points off Greeley Chapel and
+    Breese Road for the proposed data center, with Trustee Cox stating only emergency
+    access would be permitted off Greeley Chapel. Regional Planning had recommended
+    against rezoning road frontage as industrial, but the Zoning Board's motion recommended
+    the parcels in full be rezoned as industrial; the Trustees voted only to accept
+    the corrected Zoning Board meeting minutes and to set a public hearing on October
+    15th for further rezoning discussion. Resident Cindy Leis announced that Microsoft
+    has issued new contact cards with a dedicated phone number and email for public
+    questions about the project, and noted no site plan exists yet so access has not
+    been determined.
+  corridor_relevance: This meeting directly addresses the proposed data center project
+    through discussion of rezoning parcels to industrial along Greeley Chapel and
+    Breese Road, conflicting recommendations from the Zoning Board and Regional Planning,
+    and a Microsoft representative providing updated public contact information for
+    the project.
+  decisions:
+  - Kevin Cox made a motion to accept the Zoning Meeting Minutes as corrected from
+    the Public Hearing held on September 16th, 2nd Larry Sidener. Roll call.
+  - Larry Sidener made a motion to set a Trustees Public Hearing for a rezoning request
+    on October 15th at 6 PM, 2nd Kevin Cox. Roll call.
+  parties:
+  - Larry Sidener (Chairperson, Perry Township Trustee)
+  - Kevin Cox (Perry Township Trustee)
+  - Greg Kessen (Perry Township Trustee)
+  - Christina Stombaugh (Fiscal Officer)
+  - John Brewster (Zoning Inspector)
+  - Blain Brock (Attorney)
+  - Kevin Rader (Fire Chief)
+  - John Iten (Police Chief)
+  - Cindy Leis (resident, Microsoft contact liaison)
+  - Matthew (Microsoft contact person)
+  - Frank Clementz (resident)
+  - Norm Capps (resident)
+  - Kayla Rogers (Allen County Prosecutors)
+  - Regional Planning
+  - Microsoft
+  parcels:
+  - 3200 Yoder Rd
+  dollar_figures:
+  - $81,000 (transfer to Gas Tax Fund for purchase from Kalida Truck)
+  - $8,000 (savings on 2024 Chevy Tahoe vs. Dodge Durango)
+  - $64,654 (cost of 2024 Chevy Tahoe fully outfitted except graphics)
+  - $55,000 (current funds in police vehicle fund)
+  - $3,500 each (speed cameras attached to a post)
+  - $9,000 (3 speed cameras)
+  - $2,300 (possible lower price for speed cameras)
+  - $9,200 (2005 GMC sold on GovDeals)
+  - $260 (September zoning permit fees)
+  - $117,149.28 (bills approved for payment)
+  - $100 (Fiscal Officer training cost in Perrysburg)
+  - $14/hr (rate for Lori Iten, Police Administrative Assistant)
+  - $1,200 (educational reimbursement grant)
+- date: '2024-10-15'
+  kind: minutes
+  filename: PERRY-MINUTES-2024.1015-PUBLIC-HEARING-TO-REZONE-2-PARCELS.docx.pdf
+  hits:
+  - datacenter
+  - hume
+  - rezoning
+  summary: Perry Township Trustees held a special public hearing on October 15, 2024
+    regarding a rezoning request for two parcels to I-2 industrial classification.
+    Cindy Leis of the Allen Economic Development Group and Allen County Port Authority
+    informed the board that Microsoft had notified her the previous day that upper
+    management had decided to pull the project from Perry Township, offering no reason.
+    Despite Microsoft's withdrawal, the Zoning Commission had recommended approval
+    of the rezoning applications for both parcels, and Leis encouraged the Trustees
+    to approve the recommendation, noting other data center prospects remain interested
+    in the site. The Trustees deferred their decision, scheduling a special meeting
+    for October 29, 2024 at 5:30 PM.
+  corridor_relevance: This meeting directly concerns the hyperscale data center corridor
+    project, as it documents Microsoft's withdrawal from the Perry Township site and
+    a public hearing on the rezoning of two parcels that had been sought in connection
+    with that project.
+  decisions:
+  - Trustees deferred a decision on the rezoning applications to the next regular
+    meeting and scheduled a special meeting for Tuesday, October 29, 2024 at 5:30
+    PM.
+  - Kevin Cox made a motion to adjourn at 6:32 PM, seconded by Greg Kessen; Sidener-Yes,
+    Cox-Yes, Kessen-Yes.
+  parties:
+  - Larry Sidener – Chairperson, Perry Township Trustees
+  - Greg Kessen – Perry Township Trustee
+  - Kevin Cox – Perry Township Trustee
+  - Christina Stombaugh – Fiscal Officer
+  - 'Cindy Leis – Allen Economic Development Group and Allen County Port Authority
+    (work address: 144 S Main St, Lima)'
+  - 'Adam Haunhorst – LACRPC (work address: 130 W North St, Lima)'
+  - Mike Mathys – Greely Chapel Rd
+  - Norm Capps – 820 E Breese Rd (former Perry Township Trustee)
+  - Mike & Jackie Reynolds – 4500 McPheron Rd
+  - Frank Clementz – 5525 St Johns Rd
+  - Janet Lauf – 1642 E Hume Rd
+  - Frank Lamar – former Perry Township Trustee
+  - Sharon Mullins – 25380 St Route 33, Wapak (Wireman Farm on State Route 65)
+  - Ron McElwin – 2395 Breese Rd
+  - Mike Nicely – 1018 S Thayer Rd
+  - Chuck Weigt
+  - Jim Clementz
+  - Jeff Poling
+  - Dave Stombaugh
+  - Jason Stombaugh
+  - Tom Coulder
+  - Microsoft
+  - CIRA's
+  - Henderson's
+  parcels:
+  - 4210 Greely Chapel (referenced by a resident)
+  dollar_figures: []
+- date: '2024-10-15'
+  kind: minutes
+  filename: PERRY-MINUTES-2024.1015.docx.pdf
+  hits:
+  - datacenter
+  - rezoning
+  - solar
+  summary: Cindy Leis of the Allen Economic Development Group and Allen County Port
+    Authority reported to the Perry Township Trustees that a data center prospect
+    she had been working to bring to Perry Township was recently unmasked as Microsoft,
+    but that Microsoft's executives have decided to pull the project from Perry Township
+    without giving a reason. She noted that Microsoft had held a 6-month option on
+    two parcels and had recently renewed it, and she encouraged the Trustees to consider
+    rezoning those two parcels as she continues to seek new data center prospects.
+    The Trustees subsequently approved a special meeting for October 29th to address
+    a rezoning request for 2 parcels.
+  corridor_relevance: This meeting connects to the data-center corridor project through
+    Cindy Leis's report that a hyperscale data center prospect — identified as Microsoft
+    — had held an option on two Perry Township parcels but withdrew, and her encouragement
+    for the Trustees to rezone those parcels and pursue new data center interest.
+  decisions:
+  - 'Resolution #2024.1015-01: Increase lighting assessment to $14.21 per lot for
+    Perry Township Lighting District - Linneman. SIDENER-YES, COX-YES, KESSEN-YES.'
+  - 'Resolution #2024.1015-02: Increase lighting assessment to $14.50 per lot for
+    Perry Township Lighting District - St. Johns. SIDENER-YES, COX-YES, KESSEN-YES.'
+  - 'Resolution #2024.1015-03: Increase lighting assessment to $18.30 per lot for
+    Perry Township Lighting District - Glenn Ave. SIDENER-YES, COX-YES, KESSEN-YES.'
+  - 'Resolution #2024.1015-04: Approve purchase request for a 2024 Chevy Tahoe, fully
+    upfitted with emergency lighting package in the amount of $64,654.00. SIDENER-YES,
+    COX-YES, KESSEN-YES.'
+  - 'Resolution #2024.1015-05: Supplemental appropriation increase of $55,000 to the
+    Gas Tax, Machinery and Equipment Fund (1000-760-730-0000) for the purchase of
+    a 2024 Chevy Tahoe in the amount of $64,654.00; remaining funds paid from Police
+    Operating Fund (1000-210-420-0000) in the amount of $9,654.00. SIDENER-YES, COX-YES,
+    KESSEN-YES.'
+  - 'Resolution #2024.1015-06: Accept the Zoning Board of Appeals meeting minutes
+    for a variance request at 3200 Yoder Rd. SIDENER-YES, COX-YES, KESSEN-YES.'
+  - Motion to accept meeting minutes from October 1, 2024. SIDENER-YES, COX-YES, KESSEN-YES.
+  - Motion to pay bills of $43,493.08. SIDENER-YES, COX-YES, KESSEN-YES.
+  - Motion to accept bank reconciliation for September 2024. SIDENER-YES, COX-YES,
+    KESSEN-YES.
+  - Motion to approve the purchase of the 2025 Education Subscription with Ohio Township
+    Association in the amount of $250.00. SIDENER-YES, COX-YES, KESSEN-YES.
+  - Motion to accept the meeting minutes from October 7th from the Zoning Appeals
+    Board. SIDENER-YES, COX-YES, KESSEN-YES.
+  - Motion to have a Special Meeting on October 29th at 5:30 PM for a rezoning request
+    2 parcels. SIDENER-YES, COX-YES, KESSEN-YES.
+  - Motion to appoint Brooke Hedges to the Zoning Commission Board. SIDENER-YES, COX-YES,
+    KESSEN-YES.
+  - Motion to appoint Marc Huersten to the Zoning Commission Board. SIDENER-YES, COX-YES,
+    KESSEN-YES.
+  - Motion to appoint Norm Capps to the Zoning Commission Board. SIDENER-NO, COX-YES,
+    KESSEN-NO. (Failed)
+  - Motion to appoint Dave Bailey to the Zoning Commission Board. SIDENER-YES, COX-YES,
+    KESSEN-YES.
+  - Motion to approve a $.10 pay raise for Kortni Pomaville for certification for
+    continuing education instructor. SIDENER-YES, COX-YES, KESSEN-YES.
+  - Motion to hire Lacie Lynn Graham as part-time EMT at the applicable rate of $14.50/hour.
+    SIDENER-YES, COX-YES, KESSEN-YES.
+  - Motion to go into Executive Session with Chief Rader and Fiscal Officer Christina
+    Stombaugh at 8:26 PM. SIDENER-YES, COX-YES, KESSEN-YES.
+  - Motion to come out of Executive Session at 9:05 PM. SIDENER-YES, COX-YES, KESSEN-YES.
+  - Motion to hire an additional full-time person for the Fire Department; eliminate
+    Shift D and E and have two full-time employees each on A, B and C Shift, effective
+    immediately. SIDENER-YES, COX-YES, KESSEN-YES.
+  - Motion to reduce part-time staff effective January 1, 2025 for the Fire Department
+    to 4,380 hours per year as needed. SIDENER-YES, COX-YES, KESSEN-YES.
+  - Motion to go into Executive Session for legal issues with Blain Brock at 9:08
+    PM. SIDENER-YES, COX-YES, KESSEN-YES.
+  - Motion to come out of Executive Session at 9:20 PM. No action taken. SIDENER-YES,
+    COX-YES, KESSEN-YES.
+  - Motion to adjourn at 9:21 PM. SIDENER-YES, COX-YES, KESSEN-YES.
+  parties:
+  - Larry Sidener, Chairperson, Perry Township Trustee
+  - Greg Kessen, Perry Township Trustee
+  - Kevin Cox, Perry Township Trustee
+  - Christina Stombaugh, Fiscal Officer
+  - John Iten, Police Chief
+  - Corey Lehman, Road Dept. (absent)
+  - John Brewster, Zoning Inspector
+  - Kevin Rader, Fire Chief
+  - Cindy Leis, Allen Economic Development Group and Allen County Port Authority
+  - Matt Treglia
+  - Ron McElwin
+  - Scott Hofacker
+  - Sharon Mullins
+  - Janet Lauf
+  - Brooke Hedges
+  - Nicholas Myers
+  - Frank Clementz
+  - Jim Clementz
+  - Tom Coulter
+  - Chuck Weigt
+  - Blain Brock
+  - Frank Lamar
+  - Jason Stombaugh
+  - Cindy Leis
+  - Angela Bailey
+  - Dave Bailey
+  - Kortni Pomaville
+  - Lacie Lynn Graham
+  - Marc Huersten
+  - Norm Capps
+  - Bill Joseph
+  - Microsoft
+  parcels:
+  - 2 parcels (referenced in rezoning request and special meeting motion, locations
+    not specified beyond association with Greely Chapel and Breese Rd per public hearing
+    notice error)
+  - 3200 Yoder Rd
+  dollar_figures:
+  - $250.00 – 2025 Education Subscription with Ohio Township Association
+  - $9,200 – wire transfer received October 11th for sale of 2005 GMC from Roads Department
+  - $395.00 – check received for sale of expired turn-out gear (Fire Department)
+  - $3,500 – approximate cost of solar-powered digital speed signs
+  - $64,654.00 – purchase of 2024 Chevy Tahoe fully upfitted with emergency lighting
+    package
+  - $55,000 – supplemental appropriation increase to Gas Tax, Machinery and Equipment
+    Fund (1000-760-730-0000)
+  - $9,654.00 – remaining funds paid from Police Operating Fund (1000-210-420-0000)
+  - $43,493.08 – bills approved for payment
+  - $14.21 per lot – lighting assessment, Perry Township Lighting District - Linneman
+  - $14.50 per lot – lighting assessment, Perry Township Lighting District - St. Johns
+  - $18.30 per lot – lighting assessment, Perry Township Lighting District - Glenn
+    Ave.
+  - $.10 – pay raise for Kortni Pomaville
+  - $14.50/hour – hire rate for Lacie Lynn Graham, part-time EMT
+- date: '2024-10-29'
+  kind: minutes
+  filename: PERRY-MINUTES-2024.1029-SPECIAL.docx.pdf
+  hits:
+  - datacenter
+  - rezoning
+  summary: Perry Township Trustees held a special meeting on October 29, 2024 to announce
+    their decision on rezoning two parcels from Agricultural to Industrial, a process
+    that had been initiated in connection with a prospective data center project.
+    The trustees discussed the rezoning applications following a completed public
+    hearing, noting that Microsoft had dropped out of the project; opinions were divided
+    on whether the parcels should be rezoned to I-2 Industrial or remain Agricultural.
+    By a 2-1 vote, the trustees denied the Zoning Commission's recommendation to rezone
+    the two parcels, with Trustee Cox dissenting, and affirmed their continued interest
+    in marketing the existing approximately 325 acres already zoned I-2.
+  corridor_relevance: This meeting directly concerns the data center corridor project,
+    as the rezoning of two parcels from Agricultural to Industrial had been pursued
+    in connection with a prospective data center (referenced as a Microsoft prospect),
+    and the trustees' denial of that rezoning was explicitly tied to Microsoft's withdrawal
+    from the project.
+  decisions:
+  - Larry Sidener made a motion to deny the recommendation from the Zoning Board to
+    rezone the entire two parcels from Agricultural to Industrial; 2nd Greg Kessen;
+    Sidener-Yes, Cox-No, Kessen-Yes. Motion passed. The zoning request is denied.
+  - Larry Sidener made motion to adjourn at 5:53PM; 2nd Greg Kessen; Larry Sidener-Yes,
+    Kevin Cox-Yes, Greg Kessen-Yes.
+  parties:
+  - Larry Sidener (Chairperson, Perry Township Trustee)
+  - Kevin Cox (Trustee)
+  - Greg Kessen (Trustee)
+  - Mike Mathys (Guest)
+  - Rex Huffman (Guest)
+  - Gary Sweigart (Guest)
+  - Mary Sweigart (Guest)
+  - Cindy Leis (Guest)
+  - Sharon Mullins (Guest)
+  - Frank Clementz (Guest)
+  - Chuck Weigt (Guest)
+  - Kathy Dickson (Guest)
+  - Jim Cira (referenced via email)
+  - Jeff Cira (referenced via email)
+  - Ron (referenced by Cindy Leis)
+  - Henderson's (referenced parcel owner)
+  - Microsoft (referenced prospect, dropped out)
+  - Mike Nichols (Zoning Commission motion maker)
+  - Sasha Weigt (Zoning Commission 2nd)
+  - Blain Brock (speaker at meeting)
+  - AEDG (Allen Economic Development Group, referenced)
+  - Port Authority (referenced)
+  parcels:
+  - Two parcels (described as Henderson and Cira properties, frontage on Greely Chapel
+    Road; specific parcel numbers not stated in the text)
+  - Approximately 325 acres currently zoned I-2
+  dollar_figures: []
+- date: '2025-01-21'
+  kind: minutes
+  filename: PERRY-MINUTES-2025.0121.docx.pdf
+  hits:
+  - datacenter
+  - solar
+  summary: At the January 21, 2025 regular session, Trustee Larry Sidener briefly
+    referenced corridor-adjacent activity, noting that Cindy Leis spoke about Commerce
+    Parkway proposing two 100,000 square-foot spec buildings, that AEP is having issues
+    in American Township, that Bowling Green has not yet disclosed the identity of
+    a project, and that three large companies were reported on the news as discussing
+    data centers for medical purposes. No formal action was taken on any of these
+    items. The remainder of the meeting focused on routine township business including
+    personnel, fire/police operations, and financial resolutions.
+  corridor_relevance: The meeting is flagged for corridor relevance due to Trustee
+    Sidener's remarks referencing AEP issues in American Township, an undisclosed
+    project in Bowling Green, and news reports of large companies discussing data
+    centers — language consistent with the hyperscale data-center corridor project.
+  decisions: []
+  parties:
+  - Larry Sidener (Trustee)
+  - Cindy Leis (mentioned by Trustee Sidener)
+  parcels: []
+  dollar_figures: []
+- date: '2025-03-18'
+  kind: minutes
+  filename: PERRY-MINUTES-2025.0318.docx.pdf
+  hits:
+  - datacenter
+  - rezoning
+  summary: At the March 18, 2025 Perry Township Trustees meeting, Trustee Larry Sidener
+    raised the status of the industrial area off the railroad tracks and discussed
+    a potential rezoning from I-2 General Industrial to B-2 General Business, noting
+    that Allen Economic and Port Authority had not reached out since "the data center
+    went out." Discussion included whether Microsoft's option-to-purchase contracts
+    with landowners would affect the township's ability to rezone, and the Allen Economic
+    Development Group (AEDG) contacted Chairman Cox asking the board to decide how
+    they want to market the industrial land. No formal rezoning decision was made
+    at this meeting.
+  corridor_relevance: The meeting references the data center project directly, with
+    Trustee Sidener stating that Allen Economic and Port Authority has not contacted
+    Perry Township since "the data center went out," and Jason Stombaugh raising questions
+    about Microsoft's option-to-purchase contracts with landowners in connection with
+    a potential rezoning of industrial land.
+  decisions:
+  - Larry Sidener made a motion to hire Bill Foster as a part-time fire inspector
+    at the rate of $15 per hour, 2nd Greg Kessen. Sidener – YES, Cox – YES, Kessen
+    – YES
+  - Larry Sidener made a motion to accept the corrected meeting minutes from March
+    4, 2025, 2nd Greg Kessen. Sidener – YES, Cox – YES, Kessen – YES
+  - Greg Kessen made motion to pay bills in the amount of $114,935.55, 2nd Larry Sidener.
+    Sidener – YES, Cox – YES, Kessen – YES
+  - Greg Kessen made a motion to approve the bank reconciliation for February 2025,
+    2nd Larry Sidener. Sidener – YES, Cox – YES, Kessen – YES
+  - Greg Kessen made a motion to approve the credit card reconciliation for March
+    2025, 2nd Larry Sidener. Sidener – YES, Cox – YES, Kessen – YES
+  - Greg Kessen made a motion to set a special meeting on April 15, 2025 at 5 PM for
+    handbook review, 2nd Larry Sidener. Sidener – YES, Cox – YES, Kessen – YES
+  - Greg Kessen made a motion to cover the funeral expenses in the amount of $750.00
+    to Chiles-Laman Funeral Service for Oy Bounlevang, 2nd Larry Sidener. Sidener
+    – YES, Cox – YES, Kessen – YES
+  - Larry Sidener made a motion to pay Blain Brock $1000 to start the renewal levy
+    process, 2nd Greg Kessen. Sidener – YES, Cox – YES, Kessen – YES
+  - Larry Sidener made a motion to rescind a motion from the trustee meeting on February
+    18th to JBL Graphics in the amount of $3,200, 2nd Greg Kessen. Sidener – YES,
+    Cox – YES, Kessen – YES
+  - Greg Kessen made a motion to approve the purchase request for Parr for decals
+    for the 2024 Chevy Tahoe in the amount of $1,650, 2nd Larry Sidener. Sidener –
+    YES, Cox – YES, Kessen – YES
+  - Larry Sidener made a motion to approve the road striping, 2nd Greg Kessen. Sidener
+    – YES, Cox – YES, Kessen – YES
+  - Greg Kessen made a motion to approve the estimate for Reclamite Sealing to Pavement
+    Tech Inc on Amherst and Kerr Road in the amount of $13,975.10, 2nd Larry Sidener.
+    Sidener – YES, Cox – YES, Kessen – YES
+  - Greg Kessen made a motion to accept the zoning meeting minutes from 3/12/2025,
+    2nd [Sidener]. Sidener – YES, Cox – YES, Kessen – YES
+  - Greg Kessen made a motion to approve the contract for Perry Protech for 60 months,
+    2nd Larry Sidener. Sidener – YES, Cox – YES, Kessen – YES
+  - Greg Kessen made a motion to go into executive session at 8:04 PM for employment/appointment,
+    2nd Larry Sidener. Sidener – YES, Cox – YES, Kessen – YES — No action
+  - Greg Kessen made a motion to come out of executive session at 8:16 PM, 2nd Larry
+    Sidener. Sidener – YES, Cox – YES, Kessen – YES
+  - Kevin Cox made a motion to go into executive session at 8:17 PM for personnel
+    with Chief Rader, 2nd Greg Kessen. Sidener – YES, Cox – YES, Kessen – YES
+  - 'Greg Kessen made a motion to come out of executive session at 8:30 PM, 2nd Larry
+    Sidener. Sidener – YES, Cox – YES, Kessen – YES — Action taken: hire Ashlyn Tracy
+    as Fire Administrative Assistant at the rate of $17.25'
+  - Larry Sidener made a motion to hire Ashlyn Tracy as Fire Administrative Assistant
+    at the rate of $17.25 for 40 hours per week and will contribute to OPERS, 2nd
+    Greg Kessen. Sidener – YES, Cox – YES, Kessen – YES
+  - Kevin Cox made a motion to go into executive session at 8:32 PM for personnel
+    with Chief Rader, Larry Sidener 2nd. Sidener – YES, Cox – YES, Kessen – YES
+  - 'Larry Sidener made a motion to come out of executive session at 8:35 PM, 2nd
+    Greg Kessen. Sidener – YES, Cox – YES, Kessen – YES — Action taken: hire Bill
+    Foster as part-time fire inspector with retirement contributions to Social Security'
+  - Greg Kessen made motion to adjourn at 8:40 PM, 2nd Larry Sidener. Sidener – YES,
+    Cox – YES, Kessen – YES
+  parties:
+  - Kevin Cox (Chairperson/Trustee)
+  - Larry Sidener (Trustee)
+  - Greg Kessen (Trustee)
+  - Christina Stombaugh (Fiscal Officer)
+  - John Iten (Police Chief)
+  - Dylan Mohr (sworn in as Perry Police Department officer)
+  - Corey Lehman (Road Supervisor)
+  - John Brewster (Zoning Inspector)
+  - Kevin Rader (Fire Chief)
+  - Cosimo Di Tolla
+  - Jason Stombaugh
+  - Dave Stombaugh
+  - Frank Clementz
+  - Jim Clementz
+  - Janet Lauf
+  - Caleb Johnson
+  - Bill Foster
+  - Ashlyn Tracy
+  - Blain Brock
+  - Jerry Hunt
+  - Holcomb
+  - Pomaville
+  - Hedges
+  - Lee
+  - Sprague
+  - Fred Lord
+  - Clemans and Nelson
+  - Chiles-Laman Funeral Service
+  - JBL Graphics
+  - Parr (PAR up in Bucyrus)
+  - Pavement Tech Inc
+  - Perry Protech
+  - Allen Economic and Port Authority
+  - Allen Economic Development Group (AEDG)
+  - Regional Planning
+  - Microsoft
+  parcels: []
+  dollar_figures:
+  - $750.00 (indigent burial, Chiles-Laman Funeral Service)
+  - $1000 (Blain Brock, renewal levy process paperwork)
+  - $1,650 (Parr/PAR, decals for 2024 Chevy Tahoe)
+  - $3,200 (JBL Graphics — rescinded)
+  - $8,000 to $9,000 (estimated cost for two digital speed signs)
+  - $13,975.10 (Reclamite Sealing estimate, Pavement Tech Inc, Amherst and Kerr Road)
+  - $114,935.55 (bills approved)
+  - $208,000 (road striping program total after county's $8,000 share)
+  - $8,000 (county share of road striping)
+  - $600 (rebate check, Perry Protech contract)
+  - $700 (discounts for security, Perry Protech contract)
+  - $533.20 (current monthly bill, Perry Protech)
+  - $524.94 (new monthly bill, Perry Protech)
+  - $15 per hour (Bill Foster, part-time fire inspector)
+  - $17.25 per hour (Ashlyn Tracy, Fire Administrative Assistant)
+- date: '2025-05-20'
+  kind: minutes
+  filename: PERRY-MINUTES-2025.0520.docx.pdf
+  hits:
+  - datacenter
+  - hume
+  summary: At the May 20, 2025 Perry Township Trustees regular meeting, resident Frank
+    Clementz raised concerns about zoning meeting minutes being changed in relation
+    to the data center, and the board explained that a correction was made after confirming
+    a motion had been worded incorrectly in the printed minutes. Trustee Greg Kessen
+    also referenced Microsoft pulling out of Ohio due to power concerns, and Frank
+    Clementz raised the topic of AEP rate increases potentially caused by the industrial
+    park on Cole St. in Lima and possible brownouts, to which Trustee Cox relayed
+    that AEP had previously indicated power was not an issue when the proposed data
+    center was being discussed.
+  corridor_relevance: The meeting directly references the proposed data center in
+    the context of disputed zoning meeting minutes and community concerns about power
+    grid impacts (AEP rate increases and brownouts) tied to the project.
+  decisions:
+  - 'Resolution #2025.0520-01 approved (3-0): $50 permit fee for temporary storage
+    containers/boxes smaller than 20 feet in length, maintained on a driveway for
+    no longer than 60 days, with emergency extensions by application.'
+  - 'Resolution #2025.0520-02 approved (3-0): Adopt definition of ''Storage Shed/Building/Carport''
+    into the zoning book.'
+  - 'Resolution #2025.0520-03 approved (2-1, Sidener – NO): Approve variance request
+    for road frontage for 1030 Hume Rd.'
+  - 'Resolution #2025-520-04 approved (3-0): Approve variance for 3939 Greely Chapel
+    Road to allow a home addition to be 16 feet from the neighboring property instead
+    of the required 25 foot.'
+  - 'Resolution #2025-0520-05 approved (3-0): Approve variance for 6336 St Johns Road
+    for road frontage.'
+  - 'Motion approved (3-0): Accept meeting minutes from April 15, 2025.'
+  - 'Motion approved (3-0): Accept handbook revisions meeting minutes from April 15,
+    2025.'
+  - 'Motion approved (3-0): Pay bills of $116,863.03.'
+  - 'Motion approved (3-0): Accept April 2025 bank reconciliation.'
+  - 'Motion approved (3-0): Accept April 2025 credit card reconciliation.'
+  - 'Motion approved (3-0): Set Perry Township Clean Up Day for July 19th from 9AM–1PM.'
+  - 'Motion approved (3-0): Special budget meeting set for June 3rd at 5:00 PM.'
+  - 'Motion approved (3-0): Increase Ashlyn Tracy''s credit card limit to $3,000.'
+  - 'Motion approved (3-0): Approve March and April zoning receipts in the amount
+    of $1,305.00.'
+  - 'Motion approved (3-0): Appoint Cody Lapoint to the Zoning Board of Appeals.'
+  - 'Motion approved (3-0): Hire Michael Seiner as a part time EMT Basic and volunteer
+    fire fighter at the applicable rate.'
+  - 'Motion approved (3-0): Hire Lacey Price as a volunteer fire fighter.'
+  - 'Motion approved (3-0): Hire Cosimo Di Tolla as a volunteer fire fighter.'
+  - 'Motion approved (3-0): Hire Andrew Inamdar as a part time EMT Basic at the applicable
+    rate.'
+  - 'Motion approved (3-0): Hire Diego Williams as a volunteer fire fighter.'
+  - 'Motion approved (3-0): Hire Matthew Carney as a fulltime fire fighter and EMT
+    Basic assigned to B Shift, upon passing his OP&F physical, advanced EMT course
+    and state certification within 6 months after completing the course.'
+  - 'Motion approved (3-0): Approve repair parts for damaged hydrant and additional
+    parts for the hydrant on Breese Rd in the amount of $3,627.74.'
+  - 'Motion approved (3-0): Chief Iten to sell the Crown Vic Cruiser.'
+  - 'Motion approved: Adjourn at 8:32 PM.'
+  parties:
+  - Kevin Cox (Chairperson/Trustee)
+  - Larry Sidener (Trustee)
+  - Greg Kessen (Trustee)
+  - Christina Stombaugh (Fiscal Officer)
+  - John Iten (Police Chief, absent)
+  - Lt. Watson
+  - Corey Lehman (Road Supervisor)
+  - Nick (Road Department)
+  - Brion Rhodes (Allen County Engineers)
+  - John Brewster (Zoning Inspector)
+  - Blain Brock
+  - Cody Lapoint
+  - Frank Clementz
+  - Cathy Clementz
+  - Kevin Rader (Fire Chief)
+  - Ashlyn Tracy (Fire Admin Assistant)
+  - Michael Seiner
+  - Lacey Price
+  - Cosimo Di Tolla
+  - Andrew Inamdar
+  - Diego Williams
+  - Matthew Carney
+  - Jason Smedley (Deputy Chief)
+  - Christina Deter
+  - Jason Stombaugh
+  - Jim Clementz
+  - Rex Huffman
+  - Cindy Leis
+  - Sandy
+  - AEP
+  - Allen County Recycling
+  - Lima Memorial
+  - United States Deputy Sheriff's Association Program
+  - Regional Planning
+  - Victory Lounge
+  - Perry Local Schools
+  - Perry United Methodist Church / Perry Church of Faith
+  - Apollo (Career Technology Center)
+  parcels:
+  - 1030 Hume Rd
+  - 3939 Greely Chapel Road
+  - 6336 St Johns Road
+  - Crabb Road (dog grooming business residence)
+  - Breese Road (fire hydrant/Yoder intersection)
+  - Kerr Rd
+  - Amherst Road (from McClain to Greely Chapel)
+  - 13th St.
+  - 700 Blk of S. Main St., Lima
+  - Cole St., Lima (industrial park)
+  dollar_figures:
+  - $3,000 (Ashlyn Tracy updated credit card limit)
+  - $2,000 (previous credit card limit)
+  - $700.00 (FLIR Thermal Camera donation value)
+  - $3,627.74 (hydrant repair parts for Breese Rd)
+  - $1,872 (MARCS pagers update – building)
+  - $4,000 (MARCS pagers update – 5 pagers)
+  - $500 (hose bed replacements, less than)
+  - $116,863.03 (bills approved for payment)
+  - $1,305.00 (March and April zoning receipts)
+  - '$50 (permit fee for temporary storage containers, per Resolution #2025.0520-01)'
+- date: '2025-06-03'
+  kind: minutes
+  filename: PERRY-MINUTES-2025.0603.docx.pdf
+  hits:
+  - datacenter
+  - easement
+  - hume
+  - pipeline
+  - tax_abatement
+  summary: At the June 3, 2025 Perry Township Trustees regular meeting, Cindy Leis
+    presented on development activity in and around Perry Township, including updates
+    on the Perry Industrial Site and data center interest. She noted that the Port
+    Authority has reassigned approximately 196 acres to Thor Equities for data center
+    clients, that a real estate developer is conducting due diligence including a
+    power study on those acres, and that the American Township data center project
+    is moving forward and expected to be announced soon with city treated water service
+    and a newly created Community Reinvestment Area (CRA). The trustees took several
+    routine administrative actions including approving bill payments, a fund transfer,
+    and personnel matters.
+  corridor_relevance: This meeting connects to the data-center corridor project through
+    Cindy Leis's guest presentation, which referenced Thor Equities being assigned
+    196 acres at the Perry Industrial Site for data center clients, a developer conducting
+    a power study on those acres, and the imminent announcement of the American Township
+    data center project.
+  decisions:
+  - Larry Sidener made a motion to accept the corrected meeting minutes from May 20,
+    2025; passed unanimously (Sidener – Yes, Cox – Yes, Kessen – Yes)
+  - Greg Kessen made a motion to pay bills of $64,911.30; passed unanimously (Sidener
+    – Yes, Cox – Yes, Kessen – Yes)
+  - Greg Kessen made a motion to accept the credit card reconciliation for May 2025;
+    passed unanimously (Sidener – Yes, Cox – Yes, Kessen – Yes)
+  - Greg Kessen made a motion to transfer $50,000 to STAR Ohio; passed unanimously
+    (Sidener – Yes, Cox – Yes, Kessen – Yes)
+  - Greg Kessen made a motion to approve the payment of $2,750.00 to Huffman, Kelley
+    & Brock for legal work for Victory Lounge; passed unanimously (Sidener – Yes,
+    Cox – Yes, Kessen – Yes)
+  - Greg Kessen made a motion to accept the resignation from Kortni Pomaville, last
+    day to be June 12th with her last shift being June 11th; passed unanimously (Sidener
+    – Yes, Cox – Yes, Kessen – Yes)
+  - Greg Kessen made a motion to hire Kortni Pomaville as part time Fire Fighter and
+    Paramedic at the applicable rate; passed unanimously (Sidener – Yes, Cox – Yes,
+    Kessen – Yes)
+  - Greg Kessen made a motion to hire Jerry Hunt once a month for $50 per month for
+    approximately 3 hours of cleaning; passed unanimously (Sidener – Yes, Cox – Yes,
+    Kessen – Yes)
+  - Greg Kessen made a motion to adjourn at 7:29 PM; passed unanimously (Sidener –
+    Yes, Cox – Yes, Kessen – Yes)
+  parties:
+  - Kevin Cox, Chairman, Perry Township Trustee
+  - Greg Kessen, Perry Township Trustee
+  - Larry Sidener, Perry Township Trustee
+  - Christina Stombaugh, Fiscal Officer
+  - John Iten, Police Chief
+  - Corey Lehman, Road Supervisor
+  - John Brewster, Zoning (absent)
+  - Mr. Brock
+  - Kevin Rader, Fire Chief (absent)
+  - Kortni Pomaville
+  - Sharon Mullins
+  - Loretta Hicks
+  - Frank and Cathy Clementz
+  - Cindy Leis
+  - Norm Capps
+  - Jobs Ohio
+  - Ohio Logistics
+  - Perry Protech
+  - Port Authority
+  - Thor Equities
+  - Wilma Youngblood
+  - Scott Stombaugh
+  - Jason Stombaugh
+  - Janet Lauf
+  - Patty Dyer
+  - Jerry Hunt
+  - ACTS Character Academy
+  - LifeWise Academy
+  - Victory Lounge
+  - Huffman, Kelley & Brock
+  - AEP
+  - Miller Auto
+  parcels:
+  - parcels on the south side of Commerce Parkway (privately owned, two parcels)
+  - parcel owned by Norm Capps (next parcel over on south side of Commerce Parkway)
+  - north side of Commerce Parkway – Ohio Logistics, 10 acres on each side of the
+    creek
+  - land between Perry Protech and the bridge on McClain (30 acres, 10 buildable)
+  - old Gossard property (now owned by ACTS Character Academy)
+  - property on Yoder Road
+  - old Wollahans on State Route 65
+  - old FedEx building
+  - 25–30 acres south of Randall Bearings
+  - 196 acres reassigned to a real estate developer at Perry Industrial Site
+  dollar_figures:
+  - $50,000 (transfer from Chase to STAR Ohio)
+  - $64,911.30 (bills payment)
+  - $2,750.00 (payment to Huffman, Kelley & Brock for legal work for Victory Lounge)
+  - $350 (tree removal on McPheron Road)
+  - $50 per month (Jerry Hunt cleaning, approximately 3 hours)
+- date: '2025-07-15'
+  kind: minutes
+  filename: PERRY-MINUTES-2025.0715.docx.pdf
+  hits:
+  - amazon
+  - datacenter
+  - solar
+  summary: 'At the July 15, 2025 Perry Township Trustees regular meeting, Zoning Inspector
+    John Brewster noted that a prior motion accepting data centers in the zoning books
+    needed to be converted to a formal resolution for recording purposes. The Board
+    subsequently passed Resolution #2025.0715-02, formally adopting language into
+    the Perry Township Zoning Resolution to permit data centers under I-2 zoning (section
+    11.1.6), and concurrently rescinded the original motion from 9/5/2024 on the same
+    subject. During public comment, a resident asked about the data center going into
+    American Township, prompting Trustee Kessen to clarify that Microsoft had pulled
+    out of the Perry project and Chairman Cox stated that other data centers are still
+    investigating the property in Perry Township.'
+  corridor_relevance: This meeting directly addresses the data-center corridor project
+    by formalizing Perry Township's zoning resolution to permit data centers under
+    I-2 zoning, and includes trustee commentary confirming Microsoft's withdrawal
+    from the Perry Township project while noting continued interest from other data
+    center parties.
+  decisions:
+  - 'Resolution #2025.0715-02 passed unanimously (Sidener – Yes, Cox – Yes, Kessen
+    – Yes): to modify and adopt the language of the Zoning Board and Regional Planning
+    to locate data centers language into the Perry Township Zoning Resolution from
+    the recommendation from I-1 modifying to I-2 zoning under 11.1.6 ''FOR THE PURPOSE
+    OF STORING AND SAVING COMPUTER DATA ON SERVERS AND SIMILAR EQUIPMENT'''
+  - 'Motion passed unanimously (Sidener – Yes, Cox – Yes, Kessen – Yes): Larry Sidener
+    rescinded the motion from 9/5/2024 to modify and adopt the language of the Zoning
+    Board and Regional Planning to locate data centers language into the Perry Township
+    Zoning Resolution from the recommendation from I-1 modifying to I-2 zoning under
+    11.1.6 ''FOR THE PURPOSE OF STORING AND SAVING COMPUTER DATA ON SERVERS AND SIMILAR
+    EQUIPMENT'''
+  parties:
+  - Kevin Cox, Chairperson/Trustee
+  - Greg Kessen, Trustee
+  - Larry Sidener, Trustee
+  - Christina Stombaugh, Fiscal Officer
+  - John Brewster, Zoning Inspector
+  - Frank Lamar (guest/public comment)
+  - Microsoft (referenced by Trustee Kessen)
+  parcels: []
+  dollar_figures: []
+- date: '2025-09-16'
+  kind: minutes
+  filename: PERRY-MINUTES-2025.0916.docx.pdf
+  hits:
+  - google
+  - setback
+  - solar
+  summary: The September 16, 2025 Perry Township Trustees regular meeting was dominated
+    by public comment and trustee discussion regarding a proposed large-scale chicken
+    farm (CAFF) being developed by Keiran Fetter in Perry Township, with residents
+    raising concerns about water table impact, air quality, odor, dust, road damage,
+    and lack of prior notification. The trustees, zoning inspector, zoning board representatives,
+    and township attorney discussed the permitting process, applicable Ohio Revised
+    Code provisions (ORC 519.19/519.21) limiting township authority over agricultural
+    uses on land of five or more acres, and what steps — if any — the township could
+    take. The meeting also addressed routine fiscal, road, fire, and police department
+    matters including payment approvals, equipment purchases, and a sign grant.
+  corridor_relevance: This meeting is flagged for corridor relevance solely due to
+    the extensive discussion of a proposed large-scale poultry facility (CAFF) by
+    Keiran Fetter in Perry Township, which appears to be the "chicken farm" project
+    referenced in connection with permitting, zoning, and community opposition — not
+    directly referencing Project BOSC / Bistrozzi LLC / a hyperscale data center;
+    the document contains no mention of a data center, Google, Project BOSC, or Bistrozzi
+    LLC.
+  decisions:
+  - Motion to pay the NOW Marketing invoice for $2,500.00 for 30 hours of support
+    — requested by Fiscal Officer Christina Stombaugh (vote outcome not explicitly
+    recorded).
+  - Resolution passed for the Allen County Auditor for the adopted Tax Budget for
+    2026.
+  - Motion to rehire Attorney Blain Brock at $1,000 each month from September 2025
+    – December 2025 — requested by Fiscal Officer Christina Stombaugh (vote outcome
+    not explicitly recorded).
+  - Motion to set a meeting for Handbook Revisions for September 25th from 9AM – 11AM
+    — requested by Fiscal Officer Christina Stombaugh (vote outcome not explicitly
+    recorded).
+  - Kevin Cox added as JP Morgan Chase security administrator (due to November election).
+  - Two resolutions that were tabled at the last meeting were passed by the Trustees.
+  - Trustee Kessen requested that something be put on the sign about burning regulations.
+  - Trustee Sidener to call again regarding broken telephone poles on Bowman Road.
+  parties:
+  - Kevin Cox, Chairperson/Trustee
+  - Larry Sidener, Trustee
+  - Greg Kessen, Trustee
+  - Christina Stombaugh, Fiscal Officer
+  - John Iten, Police Chief
+  - Corey Lehman, Road Supervisor
+  - John Brewster, Zoning Inspector
+  - Kevin Rader, Fire Chief
+  - Blain Brock, Attorney
+  - Lydia Archambo, Stormwater Coordinator, Allen Soil and Water Conservation District
+  - Joe Gearing, Allen County Engineer
+  - Keiran Fetter (applicant/developer, chicken farm)
+  - Albert Siegwell (sp) (referenced by Chairman Cox)
+  - Brion Rhodes (referenced by Trustee Sidener)
+  - Jarrod (Nutrient Manager, Allen SWCD)
+  - Matthew Liles, public commenter
+  - John Godfrey, public commenter
+  - Michele Houseworth, public commenter
+  - Dieter Wireman, public commenter
+  - Tom Crisenberry, public commenter
+  - Chris Wells, public commenter
+  - Kyle Wallace, public commenter
+  - Tim Riepenhoff, public commenter
+  - Micheal Liles, public commenter
+  - Laura Durkee, public commenter
+  - Ralph Haggard, public commenter
+  - Scott Stombaugh, Zoning Appeals/Zoning Commission Board representative
+  - Jeff Carolus, Zoning Board representative
+  - Doug Mooney, public commenter
+  - Frank Clements, public commenter
+  - Tim Jackson, public commenter
+  - Kellie Jackson, public commenter
+  - Janet Lauf, public commenter
+  - Rita Fricke, public commenter
+  - Deb Riepenhoff, public commenter
+  - James Conrad, public commenter
+  - Lori Brooks, public commenter
+  - NOW Marketing
+  - Smith Bohn Mechanical
+  - Hefner's (winning bid, Crown House demolition)
+  - Ohio Department of Agriculture (ODA)
+  - Ohio EPA
+  - Allen County Health Department
+  - Ohio Department of Forestry
+  - MARCS
+  - Lima Municipal Court
+  - JP Morgan Chase
+  - GovDeals
+  - Wings and Rings
+  parcels:
+  - Land on or near Amherst Road (digital speed sign location)
+  - Land on or near Breese Road (digital speed sign location)
+  - Land on St Johns Rd (Crown House behind PTC, tear-down by Hefner's)
+  - Property associated with Keiran Fetter's proposed chicken farm, Perry Township
+    (specific parcel number not stated)
+  - Land in Auglaize County, Wayne Township off of St Rt 117 and Fairmont (Fetter
+    building referenced)
+  - Osman Road (referenced for truck traffic concerns)
+  - Bowman Road (telephone pole issue)
+  dollar_figures:
+  - $2,500.00 – NOW Marketing invoice for 30 hours of support
+  - $1,000 each month (September 2025 – December 2025) – Attorney Blain Brock retainer
+  - -$2,450.61 – credit on 1st invoice for Road Program
+  - $5,549.39 – Road Program invoice amount
+  - $8,000 – credit for 2025 mowing
+  - $110 – Fiscal Officer training cost in Perrysburg, October 2nd
+  - $10,600 – ACH payment received from GovDeals for the 2000 Sterling
+  - $4,500 – sign grant approved
+  - $4,005.00 – cost for 100 foot, 3 sections of 5" rubber hose replacement with synthetic
+    (Fire Dept)
+  - $15,200 – cost for personal protection equipment for firefighters (turn out gear,
+    4 employees)
+  - $16,000 – budgeted line item for turn out gear
+  - $553.00 – Wings and Rings donation to Fire Auxiliary account
+- date: '2025-10-21'
+  kind: minutes
+  filename: PERRY-MINUTES-2025.1021.docx.pdf
+  hits:
+  - datacenter
+  - hume
+  - rezoning
+  summary: At the October 21, 2025 Perry Township Trustees regular meeting, the data
+    center project arose solely in the context of discussions about trustee transparency
+    and public participation. Trustee Sidener referenced "the data center meetings
+    last year" as an example of a rare case where public comment time was limited,
+    and resident Cathy Clementz asked the trustees to publicly state their personal
+    positions on the data center given its broad community impact. Chairman Cox responded
+    that he believed everyone already knew where he stood on the matter.
+  corridor_relevance: The meeting references the data center project only as a past
+    example cited during a transparency debate — Trustee Sidener noted comment time
+    was limited at "the data center meetings last year," and a resident asked the
+    trustees to share their personal views on the data center with the public.
+  decisions:
+  - 'Resolution #2025.1021-01: Lighting assessment to remain the same as previous
+    year at $14.21 per lot for Perry Township Lighting District - Linneman. (Sidener-YES,
+    Cox-YES, Kessen-YES)'
+  - 'Resolution #2025.1021-02: Lighting assessment to remain the same as previous
+    year at $14.50 per lot for Perry Township Lighting District - St. Johns. (Sidener-YES,
+    Cox-YES, Kessen-YES)'
+  - 'Resolution #2025.1021-03: Lighting assessment at $18.30 per lot for Perry Township
+    Lighting District - Glenn Ave. (Sidener-YES, Cox-YES, Kessen-YES)'
+  - 'Resolution #2025.1021-04: Increase revenue for Fire Fund, Contracts for Emergency
+    Medical Services (2111-202-0001) in the amount of $180,000.00 for increased medical
+    collections in 2025. (Sidener-YES, Cox-YES, Kessen-YES)'
+  - 'Resolution #2025.1021-05: Increase appropriations for Fire Fund, Contracted Services
+    (2111-220-360-0000) in the amount of $8,000 for increased collection fees for
+    the Medicount Revenue Fund. (Sidener-YES, Cox-YES, Kessen-YES)'
+  - 'Resolution #2025.1021-06: Decrease revenue for Fire Fund, Other State Receipts
+    (2111-539-0000) in the amount of $50,000 due to receiving no grants in 2025. (Sidener-YES,
+    Cox-YES, Kessen-YES)'
+  - Motion to accept meeting minutes from October 7, 2025. (Sidener-YES, Cox-YES,
+    Kessen-YES)
+  - Motion to pay bills of $66,403.88. (Sidener-YES, Cox-YES, Kessen-YES)
+  - Motion to approve purchase of 2026 Education Subscription with Ohio Township Association
+    in the amount of $250.00. (Sidener-YES, Cox-YES, Kessen-YES)
+  - 'Motion to accept three-year contract with Smith Boughan for furnace maintenance
+    for Admin, Fire and Police Department: 1st year $3,294.00, 2nd year $3,442.00,
+    3rd year $3,597.00. (Sidener-YES, Cox-YES, Kessen-YES)'
+  - Motion to approve estimate from Culp Tree Service to remove two trees (one on
+    14th Street, one on Clum Road) in the amount of $2,400.00. (Sidener-YES, Cox-YES,
+    Kessen-YES)
+  - Motion to give vacation credit due to years of service with a governmental agency
+    of 3 years / 120 hours (for Ashlyn Tracy). (Sidener-YES, Cox-YES, Kessen-YES)
+  - Motion to adjourn at 8:04 PM. (Sidener-YES, Cox-YES, Kessen-YES)
+  - Trustees decided to approve the Smith Boughan furnace contract.
+  - Board decided to grant Ashlyn Tracy service credits.
+  - Zoning Board of Appeals to make a motion to appoint Jeff Carolus as Chairman and
+    appoint a Vice Chairman next month; Trustees will then accept their recommendation.
+  - Brooke Hedges moved to the Appeals Board; Ryan Klickman is now an alternate.
+  parties:
+  - Kevin Cox, Chairman/Trustee
+  - Greg Kessen, Trustee
+  - Larry Sidener, Trustee
+  - Christina Stombaugh, Fiscal Officer
+  - John Iten, Police Chief (absent)
+  - Corey Lehman, Road Department Head
+  - John Brewster, Zoning Inspector (absent)
+  - Kevin Rader, Fire Chief
+  - Jeff Carolus, Zoning Board of Appeals
+  - Paul Neff
+  - John Godfrey
+  - Cathy Clementz
+  - Frank Clementz
+  - Jim Clementz
+  - Dave Stombaugh
+  - Janet Lauf
+  - Paula Patton
+  - Sharon Mullins
+  - Scott Stombaugh
+  - Rick Phillips
+  - Dieter Wireman
+  - Ashlyn Tracy
+  - Ethan Hull
+  - Blain Brock (attorney)
+  - Adam Haunhorst (zoning consultant)
+  - Brooke Hedges
+  - Ryan Klickman
+  - Pavement Technologies
+  - Lima Allen County Convention Center
+  - Gueye and Associates
+  - Ohio Township Association
+  - Smith Boughan
+  - Culp Tree Service
+  - Medicount
+  - Bright Speed
+  - Gerkin (truck company)
+  parcels:
+  - 14th Street (tree removal)
+  - Clum Road (tree removal)
+  - Hanthorn Road
+  - Hume Road
+  - Amherst Road
+  - Breese Road
+  - Wonnell Road (off Schooler by the river)
+  - 4th Street (Waughtel property)
+  - Fetters Farm
+  dollar_figures:
+  - $13,661.56 – Pavement Technologies, road program
+  - $17,609.04 – Lima Allen County Convention Center, regular monthly payment
+  - $4,000 – Gueye and Associates, audit
+  - $250.00 – Ohio Township Association 2026 education subscription
+  - $180,000.00 – increase revenue for Fire Fund, Contracts for Emergency Medical
+    Services (2111-202-0001)
+  - $8,000 – increase appropriations for Fire Fund, Contracted Services (2111-220-360-0000)
+  - $50,000 – decrease revenue for Fire Fund, Other State Receipts (2111-539-0000)
+  - $66,403.88 – bills paid
+  - $3,294.00 – Smith Boughan furnace contract, 1st year
+  - $3,442.00 – Smith Boughan furnace contract, 2nd year
+  - $3,597.00 – Smith Boughan furnace contract, 3rd year
+  - $2,400.00 – Culp Tree Service, two tree removals
+  - $14.21 per lot – Lighting District Linneman assessment
+  - $14.50 per lot – Lighting District St. Johns assessment
+  - $18.30 per lot – Lighting District Glenn Ave. assessment
+  - '$17,000 – funds held re: Patton property'
+- date: '2025-12-02'
+  kind: minutes
+  filename: PERRY-MINUTES-2025.1202.docx.pdf
+  hits:
+  - datacenter
+  - tax_abatement
+  summary: At the December 2, 2025 Perry Township Trustees meeting, Zoning Inspector
+    John Brewster reported that the data center language being added to zoning was
+    approved, and that a separate data center has shown interest in an area already
+    zoned industrial. Trustee Sidener relayed that a previously denied data center's
+    landowner was upset and may pursue legal action, and that the denied party threatened
+    to sue the township. A resident asked about new development, and Brewster confirmed
+    inquiries from multiple data centers regarding industrially zoned land, though
+    nothing was confirmed beyond early-stage interest.
+  corridor_relevance: This meeting directly references the data center corridor project,
+    including the denial of an earlier data center application, a potential lawsuit
+    threat, approval of data center zoning language, and new data center inquiries
+    in an industrially zoned area of Perry Township.
+  decisions:
+  - 'Resolution #2025.1202-01 approved: transfer (not to be repaid) from General Fund
+    Transfer Out (1000-910-910-0000) to Road and Bridge Transfer In (2031-931-0000)
+    in the amount of $58,000.00 to cover invoices for the 2025 Road Program — Larry
+    Sidener YES, Kevin Cox YES, Greg Kessen ABSENT.'
+  - Motion to accept meeting minutes from November 18, 2025 — Larry Sidener YES, Kevin
+    Cox YES, Greg Kessen ABSENT.
+  - Motion to pay bills of $112,777.02 — Larry Sidener YES, Kevin Cox YES, Greg Kessen
+    ABSENT.
+  - Motion to approve November 2025 credit card reconciliation — Larry Sidener YES,
+    Kevin Cox YES, Greg Kessen ABSENT.
+  - Motion to cancel the regular Trustee meeting on January 6, 2026 — Larry Sidener
+    YES, Kevin Cox YES, Greg Kessen ABSENT.
+  - Motion to transfer $100,000 to STAR Ohio — Larry Sidener YES, Kevin Cox YES, Greg
+    Kessen ABSENT.
+  - Motion to adjourn at 7:20 PM — Larry Sidener YES, Kevin Cox YES, Greg Kessen ABSENT.
+  parties:
+  - Kevin Cox, Chairman/Trustee
+  - Larry Sidener, Trustee
+  - Greg Kessen, Trustee (absent)
+  - Christina Stombaugh, Fiscal Officer
+  - John Brewster, Zoning Inspector
+  - John Iten, Police Chief (absent)
+  - Corey Lehman, Head of Roads (absent)
+  - Kevin Rader, Fire Chief
+  - Natalie (UAN webinar assistant, last name not stated)
+  - Clemans and Nelson (legal/HR firm)
+  - Blain Brock
+  - Jim Clementz
+  - Dave Stombaugh
+  - Cassie Betts
+  - Tim Myers
+  - Brooke Hedges
+  - Frank Clementz
+  - Cathy Clementz
+  - Scott Stombaugh
+  - Norm Capps
+  - Andrew Klaus
+  - Janet Lauf
+  - Steve Myers
+  - Allen County Engineers
+  - Miller Auto
+  - Atlantic Emergency Solutions
+  - Stryker Sales
+  - TASC
+  - AEDG
+  - Murphy Tractor
+  parcels:
+  - 1404 (referenced as a truck/equipment purchase, not a land parcel)
+  - Old Wolahan Lumber Building (prospective water treatment plant site)
+  - Main and 14th or 15th (telephone pole location)
+  dollar_figures:
+  - $2,999.99 — Steve Myers, multiple invoices
+  - $14,808.56 — Allen County Engineers, road program
+  - $5,359.95 — Miller Auto, approved at November 18th meeting
+  - $30,459.53 — Atlantic Emergency Solutions, approved at October 7th meeting for
+    turn-outs
+  - $58,000.00 — transfer from General Fund to Road & Bridge for Allen County Engineers
+    invoice
+  - $112,777.02 — bills payment motion
+  - $100,000 — transfer to STAR Ohio
+  - $7,500 — proposed TASC card amount for employees with dependents
+- date: '2026-02-17'
+  kind: minutes
+  filename: 2026.02117-PERRY-MINUTES.docx.pdf
+  hits:
+  - google
+  - hume
+  summary: The February 17, 2026 Perry Township Trustees regular meeting covered routine
+    township business including fire department staffing and ISO certification, road
+    maintenance, police equipment, and administrative matters. Interim Fire Chief
+    Justin Roberts noted that the township's ISO rating had been at risk of dropping
+    to a Class 10, which he stated "would have also stunted the future growth of businesses
+    in the area," a comment that may bear indirect relevance to the data-center corridor
+    project. The meeting included multiple executive sessions, hiring decisions, and
+    equipment approvals, but contained no explicit discussion of Project BOSC, Bistrozzi
+    LLC, or a hyperscale data center. The MOU with LARPC (Lima-Allen County Regional
+    Planning Commission) was approved, which is an agency associated with corridor-area
+    land use planning.
+  corridor_relevance: The meeting was flagged due to an approved MOU with the Lima-Allen
+    County Regional Planning Commission (LARPC), an agency involved in corridor-area
+    planning, and a passing reference by Interim Fire Chief Roberts that a drop in
+    ISO fire rating "would have also stunted the future growth of businesses in the
+    area," though neither the data center project nor Bistrozzi LLC is explicitly
+    named in the document.
+  decisions:
+  - 'Resolution #2026.0217-01: To correct fire employees'' pay from 12/29/25 minutes
+    and to rescind Resolution #2025.1229-03 — Stombaugh YES, Cox YES, Clementz YES'
+  - 'Resolution #2026.0217-02: To charge $75/hour up to $750.00 for dash cam and body
+    cam video for public records requests per House Bill 315 — Stombaugh YES, Cox
+    YES, Clementz YES'
+  - Motion to accept meeting minutes from February 3, 2026 — approved unanimously
+  - Motion to accept emergency meeting minutes from February 2, 2026 — approved unanimously
+  - Motion to accept emergency meeting minutes from February 5, 2026 — approved unanimously
+  - Motion to accept emergency meeting minutes from February 6, 2026 — approved unanimously
+  - Motion to accept emergency meeting minutes from February 9, 2026 — approved unanimously
+  - Motion to accept Trustee Workshop meeting minutes from February 13, 2026 — approved
+    unanimously
+  - Motion to pay bills in the amount of $48,359.01 — approved unanimously
+  - Motion to approve the MOU with LARPC (Lima-Allen County Regional Planning Commission)
+    and pay $1,352.80 — approved unanimously
+  - Motion to allow Fiscal Officer Christina Stombaugh to attend the Local Government
+    Conference in March 2026 and cover related expenses — approved unanimously
+  - Motion to approve indigent funeral expenses for Randy Pugin on 801 S Mumaugh Road
+    paid to Chiles and Sons for $750.00 — approved unanimously
+  - Motion to add Todd Gardner to the credit card policy with a limit of $2,000 —
+    approved unanimously
+  - Motion to change the credit card policy limit for Ashlyn Tracy from $3,000 to
+    $7,500 while employing an interim part-time fire chief — approved unanimously
+  - Motion to go into executive session to review the contract for Sam Huffman and
+    possible hiring at 6:45 PM — approved unanimously
+  - 'Motion to come out of executive session at 7:02 PM — approved unanimously; Action
+    taken: hiring Sam Huffman at $1,000/month for up to 6 hours/month and $225.00
+    for any billable hours after the 6 hours'
+  - Motion to hire Attorney Sam Huffman at the rate of $1,000/month for up to 6 hours
+    and $225.00 for any billable hours after the 6 hours — approved unanimously
+  - Motion to go into executive session for personnel with Police Chief Iten at 7:03
+    PM — approved unanimously
+  - Motion to come out of executive session at 7:10 PM — approved unanimously; No
+    action taken
+  - Motion to approve the quote for the purchase of seven police vests with the upfront
+    cost of $7,558.00 with a 75% reimbursement from the state for a final cost of
+    $1,889 — approved unanimously
+  - 'Motion to appoint Volunteer Firefighter Dependents Fund Board members: Frank
+    Clementz (Chair), Scott Stombaugh, Brooke Hedges, Todd Gardner, and Tyler Turner
+    — approved unanimously'
+  - Motion to hire Aaron Ream as a part-time EMT Basic and a volunteer firefighter
+    at the applicable rate — approved unanimously
+  - Motion to post full-time fire positions externally until filled — approved unanimously
+  - Motion to enter into a contract with National Hose Testing and Ground Ladder Testing
+    in the amount of $6,507.50 — approved unanimously
+  - Motion to approve the purchase of an inverter for Medic One at the cost of $1,280.00
+    — approved unanimously
+  - Motion to accept the resignation of Jason Smedley, effective immediately — approved
+    unanimously
+  - Motion to accept the resignation of JR Long, effective immediately — approved
+    unanimously
+  - Motion to go into executive session at 8:12 PM for an employment contract with
+    Justin Roberts — approved unanimously
+  - 'Motion to come out of executive session at 8:33 PM — approved unanimously; Action
+    taken: entered into a contract with Interim Chief Justin Roberts'
+  - Motion to enter into a contract with Justin Roberts as Interim Fire Chief for
+    $3,000/week, to be renegotiated after 12 weeks — approved unanimously
+  - Motion to adjourn at 8:50 PM — approved unanimously
+  parties:
+  - Scott Stombaugh (Chairperson/Trustee)
+  - Kevin Cox (Trustee)
+  - Frank Clementz (Trustee)
+  - Christina Stombaugh (Fiscal Officer)
+  - John Iten (Police Chief)
+  - Corey Lehman (Road Department)
+  - John Brewster (Zoning Inspector)
+  - Justin Roberts (Interim Fire Chief)
+  - Todd Gardner
+  - Ashlyn Tracy
+  - Sam Huffman (Attorney)
+  - Denny Phalen
+  - Brian Rhodes
+  - Beth Seibert
+  - Aaron Ream
+  - Jason Smedley
+  - JR Long
+  - Bill Foster (Chief Fire Inspector)
+  - Brooke Hedges
+  - Tyler Turner
+  - Brian Miller
+  - Heath Smedley (Medicount)
+  - Sasha Weigt
+  - Chuck Weigt
+  - Cathy Clementz
+  - Michele Houseworth
+  - Ron McElwain
+  - Larry Sidener
+  - TJ Myers
+  - Nick Myers
+  - Parker Beard
+  - Blaici Lee
+  - Dustin Buell
+  - Matthew Carney
+  - William Foster
+  - Tim Jackson
+  - Jim Clementz
+  - Greg Kessen
+  - Chiles and Sons
+  - Medicount
+  - LARPC (Lima-Allen County Regional Planning Commission)
+  - National Hose Testing
+  - Ohio EPA
+  - Ohio Auditor of State
+  parcels:
+  - 801 S Mumaugh Road (Randy Pugin, indigent funeral)
+  - 2648 Breese Rd (hollow tree in right of way)
+  - 333 E Hume Rd (tree near power lines)
+  - 'South Union Street between 12th Street and 11th Street (complaint re: cars on
+    lots)'
+  - East Hume Rd (lot split, garage residence concern)
+  - Osman Road (tree service business, burning complaint)
+  - Yoder Rd from Greeley to Bowman (1.42 miles)
+  - Thayer Rd from 117 and 309 (1.34 miles)
+  dollar_figures:
+  - $300 (Local Government Conference registration fee)
+  - $7,558.00 (upfront cost for 7 police vests)
+  - $1,889 (final cost for 7 police vests after 75% state reimbursement)
+  - $75/hour up to $750.00 (dash cam/body cam video records requests per House Bill
+    315)
+  - $48,359.01 (bills payment)
+  - $1,352.80 (MOU payment to LARPC)
+  - $750.00 (indigent funeral expenses for Randy Pugin, paid to Chiles and Sons)
+  - $2,000 (credit card limit for Todd Gardner)
+  - $3,000 (credit card limit change from)
+  - $7,500 (new credit card limit for Ashlyn Tracy)
+  - $1,000/month (Attorney Sam Huffman retainer for up to 6 hours/month)
+  - $225.00 (Attorney Sam Huffman hourly rate after 6 hours)
+  - $355 (average per transport over last year, per Medicount)
+  - $7/month per user (Google email, 10 users)
+  - $840 annually (Google email total cost)
+  - '$5,538.00 (hose testing: 10,650 feet at 52 cents a foot)'
+  - $969.50 (ground ladder testing)
+  - $6,507.50 (total hose and ground ladder testing contract)
+  - $1,280.00 (inverter replacement for Medic 1)
+  - $3,000/week (Interim Fire Chief Justin Roberts contract, renegotiated after 12
+    weeks)
+  - $3,000 (referenced by Brooke Hedges in context of Roberts' compensation)
+- date: '2026-03-03'
+  kind: minutes
+  filename: 2026.0303-PERRY-MINUTES.pdf
+  hits:
+  - google
+  - hume
+  summary: The Perry Township Trustees regular meeting of March 3, 2026 covered routine
+    township business including fiscal payments, personnel actions, road maintenance,
+    fire department staffing, and technology upgrades. The only reference potentially
+    connected to the data-center corridor project is the board's approval of Google
+    Workspace for 25 users at a cost of $2,100 for township-wide email; the word "Google"
+    appears solely in this administrative IT context. No business related to Project
+    BOSC, Bistrozzi LLC, a hyperscale data center, land acquisition, or corridor infrastructure
+    was discussed or transacted.
+  corridor_relevance: The meeting was flagged due to the mention of "Google," but
+    the sole reference is an administrative vote to adopt Google Workspace for internal
+    township email — no discussion of Project BOSC, Bistrozzi LLC, a hyperscale data
+    center, or any corridor-related land, zoning, or infrastructure matter appears
+    anywhere in the document text.
+  decisions:
+  - 'Resolution #2026.0303-01 approved payment for BWC True-Up for 2024 in the amount
+    of $2,276.00 (Cox-yes, Stombaugh-yes, Clementz-yes)'
+  - Motion to accept corrected meeting minutes from February 17, 2026 approved (Stombaugh-yes,
+    Cox-yes, Clementz-yes)
+  - Motion to pay bills of $90,986.18 approved (Stombaugh-yes, Cox-yes, Clementz-yes)
+  - Motion to approve payment to Atlantic Emergency Solutions in the amount of $2,165.90
+    for Pump Hale Pack approved (Stombaugh-yes, Cox-yes, Clementz-yes)
+  - Motion to approve payment to Huffman, Kelley, and Brock in the amount of $4,775.00
+    for the Victory Lounge legal case approved (Stombaugh-yes, Cox-yes, Clementz-yes)
+  - Motion to pay Clemans-Nelson in the amount of $4,480.00 for personnel issues at
+    the fire department approved (Stombaugh-yes, Cox-yes, Clementz-yes)
+  - Motion to accept bank reconciliation for December 2025 approved (Stombaugh-yes,
+    Cox-yes, Clementz-yes)
+  - Motion to accept bank reconciliation for January 2026 approved (Stombaugh-yes,
+    Cox-yes, Clementz-yes)
+  - Motion to accept credit card reconciliation for January 2026 approved (Stombaugh-yes,
+    Cox-yes, Clementz-yes)
+  - Motion to approve changes to the rental agreement and post revisions on the Perry
+    website approved (Stombaugh-yes, Cox-yes, Clementz-yes)
+  - Motion to remove Kevin Rader, Jason Smedley, and Lori Iten from the credit card
+    policy and close said cards approved (Stombaugh-yes, Cox-yes, Clementz-yes)
+  - Motion to accept the resignation of Lori Iten as Police Dept Administrator approved
+    (Stombaugh-yes, Cox-yes, Clementz-yes)
+  - Motion to go into executive session at 6:53 PM with Attorney Sam Huffman for police
+    personnel approved (Stombaugh-yes, Cox-yes, Clementz-yes)
+  - Motion to come out of executive session at 7:16 PM approved — no action taken
+    (Stombaugh-yes, Cox-yes, Clementz-yes)
+  - Motion to approve estimate from Culp Tree Service in the amount of $3,000 to take
+    down two dead trees on Breese and Hume Roads approved (Stombaugh-yes, Cox-yes,
+    Clementz-yes)
+  - Motion to accept zoning receipts for January and February 2026 in the amount of
+    $1,951.19 approved (Stombaugh-yes, Cox-yes, Clementz-yes)
+  - Motion to promote Andrew Klaus as a full-time Firefighter II and Advanced EMT
+    at the applicable rate to B Shift, pending passing an OP&F physical, effective
+    March 23rd if not sooner, approved (Stombaugh-yes, Cox-yes, Clementz-yes)
+  - Motion to hire Krew Kizer as a full-time Level I Firefighter and EMT-Basic on
+    a shift at the applicable rate, pending passing an OP&F physical, with a tentative
+    start date of March 23rd if not sooner, approved (Stombaugh-yes, Cox-yes, Clementz-yes)
+  - Motion to hire Logan Bowers as part-time EMT at the applicable rate and appoint
+    him as a volunteer fire fighter effective March 4th, 2026 approved (Stombaugh-yes,
+    Cox-yes, Clementz-yes)
+  - Motion to remove a list of old unused items from the fire inventory list to either
+    donate or dispose of those that have no value approved (Stombaugh-yes, Cox-yes,
+    Clementz-yes)
+  - Motion to approve Google Workspace for 25 users at a cost of $2,100 approved (Stombaugh-yes,
+    Cox-yes, Clementz-yes)
+  - Motion to go into executive session for personnel compensation with Ashlyn Tracy
+    and Justin Roberts at 8:08 PM approved (Stombaugh-yes, Cox-yes, Clementz-yes)
+  - Motion to come out of executive session at 8:35 PM approved — no action taken
+    (Stombaugh-yes, Cox-yes, Clementz-yes)
+  - Motion to pay Attorney Sam Huffman $1,500 ($500 for February, $1,000 for March)
+    plus any billable hours at the end of March 2026 approved (Stombaugh-yes, Cox-yes,
+    Clementz-yes)
+  - Motion to adjourn at 8:37 PM approved (Stombaugh-yes, Cox-yes, Clementz-yes)
+  parties:
+  - Scott Stombaugh (Chairperson/Trustee)
+  - Kevin Cox (Trustee)
+  - Frank Clementz (Trustee)
+  - Chris Stombaugh (Fiscal Officer)
+  - John Iten (Police Chief)
+  - Sgt. Eichman
+  - Corey Lehman (Road Supervisor)
+  - Eric (County)
+  - Brion Rhodes
+  - John Brewster (Zoning Inspector)
+  - Interim Chief Justin Roberts (Fire Chief)
+  - Brooke Hedges
+  - Betsy Billingsley (Visit Greater Lima)
+  - Jason Stombaugh
+  - Dave Stombaugh
+  - Ron McElwain
+  - Ashlyn Tracy
+  - Sam Huffman (Attorney)
+  - Bob Phillips
+  - Nick Myers
+  - Jim Clementz
+  - Atlantic Emergency Solutions
+  - Huffman, Kelley, and Brock
+  - Clemans-Nelson
+  - Culp Tree Service
+  - Smith Boughan
+  - Orkin
+  - Andrew Klaus
+  - Krew Kizer
+  - Logan Bowers
+  - Kevin Rader
+  - Jason Smedley
+  - Lori Iten
+  - Mary Williamson
+  - Fred Lord
+  - Army's Towing
+  parcels:
+  - 1030 Hume Rd
+  - Breese and Hume Roads
+  - 12th St.
+  - Breese Rd
+  - Schooler Road from Breese to Hanthorn
+  - Yoder (from Greely Chapel to Bowman)
+  - Thayer Road
+  - State Route 65
+  - Townline (south of Amherst)
+  dollar_figures:
+  - $2,276.00 (BWC True-Up for 2024)
+  - $2,165.90 (Atlantic Emergency Solutions, Pump Hale Pack)
+  - $3,294.00 (Smith Boughan, contract for service)
+  - $4,775.00 (Huffman, Kelley, and Brock, Victory Lounge legal case)
+  - $4,480.00 (Clemans-Nelson, personnel issues at fire department)
+  - $3,000 (Culp Tree Service, two dead trees on Breese and Hume Roads)
+  - $33,433.75 (Reclamite for roads paved in 2024)
+  - $1,951.19 (zoning receipts, January and February 2026)
+  - $90,986.18 (bills)
+  - $300 (Orkin extra charge for cockroach treatment)
+  - $2,100 (Google Workspace for 25 users)
+  - $500 (fair board offer for ambulance/EMTs)
+  - $2.9 million (tourism brought into county by Hearse Mania)
+  - $122,948 (grants totaling, Visit Greater Lima)
+  - $1,500 (Attorney Sam Huffman, $500 for February, $1,000 for March)
+- date: '2026-04-07'
+  kind: minutes
+  filename: 2026.0407-PERRY-MINUTES.doc.pdf
+  hits:
+  - datacenter
+  - hume
+  summary: At the April 7, 2026 Perry Township Trustees regular meeting, Trustee Frank
+    Clementz reported that a meeting was held with Allen County Regional Planning
+    regarding data centers, and noted that a petition is currently circulating to
+    investigate the pros and cons of the power and water usage associated with these
+    facilities. Clementz also stated that 10 more data centers are expected to be
+    coming to Northwest Ohio. No votes, resolutions, or formal actions related to
+    the data center corridor project were taken at this meeting.
+  corridor_relevance: The meeting connects to the project through Trustee Clementz's
+    report of a meeting with Allen County Regional Planning about data centers and
+    a community petition investigating the pros and cons of power and water usage,
+    with reference to 10 more data centers expected in Northwest Ohio.
+  decisions:
+  - No formal motions or votes were taken regarding the data center corridor project
+    or the petition; Clementz's report was informational only.
+  parties:
+  - Trustee Frank Clementz
+  - Allen County Regional Planning
+  - Tonya Dye, LACRP (Lima Allen County Regional Planning)
+  parcels: []
+  dollar_figures: []
+- date: '2026-04-21'
+  kind: minutes
+  filename: 2026.0421-PERRY-MINUTES.docx.pdf
+  hits:
+  - datacenter
+  - hume
+  summary: A guest, Dave Stombaugh, raised the topic of a moratorium on data centers
+    that Shawnee Township had passed, prompting the Perry Township Trustees to discuss
+    whether they need a temporary hold on alternative energy. Zoning-related concerns
+    about data centers and water usage were also raised, specifically that data centers
+    should be required to tap into a hydrant system or municipal water rather than
+    digging deep water wells that could deplete residents' wells. The trustees also
+    discussed that Shawnee Township now has 1½ years to develop a plan for data centers,
+    and that small nuclear plants to power data centers were also being considered.
+  corridor_relevance: This meeting connects to the corridor project through a guest's
+    inquiry about Shawnee Township's data center moratorium, prompting Perry Township
+    Trustees to discuss whether they should impose a similar temporary hold and explore
+    zoning regulations related to water sourcing for data centers.
+  decisions:
+  - Trustees will check if they need a temporary hold on alternative energy (no formal
+    vote recorded).
+  - Trustees will research putting language in the zoning book requiring data centers
+    to tap into a hydrant system or municipal water source (no formal vote recorded).
+  - Motion to approve Access Management Roads — Scott Stombaugh YES, Kevin Cox YES,
+    Frank Clementz YES.
+  - Motion to approve purchase order in the amount of $5,000 for accounting and legal
+    fees — Scott Stombaugh YES, Kevin Cox YES, Frank Clementz YES.
+  - Motion to approve Sasha Weigt to be paid $30 per hour with a max of $500 to create
+    prior approved resolutions in PDF form within 2 months — Scott Stombaugh YES,
+    Kevin Cox YES, Frank Clementz YES.
+  - Motion to reinstate Lacey Price to active status as a volunteer firefighter at
+    the applicable rate — Scott Stombaugh YES, Kevin Cox YES, Frank Clementz YES.
+  - Motion to appoint Kyle Hanthorn as a volunteer firefighter at the applicable rate
+    — Scott Stombaugh YES, Kevin Cox YES, Frank Clementz YES.
+  - Motion to approve Erin Werner for an applicable rate increase for earning an Advanced
+    EMT Certification — Scott Stombaugh YES, Kevin Cox YES, Frank Clementz YES.
+  - Motion to appoint Nick Adams as Fire Chief effective June 29, 2026 at a salary
+    of $66,000 per year — Scott Stombaugh YES, Kevin Cox YES, Frank Clementz YES.
+  - Motion to add a new temporary position of Full-Time Assistant Fire Chief and appoint
+    Nick Adams at a rate of $27 per hour until June 28th — Scott Stombaugh YES, Kevin
+    Cox YES, Frank Clementz YES.
+  - Motion to keep runners' pay at $40 per run — Scott Stombaugh YES, Kevin Cox YES,
+    Frank Clementz YES.
+  - Motion to pay Brooke Hedges $300 per month for the position of Assistant EMS Chief
+    — Scott Stombaugh YES, Kevin Cox YES, Frank Clementz YES.
+  - 'Motion to set part-time pay rates: Basic EMT $15.50/hour, Advanced EMT $16.00/hour,
+    Paramedic $16.50/hour, Fire Inspector $17.00/hour — Scott Stombaugh YES, Kevin
+    Cox YES, Frank Clementz YES.'
+  - Motion to set hourly rate for Ashlyn Tracy to $21.00 per hour starting May 4,
+    2026 — Scott Stombaugh YES, Kevin Cox YES, Frank Clementz YES.
+  - Motion to allow Ashlyn Tracy to attend Rhodes State for paramedic school for a
+    maximum amount of $8,857.25 — Scott Stombaugh YES, Kevin Cox YES, Frank Clementz
+    YES.
+  - Motion to pay bills of $41,921.18 — Scott Stombaugh YES, Kevin Cox YES, Frank
+    Clementz YES.
+  - Motion to reschedule canceled trustee meeting from May 5th to Wednesday, May 6th
+    at 6:30 PM — Scott Stombaugh YES, Kevin Cox YES, Frank Clementz YES.
+  parties:
+  - Scott Stombaugh – Chairperson/Trustee
+  - Kevin Cox – Trustee
+  - Frank Clementz – Trustee
+  - Christina Stombaugh – Fiscal Officer
+  - Nick Adams – Road Supervisor / appointed Fire Chief
+  - John Brewster – Zoning Inspector
+  - Justin Roberts – Interim Fire Chief
+  - Sasha Weigt
+  - Adam Haunhorst
+  - Brooke Hedges – Assistant EMS Chief
+  - Lacey Price – Volunteer Firefighter
+  - Kyle Hanthorn – Volunteer Firefighter
+  - Erin Werner
+  - Ashlyn Tracy / Ashlynn Tracy
+  - Brian Winegarder – Allen County Commissioner
+  - Jerry Hunt
+  - Dave Stombaugh
+  - Jason Stombaugh
+  - Jim Clementz
+  - Bill Foster – Chief Inspector
+  - Todd Gardner
+  - Brenda Dunlap
+  - Callie Adams
+  - Sam Huffman
+  - Chief Iten – Police Chief
+  - Fire Chief Roberts / Justin Roberts
+  - Ohio Attorney General
+  - Rhodes State University
+  - Apollo (internship program)
+  parcels:
+  - Waughtel's property on 4th Street
+  - Lennox (resident property referenced)
+  dollar_figures:
+  - $5,000 – reallocation of funds for legal and accounting fees; approved purchase
+    order
+  - $414.00 – reimbursement check from Ohio Attorney General for police training
+  - $30/hr – rate for Sasha Weigt; maximum of $500
+  - $8,857.25 – maximum amount for Ashlyn Tracy to attend Rhodes State for paramedic
+    school
+  - $66,000 – annual salary for Nick Adams as Fire Chief starting June 29th
+  - $27.00 per hour – Nick Adams as temporary Full-Time Assistant Fire Chief until
+    June 28th
+  - $40/run – runners' pay
+  - $300/month – Brooke Hedges as Assistant EMS Chief
+  - $15.50/hour – Basic EMT part-time rate
+  - $16.00/hour – Advanced EMT part-time rate
+  - $16.50/hour – Paramedic part-time rate
+  - $17.00/hour – Fire Inspector part-time rate
+  - $21.00 per hour – Ashlyn Tracy's hourly rate starting May 4, 2026
+  - $41,921.18 – bills approved for payment
+  - $8,700 – total proceeds from Perry Rental Hall in 2025

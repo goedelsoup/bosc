@@ -1,0 +1,270 @@
+meta:
+  subject: shawnee-township corridor meeting summaries
+  slug: shawnee-township
+  method: structured extraction (forced tool use) over the meeting text; model records
+    only what the minutes state — no inference.
+  summarized: 3
+  skipped_no_text: []
+meetings:
+- date: '2026-03-09'
+  kind: minutes
+  filename: 2026-03-09-Minutes.pdf
+  hits:
+  - datacenter
+  summary: At the March 9, 2026 Regular Meeting, Jim Thompson addressed the Shawnee
+    Township Board of Trustees regarding the potential of data centers in Shawnee
+    Township, the Township Comprehensive Plan, and requested that the Trustees pass
+    a resolution imposing a temporary moratorium on data centers in agricultural districts.
+    The Trustees declined to act immediately, stating they wished to review the data
+    and proposed resolution and have it reviewed by legal counsel. No moratorium resolution
+    was passed at this meeting.
+  corridor_relevance: The meeting is connected to the data-center corridor project
+    because a resident, Jim Thompson, formally addressed the Board requesting a temporary
+    moratorium on data centers in agricultural districts in Shawnee Township, prompting
+    a discussion that the Trustees tabled pending legal review.
+  decisions:
+  - Trustee Gross motioned to accept the February 23, 2026 Regular meeting minutes;
+    Trustee Recker seconded; passed 3-0.
+  - 'Resolution 42-26: Accepted Memorandum of Understanding with Lima Allen County
+    Regional Planning Commission for Safe Routes to School; passed 3-0.'
+  - 'Resolution 43-26: Authorized Todd Lause to represent Shawnee Township for the
+    Safe Routes to School Program at $25.00 per hour effective March 9, 2026; passed
+    3-0.'
+  - 'Resolution 44-26: Accepted Service Agreement with Clemans Nelson and Associates
+    as management consultant effective March 1, 2026; passed 3-0.'
+  - 'Resolution 45-26: Authorized hiring of Albert Hughes IV as part-time civilian
+    Police Department employee at $20.00 per hour effective March 9, 2026; passed
+    3-0.'
+  - 'Resolution 46-26: Authorized purchase of a double-sided, full color, 6mm EMC
+    CIRRUS sign from New Signs Ohio LLC at a cost of $27,429.00; passed 3-0.'
+  - 'Resolution 47-26: Accepted resignation of full-time Police Officer Aaron Baker
+    effective March 8, 2026; passed 3-0.'
+  - 'Resolution 48-26: Appointed Briley Hillard as acting Police Sergeant effective
+    March 8, 2026; passed 3-0.'
+  - Motion to pay the bills passed 3-0.
+  - Motion to accept reports passed 3-0.
+  - Motion to recess into Executive Session to discuss complaints against a public
+    employee passed 3-0; no business taken upon reconvening.
+  - Motion for adjournment passed 3-0.
+  - Trustees declined to immediately pass a moratorium resolution on data centers,
+    stating they would review the data and proposed resolution and have it reviewed
+    by legal counsel.
+  parties:
+  - Trustee Neff (Chairman / Paul Neff)
+  - Trustee Gross (Kenny Gross, Vice Chairperson)
+  - Trustee Recker
+  - Police Chief Kohli
+  - Fire Chief Austin Miller
+  - Howard Gray
+  - Kevin Cooley
+  - Teresa Pulfer
+  - Lesa Wende
+  - Clay Balyeat
+  - Valerie Lester
+  - Rebecca Phillips — Allen County Regional Planning Commission
+  - Megan (Allen County Regional Planning Commission, first name only as referenced)
+  - Rob White — ODOT
+  - Brandon — Local 2075 Tombstone Project
+  - Jim Thompson
+  - Bev Beery — Lima Small Business Advocacy Group
+  - Todd Lause
+  - Clemans Nelson and Associates
+  - Albert Hughes IV
+  - New Signs Ohio LLC
+  - IC Signs
+  - Aaron Baker
+  - Briley Hillard
+  - Missy Van Meter — Administrative Assistant, Shawnee Township
+  - Lima Allen County Regional Planning Commission (LACRPC)
+  - FOP (Fraternal Order of Police)
+  - Athena (dispatch)
+  - Jess (dispatch)
+  - Lyle Dray
+  - Todd Gardner
+  - Bryon Stumbaugh
+  - Mike Hasenstaub
+  - Kyle Fronning
+  - Trent Jorgensen
+  - Garrett Smith
+  - Brian Miller
+  - Aaron Crider
+  - Marathon
+  parcels: []
+  dollar_figures:
+  - $25.00 per hour (Todd Lause, Safe Routes to School Program)
+  - $20.00 per hour (Albert Hughes IV, part-time civilian Police Department employee)
+  - $27,429.00 (purchase of double-sided, full color, 6mm EMC CIRRUS sign from New
+    Signs Ohio LLC, including removal, disposal, and installation)
+- date: '2026-03-23'
+  kind: minutes
+  filename: 2026-03-23-Minutes.pdf
+  hits:
+  - datacenter
+  - solar
+  summary: At the March 23, 2026 Regular Meeting of the Shawnee Township Board of
+    Trustees, community member Jim Thompson raised concerns about a potential data
+    center in Shawnee Township, referencing secrecy, non-disclosure agreements, and
+    comparisons to the Birch Solar experience, and formally requested the Trustees
+    confirm or deny any out-of-public-meeting discussions with data center interests.
+    Both Trustee Neff and Trustee Recker stated on the record that they have had no
+    conversations with anyone regarding data centers in Shawnee Township. Thompson
+    advocated for a moratorium on data centers until safeguards are in place, and
+    Trustee Neff noted that current zoning regulations require data centers to be
+    located in industrial zoning districts. Resolution 52-26 and an associated Presentation
+    were removed from the agenda by motion before the meeting proceeded.
+  corridor_relevance: This meeting connects to the data-center corridor project through
+    a public comment by Jim Thompson explicitly raising concerns about a potential
+    large-scale data center in Shawnee Township, referencing community anxieties about
+    secrecy and NDAs, and requesting on-the-record denials from the Trustees of any
+    private discussions with data center interests.
+  decisions:
+  - Trustee Recker motioned to remove Resolution 52-26 and the Presentation from the
+    agenda; Trustee Neff seconded; passed 2-0.
+  - Trustee Recker motioned to accept the agenda as amended; Trustee Neff seconded;
+    passed 2-0.
+  - Trustee Neff stated on the record that the trustees have not had any discussion
+    with any data center.
+  - Trustee Recker stated on the record that he has not had any conversations with
+    anyone regarding data centers in Shawnee Township.
+  - Resolution 49-26 (Promotion of Briley Hillard to Police Sergeant) approved 2-0.
+  - Resolution 50-26 (MOU with IAFF Local 2550 Regarding Lateral Transfers) approved
+    2-0.
+  - Resolution 51-26 (Authorization to Appoint Kris Browning as Fire Department Chaplain)
+    approved 2-0.
+  - Resolution 53-26 (Authorization to Hire Full-time Firefighter Kevin Rader) approved
+    2-0.
+  - Resolution 54-26 (Authorization to Hire Full-time Firefighter Brock Profit) failed
+    to get a motion.
+  - Resolution 55-26 (PPM Language Regarding Flex-time) approved 2-0.
+  - Resolution 56-26 (Officer Training Reimbursement Agreement for Albert Hughes IV)
+    approved 2-0.
+  - Motion to pay the bills passed 2-0.
+  - Motion to recess into Executive Session to discuss complaints against a public
+    employee passed 2-0.
+  - Motion to reconvene the regular meeting passed 2-0.
+  - Motion for adjournment passed 2-0.
+  parties:
+  - Shawnee Township Board of Trustees
+  - Trustee Neff
+  - Trustee Recker
+  - Trustee Gross (absent)
+  - Police Chief Kohli
+  - Fire Chief Austin Miller
+  - Howard Gray
+  - Kevin Cooley
+  - Lesa Wende
+  - Clay Balyeat
+  - Teresa Pulfer (absent)
+  - Valerie Lester (absent)
+  - Attorney Al Smith
+  - Jim Thompson
+  - Allen County Commissioner Winegardner
+  - Jon Keske
+  - Anna Selfridge
+  - Rabbe Ford
+  - Shawnee Baseball team
+  - Rinehart and Sons
+  - Briley Hillard
+  - IAFF Local 2550
+  - FOP
+  - Kris Browning
+  - Kevin Rader
+  - Brock Profit
+  - Albert Hughes IV
+  - SRO Wilson
+  - SRO Stevenson
+  - Bible Believers
+  - Missy Van Meter
+  parcels: []
+  dollar_figures:
+  - $9,268,000.00 (Fund Status)
+  - $46,000.00 (estimated cost for new signage)
+- date: '2026-04-13'
+  kind: other
+  filename: 2026-04-13-Miuntes.pdf
+  hits:
+  - bess
+  - datacenter
+  summary: At its April 13, 2026 Regular Meeting, the Shawnee Township Board of Trustees
+    passed Resolution 65-26, accepting the Shawnee Township Zoning Commission's recommendation
+    to implement a moratorium on Data Centers, Battery Energy Storage Systems (BESS),
+    and Commercial Renewable Energy Facilities in Shawnee Township. The Board also
+    passed Resolutions 66-26 and 67-26 to begin updating the 2009 Shawnee Township
+    Comprehensive Plan, appointing a Representative Liaison and entering into a Memorandum
+    of Understanding with the Lima Allen County Regional Planning Commission (LACRPC)
+    to guide the process.
+  corridor_relevance: This meeting directly connects to the data-center corridor project
+    through Resolution 65-26, which enacts a moratorium on Data Centers, BESS, and
+    Commercial Renewable Energy Facilities in Shawnee Township, as recommended by
+    the Shawnee Township Zoning Commission.
+  decisions:
+  - 'Resolution 57-26: Authorized Family Medical Leave for Full-time Police Officer
+    Tyler Cramer (March 2–22, 2026); passed 3-0.'
+  - 'Resolution 58-26: Authorized Family Medical Leave for Full-time Dispatcher Jessica
+    Harter (March 17–21, 2026); passed 3-0.'
+  - 'Resolution 59-26: Authorized Family Medical Leave for Full-time Firefighter Christie
+    Kerby (beginning April 12, 2026); passed 3-0.'
+  - 'Resolution 60-26: Authorized purchase of 8 Dell computer systems at a cost of
+    $7,264.00 for the Shawnee Township Police Department; passed 3-0.'
+  - 'Resolution 61-26: Accepted the MORE grant through OTARMA in the amount of $1,000.00
+    for the Shawnee Police Department; passed 3-0.'
+  - 'Resolution 62-26: Accepted the 2026 Road Program at an amount not to exceed $60,161.93;
+    passed 3-0.'
+  - 'Resolution 63-26: Created the position of Assistant Road Superintendent; passed
+    3-0.'
+  - 'Resolution 64-26: Appointed James (Chris) Jordan as Assistant Road Superintendent
+    effective March 8, 2026, with an 8% hourly wage increase; passed 3-0.'
+  - 'Resolution 65-26: Accepted the Shawnee Township Zoning Commission''s recommendation
+    to implement a moratorium on Data Centers, Battery Energy Storage Systems (BESS),
+    and Commercial Renewable Energy Facilities in Shawnee Township; passed 3-0.'
+  - 'Resolution 66-26: Appointed Todd Lause as Representative Liaison for the Shawnee
+    Township Comprehensive Plan at $25.00 per hour; passed 3-0.'
+  - 'Resolution 67-26: Accepted MOU with Lima Allen County Regional Planning Commission
+    (LACRPC) for guidance in creating an updated Comprehensive Plan; passed 3-0.'
+  - 'Resolution 68-26: Accepted MOU with Lima Allen County Regional Planning Commission
+    (LACRPC) for support as the Metropolitan Planning Organization for Shawnee Township;
+    passed 3-0.'
+  - March 23, 2026 Regular meeting minutes accepted; passed 3-0.
+  - All department reports approved; passed 3-0.
+  - Bills approved for payment; passed 3-0.
+  - Meeting adjourned; passed 3-0.
+  parties:
+  - Shawnee Township Board of Trustees
+  - Trustee Neff (Chairman)
+  - Trustee Recker
+  - Trustee Gross
+  - Police Chief Kohli
+  - Fire Chief Austin Miller
+  - Howard Gray
+  - Kevin Cooley
+  - Teresa Pulfer
+  - Lesa Wende
+  - Valerie Lester
+  - Clay Balyeat
+  - Firefighter Kevin Rader
+  - John Hollenbacher
+  - Jim Thompson
+  - Tyler Cramer (Full-time Police Officer)
+  - Jessica Harter (Full-time Dispatcher)
+  - Christie Kerby (Full-time Firefighter)
+  - James (Chris) Jordan
+  - Todd Lause
+  - Lima Allen County Regional Planning Commission (LACRPC)
+  - Shawnee Township Zoning Commission
+  - OTARMA
+  - J. Dotson
+  - Texas Oil School
+  - Albert Hughes
+  - Sergeant Hillard
+  - Missy Van Meter (Administrative Assistant)
+  - Enbridge
+  - Allen County Engineer
+  parcels: []
+  dollar_figures:
+  - $7,264.00 — purchase of 8 Dell computer systems for the Shawnee Township Police
+    Department
+  - $1,000.00 — MORE grant through OTARMA for the Shawnee Police Department
+  - $60,161.93 — 2026 Road Program (amount not to exceed)
+  - $25.00 per hour — Todd Lause's hourly wage as Representative Liaison for the Comprehensive
+    Plan
+  - $50,000.00 — Donation from Texas Oil School

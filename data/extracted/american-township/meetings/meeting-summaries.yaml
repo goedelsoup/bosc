@@ -1,0 +1,699 @@
+meta:
+  subject: american-township corridor meeting summaries
+  slug: american-township
+  method: structured extraction (forced tool use) over the meeting text; model records
+    only what the minutes state — no inference.
+  summarized: 11
+  skipped_no_text: []
+meetings:
+- date: '2024-11-25'
+  kind: minutes
+  filename: 11-25-24 minutes.docx
+  hits:
+  - amazon
+  - bosc
+  - datacenter
+  - easement
+  - rezoning
+  - setback
+  - tax_abatement
+  summary: 'American Township Trustees held a regular session at which Zoning Inspector
+    Bishop presented a Conditional Use Permit application (Case # BZA2024-12) filed
+    on November 14, 2024, by Cindy Leis of AEDG on behalf of Project BOSC (c/o Jill
+    Tangeman, Esq., Vorys, Sater, Seymour and Pease LLP), seeking to use 162.5 acres
+    off Cole Street for a hyperscale data center complex — including three data center
+    units, a main office building, security office, mounding areas, two water basins,
+    and an AEP substation — on land owned by Neff Farms LLC and currently zoned M-2
+    Manufacturing. Numerous residents raised concerns about transparency, public participation
+    rights, noise, flooding, and whether the proposed use is legally compatible with
+    the M-2 zoning designation. The Board of Zoning Appeals was scheduled to hold
+    a public hearing on December 11, 2024, to discuss and vote on the conditional
+    use permit.'
+  corridor_relevance: This meeting directly concerns Project BOSC, the codename for
+    the hyperscale data center development, as the trustees received, discussed, and
+    referred to the Board of Zoning Appeals a Conditional Use Permit application filed
+    by Project BOSC c/o Jill Tangeman, Esq. for construction of data centers on 162.5
+    acres in American Township.
+  decisions:
+  - Motion by Trustee Basinger, second by Trustee Mohler to accept the minutes of
+    the November 11, 2024 meeting as presented. Roll call, all yes.
+  - Motion by Trustee Mohler, second by Trustee Basinger to approve payment of the
+    warrants as presented by the Fiscal Officer. Roll call, all yes.
+  - Motion by Trustee Mohler, second by Trustee Basinger to cancel the December 30th
+    meeting and to set 1/2/25 at 4 pm for the reorganization meeting for the new calendar
+    year 2025. Roll call, all yes.
+  - Motion by Trustee Mohler, second by Trustee Harmon to adjourn. Roll call, all
+    yes.
+  - 'Zoning Board of Appeals scheduled to hold a public hearing on 12/11/24 at 7pm
+    to discuss and vote on the conditional use permit (Case # BZA2024-12).'
+  - Legal Counsel Huffman to look into whether trustees may have a right to vote on
+    allowing the conditional use permit to pass or not, and report back to the trustees
+    as soon as possible.
+  parties:
+  - Paul Basinger, Trustee / Chairman
+  - Ross Harmon, Trustee
+  - Lynn Mohler, Trustee
+  - Brady Overholt, Fiscal Officer
+  - Chief Haines (ATPD)
+  - Chief Hadding (ATFD)
+  - Legal Counsel Huffman
+  - Zoning Inspector Bishop
+  - Cindy Leis, AEDG (Lima Economic Development Group)
+  - Project BOSC
+  - Jill Tangeman, Esq., Vorys, Sater, Seymour and Pease LLP, 52 East Gay Street,
+    Columbus, Ohio
+  - Neff Farms LLC, 11951 Zerkle Road, Lima, Ohio 45806
+  - Midwest Electric
+  - Moose Lodge
+  - Alexander and Bebout
+  - Jonathan Sickles
+  - Tim Piper, 1337 Berry Rd.
+  - Becky Streeter, 1640 W State Rd.
+  - Mike Shrider, 1357 Irvin Rd.
+  - Bob Morris, 3471 Providence Circle
+  - Shelly Reiff, 2470 Irving Rd.
+  - Jeff and Cindy Davis, 3554 Cole
+  - Derek Edwards, 2340 Irving Rd.
+  - John Groom, 1095 W Bluelick
+  - Joe Davis, 1194 W Bluelick
+  - Dave Streeter, 1640 W State Rd.
+  - Denny Schwinnen (Board of Zoning Appeals, Chairman)
+  - Tim Piper (Board of Zoning Appeals member)
+  - Jack Burklo (Board of Zoning Appeals member)
+  - Louis Carter (Board of Zoning Appeals member)
+  - Dan Finch (Board of Zoning Appeals member)
+  - Churchill Construction Company (historical reference)
+  - Mr. Joseph Weir (historical reference)
+  - Trustees Crider, Bowers, and Metzger (historical reference)
+  - AEP
+  parcels:
+  - 36-1200-02-001.000 (No. 1 – 25 Acres)
+  - 36-1200-02-001.001 (No. 2 – 137.5 Acres)
+  - 162.5 Acres Combined, N. Cole Street, Lima, Ohio 45801, Section 12, American Township,
+    Ohio
+  dollar_figures:
+  - $1000 (Midwest Electric donation for MARCS radios systems to ATPD)
+  - $10,967.77 (Moose Lodge donation to ATFD)
+  - '$500 (check #2 from Jonathan Sickles towards debt owed to the township)'
+- date: '2024-12-09'
+  kind: minutes
+  filename: 12-9-24 minutes.docx
+  hits:
+  - datacenter
+  - rezoning
+  summary: At the American Township Trustees regular meeting, multiple residents addressed
+    the board during privilege of the floor to voice concerns about a proposed data
+    center project, citing issues including noise, flooding, stress impacts, and lack
+    of township noise ordinances. Zoning Inspector Bishop provided context on zoning
+    regulations and explained that a public Board of Zoning Appeals hearing was scheduled
+    for December 11, 2024 at 7pm. Legal Counsel Huffman clarified that the Trustees
+    are legally prohibited from attempting to influence the Board of Zoning Appeals
+    on the matter.
+  corridor_relevance: This meeting connects to the data-center corridor project through
+    extensive public comment from neighboring residents opposing a proposed data center,
+    and through Zoning Inspector Bishop's explanation of the upcoming Board of Zoning
+    Appeals hearing on December 11, 2024 that will address the project's zoning matters.
+  decisions:
+  - Motion by Trustee Harmon second by Trustee Mohler to approve the minutes of the
+    November 25, 2024 meeting as presented. Roll call, all yes.
+  - Motion by Trustee Basinger second by Trustee Harmon to approve payment of the
+    warrants as presented by the Fiscal Officer. Roll call, all yes.
+  - Motion by Trustee Basinger second by Trustee Mohler to accept the reports as presented.
+    Roll call, all yes.
+  - Motion by Trustee Harmon second by Trustee Mohler to name LACRPC as the Metropolitan
+    Planning Organization for American Township for 2025. Roll call, all yes.
+  - Motion by Trustee Mohler second by Trustee Basinger to pay the member dues for
+    the trustees, fiscal officer, and board members for the upcoming year. Roll call,
+    all yes.
+  - Motion by Trustee Mohler second by Trustee Harmon to continue to contract for
+    the Township's MCO; continue to meet on the 2nd and last Monday of each month
+    at 7:30pm; authorize expenditures from Township funds for medical, dental, life,
+    cancer, and intensive care insurance for elected officials and full time workers;
+    offer cash in lieu of benefits up to 25% of total cost; pay Township officials
+    in 12 equal installments on a salary basis; appoint the Fiscal Officer and the
+    Chairman to the Audit/Records Commission; pay Township Trustees and Fiscal Officer
+    state convention fees and expenses; continue with sick, vacation, and comp time
+    policies; appoint the chairman as representative for CDL drug testing program.
+    Roll call, all yes.
+  - Motion by Trustee Basinger second by Trustee Mohler to renew the bonds for the
+    trustees and the fiscal officer through OTARMA. Roll call, all yes.
+  - Motion by Trustee Harmon second by Trustee Basinger to accept Ralph Long, Ron
+    Patterson and Kevin Weiging as seasonal snow plow operators for 2024-25 at a rate
+    of $150/day. Roll call, all yes.
+  - Motion by Trustee Basinger second by Trustee Harmon to accept the donation from
+    the Lima Eagles for MARCS Radios for ATPD in the amount of $3618.62. Roll call,
+    all yes.
+  - Motion by Trustee Mohler second by Trustee Harmon to go into executive session
+    for employee benefits.
+  - Motion by Trustee Mohler second by Trustee [unnamed] to enter an agreement with
+    Aetna Health Insurance and Delta Dental through Stolly Insurance Services as the
+    Township's Broker for 2025 American Township Health Insurance Providers. Roll
+    call, all yes.
+  - Motion by Trustee Basinger second by Trustee Harmon to adjourn. Roll call, all
+    yes.
+  parties:
+  - Paul Basinger (Trustee/Chairman)
+  - Ross Harmon (Trustee)
+  - Lynn Mohler (Trustee)
+  - Brady Overholt (Fiscal Officer)
+  - Road Superintendent Osting
+  - Ron Patterson
+  - Kevin Weiging
+  - Ralph Long
+  - Police Chief Haines
+  - Lima Eagles
+  - Fire Chief Hadding
+  - Michael Carl
+  - State of Ohio
+  - Zoning Inspector Bishop
+  - Becky Streeter
+  - Dave Streeter
+  - Cindy Davis
+  - Darlene White
+  - Don Morris
+  - Jeff Reprogie
+  - Hunter Reprogie
+  - Mike Shrider
+  - Tim Piper
+  - John Groom
+  - Legal Counsel Huffman
+  - Aetna Health Insurance
+  - Delta Dental
+  - Stolly Insurance Services
+  - Jordan Martin
+  - LACRPC
+  - OTARMA
+  - AEDG
+  parcels:
+  - 1640 W State Rd.
+  - 3554 Cole St.
+  - 4848 N Cole St.
+  - 3471 Providence Circle
+  - 4255 N Cole St.
+  - 1357 Irvin Rd.
+  - 1337 Berry Rd.
+  - 1095 W Bluelick
+  dollar_figures:
+  - $150/day (seasonal snow plow operators)
+  - $3618.62 (donation from Lima Eagles for MARCS Radios)
+  - $46,717.98 (grant from State of Ohio for ATFD MARCS Radio systems)
+  - 33% decrease from 2024 rates (Aetna/Delta Dental health and dental insurance plan)
+- date: '2025-01-13'
+  kind: minutes
+  filename: 1-13-25 minutes.docx
+  hits:
+  - datacenter
+  summary: A resident, Becky Streeter of 1604 State Rd., raised concerns during the
+    privilege of the floor that noise complaints about a data center may not have
+    been accurately represented by Zoning Inspector Bishop or the developer's legal
+    counsel. She also questioned how the developer's legal counsel obtained access
+    to a video presentation submitted by her group. Legal Counsel Huffman responded
+    that all materials submitted to the board become public record.
+  corridor_relevance: A resident raised concerns about the handling of noise complaints
+    related to a data center and the developer's legal counsel's access to a video
+    her group submitted, directly referencing the data-center corridor project.
+  decisions:
+  - Motion by Trustee Mohler second by Trustee Basinger to accept the minutes of the
+    reorganizational meeting January 2, 2024. Roll call, all yes.
+  - Motion by Trustee Mohler second by Trustee Basinger to approve payment of the
+    warrants as presented by the Fiscal Officer. Roll call, all yes.
+  - Motion by Trustee Mohler second by Trustee Harmon to enter into a Memorandum of
+    Understanding for 2025 between ASWCD and American Township for MS4 Stormwater
+    Program Administration at a cost of $7300/year. Roll call, all yes.
+  - Motion by Trustee Mohler second by Trustee Harmon to certify and accept the 2025
+    township total road mileage of 69.268 miles. Roll call, all yes.
+  - Motion by Trustee Mohler second by Trustee Harmon to contract Natalie Bartlett
+    at $20 per hour for all LEADS paperwork for the Police Department for the 2025
+    calendar year. Roll call, all yes.
+  - Motion by Trustee Mohler second by Trustee Harmon to reinstate the OAPFF 457 Deferred
+    Compensation Plan for 2025. Roll call, all yes.
+  - 'Motion by Trustee Basinger second by Trustee Mohler to pass Resolution #01-132025
+    to reappointment of 5-year terms for Merle Miller to the Zoning Commission and
+    Tim Piper for Zoning Appeals ending on 12/31/29. Roll call, all yes.'
+  - Motion by Trustee Harmon second by Trustee Mohler to use TSC as internet providers
+    for the township house. Roll call, all yes.
+  - Motion by Trustee Mohler second by Trustee Harmon to adjourn. Roll call, all yes.
+  parties:
+  - Paul Basinger (Trustee)
+  - Ross Harmon (Trustee, Chairman)
+  - Lynn Mohler (Trustee)
+  - Lydia Archambo (ASWCD representative)
+  - Mary Caldwell
+  - Becky Streeter
+  - Zoning Inspector Bishop
+  - Legal Counsel Huffman
+  - Brady Overholt (Fiscal Officer)
+  - Natalie Bartlett
+  - Merle Miller
+  - Tim Piper
+  - Road Superintendent Osting
+  - Police Chief Haines
+  - Fire Chief Hadding
+  - Jon Sickles
+  - Tom Ahl
+  - ASWCD
+  - TSC
+  - Spectrum
+  parcels:
+  - 1910 Brookhaven
+  - 1604 State Rd.
+  dollar_figures:
+  - $7300/year
+  - $20/hr
+  - $20 per hour
+- date: '2025-06-09'
+  kind: minutes
+  filename: 6-9-25 minutes.docx
+  hits:
+  - annexation
+  - datacenter
+  summary: At the American Township Trustees regular session, resident Heather Davis
+    of 3554 Cole St. raised concerns specifically about the data center planned on
+    Bluelick Road, asking questions about zoning, document requests, and whether trustees
+    had signed or been asked to sign any NDAs related to the project. Discussions
+    were held between Davis and the trustees on the matter, and Trustee Basinger later
+    apologized to Davis for remarks made during those discussions. No formal decisions
+    were made regarding the data center or related zoning matters at this meeting.
+  corridor_relevance: This meeting is connected to the corridor project because a
+    resident directly questioned trustees about the data center planned on Bluelick
+    Road, including zoning implications and potential NDA agreements signed by trustees.
+  decisions:
+  - Motion by Trustee Basinger second by Trustee Mohler to approve the minutes of
+    the regular meeting of May 12, 2025. Roll call, all yes.
+  - Motion by Trustee Basinger second by Trustee Mohler to approve the warrants as
+    presented by the Fiscal Officer. Roll call, all yes.
+  - Motion by Trustee Basinger second by Trustee Mohler to accept the financial reports
+    as presented. Roll call, all yes.
+  - Road superintendent, fiscal officer, and both trustees agreed to accept the Progressive
+    Insurance offer of $5821.99 for the missing fence at Greenlawn Cemetery.
+  - Motion by Trustee Basinger second by Trustee Mohler to accept the insurance payment
+    of $5821.99 from Progressive Insurance. Roll call, all yes.
+  - Tabled the yearly $1000 AEDG contribution request until the next meeting when
+    all 3 trustees are present.
+  - Motion by Trustee Mohler second by Trustee Basinger to hold a public hearing on
+    6/30/25 at 7pm relating to Article 23 and newspaper notice requirements. Roll
+    call, all yes.
+  - 'Motion by Trustee Basinger second by Trustee Mohler to pass Resolution #2025-0609
+    (certifying a fee of $500 to Roxanne Ledbetter at 2430 Windsor Dr for junk vehicles
+    and other trash). Roll call, all yes.'
+  - Motion by Trustee Mohler second by Trustee Basinger to adjourn. Roll call, all
+    yes.
+  parties:
+  - Paul Basinger (Trustee)
+  - Lynn Mohler (Trustee, Vice Chairman)
+  - Brady Overholt (Fiscal Officer)
+  - Heather Davis (resident, 3554 Cole St.)
+  - Chief Haines (Police Chief)
+  - Osting (Road Superintendent)
+  - Bishop (Zoning Inspector)
+  - Hadding (Fire Chief)
+  - Roxanne Ledbetter (zoning violation subject)
+  - Becky Streeter (resident)
+  - Progressive Insurance
+  - AEDG
+  - Moose (donor organization)
+  - Zoning Commission
+  parcels:
+  - 3554 Cole St.
+  - 2430 Windsor Dr
+  - Foust Property off of East Rd.
+  - Bluelick Road (data center location, referenced generally)
+  - Greenlawn Cemetery
+  - corner of Eastown and Diller Rd.
+  - Stevick Rd.
+  dollar_figures:
+  - $5821.99 (Progressive Insurance offer/payment for missing fence at Greenlawn Cemetery)
+  - $1000 (yearly contribution request from AEDG)
+  - '$500 (fee certified to Roxanne Ledbetter at 2430 Windsor Dr for junk vehicles
+    and other trash — Resolution #2025-0609)'
+  - $1000 (new citation to be issued to Roxanne Ledbetter if unresolved)
+  - $15,884.46 (quarterly donation from the Moose to ATFD)
+- date: '2025-06-30'
+  kind: minutes
+  filename: 6-30-25 minutes.docx
+  hits:
+  - datacenter
+  summary: At a regular American Township Trustees meeting, two residents addressed
+    the board during the privilege of the floor regarding the data center project.
+    Heather Davis reported having conversations with county commissioners under NDA
+    about the project and thanked Zoning Inspector Bishop for public records information.
+    Becky Street shared details about the Neff Farm rezoning from M1 to M2, potentially
+    lost historical records, eminent domain concerns, and ways to protect residents
+    and the township in relation to the project. No formal decisions on the data center
+    were made by the Trustees.
+  corridor_relevance: Two residents addressed the Trustees directly about the data
+    center corridor project, referencing NDA discussions with commissioners, the Neff
+    Farm rezoning from M1 to M2, eminent domain concerns, and township/resident protections.
+  decisions:
+  - Motion by Trustee Harmon second by Trustee Basinger to approve the minutes of
+    the regular meeting of June 9, 2025. Roll call, all yes.
+  - Motion by Trustee Harmon second by Trustee Mohler to approve the warrants as presented
+    by the Fiscal Officer. Roll call, all yes.
+  - Motion by Trustee Basinger second by Trustee Mohler to have a 2026 projected budget
+    hearing 7/14/25. Roll call, all yes.
+  - Motion by Trustee Harmon second by Trustee [name not stated] to adjourn. Roll
+    call, all yes.
+  parties:
+  - Paul Basinger (Trustee)
+  - Ross Harmon (Trustee/Chairman)
+  - Lynn Mohler (Trustee)
+  - Heather Davis (resident, 3554 Cole St.)
+  - Becky Street (resident, 1640 State Rd.)
+  - Mark Lorge (resident, 2089 Brookhaven Dr.)
+  - Bishop (Zoning Inspector)
+  - Osting (Road Superintendent)
+  - Haines (Police Chief)
+  - Lima 370 Charity Foundation
+  - Brady Overholt (Fiscal Officer)
+  parcels:
+  - Neff Farm
+  dollar_figures:
+  - $2654 (donation from Lima 370 Charity Foundation to ATPD toward a new radar gun)
+- date: '2025-08-11'
+  kind: minutes
+  filename: 8-11-25 minutes.docx
+  hits:
+  - datacenter
+  - rezoning
+  summary: At a regular session of the American Township Trustees, residents raised
+    questions during Privilege of the Floor regarding a data center project, specifically
+    about a proposed sub-station (asking whether it would be nuclear) and potential
+    use of approximately 40 acres of the Neff property in Sugar Creek Township. The
+    trustees stated they are not directly involved in those discussions at this time
+    and know nothing more than the general public. No formal action was taken regarding
+    the data center or related infrastructure.
+  corridor_relevance: The meeting is connected to the corridor project through public
+    comments from residents asking about the data center site's sub-station type and
+    the possible use of the Neff property in Sugar Creek Township, to which the trustees
+    disclaimed any direct involvement.
+  decisions:
+  - Motion by Trustee Basinger second by Trustee Harmon to approve the payment of
+    the warrants as presented by the Fiscal Officer. Roll call, all yes.
+  - Motion by Trustee Basinger second by Trustee Harmon to approve the minutes of
+    the regular meeting of July 28, 2025. Roll call, all yes.
+  - Motion by Trustee Basinger second by Trustee Harmon to accept the reports as presented.
+    Roll call, all yes.
+  - Motion by Trustee Harmon second by Trustee Basinger to adjourn. Roll call, all
+    yes.
+  parties:
+  - Paul Basinger (Trustee)
+  - Ross Harmon (Trustee, Chairman)
+  - Brady Overholt (Fiscal Officer)
+  - Tim Piper
+  - Dave and Becky Streeter
+  - Joe Gearing (Allen County Drainage Engineer)
+  - Zoning Inspector Bishop
+  - Road Superintendent Osting
+  - Police Chief Haines
+  - Fire Chief Hadding
+  - Cody Blair (firefighter)
+  - Ross Emans (firefighter)
+  - Nate Twining (firefighter)
+  - Moose Lodge
+  parcels:
+  - 1337 Beery Rd.
+  - 1640 W State Rd.
+  - Neff property (Sugar Creek Township)
+  dollar_figures:
+  - $14,38.05 (Moose Lodge quarterly donation to ATFD)
+- date: '2025-09-08'
+  kind: minutes
+  filename: 9-8-25 minutes.docx
+  hits:
+  - datacenter
+  - rezoning
+  summary: At the American Township Trustees regular meeting, resident Heather Davis
+    of 3554 N Cole St. asked the Trustees to consider joining a collaborative group
+    with community members and county commissioners regarding the data center project.
+    Trustee Harmon agreed to reach out to the commissioners to inquire about new information
+    or the possibility of public forums on the topic. No formal vote or resolution
+    on the data center matter was taken at this meeting.
+  corridor_relevance: The meeting is connected to the project because a resident formally
+    raised the data center project during Privilege of the Floor, prompting Trustee
+    Harmon to commit to contacting county commissioners about public engagement opportunities.
+  decisions:
+  - Motion by Trustee Mohler, second by Trustee Basinger to approve the minutes of
+    the regular meeting of August 25, 2025 — Roll call, all yes.
+  - Motion by Trustee Harmon, second by Trustee Mohler to approve the payment of the
+    warrants as presented by the Fiscal Officer — Roll call, all yes.
+  - Motion by Trustee Basinger, second by Trustee Harmon to accept the financial reports
+    as presented — Roll call, all yes.
+  - 'Motion by Trustee Harmon, second by Trustee Basinger to approve Resolution #09-082025
+    relating to zoning text amendments — Roll call, all yes.'
+  - Motion by Trustee Basinger, second by Trustee Harmon to accept bids to complete
+    the East Rd. asphalt issues in an amount not to exceed $15,000 — Roll call, all
+    yes.
+  - Motion by Trustee Harmon to hire township employed officers to serve as SROs at
+    Elida Schools — No second, motion died.
+  - Motion by Trustee Harmon, second by Trustee Mohler to adjourn — Roll call, all
+    yes.
+  parties:
+  - Paul Basinger (Trustee)
+  - Ross Harmon (Trustee, Chairman)
+  - Lynn Mohler (Trustee)
+  - Heather Davis (resident)
+  - Brady Overholt (Fiscal Officer)
+  - Zoning Inspector Bishop
+  - Road Superintendent Osting
+  - Fire Chief Hadding
+  - Mr. Point (School Board President)
+  parcels:
+  - 3554 N Cole St.
+  - Oakland Pkwy
+  - East Rd.
+  - Wapak Rd.
+  dollar_figures:
+  - $15,000 (not to exceed, for East Rd. asphalt issues)
+- date: '2025-11-24'
+  kind: minutes
+  filename: 11-24-25 minutes.docx
+  hits:
+  - datacenter
+  summary: Two residents, Jeff Davis of 3554 Cole St. and Jeff Repogle of 4255 Cole
+    St., raised concerns at the meeting about the data center project, specifically
+    regarding reports that workers "hit water" and may conduct dewatering operations,
+    and about potential impacts to a private well located directly across from the
+    data center site. The trustees received these public comments but no formal action
+    or response regarding the data center was recorded in the minutes.
+  corridor_relevance: Two neighboring residents appeared during privilege of the floor
+    to raise concerns about groundwater and dewatering activities associated with
+    the data center under construction in American Township.
+  decisions:
+  - Motion by Trustee Harmon, second by Trustee Mohler to accept the minutes of the
+    November 10, 2025 meeting as presented. Roll call, all yes.
+  - Motion by Trustee Mohler, second by Trustee Basinger to approve payment of the
+    warrants as presented by the Fiscal Officer. Roll call, all yes.
+  - Motion by Trustee Mohler, second by Trustee Harmon to accept the insurance rates
+    for the 2026 fiscal year. Roll call, all yes.
+  - Motion by Trustee Mohler, second by Trustee Harmon to cancel the December 29th
+    meeting and to set 1/2/26 at 4 pm for the reorganization meeting for the new calendar
+    year 2026. Roll call, all yes.
+  - 'Motion by Trustee Harmon, second by Trustee Mohler to pass Resolution #11-242025
+    as read by Chief Haines (lowering speed limit on Stevick Rd. to 25 mph). Roll
+    call, all yes.'
+  - Motion by Trustee Harmon, second by Trustee Mohler to go into executive session
+    for employee compensation.
+  - Motion by Trustee Harmon, second by Trustee Mohler to enter into contract with
+    Lima Security for $17,312. Roll call, all yes.
+  - Motion by Trustee Mohler, second by Trustee Harmon to add Mark Fannon to the Zoning
+    Commission. Roll call, all yes.
+  - Motion by Trustee Mohler, second by Trustee Harmon to adjourn. Roll call, all
+    yes.
+  parties:
+  - Paul Basinger (Trustee)
+  - Ross Harmon (Trustee, Chairman)
+  - Lynn Mohler (Trustee)
+  - Brady Overholt (Fiscal Officer)
+  - Jordan (Stolly Insurance)
+  - Jeff Davis (resident, 3554 Cole St.)
+  - Jeff Repogle (resident, 4255 Cole St.)
+  - Zoning Inspector Bishop
+  - Chief Haines
+  - Chief Hadding
+  - Tractor Supply
+  - Homeland Security
+  - Lima Security
+  - Jody Long
+  - Mark Fannon
+  parcels:
+  - 3554 Cole St.
+  - 4255 Cole St.
+  dollar_figures:
+  - 6.2% (insurance cost increase for 2026 health insurance plan)
+  - $250 donation from Tractor Supply (to Chief Haines / law enforcement)
+  - $250 donation from Tractor Supply (to fire department)
+  - $46,000 (Homeland Security quote for security systems at new station)
+  - $17,312 (Lima Security quote for security systems at new station)
+- date: '2026-02-09'
+  kind: minutes
+  filename: 2-9-26 minutes.docx
+  hits:
+  - bosc
+  - datacenter
+  - rezoning
+  summary: At the American Township Trustees regular session, two residents — Ella
+    Blythe and Heather Davis — raised concerns about a data center project set to
+    come into American Township, requesting public records and noting a second hearing
+    on "Project Bosch" relating to Sugar Creek Township and Wetlands. The trustees
+    and zoning inspector responded that they are "in the dark on many things" and
+    "not at liberty to discuss much about the project." No formal decisions regarding
+    the data center or Project BOSC were made at this meeting.
+  corridor_relevance: This meeting is connected to the corridor project because two
+    residents addressed the trustees with concerns about the incoming data center
+    (referenced as "Project Bosch"), prompting the trustees and zoning inspector to
+    acknowledge limited knowledge and inability to publicly discuss the project.
+  decisions:
+  - Motion by Trustee Long second by Trustee Harmon to approve the minutes of the
+    regular meeting of January 26, 2026. Roll call, all yes.
+  - Motion by Trustee Harmon second by Trustee Long to approve the payment of the
+    warrants as presented by the Fiscal Officer. Roll call, all yes.
+  - Motion by Trustee Harmon second by Trustee Long to enter into a Memorandum of
+    Understanding for 2026 between ASWCD and American Township for MS4 Stormwater
+    Program Administration at a cost of $7300/year. Roll call, all yes.
+  - Motion by Trustee Long second by Trustee Basinger to accept the reports as presented.
+    Roll call, all yes.
+  - Motion by Trustee Harmon second by Trustee Basinger to pay Andrew Follas $550
+    per year to run the townships website as webmaster. Roll call, all yes.
+  - Motion by Trustee Harmon second by Trustee Mohler to approve the permanent appropriations
+    for 2026 in the amount of $10,170,250. Roll call, all yes.
+  - 'Motion by Trustee Harmon second by Trustee Long to pass Resolution #02-092026-01
+    and Resolution #02-092026-02. Roll call, all yes.'
+  - Motion by Trustee Long second by Trustee Harmon to go into executive session for
+    employee discipline. Roll call, all yes.
+  - Motion by Trustee Long second by Trustee Harmon to reappoint Merle Miller as AWD
+    representative for American Township for a 3-year term beginning 5/1/26. Roll
+    call, all yes.
+  - Motion by Trustee Basinger second by Trustee Long to discipline employee Josh
+    Teman and suspend him for 5 days without pay due to employee negligence in accordance
+    to Employee Handbook Sections 4.2, 4.3, 4.3.1, 4.3.2. Roll call, all yes.
+  - Motion by Trustee Harmon second by Trustee Long to include Louie Carter and Ralph
+    Long to our plowing crew backdated to 1/1/26. Roll call, all yes.
+  - Motion by Trustee Basinger second by Trustee Long to adjourn. Roll call, all yes.
+  parties:
+  - Paul Basinger (Trustee)
+  - Ross Harmon (Trustee, Chairman)
+  - Jody Long (Trustee)
+  - Ella Blythe
+  - Heather Davis
+  - Lydia Archambo (ASWCD representative)
+  - Malinda Delarosa (ASWCD representative)
+  - ASWCD (Allen Soil and Water Conservation District)
+  - Brady Overholt (Fiscal Officer)
+  - Andrew Follas (webmaster)
+  - Bishop (Zoning Inspector)
+  - Osting (Road Superintendent)
+  - Hadding (Fire Chief)
+  - Merle Miller (AWD representative)
+  - Josh Teman (employee)
+  - Louie Carter (plowing crew)
+  - Ralph Long (plowing crew)
+  - Trustee Mohler
+  parcels:
+  - parcels on Allentown Rd.
+  dollar_figures:
+  - $7300/year (MOU between ASWCD and American Township for MS4 Stormwater Program
+    Administration)
+  - $550 per year (Andrew Follas, webmaster)
+  - $10,170,250 (permanent appropriations for 2026)
+  - $2246.44 (EMS Grant received by fire department)
+- date: '2026-02-23'
+  kind: minutes
+  filename: 2-23-26 minutes.docx
+  hits:
+  - datacenter
+  - rezoning
+  summary: During the regular session, Trustee Basinger noted that HB 706 is on the
+    legislative docket pertaining to data center concerns, representing the meeting's
+    only direct reference to the corridor project. The board otherwise conducted routine
+    township business including zoning resolutions, a street sweeping contract approval,
+    and fire/police department reports. No corridor-specific votes, agreements, or
+    parcel actions were taken at this meeting.
+  corridor_relevance: Trustee Basinger explicitly mentioned that HB 706 is on the
+    docket "pertaining to data center concerns," directly connecting this meeting
+    to the hyperscale data center corridor project.
+  decisions:
+  - Motion by Trustee Harmon, second by Trustee Long to approve minutes of the regular
+    meeting of February 9, 2026 — Roll call, all yes.
+  - Motion by Trustee Long, second by Trustee Harmon to approve payment of warrants
+    as presented by the Fiscal Officer — Roll call, all yes.
+  - 'Motion by Trustee Basinger, second by Trustee Harmon to pass Resolution #02-232026-01
+    — Roll call, all yes.'
+  - 'Motion by Trustee Harmon, second by Trustee Long to pass Resolution #02-232026-02
+    — Roll call, all yes.'
+  - Motion by Trustee Long, second by Trustee Harmon to approve the amount of $14,750
+    for street sweeping for 2026 — Roll call, all yes.
+  - Motion by Trustee Harmon, second by Trustee Long to go into executive session
+    for employee discipline — Roll call, all yes.
+  - Motion by Trustee Long, second by Trustee Harmon to adjourn — Roll call, all yes.
+  parties:
+  - Paul Basinger (Trustee / Chairman)
+  - Ross Harmon (Trustee)
+  - Jody Long (Trustee)
+  - Brady Overholt (Fiscal Officer)
+  - Zoning Inspector Bishop
+  - Road Superintendent Osting
+  - Police Chief Haines
+  - Fire Chief Hadding
+  - Nate Twinning
+  - Mr. Huffman
+  - Best Rents
+  - Marshalls Grant
+  - Moose Lodge
+  - Midwest (dispatch services)
+  parcels:
+  - 3185 Burch Ave.
+  - 2430 Windsor Dr.
+  - 'SR 309 (new property, station #1)'
+  dollar_figures:
+  - $14,750 (street sweeping contract with Best Rents, cost shared by Bath and Shawnee
+    township)
+  - $7424.31 (received by ATFD from the Moose Lodge for their 1st quarter pledge)
+  - $1000 (received from Midwest for dispatch services)
+- date: '2026-03-30'
+  kind: minutes
+  filename: 3-30-26 minutes.docx
+  hits:
+  - datacenter
+  - google
+  summary: At the American Township Trustees regular session, Zoning Inspector Bishop
+    provided an update from Google and Turner Construction regarding well water issues
+    being experienced by residents living near the data center location, with copies
+    of information from each business made available to the public. No formal votes
+    or resolutions related to the corridor project were taken at this meeting. The
+    meeting otherwise addressed routine township business including road maintenance,
+    hiring, and fire station updates.
+  corridor_relevance: Zoning Inspector Bishop delivered an update from Google and
+    Turner Construction specifically addressing well water issues affecting residents
+    near the data center location, connecting this meeting directly to the Project
+    BOSC/hyperscale data center corridor.
+  decisions:
+  - Motion by Trustee Long second by Trustee Harmon to approve the minutes of the
+    regular meeting of March 9, 2026. Roll call, all yes.
+  - Motion by Trustee Basinger second by Trustee Long to approve the payment of the
+    warrants as presented by the Fiscal Officer. Roll call, all yes.
+  - Motion by Trustee Harmon second by Trustee Long to accept entering into contract
+    with the county for striping and painting for 2026 township roads. Roll call,
+    all yes.
+  - Motion by Trustee Harmon second by Trustee Long to hire Robert Gehr IV at $25/hr
+    beginning 4/6/26. Roll call, all yes.
+  - Motion by Trustee Harmon second by Trustee Long to move forward with township
+    cleanup day on June 13th with a 50% grant covering some of the cost. Roll call,
+    all yes.
+  - Motion by Trustee Long second by Trustee Harmon to adjourn. Roll call, all yes.
+  parties:
+  - Paul Basinger (Trustee/Chairman)
+  - Ross Harmon (Trustee)
+  - Jody Long (Trustee)
+  - Brian Winegardner (Allen County Commissioner)
+  - Zoning Inspector Bishop
+  - Road Superintendent Osting
+  - Robert Gehr IV
+  - Chief Haines
+  - Chief Hadding
+  - Brady Overholt (Fiscal Officer)
+  - Google
+  - Turner Construction
+  parcels: []
+  dollar_figures:
+  - $25/hr (rate for Robert Gehr IV)
+  - 50% reimbursement grant from Solid Waste District for township clean-up day
