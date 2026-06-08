@@ -507,6 +507,34 @@ def _corridor_key(name: str, graph: EntityGraph) -> str | None:
     return None
 
 
+def _actor_identity(needle: str) -> tuple[str, str]:
+    """``(display_name, graph_key)`` for a curated corridor-actor needle."""
+    for n, canon in _CANONICAL_ACTORS:
+        if n == needle:
+            return canon, normalize_name(canon)
+    return needle.title(), normalize_name(needle)
+
+
+def _narrative_actors(meeting: dict[str, Any]) -> list[str]:
+    """Curated corridor-actor needles named in a meeting's grounded narrative.
+
+    The structured ``parties`` list is the committee roster; a project *principal*
+    (Google) is often named only in the summary/relevance prose — e.g. "project BOSC
+    (Google data center)" — and would otherwise never link. Scan that prose, but admit
+    ONLY the curated :data:`_CORRIDOR_ACTORS` (whole-word), never a new generic party,
+    so the parties-path selectivity is preserved.
+    """
+    parts: list[str] = [
+        str(meeting.get("summary") or ""),
+        str(meeting.get("corridor_relevance") or ""),
+    ]
+    decisions = meeting.get("decisions")
+    if isinstance(decisions, list):
+        parts.extend(str(d) for d in decisions)
+    blob = " ".join(parts).upper()
+    return [n for n in _CORRIDOR_ACTORS if re.search(rf"\b{re.escape(n)}\b", blob)]
+
+
 def _subdivision_meeting_entities(graph: EntityGraph, *, settings: Settings | None = None) -> None:
     """Fold corridor-relevant meeting participants into the graph (opt-in).
 
@@ -535,10 +563,18 @@ def _subdivision_meeting_entities(graph: EntityGraph, *, settings: Settings | No
             if not isinstance(meeting, dict):
                 continue
             date = str(meeting.get("date") or "")
+            # Fold candidates from the structured roster AND the grounded prose; the
+            # latter catches a principal (Google) named only in the summary.
+            candidates: list[tuple[str, str]] = []
             for raw in meeting.get("parties", []):
                 name = _clean_party(str(raw))
                 key = _corridor_key(name, graph)
-                if not key:
+                if key:
+                    candidates.append((name, key))
+            for needle in _narrative_actors(meeting):
+                candidates.append(_actor_identity(needle))
+            for name, key in candidates:
+                if key == sub_key:  # a body naming itself as a party is not a relationship
                     continue
                 if not sub_registered:
                     graph._register(sub_name, role="meeting_body", source=rel)

@@ -285,14 +285,19 @@ actually answer *"is this a good deal?"* are withheld: the County's **cost-benef
 analysis** (PRR request item 4, withheld under R.C. 149.43 / 9.66 as "being reviewed by
 legal counsel"); the **School District Compensation Agreement** dollar amounts
 (non-public, only the 25% floor disclosed — though the PAAC minutes surface a *proposed*
-**$200K→$250K/yr PILOT** to Elida, so the deciding figure demonstrably exists); and the
+**$200K→$250K/yr PILOT** to Elida, so the deciding figure demonstrably exists, and the
+**Lima-Allen County Regional Planning Commission**'s own minutes independently restate it:
+a DCC presentation on the project — named in the minutes as *"project BOSC (Google data
+center)"* — recorded **$250,000 to Elida Schools** and **$1.5 billion invested if all
+three phases proceed**); and the
 **land-assembly purchase prices** — the recorded deeds state only "valuable
 consideration" and the **DTE-100 transfer-tax forms were produced with the price fields
 blank**, so what was paid to assemble the ~350-acre campus is opaque (only the Neighbors
 parcel, **$600K / 5.0 ac**, is disclosed). And CRA **§22 indemnifies the County's
 attorney fees** for defending exactly that kind of withholding — a private subsidy for
 public secrecy. `[verified: cra-agreement.cra.yaml + seller-land-packets.land.yaml +
-paac-board-minutes.minutes.yaml + bosc-prr-production-2026-06-05.response-index.yaml]`
+paac-board-minutes.minutes.yaml + bosc-prr-production-2026-06-05.response-index.yaml +
+lacrpc/meetings/meeting-summaries.yaml]`
 
 ---
 
