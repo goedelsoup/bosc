@@ -68,3 +68,77 @@ def test_pull_offline_missing_fixture_raises(gis_settings: Settings, tmp_path: P
     other = next(s for s in scenes if s.scene_id.endswith("T16TGL_20240920T204040"))
     with pytest.raises(raster.ImageryOfflineError):
         raster.pull_capture(other, _site, asset="visual", out_dir=tmp_path, settings=gis_settings)
+
+
+def test_default_asset_per_collection() -> None:
+    assert raster.default_asset("sentinel-2-l2a") == "visual"
+    assert raster.default_asset("naip") == "image"
+    assert raster.default_asset("landsat-c2-l2") == "red"
+    assert raster.default_asset("something-unknown") == "visual"  # safe fallback
+
+
+def test_pull_landsat_red_offline(gis_settings: Settings, tmp_path: Path) -> None:
+    _site, scenes = imagery.search_site(
+        "campus",
+        collection="landsat-c2-l2",
+        datetime_range="2024-06-01/2024-09-30",
+        max_cloud=20.0,
+        limit=3,
+        settings=gis_settings,
+    )
+    top = scenes[0]  # LC09 2024-09-21, EPSG 32616 — the one we have a fixture COG for
+
+    cap = raster.pull_capture(top, _site, out_dir=tmp_path, settings=gis_settings)  # default 'red'
+    assert cap.asset == "red"
+    assert cap.epsg == 32616
+    tif = Path(cap.path)
+    assert tif.name == "2024-09-21.red.tif"
+    with rasterio.open(tif) as ds:
+        assert ds.count == 1 and ds.dtypes[0] == "uint16" and ds.crs.to_epsg() == 32616
+    assert 0 < cap.width < 48 and 0 < cap.height < 91  # interior clip of the padded fixture
+    assert hashlib.sha256(tif.read_bytes()).hexdigest() == cap.sha256
+
+
+def test_pull_naip_image_offline(gis_settings: Settings, tmp_path: Path) -> None:
+    # NAIP at 0.3 m: a full-campus clip is ~76 MB, so the committed fixture COG covers
+    # only a small sub-AOI. Pull a matching small test site to exercise the 4-band path.
+    _site, scenes = imagery.search_site(
+        "campus",
+        collection="naip",
+        datetime_range="2017-01-01/2023-12-31",
+        limit=3,
+        settings=gis_settings,
+    )
+    naip_scene = scenes[0]  # oh_m_4008415_se_..._20230526, EPSG 26917
+
+    aoi = (-84.12345, 40.79685, -84.12325, 40.79705)  # must match the recorded fixture COG
+    site = TrackingSite(
+        id="naip_test",
+        name="NAIP test AOI",
+        layer="test",
+        n_features=1,
+        acreage=None,
+        bbox=aoi,
+        geometry={
+            "type": "Polygon",
+            "coordinates": [
+                [
+                    [aoi[0], aoi[1]],
+                    [aoi[2], aoi[1]],
+                    [aoi[2], aoi[3]],
+                    [aoi[0], aoi[3]],
+                    [aoi[0], aoi[1]],
+                ]
+            ],
+        },
+        source="test",
+    )
+
+    cap = raster.pull_capture(
+        naip_scene, site, out_dir=tmp_path, settings=gis_settings
+    )  # default 'image'
+    assert cap.asset == "image"
+    assert cap.epsg == 26917
+    with rasterio.open(cap.path) as ds:
+        assert ds.count == 4 and ds.dtypes[0] == "uint8" and ds.crs.to_epsg() == 26917
+    assert 0 < cap.width < 118 and 0 < cap.height < 152  # interior clip of the padded fixture

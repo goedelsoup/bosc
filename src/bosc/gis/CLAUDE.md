@@ -10,15 +10,29 @@ Geospatial subsystem: tracking sites + satellite imagery. Defers to the root
   Don't draw new AOI geometry — that would be fabricated evidence. To add a site,
   add its geometry to the findings (e.g. a warehouse parcel via `bosc parcels`,
   the reservoir footprint) and tag the layer.
-- **Imagery is `search → materialize`, and only *search* exists today.**
-  `imagery.search_scenes` is a pure connector: a single `httpx` POST to the
-  Planetary Computer STAC `/search`, wrapped in the shared
-  `bosc.hydrology.connectors._cache.cached_get` (the same cross-subsystem reuse
-  `civic`/`economics` do) against the GIS cache root. STAC fields are read **by
-  name**, never index; an offline miss raises `HydroOfflineError` naming the key.
-  The raster-clip / GeoTIFF layer (rasterio + asset signing) is a later increment —
-  **do not add `rasterio`/`pystac` for search.**
-- **A new collection/AOI needs a committed fixture** under
-  `tests/fixtures/gis/<connector>/<key>.json` (connector is `pc_stac_search`).
-  Record the live response once; don't hand-edit recorded JSON.
-- Sync throughout (`httpx`), matching the rest of the pipeline.
+- **Imagery is `search → materialize`; both layers exist.**
+  - *Search* (`imagery.search_scenes`) is a pure connector: a single `httpx` POST to
+    the Planetary Computer STAC `/search`, wrapped in the shared
+    `bosc.hydrology.connectors._cache.cached_get` (the same cross-subsystem reuse
+    `civic`/`economics` do) against the GIS cache root. STAC fields are read **by
+    name**, never index; an offline miss raises `HydroOfflineError` naming the key.
+    Search is **collection-agnostic** — `sentinel-2-l2a`, `naip`, `landsat-c2-l2` all
+    go through the one path. NAIP carries no `eo:cloud_cover`, so don't pass
+    `--max-cloud` for it.
+  - *Materialize* (`raster.pull_capture`) signs the asset (`planetary_computer`, lazy
+    import) and does a windowed `rasterio` read **clipped to the AOI in the scene's
+    native CRS — no resampling**, writing a dated GeoTIFF + a `.yaml` provenance
+    sidecar (sensing vs. retrieval date, `scene_id`, unsigned `source_url`, sha256).
+    Per-collection default asset lives in `raster._DEFAULT_ASSET`
+    (`raster.default_asset`); an offline fixture-COG miss raises `ImageryOfflineError`.
+- **Pixels are verbatim, output is evidence.** Captures land under
+  `data/reference/imagery/<site>/<collection>/` (GeoTIFFs are Git LFS — see
+  `.gitattributes`). Never resample or alter beyond the logged clip; keep the
+  `scene_id` so any capture is re-pullable from the archive.
+- **A new collection/AOI needs committed fixtures.** Search: a real STAC response at
+  `tests/fixtures/gis/pc_stac_search/<key>.json`. Pull: a **small real** COG at
+  `tests/fixtures/gis/imagery_cog/<scene_id>.<asset>.tif` — these stay in-repo (not
+  LFS) so tests are hermetic. High-res collections (NAIP 0.3 m) make a full-AOI clip
+  huge, so record the pull fixture against a **small sub-AOI**. Record live once;
+  don't hand-edit recorded JSON/COGs.
+- Sync throughout (`httpx`/`rasterio`), matching the rest of the pipeline.

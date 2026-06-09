@@ -1,0 +1,550 @@
+{
+  "params": {
+    "collection": "naip",
+    "bbox": [
+      -84.128403,
+      40.787748,
+      -84.118419,
+      40.806044
+    ],
+    "datetime": "2017-01-01/2023-12-31",
+    "max_cloud": null,
+    "limit": 3
+  },
+  "fetched_at": "2026-06-09T21:14:12.034843+00:00",
+  "payload": {
+    "type": "FeatureCollection",
+    "links": [
+      {
+        "rel": "root",
+        "type": "application/json",
+        "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+      },
+      {
+        "rel": "self",
+        "type": "application/geo+json",
+        "href": "https://planetarycomputer.microsoft.com/api/stac/v1/search"
+      },
+      {
+        "rel": "next",
+        "type": "application/geo+json",
+        "method": "POST",
+        "href": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+        "body": {
+          "collections": [
+            "naip"
+          ],
+          "bbox": [
+            -84.128403,
+            40.787748,
+            -84.118419,
+            40.806044
+          ],
+          "limit": 3,
+          "datetime": "2017-01-01/2023-12-31",
+          "token": "next:naip:oh_m_4008416_sw_16_060_20210902"
+        }
+      }
+    ],
+    "features": [
+      {
+        "id": "oh_m_4008415_se_17_030_20230526_20231018",
+        "bbox": [
+          -84.191596,
+          40.747451,
+          -84.12097,
+          40.81505
+        ],
+        "type": "Feature",
+        "links": [
+          {
+            "rel": "collection",
+            "type": "application/json",
+            "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/naip"
+          },
+          {
+            "rel": "parent",
+            "type": "application/json",
+            "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/naip"
+          },
+          {
+            "rel": "root",
+            "type": "application/json",
+            "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+          },
+          {
+            "rel": "self",
+            "type": "application/geo+json",
+            "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/naip/items/oh_m_4008415_se_17_030_20230526_20231018"
+          },
+          {
+            "rel": "preview",
+            "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/map?collection=naip&item=oh_m_4008415_se_17_030_20230526_20231018",
+            "title": "Map of item",
+            "type": "text/html"
+          }
+        ],
+        "assets": {
+          "image": {
+            "href": "https://naipeuwest.blob.core.windows.net/naip/v002/oh/2023/oh_030cm_2023/40084/m_4008415_se_17_030_20230526_20231018.tif",
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+              "data"
+            ],
+            "title": "RGBIR COG tile",
+            "eo:bands": [
+              {
+                "name": "Red",
+                "common_name": "red"
+              },
+              {
+                "name": "Green",
+                "common_name": "green"
+              },
+              {
+                "name": "Blue",
+                "common_name": "blue"
+              },
+              {
+                "name": "NIR",
+                "common_name": "nir",
+                "description": "near-infrared"
+              }
+            ]
+          },
+          "thumbnail": {
+            "href": "https://naipeuwest.blob.core.windows.net/naip/v002/oh/2023/oh_030cm_2023/40084/m_4008415_se_17_030_20230526_20231018.200.jpg",
+            "type": "image/jpeg",
+            "roles": [
+              "thumbnail"
+            ],
+            "title": "Thumbnail"
+          },
+          "tilejson": {
+            "title": "TileJSON with default rendering",
+            "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/tilejson.json?collection=naip&item=oh_m_4008415_se_17_030_20230526_20231018&assets=image&asset_bidx=image%7C1%2C2%2C3&format=png",
+            "type": "application/json",
+            "roles": [
+              "tiles"
+            ]
+          },
+          "rendered_preview": {
+            "title": "Rendered preview",
+            "rel": "preview",
+            "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/preview.png?collection=naip&item=oh_m_4008415_se_17_030_20230526_20231018&assets=image&asset_bidx=image%7C1%2C2%2C3&format=png",
+            "roles": [
+              "overview"
+            ],
+            "type": "image/png"
+          }
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -84.12097,
+                40.749297
+              ],
+              [
+                -84.124053,
+                40.81505
+              ],
+              [
+                -84.191596,
+                40.813199
+              ],
+              [
+                -84.188447,
+                40.747451
+              ],
+              [
+                -84.12097,
+                40.749297
+              ]
+            ]
+          ]
+        },
+        "collection": "naip",
+        "properties": {
+          "gsd": 0.3,
+          "datetime": "2023-05-26T16:00:00Z",
+          "naip:year": "2023",
+          "proj:bbox": [
+            230805.0,
+            4515614.100000001,
+            236510.1,
+            4522923.9
+          ],
+          "proj:epsg": 26917,
+          "providers": [
+            {
+              "url": "https://www.fsa.usda.gov/programs-and-services/aerial-photography/imagery-programs/naip-imagery/",
+              "name": "USDA Farm Service Agency",
+              "roles": [
+                "producer",
+                "licensor"
+              ]
+            }
+          ],
+          "naip:state": "oh",
+          "proj:shape": [
+            24366,
+            19017
+          ],
+          "proj:centroid": {
+            "lat": 40.78125,
+            "lon": -84.15627
+          },
+          "proj:transform": [
+            0.3,
+            0.0,
+            230805.0,
+            0.0,
+            -0.3,
+            4522923.9,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "stac_extensions": [
+          "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+          "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+        ],
+        "stac_version": "1.0.0"
+      },
+      {
+        "id": "oh_m_4008416_sw_17_030_20230521_20231018",
+        "bbox": [
+          -84.129037,
+          40.747484,
+          -84.058528,
+          40.815014
+        ],
+        "type": "Feature",
+        "links": [
+          {
+            "rel": "collection",
+            "type": "application/json",
+            "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/naip"
+          },
+          {
+            "rel": "parent",
+            "type": "application/json",
+            "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/naip"
+          },
+          {
+            "rel": "root",
+            "type": "application/json",
+            "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+          },
+          {
+            "rel": "self",
+            "type": "application/geo+json",
+            "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/naip/items/oh_m_4008416_sw_17_030_20230521_20231018"
+          },
+          {
+            "rel": "preview",
+            "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/map?collection=naip&item=oh_m_4008416_sw_17_030_20230521_20231018",
+            "title": "Map of item",
+            "type": "text/html"
+          }
+        ],
+        "assets": {
+          "image": {
+            "href": "https://naipeuwest.blob.core.windows.net/naip/v002/oh/2023/oh_030cm_2023/40084/m_4008416_sw_17_030_20230521_20231018.tif",
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+              "data"
+            ],
+            "title": "RGBIR COG tile",
+            "eo:bands": [
+              {
+                "name": "Red",
+                "common_name": "red"
+              },
+              {
+                "name": "Green",
+                "common_name": "green"
+              },
+              {
+                "name": "Blue",
+                "common_name": "blue"
+              },
+              {
+                "name": "NIR",
+                "common_name": "nir",
+                "description": "near-infrared"
+              }
+            ]
+          },
+          "thumbnail": {
+            "href": "https://naipeuwest.blob.core.windows.net/naip/v002/oh/2023/oh_030cm_2023/40084/m_4008416_sw_17_030_20230521_20231018.200.jpg",
+            "type": "image/jpeg",
+            "roles": [
+              "thumbnail"
+            ],
+            "title": "Thumbnail"
+          },
+          "tilejson": {
+            "title": "TileJSON with default rendering",
+            "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/tilejson.json?collection=naip&item=oh_m_4008416_sw_17_030_20230521_20231018&assets=image&asset_bidx=image%7C1%2C2%2C3&format=png",
+            "type": "application/json",
+            "roles": [
+              "tiles"
+            ]
+          },
+          "rendered_preview": {
+            "title": "Rendered preview",
+            "rel": "preview",
+            "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/preview.png?collection=naip&item=oh_m_4008416_sw_17_030_20230521_20231018&assets=image&asset_bidx=image%7C1%2C2%2C3&format=png",
+            "roles": [
+              "overview"
+            ],
+            "type": "image/png"
+          }
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -84.058528,
+                40.749292
+              ],
+              [
+                -84.061547,
+                40.815014
+              ],
+              [
+                -84.129037,
+                40.813202
+              ],
+              [
+                -84.125952,
+                40.747484
+              ],
+              [
+                -84.058528,
+                40.749292
+              ]
+            ]
+          ]
+        },
+        "collection": "naip",
+        "properties": {
+          "gsd": 0.3,
+          "datetime": "2023-05-21T16:00:00Z",
+          "naip:year": "2023",
+          "proj:bbox": [
+            236082.30000000002,
+            4515427.8,
+            241782.6,
+            4522733.7
+          ],
+          "proj:epsg": 26917,
+          "providers": [
+            {
+              "url": "https://www.fsa.usda.gov/programs-and-services/aerial-photography/imagery-programs/naip-imagery/",
+              "name": "USDA Farm Service Agency",
+              "roles": [
+                "producer",
+                "licensor"
+              ]
+            }
+          ],
+          "naip:state": "oh",
+          "proj:shape": [
+            24353,
+            19001
+          ],
+          "proj:centroid": {
+            "lat": 40.78125,
+            "lon": -84.09377
+          },
+          "proj:transform": [
+            0.3,
+            0.0,
+            236082.30000000002,
+            0.0,
+            -0.3,
+            4522733.7,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "stac_extensions": [
+          "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+          "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+        ],
+        "stac_version": "1.0.0"
+      },
+      {
+        "id": "oh_m_4008416_sw_16_060_20210902",
+        "bbox": [
+          -84.130145,
+          40.746584,
+          -84.057317,
+          40.815931
+        ],
+        "type": "Feature",
+        "links": [
+          {
+            "rel": "collection",
+            "type": "application/json",
+            "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/naip"
+          },
+          {
+            "rel": "parent",
+            "type": "application/json",
+            "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/naip"
+          },
+          {
+            "rel": "root",
+            "type": "application/json",
+            "href": "https://planetarycomputer.microsoft.com/api/stac/v1/"
+          },
+          {
+            "rel": "self",
+            "type": "application/geo+json",
+            "href": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/naip/items/oh_m_4008416_sw_16_060_20210902"
+          },
+          {
+            "rel": "preview",
+            "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/map?collection=naip&item=oh_m_4008416_sw_16_060_20210902",
+            "title": "Map of item",
+            "type": "text/html"
+          }
+        ],
+        "assets": {
+          "image": {
+            "href": "https://naipeuwest.blob.core.windows.net/naip/v002/oh/2021/oh_060cm_2021/40084/m_4008416_sw_16_060_20210902.tif",
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+              "data"
+            ],
+            "title": "RGBIR COG tile",
+            "eo:bands": [
+              {
+                "name": "Red",
+                "common_name": "red"
+              },
+              {
+                "name": "Green",
+                "common_name": "green"
+              },
+              {
+                "name": "Blue",
+                "common_name": "blue"
+              },
+              {
+                "name": "NIR",
+                "common_name": "nir",
+                "description": "near-infrared"
+              }
+            ]
+          },
+          "thumbnail": {
+            "href": "https://naipeuwest.blob.core.windows.net/naip/v002/oh/2021/oh_060cm_2021/40084/m_4008416_sw_16_060_20210902.200.jpg",
+            "type": "image/jpeg",
+            "roles": [
+              "thumbnail"
+            ],
+            "title": "Thumbnail"
+          },
+          "tilejson": {
+            "title": "TileJSON with default rendering",
+            "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/tilejson.json?collection=naip&item=oh_m_4008416_sw_16_060_20210902&assets=image&asset_bidx=image%7C1%2C2%2C3&format=png",
+            "type": "application/json",
+            "roles": [
+              "tiles"
+            ]
+          },
+          "rendered_preview": {
+            "title": "Rendered preview",
+            "rel": "preview",
+            "href": "https://planetarycomputer.microsoft.com/api/data/v1/item/preview.png?collection=naip&item=oh_m_4008416_sw_16_060_20210902&assets=image&asset_bidx=image%7C1%2C2%2C3&format=png",
+            "roles": [
+              "overview"
+            ],
+            "type": "image/png"
+          }
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -84.060301,
+                40.746584
+              ],
+              [
+                -84.057317,
+                40.814167
+              ],
+              [
+                -84.127232,
+                40.815931
+              ],
+              [
+                -84.130145,
+                40.748344
+              ],
+              [
+                -84.060301,
+                40.746584
+              ]
+            ]
+          ]
+        },
+        "collection": "naip",
+        "properties": {
+          "gsd": 0.6,
+          "datetime": "2021-09-02T16:00:00Z",
+          "naip:year": "2021",
+          "proj:bbox": [
+            742290.0,
+            4514784.0,
+            748194.0,
+            4522296.0
+          ],
+          "proj:epsg": 26916,
+          "providers": [
+            {
+              "url": "https://www.fsa.usda.gov/programs-and-services/aerial-photography/imagery-programs/naip-imagery/",
+              "name": "USDA Farm Service Agency",
+              "roles": [
+                "producer",
+                "licensor"
+              ]
+            }
+          ],
+          "naip:state": "oh",
+          "proj:shape": [
+            12520,
+            9840
+          ],
+          "proj:transform": [
+            0.6,
+            0.0,
+            742290.0,
+            0.0,
+            -0.6,
+            4522296.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "stac_extensions": [
+          "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+          "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+        ],
+        "stac_version": "1.0.0"
+      }
+    ],
+    "numberReturned": 3
+  }
+}

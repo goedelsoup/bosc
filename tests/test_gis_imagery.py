@@ -63,3 +63,41 @@ def test_search_offline_miss_raises(gis_settings: Settings) -> None:
             collection="sentinel-2-l2a",
             settings=gis_settings,
         )
+
+
+def test_search_naip_offline(gis_settings: Settings) -> None:
+    _site, scenes = imagery.search_site(
+        "campus",
+        collection="naip",
+        datetime_range="2017-01-01/2023-12-31",
+        limit=3,
+        settings=gis_settings,
+    )
+    assert len(scenes) == 3
+    top = scenes[0]
+    assert top.collection == "naip"
+    assert top.scene_id.startswith("oh_m_4008415_se_17_030_20230526")
+    assert top.epsg == 26917  # NAD83 / UTM 17N — NAIP's native grid
+    assert top.cloud_cover is None  # NAIP (aerial) carries no eo:cloud_cover
+    assert top.asset("image") is not None  # the 4-band RGBN COG
+
+
+def test_search_landsat_offline(gis_settings: Settings) -> None:
+    _site, scenes = imagery.search_site(
+        "campus",
+        collection="landsat-c2-l2",
+        datetime_range="2024-06-01/2024-09-30",
+        max_cloud=20.0,
+        limit=3,
+        settings=gis_settings,
+    )
+    assert len(scenes) == 3
+    dates = [s.acquired for s in scenes]
+    assert dates == sorted(dates, reverse=True)  # newest first
+    top = scenes[0]
+    assert top.collection == "landsat-c2-l2"
+    assert top.scene_id == "LC09_L2SP_020032_20240921_02_T1"
+    assert top.platform == "landsat-9"
+    assert top.cloud_cover is not None and top.cloud_cover < 20.0
+    assert top.epsg == 32616
+    assert top.asset("red") is not None  # per-band SR COG (no single 'visual' asset)

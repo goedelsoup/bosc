@@ -213,10 +213,15 @@ Each phase is a shippable slice.
   committed real fixture + `bosc imagery sites` / `bosc imagery search`. The
   "Data-center campus" site (10 Bistrozzi parcels, ~339 ac) resolves and returns
   scenes offline.
-- **P2 — pull.** Add `pystac-client`/`planetary-computer`/`rasterio`; sign assets →
-  windowed COG clip to AOI → GeoTIFF + sidecar + sha256; commit fixture COG;
-  `bosc imagery pull`. Introduce `ImageryOfflineError` here (with the `_cache` lift).
-- **P3 — NAIP + Landsat.** Same pattern, new collection ids/bands; historical baseline.
+- **P2 — pull. ✅ done.** `rasterio` + `planetary-computer` (no `pystac-client` —
+  signing only); sign assets → windowed COG clip to AOI → GeoTIFF + sidecar + sha256;
+  committed fixture COG; `bosc imagery pull`. `ImageryOfflineError` added for the
+  raster path (the `_cache` lift remains deferred).
+- **P3 — NAIP + Landsat. ✅ done.** Same `pull` path, per-collection default asset
+  (`raster._DEFAULT_ASSET`: sentinel-2→`visual`, naip→`image`, landsat→`red`).
+  Real search + small COG fixtures for both; NAIP (0.3 m) pull-fixtures use a small
+  sub-AOI. NAIP has no `eo:cloud_cover` (don't `--max-cloud` it). Gives the high-res
+  before/after (NAIP) and the decadal baseline (Landsat).
 - **P4 — analysis.** NDVI disturbance + **NDWI reservoir water-extent time series**
   wired to the off-stream reservoir budget (sequent-peak drought storage); date-to-date
   change detection.
