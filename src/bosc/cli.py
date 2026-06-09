@@ -19,7 +19,7 @@ from rich.console import Console
 from rich.table import Table
 
 from bosc import __version__
-from bosc.config import get_settings
+from bosc.config import Settings, get_settings
 from bosc.documents import DEFAULT_DPI
 from bosc.logging import configure_logging
 from bosc.models import OPCSummary
@@ -2403,6 +2403,103 @@ def subdivisions_summarize(
     console.print(f"[green]{len(report.entries)}[/] meetings summarized → {out}")
     if report.skipped:
         console.print(f"[dim]{len(report.skipped)} skipped (no extractable text).[/]")
+
+
+imagery_app = typer.Typer(
+    name="imagery",
+    help="Satellite imagery for tracking sites (AOIs from the GIS findings).",
+    no_args_is_help=True,
+    add_completion=False,
+)
+app.add_typer(imagery_app, name="imagery")
+
+
+def _gis_offline_settings() -> Settings:
+    """Settings that serve committed GIS fixtures only (never touch the network)."""
+    base = get_settings()
+    return Settings(
+        gis_offline=True,
+        gis_fixtures_dir=base.data_dir.parent / "tests" / "fixtures" / "gis",
+    )
+
+
+@imagery_app.command("sites")
+def imagery_sites() -> None:
+    """List the tracking sites (named AOIs grouped from the committed GIS findings)."""
+    from bosc.gis import load_tracking_sites
+
+    sites = load_tracking_sites()
+    if not sites:
+        console.print(
+            "[yellow]No tracking sites[/] — check settings.gis_tracking_layers against "
+            "the layers in data/site/gis-findings.geojson."
+        )
+        raise typer.Exit(1)
+    table = Table("id", "name", "features", "acres", "bbox (W,S,E,N)")
+    for s in sites:
+        acres = f"{s.acreage:,.1f}" if s.acreage is not None else "—"
+        bbox = ", ".join(f"{c:.4f}" for c in s.bbox)
+        table.add_row(s.id, s.name, str(s.n_features), acres, bbox)
+    console.print(table)
+
+
+@imagery_app.command("search")
+def imagery_search(
+    site: str = typer.Argument(..., help="Tracking-site id (see `bosc imagery sites`)."),
+    collection: str | None = typer.Option(
+        None, "--collection", help="STAC collection (default: settings.gis_default_collection)."
+    ),
+    date_from: str | None = typer.Option(None, "--from", help="Start date, e.g. 2023-01-01."),
+    date_to: str | None = typer.Option(None, "--to", help="End date, e.g. 2024-12-31."),
+    max_cloud: float | None = typer.Option(
+        None, "--max-cloud", help="Max eo:cloud_cover percent (Sentinel-2/Landsat)."
+    ),
+    limit: int | None = typer.Option(None, "--limit", help="Max scenes to return."),
+    pad: float = typer.Option(0.0, "--pad", help="Grow the site bbox by N degrees."),
+    offline: bool = typer.Option(
+        False, "--offline", help="Use the committed fixture only; never touch the network."
+    ),
+) -> None:
+    """Search a public STAC catalog for scenes covering a tracking site, newest first.
+
+    Lists the matching scenes (acquisition date, cloud, platform, native CRS) and their
+    asset count — the search step; materializing AOI-clipped GeoTIFFs is a later stage.
+    """
+    from bosc.gis import imagery
+
+    dt_range = f"{date_from or '..'}/{date_to or '..'}" if (date_from or date_to) else None
+    settings = _gis_offline_settings() if offline else get_settings()
+    try:
+        site_obj, scenes = imagery.search_site(
+            site,
+            collection=collection,
+            datetime_range=dt_range,
+            max_cloud=max_cloud,
+            limit=limit,
+            pad_deg=pad,
+            settings=settings,
+        )
+    except KeyError as exc:
+        console.print(f"[red]{exc}[/] — see [bold]bosc imagery sites[/].")
+        raise typer.Exit(1) from exc
+
+    coll = collection or get_settings().gis_default_collection
+    span = dt_range or "all dates"
+    console.print(
+        f"[bold]{site_obj.name}[/] [{coll}] {span} — [bold]{len(scenes)}[/] scenes "
+        f"(bbox {', '.join(f'{c:.4f}' for c in site_obj.padded_bbox(pad))})"
+    )
+    table = Table("acquired", "platform", "cloud %", "EPSG", "assets", "scene id")
+    for sc in scenes:
+        table.add_row(
+            (sc.acquired or "—")[:19],
+            sc.platform or "—",
+            f"{sc.cloud_cover:.1f}" if sc.cloud_cover is not None else "—",
+            str(sc.epsg) if sc.epsg is not None else "—",
+            str(len(sc.assets)),
+            sc.scene_id,
+        )
+    console.print(table)
 
 
 if __name__ == "__main__":

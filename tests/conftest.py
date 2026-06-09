@@ -44,6 +44,16 @@ def econ_settings() -> Settings:
 
 
 @pytest.fixture
+def gis_settings() -> Settings:
+    """Offline GIS/imagery settings: real repo data dir, STAC fixtures, no network."""
+    return Settings(
+        data_dir=REPO_ROOT / "data",
+        gis_offline=True,
+        gis_fixtures_dir=FIXTURES / "gis",
+    )
+
+
+@pytest.fixture
 def facility_settings() -> Settings:
     """Settings for the facility compute-capacity derivation.
 

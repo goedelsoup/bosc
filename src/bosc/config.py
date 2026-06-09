@@ -133,6 +133,23 @@ class Settings(BaseSettings):
     econ_request_timeout_s: float = 60.0
     econ_fixtures_dir: Path | None = None  # committed connector fixtures (tests/CI)
 
+    # --- GIS / satellite imagery -------------------------------------------
+    # Pull AOI-clipped satellite imagery for tracking sites (the campus/footprints
+    # already mapped in data/site/gis-findings.geojson). The catalog is Microsoft
+    # Planetary Computer's STAC API, which fronts the free/open collections
+    # (Sentinel-2 L2A, NAIP, Landsat C2 L2) behind one search endpoint. Same
+    # offline/cache/fixture discipline as the other connectors. See
+    # docs/imagery-subsystem.md. P1 is search-only (no rasterio/pystac yet).
+    pc_stac_url: str = "https://planetarycomputer.microsoft.com/api/stac/v1"
+    gis_default_collection: str = "sentinel-2-l2a"
+    gis_search_limit: int = 50
+    gis_offline: bool = False  # serve cached/fixture STAC responses only; never fetch
+    gis_request_timeout_s: float = 60.0
+    gis_cache_ttl_hours: int = 168  # 1 week; the scene archive is slow-moving
+    gis_fixtures_dir: Path | None = None  # committed connector fixtures (tests/CI)
+    # gis-findings layers treated as trackable sites (grouped into one AOI each).
+    gis_tracking_layers: list[str] = Field(default_factory=lambda: ["campus"])
+
     # --- Documents library -------------------------------------------------
     # The full source corpus (~5 GB) is too large to republish on a static host,
     # so the Documents page is a complete *catalog* with direct downloads only for
@@ -173,6 +190,16 @@ class Settings(BaseSettings):
     def econ_cache_dir(self) -> Path:
         """Cached economics-connector responses (Census, BLS QCEW). Not committed."""
         return self.cache_dir / "economics"
+
+    @property
+    def gis_cache_dir(self) -> Path:
+        """Cached GIS/imagery STAC responses (Planetary Computer search). Not committed."""
+        return self.cache_dir / "gis"
+
+    @property
+    def gis_findings_path(self) -> Path:
+        """The committed GIS findings GeoJSON — source of tracking-site geometry."""
+        return self.data_dir / "site" / "gis-findings.geojson"
 
     @property
     def gleif_cache_dir(self) -> Path:
