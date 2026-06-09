@@ -29,6 +29,10 @@ The point-of-interest (place) research store. Defers to the root
   (a **proposal**, `confidence=medium`, `auto_mergeable=False`, because geocoding is
   fuzzy). `bosc poi resolve <value>`. Connector fixtures: `tests/fixtures/poi/` +
   `tests/fixtures/hydrology/allen_gis/`.
-- **Not built yet:** **GNIS** (non-parcel features) and the cross-candidate **merge /
-  blocking** (only exact parcel-id auto-merges; the rest are human-confirmed). Promotion
-  of a candidate to a curated `data/poi/` profile is a human step.
+- **`merge` (built):** `merge.py` resolves + **blocks by canonical parcel** into
+  `MergeGroup`s with the gate `covered`/`auto`/`review`/`unresolved` (only an exact
+  parcel-id makes a group `auto`). `merge_resolutions` is pure (group logic testable on
+  synthetic resolutions); `bosc poi merge`. Atomic merge keeps distinct parcels distinct —
+  a *composite* unifies them by hand in curate, not here.
+- **Not built yet:** **GNIS** (non-parcel features) and **curate** (promote a group to a
+  `data/poi/` profile — a human step, writing the grouped members as `surface_forms`).

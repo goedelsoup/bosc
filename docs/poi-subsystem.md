@@ -223,8 +223,11 @@ flag + tracking block), and the curation is hand-editing `data/poi/` (like peopl
     medium confidence). `bosc poi resolve`. Real committed fixtures for both connectors.
   - **P2b — non-parcel.** GNIS connector for features with no parcel (roads, water
     bodies) → fallback `(kind, geohash)` key.
-  - **P2c — merge.** Block candidates, auto-merge only on exact parcel-id equality, queue
-    the rest for human confirm; write `surface_forms` (the dedup audit trail).
+  - **P2c (✅ done) — merge.** `merge.py` resolves + **blocks by canonical parcel** into
+    `MergeGroup`s with the gate: `covered` (already a POI) / `auto` (identity fixed by an
+    exact parcel-id) / `review` (rests on a geocode) / `unresolved`. `merge_resolutions`
+    is pure (testable on synthetic resolutions); `bosc poi merge [--addresses --status]`.
+    Distinct parcels stay distinct — a composite unifies them by hand in curate, not here.
 - **P3 — curate.** Promote candidates → `data/poi/` profiles; depth gates; composite
   assembly (members).
 - **P4 — wire tracking.** `bosc.gis.load_tracking_sites` reads `data/poi/` (`track:true`);

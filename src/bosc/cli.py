@@ -2750,5 +2750,57 @@ def poi_resolve(
         console.print(f"  [dim]{r.note}[/]")
 
 
+@poi_app.command("merge")
+def poi_merge(
+    addresses: bool = typer.Option(
+        False, "--addresses", help="Also resolve address candidates (slower; geocoded)."
+    ),
+    status: str | None = typer.Option(
+        None, "--status", help="Filter: auto | review | covered | unresolved."
+    ),
+    limit: int = typer.Option(40, "--limit", help="Max groups to show."),
+    out: str | None = typer.Option(
+        None, "--out", help="Write the full merge plan to this YAML path."
+    ),
+) -> None:
+    """Resolve + block discovered candidates into deduplicated place groups (the dedup plan).
+
+    Each group is one canonical parcel with the surface forms that resolve to it.
+    ``auto`` = identity fixed by an exact parcel-id (promotable); ``review`` = rests on a
+    geocode (confirm); ``covered`` = already a POI. Hits the network to resolve (cached).
+    """
+    import yaml
+
+    from bosc.poi import merge_corpus
+
+    groups = merge_corpus(parcel_ids_only=not addresses)
+    if status:
+        groups = [g for g in groups if g.status == status]
+    if not groups:
+        console.print("[yellow]No groups.[/]")
+        raise typer.Exit(1)
+
+    counts: dict[str, int] = {}
+    for g in groups:
+        counts[g.status] = counts.get(g.status, 0) + 1
+    table = Table("status", "parcel", "owner", "members", "citations")
+    for g in groups[:limit]:
+        owner = g.parcel.owner if g.parcel else None
+        cites = sum(len(m.citations) for m in g.members)
+        table.add_row(
+            g.status, g.parcel_no or "—", (owner or "—")[:28], str(len(g.members)), str(cites)
+        )
+    console.print(table)
+    if len(groups) > limit:
+        console.print(f"[dim]… {len(groups) - limit} more (raise --limit or use --out).[/]")
+    summary = ", ".join(f"{k}={v}" for k, v in sorted(counts.items()))
+    console.print(f"[dim]{len(groups)} groups — {summary}.[/]")
+
+    if out:
+        doc = {"groups": [g.model_dump() for g in groups]}
+        Path(out).write_text(yaml.safe_dump(doc, sort_keys=False, allow_unicode=True), "utf-8")
+        console.print(f"[green]Wrote[/] {out}")
+
+
 if __name__ == "__main__":
     app()

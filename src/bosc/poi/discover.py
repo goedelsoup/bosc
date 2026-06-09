@@ -65,8 +65,9 @@ class _Acc:
     files: set[str] = field(default_factory=set)
 
 
-def _covered_parcels(settings: Settings) -> set[str]:
+def covered_parcels(*, settings: Settings | None = None) -> set[str]:
     """Normalized parcel numbers already represented by a POI in the store."""
+    settings = settings or get_settings()
     covered: set[str] = set()
     for poi in load_pois(settings=settings):
         for pid in poi.front.parcels:
@@ -117,7 +118,7 @@ def discover_candidates(
                 value = re.sub(r"\s+", " ", m.group(0)).strip(" .")
                 add("address", value, value.upper(), path)
 
-    covered = _covered_parcels(settings)
+    covered = covered_parcels(settings=settings)
     candidates = [
         POICandidate(
             kind=kind,  # 'parcel-id' | 'address' by construction
