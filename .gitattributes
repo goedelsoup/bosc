@@ -19,3 +19,8 @@ data/documents/**/*.flac filter=lfs diff=lfs merge=lfs -text
 # custody). Small enough to stay in-repo (not LFS), unlike the scans above.
 data/documents/**/*.html -text
 data/documents/**/*.txt -text
+# AOI-clipped satellite captures (`bosc imagery pull`) — committed reference evidence
+# GeoTIFFs; large binaries, so LFS like the scans above. (Small test-fixture COGs
+# under tests/fixtures/ deliberately stay in-repo so the suite is hermetic.)
+data/reference/imagery/**/*.tif filter=lfs diff=lfs merge=lfs -text
+data/reference/imagery/**/*.tiff filter=lfs diff=lfs merge=lfs -text

@@ -2502,5 +2502,74 @@ def imagery_search(
     console.print(table)
 
 
+@imagery_app.command("pull")
+def imagery_pull(
+    site: str = typer.Argument(..., help="Tracking-site id (see `bosc imagery sites`)."),
+    collection: str | None = typer.Option(
+        None, "--collection", help="STAC collection (default: settings.gis_default_collection)."
+    ),
+    asset: str | None = typer.Option(
+        None, "--asset", help="Asset/band key (default per collection, e.g. sentinel-2 'visual')."
+    ),
+    date_from: str | None = typer.Option(None, "--from", help="Start date, e.g. 2024-06-01."),
+    date_to: str | None = typer.Option(None, "--to", help="End date, e.g. 2024-09-30."),
+    max_cloud: float | None = typer.Option(None, "--max-cloud", help="Max eo:cloud_cover percent."),
+    limit: int = typer.Option(1, "--limit", help="How many scenes (newest first) to pull."),
+    out: str | None = typer.Option(
+        None, "--out", help="Output root (default: data/reference/imagery)."
+    ),
+    offline: bool = typer.Option(
+        False, "--offline", help="Use committed fixtures only; never touch the network."
+    ),
+) -> None:
+    """Clip scenes covering a tracking site to AOI GeoTIFFs (dated, with provenance sidecars).
+
+    Searches the catalog, then for each of the newest ``--limit`` scenes reads just the
+    AOI window of the chosen asset and writes
+    data/reference/imagery/<site>/<collection>/<date>.<asset>.tif plus a `.yaml`
+    chain-of-custody sidecar (sensing vs. retrieval date, scene id, sha256). Pixels are
+    verbatim — a windowed clip in the scene's native CRS, no resampling.
+    """
+    from bosc.gis import imagery, raster
+
+    dt_range = f"{date_from or '..'}/{date_to or '..'}" if (date_from or date_to) else None
+    settings = _gis_offline_settings() if offline else get_settings()
+    out_dir = Path(out) if out else None
+    try:
+        site_obj, scenes = imagery.search_site(
+            site,
+            collection=collection,
+            datetime_range=dt_range,
+            max_cloud=max_cloud,
+            limit=limit,
+            settings=settings,
+        )
+    except KeyError as exc:
+        console.print(f"[red]{exc}[/] — see [bold]bosc imagery sites[/].")
+        raise typer.Exit(1) from exc
+    if not scenes:
+        console.print("[yellow]No scenes matched[/] — widen --from/--to or raise --max-cloud.")
+        raise typer.Exit(1)
+
+    table = Table("acquired", "asset", "EPSG", "size", "sha256", "path")
+    for sc in scenes[:limit]:
+        try:
+            cap = raster.pull_capture(sc, site_obj, asset=asset, out_dir=out_dir, settings=settings)
+        except raster.ImageryOfflineError as exc:
+            console.print(f"[red]offline:[/] {exc}")
+            raise typer.Exit(1) from exc
+        table.add_row(
+            (cap.acquired or "—")[:10],
+            cap.asset,
+            str(cap.epsg) if cap.epsg else "—",
+            f"{cap.width}x{cap.height}",
+            cap.sha256[:12],
+            cap.path,
+        )
+    n = min(limit, len(scenes))
+    console.print(f"[bold]{site_obj.name}[/] — pulled [bold]{n}[/] capture(s):")
+    console.print(table)
+
+
 if __name__ == "__main__":
     app()
