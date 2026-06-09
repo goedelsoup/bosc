@@ -223,6 +223,12 @@ class Settings(BaseSettings):
         return self.data_dir / "people"
 
     @property
+    def poi_dir(self) -> Path:
+        """Curated point-of-interest (place) profiles (markdown + frontmatter) — the
+        place peer of people_dir; POIs flagged ``watched`` feed imagery tracking. Committed."""
+        return self.data_dir / "poi"
+
+    @property
     def entities_dir(self) -> Path:
         """Curated entity inputs not derived from the corpus. The inventories live
         under ``entities/profiles/`` (cloud-consumer candidates, defense

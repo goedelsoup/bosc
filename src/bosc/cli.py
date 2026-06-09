@@ -2571,5 +2571,78 @@ def imagery_pull(
     console.print(table)
 
 
+poi_app = typer.Typer(
+    name="poi",
+    help="Points of interest (places) — the curated, depth-marked place store.",
+    no_args_is_help=True,
+    add_completion=False,
+)
+app.add_typer(poi_app, name="poi")
+
+
+@poi_app.command("list")
+def poi_list(
+    tracked: bool = typer.Option(False, "--tracked", help="Only POIs that feed imagery tracking."),
+) -> None:
+    """List the curated POI store (place, kind, research depth, tracking)."""
+    from bosc.poi import load_pois
+
+    pois = load_pois()
+    if tracked:
+        pois = [p for p in pois if p.tracked]
+    if not pois:
+        console.print("[yellow]No POIs[/] — the store at data/poi/ is empty.")
+        raise typer.Exit(1)
+    table = Table("slug", "kind", "depth", "tracked", "parcels", "located")
+    for p in pois:
+        table.add_row(
+            p.slug,
+            p.kind,
+            p.depth,
+            "✓" if p.tracked else "",
+            str(len(p.front.parcels)),
+            "✓" if p.bbox else "",
+        )
+    console.print(table)
+    console.print(
+        f"[dim]{len(pois)} POIs — {sum(1 for p in pois if p.tracked)} watched/tracked.[/]"
+    )
+
+
+@poi_app.command("show")
+def poi_show(slug: str = typer.Argument(..., help="POI slug (see `bosc poi list`).")) -> None:
+    """Show one POI: its frontmatter (identity, location, tracking) and body."""
+    from bosc.poi import load_poi
+
+    poi = load_poi(slug)
+    if poi is None:
+        console.print(f"[red]No such POI:[/] {slug}")
+        raise typer.Exit(1)
+    f = poi.front
+    console.print(f"[bold]{f.name}[/] [dim]({poi.slug})[/] — {f.kind}, depth=[bold]{f.depth}[/]")
+    if f.parcels:
+        console.print(f"  parcels: {', '.join(f.parcels)}")
+    if f.members:
+        console.print(f"  members: {', '.join(f.members)}")
+    if f.location:
+        loc = f.location
+        bbox = ", ".join(f"{c:.4f}" for c in loc.bbox) if loc.bbox else "—"
+        console.print(
+            f"  location: method={loc.method or '—'} confidence={loc.confidence or '—'} "
+            f"asof={loc.asof or '—'} bbox=[{bbox}]"
+        )
+    if f.track and f.track.enabled:
+        console.print(
+            f"  [green]tracked[/]: collections={', '.join(f.track.collections) or '—'} "
+            f"since={f.track.since or '—'}"
+        )
+    if f.citations:
+        console.print("  citations:")
+        for c in f.citations:
+            console.print(f"    - {c}")
+    if poi.body:
+        console.print(f"\n{poi.body}")
+
+
 if __name__ == "__main__":
     app()

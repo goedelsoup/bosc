@@ -54,6 +54,12 @@ def gis_settings() -> Settings:
 
 
 @pytest.fixture
+def poi_settings() -> Settings:
+    """Settings for the committed POI store (data/poi/) — no network, no connector."""
+    return Settings(data_dir=REPO_ROOT / "data")
+
+
+@pytest.fixture
 def facility_settings() -> Settings:
     """Settings for the facility compute-capacity derivation.
 
