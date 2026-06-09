@@ -1,0 +1,82 @@
+meta:
+  subject: Refill adequacy / drought storage requirement — Lima reservoir system
+  source: 'USGS NWIS daily discharge: Auglaize 04186500 (Fort Jennings) + Ottawa 04187100 (Lima); storage
+    from water-supply.yaml'
+  method: sequent-peak (Rippl) storage requirement on aligned daily NWIS discharge, passby-adjusted
+  discipline: 'Derived screening: sequent-peak storage requirement vs committed reservoir storage. Refill
+    is amply adequate in normal years; the binding case is the worst gauged drought, and the residual
+    risk is a drought beyond the record.'
+refill:
+  tier: tier0
+  period_start: '1988-09-30'
+  period_end: '2024-12-31'
+  aligned_days: 9734
+  storage_capacity_mg: 14413.0
+  combined_mean_cfs: 451.3
+  annual_demand_mg: 6906.0
+  annual_supply_multiple: 15.4
+  rivers:
+  - site_no: 04186500
+    site_name: Auglaize River near Fort Jennings OH
+    river: Auglaize River
+    period_start: '1980-01-01'
+    period_end: '2024-12-31'
+    record_days: 16437
+    mean_cfs: 330.5
+    median_cfs: 81.4
+    min_cfs: 0.5
+    p90_cfs: 11.1
+    p95_cfs: 6.7
+    p99_cfs: 2.5
+    passby_cfs: 2.5
+    pct_days_below_demand: 25.8
+    note: gauged at Fort Jennings, DOWNSTREAM of Lima's Auglaize intakes with more drainage area — overstates
+      the flow at the intake (optimistic refill)
+  - site_no: 04187100
+    site_name: Ottawa River at Lima OH
+    river: Ottawa River
+    period_start: '1988-09-30'
+    period_end: '2024-12-31'
+    record_days: 9734
+    mean_cfs: 123.2
+    median_cfs: 23.0
+    min_cfs: 0.0
+    p90_cfs: 3.6
+    p95_cfs: 2.2
+    p99_cfs: 0.15
+    passby_cfs: 0.2
+    pct_days_below_demand: 55.3
+    note: net of Lima's upstream Ottawa intakes; reaches 0 cfs in drought
+  scenarios:
+  - label: baseline city
+    demand_mgd: 15.0
+    required_storage_mg: 1997.8
+    pct_of_capacity: 13.9
+    worst_spell_start: '1999-08-01'
+    worst_spell_days: 200
+    survives: true
+  - label: +campus (central)
+    demand_mgd: 18.92
+    required_storage_mg: 2844.2
+    pct_of_capacity: 19.7
+    worst_spell_start: '1999-07-27'
+    worst_spell_days: 229
+    survives: true
+  - label: +campus (high bound)
+    demand_mgd: 27.5
+    required_storage_mg: 5627.1
+    pct_of_capacity: 39.0
+    worst_spell_start: '1999-07-05'
+    worst_spell_days: 320
+    survives: true
+  method: sequent-peak (Rippl) storage requirement on aligned daily NWIS discharge, passby-adjusted
+  warnings: []
+  caveats:
+  - Auglaize gauged at Fort Jennings (downstream, larger drainage area) — overstates intake flow, so the
+    storage requirement is an UNDER-estimate (optimistic).
+  - Pure sequent-peak captures all surplus above passby (no pump-rate cap) — also optimistic; a real pump-capacity
+    limit would raise the storage requirement.
+  - Passby flows are screening assumptions (Ottawa = cited 7Q10 0.2 cfs; Auglaize 2.5 cfs, no cited 7Q10);
+    reservoir evaporation is not subtracted.
+  - The binding drought is the worst in the GAUGED record — a longer/deeper drought than ~1988-2024 would
+    call on more storage than shown.

@@ -238,6 +238,63 @@ def _render_water_supply(emit: Callable[[str], None], settings: Settings) -> Non
     )
 
 
+def _render_refill_adequacy(emit: Callable[[str], None], settings: Settings) -> None:
+    """The flow side of the supply: can pumping refill the reservoirs through a drought?"""
+    from bosc.pipeline import hydrology as hydro_stage
+
+    ra, _findings = hydro_stage.run_refill(settings=settings)
+    if ra is None or not ra.scenarios:
+        return
+    base = ra.scenario("baseline city")
+    campus = ra.scenario("+campus (central)")
+    high = ra.scenario("+campus (high bound)")
+    if base is None or campus is None:
+        return
+
+    emit(
+        "\n### Can the rivers refill the reservoirs — even in drought?\n\n"
+        "Off-stream storage only helps if high-flow pumping keeps it filled. Two questions, two "
+        "answers from the gauged record "
+        f"(Auglaize at Fort Jennings + Ottawa at Lima, {ra.period_start}—{ra.period_end}). "
+        "**In a normal year, refill is amply adequate**: the two rivers' combined mean flow "
+        f"(**{ra.combined_mean_cfs:g} cfs**) is ~**{ra.annual_supply_multiple:g}x** the city+campus "
+        "demand `[verified: connector]`. **The binding case is drought**: the Ottawa reaches 0 cfs "
+        f"and the Auglaize sits below the city+campus draw ~{ra.rivers[0].pct_days_below_demand:g}% "
+        "of the time, so the system draws down storage.\n"
+    )
+    emit(
+        "\nThe **sequent-peak storage requirement** — the active storage the worst gauged drawdown "
+        "calls on at a constant demand — measures the drought margin and the campus's bite:\n"
+    )
+    emit(
+        "\n| demand scenario | storage the worst drought needs | of the 14.4 BG | worst drawdown |"
+    )
+    emit("|---|--:|--:|---|")
+    for sc in ra.scenarios:
+        emit(
+            f"| {sc.label} ({sc.demand_mgd:g} MGD) | {sc.required_storage_mg:,.0f} MG | "
+            f"{sc.pct_of_capacity:g}% | ~{sc.worst_spell_days} d from {sc.worst_spell_start} |"
+        )
+    eroded = campus.required_storage_mg - base.required_storage_mg
+    high_txt = (
+        f" At the high cooling bound ({high.demand_mgd:g} MGD) it rises to "
+        f"**{high.pct_of_capacity:g}%**."
+        if high is not None
+        else ""
+    )
+    emit(
+        f"\nThe worst gauged drought (the 1999 event, a ~{campus.worst_spell_days}-day drawdown) is "
+        f"survived with large margin — but the campus raises the storage it calls on from "
+        f"**{base.pct_of_capacity:g}% to {campus.pct_of_capacity:g}%** of capacity "
+        f"(**+{eroded:,.0f} MG**, and ~{campus.worst_spell_days - base.worst_spell_days} more days of "
+        f"drawdown).{high_txt} `[inference: derived]` So refill is adequate and the system survives the "
+        "historical record — but the campus measurably erodes the buffer, and **a drought longer or "
+        "deeper than 1988—2024 is the residual exposure** this screen cannot bound. The estimate is "
+        "*optimistic* (the Auglaize gage is downstream of the intakes; no pump-rate cap or reservoir "
+        "evaporation), so the real margin is tighter.\n"
+    )
+
+
 def _render_tier1_swmm(emit: Callable[[str], None], settings: Settings) -> None:
     """The committed EPA-SWMM detention + surcharge numbers (engine-free, from the artifact)."""
     from bosc.hydrology.tier1 import load_tier1
@@ -415,6 +472,7 @@ def render_report(*, settings: Settings | None = None, live: bool = False) -> st
     _render_lowflow_corroboration(w, settings)
     _render_routed_network(w, settings)
     _render_water_supply(w, settings)
+    _render_refill_adequacy(w, settings)
     _render_toxic_screen(w, settings)
 
     from bosc.hydrology.floodplain import load_wwtp_floodzones

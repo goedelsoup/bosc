@@ -1819,6 +1819,73 @@ def supply_cmd() -> None:
         console.print(f"  ! {w}", markup=False)
 
 
+@app.command(name="refill")
+def refill_cmd(
+    write: bool = typer.Option(
+        False, "--write", help="Regenerate the committed analysis from the live USGS record."
+    ),
+) -> None:
+    """Can high-flow pumping refill the reservoirs against demand — incl. through drought?
+
+    The flow-side counterpart to `bosc supply`. Reports the normal-year supply surplus and
+    the sequent-peak (Rippl) storage the worst gauged drought calls on, city-only vs +campus.
+    `--write` re-pulls the Auglaize + Ottawa daily records and rewrites the committed artifact.
+    """
+    from bosc.hydrology import refill as refill_mod
+    from bosc.pipeline import hydrology as hydro_stage
+
+    settings = get_settings()
+    if write:
+        ra = refill_mod.compute_refill_adequacy(settings=settings)
+        path = refill_mod.write_refill_adequacy(ra, settings=settings)
+        console.print(f"[green]Wrote[/] {path}")
+        findings = refill_mod.refill_findings(ra)
+    else:
+        loaded, findings = hydro_stage.run_refill(settings=settings)
+        if loaded is None:
+            console.print(
+                "[yellow]No refill analysis[/] (data/reference/hydrology/refill-adequacy.yaml). "
+                "Run [bold]bosc refill --write[/] to generate it."
+            )
+            raise typer.Exit(1)
+        ra = loaded
+
+    console.print(
+        f"[bold]Reservoir refill adequacy[/] — combined mean flow "
+        f"[bold]{ra.combined_mean_cfs:g} cfs[/] = [bold]{ra.annual_supply_multiple:g}x[/] demand "
+        f"in a normal year; gauged {ra.period_start}..{ra.period_end} ({ra.aligned_days:,} days)."
+    )
+    rt = Table("river", "mean", "median", "p90", "p99", "min", "% days < demand")
+    for r in ra.rivers:
+        rt.add_row(
+            r.river,
+            f"{r.mean_cfs:g}",
+            f"{r.median_cfs:g}",
+            f"{r.p90_cfs:g}",
+            f"{r.p99_cfs:g}",
+            f"{r.min_cfs:g}",
+            f"{r.pct_days_below_demand:g}%" if r.pct_days_below_demand is not None else "—",
+        )
+    console.print(rt)
+    st = Table(
+        "demand scenario", "MGD", "storage needed", "% of 14.4 BG", "worst drawdown", "survives"
+    )
+    for sc in ra.scenarios:
+        st.add_row(
+            sc.label,
+            f"{sc.demand_mgd:g}",
+            f"{sc.required_storage_mg:,.0f} MG",
+            f"{sc.pct_of_capacity:g}%",
+            f"{sc.worst_spell_days}d from {sc.worst_spell_start}",
+            "[green]yes[/]" if sc.survives else "[red]NO[/]",
+        )
+    console.print(st)
+    for f in findings:
+        console.print(f"  {'·' if f.ok else '!'} {f.detail}", markup=False)
+    for c in ra.caveats:
+        console.print(f"  ~ {c}", markup=False)
+
+
 @app.command(name="people")
 def people() -> None:
     """List the curated individual profiles (the entity graph's detail store).

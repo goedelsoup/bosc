@@ -441,6 +441,88 @@ class WaterBudget(BaseModel):
         return self.plant_headroom_mgd < 0.0
 
 
+class RiverFlowStat(BaseModel):
+    """Flow-duration + drought characterization of one supply river's gage record.
+
+    The reservoirs are filled from each river only when flow is available; this is the
+    refill side of the storage budget. The percentiles are *exceedance* flows (``p90``
+    is the flow exceeded 90% of days — a low value), so the tail (``p95``/``p99``)
+    measures how reliably the river can be pumped through a drought.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    site_no: str
+    site_name: str
+    river: str
+    period_start: str
+    period_end: str
+    record_days: int
+    mean_cfs: float
+    median_cfs: float
+    min_cfs: float
+    p90_cfs: float  # flow exceeded 90% of days
+    p95_cfs: float
+    p99_cfs: float
+    passby_cfs: float  # screening minimum left in-stream (not pumped)
+    pct_days_below_demand: float | None = None  # share of days below the buildout demand
+    note: str = ""
+
+
+class DroughtDrawdown(BaseModel):
+    """One demand scenario's sequent-peak storage requirement over the historical record.
+
+    The sequent-peak (Rippl) ``required_storage_mg`` is the maximum cumulative deficit of
+    (demand - pumpable river inflow) — the active storage a reservoir must hold to deliver
+    the constant demand through the worst historical drawdown. If it stays under the actual
+    storage capacity the system survives that drought; the headroom is the safety margin.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    label: str
+    demand_mgd: float
+    required_storage_mg: float
+    pct_of_capacity: float  # required_storage / storage capacity
+    worst_spell_start: str | None = None  # date the binding drawdown began
+    worst_spell_days: int = 0
+    survives: bool = True  # required_storage < capacity
+
+
+class RefillAdequacy(BaseModel):
+    """Can high-flow pumping refill Lima's reservoirs against demand, incl. the campus?
+
+    Two questions, two answers: (1) in a normal year the rivers carry far more than demand
+    (``annual_supply_multiple``), so refill is trivially adequate; (2) the binding case is a
+    prolonged drought when both rivers fall below demand and the system draws down storage —
+    answered by the sequent-peak :class:`DroughtDrawdown` per demand scenario. The campus
+    raises demand, so it raises the storage the worst drought calls on; the residual risk is
+    a drought longer/deeper than the gauged record. A *derived* screening analysis.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    tier: Literal["tier0"] = "tier0"
+    period_start: str
+    period_end: str
+    aligned_days: int
+    storage_capacity_mg: float
+    combined_mean_cfs: float  # mean of (Auglaize + Ottawa) over the aligned record
+    annual_demand_mg: float  # buildout gross annual demand
+    annual_supply_multiple: float  # mean annual river supply / annual buildout demand
+    rivers: list[RiverFlowStat]
+    scenarios: list[DroughtDrawdown]
+    method: str
+    warnings: list[str] = []
+    caveats: list[str] = []
+
+    def scenario(self, label: str) -> DroughtDrawdown | None:
+        return next((s for s in self.scenarios if s.label == label), None)
+
+    def river(self, site_no: str) -> RiverFlowStat | None:
+        return next((r for r in self.rivers if r.site_no == site_no), None)
+
+
 class AssimilativeCheck(BaseModel):
     """Low-flow dilution of one discharge into its receiving water.
 

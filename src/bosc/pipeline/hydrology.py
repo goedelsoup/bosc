@@ -11,6 +11,7 @@ from collections.abc import Sequence
 
 from bosc.config import Settings, get_settings
 from bosc.hydrology import network as network_stage
+from bosc.hydrology import refill as refill_stage
 from bosc.hydrology import scenario as scenario_stage
 from bosc.hydrology import supply as supply_stage
 from bosc.hydrology.assimilative import assimilative_findings, check_assimilative
@@ -18,6 +19,7 @@ from bosc.hydrology.balance import build_water_balance
 from bosc.hydrology.model import (
     AssimilativeCheck,
     HydroFinding,
+    RefillAdequacy,
     RoutedNetwork,
     RoutedNetworkDiff,
     ScenarioDiff,
@@ -59,6 +61,30 @@ def run_water_budget(
         reserve_lost_days=budget.drought_reserve_lost_days,
     )
     return supply, budget, findings
+
+
+def run_refill(
+    *,
+    settings: Settings | None = None,
+) -> tuple[RefillAdequacy | None, list[HydroFinding]]:
+    """Load the committed refill-adequacy analysis + findings (offline; reads the artifact).
+
+    The flow-side counterpart to :func:`run_water_budget`: where the storage budget screens
+    the campus draw against the reservoir *stock*, this reads the committed sequent-peak
+    drought storage-requirement (regenerate it from the live USGS record with
+    ``bosc refill --write``). Returns ``(None, [])`` if the artifact is absent.
+    """
+    settings = settings or get_settings()
+    ra = refill_stage.load_refill_adequacy(settings=settings)
+    if ra is None:
+        return None, []
+    findings = refill_stage.refill_findings(ra)
+    log.info(
+        "hydro.refill.run",
+        supply_multiple=ra.annual_supply_multiple,
+        scenarios=len(ra.scenarios),
+    )
+    return ra, findings
 
 
 def run_baseline(
