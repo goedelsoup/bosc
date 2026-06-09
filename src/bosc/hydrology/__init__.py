@@ -26,23 +26,55 @@ from __future__ import annotations
 
 from bosc.hydrology.assimilative import assimilative_findings, check_assimilative
 from bosc.hydrology.balance import build_water_balance
+from bosc.hydrology.lowflow_frequency import (
+    compute_low_flow_frequency,
+    load_low_flow_frequency,
+    low_flow_quantiles,
+)
 from bosc.hydrology.model import (
+    AnnualMinimum,
     AssimilativeCheck,
     HydroFinding,
+    LowFlowFrequency,
+    LowFlowStatistic,
+    NetworkNode,
     Node,
     ProvenancedValue,
+    ReachFlow,
+    RoutedNetwork,
+    RoutedNetworkDiff,
     WaterBalance,
     WaterBalanceNode,
 )
+from bosc.hydrology.network import (
+    diff_networks,
+    load_topology,
+    network_findings,
+    route_network,
+)
 
 __all__ = [
+    "AnnualMinimum",
     "AssimilativeCheck",
     "HydroFinding",
+    "LowFlowFrequency",
+    "LowFlowStatistic",
+    "NetworkNode",
     "Node",
     "ProvenancedValue",
+    "ReachFlow",
+    "RoutedNetwork",
+    "RoutedNetworkDiff",
     "WaterBalance",
     "WaterBalanceNode",
     "assimilative_findings",
     "build_water_balance",
     "check_assimilative",
+    "compute_low_flow_frequency",
+    "diff_networks",
+    "load_low_flow_frequency",
+    "load_topology",
+    "low_flow_quantiles",
+    "network_findings",
+    "route_network",
 ]

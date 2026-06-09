@@ -1,0 +1,145 @@
+# Routed low-flow stream network for the Lima municipal water loop.
+#
+# This is the TOPOLOGY only — a directed graph of stream junctions and the node
+# each one drains into. It carries NO flow magnitudes: every flow term is read by
+# the solver (bosc.hydrology.network) from an already-grounded source, so the graph
+# never fabricates a number.
+#
+#   low_flow:        inject the cited 7Q10 for that receiving water (low-flow-7q10.yaml)
+#   balance_return:  add that WaterBalance node's document-cited discharge as a gain
+#   consumptive:     remove the scenario's cooling consumptive draw as a loss
+#
+# What the graph DOES assert is structure: which stream each WWTP discharges to
+# (from routing.yaml, status:confirmed, OEPA fact-sheet-cited) and that Dug Run and
+# Pike Run are Ottawa River (Lima area) tributaries (Ottawa River Watershed (Lima
+# Area) TMDL, US EPA-approved 2014-04-15 — see ottawa-lima-tmdl.yaml, which states
+# American-Bath / American No.2 "discharge to Pike Run / Dug Run"). The ONLY modeling
+# choice is the relative ORDER in which confluences meet the mainstem; because the
+# loop's discharges all drain to the Ottawa above the outlet, the order does not
+# change the order-invariant SYSTEM totals (natural low flow, effluent, net) the
+# headline rests on — it affects only the per-reach screening values.
+#
+# Datum note: the cited Ottawa 7Q10 (0.2 cfs) is the design low flow measured AT the
+# Lima gage (USGS 04187100), already net of the historical upstream abstraction for
+# Lima's water supply. So it is injected as the pre-campus mainstem low flow, and the
+# data-center COOLING consumptive draw is applied as the NEW, incremental depletion
+# (it is not in the historical 7Q10). The campus FM-2 industrial discharge returns to
+# the Ottawa via Lima's sewer + Lima WWTP and is routed as an effluent gain.
+
+meta:
+  subject: Routed low-flow stream network — Lima municipal loop
+  source: routing.yaml (WWTP -> stream, OEPA-cited) + ottawa-lima-tmdl.yaml (tributary structure)
+  tier: tier0
+  caveats:
+    - "Topology is cited; only confluence ORDER is a screening assumption."
+    - "System totals (Σ natural, Σ effluent, net) are order-invariant; per-reach values are screening."
+    - "Lima WWTP's OWN municipal discharge is not counted (no cited design flow in corpus) — the effluent share is therefore a CONSERVATIVE undercount."
+
+nodes:
+  # --- Ottawa mainstem: headwater -> abstraction/cooling draw -> Lima reach ---
+  - id: ottawa-head
+    name: Ottawa River upstream of Lima
+    kind: headwater
+    receiving_water: Ottawa River
+    low_flow: Ottawa River
+    downstream: lima-abstraction
+    status: confirmed
+    citation: "Cited Ottawa River 7Q10 0.2 cfs at USGS 04187100 (low-flow-7q10.yaml)"
+
+  - id: lima-abstraction
+    name: Lima WTP intake + data-center cooling draw
+    kind: abstraction
+    consumptive: true
+    downstream: lima-reach
+    receiving_water: Ottawa River
+    status: confirmed
+    citation: "Campus evaporative-cooling consumptive draw on the Lima supply (scenario knob; bosc.hydrology.cooling)"
+
+  # --- Dug Run tributary: headwater + American II outfall -> confluence -> Ottawa ---
+  - id: dug-run-head
+    name: Dug Run (headwater)
+    kind: headwater
+    receiving_water: Dug Run
+    low_flow: Dug Run
+    downstream: dug-run-confluence
+    status: confirmed
+    citation: "Cited Dug Run 7Q10 0.78 cfs (low-flow-7q10.yaml; OEPA 2PH00006)"
+
+  - id: american-ii
+    name: American II WWTP outfall
+    kind: outfall
+    receiving_water: Dug Run
+    balance_return: watch-american-ii-wwtp
+    downstream: dug-run-confluence
+    status: confirmed
+    citation: "OEPA NPDES 2PH00006 — American II WWTP discharges to Dug Run (routing.yaml)"
+
+  - id: dug-run-confluence
+    name: Dug Run -> Ottawa River
+    kind: confluence
+    receiving_water: Ottawa River
+    downstream: lima-reach
+    status: confirmed
+    citation: "Dug Run is an Ottawa River (Lima area) tributary (ottawa-lima-tmdl.yaml)"
+
+  # --- Pike Run tributary: headwater + American Bath outfall -> confluence -> Ottawa ---
+  - id: pike-run-head
+    name: Pike Run (headwater)
+    kind: headwater
+    receiving_water: Pike Run
+    low_flow: Pike Run
+    downstream: pike-run-confluence
+    status: confirmed
+    citation: "Cited Pike Run 7Q10 0.03 cfs (low-flow-7q10.yaml; OEPA 2PH00007)"
+
+  - id: american-bath
+    name: American Bath WWTP outfall
+    kind: outfall
+    receiving_water: Pike Run
+    balance_return: watch-american-bath-wwtp
+    downstream: pike-run-confluence
+    status: confirmed
+    citation: "OEPA NPDES 2PH00007 — American Bath WWTP discharges to Pike Run (routing.yaml)"
+
+  - id: pike-run-confluence
+    name: Pike Run -> Ottawa River
+    kind: confluence
+    receiving_water: Ottawa River
+    downstream: lima-reach
+    status: confirmed
+    citation: "Pike Run is an Ottawa River (Lima area) tributary (ottawa-lima-tmdl.yaml)"
+
+  # --- Direct Ottawa-mainstem discharges into the Lima assimilative reach ---
+  - id: shawnee-ii
+    name: Shawnee II WWTP outfall
+    kind: outfall
+    receiving_water: Ottawa River
+    balance_return: watch-shawnee-ii-wwtp
+    downstream: lima-reach
+    status: confirmed
+    citation: "OEPA NPDES 2PK00002 — Shawnee II WWTP discharges to Ottawa River (routing.yaml)"
+
+  - id: bosc-fm2-return
+    name: BOSC FM-2 industrial discharge (via Lima sewer + Lima WWTP)
+    kind: outfall
+    receiving_water: Ottawa River
+    balance_return: bosc-campus
+    downstream: lima-reach
+    status: confirmed
+    citation: "bosc-fm2 -> City of Lima 78\" sewer -> Lima WWTP -> Ottawa River (routing.yaml; sanitary-basis.yaml)"
+
+  # --- The assimilative reach (gage) and the outlet to the Auglaize/Maumee ---
+  - id: lima-reach
+    name: Ottawa River at Lima (assimilative reach / USGS 04187100)
+    kind: gage
+    receiving_water: Ottawa River
+    downstream: outlet
+    status: confirmed
+    citation: "USGS gage 04187100, Ottawa River at Lima — the assimilative reach"
+
+  - id: outlet
+    name: Ottawa River -> Auglaize -> Maumee
+    kind: outlet
+    downstream: null
+    status: confirmed
+    citation: "Ottawa flows to the Auglaize and on to the Maumee (maumee-tmdl reference)"

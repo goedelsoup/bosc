@@ -1,0 +1,534 @@
+meta:
+  subject: Independent low-flow frequency analysis — Ottawa River at Lima OH
+  source: USGS NWIS daily-values service, gage 04187100
+  method: climatic-year (Apr-Mar) annual n-day minima; log-Pearson III (method of moments, Wilson-Hilferty
+    frequency factor) bracketed by Weibull plotting position; conditional-probability adjustment for zero-flow
+    years
+  discipline: Computed (derived) corroboration of the cited regulatory 7Q10 in low-flow-7q10.yaml — not
+    a substitute for the cited statistic.
+frequency:
+  site_no: 04187100
+  site_name: Ottawa River at Lima OH
+  receiving_water: Ottawa River
+  period_start: '1988-09-30'
+  period_end: '2024-12-31'
+  record_days: 9734
+  complete_years: 24
+  completeness_threshold_days: 350
+  statistics:
+  - label: 1Q10
+    nday: 1
+    return_period_yr: 10
+    nonexceedance_prob: 0.1
+    n_years: 24
+    lp3_cfs:
+      value: 0.0
+      unit: cfs
+      source: derived
+      citation: log-Pearson III on 24 climatic-year 1-day minima, NWIS 04187100 1988-09-30—2024-12-31
+      confidence: medium
+      asof: null
+    weibull_cfs:
+      value: 0.0
+      unit: cfs
+      source: derived
+      citation: Weibull plotting position, 24 climatic-year 1-day minima, NWIS 04187100
+      confidence: medium
+      asof: null
+    log_skew: 0.0
+    zero_fraction: 0.2083
+    cited_cfs:
+      value: 0.0
+      unit: cfs
+      source: document
+      citation: cited 1Q10 for Ottawa River
+      confidence: high
+      asof: null
+    cited_basis: 1Q10
+    corroborates: true
+  - label: 7Q10
+    nday: 7
+    return_period_yr: 10
+    nonexceedance_prob: 0.1
+    n_years: 24
+    lp3_cfs:
+      value: 0.2387
+      unit: cfs
+      source: derived
+      citation: log-Pearson III on 24 climatic-year 7-day minima, NWIS 04187100 1988-09-30—2024-12-31
+      confidence: medium
+      asof: null
+    weibull_cfs:
+      value: 0.15
+      unit: cfs
+      source: derived
+      citation: Weibull plotting position, 24 climatic-year 7-day minima, NWIS 04187100
+      confidence: medium
+      asof: null
+    log_skew: -0.4731
+    zero_fraction: 0.0
+    cited_cfs:
+      value: 0.2
+      unit: cfs
+      source: document
+      citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River
+        at Lima, USGS gage 04187100, 1989-2021
+      confidence: high
+      asof: null
+    cited_basis: 7Q10
+    corroborates: true
+  - label: 30Q10
+    nday: 30
+    return_period_yr: 10
+    nonexceedance_prob: 0.1
+    n_years: 24
+    lp3_cfs:
+      value: 1.528
+      unit: cfs
+      source: derived
+      citation: log-Pearson III on 24 climatic-year 30-day minima, NWIS 04187100 1988-09-30—2024-12-31
+      confidence: medium
+      asof: null
+    weibull_cfs:
+      value: 1.9077
+      unit: cfs
+      source: derived
+      citation: Weibull plotting position, 24 climatic-year 30-day minima, NWIS 04187100
+      confidence: medium
+      asof: null
+    log_skew: -0.0303
+    zero_fraction: 0.0
+    cited_cfs:
+      value: 1.6
+      unit: cfs
+      source: document
+      citation: cited summer 30Q10 for Ottawa River
+      confidence: high
+      asof: null
+    cited_basis: summer 30Q10
+    corroborates: true
+  annual_minima:
+  - climatic_year: 1988
+    nday: 1
+    min_cfs: 0.5
+    valid_days: 183
+    complete: false
+  - climatic_year: 1989
+    nday: 1
+    min_cfs: 3.8
+    valid_days: 365
+    complete: true
+  - climatic_year: 1990
+    nday: 1
+    min_cfs: 22.0
+    valid_days: 365
+    complete: true
+  - climatic_year: 1991
+    nday: 1
+    min_cfs: 1.1
+    valid_days: 366
+    complete: true
+  - climatic_year: 1992
+    nday: 1
+    min_cfs: 3.7
+    valid_days: 365
+    complete: true
+  - climatic_year: 1993
+    nday: 1
+    min_cfs: 0.0
+    valid_days: 365
+    complete: true
+  - climatic_year: 1994
+    nday: 1
+    min_cfs: 0.02
+    valid_days: 365
+    complete: true
+  - climatic_year: 1995
+    nday: 1
+    min_cfs: 1.8
+    valid_days: 366
+    complete: true
+  - climatic_year: 1996
+    nday: 1
+    min_cfs: 2.0
+    valid_days: 365
+    complete: true
+  - climatic_year: 1997
+    nday: 1
+    min_cfs: 0.94
+    valid_days: 365
+    complete: true
+  - climatic_year: 1998
+    nday: 1
+    min_cfs: 1.4
+    valid_days: 365
+    complete: true
+  - climatic_year: 1999
+    nday: 1
+    min_cfs: 0.0
+    valid_days: 236
+    complete: false
+  - climatic_year: 2009
+    nday: 1
+    min_cfs: 0.07
+    valid_days: 274
+    complete: false
+  - climatic_year: 2010
+    nday: 1
+    min_cfs: 0.0
+    valid_days: 365
+    complete: true
+  - climatic_year: 2011
+    nday: 1
+    min_cfs: 0.0
+    valid_days: 366
+    complete: true
+  - climatic_year: 2012
+    nday: 1
+    min_cfs: 0.0
+    valid_days: 365
+    complete: true
+  - climatic_year: 2013
+    nday: 1
+    min_cfs: 2.3
+    valid_days: 365
+    complete: true
+  - climatic_year: 2014
+    nday: 1
+    min_cfs: 2.12
+    valid_days: 365
+    complete: true
+  - climatic_year: 2015
+    nday: 1
+    min_cfs: 2.89
+    valid_days: 366
+    complete: true
+  - climatic_year: 2016
+    nday: 1
+    min_cfs: 0.04
+    valid_days: 365
+    complete: true
+  - climatic_year: 2017
+    nday: 1
+    min_cfs: 0.42
+    valid_days: 365
+    complete: true
+  - climatic_year: 2018
+    nday: 1
+    min_cfs: 3.54
+    valid_days: 365
+    complete: true
+  - climatic_year: 2019
+    nday: 1
+    min_cfs: 0.02
+    valid_days: 366
+    complete: true
+  - climatic_year: 2020
+    nday: 1
+    min_cfs: 0.0
+    valid_days: 365
+    complete: true
+  - climatic_year: 2021
+    nday: 1
+    min_cfs: 1.7
+    valid_days: 365
+    complete: true
+  - climatic_year: 2022
+    nday: 1
+    min_cfs: 2.38
+    valid_days: 365
+    complete: true
+  - climatic_year: 2023
+    nday: 1
+    min_cfs: 1.09
+    valid_days: 366
+    complete: true
+  - climatic_year: 2024
+    nday: 1
+    min_cfs: 0.7
+    valid_days: 275
+    complete: false
+  - climatic_year: 1988
+    nday: 7
+    min_cfs: 2.8886
+    valid_days: 183
+    complete: false
+  - climatic_year: 1989
+    nday: 7
+    min_cfs: 5.0857
+    valid_days: 365
+    complete: true
+  - climatic_year: 1990
+    nday: 7
+    min_cfs: 26.4286
+    valid_days: 365
+    complete: true
+  - climatic_year: 1991
+    nday: 7
+    min_cfs: 1.7429
+    valid_days: 366
+    complete: true
+  - climatic_year: 1992
+    nday: 7
+    min_cfs: 9.6714
+    valid_days: 365
+    complete: true
+  - climatic_year: 1993
+    nday: 7
+    min_cfs: 0.2586
+    valid_days: 365
+    complete: true
+  - climatic_year: 1994
+    nday: 7
+    min_cfs: 0.15
+    valid_days: 365
+    complete: true
+  - climatic_year: 1995
+    nday: 7
+    min_cfs: 2.7429
+    valid_days: 366
+    complete: true
+  - climatic_year: 1996
+    nday: 7
+    min_cfs: 3.1286
+    valid_days: 365
+    complete: true
+  - climatic_year: 1997
+    nday: 7
+    min_cfs: 4.5286
+    valid_days: 365
+    complete: true
+  - climatic_year: 1998
+    nday: 7
+    min_cfs: 2.9857
+    valid_days: 365
+    complete: true
+  - climatic_year: 1999
+    nday: 7
+    min_cfs: 0.0
+    valid_days: 236
+    complete: false
+  - climatic_year: 2009
+    nday: 7
+    min_cfs: 0.4343
+    valid_days: 274
+    complete: false
+  - climatic_year: 2010
+    nday: 7
+    min_cfs: 0.1
+    valid_days: 365
+    complete: true
+  - climatic_year: 2011
+    nday: 7
+    min_cfs: 3.6286
+    valid_days: 366
+    complete: true
+  - climatic_year: 2012
+    nday: 7
+    min_cfs: 0.2257
+    valid_days: 365
+    complete: true
+  - climatic_year: 2013
+    nday: 7
+    min_cfs: 3.1571
+    valid_days: 365
+    complete: true
+  - climatic_year: 2014
+    nday: 7
+    min_cfs: 2.3114
+    valid_days: 365
+    complete: true
+  - climatic_year: 2015
+    nday: 7
+    min_cfs: 4.2714
+    valid_days: 366
+    complete: true
+  - climatic_year: 2016
+    nday: 7
+    min_cfs: 0.3657
+    valid_days: 365
+    complete: true
+  - climatic_year: 2017
+    nday: 7
+    min_cfs: 1.4371
+    valid_days: 365
+    complete: true
+  - climatic_year: 2018
+    nday: 7
+    min_cfs: 7.4429
+    valid_days: 365
+    complete: true
+  - climatic_year: 2019
+    nday: 7
+    min_cfs: 0.7414
+    valid_days: 366
+    complete: true
+  - climatic_year: 2020
+    nday: 7
+    min_cfs: 0.15
+    valid_days: 365
+    complete: true
+  - climatic_year: 2021
+    nday: 7
+    min_cfs: 2.9129
+    valid_days: 365
+    complete: true
+  - climatic_year: 2022
+    nday: 7
+    min_cfs: 2.6229
+    valid_days: 365
+    complete: true
+  - climatic_year: 2023
+    nday: 7
+    min_cfs: 1.4343
+    valid_days: 366
+    complete: true
+  - climatic_year: 2024
+    nday: 7
+    min_cfs: 0.8857
+    valid_days: 275
+    complete: false
+  - climatic_year: 1988
+    nday: 30
+    min_cfs: 5.2673
+    valid_days: 183
+    complete: false
+  - climatic_year: 1989
+    nday: 30
+    min_cfs: 8.14
+    valid_days: 365
+    complete: true
+  - climatic_year: 1990
+    nday: 30
+    min_cfs: 46.2667
+    valid_days: 365
+    complete: true
+  - climatic_year: 1991
+    nday: 30
+    min_cfs: 3.61
+    valid_days: 366
+    complete: true
+  - climatic_year: 1992
+    nday: 30
+    min_cfs: 20.6333
+    valid_days: 365
+    complete: true
+  - climatic_year: 1993
+    nday: 30
+    min_cfs: 1.834
+    valid_days: 365
+    complete: true
+  - climatic_year: 1994
+    nday: 30
+    min_cfs: 2.275
+    valid_days: 365
+    complete: true
+  - climatic_year: 1995
+    nday: 30
+    min_cfs: 7.41
+    valid_days: 366
+    complete: true
+  - climatic_year: 1996
+    nday: 30
+    min_cfs: 4.57
+    valid_days: 365
+    complete: true
+  - climatic_year: 1997
+    nday: 30
+    min_cfs: 6.2713
+    valid_days: 365
+    complete: true
+  - climatic_year: 1998
+    nday: 30
+    min_cfs: 3.6067
+    valid_days: 365
+    complete: true
+  - climatic_year: 1999
+    nday: 30
+    min_cfs: 0.0
+    valid_days: 236
+    complete: false
+  - climatic_year: 2009
+    nday: 30
+    min_cfs: 2.124
+    valid_days: 274
+    complete: false
+  - climatic_year: 2010
+    nday: 30
+    min_cfs: 2.0137
+    valid_days: 365
+    complete: true
+  - climatic_year: 2011
+    nday: 30
+    min_cfs: 8.3167
+    valid_days: 366
+    complete: true
+  - climatic_year: 2012
+    nday: 30
+    min_cfs: 6.175
+    valid_days: 365
+    complete: true
+  - climatic_year: 2013
+    nday: 30
+    min_cfs: 4.974
+    valid_days: 365
+    complete: true
+  - climatic_year: 2014
+    nday: 30
+    min_cfs: 10.831
+    valid_days: 365
+    complete: true
+  - climatic_year: 2015
+    nday: 30
+    min_cfs: 7.059
+    valid_days: 366
+    complete: true
+  - climatic_year: 2016
+    nday: 30
+    min_cfs: 3.623
+    valid_days: 365
+    complete: true
+  - climatic_year: 2017
+    nday: 30
+    min_cfs: 2.9413
+    valid_days: 365
+    complete: true
+  - climatic_year: 2018
+    nday: 30
+    min_cfs: 23.5473
+    valid_days: 365
+    complete: true
+  - climatic_year: 2019
+    nday: 30
+    min_cfs: 7.104
+    valid_days: 366
+    complete: true
+  - climatic_year: 2020
+    nday: 30
+    min_cfs: 0.476
+    valid_days: 365
+    complete: true
+  - climatic_year: 2021
+    nday: 30
+    min_cfs: 10.4643
+    valid_days: 365
+    complete: true
+  - climatic_year: 2022
+    nday: 30
+    min_cfs: 2.9603
+    valid_days: 365
+    complete: true
+  - climatic_year: 2023
+    nday: 30
+    min_cfs: 1.9813
+    valid_days: 366
+    complete: true
+  - climatic_year: 2024
+    nday: 30
+    min_cfs: 5.0267
+    valid_days: 275
+    complete: false
+  method: climatic-year (Apr-Mar) annual n-day minima; log-Pearson III (method of moments, Wilson-Hilferty
+    frequency factor) bracketed by Weibull plotting position; conditional-probability adjustment for zero-flow
+    years
+  note: ''

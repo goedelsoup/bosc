@@ -8,18 +8,22 @@ against its receiving water's cited low flow.
 from __future__ import annotations
 
 from bosc.config import Settings, get_settings
+from bosc.hydrology import network as network_stage
 from bosc.hydrology import scenario as scenario_stage
 from bosc.hydrology.assimilative import assimilative_findings, check_assimilative
 from bosc.hydrology.balance import build_water_balance
 from bosc.hydrology.model import (
     AssimilativeCheck,
     HydroFinding,
+    RoutedNetwork,
+    RoutedNetworkDiff,
     ScenarioDiff,
     ScenarioResult,
     StormRunoff,
     WaterBalance,
 )
 from bosc.hydrology.stormwater import run_storm_scenario
+from bosc.hydrology.units import mgd_to_cfs
 from bosc.logging import get_logger
 
 log = get_logger(__name__)
@@ -91,3 +95,41 @@ def run_scenarios(
         multiple_of_7q10=delta.multiple_of_7q10,
     )
     return base, build, delta
+
+
+def run_network(
+    *,
+    cooling_demand_mgd: float | None = None,
+    consumptive_fraction: float | None = None,
+    settings: Settings | None = None,
+    live: bool = False,
+) -> tuple[RoutedNetwork, RoutedNetwork, RoutedNetworkDiff]:
+    """Route the loop at design low flow under baseline vs buildout consumptive draw.
+
+    Generalizes :func:`run_baseline`'s per-stream screen: the cited headwater 7Q10s,
+    the document-cited WWTP/campus discharges, and the buildout cooling draw are
+    accumulated through the cited confluence graph. Returns the baseline network, the
+    buildout network, and their diff (the new draw vs the loop's natural low flow).
+    """
+    settings = settings or get_settings()
+    balance = build_water_balance(settings=settings, live=live)
+    baseline = network_stage.route_network(
+        balance, consumptive_cfs=0.0, scenario_name="baseline", settings=settings
+    )
+    build_scenario = scenario_stage.buildout_scenario(
+        cooling_demand_mgd=cooling_demand_mgd, consumptive_fraction=consumptive_fraction
+    )
+    consumptive_cfs = mgd_to_cfs(
+        build_scenario.cooling_demand.value * build_scenario.consumptive_fraction.value
+    )
+    buildout = network_stage.route_network(
+        balance, consumptive_cfs=consumptive_cfs, scenario_name="buildout", settings=settings
+    )
+    delta = network_stage.diff_networks(baseline, buildout)
+    log.info(
+        "hydro.network.diff",
+        natural_total_cfs=delta.natural_total_cfs,
+        multiple_of_natural=delta.multiple_of_natural,
+        mainstem_runs_dry=delta.mainstem_runs_dry,
+    )
+    return baseline, buildout, delta

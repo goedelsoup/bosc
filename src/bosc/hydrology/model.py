@@ -180,6 +180,112 @@ class WaterBalance(BaseModel):
         return True
 
 
+NetworkNodeKind = Literal["headwater", "abstraction", "outfall", "confluence", "gage", "outlet"]
+
+
+class NetworkNode(BaseModel):
+    """One junction in the routed low-flow stream network (cited topology only).
+
+    The node carries *structure* — its kind, the stream it sits on, and the node it
+    drains into — plus a pointer telling the solver where to read its flow term from
+    an already-grounded source (``low_flow`` -> cited 7Q10; ``balance_return`` -> a
+    WWTP/campus discharge in the :class:`WaterBalance`; ``consumptive`` -> the
+    scenario's cooling draw). No flow magnitudes live here, so the topology never
+    fabricates a number; the only modeling choice is the *order* of confluences,
+    flagged ``status`` (``confirmed`` / ``theorized``) like the routing table.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: str
+    name: str
+    kind: NetworkNodeKind
+    downstream: str | None = None  # id of the node this drains into (None at the outlet)
+    receiving_water: str | None = None
+    low_flow: str | None = None  # receiving-water key -> inject its cited 7Q10 as base flow
+    balance_return: str | None = None  # WaterBalance node id -> add its return_flow as a gain
+    consumptive: bool = False  # apply the scenario's consumptive draw here as a loss
+    status: Literal["confirmed", "theorized"] = "confirmed"
+    citation: str | None = None
+
+
+class ReachFlow(BaseModel):
+    """The solved low-flow state of the reach leaving one network node.
+
+    ``natural_cfs`` is headwater-origin streamflow; ``effluent_cfs`` is WWTP/campus
+    discharge routed downstream. Their sum is ``routed_cfs``. ``deficit_cfs`` is
+    consumptive demand the reach could not supply (the draw exceeded the water
+    present) — the screening signature of a stream drawn dry at design low flow.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    node_id: str
+    name: str
+    kind: NetworkNodeKind
+    base: ProvenancedValue | None = None  # cited 7Q10 injected here (headwater)
+    gain: ProvenancedValue | None = None  # discharge added here (outfall)
+    loss: ProvenancedValue | None = None  # consumptive draw removed here (abstraction)
+    inflow_cfs: float  # sum of upstream routed flow
+    natural_cfs: float  # headwater-origin component leaving this node
+    effluent_cfs: float  # discharge-origin component leaving this node
+    routed_cfs: float  # natural + effluent (>= 0)
+    deficit_cfs: float = 0.0  # consumptive demand the reach could not meet
+    status: Literal["confirmed", "theorized"] = "confirmed"
+
+    @property
+    def effluent_fraction(self) -> float | None:
+        return self.effluent_cfs / self.routed_cfs if self.routed_cfs > 0 else None
+
+
+class RoutedNetwork(BaseModel):
+    """The Lima loop solved as a directed low-flow stream network.
+
+    Generalizes the per-stream :class:`AssimilativeCheck`: instead of reading each
+    WWTP against its own tributary in isolation, it routes the cited headwater low
+    flows, the WWTP/campus discharges, and the scenario's consumptive draw through a
+    cited confluence graph and accumulates them downstream. The order-invariant
+    **system** totals are the robust headline; the per-reach values are screening.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    tier: Literal["tier0"] = "tier0"
+    scenario: str = "baseline"
+    reaches: list[ReachFlow]
+    assimilative_reach: str | None = None  # the gage node the loop's flow passes
+    natural_total_cfs: float  # Σ cited headwater 7Q10 (system natural low flow)
+    effluent_total_cfs: float  # Σ WWTP/campus discharge (system effluent)
+    consumptive_cfs: float  # the scenario's consumptive draw on the loop
+    outlet_cfs: float  # routed flow leaving the outlet
+    outlet_effluent_fraction: float | None = None  # effluent share of the outlet flow
+    warnings: list[str] = []
+
+    def reach(self, node_id: str) -> ReachFlow | None:
+        return next((r for r in self.reaches if r.node_id == node_id), None)
+
+    @property
+    def closes(self) -> bool:
+        """Mass conservation: Σ base + Σ gain - Σ(loss applied) == outlet routed flow."""
+        applied_loss = sum((r.loss.value if r.loss else 0.0) - r.deficit_cfs for r in self.reaches)
+        supplied = self.natural_total_cfs + self.effluent_total_cfs - applied_loss
+        return abs(supplied - self.outlet_cfs) <= max(0.01, abs(supplied) * 0.01)
+
+
+class RoutedNetworkDiff(BaseModel):
+    """Baseline vs buildout routed network: what the consumptive draw does to the loop."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    baseline: str
+    scenario: str
+    natural_total_cfs: float  # unchanged by the scenario (cited low flows)
+    consumptive_increase_cfs: float  # the new draw
+    multiple_of_natural: float | None = None  # draw / Σ natural low flow
+    outlet_decrease_cfs: float  # baseline outlet - buildout outlet
+    mainstem_runs_dry: bool  # the abstraction reach hits 0 under the buildout draw
+
+
 class AssimilativeCheck(BaseModel):
     """Low-flow dilution of one discharge into its receiving water.
 
@@ -204,6 +310,83 @@ class AssimilativeCheck(BaseModel):
 # undiluted. These are coarse screening bands, not regulatory mixing-zone rules.
 DILUTION_VIOLATION = 1.0
 DILUTION_TIGHT = 10.0
+
+
+class AnnualMinimum(BaseModel):
+    """One climatic year's minimum n-day average discharge at a gage.
+
+    The climatic year (Apr 1 to Mar 31) brackets the late-summer low-flow season
+    so a single drought is never split across two years. ``complete`` records
+    whether the year carried enough daily values to enter the frequency fit — the
+    exclusion is auditable, never silent.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    climatic_year: int  # the Apr 1 start year
+    nday: int
+    min_cfs: float
+    valid_days: int
+    complete: bool
+
+
+class LowFlowStatistic(BaseModel):
+    """A computed n-day, T-year low-flow frequency statistic (e.g. the 7Q10).
+
+    Two independent estimates bracket the value: a parametric **log-Pearson III**
+    fit (the USGS-standard distribution, by method of moments on the log of the
+    annual minima, with a conditional-probability adjustment when some years run
+    dry) and a non-parametric **Weibull** plotting-position interpolation. Both are
+    ``derived`` — a screening corroboration of the cited regulatory figure, never a
+    substitute for it (see :mod:`bosc.hydrology.lowflow`).
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    label: str  # "7Q10"
+    nday: int
+    return_period_yr: int  # 10
+    nonexceedance_prob: float  # 0.10 (= 1 / return_period_yr)
+    n_years: int  # complete climatic years in the fit
+    lp3_cfs: ProvenancedValue  # derived, log-Pearson III
+    weibull_cfs: ProvenancedValue  # derived, empirical plotting position
+    log_skew: float  # skew of log10(annual minima), the LP3 shape
+    zero_fraction: float  # fraction of minima that are zero (dry years)
+    cited_cfs: ProvenancedValue | None = None  # the cited regulatory value, if any
+    cited_basis: str | None = None  # what the cited value represents (e.g. "summer 30Q10")
+    corroborates: bool | None = None  # LP3 within the screening band of the cited value
+
+
+class LowFlowFrequency(BaseModel):
+    """Independent low-flow frequency analysis of one USGS gage's daily record.
+
+    Reproduces the design low flows (1Q10 / 7Q10 / 30Q10) from the raw USGS daily
+    discharge — the statistic Ohio EPA cites from a fact sheet but never shows its
+    work for. A second, self-standing line of evidence under the assimilative
+    screen: when the computed 7Q10 lands on the cited value, the "effluent is
+    undiluted at design low flow" finding no longer rests on a single number.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    site_no: str
+    site_name: str
+    receiving_water: str | None = None
+    period_start: str  # ISO date of the first daily value used
+    period_end: str
+    record_days: int  # valid daily values in the record
+    complete_years: int  # climatic years that entered the fit
+    completeness_threshold_days: int
+    statistics: list[LowFlowStatistic]
+    annual_minima: list[AnnualMinimum]  # the auditable per-year series (1/7/30-day)
+    method: str
+    note: str = ""
+
+    def stat(self, label: str) -> LowFlowStatistic | None:
+        return next((s for s in self.statistics if s.label == label), None)
+
+    def minima_for(self, nday: int) -> list[AnnualMinimum]:
+        return [m for m in self.annual_minima if m.nday == nday]
 
 
 class DesignStorm(BaseModel):

@@ -29,6 +29,41 @@ At design low flow the receiving streams carry less than the effluent they
 receive — the discharges are effectively undiluted.
 
 
+**The cited 7Q10 is independently reproducible.** The denominator above is a single number read off a fact sheet. Computing it ourselves from the raw record — the USGS daily-mean discharge at the **same gage the fact sheet names** (NWIS 04187100, Ottawa River at Lima OH, 1988-09-30..2024-12-31, 24 complete climatic years) — lands on it. Annual n-day minima by climatic year, fit with log-Pearson III and bracketed by the non-parametric Weibull plotting position `[inference: derived]`:
+
+
+| design low flow | computed (LP3) | computed (Weibull) | cited (Ohio EPA) |
+|---|--:|--:|--:|
+| 1Q10 | 0 cfs | 0 cfs | 0 cfs |
+| 7Q10 | 0.2387 cfs | 0.15 cfs | 0.2 cfs |
+| 30Q10 (vs summer 30Q10) | 1.528 cfs | 1.9077 cfs | 1.6 cfs |
+
+The computed **7Q10 is 0.2387 cfs** against the cited **0.2 cfs** — agreement to within rounding, from an independent method on a longer record than the fact sheet used. The 1-day record is dry in **21%** of complete years, so the computed 1Q10 is **0 cfs** — the mainstem literally stops, matching the cited 1Q10. So the assimilative screen's denominator is not an Ohio EPA artifact to be argued with; it is what the river actually carries at design low flow, reproducible by anyone with the public gage record. These computed figures are `[inference: derived]` and corroborate — they do not replace — the cited regulatory statistic.
+
+
+### The whole loop at design low flow: a routed mass balance
+
+The screen above reads each plant against its *own* tributary in isolation. Routing the cited headwater 7Q10s, the document-cited WWTP/campus discharges, and the cooling draw through the cited confluence graph (`data/reference/hydrology/network.yaml`) shows the system picture the per-stream rows miss. At design low flow the loop's streams carry, in total, only **1.01 cfs** of *natural* low flow (Ottawa 0.2 + Dug Run 0.78 + Pike Run 0.03 `[verified: document]`). The three county WWTP discharges alone add **8.82 cfs** of treated effluent — **8.7x** the streams' entire natural low flow, with no data center in the picture. The river at design low flow is effluent, not stream. The campus then adds its own documented **3.87 cfs** FM-2 industrial discharge (routed via Lima's sewer + WWTP), taking the Ottawa leaving Lima to **93% treated effluent** — a *conservative* floor, since Lima WWTP's own larger municipal discharge has no cited design flow in the corpus and is not counted.
+
+
+| reach | natural (cfs) | effluent (cfs) | routed (cfs) | deficit (cfs) |
+|---|--:|--:|--:|--:|
+| Ottawa River upstream of Lima | 0.20 | 0.00 | 0.20 | — |
+| Dug Run (headwater) | 0.78 | 0.00 | 0.78 | — |
+| American II WWTP outfall | 0.00 | 1.86 | 1.86 | — |
+| Pike Run (headwater) | 0.03 | 0.00 | 0.03 | — |
+| American Bath WWTP outfall | 0.00 | 2.32 | 2.32 | — |
+| Shawnee II WWTP outfall | 0.00 | 4.64 | 4.64 | — |
+| BOSC FM-2 industrial discharge (via Lima sewer + Lima WWTP) | 0.00 | 3.87 | 3.87 | — |
+| Lima WTP intake + data-center cooling draw | 0.00 | 0.00 | 0.00 | 4.65 |
+| Dug Run -> Ottawa River | 0.78 | 1.86 | 2.64 | — |
+| Pike Run -> Ottawa River | 0.03 | 2.32 | 2.35 | — |
+| Ottawa River at Lima (assimilative reach / USGS 04187100) | 0.81 | 12.69 | 13.50 | — |
+| Ottawa River -> Auglaize -> Maumee | 0.81 | 12.69 | 13.50 | — |
+
+Under buildout the cooling consumptive draw of **4.85 cfs** is **4.8x** the loop's entire natural low flow. It consumes the Ottawa mainstem's entire design low flow — it runs **dry** at the intake, leaving a **3.84 cfs** shortfall the river cannot supply. The routed balance conserves mass (base + gains - applied loss reconciles to the 13.50 cfs outlet) `[inference: derived]`. The order-invariant system totals are the robust result; the per-reach values depend on the cited-but-approximate confluence order and are screening-grade.
+
+
 **Industrial toxic dischargers on the same reaches.** The municipal screen above covers the three WWTPs; the *industrial* side is larger. Of the 12 EPA-RSEI facilities that release toxics to water in the county, **3** sit on a near-undiluted reach. Placing each on its receiving stream (ECHO-cited where available, else inferred from the Ottawa River industrial corridor) and reading it against the same cited 7Q10:
 
 
@@ -168,22 +203,22 @@ does not have — even the low estimate is tens of times the 7Q10.
 The annual-7Q10 multiple understates the constraint. The growing season (**MAY-OCT**, where reference ET exceeds precipitation — §3) is exactly when the Ottawa sits at its summer design low flow, with no rainfall buffer. Reading the same consumptive draw against the *cited seasonal* floor:
 
 
-| month | ET0 − precip (mm/d) | Ottawa low flow | draw ÷ low flow |
+| month | ET0 - precip (mm/d) | Ottawa low flow | draw ÷ low flow |
 |---|--:|---|--:|
-| JAN | -1.19 | 0.2 cfs (7Q10 annual) | 24.3× |
-| FEB | -0.73 | 0.2 cfs (7Q10 annual) | 24.3× |
-| MAR | -0.38 | 0.2 cfs (7Q10 annual) | 24.3× |
-| APR | -0.18 | 0.2 cfs (7Q10 annual) | 24.3× |
-| MAY 🔴 | +0.14 | 1.6 cfs (30Q10 summer) | 3× |
-| JUN 🔴 | +1.33 | 1.6 cfs (30Q10 summer) | 3× |
-| JUL 🔴 | +2.07 | 1.6 cfs (30Q10 summer) | 3× |
-| AUG 🔴 | +1.78 | 1.6 cfs (30Q10 summer) | 3× |
-| SEP 🔴 | +1.41 | 1.6 cfs (30Q10 summer) | 3× |
-| OCT 🔴 | +0.56 | 1.6 cfs (30Q10 summer) | 3× |
-| NOV | -0.70 | 0.2 cfs (7Q10 annual) | 24.3× |
-| DEC | -1.26 | 0.2 cfs (7Q10 annual) | 24.3× |
+| JAN | -1.19 | 0.2 cfs (7Q10 annual) | 24.3x |
+| FEB | -0.73 | 0.2 cfs (7Q10 annual) | 24.3x |
+| MAR | -0.38 | 0.2 cfs (7Q10 annual) | 24.3x |
+| APR | -0.18 | 0.2 cfs (7Q10 annual) | 24.3x |
+| MAY 🔴 | +0.14 | 1.6 cfs (30Q10 summer) | 3x |
+| JUN 🔴 | +1.33 | 1.6 cfs (30Q10 summer) | 3x |
+| JUL 🔴 | +2.07 | 1.6 cfs (30Q10 summer) | 3x |
+| AUG 🔴 | +1.78 | 1.6 cfs (30Q10 summer) | 3x |
+| SEP 🔴 | +1.41 | 1.6 cfs (30Q10 summer) | 3x |
+| OCT 🔴 | +0.56 | 1.6 cfs (30Q10 summer) | 3x |
+| NOV | -0.70 | 0.2 cfs (7Q10 annual) | 24.3x |
+| DEC | -1.26 | 0.2 cfs (7Q10 annual) | 24.3x |
 
-In the **MAY-OCT** window the draw is **3×** the cited summer 30Q10 (1.6 cfs) — vs 24.3× the annual 7Q10. And the summer 30Q10 is the *generous* floor: the Ottawa's absolute design low flow is **1Q10 = 0 cfs** `[verified: document]`, so in the driest growing-season weeks there is no flow to draw against at all. The cooling draw peaks against supply precisely when the atmosphere is also taking the most.
+In the **MAY-OCT** window the draw is **3x** the cited summer 30Q10 (1.6 cfs) — vs 24.3x the annual 7Q10. And the summer 30Q10 is the *generous* floor: the Ottawa's absolute design low flow is **1Q10 = 0 cfs** `[verified: document]`, so in the driest growing-season weeks there is no flow to draw against at all. The cooling draw peaks against supply precisely when the atmosphere is also taking the most.
 
 
 

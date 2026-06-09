@@ -1501,6 +1501,122 @@ def floodzone(
     console.print(f"[green]Wrote[/] campus floodzone finding -> {path}")
 
 
+@app.command(name="lowflow-freq")
+def lowflow_freq(
+    site: str = typer.Option(
+        "04187100", "--site", help="USGS NWIS gage (default: Ottawa at Lima)."
+    ),
+    receiving_water: str = typer.Option(
+        "Ottawa River", "--receiving", help="Receiving water whose cited 7Q10 to corroborate."
+    ),
+    start: str = typer.Option("1980-01-01", "--start", help="Record start date (ISO)."),
+    end: str = typer.Option("2024-12-31", "--end", help="Record end date (ISO)."),
+    offline: bool = typer.Option(
+        False,
+        "--offline",
+        help="Use the cached/committed gage record only; never touch the network.",
+    ),
+    write: bool = typer.Option(
+        False, "--write", help="Persist to data/reference/hydrology/low-flow-frequency.yaml."
+    ),
+) -> None:
+    """Independently COMPUTE the 1Q10/7Q10/30Q10 from the USGS daily-discharge record.
+
+    Reproduces the design low flows Ohio EPA cites from a fact sheet but never shows
+    its work for (log-Pearson III + Weibull on climatic-year n-day minima), and reads
+    each against the cited regulatory value. The computed figures are `derived` — a
+    screening corroboration, not a substitute for the cited 7Q10.
+    """
+    from bosc.config import Settings
+    from bosc.hydrology import lowflow_frequency as lf
+
+    settings = get_settings()
+    if offline:
+        settings = Settings(
+            data_dir=settings.data_dir,
+            hydro_offline=True,
+            hydro_fixtures_dir=settings.data_dir.parent / "tests" / "fixtures" / "hydrology",
+        )
+
+    lff = lf.compute_low_flow_frequency(
+        site_no=site,
+        receiving_water=receiving_water,
+        start_date=start,
+        end_date=end,
+        settings=settings,
+    )
+    console.print(
+        f"[bold]{lff.site_name}[/] (NWIS {lff.site_no}) — "
+        f"{lff.period_start}..{lff.period_end}, {lff.complete_years} complete climatic years"
+    )
+    table = Table(
+        "Statistic", "LP3 (cfs)", "Weibull (cfs)", "log-skew", "dry frac", "cited", "corroborates"
+    )
+    for s in lff.statistics:
+        cited = f"{s.cited_cfs.value:g} ({s.cited_basis})" if s.cited_cfs else "—"
+        mark = "—" if s.corroborates is None else ("[green]✓[/]" if s.corroborates else "[red]✗[/]")
+        table.add_row(
+            s.label,
+            f"{s.lp3_cfs.value:g}",
+            f"{s.weibull_cfs.value:g}",
+            f"{s.log_skew:g}",
+            f"{s.zero_fraction:g}",
+            cited,
+            mark,
+        )
+    console.print(table)
+
+    if write:
+        path = lf.write_low_flow_frequency(lff, settings=get_settings())
+        console.print(f"[green]Wrote[/] {path}")
+
+
+@app.command(name="network")
+def network_cmd(
+    live: bool = typer.Option(
+        False, "--live", help="Ground the abstraction reach with live NWIS flow (offline-aware)."
+    ),
+) -> None:
+    """Route the Lima loop at design low flow: natural vs effluent vs the cooling draw.
+
+    Generalizes the per-stream assimilative screen into a routed mass balance over a
+    cited confluence graph. The order-invariant system totals (natural low flow,
+    effluent, net draw) are the headline; per-reach flows are screening-grade.
+    """
+    from bosc.pipeline import hydrology as hydro_stage
+
+    settings = get_settings()
+    baseline, buildout, delta = hydro_stage.run_network(settings=settings, live=live)
+    if not baseline.reaches:
+        console.print("[yellow]No network topology[/] (data/reference/hydrology/network.yaml).")
+        raise typer.Exit(1)
+
+    bf = baseline.outlet_effluent_fraction
+    frac = f" (outlet {bf:.0%} effluent)" if bf is not None else ""
+    console.print(
+        f"[bold]Lima loop at design low flow[/] — natural Σ[bold]{baseline.natural_total_cfs:g}[/] "
+        f"cfs vs effluent Σ[bold]{baseline.effluent_total_cfs:g}[/] cfs{frac}"
+    )
+    table = Table("reach", "kind", "natural", "effluent", "routed", "deficit")
+    for r in buildout.reaches:
+        table.add_row(
+            r.name,
+            r.kind,
+            f"{r.natural_cfs:g}",
+            f"{r.effluent_cfs:g}",
+            f"{r.routed_cfs:g}",
+            f"{r.deficit_cfs:g}" if r.deficit_cfs else "—",
+        )
+    console.print(table)
+    dry = "[red]runs dry[/]" if delta.mainstem_runs_dry else "holds"
+    console.print(
+        f"Buildout cooling draw [bold]{buildout.consumptive_cfs:g} cfs[/] = "
+        f"[bold]{delta.multiple_of_natural:g}x[/] the loop's natural low flow; "
+        f"Ottawa mainstem at the intake {dry}. "
+        f"Conservation closes: {'✓' if buildout.closes else '✗'}."
+    )
+
+
 @app.command(name="people")
 def people() -> None:
     """List the curated individual profiles (the entity graph's detail store).

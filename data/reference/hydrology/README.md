@@ -12,7 +12,9 @@ which are cached, not committed here.
 |---|---|---|
 | `cn-lookup.yaml` | SCS Curve Numbers by NLCD land-cover class × hydrologic soil group (AMC-II), plus the dry/wet AMC adjustment forms. | USDA NRCS TR-55 Table 2-2, mapped to NLCD 2021 classes (same mapping Periplus used). |
 | `low-flow-7q10.yaml` | Cited 7Q10 (7-day, 10-year) low-flow statistics for the receiving waters. | As cited; the regulatory statistic used by `bosc.hydrology.lowflow`. |
+| `low-flow-frequency.yaml` | **Independently computed** 1Q10/7Q10/30Q10 for the Ottawa-at-Lima gage (NWIS 04187100) — log-Pearson III + Weibull on climatic-year n-day minima — with the per-year minima preserved for audit, read against the cited values above. The computed 7Q10 (≈0.24 cfs) reproduces the cited 0.2 cfs; the 1Q10 is 0 cfs (dry). `source: derived`. | USGS NWIS Daily Values service, pulled via `bosc lowflow-freq --write`; computed by `bosc.hydrology.lowflow_frequency`. A *corroboration* of the cited regulatory 7Q10, **not** a substitute. |
 | `routing.yaml` | Discharge routing: which stream each WWTP discharges to (`wwtp_receiving`, the assimilative-screen denominator, externalized from `bosc.hydrology.balance`), and where the BOSC campus sends its own wastewater by forcemain (`bosc_routing`). Each route is `status: confirmed` (cited) or `theorized`. **BOSC output is confirmed to Lima (FM-2) + American Bath/II (FM-1); Shawnee II's FM-3 is theorized and excluded.** | Ohio EPA NPDES fact sheets + Periplus `watch-items.geojson`; loaded by `bosc.hydrology.routing`. |
+| `network.yaml` | **Routed-network topology** — the directed confluence graph (headwaters → outfalls → confluences → the Lima assimilative reach → outlet) that turns the per-stream screen into a system mass balance. Carries no flow magnitudes (the solver reads each term from the cited 7Q10s, the document-cited discharges, and the scenario draw); only the confluence ORDER is a screening choice, so the order-invariant system totals (Σ natural ≈ 1.0 cfs vs Σ effluent ≈ 12.7 cfs) are robust. | `routing.yaml` (WWTP→stream, OEPA-cited) + `ottawa-lima-tmdl.yaml` (Dug Run / Pike Run are Ottawa tributaries); solved by `bosc.hydrology.network` (`bosc network`). |
 | `sanitary-basis.yaml` | Sanitary-flow basis parameters for the loop. | Reference basis. |
 | `maumee-tmdl-wla.yaml` | Individual NPDES total-phosphorus wasteload allocations (spring-season + daily) for the Lima-loop facilities. | Transcribed verbatim from the final Maumee Watershed Nutrient TMDL, Appendix 4 (`data/documents/maumee-tmdl/`); `source: document`. |
 | `maumee-tmdl-budget.yaml` | The watershed-level TMDL phosphorus budget (loading capacity) the WLAs sit inside: Table 1A (boundary + WLA + LA + MOS + AFG = 914.4 mt/spring), the ~40% reduction mandate (Annex 4 spring targets 860 mt TP / 186 mt DRP at Waterville; 2008 baseline 1,414.1 mt), and the tiny ~1.4–1.5 mt/spring future-growth allowance — the assimilative-capacity *ceiling*. | Transcribed verbatim from the final TMDL main report + US EPA Decision Document Att.1 (`data/documents/maumee-tmdl/`); `source: document`. |
@@ -26,6 +28,9 @@ which are cached, not committed here.
 ## Caveats
 
 These are inputs, not measurements. The `cn-lookup` AMC formulas note which form is
-actually applied in code. The 7Q10 here is the **cited regulatory** value — the USGS
-NWIS connector only sanity-checks it against observed minimum discharge, it does not
-replace it.
+actually applied in code. The 7Q10 in `low-flow-7q10.yaml` is the **cited regulatory**
+value. Two `derived` cross-checks corroborate it without replacing it: the USGS NWIS
+instantaneous connector's observed minimum discharge, and the full low-flow frequency
+analysis in `low-flow-frequency.yaml` (log-Pearson III on the multi-decade daily
+record). When the assimilative screen divides by a 7Q10, it uses the cited document
+value — the computed one only shows the cited value is reproducible from public data.
