@@ -236,12 +236,17 @@ document/connector-sourced.
 The committed run (`pyswmm 2.1.0`, 25-yr 4.25-in storm; mass-balance continuity error 0.00%) `[inference: derived]` sizes the detention the corridor needs. Paving the footprint takes the design-storm peak from **215 cfs** (cropland) to **579 cfs** (impervious); holding the release back to the pre-development rate (216 cfs) takes a **42 ac-ft** basin (13.6 ac, 5.49-ft bottom orifice). The four input decks are committed under `data/reference/hydrology/swmm/` so anyone can re-run them in EPA SWMM.
 
 
-| plant | wet-weather peak | documented headroom | result |
-|---|--:|--:|---|
-| American II | 16.9 MGD | 2.4 MGD (peak 3.6 - avg 1.2) | ❌ exceeds (-14.5) |
-| Shawnee II | 16.9 MGD | 9.6 MGD (peak 12.6 - avg 3) | ❌ exceeds (-7.3) |
+The campus's storm-driven sanitary peak does not stay on site — it rides the forcemains to the treatment plants. It is judged only against the plants that actually receive it:
 
-The storm-driven wet-weather peak (16.9 MGD, RDII assumption + the documented FM-2 dry base) overruns every documented wet-weather margin. The RDII rate is an uncalibrated screening assumption — but the direction is robust, and it lands on the regulatory fact below.
+
+> Campus sanitary routing: FM-1 → American Bath WWTP + American II WWTP; FM-2 → City of Lima WWTP. Receives campus flow but peak hydraulic capacity not cited (campus share not quantified): American Bath WWTP, City of Lima WWTP. Excluded — no campus routing (FM-3 theorized): Shawnee II.
+
+
+| plant (forcemain) | wet-weather peak | documented headroom | result |
+|---|--:|--:|---|
+| American II (FM-1) | 16.9 MGD | 2.4 MGD (peak 3.6 - avg 1.2) | ❌ exceeds (-14.5) |
+
+That **16.9 MGD** is the campus's *total* wet-weather sanitary peak; it splits across FM-1 (the small American Bath / American II plants) and FM-2 (the City of Lima sewer). The corpus does not quantify the split, so it is not apportioned — but the total alone is several times even American II's whole wet-weather headroom (2.4 MGD), so the small FM-1 plants cannot absorb their share. The RDII rate is an uncalibrated screening assumption — but the direction is robust, and it lands on the regulatory fact below.
 
 
 **The surcharge lands on a system with no headroom to give.** Permitted

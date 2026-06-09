@@ -55,6 +55,7 @@ def _plant_from_entry(name: str, entry: dict[str, Any]) -> SanitaryPlant:
     return SanitaryPlant(
         plant=name,
         npdes=entry.get("npdes"),
+        routing_id=entry.get("routing_id"),
         receiving_water=entry.get("receiving_water"),
         avg_design_flow=avg,
         peak_capacity=peak,

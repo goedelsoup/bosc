@@ -103,6 +103,9 @@ def test_run_tier1_sizes_detention_and_flags_surcharge() -> None:
     assert result.engine.startswith("pyswmm")
     assert {d.name for d in result.decks} == {"pre", "post", "detention", "sanitary"}
     assert all(d.inp_text and d.reports_node for d in result.decks)
+    # The surcharge is routing-aware: only campus receivers are judged (no Shawnee II).
+    assert "Shawnee II" not in {s.plant for s in result.surcharge}
+    assert all(s.forcemain == "FM-1" for s in result.surcharge)
     # The documented small plants are surcharged by the wet-weather peak.
     assert any(s.exceeds for s in result.surcharge)
     am2 = next(s for s in result.surcharge if "American II" in s.plant)

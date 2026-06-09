@@ -33,6 +33,17 @@ def test_bosc_routing_confirmed_vs_theorized(hydro_settings: Settings) -> None:
     assert "watch-shawnee-ii-wwtp" not in confirmed_targets
 
 
+def test_campus_receivers_maps_node_to_forcemain(hydro_settings: Settings) -> None:
+    routing = load_routing(settings=hydro_settings)
+    assert routing is not None
+    receivers = routing.campus_receivers()
+    # FM-2 -> Lima; FM-1 -> American Bath + American II; Shawnee II is not a receiver.
+    assert receivers["watch-lima-fm2-terminus"] == "bosc-fm2"
+    assert receivers["watch-american-ii-wwtp"] == "bosc-fm1"
+    assert receivers["watch-american-bath-wwtp"] == "bosc-fm1"
+    assert "watch-shawnee-ii-wwtp" not in receivers
+
+
 def test_balance_surfaces_theorized_shawnee_routing(hydro_settings: Settings) -> None:
     """The balance must flag Shawnee II's theorized BOSC routing as excluded."""
     balance = build_water_balance(settings=hydro_settings, live=False)

@@ -70,6 +70,19 @@ class RoutingTable(BaseModel):
     def theorized_bosc_routes(self) -> list[BoscRoute]:
         return [r for r in self.bosc_routing if r.status == "theorized"]
 
+    def campus_receivers(self) -> dict[str, str]:
+        """Map each *confirmed* campus-receiver node id to the forcemain that reaches it.
+
+        e.g. ``{"watch-lima-fm2-terminus": "bosc-fm2",
+        "watch-american-bath-wwtp": "bosc-fm1", "watch-american-ii-wwtp": "bosc-fm1"}``.
+        Plants absent from this map (Shawnee II — FM-3 theorized) receive no campus flow.
+        """
+        out: dict[str, str] = {}
+        for route in self.confirmed_bosc_routes():
+            for node_id in route.to:
+                out.setdefault(node_id, route.via)
+        return out
+
 
 def load_routing(*, settings: Settings | None = None) -> RoutingTable | None:
     """Load the committed routing table, or ``None`` if the file is absent."""

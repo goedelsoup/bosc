@@ -51,6 +51,21 @@ def test_committed_surcharge_exceeds_headroom_with_provenance(hydro_settings: Se
     )
 
 
+def test_committed_surcharge_respects_campus_routing(hydro_settings: Settings) -> None:
+    result = load_tier1(settings=hydro_settings)
+    assert result is not None
+    judged = {s.plant for s in result.surcharge}
+    # Shawnee II receives no campus flow (FM-3 theorized) -> it must not be judged.
+    assert "Shawnee II" not in judged
+    # The judged plant is an FM-1 receiver.
+    am2 = next(s for s in result.surcharge if "American II" in s.plant)
+    assert am2.forcemain == "FM-1"
+    # The routing decisions are recorded for audit: the FM split + the exclusion.
+    note = result.surcharge_note
+    assert "FM-1" in note and "FM-2" in note
+    assert "Shawnee II" in note and "Excluded" in note
+
+
 def test_committed_deck_checksums_match(hydro_settings: Settings) -> None:
     result = load_tier1(settings=hydro_settings)
     assert result is not None

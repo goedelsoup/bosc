@@ -17,6 +17,7 @@ tier1:
     tier: tier1-swmm
   surcharge:
   - plant: American II
+    forcemain: FM-1
     capacity:
       value: 3.6
       unit: MGD
@@ -51,41 +52,9 @@ tier1:
       asof: null
     exceeds: true
     margin_mgd: -14.47
-  - plant: Shawnee II
-    capacity:
-      value: 12.6
-      unit: MGD
-      source: document
-      citation: 'watch-shawnee-ii-wwtp (Phase 2: 2.0 -> 3.0 MGD avg / 12.6 MGD peak; NPDES OH0023850;
-        ~$23M OWDA). CNA-2005 p2: prior expansion under a USEPA consent decree.'
-      confidence: high
-      asof: null
-    avg_design_flow:
-      value: 3.0
-      unit: MGD
-      source: document
-      citation: 'watch-shawnee-ii-wwtp (Phase 2: 2.0 -> 3.0 MGD avg / 12.6 MGD peak; NPDES OH0023850;
-        ~$23M OWDA). CNA-2005 p2: prior expansion under a USEPA consent decree.'
-      confidence: high
-      asof: null
-    peaking_factor:
-      value: 4.2
-      unit: ratio
-      source: derived
-      citation: peak 12.6 / avg 3 MGD (Shawnee II, document-cited)
-      confidence: medium
-      asof: null
-    headroom_mgd: 9.6
-    wet_weather_peak:
-      value: 16.87
-      unit: MGD
-      source: derived
-      citation: SWMM RDII (R=0.05, assumption) over 340 ac + 2.5 MGD campus dry base (FM-2, document),
-        25-yr storm
-      confidence: medium
-      asof: null
-    exceeds: true
-    margin_mgd: -7.27
+  surcharge_note: 'Campus sanitary routing: FM-1 → American Bath WWTP + American II WWTP; FM-2 → City
+    of Lima WWTP. Receives campus flow but peak hydraulic capacity not cited (campus share not quantified):
+    American Bath WWTP, City of Lima WWTP. Excluded — no campus routing (FM-3 theorized): Shawnee II.'
   decks:
   - name: pre
     filename: swmm/tier1-pre.inp

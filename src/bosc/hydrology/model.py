@@ -610,6 +610,7 @@ class SanitaryPlant(BaseModel):
 
     plant: str
     npdes: str | None = None
+    routing_id: str | None = None  # the watch-items node id used by the routing table
     receiving_water: str | None = None
     avg_design_flow: ProvenancedValue  # MGD, document-cited permitted average
     peak_capacity: ProvenancedValue | None = None  # MGD, document-cited peak hydraulic
@@ -689,6 +690,7 @@ class SanitarySurcharge(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     plant: str
+    forcemain: str | None = None  # the campus forcemain that reaches this plant (FM-1 / FM-2)
     capacity: ProvenancedValue  # MGD, document-cited peak hydraulic capacity
     avg_design_flow: ProvenancedValue | None = None  # MGD, document-cited permitted average
     peaking_factor: ProvenancedValue | None = None  # derived, peak / avg (context)
@@ -727,6 +729,7 @@ class Tier1Result(BaseModel):
     available: bool
     detention: DetentionDesign | None = None
     surcharge: list[SanitarySurcharge] = []
+    surcharge_note: str = ""  # auditable routing of the campus flow + who is/isn't judged
     decks: list[SwmmDeck] = []  # the committed model inputs behind the numbers
     engine: str = ""  # the SWMM/pyswmm version that produced the result
     storm_return_period_yr: int | None = None

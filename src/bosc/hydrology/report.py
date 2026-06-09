@@ -213,25 +213,37 @@ def _render_tier1_swmm(emit: Callable[[str], None], settings: Settings) -> None:
         "input decks are committed under `data/reference/hydrology/swmm/` so anyone can re-run "
         "them in EPA SWMM.\n"
     )
-    sur = [s for s in result.surcharge if s.headroom_mgd is not None]
+    sur = [
+        s for s in result.surcharge if s.headroom_mgd is not None and s.avg_design_flow is not None
+    ]
     if sur:
-        emit("\n| plant | wet-weather peak | documented headroom | result |")
+        emit(
+            "\nThe campus's storm-driven sanitary peak does not stay on site — it rides the "
+            "forcemains to the treatment plants. It is judged only against the plants that "
+            "actually receive it:\n"
+        )
+        if result.surcharge_note:
+            emit(f"\n> {result.surcharge_note}\n")
+        emit("\n| plant (forcemain) | wet-weather peak | documented headroom | result |")
         emit("|---|--:|--:|---|")
         for s in sur:
             verdict = "❌ exceeds" if s.exceeds else "✅ within"
+            fm = f" ({s.forcemain})" if s.forcemain else ""
+            assert s.avg_design_flow is not None  # filtered above
             emit(
-                f"| {s.plant} | {s.wet_weather_peak.value:.1f} MGD | {s.headroom_mgd:g} MGD "
+                f"| {s.plant}{fm} | {s.wet_weather_peak.value:.1f} MGD | {s.headroom_mgd:g} MGD "
                 f"(peak {s.capacity.value:g} - avg {s.avg_design_flow.value:g}) | "
                 f"{verdict} ({s.margin_mgd:+.1f}) |"
-                if s.avg_design_flow is not None
-                else f"| {s.plant} | {s.wet_weather_peak.value:.1f} MGD | "
-                f"{s.headroom_mgd:g} MGD | {verdict} ({s.margin_mgd:+.1f}) |"
             )
         emit(
-            f"\nThe storm-driven wet-weather peak ({sur[0].wet_weather_peak.value:.1f} MGD, "
-            "RDII assumption + the documented FM-2 dry base) overruns every documented "
-            "wet-weather margin. The RDII rate is an uncalibrated screening assumption — but "
-            "the direction is robust, and it lands on the regulatory fact below.\n"
+            f"\nThat **{sur[0].wet_weather_peak.value:.1f} MGD** is the campus's *total* "
+            "wet-weather sanitary peak; it splits across FM-1 (the small American Bath / "
+            "American II plants) and FM-2 (the City of Lima sewer). The corpus does not "
+            "quantify the split, so it is not apportioned — but the total alone is several "
+            f"times even American II's whole wet-weather headroom ({sur[0].headroom_mgd:g} MGD), "
+            "so the small FM-1 plants cannot absorb their share. The RDII rate is an "
+            "uncalibrated screening assumption — but the direction is robust, and it lands on "
+            "the regulatory fact below.\n"
         )
 
 

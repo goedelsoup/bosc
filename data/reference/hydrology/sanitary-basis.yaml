@@ -18,6 +18,7 @@
 plants:
   American II:
     npdes: "OH0037338"
+    routing_id: "watch-american-ii-wwtp"  # FM-1 receiver (routing.yaml)
     receiving_water: "Dug Run"
     avg_design_flow_mgd: 1.2
     peak_capacity_mgd: 3.6
@@ -28,6 +29,7 @@ plants:
 
   American Bath:
     npdes: "OH0023841"
+    routing_id: "watch-american-bath-wwtp"  # FM-1 receiver (routing.yaml)
     receiving_water: "Pike Run"
     avg_design_flow_mgd: 1.5
     # peak hydraulic capacity not separately cited in corpus -> omitted (not guessed)
@@ -39,6 +41,7 @@ plants:
 
   Shawnee II:
     npdes: "OH0023850"
+    routing_id: "watch-shawnee-ii-wwtp"  # NOT a campus receiver — FM-3 theorized/excluded (routing.yaml)
     receiving_water: "Ottawa River"
     avg_design_flow_mgd: 3.0
     peak_capacity_mgd: 12.6
