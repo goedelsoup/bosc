@@ -10,6 +10,7 @@ import pytest
 
 from bosc.config import Settings
 from bosc.economics.baseline import build_baseline, load_baseline
+from bosc.economics.connectors.census import fetch_population_series
 from bosc.economics.connectors.qcew import fetch_county_industries
 from bosc.hydrology.connectors._cache import HydroOfflineError
 
@@ -29,12 +30,23 @@ def test_qcew_connector_offline(econ_settings: Settings) -> None:
     assert emps == sorted(emps, reverse=True)
 
 
+def test_census_population_offline(econ_settings: Settings) -> None:
+    series = fetch_population_series(years=[2010, 2023], fips="39003", settings=econ_settings)
+    assert series.fips == "39003" and series.area_name == "Allen County, Ohio"
+    assert [p.year for p in series.points] == [2010, 2023]
+    assert all(p.population.verified for p in series.points)  # connector-sourced
+    # Allen County's population declined over the span (the documented trend).
+    assert series.points[-1].population.value < series.points[0].population.value
+
+
 def test_build_baseline_trend(econ_settings: Settings) -> None:
     baseline = build_baseline(years=[2018, 2023], settings=econ_settings)
     assert [t.year for t in baseline.trend] == [2018, 2023]
     assert baseline.latest.year == 2023
-    assert baseline.population is None  # needs a Census key
     assert baseline.latest.sectors
+    # Population is folded in from the committed ACS5 fixtures (offline).
+    assert baseline.population is not None
+    assert len(baseline.population.points) == 4
 
 
 def test_offline_miss_raises(econ_settings: Settings) -> None:

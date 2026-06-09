@@ -497,7 +497,43 @@ trend:
     citation: BLS QCEW 2023 annual averages, area 39003
     confidence: high
     asof: null
-population: null
+population:
+  fips: '39003'
+  area_name: Allen County, Ohio
+  points:
+  - year: 2010
+    population:
+      value: 106586.0
+      unit: people
+      source: connector
+      citation: US Census ACS5 2010 B01003_001E (Allen County, Ohio)
+      confidence: high
+      asof: null
+  - year: 2015
+    population:
+      value: 105196.0
+      unit: people
+      source: connector
+      citation: US Census ACS5 2015 B01003_001E (Allen County, Ohio)
+      confidence: high
+      asof: null
+  - year: 2020
+    population:
+      value: 102808.0
+      unit: people
+      source: connector
+      citation: US Census ACS5 2020 B01003_001E (Allen County, Ohio)
+      confidence: high
+      asof: null
+  - year: 2023
+    population:
+      value: 101685.0
+      unit: people
+      source: connector
+      citation: US Census ACS5 2023 B01003_001E (Allen County, Ohio)
+      confidence: high
+      asof: null
+  source: US Census ACS 5-year (B01003)
 note: Employment from BLS QCEW (keyless open data). Location quotient = county sector
   share / national share (export-orientation; the county-level proxy for an import/export
-  ratio). Population-over-time needs a Census key.
+  ratio). Population from US Census ACS 5-year (B01003).
