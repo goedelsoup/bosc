@@ -38,6 +38,7 @@ from bosc.hydrology.model import (
     LowFlowFrequency,
     LowFlowStatistic,
     NetworkNode,
+    NetworkTheory,
     Node,
     ProvenancedValue,
     ReachFlow,
@@ -47,10 +48,14 @@ from bosc.hydrology.model import (
     WaterBalanceNode,
 )
 from bosc.hydrology.network import (
+    apply_theories,
     diff_networks,
+    load_theories,
     load_topology,
     network_findings,
+    resolve_theories,
     route_network,
+    theory_findings,
 )
 from bosc.hydrology.tier1 import load_tier1, run_tier1, tier1_findings, write_tier1
 
@@ -61,6 +66,7 @@ __all__ = [
     "LowFlowFrequency",
     "LowFlowStatistic",
     "NetworkNode",
+    "NetworkTheory",
     "Node",
     "ProvenancedValue",
     "ReachFlow",
@@ -68,18 +74,22 @@ __all__ = [
     "RoutedNetworkDiff",
     "WaterBalance",
     "WaterBalanceNode",
+    "apply_theories",
     "assimilative_findings",
     "build_water_balance",
     "check_assimilative",
     "compute_low_flow_frequency",
     "diff_networks",
     "load_low_flow_frequency",
+    "load_theories",
     "load_tier1",
     "load_topology",
     "low_flow_quantiles",
     "network_findings",
+    "resolve_theories",
     "route_network",
     "run_tier1",
+    "theory_findings",
     "tier1_findings",
     "write_tier1",
 ]

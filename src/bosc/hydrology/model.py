@@ -205,6 +205,12 @@ class NetworkNode(BaseModel):
     low_flow: str | None = None  # receiving-water key -> inject its cited 7Q10 as base flow
     balance_return: str | None = None  # WaterBalance node id -> add its return_flow as a gain
     consumptive: bool = False  # apply the scenario's consumptive draw here as a loss
+    # Theory-only seam: an exogenous flow this node injects, carrying its OWN provenance
+    # (an assumption/derived magnitude, not a 7Q10 or a balance discharge). The cited base
+    # topology never sets this — it keeps the graph magnitude-free; only a NetworkTheory's
+    # overlay nodes use it, so a toggled-off theory leaves the baseline numerically identical.
+    inject_cfs: ProvenancedValue | None = None
+    inject_component: Literal["natural", "effluent"] = "natural"  # which component it adds to
     status: Literal["confirmed", "theorized"] = "confirmed"
     citation: str | None = None
 
@@ -225,6 +231,7 @@ class ReachFlow(BaseModel):
     kind: NetworkNodeKind
     base: ProvenancedValue | None = None  # cited 7Q10 injected here (headwater)
     gain: ProvenancedValue | None = None  # discharge added here (outfall)
+    inject: ProvenancedValue | None = None  # exogenous theory inflow added here (overlay only)
     loss: ProvenancedValue | None = None  # consumptive draw removed here (abstraction)
     inflow_cfs: float  # sum of upstream routed flow
     natural_cfs: float  # headwater-origin component leaving this node
@@ -252,6 +259,7 @@ class RoutedNetwork(BaseModel):
 
     tier: Literal["tier0"] = "tier0"
     scenario: str = "baseline"
+    theories: list[str] = []  # ids of enabled theory overlays (empty = cited baseline)
     reaches: list[ReachFlow]
     assimilative_reach: str | None = None  # the gage node the loop's flow passes
     natural_total_cfs: float  # Σ cited headwater 7Q10 (system natural low flow)
@@ -279,11 +287,40 @@ class RoutedNetworkDiff(BaseModel):
 
     baseline: str
     scenario: str
+    theories: list[str] = []  # theory overlays active in the buildout side of the diff
     natural_total_cfs: float  # unchanged by the scenario (cited low flows)
     consumptive_increase_cfs: float  # the new draw
     multiple_of_natural: float | None = None  # draw / Σ natural low flow
     outlet_decrease_cfs: float  # baseline outlet - buildout outlet
     mainstem_runs_dry: bool  # the abstraction reach hits 0 under the buildout draw
+
+
+class NetworkTheory(BaseModel):
+    """A toggleable, citation-tagged structural overlay on the routed network.
+
+    A theory is an **unproven** intervention (``status: theorized``) held *out* of the
+    cited baseline. Enabling it patches the topology before the solve — it appends
+    directed-inflow nodes (each carrying its own ``assumption``/``derived`` injected
+    flow via :attr:`NetworkNode.inject_cfs`) and may re-point an existing edge. Both the
+    waterfall-roundabout augmentation (directed stormwater into Pike Run) and the FM-3
+    Shawnee-II diverter (campus wastewater rebalanced to Shawnee II) are expressed this
+    way, so a scenario turns one on by ``id`` without ever editing the cited base graph.
+    A toggled-off theory leaves the baseline numerically identical. Nothing here is
+    presented as fact — every overlay is labelled theorized and its magnitude tagged
+    as an assumption.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: str
+    name: str
+    description: str = ""
+    status: Literal["theorized"] = "theorized"
+    enabled: bool = False  # catalog default; a run/scenario can override
+    confidence: Literal["high", "medium", "low"] = "low"
+    citation: str | None = None
+    add_nodes: list[NetworkNode] = []  # directed-inflow nodes this theory introduces
+    repoint: dict[str, str] = {}  # existing node_id -> new downstream id (re-route an edge)
 
 
 class AssimilativeCheck(BaseModel):

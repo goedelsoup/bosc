@@ -1,0 +1,101 @@
+# Toggleable network theories for the Lima municipal water loop.
+#
+# A "theory" is an UNPROVEN structural intervention on the routed low-flow network
+# (bosc.hydrology.network) that the relator wants to test as a what-if — held OUT of
+# the cited baseline and turned on by id per scenario. Each theory is a thin overlay:
+# it appends directed-inflow nodes (each carrying its OWN injected flow, tagged as an
+# assumption — never a 7Q10 or a document-cited discharge) and/or re-points an edge.
+# Enabling a theory NEVER edits the cited base graph in network.yaml; toggling one off
+# leaves the baseline numerically identical. Everything here is labelled `theorized`
+# and every magnitude is an `assumption` knob, not a measurement.
+#
+# Toggle:  bosc network --theory <id>            (repeatable; --all-theories enables all)
+# List:    bosc theories
+# Default: every theory ships `enabled: false`; the cited baseline runs with none.
+#
+# The injected magnitudes below are deliberately round, low-confidence PLACEHOLDERS so
+# the mechanism has something to route; treat them as scenario knobs to be set, not as
+# findings. The structural CLAIM each theory encodes (where the inflow lands, and that
+# it lands downstream of the Ottawa intake) is the part worth arguing about.
+
+meta:
+  subject: Toggleable theories on the routed low-flow network
+  source: Relator working theories; overlaid on network.yaml (cited topology)
+  tier: tier0
+  caveats:
+    - "Every theory is `status: theorized` and OFF by default; the baseline uses none."
+    - "Injected magnitudes are `assumption` knobs (low confidence), not measurements."
+    - "An overlay node injects flow at its confluence; the cited base graph is untouched."
+
+theories:
+  # --- Theory 1: the "waterfall" roundabout directing stormwater into Pike Run -----
+  # Cole St / Beery Rd roundabout built to direct surface flow into Pike Run, raising
+  # its baseflow to flush WWTP sludge — accepting road-runoff pollution as the price.
+  # Pike Run is American Bath's (FM-1) receiving stream, so any augmentation lands on
+  # the same small run that already carries American Bath's near-undiluted effluent.
+  # NOTE: Pike Run joins the Ottawa at `pike-run-confluence -> lima-reach`, which is
+  # DOWNSTREAM of the `lima-abstraction` cooling intake. So this augmentation adds flow
+  # to the assimilative reach but does NOT offset the cooling draw at the intake.
+  - id: waterfall-roundabout-pike-run
+    name: "Cole/Beery 'waterfall' roundabout — directed stormwater to Pike Run"
+    description: >
+      Theorized roundabout at Cole St / Beery Rd engineered to direct surface flow into
+      Pike Run, augmenting its low-flow baseflow to flush sludge from the WWTP reach,
+      accepting surface-runoff pollution as the tradeoff. UNPROVEN; the actual drainage
+      discharge point is not yet corpus-confirmed.
+    status: theorized
+    enabled: false
+    confidence: low
+    citation: "Relator theory (Cole/Beery roundabout -> Pike Run); discharge point not yet corpus-confirmed."
+    add_nodes:
+      - id: roundabout-pike-run
+        name: "Cole/Beery roundabout directed stormwater inflow"
+        kind: outfall
+        receiving_water: Pike Run
+        downstream: pike-run-confluence
+        status: theorized
+        inject_component: natural
+        inject_cfs:
+          value: 0.5
+          unit: cfs
+          source: assumption
+          citation: >
+            Theorized dry-weather augmentation the 'waterfall' directs into Pike Run;
+            magnitude is a scenario knob, not measured. Carries road-runoff pollution
+            (a water-QUALITY load) even as it augments FLOW.
+          confidence: low
+        citation: "Theorized directed-stormwater inflow to Pike Run at Cole/Beery (status:theorized)."
+
+  # --- Theory 2: the FM-3 diverter rebalancing campus wastewater to Shawnee II ------
+  # A diverter sending a share of campus wastewater to Shawnee II WWTP — the FM-3 lead
+  # held OUT of the confirmed routing (routing.yaml `theorized-fm3-shawnee-ii`) — as
+  # part of a broader load rebalance off the American (FM-1) plants. Shawnee II
+  # discharges directly to the Ottawa River at `lima-reach`, so this adds campus
+  # EFFLUENT to the assimilative reach. UNPROVEN (new construction, no existing main).
+  - id: shawnee-ii-diverter
+    name: "FM-3 diverter — campus wastewater rebalanced to Shawnee II"
+    description: >
+      Theorized FM-3 diverter sending a share of campus wastewater to Shawnee II WWTP as
+      part of a broader rebalance off the American (FM-1) plants. UNPROVEN: no existing
+      main; recorded as `theorized` in routing.yaml and excluded from the balance.
+    status: theorized
+    enabled: false
+    confidence: low
+    citation: "Theorized FM-3 to Shawnee II (routing.yaml theorized-fm3-shawnee-ii, status:theorized)."
+    add_nodes:
+      - id: bosc-fm3-return
+        name: "BOSC FM-3 diverted discharge (via Shawnee II WWTP)"
+        kind: outfall
+        receiving_water: Ottawa River
+        downstream: lima-reach
+        status: theorized
+        inject_component: effluent
+        inject_cfs:
+          value: 1.0
+          unit: cfs
+          source: assumption
+          citation: >
+            Theorized campus-wastewater share diverted via FM-3 to Shawnee II; magnitude
+            is a scenario knob, not measured. A rebalance off the FM-1 American plants.
+          confidence: low
+        citation: "Theorized FM-3 diverter discharging to the Ottawa via Shawnee II (status:theorized)."

@@ -7,6 +7,8 @@ against its receiving water's cited low flow.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
+
 from bosc.config import Settings, get_settings
 from bosc.hydrology import network as network_stage
 from bosc.hydrology import scenario as scenario_stage
@@ -97,10 +99,23 @@ def run_scenarios(
     return base, build, delta
 
 
+def _buildout_consumptive_cfs(
+    cooling_demand_mgd: float | None, consumptive_fraction: float | None
+) -> float:
+    """The buildout cooling consumptive draw (cfs) from the cooling basis or overrides."""
+    build_scenario = scenario_stage.buildout_scenario(
+        cooling_demand_mgd=cooling_demand_mgd, consumptive_fraction=consumptive_fraction
+    )
+    return mgd_to_cfs(
+        build_scenario.cooling_demand.value * build_scenario.consumptive_fraction.value
+    )
+
+
 def run_network(
     *,
     cooling_demand_mgd: float | None = None,
     consumptive_fraction: float | None = None,
+    theories: Sequence[str] | None = None,
     settings: Settings | None = None,
     live: bool = False,
 ) -> tuple[RoutedNetwork, RoutedNetwork, RoutedNetworkDiff]:
@@ -110,26 +125,73 @@ def run_network(
     the document-cited WWTP/campus discharges, and the buildout cooling draw are
     accumulated through the cited confluence graph. Returns the baseline network, the
     buildout network, and their diff (the new draw vs the loop's natural low flow).
+
+    ``theories`` overlays unproven structural interventions (``theories.yaml``) on the
+    **buildout** side only; the baseline always stays the cited graph. ``None`` uses the
+    catalog defaults (all off); a list of ids enables exactly those.
     """
     settings = settings or get_settings()
     balance = build_water_balance(settings=settings, live=live)
     baseline = network_stage.route_network(
-        balance, consumptive_cfs=0.0, scenario_name="baseline", settings=settings
+        balance, consumptive_cfs=0.0, scenario_name="baseline", theories=[], settings=settings
     )
-    build_scenario = scenario_stage.buildout_scenario(
-        cooling_demand_mgd=cooling_demand_mgd, consumptive_fraction=consumptive_fraction
-    )
-    consumptive_cfs = mgd_to_cfs(
-        build_scenario.cooling_demand.value * build_scenario.consumptive_fraction.value
-    )
+    consumptive_cfs = _buildout_consumptive_cfs(cooling_demand_mgd, consumptive_fraction)
     buildout = network_stage.route_network(
-        balance, consumptive_cfs=consumptive_cfs, scenario_name="buildout", settings=settings
+        balance,
+        consumptive_cfs=consumptive_cfs,
+        scenario_name="buildout",
+        theories=theories,
+        settings=settings,
     )
     delta = network_stage.diff_networks(baseline, buildout)
     log.info(
         "hydro.network.diff",
+        theories=buildout.theories,
         natural_total_cfs=delta.natural_total_cfs,
         multiple_of_natural=delta.multiple_of_natural,
         mainstem_runs_dry=delta.mainstem_runs_dry,
     )
     return baseline, buildout, delta
+
+
+def compare_theory(
+    theories: Sequence[str],
+    *,
+    cooling_demand_mgd: float | None = None,
+    consumptive_fraction: float | None = None,
+    settings: Settings | None = None,
+    live: bool = False,
+) -> tuple[RoutedNetwork, RoutedNetwork, list[HydroFinding]]:
+    """Isolate a theory overlay's effect: same buildout draw, overlay OFF vs ON.
+
+    Solves the buildout network twice at the same cooling draw — once with no theory
+    (the cited graph) and once with ``theories`` enabled — and returns both plus the
+    quantified :func:`~bosc.hydrology.network.theory_findings` (the directed inflow it
+    injects and the net change in outlet flow / effluent share). This separates the
+    overlay's effect from the cooling draw's, which :func:`run_network`'s diff conflates.
+    """
+    settings = settings or get_settings()
+    balance = build_water_balance(settings=settings, live=live)
+    consumptive_cfs = _buildout_consumptive_cfs(cooling_demand_mgd, consumptive_fraction)
+    without = network_stage.route_network(
+        balance,
+        consumptive_cfs=consumptive_cfs,
+        scenario_name="buildout",
+        theories=[],
+        settings=settings,
+    )
+    with_theory = network_stage.route_network(
+        balance,
+        consumptive_cfs=consumptive_cfs,
+        scenario_name="buildout",
+        theories=theories,
+        settings=settings,
+    )
+    findings = network_stage.theory_findings(without, with_theory)
+    log.info(
+        "hydro.network.theory",
+        theories=with_theory.theories,
+        outlet_without=without.outlet_cfs,
+        outlet_with=with_theory.outlet_cfs,
+    )
+    return without, with_theory, findings

@@ -1588,17 +1588,37 @@ def network_cmd(
     live: bool = typer.Option(
         False, "--live", help="Ground the abstraction reach with live NWIS flow (offline-aware)."
     ),
+    theory: str = typer.Option(
+        "",
+        "--theory",
+        help="Theory overlay id(s) to enable, comma-separated (see `bosc theories`).",
+    ),
+    all_theories: bool = typer.Option(
+        False, "--all-theories", help="Enable every theory in the catalog."
+    ),
 ) -> None:
     """Route the Lima loop at design low flow: natural vs effluent vs the cooling draw.
 
     Generalizes the per-stream assimilative screen into a routed mass balance over a
     cited confluence graph. The order-invariant system totals (natural low flow,
     effluent, net draw) are the headline; per-reach flows are screening-grade.
+
+    Pass `--theory <id>` (repeatable) or `--all-theories` to overlay unproven
+    interventions (the waterfall roundabout, the FM-3 Shawnee II diverter) on the
+    buildout side; the overlay's isolated effect is reported below the table.
     """
+    from bosc.hydrology import network as network_stage
     from bosc.pipeline import hydrology as hydro_stage
 
     settings = get_settings()
-    baseline, buildout, delta = hydro_stage.run_network(settings=settings, live=live)
+    requested = [t.strip() for t in theory.split(",") if t.strip()]
+    theories: list[str] | None = requested or None
+    if all_theories:
+        theories = [t.id for t in network_stage.load_theories(settings=settings)]
+
+    baseline, buildout, delta = hydro_stage.run_network(
+        theories=theories, settings=settings, live=live
+    )
     if not baseline.reaches:
         console.print("[yellow]No network topology[/] (data/reference/hydrology/network.yaml).")
         raise typer.Exit(1)
@@ -1609,6 +1629,8 @@ def network_cmd(
         f"[bold]Lima loop at design low flow[/] — natural Σ[bold]{baseline.natural_total_cfs:g}[/] "
         f"cfs vs effluent Σ[bold]{baseline.effluent_total_cfs:g}[/] cfs{frac}"
     )
+    if buildout.theories:
+        console.print(f"[magenta]Theories enabled (buildout):[/] {', '.join(buildout.theories)}")
     table = Table("reach", "kind", "natural", "effluent", "routed", "deficit")
     for r in buildout.reaches:
         table.add_row(
@@ -1626,6 +1648,54 @@ def network_cmd(
         f"[bold]{delta.multiple_of_natural:g}x[/] the loop's natural low flow; "
         f"Ottawa mainstem at the intake {dry}. "
         f"Conservation closes: {'✓' if buildout.closes else '✗'}."
+    )
+    for w in buildout.warnings:
+        if "theory" in w.lower():
+            console.print(f"[yellow]![/] {w}")
+
+    if theories:
+        _without, _with_theory, findings = hydro_stage.compare_theory(
+            theories, settings=settings, live=live
+        )
+        console.print(
+            "\n[bold magenta]Theory overlay (isolated, same buildout draw):[/] "
+            "[dim]theorized — magnitudes are assumption knobs, not measurements[/]"
+        )
+        for f in findings:
+            console.print(f"  • {f.detail}", markup=False)  # detail carries literal [..] brackets
+
+
+@app.command(name="theories")
+def theories_cmd() -> None:
+    """List the toggleable network theories (unproven overlays held out of the baseline).
+
+    Each is enabled per run with `bosc network --theory <id>`. Every theory is
+    `theorized` and ships disabled; its injected magnitude is an assumption knob.
+    """
+    from bosc.hydrology import network as network_stage
+
+    settings = get_settings()
+    catalog = network_stage.load_theories(settings=settings)
+    if not catalog:
+        console.print("[yellow]No theories[/] (data/reference/hydrology/theories.yaml).")
+        return
+    table = Table("id", "name", "status", "default", "injects")
+    for t in catalog:
+        injects = "; ".join(
+            f"{n.inject_cfs.value:g} {n.inject_cfs.unit} -> {n.downstream}"
+            for n in t.add_nodes
+            if n.inject_cfs is not None
+        )
+        table.add_row(
+            t.id,
+            t.name,
+            t.status,
+            "[green]on[/]" if t.enabled else "[dim]off[/]",
+            injects or "—",
+        )
+    console.print(table)
+    console.print(
+        "[dim]Enable with[/] bosc network --theory <id> [dim](repeatable) or[/] --all-theories."
     )
 
 

@@ -23,6 +23,7 @@ confluence order and are screening-grade.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from pathlib import Path
 
 import yaml
@@ -32,6 +33,7 @@ from bosc.hydrology import lowflow
 from bosc.hydrology.model import (
     HydroFinding,
     NetworkNode,
+    NetworkTheory,
     ProvenancedValue,
     ReachFlow,
     RoutedNetwork,
@@ -55,6 +57,82 @@ def load_topology(*, settings: Settings | None = None) -> list[NetworkNode]:
         return []
     data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     return [NetworkNode.model_validate(n) for n in (data.get("nodes") or [])]
+
+
+def _theories_path(settings: Settings) -> Path:
+    return settings.data_dir / "reference" / "hydrology" / "theories.yaml"
+
+
+def load_theories(*, settings: Settings | None = None) -> list[NetworkTheory]:
+    """Load the committed catalog of toggleable network theories, or ``[]`` if absent."""
+    settings = settings or get_settings()
+    path = _theories_path(settings)
+    if not path.is_file():
+        return []
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    return [NetworkTheory.model_validate(t) for t in (data.get("theories") or [])]
+
+
+def resolve_theories(
+    requested: Sequence[str] | None,
+    catalog: list[NetworkTheory],
+) -> tuple[list[NetworkTheory], list[str]]:
+    """Pick which theories to enable: the named ids, or each catalog ``enabled`` default.
+
+    ``requested is None`` means "use the catalog defaults" (theories with
+    ``enabled: true``); an explicit list (even empty) overrides that. Returns the chosen
+    theories and warnings for any unknown id.
+    """
+    by_id = {t.id: t for t in catalog}
+    if requested is None:
+        return [t for t in catalog if t.enabled], []
+    chosen: list[NetworkTheory] = []
+    warnings: list[str] = []
+    for tid in requested:
+        theory = by_id.get(tid)
+        if theory is None:
+            warnings.append(f"unknown theory {tid!r} (not in theories.yaml)")
+            continue
+        chosen.append(theory)
+    return chosen, warnings
+
+
+def apply_theories(
+    nodes: list[NetworkNode], theories: list[NetworkTheory]
+) -> tuple[list[NetworkNode], list[str]]:
+    """Overlay enabled theory nodes/edges onto the cited topology (pure, non-mutating).
+
+    For each theory: append its ``add_nodes`` (directed inflows, each carrying its own
+    ``inject_cfs``) and apply its ``repoint`` edges (replace a node with a re-pointed
+    copy). Returns the patched node list and warnings (id collisions, dangling
+    downstreams, unknown repoint endpoints). The base graph is never mutated.
+    """
+    warnings: list[str] = []
+    by_id = {n.id: n for n in nodes}
+    out = list(nodes)
+    for theory in theories:
+        for new in theory.add_nodes:
+            if new.id in by_id:
+                warnings.append(f"theory {theory.id}: node {new.id!r} already exists; skipped")
+                continue
+            if new.downstream is not None and new.downstream not in by_id:
+                warnings.append(
+                    f"theory {theory.id}: node {new.id!r} drains into unknown {new.downstream!r}"
+                )
+            by_id[new.id] = new
+            out.append(new)
+        for src, dst in theory.repoint.items():
+            node = by_id.get(src)
+            if node is None:
+                warnings.append(f"theory {theory.id}: repoint source {src!r} not found")
+                continue
+            if dst not in by_id:
+                warnings.append(f"theory {theory.id}: repoint target {dst!r} not found")
+                continue
+            repointed = node.model_copy(update={"downstream": dst})
+            by_id[src] = repointed
+            out = [repointed if n.id == src else n for n in out]
+    return out, warnings
 
 
 def _toposort(nodes: list[NetworkNode]) -> list[NetworkNode]:
@@ -84,6 +162,7 @@ def route_network(
     *,
     consumptive_cfs: float = 0.0,
     scenario_name: str = "baseline",
+    theories: Sequence[str] | None = None,
     settings: Settings | None = None,
 ) -> RoutedNetwork:
     """Solve the routed low-flow network for one consumptive-draw scenario.
@@ -91,6 +170,11 @@ def route_network(
     Resolves every flow term from a grounded source — cited 7Q10 (``low_flow``),
     document-cited discharge in ``balance`` (``balance_return``), scenario draw
     (``consumptive``) — then hands the pre-resolved terms to :func:`solve_network`.
+
+    ``theories`` toggles unproven structural overlays from
+    ``data/reference/hydrology/theories.yaml``: ``None`` uses the catalog ``enabled``
+    defaults (off), a list of ids enables exactly those, ``[]`` forces the cited
+    baseline. Each enabled theory appends its directed-inflow nodes before the solve.
     """
     settings = settings or get_settings()
     nodes = load_topology(settings=settings)
@@ -105,6 +189,13 @@ def route_network(
             scenario_name=scenario_name,
             warnings=warnings,
         )
+
+    chosen, theory_warnings = resolve_theories(theories, load_theories(settings=settings))
+    warnings.extend(theory_warnings)
+    if chosen:
+        nodes, overlay_warnings = apply_theories(nodes, chosen)
+        warnings.extend(overlay_warnings)
+    enabled_ids = [t.id for t in chosen]
 
     norm_low = {k.strip().lower(): v for k, v in lowflow.load_low_flows(settings=settings).items()}
     bases: dict[str, ProvenancedValue] = {}
@@ -129,6 +220,7 @@ def route_network(
         gains=gains,
         consumptive_cfs=consumptive_cfs,
         scenario_name=scenario_name,
+        theories=enabled_ids,
         warnings=warnings,
     )
 
@@ -140,15 +232,18 @@ def solve_network(
     gains: dict[str, ProvenancedValue],
     consumptive_cfs: float = 0.0,
     scenario_name: str = "baseline",
+    theories: list[str] | None = None,
     warnings: list[str] | None = None,
 ) -> RoutedNetwork:
     """Accumulate pre-resolved flow terms downstream through the topology (pure).
 
-    ``bases`` (headwater 7Q10) and ``gains`` (outfall discharge) are keyed by node id.
-    A node tagged ``consumptive`` removes ``consumptive_cfs`` as a loss; where the loss
-    exceeds the water present the shortfall becomes a ``deficit`` and the reach goes to
-    zero. Natural (headwater-origin) and effluent (gain-origin) flow are tracked
-    separately and a loss removes them proportionally.
+    ``bases`` (headwater 7Q10) and ``gains`` (outfall discharge) are keyed by node id;
+    a node's own ``inject_cfs`` (a theory overlay's directed inflow) is read straight
+    off the node and added to its ``natural`` or ``effluent`` component. A node tagged
+    ``consumptive`` removes ``consumptive_cfs`` as a loss; where the loss exceeds the
+    water present the shortfall becomes a ``deficit`` and the reach goes to zero.
+    Natural (headwater-origin) and effluent (gain-origin) flow are tracked separately
+    and a loss removes them proportionally.
     """
     warnings = warnings if warnings is not None else []
     upstream: dict[str, list[str]] = {n.id: [] for n in nodes}
@@ -164,6 +259,7 @@ def solve_network(
 
         base = bases.get(node.id)
         gain = gains.get(node.id)
+        inject = node.inject_cfs
         loss = (
             ProvenancedValue.derived(
                 consumptive_cfs,
@@ -177,6 +273,11 @@ def solve_network(
             nat_in += base.value
         if gain is not None:
             eff_in += gain.value
+        if inject is not None:
+            if node.inject_component == "effluent":
+                eff_in += inject.value
+            else:
+                nat_in += inject.value
 
         total_in = nat_in + eff_in
         loss_val = loss.value if loss is not None else 0.0
@@ -196,6 +297,7 @@ def solve_network(
             kind=node.kind,
             base=base,
             gain=gain,
+            inject=inject,
             loss=loss,
             inflow_cfs=round(inflow, 4),
             natural_cfs=round(nat_out, 4),
@@ -206,13 +308,24 @@ def solve_network(
         )
 
     natural_total = sum(r.base.value for r in solved.values() if r.base is not None)
+    natural_total += sum(
+        n.inject_cfs.value
+        for n in nodes
+        if n.inject_cfs is not None and n.inject_component == "natural"
+    )
     effluent_total = sum(r.gain.value for r in solved.values() if r.gain is not None)
+    effluent_total += sum(
+        n.inject_cfs.value
+        for n in nodes
+        if n.inject_cfs is not None and n.inject_component == "effluent"
+    )
     gage = next((n.id for n in nodes if n.kind == "gage"), None)
     outlet_id = next((n.id for n in nodes if n.kind == "outlet"), None)
     outlet = solved.get(outlet_id) if outlet_id else None
 
     rn = RoutedNetwork(
         scenario=scenario_name,
+        theories=list(theories or []),
         reaches=list(solved.values()),
         assimilative_reach=gage,
         natural_total_cfs=round(natural_total, 4),
@@ -229,6 +342,7 @@ def solve_network(
     log.info(
         "hydro.network",
         scenario=scenario_name,
+        theories=rn.theories,
         natural=rn.natural_total_cfs,
         effluent=rn.effluent_total_cfs,
         consumptive=rn.consumptive_cfs,
@@ -252,6 +366,7 @@ def diff_networks(baseline: RoutedNetwork, buildout: RoutedNetwork) -> RoutedNet
     return RoutedNetworkDiff(
         baseline=baseline.scenario,
         scenario=buildout.scenario,
+        theories=list(buildout.theories),
         natural_total_cfs=natural,
         consumptive_increase_cfs=round(increase, 4),
         multiple_of_natural=round(increase / natural, 2) if natural > 0 else None,
@@ -304,4 +419,52 @@ def network_findings(rn: RoutedNetwork) -> list[HydroFinding]:
                 ),
             )
         )
+    return findings
+
+
+def theory_findings(without: RoutedNetwork, with_theory: RoutedNetwork) -> list[HydroFinding]:
+    """Quantify what an enabled theory overlay does to the loop vs the cited baseline.
+
+    Pass the same-scenario network solved *without* theories and *with* them. Reports,
+    per overlay reach, the directed inflow it injects and where, and the net change in
+    outlet flow and effluent share — always carrying the standing caveat that the
+    overlay is *theorized* and its magnitude is an assumption, not a measurement.
+    """
+    findings: list[HydroFinding] = []
+    if not with_theory.theories:
+        return findings
+
+    ids = ", ".join(with_theory.theories)
+    for r in with_theory.reaches:
+        if r.inject is None:
+            continue
+        findings.append(
+            HydroFinding(
+                subject=f"theory inflow at {r.name}",
+                check="theory-injected-inflow",
+                ok=True,  # informational: a what-if input, neither pass nor fail
+                detail=(
+                    f"+{r.inject.value:g} {r.inject.unit} directed inflow [{r.inject.source}] "
+                    f"— {r.inject.citation or 'no citation'}"
+                ),
+            )
+        )
+
+    added = round(with_theory.outlet_cfs - without.outlet_cfs, 3)
+    fb, fa = without.outlet_effluent_fraction, with_theory.outlet_effluent_fraction
+    frac_txt = ""
+    if fb is not None and fa is not None:
+        frac_txt = f"; outlet effluent share {fb:.0%} -> {fa:.0%}"
+    findings.append(
+        HydroFinding(
+            subject=f"theory overlay [{ids}]",
+            check="theory-net-effect",
+            ok=True,  # informational, not an adverse finding
+            detail=(
+                f"enabling [{ids}] changes outlet flow by {added:+g} cfs{frac_txt}. "
+                "THEORIZED overlay held out of the cited baseline; the injected magnitude "
+                "is an assumption, not a measurement."
+            ),
+        )
+    )
     return findings
