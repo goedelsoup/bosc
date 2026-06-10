@@ -1,0 +1,23 @@
+{
+  "name": "bosc-deckgl-corridor-spike",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Issue #70 spike — DeckGL vs Leaflet for the BOSC corridor map. The runnable proof is index.html (no install); these deps are for the CorridorMap.tsx production-shape reference, to be dropped into the Astro app from #63.",
+  "type": "module",
+  "//": "NOT installed during the spike (disk was full). Versions pinned to the deck.gl 9.x line that index.html also uses.",
+  "dependencies": {
+    "@deck.gl/core": "^9.0.0",
+    "@deck.gl/layers": "^9.0.0",
+    "@deck.gl/geo-layers": "^9.0.0",
+    "@deck.gl/react": "^9.0.0",
+    "maplibre-gl": "^4.5.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "react-map-gl": "^7.1.7"
+  },
+  "devDependencies": {
+    "@types/geojson": "^7946.0.14",
+    "@types/react": "^18.3.0",
+    "typescript": "^5.5.0"
+  }
+}

@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BOSC · DeckGL corridor spike (#70)</title>
+  <!--
+    Zero-install, runnable DeckGL spike for issue #70.
+
+    Renders the committed corridor findings (data/site/gis-findings.geojson) with
+    deck.gl alone (UMD scripting bundle from CDN — no node_modules, no build step),
+    to confirm the must-haves before adopting DeckGL for Epic 3:
+      * GeoJsonLayer polygons + points with per-layer styling
+      * click popups (+ hover tooltips)
+      * layer toggles
+      * raster TILE layers: OSM / Esri World Imagery / dated Esri Wayback aerials
+
+    HOW TO RUN (the page fetch()es the committed GeoJSON, so it needs a static
+    server — file:// is blocked by CORS):
+
+        # from the repo root
+        python3 -m http.server 8000
+        # then open:
+        http://localhost:8000/spikes/deckgl-corridor/
+
+    The GeoJSON URL defaults to the repo-root-absolute path and can be overridden
+    with ?data=<url>.
+
+    deck.gl is pinned to a major version so the scripting API stays stable.
+  -->
+  <script src="https://unpkg.com/deck.gl@9.0.0/dist.min.js"></script>
+  <style>
+    :root { --panel-bg: rgba(255,255,255,0.94); }
+    html, body { margin: 0; height: 100%; font: 14px/1.45 system-ui, sans-serif; color: #1a1a1a; }
+    #map { position: absolute; inset: 0; background: #0b1020; }
+    .panel {
+      position: absolute; z-index: 2; background: var(--panel-bg);
+      border: 1px solid #d0d0d0; border-radius: 8px; padding: 12px 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.18); backdrop-filter: blur(2px);
+    }
+    #controls { top: 12px; left: 12px; max-width: 260px; }
+    #controls h1 { font-size: 13px; margin: 0 0 8px; letter-spacing: .02em; text-transform: uppercase; color: #444; }
+    #controls h2 { font-size: 11px; margin: 12px 0 4px; color: #888; text-transform: uppercase; letter-spacing: .04em; }
+    #controls label { display: flex; align-items: center; gap: 7px; padding: 2px 0; cursor: pointer; }
+    .sw { width: 12px; height: 12px; border-radius: 3px; flex: 0 0 auto; border: 1px solid rgba(0,0,0,.25); }
+    #info { bottom: 12px; left: 12px; max-width: 320px; display: none; }
+    #info .close { float: right; cursor: pointer; color: #999; margin-left: 8px; }
+    #legend-note { color: #777; font-size: 11px; margin-top: 10px; }
+    a { color: #1565c0; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <div id="controls" class="panel">
+    <h1>Corridor findings</h1>
+    <h2>Basemap</h2>
+    <div id="basemaps"></div>
+    <h2>Layers</h2>
+    <div id="layers"></div>
+    <div id="legend-note">Click any shape for its record. Spike for <a href="https://github.com/goedelsoup/bosc/issues/70" target="_blank" rel="noopener">#70</a>.</div>
+  </div>
+
+  <div id="info" class="panel">
+    <span class="close" onclick="document.getElementById('info').style.display='none'">×</span>
+    <div id="info-body"></div>
+  </div>
+
+  <script>
+  (function () {
+    const { DeckGL, GeoJsonLayer, TileLayer, BitmapLayer } = deck;
+
+    const params = new URLSearchParams(location.search);
+    const DATA_URL = params.get("data") || "/data/site/gis-findings.geojson";
+
+    // ---- Per-layer styling, ported from bosc.site.gismap (_LAYER_COLORS + styles).
+    // fill = [r,g,b,a] (a 0-255), line = [r,g,b], width in pixels.
+    const STYLE = {
+      campus:     { label: "Campus footprint (recorded parcels)", fill: [63, 81, 181, 64],  line: [63, 81, 181],  width: 2 },
+      jsmc:       { label: "JSMC / Lima Army Tank Plant (US-owned)", fill: [109, 76, 65, 77], line: [109, 76, 65], width: 2 },
+      wwtp:       { label: "County WWTP discharge points (NPDES)", fill: [0, 137, 123, 230], line: [0, 105, 92],   width: 2, pointRadius: 7 },
+      corridor:   { label: "North Cole St corridor — study area",  fill: [249, 168, 37, 18], line: [249, 168, 37], width: 1 },
+      roadwork:   { label: "Corridor roadwork — road centerline",  fill: [0, 0, 0, 0],       line: [230, 74, 25],  width: 4 },
+      floodway:   { label: "FEMA regulatory floodway (Zone AE)",   fill: [211, 47, 47, 102], line: [211, 47, 47],  width: 1 },
+      floodplain: { label: "FEMA 1%-chance floodplain (Zone A/AE)", fill: [25, 118, 210, 38], line: [25, 118, 210], width: 1 },
+      rsei:       { label: "RSEI toxic-release facilities (sized by Score)", fill: [142, 36, 170, 140], line: [106, 27, 154], width: 1 },
+    };
+    // Render order back-to-front so points/lines sit above the polygons.
+    const ORDER = ["floodplain", "floodway", "corridor", "campus", "jsmc", "roadwork", "wwtp", "rsei"];
+    const RSEI_RING = { critical: [198, 40, 40], elevated: [239, 108, 0] };
+
+    // ---- Raster basemaps as deck.gl TileLayers (proves the must-have).
+    const WAYBACK = "https://wayback.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/WMTS/1.0.0/default028mm/MapServer/tile";
+    const BASEMAPS = {
+      osm:    { label: "Street (OSM)",            url: "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" },
+      esri:   { label: "Aerial (Esri, current)",  url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" },
+      wb2014: { label: "Aerial 2014 (Esri Wayback)", url: WAYBACK + "/5844/{z}/{y}/{x}" },
+      wb2024: { label: "Aerial 2024 (Esri Wayback)", url: WAYBACK + "/16453/{z}/{y}/{x}" },
+      none:   { label: "(none — dark)",            url: null },
+    };
+
+    let geo = { type: "FeatureCollection", features: [] };
+    const enabled = {};        // layer key -> bool
+    let basemap = "esri";
+
+    function basemapLayer() {
+      const url = BASEMAPS[basemap].url;
+      if (!url) return null;
+      return new TileLayer({
+        id: "basemap-" + basemap,
+        data: url,
+        minZoom: 0, maxZoom: 19, tileSize: 256,
+        renderSubLayers: (props) => {
+          const { boundingBox } = props.tile;
+          return new BitmapLayer(props, {
+            data: null,
+            image: props.data,
+            bounds: [boundingBox[0][0], boundingBox[0][1], boundingBox[1][0], boundingBox[1][1]],
+          });
+        },
+      });
+    }
+
+    function featuresFor(key) {
+      return { type: "FeatureCollection", features: geo.features.filter((f) => (f.properties || {}).layer === key) };
+    }
+
+    function findingLayer(key) {
+      const s = STYLE[key];
+      const isRsei = key === "rsei";
+      return new GeoJsonLayer({
+        id: "find-" + key,
+        data: featuresFor(key),
+        pickable: true,
+        stroked: true,
+        filled: true,
+        // polygons / lines
+        getFillColor: s.fill,
+        getLineColor: isRsei
+          ? (f) => RSEI_RING[(f.properties || {}).water_flag] || s.line
+          : s.line,
+        lineWidthUnits: "pixels",
+        getLineWidth: isRsei ? (f) => ((f.properties || {}).water_flag ? 3 : 1) : s.width,
+        // points
+        pointType: "circle",
+        pointRadiusUnits: "pixels",
+        getPointRadius: isRsei
+          ? (f) => Number((f.properties || {}).radius) || 5
+          : (s.pointRadius || 6),
+        // RSEI: hollow where reported-but-unscored
+        updateTriggers: {},
+        ...(isRsei
+          ? { getFillColor: (f) => [142, 36, 170, (f.properties || {}).scored ? 140 : 31] }
+          : {}),
+      });
+    }
+
+    function buildLayers() {
+      const layers = [];
+      const bm = basemapLayer();
+      if (bm) layers.push(bm);
+      for (const key of ORDER) {
+        if (enabled[key] && geo.features.some((f) => (f.properties || {}).layer === key)) {
+          layers.push(findingLayer(key));
+        }
+      }
+      return layers;
+    }
+
+    const deckgl = new DeckGL({
+      container: "map",
+      initialViewState: { longitude: -84.122, latitude: 40.792, zoom: 13, pitch: 0, bearing: 0 },
+      controller: true,
+      layers: [],
+      // hover tooltip — the committed labels are HTML.
+      getTooltip: ({ object }) =>
+        object && object.properties && object.properties.label
+          ? { html: object.properties.label, style: { fontSize: "12px", maxWidth: "260px" } }
+          : null,
+      // click popup — pin the record in the info panel.
+      onClick: (info) => {
+        const el = document.getElementById("info");
+        if (info && info.object && info.object.properties && info.object.properties.label) {
+          document.getElementById("info-body").innerHTML =
+            '<div style="font-size:11px;text-transform:uppercase;color:#999;letter-spacing:.04em">' +
+            (info.object.properties.layer || "") + "</div>" + info.object.properties.label;
+          el.style.display = "block";
+        } else {
+          el.style.display = "none";
+        }
+      },
+    });
+
+    function refresh() { deckgl.setProps({ layers: buildLayers() }); }
+
+    // ---- Control panel.
+    function hex(rgb) { return "#" + rgb.slice(0, 3).map((c) => c.toString(16).padStart(2, "0")).join(""); }
+
+    function buildControls(counts) {
+      const bm = document.getElementById("basemaps");
+      for (const [key, b] of Object.entries(BASEMAPS)) {
+        const id = "bm-" + key;
+        const lab = document.createElement("label");
+        lab.innerHTML =
+          '<input type="radio" name="bm" id="' + id + '"' + (key === basemap ? " checked" : "") + "> " + b.label;
+        lab.querySelector("input").addEventListener("change", () => { basemap = key; refresh(); });
+        bm.appendChild(lab);
+      }
+      const box = document.getElementById("layers");
+      for (const key of ORDER) {
+        const n = counts[key] || 0;
+        if (!n) continue;
+        const lab = document.createElement("label");
+        const sw = '<span class="sw" style="background:' + hex(STYLE[key].fill) + '"></span>';
+        lab.innerHTML =
+          '<input type="checkbox" ' + (enabled[key] ? "checked" : "") + "> " +
+          sw + STYLE[key].label + " (" + n + ")";
+        lab.querySelector("input").addEventListener("change", (e) => { enabled[key] = e.target.checked; refresh(); });
+        box.appendChild(lab);
+      }
+    }
+
+    fetch(DATA_URL)
+      .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status + " for " + DATA_URL); return r.json(); })
+      .then((fc) => {
+        geo = fc;
+        const counts = {};
+        for (const f of geo.features) {
+          const k = (f.properties || {}).layer;
+          counts[k] = (counts[k] || 0) + 1;
+        }
+        // default: everything on except the heavy RSEI county overlay (matches Leaflet).
+        for (const key of ORDER) enabled[key] = key !== "rsei";
+        buildControls(counts);
+        refresh();
+      })
+      .catch((err) => {
+        document.getElementById("info-body").innerHTML =
+          "<b>Could not load GeoJSON.</b><br>" + err.message +
+          '<br><br>Serve the repo root and open <code>/spikes/deckgl-corridor/</code> ' +
+          "(see the comment at the top of this file).";
+        document.getElementById("info").style.display = "block";
+      });
+  })();
+  </script>
+</body>
+</html>
