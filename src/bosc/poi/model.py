@@ -121,16 +121,17 @@ class POIProfile:
 class POICandidate(BaseModel):
     """A place reference discovered in the corpus, pre-resolution.
 
-    The output of the ``discover`` stage: a raw locator (a parcel id or an address)
-    with the corpus citations where it appears and whether the store already covers it.
-    A candidate is a *lead to resolve and curate*, never an automatic POI.
+    The output of the ``discover`` stage: a raw locator (a parcel id, an address, or a
+    corpus-verified facility/business ``feature`` name) with the corpus citations where
+    it appears and whether the store already covers it. A candidate is a *lead to resolve
+    and curate*, never an automatic POI.
     """
 
     model_config = ConfigDict(extra="forbid")
 
     kind: Literal["parcel-id", "address", "feature"]
     value: str  # a representative verbatim form
-    normalized: str  # the coverage/dedup key (digits-only parcel; upper-cased address)
+    normalized: str  # coverage/dedup key (digits-only parcel; upper-cased address; name key)
     occurrences: int  # total mentions across the corpus
     citations: list[str] = Field(default_factory=list)  # repo-relative source paths
     covered: bool = False  # already represented by a POI in the store

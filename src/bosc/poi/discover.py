@@ -1,17 +1,22 @@
 """Discover place references in the committed corpus → POI candidates.
 
 The first POI pipeline stage. Scan the reviewed corpus text for place references —
-deed-format **parcel ids** (the canonical anchor) and **street addresses** — aggregate
-them with the citations where they appear, and flag which the ``data/poi/`` store
-already covers. Read-only and idempotent: it proposes a worklist; promoting a candidate
-to a curated POI is a human step (``curate``). The parcel regex mirrors
-``allen_gis._PARCEL_ID_RE``; a test cross-checks the two so they can't drift.
+deed-format **parcel ids** (the canonical anchor), **street addresses**, and
+**facility / business names** — aggregate them with the citations where they appear,
+and flag which the ``data/poi/`` store already covers. Read-only and idempotent: it
+proposes a worklist; promoting a candidate to a curated POI is a human step (``curate``).
+
+Each kind is divergence-guarded so the pass can't invent a place: the parcel regex
+mirrors ``allen_gis._PARCEL_ID_RE`` (a test cross-checks the two), and the facility-name
+vocabulary is the **entity graph's facility + corporate nodes** — discover only proposes
+a name the entity resolver already resolved from the corpus. Name candidates are emitted
+as ``feature`` so they flow through the resolve funnel's GNIS branch (``_resolve_feature``).
 """
 
 from __future__ import annotations
 
 import re
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -80,19 +85,99 @@ def covered_parcels(*, settings: Settings | None = None) -> set[str]:
     return covered
 
 
+def covered_names(*, settings: Settings | None = None) -> set[str]:
+    """Normalized facility/business names already represented by a POI in the store.
+
+    The coverage key is :func:`bosc.pipeline.entities.normalize_name` of the POI's name,
+    aliases, and any ``name``/``gnis`` surface form — the same normalization the name
+    pass keys candidates by, so an already-curated facility drops out of the worklist.
+    """
+    from bosc.pipeline.entities import normalize_name
+
+    settings = settings or get_settings()
+    covered: set[str] = set()
+    for poi in load_pois(settings=settings):
+        covered.add(normalize_name(poi.front.name))
+        for alias in poi.front.aliases:
+            covered.add(normalize_name(alias))
+        for sf in poi.front.surface_forms:
+            if sf.type in ("name", "gnis"):
+                covered.add(normalize_name(sf.value))
+    covered.discard("")
+    return covered
+
+
+def _no_names(_text: str) -> list[tuple[str, str]]:
+    """The name matcher when name extraction is disabled — finds nothing."""
+    return []
+
+
+def _facility_name_matcher(settings: Settings) -> Callable[[str], list[tuple[str, str]]]:
+    """A matcher over corpus-verified facility/business names → ``(display, norm)`` hits.
+
+    The divergence guard: the vocabulary is the **entity graph's facility + corporate
+    nodes**, so discover can only propose a name the entity resolver already resolved
+    from the corpus — the name analog of the parcel regex mirroring ``allen_gis``. Every
+    name variant becomes a boundary-guarded, whitespace-flexible literal (so a
+    line-wrapped mention still matches); the longest name wins at a shared start. A match
+    is mapped back to its entity by normalizing the matched text, so a hit always carries
+    the entity's legible display name and its canonical dedup key.
+    """
+    from bosc.pipeline.entities import build_entity_graph, normalize_name
+
+    graph = build_entity_graph(settings=settings)
+    by_norm: dict[str, tuple[str, str]] = {}
+    patterns: list[str] = []
+    for ent in graph.entities.values():
+        if ent.kind not in ("facility", "corporate"):
+            continue
+        display = ent.display
+        norm = normalize_name(display)
+        if not norm:
+            continue
+        for variant in ent.variants:
+            value = variant.strip()
+            if len(value) < 4:  # too short to match a name without risking noise
+                continue
+            by_norm.setdefault(normalize_name(value), (display, norm))
+            tokens = [t for t in re.split(r"\s+", value) if t]
+            if tokens:
+                patterns.append(r"\s+".join(re.escape(t) for t in tokens))
+    if not patterns:
+        return _no_names
+
+    patterns.sort(key=len, reverse=True)  # longest name wins at a shared start
+    name_re = re.compile(rf"(?<![A-Za-z0-9])(?:{'|'.join(patterns)})(?![A-Za-z0-9])")
+
+    def match(text: str) -> list[tuple[str, str]]:
+        hits: list[tuple[str, str]] = []
+        for m in name_re.finditer(text):
+            hit = by_norm.get(normalize_name(m.group(0)))
+            if hit is not None:
+                hits.append(hit)
+        return hits
+
+    return match
+
+
 def discover_candidates(
-    *, roots: list[Path] | None = None, settings: Settings | None = None
+    *, roots: list[Path] | None = None, settings: Settings | None = None, names: bool = True
 ) -> list[POICandidate]:
     """Place references found in the corpus, with citations + store-coverage flags.
 
     Aggregated by ``(kind, normalized)`` and sorted kind → most-cited → key. Parcel-id
     candidates already in the store are marked ``covered`` (the uncovered ones are the
-    records-worklist). Pass ``roots`` to scan a specific location (tests); ``settings``
-    still drives store coverage.
+    records-worklist), as are facility-name candidates a POI already names. Pass ``roots``
+    to scan a specific location (tests); ``settings`` still drives store coverage.
+
+    ``names`` enables the facility/business-name pass (entity-graph guarded, emitted as
+    ``feature`` candidates for the GNIS funnel); set it ``False`` to skip building the
+    entity graph when only the parcel/address worklist is wanted (e.g. parcel-only merge).
     """
     settings = settings or get_settings()
     scan_roots = roots if roots is not None else _default_roots(settings)
     repo_root = settings.data_dir.parent
+    match_names = _facility_name_matcher(settings) if names else _no_names
 
     hits: dict[tuple[str, str], _Acc] = {}
 
@@ -117,16 +202,22 @@ def discover_candidates(
             for m in _ADDRESS_RE.finditer(text):
                 value = re.sub(r"\s+", " ", m.group(0)).strip(" .")
                 add("address", value, value.upper(), path)
+            for display, norm in match_names(text):
+                add("feature", display, norm, path)
 
-    covered = covered_parcels(settings=settings)
+    covered_parc = covered_parcels(settings=settings)
+    covered_nm = covered_names(settings=settings) if names else set[str]()
     candidates = [
         POICandidate(
-            kind=kind,  # 'parcel-id' | 'address' by construction
+            kind=kind,  # 'parcel-id' | 'address' | 'feature' by construction
             value=acc.value,
             normalized=norm,
             occurrences=acc.count,
             citations=sorted(acc.files),
-            covered=(kind == "parcel-id" and norm in covered),
+            covered=(
+                (kind == "parcel-id" and norm in covered_parc)
+                or (kind == "feature" and norm in covered_nm)
+            ),
         )
         for (kind, norm), acc in hits.items()
     ]

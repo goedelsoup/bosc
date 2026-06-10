@@ -212,10 +212,14 @@ flag + tracking block), and the curation is hand-editing `data/poi/` (like peopl
   `data/poi/`, `store.py`, `bosc poi list/show`; seeded by porting the `gis-findings`
   `campus` layer as the first composite POI.
 - **P1 — discover. ✅ done.** `discover.py` scans the committed corpus text →
-  `POICandidate`s (deed-format **parcel ids** + **addresses**) with citations and a
-  store-`covered` flag; `bosc poi discover [--uncovered]`. Idempotent and read-only —
-  the uncovered parcel-ids are the worklist. (Facility-name extraction deferred; the
-  parcel regex is divergence-guarded against `allen_gis.scan_parcel_ids`.)
+  `POICandidate`s (deed-format **parcel ids**, **addresses**, and **facility/business
+  names**) with citations and a store-`covered` flag; `bosc poi discover [--uncovered]
+  [--no-names]`. Idempotent and read-only — the uncovered parcel-ids are the worklist.
+  Both pattern passes are **divergence-guarded** so neither can invent a place: the
+  parcel regex is cross-checked against `allen_gis.scan_parcel_ids`, and the
+  facility-name vocabulary is the **entity-graph facility + corporate nodes** (a name the
+  entity resolver already produced from the corpus). Names are emitted as `feature`
+  candidates, so they funnel through the GNIS branch (`_resolve_feature`).
 - **P2 — resolve.** The resolve-to-parcel funnel + the merge:
   - **P2a (✅ done) — funnel core.** `census_geocoder` connector (address → point) +
     `allen_gis.parcel_at_point` (point → parcel) + `resolve.py` (`resolve_candidate`):

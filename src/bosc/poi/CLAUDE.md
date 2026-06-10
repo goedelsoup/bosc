@@ -20,9 +20,13 @@ The point-of-interest (place) research store. Defers to the root
   **never fabricated**. The `surface_forms` list is the dedup audit trail (record *why*
   aliases unified). Geocoding (P2) caches raw responses under git-ignored `data/cache/`.
 - **`discover` (built):** `discover.py` scans the committed corpus text →
-  `POICandidate`s (parcel ids + addresses) with citations + a store-`covered` flag.
-  Read-only worklist; the uncovered parcel-ids are the leads. Its parcel regex mirrors
-  `allen_gis._PARCEL_ID_RE` — a test cross-checks the two so they can't drift.
+  `POICandidate`s (parcel ids, addresses, **facility/business names**) with citations +
+  a store-`covered` flag. Read-only worklist; the uncovered parcel-ids are the leads.
+  Each kind is **divergence-guarded** so the pass can't invent a place: the parcel regex
+  mirrors `allen_gis._PARCEL_ID_RE` (a test cross-checks the two), and the facility-name
+  vocabulary is the **entity-graph facility + corporate nodes** — discover only proposes
+  a name the entity resolver already produced. Name candidates are `feature`-kind, so
+  they funnel through GNIS (`_resolve_feature`); `--no-names` skips the graph pass.
 - **`resolve` (built — funnel core):** `resolve.py` funnels one candidate to a parcel —
   parcel-id → CAMA (exact, `confidence=high`, `auto_mergeable=True`); address →
   `census_geocoder` (US Census, in `connectors/`) → point → `allen_gis.parcel_at_point`

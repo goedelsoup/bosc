@@ -2778,26 +2778,30 @@ def poi_show(slug: str = typer.Argument(..., help="POI slug (see `bosc poi list`
 
 @poi_app.command("discover")
 def poi_discover(
-    kind: str | None = typer.Option(None, "--kind", help="Filter: parcel-id | address."),
+    kind: str | None = typer.Option(None, "--kind", help="Filter: parcel-id | address | feature."),
     uncovered: bool = typer.Option(
         False, "--uncovered", help="Only references the POI store doesn't cover yet."
+    ),
+    no_names: bool = typer.Option(
+        False, "--no-names", help="Skip the entity-graph facility/business-name pass."
     ),
     limit: int = typer.Option(40, "--limit", help="Max rows to show."),
     out: str | None = typer.Option(
         None, "--out", help="Write the full candidate list to this YAML path."
     ),
 ) -> None:
-    """Scan the corpus for place references (parcel ids, addresses) → POI candidates.
+    """Scan the corpus for place references → POI candidates.
 
     Read-only worklist: the *uncovered* parcel-id candidates are places cited in the
     corpus that are not yet POIs. Promoting a candidate to a curated POI is a manual step.
-    Addresses are leads to verify, not a precise extraction.
+    Addresses and facility/business names (entity-graph verified, emitted as ``feature``
+    for the GNIS funnel) are leads to verify, not precise extractions.
     """
     import yaml
 
     from bosc.poi import discover_candidates
 
-    cands = discover_candidates()
+    cands = discover_candidates(names=not no_names)
     if kind:
         cands = [c for c in cands if c.kind == kind]
     if uncovered:
@@ -2808,6 +2812,7 @@ def poi_discover(
 
     n_parcel = sum(1 for c in cands if c.kind == "parcel-id")
     n_addr = sum(1 for c in cands if c.kind == "address")
+    n_feat = sum(1 for c in cands if c.kind == "feature")
     n_unc = sum(1 for c in cands if c.kind == "parcel-id" and not c.covered)
     table = Table("kind", "value", "occ", "sources", "covered")
     for c in cands[:limit]:
@@ -2819,7 +2824,7 @@ def poi_discover(
         console.print(f"[dim]… {len(cands) - limit} more (raise --limit or use --out).[/]")
     console.print(
         f"[dim]{len(cands)} candidates — {n_parcel} parcel-id ({n_unc} uncovered), "
-        f"{n_addr} address.[/]"
+        f"{n_addr} address, {n_feat} feature.[/]"
     )
 
     if out:

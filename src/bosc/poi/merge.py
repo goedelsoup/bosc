@@ -125,9 +125,11 @@ def merge_corpus(
     *, parcel_ids_only: bool = True, settings: Settings | None = None
 ) -> list[MergeGroup]:
     """Discover the corpus, then merge. Parcel-ids only by default (the reliable anchor;
-    including addresses geocodes every one — slower and fuzzier)."""
+    including addresses/feature-names geocodes/GNIS-resolves every one — slower, fuzzier).
+    """
     settings = settings or get_settings()
-    cands = discover_candidates(settings=settings)
+    # Skip the entity-graph name pass when we only want parcel-ids (the lean default).
+    cands = discover_candidates(settings=settings, names=not parcel_ids_only)
     if parcel_ids_only:
         cands = [c for c in cands if c.kind == "parcel-id"]
     return merge_candidates(cands, settings=settings)
