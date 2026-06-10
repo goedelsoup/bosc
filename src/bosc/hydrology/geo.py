@@ -13,8 +13,9 @@ from pathlib import Path
 from typing import Any, cast
 
 from pyproj import Transformer
-from shapely.geometry import shape
+from shapely.geometry import Point, shape
 from shapely.ops import transform as shapely_transform
+from shapely.ops import unary_union
 
 from bosc.config import Settings, get_settings
 from bosc.hydrology.model import Node
@@ -71,6 +72,33 @@ def bbox_of(path: Path, *, pad_deg: float = 0.0) -> tuple[float, float, float, f
     maxx = max(g.bounds[2] for g in geoms) + pad_deg
     maxy = max(g.bounds[3] for g in geoms) + pad_deg
     return (minx, miny, maxx, maxy)
+
+
+def grid_points_within(path: Path, n_side: int) -> list[tuple[float, float]]:
+    """Deterministic ``(lon, lat)`` grid-cell centers that fall inside the footprint.
+
+    An ``n_side x n_side`` lattice over the bounding box of the GeoJSON's polygon
+    features, keeping the centers inside their union — a uniform area sample of the
+    footprint (e.g. for a soil-survey point grid). Deterministic, so the sample (and
+    any cache key derived from it) is stable for a given committed geometry.
+    """
+    geoms = [
+        shape(f["geometry"])
+        for f in _load_features(path)
+        if f.get("geometry", {}).get("type") in ("Polygon", "MultiPolygon")
+    ]
+    if not geoms:
+        raise ValueError(f"no polygon geometries in {path}")
+    footprint = unary_union(geoms)
+    minx, miny, maxx, maxy = footprint.bounds
+    points: list[tuple[float, float]] = []
+    for i in range(n_side):
+        for j in range(n_side):
+            lon = minx + (maxx - minx) * (i + 0.5) / n_side
+            lat = miny + (maxy - miny) * (j + 0.5) / n_side
+            if footprint.contains(Point(lon, lat)):
+                points.append((round(lon, 6), round(lat, 6)))
+    return points
 
 
 def wwtp_nodes_from_watch_items(path: Path) -> list[Node]:

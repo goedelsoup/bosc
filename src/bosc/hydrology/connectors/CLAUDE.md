@@ -1,6 +1,6 @@
 # CLAUDE.md — `bosc.hydrology.connectors`
 
-Live public-data connectors (USGS NWIS, NOAA Atlas-14, EPA ECHO, Allen/Lima GIS,
+Live public-data connectors (USGS NWIS, NOAA Atlas-14, EPA ECHO, USDA SSURGO/SDA, Allen/Lima GIS,
 ORC, LSC). Defers to the root [`CLAUDE.md`](../../../../CLAUDE.md).
 
 - **A connector is a pure sync `fn(..., settings) -> pydantic`.** Keep the network

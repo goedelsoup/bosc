@@ -106,6 +106,11 @@ class Settings(BaseSettings):
             "ALLSKY_SFC_SW_DWN",
         ]
     )
+    # USDA NRCS SSURGO soils via Soil Data Access (SDA) Tabular REST — the dominant
+    # hydrologic soil group (HSG) over the campus footprint, grid-sampled (replaces the
+    # hardcoded "C" assumption in the stormwater model). Same connector cache/fixture
+    # discipline (offline -> committed fixture under tests/fixtures/hydrology/ssurgo/).
+    ssurgo_sda_url: str = "https://sdmdataaccess.sc.egov.usda.gov/Tabular/post.rest"
     # GLEIF Legal Entity Identifier registry (AWS Open Data s3://gleif). The bucket is
     # the bulk golden copy; for our curated watchlist we use the REST API (exact-LEI
     # lookups + parent relationships). `bosc lei` resolves the watchlist to a YAML.

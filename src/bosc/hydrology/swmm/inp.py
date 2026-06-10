@@ -71,8 +71,21 @@ RG1 INTENSITY {rg_interval} 1.0 TIMESERIES TS1
 """
 
 
-# Horton infiltration for Allen County HSG-C soils (assumption, in/hr + hr).
-_HORTON = "3.0 0.1 4.0 7 0"
+# Horton infiltration by hydrologic soil group (max/min rate in/hr, decay 1/hr, dry
+# days, max-vol). Assumption-grade screening values; the min (saturated) rate falls
+# with the HSG. "C" keeps the legacy default string verbatim so existing decks are
+# unchanged; a sourced HSG (bosc.hydrology.connectors.ssurgo) selects its infiltration.
+_HORTON_BY_HSG = {
+    "A": "3.0 0.45 4.0 7 0",
+    "B": "3.0 0.30 4.0 7 0",
+    "C": "3.0 0.1 4.0 7 0",
+    "D": "3.0 0.05 4.0 7 0",
+}
+
+
+def _horton_for(hsg: str) -> str:
+    """Horton infiltration string for an HSG (first letter; a dual group -> drained)."""
+    return _HORTON_BY_HSG.get(hsg.strip().upper()[:1], _HORTON_BY_HSG["C"])
 
 
 def stormwater_inp(
@@ -83,8 +96,13 @@ def stormwater_inp(
     detention: DetentionGeom | None = None,
     dt_hr: float = 0.1,
     end_hr: float = 30.0,
+    hsg: str = "C",
 ) -> tuple[str, str, str, str]:
-    """Build a stormwater ``.inp``. Returns (text, outfall, orifice_link, storage_node)."""
+    """Build a stormwater ``.inp``. Returns (text, outfall, orifice_link, storage_node).
+
+    ``hsg`` selects the Horton infiltration (default "C" = the legacy assumption);
+    pass a SSURGO-sourced group to ground the deck's soils.
+    """
     width = (area_acres * _SQFT_PER_ACRE) ** 0.5  # square-catchment width (ft)
     outfall = "OUT1"
     storage = "DET"
@@ -100,7 +118,7 @@ S1 RG1 {drains_to} {area_acres:.2f} {pct_imperv:.1f} {width:.1f} 1.0 0
 S1 0.015 0.10 0.05 0.05 25 OUTLET
 
 [INFILTRATION]
-S1 {_HORTON}
+S1 {_horton_for(hsg)}
 
 [OUTFALLS]
 {outfall} 0 FREE NO

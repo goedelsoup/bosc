@@ -7,10 +7,10 @@ and the screening detention deficit — the classic "post-development must not e
 pre-development peak" stormwater test.
 
 Grounding: the footprint area is document-sourced (the recorded Bistrozzi parcels);
-the design storm is connector-sourced (NOAA Atlas-14); land cover and hydrologic soil
-group are cited assumptions (prior use "Neff Farms" -> cropland; Allen County /
-Maumee Lake Plain soils -> HSG C; NRCS soil survey). Curve numbers come from the
-cited TR-55 table.
+the design storm and the hydrologic soil group are connector-sourced (NOAA Atlas-14;
+USDA SSURGO via SDA, the footprint's grid-sampled dominant HSG), each falling back to a
+cited value offline (HSG -> the "C" assumption). Land cover is a cited assumption (prior
+use "Neff Farms" -> cropland). Curve numbers come from the cited TR-55 table.
 """
 
 from __future__ import annotations
@@ -21,6 +21,7 @@ from bosc.config import Settings, get_settings
 from bosc.hydrology import geo
 from bosc.hydrology.connectors._cache import HydroOfflineError
 from bosc.hydrology.connectors.noaa_atlas14 import design_storm
+from bosc.hydrology.connectors.ssurgo import SsurgoError, dominant_hsg
 from bosc.hydrology.model import (
     DesignStorm,
     HydroFinding,
@@ -78,12 +79,12 @@ def run_storm_scenario(
     area = ProvenancedValue.from_document(
         acres, "acre", citation=f"{path.name} (recorded Bistrozzi parcel footprints)"
     )
-    hsg = ProvenancedValue.assume(float("ABCD".index(_HSG) + 1), "hsg_code", why=_HSG_CITATION)
+    hsg_letter, hsg = _resolve_hsg(path, settings=settings, live=live)
 
     storm = _resolve_storm(return_period_yr, settings=settings, live=live)
 
-    pre_cn = cn_for(_PRE_COVER, _HSG, settings=settings)
-    post_cn = cn_for(_POST_COVER, _HSG, settings=settings)
+    pre_cn = cn_for(_PRE_COVER, hsg_letter, settings=settings)
+    post_cn = cn_for(_POST_COVER, hsg_letter, settings=settings)
     depth = storm.depth.value
     pre = simulate_runoff(area_acres=acres, curve_number=pre_cn, tc_hr=_TC_HR, storm_depth_in=depth)
     post = simulate_runoff(
@@ -102,6 +103,36 @@ def run_storm_scenario(
         peak_increase=round(runoff.peak_increase_cfs, 1),
     )
     return runoff, _storm_findings(runoff)
+
+
+def _resolve_hsg(
+    footprint_path: Path, *, settings: Settings, live: bool
+) -> tuple[str, ProvenancedValue]:
+    """Dominant HSG over the footprint from SSURGO (live), else the cited "C" assumption.
+
+    Returns ``(letter, code)`` where ``letter`` is the single A-D group fed to ``cn_for``
+    (a dual group like "B/D" resolves to its drained first letter — the tile-drained
+    lake-plain / engineered-drainage case) and ``code`` is the 1-4 HSG index, provenance
+    tagged ``connector`` when sourced live, ``assumption`` on the offline fallback.
+    """
+    if live:
+        try:
+            survey = dominant_hsg(footprint_path, settings=settings)
+            letter = survey.hsg_letter
+            shares = ", ".join(f"{d.hsg} {d.fraction:.0%}" for d in survey.distribution)
+            code = ProvenancedValue.from_connector(
+                float("ABCD".index(letter) + 1),
+                "hsg_code",
+                citation=(
+                    f"SSURGO dominant HSG {survey.dominant_hsg} ({shares}) over "
+                    f"{survey.n_points} footprint grid points — {survey.source}"
+                ),
+            )
+            return letter, code
+        except (HydroOfflineError, SsurgoError) as exc:
+            log.info("hydro.storm.hsg_fallback", error=str(exc).splitlines()[0])
+    code = ProvenancedValue.assume(float("ABCD".index(_HSG) + 1), "hsg_code", why=_HSG_CITATION)
+    return _HSG, code
 
 
 def _resolve_storm(return_period_yr: int, *, settings: Settings, live: bool) -> DesignStorm:

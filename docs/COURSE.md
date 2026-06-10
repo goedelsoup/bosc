@@ -287,8 +287,11 @@ assumption|derived`. (`bosc.hydrology`, see [the plan](../../.claude/plans/splen
    *Scope note:* this is the steady-state low-flow check's complement, not a coupling — a
    design storm is a different flow regime than 7Q10, so the storm does **not** "collapse
    the 7Q10 dilution"; the `stormwater` node seam stays inert until a wet-weather scenario
-   couples event runoff into the balance. Live **SSURGO** HSG deferred (endpoint 404 at
-   build; HSG is the cited assumption above).
+   couples event runoff into the balance. The HSG is now **SSURGO-sourced** (`connectors.
+   ssurgo`: the footprint's grid-sampled dominant hydrologic soil group via USDA Soil Data
+   Access), falling back to the cited "C" assumption offline — SSURGO actually shows the
+   footprint is predominantly dual **B/D** (tile-drainable lake-plain lows) with upland B,
+   not C.
 10. **Scenario diffing + dossier.** `[done]` — Increment 3. `bosc scenario` (+ agent
    `hydrology_scenario` tool) evaluates **baseline vs data-center buildout** on the
    cooling consumptive-fraction knob (`bosc.hydrology.scenario`): the campus draws
