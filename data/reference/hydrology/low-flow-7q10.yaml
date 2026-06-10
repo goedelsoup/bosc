@@ -11,6 +11,11 @@
 # discharge MORE than the streams' entire 7Q10 low flow — at design low flow the
 # effluent is effectively undiluted. The fact sheets say so themselves (American II's
 # stated acute dilution ratio is 1.3 to 1).
+#
+# Basin-wide companion: `low-flow-7q10.derived.yaml` holds DERIVED (LP3, source=derived)
+# 7Q10s for the major USGS-gaged Maumee mainstems, used by `bosc basin-screen` to extend
+# this screen beyond Lima. Those are screening proxies (gage value, not the discharge
+# reach), never a substitute for a cited fact-sheet 7Q10 here.
 
 streams:
   dug run:

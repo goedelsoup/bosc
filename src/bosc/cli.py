@@ -233,6 +233,62 @@ def hydro(
         console.print(f"[dim]! {w}[/]")
 
 
+@app.command(name="basin-screen")
+def basin_screen() -> None:
+    """Basin-wide low-flow assimilative screen over the ECHO Maumee POTW inventory.
+
+    Extends the Lima-loop screen to every basin POTW, using the cited 7Q10s plus the
+    derived mainstem 7Q10s (`bosc derive-low-flows`). Dischargers on ungaged tributaries
+    or with no receiving water in ECHO are reported, not screened (omit, don't guess).
+    """
+    from bosc.hydrology.basin import check_basin_assimilative
+
+    screen = check_basin_assimilative(settings=get_settings())
+    cov = screen.coverage
+    table = Table("dilution", "flag", "discharger", "receiving water", "7Q10", "src")
+    for ch in screen.checks:
+        color = {"violation": "red", "tight": "yellow", "ok": "green"}[ch.flag]
+        table.add_row(
+            f"{ch.dilution_ratio:.2f}:1",
+            f"[{color}]{ch.flag}[/]",
+            ch.discharger,
+            ch.receiving_water,
+            f"{ch.design_low_flow.value:.2f} cfs",
+            ch.design_low_flow.source,
+        )
+    console.print(table)
+    console.print(
+        f"\n[bold]{cov.screened}[/] of [bold]{cov.total}[/] basin POTWs screened "
+        f"([red]{cov.violations} violation[/], [yellow]{cov.tight} tight[/], "
+        f"[green]{cov.ok} ok[/])."
+    )
+    console.print(
+        f"[dim]Unscreenable (reported, not guessed): {cov.no_receiving_water} no receiving "
+        f"water in ECHO, {cov.no_7q10} ungaged tributary / no 7Q10, "
+        f"{cov.no_design_flow} no design flow.[/]"
+    )
+
+
+@app.command(name="derive-low-flows")
+def derive_low_flows(
+    offline: bool = typer.Option(
+        False, "--offline", help="Use cached NWIS records only; never fetch."
+    ),
+) -> None:
+    """Regenerate the derived mainstem 7Q10 reference (USGS NWIS daily record -> LP3)."""
+    from bosc.hydrology.basin import derive_basin_low_flows, write_derived_low_flows
+
+    settings = Settings(hydro_offline=True) if offline else get_settings()
+    streams = derive_basin_low_flows(settings=settings)
+    path = write_derived_low_flows(streams, settings=settings)
+    console.print(f"[green]Wrote[/] {path} — {len(streams)} mainstem 7Q10s:")
+    for name, entry in streams.items():
+        console.print(
+            f"  {name.title():22} {entry['seven_q10_cfs']:8.2f} cfs  "
+            f"[dim]gage {entry['gage']} ({entry['complete_years']} yr)[/]"
+        )
+
+
 @app.command()
 def storm(
     return_period: int = typer.Option(

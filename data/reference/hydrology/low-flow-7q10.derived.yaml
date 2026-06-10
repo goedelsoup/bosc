@@ -1,0 +1,62 @@
+meta:
+  subject: DERIVED receiving-stream 7Q10s for the major Maumee-basin mainstems
+  source: USGS NWIS daily discharge -> log-Pearson III (bosc.hydrology.lowflow_frequency)
+  discipline: DERIVED screening denominators (source=derived), NOT cited regulatory 7Q10s — those live
+    in low-flow-7q10.yaml. Each value is the 7Q10 AT THE GAGE, a proxy for a direct-discharge reach on
+    that mainstem; a discharger on a tributary is screened only against that tributary's own cited/derived
+    7Q10, never this one. Regenerate with `bosc derive-low-flows`.
+streams:
+  maumee river:
+    seven_q10_cfs: 114.15
+    source: derived
+    gage: 04193500
+    gage_name: Maumee River at Waterville OH
+    period: 1980-01-01..2024-12-31
+    complete_years: 44
+    aliases:
+    - maumee river
+    citation: LP3 7Q10 from USGS 04193500 (Maumee River at Waterville OH), 44 climatic years 1980-2024
+      (gage value; screening proxy for the discharge reach)
+    confidence: medium
+  auglaize river:
+    seven_q10_cfs: 1.91
+    source: derived
+    gage: 04186500
+    gage_name: Auglaize River near Fort Jennings OH
+    period: 1980-01-01..2024-12-31
+    complete_years: 44
+    aliases:
+    - auglaize river
+    - auglaze river
+    citation: LP3 7Q10 from USGS 04186500 (Auglaize River near Fort Jennings OH), 44 climatic years 1980-2024
+      (gage value; screening proxy for the discharge reach)
+    confidence: medium
+  st. marys river:
+    seven_q10_cfs: 15.65
+    source: derived
+    gage: 04182000
+    gage_name: ST. MARYS RIVER NEAR FORT WAYNE, IN
+    period: 1980-01-01..2024-12-31
+    complete_years: 44
+    aliases:
+    - st marys river
+    - st. marys river
+    - saint marys river
+    citation: LP3 7Q10 from USGS 04182000 (ST. MARYS RIVER NEAR FORT WAYNE, IN), 44 climatic years 1980-2024
+      (gage value; screening proxy for the discharge reach)
+    confidence: medium
+  st. joseph river:
+    seven_q10_cfs: 29.69
+    source: derived
+    gage: 04178000
+    gage_name: St Joseph River near Newville IN
+    period: 1980-01-01..2024-12-31
+    complete_years: 44
+    aliases:
+    - st joseph river
+    - st. joseph river
+    - saint joseph river
+    - st joseph r
+    citation: LP3 7Q10 from USGS 04178000 (St Joseph River near Newville IN), 44 climatic years 1980-2024
+      (gage value; screening proxy for the discharge reach)
+    confidence: medium

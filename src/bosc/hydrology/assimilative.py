@@ -24,7 +24,8 @@ from bosc.logging import get_logger
 log = get_logger(__name__)
 
 
-def _flag(ratio: float) -> Flag:
+def dilution_flag(ratio: float) -> Flag:
+    """Screening band for a 7Q10/discharge dilution ratio (violation < tight < ok)."""
     if ratio < DILUTION_VIOLATION:
         return "violation"
     if ratio < DILUTION_TIGHT:
@@ -51,7 +52,7 @@ def check_assimilative(
             log.info("hydro.assim.skip", plant=wbn.node.name, reason="no cited 7Q10", water=water)
             continue
         ratio = q7.value / discharge.value if discharge.value else 0.0
-        flag = _flag(ratio)
+        flag = dilution_flag(ratio)
         checks.append(
             AssimilativeCheck(
                 receiving_water=water,

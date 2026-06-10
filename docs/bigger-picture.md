@@ -66,12 +66,17 @@ future-growth reserve is only **~1.4–1.5 mt P/spring**). `[verified:
 data/reference/hydrology/maumee-tmdl-budget.yaml]` So a new data-center sanitary load
 enters a *fully-allocated* basin regardless of which plant takes it.
 
-**What's still open `[open]`.** The per-plant 7Q10 dilution screen is computed only
-for Lima's plants (the corpus cites their 7Q10). Extending it basin-wide — to
-quantify how many of the 129 screen as undiluted like Lima's — needs each receiving
-water's cited 7Q10, not yet ingested. The ECHO inventory gives the dischargers and
-their flows; the low-flow denominators are the next ingest. That is the concrete
-"are there more?" follow-up.
+**Extended basin-wide `[v]`.** The per-plant 7Q10 dilution screen now runs over the
+full ECHO POTW inventory (`bosc basin-screen`), not just Lima's plants. The
+denominators are the cited fact-sheet 7Q10s plus a **derived** LP3 7Q10 for the four
+major USGS-gaged mainstems (Maumee, Auglaize, St. Marys, St. Joseph;
+`data/reference/hydrology/low-flow-7q10.derived.yaml`). The honest result: only **7 of
+129** POTWs are screenable — **77** have no receiving water in ECHO and **44** discharge
+to ungaged tributaries/ditches, all reported "no 7Q10" rather than screened against a
+downstream river's larger flow. Of the screenable, Lima's American Bath → Pike Run is
+the lone violation; **Decatur → St. Marys (3.1:1)** and **Defiance → Maumee (6.2:1)**
+screen "tight." The wide data gap is itself the finding — Lima's plants are unusually
+well-documented, and a basin-wide answer needs each tributary's own cited/gaged 7Q10.
 
 ## 3. Boom patterns — where Lima is typical, where it is the outlier
 
