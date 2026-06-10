@@ -20,6 +20,15 @@ committed fixtures. An offline miss raises ``ImageryOfflineError``.
 
 from __future__ import annotations
 
+from bosc.gis.corridor import CorridorMember, CorridorRoute, CorridorView, build_corridor_view
 from bosc.gis.sites import TrackingSite, get_site, load_tracking_sites
 
-__all__ = ["TrackingSite", "get_site", "load_tracking_sites"]
+__all__ = [
+    "CorridorMember",
+    "CorridorRoute",
+    "CorridorView",
+    "TrackingSite",
+    "build_corridor_view",
+    "get_site",
+    "load_tracking_sites",
+]

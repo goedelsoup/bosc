@@ -1107,6 +1107,68 @@ def toxics_cmd(
             console.print("[yellow]No RSEI inventory or GIS findings GeoJSON; skipped --map.[/]")
 
 
+@app.command(name="corridor")
+def corridor_cmd(
+    in_corridor: bool = typer.Option(
+        False, "--in", help="Only features inside the corridor study area."
+    ),
+    update_map: bool = typer.Option(
+        False, "--map", help="Merge the corridor + roadwork layers into the GIS findings GeoJSON."
+    ),
+) -> None:
+    """Tie BOSC facilities / parcels / roadwork to the North Cole Street corridor.
+
+    A spatial join of every watch item (facilities + force mains) and recorded parcel
+    onto the frozen Periplus corridor geometry: in-study-area flag, distance to the
+    nearest corridor route, the route, and station (chainage) along the roadwork
+    centerline. Read-only and hermetic (committed GeoJSON only). ``--map`` writes the
+    corridor study area + roadwork centerline into ``data/site/gis-findings.geojson``.
+    """
+    import json
+
+    from bosc.gis.corridor import build_corridor_view
+
+    settings = get_settings()
+    view = build_corridor_view(settings=settings)
+
+    console.print(
+        f"[bold]North Cole Street corridor[/] — study area {view.study_area_acres:,.0f} ac, "
+        f"road centerline {view.road_length_m:,.0f} m; "
+        f"{len(view.in_corridor)}/{len(view.members)} features in the corridor."
+    )
+    routes = Table("role", "length (m)", "route")
+    for r in view.routes:
+        routes.add_row(r.role, f"{r.length_m:,.0f}" if r.length_m else "—", r.name[:48])
+    console.print(routes)
+
+    members = view.in_corridor if in_corridor else view.members
+    table = Table("in", "kind", "feature", "dist→route (m)", "via", "station (m)")
+    for m in members:
+        station = f"{m.station_m:,.0f}" if m.station_m is not None else "—"
+        table.add_row(
+            "✓" if m.in_study_area else "",
+            m.kind,
+            m.id[:32],
+            f"{m.distance_to_route_m:,.0f}",
+            m.nearest_route_role,
+            station,
+        )
+    console.print(table)
+    console.print(f"[dim]source: {view.source}[/]")
+
+    if update_map:
+        from bosc.site import gismap
+
+        geojson = settings.data_dir / "site" / "gis-findings.geojson"
+        if geojson.is_file():
+            fc = json.loads(geojson.read_text(encoding="utf-8"))
+            fc, n = gismap.merge_corridor_layer(fc, settings=settings)
+            geojson.write_text(json.dumps(fc, indent=1), encoding="utf-8")
+            console.print(f"[green]Merged[/] {n} corridor/roadwork features into {geojson}")
+        else:
+            console.print(f"[yellow]No GIS findings GeoJSON at {geojson}; skipped --map.[/]")
+
+
 @app.command(name="drainage-audit")
 def drainage_audit_cmd(
     offline: bool = typer.Option(
