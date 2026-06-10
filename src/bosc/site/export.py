@@ -48,6 +48,7 @@ from bosc.pipeline.timeline import build_timeline
 from bosc.poi import load_pois
 from bosc.rsei import load_inventory as load_rsei_inventory
 from bosc.site import candidates as candidates_mod
+from bosc.site import concepts as concepts_mod
 from bosc.site import documents as documents_mod
 from bosc.site import economics as economics_mod
 from bosc.site import exhibits as exhibits_mod
@@ -63,6 +64,7 @@ from bosc.site.feeds import (
     CONTRACT_VERSION,
     CandidateItem,
     Citation,
+    ConceptItem,
     DocumentCollectionItem,
     EntityNode,
     ExhibitItem,
@@ -247,6 +249,10 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
     feeds.append(
         _collection_feed("people", PersonItem, people_mod.export_people(people, egraph=egraph))
     )
+
+    # Wiki concept-glossary store (issue #68) — curated term/method definitions.
+    concepts = concepts_mod.load_concepts(settings.concepts_dir)
+    feeds.append(_collection_feed("concepts", ConceptItem, concepts_mod.export_concepts(concepts)))
 
     pois = load_pois(settings=settings)
     feeds.append(_collection_feed("places", PlaceItem, places_mod.export_places(pois)))

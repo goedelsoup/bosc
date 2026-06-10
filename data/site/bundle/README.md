@@ -72,6 +72,7 @@ over 500 rows), or `application/geo+json`. `count` is rows, features, or `1` for
 | `entities` | collection | resolved parties in the entity graph, keyed by canonical `key` |
 | `relationships` | collection | directed edges between entity `key`s, each traceable to one document |
 | `people` | collection | curated (expanded-research) individual profiles; `entity_key` links into `entities` |
+| `concepts` | collection | the wiki concept-glossary store (`data/concepts/*.md`); `related` links sibling concepts, body carries `[[wiki links]]` |
 | `places` | collection | curated POI profiles; `slug` is the cross-feed key; relationships link entity keys |
 | `candidates` | collection | demand-fit cloud-consumer candidates; `entity_key` set when matched in the graph |
 | `defense-contractors` | object | DoD prime seed list + corpus matches (entity keys) + the Allen County parcel scan |

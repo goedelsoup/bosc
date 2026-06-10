@@ -263,6 +263,12 @@ class Settings(BaseSettings):
         return self.data_dir / "poi"
 
     @property
+    def concepts_dir(self) -> Path:
+        """Wiki concept-glossary store (markdown + frontmatter) — term/method
+        definitions cross-linked from the wiki (issue #68). Committed."""
+        return self.data_dir / "concepts"
+
+    @property
     def entities_dir(self) -> Path:
         """Curated entity inputs not derived from the corpus. The inventories live
         under ``entities/profiles/`` (cloud-consumer candidates, defense

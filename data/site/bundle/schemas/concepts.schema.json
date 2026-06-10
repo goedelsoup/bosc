@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "concepts feed",
+  "type": "array",
+  "items": {
+    "additionalProperties": false,
+    "description": "One glossary concept from the wiki concept store (``data/concepts/*.md``).\n\nThe lightweight peer of a person profile: a frontmatter header (identity +\ncross-links) plus a hand-written markdown body. ``related`` holds the slugs of\nsibling concepts; the frontend additionally resolves inline ``[[wiki links]]``\nin the body against the concepts, entities, and people feeds.",
+    "properties": {
+      "slug": {
+        "title": "Slug",
+        "type": "string"
+      },
+      "title": {
+        "title": "Title",
+        "type": "string"
+      },
+      "kind": {
+        "default": "concept",
+        "title": "Kind",
+        "type": "string"
+      },
+      "aliases": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Aliases",
+        "type": "array"
+      },
+      "tags": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Tags",
+        "type": "array"
+      },
+      "summary": {
+        "default": "",
+        "title": "Summary",
+        "type": "string"
+      },
+      "related": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Related",
+        "type": "array"
+      },
+      "body": {
+        "default": "",
+        "title": "Body",
+        "type": "string"
+      }
+    },
+    "required": [
+      "slug",
+      "title"
+    ],
+    "title": "ConceptItem",
+    "type": "object"
+  }
+}

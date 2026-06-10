@@ -31,7 +31,8 @@ from pydantic import BaseModel, ConfigDict, Field, computed_field
 # --- bundle contract version ---------------------------------------------------
 # Bumped per the back-compat policy in data/site/bundle/README.md: PATCH for additive
 # optional fields, MINOR for new feeds, MAJOR for a breaking field change/removal.
-CONTRACT_VERSION = "1.0.0"
+# 1.1.0: added the `concepts` feed (issue #68, the wiki concept-glossary store).
+CONTRACT_VERSION = "1.1.0"
 
 SourceKind = Literal["document", "connector", "reference", "assumption", "derived"]
 Confidence = Literal["high", "medium", "low"]
@@ -322,6 +323,28 @@ class ExhibitItem(BaseModel):
     source: str  # path relative to data/documents
     pages: str | None = None  # "317-327" (0-based inclusive) or None for the whole file
     available: bool
+
+
+# --- concepts feed (issue #68) ------------------------------------------------
+class ConceptItem(BaseModel):
+    """One glossary concept from the wiki concept store (``data/concepts/*.md``).
+
+    The lightweight peer of a person profile: a frontmatter header (identity +
+    cross-links) plus a hand-written markdown body. ``related`` holds the slugs of
+    sibling concepts; the frontend additionally resolves inline ``[[wiki links]]``
+    in the body against the concepts, entities, and people feeds.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    slug: str  # the stable concept id (file stem)
+    title: str
+    kind: str = "concept"  # concept | term | method
+    aliases: list[str] = Field(default_factory=list)
+    tags: list[str] = Field(default_factory=list)
+    summary: str = ""
+    related: list[str] = Field(default_factory=list)  # sibling concept slugs
+    body: str = ""
 
 
 # --- typed GeoJSON feeds (issue #61) ------------------------------------------
