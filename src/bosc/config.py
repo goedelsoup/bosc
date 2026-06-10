@@ -40,6 +40,13 @@ class Settings(BaseSettings):
     extract_model: str = "claude-sonnet-4-6"
     max_turns: int = 20
 
+    # --- Research runs (the automated-research agent; see bosc.research) ----
+    # An investigation run is open-ended (more turns than a single Q&A) and distills
+    # its findings into at most this many issue proposals. A hard cost ceiling and a
+    # kill switch live with the workflow guardrails (Epic 5.5), not here.
+    research_max_turns: int = 30
+    research_max_proposals: int = 5
+
     # --- Logging -----------------------------------------------------------
     log_level: str = "INFO"
 
@@ -266,6 +273,13 @@ class Settings(BaseSettings):
     def scenarios_dir(self) -> Path:
         """Reviewed hydrology scenario artifacts (committed). Reserved for Increment 3."""
         return self.data_dir / "scenarios"
+
+    @property
+    def research_dir(self) -> Path:
+        """Agent-driven research runs (findings + issue-proposal manifests). Committed
+        on review: a run lands as a branch/PR a human verifies. Read-only on the
+        corpus by construction — a run writes only here, never under documents_dir."""
+        return self.data_dir / "research"
 
     def ensure_dirs(self) -> None:
         """Create the data directories if they do not yet exist."""

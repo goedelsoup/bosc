@@ -731,6 +731,114 @@ def ask(
         raise typer.Exit(code=1)
 
 
+research_app = typer.Typer(
+    name="research",
+    help="Automated-research runs: investigate a topic, propose follow-up issues.",
+    no_args_is_help=True,
+)
+app.add_typer(research_app, name="research")
+
+
+@research_app.command("run")
+def research_run_cmd(
+    topic: str = typer.Option(..., "--topic", "-t", help="The investigation topic / question."),
+    out: str = typer.Option("", "--out", help="Output dir (default: data/research/<slug>)."),
+    max_turns: int = typer.Option(0, "--max-turns", help="Agent turn cap (0 = settings default)."),
+    max_proposals: int = typer.Option(
+        -1, "--max-proposals", help="Issue proposals to distill (-1 = settings default)."
+    ),
+    no_tools: bool = typer.Option(False, "--no-tools", help="Disable the BOSC data tools."),
+) -> None:
+    """Investigate a topic over the corpus (read-only) and write findings + an
+    issue-proposal manifest under data/research/. Never mutates source bytes."""
+    from datetime import UTC, datetime
+
+    from bosc.agent.client import ResearchAgent
+    from bosc.research import run_research, run_slug, write_run
+
+    settings = get_settings()
+    generated_at = datetime.now(UTC).isoformat(timespec="seconds")
+    turns = max_turns or settings.research_max_turns
+    n = max_proposals if max_proposals >= 0 else settings.research_max_proposals
+    agent = ResearchAgent(settings=settings, max_turns=turns, enable_tools=not no_tools)
+
+    def emit(chunk: str) -> None:
+        console.print(chunk, end="", markup=False, highlight=False)
+
+    manifest = asyncio.run(
+        run_research(
+            topic,
+            generated_at=generated_at,
+            settings=settings,
+            agent=agent,
+            max_proposals=n,
+            on_text=emit,
+        )
+    )
+    console.print()  # newline after the streamed findings
+
+    out_dir = Path(out) if out else settings.research_dir / run_slug(topic, generated_at)
+    write_run(manifest, out_dir, settings=settings)
+
+    console.print(f"\n[bold]Research run →[/] {out_dir}")
+    prov = manifest.provenance
+    footer: list[str] = []
+    if prov.tools_used:
+        footer.append("tools: " + ", ".join(prov.tools_used))
+    if prov.num_turns:
+        footer.append(f"{prov.num_turns} turns")
+    if prov.cost_usd is not None:
+        footer.append(f"${prov.cost_usd:.4f}")
+    if footer:
+        console.print(f"[dim]({' · '.join(footer)})[/]")
+
+    if manifest.proposals:
+        table = Table("proposed issue", "labels", "dedupe key")
+        for pr in manifest.proposals:
+            table.add_row(pr.title, ", ".join(pr.labels), pr.dedupe_key)
+        console.print(table)
+    else:
+        console.print("[yellow]No issue proposals distilled from the findings.[/]")
+
+    if prov.is_error:
+        raise typer.Exit(code=1)
+
+
+@research_app.command("publish")
+def research_publish_cmd(
+    run: str = typer.Option(..., "--run", help="Run directory (contains manifest.yaml)."),
+    existing: str = typer.Option(
+        "",
+        "--existing",
+        help="JSON file of existing issues (gh issue list --json number,title,body).",
+    ),
+    out: str = typer.Option(
+        "", "--out", help="Write the publish plan JSON here (default: <run>/publish-plan.json)."
+    ),
+) -> None:
+    """Build a publish plan from a research run: dedupe its proposals against existing
+    issues and render the PR body. Pure (no GitHub calls) — the research workflow feeds
+    in the existing-issues list and acts on the plan it writes."""
+    import json
+    from typing import Any
+
+    from bosc.research import build_plan, load_manifest
+
+    run_dir = Path(run)
+    manifest = load_manifest(run_dir)
+    issues: list[dict[str, Any]] = []
+    if existing:
+        loaded = json.loads(Path(existing).read_text(encoding="utf-8"))
+        issues = loaded if isinstance(loaded, list) else []
+    plan = build_plan(manifest, existing=issues, run_ref=run_dir.as_posix())
+    out_path = Path(out) if out else run_dir / "publish-plan.json"
+    out_path.write_text(json.dumps(plan.model_dump(), indent=2) + "\n", encoding="utf-8")
+    console.print(
+        f"[bold]Publish plan →[/] {out_path}  "
+        f"({len(plan.issues)} to open, {len(plan.duplicates)} skipped)"
+    )
+
+
 @app.command()
 def extract(
     doc_id: str = typer.Argument(..., help="A doc_id from `bosc ingest`."),
