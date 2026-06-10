@@ -12,10 +12,10 @@ Defers to the root [`CLAUDE.md`](../../../CLAUDE.md).
   (`grounded_from`); `publishing.*` is a live-web finding with its own
   `discovered:` provenance. `platform: unknown` means *not yet looked*, never
   *publishes nothing* — and never fabricate a `records_url`.
-- **Discovery reuses the connector cache.** `discovery.py` fetches through
-  `bosc.hydrology.connectors._cache.cached_get` (connector name
-  `subdivision_discovery`) — the same offline/fixture discipline as the hydrology
-  connectors, so tests never hit the network. `classify_platform` /
+- **Discovery reuses the connector cache.** `discovery.py` fetches through the neutral
+  `bosc.connectors.cached_get` (connector name `subdivision_discovery`), against the
+  hydrology cache root + fixtures it shares — the same offline/fixture discipline as
+  every subsystem's connectors, so tests never hit the network. `classify_platform` /
   `find_records_links` are pure and unit-tested without fixtures.
 - **`discover` is read-only.** It prints/exports findings for review; it does not
   rewrite the curated registry. Fold confirmed results into the YAML by hand.

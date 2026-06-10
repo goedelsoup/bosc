@@ -2565,7 +2565,7 @@ def imagery_pull(
     for sc in scenes[:limit]:
         try:
             cap = raster.pull_capture(sc, site_obj, asset=asset, out_dir=out_dir, settings=settings)
-        except raster.ImageryOfflineError as exc:
+        except imagery.ImageryOfflineError as exc:
             console.print(f"[red]offline:[/] {exc}")
             raise typer.Exit(1) from exc
         table.add_row(
@@ -2606,7 +2606,7 @@ def imagery_index(
     from typing import cast
 
     from bosc.gis import analysis, imagery
-    from bosc.gis.raster import ImageryOfflineError
+    from bosc.gis.imagery import ImageryOfflineError
 
     if index not in ("ndvi", "ndwi"):
         console.print("[red]--index must be ndvi or ndwi[/]")

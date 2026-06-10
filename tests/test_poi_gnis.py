@@ -5,7 +5,7 @@ from __future__ import annotations
 import pytest
 
 from bosc.config import Settings
-from bosc.hydrology.connectors._cache import HydroOfflineError
+from bosc.connectors import OfflineError
 from bosc.poi.connectors.gnis import find_feature
 from bosc.poi.merge import Item, merge_resolutions
 from bosc.poi.model import POICandidate
@@ -40,7 +40,7 @@ def test_resolve_feature_offline(poi_offline_settings: Settings) -> None:
 
 
 def test_gnis_offline_miss_raises(poi_offline_settings: Settings) -> None:
-    with pytest.raises(HydroOfflineError):
+    with pytest.raises(OfflineError):
         find_feature("Nonexistent Creek", settings=poi_offline_settings)
 
 

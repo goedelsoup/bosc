@@ -5,7 +5,7 @@ from __future__ import annotations
 import pytest
 
 from bosc.config import Settings
-from bosc.hydrology.connectors._cache import HydroOfflineError
+from bosc.connectors import OfflineError
 from bosc.poi.connectors.census_geocoder import geocode_address
 from bosc.poi.model import POICandidate
 from bosc.poi.resolve import resolve_candidate, resolve_value
@@ -49,5 +49,5 @@ def test_resolve_candidate_dispatches(poi_offline_settings: Settings) -> None:
 
 def test_resolve_offline_miss_raises(poi_offline_settings: Settings) -> None:
     # An address with no committed geocoder fixture must fail loudly (hermetic).
-    with pytest.raises(HydroOfflineError):
+    with pytest.raises(OfflineError):
         resolve_value("address", "1 Nowhere Street, Nowhere, OH", settings=poi_offline_settings)

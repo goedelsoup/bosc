@@ -6,7 +6,6 @@ import pytest
 
 from bosc.config import Settings
 from bosc.gis import get_site, imagery, load_tracking_sites
-from bosc.hydrology.connectors._cache import HydroOfflineError
 
 
 def test_campus_site_loads(gis_settings: Settings) -> None:
@@ -55,7 +54,7 @@ def test_search_site_offline_parses_fixture(gis_settings: Settings) -> None:
 
 def test_search_offline_miss_raises(gis_settings: Settings) -> None:
     # An AOI/date we have no committed fixture for must fail loudly, naming the key.
-    with pytest.raises(HydroOfflineError):
+    with pytest.raises(imagery.ImageryOfflineError):
         imagery.search_scenes(
             (-84.0, 40.0, -83.9, 40.1),
             collection="sentinel-2-l2a",

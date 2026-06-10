@@ -16,7 +16,7 @@ import httpx
 from pydantic import BaseModel, ConfigDict
 
 from bosc.config import Settings, get_settings
-from bosc.hydrology.connectors._cache import cached_get
+from bosc.connectors import cached_get
 from bosc.logging import get_logger
 
 log = get_logger(__name__)
@@ -82,7 +82,6 @@ def find_feature(
                 _CONNECTOR,
                 params,
                 fetch,
-                settings=settings,
                 cache_dir=settings.poi_cache_dir,
                 offline=settings.poi_offline,
                 fixtures_dir=settings.poi_fixtures_dir,

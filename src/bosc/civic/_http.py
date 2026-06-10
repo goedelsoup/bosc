@@ -11,7 +11,7 @@ from typing import Any, cast
 import httpx
 
 from bosc.config import Settings
-from bosc.hydrology.connectors._cache import cached_get
+from bosc.connectors import cached_get
 
 # A real browser User-Agent + Accept: several county CMS/WAFs (Sucuri, the Duda CDN,
 # Drupal bot rules) reflexively 403/406 an unknown UA, which would otherwise hide a
@@ -32,7 +32,7 @@ def get_page(url: str, *, connector: str, settings: Settings) -> dict[str, Any]:
 
     ``connector`` namespaces the cache/fixture directory (e.g. ``subdivision_discovery``,
     ``civicplus``). Raises ``httpx.HTTPStatusError`` on a 4xx/5xx live response and
-    ``HydroOfflineError`` on an offline cache/fixture miss.
+    :class:`~bosc.connectors.OfflineError` on an offline cache/fixture miss.
     """
 
     def fetch() -> Any:
@@ -45,4 +45,16 @@ def get_page(url: str, *, connector: str, settings: Settings) -> dict[str, Any]:
         resp.raise_for_status()
         return {"html": resp.text, "final_url": str(resp.url), "status_code": resp.status_code}
 
-    return cast("dict[str, Any]", cached_get(connector, {"url": url}, fetch, settings=settings))
+    # Civic shares the hydrology connector cache root + offline flag / fixtures
+    # (fixtures live under tests/fixtures/hydrology/<connector>/); see issue #43.
+    return cast(
+        "dict[str, Any]",
+        cached_get(
+            connector,
+            {"url": url},
+            fetch,
+            cache_dir=settings.hydro_cache_dir,
+            offline=settings.hydro_offline,
+            fixtures_dir=settings.hydro_fixtures_dir,
+        ),
+    )

@@ -12,7 +12,7 @@ from bosc.civic.discovery import (
 )
 from bosc.civic.models import Platform
 from bosc.config import Settings
-from bosc.hydrology.connectors._cache import HydroOfflineError
+from bosc.connectors import OfflineError
 
 
 def test_registry_loads_and_validates(hydro_settings: Settings) -> None:
@@ -127,5 +127,5 @@ def test_discover_offline_miss_raises(hydro_settings: Settings) -> None:
     assert bath is not None
     # A homepage with no recorded cache/fixture -> offline miss is actionable.
     # (Use an .invalid host so a real local cache pull can never mask this.)
-    with pytest.raises(HydroOfflineError):
+    with pytest.raises(OfflineError):
         discover(bath, url="https://bath-township.invalid/", settings=hydro_settings)

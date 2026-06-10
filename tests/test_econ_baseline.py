@@ -9,10 +9,10 @@ from pathlib import Path
 import pytest
 
 from bosc.config import Settings
+from bosc.connectors import OfflineError
 from bosc.economics.baseline import build_baseline, load_baseline
 from bosc.economics.connectors.census import fetch_population_series
 from bosc.economics.connectors.qcew import fetch_county_industries
-from bosc.hydrology.connectors._cache import HydroOfflineError
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -50,7 +50,7 @@ def test_build_baseline_trend(econ_settings: Settings) -> None:
 
 
 def test_offline_miss_raises(econ_settings: Settings) -> None:
-    with pytest.raises(HydroOfflineError):
+    with pytest.raises(OfflineError):
         fetch_county_industries(year=1999, fips="39003", settings=econ_settings)
 
 

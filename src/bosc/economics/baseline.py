@@ -15,10 +15,10 @@ import httpx
 import yaml
 
 from bosc.config import Settings, get_settings
+from bosc.connectors import OfflineError
 from bosc.economics.connectors.census import CensusError, fetch_population_series
 from bosc.economics.connectors.qcew import fetch_county_industries
 from bosc.economics.model import EconomicBaseline, PopulationSeries, YearTotal
-from bosc.hydrology.connectors._cache import HydroOfflineError
 from bosc.logging import get_logger
 
 log = get_logger(__name__)
@@ -39,7 +39,7 @@ def _maybe_population(settings: Settings) -> PopulationSeries | None:
         return None
     try:
         return fetch_population_series(years=_POP_YEARS, fips=settings.econ_fips, settings=settings)
-    except (HydroOfflineError, httpx.HTTPError, CensusError) as exc:
+    except (OfflineError, httpx.HTTPError, CensusError) as exc:
         log.warning("econ.population.skipped", error=str(exc).splitlines()[0])
         return None
 

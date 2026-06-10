@@ -24,11 +24,16 @@ import httpx
 from pydantic import BaseModel, ConfigDict
 
 from bosc.config import Settings, get_settings
+from bosc.connectors import OfflineError, cached_get
 from bosc.gis.sites import TrackingSite, get_site
-from bosc.hydrology.connectors._cache import cached_get
 
 _CONNECTOR = "pc_stac_search"
 _SOURCE = "Microsoft Planetary Computer STAC"
+
+
+class ImageryOfflineError(OfflineError):
+    """Offline imagery needs a cache/fixture (STAC search or COG) that is missing."""
+
 
 Bbox = tuple[float, float, float, float]
 
@@ -121,11 +126,11 @@ def search_scenes(
             _CONNECTOR,
             params,
             fetch,
-            settings=settings,
             cache_dir=settings.gis_cache_dir,
             offline=settings.gis_offline,
             fixtures_dir=settings.gis_fixtures_dir,
             ttl_hours=settings.gis_cache_ttl_hours,
+            offline_error=ImageryOfflineError,
         ),
     )
     return _parse(payload, requested_collection=collection)

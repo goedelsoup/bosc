@@ -1,8 +1,8 @@
 """Economics connectors — pure-sync ``fn(..., settings) -> pydantic`` pulls.
 
-Reuse the hydrology cache/offline/fixture machinery (``cached_get``) pointed at the
-economics cache root, so tests stay hermetic and offline misses raise the same
-actionable error naming the key to record.
+Reuse the neutral ``bosc.connectors`` cache/offline/fixture machinery (``cached_get``)
+pointed at the economics cache root, so tests stay hermetic and offline misses raise an
+actionable ``OfflineError`` naming the key to record.
 """
 
 from __future__ import annotations

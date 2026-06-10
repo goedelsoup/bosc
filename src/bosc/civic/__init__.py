@@ -5,9 +5,9 @@ the county's meeting-holding bodies (``data/reference/subdivisions/``) drives a
 discovery pass that classifies where each body publishes, and (downstream) a small
 set of per-platform fetchers that pull minutes/agendas into ``data/documents/``.
 
-Reuses the shared connector cache/offline/fixture machinery in
-``bosc.hydrology.connectors._cache`` — the same path the non-hydrology LSC/ORC
-connectors already take.
+Reuses the shared connector cache/offline/fixture machinery in ``bosc.connectors``
+(against the hydrology cache root + fixtures it shares), so it gets the same
+offline/fixture discipline as every other subsystem's connectors.
 """
 
 from __future__ import annotations

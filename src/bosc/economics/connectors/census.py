@@ -15,8 +15,8 @@ from typing import Any, cast
 import httpx
 
 from bosc.config import Settings, get_settings
+from bosc.connectors import cached_get
 from bosc.economics.model import PopulationPoint, PopulationSeries
-from bosc.hydrology.connectors._cache import cached_get
 from bosc.hydrology.model import ProvenancedValue
 
 _POP_VAR = "B01003_001E"  # ACS total population
@@ -69,7 +69,6 @@ def _fetch_year(year: int, fips: str, settings: Settings) -> tuple[float, str]:
             "census",
             params,
             fetch,
-            settings=settings,
             cache_dir=settings.econ_cache_dir,
             offline=settings.econ_offline,
             fixtures_dir=settings.econ_fixtures_dir,

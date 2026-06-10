@@ -19,8 +19,8 @@ from typing import Any, cast
 import httpx
 
 from bosc.config import Settings, get_settings
+from bosc.connectors import cached_get
 from bosc.economics.model import IndustryEmployment, SectorEmployment
-from bosc.hydrology.connectors._cache import cached_get
 from bosc.hydrology.model import ProvenancedValue
 
 # Official NAICS 2-digit sector titles (stable reference, not data) for QCEW codes.
@@ -103,7 +103,6 @@ def fetch_county_industries(
             "qcew",
             params,
             fetch,
-            settings=settings,
             cache_dir=settings.econ_cache_dir,
             offline=settings.econ_offline,
             fixtures_dir=settings.econ_fixtures_dir,

@@ -13,10 +13,10 @@ Geospatial subsystem: tracking sites + satellite imagery. Defers to the root
   it to `watched` with a `bbox`; don't author geometry here.
 - **Imagery is `search → materialize`; both layers exist.**
   - *Search* (`imagery.search_scenes`) is a pure connector: a single `httpx` POST to
-    the Planetary Computer STAC `/search`, wrapped in the shared
-    `bosc.hydrology.connectors._cache.cached_get` (the same cross-subsystem reuse
-    `civic`/`economics` do) against the GIS cache root. STAC fields are read **by
-    name**, never index; an offline miss raises `HydroOfflineError` naming the key.
+    the Planetary Computer STAC `/search`, wrapped in the shared neutral
+    `bosc.connectors.cached_get` (the same layer `civic`/`economics` use) against the
+    GIS cache root. STAC fields are read **by name**, never index; an offline miss
+    raises `ImageryOfflineError` (a `bosc.connectors.OfflineError`) naming the key.
     Search is **collection-agnostic** — `sentinel-2-l2a`, `naip`, `landsat-c2-l2` all
     go through the one path. NAIP carries no `eo:cloud_cover`, so don't pass
     `--max-cloud` for it.

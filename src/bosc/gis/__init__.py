@@ -13,9 +13,9 @@ Two layers:
   layer (rasterio + asset signing) lands in a later increment.
 
 Imagery search reuses the shared connector cache machinery
-(``bosc.hydrology.connectors._cache.cached_get``) against a GIS-specific cache root —
-the same cross-subsystem pattern the ``civic`` and ``economics`` connectors use — so
-tests stay hermetic against committed fixtures.
+(``bosc.connectors.cached_get``) against a GIS-specific cache root — the same neutral
+layer the ``civic`` and ``economics`` connectors use — so tests stay hermetic against
+committed fixtures. An offline miss raises ``ImageryOfflineError``.
 """
 
 from __future__ import annotations

@@ -31,7 +31,7 @@ from rasterio.warp import transform_bounds
 from rasterio.windows import Window, from_bounds
 
 from bosc.config import Settings, get_settings
-from bosc.gis.imagery import Scene
+from bosc.gis.imagery import ImageryOfflineError, Scene
 from bosc.gis.sites import TrackingSite
 from bosc.logging import get_logger
 
@@ -43,10 +43,6 @@ _DEFAULT_ASSET = {
     "landsat-c2-l2": "red",
     "naip": "image",
 }
-
-
-class ImageryOfflineError(RuntimeError):
-    """Offline pull needs a fixture COG that is not committed (names the key)."""
 
 
 class Capture(BaseModel):
