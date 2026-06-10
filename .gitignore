@@ -40,6 +40,12 @@ uv.lock.bak
 data/cache/
 data/scratch/
 
+# Hearing audio is multi-GB and belongs in an evidence bucket, not git. The WAVs were
+# externalized on 2026-06-10 (kept locally, pending upload); integrity + provenance are
+# recorded in .../hearings-audio/hearings-audio-externalized.yaml. The derived transcripts
+# stay committed.
+data/documents/**/*.wav
+
 # Agent run logs / transcripts
 runs/
 *.log

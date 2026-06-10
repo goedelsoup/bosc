@@ -1,0 +1,38 @@
+# Hearing audio — externalized from git (chain-of-custody record).
+#
+# The Select Committee on Data Centers (2026-06-04) hearing audio is too large to keep
+# in the repo (multi-GB; ~4.2 GiB across four WAVs). On 2026-06-10 the WAVs were removed
+# from Git/Git-LFS tracking and added to .gitignore. The bytes are retained locally (in
+# the Git-LFS object store + the working tree) pending upload to an evidence bucket; this
+# manifest is the durable record that the audio was captured and remains integrity-
+# verifiable by the recorded sha256 (the exact Git-LFS oids).
+#
+# Provenance: these WAVs are time-sliced segments of a single raw original recording that
+# was never committed to git (local-only). The transcripts derived from this audio are
+# the committed, reviewed artifact (see ../hearings-audio/*.transcript.md and the nav).
+#
+# Re-link: do NOT `git lfs prune` until these are safely in the bucket — history still
+# references the oids, so the objects stay in .git/lfs/objects and can be restored with
+# `git lfs checkout <path>` against an earlier commit, or read from .git/lfs/objects.
+
+subject: Select Committee on Data Centers (2026) — 2026-06-04 hearing audio
+externalized_on: 2026-06-10
+reason: multi-GB binaries; storage belongs in an evidence bucket, not git/LFS
+status: externalized — kept locally, pending bucket upload
+target_bucket: TBD
+source_provenance: time-sliced segments of a raw original recording never committed to git
+integrity: sha256 below are the authoritative Git-LFS oids recorded at externalization
+
+files:
+  - path: bosc-committee-hearing-2026-06-04-am.wav
+    sha256: a92a4ae5498c17e9047ee3dc484d66445a0c805fd043a965e28012d7f42f15fd
+    bytes: 1993482344
+  - path: bosc-committee-hearing-2026-06-04-pm.wav
+    sha256: dbd80a7b9ceff563d185bc8f0c7ab2867c6f1dee2ca5037759b2f1fd5cdb8fbc
+    bytes: 1716344936
+  - path: bosc-committee-hearing-2026-06-04-pm2.wav
+    sha256: 3bf4f6a8f340eaae1c96aef38f2199c756948fa399106313fef94dfb03d7d899
+    bytes: 592828520
+  - path: bosc-committee-testimony-2026-06-04.wav
+    sha256: fc60c2414690e4b3cea31ea6476e831d271bd75d718566d12b7b3e4b32931060
+    bytes: 212238440
