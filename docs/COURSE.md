@@ -231,9 +231,17 @@ validation → provenance). Order is driven by inquiry leverage.
 6. **Timeline assembly.** `[done]` — `bosc.pipeline.timeline`: one sorted
    chronology across deeds/NPDES/OPC, deduped across corroborating artifacts.
    `bosc timeline` + agent `timeline` tool.
-7. **Corridor view.** `[open]` Tie facilities/parcels/roadwork to corridor
-   geography (we deliberately left Periplus's GIS behind; decide if/what to
-   rebuild). Frozen corridor/parcel geojson is in `data/reference/periplus/`.
+7. **Corridor view.** `[done]` — **decided: build** (the frozen corridor geometry
+   was sitting unused and the join is the research question, not Periplus platform
+   code). `bosc.gis.corridor` spatially joins every watch item (facilities + force
+   mains) and recorded parcel onto the frozen Periplus `corridor.geojson` study area
+   + `corridor-centerline.geojson` routes: in-study-area flag, distance to the
+   nearest corridor route, the route, and station (chainage) along the roadwork road
+   centerline (the roadway the roundabouts OPC prices). `bosc corridor` shows the
+   join; `bosc corridor --map` adds the `corridor` (study area) + `roadwork` (road
+   centerline) layers to `gis-findings.geojson`. Pure/hermetic (shapely+pyproj over
+   committed GeoJSON, like `bosc.hydrology.geo`); the corridor geometry stays cited
+   external corroboration, never edited in place.
 
 Both built on `bosc.pipeline.corpus` — a loader that reads every committed
 extraction into one typed `Corpus`, classified by content shape.

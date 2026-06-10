@@ -40,4 +40,14 @@ Geospatial subsystem: tracking sites + satellite imagery. Defers to the root
   LFS) so tests are hermetic. High-res collections (NAIP 0.3 m) make a full-AOI clip
   huge, so record the pull fixture against a **small sub-AOI**. Record live once;
   don't hand-edit recorded JSON/COGs.
+- **Corridor view (`corridor.py`):** `build_corridor_view` is the spatial join that ties
+  BOSC watch items (facilities + force mains) and recorded parcels to the **frozen
+  Periplus** corridor geometry (`data/reference/periplus/corridor*.geojson`) — in-study-
+  area flag, distance to the nearest corridor route, the route, and station along the
+  roadwork road centerline. Pure/hermetic: shapely+pyproj over committed GeoJSON, like
+  `bosc.hydrology.geo` (project to `hydro_utm_epsg` so distances are metres); the
+  corridor geometry is cited **external corroboration**, never edited in place. `bosc
+  corridor` shows the join; `bosc corridor --map` writes the `corridor` + `roadwork`
+  layers into `gis-findings.geojson` via `gismap.merge_corridor_layer` (the committed
+  system-of-record the map fetches), mirroring the RSEI `--map` merge.
 - Sync throughout (`httpx`/`rasterio`), matching the rest of the pipeline.

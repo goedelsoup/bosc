@@ -16,15 +16,20 @@ from collections import Counter
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
+from bosc.config import Settings, get_settings
+
 if TYPE_CHECKING:
     from bosc.hydrology.toxics import ToxicDischargeInventory
     from bosc.rsei import RseiInventory
 
 _RSEI_LAYER = "rsei"
+_CORRIDOR_LAYERS = ("corridor", "roadwork")
 _LAYER_LABELS = {
     "campus": "Campus footprint (recorded Bistrozzi parcels)",
     "jsmc": "JSMC / Lima Army Tank Plant (United States-owned)",
     "wwtp": "County WWTP discharge points (NPDES)",
+    "corridor": "North Cole Street corridor — study area (Periplus)",
+    "roadwork": "Corridor roadwork — road centerline (the roundabouts OPC corridor)",
     "floodway": "FEMA regulatory floodway (Zone AE)",
     "floodplain": "FEMA 1%-annual-chance floodplain (Zone A/AE)",
     "rsei": "RSEI toxic-release facilities — sized by Score (overlay, off by default)",
@@ -33,6 +38,8 @@ _LAYER_COLORS = {
     "campus": "#3f51b5",
     "jsmc": "#6d4c41",
     "wwtp": "#00897b",
+    "corridor": "#f9a825",
+    "roadwork": "#e64a19",
     "floodway": "#d32f2f",
     "floodplain": "#1976d2",
     "rsei": "#8e24aa",
@@ -189,10 +196,83 @@ def _style_js() -> str:
     styles = {
         "campus": {"color": "#3f51b5", "weight": 2, "fillOpacity": 0.25},
         "jsmc": {"color": "#6d4c41", "weight": 2, "fillOpacity": 0.30},
+        "corridor": {"color": "#f9a825", "weight": 1, "fillOpacity": 0.06, "dashArray": "6 4"},
+        "roadwork": {"color": "#e64a19", "weight": 4, "opacity": 0.9},
         "floodway": {"color": "#d32f2f", "weight": 1, "fillOpacity": 0.40},
         "floodplain": {"color": "#1976d2", "weight": 1, "fillOpacity": 0.15},
     }
     return json.dumps(styles)
+
+
+def merge_corridor_layer(
+    fc: dict[str, Any], *, settings: Settings | None = None
+) -> tuple[dict[str, Any], int]:
+    """Idempotently add the corridor study-area + roadwork layers to the findings.
+
+    Draws the frozen Periplus corridor geography verbatim (WGS84, no reprojection — the
+    map is display-only): the ``corridor_of_interest`` study-area polygon (layer
+    ``corridor``) and the road-role centerline route the roundabouts OPC prices (layer
+    ``roadwork``). Existing corridor/roadwork features are dropped first so re-running is
+    a no-op. The numeric facilities↔corridor join lives in :func:`bosc.gis.corridor`;
+    this is its visual frame. Returns the updated collection and the feature count added.
+    """
+    settings = settings or get_settings()
+    ref = settings.reference_dir / "periplus"
+    feats = [
+        f
+        for f in fc.get("features", [])
+        if f.get("properties", {}).get("layer") not in _CORRIDOR_LAYERS
+    ]
+    added = 0
+
+    study = ref / "corridor.geojson"
+    if study.is_file():
+        for f in json.loads(study.read_text(encoding="utf-8")).get("features", []):
+            if not f.get("geometry"):
+                continue
+            feats.append(
+                {
+                    "type": "Feature",
+                    "geometry": f["geometry"],
+                    "properties": {
+                        "layer": "corridor",
+                        "label": "North Cole Street corridor — Periplus study area",
+                    },
+                }
+            )
+            added += 1
+
+    centerline = ref / "corridor-centerline.geojson"
+    if centerline.is_file():
+        for f in json.loads(centerline.read_text(encoding="utf-8")).get("features", []):
+            props = f.get("properties") or {}
+            geom = f.get("geometry") or {}
+            if props.get("role") != "road" or geom.get("type") not in (
+                "LineString",
+                "MultiLineString",
+            ):
+                continue
+            feats.append(
+                {
+                    "type": "Feature",
+                    "geometry": geom,
+                    "properties": {
+                        "layer": "roadwork",
+                        "label": str(props.get("Name") or "Corridor road route"),
+                    },
+                }
+            )
+            added += 1
+
+    fc["features"] = feats
+    sources = fc.setdefault("meta", {}).setdefault("sources", [])
+    note = (
+        "Periplus frozen corridor study area + roadwork centerline "
+        "(data/reference/periplus/) — external corroboration"
+    )
+    if note not in sources:
+        sources.append(note)
+    return fc, added
 
 
 # Esri **Wayback** dated World-Imagery releases (releaseNum from the Wayback config) —
@@ -240,12 +320,14 @@ def render_gis_map(geojson_path: Path) -> str:
     lines = [
         "# GIS findings — one map",
         "",
-        "Three corridor findings on a single map: the recorded **data-center campus** "
+        "The corridor findings on a single map: the recorded **data-center campus** "
         "footprint, the federally-held **JSMC / Lima Army Tank Plant** land (Allen "
-        "County's documented defense-industry footprint), and the **FEMA floodplain / "
-        "floodway**. A toggleable **RSEI toxic-release** overlay adds the county's "
-        "TRI facilities, sized by Risk-Screening Score. Pan/zoom and click a shape for "
-        "its label.",
+        "County's documented defense-industry footprint), the **FEMA floodplain / "
+        "floodway**, and the frozen-Periplus **North Cole Street corridor** study area "
+        "with its **roadwork** centerline (the roadway the roundabouts OPC prices). A "
+        "toggleable **RSEI toxic-release** overlay adds the county's TRI facilities, "
+        "sized by Risk-Screening Score. Pan/zoom and click a shape for its label. The "
+        "numeric facilities↔corridor join (distance, station) is `bosc corridor`.",
         "",
         '!!! note "What the map shows"',
         "    Geometry is verbatim from the county/FEMA GIS (WGS84). The campus parcels "

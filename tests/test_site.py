@@ -76,9 +76,18 @@ def test_gis_findings_geojson_is_valid() -> None:
     assert fc["type"] == "FeatureCollection"
     layers = {f["properties"]["layer"] for f in fc["features"]}
     assert {"campus", "jsmc", "wwtp", "floodway", "floodplain", "rsei"} <= layers
-    # Every feature has non-empty geometry (polygons for areas, points for WWTPs/RSEI).
+    # The corridor view layers it in: a study-area polygon + the roadwork road centerline.
+    assert {"corridor", "roadwork"} <= layers
+    # Every feature has non-empty geometry (polygons for areas, points for WWTPs/RSEI,
+    # a line for the corridor roadwork centerline).
     for f in fc["features"]:
-        assert f["geometry"]["type"] in ("Polygon", "MultiPolygon", "Point")
+        assert f["geometry"]["type"] in (
+            "Polygon",
+            "MultiPolygon",
+            "Point",
+            "LineString",
+            "MultiLineString",
+        )
         assert f["geometry"]["coordinates"]
     # RSEI points carry a graduated radius + score for the sized overlay markers.
     rsei = [f for f in fc["features"] if f["properties"]["layer"] == "rsei"]
