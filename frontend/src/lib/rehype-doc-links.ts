@@ -17,6 +17,7 @@ import { posix } from "node:path";
 import { visit } from "unist-util-visit";
 import type { Element, Root } from "hast";
 import type { VFile } from "vfile";
+import { legalSlugForRepoPath, PUBLISHED_LEGAL } from "./legal";
 import { LINK_MAP, MIGRATED, slugForRepoPath } from "./narrative";
 import { PUBLISHED_REFERENCE, refSlugForRepoPath } from "./reference";
 
@@ -67,6 +68,9 @@ export default function rehypeDocLinks(options: DocLinkOptions = {}) {
       } else if (PUBLISHED_REFERENCE.has(resolved)) {
         // 2. a published reference README → its /site/reference/<slug> route
         target = `${base}/site/reference/${refSlugForRepoPath(resolved)}`;
+      } else if (PUBLISHED_LEGAL.has(resolved)) {
+        // 2b. a published legal-history doc → its /site/legal/<slug> route
+        target = `${base}/site/legal/${legalSlugForRepoPath(resolved)}`;
       } else if (LINK_MAP[resolved]) {
         // 3. a correctly-pathed legacy generated page → its IA route
         target = toRoute(LINK_MAP[resolved]);

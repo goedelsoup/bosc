@@ -23,6 +23,7 @@ import {
   type RecordItem,
   type TimelineEntry,
 } from "./feeds";
+import { LEGAL } from "./legal";
 import { getSection, SECTIONS } from "./nav";
 import { NARRATIVE } from "./narrative";
 import { REFERENCE } from "./reference";
@@ -74,6 +75,16 @@ export function buildSearchIndex(): SearchDoc[] {
       url: `/site/reference/${d.slug}`,
       section: "The BOSC site",
       text: blob("reference data", d.blurb),
+    });
+  }
+
+  // Legal-history docs (Pages cutover #105) — by title + group + blurb.
+  for (const d of LEGAL) {
+    docs.push({
+      title: d.title,
+      url: `/site/legal/${d.slug}`,
+      section: "The BOSC site",
+      text: blob(d.group, d.blurb),
     });
   }
 

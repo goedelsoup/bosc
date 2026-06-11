@@ -1,0 +1,27 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../../layouts/Base.astro";
+import { legalBySlug } from "../../../lib/legal";
+import { withBase } from "../../../lib/site";
+
+export async function getStaticPaths() {
+  // Only the curated legal-history set (lib/legal.ts) is published.
+  const entries = await getCollection("legal", (e) => legalBySlug.has(e.id));
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const doc = legalBySlug.get(entry.id)!;
+const { Content } = await render(entry);
+---
+
+<Base title={doc.title} section="site" description={doc.blurb}>
+  <article class="prose">
+    <p>
+      <a href={withBase("/site/")}>← The BOSC site</a> ·
+      <a href={withBase("/site/legal/")}>Legal history</a>
+    </p>
+    <p class="card-meta">{doc.group}</p>
+    <Content />
+  </article>
+</Base>

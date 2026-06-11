@@ -1,0 +1,78 @@
+---
+import { getCollection } from "astro:content";
+import Provenance from "../../../components/Provenance.astro";
+import Base from "../../../layouts/Base.astro";
+import { hasFeed, loadFeed } from "../../../lib/bundle";
+import type { MeetingItem } from "../../../lib/feeds";
+import { LEGAL, LEGAL_GROUPS, legalBySlug } from "../../../lib/legal";
+import { withBase } from "../../../lib/site";
+
+const meetings = hasFeed("meetings") ? loadFeed<MeetingItem[]>("meetings") : [];
+const sorted = [...meetings].sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
+
+// Only show docs whose source is present in this checkout.
+const present = new Set((await getCollection("legal")).map((e) => e.id));
+const docs = LEGAL.filter((d) => present.has(d.slug) && legalBySlug.has(d.slug));
+const groups = LEGAL_GROUPS.filter((g) => docs.some((d) => d.group === g));
+---
+
+<Base title="Legal history" section="site">
+  <article class="prose">
+    <h1>Legal history</h1>
+    <p class="section-lead">
+      The governance and litigation record: the Select-Committee testimony and hearing
+      transcripts, the PRR &amp; mandamus analyses, the corpus-completeness and web-vendor
+      audits, the commissioners record, and the corridor-relevant meeting summaries.
+    </p>
+    <p>
+      Narrative analyses: <a href={withBase("/docs/legal/mandamus-analysis")}>mandamus analysis</a> ·
+      <a href={withBase("/docs/legal/proponent-analysis")}>proponent analysis</a>
+    </p>
+
+    <h2 id="documents">Documents</h2>
+    {
+      groups.map((group) => (
+        <>
+          <h3>{group}</h3>
+          <div class="cards">
+            {docs
+              .filter((d) => d.group === group)
+              .map((d) => (
+                <a class="card" href={`${withBase("/site/legal/")}${d.slug}`}>
+                  <span class="card-title">{d.title}</span>
+                  <span class="card-meta">{d.blurb}</span>
+                </a>
+              ))}
+          </div>
+        </>
+      ))
+    }
+
+    <h2 id="meetings">Meeting summaries</h2>
+    <p>{meetings.length} corridor-relevant meeting record(s) — grounded, no inference.</p>
+    {
+      sorted.map((m) => (
+        <div class="item">
+          <h3>
+            <span class="timeline-date">{m.date ?? "—"}</span>
+            {m.kind ?? "meeting"} · {m.slug}
+          </h3>
+          {m.summary && <p>{m.summary}</p>}
+          {m.corridor_relevance && (
+            <p class="card-meta">
+              <strong>Corridor relevance:</strong> {m.corridor_relevance}
+            </p>
+          )}
+          {m.decisions.length > 0 && (
+            <ul>
+              {m.decisions.map((d) => (
+                <li>{d}</li>
+              ))}
+            </ul>
+          )}
+          <Provenance citation={m.citation} />
+        </div>
+      ))
+    }
+  </article>
+</Base>
