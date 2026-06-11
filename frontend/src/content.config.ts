@@ -1,5 +1,6 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
+import { LEGAL } from "./lib/legal";
 import { REFERENCE } from "./lib/reference";
 
 // The `narrative` collection sources the public prose under the repo-root `docs/`
@@ -28,4 +29,23 @@ const reference = defineCollection({
   }),
 });
 
-export const collections = { narrative, reference };
+// The `legal` collection (Pages cutover Gap B, #105): the curated legal-history
+// records under `data/extracted/`, read AS-IS. `id` is each doc's slug (from
+// `lib/legal.ts`), so the route + the rehype rewriter agree.
+const legal = defineCollection({
+  loader: glob({
+    pattern: [
+      "legal/select-committee-2026/relator-testimony/*.md",
+      "legal/select-committee-2026/hearings-audio/*.transcript.md",
+      "legal/prr-mandamus/bosc-prr-production-*.analysis.md",
+      "legal/prr-mandamus/README.md",
+      "legal/corpus-completeness-audit.md",
+      "legal/web-vendor-audit/*.md",
+      "commissioners/README.md",
+    ],
+    base: "../data/extracted",
+    generateId: ({ entry }) => LEGAL.find((r) => r.repo === entry)?.slug ?? entry,
+  }),
+});
+
+export const collections = { narrative, reference, legal };
