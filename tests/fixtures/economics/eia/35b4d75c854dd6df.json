@@ -1,0 +1,11 @@
+{
+  "params": {
+    "connector": "eia",
+    "route": "seriesid",
+    "series_id": "NG.N3010OH3.A"
+  },
+  "payload": {
+    "period": "2023",
+    "value": 12.49
+  }
+}

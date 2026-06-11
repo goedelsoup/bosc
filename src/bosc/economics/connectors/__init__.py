@@ -8,6 +8,12 @@ actionable ``OfflineError`` naming the key to record.
 from __future__ import annotations
 
 from bosc.economics.connectors.census import fetch_population_series
+from bosc.economics.connectors.eia import fetch_consumer_energy, fetch_eia_series
 from bosc.economics.connectors.qcew import fetch_county_industries
 
-__all__ = ["fetch_county_industries", "fetch_population_series"]
+__all__ = [
+    "fetch_consumer_energy",
+    "fetch_county_industries",
+    "fetch_eia_series",
+    "fetch_population_series",
+]

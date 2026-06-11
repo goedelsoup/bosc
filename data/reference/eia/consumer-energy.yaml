@@ -1,0 +1,46 @@
+area: OH
+area_name: Ohio
+prices:
+- series_id: ELEC.PRICE.OH-RES.A
+  label: Ohio residential electricity price
+  fuel: electricity
+  metric: price
+  period: '2023'
+  area: OH
+  value:
+    value: 15.71
+    unit: cents/kWh
+    source: connector
+    citation: EIA API v2 seriesid ELEC.PRICE.OH-RES.A (2023)
+    confidence: high
+    asof: null
+- series_id: ELEC.SALES.OH-ALL.A
+  label: Ohio electricity retail sales (all sectors)
+  fuel: electricity
+  metric: sales
+  period: '2023'
+  area: OH
+  value:
+    value: 149003.0
+    unit: million kWh
+    source: connector
+    citation: EIA API v2 seriesid ELEC.SALES.OH-ALL.A (2023)
+    confidence: high
+    asof: null
+- series_id: NG.N3010OH3.A
+  label: Ohio residential natural-gas price
+  fuel: natural_gas
+  metric: price
+  period: '2023'
+  area: OH
+  value:
+    value: 12.49
+    unit: $/Mcf
+    source: connector
+    citation: EIA API v2 seriesid NG.N3010OH3.A (2023)
+    confidence: high
+    asof: null
+source: 'US EIA API v2 (seriesid route): residential prices + retail sales'
+note: 'EIA API v2 (seriesid route): residential electricity + natural-gas prices and
+  total electricity retail sales for Ohio. Annual averages; regenerable via `bosc
+  eia` with BOSC_EIA_API_KEY.'

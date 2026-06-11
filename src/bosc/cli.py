@@ -1459,6 +1459,56 @@ def economics(
         console.print(f"[green]Wrote[/] {path}")
 
 
+@app.command(name="eia")
+def eia_cmd(
+    write: bool = typer.Option(
+        True, "--write/--no-write", help="Persist data/reference/eia/consumer-energy.yaml."
+    ),
+    offline: bool = typer.Option(
+        False, "--offline", help="Use cached/fixture EIA responses only; never fetch."
+    ),
+) -> None:
+    """Consumer energy costs (EIA) + the data-center demand → price-pressure sensitivity."""
+    from bosc.config import Settings
+    from bosc.economics.energy import (
+        build_consumer_energy,
+        derive_demand_pressure,
+        write_consumer_energy,
+    )
+
+    settings = Settings(econ_offline=True) if offline else get_settings()
+    costs = build_consumer_energy(settings=settings)
+
+    console.print(f"[bold]{costs.area_name} consumer energy costs[/] [dim](EIA API v2)[/]")
+    table = Table("series", "metric", "period", "value")
+    for p in costs.prices:
+        table.add_row(p.label, p.metric, p.period, f"{p.value.value:,.2f} {p.value.unit}")
+    console.print(table)
+
+    dp = derive_demand_pressure(costs=costs, settings=settings)
+    console.print(
+        f"\n[bold]Data-center demand → consumer price pressure[/] "
+        f"[dim](a sensitivity, not a forecast)[/]\n"
+        f"  Facility draw [bold]{dp.facility_draw_mw.value:g} MW[/] x {dp.load_factor.value:g} "
+        f"load factor → [bold]{dp.annual_consumption_gwh.value:,.0f} GWh/yr[/]\n"
+        f"  = [bold]{dp.demand_share_pct.value:g}%[/] of Ohio retail electricity sales "
+        f"([dim]{dp.state_retail_sales_gwh.value:,.0f} GWh[/]); "
+        f"≈ [bold]{dp.households_equivalent.value:,.0f}[/] Ohio homes\n"
+        f"  Stylized price pressure [bold]{dp.price_pressure_pct_low.value:g}-"
+        f"{dp.price_pressure_pct_high.value:g}%[/] on the "
+        f"{dp.residential_price.value:g} {dp.residential_price.unit} residential price "
+        f"[dim](transmission {dp.supply_elasticity.value:g} %price/%demand)[/]"
+    )
+    console.print(
+        "\n[dim]Demand share + households-equivalent are EIA-cited; the price-pressure band "
+        "is a STYLIZED screening sensitivity (the campus buys at wholesale, not the "
+        "residential rate shown). Source: EIA API v2 + the 2026-06-10 facility-design call.[/]"
+    )
+    if write:
+        path = write_consumer_energy(costs, settings=settings)
+        console.print(f"[green]Wrote[/] {path}")
+
+
 @app.command(name="lei")
 def lei_cmd(
     offline: bool = typer.Option(

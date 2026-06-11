@@ -145,6 +145,13 @@ class Settings(BaseSettings):
     census_api_key: str = ""  # optional; ACS works keyless at low volume
     qcew_base_url: str = "https://data.bls.gov/cew/data/api"
     bea_base_url: str = "https://apps.bea.gov/api/data"
+    # EIA API v2 — consumer energy prices (residential electricity + retail fuel) for
+    # the demand -> consumer-price-pressure thread (issue #91). Keyed: a free key read
+    # from BOSC_EIA_API_KEY, sent only on the live request (never in the cache key or
+    # the committed fixture). Reuses the shared econ cache/offline/fixtures discipline.
+    eia_base_url: str = "https://api.eia.gov/v2"
+    eia_api_key: str = ""  # required for live pulls; offline replays committed fixtures
+    eia_state: str = "OH"  # the state whose consumer energy prices anchor the scenario
     econ_fips: str = "39003"  # Allen County, OH (state 39 + county 003)
     econ_offline: bool = False  # serve cached/fixture responses only; never fetch
     econ_request_timeout_s: float = 60.0

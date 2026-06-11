@@ -1,0 +1,11 @@
+{
+  "params": {
+    "connector": "eia",
+    "route": "seriesid",
+    "series_id": "ELEC.SALES.OH-ALL.A"
+  },
+  "payload": {
+    "period": "2023",
+    "value": 149003.0
+  }
+}

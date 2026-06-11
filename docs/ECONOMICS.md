@@ -101,6 +101,31 @@ with its cited sources — though whether each applies to *this* campus stays
 | GovCloud premium ~20–30%; GPU/rack/facility magnitudes | `[verified: data appendix]` (industry ranges) |
 | Whether those magnitudes apply to *this* campus | `[open]` / `[inference]` |
 
+## 6. Consumer energy-price pressure — the demand spillover `[inference]`
+
+The 2026-06-10 facility-design call asked to *"bring in fuel costs at the consumer
+level due to macro pressures and data-center demand."* The
+[`bosc.economics.energy`](../src/bosc/economics/energy.py) thread sizes that spillover
+against **committed EIA consumer prices** (`bosc eia` →
+[`data/reference/eia/`](../data/reference/eia/)): Ohio residential electricity (¢/kWh),
+residential natural gas ($/Mcf), and total state retail electricity sales.
+
+The link is the facility's first-class total **`facility_draw`** (§1 + the PUE model,
+issue #87 — IT load × PUE), not IT load alone:
+
+| Quantity | Value | Tag |
+|---|---|---|
+| Annual consumption (draw × 8760 h × ~0.9 load factor) | **~2,700 GWh/yr** | `[inference: derived]` |
+| Share of Ohio retail electricity sales (EIA) | **~1.8%** | `[inference: derived]`, EIA-cited |
+| Households-equivalent (÷ ~10,500 kWh/home·yr) | **~260,000 Ohio homes** | `[inference: derived]` |
+| Stylized price pressure (share × 0.5–1.0 transmission) | **~0.9–1.8%** | `[inference, low]` — *screening only* |
+
+The **demand share and households-equivalent are the robust, EIA-cited headline**; the
+price-pressure band is a **deliberately stylized screening sensitivity, not a
+forecast** (retail price formation is far more complex than one coefficient, and the
+campus buys at wholesale/industrial rates, not the residential price shown). This is
+the consumer-cost mirror of the §3 "subsidizes load, not jobs" finding.
+
 **Nothing on this page promotes a defense-intelligence thesis.** Defense-ecosystem
 actors enter only as `[open]` context where the public record already names them
 (see COURSE §1.4); the load, the benefits, and the consumption are the findings.
