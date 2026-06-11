@@ -1,8 +1,15 @@
 # Build & deploy the BOSC site to GitHub Pages — MANUAL ONLY.
 #
+# This builds the redesigned **Astro** site (`frontend/`, Epics #54/#55) over the
+# real content bundle (`bosc export`) — the parity-gated cutover from the legacy
+# Python SSG (#102). The legacy generator stays available as a fallback: run
+# `bosc site build` locally to regenerate the old `site/` tree if ever needed.
+#
 # This workflow never runs on push. It is `workflow_dispatch` (a button in the
-# Actions tab) so nothing publishes until you explicitly trigger it — the site is
-# a private/unlisted draft for now.
+# Actions tab) and `deploy` defaults to false, so a run is **build-only** unless you
+# tick the box — nothing publishes until you explicitly deploy. Recommended first
+# run: build-only, then do a browser visual pass on the deck.gl maps before
+# deploying (WebGL isn't covered by `astro check`).
 #
 # NOTE ON VISIBILITY: GitHub Pages served from a PRIVATE repo is only access-
 # controlled on GitHub Pro / Team / Enterprise. On a free account, enabling Pages
@@ -31,18 +38,48 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # GitHub Pages for a project repo serves under https://<owner>.github.io/<repo>/,
+    # so the Astro site is built with that base path (handled everywhere via withBase()).
+    env:
+      SITE_URL: https://${{ github.repository_owner }}.github.io
+      BASE_PATH: /${{ github.event.repository.name }}
     steps:
       - uses: actions/checkout@v4
+        # No LFS: the Astro site builds from the JSON bundle (`bosc export`) and never
+        # serves source bytes, so the ~5.4 GB corpus isn't pulled. (The exhibits page
+        # shows metadata + an "available" flag, which reads false for unmaterialized
+        # LFS sources — cosmetic; wire a sparse `git lfs pull` of the exhibit allowlist
+        # later if those badges should read true.)
+
+      # 1. Generate the real content bundle the frontend reads.
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          lfs: true   # pulls the curated exhibit PDFs so they can be published
-      - uses: astral-sh/setup-uv@v5
-      - name: Install (with docs extra)
-        run: uv sync --extra docs
-      - name: Build the static site (stages web/, renders site/)
-        run: uv run bosc site build
+          enable-cache: true
+      - name: Set up Python
+        run: uv python install 3.11
+      - name: Install dependencies
+        run: uv sync
+      - name: Export the content bundle (-> data/site/bundle)
+        run: uv run bosc export
+
+      # 2. Build the Astro site over that bundle.
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+      - name: Build the site (-> frontend/dist)
+        working-directory: frontend
+        run: npm run build
+
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: frontend/dist
 
   deploy:
     # Only deploys when you tick the "deploy" input; otherwise the run is build-only.
