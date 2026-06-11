@@ -19,7 +19,8 @@ import {
   type RecordItem,
   type TimelineEntry,
 } from "./feeds";
-import { SECTIONS } from "./nav";
+import { getSection, SECTIONS } from "./nav";
+import { NARRATIVE } from "./narrative";
 
 export interface SearchDoc {
   title: string;
@@ -49,6 +50,16 @@ export function buildSearchIndex(): SearchDoc[] {
         text: `${t.label} ${s.blurb}`,
       });
     }
+  }
+
+  // Migrated narrative prose (#69) — by title + blurb.
+  for (const d of NARRATIVE) {
+    docs.push({
+      title: d.title,
+      url: `/docs/${d.slug}`,
+      section: getSection(d.section).label,
+      text: d.blurb,
+    });
   }
 
   const SITE = "The BOSC site";

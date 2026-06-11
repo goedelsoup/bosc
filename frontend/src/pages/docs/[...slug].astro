@@ -1,0 +1,26 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { bySlug } from "../../lib/narrative";
+import { getSection } from "../../lib/nav";
+import { withBase } from "../../lib/site";
+
+export async function getStaticPaths() {
+  // Only the curated narrative set (lib/narrative.ts) is published; the glob may
+  // load other docs/ markdown, which we drop here.
+  const entries = await getCollection("narrative", (e) => bySlug.has(e.id));
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const doc = bySlug.get(entry.id)!;
+const section = getSection(doc.section);
+const { Content } = await render(entry);
+---
+
+<Base title={doc.title} section={doc.section} description={doc.blurb}>
+  <article class="prose">
+    <p><a href={withBase(section.href)}>← {section.label}</a> · <a href={withBase("/docs/")}>All narrative</a></p>
+    <Content />
+  </article>
+</Base>

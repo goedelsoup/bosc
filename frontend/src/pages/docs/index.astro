@@ -1,0 +1,39 @@
+---
+import Base from "../../layouts/Base.astro";
+import { NARRATIVE } from "../../lib/narrative";
+import { getSection, SECTIONS, type SectionId } from "../../lib/nav";
+import { withBase } from "../../lib/site";
+
+// Group the migrated narrative by the section each piece belongs to.
+const groups = SECTIONS.map((s) => ({
+  section: s,
+  docs: NARRATIVE.filter((d) => d.section === (s.id as SectionId)),
+})).filter((g) => g.docs.length > 0);
+---
+
+<Base title="Narrative" section="home" description="The project's narrative prose — methodology, dossier, hydrology, economics, and legal analysis.">
+  <article class="prose">
+    <h1>Narrative</h1>
+    <p class="section-lead">
+      The project's long-form prose, migrated from <code>docs/</code> into the
+      site (issue #69). The same files still feed the legacy generator — this
+      reads them as-is, rewriting their cross-links into the new sections.
+    </p>
+
+    {
+      groups.map((g) => (
+        <>
+          <h2 id={g.section.id}>{getSection(g.section.id).label}</h2>
+          <div class="cards">
+            {g.docs.map((d) => (
+              <a class="card" href={`${withBase("/docs/")}${d.slug}`}>
+                <span class="card-title">{d.title}</span>
+                <span class="card-meta">{d.blurb}</span>
+              </a>
+            ))}
+          </div>
+        </>
+      ))
+    }
+  </article>
+</Base>

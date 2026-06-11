@@ -92,6 +92,27 @@ The islands are build-verified (bundle, mount, endpoint fetch); a quick **browse
 visual pass** is still worth doing (WebGL rendering isn't covered by `astro check`).
 The watershed map proper + imagery slider ([#72](https://github.com/goedelsoup/bosc/issues/72)) await committed watershed-boundary geometry + imagery feeds (E1.4).
 
+## Narrative content (the `docs/` collection)
+
+The project's prose (DOSSIER, methodology, HYDROLOGY, ECONOMICS, the bigger
+picture, legal analyses…) is surfaced via an Astro **content collection** sourced
+from the repo-root `docs/` **as-is** ([#69](https://github.com/goedelsoup/bosc/issues/69)).
+
+**Single-source decision:** `docs/` stays at the repo root and is **not** moved or
+edited — it's also the legacy Python SSG's input and general repo documentation.
+The frontend reads it with a `glob` loader over `../docs` (`src/content.config.ts`),
+publishing only the curated set in `src/lib/narrative.ts`, rendered at `/docs/<slug>`.
+
+Because the source links target the *legacy* `web/docs/` layout, a build-time
+rehype plugin (`src/lib/rehype-doc-links.ts`) rewrites them without touching the
+source: intra-narrative links → `/docs/<slug>`, known legacy pages → their new-IA
+route (`src/lib/narrative.ts` `LINK_MAP`), and any other in-repo file (the corpus,
+not-yet-migrated pages) → its GitHub source — so cross-links resolve in both tiers.
+
+> Note: editing `astro.config.ts`-imported modules (the rehype plugin / its data)
+> requires clearing `node_modules/.vite` to bust Astro's config bundle cache; a
+> fresh `npm ci` in CI is unaffected.
+
 ## Evidence tags
 
 `src/components/EvidenceTag.astro` renders the corpus's inline confidence markers
@@ -139,5 +160,8 @@ Plus the **deck.gl visualization layer** (Epic #55): the corridor map
 ([#71](https://github.com/goedelsoup/bosc/issues/71)) and the entity graph
 ([#73](https://github.com/goedelsoup/bosc/issues/73)).
 
-Next: the narrative MDX content collection (#69); the watershed map + imagery
-slider (#72, blocked on E1.4 geometry/imagery feeds).
+Plus the narrative content collection
+([#69](https://github.com/goedelsoup/bosc/issues/69)) — **Epic #54 is complete**.
+
+Remaining for the redesign: the watershed map + imagery slider (#72, blocked on
+E1.4 geometry/imagery feeds), and flipping the parity-gated Pages deploy to this app.

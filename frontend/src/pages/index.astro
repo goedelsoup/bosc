@@ -86,18 +86,17 @@ const doors = SECTIONS.filter((s) => s.id !== "home");
     <p>
       Each record is read from the <em>image</em>, not the OCR text layer (whose
       digits are unreliable), validated against a typed schema, and cited back to
-      a source page — confidence surfaced inline as evidence tags. The full
-      write-up, taught through runnable notebooks, lives in
-      <a href={withBase("/about/")}>About</a> (the narrative methodology page
-      migrates in #69).
+      a source page — confidence surfaced inline as evidence tags. Read the full
+      write-up: <a href={withBase("/docs/methodology")}>Methodology</a> · the
+      <a href={withBase("/docs/course")}>research course</a>.
     </p>
 
     <h2 id="bigger-picture">The bigger picture</h2>
     <p>
       The BOSC site is one node in a regional data-center build-out; placing the
       document-by-document record against the watershed's water balance is how
-      the analysis moves from anecdote to evidence. How Lima compares to the
-      broader boom is sketched in <a href={withBase("/about/")}>About</a>.
+      the analysis moves from anecdote to evidence. →
+      <a href={withBase("/docs/bigger-picture")}>The bigger picture</a>.
     </p>
 
     <p class="stub-note">Bundle source: <code>{bundleDir()}</code>.</p>

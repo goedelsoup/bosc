@@ -71,5 +71,10 @@ const meetings = hasFeed("meetings") ? loadFeed<MeetingItem[]>("meetings") : [];
       {meetings.length} meeting summaries, plus PRR &amp; mandamus and
       Select-Committee testimony. → <a href={withBase("/site/legal")}>Open legal history</a>
     </p>
+    <p>
+      Narrative: <a href={withBase("/docs/dossier")}>the research dossier</a> ·
+      <a href={withBase("/docs/legal/mandamus-analysis")}>mandamus analysis</a> ·
+      <a href={withBase("/docs/legal/proponent-analysis")}>proponent analysis</a>
+    </p>
   </article>
 </Base>
