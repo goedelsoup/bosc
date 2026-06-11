@@ -13,11 +13,12 @@ from __future__ import annotations
 
 from bosc.facility.compute import derive_compute_capacity
 from bosc.facility.model import AcceleratorScenario, ComputeCapacity
-from bosc.facility.power import PowerBasis, derive_power_basis
+from bosc.facility.power import GenerationConfig, PowerBasis, derive_power_basis
 
 __all__ = [
     "AcceleratorScenario",
     "ComputeCapacity",
+    "GenerationConfig",
     "PowerBasis",
     "derive_compute_capacity",
     "derive_power_basis",

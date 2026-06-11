@@ -29,3 +29,47 @@ def test_facility_power_matches_cooling_it_load() -> None:
 
     assert _IT_LOAD_MW == cooling._IT_LOAD_MW
     assert derive_power_basis().it_load.value == pytest.approx(cooling._IT_LOAD_MW)
+
+
+def test_generation_cycle_efficiency_coefficient() -> None:
+    """Issue #90: simple- vs combined-cycle net efficiency (the power-loss coefficient)."""
+    b = derive_power_basis()
+    simple = b.generation_config("simple")
+    combined = b.generation_config("combined")
+    assert simple is not None and combined is not None
+
+    # The net-efficiency coefficient is a banded assumption, and the combined cycle
+    # (heat-recovery) is materially more efficient than the simple cycle.
+    for g in (simple, combined):
+        assert g.net_efficiency.source == "assumption"
+        assert 0.0 < g.net_efficiency.value < 1.0
+    assert combined.net_efficiency.value > simple.net_efficiency.value
+
+    # Heat rate is the derived inverse (fuel per MWh) — lower for the efficient cycle.
+    assert simple.heat_rate_mmbtu_per_mwh.source == "derived"
+    assert combined.heat_rate_mmbtu_per_mwh.value < simple.heat_rate_mmbtu_per_mwh.value
+    assert simple.heat_rate_mmbtu_per_mwh.value == pytest.approx(
+        3.412142 / simple.net_efficiency.value, abs=0.01
+    )
+
+
+def test_combined_cycle_steam_water_cross_refs_cooling() -> None:
+    """Issue #90: the steam loop is an additional water pathway, cross-ref to cooling."""
+    b = derive_power_basis()
+    simple = b.generation_config("simple")
+    combined = b.generation_config("combined")
+    assert simple is not None and combined is not None
+
+    # Only the combined cycle recovers exhaust heat and carries a steam-water pathway.
+    assert simple.recovers_exhaust_heat is False
+    assert simple.steam_cycle_water is None
+    assert combined.recovers_exhaust_heat is True
+    assert combined.steam_cycle_water is not None
+    assert combined.steam_cycle_water.unit == "MGD"
+    assert combined.steam_cycle_water.value > 0.0
+    # The water implication is an assumption that cross-references the cooling subsystem.
+    assert combined.steam_cycle_water.source == "assumption"
+    assert "cooling" in (combined.steam_cycle_water.citation or "").lower()
+
+    # The cycle is honestly framed as an open evidence question (disclosed = backup).
+    assert "OPEN EVIDENCE QUESTION" in b.generation_note

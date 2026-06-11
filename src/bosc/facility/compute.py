@@ -191,6 +191,11 @@ def derive_compute_capacity(
     it_power_high = power.it_load_high.value
 
     # --- Method 2: cooling-water back-solve (cross-check, shares WUE) --------
+    # NB: this inversion treats the disclosed consumptive water as data-hall cooling
+    # only. If primary on-site generation were combined-cycle, its steam condenser
+    # would be an additional consumptive pathway (see power.py GenerationConfig /
+    # issue #90), biasing this back-solve high — but that is unproven (the disclosed
+    # gensets are backup), so we do not add it here.
     it_water_low = _it_load_from_consumptive_mgd(cooling.consumptive_low.value, _WUE_L_PER_KWH)
     it_water_high = _it_load_from_consumptive_mgd(cooling.consumptive_high.value, _WUE_L_PER_KWH)
 

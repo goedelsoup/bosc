@@ -444,6 +444,7 @@ def compute(
 ) -> None:
     """Derive the facility's compute / AI capacity by three independent methods."""
     from bosc.facility.compute import derive_compute_capacity
+    from bosc.facility.power import derive_power_basis
 
     settings = get_settings()
     frac = None
@@ -504,6 +505,30 @@ def compute(
         "(training). Accelerator type/count/utilization are UNDISCLOSED — every per-chip row is a "
         "labeled scenario, not a fact. IT load is air-permit-derived (P0138965); chip specs are "
         "vendored reference (data/reference/compute); fractions/MFU are stated assumptions.[/]"
+    )
+
+    # On-site generation cycle (issue #90): the net-efficiency "power-loss coefficient"
+    # per cycle + the combined-cycle steam-water pathway.
+    power = derive_power_basis()
+    console.print(
+        "\n[bold]On-site generation cycle[/] — net-efficiency 'power-loss coefficient' "
+        "[dim](open evidence question; disclosed units are emergency backup, #33)[/]"
+    )
+    gen_table = Table("cycle", "net efficiency", "heat rate (MMBtu/MWh)", "steam-cycle water")
+    for g in power.generation:
+        steam = g.steam_cycle_water
+        gen_table.add_row(
+            g.label,
+            f"{g.net_efficiency.value:g}",
+            f"{g.heat_rate_mmbtu_per_mwh.value:g}",
+            f"~{steam.value:g} MGD (additional)" if steam is not None else "—",
+        )
+    console.print(gen_table)
+    console.print(
+        "\n[dim]Net efficiency (fuel → delivered MWh) and heat rate are banded assumptions; "
+        "the combined-cycle steam loop reuses water — an ADDITIONAL consumptive pathway beyond "
+        "data-hall cooling (cross-ref bosc.hydrology.cooling), conditional on unproven on-site "
+        "primary generation. Source: 2026-06-10 call + air permit P0138965.[/]"
     )
 
 

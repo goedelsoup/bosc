@@ -31,6 +31,30 @@ N+1 ratios the backup ≈ the IT load, so the campus IT load is **~250–300 MW*
 [`bosc.hydrology.cooling`](HYDROLOGY.md) uses for the cooling-water balance; it lives
 in [`bosc.facility.power`](../src/bosc/facility/power.py).
 
+#### On-site generation cycle — simple vs combined (efficiency coefficient)
+
+Beyond *how much* power, `PowerBasis` carries *how* it is generated (issue #90, from
+the 2026-06-10 call's "single- vs double-phase" distinction):
+
+- **simple-cycle (single-phase)** — the prime mover drives the generator directly;
+  exhaust heat is lost. Net electrical efficiency ~**0.38** `[inference: assumption]`
+  (band 0.33–0.43), heat rate ~9.0 MMBtu/MWh.
+- **combined-cycle (double-phase)** — exhaust heat is recovered to raise steam and
+  drive a second-stage steam turbine (cogeneration). Net efficiency ~**0.55**
+  `[inference: assumption]` (band 0.50–0.62), heat rate ~6.2 MMBtu/MWh — less fuel
+  per MWh (the lever the consumer fuel-cost thread, [#91](ECONOMICS.md), needs) **at
+  the cost of a steam/condenser water loop**: an *additional* ~**1.3 MGD** consumptive
+  pathway beyond data-hall cooling, cross-referenced to
+  [`bosc.hydrology.cooling`](HYDROLOGY.md).
+
+The net electrical efficiency is the **"power-loss coefficient"** (fuel chemical
+energy → delivered MWh) as a banded assumption per cycle. **Open evidence question:**
+the disclosed 114 × 2.75 ekW units are emergency **backup** reciprocating gensets
+(simple-cycle by nature); whether any *primary* on-site generation exists, and its
+cycle, is unproven (depends on [#33](../src/bosc/facility/power.py)) — so both configs
+are labeled **scenarios**, and the combined-cycle steam water is conditional (likely
+ruled out today, not added to the water balance).
+
 The accelerator chain:
 
 > IT load (MW) → **usable accelerator power** = IT load × *accelerator-power fraction*
@@ -116,6 +140,8 @@ AI compute facility — is robust to the disagreement.
 | input | value | source |
 |---|---|---|
 | Genset count × rating → backup → IT load | 114 × 2.75 ekW → 313 MW → 275 MW | `[verified: document]` OEPA Air PTI P0138965 |
+| Generation net efficiency — simple / combined cycle | 0.38 / 0.55 (heat rate ~9.0 / ~6.2 MMBtu/MWh) | `[inference: assumption]` power-loss coefficient per cycle (#90) |
+| Combined-cycle steam-loop water | ~1.3 MGD additional | `[inference: assumption]` conditional; cross-ref `bosc.hydrology.cooling` (#90) |
 | Cooling consumptive (low / high) | 3.1 / 10 MGD | `[inference: derived]` `CoolingBasis` (power×WUE; FM-2 blowdown×cycles) |
 | WUE | 1.8 L/kWh | `[inference: assumption]` evaporative hyperscale (shared with cooling) |
 | Campus land area | ~340 acres | `[verified: document]` recorded Bistrozzi parcels geojson |
