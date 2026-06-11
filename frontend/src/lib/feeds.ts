@@ -174,6 +174,33 @@ export interface ScenarioResult {
   assimilative: ProvenancedValue;
 }
 
+/** One dated Esri Wayback aerial release (the `geo/imagery` feed's `meta.wayback`). */
+export interface WaybackRelease {
+  date: string; // e.g. "2014-12"
+  release: number; // the Wayback releaseNum, substituted into the tile template
+}
+
+/** The `geo/imagery` feed shape (issue #72): AOI footprints + the dated ladder. */
+export interface ImageryFeed {
+  type: "FeatureCollection";
+  feed?: string;
+  meta?: {
+    crs?: string;
+    subject?: string;
+    wayback?: {
+      tile_url_template: string; // carries `{release}` + `{z}/{y}/{x}`
+      attribution?: string;
+      note?: string;
+      releases: WaybackRelease[];
+    };
+  };
+  features: {
+    type: "Feature";
+    geometry: { type: string; coordinates: unknown };
+    properties: { layer: string; label?: string; color?: string; site?: string; bbox?: number[] };
+  }[];
+}
+
 export interface RseiFacility {
   name?: string | null;
   city?: string | null;

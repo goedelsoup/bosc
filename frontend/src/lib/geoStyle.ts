@@ -23,8 +23,10 @@ export interface GeoProps {
 export type GeoFeature = Feature<Geometry, GeoProps>;
 export type RGBA = [number, number, number, number];
 
-/** Draw order (areas first, points last) and friendly per-layer names. */
+/** Draw order (areas first, points last) and friendly per-layer names. The
+ *  watershed boundary draws first so it sits underneath as context. */
 export const LAYER_ORDER = [
+  "watershed",
   "floodplain",
   "floodway",
   "corridor",
@@ -36,6 +38,7 @@ export const LAYER_ORDER = [
 ] as const;
 
 export const LAYER_LABELS: Record<string, string> = {
+  watershed: "Watershed boundary (USGS WBD)",
   floodplain: "FEMA floodplain",
   floodway: "FEMA floodway",
   corridor: "Corridor study area",

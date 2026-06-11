@@ -137,6 +137,57 @@ def test_cross_feed_references_resolve(bundle: Path) -> None:
         assert (extracted / record["rel"]).exists(), f"record path missing: {record['rel']}"
         assert record["citation"]["source"] == record["rel"]
 
+    # Every timeline event's source resolves to a committed extraction (chain of custody).
+    for event in _rows(bundle, by_name["timeline"]):
+        if event.get("source"):
+            assert (extracted / event["source"]).exists(), (
+                f"timeline source missing: {event['source']}"
+            )
+
+    # Concept `related` siblings are real concept slugs (no orphaned wiki links).
+    if "concepts" in by_name:
+        concepts = _rows(bundle, by_name["concepts"])
+        slugs = {c["slug"] for c in concepts}
+        for c in concepts:
+            for sib in c.get("related", []):
+                assert sib in slugs, f"concept {c['slug']} relates to unknown concept {sib}"
+
+
+def test_feed_slugs_are_unique(bundle: Path) -> None:
+    """Slug-keyed feeds (the per-item page ids) must have no duplicates."""
+    by_name = _feeds_by_name(bundle)
+    for feed in ("people", "places", "concepts", "documents"):
+        if feed not in by_name:
+            continue
+        slugs = [r["slug"] for r in _rows(bundle, by_name[feed])]
+        assert len(slugs) == len(set(slugs)), f"{feed}: duplicate slugs"
+        assert all(s and s == s.strip() for s in slugs), f"{feed}: blank/untrimmed slug"
+
+
+def test_e14_watershed_and_imagery_geo_feeds_are_coherent(bundle: Path) -> None:
+    """The E1.4 geo feeds (#61) for the #72 map exist and carry their metadata."""
+    by_name = _feeds_by_name(bundle)
+
+    watershed = json.loads((bundle / by_name["geo/watershed"]["path"]).read_text(encoding="utf-8"))
+    assert watershed["features"], "watershed feed has no boundaries"
+    for f in watershed["features"]:
+        p = f["properties"]
+        assert p["layer"] == "watershed"
+        assert p["role"] == "area"
+        assert str(p["huc"]).isdigit() and p["level"] in (8, 10, 12)
+        assert p["name"], "watershed feature missing HU name"
+    # Coarsest → finest so the finer subwatershed draws on top.
+    levels = [f["properties"]["level"] for f in watershed["features"]]
+    assert levels == sorted(levels)
+
+    imagery = json.loads((bundle / by_name["geo/imagery"]["path"]).read_text(encoding="utf-8"))
+    wayback = imagery["meta"]["wayback"]
+    assert wayback["releases"], "imagery feed missing the dated Wayback ladder"
+    assert "{release}" in wayback["tile_url_template"]
+    assert all("date" in r and "release" in r for r in wayback["releases"])
+    assert imagery["features"], "imagery feed missing an AOI footprint"
+    assert all(f["properties"]["layer"] == "imagery" for f in imagery["features"])
+
 
 def test_geo_features_carry_layer_metadata(bundle: Path) -> None:
     for name, ref in _feeds_by_name(bundle).items():

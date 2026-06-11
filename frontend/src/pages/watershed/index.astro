@@ -8,6 +8,8 @@ const manifest = loadManifest();
 const geoLayers = manifest.feeds.filter((f) => f.name.startsWith("geo/"));
 const scenarios = manifest.feeds.find((f) => f.name === "hydrology-scenarios")?.count ?? 0;
 const rseiFeatures = manifest.feeds.find((f) => f.name === "geo/rsei")?.count ?? 0;
+const watershedFeatures = manifest.feeds.find((f) => f.name === "geo/watershed")?.count ?? 0;
+const hasImagery = manifest.feeds.some((f) => f.name === "geo/imagery");
 ---
 
 <Base title="The Maumee watershed" section="watershed">
@@ -31,22 +33,29 @@ const rseiFeatures = manifest.feeds.find((f) => f.name === "geo/rsei")?.count ??
 
     <h2 id="map">Watershed map</h2>
     <p>
-      The interactive <a href={withBase("/watershed/map")}>corridor map</a> (#71)
-      renders {geoLayers.length} typed GeoJSON layers — campus, JSMC, the corridor
-      and roadwork, FEMA floodway/floodplain, WWTP discharge points, and the RSEI
-      overlay — on deck.gl + MapLibre, with dated aerials and click-through to each
-      record.
+      The interactive <a href={withBase("/watershed/map")}>watershed &amp; corridor map</a>
+      renders {geoLayers.filter((g) => g.name !== "geo/imagery").length} typed GeoJSON layers
+      on deck.gl + MapLibre, with dated aerials and click-through to each record — the
+      campus, JSMC, the corridor and roadwork, FEMA floodway/floodplain, WWTP discharge
+      points, the RSEI overlay, and {watershedFeatures
+        ? `the USGS WBD watershed boundary (${watershedFeatures} hydrologic unit${watershedFeatures === 1 ? "" : "s"} — Pike Run subwatershed + the Ottawa River watershed)`
+        : "the watershed boundary"}.
     </p>
     <ul>
       {geoLayers.map((g) => <li><code>{g.name}</code> — {g.count} feature(s)</li>)}
     </ul>
-    <p class="stub-note">
-      The broader Maumee/Lost Creek watershed boundary + the imagery time-slider
-      (#72) await committed watershed geometry and imagery feeds (E1.4).
-    </p>
 
-    <h2 id="imagery">Imagery</h2>
-    <BeforeAfterSlider />
+    <h2 id="imagery">Imagery — before / during / after</h2>
+    {
+      hasImagery ? (
+        <p>
+          Dated Esri <strong>Wayback</strong> aerials over the campus AOI — scrub through
+          the data-center buildout. → <a href={withBase("/watershed/imagery")}>Open the imagery slider</a>
+        </p>
+      ) : (
+        <BeforeAfterSlider />
+      )
+    }
 
     <h2 id="rsei">RSEI / toxics</h2>
     <p>

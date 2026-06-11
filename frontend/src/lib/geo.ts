@@ -7,6 +7,10 @@ import type { FeatureCollection } from "geojson";
 import { loadFeed, loadManifest } from "./bundle";
 import type { GeoFeature } from "./geoStyle";
 
+// The imagery feed is the time-slider's data (an AOI footprint + the Wayback
+// ladder in its meta), not a corridor-map layer — keep it out of the merge.
+const MERGE_EXCLUDE = new Set(["geo/imagery"]);
+
 /** Manifest names of the geo layer feeds (e.g. "geo/campus"). */
 export function geoFeedNames(): string[] {
   return loadManifest()
@@ -14,15 +18,17 @@ export function geoFeedNames(): string[] {
     .map((f) => f.name);
 }
 
-/** One geo layer feed as a GeoJSON FeatureCollection. */
+/** One geo layer feed as a GeoJSON FeatureCollection (meta preserved). */
 export function loadGeo(name: string): FeatureCollection {
   return loadFeed<FeatureCollection>(name);
 }
 
-/** All geo feeds merged into one FeatureCollection (the corridor-map source). */
+/** The corridor + watershed map's source: every geo layer feed merged into one
+ *  FeatureCollection (minus the imagery feed, which drives the slider). */
 export function mergedGeo(): FeatureCollection {
   const features: GeoFeature[] = [];
   for (const name of geoFeedNames()) {
+    if (MERGE_EXCLUDE.has(name)) continue;
     const fc = loadGeo(name);
     features.push(...(fc.features as GeoFeature[]));
   }

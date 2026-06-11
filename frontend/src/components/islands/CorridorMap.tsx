@@ -12,8 +12,7 @@
 import { useEffect, useMemo, useState } from "react";
 import DeckGL from "@deck.gl/react";
 import type { Layer } from "@deck.gl/core";
-import { BitmapLayer, GeoJsonLayer } from "@deck.gl/layers";
-import { TileLayer } from "@deck.gl/geo-layers";
+import { GeoJsonLayer } from "@deck.gl/layers";
 import { Map } from "react-map-gl/maplibre";
 import type { FeatureCollection } from "geojson";
 import "maplibre-gl/dist/maplibre-gl.css";
@@ -25,6 +24,7 @@ import {
   type GeoFeature,
   type GeoProps,
 } from "../../lib/geoStyle";
+import { rasterTileLayer } from "./rasterTile";
 
 type FC = FeatureCollection<GeoFeature["geometry"], GeoProps>;
 
@@ -37,24 +37,6 @@ const BASEMAPS: Record<string, string | null> = {
   street: null, // the MapLibre vector basemap shows through
 };
 const INITIAL_VIEW_STATE = { longitude: -84.122, latitude: 40.792, zoom: 12.5, pitch: 0, bearing: 0 };
-
-function rasterBasemap(url: string) {
-  return new TileLayer({
-    id: `basemap-${url}`,
-    data: url,
-    minZoom: 0,
-    maxZoom: 19,
-    tileSize: 256,
-    renderSubLayers: (props) => {
-      const { boundingBox } = props.tile;
-      return new BitmapLayer(props, {
-        data: undefined,
-        image: props.data,
-        bounds: [boundingBox[0][0], boundingBox[0][1], boundingBox[1][0], boundingBox[1][1]],
-      });
-    },
-  });
-}
 
 function layerFor(key: string, features: GeoFeature[]): GeoJsonLayer<GeoProps> {
   const data: FeatureCollection = {
@@ -70,6 +52,9 @@ function layerFor(key: string, features: GeoFeature[]): GeoJsonLayer<GeoProps> {
     getFillColor: (f) => {
       const p = (f as GeoFeature).properties;
       if (p.role === "point") return rgba(p.color, p.scored === false ? 80 : 210);
+      // The watershed boundaries are large context polygons — a faint wash so the
+      // corridor stays legible; everything else keeps the standard area fill.
+      if (p.layer === "watershed") return rgba(p.color, 22);
       return rgba(p.color, 70);
     },
     getLineColor: (f) => rgba((f as GeoFeature).properties.color, 255),
@@ -114,7 +99,7 @@ export default function CorridorMap({ src }: { src: string }): JSX.Element {
   const layers = useMemo(() => {
     const out: Layer[] = [];
     const url = BASEMAPS[basemap];
-    if (url) out.push(rasterBasemap(url));
+    if (url) out.push(rasterTileLayer(url));
     for (const key of present) if (visible[key]) out.push(layerFor(key, features));
     return out;
   }, [fc, visible, basemap]);

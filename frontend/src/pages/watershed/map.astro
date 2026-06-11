@@ -21,16 +21,19 @@ const legend = present.map((layer) => {
 const mapSrc = withBase("/feeds/geo/corridor-map.geojson");
 ---
 
-<Base title="Corridor map" section="watershed">
+<Base title="Watershed & corridor map" section="watershed">
   <article class="prose">
     <p><a href={withBase("/watershed/")}>← The Maumee watershed</a></p>
-    <h1>Corridor map</h1>
+    <h1>Watershed &amp; corridor map</h1>
     <p class="section-lead">
-      The campus, the JSMC parcels, the North Cole Street corridor and roadwork,
-      FEMA floodway/floodplain, WWTP discharge points, and the RSEI toxic-release
-      overlay (off by default). Pan/zoom, toggle layers, switch basemaps (street,
-      Esri aerial, dated 2014/2024 Wayback aerials), and click a feature for its
-      record. {features.length} features across {present.length} layers.
+      The USGS WBD watershed boundary (the Pike Run subwatershed within the Ottawa
+      River watershed) framing the campus, the JSMC parcels, the North Cole Street
+      corridor and roadwork, FEMA floodway/floodplain, WWTP discharge points, and the
+      RSEI toxic-release overlay (off by default). Pan/zoom, toggle layers, switch
+      basemaps (street, Esri aerial, dated 2014/2024 Wayback aerials), and click a
+      feature for its record. {features.length} features across {present.length} layers.
+      For the dated before/during/after view, see the
+      <a href={withBase("/watershed/imagery")}>imagery slider</a>.
     </p>
 
     <div class="deck-surface">

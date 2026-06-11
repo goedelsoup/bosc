@@ -1,0 +1,96 @@
+---
+import BeforeAfterSlider from "../../components/BeforeAfterSlider.astro";
+import ImagerySlider from "../../components/islands/ImagerySlider.tsx";
+import Base from "../../layouts/Base.astro";
+import { hasFeed } from "../../lib/bundle";
+import type { ImageryFeed, WaybackRelease } from "../../lib/feeds";
+import { loadGeo } from "../../lib/geo";
+import { withBase } from "../../lib/site";
+
+// Build-time: read the imagery feed so the page server-renders a real
+// before/during/after view (dated Wayback tiles over the AOI centroid) plus the
+// release table — the no-JS fallback and a plain data view under the deck island.
+const feed = hasFeed("geo/imagery") ? (loadGeo("geo/imagery") as unknown as ImageryFeed) : null;
+const wayback = feed?.meta?.wayback;
+const releases: WaybackRelease[] = wayback?.releases ?? [];
+const aoi = feed?.features ?? [];
+const bbox = aoi[0]?.properties?.bbox;
+const center: [number, number] = bbox
+  ? [(bbox[0] + bbox[2]) / 2, (bbox[1] + bbox[3]) / 2]
+  : [-84.1234, 40.7969];
+
+// Slippy-tile (XYZ) coords for the AOI centroid — one 256px tile per dated release
+// gives a static before/during/after strip without JavaScript.
+const TILE_Z = 14;
+function lonLatToTile([lon, lat]: [number, number], z: number): { x: number; y: number } {
+  const n = 2 ** z;
+  const latRad = (lat * Math.PI) / 180;
+  const x = Math.floor(((lon + 180) / 360) * n);
+  const y = Math.floor(((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2) * n);
+  return { x, y };
+}
+const { x: tileX, y: tileY } = lonLatToTile(center, TILE_Z);
+const tileFor = (release: number): string =>
+  (wayback?.tile_url_template ?? "")
+    .replace("{release}", String(release))
+    .replace("{z}", String(TILE_Z))
+    .replace("{y}", String(tileY))
+    .replace("{x}", String(tileX));
+
+const frames = releases.map((r) => ({ label: r.date, src: tileFor(r.release) }));
+const src = withBase("/feeds/geo/imagery.geojson");
+const siteName = aoi[0]?.properties?.label ?? "Data-center campus — imagery AOI";
+---
+
+<Base title="Imagery — before / during / after" section="watershed">
+  <article class="prose">
+    <p><a href={withBase("/watershed/")}>← The Maumee watershed</a></p>
+    <h1>Imagery — before / during / after</h1>
+    <p class="section-lead">
+      Dated Esri <strong>Wayback</strong> aerials over the {siteName.replace(" — imagery AOI", "")} AOI:
+      scrub the slider to watch the land change through the data-center buildout
+      ({releases.length ? `${releases[0].date} → ${releases[releases.length - 1].date}` : "no dates"}).
+      Pan and zoom the interactive map; the strip below is a no-JS, fixed-frame view of the
+      same dates. These are a <em>view-only</em> historical supplement (tiles load from Esri);
+      the publishable analysis-grade series is the free/open Sentinel-2 / NAIP imagery pulled by
+      <code>bosc imagery</code>.
+    </p>
+
+    {
+      releases.length === 0 ? (
+        <p class="stub-note">No <code>geo/imagery</code> feed in this bundle.</p>
+      ) : (
+        <>
+          <div class="deck-surface">
+            <ImagerySlider client:only="react" src={src} />
+            <noscript>
+              <div class="deck-loading">
+                Interactive map needs JavaScript — the dated strip below carries the same aerials.
+              </div>
+            </noscript>
+          </div>
+
+          <h2>Dated aerials (no-JS)</h2>
+          <BeforeAfterSlider frames={frames} />
+
+          <h2>Releases</h2>
+          <table>
+            <thead>
+              <tr><th>Date</th><th>Wayback release</th><th>Aerial (AOI tile)</th></tr>
+            </thead>
+            <tbody>
+              {releases.map((r) => (
+                <tr>
+                  <td>{r.date}</td>
+                  <td><code>{r.release}</code></td>
+                  <td><a href={tileFor(r.release)} rel="noopener">tile</a></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p class="card-meta">{wayback?.attribution ?? "Imagery © Esri — World Imagery Wayback"}</p>
+        </>
+      )
+    }
+  </article>
+</Base>

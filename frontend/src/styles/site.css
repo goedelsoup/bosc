@@ -415,6 +415,10 @@ a.card:hover { border-color: var(--bosc-indigo); background: #f8f9fc; }
 .deck-controls strong { display: block; margin: 0.45rem 0 0.2rem; }
 .deck-controls strong:first-child { margin-top: 0; }
 .deck-controls label { display: block; cursor: pointer; }
+/* Imagery time-slider scrubber (#72): a wider control bar for the dated aerials. */
+.imagery-scrubber { max-width: 18rem; }
+.imagery-scrubber input[type="range"] { display: block; width: 100%; margin: 0.2rem 0; }
+.imagery-scrubber .scrubber-date { font-weight: 600; }
 .deck-popup {
   position: absolute;
   bottom: 12px;
