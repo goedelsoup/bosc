@@ -77,6 +77,7 @@ export const SECTIONS: Section[] = [
       { label: "Entities", anchor: "entities" },
       { label: "People", anchor: "people" },
       { label: "Concepts", anchor: "concepts" },
+      { label: "Curated entities", anchor: "curated" },
     ],
   },
 ];

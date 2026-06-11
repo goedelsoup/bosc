@@ -2,8 +2,8 @@
   "bundle_version": "1.0.0",
   "contract_version": "1.1.0",
   "generated_at": "2026-06-10T00:00:00+00:00",
-  "feed_count": 15,
-  "row_total": 41,
+  "feed_count": 19,
+  "row_total": 48,
   "feeds": [
     {
       "name": "records",
@@ -123,6 +123,38 @@
       "media_type": "application/geo+json",
       "schema": "schemas/geo.schema.json",
       "kind": "geojson",
+      "count": 1
+    },
+    {
+      "name": "candidates",
+      "path": "feeds/candidates.json",
+      "media_type": "application/json",
+      "schema": "schemas/candidates.schema.json",
+      "kind": "collection",
+      "count": 4
+    },
+    {
+      "name": "defense-contractors",
+      "path": "feeds/defense-contractors.json",
+      "media_type": "application/json",
+      "schema": "schemas/defense-contractors.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "lei",
+      "path": "feeds/lei.json",
+      "media_type": "application/json",
+      "schema": "schemas/lei.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "economics-baseline",
+      "path": "feeds/economics-baseline.json",
+      "media_type": "application/json",
+      "schema": "schemas/economics-baseline.schema.json",
+      "kind": "object",
       "count": 1
     }
   ]

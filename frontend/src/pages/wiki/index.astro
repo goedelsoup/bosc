@@ -60,5 +60,31 @@ const concepts = hasFeed("concepts") ? loadFeed<ConceptItem[]>("concepts") : [];
         ))
       }
     </div>
+
+    <h2 id="curated">Curated entities</h2>
+    <p>
+      Hand-curated entity inventories that sit alongside the corpus graph — leads to verify, not
+      corpus-derived classifications.
+    </p>
+    <div class="cards">
+      {hasFeed("candidates") && (
+        <a class="card" href={withBase("/wiki/candidates")}>
+          <span class="card-title">Cloud-consumer candidates</span>
+          <span class="card-meta">{count("candidates")} corridor operations marked on demand-fit</span>
+        </a>
+      )}
+      {hasFeed("defense-contractors") && (
+        <a class="card" href={withBase("/wiki/defense-contractors")}>
+          <span class="card-title">Defense contractors</span>
+          <span class="card-meta">DoD-prime pattern matches + the county land scan</span>
+        </a>
+      )}
+      {hasFeed("lei") && (
+        <a class="card" href={withBase("/wiki/lei")}>
+          <span class="card-title">Entity LEIs (GLEIF)</span>
+          <span class="card-meta">{count("lei")} legal-entity identifiers + parent chains</span>
+        </a>
+      )}
+    </div>
   </article>
 </Base>

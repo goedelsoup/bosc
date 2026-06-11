@@ -1,0 +1,101 @@
+---
+import Base from "../../layouts/Base.astro";
+import { hasFeed, loadFeed } from "../../lib/bundle";
+import type { EconomicBaseline, ProvenancedValue } from "../../lib/feeds";
+import { withBase } from "../../lib/site";
+
+const eb = hasFeed("economics-baseline") ? loadFeed<EconomicBaseline>("economics-baseline") : null;
+const num = (v?: ProvenancedValue | null): string =>
+  v?.value == null ? "—" : Math.round(v.value).toLocaleString("en-US");
+const lq = (v?: ProvenancedValue | null): number | null => (v?.value == null ? null : v.value);
+// A location quotient is the county's employment share over the national share:
+// ≥ 1.25 means the county does much more of that work than the nation (it exports).
+const orientation = (q: number | null): string =>
+  q == null ? "—" : q >= 1.25 ? `${q.toFixed(2)} · exports` : q >= 1.0 ? `${q.toFixed(2)}` : `${q.toFixed(2)} · imports`;
+
+const sectors = [...(eb?.latest.sectors ?? [])].sort(
+  (a, b) => (b.annual_avg_employment.value ?? 0) - (a.annual_avg_employment.value ?? 0),
+);
+const trend = eb?.trend ?? [];
+const pop = eb?.population?.points ?? [];
+const first = trend[0];
+const last = trend[trend.length - 1];
+const delta = first && last ? (last.total_employment.value ?? 0) - (first.total_employment.value ?? 0) : 0;
+const pct = first?.total_employment.value ? (delta / first.total_employment.value) * 100 : 0;
+---
+
+<Base title="Economics — localized baseline" section="watershed">
+  <article class="prose">
+    <p><a href={withBase("/watershed/")}>← The Maumee watershed</a></p>
+    <h1>Economics — localized baseline</h1>
+    {
+      eb === null ? (
+        <p class="stub-note">No <code>economics-baseline</code> feed in this bundle.</p>
+      ) : (
+        <>
+          <p class="section-lead">
+            What {eb.area_name}'s economy actually is, quantitatively — the ground the data-center deal sits
+            on. Employment by industry for <strong>{eb.latest.year}</strong> (BLS QCEW) with each sector's
+            <strong> location quotient</strong> (county share ÷ national share), and population (US Census
+            ACS). Every figure is connector-sourced <code>[verified]</code>; the prose companion is
+            <a href={withBase("/docs/economics")}> Economics — demand &amp; public benefits</a>.
+          </p>
+
+          {pop.length > 0 && (
+            <>
+              <h2 id="population">Population</h2>
+              <table>
+                <thead><tr><th>Year</th><th>Population</th></tr></thead>
+                <tbody>
+                  {pop.map((p) => (
+                    <tr><td>{p.year}</td><td>{num(p.population)}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
+          )}
+
+          {trend.length > 0 && (
+            <>
+              <h2 id="employment">Employment trend</h2>
+              <table>
+                <thead><tr><th>Year</th><th>Total covered employment</th></tr></thead>
+                <tbody>
+                  {trend.map((t) => (
+                    <tr><td>{t.year}</td><td>{num(t.total_employment)}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+              {trend.length >= 2 && (
+                <p>
+                  Total covered employment <strong>{delta > 0 ? "grew" : "shrank"} {Math.abs(pct).toFixed(1)}%</strong>{" "}
+                  ({num(first.total_employment)} → {num(last.total_employment)}) between {first.year} and
+                  {" "}{last.year} — the labor base the campus's ~50 promised jobs join.
+                </p>
+              )}
+            </>
+          )}
+
+          <h2 id="industry">Industry mix &amp; export-orientation</h2>
+          <p>Employment by NAICS sector, {eb.latest.year}, ranked by jobs.</p>
+          <table>
+            <thead>
+              <tr><th>Sector</th><th>Jobs</th><th>Establishments</th><th>Location quotient</th></tr>
+            </thead>
+            <tbody>
+              {sectors.map((s) => (
+                <tr>
+                  <td>{s.naics} · {s.sector_name}</td>
+                  <td>{num(s.annual_avg_employment)}</td>
+                  <td>{num(s.establishments)}</td>
+                  <td>{orientation(lq(s.location_quotient))}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {eb.note && <p class="card-meta">{eb.note}</p>}
+        </>
+      )
+    }
+  </article>
+</Base>

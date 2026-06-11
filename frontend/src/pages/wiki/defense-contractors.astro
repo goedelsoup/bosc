@@ -1,0 +1,120 @@
+---
+import Base from "../../layouts/Base.astro";
+import { hasFeed, loadFeed } from "../../lib/bundle";
+import { slugify, type DefenseContractors } from "../../lib/feeds";
+import { withBase } from "../../lib/site";
+
+const dc = hasFeed("defense-contractors") ? loadFeed<DefenseContractors>("defense-contractors") : null;
+const contractors = dc?.contractors ?? [];
+const primeOwned = dc?.prime_owned ?? [];
+const armyControlled = dc?.army_controlled ?? [];
+const field = (row: Record<string, unknown>, key: string): string =>
+  row[key] == null ? "—" : String(row[key]);
+---
+
+<Base title="Defense contractors" section="wiki">
+  <article class="prose">
+    <p><a href={withBase("/wiki/")}>← Wiki</a></p>
+    <h1>Defense contractors</h1>
+    {
+      dc === null ? (
+        <p class="stub-note">No <code>defense-contractors</code> feed in this bundle.</p>
+      ) : (
+        <>
+          <p class="section-lead">
+            {dc.notes?.subject ?? "Allen County defense-industry scan"} — a seed list of major DoD prime
+            contractors matched against corridor parties and county parcels.
+          </p>
+          <div class="callout">
+            <p class="callout-title">Pattern matches — leads, not verdicts</p>
+            <p>
+              A match means a party name <em>fits a known prime's pattern</em> — a lead to verify,
+              <strong>not</strong> a classification and <strong>not</strong> an accusation. It does not change
+              an entity's graph classification; a hit on a dual-use firm may be a purely commercial holding.
+            </p>
+          </div>
+
+          <h2>Prime-contractor patterns</h2>
+          <table>
+            <thead>
+              <tr><th>Prime</th><th>Name patterns</th><th>Matched corridor entities</th></tr>
+            </thead>
+            <tbody>
+              {contractors.map((c) => (
+                <tr>
+                  <td>{c.name}</td>
+                  <td class="card-meta">{c.patterns.join(", ")}</td>
+                  <td>
+                    {c.matched_entities.length === 0
+                      ? "—"
+                      : c.matched_entities.map((k, i) => (
+                          <>
+                            {i > 0 && ", "}
+                            <a href={`${withBase("/wiki/entities/")}${slugify(k)}/`}>{k}</a>
+                          </>
+                        ))}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {dc.notes?.finding && <p>{dc.notes.finding}</p>}
+
+          {primeOwned.length > 0 && (
+            <>
+              <h2>Prime-owned parcels ({primeOwned.length})</h2>
+              <table>
+                <thead>
+                  <tr><th>Prime</th><th>Parcel</th><th>Owner</th><th>Situs</th><th>Acres</th></tr>
+                </thead>
+                <tbody>
+                  {primeOwned.map((r) => (
+                    <tr>
+                      <td>{field(r, "matched_prime")}</td>
+                      <td>{field(r, "parcel_no")}</td>
+                      <td>{field(r, "owner")}</td>
+                      <td>{field(r, "situs_address")}</td>
+                      <td>{field(r, "acres")}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
+          )}
+
+          {armyControlled.length > 0 && (
+            <>
+              <h2>Army-controlled defense land ({armyControlled.length})</h2>
+              <table>
+                <thead>
+                  <tr><th>Parcel</th><th>Owner</th><th>Situs</th><th>Acres</th><th>Tax district</th></tr>
+                </thead>
+                <tbody>
+                  {armyControlled.map((r) => (
+                    <tr>
+                      <td>{field(r, "parcel_no")}</td>
+                      <td>{field(r, "owner")}</td>
+                      <td>{field(r, "situs_address")}</td>
+                      <td>{field(r, "acres")}</td>
+                      <td>{field(r, "tax_district")}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div class="callout">
+                <p class="callout-title">Independent corroboration — EPA RSEI</p>
+                <p>
+                  EPA's RSEI Public Data Set lists <strong>US ARMY JSMC / General Dynamics Land Systems</strong>
+                  as a TRI reporter at this footprint — Allen County's #3 toxic-release Score. See the
+                  <a href={withBase("/watershed/rsei")}> RSEI inventory</a>.
+                </p>
+              </div>
+            </>
+          )}
+          {dc.notes?.source && <p class="card-meta">Source: {dc.notes.source}</p>}
+        </>
+      )
+    }
+  </article>
+</Base>

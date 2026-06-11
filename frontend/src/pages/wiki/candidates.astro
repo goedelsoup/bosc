@@ -1,0 +1,82 @@
+---
+import Base from "../../layouts/Base.astro";
+import { hasFeed, loadFeed } from "../../lib/bundle";
+import { slugify, type CandidateItem } from "../../lib/feeds";
+import { withBase } from "../../lib/site";
+
+const candidates = hasFeed("candidates") ? loadFeed<CandidateItem[]>("candidates") : [];
+const confirmed = candidates.filter((c) => c.confirmed_cloud_relationship).length;
+const tiers = [...new Set(candidates.map((c) => c.tier))].sort((a, b) => a - b);
+const TIER_NAMES: Record<number, string> = {
+  1: "documented cloud relationship or strong demand-fit",
+  2: "plausible demand-fit",
+  3: "speculative",
+};
+---
+
+<Base title="Cloud-consumer candidates" section="wiki">
+  <article class="prose">
+    <p><a href={withBase("/wiki/")}>← Wiki</a></p>
+    <h1>Cloud-consumer candidates</h1>
+    {
+      candidates.length === 0 ? (
+        <p class="stub-note">No <code>candidates</code> feed in this bundle.</p>
+      ) : (
+        <>
+          <p class="section-lead">
+            {candidates.length} corridor operations marked <strong>cloud-consumer candidates</strong> on
+            demand-fit only — each has at least one workload class that hyperscale / edge infrastructure
+            exists to serve. {confirmed} carry a publicly documented cloud relationship. Curated, not
+            corpus-derived; they sit alongside the <a href={withBase("/wiki/entities/")}>entity graph</a>.
+          </p>
+          <div class="callout">
+            <p class="callout-title">Demand-fit, not a claim about Google's customers</p>
+            <p>
+              "Candidate" means an operation whose workloads <em>fit</em> what a hyperscale campus serves —
+              a lead to investigate, <strong>not</strong> a statement that it is or will be a tenant.
+            </p>
+          </div>
+          {
+            tiers.map((tier) => (
+              <>
+                <h2>Tier {tier}{TIER_NAMES[tier] ? ` — ${TIER_NAMES[tier]}` : ""}</h2>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Entity</th><th>Sector</th><th>Location</th>
+                      <th>Workload classes</th><th>Confirmed cloud</th><th>In graph</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {candidates
+                      .filter((c) => c.tier === tier)
+                      .sort((a, b) => a.name.localeCompare(b.name))
+                      .map((c) => (
+                        <tr>
+                          <td>
+                            {c.name}
+                            {c.speculative && <span class="card-meta"> (speculative)</span>}
+                          </td>
+                          <td>{c.sector ?? "—"}</td>
+                          <td>{c.location ?? "—"}</td>
+                          <td>{c.workload_classes.join(", ") || "—"}</td>
+                          <td>{c.confirmed_cloud_relationship ?? "—"}</td>
+                          <td>
+                            {c.entity_key ? (
+                              <a href={`${withBase("/wiki/entities/")}${slugify(c.entity_key)}/`}>✓</a>
+                            ) : (
+                              "—"
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </>
+            ))
+          }
+        </>
+      )
+    }
+  </article>
+</Base>

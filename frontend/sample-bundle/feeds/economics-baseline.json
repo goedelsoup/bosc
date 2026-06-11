@@ -1,0 +1,194 @@
+{
+  "fips": "39003",
+  "area_name": "Allen County, Ohio",
+  "latest": {
+    "fips": "39003",
+    "area_name": "Allen County, Ohio",
+    "year": 2023,
+    "total_employment": {
+      "value": 49577.0,
+      "unit": "jobs",
+      "source": "connector",
+      "citation": "BLS QCEW 2023 annual averages, area 39003",
+      "confidence": "high",
+      "asof": null
+    },
+    "establishments": {
+      "value": 2564.0,
+      "unit": "establishments",
+      "source": "connector",
+      "citation": "BLS QCEW 2023 annual averages, area 39003",
+      "confidence": "high",
+      "asof": null
+    },
+    "sectors": [
+      {
+        "naics": "62",
+        "sector_name": "Health Care & Social Assistance",
+        "annual_avg_employment": {
+          "value": 9495.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 312.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39003",
+          "confidence": "high",
+          "asof": null
+        },
+        "location_quotient": {
+          "value": 1.38,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "31-33",
+        "sector_name": "Manufacturing",
+        "annual_avg_employment": {
+          "value": 8661.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 133.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39003",
+          "confidence": "high",
+          "asof": null
+        },
+        "location_quotient": {
+          "value": 2.08,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "44-45",
+        "sector_name": "Retail Trade",
+        "annual_avg_employment": {
+          "value": 5357.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 385.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39003",
+          "confidence": "high",
+          "asof": null
+        },
+        "location_quotient": {
+          "value": 1.07,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "72",
+        "sector_name": "Accommodation & Food Services",
+        "annual_avg_employment": {
+          "value": 4567.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 229.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39003",
+          "confidence": "high",
+          "asof": null
+        },
+        "location_quotient": {
+          "value": 1.01,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39003",
+          "confidence": "high",
+          "asof": null
+        }
+      }
+    ],
+    "source": "BLS QCEW (annual averages, private ownership by NAICS sector)"
+  },
+  "trend": [
+    {
+      "year": 2018,
+      "total_employment": {
+        "value": 50828.0,
+        "unit": "jobs",
+        "source": "connector",
+        "citation": "BLS QCEW 2018 annual averages, area 39003",
+        "confidence": "high",
+        "asof": null
+      }
+    },
+    {
+      "year": 2023,
+      "total_employment": {
+        "value": 49577.0,
+        "unit": "jobs",
+        "source": "connector",
+        "citation": "BLS QCEW 2023 annual averages, area 39003",
+        "confidence": "high",
+        "asof": null
+      }
+    }
+  ],
+  "population": {
+    "fips": "39003",
+    "area_name": "Allen County, Ohio",
+    "points": [
+      {
+        "year": 2010,
+        "population": {
+          "value": 106586.0,
+          "unit": "people",
+          "source": "connector",
+          "citation": "US Census ACS5 2010 B01003_001E (Allen County, Ohio)",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "year": 2023,
+        "population": {
+          "value": 101685.0,
+          "unit": "people",
+          "source": "connector",
+          "citation": "US Census ACS5 2023 B01003_001E (Allen County, Ohio)",
+          "confidence": "high",
+          "asof": null
+        }
+      }
+    ],
+    "source": "US Census ACS 5-year (B01003)"
+  },
+  "note": "Employment from BLS QCEW (keyless open data). Location quotient = county sector share / national share (export-orientation; the county-level proxy for an import/export ratio). Population from US Census ACS 5-year (B01003)."
+}

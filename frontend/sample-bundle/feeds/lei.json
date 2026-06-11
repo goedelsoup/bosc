@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "subject": "GLEIF LEI resolution — corridor entity parents",
+    "source": "GLEIF (AWS Open Data s3://gleif), REST API api.gleif.org; license CC0",
+    "record_count": 3,
+    "with_reported_parent": 1,
+    "lead_count": 0,
+    "method": "pinned LEIs fetched by exact ID (no fuzzy name match)"
+  },
+  "records": [
+    {
+      "watchlist_name": "Cenovus Energy Inc.",
+      "lei": "254900LJGL2N2XEMD470",
+      "legal_name": "Cenovus Energy Inc.",
+      "jurisdiction": "CA",
+      "legal_form": "UDLA",
+      "entity_status": "ACTIVE",
+      "registration_status": "ISSUED",
+      "last_update": "2026-02-19T19:01:07Z",
+      "legal_address": {
+        "city": "CALGARY",
+        "region": "CA-AB",
+        "country": "CA"
+      },
+      "direct_parent": null,
+      "ultimate_parent": null,
+      "note": "Successor to Husky Energy (the RSEI Lima Refining Co parent), post-2021 merger."
+    },
+    {
+      "watchlist_name": "Dana Incorporated",
+      "lei": "KVWHW7YLZPFJM8QYNJ51",
+      "legal_name": "DANA INCORPORATED",
+      "jurisdiction": "US-DE",
+      "legal_form": "XTIQ",
+      "entity_status": "ACTIVE",
+      "registration_status": "ISSUED",
+      "last_update": "2025-07-01T10:08:27Z",
+      "legal_address": {
+        "city": "WILMINGTON",
+        "region": "US-DE",
+        "country": "US"
+      },
+      "direct_parent": null,
+      "ultimate_parent": null,
+      "note": "Parent of Dana Driveshaft Manufacturing (RSEI facility)."
+    },
+    {
+      "watchlist_name": "Ford Motor Company",
+      "lei": "20S05OYHG0MQM4VUIC57",
+      "legal_name": "FORD MOTOR COMPANY",
+      "jurisdiction": "US-DE",
+      "legal_form": "XTIQ",
+      "entity_status": "ACTIVE",
+      "registration_status": "ISSUED",
+      "last_update": "2026-04-24T20:36:32Z",
+      "legal_address": {
+        "city": "WILMINGTON",
+        "region": "US-DE",
+        "country": "US"
+      },
+      "direct_parent": null,
+      "ultimate_parent": null,
+      "note": "Parent of the Ford Lima Engine Plant (RSEI facility)."
+    }
+  ],
+  "leads": []
+}

@@ -10,6 +10,7 @@ const scenarios = manifest.feeds.find((f) => f.name === "hydrology-scenarios")?.
 const rseiFeatures = manifest.feeds.find((f) => f.name === "geo/rsei")?.count ?? 0;
 const watershedFeatures = manifest.feeds.find((f) => f.name === "geo/watershed")?.count ?? 0;
 const hasImagery = manifest.feeds.some((f) => f.name === "geo/imagery");
+const hasEconBaseline = manifest.feeds.some((f) => f.name === "economics-baseline");
 ---
 
 <Base title="The Maumee watershed" section="watershed">
@@ -29,6 +30,9 @@ const hasImagery = manifest.feeds.some((f) => f.name === "geo/imagery");
     <p>
       Narrative: <a href={withBase("/docs/hydrology")}>Hydrology — Tier-0 findings</a> ·
       <a href={withBase("/docs/economics")}>Economics — demand &amp; public benefits</a>
+      {hasEconBaseline && (
+        <> · <a href={withBase("/watershed/economics-baseline")}>Economics — localized baseline (BLS QCEW)</a></>
+      )}
     </p>
 
     <h2 id="map">Watershed map</h2>

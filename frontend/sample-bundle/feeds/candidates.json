@@ -1,0 +1,63 @@
+[
+  {
+    "name": "Ford Lima Engine Plant",
+    "tier": 1,
+    "kind": "corporate",
+    "sector": "Automotive powertrain manufacturing",
+    "location": "Lima, Allen County",
+    "workload_classes": [
+      "vision_ml",
+      "industrial_telemetry"
+    ],
+    "confirmed_cloud_relationship": "Google (corporate level)",
+    "speculative": false,
+    "basis": "Vision-AI line inspection + predictive maintenance; pattern Ford pursues with Google at corporate level. No Lima-specific project in the record.",
+    "entity_key": null
+  },
+  {
+    "name": "Procter & Gamble Lima Plant",
+    "tier": 1,
+    "kind": "corporate",
+    "sector": "Consumer-goods manufacturing (detergent)",
+    "location": "Lima, Allen County",
+    "workload_classes": [
+      "industrial_telemetry",
+      "erp_data_warehouse"
+    ],
+    "confirmed_cloud_relationship": "Google Cloud (consumer-data, corporate)",
+    "speculative": false,
+    "basis": "High-volume continuous-manufacturing telemetry + supply-chain data; plant-floor data currently on a third-party MES.",
+    "entity_key": null
+  },
+  {
+    "name": "Ohio Logistics",
+    "tier": 2,
+    "kind": "corporate",
+    "sector": "3PL warehousing / distribution",
+    "location": "Gateway Commerce Park, Allen County",
+    "workload_classes": [
+      "low_latency_edge",
+      "erp_data_warehouse",
+      "vision_ml"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "WMS, automation, routing analytics; building two spec facilities (no identified end user); 25+ locations.",
+    "entity_key": null
+  },
+  {
+    "name": "Spartan Logistics",
+    "tier": 2,
+    "kind": "corporate",
+    "sector": "3PL warehousing",
+    "location": "Lima (McCullough St.), Allen County",
+    "workload_classes": [
+      "low_latency_edge",
+      "erp_data_warehouse"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "Multi-site 3PL marketing one-day-transit reach; warehouse + supply-chain analytics.",
+    "entity_key": null
+  }
+]

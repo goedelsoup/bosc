@@ -1,0 +1,80 @@
+{
+  "contractors": [
+    {
+      "name": "Lockheed Martin",
+      "note": null,
+      "patterns": [
+        "LOCKHEED MARTIN",
+        "LOCKHEED-MARTIN",
+        "LOCKHEED CORP",
+        "SIKORSKY AIRCRAFT"
+      ],
+      "matched_entities": []
+    },
+    {
+      "name": "Boeing",
+      "note": null,
+      "patterns": [
+        "BOEING"
+      ],
+      "matched_entities": []
+    }
+  ],
+  "prime_owned": [],
+  "army_controlled": [
+    {
+      "parcel_no": "46110004005000",
+      "owner": "UNITED STATES",
+      "owner_2": "OF AMERICA",
+      "deeded_owner": "UNITED STATES OF AMERICA",
+      "situs_address": "1151-55-61 BUCKEYE RD",
+      "owner_address": "1151-55-61 BUCKEYE RD LIMA OH 45804",
+      "land_use_code": 600,
+      "acres": 133.78,
+      "market_land_value": 909500,
+      "market_improvement_value": 11687200,
+      "market_total_value": 12596700,
+      "cauv_value": 0,
+      "tax_district": "L35",
+      "school_code": "208",
+      "neighborhood_code": "3018",
+      "last_sale_date": "1990-01-01",
+      "last_sale_amount": 0,
+      "valid_sale": "N"
+    },
+    {
+      "parcel_no": "46140001001000",
+      "owner": "UNITED STATES",
+      "owner_2": "OF AMERICA",
+      "deeded_owner": "UNITED STATES OF AMERICA",
+      "situs_address": "REED RD",
+      "owner_address": "REED RD LIMA OH 45804",
+      "land_use_code": 600,
+      "acres": 189.96,
+      "market_land_value": 1428400,
+      "market_improvement_value": 0,
+      "market_total_value": 1428400,
+      "cauv_value": 0,
+      "tax_district": "L35",
+      "school_code": "208",
+      "neighborhood_code": "3000",
+      "last_sale_date": "1990-01-01",
+      "last_sale_amount": 0,
+      "valid_sale": "N"
+    }
+  ],
+  "notes": {
+    "subject": "Allen County, Ohio defense-industry land scan",
+    "source": "Allen County GIS — ArcGIS REST, Current Parcels (AGOL_NonEditLayers/1)",
+    "source_url": "https://gis.allencountyohio.com/arcgis/rest/services/AGOL/AGOL_NonEditLayers/MapServer/1",
+    "scan": "Owner-name match of the curated DoD-prime seed list (data/entities/profiles/defense-contractors.yaml) against the CAMA owner / deeded-owner / second-owner fields.",
+    "patterns_searched": 51,
+    "prime_owned_count": 0,
+    "finding": "No Allen County parcel is owned by a DoD prime in its own name. The local defense footprint is the federally-held JSMC reservation below.",
+    "army_controlled_note": "[inference] the UNITED STATES-owned cluster in tax district L35 on Buckeye/Reed Rd is the Joint Systems Manufacturing Center (Lima Army Tank Plant; 1151 Buckeye Rd), operated by General Dynamics Land Systems. Ownership is verbatim from the GIS; the JSMC identification is an analyst inference — verify against the deed/lease before relying on it.",
+    "caveats": [
+      "Values are verbatim from the county GIS; null means the service had no value.",
+      "A pattern match is a lead to verify, not a classification or accusation."
+    ]
+  }
+}

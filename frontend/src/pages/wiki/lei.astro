@@ -1,0 +1,61 @@
+---
+import Base from "../../layouts/Base.astro";
+import { hasFeed, loadFeed } from "../../lib/bundle";
+import type { LeiInventory } from "../../lib/feeds";
+import { withBase } from "../../lib/site";
+
+const lei = hasFeed("lei") ? loadFeed<LeiInventory>("lei") : null;
+const records = [...(lei?.records ?? [])].sort((a, b) => a.legal_name.localeCompare(b.legal_name));
+const addr = (a: { city?: string; region?: string; country?: string } | null | undefined): string =>
+  a ? [a.city, a.region, a.country].filter(Boolean).join(", ") : "—";
+---
+
+<Base title="Entity LEIs (GLEIF)" section="wiki">
+  <article class="prose">
+    <p><a href={withBase("/wiki/")}>← Wiki</a></p>
+    <h1>Entity LEIs (GLEIF)</h1>
+    {
+      lei === null ? (
+        <p class="stub-note">No <code>lei</code> feed in this bundle.</p>
+      ) : (
+        <>
+          <p class="section-lead">
+            {lei.meta.subject ?? "GLEIF LEI resolution — corridor entity parents"}. Each LEI is fetched by
+            exact ID (no fuzzy name match), so the legal name and parent chain are authoritative.
+          </p>
+          <p class="card-meta">
+            Source: {lei.meta.source} · {lei.meta.record_count ?? records.length} records,
+            {" "}{lei.meta.with_reported_parent ?? 0} with a reported parent.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Legal name</th><th>LEI</th><th>Jurisdiction</th><th>Status</th>
+                <th>Direct parent</th><th>Ultimate parent</th>
+              </tr>
+            </thead>
+            <tbody>
+              {records.map((r) => (
+                <tr>
+                  <td>
+                    {r.legal_name}
+                    {r.watchlist_name && r.watchlist_name !== r.legal_name && (
+                      <span class="card-meta"> (as {r.watchlist_name})</span>
+                    )}
+                    {r.note && <div class="card-meta">{r.note}</div>}
+                  </td>
+                  <td><code>{r.lei}</code></td>
+                  <td>{addr(r.legal_address) === "—" ? (r.jurisdiction ?? "—") : addr(r.legal_address)}</td>
+                  <td>{[r.entity_status, r.registration_status].filter(Boolean).join(" / ") || "—"}</td>
+                  <td>{r.direct_parent ?? "—"}</td>
+                  <td>{r.ultimate_parent ?? "—"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p class="card-meta">{lei.meta.method}</p>
+        </>
+      )
+    }
+  </article>
+</Base>

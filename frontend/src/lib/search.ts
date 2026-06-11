@@ -10,9 +10,13 @@
 import { hasFeed, loadFeed } from "./bundle";
 import {
   slugify,
+  type CandidateItem,
   type ConceptItem,
+  type DefenseContractors,
   type DocumentCollectionItem,
+  type EconomicBaseline,
   type EntityNode,
+  type LeiInventory,
   type MeetingItem,
   type PersonItem,
   type PlaceItem,
@@ -151,6 +155,44 @@ export function buildSearchIndex(): SearchDoc[] {
         text: blob(c.summary, ...c.aliases, ...c.tags, c.body),
       });
     }
+  }
+
+  // Curated-entity + economics pages (Pages cutover #103) — one entry per page.
+  if (hasFeed("candidates")) {
+    const rows = loadFeed<CandidateItem[]>("candidates");
+    docs.push({
+      title: "Cloud-consumer candidates",
+      url: "/wiki/candidates",
+      section: WIKI,
+      text: blob("cloud-consumer demand-fit candidates", ...rows.map((c) => c.name)),
+    });
+  }
+  if (hasFeed("defense-contractors")) {
+    const dc = loadFeed<DefenseContractors>("defense-contractors");
+    docs.push({
+      title: "Defense contractors",
+      url: "/wiki/defense-contractors",
+      section: WIKI,
+      text: blob("DoD prime contractor pattern matches", ...dc.contractors.map((c) => c.name)),
+    });
+  }
+  if (hasFeed("lei")) {
+    const lei = loadFeed<LeiInventory>("lei");
+    docs.push({
+      title: "Entity LEIs (GLEIF)",
+      url: "/wiki/lei",
+      section: WIKI,
+      text: blob("GLEIF legal entity identifiers", ...lei.records.map((r) => r.legal_name)),
+    });
+  }
+  if (hasFeed("economics-baseline")) {
+    const eb = loadFeed<EconomicBaseline>("economics-baseline");
+    docs.push({
+      title: "Economics — localized baseline",
+      url: "/watershed/economics-baseline",
+      section: getSection("watershed").label,
+      text: blob("BLS QCEW Census employment population baseline", eb.area_name, eb.note),
+    });
   }
 
   return docs;
