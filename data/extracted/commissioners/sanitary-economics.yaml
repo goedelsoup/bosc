@@ -55,6 +55,20 @@ cridersville_shawnee_oaks_reroute:    # the County stops paying OUT and captures
     - "Res #113-26 (2026-02-19): $161,000 contract w/ Garmann/Miller (Access Engineering) for the Shawnee Oaks Sewer System ENGINEERING (PO #18640 'Shawnee Oaks Reroute Engineering') — reroutes Cridersville/Shawnee Oaks flow to Shawnee II. [confirmed primary: batch-2 PRR]"
     - "Res #137-26 (2026-02-26): $1,000,000 at 0% interest; project adds 200+ homes to the system AND moves current Cridersville customers to Shawnee."
   reroute_also_frees_capacity: "Rerouting Shawnee Oaks to Shawnee WWTP 'would also allow room for an additional 35-40 homes' (2025-05-29)."
+  cridersville_wwtp_facility:         # the EPA/OEPA-regulated plant behind the $102k/yr the County pays OUT (EPA ECHO)
+    npdes_id: OH0020222
+    design_flow_mgd: 2.4
+    receiving_water: "unnamed trib → Little Ottawa River"   # same low-flow Ottawa assimilative thread as the BOSC receivers
+    frs_registry_id: '110006351063'
+    county: Allen
+    huc8: '04100007'                 # Auglaize / Lima subbasin; ottawa_discharge = true
+    source: data/reference/echo/maumee-wwtp.potw.yaml   # EPA ECHO Maumee NPDES inventory (`bosc npdes`)
+    note: >-
+      The village plant the County pays ~$102k/yr to treat the Shawnee Oaks flow (233 customers); the
+      #113-26/#136-26 reroute moves that flow off Cridersville onto the County's own Shawnee II WWTP.
+      Its discharge to the Little Ottawa ties the reroute to the SAME Ottawa low-flow receiving-water
+      thread as the BOSC sanitary load. This is the PRR "Cridersville WWTP records" item, satisfiable
+      now from public EPA ECHO data already in-corpus (per-DMR compliance/enforcement detail = ECHO DFR follow-up).
 
 capacity_strain:                      # the system the BOSC load lands on
   elm_street: "The Elm Street-area pump station 'was originally designed for 45 homes and is currently serving nearly 250' (2025-05-29) -- a >5x overload; 'looking into possible solutions.'"
