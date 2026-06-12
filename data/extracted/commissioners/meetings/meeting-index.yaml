@@ -1,0 +1,606 @@
+meta:
+  subject: commissioners meeting index (text-verified dates + corridor hits)
+  slug: commissioners
+  generated_at: '2026-06-12'
+  text_extraction: 'PDF text layer (pypdf) / DOCX / HTML — NO OCR. An image-only scanned
+    PDF has text_method: none (date unverified, text unscanned); those need an OCR
+    pass not wired here.'
+  date_evidence: date_verified is the listing date CONFIRMED in the file's own text;
+    null means unconfirmed (date_listing still stands).
+  counts:
+    total: 48
+    text_extracted: 22
+    date_verified: 22
+    with_corridor_hits: 8
+documents:
+- filename: M032526-Special.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-03-25'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of March 25, 2026-Special Session
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/M032526-Special.pdf
+  sha256: 3a3bef140b3f2a8a8a421321b74f04a2f001fb6dbd92bcc79f4ba249f96a2915
+- filename: M032626.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-03-26'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of March 26, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/M032626.pdf
+  sha256: 55ce663f0dbe702df9e1e470be830a2a7421635f91f68d87d3ffda3584867cf3
+- filename: M033126-1.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-03-31'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of March 31, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/M033126-1.pdf
+  sha256: 84891f5833dff343a127cb4e19f43e2d1e39d143abfbe5d713e65cd659449c79
+- filename: M040226.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-04-02'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of April 2, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/M040226.pdf
+  sha256: 7b40e84afb90c11667aec7f6815f728d5cf3cabbb2e8677e050e5baf75de9bae
+- filename: M040726.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-04-07'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of April 7, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/M040726.pdf
+  sha256: 184a7501b9e1bfda7d305c657a27095b40727dc6f1ad5f197574c58becb62ada
+- filename: M040826-Special.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-04-08'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of April 8, 2026-Special Session
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/M040826-Special.pdf
+  sha256: 56a87b939f6c4b4df025fd71bd34978ebc91ed39a7742e27d36061b5335a32c0
+- filename: M040926.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-04-09'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of April 9, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/M040926.pdf
+  sha256: 257e40337b900c20d627b92d7491efc99f6069b59d90b7caf812903583b80f6b
+- filename: M041426.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-04-14'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of April 14, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/M041426.pdf
+  sha256: 0e036e42d5e33dca564cd537077d37740a813832e8027bf525f91b45d26036f1
+- filename: M041626.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-04-16'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of April 16, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/05/M041626.pdf
+  sha256: 86eef0c51888598261939f059d419662ff4f2165c1282ac1b885c850afd768d0
+- filename: M042026-Special.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-04-20'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of April 20, 2026-Special Session
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/05/M042026-Special.pdf
+  sha256: f822bc4edf51baa0e9ff3f3eb691203cf376549b9905b5de3537aa575921bfe9
+- filename: M042126.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-04-21'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of April 21, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/05/M042126.pdf
+  sha256: f807aa0438eca264d9ac11f0b9543120d13930b30ec0f1d1d3bc2c25e163522c
+- filename: M042326.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-04-23'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of April 23, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/05/M042326.pdf
+  sha256: 1d4d95bfdea8ec1c7d6965ea6c4a9f8277c6a0bf207165cd2d2a74250de850bc
+- filename: m042826.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-04-28'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of April 28, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/06/m042826.pdf
+  sha256: dd2a4cfe74d1239e00392caaa9f8b26cf94d49718d1c106696e2d645c392c67d
+- filename: M042926-Special.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-04-29'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of April 29, 2026-Special Session
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/06/M042926-Special.pdf
+  sha256: 31584bc24e99f41ea69e8d3f66efce6a3bfd0e650245d4c32fc2a3f12e3d7851
+- filename: M043026.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-04-30'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of April 30, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/06/M043026.pdf
+  sha256: ae73917201dbff9f79094607ab808fd1aa9292ae9f4cf0c62f4419bbb0ce5983
+- filename: M050526.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-05-05'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of May 5, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/06/M050526.pdf
+  sha256: e6699f4796afdd64efa06fd6af5ee62fa00d30ee03a76f9c05bbcfd2b4643b1b
+- filename: M050626-Special.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-05-06'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of May 6, 2026-Special Session
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/06/M050626-Special.pdf
+  sha256: 4dce8917309671f4c6726231a877a2d75cb6a287e3133f3505833388195cce29
+- filename: M050726.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-05-07'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of May 7, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/06/M050726.pdf
+  sha256: 3ec0dae04d0de671db3591382c1cacf459dc39a2e4bfcff1d76ecd4a878288b7
+- filename: M051226.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-05-12'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of May 12, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/06/M051226.pdf
+  sha256: b2b1473043423e710554678b4d653fddd4ffded1965341462cb3a0132d4fc136
+- filename: M051426.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-05-14'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of May 14, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/06/M051426.pdf
+  sha256: a15d0771252fc1600b2b9cdd7cd394e1315222e9da924d3b64a341e74d49bdf0
+- filename: M051926.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-05-19'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of May 19, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/06/M051926.pdf
+  sha256: abccf52761fee340b29f1d030402573d22f716e46bc1abee7af3be95645fab8e
+- filename: M052126.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-05-21'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of May 21, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/06/M052126.pdf
+  sha256: 83a9b8fb5e6ab40e95b43f756cd66ae0b6d6eb0f555877aacc2a48a4d14996b5
+- filename: M052626.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-05-26'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of May 26, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/06/M052626.pdf
+  sha256: 22e3d12c631f9d3c48923f52c82e5db4dc7c8483557cecb3288e43b806f2fc20
+- filename: M052826.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-05-28'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of May 28, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/06/M052826.pdf
+  sha256: 966e01ea04142cd59f79643f653c22aa5616e50a985e09b4e620f2304d22b3df
+- filename: M060126-Special.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-06-01'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of June 1, 2026-Special Session
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/06/M060126-Special.pdf
+  sha256: d87344ce9abd20526c63e33de9c11236c3215cc8ea877fcbbb539a0f1f9b4652
+- filename: M060226.pdf
+  kind: minutes
+  body: null
+  date_listing: '2026-06-02'
+  date_verified: null
+  date_evidence: listing
+  text_method: none
+  char_count: 0
+  hits: []
+  title: Minutes of June 2, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/06/M060226.pdf
+  sha256: 380dc5e25f991a82275fd4b3f9fce77442df65aac1c72a6dcfea50c0cf79d4ba
+- filename: A042126.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-04-21'
+  date_verified: '2026-04-21'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 3793
+  hits:
+  - annexation
+  title: April 21, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/A042126.pdf
+  sha256: 7a554a24c1e59ad9ba3fff6e7b652b8519b861c7daa7a00a92caf48e6d83c654
+- filename: A042126-Amended.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-04-21'
+  date_verified: '2026-04-21'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 2909
+  hits:
+  - annexation
+  title: April 21, 2026-Amended
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/A042126-Amended.pdf
+  sha256: b51b6cd8b8bd8af3dc712944c28022ee380a6baaab5bd27d2ff7a097ae332605
+- filename: A042226-Special.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-04-22'
+  date_verified: '2026-04-22'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 461
+  hits: []
+  title: April 22, 2026-Special Session
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/A042226-Special.pdf
+  sha256: 01cb090eb6688368a55ba7076a72d392f8b4b9c94bb2eb876a84e64ffe661c1c
+- filename: A042326.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-04-23'
+  date_verified: '2026-04-23'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 1613
+  hits:
+  - annexation
+  - easement
+  title: April 23, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/A042326.pdf
+  sha256: f0749c844fddaafa7720bc6ca7bb3caf315d43d69c7c60e0accd2b8236fc0115
+- filename: A042326-Amended.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-04-23'
+  date_verified: '2026-04-23'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 1717
+  hits:
+  - annexation
+  - easement
+  title: April 23, 2026-Amended
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/A042326-Amended.pdf
+  sha256: b4dbc513b2cdefd00f1cfdeaaff4ad35d00e26bfb395d2231355db4be87fd1b6
+- filename: A042826.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-04-28'
+  date_verified: '2026-04-28'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 756
+  hits: []
+  title: April 28, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/A042826.pdf
+  sha256: 997e0dda4fa0cd5a887b2fa156f6cb0e37ac0a7273c26debfb71bd763c0c9225
+- filename: A042926-Special.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-04-29'
+  date_verified: '2026-04-29'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 473
+  hits: []
+  title: April 29, 2026-Special Session
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/A042926-Special.pdf
+  sha256: 4ee7a2c0b2341a56730ee1507bda43342fdeeec0e0c8c96ca567cc4fdeddfc24
+- filename: A043026.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-04-30'
+  date_verified: '2026-04-30'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 3739
+  hits: []
+  title: April 30, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/04/A043026.pdf
+  sha256: b6f2736ce3e8f8eee6df405b5470583266538ec5fd05bdf9f76559919b9dbaa6
+- filename: A050626-Special.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-05-06'
+  date_verified: '2026-05-06'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 603
+  hits: []
+  title: May 6, 2026-Special Session
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/05/A050626-Special.pdf
+  sha256: 912e06730efef54c27bbe55aa1a0dac1259ee03eaa2402fc4dc9e0ad632e340b
+- filename: A050726.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-05-07'
+  date_verified: '2026-05-07'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 3527
+  hits: []
+  title: May 7, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/05/A050726.pdf
+  sha256: 8645bf30a1a7c79a14951fb813c2b6962e6f51c676fb657b94fe9d97e022f240
+- filename: A051226.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-05-12'
+  date_verified: '2026-05-12'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 808
+  hits: []
+  title: May 12, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/05/A051226.pdf
+  sha256: 1afd04ba7b4fdd1ab78dd8b4b9a9f6c295458750ecc7e92ba468445936a551e9
+- filename: A051426.docx.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-05-14'
+  date_verified: '2026-05-14'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 3402
+  hits:
+  - bosc
+  - cmar
+  - forcemain
+  - pump_station
+  title: May 14, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/05/A051426.docx.pdf
+  sha256: 920ec0b5103e13b68e64375937e2b6dcaa4f9c8b85cde30abe67f9edcea4249a
+- filename: A051926.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-05-19'
+  date_verified: '2026-05-19'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 661
+  hits: []
+  title: May 19, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/05/A051926.pdf
+  sha256: fea71c71d2c6e637d32dd4910b492083063ed57619a9b2c7a9a22acd79167360
+- filename: A052126.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-05-21'
+  date_verified: '2026-05-21'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 3643
+  hits: []
+  title: May 21, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/05/A052126.pdf
+  sha256: 3e8b6b3e7ac1c52334f42a2c32ef3aa051ec677160c117f7055952b40d81ca3a
+- filename: A052626.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-05-26'
+  date_verified: '2026-05-26'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 1255
+  hits: []
+  title: May 26, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/05/A052626.pdf
+  sha256: de7621358764345682deabcd7058d34f190fe73f3d3421d790806818b3209c02
+- filename: A052826.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-05-28'
+  date_verified: '2026-05-28'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 1693
+  hits:
+  - easement
+  title: May 28, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/05/A052826.pdf
+  sha256: 922fd3bc8efb9bf4b2e818bca9f39c44166da7aeebdb94180e5a50059a86718b
+- filename: A060126-Special.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-06-01'
+  date_verified: '2026-06-01'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 481
+  hits: []
+  title: June 1, 2026-Special Session
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/05/A060126-Special.pdf
+  sha256: 99c913cd14a85b17dcb59b0dfd167299614c1ab9936501ff6d4b5ac713784ae2
+- filename: A060226.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-06-02'
+  date_verified: '2026-06-02'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 566
+  hits: []
+  title: June 2, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/06/A060226.pdf
+  sha256: 7949e07a79766a49f9811df8709b9ed32dc10b28bcb55698e3ba5bbff17a6ff0
+- filename: A060426.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-06-04'
+  date_verified: '2026-06-04'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 4235
+  hits:
+  - hume
+  title: June 4, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/06/A060426.pdf
+  sha256: 2cf1bdea4ed0d3af2c991e0374248ad4ea8b6e9fd559e6151416a9fde5d72faf
+- filename: A060526-Special.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-06-05'
+  date_verified: '2026-06-05'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 492
+  hits: []
+  title: June 5, 2026-Special Session
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/06/A060526-Special.pdf
+  sha256: 6df687bedbff35ed64ecc72be19c17461ff2026eae9dc84d5b04d7a09b35fc35
+- filename: A060926.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-06-09'
+  date_verified: '2026-06-09'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 596
+  hits: []
+  title: June 9, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/06/A060926.pdf
+  sha256: dd49168e4da245d9139c41cd87c87aec7529e35da1e87c8e10353177041ad3a2
+- filename: A061126.pdf
+  kind: agenda
+  body: null
+  date_listing: '2026-06-11'
+  date_verified: '2026-06-11'
+  date_evidence: pdf_text
+  text_method: pdf_text
+  char_count: 4221
+  hits:
+  - easement
+  - hume
+  - pump_station
+  title: June 11, 2026
+  source_url: https://commissioners.allencountyohio.com/wp-content/uploads/2026/06/A061126.pdf
+  sha256: b945a656c094302edab00fdb58cade0ba6a50f0e95fc61785566ad9a6ad9080c

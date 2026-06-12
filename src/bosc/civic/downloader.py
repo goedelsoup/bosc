@@ -28,6 +28,7 @@ import re
 from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Any
 from urllib.parse import unquote, urlparse
 
 import httpx
@@ -157,13 +158,16 @@ def download_meetings(
     dest_root: Path | None = None,
     limit: int | None = None,
     fetcher: BytesFetcher = _get_bytes,
+    source_page: str | None = None,
 ) -> DownloadReport:
     """Download ``docs`` into ``data/documents/<slug>/meetings/`` (chain of custody).
 
     Idempotent: an identical existing file is skipped; a differing file under the
     same name is written beside it and flagged ``conflict`` (never overwritten).
     ``limit`` caps how many are pulled this run (the rest are simply not fetched —
-    a later run resumes). ``fetcher`` is injectable for tests.
+    a later run resumes). ``fetcher`` is injectable for tests. ``source_page`` is the
+    listing actually scraped (the ``--url`` override for bodies whose minutes/agenda
+    pages differ); it falls back to the registry ``records_url`` for the manifest.
     """
     settings = settings or get_settings()
     dest = dest_root or (settings.documents_dir / subdivision.slug / "meetings")
@@ -183,7 +187,7 @@ def download_meetings(
     return DownloadReport(
         slug=subdivision.slug,
         dest_dir=str(dest),
-        source_page=subdivision.publishing.records_url,
+        source_page=source_page or subdivision.publishing.records_url,
         docs=results,
     )
 
@@ -243,13 +247,42 @@ def _download_one(
 
 
 def write_manifest(report: DownloadReport, out_path: Path) -> Path:
-    """Write the non-destructive download manifest (mirrors filename-map.yaml)."""
+    """Write the non-destructive download manifest (mirrors filename-map.yaml).
+
+    Merges with an existing manifest at ``out_path``, keyed by ``source_url`` (this
+    run wins for a re-downloaded URL). A body that posts minutes and agendas on
+    *separate* pages downloads in two runs (the second with ``--url``); both must
+    accumulate into the one manifest the indexer reads, so ``source_pages`` is a list
+    and ``counts`` are recomputed across the merged set.
+    """
     out_path.parent.mkdir(parents=True, exist_ok=True)
+    by_url: dict[str | None, dict[str, Any]] = {}
+    source_pages: list[str] = []
+    if out_path.exists():
+        existing = yaml.safe_load(out_path.read_text(encoding="utf-8")) or {}
+        if isinstance(existing, dict):
+            for prior in existing.get("documents", []):
+                by_url[prior.get("source_url")] = prior
+            prior_meta = existing.get("meta", {}) or {}
+            prior_pages = prior_meta.get("source_pages")
+            if isinstance(prior_pages, list):
+                source_pages.extend(p for p in prior_pages if isinstance(p, str))
+            elif isinstance(prior_meta.get("source_page"), str):  # migrate the old key
+                source_pages.append(prior_meta["source_page"])
+    for d in report.docs:
+        by_url[d.source_url] = d.model_dump()
+    if report.source_page and report.source_page not in source_pages:
+        source_pages.append(report.source_page)
+    merged = list(by_url.values())
+
+    def _count(status: str) -> int:
+        return sum(1 for d in merged if d.get("status") == status)
+
     doc = {
         "meta": {
             "subject": f"{report.slug} meeting-document download manifest",
             "slug": report.slug,
-            "source_page": report.source_page,
+            "source_pages": source_pages,
             "dest_dir": report.dest_dir,
             "generated_at": datetime.now(UTC).date().isoformat(),
             "policy": "non-destructive — originals keep as-received names; this is an "
@@ -257,14 +290,14 @@ def write_manifest(report: DownloadReport, out_path: Path) -> Path:
             "date_evidence": "listing — dates are parsed from the records-page link "
             "text/filename, NOT content-verified. OCR of each file is the verification step.",
             "counts": {
-                "total": len(report.docs),
-                "downloaded": report.downloaded,
-                "skipped_existing": report.skipped,
-                "conflicts": report.conflicts,
-                "errors": report.errors,
+                "total": len(merged),
+                "downloaded": _count("downloaded"),
+                "skipped_existing": _count("skipped_existing"),
+                "conflicts": _count("conflict"),
+                "errors": _count("error"),
             },
         },
-        "documents": [d.model_dump() for d in report.docs],
+        "documents": merged,
     }
     out_path.write_text(yaml.safe_dump(doc, sort_keys=False, allow_unicode=True), encoding="utf-8")
     return out_path

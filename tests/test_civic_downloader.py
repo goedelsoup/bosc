@@ -128,6 +128,35 @@ def test_write_manifest_shape(tmp_path: Path) -> None:
     assert doc["documents"][0]["sha256"] == hashlib.sha256(b"x").hexdigest()
 
 
+def test_write_manifest_merges_two_pages(tmp_path: Path) -> None:
+    """A body posting minutes + agendas on separate pages downloads in two runs.
+
+    Both must accumulate into the one manifest the indexer reads (keyed by source_url),
+    not overwrite each other.
+    """
+    out = tmp_path / "download-manifest.yaml"
+    min_report = download_meetings(
+        _body(),
+        [_doc("https://x.gov/M060226.pdf", kind="minutes", date="2026-06-02")],
+        dest_root=tmp_path / "docs",
+        fetcher=_fake_fetcher({"https://x.gov/M060226.pdf": b"m"}),
+    )
+    write_manifest(min_report, out)
+    ag_report = download_meetings(
+        _body(),
+        [_doc("https://x.gov/A060226.pdf", kind="agenda", date="2026-06-02")],
+        dest_root=tmp_path / "docs",
+        fetcher=_fake_fetcher({"https://x.gov/A060226.pdf": b"a"}),
+    )
+    write_manifest(ag_report, out)
+
+    doc = yaml.safe_load(out.read_text())
+    urls = {d["source_url"] for d in doc["documents"]}
+    assert urls == {"https://x.gov/M060226.pdf", "https://x.gov/A060226.pdf"}  # both retained
+    assert doc["meta"]["counts"]["total"] == 2
+    assert {d["kind"] for d in doc["documents"]} == {"minutes", "agenda"}
+
+
 def test_downloaded_doc_model_forbids_extra() -> None:
     # Guards the manifest schema from silent drift.
     d = DownloadedDoc(

@@ -478,3 +478,38 @@ subdivisions:
           Department page on the county WordPress site; no board-records page —
           sanitary governance appears in the County Commissioners' minutes
           (data/extracted/commissioners/).
+
+  # --- County governing board ------------------------------------------------
+  - slug: commissioners
+    name: Allen County Board of Commissioners
+    type: county_board
+    governing_body: Board of County Commissioners
+    meeting_schedule: null
+    office: null
+    grounded_from: null
+    note: >-
+      The county's governing board. Its general-session minutes are the corpus
+      core under data/documents/commissioners/minutes/raw/ (Jan 2023–, with the
+      hand-maintained filename-map and the standing corpus-completeness audit).
+      This civic entry ingests the ongoing records from the dedicated
+      commissioners site into the meetings/ tree via the generic WordPress
+      fetcher; the legacy raw/ tree holds everything through 2026-03 (minutes) /
+      2026-04 (agendas), so the meetings/ tree is pulled with `--since` to
+      continue from there without duplicating bytes. Grounded roster facts
+      (cadence/office) are not yet transcribed — meeting_schedule/office null.
+    publishing:
+      website: https://commissioners.allencountyohio.com/
+      records_url: https://commissioners.allencountyohio.com/meeting-minutes/
+      platform: wordpress
+      discovered:
+        asof: "2026-06-12"
+        method: web
+        note: >-
+          Self-hosted WordPress (commissioners.allencountyohio.com) with separate
+          per-year 'Meeting Minutes' and 'Meeting Agendas' pages of PDF links in
+          the Allen County M######/A###### (MMDDYY) filename convention. General
+          session Tuesday & Thursday 9:00 AM; special sessions are labeled
+          '-Special Session' and carry no separate agenda. Agendas live on per-year
+          pages (meeting-agendas-YYYY — pass via --url); the minutes page lists
+          roughly the trailing six months (year archives at
+          meeting-minutes-YYYY-archives).

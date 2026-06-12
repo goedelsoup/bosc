@@ -46,6 +46,32 @@ def test_extract_documents_kinds_dates_dedup_and_filtering() -> None:
     assert docs[2].url == "https://x.gov/minutes/Documents/2.6.2024.pdf?t=20240101"
 
 
+def test_classify_allen_county_filename_convention() -> None:
+    """Allen County commissioners link agendas as a bare date; kind is in the A###### name.
+
+    The county's agenda anchors carry no "agenda" word (just the meeting date), so the
+    A######/M###### (MMDDYY) basename is the only kind signal — read after the keyword
+    checks. A township's bare-date filename (no A/M letter prefix) still stays ``other``.
+    """
+    base = "https://commissioners.allencountyohio.com/meeting-agendas-2026/"
+    up = "https://commissioners.allencountyohio.com/wp-content/uploads/2026/06"
+    html = (
+        f'<a href="{up}/A060926.pdf">June 9, 2026</a>'  # bare-date agenda
+        f'<a href="{up}/A060126-Special.pdf">June 1, 2026-Special Session</a>'  # bare special
+        f'<a href="{up}/M060226.pdf">Minutes of June 2, 2026</a>'  # keyword wins
+        f'<a href="{up}/M060126-Special.pdf">June 1, 2026-Special Session</a>'  # bare special
+        '<a href="https://x.gov/uploads/2.6.2024.pdf">2.6.2024</a>'  # township bare date
+    )
+    docs = generic.extract_documents(html, base_url=base, slug="commissioners")
+    assert [(d.kind, d.date) for d in docs] == [
+        ("agenda", "2026-06-09"),
+        ("agenda", "2026-06-01"),
+        ("minutes", "2026-06-02"),
+        ("minutes", "2026-06-01"),
+        ("other", "2024-02-06"),  # no A/M prefix — heuristic must not over-reach
+    ]
+
+
 def test_generic_fetch_offline_replay(hydro_settings: Settings) -> None:
     reg = load_registry(hydro_settings)
     bath = reg.get("bath-township")  # platform wordpress
