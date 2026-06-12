@@ -220,9 +220,13 @@ the Pages project exists (Phase 1).
 
 ### Phase 1 — the host (prerequisite for the Cloudflare secrets)
 
-4. Create a **Cloudflare Pages** project for the `frontend/` build (the Wrangler deploy
-   is wired in Phase 1). Pick the domain — a custom root domain (drops the `/bosc` base
-   path) or the `*.pages.dev` subdomain — and set Astro `SITE_URL`/`BASE_PATH` to match.
+4. Create a **Cloudflare Pages** project named **`bosc`** (production branch `main`). The
+   Wrangler direct-upload deploy is wired in [`pages.yml`](../.github/workflows/pages.yml)
+   (manual, build-only by default) — config in [`frontend/wrangler.toml`](../frontend/wrangler.toml).
+   Set two repo **secrets**: `CLOUDFLARE_API_TOKEN` (a token with *Cloudflare Pages —
+   Edit*) and `CLOUDFLARE_ACCOUNT_ID`. The default domain is `bosc.pages.dev` at the
+   root (no base path); for a custom domain set the repo vars `PAGES_SITE_URL` /
+   `PAGES_BASE_PATH` (no code change).
 5. Create a free **Turnstile** widget for that domain; note the **site key** (public)
    and **secret key**.
 
@@ -262,7 +266,7 @@ shows the placeholder on the next build), or uninstall the App.
 | Interim endpoint (`frontend/functions/api/submit.ts`: Turnstile + create issue) | **built** — dormant until bootstrapped (`SUBMISSIONS_ENABLED`) |
 | Frontend form (`/submit`) + query-param `target` pre-fill | **built** — disabled placeholder until `PUBLIC_TURNSTILE_SITE_KEY` is set |
 | `submission` label (Pulumi) | **coded** (Phase 4 — `pulumi up` to apply) |
-| Cloudflare Pages host migration | planned (Phase 1 — supersedes the GitHub Pages flip; required to make the above live) |
+| Cloudflare Pages host migration | **wired** (Phase 1 — `pages.yml` Wrangler deploy + `wrangler.toml`; needs the CF project + `CLOUDFLARE_*` secrets) |
 | `bosc-tips-bot` App + secrets | planned (Phase 4 — manual bootstrap, below) |
 | KV rate-limit, dedupe, triage surface | **deferred** (Phase 5 — seam is ready) |
 | Webhook receiver (event-driven, Epic 4 upgrade) | **deferred** — the Function is the request-driven seam; a persistent receiver is a later tier |

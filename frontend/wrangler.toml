@@ -1,0 +1,22 @@
+# Cloudflare Pages config for the BOSC site (Epic #56, Phase 1 — host migration).
+#
+# The static Astro build (frontend/dist) and the Pages Functions (frontend/functions/,
+# the submissions endpoint #74) deploy together to one origin. The deploy runs from the
+# Actions workflow (.github/workflows/pages.yml) via Wrangler direct-upload — Cloudflare's
+# own Git build is NOT used, because the content bundle is produced by `bosc export`
+# (Python) before `npm run build`, which that build can't run.
+#
+# Secrets (TIPS_APP_ID, TIPS_APP_PRIVATE_KEY, TURNSTILE_SECRET_KEY) and the kill switch
+# SUBMISSIONS_ENABLED are set in the Cloudflare dashboard, NOT here: secrets never go in
+# wrangler.toml, and the kill switch must stay operator-flippable without a redeploy.
+# See docs/submissions-api.md.
+
+name = "bosc"
+pages_build_output_dir = "dist"
+compatibility_date = "2024-11-01"
+
+# Non-secret, stable config for the submissions Function. (The Function also defaults
+# these in code, so this is belt-and-suspenders + documentation.)
+[vars]
+GITHUB_OWNER = "goedelsoup"
+GITHUB_REPO = "bosc"

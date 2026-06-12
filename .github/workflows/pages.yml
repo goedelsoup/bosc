@@ -1,20 +1,26 @@
-# Build & deploy the BOSC site to GitHub Pages — MANUAL ONLY.
+# Build & deploy the BOSC site to Cloudflare Pages — MANUAL ONLY.
 #
-# This builds the redesigned **Astro** site (`frontend/`, Epics #54/#55) over the
-# real content bundle (`bosc export`) — the parity-gated cutover from the legacy
-# Python SSG (#102). The legacy generator stays available as a fallback: run
-# `bosc site build` locally to regenerate the old `site/` tree if ever needed.
+# Phase 1 of the host migration (Epic #56): the redesigned Astro site (frontend/) and
+# its Pages Functions (frontend/functions/ — the submissions endpoint, #74) deploy
+# together to Cloudflare Pages, one origin for static assets + serverless. This
+# supersedes the never-flipped GitHub Pages deploy. The legacy Python SSG stays a local
+# fallback: `bosc site build` regenerates the old `site/` tree if ever needed.
 #
-# This workflow never runs on push. It is `workflow_dispatch` (a button in the
-# Actions tab) and `deploy` defaults to false, so a run is **build-only** unless you
-# tick the box — nothing publishes until you explicitly deploy. Recommended first
-# run: build-only, then do a browser visual pass on the deck.gl maps before
-# deploying (WebGL isn't covered by `astro check`).
+# Still MANUAL and build-only by default: `workflow_dispatch` with a `deploy` toggle
+# that defaults to false, so a run only *builds* unless you tick the box. Recommended
+# first run: build-only, then a browser visual pass on the deck.gl maps (WebGL isn't
+# covered by `astro check`) before deploying.
 #
-# NOTE ON VISIBILITY: GitHub Pages served from a PRIVATE repo is only access-
-# controlled on GitHub Pro / Team / Enterprise. On a free account, enabling Pages
-# makes the built site publicly reachable. Confirm your plan/visibility before
-# running the deploy job.
+# Cloudflare's own Git build is NOT used — the content bundle is produced by `bosc
+# export` (Python) before `npm run build`, so the build runs here and Wrangler does a
+# direct upload. Pages config lives in `frontend/wrangler.toml`.
+#
+# One-time setup before the first deploy (see docs/submissions-api.md):
+#   - Create the Cloudflare Pages project `bosc` (production branch: main).
+#   - Repo secrets: CLOUDFLARE_API_TOKEN (token with "Cloudflare Pages: Edit") and
+#     CLOUDFLARE_ACCOUNT_ID.
+#   - Optional repo vars PAGES_SITE_URL / PAGES_BASE_PATH for a custom domain; the
+#     defaults target the bosc.pages.dev subdomain at the root (no base path).
 
 name: Pages (manual)
 
@@ -22,14 +28,12 @@ on:
   workflow_dispatch:
     inputs:
       deploy:
-        description: "Deploy to GitHub Pages after building (else build-only)"
+        description: "Deploy to Cloudflare Pages after building (else build-only)"
         type: boolean
         default: false
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages
@@ -38,18 +42,16 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # GitHub Pages for a project repo serves under https://<owner>.github.io/<repo>/,
-    # so the Astro site is built with that base path (handled everywhere via withBase()).
+    # *.pages.dev serves at the domain root, so no base path (handled via withBase()).
+    # For a custom domain, set the PAGES_SITE_URL / PAGES_BASE_PATH repo variables — no
+    # code change needed.
     env:
-      SITE_URL: https://${{ github.repository_owner }}.github.io
-      BASE_PATH: /${{ github.event.repository.name }}
+      SITE_URL: ${{ vars.PAGES_SITE_URL || 'https://bosc.pages.dev' }}
+      BASE_PATH: ${{ vars.PAGES_BASE_PATH || '' }}
     steps:
       - uses: actions/checkout@v4
-        # No LFS: the Astro site builds from the JSON bundle (`bosc export`) and never
-        # serves source bytes, so the ~5.4 GB corpus isn't pulled. (The exhibits page
-        # shows metadata + an "available" flag, which reads false for unmaterialized
-        # LFS sources — cosmetic; wire a sparse `git lfs pull` of the exhibit allowlist
-        # later if those badges should read true.)
+        # No LFS: the site builds from the JSON bundle (`bosc export`) and never serves
+        # source bytes, so the ~5.4 GB corpus isn't pulled.
 
       # 1. Generate the real content bundle the frontend reads.
       - name: Install uv
@@ -77,9 +79,13 @@ jobs:
         working-directory: frontend
         run: npm run build
 
-      - uses: actions/upload-pages-artifact@v3
+      # Hand the built assets to the deploy job (Functions come from source at checkout).
+      - name: Upload the build
+        uses: actions/upload-artifact@v4
         with:
+          name: site-dist
           path: frontend/dist
+          retention-days: 1
 
   deploy:
     # Only deploys when you tick the "deploy" input; otherwise the run is build-only.
@@ -87,8 +93,23 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      name: cloudflare-pages
+      url: ${{ steps.deploy.outputs.deployment-url }}
     steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      # Source restores frontend/functions/ + frontend/wrangler.toml; the artifact
+      # restores the built frontend/dist/. Wrangler then uploads dist + compiles
+      # functions/ (per wrangler.toml `pages_build_output_dir`).
+      - uses: actions/checkout@v4
+      - name: Download the build
+        uses: actions/download-artifact@v4
+        with:
+          name: site-dist
+          path: frontend/dist
+      - name: Deploy to Cloudflare Pages
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: frontend
+          command: pages deploy --branch=main
