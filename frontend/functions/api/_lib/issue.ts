@@ -17,6 +17,15 @@ export interface IssueDraft {
 /** `submission` is the provenance marker (cf. `agent-proposed`); `needs-triage` is inert-until-human. */
 export const SUBMISSION_LABELS = ["submission", "needs-triage"];
 
+/**
+ * Hidden marker embedded in each issue body so a resubmission is detectable. The same
+ * string is matched when scanning open issues for dedupe (`github.ts`) — one source of
+ * the format.
+ */
+export function submissionMarker(dedupeHash: string): string {
+  return `<!-- submission: ${dedupeHash} -->`;
+}
+
 /** Strip newlines/control chars and neutralize backticks for an inline-code context. */
 function inlineSafe(s: string): string {
   return s
@@ -58,7 +67,7 @@ export function buildIssue(s: Submission, dedupeHash: string): IssueDraft {
     "_Submitted via the public form; Turnstile-verified; **unverified** — triage before " +
       "acting. A submission is a proposal, never evidence._",
   );
-  lines.push(`<!-- submission: ${dedupeHash} -->`);
+  lines.push(submissionMarker(dedupeHash));
 
   return { title: titleText(s), body: lines.join("\n"), labels: SUBMISSION_LABELS };
 }

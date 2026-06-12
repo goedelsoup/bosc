@@ -18,8 +18,9 @@ issue). The contract, abuse model, identity, and bootstrap are in
 - **Typecheck:** `npm run check` runs `tsc -p functions/tsconfig.json` (WebWorker libs).
   This tree is **excluded** from the Astro project's tsconfig so `astro check` doesn't
   typecheck Workers code with DOM/Astro libs.
-- **Pure logic is split out** (`api/_lib/schema.ts`, `api/_lib/issue.ts`) so it's
-  testable without the runtime (`node --experimental-strip-types`).
+- **Pure logic is split out** (`api/_lib/schema.ts`, `api/_lib/issue.ts`, and the window
+  math in `api/_lib/ratelimit.ts`) so it's testable without the runtime
+  (`node --experimental-strip-types`).
 
 ## Not live yet
 

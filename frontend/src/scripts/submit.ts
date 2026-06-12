@@ -73,11 +73,16 @@ if (form && statusEl) {
       body: JSON.stringify(payload),
     })
       .then(async (r) => {
-        const out = (await r.json().catch(() => ({}))) as { issue_url?: string; error?: string };
+        const out = (await r.json().catch(() => ({}))) as {
+          issue_url?: string;
+          error?: string;
+          deduped?: boolean;
+        };
         if (r.ok && out.issue_url) {
           form.reset();
           const safe = out.issue_url.replace(/"/g, "%22");
-          statusEl.innerHTML = `Thank you — filed as <a href="${safe}">${safe}</a> for review.`;
+          const verb = out.deduped ? "already tracked as" : "filed as";
+          statusEl.innerHTML = `Thank you — ${verb} <a href="${safe}">${safe}</a> for review.`;
           statusEl.dataset.kind = "ok";
           return;
         }

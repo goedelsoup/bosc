@@ -7,7 +7,7 @@
 // downloads a PKCS#1 key (`-----BEGIN RSA PRIVATE KEY-----`); convert it once with
 // `openssl pkcs8 -topk8 -nocrypt -in app.pem -out app.pkcs8.pem` (bootstrap step).
 
-import type { IssueDraft } from "./issue";
+import { submissionMarker, type IssueDraft } from "./issue";
 
 const API = "https://api.github.com";
 const UA = "bosc-tips-bot";
@@ -75,15 +75,51 @@ async function installationToken(jwt: string, owner: string, repo: string): Prom
   return token;
 }
 
-export async function createIssueAsApp(opts: {
+/**
+ * Dedupe (Phase 5): scan the open `submission` issues for one already carrying this
+ * run's marker and return its URL, else null. Best-effort — only the first page (100)
+ * of open submissions is checked, and any error returns null (proceed to create) so a
+ * dedupe hiccup never drops a legitimate submission. The triage queue is kept bounded
+ * by closing handled issues (they leave `state=open`).
+ */
+async function findOpenSubmission(
+  token: string,
+  owner: string,
+  repo: string,
+  marker: string,
+): Promise<string | null> {
+  try {
+    const res = await fetch(
+      `${API}/repos/${owner}/${repo}/issues?labels=submission&state=open&per_page=100`,
+      { headers: ghHeaders(token, "token") },
+    );
+    if (!res.ok) return null;
+    const issues = (await res.json()) as Array<{ html_url: string; body: string | null }>;
+    return issues.find((i) => (i.body ?? "").includes(marker))?.html_url ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export interface FileResult {
+  url: string;
+  /** True when an existing open issue carried the same marker (no new issue opened). */
+  deduped: boolean;
+}
+
+export async function fileIssueAsApp(opts: {
   appId: string;
   privateKey: string;
   owner: string;
   repo: string;
   issue: IssueDraft;
-}): Promise<string> {
+  dedupeHash: string;
+}): Promise<FileResult> {
   const jwt = await appJwt(opts.appId, opts.privateKey);
   const token = await installationToken(jwt, opts.owner, opts.repo);
+
+  const existing = await findOpenSubmission(token, opts.owner, opts.repo, submissionMarker(opts.dedupeHash));
+  if (existing) return { url: existing, deduped: true };
 
   const res = await fetch(`${API}/repos/${opts.owner}/${opts.repo}/issues`, {
     method: "POST",
@@ -92,5 +128,5 @@ export async function createIssueAsApp(opts: {
   });
   if (!res.ok) throw new Error(`issue create failed (${res.status})`);
   const { html_url } = (await res.json()) as { html_url: string };
-  return html_url;
+  return { url: html_url, deduped: false };
 }

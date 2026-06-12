@@ -20,3 +20,14 @@ compatibility_date = "2024-11-01"
 [vars]
 GITHUB_OWNER = "goedelsoup"
 GITHUB_REPO = "bosc"
+# Optional rate-limit knobs (defaults in code: 5 / 3600s). Uncomment to override.
+# RATE_LIMIT_MAX = "5"
+# RATE_LIMIT_WINDOW_SEC = "3600"
+
+# Per-IP rate limiting (Phase 5) is opt-in: the Function degrades gracefully until a KV
+# namespace is bound here as RATE_LIMIT. Create one and fill in the printed id:
+#   npx wrangler kv namespace create RATE_LIMIT
+# then uncomment:
+# [[kv_namespaces]]
+# binding = "RATE_LIMIT"
+# id = "<namespace-id>"

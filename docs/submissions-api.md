@@ -114,7 +114,7 @@ on a record/entity/concept page (it already knows the id it rendered); the stand
 | **title** | `[tip]` / `[correction]` + `ref_label` (or the first ~60 chars of `body` when untargeted) |
 | **body** | a structured block: the target (kind + a deep link to `page_url`), the submission text as a **fenced quote**, the `evidence_url` as a link, and a provenance footer (*"Submitted via the public form; Turnstile-verified; **unverified** — triage before acting."*) |
 | **labels** | `submission` (provenance marker — opened via the public form) + `needs-triage` (inert until a human acts) |
-| **dedupe** | a hidden marker `<!-- submission: <sha256(ref + normalized body)> -->`, so a resubmit is detectable. Listing/deduping against open issues is a Phase-5 hardening (the marker is written now so it's free later). |
+| **dedupe** | a hidden marker `<!-- submission: <sha256(ref + normalized body)> -->`. Before creating, the Function scans the open `submission` issues for this marker and returns the existing one instead of a duplicate (see [Abuse & spam](#abuse--spam)). |
 
 The provenance label is to submissions what `agent-proposed` is to research proposals,
 and `needs-triage` is shared — so the existing triage habit covers both. Both labels are
@@ -124,9 +124,20 @@ and `needs-triage` is shared — so the existing triage habit covers both. Both 
 
 The endpoint opens public issues, so it is an abuse vector. Controls, interim → hardened:
 
-**Live in the interim endpoint:**
+**Built into the endpoint:**
 - **Cloudflare Turnstile** — a human-verification token required on every submission,
   verified server-side against the Turnstile secret. The first line of defense.
+- **Per-IP rate limiting** (Phase 5) — a fixed-window KV counter (default **5 per IP per
+  hour**, `RATE_LIMIT_MAX` / `RATE_LIMIT_WINDOW_SEC`) checked *before* Turnstile, so a
+  flooding IP is cut off cheaply; over-limit gets `429` + `Retry-After`. **Opt-in and
+  fail-open:** with no `RATE_LIMIT` KV namespace bound it's simply off, and a KV error
+  allows the request (Turnstile stays the primary gate). KV is eventually consistent, so
+  this is a soft dampener, not a hard cap.
+- **Dedupe** (Phase 5) — before creating, the Function scans the open `submission` issues
+  for the same `<!-- submission: <hash> -->` marker and returns that existing issue
+  (`200 {deduped:true}`) instead of opening a duplicate. Best-effort (first 100 open
+  submissions; errors fail open to *create*, never drop). The triage queue stays bounded
+  because handled issues are closed (leave `state=open`).
 - **Hard size caps** — per the schema table; oversized or malformed bodies are rejected
   `4xx` before any GitHub call.
 - **Markdown neutralized** — `body` is emitted inside a fenced block and the title is
@@ -135,17 +146,16 @@ The endpoint opens public issues, so it is an abuse vector. Controls, interim �
   the site's own host.
 - **GitHub's own per-token issue rate limits** backstop volume.
 
-**Phase-5 hardening (deferred, the seam is ready):**
-- **Per-IP / per-window rate limiting** via Cloudflare KV (or Durable Objects) — the
-  interim relies on Turnstile + GitHub limits; a KV counter is the next increment.
-- **Dedupe** against open `submission` issues using the marker above (needs an
-  Issues: read list per submit — a soft cost, hence deferred).
-- **A triage surface** (a saved filter / lightweight view over `label:submission
-  label:needs-triage`), and optional notify-on-submit.
+**Still deferred:** optional notify-on-submit, and Pulumi-managing the Cloudflare
+resources (Pages project + KV namespace) via `@pulumi/cloudflare` (today they're created
+in the dashboard / via `wrangler`).
 
-The moderation model is the same as everywhere in BOSC: nothing a non-maintainer
-produces is acted on automatically — it sits labeled and inert until `@goedelsoup`
-triages it.
+**Triage** the queue with this saved filter — open submissions awaiting a human:
+<https://github.com/goedelsoup/bosc/issues?q=is%3Aopen+is%3Aissue+label%3Asubmission+label%3Aneeds-triage>.
+Closing an issue (or dropping `needs-triage`) takes it off the queue and out of dedupe's
+open-issue scan. The moderation model is the same as everywhere in BOSC: nothing a
+non-maintainer produces is acted on automatically — it sits labeled and inert until
+`@goedelsoup` triages it.
 
 ## Identity — the `bosc-tips-bot` App
 
@@ -253,6 +263,18 @@ the Pages project exists (Phase 1).
    Expect `201 {"issue_url": …}` and a new `submission` + `needs-triage` issue opened by
    `bosc-tips-bot[bot]`. Close the test issue, then swap in the **real** Turnstile keys.
 
+### Optional — enable per-IP rate limiting (Phase 5)
+
+Rate limiting is off until a KV namespace is bound. To enable it, create one and wire the
+`RATE_LIMIT` binding in [`frontend/wrangler.toml`](../frontend/wrangler.toml):
+
+```sh
+npx wrangler kv namespace create RATE_LIMIT   # prints the namespace id
+```
+
+Uncomment the `[[kv_namespaces]]` block with that id, then redeploy. Override the
+defaults (5 / 3600s) with the `RATE_LIMIT_MAX` / `RATE_LIMIT_WINDOW_SEC` vars if needed.
+
 ### Turning it off
 
 Set `SUBMISSIONS_ENABLED` to anything but `true` (the endpoint returns `503`; the form
@@ -268,7 +290,8 @@ shows the placeholder on the next build), or uninstall the App.
 | `submission` label (Pulumi) | **coded** (Phase 4 — `pulumi up` to apply) |
 | Cloudflare Pages host migration | **wired** (Phase 1 — `pages.yml` Wrangler deploy + `wrangler.toml`; needs the CF project + `CLOUDFLARE_*` secrets) |
 | `bosc-tips-bot` App + secrets | planned (Phase 4 — manual bootstrap, below) |
-| KV rate-limit, dedupe, triage surface | **deferred** (Phase 5 — seam is ready) |
+| Per-IP rate limit + dedupe + triage filter | **built** (Phase 5 — rate limit opt-in via a `RATE_LIMIT` KV binding) |
+| Notify-on-submit; Pulumi-managed CF resources (`@pulumi/cloudflare`) | **deferred** |
 | Webhook receiver (event-driven, Epic 4 upgrade) | **deferred** — the Function is the request-driven seam; a persistent receiver is a later tier |
 
 ### Open decisions
