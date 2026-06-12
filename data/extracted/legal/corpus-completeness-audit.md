@@ -132,6 +132,16 @@ under `genuine_absence_verified:`. Summary:
 
 No corpus action required for any of the 8.
 
+The legacy `minutes/raw/` snapshot had fallen ~2 months behind the county (it ends
+at minutes `M032426` 2026-03-24 / agenda `A042026` 2026-04-20). That backlog was
+**ingested 2026-06-12** via the civic pipeline (the commissioners are now a registry
+body): 26 minutes (2026-03-25 → 06-02) + 22 agendas (2026-04-21 → 06-11) under
+[`data/documents/commissioners/meetings/`](../../documents/commissioners/meetings/)
+with a download manifest + meeting index at [`./meetings/`](../commissioners/meetings/).
+The `meetings/` tree continues the legacy `raw/` tree from its last date forward (no
+byte overlap); the 22 agendas are text-verified, the 26 minutes are image-only scans
+pending an OCR pass.
+
 ---
 
 ## Cross-refs

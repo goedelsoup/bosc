@@ -3069,6 +3069,12 @@ def subdivisions_download(
         False, "--dry-run", help="Show what would be downloaded; write nothing."
     ),
     url: str | None = typer.Option(None, "--url", help="Override the records/Agenda Center URL."),
+    since: str | None = typer.Option(
+        None,
+        "--since",
+        help="Only download docs dated on/after this ISO date (yyyy-mm-dd); "
+        "undated docs are skipped. Use to ingest just the new meetings.",
+    ),
 ) -> None:
     """Download a body's minutes/agendas into data/documents/<slug>/meetings/.
 
@@ -3095,6 +3101,14 @@ def subdivisions_download(
         console.print(f"[yellow]{exc}[/]")
         raise typer.Exit(1) from exc
 
+    if since is not None:
+        before = len(docs)
+        docs = [d for d in docs if d.date and d.date >= since]
+        console.print(
+            f"[dim]--since {since}: {len(docs)} of {before} documents dated on/after "
+            f"that date ({before - len(docs)} earlier/undated skipped).[/]"
+        )
+
     selected = docs[:limit] if limit is not None else docs
     if dry_run:
         console.print(
@@ -3107,7 +3121,9 @@ def subdivisions_download(
             console.print(f"  [dim]… and {len(selected) - 30} more[/]")
         return
 
-    report = download_meetings(body, docs, settings=settings, limit=limit)
+    report = download_meetings(
+        body, docs, settings=settings, limit=limit, source_page=url or body.publishing.records_url
+    )
     manifest = write_manifest(
         report, settings.extracted_dir / slug / "meetings" / "download-manifest.yaml"
     )

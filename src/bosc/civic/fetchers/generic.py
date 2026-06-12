@@ -80,6 +80,15 @@ def _classify_kind(haystack: str) -> str:
         return "minutes"
     if "packet" in low:
         return "packet"
+    # Allen County's A######/M###### (MMDDYY) filename convention: the county
+    # commissioners link an agenda as the bare meeting date ("June 9, 2026") with the
+    # kind carried only by the file basename. Read it as a last resort — after the
+    # title/keyword checks — and anchor to the path separator + the suffix/extension
+    # so it can't catch a township's bare-date "2.6.2024.pdf" (no A/M letter prefix).
+    if re.search(r"/a\d{5,7}[-.]", low):
+        return "agenda"
+    if re.search(r"/m\d{5,7}[-.]", low):
+        return "minutes"
     return "other"
 
 
