@@ -30,6 +30,21 @@ Declared in the county's first production tracker (cover letter 2026-06-05, Cler
 
 *Universe note:* per the relator's 2026-06-03 narrowing email, any request item not listed was treated as withdrawn — so the "owed" set is bounded by these items. Production is rolling ("every Friday"). **Items 5–15 were produced in batch 2 (2026-06-12)**; **item 4** (cost-benefit, held under §9.66(D)) remains the one to watch.
 
+### Allen SWCD production (2026-06-12) — site stormwater; two "no records" tensions
+
+*Added 2026-06-12.* A **separate agency** — Allen Soil & Water Conservation District — answered the relator's own **11-item (Parts A–E)** request about the **4110 N. Cole St.** site's stormwater/erosion jurisdiction. Ingested as [`prr-mandamus/bosc-prr-production-2026-06-12-aswcd.response-index.yaml`](prr-mandamus/bosc-prr-production-2026-06-12-aswcd.response-index.yaml) (+ [analysis](prr-mandamus/bosc-prr-production-2026-06-12-aswcd.analysis.md)); binaries (4-pp letter + 54-pp records bundle) under [`prr-production-2026-06-12-aswcd/`](../../documents/legal/prr-mandamus/prr-production-2026-06-12-aswcd/). It **produced** the site ESC inspections (2025-12 → 2026-06), the County Engineer's mass-grading approval + **SW1225** stormwater permit ($5,800), and the plan-review email chain — and **withheld the plan sets** under a *new* dual ground (**R.C. 149.433** infrastructure records + **R.C. 1333.61** trade secret — "water and wastewater usage for a data center"), now [withholding-map layer 7](prr-mandamus/records-withholding-map.yaml).
+
+What's **owed / unresolved** from this track:
+
+| Item(s) | What | SWCD posture |
+|---|---|---|
+| **1** | The **NPDES CGP coverage number** for the site | Not produced — *"TBD"* on every inspection form; SWCD points to **Ohio EPA**. Half a year of mass grading on a ~335-ac parcel with no recorded coverage number. |
+| **3** | Wetland determinations (the 0.7-ac forested wetland, DSW401251760W) | **"No records"** — *yet* the produced inspections record *"the existing wetland was mitigated."* A produced record contradicts the answer. (Corroborated by in-corpus [`permits/3788677`](../permits/3788677.epa.yaml) + [`/3796349`](../permits/3796349.epa.yaml).) |
+| **4** | Tile/agricultural-drainage impact | **"No records"** — *yet* the 2026-06-05 inspection documents an **east farm-tile diversion swale** failure (photo *"East farm tile bypass"*). A produced record contradicts the answer. |
+| **6–11** | BOSC-1A forcemain, Shawnee II Phase 2, Hume/Shawnee forcemain (MGD design capacity), MS Consultants comms, **Commissioner Beth Seibert** comms | **"No records"** → deferred to Ohio EPA / Allen County Sanitary Engineer / townships. |
+
+The plan sets are the same documents the County withholds, now shielded a second way; the **§149.433/trade-secret** ground reaches even the plan-share **links inside produced emails** (redacted). Items 3 and 4 are the adequacy flags to carry forward.
+
 ---
 
 ## 2. Watershed / conservation grant docs — to dig up

@@ -84,6 +84,26 @@ the_stack:                            # ordered along the records lifecycle
       floor is disclosed; a proposed $200k->$250k/yr PILOT surfaces only in PAAC minutes).
     effect: "What IS produced omits the numbers that decide the public-interest question — prices and school terms."
     source: data/extracted/aedg/seller-land-packets.land.yaml
+  - layer: 7 — infrastructure-record + trade-secret shield (a THIRD agency, a NEW statutory basis)
+    mechanism: "R.C. 149.433 infrastructure records (25-yr exemption) + R.C. 1333.61 trade secret (via R.C. 149.43(A)(1)(v))"
+    instrument: "Allen Soil & Water Conservation District PRR response (2026-06-12; Lydia Archambo, Stormwater Coordinator)"
+    operative_text: >-
+      The SWCD withholds the data-center plan sets on TWO grounds at once: (i) R.C. 149.433(C) —
+      "infrastructure records" of a private entity submitted with an "express statement" are exempt from
+      149.43 for 25 years; the plans carry the statutory express statement ("This information is voluntarily
+      submitted to a public office in expectation of protection from disclosure as provided by section
+      149.433..."). (ii) R.C. 149.43(A)(1)(v) state-law exemption incorporating Ohio's Uniform Trade Secrets
+      Act, R.C. 1333.61(D) (citing State ex rel. Besser v. Ohio State Univ., 89 Ohio St.3d 396 (2000)); the
+      asserted secret is "Construction and water and wastewater usage for a data center... independent economic
+      value to the Company." The SWCD also REDACTED the plan-share links in the produced emails + one quoted
+      line of plan text (response #2).
+    effect: >-
+      Extends the withholding architecture to the SITE-LEVEL stormwater jurisdiction (SWCD), under statutes the
+      County's own productions never invoked — and reaches not just the plans but every email link pointing to
+      them. The "water and wastewater usage for a data center" framing is the same load/usage data the cooling
+      and sanitary axes turn on.
+    note: "Distinct from the County's NDA/CRA/RDA/4582.58 stack — a parallel branch, not the same instruments. Items 6-11 of the SWCD request were answered 'no records' (deferred to OEPA/Sanitary Eng/townships), incl. Commissioner Beth Seibert comms (item 11)."
+    source: data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-12-aswcd.response-index.yaml
 
 actors:                               # who built / operates the stack
   origin_county_counsel: "John R. Willamowski, Jr. (Asst. Prosecutor) — originated the NDA; County counsel on the RDA"
@@ -108,11 +128,12 @@ cross_refs:
   - data/extracted/commissioners/bosc-resolution-ledger.yaml
   - data/extracted/legal/corpus-completeness-audit.md
   - data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-05.response-index.yaml
+  - data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-12-aswcd.response-index.yaml   # layer 7 (SWCD 149.433 + 1333.61)
   - data/extracted/aedg/seller-land-packets.land.yaml
   - src/bosc/ledger.py
 
 relevance:
-  tags: [verified, records, withholding, mandamus, nda, cra, rda, 4582.58, open-meetings, prr]
+  tags: [verified, records, withholding, mandamus, nda, cra, rda, 4582.58, open-meetings, prr, '149.433', trade-secret, swcd]
   note: >-
     One map of Project BOSC's layered records-withholding architecture: the R.C. 4582.58 front-end
     non-record shield; the contractual developer-notice clauses (NDA §6(f) ≥10 business days, RDA §9.13

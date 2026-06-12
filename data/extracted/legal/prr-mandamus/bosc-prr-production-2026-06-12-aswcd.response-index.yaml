@@ -1,0 +1,358 @@
+# Allen SOIL & WATER CONSERVATION DISTRICT (ASWCD) production in response to the BOSC
+# public-records request. A SEPARATE producing agency from the County Commissioners /
+# Sanitary Engineer batches (2026-06-05, 2026-06-12) — a DIFFERENT 11-item request (Parts
+# A-E) the relator put to the SWCD, the stormwater/erosion-control jurisdiction over the
+# 4110 N. Cole St. data-center site. Received 2026-06-12 (same day as the Commissioners'
+# batch 2, but a distinct response from a distinct custodian — hence the "-aswcd" suffix).
+#
+# Two source binaries (verbatim as-received names; chain of custody):
+#   data/documents/legal/prr-mandamus/prr-production-2026-06-12-aswcd/
+#     - "Mr. Parent Records request.pdf"   (4 pp)  -> the SWCD response LETTER (request restated + item-by-item)
+#     - "Parent Records Request.pdf"        (54 pp) -> the responsive RECORDS bundle
+#   sha256: letter  3a283a70a0b4e943c42eb114f87a9494732e5ac63beb3642da206bd979a1c817
+#           records 9e535721c182571c33a0921ca664d8a4bb2612313d6fd2a55033008c2fcb59bf
+# Page numbers below are 1-based positions within the 54-page records bundle PDF. Inspection
+# dates, dollar figures, acreages, and permit numbers are clearly printed (high-confidence);
+# transcribed and cited by page. Hand-marked "Category 1/3" + exhibit "#1-#5" labels in the
+# bundle are the producing agency's own exhibit tabs.
+meta:
+  subject: BOSC PRR — Allen Soil & Water Conservation District production (stormwater / erosion-control jurisdiction over the 4110 N. Cole St. data-center site)
+  production_date: 2026-06-12
+  producing_agency: Allen Soil and Water Conservation District (ASWCD)
+  custodian: Lydia Archambo, Stormwater Coordinator, ASWCD (1870 Slabtown Road, Lima OH 45801; 419-222-0846 x1004)
+  relator: Cory Parent (cparent101@gmail.com)
+  cover_letter: "Mr. Parent Records request.pdf — 4-pp response letter; restates the 11-item request (Parts A-E) then answers item-by-item; signed Lydia Archambo."
+  collection: legal
+  source_dir: data/documents/legal/prr-mandamus/prr-production-2026-06-12-aswcd/
+  as_received_filenames: ["Mr. Parent Records request.pdf", "Parent Records Request.pdf"]
+  posture: >
+    SWCD "considers your records request fulfilled." It produced erosion-&-sediment-control (ESC)
+    site-inspection reports + a set of plan-review/preconstruction emails + the County stormwater
+    permit package, and WITHHELD the data-center plan sets on a NEW dual ground not seen in the
+    County's productions: R.C. 149.433 INFRASTRUCTURE RECORDS (25-year exemption, "express statement")
+    AND R.C. 1333.61 TRADE SECRETS (via R.C. 149.43(A)(1)(v)), the asserted secret being
+    "Construction and water and wastewater usage for a data center." It also redacted plan-share
+    LINKS in the produced emails + one quote of plan text. Items 6-11 = "no responsive records"
+    (deferred to Ohio EPA / Allen County Sanitary Engineer / the townships).
+  distinct_from: >
+    Different request and custodian than bosc-prr-production-2026-06-05 / -2026-06-12 (the County
+    Commissioners / Clerk of Board / Sanitary Engineer). This is the SWCD's own 11-item Parts A-E
+    request. Same matter (Project BOSC / 4110 N. Cole St. / Ohio EPA Facility ID 0302022054), same relator.
+  relevance: >
+    First primary records of the SITE-LEVEL stormwater/erosion regime: monthly ESC inspections of the
+    "Data Center" earth-disturbance (Dec 2025 -> Jun 2026), the County Engineer's mass-grading approval
+    + SW1225 stormwater permit ($5,800), and the plan-review chain (EMH&T engineer of record; Allen
+    County Engineer Joe Gearing as reviewing AHJ; Mannik & Smith Group as third-party storm reviewer).
+    Surfaces three findings the SWCD's own "no records" answers (items 3, 4) sit awkwardly against:
+    the NPDES coverage number is still "TBD" 6+ months into mass grading; the on-site wetland is
+    recorded as "mitigated"; and an east FARM-TILE diversion swale failed (tile "bubbling up through soil").
+
+# ---------------------------------------------------------------------------------------------
+# THE RECORDS BUNDLE ("Parent Records Request.pdf", 54 pp) mapped by page range, grouped by thread.
+# The bundle re-produces the ESC inspections twice (once chronologically pp1-12, once under the
+# agency's category tabs pp31-39) and the Mass-Ex Rev-1 email thread twice (pp21-25, pp49-51).
+# ---------------------------------------------------------------------------------------------
+source_documents:
+
+  # --- ESC site-inspection reports (the item-1/2 responsive core) -----------------------------
+  - record: ESC Site Inspection Report — Data Center, 2026-02-18 (report #183948)
+    pages: "1-3"      # re-produced at pp 34-36 under category tab "#2"
+    inspector: Albert Suniga, CESSWI (ASWCD Stormwater Inspector / Sr. Engineering Tech)
+    permittee: Jeremy Eisele, EMH&T (jeisele@emht.com)
+    npdes_number: "TBD"
+    activity: "Mass Grading; Sub-grade Infrastructure"
+    what: >
+      Monthly inspection; 65F partly cloudy. All BMP items "Yes" except Q8 roads/gutters ("keep
+      roadway clean" reminder) and Q12 washouts (concrete-washout reminder). Q22 permanent stability = No.
+      Q23 Stop Work Order = No.
+  - record: ESC Site Inspection Report — Data Center, 2026-03-18 (report #186808)
+    pages: "4-6"      # re-produced at pp 37-39 under category tab "#3"
+    inspector: Albert Suniga, CESSWI
+    npdes_number: "TBD"
+    activity: "Mass Grading; Sub-grade Infrastructure"
+    what: >
+      Q2 notes: inspector verified with Tyler Brumbaugh (Site Manager) that DEWATERING systems were
+      stalled at 2 locations — one off COLE ROAD (intake >=20 ft below ground, "no surface water was
+      being discharged") and one off BLUELICK ("deactivated"; "no mirky colored water discharges").
+      Q8 roads/gutters = "Open Work Items Exist / Maintenance Action Required" — MUD TRACKING observed
+      on Cole Road. Q11 wetlands = "The existing wetland was mitigated." Q22 permanent stability = No.
+  - record: ESC Site Inspection Report — Data Center, 2026-06-05 (report #194263)
+    pages: "7-9"
+    inspector: Jarrod Wehinger (ASWCD Inspector)   # NOTE: different inspector than Suniga
+    npdes_number: "TBD"
+    activity: "Mass Grading; Sub-grade Infrastructure; Pavement Install"
+    what: >
+      77F clear; report generated 2026-06-10. Q10 basins: crew placing topsoil on main basin slopes;
+      per JOE GEARING (Allen County Drainage Engineer) seeding of slopes "would begin soon"; a temporary
+      basin near the SW temporary-utilities area "has started" (seeding/finish grading still needed).
+      Q11 wetlands = "The existing wetland was mitigated." Q18 dust = recommend watering (dry conditions).
+      Q20 non-classified BMP = "Open Work Items Exist": dewatering "appears remedied" but "check the
+      outlet at the CREEK WEST of the site is not releasing sediment; more rock may be needed"; AND
+      "Maintenance Action Required — the EAST FARM TILE diversion swale needs attention... regraded and
+      protected. The tile is no longer exposed and only bubbling up through soil. Please re-expose outlet
+      to the swale." Photo 1 (p9) labeled "East farm tile bypass," 2026-06-05 10:31am. Q22 stability = No.
+    significance: >
+      The 06-05 inspection documents (a) a discharge pathway to a CREEK WEST of the site and (b) an
+      AGRICULTURAL TILE impact — both squarely within request items 1 (discharge/compliance) and 4 (tile
+      drainage), which the SWCD answered "no responsive records." A produced record cuts against the answer.
+  - record: ESC Site Inspection Report — Data Center, 2025-12-08 (report #177506)
+    pages: "10-12"    # re-produced at pp 31-33 under category tab "#1"
+    inspector: Albert Suniga, CESSWI
+    npdes_number: "TBD"
+    activity: "Clearing/Grubbing; Mass Grading"
+    what: >
+      Earliest inspection produced; 25F clear. Q2: "Overall site is in good order. Site is currently busy
+      moving soil and earth moving." Q10 basins = "No detention basin noted at time of inspection." Q11
+      wetlands = "Wetland has been mitigated." Q12 washouts = "No washout is not needed yet." Q22 stability = No.
+    significance: As early as 2025-12-08 — at clearing/grubbing — the on-site wetland is already recorded "mitigated," and there is no detention basin yet.
+
+  # --- Plan-review / governance correspondence -----------------------------------------------
+  - record: Email — Joe Gearing (Allen Co. Engineer) -> Jarrod Wehinger (ASWCD) et al., "Plan Review Consulting Services"
+    pages: "13"
+    date: 2026-06-03
+    to: "Jarrod Wehinger (ASWCD); Doug Turney (EMH&T); Patrick Schwan (Mannik Smith Group); cc Brion Rhodes (Allen Co. Engineer)"
+    what: >
+      "Starting July 1 2026, Allen Soil and Water Conservation District will be reviewing plans for private
+      development. Jarrod Wehinger will be the point contact for S&W." Gearing asks the consultants to share
+      contact info so the SWCD can use the same contract plan-review services the County Engineer's Office used.
+    significance: A GOVERNANCE HANDOFF — private-development plan review transfers County Engineer -> SWCD on 2026-07-01. The data-center review (below) all predates that handoff and was done by the County Engineer.
+  - record: Letter — Allen County Engineer (Brion E. Rhodes / Joe Gearing) -> EMH&T (Jeremy Eisele), "Project BOSC Mass Grading Plan"
+    pages: "14"
+    date: 2025-11-14
+    what: >
+      County Engineer "reviewed and Approved-As Noted the submitted Mass Grading Plan, SWPPP and Drainage
+      Report." The "As Noted" condition: "Proposed driveways require individual approval (Permit) and are
+      subject to change based on construction traffic and schedules." Plans to be kept on-site; final-development
+      design drawings to follow. CC: Turner Construction Company, American Township, Sugar Creek Township, ODOT, T. Audet, ASWCD.
+    significance: The formal mass-grading approval (SWPPP + Drainage Report) for Project BOSC — same date as the SW1225 permit (p52). Engineer of record = EMH&T; reviewing AHJ = Allen County Engineer (Gearing).
+  - record: 'Email thread (exhibit "#1") — "Meeting Request: Project BOSC Preconstruction Meeting"'
+    pages: "15-18"
+    dates: "2025-10-30 -> 2025-11-04 (fwd by A. Suniga to L. Archambo 2026-04-27)"
+    what: >
+      Allison Ansari (EMH&T) requests a Project BOSC PRECONSTRUCTION meeting (10/30/2025). Amanda Maag
+      (Turner/TCCO) names Tyler Brumbaugh (Turner Project Superintendent) as main contact for environmental
+      inspections, Jared Grigg (Turner EHS Mgr) as second. Suniga (ASWCD) would do the monthly environmental
+      inspection and needs the day-to-day site lead + weekly-SWP3 contacts. p18 = confidentiality boilerplate.
+    significance: Responsive to item 2 (preconstruction-meeting records) and item 5 (ASWCD<->EMH&T/Turner comms). Establishes the inspection cadence + the Turner/EMH&T contact chain.
+  - record: Email thread (exhibit "#2") — "LMA" (silt-fence durability)
+    pages: "19-20"
+    dates: "2026-01-07 -> 2026-01-08 (fwd by A. Suniga to L. Archambo 2026-04-27)"
+    what: >
+      Tyler Brumbaugh (Turner) -> Joe Gearing: "The wind has been really battering the silt fence out at the
+      data center. We have been inspecting and aware and are fixing the best we can while we determine a better
+      long-term solution that will hold up for the duration of the campus buildout until areas are stabilized
+      permanently." Gearing: "Appreciate the heads up and your attention towards it."
+    significance: Contemporaneous perimeter-control (silt fence) maintenance issue acknowledged by the GC; "campus buildout" framing.
+  - record: Email thread (exhibit "#3") — "Project BOSC Mass Ex Revision 1"
+    pages: "21-25"    # re-produced at pp 49-51
+    dates: "2026-03-18 -> 2026-04-09 (fwd by A. Suniga to L. Archambo 2026-04-27)"
+    what: >
+      EMH&T (Matt Beine) to Joe Gearing on a Revision-1 submittal for the mass excavation: background updates
+      (the roundabout, onsite coordination, minor grading) would cloud "almost everything on every sheet."
+      KEY: "Please note, the changes are background content only — the 60\" storm outfall has NOT been adjusted."
+      Offers a red-green overlay + a clean B/W set. Gearing requests both; plans for Mass Grading Plan Revision 1
+      "have been signed" 2026-04-09. pp24-25 = confidentiality boilerplate.
+    significance: Establishes the 60" STORM OUTFALL as the load-bearing element of the stormwater design (carried unchanged through Rev 1). Ties to the "60-inch bypass storm sewer" in exhibit #5 (p30).
+  - record: Email (exhibit "#4") + attachment — "Project BOSC - Site Utilities Follow-Up" / Site Utilities Kickoff meeting minutes
+    pages: "26-29"
+    date: 2026-04-02
+    what: >
+      Preston Henry (Turner) circulates minutes of the 2026-04-02 2:00 PM "Project BOSC - Site Utilities
+      Kickoff" to a broad AHJ distribution. Minutes (Turner Construction): attendees = Turner (Brumbaugh,
+      AlRashed, Henry, Heitkamp, Hoppe), Igel (John Powers, Joe Sharp), and Allen County AHJs — Joe Gearing
+      (Engineers), Brad Niemeyer + Eric Trachsel (Sanitary Engineering), Kimberly Siles (Water District),
+      Eric Bontrager (City of Lima Utilities), Albert Suniga (ASWCD). STORM notes: erosion control;
+      dewatering; "DC01 approved"; "more concerned with outlet"; "no true final inspection." WATER notes:
+      domestic; testing/bacteria/hydrostatic; "ROM for install and inspection (separate from Allen Water
+      District) = $69,103.00."
+    significance: >
+      Single-document census of every AHJ over the BOSC site utilities (Engineer, Sanitary Eng, Water District,
+      City of Lima, SWCD). "DC01 approved" + "more concerned with outlet" corroborate the storm-outfall focus.
+      $69,103 water install/inspection ROM is a discrete cost figure.
+    figures: {water_install_inspection_rom_usd: 69103.00}
+  - record: Email (exhibit "#5") — "LMA/BOSC Storm Sewer Inspections"
+    pages: "30"
+    date: 2026-02-02
+    what: >
+      Tyler Brumbaugh (Turner) -> Joe Gearing: "We are going to be starting the 60\" bypass storm sewer and
+      wanted to ask who is going to be inspecting on behalf of the County and what your expectations are...
+      we can meet at the site job trailer that's off Cole Street."
+    significance: Confirms the 60" outfall is a "bypass storm sewer" under construction by Feb 2026; the site job trailer is off Cole Street.
+  - record: Email thread — "Project BOSC HUB" / "Project BOSC Storm Plan - 1st Submittal" (HUB plan review)
+    pages: "40-51"
+    dates: "2025-12-22 -> 2026-06-08"
+    parties: "Allen Co. Engineer (Joe Gearing) <-> EMH&T (Robert McCurnin, Matt Beine) <-> Mannik & Smith Group (Patrick Schwan, Tony Warholic)"
+    what: >
+      The plan-review correspondence for the BOSC "HUB" and Storm plan sets. Mannik & Smith Group is the
+      third-party storm reviewer; EMH&T is the engineer of record; Gearing is the County AHJ. 3rd HUB
+      submittal (2026-05-11) -> "Plans and calcs look good. Submit three (3) hard copies for stamped
+      approval" (Gearing, 2026-05-27). Late thread (2026-06-01/08): some plan text "don't print correctly,"
+      revised sheets to follow. SWCD REDACTED the file-share LINKS to the plan sets throughout (black boxes
+      on pp 41, 42, 43, 45, 46, 50) and one quoted text excerpt. pp 47-48, 51 = confidentiality boilerplate.
+    significance: >
+      The plan-review chain behind the withheld plan sets. NOTE: "Mannik & Smith Group" (storm reviewer) is a
+      DIFFERENT firm from "MS Consultants / ms consultants inc." (the County's wastewater engineer named in
+      request item 10) — do not conflate. The redacted links are the §149.433/trade-secret "redacted links to
+      these plans" the cover letter (response #2) describes.
+
+  # --- The County stormwater permit package (item 1/2 responsive) -----------------------------
+  - record: Allen County Stormwater Permit SW1225 — "Project BOSC Mass Grading"
+    pages: "52"
+    date: 2025-11-14
+    what: >
+      Allen County Dept. of County Roads Stormwater Permit No. SW1225 (Townships: American and Sugar Creek;
+      Road: Cole Street). Applicant: Jeremy Eisele, EMH&T (5500 New Albany Rd). Issued under the Allen County
+      Stormwater Management and Sediment Control Regulations (SMSCR). Signed Joe Gearing, Allen County Drainage
+      Engineer, 2025-11-14. PERMIT FEE = $5,800.00.
+    figures: {permit_fee_usd: 5800.00}
+  - record: Stormwater Management & Sediment Control — Application for Permit
+    pages: "53"
+    date: 2025-11-14
+    what: >
+      Application (Allen County Engineer, Drainage Dept). Owner: BISTROZZI LLC, 4110 N. Cole St., Lima OH 45801.
+      Developer/Contractor: Turner Construction (28 N. St. Clair St., Suite 200, Toledo OH 43604). Engineer:
+      EMH&T (New Albany). Project: Project BOSC Mass Grading, 4110 N. Cole St., Lima; Township American; nearest
+      intersection Cole & Bluelick; type Industrial. NPDES Program = "Turner Construction." Hand-dated 2025-11-14.
+    figures:
+      total_parcel_acres: ~335           # "Total Area of Parcel: 335"
+      developed_acres: ~195              # "Total Area of Parcel to be Developed: 195 permanent"
+      permanently_impervious_acres: ~115 # "Total Area to be Permanently Impervious: 115 acres"
+      mass_grading_duration_months: 9    # "Duration of Construction Activities: 9 Months for mass grading"
+    significance: >
+      The applicant-declared site footprint: ~335-ac parcel, ~195 ac to be developed, ~115 ac permanently
+      impervious, 9-month mass-grading window. Owner = BISTROZZI LLC (the land-assembly shell); developer/GC =
+      Turner Construction; engineer = EMH&T. NPDES responsibility lies with Turner Construction.
+  - record: Check #637852 — Turner Construction Co. -> Allen County Engineer (stormwater fee)
+    pages: "54"
+    date: 2025-11-10
+    what: >
+      JPMorgan Chase check #637852, $5,800.00, "Stormwater Fee," Turner Construction Co. (Job #240308, Invoice
+      002) payable to Allen County Engineer, dated 2025-11-10.
+    figures: {amount_usd: 5800.00}
+    significance: Proof of payment for the SW1225 mass-grading stormwater permit; Turner Construction Job #240308.
+
+# ---------------------------------------------------------------------------------------------
+# ESC inspection series at a glance (all four; NPDES = "TBD" on every one).
+# ---------------------------------------------------------------------------------------------
+inspection_index:
+  - {report: '177506', inspection_date: 2025-12-08, inspector: "Albert Suniga",  activity: "Clearing/Grubbing; Mass Grading",            npdes: "TBD", open_items: "none (washout/detention not yet needed)",                 pages: "10-12 (dup 31-33)"}
+  - {report: '183948', inspection_date: 2026-02-18, inspector: "Albert Suniga",  activity: "Mass Grading; Sub-grade",                    npdes: "TBD", open_items: "roadway-clean + washout reminders",                       pages: "1-3 (dup 34-36)"}
+  - {report: '186808', inspection_date: 2026-03-18, inspector: "Albert Suniga",  activity: "Mass Grading; Sub-grade",                    npdes: "TBD", open_items: "mud tracking on Cole Rd (maintenance action); dewatering @ 2 sites; wetland mitigated", pages: "4-6 (dup 37-39)"}
+  - {report: '194263', inspection_date: 2026-06-05, inspector: "Jarrod Wehinger", activity: "Mass Grading; Sub-grade; Pavement Install", npdes: "TBD", open_items: "east FARM-TILE diversion swale (maintenance action); check creek-west dewatering outlet for sediment; wetland mitigated", pages: "7-9"}
+
+# ---------------------------------------------------------------------------------------------
+# ITEM-BY-ITEM — the SWCD's 11-item request (Parts A-E) and its answer. Source: the 4-pp letter.
+# ---------------------------------------------------------------------------------------------
+request_response:
+  request_summary: >
+    11 items across five parts: A (1-5) Project BOSC site 4110 N. Cole St. — NPDES CGP/SWPPP/land-disturbance,
+    ESC reviews + preconstruction records, wetland/floodplain determinations, tile drainage, and ASWCD<->
+    Bistrozzi/Google/AEDG/EMH&T comms; B (6-7) BOSC-1A forcemain corridor (SWPTI-260294 / DSW-6756);
+    C (8) Shawnee II Phase 2 (3640 Spencerville Rd); D (9) Hume/Shawnee Rd forcemain incl. design capacity in
+    MGD; E (10-11) MS Consultants comms + Commissioner Beth Seibert comms.
+  items:
+    - {n: 1, part: A, ask: "NPDES CGP coverage / SWPPPs / land-disturbance permit reviews for 4110 N. Cole St. (OEPA Facility ID 0302022054), incl. inspections, NODs, compliance correspondence",
+       status: produced_partial_with_withholding,
+       produced: "ESC site-inspection forms + multiple plan sets (the plan sets WITHHELD).",
+       withheld: "The plan sets — as infrastructure records (R.C. 149.433, 25-yr) AND trade secrets (R.C. 1333.61 via 149.43(A)(1)(v)).",
+       note: "SWCD points the relator to Ohio EPA for the NPDES permit records (epa.ohio.gov access-public-records). Coverage NUMBER is 'TBD' on every inspection form produced."}
+    - {n: 2, part: A, ask: "ESC plan reviews/approvals + site-inspection records; preconstruction meeting + preconstruction inspection records",
+       status: produced_with_withholding,
+       produced: "Inspection forms + emails re preconstruction meetings (exhibit #1, pp15-18).",
+       withheld: "The plan sets; plus 'redacted links to these plans in provided emails as well as one quote of text from the plans.'"}
+    - {n: 3, part: A, ask: "Wetland/floodplain/water-resource determinations re the site or adjacent parcels, incl. the 0.7-ac forested wetland under DSW401251760W (2025-08-12) and pending DSW401252260W (applied 2025-12-09)",
+       status: no_records_claimed,
+       answer: "'No responsive records... unless your request also implicates the previously identified sets of plans' (withheld).",
+       tension: "The produced inspection forms themselves repeatedly record 'the existing wetland was mitigated' (pp5, 8, 11) — a wetland determination/status fact in a produced record. The 401 permit DSW401251760W + its 2025-08-18 Mitigation Purchase Agreement are already in-corpus (permits/3788677, /3796349)."}
+    - {n: 4, part: A, ask: "Records re any tile drainage / field tile / agricultural drainage system affected by construction at or adjacent to the site",
+       status: no_records_claimed,
+       answer: "'No responsive records... unless your request also implicates the previously identified sets of plans' (withheld).",
+       tension: "The 2026-06-05 inspection (pp7-9, photo p9 'East farm tile bypass') documents an EAST FARM-TILE diversion swale failing — 'the tile is no longer exposed and only bubbling up through soil.' A produced record squarely on item 4's subject."}
+    - {n: 5, part: A, ask: "ASWCD <-> Bistrozzi LLC / Bistrozzi Addition LLC / Google LLC / AEDG / EMH&T comms re this site",
+       status: produced,
+       produced: "The preconstruction/LMA/site-utilities/HUB email exhibits. SWCD also included one email re the County Stormwater (SMSCR) regulations 'due to being sent to an EMHT employee.'"}
+    - {n: 6, part: B, ask: "NPDES CGP / SWPPPs / land-disturbance permits / ESC reviews+inspections for the BOSC-1A pump station & forcemain corridor", status: no_records_claimed, answer: "No records. 'These may be held by the Ohio EPA and/or Allen County Sanitary Engineer.'", note: "Corridor itself is in-corpus: permits 4074527/4074529/4074551 (BOSC-1A private sanitary sewer, approved 2026-04-07); plans/LMA1A-95-SPS."}
+    - {n: 7, part: B, ask: "Drainage/tile/wetland/water-resource impact along the forcemain route (American Township -> American Bath & American II receiving facilities)", status: no_records_claimed, answer: "No records. 'These may [be] held by the Allen County Sanitary Engineer and/or the townships.'", note: "American Bath WWTP receiving facility is in-corpus: oepa/oepa-2PH00007-american-bath-permit.npdes.yaml; the data-center blowdown link is Res #679-24 / Task Order #5."}
+    - {n: 8, part: C, ask: "NPDES CGP / SWPPPs / land-disturbance / stormwater & ESC reviews+inspections for Shawnee II Phase 2 (3640 Spencerville Rd)", status: no_records_claimed, answer: "No records. 'These may be held by the Ohio EPA and/or Allen County Sanitary Engineer.'", note: "Shawnee II Phase 2 is in-corpus via the Commissioners' batch 2 (Res #220-24/#937-23) + oepa permits."}
+    - {n: 9, part: D, ask: "Pre-application meetings / preliminary drainage reviews / stormwater assessments for the Hume/Shawnee Rd forcemain, incl. design capacity in MGD; land-disturbance/drainage review along the alignment (past 3 yrs)", status: no_records_claimed, answer: "No records. 'These may be held by the Ohio EPA and/or Allen County Sanitary Engineer.'", note: "The MGD design-capacity figure the relator sought is not produced by SWCD."}
+    - {n: 10, part: E, ask: "ASWCD <-> MS Consultants comms (2024-01-01 -> date) re any Allen County project, incl. any doc where MS Consultants referenced more than one project", status: no_records_claimed, answer: "No records.", note: "MS Consultants (ms consultants inc., County wastewater engineer) is NOT 'Mannik & Smith Group' (the HUB storm reviewer in the produced emails)."}
+    - {n: 11, part: E, ask: "Records re Commissioner Beth Seibert (as former ASWCD staff OR as County Commissioner) <-> ASWCD staff / Allen Co. Sanitary Engineer / Ohio EPA re Project BOSC, BOSC-1A forcemain, Shawnee II Phase 2, or the Hume/Shawnee forcemain; + ASWCD<->Board / Seibert re design capacity/routing/approval", status: no_records_claimed, answer: "No records.", note: "Pointed ask: Seibert is FORMER ASWCD staff and now an Allen County Commissioner / Board President (commissioners/bosc-resolution-ledger.yaml; closed-deliberation-and-corridor.yaml). SWCD reports zero records."}
+  withdrawn_universe: "The letter states 'any request not listed above has been withdrawn' — so the owed set is bounded by items 1-11 as the SWCD restated them."
+
+# ---------------------------------------------------------------------------------------------
+new_findings:
+  - id: npdes-coverage-number-tbd
+    finding: >
+      All four ESC inspections — 2025-12-08, 2026-02-18, 2026-03-18, 2026-06-05 — carry "Site NPDES Number: TBD."
+      A ~335-ac parcel (~195 ac developed) has been mass-graded since clearing/grubbing in Dec 2025 with the
+      NPDES Construction General Permit COVERAGE NUMBER unrecorded on the jurisdiction's own inspection forms.
+    implication: >
+      Directly responsive to item 1; the SWCD does not produce the coverage number and points to Ohio EPA. The
+      "TBD" persisting 6+ months into earth-disturbance is itself the finding for the NPDES-coverage question.
+      (NPDES responsibility is assigned to Turner Construction per the permit application, p53.)
+  - id: wetland-mitigated-vs-no-records
+    finding: >
+      Item 3 ("wetland determinations") answered "no responsive records," yet the produced inspections record
+      "the existing wetland was mitigated" (2025-12-08 onward). The on-site isolated wetland's 401 permit
+      (DSW401251760W, issued 2025-08-12) and its 2025-08-18 Mitigation Purchase Agreement are already in-corpus.
+    implication: A produced record contains the very determination the "no records" answer disclaims. Corroborates the wetland-mitigation timeline (permits/3788677, /3796349).
+  - id: farm-tile-impact-vs-no-records
+    finding: >
+      Item 4 ("tile drainage affected by construction") answered "no responsive records," yet the 2026-06-05
+      inspection documents an EAST FARM-TILE diversion swale failure ("tile no longer exposed... bubbling up
+      through soil") with a labeled photo ("East farm tile bypass").
+    implication: A produced record squarely on item 4's subject. Worth flagging in any completeness/adequacy challenge.
+  - id: sixty-inch-storm-outfall
+    finding: >
+      The "60-inch storm outfall" / "60-inch bypass storm sewer" is the load-bearing element of the BOSC
+      stormwater design — explicitly carried unchanged through Mass-Ex Revision 1 (2026-03/04) and under
+      construction by Feb 2026 (site job trailer off Cole Street).
+    implication: Engineering keystone for the stormwater/discharge axis; ties to the plans/lma1a storm inventory and the "creek west of site" discharge pathway.
+  - id: site-cost-and-footprint-figures
+    finding: >
+      Discrete primary figures: SW1225 mass-grading stormwater permit fee $5,800 (check #637852, 2025-11-10);
+      water install/inspection ROM $69,103 (4/02 utilities kickoff); applicant-declared footprint ~335-ac parcel,
+      ~195 ac developed, ~115 ac permanently impervious, 9-month mass-grading window.
+    implication: Feeds the cost/impervious-area inputs for the hydrology + ROI axes; ~115 ac of new impervious is a stormwater-runoff driver.
+  - id: plan-review-and-governance-handoff
+    finding: >
+      The BOSC stormwater plan review was run by the ALLEN COUNTY ENGINEER (Joe Gearing) — mass-grading approval
+      2025-11-14, SW1225 permit, HUB plan approved-for-stamping 2026-05-27 — with EMH&T as engineer of record and
+      Mannik & Smith Group as third-party storm reviewer. Private-development plan review transfers to the SWCD
+      on 2026-07-01 (Gearing email, 2026-06-03).
+    implication: Clarifies the AHJ map for the site (County Engineer for stormwater/drainage; SWCD for ESC inspection; Sanitary Eng for sewer) and dates a jurisdictional handoff.
+  - id: aswcd-new-withholding-ground
+    finding: >
+      The SWCD withholds the plan sets on a ground NOT used in the County's productions: R.C. 149.433
+      INFRASTRUCTURE RECORDS (25-yr exemption + statutory "express statement" the plans carry) AND R.C. 1333.61
+      TRADE SECRETS (via 149.43(A)(1)(v); State ex rel. Besser v. OSU). The asserted secret is "Construction and
+      water and wastewater usage for a data center." It also redacted plan-share links + one plan-text quote.
+    implication: A THIRD agency adds a NEW statutory layer to the withholding architecture — distinct from the County's NDA/CRA/RDA/4582.58 stack. Folded into records-withholding-map.yaml as layer 7.
+
+timeline_additions:   # [BOSC]/[stormwater] strand
+  - {date: 2025-11-10, event: "Turner Construction pays $5,800 stormwater-permit fee (check #637852) to Allen County Engineer"}
+  - {date: 2025-11-14, event: "Allen County Engineer approves the BOSC Mass Grading Plan/SWPPP/Drainage Report (Approved-As Noted) + issues Stormwater Permit SW1225"}
+  - {date: 2025-12-08, event: "ASWCD ESC inspection #177506 — clearing/grubbing+mass grading; 'wetland has been mitigated'; NPDES = TBD"}
+  - {date: 2026-02-02, event: "Turner asks the County Engineer who inspects the 60-inch bypass storm sewer (site trailer off Cole St.)"}
+  - {date: 2026-02-18, event: "ASWCD ESC inspection #183948; NPDES = TBD"}
+  - {date: 2026-03-18, event: "ASWCD ESC inspection #186808 — dewatering @ 2 sites (Cole Rd / Bluelick); mud tracking on Cole Rd; NPDES = TBD"}
+  - {date: 2026-04-02, event: "Project BOSC Site Utilities Kickoff (all AHJs); water install/inspection ROM $69,103; 'DC01 approved'"}
+  - {date: 2026-04-09, event: "Mass Grading Plan Revision 1 signed — 60-inch storm outfall unchanged"}
+  - {date: 2026-05-27, event: "County Engineer: BOSC HUB plans/calcs approved for stamped approval (3 hard copies)"}
+  - {date: 2026-06-03, event: "County Engineer notifies consultants: ASWCD takes over private-development plan review on 2026-07-01"}
+  - {date: 2026-06-05, event: "ASWCD ESC inspection #194263 — east farm-tile diversion swale failing; check creek-west dewatering outlet; NPDES = TBD"}
+  - {date: 2026-06-12, event: "ASWCD production (this document) — items 1/2/5 produced (plans withheld §149.433 + §1333.61); items 3-4 'no records' (tension); items 6-11 'no records' (deferred OEPA/Sanitary/townships)."}
+
+cross_refs:
+  - data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-05.response-index.yaml   # County batch 1 (different request/custodian)
+  - data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-12.response-index.yaml   # County batch 2 (same day, different custodian)
+  - data/extracted/legal/prr-mandamus/records-withholding-map.yaml                         # add the §149.433 + §1333.61 SWCD layer (layer 7)
+  - data/extracted/legal/corpus-completeness-audit.md                                      # register this production + the item 3/4 tensions
+  - data/extracted/permits/3788677.epa.yaml                                                # DSW401251760W wetland grant (Project Bosc, 2025-08-12)
+  - data/extracted/permits/3796349.epa.yaml                                                # DSW401251760W Mitigation Purchase Agreement (2025-08-18) — corroborates "mitigated"
+  - data/extracted/permits/4074527.epa.yaml                                                # BOSC-1A private sanitary sewer (item 6 corridor)
+  - data/extracted/oepa/oepa-2PH00007-american-bath-permit.npdes.yaml                      # American Bath WWTP (item 7 receiving facility)
+  - data/extracted/plans/lma1a.storm-inventory.yaml                                        # storm system (the 60-inch outfall context)
+  - data/extracted/commissioners/sanitary-economics.yaml                                   # data-center blowdown -> WWTP (item 7)
+  - data/extracted/commissioners/closed-deliberation-and-corridor.yaml                     # Beth Seibert (item 11)
+  - data/extracted/aedg/seller-land-packets.land.yaml                                       # BISTROZZI LLC / 4110 N. Cole St. land assembly (owner on the permit app)
