@@ -138,9 +138,11 @@ record (Jan 2023–, 991 files) is now **connector-sourced** under
 The legacy hand-assembled `minutes/raw/` tree (930 PDFs) was **retired** after every
 file was verified **byte-identical** to its connector copy — the per-file record is
 [`cutover-reconciliation.yaml`](../commissioners/meetings/cutover-reconciliation.yaml)
-(930/930 matched, 0 retained). The download manifest + meeting index sit alongside it;
-497 agenda dates are content-verified and 489 image-only minutes await OCR (#135). The
-"934 files in `minutes/raw/`" figures above describe the pre-cutover 2026-04-17 snapshot.
+(930/930 matched, 0 retained). The download manifest + meeting index sit alongside it.
+**OCR pass complete (2026-06-12, #135):** all 991 files text-extracted, **969/991 dates
+content-verified** and **270 meetings flagged for corridor topics** (up from 497/91 when only
+the agendas had a text layer). The "934 files in `minutes/raw/`" figures above describe the
+pre-cutover 2026-04-17 snapshot.
 
 ---
 
