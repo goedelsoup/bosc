@@ -38,6 +38,7 @@ import yaml
 from pydantic import BaseModel, ConfigDict
 
 from bosc.config import Settings, get_settings
+from bosc.economics.connectors.eia import fetch_eia_series
 from bosc.facility.power import derive_power_basis
 from bosc.grid.model import CitedFact
 from bosc.hydrology.model import ProvenancedValue
@@ -49,13 +50,13 @@ _HOURS_PER_YEAR = 8760.0
 _LOAD_FACTOR = 0.9  # data centers run near-flat (shared convention with #91/#94/#95)
 _LOAD_FACTOR_CITE = "data-center capacity utilization ~0.9 (near-flat 24x7); assumption (cf. #91)"
 
-# --- Transcribed federal output / statistics (verify / regenerate via EIA) -----
-# US total electricity net generation (EIA Electric Power Annual). 1 TWh = 1000 GWh.
-_US_NET_GEN_TWH = 4300.0
-_US_NET_GEN_CITE = (
-    "EIA Electric Power Annual: US total electricity net generation ~4,300 TWh/yr; "
-    "transcribed published figure - verify / regenerate via EIA"
-)
+# --- Federal output / statistics ----------------------------------------------
+# US total net generation + US avg retail price are LIVE EIA seriesid pulls (#98/#120):
+#   ELEC.GEN.ALL-US-99.A (net generation, thousand MWh) and ELEC.PRICE.US-ALL.A
+#   (avg retail price, cents/kWh). The data-center share below stays a report-cited
+#   reference (LBNL/DOE), not on the EIA API.
+_US_NET_GEN_SERIES = "ELEC.GEN.ALL-US-99.A"
+_US_RETAIL_PRICE_SERIES = "ELEC.PRICE.US-ALL.A"
 # US data-center electricity use ~176 TWh in 2023 (~4.4% of US total), projected to
 # ~6.7-12% of US load by 2028 (LBNL/DOE 2024 data-center report).
 _DC_USE_2023_TWH = 176.0
@@ -65,12 +66,6 @@ _DC_CITE = (
     "LBNL/DOE 2024 United States Data Center Energy Usage Report: US data-center "
     "electricity use ~176 TWh in 2023 (~4.4% of US total), projected to ~6.7-12% of "
     "US load by 2028; transcribed published figure - verify"
-)
-# US average retail electricity price ~12.9 cents/kWh, all sectors, with an upward trend.
-_US_RETAIL_PRICE_CENTS = 12.9
-_US_RETAIL_PRICE_CITE = (
-    "EIA: US average retail electricity price ~12.9 cents/kWh (all sectors), upward "
-    "trend; transcribed published figure - verify / regenerate via EIA"
 )
 
 # --- Statute citations for the policy levers (IRA / DOE) -----------------------
@@ -211,10 +206,18 @@ def _policy_levers() -> list[PolicyLever]:
     ]
 
 
-def _federal_output() -> FederalEnergyOutput:
+def _federal_output(settings: Settings) -> FederalEnergyOutput:
+    """US output: net generation + avg retail price LIVE from EIA (#98); data-center
+    share stays a report-cited reference (LBNL/DOE, not on the EIA API)."""
+    gen = fetch_eia_series(_US_NET_GEN_SERIES, settings=settings)
+    net_gen_twh = gen.value.value / 1000.0  # thousand MWh -> TWh (1000 thousand-MWh = 1 TWh)
+    price = fetch_eia_series(_US_RETAIL_PRICE_SERIES, settings=settings)
     return FederalEnergyOutput(
-        us_net_generation_twh=ProvenancedValue.from_reference(
-            _US_NET_GEN_TWH, "TWh/yr", citation=_US_NET_GEN_CITE, confidence="medium"
+        us_net_generation_twh=ProvenancedValue.from_connector(
+            round(net_gen_twh, 1),
+            "TWh/yr",
+            citation=f"EIA {gen.series_id} ({gen.period}): {gen.value.value:,.0f} thousand MWh "
+            f"= {net_gen_twh:,.0f} TWh (US total net generation, all sectors)",
         ),
         datacenter_use_2023_twh=ProvenancedValue.from_reference(
             _DC_USE_2023_TWH, "TWh/yr", citation=_DC_CITE, confidence="medium"
@@ -225,8 +228,15 @@ def _federal_output() -> FederalEnergyOutput:
         datacenter_share_pct_2028_proj=ProvenancedValue.from_reference(
             _DC_SHARE_2028_PROJ_PCT, "percent", citation=_DC_CITE, confidence="medium"
         ),
-        us_avg_retail_price_cents_kwh=ProvenancedValue.from_reference(
-            _US_RETAIL_PRICE_CENTS, "cents/kWh", citation=_US_RETAIL_PRICE_CITE, confidence="medium"
+        us_avg_retail_price_cents_kwh=ProvenancedValue.from_connector(
+            price.value.value,
+            "cents/kWh",
+            citation=f"EIA {price.series_id} ({price.period}): "
+            "US average retail electricity price, all sectors",
+        ),
+        source=(
+            "EIA national net generation + avg retail price (connector, live) + "
+            "LBNL/DOE 2024 data-center report (reference)"
         ),
     )
 
@@ -241,7 +251,7 @@ def derive_federal_backdrop(*, settings: Settings | None = None) -> FederalBackd
     """
     settings = settings or get_settings()
     power = derive_power_basis(settings=settings)
-    output = _federal_output()
+    output = _federal_output(settings)
 
     draw_mw = power.facility_draw.value
     consumption_gwh = draw_mw * _HOURS_PER_YEAR * _LOAD_FACTOR / 1000.0  # MWh -> GWh
@@ -278,7 +288,7 @@ def derive_federal_backdrop(*, settings: Settings | None = None) -> FederalBackd
             round(_share(us_generation_gwh), 4),
             "percent",
             citation=f"campus {consumption_gwh:.0f} GWh / US net generation "
-            f"{us_generation_gwh:,.0f} GWh ({_US_NET_GEN_TWH:g} TWh x 1000; EIA)",
+            f"{us_generation_gwh:,.0f} GWh ({output.us_net_generation_twh.value:g} TWh x 1000; EIA)",
             confidence="medium",
         ),
         note=(

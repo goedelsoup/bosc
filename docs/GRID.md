@@ -149,9 +149,10 @@ IRA §45 PTC / §48 ITC and the tech-neutral §45Y/48E successors (**lower clean
 (lowers clean-gen cost) and DOE grid resilience (deliverability). Applicability depends on
 the campus's **undisclosed** generation/procurement choices.
 
-**Federal output / statistics** (transcribed EIA national + LBNL/DOE, `[reference]`, *verify*):
-US total net generation ~**4,300 TWh/yr**; US data-center use ~**176 TWh in 2023 (~4.4%
-of US load)**, projected ~**6.7–12%** by 2028; US avg retail price ~**12.9 ¢/kWh** (rising).
+**Federal output / statistics** (EIA national `[connector]`, live 2025; LBNL/DOE data-center
+share `[reference]`): US total net generation ~**4,430 TWh/yr** and US avg retail price
+~**13.63 ¢/kWh** (rising) are live EIA seriesid pulls; US data-center use ~**176 TWh in 2023
+(~4.4% of US load)**, projected ~**6.7–12%** by 2028, stays a report-cited reference.
 
 **The campus vs the national backdrop:** the ~348 MW campus at a 0.9 load factor
 (~2,743 GWh/yr) is ~**1.6% of US data-center load** and ~**0.06% of US total net

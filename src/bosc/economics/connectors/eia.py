@@ -57,7 +57,33 @@ _SERIES: dict[str, dict[str, str]] = {
         "unit": "$/Mcf",
         "col": "value",
     },
+    # --- US national series (the federal backdrop, #98). `area: US`. ---
+    "ELEC.GEN.ALL-US-99.A": {
+        "label": "US total electricity net generation (all sectors)",
+        "fuel": "electricity",
+        "metric": "generation",
+        "unit": "thousand MWh",
+        "col": "generation",
+        "area": "US",
+    },
+    "ELEC.PRICE.US-ALL.A": {
+        "label": "US average retail electricity price (all sectors)",
+        "fuel": "electricity",
+        "metric": "price",
+        "unit": "cents/kWh",
+        "col": "price",
+        "area": "US",
+    },
 }
+
+# The Ohio consumer trio `fetch_consumer_energy` assembles by default — an explicit list
+# so adding other series (e.g. the US-national ones above) to `_SERIES` does not leak
+# into the consumer-energy dataset.
+_OH_CONSUMER_SERIES: tuple[str, ...] = (
+    "ELEC.PRICE.OH-RES.A",
+    "ELEC.SALES.OH-ALL.A",
+    "NG.N3010OH3.A",
+)
 
 # Row fields on the /v2/seriesid route that are never the value (period + the dimension
 # labels EIA echoes back). Used only by the value-column fallback below.
@@ -157,7 +183,7 @@ def fetch_eia_series(series_id: str, *, settings: Settings | None = None) -> Con
         fuel=meta["fuel"],
         metric=meta["metric"],
         period=str(payload["period"]),
-        area=settings.eia_state,
+        area=meta.get("area", settings.eia_state),  # national series set area="US"
         value=ProvenancedValue.from_connector(float(payload["value"]), meta["unit"], citation=cite),
     )
 
@@ -167,7 +193,7 @@ def fetch_consumer_energy(
 ) -> ConsumerEnergyCosts:
     """Assemble the state's consumer energy-cost dataset (price + sales) from EIA."""
     settings = settings or get_settings()
-    ids = series_ids or list(_SERIES)
+    ids = series_ids or list(_OH_CONSUMER_SERIES)
     prices = [fetch_eia_series(sid, settings=settings) for sid in ids]
     return ConsumerEnergyCosts(
         area=settings.eia_state,

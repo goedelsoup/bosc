@@ -23,7 +23,7 @@ to the national figures:
   ~2,743 GWh/yr, the same convention as #91/#94/#95.
 - **Share of US data-center load** = that consumption / (US data-center use ~176 TWh
   x 1000) — ~1.6%.
-- **Share of US total net generation** = consumption / (~4,300 TWh x 1000) — ~0.06%.
+- **Share of US total net generation** = consumption / (~4,430 TWh x 1000) — ~0.06%.
 
 The policy levers map each credit/program to its **direction on cost** (`lowers
 clean-gen cost` / `tangential` / `n/a`) — a direction, never a quantified offset. The
@@ -35,16 +35,17 @@ deliverability, not a direct campus credit.
 
 ## Known gaps & caveats
 
-- **No live pull.** Unlike the EIA *connector* datasets (`data/reference/eia/`), these
-  federal national figures are **transcribed** from published EIA national tables and
-  the LBNL/DOE report into `federal-energy.yaml` (`source: reference`,
-  `confidence: medium`), each flagged *verify / regenerate via EIA*. Replace with a
-  keyed/bulk EIA pull (national series) and the latest LBNL/DOE vintage to refresh.
-- **Figures are as-of the latest published vintage.** US net generation ~4,300 TWh/yr
-  (EIA Electric Power Annual); US data-center use ~176 TWh in 2023 (~4.4% of US total),
-  projected to ~6.7-12% of US load by 2028 (LBNL/DOE 2024); US average retail price
-  ~12.9 cents/kWh, all sectors, upward trend (EIA). The 2028 projection stored is the
-  ~9.5% midpoint of the published ~6.7-12% range.
+- **EIA national output is a live connector pull (#98/#120).** US net generation
+  (`ELEC.GEN.ALL-US-99.A`) and US average retail price (`ELEC.PRICE.US-ALL.A`) are
+  pulled from the EIA seriesid connector (`source: connector`, keyed via
+  `BOSC_EIA_API_KEY`; offline replays `tests/fixtures/economics/eia/`). The
+  **data-center share** (~176 TWh / ~4.4% / ~9.5% by 2028) stays a **report-cited
+  reference** (LBNL/DOE 2024) — it is not on the EIA API.
+- **Figures are as-of the latest published vintage.** US net generation ~**4,430 TWh/yr**
+  (EIA `ELEC.GEN.ALL-US-99.A`, 2025); US average retail price ~**13.63 cents/kWh**, all
+  sectors (EIA `ELEC.PRICE.US-ALL.A`, 2025); US data-center use ~176 TWh in 2023 (~4.4%
+  of US total), projected to ~6.7-12% of US load by 2028 (LBNL/DOE 2024). The 2028
+  projection stored is the ~9.5% midpoint of the published ~6.7-12% range.
 - **Policy applicability is profile-level, not a facility claim.** Which levers apply
   depends on the campus's **undisclosed** generation / procurement choices; the levers
   are mapped to a load/generation of this profile, not asserted as claimed by this

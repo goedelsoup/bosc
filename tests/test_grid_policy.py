@@ -22,8 +22,13 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 
 @pytest.fixture
 def grid_settings() -> Settings:
-    """Real repo data dir (reads committed reference data); no network."""
-    return Settings(data_dir=REPO_ROOT / "data", hydro_offline=True, econ_offline=True)
+    """Real repo data dir (reads committed reference data + EIA fixtures); no network."""
+    return Settings(
+        data_dir=REPO_ROOT / "data",
+        hydro_offline=True,
+        econ_offline=True,
+        econ_fixtures_dir=REPO_ROOT / "tests" / "fixtures" / "economics",
+    )
 
 
 def test_policy_levers_include_ira_credits_with_cost_direction(grid_settings: Settings) -> None:
@@ -51,26 +56,27 @@ def test_policy_levers_include_ira_credits_with_cost_direction(grid_settings: Se
     assert "Inflation Reduction Act" in ptc.statute.value
 
 
-def test_federal_output_is_reference_sourced(grid_settings: Settings) -> None:
+def test_federal_output_sources(grid_settings: Settings) -> None:
     out = derive_federal_backdrop(settings=grid_settings).output
-    # The US output / price figures are transcribed published values (reference, medium).
+    # US net generation + avg retail price are now LIVE EIA connector pulls (#98/#120).
+    for pv in (out.us_net_generation_twh, out.us_avg_retail_price_cents_kwh):
+        assert pv.source == "connector" and pv.verified
+        assert "EIA" in (pv.citation or "")
+    # The data-center share stays a report-cited reference (LBNL/DOE, not on the EIA API).
     for pv in (
-        out.us_net_generation_twh,
         out.datacenter_use_2023_twh,
         out.datacenter_share_pct_2023,
         out.datacenter_share_pct_2028_proj,
-        out.us_avg_retail_price_cents_kwh,
     ):
         assert pv.source == "reference"
         assert pv.confidence == "medium"
         assert pv.citation
-    # Realistic published magnitudes, flagged for verification.
+    # Realistic magnitudes.
     assert out.us_net_generation_twh.value == pytest.approx(4300.0, rel=0.2)
     assert out.datacenter_use_2023_twh.value == pytest.approx(176.0, rel=0.2)
     assert 3.0 < out.datacenter_share_pct_2023.value < 6.0
     assert out.datacenter_share_pct_2028_proj.value > out.datacenter_share_pct_2023.value
     assert 10.0 < out.us_avg_retail_price_cents_kwh.value < 16.0
-    assert "verify" in (out.us_net_generation_twh.citation or "").lower()
 
 
 def test_campus_vs_us_datacenter_share_links_facility_draw(grid_settings: Settings) -> None:

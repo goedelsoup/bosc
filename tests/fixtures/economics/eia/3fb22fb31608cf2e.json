@@ -1,0 +1,11 @@
+{
+  "params": {
+    "connector": "eia",
+    "route": "seriesid",
+    "series_id": "ELEC.GEN.ALL-US-99.A"
+  },
+  "payload": {
+    "period": "2025",
+    "value": 4429501.60313
+  }
+}

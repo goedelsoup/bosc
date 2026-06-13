@@ -148,12 +148,12 @@ policy_levers:
     confidence: medium
 output:
   us_net_generation_twh:
-    value: 4300.0
+    value: 4429.5
     unit: TWh/yr
-    source: reference
-    citation: 'EIA Electric Power Annual: US total electricity net generation ~4,300
-      TWh/yr; transcribed published figure - verify / regenerate via EIA'
-    confidence: medium
+    source: connector
+    citation: 'EIA ELEC.GEN.ALL-US-99.A (2025): 4,429,502 thousand MWh = 4,430 TWh
+      (US total net generation, all sectors)'
+    confidence: high
     asof: null
   datacenter_use_2023_twh:
     value: 176.0
@@ -183,15 +183,15 @@ output:
     confidence: medium
     asof: null
   us_avg_retail_price_cents_kwh:
-    value: 12.9
+    value: 13.63
     unit: cents/kWh
-    source: reference
-    citation: 'EIA: US average retail electricity price ~12.9 cents/kWh (all sectors),
-      upward trend; transcribed published figure - verify / regenerate via EIA'
-    confidence: medium
+    source: connector
+    citation: 'EIA ELEC.PRICE.US-ALL.A (2025): US average retail electricity price,
+      all sectors'
+    confidence: high
     asof: null
-  source: EIA national output/price + LBNL/DOE 2024 data-center report (transcribed;
-    verify)
+  source: EIA national net generation + avg retail price (connector, live) + LBNL/DOE
+    2024 data-center report (reference)
 campus_load_mw:
   value: 347.9
   unit: MW
@@ -224,10 +224,11 @@ share_of_us_datacenter_pct:
   confidence: medium
   asof: null
 share_of_us_generation_pct:
-  value: 0.0638
+  value: 0.0619
   unit: percent
   source: derived
-  citation: campus 2743 GWh / US net generation 4,300,000 GWh (4300 TWh x 1000; EIA)
+  citation: campus 2743 GWh / US net generation 4,429,500 GWh (4429.5 TWh x 1000;
+    EIA)
   confidence: medium
   asof: null
 note: Federal backdrop (#98), the top of the grid stack. The policy levers map the
