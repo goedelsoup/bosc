@@ -88,6 +88,7 @@ export function watermarkBundle(opts: WatermarkBundleOptions = {}): Plugin {
 
   function shouldSkip(isWatch: boolean): boolean {
     if (process.env.WATERMARK_SKIP_EXPORT === "1") return true;
+    if (process.env.VITEST) return true; // vitest loads Vite plugins but must not shell out
     if (opts.skip) return true;
     if (isWatch && process.env.WATERMARK_EXPORT_IN_DEV !== "1") return true;
     return false;
