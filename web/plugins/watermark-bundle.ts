@@ -15,9 +15,11 @@
  * handleHotUpdate: suppresses HMR for files inside data/site/bundles/ so the
  * plugin's own writes don't trigger an infinite reload loop.
  *
- * #1019/#1021 forward-compat seam: supply `buildArgs` to swap the CLI command
- * when `bosc catalog run` ships without touching plugin code:
- *   buildArgs: (cmd, slug) => [...cmd, `watermark-export-${slug}`]
+ * #1019/#1021 forward-compat seam: supply `buildArgs` to swap the CLI args
+ * when `bosc catalog run` ships without touching plugin code. `cmd` is the
+ * resolved base command (from `opts.cmd`) passed for reference; return only
+ * the args to append after the binary's base args:
+ *   buildArgs: (_cmd, slug) => ["catalog", "run", `watermark-export-${slug}`]
  */
 
 import { spawnSync } from "node:child_process";
@@ -69,6 +71,10 @@ function runExport(
     stdio: "inherit",
     env: process.env,
   });
+  if (result.error) {
+    console.error(`[watermark-bundle] ${label} could not be spawned: ${result.error.message}`);
+    return false;
+  }
   if (result.status !== 0) {
     console.error(`[watermark-bundle] ${label} failed (exit ${result.status ?? "signal"})`);
     return false;
@@ -82,7 +88,7 @@ export function watermarkBundle(opts: WatermarkBundleOptions = {}): Plugin {
   const cwd = opts.cwd ?? repoRoot(_pluginDir);
   const buildArgs =
     opts.buildArgs ??
-    ((c: string[], slug: string) => [...c, "--site", slug, "export"]);
+    ((_c: string[], slug: string) => ["--site", slug, "export"]);
 
   let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -96,7 +102,7 @@ export function watermarkBundle(opts: WatermarkBundleOptions = {}): Plugin {
 
   function exportAll(): void {
     for (const slug of sites) {
-      const args = buildArgs([], slug);
+      const args = buildArgs(cmd, slug);
       const ok = runExport(cmd, args, cwd, `--site ${slug} export`);
       if (!ok) throw new Error(`[watermark-bundle] export failed for site "${slug}"`);
     }
@@ -140,7 +146,7 @@ export function watermarkBundle(opts: WatermarkBundleOptions = {}): Plugin {
       const watchDirs = DATA_WATCH_DIRS.map((d) => path.join(cwd, d));
 
       function onChange(filePath: string) {
-        if (filePath.startsWith(bundlesDir)) return;
+        if (filePath.startsWith(bundlesDir + path.sep)) return;
         if (debounceTimer != null) clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => {
           debounceTimer = null;
@@ -171,6 +177,10 @@ export function watermarkBundle(opts: WatermarkBundleOptions = {}): Plugin {
       }
 
       return () => {
+        if (debounceTimer != null) {
+          clearTimeout(debounceTimer);
+          debounceTimer = null;
+        }
         server.watcher.off("change", onChange);
         server.watcher.off("add", onChange);
         server.watcher.off("unlink", onChange);

@@ -59,8 +59,11 @@ jobs:
       PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.PUBLIC_TURNSTILE_SITE_KEY }}
     steps:
       - uses: actions/checkout@v4
-        # No LFS: the site builds from the JSON bundle (`bosc export`) and never serves
-        # source bytes, so the ~5.4 GB corpus isn't pulled.
+        with:
+          persist-credentials: false
+        # No LFS: the site builds from the JSON bundle emitted by the watermarkBundle
+        # Vite plugin (`uv run watermark --site <slug> export`) and never serves source
+        # bytes, so the ~5.4 GB corpus isn't pulled.
 
       # 1. Python toolchain: the watermarkBundle Vite plugin shells out to
       #    `uv run watermark --site <slug> export` inside `npm run build`.
