@@ -26,11 +26,14 @@ run = "npm run dev:stack"
 
 [tasks.check]
 description = "Frontend gate (CI parity): Biome lint + astro/tsc types + vitest + build + link check"
+# Skip the Python export and point bundle.ts at the committed sample-bundle/ fixtures.
+# sample-bundle is an explicit opt-in here — not a silent fallback from bundle.ts.
+env = { WATERMARK_SKIP_EXPORT = "1", WATERMARK_BUNDLE_DIR = "sample-bundle" }
 run = [
   "npm run lint",        # Biome (format + lint) — the gate CI runs that `npm run check` omits
   "npm run check",       # astro check + tsc (functions)
   "npm test",            # vitest
-  "npm run build",       # astro build against sample-bundle/
+  "npm run build",       # astro build against sample-bundle/ (offline, no Python)
   "npm run check:links", # internal-link check over the build
 ]
 

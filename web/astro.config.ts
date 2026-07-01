@@ -4,6 +4,7 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import rehypeDocLinks from "./src/lib/rehype-doc-links";
 import { SITE_BASE } from "./src/lib/routes";
+import { watermarkBundle } from "./plugins/watermark-bundle";
 
 // Static build (the default). `site`/`base` come from the environment so the
 // parity-gated Pages cutover can set them later without a code change.
@@ -52,5 +53,13 @@ export default defineConfig({
     // code matches inline code and the rest of the page (#106).
     shikiConfig: { theme: "github-light" },
     rehypePlugins: [[rehypeDocLinks, { base: limaBase }]],
+  },
+  vite: {
+    plugins: [
+      watermarkBundle({
+        sites: ["lima", "urbana", "fort-wayne"],
+        cmd: ["uv", "run", "watermark"],
+      }),
+    ],
   },
 });

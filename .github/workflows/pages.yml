@@ -11,9 +11,10 @@
 # first run: build-only, then a browser visual pass on the deck.gl maps (WebGL isn't
 # covered by `astro check`) before deploying.
 #
-# Cloudflare's own Git build is NOT used — the content bundle is produced by `bosc
-# export` (Python) before `npm run build`, so the build runs here and Wrangler does a
-# direct upload. Pages config lives in `web/wrangler.toml`.
+# Cloudflare's own Git build is NOT used — the content bundle is produced by the
+# watermarkBundle Vite plugin (shells out to `uv run watermark --site <slug> export`)
+# inside `npm run build`, so the build runs here and Wrangler does a direct upload.
+# Pages config lives in `web/wrangler.toml`.
 #
 # One-time setup before the first deploy (see docs/submissions-api.md):
 #   - Create the Cloudflare Pages project `the-watermark-directory` (production branch: main).
@@ -61,7 +62,8 @@ jobs:
         # No LFS: the site builds from the JSON bundle (`bosc export`) and never serves
         # source bytes, so the ~5.4 GB corpus isn't pulled.
 
-      # 1. Generate the real content bundle the frontend reads.
+      # 1. Python toolchain: the watermarkBundle Vite plugin shells out to
+      #    `uv run watermark --site <slug> export` inside `npm run build`.
       - name: Install uv
         uses: astral-sh/setup-uv@v5
         with:
@@ -70,13 +72,8 @@ jobs:
         run: uv python install 3.11
       - name: Install dependencies
         run: uv sync
-      - name: Export the content bundle (-> data/site/bundle)
-        run: |
-          uv run watermark export
-          uv run watermark --site urbana export
-          uv run watermark --site fort-wayne export
 
-      # 2. Build the Astro site over that bundle.
+      # 2. Build the Astro site (plugin runs export for each site first).
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
