@@ -161,7 +161,7 @@ uv run watermark catalog audit --apply
 #   mise run wt:list             # all worktrees
 #   mise run wt:rm 123           # remove by issue number
 #   mise run wt:rm my-feature    # remove by branch name
-#   cd $(mise run wt:path 123)   # jump into a worktree
+#   cd "$(mise run wt:path 123)"   # jump into a worktree
 #
 # Worktrees live as siblings of `main` inside the watermark-directory/ parent.
 # Issue branches are named <number>-<slug> so they round-trip by issue number.
@@ -180,17 +180,23 @@ target="${usage_target}"
 base="${usage_base:-main}"
 
 if [[ "$target" =~ ^[0-9]+$ ]]; then
-  title=$(gh issue view "$target" --json title --jq '.title')
-  slug=$(printf '%s' "$title" \
-    | tr '[:upper:]' '[:lower:]' \
-    | sed 's/[^a-z0-9]/-/g; s/-\+/-/g; s/^-//; s/-$//' \
-    | cut -c1-50)
-  branch="${target}-${slug}"
+  # Reuse any local branch already created for this issue number so a title
+  # change doesn't silently spawn a second branch for the same issue.
+  branch=$(git branch --format='%(refname:short)' \
+    | grep "^${target}-" | head -1 || true)
+  if [[ -z "$branch" ]]; then
+    title=$(gh issue view "$target" --json title --jq '.title')
+    slug=$(printf '%s' "$title" \
+      | tr '[:upper:]' '[:lower:]' \
+      | sed 's/[^a-z0-9]/-/g; s/-\+/-/g; s/^-//; s/-$//' \
+      | cut -c1-50)
+    branch="${target}-${slug}"
+  fi
 else
   branch="$target"
 fi
 
-parent=$(dirname "$(git worktree list --porcelain | awk '/^worktree /{print $2; exit}')")
+parent=$(dirname "$(git worktree list --porcelain | awk '/^worktree /{sub(/^worktree /, ""); print; exit}')")
 dest="${parent}/${branch}"
 
 if [[ -d "$dest" ]]; then
@@ -228,7 +234,7 @@ target="${usage_target}"
 if [[ "$target" =~ ^[0-9]+$ ]]; then
   branch=$(git worktree list --porcelain \
     | awk '/^branch /{sub("refs/heads/", "", $2); print $2}' \
-    | grep "^${target}-" | head -1)
+    | grep "^${target}-" | head -1 || true)
   if [[ -z "$branch" ]]; then
     echo "no worktree found for issue #${target}" >&2
     exit 1
@@ -237,7 +243,7 @@ else
   branch="$target"
 fi
 
-parent=$(dirname "$(git worktree list --porcelain | awk '/^worktree /{print $2; exit}')")
+parent=$(dirname "$(git worktree list --porcelain | awk '/^worktree /{sub(/^worktree /, ""); print; exit}')")
 dest="${parent}/${branch}"
 
 git worktree remove "$dest"
@@ -262,7 +268,7 @@ target="${usage_target}"
 if [[ "$target" =~ ^[0-9]+$ ]]; then
   branch=$(git worktree list --porcelain \
     | awk '/^branch /{sub("refs/heads/", "", $2); print $2}' \
-    | grep "^${target}-" | head -1)
+    | grep "^${target}-" | head -1 || true)
   if [[ -z "$branch" ]]; then
     echo "no worktree found for issue #${target}" >&2
     exit 1
@@ -271,6 +277,18 @@ else
   branch="$target"
 fi
 
-parent=$(dirname "$(git worktree list --porcelain | awk '/^worktree /{print $2; exit}')")
-echo "${parent}/${branch}"
+# Look up the registered worktree path directly — avoids guessing at the sibling
+# layout and fails clearly if the branch has no worktree checked out.
+path=$(git worktree list --porcelain | awk \
+  -v b="refs/heads/${branch}" '
+    /^worktree /{ wt=substr($0, 10) }
+    $0 == "branch " b { print wt; exit }
+  ')
+
+if [[ -z "$path" ]]; then
+  echo "no worktree found for branch ${branch}" >&2
+  exit 1
+fi
+
+echo "$path"
 '''
