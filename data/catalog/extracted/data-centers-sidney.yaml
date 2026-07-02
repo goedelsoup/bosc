@@ -1,0 +1,33 @@
+id: data-centers-sidney
+title: Sidney / Shelby County OH — Data-Center Activity Register
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: Sidney City Council resolutions (18-25, 26-26, 27-26, 80-25, 81-25, 82-25);
+    sidneyoh.com/526 FAQ; Data Center Dynamics (Oct 2025); Obedio (Apr 2026); ECHO Great
+    Miami all-NPDES (committed 2026-07-02); RSEI v234 Shelby County inventory
+license: public record / public domain
+access_tier: public
+site_scope: site:sidney
+storage:
+- relpath: extracted/sidney/data-centers.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- data-center
+- aws
+- amazon
+- project-galaxy
+- i75-corridor
+- shelby-county
+- sidney
+- sweep
+notes: '#511 I-75 corridor sweep (2026-07-02). One confirmed project: Amazon / AWS "Project
+  Galaxy," 2388 W. Millcreek Rd Sidney OH — $3B campus, 30-yr CRA abatement (Oct 2025),
+  construction started Jan 2026, ops target 2028, max 1.0 MGD water draw. No second operator
+  found in RSEI, ECHO, or web sweep. Open items: parcel acreage, power MW, air PTI,
+  stormwater permit, recorder deeds, SOS filings.'
