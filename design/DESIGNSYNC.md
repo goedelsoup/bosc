@@ -101,8 +101,17 @@ it needs `npm run build` + a visual pass — out of scope for token availability
 
 ## Scope status
 
-- **Synced now:** the foundations (`tokens/*`, `styles.css`, `readme.md`, `SKILL.md`), **all 27
-  component specs** (`components/core|forms|record/**`, `ui_kits/directory|site/**` — each `.jsx`
+- **Upstream restructure (pulled 2026-07-02):** the Claude Design project moved `ui_kits/*` →
+  `templates/*`, `templates/data-catalog` → `kits/data-catalog`, and `templates/contributing` →
+  `guidelines/contributing`; the mirror follows (git mv). New upstream families pulled:
+  `components/navigation/**` (Chrome — the global ink bar) and `templates/design-spec/**`
+  (the issue **#760** ProvenancedValue-ranges design brief). Still upstream-only (pending):
+  `templates/watermark-platform/**` — 11 full-page mocks (Site Home, Record Screen,
+  Sustainability, …) to pull page-by-page as needed. That pull was structural — the content of
+  previously-synced files was **not** re-diffed; a content pass is a follow-up.
+- **Synced now:** the foundations (`tokens/*`, `styles.css`, `readme.md`, `SKILL.md`), **all
+  component specs** (`components/core|forms|record|charts|hydrology|navigation/**`,
+  `templates/directory|site/**` — each `.jsx`
   + `.d.ts` + `.prompt.md` + `*.card.html`), and the **11 guideline cards** (`guidelines/**`).
 - **Colors / type / spacing:** the design system **drives** the live palette (done), and the live
   `site.css` is **regularized onto the `--fs-*` / `--sp-*` / motion token scales** (PRs #551–#554).
