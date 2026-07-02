@@ -115,6 +115,72 @@ def catalog_show(
         console.print(table)
 
 
+@catalog_app.command("run")
+def catalog_run_cmd(
+    entry_id: str = typer.Argument(..., help="Catalog entry id to (re)produce."),
+    site: str = typer.Option(
+        "", "--site", help="Expand {site} in producer commands (default: the active site)."
+    ),
+    dry_run: bool = typer.Option(
+        False, "--dry-run", help="Print the resolved run plan without executing."
+    ),
+    force: bool = typer.Option(
+        False, "--force", help="Ignore refresh TTLs; re-run every node in the subgraph."
+    ),
+    only_stale: bool = typer.Option(
+        True,
+        "--only-stale",
+        help="Skip entries within their refresh TTL (the default; explicit for clarity).",
+    ),
+) -> None:
+    """Run an entry's producer plus its prerequisites, in dependency order (#1021).
+
+    Resolves the ``depends_on`` subgraph rooted at ENTRY_ID (upstream-first), skips nodes
+    still within their refresh TTL (unless --force), expands ``{site}``, and invokes each
+    ``producer.command`` as a ``watermark`` subprocess — aborting on the first failure. The
+    machine-readable ordering that used to live only in the onboarding prose (epic #1019).
+    """
+    from watermark.catalog.runner import execute_plan, plan
+
+    del only_stale  # accepted for explicitness only — it *is* the default; --force widens the run
+    if site and site not in SITES:
+        raise typer.BadParameter(
+            f"unknown site {site!r}; known: {sorted(SITES)}", param_hint="--site"
+        )
+    resolved_site = site or get_settings().site
+    try:
+        steps = plan(entry_id, site=resolved_site, force=force)
+    except KeyError as exc:
+        raise typer.BadParameter(str(exc.args[0]), param_hint="entry_id") from exc
+    except ValueError as exc:  # a dependency cycle — a `catalog check` failure
+        console.print(f"[red]{exc}[/] — fix the graph (`watermark catalog check`).")
+        raise typer.Exit(1) from exc
+
+    action_colors = {"run": "green", "skip-fresh": "dim", "virtual": "dim"}
+    console.print(f"Plan ({len(steps)} entries, topological order, site={resolved_site}):")
+    for i, step in enumerate(steps, 1):
+        cmd = f"watermark {step.command}" if step.command else "—"
+        color = action_colors[step.action]
+        console.print(f"  {i}. [{color}]{step.entry_id}[/]  {cmd}  [dim]({step.reason})[/]")
+    if dry_run:
+        console.print("[dim]dry-run — nothing executed.[/]")
+        return
+
+    report = execute_plan(steps, site=resolved_site)
+    console.print(
+        f"\nran {report.count('ran')} · fresh-skipped {report.count('fresh')} · "
+        f"virtual {report.count('virtual')} · failed {report.count('failed')} · "
+        f"aborted {report.count('aborted')}"
+    )
+    failed = report.failed
+    if failed is not None:
+        console.print(
+            f"[red]failed:[/] {failed.step.entry_id} "
+            f"(`watermark {failed.step.command}` exited {failed.exit_code})"
+        )
+        raise typer.Exit(1)
+
+
 @catalog_app.command("validate")
 def catalog_validate() -> None:
     """Structurally validate the catalog (schema + scope/id path match + unique ids).

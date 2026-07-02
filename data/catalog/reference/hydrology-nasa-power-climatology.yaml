@@ -9,6 +9,8 @@ producer:
   source: NASA POWER (Prediction Of Worldwide Energy Resources) — climatology point REST API (satellite-derived
     monthly/annual normals)
   external_url: https://power.larc.nasa.gov/
+depends_on:
+- hydrology-wbd
 license: U.S. Government work (public domain)
 access_tier: public
 site_scope: slug-scoped

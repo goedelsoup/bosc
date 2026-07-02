@@ -102,12 +102,24 @@ description = "Regenerate the content bundle the web site reads (watermark expor
 run = "uv run watermark export"
 
 [tasks.onboard-site]
-description = "Onboard a site to the research platform"
+description = "Bootstrap a site's connector data — the catalog DAG in dependency order (#1025)"
+usage = '''
+arg "<site>" help="Target site slug"
+'''
+# The catalog's `onboard-bundle` aggregate resolves the run order (the executable half of
+# docs/onboarding.md). --dry-run previews the plan; drop it (run the printed command by
+# hand) for a live run. The agent-driven research pass stays `onboard-research`.
+run = '''
+uv run watermark catalog run onboard-bundle --site "${usage_site}" --dry-run
+'''
+
+[tasks.onboard-research]
+description = "Agent-driven site research pass (the old onboard-site recipe)"
 usage = '''
 arg "<site>" help="Target site slug"
 '''
 run = '''
-watermark --site "${usage_site}" research run --recipe site-onboard
+uv run watermark --site "${usage_site}" research run --recipe site-onboard
 '''
 
 [tasks.oepa-permit]

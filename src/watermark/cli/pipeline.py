@@ -793,9 +793,30 @@ def export(
     """
     from watermark.site import export_bundle
 
+    _export_preflight()
     result = export_bundle(out_dir=Path(out) if out else None, skip_embeddings=no_embeddings)
     console.print(
         f"[green]Exported[/] {result.out_dir} — {result.feed_count} feeds, {result.row_total} rows."
     )
     for ref in result.feeds:
         console.print(f"[dim]  {ref.name:<22} {ref.count:>6}  {ref.path}[/]")
+
+
+def _export_preflight() -> None:
+    """Warn (never abort) when the bundle's declared upstream chain is downstream-stale (#1024).
+
+    The catalog's ``bundle-records`` entry declares the reference datasets the export reads;
+    this surfaces any upstream refreshed more recently than its dependent at export time, with
+    the ``watermark catalog run`` fix — the operator/agent decides whether to re-run upstreams
+    or export with current data.
+    """
+    from watermark.catalog.check import upstream_preflight
+
+    findings = upstream_preflight("bundle-records")
+    for f in findings:
+        console.print(f"[yellow]stale upstream:[/] {f.subject} — {f.detail}")
+    if findings:
+        console.print(
+            "[yellow]exporting with current data[/] — re-run the stale producers first "
+            "(`watermark catalog run bundle-records`) if the bundle must reflect them.\n"
+        )

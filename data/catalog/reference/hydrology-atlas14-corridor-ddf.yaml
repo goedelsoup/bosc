@@ -8,6 +8,8 @@ producer:
   source: NOAA NWS HDSC Atlas-14 — precipitation-frequency point query (Partial-Duration Series, English
     depths)
   external_url: https://hdsc.nws.noaa.gov/pfds/
+depends_on:
+- hydrology-wbd
 license: U.S. Government work (public domain)
 access_tier: public
 site_scope: slug-scoped

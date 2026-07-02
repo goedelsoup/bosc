@@ -192,6 +192,197 @@ def test_matching_pin_has_no_drift(tmp_path: Path) -> None:
     assert "checksum-drift" not in _kinds(check(settings=settings, now=_FIXED))
 
 
+# --- dependency graph (#1020) ------------------------------------------------------------------
+def test_unknown_dependency_is_an_error(tmp_path: Path) -> None:
+    settings = _settings(tmp_path)
+    _data(settings, "reference/echo/x.yaml")
+    _entry(
+        settings,
+        "echo-x",
+        _basic("echo-x", "reference/echo/x.yaml") + "depends_on:\n- no-such-entry\n",
+    )
+    findings = check(settings=settings, now=_FIXED)
+    unknown = [f for f in findings if f.kind == "unknown-dependency"]
+    assert unknown and unknown[0].severity == "error"
+    assert "no-such-entry" in unknown[0].detail
+
+
+def test_dependency_cycle_is_an_error(tmp_path: Path) -> None:
+    settings = _settings(tmp_path)
+    _data(settings, "reference/echo/a.yaml")
+    _data(settings, "reference/echo/b.yaml")
+    _entry(
+        settings, "echo-a", _basic("echo-a", "reference/echo/a.yaml") + "depends_on:\n- echo-b\n"
+    )
+    _entry(
+        settings, "echo-b", _basic("echo-b", "reference/echo/b.yaml") + "depends_on:\n- echo-a\n"
+    )
+    findings = check(settings=settings, now=_FIXED)
+    cycles = [f for f in findings if f.kind == "dependency-cycle"]
+    assert cycles and cycles[0].severity == "error"
+    assert "echo-a" in cycles[0].detail and "echo-b" in cycles[0].detail
+
+
+def test_resolved_acyclic_graph_is_clean(tmp_path: Path) -> None:
+    settings = _settings(tmp_path)
+    _data(settings, "reference/echo/a.yaml")
+    _data(settings, "reference/echo/b.yaml")
+    _entry(
+        settings, "echo-a", _basic("echo-a", "reference/echo/a.yaml") + "depends_on:\n- echo-b\n"
+    )
+    _entry(settings, "echo-b", _basic("echo-b", "reference/echo/b.yaml"))
+    assert check(settings=settings, now=_FIXED) == []
+
+
+def test_virtual_entry_without_storage_is_not_missing(tmp_path: Path) -> None:
+    """A storage-less entry is a virtual DAG node (an aggregate like onboard-bundle) — present
+    by definition, never a missing-files error."""
+    settings = _settings(tmp_path)
+    _entry(
+        settings,
+        "virtual-agg",
+        textwrap.dedent(
+            """\
+            id: virtual-agg
+            title: T
+            scope: reference
+            producer:
+              kind: derived
+              source: aggregate
+            refresh:
+              cadence: on-demand
+            """
+        ),
+    )
+    assert check(settings=settings, now=_FIXED) == []
+
+
+# --- downstream staleness (#1022) ---------------------------------------------------------------
+def _dated(
+    settings: Settings, name: str, relpath: str, asof: str, deps: list[str] | None = None
+) -> None:
+    _data(settings, relpath, f"meta:\n  asof: '{asof}'\n")
+    dep_block = "depends_on:\n" + "".join(f"- {d}\n" for d in deps) if deps else ""
+    _entry(settings, name, _basic(name, relpath) + dep_block)
+
+
+def test_downstream_stale_warns_when_upstream_is_newer(tmp_path: Path) -> None:
+    settings = _settings(tmp_path)
+    _dated(settings, "up", "reference/echo/up.yaml", "2026-06-15")
+    _dated(settings, "down", "reference/echo/down.yaml", "2026-03-01", deps=["up"])
+    findings = check(settings=settings, now=_FIXED)
+    ds = [f for f in findings if f.kind == "downstream-stale"]
+    assert ds and ds[0].severity == "warn"
+    assert ds[0].subject == "down"
+    assert "catalog run down" in ds[0].detail
+    assert errors(findings) == []  # a warning never fails the gate
+
+
+def test_downstream_stale_promoted_under_strict(tmp_path: Path) -> None:
+    settings = _settings(tmp_path)
+    _dated(settings, "up", "reference/echo/up.yaml", "2026-06-15")
+    _dated(settings, "down", "reference/echo/down.yaml", "2026-03-01", deps=["up"])
+    strict = check(settings=settings, now=_FIXED, strict=True)
+    assert next(f for f in strict if f.kind == "downstream-stale").severity == "error"
+    assert errors(strict)
+
+
+def test_downstream_fresher_than_upstream_is_clean(tmp_path: Path) -> None:
+    settings = _settings(tmp_path)
+    _dated(settings, "up", "reference/echo/up.yaml", "2026-03-01")
+    _dated(settings, "down", "reference/echo/down.yaml", "2026-06-15", deps=["up"])
+    assert "downstream-stale" not in _kinds(check(settings=settings, now=_FIXED))
+
+
+def test_downstream_stale_skips_edges_with_unknown_dates(tmp_path: Path) -> None:
+    settings = _settings(tmp_path)
+    _data(settings, "reference/echo/up.yaml")  # no meta.asof, no last_refreshed
+    _entry(settings, "up", _basic("up", "reference/echo/up.yaml"))
+    _dated(settings, "down", "reference/echo/down.yaml", "2026-03-01", deps=["up"])
+    assert "downstream-stale" not in _kinds(check(settings=settings, now=_FIXED))
+
+
+def test_downstream_stale_scoped_to_a_root_closure(tmp_path: Path) -> None:
+    from watermark.catalog import load_entries
+    from watermark.catalog.check import downstream_stale_findings
+    from watermark.catalog.reconcile import reconcile
+
+    settings = _settings(tmp_path)
+    _dated(settings, "up", "reference/echo/up.yaml", "2026-06-15")
+    _dated(settings, "down", "reference/echo/down.yaml", "2026-03-01", deps=["up"])
+    _dated(settings, "other-up", "reference/echo/ou.yaml", "2026-06-15")
+    _dated(settings, "other", "reference/echo/o.yaml", "2026-03-01", deps=["other-up"])
+    entries = load_entries(settings=settings)
+    observed = reconcile(settings=settings, now=_FIXED).entries
+    scoped = downstream_stale_findings(entries, observed, root="down")
+    assert [f.subject for f in scoped] == ["down"]  # `other` is outside the closure
+
+
+# --- the export pre-flight (#1024) --------------------------------------------------------------
+def test_upstream_preflight_reports_ttl_stale_and_ordering_within_the_closure(
+    tmp_path: Path,
+) -> None:
+    from watermark.catalog.check import upstream_preflight
+
+    settings = _settings(tmp_path)
+    # a TTL-stale upstream in the closure...
+    _data(settings, "reference/echo/up.yaml", "meta:\n  asof: '2020-01-01'\n")
+    _entry(
+        settings,
+        "up",
+        _basic("up", "reference/echo/up.yaml", refresh="  cadence: annual\n  ttl_days: 30\n"),
+    )
+    # ...an unrelated TTL-stale entry outside it...
+    _data(settings, "reference/echo/other.yaml", "meta:\n  asof: '2020-01-01'\n")
+    _entry(
+        settings,
+        "other",
+        _basic("other", "reference/echo/other.yaml", refresh="  cadence: annual\n  ttl_days: 30\n"),
+    )
+    # ...and a virtual bundle root depending on `up`.
+    _entry(
+        settings,
+        "bundle-root",
+        textwrap.dedent(
+            """\
+            id: bundle-root
+            title: T
+            scope: reference
+            producer:
+              kind: derived
+              source: export
+            depends_on:
+            - up
+            refresh:
+              cadence: on-demand
+            """
+        ),
+    )
+    findings = upstream_preflight("bundle-root", settings=settings, now=_FIXED)
+    assert [f.subject for f in findings] == ["up"]  # `other` is outside the closure
+    assert all(f.severity == "warn" for f in findings)
+    assert "catalog run bundle-root" in findings[0].detail
+
+
+def test_upstream_preflight_is_silent_for_a_missing_root(tmp_path: Path) -> None:
+    from watermark.catalog.check import upstream_preflight
+
+    settings = _settings(tmp_path)
+    assert upstream_preflight("no-such-entry", settings=settings, now=_FIXED) == []
+
+
+def test_committed_bundle_entry_resolves() -> None:
+    """The committed bundle-records entry exists and its full dependency closure resolves."""
+    from watermark.catalog import load_entries
+    from watermark.catalog.dag import subgraph_order
+
+    order = [e.id for e in subgraph_order(load_entries(), "bundle-records")]
+    assert order[-1] == "bundle-records"
+    assert "rsei-inventory" in order
+    assert "echo-maumee-npdes" in order
+    assert order.index("echo-maumee-npdes") < order.index("rsei-inventory")
+
+
 # --- schema / duplicate ----------------------------------------------------------------------
 def test_duplicate_id_is_an_error_and_short_circuits_on_load_error(tmp_path: Path) -> None:
     settings = _settings(tmp_path)

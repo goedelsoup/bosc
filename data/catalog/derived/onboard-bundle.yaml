@@ -1,0 +1,32 @@
+id: onboard-bundle
+title: Full site onboarding — every reach/economics connector, in dependency order
+scope: derived
+status: reviewed
+producer:
+  kind: derived
+  source: virtual aggregate — resolved by `watermark catalog run onboard-bundle --site <slug>`
+site_scope: slug-scoped
+depends_on:
+- economics-baseline
+- echo-maumee-npdes
+- eia-consumer-energy
+- eia-grid-profile
+- hydrology-atlas14-corridor-ddf
+- hydrology-low-flow-7q10
+- hydrology-nasa-power-climatology
+- hydrology-wbd
+- rsei-inventory
+refresh:
+  cadence: on-demand
+provenance: derived
+tags:
+- onboarding
+- aggregate
+notes: >-
+  The executable half of docs/onboarding.md (#1025): a virtual DAG node (no producer command,
+  no storage) whose depends_on is the canonical connector ordering for bringing a new
+  watershed-point site online. `watermark catalog run onboard-bundle --site <slug> --dry-run`
+  previews the plan; drop --dry-run to execute. echo-maumee-npdes is the Maumee basin
+  inventory — a site in another basin runs its basin's `npdes --basin <name>` equivalent
+  (echo-great-miami-wwtp / echo-little-miami-wwtp); the per-site corpus/GIS dimensions stay
+  `bosc onboard <slug>` + human review, not connector pulls.

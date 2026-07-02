@@ -108,8 +108,19 @@ record as `dry-run` (naming the cache key to record) or `skipped` — the run al
 ### 3. Populate + review the per-site data
 
 Seed the site's `data/extracted/<slug>/` and `data/reference/<slug>/` from its corpus, and
-fill any `dry-run` connector outputs by running the per-connector commands live
-(`derive-low-flows`, `nasa-power --write`, etc.) and committing the result. Every value is
+fill any `dry-run` connector outputs by running the connectors live and committing the
+result. **The connector ordering is no longer prose — it's the catalog's dependency DAG**
+([#1025](https://github.com/watermark-directory/the-watermark-directory/issues/1025)): the
+`onboard-bundle` aggregate entry (`data/catalog/derived/onboard-bundle.yaml`) declares every
+reach/economics connector and its prerequisites, and `watermark catalog run` resolves them
+upstream-first, skipping entries still within their refresh TTL:
+
+```sh
+bosc catalog run onboard-bundle --site <slug> --dry-run   # preview the resolved plan
+bosc catalog run onboard-bundle --site <slug>             # execute it
+```
+
+(`mise run onboard-site <slug>` prints the same dry-run plan.) Every value is
 an **onboarding seed** until reviewed against a cited source — keep the
 `[verified]`/`[inference]`/`[reference]`/`[open]` discipline (see
 [`docs/methodology.md`](methodology.md)); "no data-center here yet" is a finding, not a gap.

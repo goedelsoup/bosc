@@ -8,6 +8,8 @@ producer:
   connector_ref: watermark.grid.utility
   source: U.S. EIA — Form EIA-861 (AEP Ohio retail sales) + Form EIA-930 (PJM hourly demand)
   external_url: https://www.eia.gov/electricity/data/eia861/
+depends_on:
+- eia-consumer-energy
 license: U.S. Government work (public domain)
 access_tier: keyed
 site_scope: slug-scoped

@@ -160,6 +160,11 @@ class CatalogEntry(BaseModel):
     scope: Scope
     status: EntryStatus = "needs-review"
     producer: Producer
+    # The entries that must be produced before this one can be regenerated (#1020) — each a
+    # catalog entry ``id``. This is *process* ordering (the executable-runbook DAG that
+    # ``bosc catalog run`` walks), not necessarily byte-level data lineage. Referential
+    # integrity + acyclicity are gated by ``bosc catalog check`` (watermark.catalog.dag).
+    depends_on: list[str] = Field(default_factory=list)
     license: str | None = None  # e.g. "U.S. Government work (public domain)"
     access_tier: AccessTier = "public"
     site_scope: SiteScope = "basin-shared"

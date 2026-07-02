@@ -1,0 +1,35 @@
+id: bundle-records
+title: The published content bundle — typed feeds + manifest (watermark export)
+scope: bundle
+status: reviewed
+producer:
+  kind: derived
+  command: export
+  connector_ref: watermark.site.export
+  source: watermark export — assembled from the committed corpus + reference datasets
+license: Site content — CC BY 4.0 over public-record sources (see web/README.md)
+access_tier: public
+site_scope: slug-scoped
+depends_on:
+- echo-maumee-npdes
+- economics-baseline
+- eia-grid-profile
+- gleif
+- hydrology-low-flow-7q10
+- hydrology-wbd
+- rsei-inventory
+refresh:
+  cadence: on-demand
+provenance: derived
+schema_ref: watermark.site.feeds
+tags:
+- bundle
+- export
+- frontend
+notes: >-
+  The per-site content bundle the Astro frontend reads at build time (data/site/bundles/<slug>/,
+  regenerable and git-ignored — hence no committed storage; a virtual DAG node, #1024).
+  depends_on declares the committed reference datasets the export verifiably reads: the RSEI/
+  economics/LEI/watershed feeds plus the basin network synthesis (ECHO dischargers, low-flow
+  lookup, per-site grid profiles). `watermark export` pre-flights this chain and warns when an
+  upstream is downstream-stale; regenerate with `watermark catalog run bundle-records --site <slug>`.

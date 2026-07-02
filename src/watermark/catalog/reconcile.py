@@ -137,7 +137,10 @@ def _observe(entry: CatalogEntry, settings: Settings, now: date) -> ObservedEntr
     found, missing = _members(entry, settings)
     pointers = [p for _, p in found if _is_lfs_pointer(p)]
     lfs_materialized = not pointers
-    exists = not missing and len(found) >= 1
+    # An entry with no declared storage is a *virtual* node (#1020/#1024) — a pure aggregate
+    # in the dependency DAG (e.g. `onboard-bundle`) or a feed whose output is regenerable and
+    # git-ignored (the bundle). Nothing on disk to observe, so it counts as present.
+    exists = (not missing and len(found) >= 1) or not entry.storage
     size_bytes = sum(p.stat().st_size for _, p in found)
 
     # sha256: the file's own hash for a single materialized file (so a pinned, file-level
