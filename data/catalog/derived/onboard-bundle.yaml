@@ -8,7 +8,6 @@ producer:
 site_scope: slug-scoped
 depends_on:
 - economics-baseline
-- echo-maumee-npdes
 - eia-consumer-energy
 - eia-grid-profile
 - hydrology-atlas14-corridor-ddf
@@ -26,7 +25,10 @@ notes: >-
   The executable half of docs/onboarding.md (#1025): a virtual DAG node (no producer command,
   no storage) whose depends_on is the canonical connector ordering for bringing a new
   watershed-point site online. `watermark catalog run onboard-bundle --site <slug> --dry-run`
-  previews the plan; drop --dry-run to execute. echo-maumee-npdes is the Maumee basin
-  inventory — a site in another basin runs its basin's `npdes --basin <name>` equivalent
-  (echo-great-miami-wwtp / echo-little-miami-wwtp); the per-site corpus/GIS dimensions stay
-  `bosc onboard <slug>` + human review, not connector pulls.
+  previews the plan; drop --dry-run to execute. The **basin ECHO NPDES inventory is
+  deliberately excluded**: it is basin-shared (Maumee `echo-maumee-npdes`, Great/Little Miami
+  `echo-{great,little}-miami-wwtp`, …), not per-site — a `depends_on` id is static, so pinning
+  one basin here would run the wrong `npdes --basin <name>` for every out-of-basin site. A new
+  site reuses its basin's inventory (per docs/onboarding.md, it is not regenerated at onboard
+  time); run `watermark catalog run <basin-npdes-id>` once per basin instead. The per-site
+  corpus/GIS dimensions likewise stay `bosc onboard <slug>` + human review, not connector pulls.

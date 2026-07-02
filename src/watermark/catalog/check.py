@@ -29,7 +29,10 @@ from watermark.catalog import CatalogEntry, load_entries, validate_entries
 from watermark.catalog.backfill import BACKFILL_SCOPES, _is_data_file
 from watermark.catalog.reconcile import ObservedEntry, load_observed, reconcile
 from watermark.config import Settings, get_settings
+from watermark.logging import get_logger
 from watermark.sites import SITES
+
+log = get_logger(__name__)
 
 Severity = Literal["error", "warn"]
 CheckKind = Literal[
@@ -292,18 +295,27 @@ def upstream_preflight(
     upstream that is TTL-stale plus every downstream-stale edge, so a consumer command can
     print them before running with current data. Returns ``[]`` when the root entry doesn't
     exist or the graph is broken — those are ``bosc catalog check``'s findings, not ours.
+
+    **Fails open:** this is an advisory pre-flight for a "never abort" caller (``watermark
+    export``, #1024), so any unexpected failure loading/reconciling the catalog is swallowed
+    (logged) and returns ``[]`` rather than propagating and aborting the consumer.
     """
     from watermark.catalog.dag import subgraph_order
 
     settings = settings or get_settings()
-    entries = load_entries(settings=settings)
     try:
+        entries = load_entries(settings=settings)
         closure = subgraph_order(entries, root)
+        observed = reconcile(settings=settings, now=now).entries
     except (KeyError, ValueError):
+        return []  # unknown root / broken graph — bosc catalog check owns those findings
+    except Exception:  # advisory pre-flight must never abort the caller — fail open, log
+        log.warning("catalog.upstream_preflight.skipped", root=root, exc_info=True)
         return []
-    observed = reconcile(settings=settings, now=now).entries
     out: list[CheckFinding] = []
     for entry in closure:
+        if entry.id == root:  # the export target itself is not one of its own upstreams
+            continue
         obs = observed.get(entry.id)
         if obs is not None and obs.stale:
             out.append(

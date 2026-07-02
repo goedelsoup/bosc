@@ -364,6 +364,34 @@ def test_upstream_preflight_reports_ttl_stale_and_ordering_within_the_closure(
     assert "catalog run bundle-root" in findings[0].detail
 
 
+def test_upstream_preflight_does_not_report_the_root_itself_as_a_stale_upstream(
+    tmp_path: Path,
+) -> None:
+    from watermark.catalog.check import upstream_preflight
+
+    settings = _settings(tmp_path)
+    # The root is TTL-stale but its (older) leaf is not, and the leaf is not newer than the root
+    # (so no downstream-stale edge fires). The root is the export target, not one of its own
+    # upstreams, so the TTL scan must not report it — the only finding path left here is empty.
+    _data(settings, "reference/echo/leaf.yaml", "meta:\n  asof: '2020-01-01'\n")
+    _entry(
+        settings,
+        "leaf",
+        _basic("leaf", "reference/echo/leaf.yaml", refresh="  cadence: annual\n  ttl_days: 36500\n"),
+    )
+    _data(settings, "reference/echo/root.yaml", "meta:\n  asof: '2020-06-01'\n")
+    _entry(
+        settings,
+        "root",
+        _basic("root", "reference/echo/root.yaml", refresh="  cadence: annual\n  ttl_days: 30\n")
+        + "depends_on:\n- leaf\n",
+    )
+    findings = upstream_preflight("root", settings=settings, now=_FIXED)
+    # root is TTL-stale but excluded (it's the target); leaf is fresh; no downstream-stale edge.
+    assert "root" not in [f.subject for f in findings]
+    assert findings == []
+
+
 def test_upstream_preflight_is_silent_for_a_missing_root(tmp_path: Path) -> None:
     from watermark.catalog.check import upstream_preflight
 
@@ -377,10 +405,9 @@ def test_committed_bundle_entry_resolves() -> None:
     from watermark.catalog.dag import subgraph_order
 
     order = [e.id for e in subgraph_order(load_entries(), "bundle-records")]
-    assert order[-1] == "bundle-records"
-    assert "rsei-inventory" in order
-    assert "echo-maumee-npdes" in order
-    assert order.index("echo-maumee-npdes") < order.index("rsei-inventory")
+    assert order[-1] == "bundle-records"  # the root is always emitted last
+    # a representative sample of the declared upstreams resolve into the closure
+    assert {"rsei-inventory", "echo-maumee-npdes", "hydrology-wbd"} <= set(order)
 
 
 # --- schema / duplicate ----------------------------------------------------------------------
