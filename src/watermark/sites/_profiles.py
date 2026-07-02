@@ -1599,19 +1599,40 @@ _GREENVILLE = SiteProfile(
     rsei_relpath="reference/rsei/greenville/inventory.yaml",
     consumer_energy_relpath="reference/eia/greenville/consumer-energy.yaml",
     grid_relpath="reference/eia/greenville/grid-profile.yaml",
-    toxic_corridor_bbox=(
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-    ),  # [open] pending the corridor (the Greenville ag/food-processing reach)
-    plant_receiving={},  # [open] pending the Greenville WWTP NPDES fact sheet
+    # [inference] Greenville urban-industrial corridor: the RSEI-dominant cluster is NOT
+    # ag/food-processing (as expected going in) but a mixed manufacturing core —
+    # BASF Corp (1175 Martin St, plastics/chemicals, RSEI #2 by score), Honeywell
+    # (851 Jackson St, auto parts/formaldehyde, RSEI #1 historically 1988-2000), Greif
+    # Packaging (526 Markwith Ave, steel drums), Corning Inc (1025 Martin St, glass),
+    # Whirlpool KitchenAid (1701 KitchenAid Way, appliances), and the Jaysville-St Johns
+    # Rd industrial park (Textron Cadillac Gage, Spartech, Greenville Technology Inc,
+    # The Andersons Marathon Ethanol). Box covers the tight Greenville urban industrial
+    # zone; excludes Union City Non-Ferrous (~17 mi NW), Norcold/Gettysburg (~10 mi E),
+    # Production Paint Finishers/Bradford (~13 mi E), Florida Production Engineering/
+    # New Madison (~8 mi S), and Midmark/Versailles (~15 mi N). (lat_min, lat_max,
+    # lon_min, lon_max)
+    toxic_corridor_bbox=(40.063, 40.140, -84.650, -84.578),
+    # [verified] ECHO POTW record (FRS 110002345472, NPDES OH0025429): Greenville WWTP
+    # → Greenville Creek, design flow 3.5 MGD. Fact sheet not yet in corpus; receiving
+    # water and NPDES ID sourced from EPA ECHO great-miami-wwtp.potw.yaml.
+    plant_receiving={
+        "greenville-wwtp": (
+            "Greenville Creek",
+            "EPA ECHO POTW record, NPDES OH0025429 (Greenville WWTP, 3.5 MGD design flow)",
+        ),
+    },
     abstraction_gage="03264000",  # [verified] Greenville Creek near Bradford OH
     supply_gage_primary="03264000",  # [verified] Greenville Creek near Bradford
     supply_gage_secondary="03265000",  # [verified] Stillwater River at Pleasant Hill (downstream context)
-    passby_primary_cfs=0.0,  # [open] pending the in-stream passby minimum
-    passby_secondary_cfs=0.0,  # [open]
-    facility=None,  # [open] the data-center / ag-land-conversion dimension is the research target (#482)
+    # [inference] LP3 7Q10 from USGS NWIS as conservative supply passby proxy (no abstraction
+    # permit on record); regenerable via `bosc derive-low-flows`.
+    # Greenville Creek near Bradford (03264000): 7Q10 = 11.34 cfs, 41 yr 1980-2024.
+    # Stillwater at Pleasant Hill (03265000): 7Q10 = 15.69 cfs, 44 yr 1980-2024.
+    passby_primary_cfs=11.34,
+    passby_secondary_cfs=15.69,
+    facility=None,  # [verified] zero Greenville/Darke-County data-center records in RSEI, ECHO NPDES,
+    # and the onboarding self-research pass (#482/#515); the site angle is greenfield ag-land
+    # conversion — no disclosed facility as of 2026-07-02.
     serving_utility_citation="EIA-861 2024 Service_Territory: Darke County, OH is a patchwork (DP&L #4922, AEP #14006 on the east fringe, Darke Rural Electric co-op #4796, village munis Arcanum/Versailles); the City of Greenville LSE is Dayton Power & Light (#4922). [verified]",
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(

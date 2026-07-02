@@ -189,3 +189,29 @@ streams:
     citation: LP3 7Q10 from USGS 03245500 (Little Miami River at Milford OH), 44 climatic years 1980-2024
       (gage value; screening proxy for the discharge reach)
     confidence: medium
+  greenville creek:
+    seven_q10_cfs: 11.34
+    source: derived
+    gage: '03264000'
+    gage_name: Greenville Creek near Bradford OH
+    period: 1980-01-01..2024-12-31
+    complete_years: 41
+    aliases:
+    - greenville creek
+    - greenville ck
+    citation: LP3 7Q10 from USGS 03264000 (Greenville Creek near Bradford OH), 41 climatic years 1980-2024
+      (gage value; screening proxy for the discharge reach)
+    confidence: medium
+  stillwater river:
+    seven_q10_cfs: 15.69
+    source: derived
+    gage: '03265000'
+    gage_name: Stillwater River at Pleasant Hill OH
+    period: 1980-01-01..2024-12-31
+    complete_years: 44
+    aliases:
+    - stillwater river
+    - stillwater r
+    citation: LP3 7Q10 from USGS 03265000 (Stillwater River at Pleasant Hill OH), 44 climatic years 1980-2024
+      (gage value; screening proxy for the discharge reach)
+    confidence: medium
