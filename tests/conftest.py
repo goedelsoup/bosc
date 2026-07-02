@@ -82,10 +82,14 @@ def poi_offline_settings() -> Settings:
 
 
 @pytest.fixture
-def research_settings() -> Settings:
-    """Offline research-connector settings: fixture-backed Serper search, no network."""
+def research_settings(tmp_path: Path) -> Settings:
+    """Offline research-connector settings: fixture-backed Serper/fetch, no network.
+
+    Uses a tmp_path-backed data_dir so research_cache_dir is sandboxed — stale
+    on-disk cache entries from previous live runs cannot leak into the test.
+    """
     return Settings(
-        data_dir=REPO_ROOT / "data",
+        data_dir=tmp_path,
         research_offline=True,
         research_fixtures_dir=FIXTURES / "research",
     )

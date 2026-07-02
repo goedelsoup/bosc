@@ -24,15 +24,9 @@ _FIXTURE_N = 10
 # ---------------------------------------------------------------------------
 
 
-def test_fixture_fallback_returns_search_results(tmp_path: Path) -> None:
+def test_fixture_fallback_returns_search_results(research_settings: Settings) -> None:
     """Offline mode with fixture → parses into SearchResult objects."""
-    settings = Settings(
-        data_dir=Path(__file__).resolve().parents[1] / "data",
-        research_offline=True,
-        research_fixtures_dir=FIXTURES / "research",
-        # tmp_path has no cache entries → forces fixture lookup
-    )
-    results = search_web(_FIXTURE_QUERY, n=_FIXTURE_N, settings=settings)
+    results = search_web(_FIXTURE_QUERY, n=_FIXTURE_N, settings=research_settings)
     assert len(results) == 3
     assert all(isinstance(r, SearchResult) for r in results)
 
@@ -42,14 +36,9 @@ def test_fixture_fallback_returns_search_results(tmp_path: Path) -> None:
 # ---------------------------------------------------------------------------
 
 
-def test_search_result_fields(tmp_path: Path) -> None:
+def test_search_result_fields(research_settings: Settings) -> None:
     """SearchResult fields are populated from the Serper organic payload."""
-    settings = Settings(
-        data_dir=Path(__file__).resolve().parents[1] / "data",
-        research_offline=True,
-        research_fixtures_dir=FIXTURES / "research",
-    )
-    results = search_web(_FIXTURE_QUERY, n=_FIXTURE_N, settings=settings)
+    results = search_web(_FIXTURE_QUERY, n=_FIXTURE_N, settings=research_settings)
     first = results[0]
     assert first.title == "QTS Data Centers Announces Major Expansion in Sidney, Ohio"
     assert "QTS" in first.snippet
@@ -128,14 +117,9 @@ def test_cache_hit_serves_without_fixture(tmp_path: Path) -> None:
 # ---------------------------------------------------------------------------
 
 
-def test_missing_key_offline_uses_fixture() -> None:
+def test_missing_key_offline_uses_fixture(research_settings: Settings) -> None:
     """No API key + offline=True → fixture is served without touching the network."""
-    settings = Settings(
-        data_dir=Path(__file__).resolve().parents[1] / "data",
-        serper_api_key="",  # no key
-        research_offline=True,
-        research_fixtures_dir=FIXTURES / "research",
-    )
+    settings = research_settings.model_copy(update={"serper_api_key": ""})
     results = search_web(_FIXTURE_QUERY, n=_FIXTURE_N, settings=settings)
     assert len(results) > 0  # fixture served, no key required
 
@@ -161,10 +145,6 @@ def test_missing_key_online_returns_empty(monkeypatch: pytest.MonkeyPatch) -> No
 
     monkeypatch.setattr(mod, "cached_get", _fake_cached_get)
 
-    settings = Settings(
-        data_dir=Path(__file__).resolve().parents[1] / "data",
-        serper_api_key="",
-        research_offline=False,
-    )
+    settings = Settings(serper_api_key="", research_offline=False)
     results = search_web("any query", settings=settings)
     assert results == []

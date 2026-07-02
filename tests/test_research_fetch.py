@@ -14,17 +14,8 @@ from watermark.connectors._cache import OfflineError, cache_key
 from watermark.research.connectors.fetch import _html_to_text, _pdf_to_text, fetch_url
 
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
-REPO_ROOT = Path(__file__).resolve().parents[1]
 
 _FETCH_URL = "https://shelbycountycommissioners.example.gov/resolutions/2025-data-center"
-
-
-def _offline(tmp_path: Path | None = None, fixtures_dir: Path | None = None) -> Settings:
-    return Settings(
-        data_dir=tmp_path or REPO_ROOT / "data",
-        research_offline=True,
-        research_fixtures_dir=fixtures_dir or FIXTURES / "research",
-    )
 
 
 # ---------------------------------------------------------------------------
@@ -47,10 +38,9 @@ def test_fetch_url_in_all_tools() -> None:
 # ---------------------------------------------------------------------------
 
 
-def test_fetch_url_fixture_fallback() -> None:
+def test_fetch_url_fixture_fallback(research_settings: Settings) -> None:
     """Offline mode + committed fixture → returns text without network."""
-    settings = _offline()
-    content = fetch_url(_FETCH_URL, settings=settings)
+    content = fetch_url(_FETCH_URL, settings=research_settings)
     assert "QTS" in content
     assert "I-75" in content
 
@@ -153,12 +143,13 @@ def test_pdf_to_text_extracts_pages() -> None:
 # ---------------------------------------------------------------------------
 
 
-def test_fetch_url_tool_serves_fixture(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_fetch_url_tool_serves_fixture(
+    monkeypatch: pytest.MonkeyPatch, research_settings: Settings
+) -> None:
     """The fetch_url agent tool returns fixture content in offline mode."""
     from watermark.agent.tools import fetch_url as _tool
 
-    settings = _offline()
-    monkeypatch.setattr("watermark.agent.tools.get_settings", lambda: settings)
+    monkeypatch.setattr("watermark.agent.tools.get_settings", lambda: research_settings)
 
     result = asyncio.run(_tool.handler({"url": _FETCH_URL}))
     text = result["content"][0]["text"]
@@ -166,12 +157,13 @@ def test_fetch_url_tool_serves_fixture(monkeypatch: pytest.MonkeyPatch) -> None:
     assert _FETCH_URL in text
 
 
-def test_fetch_url_tool_empty_url(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_fetch_url_tool_empty_url(
+    monkeypatch: pytest.MonkeyPatch, research_settings: Settings
+) -> None:
     """fetch_url tool returns an error message when url is missing."""
     from watermark.agent.tools import fetch_url as _tool
 
-    settings = _offline()
-    monkeypatch.setattr("watermark.agent.tools.get_settings", lambda: settings)
+    monkeypatch.setattr("watermark.agent.tools.get_settings", lambda: research_settings)
 
     result = asyncio.run(_tool.handler({}))
     text = result["content"][0]["text"]
@@ -183,12 +175,13 @@ def test_fetch_url_tool_empty_url(monkeypatch: pytest.MonkeyPatch) -> None:
 # ---------------------------------------------------------------------------
 
 
-def test_search_web_tool_serves_fixture(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_search_web_tool_serves_fixture(
+    monkeypatch: pytest.MonkeyPatch, research_settings: Settings
+) -> None:
     """The search_web agent tool returns fixture results in offline mode."""
     from watermark.agent.tools import search_web as _tool
 
-    settings = _offline()
-    monkeypatch.setattr("watermark.agent.tools.get_settings", lambda: settings)
+    monkeypatch.setattr("watermark.agent.tools.get_settings", lambda: research_settings)
 
     result = asyncio.run(_tool.handler({"query": "data center Sidney Ohio I-75", "n": 10}))
     text = result["content"][0]["text"]
@@ -196,12 +189,13 @@ def test_search_web_tool_serves_fixture(monkeypatch: pytest.MonkeyPatch) -> None
     assert "search_web" in text
 
 
-def test_search_web_tool_empty_query(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_search_web_tool_empty_query(
+    monkeypatch: pytest.MonkeyPatch, research_settings: Settings
+) -> None:
     """search_web tool returns an error when query is empty."""
     from watermark.agent.tools import search_web as _tool
 
-    settings = _offline()
-    monkeypatch.setattr("watermark.agent.tools.get_settings", lambda: settings)
+    monkeypatch.setattr("watermark.agent.tools.get_settings", lambda: research_settings)
 
     result = asyncio.run(_tool.handler({"query": ""}))
     text = result["content"][0]["text"]

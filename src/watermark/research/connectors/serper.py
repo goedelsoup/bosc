@@ -85,7 +85,7 @@ def search_web(
                 _SERPER_URL,
                 json=params,
                 headers={"X-API-KEY": settings.serper_api_key},
-                timeout=settings.civic_request_timeout_s,
+                timeout=settings.research_request_timeout_s,
             )
             resp.raise_for_status()
             return cast("list[dict[str, Any]]", resp.json().get("organic", []))

@@ -87,6 +87,9 @@ class Settings(BaseSettings):
     # Max characters returned by fetch_url (proxy for the token budget passed to the agent).
     # ~20 k chars ≈ 5 k tokens — generous for an article, tight for a full PDF.
     research_fetch_max_chars: int = 20_000
+    # HTTP timeout for research connectors (Serper, URL fetch). Separate from the civic
+    # connector timeout so research latency can be tuned independently.
+    research_request_timeout_s: float = 30.0
 
     # --- Logging -----------------------------------------------------------
     log_level: str = "INFO"

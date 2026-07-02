@@ -27,6 +27,10 @@ if TYPE_CHECKING:
 log = get_logger(__name__)
 
 _CONNECTOR = "fetch"
+# Hard byte cap applied during streaming — prevents buffering an arbitrarily large
+# response before research_fetch_max_chars truncation.  5 MB is generous for any
+# article or short PDF; larger payloads are rejected early.
+_MAX_RESPONSE_BYTES = 5 * 1024 * 1024
 
 _SKIP_TAGS = frozenset(
     {"script", "style", "head", "nav", "footer", "aside", "header", "noscript", "svg"}
@@ -111,33 +115,58 @@ def fetch_url(
     params: dict[str, Any] = {"url": url}
 
     def _live() -> str:
+        raw_bytes = b""
+        ct = ""
         try:
-            resp = httpx.get(
-                url,
-                follow_redirects=True,
-                timeout=settings.civic_request_timeout_s,
-                headers={
-                    "User-Agent": "watermark-bosc/1.0 (research; +https://github.com/watermark-directory)"
-                },
-            )
-            resp.raise_for_status()
+            with (
+                httpx.Client() as client,
+                client.stream(
+                    "GET",
+                    url,
+                    follow_redirects=True,
+                    timeout=settings.research_request_timeout_s,
+                    headers={
+                        "User-Agent": "watermark-bosc/1.0 (research; +https://github.com/watermark-directory)"
+                    },
+                ) as resp,
+            ):
+                resp.raise_for_status()
+                cl_header = resp.headers.get("content-length")
+                if cl_header and int(cl_header) > _MAX_RESPONSE_BYTES:
+                    log.warning(
+                        "research.fetch_url.too_large",
+                        url=url,
+                        content_length=cl_header,
+                    )
+                    return ""
+                chunks: list[bytes] = []
+                total = 0
+                for chunk in resp.iter_bytes(chunk_size=4096):
+                    chunks.append(chunk)
+                    total += len(chunk)
+                    if total > _MAX_RESPONSE_BYTES:
+                        log.warning("research.fetch_url.too_large", url=url, bytes_read=total)
+                        return ""
+                raw_bytes = b"".join(chunks)
+                ct = resp.headers.get("content-type", "").lower()
         except (httpx.HTTPError, ValueError) as exc:
             log.warning("research.fetch_url.failed", url=url, error=str(exc))
             return ""
 
-        ct = resp.headers.get("content-type", "").lower()
         if "pdf" in ct or url.lower().endswith(".pdf"):
             try:
-                text = _pdf_to_text(resp.content)
+                text = _pdf_to_text(raw_bytes)
             except Exception as exc:
                 log.warning("research.fetch_url.pdf_error", url=url, error=str(exc))
                 text = ""
         else:
             try:
-                text = _html_to_text(resp.text)
+                text = _html_to_text(raw_bytes.decode("utf-8", errors="replace"))
             except Exception as exc:
                 log.warning("research.fetch_url.html_error", url=url, error=str(exc))
-                text = resp.text[: settings.research_fetch_max_chars]
+                text = raw_bytes.decode("utf-8", errors="replace")[
+                    : settings.research_fetch_max_chars
+                ]
 
         return text[: settings.research_fetch_max_chars]
 
