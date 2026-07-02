@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-07-02T03:42:38.893910+00:00**. Regenerate with `bosc catalog audit --apply` after `bosc catalog reconcile`.
+Snapshot reconciled: **2026-07-02T13:17:50.111830+00:00**. Regenerate with `bosc catalog audit --apply` after `bosc catalog reconcile`.
 
 ## Headline
 
-- **86** catalogued datasets — **85** reviewed.
-- **86** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **87** catalogued datasets — **86** reviewed.
+- **87** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -34,6 +34,7 @@ Snapshot reconciled: **2026-07-02T03:42:38.893910+00:00**. Regenerate with `bosc
 | extracted | recorder | 1 | 1 | 0 | 0 |
 | extracted | regulatory | 1 | 1 | 0 | 0 |
 | extracted | shawnee-township | 1 | 1 | 0 | 0 |
+| extracted | sidney | 1 | 1 | 0 | 0 |
 | extracted | urbana | 1 | 1 | 0 | 0 |
 | extracted | watershed | 1 | 1 | 0 | 0 |
 | reference | allen-boe | 4 | 4 | 0 | 0 |
@@ -77,7 +78,7 @@ Snapshot reconciled: **2026-07-02T03:42:38.893910+00:00**. Regenerate with `bosc
 | lima | 75 | 71 | 4 |
 | new-albany | 36 | 32 | 4 |
 | ottawa | 37 | 32 | 5 |
-| sidney | 38 | 33 | 5 |
+| sidney | 39 | 34 | 5 |
 | springfield | 37 | 33 | 4 |
 | toledo | 37 | 32 | 5 |
 | troy-piqua | 38 | 33 | 5 |
