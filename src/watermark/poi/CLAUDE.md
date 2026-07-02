@@ -23,7 +23,9 @@ The point-of-interest (place) research store. Defers to the root
   `POICandidate`s (parcel ids, addresses, **facility/business names**) with citations +
   a store-`covered` flag. Read-only worklist; the uncovered parcel-ids are the leads.
   Each kind is **divergence-guarded** so the pass can't invent a place: the parcel regex
-  mirrors `allen_gis._PARCEL_ID_RE` (a test cross-checks the two), and the facility-name
+  (`discover._PARCEL_RE`) mirrors the active site's `GisParcelSchema.deed_id_regex` (in
+  `watermark.sites`, which `allen_gis` compiles at `scan_parcel_ids`; a test cross-checks
+  the two — the shared regex is no longer a module constant), and the facility-name
   vocabulary is the **entity-graph facility + corporate nodes** — discover only proposes
   a name the entity resolver already produced. Name candidates are `feature`-kind, so
   they funnel through GNIS (`_resolve_feature`); `--no-names` skips the graph pass.

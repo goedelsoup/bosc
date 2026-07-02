@@ -99,6 +99,22 @@ markdown PR body there before the process exits and the harness will use it as t
 PR description. If the file is absent or empty, the harness generates a default body
 from the issue title and body.
 
+## Issue & PR labels
+
+The label vocabulary is **managed as code** in
+[`.github/config/`](.github/config/README.md) (`index.ts`, applied by Pulumi); run
+`gh label list` for the live set. The namespaces an agent interacts with:
+
+- **`agent:*`** — the work queue. `agent:available` = staged for pickup (claim per the
+  Orlop queue protocol: assign yourself + swap to `agent:claimed`); `agent:claimed` =
+  in flight; `agent:needs-human` = blocked (see below).
+- **`orlop:*`** — board-managed by the [Orlop](https://github.com/tonnetz-io/orlop) HITL
+  board; **agents don't set these**. `orlop:hold` means *do not pick up or merge*.
+- **`status:*`** — triage state on proposed work: `status:agent-proposed` (opened by a
+  research run), `status:needs-triage` (inert until a maintainer reviews), `status:blocked`.
+- **`type:*` / `area:*` / `lead:*`** — the categorization a PR/issue carries (kind, subsystem,
+  open-leads board). See [CONTRIBUTING.md](CONTRIBUTING.md) for the PR-labeling convention.
+
 ## Stuck / blocked
 
 Exit with a non-zero status code. The harness catches it, adds `agent:needs-human`
