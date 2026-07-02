@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-02T14:34:01.097601+00:00'
+reconciled_at: '2026-07-02T15:24:01.525098+00:00'
 entries:
   aedg:
     exists: true
@@ -119,10 +119,19 @@ entries:
     stale: false
   data-centers:
     exists: true
-    sha256: 34f6f4a43714184765b7181b24872da2c5e15e7be4dfdbd0c7e5d73674146590
-    size_bytes: 30229
+    sha256: 8e3839ac1ccef440c7f9fb6600e33bf9f663f953d525a68d36e57b1fce2455a5
+    size_bytes: 38900
     lfs_materialized: true
-    file_count: 3
+    file_count: 4
+    missing: []
+    asof: null
+    stale: false
+  data-centers-sidney:
+    exists: true
+    sha256: a48f879eb13104b9c3ab22d9d4170f11085717ca8406b01a3a21fac6f41bce39
+    size_bytes: 8671
+    lfs_materialized: true
+    file_count: 1
     missing: []
     asof: null
     stale: false
