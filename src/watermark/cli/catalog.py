@@ -127,11 +127,6 @@ def catalog_run_cmd(
     force: bool = typer.Option(
         False, "--force", help="Ignore refresh TTLs; re-run every node in the subgraph."
     ),
-    only_stale: bool = typer.Option(
-        True,
-        "--only-stale",
-        help="Skip entries within their refresh TTL (the default; explicit for clarity).",
-    ),
 ) -> None:
     """Run an entry's producer plus its prerequisites, in dependency order (#1021).
 
@@ -140,9 +135,9 @@ def catalog_run_cmd(
     ``producer.command`` as a ``watermark`` subprocess — aborting on the first failure. The
     machine-readable ordering that used to live only in the onboarding prose (epic #1019).
     """
+    from watermark.catalog import get_entry
     from watermark.catalog.runner import execute_plan, plan
 
-    del only_stale  # accepted for explicitness only — it *is* the default; --force widens the run
     if site and site not in SITES:
         raise typer.BadParameter(
             f"unknown site {site!r}; known: {sorted(SITES)}", param_hint="--site"
@@ -151,7 +146,16 @@ def catalog_run_cmd(
     try:
         steps = plan(entry_id, site=resolved_site, force=force)
     except KeyError as exc:
-        raise typer.BadParameter(str(exc.args[0]), param_hint="entry_id") from exc
+        # subgraph_order raises KeyError for both an unknown root and an unresolved depends_on
+        # target. Only the former is a bad user argument; the latter is a broken catalog graph.
+        if get_entry(entry_id) is None:
+            raise typer.BadParameter(
+                f"unknown catalog entry {entry_id!r}", param_hint="entry_id"
+            ) from exc
+        console.print(
+            f"[red]{exc.args[0]}[/] — broken dependency graph (`watermark catalog check`)."
+        )
+        raise typer.Exit(1) from exc
     except ValueError as exc:  # a dependency cycle — a `catalog check` failure
         console.print(f"[red]{exc}[/] — fix the graph (`watermark catalog check`).")
         raise typer.Exit(1) from exc
@@ -174,9 +178,14 @@ def catalog_run_cmd(
     )
     failed = report.failed
     if failed is not None:
+        exit_note = (
+            f"exited {failed.exit_code}"
+            if failed.exit_code is not None
+            else "did not run to completion (timeout/spawn error)"
+        )
         console.print(
             f"[red]failed:[/] {failed.step.entry_id} "
-            f"(`watermark {failed.step.command}` exited {failed.exit_code})"
+            f"(`watermark {failed.step.command}` {exit_note})"
         )
         raise typer.Exit(1)
 

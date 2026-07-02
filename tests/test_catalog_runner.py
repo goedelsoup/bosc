@@ -155,6 +155,20 @@ def test_execute_aborts_remaining_steps_on_failure() -> None:
     assert report.failed.exit_code == 3
 
 
+def test_execute_converts_subprocess_exception_to_failed_step() -> None:
+    import subprocess
+
+    def boom(argv: list[str]) -> int:
+        raise subprocess.TimeoutExpired(cmd=argv, timeout=1)
+
+    steps = [_step("a"), _step("b")]
+    report = execute_plan(steps, site="lima", execute=boom)
+    assert [r.status for r in report.results] == ["failed", "aborted"]
+    assert report.failed is not None
+    assert report.failed.step.entry_id == "a"
+    assert report.failed.exit_code is None  # no clean exit code — a timeout, not a non-zero exit
+
+
 def test_execute_carries_fresh_and_virtual_through_without_spawning() -> None:
     calls: list[list[str]] = []
     steps = [_step("a", action="skip-fresh"), _step("agg", action="virtual")]

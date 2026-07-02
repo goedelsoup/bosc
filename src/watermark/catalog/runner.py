@@ -152,8 +152,13 @@ def _argv(command: str, site: str) -> list[str]:
     return [sys.executable, "-m", "watermark", "--site", site, *shlex.split(command)]
 
 
+# A generous per-producer backstop against a wedged subprocess (a hung network pull). Real
+# connector pulls can run for minutes; this only trips a runaway, not legitimate work.
+_PRODUCER_TIMEOUT_S = 3600
+
+
 def _subprocess_execute(argv: list[str]) -> int:
-    return subprocess.run(argv, check=False).returncode
+    return subprocess.run(argv, check=False, timeout=_PRODUCER_TIMEOUT_S).returncode
 
 
 def execute_plan(
@@ -182,7 +187,14 @@ def execute_plan(
             results.append(StepResult(step=step, status="fresh"))
             continue
         assert step.command is not None  # action == "run" implies a concrete command
-        code = execute(_argv(step.command, site))
+        try:
+            code = execute(_argv(step.command, site))
+        except (subprocess.SubprocessError, OSError):
+            # a timeout, a missing interpreter, a fork failure — treat as a failed step (not a
+            # crash) so the abort-on-first-failure path reports it cleanly like a non-zero exit.
+            results.append(StepResult(step=step, status="failed", exit_code=None))
+            failed = True
+            continue
         if code == 0:
             results.append(StepResult(step=step, status="ran", exit_code=0))
         else:
