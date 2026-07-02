@@ -18,6 +18,7 @@
  */
 
 import { activeSite } from "./bundle";
+import type { HypothesisItem } from "./feeds";
 import { sectionStatus } from "./readiness";
 import { DEFAULT_STORY_CODENAME, LIMA_SLUG, siteBase, storyBase } from "./routes";
 import { type NetworkSite, SITES } from "./sites";
@@ -37,7 +38,7 @@ export type SectionId =
   | "ask"
   | "search"
   | "directory"
-  | "hypotheses"
+  | "research"
   | "submit"
   | "connect";
 
@@ -217,10 +218,9 @@ export function sections(): Section[] {
       toc: [],
     },
     {
-      // The network's hypotheses layer (the (site × hypothesis) join) — read the network
-      // through the boom-origin hypotheses. A network-tier tab beside Report.
-      id: "hypotheses",
-      label: "Hypotheses",
+      // The network's research layer — the boom-origin hypotheses + the MCP playground.
+      id: "research",
+      label: "Research",
       tab: "Research",
       href: "/research/hypotheses",
       blurb: "Read the network three ways — the boom-origin hypotheses, scored against each site.",
@@ -292,25 +292,35 @@ export type NavItem =
   | { kind: "mega"; label: string; section: SectionId; mega: MegaMenu; match?: SectionId[] };
 
 /** Network-tier left tabs — shown at the directory and on cross-cutting globals.
- *  Submit is NOT here — it's a right-cluster affordance (see SUBMIT_LINK / the Header). */
-export function networkTabs(): NavItem[] {
+ *  Submit is NOT here — it's a right-cluster affordance (see SUBMIT_LINK / the Header).
+ *  Hypotheses come from the live feed so the dropdown labels stay in sync without hardcoding. */
+export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
   const { base } = siteRoots();
+  const researchChildren: NavChild[] = [
+    ...hypotheses.map((h) => ({ label: h.name, href: `/research/hypotheses?lens=${h.id}` })),
+    ...(hypotheses.length > 0 ? [{ divider: true as const }] : []),
+    { label: "Methodology", href: `${base}/docs/methodology`, blurb: "How the record is built & labeled" },
+    { label: "Connect", href: "/network/connect" },
+  ];
   return [
     { kind: "link", label: "Directory", section: "directory", href: "/" },
-    { kind: "link", label: "Research", section: "hypotheses", href: "/research/hypotheses" },
+    {
+      kind: "dropdown",
+      label: "Research",
+      section: "research",
+      match: ["connect"],
+      children: researchChildren,
+    },
     {
       kind: "dropdown",
       label: "About",
       section: "about",
       children: [
-        {
-          label: "Methodology",
-          href: `${base}/docs/methodology`,
-          blurb: "How the record is built & labeled",
-        },
-        { label: "About the site", href: "/about", blurb: "What Watermark is, and why" },
-        { label: "Data catalog", href: "/about/catalog", blurb: "Every dataset: source, license, freshness" },
+        { label: "About this site", href: "/about", blurb: "What Watermark is, and why" },
         { label: "Who runs this", href: "/about-me", blurb: "The team behind the record" },
+        { divider: true as const },
+        { label: "Data catalog", href: "/about/catalog", blurb: "Every dataset: source, license, freshness" },
+        { divider: true as const },
         { label: "Contributing", href: "/about/contributing" },
       ],
     },
@@ -421,13 +431,13 @@ export function comingSoonSiteTabs(site: NetworkSite): NavItem[] {
 }
 
 /** The platform cluster (right of the bar), constant across tiers. Ask + Search and
- *  Submit are rendered separately as affordances; these two are the plain links. */
+ *  Submit are rendered separately as affordances; these two are the plain links.
+ *  Connect has moved to the Research dropdown (#1017). */
 export function platformLinks(): { label: string; section: SectionId; href: string }[] {
   const { base } = siteRoots();
   return [
     { label: "Docs", section: "reports", href: `${base}/docs/` },
     { label: "Wiki", section: "wiki", href: "/wiki/" },
-    { label: "Connect", section: "connect", href: "/network/connect" },
   ];
 }
 
@@ -469,6 +479,7 @@ export function navLinks(): { label: string; href: string }[] {
     ...siteTabs().flatMap(navItemLinks),
     { label: "Directory", href: "/" },
     { label: "Research", href: "/research/hypotheses" },
+    { label: "Connect", href: "/network/connect" },
     ...platformLinks().map((t) => ({ label: t.label, href: t.href })),
   ];
 }
@@ -484,7 +495,6 @@ export function footerGroups(): FooterGroup[] {
   const plat = platformLinks();
   const docs = plat.find((p) => p.section === "reports")!;
   const wiki = plat.find((p) => p.section === "wiki")!;
-  const connect = plat.find((p) => p.section === "connect")!;
   return [
     {
       heading: "The investigation",
@@ -509,7 +519,7 @@ export function footerGroups(): FooterGroup[] {
     {
       heading: "Site",
       links: [
-        { label: connect.label, href: connect.href },
+        { label: "Connect", href: "/network/connect" },
         { label: "Methodology", href: `${base}/docs/methodology` },
         { label: "About", href: "/about" },
       ],
