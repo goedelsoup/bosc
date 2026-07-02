@@ -46,6 +46,10 @@ log = get_logger(__name__)
 # NPDES parameter codes we care about for a receiving-water characterization.
 FLOW_PARAM = "50050"  # "Flow, in conduit or thru treatment plant" (the effluent flow, MGD)
 OVERFLOW_PARAM = "74063"  # "Overflow volume [SSO volume, CSO volume]" (a CSO/bypass outfall)
+# ECHO returns multiple stat-base rows per period (e.g. "MO AVG" and "DAILY MX"). Only the
+# monthly-average series is meaningful for the mean-flow / utilisation computation; mixing in
+# daily-max rows inflates both the mean and n_flow_months.
+_MONTHLY_AVG_STAT = "MO AVG"
 
 _EFF_SERVICE = "eff_rest_services"
 # Three-letter month tokens ECHO returns in MonitoringPeriodEndDate ("31-JAN-23").
@@ -298,13 +302,20 @@ def summarize_discharge(
     reported monthly values; ``None`` (no-discharge) periods are excluded, never zero-filled.
     """
     flow_params = chart.series(FLOW_PARAM)
-    # Pick the outfall with the most reported flow values as the continuous effluent point.
+    # Pick the outfall with the most reported monthly-average flow values as the continuous
+    # effluent point. Limit to MO AVG rows so DAILY MX rows don't inflate the count.
     primary = max(
         flow_params,
-        key=lambda p: sum(1 for r in p.rows if r.value is not None),
+        key=lambda p: sum(
+            1 for r in p.rows if r.value is not None and r.stat_base == _MONTHLY_AVG_STAT
+        ),
         default=None,
     )
-    flows = [r.value for r in primary.rows if r.value is not None] if primary else []
+    flows = [
+        r.value
+        for r in (primary.rows if primary else [])
+        if r.value is not None and r.stat_base == _MONTHLY_AVG_STAT
+    ]
     mean = round(sum(flows) / len(flows), 3) if flows else None
     pct = round(100.0 * mean / design_flow_mgd, 1) if (mean and design_flow_mgd) else None
 

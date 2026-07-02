@@ -26,7 +26,7 @@ tags:
 - receiving-water
 - sidney
 notes: 'Verbatim ECHO effluent-chart data for Sidney WWTP (OH0027421), outfall 001 →
-  Great Miami River. Design 7.0 MGD; actual mean 5.382 MGD (2023, 76.9% utilization);
-  CSO/bypass outfalls: 1; no ECHO-flagged exceedances. Regenerable via `watermark dmr
-  OH0027421 --design-flow 7.0 --out data/extracted/sidney/wwtp-oh0027421.dmr.yaml`.
+  Great Miami River. Design 7.0 MGD; actual mean 4.01 MGD (2023 MO AVG, 57.3% utilization);
+  max 6.181 MGD (MO AVG); CSO/bypass outfalls: 1; no ECHO-flagged exceedances. Regenerable
+  via `watermark dmr OH0027421 --design-flow 7.0 --out data/extracted/sidney/wwtp-oh0027421.dmr.yaml`.
   NPDES fact sheet (cited 7Q10 + in-stream passby) tracked in #833.'

@@ -1541,7 +1541,7 @@ _SIDNEY = SiteProfile(
             # design 7.0 MGD, actual ~5.382 MGD (2023 DMR, 76.9% of design); CSO/bypass outfalls: 1;
             # no ECHO-flagged exceedances 2023. NPDES fact sheet pending for cited 7Q10 (#833).
             "ECHO NPDES OH0027421 (Sidney WWTP) → Great Miami River; design 7.0 MGD, "
-            "actual ~5.382 MGD (2023 DMR) — data/extracted/sidney/wwtp-oh0027421.dmr.yaml [verified — ECHO]",
+            "actual ~4.01 MGD (2023 DMR, MO AVG mean) — data/extracted/sidney/wwtp-oh0027421.dmr.yaml [verified — ECHO]",
         ),
     },
     abstraction_gage="03261500",  # [verified] Great Miami River at Sidney OH

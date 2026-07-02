@@ -90,7 +90,13 @@ def test_basin_screen_follows_active_basin(data_settings: Settings) -> None:
     # (#508), enabling Botkins WWTP (OH0022217) to be screened against the Lockington gage.
     # (Normalize whitespace: ECHO uses "Mad  River".)
     waters = {" ".join(ch.receiving_water.upper().split()) for ch in screen.checks}
-    assert waters <= {"MAD RIVER", "GREAT MIAMI RIVER", "GREENVILLE CREEK", "STILLWATER RIVER", "LORAMIE CREEK"}
+    assert waters <= {
+        "MAD RIVER",
+        "GREAT MIAMI RIVER",
+        "GREENVILLE CREEK",
+        "STILLWATER RIVER",
+        "LORAMIE CREEK",
+    }
     assert all(ch.design_low_flow.source == "derived" for ch in screen.checks)
     # The City of Springfield WWTP is in the inventory but ECHO has no receiving water for it,
     # so it is reported unscreened (omit, don't guess) — not silently dropped.

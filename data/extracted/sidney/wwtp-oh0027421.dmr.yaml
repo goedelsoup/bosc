@@ -17,12 +17,12 @@ discharge_summary:
   design_flow_mgd: 7.0
   design_flow_cfs: 10.83
   primary_outfall: '001'
-  n_flow_months: 24
-  actual_flow_mean_mgd: 5.382
-  actual_flow_mean_cfs: 8.33
+  n_flow_months: 12
+  actual_flow_mean_mgd: 4.01
+  actual_flow_mean_cfs: 6.2
   actual_flow_min_mgd: 2.97
-  actual_flow_max_mgd: 18.28
-  flow_pct_of_design: 76.9
+  actual_flow_max_mgd: 6.181
+  flow_pct_of_design: 57.3
   cso_outfalls: 1
   reported_exceedances: 0
 flow_monthly:
