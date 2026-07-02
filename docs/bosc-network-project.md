@@ -58,3 +58,10 @@ Order the Readiness column left→right as the assembly line:
 
 Discipline/basin inference is heuristic — a handful of issues may want a manual field nudge
 on the board; that's expected and non-destructive.
+
+`--all` **adds and re-fields** every board item but never **removes** one. That's deliberate:
+the board intentionally retains items that carry no scope label of their own — the task
+children auto-added from a `boom` tracker (they inherit their fields), and closed issues
+(kept as history). Fields still regress correctly: when an item stops resolving to a value
+(a site label removed, a discipline no longer matched) the sync clears that field rather
+than leaving a stale one. Drop an item by removing it from the board in the UI.

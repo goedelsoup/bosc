@@ -32,11 +32,11 @@ from __future__ import annotations
 import argparse
 import json
 import pathlib
-import re
-import shlex
 import subprocess
 import sys
 from string import Template
+
+import yaml
 
 PROJECT_ID = "PVT_kwDOEamayM4BcU30"  # org/watermark-directory/projects/1 — "BOSC Network"
 PROJECT_NUMBER = 1
@@ -77,30 +77,26 @@ BASIN = {
 SLUG2BASIN = {s: b for b, ss in BASIN.items() for s in ss}
 
 
-def sh(cmd: str) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(cmd, shell=True, capture_output=True, text=True)
+def sh(args: list[str]) -> subprocess.CompletedProcess[str]:
+    """Run a command as an argument list (no shell), capturing text output."""
+    return subprocess.run(args, capture_output=True, text=True)
 
 
 def gql(query: str) -> dict:
-    r = sh(f"gh api graphql -f query={shlex.quote(query)}")
+    r = sh(["gh", "api", "graphql", "-f", f"query={query}"])
     if r.returncode != 0:
         raise RuntimeError(r.stderr.strip() or r.stdout.strip())
     return json.loads(r.stdout)
 
 
 def load_status() -> dict[str, str]:
-    """slug -> status ('live'|'building'|'queued'|'tracking') from data/sites.yaml."""
-    status: dict[str, str] = {}
-    slug = None
-    for line in SITES_YAML.read_text().splitlines():
-        m = re.match(r"\s*-\s*slug:\s*(\S+)", line)
-        if m:
-            slug = m.group(1).strip().strip('"')
-            continue
-        m = re.match(r'\s*status:\s*"?(\w[\w-]*)"?', line)
-        if m and slug:
-            status[slug] = m.group(1)
-    return status
+    """slug -> status ('live'|'building'|'queued'|'tracking') from data/sites.yaml.
+
+    Structured parse of the canonical registry (top level: ``{sites: [...]}``) — robust to
+    quoting, ordering, and comments in a way the previous regex scan was not.
+    """
+    data = yaml.safe_load(SITES_YAML.read_text())
+    return {s["slug"]: s["status"] for s in data["sites"] if "slug" in s and "status" in s}
 
 
 _Q_FIELDS = Template(
@@ -182,14 +178,24 @@ def resolve(number: int, status: dict[str, str]) -> dict[str, str | None]:
     }
 
 
+_SCOPE_LIMIT = 1000  # gh search issues hard cap
+
+
 def scope_numbers() -> list[int]:
     """All open issues labelled area:network or site:* — one robust comma-OR search."""
     labels = ",".join(["area:network"] + [f"site:{s}" for s in SLUG2BASIN])
     r = sh(
-        f"gh search issues --repo {REPO} --state open {shlex.quote('label:' + labels)} "
-        f"--limit 400 --json number"
-    )
-    return [it["number"] for it in json.loads(r.stdout or "[]")]
+        ["gh", "search", "issues", "--repo", REPO, "--state", "open",
+         f"label:{labels}", "--limit", str(_SCOPE_LIMIT), "--json", "number"]
+    )  # fmt: skip
+    nums = [it["number"] for it in json.loads(r.stdout or "[]")]
+    if len(nums) >= _SCOPE_LIMIT:
+        print(
+            f"  ! scope search returned the {_SCOPE_LIMIT}-result cap — some in-scope issues "
+            "may be missing; add pagination if the network has grown this large.",
+            file=sys.stderr,
+        )
+    return nums
 
 
 _Q_ITEMS = Template(
@@ -224,6 +230,10 @@ _M_SET = Template(
     'mutation{updateProjectV2ItemFieldValue(input:{projectId:"$pid",itemId:"$iid",'
     'fieldId:"$fid",value:{singleSelectOptionId:"$oid"}}){projectV2Item{id}}}'
 )
+_M_CLEAR = Template(
+    'mutation{clearProjectV2ItemFieldValue(input:{projectId:"$pid",itemId:"$iid",'
+    'fieldId:"$fid"}){projectV2Item{id}}}'
+)
 
 
 def add_item(number: int) -> str:
@@ -234,13 +244,17 @@ def add_item(number: int) -> str:
 
 
 def set_field(item_id: str, fields: dict, name: str, opt: str | None) -> None:
-    if not opt:
+    fid = fields[name]["id"]
+    if opt is None:
+        # Regress the field to empty — otherwise a value that no longer resolves (e.g. a site
+        # label removed, or a discipline no longer matched) would stay stuck on the item.
+        gql(_M_CLEAR.substitute(pid=PROJECT_ID, iid=item_id, fid=fid))
         return
     oid = fields[name]["opts"].get(opt)
     if not oid:
         print(f"  ! unknown option {opt!r} in field {name}")
         return
-    gql(_M_SET.substitute(pid=PROJECT_ID, iid=item_id, fid=fields[name]["id"], oid=oid))
+    gql(_M_SET.substitute(pid=PROJECT_ID, iid=item_id, fid=fid, oid=oid))
 
 
 def main() -> int:
