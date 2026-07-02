@@ -159,11 +159,11 @@ def diff(baseline: ScenarioResult, scenario: ScenarioResult) -> ScenarioDiff:
 def evaluate_seasonal(
     consumptive_cfs: float,
     *,
-    receiving_water: str = "Ottawa River",
+    receiving_water: str | None = None,
     scenario_name: str = "buildout",
     settings: Settings | None = None,
 ) -> SeasonalWithdrawal | None:
-    """Screen a constant consumptive draw against the Ottawa's *seasonal* low flow.
+    """Screen a constant consumptive draw against the receiving water's *seasonal* low flow.
 
     The growing season is the months where reference ET0 exceeds precipitation (from
     the committed NASA POWER normals + FAO-56 ET0). In those months the draw is read
@@ -173,15 +173,17 @@ def evaluate_seasonal(
     """
     settings = settings or get_settings()
     from watermark.hydrology import climate, et
+    from watermark.sites import active_profile
 
+    rw = receiving_water or active_profile(settings).receiving_water_name
     clim = climate.load_climatology(settings=settings)
     precip = clim.get("PRECTOTCORR") if clim is not None else None
     if clim is None or precip is None:
         return None
     et0 = et.penman_monteith_et0(clim)
 
-    q7 = low_flow_for(receiving_water, settings=settings)
-    ctx = low_flow_context(receiving_water, settings=settings)
+    q7 = low_flow_for(rw, settings=settings)
+    ctx = low_flow_context(rw, settings=settings)
     annual_7q10 = q7.value if q7 is not None else None
     if annual_7q10 is None:
         return None
