@@ -7,6 +7,9 @@ shape (``{"content": [{"type": "text", "text": ...}]}``).
 
 from __future__ import annotations
 
+import asyncio
+import ipaddress
+import urllib.parse as _urlparse
 from pathlib import Path
 from typing import Any
 
@@ -863,6 +866,37 @@ async def reconcile_estimate(args: dict[str, Any]) -> dict[str, Any]:
     return _text("\n".join(str(f) for f in findings))
 
 
+_FETCH_ALLOWED_SCHEMES = frozenset({"http", "https"})
+
+
+def _ssrf_check(url: str) -> str | None:
+    """Return an error string if the URL targets a private/loopback/reserved host."""
+    try:
+        parsed = _urlparse.urlparse(url)
+    except Exception:
+        return "Invalid URL."
+    if parsed.scheme not in _FETCH_ALLOWED_SCHEMES:
+        return f"Scheme {parsed.scheme!r} is not allowed; use http or https."
+    host = (parsed.hostname or "").rstrip(".")
+    if not host:
+        return "URL has no hostname."
+    if host.lower() == "localhost":
+        return "Host 'localhost' is blocked."
+    try:
+        addr = ipaddress.ip_address(host)
+        if (
+            addr.is_private
+            or addr.is_loopback
+            or addr.is_link_local
+            or addr.is_reserved
+            or addr.is_multicast
+        ):
+            return f"IP {host!r} is in a restricted range."
+    except ValueError:
+        pass  # hostname — can't validate without DNS resolution
+    return None
+
+
 @tool(
     "search_web",
     "Search the web via Google (Serper) and return ranked snippets + URLs. "
@@ -879,8 +913,11 @@ async def search_web(args: dict[str, Any]) -> dict[str, Any]:
     query: str = args.get("query", "").strip()
     if not query:
         return _text("[search_web] query is required.")
-    n = int(args.get("n", 10))
-    results = _search_web(query, n=n, settings=settings)
+    try:
+        n = int(args.get("n", 10))
+    except (TypeError, ValueError):
+        n = 10
+    results = await asyncio.to_thread(_search_web, query, n=n, settings=settings)
     if not results:
         return _text(
             f"[search_web] No results for {query!r}. "
@@ -911,8 +948,11 @@ async def fetch_url(args: dict[str, Any]) -> dict[str, Any]:
     url: str = args.get("url", "").strip()
     if not url:
         return _text("[fetch_url] url is required.")
+    err = _ssrf_check(url)
+    if err:
+        return _text(f"[fetch_url] {err}")
     settings = get_settings()
-    content = _fetch_url(url, settings=settings)
+    content = await asyncio.to_thread(_fetch_url, url, settings=settings)
     if not content:
         return _text(f"[fetch_url] No content fetched from {url!r}.")
     return _text(f"[fetch_url] {url}\n\n{content}")
