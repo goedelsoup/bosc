@@ -16,8 +16,14 @@ if (input && out) {
     if (index) return Promise.resolve(index);
     return fetch(indexUrl)
       .then((r) => r.json())
-      .then((d: SearchDoc[]) => (index = d))
-      .catch(() => (index = []));
+      .then((d: SearchDoc[]) => {
+        index = d;
+        return index;
+      })
+      .catch(() => {
+        index = [];
+        return index;
+      });
   };
 
   const run = (): void => {

@@ -299,6 +299,10 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
   const researchChildren: NavChild[] = [
     ...hypotheses.map((h) => ({ label: h.name, href: `/research/hypotheses?lens=${h.id}` })),
     ...(hypotheses.length > 0 ? [{ divider: true as const }] : []),
+    // Basin views (design "Chrome": Research ▾ → Basin views) — Maumee is the one built today;
+    // the other eight basins join here as their /basin pages land.
+    { label: "The Maumee basin", href: "/basin", blurb: "Basin view — every site against the drainage" },
+    { divider: true as const },
     { label: "Methodology", href: `${base}/docs/methodology`, blurb: "How the record is built & labeled" },
     { label: CONNECT_LINK.label, href: CONNECT_LINK.href },
   ];
