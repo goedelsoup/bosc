@@ -106,7 +106,7 @@ to the Maumee (Lake Erie basin), distinct from the Great Miami / Scioto data-cen
   raised concerns (water levels, electricity, noise, light pollution); some demanded a moratorium or
   full three readings. Council passed the enabling ordinances anyway (as emergencies). `[verified]`
 - **Statewide:** a citizen effort is gathering signatures for a constitutional amendment to prohibit
-  data centers consuming >25 MW/month; lawmakers heard data-center opposition (June 3, 2026) but
+  data centers consuming >25 MW; lawmakers heard data-center opposition (June 3, 2026) but
   enacted no moratorium. `[reference]` (advocacy).
 - **Litigation:** none specific to the Van Wert project found. `[open]`
 

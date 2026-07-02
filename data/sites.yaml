@@ -312,7 +312,7 @@ sites:
   - slug: piketon
     place: "Piketon"
     basin_label: "Scioto River · PORTS"
-    receiving_water: "Scioto River"
+    receiving_water: null  # [open] PORTS water/wastewater plan undisclosed; Scioto is the likely (unconfirmed) receiving water — _PIKETON keeps plant_receiving empty
     state: "OH"
     codename: null
     mono: "PIK"
