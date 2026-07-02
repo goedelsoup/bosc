@@ -81,7 +81,7 @@ const tiles: Tile[] = [
         basis: "modeled",
         source: "Read from filed permits — a labelled derivation, not a meter",
       }
-    : { label: "Disclosed IT load", value: "—", sub: "no facility on the record", evidence: "open" },
+    : { label: "Disclosed IT load", value: "—", sub: "no disclosed load on file", evidence: "open" },
   flowTot.count > 0
     ? {
         label: "Receiving design flow",
@@ -91,7 +91,7 @@ const tiles: Tile[] = [
         evidence: "verified",
         source: "EPA ECHO ICIS-NPDES design flows",
       }
-    : { label: "Receiving design flow", value: "—", sub: "network feed not assembled", evidence: "open" },
+    : { label: "Receiving design flow", value: "—", sub: "no design flows on file", evidence: "open" },
 ];
 
 // --- aggregates + drill-downs ---------------------------------------------------------------
@@ -103,6 +103,7 @@ const rows = basinSiteRows(sites, byNode);
 const outfalls = dischargeRows(nodes, sites);
 const screenedCount = outfalls.filter((o) => o.evidence === "verified").length;
 const openCount = rows.filter((r) => r.evidence === "open").length;
+const verifiedCount = rows.filter((r) => r.evidence === "verified").length;
 const subbasins = [...new Set(nodes.map((n) => n.subtree))];
 const huc = hucRange(nodes);
 
@@ -267,7 +268,7 @@ const EV_INK: Record<string, string> = {
         <h2>The receiving system — one site at a time, stacked</h2>
       </div>
       {
-        nodes.length > 0 ? (
+        flowTot.count > 0 ? (
           <div class="basin-agg-grid">
             <div class="basin-panel">
               <div class="basin-panel-t">Cumulative receiving design flow, upstream → downstream</div>
@@ -303,11 +304,15 @@ const EV_INK: Record<string, string> = {
             </div>
           </div>
         ) : (
-          <p class="basin-stub">No network data is available yet — the aggregates render once the `network` feed is assembled.</p>
+          <p class="basin-stub">No receiving design flows are on file yet — the aggregates render once the network feed carries them.</p>
         )
       }
       <p class="basin-agg-note">
-        No site in this basin has a filed data-center water record; {load.count > 0 ? `only ${load.count} carries a disclosed facility load` : "none carries a disclosed facility load"}.
+        {
+          load.count > 0
+            ? `${load.count} of ${sites.length} sites carries a disclosed facility load${verifiedCount > 0 ? ` and ${verifiedCount} a screened facility record` : ""}; none carries a filed draw volume — the water figure behind any projection is still open.`
+            : "No site in this basin carries a disclosed facility load or a filed draw volume."
+        }
         The design flows above are the receiving plants' permitted capacity — the denominator any projected draw must be read
         against, not a measure of the draw itself. A projected basin total would be an open range, not a claim.
       </p>
@@ -350,9 +355,12 @@ const EV_INK: Record<string, string> = {
         <h2>Where the basin's outfalls actually are</h2>
       </div>
       <p class="basin-sec-dek">
-        The NPDES-permitted municipal outfalls that would receive any new load — {screenedCount} of {outfalls.length || sites.length}
-        carry an assembled dilution screen; the rest discharge to ungaged tributaries or carry no ECHO receiving water. The
-        gap is itself a finding. Each opens its site's record.
+        The NPDES-permitted municipal outfalls that would receive any new load.
+        {
+          outfalls.length > 0
+            ? ` ${screenedCount} of ${outfalls.length} carry an assembled dilution screen; the rest discharge to ungaged tributaries or carry no ECHO receiving water — the gap is itself a finding. Each opens its site's record.`
+            : " The outfall inventory renders once the network feed is assembled."
+        }
       </p>
       {
         outfalls.length > 0 ? (
@@ -499,14 +507,16 @@ const EV_INK: Record<string, string> = {
     text-transform: uppercase;
     color: var(--ink-faint);
   }
+  /* The modeled/grounded basis chip — inference-toned by house rule (FigureStat: modeled →
+     [inference]), routed through the site's semantic aliases like .fs-basis--modeled. */
   .basin-basis {
     font-family: var(--font-mono);
     font-size: 9px;
     letter-spacing: 0.8px;
     text-transform: uppercase;
-    color: var(--ev-inference-fg);
-    border: 1px solid var(--ev-inference-border);
-    background: var(--ev-inference-bg);
+    color: var(--bosc-inference);
+    border: 1px solid currentColor;
+    background: var(--td-inference-bg);
     padding: 0 4px;
   }
   .basin-tile-value {
@@ -895,17 +905,19 @@ const EV_INK: Record<string, string> = {
     padding: 2px 6px;
     border: 1px solid;
   }
+  /* Screen-flag chips read the site's semantic status aliases (danger/inference/verified),
+     not the raw evidence-pill tokens — those stay reserved for EvidenceTag + EV_INK. */
   .basin-flag.is-violation {
-    color: var(--ev-gap-fg);
-    border-color: var(--ev-gap-fg);
+    color: var(--bosc-danger);
+    border-color: currentColor;
   }
   .basin-flag.is-tight {
-    color: var(--ev-inference-fg);
-    border-color: var(--ev-inference-border);
+    color: var(--bosc-inference);
+    border-color: currentColor;
   }
   .basin-flag.is-ok {
-    color: var(--ev-verified-fg);
-    border-color: var(--ev-verified-border);
+    color: var(--bosc-verified);
+    border-color: currentColor;
   }
   @media (max-width: 720px) {
     .basin-outfall {
