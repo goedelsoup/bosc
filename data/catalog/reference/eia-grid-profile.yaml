@@ -31,9 +31,11 @@ tags:
 - pjm
 - aep-ohio
 - indiana-michigan-power
+- aes-ohio
 notes: >-
   Per-site (slug-scoped): identifies the active site's serving utility (corpus-grounded + EIA-861
   confirmation) and BA, expressing campus load as a share of the utility retail, BA total, and state
   retail. Denominators + labels are site-derived (Lima = AEP Ohio / Ohio; Fort Wayne = Indiana
-  Michigan Power / Indiana). Fort Wayne's load_share is now populated from the IDEM-air-permit power
+  Michigan Power / Indiana; the Miami-basin sites WPAFB/Xenia = Dayton Power & Light / AES Ohio,
+  #4922, PJM DAY zone). Fort Wayne's load_share is now populated from the IDEM-air-permit power
   basis (#360); a site with no documented facility carries the grid backdrop without a load share.

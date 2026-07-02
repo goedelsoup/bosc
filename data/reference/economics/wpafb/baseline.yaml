@@ -534,6 +534,13 @@ population:
       confidence: high
       asof: null
   source: US Census ACS 5-year (B01003)
-note: Employment from BLS QCEW (keyless open data). Location quotient = county sector
+note: 'Employment from BLS QCEW (keyless open data). Location quotient = county sector
   share / national share (export-orientation; the county-level proxy for an import/export
-  ratio). Population from US Census ACS 5-year (B01003).
+  ratio). Population from US Census ACS 5-year (B01003). Economic-unit caveat: Wright-Patterson
+  AFB straddles Greene + Montgomery counties; this baseline is Montgomery County (39113)
+  — the well-field / TCE-PFAS-plume / Dayton-metro toxics context. The defense-supplier
+  Professional/Scientific/Technical concentration the WPAFB thesis rests on is NOT
+  visible in this unit (Montgomery NAICS 54 LQ 0.81, NAICS 51 LQ 0.90 — neither elevated);
+  it lives in adjacent Greene County (NAICS 54 LQ 2.11), covered by the Xenia baseline
+  (Greene County, FIPS 39057). Do not read this single-county unit as ''no defense
+  concentration.'''

@@ -1,0 +1,42 @@
+id: data-centers-wpafb
+title: WPAFB / Dayton (Greene + Montgomery Co.) OH — Data-Center Activity Register
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: BOSC corpus (written testimony §8 Ohio defense footprint; cloud-consumer-candidates.yaml;
+    mandamus-analysis.md IL5/IL6 entity-level caution); onboarding self-research pass
+    (data/research/onboard-wpafb-*/findings.md). The sited-facility web pass (parcel/SOS/OEPA) is
+    still to-run.
+license: public record / public domain
+access_tier: public
+site_scope: site:wpafb
+storage:
+- relpath: extracted/wpafb/data-centers.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- data-center
+- wpafb
+- dod-cloud
+- il5-il6
+- gdit
+- rapid-sustainment-office
+- google-distributed-cloud
+- great-miami
+- mad-river
+- sweep
+notes: >
+  WPAFB sweep scaffold (2026-07-02, #467). Two registers kept separate: (1) the corpus-grounded
+  DoD-cloud thread — regulated/air-gapped IL5/IL6 (Google Distributed Cloud, AF Rapid Sustainment
+  Office a named early customer, GDIT + Google Public Sector at Exercise Mobility Guardian 2025),
+  carried as [reference] published record, entity-level, NOT a sited facility, NOT bridged to the
+  Lima Bistrozzi graph; (2) the sited-facility scan — [verified] zero primary records in the corpus,
+  county employment mix (Info NAICS 51 LQ 0.90, Prof/Sci/Tech 54 LQ 0.81) argues against an existing
+  cluster; expected outcome is a flat no-primary-record finding pending the web pass. Instruments to
+  pull: Montgomery/Greene Auditor GIS, Ohio SOS, OEPA/ECHO (OHD000001), AES Ohio large-load queue,
+  zoning dockets, WPAFB federal enclave (separate register). Water hook is groundwater — see
+  groundwater-screen.md (#463).

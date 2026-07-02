@@ -114,7 +114,8 @@ class _UtilityGrid(NamedTuple):
 # Per-utility holding company + PJM transmission-zone provenance, keyed by EIA-861 utility
 # number. The AEP-family utilities (Ohio Power #14006 for Lima/Findlay/Van Wert, Indiana
 # Michigan Power #9324 for Fort Wayne) share the AEP parent; The Toledo Edison Co #18997 is
-# FirstEnergy (the PJM **ATSI** zone, not AEP) — the first registered non-AEP utility. An
+# FirstEnergy (the PJM **ATSI** zone, not AEP) — the first registered non-AEP utility; Dayton
+# Power & Light / AES Ohio #4922 (WPAFB/Xenia) is the AES-parent, PJM **DAY** zone IOU. An
 # unlisted utility falls back to a zone-agnostic PJM phrasing keyed off the EIA-861 name.
 _UTILITY_GRID: dict[int, _UtilityGrid] = {
     14006: _UtilityGrid(
@@ -145,6 +146,18 @@ _UTILITY_GRID: dict[int, _UtilityGrid] = {
         ba_citation="Bryan's municipal load is scheduled into the PJM RTO footprint via "
         "American Municipal Power (EIA-861S BA Code PJM)",
         rto_citation="PJM is the FERC-jurisdictional wholesale-market RTO for Bryan (AMP/PJM)",
+    ),
+    4922: _UtilityGrid(
+        # The Miami-basin serving IOU (WPAFB #442, Xenia #444) — Dayton Power & Light,
+        # d/b/a AES Ohio, the AES Corporation operating company; its transmission zone is
+        # PJM's **DAY** zone, the network's first non-AEP/non-ATSI IOU zone.
+        holding_company="The AES Corporation (AES Ohio)",
+        holding_citation="Dayton Power & Light Co does business as AES Ohio, the Ohio "
+        "operating company of The AES Corporation",
+        ba_citation="Dayton Power & Light's (AES Ohio) DAY transmission zone is within the "
+        "PJM RTO footprint",
+        rto_citation="PJM is the FERC-jurisdictional wholesale-market RTO for Dayton Power "
+        "& Light (AES Ohio)",
     ),
 }
 

@@ -80,6 +80,9 @@ def build_baseline(
         if population is not None
         else "Population-over-time needs a Census key (WATERMARK_CENSUS_API_KEY)."
     )
+    # An optional per-site economic-unit caveat (e.g. WPAFB's Greene/Montgomery straddle) — the
+    # site's own note, surfaced so a reader of this single-county baseline isn't misled.
+    unit_note = active_profile(settings).econ_unit_note
     return EconomicBaseline(
         fips=latest.fips,
         area_name=area_name,
@@ -89,7 +92,7 @@ def build_baseline(
         note=(
             "Employment from BLS QCEW (keyless open data). Location quotient = county "
             "sector share / national share (export-orientation; the county-level proxy "
-            f"for an import/export ratio). {pop_note}"
+            f"for an import/export ratio). {pop_note}" + (f" {unit_note}" if unit_note else "")
         ),
     )
 

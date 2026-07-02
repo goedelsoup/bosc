@@ -135,6 +135,22 @@ _MAINSTEM_GAGES: dict[str, dict[str, Any]] = {
         "gage": "03262000",
         "aliases": ["loramie creek"],
     },
+    # Great Miami basin — WPAFB / Dayton reaches (#464). The mouth-ward Hamilton gage (03274000)
+    # is the basin-wide "GREAT MIAMI RIVER" ECHO proxy; these two serve the WPAFB site-level 7Q10
+    # at the at-base reaches (the Mad River near Dayton is WPAFB's abstraction/supply gage; the
+    # Great Miami at Dayton is the well-field mainstem). Both use non-colliding aliases so they
+    # don't capture ECHO's bare "MAD RIVER" / "GREAT MIAMI RIVER" (aliased to Springfield/Hamilton
+    # above). NB: values populate on the next connectivity-permitting `derive-low-flows` run —
+    # this step hit a transient USGS 503 at WPAFB onboarding (2026-06-22); the derived table is
+    # otherwise committed and unchanged.
+    "Mad River at Dayton": {
+        "gage": "03270000",  # Mad River near Dayton OH (WPAFB at-base reach; DA ~635 mi²)
+        "aliases": ["mad river at dayton", "mad river near dayton", "mad river (dayton reach)"],
+    },
+    "Great Miami River at Dayton": {
+        "gage": "03270500",  # Great Miami River at Dayton OH (well-field mainstem reach)
+        "aliases": ["great miami river at dayton", "great miami r at dayton"],
+    },
 }
 
 # Synthesized headwaters-confluence 7Q10s: a mainstem formed by the junction of two gaged

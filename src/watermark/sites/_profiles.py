@@ -1315,7 +1315,27 @@ _WPAFB = SiteProfile(
         0.0,
         0.0,
     ),  # [open] pending the identified corridor (the WPAFB TCE/PFAS plume + Dayton industrial reach)
-    plant_receiving={},  # [open] pending the WPAFB / Dayton WWTP NPDES fact sheet(s)
+    plant_receiving={
+        "fairborn-wrc": (
+            "Mad River",
+            # NPDES OH0025062 (Fairborn Water Reclamation Center); design flow 6.0 MGD; outfall
+            # at 39.8365 -84.0606, on the northern edge of WPAFB — the at-base Mad River reach
+            # (USGS 03270000). Source: EPA ECHO CWA inventory, great-miami-wwtp.potw.yaml.
+            "NPDES OH0025062 (Fairborn Water Reclamation Center); → Mad River; design flow "
+            "6.0 MGD [connector — EPA ECHO CWA, great-miami-wwtp.potw.yaml]",
+        ),
+        "western-regional-wrf": (
+            "Great Miami River",
+            # NPDES OH0026638 (Montgomery Co. Western Regional WRF); design flow 20.0 MGD; the
+            # metro-mainstem discharger on the well-field reach (Great Miami at Dayton, 03270500).
+            # Source: EPA ECHO CWA inventory, great-miami-wwtp.potw.yaml.
+            "NPDES OH0026638 (Western Regional WRF, Montgomery Co.); → Great Miami River; design "
+            "flow 20.0 MGD [connector — EPA ECHO CWA, great-miami-wwtp.potw.yaml]",
+        ),
+    },  # [connector] Fairborn WRC (at-base Mad River) + Western Regional WRF (Great Miami); the
+    # City of Dayton WRF (OH0024881, 72 MGD) and Tri-Cities North Regional WWA (OH0049646, 11.2
+    # MGD) are the larger metro dischargers but ECHO returned no receiving_water — [open] pending
+    # their OEPA permit fact sheets. Regulatory passby minimums also pending the fact sheets.
     abstraction_gage="03270000",  # [verified] Mad River near Dayton OH
     supply_gage_primary="03270000",  # [verified] Mad River near Dayton (the buried-valley supply reach)
     supply_gage_secondary="03270500",  # [verified] Great Miami River at Dayton (the well-field mainstem)
@@ -1332,6 +1352,20 @@ _WPAFB = SiteProfile(
     lmp_pnode_id=34508503,  # [verified] PJM DAY zone (AES Ohio / Dayton Power & Light)
     lmp_pnode_name="DAY",
     county_name="Montgomery County, OH",  # [verified] (Dayton metro; base straddles Greene+Montgomery)
+    # [inference] Reader guard (#465): WPAFB straddles Greene + Montgomery; the econ unit here is
+    # Montgomery (well-field/plume/Dayton-metro toxics context). The defense-supplier signature the
+    # WPAFB thesis rests on is NOT in this unit — Montgomery Professional/Scientific/Technical
+    # (NAICS 54) LQ 0.81, Information (NAICS 51) LQ 0.90, neither elevated. That concentration lives
+    # in adjacent Greene County (NAICS 54 LQ 2.11), carried by the Xenia baseline (FIPS 39057, #444).
+    econ_unit_note=(
+        "Economic-unit caveat: Wright-Patterson AFB straddles Greene + Montgomery counties; this "
+        "baseline is Montgomery County (39113) — the well-field / TCE-PFAS-plume / Dayton-metro "
+        "toxics context. The defense-supplier Professional/Scientific/Technical concentration the "
+        "WPAFB thesis rests on is NOT visible in this unit (Montgomery NAICS 54 LQ 0.81, NAICS 51 "
+        "LQ 0.90 — neither elevated); it lives in adjacent Greene County (NAICS 54 LQ 2.11), "
+        "covered by the Xenia baseline (Greene County, FIPS 39057). Do not read this single-county "
+        "unit as 'no defense concentration.'"
+    ),
 )
 
 

@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-07-02T21:46:22.874077+00:00**. Regenerate with `bosc catalog audit --apply` after `bosc catalog reconcile`.
+Snapshot reconciled: **2026-07-02T23:03:55.506982+00:00**. Regenerate with `bosc catalog audit --apply` after `bosc catalog reconcile`.
 
 ## Headline
 
-- **92** catalogued datasets — **91** reviewed.
-- **92** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **95** catalogued datasets — **94** reviewed.
+- **95** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -40,6 +40,8 @@ Snapshot reconciled: **2026-07-02T21:46:22.874077+00:00**. Regenerate with `bosc
 | extracted | urbana | 1 | 1 | 0 | 0 |
 | extracted | van-wert | 1 | 1 | 0 | 0 |
 | extracted | watershed | 1 | 1 | 0 | 0 |
+| extracted | wpafb | 2 | 2 | 0 | 0 |
+| extracted | xenia | 1 | 1 | 0 | 0 |
 | reference | allen-boe | 4 | 4 | 0 | 0 |
 | reference | allen-gis | 1 | 1 | 0 | 0 |
 | reference | compute | 1 | 1 | 0 | 0 |
@@ -92,8 +94,8 @@ Snapshot reconciled: **2026-07-02T21:46:22.874077+00:00**. Regenerate with `bosc
 | urbana | 39 | 34 | 5 |
 | van-wert | 40 | 36 | 4 |
 | wilmington | 40 | 35 | 5 |
-| wpafb | 38 | 33 | 5 |
-| xenia | 38 | 33 | 5 |
+| wpafb | 40 | 36 | 4 |
+| xenia | 39 | 35 | 4 |
 
 ## Integrity gaps
 
