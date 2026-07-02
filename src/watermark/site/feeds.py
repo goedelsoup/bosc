@@ -51,7 +51,11 @@ from watermark.provenance import source_is_verified
 #   (`data/site/leads.yaml`, slug-scoped), so a peer carries its own leads, not Lima's (#796).
 # 1.8.0: adds the optional `ask-embeddings` feed — all-MiniLM-L6-v2 document vectors for hybrid
 #   BM25 + vector retrieval (#329); absent when `bosc export --no-embeddings` is used.
-CONTRACT_VERSION = "1.8.0"
+# 1.9.0: `hydrology-scenarios` rows gain `cooling_model` (top-level, on the scenario, and on its
+#   basis) plus the basis honesty flags `method_disclosed` / `is_bracketed` and the hybrid
+#   `seasonal_months` — the cooling-model typology (epic #1060). An `unknown` model means the
+#   method is undisclosed: render the bracketed range, never a single headline (#1057).
+CONTRACT_VERSION = "1.9.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

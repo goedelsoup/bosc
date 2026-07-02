@@ -5,7 +5,7 @@ import Base from "~/layouts/Base.astro";
 import FigureStat from "~/components/FigureStat.astro";
 import BulletChart from "~/components/charts/BulletChart.astro";
 import { hasFeed, loadFeed } from "~/lib/bundle";
-import type { ProvenancedValue, ScenarioResult } from "~/lib/feeds";
+import type { CoolingModel, ProvenancedValue, ScenarioResult } from "~/lib/feeds";
 import type { FigureStatData } from "~/lib/viz";
 import { withSite } from "~/lib/site";
 
@@ -28,16 +28,37 @@ const toStat = (label: string, v: ProvenancedValue, neg?: boolean): FigureStatDa
   warn: neg,
 });
 
+// The cooling archetype labels (epic #1060). The enum is keyed on mechanism; "open loop /
+// closed loop" are the industry's ambiguous labels, shown only as parenthetical aliases.
+const COOLING_LABELS: Record<CoolingModel, string> = {
+  off: "no cooling-water load",
+  evaporative_tower: "evaporative cooling tower (“open loop”)",
+  once_through: "once-through surface water (“open once-through”)",
+  closed_loop_dry: "closed-loop dry / air-cooled (“closed loop”)",
+  hybrid_adiabatic: "hybrid dry + seasonal adiabatic assist",
+  unknown: "undisclosed cooling method",
+};
+const coolingOf = (s: ScenarioResult): CoolingModel | null =>
+  s.cooling_model ?? s.scenario.cooling_model ?? null;
+// A bracketed basis (undisclosed method, #1057) must never render a single headline.
+const bracketed = (s: ScenarioResult): boolean =>
+  coolingOf(s) === "unknown" || s.scenario.basis?.is_bracketed === true;
+
 // Headline screen (#306): the worst-case scenario by *modeled* consumptive draw — picked
 // from the data, not by name — against the river's grounded 7Q10 design low flow. The
 // bullet keeps each row's own evidence register: the draw is inferred (amber), the design
 // low flow is document-grounded (verified). Drawn straight from the feed; no fork.
+// A bracketed (undisclosed-method) scenario is excluded: its "draw" is an envelope, not
+// an estimate — the range panel below carries it instead (#1057).
+const candidates = scenarios.filter((s) => !bracketed(s));
 const worst =
-  scenarios.length > 0
-    ? scenarios.reduce((a, b) => ((b.consumptive_loss.value ?? 0) > (a.consumptive_loss.value ?? 0) ? b : a))
+  candidates.length > 0
+    ? candidates.reduce((a, b) => ((b.consumptive_loss.value ?? 0) > (a.consumptive_loss.value ?? 0) ? b : a))
     : null;
 const drawV = worst?.consumptive_loss ?? null;
-const lowV = worst?.ottawa_7q10 ?? null;
+const lowV = worst?.receiving_7q10 ?? null;
+const liveV = worst?.receiving_live ?? null;
+const riverName = worst?.receiving_water_name ?? "Ottawa";
 const showScreen = worst != null && (drawV?.value ?? 0) > 0 && (lowV?.value ?? 0) > 0;
 const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.value as number)) : 0;
 ---
@@ -80,21 +101,47 @@ const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.valu
               evidenceNote: lowV.citation ?? lowV.source ?? undefined,
             },
           ]}
-          note={`The modeled ${worst.scenario.name} cooling draw (${fmt(drawV)}) is about ${drawRatio}× the Ottawa's 7Q10 design low flow (${fmt(lowV)}) — the drought flow Ohio writes discharge permits at. Live flow today (${fmt(worst.ottawa_live)}) is far higher, but the screen is written for the dry floor.`}
+          note={`The modeled ${worst.scenario.name} cooling draw (${fmt(drawV)}) is about ${drawRatio}× the ${riverName}'s 7Q10 design low flow (${fmt(lowV)}) — the drought flow Ohio writes discharge permits at.${liveV ? ` Live flow today (${fmt(liveV)}) is far higher, but the screen is written for the dry floor.` : ""}`}
         />
       )
+    }
+
+    {
+      // Undisclosed cooling method (#1057): the honest render is the bracketed range —
+      // never a single consumptive headline presented as if the method were on record.
+      scenarios.filter(bracketed).map((s) => {
+        const basis = s.scenario.basis;
+        return (
+          <div class="bracket-panel">
+            <p class="bracket-title">Cooling method not on the record</p>
+            <p class="card-meta">
+              A facility is documented here, but no record discloses how it rejects heat. The
+              consumptive water figure is therefore a <strong>range across candidate cooling
+              archetypes</strong>
+              {basis
+                ? ` — ${fmt(basis.consumptive_low)} (closed-loop dry) to ${fmt(basis.consumptive_high)} (evaporative tower)`
+                : ""}
+              — not an estimate. A single headline would fabricate the site's most load-bearing
+              number; the section stays locked until the method is disclosed.
+            </p>
+            <p class="card-meta">
+              Have a water contract, wastewater permit, or cooling-plant spec?{" "}
+              <a href={withSite("/submit")}>Submit the disclosure →</a>
+            </p>
+          </div>
+        );
+      })
     }
 
     {scenarios.length === 0 && <p class="stub-note">No hydrology scenarios have been modeled yet.</p>}
 
     {
-      scenarios.map((s) => {
-        // The three genuinely-scalar provenanced metrics.
-        const stats: FigureStatData[] = [
-          toStat("Consumptive loss", s.consumptive_loss),
-          toStat("Ottawa 7Q10", s.ottawa_7q10),
-          toStat("Ottawa live flow", s.ottawa_live),
-        ];
+      scenarios.filter((s) => !bracketed(s)).map((s) => {
+        const river = s.receiving_water_name ?? "Ottawa";
+        // The genuinely-scalar provenanced metrics (low flows are per-site and nullable).
+        const stats: FigureStatData[] = [toStat("Consumptive loss", s.consumptive_loss)];
+        if (s.receiving_7q10) stats.push(toStat(`${river} 7Q10`, s.receiving_7q10));
+        if (s.receiving_live) stats.push(toStat(`${river} live flow`, s.receiving_live));
         // `assimilative` is a per-discharger array, not a scalar: surface the binding
         // (worst-diluted) reach as the headline, carrying its own cited provenance.
         const assim = s.assimilative ?? [];
@@ -115,6 +162,19 @@ const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.valu
           <div class="scenario">
             <h2>{s.scenario.name}</h2>
             {s.scenario.description && <p class="card-meta">{s.scenario.description}</p>}
+            {
+              // Which cooling world these numbers assume (epic #1060) + its key assumptions.
+              coolingOf(s) && (
+                <p class="card-meta">
+                  Cooling model: <strong>{COOLING_LABELS[coolingOf(s)!]}</strong>
+                  {s.scenario.basis?.wue?.value != null && ` · WUE ${fmt(s.scenario.basis.wue)}`}
+                  {s.scenario.basis?.cycles_of_concentration?.value != null &&
+                    ` · ${s.scenario.basis.cycles_of_concentration.value} cycles of concentration`}
+                  {(s.scenario.basis?.seasonal_months?.length ?? 0) > 0 &&
+                    ` · evaporative assist ${s.scenario.basis!.seasonal_months![0]}–${s.scenario.basis!.seasonal_months!.at(-1)}`}
+                </p>
+              )
+            }
             <p class="card-meta">
               Cooling demand: {fmt(s.scenario.cooling_demand)} · consumptive fraction{" "}
               {fmt(s.scenario.consumptive_fraction)}
@@ -153,4 +213,6 @@ const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.valu
 <style>
   .hydro-caveats { margin: 6px 0 0; padding-left: 1.1rem; }
   .hydro-caveats li { font-size: 0.85rem; color: var(--bosc-muted); line-height: 1.5; margin-top: 4px; }
+  .bracket-panel { border: 1px solid var(--bosc-rule); background: #efece2; padding: 16px 18px; margin: 14px 0; }
+  .bracket-title { font-weight: 700; color: var(--bosc-ink); margin: 0 0 4px; }
 </style>

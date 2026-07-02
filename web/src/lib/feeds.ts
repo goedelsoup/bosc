@@ -211,17 +211,52 @@ export interface AssimilativeCheck {
   detail: string;
 }
 
+/**
+ * The cooling archetype a scenario's water math assumes (`bosc.sites.CoolingModelType`,
+ * epic #1060). Keyed on physical mechanism — "open loop / closed loop" are display-only
+ * aliases. `unknown` = the facility is disclosed but its cooling method is not on record:
+ * the basis is a bracketed range and no single consumptive headline may be rendered (#1057).
+ */
+export type CoolingModel =
+  | "off"
+  | "evaporative_tower"
+  | "once_through"
+  | "closed_loop_dry"
+  | "hybrid_adiabatic"
+  | "unknown";
+
+/** The sourced cooling design basis (`bosc.hydrology.model.CoolingBasis`, contract 1.9.0). */
+export interface CoolingBasis {
+  cooling_model?: CoolingModel | null;
+  it_load: ProvenancedValue;
+  wue?: ProvenancedValue | null; // null for archetypes where WUE does not apply
+  cycles_of_concentration?: ProvenancedValue | null;
+  consumptive_fraction: ProvenancedValue;
+  makeup_demand: ProvenancedValue;
+  consumptive_low: ProvenancedValue;
+  consumptive_high: ProvenancedValue;
+  method?: string | null;
+  method_disclosed?: boolean; // false = `unknown` archetype (undisclosed method)
+  is_bracketed?: boolean; // true = low/high span candidate archetypes, not an estimate
+  seasonal_months?: string[] | null; // hybrid_adiabatic: the evaporative-assist months
+}
+
 export interface ScenarioResult {
   scenario: {
     name: string;
     description?: string | null;
+    cooling_model?: CoolingModel | null;
     cooling_demand: ProvenancedValue;
     consumptive_fraction: ProvenancedValue;
-    basis?: string | null;
+    basis?: CoolingBasis | null;
   };
+  cooling_model?: CoolingModel | null;
   consumptive_loss: ProvenancedValue;
-  ottawa_7q10: ProvenancedValue;
-  ottawa_live: ProvenancedValue;
+  // Renamed from ottawa_* in the backend's per-site generalization (#900); nullable —
+  // a site without a cited receiving-water low flow carries null, never a faked figure.
+  receiving_7q10?: ProvenancedValue | null;
+  receiving_live?: ProvenancedValue | null;
+  receiving_water_name?: string | null;
   // `balance` is the composite Tier-0 loop and `assimilative` is a per-discharger
   // array — NOT scalar provenanced values. (Previously both mistyped as
   // ProvenancedValue, which rendered blank, falsely-tagged headline tiles — #635.)

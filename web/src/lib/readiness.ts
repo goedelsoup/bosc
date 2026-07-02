@@ -17,7 +17,8 @@
  * so it's pure and testable: the committed `sample-bundle/{lima,fort-wayne}` fixtures are a real
  * full-vs-partial pair the unit tests pin against.
  */
-import { loadManifest } from "./bundle";
+import { hasFeed, loadFeed, loadManifest } from "./bundle";
+import type { ScenarioResult } from "./feeds";
 import { LIMA_SLUG } from "./routes";
 import { siteForSlug } from "./sites";
 
@@ -100,6 +101,26 @@ function feedSum(slug: string, names: readonly string[]): number {
 }
 
 /**
+ * Whether the site's water math rests on an **undisclosed cooling method** (#1057).
+ *
+ * A `hydrology-scenarios` row whose `cooling_model` is `unknown` (equivalently, whose basis
+ * says `method_disclosed: false`) carries a bracketed range across candidate archetypes, not
+ * an estimate — the facility exists but no record says how it rejects heat. Rendering its
+ * single consumptive/7Q10-multiple headline as if confirmed would fabricate the site's most
+ * load-bearing number, so the watershed section locks and the needs board asks for the
+ * disclosure instead. Content-based (reads feed rows), unlike the count-based predicates.
+ */
+export function coolingMethodUndisclosed(slug: string): boolean {
+  if (!hasFeed("hydrology-scenarios", slug)) return false;
+  const rows = loadFeed<ScenarioResult[]>("hydrology-scenarios", slug);
+  return rows.some(
+    (r) =>
+      (r.cooling_model ?? r.scenario.cooling_model) === "unknown" ||
+      r.scenario.basis?.method_disclosed === false,
+  );
+}
+
+/**
  * Whether a section has enough of *this site's* own data to stand on its own. The reference site
  * short-circuits to `available` everywhere (it carries the network-global content). Each predicate
  * reads only feed counts (+ the registry for the story), so it's deterministic per bundle.
@@ -118,6 +139,9 @@ function hasEnough(section: ReadinessSection, slug: string): boolean {
     case "exhibits":
       return feedCount(slug, "exhibits") > 0;
     case "watershed":
+      // An undisclosed cooling method locks the section outright (#1057): its scenario rows
+      // are bracketed ranges, and no fabricated single-figure headline may stand in.
+      if (coolingMethodUndisclosed(slug)) return false;
       return feedSum(slug, ["geo/campus", "geo/watershed", "geo/imagery", "hydrology-scenarios", "rsei"]) > 0;
     case "economy":
       return feedSum(slug, ["economics-baseline", "network"]) > 0;

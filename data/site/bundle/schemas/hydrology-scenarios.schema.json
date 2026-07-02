@@ -9,6 +9,17 @@
       "scenario": {
         "$ref": "#/$defs/Scenario"
       },
+      "cooling_model": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/CoolingModelType"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
       "consumptive_loss": {
         "$ref": "#/$defs/ProvenancedValue"
       },
@@ -128,16 +139,36 @@
     },
     "CoolingBasis": {
       "additionalProperties": false,
-      "description": "A sourced cooling-water design basis, derived from disclosed campus data.\n\nTwo independent estimates bracket the demand: a top-down power x WUE balance\n(disclosed backup generation -> IT load -> evaporative makeup) and a bottom-up\nblowdown x cycles-of-concentration check (documented FM-2 discharge). The\ninputs are document/assumption-tagged; the demands are ``derived``.",
+      "description": "A sourced cooling-water design basis for one cooling archetype.\n\nDerived by the archetype's spec in :data:`watermark.hydrology.cooling_models.COOLING_MODELS`\n(#1053): ``cooling_model`` records *which world* produced these numbers. Fields\nirrelevant to a given archetype (e.g. ``cycles_of_concentration`` for\n``closed_loop_dry``) are ``None`` — never faked. For the ``unknown`` archetype the\nlow/high pair is a **bracket across candidate archetypes** (``is_bracketed=True``,\n``method_disclosed=False``), not an estimate.",
       "properties": {
+        "cooling_model": {
+          "$ref": "#/$defs/CoolingModelType",
+          "default": "evaporative_tower"
+        },
         "it_load": {
           "$ref": "#/$defs/ProvenancedValue"
         },
         "wue": {
-          "$ref": "#/$defs/ProvenancedValue"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "cycles_of_concentration": {
-          "$ref": "#/$defs/ProvenancedValue"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "consumptive_fraction": {
           "$ref": "#/$defs/ProvenancedValue"
@@ -155,12 +186,35 @@
           "default": "power x WUE (central); blowdown x cycles (upper bound)",
           "title": "Method",
           "type": "string"
+        },
+        "method_disclosed": {
+          "default": true,
+          "title": "Method Disclosed",
+          "type": "boolean"
+        },
+        "is_bracketed": {
+          "default": false,
+          "title": "Is Bracketed",
+          "type": "boolean"
+        },
+        "seasonal_months": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Seasonal Months"
         }
       },
       "required": [
         "it_load",
-        "wue",
-        "cycles_of_concentration",
         "consumptive_fraction",
         "makeup_demand",
         "consumptive_low",
@@ -168,6 +222,19 @@
       ],
       "title": "CoolingBasis",
       "type": "object"
+    },
+    "CoolingModelType": {
+      "description": "The cooling-water archetype of a data-center facility, keyed on physical mechanism.\n\nEach member selects one spec in :data:`watermark.hydrology.cooling_models.COOLING_MODELS` —\nits own consumptive/withdrawal math and parameter set. The enum lives here (not in\n``watermark.hydrology``) because the archetype is a **per-site facility attribute**\n(:class:`SiteFacility.cooling_model`) and ``watermark.config`` imports this package,\nso hydrology modules cannot be imported from here.\n\nNaming ([reference]): the enum is keyed on mechanism because the data-center industry's\n\"open loop / closed loop\" labels are ambiguous — EPA WaterSense at Work (§6, Cooling\nTowers) calls a recirculating wet tower an *open recirculating* system, which trade\nusage shortens to \"open loop\", while \"closed loop\" is used both for sealed dry/air-\ncooled circuits and (confusingly) for tower condenser-water loops. The open/closed\nlabels are display-only **aliases**, documented per spec in\n:mod:`watermark.hydrology.cooling_models`; the engine never dispatches on them.\n\n``unknown`` means \"facility disclosed, cooling method not on record\" — never \"no\ncooling\". It yields a bracketed range, not a single figure. ``off`` is the explicit\nno-cooling-water-load case; ``SiteProfile.facility is None`` also resolves to it.",
+      "enum": [
+        "off",
+        "evaporative_tower",
+        "once_through",
+        "closed_loop_dry",
+        "hybrid_adiabatic",
+        "unknown"
+      ],
+      "title": "CoolingModelType",
+      "type": "string"
     },
     "Node": {
       "additionalProperties": false,
@@ -314,6 +381,17 @@
           "default": "",
           "title": "Description",
           "type": "string"
+        },
+        "cooling_model": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CoolingModelType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "cooling_demand": {
           "$ref": "#/$defs/ProvenancedValue"

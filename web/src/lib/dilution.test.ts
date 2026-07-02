@@ -60,8 +60,8 @@ const BUILDOUT = {
     consumptive_fraction: pv(0.8),
   },
   consumptive_loss: pv(4.851392),
-  ottawa_7q10: pv(0.2),
-  ottawa_live: pv(36.3),
+  receiving_7q10: pv(0.2),
+  receiving_live: pv(36.3),
   balance: pv(0),
   assimilative: [
     assim("Shawnee II WWTP", "Ottawa River", 4.641, 0.2),
@@ -103,7 +103,7 @@ describe("buildDilution — feed-sourced (no fork)", () => {
     expect(data.maxCoolingMgd).toBe(3.92);
     expect(data.consumptiveFraction).toBe(0.8);
     expect(data.drawAtBuildoutCfs).toBeCloseTo(4.851392, 5);
-    // annual floor is the feed's ottawa_7q10; the seasonal floors are cited consts.
+    // annual floor is the feed's receiving_7q10; the seasonal floors are cited consts.
     expect(data.floors.find((f) => f.key === "annual")?.cfs).toBe(0.2);
     expect(data.floors.find((f) => f.key === "summer")?.cfs).toBe(1.6);
     expect(data.floors.find((f) => f.key === "driest")?.cfs).toBe(0);
