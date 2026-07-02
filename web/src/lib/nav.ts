@@ -300,7 +300,7 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
     ...hypotheses.map((h) => ({ label: h.name, href: `/research/hypotheses?lens=${h.id}` })),
     ...(hypotheses.length > 0 ? [{ divider: true as const }] : []),
     { label: "Methodology", href: `${base}/docs/methodology`, blurb: "How the record is built & labeled" },
-    { label: "Connect", href: "/network/connect" },
+    { label: CONNECT_LINK.label, href: CONNECT_LINK.href },
   ];
   return [
     { kind: "link", label: "Directory", section: "directory", href: "/" },
@@ -441,6 +441,13 @@ export function platformLinks(): { label: string; section: SectionId; href: stri
   ];
 }
 
+/** Connect — the MCP connector + contribution entry point; lives in the Research dropdown (#1017). */
+export const CONNECT_LINK: { label: string; section: SectionId; href: string } = {
+  label: "Connect",
+  section: "connect",
+  href: "/network/connect",
+};
+
 /** Submit — a right-cluster affordance (a `+` pill), present on both tiers (design "Chrome").
  *  It's the network-tier `/submit` route; the per-record correction deep-links target the
  *  site-tier `<base>/submit` instead (both share <SubmitForm>). */
@@ -479,7 +486,7 @@ export function navLinks(): { label: string; href: string }[] {
     ...siteTabs().flatMap(navItemLinks),
     { label: "Directory", href: "/" },
     { label: "Research", href: "/research/hypotheses" },
-    { label: "Connect", href: "/network/connect" },
+    { label: CONNECT_LINK.label, href: CONNECT_LINK.href },
     ...platformLinks().map((t) => ({ label: t.label, href: t.href })),
   ];
 }
@@ -519,7 +526,7 @@ export function footerGroups(): FooterGroup[] {
     {
       heading: "Site",
       links: [
-        { label: "Connect", href: "/network/connect" },
+        { label: CONNECT_LINK.label, href: CONNECT_LINK.href },
         { label: "Methodology", href: `${base}/docs/methodology` },
         { label: "About", href: "/about" },
       ],
