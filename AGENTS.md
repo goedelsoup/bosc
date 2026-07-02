@@ -4,6 +4,46 @@ Orientation for automated agents working in this repo. For project architecture,
 read [CLAUDE.md](CLAUDE.md). This file is the execution contract — the conventions
 and sharp edges for agentic runs (research and task-execution alike).
 
+## Start here — route by task
+
+| If your task is… | Read |
+|---|---|
+| Start a branch/worktree for an issue | [Branch & worktree](#branch--worktree) below |
+| Run the research agent | [Research tasks](#research-tasks) below, then [README.md](README.md) |
+| Extract a document / add an extraction | [CONTRIBUTING.md](CONTRIBUTING.md) |
+| Onboard a new watershed-point site | [docs/onboarding.md](docs/onboarding.md) |
+| Frontend / Astro (`web/`) | [web/README.md](web/README.md) |
+| Task reference, CI gate, module map | [DEVELOPMENT.md](DEVELOPMENT.md) |
+| Data conventions & chain of custody | [CONTRIBUTING.md](CONTRIBUTING.md) |
+
+When in doubt, the flow is: pick a worktree → make the change → `mise run check`
+→ write the PR body → exit. Each step is a section below.
+
+## Branch & worktree
+
+Never work directly on `main`. Each task gets its own **sibling worktree** created
+through the `wt:*` mise tasks — they encode the issue→branch naming and the
+sibling-path layout, so prefer them over raw `git worktree`/`git checkout`.
+
+```bash
+mise run wt:new 123          # branch from issue #123 → ../123-short-title/
+mise run wt:new my-feature   # plain branch name, no issue
+cd "$(mise run wt:path 123)" # jump into the worktree
+```
+
+`wt:new` prints the worktree path on stdout. It branches from `main` by default
+(`--base <ref>` to override), reuses an existing `<issue>-*` branch instead of
+spawning a second one, and tracks `origin/<branch>` if the branch already exists
+remotely. Worktrees live as siblings of `main` inside the `watermark-directory/`
+parent, named `<issue-number>-<slug>` so they round-trip by issue number.
+
+When the task is done and merged, clean up:
+
+```bash
+mise run wt:list                  # show all worktrees
+mise run wt:rm 123 --delete-branch # remove worktree + local branch
+```
+
 ## Gate before declaring done
 
 ```bash
