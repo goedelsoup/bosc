@@ -16,6 +16,7 @@ from __future__ import annotations
 from watermark.cli import (  # noqa: F401
     catalog,
     gis,
+    greenops,
     grid,
     hydrology,
     hypotheses,

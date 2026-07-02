@@ -220,6 +220,31 @@ class Settings(BaseSettings):
     pjm_base_url: str = "https://api.pjm.com/api/v1"
     pjm_api_key: str = ""  # required for live pulls; offline replays committed fixtures
 
+    # --- GreenOps (Watermark's own compute footprint; epic #1076) ----------
+    # The self-reported carbon/water footprint of running the platform, published to the
+    # same evidence standard as the sites we track (/about/sustainability). Per-source
+    # billing/usage connectors — AWS (Cost Explorer + Customer Carbon Footprint Tool),
+    # Anthropic (Admin usage/cost API), GitHub Actions, EPA eGRID — land in later issues
+    # (#1078-#1082) through the shared cache/offline/fixture discipline. Every figure is
+    # modeled (reference/assumption/derived), NEVER connector-"verified" as a metered fact.
+    greenops_offline: bool = False  # serve cached/fixture responses only; never fetch
+    greenops_request_timeout_s: float = 60.0
+    greenops_cache_ttl_hours: int = DEFAULT_CACHE_TTL_HOURS  # billing/usage roll up slowly
+    greenops_fixtures_dir: Path | None = None  # committed connector fixtures (tests/CI)
+    # AWS billing/carbon credentials. SDK-convention names (NOT WATERMARK_-prefixed): the
+    # boto3/AWS SDK reads AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY / AWS_REGION. Absent
+    # credentials => the AWS source degrades to a modeled assumption, never a crash. Cost
+    # Explorer + CCFT are us-east-1-only endpoints, so that is the default region.
+    aws_access_key_id: str = Field(default="", alias="AWS_ACCESS_KEY_ID")
+    aws_secret_access_key: str = Field(default="", alias="AWS_SECRET_ACCESS_KEY")
+    aws_region: str = Field(default="us-east-1", alias="AWS_REGION")
+    aws_cost_explorer_enabled: bool = True  # WATERMARK_AWS_COST_EXPLORER_ENABLED; CE billing pull
+    aws_ccft_enabled: bool = True  # WATERMARK_AWS_CCFT_ENABLED; Customer Carbon Footprint Tool
+    # Anthropic Admin API key (usage/cost reporting) — the SDK-convention name, not
+    # WATERMARK_-prefixed and distinct from the inference ANTHROPIC_API_KEY. Absent =>
+    # the Anthropic source degrades to a modeled assumption.
+    anthropic_admin_key: str = Field(default="", alias="ANTHROPIC_ADMIN_KEY")
+
     # --- GIS / satellite imagery -------------------------------------------
     # Pull AOI-clipped satellite imagery for tracking sites (the campus/footprints
     # already mapped in data/site/gis-findings.geojson). The catalog is Microsoft
@@ -334,6 +359,12 @@ class Settings(BaseSettings):
     def econ_cache_dir(self) -> Path:
         """Cached economics-connector responses (Census, BLS QCEW). Not committed."""
         return self.cache_dir / "economics"
+
+    @property
+    def greenops_cache_dir(self) -> Path:
+        """Cached GreenOps connector responses (AWS billing/CCFT, Anthropic usage, GitHub,
+        eGRID). Regenerable, not committed."""
+        return self.cache_dir / "greenops"
 
     @property
     def gis_cache_dir(self) -> Path:

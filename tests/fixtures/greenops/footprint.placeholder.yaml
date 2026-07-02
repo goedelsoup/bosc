@@ -1,0 +1,281 @@
+period:
+  label: Jul 2025-Jun 2026
+  start: 2025-07
+  end: 2026-06
+  kind: trailing_12_months
+headline:
+- key: compute
+  label: Compute
+  value:
+    value: 14220.0
+    unit: vCPU-hrs
+    source: assumption
+    citation: modeled placeholder pending the wired source (#1078-#1083)
+    confidence: low
+    asof: null
+  sub: hosting, ingestion, search, AI
+  source_label: cloud billing export
+- key: ai_inferences
+  label: AI inferences run
+  value:
+    value: 2340000.0
+    unit: calls
+    source: assumption
+    citation: modeled placeholder pending the wired source (#1078-#1083)
+    confidence: low
+    asof: null
+  sub: extraction, ask, corroboration, drafting
+  source_label: model-provider usage logs
+- key: electricity
+  label: Electricity drawn
+  value:
+    value: 37.4
+    unit: MWh
+    source: assumption
+    citation: modeled placeholder pending the wired source (#1078-#1083)
+    confidence: low
+    asof: null
+  sub: compute + cooling, all regions
+  source_label: eGRID factors
+- key: water
+  label: Water drawn
+  value:
+    value: 37500.0
+    unit: gal
+    source: assumption
+    citation: modeled placeholder pending the wired source (#1078-#1083)
+    confidence: low
+    asof: null
+  sub: direct cooling + generation upstream
+  source_label: WUE benchmarks
+compute_by_function:
+  unit: vCPU-hrs
+  functions:
+  - label: Hosting
+    value:
+      value: 6200.0
+      unit: vCPU-hrs
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+  - label: Ingestion
+    value:
+      value: 3400.0
+      unit: vCPU-hrs
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+  - label: AI inference
+    value:
+      value: 3050.0
+      unit: vCPU-hrs
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+  - label: Search index
+    value:
+      value: 980.0
+      unit: vCPU-hrs
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+  - label: Corroboration
+    value:
+      value: 590.0
+      unit: vCPU-hrs
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+ai_by_task:
+  unit: calls
+  tasks:
+  - label: Structured extraction
+    value:
+      value: 1220000.0
+      unit: calls
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+  - label: Search & Ask
+    value:
+      value: 725000.0
+      unit: calls
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+  - label: Corroboration assist
+    value:
+      value: 255000.0
+      unit: calls
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+  - label: Drafting summaries
+    value:
+      value: 140000.0
+      unit: calls
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+electricity:
+  unit: MWh
+  monthly:
+  - label: Jul
+    value:
+      value: 2.8
+      unit: MWh
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+  - label: Aug
+    value:
+      value: 3.1
+      unit: MWh
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+  - label: Sep
+    value:
+      value: 3.3
+      unit: MWh
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+  - label: Oct
+    value:
+      value: 3.0
+      unit: MWh
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+  - label: Nov
+    value:
+      value: 2.9
+      unit: MWh
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+  - label: Dec
+    value:
+      value: 3.2
+      unit: MWh
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+  - label: Jan
+    value:
+      value: 3.6
+      unit: MWh
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+  - label: Feb
+    value:
+      value: 3.3
+      unit: MWh
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+  - label: Mar
+    value:
+      value: 3.0
+      unit: MWh
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+  - label: Apr
+    value:
+      value: 2.9
+      unit: MWh
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+  - label: May
+    value:
+      value: 3.1
+      unit: MWh
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+  - label: Jun
+    value:
+      value: 3.2
+      unit: MWh
+      source: assumption
+      citation: modeled placeholder pending the wired source (#1078-#1083)
+      confidence: low
+      asof: null
+  grid:
+    value: 23.2
+    unit: MWh
+    source: assumption
+    citation: modeled placeholder pending the wired source (#1078-#1083)
+    confidence: low
+    asof: null
+  renewable:
+    value: 14.2
+    unit: MWh
+    source: assumption
+    citation: modeled placeholder pending the wired source (#1078-#1083)
+    confidence: low
+    asof: null
+water:
+  unit: gal
+  direct:
+    value: 15800.0
+    unit: gal
+    source: assumption
+    citation: modeled placeholder pending the wired source (#1078-#1083)
+    confidence: low
+    asof: null
+  indirect:
+    value: 21700.0
+    unit: gal
+    source: assumption
+    citation: modeled placeholder pending the wired source (#1078-#1083)
+    confidence: low
+    asof: null
+  budget_cap:
+    value: 45000.0
+    unit: gal
+    source: assumption
+    citation: modeled placeholder pending the wired source (#1078-#1083)
+    confidence: low
+    asof: null
+methodology:
+- title: Compute
+  body: Read from cloud vendor billing exports, split by service tag (hosting, ingestion,
+    search, model inference).
+- title: Electricity
+  body: vCPU- and GPU-hours converted with vendor power-draw specs, then apportioned
+    by EPA eGRID subregion carbon-intensity factors for where each workload runs.
+- title: Water
+  body: Modeled from the electricity figure using published Water Usage Effectiveness
+    (WUE) benchmarks — direct on-site cooling plus the water withdrawn upstream to
+    generate the power we draw.
+sources:
+- cloud billing export FY26
+- EPA eGRID subregion RFCW factors 2025
+- EPRI / Uptime Institute WUE benchmarks 2024
+note: 'Placeholder scaffold (#1077): every figure is a modeled assumption pending
+  its wired source. Nothing here is metered.'

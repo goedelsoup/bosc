@@ -160,3 +160,12 @@ sweep_app = typer.Typer(
     add_completion=False,
 )
 app.add_typer(sweep_app, name="sweep")
+
+
+greenops_app = typer.Typer(
+    name="greenops",
+    help="Watermark's own compute footprint (AWS/Anthropic/GitHub/eGRID) — epic #1076.",
+    no_args_is_help=True,
+    add_completion=False,
+)
+app.add_typer(greenops_app, name="greenops")
