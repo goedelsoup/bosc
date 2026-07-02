@@ -6,27 +6,39 @@ from pydantic import BaseModel, ConfigDict
 
 from watermark.hydrology.models._core import ProvenancedValue, WaterBalance
 from watermark.hydrology.models._lowflow import AssimilativeCheck
+from watermark.sites import CoolingModelType
 
 
 class CoolingBasis(BaseModel):
-    """A sourced cooling-water design basis, derived from disclosed campus data.
+    """A sourced cooling-water design basis for one cooling archetype.
 
-    Two independent estimates bracket the demand: a top-down power x WUE balance
-    (disclosed backup generation -> IT load -> evaporative makeup) and a bottom-up
-    blowdown x cycles-of-concentration check (documented FM-2 discharge). The
-    inputs are document/assumption-tagged; the demands are ``derived``.
+    Derived by the archetype's spec in :data:`watermark.hydrology.cooling_models.COOLING_MODELS`
+    (#1053): ``cooling_model`` records *which world* produced these numbers. Fields
+    irrelevant to a given archetype (e.g. ``cycles_of_concentration`` for
+    ``closed_loop_dry``) are ``None`` — never faked. For the ``unknown`` archetype the
+    low/high pair is a **bracket across candidate archetypes** (``is_bracketed=True``,
+    ``method_disclosed=False``), not an estimate.
     """
 
     model_config = ConfigDict(extra="forbid")
 
-    it_load: ProvenancedValue  # MW (from the air-permit genset count)
-    wue: ProvenancedValue  # L/kWh, consumptive water per IT energy
-    cycles_of_concentration: ProvenancedValue  # cooling-tower CoC
-    consumptive_fraction: ProvenancedValue  # (CoC-1)/CoC, derived
-    makeup_demand: ProvenancedValue  # MGD, the cooling intake (power-based central)
-    consumptive_low: ProvenancedValue  # MGD, power x WUE
-    consumptive_high: ProvenancedValue  # MGD, full-blowdown x cycles upper bound
+    # Which archetype's math produced this basis. Defaults to the evaporative tower only
+    # so committed pre-taxonomy artifacts (all Lima, all evaporative) still parse; every
+    # spec sets it explicitly — selection never falls through to this default (#1054).
+    cooling_model: CoolingModelType = CoolingModelType.EVAPORATIVE_TOWER
+    it_load: ProvenancedValue  # MW (from the air-permit genset count; 0 for `off`)
+    wue: ProvenancedValue | None = None  # L/kWh, consumptive water per IT energy (wet modes)
+    cycles_of_concentration: ProvenancedValue | None = None  # cooling-tower CoC (tower modes)
+    consumptive_fraction: ProvenancedValue  # evaporated share of the intake
+    makeup_demand: ProvenancedValue  # MGD, the cooling intake / withdrawal
+    consumptive_low: ProvenancedValue  # MGD, low bound
+    consumptive_high: ProvenancedValue  # MGD, upper bound
     method: str = "power x WUE (central); blowdown x cycles (upper bound)"
+    method_disclosed: bool = True  # False = archetype not on record (`unknown`)
+    is_bracketed: bool = False  # True = low/high span candidate archetypes, no single estimate
+    # hybrid_adiabatic (#1058): the months with evaporative assist (ET0 > precip); the
+    # consumptive draw is ~0 outside them. None for the constant-draw archetypes.
+    seasonal_months: list[str] | None = None
 
 
 class Scenario(BaseModel):
@@ -42,6 +54,9 @@ class Scenario(BaseModel):
 
     name: str
     description: str = ""
+    # Which cooling world the knobs assume (#1056). None only for a pre-taxonomy artifact
+    # or a bare-override sensitivity with no archetype semantics.
+    cooling_model: CoolingModelType | None = None
     cooling_demand: ProvenancedValue  # campus cooling intake (MGD)
     consumptive_fraction: ProvenancedValue  # fraction evaporated (0..1)
     basis: CoolingBasis | None = None  # the sourced derivation, when used
@@ -53,6 +68,8 @@ class ScenarioResult(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     scenario: Scenario
+    # Surfaced from scenario.cooling_model so the bundle feed reads it top-level (#1059).
+    cooling_model: CoolingModelType | None = None
     consumptive_loss: ProvenancedValue  # net basin loss (cfs), derived from the knobs
     receiving_7q10: ProvenancedValue | None = None  # per-site receiving-water low flow (#900)
     receiving_live: ProvenancedValue | None = None  # live receiving-water streamflow, for context
@@ -77,11 +94,13 @@ class ScenarioDiff(BaseModel):
 class MonthlyWithdrawal(BaseModel):
     """One month: the cooling draw vs the season-appropriate cited low flow.
 
-    The consumptive draw is constant year-round; what changes by month is the
-    receiving stream's *available* low flow and whether rainfall offsets atmospheric
-    demand. In the growing season the draw is read against the cited summer design low
-    flow (30Q10), not the annual 7Q10 — and arrives when reference ET exceeds precip,
-    so there is no rainfall buffer.
+    For the constant-draw archetypes the consumptive draw is the same year-round; what
+    changes by month is the receiving stream's *available* low flow and whether rainfall
+    offsets atmospheric demand. A ``hybrid_adiabatic`` facility's draw is itself
+    month-varying (#1058): the warm-season assist rate in ET0 > precip months, ~0
+    otherwise. In the growing season the draw is read against the cited summer design
+    low flow (30Q10), not the annual 7Q10 — and arrives when reference ET exceeds
+    precip, so there is no rainfall buffer.
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -93,7 +112,7 @@ class MonthlyWithdrawal(BaseModel):
     net_atmospheric_mm_day: float  # ET0 - precip (positive = deficit, no rainfall buffer)
     low_flow_cfs: float  # the cited design low flow applied this month
     low_flow_basis: str  # "30Q10 summer" | "7Q10 annual"
-    consumptive_cfs: float  # the scenario's net consumptive draw (constant)
+    consumptive_cfs: float  # this month's net consumptive draw (month-varying for hybrid)
     multiple: float | None  # consumptive / low_flow (None when the floor is 0)
 
 
@@ -109,6 +128,9 @@ class SeasonalWithdrawal(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     scenario: str
+    # The archetype the draw assumes (#1058); None for a bare-override sensitivity.
+    cooling_model: CoolingModelType | None = None
+    # The headline rate: the constant draw, or for hybrid the warm-season assist rate.
     consumptive_cfs: float
     months: list[MonthlyWithdrawal]
     growing_season_months: list[str]

@@ -331,33 +331,64 @@ def scenario(
         "--consumptive-fraction",
         help="Override evaporated fraction (0..1). Default: sourced basis.",
     ),
+    cooling_model: str | None = typer.Option(
+        None,
+        "--cooling-model",
+        help=(
+            "Override the cooling archetype (off | evaporative_tower | once_through | "
+            "closed_loop_dry | hybrid_adiabatic | unknown). Default: the site facility's model."
+        ),
+    ),
     write: bool = typer.Option(False, "--write", help="Persist results under data/scenarios/."),
     offline: bool = typer.Option(False, "--offline", help="Use cached/fixture streamflow only."),
 ) -> None:
     """Baseline vs data-center buildout: net consumptive draw vs the receiving-water 7Q10."""
+    from watermark.hydrology import cooling_models
     from watermark.hydrology import scenario as scenario_stage
     from watermark.pipeline import hydrology as hydro_stage
+    from watermark.sites import CoolingModelType
 
     settings = get_settings()
     if offline:
         settings = Settings(hydro_offline=True)
+    if cooling_model is not None:
+        try:
+            CoolingModelType(cooling_model)
+        except ValueError:
+            console.print(
+                f"[red]unknown cooling model {cooling_model!r}[/]; "
+                f"choose one of: {', '.join(m.value for m in CoolingModelType)}"
+            )
+            raise typer.Exit(code=1) from None
     base, build, delta = hydro_stage.run_scenarios(
         cooling_demand_mgd=cooling_demand,
         consumptive_fraction=consumptive_fraction,
+        cooling_model=cooling_model,
         settings=settings,
         live=True,
     )
 
     basis = build.scenario.basis
     if basis is not None:
+        spec = cooling_models.get(basis.cooling_model)
+        alias = f" ('{spec.alias}')" if spec.alias else ""
         console.print(
-            f"[bold]Cooling design basis[/] (sourced): IT load {basis.it_load.value:g} MW "
-            f"[dim](doc: air permit P0138965)[/], WUE {basis.wue.value:g} L/kWh, "
-            f"CoC {basis.cycles_of_concentration.value:g}\n"
-            f"  consumptive estimate range: [bold]{basis.consumptive_low.value:g}-"
-            f"{basis.consumptive_high.value:g} MGD[/] "
-            f"[dim](powerxWUE … blowdownxcycles)[/]"
+            f"[bold]Cooling model[/]: {basis.cooling_model.value}{alias} — {spec.mechanism}"
         )
+        assumptions = [f"IT load {basis.it_load.value:g} MW"]
+        if basis.wue is not None:
+            assumptions.append(f"WUE {basis.wue.value:g} L/kWh")
+        if basis.cycles_of_concentration is not None:
+            assumptions.append(f"CoC {basis.cycles_of_concentration.value:g}")
+        console.print(f"  [bold]Design basis[/] (sourced): {', '.join(assumptions)}")
+        rng = f"{basis.consumptive_low.value:g}-{basis.consumptive_high.value:g} MGD"
+        if basis.is_bracketed:
+            console.print(
+                f"  [bold yellow]cooling method undisclosed[/] — bracketed range "
+                f"[bold]{rng}[/]; no single consumptive estimate"
+            )
+        else:
+            console.print(f"  consumptive estimate range: [bold]{rng}[/] [dim]({basis.method})[/]")
 
     table = Table("scenario", "cooling intake", "consumptive frac", "net basin loss (cfs)", "src")
     for r in (base, build):
@@ -383,8 +414,11 @@ def scenario(
             f"low flow ({q7:g} cfs)"
             + (f"; live flow now {live_flow:,.0f} cfs." if live_flow else ".")
         )
-    # Seasonal screen: the same draw against the growing-season design low flow.
-    sw = scenario_stage.evaluate_seasonal(build.consumptive_loss.value, settings=settings)
+    # Seasonal screen: the draw against the growing-season design low flow. The basis
+    # rides along so a hybrid_adiabatic facility's draw is month-varying (#1058).
+    sw = scenario_stage.evaluate_seasonal(
+        build.consumptive_loss.value, settings=settings, basis=basis
+    )
     if sw is not None and sw.summer_multiple is not None and sw.growing_season_months:
         win = f"{sw.growing_season_months[0]}-{sw.growing_season_months[-1]}"
         console.print(
@@ -394,8 +428,9 @@ def scenario(
             f"The absolute floor is 1Q10 = {sw.one_q10_cfs:g} cfs — no flow to draw against."
         )
     console.print(
-        f"\n[dim]Cooling basis derived from the air permit + FM-2 discharge (see provenance "
-        f"tags); {rw} 7Q10 is cited from the NPDES permit fact sheet. Tier-0 screening.[/]"
+        f"\n[dim]Cooling basis derived per the site facility's cooling archetype (see "
+        f"provenance tags); {rw} 7Q10 is cited from the NPDES permit fact sheet. "
+        f"Tier-0 screening.[/]"
     )
     if write:
         for r in (base, build):

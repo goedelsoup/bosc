@@ -12,7 +12,13 @@ from __future__ import annotations
 from collections.abc import Callable
 
 from watermark.config import Settings, get_settings
-from watermark.hydrology.model import HydroFinding, ProvenancedValue, SourceKind, StormRunoff
+from watermark.hydrology.model import (
+    CoolingBasis,
+    HydroFinding,
+    ProvenancedValue,
+    SourceKind,
+    StormRunoff,
+)
 from watermark.pipeline import hydrology as hydro_stage
 
 _TAG = {
@@ -455,12 +461,18 @@ def _render_drainage_audit(emit: Callable[[str], None], settings: Settings) -> N
 
 
 def _render_seasonal_withdrawal(
-    emit: Callable[[str], None], settings: Settings, consumptive_cfs: float
+    emit: Callable[[str], None],
+    settings: Settings,
+    consumptive_cfs: float,
+    basis: CoolingBasis | None = None,
 ) -> None:
-    """The cooling draw read against the Ottawa's growing-season (May-Oct) low flow."""
+    """The cooling draw read against the receiving water's growing-season low flow.
+
+    The basis rides along so a ``hybrid_adiabatic`` facility's draw is month-varying (#1058).
+    """
     from watermark.hydrology import scenario
 
-    sw = scenario.evaluate_seasonal(consumptive_cfs, settings=settings)
+    sw = scenario.evaluate_seasonal(consumptive_cfs, settings=settings, basis=basis)
     if sw is None or not sw.growing_season_months:
         return
 
@@ -758,7 +770,8 @@ def render_report(*, settings: Settings | None = None, live: bool = False) -> st
     rw_heading = delta.receiving_water_name or "receiving water"
     w(f"\n\n## 4. Scenario: data-center cooling vs the {rw_heading}'s low flow\n")
     basis = build.scenario.basis
-    if basis is not None:
+    if basis is not None and basis.wue is not None and basis.cycles_of_concentration is not None:
+        # The evaporative-tower two-method bracket (Lima's archetype).
         w("The cooling demand is **sourced**, derived from disclosed campus data by two methods:\n")
         w(
             f"- top-down: IT load {_ev(basis.it_load)} x WUE {_ev(basis.wue)} → "
@@ -770,6 +783,17 @@ def render_report(*, settings: Settings | None = None, live: bool = False) -> st
             f"\nThey bracket the consumptive demand at "
             f"**{basis.consumptive_low.value:g}-{basis.consumptive_high.value:g} MGD** "
             f"(FM-2 is not purely cooling blowdown). The conclusion is robust to the range.\n"
+        )
+    elif basis is not None:
+        w(
+            f"Cooling model: **{basis.cooling_model.value}** — {basis.method}. "
+            f"Consumptive range **{basis.consumptive_low.value:g}-"
+            f"{basis.consumptive_high.value:g} MGD**"
+            + (
+                " (method undisclosed — a bracket across candidate archetypes, not an estimate).\n"
+                if basis.is_bracketed
+                else ".\n"
+            )
         )
     w("\n| scenario | cooling intake | consumptive fraction | net basin loss |")
     w("|---|---|---|---|")
@@ -788,7 +812,9 @@ def render_report(*, settings: Settings | None = None, live: bool = False) -> st
             f"does not have — even the low estimate is tens of times the 7Q10.\n"
         )
 
-    _render_seasonal_withdrawal(w, settings, build.consumptive_loss.value)
+    _render_seasonal_withdrawal(
+        w, settings, build.consumptive_loss.value, basis=build.scenario.basis
+    )
 
     w("\n\n## 5. Tier-1 escalation (EPA SWMM)\n")
     w(

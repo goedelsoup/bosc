@@ -69,6 +69,9 @@ from watermark.sites._model import (
     YAML_BACKED_PROFILE_FIELDS as YAML_BACKED_PROFILE_FIELDS,
 )
 from watermark.sites._model import (
+    CoolingModelType as CoolingModelType,
+)
+from watermark.sites._model import (
     SiteEntry as SiteEntry,
 )
 from watermark.sites._model import (

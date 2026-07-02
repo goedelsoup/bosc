@@ -23,7 +23,7 @@ from watermark.sites._gis_schemas import (
     OHIO_STATEWIDE_PARCEL_SCHEMA,
     PUTNAM_PARCEL_SCHEMA,
 )
-from watermark.sites._model import SiteFacility, SiteProfile
+from watermark.sites._model import CoolingModelType, SiteFacility, SiteProfile
 
 # The live reference build. Every value reproduces the pre-#325 hardcoded default exactly —
 # see tests/test_sites.py for the zero-drift golden snapshot.
@@ -128,6 +128,26 @@ _LIMA = SiteProfile(
             "bosc-fm2 2.5 MGD industrial discharge (CMAR RFQ §A.6), taken as cooling "
             "blowdown upper bound"
         ),
+        # Cooling archetype (#1054): makes the platform's historical implicit assumption
+        # EXPLICIT — [inference] the air permit lists 36 cooling towers (consistent with an
+        # open recirculating evaporative plant), but no cooling-system flowrates (CBI-
+        # withheld), so the archetype is an assumption, not a documented disclosure.
+        # Numbers must not move: the WUE/CoC overrides below carry the exact pre-taxonomy
+        # defaults + citations (regression-locked by tests/test_hydro_cooling.py).
+        cooling_model=CoolingModelType.EVAPORATIVE_TOWER,
+        cooling_model_source="assumption",
+        cooling_model_citation=(
+            "36 cooling towers on OEPA Air PTI P0138965 imply an evaporative (open "
+            "recirculating) plant; cooling-system flowrates are CBI-withheld, so the "
+            "archetype is asserted, not disclosed"
+        ),
+        wue_l_per_kwh=1.8,  # evaporative hyperscale; Google fleet avg ~1.1, evaporative higher
+        wue_citation=(
+            "evaporative-cooled hyperscale WUE ~1.8 L/kWh (Google fleet avg ~1.1; "
+            "36 cooling towers on the air permit)"
+        ),
+        cycles_of_concentration=5.0,  # cooling-tower cycles of concentration (typical 4-6)
+        cycles_citation="cooling-tower cycles of concentration ~5 (typical 4-6)",
     ),
     serving_utility_source="document",
     serving_utility_citation=(
@@ -395,6 +415,17 @@ _FORT_WAYNE = SiteProfile(
         ),
         # No disclosed cooling/industrial blowdown (the air permit doesn't cover discharge) → None,
         # so the cooling back-solve uses the power-derived consumptive as the high bound (no Lima leak).
+        # Cooling archetype (#1054): [open] the facility is confirmed (IDEM Title V, §401)
+        # but no water-cooling method is on record — the Title V permit covers the gensets,
+        # not the cooling plant. `unknown` ⇒ a bracketed range (closed_loop_dry…evaporative_
+        # tower), never a defaulted evaporative headline (#1057). Refine when the cooling
+        # method surfaces (utility water contract, wastewater permit, or the 003-48739 mod).
+        cooling_model=CoolingModelType.UNKNOWN,
+        cooling_model_source="assumption",
+        cooling_model_citation=(
+            "cooling method not disclosed: IDEM Title V 003-47378-00530 covers the emergency "
+            "gensets only, no cooling-system disclosure on record for Project Zodiac"
+        ),
     ),
     serving_utility_citation=(  # [reference] not corpus
         "EIA-861 service-territory file (Indiana Michigan Power Co #9324, an AEP subsidiary) + "

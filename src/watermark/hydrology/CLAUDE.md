@@ -15,4 +15,16 @@ Water-balance / stormwater modeling of the Lima municipal loop. Defers to the ro
   decks for the real engine; don't blur the two.
 - The cited regulatory **7Q10** lives in `lowflow.py`; the NWIS observed minimum only
   sanity-checks it — don't substitute one for the other.
+- **Cooling is dispatched by archetype** (`cooling_models.py`, epic #1060): the
+  `CoolingModelType` enum is keyed on physical **mechanism** — "open loop / closed
+  loop" are ambiguous industry labels kept only as documented per-spec aliases.
+  Archetypes: `off` (explicit zero), `evaporative_tower` (Lima; alias "open loop"),
+  `once_through`, `closed_loop_dry` (alias "closed loop"), `hybrid_adiabatic`
+  (month-varying, wired into `evaluate_seasonal`), `unknown` (disclosed facility,
+  undisclosed method → **bracketed range**, `method_disclosed=False`, never a single
+  headline). Select per site via `SiteFacility.cooling_model` — never hardcode; a
+  facility with no method on record stays `unknown`, and `facility=None` ⇒ `off`.
+  Add an archetype by registering a `CoolingModelSpec`, mirroring `watermark.profiles`.
+  Lima's evaporative figures are regression-locked against the committed
+  `data/scenarios/buildout.scenario.yaml` (`tests/test_hydro_cooling.py`).
 - Sync throughout (`httpx.Client`) to match the rest of the pipeline.
