@@ -9,6 +9,7 @@ from __future__ import annotations
 import asyncio
 
 import typer
+import yaml
 
 from watermark.cli._base import (
     console,
@@ -25,7 +26,7 @@ _CATALOG_TEMPLATE = """\
 id: data-centers-{site}
 title: {city} / {county} — Data-Center Activity Register
 scope: extracted
-status: needs-review
+status: {status}
 producer:
   kind: manual
   source: >-
@@ -144,7 +145,6 @@ def sweep_data_centers(
     reviewed in the catalog entry."""
     from datetime import UTC, datetime
 
-    from watermark.agent.client import RESEARCH_SKILLS as _SKILLS
     from watermark.agent.client import ResearchAgent
     from watermark.sites import active_profile
 
@@ -200,13 +200,12 @@ def sweep_data_centers(
         f"[bold]sweep data-centers[/] → {site} / {county} (max_turns={turns}, offline={offline})\n"
     )
 
-    agent = ResearchAgent(
-        settings=settings,
-        max_turns=turns,
-        skills=_SKILLS,
-    )
+    agent = ResearchAgent(settings=settings, max_turns=turns)
     result = asyncio.run(agent.converse(prompt, on_text=emit))
     console.print()  # newline after streamed output
+
+    if result.is_error:
+        raise typer.Exit(code=1)
 
     register_text = result.text or "".join(streamed)
 
@@ -214,12 +213,23 @@ def sweep_data_centers(
     register_path.write_text(register_text, encoding="utf-8")
     wrote(register_path)
 
+    # Preserve an existing "reviewed" status rather than resetting it to needs-review.
+    catalog_status = "needs-review"
+    if catalog_path.exists():
+        try:
+            existing = yaml.safe_load(catalog_path.read_text(encoding="utf-8")) or {}
+            if existing.get("status") == "reviewed":
+                catalog_status = "reviewed"
+        except Exception:
+            pass
+
     catalog_text = _CATALOG_TEMPLATE.format(
         site=site,
         city=city,
         county=county,
         county_tag=county_tag,
         date=date,
+        status=catalog_status,
     )
     catalog_path.parent.mkdir(parents=True, exist_ok=True)
     catalog_path.write_text(catalog_text, encoding="utf-8")
@@ -241,6 +251,3 @@ def sweep_data_centers(
         "cited instrument before committing. Then run:\n"
         "  watermark catalog reconcile"
     )
-
-    if result.is_error:
-        raise typer.Exit(code=1)
