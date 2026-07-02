@@ -30,6 +30,7 @@ from watermark.cli import (  # noqa: F401
     retrieval,
     sites,
     subdivisions,
+    sweep,
 )
 from watermark.cli._base import app
 

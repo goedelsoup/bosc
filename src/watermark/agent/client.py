@@ -52,6 +52,7 @@ RESEARCH_SKILLS = [
     "evidentiary-discipline",
     "entity-and-document-deconstruction",
     "gis-and-siting-analysis",
+    "data-center-sweep",
 ]
 
 

@@ -151,3 +151,12 @@ oepa_app = typer.Typer(
     add_completion=False,
 )
 app.add_typer(oepa_app, name="oepa")
+
+
+sweep_app = typer.Typer(
+    name="sweep",
+    help="External-discovery sweeps: data-center activity, permit searches, SOS filings (#1050).",
+    no_args_is_help=True,
+    add_completion=False,
+)
+app.add_typer(sweep_app, name="sweep")

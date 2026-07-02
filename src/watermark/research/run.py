@@ -386,6 +386,15 @@ Cover the following areas for {site}:
 4. GIS: parcel / zoning connectors wired; footprint geometry present.
 5. Extracted corpus: what's been extracted vs what source documents exist.
 6. Hypothesis assessments: which cells are populated vs open.
+7. Data-center activity sweep: run search_web with I-75/rail-corridor data-center queries for
+   {site}. Use the data-center-sweep skill methodology: disambiguation guardrail first, then
+   source-priority order (city council resolutions → county recorder → Ohio SOS → OEPA →
+   ECHO → trade press). For any active project, call fetch_url on the primary city/council
+   resolution source to confirm operator, location, water draw, and tax instruments. Check
+   RSEI county inventory and ECHO NPDES for NAICS 518210 entries; record a negative result
+   explicitly if no project is found. Tag every claim with the BOSC evidence vocabulary:
+   [verified] for cited primary-source instruments, [inference] for arithmetic, [open] for
+   unconfirmed items. Do not bridge Lima/Allen County entities onto {site}.
 
 End with a prioritized checklist of blocking gaps (items that must be resolved before the
 site can be promoted to selectable) and non-blocking gaps (good follow-up leads).
