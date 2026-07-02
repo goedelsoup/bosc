@@ -452,11 +452,9 @@ async def hydrology_scenario(_args: dict[str, Any]) -> dict[str, Any]:
 )
 @traced_tool
 async def storm_plan_inventory(_args: dict[str, Any]) -> dict[str, Any]:
-    if (note := _reference_only("storm_plan_inventory")) is not None:
-        return note
     from watermark.hydrology import stormplan
 
-    inv = stormplan.load_inventory()
+    inv = stormplan.load_inventory(settings=get_settings())
     if inv is None:
         return _text("No storm-plan inventory yet (run `bosc storm-plan --refresh`).")
     lines = [
@@ -484,14 +482,14 @@ async def storm_plan_inventory(_args: dict[str, Any]) -> dict[str, Any]:
 )
 @traced_tool
 async def sanitary_basis(_args: dict[str, Any]) -> dict[str, Any]:
-    if (note := _reference_only("sanitary_basis")) is not None:
-        return note
     from watermark.hydrology.sanitary import load_sanitary_basis
 
-    basis = load_sanitary_basis()
+    settings = get_settings()
+    basis = load_sanitary_basis(settings=settings)
     if basis is None:
         return _text(
-            "No sanitary basis table found (data/reference/hydrology/sanitary-basis.yaml)."
+            f"No sanitary basis table found for site {settings.site!r} "
+            f"(data/reference/hydrology/{settings.site}/sanitary-basis.yaml)."
         )
     lines = []
     for p in basis.plants:

@@ -1,6 +1,6 @@
 """Cited sanitary design basis for the municipal loop's WWTPs.
 
-Loads ``data/reference/hydrology/sanitary-basis.yaml`` into a :class:`SanitaryBasis`:
+Loads ``data/reference/hydrology/<site>/sanitary-basis.yaml`` into a :class:`SanitaryBasis`:
 per-plant permitted average design flow + peak hydraulic capacity (both
 ``source=document``), with the derived peaking factor and the system's I/I + SSO
 regulatory context. This grounds the Tier-1 sanitary surcharge — the campus's
@@ -23,7 +23,7 @@ from watermark.hydrology.model import ProvenancedValue, SanitaryBasis, SanitaryP
 
 
 def _reference_path(settings: Settings) -> Any:
-    return settings.data_dir / "reference" / "hydrology" / "sanitary-basis.yaml"
+    return settings.data_dir / "reference" / "hydrology" / settings.site / "sanitary-basis.yaml"
 
 
 def _plant_from_entry(name: str, entry: dict[str, Any]) -> SanitaryPlant:

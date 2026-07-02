@@ -33,6 +33,7 @@ import yaml
 from watermark.config import Settings, get_settings
 from watermark.hydrology.model import HydroFinding, ProvenancedValue, StormPlanInventory
 from watermark.logging import get_logger
+from watermark.sites import active_profile
 
 log = get_logger(__name__)
 
@@ -155,7 +156,13 @@ def refresh_inventory(
         ),
     )
     if write:
-        out = settings.data_dir / _INVENTORY_REL
+        relpath = active_profile(settings).storm_inventory_relpath
+        if relpath is None:
+            raise ValueError(
+                f"Site '{settings.site}' has no storm_inventory_relpath — "
+                "set it in the site profile before running refresh."
+            )
+        out = settings.data_dir / relpath
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(
             yaml.safe_dump(inv.model_dump(mode="json"), sort_keys=False), encoding="utf-8"
@@ -165,9 +172,12 @@ def refresh_inventory(
 
 
 def load_inventory(*, settings: Settings | None = None) -> StormPlanInventory | None:
-    """Load the committed inventory artifact, or ``None`` if it has not been generated."""
+    """Load the committed inventory artifact, or ``None`` if unavailable for this site."""
     settings = settings or get_settings()
-    path = settings.data_dir / _INVENTORY_REL
+    relpath = active_profile(settings).storm_inventory_relpath
+    if relpath is None:
+        return None
+    path = settings.data_dir / relpath
     if not path.exists():
         return None
     data = yaml.safe_load(path.read_text(encoding="utf-8"))

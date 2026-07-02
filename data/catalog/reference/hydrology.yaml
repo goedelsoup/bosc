@@ -44,7 +44,7 @@ storage:
 - relpath: reference/hydrology/routing.yaml
   media_type: application/x-yaml
   lfs: false
-- relpath: reference/hydrology/sanitary-basis.yaml
+- relpath: reference/hydrology/lima/sanitary-basis.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: reference/hydrology/theories.yaml

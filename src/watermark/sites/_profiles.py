@@ -86,6 +86,8 @@ _LIMA = SiteProfile(
     rsei_relpath="reference/rsei/inventory.yaml",
     consumer_energy_relpath="reference/eia/consumer-energy.yaml",
     grid_relpath="reference/eia/grid-profile.yaml",
+    # civil plan artifact (#901)
+    storm_inventory_relpath="extracted/plans/lma1a.storm-inventory.yaml",
     # toxics
     toxic_corridor_bbox=(40.695, 40.725, -84.140, -84.105),
     # balance
