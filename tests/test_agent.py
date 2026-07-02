@@ -162,6 +162,7 @@ def test_options_wire_the_discipline_prompt_and_research_skills() -> None:
     # read-only BOSC tools (no Bash/Write/etc. leak in).
     assert opts.allowed_tools == tools.ALLOWED_TOOL_NAMES
     assert len(tools.ALLOWED_TOOL_NAMES) == 25  # +search_web, +fetch_url (#1048)
+    assert "data-center-sweep" in RESEARCH_SKILLS  # +data-center-sweep (#1049)
 
 
 def test_held_back_skills_are_not_active() -> None:
