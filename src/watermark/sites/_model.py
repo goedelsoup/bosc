@@ -297,6 +297,12 @@ class SiteProfile(BaseModel):
 
     # --- RSEI county (rsei.py) ----------------------------------------------------------
     county_name: str
+    # Optional per-site economic-unit caveat, appended to the ``EconomicBaseline.note`` by
+    # ``economics.baseline.build_baseline``. For a site whose single-county econ unit does not
+    # capture the signature the site's thesis rests on (e.g. WPAFB straddles Greene+Montgomery
+    # and its defense-supplier concentration lives in the *other* county), this states that
+    # plainly and points the reader at the county/sibling that carries it. Default "" = no note.
+    econ_unit_note: str = ""
 
     # --- Legacy SSG map default view (site/gismap.py) -----------------------------------
     map_view_lat: float = 0.0  # authoritative in data/sites.yaml; filled by _fill_from_yaml

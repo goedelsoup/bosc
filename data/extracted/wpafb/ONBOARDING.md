@@ -67,6 +67,36 @@ WWTP NPDES; resolve the economic-unit scope (two-county Greene + Montgomery); co
 to DP&L #4922/PJM); and the data-center activity sweep (confirm the DoD-cloud
 thread + scan for a sited facility).
 
+## Batch progress (2026-07-02, #463–#467)
+
+- **#461 / #466 grid (DONE).** DP&L / **AES Ohio #4922** registered in `watermark.grid.utility._UTILITY_GRID`
+  (holding company **The AES Corporation (AES Ohio)**, PJM **DAY** zone) — the WPAFB + Xenia grid profiles
+  now carry a specific holding-company citation instead of the generic EIA-861 fallback. The requested
+  Ohio-hardcoding re-scan of the grid/econ connectors came back **clean** (no AEP leak; the utility
+  registry falls back gracefully for unlisted numbers).
+- **#465 economic unit (DONE — Montgomery-only + cross-ref note).** No multi-FIPS code change; instead a
+  durable `SiteProfile.econ_unit_note` field, surfaced by `economics.baseline.build_baseline` into the
+  committed baseline `note`, states the Greene/Montgomery straddle plainly and points the reader at the
+  Xenia (Greene 39057) baseline for the defense-supplier concentration (NAICS 54 LQ 2.11). So a reader of
+  the Montgomery-only unit is no longer misled into "no defense concentration."
+- **#464 WWTP (DONE, connector-sourced).** `plant_receiving` populated from the committed EPA ECHO
+  Great-Miami inventory: **Fairborn WRC** (OH0025062, 6.0 MGD → Mad River; at the base's northern edge on
+  WPAFB's abstraction reach 03270000) + **Western Regional WRF** (OH0026638, 20.0 MGD → Great Miami River).
+  Dayton WRF (72 MGD) + Tri-Cities North (11.2 MGD) stay `[open]` — ECHO returned no receiving_water;
+  passby minimums pending the OEPA fact sheets.
+- **#464 low-flow reaches (code done; values pending a live run).** The WPAFB at-Dayton reaches
+  (**03270000** Mad River near Dayton, **03270500** Great Miami at Dayton) were added to
+  `hydrology.basin._MAINSTEM_GAGES` with non-colliding aliases (the Urbana/Sidney precedent). Their 7Q10s
+  populate on the next connectivity-permitting `derive-low-flows` run (this environment can't reach USGS —
+  same transient-503 situation recorded above).
+- **#467 / #460 / #463 scaffolds (DONE as sourced skeletons; web pass to-run).** Committed and catalogued:
+  `extracted/wpafb/data-centers.md` (DoD-cloud thread from the corpus + the flat no-sited-facility scan +
+  instruments to pull), `extracted/xenia/data-centers.md` (flat-no-activity prior + instruments), and
+  `extracted/wpafb/groundwater-screen.md` (the buried-valley sole-source aquifer + TCE/PFAS plume overlay,
+  each claim pinned to the primary instrument that must verify it — EPA SSA record, AF IRP/CERCLA, DoD
+  PFAS, ATSDR, OEPA — and kept **to-verify, not findings**). The live web research (parcel/SOS/permit +
+  primary-source verification) is the remaining pass.
+
 ## Review gate (blocking)
 
 - [ ] Every written reference value is reviewed against a cited source (no fabricated values).

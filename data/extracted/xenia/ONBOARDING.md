@@ -67,6 +67,19 @@ Xenia/Beavercreek + WPAFB-corridor data-center activity (incl. the plume overlay
 County utility + PJM zone is pinned (Dayton Power & Light, EIA-861 #4922, PJM/PUCO) and the RSEI toxics
 inventory is run (Greene Co, 20 facilities / 17 scored).
 
+## Batch progress (2026-07-02, #460/#461)
+
+- **#461 grid (DONE).** Already pinned to DP&L / **AES Ohio #4922** / PJM **DAY**; the citation was
+  upgraded — #4922 is now registered in `watermark.grid.utility._UTILITY_GRID` (holding company
+  **The AES Corporation (AES Ohio)**, DAY zone), so the Xenia grid profile carries a specific
+  holding-company citation instead of the generic EIA-861 fallback.
+- **#460 data-center sweep (scaffold DONE; web pass to-run).** Committed and catalogued
+  `extracted/xenia/data-centers.md`: the flat-no-activity prior (`[verified]` zero corpus records;
+  Info NAICS 51 LQ 0.29 vs. the defense-signature NAICS 54 LQ 2.11), the instruments to pull
+  (Greene Auditor GIS, Ohio SOS, zoning, OEPA/ECHO OHD000001, AES Ohio DAY large-load queue), and
+  the WPAFB TCE/PFAS plume as the `[open]` contamination overlay on the shared buried-valley
+  aquifer. Discipline preserved: the Lima/Allen Bistrozzi graph is **not** bridged onto Xenia.
+
 ## Review gate (blocking)
 
 - [ ] Every written reference value is reviewed against a cited source (no fabricated values).

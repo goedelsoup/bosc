@@ -1,0 +1,36 @@
+id: data-centers-xenia
+title: Xenia / Beavercreek (Greene Co.) OH — Data-Center Activity Register
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: BOSC corpus (Greene County economics baseline; Little-Miami ECHO inventory); Xenia
+    onboarding self-research pass. The sited-facility web pass (parcel/SOS/EPA) is still to-run.
+license: public record / public domain
+access_tier: public
+site_scope: site:xenia
+storage:
+- relpath: extracted/xenia/data-centers.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- data-center
+- xenia
+- beavercreek
+- greene-county
+- little-miami
+- no-activity-prior
+- plume-overlay
+- sweep
+notes: >
+  Xenia sweep scaffold (2026-07-02, #460). Discover-and-pin with a real flat-no-activity prior:
+  [verified] zero Xenia/Greene/Little-Miami/Beavercreek data-center primary docs in the corpus, and
+  the employment mix argues against a cluster — Information NAICS 51 LQ 0.29 (no IT-hosting), while
+  Prof/Sci/Tech NAICS 54 LQ 2.11 is the WPAFB defense-contractor signature, not a data-center signal.
+  Web pass to-run: Greene Auditor GIS, Ohio SOS, zoning dockets, OEPA/ECHO (OHD000001), AES Ohio
+  DAY-zone large-load queue. Track the WPAFB TCE/PFAS plume as the [open] contamination overlay on
+  the shared buried-valley sole-source aquifer (see wpafb/groundwater-screen.md, #463). Discipline:
+  do NOT bridge the Lima/Allen Bistrozzi graph — any Xenia assembly is a separate register.

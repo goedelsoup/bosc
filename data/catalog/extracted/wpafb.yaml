@@ -1,0 +1,37 @@
+id: wpafb
+title: WPAFB (Greene + Montgomery Co., OH) Investigative Findings & Onboarding Record
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: Onboarding self-research pass (data/research/onboard-wpafb-*/findings.md); SiteProfile
+    hsg_citation. The primary sources named in the groundwater screen (US-EPA Sole Source Aquifer
+    record, AF IRP/CERCLA, DoD PFAS, ATSDR, OEPA) are to-pull — not yet in the corpus.
+license: public record / public domain
+access_tier: public
+site_scope: site:wpafb
+storage:
+- relpath: extracted/wpafb/groundwater-screen.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- wpafb
+- groundwater
+- buried-valley-aquifer
+- sole-source-aquifer
+- tce-plume
+- pfas
+- great-miami
+- mad-river
+notes: >
+  WPAFB groundwater screen scaffold (2026-07-02, #463) — the defining WPAFB receiving-water
+  dimension. WPAFB's water risk is groundwater, not surface 7Q10: the Great Miami / Mad River
+  Buried Valley sole-source aquifer (Dayton + WPAFB well fields) + a documented TCE/PFAS plume on
+  the same drinking-water aquifer. Both claims are currently [inference]/[reference] with NO primary
+  cited source — this doc pins each to the primary instrument that must verify it (EPA SSA
+  designation; AF IRP/CERCLA administrative record; DoD PFAS/AFFF; ATSDR; OEPA) and defines the
+  buried-valley + plume overlay as a new analysis dimension the surface Tier-0 tools do not cover.
+  Both claims stay to-verify, not findings, until cited.

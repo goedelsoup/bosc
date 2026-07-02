@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-02T21:46:22.874077+00:00'
+reconciled_at: '2026-07-02T23:03:55.506982+00:00'
 entries:
   aedg:
     exists: true
@@ -119,10 +119,10 @@ entries:
     stale: false
   data-centers:
     exists: true
-    sha256: 058c155fd36b0290f34b30ab4a1a3b71a9012c4a530737cbc9eb8896c836794f
-    size_bytes: 73291
+    sha256: 2482efb6cf3658b47cf53a6b887cc63e3263afa9b513c52be9909cd8435c700a
+    size_bytes: 85943
     lfs_materialized: true
-    file_count: 7
+    file_count: 9
     missing: []
     asof: null
     stale: false
@@ -157,6 +157,24 @@ entries:
     exists: true
     sha256: 13429781f72e11434a9880c5547407bb59b8add596c5792f054164f275ad72dd
     size_bytes: 11393
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+  data-centers-wpafb:
+    exists: true
+    sha256: f4d6119d3aee723c9c2903ddf8b36030af87c95844783b4aa509d19c9495193d
+    size_bytes: 8001
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+  data-centers-xenia:
+    exists: true
+    sha256: c5651d1f885b1bfb556abf913c5971ac0c94767c8908b54a223c58c236374f68
+    size_bytes: 4651
     lfs_materialized: true
     file_count: 1
     missing: []
@@ -209,8 +227,8 @@ entries:
     stale: false
   economics-baseline:
     exists: true
-    sha256: bc9c41e2b1fdffb10cee6d5856d562f97f51a3139eb597ceb5819d52e80a0767
-    size_bytes: 268995
+    sha256: 4d8fb26a338d4069b20255811877808414d98bba2f95e71b20fa77371255ee88
+    size_bytes: 269580
     lfs_materialized: true
     file_count: 19
     missing: []
@@ -236,8 +254,8 @@ entries:
     stale: false
   eia-grid-profile:
     exists: true
-    sha256: 787ccbc1a9bd6ced610071cf2c5b0b6128c959e0ea1d3b38998fffbf769923ed
-    size_bytes: 60439
+    sha256: 7dc6726d523aa081b4ecd3a6f0eccd7d16dab5d607f612efd71fd57cd2bdcadb
+    size_bytes: 60535
     lfs_materialized: true
     file_count: 19
     missing: []
@@ -814,6 +832,15 @@ entries:
     exists: true
     sha256: 9d8f9904a56c8b020dee930eb90a51ebbe1fc145ed0c49994be3e4aa546771ea
     size_bytes: 644
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+  wpafb:
+    exists: true
+    sha256: 8f4afee176b3a935d539ee32910c4e71720a850ac5e84749e8cb2f886da8362c
+    size_bytes: 7431
     lfs_materialized: true
     file_count: 1
     missing: []
