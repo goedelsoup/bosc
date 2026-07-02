@@ -1,0 +1,29 @@
+id: greenops
+title: GreenOps — Anthropic Admin usage & cost
+scope: reference
+status: reviewed
+producer:
+  kind: connector
+  command: greenops anthropic
+  connector_ref: watermark.greenops.connectors.anthropic
+  source: Anthropic Admin API — usage_report/messages + cost_report (org usage & cost, by model/workspace)
+  external_url: https://platform.claude.com/docs/en/api/usage-cost-api
+access_tier: keyed
+site_scope: basin-shared
+storage:
+- relpath: reference/greenops/anthropic-usage.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: reference
+tags:
+- greenops
+- anthropic
+- usage
+- cost
+notes: The model-provider slice of Watermark's own compute footprint (#1076/#1078) — Anthropic Admin
+  usage + cost over a trailing window, attributed by model and workspace. Every figure is `reference`
+  (a usage/billing export), never metered; the API exposes no per-message count, so an "inferences run"
+  figure is derived downstream (#4/#1083). Regenerate with `watermark greenops anthropic --write`
+  (needs ANTHROPIC_ADMIN_KEY).
