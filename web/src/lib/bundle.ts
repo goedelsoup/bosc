@@ -24,6 +24,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, isAbsolute, join, resolve } from "node:path";
 import { cwd, env } from "node:process";
 import { fileURLToPath } from "node:url";
+import type { HypothesisItem } from "./feeds";
 import { LIMA_SLUG } from "./routes";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -171,4 +172,9 @@ export function loadFeed<T = unknown>(name: string, slug: string = activeSite())
     return rows as T;
   }
   return JSON.parse(raw) as T;
+}
+
+/** Convenience wrapper — the three-hypothesis feed, or [] if unavailable. */
+export function getHypotheses(): HypothesisItem[] {
+  return hasFeed("hypotheses") ? loadFeed<HypothesisItem[]>("hypotheses") : [];
 }

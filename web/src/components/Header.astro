@@ -14,8 +14,7 @@ import {
   navItemLinks,
   type SectionId,
 } from "../lib/nav";
-import { hasFeed, loadFeed } from "../lib/bundle";
-import type { HypothesisItem } from "../lib/feeds";
+import { getHypotheses } from "../lib/bundle";
 import { withBase } from "../lib/site";
 import { currentSiteForPath, groupSites, SITE_STATUS_META, SITES, siteForPath } from "../lib/sites";
 
@@ -38,7 +37,7 @@ const here = siteForPath(Astro.url.pathname, base);
 // matches the chip instead of dropping to the network tabs (#793).
 const current = currentSiteForPath(Astro.url.pathname, base);
 const tier: "network" | "site" = current ? "site" : "network";
-const hypItems = hasFeed("hypotheses") ? loadFeed<HypothesisItem[]>("hypotheses") : [];
+const hypItems = getHypotheses();
 const networkTabsList = networkTabs(hypItems);
 const platformList = platformLinks();
 // The site-tier tab set for the current site: a coming-soon peer gets the registry-only locked bar;

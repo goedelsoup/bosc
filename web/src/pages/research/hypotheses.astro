@@ -11,9 +11,9 @@
  * rest are "Not yet assessed". Counts are real (Lima from the bundle) or a dash — never invented.
  */
 import Base from "~/layouts/Base.astro";
-import { hasFeed, loadFeed, loadManifest } from "~/lib/bundle";
-import { buildLens, indexAssessments, LENS_ORDER, lensConfig, lensCount, type DirLens } from "~/lib/directory";
-import type { DocumentCollectionItem, HypothesisAssessmentItem, HypothesisItem } from "~/lib/feeds";
+import { getHypotheses, hasFeed, loadFeed, loadManifest } from "~/lib/bundle";
+import { buildLens, indexAssessments, LENS_ORDER, lensConfig, lensCount } from "~/lib/directory";
+import type { DocumentCollectionItem, HypothesisAssessmentItem } from "~/lib/feeds";
 import { withBase } from "~/lib/site";
 
 const manifest = loadManifest();
@@ -29,19 +29,12 @@ const limaCounts = { docs: nFiles ? num(nFiles) : "—", records: nRecords ? num
 
 // The boom-origin hypotheses + their (site x hypothesis) evidence cells (#308) — now read from
 // the bundle, no longer hardcoded in directory.ts. Each cell carries a Citation (provenance).
-const hypItems = hasFeed("hypotheses") ? loadFeed<HypothesisItem[]>("hypotheses") : [];
+const hypItems = getHypotheses();
 const hypByKey = new Map(hypItems.map((h) => [h.id, h]));
 const cells = hasFeed("hypothesis-assessments")
   ? loadFeed<HypothesisAssessmentItem[]>("hypothesis-assessments")
   : [];
 const lensData = indexAssessments(cells);
-
-// ?lens= pre-selects the active pane server-side; CSS :checked selectors open it without JS.
-// Falls back to the default (water) for invalid or absent params.
-const lensParam = Astro.url.searchParams.get("lens") ?? "";
-const activeLens: DirLens = (LENS_ORDER as readonly string[]).includes(lensParam)
-  ? (lensParam as DirLens)
-  : LENS_ORDER[0];
 
 const lenses = LENS_ORDER.map((key) => ({
   cfg: lensConfig(key, hypByKey.get(key)),
@@ -81,7 +74,7 @@ const statusSwatch = (kind: "live" | "new") =>
             name="dir-lens"
             id={`lens-${l.cfg.key}`}
             class="dir-lens-input"
-            checked={l.cfg.key === activeLens}
+            checked={l.cfg.key === LENS_ORDER[0]}
             aria-label={`${l.cfg.n} — ${l.cfg.name}`}
           />
         ))
