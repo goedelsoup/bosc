@@ -1,0 +1,93 @@
+period:
+  label: Jul 2025-Jun 2026
+  start: 2025-07
+  end: 2026-06
+  kind: trailing_12_months
+input_tokens:
+  value: 4250000.0
+  unit: tokens
+  source: reference
+  citation: Anthropic Admin usage_report/messages (Jul 2025-Jun 2026)
+  confidence: high
+  asof: null
+output_tokens:
+  value: 1330000.0
+  unit: tokens
+  source: reference
+  citation: Anthropic Admin usage_report/messages (Jul 2025-Jun 2026)
+  confidence: high
+  asof: null
+cache_read_input_tokens:
+  value: 450000.0
+  unit: tokens
+  source: reference
+  citation: Anthropic Admin usage_report/messages (Jul 2025-Jun 2026)
+  confidence: high
+  asof: null
+cache_creation_input_tokens:
+  value: 200000.0
+  unit: tokens
+  source: reference
+  citation: Anthropic Admin usage_report/messages (Jul 2025-Jun 2026)
+  confidence: high
+  asof: null
+total_cost:
+  value: 126.5
+  unit: USD
+  source: reference
+  citation: Anthropic Admin cost_report (Jul 2025-Jun 2026)
+  confidence: high
+  asof: null
+web_search_requests:
+  value: 60.0
+  unit: requests
+  source: reference
+  citation: Anthropic Admin usage_report/messages (Jul 2025-Jun 2026)
+  confidence: high
+  asof: null
+by_model:
+- model: claude-sonnet-4-6
+  input_tokens: 2400000
+  output_tokens: 950000
+  cost:
+    value: 45.5
+    unit: USD
+    source: reference
+    citation: Anthropic Admin cost_report (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+- model: claude-opus-4-8
+  input_tokens: 1850000
+  output_tokens: 380000
+  cost:
+    value: 78.0
+    unit: USD
+    source: reference
+    citation: Anthropic Admin cost_report (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+by_workspace:
+- workspace_id: wrkspc_01JwQvzr7rXLA5AGx3HKfFUJ
+  input_tokens: 2750000
+  output_tokens: 730000
+  cost:
+    value: 95.5
+    unit: USD
+    source: reference
+    citation: Anthropic Admin cost_report (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+- workspace_id: wrkspc_01XYZ789ABC123DEF456MNO0
+  input_tokens: 1500000
+  output_tokens: 600000
+  cost:
+    value: 31.0
+    unit: USD
+    source: reference
+    citation: Anthropic Admin cost_report (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+note: Anthropic Admin usage_report/messages + cost_report over the window, attributed
+  by model and by workspace. Figures are `reference` (a usage/billing export), not
+  metered facts. The API exposes no per-message request count, so a literal 'inferences
+  run' figure is derived downstream (#4/#1083), never claimed here.

@@ -44,6 +44,16 @@ def econ_settings() -> Settings:
 
 
 @pytest.fixture
+def greenops_settings() -> Settings:
+    """Offline GreenOps settings: real repo data dir, connector fixtures, no network, no key."""
+    return Settings(
+        data_dir=REPO_ROOT / "data",
+        greenops_offline=True,
+        greenops_fixtures_dir=FIXTURES / "greenops",
+    )
+
+
+@pytest.fixture
 def gis_settings() -> Settings:
     """Offline GIS/imagery settings: real repo data dir, STAC fixtures, no network."""
     return Settings(
