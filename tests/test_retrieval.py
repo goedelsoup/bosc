@@ -31,15 +31,22 @@ from watermark.retrieval.store import Chunk, CorpusStore, SearchResult
 
 
 class _VectorProvider(EmbeddingProvider):
-    """Deterministic stub: hash-based fixed-dimension vectors, no model load."""
+    """Deterministic stub: hashlib-based fixed-dimension vectors, no model load.
+
+    Uses hashlib.md5 (not Python's randomized hash()) so vectors are stable
+    across processes regardless of PYTHONHASHSEED, and byte values ensure no
+    zero vector is produced for ordinary text.
+    """
 
     DIM = 8
 
     def embed(self, texts: list[str]) -> list[list[float]]:
+        import hashlib
+
         out: list[list[float]] = []
         for text in texts:
-            h = hash(text)
-            v = [(h >> i & 1) * 0.5 for i in range(self.DIM)]
+            digest = hashlib.md5(text.encode()).digest()
+            v = [b / 255.0 for b in digest[: self.DIM]]
             norm = sum(x**2 for x in v) ** 0.5 or 1.0
             out.append([x / norm for x in v])
         return out
