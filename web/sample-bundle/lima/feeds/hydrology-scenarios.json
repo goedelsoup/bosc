@@ -3,6 +3,7 @@
     "scenario": {
       "name": "baseline",
       "description": "Current municipal loop, no data-center cooling draw.",
+      "cooling_model": "off",
       "cooling_demand": {
         "value": 0.0,
         "unit": "MGD",
@@ -21,6 +22,7 @@
       },
       "basis": null
     },
+    "cooling_model": "off",
     "consumptive_loss": {
       "value": 0.0,
       "unit": "cfs",
@@ -29,7 +31,7 @@
       "confidence": "medium",
       "asof": null
     },
-    "ottawa_7q10": {
+    "receiving_7q10": {
       "value": 0.2,
       "unit": "cfs",
       "source": "document",
@@ -37,7 +39,7 @@
       "confidence": "high",
       "asof": null
     },
-    "ottawa_live": {
+    "receiving_live": {
       "value": 36.3,
       "unit": "cfs",
       "source": "connector",
@@ -45,6 +47,7 @@
       "confidence": "high",
       "asof": "2026-05-31T12:30:00.000-04:00"
     },
+    "receiving_water_name": null,
     "balance": {
       "nodes": [
         {
@@ -245,7 +248,8 @@
   {
     "scenario": {
       "name": "buildout",
-      "description": "Data-center campus with evaporative cooling drawing on Lima's supply.",
+      "description": "Data-center campus cooling draw (evaporative_tower) on the municipal supply.",
+      "cooling_model": "evaporative_tower",
       "cooling_demand": {
         "value": 3.92,
         "unit": "MGD",
@@ -263,11 +267,12 @@
         "asof": null
       },
       "basis": {
+        "cooling_model": "evaporative_tower",
         "it_load": {
           "value": 275.0,
           "unit": "MW",
           "source": "document",
-          "citation": "OEPA Air PTI P0138965 (Facility 0302022054): 114 gensets x 2.75 ekW = ~313 MW backup; IT ~250-300 MW (N+1)",
+          "citation": "OEPA Air PTI P0138965 (Facility 0302022054), committed data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): 114 hall gensets x 2.75 ekW = ~313 MW backup; IT ~250-300 MW (N+1). Per-engine ekW from the draft public notice (3987141/3987144); engine size CBI-redacted in the final permit under an Ohio EPA trade-secret grant (OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).",
           "confidence": "high",
           "asof": null
         },
@@ -319,9 +324,13 @@
           "confidence": "medium",
           "asof": null
         },
-        "method": "power x WUE (central); blowdown x cycles (upper bound)"
+        "method": "power x WUE (central); blowdown x cycles (upper bound)",
+        "method_disclosed": true,
+        "is_bracketed": false,
+        "seasonal_months": null
       }
     },
+    "cooling_model": "evaporative_tower",
     "consumptive_loss": {
       "value": 4.851392,
       "unit": "cfs",
@@ -330,7 +339,7 @@
       "confidence": "medium",
       "asof": null
     },
-    "ottawa_7q10": {
+    "receiving_7q10": {
       "value": 0.2,
       "unit": "cfs",
       "source": "document",
@@ -338,7 +347,7 @@
       "confidence": "high",
       "asof": null
     },
-    "ottawa_live": {
+    "receiving_live": {
       "value": 36.3,
       "unit": "cfs",
       "source": "connector",
@@ -346,6 +355,7 @@
       "confidence": "high",
       "asof": "2026-05-31T12:30:00.000-04:00"
     },
+    "receiving_water_name": null,
     "balance": {
       "nodes": [
         {

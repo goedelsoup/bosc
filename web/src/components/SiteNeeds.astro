@@ -10,7 +10,7 @@
  * Shared by the partial-site landing (`PartialSiteHome`) and the peer leads page so the board has
  * one source of truth.
  */
-import { SECTION_META, lockedSections } from "../lib/readiness";
+import { SECTION_META, coolingMethodUndisclosed, lockedSections } from "../lib/readiness";
 import { withSite } from "../lib/site";
 
 interface Props {
@@ -22,6 +22,16 @@ const needs = lockedSections(slug).map((s) => ({
   label: SECTION_META[s].label,
   holds: SECTION_META[s].holds,
 }));
+// The cooling-method disclosure lead (#1057): a facility on the record with no disclosed
+// cooling method means every water number is a bracketed range — the single most valuable
+// source a visitor could contribute here is the disclosure itself.
+if (coolingMethodUndisclosed(slug)) {
+  needs.unshift({
+    label: "Cooling-method disclosure",
+    holds:
+      "any record of how the facility rejects heat — a water contract, wastewater permit, or cooling-plant spec; until then the water figures stay a bracketed range",
+  });
+}
 ---
 
 {

@@ -17,7 +17,7 @@
  *
  * Figures come from the `hydrology-scenarios` feed (the same numbers the hydrology
  * dashboard renders — no fork): the buildout cooling demand / consumptive fraction
- * / consumptive loss, the assimilative discharge rows, and `ottawa_7q10`. The
+ * / consumptive loss, the assimilative discharge rows, and `receiving_7q10`. The
  * seasonal floors (summer 30Q10, driest 1Q10) and the campus FM-2 discharge are
  * cited constants. NOT client-safe; the island consumes the plain `DilutionData`.
  */
@@ -108,8 +108,8 @@ export function buildDilution(): DilutionData {
   const consumptiveFraction = buildout?.scenario.consumptive_fraction.value ?? 0.8;
   const drawAtBuildoutCfs =
     buildout?.consumptive_loss.value ?? maxCoolingMgd * consumptiveFraction * CFS_PER_MGD;
-  const annual7q10 = buildout?.ottawa_7q10.value ?? 0.2;
-  const ottawaLiveCfs = buildout?.ottawa_live.value ?? null;
+  const annual7q10 = buildout?.receiving_7q10?.value ?? 0.2;
+  const ottawaLiveCfs = buildout?.receiving_live?.value ?? null;
   const cfsPerCoolingMgd =
     maxCoolingMgd > 0 ? drawAtBuildoutCfs / maxCoolingMgd : consumptiveFraction * CFS_PER_MGD;
 
