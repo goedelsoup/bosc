@@ -1,7 +1,7 @@
 // The full /search results page (#308) — the "see all N results" surface. Shares the
 // matcher + record-row grammar with the topbar dropdown via searchEngine.ts. Reads ?q from
 // the URL, renders every match grouped by section, keeps the URL in sync as you type.
-import { esc, rank, renderGroups, type SearchDoc } from "./searchEngine";
+import { esc, makeIndexLoader, rank, renderGroups } from "./searchEngine";
 
 const input = document.getElementById("search-page-input") as HTMLInputElement | null;
 const out = document.getElementById("search-page-results");
@@ -11,20 +11,7 @@ if (input && out) {
   const indexUrl = input.dataset.index || "/search-index.json";
   const base = (input.dataset.base || "/").replace(/\/$/, "");
 
-  let index: SearchDoc[] | null = null;
-  const load = (): Promise<SearchDoc[]> => {
-    if (index) return Promise.resolve(index);
-    return fetch(indexUrl)
-      .then((r) => r.json())
-      .then((d: SearchDoc[]) => {
-        index = d;
-        return index;
-      })
-      .catch(() => {
-        index = [];
-        return index;
-      });
-  };
+  const load = makeIndexLoader(indexUrl);
 
   const run = (): void => {
     const q = input.value.trim();

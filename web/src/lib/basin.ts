@@ -120,6 +120,8 @@ export function cumulativeFlowSeries(
 ): { points: LinePoint[]; totalMgd: number; skipped: number } {
   const bySlug = new Map(sites.map((s) => [s.slug, s]));
   const points: LinePoint[] = [];
+  // Accumulate raw and round only at the point/total boundary, so the end label always
+  // agrees with `totalDesignFlow` (which sums raw values and rounds once).
   let running = 0;
   let skipped = 0;
   for (const n of nodes) {
@@ -128,11 +130,11 @@ export function cumulativeFlowSeries(
       skipped += 1;
       continue;
     }
-    running = Math.round((running + flow) * 100) / 100;
+    running += flow;
     const site = bySlug.get(n.slug);
-    points.push({ label: site ? siteBadge(site) : n.place, value: running });
+    points.push({ label: site ? siteBadge(site) : n.place, value: Math.round(running * 100) / 100 });
   }
-  return { points, totalMgd: running, skipped };
+  return { points, totalMgd: Math.round(running * 10) / 10, skipped };
 }
 
 /** Per-site receiving design flow, largest first — the ranked-bar view of the same record. */

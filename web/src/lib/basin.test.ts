@@ -30,26 +30,26 @@ const site = (slug: string, over: Partial<NetworkSite> = {}): NetworkSite => ({
   ...over,
 });
 
-const node = (slug: string, over: Record<string, unknown> = {}): WatershedNode =>
-  ({
-    slug,
-    place: slug[0].toUpperCase() + slug.slice(1),
-    county: "Test",
-    huc8: "04100005",
-    receiving_water: "Test River",
-    drainage_path: ["Test River"],
-    subtree: "Test",
-    downstream: "Lake Erie",
-    regime: "tributary",
-    screen: { npdes: `OH00${slug.length}`, discharger: `${slug.toUpperCase()} WWTP`, status: "no_7q10" },
-    grid: {},
-    economy: {},
-    toxics: {},
-    activity: { has_disclosed_facility: false },
-    ...over,
-  }) as WatershedNode;
+// Type-checked like site() — no cast, so the fixture can't drift from the feeds.ts contract.
+const node = (slug: string, over: Partial<WatershedNode> = {}): WatershedNode => ({
+  slug,
+  place: slug[0].toUpperCase() + slug.slice(1),
+  county: "Test",
+  huc8: "04100005",
+  receiving_water: "Test River",
+  drainage_path: ["Test River"],
+  subtree: "Test",
+  downstream: "Lake Erie",
+  regime: "tributary",
+  screen: { npdes: `OH00${slug.length}`, discharger: `${slug.toUpperCase()} WWTP`, status: "no_7q10" },
+  grid: {},
+  economy: {},
+  toxics: {},
+  activity: { has_disclosed_facility: false },
+  ...over,
+});
 
-const screened = (slug: string, flow: number, extra: Record<string, unknown> = {}): WatershedNode =>
+const screened = (slug: string, flow: number, extra: Partial<WatershedNode> = {}): WatershedNode =>
   node(slug, {
     screen: {
       npdes: "OH0000001",

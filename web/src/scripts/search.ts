@@ -1,7 +1,7 @@
 // The topbar dropdown search. Matching + the record-row grammar live in the shared engine
 // (searchEngine.ts) so the dropdown and the full /search page never drift. Reads config off
 // the input's data attributes (set server-side): data-index, data-base.
-import { rank, renderGroups, type SearchDoc } from "./searchEngine";
+import { makeIndexLoader, rank, renderGroups } from "./searchEngine";
 
 const box = document.getElementById("bosc-search") as HTMLInputElement | null;
 const panel = document.getElementById("bosc-search-results");
@@ -12,20 +12,7 @@ if (box && panel) {
   // The full results page is a network-global route (root, not under the Lima base).
   const allUrl = (q: string): string => `${base}/search?q=${encodeURIComponent(q)}`;
 
-  let index: SearchDoc[] | null = null;
-  const load = (): Promise<SearchDoc[]> => {
-    if (index) return Promise.resolve(index);
-    return fetch(indexUrl)
-      .then((r) => r.json())
-      .then((d: SearchDoc[]) => {
-        index = d;
-        return index;
-      })
-      .catch(() => {
-        index = [];
-        return index;
-      });
-  };
+  const load = makeIndexLoader(indexUrl);
 
   const run = (): void => {
     const q = box.value.trim();

@@ -14,6 +14,27 @@ export interface SearchDoc {
 export const esc = (s: string): string =>
   s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 
+/** Lazy, cached loader for the build-time search index — shared by the dropdown and the
+ *  results page so the fetch/cache/fallback behavior never drifts. A failed fetch/parse is
+ *  logged and degrades to an empty index (search shows "no matches", the page still works). */
+export function makeIndexLoader(indexUrl: string): () => Promise<SearchDoc[]> {
+  let index: SearchDoc[] | null = null;
+  return () => {
+    if (index) return Promise.resolve(index);
+    return fetch(indexUrl)
+      .then((r) => r.json())
+      .then((d: SearchDoc[]) => {
+        index = d;
+        return index;
+      })
+      .catch((err: unknown) => {
+        console.error(`search: failed to load index ${indexUrl}`, err);
+        index = [];
+        return index;
+      });
+  };
+}
+
 // A ~140-char window around the first matched term, with the term marked.
 export function snippet(text: string, terms: string[]): string {
   const lower = text.toLowerCase();
