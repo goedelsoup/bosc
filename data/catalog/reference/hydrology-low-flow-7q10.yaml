@@ -9,6 +9,8 @@ producer:
   source: Cited 7Q10s read from Ohio EPA NPDES fact sheets (document) + mainstem 7Q10s derived from USGS
     NWIS daily discharge via log-Pearson III
   external_url: https://waterservices.usgs.gov/
+depends_on:
+- hydrology-wbd
 license: U.S. Government work (USGS-derived) + Ohio public record (cited fact-sheet values)
 access_tier: public
 site_scope: basin-shared

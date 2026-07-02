@@ -366,6 +366,9 @@ _PRESERVED_FIELDS = (
     "schema_ref",
     "tags",
     "notes",
+    # ``depends_on`` is editorial too (#1020): the process DAG is mapped by hand, so a
+    # refreshed stub must never drop a reviewer's declared prerequisites.
+    "depends_on",
     # ``site_scope`` is editorial (#778): a path can't tell that Fort Wayne's IDEM permits are
     # `site:fort-wayne` rather than a generic `slug-scoped` template, so the reviewer's owner tag
     # is preserved on refresh. The mechanical default below is only for a brand-new stub.

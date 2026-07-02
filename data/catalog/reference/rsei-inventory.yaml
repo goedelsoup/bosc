@@ -8,6 +8,8 @@ producer:
   connector_ref: watermark.rsei
   source: EPA RSEI Public Data Set (AWS Open Data s3://epa-rsei-pds), version v234
   external_url: https://registry.opendata.aws/epa-rsei-pds/
+depends_on:
+- echo-maumee-npdes
 license: U.S. Government work (public domain)
 access_tier: public
 site_scope: slug-scoped

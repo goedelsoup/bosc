@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-01T21:10:32.826176+00:00'
+reconciled_at: '2026-07-01T23:56:12.796027+00:00'
 entries:
   aedg:
     exists: true
@@ -69,6 +69,15 @@ entries:
     size_bytes: 81424
     lfs_materialized: true
     file_count: 4
+    missing: []
+    asof: null
+    stale: false
+  bundle-records:
+    exists: true
+    sha256: null
+    size_bytes: 0
+    lfs_materialized: true
+    file_count: 0
     missing: []
     asof: null
     stale: false
@@ -591,6 +600,15 @@ entries:
     size_bytes: 17043
     lfs_materialized: true
     file_count: 8
+    missing: []
+    asof: null
+    stale: false
+  onboard-bundle:
+    exists: true
+    sha256: null
+    size_bytes: 0
+    lfs_materialized: true
+    file_count: 0
     missing: []
     asof: null
     stale: false
