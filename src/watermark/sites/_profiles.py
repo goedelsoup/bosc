@@ -1518,12 +1518,15 @@ _SIDNEY = SiteProfile(
     rsei_relpath="reference/rsei/sidney/inventory.yaml",
     consumer_energy_relpath="reference/eia/sidney/consumer-energy.yaml",
     grid_relpath="reference/eia/sidney/grid-profile.yaml",
-    toxic_corridor_bbox=(
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-    ),  # [open] pending the corridor (the Sidney manufacturing reach)
+    # [inference] the Sidney manufacturing reach: Emerson Climate Technologies (1675 W Campbell Rd,
+    # 40.280/-84.182) + Copeland Shelby Mfg (320 Adams St, 40.289/-84.152) + Copeland Condensing
+    # Unit Div. (756 S Brooklyn Ave, 40.277/-84.148), the three Emerson Electric subsidiaries that
+    # anchor Sidney's compressor/refrigeration complex. Box extends to cover the adjacent heavy-
+    # industrial cluster (Thermoseal, American Trim, ITW Food Equipment, Reliable Castings,
+    # Mechanical Galv-Plating, Ross Aluminum Castings, LEROI, Masland, NORCOLD, Stolle);
+    # excludes Anna Engine Plant (~40.37) and GKN/Airstream (~40.44) in Anna/Jackson Center,
+    # and Ross Aluminum Avon Div (~40.253) south of Sidney proper. (lat_min, lat_max, lon_min, lon_max)
+    toxic_corridor_bbox=(40.268, 40.308, -84.210, -84.140),
     plant_receiving={},  # [open] pending the Sidney WWTP NPDES fact sheet
     abstraction_gage="03261500",  # [verified] Great Miami River at Sidney OH
     supply_gage_primary="03261500",  # [verified] Great Miami River at Sidney
