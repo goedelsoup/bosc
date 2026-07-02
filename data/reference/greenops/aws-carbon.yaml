@@ -1,0 +1,163 @@
+period:
+  label: Jul 2025-Jun 2026
+  start: 2025-07
+  end: 2026-06
+  kind: trailing_12_months
+mbm_total:
+  value: 0.018
+  unit: MTCO2e
+  source: reference
+  citation: AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)
+  confidence: high
+  asof: null
+lbm_total:
+  value: 0.045
+  unit: MTCO2e
+  source: reference
+  citation: AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)
+  confidence: high
+  asof: null
+monthly:
+- month: 2025-07
+  mbm_emissions:
+    value: 0.002
+    unit: MTCO2e
+    source: reference
+    citation: AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  lbm_emissions:
+    value: 0.005
+    unit: MTCO2e
+    source: reference
+    citation: AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+- month: 2025-08
+  mbm_emissions:
+    value: 0.002
+    unit: MTCO2e
+    source: reference
+    citation: AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  lbm_emissions:
+    value: 0.005
+    unit: MTCO2e
+    source: reference
+    citation: AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+- month: 2025-09
+  mbm_emissions:
+    value: 0.002
+    unit: MTCO2e
+    source: reference
+    citation: AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  lbm_emissions:
+    value: 0.005
+    unit: MTCO2e
+    source: reference
+    citation: AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+- month: 2025-10
+  mbm_emissions:
+    value: 0.002
+    unit: MTCO2e
+    source: reference
+    citation: AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  lbm_emissions:
+    value: 0.005
+    unit: MTCO2e
+    source: reference
+    citation: AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+- month: 2025-11
+  mbm_emissions:
+    value: 0.002
+    unit: MTCO2e
+    source: reference
+    citation: AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  lbm_emissions:
+    value: 0.005
+    unit: MTCO2e
+    source: reference
+    citation: AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+- month: 2025-12
+  mbm_emissions:
+    value: 0.002
+    unit: MTCO2e
+    source: reference
+    citation: AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  lbm_emissions:
+    value: 0.005
+    unit: MTCO2e
+    source: reference
+    citation: AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+- month: 2026-01
+  mbm_emissions:
+    value: 0.002
+    unit: MTCO2e
+    source: reference
+    citation: AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  lbm_emissions:
+    value: 0.005
+    unit: MTCO2e
+    source: reference
+    citation: AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+- month: 2026-02
+  mbm_emissions:
+    value: 0.002
+    unit: MTCO2e
+    source: reference
+    citation: AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  lbm_emissions:
+    value: 0.005
+    unit: MTCO2e
+    source: reference
+    citation: AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+- month: 2026-03
+  mbm_emissions:
+    value: 0.002
+    unit: MTCO2e
+    source: reference
+    citation: AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  lbm_emissions:
+    value: 0.005
+    unit: MTCO2e
+    source: reference
+    citation: AWS Sustainability GetEstimatedCarbonEmissions (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+model_version: v3.0.0
+note: AWS Sustainability GetEstimatedCarbonEmissions (the Customer Carbon Footprint
+  Tool's successor; CCFT retired 2026-06-30) over the window, monthly granularity,
+  market- + location-based methods. Figures are `reference` (AWS's own estimate),
+  not metered. AWS publishes no electricity/kWh figure — the derived electricity number
+  is calibrated against lbm_total via grid intensity in footprint.py (#1082/#1083).
+  Emissions data lags ~3 months; the monthly series ends at AWS's latest published
+  month.

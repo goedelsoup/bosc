@@ -1,0 +1,35 @@
+id: greenops-aws
+title: GreenOps — AWS costs & estimated carbon
+scope: reference
+status: reviewed
+producer:
+  kind: connector
+  command: greenops aws
+  connector_ref: watermark.greenops.connectors.aws
+  source: AWS Cost Explorer (ce:GetCostAndUsage) + AWS Sustainability API (GetEstimatedCarbonEmissions,
+    the Customer Carbon Footprint Tool's successor)
+  external_url: https://docs.aws.amazon.com/sustainability/latest/APIReference/Welcome.html
+access_tier: keyed
+site_scope: basin-shared
+storage:
+- relpath: reference/greenops/aws-costs.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/greenops/aws-carbon.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: reference
+tags:
+- greenops
+- aws
+- cost
+- carbon
+notes: The cloud-provider slice of Watermark's own compute footprint (#1076/#1079) — Cost Explorer
+  dollars folded into the platform-function taxonomy (hosting/ingestion/search/ai_inference/storage;
+  unmapped services land in `other`), plus AWS's own emissions estimate (MBM + LBM, MTCO2e). Every
+  figure is `reference` (a billing/emissions export), never metered. AWS publishes no electricity/kWh
+  figure — the derived electricity number is calibrated against the LBM total in footprint.py
+  (#1082/#1083); emissions data lags ~3 months. Regenerate with `watermark greenops aws --write`
+  (needs AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY).

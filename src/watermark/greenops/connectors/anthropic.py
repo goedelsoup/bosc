@@ -26,7 +26,6 @@ headline stays a modeled figure derived downstream (#4/#1083), never metered her
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, cast
 
@@ -36,11 +35,12 @@ from pydantic import BaseModel, ConfigDict
 
 from watermark.config import Settings, get_settings
 from watermark.connectors import cached_get
-from watermark.greenops.model import GreenopsPeriod
+from watermark.greenops.model import GreenopsPeriod, period_from_window
 from watermark.hydrology.model import ProvenancedValue
 from watermark.logging import get_logger
 
 from . import GreenopsOfflineError
+from ._readme import write_reference_readme
 
 log = get_logger(__name__)
 
@@ -117,17 +117,6 @@ class AnthropicUsageReport(BaseModel):
         values += [m.cost for m in self.by_model]
         values += [w.cost for w in self.by_workspace]
         return values
-
-
-def _period_from_window(starting_at: str, ending_at: str) -> GreenopsPeriod:
-    """Build the report window label from the RFC 3339 bounds (``ending_at`` is exclusive)."""
-    start = datetime.fromisoformat(starting_at.replace("Z", "+00:00"))
-    end = datetime.fromisoformat(ending_at.replace("Z", "+00:00")) - timedelta(days=1)
-    return GreenopsPeriod(
-        label=f"{start:%b %Y}-{end:%b %Y}",
-        start=f"{start:%Y-%m}",
-        end=f"{end:%Y-%m}",
-    )
 
 
 def _fetch_report(report: str, key_params: dict[str, Any], settings: Settings) -> dict[str, Any]:
@@ -335,7 +324,7 @@ def fetch_anthropic_usage(
     usage_payload = _fetch_report("usage_report/messages", usage_key, settings)
     cost_payload = _fetch_report("cost_report", cost_key, settings)
     return build_usage_report(
-        usage_payload, cost_payload, _period_from_window(starting_at, ending_at)
+        usage_payload, cost_payload, period_from_window(starting_at, ending_at)
     )
 
 
@@ -343,34 +332,11 @@ def fetch_anthropic_usage(
 
 _REFERENCE_RELPATH = Path("reference") / "greenops" / "anthropic-usage.yaml"
 
-_README = """\
-# GreenOps — Anthropic Admin usage & cost
-
-The model-provider slice of Watermark's own compute footprint (epic #1076, #1078): the
-organization's Anthropic **Admin** usage and cost reports, reduced to token totals + USD cost
-over a trailing window and attributed **by model** and **by workspace**.
-
-Regenerate with `watermark greenops anthropic --write` (needs `ANTHROPIC_ADMIN_KEY`, an Admin
-API key `sk-ant-admin01-…` distinct from the inference `ANTHROPIC_API_KEY`). Raw responses
-cache under `data/cache/greenops/` (git-ignored); this committed YAML is regenerable.
-
-## Source & discipline
-
-- `anthropic-usage.yaml` — pulled from `/v1/organizations/usage_report/messages`
-  (`group_by=model,workspace_id`) and `/v1/organizations/cost_report`
-  (`group_by=workspace_id,description`), both at daily granularity, paginated.
-- Every figure is `source: reference` — an authoritative usage/billing export, **not** a
-  metered fact about our own consumption. Nothing here is `connector`-`verified`.
-- **No inference count.** The Messages Usage Report exposes token aggregates and
-  `web_search_requests` only — there is no per-request/message count. The `/about/sustainability`
-  "AI inferences run" headline is therefore derived downstream (#4/#1083), never metered here.
-"""
-
 
 def write_anthropic_usage(
     report: AnthropicUsageReport, *, settings: Settings | None = None
 ) -> Path:
-    """Persist the report as committed reference YAML + a README; return the YAML path."""
+    """Persist the report as committed reference YAML + the shared README; return the YAML path."""
     settings = settings or get_settings()
     out = settings.data_dir / _REFERENCE_RELPATH
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -378,7 +344,7 @@ def write_anthropic_usage(
         yaml.safe_dump(report.model_dump(mode="json"), sort_keys=False, allow_unicode=True),
         encoding="utf-8",
     )
-    (out.parent / "README.md").write_text(_README, encoding="utf-8")
+    write_reference_readme(out.parent)
     log.info("greenops.anthropic.wrote", path=str(out))
     return out
 

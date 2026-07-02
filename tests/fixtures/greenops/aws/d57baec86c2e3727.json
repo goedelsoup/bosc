@@ -1,0 +1,179 @@
+{
+  "params": {
+    "report": "estimated_carbon_emissions",
+    "starting_at": "2025-07-01T00:00:00Z",
+    "ending_at": "2026-07-01T00:00:00Z",
+    "granularity": "MONTHLY",
+    "emissions_types": [
+      "TOTAL_LBM_CARBON_EMISSIONS",
+      "TOTAL_MBM_CARBON_EMISSIONS"
+    ]
+  },
+  "fetched_at": "2026-07-01T00:00:00+00:00",
+  "payload": {
+    "Results": [
+      {
+        "DimensionsValues": {},
+        "EmissionsValues": {
+          "TOTAL_LBM_CARBON_EMISSIONS": {
+            "Unit": "MTCO2e",
+            "Value": 0.005
+          },
+          "TOTAL_MBM_CARBON_EMISSIONS": {
+            "Unit": "MTCO2e",
+            "Value": 0.002
+          }
+        },
+        "ModelVersion": "v3.0.0",
+        "TimePeriod": {
+          "Start": "2025-07-01T00:00:00Z",
+          "End": "2025-08-01T00:00:00Z"
+        }
+      },
+      {
+        "DimensionsValues": {},
+        "EmissionsValues": {
+          "TOTAL_LBM_CARBON_EMISSIONS": {
+            "Unit": "MTCO2e",
+            "Value": 0.005
+          },
+          "TOTAL_MBM_CARBON_EMISSIONS": {
+            "Unit": "MTCO2e",
+            "Value": 0.002
+          }
+        },
+        "ModelVersion": "v3.0.0",
+        "TimePeriod": {
+          "Start": "2025-08-01T00:00:00Z",
+          "End": "2025-09-01T00:00:00Z"
+        }
+      },
+      {
+        "DimensionsValues": {},
+        "EmissionsValues": {
+          "TOTAL_LBM_CARBON_EMISSIONS": {
+            "Unit": "MTCO2e",
+            "Value": 0.005
+          },
+          "TOTAL_MBM_CARBON_EMISSIONS": {
+            "Unit": "MTCO2e",
+            "Value": 0.002
+          }
+        },
+        "ModelVersion": "v3.0.0",
+        "TimePeriod": {
+          "Start": "2025-09-01T00:00:00Z",
+          "End": "2025-10-01T00:00:00Z"
+        }
+      },
+      {
+        "DimensionsValues": {},
+        "EmissionsValues": {
+          "TOTAL_LBM_CARBON_EMISSIONS": {
+            "Unit": "MTCO2e",
+            "Value": 0.005
+          },
+          "TOTAL_MBM_CARBON_EMISSIONS": {
+            "Unit": "MTCO2e",
+            "Value": 0.002
+          }
+        },
+        "ModelVersion": "v3.0.0",
+        "TimePeriod": {
+          "Start": "2025-10-01T00:00:00Z",
+          "End": "2025-11-01T00:00:00Z"
+        }
+      },
+      {
+        "DimensionsValues": {},
+        "EmissionsValues": {
+          "TOTAL_LBM_CARBON_EMISSIONS": {
+            "Unit": "MTCO2e",
+            "Value": 0.005
+          },
+          "TOTAL_MBM_CARBON_EMISSIONS": {
+            "Unit": "MTCO2e",
+            "Value": 0.002
+          }
+        },
+        "ModelVersion": "v3.0.0",
+        "TimePeriod": {
+          "Start": "2025-11-01T00:00:00Z",
+          "End": "2025-12-01T00:00:00Z"
+        }
+      },
+      {
+        "DimensionsValues": {},
+        "EmissionsValues": {
+          "TOTAL_LBM_CARBON_EMISSIONS": {
+            "Unit": "MTCO2e",
+            "Value": 0.005
+          },
+          "TOTAL_MBM_CARBON_EMISSIONS": {
+            "Unit": "MTCO2e",
+            "Value": 0.002
+          }
+        },
+        "ModelVersion": "v3.0.0",
+        "TimePeriod": {
+          "Start": "2025-12-01T00:00:00Z",
+          "End": "2026-01-01T00:00:00Z"
+        }
+      },
+      {
+        "DimensionsValues": {},
+        "EmissionsValues": {
+          "TOTAL_LBM_CARBON_EMISSIONS": {
+            "Unit": "MTCO2e",
+            "Value": 0.005
+          },
+          "TOTAL_MBM_CARBON_EMISSIONS": {
+            "Unit": "MTCO2e",
+            "Value": 0.002
+          }
+        },
+        "ModelVersion": "v3.0.0",
+        "TimePeriod": {
+          "Start": "2026-01-01T00:00:00Z",
+          "End": "2026-02-01T00:00:00Z"
+        }
+      },
+      {
+        "DimensionsValues": {},
+        "EmissionsValues": {
+          "TOTAL_LBM_CARBON_EMISSIONS": {
+            "Unit": "MTCO2e",
+            "Value": 0.005
+          },
+          "TOTAL_MBM_CARBON_EMISSIONS": {
+            "Unit": "MTCO2e",
+            "Value": 0.002
+          }
+        },
+        "ModelVersion": "v3.0.0",
+        "TimePeriod": {
+          "Start": "2026-02-01T00:00:00Z",
+          "End": "2026-03-01T00:00:00Z"
+        }
+      },
+      {
+        "DimensionsValues": {},
+        "EmissionsValues": {
+          "TOTAL_LBM_CARBON_EMISSIONS": {
+            "Unit": "MTCO2e",
+            "Value": 0.005
+          },
+          "TOTAL_MBM_CARBON_EMISSIONS": {
+            "Unit": "MTCO2e",
+            "Value": 0.002
+          }
+        },
+        "ModelVersion": "v3.0.0",
+        "TimePeriod": {
+          "Start": "2026-03-01T00:00:00Z",
+          "End": "2026-04-01T00:00:00Z"
+        }
+      }
+    ]
+  }
+}

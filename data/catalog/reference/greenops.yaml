@@ -26,4 +26,6 @@ notes: The model-provider slice of Watermark's own compute footprint (#1076/#107
   usage + cost over a trailing window, attributed by model and workspace. Every figure is `reference`
   (a usage/billing export), never metered; the API exposes no per-message count, so an "inferences run"
   figure is derived downstream (#4/#1083). Regenerate with `watermark greenops anthropic --write`
-  (needs ANTHROPIC_ADMIN_KEY).
+  (needs ANTHROPIC_ADMIN_KEY). The folder README is shared across the greenops connectors (composed
+  by `greenops.connectors._readme` since issue 1079), so any `--write` regenerates the whole
+  document — see also `greenops-aws`.

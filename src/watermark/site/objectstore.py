@@ -19,7 +19,6 @@ this only reads source bytes — it never alters one.
 from __future__ import annotations
 
 import hashlib
-import hmac
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
@@ -30,6 +29,7 @@ from urllib.parse import quote
 import httpx
 
 from watermark.config import Settings
+from watermark.connectors._sigv4 import sigv4_authorization
 from watermark.logging import get_logger
 from watermark.site.documents import build_documents
 
@@ -189,62 +189,8 @@ def run_sync(
 
 
 # --- SigV4-signed R2 transport ------------------------------------------------
-def _hmac(key: bytes, msg: str) -> bytes:
-    return hmac.new(key, msg.encode("utf-8"), hashlib.sha256).digest()
-
-
-def _signing_key(secret: str, datestamp: str, region: str, service: str) -> bytes:
-    k = _hmac(("AWS4" + secret).encode("utf-8"), datestamp)
-    k = _hmac(k, region)
-    k = _hmac(k, service)
-    return _hmac(k, "aws4_request")
-
-
-def sigv4_authorization(
-    *,
-    method: str,
-    canonical_uri: str,
-    canonical_querystring: str,
-    headers: dict[str, str],
-    payload_hash: str,
-    access_key: str,
-    secret_key: str,
-    amzdate: str,
-    datestamp: str,
-    region: str = "auto",
-    service: str = "s3",
-) -> str:
-    """The AWS SigV4 ``Authorization`` header value for one S3/R2 request.
-
-    ``headers`` are the headers to sign (must include ``host``, ``x-amz-content-sha256``,
-    ``x-amz-date``, and every ``x-amz-*`` header sent). Pure and deterministic — tested
-    against the published AWS SigV4 reference vector.
-    """
-    canonical = sorted((k.lower(), v.strip()) for k, v in headers.items())
-    canonical_headers = "".join(f"{k}:{v}\n" for k, v in canonical)
-    signed_headers = ";".join(k for k, _ in canonical)
-    canonical_request = "\n".join(
-        [
-            method,
-            canonical_uri,
-            canonical_querystring,
-            canonical_headers,
-            signed_headers,
-            payload_hash,
-        ]
-    )
-    cr_hash = hashlib.sha256(canonical_request.encode("utf-8")).hexdigest()
-    scope = f"{datestamp}/{region}/{service}/aws4_request"
-    string_to_sign = "\n".join(["AWS4-HMAC-SHA256", amzdate, scope, cr_hash])
-    signature = hmac.new(
-        _signing_key(secret_key, datestamp, region, service),
-        string_to_sign.encode("utf-8"),
-        hashlib.sha256,
-    ).hexdigest()
-    return (
-        f"AWS4-HMAC-SHA256 Credential={access_key}/{scope}, "
-        f"SignedHeaders={signed_headers}, Signature={signature}"
-    )
+# The signer itself is neutral machinery, hoisted to watermark.connectors._sigv4 (#1079)
+# and re-exported here for the existing objectstore callers/tests.
 
 
 class R2Store:
