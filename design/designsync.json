@@ -16,24 +16,28 @@
     "components/record/**",
     "components/charts/**",
     "components/hydrology/**",
-    "ui_kits/directory/**",
-    "ui_kits/site/**",
+    "components/navigation/**",
+    "templates/directory/**",
+    "templates/site/**",
+    "templates/design-spec/**",
     "guidelines/**",
-    "templates/contributing/**",
-    "templates/data-catalog/**"
+    "kits/data-catalog/**"
   ],
   "pending": [
-    "assets/brand/**"
+    "assets/brand/**",
+    "templates/watermark-platform/**"
   ],
   "generated": [
     "_ds_bundle.js",
     "_ds_manifest.json",
     "_adherence.oxlintrc.json",
-    "templates/data-catalog/support.js"
+    "kits/data-catalog/support.js",
+    "templates/design-spec/support.js",
+    "guidelines/contributing/support.js"
   ],
   "notes": {
-    "synced": "Foundations + all 40 component specs (components/{core,forms,record,charts,hydrology}/** + ui_kits/**) + 11 guideline cards are mirrored. The charts/hydrology/Icon families were added upstream after the first audit and pulled in a second pass (tokens/colors.css gained the --data-* chart-series ramp). Drift vs the live Astro impls is recorded in COMPONENT-AUDIT.md; reconciliation (Stage 2) is gated on review. templates/data-catalog/** added 2026-06-30 (DataCatalog.dc.html + ds-base.js; support.js is a generated dc-runtime bundle, not mirrored).",
-    "pending": "Only assets/brand/** remains (intentionally — see below). NOT mirrored (design-canvas artifacts, not components): explorations/** and templates/social-kit/**. On a future pull, the exact paths come from DesignSync list_files.",
+    "synced": "Foundations + all component specs (components/{core,forms,record,charts,hydrology,navigation}/** + templates/{directory,site}/**) + guideline cards are mirrored. 2026-07-02 pull: upstream restructured — ui_kits/* -> templates/*, templates/data-catalog -> kits/data-catalog, templates/contributing -> guidelines/contributing — mirror follows (git mv). New upstream: components/navigation/** (Chrome, the global ink bar) and templates/design-spec/** (DesignSpec.dc.html — the issue #760 ProvenancedValue-ranges brief) pulled; ds-base.js per-template loader mirrored, support.js dc-runtime bundles are generated (not mirrored). NOTE: content of previously-synced files was not re-diffed on the 2026-07-02 structural pull — a content pass is a follow-up.",
+    "pending": "assets/brand/** (intentionally — see below) and templates/watermark-platform/** (11 full-page .dc.html mocks incl. Sustainability + Chrome, added upstream 2026-07; large — pull page-by-page as each is needed). NOT mirrored (design-canvas artifacts, not components): explorations/**, kits/social-kit/**, uploads/**. On a future pull, the exact paths come from DesignSync list_files.",
     "generated": "Authored by the Claude Design app's self-check / tooling — never mirror or push these.",
     "assets/brand/**": "Brand binaries already live in web/public/ (favicons, app icons); only mirror here if you want them version-controlled in the design system too."
   }

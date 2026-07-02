@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Design Spec" description="Structured design-specification document — issue metadata, proposed shape, conventions, migration map, and open questions. Styled for screen and print." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>
+  @page { size: letter; margin: 0; }
+  body { margin: 0; background: var(--bone-page); color: var(--ink-prose);
+         font-family: var(--font-sans); font-size: 15px; line-height: 1.6; }
+
+  .doc { box-sizing: border-box; max-width: 8.5in; margin: 0 auto;
+         background: inherit; padding: 52px clamp(24px, 5vw, 0.75in) 100px; }
+  .doc-frame { width: 100%; border-collapse: collapse; }
+  .doc-frame td { padding: 0; }
+  .hdr-space, .ftr-space { display: none; }
+
+  @media print {
+    html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    html, body { margin: 0; padding: 0; }
+    .doc { max-width: none !important; margin: 0 !important; padding: 0 0.75in !important; }
+    .hdr-space, .ftr-space { display: table-cell; height: 0.75in; }
+    h2, h3, h4 { break-after: avoid; }
+    .nobreak { break-inside: avoid; }
+    .screen-only { display: none !important; }
+  }
+
+  p { margin: 0 0 13px; text-wrap: pretty; }
+  p:last-child { margin-bottom: 0; }
+  ul, ol { padding-left: 20px; margin: 0 0 14px; }
+  li { margin-bottom: 5px; }
+  h2, h3 { text-wrap: balance; }
+  strong { font-weight: 600; color: var(--ink); }
+
+  /* ── doc header ── */
+  .ey { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.8px;
+        text-transform: uppercase; color: var(--ink-faint); margin: 0 0 14px; }
+  .doc-title { font-family: var(--font-sans); font-size: 33px; font-weight: 800;
+               letter-spacing: -0.6px; color: var(--ink); margin: 0 0 9px; line-height: 1.08; }
+  .doc-sub { font-size: 17px; color: var(--ink-muted); margin: 0 0 22px; line-height: 1.45; }
+  .doc-meta { display: flex; flex-wrap: wrap; gap: 6px 24px;
+              font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint); }
+  .doc-meta b { color: var(--ink-muted); font-weight: 500; }
+  .rule2 { border: none; border-top: 2px solid var(--ink); margin: 24px 0 44px; }
+
+  /* ── sections ── */
+  .sec { margin-bottom: 52px; }
+  .sec + .sec { padding-top: 40px; border-top: 1px solid var(--line-hair); }
+  .sec-ey { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.8px;
+            text-transform: uppercase; color: var(--ink-faint); margin: 0 0 6px; }
+  h2.sh { font-family: var(--font-sans); font-size: 22px; font-weight: 700;
+          letter-spacing: -0.3px; color: var(--ink); margin: 0 0 18px; }
+  h3.ss { font-family: var(--font-sans); font-size: 15px; font-weight: 700;
+          color: var(--ink); margin: 28px 0 10px; }
+  h3.ss:first-child { margin-top: 0; }
+
+  /* ── rails ── */
+  .rl-i { border-left: 3px solid var(--ev-inference-fg); padding-left: 16px; }
+  .rl-f { border-left: 3px solid var(--forest); padding-left: 16px; }
+  .rl-g { border-left: 3px solid var(--ev-gap-fg); padding-left: 16px; }
+
+  /* ── evidence chips ── */
+  .ch { display: inline-block; font-family: var(--font-mono); font-size: 10px;
+        letter-spacing: 0.5px; text-transform: uppercase; padding: 1px 7px;
+        border: 1px solid; line-height: 1.6; vertical-align: middle; }
+  .ch-v { color: var(--ev-verified-fg); background: var(--ev-verified-bg); border-color: var(--ev-verified-border); }
+  .ch-i { color: var(--ev-inference-fg); background: var(--ev-inference-bg); border-color: var(--ev-inference-border); }
+  .ch-o { color: var(--ev-open-fg); background: var(--ev-open-bg); border-color: var(--ev-open-border); }
+
+  /* ── code ── */
+  .cl { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.4px;
+        text-transform: uppercase; color: var(--ink-faint); margin: 0 0 5px; }
+  pre.cb { background: var(--bone-sunk); border: 1px solid var(--line-hair);
+           padding: 14px 18px; font-family: var(--font-mono); font-size: 12.5px;
+           line-height: 1.7; color: var(--ink-prose); white-space: pre;
+           overflow-x: auto; margin: 0; }
+  .cm  { color: var(--ink-ghost); }
+  .kw  { color: var(--ink); font-weight: 600; }
+  .ty  { color: var(--forest); }
+  .s   { color: var(--ev-inference-fg); }
+  .hi  { background: rgba(31,111,74,0.13); }
+
+  /* ── compare grid ── */
+  .cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 22px 0; }
+  @media (max-width: 600px) { .cmp { grid-template-columns: 1fr; } }
+
+  /* ── figure-stat panels ── */
+  .ep { background: var(--bone-surface); border: 1px solid var(--line-hair); padding: 18px 20px; }
+  .ep-ey { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.2px;
+           text-transform: uppercase; color: var(--ink-ghost); margin: 0 0 12px; }
+  .fv { font-family: var(--font-mono); font-size: 30px; font-weight: 600;
+        letter-spacing: -1.5px; color: var(--ink); }
+  .fr { font-family: var(--font-mono); font-size: 14px; color: var(--ev-inference-fg);
+        margin-left: 3px; }
+  .fu { font-family: var(--font-mono); font-size: 14px; color: var(--ink-faint);
+        margin-left: 3px; }
+  .fp { font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint); margin-top: 7px; }
+  .mn { font-family: var(--font-mono); }
+  .mr { font-family: var(--font-mono); color: var(--ev-inference-fg); }
+
+  /* ── data table ── */
+  table.dt { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  table.dt th { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.4px;
+                text-transform: uppercase; color: var(--ink-faint); text-align: left;
+                padding: 7px 12px; border-bottom: 2px solid var(--ink); }
+  table.dt td { padding: 10px 12px; border-bottom: 1px solid var(--line-hair);
+                color: var(--ink-prose); vertical-align: top; }
+  table.dt tr:last-child td { border-bottom: none; }
+  table.dt tr:nth-child(even) td { background: var(--bone-band); }
+  .dtm { font-family: var(--font-mono); font-size: 11.5px; }
+  .dtf { color: var(--ink-faint); font-size: 12.5px; }
+
+  /* ── callout ── */
+  .note { background: var(--ev-key-bg); border: 1px solid var(--ev-key-border);
+          border-left: 3px solid var(--ev-inference-fg); padding: 12px 16px; margin: 18px 0; }
+  .note-l { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.4px;
+            text-transform: uppercase; color: var(--ev-inference-fg); margin: 0 0 5px; }
+
+  /* ── open questions ── */
+  .oq { border-left: 2px solid var(--line-2); padding-left: 14px; margin-bottom: 22px; }
+  .oq-id { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.2px;
+           text-transform: uppercase; color: var(--ink-ghost); margin: 0 0 4px; }
+</style>
+</helmet>
+
+<main class="doc">
+  <table class="doc-frame" role="presentation">
+    <thead><tr><td class="hdr-space"></td></tr></thead>
+    <tbody><tr><td>
+
+      <!-- ─── HEADER ───────────────────────────────────── -->
+      <p class="ey">Design Spec · Issue {{ issueNumber }} / Epic {{ epicNumber }} · {{ projectName }}</p>
+      <h1 class="doc-title">First-class ranges on <span class="mn">ProvenancedValue</span></h1>
+      <p class="doc-sub">Replacing buried prose uncertainty with a structured quantitative spread — a shape change, a display grammar, and a migration path for three existing workarounds.</p>
+      <div class="doc-meta">
+        <span><b>Surfaced</b> {{ surfacedDate }}</span>
+        <span><b>Status</b> {{ status }}</span>
+        <span><b>Blocks</b> Epic {{ epicNumber }} (uncertainty engine)</span>
+        <span><b>Trigger</b> Fort Wayne §401 impervious-area derivation</span>
+      </div>
+      <hr class="rule2">
+
+      <!-- ─── 01 PROBLEM ───────────────────────────────── -->
+      <div class="sec">
+        <p class="sec-ey">01 · Problem</p>
+        <h2 class="sh">A point estimate that hides a ±20% band is false precision.</h2>
+
+        <p>The platform's evidentiary discipline requires every figure to carry its provenance <em>and</em> its honest uncertainty. <span class="mn">ProvenancedValue</span> carries a single scalar <span class="mn">value</span>, a qualitative <span class="mn">confidence</span> enum, and a prose <span class="mn">citation</span>. When a figure is a derived estimate — not verbatim from a document — any quantitative spread is today smuggled into the citation string.</p>
+        <p>Downstream consumers (the Monte-Carlo engine in Epic {{ epicNumber }}, the bundle/feed, the frontend) see only the point estimate. The uncertainty is not data — it is a sentence that no model reads.</p>
+
+        <h3 class="ss">The concrete trigger</h3>
+        <div class="rl-i nobreak" style="margin-bottom: 22px;">
+          <p>Fort Wayne <span class="mn">{{ issueNumber }}</span> — impervious area derived from the Project Zodiac §401 Exhibit 7 site plan via raster color-segmentation at <span class="mn">1"=200'</span>. The method carries an inherent <span class="mr">±15–20%</span> uncertainty. Today this is stored as:</p>
+          <p class="cl">current · bosc.site.impervious_acres</p>
+          <pre class="cb"><span class="cm">// single value; the ±15–20% lives only in citation prose</span>
+<span class="kw">impervious_acres</span>: {
+  <span class="kw">value</span>:      <span class="s">226</span>,
+  <span class="kw">unit</span>:       <span class="s">"ac"</span>,
+  <span class="kw">confidence</span>: <span class="s">"medium"</span>,
+  <span class="kw">citation</span>:   <span class="s">"§401 Ex. 7, color-seg. 1"=200'; est. ±15–20%"</span>
+                          <span class="cm">^^ range buried here — unreachable as data</span>
+}</pre>
+          <p style="margin-top: 12px; font-size: 13.5px; color: var(--ink-muted);">The Epic {{ epicNumber }} uncertainty engine must read <span class="mn">226</span> and has no access to the spread. It cannot propagate the error into downstream estimates.</p>
+        </div>
+
+        <h3 class="ss">The pattern recurs across three existing locations</h3>
+        <p>Each workaround is a bespoke shape the uncertainty engine cannot consume uniformly:</p>
+        <ul>
+          <li><span class="mn">bosc.facility.power</span> — <span class="mn">it_load_low</span> and <span class="mn">it_load_high</span> as two separate scalar fields, losing the shared provenance and central estimate.</li>
+          <li><span class="mn">bosc.facility.cooling</span> — <span class="mn">consumptive_high</span> as an orphaned upper bound with no paired <span class="mn">low</span> or central <span class="mn">value</span>.</li>
+          <li>Various hydrology inputs — modeled flows and withdrawal rates that are uncertainty bands, stored as points with "approx." in the citation.</li>
+        </ul>
+      </div>
+
+      <!-- ─── 02 PROPOSED SHAPE ────────────────────────── -->
+      <div class="sec">
+        <p class="sec-ey">02 · Proposed shape</p>
+        <h2 class="sh">Extend <span class="mn">ProvenancedValue</span> with optional range fields.</h2>
+
+        <p>Two options were considered: a sibling <span class="mn">ProvenancedRange</span> type, or optional fields on the existing shape. The optional-fields approach is preferred — it is backward-compatible (every existing <span class="mn">ProvenancedValue</span> is valid unchanged), requires no union discriminant in serializers, and is simpler to migrate.</p>
+
+        <div class="cmp">
+          <div>
+            <p class="cl">Before</p>
+            <pre class="cb"><span class="kw">interface</span> <span class="ty">ProvenancedValue</span> {
+  value:      <span class="ty">number</span>;
+  unit:       <span class="ty">string</span>;
+  confidence: <span class="ty">Confidence</span>;
+  citation:   <span class="ty">string</span>;
+  source_id?: <span class="ty">string</span>;
+}</pre>
+          </div>
+          <div>
+            <p class="cl">After — three optional range fields added</p>
+            <pre class="cb"><span class="kw">interface</span> <span class="ty">ProvenancedValue</span> {
+  value:      <span class="ty">number</span>;
+  unit:       <span class="ty">string</span>;
+  confidence: <span class="ty">Confidence</span>;
+  citation:   <span class="ty">string</span>;
+  source_id?: <span class="ty">string</span>;
+  <span class="hi">low?:             <span class="ty">number</span>; <span class="cm">// lower bound, same unit</span></span>
+  <span class="hi">high?:            <span class="ty">number</span>; <span class="cm">// upper bound, same unit</span></span>
+  <span class="hi">rel_uncertainty?: <span class="ty">number</span>; <span class="cm">// e.g. 0.175 for ±17.5%</span></span>
+}</pre>
+          </div>
+        </div>
+
+        <h3 class="ss">Field semantics</h3>
+        <table class="dt nobreak" style="margin-bottom: 18px;">
+          <thead>
+            <tr><th>Field</th><th>Type</th><th>Meaning</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="dtm">value</td>
+              <td class="dtm">number</td>
+              <td>The central estimate. For ranges, the midpoint or best single-figure read. Always present; all existing reads are unaffected.</td>
+            </tr>
+            <tr>
+              <td class="dtm">low</td>
+              <td class="dtm">number?</td>
+              <td>Lower bound of the estimate interval, in the same <span class="dtm">unit</span>. May be absent if only an upper cap is known.</td>
+            </tr>
+            <tr>
+              <td class="dtm">high</td>
+              <td class="dtm">number?</td>
+              <td>Upper bound of the estimate interval. May be set without a <span class="dtm">low</span> (e.g. "at most X").</td>
+            </tr>
+            <tr>
+              <td class="dtm">rel_uncertainty</td>
+              <td class="dtm">number?</td>
+              <td>Relative uncertainty as a fraction (0–1). Symmetric approximation — use when the method precision is known but explicit bounds are not. The display layer computes <span class="dtm">low = value × (1 − r)</span>, <span class="dtm">high = value × (1 + r)</span>.</td>
+            </tr>
+            <tr>
+              <td class="dtm">confidence</td>
+              <td class="dtm">Confidence</td>
+              <td><em>Qualitative</em> certainty of the central value — distinct from the quantitative spread. A high-confidence modeled figure can still carry a ±10% band.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note nobreak">
+          <p class="note-l">Invariant</p>
+          <p>If both <span class="mn">low</span> and <span class="mn">high</span> are present: <span class="mn">low ≤ value ≤ high</span>. Serializers should enforce this via JSON Schema. If only <span class="mn">rel_uncertainty</span> is set, the display layer derives bounds; the raw fields remain absent in storage.</p>
+        </div>
+      </div>
+
+      <!-- ─── 03 CONVENTION ────────────────────────────── -->
+      <div class="sec">
+        <p class="sec-ey">03 · Convention</p>
+        <h2 class="sh">When to add a range — and when not to.</h2>
+        <p>The deciding rule is whether the figure is <strong>document-verbatim</strong> or <strong>derived</strong>. A range is a data commitment, not a hedge — only add bounds when they are themselves sourced.</p>
+
+        <table class="dt nobreak" style="margin: 20px 0;">
+          <thead>
+            <tr><th>Figure origin</th><th>Range?</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Verbatim from a filed document — deed price, permit limit, volume in a water-use form</td>
+              <td><span class="ch ch-v">No range</span></td>
+              <td class="dtm dtf">$14,223,081 — Allen Co. deed, exact</td>
+            </tr>
+            <tr>
+              <td>Derived from a method with known precision — raster segmentation, scaled area, GIS area tool</td>
+              <td><span class="ch ch-i">Range required</span></td>
+              <td class="dtm dtf">226 ac ±15–20% from color-seg. at 1"=200'</td>
+            </tr>
+            <tr>
+              <td>Modeled or projected — water withdrawal model, load-growth scenario band</td>
+              <td><span class="ch ch-i">Range required</span></td>
+              <td class="dtm dtf">IT load 14.2–17.8 MW (scenario band)</td>
+            </tr>
+            <tr>
+              <td>Document gives an estimate with explicit bounds — engineering report states "approx. 15 MGD ± 2 MGD"</td>
+              <td><span class="ch ch-i">Range — lift from source</span></td>
+              <td class="dtm dtf">value: 15, low: 13, high: 17</td>
+            </tr>
+            <tr>
+              <td>Document gives an estimate, no explicit bounds — "approximately 15 MGD"</td>
+              <td><span class="ch ch-o">Point + citation</span></td>
+              <td class="dtm dtf">value: 15, confidence: 'low' — note "approx." in citation</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note nobreak">
+          <p class="note-l">Core principle</p>
+          <p>Do not invent bounds to signal general uncertainty — use <span class="mn">confidence: 'low'</span> for that. Only add <span class="mn">low</span> / <span class="mn">high</span> when the interval is itself traceable to a source: the method's stated precision, the document's explicit bounds, or the scenario definitions of a model run.</p>
+        </div>
+      </div>
+
+      <!-- ─── 04 DISPLAY GRAMMAR ───────────────────────── -->
+      <div class="sec">
+        <p class="sec-ey">04 · Display grammar</p>
+        <h2 class="sh">How a range renders across three surfaces.</h2>
+        <p>The central <span class="mn">value</span> is always prominent. The spread appears in a lighter, secondary weight — amber to signal inference. The evidence chip carries the confidence qualifier.</p>
+
+        <h3 class="ss">A. Figure-stat card</h3>
+        <div class="cmp" style="margin-bottom: 22px;">
+          <div class="ep nobreak">
+            <p class="ep-ey">Range present — Fort Wayne impervious area</p>
+            <div style="display: flex; align-items: baseline; flex-wrap: wrap;">
+              <span class="fv">226</span>
+              <span class="fr">± ~35</span>
+              <span class="fu">ac</span>
+            </div>
+            <div style="margin: 6px 0 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span class="ch ch-i">Inference</span>
+              <span style="font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint);">191–261 ac · medium confidence</span>
+            </div>
+            <p class="fp">§401 Exhibit 7 · color-seg. 1"=200' · ±15–20% method</p>
+          </div>
+          <div class="ep nobreak">
+            <p class="ep-ey">No range — verbatim deed figure</p>
+            <div style="display: flex; align-items: baseline; flex-wrap: wrap;">
+              <span class="fv">$14,223,081</span>
+            </div>
+            <div style="margin: 6px 0 0; display: flex; align-items: center; gap: 8px;">
+              <span class="ch ch-v">Verified</span>
+              <span style="font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint);">high confidence</span>
+            </div>
+            <p class="fp">Allen County deed · Instrument 2024-009104</p>
+          </div>
+        </div>
+
+        <h3 class="ss">B. Inline prose</h3>
+        <div class="ep nobreak" style="margin-bottom: 22px;">
+          <p class="ep-ey">Rendered inline in a record paragraph</p>
+          <p style="margin: 0; line-height: 1.7;">The site plan indicates an impervious surface area of <span class="mn">226 <span class="mr">± ~35</span> ac</span> <span class="ch ch-i" style="font-size: 9px;">inference</span>, derived from raster color-segmentation at <span class="mn">1"=200'</span> with a method uncertainty of <span class="mr">±15–20%</span>. Compare to the transfer price of <span class="mn">$14,223,081</span> <span class="ch ch-v" style="font-size: 9px;">verified</span> — a verbatim deed figure that carries no spread.</p>
+        </div>
+
+        <h3 class="ss">C. Table cell (compact two-line)</h3>
+        <div class="ep nobreak">
+          <p class="ep-ey">Compact form in a data table — central value on top, interval beneath</p>
+          <table class="dt" style="width: 100%;">
+            <thead>
+              <tr><th>Field</th><th>Value</th><th>Evidence</th><th>Source</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="color: var(--ink-muted);">Impervious area</td>
+                <td>
+                  <span class="dtm">226 ac</span><br>
+                  <span style="font-family: var(--font-mono); font-size: 11px; color: var(--ev-inference-fg);">191–261 ac</span>
+                </td>
+                <td><span class="ch ch-i">Inference</span></td>
+                <td class="dtm dtf">§401 Ex. 7</td>
+              </tr>
+              <tr>
+                <td style="color: var(--ink-muted);">IT load</td>
+                <td>
+                  <span class="dtm">16.0 MW</span><br>
+                  <span style="font-family: var(--font-mono); font-size: 11px; color: var(--ev-inference-fg);">14.2–17.8 MW</span>
+                </td>
+                <td><span class="ch ch-i">Inference</span></td>
+                <td class="dtm dtf">Power basis</td>
+              </tr>
+              <tr>
+                <td style="color: var(--ink-muted);">Transfer price</td>
+                <td class="dtm">$14,223,081</td>
+                <td><span class="ch ch-v">Verified</span></td>
+                <td class="dtm dtf">Allen Co. deed</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note" style="margin-top: 18px;">
+          <p class="note-l">Rendering rule</p>
+          <p>Use <strong>tilde-form</strong> (<span class="mn">226 ± ~35 ac</span>) in prose and stat cards — the tilde signals "approximately this band." Use <strong>interval form</strong> (<span class="mn">191–261 ac</span>) in table cells and tooltips where precision reads cleanly. Both modes should be covered by a shared formatting utility so display logic is not duplicated across surfaces.</p>
+        </div>
+      </div>
+
+      <!-- ─── 05 MIGRATION MAP ──────────────────────────── -->
+      <div class="sec">
+        <p class="sec-ey">05 · Migration map</p>
+        <h2 class="sh">Collapsing the three existing ad-hoc workarounds.</h2>
+        <p>All three affected locations reshape onto the new fields with no new data required — the information already exists, distributed across separate fields or buried in citation prose.</p>
+
+        <table class="dt" style="margin: 20px 0;">
+          <thead>
+            <tr><th>Current path</th><th>Current shape</th><th>New shape</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="dtm">bosc.facility.power<br><span class="dtf">.it_load_low<br>.it_load_high</span></td>
+              <td class="dtf">Two separate <span class="dtm">ProvenancedValue</span> scalars — shared provenance is implicit, no central value</td>
+              <td><pre style="font-family: var(--font-mono); font-size: 11px; margin: 0; white-space: pre; color: var(--ink-prose);">it_load: {
+  value: 16.0,
+  low:   14.2,
+  high:  17.8,
+  unit:  "MW"
+}</pre></td>
+            </tr>
+            <tr>
+              <td class="dtm">bosc.facility.cooling<br><span class="dtf">.consumptive<br>.consumptive_high</span></td>
+              <td class="dtf">Point value + orphaned upper bound — no paired <span class="dtm">low</span></td>
+              <td><pre style="font-family: var(--font-mono); font-size: 11px; margin: 0; white-space: pre; color: var(--ink-prose);">consumptive: {
+  value: 0.18,
+  high:  0.22,
+  unit:  "MGD"
+}  <span style="color: var(--ink-ghost);">// low omitted — not yet sourced</span></pre></td>
+            </tr>
+            <tr>
+              <td class="dtm">bosc.site<br><span class="dtf">.impervious_acres</span></td>
+              <td class="dtf">Point value; ±15–20% range buried in <span class="dtm">citation</span> string</td>
+              <td><pre style="font-family: var(--font-mono); font-size: 11px; margin: 0; white-space: pre; color: var(--ink-prose);">impervious_acres: {
+  value:           226,
+  low:             181,
+  high:            271,
+  rel_uncertainty: 0.20,
+  unit:            "ac"
+}</pre></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note nobreak">
+          <p class="note-l">No breaking change to feed consumers</p>
+          <p>The <span class="mn">value</span> field is unchanged in all three cases. Existing consumers reading only <span class="mn">.value</span> continue to receive the same number. <span class="mn">low</span>, <span class="mn">high</span>, and <span class="mn">rel_uncertainty</span> are purely additive. No feed schema bump is required for read-only consumers.</p>
+        </div>
+      </div>
+
+      <!-- ─── 06 OPEN QUESTIONS ─────────────────────────── -->
+      <div class="sec">
+        <p class="sec-ey">06 · Open questions</p>
+        <h2 class="sh">What still needs a decision.</h2>
+
+        <div class="oq nobreak">
+          <p class="oq-id">OQ-A · Schema placement</p>
+          <p>Flat optional fields on <span class="mn">ProvenancedValue</span> (recommended) vs. a nested <span class="mn">range: &#123; low, high &#125;</span> sub-object. The flat option is simpler and avoids a discriminant; the sub-object makes optionality explicit. Enforce either via JSON Schema <span class="mn">if / then</span> to require <span class="mn">low ≤ value ≤ high</span> when both bounds are present.</p>
+        </div>
+
+        <div class="oq nobreak">
+          <p class="oq-id">OQ-B · Asymmetric uncertainty</p>
+          <p>Several figures have genuinely asymmetric bounds (consumptive use has a physical floor but spikes in drought years). The explicit <span class="mn">low</span> / <span class="mn">high</span> fields handle asymmetry naturally. <span class="mn">rel_uncertainty</span> is always symmetric — this is a deliberate simplification for the method-precision case. No action needed unless Epic {{ epicNumber }} requires per-side propagation.</p>
+        </div>
+
+        <div class="oq nobreak">
+          <p class="oq-id">OQ-C · Confidence × spread interaction</p>
+          <p>A "high confidence" figure should not also carry a very wide band, but the type does not enforce this. Should validation warn when <span class="mn">rel_uncertainty &gt; 0.30</span> and <span class="mn">confidence === 'high'</span>? Recommendation: soft warning only — the fields serve different purposes (qualitative framing vs. quantitative method precision) and a wide-but-well-sourced band is legitimate.</p>
+        </div>
+
+        <div class="oq nobreak">
+          <p class="oq-id">OQ-D · Formatting utility location</p>
+          <p>The tilde-form / interval-form logic belongs in a shared utility, not duplicated across the frontend and the bundle layer. Where does it live — <span class="mn">ProvenancedValue.formatRange()</span> method, a standalone <span class="mn">formatRange(pv, mode)</span> function, or a display component? Recommendation: standalone function, co-located with the type definition, exported from the core module.</p>
+        </div>
+      </div>
+
+      <!-- ─── FOOTER ────────────────────────────────────── -->
+      <div style="padding-top: 28px; border-top: 1px solid var(--line-hair); display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 10px;">
+        <span style="font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--ink-ghost);">Watermark · {{ projectName }}</span>
+        <span style="font-family: var(--font-mono); font-size: 10px; color: var(--ink-ghost);">Issue {{ issueNumber }} — surfaced {{ surfacedDate }} — status: {{ statusSlug }}</span>
+      </div>
+
+    </td></tr></tbody>
+    <tfoot><tr><td class="ftr-space"></td></tr></tfoot>
+  </table>
+</main>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 860, &quot;height&quot;: 1100 },
+  &quot;issueNumber&quot;:  { &quot;editor&quot;: &quot;text&quot;,    &quot;default&quot;: &quot;#362&quot;,                   &quot;section&quot;: &quot;Issue metadata&quot; },
+  &quot;epicNumber&quot;:   { &quot;editor&quot;: &quot;text&quot;,    &quot;default&quot;: &quot;#271&quot;,                   &quot;section&quot;: &quot;Issue metadata&quot; },
+  &quot;projectName&quot;:  { &quot;editor&quot;: &quot;text&quot;,    &quot;default&quot;: &quot;The Watershed Project&quot;,  &quot;section&quot;: &quot;Issue metadata&quot; },
+  &quot;status&quot;:       { &quot;editor&quot;: &quot;text&quot;,    &quot;default&quot;: &quot;Proposal · open&quot;,        &quot;section&quot;: &quot;Issue metadata&quot; },
+  &quot;surfacedDate&quot;: { &quot;editor&quot;: &quot;text&quot;,    &quot;default&quot;: &quot;2026-06-27&quot;,             &quot;section&quot;: &quot;Issue metadata&quot; }
+}">
+class Component extends DCLogic {
+  renderVals() {
+    const issueNumber   = this.props.issueNumber   ?? '#362';
+    const epicNumber    = this.props.epicNumber    ?? '#271';
+    const projectName   = this.props.projectName   ?? 'The Watershed Project';
+    const status        = this.props.status        ?? 'Proposal · open';
+    const surfacedDate  = this.props.surfacedDate  ?? '2026-06-27';
+    // derive a slug for the footer (strip spaces/dots)
+    const statusSlug    = status.toLowerCase().replace(/\s*·\s*/g, ' · ');
+    return { issueNumber, epicNumber, projectName, status, surfacedDate, statusSlug };
+  }
+}
+
+</script>
+</body>
+</html>
