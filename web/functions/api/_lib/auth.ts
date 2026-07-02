@@ -10,7 +10,7 @@ export interface KVLike {
   put(key: string, value: string, options?: { expirationTtl?: number }): Promise<void>;
 }
 
-export type Role = "standard" | "site-admin" | "admin";
+export type Role = "standard" | "site-admin" | "admin" | "early-access";
 
 export interface CognitoIdToken {
   sub: string;
@@ -126,8 +126,12 @@ export function extractRole(payload: CognitoIdToken): Role {
   const groups = payload["cognito:groups"] ?? [];
   if (groups.includes("admin")) return "admin";
   if (groups.includes("site-admin")) return "site-admin";
+  if (groups.includes("early-access")) return "early-access";
   return "standard";
 }
+
+/** Groups eligible to receive an early-access bypass cookie. */
+export const EARLY_ACCESS_GROUPS = ["early-access", "site-admin", "admin"] as const;
 
 export function extractAdminSites(payload: CognitoIdToken): string[] {
   const raw = payload["custom:admin_sites"];

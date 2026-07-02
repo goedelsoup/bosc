@@ -15,7 +15,7 @@ export interface KVListable extends KVLike {
   }>;
 }
 
-export type AuditAction = "set-groups" | "set-admin-sites";
+export type AuditAction = "set-groups" | "set-admin-sites" | "grant-early-access" | "revoke-early-access";
 
 export interface AuditEntry {
   actor: string;

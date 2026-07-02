@@ -256,6 +256,24 @@ export async function setGroupsForUser(
   }
 }
 
+/** Add a user to a single Cognito group. Idempotent (Cognito ignores if already member). */
+export async function addUserToGroup(env: CognitoAdminEnv, sub: string, group: string): Promise<void> {
+  await cognitoPost(env, "AdminAddUserToGroup", {
+    UserPoolId: env.COGNITO_USER_POOL_ID,
+    Username: sub,
+    GroupName: group,
+  });
+}
+
+/** Remove a user from a single Cognito group. Idempotent (Cognito ignores if not member). */
+export async function removeUserFromGroup(env: CognitoAdminEnv, sub: string, group: string): Promise<void> {
+  await cognitoPost(env, "AdminRemoveUserFromGroup", {
+    UserPoolId: env.COGNITO_USER_POOL_ID,
+    Username: sub,
+    GroupName: group,
+  });
+}
+
 /** Update the `custom:admin_sites` attribute for a user. */
 export async function setAdminSites(env: CognitoAdminEnv, sub: string, sites: string[]): Promise<void> {
   await cognitoPost(env, "AdminUpdateUserAttributes", {
