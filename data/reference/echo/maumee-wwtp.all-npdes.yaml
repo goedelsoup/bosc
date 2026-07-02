@@ -21,6 +21,15 @@ meta:
   - design_flow_mgd is null where ECHO returned no value; it is never estimated.
   - ottawa_discharge keys on the sparse receiving_water field and undercounts (e.g.
     Lima WWTP).
+  - "receiving_water is null in ECHO for OH0135569 (CITY OF VAN WERT, NON-POTW);
+    corrected to Lower Town Creek per the ECHO detailed facility report (WBD12
+    041000070804, outfall 001 monitoring point 40.847601/-84.574769). This is the
+    City of Van Wert WATER TREATMENT PLANT (SIC 4941 Water Supply, 1260 S Washington
+    St) discharging filter/softening residuals — NOT the WWTP (OH0027910) and NOT an
+    MS4. Flow is monitor-only (no numeric effluent limit; no design flow); pH is the
+    only numeric limit (6.5-11 SU). Same Town Creek reach as OH0027910 but ~2.5 mi
+    south. Excluded from the effluent-dominance basin screen (no design flow, no
+    mass limit). See data/extracted/van-wert/ONBOARDING.md (#379)."
 facilities:
 - frs_registry_id: '110071323171'
   name: 1134 COUNTY ROAD 40
@@ -18221,7 +18230,7 @@ facilities:
   permit_type: NPDES Individual Permit
   design_flow_mgd: null
   design_flow_missing: true
-  receiving_water: null
+  receiving_water: LOWER TOWN CREEK  # water treatment plant (SIC 4941), not WWTP/MS4 — see meta caveat + #379
   huc8: '04100007'
   huc8_name: Auglaize
   huc12: 041000070804

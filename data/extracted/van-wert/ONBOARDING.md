@@ -84,9 +84,37 @@ Lima and Findlay, so the cross-state connector axis is not re-exercised.
 
 **Proposals — all 5 distilled proposals are filed as sub-issues of #363:** #375 (ingest the OH0027910
 NPDES permit + Town Creek 7Q10), #376 (re-screen once the 7Q10 lands), #377 (obtain a primary QTS
-instrument), #378 (resolve QTS-vs-Thor), #379 (disambiguate OH0135569 vs OH0027910). The GIS lift
+instrument), #378 (resolve QTS-vs-Thor), #379 (disambiguate OH0135569 vs OH0027910 — **resolved**, see
+NPDES permit disambiguation section below: OH0135569 is the City of Van Wert water treatment
+plant, not an MS4). The GIS lift
 (the Van Wert County PAT MapServer on `ags.bhamaps.com` with an expired TLS cert) is the shared-host
 case tracked under GIS discovery above — re-probe once the cert is renewed; **don't weaken TLS** for it.
+
+## NPDES permit disambiguation — OH0135569 vs OH0027910 (#379) — 2026-07-02
+
+Resolves #379. The ECHO Maumee inventory carried **two** Van Wert permits; OH0135569 was
+flagged as "likely a distinct MS4/industrial coverage worth disambiguating." Looked up in the
+ECHO detailed facility report + effluent chart (FRS `110008587421`). **It is the City of Van
+Wert WATER TREATMENT PLANT** (drinking-water surface plant, 1260 S Washington St, SIC **4941
+Water Supply**) discharging filter/softening residuals — **not** an MS4, not industrial process,
+not a CSO, and not the WWTP. The city draws its raw water *from* Town Creek reservoirs and
+discharges treatment residuals back to **Lower Town Creek**.
+
+| permit | facility | type | receiving water | design flow | effluent limits | in basin-screen denominator? |
+|---|---|---|---|---|---|---|
+| OH0027910 | Van Wert WWTP | POTW (individual) | Town Creek (RM 13.87, outfall 2PD00006001) | 4.0 MGD | full mass/conc suite | **yes** — screened, 0.03:1 dilution → violation |
+| OH0135569 | City of Van Wert Water Treatment Plant | NON-POTW water-supply plant (Non-Major individual) | **Lower Town Creek** (WBD12 041000070804, outfall 001 at 40.8476/-84.5748, ~2.5 mi S of WWTP) | none (flow monitor-only) | **pH 6.5–11 SU only**; flow reported, no numeric limit | **no** — WTP residuals, no design flow, no mass limit |
+
+**Determination:** OH0135569 does **not** require inclusion in the effluent-dominance basin-screen
+denominator. It is a low-volume water-treatment-residuals discharge with **no design flow** and **no
+mass/concentration effluent-quality limit** (flow is monitor-only; pH is the only numeric limit), so
+it carries no municipal-sewage load and cannot drive the receiving-water dilution screen. It is on the
+**same Town Creek reach** as OH0027910 (the Lower Town Creek segment, ~2.5 mi downstream of the WWTP
+outfall) — relevant context, but not an additional screened discharger. The ambiguity about "what is
+being screened" is resolved: the municipal-discharge footprint on Town Creek is **OH0027910 (WWTP) only**.
+ECHO's null `receiving_water` for OH0135569 corrected to "Lower Town Creek" in
+`data/reference/echo/maumee-wwtp.all-npdes.yaml` (entry + meta caveat). Permit period 04/01/2023–06/26/2026
+(effluent chart) with limits effective through 12/31/2029; DMR pollutant loadings ~7.7–8.2 k lb/yr (TSS-class).
 
 ## Phase 6 research — QTS/Thor identity + Van Wert-jurisdiction documents (2026-07-02)
 
