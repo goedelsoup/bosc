@@ -39,7 +39,17 @@ async function handle(method: "PUT" | "DELETE", { request, env, params }: Reques
   }
 
   const { sub } = params;
-  const before = await listGroupsForUser(env, sub).catch(() => [] as string[]);
+
+  // Fetch before-state first so the audit record is accurate.
+  // Propagate failures (502) rather than swallowing them — a fabricated empty
+  // before[] would make the audit log useless for the revoke path.
+  let before: string[];
+  try {
+    before = await listGroupsForUser(env, sub);
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    return json(502, { error: `Cognito error: ${msg}` });
+  }
 
   try {
     if (method === "PUT") {
