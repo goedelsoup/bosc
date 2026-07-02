@@ -110,8 +110,8 @@ _MAINSTEM_GAGES: dict[str, dict[str, Any]] = {
         "aliases": ["caesar creek"],
     },
     # Greenville (Darke Co.) receiving waters. Greenville Creek is the primary at-site
-    # gage (Bradford gage 03264000, DA 177 mi²); Stillwater River at Pleasant Hill
-    # (03265000, DA 647 mi²) is the downstream context after Greenville Creek enters the
+    # gage (Bradford gage 03264000, DA 193 mi²); Stillwater River at Pleasant Hill
+    # (03265000, DA 503 mi²) is the downstream context after Greenville Creek enters the
     # Stillwater mainstem. These are the only actively gaged reaches on the site's
     # Stillwater/Greenville Creek corridor.
     "Greenville Creek": {
