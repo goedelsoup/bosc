@@ -82,13 +82,15 @@ def test_basin_screen_follows_active_basin(data_settings: Settings) -> None:
     screen = basin.check_basin_assimilative(settings=springfield)
     c = screen.coverage
     assert c.total == 81  # the committed great-miami POTW inventory
-    assert c.screened == len(screen.checks) == 17
+    assert c.screened == len(screen.checks) == 18
     assert c.screened + c.no_receiving_water + c.no_7q10 + c.no_design_flow == c.total
     # Screened denominators are Great Miami basin streams only — no Maumee stream leaks in.
     # Greenville Creek + Stillwater River added when Darke County gages (03264000/03265000)
-    # were registered in _MAINSTEM_GAGES (#512). (Normalize whitespace: ECHO uses "Mad  River".)
+    # were registered in _MAINSTEM_GAGES (#512). Loramie Creek added for Sidney onboarding
+    # (#508), enabling Botkins WWTP (OH0022217) to be screened against the Lockington gage.
+    # (Normalize whitespace: ECHO uses "Mad  River".)
     waters = {" ".join(ch.receiving_water.upper().split()) for ch in screen.checks}
-    assert waters <= {"MAD RIVER", "GREAT MIAMI RIVER", "GREENVILLE CREEK", "STILLWATER RIVER"}
+    assert waters <= {"MAD RIVER", "GREAT MIAMI RIVER", "GREENVILLE CREEK", "STILLWATER RIVER", "LORAMIE CREEK"}
     assert all(ch.design_low_flow.source == "derived" for ch in screen.checks)
     # The City of Springfield WWTP is in the inventory but ECHO has no receiving water for it,
     # so it is reported unscreened (omit, don't guess) — not silently dropped.

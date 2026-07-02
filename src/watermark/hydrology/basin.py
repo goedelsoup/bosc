@@ -122,6 +122,19 @@ _MAINSTEM_GAGES: dict[str, dict[str, Any]] = {
         "gage": "03265000",
         "aliases": ["stillwater river", "stillwater r"],
     },
+    # Great Miami basin — Sidney reach. The mouth-ward Hamilton gage (03274000) above is the
+    # basin-wide "GREAT MIAMI RIVER" ECHO screen proxy. These two entries serve the Sidney
+    # site-level 7Q10 (the at-site upper reach) and the Loramie Creek tributary screen.
+    # Great Miami at Sidney (03261500, DA 601 mi²) uses a non-colliding alias so it doesn't
+    # capture ECHO's bare "GREAT MIAMI RIVER" (already aliased to Hamilton above).
+    "Great Miami River at Sidney": {
+        "gage": "03261500",
+        "aliases": ["great miami river at sidney", "great miami r at sidney"],
+    },
+    "Loramie Creek": {
+        "gage": "03262000",
+        "aliases": ["loramie creek"],
+    },
 }
 
 # Synthesized headwaters-confluence 7Q10s: a mainstem formed by the junction of two gaged

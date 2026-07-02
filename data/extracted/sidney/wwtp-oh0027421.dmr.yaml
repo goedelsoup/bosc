@@ -1,0 +1,101 @@
+meta:
+  subject: SIDNEY WWTP (NPDES OH0027421) — reported effluent record (EPA ECHO DMR)
+  source: EPA ECHO eff_rest_services.get_effluent_chart
+  regenerate: watermark dmr OH0027421 --start 2023-01-01 --end 2023-12-31 --design-flow 7.0
+  discipline: Reported DMR values are verbatim from the permittee's submissions via ECHO; a no-discharge/no-data
+    period is null (never zero-filled), and an exceedance is listed only where ECHO reports one. Design
+    flow is the permitted maximum, not a metered value.
+permit:
+  npdes_id: OH0027421
+  name: SIDNEY WWTP
+  permit_type: NPDES Individual Permit
+  permit_status: Effective
+  major_minor: M
+  snc_status: null
+  window: 2023-01-01..2023-12-31
+discharge_summary:
+  design_flow_mgd: 7.0
+  design_flow_cfs: 10.83
+  primary_outfall: '001'
+  n_flow_months: 24
+  actual_flow_mean_mgd: 5.382
+  actual_flow_mean_cfs: 8.33
+  actual_flow_min_mgd: 2.97
+  actual_flow_max_mgd: 18.28
+  flow_pct_of_design: 76.9
+  cso_outfalls: 1
+  reported_exceedances: 0
+flow_monthly:
+- period_end: '2023-01-31'
+  value_mgd: 4.44
+  stat_base: MO AVG
+- period_end: '2023-01-31'
+  value_mgd: 7.33
+  stat_base: DAILY MX
+- period_end: '2023-02-28'
+  value_mgd: 4.11
+  stat_base: MO AVG
+- period_end: '2023-02-28'
+  value_mgd: 6.89
+  stat_base: DAILY MX
+- period_end: '2023-03-31'
+  value_mgd: 6.181
+  stat_base: MO AVG
+- period_end: '2023-03-31'
+  value_mgd: 18.28
+  stat_base: DAILY MX
+- period_end: '2023-04-30'
+  value_mgd: 5.01
+  stat_base: MO AVG
+- period_end: '2023-04-30'
+  value_mgd: 8.11
+  stat_base: DAILY MX
+- period_end: '2023-05-31'
+  value_mgd: 4.76
+  stat_base: MO AVG
+- period_end: '2023-05-31'
+  value_mgd: 7.0
+  stat_base: DAILY MX
+- period_end: '2023-06-30'
+  value_mgd: 3.86
+  stat_base: MO AVG
+- period_end: '2023-06-30'
+  value_mgd: 6.1
+  stat_base: DAILY MX
+- period_end: '2023-07-31'
+  value_mgd: 3.82
+  stat_base: MO AVG
+- period_end: '2023-07-31'
+  value_mgd: 5.24
+  stat_base: DAILY MX
+- period_end: '2023-08-31'
+  value_mgd: 3.84
+  stat_base: MO AVG
+- period_end: '2023-08-31'
+  value_mgd: 6.35
+  stat_base: DAILY MX
+- period_end: '2023-09-30'
+  value_mgd: 3.03
+  stat_base: MO AVG
+- period_end: '2023-09-30'
+  value_mgd: 3.8
+  stat_base: DAILY MX
+- period_end: '2023-10-31'
+  value_mgd: 3.12
+  stat_base: MO AVG
+- period_end: '2023-10-31'
+  value_mgd: 4.07
+  stat_base: DAILY MX
+- period_end: '2023-11-30'
+  value_mgd: 2.97
+  stat_base: MO AVG
+- period_end: '2023-11-30'
+  value_mgd: 4.13
+  stat_base: DAILY MX
+- period_end: '2023-12-31'
+  value_mgd: 2.98
+  stat_base: MO AVG
+- period_end: '2023-12-31'
+  value_mgd: 3.74
+  stat_base: DAILY MX
+exceedances: []

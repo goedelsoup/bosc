@@ -1486,13 +1486,20 @@ _SIDNEY = SiteProfile(
     rsei_fips="39149",  # [verified] Shelby County, OH
     econ_fips="39149",
     eia861_utility_number=4922,  # Dayton Power & Light (AES Ohio) — EIA-861 2024 Service_Territory, Shelby Co [verified] (not 'City of Shelby' #17043, a Richland-Co muni)
-    parcels_url="TODO",  # [open] pending the Shelby County, OH GIS REST endpoint discovery
-    zoning_url="TODO",  # [open] pending the City of Sidney GIS REST endpoint discovery
+    parcels_url=(  # [reference] OGRIP Ohio statewide parcels, scoped to County='Shelby' (39149)
+        "https://services2.arcgis.com/MlJ0G8iWUyC7jAmu/arcgis/rest/services/"
+        "OhioStatewidePacels_full_view/FeatureServer/0"
+    ),
+    zoning_url="TODO",  # [open] pending City of Sidney zoning REST endpoint discovery
     floodzone_url=(  # [verified] FEMA NFHL S_FLD_HAZ_AR (national layer 28)
         "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28"
     ),
     hydro_utm_epsg=32616,  # [verified] UTM 16N (Sidney ~84.16 degW; zone 16 spans 90-84 degW) — NOT zone 17
-    gis_parcel=None,  # [open] pending Shelby County, OH parcel-layer discovery
+    gis_parcel=OHIO_STATEWIDE_PARCEL_SCHEMA.model_copy(
+        # Shelby County OGRIP layer — owner-redacted public view. LocalParcelID format
+        # pending a live sample verification; defaulting to dashless-12-digit (Hancock pattern).
+        update={"reference_dir": "sidney-gis", "query_scope": "County='Shelby'"}
+    ),
     gis_zoning=None,  # [open] pending City of Sidney zoning-layer discovery
     gis_flood=NATIONAL_NFHL_FLOOD_SCHEMA.model_copy(update={"reference_dir": "sidney-gis"}),
     design_lat=40.2842,  # [verified] Sidney centroid = NOAA Atlas-14 point
@@ -1527,12 +1534,24 @@ _SIDNEY = SiteProfile(
     # excludes Anna Engine Plant (~40.37) and GKN/Airstream (~40.44) in Anna/Jackson Center,
     # and Ross Aluminum Avon Div (~40.253) south of Sidney proper. (lat_min, lat_max, lon_min, lon_max)
     toxic_corridor_bbox=(40.268, 40.308, -84.210, -84.140),
-    plant_receiving={},  # [open] pending the Sidney WWTP NPDES fact sheet
+    plant_receiving={
+        "sidney-wwtp": (
+            "Great Miami River",
+            # ECHO NPDES OH0027421 (Sidney WWTP); outfall 001 → Great Miami River (HUC12 050800010703);
+            # design 7.0 MGD, actual ~5.382 MGD (2023 DMR, 76.9% of design); CSO/bypass outfalls: 1;
+            # no ECHO-flagged exceedances 2023. NPDES fact sheet pending for cited 7Q10 (#833).
+            "ECHO NPDES OH0027421 (Sidney WWTP) → Great Miami River; design 7.0 MGD, "
+            "actual ~5.382 MGD (2023 DMR) — data/extracted/sidney/wwtp-oh0027421.dmr.yaml [verified — ECHO]",
+        ),
+    },
     abstraction_gage="03261500",  # [verified] Great Miami River at Sidney OH
     supply_gage_primary="03261500",  # [verified] Great Miami River at Sidney
     supply_gage_secondary="03262000",  # [verified] Loramie Creek at Lockington (the major local tributary)
-    passby_primary_cfs=0.0,  # [open] pending the in-stream passby minimum
-    passby_secondary_cfs=0.0,  # [open]
+    # [derived] LP3 7Q10 at USGS 03261500 (Great Miami River at Sidney OH, 44 yr 1980-2024) —
+    # conservative abstraction screen floor; regulatory passby minimum pending the OEPA NPDES
+    # fact sheet for OH0027421 (Sidney WWTP) (#833).
+    passby_primary_cfs=30.95,
+    passby_secondary_cfs=0.0,  # [open] Loramie Creek derived 7Q10 = 3.55 cfs (03262000); passby pending
     facility=None,  # [open] the Sidney / I-75-corridor data-center dimension is the research target (#481)
     serving_utility_citation="EIA-861 2024 Service_Territory: Dayton Power & Light Co (AES Ohio, #4922) is the IOU serving Shelby County, OH / Sidney — distinct from 'City of Shelby' (#17043, a Richland-County muni). [verified]",
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]

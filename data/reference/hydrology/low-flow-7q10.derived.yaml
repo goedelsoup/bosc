@@ -215,3 +215,28 @@ streams:
     citation: LP3 7Q10 from USGS 03265000 (Stillwater River at Pleasant Hill OH), 44 climatic years 1980-2024
       (gage value; screening proxy for the discharge reach)
     confidence: medium
+  great miami river at sidney:
+    seven_q10_cfs: 30.95
+    source: derived
+    gage: '03261500'
+    gage_name: Great Miami River at Sidney OH
+    period: 1980-01-01..2024-12-31
+    complete_years: 44
+    aliases:
+    - great miami river at sidney
+    - great miami r at sidney
+    citation: LP3 7Q10 from USGS 03261500 (Great Miami River at Sidney OH), 44 climatic years 1980-2024
+      (gage value; screening proxy for the discharge reach)
+    confidence: medium
+  loramie creek:
+    seven_q10_cfs: 3.55
+    source: derived
+    gage: '03262000'
+    gage_name: Loramie Creek at Lockington OH
+    period: 1980-01-01..2024-12-31
+    complete_years: 44
+    aliases:
+    - loramie creek
+    citation: LP3 7Q10 from USGS 03262000 (Loramie Creek at Lockington OH), 44 climatic years 1980-2024
+      (gage value; screening proxy for the discharge reach)
+    confidence: medium
