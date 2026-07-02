@@ -14,6 +14,8 @@ import {
   navItemLinks,
   type SectionId,
 } from "../lib/nav";
+import { hasFeed, loadFeed } from "../lib/bundle";
+import type { HypothesisItem } from "../lib/feeds";
 import { withBase } from "../lib/site";
 import { currentSiteForPath, groupSites, SITE_STATUS_META, SITES, siteForPath } from "../lib/sites";
 
@@ -36,7 +38,8 @@ const here = siteForPath(Astro.url.pathname, base);
 // matches the chip instead of dropping to the network tabs (#793).
 const current = currentSiteForPath(Astro.url.pathname, base);
 const tier: "network" | "site" = current ? "site" : "network";
-const networkTabsList = networkTabs();
+const hypItems = hasFeed("hypotheses") ? loadFeed<HypothesisItem[]>("hypotheses") : [];
+const networkTabsList = networkTabs(hypItems);
 const platformList = platformLinks();
 // The site-tier tab set for the current site: a coming-soon peer gets the registry-only locked bar;
 // a built site (or the global-default) gets the real bundle-backed tabs. The desktop left tabs use

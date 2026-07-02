@@ -12,7 +12,7 @@
  */
 import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed, loadManifest } from "~/lib/bundle";
-import { buildLens, indexAssessments, LENS_ORDER, lensConfig, lensCount } from "~/lib/directory";
+import { buildLens, indexAssessments, LENS_ORDER, lensConfig, lensCount, type DirLens } from "~/lib/directory";
 import type { DocumentCollectionItem, HypothesisAssessmentItem, HypothesisItem } from "~/lib/feeds";
 import { withBase } from "~/lib/site";
 
@@ -36,6 +36,13 @@ const cells = hasFeed("hypothesis-assessments")
   : [];
 const lensData = indexAssessments(cells);
 
+// ?lens= pre-selects the active pane server-side; CSS :checked selectors open it without JS.
+// Falls back to the default (water) for invalid or absent params.
+const lensParam = Astro.url.searchParams.get("lens") ?? "";
+const activeLens: DirLens = (LENS_ORDER as readonly string[]).includes(lensParam)
+  ? (lensParam as DirLens)
+  : LENS_ORDER[0];
+
 const lenses = LENS_ORDER.map((key) => ({
   cfg: lensConfig(key, hypByKey.get(key)),
   view: buildLens(key, limaCounts, lensData),
@@ -50,7 +57,7 @@ const statusSwatch = (kind: "live" | "new") =>
 
 <Base
   title="The three hypotheses"
-  section="hypotheses"
+  section="research"
   rail={false}
   description="The Watermark directory, read three ways: where compute meets water and power, where it meets the defense base, and who owns it. The same network of data-center watershed points across Ohio, scored under each hypothesis. Lima is the live reference build."
 >
@@ -68,13 +75,13 @@ const statusSwatch = (kind: "live" | "new") =>
 
     <div class="dir-lenswrap">
       {
-        lenses.map((l, i) => (
+        lenses.map((l) => (
           <input
             type="radio"
             name="dir-lens"
             id={`lens-${l.cfg.key}`}
             class="dir-lens-input"
-            checked={i === 0}
+            checked={l.cfg.key === activeLens}
             aria-label={`${l.cfg.n} — ${l.cfg.name}`}
           />
         ))
