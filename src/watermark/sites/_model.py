@@ -7,6 +7,7 @@ Split out of the former monolithic ``sites.py`` (#597). Re-exported by the packa
 
 from __future__ import annotations
 
+from enum import StrEnum
 from pathlib import Path
 from typing import Literal
 
@@ -49,6 +50,36 @@ def _get_identity() -> dict[str, SiteEntry]:
     return _IDENTITY
 
 
+class CoolingModelType(StrEnum):
+    """The cooling-water archetype of a data-center facility, keyed on physical mechanism.
+
+    Each member selects one spec in :data:`watermark.hydrology.cooling_models.COOLING_MODELS` —
+    its own consumptive/withdrawal math and parameter set. The enum lives here (not in
+    ``watermark.hydrology``) because the archetype is a **per-site facility attribute**
+    (:class:`SiteFacility.cooling_model`) and ``watermark.config`` imports this package,
+    so hydrology modules cannot be imported from here.
+
+    Naming ([reference]): the enum is keyed on mechanism because the data-center industry's
+    "open loop / closed loop" labels are ambiguous — EPA WaterSense at Work (§6, Cooling
+    Towers) calls a recirculating wet tower an *open recirculating* system, which trade
+    usage shortens to "open loop", while "closed loop" is used both for sealed dry/air-
+    cooled circuits and (confusingly) for tower condenser-water loops. The open/closed
+    labels are display-only **aliases**, documented per spec in
+    :mod:`watermark.hydrology.cooling_models`; the engine never dispatches on them.
+
+    ``unknown`` means "facility disclosed, cooling method not on record" — never "no
+    cooling". It yields a bracketed range, not a single figure. ``off`` is the explicit
+    no-cooling-water-load case; ``SiteProfile.facility is None`` also resolves to it.
+    """
+
+    OFF = "off"  # no cooling-water load
+    EVAPORATIVE_TOWER = "evaporative_tower"  # recirculating wet tower (alias: "open loop")
+    ONCE_THROUGH = "once_through"  # surface-water pass-through (alias: "open once-through")
+    CLOSED_LOOP_DRY = "closed_loop_dry"  # sealed fluid + dry/air rejection (alias: "closed loop")
+    HYBRID_ADIABATIC = "hybrid_adiabatic"  # dry with seasonal evaporative assist
+    UNKNOWN = "unknown"  # disclosed facility, undisclosed method -> bracketed range
+
+
 class SiteFacility(BaseModel):
     """A site's disclosed data-center facility power basis (air-permit-grounded).
 
@@ -72,6 +103,20 @@ class SiteFacility(BaseModel):
     # site's own power-derived consumptive as the high bound (no Lima FM-2 leak).
     blowdown_mgd: float | None = None
     blowdown_citation: str | None = None
+    # Cooling archetype (#1054): selected per site, never hardcoded. The default is
+    # ``unknown`` — a disclosed facility whose cooling method is not on record must NOT
+    # silently inherit the water-intensive evaporative model (it gets a bracketed range
+    # instead). ``SiteProfile.facility is None`` resolves to ``off`` in
+    # :func:`watermark.hydrology.cooling_models.resolve_cooling_model`.
+    cooling_model: CoolingModelType = CoolingModelType.UNKNOWN
+    cooling_model_citation: str = "cooling method not disclosed in the record"
+    cooling_model_source: Literal["document", "connector", "reference", "assumption"] = "assumption"
+    # Per-archetype parameter overrides — a site cites disclosed values here instead of
+    # inheriting the archetype defaults. ``None`` = use the spec default (with its cite).
+    wue_l_per_kwh: float | None = None
+    wue_citation: str | None = None
+    cycles_of_concentration: float | None = None
+    cycles_citation: str | None = None
 
 
 class SiteProfile(BaseModel):

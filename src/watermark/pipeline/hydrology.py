@@ -177,6 +177,7 @@ def run_scenarios(
     *,
     cooling_demand_mgd: float | None = None,
     consumptive_fraction: float | None = None,
+    cooling_model: str | None = None,
     settings: Settings | None = None,
     live: bool = True,
 ) -> tuple[ScenarioResult, ScenarioResult, ScenarioDiff]:
@@ -184,12 +185,17 @@ def run_scenarios(
 
     The buildout's cooling consumptive draw is compared against the cited Ottawa
     7Q10 — the scale that shows how a data center stresses an already low-flow river.
+    ``cooling_model`` overrides the facility's cooling archetype for sensitivity runs
+    (#1056); the default is the active site's ``SiteFacility.cooling_model``.
     """
     settings = settings or get_settings()
     base = scenario_stage.evaluate(scenario_stage.baseline_scenario(), settings=settings, live=live)
     build = scenario_stage.evaluate(
         scenario_stage.buildout_scenario(
-            cooling_demand_mgd=cooling_demand_mgd, consumptive_fraction=consumptive_fraction
+            cooling_demand_mgd=cooling_demand_mgd,
+            consumptive_fraction=consumptive_fraction,
+            cooling_model=cooling_model,
+            settings=settings,
         ),
         settings=settings,
         live=live,
@@ -197,6 +203,7 @@ def run_scenarios(
     delta = scenario_stage.diff(base, build)
     log.info(
         "hydro.scenarios",
+        cooling_model=build.cooling_model,
         consumptive_increase_cfs=delta.consumptive_increase_cfs,
         multiple_of_7q10=delta.multiple_of_7q10,
     )
@@ -204,11 +211,15 @@ def run_scenarios(
 
 
 def _buildout_consumptive_cfs(
-    cooling_demand_mgd: float | None, consumptive_fraction: float | None
+    cooling_demand_mgd: float | None,
+    consumptive_fraction: float | None,
+    settings: Settings | None = None,
 ) -> float:
     """The buildout cooling consumptive draw (cfs) from the cooling basis or overrides."""
     build_scenario = scenario_stage.buildout_scenario(
-        cooling_demand_mgd=cooling_demand_mgd, consumptive_fraction=consumptive_fraction
+        cooling_demand_mgd=cooling_demand_mgd,
+        consumptive_fraction=consumptive_fraction,
+        settings=settings,
     )
     return mgd_to_cfs(
         build_scenario.cooling_demand.value * build_scenario.consumptive_fraction.value
@@ -239,7 +250,7 @@ def run_network(
     baseline = network_stage.route_network(
         balance, consumptive_cfs=0.0, scenario_name="baseline", theories=[], settings=settings
     )
-    consumptive_cfs = _buildout_consumptive_cfs(cooling_demand_mgd, consumptive_fraction)
+    consumptive_cfs = _buildout_consumptive_cfs(cooling_demand_mgd, consumptive_fraction, settings)
     buildout = network_stage.route_network(
         balance,
         consumptive_cfs=consumptive_cfs,
@@ -276,7 +287,7 @@ def compare_theory(
     """
     settings = settings or get_settings()
     balance = build_water_balance(settings=settings, live=live)
-    consumptive_cfs = _buildout_consumptive_cfs(cooling_demand_mgd, consumptive_fraction)
+    consumptive_cfs = _buildout_consumptive_cfs(cooling_demand_mgd, consumptive_fraction, settings)
     without = network_stage.route_network(
         balance,
         consumptive_cfs=consumptive_cfs,

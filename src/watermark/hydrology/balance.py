@@ -163,13 +163,14 @@ def _campus_node(path: Path, warnings: list[str]) -> WaterBalanceNode:
     basis = derive_cooling_basis()
     low, high = basis.consumptive_low.value, basis.consumptive_high.value
     loss_cfs = mgd_to_cfs(low)
+    wue_txt = f" x {basis.wue.value:g} L/kWh" if basis.wue is not None else ""
     consumptive = ProvenancedValue.derived(
         round(loss_cfs, 3),
         "cfs",
         citation=(
-            f"derived cooling basis (power-based central): {low:g} MGD evaporative consumptive "
-            f"(range {low:g}-{high:g} MGD), {basis.it_load.value:g} MW IT x {basis.wue.value:g} "
-            f"L/kWh — see watermark.hydrology.cooling"
+            f"derived cooling basis ({basis.cooling_model.value}): {low:g} MGD consumptive "
+            f"(range {low:g}-{high:g} MGD), {basis.it_load.value:g} MW IT{wue_txt} "
+            f"— see watermark.hydrology.cooling"
         ),
     )
     warnings.append(

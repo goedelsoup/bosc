@@ -1,6 +1,7 @@
 scenario:
   name: baseline
   description: Current municipal loop, no data-center cooling draw.
+  cooling_model: 'off'
   cooling_demand:
     value: 0.0
     unit: MGD
@@ -16,6 +17,7 @@ scenario:
     confidence: low
     asof: null
   basis: null
+cooling_model: 'off'
 consumptive_loss:
   value: 0.0
   unit: cfs
@@ -38,6 +40,7 @@ receiving_live:
   citation: NWIS 04187100 (Ottawa River at Lima OH)
   confidence: high
   asof: '2026-05-31T12:30:00.000-04:00'
+receiving_water_name: null
 balance:
   nodes:
   - node:
