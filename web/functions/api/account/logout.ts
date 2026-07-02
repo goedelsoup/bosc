@@ -20,6 +20,6 @@ export const onRequestPost = async ({ env }: RequestContext): Promise<Response> 
 
   const headers = new Headers({ "content-type": "application/json" });
   headers.append("set-cookie", "__rt=; HttpOnly; Secure; SameSite=Lax; Path=/api/account; Max-Age=0");
-  headers.append("set-cookie", "__ea=; HttpOnly; Secure; SameSite=Lax; Max-Age=0");
+  headers.append("set-cookie", "__ea=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0");
   return new Response(JSON.stringify({ ok: true }), { status: 200, headers });
 };

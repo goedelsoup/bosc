@@ -9,9 +9,17 @@
  * Exception: a request carrying a valid __ea cookie (HMAC-signed, non-expired) passes
  * through all routes regardless of PRE_LAUNCH_ENABLED (#1013).
  *
+ * Revocation note: the __ea cookie is stateless and carries a 7-day embedded expiry.
+ * Revoking early-access group membership (via the admin UI) removes the user from
+ * Cognito but does NOT immediately invalidate outstanding cookies — they remain valid
+ * until they expire or EARLY_ACCESS_SECRET is rotated. For the beta cohort this
+ * window is acceptable; rotate the secret if immediate revocation is required.
+ *
  * All other requests pass straight through to the static Astro output or the
  * api/* Pages Functions.
  */
+
+import { isValidEaCookie } from "./api/_lib/eaCookie";
 
 interface Env {
   /** Written by `pulumi up` from deploy/features.yaml `preLaunch`. */
@@ -34,44 +42,6 @@ function parseCookieValue(cookieHeader: string, name: string): string | null {
     if (k.trim() === name) return rest.join("=").trim();
   }
   return null;
-}
-
-async function isValidEaCookie(value: string, secret: string): Promise<boolean> {
-  const dot = value.lastIndexOf(".");
-  if (dot < 1) return false;
-  const payload = value.slice(0, dot);
-  const claimedSig = value.slice(dot + 1);
-
-  // Check expiry from payload before doing any crypto.
-  let exp = 0;
-  try {
-    const decoded = atob(payload.replace(/-/g, "+").replace(/_/g, "/"));
-    const pipe = decoded.lastIndexOf("|");
-    if (pipe < 1) return false;
-    exp = parseInt(decoded.slice(pipe + 1), 10);
-  } catch {
-    return false;
-  }
-  if (!Number.isFinite(exp) || exp < Math.floor(Date.now() / 1000)) return false;
-
-  const key = await crypto.subtle.importKey(
-    "raw",
-    new TextEncoder().encode(secret),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["verify"],
-  );
-
-  // Decode the claimed signature and verify in constant time.
-  let sigBytes: Uint8Array;
-  try {
-    const bin = atob(claimedSig.replace(/-/g, "+").replace(/_/g, "/"));
-    sigBytes = new Uint8Array(Array.from(bin, (c) => c.charCodeAt(0)));
-  } catch {
-    return false;
-  }
-
-  return crypto.subtle.verify("HMAC", key, sigBytes.buffer as ArrayBuffer, new TextEncoder().encode(payload));
 }
 
 export const onRequest: PagesFunction = async ({ request, env, next }) => {

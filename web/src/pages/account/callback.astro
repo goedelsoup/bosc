@@ -59,10 +59,12 @@ const callbackPath = withBase("/account/callback");
 
         // Attempt to mint an early-access bypass cookie. Non-fatal: a 403 (not in group)
         // or 503 (not configured) is the expected path for standard users.
+        // A 5-second timeout prevents a hung edge function from blocking the redirect.
         try {
           await fetch("/api/account/early-access", {
             method: "POST",
             headers: { Authorization: "Bearer " + tokens.id_token },
+            signal: AbortSignal.timeout(5000),
           });
         } catch (e) {}
 
