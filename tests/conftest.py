@@ -44,10 +44,15 @@ def econ_settings() -> Settings:
 
 
 @pytest.fixture
-def greenops_settings() -> Settings:
-    """Offline GreenOps settings: real repo data dir, connector fixtures, no network, no key."""
+def greenops_settings(tmp_path: Path) -> Settings:
+    """Offline GreenOps settings: connector fixtures, no network, no key.
+
+    Uses a tmp_path-backed data_dir so greenops_cache_dir is sandboxed — a stale on-disk
+    cache entry from a previous live pull cannot shadow the committed fixture (offline
+    cached_get returns a cache hit before consulting fixtures).
+    """
     return Settings(
-        data_dir=REPO_ROOT / "data",
+        data_dir=tmp_path,
         greenops_offline=True,
         greenops_fixtures_dir=FIXTURES / "greenops",
     )
