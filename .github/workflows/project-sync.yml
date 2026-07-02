@@ -1,0 +1,41 @@
+name: project-sync
+
+# Keeps the "BOSC Network" org Project (watermark-directory/projects/1) in sync with
+# the site:* / area:network issues, and re-mirrors the Readiness field from data/sites.yaml.
+#
+# Requires an org secret PROJECT_TOKEN — a PAT (classic: `project` + `repo` scopes, or a
+# fine-grained token with org Projects: read/write + repo Issues: read). The default
+# GITHUB_TOKEN cannot write organization-level Projects.
+
+on:
+  issues:
+    types: [opened, reopened, labeled, unlabeled, edited]
+  workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * *"  # daily readiness resync from data/sites.yaml
+
+permissions:
+  contents: read
+  issues: read
+
+concurrency:
+  group: project-sync-${{ github.event.issue.number || 'all' }}
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Sync project
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+        run: |
+          if [ -n "${{ github.event.issue.number }}" ]; then
+            python scripts/project_sync.py --issue ${{ github.event.issue.number }}
+          else
+            python scripts/project_sync.py --all
+          fi
