@@ -12,6 +12,7 @@ from __future__ import annotations
 from collections.abc import Callable
 
 from watermark.config import Settings, get_settings
+from watermark.hydrology.cooling_models import consumptive_range_label
 from watermark.hydrology.model import (
     CoolingBasis,
     HydroFinding,
@@ -785,10 +786,11 @@ def render_report(*, settings: Settings | None = None, live: bool = False) -> st
             f"(FM-2 is not purely cooling blowdown). The conclusion is robust to the range.\n"
         )
     elif basis is not None:
+        span = basis.consumptive_low.value != basis.consumptive_high.value
         w(
             f"Cooling model: **{basis.cooling_model.value}** — {basis.method}. "
-            f"Consumptive range **{basis.consumptive_low.value:g}-"
-            f"{basis.consumptive_high.value:g} MGD**"
+            f"Consumptive {'range' if span else 'estimate'} "
+            f"**{consumptive_range_label(basis)}**"
             + (
                 " (method undisclosed — a bracket across candidate archetypes, not an estimate).\n"
                 if basis.is_bracketed

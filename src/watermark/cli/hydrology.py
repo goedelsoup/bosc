@@ -381,14 +381,18 @@ def scenario(
         if basis.cycles_of_concentration is not None:
             assumptions.append(f"CoC {basis.cycles_of_concentration.value:g}")
         console.print(f"  [bold]Design basis[/] (sourced): {', '.join(assumptions)}")
-        rng = f"{basis.consumptive_low.value:g}-{basis.consumptive_high.value:g} MGD"
+        rng = cooling_models.consumptive_range_label(basis)
+        span = basis.consumptive_low.value != basis.consumptive_high.value
         if basis.is_bracketed:
             console.print(
                 f"  [bold yellow]cooling method undisclosed[/] — bracketed range "
                 f"[bold]{rng}[/]; no single consumptive estimate"
             )
         else:
-            console.print(f"  consumptive estimate range: [bold]{rng}[/] [dim]({basis.method})[/]")
+            console.print(
+                f"  consumptive estimate{' range' if span else ''}: "
+                f"[bold]{rng}[/] [dim]({basis.method})[/]"
+            )
 
     table = Table("scenario", "cooling intake", "consumptive frac", "net basin loss (cfs)", "src")
     for r in (base, build):
