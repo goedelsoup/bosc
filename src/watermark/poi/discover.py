@@ -7,7 +7,8 @@ and flag which the ``data/entities/poi/`` store already covers. Read-only and id
 proposes a worklist; promoting a candidate to a curated POI is a human step (``curate``).
 
 Each kind is divergence-guarded so the pass can't invent a place: the parcel regex
-mirrors ``allen_gis._PARCEL_ID_RE`` (a test cross-checks the two), and the facility-name
+mirrors the active site's ``GisParcelSchema.deed_id_regex`` (which ``allen_gis`` compiles in
+``scan_parcel_ids``; a test cross-checks that the two yield the same parcel set), and the facility-name
 vocabulary is the **entity graph's facility + corporate nodes** — discover only proposes
 a name the entity resolver already resolved from the corpus. Name candidates are emitted
 as ``feature`` so they flow through the resolve funnel's GNIS branch (``_resolve_feature``).

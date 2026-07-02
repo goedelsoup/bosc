@@ -71,8 +71,13 @@ The `oepa-permit` mise task does this automatically for permit runs.
 
 - Title format: `type(scope): description` — e.g. `feat(research): add …`,
   `fix(grid): …`, `chore(catalog): …`, `data(oepa): ingest …`.
-- One kind label + one or more area labels + optional status label per PR
-  (`kind/*`, `area/*`, `status/*`).
+- One `type:*` label + one or more `area:*` labels + an optional `status:*` label
+  per PR. The label vocabulary is **managed as code** in
+  [`.github/config/`](.github/config/README.md) (`index.ts`, applied by Pulumi) —
+  `type:*` (bug/docs/enhancement/chore/gap/…), `area:*` (the subsystem), `status:*`
+  (triage state), plus the automation namespaces `agent:*`/`orlop:*` (the agent work
+  queue, see [AGENTS.md](AGENTS.md)) and `lead:*` (open-leads board). Run
+  `gh label list` for the live set; don't invent an off-vocabulary label.
 - Run `mise run check` (backend) or `mise run //web:check` (frontend)
   before opening a PR. Both must pass on `mise run ci`.
 - Markdown edits: run `npx markdownlint-cli2` locally. Common failures are
