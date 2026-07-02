@@ -377,7 +377,9 @@ def test_upstream_preflight_does_not_report_the_root_itself_as_a_stale_upstream(
     _entry(
         settings,
         "leaf",
-        _basic("leaf", "reference/echo/leaf.yaml", refresh="  cadence: annual\n  ttl_days: 36500\n"),
+        _basic(
+            "leaf", "reference/echo/leaf.yaml", refresh="  cadence: annual\n  ttl_days: 36500\n"
+        ),
     )
     _data(settings, "reference/echo/root.yaml", "meta:\n  asof: '2020-06-01'\n")
     _entry(
