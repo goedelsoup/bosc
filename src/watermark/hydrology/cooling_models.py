@@ -89,6 +89,35 @@ def _consumptive_mgd_from_power(it_load_mw: float, wue_l_per_kwh: float) -> floa
     return liters_per_day / _L_PER_GAL / 1_000_000.0
 
 
+_MONTH_ORDER = ("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC")
+
+
+def _window_label(months: list[str]) -> str:
+    """A faithful label for an assist window: a span only when the months are contiguous.
+
+    A climatology can return a gapped window (or one that wraps the year-end); collapsing
+    it to ``first-last`` would misstate the assist months, so those list explicitly.
+    """
+    if not months:
+        return "none"
+    idx = [_MONTH_ORDER.index(m) for m in months]
+    if idx == list(range(idx[0], idx[0] + len(idx))):
+        return f"{months[0]}-{months[-1]}" if len(months) > 1 else months[0]
+    return ", ".join(months)
+
+
+def consumptive_range_label(basis: CoolingBasis) -> str:
+    """The basis's consumptive figure for display: a single value when low == high.
+
+    Shared by the CLI and the report renderer so a point estimate (e.g. closed_loop_dry's
+    0 MGD) never prints as an awkward ``0-0 MGD`` range.
+    """
+    low, high = basis.consumptive_low, basis.consumptive_high
+    if low.value == high.value:
+        return f"{low.value:g} {low.unit}"
+    return f"{low.value:g}-{high.value:g} {high.unit}"
+
+
 @dataclass(frozen=True)
 class CoolingParams:
     """Per-call overrides for a derivation (sensitivity sweeps).
@@ -377,7 +406,21 @@ def _derive_hybrid_adiabatic(
     frac = (cycles - 1.0) / cycles
     warm_consumptive = _consumptive_mgd_from_power(it_load_mw, wue_l_per_kwh)
     warm_makeup = warm_consumptive / frac if frac > 0 else warm_consumptive
-    window = f"{months[0]}-{months[-1]}" if months else "none"
+    window = _window_label(months)
+    # No assist window at all (ET0 never exceeds precip) ⇒ the facility runs dry
+    # year-round — there is no "warm-season rate" to report as the high bound.
+    if months:
+        high_value = round(warm_consumptive, 2)
+        high_cite = (
+            f"warm-season (assist) rate: {it_load_mw:g} MW x {wue_l_per_kwh:g} L/kWh "
+            "(power x WUE) — applies in the assist months, ~0 otherwise"
+        )
+    else:
+        high_value = 0.0
+        high_cite = (
+            "no assist window — ET0 never exceeds precip in the climatology, so the "
+            "facility runs dry year-round (~0 consumptive)"
+        )
 
     return CoolingBasis(
         cooling_model=CoolingModelType.HYBRID_ADIABATIC,
@@ -409,14 +452,7 @@ def _derive_hybrid_adiabatic(
                 f"{len(months)}/12 assist months ({window}); {window_cite}"
             ),
         ),
-        consumptive_high=ProvenancedValue.derived(
-            round(warm_consumptive, 2),
-            "MGD",
-            citation=(
-                f"warm-season (assist) rate: {it_load_mw:g} MW x {wue_l_per_kwh:g} L/kWh "
-                "(power x WUE) — applies in the assist months, ~0 otherwise"
-            ),
-        ),
+        consumptive_high=ProvenancedValue.derived(high_value, "MGD", citation=high_cite),
         method=(
             "dry cooling with seasonal evaporative (adiabatic) assist in ET0 > precip "
             "months; the consumptive draw is month-varying, ~0 outside the assist window"

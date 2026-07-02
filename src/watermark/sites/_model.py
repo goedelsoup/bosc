@@ -113,10 +113,20 @@ class SiteFacility(BaseModel):
     cooling_model_source: Literal["document", "connector", "reference", "assumption"] = "assumption"
     # Per-archetype parameter overrides — a site cites disclosed values here instead of
     # inheriting the archetype defaults. ``None`` = use the spec default (with its cite).
+    # A value and its citation travel together (enforced below): an uncited override would
+    # silently pick up the generic archetype citation and misattribute the number.
     wue_l_per_kwh: float | None = None
     wue_citation: str | None = None
     cycles_of_concentration: float | None = None
     cycles_citation: str | None = None
+
+    @model_validator(mode="after")
+    def _override_citations_paired(self) -> SiteFacility:
+        if (self.wue_l_per_kwh is None) != (self.wue_citation is None):
+            raise ValueError("wue_l_per_kwh and wue_citation must be set together")
+        if (self.cycles_of_concentration is None) != (self.cycles_citation is None):
+            raise ValueError("cycles_of_concentration and cycles_citation must be set together")
+        return self
 
 
 class SiteProfile(BaseModel):

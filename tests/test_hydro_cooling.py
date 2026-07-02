@@ -128,7 +128,9 @@ def test_unknown_yields_bracket_not_estimate() -> None:
 
 
 def test_fort_wayne_is_unknown_and_leaks_no_lima_figure() -> None:
-    fw = Settings(data_dir=Path("data"), site="fort-wayne")
+    # hydro_settings is lima-pinned, so the site override needs its own Settings;
+    # hydro_offline keeps it hermetic like the fixture (tests/conftest.py).
+    fw = Settings(data_dir=Path("data"), site="fort-wayne", hydro_offline=True)
     b = derive_cooling_basis(fw)
     assert b.cooling_model == CoolingModelType.UNKNOWN
     assert b.is_bracketed and not b.method_disclosed
@@ -157,7 +159,7 @@ def _stub_facility(**overrides: object) -> SiteFacility:
 
 def test_no_facility_resolves_off() -> None:
     assert resolve_cooling_model(None) == CoolingModelType.OFF
-    findlay = Settings(data_dir=Path("data"), site="findlay")
+    findlay = Settings(data_dir=Path("data"), site="findlay", hydro_offline=True)
     assert derive_cooling_basis(findlay).cooling_model == CoolingModelType.OFF
 
 
@@ -186,6 +188,31 @@ def test_lima_profile_is_explicit_evaporative() -> None:
 
 def test_registry_covers_every_enum_member() -> None:
     assert set(COOLING_MODELS) == set(CoolingModelType)
+
+
+def test_explicit_model_without_facility_is_refused() -> None:
+    # A facility-less site (Findlay) must never derive a non-off basis from the Lima
+    # module fallbacks — that would leak Lima's air-permit provenance into its figures.
+    findlay = Settings(data_dir=Path("data"), site="findlay", hydro_offline=True)
+    with pytest.raises(ValueError, match=r"requires a SiteProfile\.facility"):
+        derive_cooling_basis(findlay, cooling_model="evaporative_tower")
+
+
+def test_override_without_citation_is_rejected() -> None:
+    # Provenance travels with the value: an uncited WUE/CoC override must not construct.
+    with pytest.raises(ValueError, match="wue_citation"):
+        _stub_facility(wue_l_per_kwh=2.0)
+    with pytest.raises(ValueError, match="cycles_citation"):
+        _stub_facility(cycles_of_concentration=4.0)
+
+
+def test_consumptive_range_label_collapses_point_estimates() -> None:
+    from watermark.hydrology.cooling_models import consumptive_range_label
+
+    dry = derive_cooling_basis(cooling_model="closed_loop_dry")
+    assert consumptive_range_label(dry) == "0 MGD"
+    tower = derive_cooling_basis(cooling_model="evaporative_tower")
+    assert consumptive_range_label(tower) == "3.14-10 MGD"
 
 
 # ---------------------------------------------------------------------------------------

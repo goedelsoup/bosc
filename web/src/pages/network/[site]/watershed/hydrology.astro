@@ -58,7 +58,8 @@ const worst =
 const drawV = worst?.consumptive_loss ?? null;
 const lowV = worst?.receiving_7q10 ?? null;
 const liveV = worst?.receiving_live ?? null;
-const riverName = worst?.receiving_water_name ?? "Ottawa";
+// Per-site receiving water (#900); the fallback reads generically, never another site's river.
+const riverName = scenarios.map((s) => s.receiving_water_name).find(Boolean) ?? "receiving water";
 const showScreen = worst != null && (drawV?.value ?? 0) > 0 && (lowV?.value ?? 0) > 0;
 const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.value as number)) : 0;
 ---
@@ -67,7 +68,7 @@ const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.valu
   <article class="prose">
     <h1>Hydrology — water balance</h1>
     <p class="section-lead">
-      Each scenario screens the Ottawa River's low-flow capacity against the
+      Each scenario screens the {riverName}'s low-flow capacity against the
       campus's consumptive cooling draw: live flow minus consumptive loss against
       the 7Q10 design low flow, and the assimilative headroom that remains. Live
       gauge and permit figures are <strong>grounded</strong>; scenario draws are
@@ -95,7 +96,7 @@ const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.valu
               evidenceNote: drawV.citation ?? drawV.source ?? undefined,
             },
             {
-              label: "Ottawa 7Q10 design low flow",
+              label: `${riverName} 7Q10 design low flow`,
               value: lowV.value as number,
               evidence: grounded(lowV) ? "verified" : "inference",
               evidenceNote: lowV.citation ?? lowV.source ?? undefined,
@@ -137,7 +138,7 @@ const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.valu
 
     {
       scenarios.filter((s) => !bracketed(s)).map((s) => {
-        const river = s.receiving_water_name ?? "Ottawa";
+        const river = s.receiving_water_name ?? riverName;
         // The genuinely-scalar provenanced metrics (low flows are per-site and nullable).
         const stats: FigureStatData[] = [toStat("Consumptive loss", s.consumptive_loss)];
         if (s.receiving_7q10) stats.push(toStat(`${river} 7Q10`, s.receiving_7q10));
