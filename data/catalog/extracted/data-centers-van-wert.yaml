@@ -1,0 +1,36 @@
+id: data-centers-van-wert
+title: Van Wert / Van Wert County OH — Data-Center Activity Register
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: QTS (q.com/data-centers/van-wert); Data Center Dynamics; Van Wert Independent
+    (2026-05/06); Thor Equities / Form8tion (GlobeNewswire 2025-08-19); Ohio EPA data-center
+    general permit OHD000001; City of Van Wert water-treatment page; Ohio EPA HUC-12 reports
+license: public record / public domain
+access_tier: public
+site_scope: site:van-wert
+storage:
+- relpath: extracted/van-wert/data-centers.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- data-center
+- qts
+- blackstone
+- thor-equities
+- form8tion
+- van-wert-mega-site
+- van-wert
+- maumee
+- sweep
+notes: 'Van Wert Mega Site sweep (2026-07-02). One confirmed project: QTS Data Centers (QTS
+  Realty Trust LLC, Blackstone-owned) — ~$10B, up-to-500-MW (developer figure), ~902-acre
+  campus on the Marsh Foundation Mega Site; served by AEP Ohio; land assembled by Thor
+  Equities/Form8tion (~221 ac Aug 2025); City annexed ~962 ac + I-2 zoning (emergency
+  ordinances 6-0, May 11 2026). Groundbreaking Q4 2026, buildout ~2032. Receiving water Town
+  Creek -> Little Auglaize -> Auglaize -> Maumee. Open: deed LLC, CRA/TIF/PILOT terms, air
+  PTI, facility NPDES/outfall, Town Creek 7Q10.'

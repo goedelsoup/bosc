@@ -1,0 +1,37 @@
+id: data-centers-troy-piqua
+title: Troy-Piqua / Miami County OH — Data-Center Activity Register
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: City of Piqua project page (piquaoh.gov/1673); Data Center Dynamics; Miami Valley
+    Today; CivicCapacity water/wastewater analysis; Ohio EPA NPDES 1PD00008 (Piqua WWTP);
+    Ohio EPA data-center general permit OHD000001; Hunterbrook (Meta attribution, investigative);
+    Ryan Grissinger candidate-site tracker
+license: public record / public domain
+access_tier: public
+site_scope: site:troy-piqua
+storage:
+- relpath: extracted/troy-piqua/data-centers.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- data-center
+- project-klondike
+- j5-llc
+- shaytura
+- meta
+- piqua
+- great-miami
+- sweep
+notes: 'Piqua sweep (2026-07-02). One confirmed project: "Project Klondike" — developer of
+  record J5 LLC dba Shaytura LLC (reported Meta backer, NOT verified); ~$1B+, ~607-ac phase-1
+  (~1,200 ac assembled 2020-2025), two ~350k-sqft buildings, ~180 MW (tracker figure).
+  Construction power = Piqua Power System (municipal, AMP; EIA #15095); operations = AES Ohio.
+  Stacked 15-yr CRA + 30-yr TIF, ~$735k/building/yr PILOT. Approved 4-0 Nov 3 2025 (emergency).
+  Water agreement reserves up-to-2.0 MGD (conflicts with City closed-loop FAQ); WWTP NPDES
+  1PD00008 -> Great Miami River RM 114.3. Active opposition (Save Piqua). Open: Meta ID
+  primary filing, official MW, air PTI, stormwater NPDES, TCA exemption, parcel IDs.'

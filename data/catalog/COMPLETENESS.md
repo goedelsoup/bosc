@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-07-02T16:34:30.682132+00:00**. Regenerate with `bosc catalog audit --apply` after `bosc catalog reconcile`.
+Snapshot reconciled: **2026-07-02T16:55:15.865364+00:00**. Regenerate with `bosc catalog audit --apply` after `bosc catalog reconcile`.
 
 ## Headline
 
-- **88** catalogued datasets — **87** reviewed.
-- **88** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **91** catalogued datasets — **90** reviewed.
+- **91** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -22,6 +22,7 @@ Snapshot reconciled: **2026-07-02T16:34:30.682132+00:00**. Regenerate with `bosc
 | extracted | american-township | 1 | 1 | 0 | 0 |
 | extracted | commissioners | 3 | 3 | 0 | 0 |
 | extracted | extracted | 2 | 2 | 0 | 0 |
+| extracted | hamilton-middletown | 1 | 1 | 0 | 0 |
 | extracted | history | 1 | 1 | 0 | 0 |
 | extracted | idem | 1 | 1 | 0 | 0 |
 | extracted | lacrpc | 2 | 2 | 0 | 0 |
@@ -35,7 +36,9 @@ Snapshot reconciled: **2026-07-02T16:34:30.682132+00:00**. Regenerate with `bosc
 | extracted | regulatory | 1 | 1 | 0 | 0 |
 | extracted | shawnee-township | 1 | 1 | 0 | 0 |
 | extracted | sidney | 2 | 2 | 0 | 0 |
+| extracted | troy-piqua | 1 | 1 | 0 | 0 |
 | extracted | urbana | 1 | 1 | 0 | 0 |
+| extracted | van-wert | 1 | 1 | 0 | 0 |
 | extracted | watershed | 1 | 1 | 0 | 0 |
 | reference | allen-boe | 4 | 4 | 0 | 0 |
 | reference | allen-gis | 1 | 1 | 0 | 0 |
@@ -70,20 +73,23 @@ Snapshot reconciled: **2026-07-02T16:34:30.682132+00:00**. Regenerate with `bosc
 | --- | --- | --- | --- |
 | bryan | 37 | 32 | 5 |
 | columbus | 36 | 32 | 4 |
+| coshocton | 36 | 25 | 11 |
 | defiance | 37 | 32 | 5 |
 | findlay | 38 | 33 | 5 |
 | fort-wayne | 31 | 25 | 6 |
 | greenville | 37 | 32 | 5 |
-| hamilton-middletown | 37 | 32 | 5 |
+| hamilton-middletown | 38 | 34 | 4 |
 | lima | 75 | 71 | 4 |
 | new-albany | 36 | 32 | 4 |
 | ottawa | 37 | 32 | 5 |
+| piketon | 36 | 25 | 11 |
+| sandusky | 36 | 25 | 11 |
 | sidney | 40 | 36 | 4 |
 | springfield | 37 | 33 | 4 |
 | toledo | 37 | 32 | 5 |
-| troy-piqua | 38 | 33 | 5 |
+| troy-piqua | 39 | 35 | 4 |
 | urbana | 38 | 33 | 5 |
-| van-wert | 38 | 33 | 5 |
+| van-wert | 39 | 35 | 4 |
 | wilmington | 39 | 34 | 5 |
 | wpafb | 37 | 32 | 5 |
 | xenia | 37 | 32 | 5 |

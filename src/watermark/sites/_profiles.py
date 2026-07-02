@@ -1927,6 +1927,249 @@ _COLUMBUS = SiteProfile(
 )
 
 
+# The Muskingum basin's confluence city (epic #495, onboarding 2026-07-02): Coshocton /
+# Coshocton County — where the Tuscarawas + Walhonding join to form the Muskingum. Data-center
+# driver = Aligned Data Centers' Conesville mega-scale AI campus (~197 ac at the former AEP
+# Conesville coal plant, groundbreaking Oct 11 2025, initial capacity mid-2026). Grid is PINNED:
+# AEP Ohio (Ohio Power #14006, PJM AEP zone) — the Conesville Industrial Park is fed by on-site
+# 138/345-kV AEP substations; Frontier Power co-op serves the surrounding rural territory, not the
+# park load. No committed Muskingum POTW inventory yet → the basin screen degrades to empty (the
+# documented behavior in hydrology/basin.py), never borrowing another basin's dischargers.
+_COSHOCTON = SiteProfile(
+    slug="coshocton",
+    basin="muskingum",  # [verified] Tuscarawas + Walhonding → Muskingum River → Ohio River (subregion 0504)
+    nwis_sites=[
+        "03129000",  # [verified] Tuscarawas River at Newcomerstown OH (upstream confluence input; DA 2,443 mi²)
+        "03138500",  # [verified] Walhonding River below Mohawk Dam at Nellie OH (Walhonding confluence input; DA 1,505 mi²)
+        "03150000",  # [verified] Muskingum River at McConnelsville OH (downstream mainstem; DA 7,422 mi²)
+    ],
+    nasa_power_lat=40.272,  # [verified] City of Coshocton centroid
+    nasa_power_lon=-81.860,
+    rsei_fips="39031",  # [verified] Coshocton County, OH
+    econ_fips="39031",
+    eia861_utility_number=14006,  # [verified] Ohio Power Co (AEP Ohio); the Conesville Industrial Park/DC load is AEP (138/345-kV substations), not the Frontier Power rural co-op
+    parcels_url=(  # [reference] OGRIP Ohio statewide parcels public view, scoped to County='Coshocton'
+        "https://services2.arcgis.com/MlJ0G8iWUyC7jAmu/arcgis/rest/services/"
+        "OhioStatewidePacels_full_view/FeatureServer/0"
+    ),
+    zoning_url="TODO",  # [open] pending a Coshocton County / City of Coshocton zoning REST discovery
+    floodzone_url=(  # [verified] FEMA NFHL S_FLD_HAZ_AR (national layer 28)
+        "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28"
+    ),
+    hydro_utm_epsg=32617,  # [verified] UTM 17N (Coshocton ~81.86 degW; zone 17 spans 84-78 degW)
+    gis_parcel=OHIO_STATEWIDE_PARCEL_SCHEMA.model_copy(
+        update={"reference_dir": "coshocton-gis", "query_scope": "County='Coshocton'"}
+    ),  # [reference] OGRIP scoped to Coshocton
+    gis_zoning=None,  # [open] pending a Coshocton zoning-layer discovery
+    gis_flood=NATIONAL_NFHL_FLOOD_SCHEMA.model_copy(update={"reference_dir": "coshocton-gis"}),
+    design_lat=40.272,  # [verified] city centroid = NOAA Atlas-14 point
+    design_lon=-81.860,
+    corridor_name="Tuscarawas-Walhonding-Muskingum confluence corridor",  # [inference]
+    dominant_hsg="C",  # [inference] Muskingum valley: valley-fill alluvium over unglaciated-plateau till/bedrock
+    hsg_citation=(
+        "Coshocton sits at the Tuscarawas/Walhonding confluence in the unglaciated Allegheny "
+        "Plateau's Muskingum valley — valley-fill alluvium in the floodplain over till/bedrock "
+        "uplands; [inference] pending an SSURGO area-weighted confirmation (onboard SSURGO needs "
+        "a footprint)"
+    ),
+    pre_cover="TODO",  # [open] development land-cover scenario — pending an identified site
+    post_cover="TODO",
+    developed_pervious_cover="TODO",
+    noaa_fallback_24h_depth_in={},  # [open] pending the NOAA Atlas-14 pull (onboard corridor-DDF step)
+    parcels_relpath="reference/coshocton/parcel-assemblage.geojson",  # [open] commit the site's own geometry
+    footprint_relpath="extracted/coshocton/bosc-site-footprint.yaml",  # [open] pending an identified site
+    climatology_relpath="reference/hydrology/coshocton/nasa-power-climatology.yaml",
+    corridor_ddf_relpath="reference/hydrology/coshocton/atlas14-corridor-ddf.yaml",
+    baseline_relpath="reference/economics/coshocton/baseline.yaml",
+    rsei_relpath="reference/rsei/coshocton/inventory.yaml",
+    consumer_energy_relpath="reference/eia/coshocton/consumer-energy.yaml",
+    grid_relpath="reference/eia/coshocton/grid-profile.yaml",
+    toxic_corridor_bbox=(0.0, 0.0, 0.0, 0.0),  # [open] pending an identified corridor
+    plant_receiving={},  # [open] pending the Coshocton WWTP NPDES fact sheet (4.4 MGD → Muskingum River)
+    abstraction_gage="03150000",  # [inference] Muskingum at McConnelsville (downstream mainstem; no discharge gage at Coshocton)
+    supply_gage_primary="03129000",  # [verified] Tuscarawas at Newcomerstown (confluence input)
+    supply_gage_secondary="03138500",  # [verified] Walhonding below Mohawk Dam at Nellie (confluence input)
+    passby_primary_cfs=0.0,  # [open] pending the in-stream passby minimum
+    passby_secondary_cfs=0.0,  # [open]
+    facility=None,  # [open] data-center dimension = Aligned Conesville AI campus (#495); pending a pinned facility
+    serving_utility_citation=(
+        "AEP Ohio (Ohio Power Co #14006, PJM AEP zone) — the Conesville Industrial Park is fed by "
+        "on-site 138/345-kV AEP substations per the park utility page; Frontier Power Company co-op "
+        "serves the surrounding rural territory, not the park / data-center load. [verified]"
+    ),
+    lmp_usd_mwh=45.81,  # [reference] connector-sourced AEP-zone day-ahead annual mean (same PJM AEP zone as Lima)
+    lmp_citation=(
+        "PJM AEP-zone day-ahead annual-mean LMP applied to Coshocton (AEP Ohio, PJM AEP zone); "
+        "[reference] connector-sourced (#121)"
+    ),
+    lmp_pnode_id=8445784,  # [verified] PJM AEP zone (same pnode as Lima)
+    lmp_pnode_name="AEP",
+    county_name="Coshocton County, OH",  # [verified]
+)
+
+
+# The Scioto basin's southern anchor (onboarding 2026-07-02): Piketon / Pike County — the former
+# Portsmouth Gaseous Diffusion Plant (a DOE reservation). Data-center driver = SB Energy's PORTS
+# Technology Campus (operating entity New Day Data Centers LLC): a 10 GW data-center load with
+# ~9.2 GW of on-site natural-gas generation, groundbreaking March 20 2026 — the largest single
+# data-center project announced in the U.S. Grid interconnect = AEP Ohio (Ohio Power #14006, PJM
+# AEP zone; $4.2B in AEP 765-kV upgrades, SB-Energy-funded). South Central Power co-op serves the
+# surrounding rural territory, not the campus interconnect. Water is officially undisclosed — the
+# Scioto is the likely receiving water but is [open] pending a permit, not asserted here.
+_PIKETON = SiteProfile(
+    slug="piketon",
+    basin="scioto",  # [verified] Scioto River mainstem → Ohio River (subregion 0506)
+    nwis_sites=[
+        "03237020",  # [verified] Scioto River at Piketon OH (at-site reach; DA 5,836 mi²; DV since 2001)
+        "03234500",  # [verified] Scioto River at Higby OH (upstream long-record mainstem; DA 5,131 mi²; DV since 1930)
+    ],
+    nasa_power_lat=39.068,  # [verified] Piketon village centroid
+    nasa_power_lon=-83.014,
+    rsei_fips="39131",  # [verified] Pike County, OH
+    econ_fips="39131",
+    eia861_utility_number=14006,  # [verified] Ohio Power Co (AEP Ohio); the PORTS interconnect is AEP (765-kV), not the South Central Power rural co-op
+    parcels_url=(  # [reference] OGRIP Ohio statewide parcels public view, scoped to County='Pike'
+        "https://services2.arcgis.com/MlJ0G8iWUyC7jAmu/arcgis/rest/services/"
+        "OhioStatewidePacels_full_view/FeatureServer/0"
+    ),
+    zoning_url="TODO",  # [open] pending a Pike County / Scioto Township zoning REST discovery
+    floodzone_url=(  # [verified] FEMA NFHL S_FLD_HAZ_AR (national layer 28)
+        "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28"
+    ),
+    hydro_utm_epsg=32617,  # [verified] UTM 17N (Piketon ~83.01 degW; zone 17 spans 84-78 degW)
+    gis_parcel=OHIO_STATEWIDE_PARCEL_SCHEMA.model_copy(
+        update={"reference_dir": "piketon-gis", "query_scope": "County='Pike'"}
+    ),  # [reference] OGRIP scoped to Pike
+    gis_zoning=None,  # [open] pending a Pike County zoning-layer discovery
+    gis_flood=NATIONAL_NFHL_FLOOD_SCHEMA.model_copy(update={"reference_dir": "piketon-gis"}),
+    design_lat=39.068,  # [verified] village centroid = NOAA Atlas-14 point
+    design_lon=-83.014,
+    corridor_name="Scioto River (Piketon) corridor",  # [inference] the at-site Scioto reach
+    dominant_hsg="C",  # [inference] Scioto valley-fill alluvium over unglaciated-plateau uplands
+    hsg_citation=(
+        "Piketon sits in the Scioto River valley at the edge of the unglaciated Allegheny Plateau "
+        "— valley-fill alluvium/terrace in the floodplain over till/bedrock uplands; [inference] "
+        "pending an SSURGO area-weighted confirmation (onboard SSURGO needs a footprint)"
+    ),
+    pre_cover="TODO",  # [open] development land-cover scenario — pending an identified site
+    post_cover="TODO",
+    developed_pervious_cover="TODO",
+    noaa_fallback_24h_depth_in={},  # [open] pending the NOAA Atlas-14 pull (onboard corridor-DDF step)
+    parcels_relpath="reference/piketon/parcel-assemblage.geojson",  # [open] commit the site's own geometry
+    footprint_relpath="extracted/piketon/bosc-site-footprint.yaml",  # [open] pending an identified site
+    climatology_relpath="reference/hydrology/piketon/nasa-power-climatology.yaml",
+    corridor_ddf_relpath="reference/hydrology/piketon/atlas14-corridor-ddf.yaml",
+    baseline_relpath="reference/economics/piketon/baseline.yaml",
+    rsei_relpath="reference/rsei/piketon/inventory.yaml",
+    consumer_energy_relpath="reference/eia/piketon/consumer-energy.yaml",
+    grid_relpath="reference/eia/piketon/grid-profile.yaml",
+    toxic_corridor_bbox=(0.0, 0.0, 0.0, 0.0),  # [open] pending an identified corridor
+    plant_receiving={},  # [open] the PORTS water/wastewater plan is officially undisclosed (no NPDES issued)
+    abstraction_gage="03237020",  # [verified] Scioto River at Piketon (at-site reach)
+    supply_gage_primary="03237020",  # [verified] Scioto River at Piketon
+    supply_gage_secondary="03234500",  # [verified] Scioto River at Higby (upstream long-record)
+    passby_primary_cfs=0.0,  # [open] pending the in-stream passby minimum
+    passby_secondary_cfs=0.0,  # [open]
+    facility=None,  # [open] data-center dimension = SB Energy PORTS Technology Campus; pending a pinned facility
+    serving_utility_citation=(
+        "AEP Ohio (Ohio Power Co #14006, PJM AEP zone) — the PORTS Technology Campus interconnect is "
+        "AEP Ohio ($4.2B in 765-kV transmission upgrades, SB-Energy-funded); South Central Power "
+        "Company co-op serves the surrounding rural Pike County territory, not the campus. [verified]"
+    ),
+    lmp_usd_mwh=45.81,  # [reference] connector-sourced AEP-zone day-ahead annual mean (same PJM AEP zone as Lima)
+    lmp_citation=(
+        "PJM AEP-zone day-ahead annual-mean LMP applied to Piketon (AEP Ohio, PJM AEP zone); "
+        "[reference] connector-sourced (#121)"
+    ),
+    lmp_pnode_id=8445784,  # [verified] PJM AEP zone (same pnode as Lima)
+    lmp_pnode_name="AEP",
+    county_name="Pike County, OH",  # [verified]
+)
+
+
+# The Sandusky/Lake-Erie shoreline point (onboarding 2026-07-02): Sandusky / Erie County — a
+# DIRECT-to-Lake-Erie site, NOT the Sandusky River mainstem. Data-center driver = Aligned Data
+# Centers' NEO-01 campus (Perkins Township, 2509 Hayes Ave, ~129 ac brownfield of the former
+# KBI/GM bearing plant; groundbreaking May 2024; first building 96 MW, campus >200 MW). Basin
+# nuance: the Aligned parcel + the Sandusky WWTP discharge to Sandusky Bay → Lake Erie; the local
+# creeks (Pipe/Mills) are coded HUC 04100011 "Sandusky River & Sandusky Bay Tributaries" while the
+# adjacent direct-Lake-Erie tributaries are 04100012 (Huron-Vermilion). Registered under the
+# network's `sandusky` branch (the Sandusky Bay estuary system), receiving water = Sandusky Bay,
+# NOT the Sandusky River — do not screen against a Sandusky-River 7Q10. Grid = FirstEnergy / PJM
+# ATSI (Ohio Edison #13998; Toledo Edison #18997 is the alternative — parcel-specific confirmation
+# is [open]). No committed Sandusky POTW inventory yet → basin screen degrades to empty.
+_SANDUSKY = SiteProfile(
+    slug="sandusky",
+    basin="sandusky",  # [verified as Sandusky-Bay estuary system] direct to Sandusky Bay → Lake Erie; NOT the Sandusky River mainstem (see note above)
+    nwis_sites=[
+        "04199000",  # [reference] Huron River at Milan OH (nearest active discharge gage; DA 371 mi²) — Pipe/Mills Creek have no USGS flow gage
+        "04199155",  # [reference] Old Woman Creek at Berlin Rd near Huron OH (nearest small-watershed gage; DA 22.1 mi²)
+    ],
+    nasa_power_lat=41.4489,  # [verified] City of Sandusky centroid (the Aligned parcel is in Perkins Twp just south, ~41.42/-82.71)
+    nasa_power_lon=-82.7080,
+    rsei_fips="39043",  # [verified] Erie County, OH
+    econ_fips="39043",
+    eia861_utility_number=13998,  # [inference] Ohio Edison Co (FirstEnergy, PJM ATSI) — City of Sandusky aggregation points to Ohio Edison; Toledo Edison #18997 is the alternative; parcel-specific confirmation [open]
+    parcels_url=(  # [reference] OGRIP Ohio statewide parcels public view, scoped to County='Erie'
+        "https://services2.arcgis.com/MlJ0G8iWUyC7jAmu/arcgis/rest/services/"
+        "OhioStatewidePacels_full_view/FeatureServer/0"
+    ),
+    zoning_url="TODO",  # [open] pending a Perkins Township / City of Sandusky zoning REST discovery
+    floodzone_url=(  # [verified] FEMA NFHL S_FLD_HAZ_AR (national layer 28)
+        "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28"
+    ),
+    hydro_utm_epsg=32617,  # [verified] UTM 17N (Sandusky ~82.71 degW; zone 17 spans 84-78 degW)
+    gis_parcel=OHIO_STATEWIDE_PARCEL_SCHEMA.model_copy(
+        update={"reference_dir": "sandusky-gis", "query_scope": "County='Erie'"}
+    ),  # [reference] OGRIP scoped to Erie
+    gis_zoning=None,  # [open] pending a Perkins Twp / Sandusky zoning-layer discovery
+    gis_flood=NATIONAL_NFHL_FLOOD_SCHEMA.model_copy(update={"reference_dir": "sandusky-gis"}),
+    design_lat=41.4489,  # [verified] city centroid = NOAA Atlas-14 point
+    design_lon=-82.7080,
+    corridor_name="Sandusky Bay / Lake Erie shoreline corridor",  # [inference] the direct-to-bay reach
+    dominant_hsg="C",  # [inference] Lake Erie lake-plain clays/silts near the shoreline
+    hsg_citation=(
+        "Sandusky / Perkins Township sits on the Lake Erie lake plain near Sandusky Bay — poorly-"
+        "drained lacustrine clays/silts (HSG C/D) typical of the shoreline; [inference] pending an "
+        "SSURGO area-weighted confirmation (onboard SSURGO needs a footprint)"
+    ),
+    pre_cover="TODO",  # [open] development land-cover scenario — pending an identified site
+    post_cover="TODO",
+    developed_pervious_cover="TODO",
+    noaa_fallback_24h_depth_in={},  # [open] pending the NOAA Atlas-14 pull (onboard corridor-DDF step)
+    parcels_relpath="reference/sandusky/parcel-assemblage.geojson",  # [open] commit the site's own geometry
+    footprint_relpath="extracted/sandusky/bosc-site-footprint.yaml",  # [open] pending an identified site
+    climatology_relpath="reference/hydrology/sandusky/nasa-power-climatology.yaml",
+    corridor_ddf_relpath="reference/hydrology/sandusky/atlas14-corridor-ddf.yaml",
+    baseline_relpath="reference/economics/sandusky/baseline.yaml",
+    rsei_relpath="reference/rsei/sandusky/inventory.yaml",
+    consumer_energy_relpath="reference/eia/sandusky/consumer-energy.yaml",
+    grid_relpath="reference/eia/sandusky/grid-profile.yaml",
+    toxic_corridor_bbox=(0.0, 0.0, 0.0, 0.0),  # [open] pending an identified corridor
+    plant_receiving={},  # [open] the Aligned site water/wastewater plan is undisclosed; Sandusky WWTP (3.8 MGD) → Sandusky Bay/Lake Erie
+    abstraction_gage="04199000",  # [reference] Huron River at Milan (nearest active discharge gage; no gage on the site's own creeks)
+    supply_gage_primary="TODO",  # [open] refill supply gage — pending the site's water-balance model
+    supply_gage_secondary="TODO",
+    passby_primary_cfs=0.0,  # [open] in-stream passby minimums — pending the model
+    passby_secondary_cfs=0.0,
+    facility=None,  # [open] data-center dimension = Aligned NEO-01 campus; pending a pinned facility
+    serving_utility_citation=(
+        "FirstEnergy / PJM ATSI zone — City of Sandusky aggregation materials point to Ohio Edison "
+        "Co (#13998) as the distribution utility; The Toledo Edison Co (#18997) also serves parts of "
+        "Erie County. The utility serving the Aligned parcel specifically is [open] pending the "
+        "interconnection/PUCO filing. [inference]"
+    ),
+    lmp_usd_mwh=45.84,  # [reference] connector-sourced PJM ATSI-zone day-ahead annual mean (committed ATSI fixture)
+    lmp_citation=(
+        "PJM ATSI-zone day-ahead annual-mean LMP applied to Sandusky (FirstEnergy/Ohio Edison, PJM "
+        "ATSI zone); [reference] connector-sourced (#121)"
+    ),
+    lmp_pnode_id=116013753,  # [verified] PJM ATSI zone
+    lmp_pnode_name="ATSI",
+    county_name="Erie County, OH",  # [verified]
+)
+
+
 SITES: dict[str, SiteProfile] = {
     _LIMA.slug: _LIMA,
     _FINDLAY.slug: _FINDLAY,
@@ -1947,6 +2190,9 @@ SITES: dict[str, SiteProfile] = {
     _WILMINGTON.slug: _WILMINGTON,
     _NEW_ALBANY.slug: _NEW_ALBANY,
     _COLUMBUS.slug: _COLUMBUS,
+    _COSHOCTON.slug: _COSHOCTON,
+    _PIKETON.slug: _PIKETON,
+    _SANDUSKY.slug: _SANDUSKY,
 }
 
 # The per-site output relpaths `bosc onboard` writes. Each must be unique to its site so

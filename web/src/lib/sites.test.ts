@@ -59,9 +59,11 @@ describe("sites registry — the Watermark network (#304)", () => {
       "wilmington",
       "new-albany",
       "columbus",
+      "coshocton",
+      "piketon",
+      "sandusky",
       "newark",
       "zanesville",
-      "coshocton",
       "fremont",
       "tiffin",
       "bucyrus",
@@ -99,8 +101,8 @@ describe("site build phases — the four-phase clock (#308 dictate B)", () => {
       expect(s.codename).toBeNull();
     }
   });
-  it("the full network the selector depicts — 32 sites across 9 basins", () => {
-    expect(SITES.length).toBe(32);
+  it("the full network the selector depicts — 34 sites across 9 basins", () => {
+    expect(SITES.length).toBe(34);
     expect(groupSites("basin").length).toBe(9);
   });
 });
