@@ -82,6 +82,16 @@ def poi_offline_settings() -> Settings:
 
 
 @pytest.fixture
+def research_settings() -> Settings:
+    """Offline research-connector settings: fixture-backed Serper search, no network."""
+    return Settings(
+        data_dir=REPO_ROOT / "data",
+        research_offline=True,
+        research_fixtures_dir=FIXTURES / "research",
+    )
+
+
+@pytest.fixture
 def facility_settings() -> Settings:
     """Settings for the facility compute-capacity derivation.
 

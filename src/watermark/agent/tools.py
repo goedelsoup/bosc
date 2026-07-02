@@ -863,6 +863,61 @@ async def reconcile_estimate(args: dict[str, Any]) -> dict[str, Any]:
     return _text("\n".join(str(f) for f in findings))
 
 
+@tool(
+    "search_web",
+    "Search the web via Google (Serper) and return ranked snippets + URLs. "
+    "Use for data-center activity, permit searches, SOS filings, and local news. "
+    "Requires WATERMARK_SERPER_API_KEY; returns empty if the key is absent and no "
+    "cached result exists.",
+    {"query": str, "n": int},
+)
+@traced_tool
+async def search_web(args: dict[str, Any]) -> dict[str, Any]:
+    from watermark.research.connectors.serper import search_web as _search_web
+
+    settings = get_settings()
+    query: str = args.get("query", "").strip()
+    if not query:
+        return _text("[search_web] query is required.")
+    n = int(args.get("n", 10))
+    results = _search_web(query, n=n, settings=settings)
+    if not results:
+        return _text(
+            f"[search_web] No results for {query!r}. "
+            "Check WATERMARK_SERPER_API_KEY or try a broader query."
+        )
+    lines = [f"[search_web] {len(results)} result(s) for: {query!r}\n"]
+    for i, r in enumerate(results, start=1):
+        date_note = f" ({r.date})" if r.date else ""
+        lines.append(f"--- {i}.{date_note} ---")
+        lines.append(f"Title: {r.title}")
+        lines.append(f"URL:   {r.url}")
+        lines.append(f"       {r.snippet}")
+        lines.append("")
+    return _text("\n".join(lines))
+
+
+@tool(
+    "fetch_url",
+    "Fetch the text content of a URL (HTML stripped to readable text; PDF pages "
+    "extracted up to 50 pages). Response capped at ~20 k characters. Cached — "
+    "repeated fetches are free.",
+    {"url": str},
+)
+@traced_tool
+async def fetch_url(args: dict[str, Any]) -> dict[str, Any]:
+    from watermark.research.connectors.fetch import fetch_url as _fetch_url
+
+    url: str = args.get("url", "").strip()
+    if not url:
+        return _text("[fetch_url] url is required.")
+    settings = get_settings()
+    content = _fetch_url(url, settings=settings)
+    if not content:
+        return _text(f"[fetch_url] No content fetched from {url!r}.")
+    return _text(f"[fetch_url] {url}\n\n{content}")
+
+
 def _gh_app_required(tool_name: str) -> dict[str, Any]:
     """Standard dry-run response when App credentials are not configured."""
     return _text(
@@ -1051,6 +1106,8 @@ ALL_TOOLS = [
     sanitary_basis,
     tier1_swmm,
     retrieve_corpus,
+    search_web,
+    fetch_url,
     discover_oepa_permits,
     fetch_oepa_permit,
     list_site_issues,

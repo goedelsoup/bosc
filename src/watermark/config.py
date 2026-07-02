@@ -78,6 +78,15 @@ class Settings(BaseSettings):
     # kill switch live with the workflow guardrails (Epic 5.5), not here.
     research_max_turns: int = 30
     research_max_proposals: int = 5
+    # Research connector cache/offline/fixture discipline (web-search, URL-fetch).
+    # Same pattern as the hydrology/econ/civic connectors: offline=True means no
+    # network — serve cached or committed-fixture responses only (tests/CI).
+    research_offline: bool = False
+    research_cache_ttl_hours: int = DEFAULT_CACHE_TTL_HOURS
+    research_fixtures_dir: Path | None = None  # committed connector fixtures (tests/CI)
+    # Max characters returned by fetch_url (proxy for the token budget passed to the agent).
+    # ~20 k chars ≈ 5 k tokens — generous for an article, tight for a full PDF.
+    research_fetch_max_chars: int = 20_000
 
     # --- Logging -----------------------------------------------------------
     log_level: str = "INFO"
@@ -337,6 +346,11 @@ class Settings(BaseSettings):
     def civic_cache_dir(self) -> Path:
         """Cached civic page fetches (county CMS/WAF listings). Not committed."""
         return self.cache_dir / "civic"
+
+    @property
+    def research_cache_dir(self) -> Path:
+        """Cached research-connector responses (Serper web-search, URL-fetch). Not committed."""
+        return self.cache_dir / "research"
 
     @property
     def gis_findings_path(self) -> Path:

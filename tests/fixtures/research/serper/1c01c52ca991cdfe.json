@@ -1,0 +1,24 @@
+{
+  "params": {"gl": "us", "hl": "en", "num": 10, "q": "data center Sidney Ohio I-75"},
+  "fetched_at": "2026-06-01T00:00:00+00:00",
+  "payload": [
+    {
+      "title": "QTS Data Centers Announces Major Expansion in Sidney, Ohio",
+      "snippet": "QTS Data Centers plans a 200 MW hyperscale campus along the I-75 corridor in Shelby County, Ohio, leveraging low-cost utility power and available land.",
+      "link": "https://qts.example.com/sidney-ohio-expansion",
+      "date": "May 15, 2025"
+    },
+    {
+      "title": "Shelby County Commissioners Approve Rezoning for I-75 Industrial Park",
+      "snippet": "The Shelby County Board of Commissioners approved rezoning of 450 acres along State Route 47 near I-75 for heavy industrial use, enabling large-scale data center development.",
+      "link": "https://shelbycounty.example.gov/commissioners/2025-03-12",
+      "date": "Mar 12, 2025"
+    },
+    {
+      "title": "AEP Ohio Files Utility Agreement for Sidney Data Campus",
+      "snippet": "AEP Ohio submitted a large-load service agreement to the PUCO for a proposed data center campus in Sidney, Ohio, totaling approximately 180 MW of peak demand.",
+      "link": "https://puco.ohio.example.gov/filings/aep-sidney-2025",
+      "date": "Feb 28, 2025"
+    }
+  ]
+}
