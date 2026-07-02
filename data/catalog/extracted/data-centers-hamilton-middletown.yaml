@@ -1,0 +1,34 @@
+id: data-centers-hamilton-middletown
+title: Hamilton-Middletown / Butler County OH — Data-Center Activity Register
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: Data Center Dynamics; Journal-News (CRA/tax filing); WVXU; WCPO; Duke Energy Ohio
+    Woodsdale 345-kV transmission project page; City of Trenton water/sewer pages; Butler County
+    wastewater (LeSourdsville WRF); stopohiodatacenters.org (advocacy, leads only)
+license: public record / public domain
+access_tier: public
+site_scope: site:hamilton-middletown
+storage:
+- relpath: extracted/hamilton-middletown/data-centers.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- data-center
+- project-mila
+- prologis
+- trenton
+- butler-county
+- great-miami
+- sweep
+notes: 'Butler County / Trenton sweep (2026-07-02). One confirmed project: Prologis "Project
+  Mila" — ~141 ac in the Trenton Industrial Park, four buildings ~880k-899k sqft, 250 MW,
+  ~$1B (advocacy figure). Served by Duke Energy Ohio (#3542, PJM DEOK) via new 345-kV Woodsdale
+  circuits (Duke primary filing corrects the advocacy "AEP" error). 15-yr 75% CRA + PILOT.
+  Site-plan approved Mar 30 2026 (pre-zoned I-G, no rezoning). Wastewater crosses under the
+  Great Miami to Butler County LeSourdsville WRF (1PK00011) -> Great Miami River. Opposition:
+  W.A.T.E.R. Open: deed LLC, air PTI, construction jobs, current NPDES number, $1B basis.'

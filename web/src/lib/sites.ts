@@ -333,9 +333,11 @@ const PLACEMENT: Record<string, { state: string; basin: string }> = {
   // The Scioto branch (the data-center epicenter) and the remaining major basins.
   "new-albany": { state: "Ohio", basin: "Scioto" },
   columbus: { state: "Ohio", basin: "Scioto" },
+  piketon: { state: "Ohio", basin: "Scioto" },
   newark: { state: "Ohio", basin: "Muskingum" },
   zanesville: { state: "Ohio", basin: "Muskingum" },
   coshocton: { state: "Ohio", basin: "Muskingum" },
+  sandusky: { state: "Ohio", basin: "Sandusky" },
   fremont: { state: "Ohio", basin: "Sandusky" },
   tiffin: { state: "Ohio", basin: "Sandusky" },
   bucyrus: { state: "Ohio", basin: "Sandusky" },

@@ -295,6 +295,48 @@ sites:
     map_lon: -83.004
     map_zoom: 13
 
+  - slug: coshocton
+    place: "Coshocton"
+    basin_label: "Tuscarawas + Walhonding"
+    receiving_water: "Muskingum River"
+    state: "OH"
+    codename: null
+    mono: "CSH"
+    status: "tracking"
+    selectable: false
+    issue: "495"
+    map_lat: 40.272
+    map_lon: -81.860
+    map_zoom: 13
+
+  - slug: piketon
+    place: "Piketon"
+    basin_label: "Scioto River · PORTS"
+    receiving_water: "Scioto River"
+    state: "OH"
+    codename: null
+    mono: "PIK"
+    status: "tracking"
+    selectable: false
+    issue: "1063"
+    map_lat: 39.068
+    map_lon: -83.014
+    map_zoom: 12
+
+  - slug: sandusky
+    place: "Sandusky · Perkins Twp"
+    basin_label: "Sandusky Bay · Lake Erie"
+    receiving_water: "Sandusky Bay"
+    state: "OH"
+    codename: null
+    mono: "SAN"
+    status: "tracking"
+    selectable: false
+    issue: "1064"
+    map_lat: 41.4489
+    map_lon: -82.7080
+    map_zoom: 12
+
   # ── Tracking only (GitHub issue, no Python profile yet) ─────────────────────────────────
   # Scioto basin (the data-center epicenter)
 
@@ -322,20 +364,6 @@ sites:
     status: "tracking"
     selectable: false
     issue: "494"
-    map_lat: null
-    map_lon: null
-    map_zoom: null
-
-  - slug: coshocton
-    place: "Coshocton"
-    basin_label: "Tuscarawas + Walhonding"
-    receiving_water: null
-    state: "OH"
-    codename: null
-    mono: "CSH"
-    status: "tracking"
-    selectable: false
-    issue: "495"
     map_lat: null
     map_lon: null
     map_zoom: null
