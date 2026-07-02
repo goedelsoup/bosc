@@ -7,7 +7,7 @@ Living record for the Van Wert watershed point (basin: maumee), scaffolded by `b
 - [x] **Hydrology** — onboard reach connectors (low-flows, corridor DDF, SSURGO HSG, climatology)
 - [x] **Economics** — county baseline, RSEI toxics, consumer energy, grid profile
 - [x] **OEPA permit ingest** — NPDES permit `2PD00006` (OH0027910) + fact sheet `2PD00006.fs` fetched and extracted (`data/documents/oepa/van-wert/`, `data/extracted/oepa/2PD00006*.npdes.yaml`). Town Creek 7Q10 = 0.16 cfs (annual; summer/winter = 0 — intermittent). Design flow confirmed 4.0 MGD. See `data/reference/hydrology/low-flow-7q10.yaml`. Resolves #837.
-- [~] **Data-center activity** — self-research first pass run (`bosc onboard --research`, #247); the QTS $10B campus + Thor Equities threads are documented **secondhand** (Allen-County records), `[open]` at the parcel/entity level (#377/#378). See self-research summary below.
+- [~] **Data-center activity** — QTS/Thor confirmed same project (Phase 6 research, 2026-07-02); Van Wert-jurisdiction instruments exist but **not yet ingested** — see Phase 6 below. Closes #378/#840; #377 tracks ingest.
 - [~] **Per-jurisdiction GIS** — flood = shared national NFHL (wired). Parcels/zoning `[open]` — see GIS discovery below; no clean queryable district catalog like Findlay's, so nothing committed yet
 
 ## Last onboard run
@@ -88,11 +88,82 @@ instrument), #378 (resolve QTS-vs-Thor), #379 (disambiguate OH0135569 vs OH00279
 (the Van Wert County PAT MapServer on `ags.bhamaps.com` with an expired TLS cert) is the shared-host
 case tracked under GIS discovery above — re-probe once the cert is renewed; **don't weaken TLS** for it.
 
+## Phase 6 research — QTS/Thor identity + Van Wert-jurisdiction documents (2026-07-02)
+
+External web research conducted 2026-07-02 (not yet corpus-ingested). All findings are `[reference]`
+until primary instruments land in `data/documents/van-wert/` and `data/extracted/van-wert/`.
+Sources: DCD, VW Independent, 21Alive/WPTA, Hometown Stations, Mercer County Outlook,
+vanwertcountyohio.gov commissioner agendas, q.com/data-centers/van-wert.
+
+### QTS / Thor Equities are the same project — confirmed (#378/#840 resolved)
+
+**Thor Equities** (via its Form8tion data center division, founded March 2023) is the
+developer/land-banking agent. **QTS Data Centers** (Blackstone subsidiary, "QTS Realty Trust") is
+the end-user/operator. The joint city/QTS announcement of May 29, 2026 stated that "Thor Equities
+purchased the land on QTS's behalf." AEP Ohio is the utility partner — consistent with the PAAC
+board minutes' "brought by AEP."
+
+Timeline:
+
+- Jan 2025: AEP in discussions with unnamed developer (DCD); VWAEDC director cites 500 MW, ~1.5M gal/day water
+- Aug 2025: Thor Equities acquires 221 acres from Marsh Foundation at ~$51K/ac (deed: Van Wert County Recorder)
+- May 11, 2026: Van Wert City Council 6-0 approves annexation/rezoning (see below)
+- May 27, 2026: VW Independent reports "data center tax exemptions paused" (moratorium signed May 29)
+- May 29, 2026: Joint city/QTS announcement; Governor DeWine suspends Ohio sales tax exemption (R.C. §122.175) same day
+- Jun 3, 2026: QTS testifies at Ohio House Select Committee on Data Centers
+
+**Perry Industrial Park thread (PAAC minutes) is a SEPARATE site.** The PAAC board minutes
+entry "Thor Equities, Perry Industrial Park (remainder, N of power line)... also doing a Van Wert
+data center; brought by AEP" records Thor simultaneously pursuing an Allen County, OH site (Perry
+Industrial Park) as a separate AEP-adjacent transaction. Do not conflate with the Van Wert Mega Site.
+
+### Van Wert-jurisdiction primary documents identified — not yet ingested (#377 tracks ingest)
+
+This is **not** a zero-document situation. Documents to ingest in priority order:
+
+1. **Van Wert City Council ordinances — May 11, 2026** (highest priority): Three ordinances passed 6-0
+   with emergency clauses (three readings waived): (1) annexation of ~962 acres purchased by Thor from
+   Marsh Foundation; (2) I-2 General Industrial zoning permitting data centers; (3) conditional zoning
+   petition. Councilman Greg Roberts (Marsh Foundation employee) recused. Obtain from Van Wert City Clerk.
+2. **Van Wert County Commissioner agendas — June 12, 2025** (already public online):
+   Agenda lists "Chuck Koch, Attorney Re: Annexation – Megasite – Project Thor – Data Center."
+   Full meeting minutes not posted online — require in-person or public-records request to
+   Van Wert County Commissioners, 114 E. Main St., Suite 200, Van Wert, OH 45891.
+3. **Thor Equities / Marsh Foundation deed** (2025): Van Wert County Recorder —
+   countyfusion14.govos.com (search grantor "Marsh Foundation"). 221-acre initial parcel; site grew
+   to 902 acres via subsequent annexation by May 2026.
+4. **AEP Ohio PUCO data center tariff (approved July 9, 2025)**: Governs the 500-MW interconnection;
+   AEP committed to 100% of infrastructure costs. Public at puco.ohio.gov.
+5. **OPSB Case No. 25-0697-EL-BLN**: Van Wert–Haviland 69-kV→138-kV transmission line rebuild
+   (~10 miles, Paulding + Van Wert Counties). Separate from the project-specific 345-kV substation
+   connection (no OPSB docket found for that as of research date).
+
+### Site geometry (from public sources)
+
+- **Location:** Northern Mega Site between US Route 30, Gilliland Road, and Marsh Road, Van Wert, OH.
+  ~902 acres of 1,500-acre Marsh Foundation land north of US-30.
+- **Campus:** Up to 7 buildings; $10B capital investment (proponent claim); 1,500 construction jobs
+  (QTS announcement) vs. 4,500 (select-committee testimony — possibly multi-phase/induced);
+  200 permanent QTS positions.
+- **Footprint lead:** Thor Equities / GlobeNewswire press release (Aug 19, 2025) + the Van Wert
+  County Recorder deed are the sources for the parcel geometry. Both needed for `bosc-site-footprint.yaml`.
+
+### Water-use tension (relevant to hydrology thesis)
+
+VWAEDC director Brent Stevens quoted in July 2025 (Hometown Stations): "maybe 1.5 million gallons
+of water a day, but they are only going to take that from July and August." QTS's May 2026
+announcement claims closed-loop glycol cooling — "no ongoing water consumption for cooling once
+operational; municipal water serves only bathrooms, kitchens, cleaning, and landscaping —
+approximately what 4 households use a month." These claims are in direct tension. The BOSC
+cooling-withdrawal screen models evaporative draw, which the closed-loop design would eliminate.
+Verification: Ohio EPA air permit application (submitted per QTS FAQ; no permit number found).
+`[open]` — resolving this changes the site's effluent-dominance framing.
+
 ## Review gate (blocking)
 
 - [ ] Every written reference value is reviewed against a cited source (no fabricated values).
 - [ ] SSURGO dominant HSG matches the profile, or the SiteProfile is updated with a citation.
-- [ ] basin-screen coverage is sane for this site's receiving waters.
+- [x] basin-screen coverage is sane for this site's receiving waters. OH0027910 screened against Town Creek 7Q10 (0.16 cfs annual, source=document); dilution ratio 0.03:1 — 39× effluent dominance, `[verified]`. See self-research summary above.
 - [ ] A per-jurisdiction County/City GIS connector exists (the known lift — see docs/onboarding.md).
 - [x] Self-research first pass reviewed (run with --research; triage data/research/<slug>-<date>/) — see self-research summary above; 5 proposals filed as sub-issues of #363 (#375–379).
 - [ ] PROMOTION IS A SEPARATE MANUAL EDIT: flip status->live + selectable->true for 'van-wert' in web/src/lib/sites.ts, parity-gated. onboard never auto-promotes; only one live build (/bosc) exists today.
