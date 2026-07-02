@@ -1,487 +1,963 @@
 ---
 /**
- * The basin (#308/#323) — the watershed points as nested nodes on ONE connected basin, mirroring
- * the Directory "The basin" design: a drainage nesting tree (basin → watershed → site, derived
- * from each node's drainage_path), a cross-site scorecard, and the facility-status "second clock".
- * Two clocks, kept distinct: the site BUILD status (live/onboarding/open — our website) vs the
- * FACILITY status (investigation → confirmed → construction → live — the data center in the
- * ground). Data is the `network` object feed joined with the sites.ts registry. Charts are forest.
+ * The basin view (#308/#323; design "Basin — Maumee", branch design/basin-view) — every
+ * watershed point in the basin read against the one drainage it draws from: a hero ledger,
+ * the schematic HUC map, the on-record aggregates, the site table, and the receiving outfalls.
+ *
+ * Discipline (see `lib/basin.ts`): figures are computed from the registry + the `network`
+ * feed or they are a dash. The design mock's placeholder projections (cumulative draw vs. a
+ * modeled cap, per-site draw bars) have no backing feed, so the honest on-record equivalents
+ * render instead — the receiving WWTPs' NPDES design flows, the assembled dilution screens,
+ * and the one disclosed IT load. The gaps section says exactly what's missing.
+ *
+ * Sits under the Research tab (design "Chrome": Research ▾ → Basin views → Maumee).
  */
+import EvidenceTag from "../components/EvidenceTag.astro";
+import LineChart from "../components/charts/LineChart.astro";
 import RankedBarChart from "../components/charts/RankedBarChart.astro";
 import Base from "../layouts/Base.astro";
+import {
+  basinSiteRows,
+  cumulativeFlowSeries,
+  designFlowBars,
+  dischargeRows,
+  disclosedLoad,
+  hucRange,
+  nodeIndex,
+  PHASE_INK,
+  phaseSplit,
+  totalDesignFlow,
+} from "../lib/basin";
 import { hasFeed, loadFeed } from "../lib/bundle";
-import type { BasinNetwork, WatershedNode } from "../lib/feeds";
+import type { EvidenceKind } from "../lib/evidence";
+import type { BasinNetwork } from "../lib/feeds";
 import { withBase } from "../lib/site";
-import { FACILITY_STATUS_META, facilityStatus, SITES } from "../lib/sites";
+import { groupSites, siteState } from "../lib/sites";
+
+const group = groupSites("basin").find((g) => g.label === "Maumee");
+const sites = group?.sites ?? [];
 
 const net = hasFeed("network") ? loadFeed<BasinNetwork>("network") : null;
-const nodes: WatershedNode[] = net?.nodes ?? [];
+const nodes = net?.nodes ?? [];
+const byNode = nodeIndex(nodes);
 
-const siteBySlug = new Map(SITES.map((s) => [s.slug, s]));
-const nodeHref = (slug: string): string => siteBySlug.get(slug)?.href ?? `/network/${slug}`;
-const codenameOf = (slug: string): string | null => siteBySlug.get(slug)?.codename ?? null;
+// --- hero ledger — registry counts + what the feed actually carries ------------------------
+const states = [...new Set(sites.map((s) => siteState(s.slug)).filter(Boolean))];
+const liveBuilding = sites.filter((s) => s.status === "live" || s.status === "building");
+const load = disclosedLoad(nodes);
+const flowTot = totalDesignFlow(nodes);
 
-// Build phase (our website) — the FIRST clock. Distinct from facility status below.
-const STATUS_META: Record<string, { label: string; color: string; dot: string }> = {
-  live: { label: "Live", color: "#1f6f4a", dot: "#1f6f4a" },
-  building: { label: "Building", color: "#1f6f4a", dot: "#1f6f4a" },
-  queued: { label: "Queued", color: "#9a6a14", dot: "#9a6a14" },
+interface Tile {
+  label: string;
+  value: string;
+  unit?: string;
+  sub?: string;
+  evidence: EvidenceKind;
+  basis?: "grounded" | "modeled";
+  source?: string;
+}
+const tiles: Tile[] = [
+  {
+    label: "Sites",
+    value: String(sites.length),
+    sub: states.join(" · ") || undefined,
+    evidence: "verified",
+    source: "The network registry (data/sites.yaml)",
+  },
+  {
+    label: "Live + building",
+    value: String(liveBuilding.length),
+    sub: liveBuilding.map((s) => s.place).join(" · ") || undefined,
+    evidence: "verified",
+    source: "Site build phase — the registry's first clock",
+  },
+  load.count > 0
+    ? {
+        label: "Disclosed IT load",
+        value: String(Math.round(load.mw)),
+        unit: "MW",
+        sub: `${load.count} of ${sites.length} sites disclosed`,
+        evidence: "inference",
+        basis: "modeled",
+        source: "Read from filed permits — a labelled derivation, not a meter",
+      }
+    : { label: "Disclosed IT load", value: "—", sub: "no facility on the record", evidence: "open" },
+  flowTot.count > 0
+    ? {
+        label: "Receiving design flow",
+        value: flowTot.mgd.toLocaleString("en-US"),
+        unit: "MGD",
+        sub: `${flowTot.count} receiving WWTPs · NPDES`,
+        evidence: "verified",
+        source: "EPA ECHO ICIS-NPDES design flows",
+      }
+    : { label: "Receiving design flow", value: "—", sub: "network feed not assembled", evidence: "open" },
+];
+
+// --- aggregates + drill-downs ---------------------------------------------------------------
+const cumFlow = cumulativeFlowSeries(nodes, sites);
+const flowBars = designFlowBars(nodes);
+const phases = phaseSplit(sites);
+const phaseTotal = phases.reduce((a, p) => a + p.count, 0);
+const rows = basinSiteRows(sites, byNode);
+const outfalls = dischargeRows(nodes, sites);
+const screenedCount = outfalls.filter((o) => o.evidence === "verified").length;
+const openCount = rows.filter((r) => r.evidence === "open").length;
+const subbasins = [...new Set(nodes.map((n) => n.subtree))];
+const huc = hucRange(nodes);
+
+// --- the schematic map (presentational geography — simplified from USGS WBD, not to scale) --
+// Marker positions are design coordinates from the "Basin — Maumee" mock, keyed by slug so
+// the markers themselves (presence, phase ink, badge) stay registry-driven.
+const MAP_XY: Record<string, { x: number; y: number }> = {
+  lima: { x: 372, y: 470 },
+  "fort-wayne": { x: 96, y: 330 },
+  defiance: { x: 322, y: 300 },
+  findlay: { x: 486, y: 410 },
+  toledo: { x: 686, y: 138 },
+  "van-wert": { x: 158, y: 420 },
+  bryan: { x: 148, y: 208 },
+  ottawa: { x: 558, y: 352 },
 };
-const statusOf = (slug: string): { label: string; color: string; dot: string } =>
-  STATUS_META[siteBySlug.get(slug)?.status ?? "queued"] ?? STATUS_META.queued;
+const markers = sites
+  .filter((s) => MAP_XY[s.slug])
+  .map((s) => ({ ...MAP_XY[s.slug], code: s.codename ?? s.mono, ink: PHASE_INK[s.status] }));
+// A diamond marks an outfall whose dilution screen is assembled — the map's only evidence mark.
+const diamonds = outfalls
+  .filter((o) => o.evidence === "verified" && MAP_XY[o.slug])
+  .map((o) => ({ x: MAP_XY[o.slug].x, y: MAP_XY[o.slug].y + 30 }));
 
-// --- the drainage tree: build a trie from each node's drainage_path (reversed: basin → site) ---
-interface RiverNode {
-  name: string;
-  children: Map<string, RiverNode>;
-  sites: WatershedNode[];
-}
-const root: RiverNode = { name: "Western Lake Erie Basin", children: new Map(), sites: [] };
-for (const n of nodes) {
-  let cur = root;
-  for (const river of [...n.drainage_path].reverse()) {
-    let next = cur.children.get(river);
-    if (!next) {
-      next = { name: river, children: new Map(), sites: [] };
-      cur.children.set(river, next);
-    }
-    cur = next;
-  }
-  cur.sites.push(n); // the site sits at its most-upstream receiving water (path[0])
-}
-interface TreeRow {
-  depth: number;
-  kind: "river" | "site";
-  name: string;
-  slug?: string;
-}
-const treeRows: TreeRow[] = [];
-function walk(node: RiverNode, depth: number): void {
-  treeRows.push({ depth, kind: "river", name: node.name });
-  for (const s of node.sites) treeRows.push({ depth: depth + 1, kind: "site", name: s.place, slug: s.slug });
-  for (const child of node.children.values()) walk(child, depth + 1);
-}
-walk(root, 0);
-
-// --- scorecard helpers ---
-const regimeLabel = (r: string): string => r.replace(/_/g, " ");
-const STATUS_TEXT: Record<string, string> = {
-  no_receiving_water: "unscreened · no ECHO receiving water",
-  no_7q10: "unscreened · ungaged tributary",
-  no_design_flow: "unscreened · no design flow",
-  not_in_inventory: "unscreened · not in ECHO",
+const EV_INK: Record<string, string> = {
+  verified: "var(--ev-verified-fg)",
+  inference: "var(--ev-inference-fg)",
+  open: "var(--ev-open-fg)",
 };
-const screenText = (n: WatershedNode): string => {
-  const s = n.screen;
-  if (s.status === "screened" && s.dilution_ratio != null)
-    return `${s.flag} · ${s.dilution_ratio.toFixed(2)}:1`;
-  return STATUS_TEXT[s.status] ?? "unscreened";
-};
-const num = (v: number | null | undefined, d = 1): string => (v == null ? "—" : v.toFixed(d));
-
-// Charts (forest = data): grid bundled price is the genuine differentiator; mfg LQ the universal base.
-const priceData = nodes
-  .filter((n) => n.grid.avg_price_cents_kwh != null)
-  .map((n) => ({ label: n.place, value: n.grid.avg_price_cents_kwh as number }))
-  .sort((a, b) => b.value - a.value);
-const mfgData = nodes
-  .filter((n) => n.economy.manufacturing_lq != null)
-  .map((n) => ({ label: n.place, value: n.economy.manufacturing_lq as number }))
-  .sort((a, b) => b.value - a.value);
-const screenedCount = nodes.filter((n) => n.screen.status === "screened").length;
 ---
 
 <Base
-  title="The basin — one connected system"
-  section="directory"
-  description="The Maumee watershed points as nested nodes on one basin: sites nest inside watersheds, watersheds inside the basin, all draining to Lake Erie under one TMDL cap — compared across receiving-water regime, grid, economy, toxics, and facility status."
+  title="The Maumee basin"
+  section="research"
+  rail={false}
+  description="Every watershed-point site in the Maumee basin, read against one drainage: the schematic HUC map, the receiving WWTPs' NPDES design flows, the assembled dilution screens, and the gaps in the record. A lead, not a verdict."
 >
-  <article class="prose">
-    <div class="submit-eyebrow">The Watermark network · the basin</div>
-    <h1>How the points nest</h1>
-    <p class="section-lead">
-      The watershed points are not parallel, independent sites. Every one sits at a point in the
-      Maumee drainage — <strong>sites nest inside watersheds, watersheds inside the basin</strong>,
-      all draining to Lake Erie under the <strong>same 2023 TMDL phosphorus cap</strong>. A
-      cross-reference between two sites isn't a guess about distance; it's an edge in this tree. So a
-      data-center load at <em>any</em> node accumulates downstream into one fully-allocated budget.
-    </p>
-    {net == null && <p class="stub-note">No network data is available yet.</p>}
-  </article>
+  <div class="basin">
+    <!-- ===================== HERO ===================== -->
+    <header class="basin-hero">
+      <div class="basin-hero-l">
+        <div class="basin-eyebrow">Research · basin view</div>
+        <div class="basin-title-row">
+          <h1>Maumee basin</h1>
+          {huc && <span class="basin-huc">HUC-8 · {huc}</span>}
+        </div>
+        <p class="basin-dek">
+          {sites.length} sites, one watershed. Fort Wayne's headwaters, the Auglaize and Blanchard
+          confluences, the Ottawa River draw at Lima — every intake and outfall in the basin, read
+          against one drainage. This is a lead, not a verdict: most of the basin has no filed water
+          record yet, and a gap below is an open question, never a zero.
+        </p>
+      </div>
+      <div class="basin-tiles">
+        {
+          tiles.map((t) => (
+            <div class="basin-tile">
+              <div class="basin-tile-head">
+                <span class="basin-tile-label">{t.label}</span>
+                {t.basis && <span class="basin-basis">{t.basis}</span>}
+              </div>
+              <div class="basin-tile-value">
+                <span class="v">{t.value}</span>
+                {t.unit && <span class="u">{t.unit}</span>}
+              </div>
+              {t.sub && <div class="basin-tile-sub">{t.sub}</div>}
+              <div class="basin-tile-foot">
+                <EvidenceTag kind={t.evidence} title={t.source} />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </header>
 
-  {
-    net != null && (
-      <>
-        <section class="basin-nest" aria-label="The drainage, as a tree">
-          <div class="nest-tree">
-            <div class="nest-kicker">The drainage, as a tree</div>
-            {treeRows.map((row) =>
-              row.kind === "river" ? (
-                <div class:list={["nest-row", "is-river", `d${row.depth}`]}>
-                  <span class="nest-river">{row.name}</span>
+    <!-- ===================== THE MAP ===================== -->
+    <section class="basin-sec" aria-label="The watershed, mapped">
+      <div class="basin-sec-head">
+        <span class="basin-kicker">The watershed, mapped</span>
+        <h2>Every site, against the drainage it draws from</h2>
+        <span class="basin-sec-note">Schematic basin diagram — simplified from USGS HUC boundaries, not to scale</span>
+      </div>
+      <div class="basin-map-grid">
+        <div class="basin-map-canvas">
+          <svg viewBox="0 0 760 560" role="img" aria-label="Schematic map of the Maumee basin with every site marked">
+            <path
+              d="M60,320 C40,230 90,150 170,130 C230,90 320,70 420,90 C520,70 620,60 680,110 C740,150 730,220 700,260 C740,300 720,360 660,380 C680,430 640,480 570,470 C540,520 470,540 410,520 C340,560 260,545 220,500 C150,510 90,470 80,410 C40,390 40,350 60,320 Z"
+              fill="var(--bone-band)"
+              stroke="var(--rule-ink)"
+              stroke-width="2"></path>
+            <path d="M60,320 C40,230 90,150 170,130 C210,160 230,230 200,290 C210,340 180,380 130,390 C90,380 60,350 60,320 Z" fill="rgba(31,111,74,0.07)"></path>
+            <path d="M200,290 C230,230 210,160 170,130 C230,90 320,70 420,90 C400,150 380,210 340,250 C300,280 240,290 200,290 Z" fill="rgba(31,111,74,0.045)"></path>
+            <path d="M420,90 C520,70 620,60 680,110 C700,150 690,190 650,210 C580,200 500,180 450,150 C430,130 420,110 420,90 Z" fill="rgba(31,111,74,0.07)"></path>
+            <path d="M340,380 C400,360 460,380 490,430 C470,480 400,510 340,500 C300,470 300,420 340,380 Z" fill="rgba(31,111,74,0.06)"></path>
+            <path d="M660,380 C700,360 730,300 700,260 C740,300 720,360 660,380 Z" fill="rgba(31,111,74,0.09)"></path>
+
+            <path d="M700,110 C740,120 760,150 750,190 C730,180 700,160 680,140 Z" fill="var(--bone-sunk)" stroke="var(--line-hair)" stroke-width="1.5"></path>
+            <text x="755" y="95" text-anchor="end" class="basin-map-mono">LAKE ERIE</text>
+
+            <path d="M96,330 C150,300 220,290 260,270 C300,250 320,240 322,300" fill="none" stroke="var(--ink-muted)" stroke-width="2"></path>
+            <path d="M158,420 C210,390 250,340 260,290" fill="none" stroke="var(--ink-muted)" stroke-width="1.6"></path>
+            <path d="M148,208 C200,220 260,250 300,270" fill="none" stroke="var(--ink-muted)" stroke-width="1.6"></path>
+            <path d="M322,300 C400,280 470,240 520,190 C560,160 620,150 686,138" fill="none" stroke="var(--ink)" stroke-width="3.5"></path>
+            <path d="M486,410 C520,360 540,300 520,190" fill="none" stroke="var(--ink-muted)" stroke-width="1.8"></path>
+            <path d="M558,352 C540,330 525,260 520,190" fill="none" stroke="var(--ink-muted)" stroke-width="1.5"></path>
+            <path d="M372,470 C400,420 400,350 400,300 C420,260 470,230 520,190" fill="none" stroke="var(--ink-muted)" stroke-width="1.8"></path>
+
+            <ellipse cx="372" cy="470" rx="70" ry="46" fill="none" stroke="var(--forest)" stroke-width="1.5" stroke-dasharray="5,4"></ellipse>
+            <text x="372" y="528" text-anchor="middle" class="basin-map-mono is-forest">buried-valley aquifer draw</text>
+
+            <text x="150" y="150" class="basin-map-label">St. Joseph / St. Marys hd.</text>
+            <text x="330" y="230" class="basin-map-label">Auglaize River</text>
+            <text x="500" y="330" class="basin-map-label">Blanchard River</text>
+            <text x="410" y="550" class="basin-map-label">Ottawa River</text>
+
+            {diamonds.map((d) => (
+              <rect x={d.x - 6} y={d.y - 6} width="12" height="12" transform={`rotate(45 ${d.x} ${d.y})`} fill="var(--forest)" stroke="var(--bone-surface)" stroke-width="1.2" />
+            ))}
+            {markers.map((m) => (
+              <g transform={`translate(${m.x},${m.y})`}>
+                <rect x="-9" y="-9" width="18" height="18" fill={m.ink} stroke="var(--bone-surface)" stroke-width="1.5" />
+                <text x="0" y="-15" text-anchor="middle" class="basin-map-code">{m.code}</text>
+              </g>
+            ))}
+          </svg>
+        </div>
+        <aside class="basin-map-panel">
+          <div class="basin-map-block">
+            <div class="basin-kicker">Layer key</div>
+            <div class="basin-legend">
+              {phases.map((p) => (
+                <span class="basin-legend-row"><span class="basin-legend-sq" style={`background:${p.ink};border-color:${p.ink}`}></span>{p.label}</span>
+              ))}
+              <span class="basin-legend-rule"></span>
+              <span class="basin-legend-row"><span class="basin-legend-dm" style="background:var(--ev-verified-fg)"></span>Outfall · dilution screen on record</span>
+              <span class="basin-legend-rule"></span>
+              <span class="basin-legend-row"><span class="basin-legend-aq"></span>Aquifer draw zone</span>
+              <span class="basin-legend-row"><span class="basin-legend-rv"></span>River / tributary</span>
+            </div>
+          </div>
+          {
+            subbasins.length > 0 && (
+              <div class="basin-map-block grows">
+                <div class="basin-kicker">Sub-basins on the record</div>
+                <div class="basin-map-subs">
+                  {subbasins.map((sb) => (
+                    <span>{sb}</span>
+                  ))}
                 </div>
-              ) : (
-                <div class:list={["nest-row", "is-site", `d${row.depth}`]}>
-                  <span class="nest-arrow">→</span>
-                  <span class="nest-dot" style={`background:${statusOf(row.slug ?? "").dot}`} />
-                  <a class="nest-site" href={withBase(nodeHref(row.slug ?? ""))}>{row.name}</a>
-                  {codenameOf(row.slug ?? "") && <span class="nest-code">{codenameOf(row.slug ?? "")}</span>}
-                  <span class="nest-status" style={`color:${statusOf(row.slug ?? "").color}`}>
-                    {statusOf(row.slug ?? "").label}
-                  </span>
-                </div>
-              ),
-            )}
-            <div class="nest-legend">
-              <span style="color:#1f6f4a"><span class="nest-dot" style="background:#1f6f4a" />Live</span>
-              <span style="color:#1f6f4a"><span class="nest-dot" style="background:#1f6f4a" />Building</span>
-              <span style="color:#9a6a14"><span class="nest-dot" style="background:#9a6a14" />Queued</span>
+              </div>
+            )
+          }
+          <div class="basin-map-src">Boundary source: USGS WBD, simplified for legibility. Not for engineering use.</div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===================== AGGREGATE (on the record) ===================== -->
+    <section class="basin-sec" aria-label="Aggregate across the basin">
+      <div class="basin-sec-head">
+        <span class="basin-kicker">Aggregate across the basin</span>
+        <h2>The receiving system — one site at a time, stacked</h2>
+      </div>
+      {
+        nodes.length > 0 ? (
+          <div class="basin-agg-grid">
+            <div class="basin-panel">
+              <div class="basin-panel-t">Cumulative receiving design flow, upstream → downstream</div>
+              <div class="basin-panel-s">
+                Running total of the WWTPs' NPDES design flows — the treatment capacity any new load in this basin lands on
+              </div>
+              <LineChart
+                kicker="Line · cumulative"
+                title="Receiving design flow, stacked across the basin"
+                data={cumFlow.points}
+                endLabel={`${cumFlow.totalMgd.toLocaleString("en-US")} MGD`}
+                evidence="verified"
+                source="EPA ECHO ICIS-NPDES design flows"
+                caption={cumFlow.skipped > 0 ? `${cumFlow.skipped} node(s) carry no design flow on file and are not stacked.` : undefined}
+              />
+            </div>
+            <div class="basin-panel">
+              <div class="basin-panel-t">Site count by build phase</div>
+              <div class="basin-panel-s">{phases.map((p) => `${p.count} ${p.label.toLowerCase()}`).join(" · ")}</div>
+              <div class="basin-phasebar" role="img" aria-label={`Build phase split across ${phaseTotal} sites`}>
+                {phases.map((p) => (
+                  <span style={`flex:${p.count};background:${p.ink}`} />
+                ))}
+              </div>
+              <div class="basin-phasebar-legend">
+                {phases.map((p) => (
+                  <span class="basin-legend-row"><span class="basin-legend-sq" style={`background:${p.ink};border-color:${p.ink}`}></span><b>{p.count}</b>&nbsp;{p.label}</span>
+                ))}
+              </div>
+              <div class="basin-panel-rule"></div>
+              <div class="basin-panel-t">Receiving WWTP design flow by site</div>
+              <RankedBarChart kicker="Bar · ranked" title="NPDES design flow (MGD)" data={flowBars} unit="MGD" evidence="verified" source="EPA ECHO ICIS-NPDES" />
             </div>
           </div>
+        ) : (
+          <p class="basin-stub">No network data is available yet — the aggregates render once the `network` feed is assembled.</p>
+        )
+      }
+      <p class="basin-agg-note">
+        No site in this basin has a filed data-center water record; {load.count > 0 ? `only ${load.count} carries a disclosed facility load` : "none carries a disclosed facility load"}.
+        The design flows above are the receiving plants' permitted capacity — the denominator any projected draw must be read
+        against, not a measure of the draw itself. A projected basin total would be an open range, not a claim.
+      </p>
+    </section>
 
-          <div class="nest-notes">
-            <div class="nest-note is-accent">
-              <div class="nest-note-k">Why nest by watershed</div>
-              <p>
-                Power meets water at the watershed scale — a data center's draw, discharge, and
-                downstream effects are basin facts. Nesting sites by drainage makes a cross-site
-                claim (Lima's intake vs. Defiance's) a structural relationship, not a coincidence of
-                state lines.
-              </p>
-            </div>
-            <div class="nest-note">
-              <div class="nest-note-k">The reference point</div>
-              <p>
-                <strong>Lima (BOSC)</strong> sits on the Ottawa River, a tributary of the Auglaize.
-                It's the only live build — the record grammar every other point inherits as it comes
-                online.
-              </p>
-            </div>
+    <!-- ===================== SITES IN THIS BASIN ===================== -->
+    <section class="basin-sec" aria-label="The sites in this basin">
+      <div class="basin-sec-head">
+        <span class="basin-kicker">Drill down</span>
+        <h2>The {sites.length} sites in this basin</h2>
+      </div>
+      <div class="basin-table">
+        <div class="basin-tr basin-th">
+          <span></span><span>Code</span><span>Place</span><span>Sub-basin</span><span>Phase</span><span class="ta-r">Draw record</span>
+        </div>
+        {
+          rows.map((r) => (
+            <a class="basin-tr basin-row" href={withBase(r.href)}>
+              <span class="basin-row-mark" style={`background:${r.phaseInk}`} />
+              <span class="basin-row-code">{r.code}</span>
+              <span class="basin-row-place">{r.place}</span>
+              <span class="basin-row-sub">{r.subbasin}</span>
+              <span class="basin-row-phase" style={`color:${r.phaseInk}`}>
+                <span class="basin-row-dot" style={`background:${r.phaseInk}`} />
+                {r.phaseLabel}
+              </span>
+              <span class="ta-r">
+                <EvidenceTag kind={r.evidence} />
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ===================== DISCHARGE POINTS ===================== -->
+    <section class="basin-sec" aria-label="Discharge points">
+      <div class="basin-sec-head">
+        <span class="basin-kicker">Drill down · discharge points</span>
+        <h2>Where the basin's outfalls actually are</h2>
+      </div>
+      <p class="basin-sec-dek">
+        The NPDES-permitted municipal outfalls that would receive any new load — {screenedCount} of {outfalls.length || sites.length}
+        carry an assembled dilution screen; the rest discharge to ungaged tributaries or carry no ECHO receiving water. The
+        gap is itself a finding. Each opens its site's record.
+      </p>
+      {
+        outfalls.length > 0 ? (
+          <div class="basin-outfalls">
+            {outfalls.map((o) => (
+              <a class="basin-outfall" href={withBase(o.href)} style={`border-left-color:${EV_INK[o.evidence] ?? "var(--ink-muted)"}`}>
+                <span class="basin-outfall-dm" style={`background:${EV_INK[o.evidence] ?? "var(--ink-muted)"}`} />
+                <span class="basin-outfall-body">
+                  <span class="basin-outfall-t">{o.title}</span>
+                  <span class="basin-outfall-m">{o.meta}</span>
+                </span>
+                {o.flag && <span class:list={["basin-flag", `is-${o.flag}`]}>{o.flag}</span>}
+                <span class="basin-outfall-flow">{o.flow}</span>
+                <EvidenceTag kind={o.evidence} />
+                <span class="basin-outfall-ch">›</span>
+              </a>
+            ))}
           </div>
-        </section>
+        ) : (
+          <p class="basin-stub">No outfall inventory is available yet — the rows render once the `network` feed is assembled.</p>
+        )
+      }
+    </section>
 
-        <section class="basin-scorecard" aria-label="Cross-site scorecard">
-          <div class="scorecard-head">
-            <h2>Every point, side by side</h2>
-            <span class="two-clocks">Build phase &amp; facility status are two clocks — kept distinct.</span>
-          </div>
-          <p>
-            Ordered upstream &rarr; downstream. The dilution screen is one dimension — only
-            <strong>{" "}{screenedCount} of {nodes.length}</strong> are cleanly screenable (the rest
-            discharge to ungaged tributaries or carry no ECHO receiving water; the data gap is itself
-            a finding).
-          </p>
-          <div class="scorecard-wrap">
-            <table class="scorecard">
-              <thead>
-                <tr>
-                  <th>Node</th>
-                  <th>Subtree &rarr; down</th>
-                  <th>Receiving-water regime</th>
-                  <th>Low-flow screen</th>
-                  <th>Serving utility</th>
-                  <th>¢/kWh</th>
-                  <th>mfg / info LQ</th>
-                  <th>Facility status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {nodes.map((n) => {
-                  const fs = FACILITY_STATUS_META[facilityStatus(n.slug)];
-                  return (
-                    <tr>
-                      <td>
-                        <a href={withBase(nodeHref(n.slug))}>{n.place}</a>
-                        {codenameOf(n.slug) && <span class="code-tag">{codenameOf(n.slug)}</span>}
-                      </td>
-                      <td class="dim">{n.subtree} &rarr; {n.downstream}</td>
-                      <td>{regimeLabel(n.regime)}</td>
-                      <td>
-                        <span class:list={["screen", n.screen.status === "screened" ? n.screen.flag : "unscreened"]}>
-                          {screenText(n)}
-                        </span>
-                      </td>
-                      <td>{n.grid.holding_company ?? "—"}</td>
-                      <td class="mono">{num(n.grid.avg_price_cents_kwh)}</td>
-                      <td class="mono">{num(n.economy.manufacturing_lq)} / {num(n.economy.information_lq, 2)}</td>
-                      <td>
-                        <span class="fac-pill" style={`color:${fs.color};background:${fs.bg}`}>
-                          <span class="nest-dot" style={`background:${fs.dot}`} />{fs.label}
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-          <p class="dim two-clocks-note">
-            <strong>Two clocks, never conflated.</strong> The build phase (live / onboarding / open,
-            the dots in the tree above) tracks <em>our</em> progress assembling the website; facility
-            status (investigation → confirmed → construction → live) tracks the data center in the
-            ground. A queued site can document a live facility, and a live site one still under
-            investigation.
-          </p>
-        </section>
-
-        <section class="basin-charts">
-          <RankedBarChart
-            title="The grid is where the nodes differ"
-            kicker="Bundled retail price · by serving utility"
-            data={priceData}
-            unit="¢/kWh"
-            source="EIA-861 per-utility bundled full-service price"
-          />
-          <RankedBarChart
-            title="Every node is a manufacturing-concentrated county"
-            kicker="Manufacturing location quotient (>1 = over-represented)"
-            data={mfgData}
-            unit="LQ"
-            source="BLS QCEW (county sector share / national)"
-          />
-        </section>
-
-        <article class="prose">
-          <h2>What the network shows</h2>
-          <ol>
-            <li>
-              <strong>Lima is the outlier in exactly one dimension — receiving-water choice.</strong>
-              It is the lone screened violation, on a flow-starved tributary. Defiance's mainstem
-              dilutes ~6:1; Toledo (22 MGD) and Fort Wayne (74 MGD, the largest) sit on the diluting
-              mainstem. Size is irrelevant.
-            </li>
-            <li>
-              <strong>The economic shape is universal.</strong> Every node is manufacturing-heavy
-              (mfg LQ &gt; 1) with a near-absent information sector (info LQ &lt; 1) — the
-              "load-not-jobs onto a shrinking industrial base" pattern is basin-wide, not a Lima
-              quirk.
-            </li>
-            <li>
-              <strong>One shared sink, one shared cap.</strong> All {nodes.length} drain to {net.sink} under
-              one TMDL phosphorus budget. A new load anywhere upstream lands in the same
-              fully-allocated basin — the connectivity is the point.
-            </li>
-          </ol>
-          <p class="dim">
-            Computed by <code>bosc basin-network</code> over the curated topology + each node's
-            committed economy / grid / toxics artifacts and its low-flow screen.
-          </p>
-        </article>
-      </>
-    )
-  }
+    <!-- ===================== FOOTER / GAPS ===================== -->
+    <div class="basin-foot">
+      <div class="basin-foot-gaps">
+        ⚠ <b>Gaps in the record:</b> {openCount} of {sites.length} sites in this basin have no filed water or facility
+        record. The aggregate figures above count only what's on the record — read the record column before citing a
+        basin total.
+      </div>
+      <div class="basin-foot-actions">
+        <a class="basin-btn is-ghost" href={withBase("/")}>← Directory</a>
+        <a class="basin-btn is-forest" href={withBase("/submit")}>Submit a lead</a>
+      </div>
+    </div>
+  </div>
 </Base>
 
 <style>
-  .basin-nest,
-  .basin-scorecard,
-  .basin-charts {
-    margin: 2.5rem 0;
+  /* Design "Basin — Maumee": one framed card on the page field — square corners, no shadows,
+     hairlines within, a 1px ink rule around. Mono carries every figure and part-label. */
+  .basin {
+    max-width: 1180px;
+    margin: 0 auto;
+    background: var(--surface-card);
+    border: 1px solid var(--rule-ink);
+    color: var(--ink);
   }
-  .basin-nest {
+  .basin h1,
+  .basin h2 {
+    margin: 0;
+  }
+  .basin-kicker {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* Hero */
+  .basin-hero {
+    padding: 34px 28px 26px;
+    border-bottom: 1px solid var(--line-hair);
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  .basin-hero-l {
+    flex: 1 1 480px;
+    min-width: 300px;
+  }
+  .basin-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--forest);
+  }
+  .basin-title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-top: 9px;
+    flex-wrap: wrap;
+  }
+  .basin-title-row h1 {
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.02;
+  }
+  .basin-huc {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: var(--forest);
+    background: var(--forest-tint);
+    border: 1px solid var(--forest-line);
+    padding: 3px 8px;
+  }
+  .basin-dek {
+    max-width: 640px;
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: var(--ink-prose);
+    margin: 14px 0 0;
+    text-wrap: pretty;
+  }
+  .basin-tiles {
+    flex: 0 0 auto;
+    width: 420px;
     display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: 1.4rem;
-    align-items: start;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line-hair);
+    border: 1px solid var(--rule-ink);
+    align-self: flex-start;
   }
-  @media (max-width: 720px) {
-    .basin-nest {
+  @media (max-width: 560px) {
+    .basin-tiles {
+      width: 100%;
+    }
+  }
+  .basin-tile {
+    background: var(--bone-surface);
+    padding: 16px 18px;
+    min-height: 148px;
+    display: flex;
+    flex-direction: column;
+  }
+  .basin-tile-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .basin-tile-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .basin-basis {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--ev-inference-fg);
+    border: 1px solid var(--ev-inference-border);
+    background: var(--ev-inference-bg);
+    padding: 0 4px;
+  }
+  .basin-tile-value {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .basin-tile-value .v {
+    font-family: var(--font-mono);
+    font-size: 34px;
+    font-weight: 600;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+  .basin-tile-value .u {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+  .basin-tile-sub {
+    font-size: 11.5px;
+    color: var(--ink-muted);
+    margin-top: 6px;
+    line-height: 1.35;
+  }
+  .basin-tile-foot {
+    margin-top: auto;
+    padding-top: 10px;
+  }
+
+  /* Sections */
+  .basin-sec {
+    padding: 26px 28px 30px;
+    border-bottom: 1px solid var(--line-hair);
+  }
+  .basin-sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 11px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .basin-sec-head h2 {
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+  }
+  .basin-sec-note {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+  .basin-sec-dek {
+    max-width: 760px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--ink-muted);
+    margin: -8px 0 16px;
+  }
+  .basin-stub {
+    font-size: 13px;
+    color: var(--ink-faint);
+    margin: 0;
+  }
+
+  /* Map */
+  .basin-map-grid {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    border: 1px solid var(--rule-ink);
+  }
+  @media (max-width: 900px) {
+    .basin-map-grid {
       grid-template-columns: 1fr;
     }
   }
-  .nest-tree {
-    border: 1px solid var(--rule, #dcd8cc);
-    border-radius: 14px;
-    padding: 1.1rem 1.25rem;
-    background: #faf8f1;
+  .basin-map-canvas {
+    background: var(--bone-band);
+    border-right: 1px solid var(--rule-ink);
+    padding: 14px;
   }
-  .nest-kicker {
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: #8c9389;
+  @media (max-width: 900px) {
+    .basin-map-canvas {
+      border-right: 0;
+      border-bottom: 1px solid var(--rule-ink);
+    }
+  }
+  .basin-map-canvas svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .basin-map-mono {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    fill: var(--ink-faint);
+  }
+  .basin-map-mono.is-forest {
+    font-size: 10px;
+    fill: var(--forest);
+  }
+  .basin-map-label {
+    font-family: var(--font-sans, Archivo, sans-serif);
+    font-size: 12px;
     font-weight: 700;
-    margin-bottom: 0.7rem;
+    fill: var(--ink-muted);
   }
-  .nest-row {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-    padding: 0.18rem 0;
-    font-size: 0.9rem;
-  }
-  .nest-row.d0 { padding-left: 0; }
-  .nest-row.d1 { padding-left: 0.9rem; }
-  .nest-row.d2 { padding-left: 2.1rem; }
-  .nest-row.d3 { padding-left: 3.3rem; }
-  .nest-row.d4 { padding-left: 4.5rem; }
-  .nest-river {
+  .basin-map-code {
+    font-family: var(--font-mono);
+    font-size: 10px;
     font-weight: 700;
-    color: #3a4036;
+    fill: var(--ink);
   }
-  .nest-row.d0 .nest-river,
-  .nest-row.d1 .nest-river {
-    font-weight: 800;
-    color: #16201a;
-  }
-  .nest-arrow {
-    color: #8c9389;
-  }
-  .nest-dot {
-    display: inline-block;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    flex: 0 0 auto;
-  }
-  .nest-site {
-    font-weight: 700;
-    color: #16201a;
-    text-decoration: none;
-  }
-  .nest-site:hover {
-    text-decoration: underline;
-  }
-  .nest-code {
-    font-size: 0.6rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    font-weight: 700;
-    color: #7a82c4;
-    background: #e4ece4;
-    border: 1px solid #bcd2c4;
-    border-radius: 4px;
-    padding: 0 0.3rem;
-    font-family: var(--mono, ui-monospace, monospace);
-  }
-  .nest-status {
-    font-size: 0.72rem;
-    font-weight: 700;
-    margin-left: auto;
-  }
-  .nest-legend {
-    margin-top: 0.9rem;
-    padding-top: 0.7rem;
-    border-top: 1px solid #ece8dc;
-    display: flex;
-    gap: 1rem;
-    font-size: 0.7rem;
-    font-weight: 700;
-  }
-  .nest-legend span {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-  }
-  .nest-notes {
+  .basin-map-panel {
+    background: var(--bone-sunk);
     display: flex;
     flex-direction: column;
-    gap: 0.9rem;
   }
-  .nest-note {
-    border: 1px solid #dcd8cc;
-    border-radius: 14px;
-    padding: 1rem 1.15rem;
-    background: #f5f2ea;
+  .basin-map-block {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line-hair);
   }
-  .nest-note.is-accent {
-    border-color: #bcd2c4;
-    background: #e4ece4;
+  .basin-map-block.grows {
+    flex: 1 1 auto;
+    border-bottom: 0;
   }
-  .nest-note-k {
-    font-size: 0.68rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: #8c9389;
-    font-weight: 700;
-    margin-bottom: 0.4rem;
+  .basin-map-block .basin-kicker {
+    display: block;
+    letter-spacing: 1.2px;
+    margin-bottom: 10px;
   }
-  .nest-note.is-accent .nest-note-k {
-    color: #1f6f4a;
-  }
-  .nest-note p {
-    margin: 0;
-    font-size: 0.86rem;
-    line-height: 1.5;
-    color: #3a4036;
-  }
-  .scorecard-head {
+  .basin-legend {
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 8px;
   }
-  .two-clocks {
-    font-size: 0.8rem;
-    color: #8c9389;
+  .basin-legend-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 12.5px;
+    color: var(--ink-prose);
   }
-  .scorecard-wrap {
-    overflow-x: auto;
+  .basin-legend-sq {
+    width: 12px;
+    height: 12px;
+    flex: 0 0 auto;
+    border: 1px solid;
   }
-  table.scorecard {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.86rem;
+  .basin-legend-dm {
+    width: 10px;
+    height: 10px;
+    flex: 0 0 auto;
+    transform: rotate(45deg);
   }
-  table.scorecard th,
-  table.scorecard td {
-    text-align: left;
-    padding: 0.4rem 0.6rem;
-    border-bottom: 1px solid var(--rule, #ece8dc);
-    white-space: nowrap;
+  .basin-legend-aq {
+    width: 14px;
+    height: 8px;
+    flex: 0 0 auto;
+    border: 1.5px dashed var(--forest);
   }
-  table.scorecard th {
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    color: #6b7280;
+  .basin-legend-rv {
+    width: 14px;
+    height: 2px;
+    flex: 0 0 auto;
+    background: var(--ink-muted);
   }
-  table.scorecard td.mono {
-    font-variant-numeric: tabular-nums;
-    font-family: var(--mono, ui-monospace, monospace);
+  .basin-legend-rule {
+    height: 1px;
+    background: var(--line-hair);
+    margin: 2px 0;
   }
-  table.scorecard td.dim,
-  .dim {
-    color: #6b7280;
+  .basin-map-subs {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12.5px;
+    color: var(--ink-muted);
+    line-height: 1.4;
   }
-  .code-tag {
-    margin-left: 0.35rem;
-    padding: 0 0.3rem;
-    font-size: 0.6rem;
+  .basin-map-src {
+    padding: 12px 16px;
+    border-top: 1px solid var(--line-hair);
+    font-size: 11px;
+    color: var(--ink-faint);
+    line-height: 1.4;
+  }
+
+  /* Aggregates */
+  .basin-agg-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 22px;
+    align-items: stretch;
+  }
+  @media (max-width: 900px) {
+    .basin-agg-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .basin-panel {
+    background: var(--bone-sunk);
+    border: 1px solid var(--line-hair);
+    padding: 18px 20px;
+  }
+  .basin-panel-t {
+    font-size: 13px;
     font-weight: 700;
-    border-radius: 4px;
-    background: #ece8dc;
-    color: #1f6f4a;
-    font-family: var(--mono, ui-monospace, monospace);
+    margin-bottom: 2px;
   }
-  .fac-pill {
+  .basin-panel-s {
+    font-size: 12px;
+    color: var(--ink-faint);
+    margin-bottom: 12px;
+  }
+  .basin-panel-rule {
+    height: 1px;
+    background: var(--line-hair);
+    margin: 20px 0 16px;
+  }
+  /* The shared chart components carry the site's legacy card chrome — flatten it to
+     the design's square, borderless in-panel figure (scoped; the global sheet is untouched). */
+  .basin-panel :global(.chart-card) {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+  .basin-phasebar {
+    display: flex;
+    height: 30px;
+    border: 1px solid var(--rule-ink);
+    background: var(--bone-surface);
+  }
+  .basin-phasebar-legend {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    font-size: 12.5px;
+  }
+  .basin-agg-note {
+    margin: 14px 0 0;
+    font-size: 12px;
+    color: var(--ink-faint);
+    line-height: 1.5;
+    max-width: 820px;
+  }
+
+  /* Site table */
+  .basin-table {
+    border-top: 1px solid var(--rule-ink);
+    border-bottom: 1px solid var(--rule-ink);
+  }
+  .basin-tr {
+    display: grid;
+    grid-template-columns: 30px 60px 150px 1fr 130px 120px;
+    align-items: center;
+    padding: 10px 6px;
+    border-bottom: 1px solid var(--line-hair);
+  }
+  .basin-tr:last-child {
+    border-bottom: 0;
+  }
+  .basin-th {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding: 8px 6px;
+  }
+  .basin-row {
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .basin-row:hover {
+    background: var(--bone-band);
+  }
+  .basin-row-mark {
+    width: 9px;
+    height: 9px;
+  }
+  .basin-row-code {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .basin-row-place {
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .basin-row-sub {
+    font-size: 12.5px;
+    color: var(--ink-muted);
+  }
+  .basin-row-phase {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    font-size: 0.72rem;
+    gap: 7px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .basin-row-dot {
+    width: 7px;
+    height: 7px;
+  }
+  .ta-r {
+    text-align: right;
+  }
+  @media (max-width: 720px) {
+    .basin-tr {
+      grid-template-columns: 24px 52px 1fr 110px;
+    }
+    .basin-row-sub,
+    .basin-th span:nth-child(4),
+    .basin-row-phase,
+    .basin-th span:nth-child(5) {
+      display: none;
+    }
+  }
+
+  /* Discharge points */
+  .basin-outfalls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .basin-outfall {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 16px;
+    background: var(--surface-card);
+    border: 1px solid var(--line-hair);
+    border-left: 3px solid var(--ink-muted);
+    text-decoration: none;
+    color: var(--ink);
+    transition: border-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .basin-outfall:hover {
+    border-color: var(--forest-line);
+  }
+  .basin-outfall-dm {
+    flex: 0 0 auto;
+    width: 10px;
+    height: 10px;
+    transform: rotate(45deg);
+  }
+  .basin-outfall-body {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .basin-outfall-t {
+    display: block;
+    font-size: 14.5px;
     font-weight: 700;
-    border-radius: 999px;
-    padding: 0.12rem 0.55rem;
   }
-  .screen.violation {
-    color: #7a2230;
+  .basin-outfall-m {
+    display: block;
+    font-size: 12px;
+    color: var(--ink-faint);
+    margin-top: 2px;
+  }
+  .basin-outfall-flow {
+    flex: 0 0 auto;
+    font-family: var(--font-mono);
+    font-size: 13px;
     font-weight: 700;
   }
-  .screen.tight {
-    color: #9a6a14;
-    font-weight: 600;
+  .basin-outfall-ch {
+    color: var(--ink-ghost);
   }
-  .screen.unscreened {
-    color: #9aa1b2;
+  .basin-flag {
+    flex: 0 0 auto;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border: 1px solid;
   }
-  .two-clocks-note {
-    margin-top: 0.8rem;
-    font-size: 0.84rem;
+  .basin-flag.is-violation {
+    color: var(--ev-gap-fg);
+    border-color: var(--ev-gap-fg);
+  }
+  .basin-flag.is-tight {
+    color: var(--ev-inference-fg);
+    border-color: var(--ev-inference-border);
+  }
+  .basin-flag.is-ok {
+    color: var(--ev-verified-fg);
+    border-color: var(--ev-verified-border);
+  }
+  @media (max-width: 720px) {
+    .basin-outfall {
+      flex-wrap: wrap;
+    }
+  }
+
+  /* Footer / gaps */
+  .basin-foot {
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    background: var(--bone-sunk);
+  }
+  .basin-foot-gaps {
+    font-size: 13px;
     line-height: 1.5;
+    max-width: 680px;
   }
-  .basin-charts {
-    display: grid;
-    gap: 2rem;
+  .basin-foot-actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .basin-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 14px;
+    text-decoration: none;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .basin-btn.is-ghost {
+    color: var(--ink-muted);
+    border: 1px solid var(--ink-muted);
+    background: transparent;
+  }
+  .basin-btn.is-ghost:hover {
+    color: var(--forest);
+    border-color: var(--forest);
+  }
+  .basin-btn.is-forest {
+    color: var(--bone-surface);
+    background: var(--forest);
+    border: 1px solid var(--forest);
+  }
+  .basin-btn.is-forest:hover {
+    background: #155539;
   }
 </style>
