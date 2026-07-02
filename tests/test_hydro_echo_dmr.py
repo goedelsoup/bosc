@@ -87,6 +87,64 @@ def test_dmr_document_is_regenerable_and_faithful(hydro_settings: Settings) -> N
     assert "watermark dmr IN0032191" in doc["meta"]["regenerate"]
 
 
+def test_summarize_ignores_daily_max_rows() -> None:
+    # ECHO returns both MO AVG and DAILY MX rows per period. Only MO AVG should
+    # enter the mean/min/max/count computation; mixing them inflates all four.
+    mo_avg = [
+        echo_dmr.DmrRow(
+            period_end=f"2023-{m:02d}-01",
+            value=float(m),
+            unit="MGD",
+            qualifier=None,
+            stat_base="MO AVG",
+            limit=None,
+            limit_type=None,
+            exceedance_pct=None,
+            nodi=None,
+        )
+        for m in range(1, 13)  # values 1..12
+    ]
+    daily_mx = [
+        echo_dmr.DmrRow(
+            period_end=f"2023-{m:02d}-01",
+            value=float(m) * 3,
+            unit="MGD",
+            qualifier=None,
+            stat_base="DAILY MX",
+            limit=None,
+            limit_type=None,
+            exceedance_pct=None,
+            nodi=None,
+        )
+        for m in range(1, 13)  # values 3..36 — would skew mean if included
+    ]
+    chart = echo_dmr.EffluentChart(
+        npdes_id="TEST001",
+        name="Test Plant",
+        permit_type=None,
+        permit_status=None,
+        major_minor=None,
+        snc_status=None,
+        start_date="2023-01-01",
+        end_date="2023-12-31",
+        parameters=[
+            echo_dmr.DmrParameter(
+                outfall="001",
+                outfall_type=None,
+                parameter_code=echo_dmr.FLOW_PARAM,
+                parameter_desc=None,
+                monitoring_location=None,
+                rows=mo_avg + daily_mx,
+            ),
+        ],
+    )
+    summary = echo_dmr.summarize_discharge(chart, design_flow_mgd=20.0)
+    assert summary.n_flow_months == 12  # calendar months, not rows
+    assert summary.actual_flow_mean_mgd == pytest.approx(6.5)  # mean(1..12), not mean(1..12, 3..36)
+    assert summary.actual_flow_min_mgd == pytest.approx(1.0)  # MO AVG min, not 3.0 (DAILY MX min)
+    assert summary.actual_flow_max_mgd == pytest.approx(12.0)  # MO AVG max, not 36.0
+
+
 def test_offline_cache_miss_raises(hydro_settings: Settings) -> None:
     # A permit with no committed fixture -> offline miss must be loud, not silent.
     with pytest.raises(HydroOfflineError):
