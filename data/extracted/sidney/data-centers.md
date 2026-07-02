@@ -58,7 +58,7 @@ council resolution references are primary-source verified. `[verified]`
 - **Projected cooling-water consumption:** 4.6 million gallons per year (~12,600 GPD average).
   `[verified]` Source: sidneyoh.com/526.
   *Note: the 1.0 MGD max is peak withdrawal; the 4.6M gal/yr figure is projected evaporative
-  consumption. Net consumptive loss ≈ 0.013 cfs average against the Great Miami 7Q10 = 30.95 cfs —
+  consumption. Net consumptive loss ≈ 0.0195 cfs average against the Great Miami 7Q10 = 30.95 cfs —
   <0.1% of 7Q10.* `[inference]` (arithmetic from cited inputs; see hydrology hook below.)
 - **Water source:** City of Sidney municipal system — multiple sources: groundwater wells, Great
   Miami River intake, Tawawa Creek. `[verified]` Source: sidneyoh.com/526.
@@ -71,7 +71,7 @@ council resolution references are primary-source verified. `[verified]`
 
 - **Receiving water (indirect):** Great Miami River at Sidney — 7Q10 30.95 cfs (derived LP3, gage
   03261500, 44 yr 1980–2024; `low-flow-7q10.derived.yaml`). `[verified]`
-- **Abstraction vs. 7Q10:** 1.0 MGD peak = 1.55 cfs; consuming 4.6M gal/yr = 0.013 cfs average.
+- **Abstraction vs. 7Q10:** 1.0 MGD peak = 1.55 cfs; consuming 4.6M gal/yr = 0.0195 cfs average.
   Net consumptive draw is <0.1% of the 7Q10 denominator — **no assimilative violation flag on
   water-quantity grounds.** `[inference]` (confirmed arithmetic; regulatory passby threshold not
   yet set — see SiteProfile `passby_primary_cfs`.)
@@ -94,12 +94,14 @@ council resolution references are primary-source verified. `[verified]`
 
 RSEI TRI inventory (Shelby County, RSEI v234, 39 facilities): no NAICS 518210 entry; no
 data-center SIC code. All 39 facilities are legacy manufacturing, quarrying, or food processing.
-`[verified]`
+`[verified]` Source: `data/reference/rsei/sidney/inventory.yaml` (EPA RSEI Public Data Set v234,
+county FIPS 39149).
 
 ECHO Great Miami all-NPDES (committed 2026-07-02, 286 facilities, 18 Shelby County): no NAICS
 518210 or data-center-type facility. Shelby County entries are municipal WWTPs (Anna STP,
 Botkins WWTP, Sidney WWTP OH0027421, Jackson Center, Russia) + quarries (Barrett Paving ×4) +
-Honda Anna Engine Plant + miscellaneous non-POTW. `[verified]`
+Honda Anna Engine Plant + miscellaneous non-POTW. `[verified]` Source:
+`data/reference/echo/great-miami-wwtp.all-npdes.yaml` (committed 2026-07-02).
 
 I-75 corridor web sweep (2026-07-02): no evidence of a second data-center operator or land
 assembly beyond Project Galaxy. `[verified]` Source: stopohiodatacenters.org; CleanView; DCD; WHIO.
