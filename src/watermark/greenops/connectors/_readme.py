@@ -1,3 +1,16 @@
+"""The one README for ``data/reference/greenops/`` — covering every connector's artifact.
+
+Each connector's ``write_*`` regenerates its own YAML **and** this shared README, so the
+folder's documentation stays whole no matter which ``--write`` ran last (a per-connector
+README would clobber its siblings'). Add a section here when a new GreenOps connector
+lands (#1078-#1082).
+"""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+REFERENCE_README = """\
 # GreenOps — provider usage, cost & carbon exports
 
 The raw-source slice of Watermark's own compute footprint (epic #1076): per-provider
@@ -42,3 +55,12 @@ Regenerate both with `watermark greenops aws --write` (needs `AWS_ACCESS_KEY_ID`
   `footprint.py` (#1082/#1083), never read from this export. Emissions data lags roughly
   **three months** behind the calendar (the CCFT's documented lag, carried over), so the
   monthly series ends at AWS's latest published month, not the request window's end.
+"""
+
+
+def write_reference_readme(reference_dir: Path) -> Path:
+    """(Re)write the shared ``data/reference/greenops/README.md``; return its path."""
+    reference_dir.mkdir(parents=True, exist_ok=True)
+    path = reference_dir / "README.md"
+    path.write_text(REFERENCE_README, encoding="utf-8")
+    return path

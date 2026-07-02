@@ -8,7 +8,8 @@ actionable :class:`GreenopsOfflineError` naming the key to record. Credentials c
 ``settings`` (AWS SDK names, ``anthropic_admin_key``), excluded from the cache key and added
 only in the live fetch, mirroring the EIA connector template.
 
-Landed: the Anthropic Admin usage/cost connector (#1078). AWS/GitHub/eGRID follow.
+Landed: the Anthropic Admin usage/cost connector (#1078) and the AWS Cost Explorer +
+Sustainability (CCFT successor) connector (#1079). GitHub/eGRID follow.
 """
 
 from __future__ import annotations
@@ -34,15 +35,35 @@ from watermark.greenops.connectors.anthropic import (  # noqa: E402  (after the 
     load_anthropic_usage,
     write_anthropic_usage,
 )
+from watermark.greenops.connectors.aws import (  # noqa: E402  (after the error class)
+    AwsCredentialsError,
+    build_carbon_report,
+    build_cost_report,
+    fetch_aws_carbon,
+    fetch_aws_costs,
+    load_aws_carbon,
+    load_aws_costs,
+    write_aws_carbon,
+    write_aws_costs,
+)
 
 __all__ = [
     "AnthropicAdminError",
     "AnthropicUsageByModel",
     "AnthropicUsageByWorkspace",
     "AnthropicUsageReport",
+    "AwsCredentialsError",
     "GreenopsOfflineError",
+    "build_carbon_report",
+    "build_cost_report",
     "build_usage_report",
     "fetch_anthropic_usage",
+    "fetch_aws_carbon",
+    "fetch_aws_costs",
     "load_anthropic_usage",
+    "load_aws_carbon",
+    "load_aws_costs",
     "write_anthropic_usage",
+    "write_aws_carbon",
+    "write_aws_costs",
 ]

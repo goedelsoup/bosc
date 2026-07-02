@@ -1,0 +1,157 @@
+period:
+  label: Jul 2025-Jun 2026
+  start: 2025-07
+  end: 2026-06
+  kind: trailing_12_months
+total_cost:
+  value: 207.5
+  unit: USD
+  source: reference
+  citation: AWS Cost Explorer GetCostAndUsage (Jul 2025-Jun 2026)
+  confidence: high
+  asof: null
+by_function:
+- function: hosting
+  label: Hosting
+  cost:
+    value: 82.5
+    unit: USD
+    source: reference
+    citation: AWS Cost Explorer GetCostAndUsage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  services:
+  - Amazon Elastic Compute Cloud - Compute
+- function: search
+  label: Search
+  cost:
+    value: 60.0
+    unit: USD
+    source: reference
+    citation: AWS Cost Explorer GetCostAndUsage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  services:
+  - Amazon OpenSearch Service
+- function: storage
+  label: Storage
+  cost:
+    value: 26.0
+    unit: USD
+    source: reference
+    citation: AWS Cost Explorer GetCostAndUsage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  services:
+  - Amazon Simple Storage Service
+- function: ai_inference
+  label: AI inference
+  cost:
+    value: 25.0
+    unit: USD
+    source: reference
+    citation: AWS Cost Explorer GetCostAndUsage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  services:
+  - Amazon Bedrock
+- function: ingestion
+  label: Ingestion
+  cost:
+    value: 12.0
+    unit: USD
+    source: reference
+    citation: AWS Cost Explorer GetCostAndUsage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  services:
+  - Amazon Textract
+- function: other
+  label: Other
+  cost:
+    value: 2.0
+    unit: USD
+    source: reference
+    citation: AWS Cost Explorer GetCostAndUsage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  services:
+  - AWS Key Management Service
+lines:
+- service: Amazon Elastic Compute Cloud - Compute
+  usage_type: BoxUsage:t3.medium
+  function: hosting
+  cost:
+    value: 82.5
+    unit: USD
+    source: reference
+    citation: AWS Cost Explorer GetCostAndUsage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  usage_amount: 1464.0
+  usage_unit: Hrs
+- service: Amazon OpenSearch Service
+  usage_type: ESInstance:t3.small
+  function: search
+  cost:
+    value: 60.0
+    unit: USD
+    source: reference
+    citation: AWS Cost Explorer GetCostAndUsage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  usage_amount: 1464.0
+  usage_unit: Hrs
+- service: Amazon Simple Storage Service
+  usage_type: TimedStorage-ByteHrs
+  function: storage
+  cost:
+    value: 26.0
+    unit: USD
+    source: reference
+    citation: AWS Cost Explorer GetCostAndUsage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  usage_amount: 1020.0
+  usage_unit: GB-Mo
+- service: Amazon Bedrock
+  usage_type: InputTokens
+  function: ai_inference
+  cost:
+    value: 25.0
+    unit: USD
+    source: reference
+    citation: AWS Cost Explorer GetCostAndUsage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  usage_amount: 5000000.0
+  usage_unit: Count
+- service: Amazon Textract
+  usage_type: PagesProcessed
+  function: ingestion
+  cost:
+    value: 12.0
+    unit: USD
+    source: reference
+    citation: AWS Cost Explorer GetCostAndUsage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  usage_amount: 4000.0
+  usage_unit: Count
+- service: AWS Key Management Service
+  usage_type: us-east-1-KMS-Requests
+  function: other
+  cost:
+    value: 2.0
+    unit: USD
+    source: reference
+    citation: AWS Cost Explorer GetCostAndUsage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  usage_amount: 67000.0
+  usage_unit: Count
+note: AWS Cost Explorer GetCostAndUsage over the window, monthly granularity, grouped
+  by SERVICE + USAGE_TYPE (values read by name via the response's GroupDefinitions).
+  Dollars are `reference` (a billing export); the function taxonomy is our declared
+  mapping of AWS services — unmapped services land in `other`, never dropped. Usage
+  units vary per line and must not be summed across lines.

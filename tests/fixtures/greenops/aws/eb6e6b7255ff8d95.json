@@ -1,0 +1,239 @@
+{
+  "params": {
+    "report": "cost_and_usage",
+    "start": "2025-07-01",
+    "end": "2026-07-01",
+    "granularity": "MONTHLY",
+    "metrics": [
+      "UnblendedCost",
+      "UsageQuantity"
+    ],
+    "group_by": [
+      "SERVICE",
+      "USAGE_TYPE"
+    ]
+  },
+  "fetched_at": "2026-07-01T00:00:00+00:00",
+  "payload": {
+    "ResultsByTime": [
+      {
+        "TimePeriod": {
+          "Start": "2025-07-01",
+          "End": "2025-08-01"
+        },
+        "Groups": [
+          {
+            "Keys": [
+              "Amazon Elastic Compute Cloud - Compute",
+              "BoxUsage:t3.medium"
+            ],
+            "Metrics": {
+              "UnblendedCost": {
+                "Amount": "40.00",
+                "Unit": "USD"
+              },
+              "UsageQuantity": {
+                "Amount": "720",
+                "Unit": "Hrs"
+              }
+            }
+          },
+          {
+            "Keys": [
+              "Amazon Simple Storage Service",
+              "TimedStorage-ByteHrs"
+            ],
+            "Metrics": {
+              "UnblendedCost": {
+                "Amount": "12.25",
+                "Unit": "USD"
+              },
+              "UsageQuantity": {
+                "Amount": "500",
+                "Unit": "GB-Mo"
+              }
+            }
+          },
+          {
+            "Keys": [
+              "Amazon OpenSearch Service",
+              "ESInstance:t3.small"
+            ],
+            "Metrics": {
+              "UnblendedCost": {
+                "Amount": "30.00",
+                "Unit": "USD"
+              },
+              "UsageQuantity": {
+                "Amount": "720",
+                "Unit": "Hrs"
+              }
+            }
+          },
+          {
+            "Keys": [
+              "Amazon Textract",
+              "PagesProcessed"
+            ],
+            "Metrics": {
+              "UnblendedCost": {
+                "Amount": "8.40",
+                "Unit": "USD"
+              },
+              "UsageQuantity": {
+                "Amount": "2800",
+                "Unit": "Count"
+              }
+            }
+          },
+          {
+            "Keys": [
+              "Amazon Bedrock",
+              "InputTokens"
+            ],
+            "Metrics": {
+              "UnblendedCost": {
+                "Amount": "15.00",
+                "Unit": "USD"
+              },
+              "UsageQuantity": {
+                "Amount": "3000000",
+                "Unit": "Count"
+              }
+            }
+          },
+          {
+            "Keys": [
+              "AWS Key Management Service",
+              "us-east-1-KMS-Requests"
+            ],
+            "Metrics": {
+              "UnblendedCost": {
+                "Amount": "1.00",
+                "Unit": "USD"
+              },
+              "UsageQuantity": {
+                "Amount": "33000",
+                "Unit": "Count"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "TimePeriod": {
+          "Start": "2025-08-01",
+          "End": "2025-09-01"
+        },
+        "Groups": [
+          {
+            "Keys": [
+              "Amazon Elastic Compute Cloud - Compute",
+              "BoxUsage:t3.medium"
+            ],
+            "Metrics": {
+              "UnblendedCost": {
+                "Amount": "42.50",
+                "Unit": "USD"
+              },
+              "UsageQuantity": {
+                "Amount": "744",
+                "Unit": "Hrs"
+              }
+            }
+          },
+          {
+            "Keys": [
+              "Amazon Simple Storage Service",
+              "TimedStorage-ByteHrs"
+            ],
+            "Metrics": {
+              "UnblendedCost": {
+                "Amount": "13.75",
+                "Unit": "USD"
+              },
+              "UsageQuantity": {
+                "Amount": "520",
+                "Unit": "GB-Mo"
+              }
+            }
+          },
+          {
+            "Keys": [
+              "Amazon OpenSearch Service",
+              "ESInstance:t3.small"
+            ],
+            "Metrics": {
+              "UnblendedCost": {
+                "Amount": "30.00",
+                "Unit": "USD"
+              },
+              "UsageQuantity": {
+                "Amount": "744",
+                "Unit": "Hrs"
+              }
+            }
+          },
+          {
+            "Keys": [
+              "Amazon Textract",
+              "PagesProcessed"
+            ],
+            "Metrics": {
+              "UnblendedCost": {
+                "Amount": "3.60",
+                "Unit": "USD"
+              },
+              "UsageQuantity": {
+                "Amount": "1200",
+                "Unit": "Count"
+              }
+            }
+          },
+          {
+            "Keys": [
+              "Amazon Bedrock",
+              "InputTokens"
+            ],
+            "Metrics": {
+              "UnblendedCost": {
+                "Amount": "10.00",
+                "Unit": "USD"
+              },
+              "UsageQuantity": {
+                "Amount": "2000000",
+                "Unit": "Count"
+              }
+            }
+          },
+          {
+            "Keys": [
+              "AWS Key Management Service",
+              "us-east-1-KMS-Requests"
+            ],
+            "Metrics": {
+              "UnblendedCost": {
+                "Amount": "1.00",
+                "Unit": "USD"
+              },
+              "UsageQuantity": {
+                "Amount": "34000",
+                "Unit": "Count"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "GroupDefinitions": [
+      {
+        "Type": "DIMENSION",
+        "Key": "SERVICE"
+      },
+      {
+        "Type": "DIMENSION",
+        "Key": "USAGE_TYPE"
+      }
+    ]
+  }
+}

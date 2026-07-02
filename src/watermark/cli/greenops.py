@@ -114,3 +114,72 @@ def anthropic(
     console.print(f"\n[dim]{report.note}[/]")
     if write:
         wrote(write_anthropic_usage(report, settings=settings))
+
+
+@greenops_app.command("aws")
+def aws(
+    write: bool = typer.Option(
+        False, "--write", help="Write data/reference/greenops/aws-*.yaml + README."
+    ),
+    offline: bool = typer.Option(
+        False, "--offline", help="Replay committed fixtures only; never hit AWS."
+    ),
+    start: str = typer.Option(
+        "", "--start", help="RFC 3339 window start (default: 12 months ago, month-aligned)."
+    ),
+    end: str = typer.Option(
+        "", "--end", help="RFC 3339 window end, exclusive (default: start of this month)."
+    ),
+) -> None:
+    """Pull AWS Cost Explorer (by function) + the Sustainability emissions estimate.
+
+    Needs ``AWS_ACCESS_KEY_ID`` / ``AWS_SECRET_ACCESS_KEY`` (``ce:GetCostAndUsage`` +
+    ``sustainability:GetEstimatedCarbonEmissions``) for a live pull; ``--offline`` replays
+    committed fixtures. Figures are ``reference`` (a billing/emissions export), never
+    metered. AWS publishes no electricity/kWh figure — that stays a derived number
+    (#1082/#1083); emissions data lags ~3 months.
+    """
+    from watermark.greenops.connectors import (
+        fetch_aws_carbon,
+        fetch_aws_costs,
+        write_aws_carbon,
+        write_aws_costs,
+    )
+
+    settings = offline_settings("greenops", offline)
+    default_start, default_end = _trailing_12_months()
+    window = (start or default_start, end or default_end)
+    costs = fetch_aws_costs(*window, settings=settings)
+    carbon = fetch_aws_carbon(*window, settings=settings)
+
+    console.print(
+        f"[bold]AWS costs[/] [dim]({costs.period.label})[/]  "
+        f"[dim]reference — a billing export, not metered[/]"
+    )
+    by_function = Table("function", "cost", "services")
+    for f in costs.by_function:
+        by_function.add_row(f.label, f"${f.cost.value:,.2f}", ", ".join(f.services))
+    console.print(by_function)
+    console.print(f"Total: ${costs.total_cost.value:,.2f}  [dim]{costs.total_cost.source}[/]")
+
+    console.print(
+        f"\n[bold]AWS estimated emissions[/] [dim]({carbon.period.label})[/]  "
+        f"[dim]reference — AWS's own estimate; lags ~3 months[/]"
+    )
+    emissions = Table("figure", "value", "provenance")
+    emissions.add_row(
+        "Market-based (MBM)",
+        f"{carbon.mbm_total.value:g} {carbon.mbm_total.unit}",
+        f"[dim]{carbon.mbm_total.source}[/]",
+    )
+    emissions.add_row(
+        "Location-based (LBM)",
+        f"{carbon.lbm_total.value:g} {carbon.lbm_total.unit}",
+        f"[dim]{carbon.lbm_total.source}[/]",
+    )
+    console.print(emissions)
+
+    console.print(f"\n[dim]{carbon.note}[/]")
+    if write:
+        wrote(write_aws_costs(costs, settings=settings))
+        wrote(write_aws_carbon(carbon, settings=settings))
