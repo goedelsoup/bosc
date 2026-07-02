@@ -59,12 +59,7 @@ function repoRoot(pluginDir: string): string {
   return path.resolve(pluginDir, "../..");
 }
 
-function runExport(
-  cmd: string[],
-  args: string[],
-  cwd: string,
-  label: string,
-): boolean {
+function runExport(cmd: string[], args: string[], cwd: string, label: string): boolean {
   const [bin, ...binArgs] = cmd;
   const result = spawnSync(bin, [...binArgs, ...args], {
     cwd,
@@ -86,9 +81,7 @@ export function watermarkBundle(opts: WatermarkBundleOptions = {}): Plugin {
   const sites = opts.sites ?? DEFAULT_SITES;
   const cmd = opts.cmd ?? DEFAULT_CMD;
   const cwd = opts.cwd ?? repoRoot(_pluginDir);
-  const buildArgs =
-    opts.buildArgs ??
-    ((_c: string[], slug: string) => ["--site", slug, "export"]);
+  const buildArgs = opts.buildArgs ?? ((_c: string[], slug: string) => ["--site", slug, "export"]);
 
   let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -107,24 +100,12 @@ export function watermarkBundle(opts: WatermarkBundleOptions = {}): Plugin {
       if (!ok) throw new Error(`[watermark-bundle] export failed for site "${slug}"`);
     }
     for (const extra of opts.extraCommands ?? []) {
-      const targets =
-        extra.sites === "all"
-          ? sites
-          : extra.sites != null
-            ? extra.sites
-            : [null];
+      const targets = extra.sites === "all" ? sites : extra.sites != null ? extra.sites : [null];
       for (const slug of targets) {
         const prefix = slug != null ? ["--site", slug] : [];
-        const ok = runExport(
-          cmd,
-          [...prefix, ...extra.args],
-          cwd,
-          extra.label ?? extra.args.join(" "),
-        );
+        const ok = runExport(cmd, [...prefix, ...extra.args], cwd, extra.label ?? extra.args.join(" "));
         if (!ok)
-          throw new Error(
-            `[watermark-bundle] extra command failed: ${extra.label ?? extra.args.join(" ")}`,
-          );
+          throw new Error(`[watermark-bundle] extra command failed: ${extra.label ?? extra.args.join(" ")}`);
       }
     }
   }

@@ -13,6 +13,8 @@ const AUDIT_URL = withBase("/api/admin/audit");
 const userGroupsUrl = (sub: string) => withBase(`/api/admin/users/${encodeURIComponent(sub)}/groups`);
 const userAdminSitesUrl = (sub: string) =>
   withBase(`/api/admin/users/${encodeURIComponent(sub)}/admin-sites`);
+const userEarlyAccessUrl = (sub: string) =>
+  withBase(`/api/admin/users/${encodeURIComponent(sub)}/early-access`);
 
 const MANAGED_GROUPS = ["admin", "site-admin", "standard"];
 
@@ -127,9 +129,20 @@ function renderUserCard(user: AdminUser, callerRole: string): string {
         <p class="save-status save-groups-status form-status" role="status" aria-live="polite"></p>`
       : `<h3>Groups</h3><p class="account-note">${escapeHtml(user.groups.join(", ") || "(none)")}</p>`;
 
+  const hasEarlyAccess = user.groups.includes("early-access");
+  const earlyAccessSection = `<div class="early-access-row">
+    ${hasEarlyAccess ? `<span class="badge badge--ea">early access</span>` : ""}
+    <button type="button" class="btn btn--sm ea-toggle-btn" data-sub="${escapeHtml(user.sub)}" data-has="${hasEarlyAccess ? "1" : "0"}">
+      ${hasEarlyAccess ? "Revoke early access" : "Grant early access"}
+    </button>
+    <p class="save-status ea-status form-status" role="status" aria-live="polite"></p>
+  </div>`;
+
   return `<div class="user-card" id="user-card-${escapeHtml(user.sub)}">
     <div class="user-card-meta">${escapeHtml(user.email)} &mdash; sub: <code>${escapeHtml(user.sub)}</code></div>
     ${groupsSection}
+    <h3>Early access</h3>
+    ${earlyAccessSection}
     <h3>Admin sites</h3>
     ${sitesInput}
     <button type="button" class="btn btn--sm save-sites-btn" data-sub="${escapeHtml(user.sub)}">Save sites</button>
@@ -201,6 +214,54 @@ function attachCardHandlers(card: Element, token: string): void {
           (status as HTMLElement).dataset.kind = res.ok ? "ok" : "err";
         }
         if (res.ok) await loadAuditTrail(token, sub, card);
+      } catch {
+        if (status) {
+          status.textContent = "Network error.";
+          (status as HTMLElement).dataset.kind = "err";
+        }
+      }
+    });
+  }
+
+  const eaToggleBtn = card.querySelector<HTMLButtonElement>(".ea-toggle-btn");
+  if (eaToggleBtn) {
+    eaToggleBtn.addEventListener("click", async () => {
+      const hasEa = eaToggleBtn.dataset.has === "1";
+      const status = card.querySelector(".ea-status");
+      if (status) {
+        status.textContent = "Saving…";
+        (status as HTMLElement).dataset.kind = "info";
+      }
+      try {
+        const res = await fetch(userEarlyAccessUrl(sub), {
+          method: hasEa ? "DELETE" : "PUT",
+          headers: bearer(token),
+        });
+        if (res.ok) {
+          const nowHas = !hasEa;
+          eaToggleBtn.dataset.has = nowHas ? "1" : "0";
+          eaToggleBtn.textContent = nowHas ? "Revoke early access" : "Grant early access";
+          const badge = card.querySelector(".badge--ea");
+          if (nowHas && !badge) {
+            eaToggleBtn.insertAdjacentHTML(
+              "beforebegin",
+              `<span class="badge badge--ea">early access</span>`,
+            );
+          } else if (!nowHas && badge) {
+            badge.remove();
+          }
+          if (status) {
+            status.textContent = nowHas ? "Granted." : "Revoked.";
+            (status as HTMLElement).dataset.kind = "ok";
+          }
+          await loadAuditTrail(token, sub, card);
+        } else {
+          const msg = `Error: ${((await res.json()) as { error: string }).error}`;
+          if (status) {
+            status.textContent = msg;
+            (status as HTMLElement).dataset.kind = "err";
+          }
+        }
       } catch {
         if (status) {
           status.textContent = "Network error.";

@@ -9,6 +9,10 @@ import { SITES } from "../lib/sites";
 import { withBase } from "../lib/site";
 import "../styles/site.css";
 
+const cognitoDomain = import.meta.env.PUBLIC_COGNITO_DOMAIN;
+const authEnabled = Boolean(cognitoDomain && import.meta.env.PUBLIC_COGNITO_CLIENT_ID);
+const loginHref = authEnabled ? withBase("/account/login") : null;
+
 const pad2 = (n: number): string => String(n).padStart(2, "0");
 const siteCount = SITES.length;
 const basinCount = 9; // the nine major Ohio river basins the network spans
@@ -187,6 +191,9 @@ const repoHref = "https://github.com/watermark-directory/the-watermark-directory
           <span class="pl-foot-word">watermark<span class="pl-dot">.</span>directory</span>
           <span class="pl-foot-pill"><span class="pl-status-dot" aria-hidden="true"></span>provenance-first</span>
           <span class="pl-foot-meta">A public record assembled from documents the developers didn't write. Opening soon.</span>
+          {loginHref && (
+            <a class="pl-ea-link" href={loginHref}>Early access? Sign in →</a>
+          )}
         </div>
       </div>
     </div>
@@ -265,6 +272,8 @@ const repoHref = "https://github.com/watermark-directory/the-watermark-directory
       .pl-foot-word { font-family: var(--bosc-mono); font-size: 0.78rem; color: #7d8a86; }
       .pl-foot-pill { display: inline-flex; align-items: center; gap: 6px; font-family: var(--bosc-mono); font-size: 0.68rem; letter-spacing: 0.5px; text-transform: uppercase; color: #9aa89a; border: 1px solid #2b362e; padding: 3px 10px; }
       .pl-foot-meta { margin-left: auto; font-size: 0.8rem; color: #7d8a86; line-height: 1.5; }
+      .pl-ea-link { font-size: 0.75rem; color: #7d8a86; text-decoration: none; font-family: var(--bosc-mono); white-space: nowrap; }
+      .pl-ea-link:hover { color: #bcd2c4; }
       @media (max-width: 720px) {
         .pl-h1 { font-size: 2.3rem; letter-spacing: -1.2px; }
         .pl-lenses, .pl-principles { grid-template-columns: 1fr; }

@@ -90,10 +90,12 @@ const features = validateFeatures(
 //   pulumi config set --secret bosc-deploy:honeycombApiKey   <key>
 //   pulumi config set --secret bosc-deploy:tipsAppId         <github-app-id>
 //   pulumi config set --secret bosc-deploy:tipsAppPrivateKey <pkcs8-pem>
+//   pulumi config set --secret bosc-deploy:earlyAccessSecret <random-32-bytes-hex>
 const anthropicApiKey = config.getSecret("anthropicApiKey");
 const honeycombApiKey = config.getSecret("honeycombApiKey");
 const tipsAppId = config.getSecret("tipsAppId");
 const tipsAppPrivateKey = config.getSecret("tipsAppPrivateKey");
+const earlyAccessSecret = config.getSecret("earlyAccessSecret");
 const notifyGithubUsers = config.get("notifyGithubUsers") ?? "";
 
 // Cloudflare account that owns the resources (required — set out of band):
@@ -332,11 +334,23 @@ const groupAdmin = authEnabled && userPool
       }, { provider: cognitoProvider })
     : undefined;
 
+// early-access group: invited users who bypass the pre-launch gate (#1010).
+// Precedence 20 — below site-admin (10), above standard (30).
+const groupEarlyAccess = authEnabled && userPool
+    ? new aws.cognito.UserGroup("auth-group-early-access", {
+          name: "early-access",
+          description: "Early access — bypasses pre-launch gate",
+          userPoolId: userPool.id,
+          precedence: 20,
+      }, { provider: cognitoProvider })
+    : undefined;
+
 // Suppress unused-variable warnings for the group resources — they're managed for
 // side-effect (the groups exist in Cognito) and their ids aren't needed downstream.
 void groupStandard;
 void groupSiteAdmin;
 void groupAdmin;
+void groupEarlyAccess;
 
 // --- Auth: KV namespaces (always created — cheap; activation gate is wrangler.toml) ---
 
@@ -578,6 +592,7 @@ if (anthropicApiKey)   pageEnvVars.ANTHROPIC_API_KEY    = { value: anthropicApiK
 if (honeycombApiKey)   pageEnvVars.HONEYCOMB_API_KEY    = { value: honeycombApiKey,    type: "secret_text" };
 if (tipsAppId)         pageEnvVars.TIPS_APP_ID          = { value: tipsAppId,          type: "secret_text" };
 if (tipsAppPrivateKey) pageEnvVars.TIPS_APP_PRIVATE_KEY = { value: tipsAppPrivateKey,  type: "secret_text" };
+if (earlyAccessSecret) pageEnvVars.EARLY_ACCESS_SECRET  = { value: earlyAccessSecret,  type: "secret_text" };
 // Optional plain-text overrides — only added when set so omitting them doesn't wipe a value
 // that hasn't been migrated yet. (Other optional vars like MCP_BUDGET_* and RUM_HONEYCOMB_DATASET
 // have code-level defaults and are not currently deployed; add via Pulumi config if needed.)

@@ -57,6 +57,15 @@ const callbackPath = withBase("/account/callback");
         sessionStorage.setItem("watermark_id_token", tokens.id_token);
         sessionStorage.removeItem("watermark_pkce_cv");
 
+        // Attempt to mint an early-access bypass cookie. Non-fatal: a 403 (not in group)
+        // or 503 (not configured) is the expected path for standard users.
+        try {
+          await fetch("/api/account/early-access", {
+            method: "POST",
+            headers: { Authorization: "Bearer " + tokens.id_token },
+          });
+        } catch (e) {}
+
         // Honour the ?next= destination carried through state, defaulting to home.
         var next = "/";
         try {
