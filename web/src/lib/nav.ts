@@ -295,7 +295,6 @@ export type NavItem =
  *  Submit is NOT here — it's a right-cluster affordance (see SUBMIT_LINK / the Header).
  *  Hypotheses come from the live feed so the dropdown labels stay in sync without hardcoding. */
 export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
-  const { base } = siteRoots();
   const researchChildren: NavChild[] = [
     ...hypotheses.map((h) => ({ label: h.name, href: `/research/hypotheses?lens=${h.id}` })),
     ...(hypotheses.length > 0 ? [{ divider: true as const }] : []),
@@ -303,7 +302,7 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
     // the other eight basins join here as their /basin pages land.
     { label: "The Maumee basin", href: "/basin", blurb: "Basin view — every site against the drainage" },
     { divider: true as const },
-    { label: "Methodology", href: `${base}/docs/methodology`, blurb: "How the record is built & labeled" },
+    { label: "Methodology", href: "/methodology", blurb: "How the record is built & labeled" },
     { label: CONNECT_LINK.label, href: CONNECT_LINK.href },
   ];
   return [
@@ -531,7 +530,7 @@ export function footerGroups(): FooterGroup[] {
       heading: "Site",
       links: [
         { label: CONNECT_LINK.label, href: CONNECT_LINK.href },
-        { label: "Methodology", href: `${base}/docs/methodology` },
+        { label: "Methodology", href: "/methodology" },
         { label: "About", href: "/about" },
       ],
     },

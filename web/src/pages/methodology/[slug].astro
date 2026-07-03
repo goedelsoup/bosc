@@ -1,0 +1,276 @@
+---
+/**
+ * /methodology/<slug> — a per-domain Methodology sub-page (#1130, epic #1126).
+ *
+ * One dynamic route over `DOMAINS` (`~/lib/methodology`): the domain's method,
+ * its live data sources, deep prose sections, a worked evidence-grammar example
+ * with real tags in context, and the honesty guardrail. Layout follows the
+ * Watermark Design System "Methodology — domain page" template (DesignSync).
+ */
+import EvidenceTag from "~/components/EvidenceTag.astro";
+import Base from "~/layouts/Base.astro";
+import { type Domain, DOMAINS } from "~/lib/methodology";
+import { withBase } from "~/lib/site";
+
+export function getStaticPaths() {
+  return DOMAINS.map((domain, i) => {
+    const prev = DOMAINS[(i - 1 + DOMAINS.length) % DOMAINS.length];
+    const next = DOMAINS[(i + 1) % DOMAINS.length];
+    return { params: { slug: domain.slug }, props: { domain, prev, next } };
+  });
+}
+
+interface Props {
+  domain: Domain;
+  prev: Domain;
+  next: Domain;
+}
+const { domain, prev, next } = Astro.props as Props;
+
+const title = `${domain.label} — methodology`;
+const description = domain.method;
+const hubHref = withBase("/methodology");
+const breadcrumbs = [
+  { label: "Methodology", href: hubHref },
+  { label: domain.label, href: withBase(`/methodology/${domain.slug}`) },
+];
+---
+
+<Base
+  title={title}
+  section="research"
+  description={description}
+  rail={false}
+  ogType="article"
+  breadcrumbs={breadcrumbs}
+  prevHref={withBase(`/methodology/${prev.slug}`)}
+  nextHref={withBase(`/methodology/${next.slug}`)}
+>
+  <article class="mdm">
+    <nav class="mdm-crumb" aria-label="Breadcrumb">
+      <a href={hubHref}>Methodology</a>
+      <span class="mdm-crumb-sep" aria-hidden="true">/</span>
+      <span class="mdm-crumb-here">{domain.label}</span>
+    </nav>
+
+    <div class="mdm-col">
+      <p class="mdm-eyebrow">{domain.label}</p>
+      <h1 class="mdm-h1">{domain.method}</h1>
+
+      <div class="mdm-sources">
+        <span class="mdm-sources-label">Data sources</span>
+        {domain.dataSources.map((s) => <span class="mdm-source">{s}</span>)}
+      </div>
+
+      {
+        domain.sections.map((sec) => (
+          <div class="mdm-block">
+            <h2 class="mdm-h3">{sec.heading}</h2>
+            <p class="mdm-body">{sec.body}</p>
+          </div>
+        ))
+      }
+
+      <p class="mdm-example">
+        {domain.example.before} <EvidenceTag kind={domain.example.first} />{domain.example.mid}{" "}
+        <EvidenceTag kind={domain.example.second} />{domain.example.after}
+      </p>
+
+      <div class="mdm-guardrail">
+        <div class="mdm-guardrail-label">Guardrail</div>
+        <p class="mdm-guardrail-text">{domain.guardrail}</p>
+      </div>
+    </div>
+
+    <div class="mdm-foot">
+      <div class="mdm-prevnext">
+        <a class="mdm-pn" href={withBase(`/methodology/${prev.slug}`)}>
+          <span class="mdm-pn-dir">← Previous</span>
+          <span class="mdm-pn-label">{prev.label}</span>
+        </a>
+        <a class="mdm-pn mdm-pn--next" href={withBase(`/methodology/${next.slug}`)}>
+          <span class="mdm-pn-dir">Next →</span>
+          <span class="mdm-pn-label">{next.label}</span>
+        </a>
+      </div>
+      <a class="mdm-back" href={hubHref}>↩ Back to the method, network-wide</a>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .mdm {
+    color: var(--ink);
+    font-family: var(--bosc-sans);
+    padding-top: 0.75rem;
+  }
+  .mdm-crumb {
+    font-family: var(--bosc-mono);
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    margin-bottom: 22px;
+  }
+  .mdm-crumb a {
+    color: var(--ink-faint);
+    text-decoration: none;
+  }
+  .mdm-crumb a:hover {
+    color: var(--forest);
+  }
+  .mdm-crumb-sep {
+    padding: 0 6px;
+  }
+  .mdm-crumb-here {
+    color: var(--ink-muted);
+  }
+
+  .mdm-col {
+    max-width: 52rem;
+  }
+  .mdm-eyebrow {
+    font-family: var(--bosc-mono);
+    font-size: 11px;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--forest);
+    margin: 0 0 12px;
+  }
+  .mdm-h1 {
+    font-family: var(--bosc-sans);
+    font-weight: 800;
+    letter-spacing: -1px;
+    font-size: 36px;
+    line-height: 1.12;
+    margin: 0 0 20px;
+  }
+
+  .mdm-sources {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 36px;
+  }
+  .mdm-sources-label {
+    font-family: var(--bosc-mono);
+    font-size: 11px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-right: 2px;
+  }
+  .mdm-source {
+    font-family: var(--bosc-mono);
+    font-size: 12px;
+    color: var(--ink-muted);
+    background: var(--bone-surface);
+    border: 1px solid var(--line-hair);
+    padding: 4px 10px;
+  }
+
+  .mdm-block {
+    margin-bottom: 26px;
+  }
+  .mdm-h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    border: 0;
+    padding: 0;
+  }
+  .mdm-body {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink-prose);
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  .mdm-example {
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--ink-prose);
+    margin: 8px 0 36px;
+    text-wrap: pretty;
+  }
+
+  .mdm-guardrail {
+    border: 2px solid var(--ink);
+    background: var(--bone-surface);
+    padding: 22px 24px;
+    margin-bottom: 44px;
+  }
+  .mdm-guardrail-label {
+    font-family: var(--bosc-mono);
+    font-size: 10.5px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .mdm-guardrail-text {
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink);
+    margin: 0;
+    font-weight: 600;
+    text-wrap: pretty;
+  }
+
+  .mdm-foot {
+    border-top: 1px solid var(--line-hair);
+    padding-top: 24px;
+  }
+  .mdm-prevnext {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .mdm-pn {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-decoration: none;
+    color: inherit;
+    padding: 14px 16px;
+    border: 1px solid var(--line-hair);
+    background: var(--bone-surface);
+    transition: border-color var(--dur) var(--ease);
+  }
+  .mdm-pn:hover {
+    border-color: var(--forest);
+  }
+  .mdm-pn--next {
+    text-align: right;
+  }
+  .mdm-pn-dir {
+    font-family: var(--bosc-mono);
+    font-size: 10.5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .mdm-pn-label {
+    font-size: 14.5px;
+    font-weight: 700;
+  }
+  .mdm-back {
+    font-family: var(--bosc-mono);
+    font-size: 12.5px;
+    color: var(--forest);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  @media (max-width: 700px) {
+    .mdm-h1 {
+      font-size: 30px;
+    }
+    .mdm-prevnext {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
