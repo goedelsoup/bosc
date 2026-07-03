@@ -3,7 +3,7 @@ import { selectableSitePaths } from "~/lib/sites";
 export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
 import { hasFeed, loadManifest } from "~/lib/bundle";
-import { withBase, siteUrl } from "~/lib/site";
+import { withSite } from "~/lib/site";
 
 const manifest = loadManifest();
 const byName = new Map(manifest.feeds.map((f) => [f.name, f]));
@@ -26,7 +26,7 @@ const doors: Door[] = [
   {
     id: "hydrology",
     kind: "Analysis",
-    href: siteUrl("/watershed/hydrology"),
+    href: withSite("/watershed/hydrology"),
     count: num(count("hydrology-scenarios")),
     title: "Hydrology",
     desc: "Water-balance / low-flow dilution screen — live flow vs the 7Q10 design low flow, and the headroom that remains.",
@@ -35,7 +35,7 @@ const doors: Door[] = [
   {
     id: "map",
     kind: "Interactive map",
-    href: siteUrl("/watershed/map"),
+    href: withSite("/watershed/map"),
     count: num(geoMapLayers),
     title: "Watershed map",
     desc: "Typed GeoJSON layers on deck.gl + MapLibre — campus, corridor, floodway, WWTP, RSEI, watershed.",
@@ -44,7 +44,7 @@ const doors: Door[] = [
   {
     id: "imagery",
     kind: "Aerial imagery",
-    href: siteUrl("/watershed/imagery"),
+    href: withSite("/watershed/imagery"),
     count: "—",
     title: "Imagery",
     desc: "Dated Esri Wayback aerials over the campus AOI — before / during / after the buildout.",
@@ -53,7 +53,7 @@ const doors: Door[] = [
   {
     id: "rsei",
     kind: "External data",
-    href: siteUrl("/watershed/rsei"),
+    href: withSite("/watershed/rsei"),
     count: num(count("geo/rsei")),
     title: "RSEI / toxics",
     desc: "EPA RSEI toxic-release inventory on the same reaches the campus discharges to.",
@@ -64,7 +64,7 @@ if (hasFeed("economics-baseline")) {
   doors.push({
     id: "economics",
     kind: "Baseline data",
-    href: siteUrl("/watershed/economics-baseline"),
+    href: withSite("/watershed/economics-baseline"),
     count: "—",
     title: "Economics baseline",
     desc: "Localized BLS QCEW / Census employment baseline for the corridor.",
@@ -89,7 +89,7 @@ if (hasFeed("economics-baseline")) {
     <div class="hub-grid">
       {
         doors.map((d) => (
-          <a class="hub-door" id={d.id} href={withBase(d.href)}>
+          <a class="hub-door" id={d.id} href={d.href}>
             <div class="hub-door-top">
               <span class="hub-door-kind">{d.kind}</span>
               <span class="hub-door-count">{d.count}</span>

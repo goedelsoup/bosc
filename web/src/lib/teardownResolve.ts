@@ -20,7 +20,6 @@
  * fixture (CI) gracefully falls back to the curated value/link rather than
  * forking or 404-ing.
  */
-import { siteUrl } from "./routes";
 import { hasFeed, loadFeed } from "./bundle";
 import {
   type Citation,
@@ -158,7 +157,7 @@ export function resolveTeardown(t: TeardownRecord): ResolvedTeardown {
     liveCitation = row.citation;
     check = {
       ...check,
-      verifyHref: withBase(siteUrl(`/site/records/${row.group}/${slugify(t.recordRel)}`)),
+      verifyHref: withSite(`/site/records/${row.group}/${slugify(t.recordRel)}`),
     };
     verifyResolved = true;
     extraction = t.extraction.map((r) => bindRow(r, row));
