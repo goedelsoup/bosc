@@ -33,12 +33,29 @@ happen to share a string can never collide.
 parse → assertNoCode → sanitize → resolveHandles → lowerToSDM → persist
 ```
 
-Only `parse`/`assertNoCode` are format-specific (DSL for the untrusted user tier; MDX stays only
-for the trusted, build-time editorial tier). Everything downstream is **shared**. Borrowing
-Nextra's *compile-once-store-run-many*: the dangerous + expensive steps run at **write time**
-(authenticated, rate-limited); the public read path only ever renders **pre-validated SDM**.
+Only `parse`/`assertNoCode` are format-specific (the `StoryFormat` seam); everything downstream is
+**shared**. Borrowing Nextra's *compile-once-store-run-many*: the dangerous + expensive steps run
+at **write time** (authenticated, rate-limited); the public read path only ever renders
+**pre-validated SDM**. The compiler ([`src/lib/storyCompile.ts`](../src/lib/storyCompile.ts),
+#1094) is **pure** — `(source, format, catalog) → SDM | author-facing errors` — like `buildStory`.
 
-#1092 defines the seam and its output type (the SDM); #1094 implements parse → lower for the DSL.
+Two front-ends implement the seam, so DSL vs. MDX-restricted-to-data is a bake-off on identical
+SDM output:
+
+- **DSL** (`dslFormat`) — a markdown subset (remark-parse, no GFM/HTML) plus container directives
+  via remark-directive: `:::atom{handle="<kind>:<site>:<localId>"}` (the handle is a **quoted
+  attribute** — a bracketed `[handle]` label would mis-parse its inner `:`s as nested directives)
+  and `:::callout{variant=note|info|warning}`. No JSX / imports / `{expressions}` — UGC-safe by
+  construction.
+- **MDX-as-data** (`mdxDataFormat`) — parse-only MDX (remark-mdx) that hard-rejects
+  `mdxFlowExpression` / `mdxTextExpression` / `mdxjsEsm`, so `<Atom handle="…"/>` / `<Callout
+  variant="…">` JSX lowers to the *same* SDM. Editorial MDX stays trusted + build-time.
+
+`assertNoCode` rejects raw HTML (DSL) or executable MDX (MDX-data); `sanitize` drops unsafe link
+URLs (only relative / `http(s):` / `mailto:` survive); `resolveHandles` resolves each cited handle
+against the catalog (unknown → author error), capturing the atom's thin snapshot; `lowerToSDM`
+emits the block tree. An out-of-vocabulary block/inline or an unknown directive/component is an
+author-facing error, never silently dropped.
 
 ## The Story Document Model (SDM) — data, not code
 
@@ -48,11 +65,14 @@ vocabulary, never introduce a component, expression, or raw HTML.
 
 - **Inline (a markdown subset):** `text`, `strong`, `emphasis`, `code`, `link`. No raw HTML.
 - **Blocks:** `heading` (levels 2–4 only — `h1` is the Story title chrome, not forgeable body),
-  `paragraph`, `blockquote`, `list`, and `atom`.
-- **`atom` block** — the **only** way a Story pulls in platform content: `{ type: "atom", handle }`
-  referencing a catalog handle (`:::atom[<kind>:<site>:<localId>]`). A **live pointer**, resolved
-  against the catalog at render time — never a copy of the cited atom. Reader prose renders
-  visually distinct from these cited atoms.
+  `paragraph`, `blockquote`, `list`, `callout` (`{ variant, children }` — an author-framed aside),
+  and `atom`.
+- **`atom` block** — the **only** way a Story pulls in platform content:
+  `{ type: "atom", handle, kind, title }` referencing a catalog handle. A **live pointer**,
+  resolved against the catalog at render time — never a copy. The `kind`/`title` are a **thin
+  snapshot** captured at write time, so a later-dangling handle still renders a labeled placeholder
+  while the full payload resolves live (chain of custody). Reader prose renders visually distinct
+  from these cited atoms.
 
 `StoryDocument = { version, blocks }`. `version` records the `SDM_CONTRACT_VERSION` the body was
 lowered under (compile-once-store-run-many); a bump means stored docs may need revalidation
@@ -82,5 +102,6 @@ The catalog (#1093) is the addressable index; resolution is a **live pointer** (
 - Migrating the editorial MDX path onto the DSL — the contract makes a future convergence cheap,
   but we don't pay for it now. The editorial path keeps its MDX; both paths only need to *lower
   into the same SDM* to share the renderer.
-- The DSL parser (#1094), the renderer components (#1097), the D1 store (#1095), authoring UX
-  (#1096), sharing/moderation (#1098). Each builds against the types above.
+- The renderer components (#1097), the D1 store (#1095), authoring UX (#1096), and
+  sharing/moderation (#1098). Each builds against the types above. (The DSL parser + write-path
+  pipeline landed in #1094 — see [`src/lib/storyCompile.ts`](../src/lib/storyCompile.ts).)
