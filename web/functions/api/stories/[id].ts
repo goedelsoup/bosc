@@ -7,7 +7,13 @@
 
 import { loadCatalogAsset } from "../_lib/catalogAsset";
 import { json, parseJsonBody } from "../_lib/http";
-import { type StoriesEnv, guardStories, storyDetail, writeRateLimit } from "../_lib/storiesRoute";
+import {
+  type StoriesEnv,
+  guardStories,
+  publishGate,
+  storyDetail,
+  writeRateLimit,
+} from "../_lib/storiesRoute";
 import { deleteStory, getStory, updateStory } from "../_lib/storiesStore";
 import { buildStoryWrite, parseStoryInput } from "../_lib/storyWrite";
 
@@ -48,15 +54,21 @@ export const onRequestPut = async ({ request, env, params }: RequestContext): Pr
   const built = buildStoryWrite(parsed.input, catalog);
   if (!built.ok) return json(400, { error: "story failed validation", errors: built.errors });
 
+  // Publishing (incl. republishing) is early-access-gated (#1098); unpublish/draft is always allowed.
+  const blocked = publishGate(guard.ctx, built.write.status);
+  if (blocked) return blocked;
+
   const now = new Date().toISOString();
+  const shareId = crypto.randomUUID(); // candidate — used iff this publish is the first one
   let ok: boolean;
   try {
-    ok = await updateStory(guard.db, guard.owner, params.id, built.write, now);
+    ok = await updateStory(guard.db, guard.owner, params.id, built.write, now, shareId);
   } catch {
     return json(409, { error: "a story with that slug already exists" });
   }
   if (!ok) return json(404, { error: "not found" });
-  return json(200, { id: params.id });
+  const saved = await getStory(guard.db, guard.owner, params.id);
+  return json(200, { id: params.id, share_id: saved?.story.share_id ?? null });
 };
 
 export const onRequestDelete = async ({ request, env, params }: RequestContext): Promise<Response> => {

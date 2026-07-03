@@ -25,6 +25,8 @@ export interface D1Like {
 
 export type StoryStatus = "draft" | "published";
 export type StorySourceFormat = "dsl" | "mdx-data";
+/** The admin moderation flag (#1098). A public read requires `ok`; `removed` is an admin takedown. */
+export type StoryModeration = "ok" | "removed";
 
 /** The Story owner (#1092) — user-owned for this feature; the `site` case is the editorial path. */
 export interface StoryOwner {
@@ -55,8 +57,21 @@ export interface StoryRow {
   source_text: string;
   sdm_json: string;
   catalog_version: string;
+  moderation: StoryModeration;
+  published_at: string | null;
   created_at: string;
   updated_at: string;
+}
+
+/** One row of the report queue (#1098) — a public flag against a shared story, for admin review. */
+export interface StoryReport {
+  id: string;
+  story_id: string;
+  share_id: string;
+  reason: string;
+  detail: string;
+  resolved: number;
+  created_at: string;
 }
 
 /** The write payload — the compiled, validated Story a Function persists (no id/timestamps). */
@@ -74,7 +89,22 @@ export interface StoryWrite {
 }
 
 const STORY_COLUMNS =
-  "id, owner_kind, owner_id, site, slug, title, dek, status, share_id, source_format, source_text, sdm_json, catalog_version, created_at, updated_at";
+  "id, owner_kind, owner_id, site, slug, title, dek, status, share_id, source_format, source_text, sdm_json, catalog_version, moderation, published_at, created_at, updated_at";
+
+/** Sticky publish state: once a story has a `share_id`/`published_at`, keep it across an
+ *  unpublish→republish; otherwise mint (only when going public) from the injected candidate. */
+function publishState(
+  existing: { share_id: string | null; published_at: string | null } | null,
+  status: StoryStatus,
+  shareIdCandidate: string,
+  now: string,
+): { shareId: string | null; publishedAt: string | null } {
+  const publishing = status === "published";
+  return {
+    shareId: existing?.share_id ?? (publishing ? shareIdCandidate : null),
+    publishedAt: existing?.published_at ?? (publishing ? now : null),
+  };
+}
 
 /** One INSERT statement per ref — replaced wholesale on every write (not diffed). */
 function refInserts(db: D1Like, storyId: string, refs: StoryRef[]): D1PreparedStatement[] {
@@ -125,10 +155,14 @@ export async function createStory(
   id: string,
   write: StoryWrite,
   now: string,
+  shareIdCandidate: string,
 ): Promise<void> {
+  const pub = publishState(null, write.status, shareIdCandidate, now);
   await db.batch([
     db
-      .prepare(`INSERT INTO stories (${STORY_COLUMNS}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
+      .prepare(
+        `INSERT INTO stories (${STORY_COLUMNS}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      )
       .bind(
         id,
         owner.kind,
@@ -138,11 +172,13 @@ export async function createStory(
         write.title,
         write.dek,
         write.status,
-        null, // share_id — populated on publish (#1098)
+        pub.shareId, // minted here iff created as published (#1098)
         write.source_format,
         write.source_text,
         write.sdm_json,
         write.catalog_version,
+        "ok", // moderation — admin-only from here
+        pub.publishedAt,
         now,
         now,
       ),
@@ -162,14 +198,18 @@ export async function updateStory(
   id: string,
   write: StoryWrite,
   now: string,
+  shareIdCandidate: string,
 ): Promise<boolean> {
   const existing = await getStory(db, owner, id);
   if (!existing) return false;
+  // Publish state is sticky (mint on first publish, keep the same share URL on republish). Moderation
+  // is deliberately NOT in the SET clause — an owner edit can't clear an admin takedown (#1098).
+  const pub = publishState(existing.story, write.status, shareIdCandidate, now);
   await db.batch([
     db
       .prepare(
         `UPDATE stories SET site = ?, slug = ?, title = ?, dek = ?, status = ?, source_format = ?,
-           source_text = ?, sdm_json = ?, catalog_version = ?, updated_at = ?
+           source_text = ?, sdm_json = ?, catalog_version = ?, share_id = ?, published_at = ?, updated_at = ?
          WHERE id = ? AND owner_kind = ? AND owner_id = ?`,
       )
       .bind(
@@ -182,6 +222,8 @@ export async function updateStory(
         write.source_text,
         write.sdm_json,
         write.catalog_version,
+        pub.shareId,
+        pub.publishedAt,
         now,
         id,
         owner.kind,
@@ -199,5 +241,78 @@ export async function deleteStory(db: D1Like, owner: StoryOwner, id: string): Pr
     .prepare("DELETE FROM stories WHERE id = ? AND owner_kind = ? AND owner_id = ?")
     .bind(id, owner.kind, owner.id)
     .run();
+  return (res.meta?.changes ?? 0) > 0;
+}
+
+// --- public read + moderation (#1098) -------------------------------------------------------
+
+/**
+ * Resolve a **published, un-removed** Story by its public `share_id` — the only path a Story is
+ * reachable without auth. An unpublished (draft) or admin-removed Story returns `null` (not reachable),
+ * so a stale share URL leaks nothing. Owner-agnostic by design (anyone with the link may read).
+ */
+export async function getPublicStory(
+  db: D1Like,
+  shareId: string,
+): Promise<{ story: StoryRow; refs: StoryRef[] } | null> {
+  const story = await db
+    .prepare(
+      `SELECT ${STORY_COLUMNS} FROM stories WHERE share_id = ? AND status = 'published' AND moderation = 'ok'`,
+    )
+    .bind(shareId)
+    .first<StoryRow>();
+  if (!story) return null;
+  const refs = await db
+    .prepare("SELECT ord, handle, kind, title FROM story_refs WHERE story_id = ? ORDER BY ord")
+    .bind(story.id)
+    .all<StoryRef>();
+  return { story, refs: refs.results ?? [] };
+}
+
+/** Admin takedown / restore: flip a Story's moderation flag by id. Returns whether a row changed. */
+export async function setModeration(db: D1Like, id: string, moderation: StoryModeration): Promise<boolean> {
+  const res = await db.prepare("UPDATE stories SET moderation = ? WHERE id = ?").bind(moderation, id).run();
+  return (res.meta?.changes ?? 0) > 0;
+}
+
+/** Look up a Story id by its share_id (any status) — the report endpoint resolves the target this way
+ *  without leaking whether it's currently published. */
+export async function storyIdForShareId(db: D1Like, shareId: string): Promise<string | null> {
+  const row = await db
+    .prepare("SELECT id FROM stories WHERE share_id = ?")
+    .bind(shareId)
+    .first<{ id: string }>();
+  return row?.id ?? null;
+}
+
+/** File a report against a Story (the public flag → admin review queue). */
+export async function insertReport(
+  db: D1Like,
+  report: { id: string; storyId: string; shareId: string; reason: string; detail: string; now: string },
+): Promise<void> {
+  await db
+    .prepare(
+      "INSERT INTO story_reports (id, story_id, share_id, reason, detail, resolved, created_at) VALUES (?, ?, ?, ?, ?, 0, ?)",
+    )
+    .bind(report.id, report.storyId, report.shareId, report.reason, report.detail, report.now)
+    .run();
+}
+
+/** The admin review queue: open reports (or all), newest first. */
+export async function listReports(
+  db: D1Like,
+  opts: { openOnly?: boolean; limit?: number } = {},
+): Promise<StoryReport[]> {
+  const limit = opts.limit ?? 100;
+  const sql = opts.openOnly
+    ? "SELECT id, story_id, share_id, reason, detail, resolved, created_at FROM story_reports WHERE resolved = 0 ORDER BY created_at DESC LIMIT ?"
+    : "SELECT id, story_id, share_id, reason, detail, resolved, created_at FROM story_reports ORDER BY created_at DESC LIMIT ?";
+  const res = await db.prepare(sql).bind(limit).all<StoryReport>();
+  return res.results ?? [];
+}
+
+/** Mark a report reviewed (resolved). Returns whether a row changed. */
+export async function resolveReport(db: D1Like, reportId: string): Promise<boolean> {
+  const res = await db.prepare("UPDATE story_reports SET resolved = 1 WHERE id = ?").bind(reportId).run();
   return (res.meta?.changes ?? 0) > 0;
 }

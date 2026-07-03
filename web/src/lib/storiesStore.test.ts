@@ -1,6 +1,6 @@
-// Unit tests for the D1 Story store (#1095) against an in-memory SQLite (node:sqlite) with the
-// committed schema — so owner-scoping, ref replacement, FK cascade, unique constraints, and the
-// `batch()` transaction rollback are all exercised on real SQL, not a mock.
+// Unit tests for the D1 Story store (#1095/#1098) against an in-memory SQLite (node:sqlite) with the
+// committed schema — so owner-scoping, ref replacement, FK cascade, unique constraints, the
+// `batch()` transaction rollback, and the sharing/moderation rails are all exercised on real SQL.
 
 import { describe, expect, it } from "vitest";
 import {
@@ -8,8 +8,14 @@ import {
   type StoryWrite,
   createStory,
   deleteStory,
+  getPublicStory,
   getStory,
+  insertReport,
+  listReports,
   listStories,
+  resolveReport,
+  setModeration,
+  storyIdForShareId,
   updateStory,
 } from "@fn/api/_lib/storiesStore";
 import { fakeD1 } from "./_routeHarness";
@@ -17,6 +23,7 @@ import { fakeD1 } from "./_routeHarness";
 const owner: StoryOwner = { kind: "user", id: "user-1" };
 const other: StoryOwner = { kind: "user", id: "user-2" };
 const NOW = "2026-07-03T00:00:00.000Z";
+const SHARE = "share-abc";
 
 function write(over: Partial<StoryWrite> = {}): StoryWrite {
   return {
@@ -40,7 +47,7 @@ function write(over: Partial<StoryWrite> = {}): StoryWrite {
 describe("stories store — CRUD", () => {
   it("creates a story + its refs and reads them back in order", async () => {
     const db = fakeD1();
-    await createStory(db, owner, "s1", write(), NOW);
+    await createStory(db, owner, "s1", write(), NOW, SHARE);
     const got = await getStory(db, owner, "s1");
     expect(got?.story.title).toBe("My Story");
     expect(got?.story.status).toBe("draft");
@@ -49,21 +56,22 @@ describe("stories store — CRUD", () => {
 
   it("lists a user's own stories newest-first", async () => {
     const db = fakeD1();
-    await createStory(db, owner, "s1", write({ slug: "one" }), "2026-07-01T00:00:00.000Z");
-    await createStory(db, owner, "s2", write({ slug: "two" }), "2026-07-03T00:00:00.000Z");
+    await createStory(db, owner, "s1", write({ slug: "one" }), "2026-07-01T00:00:00.000Z", SHARE);
+    await createStory(db, owner, "s2", write({ slug: "two" }), "2026-07-03T00:00:00.000Z", "share-2");
     const rows = await listStories(db, owner);
     expect(rows.map((r) => r.id)).toEqual(["s2", "s1"]);
   });
 
   it("replaces refs wholesale on update", async () => {
     const db = fakeD1();
-    await createStory(db, owner, "s1", write(), NOW);
+    await createStory(db, owner, "s1", write(), NOW, SHARE);
     const ok = await updateStory(
       db,
       owner,
       "s1",
       write({ title: "Renamed", refs: [{ ord: 0, handle: "lead:lima:c", kind: "lead", title: "C" }] }),
       "2026-07-04T00:00:00.000Z",
+      SHARE,
     );
     expect(ok).toBe(true);
     const got = await getStory(db, owner, "s1");
@@ -73,7 +81,7 @@ describe("stories store — CRUD", () => {
 
   it("deletes a story and cascades its refs", async () => {
     const db = fakeD1();
-    await createStory(db, owner, "s1", write(), NOW);
+    await createStory(db, owner, "s1", write(), NOW, SHARE);
     expect(await deleteStory(db, owner, "s1")).toBe(true);
     expect(await getStory(db, owner, "s1")).toBeNull();
     const orphans = db.raw.prepare("SELECT COUNT(*) AS n FROM story_refs").get() as { n: number };
@@ -84,9 +92,9 @@ describe("stories store — CRUD", () => {
 describe("stories store — owner scoping", () => {
   it("never reads, updates, or deletes another owner's story", async () => {
     const db = fakeD1();
-    await createStory(db, owner, "s1", write(), NOW);
+    await createStory(db, owner, "s1", write(), NOW, SHARE);
     expect(await getStory(db, other, "s1")).toBeNull();
-    expect(await updateStory(db, other, "s1", write({ title: "hijack" }), NOW)).toBe(false);
+    expect(await updateStory(db, other, "s1", write({ title: "hijack" }), NOW, SHARE)).toBe(false);
     expect(await deleteStory(db, other, "s1")).toBe(false);
     // The real owner's story is untouched.
     expect((await getStory(db, owner, "s1"))?.story.title).toBe("My Story");
@@ -108,6 +116,7 @@ describe("stories store — transactional integrity", () => {
           ],
         }),
         NOW,
+        SHARE,
       ),
     ).rejects.toThrow();
     // The story row must not survive the failed batch.
@@ -116,9 +125,113 @@ describe("stories store — transactional integrity", () => {
 
   it("rejects a second story with a duplicate (owner, site, slug)", async () => {
     const db = fakeD1();
-    await createStory(db, owner, "s1", write({ slug: "dup" }), NOW);
-    await expect(createStory(db, owner, "s2", write({ slug: "dup" }), NOW)).rejects.toThrow();
+    await createStory(db, owner, "s1", write({ slug: "dup" }), NOW, SHARE);
+    await expect(createStory(db, owner, "s2", write({ slug: "dup" }), NOW, "share-2")).rejects.toThrow();
     // But a different owner may reuse the slug.
-    await expect(createStory(db, other, "s3", write({ slug: "dup" }), NOW)).resolves.toBeUndefined();
+    await expect(
+      createStory(db, other, "s3", write({ slug: "dup" }), NOW, "share-3"),
+    ).resolves.toBeUndefined();
+  });
+});
+
+describe("stories store — sharing (#1098)", () => {
+  it("mints share_id + published_at only when published; a draft has neither", async () => {
+    const db = fakeD1();
+    await createStory(db, owner, "draft", write({ slug: "d", status: "draft" }), NOW, SHARE);
+    await createStory(db, owner, "pub", write({ slug: "p", status: "published" }), NOW, "share-pub");
+    expect((await getStory(db, owner, "draft"))?.story.share_id).toBeNull();
+    expect((await getStory(db, owner, "pub"))?.story.share_id).toBe("share-pub");
+    expect((await getStory(db, owner, "pub"))?.story.published_at).toBe(NOW);
+  });
+
+  it("keeps share_id sticky across publish → unpublish → republish", async () => {
+    const db = fakeD1();
+    await createStory(db, owner, "s1", write({ status: "published" }), NOW, "first-share");
+    // unpublish
+    await updateStory(db, owner, "s1", write({ status: "draft" }), "2026-07-04T00:00:00.000Z", "ignored");
+    expect((await getStory(db, owner, "s1"))?.story.share_id).toBe("first-share");
+    // republish — must reuse the original share_id, not the new candidate
+    await updateStory(
+      db,
+      owner,
+      "s1",
+      write({ status: "published" }),
+      "2026-07-05T00:00:00.000Z",
+      "new-candidate",
+    );
+    expect((await getStory(db, owner, "s1"))?.story.share_id).toBe("first-share");
+  });
+
+  it("resolves a published story by share_id, but not a draft or unpublished one", async () => {
+    const db = fakeD1();
+    await createStory(db, owner, "s1", write({ status: "published" }), NOW, "share-1");
+    expect((await getPublicStory(db, "share-1"))?.story.title).toBe("My Story");
+    // unpublish → no longer publicly reachable
+    await updateStory(db, owner, "s1", write({ status: "draft" }), NOW, "x");
+    expect(await getPublicStory(db, "share-1")).toBeNull();
+  });
+
+  it("storyIdForShareId finds the row regardless of status", async () => {
+    const db = fakeD1();
+    await createStory(db, owner, "s1", write({ status: "published" }), NOW, "share-1");
+    expect(await storyIdForShareId(db, "share-1")).toBe("s1");
+    expect(await storyIdForShareId(db, "nope")).toBeNull();
+  });
+});
+
+describe("stories store — moderation (#1098)", () => {
+  it("an admin takedown makes a published story unreachable; restore brings it back", async () => {
+    const db = fakeD1();
+    await createStory(db, owner, "s1", write({ status: "published" }), NOW, "share-1");
+    expect(await setModeration(db, "s1", "removed")).toBe(true);
+    expect(await getPublicStory(db, "share-1")).toBeNull();
+    // an owner edit cannot clear the takedown
+    await updateStory(db, owner, "s1", write({ status: "published", title: "Edited" }), NOW, "x");
+    expect(await getPublicStory(db, "share-1")).toBeNull();
+    // admin restore
+    expect(await setModeration(db, "s1", "ok")).toBe(true);
+    expect((await getPublicStory(db, "share-1"))?.story.title).toBe("Edited");
+  });
+});
+
+describe("stories store — reports (#1098)", () => {
+  it("files reports and lists open ones newest-first, then resolves them", async () => {
+    const db = fakeD1();
+    await createStory(db, owner, "s1", write({ status: "published" }), NOW, "share-1");
+    await insertReport(db, {
+      id: "r1",
+      storyId: "s1",
+      shareId: "share-1",
+      reason: "abuse",
+      detail: "x",
+      now: "2026-07-03T00:00:01.000Z",
+    });
+    await insertReport(db, {
+      id: "r2",
+      storyId: "s1",
+      shareId: "share-1",
+      reason: "spam",
+      detail: "",
+      now: "2026-07-03T00:00:02.000Z",
+    });
+    const open = await listReports(db, { openOnly: true });
+    expect(open.map((r) => r.id)).toEqual(["r2", "r1"]);
+    expect(await resolveReport(db, "r1")).toBe(true);
+    expect((await listReports(db, { openOnly: true })).map((r) => r.id)).toEqual(["r2"]);
+  });
+
+  it("cascades reports when the story is deleted", async () => {
+    const db = fakeD1();
+    await createStory(db, owner, "s1", write({ status: "published" }), NOW, "share-1");
+    await insertReport(db, {
+      id: "r1",
+      storyId: "s1",
+      shareId: "share-1",
+      reason: "abuse",
+      detail: "",
+      now: NOW,
+    });
+    await deleteStory(db, owner, "s1");
+    expect((await listReports(db)).length).toBe(0);
   });
 });

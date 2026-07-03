@@ -38,6 +38,19 @@ export interface StoryDetail extends StorySummary {
   refs: StoryRefWire[];
 }
 
+/** The public projection of a shared Story (#1098) — no owner id / editable source. */
+export interface PublicStory {
+  share_id: string;
+  site: string;
+  title: string;
+  dek: string;
+  published_at: string | null;
+  sdm: StoryDocument;
+  refs: StoryRefWire[];
+}
+
+export type ReportReason = "spam" | "abuse" | "misinformation" | "copyright" | "other";
+
 export interface AuthorError {
   kind: string;
   message: string;
@@ -82,7 +95,13 @@ export interface StoryInput {
   source_text: string;
 }
 
-export async function createStory(input: StoryInput): Promise<ApiResult<{ id: string }>> {
+/** Create/update responses carry the minted `share_id` (present once the Story is published). */
+export interface SaveResult {
+  id: string;
+  share_id: string | null;
+}
+
+export async function createStory(input: StoryInput): Promise<ApiResult<SaveResult>> {
   return parse(
     await fetch(STORIES_API, {
       method: "POST",
@@ -92,7 +111,7 @@ export async function createStory(input: StoryInput): Promise<ApiResult<{ id: st
   );
 }
 
-export async function updateStory(id: string, input: StoryInput): Promise<ApiResult<{ ok: true }>> {
+export async function updateStory(id: string, input: StoryInput): Promise<ApiResult<SaveResult>> {
   return parse(
     await fetch(`${STORIES_API}/${encodeURIComponent(id)}`, {
       method: "PUT",
@@ -105,6 +124,27 @@ export async function updateStory(id: string, input: StoryInput): Promise<ApiRes
 export async function deleteStory(id: string): Promise<ApiResult<{ ok: true }>> {
   return parse(
     await fetch(`${STORIES_API}/${encodeURIComponent(id)}`, { method: "DELETE", headers: authHeaders() }),
+  );
+}
+
+/** The public share read (#1098) — no auth. `shareId` comes from the `?share=` URL param. */
+export async function getPublicStory(shareId: string): Promise<ApiResult<{ story: PublicStory }>> {
+  return parse(await fetch(`${STORIES_API}/shared/${encodeURIComponent(shareId)}`));
+}
+
+/** Flag a shared Story for admin review (#1098). Public; Turnstile token optional. */
+export async function reportStory(
+  shareId: string,
+  reason: ReportReason,
+  detail = "",
+  turnstileToken?: string,
+): Promise<ApiResult<{ ok: true }>> {
+  return parse(
+    await fetch(`${STORIES_API}/report`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ shareId, reason, detail, turnstileToken }),
+    }),
   );
 }
 

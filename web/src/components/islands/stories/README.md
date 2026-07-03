@@ -12,7 +12,8 @@ exact same renderer — the only difference is the byline. See
 |---|---|
 | `StoryRenderer.tsx` | **#1097** — walks the closed SDM block vocabulary; reader prose renders visually distinct from cited atoms. |
 | `StoryAtom.tsx` | **#1097** — the closed dispatch table: each of the 14 catalog kinds → one embedded-scale treatment, with **resolved / loading / dangling** states. Never a broken card. |
-| `StoryReader.tsx` | **#1097** — the page-level reader: owner eyebrow + title chrome + byline over `StoryRenderer`. Fetches `?id=` (owner's own) or renders a `?preview=` fixture. |
+| `StoryReader.tsx` | **#1097 / #1098** — the page-level reader: owner eyebrow + title chrome + byline over `StoryRenderer`. Fetches `?id=` (owner's own), `?share=` (public, unauthed — with an archive disclosure + report control), or renders a `?preview=` fixture. |
+| `ReportControl.tsx` | **#1098** — the public report affordance on a shared Story (reason + optional detail → the admin review queue). |
 | `StoryEditor.tsx` | **#1096** — the block-by-block authoring canvas over the closed vocabulary. Serializes to **DSL source** and lets the server recompile — never ships SDM. Surfaces author errors (paste-blocked, unsafe-link, dangling atom, server validation). |
 | `StoryGrab.tsx` | **#1096** — the grab affordance (`GrabPin`) + the persistent non-modal tray. Grabbing drops a thin snapshot into `sessionStorage`, which the editor seeds from. The default export is a demo host + integration reference. |
 | `MyStories.tsx` | **#1096** — the owner-scoped account view: Stories by status, edit / share / delete, empty state. |

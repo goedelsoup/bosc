@@ -21,6 +21,14 @@ Two endpoints live here:
   source against the build-time `/stories-catalog.json` catalog (`_lib/catalogAsset.ts`), validate
   every handle, and **transactionally** upsert the Story + replace its refs (`_lib/storiesStore.ts`).
   Ships dark behind `STORIES_ENABLED`; the D1 binding is commented in `wrangler.toml` until provisioned.
+- the **Stories sharing + moderation endpoints** (epic #1090 / #1098): publishing mints an
+  unguessable `share_id` and is **early-access-gated** (a `standard` user saves drafts but can't make
+  a Story public); `GET api/stories/shared/[shareId]` is the **only unauthenticated read** and serves
+  a *published, un-removed* Story's public projection (no owner id / editable source); `POST
+  api/stories/report` lets a public visitor flag a shared story (rate-limited + Turnstile-verified
+  when `TURNSTILE_SECRET` is set) onto an admin review queue; `api/admin/stories` (admin role only) is
+  the queue + takedown/restore. An admin `moderation='removed'` flip takes a story down instantly and
+  survives an owner edit; an unpublished/removed story is never reachable by its share URL.
 
 ## Constraints
 

@@ -7,8 +7,14 @@
 
 import { loadCatalogAsset } from "./_lib/catalogAsset";
 import { json, parseJsonBody } from "./_lib/http";
-import { type StoriesEnv, guardStories, storySummary, writeRateLimit } from "./_lib/storiesRoute";
-import { createStory, listStories } from "./_lib/storiesStore";
+import {
+  type StoriesEnv,
+  guardStories,
+  publishGate,
+  storySummary,
+  writeRateLimit,
+} from "./_lib/storiesRoute";
+import { createStory, getStory, listStories } from "./_lib/storiesStore";
 import { buildStoryWrite, parseStoryInput } from "./_lib/storyWrite";
 
 interface RequestContext {
@@ -47,14 +53,20 @@ export const onRequestPost = async ({ request, env }: RequestContext): Promise<R
   const built = buildStoryWrite(parsed.input, catalog);
   if (!built.ok) return json(400, { error: "story failed validation", errors: built.errors });
 
+  // Publishing is early-access-gated (#1098); drafts are open to any authed user.
+  const blocked = publishGate(guard.ctx, built.write.status);
+  if (blocked) return blocked;
+
   const id = crypto.randomUUID();
+  const shareId = crypto.randomUUID(); // unguessable public id candidate — used iff published
   const now = new Date().toISOString();
   try {
-    await createStory(guard.db, guard.owner, id, built.write, now);
+    await createStory(guard.db, guard.owner, id, built.write, now, shareId);
   } catch {
     // The most likely failure is the unique (owner, site, slug) constraint.
     return json(409, { error: "a story with that slug already exists" });
   }
 
-  return json(201, { id });
+  const saved = await getStory(guard.db, guard.owner, id);
+  return json(201, { id, share_id: saved?.story.share_id ?? null });
 };
