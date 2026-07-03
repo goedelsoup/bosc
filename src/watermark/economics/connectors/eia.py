@@ -42,6 +42,12 @@ from watermark.hydrology.model import ProvenancedValue
 # series (#98) are static, below.
 _STATE_NAME: dict[str, str] = {"OH": "Ohio", "IN": "Indiana"}
 
+# Version of the *cached payload shape*. Part of the cache key (below), so a shape change
+# invalidates prior entries by producing a new key rather than a hit on an incompatible
+# payload. Bumped to 2 at the #1111 latest-point -> full-series (`{"points": [...]}`)
+# migration; a stale pre-#1111 `{period, value}` entry would otherwise KeyError on read.
+_PAYLOAD_SCHEMA = 2
+
 
 def _state_name(state: str) -> str:
     return _STATE_NAME.get(state, state)
@@ -172,8 +178,14 @@ def fetch_eia_series(series_id: str, *, settings: Settings | None = None) -> Con
     if meta is None:
         raise ValueError(f"unknown EIA series id {series_id!r}; known: {sorted(known)}")
     # The api key is deliberately excluded from the cache-key params (a secret that
-    # must not vary the key); it is added only inside the live fetch.
-    params = {"connector": "eia", "route": "seriesid", "series_id": series_id}
+    # must not vary the key); it is added only inside the live fetch. ``schema`` versions the
+    # cached payload shape so a shape change invalidates old entries (see _PAYLOAD_SCHEMA).
+    params = {
+        "connector": "eia",
+        "route": "seriesid",
+        "series_id": series_id,
+        "schema": _PAYLOAD_SCHEMA,
+    }
 
     def fetch() -> Any:
         query: dict[str, str] = {}
@@ -207,10 +219,16 @@ def fetch_eia_series(series_id: str, *, settings: Settings | None = None) -> Con
         ),
     )
 
-    points = [
-        EnergyPricePoint(period=str(p["period"]), value=float(p["value"]))
-        for p in payload["points"]
-    ]
+    # Re-sort by period rather than trusting input order: a hand-edited or externally-sourced
+    # cache/fixture payload may be unordered, so ``points[-1]`` must derive from ordering, not
+    # trust (the live path sorts in _series_points; the cache/fixture path does not).
+    points = sorted(
+        (
+            EnergyPricePoint(period=str(p["period"]), value=float(p["value"]))
+            for p in payload["points"]
+        ),
+        key=lambda pt: pt.period,
+    )
     latest = points[-1]
     cite = f"EIA API v2 seriesid {series_id} ({latest.period})"
     return ConsumerEnergyPrice(

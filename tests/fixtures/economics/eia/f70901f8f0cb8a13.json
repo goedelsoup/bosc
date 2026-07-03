@@ -2,7 +2,8 @@
   "params": {
     "connector": "eia",
     "route": "seriesid",
-    "series_id": "ELEC.SALES.OH-ALL.A"
+    "series_id": "ELEC.SALES.OH-ALL.A",
+    "schema": 2
   },
   "payload": {
     "points": [
