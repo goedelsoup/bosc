@@ -70,6 +70,28 @@ _MAINSTEM_GAGES: dict[str, dict[str, Any]] = {
     # gage is the shared Blanchard denominator for both plants — the 14-yr Ottawa gage confirms
     # the low flow barely grows over the 40-mi reach (8.98 vs 8.67 cfs), so it is basin-representative.
     "Blanchard River": {"gage": "04189000", "aliases": ["blanchard river", "blanchard r"]},
+    # Defiance reach (#391). The basin-wide "MAUMEE RIVER" ECHO screen proxy is the mouth-ward
+    # Waterville gage (04193500, DA 6330 mi²) — but it sits ~50 river-miles DOWNSTREAM of the
+    # Defiance WWTP outfall (OH0024899), so it is the wrong denominator for the actual discharge
+    # reach. The honest at-reach mainstem denominator is the Maumee-near-Defiance gage (04192500,
+    # DA 5545 mi²): it sits just EAST/downstream of the city and — per NWIS drainage areas —
+    # ALREADY INCLUDES the Auglaize (its 5545 mi² > Waterville's 6330 minus the Tiffin), so it is
+    # the mainstem BELOW the Auglaize confluence, not above it. No confluence SUM is synthesized
+    # here (that would double-count the Auglaize, unlike the ungaged Fort Wayne junction). Counter-
+    # intuitively the near-Defiance 7Q10 comes out HIGHER than Waterville's, so the reach-specific
+    # dilution is slightly LOOSER, not tighter — the honest number regardless (see ONBOARDING.md).
+    # The Auglaize-near-Defiance gage (04191500, DA 2318 mi²) is the tributary-arm denominator for a
+    # discharger on the Auglaize just above the junction. Non-colliding aliases only: a bare "maumee
+    # river"/"auglaize river" would capture ECHO's basin-wide receiving water (already aliased to the
+    # Waterville / Fort Jennings proxies above).
+    "Maumee River near Defiance": {
+        "gage": "04192500",
+        "aliases": ["maumee river near defiance", "maumee r near defiance"],
+    },
+    "Auglaize River near Defiance": {
+        "gage": "04191500",
+        "aliases": ["auglaize river near defiance", "auglaize r near defiance"],
+    },
     "St. Marys River": {
         "gage": "04182000",
         "aliases": ["st marys river", "st. marys river", "saint marys river"],

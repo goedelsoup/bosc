@@ -76,7 +76,11 @@ to ungaged tributaries/ditches (reported "no 7Q10" rather than screened against 
 downstream river's larger flow), and **1** has no design flow on record. Of the
 screenable, two are violations — Lima's **American Bath → Pike Run (0.01:1)** and
 **Van Wert → Town Creek (0.03:1)** — while **Decatur → St. Marys (3.1:1)** and
-**Defiance → Maumee (6.2:1)** screen "tight." The wide data gap is itself the finding — Lima's plants are unusually
+**Defiance → Maumee (6.2:1)** screen "tight." (The Defiance 6.2:1 uses the basin-wide Waterville
+proxy; the reach-specific denominator — USGS 04192500, Maumee near Defiance, LP3 7Q10 139.24 cfs —
+gives **7.5:1**, still "tight" and slightly *looser* than the proxy, since the near-Defiance mainstem
+gage already includes the Auglaize and reads higher than Waterville ~50 mi downstream; #391.) The wide
+data gap is itself the finding — Lima's plants are unusually
 well-documented, and a basin-wide answer needs each tributary's own cited/gaged 7Q10.
 
 **The network view `[v]`.** The screen is one dimension of a wider cross-site comparison: see
