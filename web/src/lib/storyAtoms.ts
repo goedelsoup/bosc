@@ -318,6 +318,9 @@ export function sdmToEditorBlocks(doc: StoryDocument): EditorBlock[] {
         break;
       case "blockquote":
         out.push({ type: "blockquote", text: blockText(block.children) });
+        // a blockquote can hold cited atoms too — surface them (same as the callout case) so a
+        // round-trip through the flat editor canvas doesn't drop them.
+        block.children.filter((c) => c.type === "atom").forEach(pushBlock);
         break;
       case "list":
         out.push({ type: "list", ordered: block.ordered, items: block.items.map((item) => blockText(item)) });

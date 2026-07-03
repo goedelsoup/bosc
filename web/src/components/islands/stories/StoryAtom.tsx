@@ -98,7 +98,8 @@ function Dangling({ handle, kind, title }: { handle: string; kind: CatalogKind; 
 
 // --- resolved: dispatch on family -----------------------------------------------------------
 function Resolved({ atom }: { atom: HydratedAtom }) {
-  switch (KIND_FAMILY[atom.kind]) {
+  const family = KIND_FAMILY[atom.kind];
+  switch (family) {
     case "record":
       return <RecordCard atom={atom} />;
     case "profile":
@@ -119,6 +120,12 @@ function Resolved({ atom }: { atom: HydratedAtom }) {
       return <ChapterCard atom={atom} />;
     case "figure":
       return <FigureCard atom={atom} />;
+    default: {
+      // Exhaustiveness guard: a new AtomFamily added to KIND_FAMILY without a case here is a
+      // compile-time error, not a silent blank render.
+      const _never: never = family;
+      return _never;
+    }
   }
 }
 

@@ -5,6 +5,7 @@
  * the new-story entry point. Sits under the site chrome ("Your stories"); `?preview` shows a sample.
  */
 import Base from "~/layouts/Base.astro";
+import StoriesDisabled from "~/components/StoriesDisabled.astro";
 import MyStories from "~/components/islands/stories/MyStories.tsx";
 import { withSite } from "~/lib/site";
 import { activeSite, selectableSitePaths, siteForSlug } from "~/lib/sites";
@@ -26,10 +27,9 @@ const readHref = withSite("/stories/read");
       enabled ? (
         <MyStories client:only="react" newHref={composeHref} composeHref={composeHref} readHref={readHref} />
       ) : (
-        <div class="story-disabled">
-          <p>Reader-authored stories aren't enabled in this build yet.</p>
-          <p class="story-disabled-sub"><a href="?preview=1">Preview the account view</a></p>
-        </div>
+        <StoriesDisabled message="Reader-authored stories aren't enabled in this build yet.">
+          <a href="?preview=1">Preview the account view</a>
+        </StoriesDisabled>
       )
     }
   </div>
@@ -40,22 +40,5 @@ const readHref = withSite("/stories/read");
     max-width: 960px;
     margin: 0 auto;
     padding: 40px 32px 96px;
-  }
-  .story-disabled {
-    max-width: 720px;
-    margin: 0 auto;
-    border: 1px dashed var(--line-2);
-    background: var(--bone-sunk);
-    padding: 40px 32px;
-    text-align: center;
-    color: var(--ink-muted);
-  }
-  .story-disabled-sub {
-    font-size: 13px;
-    margin-top: 10px;
-    color: var(--ink-faint);
-  }
-  .story-disabled-sub a {
-    color: var(--forest);
   }
 </style>

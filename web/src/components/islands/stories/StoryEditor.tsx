@@ -48,10 +48,16 @@ const row = (block: EditorBlock): Row => ({ id: uid(), block });
 
 export interface StoryEditorProps {
   siteSlug: string;
+  /** The per-site render-catalog asset URL (built via `withSite` on the page). */
+  atomsUrl: string;
+  /** The per-site reader route href (built via `withSite`), for the published share link. */
+  readHref: string;
 }
 
-export default function StoryEditor({ siteSlug }: StoryEditorProps) {
+export default function StoryEditor({ siteSlug, atomsUrl, readHref }: StoryEditorProps) {
   const [ready, setReady] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [catalogError, setCatalogError] = useState(false);
   const [id, setId] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [dek, setDek] = useState("");
@@ -74,30 +80,45 @@ export default function StoryEditor({ siteSlug }: StoryEditorProps) {
     const params = new URLSearchParams(window.location.search);
     const preview = params.has("preview");
     (async () => {
-      const cat = preview ? FIXTURE_CATALOG : await loadRenderCatalog();
+      const cat = preview ? FIXTURE_CATALOG : await loadRenderCatalog(atomsUrl);
       if (!live) return;
-      setCatalog(cat);
+      // A null catalog is a load *failure* (not an empty catalog) — flag it so citations aren't all
+      // shown as dangling; the editor still opens with an empty catalog so prose editing works.
+      if (cat === null) setCatalogError(true);
+      setCatalog(cat ?? {});
 
+      // Edit mode is terminal: if `?id=` is present we either load that Story or surface an error —
+      // we never fall through to new-story seeding (which would silently turn an edit into a create).
       const editId = params.get("id");
-      if (editId && currentUser()) {
+      if (editId) {
+        if (!currentUser()) {
+          setLoadError("Sign in to edit this story.");
+          setReady(true);
+          return;
+        }
         const res = await getStory(editId);
         if (!live) return;
-        if (res.ok) {
-          const s = res.value.story;
-          setId(s.id);
-          setTitle(s.title);
-          setDek(s.dek);
-          setSlug(s.slug);
-          setStatus(s.status);
-          setRows(sdmToEditorBlocks(s.sdm).map(row));
-          setSnaps(
-            Object.fromEntries(
-              s.refs.map((r) => [r.handle, { kind: r.kind as CatalogKind, title: r.title }]),
-            ),
+        if (!res.ok) {
+          setLoadError(
+            res.status === 404
+              ? "This story doesn't exist, or isn't yours."
+              : "Couldn't load this story to edit.",
           );
           setReady(true);
           return;
         }
+        const s = res.value.story;
+        setId(s.id);
+        setTitle(s.title);
+        setDek(s.dek);
+        setSlug(s.slug);
+        setStatus(s.status);
+        setRows(sdmToEditorBlocks(s.sdm).map(row));
+        setSnaps(
+          Object.fromEntries(s.refs.map((r) => [r.handle, { kind: r.kind as CatalogKind, title: r.title }])),
+        );
+        setReady(true);
+        return;
       }
 
       // new: seed from the grab tray, else the preview sample, else a minimal starter.
@@ -191,6 +212,11 @@ export default function StoryEditor({ siteSlug }: StoryEditorProps) {
       <div style={{ padding: "60px 0", textAlign: "center", color: "var(--ink-muted)" }}>Loading editor…</div>
     );
 
+  if (loadError)
+    return (
+      <div style={{ padding: "60px 0", textAlign: "center", color: "var(--ink-muted)" }}>{loadError}</div>
+    );
+
   return (
     <div style={{ maxWidth: 1180, margin: "0 auto" }}>
       <TopBar
@@ -200,6 +226,12 @@ export default function StoryEditor({ siteSlug }: StoryEditorProps) {
         onSaveDraft={() => save("draft")}
         onPublish={() => save("published")}
       />
+      {catalogError && (
+        <Banner tone="warn">
+          <b>Couldn't load the catalog.</b> Cited atoms may not preview correctly and the grab panel is empty.
+          Reload the page to try again.
+        </Banner>
+      )}
       {savedNote && <Banner tone="ok">{savedNote}</Banner>}
       {errors.length > 0 && (
         <Banner tone="warn">
@@ -309,7 +341,7 @@ export default function StoryEditor({ siteSlug }: StoryEditorProps) {
         </div>
       </div>
 
-      {publishOpen && <PublishModal siteSlug={siteSlug} slug={slug} onClose={() => setPublishOpen(false)} />}
+      {publishOpen && <PublishModal readHref={readHref} storyId={id} onClose={() => setPublishOpen(false)} />}
     </div>
   );
 }
@@ -879,8 +911,18 @@ function EditableBlock({
 }
 
 // --- publish modal --------------------------------------------------------------------------
-function PublishModal({ siteSlug, slug, onClose }: { siteSlug: string; slug: string; onClose: () => void }) {
-  const link = `${window.location.origin}/network/${siteSlug}/stories/read?slug=${slug}`;
+function PublishModal({
+  readHref,
+  storyId,
+  onClose,
+}: {
+  readHref: string;
+  storyId: string | null;
+  onClose: () => void;
+}) {
+  // The reader route resolves by `?id=` (functions/api/stories/[id]); `readHref` is already
+  // base-aware + site-correct (built via withSite on the page), so this link works on subpaths.
+  const link = storyId ? `${readHref}?id=${encodeURIComponent(storyId)}` : readHref;
   return (
     <div
       style={{

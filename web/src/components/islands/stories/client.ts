@@ -5,7 +5,6 @@
  * stay declarative.
  */
 import { getIdToken } from "~/lib/auth";
-import { withBase } from "~/lib/base";
 import type { StoryDocument } from "~/lib/sdm";
 import type { HydratedAtom, HydratedCatalog } from "~/lib/storyAtoms";
 
@@ -109,12 +108,27 @@ export async function deleteStory(id: string): Promise<ApiResult<{ ok: true }>> 
   );
 }
 
-/** The render-catalog asset (`/stories-atoms.json`) — the hydrated atoms the renderer resolves. */
-export async function loadRenderCatalog(): Promise<HydratedCatalog> {
-  const res = await fetch(withBase("/stories-atoms.json"));
-  if (!res.ok) return {};
-  const body = (await res.json()) as { atoms?: HydratedAtom[] };
-  const out: HydratedCatalog = {};
-  for (const a of body.atoms ?? []) out[a.handle] = a;
-  return out;
+/**
+ * Fetch the per-site render-catalog asset (`…/stories-atoms.json`) — the hydrated atoms the renderer
+ * resolves each handle against. Returns `null` on a failed / non-OK fetch (a *load error*, distinct
+ * from a genuinely empty `{}` catalog) so callers can show "couldn't load, try again" rather than
+ * marking every citation as dangling. `url` is site-specific (built via `withSite` on the page), so
+ * a non-Lima page never resolves against Lima's atoms.
+ */
+export async function loadRenderCatalog(url: string): Promise<HydratedCatalog | null> {
+  let res: Response;
+  try {
+    res = await fetch(url);
+  } catch {
+    return null;
+  }
+  if (!res.ok) return null;
+  try {
+    const body = (await res.json()) as { atoms?: HydratedAtom[] };
+    const out: HydratedCatalog = {};
+    for (const a of body.atoms ?? []) out[a.handle] = a;
+    return out;
+  } catch {
+    return null;
+  }
 }

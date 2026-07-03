@@ -58,6 +58,23 @@ describe("sdmToEditorBlocks re-opens a stored Story for editing", () => {
     expect(blocks.some((b) => b.type === "callout")).toBe(true);
   });
 
+  it("preserves atoms nested inside a blockquote (not just a callout)", () => {
+    const doc: StoryDocument = {
+      version: "1.0.0",
+      blocks: [
+        {
+          type: "blockquote",
+          children: [
+            { type: "paragraph", children: [{ type: "text", value: "As the record shows:" }] },
+            { type: "atom", handle: "record:lima:deed-0008300", kind: "record", title: "Limited Warranty Deed" },
+          ],
+        },
+      ],
+    };
+    const blocks = sdmToEditorBlocks(doc);
+    expect(blocks.some((b) => b.type === "atom" && b.handle === "record:lima:deed-0008300")).toBe(true);
+  });
+
   it("survives a re-serialize (blocks → dsl produces non-empty source per atom)", () => {
     const blocks = sdmToEditorBlocks(FIXTURE_READER_STORY.doc);
     const dsl = serializeBlocksToDsl(blocks);

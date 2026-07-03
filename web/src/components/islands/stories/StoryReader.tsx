@@ -31,9 +31,11 @@ interface Loaded {
 export interface StoryReaderProps {
   /** Render a bundled fixture Story instead of fetching (design preview). */
   preview?: "reader" | "editorial";
+  /** The per-site render-catalog asset URL (built via `withSite` on the page). */
+  atomsUrl?: string;
 }
 
-export default function StoryReader({ preview }: StoryReaderProps) {
+export default function StoryReader({ preview, atomsUrl }: StoryReaderProps) {
   const [state, setState] = useState<{
     status: "loading" | "ready" | "error";
     data?: Loaded;
@@ -73,7 +75,10 @@ export default function StoryReader({ preview }: StoryReaderProps) {
       return;
     }
     (async () => {
-      const [res, atoms] = await Promise.all([getStory(id), loadRenderCatalog()]);
+      const [res, atoms] = await Promise.all([
+        getStory(id),
+        loadRenderCatalog(atomsUrl ?? "/stories-atoms.json"),
+      ]);
       if (!live) return;
       if (!res.ok) {
         const msg =
@@ -83,6 +88,11 @@ export default function StoryReader({ preview }: StoryReaderProps) {
               ? "Stories aren't enabled yet."
               : "Couldn't load this story.";
         setState({ status: "error", message: msg });
+        return;
+      }
+      if (atoms === null) {
+        // The Story loaded but its citations couldn't — don't render every atom as dangling.
+        setState({ status: "error", message: "Couldn't load this story's citations. Reload to try again." });
         return;
       }
       const s = res.value.story;

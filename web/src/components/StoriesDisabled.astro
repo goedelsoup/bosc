@@ -1,0 +1,40 @@
+---
+/**
+ * The shared "not enabled yet" fallback for the gated user-Stories routes (#1096/#1097) —
+ * `stories/{read,compose,mine}` render this when `storiesUiEnabled()` is false, instead of each
+ * repeating the same dashed panel. The message is a prop; the preview-link sub-line is the default
+ * slot (omitted when empty).
+ */
+interface Props {
+  message: string;
+}
+const { message } = Astro.props;
+const hasSub = Astro.slots.has("default");
+---
+
+<div class="story-disabled">
+  <p>{message}</p>
+  {hasSub && (
+    <p class="story-disabled-sub"><slot /></p>
+  )}
+</div>
+
+<style>
+  .story-disabled {
+    max-width: 720px;
+    margin: 0 auto;
+    border: 1px dashed var(--line-2);
+    background: var(--bone-sunk);
+    padding: 40px 32px;
+    text-align: center;
+    color: var(--ink-muted);
+  }
+  .story-disabled-sub {
+    font-size: 13px;
+    margin-top: 10px;
+    color: var(--ink-faint);
+  }
+  .story-disabled-sub :global(a) {
+    color: var(--forest);
+  }
+</style>

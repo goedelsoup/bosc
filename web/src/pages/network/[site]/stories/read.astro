@@ -12,6 +12,7 @@
  * contends with a story codename.
  */
 import Base from "~/layouts/Base.astro";
+import StoriesDisabled from "~/components/StoriesDisabled.astro";
 import StoryReader from "~/components/islands/stories/StoryReader.tsx";
 import { withSite } from "~/lib/site";
 import { activeSite, selectableSitePaths, siteForSlug } from "~/lib/sites";
@@ -22,6 +23,7 @@ export const getStaticPaths = selectableSitePaths;
 const { slug } = Astro.props as { slug: string };
 const site = siteForSlug(slug) ?? activeSite();
 const enabled = storiesUiEnabled();
+const atomsUrl = withSite("/stories-atoms.json");
 ---
 
 <Base
@@ -40,15 +42,12 @@ const enabled = storiesUiEnabled();
 
     {
       enabled ? (
-        <StoryReader client:only="react" />
+        <StoryReader client:only="react" atomsUrl={atomsUrl} />
       ) : (
-        <div class="story-disabled">
-          <p>Reader-authored stories aren't enabled in this build yet.</p>
-          <p class="story-disabled-sub">
-            Preview the renderer: <a href="?preview=reader">a reader story</a> ·{" "}
-            <a href="?preview=editorial">an editorial story</a>
-          </p>
-        </div>
+        <StoriesDisabled message="Reader-authored stories aren't enabled in this build yet.">
+          Preview the renderer: <a href="?preview=reader">a reader story</a> ·{" "}
+          <a href="?preview=editorial">an editorial story</a>
+        </StoriesDisabled>
       )
     }
   </div>
@@ -78,22 +77,5 @@ const enabled = storiesUiEnabled();
   }
   .story-crumb span {
     color: var(--ink-ghost);
-  }
-  .story-disabled {
-    max-width: 720px;
-    margin: 0 auto;
-    border: 1px dashed var(--line-2);
-    background: var(--bone-sunk);
-    padding: 40px 32px;
-    text-align: center;
-    color: var(--ink-muted);
-  }
-  .story-disabled-sub {
-    font-size: 13px;
-    margin-top: 10px;
-    color: var(--ink-faint);
-  }
-  .story-disabled-sub a {
-    color: var(--forest);
   }
 </style>
