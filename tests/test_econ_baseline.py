@@ -49,6 +49,19 @@ def test_build_baseline_trend(econ_settings: Settings) -> None:
     assert len(baseline.population.points) == 4
 
 
+def test_build_baseline_default_span_is_a_decade_with_establishments(
+    econ_settings: Settings,
+) -> None:
+    """The default span is a real ~decade trend (issue #1111), and each trend point carries
+    QCEW establishments alongside employment — all served offline from committed fixtures."""
+    baseline = build_baseline(settings=econ_settings)  # default years
+    years = [t.year for t in baseline.trend]
+    assert years == sorted(years) and len(years) >= 10  # a decade-plus, not two points
+    assert baseline.latest.year == years[-1]
+    # Establishments are carried on every trend point (not just the latest sector mix).
+    assert all(t.establishments is not None and t.establishments.value > 0 for t in baseline.trend)
+
+
 def test_offline_miss_raises(econ_settings: Settings) -> None:
     with pytest.raises(OfflineError):
         fetch_county_industries(year=1999, fips="39003", settings=econ_settings)

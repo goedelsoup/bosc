@@ -219,7 +219,7 @@
     },
     "YearTotal": {
       "additionalProperties": false,
-      "description": "Total covered employment in one year — a point on the trend.",
+      "description": "Total covered employment (and establishments) in one year — a point on the trend.",
       "properties": {
         "year": {
           "title": "Year",
@@ -227,6 +227,17 @@
         },
         "total_employment": {
           "$ref": "#/$defs/ProvenancedValue"
+        },
+        "establishments": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
       "required": [

@@ -43,6 +43,7 @@ from watermark.candidates import (
 from watermark.civic.summarize import load_committed_summaries
 from watermark.config import Settings, get_settings
 from watermark.economics.baseline import load_baseline as load_econ_baseline
+from watermark.economics.energy import load_consumer_energy
 from watermark.gleif import load_inventory as load_lei_inventory
 from watermark.hydrology.model import ScenarioResult
 from watermark.hypotheses import HYPOTHESES, Hypothesis, HypothesisAssessment, load_assessments
@@ -324,6 +325,7 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         site_scoped_path(settings.reference_dir, settings.site, is_dir=True)
     )
     econ = load_econ_baseline(settings)
+    econ_energy = load_consumer_energy(settings)
 
     # The feed registry — one row per feed, in bundle order. ``model`` set => a collection feed
     # of that item type; ``None`` => an already-provenanced object feed (its own Pydantic model,
@@ -376,6 +378,15 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
             "economics-baseline",
             None,
             lambda: None if econ is None else economics_mod.export_economics(econ),
+        ),
+        # Consumer energy costs (EIA) with the full annual price/sales series for charting
+        # (issue #1111); absent when the site has no committed consumer-energy dataset.
+        (
+            "consumer-energy",
+            None,
+            lambda: (
+                None if econ_energy is None else economics_mod.export_consumer_energy(econ_energy)
+            ),
         ),
         # Cross-site basin synthesis (#308/#323): the watershed points as one connected basin.
         ("network", None, lambda: build_basin_network(settings=settings)),
