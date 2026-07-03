@@ -28,4 +28,5 @@ tags:
 - policy
 notes: Federal clean-energy policy levers mapped to direction-on-cost, plus live EIA national net-gen/retail-price
   and the LBNL/DOE data-center load share, integrated against the campus facility_draw; nothing is a facility
-  disclosure.
+  disclosure. The shared EIA connector now retains each series' full annual history (#1111); the federal
+  backdrop reads its latest point.

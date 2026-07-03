@@ -13,6 +13,7 @@ site_scope: slug-scoped
 depends_on:
 - echo-maumee-npdes
 - economics-baseline
+- eia-consumer-energy
 - eia-grid-profile
 - gleif
 - hydrology-low-flow-7q10
@@ -31,5 +32,7 @@ notes: >-
   regenerable and git-ignored — hence no committed storage; a virtual DAG node, #1024).
   depends_on declares the committed reference datasets the export verifiably reads: the RSEI/
   economics/LEI/watershed feeds plus the basin network synthesis (ECHO dischargers, low-flow
-  lookup, per-site grid profiles). `watermark export` pre-flights this chain and warns when an
-  upstream is downstream-stale; regenerate with `watermark catalog run bundle-records --site <slug>`.
+  lookup, per-site grid profiles) and the EIA consumer-energy price/sales series now surfaced
+  as the `consumer-energy` feed for charting (#1111). `watermark export` pre-flights this chain
+  and warns when an upstream is downstream-stale; regenerate with
+  `watermark catalog run bundle-records --site <slug>`.
