@@ -102,9 +102,29 @@ The catalog (#1093) is the addressable index; resolution is a **live pointer** (
 - Migrating the editorial MDX path onto the DSL — the contract makes a future convergence cheap,
   but we don't pay for it now. The editorial path keeps its MDX; both paths only need to *lower
   into the same SDM* to share the renderer.
-- The renderer components (#1097), authoring UX (#1096), and sharing/moderation (#1098). Each
-  builds against the types above. (The DSL parser + write-path pipeline landed in #1094 —
-  [`src/lib/storyCompile.ts`](../src/lib/storyCompile.ts); the D1 store + owner-scoped CRUD
-  Functions landed in #1095 — [`functions/api/stories.ts`](../functions/api/stories.ts) +
+- Sharing/moderation (#1098) and catalog revalidation (#1099). Each builds against the types above.
+  (The DSL parser + write-path pipeline landed in #1094 — [`src/lib/storyCompile.ts`](../src/lib/storyCompile.ts);
+  the D1 store + owner-scoped CRUD Functions landed in #1095 — [`functions/api/stories.ts`](../functions/api/stories.ts) +
   [`functions/api/_lib/storiesStore.ts`](../functions/api/_lib/storiesStore.ts), which run the
   write path server-side against the runtime `/stories-catalog.json` catalog.)
+
+## The renderer + authoring UX (#1096 / #1097 — landed)
+
+The presentation tier is a set of **React client islands** under
+[`src/components/islands/stories/`](../src/components/islands/stories/) (the site is pure-static, so
+user Stories render client-side). See that directory's `README.md`. In brief:
+
+- **Runtime renderer (#1097)** — `StoryRenderer` walks the SDM block tree (reader prose rendered
+  visually distinct from cited atoms); `StoryAtom` is the closed dispatch table made concrete: each
+  of the 14 kinds routes to one embedded-scale treatment, with **resolved / loading / dangling**
+  states. Because an island can't use the Astro presentation components, atoms resolve against a
+  hydrated **render catalog** — the `/stories-atoms.json` build asset ([`src/lib/renderCatalog.ts`](../src/lib/renderCatalog.ts),
+  a superset of the thin `/stories-catalog.json`) — fetched at runtime (the ask-index pattern).
+- **Authoring UX (#1096)** — `StoryGrab` (grab affordance + persistent tray), `StoryEditor` (the
+  block-by-block canvas over the closed vocabulary; it serializes to **DSL source** and lets the
+  server recompile — never ships SDM), and `MyStories` (the owner-scoped account view). The block
+  model + block⇄DSL serializers are the pure, tested seam in [`src/lib/storyAtoms.ts`](../src/lib/storyAtoms.ts).
+
+Both tiers are build-time gated by `storiesUiEnabled()` (Cognito + `PUBLIC_STORIES_ENABLED`), the
+UI peer of the server-side `STORIES_ENABLED` kill switch; a `?preview` mode renders a bundled fixture
+Story with no auth/D1 so the design is legible in any build.

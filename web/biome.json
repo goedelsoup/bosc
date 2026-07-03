@@ -41,6 +41,14 @@
           "correctness": { "noUnusedVariables": "off", "noUnusedImports": "off" }
         }
       }
+    },
+    {
+      "includes": ["src/components/islands/stories/**"],
+      "linter": {
+        "rules": {
+          "suspicious": { "noArrayIndexKey": "off" }
+        }
+      }
     }
   ]
 }
