@@ -18,6 +18,9 @@ storage:
 - relpath: reference/network/topology.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: reference/network/findlay-ottawa-comparison.yaml
+  media_type: application/x-yaml
+  lfs: false
 refresh:
   cadence: on-demand
 provenance: derived
@@ -29,4 +32,6 @@ tags:
 - cross-site
 - synthesis
 notes: topology.yaml is curated/cited; basin-network.yaml is the computed, regenerable cross-site join
-  carrying each attribute's own provenance — regenerate via `bosc network --write`, do not hand-edit.
+  carrying each attribute's own provenance — regenerate via `watermark basin-network --write`, do not
+  hand-edit. findlay-ottawa-comparison.yaml is curated/cited (#417) — the network's only along-one-river
+  control, both plants screened against the shared derived Blanchard 7Q10.

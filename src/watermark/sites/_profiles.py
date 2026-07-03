@@ -255,7 +255,12 @@ _FINDLAY = SiteProfile(
         0.0,
     ),  # [open] pending an identified corridor on the Blanchard
     # balance (per-WWTP receiving waters pending the site's NPDES fact sheets)
-    plant_receiving={},  # [open] pending Findlay-area WWTP NPDES fact sheets
+    # Findlay↔Ottawa intra-tributary comparison (#417): the Findlay WPCC (OH0025135, 15.0 MGD →
+    # 23.21 cfs) screens VIOLATION (2.68x — effluent exceeds the whole low flow) against the shared
+    # derived Blanchard 7Q10 (8.67 cfs, USGS 04189000; low-flow-7q10.derived.yaml, #414) vs its
+    # downstream Ottawa sibling's TIGHT band (0.54x) — the network's only along-one-river control.
+    # See data/reference/network/findlay-ottawa-comparison.yaml (watershed held constant, discharge point varied).
+    plant_receiving={},  # [open] cited fact-sheet 7Q10 still pending the Findlay WPCC NPDES fact sheet (#352)
     abstraction_gage="04189000",  # [inference] the primary Blanchard gage near Findlay
     # refill (the water-balance supply model is not yet designed for Findlay)
     supply_gage_primary="TODO",  # [open] refill supply gage — pending the site's water-balance model
@@ -961,7 +966,12 @@ _OTTAWA = SiteProfile(
         0.0,
     ),  # [open] pending an identified corridor on the Blanchard
     # balance (per-WWTP receiving waters pending the site's NPDES fact sheets)
-    plant_receiving={},  # [open] pending Ottawa-area WWTP NPDES fact sheets
+    # Findlay↔Ottawa intra-tributary comparison (#417): the Ottawa WWTP (OH0026921, 3.0 MGD →
+    # 4.64 cfs) screens TIGHT (0.54x) against the shared derived Blanchard 7Q10 (8.67 cfs, USGS
+    # 04189000; low-flow-7q10.derived.yaml, #414) vs its upstream Findlay sibling's VIOLATION band
+    # (2.68x) — the network's only along-one-river control. See the committed artifact
+    # data/reference/network/findlay-ottawa-comparison.yaml (watershed held constant, discharge point varied).
+    plant_receiving={},  # [open] cited fact-sheet 7Q10 still pending the Ottawa WWTP NPDES fact sheet (#415)
     abstraction_gage="04189260",  # [inference] the Blanchard-at-Ottawa receiving-reach gage
     # refill (the water-balance supply model is not yet designed for Ottawa)
     supply_gage_primary="TODO",  # [open] refill supply gage — pending the site's water-balance model
