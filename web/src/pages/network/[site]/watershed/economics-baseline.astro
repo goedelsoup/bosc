@@ -2,12 +2,22 @@
 import { selectableSitePaths } from "~/lib/sites";
 export const getStaticPaths = selectableSitePaths;
 import BackLink from "~/components/BackLink.astro";
+import LineChart from "~/components/charts/LineChart.astro";
 import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed } from "~/lib/bundle";
-import type { EconomicBaseline, ProvenancedValue } from "~/lib/feeds";
+import type { LinePoint } from "~/lib/charts";
+import type {
+  ConsumerEnergyCosts,
+  ConsumerEnergyPrice,
+  EconomicBaseline,
+  ProvenancedValue,
+} from "~/lib/feeds";
 import { withSite } from "~/lib/site";
 
 const eb = hasFeed("economics-baseline") ? loadFeed<EconomicBaseline>("economics-baseline") : null;
+// State-level EIA consumer energy costs (issue #1125) — guarded independently of the county
+// baseline so a site can carry one without the other; degrades to nothing when the feed is absent.
+const ce = hasFeed("consumer-energy") ? loadFeed<ConsumerEnergyCosts>("consumer-energy") : null;
 const num = (v?: ProvenancedValue | null): string =>
   v?.value == null ? "—" : Math.round(v.value).toLocaleString("en-US");
 const lq = (v?: ProvenancedValue | null): number | null => (v?.value == null ? null : v.value);
@@ -31,6 +41,61 @@ const first = trend[0];
 const last = trend[trend.length - 1];
 const delta = first && last ? (last.total_employment.value ?? 0) - (first.total_employment.value ?? 0) : 0;
 const pct = first?.total_employment.value ? (delta / first.total_employment.value) * 100 : 0;
+
+// --- trend charts (issue #1125) -----------------------------------------------------------
+// Hand-rolled SVG line charts (indigo encodes data, per web/src/lib/charts.ts). Thin the year
+// axis so a multi-decade series stays legible: label the endpoints and every `stride`-th year,
+// blank the rest (the dot still plots). `window` keeps the last N points so the long EIA series
+// (natural gas runs from 1967) shares a readable ~quarter-century window with the shorter ones.
+function yearLine(
+  rows: { year: number; value: number }[],
+  opts: { stride?: number; window?: number } = {},
+): LinePoint[] {
+  const stride = opts.stride ?? 5;
+  const w = opts.window ? rows.slice(-opts.window) : rows;
+  const firstYr = w[0]?.year;
+  const lastYr = w[w.length - 1]?.year;
+  return w.map((r) => ({
+    label: r.year === firstYr || r.year === lastYr || r.year % stride === 0 ? String(r.year) : "",
+    value: r.value,
+  }));
+}
+
+const empLine = yearLine(
+  trend.map((t) => ({ year: t.year, value: t.total_employment.value ?? 0 })),
+  { stride: 2 },
+);
+const estabTrend = trend.filter((t) => t.establishments?.value != null);
+const estabLine = yearLine(
+  estabTrend.map((t) => ({ year: t.year, value: t.establishments?.value ?? 0 })),
+  { stride: 2 },
+);
+
+// One EIA series → a windowed line + a units-carrying end label.
+function energyLine(s: ConsumerEnergyPrice | undefined): LinePoint[] {
+  return s
+    ? yearLine(
+        s.points.map((p) => ({ year: Number(p.period.slice(0, 4)), value: p.value })),
+        { window: 25 },
+      )
+    : [];
+}
+const endLabel = (s?: ConsumerEnergyPrice): string | undefined =>
+  s?.value.value == null
+    ? undefined
+    : `${s.value.value.toLocaleString("en-US")} ${s.value.unit ?? ""}`.trim();
+const elecPrice = ce?.prices.find((p) => p.fuel === "electricity" && p.metric === "price");
+const gasPrice = ce?.prices.find((p) => p.fuel === "natural_gas" && p.metric === "price");
+const elecSales = ce?.prices.find((p) => p.fuel === "electricity" && p.metric === "sales");
+const energyCharts = [
+  { series: elecPrice, kicker: "Line · residential ¢/kWh", title: "Residential electricity price" },
+  { series: gasPrice, kicker: "Line · residential $/Mcf", title: "Residential natural-gas price" },
+  {
+    series: elecSales,
+    kicker: "Line · retail sales (million kWh)",
+    title: "Electricity retail sales — all sectors",
+  },
+].filter((c): c is { series: ConsumerEnergyPrice; kicker: string; title: string } => c.series != null);
 ---
 
 <Base title="Economics — localized baseline" section="watershed">
@@ -68,6 +133,28 @@ const pct = first?.total_employment.value ? (delta / first.total_employment.valu
           {trend.length > 0 && (
             <>
               <h2 id="employment">Employment trend</h2>
+              {empLine.length >= 2 && (
+                <div class="chart-grid">
+                  <LineChart
+                    data={empLine}
+                    kicker="Line · covered employment"
+                    title="Total covered employment"
+                    endLabel={num(last?.total_employment)}
+                    evidence="verified"
+                    source="BLS QCEW annual averages"
+                  />
+                  {estabLine.length >= 2 && (
+                    <LineChart
+                      data={estabLine}
+                      kicker="Line · establishments"
+                      title="Establishments"
+                      endLabel={num(estabTrend[estabTrend.length - 1]?.establishments)}
+                      evidence="verified"
+                      source="BLS QCEW annual averages"
+                    />
+                  )}
+                </div>
+              )}
               <table>
                 <thead><tr><th>Year</th><th>Total covered employment</th></tr></thead>
                 <tbody>
@@ -104,6 +191,35 @@ const pct = first?.total_employment.value ? (delta / first.total_employment.valu
             </tbody>
           </table>
           {eb.note && <p class="card-meta">{eb.note}</p>}
+        </>
+      )
+    }
+
+    {
+      ce && energyCharts.length > 0 && (
+        <>
+          <h2 id="consumer-energy">Consumer energy costs</h2>
+          <p class="section-lead">
+            What households in <strong>{ce.area_name}</strong> pay for electricity and heating fuel — the
+            consumer-price half of the demand thread the data-center load presses on. State-level EIA
+            residential prices and retail sales, each connector-sourced <code>[verified]</code>, charted over
+            the last ~quarter-century (the natural-gas series runs to 1967; the window is trimmed for
+            legibility). Prices are in native units — electricity in cents/kWh, gas in $/Mcf, sales in
+            million kWh.
+          </p>
+          <div class="chart-grid">
+            {energyCharts.map((c) => (
+              <LineChart
+                data={energyLine(c.series)}
+                kicker={c.kicker}
+                title={c.title}
+                endLabel={endLabel(c.series)}
+                evidence="verified"
+                source={`EIA API v2 · ${c.series.series_id}`}
+              />
+            ))}
+          </div>
+          {ce.note && <p class="card-meta">{ce.note}</p>}
         </>
       )
     }
