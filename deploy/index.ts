@@ -414,10 +414,22 @@ function parseLakebaseOrigin(url: string): cloudflare.types.input.HyperdriveConf
             `bosc-deploy:storiesLakebaseUrl scheme must be postgres:// or postgresql:// (got "${scheme}://")`,
         );
     }
-    const database = decodeURIComponent(parsed.pathname.replace(/^\//, ""));
-    if (!parsed.hostname || !parsed.username || !database) {
+    // decodeURIComponent throws URIError on malformed percent-encoding (e.g. a lone "%");
+    // convert that into the same clear validation error instead of letting it escape raw.
+    const decode = (component: string): string => {
+        try {
+            return decodeURIComponent(component);
+        } catch {
+            throw new Error(
+                "bosc-deploy:storiesLakebaseUrl has malformed percent-encoding — expected " +
+                "postgres://user:password@host:port/database",
+            );
+        }
+    };
+    const database = decode(parsed.pathname.replace(/^\//, ""));
+    if (!parsed.hostname || !parsed.username || !parsed.password || !database) {
         throw new Error(
-            "bosc-deploy:storiesLakebaseUrl must include host, user, and database " +
+            "bosc-deploy:storiesLakebaseUrl must include host, user, password, and database " +
             "(postgres://user:password@host:port/database)",
         );
     }
@@ -426,8 +438,8 @@ function parseLakebaseOrigin(url: string): cloudflare.types.input.HyperdriveConf
         host: parsed.hostname,
         port: parsed.port ? Number(parsed.port) : 5432,
         database,
-        user: decodeURIComponent(parsed.username),
-        password: decodeURIComponent(parsed.password),
+        user: decode(parsed.username),
+        password: decode(parsed.password),
     };
 }
 
