@@ -430,8 +430,8 @@ export interface EnergyPricePoint {
 export interface ConsumerEnergyPrice {
   series_id: string;
   label: string;
-  fuel: string; // "electricity" | "natural_gas"
-  metric: string; // "price" | "sales"
+  fuel: "electricity" | "natural_gas";
+  metric: "price" | "sales";
   period: string; // latest period; mirrors points[-1].period
   area: string;
   value: ProvenancedValue; // latest point; native units in `.unit`
