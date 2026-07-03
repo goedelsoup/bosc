@@ -3,16 +3,15 @@
 Verified inventories of CWA-permitted facilities per watershed basin, pulled from
 EPA's **ECHO Clean Water Act REST services** (`cwa_rest_services`). Every facility,
 NPDES ID, and value here was returned by the ECHO API — nothing is fabricated,
-inferred, or filled in. Two basins are committed today, each with its own
-`<basin>-wwtp.*` fileset: the **Maumee** (`watermark npdes`, the default) and the **Great
+inferred, or filled in. Three basins are committed today, each with its own
+`<basin>-wwtp.*` fileset: the **Maumee** (`watermark npdes`, the default), the **Great
 Miami** (`watermark npdes --basin great-miami`, the Miami-basin sites — Urbana, Springfield,
-WPAFB, Troy-Piqua, Hamilton-Middletown). Two further basins are **registered in the
-connector but not yet committed**: the **Scioto** (`--basin scioto`, the Columbus /
-New Albany data-center cluster) — deferred on an ECHO 300/hr throttle (HTTP 429) — and
-the **Little Miami** (`--basin little-miami`, the Scenic-River sites Xenia and
-Wilmington / Todd Fork, a single HUC-8 `05090202`) — deferred when ECHO returned read
-timeouts then a 500. Run `watermark npdes --basin scioto` / `--basin little-miami` to write
-their `<basin>-wwtp.*` filesets when ECHO is healthy. Add a basin by registering it in
+WPAFB, Troy-Piqua, Hamilton-Middletown), and the **Little Miami** (`watermark npdes --basin
+little-miami`, the Scenic-River sites Xenia and Wilmington / Todd Fork, a single HUC-8
+`05090202`). One further basin is **registered in the connector but not yet committed**:
+the **Scioto** (`--basin scioto`, the Columbus / New Albany data-center cluster) — deferred
+on an ECHO 300/hr throttle (HTTP 429). Run `watermark npdes --basin scioto` to write its
+`<basin>-wwtp.*` fileset when ECHO is healthy. Add a basin by registering it in
 `watermark.hydrology.connectors.echo`; never hardcode one into the connector.
 
 ## What the watershed is

@@ -70,12 +70,13 @@ enters a *fully-allocated* basin regardless of which plant takes it.
 full ECHO POTW inventory (`watermark basin-screen`), not just Lima's plants. The
 denominators are the cited fact-sheet 7Q10s plus a **derived** LP3 7Q10 for the four
 major USGS-gaged mainstems (Maumee, Auglaize, St. Marys, St. Joseph;
-`data/reference/hydrology/low-flow-7q10.derived.yaml`). The honest result: only **7 of
-129** POTWs are screenable — **77** have no receiving water in ECHO and **44** discharge
-to ungaged tributaries/ditches, all reported "no 7Q10" rather than screened against a
-downstream river's larger flow. Of the screenable, Lima's American Bath → Pike Run is
-the lone violation; **Decatur → St. Marys (3.1:1)** and **Defiance → Maumee (6.2:1)**
-screen "tight." The wide data gap is itself the finding — Lima's plants are unusually
+`data/reference/hydrology/low-flow-7q10.derived.yaml`). The honest result: only **8 of
+129** POTWs are screenable — **76** have no receiving water in ECHO, **44** discharge
+to ungaged tributaries/ditches (reported "no 7Q10" rather than screened against a
+downstream river's larger flow), and **1** has no design flow on record. Of the
+screenable, two are violations — Lima's **American Bath → Pike Run (0.01:1)** and
+**Van Wert → Town Creek (0.03:1)** — while **Decatur → St. Marys (3.1:1)** and
+**Defiance → Maumee (6.2:1)** screen "tight." The wide data gap is itself the finding — Lima's plants are unusually
 well-documented, and a basin-wide answer needs each tributary's own cited/gaged 7Q10.
 
 **The network view `[v]`.** The screen is one dimension of a wider cross-site comparison: see
