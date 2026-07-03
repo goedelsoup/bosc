@@ -46,6 +46,32 @@ Always created (cheap; activation gate is wiring in `wrangler.toml`):
 - **`cloudflare.WorkersKvNamespace` — `AUTH_PREFS`** — per-user profile + notification
   prefs, keyed by Cognito `sub` (#921).
 
+### User-authored Stories — Hyperdrive → Lakebase (#1090 / #1138)
+
+Gated on the `stories` toggle in [`features.yaml`](features.yaml) (defaults false).
+
+- **`cloudflare.HyperdriveConfig` — `STORIES_HYPERDRIVE`** — a pooled Postgres path from the
+  Workers runtime to Databricks **Lakebase** (the `/api/stories` Functions can't open a raw
+  Postgres socket; they go through Hyperdrive via postgres.js). Its origin is parsed from the
+  **secret** `storiesLakebaseUrl` connection string. Provisioned only when `stories=true`;
+  a `stories=true` with no `storiesLakebaseUrl` set fails `pulumi up` (a config guard).
+
+  Set the secret out of band (Databricks issues a **short-lived OAuth token** as the Postgres
+  password, so the whole URL is sensitive — never commit it):
+
+  ```bash
+  pulumi config set --secret bosc-deploy:storiesLakebaseUrl \
+    postgres://<user>:<oauth-token>@<host>:5432/<database>
+  ```
+
+  Then export the id into wrangler: `pulumi stack output storiesHyperdriveId` → the
+  `[[hyperdrive]]` `id` in `web/wrangler.toml`. **Token refresh:** Hyperdrive caches the origin
+  credentials, so a rotated OAuth token needs a fresh `pulumi up` to re-push it — prefer a
+  Databricks service principal with a longer-lived credential, or a scheduled re-apply.
+
+  The toggle also writes `STORIES_ENABLED` (the Functions kill switch) and
+  `PUBLIC_STORIES_ENABLED` (the Astro build-time UI gate) to the Pages project, mirroring `rum`.
+
 ### Custom domain exchange (when `siteDomain` is set)
 
 - **`cloudflare.PagesDomain`** — attaches `siteDomain` to the `the-watermark-directory` Pages project (the
@@ -93,6 +119,12 @@ project by name, so the two don't fight.
 | `cognitoRegionOut` | `web/wrangler.toml` `[vars]` `COGNITO_REGION` |
 | `jwksCacheKvNamespaceId` | `web/wrangler.toml` → `[[kv_namespaces]]` `id` (JWKS_CACHE) |
 | `authPrefsKvNamespaceId` | `web/wrangler.toml` → `[[kv_namespaces]]` `id` (AUTH_PREFS) |
+
+### Stories
+
+| Output | Wire it into |
+| --- | --- |
+| `storiesHyperdriveId` | `web/wrangler.toml` → `[[hyperdrive]]` `id` (STORIES_HYPERDRIVE); `not-configured` until `stories=true` |
 
 ## Stack config (`Pulumi.prod.yaml`, committed — no secrets)
 
