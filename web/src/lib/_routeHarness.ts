@@ -9,7 +9,11 @@
 // Underscore-prefixed so it's never mistaken for a routed Function; lives in src/lib (not
 // functions/) so vitest + Biome + astro-check all see it without entering the Workers tree.
 
+import { readFileSync } from "node:fs";
+import { DatabaseSync } from "node:sqlite";
+import { fileURLToPath } from "node:url";
 import type { KVLike } from "@fn/api/_lib/ratelimit";
+import type { D1Like, D1PreparedStatement, D1Result } from "@fn/api/_lib/storiesStore";
 
 /** A `fetch`-compatible response carrying JSON. */
 export function jsonResponse(status: number, data: unknown, headers?: Record<string, string>): Response {
@@ -225,4 +229,66 @@ export async function mintIdToken(
     .replace(/\//g, "_")
     .replace(/=/g, "");
   return `${header}.${payload}.${sigB64}`;
+}
+
+// ---------------------------------------------------------------------------
+// Fake D1 for the Story store (Epic #1090 / #1095)
+// ---------------------------------------------------------------------------
+// An in-memory D1 backed by Node 24's built-in `node:sqlite` — real SQL + real transactions, so
+// the store's `batch()` atomicity, FK cascade, and unique-constraint behavior are exercised for
+// real (not mocked). The schema is the committed migration, so a schema/store drift fails a test.
+
+const MIGRATION_PATH = fileURLToPath(new URL("../../migrations/0001_create_stories.sql", import.meta.url));
+
+/** A D1Like whose `raw` handle is exposed for direct seeding/inspection in a test. */
+export interface FakeD1 extends D1Like {
+  raw: DatabaseSync;
+}
+
+function d1Statement(db: DatabaseSync, sql: string): D1PreparedStatement {
+  let params: unknown[] = [];
+  const api: D1PreparedStatement = {
+    bind: (...values: unknown[]) => {
+      params = values;
+      return api;
+    },
+    first: async <T = unknown>() => {
+      const row = db.prepare(sql).get(...(params as never[]));
+      return (row ?? null) as T | null;
+    },
+    all: async <T = unknown>() => {
+      const rows = db.prepare(sql).all(...(params as never[]));
+      return { results: rows as T[], success: true } satisfies D1Result<T>;
+    },
+    run: async () => {
+      const r = db.prepare(sql).run(...(params as never[]));
+      return { success: true, meta: { changes: Number(r.changes) } } satisfies D1Result;
+    },
+  };
+  return api;
+}
+
+/** Build an in-memory D1 with the Stories schema applied (FK enforcement on). */
+export function fakeD1(): FakeD1 {
+  const db = new DatabaseSync(":memory:");
+  db.exec("PRAGMA foreign_keys = ON;");
+  db.exec(readFileSync(MIGRATION_PATH, "utf-8"));
+  return {
+    raw: db,
+    prepare: (sql: string) => d1Statement(db, sql),
+    // node:sqlite has no async transaction API; emulate D1's atomic batch with BEGIN/COMMIT and
+    // ROLLBACK on any statement error, so a failed ref-insert rolls the whole write back.
+    batch: async (statements: D1PreparedStatement[]) => {
+      db.exec("BEGIN;");
+      try {
+        const out: D1Result[] = [];
+        for (const s of statements) out.push(await s.run());
+        db.exec("COMMIT;");
+        return out;
+      } catch (e) {
+        db.exec("ROLLBACK;");
+        throw e;
+      }
+    },
+  };
 }

@@ -152,14 +152,17 @@ export function validateStoryDocument(value: unknown): StoryDocument | null {
 }
 
 // --- the resolver seam: SDM × catalog -------------------------------------------------------
-/** The `depth`-first list of every catalog handle an SDM references, in document order (with
- *  duplicates). The write-path validation (#1094) and handle-drift revalidation (#1099) read it. */
-export function sdmHandles(doc: StoryDocument): string[] {
-  const handles: string[] = [];
+/** An `atom` block — the cited-atom shape (with its thin snapshot). */
+export type SdmAtomBlock = Extract<SdmBlock, { type: "atom" }>;
+
+/** Every `atom` block an SDM references, in depth-first document order (with duplicates). The
+ *  write path derives the `story_refs` rows from these (#1095); `sdmHandles` is the handle-only view. */
+export function sdmAtomBlocks(doc: StoryDocument): SdmAtomBlock[] {
+  const atoms: SdmAtomBlock[] = [];
   const walkBlock = (block: SdmBlock): void => {
     switch (block.type) {
       case "atom":
-        handles.push(block.handle);
+        atoms.push(block);
         break;
       case "blockquote":
       case "callout":
@@ -172,7 +175,13 @@ export function sdmHandles(doc: StoryDocument): string[] {
     }
   };
   doc.blocks.forEach(walkBlock);
-  return handles;
+  return atoms;
+}
+
+/** The depth-first list of every catalog handle an SDM references, in document order (with
+ *  duplicates). The write-path validation (#1094) and handle-drift revalidation (#1099) read this. */
+export function sdmHandles(doc: StoryDocument): string[] {
+  return sdmAtomBlocks(doc).map((b) => b.handle);
 }
 
 export type ResolvedAtom =
