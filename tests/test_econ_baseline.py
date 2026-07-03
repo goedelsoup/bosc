@@ -4,17 +4,25 @@ mix with location quotients, and an offline cache miss raises (no silent network
 
 from __future__ import annotations
 
+import json
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
 
 from watermark.config import Settings
 from watermark.connectors import OfflineError
-from watermark.economics.baseline import build_baseline, load_baseline
+from watermark.economics.baseline import (
+    _POP_YEARS,
+    _maybe_population,
+    build_baseline,
+    load_baseline,
+)
 from watermark.economics.connectors.census import fetch_population_series
 from watermark.economics.connectors.qcew import fetch_county_industries
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+FIXTURES = REPO_ROOT / "tests" / "fixtures"
 
 
 def test_qcew_connector_offline(econ_settings: Settings) -> None:
@@ -65,6 +73,36 @@ def test_build_baseline_default_span_is_a_decade_with_establishments(
 def test_offline_miss_raises(econ_settings: Settings) -> None:
     with pytest.raises(OfflineError):
         fetch_county_industries(year=1999, fips="39003", settings=econ_settings)
+
+
+def test_keyless_live_serves_warm_census_cache(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Regression (#1108): a keyless *live* population pull still consults the on-disk cache.
+
+    A warm ACS5 series must not be discarded just because no key is set — the key is
+    optional and isn't part of the cache key. Priming the live cache and forbidding the
+    network proves the keyless path is served from cache, not dropped to ``None``.
+    """
+    cache_dir = tmp_path / "cache" / "economics" / "census"
+    cache_dir.mkdir(parents=True)
+    now = datetime.now(UTC).isoformat()
+    for fx in sorted((FIXTURES / "economics" / "census").glob("*.json")):
+        record = json.loads(fx.read_text(encoding="utf-8"))
+        record["fetched_at"] = now  # fresh, so live mode returns the cache hit without fetching
+        (cache_dir / fx.name).write_text(json.dumps(record), encoding="utf-8")
+
+    # Live mode, no key: any network attempt must fail the test.
+    settings = Settings(data_dir=tmp_path, econ_offline=False, census_api_key="", econ_fips="39003")
+
+    def _no_network(*_args: object, **_kwargs: object) -> None:
+        raise AssertionError("keyless live path must be served from the warm cache, not network")
+
+    monkeypatch.setattr("watermark.economics.connectors.census.httpx.get", _no_network)
+
+    series = _maybe_population(settings)
+    assert series is not None
+    assert [p.year for p in series.points] == _POP_YEARS
 
 
 def test_committed_baseline_loads() -> None:
