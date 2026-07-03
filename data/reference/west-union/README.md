@@ -1,10 +1,10 @@
 # West Union · Adams Co (west-union) — reference data
 
-Per-site onboarding tree for the West Union · Adams Co watershed point (basin: ohio-brush-creek), scaffolded by `bosc onboard west-union` (#326). Values come from the portable reach connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is fabricated; regenerate, don't hand-edit.
+Per-site onboarding tree for the West Union · Adams Co watershed point (basin: ohio-brush-creek), scaffolded by `bosc onboard west-union` (#326). Values come from the portable onboard connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is fabricated; regenerate, don't hand-edit.
 
 ## Source
 
-`bosc onboard west-union` over the West Union · Adams Co `SiteProfile` (reach connectors: NWIS / NOAA Atlas-14 / SSURGO / NASA-POWER).
+`bosc onboard west-union` over the West Union · Adams Co `SiteProfile` — per-site authored reference inputs + per-jurisdiction connectors (site geometry, parcels/zoning).
 
 ## Known gaps & caveats
 

@@ -69,17 +69,21 @@ class OnboardReport(BaseModel):
     review_checklist: list[str]
 
 
-def _readme_body(place: str, slug: str, basin: str, purpose: str) -> str:
-    """House-style README for a scaffolded per-site dir (source + gaps + regenerate)."""
+def _readme_body(place: str, slug: str, basin: str, purpose: str, source: str) -> str:
+    """House-style README for a scaffolded per-site dir (source + gaps + regenerate).
+
+    ``source`` names the folder's actual provenance chain — it differs per dir (the eia
+    folder is EIA/RTO, the rsei folder is EPA RSEI, …), so a scaffolded README documents
+    its own dataset origin per the ``data/reference/**`` source-and-gaps rule.
+    """
     return (
         f"# {place} ({slug}) — {purpose}\n\n"
         f"Per-site onboarding tree for the {place} watershed point (basin: {basin}), "
-        f"scaffolded by `bosc onboard {slug}` (#326). Values come from the portable reach "
+        f"scaffolded by `bosc onboard {slug}` (#326). Values come from the portable onboard "
         f"connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is "
         f"fabricated; regenerate, don't hand-edit.\n\n"
         "## Source\n\n"
-        f"`bosc onboard {slug}` over the {place} `SiteProfile` (reach connectors: NWIS / "
-        "NOAA Atlas-14 / SSURGO / NASA-POWER).\n\n"
+        f"`bosc onboard {slug}` over the {place} `SiteProfile` — {source}.\n\n"
         "## Known gaps & caveats\n\n"
         "- Onboarding seed — **review every value against a cited source before promotion** "
         "(`web/src/lib/sites.ts` `status`/`selectable`, parity-gated).\n"
@@ -100,17 +104,46 @@ def scaffold_dirs(settings: Settings, *, dry_run: bool = False) -> tuple[list[st
     """
     prof = active_profile(settings)
     slug = prof.slug
-    targets: list[tuple[Path, str]] = [
-        (settings.data_dir / "reference" / slug, "reference data"),
-        (settings.data_dir / "extracted" / slug, "extractions"),
-        (settings.data_dir / "reference" / "hydrology" / slug, "hydrology connector outputs"),
-        (settings.data_dir / "reference" / "economics" / slug, "economics baseline outputs"),
-        (settings.data_dir / "reference" / "eia" / slug, "energy / grid outputs"),
-        (settings.data_dir / "reference" / "rsei" / slug, "RSEI toxics outputs"),
+    # Each dir carries its OWN provenance chain in its README (the data/reference/** source-and-
+    # gaps rule) — the eia folder is EIA/RTO, rsei is EPA RSEI, etc., not the hydrology connectors.
+    targets: list[tuple[Path, str, str]] = [
+        (
+            settings.data_dir / "reference" / slug,
+            "reference data",
+            "per-site authored reference inputs + per-jurisdiction connectors (site geometry, "
+            "parcels/zoning)",
+        ),
+        (
+            settings.data_dir / "extracted" / slug,
+            "extractions",
+            "the ingest→extract corpus pipeline over this site's source documents",
+        ),
+        (
+            settings.data_dir / "reference" / "hydrology" / slug,
+            "hydrology connector outputs",
+            "USGS NWIS (7Q10) · NOAA Atlas-14 (corridor DDF) · USDA NRCS SSURGO (dominant HSG) · "
+            "NASA-POWER (climatology)",
+        ),
+        (
+            settings.data_dir / "reference" / "economics" / slug,
+            "economics baseline outputs",
+            "US Census · BLS QCEW (county economic baseline)",
+        ),
+        (
+            settings.data_dir / "reference" / "eia" / slug,
+            "energy / grid outputs",
+            "EIA-861 (utility retail) · EIA-930 (RTO demand/mix) · EIA v2 API (consumer energy "
+            "prices)",
+        ),
+        (
+            settings.data_dir / "reference" / "rsei" / slug,
+            "RSEI toxics outputs",
+            "EPA RSEI (county toxics release inventory)",
+        ),
     ]
     dirs: list[str] = []
     written: list[str] = []
-    for path, purpose in targets:
+    for path, purpose, source in targets:
         if not dry_run:
             path.mkdir(parents=True, exist_ok=True)
         dirs.append(str(path.relative_to(settings.data_dir)))
@@ -118,7 +151,7 @@ def scaffold_dirs(settings: Settings, *, dry_run: bool = False) -> tuple[list[st
         if not readme.is_file():
             if not dry_run:
                 readme.write_text(
-                    _readme_body(prof.place, slug, prof.basin, purpose), encoding="utf-8"
+                    _readme_body(prof.place, slug, prof.basin, purpose, source), encoding="utf-8"
                 )
             written.append(str(readme.relative_to(settings.data_dir)))
     return dirs, written

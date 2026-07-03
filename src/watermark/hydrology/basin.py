@@ -114,9 +114,11 @@ _MAINSTEM_GAGES: dict[str, dict[str, Any]] = {
     # #1117). The only substantive active gage on the creek is Ohio Brush Creek near West Union
     # (03237500, DA 387 mi², daily discharge since 1926); the West Fork gages (03237400 Lawshe,
     # 03237295 Peebles) are trivial/short-record and are omitted rather than proxied.
+    # Non-colliding aliases only: a bare "brush creek" would capture ECHO's unrelated Maumee-basin
+    # "BRUSH CREEK" receiving water (a different stream) and misroute it to this southern-Ohio gage.
     "Ohio Brush Creek": {
         "gage": "03237500",
-        "aliases": ["ohio brush creek", "ohio brush ck", "brush creek"],
+        "aliases": ["ohio brush creek", "ohio brush ck"],
     },
     # Greenville (Darke Co.) receiving waters. Greenville Creek is the primary at-site
     # gage (Bradford gage 03264000, DA 193 mi²); Stillwater River at Pleasant Hill
