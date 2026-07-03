@@ -1,6 +1,6 @@
 # Onboarding — Van Wert (van-wert)
 
-Living record for the Van Wert watershed point (basin: maumee), scaffolded by `watermark onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
+Living record for the Van Wert watershed point (basin: maumee), scaffolded by `watermark onboard van-wert`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
 
 ## Dimension coverage
 
@@ -43,7 +43,7 @@ Engineer's-office parcel shapefile; locate a Van Wert zoning layer (or accept ma
 
 ## Self-research (Phase 5; #247) — 2026-06-21
 
-First automated-research pass (`watermark onboard --research`, 27 turns, $1.28, read-only over the corpus) →
+First automated-research pass (`watermark onboard van-wert --research`, 27 turns, $1.28, read-only over the corpus) →
 `data/research/onboard-van-wert-van-wert-data-center-activity-r-2026-06-19/` (`findings.md` + `manifest.yaml`).
 
 **Headline — the effluent-dominance end-member, `[verified]` (resolves #376).** Van Wert is

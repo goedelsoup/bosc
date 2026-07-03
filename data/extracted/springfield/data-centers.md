@@ -106,7 +106,7 @@ Per discipline, a shared county is **not** an evidentiary link, a manufacturing-
 Roshel thread therefore **remains a quarantined `[open]` corridor-context note and does not enter the
 entity graph.** It re-enters scope only on a *filed instrument tying the plant/site to data-center
 reuse*. The prior corpus comments calling it the "Springfield-**Beckley** APA" / a "Roshel-APA
-**data-center** dimension" (`src/watermark/sites.py`) were incorrect and have been corrected to the 5C/Vultr +
+**data-center** dimension" (`src/watermark/sites/__init__.py`) were incorrect and have been corrected to the 5C/Vultr +
 Crusoe thread above.
 
 ## Hydrology hook (the receiving-water / source-water screen)

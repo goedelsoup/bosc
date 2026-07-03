@@ -176,7 +176,7 @@ functions), so they version cleanly and diff sensibly — unlike `.ipynb` JSON.
 Add an **opt-in** build step rather than changing the default pipeline. Two
 equally-valid placements; prefer the CLI flag for discoverability:
 
-- **CLI flag (recommended):** extend `site_build` in `src/watermark/cli.py` with
+- **CLI flag (recommended):** extend `site_build` in the `src/watermark/cli/` package (`_base.py`) with
   `notebooks: bool = typer.Option(False, "--notebooks/--no-notebooks", …)`. When set,
   after `render_site(...)`, iterate `notebooks/*.py` and for each run
   `marimo export html-wasm <nb> -o site/notebooks/<slug> --mode run --no-show-code`.

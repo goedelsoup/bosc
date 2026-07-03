@@ -1,6 +1,6 @@
 # Onboarding — Fort Wayne (fort-wayne)
 
-Living record for the Fort Wayne watershed point (basin: maumee), scaffolded by `watermark onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
+Living record for the Fort Wayne watershed point (basin: maumee), scaffolded by `watermark onboard fort-wayne`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
 
 ## Dimension coverage
 
@@ -51,7 +51,7 @@ surveyed boundary), which also feeds the SSURGO HSG validation below.
 
 ## Self-research (Phase 5; #247) — 2026-06-21
 
-First automated-research pass (`watermark onboard --research`, 35 turns, $1.38, read-only over the corpus)
+First automated-research pass (`watermark onboard fort-wayne --research`, 35 turns, $1.38, read-only over the corpus)
 → `data/research/onboard-fort-wayne-fort-wayne-data-center-activi-2026-06-19/` (`findings.md` +
 `manifest.yaml`).
 

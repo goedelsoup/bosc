@@ -20,7 +20,7 @@ City of Findlay (Hancock County, OH) GIS layers for the Findlay watershed point
   **not** "one parcel" — it is not a parcel/area measure. (Contrast Lima, whose layer carries
   many per-parcel polygons.)
 - **Polygon-only — no parcel join.** The layer has no parcel-id field, so per-parcel zoning
-  lookups (`zoning_for_parcel` / `watermark zoning --parcel`) are not supported for Findlay; the
+  lookups (`zoning_for_parcel` / `watermark --site findlay zoning --parcel`) are not supported for Findlay; the
   district catalog is the available read.
 - **Parcels — the OGRIP Ohio statewide layer, Hancock-scoped (`[reference]`, partial).** Hancock
   County publishes no county parcel ArcGIS-REST (Beacon/Schneider only), so `gis_parcel` is the
