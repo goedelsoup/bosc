@@ -29,6 +29,12 @@ Two endpoints live here:
   when `TURNSTILE_SECRET` is set) onto an admin review queue; `api/admin/stories` (admin role only) is
   the queue + takedown/restore. An admin `moderation='removed'` flip takes a story down instantly and
   survives an owner edit; an unpublished/removed story is never reachable by its share URL.
+- the **Stories revalidation job** (epic #1090 / #1099): `POST api/admin/stories {action:"revalidate"}`
+  (admin, also cron-drivable) walks every Story behind the current `catalog_version`, re-resolves each
+  cited handle against the live catalog, **auto-heals** renamed handles via a curated map
+  (`src/lib/handleRenames.ts` — rewrites the ref + the stored SDM), and flags the rest `stale` so the
+  author is nudged in their account view. Idempotent; the pure core is `src/lib/revalidate.ts` and the
+  job is `_lib/revalidateStories.ts`.
 
 ## Constraints
 

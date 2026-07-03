@@ -148,3 +148,23 @@ record. The moderation rails reuse the existing infra:
 
 `share_id`/`published_at` are **sticky** (an unpublish→republish keeps the same share URL). Schema in
 [`migrations/0002_stories_moderation.sql`](../migrations/0002_stories_moderation.sql).
+
+## Catalog revalidation / handle stability (#1099 — landed)
+
+Handles reuse each feed's existing stable key, but a `localId` (a record `rel`, a slug) *can* change,
+so a handle a stored Story cited may stop resolving. The revalidation job keeps stored references
+honest: on a `catalog_version` bump, `POST /api/admin/stories {action:"revalidate"}` (admin, also
+cron-drivable) walks every Story behind the current version and, per cited handle:
+
+- **still resolves** → nothing to do;
+- **renamed** (a curated `HANDLE_RENAMES` entry maps it to a live handle) → **auto-heal**: rewrite the
+  `story_refs` row *and* the stored SDM atom handle (thin snapshot preserved), no flag;
+- **dangling** (gone, no rename) → flag the Story `stale=1`. The public render already degrades to the
+  write-time snapshot placeholder (#1097); the author is nudged in their **account view** (a "needs
+  attention" banner + per-story badge) and in the **editor** (a banner over the dangling atom). A clean
+  owner re-save (the write path rejects dangling handles) clears the flag.
+
+Pure core: [`src/lib/revalidate.ts`](../src/lib/revalidate.ts) (`revalidateHandles` + `remapSdmHandles`);
+the job orchestrator is [`functions/api/_lib/revalidateStories.ts`](../functions/api/_lib/revalidateStories.ts).
+Idempotent, and stories already at the current `catalog_version` are skipped (untouched). Schema in
+[`migrations/0003_stories_revalidation.sql`](../migrations/0003_stories_revalidation.sql).

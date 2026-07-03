@@ -12,8 +12,10 @@ import { currentUser } from "~/lib/auth";
 import { type StorySummary, deleteStory, listStories } from "./client";
 import { mono } from "./parts";
 
+const base = { catalog_version: "", published_at: null, created_at: "", stale: false };
 const PREVIEW: StorySummary[] = [
   {
+    ...base,
     id: "draft-1",
     site: "lima",
     slug: "whos-paying",
@@ -21,11 +23,10 @@ const PREVIEW: StorySummary[] = [
     dek: "",
     status: "draft",
     share_id: null,
-    catalog_version: "",
-    created_at: "",
     updated_at: new Date().toISOString(),
   },
   {
+    ...base,
     id: "pub-1",
     site: "lima",
     slug: "parcels-nobody-named",
@@ -33,11 +34,13 @@ const PREVIEW: StorySummary[] = [
     dek: "",
     status: "published",
     share_id: "s7k2-9pxq",
-    catalog_version: "",
-    created_at: "",
+    published_at: new Date(Date.now() - 5 * 86400000).toISOString(),
+    // a cited record was renamed in the corpus — the author is nudged to re-check (#1099).
+    stale: true,
     updated_at: new Date(Date.now() - 3 * 86400000).toISOString(),
   },
   {
+    ...base,
     id: "draft-2",
     site: "lima",
     slug: "untitled",
@@ -45,8 +48,6 @@ const PREVIEW: StorySummary[] = [
     dek: "",
     status: "draft",
     share_id: null,
-    catalog_version: "",
-    created_at: "",
     updated_at: new Date(Date.now() - 14 * 86400000).toISOString(),
   },
 ];
@@ -193,6 +194,23 @@ export default function MyStories({ newHref, composeHref, readHref }: MyStoriesP
         </div>
       )}
 
+      {state.status === "ready" && (state.stories ?? []).some((s) => s.stale) && (
+        <div
+          style={{
+            border: "1px solid var(--ev-inference-border)",
+            background: "var(--ev-inference-bg)",
+            color: "var(--ev-inference-fg)",
+            fontSize: 13,
+            lineHeight: 1.5,
+            padding: "11px 14px",
+            marginBottom: 18,
+          }}
+        >
+          A reference in one of your stories needs attention — a cited record changed in the archive. Open the
+          story to re-check it; until then it shows a placeholder where the citation was.
+        </div>
+      )}
+
       {state.status === "loading" && (
         <div style={{ padding: "40px 0", textAlign: "center", color: "var(--ink-muted)" }}>Loading…</div>
       )}
@@ -297,6 +315,24 @@ function StoryRow({
         >
           {published ? "Published" : "Draft"}
         </span>
+        {story.stale && (
+          <span
+            title="A cited record changed in the archive — re-check this story"
+            style={{
+              fontFamily: mono,
+              fontSize: 10,
+              fontWeight: 700,
+              letterSpacing: "0.6px",
+              textTransform: "uppercase",
+              padding: "3px 9px",
+              background: "var(--ev-inference-bg)",
+              color: "var(--ev-inference-fg)",
+              border: "1px solid var(--ev-inference-border)",
+            }}
+          >
+            ⚠ Needs attention
+          </span>
+        )}
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           <a href={`${composeHref}?id=${encodeURIComponent(story.id)}`} style={rowLink("var(--ink-muted)")}>
             ✎ Edit

@@ -20,6 +20,9 @@ export interface StorySummary {
   status: "draft" | "published";
   share_id: string | null;
   catalog_version: string;
+  published_at: string | null;
+  /** #1099 — a cited handle no longer resolves; the account view nudges the author. */
+  stale: boolean;
   created_at: string;
   updated_at: string;
 }
