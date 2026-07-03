@@ -80,9 +80,9 @@ def test_keyless_live_serves_warm_census_cache(
 ) -> None:
     """Regression (#1108): a keyless *live* population pull still consults the on-disk cache.
 
-    A warm ACS5 series must not be discarded just because no key is set — the key is
-    optional and isn't part of the cache key. Priming the live cache and forbidding the
-    network proves the keyless path is served from cache, not dropped to ``None``.
+    A live ACS5 fetch needs a key, but a warm cache hit doesn't (the key isn't part of the
+    cache key). Priming the live cache and forbidding the network proves the keyless path is
+    served from cache, not dropped to ``None``.
     """
     cache_dir = tmp_path / "cache" / "economics" / "census"
     cache_dir.mkdir(parents=True)
@@ -103,6 +103,21 @@ def test_keyless_live_serves_warm_census_cache(
     series = _maybe_population(settings)
     assert series is not None
     assert [p.year for p in series.points] == _POP_YEARS
+
+
+def test_keyless_live_cache_miss_fails_fast_without_network(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A keyless live fetch with a cold cache fails fast (no network), and the baseline
+    degrades to ``None`` rather than attempting a keyless ACS5 request that would fail."""
+    settings = Settings(data_dir=tmp_path, econ_offline=False, census_api_key="", econ_fips="39003")
+
+    def _no_network(*_args: object, **_kwargs: object) -> None:
+        raise AssertionError("keyless live fetch must fail fast before touching the network")
+
+    monkeypatch.setattr("watermark.economics.connectors.census.httpx.get", _no_network)
+
+    assert _maybe_population(settings) is None
 
 
 def test_committed_baseline_loads() -> None:

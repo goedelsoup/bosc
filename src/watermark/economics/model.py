@@ -195,5 +195,5 @@ class EconomicBaseline(BaseModel):
     area_name: str
     latest: IndustryEmployment
     trend: list[YearTotal] = []  # total covered employment over years
-    population: PopulationSeries | None = None  # ACS5 (keyless-capable); omitted if unreachable
+    population: PopulationSeries | None = None  # ACS5 (live fetch keyed); omitted if unreachable
     note: str = ""

@@ -7,7 +7,8 @@ costs, plus the stylized facility→price-pressure sensitivity. Defers to the ro
 
 - **Three connectors, one discipline (`connectors/`).** `qcew.py` (BLS QCEW, keyless — county
   employment by NAICS sector + published location quotients), `census.py` (Census ACS5 — county
-  population series, optional key), `eia.py` (EIA API v2 — state residential electricity price,
+  population series, live fetch needs a key; a warm cache/fixture is served keyless), `eia.py`
+  (EIA API v2 — state residential electricity price,
   retail sales, residential natural-gas price). All go through the shared
   `watermark.connectors.cached_get` (on-disk cache + fixture fallback); an **API key is never part
   of a cache key**; an offline miss raises `OfflineError` naming the key; columns are read **by
