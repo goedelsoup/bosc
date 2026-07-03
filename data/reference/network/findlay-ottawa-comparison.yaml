@@ -93,9 +93,10 @@ finding: >
   The control isolates position + plant size from watershed. Same river, same ~8.7 cfs 7Q10, same
   TMDL, same grid zone. The UPSTREAM plant (Findlay, 5x the design flow) screens in the VIOLATION
   band — its effluent is 2.68x the entire low flow; the DOWNSTREAM plant (Ottawa, 3 MGD) screens in
-  the TIGHT band at 0.54x. Because a shared denominator is used, the effluent-fraction ratio between
-  the two plants (2.68 / 0.54 = 5.0) is EXACTLY the design-flow ratio (15.0 / 3.0 = 5.0): with the
-  watershed held constant the entire screen difference collapses to plant size. And because the
+  the TIGHT band at 0.54x. Because a shared denominator is used, the shared 7Q10 cancels and the
+  effluent-fraction ratio between the two plants equals the design-flow ratio exactly (15.0 / 3.0 =
+  5.0) — the rounded displayed fractions (2.68 / 0.54) only approximate it: with the watershed held
+  constant the entire screen difference collapses to plant size. And because the
   Blanchard's low flow barely grows over the 40-mile reach (the 14-yr Ottawa gage confirms +3.6%),
   downstream position confers essentially NO assimilative advantage on this stretch — Ottawa is the
   cleaner site only because it is the smaller plant, not because it sits 40 miles further down a
