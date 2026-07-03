@@ -208,8 +208,8 @@ def economics(
     console.print(table)
     console.print(
         "\n[dim]BLS QCEW (keyless); location quotient = county share / national share "
-        "(>1 = export-oriented). Population from US Census ACS5 (keyless at low volume; "
-        "WATERMARK_CENSUS_API_KEY only lifts the rate limit).[/]"
+        "(>1 = export-oriented). Population from US Census ACS5 (live fetch needs "
+        "WATERMARK_CENSUS_API_KEY; a warm cache/fixture is served keyless).[/]"
     )
     if write:
         path = write_baseline(baseline, settings=settings)

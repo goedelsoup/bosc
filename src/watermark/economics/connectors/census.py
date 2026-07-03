@@ -1,12 +1,12 @@
 """US Census ACS 5-year — county population over time.
 
 Pulls total population (``B01003_001E``) for the county across a set of years from
-the Census ACS 5-year API. The key is **optional**: ACS answers keyless requests at
-low volume (a key only lifts the rate limit). When set, it is read from
-``settings.census_api_key`` (``WATERMARK_CENSUS_API_KEY``) and sent only on the live
-request — never part of the cache key or the committed fixture/response, so a warm
-cache/fixture is served keyless. Fields are selected **by name** from the header row,
-never by index.
+the Census ACS 5-year API. **A live fetch requires a key** (``settings.census_api_key``
+/ ``WATERMARK_CENSUS_API_KEY``); a keyless live fetch fails fast rather than hitting the
+API. The key is sent only on the live request and is never part of the cache key or the
+committed fixture/response — so a warm cache or committed fixture is still served
+**keyless** (the miss that needs the key never runs). Fields are selected **by name**
+from the header row, never by index.
 """
 
 from __future__ import annotations
@@ -46,9 +46,19 @@ def _fetch_year(year: int, fips: str, settings: Settings) -> tuple[float, str]:
     }
 
     def fetch() -> Any:
-        query = {"get": f"NAME,{_POP_VAR}", "for": f"county:{county}", "in": f"state:{state}"}
-        if settings.census_api_key:
-            query["key"] = settings.census_api_key
+        # Live fetches require a key. This closure only runs on a cache/fixture miss, so a
+        # warm cache or committed fixture is still served keyless (cached_get returns first).
+        if not settings.census_api_key:
+            raise CensusError(
+                "live Census ACS5 fetch requires WATERMARK_CENSUS_API_KEY "
+                "(a warm cache or committed fixture is served keyless)"
+            )
+        query = {
+            "get": f"NAME,{_POP_VAR}",
+            "for": f"county:{county}",
+            "in": f"state:{state}",
+            "key": settings.census_api_key,
+        }
         resp = httpx.get(
             f"{settings.census_base_url}/{year}/acs/acs5",
             params=query,
@@ -60,12 +70,10 @@ def _fetch_year(year: int, fips: str, settings: Settings) -> tuple[float, str]:
             return resp.json()
         except json.JSONDecodeError as exc:
             # Census serves an HTML "Invalid Key" page under HTTP 200 for a bad key.
-            hint = (
-                "invalid or inactive WATERMARK_CENSUS_API_KEY"
-                if settings.census_api_key
-                else "no key"
-            )
-            raise CensusError(f"Census API returned non-JSON ({hint}): {resp.text[:60]!r}") from exc
+            raise CensusError(
+                "Census API returned non-JSON (invalid or inactive "
+                f"WATERMARK_CENSUS_API_KEY): {resp.text[:60]!r}"
+            ) from exc
 
     payload = cast(
         "list[list[str]]",

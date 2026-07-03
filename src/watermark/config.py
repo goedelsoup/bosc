@@ -186,10 +186,11 @@ class Settings(BaseSettings):
 
     # --- Economics (localized baselines: Census population, BLS employment) -----
     # The "what the campus consumes / what the place is" axis beyond utility draw.
-    # Census ACS works keyless at low volume; BLS QCEW open data needs no key. Same
-    # offline/cache/fixture discipline as hydrology, via a generalized `cached_get`.
+    # Census ACS5 needs a key for a live fetch (a warm cache/fixture is served keyless);
+    # BLS QCEW open data needs no key. Same offline/cache/fixture discipline as hydrology,
+    # via a generalized `cached_get`.
     census_base_url: str = "https://api.census.gov/data"
-    census_api_key: str = ""  # optional; ACS works keyless at low volume
+    census_api_key: str = ""  # required for a live ACS5 fetch; cache/fixture served keyless
     qcew_base_url: str = "https://data.bls.gov/cew/data/api"
     bea_base_url: str = "https://apps.bea.gov/api/data"
     # EIA API v2 — consumer energy prices (residential electricity + retail fuel) for
