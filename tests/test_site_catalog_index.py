@@ -58,6 +58,27 @@ def test_kind_sets_are_the_single_source_of_truth() -> None:
     assert set(CATALOG_KINDS) == set(FEED_BACKED_KINDS) | {"teardown", "doc", "chapter", "figure"}
 
 
+def test_catalog_kinds_match_the_shared_literal() -> None:
+    """The kind partition must exactly cover the `CatalogKind` Literal (feeds.py) — the enum the
+    generated schema carries and the frontend parity-tests against, so the two tiers can't drift."""
+    from typing import get_args
+
+    from watermark.site.feeds import CatalogKind
+
+    assert set(CATALOG_KINDS) == set(get_args(CatalogKind))
+
+
+def test_schema_kind_enum_is_the_closed_set() -> None:
+    """The committed `catalog-index.schema.json` `kind` enum is the frontend's parity anchor."""
+    schema = json.loads(
+        (
+            REPO_ROOT / "data" / "site" / "bundle" / "schemas" / "catalog-index.schema.json"
+        ).read_text()
+    )
+    enum = schema["$defs"]["CatalogAtom"]["properties"]["kind"]["enum"]
+    assert set(enum) == set(CATALOG_KINDS)
+
+
 # --- locked rough edges --------------------------------------------------------------------
 def test_timeline_atoms_require_a_ref() -> None:
     index = _index(
