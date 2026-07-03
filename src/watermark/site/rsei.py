@@ -1,6 +1,6 @@
 """Export the Allen County RSEI toxic-release inventory as a typed feed.
 
-Publishes ``data/reference/rsei/inventory.yaml`` (built by ``bosc rsei`` from the EPA RSEI
+Publishes ``data/reference/rsei/inventory.yaml`` (built by ``watermark rsei`` from the EPA RSEI
 Public Data Set) as a feed. (The legacy markdown ``render_rsei`` peer was removed at the
 SSG-cutover cleanup, #603.)
 """

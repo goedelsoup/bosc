@@ -1,12 +1,12 @@
-"""``bosc`` command-line interface.
+"""``watermark`` command-line interface.
 
 Commands:
-    bosc version
-    bosc ingest                 # inventory source documents
-    bosc reconcile <file>       # arithmetic checks over a summary extraction
-    bosc ask "<question>"       # ask the research agent
-    bosc extract <doc-id> ...   # run an agentic extraction (seam for your data)
-    bosc export                 # write the typed content bundle the frontend reads
+    watermark version
+    watermark ingest                 # inventory source documents
+    watermark reconcile <file>       # arithmetic checks over a summary extraction
+    watermark ask "<question>"       # ask the research agent
+    watermark extract <doc-id> ...   # run an agentic extraction (seam for your data)
+    watermark export                 # write the typed content bundle the frontend reads
 """
 
 from __future__ import annotations

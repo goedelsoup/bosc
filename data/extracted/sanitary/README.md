@@ -21,7 +21,7 @@ forcemain size, pump capacities, and design flows must be read off the drawing, 
 invented. Run once a key is available:
 
 ```
-bosc extract indianbrook-ps-asbuilt-2007 --kind sanitary --write
+watermark extract indianbrook-ps-asbuilt-2007 --kind sanitary --write
 ```
 
 See `watermark.models.EngineeringRecord` for the schema (the `components`/`specs` and

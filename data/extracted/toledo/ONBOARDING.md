@@ -1,12 +1,12 @@
 # Onboarding — Toledo (toledo)
 
-Living record for the Toledo watershed point (basin: maumee), scaffolded by `bosc onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
+Living record for the Toledo watershed point (basin: maumee), scaffolded by `watermark onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
 
 ## Dimension coverage
 
 - [x] **Hydrology** — onboard reach connectors (low-flows, corridor DDF, SSURGO HSG, climatology)
 - [x] **Economics** — county baseline, RSEI toxics, consumer energy, grid profile
-- [ ] **Data-center activity** — extracted permits/records + entity graph (corpus extraction; seed proposals via `bosc onboard --research`, #247)
+- [ ] **Data-center activity** — extracted permits/records + entity graph (corpus extraction; seed proposals via `watermark onboard --research`, #247)
 - [x] **Per-jurisdiction GIS** — **wired** (#384): parcels = Lucas County AREIS layer 38 (owner-bearing — owner + situs + land-use) and zoning = AREIS Parcel_Zoning (parcel-level, with a `PARID` join); flood = shared national NFHL. The richest GIS in the network. See GIS discovery below. Deferred follow-ups: the appraised-value PARID join (layer 83) + the Waterville land-assembly screen.
 
 ## Last onboard run

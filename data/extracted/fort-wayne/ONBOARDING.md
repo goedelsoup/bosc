@@ -1,6 +1,6 @@
 # Onboarding — Fort Wayne (fort-wayne)
 
-Living record for the Fort Wayne watershed point (basin: maumee), scaffolded by `bosc onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
+Living record for the Fort Wayne watershed point (basin: maumee), scaffolded by `watermark onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
 
 ## Dimension coverage
 
@@ -51,7 +51,7 @@ surveyed boundary), which also feeds the SSURGO HSG validation below.
 
 ## Self-research (Phase 5; #247) — 2026-06-21
 
-First automated-research pass (`bosc onboard --research`, 35 turns, $1.38, read-only over the corpus)
+First automated-research pass (`watermark onboard --research`, 35 turns, $1.38, read-only over the corpus)
 → `data/research/onboard-fort-wayne-fort-wayne-data-center-activi-2026-06-19/` (`findings.md` +
 `manifest.yaml`).
 
@@ -102,7 +102,7 @@ outputs + the basin-shared ECHO inventory.
 **Proposals — 5 filed as sub-issues of #235:** ~~#358 (resolve the headwaters 7Q10 denominator
 mismatch)~~ **— resolved 2026-06-23: derived headwaters 7Q10 ≈ 69.7 cfs; FW correctly unscreened
 (Baldwin Ditch); see [`wwtp-receiving-water.md`](wwtp-receiving-water.md)**,
-~~#359 (extract the IN0032191 NPDES permit + DMR + ECHO detail)~~ **— resolved 2026-06-23: `bosc dmr`
+~~#359 (extract the IN0032191 NPDES permit + DMR + ECHO detail)~~ **— resolved 2026-06-23: `watermark dmr`
 connector + [`wwtp-in0032191.dmr.yaml`](wwtp-in0032191.dmr.yaml); actual ≈ 43.9 MGD vs 74 design, no
 2021–2025 exceedance; the "1 violation" is American-Bath, not FW**, ~~#360 (investigate the disclosed
 Fort Wayne / NE-Indiana data-center facility)~~ **— resolved 2026-06-23: Google "Project Zodiac" $2B
@@ -116,7 +116,7 @@ tracked under GIS discovery above.
 
 ## Bring the site live — content + story (#741)
 
-The **plumbing is done**: the content bundle is per-site (#762, via #763/#764/#765 — `bosc --site
+The **plumbing is done**: the content bundle is per-site (#762, via #763/#764/#765 — `watermark --site
 fort-wayne export` carries no Lima data), the site-page chrome reads the active site (#766), and the
 curation stores + the Project Zodiac story are scaffolded (#767). What remains is **sourced
 authoring** written into the scaffolded slots, then promotion. Each item cites a committed source —

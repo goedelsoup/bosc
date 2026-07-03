@@ -29,10 +29,10 @@ cells the `/directory` page renders, now carried as data with provenance.
 - These are partly **our own inferences** (tagged as such), so this is a new tree — not
   `data/reference/` (authoritative outside data only).
 - A cell is hand-authored here, or **promoted** from a research run
-  (`bosc research run --recipe hypothesis-assessment --hypothesis <id>`, which proposes
+  (`watermark research run --recipe hypothesis-assessment --hypothesis <id>`, which proposes
   candidates under `data/research/<run>/assessments/` for review — onboard-style: it
   proposes, it never promotes).
-- Lint before committing: `bosc hypotheses check`.
+- Lint before committing: `watermark hypotheses check`.
 
 `water/` (H1) carries no cells: the reference lens is rendered from the site registry +
 basin network (by drainage), not from per-site assessment cells.

@@ -2,14 +2,14 @@
 
 One markdown file per **key individual**, `data/entities/people/<slug>.md`, opened by a YAML
 **frontmatter** header. This is the hand-authored detail layer of the
-[entity graph](../../src/bosc/pipeline/entities.py): a profile links to a resolved
+[entity graph](../../src/watermark/pipeline/entities.py): a profile links to a resolved
 graph node by `entity_key` (the canonical normalized name), so the generated graph
 and the human research deep-link to each other.
 
 ## The `expanded_research` gate
 
 Track *meaningful* individuals here freely. Only profiles with
-`expanded_research: true` are **published to the site** (`bosc export` includes
+`expanded_research: true` are **published to the site** (`watermark export` includes
 them in the content bundle the frontend renders, linked from the entity graph).
 Everyone else is tracked privately and stays off the site until promoted.
 
@@ -39,7 +39,7 @@ cited source before quoting it in a filing.
 
 ## Commands
 
-- `bosc people` — list tracked individuals, the expanded-research flag, and whether
+- `watermark people` — list tracked individuals, the expanded-research flag, and whether
   each resolves in the entity graph.
-- `bosc export` — include the expanded-research profiles in the content bundle the
+- `watermark export` — include the expanded-research profiles in the content bundle the
   frontend renders.

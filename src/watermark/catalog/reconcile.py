@@ -1,4 +1,4 @@
-"""``bosc catalog reconcile`` — the observed half of the declared-vs-observed split.
+"""``watermark catalog reconcile`` — the observed half of the declared-vs-observed split.
 
 Phase 1 of the data-catalog epic (#631, issue #625). Where :class:`watermark.catalog.CatalogEntry`
 is what a dataset *declares*, this walks each entry's ``storage`` on disk and records what is
@@ -7,7 +7,7 @@ materialized (vs an unresolved pointer), the data's own ``asof``/``last_refreshe
 and freshness against ``refresh.ttl_days`` — into a committed, deterministic, sorted snapshot at
 ``data/catalog/_observed.yaml``.
 
-Reconcile **observes**; it does not decide acceptability — that's ``bosc catalog check`` (#626),
+Reconcile **observes**; it does not decide acceptability — that's ``watermark catalog check`` (#626),
 which gates on this snapshot. It is offline and hermetic (stat + sha256 of committed files, no
 network, no parquet/Arrow fingerprint — the data is YAML/CSV/PDF/GeoJSON). Slug-scoped
 ``{site}`` templates are expanded across the registered sites and resolved to the files that

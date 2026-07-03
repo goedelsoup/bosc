@@ -35,7 +35,7 @@ costs, plus the stylized facility→price-pressure sensitivity. Defers to the ro
   exports the model as-is to the **`economics-baseline`** bundle feed (schema at
   `schemas/economics-baseline.schema.json`). Consumer energy also feeds the grid profile
   (`watermark.grid.utility`), a separate feed.
-- **CLI (all under `bosc grid`, `cli/grid.py`):** `economics` (build/write the baseline),
+- **CLI (all under `watermark grid`, `cli/grid.py`):** `economics` (build/write the baseline),
   `eia` (consumer energy + optional demand pressure), `grid` (the grid profile that consumes
   consumer energy). Each takes `--write/--no-write` and `--offline`; `watermark onboard <slug>`
   runs the baseline + consumer-energy steps as part of onboarding.

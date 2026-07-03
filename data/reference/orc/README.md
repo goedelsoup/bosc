@@ -2,7 +2,7 @@
 
 Statutory full text pulled from the Ohio LSC code portal, **codes.ohio.gov**, for
 the ORC sections the BOSC corpus cites. Text is **verbatim** from the portal —
-nothing is summarized, paraphrased, or fabricated. Regenerate with `bosc orc`
+nothing is summarized, paraphrased, or fabricated. Regenerate with `watermark orc`
 (add `--titles` to also pull the whole titles the cited sections belong to).
 
 ## What's here
@@ -14,7 +14,7 @@ nothing is summarized, paraphrased, or fabricated. Regenerate with `bosc orc`
 - `orc.cited.yaml` — the full text of those cited sections (number, heading, Title,
   Chapter, body, amendment history, URL), with a provenance `meta` block.
 - `orc.title-<n>.yaml` — the full text of every section in a whole Title (run via
-  `bosc orc --titles`). These are large (~35 MB total). The committed set covers the
+  `watermark orc --titles`). These are large (~35 MB total). The committed set covers the
   titles the corpus cites into: **1** State Government, **3** Counties, **13**
   Commercial Transactions, **15** Conservation of Natural Resources, **17**
   Corporations-Partnerships, **23** Courts-Common Pleas, **35** Elections, **37**

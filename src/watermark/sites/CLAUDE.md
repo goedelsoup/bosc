@@ -7,7 +7,7 @@ values instead of baking in Lima's. Defers to the root [`CLAUDE.md`](../../../CL
 [`docs/onboarding.md`](../../../docs/onboarding.md).
 
 - **This package is the Python peer of `web/src/lib/sites.ts`.** The two registries stay
-  in sync via `bosc sites sync` (writes `web/src/lib/sites-registry.json` from
+  in sync via `watermark sites sync` (writes `web/src/lib/sites-registry.json` from
   `data/sites.yaml`); `is_reference_site` here is the peer of the frontend's `isReferenceSite`
   in `web/src/lib/readiness.ts`. Change a site's identity in **`data/sites.yaml`**, not in
   two places — the profile back-fills identity from it (below).
@@ -50,10 +50,10 @@ values instead of baking in Lima's. Defers to the root [`CLAUDE.md`](../../../CL
   mirror — not a module constant. **Champaign County is Ohio (FIPS 39021), not Illinois** — the
   schema guards this.
 - **Adding a site, end to end** (full runbook: `docs/onboarding.md`): register identity in
-  `data/sites.yaml` → `bosc sites new <slug>` scaffolds a paste-ready `SiteProfile(...)` stub
+  `data/sites.yaml` → `watermark sites new <slug>` scaffolds a paste-ready `SiteProfile(...)` stub
   (`scaffold_profile_src`, pre-slug-scoped outputs + typed TODOs) → paste into `_profiles.py`
   and fill each TODO **from a cited source** → add GIS schema instances if the site publishes
-  layers → `profile_readiness(slug)` / `bosc onboard <slug>` lints unfilled placeholders and
+  layers → `profile_readiness(slug)` / `watermark onboard <slug>` lints unfilled placeholders and
   values still copied from Lima → run `watermark onboard <slug>` → **manual, parity-gated**
   promotion to `live`/`selectable` in `data/sites.yaml` + `web/src/lib/sites.ts`. Registered ≠
   selectable; a thin peer still degrades gracefully via the readiness layer.

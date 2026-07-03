@@ -14,12 +14,12 @@ for every site and stays committed here under `data/site/bundle/`.
 **Regenerate a site's bundle:**
 
 ```sh
-bosc export                          # → data/site/bundles/<active-site>/ (default: lima)
-bosc --site fort-wayne export        # → data/site/bundles/fort-wayne/
-bosc export --out /tmp/b             # → anywhere
+watermark export                          # → data/site/bundles/<active-site>/ (default: lima)
+watermark --site fort-wayne export        # → data/site/bundles/fort-wayne/
+watermark export --out /tmp/b             # → anywhere
 ```
 
-The generator is [`watermark.site.export.export_bundle`](../../../src/bosc/site/export.py); each
+The generator is [`watermark.site.export.export_bundle`](../../../src/watermark/site/export.py); each
 feed comes from an `export_X()` next to the matching `render_X()` in `watermark.site.*`. The
 frontend resolves a site's bundle by slug (`bundleFor(slug)` in
 [`web/src/lib/bundle.ts`](../../../web/src/lib/bundle.ts)).
@@ -49,12 +49,12 @@ data/site/bundles/<slug>/         # ← generated per site, git-ignored
 
 The **contract** is committed and reviewable: `README.md`, every `schemas/*.schema.json`,
 and `manifest.example.json`. The **feed data** (`feeds/**`) and the live, timestamped
-`manifest.json` are **generated artifacts** — regenerable with `bosc export`, and kept out
+`manifest.json` are **generated artifacts** — regenerable with `watermark export`, and kept out
 of git (`.gitignore`), the same discipline as the regenerable `web/` + `site/` trees. Two
 reasons feeds aren't committed: they churn on every corpus edit, and the `documents` feed's
 `size_bytes` / `available` depend on whether the Git-LFS binaries are materialized locally,
 so a committed copy would be wrong in most checkouts. The schemas, by contrast, are
-generated from the Pydantic models in [`watermark.site.feeds`](../../../src/bosc/site/feeds.py)
+generated from the Pydantic models in [`watermark.site.feeds`](../../../src/watermark/site/feeds.py)
 and are deterministic, so they're committed and a test guards them against drift.
 
 ## The manifest
@@ -108,7 +108,7 @@ Most geo feeds reproduce the layers of the committed
 verbatim** (display-only, no reprojection), with `layer` / `label` / `color` / `role` and
 the source popup fields carried as feature `properties`. Two are assembled outside
 gis-findings (#61): `geo/watershed` from the committed USGS WBD boundaries
-(`data/reference/hydrology/wbd/`, regenerable via `bosc wbd`), and `geo/imagery` from the
+(`data/reference/hydrology/wbd/`, regenerable via `watermark wbd`), and `geo/imagery` from the
 imagery tracking AOIs (a watched POI's bbox) plus the dated Wayback releases in `meta` —
 both source the Maumee-watershed map and imagery time-slider (#72).
 
@@ -117,7 +117,7 @@ both source the Maumee-watershed map and imagery time-slider (#72).
 Every figure-bearing feed carries provenance as **data**, so a consumer renders
 `[verified] cite p.X` or an approximate `~` value without re-deriving anything
 ([#60](../../../README.md)). Two shapes, both in
-[`watermark.site.feeds`](../../../src/bosc/site/feeds.py) (and `schemas/citation.schema.json`):
+[`watermark.site.feeds`](../../../src/watermark/site/feeds.py) (and `schemas/citation.schema.json`):
 
 * **`Citation`** — `{ source, source_kind, page, confidence, note, verified }`. `source_kind`
   is `document` / `connector` / `reference` / `assumption` / `derived`; `verified` is a

@@ -31,7 +31,7 @@ def imagery_sites() -> None:
     if not sites:
         console.print(
             "[yellow]No tracking sites[/] — no POI in data/entities/poi/ is watched "
-            "(depth=watched + track.enabled with a location bbox). See `bosc poi list`."
+            "(depth=watched + track.enabled with a location bbox). See `watermark poi list`."
         )
         raise typer.Exit(1)
     table = Table("id (slug)", "name", "parcels", "bbox (W,S,E,N)")
@@ -43,7 +43,7 @@ def imagery_sites() -> None:
 
 @imagery_app.command("search")
 def imagery_search(
-    site: str = typer.Argument(..., help="Tracking-site id (see `bosc imagery sites`)."),
+    site: str = typer.Argument(..., help="Tracking-site id (see `watermark imagery sites`)."),
     collection: str | None = typer.Option(
         None, "--collection", help="STAC collection (default: settings.gis_default_collection)."
     ),
@@ -78,7 +78,7 @@ def imagery_search(
             settings=settings,
         )
     except KeyError as exc:
-        console.print(f"[red]{exc}[/] — see [bold]bosc imagery sites[/].")
+        console.print(f"[red]{exc}[/] — see [bold]watermark imagery sites[/].")
         raise typer.Exit(1) from exc
 
     coll = collection or get_settings().gis_default_collection
@@ -102,7 +102,7 @@ def imagery_search(
 
 @imagery_app.command("pull")
 def imagery_pull(
-    site: str = typer.Argument(..., help="Tracking-site id (see `bosc imagery sites`)."),
+    site: str = typer.Argument(..., help="Tracking-site id (see `watermark imagery sites`)."),
     collection: str | None = typer.Option(
         None, "--collection", help="STAC collection (default: settings.gis_default_collection)."
     ),
@@ -143,7 +143,7 @@ def imagery_pull(
             settings=settings,
         )
     except KeyError as exc:
-        console.print(f"[red]{exc}[/] — see [bold]bosc imagery sites[/].")
+        console.print(f"[red]{exc}[/] — see [bold]watermark imagery sites[/].")
         raise typer.Exit(1) from exc
     if not scenes:
         console.print("[yellow]No scenes matched[/] — widen --from/--to or raise --max-cloud.")
@@ -171,7 +171,7 @@ def imagery_pull(
 
 @imagery_app.command("index")
 def imagery_index(
-    site: str = typer.Argument(..., help="Tracking-site id (see `bosc imagery sites`)."),
+    site: str = typer.Argument(..., help="Tracking-site id (see `watermark imagery sites`)."),
     index: str = typer.Option("ndvi", "--index", help="ndvi (vegetation) | ndwi (water)."),
     collection: str | None = typer.Option(
         None, "--collection", help="STAC collection (default: settings.gis_default_collection)."
@@ -213,7 +213,7 @@ def imagery_index(
             settings=settings,
         )
     except KeyError as exc:
-        console.print(f"[red]{exc}[/] — see [bold]bosc imagery sites[/].")
+        console.print(f"[red]{exc}[/] — see [bold]watermark imagery sites[/].")
         raise typer.Exit(1) from exc
     if not scenes:
         console.print("[yellow]No scenes matched[/] — widen --from/--to or raise --max-cloud.")

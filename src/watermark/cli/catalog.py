@@ -98,7 +98,7 @@ def catalog_show(
     console.print(f"  {entry.title}")
     console.print(f"  [dim]producer:[/] {entry.producer.kind} · {entry.producer.source}")
     if entry.producer.command:
-        console.print(f"  [dim]regen:[/] bosc {entry.producer.command}")
+        console.print(f"  [dim]regen:[/] watermark {entry.producer.command}")
     console.print(
         f"  [dim]license:[/] {entry.license or '—'}  "
         f"[dim]access:[/] {entry.access_tier}  [dim]site:[/] {entry.site_scope}"
@@ -195,7 +195,7 @@ def catalog_validate() -> None:
     """Structurally validate the catalog (schema + scope/id path match + unique ids).
 
     The model-layer half of the gate; the fuller missing/orphan/staleness checks land with
-    ``bosc catalog check`` (issue #626) once ``reconcile`` supplies the observed snapshot.
+    ``watermark catalog check`` (issue #626) once ``reconcile`` supplies the observed snapshot.
     """
     from watermark.catalog import validate_entries
 
@@ -259,7 +259,7 @@ def catalog_reconcile_cmd(
     """Observe the catalog's storage on disk → data/catalog/_observed.yaml (offline).
 
     The declared-vs-observed split's observed half: stat + sha256 + LFS-materialization +
-    freshness for every entry. Reconcile observes; `bosc catalog check` (#626) gates on it.
+    freshness for every entry. Reconcile observes; `watermark catalog check` (#626) gates on it.
     """
     from watermark.catalog.reconcile import reconcile, write_observed
 
@@ -292,7 +292,7 @@ def catalog_render_cmd(
 
     Additive + prose-preserving: injects a marker-delimited generated block (files, regen
     command, source, license, access tier, refresh) and leaves all other prose untouched. A
-    collection opts in the first time it is rendered; `bosc catalog check` then gates its drift.
+    collection opts in the first time it is rendered; `watermark catalog check` then gates its drift.
     """
     from watermark.catalog.render import render
 
@@ -368,7 +368,7 @@ def catalog_producer_check_cmd(
         return
     console.print(
         f"\n[red]{len(result.findings)} producer(s) changed without a catalog update.[/] "
-        "Update the entry (`bosc catalog backfill --apply` then review) or add "
+        "Update the entry (`watermark catalog backfill --apply` then review) or add "
         "`[catalog-waiver: <reason>]` to a commit message."
     )
     raise typer.Exit(1)
@@ -385,7 +385,7 @@ def catalog_audit_cmd(
     The automated half of the corpus-completeness audit: existence + freshness for every
     catalogued dataset, rendered to data/catalog/COMPLETENESS.md (the substantive "what was
     withheld" half stays human-authored). Reads the committed snapshot, so it's content-stable;
-    `bosc catalog check` gates the committed report's drift.
+    `watermark catalog check` gates the committed report's drift.
     """
     from watermark.catalog.audit import build_audit, write_audit
 

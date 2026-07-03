@@ -1,10 +1,10 @@
 # Greenville · Darke Co (greenville) — energy / grid outputs
 
-Per-site onboarding tree for the Greenville · Darke Co watershed point (basin: great-miami), scaffolded by `bosc onboard greenville` (#326). Values come from the portable reach connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is fabricated; regenerate, don't hand-edit.
+Per-site onboarding tree for the Greenville · Darke Co watershed point (basin: great-miami), scaffolded by `watermark onboard greenville` (#326). Values come from the portable reach connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is fabricated; regenerate, don't hand-edit.
 
 ## Source
 
-`bosc onboard greenville` over the Greenville · Darke Co `SiteProfile` (reach connectors: NWIS / NOAA Atlas-14 / SSURGO / NASA-POWER).
+`watermark onboard greenville` over the Greenville · Darke Co `SiteProfile` (reach connectors: NWIS / NOAA Atlas-14 / SSURGO / NASA-POWER).
 
 ## Known gaps & caveats
 
@@ -13,4 +13,4 @@ Per-site onboarding tree for the Greenville · Darke Co watershed point (basin: 
 
 ## Regenerate
 
-`bosc onboard greenville`  (or the per-connector commands: `derive-low-flows`, `nasa-power --write`, etc.)
+`watermark onboard greenville`  (or the per-connector commands: `derive-low-flows`, `nasa-power --write`, etc.)

@@ -3,11 +3,12 @@
 The Typer command surface. Defers to the root [`CLAUDE.md`](../../../CLAUDE.md)
 (its **CLI options** convention lives there).
 
-- **Installed as `watermark`, spoken of as `bosc`.** The `[project.scripts]` entry point is
-  `watermark = "watermark.cli:app"` (`pyproject.toml`) — the invocable command is `watermark`.
-  `bosc` is the project codename and is used interchangeably throughout docstrings/docs; there
-  is no separate `bosc` executable. The parenthetical "`src/watermark/cli.py`" in the root doc
-  is now this **package** (`cli/__init__.py`), not a single file.
+- **Invoked as `watermark`; `BOSC`/`bosc` is the project codename, not the command.** The
+  `[project.scripts]` entry point is `watermark = "watermark.cli:app"` (`pyproject.toml`) — the
+  invocable command is `watermark`, and **all docs invoke `watermark <cmd>`** (there is no `bosc`
+  executable). `bosc`/`BOSC` survives only as vocabulary: the platform name, the `/bosc` Lima
+  site re-root, the `bosc` GitHub repo, `bosc-`-prefixed Lima filenames. This CLI is a
+  **package** (`cli/__init__.py`), not a single `cli.py` file.
 - **The app is assembled in `_base.py`, split from `__init__.py` on purpose.** `_base.py`
   defines the root `app = typer.Typer(...)`, the global `--site` `@app.callback`, and every
   sub-app (`sites_app`, `catalog_app`, `poi_app`, `imagery_app`, …) wired with `app.add_typer`.

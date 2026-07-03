@@ -17,7 +17,7 @@ RSEI is a relational dump; the reduction joins five tables (keys in parentheses)
 
 The bulk ``.gz`` tables (``elements`` alone is ~250 MB) are **not** committed: they
 cache under the git-ignored ``data/cache/rsei/`` and the committed artifact is the
-small per-county YAML under ``data/reference/rsei/``. Regenerate with ``bosc rsei``.
+small per-county YAML under ``data/reference/rsei/``. Regenerate with ``watermark rsei``.
 
 Nothing here is fabricated. Pounds are summed from the reported ``release`` rows;
 Score / Cancer / Non-cancer / Hazard are summed from EPA's modeled ``elements``

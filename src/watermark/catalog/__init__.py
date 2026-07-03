@@ -5,18 +5,18 @@ one place: *what datasets do we have, where did each come from, when was it last
 what's its license/access tier, what command regenerates it, is it stale?* Today three
 siloed catalog-shaped things each cover a slice — the bundle ``manifest.json`` (published
 feeds), the documents feed (raw corpus), and ~40 hand-written ``data/reference/*/README.md``
-(prose; only a few state a license) — plus a scattered regeneration registry (~28 ``bosc``
+(prose; only a few state a license) — plus a scattered regeneration registry (~28 ``watermark``
 commands). Provenance is strong per-file (:class:`watermark.hydrology.model.ProvenancedValue` /
 ``SourceKind``) but nothing rolls up. This module is the rollup.
 
 One :class:`CatalogEntry` is committed per dataset at ``data/catalog/<scope>/<id>.yaml``,
 where ``scope`` mirrors the ``data/`` tree and ``id`` is a stable kebab slug unique across
 the catalog. The entry is the **declared** half; the **observed** half (stat + sha256 +
-freshness) is computed by ``bosc catalog reconcile`` into ``_observed.yaml`` (issue #625),
-and ``bosc catalog check`` (issue #626) gates the two against each other.
+freshness) is computed by ``watermark catalog reconcile`` into ``_observed.yaml`` (issue #625),
+and ``watermark catalog check`` (issue #626) gates the two against each other.
 
 This module mirrors :mod:`watermark.hypotheses` / :mod:`watermark.sites` conventions: typed frozen
-models, a ``data/`` loader, and a structural validator surfaced by the ``bosc catalog`` CLI.
+models, a ``data/`` loader, and a structural validator surfaced by the ``watermark catalog`` CLI.
 It imports only :mod:`watermark.config`, reusing that package's ``SourceKind`` vocabulary so the
 whole tree speaks one provenance language. The heavier observe/gate logic (reconcile, check,
 backfill, render) lands in the sibling issues — this is the schema everything builds on.
@@ -75,7 +75,7 @@ _OWNER_SITE_SCOPE_RE = re.compile(r"^(?:site|basin):[a-z0-9-]+$|^state:[A-Z]{2}$
 
 def _validate_site_scope(value: str) -> str:
     """Enforce the ``site_scope`` grammar (#778); semantic checks (real slug/basin/state) live
-    in ``bosc catalog check``."""
+    in ``watermark catalog check``."""
     if value in _FIXED_SITE_SCOPES or _OWNER_SITE_SCOPE_RE.match(value):
         return value
     raise ValueError(
@@ -95,7 +95,7 @@ SourceKind = Literal["document", "connector", "reference", "assumption", "derive
 class Producer(BaseModel):
     """How a dataset is (re)generated and where it ultimately comes from.
 
-    The de-scattering of the ~28 ``bosc`` regeneration commands: :attr:`command` is the
+    The de-scattering of the ~28 ``watermark`` regeneration commands: :attr:`command` is the
     invocation that rewrites the dataset (e.g. ``npdes --basin maumee``), :attr:`connector_ref`
     the module that does the pull, :attr:`source` a human upstream label, and
     :attr:`external_url` the canonical upstream page when one exists.
@@ -104,7 +104,7 @@ class Producer(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
     kind: ProducerKind
-    command: str | None = None  # the `bosc <cmd>` regenerator, e.g. "npdes --basin maumee"
+    command: str | None = None  # the `watermark <cmd>` regenerator, e.g. "npdes --basin maumee"
     connector_ref: str | None = (
         None  # dotted module path, e.g. "watermark.hydrology.connectors.echo"
     )
@@ -116,7 +116,7 @@ class StorageItem(BaseModel):
     """One committed file belonging to a dataset, addressed relative to ``settings.data_dir``.
 
     :attr:`sha256` is optional and **pinned** only when integrity matters (e.g. a SWMM deck);
-    the live, observed checksum is computed by ``bosc catalog reconcile`` (#625), not here.
+    the live, observed checksum is computed by ``watermark catalog reconcile`` (#625), not here.
     """
 
     model_config = ConfigDict(extra="forbid", frozen=True)
@@ -162,8 +162,8 @@ class CatalogEntry(BaseModel):
     producer: Producer
     # The entries that must be produced before this one can be regenerated (#1020) — each a
     # catalog entry ``id``. This is *process* ordering (the executable-runbook DAG that
-    # ``bosc catalog run`` walks), not necessarily byte-level data lineage. Referential
-    # integrity + acyclicity are gated by ``bosc catalog check`` (watermark.catalog.dag).
+    # ``watermark catalog run`` walks), not necessarily byte-level data lineage. Referential
+    # integrity + acyclicity are gated by ``watermark catalog check`` (watermark.catalog.dag).
     depends_on: list[str] = Field(default_factory=list)
     license: str | None = None  # e.g. "U.S. Government work (public domain)"
     access_tier: AccessTier = "public"
@@ -231,7 +231,7 @@ def entries_for_scope(scope: Scope, *, settings: Settings | None = None) -> list
 
 
 def output_dir_for_command(command: str, *, settings: Settings | None = None) -> Path | None:
-    """The single reference output directory the catalog assigns to ``bosc <command>``.
+    """The single reference output directory the catalog assigns to ``watermark <command>``.
 
     Resolves the collection dir from the ``storage`` relpaths of every entry whose
     ``producer.command`` verb matches ``command`` — a ``{site}`` segment is dropped, since the
@@ -264,9 +264,9 @@ def output_dir_for_command(command: str, *, settings: Settings | None = None) ->
     return settings.data_dir / dirs.pop()
 
 
-# --- structural validation (the model-layer half of `bosc catalog check`, #626) ------------
+# --- structural validation (the model-layer half of `watermark catalog check`, #626) ------------
 class CatalogFinding(BaseModel):
-    """One structural problem with the committed catalog (surfaced by ``bosc catalog validate``).
+    """One structural problem with the committed catalog (surfaced by ``watermark catalog validate``).
 
     This is the model-layer lint: invalid/misfiled entries (caught at load) plus duplicate
     ids. The fuller gate — missing declared files, orphaned uncatalogued data, staleness,

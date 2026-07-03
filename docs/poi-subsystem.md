@@ -1,11 +1,14 @@
 # POI subsystem — design
 
-*Forward-looking design. **Nothing here is built yet** — there is no `watermark.poi`
-package and no `data/entities/poi/` store. This is the plan for deriving **points of interest**
-from the corpus, geocoding them, and — when a POI is flagged — feeding it to the
-imagery tracking machinery (`watermark.gis`, see [`imagery-subsystem.md`](imagery-subsystem.md)).
-Hand-written design note; fold steady-state guidance into a `watermark.poi` `CLAUDE.md`
-once code exists.*
+**Status:** adopted (as of 2026-07-02) — the design below is **built**. The
+`watermark.poi` package exists (`discover`/`resolve`/`merge`/`curate`, `POIFrontmatter`,
+`tracked_pois()`) and the `data/entities/poi/` store is populated. Steady-state guidance
+now lives in [`src/watermark/poi/CLAUDE.md`](../src/watermark/poi/CLAUDE.md); this file is
+kept as the original design note / roadmap of record.
+
+*Design record. The plan for deriving **points of interest** from the corpus,
+geocoding them, and — when a POI is flagged — feeding it to the imagery tracking
+machinery (`watermark.gis`, see [`imagery-subsystem.md`](imagery-subsystem.md)).*
 
 *Note: the Astro `web/` surfaces `docs/` markdown via its narrative content
 collection (links rewritten at build by the rehype plugin). This is an internal
@@ -200,20 +203,20 @@ Mostly reuse — no heavy new deps:
 - Reuse `allen_gis` (parcel by number/owner), ECHO/RSEI (facility coords already
   geocoded). A small inline **geohash** for the fallback key (no dependency).
 
-## 7. CLI surface (`bosc poi`)
+## 7. CLI surface (`watermark poi`)
 
-Mirrors `bosc subdivisions`: `discover` (corpus → candidates), `resolve <candidate|all>`
+Mirrors `watermark subdivisions`: `discover` (corpus → candidates), `resolve <candidate|all>`
 (funnel + propose merges), `list` / `show <slug>`, `track <slug> --on/--off` (flip the
 flag + tracking block), and the curation is hand-editing `data/entities/poi/` (like people).
 
 ## 8. Roadmap
 
 - **P0 — store + model. ✅ done.** `watermark.poi` package, `POIFrontmatter` schema,
-  `data/entities/poi/`, `store.py`, `bosc poi list/show`; seeded by porting the `gis-findings`
+  `data/entities/poi/`, `store.py`, `watermark poi list/show`; seeded by porting the `gis-findings`
   `campus` layer as the first composite POI.
 - **P1 — discover. ✅ done.** `discover.py` scans the committed corpus text →
   `POICandidate`s (deed-format **parcel ids**, **addresses**, and **facility/business
-  names**) with citations and a store-`covered` flag; `bosc poi discover [--uncovered]
+  names**) with citations and a store-`covered` flag; `watermark poi discover [--uncovered]
   [--no-names]`. Idempotent and read-only — the uncovered parcel-ids are the worklist.
   Both pattern passes are **divergence-guarded** so neither can invent a place: the
   parcel regex is cross-checked against `allen_gis.scan_parcel_ids`, and the
@@ -224,20 +227,20 @@ flag + tracking block), and the curation is hand-editing `data/entities/poi/` (l
   - **P2a (✅ done) — funnel core.** `census_geocoder` connector (address → point) +
     `allen_gis.parcel_at_point` (point → parcel) + `resolve.py` (`resolve_candidate`):
     parcel-id → CAMA (exact, auto-mergeable); address → geocode → parcel (a *proposal*,
-    medium confidence). `bosc poi resolve`. Real committed fixtures for both connectors.
+    medium confidence). `watermark poi resolve`. Real committed fixtures for both connectors.
   - **P2b (✅ done) — non-parcel.** `gnis` connector (USGS GNIS via the National Map
     *geonames* ArcGIS service) resolves a named feature → a **stable `gnis-<gaz_id>` key**
     - a point (a `review` proposal). `resolve_value("feature", …)`; the geocode-only path
     gets a `geo-<geohash>` fallback; `merge` blocks by `Resolution.key` (parcel else
-    fallback). `bosc poi resolve "<name>" --kind feature`.
+    fallback). `watermark poi resolve "<name>" --kind feature`.
   - **P2c (✅ done) — merge.** `merge.py` resolves + **blocks by canonical parcel** into
     `MergeGroup`s with the gate: `covered` (already a POI) / `auto` (identity fixed by an
     exact parcel-id) / `review` (rests on a geocode) / `unresolved`. `merge_resolutions`
-    is pure (testable on synthetic resolutions); `bosc poi merge [--addresses --status]`.
+    is pure (testable on synthetic resolutions); `watermark poi merge [--addresses --status]`.
     Distinct parcels stay distinct — a composite unifies them by hand in curate, not here.
 - **P3 — curate. ✅ done (scaffolding).** `curate.py` scaffolds a resolved `MergeGroup`
   into a `data/entities/poi/<slug>.md` profile at depth `located` (parcel id + `surface_forms` +
-  owner relationship + citations; no AOI yet). `bosc poi curate <parcel-no> [--write]`
+  owner relationship + citations; no AOI yet). `watermark poi curate <parcel-no> [--write]`
   refuses to overwrite and warns on already-covered parcels. Promotion to
   `characterized`/`watched` (and adding a tracking `bbox`) stays a human step; composite
   assembly via `members` is hand-curated.
@@ -245,7 +248,7 @@ flag + tracking block), and the curation is hand-editing `data/entities/poi/` (l
   POI store (`tracked_pois()` — `watched` + a `location.bbox`) and project each to a
   `TrackingSite` (id = POI slug). `gis_tracking_layers` and the `gis-findings` layer
   grouping are retired; the campus composite POI is now the source of the campus AOI, so
-  `bosc imagery search/pull <slug>` runs off the store. `gis-findings.geojson` remains a
+  `watermark imagery search/pull <slug>` runs off the store. `gis-findings.geojson` remains a
   display-only map layer.
 - **P5 — graph + site. ✅ done.** `enrich_with_places` folds the POI store into the
   entity graph as `place` nodes (keyed by slug, carrying parcels/depth), linking a POI's

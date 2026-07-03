@@ -45,7 +45,7 @@ Composite POI of the **10 Bistrozzi LLC parcels** that make up the data-center c
 ported from the `campus` layer of
 [gis-findings.geojson](../site/gis-findings.geojson) — the seed that proves the store and
 the first composite. It is the active imagery tracking site (`depth: watched`): the AOI
-bbox here is what `bosc imagery search/pull` clips to.
+bbox here is what `watermark imagery search/pull` clips to.
 
 Geometry/identity are the Allen County CAMA parcels listed in `parcels` (deed format);
 the dedup `resolve` layer normalizes those to the county `PARCEL_NO` anchor. Members are

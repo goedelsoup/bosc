@@ -1,4 +1,4 @@
-"""The BOSC network synthesis (bosc.network): the watershed points as one connected basin.
+"""The BOSC network synthesis (watermark.network): the watershed points as one connected basin.
 
 Hermetic — builds the cross-site comparison from committed reference data only (topology +
 each node's economy/grid/toxics artifacts + the low-flow screen). No network, no fixtures.

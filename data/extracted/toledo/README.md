@@ -1,10 +1,10 @@
 # Toledo (toledo) — extractions
 
-Per-site onboarding tree for the Toledo watershed point (basin: maumee), scaffolded by `bosc onboard toledo` (#326). Values come from the portable reach connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is fabricated; regenerate, don't hand-edit.
+Per-site onboarding tree for the Toledo watershed point (basin: maumee), scaffolded by `watermark onboard toledo` (#326). Values come from the portable reach connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is fabricated; regenerate, don't hand-edit.
 
 ## Source
 
-`bosc onboard toledo` over the Toledo `SiteProfile` (reach connectors: NWIS / NOAA Atlas-14 / SSURGO / NASA-POWER).
+`watermark onboard toledo` over the Toledo `SiteProfile` (reach connectors: NWIS / NOAA Atlas-14 / SSURGO / NASA-POWER).
 
 ## Known gaps & caveats
 
@@ -13,4 +13,4 @@ Per-site onboarding tree for the Toledo watershed point (basin: maumee), scaffol
 
 ## Regenerate
 
-`bosc onboard toledo`  (or the per-connector commands: `derive-low-flows`, `nasa-power --write`, etc.)
+`watermark onboard toledo`  (or the per-connector commands: `derive-low-flows`, `nasa-power --write`, etc.)

@@ -16,4 +16,4 @@ When a new connector call or key is exercised, the offline cache miss raises
 `HydroOfflineError` naming the exact key. Record the live response once and commit it
 as `hydrology/<connector>/<key>.json`. Fixtures are committed reference data — keep
 them minimal (just enough rows to exercise the code path) and don't hand-edit the
-recorded JSON. See [`../../src/bosc/hydrology/connectors/CLAUDE.md`](../../src/bosc/hydrology/connectors/CLAUDE.md).
+recorded JSON. See [`../../src/watermark/hydrology/connectors/CLAUDE.md`](../../src/watermark/hydrology/connectors/CLAUDE.md).

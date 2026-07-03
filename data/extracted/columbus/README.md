@@ -1,10 +1,10 @@
 # Columbus (columbus) — extractions
 
-Per-site onboarding tree for the Columbus watershed point (basin: scioto), scaffolded by `bosc onboard columbus` (#326). Values come from the portable reach connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is fabricated; regenerate, don't hand-edit.
+Per-site onboarding tree for the Columbus watershed point (basin: scioto), scaffolded by `watermark onboard columbus` (#326). Values come from the portable reach connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is fabricated; regenerate, don't hand-edit.
 
 ## Source
 
-`bosc onboard columbus` over the Columbus `SiteProfile` (reach connectors: NWIS / NOAA Atlas-14 / SSURGO / NASA-POWER).
+`watermark onboard columbus` over the Columbus `SiteProfile` (reach connectors: NWIS / NOAA Atlas-14 / SSURGO / NASA-POWER).
 
 ## Known gaps & caveats
 
@@ -13,4 +13,4 @@ Per-site onboarding tree for the Columbus watershed point (basin: scioto), scaff
 
 ## Regenerate
 
-`bosc onboard columbus`  (or the per-connector commands: `derive-low-flows`, `nasa-power --write`, etc.)
+`watermark onboard columbus`  (or the per-connector commands: `derive-low-flows`, `nasa-power --write`, etc.)

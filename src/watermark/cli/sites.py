@@ -76,7 +76,7 @@ def sites_show(
     if r.stale:
         console.print(f"  [dim]stale:[/] {', '.join(r.stale)}")
     console.print(
-        "  [dim](datasets derived from the catalog's per-site axis — `bosc catalog "
+        "  [dim](datasets derived from the catalog's per-site axis — `watermark catalog "
         f"list --site {slug}`)[/]"
     )
 
@@ -111,7 +111,7 @@ def sites_check() -> None:
 
     Checks:
     - Every Python SITES slug has an entry in data/sites.yaml.
-    - web/src/lib/sites-registry.json byte-matches what `bosc sites sync` would write.
+    - web/src/lib/sites-registry.json byte-matches what `watermark sites sync` would write.
     """
     from watermark.sites._model import _get_identity
 
@@ -122,16 +122,18 @@ def sites_check() -> None:
         if slug not in identity:
             errors.append(
                 f"Python profile {slug!r} is missing from data/sites.yaml — "
-                "add it there and run `bosc sites sync`"
+                "add it there and run `watermark sites sync`"
             )
 
     expected = _build_registry_json()
     if _REGISTRY_PATH.exists():
         actual = _REGISTRY_PATH.read_text(encoding="utf-8")
         if actual != expected:
-            errors.append("web/src/lib/sites-registry.json is out of sync — run `bosc sites sync`")
+            errors.append(
+                "web/src/lib/sites-registry.json is out of sync — run `watermark sites sync`"
+            )
     else:
-        errors.append("web/src/lib/sites-registry.json does not exist — run `bosc sites sync`")
+        errors.append("web/src/lib/sites-registry.json does not exist — run `watermark sites sync`")
 
     if errors:
         for e in errors:

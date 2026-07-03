@@ -1,10 +1,10 @@
 # Xenia (xenia) — extractions
 
-Per-site onboarding tree for the Xenia watershed point (basin: little-miami), scaffolded by `bosc onboard xenia` (#326). Values come from the portable reach connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is fabricated; regenerate, don't hand-edit.
+Per-site onboarding tree for the Xenia watershed point (basin: little-miami), scaffolded by `watermark onboard xenia` (#326). Values come from the portable reach connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is fabricated; regenerate, don't hand-edit.
 
 ## Source
 
-`bosc onboard xenia` over the Xenia `SiteProfile` (reach connectors: NWIS / NOAA Atlas-14 / SSURGO / NASA-POWER).
+`watermark onboard xenia` over the Xenia `SiteProfile` (reach connectors: NWIS / NOAA Atlas-14 / SSURGO / NASA-POWER).
 
 ## Known gaps & caveats
 
@@ -13,4 +13,4 @@ Per-site onboarding tree for the Xenia watershed point (basin: little-miami), sc
 
 ## Regenerate
 
-`bosc onboard xenia`  (or the per-connector commands: `derive-low-flows`, `nasa-power --write`, etc.)
+`watermark onboard xenia`  (or the per-connector commands: `derive-low-flows`, `nasa-power --write`, etc.)

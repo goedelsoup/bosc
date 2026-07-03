@@ -227,7 +227,7 @@ validation → provenance). Order is driven by inquiry leverage.
    party names to a canonical key, merge variants, classify conservatively
    (government / corporate / individual / trust / facility / water; flag Delaware
    as a *signal*, not a verdict), and link conveyances / utility operation /
-   discharge. `bosc entities` + agent `entities` tool. Resolves Bistrozzi's four
+   discharge. `watermark entities` + agent `entities` tool. Resolves Bistrozzi's four
    acquisitions and the Port-Authority→Amazon edge. Facilities key on their base
    permit number; **deeds-side trustee recitals are parsed** (`_parse_trustee_recital`
    / `_register_deed_party`) into a trust node + its trustee persons linked
@@ -236,15 +236,15 @@ validation → provenance). Order is driven by inquiry leverage.
    `_split_principal` de-fragmentation now also applies to deed parties).
 6. **Timeline assembly.** `[done]` — `watermark.pipeline.timeline`: one sorted
    chronology across deeds/NPDES/OPC, deduped across corroborating artifacts.
-   `bosc timeline` + agent `timeline` tool.
+   `watermark timeline` + agent `timeline` tool.
 7. **Corridor view.** `[done]` — **decided: build** (the frozen corridor geometry
    was sitting unused and the join is the research question, not Periplus platform
    code). `watermark.gis.corridor` spatially joins every watch item (facilities + force
    mains) and recorded parcel onto the frozen Periplus `corridor.geojson` study area
    - `corridor-centerline.geojson` routes: in-study-area flag, distance to the
    nearest corridor route, the route, and station (chainage) along the roadwork road
-   centerline (the roadway the roundabouts OPC prices). `bosc corridor` shows the
-   join; `bosc corridor --map` adds the `corridor` (study area) + `roadwork` (road
+   centerline (the roadway the roundabouts OPC prices). `watermark corridor` shows the
+   join; `watermark corridor --map` adds the `corridor` (study area) + `roadwork` (road
    centerline) layers to `gis-findings.geojson`. Pure/hermetic (shapely+pyproj over
    committed GeoJSON, like `watermark.hydrology.geo`); the corridor geometry stays cited
    external corroboration, never edited in place.
@@ -265,13 +265,13 @@ extraction into one typed `Corpus`, classified by content shape.
   `entities` tools added; `program_overview` / `reconcile_estimate` already exist.
 - Section-subtotal **accuracy** `[machinery done; live pass gated on a key]` (#40) —
   `analyze.reconcile_with_repair` is the self-correcting loop (re-extract offending
-  sections, reconcile again, up to `max_rounds`); `bosc reconcile-repair` characterizes
+  sections, reconcile again, up to `max_rounds`); `watermark reconcile-repair` characterizes
   the 3 pinned ROADWAY/PAVEMENT gaps offline (`test_reconcile_repair.py`), and a caller
   supplies the live higher-fidelity re-extractor (Opus A‑B). The reviewed artifact is
   characterized, not rewritten.
 - **`extract-sweep`** sweep + assembled `OPCSummary` for the roadwork
   `[machinery done; live sweep gated on a key]` (#39) — `extract.sweep_opc_pages` +
-  `extract.assemble_opc_summary` (`bosc extract-sweep`) regenerate the summary from a
+  `extract.assemble_opc_summary` (`watermark extract-sweep`) regenerate the summary from a
   page range and reconcile it; tested offline on synthetic estimates. The legacy 25% /
   `OPCSummary` reconcile path is **kept** (the original "retire the 25%" goal was dropped
   as contrary to current conventions — the 25% lives in a `Profile`, not a hardcode).
@@ -287,7 +287,7 @@ stack. Every numeric input is a `ProvenancedValue` tagged `document|connector|
 assumption|derived`. (`watermark.hydrology`, see [the plan](../../.claude/plans/splendid-roaming-peacock.md).)
 
 8. **Water-balance spine + low-flow assimilative screen.** `[done]` — Increment 1.
-   `bosc hydro` (+ agent `hydrology_balance` tool) assembles the WWTP discharges (cited
+   `watermark hydro` (+ agent `hydrology_balance` tool) assembles the WWTP discharges (cited
    design flows from `watch-items.geojson`) routed to their receiving waters, grounds the
    abstraction reach with **live USGS NWIS** streamflow (Ottawa at Lima, gauge 04187100;
    offline-aware cache + committed fixtures), and screens each discharge against the
@@ -297,7 +297,7 @@ assumption|derived`. (`watermark.hydrology`, see [the plan](../../.claude/plans/
    **American Bath → Pike Run 0.01:1**, **American II → Dug Run 0.42:1** dilution (both
    `violation`; the American II fact sheet states the acute ratio itself as 1.3:1).
    Shawnee II → Ottawa mainstem has no cited 7Q10 and is **skipped, not invented**.
-9. **SCS-CN stormwater runoff.** `[done]` — Increment 2. `bosc storm` (+ agent
+9. **SCS-CN stormwater runoff.** `[done]` — Increment 2. `watermark storm` (+ agent
    `stormwater_runoff` tool) runs the Tier-0 SCS chain (`watermark.hydrology.solver`:
    Type-II rainfall → curve-number excess → SCS unit-hydrograph convolution; plus a
    Muskingum-Cunge routing module) for a **pre- vs post-development** design storm over
@@ -316,7 +316,7 @@ assumption|derived`. (`watermark.hydrology`, see [the plan](../../.claude/plans/
    Access), falling back to the cited "C" assumption offline — SSURGO actually shows the
    footprint is predominantly dual **B/D** (tile-drainable lake-plain lows) with upland B,
    not C.
-10. **Scenario diffing + dossier.** `[done]` — Increment 3. `bosc scenario` (+ agent
+10. **Scenario diffing + dossier.** `[done]` — Increment 3. `watermark scenario` (+ agent
    `hydrology_scenario` tool) evaluates **baseline vs data-center buildout** on the
    cooling consumptive-fraction knob (`watermark.hydrology.scenario`): the campus draws
    cooling water from the same Ottawa/Auglaize supply the WWTPs discharge to, and the
@@ -325,7 +325,7 @@ assumption|derived`. (`watermark.hydrology`, see [the plan](../../.claude/plans/
    land: the **Ottawa mainstem 7Q10 is now cited at 0.2 cfs** (Lima Refining fact sheet
    2IG00001, USGS 04187100; 1Q10 = 0 cfs — the river nearly dries at design low flow,
    heavily abstracted upstream for Lima's own supply), which also un-skips Shawnee II →
-   Ottawa in the assimilative screen (now a violation, 0.04:1). `bosc hydro-report`
+   Ottawa in the assimilative screen (now a violation, 0.04:1). `watermark hydro-report`
    renders the whole Tier-0 story as the evidence-tagged [`HYDROLOGY.md`](HYDROLOGY.md)
    dossier (regenerable).
 11. **Sourced cooling design basis.** `[done]` — replaces the bare "5 MGD, TBD"
@@ -339,7 +339,7 @@ assumption|derived`. (`watermark.hydrology`, see [the plan](../../.claude/plans/
    (overridable via `--cooling-demand`). Headline is now sourced and robust: even the low
    estimate = **4.85 cfs net basin loss ≈ 24× the Ottawa 7Q10**; the upper bound ~77×.
    Inputs are document/assumption-tagged, demands `derived`.
-12. **Tier-1 escalation — EPA SWMM.** `[done]` — `bosc tier1` (+ agent `tier1_swmm` tool)
+12. **Tier-1 escalation — EPA SWMM.** `[done]` — `watermark tier1` (+ agent `tier1_swmm` tool)
    runs the real EPA SWMM5 engine (`watermark.hydrology.swmm`, via pyswmm) for two questions
    Tier-0 only approximated. **Detention sizing:** bisect a basin's bottom-orifice
    diameter until the released post-development peak matches the pre-development peak —
@@ -355,7 +355,7 @@ assumption|derived`. (`watermark.hydrology`, see [the plan](../../.claude/plans/
    assumptions, since we lack the as-built drainage network.
 
 13. **Ground the detention result in the real civil design.** `[done]` —
-   `bosc storm-plan` (+ agent `storm_plan_inventory` tool, `watermark.hydrology.stormplan`)
+   `watermark storm-plan` (+ agent `storm_plan_inventory` tool, `watermark.hydrology.stormplan`)
    transcribes the campus **grading & stormwater plan** (sheet `1A-C-3104`, EMH&T 95% SPS,
    *Not For Construction* — the `.odg` under `plans/bistrozzi-plans/`) into a reviewed
    artifact (`data/extracted/plans/lma1a.storm-inventory.yaml`). The sheet's pipe
@@ -366,7 +366,7 @@ assumption|derived`. (`watermark.hydrology`, see [the plan](../../.claude/plans/
    headwall outfalls, rock check dams, overland flood routing). The headline grounded fact —
    **no detention, retention, or infiltration storage is shown** (the negative is auditable:
    seven storage terms searched, all absent) — reframes item 12's basin: it is the on-site
-   control the as-drawn 95% design **omits**, not a modeled redesign. Wired into `bosc tier1`
+   control the as-drawn 95% design **omits**, not a modeled redesign. Wired into `watermark tier1`
    (the detention finding now cites the sheet) and the dossier's Tier-1 section.
 
 14. **Ground the sanitary surcharge in cited design flows + the SSO mandate.** `[done]` —
@@ -383,7 +383,7 @@ assumption|derived`. (`watermark.hydrology`, see [the plan](../../.claude/plans/
    already under a **2005 OEPA mandate to eliminate all SSO bypassing by 2015**, with **$11.8M**
    of storm-water I/I remediation and a **21→48-inch trunk** rebuilt purely to equalize
    wet-weather I/I (1996 federal CWA consent decree; Allen County CNA-2005) — so the headroom
-   is documented as effectively already spent. `bosc tier1` + agent `sanitary_basis` tool +
+   is documented as effectively already spent. `watermark tier1` + agent `sanitary_basis` tool +
    the dossier's Tier-1 section. (Indian Brook pump-station as-built is scan-only; the
    discipline-agnostic `kind=sanitary` engineering extractor now exists (#41) — the
    `.sanitary.yaml` is gated on a keyed vision pass, #124.)

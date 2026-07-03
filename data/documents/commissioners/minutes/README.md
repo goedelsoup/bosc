@@ -6,7 +6,7 @@ The hand-assembled `raw/` tree (930 PDFs) was **retired in the #133 cutover
 (2026-06-12)**. The Board of Commissioners' full meeting record — minutes + agendas,
 Jan 2023– — is now **connector-sourced** under
 [`data/documents/commissioners/meetings/`](../meetings/), pulled via the civic
-pipeline (`bosc subdivisions download commissioners`).
+pipeline (`watermark subdivisions download commissioners`).
 
 Every retired `raw/` file was verified **byte-identical** to its connector copy before
 removal — the only deletion the chain-of-custody rule permits (a checksum-verified

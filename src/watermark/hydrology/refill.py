@@ -19,7 +19,7 @@ Two answers, from the gauged daily record:
 
 A *derived* screening analysis. The committed artifact
 (``data/reference/hydrology/refill-adequacy.yaml``) is regenerated from the live USGS record by
-``bosc refill --write`` and read offline by :func:`load_refill_adequacy`.
+``watermark refill --write`` and read offline by :func:`load_refill_adequacy`.
 """
 
 from __future__ import annotations
@@ -143,7 +143,7 @@ def compute_refill_adequacy(
 ) -> RefillAdequacy:
     """Compute the refill adequacy / drought storage-requirement from the live gage records.
 
-    The networked regeneration path (``bosc refill --write``). Pulls both rivers' daily
+    The networked regeneration path (``watermark refill --write``). Pulls both rivers' daily
     discharge, characterizes each, and runs the sequent-peak storage requirement for the
     baseline-city / +campus / +campus-high demand scenarios against the committed storage.
 

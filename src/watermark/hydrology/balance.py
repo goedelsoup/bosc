@@ -158,7 +158,7 @@ def _campus_node(path: Path, warnings: list[str]) -> WaterBalanceNode:
     # derive_cooling_basis() brackets the evaporative consumptive draw from the disclosed
     # air-permit power figure (x WUE) and the documented FM-2 blowdown. Carry the
     # conservative power-based central as the campus's projected consumptive (net basin)
-    # loss — `derived`, not a 0 placeholder. The scenario layer (`bosc scenario`)
+    # loss — `derived`, not a 0 placeholder. The scenario layer (`watermark scenario`)
     # re-derives baseline-vs-buildout and can override via `--cooling-demand`.
     basis = derive_cooling_basis()
     low, high = basis.consumptive_low.value, basis.consumptive_high.value

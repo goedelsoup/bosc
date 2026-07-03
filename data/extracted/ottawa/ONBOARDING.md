@@ -1,6 +1,6 @@
 # Onboarding — Ottawa (ottawa)
 
-Living record for the Ottawa watershed point (basin: maumee), scaffolded by `bosc onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
+Living record for the Ottawa watershed point (basin: maumee), scaffolded by `watermark onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
 
 ## Dimension coverage
 
@@ -44,7 +44,7 @@ map-only). The parcel `gis_parcel` schema is now **wired** (#420) — `PUTNAM_PA
 `watermark.sites`, field-map confirmed from the live `?f=json` + samples (2026-06-21), with an offline
 fixture/decode test; the `?f=json` field semantics resolved during wiring are recorded in the
 schema comment (OWNERC/OWNERD = situs vs MAILC/MAILD = mailing; `CLASS_1` is the populated land-use
-code, not `Class`; `SALEDATE` is MM-DD-YY). No committed reference *data* yet (a `bosc parcels
+code, not `Class`; `SALEDATE` is MM-DD-YY). No committed reference *data* yet (a `watermark parcels
 --site ottawa` pull is a separate reviewed step). Zoning stays `[open]`.
 
 | layer | endpoint | finding | status |
@@ -55,12 +55,12 @@ code, not `Class`; `SALEDATE` is MM-DD-YY). No committed reference *data* yet (a
 | villages | `putnamcountygis.com/.../Boundaries/Villages/MapServer/0` | village boundaries (incl. Ottawa) | reference |
 | zoning | — | no standalone zoning REST found (village zoning is parcel-class-coded / map-only) | `[open]` |
 
-Follow-up: commit the reviewed Putnam parcel reference *data* (a `bosc parcels --site ottawa`
+Follow-up: commit the reviewed Putnam parcel reference *data* (a `watermark parcels --site ottawa`
 pull); accept zoning as class-coded/map-only here (or locate a Village of Ottawa zoning layer).
 
 ## Self-research (Phase 5; #247) — 2026-06-21
 
-First automated-research pass (`bosc research run`, 28 turns, $1.57, read-only over the corpus) →
+First automated-research pass (`watermark research run`, 28 turns, $1.57, read-only over the corpus) →
 `data/research/onboard-ottawa-village-of-ottawa-putnam-county-d-2026-06-21/` (`findings.md` + `manifest.yaml`).
 
 **Headline — the same-river control is structurally sound but not yet computable; one derivation

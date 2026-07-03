@@ -1,4 +1,4 @@
-"""The `bosc compute` CLI command (offline, deterministic)."""
+"""The `watermark compute` CLI command (offline, deterministic)."""
 
 from __future__ import annotations
 

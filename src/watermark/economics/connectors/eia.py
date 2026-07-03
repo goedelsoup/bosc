@@ -218,6 +218,6 @@ def fetch_consumer_energy(
         note=(
             f"EIA API v2 (seriesid route): residential electricity + natural-gas prices "
             f"and total electricity retail sales for {name}. Annual averages; regenerable "
-            "via `bosc eia` with WATERMARK_EIA_API_KEY."
+            "via `watermark eia` with WATERMARK_EIA_API_KEY."
         ),
     )

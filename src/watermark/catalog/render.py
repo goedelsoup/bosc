@@ -1,7 +1,7 @@
-"""``bosc catalog render`` — generate the ``data/reference`` README facts from the catalog.
+"""``watermark catalog render`` — generate the ``data/reference`` README facts from the catalog.
 
 Phase 2 of the data-catalog epic (#631, issue #627). Makes the catalog the single source of
-truth for each reference collection's *facts* — the files, the producing ``bosc`` command, the
+truth for each reference collection's *facts* — the files, the producing ``watermark`` command, the
 source, license, access tier, and refresh cadence — and kills the prose drift of 40
 hand-maintained READMEs (only a few of which state a license today).
 

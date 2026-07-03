@@ -80,11 +80,11 @@ def _readme_body(place: str, slug: str, basin: str, purpose: str, source: str) -
     return (
         f"# {place} ({slug}) — {purpose}\n\n"
         f"Per-site onboarding tree for the {place} watershed point (basin: {basin}), "
-        f"scaffolded by `bosc onboard {slug}` (#326). Values come from the portable onboard "
+        f"scaffolded by `watermark onboard {slug}` (#326). Values come from the portable onboard "
         f"connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is "
         f"fabricated; regenerate, don't hand-edit.\n\n"
         "## Source\n\n"
-        f"`bosc onboard {slug}` over the {place} `SiteProfile` — {source}.\n\n"
+        f"`watermark onboard {slug}` over the {place} `SiteProfile` — {source}.\n\n"
         "## Known gaps & caveats\n\n"
         "- Onboarding seed — **review every value against a cited source before promotion** "
         "(`web/src/lib/sites.ts` `status`/`selectable`, parity-gated).\n"
@@ -92,7 +92,7 @@ def _readme_body(place: str, slug: str, basin: str, purpose: str, source: str) -
         "by the portable reach connectors — it needs a per-jurisdiction connector "
         "(see `docs/onboarding.md`).\n\n"
         "## Regenerate\n\n"
-        f"`bosc onboard {slug}`  (or the per-connector commands: `derive-low-flows`, "
+        f"`watermark onboard {slug}`  (or the per-connector commands: `derive-low-flows`, "
         "`nasa-power --write`, etc.)\n"
     )
 
@@ -266,13 +266,13 @@ def render_onboarding_doc(report: OnboardReport) -> str:
     return (
         f"# Onboarding — {report.place} ({report.slug})\n\n"
         f"Living record for the {report.place} watershed point (basin: {report.basin}), "
-        "scaffolded by `bosc onboard`. Check items as you complete them; the site is **not** "
+        "scaffolded by `watermark onboard`. Check items as you complete them; the site is **not** "
         "promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.\n\n"
         "## Dimension coverage\n\n"
         "- [x] **Hydrology** — onboard reach connectors (low-flows, corridor DDF, SSURGO HSG, climatology)\n"
         "- [x] **Economics** — county baseline, RSEI toxics, consumer energy, grid profile\n"
         "- [ ] **Data-center activity** — extracted permits/records + entity graph "
-        "(corpus extraction; seed proposals via `bosc onboard --research`, #247)\n"
+        "(corpus extraction; seed proposals via `watermark onboard --research`, #247)\n"
         "- [ ] **Per-jurisdiction GIS** — parcels/zoning connector (the known lift; see docs/onboarding.md)\n\n"
         "## Last onboard run\n\n"
         "| step | status | output |\n|---|---|---|\n" + rows + "\n\n"

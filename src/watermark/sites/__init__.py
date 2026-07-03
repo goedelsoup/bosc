@@ -207,11 +207,11 @@ def scaffold_profile_src(slug: str, *, basin: str = "maumee") -> str:
 
     Identity + the per-site output relpaths are filled (the relpaths pre-slug-scoped, so the
     stub is collision-safe by construction); every other field is a typed ``TODO`` placeholder
-    to replace from a cited source (see ``docs/onboarding.md``). Then ``bosc sites check`` flags
+    to replace from a cited source (see ``docs/onboarding.md``). Then ``watermark sites check`` flags
     anything still unfilled.
 
     Note: YAML-backed fields (``place``, ``receiving_water_name``, ``map_view_*``) are omitted
-    from the stub — add the site to ``data/sites.yaml`` first and run ``bosc sites sync`` so
+    from the stub — add the site to ``data/sites.yaml`` first and run ``watermark sites sync`` so
     those fields are filled automatically at construction time (#1027).
     """
     from watermark.sites._model import YAML_BACKED_PROFILE_FIELDS
@@ -246,7 +246,7 @@ def scaffold_profile_src(slug: str, *, basin: str = "maumee") -> str:
         "# with this site's value from a cited source — see the field guide in\n"
         "# docs/onboarding.md. The output relpaths are pre-slug-scoped (collision-safe);\n"
         "# Add the site to data/sites.yaml first (identity fields are filled from there).\n"
-        f"# run `bosc onboard {slug} --check` to find anything still unfilled.\n"
+        f"# run `watermark onboard {slug} --check` to find anything still unfilled.\n"
     )
     return header + "\n".join(lines) + "\n"
 

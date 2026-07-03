@@ -65,7 +65,7 @@ Composite POI of the **11 Hatchworks LLC parcels** that make up the Project Zodi
 campus in southeast Fort Wayne, Allen County, **Indiana** — the network's first confirmed
 operational data-center facility ([`datacenter-facility.md`](../../extracted/fort-wayne/datacenter-facility.md),
 #360). It is the active imagery tracking site (`depth: watched`); the AOI `bbox` here — derived
-from the committed parcel geometry — is what `bosc imagery search/pull` clips to.
+from the committed parcel geometry — is what `watermark imagery search/pull` clips to.
 
 Geometry and identity are the Allen County, IN CAMA parcels listed in `parcels` (the county
 iMap `QueryLayers` Parcel_Poly layer, owner-of-record joined), committed verbatim as

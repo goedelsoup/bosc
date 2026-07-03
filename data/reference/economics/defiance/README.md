@@ -1,10 +1,10 @@
 # Defiance (defiance) — economics baseline outputs
 
-Per-site onboarding tree for the Defiance watershed point (basin: maumee), scaffolded by `bosc onboard defiance` (#326). Values come from the portable reach connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is fabricated; regenerate, don't hand-edit.
+Per-site onboarding tree for the Defiance watershed point (basin: maumee), scaffolded by `watermark onboard defiance` (#326). Values come from the portable reach connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is fabricated; regenerate, don't hand-edit.
 
 ## Source
 
-`bosc onboard defiance` over the Defiance `SiteProfile` (reach connectors: NWIS / NOAA Atlas-14 / SSURGO / NASA-POWER).
+`watermark onboard defiance` over the Defiance `SiteProfile` (reach connectors: NWIS / NOAA Atlas-14 / SSURGO / NASA-POWER).
 
 ## Known gaps & caveats
 
@@ -13,4 +13,4 @@ Per-site onboarding tree for the Defiance watershed point (basin: maumee), scaff
 
 ## Regenerate
 
-`bosc onboard defiance`  (or the per-connector commands: `derive-low-flows`, `nasa-power --write`, etc.)
+`watermark onboard defiance`  (or the per-connector commands: `derive-low-flows`, `nasa-power --write`, etc.)

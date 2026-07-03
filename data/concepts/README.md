@@ -21,8 +21,8 @@ Body markdown. Inline `[[wiki links]]` resolve against concepts, entities,
 and people — e.g. [[assimilative capacity]] or [[Cynthia Leis]].
 ```
 
-- **Loaded + exported** by [`watermark.site.concepts`](../../src/bosc/site/concepts.py)
-  into the `concepts` bundle feed (`bosc export`); the frontend renders one page
+- **Loaded + exported** by [`watermark.site.concepts`](../../src/watermark/site/concepts.py)
+  into the `concepts` bundle feed (`watermark export`); the frontend renders one page
   per concept and resolves the `[[wiki links]]`.
 - `slug` defaults to the file stem. `kind` is `concept` | `term` | `method`.
 - Keep definitions **accurate and non-fabricated** — these are glossary entries,

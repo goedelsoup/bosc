@@ -1,6 +1,6 @@
 # Onboarding — Urbana (urbana)
 
-Living record for the Urbana watershed point (basin: great-miami), scaffolded by `bosc onboard`. **PROMOTED 2026-07-01** (`status: live`, `selectable: true` in `web/src/lib/sites.ts`); the site is the network's second live site (after Lima).
+Living record for the Urbana watershed point (basin: great-miami), scaffolded by `watermark onboard`. **PROMOTED 2026-07-01** (`status: live`, `selectable: true` in `web/src/lib/sites.ts`); the site is the network's second live site (after Lima).
 
 Urbana is the network's **first Miami-basin site** (epic #440 / onboarding #441): the clean *headwaters* of the **Mad River buried-valley sole-source aquifer**, upstream of the Springfield/Dayton/Wright-Patterson corridor — the deliberate geological **inverse** of the Maumee lake-plain sites (groundwater-dominated HSG B vs. poorly-drained Black Swamp clays HSG D; sink = Ohio River, not Lake Erie; no Maumee-style nutrient TMDL).
 
@@ -31,7 +31,7 @@ Urbana is the network's **first Miami-basin site** (epic #440 / onboarding #441)
 
 ## Self-research (Phase 5; #247) — 2026-06-21
 
-`bosc onboard urbana --research` (claude-opus-4-8, 27 turns, $1.02). Findings + manifest in
+`watermark onboard urbana --research` (claude-opus-4-8, 27 turns, $1.02). Findings + manifest in
 `data/research/onboard-urbana-urbana-data-center-activity-recei-2026-06-21/`.
 
 **Bottom line.** Urbana is scaffolded but **not promotable** — its two load-bearing dimensions are

@@ -12,7 +12,7 @@ refusal policy, the abuse + cost model, and the bootstrap. It mirrors
 stack.
 
 > **An answer is a *guide to the record*, never the record.** The endpoint reads only the
-> committed content bundle (`bosc export`); it never writes to `data/**`. Answers are
+> committed content bundle (`watermark export`); it never writes to `data/**`. Answers are
 > generated text over retrieved sources and may be incomplete or wrong — every claim
 > carries a citation so a reader can verify it against the source. The model is instructed
 > to answer **only** from the retrieved sources and to say "I don't find that in the
@@ -24,7 +24,7 @@ stack.
 The site is hosted on **Cloudflare Pages**; the endpoint is a **Pages Function**
 colocated with the static build, so the `/ask` page posts **same-origin** (no CORS) and
 the Anthropic key lives as a platform secret, never in the browser. The Python
-`ResearchAgent` / `bosc ask` CLI (Agent SDK + in-process corpus tools) stays the
+`ResearchAgent` / `watermark ask` CLI (Agent SDK + in-process corpus tools) stays the
 **local/CLI** research path and is *not* wired to the edge.
 
 ```
@@ -182,7 +182,7 @@ A public, **paid** LLM endpoint. Controls (reusing submit's `_lib/`):
 - **Page:** `web/src/pages/ask.astro` + `src/scripts/ask.ts` — framework-free, in the
   zero-React style of submit. Renders the live form only when `PUBLIC_TURNSTILE_SITE_KEY`
   is set at build time, else a not-yet-live placeholder pointing at browsing the corpus.
-- **Build/deploy:** unchanged — `bosc export` → `npm run build` → Wrangler uploads
+- **Build/deploy:** unchanged — `watermark export` → `npm run build` → Wrangler uploads
   `web/dist` + `web/functions/` to **Cloudflare Pages** (`pages.yml`). This is
   production; the GitHub Pages deploy was never flipped and Cloudflare supersedes it.
 

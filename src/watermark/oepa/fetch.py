@@ -1,6 +1,6 @@
 """Download OEPA/DAM permit PDFs and write a filename-map manifest.
 
-Implements the ``bosc oepa fetch`` backend: given a list of URLs (from a discovery
+Implements the ``watermark oepa fetch`` backend: given a list of URLs (from a discovery
 manifest or constructed from bare permit IDs), stream each PDF into
 ``data/documents/oepa/<site-slug>/`` and record provenance in
 ``data/documents/oepa/<site-slug>/filename-map.yaml``.

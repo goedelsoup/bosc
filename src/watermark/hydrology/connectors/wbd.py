@@ -8,7 +8,7 @@ geometry and ``f=geojson`` (so geometry comes back as GeoJSON in WGS84, no Esri-
 conversion). Geometry is kept **verbatim** (display-only, ``outSR=4326``, no
 reprojection); attributes are read **by name**, never by index.
 
-This drives ``bosc wbd``, which writes the campus's nested watershed boundaries to
+This drives ``watermark wbd``, which writes the campus's nested watershed boundaries to
 ``data/reference/hydrology/wbd/`` (a committed, regenerable reference dataset) — the
 source geometry the ``watershed`` GeoJSON feed (#61) is assembled from. Reuses the
 shared hydrology connector cache/offline/fixture machinery; synchronous (``httpx``).

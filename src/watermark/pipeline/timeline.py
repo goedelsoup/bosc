@@ -347,7 +347,7 @@ def _subdivision_meeting_events(
     """Subdivision meetings that name the corridor project in their minutes/agendas.
 
     Reads every committed ``<slug>/meetings/meeting-index.yaml`` (built by
-    ``bosc subdivisions index``) and surfaces only meetings whose text hit a
+    ``watermark subdivisions index``) and surfaces only meetings whose text hit a
     project-specific subject (``_CORRIDOR_SUBJECTS``) — routine township business
     stays in the index as searchable corpus but off the chronology. Agenda + minutes
     for the same meeting collapse via a shared ``ref``. When a meeting has a committed

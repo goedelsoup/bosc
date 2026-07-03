@@ -4,7 +4,7 @@ How to bring a new site in the BOSC network (epic [#323](https://github.com/wate
 from nothing to a "coming soon" page, repeatably. Lima is the live reference build; the
 basin sites (Fort Wayne, Defiance, …) come online one at a time. The scaffold is
 registry-driven and the data tier is per-site keyed ([#325](https://github.com/watermark-directory/the-watermark-directory/issues/325)),
-so onboarding is a short, ordered chain — `bosc onboard <slug>` runs the middle of it.
+so onboarding is a short, ordered chain — `watermark onboard <slug>` runs the middle of it.
 
 > **`onboard` proposes; it never promotes.** Flipping a site to a live, switchable build is
 > a separate, human, **parity-gated** edit (step 5). Onboarding seeds reviewable data and a
@@ -21,7 +21,7 @@ copy** — Lima's values are Lima-specific and the ones you forget will silently
 output:
 
 ```sh
-bosc sites new <slug>     # prints a paste-ready SiteProfile(...) stub
+watermark sites new <slug>     # prints a paste-ready SiteProfile(...) stub
 ```
 
 The stub fills identity + pre-slug-scopes the six output relpaths (collision-safe by
@@ -29,17 +29,17 @@ construction) and leaves every other field a typed `TODO`. Paste it into `SITES`
 `TODO` from a cited source (field guide below), then lint it:
 
 ```sh
-bosc onboard <slug> --check   # flags fields still unfilled (placeholder) or copied from Lima
+watermark onboard <slug> --check   # flags fields still unfilled (placeholder) or copied from Lima
 ```
 
-`--check` writes nothing and exits non-zero while placeholders remain. `bosc sites list` and
-`bosc sites show <slug>` inspect the registry. Two hard rules the tooling enforces:
+`--check` writes nothing and exits non-zero while placeholders remain. `watermark sites list` and
+`watermark sites show <slug>` inspect the registry. Two hard rules the tooling enforces:
 
 - **Slug-scope every per-site output relpath** — `climatology_relpath`, `corridor_ddf_relpath`
   (→ `reference/hydrology/<slug>/…`), `baseline_relpath` (→ `reference/economics/<slug>/…`),
   `rsei_relpath` (→ `reference/rsei/<slug>/…`), `consumer_energy_relpath` + `grid_relpath`
   (→ `reference/eia/<slug>/…`). If you leave Lima's un-slugged paths, onboarding would
-  overwrite Lima's committed files — `bosc onboard` now **refuses** when these aren't unique
+  overwrite Lima's committed files — `watermark onboard` now **refuses** when these aren't unique
   to the site (and a CI test enforces it), but scope them correctly from the start.
 - The `SITES` key must equal the profile's `slug` (CI enforces this too).
 
@@ -78,11 +78,11 @@ NPDES fact sheets. Until verified, prefer omission/`[open]` over a copied Lima v
 ### 2. Run the onboard chain
 
 ```sh
-bosc onboard <slug>            # live connectors
-bosc onboard <slug> --offline  # cached/committed fixtures only (hermetic)
+watermark onboard <slug>            # live connectors
+watermark onboard <slug> --offline  # cached/committed fixtures only (hermetic)
 ```
 
-`bosc onboard <slug>` ([`src/watermark/onboard.py`](../src/watermark/onboard.py)) builds its own
+`watermark onboard <slug>` ([`src/watermark/onboard.py`](../src/watermark/onboard.py)) builds its own
 `Settings(site=<slug>)` (the global `--site` flag is not needed) and, for that site:
 
 - **scaffolds** the per-site dirs (`data/reference/<slug>/`, `data/extracted/<slug>/`,
@@ -99,7 +99,7 @@ bosc onboard <slug> --offline  # cached/committed fixtures only (hermetic)
 - runs **`basin-screen`** as a coverage validation (read-only).
 - prints a step table + the **blocking review checklist** (step 4).
 
-Use `bosc onboard <slug> --dry-run` to preview the plan (every step + its target path)
+Use `watermark onboard <slug> --dry-run` to preview the plan (every step + its target path)
 without writing anything.
 
 A brand-new site has no committed fixtures and no seed data, so offline the connector steps
@@ -116,8 +116,8 @@ reach/economics connector and its prerequisites, and `watermark catalog run` res
 upstream-first, skipping entries still within their refresh TTL:
 
 ```sh
-bosc catalog run onboard-bundle --site <slug> --dry-run   # preview the resolved plan
-bosc catalog run onboard-bundle --site <slug>             # execute it
+watermark catalog run onboard-bundle --site <slug> --dry-run   # preview the resolved plan
+watermark catalog run onboard-bundle --site <slug>             # execute it
 ```
 
 (`mise run onboard-site <slug>` prints the same dry-run plan.) Every value is
@@ -138,7 +138,7 @@ before promotion:
 4. The site's GIS field-maps are registered (`gis_parcel`/`gis_zoning`/`gis_flood`) for the
    layers it publishes — field names taken from the live `/<layer>?f=json`, not fabricated; a
    layer the site lacks stays `None` (the connector refuses cleanly). See the known lift below.
-5. Self-research first pass reviewed (`bosc onboard <slug> --research`; triage the proposals — see below).
+5. Self-research first pass reviewed (`watermark onboard <slug> --research`; triage the proposals — see below).
 6. Promotion is a separate manual edit (step 5).
 
 The invariant is also enforced in CI by
@@ -156,8 +156,8 @@ deeper, separate cutover, not part of routine onboarding.
 ## What's shared vs. per-site vs. the known lift
 
 - **Basin / PJM / national (shared — reuse for free):** the curated mainstem 7Q10s
-  (`bosc derive-low-flows` → `data/reference/hydrology/low-flow-7q10.derived.yaml`), the ECHO
-  NPDES/POTW inventory (`bosc npdes`, Maumee HUC-8-wide), the PJM balancing-authority
+  (`watermark derive-low-flows` → `data/reference/hydrology/low-flow-7q10.derived.yaml`), the ECHO
+  NPDES/POTW inventory (`watermark npdes`, Maumee HUC-8-wide), the PJM balancing-authority
   interchange (`ba-interchange.yaml`), and the federal energy backdrop (`federal-energy.yaml`).
   A new site does not regenerate these.
 - **Per-site (slug-scoped via the profile `*_relpath` fields — what `onboard` writes):**
@@ -203,18 +203,18 @@ promotes. The investigative skills + system prompt are now wired into the agent
 ([#247](https://github.com/watermark-directory/the-watermark-directory/issues/247)), so onboard runs it as an **opt-in step**:
 
 ```sh
-bosc onboard <slug> --research
+watermark onboard <slug> --research
 # -> data/research/<slug>-<date>/{findings.md, manifest.yaml}  (review, then triage proposals)
 ```
 
 It's a **paid/online** LLM call (needs `ANTHROPIC_API_KEY`), so it's opt-in and **skips
 cleanly** without a key or under `--offline`. The proposal manifest feeds the step-3 review;
-the equivalent standalone command is `bosc research run --topic "…"`.
+the equivalent standalone command is `watermark research run --topic "…"`.
 
 ## Curating a site's content (people / places / exhibits)
 
 Steps 2–3 cover the connector + corpus data; this is the **hand-curated** layer the content
-bundle renders. The bundle is **per-site** (#762): `bosc --site <slug> export` reads a site's
+bundle renders. The bundle is **per-site** (#762): `watermark --site <slug> export` reads a site's
 *own* curated stores via `watermark.sites.site_scoped_path`, so a non-Lima site never inherits
 Lima's. Lima (the reference build) keeps the flat committed layout; every other site lives
 under a `<slug>/` subdir. Scaffold these — Fort Wayne's are the worked example

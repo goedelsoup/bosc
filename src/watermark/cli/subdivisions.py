@@ -268,7 +268,7 @@ def subdivisions_index(
     if not report.docs:
         console.print(
             f"[yellow]No downloaded documents for {slug}[/] — run "
-            f"[bold]bosc subdivisions download {slug}[/] first."
+            f"[bold]watermark subdivisions download {slug}[/] first."
         )
         raise typer.Exit(1)
 
@@ -366,7 +366,7 @@ def subdivisions_summarize(
     if not report.entries and not report.skipped:
         console.print(
             f"[yellow]No corridor-relevant meetings indexed for {slug}[/] — run "
-            f"[bold]bosc subdivisions index {slug}[/] first."
+            f"[bold]watermark subdivisions index {slug}[/] first."
         )
         raise typer.Exit(1)
 

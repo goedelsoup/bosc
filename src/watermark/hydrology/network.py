@@ -418,7 +418,7 @@ def network_findings(rn: RoutedNetwork) -> list[HydroFinding]:
                     "cfs) the mainstem would run dry"
                     + (".  " if _mainstem_runs_dry(rn) else " not quite.  ")
                     + "But Lima draws treated water from ~15 BG of off-stream reservoir storage, "
-                    "so the real constraint is reservoir drawdown (`bosc supply`), not this bound."
+                    "so the real constraint is reservoir drawdown (`watermark supply`), not this bound."
                 ),
             )
         )

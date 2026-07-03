@@ -1,4 +1,4 @@
-"""Hermetic CLI tests for ``bosc sweep data-centers`` — no live agent, no network."""
+"""Hermetic CLI tests for ``watermark sweep data-centers`` — no live agent, no network."""
 
 from __future__ import annotations
 

@@ -1,10 +1,10 @@
 # Hamilton · Middletown (hamilton-middletown) — energy / grid outputs
 
-Per-site onboarding tree for the Hamilton · Middletown watershed point (basin: great-miami), scaffolded by `bosc onboard hamilton-middletown` (#326). Values come from the portable reach connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is fabricated; regenerate, don't hand-edit.
+Per-site onboarding tree for the Hamilton · Middletown watershed point (basin: great-miami), scaffolded by `watermark onboard hamilton-middletown` (#326). Values come from the portable reach connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is fabricated; regenerate, don't hand-edit.
 
 ## Source
 
-`bosc onboard hamilton-middletown` over the Hamilton · Middletown `SiteProfile` (reach connectors: NWIS / NOAA Atlas-14 / SSURGO / NASA-POWER).
+`watermark onboard hamilton-middletown` over the Hamilton · Middletown `SiteProfile` (reach connectors: NWIS / NOAA Atlas-14 / SSURGO / NASA-POWER).
 
 ## Known gaps & caveats
 
@@ -13,4 +13,4 @@ Per-site onboarding tree for the Hamilton · Middletown watershed point (basin: 
 
 ## Regenerate
 
-`bosc onboard hamilton-middletown`  (or the per-connector commands: `derive-low-flows`, `nasa-power --write`, etc.)
+`watermark onboard hamilton-middletown`  (or the per-connector commands: `derive-low-flows`, `nasa-power --write`, etc.)

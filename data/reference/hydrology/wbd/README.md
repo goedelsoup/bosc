@@ -13,9 +13,9 @@ GeoJSON feed (issue #61) is assembled from, for the watershed map (#72).
 - Pulled by the `watermark.hydrology.connectors.wbd` connector; **regenerable** with:
 
   ```sh
-  bosc wbd --write              # the campus AOI's HU12 + HU10, default
-  bosc wbd --levels 12,10,8 --write   # add the coarser HU8 Subbasin too
-  bosc wbd --point -84.1234,40.7969 --write   # any WGS84 point
+  watermark wbd --write              # the campus AOI's HU12 + HU10, default
+  watermark wbd --levels 12,10,8 --write   # add the coarser HU8 Subbasin too
+  watermark wbd --point -84.1234,40.7969 --write   # any WGS84 point
   ```
 
   The AOI defaults to the `data-center-campus` tracking-site POI's bbox centroid

@@ -15,9 +15,9 @@ the same nutrient cap, so the sites are nested nodes on one connected basin, not
   This is the only place the cross-site *topology* lives — per-node attributes are NOT duplicated.
 
 - **`basin-network.yaml`** — *computed, regenerable.* The assembled cross-site comparison, written
-  by `bosc network`. For each node it joins the topology above with the node's own committed
+  by `watermark network`. For each node it joins the topology above with the node's own committed
   artifacts (economic baseline, grid profile, RSEI inventory) and its low-flow screen, into one
-  provenance-tagged `BasinNetwork` (`watermark.network`). Regenerate with `bosc network --write`; do not
+  provenance-tagged `BasinNetwork` (`watermark.network`). Regenerate with `watermark network --write`; do not
   hand-edit. Reads only committed reference data — no network calls.
 
 ## Discipline

@@ -58,7 +58,7 @@ def basin_screen() -> None:
     """Basin-wide low-flow assimilative screen over the ECHO Maumee POTW inventory.
 
     Extends the Lima-loop screen to every basin POTW, using the cited 7Q10s plus the
-    derived mainstem 7Q10s (`bosc derive-low-flows`). Dischargers on ungaged tributaries
+    derived mainstem 7Q10s (`watermark derive-low-flows`). Dischargers on ungaged tributaries
     or with no receiving water in ECHO are reported, not screened (omit, don't guess).
     """
     from watermark.hydrology.basin import check_basin_assimilative
@@ -240,7 +240,7 @@ def storm(
     console.print(
         f"\n[dim]Tier-0 SCS screening. HSG {('ABCD'[int(runoff.hsg.value) - 1])} and land cover "
         f"are cited assumptions; footprint is document-sourced; rainfall is {rainfall_src}. "
-        f"See `bosc storm-discharge` for the 60-in outfall + Dug Run screen.[/]"
+        f"See `watermark storm-discharge` for the 60-in outfall + Dug Run screen.[/]"
     )
 
 
@@ -588,7 +588,7 @@ def storm_plan(
     else:
         loaded = stormplan.load_inventory(settings=settings)
         if loaded is None:
-            console.print("[yellow]No inventory yet — run `bosc storm-plan --refresh`.[/]")
+            console.print("[yellow]No inventory yet — run `watermark storm-plan --refresh`.[/]")
             raise typer.Exit()
         inv = loaded
 
@@ -830,7 +830,7 @@ def lowflow_freq(
 def supply_cmd() -> None:
     """Screen the campus draw against Lima's reservoir storage (the supply water-budget).
 
-    The intake-side counterpart to `bosc network`. Lima's supply is five upground
+    The intake-side counterpart to `watermark network`. Lima's supply is five upground
     (off-stream) reservoirs (~15 BG) filled from the Auglaize + Ottawa at high flow, so
     the low-flow constraint is reservoir DRAWDOWN, not a 7Q10 intake. Reports the
     drought-reserve drawdown, the campus's share of plant production, and the net basin
@@ -877,7 +877,7 @@ def refill_cmd(
 ) -> None:
     """Can high-flow pumping refill the reservoirs against demand — incl. through drought?
 
-    The flow-side counterpart to `bosc supply`. Reports the normal-year supply surplus and
+    The flow-side counterpart to `watermark supply`. Reports the normal-year supply surplus and
     the sequent-peak (Rippl) storage the worst gauged drought calls on, city-only vs +campus.
     `--write` re-pulls the Auglaize + Ottawa daily records and rewrites the committed artifact.
     """
@@ -895,7 +895,7 @@ def refill_cmd(
         if loaded is None:
             console.print(
                 "[yellow]No refill analysis[/] (data/reference/hydrology/refill-adequacy.yaml). "
-                "Run [bold]bosc refill --write[/] to generate it."
+                "Run [bold]watermark refill --write[/] to generate it."
             )
             raise typer.Exit(1)
         ra = loaded

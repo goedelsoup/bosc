@@ -96,7 +96,7 @@ class ConsumerEnergyCosts(BaseModel):
 
     The consumer-price half of the demand thread: what households pay for electricity
     and heating fuel, against which the data-center load's pressure is screened. A
-    vendored, regenerable reference (``bosc eia``) like the QCEW baseline — the site
+    vendored, regenerable reference (``watermark eia``) like the QCEW baseline — the site
     reads the committed YAML, never a live pull. Every figure is connector-sourced.
     """
 

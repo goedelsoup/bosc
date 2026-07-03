@@ -17,7 +17,7 @@ the bundle — no re-deriving:
   (``approximate: true``), not as formatted text.
 
 The already-provenanced feeds (rsei, lei, economics-baseline, hydrology-scenarios)
-export their existing :mod:`bosc` Pydantic models unchanged — they already satisfy the
+export their existing :mod:`watermark` Pydantic models unchanged — they already satisfy the
 #60 discipline through ``ProvenancedValue`` / an inventory ``meta.source`` — so this
 module only models the feeds whose renderers worked off dataclasses or raw dicts.
 """
@@ -50,7 +50,7 @@ from watermark.provenance import source_is_verified
 # 1.7.0: adds the per-site `leads` feed — the open-leads board read from a committed per-site store
 #   (`data/site/leads.yaml`, slug-scoped), so a peer carries its own leads, not Lima's (#796).
 # 1.8.0: adds the optional `ask-embeddings` feed — all-MiniLM-L6-v2 document vectors for hybrid
-#   BM25 + vector retrieval (#329); absent when `bosc export --no-embeddings` is used.
+#   BM25 + vector retrieval (#329); absent when `watermark export --no-embeddings` is used.
 # 1.9.0: `hydrology-scenarios` rows gain `cooling_model` (top-level, on the scenario, and on its
 #   basis) plus the basis honesty flags `method_disclosed` / `is_bracketed` and the hybrid
 #   `seasonal_months` — the cooling-model typology (epic #1060). An `unknown` model means the
@@ -464,7 +464,7 @@ class CatalogItem(BaseModel):
     collection: str  # the first dir under the scope (e.g. "echo"), or the scope when flat
     status: str  # needs-review | reviewed | deprecated
     producer_kind: str  # connector | derived | vendored | manual | extracted
-    command: str | None = None  # the `bosc <cmd>` regenerator
+    command: str | None = None  # the `watermark <cmd>` regenerator
     connector_ref: str | None = None
     source: str  # human upstream label
     external_url: str | None = None
@@ -476,7 +476,7 @@ class CatalogItem(BaseModel):
     last_refreshed: str | None = None
     tags: list[str] = Field(default_factory=list)
     storage: list[CatalogStorageFile] = Field(default_factory=list)
-    observed: CatalogObserved | None = None  # None until `bosc catalog reconcile` has run
+    observed: CatalogObserved | None = None  # None until `watermark catalog reconcile` has run
     citation: Citation
 
 

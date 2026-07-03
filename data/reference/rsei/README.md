@@ -3,7 +3,7 @@
 Per-facility **Risk-Screening Environmental Indicators (RSEI)** results for **Allen
 County, OH (FIPS 39003)**, reduced from EPA's RSEI Public Data Set. Every figure here
 was summed from RSEI rows — nothing is fabricated, inferred, or estimated by BOSC.
-Regenerate with `bosc rsei`.
+Regenerate with `watermark rsei`.
 
 ## What RSEI is
 
@@ -29,7 +29,7 @@ two comparative measures:
 
 ## How the inventory is built
 
-RSEI is a relational dump. `bosc rsei` joins five tables and keeps only the rows that
+RSEI is a relational dump. `watermark rsei` joins five tables and keeps only the rows that
 roll up to a county-39003 facility:
 
 ```
@@ -54,12 +54,12 @@ elements   (ReleaseNumber)   -> Score, CScore, NCScore, Hazard, Population
   each with cumulative Score/Cancer/Non-cancer/Hazard/pounds, a per-year series, a
   by-media pounds breakdown, and the top contributing chemicals.
 - `toxic-discharge-screen.yaml` — the **toxic-load × assimilative-capacity screen**
-  (`bosc toxics`): the 12 facilities that release toxics **to water**, placed on their
+  (`watermark toxics`): the 12 facilities that release toxics **to water**, placed on their
   receiving stream and read against the cited 7Q10 (see below).
 
 ## Toxic-discharge screen (`toxic-discharge-screen.yaml`)
 
-`bosc toxics` extends the hydrology [low-flow assimilative screen](../../../docs/HYDROLOGY.md)
+`watermark toxics` extends the hydrology [low-flow assimilative screen](../../../docs/HYDROLOGY.md)
 from the three municipal WWTPs to the **industrial** dischargers — the RSEI facilities
 with water-media releases — using only committed artifacts (RSEI × ECHO × the cited
 7Q10), no network.

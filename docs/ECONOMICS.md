@@ -1,7 +1,7 @@
 # Economics — regional cloud-consumer demand & the public benefits extended to it
 
 > A demand-side companion to [HYDROLOGY.md](HYDROLOGY.md). **Unlike HYDROLOGY, this
-> document is not `bosc`-generated** — it is hand-assembled analysis over cited
+> document is not `watermark`-generated** — it is hand-assembled analysis over cited
 > records. Every figure is tagged: `[verified]` (read from a committed extraction
 > or cited record), `[inference]` (a labelled derivation), `[assumption]`, or
 > `[open]` (a question, not a finding). The spine is civil/land/hydrology; this is
@@ -105,8 +105,8 @@ with its cited sources — though whether each applies to *this* campus stays
 
 The 2026-06-10 facility-design call asked to *"bring in fuel costs at the consumer
 level due to macro pressures and data-center demand."* The
-[`watermark.economics.energy`](../src/bosc/economics/energy.py) thread sizes that spillover
-against **committed EIA consumer prices** (`bosc eia` →
+[`watermark.economics.energy`](../src/watermark/economics/energy.py) thread sizes that spillover
+against **committed EIA consumer prices** (`watermark eia` →
 [`data/reference/eia/`](../data/reference/eia/)): Ohio residential electricity (¢/kWh),
 residential natural gas ($/Mcf), and total state retail electricity sales.
 

@@ -4,7 +4,7 @@ A *tracking site* is a POI at depth ``watched`` (with ``track.enabled``): the si
 source of truth for what gets imagery is the ``track`` flag in a ``data/entities/poi/<slug>.md``
 profile, not a layer of ``gis-findings.geojson``. ``watermark.gis`` is a **consumer** of
 ``watermark.poi`` — this reads ``tracked_pois()`` and exposes each as a ``TrackingSite`` whose
-``bbox`` is the AOI ``bosc imagery search``/``pull`` clips to. See
+``bbox`` is the AOI ``watermark imagery search``/``pull`` clips to. See
 [`docs/poi-subsystem.md`](../../../docs/poi-subsystem.md) (decision #7).
 """
 

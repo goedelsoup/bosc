@@ -44,7 +44,7 @@ def poi_list(
 
 
 @poi_app.command("show")
-def poi_show(slug: str = typer.Argument(..., help="POI slug (see `bosc poi list`).")) -> None:
+def poi_show(slug: str = typer.Argument(..., help="POI slug (see `watermark poi list`).")) -> None:
     """Show one POI: its frontmatter (identity, location, tracking) and body."""
     from watermark.poi import load_poi
 

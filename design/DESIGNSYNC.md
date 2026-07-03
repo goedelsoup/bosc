@@ -16,6 +16,16 @@ code and what pushes/pulls go through.
 The design language (the doctrine) is in [`readme.md`](./readme.md) and [`SKILL.md`](./SKILL.md);
 the tokens are in [`tokens/`](./tokens/) and [`styles.css`](./styles.css).
 
+> **Two `SKILL.md` files, one design system — not a duplicate.**
+> [`design/SKILL.md`](./SKILL.md) is the Claude Design project's own skill packaging,
+> **synced** from upstream (it's in `designsync.json`'s `synced` set) — edit it upstream,
+> not here, or the next pull reverts it. It is *not* discovered by the repo harness (only
+> `.claude/skills/` is). The harness skill
+> [`.claude/skills/watermark-design/SKILL.md`](../.claude/skills/watermark-design/SKILL.md)
+> is the repo-authored router (trigger logic + these DesignSync instructions) that points
+> agents at this `design/` mirror. Keep the harness skill canonical; leave `design/SKILL.md`
+> to the sync.
+
 ## Connector
 
 Sync runs through the **claude_design** MCP connector (the `DesignSync` tool). It needs design

@@ -1,4 +1,4 @@
-"""Tests for the EPA RSEI per-county reduction (`bosc rsei`)."""
+"""Tests for the EPA RSEI per-county reduction (`watermark rsei`)."""
 
 from __future__ import annotations
 

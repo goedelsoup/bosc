@@ -2,9 +2,9 @@
 
 *Design + roadmap. **P0 (scaffold) and P1 (STAC search) have shipped**; the
 raster-materialization layer (P2+) is not built yet. The working code is the
-`watermark.gis` package (`sites.py`, `imagery.py`) with `bosc imagery sites` /
-`bosc imagery search`; steady-state guidance lives in
-[`src/bosc/gis/CLAUDE.md`](../src/bosc/gis/CLAUDE.md). This file is the plan and the
+`watermark.gis` package (`sites.py`, `imagery.py`) with `watermark imagery sites` /
+`watermark imagery search`; steady-state guidance lives in
+[`src/watermark/gis/CLAUDE.md`](../src/watermark/gis/CLAUDE.md). This file is the plan and the
 record of decisions/deviations.*
 
 **Shipped in P1 (two deviations from the original plan, by design):**
@@ -119,7 +119,7 @@ pull_capture(scene, aoi, bands, *, settings) -> Capture
 
 This two-layer split keeps the JSON search inside the proven `cached_get` machinery
 while giving the binary read its own committed-fixture path; the existing
-[`geo.py`](../src/bosc/hydrology/geo.py) note that the subsystem stays "no rasterio"
+[`geo.py`](../src/watermark/hydrology/geo.py) note that the subsystem stays "no rasterio"
 is superseded *only* for this new package — `rasterio` is an imagery dependency, not a
 hydrology one.
 
@@ -127,7 +127,7 @@ hydrology one.
 
 Promote a small **`watermark.gis`** package (`watermark.gis.imagery`, `watermark.gis.sites`) rather
 than wedging satellites under `watermark.hydrology`. The shared `_cache` currently lives at
-[`watermark.hydrology.connectors._cache`](../src/bosc/hydrology/connectors/_cache.py); lift
+[`watermark.hydrology.connectors._cache`](../src/watermark/hydrology/connectors/_cache.py); lift
 it to a common location (e.g. `watermark.connectors._cache`) and re-export from hydrology so
 nothing breaks. The vector helpers in `geo.py` (`bbox_of`, area math) are also natural
 candidates to migrate into `watermark.gis` over time.
@@ -151,9 +151,9 @@ candidates to migrate into `watermark.gis` over time.
 > group-by-layer sketch is kept below for history.
 
 A tracking site is just a feature with an AOI. Reuse
-[`geo.bbox_of(path, pad_deg=...)`](../src/bosc/hydrology/geo.py) for the search
+[`geo.bbox_of(path, pad_deg=...)`](../src/watermark/hydrology/geo.py) for the search
 envelope and parse sites the way
-[`wwtp_nodes_from_watch_items`](../src/bosc/hydrology/geo.py) parses receivers.
+[`wwtp_nodes_from_watch_items`](../src/watermark/hydrology/geo.py) parses receivers.
 Two options for the source-of-truth (decide at P0):
 
 - tag features `track: true` in the existing `data/site/gis-findings.geojson`, or
@@ -190,14 +190,14 @@ New deps (the real cost of "raster-capable"): `pystac-client`, `planetary-comput
 - **CLI option discipline:** any `typer.Option` whose param is a `Path` must be typed
   `str` and converted in the body (ruff `B008`) — applies to `--out`, `--sites`.
 
-## 6. CLI surface (`bosc imagery`)
+## 6. CLI surface (`watermark imagery`)
 
-- `bosc imagery sites` — list tracking sites + AOIs.
-- `bosc imagery search <site> --collection sentinel-2-l2a --from … --to … --max-cloud …`
+- `watermark imagery sites` — list tracking sites + AOIs.
+- `watermark imagery search <site> --collection sentinel-2-l2a --from … --to … --max-cloud …`
   — STAC search; print matching scenes.
-- `bosc imagery pull <site> --collection … (--date … | --from/--to …) [--bands …]`
+- `watermark imagery pull <site> --collection … (--date … | --from/--to …) [--bands …]`
   — materialize clipped GeoTIFF(s) + sidecar.
-- `bosc imagery timeline <site>` — build/refresh the dated series.
+- `watermark imagery timeline <site>` — build/refresh the dated series.
 - `--index ndvi|ndwi` — compute a derived raster (tagged `derived`).
 
 ## 7. Testing / fixtures
@@ -218,12 +218,12 @@ Each phase is a shippable slice.
   `TrackingSite` + the sites source (group-by-layer over `gis-findings.geojson`).
   (`_cache` lift + `ImageryOfflineError` since landed — see the deviations note up top, #423.)
 - **P1 — search. ✅ done.** Sentinel-2 STAC search via `httpx` + `cached_get` +
-  committed real fixture + `bosc imagery sites` / `bosc imagery search`. The
+  committed real fixture + `watermark imagery sites` / `watermark imagery search`. The
   "Data-center campus" site (10 Bistrozzi parcels, ~339 ac) resolves and returns
   scenes offline.
 - **P2 — pull. ✅ done.** `rasterio` + `planetary-computer` (no `pystac-client` —
   signing only); sign assets → windowed COG clip to AOI → GeoTIFF + sidecar + sha256;
-  committed fixture COG; `bosc imagery pull`. `ImageryOfflineError` covers the raster
+  committed fixture COG; `watermark imagery pull`. `ImageryOfflineError` covers the raster
   path's fixture-COG miss (binary COGs resolve directly, not through the JSON `cached_get`).
 - **P3 — NAIP + Landsat. ✅ done.** Same `pull` path, per-collection default asset
   (`raster._DEFAULT_ASSET`: sentinel-2→`visual`, naip→`image`, landsat→`red`).
@@ -233,11 +233,11 @@ Each phase is a shippable slice.
 - **P4 — analysis. ✅ done.** `watermark.gis.analysis.compute_index` clips the band COGs
   (shared `raster.clip_asset`) and computes **NDVI** (vegetation/disturbance) or **NDWI**
   (open water) → a `derived` float32 GeoTIFF + a sidecar with mean + **water fraction**.
-  `bosc imagery index <site> --index ndvi|ndwi`. The campus reads NDVI ≈ 0.31 (vegetated),
+  `watermark imagery index <site> --index ndvi|ndwi`. The campus reads NDVI ≈ 0.31 (vegetated),
   NDWI water-fraction 0 (no water). Wiring the NDWI water-extent series into the
   sequent-peak reservoir budget, and date-to-date change detection, await the off-stream
   reservoir becoming a tracked POI (a diff of two index rasters is a thin follow-on).
-- **P5 — map. ✅ done.** The site GIS map ([`gismap.py`](../src/bosc/site/gismap.py))
+- **P5 — map. ✅ done.** The site GIS map ([`gismap.py`](../src/watermark/site/gismap.py))
   gains a curated ladder of **dated Esri *Wayback* aerials** (2014 → 2024, real release
   numbers) in the layer control — flip the AOI between years to watch the data-center
   land change. View-only (tiles load from Esri, no redistribution). EarthExplorer
@@ -251,7 +251,7 @@ Each phase is a shippable slice.
   separate file; geometry stays sourced from committed findings.
 - **First sites in scope:** the **data-center campus** is live (layer `campus`). The
   **Amazon warehouse parcel** and **off-stream reservoir** still need committed
-  geometry in `gis-findings.geojson` (pull the warehouse parcel via `bosc parcels`;
+  geometry in `gis-findings.geojson` (pull the warehouse parcel via `watermark parcels`;
   add the reservoir footprint) before they can be tracked — not fabricated here.
 - **`_cache` lift target — decided (#423):** `watermark.connectors._cache` (the neutral base
   the whole repo lifted onto). Imagery's search path uses it with `gis_cache_dir` +

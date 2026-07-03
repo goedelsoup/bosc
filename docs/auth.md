@@ -1,5 +1,8 @@
 # Auth — Cognito identity foundation (Epic #919)
 
+**Status:** design (Epic #919, as of 2026-07-02) — describes the *planned* identity
+foundation; not yet built. The present-tense below is the target design, not a live system.
+
 Watermark Directory uses **AWS Cognito** as its identity provider. The Hosted UI
 handles registration, email verification, password reset, and social OAuth. The
 platform uses a **PKCE Authorization Code** flow — no implicit grant.

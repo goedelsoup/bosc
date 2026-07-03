@@ -160,7 +160,7 @@ _LIMA = SiteProfile(
     lmp_usd_mwh=45.81,  # connector-sourced AEP-zone 2025 day-ahead annual mean (#121)
     lmp_citation=(
         "PJM Data Miner 2 da_hrl_lmps, AEP zone (pnode 8445784), 2025 day-ahead annual mean "
-        "$45.81/MWh (8760 h); connector-sourced 2026-06-21 (bosc lmp)"
+        "$45.81/MWh (8760 h); connector-sourced 2026-06-21 (watermark lmp)"
     ),
     lmp_pnode_id=8445784,
     lmp_pnode_name="AEP",
@@ -176,7 +176,7 @@ _LIMA = SiteProfile(
 # cited below; the facility-specific model inputs (the development land-cover scenario, the
 # toxics corridor, per-WWTP receiving waters, the refill supply gages + passby minimums) stay
 # `TODO` until an actual data-center development site is identified — that's the data-center
-# dimension onboard does not capture, and `bosc onboard findlay --check` tracks the gaps.
+# dimension onboard does not capture, and `watermark onboard findlay --check` tracks the gaps.
 # Provenance tags inline: [verified] cited primary source; [inference] grounded reasoning;
 # [reference] authoritative dataset; [open] genuinely unsourced (a known lift / pending a site).
 _FINDLAY = SiteProfile(
@@ -272,7 +272,7 @@ _FINDLAY = SiteProfile(
     lmp_usd_mwh=45.81,  # connector-sourced AEP-zone 2025 day-ahead annual mean (same zone as Lima)
     lmp_citation=(
         "PJM Data Miner 2 da_hrl_lmps, AEP zone (pnode 8445784), 2025 day-ahead annual mean "
-        "$45.81/MWh (8760 h); connector-sourced 2026-06-21 (bosc lmp) — same AEP zone as Lima"
+        "$45.81/MWh (8760 h); connector-sourced 2026-06-21 (watermark lmp) — same AEP zone as Lima"
     ),
     lmp_pnode_id=8445784,
     lmp_pnode_name="AEP",
@@ -437,7 +437,7 @@ _FORT_WAYNE = SiteProfile(
     lmp_usd_mwh=45.81,  # connector-sourced AEP-zone 2025 day-ahead annual mean (I&M is in the AEP zone)
     lmp_citation=(
         "PJM Data Miner 2 da_hrl_lmps, AEP zone (pnode 8445784), 2025 day-ahead annual mean "
-        "$45.81/MWh (8760 h); connector-sourced 2026-06-21 (bosc lmp) — I&M settles in the PJM AEP zone"
+        "$45.81/MWh (8760 h); connector-sourced 2026-06-21 (watermark lmp) — I&M settles in the PJM AEP zone"
     ),
     lmp_pnode_id=8445784,
     lmp_pnode_name="AEP",
@@ -537,7 +537,7 @@ _VAN_WERT = SiteProfile(
     lmp_usd_mwh=45.81,  # connector-sourced AEP-zone 2025 day-ahead annual mean (same zone as Lima)
     lmp_citation=(
         "PJM Data Miner 2 da_hrl_lmps, AEP zone (pnode 8445784), 2025 day-ahead annual mean "
-        "$45.81/MWh (8760 h); connector-sourced 2026-06-21 (bosc lmp) — same AEP zone as Lima"
+        "$45.81/MWh (8760 h); connector-sourced 2026-06-21 (watermark lmp) — same AEP zone as Lima"
     ),
     lmp_pnode_id=8445784,
     lmp_pnode_name="AEP",
@@ -647,7 +647,7 @@ _TOLEDO = SiteProfile(
     lmp_usd_mwh=45.84,  # connector-sourced ATSI-zone 2025 day-ahead annual mean (#387; not the AEP value)
     lmp_citation=(
         "PJM Data Miner 2 da_hrl_lmps, ATSI zone (FirstEnergy / Toledo Edison, pnode 116013753), "
-        "2025 day-ahead annual mean $45.84/MWh (8760 h); connector-sourced 2026-06-21 (bosc lmp)"
+        "2025 day-ahead annual mean $45.84/MWh (8760 h); connector-sourced 2026-06-21 (watermark lmp)"
     ),
     lmp_pnode_id=116013753,
     lmp_pnode_name="ATSI",
@@ -873,7 +873,7 @@ _BRYAN = SiteProfile(
     lmp_usd_mwh=45.81,  # connector-sourced AEP-zone 2025 day-ahead annual mean (CTYBRYAN is in AEP)
     lmp_citation=(
         "PJM Data Miner 2 da_hrl_lmps, AEP zone (pnode 8445784), 2025 day-ahead annual mean "
-        "$45.81/MWh (8760 h); connector-sourced 2026-06-21 (bosc lmp) — the City-of-Bryan load "
+        "$45.81/MWh (8760 h); connector-sourced 2026-06-21 (watermark lmp) — the City-of-Bryan load "
         "(CTYBRYAN) settles in the PJM AEP zone"
     ),
     lmp_pnode_id=8445784,
@@ -979,7 +979,7 @@ _OTTAWA = SiteProfile(
     lmp_usd_mwh=45.81,  # connector-sourced AEP-zone 2025 day-ahead annual mean (same zone as Lima)
     lmp_citation=(
         "PJM Data Miner 2 da_hrl_lmps, AEP zone (pnode 8445784), 2025 day-ahead annual mean "
-        "$45.81/MWh (8760 h); connector-sourced 2026-06-21 (bosc lmp) — same AEP zone as Lima/Findlay"
+        "$45.81/MWh (8760 h); connector-sourced 2026-06-21 (watermark lmp) — same AEP zone as Lima/Findlay"
     ),
     lmp_pnode_id=8445784,
     lmp_pnode_name="AEP",
@@ -997,7 +997,7 @@ _OTTAWA = SiteProfile(
 # inverse of the poorly-drained Black Swamp clays (HSG D). Sink is the Ohio River, not Lake
 # Erie, and there is no Maumee-style basin TMDL — a genuinely different mix of influences.
 # Registered for onboarding (#440); most fields are [open] research targets filled by
-# `bosc onboard urbana --research` — only the verified geography/gages are set here.
+# `watermark onboard urbana --research` — only the verified geography/gages are set here.
 _URBANA = SiteProfile(
     slug="urbana",
     basin="great-miami",  # [verified] Mad River → Great Miami River → Ohio River (HUC-8 05080001)
@@ -1073,7 +1073,7 @@ _URBANA = SiteProfile(
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(
         "PJM Data Miner 2 da_hrl_lmps, DAY zone (pnode 34508503), 2025 day-ahead annual mean "
-        "$46.42/MWh (8760 h); connector-sourced 2026-07-01 (bosc lmp) — AES Ohio (DP&L) "
+        "$46.42/MWh (8760 h); connector-sourced 2026-07-01 (watermark lmp) — AES Ohio (DP&L) "
         "territory, Champaign County, OH [verified]"
     ),
     lmp_pnode_id=34508503,  # [verified] PJM DAY zone (AES Ohio / Dayton Power & Light)
@@ -1094,7 +1094,7 @@ _URBANA = SiteProfile(
 # PrimeOhio (601 Benjamin Drive) plus a separate Crusoe build (discovered #454, 2026-06-22) —
 # the Roshel / International Motors "Springfield APA" (2026-03-30) is an armored-vehicle plant
 # Asset Purchase Agreement (manufacturing, NOT a data center) and is scoped out of the graph
-# (#453). All such fields stay [open] research targets filled by `bosc onboard springfield`.
+# (#453). All such fields stay [open] research targets filled by `watermark onboard springfield`.
 _SPRINGFIELD = SiteProfile(
     slug="springfield",
     basin="great-miami",  # [verified] Mad River → Great Miami River → Ohio River (HUC-8 05080001)
@@ -1157,7 +1157,7 @@ _SPRINGFIELD = SiteProfile(
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(
         "PJM Data Miner 2 da_hrl_lmps, DAY zone (pnode 34508503), 2025 day-ahead annual mean "
-        "$46.42/MWh (8760 h); connector-sourced 2026-07-01 (bosc lmp) — city LSE is AES Ohio "
+        "$46.42/MWh (8760 h); connector-sourced 2026-07-01 (watermark lmp) — city LSE is AES Ohio "
         "(DP&L) #4922; EIA-861 shows no AEP in Clark County, OH [verified]"
     ),
     lmp_pnode_id=34508503,  # [verified] PJM DAY zone (AES Ohio / Dayton Power & Light, Clark County)
@@ -1239,7 +1239,7 @@ _XENIA = SiteProfile(
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(
         "PJM Data Miner 2 da_hrl_lmps, DAY zone (pnode 34508503), 2025 day-ahead annual mean "
-        "$46.42/MWh (8760 h); connector-sourced 2026-07-01 (bosc lmp) — AES Ohio (DP&L) "
+        "$46.42/MWh (8760 h); connector-sourced 2026-07-01 (watermark lmp) — AES Ohio (DP&L) "
         "territory, Greene County, OH [verified]"
     ),
     lmp_pnode_id=34508503,  # [verified] PJM DAY zone (AES Ohio / Dayton Power & Light)
@@ -1346,7 +1346,7 @@ _WPAFB = SiteProfile(
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(
         "PJM Data Miner 2 da_hrl_lmps, DAY zone (pnode 34508503), 2025 day-ahead annual mean "
-        "$46.42/MWh (8760 h); connector-sourced 2026-07-01 (bosc lmp) — AES Ohio (DP&L) "
+        "$46.42/MWh (8760 h); connector-sourced 2026-07-01 (watermark lmp) — AES Ohio (DP&L) "
         "territory, Montgomery/Greene counties, OH [verified]"
     ),
     lmp_pnode_id=34508503,  # [verified] PJM DAY zone (AES Ohio / Dayton Power & Light)
@@ -1445,7 +1445,7 @@ _HAMILTON_MIDDLETOWN = SiteProfile(
     lmp_usd_mwh=45.10,  # connector-sourced DEOK-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(
         "PJM Data Miner 2 da_hrl_lmps, DEOK zone (pnode 124076095), 2025 day-ahead annual mean "
-        "$45.10/MWh (8760 h); connector-sourced 2026-07-01 (bosc lmp) — Duke Energy Ohio (DEOK) "
+        "$45.10/MWh (8760 h); connector-sourced 2026-07-01 (watermark lmp) — Duke Energy Ohio (DEOK) "
         "territory, Butler County, OH; Hamilton muni on AMP (same DEOK wholesale zone) [verified]"
     ),
     lmp_pnode_id=124076095,  # [verified] PJM DEOK zone (Duke Energy Ohio)
@@ -1524,7 +1524,7 @@ _TROY_PIQUA = SiteProfile(
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(
         "PJM Data Miner 2 da_hrl_lmps, DAY zone (pnode 34508503), 2025 day-ahead annual mean "
-        "$46.42/MWh (8760 h); connector-sourced 2026-07-01 (bosc lmp) — AES Ohio (DP&L) "
+        "$46.42/MWh (8760 h); connector-sourced 2026-07-01 (watermark lmp) — AES Ohio (DP&L) "
         "territory, Miami County, OH; Piqua muni on AMP (same DAY wholesale zone) [verified]"
     ),
     lmp_pnode_id=34508503,  # [verified] PJM DAY zone (AES Ohio / Dayton Power & Light)
@@ -1622,7 +1622,7 @@ _SIDNEY = SiteProfile(
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(
         "PJM Data Miner 2 da_hrl_lmps, DAY zone (pnode 34508503), 2025 day-ahead annual mean "
-        "$46.42/MWh (8760 h); connector-sourced 2026-07-01 (bosc lmp) — AES Ohio (DP&L) "
+        "$46.42/MWh (8760 h); connector-sourced 2026-07-01 (watermark lmp) — AES Ohio (DP&L) "
         "territory, Shelby County, OH [verified]"
     ),
     lmp_pnode_id=34508503,  # [verified] PJM DAY zone (AES Ohio / Dayton Power & Light)
@@ -1709,7 +1709,7 @@ _GREENVILLE = SiteProfile(
     supply_gage_primary="03264000",  # [verified] Greenville Creek near Bradford
     supply_gage_secondary="03265000",  # [verified] Stillwater River at Pleasant Hill (downstream context)
     # [inference] LP3 7Q10 from USGS NWIS as conservative supply passby proxy (no abstraction
-    # permit on record); regenerable via `bosc derive-low-flows`.
+    # permit on record); regenerable via `watermark derive-low-flows`.
     # Greenville Creek near Bradford (03264000): 7Q10 = 11.34 cfs, 41 yr 1980-2024.
     # Stillwater at Pleasant Hill (03265000): 7Q10 = 15.69 cfs, 44 yr 1980-2024.
     passby_primary_cfs=11.34,
@@ -1721,7 +1721,7 @@ _GREENVILLE = SiteProfile(
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(
         "PJM Data Miner 2 da_hrl_lmps, DAY zone (pnode 34508503), 2025 day-ahead annual mean "
-        "$46.42/MWh (8760 h); connector-sourced 2026-07-01 (bosc lmp) — City of Greenville LSE "
+        "$46.42/MWh (8760 h); connector-sourced 2026-07-01 (watermark lmp) — City of Greenville LSE "
         "is AES Ohio (DP&L) #4922; Darke REC co-op also in DAY zone [verified]"
     ),
     lmp_pnode_id=34508503,  # [verified] PJM DAY zone (AES Ohio / Dayton Power & Light)
@@ -1805,7 +1805,7 @@ _WILMINGTON = SiteProfile(
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(
         "PJM Data Miner 2 da_hrl_lmps, DAY zone (pnode 34508503), 2025 day-ahead annual mean "
-        "$46.42/MWh (8760 h); connector-sourced 2026-07-01 (bosc lmp) — AES Ohio (DP&L) "
+        "$46.42/MWh (8760 h); connector-sourced 2026-07-01 (watermark lmp) — AES Ohio (DP&L) "
         "territory, Clinton County, OH [verified]"
     ),
     lmp_pnode_id=34508503,  # [verified] PJM DAY zone (AES Ohio / Dayton Power & Light)
@@ -2374,7 +2374,7 @@ SITES: dict[str, SiteProfile] = {
     _WEST_UNION.slug: _WEST_UNION,
 }
 
-# The per-site output relpaths `bosc onboard` writes. Each must be unique to its site so
+# The per-site output relpaths `watermark onboard` writes. Each must be unique to its site so
 # onboarding never overwrites another site's committed data — a profile that copies Lima
 # without slug-scoping these would otherwise clobber Lima's files (#326 hardening).
 PER_SITE_OUTPUT_FIELDS: tuple[str, ...] = (

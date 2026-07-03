@@ -7,9 +7,9 @@ across the sources**, which that one doesn't cover.
 
 The rules (from the root [`CLAUDE.md`](../../CLAUDE.md), *Data discipline*):
 
-- **Each folder carries its own `README.md`** naming its source, the regenerating `bosc`
+- **Each folder carries its own `README.md`** naming its source, the regenerating `watermark`
   subcommand, and its gaps. That per-folder README is the **authority** — start there. Many
-  carry a catalog-maintained generated block (`bosc catalog render`); don't hand-edit inside
+  carry a catalog-maintained generated block (`watermark catalog render`); don't hand-edit inside
   the markers.
 - Raw API responses stay cached under git-ignored `data/cache/`, so every committed CSV/YAML
   here is **regenerable**. Columns are selected by source field **name**, never index.

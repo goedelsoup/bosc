@@ -1,7 +1,7 @@
 """Export committed subdivision corridor-meeting summaries as typed feeds.
 
 Publishes the reviewed ``data/extracted/<slug>/meetings/meeting-summaries.yaml``
-artifacts (built by ``bosc subdivisions summarize``) as :class:`~watermark.site.feeds.MeetingItem`
+artifacts (built by ``watermark subdivisions summarize``) as :class:`~watermark.site.feeds.MeetingItem`
 feeds: for each political subdivision, the meetings whose minutes/agendas name the corridor
 project, with the grounded summary, decisions, parties, and dollar figures the model read
 from the text. (The legacy markdown ``render_meetings`` peer was removed at the SSG-cutover

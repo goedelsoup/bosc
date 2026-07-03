@@ -16,7 +16,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from watermark.connectors import DEFAULT_CACHE_TTL_HOURS
 from watermark.sites import PROFILE_SETTINGS_FIELDS, SITES
 
-# Repo root = two levels up from this file (src/bosc/config.py -> repo root).
+# Repo root = two levels up from this file (src/watermark/config.py -> repo root).
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -140,7 +140,7 @@ class Settings(BaseSettings):
     # appends `/<layer>/query`. Served through the shared hydrology cache/fixture path.
     wbd_url: str = "https://hydro.nationalmap.gov/arcgis/rest/services/wbd/MapServer"
     # EPA RSEI Public Data Set (AWS Open Data s3://epa-rsei-pds). Bulk relational
-    # tables; `bosc rsei` reduces them to one county's toxic-release inventory.
+    # tables; `watermark rsei` reduces them to one county's toxic-release inventory.
     rsei_base_url: str = "https://epa-rsei-pds.s3.amazonaws.com"
     rsei_version: str = "v234"
     rsei_fips: str = ""  # per-site (from the active SiteProfile); Lima = Allen County 39003
@@ -172,12 +172,12 @@ class Settings(BaseSettings):
     ssurgo_sda_url: str = "https://sdmdataaccess.sc.egov.usda.gov/Tabular/post.rest"
     # GLEIF Legal Entity Identifier registry (AWS Open Data s3://gleif). The bucket is
     # the bulk golden copy; for our curated watchlist we use the REST API (exact-LEI
-    # lookups + parent relationships). `bosc lei` resolves the watchlist to a YAML.
+    # lookups + parent relationships). `watermark lei` resolves the watchlist to a YAML.
     gleif_base_url: str = "https://api.gleif.org/api/v1"
     gleif_offline: bool = False  # serve cached API responses only; never fetch
     gleif_request_timeout_s: float = 30.0
 
-    # USASpending federal award data (public API, no auth). `bosc usaspending`
+    # USASpending federal award data (public API, no auth). `watermark usaspending`
     # resolves a pinned recipient watchlist to all-time prime-award obligations —
     # the "who benefits from federal dollars" layer behind the corridor.
     usaspending_base_url: str = "https://api.usaspending.gov/api/v2"
@@ -304,7 +304,7 @@ class Settings(BaseSettings):
 
     # --- Source-document object store (epic #274, B) -----------------------
     # Cloudflare R2 (S3-compatible) holds the corpus bytes that the /api/doc Pages
-    # Function (B2 / #278) streams; `bosc objectstore sync` (B3 / #279) uploads
+    # Function (B2 / #278) streams; `watermark objectstore sync` (B3 / #279) uploads
     # data/documents/** here. The access key id + secret are S3 API tokens — supplied
     # via the environment (WATERMARK_DOCUMENTS_OBJECT_STORE_*), NEVER committed. Empty
     # credentials mean the sync tool is unconfigured (it errors with a clear message);
@@ -461,7 +461,7 @@ class Settings(BaseSettings):
         """The data catalog — one typed :class:`watermark.catalog.CatalogEntry` per dataset
         (``<scope>/<id>.yaml``), the single registry of what lives under ``data/``,
         where it came from, its license/access tier, and how it regenerates. Committed
-        (epic #631). The peer of ``hypotheses_dir``; validated by ``bosc catalog check``."""
+        (epic #631). The peer of ``hypotheses_dir``; validated by ``watermark catalog check``."""
         return self.data_dir / "catalog"
 
     def ensure_dirs(self) -> None:

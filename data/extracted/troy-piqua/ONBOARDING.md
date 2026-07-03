@@ -1,6 +1,6 @@
 # Onboarding — Troy · Piqua (troy-piqua)
 
-Living record for the Troy · Piqua watershed point (basin: great-miami), scaffolded by `bosc onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
+Living record for the Troy · Piqua watershed point (basin: great-miami), scaffolded by `watermark onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
 
 Troy · Piqua is the **upper Great Miami mainstem** node (Miami County) — the I-75 corridor between the Great Miami headwaters (Indian Lake / Sidney) and Dayton, **upstream of WPAFB** (#442) and the **upstream complement** to the lower-mainstem Hamilton/Middletown node (#443). Same buried-valley sole-source aquifer, but a **mid-size manufacturing** county (Hobart commercial food-equipment HQ in Troy, auto parts) rather than Butler's heavy steel, and a distinctive **municipal-power split**: Piqua runs its own AMP-member electric utility (Great Miami hydro), while Troy/Miami County is likely AES Ohio. The site also carries a second supply water — the **Stillwater River** (gage 03265000). (UTM 16N, like WPAFB / Hamilton-Middletown — west of the 84°W meridian.) Tracking #475.
 
@@ -29,7 +29,7 @@ Troy · Piqua is the **upper Great Miami mainstem** node (Miami County) — the 
 
 ## Self-research (Phase 5; #247) — 2026-06-22
 
-`bosc onboard troy-piqua --research` (claude-opus-4-8, 31 turns, $1.23). Findings + manifest in
+`watermark onboard troy-piqua --research` (claude-opus-4-8, 31 turns, $1.23). Findings + manifest in
 `data/research/onboard-troy-piqua-troy-piqua-data-center-activi-2026-06-22/`.
 
 **Bottom line.** A registered, half-seeded upper-Great-Miami node — solid hydrometeorology + Miami

@@ -306,7 +306,7 @@ class _HypothesisAssessmentRecipe(ResearchRecipe):
 
     Output is *proposed*, not promoted: the candidate cell is written under the run's
     ``assessments/`` dir for review — graduating it into ``data/hypotheses/`` is a manual
-    edit (mirrors ``bosc onboard``, which proposes but never promotes).
+    edit (mirrors ``watermark onboard``, which proposes but never promotes).
     """
 
     name = "hypothesis-assessment"
@@ -636,7 +636,7 @@ def load_manifest(run_dir: Path) -> ResearchRunManifest:
     """Reconstruct a manifest from a written run dir (the inverse of :func:`write_run`).
 
     Reads ``manifest.yaml`` (provenance + proposals); ``findings`` is read back from
-    ``findings.md`` when present. Used by ``bosc research publish`` so the workflow can
+    ``findings.md`` when present. Used by ``watermark research publish`` so the workflow can
     turn a run into a PR + issues without re-running the agent.
     """
     data = yaml.safe_load((run_dir / "manifest.yaml").read_text(encoding="utf-8")) or {}

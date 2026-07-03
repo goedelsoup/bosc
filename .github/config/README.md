@@ -71,7 +71,7 @@ cd .github/config
 npm install
 pulumi stack init prod            # or: pulumi stack select prod
 export GITHUB_TOKEN=...           # admin-scoped PAT / App token
-pulumi import github:index/repository:Repository bosc bosc
+pulumi import github:index/repository:Repository watermark bosc
 pulumi preview                    # review: should show only the new BranchProtection
 pulumi up
 ```

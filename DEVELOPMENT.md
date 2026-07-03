@@ -54,6 +54,15 @@ mise tasks --all      # list every task
 mise run oepa-permit <permit_id> <site>   # fetch → ingest → extract → catalog sync
 ```
 
+After adding or editing an extraction, sync the data catalog (see
+[CONTRIBUTING.md → Adding extractions](CONTRIBUTING.md#adding-extractions)):
+
+```bash
+watermark catalog reconcile      # refresh _observed.yaml
+watermark catalog audit --apply  # apply inferred fields
+watermark catalog check          # gate — must pass before committing
+```
+
 ## CI
 
 `.github/workflows/ci.yml` uses a `changes` job to gate the two halves:

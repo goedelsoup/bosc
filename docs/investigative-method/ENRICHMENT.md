@@ -117,7 +117,7 @@ added only when an instrument names it. Follow that pattern.
 
 ## Platform
 
-GitHub repo `watermark-directory/the-watermark-directory` — `bosc` Typer CLI; `ingest → extract → analyze`
+GitHub repo `watermark-directory/the-watermark-directory` — `watermark` Typer CLI; `ingest → extract → analyze`
 pipeline; entity graph + timeline + dossier synthesis; the `watermark.hydrology`
-water-balance subsystem; the Python data tier (`watermark.site`, `bosc export`) and the
+water-balance subsystem; the Python data tier (`watermark.site`, `watermark export`) and the
 Astro presentation tier (`web/`). See the root `CLAUDE.md` and `README.md`.

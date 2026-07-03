@@ -17,7 +17,7 @@ decks land as ``.inp`` files under ``data/reference/hydrology/swmm/`` (chain of
 custody — anyone can re-run them in EPA SWMM) and the reviewed result as
 ``tier1-swmm.yaml``. :func:`load_tier1` reads that committed artifact so the dossier
 and tests show real SWMM numbers offline, without the engine; :func:`run_tier1`
-regenerates it (``bosc tier1 --write``).
+regenerates it (``watermark tier1 --write``).
 """
 
 from __future__ import annotations

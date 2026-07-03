@@ -1,10 +1,10 @@
 # Troy · Piqua (troy-piqua) — extractions
 
-Per-site onboarding tree for the Troy · Piqua watershed point (basin: great-miami), scaffolded by `bosc onboard troy-piqua` (#326). Values come from the portable reach connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is fabricated; regenerate, don't hand-edit.
+Per-site onboarding tree for the Troy · Piqua watershed point (basin: great-miami), scaffolded by `watermark onboard troy-piqua` (#326). Values come from the portable reach connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is fabricated; regenerate, don't hand-edit.
 
 ## Source
 
-`bosc onboard troy-piqua` over the Troy · Piqua `SiteProfile` (reach connectors: NWIS / NOAA Atlas-14 / SSURGO / NASA-POWER).
+`watermark onboard troy-piqua` over the Troy · Piqua `SiteProfile` (reach connectors: NWIS / NOAA Atlas-14 / SSURGO / NASA-POWER).
 
 ## Known gaps & caveats
 
@@ -13,4 +13,4 @@ Per-site onboarding tree for the Troy · Piqua watershed point (basin: great-mia
 
 ## Regenerate
 
-`bosc onboard troy-piqua`  (or the per-connector commands: `derive-low-flows`, `nasa-power --write`, etc.)
+`watermark onboard troy-piqua`  (or the per-connector commands: `derive-low-flows`, `nasa-power --write`, etc.)
