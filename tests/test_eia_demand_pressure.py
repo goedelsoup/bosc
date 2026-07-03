@@ -23,6 +23,7 @@ from watermark.economics.energy import (
     load_consumer_energy,
 )
 from watermark.facility.power import derive_power_basis
+from watermark.hydrology.model import ProvenancedValue
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -83,6 +84,49 @@ def test_eia_series_retains_points_with_latest_convenience(econ_settings: Settin
     assert price.period == price.points[-1].period
     assert price.value.value == price.points[-1].value
     assert price.value.verified and price.value.unit == "cents/kWh"
+
+
+def test_eia_series_resorts_untrusted_cache_order(econ_settings: Settings, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    """A hand-edited/external cache or fixture payload may be unordered; fetch_eia_series must
+    re-sort by period so ``points`` and the latest value derive from ordering, not input trust."""
+    from watermark.economics.connectors import eia
+
+    unordered = {"points": [{"period": "2025", "value": 16.96}, {"period": "2024", "value": 16.1}]}
+    monkeypatch.setattr(eia, "cached_get", lambda *a, **k: unordered)
+    price = eia.fetch_eia_series("ELEC.PRICE.OH-RES.A", settings=econ_settings)
+    assert [p.period for p in price.points] == ["2024", "2025"]  # re-sorted ascending
+    assert price.period == "2025" and price.value.value == 16.96  # latest, not the input's last
+
+
+def test_consumer_energy_price_rejects_latest_not_mirroring_points() -> None:
+    """The model enforces that period/value mirror points[-1] (no headline disagreeing with the
+    trend); an empty-points latest-only record stays valid for pre-#1111 committed data."""
+    from watermark.economics.model import ConsumerEnergyPrice, EnergyPricePoint
+
+    pv = ProvenancedValue.from_connector(16.96, "cents/kWh", citation="x")
+    pts = [
+        EnergyPricePoint(period="2024", value=16.1),
+        EnergyPricePoint(period="2025", value=16.96),
+    ]
+    ConsumerEnergyPrice(
+        series_id="ELEC.PRICE.OH-RES.A",
+        label="l",
+        fuel="electricity",
+        period="2025",
+        area="OH",
+        value=pv,
+        points=pts,
+    )  # consistent — accepted
+    with pytest.raises(ValueError, match="mirror points"):
+        ConsumerEnergyPrice(
+            series_id="ELEC.PRICE.OH-RES.A",
+            label="l",
+            fuel="electricity",
+            period="2024",
+            area="OH",
+            value=pv,
+            points=pts,  # period disagrees with points[-1]
+        )
 
 
 def test_latest_point_fallback_and_empty() -> None:

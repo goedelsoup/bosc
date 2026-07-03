@@ -8,7 +8,7 @@ numbers. ``extra="forbid"``: these are computed by our own code.
 
 from __future__ import annotations
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, model_validator
 
 from watermark.hydrology.model import ProvenancedValue
 
@@ -110,6 +110,21 @@ class ConsumerEnergyPrice(BaseModel):
     area: str  # "OH"
     value: ProvenancedValue  # latest point; connector; native units in .unit
     points: list[EnergyPricePoint] = []  # full annual series, oldest→newest (issue #1111)
+
+    @model_validator(mode="after")
+    def _latest_mirrors_points(self) -> ConsumerEnergyPrice:
+        """Enforce the documented invariant: when a series is present, ``period``/``value``
+        are its latest point (``points[-1]``) — so no caller/loader can slip in a headline
+        that disagrees with the trend. Empty ``points`` (a series-less latest-only record) is
+        allowed for backward compatibility with pre-#1111 committed data."""
+        if self.points:
+            newest = self.points[-1]
+            if self.period != newest.period or self.value.value != newest.value:
+                raise ValueError(
+                    f"{self.series_id}: latest period/value ({self.period}, {self.value.value}) "
+                    f"must mirror points[-1] ({newest.period}, {newest.value})"
+                )
+        return self
 
 
 class ConsumerEnergyCosts(BaseModel):

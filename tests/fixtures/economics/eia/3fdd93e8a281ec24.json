@@ -2,7 +2,8 @@
   "params": {
     "connector": "eia",
     "route": "seriesid",
-    "series_id": "NG.N3010OH3.A"
+    "series_id": "NG.N3010OH3.A",
+    "schema": 2
   },
   "payload": {
     "points": [
