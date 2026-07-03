@@ -1,6 +1,7 @@
-// Unit tests for the D1 Story store (#1095/#1098) against an in-memory SQLite (node:sqlite) with the
-// committed schema — so owner-scoping, ref replacement, FK cascade, unique constraints, the
-// `batch()` transaction rollback, and the sharing/moderation rails are all exercised on real SQL.
+// Unit tests for the Lakebase (Postgres) Story store (#1095/#1098) against an in-memory Postgres
+// (pglite) with the committed schema — so owner-scoping, ref replacement, FK cascade, unique
+// constraints, the `begin()` transaction rollback, and the sharing/moderation rails are all
+// exercised on the real engine (Postgres) production uses.
 
 import { describe, expect, it } from "vitest";
 import {
@@ -19,7 +20,7 @@ import {
   updateStory,
 } from "@fn/api/_lib/storiesStore";
 import { revalidateAll } from "@fn/api/_lib/revalidateStories";
-import { fakeD1 } from "./_routeHarness";
+import { fakePg } from "./_routeHarness";
 
 const owner: StoryOwner = { kind: "user", id: "user-1" };
 const other: StoryOwner = { kind: "user", id: "user-2" };
@@ -47,7 +48,7 @@ function write(over: Partial<StoryWrite> = {}): StoryWrite {
 
 describe("stories store — CRUD", () => {
   it("creates a story + its refs and reads them back in order", async () => {
-    const db = fakeD1();
+    const db = await fakePg();
     await createStory(db, owner, "s1", write(), NOW, SHARE);
     const got = await getStory(db, owner, "s1");
     expect(got?.story.title).toBe("My Story");
@@ -56,7 +57,7 @@ describe("stories store — CRUD", () => {
   });
 
   it("lists a user's own stories newest-first", async () => {
-    const db = fakeD1();
+    const db = await fakePg();
     await createStory(db, owner, "s1", write({ slug: "one" }), "2026-07-01T00:00:00.000Z", SHARE);
     await createStory(db, owner, "s2", write({ slug: "two" }), "2026-07-03T00:00:00.000Z", "share-2");
     const rows = await listStories(db, owner);
@@ -64,7 +65,7 @@ describe("stories store — CRUD", () => {
   });
 
   it("replaces refs wholesale on update", async () => {
-    const db = fakeD1();
+    const db = await fakePg();
     await createStory(db, owner, "s1", write(), NOW, SHARE);
     const ok = await updateStory(
       db,
@@ -81,18 +82,18 @@ describe("stories store — CRUD", () => {
   });
 
   it("deletes a story and cascades its refs", async () => {
-    const db = fakeD1();
+    const db = await fakePg();
     await createStory(db, owner, "s1", write(), NOW, SHARE);
     expect(await deleteStory(db, owner, "s1")).toBe(true);
     expect(await getStory(db, owner, "s1")).toBeNull();
-    const orphans = db.raw.prepare("SELECT COUNT(*) AS n FROM story_refs").get() as { n: number };
+    const orphans = (await db.raw.query<{ n: number }>("SELECT COUNT(*)::int AS n FROM story_refs")).rows[0];
     expect(orphans.n).toBe(0);
   });
 });
 
 describe("stories store — owner scoping", () => {
   it("never reads, updates, or deletes another owner's story", async () => {
-    const db = fakeD1();
+    const db = await fakePg();
     await createStory(db, owner, "s1", write(), NOW, SHARE);
     expect(await getStory(db, other, "s1")).toBeNull();
     expect(await updateStory(db, other, "s1", write({ title: "hijack" }), NOW, SHARE)).toBe(false);
@@ -104,7 +105,7 @@ describe("stories store — owner scoping", () => {
 
 describe("stories store — transactional integrity", () => {
   it("rolls the whole create back when a ref insert violates the PK (atomic batch)", async () => {
-    const db = fakeD1();
+    const db = await fakePg();
     await expect(
       createStory(
         db,
@@ -125,7 +126,7 @@ describe("stories store — transactional integrity", () => {
   });
 
   it("rejects a second story with a duplicate (owner, site, slug)", async () => {
-    const db = fakeD1();
+    const db = await fakePg();
     await createStory(db, owner, "s1", write({ slug: "dup" }), NOW, SHARE);
     await expect(createStory(db, owner, "s2", write({ slug: "dup" }), NOW, "share-2")).rejects.toThrow();
     // But a different owner may reuse the slug.
@@ -137,7 +138,7 @@ describe("stories store — transactional integrity", () => {
 
 describe("stories store — sharing (#1098)", () => {
   it("mints share_id + published_at only when published; a draft has neither", async () => {
-    const db = fakeD1();
+    const db = await fakePg();
     await createStory(db, owner, "draft", write({ slug: "d", status: "draft" }), NOW, SHARE);
     await createStory(db, owner, "pub", write({ slug: "p", status: "published" }), NOW, "share-pub");
     expect((await getStory(db, owner, "draft"))?.story.share_id).toBeNull();
@@ -146,7 +147,7 @@ describe("stories store — sharing (#1098)", () => {
   });
 
   it("keeps share_id sticky across publish → unpublish → republish", async () => {
-    const db = fakeD1();
+    const db = await fakePg();
     await createStory(db, owner, "s1", write({ status: "published" }), NOW, "first-share");
     // unpublish
     await updateStory(db, owner, "s1", write({ status: "draft" }), "2026-07-04T00:00:00.000Z", "ignored");
@@ -164,7 +165,7 @@ describe("stories store — sharing (#1098)", () => {
   });
 
   it("resolves a published story by share_id, but not a draft or unpublished one", async () => {
-    const db = fakeD1();
+    const db = await fakePg();
     await createStory(db, owner, "s1", write({ status: "published" }), NOW, "share-1");
     expect((await getPublicStory(db, "share-1"))?.story.title).toBe("My Story");
     // unpublish → no longer publicly reachable
@@ -173,7 +174,7 @@ describe("stories store — sharing (#1098)", () => {
   });
 
   it("storyIdForShareId finds the row regardless of status", async () => {
-    const db = fakeD1();
+    const db = await fakePg();
     await createStory(db, owner, "s1", write({ status: "published" }), NOW, "share-1");
     expect(await storyIdForShareId(db, "share-1")).toBe("s1");
     expect(await storyIdForShareId(db, "nope")).toBeNull();
@@ -182,7 +183,7 @@ describe("stories store — sharing (#1098)", () => {
 
 describe("stories store — moderation (#1098)", () => {
   it("an admin takedown makes a published story unreachable; restore brings it back", async () => {
-    const db = fakeD1();
+    const db = await fakePg();
     await createStory(db, owner, "s1", write({ status: "published" }), NOW, "share-1");
     expect(await setModeration(db, "s1", "removed")).toBe(true);
     expect(await getPublicStory(db, "share-1")).toBeNull();
@@ -197,7 +198,7 @@ describe("stories store — moderation (#1098)", () => {
 
 describe("stories store — reports (#1098)", () => {
   it("files reports and lists open ones newest-first, then resolves them", async () => {
-    const db = fakeD1();
+    const db = await fakePg();
     await createStory(db, owner, "s1", write({ status: "published" }), NOW, "share-1");
     await insertReport(db, {
       id: "r1",
@@ -222,7 +223,7 @@ describe("stories store — reports (#1098)", () => {
   });
 
   it("cascades reports when the story is deleted", async () => {
-    const db = fakeD1();
+    const db = await fakePg();
     await createStory(db, owner, "s1", write({ status: "published" }), NOW, "share-1");
     await insertReport(db, {
       id: "r1",
@@ -252,7 +253,7 @@ describe("stories store — revalidation (#1099)", () => {
   }
 
   it("flags a story whose cited handle no longer resolves; skips current-version stories", async () => {
-    const db = fakeD1();
+    const db = await fakePg();
     await createStory(db, owner, "gone", storyWith("record:lima:gone", "v1", "gone"), NOW, "s1");
     await createStory(db, owner, "fresh", storyWith("record:lima:a", "v2", "fresh"), NOW, "s2"); // already at v2
 
@@ -266,7 +267,7 @@ describe("stories store — revalidation (#1099)", () => {
   });
 
   it("auto-heals a renamed handle: rewrites the ref + stored SDM, and does not flag", async () => {
-    const db = fakeD1();
+    const db = await fakePg();
     await createStory(db, owner, "s1", storyWith("record:lima:old", "v1"), NOW, "sh");
 
     const summary = await revalidateAll(
@@ -289,7 +290,7 @@ describe("stories store — revalidation (#1099)", () => {
   });
 
   it("is idempotent — a second pass over the same catalog checks nothing", async () => {
-    const db = fakeD1();
+    const db = await fakePg();
     await createStory(db, owner, "s1", storyWith("record:lima:a", "v1"), NOW, "sh");
     await revalidateAll(db, { handles: new Set(["record:lima:a"]), version: "v2" }, {}, NOW);
     const second = await revalidateAll(db, { handles: new Set(["record:lima:a"]), version: "v2" }, {}, NOW);

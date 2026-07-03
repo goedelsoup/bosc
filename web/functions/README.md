@@ -15,12 +15,16 @@ Two endpoints live here:
   bootstrap in [`docs/ask-api.md`](../../docs/ask-api.md). It calls the Anthropic Messages
   API directly over `fetch` (no SDK) and streams the answer back as SSE.
 - the **user-Stories endpoints** (`api/stories.ts` + `api/stories/[id].ts`, epic #1090 / #1095)
-  — owner-scoped CRUD for reader-authored Stories, backed by the **D1** binding `STORIES_DB`
-  (the first relational binding; schema in [`../migrations/`](../migrations/), applied with
-  `wrangler d1 migrations apply STORIES_DB`). Writes run the server-side write path: compile the
-  source against the build-time `/stories-catalog.json` catalog (`_lib/catalogAsset.ts`), validate
-  every handle, and **transactionally** upsert the Story + replace its refs (`_lib/storiesStore.ts`).
-  Ships dark behind `STORIES_ENABLED`; the D1 binding is commented in `wrangler.toml` until provisioned.
+  — owner-scoped CRUD for reader-authored Stories, backed by **Databricks Lakebase** (managed
+  Postgres — the first relational store), reached from the Workers runtime through a Cloudflare
+  **Hyperdrive** binding `STORIES_HYPERDRIVE` via postgres.js (`_lib/pg.ts`). The store speaks a
+  driver-agnostic `PgLike` slice (`_lib/storiesStore.ts`), so the same SQL runs against Hyperdrive in
+  production and pglite (in-memory Postgres) in tests. Schema in [`../migrations/`](../migrations/),
+  applied out-of-band to Lakebase (psql / the Databricks SQL editor) in filename order. Writes run the
+  server-side write path: compile the source against the build-time `/stories-catalog.json` catalog
+  (`_lib/catalogAsset.ts`), validate every handle, and **transactionally** (`db.begin`) upsert the
+  Story + replace its refs. Ships dark behind `STORIES_ENABLED`; the Hyperdrive binding is commented
+  in `wrangler.toml` until provisioned.
 - the **Stories sharing + moderation endpoints** (epic #1090 / #1098): publishing mints an
   unguessable `share_id` and is **early-access-gated** (a `standard` user saves drafts but can't make
   a Story public); `GET api/stories/shared/[shareId]` is the **only unauthenticated read** and serves
@@ -40,8 +44,12 @@ Two endpoints live here:
 
 - **Workers runtime, not Node.** Use Web platform globals only (`fetch`, `Request`,
   `Response`, `FormData`, `URL`, `crypto.subtle`, `atob`/`btoa`). No `node:` imports.
-  The endpoint deliberately has **no dependencies** — GitHub App JWTs are signed with
-  Web Crypto (`api/_lib/github.ts`), not an SDK.
+  The submit/ask/doc endpoints deliberately have **no dependencies** — GitHub App JWTs are
+  signed with Web Crypto (`api/_lib/github.ts`), not an SDK. The **one** runtime dependency is
+  `postgres` (postgres.js), scoped to the Stories store (`api/_lib/pg.ts`): it's the driver that
+  speaks the Postgres wire protocol to Databricks Lakebase over a Cloudflare Hyperdrive socket —
+  there's no Web-Crypto substitute for a SQL client. It runs in the Workers runtime via
+  `cloudflare:sockets` (auto-detected); nothing else in this tree pulls a package.
 - **Typecheck:** `npm run check` runs `tsc -p functions/tsconfig.json` (WebWorker libs).
   This tree is **excluded** from the Astro project's tsconfig so `astro check` doesn't
   typecheck Workers code with DOM/Astro libs.

@@ -2,8 +2,9 @@
 // POST /api/stories — create a Story: compile the source against the live catalog, validate every
 //                     handle, and transactionally persist the Story + its refs.
 //
-// User-owned by construction (#1092). Ships dark behind STORIES_ENABLED; requires the STORIES_DB
-// D1 binding + a valid Cognito Bearer token. Mirrors the submit/ask Function shape.
+// User-owned by construction (#1092). Ships dark behind STORIES_ENABLED; requires the
+// STORIES_HYPERDRIVE binding (Lakebase/Postgres) + a valid Cognito Bearer token. Mirrors the
+// submit/ask Function shape.
 
 import { loadCatalogAsset } from "./_lib/catalogAsset";
 import { json, parseJsonBody } from "./_lib/http";

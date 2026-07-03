@@ -179,21 +179,22 @@ bucket_name = "watermark-documents"
 preview_bucket_name = "watermark-documents-dev"
 
 # --- User-authored Stories store (/api/stories, Epic #1090 / #1095) ---------------
-# D1 (SQLite) is the FIRST relational binding — the repo was KV/R2 only. The /api/stories
-# CRUD Functions store user-owned Stories + their catalog refs here. Ships dark: the
-# STORIES_ENABLED kill switch lives in deploy/features.yaml (flip stories: true + pulumi up),
-# and with STORIES_ENABLED="true" but no D1 bound the endpoints return 503 (fail-closed).
+# Databricks Lakebase (managed Postgres) is the FIRST relational store — the repo was KV/R2 only.
+# The Workers runtime can't open a raw Postgres socket to Lakebase directly, so the /api/stories
+# Functions reach it through a Cloudflare **Hyperdrive** binding (pooling + `cloudflare:sockets`),
+# via postgres.js (functions/api/_lib/pg.ts). Ships dark: the STORIES_ENABLED kill switch lives in
+# deploy/features.yaml (flip stories: true + pulumi up), and with STORIES_ENABLED="true" but no
+# Hyperdrive bound the endpoints return 503 (fail-closed).
 #
-# Provision once (the database_id comes from `pulumi stack output` after wiring D1 into
-# deploy/index.ts, mirroring the KV namespaces above), then apply the schema migration:
-#   npx wrangler d1 create watermark-stories
-#   npx wrangler d1 migrations apply STORIES_DB           # runs web/migrations/*.sql
-# then uncomment:
-# [[d1_databases]]
-# binding = "STORIES_DB"
-# database_name = "watermark-stories"
-# database_id = "<from pulumi stack output storiesD1DatabaseId>"
-# migrations_dir = "migrations"
+# Provision once: create the Lakebase database instance in Databricks, apply web/migrations/*.sql to
+# it (psql / the Databricks SQL editor), then create a Hyperdrive config over its Postgres connection
+# string (Databricks issues a short-lived OAuth token as the password — store it as a Wrangler secret,
+# don't commit it). The `id` comes from `pulumi stack output storiesHyperdriveId` after wiring the
+# Hyperdrive config into deploy/index.ts, mirroring the KV namespaces above. Then uncomment:
+#   npx wrangler hyperdrive create watermark-stories --connection-string="postgres://..."
+# [[hyperdrive]]
+# binding = "STORIES_HYPERDRIVE"
+# id = "<from pulumi stack output storiesHyperdriveId>"
 #
 # Optional per-IP write rate-limit (defaults 20 / 3600s in code); reuses the RATE_LIMIT KV:
 # STORIES_RATE_LIMIT_MAX = "20"

@@ -18,8 +18,9 @@ interface StoryOwner { kind: "site" | "user"; id: string }
   collection, editorially vetted). `owner = { kind: "site", id: <site-slug> }`, so `owner.id ===
   story.site`. This is unchanged by the epic; `walk.ts` is **not** renamed — it is recognized as
   the `site` special case of the axis.
-- **user-owned** — the new feature. `owner = { kind: "user", id: <user-id> }`, sourced from D1
-  (#1095), never from `data/**` (chain of custody preserved by construction).
+- **user-owned** — the new feature. `owner = { kind: "user", id: <user-id> }`, sourced from
+  Databricks Lakebase (managed Postgres) (#1095), never from `data/**` (chain of custody preserved
+  by construction).
 
 Types + helpers live in [`src/lib/walk.ts`](../src/lib/walk.ts): `StoryOwner`, `siteOwner(site)`,
 and `storiesOwnedBy(stories, owner)`. **Surfaces filter by owner:** a site page lists its own
@@ -104,7 +105,7 @@ The catalog (#1093) is the addressable index; resolution is a **live pointer** (
   into the same SDM* to share the renderer.
 - Sharing/moderation (#1098) and catalog revalidation (#1099). Each builds against the types above.
   (The DSL parser + write-path pipeline landed in #1094 — [`src/lib/storyCompile.ts`](../src/lib/storyCompile.ts);
-  the D1 store + owner-scoped CRUD Functions landed in #1095 — [`functions/api/stories.ts`](../functions/api/stories.ts) +
+  the Lakebase (Postgres) store + owner-scoped CRUD Functions landed in #1095 — [`functions/api/stories.ts`](../functions/api/stories.ts) +
   [`functions/api/_lib/storiesStore.ts`](../functions/api/_lib/storiesStore.ts), which run the
   write path server-side against the runtime `/stories-catalog.json` catalog.)
 
@@ -127,7 +128,7 @@ user Stories render client-side). See that directory's `README.md`. In brief:
 
 Both tiers are build-time gated by `storiesUiEnabled()` (Cognito + `PUBLIC_STORIES_ENABLED`), the
 UI peer of the server-side `STORIES_ENABLED` kill switch; a `?preview` mode renders a bundled fixture
-Story with no auth/D1 so the design is legible in any build.
+Story with no auth/store so the design is legible in any build.
 
 ## Public sharing + moderation (#1098 — landed)
 

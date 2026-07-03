@@ -5,14 +5,17 @@
 import { type AuthContext, type AuthEnv, requireAuth } from "./auth";
 import { intEnv } from "./env";
 import { json, requireEnabled } from "./http";
+import { type Hyperdrive, hyperdrivePg } from "./pg";
 import { type KVLike, checkRateLimit } from "./ratelimit";
-import type { D1Like, StoryOwner, StoryRef, StoryRow, StoryStatus } from "./storiesStore";
+import type { PgLike, StoryOwner, StoryRef, StoryRow, StoryStatus } from "./storiesStore";
 
 export interface StoriesEnv extends AuthEnv {
   /** Kill switch (feature flag). Absent/≠"true" → 503, feature ships dark. */
   STORIES_ENABLED?: string;
-  /** The D1 binding. Absent → 503 (not provisioned yet). */
-  STORIES_DB?: D1Like;
+  /** The Cloudflare Hyperdrive binding to Databricks Lakebase (Postgres). Absent → 503 (not provisioned). */
+  STORIES_HYPERDRIVE?: Hyperdrive;
+  /** Test-only injection seam: a `PgLike` bound directly (pglite in the harness); wins over Hyperdrive. */
+  STORIES_DB?: PgLike;
   /** Per-IP write rate-limit KV (optional — absent means writes aren't limited). */
   RATE_LIMIT?: KVLike;
   /** Override the same-origin `/stories-catalog.json` asset URL. */
@@ -26,28 +29,37 @@ export interface StoriesEnv extends AuthEnv {
 const DEFAULT_WRITE_MAX = 20;
 const DEFAULT_WRITE_WINDOW_SEC = 3600;
 
+/** Resolve the store: the injected `PgLike` (tests) wins; otherwise the Hyperdrive→Lakebase client. */
+function resolveDb(env: StoriesEnv): PgLike | null {
+  if (env.STORIES_DB) return env.STORIES_DB;
+  if (env.STORIES_HYPERDRIVE) return hyperdrivePg(env.STORIES_HYPERDRIVE.connectionString);
+  return null;
+}
+
 /** Kill switch + store, no auth — the guard for the public share read (anyone with the link). */
 export function guardPublicStories(
   env: StoriesEnv,
-): { ok: true; db: D1Like } | { ok: false; response: Response } {
+): { ok: true; db: PgLike } | { ok: false; response: Response } {
   const disabled = requireEnabled(env.STORIES_ENABLED, () => json(503, { error: "stories not enabled" }));
   if (disabled) return { ok: false, response: disabled };
-  if (!env.STORIES_DB) return { ok: false, response: json(503, { error: "stories store not configured" }) };
-  return { ok: true, db: env.STORIES_DB };
+  const db = resolveDb(env);
+  if (!db) return { ok: false, response: json(503, { error: "stories store not configured" }) };
+  return { ok: true, db };
 }
 
 /** Kill switch → auth → **admin role** → store — the guard for the moderation endpoints. */
 export async function guardStoriesAdmin(
   request: Request,
   env: StoriesEnv,
-): Promise<{ ok: true; db: D1Like; ctx: AuthContext } | { ok: false; response: Response }> {
+): Promise<{ ok: true; db: PgLike; ctx: AuthContext } | { ok: false; response: Response }> {
   const disabled = requireEnabled(env.STORIES_ENABLED, () => json(503, { error: "stories not enabled" }));
   if (disabled) return { ok: false, response: disabled };
   const auth = await requireAuth(request, env);
   if (!auth.ok) return { ok: false, response: auth.response };
   if (auth.ctx.role !== "admin") return { ok: false, response: json(403, { error: "forbidden" }) };
-  if (!env.STORIES_DB) return { ok: false, response: json(503, { error: "stories store not configured" }) };
-  return { ok: true, db: env.STORIES_DB, ctx: auth.ctx };
+  const db = resolveDb(env);
+  if (!db) return { ok: false, response: json(503, { error: "stories store not configured" }) };
+  return { ok: true, db, ctx: auth.ctx };
 }
 
 /**
@@ -68,7 +80,7 @@ export async function guardStories(
   request: Request,
   env: StoriesEnv,
 ): Promise<
-  { ok: true; owner: StoryOwner; db: D1Like; ctx: AuthContext } | { ok: false; response: Response }
+  { ok: true; owner: StoryOwner; db: PgLike; ctx: AuthContext } | { ok: false; response: Response }
 > {
   const disabled = requireEnabled(env.STORIES_ENABLED, () => json(503, { error: "stories not enabled" }));
   if (disabled) return { ok: false, response: disabled };
@@ -76,9 +88,10 @@ export async function guardStories(
   const auth = await requireAuth(request, env);
   if (!auth.ok) return { ok: false, response: auth.response };
 
-  if (!env.STORIES_DB) return { ok: false, response: json(503, { error: "stories store not configured" }) };
+  const db = resolveDb(env);
+  if (!db) return { ok: false, response: json(503, { error: "stories store not configured" }) };
 
-  return { ok: true, owner: { kind: "user", id: auth.ctx.sub }, db: env.STORIES_DB, ctx: auth.ctx };
+  return { ok: true, owner: { kind: "user", id: auth.ctx.sub }, db, ctx: auth.ctx };
 }
 
 /** Soft per-IP rate limit on writes. Optional (no KV bound → skipped); fails open on KV error. */

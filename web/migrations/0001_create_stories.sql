@@ -1,5 +1,7 @@
--- User-authored Stories store (epic #1090 / #1095). D1 (SQLite) — the first relational binding.
--- Applied with `wrangler d1 migrations apply STORIES_DB` (see web/functions/README.md).
+-- User-authored Stories store (epic #1090 / #1095). Databricks Lakebase (managed Postgres) — the
+-- first relational store, reached from the Workers runtime through a Cloudflare Hyperdrive binding.
+-- Applied out-of-band against Lakebase (psql / the Databricks SQL editor) in filename order; the
+-- test harness applies the same files to an in-memory Postgres (pglite). See web/functions/README.md.
 --
 -- `stories` holds one row per Story on the owner axis (#1092); `story_refs` is one row per cited
 -- catalog atom (#1093) — the inverse index ("which Stories cite handle X"), the DB analog of the

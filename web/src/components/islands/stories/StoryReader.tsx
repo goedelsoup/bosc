@@ -4,7 +4,7 @@
  * difference is the eyebrow + byline note (a reader Story vs a site-authored one).
  *
  * Two modes:
- *  - **preview** (`preview="reader"|"editorial"`) — renders a bundled fixture Story with no D1/auth,
+ *  - **preview** (`preview="reader"|"editorial"`) — renders a bundled fixture Story with no store/auth,
  *    so the design renders full-fidelity in the static build and in review.
  *  - **live** — reads `?id=` from the URL, fetches the owner's Story (`GET /api/stories/:id`) and the
  *    render-catalog asset, and renders. Handles loading / not-enabled / sign-in / not-found honestly.

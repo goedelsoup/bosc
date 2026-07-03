@@ -3,7 +3,7 @@
 // DELETE /api/stories/:id — delete the Story (refs cascade).
 //
 // All owner-scoped (#1092): a Story that isn't the caller's reads as 404, never leaks. Ships dark
-// behind STORIES_ENABLED; requires the STORIES_DB binding + a valid Cognito Bearer token.
+// behind STORIES_ENABLED; requires the STORIES_HYPERDRIVE binding (Lakebase/Postgres) + a valid Cognito Bearer token.
 
 import { loadCatalogAsset } from "../_lib/catalogAsset";
 import { json, parseJsonBody } from "../_lib/http";
