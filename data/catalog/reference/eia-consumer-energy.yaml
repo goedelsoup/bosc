@@ -30,3 +30,5 @@ tags:
 - ohio
 notes: Ohio residential electricity/natural-gas price and total retail electricity sales as provenance-tagged
   annual points from EIA API v2; the 2025 vintage is a recorded keyed pull (#120), not a transcription.
+  Each series now keeps its full annual history (`points`) alongside the latest cited value, so the site can
+  chart price/sales trends (#1111).
