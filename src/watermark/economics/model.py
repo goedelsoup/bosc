@@ -43,12 +43,13 @@ class IndustryEmployment(BaseModel):
 
 
 class YearTotal(BaseModel):
-    """Total covered employment in one year — a point on the trend."""
+    """Total covered employment (and establishments) in one year — a point on the trend."""
 
     model_config = ConfigDict(extra="forbid")
 
     year: int
     total_employment: ProvenancedValue
+    establishments: ProvenancedValue | None = None  # QCEW annual-avg establishments, when reported
 
 
 class PopulationPoint(BaseModel):
@@ -71,13 +72,32 @@ class PopulationSeries(BaseModel):
     source: str = "US Census ACS 5-year (B01003)"
 
 
+class EnergyPricePoint(BaseModel):
+    """One annual point on an EIA energy series: ``period`` + native-unit ``value``.
+
+    Deliberately compact. Provenance is carried once at the series level
+    (:class:`ConsumerEnergyPrice`: ``series_id``, ``value.unit``, connector source) rather
+    than repeated on every point — each point's citation is deterministically
+    ``EIA API v2 seriesid {series_id} ({period})`` — so the full annual history (25-60 pts)
+    stays a tiny fixture (issue #1111). The latest point is additionally exposed as the
+    fully-cited ``ConsumerEnergyPrice.value`` for callers needing one provenanced figure.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    period: str  # "2023" (annual) or "2023-12"
+    value: float  # native units (see the series' value.unit: cents/kWh, $/Mcf, million kWh)
+
+
 class ConsumerEnergyPrice(BaseModel):
-    """One EIA consumer energy-price (or sales) series point.
+    """One EIA consumer energy-price (or sales) series, with its full annual history.
 
     A consumer-level energy figure for the state/region — residential electricity
     price, residential natural-gas price, or total electricity retail sales — read
-    from the EIA API v2. ``value`` carries its native units (cents/kWh, $/Mcf, or
-    million kWh for the sales series); ``source: connector``.
+    from the EIA API v2. ``value``/``period`` are the latest point (a convenience for
+    callers that only need the current figure); ``points`` is the full annual series
+    (oldest→newest) so the site can chart the trend (issue #1111). ``value`` carries its
+    native units (cents/kWh, $/Mcf, or million kWh for the sales series); ``source: connector``.
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -86,9 +106,10 @@ class ConsumerEnergyPrice(BaseModel):
     label: str  # "Ohio residential electricity price"
     fuel: str  # "electricity" | "natural_gas"
     metric: str = "price"  # "price" | "sales"
-    period: str  # "2023" (annual) or "2023-12"
+    period: str  # latest period ("2025"); mirrors points[-1].period
     area: str  # "OH"
-    value: ProvenancedValue  # connector; native units in .unit
+    value: ProvenancedValue  # latest point; connector; native units in .unit
+    points: list[EnergyPricePoint] = []  # full annual series, oldest→newest (issue #1111)
 
 
 class ConsumerEnergyCosts(BaseModel):

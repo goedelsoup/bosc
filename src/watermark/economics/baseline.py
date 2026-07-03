@@ -22,8 +22,10 @@ from watermark.sites import active_profile
 
 log = get_logger(__name__)
 
-# QCEW annual averages; latest two-ish points give a recent employment trend.
-_DEFAULT_YEARS = [2018, 2023]
+# QCEW annual averages across a ~decade so the trend line is real, not two points
+# (issue #1111). 2014 is the earliest year the open-data CSV API serves; the latest
+# published annual is 2024. A committed fixture per year keeps offline rebuilds hermetic.
+_DEFAULT_YEARS = list(range(2014, 2025))
 # Census ACS5 population points — a longer span (the county's slow decline).
 _POP_YEARS = [2010, 2015, 2020, 2023]
 
@@ -71,7 +73,14 @@ def build_baseline(
         for y in years
     ]
     latest = industries[-1]
-    trend = [YearTotal(year=ie.year, total_employment=ie.total_employment) for ie in industries]
+    trend = [
+        YearTotal(
+            year=ie.year,
+            total_employment=ie.total_employment,
+            establishments=ie.establishments,
+        )
+        for ie in industries
+    ]
     log.info(
         "econ.baseline", years=years, sectors=len(latest.sectors), population=population is not None
     )

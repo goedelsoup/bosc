@@ -5,7 +5,107 @@
     "series_id": "ELEC.PRICE.US-ALL.A"
   },
   "payload": {
-    "period": "2025",
-    "value": 13.63
+    "points": [
+      {
+        "period": "2001",
+        "value": 7.29
+      },
+      {
+        "period": "2002",
+        "value": 7.2
+      },
+      {
+        "period": "2003",
+        "value": 7.44
+      },
+      {
+        "period": "2004",
+        "value": 7.61
+      },
+      {
+        "period": "2005",
+        "value": 8.14
+      },
+      {
+        "period": "2006",
+        "value": 8.9
+      },
+      {
+        "period": "2007",
+        "value": 9.13
+      },
+      {
+        "period": "2008",
+        "value": 9.74
+      },
+      {
+        "period": "2009",
+        "value": 9.82
+      },
+      {
+        "period": "2010",
+        "value": 9.83
+      },
+      {
+        "period": "2011",
+        "value": 9.9
+      },
+      {
+        "period": "2012",
+        "value": 9.84
+      },
+      {
+        "period": "2013",
+        "value": 10.07
+      },
+      {
+        "period": "2014",
+        "value": 10.44
+      },
+      {
+        "period": "2015",
+        "value": 10.41
+      },
+      {
+        "period": "2016",
+        "value": 10.27
+      },
+      {
+        "period": "2017",
+        "value": 10.48
+      },
+      {
+        "period": "2018",
+        "value": 10.53
+      },
+      {
+        "period": "2019",
+        "value": 10.54
+      },
+      {
+        "period": "2020",
+        "value": 10.59
+      },
+      {
+        "period": "2021",
+        "value": 11.1
+      },
+      {
+        "period": "2022",
+        "value": 12.36
+      },
+      {
+        "period": "2023",
+        "value": 12.68
+      },
+      {
+        "period": "2024",
+        "value": 12.94
+      },
+      {
+        "period": "2025",
+        "value": 13.63
+      }
+    ]
   }
 }

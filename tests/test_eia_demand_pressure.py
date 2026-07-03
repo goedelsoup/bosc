@@ -14,6 +14,7 @@ from watermark.connectors import OfflineError
 from watermark.economics.connectors.eia import (
     EiaError,
     _latest_point,
+    _series_points,
     fetch_consumer_energy,
     fetch_eia_series,
 )
@@ -52,6 +53,36 @@ def test_latest_point_reads_series_specific_value_column() -> None:
     # Natural-gas series: this one genuinely uses ``value``.
     ng = _seriesid_payload([{"period": 2025, "value": 13.85}])
     assert _latest_point(ng, "value") == {"period": "2025", "value": 13.85}
+
+
+def test_series_points_keeps_full_annual_history_sorted() -> None:
+    """The connector retains the full annual series (issue #1111), oldest→newest, reading
+    the series-specific value column — not just the latest point."""
+    payload = _seriesid_payload(
+        [
+            {"period": 2025, "stateid": "OH", "price": 16.96},
+            {"period": 2023, "stateid": "OH", "price": 15.71},
+            {"period": 2024, "stateid": "OH", "price": 16.10},
+        ]
+    )
+    points = _series_points(payload, "price")
+    assert [p["period"] for p in points] == ["2023", "2024", "2025"]  # sorted ascending
+    assert [p["value"] for p in points] == [15.71, 16.10, 16.96]
+    # _latest_point is the newest point of the same series.
+    assert _latest_point(payload, "price") == {"period": "2025", "value": 16.96}
+
+
+def test_eia_series_retains_points_with_latest_convenience(econ_settings: Settings) -> None:
+    """fetch_eia_series exposes the full annual series in ``points`` plus the latest cited
+    point as ``value``/``period`` (issue #1111)."""
+    price = fetch_eia_series("ELEC.PRICE.OH-RES.A", settings=econ_settings)
+    assert len(price.points) > 5  # a real multi-year trend, not two points
+    periods = [p.period for p in price.points]
+    assert periods == sorted(periods)  # oldest→newest
+    # The latest convenience mirrors the newest point and stays fully provenanced.
+    assert price.period == price.points[-1].period
+    assert price.value.value == price.points[-1].value
+    assert price.value.verified and price.value.unit == "cents/kWh"
 
 
 def test_latest_point_fallback_and_empty() -> None:

@@ -7,8 +7,9 @@ which the data-center load's pressure is screened. We use EIA's uniform
 rows carry ``period`` plus a **series-specific value column** named after the data
 column (``price`` for the price series, ``sales`` for the sales series, ``value`` for
 the natural-gas series) — *not* a uniform ``value`` field — so each series declares
-its value column (``_SERIES[...]["col"]``) and the latest point is read **by name**,
-never by index. Keyed: a free key read from
+its value column (``_SERIES[...]["col"]``) and every point is read **by name**, never by
+index. The connector keeps the **full annual series** (``points``) plus the latest point
+as a convenience (issue #1111), not just the latest. Keyed: a free key read from
 ``settings.eia_api_key`` (``WATERMARK_EIA_API_KEY``), sent only on the live request and
 never part of the cache key or the committed fixture.
 
@@ -28,7 +29,7 @@ import httpx
 
 from watermark.config import Settings, get_settings
 from watermark.connectors import cached_get
-from watermark.economics.model import ConsumerEnergyCosts, ConsumerEnergyPrice
+from watermark.economics.model import ConsumerEnergyCosts, ConsumerEnergyPrice, EnergyPricePoint
 from watermark.hydrology.model import ProvenancedValue
 
 # EIA data-column metadata. ``col`` is the data-column name the value lives under on the
@@ -132,26 +133,39 @@ class EiaError(RuntimeError):
     """
 
 
+def _series_points(payload: dict[str, Any], value_col: str) -> list[dict[str, Any]]:
+    """The full annual series as ``[{period, value}, ...]`` sorted oldest→newest.
+
+    ``value_col`` is the series' EIA data-column name (``price`` / ``sales`` / ``value``).
+    Rows are read by column name (with a fallback, see :func:`_row_value`); the period is
+    read from ``period``. Keeping the full series (not just the latest point) lets the site
+    chart the price/sales trend while the fixture stays tiny (issue #1111). Raises when no
+    row carries a value, so an empty/garbled payload fails loudly rather than silently.
+    """
+    data = (((payload or {}).get("response") or {}).get("data")) or []
+    points = [
+        {"period": str(r.get("period", "")), "value": v}
+        for r in data
+        if (v := _row_value(r, value_col)) is not None
+    ]
+    if not points:
+        raise EiaError(f"EIA response carried no data points (value column {value_col!r})")
+    points.sort(key=lambda p: str(p["period"]))
+    return points
+
+
 def _latest_point(payload: dict[str, Any], value_col: str) -> dict[str, Any]:
     """The most recent ``{period, value}`` row from an EIA v2 seriesid payload.
 
-    ``value_col`` is the series' EIA data-column name (``price`` / ``sales`` / ``value``).
-    EIA returns rows newest-first when sorted by period desc; we defend against either
-    order by taking the max period. The value is read by column name (with a fallback,
-    see :func:`_row_value`); the period is read from ``period``.
+    A convenience over :func:`_series_points` (the newest point); see it for the
+    column/period semantics. EIA returns rows newest-first when sorted by period desc; we
+    defend against either order by taking the latest of the sorted series.
     """
-    data = (((payload or {}).get("response") or {}).get("data")) or []
-    rows = [r for r in data if _row_value(r, value_col) is not None]
-    if not rows:
-        raise EiaError(f"EIA response carried no data points (value column {value_col!r})")
-    best = max(rows, key=lambda r: str(r.get("period", "")))
-    value = _row_value(best, value_col)
-    assert value is not None  # guaranteed by the rows filter above
-    return {"period": str(best.get("period", "")), "value": value}
+    return _series_points(payload, value_col)[-1]
 
 
 def fetch_eia_series(series_id: str, *, settings: Settings | None = None) -> ConsumerEnergyPrice:
-    """One EIA consumer-energy series, reduced to its latest annual point (cached)."""
+    """One EIA consumer-energy series with its full annual history + latest point (cached)."""
     settings = settings or get_settings()
     known = {**_state_consumer_series(settings.eia_state), **_SERIES}
     meta = known.get(series_id)
@@ -177,8 +191,9 @@ def fetch_eia_series(series_id: str, *, settings: Settings | None = None) -> Con
         except json.JSONDecodeError as exc:
             hint = "invalid WATERMARK_EIA_API_KEY" if settings.eia_api_key else "no key set"
             raise EiaError(f"EIA returned non-JSON ({hint}): {resp.text[:60]!r}") from exc
-        # Reduce to the latest point so the cached payload / fixture stays small.
-        return _latest_point(body, meta["col"])
+        # Reduce to the annual {period, value} series so the cached payload / fixture stays
+        # small but keeps the full trend (issue #1111), not just the latest point.
+        return {"points": _series_points(body, meta["col"])}
 
     payload = cast(
         "dict[str, Any]",
@@ -191,15 +206,22 @@ def fetch_eia_series(series_id: str, *, settings: Settings | None = None) -> Con
             fixtures_dir=settings.econ_fixtures_dir,
         ),
     )
-    cite = f"EIA API v2 seriesid {series_id} ({payload['period']})"
+
+    points = [
+        EnergyPricePoint(period=str(p["period"]), value=float(p["value"]))
+        for p in payload["points"]
+    ]
+    latest = points[-1]
+    cite = f"EIA API v2 seriesid {series_id} ({latest.period})"
     return ConsumerEnergyPrice(
         series_id=series_id,
         label=meta["label"],
         fuel=meta["fuel"],
         metric=meta["metric"],
-        period=str(payload["period"]),
+        period=latest.period,
         area=meta.get("area", settings.eia_state),  # national series set area="US"
-        value=ProvenancedValue.from_connector(float(payload["value"]), meta["unit"], citation=cite),
+        value=ProvenancedValue.from_connector(latest.value, meta["unit"], citation=cite),
+        points=points,
     )
 
 

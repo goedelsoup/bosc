@@ -55,7 +55,11 @@ from watermark.provenance import source_is_verified
 #   basis) plus the basis honesty flags `method_disclosed` / `is_bracketed` and the hybrid
 #   `seasonal_months` — the cooling-model typology (epic #1060). An `unknown` model means the
 #   method is undisclosed: render the bracketed range, never a single headline (#1057).
-CONTRACT_VERSION = "1.9.0"
+# 1.10.0: keep annual time series (issue #1111). `economics-baseline` trend points (`YearTotal`)
+#   gain `establishments` and now span a decade (QCEW 2014-2024, not two years); adds the
+#   `consumer-energy` feed — the EIA state price/sales dataset with each series' full annual
+#   history (`points`) plus its latest cited value, so the site can chart price trends.
+CONTRACT_VERSION = "1.10.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
