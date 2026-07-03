@@ -101,8 +101,9 @@ The developer of record is a shell (J5 LLC / Shaytura LLC); the reported hypersc
   agreements executed January 23, 2026; a further resolution April 9, 2026. `[verified]`
 - **Zoning/annexation:** three parcels totaling **~1,026 acres** annexed and zoned heavy-industrial
   2022–2025 (Statler Farms annex Jun 8, 2022 / zone Sep 20, 2022; 329.824-ac parcel annex Sep 19,
-  2024 / zone Jan 28, 2025; 33-ac parcel annex Mar 13, 2025 / zone May 20, 2025). `[verified]` (The
-  City page's ~1,200-ac figure is `[reported]`; the ~174-ac gap vs. this parcel sum is `[open]`.)
+  2024 / zone Jan 28, 2025; 33-ac parcel annex Mar 13, 2025 / zone May 20, 2025). `[verified]`
+  Source: piquaoh.gov (project page; annexation/zoning timeline). (The City page's ~1,200-ac figure
+  is `[reported]`; the ~174-ac gap vs. this parcel sum is `[open]`.)
 - **Operations target:** ~December 2029 per a candidate-site tracker. `[reported]` — not on the
   City page (which states no target).
 - **Ohio EPA air PTI (backup generators):** `[open]` — no site-specific filing found. Instrument to
