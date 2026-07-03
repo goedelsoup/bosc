@@ -31,7 +31,7 @@ def imagery_sites() -> None:
     if not sites:
         console.print(
             "[yellow]No tracking sites[/] — no POI in data/entities/poi/ is watched "
-            "(depth=watched + track.enabled with a location bbox). See `watermark poi list`."
+            "(depth=watched + track.enabled with a location bbox). See `watermark poi list --tracked`."
         )
         raise typer.Exit(1)
     table = Table("id (slug)", "name", "parcels", "bbox (W,S,E,N)")
