@@ -43,19 +43,29 @@ export const SDM_INLINE_TYPES = ["text", "strong", "emphasis", "code", "link"] a
  *  a block type — a user can't forge a page-level heading. */
 export type SdmHeadingLevel = 2 | 3 | 4;
 
+/** Callout variants (`:::callout{variant}`). A small closed set — an unknown variant lowers to
+ *  `note` rather than erroring, so an author typo degrades instead of failing the Story. */
+export type SdmCalloutVariant = "note" | "info" | "warning";
+export const SDM_CALLOUT_VARIANTS = ["note", "info", "warning"] as const;
+
 export type SdmBlock =
   | { type: "heading"; level: SdmHeadingLevel; children: SdmInline[] }
   | { type: "paragraph"; children: SdmInline[] }
   | { type: "blockquote"; children: SdmBlock[] }
   | { type: "list"; ordered: boolean; items: SdmBlock[][] }
+  /** An author-framed aside (`:::callout{variant}`) wrapping reader prose — no atoms-only rule; it
+   *  can contain any blocks, including cited atoms. */
+  | { type: "callout"; variant: SdmCalloutVariant; children: SdmBlock[] }
   /**
    * A cited catalog atom (`:::atom[<kind>:<site>:<localId>]`). The **only** way a Story pulls in
    * platform content — a live pointer, resolved against the catalog at render time. Reader prose
-   * (the blocks above) is rendered visually distinct from these cited atoms (#1090).
+   * (the blocks above) is rendered visually distinct from these cited atoms (#1090). Carries a
+   * **thin snapshot** (`kind` + `title`, captured at write time) so a later-dangling handle still
+   * renders a labeled placeholder; the full payload is always resolved live (chain of custody).
    */
-  | { type: "atom"; handle: string };
+  | { type: "atom"; handle: string; kind: CatalogKind; title: string };
 
-export const SDM_BLOCK_TYPES = ["heading", "paragraph", "blockquote", "list", "atom"] as const;
+export const SDM_BLOCK_TYPES = ["heading", "paragraph", "blockquote", "list", "callout", "atom"] as const;
 
 /** A lowered, persistable Story body — the write path's output and the read path's input. */
 export interface StoryDocument {
@@ -78,6 +88,8 @@ export const ATOM_RENDER_SLOTS: Record<CatalogKind, AtomRenderSlot> = Object.fro
 // --- structural validation: the "data, not code" guard --------------------------------------
 const INLINE_SET: ReadonlySet<string> = new Set(SDM_INLINE_TYPES);
 const BLOCK_SET: ReadonlySet<string> = new Set(SDM_BLOCK_TYPES);
+const KIND_SET: ReadonlySet<string> = new Set(CATALOG_KINDS);
+const CALLOUT_SET: ReadonlySet<string> = new Set(SDM_CALLOUT_VARIANTS);
 
 function isRecord(v: unknown): v is Record<string, unknown> {
   return typeof v === "object" && v !== null;
@@ -111,8 +123,15 @@ function isValidBlock(node: unknown): node is SdmBlock {
       return isBlockArray(node.children);
     case "list":
       return typeof node.ordered === "boolean" && Array.isArray(node.items) && node.items.every(isBlockArray);
-    default: // atom
-      return typeof node.handle === "string";
+    case "callout":
+      return typeof node.variant === "string" && CALLOUT_SET.has(node.variant) && isBlockArray(node.children);
+    default: // atom — plus the thin snapshot (kind must be a real catalog kind, title a string)
+      return (
+        typeof node.handle === "string" &&
+        typeof node.kind === "string" &&
+        KIND_SET.has(node.kind) &&
+        typeof node.title === "string"
+      );
   }
 }
 
@@ -143,6 +162,7 @@ export function sdmHandles(doc: StoryDocument): string[] {
         handles.push(block.handle);
         break;
       case "blockquote":
+      case "callout":
         block.children.forEach(walkBlock);
         break;
       case "list":
