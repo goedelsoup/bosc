@@ -1661,13 +1661,27 @@ _GREENVILLE = SiteProfile(
     rsei_fips="39037",  # [verified] Darke County, OH
     econ_fips="39037",
     eia861_utility_number=4922,  # Dayton Power & Light (AES Ohio) — EIA-861 2024 Service_Territory, Greenville city LSE [verified]; rural Darke is a co-op/AEP/muni patchwork
-    parcels_url="TODO",  # [open] pending the Darke County, OH GIS REST endpoint discovery
+    parcels_url=(  # [reference] OGRIP Ohio statewide parcels, scoped to County='Darke' (39037) —
+        # Darke County self-hosts no public parcel ArcGIS REST (the auditor's darkecountyrealestate.org
+        # is a Cloudflare-fronted vendor SPA with no exposed service), so use the shared OGRIP view.
+        "https://services2.arcgis.com/MlJ0G8iWUyC7jAmu/arcgis/rest/services/"
+        "OhioStatewidePacels_full_view/FeatureServer/0"
+    ),
     zoning_url="TODO",  # [open] pending the City of Greenville / Darke County zoning REST endpoint discovery
     floodzone_url=(  # [verified] FEMA NFHL S_FLD_HAZ_AR (national layer 28)
         "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28"
     ),
     hydro_utm_epsg=32616,  # [verified] UTM 16N (Greenville ~84.63 degW; zone 16 spans 90-84 degW)
-    gis_parcel=None,  # [open] pending Darke County, OH parcel-layer discovery
+    gis_parcel=OHIO_STATEWIDE_PARCEL_SCHEMA.model_copy(
+        # Darke County OGRIP layer — owner-redacted public view (31,368 parcels). LocalParcelID is a
+        # district-letter prefix + 17 digits (e.g. "L45021118000010600"), verified against a live
+        # Greenville sample 2026-07-03 — hence the deed_id_regex override off the Hancock-12-digit base.
+        update={
+            "reference_dir": "greenville-gis",
+            "query_scope": "County='Darke'",
+            "deed_id_regex": r"\b[A-Z]\d{17}\b",
+        }
+    ),
     gis_zoning=None,  # [open] pending City of Greenville / Darke County zoning-layer discovery
     gis_flood=NATIONAL_NFHL_FLOOD_SCHEMA.model_copy(update={"reference_dir": "greenville-gis"}),
     design_lat=40.1023,  # [verified] Greenville centroid = NOAA Atlas-14 point
@@ -1684,7 +1698,18 @@ _GREENVILLE = SiteProfile(
     pre_cover="TODO",  # [open] development land-cover scenario — pending an identified site
     post_cover="TODO",
     developed_pervious_cover="TODO",
-    noaa_fallback_24h_depth_in={},  # [open] pending the NOAA Atlas-14 pull (onboard corridor-DDF step)
+    noaa_fallback_24h_depth_in={  # [reference] NOAA Atlas-14 Vol 2 (Ohio River Basin) PDS at 40.1023/-84.633
+        1: 2.22,
+        2: 2.66,
+        5: 3.25,
+        10: 3.74,
+        25: 4.40,
+        50: 4.92,
+        100: 5.47,
+        200: 6.04,
+        500: 6.82,
+        1000: 7.43,
+    },
     parcels_relpath="reference/greenville/parcel-assemblage.geojson",  # [open] commit the site's own geometry
     footprint_relpath="extracted/greenville/bosc-site-footprint.yaml",  # [open] pending an identified site
     climatology_relpath="reference/hydrology/greenville/nasa-power-climatology.yaml",
