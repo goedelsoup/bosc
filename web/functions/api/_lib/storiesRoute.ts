@@ -6,7 +6,7 @@ import { type AuthContext, type AuthEnv, requireAuth } from "./auth";
 import { intEnv } from "./env";
 import { json, requireEnabled } from "./http";
 import { type KVLike, checkRateLimit } from "./ratelimit";
-import type { D1Like, StoryOwner, StoryRef, StoryRow } from "./storiesStore";
+import type { D1Like, StoryOwner, StoryRef, StoryRow, StoryStatus } from "./storiesStore";
 
 export interface StoriesEnv extends AuthEnv {
   /** Kill switch (feature flag). Absent/≠"true" → 503, feature ships dark. */
@@ -19,10 +19,49 @@ export interface StoriesEnv extends AuthEnv {
   STORIES_CATALOG_URL?: string;
   STORIES_RATE_LIMIT_MAX?: string;
   STORIES_RATE_LIMIT_WINDOW_SEC?: string;
+  /** Cloudflare Turnstile secret — when set, the public report endpoint requires a passing token. */
+  TURNSTILE_SECRET?: string;
 }
 
 const DEFAULT_WRITE_MAX = 20;
 const DEFAULT_WRITE_WINDOW_SEC = 3600;
+
+/** Kill switch + store, no auth — the guard for the public share read (anyone with the link). */
+export function guardPublicStories(
+  env: StoriesEnv,
+): { ok: true; db: D1Like } | { ok: false; response: Response } {
+  const disabled = requireEnabled(env.STORIES_ENABLED, () => json(503, { error: "stories not enabled" }));
+  if (disabled) return { ok: false, response: disabled };
+  if (!env.STORIES_DB) return { ok: false, response: json(503, { error: "stories store not configured" }) };
+  return { ok: true, db: env.STORIES_DB };
+}
+
+/** Kill switch → auth → **admin role** → store — the guard for the moderation endpoints. */
+export async function guardStoriesAdmin(
+  request: Request,
+  env: StoriesEnv,
+): Promise<{ ok: true; db: D1Like; ctx: AuthContext } | { ok: false; response: Response }> {
+  const disabled = requireEnabled(env.STORIES_ENABLED, () => json(503, { error: "stories not enabled" }));
+  if (disabled) return { ok: false, response: disabled };
+  const auth = await requireAuth(request, env);
+  if (!auth.ok) return { ok: false, response: auth.response };
+  if (auth.ctx.role !== "admin") return { ok: false, response: json(403, { error: "forbidden" }) };
+  if (!env.STORIES_DB) return { ok: false, response: json(503, { error: "stories store not configured" }) };
+  return { ok: true, db: env.STORIES_DB, ctx: auth.ctx };
+}
+
+/**
+ * The publish gate (#1098): publishing is gated behind early access initially — a `standard` user
+ * can save drafts but not make a Story public. Returns a 403 Response to block, or `null` to allow.
+ * Drafts are always allowed.
+ */
+export function publishGate(ctx: AuthContext, status: StoryStatus): Response | null {
+  if (status !== "published") return null;
+  if (ctx.role === "standard") {
+    return json(403, { error: "publishing is in early access — request access to share stories" });
+  }
+  return null;
+}
 
 /** Kill switch → auth → store, in order. On success yields the user-owner + the bound DB. */
 export async function guardStories(
@@ -68,6 +107,7 @@ export function storySummary(row: StoryRow) {
     status: row.status,
     share_id: row.share_id,
     catalog_version: row.catalog_version,
+    published_at: row.published_at,
     created_at: row.created_at,
     updated_at: row.updated_at,
   };
@@ -79,6 +119,23 @@ export function storyDetail(row: StoryRow, refs: StoryRef[]) {
     ...storySummary(row),
     source_format: row.source_format,
     source_text: row.source_text,
+    sdm: JSON.parse(row.sdm_json),
+    refs,
+  };
+}
+
+/**
+ * The **public** projection of a shared Story (#1098) — only what a public reader needs to render:
+ * no owner id, no editable source, no internal ids. `site` scopes the render catalog; the disclosure
+ * copy is added by the reader, not the server.
+ */
+export function publicStory(row: StoryRow, refs: StoryRef[]) {
+  return {
+    share_id: row.share_id,
+    site: row.site,
+    title: row.title,
+    dek: row.dek,
+    published_at: row.published_at,
     sdm: JSON.parse(row.sdm_json),
     refs,
   };

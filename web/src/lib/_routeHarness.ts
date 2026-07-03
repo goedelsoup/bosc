@@ -9,7 +9,7 @@
 // Underscore-prefixed so it's never mistaken for a routed Function; lives in src/lib (not
 // functions/) so vitest + Biome + astro-check all see it without entering the Workers tree.
 
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { DatabaseSync } from "node:sqlite";
 import { fileURLToPath } from "node:url";
 import type { KVLike } from "@fn/api/_lib/ratelimit";
@@ -238,7 +238,16 @@ export async function mintIdToken(
 // the store's `batch()` atomicity, FK cascade, and unique-constraint behavior are exercised for
 // real (not mocked). The schema is the committed migration, so a schema/store drift fails a test.
 
-const MIGRATION_PATH = fileURLToPath(new URL("../../migrations/0001_create_stories.sql", import.meta.url));
+// Apply every committed migration in filename order, so a schema/store drift (or a missing later
+// migration) fails a test — the same way `wrangler d1 migrations apply` runs them in sequence.
+const MIGRATIONS_DIR = fileURLToPath(new URL("../../migrations/", import.meta.url));
+function migrationSql(): string {
+  return readdirSync(MIGRATIONS_DIR)
+    .filter((f) => f.endsWith(".sql"))
+    .sort()
+    .map((f) => readFileSync(`${MIGRATIONS_DIR}${f}`, "utf-8"))
+    .join("\n");
+}
 
 /** A D1Like whose `raw` handle is exposed for direct seeding/inspection in a test. */
 export interface FakeD1 extends D1Like {
@@ -272,7 +281,7 @@ function d1Statement(db: DatabaseSync, sql: string): D1PreparedStatement {
 export function fakeD1(): FakeD1 {
   const db = new DatabaseSync(":memory:");
   db.exec("PRAGMA foreign_keys = ON;");
-  db.exec(readFileSync(MIGRATION_PATH, "utf-8"));
+  db.exec(migrationSql());
   return {
     raw: db,
     prepare: (sql: string) => d1Statement(db, sql),

@@ -59,6 +59,7 @@ export default function StoryEditor({ siteSlug, atomsUrl, readHref }: StoryEdito
   const [loadError, setLoadError] = useState<string | null>(null);
   const [catalogError, setCatalogError] = useState(false);
   const [id, setId] = useState<string | null>(null);
+  const [shareId, setShareId] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [dek, setDek] = useState("");
   const [slug, setSlug] = useState("");
@@ -109,6 +110,7 @@ export default function StoryEditor({ siteSlug, atomsUrl, readHref }: StoryEdito
         }
         const s = res.value.story;
         setId(s.id);
+        setShareId(s.share_id);
         setTitle(s.title);
         setDek(s.dek);
         setSlug(s.slug);
@@ -193,8 +195,8 @@ export default function StoryEditor({ siteSlug, atomsUrl, readHref }: StoryEdito
     const res = id ? await updateStory(id, input) : await createStory(input);
     setSaving(false);
     if (res.ok) {
-      if (!id && "value" in res && "id" in (res.value as { id?: string }))
-        setId((res.value as { id: string }).id);
+      if (!id) setId(res.value.id);
+      setShareId(res.value.share_id);
       setStatus(nextStatus);
       if (nextStatus === "published") setPublishOpen(true);
       else setSavedNote("Draft saved.");
@@ -341,7 +343,9 @@ export default function StoryEditor({ siteSlug, atomsUrl, readHref }: StoryEdito
         </div>
       </div>
 
-      {publishOpen && <PublishModal readHref={readHref} storyId={id} onClose={() => setPublishOpen(false)} />}
+      {publishOpen && (
+        <PublishModal readHref={readHref} shareId={shareId} onClose={() => setPublishOpen(false)} />
+      )}
     </div>
   );
 }
@@ -913,16 +917,17 @@ function EditableBlock({
 // --- publish modal --------------------------------------------------------------------------
 function PublishModal({
   readHref,
-  storyId,
+  shareId,
   onClose,
 }: {
   readHref: string;
-  storyId: string | null;
+  shareId: string | null;
   onClose: () => void;
 }) {
-  // The reader route resolves by `?id=` (functions/api/stories/[id]); `readHref` is already
-  // base-aware + site-correct (built via withSite on the page), so this link works on subpaths.
-  const link = storyId ? `${readHref}?id=${encodeURIComponent(storyId)}` : readHref;
+  // The public reader resolves by `?share=` (functions/api/stories/shared/[shareId]) — an unguessable
+  // id, so unpublished/private stories aren't reachable. `readHref` is base-aware + site-correct
+  // (built via withSite on the page), so this link works on subpath deploys.
+  const link = shareId ? `${readHref}?share=${encodeURIComponent(shareId)}` : readHref;
   return (
     <div
       style={{

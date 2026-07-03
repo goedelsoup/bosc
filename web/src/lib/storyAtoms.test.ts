@@ -66,7 +66,12 @@ describe("sdmToEditorBlocks re-opens a stored Story for editing", () => {
           type: "blockquote",
           children: [
             { type: "paragraph", children: [{ type: "text", value: "As the record shows:" }] },
-            { type: "atom", handle: "record:lima:deed-0008300", kind: "record", title: "Limited Warranty Deed" },
+            {
+              type: "atom",
+              handle: "record:lima:deed-0008300",
+              kind: "record",
+              title: "Limited Warranty Deed",
+            },
           ],
         },
       ],

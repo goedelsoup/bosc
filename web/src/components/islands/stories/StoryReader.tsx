@@ -14,8 +14,9 @@ import { currentUser } from "~/lib/auth";
 import type { StoryDocument } from "~/lib/sdm";
 import type { HydratedCatalog } from "~/lib/storyAtoms";
 import { FIXTURE_CATALOG, FIXTURE_EDITORIAL_STORY, FIXTURE_READER_STORY } from "~/lib/storyAtoms.fixture";
+import ReportControl from "./ReportControl";
 import StoryRenderer from "./StoryRenderer";
-import { getStory, loadRenderCatalog } from "./client";
+import { getPublicStory, getStory, loadRenderCatalog } from "./client";
 import { mono } from "./parts";
 
 interface Loaded {
@@ -26,6 +27,9 @@ interface Loaded {
   updated: string;
   doc: StoryDocument;
   atoms: HydratedCatalog;
+  /** A public (shared) read — shows the archive disclosure + a report control (#1098). */
+  isPublic?: boolean;
+  shareId?: string;
 }
 
 export interface StoryReaderProps {
@@ -65,6 +69,53 @@ export default function StoryReader({ preview, atomsUrl }: StoryReaderProps) {
       });
       return;
     }
+    // Public share read (#1098) — no auth; anyone with the `?share=` link may read a published story.
+    const share = params.get("share");
+    if (share) {
+      (async () => {
+        const [res, atoms] = await Promise.all([
+          getPublicStory(share),
+          loadRenderCatalog(atomsUrl ?? "/stories-atoms.json"),
+        ]);
+        if (!live) return;
+        if (!res.ok) {
+          setState({
+            status: "error",
+            message:
+              res.status === 404
+                ? "This story isn't shared, or has been taken down."
+                : "Couldn't load this story.",
+          });
+          return;
+        }
+        if (atoms === null) {
+          setState({
+            status: "error",
+            message: "Couldn't load this story's citations. Reload to try again.",
+          });
+          return;
+        }
+        const s = res.value.story;
+        setState({
+          status: "ready",
+          data: {
+            ownerKind: "user",
+            title: s.title,
+            dek: s.dek,
+            author: "A Watermark reader",
+            updated: s.published_at ? `shared ${relTime(s.published_at)}` : "shared",
+            doc: s.sdm,
+            atoms,
+            isPublic: true,
+            shareId: share,
+          },
+        });
+      })();
+      return () => {
+        live = false;
+      };
+    }
+
     const id = params.get("id");
     if (!id) {
       setState({ status: "error", message: "No story specified." });
@@ -220,6 +271,25 @@ export default function StoryReader({ preview, atomsUrl }: StoryReaderProps) {
       </div>
 
       <StoryRenderer doc={d.doc} atoms={d.atoms} />
+
+      {d.isPublic && d.shareId && (
+        <footer style={{ marginTop: 40, paddingTop: 20, borderTop: "1px solid var(--line-hair)" }}>
+          <p
+            style={{
+              fontSize: 12.5,
+              lineHeight: 1.55,
+              color: "var(--ink-faint)",
+              maxWidth: 620,
+              margin: "0 0 14px",
+            }}
+          >
+            The records cited here are drawn from the public archive and keep their own sources and evidence
+            tags. The prose and the selection are this reader's own — a curated reading, not a statement of
+            the record. Nothing here alters the underlying documents.
+          </p>
+          <ReportControl shareId={d.shareId} />
+        </footer>
+      )}
     </article>
   );
 }

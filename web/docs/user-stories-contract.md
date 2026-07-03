@@ -128,3 +128,23 @@ user Stories render client-side). See that directory's `README.md`. In brief:
 Both tiers are build-time gated by `storiesUiEnabled()` (Cognito + `PUBLIC_STORIES_ENABLED`), the
 UI peer of the server-side `STORIES_ENABLED` kill switch; a `?preview` mode renders a bundled fixture
 Story with no auth/D1 so the design is legible in any build.
+
+## Public sharing + moderation (#1098 — landed)
+
+Publishing a Story mints an unguessable `share_id` and sets `status=published`; the reader route
+serves it publicly at `?share=<share_id>` (the client fetches `GET /api/stories/shared/:shareId`, the
+only unauthenticated read). The public projection carries no owner id and no editable source; a
+disclosure line frames it as a reader's curated reading over the archive, not a statement of the
+record. The moderation rails reuse the existing infra:
+
+- **Publish gate** — publishing is early-access-gated initially (a `standard` user saves drafts but
+  can't share); `STORIES_ENABLED` is the coarse kill switch; writes are rate-limited.
+- **Report** — `POST /api/stories/report` (public, rate-limited, Turnstile-verified when
+  `TURNSTILE_SECRET` is set) files a flag onto an admin review queue (`ReportControl` on the public
+  reader).
+- **Admin takedown** — `/api/admin/stories` (admin role) lists the queue and flips `moderation` to
+  `removed`, which 404s the public read instantly and survives an owner edit. An unpublished or
+  removed Story is never reachable by its share URL.
+
+`share_id`/`published_at` are **sticky** (an unpublish→republish keeps the same share URL). Schema in
+[`migrations/0002_stories_moderation.sql`](../migrations/0002_stories_moderation.sql).

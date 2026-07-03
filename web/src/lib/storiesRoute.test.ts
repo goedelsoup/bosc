@@ -6,7 +6,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { _resetCatalogCache } from "@fn/api/_lib/catalogAsset";
 import type { StoriesEnv } from "@fn/api/_lib/storiesRoute";
+import { onRequestGet as adminList, onRequestPost as adminAct } from "@fn/api/admin/stories";
 import { onRequestDelete, onRequestGet as getOne, onRequestPut } from "@fn/api/stories/[id]";
+import { onRequestPost as postReport } from "@fn/api/stories/report";
+import { onRequestGet as getShared } from "@fn/api/stories/shared/[shareId]";
 import { onRequestGet as listStoriesRoute, onRequestPost } from "@fn/api/stories";
 import {
   type CognitoTestKeyPair,
@@ -66,16 +69,25 @@ function env(db: FakeD1, overrides: Record<string, unknown> = {}): Record<string
   };
 }
 
-async function bearer(sub = "user-1"): Promise<Record<string, string>> {
+async function bearer(sub = "user-1", groups?: string[]): Promise<Record<string, string>> {
   const token = await mintIdToken(keypair, {
     sub,
     email: `${sub}@x.com`,
     clientId: CLIENT,
     userPoolId: POOL,
     region: REGION,
+    groups,
   });
   return { authorization: `Bearer ${token}` };
 }
+
+// A loose ctx for the public/report/admin handlers. `shareId` satisfies the shared-read handler's
+// `params.shareId`; report/admin ignore it.
+const anyCtx = (request: Request, e: Record<string, unknown>, shareId = "") => ({
+  request,
+  env: e as unknown as StoriesEnv,
+  params: { shareId },
+});
 
 const validBody = (over: Record<string, unknown> = {}) => ({
   site: "lima",
@@ -185,5 +197,126 @@ describe("/api/stories — validation + isolation", () => {
     const intruder = await bearer("user-2");
     const res = await getOne(ctx(new Request(`${BASE}/${id}`, { headers: intruder }), env(db), { id }));
     expect(res.status).toBe(404);
+  });
+});
+
+describe("/api/stories — publish gate (#1098)", () => {
+  it("a standard user can't publish (403) but can save a draft (201)", async () => {
+    stubFetch();
+    const db = fakeD1();
+    const pub = await onRequestPost(
+      ctx(postJson(BASE, validBody({ status: "published" }), await bearer()), env(db)),
+    );
+    expect(pub.status).toBe(403);
+    const draft = await onRequestPost(
+      ctx(postJson(BASE, validBody({ status: "draft" }), await bearer()), env(db)),
+    );
+    expect(draft.status).toBe(201);
+    expect(((await draft.json()) as { share_id: string | null }).share_id).toBeNull();
+  });
+
+  it("an early-access user publishes and receives a share_id", async () => {
+    stubFetch();
+    const db = fakeD1();
+    const res = await onRequestPost(
+      ctx(postJson(BASE, validBody({ status: "published" }), await bearer("u", ["early-access"])), env(db)),
+    );
+    expect(res.status).toBe(201);
+    expect(((await res.json()) as { share_id: string | null }).share_id).toBeTruthy();
+  });
+});
+
+describe("/api/stories/shared/:shareId — public read (#1098)", () => {
+  it("serves a published story to an unauthenticated visitor; a bogus id 404s", async () => {
+    stubFetch();
+    const db = fakeD1();
+    const created = await onRequestPost(
+      ctx(postJson(BASE, validBody({ status: "published" }), await bearer("u", ["early-access"])), env(db)),
+    );
+    const { share_id } = (await created.json()) as { share_id: string };
+
+    // NO auth header on the public read.
+    const pub = await getShared(anyCtx(new Request(`${BASE}/shared/${share_id}`), env(db), share_id));
+    expect(pub.status).toBe(200);
+    const detail = (await pub.json()) as { story: { title: string; refs: unknown[] } };
+    expect(detail.story.title).toBe("My Story");
+    expect(detail.story.refs.length).toBe(1);
+
+    const miss = await getShared(anyCtx(new Request(`${BASE}/shared/nope`), env(db), "nope"));
+    expect(miss.status).toBe(404);
+  });
+
+  it("an unpublished story is no longer reachable by its old share id", async () => {
+    stubFetch();
+    const db = fakeD1();
+    const created = await onRequestPost(
+      ctx(postJson(BASE, validBody({ status: "published" }), await bearer("u", ["early-access"])), env(db)),
+    );
+    const { id, share_id } = (await created.json()) as { id: string; share_id: string };
+    const put = new Request(`${BASE}/${id}`, {
+      method: "PUT",
+      headers: { "content-type": "application/json", ...(await bearer("u", ["early-access"])) },
+      body: JSON.stringify(validBody({ status: "draft" })),
+    });
+    await onRequestPut(ctx(put, env(db), { id }));
+    const pub = await getShared(anyCtx(new Request(`${BASE}/shared/${share_id}`), env(db), share_id));
+    expect(pub.status).toBe(404);
+  });
+});
+
+describe("/api/stories/report — public report (#1098)", () => {
+  it("accepts a valid report (202) and rejects an invalid reason (400)", async () => {
+    stubFetch();
+    const db = fakeD1();
+    const created = await onRequestPost(
+      ctx(postJson(BASE, validBody({ status: "published" }), await bearer("u", ["early-access"])), env(db)),
+    );
+    const { share_id } = (await created.json()) as { share_id: string };
+
+    const ok = await postReport(
+      anyCtx(postJson(`${BASE}/report`, { shareId: share_id, reason: "abuse", detail: "bad" }), env(db)),
+    );
+    expect(ok.status).toBe(202);
+    const bad = await postReport(
+      anyCtx(postJson(`${BASE}/report`, { shareId: share_id, reason: "nonsense" }), env(db)),
+    );
+    expect(bad.status).toBe(400);
+  });
+});
+
+describe("/api/admin/stories — moderation (#1098)", () => {
+  it("forbids non-admins, lists reports, and takes a story down for the public", async () => {
+    stubFetch();
+    const db = fakeD1();
+    const created = await onRequestPost(
+      ctx(
+        postJson(BASE, validBody({ status: "published" }), await bearer("author", ["early-access"])),
+        env(db),
+      ),
+    );
+    const { id, share_id } = (await created.json()) as { id: string; share_id: string };
+    await postReport(anyCtx(postJson(`${BASE}/report`, { shareId: share_id, reason: "abuse" }), env(db)));
+
+    const ADMIN = "https://bosc.test/api/admin/stories";
+    // early-access is not admin
+    const forbidden = await adminList(
+      anyCtx(new Request(ADMIN, { headers: await bearer("author", ["early-access"]) }), env(db)),
+    );
+    expect(forbidden.status).toBe(403);
+
+    // admin sees the report
+    const list = await adminList(
+      anyCtx(new Request(ADMIN, { headers: await bearer("admin-1", ["admin"]) }), env(db)),
+    );
+    expect(list.status).toBe(200);
+    expect(((await list.json()) as { reports: unknown[] }).reports.length).toBe(1);
+
+    // admin takedown → the public read 404s
+    const act = await adminAct(
+      anyCtx(postJson(ADMIN, { action: "takedown", id }, await bearer("admin-1", ["admin"])), env(db)),
+    );
+    expect(act.status).toBe(200);
+    const pub = await getShared(anyCtx(new Request(`${BASE}/shared/${share_id}`), env(db), share_id));
+    expect(pub.status).toBe(404);
   });
 });

@@ -301,8 +301,11 @@ function StoryRow({
           <a href={`${composeHref}?id=${encodeURIComponent(story.id)}`} style={rowLink("var(--ink-muted)")}>
             ✎ Edit
           </a>
-          {published && (
-            <a href={`${readHref}?id=${encodeURIComponent(story.id)}`} style={rowLink("var(--forest)")}>
+          {published && story.share_id && (
+            <a
+              href={`${readHref}?share=${encodeURIComponent(story.share_id)}`}
+              style={rowLink("var(--forest)")}
+            >
               ↗ Share
             </a>
           )}
