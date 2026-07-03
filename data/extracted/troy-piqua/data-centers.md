@@ -28,9 +28,12 @@ The developer of record is a shell (J5 LLC / Shaytura LLC); the reported hypersc
   but not on the City page, DCD, or cleanview; origin (filing vs. community-coined) is `[open]`.
 - **Location:** north of Farrington Road, east of Washington Road, in the Piqua I-75 Business &
   Industrial Park (near I-75 exit 78), City of Piqua. `[verified]` Source: piquaoh.gov; DCD.
-- **Acreage:** ~607 acres = phase-one site; the full assembled footprint is ~1,200 contiguous
-  acres annexed 2020–2025 (Statler Farms 663.64 ac; a 329.824-ac parcel; a 33-ac parcel).
-  `[verified]` Source: piquaoh.gov. (So "607" is phase one, not the total.)
+- **Acreage:** ~607 acres = phase-one site; the documented assembled footprint is **~1,026 acres**
+  across three annexed parcels 2020–2025 (Statler Farms 663.64 ac + a 329.824-ac parcel + a 33-ac
+  parcel = 1,026.46 ac). `[verified]` Source: piquaoh.gov (parcel acreages). The City page's
+  **~1,200-ac** contiguous framing is `[reported]` — it exceeds the documented parcel sum by ~174 ac,
+  so a fourth parcel / larger source is `[open]` (see Instruments to pull #2). (So "607" is phase
+  one, not the total.)
 - **Building program:** two buildings ~350,000 ft² each (~700,000 ft² total). `[verified]`
 - **Investment:** "$1 billion plus" fixed-asset investment, plus ~$76M developer-funded utility
   infrastructure (water, wastewater, power, roads); projected >$180M community revenue over 30
@@ -96,9 +99,10 @@ The developer of record is a shell (J5 LLC / Shaytura LLC); the reported hypersc
   emergency resolution waiving three readings). `[verified]` Supporting school-compensation / TIF
   agreements passed by Piqua City Schools & Upper Valley Career Center boards October 2025; all
   agreements executed January 23, 2026; a further resolution April 9, 2026. `[verified]`
-- **Zoning/annexation:** ~1,200 acres annexed and zoned heavy-industrial 2022–2025 (Statler Farms
-  annex Jun 8, 2022 / zone Sep 20, 2022; 329.824-ac parcel annex Sep 19, 2024 / zone Jan 28, 2025;
-  33-ac parcel annex Mar 13, 2025 / zone May 20, 2025). `[verified]`
+- **Zoning/annexation:** three parcels totaling **~1,026 acres** annexed and zoned heavy-industrial
+  2022–2025 (Statler Farms annex Jun 8, 2022 / zone Sep 20, 2022; 329.824-ac parcel annex Sep 19,
+  2024 / zone Jan 28, 2025; 33-ac parcel annex Mar 13, 2025 / zone May 20, 2025). `[verified]` (The
+  City page's ~1,200-ac figure is `[reported]`; the ~174-ac gap vs. this parcel sum is `[open]`.)
 - **Operations target:** ~December 2029 per a candidate-site tracker. `[reported]` — not on the
   City page (which states no target).
 - **Ohio EPA air PTI (backup generators):** `[open]` — no site-specific filing found. Instrument to
@@ -129,7 +133,9 @@ campus pinned as of 2026-07-02. `[open]` — re-sweep on the next pass.
 1. **J5 LLC / Shaytura LLC corporate filing** — resolve the state of formation (Nevada vs.
    Delaware) and confirm the Menlo Park address (the Meta attribution's load-bearing document).
 2. **Miami County Auditor / GIS** — parcel IDs for the three annexed parcels (Statler Farms +
-   329.824-ac + 33-ac); acreage, owner of record, transfer dates.
+   329.824-ac + 33-ac); acreage, owner of record, transfer dates. **Also resolve the ~174-ac gap**
+   between the documented parcel sum (~1,026 ac) and the City page's ~1,200-ac figure — look for a
+   fourth annexed parcel or the source of the larger number.
 3. **City of Piqua** — the executed Water & Wastewater Agreement (Jan 23, 2026) to reconcile the
    2.0 MGD reservation vs. the closed-loop/domestic-only public messaging.
 4. **OEPA air PTI** — backup generator PTI(s) for the site (SWDO, Miami County, entity "J5 LLC").
