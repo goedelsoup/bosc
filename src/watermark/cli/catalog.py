@@ -325,14 +325,18 @@ def catalog_diff_cmd(
         console.print_json(data=[d.model_dump() for d in diffs])
         return
 
-    if load_observed() is None:
+    no_snapshot = load_observed() is None
+    if no_snapshot:
         console.print(
             "[yellow]no snapshot[/] — every entry shows as added; "
             "run `watermark catalog reconcile` to record a baseline."
         )
 
     if not diffs:
-        console.print("[green]in sync[/] — snapshot matches live disk.")
+        # "in sync" only means something against a real baseline — with no snapshot (and no
+        # entries) the hint above already stands, so don't also claim parity.
+        if not no_snapshot:
+            console.print("[green]in sync[/] — snapshot matches live disk.")
         return
 
     sigils = {"added": "[green]+[/]", "removed": "[red]-[/]", "changed": "[yellow]~[/]"}

@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-03T16:20:19.618494+00:00'
+reconciled_at: '2026-07-03T17:44:09.841264+00:00'
 entries:
   aedg:
     exists: true
@@ -9,6 +9,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   aedg-roundabouts-opc:
     exists: true
     sha256: 7f52e51708d8d8b89fb6fdc75c2d465e2f11cc9d0014031551c5c71bdb765391
@@ -18,6 +19,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   allen-boe:
     exists: true
     sha256: 6cfa719a0612de2530e0d4e0cc80b3b8233d6d24ca9161ee342bf62fb4faaaf0
@@ -27,6 +29,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   allen-boe-precincts-csv:
     exists: true
     sha256: fc0f5f4955552cc2e0e917e31fe1ba61fb32ad223625e6aabd6ce6a10e8ec8ed
@@ -36,6 +39,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   allen-boe-results-csv:
     exists: true
     sha256: c0c0b9efb684b1bb7becdf218d9dcae3d4fac1e2ec8a4731916deb6ae5b8e06f
@@ -45,6 +49,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   allen-boe-source-pdf:
     exists: true
     sha256: 910ad6ff5d76b85d61044abdae221124c497b8b162c9b2b52228035062985c7d
@@ -54,6 +59,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   allen-gis-parcels:
     exists: true
     sha256: f6db33887628cb209769c5f7342099bafb72ddc48c7806ed5ce9f46f3c70dedb
@@ -63,6 +69,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   american-township-meetings:
     exists: true
     sha256: 0a7e10f0c2cf2b0bf43764efed41285a8abb39c172684dd0090cd6a9efa079a4
@@ -72,6 +79,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   bundle-records:
     exists: true
     sha256: null
@@ -81,6 +89,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: slug-scoped
   commissioners:
     exists: true
     sha256: 4e0c677c5fc6d5394b6015938721ebc14398eccd8087c3b8040fd7a608d16cdd
@@ -90,6 +99,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   commissioners-meetings:
     exists: true
     sha256: 62fa556db1a5139815bf01b27968e5715e16ccec12f32b2cb20da3958278c603
@@ -99,6 +109,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   commissioners-minutes:
     exists: true
     sha256: a30938a788336b25d200b6d081aff1e90fe621151b14f378afa2ed9d769d4741
@@ -108,6 +119,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   compute:
     exists: true
     sha256: 4a7382e852780bb47c66520f601ceaece298b9c4803d5fe4c5a7d3c7116b2849
@@ -117,6 +129,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin-shared
   data-centers:
     exists: true
     sha256: bea8a65e7e958316aa89e243a05f40f619fa4348bf5af78c46c903cc3fee453f
@@ -126,6 +139,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: slug-scoped
   data-centers-hamilton-middletown:
     exists: true
     sha256: 200d6d872634423689671d339f5068bf60d0054759bc1f3180d0b4cd4337fc76
@@ -135,6 +149,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: site:hamilton-middletown
   data-centers-sidney:
     exists: true
     sha256: eabcc5390e1dab55a6019ca103a6ebe60de525465601d7a0846fcbd65df01905
@@ -144,6 +159,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: site:sidney
   data-centers-troy-piqua:
     exists: true
     sha256: 8c3221839b22d32d3b385e09a625a7d1c03dab278d172192df9ba36fe799978b
@@ -153,6 +169,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: site:troy-piqua
   data-centers-van-wert:
     exists: true
     sha256: 13429781f72e11434a9880c5547407bb59b8add596c5792f054164f275ad72dd
@@ -162,6 +179,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: site:van-wert
   data-centers-wilmington:
     exists: true
     sha256: d321b8413e3135f25f609537ca1c3a32b715bcaffc004cd3800972a9dbabc027
@@ -171,6 +189,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: site:wilmington
   data-centers-wpafb:
     exists: true
     sha256: f4d6119d3aee723c9c2903ddf8b36030af87c95844783b4aa509d19c9495193d
@@ -180,6 +199,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: site:wpafb
   data-centers-xenia:
     exists: true
     sha256: c5651d1f885b1bfb556abf913c5971ac0c94767c8908b54a223c58c236374f68
@@ -189,6 +209,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: site:xenia
   datacenter-facility-wwtp-in0032191-wwtp-receiving-water:
     exists: true
     sha256: b067d83fdbb8d5d90673899f4673a0d735537597521aaf11196dbe3caf71bd7c
@@ -198,6 +219,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: site:fort-wayne
   datacenter-industry:
     exists: true
     sha256: bca65a269956e827264e06865a041501b30971cee68d4833f924d7e1615211c3
@@ -207,6 +229,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin-shared
   echo-great-miami-wwtp:
     exists: true
     sha256: 2cfc98655fe07a9da4cf0b3592744502d1a435f6f06510f93df36c6062adab8d
@@ -216,6 +239,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin:great-miami
   echo-little-miami-wwtp:
     exists: true
     sha256: 32ca6dfcedb9a87e13982018fa99bb36cf3c8c79e3d4b2aea6e0d398a2ccd33c
@@ -225,6 +249,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin:little-miami
   echo-maumee-npdes:
     exists: true
     sha256: 975e74607b707e62232da4c4861aa329802fc52a71d3f4247420edb44c76ea10
@@ -234,6 +259,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin:maumee
   economics-baseline:
     exists: true
     sha256: db5ca132ce616015464690f15c961bcb9c096be2480dcfa6d5bf7e4b87e5f0b9
@@ -243,6 +269,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: slug-scoped
   eia:
     exists: true
     sha256: e1a519a7faed4746aadc62cb77a531398940ace7c6360d724f06f2d2888b745b
@@ -252,6 +279,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin-shared
   eia-consumer-energy:
     exists: true
     sha256: 4c693ed95df8b7328bcc590ca363f582cbcdc3166762b2198c475eecafa32f95
@@ -261,6 +289,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: slug-scoped
   eia-grid-profile:
     exists: true
     sha256: b2f30169b1d8db740901b88f4f50f37ba5ae95821f5f0820f937a5d2b9ee7831
@@ -270,6 +299,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: slug-scoped
   federal:
     exists: true
     sha256: 2f3001719a94893ce39eaaa60704e4e5c012c15e2a6ee2513daad62c03d8538a
@@ -279,6 +309,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin-shared
   ferc:
     exists: true
     sha256: 14e9aaee251502fec65e0423b389351640cdca76c93a772d7292b6f5274abae4
@@ -288,6 +319,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin-shared
   findlay-gis:
     exists: true
     sha256: f02447372c26dc6e1b37525c7cacda3b3e5350a8d450fda44e717ddfdd4ff0c0
@@ -297,6 +329,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: site:findlay
   gleif:
     exists: true
     sha256: f2ce4ea8de0d36a7c1d51601fac8bdd77c4bdb81e205dedd4177d18753d22bfd
@@ -306,6 +339,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin-shared
   greenops:
     exists: true
     sha256: d18e2c3ee9c4ecbfa89d60870336f473e9d0d30cb286e66e1c6cc9c459cc6bb0
@@ -315,6 +349,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin-shared
   greenops-aws:
     exists: true
     sha256: ba1fab19e873492150f571a993c1d2a6758116b1c5366ba8c8e96718ae1f17c0
@@ -324,6 +359,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin-shared
   history-allen-oh-leeson-1885-corpus-intersect:
     exists: true
     sha256: acb749c7ccde71f525795525617a1c4a51bfc680b6aa3f2a638285d9b1706607
@@ -333,6 +369,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   hydrology:
     exists: true
     sha256: 0c547020015ec388b918c35ce5d28fd4697cb1a0c097c46e8d2a0c4f5303169e
@@ -342,6 +379,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin-shared
   hydrology-atlas14-corridor-ddf:
     exists: true
     sha256: 460fed22c3409fcaff5f52ea5e0ecafdaab2ff1563e6c54d0bd28383213f0eed
@@ -351,6 +389,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: slug-scoped
   hydrology-low-flow-7q10:
     exists: true
     sha256: e92447034759ddcaac5cfe5fccee9f61df4ea3e58b93ec6557d274122917dfb1
@@ -360,6 +399,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin-shared
   hydrology-nasa-power-climatology:
     exists: true
     sha256: d0ab1896a9171a503033254b86a1fcec3bcd9dbbd4b9ac5fe41b45879671bec9
@@ -369,6 +409,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: slug-scoped
   hydrology-ohio-principal-streams:
     exists: true
     sha256: 6cdbc7b5096a17dfd9d003c9e8f0baa77aabb5baafe048a9fb8713eeafb91a8e
@@ -378,6 +419,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin-shared
   hydrology-swmm:
     exists: true
     sha256: 1a72f530ba3bdd1e3914744dd57fe834109c13b45967f99e3ef3f0c27b711617
@@ -387,6 +429,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin-shared
   hydrology-wbd:
     exists: true
     sha256: f2e3455fce0a343a5af4d763d3ee8d109f9361e0c2b2adbc44ba9c1417962920
@@ -396,6 +439,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin-shared
   idem:
     exists: true
     sha256: 0534aad73434736d7b58f6f6b77135d6883d99864fb6a34f14ebba1dddb0459e
@@ -405,6 +449,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: site:fort-wayne
   lacrpc:
     exists: true
     sha256: 74ae27c9ffae0f897797ff22d7fed2a01c8c4259af67a2b689948fba0b92b8d9
@@ -414,6 +459,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   lacrpc-meetings:
     exists: true
     sha256: 1891742d80e124c785236eb723f2debb78042083b3b3196c43ec06fc635e7bf6
@@ -423,6 +469,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   legal:
     exists: true
     sha256: 8085c79d1098f7b387694be15590cbcdbe808824b06bfc8fae63cb8276a22331
@@ -432,6 +479,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   legal-prr-mandamus:
     exists: true
     sha256: 510e2122a4b8f4c3d0af7973e3809c129fdfc8038b83f138a6b91b33bcf8f7cc
@@ -441,6 +489,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   legal-prr-mandamus-bosc-prr-production-2026-06-05:
     exists: true
     sha256: dd428c37fa92e0b1ef0b239bd6438a2bde74d54acab768f3330dce825c6c2ee8
@@ -450,6 +499,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   legal-prr-mandamus-bosc-prr-production-2026-06-12:
     exists: true
     sha256: f85386efe8cd2c1ddf91bde727920592ecc4f3d36000044dc87171e3bbb1d844
@@ -459,6 +509,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   legal-prr-mandamus-bosc-prr-production-2026-06-12-aswcd:
     exists: true
     sha256: 024bfc048c8f0507b35671b28729f0e1837a799bc96486ca0714e546377d7c21
@@ -468,6 +519,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   legal-prr-mandamus-bosc-site-permit-sequence:
     exists: true
     sha256: ba226378ac8a8ce3a32c4b2b415826eacbff38fcb86eca672b172e49d4ee74db
@@ -477,6 +529,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   legal-select-committee-2026:
     exists: true
     sha256: e91ffa023f77c68de8ad013930e43fc50ddf81e0801ac26baab106ca66e54051
@@ -486,6 +539,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   legal-select-committee-2026-hearings-audio-bosc-committee-hearing-2026-06-04-am:
     exists: true
     sha256: 566e3449079cc55fcb3e39ae75514a4f10c28af83647021cfba00a6a4a222fa6
@@ -495,6 +549,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   legal-select-committee-2026-hearings-audio-bosc-committee-hearing-2026-06-04-pm:
     exists: true
     sha256: 51affaa61d84907a254efaeaa8a1b70996f7915935106fe732bfc4b875309e76
@@ -504,6 +559,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   legal-select-committee-2026-hearings-audio-bosc-committee-hearing-2026-06-04-pm2:
     exists: true
     sha256: eeca85ae87074d445339cbec3ae67309b6e7d8f763694cd038e6c8938cb9b7ae
@@ -513,6 +569,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   legal-select-committee-2026-hearings-audio-bosc-committee-testimony-2026-06-04:
     exists: true
     sha256: aa1dcd0533b89aa9eea8c377e8c87aa948452bd19c93e33e45618d5125509b83
@@ -522,6 +579,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   legal-select-committee-2026-relator-testimony:
     exists: true
     sha256: b7dfcef1e62623ffd7837906b3f676039653a151c99e1969ea1d63015c379cf2
@@ -531,6 +589,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   legal-select-committee-2026-relator-testimony-bosc-written-testimony-2026-06-01:
     exists: true
     sha256: 48f22ce2256d738aa6fbe698e3fcceedf56b16b206dd5798637ffa59259592a3
@@ -540,6 +599,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   legal-web-vendor-audit:
     exists: true
     sha256: f5adeac7ef3273d65fec1b4c256ee038b0005baf68d6d8a868f42c91ba24fdbc
@@ -549,6 +609,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   legal-web-vendor-audit-allen-county-web-vendor-audit:
     exists: true
     sha256: 24ce434b9324b17b69e8581e3007a2f29b07b3eed628945929fec3b32fd8eb61
@@ -558,6 +619,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   lima-gis:
     exists: true
     sha256: 8059316b4367a3c49208bf713329eae72d46f5b2af364f82c7be62a2b9fd967e
@@ -567,6 +629,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   lsc-status-report:
     exists: true
     sha256: 6215d2664d23cf0a919a6b63360b567e06dcb43146a2788241b057ba1edace63
@@ -576,6 +639,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: state:OH
   meetings:
     exists: true
     sha256: 5ef5921d45d31f2bfb2bc3a843df5faed35f402d5ad8bf01d4736b12285cc5d3
@@ -585,6 +649,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: slug-scoped
   network:
     exists: true
     sha256: fc158c71b6b9e5aadfc4fce22b3ca32478dc9595a17292979b68cb299996e7eb
@@ -594,6 +659,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin-shared
   odd-grants-loans:
     exists: true
     sha256: c5ed114a5bee122f531cb6641834911f2a2a7c7b67ee1a4072e9ac879a1dd22c
@@ -603,6 +669,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: state:OH
   odd-tax-incentives:
     exists: true
     sha256: f912bd0e9cdde31cf50e34290d004c60783c161711b41c26df421ef5b2908a57
@@ -612,6 +679,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: state:OH
   odd-tca-minutes:
     exists: true
     sha256: 648ed41712af089ef2eab13fad98ee7ac109eccc7b39887a2249de2948d85b42
@@ -621,6 +689,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: state:OH
   odot-driveohio-cv-av:
     exists: true
     sha256: d7088c0406bca54be57d6a3f4e9dbc867936645d78f4a7c928977d08a8d5059e
@@ -630,6 +699,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: state:OH
   oepa:
     exists: true
     sha256: 8c8f6428673194de91edfb99369c2ebe2662124ea83becee502bbead08ac5749
@@ -639,6 +709,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   oepa-ohd000001-gp:
     exists: true
     sha256: ad8b415ac2a8965109916fb65963983d3941d5a6fd8b3537f633d82ed82cbd44
@@ -648,6 +719,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: state:OH
   oepa-sidney:
     exists: true
     sha256: be4b7134d7ae055b05895727f19d377d7cfeecaee7106d63b3fbc7f785c0f975
@@ -657,6 +729,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: site:sidney
   oepa-troy-piqua:
     exists: true
     sha256: c2f2300adb8ab06235bb2de04e9ffa15b834cad94b3ab60ed949664bb0fd338d
@@ -666,6 +739,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: site:troy-piqua
   oepa-van-wert:
     exists: true
     sha256: 7c4074cdc18add1006d6e6afba53d6f8d0a4932795644fa263b01d7a7e5992f4
@@ -675,6 +749,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: site:van-wert
   oepa-wilmington:
     exists: true
     sha256: f034c52deac42af8723782165e87b0f0beeaabdf0f13b0315efe68cec28ed547
@@ -684,6 +759,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: site:wilmington
   onboard-bundle:
     exists: true
     sha256: null
@@ -693,6 +769,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: slug-scoped
   orc:
     exists: true
     sha256: 674d78b7d8fc5f420683f007f0191a672226eeb93b52c903bfc01737613853af
@@ -702,6 +779,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: state:OH
   orc-orc:
     exists: true
     sha256: f7b17468a1b512bf9afc5c5c8103e0ed6d9bd12e973674360af4c9814ec30673
@@ -711,6 +789,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: state:OH
   parcel-assemblage:
     exists: true
     sha256: bb267c62bf54da26a0ac944fc31d5da4ec02ad4edec0efe09ef1b3a9c97b775f
@@ -720,6 +799,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: slug-scoped
   periplus:
     exists: true
     sha256: 922e09eb27262d28f11a0ca038c23263e0628d48c3b061dd8164bc57831adfff
@@ -729,6 +809,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin-shared
   permits:
     exists: true
     sha256: 0e7f3318507831281e9a783905f7554d334afe29abb1c39ed03fa78c058cf963
@@ -738,6 +819,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   perry-township-meetings:
     exists: true
     sha256: 97e3cb4624478eec2d5294992fe39728d466c9dd5fa863154c38d20cdcbcddd4
@@ -747,6 +829,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   pjm:
     exists: true
     sha256: eda546118c035662bd711554ca9f244432d8eaf854f3c7dd2735a48843481707
@@ -756,6 +839,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin-shared
   plans:
     exists: true
     sha256: 60bffb942baecdbc1957c9f0562920a2b5016020b2d71b73ade26baaca2ba087
@@ -765,6 +849,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   recorder:
     exists: true
     sha256: c30917c85c4c98090afc3e97487816b6798a3f51bb003a6ac9f80d4dd2217eb6
@@ -774,6 +859,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   regulatory:
     exists: true
     sha256: 7509cb9c9fe58e0fddd667a57320a796bd6da07da72a523c4b045319ce98b5ad
@@ -783,6 +869,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   rsei:
     exists: true
     sha256: 361bb7b5a1470f4ac13b79ad09b9df8de9f7e096a79a9964efd1f19fcfbc6c0d
@@ -792,6 +879,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin-shared
   rsei-inventory:
     exists: true
     sha256: 258ba174747f9d1c1c877bd18c98312fc33978df67495d3ec3a3c29d1e64890e
@@ -801,6 +889,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: slug-scoped
   shawnee-township-meetings:
     exists: true
     sha256: f8ccdbf81a1fae29a676a9a757b30e5481161196694cd1b1d1c03cabb0caea7f
@@ -810,6 +899,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   subdivisions:
     exists: true
     sha256: 2b00e95f26045a264e04fb4ae27c04ee6acfe471e58987b5e37d5adb0a0d005b
@@ -819,6 +909,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin-shared
   urbana:
     exists: true
     sha256: 1030ce7ff7ff9a93c909a25d50050b207b6ddba00f13aa3a39e54c2193d47c80
@@ -828,6 +919,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: site:urbana
   usaspending:
     exists: true
     sha256: de5f7d7fec8ff97ab3b5f5202de00386fcf2026f78723def180d31d73597f270
@@ -837,6 +929,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: basin-shared
   watershed:
     exists: true
     sha256: 1d32b846a2251c42211a79025438d858de56db29ea39e6519a352c4cfc4fea63
@@ -846,6 +939,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: lima-legacy
   wilmington:
     exists: true
     sha256: 04809992746936d296fc9f11cba055744fe13cbb5e8c5d47942610256602ceff
@@ -855,6 +949,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: site:wilmington
   wilmington-watch-items:
     exists: true
     sha256: 9d8f9904a56c8b020dee930eb90a51ebbe1fc145ed0c49994be3e4aa546771ea
@@ -864,6 +959,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: site:wilmington
   wpafb:
     exists: true
     sha256: 8f4afee176b3a935d539ee32910c4e71720a850ac5e84749e8cb2f886da8362c
@@ -873,6 +969,7 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: site:wpafb
   wwtp-oh0027421-sidney:
     exists: true
     sha256: aff4d534365cf1a8f6bb8e565bb046ea84ac318f3ff530a127a85a052bc06c4a
@@ -882,3 +979,4 @@ entries:
     missing: []
     asof: null
     stale: false
+    site_scope: site:sidney

@@ -24,9 +24,8 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
 
-from watermark.catalog import load_entries
 from watermark.catalog.reconcile import ObservedEntry, load_observed, reconcile
-from watermark.catalog.sites import is_relevant
+from watermark.catalog.sites import owner_matches
 from watermark.config import Settings, get_settings
 
 # The observed fields a per-entry delta reports, in display order. ``reconciled_at`` is
@@ -88,26 +87,26 @@ def diff(
     Returns one :class:`DiffEntry` per entry whose membership or observed fields moved, sorted by
     id. ``now`` drives the live reconcile's freshness check (injectable for deterministic tests).
     ``site`` scopes the report to entries relevant to that slug (slug-scoped + basin-shared + the
-    owner kinds), via :func:`watermark.catalog.sites.is_relevant`. When the snapshot is missing,
-    every live entry reports as ``added``.
+    owner kinds), matched against each entry's *observed* ``site_scope`` — so a ``removed`` entry
+    (whose catalog YAML no longer exists) is still scoped from its last-observed ownership rather
+    than dropped. When the snapshot is missing, every live entry reports as ``added``.
     """
     settings = settings or get_settings()
     before = load_observed(settings=settings)
     after = reconcile(settings=settings, now=now)
-
-    relevant: set[str] | None = None
-    if site is not None:
-        relevant = {e.id for e in load_entries(settings=settings) if is_relevant(e, site)}
 
     before_entries = before.entries if before is not None else {}
     after_entries = after.entries
 
     out: list[DiffEntry] = []
     for eid in sorted(set(before_entries) | set(after_entries)):
-        if relevant is not None and eid not in relevant:
-            continue
         b = before_entries.get(eid)
         a = after_entries.get(eid)
+        if site is not None:
+            # scope from the live record if present, else the snapshot's last-observed ownership
+            obs = a or b
+            if obs is None or not owner_matches(obs.site_scope, site):
+                continue
         if a is not None and b is None:
             out.append(DiffEntry(id=eid, status="added"))
         elif a is None and b is not None:
