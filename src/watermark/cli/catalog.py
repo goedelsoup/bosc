@@ -281,6 +281,71 @@ def catalog_reconcile_cmd(
     console.print(f"[green]wrote[/] {path.relative_to(get_settings().data_dir.parent)}")
 
 
+def _fmt_value(field: str, value: object) -> str:
+    """Compact one FieldChange side for the git-status-style summary."""
+    if value is None:
+        return "—"
+    if field in ("sha256",) and isinstance(value, str) and len(value) > 8:
+        return f"{value[:7]}…"
+    return str(value)
+
+
+_CHANGE_LABELS = {"file_count": "files"}
+
+
+def _fmt_change(field: str, before: object, after: object) -> str:
+    label = _CHANGE_LABELS.get(field, field)
+    return f"{label} {_fmt_value(field, before)} → {_fmt_value(field, after)}"
+
+
+@catalog_app.command("diff")
+def catalog_diff_cmd(
+    site: str = typer.Option(
+        "", "--site", help="Scope to entries relevant to a site slug (slug-scoped + basin-shared)."
+    ),
+    as_json: bool = typer.Option(False, "--json", help="Dump the DiffEntry list for scripting."),
+) -> None:
+    """Diff the committed _observed.yaml snapshot against a fresh live reconcile (observes only).
+
+    The `git diff` analogue to reconcile's `git add`: after a producer/connector run, see which
+    entries' content, membership, or freshness moved before committing the new snapshot. Distinct
+    from `watermark catalog check` (the declared-vs-disk gate) — this compares snapshot-vs-disk,
+    never gates, and always exits 0. A clean tree prints "in sync."
+    """
+    from watermark.catalog.diff import diff
+    from watermark.catalog.reconcile import load_observed
+
+    if site and site not in SITES:
+        raise typer.BadParameter(
+            f"unknown site {site!r}; known: {sorted(SITES)}", param_hint="--site"
+        )
+    diffs = diff(site=site or None)
+
+    if as_json:
+        console.print_json(data=[d.model_dump() for d in diffs])
+        return
+
+    if load_observed() is None:
+        console.print(
+            "[yellow]no snapshot[/] — every entry shows as added; "
+            "run `watermark catalog reconcile` to record a baseline."
+        )
+
+    if not diffs:
+        console.print("[green]in sync[/] — snapshot matches live disk.")
+        return
+
+    sigils = {"added": "[green]+[/]", "removed": "[red]-[/]", "changed": "[yellow]~[/]"}
+    width = max(len(d.id) for d in diffs)
+    for d in diffs:
+        summary = ", ".join(_fmt_change(c.field, c.before, c.after) for c in d.changes)
+        console.print(f"  {sigils[d.status]} {d.id:<{width}}  [dim]{summary}[/]")
+    counts: dict[str, int] = {}
+    for d in diffs:
+        counts[d.status] = counts.get(d.status, 0) + 1
+    console.print("\n" + " · ".join(f"{k}: {v}" for k, v in sorted(counts.items())))
+
+
 @catalog_app.command("render")
 def catalog_render_cmd(
     only: str = typer.Option("", "--only", help="Restrict to one reference collection."),
