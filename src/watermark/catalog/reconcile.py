@@ -23,7 +23,7 @@ from pathlib import Path
 import yaml
 from pydantic import BaseModel, ConfigDict, Field
 
-from watermark.catalog import CatalogEntry, load_entries
+from watermark.catalog import CatalogEntry, SiteScope, load_entries
 from watermark.config import Settings, get_settings
 from watermark.sites import SITES
 
@@ -97,6 +97,10 @@ class ObservedEntry(BaseModel):
     missing: list[str] = Field(default_factory=list)  # declared concrete relpaths absent on disk
     asof: str | None = None  # the data's own meta.asof/last_refreshed
     stale: bool = False  # past refresh.ttl_days vs asof/last_refreshed (False when unknowable)
+    # The entry's declared ``site_scope``, persisted so a consumer (e.g. ``catalog diff --site``)
+    # can scope an entry whose catalog YAML no longer exists — a ``removed`` entry can't be
+    # re-classified from the live catalog, so the last-observed ownership is the only record.
+    site_scope: SiteScope = "basin-shared"
 
 
 class ObservedSnapshot(BaseModel):
@@ -172,6 +176,7 @@ def _observe(entry: CatalogEntry, settings: Settings, now: date) -> ObservedEntr
         missing=sorted(missing),
         asof=asof,
         stale=stale,
+        site_scope=entry.site_scope,
     )
 
 

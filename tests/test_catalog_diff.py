@@ -248,6 +248,36 @@ def test_site_scoping_filters_to_relevant_entries(tmp_path: Path) -> None:
     assert bryan == ["eia-consumer-energy"]  # lima-legacy filtered out
 
 
+def test_site_scoping_keeps_removed_entries_via_observed_scope(tmp_path: Path) -> None:
+    # A removed entry's catalog YAML is gone, so its relevance can't be recomputed from the live
+    # catalog — it must be scoped from the snapshot's persisted site_scope, or --site hides it.
+    settings = _settings(tmp_path)
+    _data(settings, "reference/eia/bryan/consumer-energy.yaml")
+    _entry(
+        settings,
+        "eia-consumer-energy",
+        """\
+        id: eia-consumer-energy
+        title: T
+        scope: reference
+        site_scope: slug-scoped
+        producer:
+          kind: connector
+          source: x
+        storage:
+        - relpath: reference/eia/{site}/consumer-energy.yaml
+          media_type: application/x-yaml
+        refresh:
+          cadence: static
+        """,
+    )
+    _snapshot(settings)
+    # the entry's catalog YAML is deleted after the snapshot was recorded
+    (settings.catalog_dir / "reference" / "eia-consumer-energy.yaml").unlink()
+    scoped = diff(settings=settings, now=_FIXED, site="bryan")
+    assert [(d.id, d.status) for d in scoped] == [("eia-consumer-energy", "removed")]
+
+
 # --- missing snapshot ----------------------------------------------------------------------
 def test_missing_snapshot_reports_all_added(tmp_path: Path) -> None:
     settings = _settings(tmp_path)
