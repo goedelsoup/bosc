@@ -1,26 +1,20 @@
-// The D1 store for user-authored Stories (epic #1090 / #1095) — owner-scoped CRUD with
-// transactional writes. Every write that touches `stories` + `story_refs` goes through
-// `db.batch([...])`, which D1 runs as one atomic transaction, so a Story and its refs can never
+// The Databricks Lakebase (Postgres) store for user-authored Stories (epic #1090 / #1095) —
+// owner-scoped CRUD with transactional writes. Every write that touches `stories` + `story_refs`
+// runs inside `db.begin(...)`, one atomic Postgres transaction, so a Story and its refs can never
 // drift (a half-written Story with stale refs is impossible).
 //
-// Kept dependency-light: a minimal `D1Like` slice (no @cloudflare/workers-types), so the store is
-// unit-testable against an in-memory SQLite adapter (node:sqlite) in the test harness.
+// Kept driver-agnostic: a minimal `PgLike` slice (query + begin) over parameterized `$n` SQL, so the
+// same store runs against postgres.js/Hyperdrive in production (functions/api/_lib/pg.ts) and an
+// in-memory Postgres (pglite) in the test harness — the store never imports a driver directly.
 
-/** The slice of the D1 API we use. `batch` is D1's atomic-transaction primitive. */
-export interface D1Result<T = unknown> {
-  results?: T[];
-  success: boolean;
-  meta?: { changes?: number };
-}
-export interface D1PreparedStatement {
-  bind(...values: unknown[]): D1PreparedStatement;
-  first<T = unknown>(): Promise<T | null>;
-  all<T = unknown>(): Promise<D1Result<T>>;
-  run(): Promise<D1Result>;
-}
-export interface D1Like {
-  prepare(sql: string): D1PreparedStatement;
-  batch(statements: D1PreparedStatement[]): Promise<D1Result[]>;
+/**
+ * The slice of a Postgres driver the store uses. `query` runs one parameterized statement and
+ * returns its rows (an empty array for a write with no `RETURNING`); `begin` runs `fn` inside a
+ * single transaction — a throw rolls the whole thing back — passing a transaction-scoped `PgLike`.
+ */
+export interface PgLike {
+  query<T = unknown>(text: string, params?: unknown[]): Promise<T[]>;
+  begin<T>(fn: (tx: PgLike) => Promise<T>): Promise<T>;
 }
 
 export type StoryStatus = "draft" | "published";
@@ -110,51 +104,50 @@ function publishState(
   };
 }
 
-/** One INSERT statement per ref — replaced wholesale on every write (not diffed). */
-function refInserts(db: D1Like, storyId: string, refs: StoryRef[]): D1PreparedStatement[] {
-  return refs.map((r) =>
-    db
-      .prepare("INSERT INTO story_refs (story_id, ord, handle, kind, title) VALUES (?, ?, ?, ?, ?)")
-      .bind(storyId, r.ord, r.handle, r.kind, r.title),
-  );
+/** Insert every ref for a story inside a transaction — refs are replaced wholesale, not diffed. */
+async function insertRefs(tx: PgLike, storyId: string, refs: StoryRef[]): Promise<void> {
+  for (const r of refs) {
+    await tx.query(
+      "INSERT INTO story_refs (story_id, ord, handle, kind, title) VALUES ($1, $2, $3, $4, $5)",
+      [storyId, r.ord, r.handle, r.kind, r.title],
+    );
+  }
 }
 
 /** A user's own Stories, newest first. Owner-scoped by construction. */
-export async function listStories(db: D1Like, owner: StoryOwner): Promise<StoryRow[]> {
-  const res = await db
-    .prepare(
-      `SELECT ${STORY_COLUMNS} FROM stories WHERE owner_kind = ? AND owner_id = ? ORDER BY updated_at DESC`,
-    )
-    .bind(owner.kind, owner.id)
-    .all<StoryRow>();
-  return res.results ?? [];
+export async function listStories(db: PgLike, owner: StoryOwner): Promise<StoryRow[]> {
+  return db.query<StoryRow>(
+    `SELECT ${STORY_COLUMNS} FROM stories WHERE owner_kind = $1 AND owner_id = $2 ORDER BY updated_at DESC`,
+    [owner.kind, owner.id],
+  );
 }
 
 /** One owner-scoped Story + its refs, or `null` if it isn't the owner's / doesn't exist. */
 export async function getStory(
-  db: D1Like,
+  db: PgLike,
   owner: StoryOwner,
   id: string,
 ): Promise<{ story: StoryRow; refs: StoryRef[] } | null> {
-  const story = await db
-    .prepare(`SELECT ${STORY_COLUMNS} FROM stories WHERE id = ? AND owner_kind = ? AND owner_id = ?`)
-    .bind(id, owner.kind, owner.id)
-    .first<StoryRow>();
+  const rows = await db.query<StoryRow>(
+    `SELECT ${STORY_COLUMNS} FROM stories WHERE id = $1 AND owner_kind = $2 AND owner_id = $3`,
+    [id, owner.kind, owner.id],
+  );
+  const story = rows[0];
   if (!story) return null;
-  const refs = await db
-    .prepare("SELECT ord, handle, kind, title FROM story_refs WHERE story_id = ? ORDER BY ord")
-    .bind(id)
-    .all<StoryRef>();
-  return { story, refs: refs.results ?? [] };
+  const refs = await db.query<StoryRef>(
+    "SELECT ord, handle, kind, title FROM story_refs WHERE story_id = $1 ORDER BY ord",
+    [id],
+  );
+  return { story, refs };
 }
 
 /**
  * Create a Story + its refs atomically. `id`/`now` are injected (the Function mints the UUID and
- * timestamp) so the store stays pure/testable. The whole write is one `batch`, so a ref-insert
+ * timestamp) so the store stays pure/testable. The whole write is one transaction, so a ref-insert
  * failure (e.g. the unique-slug constraint) rolls the Story insert back too.
  */
 export async function createStory(
-  db: D1Like,
+  db: PgLike,
   owner: StoryOwner,
   id: string,
   write: StoryWrite,
@@ -162,12 +155,11 @@ export async function createStory(
   shareIdCandidate: string,
 ): Promise<void> {
   const pub = publishState(null, write.status, shareIdCandidate, now);
-  await db.batch([
-    db
-      .prepare(
-        `INSERT INTO stories (${STORY_COLUMNS}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      )
-      .bind(
+  await db.begin(async (tx) => {
+    await tx.query(
+      `INSERT INTO stories (${STORY_COLUMNS})
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)`,
+      [
         id,
         owner.kind,
         owner.id,
@@ -187,19 +179,20 @@ export async function createStory(
         null, // revalidated_at — set by the revalidation job
         now,
         now,
-      ),
-    ...refInserts(db, id, write.refs),
-  ]);
+      ],
+    );
+    await insertRefs(tx, id, write.refs);
+  });
 }
 
 /**
  * Update an owner's Story and **replace** its refs atomically. Returns `false` when the Story
  * isn't the owner's (ownership is checked first, and the UPDATE is owner-scoped as defense in
- * depth). The UPDATE + refs DELETE/INSERT run in one `batch`, so the refs can never outlive a
+ * depth). The UPDATE + refs DELETE/INSERT run in one transaction, so the refs can never outlive a
  * failed Story update.
  */
 export async function updateStory(
-  db: D1Like,
+  db: PgLike,
   owner: StoryOwner,
   id: string,
   write: StoryWrite,
@@ -211,14 +204,12 @@ export async function updateStory(
   // Publish state is sticky (mint on first publish, keep the same share URL on republish). Moderation
   // is deliberately NOT in the SET clause — an owner edit can't clear an admin takedown (#1098).
   const pub = publishState(existing.story, write.status, shareIdCandidate, now);
-  await db.batch([
-    db
-      .prepare(
-        `UPDATE stories SET site = ?, slug = ?, title = ?, dek = ?, status = ?, source_format = ?,
-           source_text = ?, sdm_json = ?, catalog_version = ?, share_id = ?, published_at = ?, stale = 0, updated_at = ?
-         WHERE id = ? AND owner_kind = ? AND owner_id = ?`,
-      )
-      .bind(
+  await db.begin(async (tx) => {
+    await tx.query(
+      `UPDATE stories SET site = $1, slug = $2, title = $3, dek = $4, status = $5, source_format = $6,
+         source_text = $7, sdm_json = $8, catalog_version = $9, share_id = $10, published_at = $11, stale = 0, updated_at = $12
+       WHERE id = $13 AND owner_kind = $14 AND owner_id = $15`,
+      [
         write.site,
         write.slug,
         write.title,
@@ -234,20 +225,21 @@ export async function updateStory(
         id,
         owner.kind,
         owner.id,
-      ),
-    db.prepare("DELETE FROM story_refs WHERE story_id = ?").bind(id),
-    ...refInserts(db, id, write.refs),
-  ]);
+      ],
+    );
+    await tx.query("DELETE FROM story_refs WHERE story_id = $1", [id]);
+    await insertRefs(tx, id, write.refs);
+  });
   return true;
 }
 
 /** Delete an owner's Story (refs cascade). Returns whether a row was removed. */
-export async function deleteStory(db: D1Like, owner: StoryOwner, id: string): Promise<boolean> {
-  const res = await db
-    .prepare("DELETE FROM stories WHERE id = ? AND owner_kind = ? AND owner_id = ?")
-    .bind(id, owner.kind, owner.id)
-    .run();
-  return (res.meta?.changes ?? 0) > 0;
+export async function deleteStory(db: PgLike, owner: StoryOwner, id: string): Promise<boolean> {
+  const rows = await db.query<{ id: string }>(
+    "DELETE FROM stories WHERE id = $1 AND owner_kind = $2 AND owner_id = $3 RETURNING id",
+    [id, owner.kind, owner.id],
+  );
+  return rows.length > 0;
 }
 
 // --- public read + moderation (#1098) -------------------------------------------------------
@@ -258,69 +250,68 @@ export async function deleteStory(db: D1Like, owner: StoryOwner, id: string): Pr
  * so a stale share URL leaks nothing. Owner-agnostic by design (anyone with the link may read).
  */
 export async function getPublicStory(
-  db: D1Like,
+  db: PgLike,
   shareId: string,
 ): Promise<{ story: StoryRow; refs: StoryRef[] } | null> {
-  const story = await db
-    .prepare(
-      `SELECT ${STORY_COLUMNS} FROM stories WHERE share_id = ? AND status = 'published' AND moderation = 'ok'`,
-    )
-    .bind(shareId)
-    .first<StoryRow>();
+  const rows = await db.query<StoryRow>(
+    `SELECT ${STORY_COLUMNS} FROM stories WHERE share_id = $1 AND status = 'published' AND moderation = 'ok'`,
+    [shareId],
+  );
+  const story = rows[0];
   if (!story) return null;
-  const refs = await db
-    .prepare("SELECT ord, handle, kind, title FROM story_refs WHERE story_id = ? ORDER BY ord")
-    .bind(story.id)
-    .all<StoryRef>();
-  return { story, refs: refs.results ?? [] };
+  const refs = await db.query<StoryRef>(
+    "SELECT ord, handle, kind, title FROM story_refs WHERE story_id = $1 ORDER BY ord",
+    [story.id],
+  );
+  return { story, refs };
 }
 
 /** Admin takedown / restore: flip a Story's moderation flag by id. Returns whether a row changed. */
-export async function setModeration(db: D1Like, id: string, moderation: StoryModeration): Promise<boolean> {
-  const res = await db.prepare("UPDATE stories SET moderation = ? WHERE id = ?").bind(moderation, id).run();
-  return (res.meta?.changes ?? 0) > 0;
+export async function setModeration(db: PgLike, id: string, moderation: StoryModeration): Promise<boolean> {
+  const rows = await db.query<{ id: string }>(
+    "UPDATE stories SET moderation = $1 WHERE id = $2 RETURNING id",
+    [moderation, id],
+  );
+  return rows.length > 0;
 }
 
 /** Look up a Story id by its share_id (any status) — the report endpoint resolves the target this way
  *  without leaking whether it's currently published. */
-export async function storyIdForShareId(db: D1Like, shareId: string): Promise<string | null> {
-  const row = await db
-    .prepare("SELECT id FROM stories WHERE share_id = ?")
-    .bind(shareId)
-    .first<{ id: string }>();
-  return row?.id ?? null;
+export async function storyIdForShareId(db: PgLike, shareId: string): Promise<string | null> {
+  const rows = await db.query<{ id: string }>("SELECT id FROM stories WHERE share_id = $1", [shareId]);
+  return rows[0]?.id ?? null;
 }
 
 /** File a report against a Story (the public flag → admin review queue). */
 export async function insertReport(
-  db: D1Like,
+  db: PgLike,
   report: { id: string; storyId: string; shareId: string; reason: string; detail: string; now: string },
 ): Promise<void> {
-  await db
-    .prepare(
-      "INSERT INTO story_reports (id, story_id, share_id, reason, detail, resolved, created_at) VALUES (?, ?, ?, ?, ?, 0, ?)",
-    )
-    .bind(report.id, report.storyId, report.shareId, report.reason, report.detail, report.now)
-    .run();
+  await db.query(
+    "INSERT INTO story_reports (id, story_id, share_id, reason, detail, resolved, created_at) VALUES ($1, $2, $3, $4, $5, 0, $6)",
+    [report.id, report.storyId, report.shareId, report.reason, report.detail, report.now],
+  );
 }
 
 /** The admin review queue: open reports (or all), newest first. */
 export async function listReports(
-  db: D1Like,
+  db: PgLike,
   opts: { openOnly?: boolean; limit?: number } = {},
 ): Promise<StoryReport[]> {
   const limit = opts.limit ?? 100;
   const sql = opts.openOnly
-    ? "SELECT id, story_id, share_id, reason, detail, resolved, created_at FROM story_reports WHERE resolved = 0 ORDER BY created_at DESC LIMIT ?"
-    : "SELECT id, story_id, share_id, reason, detail, resolved, created_at FROM story_reports ORDER BY created_at DESC LIMIT ?";
-  const res = await db.prepare(sql).bind(limit).all<StoryReport>();
-  return res.results ?? [];
+    ? "SELECT id, story_id, share_id, reason, detail, resolved, created_at FROM story_reports WHERE resolved = 0 ORDER BY created_at DESC LIMIT $1"
+    : "SELECT id, story_id, share_id, reason, detail, resolved, created_at FROM story_reports ORDER BY created_at DESC LIMIT $1";
+  return db.query<StoryReport>(sql, [limit]);
 }
 
 /** Mark a report reviewed (resolved). Returns whether a row changed. */
-export async function resolveReport(db: D1Like, reportId: string): Promise<boolean> {
-  const res = await db.prepare("UPDATE story_reports SET resolved = 1 WHERE id = ?").bind(reportId).run();
-  return (res.meta?.changes ?? 0) > 0;
+export async function resolveReport(db: PgLike, reportId: string): Promise<boolean> {
+  const rows = await db.query<{ id: string }>(
+    "UPDATE story_reports SET resolved = 1 WHERE id = $1 RETURNING id",
+    [reportId],
+  );
+  return rows.length > 0;
 }
 
 // --- revalidation (#1099) -------------------------------------------------------------------
@@ -335,22 +326,22 @@ export interface RevalidationTarget {
 
 /** Every Story not yet validated against the current catalog_version (the job's work-list). Skips
  *  stories already at the current version, so a no-op pass after a non-bump touches nothing. */
-export async function storiesToRevalidate(db: D1Like, currentVersion: string): Promise<RevalidationTarget[]> {
-  const rows = await db
-    .prepare("SELECT id, catalog_version, sdm_json FROM stories WHERE catalog_version != ?")
-    .bind(currentVersion)
-    .all<{ id: string; catalog_version: string; sdm_json: string }>();
+export async function storiesToRevalidate(db: PgLike, currentVersion: string): Promise<RevalidationTarget[]> {
+  const rows = await db.query<{ id: string; catalog_version: string; sdm_json: string }>(
+    "SELECT id, catalog_version, sdm_json FROM stories WHERE catalog_version != $1",
+    [currentVersion],
+  );
   const out: RevalidationTarget[] = [];
-  for (const r of rows.results ?? []) {
-    const refs = await db
-      .prepare("SELECT ord, handle, kind, title FROM story_refs WHERE story_id = ? ORDER BY ord")
-      .bind(r.id)
-      .all<StoryRef>();
+  for (const r of rows) {
+    const refs = await db.query<StoryRef>(
+      "SELECT ord, handle, kind, title FROM story_refs WHERE story_id = $1 ORDER BY ord",
+      [r.id],
+    );
     out.push({
       id: r.id,
       catalog_version: r.catalog_version,
       sdm_json: r.sdm_json,
-      refs: refs.results ?? [],
+      refs,
     });
   }
   return out;
@@ -362,17 +353,16 @@ export async function storiesToRevalidate(db: D1Like, currentVersion: string): P
  * refs never drift from the SDM.
  */
 export async function applyStoryRevalidation(
-  db: D1Like,
+  db: PgLike,
   id: string,
   args: { sdmJson: string; refs: StoryRef[]; catalogVersion: string; stale: boolean; now: string },
 ): Promise<void> {
-  await db.batch([
-    db
-      .prepare(
-        "UPDATE stories SET sdm_json = ?, catalog_version = ?, stale = ?, revalidated_at = ? WHERE id = ?",
-      )
-      .bind(args.sdmJson, args.catalogVersion, args.stale ? 1 : 0, args.now, id),
-    db.prepare("DELETE FROM story_refs WHERE story_id = ?").bind(id),
-    ...refInserts(db, id, args.refs),
-  ]);
+  await db.begin(async (tx) => {
+    await tx.query(
+      "UPDATE stories SET sdm_json = $1, catalog_version = $2, stale = $3, revalidated_at = $4 WHERE id = $5",
+      [args.sdmJson, args.catalogVersion, args.stale ? 1 : 0, args.now, id],
+    );
+    await tx.query("DELETE FROM story_refs WHERE story_id = $1", [id]);
+    await insertRefs(tx, id, args.refs);
+  });
 }

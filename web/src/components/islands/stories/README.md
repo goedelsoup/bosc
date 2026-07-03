@@ -1,7 +1,8 @@
 # User-authored Stories — the React islands (#1096 / #1097)
 
 The presentation tier for reader-authored Stories. The site is pure-static (no SSR) and user
-Stories come from D1 at runtime, so this is all **client islands** (`client:only="react"`) that
+Stories come from the Lakebase-backed API at runtime, so this is all **client islands**
+(`client:only="react"`) that
 resolve the SDM against a catalog fetched at runtime. Editorial (site-authored) Stories share the
 exact same renderer — the only difference is the byline. See
 [`../../../../docs/user-stories-contract.md`](../../../docs/user-stories-contract.md) for the model.

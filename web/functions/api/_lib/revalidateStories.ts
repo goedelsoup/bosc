@@ -1,12 +1,12 @@
 // The catalog revalidation job (#1099) — "a scheduled job over one table". Ties the pure core
-// (`src/lib/revalidate`) to the D1 store: walk every Story not yet validated against the current
+// (`src/lib/revalidate`) to the Lakebase (Postgres) store: walk every Story not yet validated against the current
 // catalog_version, re-resolve its cited handles, auto-heal renamed ones (rewrite refs + SDM), and
 // flag the rest `stale` so the author is nudged. Idempotent: a second pass over the same catalog is a
 // no-op (healed handles now resolve; still-dangling stay flagged; up-to-date stories are skipped).
 
 import type { StoryDocument } from "../../../src/lib/sdm";
 import { type RenameMap, remapSdmHandles, revalidateHandles } from "../../../src/lib/revalidate";
-import { type D1Like, type StoryRef, applyStoryRevalidation, storiesToRevalidate } from "./storiesStore";
+import { type PgLike, type StoryRef, applyStoryRevalidation, storiesToRevalidate } from "./storiesStore";
 
 export interface RevalidationSummary {
   /** Stories inspected (those behind the current catalog_version). */
@@ -26,7 +26,7 @@ export interface CurrentCatalog {
 }
 
 export async function revalidateAll(
-  db: D1Like,
+  db: PgLike,
   catalog: CurrentCatalog,
   renames: RenameMap,
   now: string,

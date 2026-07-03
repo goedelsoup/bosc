@@ -4,7 +4,7 @@
  * `stories`/`story_refs` tables: one `HydratedAtom` per catalog kind (all 14), plus two sample SDM
  * Story bodies (a reader-owned and a site-owned one, which share the renderer).
  *
- * Used by: the preview reader route (renders a full-fidelity Story with no D1/auth), the render-
+ * Used by: the preview reader route (renders a full-fidelity Story with no store/auth), the render-
  * catalog asset builder (enriches real thin handles it recognizes), and the unit tests. It is
  * **fixture data**, never shipped as a Story — the shapes mirror what a live resolver would return.
  */

@@ -1,7 +1,8 @@
 // Tier A integration test for the /api/stories Pages Functions (functions/api/stories.ts +
-// stories/[id].ts): drive the exported handlers end-to-end with a faked Env (a real in-memory D1 +
-// a stubbed catalog asset + a minted Cognito token), so the full path — kill switch → auth →
-// rate-limit → server-side compile/handle-validation → transactional D1 write — runs offline.
+// stories/[id].ts): drive the exported handlers end-to-end with a faked Env (a real in-memory
+// Postgres/pglite + a stubbed catalog asset + a minted Cognito token), so the full path — kill
+// switch → auth → rate-limit → server-side compile/handle-validation → transactional Lakebase
+// write — runs offline.
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { _resetCatalogCache } from "@fn/api/_lib/catalogAsset";
@@ -14,8 +15,8 @@ import { onRequestGet as listStoriesRoute, onRequestPost } from "@fn/api/stories
 import {
   type CognitoTestKeyPair,
   type FetchRoute,
-  type FakeD1,
-  fakeD1,
+  type FakePg,
+  fakePg,
   generateCognitoKeyPair,
   jsonResponse,
   mintIdToken,
@@ -57,7 +58,7 @@ function stubFetch(): void {
   vi.stubGlobal("fetch", routingFetch([jwksRoute, catalogRoute]));
 }
 
-function env(db: FakeD1, overrides: Record<string, unknown> = {}): Record<string, unknown> {
+function env(db: FakePg, overrides: Record<string, unknown> = {}): Record<string, unknown> {
   return {
     STORIES_ENABLED: "true",
     STORIES_DB: db,
@@ -110,20 +111,20 @@ describe("/api/stories — guards", () => {
   it("503s when the feature is disabled", async () => {
     stubFetch();
     const req = postJson(BASE, validBody(), await bearer());
-    const res = await onRequestPost(ctx(req, env(fakeD1(), { STORIES_ENABLED: "false" })));
+    const res = await onRequestPost(ctx(req, env(await fakePg(), { STORIES_ENABLED: "false" })));
     expect(res.status).toBe(503);
   });
 
   it("401s without a Bearer token", async () => {
     stubFetch();
-    const res = await onRequestPost(ctx(postJson(BASE, validBody()), env(fakeD1())));
+    const res = await onRequestPost(ctx(postJson(BASE, validBody()), env(await fakePg())));
     expect(res.status).toBe(401);
   });
 
-  it("503s when the D1 binding is absent", async () => {
+  it("503s when the store binding is absent", async () => {
     stubFetch();
     const req = postJson(BASE, validBody(), await bearer());
-    const res = await onRequestPost(ctx(req, env(fakeD1(), { STORIES_DB: undefined })));
+    const res = await onRequestPost(ctx(req, env(await fakePg(), { STORIES_DB: undefined })));
     expect(res.status).toBe(503);
   });
 });
@@ -131,7 +132,7 @@ describe("/api/stories — guards", () => {
 describe("/api/stories — CRUD lifecycle", () => {
   it("creates, reads, lists, updates, and deletes an owner-scoped story", async () => {
     stubFetch();
-    const db = fakeD1();
+    const db = await fakePg();
     const auth = await bearer();
 
     // CREATE
@@ -182,7 +183,7 @@ describe("/api/stories — validation + isolation", () => {
       validBody({ source_text: ':::atom{handle="record:lima:zzz"}\n:::\n' }),
       await bearer(),
     );
-    const res = await onRequestPost(ctx(req, env(fakeD1())));
+    const res = await onRequestPost(ctx(req, env(await fakePg())));
     expect(res.status).toBe(400);
     const body = (await res.json()) as { errors: { kind: string }[] };
     expect(body.errors.some((e) => e.kind === "unknown-handle")).toBe(true);
@@ -190,7 +191,7 @@ describe("/api/stories — validation + isolation", () => {
 
   it("does not leak another user's story (404)", async () => {
     stubFetch();
-    const db = fakeD1();
+    const db = await fakePg();
     const created = await onRequestPost(ctx(postJson(BASE, validBody(), await bearer("user-1")), env(db)));
     const { id } = (await created.json()) as { id: string };
 
@@ -203,7 +204,7 @@ describe("/api/stories — validation + isolation", () => {
 describe("/api/stories — publish gate (#1098)", () => {
   it("a standard user can't publish (403) but can save a draft (201)", async () => {
     stubFetch();
-    const db = fakeD1();
+    const db = await fakePg();
     const pub = await onRequestPost(
       ctx(postJson(BASE, validBody({ status: "published" }), await bearer()), env(db)),
     );
@@ -217,7 +218,7 @@ describe("/api/stories — publish gate (#1098)", () => {
 
   it("an early-access user publishes and receives a share_id", async () => {
     stubFetch();
-    const db = fakeD1();
+    const db = await fakePg();
     const res = await onRequestPost(
       ctx(postJson(BASE, validBody({ status: "published" }), await bearer("u", ["early-access"])), env(db)),
     );
@@ -229,7 +230,7 @@ describe("/api/stories — publish gate (#1098)", () => {
 describe("/api/stories/shared/:shareId — public read (#1098)", () => {
   it("serves a published story to an unauthenticated visitor; a bogus id 404s", async () => {
     stubFetch();
-    const db = fakeD1();
+    const db = await fakePg();
     const created = await onRequestPost(
       ctx(postJson(BASE, validBody({ status: "published" }), await bearer("u", ["early-access"])), env(db)),
     );
@@ -248,7 +249,7 @@ describe("/api/stories/shared/:shareId — public read (#1098)", () => {
 
   it("an unpublished story is no longer reachable by its old share id", async () => {
     stubFetch();
-    const db = fakeD1();
+    const db = await fakePg();
     const created = await onRequestPost(
       ctx(postJson(BASE, validBody({ status: "published" }), await bearer("u", ["early-access"])), env(db)),
     );
@@ -267,7 +268,7 @@ describe("/api/stories/shared/:shareId — public read (#1098)", () => {
 describe("/api/stories/report — public report (#1098)", () => {
   it("accepts a valid report (202) and rejects an invalid reason (400)", async () => {
     stubFetch();
-    const db = fakeD1();
+    const db = await fakePg();
     const created = await onRequestPost(
       ctx(postJson(BASE, validBody({ status: "published" }), await bearer("u", ["early-access"])), env(db)),
     );
@@ -287,7 +288,7 @@ describe("/api/stories/report — public report (#1098)", () => {
 describe("/api/admin/stories — moderation (#1098)", () => {
   it("forbids non-admins, lists reports, and takes a story down for the public", async () => {
     stubFetch();
-    const db = fakeD1();
+    const db = await fakePg();
     const created = await onRequestPost(
       ctx(
         postJson(BASE, validBody({ status: "published" }), await bearer("author", ["early-access"])),
@@ -324,7 +325,7 @@ describe("/api/admin/stories — moderation (#1098)", () => {
 describe("/api/admin/stories — revalidation (#1099)", () => {
   it("runs the revalidation job for an admin and returns a summary", async () => {
     stubFetch();
-    const db = fakeD1();
+    const db = await fakePg();
     // Seed a published story (validated against the stubbed catalog v1).
     await onRequestPost(
       ctx(postJson(BASE, validBody({ status: "published" }), await bearer("u", ["early-access"])), env(db)),
@@ -343,7 +344,7 @@ describe("/api/admin/stories — revalidation (#1099)", () => {
 
   it("forbids a non-admin from running revalidation", async () => {
     stubFetch();
-    const db = fakeD1();
+    const db = await fakePg();
     const res = await adminAct(
       anyCtx(
         postJson(
