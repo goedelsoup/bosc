@@ -59,7 +59,10 @@ from watermark.provenance import source_is_verified
 #   gain `establishments` and now span a decade (QCEW 2014-2024, not two years); adds the
 #   `consumer-energy` feed — the EIA state price/sales dataset with each series' full annual
 #   history (`points`) plus its latest cited value, so the site can chart price trends.
-CONTRACT_VERSION = "1.10.0"
+# 1.11.0: adds the `catalog-index` object feed — the hydrated catalog of addressable "grabbable"
+#   atoms (handle grammar `<kind>:<site>:<local_id>`) the user-authored Stories write/read paths
+#   resolve against, plus `catalog_version` for handle-drift revalidation (epic #1090 / #1093).
+CONTRACT_VERSION = "1.11.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -530,6 +533,45 @@ class AskEmbeddingEntry(BaseModel):
     """Stable id matching the corresponding AskUnit, ``{feed}:{local_id}``."""
     embedding: list[float]
     """384-dimensional L2-normalised float vector (all-MiniLM-L6-v2)."""
+
+
+# --- hydrated catalog index feed (epic #1090 / #1093) -------------------------
+class CatalogAtom(BaseModel):
+    """One addressable, "grabbable" atom in the hydrated catalog (#1093).
+
+    A *pointer*, not a copy: ``feed`` + ``local_id`` name the live bundle row this handle
+    resolves against at render time, so a user Story can cite a record without ever forking it
+    (chain of custody). ``handle`` is the canonical address ``<kind>:<site>:<local_id>``, where
+    ``local_id`` reuses the source feed's **existing** stable key (``rel``/``key``/``slug``/
+    ``id``/``ref``) — no new ids are minted.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    handle: str  # canonical address: <kind>:<site>:<local_id>
+    kind: str  # one of the closed catalog kinds (record, entity, timeline, meeting, ...)
+    site: str  # the network-site slug this atom belongs to
+    local_id: str  # the source feed's existing stable key
+    title: str  # human-readable label for the grab UI
+    feed: str  # the source feed name this atom resolves into (pointer, not copy)
+
+
+class CatalogIndex(BaseModel):
+    """The hydrated catalog — the addressable atom index the Story write/read paths consume (#1093).
+
+    Emitted as an object feed carrying two version stamps: ``catalog_version`` (a content hash over
+    the atom set, so #1099 can detect when a user Story's handles may have drifted) and the source
+    ``contract_version``. The Python tier emits the feed-backed kinds here; the Astro build overlays
+    the web-only kinds (``teardown``/``doc``/``chapter``/``figure``) at render time, so the resolver
+    sees one merged catalog.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    site: str
+    catalog_version: str  # sha256 over the sorted atom handles — stable across identical corpora
+    contract_version: str  # the bundle contract these atoms were indexed under
+    atoms: list[CatalogAtom] = Field(default_factory=list)
 
 
 # --- manifest ------------------------------------------------------------------

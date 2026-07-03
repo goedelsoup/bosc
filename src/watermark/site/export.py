@@ -70,6 +70,7 @@ from watermark.site import people as people_mod
 from watermark.site import places as places_mod
 from watermark.site import records as records_mod
 from watermark.site import rsei as rsei_mod
+from watermark.site.catalog_index import build_catalog_index
 from watermark.site.embeddings import build_ask_embeddings
 from watermark.site.feeds import (
     CONTRACT_VERSION,
@@ -435,6 +436,26 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
     return feeds
 
 
+def _collection_rows(feed: _Feed) -> list[dict[str, Any]]:
+    """Parse an assembled collection feed's payload back into row dicts (JSON array or NDJSON)."""
+    if feed.media_type == "application/x-ndjson":
+        return [json.loads(line) for line in feed.payload.splitlines() if line.strip()]
+    return cast("list[dict[str, Any]]", json.loads(feed.payload))
+
+
+def _catalog_index_feed(feeds: Sequence[_Feed], settings: Settings) -> _Feed:
+    """Build the hydrated catalog index (#1093) as an object feed from the assembled feeds.
+
+    A cheap normalisation over the collection feeds already assembled (no corpus re-load): the
+    feed-backed catalog kinds only. The Astro build overlays the web-only kinds at render time.
+    """
+    rows_by_feed = {
+        feed.name: _collection_rows(feed) for feed in feeds if feed.kind == "collection"
+    }
+    index = build_catalog_index(rows_by_feed, site=settings.site, contract_version=CONTRACT_VERSION)
+    return _object_feed("catalog-index", index)
+
+
 def _now_iso() -> str:
     return datetime.now(UTC).replace(microsecond=0).isoformat()
 
@@ -467,6 +488,10 @@ def export_bundle(
     feeds_dir.mkdir(parents=True, exist_ok=True)
 
     feeds = _collect_feeds(settings)
+    # The hydrated catalog index (#1093) — a normalisation over the just-assembled collection
+    # feeds, so it must be appended after `_collect_feeds`. Written + indexed through the same
+    # loops below like any other feed.
+    feeds.append(_catalog_index_feed(feeds, settings))
 
     # Schema files (geo feeds share one file — dedup by schema_file path).
     written_schemas: set[str] = set()
