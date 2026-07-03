@@ -399,6 +399,7 @@ export interface EconSector {
 export interface EconTrendPoint {
   year: number;
   total_employment: ProvenancedValue;
+  establishments?: ProvenancedValue | null;
 }
 export interface EconPopPoint {
   year: number;
@@ -417,6 +418,32 @@ export interface EconomicBaseline {
   trend: EconTrendPoint[];
   population?: { points: EconPopPoint[]; [k: string]: unknown } | null;
   note?: string | null;
+}
+
+/** One annual point on an EIA series (`consumer-energy` feed): `period` + native-unit `value`.
+ *  Provenance is carried once at the series level, not repeated per point (`bosc.economics.model`). */
+export interface EnergyPricePoint {
+  period: string; // "2023" (annual) or "2023-12"
+  value: number; // native units — see the series' `value.unit`
+}
+/** One EIA consumer energy-price (or sales) series, with its full annual history. */
+export interface ConsumerEnergyPrice {
+  series_id: string;
+  label: string;
+  fuel: string; // "electricity" | "natural_gas"
+  metric: string; // "price" | "sales"
+  period: string; // latest period; mirrors points[-1].period
+  area: string;
+  value: ProvenancedValue; // latest point; native units in `.unit`
+  points: EnergyPricePoint[]; // full annual series, oldest→newest
+}
+/** The committed EIA consumer energy-cost reference (`consumer-energy` feed). */
+export interface ConsumerEnergyCosts {
+  area: string;
+  area_name: string;
+  prices: ConsumerEnergyPrice[];
+  source?: string;
+  note?: string;
 }
 
 // --- network: the cross-site basin synthesis (object feed; bosc.network, #308/#323) ---
