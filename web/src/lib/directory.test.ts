@@ -108,7 +108,7 @@ describe("directory lenses — one network, read three ways (#308)", () => {
 
   it("water lens groups all sites by basin, nested under the two divides", () => {
     const v = buildLens("water", LIMA_COUNTS, DATA);
-    expect(v.groups).toHaveLength(9); // nine basins
+    expect(v.groups).toHaveLength(10); // ten basins
     const total = v.groups.reduce((n, g) => n + g.rows.length, 0);
     expect(total).toBe(SITES.length);
     // Exactly two groups open a divide banner (Lake Erie, Ohio River), in drainage order.
@@ -125,6 +125,7 @@ describe("directory lenses — one network, read three ways (#308)", () => {
       "Muskingum",
       "Mahoning",
       "Hocking",
+      "Ohio Brush Creek",
     ]);
   });
 
@@ -171,7 +172,7 @@ describe("directory lenses — one network, read three ways (#308)", () => {
   });
 
   it("counts assessment progress in the lens-card line, and the network in the water line", () => {
-    expect(lensCount("water", DATA)).toBe(`${SITES.length} sites · 9 basins`);
+    expect(lensCount("water", DATA)).toBe(`${SITES.length} sites · 10 basins`);
     expect(lensCount("defense", DATA)).toBe(`6 assessed · ${SITES.length - 6} to review`);
     expect(lensCount("surveillance", DATA)).toBe(`4 assessed · ${SITES.length - 4} to review`);
   });

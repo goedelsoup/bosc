@@ -57,6 +57,7 @@ describe("sites registry — the Watermark network (#304)", () => {
       "sidney",
       "greenville",
       "wilmington",
+      "west-union",
       "new-albany",
       "columbus",
       "coshocton",
@@ -101,9 +102,9 @@ describe("site build phases — the four-phase clock (#308 dictate B)", () => {
       expect(s.codename).toBeNull();
     }
   });
-  it("the full network the selector depicts — 34 sites across 9 basins", () => {
-    expect(SITES.length).toBe(34);
-    expect(groupSites("basin").length).toBe(9);
+  it("the full network the selector depicts — 35 sites across 10 basins", () => {
+    expect(SITES.length).toBe(35);
+    expect(groupSites("basin").length).toBe(10);
   });
 });
 
@@ -132,7 +133,7 @@ describe("grouped selector — State / Basin lenses (#307/#308)", () => {
     expect(groups.find((g) => g.label === "Indiana")?.sites.map((s) => s.slug)).toEqual(["fort-wayne"]);
     expect(groups.find((g) => g.label === "Ohio")?.tag).toBe("OH");
   });
-  it("by basin: the nine basins nested under four regions (design 'Site Selector')", () => {
+  it("by basin: the ten basins nested under four regions (design 'Site Selector')", () => {
     const groups = groupSites("basin");
     // Region order (maumee → the two miamis → southeastern → northeast), basins within each.
     expect(groups.map((g) => g.label)).toEqual([
@@ -142,6 +143,7 @@ describe("grouped selector — State / Basin lenses (#307/#308)", () => {
       "Scioto",
       "Muskingum",
       "Hocking",
+      "Ohio Brush Creek",
       "Sandusky",
       "Cuyahoga",
       "Mahoning",

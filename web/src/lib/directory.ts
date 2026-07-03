@@ -147,7 +147,7 @@ const DIVIDES: readonly { label: string; note: string; basins: readonly string[]
   {
     label: "Ohio River drainage",
     note: "south — into the Ohio & Mississippi",
-    basins: ["Great Miami", "Little Miami", "Scioto", "Muskingum", "Mahoning", "Hocking"],
+    basins: ["Great Miami", "Little Miami", "Scioto", "Muskingum", "Mahoning", "Hocking", "Ohio Brush Creek"],
   },
 ];
 
@@ -185,8 +185,8 @@ export const LENSES: Record<DirLens, LensConfig> = {
     statusKind: "live",
     claim: "Where discharge becomes leverage.",
     blurb:
-      "The original thesis: hyperscale compute lands where it can pull power and water, and a data center's intake, discharge, and downstream effects are basin facts. Sites nest by drainage — two divides, nine basins. Lima is the live, fully-assembled reference. A coercion sub-thesis (#903): in municipalities with declining populations, the receiving WWTP may be running lean on influent — below the biological-treatment minimum that keeps it in NPDES compliance. A datacenter's high-volume, consistent discharge provides the flow buffer the plant needs, structurally compelling municipal acceptance. The Clean Water Act is the backstop that makes the need non-negotiable.",
-    axisTitle: "Two divides · nine basins",
+      "The original thesis: hyperscale compute lands where it can pull power and water, and a data center's intake, discharge, and downstream effects are basin facts. Sites nest by drainage — two divides, ten basins. Lima is the live, fully-assembled reference. A coercion sub-thesis (#903): in municipalities with declining populations, the receiving WWTP may be running lean on influent — below the biological-treatment minimum that keeps it in NPDES compliance. A datacenter's high-volume, consistent discharge provides the flow buffer the plant needs, structurally compelling municipal acceptance. The Clean Water Act is the backstop that makes the need non-negotiable.",
+    axisTitle: "Two divides · ten basins",
     scoreTitle: "Every point, by drainage",
     scoreNote: "Build phase and facility status are two clocks — kept distinct.",
     footNote: "A dash means the section isn't assembled yet — never a zero, which would read as a finding.",
