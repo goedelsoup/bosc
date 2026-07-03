@@ -240,3 +240,44 @@ streams:
     citation: LP3 7Q10 from USGS 03262000 (Loramie Creek at Lockington OH), 44 climatic years 1980-2024
       (gage value; screening proxy for the discharge reach)
     confidence: medium
+  ohio brush creek:
+    seven_q10_cfs: 0.5
+    source: derived
+    gage: '03237500'
+    gage_name: Ohio Brush Creek near West Union OH
+    period: 1980-01-01..2024-12-31
+    complete_years: 44
+    aliases:
+    - ohio brush creek
+    - ohio brush ck
+    - brush creek
+    citation: LP3 7Q10 from USGS 03237500 (Ohio Brush Creek near West Union OH), 44 climatic years 1980-2024
+      (gage value; screening proxy for the discharge reach)
+    confidence: medium
+  mad river at dayton:
+    seven_q10_cfs: 178.05
+    source: derived
+    gage: '03270000'
+    gage_name: Mad River near Dayton OH
+    period: 1980-01-01..2024-12-31
+    complete_years: 44
+    aliases:
+    - mad river at dayton
+    - mad river near dayton
+    - mad river (dayton reach)
+    citation: LP3 7Q10 from USGS 03270000 (Mad River near Dayton OH), 44 climatic years 1980-2024 (gage
+      value; screening proxy for the discharge reach)
+    confidence: medium
+  great miami river at dayton:
+    seven_q10_cfs: 217.77
+    source: derived
+    gage: '03270500'
+    gage_name: Great Miami River at Dayton OH
+    period: 1980-01-01..2024-12-31
+    complete_years: 44
+    aliases:
+    - great miami river at dayton
+    - great miami r at dayton
+    citation: LP3 7Q10 from USGS 03270500 (Great Miami River at Dayton OH), 44 climatic years 1980-2024
+      (gage value; screening proxy for the discharge reach)
+    confidence: medium

@@ -109,6 +109,15 @@ _MAINSTEM_GAGES: dict[str, dict[str, Any]] = {
         "gage": "03242350",
         "aliases": ["caesar creek"],
     },
+    # Ohio Brush Creek basin (subregion 0509, HUC-8 05090201 "Ohio Brush-Whiteoak", direct to the
+    # Ohio River — the network's first non-Lake-Erie / non-glaciated Appalachian branch, West Union
+    # #1117). The only substantive active gage on the creek is Ohio Brush Creek near West Union
+    # (03237500, DA 387 mi², daily discharge since 1926); the West Fork gages (03237400 Lawshe,
+    # 03237295 Peebles) are trivial/short-record and are omitted rather than proxied.
+    "Ohio Brush Creek": {
+        "gage": "03237500",
+        "aliases": ["ohio brush creek", "ohio brush ck", "brush creek"],
+    },
     # Greenville (Darke Co.) receiving waters. Greenville Creek is the primary at-site
     # gage (Bradford gage 03264000, DA 193 mi²); Stillwater River at Pleasant Hill
     # (03265000, DA 503 mi²) is the downstream context after Greenville Creek enters the

@@ -1,0 +1,47 @@
+meta:
+  subject: NOAA Atlas-14 design-storm depths — Ohio Brush Creek corridor
+  source: NOAA Atlas-14 PDS, English depths (HDSC point query)
+  point:
+    latitude: 38.7945
+    longitude: -83.5452
+  units: inches (point precipitation depth)
+ddf:
+  latitude: 38.7945
+  longitude: -83.5452
+  durations:
+  - 60-min
+  - 6-hr
+  - 12-hr
+  - 24-hr
+  return_periods:
+  - 2
+  - 10
+  - 25
+  - 50
+  - 100
+  depths_in:
+    60-min:
+      '2': 1.41
+      '10': 2.03
+      '25': 2.39
+      '50': 2.68
+      '100': 2.98
+    6-hr:
+      '2': 2.09
+      '10': 3.03
+      '25': 3.63
+      '50': 4.13
+      '100': 4.65
+    12-hr:
+      '2': 2.45
+      '10': 3.51
+      '25': 4.19
+      '50': 4.76
+      '100': 5.36
+    24-hr:
+      '2': 2.87
+      '10': 4.09
+      '25': 4.88
+      '50': 5.53
+      '100': 6.22
+  source: NOAA Atlas-14 PDS, English depths (HDSC point query)
