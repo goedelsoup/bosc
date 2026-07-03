@@ -250,9 +250,10 @@ def eia_cmd(
             f"[dim](a sensitivity, not a forecast)[/]\n"
             f"  Facility draw [bold]{dp.facility_draw_mw.value:g} MW[/] x {dp.load_factor.value:g} "
             f"load factor → [bold]{dp.annual_consumption_gwh.value:,.0f} GWh/yr[/]\n"
-            f"  = [bold]{dp.demand_share_pct.value:g}%[/] of Ohio retail electricity sales "
+            f"  = [bold]{dp.demand_share_pct.value:g}%[/] of {costs.area_name} retail "
+            f"electricity sales "
             f"([dim]{dp.state_retail_sales_gwh.value:,.0f} GWh[/]); "
-            f"≈ [bold]{dp.households_equivalent.value:,.0f}[/] Ohio homes\n"
+            f"≈ [bold]{dp.households_equivalent.value:,.0f}[/] {costs.area_name} homes\n"
             f"  Stylized price pressure [bold]{dp.price_pressure_pct_low.value:g}-"
             f"{dp.price_pressure_pct_high.value:g}%[/] on the "
             f"{dp.residential_price.value:g} {dp.residential_price.unit} residential price "
@@ -309,9 +310,9 @@ def grid_cmd(
             f"[dim](facility draw {ls.campus_load_mw.value:g} MW x {ls.load_factor.value:g} "
             f"→ {ls.annual_consumption_gwh.value:,.0f} GWh/yr)[/]"
         )
-        state_name = {"OH": "Ohio", "IN": "Indiana"}.get(
-            active_profile(settings).eia_state, active_profile(settings).eia_state
-        )
+        from watermark.economics.connectors.eia import _state_name
+
+        state_name = _state_name(active_profile(settings).eia_state)
         table = Table("denominator", "annual load (GWh)", "campus share", "basis")
         table.add_row(
             f"{su.utility.value} retail (EIA-861)",
