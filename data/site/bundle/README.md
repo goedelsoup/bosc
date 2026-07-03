@@ -94,6 +94,7 @@ over 500 rows), or `application/geo+json`. `count` is rows, features, or `1` for
 | `lei` | object | the GLEIF LEI resolution inventory (already provenanced) |
 | `economics-baseline` | object | the localized BLS QCEW / Census ACS baseline (every value a `ProvenancedValue`) |
 | `hydrology-scenarios` | collection | committed water-balance scenario results (`data/scenarios/*.scenario.yaml`) |
+| `catalog-index` | object | the hydrated catalog (epic #1090) — addressable "grabbable" atoms (`handle` = `<kind>:<site>:<local_id>`, a live pointer into its source feed) that user-authored Stories cite; `catalog_version` stamps the set for handle-drift revalidation |
 | `geo/campus` | geojson | recorded campus footprint (Bistrozzi parcels) |
 | `geo/jsmc` | geojson | federally-held JSMC / Lima Army Tank Plant land |
 | `geo/femaflood` | geojson | FEMA regulatory floodway + 1%-annual-chance floodplain |

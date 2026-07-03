@@ -33,6 +33,8 @@ notes: >-
   depends_on declares the committed reference datasets the export verifiably reads: the RSEI/
   economics/LEI/watershed feeds plus the basin network synthesis (ECHO dischargers, low-flow
   lookup, per-site grid profiles) and the EIA consumer-energy price/sales series now surfaced
-  as the `consumer-energy` feed for charting (#1111). `watermark export` pre-flights this chain
-  and warns when an upstream is downstream-stale; regenerate with
-  `watermark catalog run bundle-records --site <slug>`.
+  as the `consumer-energy` feed for charting (#1111). The export also emits the `catalog-index`
+  feed — the hydrated catalog of addressable "grabbable" atoms the user-authored Stories write/read
+  paths resolve against (#1090/#1093), derived from the feeds above so it adds no new committed
+  upstream. `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
+  regenerate with `watermark catalog run bundle-records --site <slug>`.

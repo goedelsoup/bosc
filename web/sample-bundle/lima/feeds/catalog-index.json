@@ -1,0 +1,431 @@
+{
+  "site": "lima",
+  "catalog_version": "a3d471b0a4a6aee4c6236f7a312855390aaafe501f5383dc10e7f71abd55bab5",
+  "contract_version": "1.11.0",
+  "atoms": [
+    {
+      "handle": "concept:lima:7q10",
+      "kind": "concept",
+      "site": "lima",
+      "local_id": "7q10",
+      "title": "7Q10",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:lima:assimilative-capacity",
+      "kind": "concept",
+      "site": "lima",
+      "local_id": "assimilative-capacity",
+      "title": "Assimilative capacity",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:lima:common-control-plumbing",
+      "kind": "concept",
+      "site": "lima",
+      "local_id": "common-control-plumbing",
+      "title": "Common-control plumbing",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:lima:consumptive-cooling",
+      "kind": "concept",
+      "site": "lima",
+      "local_id": "consumptive-cooling",
+      "title": "Consumptive cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:lima:grant-refund-clause",
+      "kind": "concept",
+      "site": "lima",
+      "local_id": "grant-refund-clause",
+      "title": "Grant-refund clause",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:lima:hyperscale-data-center",
+      "kind": "concept",
+      "site": "lima",
+      "local_id": "hyperscale-data-center",
+      "title": "Hyperscale data center",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:lima:public-records-mandamus",
+      "kind": "concept",
+      "site": "lima",
+      "local_id": "public-records-mandamus",
+      "title": "Public-records mandamus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:lima:roadwork-development-agreement",
+      "kind": "concept",
+      "site": "lima",
+      "local_id": "roadwork-development-agreement",
+      "title": "Roadwork Development Agreement",
+      "feed": "concepts"
+    },
+    {
+      "handle": "dataset:lima:aedg-roundabouts-opc",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "aedg-roundabouts-opc",
+      "title": "AEDG roundabouts — Tetra Tech OPC estimates (extracted)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:echo-maumee-npdes",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "echo-maumee-npdes",
+      "title": "Maumee-basin NPDES discharger inventory (EPA ECHO)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:eia-consumer-energy",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "eia-consumer-energy",
+      "title": "Eia Consumer Energy",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:hydrology-ohio-principal-streams",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "hydrology-ohio-principal-streams",
+      "title": "Hydrology Ohio Principal Streams",
+      "feed": "catalog"
+    },
+    {
+      "handle": "entity:lima:AMAZON COM SERVICES",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "AMAZON COM SERVICES",
+      "title": "Amazon.com Services LLC",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:BISTROZZI",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "BISTROZZI",
+      "title": "Bistrozzi",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:BISTROZZI ADDITION",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "BISTROZZI ADDITION",
+      "title": "Bistrozzi Addition LLC",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:C T",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "C T",
+      "title": "C T Corporation",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:CENOVUS ENERGY",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "CENOVUS ENERGY",
+      "title": "Cenovus Energy Inc.",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:KEATON BRENNEMAN",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "KEATON BRENNEMAN",
+      "title": "Keaton A. Brenneman",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:KEATON BRENNEMAN LIVING",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "KEATON BRENNEMAN LIVING",
+      "title": "Keaton A. Brenneman Living Trust",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:KRISTEN BRENNEMAN",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "KRISTEN BRENNEMAN",
+      "title": "Kristen M. Brenneman",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:KYLE BRENNEMAN",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "KYLE BRENNEMAN",
+      "title": "Kyle C. Brenneman",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:KYLE BRENNEMAN LIVING",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "KYLE BRENNEMAN LIVING",
+      "title": "Kyle C. Brenneman Living Trust",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:SARAH BRENNEMAN",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "SARAH BRENNEMAN",
+      "title": "Sarah N. Brenneman",
+      "feed": "entities"
+    },
+    {
+      "handle": "exhibit:lima:bistrozzi-air-permit-data-center",
+      "kind": "exhibit",
+      "site": "lima",
+      "local_id": "bistrozzi-air-permit-data-center",
+      "title": "Ohio EPA air permit — \"Bistrozzi LLC Data Center\"",
+      "feed": "exhibits"
+    },
+    {
+      "handle": "exhibit:lima:cra-abatement-agreement",
+      "kind": "exhibit",
+      "site": "lima",
+      "local_id": "cra-abatement-agreement",
+      "title": "Community Reinvestment Area (CRA) agreement",
+      "feed": "exhibits"
+    },
+    {
+      "handle": "exhibit:lima:mutual-nda-bistrozzi-county",
+      "kind": "exhibit",
+      "site": "lima",
+      "local_id": "mutual-nda-bistrozzi-county",
+      "title": "Mutual NDA — Bistrozzi LLC ↔ Allen County",
+      "feed": "exhibits"
+    },
+    {
+      "handle": "exhibit:lima:prr-response-letter-1",
+      "kind": "exhibit",
+      "site": "lima",
+      "local_id": "prr-response-letter-1",
+      "title": "PRR response letter #1 (cover)",
+      "feed": "exhibits"
+    },
+    {
+      "handle": "lead:lima:ASWCD-03",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "ASWCD-03",
+      "title": "Wetland determination: “no records” — but a produced inspection says otherwise",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:ASWCD-04",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "ASWCD-04",
+      "title": "Farm-tile drainage impact: “no records” — yet a failure is photographed",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:ASWCD-PLANS",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "ASWCD-PLANS",
+      "title": "The site plan sets are withheld twice over",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:CORRIDOR-NPDES",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "CORRIDOR-NPDES",
+      "title": "The corridor environmental permits are owned by no county body",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:FORCEMAIN-MGD",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "FORCEMAIN-MGD",
+      "title": "Nobody owns the forcemain's MGD design capacity",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:GLRI-INSTRUMENT",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "GLRI-INSTRUMENT",
+      "title": "The grant instrument behind the $650k Lost Creek project",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:H1-DRAW",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "H1-DRAW",
+      "title": "The consumptive cooling draw against the river's cited 7Q10",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:H2-AUTH",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "H2-AUTH",
+      "title": "The campus's federal authorization posture is undisclosed",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:OSU-MONITORING",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "OSU-MONITORING",
+      "title": "The OSU monitoring data quantifying the Maumee-headwater load",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:PRR-02",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "PRR-02",
+      "title": "County ⇄ DoD / federal-contractor comms — narrowed to nothing",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:PRR-04",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "PRR-04",
+      "title": "The project's cost-benefit analysis is withheld",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:PRR-16",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "PRR-16",
+      "title": "The county website's edit history is disclaimed, not absent",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:PRR-19",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "PRR-19",
+      "title": "County ⇄ engineer-of-record (EMH&T) comms not produced",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:PTI-313MW",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "PTI-313MW",
+      "title": "The per-engine output behind the 313 MW figure is trade-secret-redacted",
+      "feed": "leads"
+    },
+    {
+      "handle": "meeting:lima:american-township/2024-11-25",
+      "kind": "meeting",
+      "site": "lima",
+      "local_id": "american-township/2024-11-25",
+      "title": "american-township meeting (2024-11-25)",
+      "feed": "meetings"
+    },
+    {
+      "handle": "meeting:lima:american-township/2024-12-09",
+      "kind": "meeting",
+      "site": "lima",
+      "local_id": "american-township/2024-12-09",
+      "title": "american-township meeting (2024-12-09)",
+      "feed": "meetings"
+    },
+    {
+      "handle": "person:lima:cynthia-leis",
+      "kind": "person",
+      "site": "lima",
+      "local_id": "cynthia-leis",
+      "title": "Cynthia Leis",
+      "feed": "people"
+    },
+    {
+      "handle": "person:lima:jill-tangeman",
+      "kind": "person",
+      "site": "lima",
+      "local_id": "jill-tangeman",
+      "title": "Jill Tangeman",
+      "feed": "people"
+    },
+    {
+      "handle": "place:lima:data-center-campus",
+      "kind": "place",
+      "site": "lima",
+      "local_id": "data-center-campus",
+      "title": "Data-center campus",
+      "feed": "places"
+    },
+    {
+      "handle": "record:lima:aedg/roundabouts.summary.opc.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "aedg/roundabouts.summary.opc.yaml",
+      "title": "Project BOSC Roadwork (privately funded; BOSC Team deposit to PAAC; dedicated to County on completion)",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:permits/4132514.epa.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "permits/4132514.epa.yaml",
+      "title": "Bistrozzi LLC Data Center (Project BOSC) - Initial Installation",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:recorder/202508130008300.deed.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "recorder/202508130008300.deed.yaml",
+      "title": "Limited Warranty Deed",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:recorder/202508130008312.deed.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "recorder/202508130008312.deed.yaml",
+      "title": "Limited Warranty Deed",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:recorder/202508130008316.deed.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "recorder/202508130008316.deed.yaml",
+      "title": "Limited Warranty Deed",
+      "feed": "records"
+    },
+    {
+      "handle": "timeline:lima:2PK00002*LD",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "2PK00002*LD",
+      "title": "NPDES 2PK00002*LD (Shawnee II WWTP) — public notice",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:amtwp-zoning-2021-02-11",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "amtwp-zoning-2021-02-11",
+      "title": "American Township Zoning Resolution — amended & adopted by Trustees",
+      "feed": "timeline"
+    }
+  ]
+}
