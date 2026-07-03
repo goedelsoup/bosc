@@ -1,0 +1,40 @@
+id: wilmington
+title: Wilmington (Clinton Co., OH) Low-Flow Screen & Onboarding Record
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: Onboarding self-research pass (data/research/onboard-wilmington-*/findings.md); SiteProfile
+    plant_receiving (WWTP NPDES OH0028134, cited); basin._MAINSTEM_GAGES Little Miami brackets. The
+    drainage areas the DAR interpolation multiplies (USGS StreamStats / NWIS) are to-pull — not yet
+    in the corpus.
+license: public record / public domain
+access_tier: public
+site_scope: site:wilmington
+storage:
+- relpath: extracted/wilmington/low-flow-screen.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- wilmington
+- clinton-county
+- todd-fork
+- little-miami
+- 7q10
+- drainage-area-ratio
+- ungaged
+- scenic-river
+notes: >
+  Wilmington low-flow screen scaffold (2026-07-03, #516 / #886) — the defining Wilmington
+  receiving-water problem. Todd Fork (the Air Park receiving water) and Lytle Creek (the WWTP
+  receiving water, NPDES OH0028134, cited) are ungaged; the historical Todd Fork gage (03244000) is
+  discontinued. The at-site 7Q10 is derived by a drainage-area-ratio interpolation between the
+  Little Miami mainstem brackets — Milford (03245500, downstream, incl. Todd Fork) and Oldtown
+  (03240000, upstream Xenia reach), both now in basin._MAINSTEM_GAGES. The DAR method is standard
+  USGS practice [reference]; the specific drainage areas + transfer exponent are [open] pending
+  StreamStats / NWIS / the Ohio low-flow (Koltun) report. Little Miami is a National & State Scenic
+  River (anti-degradation overlay → the passby minimum is to-revisit). To-verify, not findings,
+  until the DAs are cited.

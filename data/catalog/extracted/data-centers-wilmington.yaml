@@ -1,0 +1,41 @@
+id: data-centers-wilmington
+title: Wilmington / Clinton Co. OH — Data-Center Activity Register
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: Onboarding self-research pass (data/research/onboard-wilmington-*/findings.md); Clinton
+    County RSEI inventory + BLS QCEW baseline (in-corpus). The sited-facility + load-driver web pass
+    (JobsOhio, AES Ohio DAY-zone interconnect, OEPA air/NPDES, recorder/SOS, Port Authority) is
+    still to-run.
+license: public record / public domain
+access_tier: public
+site_scope: site:wilmington
+storage:
+- relpath: extracted/wilmington/data-centers.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- data-center
+- wilmington
+- clinton-county
+- wilmington-air-park
+- amazon-air
+- atsg
+- load-driver
+- little-miami
+- sweep
+notes: >
+  Wilmington sweep scaffold + load-driver verification record (2026-07-03, #519 / #891). [verified]
+  zero Wilmington/Clinton-County data-center primary records in the corpus; no NAICS 518210 facility
+  in the RSEI inventory (entirely metal-fab / auto-parts / foundry); the dominant signal is
+  Transportation & Warehousing (48-49) LQ 5.75 — the Wilmington Air Park (ILN) cargo hub (ex-DHL →
+  Amazon Air / ATSG), a cargo + Amazon comparator, NOT a data center. The #891 premise (confirm a
+  real large-load driver before deep profile work) resolves to: none recorded; six external
+  instruments to-run (JobsOhio, AES Ohio/PJM DAY-zone large-load queue, OEPA air PTI, OEPA/ECHO
+  NPDES OHD000001, recorder/SOS assembly, Clinton County Port Authority). Site stays registry/
+  inventory (non-selectable) until a driver or a flat no-activity finding is confirmed. NOT bridged
+  to the Lima/Allen Bistrozzi land-assembly graph.

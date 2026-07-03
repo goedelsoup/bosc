@@ -97,13 +97,24 @@ _MAINSTEM_GAGES: dict[str, dict[str, Any]] = {
     # receiving water) has no active USGS gage — the historical Greenfield gage
     # (03244000) was discontinued; Todd Fork dischargers stay unscreened (no_7q10)
     # rather than being proxied to a larger downstream river (that would overstate
-    # dilution). Caesar Creek (03242350, below Caesar Creek Lake) reflects a
-    # regulated low-flow regime. NWIS currently returns no daily discharge values
-    # for this gage (possibly a stage-only installation); it is skipped gracefully
-    # by the per-gage error guard and Caesar Creek dischargers remain no_7q10.
+    # dilution). Milford (downstream integrator, incl. Todd Fork) and the upstream
+    # Xenia reach at Oldtown (03240000) BRACKET the ungaged Todd Fork above and below;
+    # a drainage-area-ratio interpolation off these two brackets is the documented
+    # at-site 7Q10 basis for the Wilmington Air Park / WWTP screen (#516; derivation +
+    # cited drainage areas in data/extracted/wilmington/low-flow-screen.md), NOT an
+    # auto-applied ECHO proxy. Oldtown uses a non-colliding alias so it does not
+    # capture ECHO's bare "little miami river" (aliased to Milford above). Caesar
+    # Creek (03242350, below Caesar Creek Lake) reflects a regulated low-flow regime.
+    # NWIS currently returns no daily discharge values for this gage (possibly a
+    # stage-only installation); it is skipped gracefully by the per-gage error guard
+    # and Caesar Creek dischargers remain no_7q10.
     "Little Miami River": {
         "gage": "03245500",
         "aliases": ["little miami river", "little miami"],
+    },
+    "Little Miami River near Oldtown": {
+        "gage": "03240000",
+        "aliases": ["little miami river near oldtown", "little miami r near oldtown"],
     },
     "Caesar Creek": {
         "gage": "03242350",

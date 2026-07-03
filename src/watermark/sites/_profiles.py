@@ -1751,13 +1751,21 @@ _WILMINGTON = SiteProfile(
     rsei_fips="39027",  # [verified] Clinton County, OH
     econ_fips="39027",
     eia861_utility_number=4922,  # Dayton Power & Light (AES Ohio) — EIA-861 2024 Service_Territory, Clinton Co [verified]
-    parcels_url="TODO",  # [open] pending the Clinton County, OH GIS REST endpoint discovery
+    parcels_url=(  # [reference] Clinton County has no confirmed county-hosted parcel REST;
+        # substitute = the OGRIP Ohio statewide parcels public view, scoped to County='Clinton'
+        # (Ohio-only layer → situs-safe; 26,962 Clinton parcels, ~99% with SitusAddressAll +
+        # StateLUC + geometry, e.g. "1475 TODDS FORK RD" — verified 2026-07-03). [verified — situs]
+        "https://services2.arcgis.com/MlJ0G8iWUyC7jAmu/arcgis/rest/services/"
+        "OhioStatewidePacels_full_view/FeatureServer/0"
+    ),
     zoning_url="TODO",  # [open] pending the City of Wilmington / Clinton County zoning REST endpoint discovery
     floodzone_url=(  # [verified] FEMA NFHL S_FLD_HAZ_AR (national layer 28)
         "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28"
     ),
     hydro_utm_epsg=32617,  # [verified] UTM 17N (Wilmington ~83.83 degW; zone 17 spans 84-78 degW) — east of 84 degW
-    gis_parcel=None,  # [open] pending Clinton County, OH parcel-layer discovery
+    gis_parcel=OHIO_STATEWIDE_PARCEL_SCHEMA.model_copy(
+        update={"reference_dir": "wilmington-gis", "query_scope": "County='Clinton'"}
+    ),  # [reference] OGRIP scoped to Clinton (situs-verified 2026-07-03; LandArea sparse but present)
     gis_zoning=None,  # [open] pending City of Wilmington / Clinton County zoning-layer discovery
     gis_flood=NATIONAL_NFHL_FLOOD_SCHEMA.model_copy(update={"reference_dir": "wilmington-gis"}),
     design_lat=39.4453,  # [verified] Wilmington centroid = NOAA Atlas-14 point

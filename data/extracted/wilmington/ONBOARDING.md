@@ -6,8 +6,8 @@ Living record for the Wilmington watershed point (basin: little-miami), scaffold
 
 - [x] **Hydrology** — onboard reach connectors (low-flows, corridor DDF, SSURGO HSG, climatology)
 - [x] **Economics** — county baseline, RSEI toxics (Clinton Co, 21 facilities / 13 scored; top = Stanley Works), consumer energy, grid profile pinned to **Dayton Power & Light** (AES Ohio #4922, PJM/PUCO; EIA-861 2024 Service_Territory — the Wilmington Air Park LSE)
-- [~] **Data-center activity** — self-research first pass run (#247, 2026-06-22). `[verified]` **zero** Wilmington / Clinton-County records in the corpus — a flat no-data finding, *not* evidence none is proposed. `facility=None`. `[open]` sweep target: the **Wilmington Air Park (ILN)** — Amazon Air / ATSG cargo hub (the "place shaped by one tenant" comparator + an Amazon footprint to set against the Lima Amazon data-center tenant). **Method note:** the Lima/Allen Bistrozzi land-assembly graph is **not** bridged in.
-- [ ] **Per-jurisdiction GIS** — Clinton County (FIPS 39027) parcels / City of Wilmington zoning connector (the known lift). **Heed the same-name trap:** verify the situs is Clinton County **OH** from a live `?f=json` sample before wiring. Flood = national NFHL (wired).
+- [~] **Data-center activity** — self-research first pass run (#247, 2026-06-22). `[verified]` **zero** Wilmington / Clinton-County records in the corpus — a flat no-data finding, *not* evidence none is proposed. `facility=None`. Sweep register + load-driver record committed: `data-centers.md` (#519 / #891) — the Air Park comparator thread + the six-instrument load-driver pass (JobsOhio, AES Ohio DAY-zone interconnect, OEPA air/NPDES, recorder/SOS, Port Authority), all `[open]`/to-run. **Method note:** the Lima/Allen Bistrozzi land-assembly graph is **not** bridged in.
+- [~] **Per-jurisdiction GIS** — **parcels wired** (#887): OGRIP Ohio statewide view scoped to `County='Clinton'` (Ohio-only → situs-safe; 26,962 parcels, ~99% with situs + StateLUC + geometry, e.g. "1475 TODDS FORK RD" — verified 2026-07-03). `gis_parcel` + `parcels_url` populated. `[open]` **zoning** — City of Wilmington / Clinton County zoning REST not yet discovered (same lift New Albany left open). Flood = national NFHL (wired).
 
 ## Last onboard run
 
@@ -22,7 +22,14 @@ Living record for the Wilmington watershed point (basin: little-miami), scaffold
 | econ-baseline | ok | reference/economics/wilmington/baseline.yaml |
 | rsei | ok | reference/rsei/wilmington/inventory.yaml — 21 facilities (13 scored) |
 | consumer-energy | ok | reference/eia/wilmington/consumer-energy.yaml |
-| grid-profile | ok | reference/eia/wilmington/grid-profile.yaml — Dayton Power & Light #4922, PJM |
+| grid-profile | ok | reference/eia/wilmington/grid-profile.yaml — Dayton Power & Light #4922, PJM DAY zone (AES Ohio holding co, #888) |
+
+## Batch follow-up (2026-07-03) — #516 / #519 / #886 / #887 / #888 / #891
+
+- **#888 grid** — grid-profile `serving_utility` enriched to the `_UTILITY_GRID[4922]` citation (The AES Corporation (AES Ohio) holding co; PJM **DAY** transmission zone). Utility number + BA + LMP zone all cited.
+- **#516 / #886 low-flow** — upstream Little Miami reach at Oldtown (`03240000`) added to `basin._MAINSTEM_GAGES`, bracketing the ungaged Todd Fork with Milford (`03245500`); the drainage-area-ratio method + instruments-to-pull documented in `low-flow-screen.md`. Receiving water = Todd Fork → Little Miami (HUC 05090202); WWTP → Lytle Creek (NPDES OH0028134, cited). `[open]` the specific drainage areas (StreamStats / NWIS) and the `hydrology_balance`/`hydrology_scenario` scope-guard (needs an identified footprint, #887).
+- **#887 GIS parcels** — OGRIP Clinton connector wired (see above); footprint geometry still `[open]` (no identified site).
+- **#519 / #891 sweep** — `data-centers.md` register + load-driver verification record committed; corpus records zero; six external instruments to-run.
 
 ## Review gate (blocking)
 
