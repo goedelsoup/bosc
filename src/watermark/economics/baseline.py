@@ -31,13 +31,15 @@ _POP_YEARS = [2010, 2015, 2020, 2023]
 
 
 def _maybe_population(settings: Settings) -> PopulationSeries | None:
-    """ACS5 population series when a Census key (live) or a committed fixture is available.
+    """ACS5 population series, best-effort.
 
-    Returns ``None`` rather than raising when no key is set and no fixture exists, so
-    the baseline degrades gracefully (the gap is documented, not fabricated).
+    Always attempts the pull: ACS works keyless at low volume (the key is optional and
+    only lifts the rate limit), and even keyless a warm cache or committed fixture is
+    served without a key (it's excluded from the cache key). So a keyless re-run keeps a
+    previously-fetched series instead of discarding it. Returns ``None`` rather than
+    raising when the pull can't be satisfied (offline miss, HTTP/Census error), so the
+    baseline degrades gracefully (the gap is documented, not fabricated).
     """
-    if not settings.census_api_key and not settings.econ_offline:
-        return None
     try:
         return fetch_population_series(years=_POP_YEARS, fips=settings.econ_fips, settings=settings)
     except (OfflineError, httpx.HTTPError, CensusError) as exc:
@@ -55,14 +57,15 @@ def build_baseline(
     years = sorted(years or _DEFAULT_YEARS)
     population = _maybe_population(settings)
     if population is None:
-        # No Census key and no fixture — preserve the existing committed population rather
-        # than overwriting it with null. A re-run without a key must not drop real data.
+        # The live ACS5 pull couldn't be satisfied (offline miss / HTTP / Census error) and
+        # nothing warm in the cache — preserve the existing committed population rather than
+        # overwriting it with null. A failed re-run must not drop real data.
         existing = load_baseline(settings)
         if existing is not None and existing.population is not None:
             population = existing.population
             log.info("econ.population.preserved", fips=settings.econ_fips)
     # Authoritative per-county label from the Census ACS NAME (e.g. "Hancock County, Ohio");
-    # falls back to the active profile's county when no Census key/fixture is available.
+    # falls back to the active profile's county when the population series is unavailable.
     area_name = (
         population.area_name if population is not None else active_profile(settings).county_name
     )
@@ -87,7 +90,8 @@ def build_baseline(
     pop_note = (
         "Population from US Census ACS 5-year (B01003)."
         if population is not None
-        else "Population-over-time needs a Census key (WATERMARK_CENSUS_API_KEY)."
+        else "Population-over-time unavailable (no cached/committed ACS5 series and the "
+        "live pull could not be reached)."
     )
     # An optional per-site economic-unit caveat (e.g. WPAFB's Greene/Montgomery straddle) — the
     # site's own note, surfaced so a reader of this single-county baseline isn't misled.

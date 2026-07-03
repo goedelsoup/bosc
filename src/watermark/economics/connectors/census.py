@@ -1,10 +1,12 @@
 """US Census ACS 5-year — county population over time.
 
 Pulls total population (``B01003_001E``) for the county across a set of years from
-the Census ACS 5-year API. Keyed: the API now requires a key, read from
-``settings.census_api_key`` (``WATERMARK_CENSUS_API_KEY``); the key is sent only on the
-live request and is never part of the cache key or the committed fixture/response.
-Fields are selected **by name** from the header row, never by index.
+the Census ACS 5-year API. The key is **optional**: ACS answers keyless requests at
+low volume (a key only lifts the rate limit). When set, it is read from
+``settings.census_api_key`` (``WATERMARK_CENSUS_API_KEY``) and sent only on the live
+request — never part of the cache key or the committed fixture/response, so a warm
+cache/fixture is served keyless. Fields are selected **by name** from the header row,
+never by index.
 """
 
 from __future__ import annotations
