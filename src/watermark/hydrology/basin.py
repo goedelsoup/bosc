@@ -61,6 +61,15 @@ _MAINSTEM_GAGES: dict[str, dict[str, Any]] = {
     # Maumee basin (subregion 0410, Western Lake Erie).
     "Maumee River": {"gage": "04193500", "aliases": ["maumee river"]},
     "Auglaize River": {"gage": "04186500", "aliases": ["auglaize river", "auglaze river"]},
+    # Blanchard River (Auglaize subtree, HUC-8 04100008) — the network's only along-one-river
+    # pair, Findlay (upstream) + Ottawa (downstream), both discharge here (#414/#417). The only
+    # long-record daily-discharge gage on the Blanchard is near Findlay (04189000, DA ~346 mi²,
+    # 44 climatic yr). The at-Ottawa gage (04189260) has ~14 yr — below _MIN_YEARS, so it is
+    # omitted here (documented as a cross-check in the Findlay↔Ottawa comparison artifact); the
+    # at-Glandorf gage (04189500) has no daily-discharge record in the modern window. So this one
+    # gage is the shared Blanchard denominator for both plants — the 14-yr Ottawa gage confirms
+    # the low flow barely grows over the 40-mi reach (8.98 vs 8.67 cfs), so it is basin-representative.
+    "Blanchard River": {"gage": "04189000", "aliases": ["blanchard river", "blanchard r"]},
     "St. Marys River": {
         "gage": "04182000",
         "aliases": ["st marys river", "st. marys river", "saint marys river"],

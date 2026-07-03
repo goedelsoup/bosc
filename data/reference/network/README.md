@@ -15,10 +15,18 @@ the same nutrient cap, so the sites are nested nodes on one connected basin, not
   This is the only place the cross-site *topology* lives — per-node attributes are NOT duplicated.
 
 - **`basin-network.yaml`** — *computed, regenerable.* The assembled cross-site comparison, written
-  by `watermark network`. For each node it joins the topology above with the node's own committed
-  artifacts (economic baseline, grid profile, RSEI inventory) and its low-flow screen, into one
-  provenance-tagged `BasinNetwork` (`watermark.network`). Regenerate with `watermark network --write`; do not
-  hand-edit. Reads only committed reference data — no network calls.
+  by `watermark basin-network --write`. For each node it joins the topology above with the node's own
+  committed artifacts (economic baseline, grid profile, RSEI inventory) and its low-flow screen, into
+  one provenance-tagged `BasinNetwork` (`watermark.network`). Regenerate with `watermark basin-network
+  --write`; do not hand-edit. Reads only committed reference data — no network calls.
+
+- **`findlay-ottawa-comparison.yaml`** — *curated, cited (#417).* The network's **only** along-one-river
+  (intra-tributary) control: Findlay (upstream, 15 MGD) and the Village of Ottawa (downstream, 3 MGD)
+  both discharge to the **Blanchard River**, ~40 river-miles apart, so their effluent is screened
+  against one **shared** derived Blanchard 7Q10 (8.67 cfs, USGS 04189000; `low-flow-7q10.derived.yaml`,
+  from #414). It is hand-assembled, **not** produced by `watermark basin-network` — that synthesis
+  leaves both nodes `no_receiving_water` because ECHO carries no receiving-water name for OH0025135 /
+  OH0026921. Watershed identity is held constant; only the discharge point + plant size vary.
 
 ## Discipline
 
@@ -42,5 +50,6 @@ Regenerate: `watermark network`
 | --- | --- | --- |
 | `reference/network/basin-network.yaml` | application/x-yaml | no |
 | `reference/network/topology.yaml` | application/x-yaml | no |
+| `reference/network/findlay-ottawa-comparison.yaml` | application/x-yaml | no |
 
 <!-- catalog:end -->

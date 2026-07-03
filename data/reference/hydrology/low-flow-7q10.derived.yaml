@@ -4,7 +4,7 @@ meta:
   discipline: DERIVED screening denominators (source=derived), NOT cited regulatory 7Q10s — those live
     in low-flow-7q10.yaml. Each value is the 7Q10 AT THE GAGE, a proxy for a direct-discharge reach on
     that mainstem; a discharger on a tributary is screened only against that tributary's own cited/derived
-    7Q10, never this one. Regenerate with `bosc derive-low-flows`.
+    7Q10, never this one. Regenerate with `watermark derive-low-flows`.
 streams:
   maumee river:
     seven_q10_cfs: 114.15
@@ -278,5 +278,31 @@ streams:
     - great miami river at dayton
     - great miami r at dayton
     citation: LP3 7Q10 from USGS 03270500 (Great Miami River at Dayton OH), 44 climatic years 1980-2024
+      (gage value; screening proxy for the discharge reach)
+    confidence: medium
+  blanchard river:
+    seven_q10_cfs: 8.67
+    source: derived
+    gage: 04189000
+    gage_name: Blanchard River near Findlay OH
+    period: 1980-01-01..2024-12-31
+    complete_years: 44
+    aliases:
+    - blanchard river
+    - blanchard r
+    citation: LP3 7Q10 from USGS 04189000 (Blanchard River near Findlay OH), 44 climatic years 1980-2024
+      (gage value; screening proxy for the discharge reach)
+    confidence: medium
+  little miami river near oldtown:
+    seven_q10_cfs: 10.1
+    source: derived
+    gage: '03240000'
+    gage_name: Little Miami River near Oldtown OH
+    period: 1980-01-01..2024-12-31
+    complete_years: 44
+    aliases:
+    - little miami river near oldtown
+    - little miami r near oldtown
+    citation: LP3 7Q10 from USGS 03240000 (Little Miami River near Oldtown OH), 44 climatic years 1980-2024
       (gage value; screening proxy for the discharge reach)
     confidence: medium
