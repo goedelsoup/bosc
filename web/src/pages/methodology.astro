@@ -1,0 +1,427 @@
+---
+/**
+ * /methodology — the network-global Methodology hub (#1129, epic #1126).
+ *
+ * Network-level, decoupled from any one site: the evidence grammar, the
+ * ingest→extract→analyze pipeline, chain of custody, and the twelve analytical
+ * domains (each linking to its /methodology/<slug> sub-page). Layout follows the
+ * Watermark Design System "Methodology — network hub" template (Claude Design →
+ * DesignSync); content comes from `~/lib/methodology`.
+ */
+import EvidenceTag from "~/components/EvidenceTag.astro";
+import Base from "~/layouts/Base.astro";
+import {
+  APPROX_MARKER,
+  CUSTODY,
+  DOMAINS,
+  EVIDENCE_GRAMMAR,
+  PIPELINE,
+  SKILLS,
+  THESIS_FLOW,
+} from "~/lib/methodology";
+import { withBase } from "~/lib/site";
+
+const title = "Methodology — how we read the record";
+const description =
+  "The method behind Watermark, across every site and every domain: the evidence grammar, the ingest→extract→analyze pipeline, chain of custody, and the twelve analytical domains.";
+---
+
+<Base title={title} section="research" description={description} rail={false} ogType="article">
+  <div class="mth">
+    <!-- HERO -->
+    <header class="mth-hero">
+      <p class="mth-eyebrow mth-eyebrow--forest">The method</p>
+      <h1 class="mth-h1">How we read the record</h1>
+      <p class="mth-lede">
+        Watermark reconstructs a deliberately thin public record — across every site, across every
+        domain — from primary documents and live public data into reviewed, cited, structured
+        findings. This page explains the method once, for the whole network.
+      </p>
+      <div class="mth-flow" aria-label="source to structured read to meaning to verify">
+        {
+          THESIS_FLOW.map((step, i) => (
+            <>
+              {i > 0 && <span class="mth-flow-arrow" aria-hidden="true">→</span>}
+              <span class="mth-flow-chip">{step}</span>
+            </>
+          ))
+        }
+      </div>
+    </header>
+
+    <!-- EVIDENCE GRAMMAR -->
+    <section class="mth-section">
+      <p class="mth-eyebrow">The evidence grammar</p>
+      <h2 class="mth-h2">Every figure wears its standing</h2>
+      <p class="mth-section-lede">
+        The tags below are fixed and never recolored. They are the whole trust model in one glance —
+        before you read a number, you know what kind of number it is.
+      </p>
+      <div class="mth-frame">
+        <div class="mth-grammar-grid">
+          {
+            EVIDENCE_GRAMMAR.map((g) => (
+              <div class="mth-grammar-cell">
+                <EvidenceTag kind={g.kind} />
+                <p class="mth-grammar-gloss">{g.gloss}</p>
+              </div>
+            ))
+          }
+        </div>
+        <div class="mth-approx">
+          <span class="mth-approx-mark">{APPROX_MARKER.symbol}</span>
+          <span>{APPROX_MARKER.gloss}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PIPELINE -->
+    <section class="mth-section">
+      <p class="mth-eyebrow">The pipeline</p>
+      <h2 class="mth-h2">Ingest → extract → analyze</h2>
+      <p class="mth-section-lede">
+        Figures are read from the 300 DPI scanned image, never the garbled OCR text layer — then
+        checked against the layout a human would see.
+      </p>
+      <div class="mth-grid mth-grid--3">
+        {
+          PIPELINE.map((stage) => (
+            <div class="mth-cell">
+              <div class="mth-num">{stage.num}</div>
+              <div class="mth-cell-title">{stage.title}</div>
+              <p class="mth-cell-body">{stage.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- CHAIN OF CUSTODY -->
+    <section class="mth-section">
+      <div class="mth-band">
+        <p class="mth-eyebrow">Chain of custody</p>
+        <h2 class="mth-h2 mth-h2--tight">The corpus is treated as litigation evidence.</h2>
+        <div class="mth-grid mth-grid--3 mth-grid--open">
+          {
+            CUSTODY.map((c) => (
+              <div class="mth-rail">
+                <div class="mth-rail-title">{c.title}</div>
+                <p class="mth-rail-body">{c.body}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- THE DOMAINS -->
+    <section class="mth-section">
+      <p class="mth-eyebrow">Across the network</p>
+      <h2 class="mth-h2">Twelve domains, one grammar</h2>
+      <p class="mth-section-lede">
+        Each domain reads its own kind of document or feed, but every one publishes through the same
+        evidence grammar and the same chain of custody.
+      </p>
+      <div class="mth-grid mth-grid--3 mth-domains">
+        {
+          DOMAINS.map((d) => (
+            <a class="mth-domain" href={withBase(`/methodology/${d.slug}`)}>
+              <span class="mth-domain-label">{d.label}</span>
+              <span class="mth-domain-method">{d.method}</span>
+              <span class="mth-domain-sources">{d.dataSources.join(" · ")}</span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- THE METHOD LAYER -->
+    <section class="mth-section mth-section--last">
+      <p class="mth-eyebrow">The method layer</p>
+      <h2 class="mth-h2">Seven skills, one spine</h2>
+      <div class="mth-col">
+        <p class="mth-prose">
+          Underneath every domain sits the same research agent, working through seven discoverable
+          skills. Each hands its output to the next with the citation attached — nothing moves
+          forward unlabeled.
+        </p>
+        <p class="mth-prose">
+          That chain rests on the <strong>evidentiary-discipline</strong> spine: ingest immutably,
+          extract legibly, analyze transparently, and never let a modeled figure travel without its
+          tag. It's the same spine whether the domain is <a href={withBase("/methodology/hydrology")}
+            >hydrology</a
+          >, <a href={withBase("/methodology/entity-timeline")}>the entity graph</a>, or <a
+            href={withBase("/methodology/grid-regulatory")}>grid &amp; regulatory</a
+          > — read each domain's page for how the spine bends to its own kind of source.
+        </p>
+        <div class="mth-skills">
+          {SKILLS.map((s) => <span class="mth-skill">{s.slug}</span>)}
+        </div>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .mth {
+    color: var(--ink);
+    font-family: var(--bosc-sans);
+  }
+  /* Eyebrow — mono, uppercase, tracked. */
+  .mth-eyebrow {
+    font-family: var(--bosc-mono);
+    font-size: 11px;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--ink-faint);
+    margin: 0 0 10px;
+  }
+  .mth-eyebrow--forest {
+    color: var(--forest);
+  }
+
+  /* Hero */
+  .mth-hero {
+    padding: 1.5rem 0 3rem;
+  }
+  .mth-h1 {
+    font-family: var(--bosc-sans);
+    font-weight: 800;
+    letter-spacing: -2px;
+    font-size: 52px;
+    line-height: 1.04;
+    margin: 0 0 18px;
+    max-width: 20ch;
+  }
+  .mth-lede {
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    max-width: 56rem;
+    margin: 0 0 28px;
+    text-wrap: pretty;
+  }
+  .mth-flow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-family: var(--bosc-mono);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .mth-flow-chip {
+    background: var(--forest-tint);
+    border: 1px solid var(--forest-line);
+    color: var(--forest);
+    padding: 7px 13px;
+  }
+  .mth-flow-arrow {
+    color: var(--ink-ghost);
+  }
+
+  /* Sections */
+  .mth-section {
+    padding-bottom: 3.5rem;
+  }
+  .mth-section--last {
+    padding-bottom: 1rem;
+  }
+  .mth-h2 {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    margin: 0 0 12px;
+    border: 0;
+    padding: 0;
+  }
+  .mth-h2--tight {
+    max-width: 36ch;
+    margin-bottom: 20px;
+  }
+  .mth-section-lede {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    max-width: 52rem;
+    margin: 0 0 24px;
+    text-wrap: pretty;
+  }
+
+  /* Evidence-grammar framed panel */
+  .mth-frame {
+    border: 2px solid var(--ink);
+    background: var(--bone-surface);
+    padding: 28px 30px;
+  }
+  .mth-grammar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .mth-grammar-gloss {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--ink-muted);
+    margin: 10px 0 0;
+  }
+  .mth-approx {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line-hair);
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 13.5px;
+    color: var(--ink-muted);
+  }
+  .mth-approx-mark {
+    font-family: var(--bosc-mono);
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* Hard-grid card sets */
+  .mth-grid {
+    display: grid;
+    gap: 1px;
+    background: var(--line-hair);
+    border: 1px solid var(--line-hair);
+  }
+  .mth-grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  /* An "open" grid drops the hairline frame (chain-of-custody rails). */
+  .mth-grid--open {
+    gap: 28px;
+    background: none;
+    border: 0;
+  }
+  .mth-cell {
+    background: var(--bone-surface);
+    padding: 24px 22px;
+  }
+  .mth-num {
+    font-family: var(--bosc-mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--forest);
+  }
+  .mth-cell-title {
+    font-size: 18px;
+    font-weight: 800;
+    margin: 10px 0 8px;
+  }
+  .mth-cell-body {
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  /* Chain-of-custody band */
+  .mth-band {
+    background: var(--bone-sunk);
+    border-top: 1px solid var(--line-hair);
+    border-bottom: 1px solid var(--line-hair);
+    padding: 40px 30px;
+    /* pull the band toward the column edges within .content padding */
+    margin: 0 -14px;
+  }
+  .mth-rail {
+    border-left: 3px solid var(--forest);
+    padding-left: 16px;
+  }
+  .mth-rail-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .mth-rail-body {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  /* Domain cards */
+  .mth-domain {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: var(--bone-surface);
+    padding: 20px 20px 22px;
+    text-decoration: none;
+    color: inherit;
+    border-left: 3px solid transparent;
+    transition:
+      border-color var(--dur) var(--ease),
+      transform var(--dur) var(--ease);
+  }
+  .mth-domain:hover {
+    border-left-color: var(--forest);
+    transform: translateY(-2px);
+  }
+  .mth-domain-label {
+    font-family: var(--bosc-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--forest);
+  }
+  .mth-domain-method {
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--ink);
+    flex: 1 1 auto;
+  }
+  .mth-domain-sources {
+    font-family: var(--bosc-mono);
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    padding-top: 8px;
+    border-top: 1px solid var(--line-hair);
+  }
+
+  /* Method layer */
+  .mth-col {
+    max-width: 52rem;
+  }
+  .mth-prose {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    margin: 0 0 16px;
+    text-wrap: pretty;
+  }
+  .mth-prose a {
+    color: var(--forest);
+    font-weight: 600;
+  }
+  .mth-skills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+    font-family: var(--bosc-mono);
+    font-size: 12px;
+    color: var(--ink-muted);
+  }
+  .mth-skill {
+    border: 1px solid var(--line-hair);
+    padding: 5px 10px;
+  }
+
+  @media (max-width: 900px) {
+    .mth-h1 {
+      font-size: 34px;
+      letter-spacing: -1px;
+    }
+    .mth-grammar-grid,
+    .mth-grid--3 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
