@@ -1,7 +1,7 @@
-"""``bosc sweep`` — external-discovery sweeps for a watershed-point site.
+"""``watermark sweep`` — external-discovery sweeps for a watershed-point site.
 
 Currently exposes one sub-command:
-    bosc sweep data-centers   # I-75/rail-corridor data-center activity sweep (#1050)
+    watermark sweep data-centers   # I-75/rail-corridor data-center activity sweep (#1050)
 """
 
 from __future__ import annotations
@@ -30,7 +30,7 @@ status: {status}
 producer:
   kind: manual
   source: >-
-    bosc sweep data-centers ({site}); search_web + fetch_url sweep via
+    watermark sweep data-centers ({site}); search_web + fetch_url sweep via
     watermark.research.connectors — verify every figure against cited primary sources
     before promoting status to reviewed.
 license: Curated from cited public sources

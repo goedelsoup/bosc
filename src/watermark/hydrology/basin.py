@@ -364,7 +364,7 @@ def write_derived_low_flows(
                 "7Q10s — those live in low-flow-7q10.yaml. Each value is the 7Q10 AT THE "
                 "GAGE, a proxy for a direct-discharge reach on that mainstem; a discharger "
                 "on a tributary is screened only against that tributary's own cited/derived "
-                "7Q10, never this one. Regenerate with `bosc derive-low-flows`."
+                "7Q10, never this one. Regenerate with `watermark derive-low-flows`."
             ),
         },
         "streams": merged,

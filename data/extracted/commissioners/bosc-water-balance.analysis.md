@@ -1,6 +1,6 @@
 # BOSC water-balance run — assimilative screen + the new sanitary figures
 
-**Run:** `bosc hydro` (live) + the committed `buildout` scenario, 2026-06-08.
+**Run:** `watermark hydro` (live) + the committed `buildout` scenario, 2026-06-08.
 **Engine:** Tier-0 water balance + 7Q10 low-flow assimilative screen
 (`watermark.hydrology`). Tier-0 is an auditable screen, **not** a SWMM/HEC-RAS result.
 **Live streamflow:** Ottawa River at Lima, NWIS gage `04187100` (today ~90.5 cfs /

@@ -218,7 +218,7 @@ def test_geo_features_carry_layer_metadata(bundle: Path) -> None:
 
 def _assert_fixture_tracks_export(fixture_dir: Path, exported_manifest: dict[str, Any]) -> None:
     """A committed ``sample-bundle/<slug>/`` fixture must not silently drift from its
-    ``bosc … export`` (issue #179). It's a deliberately *trimmed* bundle, so its feed set is a
+    ``watermark … export`` (issue #179). It's a deliberately *trimmed* bundle, so its feed set is a
     subset — but the ``contract_version`` and ``site`` must match exactly, every feed it ships
     must still exist in the real export (catches a rename/removal), and the trimmed manifest must
     stay internally consistent. Refresh it (see the fixture's README.md) on drift.

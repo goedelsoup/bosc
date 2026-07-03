@@ -2,7 +2,7 @@
 
 :func:`watermark.site.export.export_bundle` emits the versioned, schema-validated JSON content
 bundle under ``data/site/bundles/<slug>/`` (per network site; feeds + a manifest carrying a
-``CONTRACT_VERSION``) that the Astro frontend reads at build time (``bosc export``). The
+``CONTRACT_VERSION``) that the Astro frontend reads at build time (``watermark export``). The
 per-section data builders (``candidates``, ``economics``, ``gismap``, ``records``, …)
 produce the typed feeds defined in :mod:`watermark.site.feeds`.
 """

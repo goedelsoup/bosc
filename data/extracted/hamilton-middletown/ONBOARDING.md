@@ -1,6 +1,6 @@
 # Onboarding — Hamilton · Middletown (hamilton-middletown)
 
-Living record for the Hamilton · Middletown watershed point (basin: great-miami), scaffolded by `bosc onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
+Living record for the Hamilton · Middletown watershed point (basin: great-miami), scaffolded by `watermark onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
 
 Hamilton · Middletown is the **lower Great Miami heavy-industry node** (Butler County) and the I-75 Cincinnati–Dayton corridor's southern anchor, near the Great Miami's Ohio River confluence — and it is the **established-industry comparator** that inverts every other Miami point: **Cleveland-Cliffs Middletown Works** (the former AK Steel integrated mill) anchors a legacy steel/paper/chemicals corridor of large *existing* water users + NPDES dischargers on the Great Miami **mainstem**, the foil to the speculative-greenfield headwaters. Three things distinguish it: the water posture flips (a large mainstem with real dilution capacity, not a headwater ditch — though over the same buried-valley sole-source aquifer, wider near the confluence); the grid is **split** (the City of Hamilton runs its own **municipal** electric utility — AMP, EIA-861S short-form — while Middletown is Duke Energy Ohio), both in PJM's **DEOK** zone (a *third* PJM zone for the network after AEP and DAY); and the seat is **Butler County (FIPS 39017)**, deliberately guarded as *not* Hamilton County / Cincinnati. (UTM 16N, like WPAFB — west of the 84°W meridian.)
 
@@ -29,7 +29,7 @@ Hamilton · Middletown is the **lower Great Miami heavy-industry node** (Butler 
 
 ## Self-research (Phase 5; #247) — 2026-06-22
 
-`bosc onboard hamilton-middletown --research` (claude-opus-4-8, 26 turns, $1.09). Findings + manifest in
+`watermark onboard hamilton-middletown --research` (claude-opus-4-8, 26 turns, $1.09). Findings + manifest in
 `data/research/onboard-hamilton-middletown-hamilton-middletown-2026-06-22/`.
 
 **Bottom line.** Registered + seeded but **not promotable**. Unlike its greenfield siblings, its

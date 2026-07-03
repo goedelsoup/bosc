@@ -64,7 +64,7 @@ unnecessary for almost all automated work.
 
 ```bash
 uv sync --extra dev    # install all deps including dev extras
-uv run bosc ...        # all CLI commands go through uv run
+uv run watermark ...        # all CLI commands go through uv run
 ```
 
 Python 3.11. Settings are read via `watermark.config.get_settings()` — never read
@@ -72,14 +72,16 @@ Python 3.11. Settings are read via `watermark.config.get_settings()` — never r
 
 ## Data discipline (important)
 
-- `data/documents/**` is **immutable evidence** — never modify, rename, or delete
-  any file here. The research workflow has a hard chain-of-custody check that aborts
-  if any source byte is touched.
-- `data/extracted/**` is the reviewed artifact. Changes require a cited source.
-- `data/reference/**` is committed authoritative external data. Changes must be
-  regenerable from a documented connector.
-- `data/research/**` is the output directory for `bosc research run` — commit the
-  whole directory as produced.
+Full rules are canonical in **[CLAUDE.md → Data discipline](CLAUDE.md#data-discipline-important)**
+(enforcement detail) and **[CONTRIBUTING.md](CONTRIBUTING.md#data-discipline)** (contributor
+workflow). The execution-critical facts for an agentic run:
+
+- `data/documents/**` is **immutable evidence** — never modify, rename, or delete a
+  file here. The research workflow's hard chain-of-custody check **aborts** if any source
+  byte is touched.
+- `data/extracted/**` (reviewed artifact) changes need a cited source; `data/reference/**`
+  changes must be connector-regenerable; commit the whole `data/research/<slug>/` output
+  directory as produced.
 
 ## Research tasks
 
@@ -123,7 +125,7 @@ errors that prevent the task from being completed correctly.
 
 ## Site axis
 
-The network hosts multiple watershed-point sites. Per-site values live on
-`SiteProfile` in `watermark.sites` — never hard-code a Lima/Allen-County value.
-Select a site with `--site <slug>` or `WATERMARK_SITE=<slug>`. The default site
-is `lima`.
+Canonical: **[CLAUDE.md → Conventions (Site axis)](CLAUDE.md#conventions)**. The
+operational rule: the network hosts multiple watershed-point sites, and per-site values
+live on `SiteProfile` in `watermark.sites` — **never hard-code a Lima/Allen-County value**.
+Select a site with `--site <slug>` or `WATERMARK_SITE=<slug>` (default `lima`).

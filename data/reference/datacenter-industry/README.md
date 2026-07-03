@@ -28,7 +28,7 @@ carries a `lima_status` to keep that line explicit.
 
 | File | What | Source |
 |---|---|---|
-| `priors.yaml` | The pooled priors: per-unknown low/central/high band + every source it pools + a `lima_status`. Read by `bosc.*`/the frontend engine for the `[assumption]` bounds. | Hand-assembled from published sources (`source: reference`); curated, not connector-regenerable. Citations carry URLs. |
+| `priors.yaml` | The pooled priors: per-unknown low/central/high band + every source it pools + a `lima_status`. Read by `watermark.*`/the frontend engine for the `[assumption]` bounds. | Hand-assembled from published sources (`source: reference`); curated, not connector-regenerable. Citations carry URLs. |
 
 ## The priors, and what the supplement adds
 

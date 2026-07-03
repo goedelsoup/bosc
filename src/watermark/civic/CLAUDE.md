@@ -41,14 +41,14 @@ Defers to the root [`CLAUDE.md`](../../../CLAUDE.md).
   step that pulls the binaries into `data/documents/<slug>/meetings/` (raw, LFS,
   immutable) and writes a non-destructive **download manifest** under
   `data/extracted/<slug>/meetings/download-manifest.yaml` (sha256, bytes,
-  content-type, source URL, listing-derived date). `bosc subdivisions download
+  content-type, source URL, listing-derived date). `watermark subdivisions download
   <slug> [--limit N] [--dry-run]`. Chain of custody: on-disk names are as-received
   (Content-Disposition → URL basename); a differing byte is never overwritten
   (kept beside the original, flagged `conflict`); manifest dates are
   `evidence: listing` — **not** content-verified until the OCR step reads the file.
 - **New binary types need LFS.** `.doc/.docx/.xls/.xlsx/.rtf` were added to
   `.gitattributes` alongside the existing `.pdf` (American Twp posts `.docx`).
-- **Index → timeline** (`indexer.py` + `keywords.py`; `bosc subdivisions index
+- **Index → timeline** (`indexer.py` + `keywords.py`; `watermark subdivisions index
   <slug> [--ocr]`). Reads the download manifest, extracts each file's text (PDF text
   layer / DOCX / HTML; **`--ocr` also renders + OCRs image-only scans** via
   `ocr_pdf`, needs the tesseract binary — without it, or without `--ocr`, image-only

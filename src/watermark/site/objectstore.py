@@ -1,6 +1,6 @@
 """Upload the source-document corpus into the R2 object store (epic #274, B3 / #279).
 
-The bytes behind the ``/api/doc`` Pages Function (B2 / #278): ``bosc objectstore sync``
+The bytes behind the ``/api/doc`` Pages Function (B2 / #278): ``watermark objectstore sync``
 walks ``data/documents/**`` and PUTs each file into a Cloudflare R2 bucket
 (S3-compatible), keyed by its ``data/documents`` rel. It is:
 

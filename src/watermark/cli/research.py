@@ -194,7 +194,7 @@ def research_run_cmd(
         console.print(table)
         console.print(
             f"[dim]candidate cells under {out_dir}/assessments/ — review, then promote into "
-            "data/hypotheses/ by hand (bosc hypotheses check before committing).[/]"
+            "data/hypotheses/ by hand (watermark hypotheses check before committing).[/]"
         )
     elif manifest.proposals:
         table = Table("proposed issue", "labels", "dedupe key")

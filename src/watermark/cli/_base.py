@@ -1,4 +1,4 @@
-"""Shared core for the ``bosc`` CLI package.
+"""Shared core for the ``watermark`` CLI package.
 
 Holds the root ``app`` Typer instance, the shared ``console``, every sub-app
 Typer instance, the ``--site`` callback, and module-level names the command

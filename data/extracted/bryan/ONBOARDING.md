@@ -1,6 +1,6 @@
 # Onboarding — Bryan (bryan)
 
-Living record for the Bryan watershed point (basin: maumee), scaffolded by `bosc onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
+Living record for the Bryan watershed point (basin: maumee), scaffolded by `watermark onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
 
 ## Dimension coverage
 
@@ -68,11 +68,11 @@ connector-sourced $45.81/MWh (#411, resolved 2026-06-21).
 
 Follow-up: locate a *native* Williams County, OHIO parcel REST (re-probe the bhamaps host once its
 cert renews, #421/#394 — it would give non-redacted owner+value); locate a real Bryan/Williams OH
-zoning layer; commit reviewed reference *data* (a `bosc parcels --site bryan` pull).
+zoning layer; commit reviewed reference *data* (a `watermark parcels --site bryan` pull).
 
 ## Self-research (Phase 5; #247) — 2026-06-21
 
-First automated-research pass (`bosc research run`, 24 turns, $1.27, read-only over the corpus) →
+First automated-research pass (`watermark research run`, 24 turns, $1.27, read-only over the corpus) →
 `data/research/onboard-bryan-bryan-data-center-activity-receivi-2026-06-21/` (`findings.md` + `manifest.yaml`).
 
 **Headline — the network's first municipal utility is the reason to onboard; the receiving-water
@@ -81,7 +81,7 @@ EIA #2439, an AMP member scheduled into PJM) is the network's first municipal / 
 home-rule electric point, exercising the EIA-861S fallback + ownership-aware regulator paths no IOU
 site does (cf. PR #388). But the assimilative screen **cannot yet be computed**: Bryan WWTP
 (OH0020532, 3.1 MGD ≈ 4.8 cfs — *larger* than Lima's Shawnee II) discharges to **Prairie Creek**
-(Tiffin subbasin), which has **no 7Q10** in the corpus, so `bosc basin-network` records `no_7q10`,
+(Tiffin subbasin), which has **no 7Q10** in the corpus, so `watermark basin-network` records `no_7q10`,
 dilution `null`. The pre-applied `effluent_dominated_tributary` label is an **`[inference]`**, not a
 finding (proposals #408/#409).
 

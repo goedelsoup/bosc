@@ -33,24 +33,24 @@ The point-of-interest (place) research store. Defers to the root
   parcel-id → CAMA (exact, `confidence=high`, `auto_mergeable=True`); address →
   `census_geocoder` (US Census, in `connectors/`) → point → `allen_gis.parcel_at_point`
   (a **proposal**, `confidence=medium`, `auto_mergeable=False`, because geocoding is
-  fuzzy). `bosc poi resolve <value>`. Connector fixtures: `tests/fixtures/poi/` +
+  fuzzy). `watermark poi resolve <value>`. Connector fixtures: `tests/fixtures/poi/` +
   `tests/fixtures/hydrology/allen_gis/`.
 - **`merge` (built):** `merge.py` resolves + **blocks by canonical parcel** into
   `MergeGroup`s with the gate `covered`/`auto`/`review`/`unresolved` (only an exact
   parcel-id makes a group `auto`). `merge_resolutions` is pure (group logic testable on
-  synthetic resolutions); `bosc poi merge`. Atomic merge keeps distinct parcels distinct —
+  synthetic resolutions); `watermark poi merge`. Atomic merge keeps distinct parcels distinct —
   a *composite* unifies them by hand in curate, not here.
 - **`curate` (built — scaffolding):** `curate.py` scaffolds a resolved `MergeGroup` into a
   `data/entities/poi/<slug>.md` profile at depth `located` (members → `surface_forms`, owner →
   relationship, citations carried through; no AOI). `write_profile` refuses to overwrite
-  unless `force`. `bosc poi curate <parcel-no> [--write]`. Promotion to
+  unless `force`. `watermark poi curate <parcel-no> [--write]`. Promotion to
   `characterized`/`watched` (+ a tracking `bbox`) is a human edit, never auto.
 - **`gnis` (built — non-parcel branch):** `connectors/gnis.py` resolves a named feature
   (river, water body, landform) via USGS GNIS (National Map *geonames* ArcGIS service) →
   a stable `gnis-<gaz_id>` key + a point. `resolve_value("feature", name)` returns a
   `review` proposal (`fallback_key`); the geocode-only-no-parcel path gets a `geo-<geohash>`
   key. `merge` blocks by `Resolution.key` (`parcel_no` else fallback), so feature surface
-  forms group. `bosc poi resolve "<name>" --kind feature`.
+  forms group. `watermark poi resolve "<name>" --kind feature`.
 - **Wired to imagery (P4):** `watermark.gis.load_tracking_sites` reads `tracked_pois()`; a
   `watched` POI *is* a tracking site.
 - **In the graph + on the site (P5):** `pipeline.entities.enrich_with_places` folds the

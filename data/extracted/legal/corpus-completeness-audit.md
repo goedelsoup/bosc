@@ -4,7 +4,7 @@
 
 > Method: (1) **Substantive gaps** read from the county's own item-by-item response in [`bosc-prr-production-2026-06-05.response-index.yaml`](prr-mandamus/bosc-prr-production-2026-06-05.response-index.yaml) — i.e. records *requested and not produced*, not inference. (2) **Integrity gaps** computed by script: minutes/agenda filename parsing + pairing over `commissioners/minutes/raw/`, existence-checks of every `*.pdf` cited across `extracted/**`, and the PRR-01 bundle's `derived_files`. Ambiguous date-typo filenames were **not** auto-resolved (the heuristic produced impossible dates); they are listed for human verification. Minutes findings reflect the **2026-04-17 manifest snapshot**, not today.
 
-> **Integrity pass now automated.** The mechanical half — existence + freshness across every catalogued dataset — is regenerated from the data catalog by `bosc catalog audit` into [`data/catalog/COMPLETENESS.md`](../../catalog/COMPLETENESS.md) and gated against drift by `bosc catalog check`. This document keeps the **substantive** half (records an authority *withheld*), which is human judgment, not a script.
+> **Integrity pass now automated.** The mechanical half — existence + freshness across every catalogued dataset — is regenerated from the data catalog by `watermark catalog audit` into [`data/catalog/COMPLETENESS.md`](../../catalog/COMPLETENESS.md) and gated against drift by `watermark catalog check`. This document keeps the **substantive** half (records an authority *withheld*), which is human judgment, not a script.
 
 ## Headline
 

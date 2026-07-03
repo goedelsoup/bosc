@@ -3,7 +3,7 @@
 All-time federal **prime-award obligations** for a pinned watchlist of recipients
 tied to the corridor — the "who benefits from federal dollars" layer behind the
 public-records dispute. Every figure is read verbatim from the USASpending API;
-nothing is estimated by BOSC. Regenerate with `bosc usaspending`.
+nothing is estimated by BOSC. Regenerate with `watermark usaspending`.
 
 ## What this answers
 

@@ -1,10 +1,10 @@
 # Springfield (springfield) — hydrology connector outputs
 
-Per-site onboarding tree for the Springfield watershed point (basin: great-miami), scaffolded by `bosc onboard springfield` (#326). Values come from the portable reach connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is fabricated; regenerate, don't hand-edit.
+Per-site onboarding tree for the Springfield watershed point (basin: great-miami), scaffolded by `watermark onboard springfield` (#326). Values come from the portable reach connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is fabricated; regenerate, don't hand-edit.
 
 ## Source
 
-`bosc onboard springfield` over the Springfield `SiteProfile` (reach connectors: NWIS / NOAA Atlas-14 / SSURGO / NASA-POWER).
+`watermark onboard springfield` over the Springfield `SiteProfile` (reach connectors: NWIS / NOAA Atlas-14 / SSURGO / NASA-POWER).
 
 ## Known gaps & caveats
 
@@ -13,4 +13,4 @@ Per-site onboarding tree for the Springfield watershed point (basin: great-miami
 
 ## Regenerate
 
-`bosc onboard springfield`  (or the per-connector commands: `derive-low-flows`, `nasa-power --write`, etc.)
+`watermark onboard springfield`  (or the per-connector commands: `derive-low-flows`, `nasa-power --write`, etc.)

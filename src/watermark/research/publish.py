@@ -112,7 +112,7 @@ def _issue_body(p: IssueProposal, *, run_ref: str) -> str:
         f"{p.body.strip()}\n\n"
         f"**Rationale:** {p.rationale}\n\n"
         "---\n"
-        f"_Proposed by `bosc research run` ({run_ref}); inert until a maintainer "
+        f"_Proposed by `watermark research run` ({run_ref}); inert until a maintainer "
         f"triages it._\n{marker(p.dedupe_key)}\n"
     )
 
@@ -131,7 +131,7 @@ def _pr_body(
         "",
         f"**Topic:** {p.topic}",
         "",
-        "Produced by `bosc research run` — read-only over the corpus. This PR adds "
+        "Produced by `watermark research run` — read-only over the corpus. This PR adds "
         "only `data/research/` artifacts (findings + issue-proposal manifest); it "
         "alters no source bytes under `data/documents/**`. A maintainer review is "
         "required — the research App cannot approve or merge its own PR.",

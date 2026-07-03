@@ -445,7 +445,7 @@ def _merge_npdes(a: Facility, b: Facility) -> str:
 # --- Inventory assembly (structured YAML + file writers) -------------------
 
 # Provenance shared by every inventory file. Static (no timestamp) so re-running
-# `bosc npdes` regenerates byte-identical output — no spurious git churn.
+# `watermark npdes` regenerates byte-identical output — no spurious git churn.
 _INVENTORY_SOURCE = "EPA ECHO — cwa_rest_services (CWA v2017-10-13)"
 # Generic caveats (every basin); basin-specific ones live on Basin.caveats.
 _GENERIC_CAVEATS = [

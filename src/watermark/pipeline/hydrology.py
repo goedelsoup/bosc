@@ -100,7 +100,7 @@ def run_refill(
     The flow-side counterpart to :func:`run_water_budget`: where the storage budget screens
     the campus draw against the reservoir *stock*, this reads the committed sequent-peak
     drought storage-requirement (regenerate it from the live USGS record with
-    ``bosc refill --write``). Returns ``(None, [])`` if the artifact is absent.
+    ``watermark refill --write``). Returns ``(None, [])`` if the artifact is absent.
     """
     settings = settings or get_settings()
     ra = refill_stage.load_refill_adequacy(settings=settings)

@@ -330,7 +330,7 @@ def export_watershed_geo(settings: Settings | None = None) -> GeoFeatureCollecti
     """The ``watershed`` feed — USGS WBD HU boundaries framing the campus AOI (#61).
 
     Reads the committed reference boundaries (``data/reference/hydrology/wbd/*.geojson``,
-    regenerable via ``bosc wbd``) and assembles one typed feed. Geometry is WGS84
+    regenerable via ``watermark wbd``) and assembles one typed feed. Geometry is WGS84
     verbatim; each feature carries its HU attributes (``huc``/``level``/``name``/…) plus
     the ``layer``/``color``/``role`` styling metadata. Features are ordered coarsest →
     finest so the finer subwatershed draws on top. ``None`` when no boundaries exist.
@@ -431,7 +431,7 @@ def export_imagery_geo(settings: Settings | None = None) -> GeoFeatureCollection
                 "note": (
                     "View-only Esri World Imagery Wayback releases (tiles load from Esri; "
                     "not redistributed). The publishable analysis-grade series is the "
-                    "free/open Sentinel-2 / NAIP pulled by `bosc imagery`."
+                    "free/open Sentinel-2 / NAIP pulled by `watermark imagery`."
                 ),
                 "releases": [{"date": label, "release": rel} for label, rel in _WAYBACK],
             },

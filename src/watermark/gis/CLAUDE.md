@@ -46,7 +46,7 @@ Geospatial subsystem: tracking sites + satellite imagery. Defers to the root
   area flag, distance to the nearest corridor route, the route, and station along the
   roadwork road centerline. Pure/hermetic: shapely+pyproj over committed GeoJSON, like
   `watermark.hydrology.geo` (project to `hydro_utm_epsg` so distances are metres); the
-  corridor geometry is cited **external corroboration**, never edited in place. `bosc
+  corridor geometry is cited **external corroboration**, never edited in place. `watermark
   corridor` shows the join; `watermark corridor --map` writes the `corridor` + `roadwork`
   layers into `gis-findings.geojson` via `gismap.merge_corridor_layer` (the committed
   system-of-record the map fetches), mirroring the RSEI `--map` merge.

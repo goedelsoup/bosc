@@ -246,7 +246,7 @@ def build_screen(settings: Settings | None = None) -> ToxicDischargeInventory:
     inv = load_inventory(settings)
     if inv is None:
         raise FileNotFoundError(
-            "RSEI inventory not found — run `bosc rsei` first (data/reference/rsei/inventory.yaml)."
+            "RSEI inventory not found — run `watermark rsei` first (data/reference/rsei/inventory.yaml)."
         )
     echo = _load_echo(settings)
     low_flows = load_low_flows(settings=settings)

@@ -459,7 +459,7 @@ async def storm_plan_inventory(_args: dict[str, Any]) -> dict[str, Any]:
 
     inv = stormplan.load_inventory(settings=get_settings())
     if inv is None:
-        return _text("No storm-plan inventory yet (run `bosc storm-plan --refresh`).")
+        return _text("No storm-plan inventory yet (run `watermark storm-plan --refresh`).")
     lines = [
         f"{inv.sheet_id} {inv.discipline} ({inv.phase}, {inv.status})",
         f"graded relief {inv.rim_min.value:.1f}-{inv.rim_max.value:.1f} ft "

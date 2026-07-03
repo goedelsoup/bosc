@@ -11,7 +11,7 @@ the dev loop works. The pieces:
 
 - **R2 bucket** — `bosc-documents` (prod) + `bosc-documents-dev` (preview/dev). Bound as
   `DOCS` in [`web/wrangler.toml`](../web/wrangler.toml). *(B1 / #277.)*
-- **`bosc objectstore sync`** — uploads `data/documents/**` into a bucket, incrementally
+- **`watermark objectstore sync`** — uploads `data/documents/**` into a bucket, incrementally
   and LFS-aware. *(B3 / #279.)*
 - **`/api/doc/<rel>` Pages Function** — streams a file from R2 and enforces the public
   publish allowlist server-side. *(B2 / #278 — pairs with the C1 allowlist.)*
@@ -44,7 +44,7 @@ preview_bucket_name = "bosc-documents-dev"
 
 ### 2. S3 API token (for the sync tool)
 
-`bosc objectstore sync` talks to R2 over its **S3-compatible API**. In the Cloudflare
+`watermark objectstore sync` talks to R2 over its **S3-compatible API**. In the Cloudflare
 dashboard (R2 → Manage R2 API Tokens) create a token with object read/write on the
 buckets, and note the **Access Key ID**, **Secret Access Key**, and your **account id**.
 
@@ -68,13 +68,13 @@ The `/api/doc` Function ships **dark**: it returns `503` until an operator sets
 same pattern as `SUBMISSIONS_ENABLED` / `ASK_ENABLED`. It's a dashboard variable, **not**
 in `wrangler.toml`, so it flips without a redeploy.
 
-## Populating the store — `bosc objectstore sync`
+## Populating the store — `watermark objectstore sync`
 
 ```sh
-bosc objectstore sync --dry-run                 # list what would upload (sizes), upload nothing
-bosc objectstore sync --target local            # → bosc-documents-dev (the dev/preview bucket)
-bosc objectstore sync --target remote            # → bosc-documents (prod)
-bosc objectstore sync --target local --collection recorder   # scope to one collection
+watermark objectstore sync --dry-run                 # list what would upload (sizes), upload nothing
+watermark objectstore sync --target local            # → bosc-documents-dev (the dev/preview bucket)
+watermark objectstore sync --target remote            # → bosc-documents (prod)
+watermark objectstore sync --target local --collection recorder   # scope to one collection
 ```
 
 Behaviour:
@@ -108,7 +108,7 @@ that actually works.) To serve a wider set, seed a whole collection then restart
 cd frontend && npm run seed:r2 -- --collection recorder   # or pass explicit data/documents rels
 ```
 
-**`bosc objectstore sync --target local` is a different thing:** it uploads to the **remote**
+**`watermark objectstore sync --target local` is a different thing:** it uploads to the **remote**
 `bosc-documents-dev` bucket that Cloudflare **preview deployments** bind — *not* the local stack.
 Run it before a preview deploy, not for local dev. The doc-serving logic (gate, ranges,
 content-type) is also covered offline by `src/lib/docRoute.test.ts`. See
@@ -117,7 +117,7 @@ content-type) is also covered offline by `src/lib/docRoute.test.ts`. See
 ## Production
 
 The Pages deploy (`.github/workflows/pages.yml`) carries the `DOCS` binding from
-`wrangler.toml`. Once the prod bucket is populated (`bosc objectstore sync --target
+`wrangler.toml`. Once the prod bucket is populated (`watermark objectstore sync --target
 remote`), the allowlist (C1) is in place, and a redaction pass (C2) has run, an operator
 flips `DOCS_ENABLED = "true"` to open `/api/doc` to the public for the allowlisted files.
 

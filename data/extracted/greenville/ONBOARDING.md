@@ -1,6 +1,6 @@
 # Onboarding — Greenville · Darke Co (greenville)
 
-Living record for the Greenville · Darke Co watershed point (basin: great-miami), scaffolded by `bosc onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
+Living record for the Greenville · Darke Co watershed point (basin: great-miami), scaffolded by `watermark onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
 
 ## Dimension coverage
 
@@ -35,6 +35,6 @@ Living record for the Greenville · Darke Co watershed point (basin: great-miami
 
 ## Self-research (Phase 5; #247) — 2026-06-22
 
-- [x] Self-research first pass reviewed (`bosc onboard greenville --research`; ~$0.8, 24 turns; 5 proposals in `data/research/onboard-greenville-…-2026-06-22/`). The **agricultural / basin-edge** node (Darke Co) — a deliberate contrast to the industrial mainstem nodes. Darke straddles a drainage divide: eastern Darke (Greenville Creek → Stillwater → Great Miami → Ohio R.) vs western Darke (→ Wabash → Mississippi); this site sits on the **Great Miami** reach. A **till-plain** county (not buried-valley) and likely a **rural electric co-op** utility — a third utility type for the network.
+- [x] Self-research first pass reviewed (`watermark onboard greenville --research`; ~$0.8, 24 turns; 5 proposals in `data/research/onboard-greenville-…-2026-06-22/`). The **agricultural / basin-edge** node (Darke Co) — a deliberate contrast to the industrial mainstem nodes. Darke straddles a drainage divide: eastern Darke (Greenville Creek → Stillwater → Great Miami → Ohio R.) vs western Darke (→ Wabash → Mississippi); this site sits on the **Great Miami** reach. A **till-plain** county (not buried-valley) and likely a **rural electric co-op** utility — a third utility type for the network.
 - `[verified]` **zero** Greenville/Darke-County records in the BOSC corpus as of 2026-06-22 — a flat no-data finding. The Greenville Creek / Stillwater **7Q10 is not yet committed** (the derived low-flow file remains Maumee-only), so the receiving-water screen can't run at-site.
 - Proposals filed as sub-issues of **#482**: commit the Greenville Creek / Stillwater 7Q10; persist the per-discharger basin-screen artifact; run the Darke-County data-center / ag-land-conversion sweep; wire the Darke County GIS connector (situs-verified); ~~resolve the skipped RSEI + grid-profile steps (co-op EIA-861)~~ **DONE 2026-06-22** — both committed. **Correction:** the City of Greenville LSE resolved to **Dayton Power & Light #4922** (AES Ohio, an IOU), *not* a co-op; the EIA-861 2024 Service_Territory shows the co-op (Darke Rural Electric #4796) serves rural Darke, while the city itself is DP&L.

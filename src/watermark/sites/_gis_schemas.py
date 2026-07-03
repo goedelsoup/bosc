@@ -185,7 +185,7 @@ LIMA_FLOOD_SCHEMA = GisFloodSchema(
             "Only Special Flood Hazard Areas (1%-annual-chance: A/AE incl. floodway, AO) "
             "are mapped here; areas outside the SFHA carry no polygon.",
             "A site's flood zone is a SPATIAL question (no PARCEL_NO on this layer) — use "
-            "footprint_floodzones() / bosc floodzone --footprint.",
+            "footprint_floodzones() / watermark floodzone --footprint.",
         ),
     ),
 )
@@ -218,7 +218,7 @@ NATIONAL_NFHL_FLOOD_SCHEMA = GisFloodSchema(
             "Only Special Flood Hazard Areas (1%-annual-chance: A/AE incl. floodway, AO) "
             "are mapped; areas outside the SFHA carry no polygon.",
             "A site's flood zone is a SPATIAL question (no parcel id on this layer) — use "
-            "footprint_floodzones() / bosc floodzone --footprint.",
+            "footprint_floodzones() / watermark floodzone --footprint.",
             "Field names confirmed from the NFHL layer-28 metadata (2026-06-19).",
         ),
     ),

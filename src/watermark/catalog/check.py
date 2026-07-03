@@ -120,7 +120,7 @@ def check(
 
     # 1b. the dependency graph (#1020) — every depends_on id resolves, and the graph is
     # acyclic. Pure graph operations over the loaded catalog; both are hard failures (a
-    # broken graph would strand `bosc catalog run` and the downstream-staleness gate).
+    # broken graph would strand `watermark catalog run` and the downstream-staleness gate).
     from watermark.catalog.dag import find_cycle, unknown_dependencies
 
     for entry_id, dep in unknown_dependencies(entries):
@@ -294,7 +294,7 @@ def upstream_preflight(
     Scoped to the DAG rooted at ``root``, it surfaces (as warnings, never gate failures) every
     upstream that is TTL-stale plus every downstream-stale edge, so a consumer command can
     print them before running with current data. Returns ``[]`` when the root entry doesn't
-    exist or the graph is broken — those are ``bosc catalog check``'s findings, not ours.
+    exist or the graph is broken — those are ``watermark catalog check``'s findings, not ours.
 
     **Fails open:** this is an advisory pre-flight for a "never abort" caller (``watermark
     export``, #1024), so any unexpected failure loading/reconciling the catalog is swallowed
@@ -308,7 +308,7 @@ def upstream_preflight(
         closure = subgraph_order(entries, root)
         observed = reconcile(settings=settings, now=now).entries
     except (KeyError, ValueError):
-        return []  # unknown root / broken graph — bosc catalog check owns those findings
+        return []  # unknown root / broken graph — watermark catalog check owns those findings
     except Exception:  # advisory pre-flight must never abort the caller — fail open, log
         log.warning("catalog.upstream_preflight.skipped", root=root, exc_info=True)
         return []

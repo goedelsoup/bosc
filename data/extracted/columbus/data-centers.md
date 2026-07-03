@@ -115,7 +115,7 @@ the metro + New Albany load is the documented driver.
 6. **Ohio SOS LLC filings** — the land-holding LLCs for AWS, Google, the AEP/Bloom array entity.
 7. **Ohio EPA NPDES** — coverage under the statewide draft General NPDES Permit for Data Centers (bars
    discharge within 500 yds upstream of a public-water surface intake — directly relevant given the
-   Scioto reservoir intakes). Pull alongside the deferred `bosc npdes --basin scioto`.
+   Scioto reservoir intakes). Pull alongside the deferred `watermark npdes --basin scioto`.
 8. **Ohio TCA data-center sales-tax exemption** award letters (Franklin Co) + the Aug-2025 pause.
 
 ## Sources

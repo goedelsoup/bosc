@@ -32,5 +32,5 @@ Development Agreement (pp.296–316), PAAC records policy (pp.80–90), board mi
 - Figures are read off the 300 DPI render, **not** the garbled OCR text layer.
 - Dollar totals/subtotals are high-confidence; uncertain quantities carry the `~`
   approximate marker (see [`data/README.md`](../../README.md)).
-- Validated by `watermark.models`; `bosc reconcile` checks line-item → subtotal → total
+- Validated by `watermark.models`; `watermark reconcile` checks line-item → subtotal → total
   arithmetic and the contingency convention. Provenance is in each file's `meta`.

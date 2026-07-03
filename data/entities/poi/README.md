@@ -20,7 +20,7 @@ A place derived from the corpus, geocoded, deduplicated, and **depth-marked**
 ## Editing
 
 Hand-curated, like `data/entities/people/`. Advance `depth` deliberately — `characterized` and
-`watched` are human gates. `bosc poi list` / `bosc poi show <slug>` read this store.
+`watched` are human gates. `watermark poi list` / `watermark poi show <slug>` read this store.
 
 ## Gaps
 

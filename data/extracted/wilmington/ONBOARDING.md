@@ -1,6 +1,6 @@
 # Onboarding — Wilmington (wilmington)
 
-Living record for the Wilmington watershed point (basin: little-miami), scaffolded by `bosc onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
+Living record for the Wilmington watershed point (basin: little-miami), scaffolded by `watermark onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
 
 ## Dimension coverage
 
@@ -35,6 +35,6 @@ Living record for the Wilmington watershed point (basin: little-miami), scaffold
 
 ## Self-research (Phase 5; #247) — 2026-06-22
 
-- [x] Self-research first pass reviewed (`bosc onboard wilmington --research`; ~$1.0, 30 turns; 5 proposals in `data/research/onboard-wilmington-…-2026-06-22/`). The Little Miami's second tracking point (with Xenia), defined by a single dominant large-load tenant — the **Wilmington Air Park** (ex-DHL super-hub → Amazon Air / ATSG). Receiving water is **Todd Fork → Little Miami** (a National & State Scenic River, the same anti-degradation overlay as Xenia).
+- [x] Self-research first pass reviewed (`watermark onboard wilmington --research`; ~$1.0, 30 turns; 5 proposals in `data/research/onboard-wilmington-…-2026-06-22/`). The Little Miami's second tracking point (with Xenia), defined by a single dominant large-load tenant — the **Wilmington Air Park** (ex-DHL super-hub → Amazon Air / ATSG). Receiving water is **Todd Fork → Little Miami** (a National & State Scenic River, the same anti-degradation overlay as Xenia).
 - `[verified]` **zero** Wilmington/Clinton-County records in the BOSC corpus as of 2026-06-22 — a flat no-data finding. **Gage gap:** Todd Fork is **ungaged** (the old 03244000 is discontinued; Clinton County has no active gage), so the profile brackets it with the downstream Little Miami integrator (Milford, 03245500) + the upstream Oldtown reach — a drainage-area-ratio adjustment is needed before the at-site screen is trustworthy.
 - Proposals filed as sub-issues of **#492**: derive the Little Miami / Todd Fork 7Q10 + re-run basin-screen; document a **drainage-area-ratio adjustment** for ungaged Todd Fork; run the Air-Park data-center sweep; ~~pin the Clinton County EIA-861 utility (grid-profile)~~ **done** — Dayton Power & Light #4922 (AES Ohio), PJM/PUCO, from EIA-861 2024 Service_Territory; stand up the Clinton County GIS connector (situs-verified).

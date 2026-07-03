@@ -1,6 +1,6 @@
 # Onboarding — Findlay (findlay)
 
-Living record for the Findlay watershed point (basin: maumee), scaffolded by `bosc onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
+Living record for the Findlay watershed point (basin: maumee), scaffolded by `watermark onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
 
 ## Dimension coverage
 
@@ -24,7 +24,7 @@ Living record for the Findlay watershed point (basin: maumee), scaffolded by `bo
 | consumer-energy | ok | reference/eia/findlay/consumer-energy.yaml |
 | grid-profile | ok | reference/eia/findlay/grid-profile.yaml |
 
-## GIS pulls (manual; not part of `bosc onboard`)
+## GIS pulls (manual; not part of `watermark onboard`)
 
 | layer | status | output |
 |---|---|---|
@@ -34,7 +34,7 @@ Living record for the Findlay watershed point (basin: maumee), scaffolded by `bo
 
 ## Self-research (Phase 5; #247) — recorded 2026-06-21 (#353)
 
-Automated-research pass (`bosc onboard --research`, committed 2026-06-19) →
+Automated-research pass (`watermark onboard --research`, committed 2026-06-19) →
 `data/research/onboard-findlay-findlay-data-center-activity-rec-2026-06-19/` (`findings.md` +
 `manifest.yaml`). Recorded here per #353.
 

@@ -2,8 +2,8 @@
 
 ``CatalogEntry.depends_on`` turns the catalog into a process DAG: each edge says "produce
 that entry before regenerating this one". This module holds the graph primitives shared by
-the two consumers — ``bosc catalog check`` gates referential integrity + acyclicity here,
-and ``bosc catalog run`` (:mod:`watermark.catalog.runner`, #1021) resolves the upstream-first
+the two consumers — ``watermark catalog check`` gates referential integrity + acyclicity here,
+and ``watermark catalog run`` (:mod:`watermark.catalog.runner`, #1021) resolves the upstream-first
 execution order. Everything operates on an already-loaded entry list; no file I/O.
 """
 
@@ -66,7 +66,7 @@ def subgraph_order(entries: list[CatalogEntry], root_id: str) -> list[CatalogEnt
 
     Depth-first postorder over ``depends_on``, deterministic (sorted edges). Raises
     ``KeyError`` for an unknown root or dependency id and ``ValueError`` on a cycle — run
-    ``bosc catalog check`` first; this function assumes a gate-clean graph.
+    ``watermark catalog check`` first; this function assumes a gate-clean graph.
     """
     index = by_id(entries)
     if root_id not in index:

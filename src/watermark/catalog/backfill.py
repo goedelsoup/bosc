@@ -1,4 +1,4 @@
-"""``bosc catalog backfill`` — idempotently scaffold catalog entries from committed data.
+"""``watermark catalog backfill`` — idempotently scaffold catalog entries from committed data.
 
 Phase 1 of the data-catalog epic (#631, issue #624). Bootstraps the ~40 ``data/reference/*``
 collections and the ``data/extracted/**`` collections into typed :class:`watermark.catalog.CatalogEntry`
@@ -13,7 +13,7 @@ un-slugged ``eia/consumer-energy.yaml`` peer fold into one ``eia-consumer-energy
 ``site_scope`` is ``slug-scoped`` and whose ``storage`` carries the ``{site}`` template (the model
 documents this: *for slug-scoped, the relpath is a template*). Each stub is then enriched from two
 more sources — an embedded ``meta.source`` block where the producing connector wrote one, and a
-curated ``command → collection`` hint map for the ``bosc`` regenerator and connector module.
+curated ``command → collection`` hint map for the ``watermark`` regenerator and connector module.
 
 **Idempotent + prose-preserving** (mirrors the periplus backfill): a discovered dataset is matched
 to an existing entry by id *or* storage overlap (so a human-renamed reviewed entry is never

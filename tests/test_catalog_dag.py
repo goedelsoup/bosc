@@ -2,7 +2,7 @@
 
 Pure graph-primitive tests over in-memory entries: referential integrity, cycle
 detection (deterministic path), and the upstream-first topological order that
-``bosc catalog run`` (#1021) executes.
+``watermark catalog run`` (#1021) executes.
 """
 
 from __future__ import annotations

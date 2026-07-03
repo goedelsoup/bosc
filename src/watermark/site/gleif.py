@@ -1,6 +1,6 @@
 """Export the GLEIF LEI resolution as a typed feed.
 
-Publishes ``data/reference/gleif/lei-records.yaml`` (built by ``bosc lei``) — the corridor
+Publishes ``data/reference/gleif/lei-records.yaml`` (built by ``watermark lei``) — the corridor
 entity parents' "who owns whom" records — as a feed. (The legacy markdown ``render_gleif``
 peer was removed at the SSG-cutover cleanup, #603.)
 """

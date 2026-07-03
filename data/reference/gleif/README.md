@@ -3,7 +3,7 @@
 Verified **Legal Entity Identifier (LEI)** records for the corridor / RSEI facility
 parent companies on the [watchlist](../../entities/profiles/lei-watchlist.yaml),
 resolved against the **GLEIF** registry — the global "who is who / who owns whom"
-directory. Regenerate with `bosc lei`.
+directory. Regenerate with `watermark lei`.
 
 ## Source
 

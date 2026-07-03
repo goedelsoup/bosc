@@ -294,7 +294,7 @@ def ask(
 
 @app.command()
 def extract(
-    doc_id: str = typer.Argument(..., help="A doc_id from `bosc ingest`."),
+    doc_id: str = typer.Argument(..., help="A doc_id from `watermark ingest`."),
     page: int | None = typer.Option(None, "--page", help="0-based PDF page index."),
     pdf_page: int | None = typer.Option(
         None, "--pdf-page", help="1-based printed sheet number (= page index + 1)."
@@ -329,7 +329,7 @@ def extract(
     docs = {d.doc_id: d for d in ingest.discover()}
     doc = docs.get(doc_id)
     if doc is None:
-        console.print(f"[red]Unknown doc_id:[/] {doc_id}. Run `bosc ingest` to list ids.")
+        console.print(f"[red]Unknown doc_id:[/] {doc_id}. Run `watermark ingest` to list ids.")
         raise typer.Exit(code=1)
 
     # Document-level kinds (deed, npdes) read across pages — no --page needed.
@@ -450,7 +450,7 @@ def extract(
 
 @app.command(name="extract-sweep")
 def extract_sweep(
-    doc_id: str = typer.Argument(..., help="A doc_id from `bosc ingest` (the OPC bundle)."),
+    doc_id: str = typer.Argument(..., help="A doc_id from `watermark ingest` (the OPC bundle)."),
     pages: str = typer.Option(
         "318-327", "--pages", help="0-based inclusive PDF page range, e.g. 318-327."
     ),
@@ -472,7 +472,7 @@ def extract_sweep(
     docs = {d.doc_id: d for d in ingest.discover()}
     doc = docs.get(doc_id)
     if doc is None:
-        console.print(f"[red]Unknown doc_id:[/] {doc_id}. Run `bosc ingest` to list ids.")
+        console.print(f"[red]Unknown doc_id:[/] {doc_id}. Run `watermark ingest` to list ids.")
         raise typer.Exit(code=1)
     try:
         lo_s, hi_s = pages.split("-", 1)
@@ -580,7 +580,7 @@ def network_cmd(
     theory: str = typer.Option(
         "",
         "--theory",
-        help="Theory overlay id(s) to enable, comma-separated (see `bosc theories`).",
+        help="Theory overlay id(s) to enable, comma-separated (see `watermark theories`).",
     ),
     all_theories: bool = typer.Option(
         False, "--all-theories", help="Enable every theory in the catalog."
@@ -658,7 +658,7 @@ def network_cmd(
 def theories_cmd() -> None:
     """List the toggleable network theories (unproven overlays held out of the baseline).
 
-    Each is enabled per run with `bosc network --theory <id>`. Every theory is
+    Each is enabled per run with `watermark network --theory <id>`. Every theory is
     `theorized` and ships disabled; its injected magnitude is an assumption knob.
     """
     from watermark.hydrology import network as network_stage
@@ -684,7 +684,7 @@ def theories_cmd() -> None:
         )
     console.print(table)
     console.print(
-        "[dim]Enable with[/] bosc network --theory <id> [dim](repeatable) or[/] --all-theories."
+        "[dim]Enable with[/] watermark network --theory <id> [dim](repeatable) or[/] --all-theories."
     )
 
 
@@ -784,7 +784,7 @@ def export(
 
     Writes versioned, schema-validated JSON feeds (records, timeline, entities, geo, …) +
     a manifest read by the frontend at build time. The bundle is per network site — it lands
-    under data/site/bundles/<slug>/ for the active site (pick one with `bosc --site <slug>
+    under data/site/bundles/<slug>/ for the active site (pick one with `watermark --site <slug>
     export`; default is the WATERMARK_SITE site).
 
     By default also generates ``ask-embeddings.json`` (all-MiniLM-L6-v2 vectors for hybrid

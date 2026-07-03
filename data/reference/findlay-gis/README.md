@@ -3,7 +3,7 @@
 City of Findlay (Hancock County, OH) GIS layers for the Findlay watershed point
 (`watermark.sites` `findlay`). Schema-driven via the per-site `gis_*` field-maps (#237); see
 [`docs/onboarding.md`](../../../docs/onboarding.md) and
-[`src/bosc/connectors/gis_schema.py`](../../../src/bosc/connectors/gis_schema.py).
+[`src/watermark/connectors/gis_schema.py`](../../../src/watermark/connectors/gis_schema.py).
 
 ## `zoning-districts.yaml` — zoning-district catalog
 
@@ -20,7 +20,7 @@ City of Findlay (Hancock County, OH) GIS layers for the Findlay watershed point
   **not** "one parcel" — it is not a parcel/area measure. (Contrast Lima, whose layer carries
   many per-parcel polygons.)
 - **Polygon-only — no parcel join.** The layer has no parcel-id field, so per-parcel zoning
-  lookups (`zoning_for_parcel` / `bosc zoning --parcel`) are not supported for Findlay; the
+  lookups (`zoning_for_parcel` / `watermark zoning --parcel`) are not supported for Findlay; the
   district catalog is the available read.
 - **Parcels — the OGRIP Ohio statewide layer, Hancock-scoped (`[reference]`, partial).** Hancock
   County publishes no county parcel ArcGIS-REST (Beacon/Schneider only), so `gis_parcel` is the
@@ -39,8 +39,8 @@ City of Findlay (Hancock County, OH) GIS layers for the Findlay watershed point
 ### Regenerate
 
 ```sh
-bosc --site findlay zoning --districts        # live; writes this file
-bosc --site findlay parcels --parcel 010001025254   # live; one Hancock parcel (no bulk dump committed)
+watermark --site findlay zoning --districts        # live; writes this file
+watermark --site findlay parcels --parcel 010001025254   # live; one Hancock parcel (no bulk dump committed)
 ```
 
 Raw API responses cache under the git-ignored `data/cache/`; the offline replay fixtures are

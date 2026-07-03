@@ -1,6 +1,6 @@
 """Automated-research runs: investigate a topic, distill issue proposals.
 
-The agentic-research subsystem behind ``bosc research run`` and the research GitHub
+The agentic-research subsystem behind ``watermark research run`` and the research GitHub
 App (Epic 5). A run investigates a topic over the corpus using the existing
 :class:`~watermark.agent.client.ResearchAgent` (read-only on ``data/documents/**``) and
 emits a reviewable issue-proposal manifest plus prose findings; :mod:`~watermark.research.publish`

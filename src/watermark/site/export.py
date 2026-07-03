@@ -8,7 +8,7 @@ in this package (``records``, ``economics``, ``gismap``, …).
 
 The output is **per network site** (#724/#727): each site's feeds land under
 ``data/site/bundles/<slug>/`` (the active site is ``settings.site``, from the global
-``bosc --site <slug>`` flag / ``WATERMARK_SITE``), so the network's sites never clobber each
+``watermark --site <slug>`` flag / ``WATERMARK_SITE``), so the network's sites never clobber each
 other. The committed, site-agnostic contract (``schemas/``, README, example manifest) stays
 shared at ``data/site/bundle/``.
 
@@ -441,13 +441,13 @@ def export_bundle(
     it defaults to the current UTC time.
 
     ``skip_embeddings`` suppresses the optional ``ask-embeddings`` feed — useful when
-    you need a fast bundle without the ~80 MB model download (``bosc export
+    you need a fast bundle without the ~80 MB model download (``watermark export
     --no-embeddings``).
     """
     settings = settings or get_settings()
     # Per-site bundle (#724/#727): the generated feeds + manifest live under a slug-scoped
     # dir so the network's sites don't clobber each other; the active site comes from
-    # `settings.site` (the global `bosc --site <slug>` flag / `WATERMARK_SITE`). The committed,
+    # `settings.site` (the global `watermark --site <slug>` flag / `WATERMARK_SITE`). The committed,
     # site-agnostic contract (schemas/README/example) stays at `data/site/bundle/`.
     out = out_dir or (settings.data_dir / "site" / "bundles" / settings.site)
     schemas_dir = out / "schemas"

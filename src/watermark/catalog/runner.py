@@ -1,4 +1,4 @@
-"""``bosc catalog run <entry-id>`` — the DAG-aware producer runner (epic #1019, issue #1021).
+"""``watermark catalog run <entry-id>`` — the DAG-aware producer runner (epic #1019, issue #1021).
 
 The executable half of the process DAG: resolve the dependency subgraph rooted at one
 catalog entry (:func:`watermark.catalog.dag.subgraph_order`, upstream-first), decide per node
@@ -84,7 +84,7 @@ def plan(
     ``refresh.ttl_days`` (or ``force`` is set); ``skip-fresh`` otherwise. A node without a
     ``producer.command`` is ``virtual`` — it orders the graph but executes nothing.
     Raises ``KeyError`` for an unknown entry/dependency id and ``ValueError`` on a cycle
-    (both are `bosc catalog check` failures — fix the graph first).
+    (both are `watermark catalog check` failures — fix the graph first).
     """
     settings = settings or get_settings()
     site = site or settings.site

@@ -343,7 +343,7 @@ def wbd(
     else:
         ts = get_site(site, settings=settings)
         if ts is None:
-            console.print(f"[red]No tracking site[/] {site!r} (see `bosc imagery sites`).")
+            console.print(f"[red]No tracking site[/] {site!r} (see `watermark imagery sites`).")
             raise typer.Exit(1)
         minx, miny, maxx, maxy = ts.bbox
         lon, lat = (minx + maxx) / 2.0, (miny + maxy) / 2.0

@@ -5,7 +5,7 @@ description: Use when running `watermark onboard <slug>`, interpreting its outpu
 
 # watermark onboard — reading and acting on the output
 
-`bosc onboard <slug>` scaffolds per-site data dirs, runs the portable reach connectors, and
+`watermark onboard <slug>` scaffolds per-site data dirs, runs the portable reach connectors, and
 returns a blocking review checklist. It **proposes; it never promotes** — flipping a site live
 in `web/src/lib/sites.ts` is always a separate, human, parity-gated edit.
 

@@ -3,7 +3,7 @@
 Resolves a pinned recipient watchlist
 (``data/entities/profiles/usaspending-watchlist.yaml``) against the public
 USASpending.gov API and commits the result to
-``data/reference/usaspending/awards.yaml`` (regenerate with ``bosc usaspending``).
+``data/reference/usaspending/awards.yaml`` (regenerate with ``watermark usaspending``).
 
 Discipline mirrors :mod:`watermark.gleif`: each recipient is pinned by its USASpending
 ``recipient_id`` **and** ``uei``; resolution fetches the recipient profile by id and

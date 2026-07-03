@@ -1,4 +1,4 @@
-"""Tests for the GLEIF LEI resolution (`bosc lei`)."""
+"""Tests for the GLEIF LEI resolution (`watermark lei`)."""
 
 from __future__ import annotations
 

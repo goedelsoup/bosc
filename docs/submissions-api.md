@@ -97,7 +97,7 @@ id already used inside the content bundle** — no new id space is invented:
 
 | `ref_kind` | `ref_id` is… | Source of truth |
 | --- | --- | --- |
-| `record` | the record `rel` (path under `data/extracted`, e.g. `aedg/roundabouts.summary.opc.yaml`) | `RecordItem.rel` ([feeds.py](../src/bosc/site/feeds.py)) |
+| `record` | the record `rel` (path under `data/extracted`, e.g. `aedg/roundabouts.summary.opc.yaml`) | `RecordItem.rel` ([feeds.py](../src/watermark/site/feeds.py)) |
 | `document` | the document's repo-relative path under `data/documents` | the documents feed |
 | `entity` | the canonical entity `key` | `EntityNode.key` |
 | `concept` | the concept `slug` | `ConceptItem.slug` |
@@ -207,7 +207,7 @@ stream because they come from a different identity.
   an inline "suggest a correction" control on record/entity/concept pages that pre-fills
   `target`. A no-JS fallback states the endpoint needs JavaScript (Turnstile requires
   it) and links to opening a GitHub issue manually.
-- **Build:** unchanged from the host migration — GitHub Actions runs `bosc export` →
+- **Build:** unchanged from the host migration — GitHub Actions runs `watermark export` →
   `npm run build` (the Python bundle step stays where uv caching works), then deploys
   `web/dist` **and** `web/functions/` to Cloudflare Pages via Wrangler. This
   supersedes the GitHub Pages flip ([#102](https://github.com/watermark-directory/the-watermark-directory/issues/102)/[#107](https://github.com/watermark-directory/the-watermark-directory/issues/107)).

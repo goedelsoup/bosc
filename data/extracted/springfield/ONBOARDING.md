@@ -1,6 +1,6 @@
 # Onboarding — Springfield (springfield)
 
-Living record for the Springfield watershed point (basin: great-miami), scaffolded by `bosc onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
+Living record for the Springfield watershed point (basin: great-miami), scaffolded by `watermark onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
 
 Springfield is the network's **second Miami-basin site** (epic #451 / onboarding #452): the **Mad River mid-corridor** node — ~20 mi downstream of the Urbana headwaters (#441) and ~25 mi upstream of Dayton / Wright-Patterson AFB (#442) — on the same **Mad River buried-valley sole-source aquifer** (US-EPA designated; the Springfield municipal **well field** is the textbook draw on that outwash sand & gravel). What distinguishes it from headwater Urbana is a **second, managed supply water**: Buck Creek, regulated by USACE **C.J. Brown Reservoir** — a two-source, partly-impounded hydrology versus Urbana's single free-flowing reach. The geology is the deliberate **inverse** of the Maumee lake-plain sites (groundwater-dominated HSG B vs. poorly-drained Black Swamp clays HSG D; sink = Ohio River, not Lake Erie; no Maumee-style nutrient TMDL).
 
@@ -44,7 +44,7 @@ Springfield is the network's **second Miami-basin site** (epic #451 / onboarding
 
 ## Self-research (Phase 5; #247) — 2026-06-21
 
-`bosc onboard springfield --research` (claude-opus-4-8, 13 turns, $0.53). Findings + manifest in
+`watermark onboard springfield --research` (claude-opus-4-8, 13 turns, $0.53). Findings + manifest in
 `data/research/onboard-springfield-springfield-data-center-acti-2026-06-21/`.
 
 **Bottom line.** Springfield is scaffolded but **not promotable** — both load-bearing dimensions

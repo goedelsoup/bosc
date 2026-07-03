@@ -271,7 +271,7 @@ per building — a screening **~$84–129M in abated property tax**, i.e. roughl
 assumption (Ohio commercial effective-rate band on the 35% assessed value), **not** a
 cited Allen County millage `[inference: assumption]` — yet even so it screens *worse*
 than the relator's own Ohio comparable of ~$1M/job of revenue loss. Regenerate with
-`bosc ledger`.
+`watermark ledger`.
 
 **What the public bears alongside** (already quantified by the other threads):
 
@@ -359,7 +359,7 @@ the lump-sum items even include a detention basin. So the drainage line reads as
 budget placeholder, not a design-basis quantity: a cost-completeness risk on
 privately-financed public infrastructure. This is a scope/design-basis reading, not
 a sizing of the roundabouts' hydraulics (the corpus carries no footprint area).
-`[verified: data/reference/hydrology/atlas14-corridor-ddf.yaml + bosc drainage-audit]`
+`[verified: data/reference/hydrology/atlas14-corridor-ddf.yaml + watermark drainage-audit]`
 
 ---
 
@@ -410,7 +410,7 @@ A consistent advisory team sits behind the entities `[verified: entity graph]`:
 
 ## 10. Chronology (selected milestones)
 
-`[verified: bosc timeline]`
+`[verified: watermark timeline]`
 
 | Date | Event |
 |---|---|
@@ -460,7 +460,7 @@ Every claim here derives from a committed artifact under `data/extracted/**`,
 produced by the `ingest → extract → analyze` pipeline (hybrid OCR+vision or
 text-first reads, Pydantic-validated, with self-reported confidence and warnings).
 The cross-document entity graph and timeline are deterministic functions of those
-artifacts (`bosc entities`, `bosc timeline`) — re-runnable and auditable. Figures
+artifacts (`watermark entities`, `watermark timeline`) — re-runnable and auditable. Figures
 transcribed from degraded scans may carry a `~` approximate marker; permit and
 instrument numbers are copied exactly. This dossier reflects the corpus **as
 extracted so far** and should be regenerated as new documents are ingested.

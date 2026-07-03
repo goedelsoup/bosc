@@ -10,7 +10,7 @@
 > directory was removed. This document is kept as the record of *why* — the
 > `pyswmm`/`pypdfium2` WASM blockers, the ~27 MB per-notebook bundle, and the
 > chain-of-custody fit — mirroring `docs/deckgl-spike.md`. The integration mechanics below
-> (`bosc site build --notebooks`, `nav.yaml`, `web/` wrappers) describe the retired SSG and
+> (`watermark site build --notebooks`, `nav.yaml`, `web/` wrappers) describe the retired SSG and
 > no longer exist; read them as history.
 
 ## Executive summary / recommendation
@@ -36,7 +36,7 @@ the browser." The good news: `numpy`, `scipy`, `pandas`, `shapely`, `pyproj`,
 all available in Pyodide, so the **entity graph, GIS geometry, OPC financials, and
 EPA/GLEIF reference data are fully in-scope** for WASM notebooks. The hydrology
 thread can participate only via **precomputed results** (export scenario outputs
-from a real `bosc` run, then visualize them client-side) — which is the
+from a real `watermark` run, then visualize them client-side) — which is the
 marimo-recommended pattern for heavy/unsupported compute anyway, and is also the
 right answer for the litigation **chain-of-custody** constraint (the browser
 notebook reads bundled read-only artifacts; the authoritative model runs server-side
@@ -49,7 +49,7 @@ straight into a notebook's `public/` folder and are read with `mo.notebook_locat
 want.
 
 **Effort to a real first increment:** ~1 day for a single curated notebook plus an
-opt-in `bosc site build --notebooks` step that shells `marimo export html-wasm` and
+opt-in `watermark site build --notebooks` step that shells `marimo export html-wasm` and
 links the result from `nav.yaml`. **Maintenance cost** is real but bounded: marimo
 is a new dev dependency, each notebook is a hand-curated page, and the WASM bundle is
 ~27 MB per notebook of frontend assets (the Python runtime/packages stream from a
@@ -176,7 +176,7 @@ functions), so they version cleanly and diff sensibly — unlike `.ipynb` JSON.
 Add an **opt-in** build step rather than changing the default pipeline. Two
 equally-valid placements; prefer the CLI flag for discoverability:
 
-- **CLI flag (recommended):** extend `site_build` in `src/bosc/cli.py` with
+- **CLI flag (recommended):** extend `site_build` in `src/watermark/cli.py` with
   `notebooks: bool = typer.Option(False, "--notebooks/--no-notebooks", …)`. When set,
   after `render_site(...)`, iterate `notebooks/*.py` and for each run
   `marimo export html-wasm <nb> -o site/notebooks/<slug> --mode run --no-show-code`.
@@ -186,14 +186,14 @@ equally-valid placements; prefer the CLI flag for discoverability:
   flag/CI input is set. Mirror the `data/extracted` copy-into-`public/` step here so
   the bundled data is provably the committed artifact.
 
-A new module `src/bosc/site/notebooks.py` should own: resolving the notebook list,
+A new module `src/watermark/site/notebooks.py` should own: resolving the notebook list,
 copying canonical artifacts into each notebook's `public/`, shelling the export, and
 **post-processing the bundle** (drop the stray sibling files the exporter copies — in
 my run it copied `notebooks/`'s neighbors including a `CLAUDE.md` into the output; the
 export grabs the whole notebook directory tree, so keep `notebooks/` clean or prune
 after export).
 
-The default `bosc site build` (and the CI/Pages workflow) stay exactly as they are
+The default `watermark site build` (and the CI/Pages workflow) stay exactly as they are
 unless the flag is passed — zero risk to the current site.
 
 ### How exported HTML is embedded / linked
@@ -234,7 +234,7 @@ over on the *wrapper/index* pages; inside the notebook itself it is marimo's the
 - The build step reads config via `get_settings()` (e.g. to locate the canonical
   `data/extracted` artifact to copy), never `os.environ`.
 - CLI option typed as `bool` (no `Path`-in-`Option` B008 issue).
-- marimo is added to the **`docs` optional group** (it powers `bosc site`,
+- marimo is added to the **`docs` optional group** (it powers `watermark site`,
   matching how markdown/jinja2 already live there), *not* core deps.
 
 ---
@@ -279,10 +279,10 @@ Defer use case (3) and any live server.
 ### Phase 1 — One real notebook, opt-in build step (~1 day)
 
 - Add `marimo` to the `docs` optional group in `pyproject.toml`.
-- Add `src/bosc/site/notebooks.py`: copy canonical artifact → `notebooks/<nb>/public/`,
+- Add `src/watermark/site/notebooks.py`: copy canonical artifact → `notebooks/<nb>/public/`,
   shell `marimo export html-wasm … --mode run`, prune stray sibling files from the
   output bundle.
-- Add `--notebooks/--no-notebooks` to `bosc site build` (default off).
+- Add `--notebooks/--no-notebooks` to `watermark site build` (default off).
 - Add a `Notebooks` section to `nav.yaml` and a thin wrapper markdown page that links
   (or iframes) the export.
 - Add the flag to the Pages workflow as a `workflow_dispatch` input so deploy is a
@@ -290,7 +290,7 @@ Defer use case (3) and any live server.
 
 ### Phase 2 — Hydrology via precomputed results (~1–2 days)
 
-- Add a `bosc` subcommand (or reuse an existing scenario run) that writes a small,
+- Add a `watermark` subcommand (or reuse an existing scenario run) that writes a small,
   committed **scenario-results** artifact under `data/extracted/.../scenario.*.yaml`
   from the *real* server-side model.
 - A WASM notebook reads that artifact and lets visitors slide between precomputed
@@ -322,7 +322,7 @@ Defer use case (3) and any live server.
   it — they're generated/authoring artifacts, like `web/`). **Exclude `notebooks/`
   from `ruff`, `mypy`, and `pytest`** (ruff `extend-exclude`, mypy `exclude`, pytest
   `norecursedirs`/no collection), the same way `web/` and `site/` are kept out.
-- The **integration glue** (`src/bosc/site/notebooks.py`, the CLI flag) is normal
+- The **integration glue** (`src/watermark/site/notebooks.py`, the CLI flag) is normal
   typed code and *does* go through `mise run check` — it just shells out to marimo via
   `subprocess`, so marimo never needs to import or type-check inside the codebase.
 - A lightweight test could assert the export command builds for one notebook in CI,

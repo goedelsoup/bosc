@@ -3,12 +3,12 @@
 The canonical roster of Allen County's meeting-holding bodies — the 12 townships,
 the cities and villages, and the meeting-holding special districts in the BOSC
 thread — and **where each one publishes its minutes and agendas online**. This is
-the registry the subdivision-records connectors (`src/bosc/civic/`) read: discovery
+the registry the subdivision-records connectors (`src/watermark/civic/`) read: discovery
 fills the `publishing:` block, and per-platform fetchers then pull each body's
 documents into `data/documents/<slug>/` for the existing OCR/index → timeline path.
 
-Regenerate the discovered fields with `bosc subdivisions discover`; list the
-registry with `bosc subdivisions list`.
+Regenerate the discovered fields with `watermark subdivisions discover`; list the
+registry with `watermark subdivisions list`.
 
 ## What is grounded vs. discovered
 

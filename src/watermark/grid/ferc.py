@@ -55,7 +55,7 @@ _FPA_CITE = (
 # --- Per-site jurisdiction (profile-only, so the FERC seam stays hermetic; #608) -------
 # The FERC<->state-PUC seam, the serving-utility identity, and the Form-1 filer all vary by
 # site. They are resolved from the active ``SiteProfile`` (eia_state + eia861_utility_number),
-# never hardcoded to Ohio/PUCO/AEP — running ``bosc ferc`` under a non-OH site must emit that
+# never hardcoded to Ohio/PUCO/AEP — running ``watermark ferc`` under a non-OH site must emit that
 # site's regulator (e.g. IN retail = IURC) and serving utility, not Lima's.
 
 # State retail regulator, keyed by EIA state. OH + IN cover registered sites; an unlisted

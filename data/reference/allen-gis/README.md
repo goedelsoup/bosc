@@ -2,8 +2,8 @@
 
 Parcel / real-estate attributes pulled from the **Allen County GIS** public ArcGIS
 REST server. Every value here was returned by the service — nothing is fabricated
-or estimated. Regenerate with `bosc parcels --cited` (or query ad hoc with
-`bosc parcels --parcel <no>` / `--owner <name>`).
+or estimated. Regenerate with `watermark parcels --cited` (or query ad hoc with
+`watermark parcels --parcel <no>` / `--owner <name>`).
 
 ## Source
 
@@ -27,7 +27,7 @@ land/improvement/total and CAUV values, tax district, school/neighborhood codes,
 and last sale (date + amount). `null` = the service returned no value.
 
 `parcels.defense.yaml` — the **defense-industry land scan** (regenerate with
-`bosc parcels --defense`). Matches the curated DoD-prime seed list
+`watermark parcels --defense`). Matches the curated DoD-prime seed list
 (`data/entities/profiles/defense-contractors.yaml`) against the CAMA owner fields.
 Two sections: `prime_owned` (parcels owned by a prime in its own name — **none** in
 Allen County) and `army_controlled` (the federally-held JSMC / Lima Army Tank Plant
@@ -46,7 +46,7 @@ inference, flagged as such in the file's `meta`.
   residential); the service ships no code→label lookup.
 - **Zoning is not here.** The county server has no countywide zoning layer; Lima
   zoning lives on a separate City of Lima ArcGIS server and is City-limits only —
-  see `data/reference/lima-gis/` (`bosc zoning`).
+  see `data/reference/lima-gis/` (`watermark zoning`).
 - Some parcels return multiple feature rows (splits/condos); the writer keeps the
   first row per distinct `PARCEL_NO`.
 

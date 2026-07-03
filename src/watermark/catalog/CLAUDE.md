@@ -3,7 +3,7 @@
 A metadata-driven registry over the committed data trees: what datasets exist, how each
 is (re)produced, and whether what's on disk matches what's declared. Defers to the root
 [`CLAUDE.md`](../../../CLAUDE.md) (its **Data discipline** section is the ground truth this
-subsystem audits). Driven by `bosc catalog …` (`cli/catalog.py`).
+subsystem audits). Driven by `watermark catalog …` (`cli/catalog.py`).
 
 - **Declared vs. observed is the spine.** *Declared* = one `CatalogEntry` YAML per dataset at
   `data/catalog/<scope>/<id>.yaml` (`__init__.py`); the loader hard-fails if the file's
@@ -13,14 +13,14 @@ subsystem audits). Driven by `bosc catalog …` (`cli/catalog.py`).
   from the network.
 - **An entry declares the dataset's contract.** `id` (kebab slug, unique), `title`, `scope`
   (`documents`/`extracted`/`reference`/`derived`/`bundle`/…), a `producer` (how it regenerates:
-  `kind` + a `bosc` `command` + `connector_ref` dotted module path + human `source`), `storage`
+  `kind` + a `watermark` `command` + `connector_ref` dotted module path + human `source`), `storage`
   items (relpath under `data_dir`, MIME, LFS flag, optional pinned `sha256`), a `refresh` block
   (cadence + `ttl_days` + `last_refreshed`), `site_scope` ownership (`slug-scoped` / `basin-shared`
   / `lima-legacy`), and `status` (`needs-review` → `reviewed`). Per-site storage relpaths carry a
   `{site}` template that reconcile expands; per-site absence is expected, not missing.
 - **The producer graph is process order, not byte lineage (`dag.py`).** `depends_on` lists entry
   ids that must be produced first; `subgraph_order` does a postorder topo-sort (upstream first),
-  and `check` hard-fails on unknown deps or cycles. `bosc catalog run <id>` (`runner.py`) plans
+  and `check` hard-fails on unknown deps or cycles. `watermark catalog run <id>` (`runner.py`) plans
   the subgraph, skips fresh nodes (TTL), and executes each entry's `producer.command` as a
   subprocess — virtual nodes (no command) only order the graph.
 - **The commands, by what they touch:**

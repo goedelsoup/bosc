@@ -67,7 +67,7 @@ data/reference/hydrology/maumee-tmdl-budget.yaml]` So a new data-center sanitary
 enters a *fully-allocated* basin regardless of which plant takes it.
 
 **Extended basin-wide `[v]`.** The per-plant 7Q10 dilution screen now runs over the
-full ECHO POTW inventory (`bosc basin-screen`), not just Lima's plants. The
+full ECHO POTW inventory (`watermark basin-screen`), not just Lima's plants. The
 denominators are the cited fact-sheet 7Q10s plus a **derived** LP3 7Q10 for the four
 major USGS-gaged mainstems (Maumee, Auglaize, St. Marys, St. Joseph;
 `data/reference/hydrology/low-flow-7q10.derived.yaml`). The honest result: only **7 of

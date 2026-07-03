@@ -1,5 +1,8 @@
 # The admin GitHub App — bootstrap
 
+**Status:** design (Epic #919, as of 2026-07-02) — describes the *planned* admin App;
+not yet built. The present-tense below is the target design, not a live system.
+
 The admin App (`watermark-admin-bot`, issue
 [#919](https://github.com/watermark-directory/the-watermark-directory/issues/919))
 is a separate **GitHub App** identity that allows the Watermark Directory backend to

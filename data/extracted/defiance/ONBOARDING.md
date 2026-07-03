@@ -1,12 +1,12 @@
 # Onboarding — Defiance (defiance)
 
-Living record for the Defiance watershed point (basin: maumee), scaffolded by `bosc onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
+Living record for the Defiance watershed point (basin: maumee), scaffolded by `watermark onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
 
 ## Dimension coverage
 
 - [x] **Hydrology** — onboard reach connectors (low-flows, corridor DDF, SSURGO HSG, climatology)
 - [x] **Economics** — county baseline, RSEI toxics, consumer energy, grid profile (Toledo Edison / ATSI, #236)
-- [~] **Data-center activity** — self-research first pass run (`bosc research run`); see research summary + proposals below (#247)
+- [~] **Data-center activity** — self-research first pass run (`watermark research run`); see research summary + proposals below (#247)
 - [~] **Per-jurisdiction GIS** — flood = shared national NFHL (wired). County parcels/zoning `[open]` — Defiance County GIS is on **bhamaps with an expired TLS cert** (same host/case as Van Wert); no AGOL opendata hub; City of Defiance zoning is map-only. See GIS discovery below.
 
 ## GIS discovery (2026-06-19; schema-driven GIS, #237)
@@ -48,7 +48,7 @@ back to the Engineer's-office parcel shapefile. Accept City zoning as map-only h
 
 ## Self-research (Phase 5; #247) — 2026-06-19
 
-First automated-research pass (`bosc research run`, 21 turns, $1.58, read-only over the corpus) →
+First automated-research pass (`watermark research run`, 21 turns, $1.58, read-only over the corpus) →
 `data/research/onboard-defiance-maumee-mainstem-2026-06-19/` (`findings.md` + `manifest.yaml`).
 
 **Headline — the mainstem thesis confirmed.** Defiance WWTP (OH0024899, 12 MGD ≈ 18.6 cfs) → Maumee

@@ -1,6 +1,6 @@
 # Onboarding — Xenia (xenia)
 
-Living record for the Xenia watershed point (basin: little-miami), scaffolded by `bosc onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
+Living record for the Xenia watershed point (basin: little-miami), scaffolded by `watermark onboard`. Check items as you complete them; the site is **not** promoted (`web/src/lib/sites.ts` `status`/`selectable`) until the gate is clear.
 
 Xenia is the network's **first Little Miami-basin site** — a **third basin branch** after the Maumee lake plain and the Great Miami / Mad River corridor (tracking #444 / epic #440). It is the **WPAFB-adjacent** Greene County node, SE of Wright-Patterson AFB. Its distinguishing influence is **not a new geology** but a heightened **regulatory overlay** the other sites lack: the **Little Miami is a National & State Scenic River** (NPS Wild & Scenic + Ohio Scenic River) `[reference]` — a protected receiving water whose anti-degradation status materially constrains a large new discharger/withdrawal and likely raises the in-stream passby minimum. The aquifer is the same buried-valley sole-source system (the Xenia/Beavercreek well fields draw on the Mad River / Little Miami outwash valleys), but the inter-valley till uplands at Xenia proper are less permeable than the Mad River outwash — so the dominant HSG is footprint-dependent.
 
@@ -29,7 +29,7 @@ Xenia is the network's **first Little Miami-basin site** — a **third basin bra
 
 ## Self-research (Phase 5; #247) — 2026-06-21
 
-`bosc onboard xenia --research` (claude-opus-4-8, 33 turns, $1.07). Findings + manifest in
+`watermark onboard xenia --research` (claude-opus-4-8, 33 turns, $1.07). Findings + manifest in
 `data/research/onboard-xenia-xenia-data-center-activity-receivi-2026-06-21/`.
 
 **Bottom line.** Xenia is registered and half-seeded (good hydrometeorology + economics scaffolding)

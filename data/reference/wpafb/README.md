@@ -1,10 +1,10 @@
 # Wright-Patterson AFB (wpafb) — reference data
 
-Per-site onboarding tree for the Wright-Patterson AFB watershed point (basin: great-miami), scaffolded by `bosc onboard wpafb` (#326). Values come from the portable reach connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is fabricated; regenerate, don't hand-edit.
+Per-site onboarding tree for the Wright-Patterson AFB watershed point (basin: great-miami), scaffolded by `watermark onboard wpafb` (#326). Values come from the portable reach connectors keyed to this site's `SiteProfile` in `watermark.sites` — nothing here is fabricated; regenerate, don't hand-edit.
 
 ## Source
 
-`bosc onboard wpafb` over the Wright-Patterson AFB `SiteProfile` (reach connectors: NWIS / NOAA Atlas-14 / SSURGO / NASA-POWER).
+`watermark onboard wpafb` over the Wright-Patterson AFB `SiteProfile` (reach connectors: NWIS / NOAA Atlas-14 / SSURGO / NASA-POWER).
 
 ## Known gaps & caveats
 
@@ -13,4 +13,4 @@ Per-site onboarding tree for the Wright-Patterson AFB watershed point (basin: gr
 
 ## Regenerate
 
-`bosc onboard wpafb`  (or the per-connector commands: `derive-low-flows`, `nasa-power --write`, etc.)
+`watermark onboard wpafb`  (or the per-connector commands: `derive-low-flows`, `nasa-power --write`, etc.)

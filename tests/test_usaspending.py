@@ -1,4 +1,4 @@
-"""Tests for the USASpending federal-award resolution (`bosc usaspending`)."""
+"""Tests for the USASpending federal-award resolution (`watermark usaspending`)."""
 
 from __future__ import annotations
 

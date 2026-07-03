@@ -2,7 +2,11 @@
 
 ## Data discipline
 
-The corpus is litigation evidence. These rules are non-negotiable:
+The corpus is litigation evidence. These rules are non-negotiable — the contributor
+summary is below; the full enforcement detail (checksum-verified dup rule, alias
+manifests, the standing corpus-completeness audit) is canonical in
+**[CLAUDE.md → Data discipline](CLAUDE.md#data-discipline-important)**. Keep the two in
+sync; don't let them drift.
 
 - **Never alter a source document.** Files under `data/documents/` are immutable
   as received. Do not rename them to "fix" typos — record the canonical name in

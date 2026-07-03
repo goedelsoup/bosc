@@ -9,13 +9,13 @@
 
 ## Publishing (the content bundle)
 
-`bosc export` assembles the typed content bundle — JSON feeds + a manifest — from
+`watermark export` assembles the typed content bundle — JSON feeds + a manifest — from
 `extracted/` + the repo `docs/` + the cross-document layer (timeline, entity graph)
 and writes it to `data/site/bundle/`. The Astro `web/` app reads that bundle
-at build time (the sole presentation tier). The data tier is `src/bosc/site/`.
+at build time (the sole presentation tier). The data tier is `src/watermark/site/`.
 
 ```bash
-bosc export                # write the content bundle to data/site/bundle/
+watermark export                # write the content bundle to data/site/bundle/
 ```
 
 Curated source PDFs are published as **Exhibits**; edit

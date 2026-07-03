@@ -211,7 +211,7 @@ def test_python_sites_registered_in_frontend() -> None:
         (REPO_ROOT / "web" / "src" / "lib" / "sites-registry.json").read_text(encoding="utf-8")
     )
     registry_slugs = {entry["slug"] for entry in registry["sites"]}
-    assert registry_slugs, "sites-registry.json has no entries — run `bosc sites sync`"
+    assert registry_slugs, "sites-registry.json has no entries — run `watermark sites sync`"
     assert set(SITES) <= registry_slugs, set(SITES) - registry_slugs
 
 

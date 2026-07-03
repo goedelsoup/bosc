@@ -1,7 +1,7 @@
 # The research GitHub App — bootstrap
 
 The automated-research bot (Epic [#57](https://github.com/watermark-directory/the-watermark-directory/issues/57))
-is a **GitHub App** identity that drives `bosc research run` over the corpus and opens
+is a **GitHub App** identity that drives `watermark research run` over the corpus and opens
 a PR + proposed issues *as the App*. This is the one-time setup. None of it runs until
 you finish it — the [`research.yml`](../.github/workflows/research.yml) workflow is
 gated on the `RESEARCH_ENABLED` variable, so every run is **skipped** (not failed)

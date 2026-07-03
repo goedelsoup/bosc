@@ -8,8 +8,12 @@ runs Claude-driven analysis over it. Spun out from Periplus.
 
 Three-stage pipeline under `src/watermark/pipeline/`: **ingest → extract → analyze**.
 The `src/watermark/agent/` layer wraps the Claude Agent SDK and exposes in-process
-tools so the agent inspects real data. Entry point is the `bosc` Typer CLI
-(`src/watermark/cli.py`).
+tools so the agent inspects real data. Entry point is the `watermark` Typer CLI
+(the `src/watermark/cli/` package). **`watermark` is the only installed command**
+(`[project.scripts]`); docs invoke `watermark <cmd>`. `BOSC`/`bosc` is the project
+codename and survives only as vocabulary — the platform name, the `/bosc` Lima
+site re-root, the `bosc` GitHub repo, and `bosc-`-prefixed Lima filenames — never
+as an executable.
 
 A second subsystem, `src/watermark/hydrology/`, runs water-balance / stormwater models
 of the Lima municipal loop. `src/watermark/hydrology/connectors/` pulls **live public
@@ -18,7 +22,7 @@ cache + TTL + offline/committed-fixture fallback, so tests never hit the network
 A new connector is a pure sync `fn(..., settings) -> pydantic` in that dir, with a
 committed fixture under `tests/fixtures/hydrology/<connector>/`. External-data
 pulls land as committed reference datasets under `data/reference/<source>/` and
-are regenerable via a `bosc` subcommand (e.g. `watermark npdes` → the EPA ECHO Maumee
+are regenerable via a `watermark` subcommand (e.g. `watermark npdes` → the EPA ECHO Maumee
 NPDES inventory; columns are selected by ECHO **ObjectName**, never by index).
 
 The **public site** is built in two tiers. The Python data tier (`src/watermark/site/`)
@@ -57,29 +61,18 @@ repo-working agents now.
 
 ## Conventions
 
-- **Tooling:** mise manages the toolchain (Python 3.11, uv, node 24, git-lfs);
-  `Brewfile` is the fallback. uv for envs/deps, ruff for lint+format, mypy
-  `strict`, pytest. mise is a **monorepo**: backend tasks run at the repo root
-  (`mise run check` — the gate to run before declaring done — plus `test`/`lint`/
-  `types`/`fmt`/`dev`/`export`), the `web/` Astro project's tasks are namespaced
-  (`mise run //web:check`, `//web:dev`, `//web:test`, …), and
-  `mise run ci` runs the whole-repo gate (both `check`s). A bare task name runs the
-  project you're standing in. The frontend is its own Node toolchain; it doesn't touch uv.
-- **Markdown lint:** `markdown` is a **separate required CI check** (alongside `check`).
-  Any PR that adds or edits `.md` files triggers it. Run `npx markdownlint-cli2` locally
-  before pushing — common failures: missing blank line before a list (`MD032`), multiple
-  consecutive blank lines (`MD012`). Config and ignores live in `.markdownlint-cli2.yaml`
-  (generated docs like `docs/HYDROLOGY.md` and `data/research/*/**` are excluded).
-- **CI / path filtering:** `.github/workflows/ci.yml` is split into two halves
-  gated by a `changes` job — the Python `check` job (ruff/format/mypy/pytest) runs
-  only when the backend tree changed (`src/`, `tests/`, `data/`, `pyproject.toml`,
-  `uv.lock`, …), the Astro `web` job runs only when `web/` changed, and a
-  `mise.toml`/`ci.yml` edit runs both. `check` is the one **required** status check
-  on `main` (`.github/config/index.ts` `requiredChecks`), so filtering is done at
-  the **job** level, not with a trigger-level `paths:` filter — a skipped job
-  reports success and satisfies the gate, whereas a path-filtered-away workflow
-  would leave that required check stuck "pending" and block the PR. Don't add a
-  top-level `paths:` to this workflow.
+- **Tooling & CI (full task reference + CI rationale: [DEVELOPMENT.md](DEVELOPMENT.md)):**
+  mise manages the toolchain (Python 3.11, uv, ruff, mypy `strict`, pytest, node 24;
+  `Brewfile` fallback) as a **monorepo** — backend tasks at the repo root, `web/` tasks
+  namespaced `//web:*`, and a bare task name runs the project you're standing in.
+  **`mise run check` is the gate to run before declaring done** (`mise run //web:check` for
+  `web/` changes; `mise run ci` for both). `markdown` (`npx markdownlint-cli2`) is a
+  **separate required CI check** on any `.md` edit — run it locally (common failures
+  `MD032` missing-blank-before-list, `MD012` consecutive-blanks; config + excludes in
+  `.markdownlint-cli2.yaml`). CI (`.github/workflows/ci.yml`) gates its two halves at the
+  **job** level via a `changes` job, **not** a trigger-level `paths:` filter — a skipped
+  job reports success and satisfies the required `check`, whereas a path-filtered-away
+  workflow leaves it stuck "pending". **Don't add a top-level `paths:` to `ci.yml`.**
 - **Python 3.11+**, `from __future__ import annotations` at the top of modules.
 - **Config:** never read `os.environ` directly — go through `watermark.config.get_settings()`.
   Settings are `WATERMARK_`-prefixed; the model default is `claude-opus-4-8`, bulk
@@ -174,7 +167,7 @@ document kind, and within OPC by `Profile` (Tetra Tech is profile #1; `generic`
 is the fallback). The `Estimate` model and `analyze.reconcile_estimate` are
 format-agnostic — section taxonomy and markup rate come from the data/profile,
 **not hardcoded**. Add a contractor by registering a `Profile`; don't add fixed
-section fields. `bosc extract --detail` adds per-section `LineItem`s (rolled up
+section fields. `watermark extract --detail` adds per-section `LineItem`s (rolled up
 by `reconcile_estimate`). `Number` (`models._coerce_number_keep`) preserves
-int-vs-float for quantities/rates and tolerates the `~` marker. `bosc reconcile`
+int-vs-float for quantities/rates and tolerates the `~` marker. `watermark reconcile`
 (legacy `OPCSummary`, 25% convention) still covers the assembled summary artifact.

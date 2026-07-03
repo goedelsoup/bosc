@@ -188,7 +188,7 @@ def zoning_for_parcel(parcel_no: str, *, settings: Settings | None = None) -> Zo
     if schema.parcel_field is None:
         raise LimaGisError(
             f"site {settings.site!r} zoning layer has no parcel-id field (polygon-only) — "
-            "use zoning_districts() / bosc zoning --districts"
+            "use zoning_districts() / watermark zoning --districts"
         )
     normalized = normalize_parcel_id(parcel_no, rule=schema.id_normalize)
     matches = query_zoning(f"{schema.parcel_field}='{normalized}'", settings=settings)

@@ -2,8 +2,8 @@
 
 Zoning attributes pulled from the **City of Lima GIS** public ArcGIS REST server.
 Every value here was returned by the service — nothing is fabricated or estimated.
-Regenerate with `bosc zoning --districts` (or query ad hoc with
-`bosc zoning --parcel <no>` / `--cited`).
+Regenerate with `watermark zoning --districts` (or query ad hoc with
+`watermark zoning --parcel <no>` / `--cited`).
 
 ## Source
 
@@ -24,7 +24,7 @@ Allen County CAMA parcel layer by id — no spatial query needed.
 of polygons carrying it (10 districts, 2,670 polygons), with a provenance `meta`
 block.
 
-`parcels.zoning.yaml` — the **cited-parcel jurisdiction scan** (`bosc zoning --cited
+`parcels.zoning.yaml` — the **cited-parcel jurisdiction scan** (`watermark zoning --cited
 --write`): every parcel id cited in the corpus, joined by `PARCEL_NO` to this layer.
 The recorded result is a **null with teeth** — **0 of 48** cited parcels fall inside
 Lima's zoning jurisdiction, so the data-center campus + JSMC corridor is **not
@@ -32,11 +32,11 @@ subject to the City of Lima zoning code**; land-use authority is township/county
 (and Allen County GIS publishes no zoning layer — only Tax and School districts).
 
 `floodzones.yaml` — the **FEMA flood-zone catalog** from layer 4 "Floodzone"
-(`bosc floodzone --catalog`). This layer is the FEMA **DFIRM panel 39003C** for
+(`watermark floodzone --catalog`). This layer is the FEMA **DFIRM panel 39003C** for
 **Allen County** (county-wide, *not* city-limited like zoning). It maps only the
 Special Flood Hazard Areas — Zone A, AE (incl. regulatory **floodway**), AO; 368
 polygons. The layer has **no `PARCEL_NO`**, so a site's flood zone is a *spatial*
-question — see `bosc floodzone --footprint` and
+question — see `watermark floodzone --footprint` and
 `data/reference/hydrology/campus-floodzone.yaml`.
 
 ## Gaps / caveats

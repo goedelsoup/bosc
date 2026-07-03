@@ -1,4 +1,4 @@
-"""GIS findings geojson + RSEI-layer-merge tests for the bosc.site data layer."""
+"""GIS findings geojson + RSEI-layer-merge tests for the watermark.site data layer."""
 
 from __future__ import annotations
 

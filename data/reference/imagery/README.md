@@ -1,7 +1,7 @@
 # data/reference/imagery/
 
 AOI-clipped satellite captures for the tracking sites, produced by
-[`bosc imagery pull`](../../../docs/imagery-subsystem.md) (`watermark.gis.raster`).
+[`watermark imagery pull`](../../../docs/imagery-subsystem.md) (`watermark.gis.raster`).
 
 ## Layout
 
@@ -24,7 +24,7 @@ e.g. `campus/sentinel-2-l2a/2024-09-20.visual.tif` + `.tif.yaml`.
   timestamp** (kept distinct), CRS, AOI bbox, processing note, and a **sha256** of the
   GeoTIFF.
 - GeoTIFFs are **Git LFS**-tracked (see `.gitattributes`); the raw signed scene reads
-  are not cached here. Regenerate any capture with `bosc imagery pull`.
+  are not cached here. Regenerate any capture with `watermark imagery pull`.
 
 ## Gaps
 

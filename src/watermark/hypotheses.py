@@ -20,7 +20,7 @@ predicts); presentation (accent colors, column widths) stays in the frontend. A
 :attr:`~HypothesisAssessment.tag`, the per-hypothesis fields, and — the upgrade over the
 old hardcoded TypeScript — a :class:`Citation` for provenance. Cells are committed under
 ``data/hypotheses/<hypothesis-id>/<site-slug>.yaml`` (hand-authored, or promoted from a
-``bosc research run --recipe hypothesis-assessment``).
+``watermark research run --recipe hypothesis-assessment``).
 
 This is **not** :class:`watermark.hydrology.hypothesis.Hypothesis`, which tags water-balance
 *scenarios* by level (macro/local/site). That one frames the Lima loop's numbers; this
@@ -28,7 +28,7 @@ one frames the *network* against the origin of the boom. They are deliberately s
 
 The peer modules are :mod:`watermark.sites` (the site axis) and :mod:`watermark.research` (the
 agent that fills cells). Mirrors ``watermark.sites`` conventions: a frozen registry, a
-``data/`` loader, and a readiness lint surfaced by the ``bosc hypotheses`` CLI.
+``data/`` loader, and a readiness lint surfaced by the ``watermark hypotheses`` CLI.
 """
 
 from __future__ import annotations
@@ -262,9 +262,9 @@ def assessments_for(hid: str, *, settings: Settings | None = None) -> list[Hypot
     return [c for c in load_assessments(settings=settings) if c.hypothesis == hid]
 
 
-# --- readiness lint (the `bosc hypotheses check` gate) -------------------------------------
+# --- readiness lint (the `watermark hypotheses check` gate) -------------------------------------
 class AssessmentFinding(BaseModel):
-    """One lint problem with a committed cell (surfaced by ``bosc hypotheses check``)."""
+    """One lint problem with a committed cell (surfaced by ``watermark hypotheses check``)."""
 
     model_config = ConfigDict(extra="forbid")
 

@@ -288,7 +288,7 @@ def write_status_report(report: StatusReport, out_dir: Path) -> Path:
     """Write the status report as one YAML file with a ``meta:`` provenance block.
 
     Deterministic — the only date in the output is the workbook's own ``as_of``, so
-    re-running ``bosc lsc`` for an unchanged report regenerates identical bytes.
+    re-running ``watermark lsc`` for an unchanged report regenerates identical bytes.
     """
     out_dir.mkdir(parents=True, exist_ok=True)
     path = out_dir / f"status-report.{report.ga}.yaml"

@@ -5,7 +5,7 @@ Resolves a curated **watchlist** of corridor / RSEI facility parent companies
 global "who is who / who owns whom" directory — and writes a committed reference
 table (``data/reference/gleif/lei-records.yaml``) with each entity's verified LEI,
 legal name, jurisdiction, status, legal address, and reported direct / ultimate
-parent. Regenerate with ``bosc lei``.
+parent. Regenerate with ``watermark lei``.
 
 GLEIF's AWS Open Data bucket (``s3://gleif``) is the bulk golden copy (millions of
 records, refreshed thrice daily); for a small watchlist we use GLEIF's REST API.

@@ -1,9 +1,9 @@
-"""``bosc oepa`` — OEPA/DAM document discovery and fetch.
+"""``watermark oepa`` — OEPA/DAM document discovery and fetch.
 
 Sub-commands:
 
-    bosc oepa discover <slug>        # DDG site-search; writes discovery manifest
-    bosc oepa fetch [manifest] ...   # Download permits from manifest or bare IDs
+    watermark oepa discover <slug>        # DDG site-search; writes discovery manifest
+    watermark oepa fetch [manifest] ...   # Download permits from manifest or bare IDs
 """
 
 from __future__ import annotations
@@ -147,7 +147,7 @@ def discover(
 def fetch(
     manifest: str | None = typer.Argument(
         None,
-        help="Path to a discovery manifest written by 'bosc oepa discover'.",
+        help="Path to a discovery manifest written by 'watermark oepa discover'.",
     ),
     permit_ids: Annotated[
         list[str] | None,
@@ -180,7 +180,7 @@ def fetch(
     Reads ``new`` results from a manifest (use ``--all`` to include known/committed),
     or constructs DAM URLs from ``--permit-id`` arguments.  Files land in
     ``data/documents/oepa/<site>/`` with as-received names; provenance is recorded in
-    ``filename-map.yaml``.  Run ``bosc ingest`` + ``bosc extract`` afterward.
+    ``filename-map.yaml``.  Run ``watermark ingest`` + ``watermark extract`` afterward.
     """
     from watermark.oepa.fetch import dam_url, fetch_one, update_filename_map
 
@@ -245,4 +245,6 @@ def fetch(
 
     update_filename_map(fetched, map_path)  # type: ignore[arg-type]
     wrote(map_path)
-    console.print("\n[dim]Run 'bosc ingest' then 'bosc extract' to process the new files.[/]")
+    console.print(
+        "\n[dim]Run 'watermark ingest' then 'watermark extract' to process the new files.[/]"
+    )

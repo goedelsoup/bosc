@@ -53,5 +53,5 @@ The County's productions gave us the **wastewater-works** universe (pump station
 - [`../../permits/3788677.epa.yaml`](../../permits/3788677.epa.yaml) · [`../../permits/3796349.epa.yaml`](../../permits/3796349.epa.yaml) — the wetland 401 permit + mitigation agreement (corroborate "mitigated")
 - [`../../plans/lma1a.storm-inventory.yaml`](../../plans/lma1a.storm-inventory.yaml) — the storm system (60-inch outfall context)
 - [`../../plans/bosc-site-footprint.yaml`](../../plans/bosc-site-footprint.yaml) — the declared footprint (335/195/115 ac), 60-inch outfall, Dug Run, as a hydrology-model input (#149)
-- [`../../../reference/hydrology/bosc-stormwater-discharge.yaml`](../../../reference/hydrology/bosc-stormwater-discharge.yaml) — the calibrated discharge screen: composite post CN, 60-in outfall capacity, peak vs Dug Run 7Q10 (`bosc storm-discharge`, #149)
+- [`../../../reference/hydrology/bosc-stormwater-discharge.yaml`](../../../reference/hydrology/bosc-stormwater-discharge.yaml) — the calibrated discharge screen: composite post CN, 60-in outfall capacity, peak vs Dug Run 7Q10 (`watermark storm-discharge`, #149)
 - [`../../commissioners/sanitary-economics.yaml`](../../commissioners/sanitary-economics.yaml) — data-center blowdown → WWTP (item 7 receiving)

@@ -1,6 +1,6 @@
 ---
 name: data-center-sweep
-description: Use when running or interpreting a data-center activity sweep for a watershed-point site — hyperscale/cloud campus discovery along I-75, rail corridors, or industrial zones. Trigger on "data center sweep", "corridor sweep", "search for data center", bosc sweep data-centers output, or any request to survey data-center activity in a county. Methodology only; site-specific public records live in data/extracted/<site>/data-centers.md. Defers to evidentiary-discipline for all tagging decisions.
+description: Use when running or interpreting a data-center activity sweep for a watershed-point site — hyperscale/cloud campus discovery along I-75, rail corridors, or industrial zones. Trigger on "data center sweep", "corridor sweep", "search for data center", watermark sweep data-centers output, or any request to survey data-center activity in a county. Methodology only; site-specific public records live in data/extracted/<site>/data-centers.md. Defers to evidentiary-discipline for all tagging decisions.
 ---
 
 # Data-Center Activity Sweep

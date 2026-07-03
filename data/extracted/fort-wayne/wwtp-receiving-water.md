@@ -7,9 +7,9 @@ follow the project vocabulary (`[verified]` / `[inference]` / `[reference]` / `[
 Sources, all regenerable:
 
 - Reported effluent record (DMR): [`wwtp-in0032191.dmr.yaml`](wwtp-in0032191.dmr.yaml) —
-  `bosc dmr IN0032191 --start 2023-01-01 --end 2023-12-31 --design-flow 74.0`.
+  `watermark dmr IN0032191 --start 2023-01-01 --end 2023-12-31 --design-flow 74.0`.
 - Derived headwaters 7Q10: `data/reference/hydrology/low-flow-7q10.derived.yaml`
-  ("maumee river (fort wayne headwaters)") — `bosc derive-low-flows`.
+  ("maumee river (fort wayne headwaters)") — `watermark derive-low-flows`.
 - ECHO inventory entry: `data/reference/echo/maumee-wwtp.potw.yaml` (IN0032191).
 
 ## 1. The facility
@@ -66,7 +66,7 @@ consistent with the basin-screen thesis that the basin's largest discharger sits
 
 1. **The basin-screen never used the Waterville proxy for this plant.** #358's premise — that Fort
    Wayne was screened against the downstream Waterville 7Q10 (114 cfs) — is **refuted**. Its primary
-   receiver is **Baldwin Ditch**, an ungaged ditch with no 7Q10, so `bosc basin-screen` correctly
+   receiver is **Baldwin Ditch**, an ungaged ditch with no 7Q10, so `watermark basin-screen` correctly
    leaves it **unscreened** (`no_7q10`) under the omit-don't-guess discipline — it is never credited
    with a downstream river's larger 7Q10. The derived headwaters 7Q10 above is a **documented
    at-mainstem proxy** for this manual characterization, deliberately *not* auto-applied to a Baldwin

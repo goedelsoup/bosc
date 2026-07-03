@@ -3,7 +3,7 @@
 ``build_baseline`` pulls BLS QCEW for a set of years (live or offline-from-fixture),
 keeps the latest year's full sector mix and a total-employment trend across years.
 ``write_baseline`` dumps it to ``data/reference/economics/baseline.yaml`` (regenerable
-via ``bosc economics``); ``load_baseline`` reads that committed artifact for the site
+via ``watermark economics``); ``load_baseline`` reads that committed artifact for the site
 build, so the site never needs a live pull.
 """
 

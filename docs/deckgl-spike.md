@@ -11,7 +11,7 @@ adopted in the Astro frontend, so this document is the retained decision record.
 ## Why we're looking at this
 
 The current map is a `_MAP_HTML` string blob in
-[`watermark.site.gismap`](../src/bosc/site/gismap.py): a Leaflet map injected as raw HTML/JS
+[`watermark.site.gismap`](../src/watermark/site/gismap.py): a Leaflet map injected as raw HTML/JS
 into a markdown page, with layer styles, the Wayback aerial ladder, and the RSEI overlay
 all hand-built in template strings. It works, but it's untyped, untestable, hard to
 restyle, and it can't grow into the watershed map, the imagery time-slider, or the entity
@@ -74,7 +74,7 @@ MapLibre rather than using a deck `TileLayer` as the only base in production.
   feature table from the feed, and mount the deck island as progressive enhancement.
 - **Third-party tiles.** OSM/Esri/Wayback tiles load directly from their servers
   (view-only, no redistribution) — unchanged from today. Keep them basemap-only; the
-  analysis-grade imagery stays the `bosc imagery` Sentinel/NAIP/Landsat pulls.
+  analysis-grade imagery stays the `watermark imagery` Sentinel/NAIP/Landsat pulls.
 - **Learning curve.** deck.gl's layer/accessor model is new to the repo; the `.tsx`
   reference + this doc lower it, and E3.1 deliberately precedes the build tickets.
 
