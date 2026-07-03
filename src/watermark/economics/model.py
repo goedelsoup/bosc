@@ -159,8 +159,8 @@ class FacilityDemandPressure(BaseModel):
     electricity demand from the first-class ``facility_draw`` (issue #87), expresses it
     as a share of state retail sales and as a households-equivalent (both robust,
     EIA-cited), and adds a deliberately STYLIZED price-pressure band from a stated
-    short-run supply elasticity (a screening illustration, heavily caveated). Retail
-    price formation is far more complex than one elasticity — the share and households
+    short-run transmission coefficient (a screening illustration, heavily caveated). Retail
+    price formation is far more complex than one coefficient — the share and households
     figures are the defensible headline; the price-pressure band is illustrative only.
     """
 
@@ -175,12 +175,12 @@ class FacilityDemandPressure(BaseModel):
     avg_household_kwh_yr: ProvenancedValue  # assumption: avg residential annual use
     households_equivalent: ProvenancedValue  # derived: campus consumption / household use
     residential_price: ProvenancedValue  # EIA: residential electricity price (cents/kWh)
-    supply_elasticity: ProvenancedValue  # assumption (banded): short-run inverse-supply slope
+    transmission_coefficient: ProvenancedValue  # assumption (banded): short-run %price/%demand
     price_pressure_pct_low: ProvenancedValue  # derived: stylized lower price-pressure bound
     price_pressure_pct_high: ProvenancedValue  # derived: stylized upper price-pressure bound
     method: str = (
         "facility draw (PUE-adjusted, #87) -> annual GWh -> share of EIA state retail "
-        "sales + households-equivalent; price pressure = demand share / supply elasticity "
+        "sales + households-equivalent; price pressure = demand share x transmission coefficient "
         "(STYLIZED screening sensitivity, not a forecast)"
     )
     caveats: list[str] = []

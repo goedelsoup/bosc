@@ -257,7 +257,7 @@ def eia_cmd(
             f"  Stylized price pressure [bold]{dp.price_pressure_pct_low.value:g}-"
             f"{dp.price_pressure_pct_high.value:g}%[/] on the "
             f"{dp.residential_price.value:g} {dp.residential_price.unit} residential price "
-            f"[dim](transmission {dp.supply_elasticity.value:g} %price/%demand)[/]"
+            f"[dim](transmission {dp.transmission_coefficient.value:g} %price/%demand)[/]"
         )
         console.print(
             "\n[dim]Demand share + households-equivalent are EIA-cited; the price-pressure band "
