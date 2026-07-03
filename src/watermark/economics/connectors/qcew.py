@@ -48,6 +48,18 @@ _SECTOR_NAMES: dict[str, str] = {
     "92": "Public Administration",
 }
 
+
+class QcewError(RuntimeError):
+    """The QCEW response is missing the county-total row we key the baseline on.
+
+    Raised rather than coercing a missing total to ``0.0`` — a fabricated
+    ``[verified]`` "zero covered employment" claim manufactured from missing data
+    (CSV drift, a mistyped FIPS, or an empty upstream response) would violate
+    "prefer omission over invention." Symmetric with :class:`EiaError` on an empty
+    EIA payload.
+    """
+
+
 _TOTAL_AGG = "70"  # county, total, all industries
 _SECTOR_AGG = "74"  # county, by NAICS sector
 _TOTAL_OWN = "0"  # all ownerships (for the total)
@@ -114,9 +126,13 @@ def fetch_county_industries(
     )
     cite = f"BLS QCEW {year} annual averages, area {fips}"
     total = payload.get("total") or {}
-    total_emp = ProvenancedValue.from_connector(
-        float(total.get("emp") or 0.0), "jobs", citation=cite
-    )
+    emp = total.get("emp")
+    if emp is None:
+        raise QcewError(
+            f"QCEW response for area {fips} ({year}) carried no county-total employment row "
+            f"(agg {_TOTAL_AGG}, own {_TOTAL_OWN}) — refusing to fabricate a zero from missing data"
+        )
+    total_emp = ProvenancedValue.from_connector(float(emp), "jobs", citation=cite)
     estabs_val = total.get("estabs")
     establishments = (
         ProvenancedValue.from_connector(float(estabs_val), "establishments", citation=cite)

@@ -19,7 +19,11 @@ from watermark.economics.baseline import (
     load_baseline,
 )
 from watermark.economics.connectors.census import fetch_population_series
-from watermark.economics.connectors.qcew import fetch_county_industries
+from watermark.economics.connectors.qcew import (
+    QcewError,
+    _reduce_csv,
+    fetch_county_industries,
+)
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = REPO_ROOT / "tests" / "fixtures"
@@ -118,6 +122,23 @@ def test_keyless_live_cache_miss_fails_fast_without_network(
     monkeypatch.setattr("watermark.economics.connectors.census.httpx.get", _no_network)
 
     assert _maybe_population(settings) is None
+
+
+def test_qcew_missing_county_total_raises_not_fabricates_zero(
+    econ_settings: Settings, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A payload without the county-total row (CSV drift / mistyped FIPS / empty upstream)
+    must raise, not manufacture a `[verified]` zero-employment claim from missing data
+    (issue #1102) — symmetric with the EIA connector's empty-payload guard."""
+    from watermark.economics.connectors import qcew
+
+    # `_reduce_csv` drops the total to `{}` when no all-ownership, all-industry row exists.
+    reduced = _reduce_csv("own_code,agglvl_code,annual_avg_emplvl\n5,74,100\n")
+    assert reduced["total"] == {}
+
+    monkeypatch.setattr(qcew, "cached_get", lambda *a, **k: reduced)
+    with pytest.raises(QcewError, match="no county-total employment row"):
+        fetch_county_industries(year=2023, fips="39003", settings=econ_settings)
 
 
 def test_committed_baseline_loads() -> None:
