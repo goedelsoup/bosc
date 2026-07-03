@@ -125,7 +125,7 @@ def derive_demand_pressure(
             price.value.unit,
             citation=f"EIA {price.series_id} ({price.period})",
         ),
-        supply_elasticity=ProvenancedValue.assume(
+        transmission_coefficient=ProvenancedValue.assume(
             round(kappa_central, 2), "ratio", why=_KAPPA_CITE
         ),
         price_pressure_pct_low=ProvenancedValue.derived(
