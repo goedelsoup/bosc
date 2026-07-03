@@ -22,6 +22,7 @@ discipline-bound agent investigates the new site and writes a proposal artifact 
 from __future__ import annotations
 
 import asyncio
+import re
 from collections.abc import Callable
 from pathlib import Path
 from typing import Literal, NamedTuple
@@ -245,10 +246,21 @@ def onboard_site(
     return report
 
 
+def _autolink_urls(cell: str) -> str:
+    """Wrap bare URLs in a run-table cell as ``<...>`` autolinks (markdownlint MD034).
+
+    An errored step's detail is the raw exception message, which for an HTTP failure embeds
+    the endpoint URL — a bare URL in a table cell trips MD034 in the committed ONBOARDING.md.
+    Excludes ``|`` so a URL can never split the table cell.
+    """
+    return re.sub(r"(?<![<(])(https?://[^\s'\"<>|]+)", r"<\1>", cell)
+
+
 def render_onboarding_doc(report: OnboardReport) -> str:
     """The living onboarding record: dimension coverage + the last run + the review gate."""
     rows = "\n".join(
-        f"| {s.name} | {s.status} | {s.output_path or s.detail} |" for s in report.steps
+        f"| {s.name} | {s.status} | {_autolink_urls(s.output_path or s.detail)} |"
+        for s in report.steps
     )
     gate = "\n".join(f"- [ ] {item}" for item in report.review_checklist)
     return (

@@ -21,8 +21,8 @@ Living record for the West Union · Adams Co watershed point (basin: ohio-brush-
 | basin-screen | skipped | 0/0 dischargers screened (0 violations, 0 tight) |
 | econ-baseline | ok | reference/economics/west-union/baseline.yaml |
 | rsei | ok | reference/rsei/west-union/inventory.yaml |
-| consumer-energy | error | Client error '403 Forbidden' for url 'https://api.eia.gov/v2/seriesid/ELEC.PRICE.OH-RES.A' |
-| grid-profile | error | Client error '403 Forbidden' for url 'https://api.eia.gov/v2/electricity/rto/daily-region-data/data?frequency=daily&data%5B0%5D=value&facets%5Brespondent%5D%5B%5D=PJM&facets%5Btype%5D%5B%5D=D&facets%5Btimezone%5D%5B%5D=Eastern&start=2024-01-01&end=2024-12-31&sort%5B0%5D%5Bcolumn%5D=period&sort%5B0%5D%5Bdirection%5D=asc&length=5000' |
+| consumer-energy | error | Client error '403 Forbidden' for url '<https://api.eia.gov/v2/seriesid/ELEC.PRICE.OH-RES.A>' |
+| grid-profile | error | Client error '403 Forbidden' for url '<https://api.eia.gov/v2/electricity/rto/daily-region-data/data?frequency=daily&data%5B0%5D=value&facets%5Brespondent%5D%5B%5D=PJM&facets%5Btype%5D%5B%5D=D&facets%5Btimezone%5D%5B%5D=Eastern&start=2024-01-01&end=2024-12-31&sort%5B0%5D%5Bcolumn%5D=period&sort%5B0%5D%5Bdirection%5D=asc&length=5000>' |
 
 ## Review gate (blocking)
 

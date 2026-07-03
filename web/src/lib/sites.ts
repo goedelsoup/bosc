@@ -334,6 +334,10 @@ const PLACEMENT: Record<string, { state: string; basin: string }> = {
   "new-albany": { state: "Ohio", basin: "Scioto" },
   columbus: { state: "Ohio", basin: "Scioto" },
   piketon: { state: "Ohio", basin: "Scioto" },
+  // The Ohio River (direct) branch — Ohio Brush Creek drains straight to the Ohio, no Scioto/Miami
+  // loop. Far-southern unglaciated Appalachian Adams County OH (#1117); grouped with the southern
+  // Appalachian basins, adjacent to the Scioto.
+  "west-union": { state: "Ohio", basin: "Ohio Brush Creek" },
   newark: { state: "Ohio", basin: "Muskingum" },
   zanesville: { state: "Ohio", basin: "Muskingum" },
   coshocton: { state: "Ohio", basin: "Muskingum" },
@@ -385,9 +389,10 @@ const BASIN_ABBR: Record<string, string> = {
   Cuyahoga: "CUY",
   Mahoning: "MAH",
   Hocking: "HOC",
+  "Ohio Brush Creek": "OBC",
 };
 
-// Region super-groups (design "Site Selector") — the basin lens nests its nine basins under
+// Region super-groups (design "Site Selector") — the basin lens nests its ten basins under
 // four regions so the panel reads geographically. Keyed by the display basin name.
 const BASIN_REGION: Record<string, string> = {
   Maumee: "maumee",
@@ -396,6 +401,7 @@ const BASIN_REGION: Record<string, string> = {
   Scioto: "southeast",
   Muskingum: "southeast",
   Hocking: "southeast",
+  "Ohio Brush Creek": "southeast",
   Cuyahoga: "northeast",
   Mahoning: "northeast",
   Sandusky: "northeast",
@@ -421,6 +427,7 @@ const BASIN_ORDER = [
   "Scioto",
   "Muskingum",
   "Hocking",
+  "Ohio Brush Creek",
   "Sandusky",
   "Cuyahoga",
   "Mahoning",
