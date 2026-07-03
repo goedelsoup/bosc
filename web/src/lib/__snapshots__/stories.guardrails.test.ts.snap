@@ -81,6 +81,10 @@ exports[`story spine parity snapshot (#742) > the Lima project-bosc spine is sta
   ],
   "codename": "project-bosc",
   "dek": "Project BOSC — read the record one document at a time, no prior knowledge.",
+  "owner": {
+    "id": "lima",
+    "kind": "site",
+  },
   "site": "lima",
   "title": "Project BOSC",
 }

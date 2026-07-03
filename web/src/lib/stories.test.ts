@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { type StoryChapterSpine, buildStory } from "./stories";
-import { storyFor } from "./walk";
+import { STORIES, siteOwner, storiesOwnedBy, storyFor } from "./walk";
 
 // The Lima `project-bosc` spine, as authored in the `stories` collection
 // (src/content/stories/lima/project-bosc/*.mdx). `buildStory` must reproduce the canonical
@@ -98,5 +98,26 @@ describe("buildStory", () => {
     // A chapter with two anchored records contributes both.
     expect(built.anchors["recorder/202508130008300.deed.yaml"].slug).toBe("who");
     expect(built.anchors["permits/sos-tilted-gate-llc-2025-09-29.sos.yaml"].slug).toBe("who");
+  });
+});
+
+describe("owner axis (#1092)", () => {
+  it("builds a site-owned story whose owner id is the site slug", () => {
+    const built = buildStory("lima", "project-bosc", { title: "x", dek: "y" }, LIMA_SPINE);
+    expect(built.owner).toEqual({ kind: "site", id: "lima" });
+    expect(built.owner.id).toBe(built.site);
+  });
+
+  it("filters stories to a single owner by the (kind, id) pair", () => {
+    const lima = buildStory("lima", "project-bosc", { title: "x", dek: "y" }, LIMA_SPINE);
+    const other = buildStory("fort-wayne", "some-codename", { title: "x", dek: "y" }, LIMA_SPINE);
+    const pool = [lima, other];
+    expect(storiesOwnedBy(pool, siteOwner("lima"))).toEqual([lima]);
+    // A user owner sharing the string "lima" must not match the site-owned story.
+    expect(storiesOwnedBy(pool, { kind: "user", id: "lima" })).toEqual([]);
+  });
+
+  it("every editorial story in the collection is site-owned (no behavior change)", () => {
+    for (const s of STORIES) expect(s.owner).toEqual({ kind: "site", id: s.site });
   });
 });

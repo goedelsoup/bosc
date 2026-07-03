@@ -59,7 +59,18 @@ export function buildStory(
       anchors[rel] = { ch: String(c.step).padStart(2, "0"), slug: c.slug, label: c.title };
     }
   }
-  return { site, codename, title: meta.title, dek: meta.dek, chapters, anchors };
+  // Site-owned (editorial) story — the `site` special case of the owner axis (#1092). Inlined
+  // rather than importing `siteOwner` from `./walk` to keep this module free of a runtime cycle
+  // (walk.ts imports `buildAllStories` from here).
+  return {
+    owner: { kind: "site", id: site },
+    site,
+    codename,
+    title: meta.title,
+    dek: meta.dek,
+    chapters,
+    anchors,
+  };
 }
 
 /** The registry metadata for a (site, codename), or a codename-titled fallback. */
