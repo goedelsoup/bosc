@@ -2235,6 +2235,119 @@ _SANDUSKY = SiteProfile(
 )
 
 
+# The network's first **Ohio River (direct)** node — West Union, Adams County, OHIO (#1117). Where
+# every prior site drains to Lake Erie (Maumee/Sandusky/Cuyahoga) or the Ohio via a glaciated Miami/
+# Scioto loop, Adams County is **far-southern, unglaciated Appalachian** (Western Allegheny Plateau,
+# MLRA 124): no buried-valley aquifer, no till plain — Ohio Brush Creek drains straight to the Ohio
+# River. A *coming-soon* point; geography/hydrology/grid are sourced + cited below, and the data-
+# center dimension + the facility-specific model inputs (covers, footprint, refill passby minimums)
+# stay `[open]` until an actual development site is identified (Adams County discovery is the "boom"
+# research target, `--research` + corpus follow-up). NB: the ADAMS COUNTY NPDES rows in the Maumee
+# reference data are Adams County **Indiana** (St. Marys headwaters) — a different place; this site
+# has no existing data feeding it.
+_WEST_UNION = SiteProfile(
+    slug="west-union",
+    basin="ohio-brush-creek",  # [verified] Ohio Brush Creek → Ohio River; HUC-8 05090201 "Ohio Brush-Whiteoak"
+    # config knobs
+    nwis_sites=[
+        "03237500",  # [verified] Ohio Brush Creek near West Union OH — DA 387 mi², daily discharge since 1926;
+        # the only substantive active gage on the creek (the West Fork gages are trivial/short-record)
+    ],
+    nasa_power_lat=38.7945,  # [reference] West Union village centroid (Adams Co seat; GNIS 1074014, Census place)
+    nasa_power_lon=-83.5452,
+    rsei_fips="39001",  # [verified] Adams County, OH (state 39 / county 001)
+    econ_fips="39001",
+    # [reference] grid backdrop = AEP Ohio (Ohio Power Co #14006) — the AEP transmission + PJM-settlement
+    # provider for Adams County, and the LSE on the village edge. The DOMINANT rural-county retail LSE is
+    # **Adams Rural Electric Cooperative** (EIA ~118, ~9,274 meters; a Buckeye Power member) — see
+    # serving_utility_citation; confirming the co-op's EIA-861 id against the primary file is a follow-up.
+    eia861_utility_number=14006,
+    # GIS — schema-driven (#237): flood = the shared national NFHL; parcels/zoning pending the raw
+    # ArcGIS REST endpoint behind the Adams County OH GIS hub (acgis-adamso.hub.arcgis.com, an ArcGIS
+    # Online hosted item — no on-prem MapServer directory surfaced yet).
+    parcels_url="TODO",  # [open] pending the Adams County OH parcel FeatureServer/MapServer REST endpoint
+    zoning_url="TODO",  # [open] pending an Adams County OH / Village of West Union zoning REST endpoint
+    floodzone_url=(  # [verified] FEMA NFHL S_FLD_HAZ_AR (national layer 28)
+        "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28"
+    ),
+    gis_parcel=None,  # [open] pending Adams County OH parcel-layer discovery
+    gis_zoning=None,  # [open] pending Village of West Union / Adams County zoning-layer discovery
+    gis_flood=NATIONAL_NFHL_FLOOD_SCHEMA.model_copy(update={"reference_dir": "west-union-gis"}),
+    hydro_utm_epsg=32617,  # [verified] UTM 17N (West Union ~83.54 degW; zone 17 spans 84-78 degW)
+    # stormwater (the Atlas-14 corridor point = village centroid; cover scenario pending a site)
+    design_lat=38.7945,  # [reference] village centroid = NOAA Atlas-14 point
+    design_lon=-83.5452,
+    corridor_name="Ohio Brush Creek corridor",  # [inference] the receiving-water design corridor
+    dominant_hsg="C",  # [inference] unglaciated Appalachian shale residuum (Latham/Rarden/Gilpin) → HSG C/D
+    hsg_citation=(
+        "Adams County, OH dominant hydrologic soil group C (grading to D) — [inference] far-southern "
+        "UNGLACIATED Appalachian uplands (Western Allegheny Plateau, MLRA 124): silt loams over slowly-"
+        "permeable acid-shale residuum with a perched seasonal water table (Latham/Rarden/Gilpin series; "
+        "NRCS OSDs), the classic HSG C/D signature — the INVERSE of the glacial-outwash HSG B valleys "
+        "(Urbana) and distinct from the Maumee lake-plain HSG D clays. Ohio Brush Creek floodplain "
+        "alluvium is better-drained (B/C). Pending an SSURGO area-weighted confirmation (Web Soil "
+        "Survey area OH001; onboard SSURGO step needs a footprint)."
+    ),
+    pre_cover="TODO",  # [open] development land-cover scenario — pending an identified site
+    post_cover="TODO",
+    developed_pervious_cover="TODO",
+    noaa_fallback_24h_depth_in={},  # [open] pending the NOAA Atlas-14 pull (onboard corridor-DDF step)
+    parcels_relpath="reference/west-union/parcel-assemblage.geojson",  # [open] commit the site's own geometry
+    footprint_relpath="extracted/west-union/bosc-site-footprint.yaml",  # [open] pending an identified site
+    # per-site onboard reach outputs (slug-scoped — never clobber the other sites)
+    climatology_relpath="reference/hydrology/west-union/nasa-power-climatology.yaml",
+    corridor_ddf_relpath="reference/hydrology/west-union/atlas14-corridor-ddf.yaml",
+    baseline_relpath="reference/economics/west-union/baseline.yaml",
+    rsei_relpath="reference/rsei/west-union/inventory.yaml",
+    consumer_energy_relpath="reference/eia/west-union/consumer-energy.yaml",
+    grid_relpath="reference/eia/west-union/grid-profile.yaml",
+    # toxics (no identified industrial corridor yet)
+    toxic_corridor_bbox=(
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+    ),  # [open] pending an identified corridor on Ohio Brush Creek
+    # balance — West Union WWTP (Village of West Union), the only municipal POTW on record.
+    plant_receiving={
+        "west-union-wwtp": (
+            "Beasley Fork (→ Ohio Brush Creek → Ohio River)",
+            "US EPA NPDES OH0028088 / Ohio EPA permit 0PC00019 (West Union WWTP); design 0.7 MGD "
+            "(Municipality 0.5-1.0 MGD class); immediate receptor Beasley Fork (warmwater habitat), "
+            "a tributary within the Ohio Brush Creek system — data/reference (Ohio EPA NPDES service) "
+            "[verified]",
+        ),
+    },
+    abstraction_gage="03237500",  # [inference] the Ohio Brush Creek near West Union receiving-reach gage
+    # refill (the water-balance supply model is not yet designed for West Union)
+    supply_gage_primary="03237500",  # [verified] Ohio Brush Creek near West Union
+    supply_gage_secondary="TODO",  # [open] no second active gage on Ohio Brush Creek
+    passby_primary_cfs=0.0,  # [open] in-stream passby minimums — pending the model
+    passby_secondary_cfs=0.0,
+    # grid / facility (no identified data-center facility → grid backdrop only, no campus share)
+    facility=None,  # [open] the data-center dimension onboarding doesn't capture (no disclosed facility)
+    serving_utility_citation=(  # [reference] not corpus
+        "Adams County, OH is predominantly served by Adams Rural Electric Cooperative, Inc. (EIA ~118, "
+        "~9,274 meters; HQ West Union; a Buckeye Power / Ohio's Electric Cooperatives member), with "
+        "Ohio Power Co (AEP Ohio, EIA-861 #14006) serving the Village of West Union edge and providing "
+        "the AEP transmission + PJM-settlement footprint (AEP 'West Union Loop' projects). The profile "
+        "uses AEP Ohio / the PJM AEP zone as the grid backdrop; confirming the co-op's EIA-861 utility "
+        "id + short-form retail line against the primary EIA-861 file is a flagged follow-up."
+    ),
+    # grid (same PJM AEP zone as the AEP-Ohio sites — Ohio Power / co-op both settle in AEP)
+    lmp_usd_mwh=45.81,  # connector-sourced AEP-zone 2025 day-ahead annual mean (same zone as Lima)
+    lmp_citation=(
+        "PJM Data Miner 2 da_hrl_lmps, AEP zone (pnode 8445784), 2025 day-ahead annual mean "
+        "$45.81/MWh (8760 h); connector-sourced 2026-06-21 (bosc lmp) — Adams County OH settles in "
+        "the PJM AEP zone (AEP transmission; Adams Rural Electric is a Buckeye Power member on AEP)"
+    ),
+    lmp_pnode_id=8445784,
+    lmp_pnode_name="AEP",
+    # rsei
+    county_name="Adams County, OH",  # [verified]
+)
+
+
 SITES: dict[str, SiteProfile] = {
     _LIMA.slug: _LIMA,
     _FINDLAY.slug: _FINDLAY,
@@ -2258,6 +2371,7 @@ SITES: dict[str, SiteProfile] = {
     _COSHOCTON.slug: _COSHOCTON,
     _PIKETON.slug: _PIKETON,
     _SANDUSKY.slug: _SANDUSKY,
+    _WEST_UNION.slug: _WEST_UNION,
 }
 
 # The per-site output relpaths `bosc onboard` writes. Each must be unique to its site so

@@ -475,6 +475,20 @@
       "map_lat": null,
       "map_lon": null,
       "map_zoom": null
+    },
+    {
+      "slug": "west-union",
+      "place": "West Union \u00b7 Adams Co",
+      "basin": "Ohio Brush Creek \u00b7 Ohio River",
+      "state": "OH",
+      "codename": null,
+      "mono": "WUN",
+      "status": "queued",
+      "selectable": false,
+      "issue": "1117",
+      "map_lat": 38.7945,
+      "map_lon": -83.5452,
+      "map_zoom": 13
     }
   ]
 }
