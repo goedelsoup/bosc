@@ -14,6 +14,13 @@ Two endpoints live here:
   over the build-time `ask-index`) — contract, grounding/refusal policy, abuse model, and
   bootstrap in [`docs/ask-api.md`](../../docs/ask-api.md). It calls the Anthropic Messages
   API directly over `fetch` (no SDK) and streams the answer back as SSE.
+- the **user-Stories endpoints** (`api/stories.ts` + `api/stories/[id].ts`, epic #1090 / #1095)
+  — owner-scoped CRUD for reader-authored Stories, backed by the **D1** binding `STORIES_DB`
+  (the first relational binding; schema in [`../migrations/`](../migrations/), applied with
+  `wrangler d1 migrations apply STORIES_DB`). Writes run the server-side write path: compile the
+  source against the build-time `/stories-catalog.json` catalog (`_lib/catalogAsset.ts`), validate
+  every handle, and **transactionally** upsert the Story + replace its refs (`_lib/storiesStore.ts`).
+  Ships dark behind `STORIES_ENABLED`; the D1 binding is commented in `wrangler.toml` until provisioned.
 
 ## Constraints
 

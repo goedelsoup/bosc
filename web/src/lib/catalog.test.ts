@@ -102,10 +102,10 @@ function makeBundle(atoms: object[], version = "abc123"): string {
   return dir;
 }
 
-async function loadCatalogModule(dir: string): Promise<typeof import("./catalog")> {
+async function loadCatalogModule(dir: string): Promise<typeof import("./catalogBuild")> {
   process.env.WATERMARK_BUNDLE_DIR = dir;
   vi.resetModules();
-  return import("./catalog");
+  return import("./catalogBuild");
 }
 
 afterEach(() => {
@@ -133,7 +133,7 @@ describe("loadCatalog", () => {
     expect(catalog.version).toBe("abc123");
 
     // Feed-backed atom (snake_case wire → camelCase) resolves.
-    const rec = m.resolveHandle("record:lima:recorder/x.deed.yaml", catalog);
+    const rec = resolveHandle("record:lima:recorder/x.deed.yaml", catalog);
     expect(rec.ok).toBe(true);
     if (rec.ok) expect(rec.atom.localId).toBe("recorder/x.deed.yaml");
 
@@ -147,7 +147,7 @@ describe("loadCatalog", () => {
     // Every overlaid chapter handle is well-formed and resolves live.
     const chapter = [...catalog.byHandle.values()].find((a) => a.kind === "chapter");
     expect(chapter).toBeDefined();
-    if (chapter) expect(m.resolveHandle(chapter.handle, catalog)).toEqual({ ok: true, atom: chapter });
+    if (chapter) expect(resolveHandle(chapter.handle, catalog)).toEqual({ ok: true, atom: chapter });
   });
 
   it("degrades to overlay-only when the bundle ships no catalog-index feed", async () => {
