@@ -1,0 +1,120 @@
+/**
+ * Browser-side plumbing shared by the Story islands (#1096/#1097): authed fetch against the
+ * `/api/stories` Functions, the render-catalog asset load, and the wire types the endpoints return.
+ * Keep this the only place that knows the endpoint shapes, so the reader/editor/my-stories islands
+ * stay declarative.
+ */
+import { getIdToken } from "~/lib/auth";
+import { withBase } from "~/lib/base";
+import type { StoryDocument } from "~/lib/sdm";
+import type { HydratedAtom, HydratedCatalog } from "~/lib/storyAtoms";
+
+/** The Pages Functions live at the origin root (never under the deploy base). */
+export const STORIES_API = "/api/stories";
+
+export interface StorySummary {
+  id: string;
+  site: string;
+  slug: string;
+  title: string;
+  dek: string;
+  status: "draft" | "published";
+  share_id: string | null;
+  catalog_version: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface StoryRefWire {
+  ord: number;
+  handle: string;
+  kind: string;
+  title: string;
+}
+
+export interface StoryDetail extends StorySummary {
+  source_format: "dsl" | "mdx-data";
+  source_text: string;
+  sdm: StoryDocument;
+  refs: StoryRefWire[];
+}
+
+export interface AuthorError {
+  kind: string;
+  message: string;
+  line?: number;
+}
+
+function authHeaders(extra: Record<string, string> = {}): Record<string, string> {
+  const token = getIdToken();
+  return token ? { authorization: `Bearer ${token}`, ...extra } : extra;
+}
+
+export type ApiResult<T> =
+  | { ok: true; value: T }
+  | { ok: false; status: number; error?: string; errors?: AuthorError[] };
+
+async function parse<T>(res: Response): Promise<ApiResult<T>> {
+  if (res.ok) return { ok: true, value: (await res.json()) as T };
+  let body: { error?: string; errors?: AuthorError[] } = {};
+  try {
+    body = (await res.json()) as typeof body;
+  } catch {
+    /* non-JSON error body */
+  }
+  return { ok: false, status: res.status, error: body.error, errors: body.errors };
+}
+
+export async function listStories(): Promise<ApiResult<{ stories: StorySummary[] }>> {
+  return parse(await fetch(STORIES_API, { headers: authHeaders() }));
+}
+
+export async function getStory(id: string): Promise<ApiResult<{ story: StoryDetail }>> {
+  return parse(await fetch(`${STORIES_API}/${encodeURIComponent(id)}`, { headers: authHeaders() }));
+}
+
+export interface StoryInput {
+  site: string;
+  slug: string;
+  title: string;
+  dek: string;
+  status: "draft" | "published";
+  source_format: "dsl" | "mdx-data";
+  source_text: string;
+}
+
+export async function createStory(input: StoryInput): Promise<ApiResult<{ id: string }>> {
+  return parse(
+    await fetch(STORIES_API, {
+      method: "POST",
+      headers: authHeaders({ "content-type": "application/json" }),
+      body: JSON.stringify(input),
+    }),
+  );
+}
+
+export async function updateStory(id: string, input: StoryInput): Promise<ApiResult<{ ok: true }>> {
+  return parse(
+    await fetch(`${STORIES_API}/${encodeURIComponent(id)}`, {
+      method: "PUT",
+      headers: authHeaders({ "content-type": "application/json" }),
+      body: JSON.stringify(input),
+    }),
+  );
+}
+
+export async function deleteStory(id: string): Promise<ApiResult<{ ok: true }>> {
+  return parse(
+    await fetch(`${STORIES_API}/${encodeURIComponent(id)}`, { method: "DELETE", headers: authHeaders() }),
+  );
+}
+
+/** The render-catalog asset (`/stories-atoms.json`) — the hydrated atoms the renderer resolves. */
+export async function loadRenderCatalog(): Promise<HydratedCatalog> {
+  const res = await fetch(withBase("/stories-atoms.json"));
+  if (!res.ok) return {};
+  const body = (await res.json()) as { atoms?: HydratedAtom[] };
+  const out: HydratedCatalog = {};
+  for (const a of body.atoms ?? []) out[a.handle] = a;
+  return out;
+}

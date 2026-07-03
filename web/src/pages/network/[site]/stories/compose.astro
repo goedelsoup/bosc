@@ -1,0 +1,63 @@
+---
+/**
+ * The Story editor route (#1096) — hosts the `StoryEditor` client island (the block-by-block
+ * authoring canvas). One route serves both new and edit: the island opens a stored Story when the
+ * URL carries `?id=<uuid>`, else starts fresh (seeded from the grab tray). `?preview` renders the
+ * design sample with no auth/D1.
+ *
+ * A distinct static filename beside the editorial `stories/[codename]/…` routes, so it never
+ * contends with a story codename.
+ */
+import Base from "~/layouts/Base.astro";
+import StoryEditor from "~/components/islands/stories/StoryEditor.tsx";
+import { activeSite, selectableSitePaths, siteForSlug } from "~/lib/sites";
+import { storiesUiEnabled } from "~/lib/storiesFlag";
+
+export const getStaticPaths = selectableSitePaths;
+
+const { slug } = Astro.props as { slug: string };
+const site = siteForSlug(slug) ?? activeSite();
+const enabled = storiesUiEnabled();
+---
+
+<Base title={`Compose a story — ${site.place}`} section="stories" rail={false} noindex>
+  <div class="story-editor-page">
+    {
+      enabled ? (
+        <StoryEditor client:only="react" siteSlug={slug} />
+      ) : (
+        <div class="story-disabled">
+          <p>The story editor isn't enabled in this build yet.</p>
+          <p class="story-disabled-sub">
+            Preview it: <a href="?preview=1">open the editor with a sample story</a>
+          </p>
+        </div>
+      )
+    }
+  </div>
+</Base>
+
+<style>
+  .story-editor-page {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 28px 32px 100px;
+  }
+  .story-disabled {
+    max-width: 720px;
+    margin: 0 auto;
+    border: 1px dashed var(--line-2);
+    background: var(--bone-sunk);
+    padding: 40px 32px;
+    text-align: center;
+    color: var(--ink-muted);
+  }
+  .story-disabled-sub {
+    font-size: 13px;
+    margin-top: 10px;
+    color: var(--ink-faint);
+  }
+  .story-disabled-sub a {
+    color: var(--forest);
+  }
+</style>

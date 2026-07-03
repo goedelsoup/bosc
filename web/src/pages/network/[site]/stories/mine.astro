@@ -1,0 +1,61 @@
+---
+/**
+ * The "my stories" account route (#1096) — hosts the `MyStories` client island: a reader's own
+ * Stories (owner-scoped by the `/api/stories` endpoint), by status, with edit / share / delete and
+ * the new-story entry point. Sits under the site chrome ("Your stories"); `?preview` shows a sample.
+ */
+import Base from "~/layouts/Base.astro";
+import MyStories from "~/components/islands/stories/MyStories.tsx";
+import { withSite } from "~/lib/site";
+import { activeSite, selectableSitePaths, siteForSlug } from "~/lib/sites";
+import { storiesUiEnabled } from "~/lib/storiesFlag";
+
+export const getStaticPaths = selectableSitePaths;
+
+const { slug } = Astro.props as { slug: string };
+const site = siteForSlug(slug) ?? activeSite();
+const enabled = storiesUiEnabled();
+
+const composeHref = withSite("/stories/compose");
+const readHref = withSite("/stories/read");
+---
+
+<Base title={`Your stories — ${site.place}`} section="stories" rail={false} noindex>
+  <div class="story-mine-page">
+    {
+      enabled ? (
+        <MyStories client:only="react" newHref={composeHref} composeHref={composeHref} readHref={readHref} />
+      ) : (
+        <div class="story-disabled">
+          <p>Reader-authored stories aren't enabled in this build yet.</p>
+          <p class="story-disabled-sub"><a href="?preview=1">Preview the account view</a></p>
+        </div>
+      )
+    }
+  </div>
+</Base>
+
+<style>
+  .story-mine-page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 32px 96px;
+  }
+  .story-disabled {
+    max-width: 720px;
+    margin: 0 auto;
+    border: 1px dashed var(--line-2);
+    background: var(--bone-sunk);
+    padding: 40px 32px;
+    text-align: center;
+    color: var(--ink-muted);
+  }
+  .story-disabled-sub {
+    font-size: 13px;
+    margin-top: 10px;
+    color: var(--ink-faint);
+  }
+  .story-disabled-sub a {
+    color: var(--forest);
+  }
+</style>
