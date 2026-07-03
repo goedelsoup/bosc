@@ -18,6 +18,8 @@ import * as yaml from "js-yaml";
 //   • PagesProject env vars     — feature toggles (features.yaml) + all secrets +
 //                                 Cognito IDs written directly to the project config.
 //   • Workers KV namespaces     — rate limiter, contact store, auth caches.
+//   • Hyperdrive config         — pooled Postgres path to Lakebase for user Stories
+//                                 (#1090); gated on features.stories.
 //   • R2 bucket                 — submission file attachments (#243).
 //   • Turnstile widget          — guards the public form.
 //   • Cognito User Pool         — auth identity (#924); gated on `authEnabled`.
@@ -60,13 +62,14 @@ interface Features {
     mcp: boolean;
     rum: boolean;
     auth: boolean;
+    stories: boolean;
 }
 function validateFeatures(raw: unknown): Features {
     if (typeof raw !== "object" || raw === null) {
         throw new Error("features.yaml must be a YAML mapping");
     }
     const obj = raw as Record<string, unknown>;
-    const keys: (keyof Features)[] = ["preLaunch", "submissions", "ask", "docs", "mcp", "rum", "auth"];
+    const keys: (keyof Features)[] = ["preLaunch", "submissions", "ask", "docs", "mcp", "rum", "auth", "stories"];
     for (const key of keys) {
         if (typeof obj[key] !== "boolean") {
             throw new Error(
@@ -97,6 +100,17 @@ const tipsAppId = config.getSecret("tipsAppId");
 const tipsAppPrivateKey = config.getSecret("tipsAppPrivateKey");
 const earlyAccessSecret = config.getSecret("earlyAccessSecret");
 const notifyGithubUsers = config.get("notifyGithubUsers") ?? "";
+
+// The Lakebase (Databricks managed Postgres) connection string backing user-authored
+// Stories (#1090). Databricks issues a short-lived OAuth token as the Postgres password,
+// so the whole URL is a secret — set it out of band, never commit it:
+//   pulumi config set --secret bosc-deploy:storiesLakebaseUrl \
+//     postgres://<user>:<oauth-token>@<host>:5432/<database>
+// It becomes the STORIES_HYPERDRIVE origin below (parsed into host/port/user/…), gated on
+// features.stories. Note: because Hyperdrive caches the origin credentials, a rotated OAuth
+// token needs a fresh `pulumi up` to re-push it — prefer a Databricks service principal with
+// a longer-lived credential, or schedule a periodic re-apply (see issue #1138).
+const storiesLakebaseUrl = config.getSecret("storiesLakebaseUrl");
 
 // Cloudflare account that owns the resources (required — set out of band):
 //   pulumi config set bosc-deploy:cloudflareAccountId <account-id>
@@ -369,6 +383,64 @@ const authPrefsKv = new cloudflare.WorkersKvNamespace("auth-prefs", {
 });
 
 // ---------------------------------------------------------------------------
+// User-authored Stories: Hyperdrive → Lakebase (Epic #1090 / issue #1138)
+// ---------------------------------------------------------------------------
+// The Workers runtime can't open a raw Postgres socket to Databricks Lakebase, so the
+// /api/stories Functions reach it through a Cloudflare Hyperdrive binding (pooling +
+// `cloudflare:sockets`, via postgres.js — see web/functions/api/_lib/pg.ts). This declares
+// the Hyperdrive config over the Lakebase connection string and exports its id so the
+// wrangler `[[hyperdrive]]` `id` can be filled from `pulumi stack output storiesHyperdriveId`.
+//
+// Gated on features.stories (like the ask/auth guards): only provisioned when the seam goes
+// live, so the short-lived Lakebase OAuth token isn't required until then. The `stories=true
+// but no storiesLakebaseUrl` config guard lives with the other guards below.
+
+// Parse the `postgres://user:password@host:port/database` secret into the structured origin
+// Hyperdrive wants. Runs inside `.apply()` so it stays a secret (password included); throwing
+// here fails `pulumi up` with a clear message.
+function parseLakebaseOrigin(url: string): cloudflare.types.input.HyperdriveConfigOrigin {
+    let parsed: URL;
+    try {
+        parsed = new URL(url);
+    } catch {
+        throw new Error(
+            "bosc-deploy:storiesLakebaseUrl is not a valid URL — expected " +
+            "postgres://user:password@host:port/database",
+        );
+    }
+    const scheme = parsed.protocol.replace(/:$/, "");
+    if (scheme !== "postgres" && scheme !== "postgresql") {
+        throw new Error(
+            `bosc-deploy:storiesLakebaseUrl scheme must be postgres:// or postgresql:// (got "${scheme}://")`,
+        );
+    }
+    const database = decodeURIComponent(parsed.pathname.replace(/^\//, ""));
+    if (!parsed.hostname || !parsed.username || !database) {
+        throw new Error(
+            "bosc-deploy:storiesLakebaseUrl must include host, user, and database " +
+            "(postgres://user:password@host:port/database)",
+        );
+    }
+    return {
+        scheme,
+        host: parsed.hostname,
+        port: parsed.port ? Number(parsed.port) : 5432,
+        database,
+        user: decodeURIComponent(parsed.username),
+        password: decodeURIComponent(parsed.password),
+    };
+}
+
+const storiesHyperdrive =
+    features.stories && storiesLakebaseUrl
+        ? new cloudflare.HyperdriveConfig("stories-hyperdrive", {
+              accountId,
+              name: "watermark-stories",
+              origin: storiesLakebaseUrl.apply(parseLakebaseOrigin),
+          })
+        : undefined;
+
+// ---------------------------------------------------------------------------
 // Notification Lambda (Epic E #938/#939)
 // ---------------------------------------------------------------------------
 // GitHub webhook → Lambda → AUTH_PREFS lookup → SES email dispatch.
@@ -553,6 +625,12 @@ if (features.auth && !authEnabled) {
         "Run: pulumi config set bosc-deploy:authEnabled true",
     );
 }
+if (features.stories && !storiesLakebaseUrl) {
+    throw new Error(
+        "features.yaml: stories=true but bosc-deploy:storiesLakebaseUrl is not set in Pulumi config. " +
+        "Run: pulumi config set --secret bosc-deploy:storiesLakebaseUrl postgres://user:password@host:5432/database",
+    );
+}
 
 type PageEnvVar = { value: pulumi.Input<string>; type: pulumi.Input<string> };
 const pageEnvVars: Record<string, PageEnvVar> = {
@@ -566,6 +644,9 @@ const pageEnvVars: Record<string, PageEnvVar> = {
     RUM_ENABLED:         { value: features.rum         ? "true" : "false", type: "plain_text" },
     PUBLIC_RUM_ENABLED:  { value: features.rum         ? "true" : "false", type: "plain_text" },
     AUTH_ENABLED:        { value: features.auth        ? "true" : "false", type: "plain_text" },
+    // stories gates the /api/stories Functions kill switch AND the Astro build-time UI gate
+    STORIES_ENABLED:        { value: features.stories  ? "true" : "false", type: "plain_text" },
+    PUBLIC_STORIES_ENABLED: { value: features.stories  ? "true" : "false", type: "plain_text" },
     // Computed non-secret vars
     APP_BASE_URL: {
         value: siteDomain ? `https://${siteDomain}` : `https://${pagesProject}.pages.dev`,
@@ -656,6 +737,12 @@ export const cognitoRegionOut = pulumi.output(cognitoRegion);
 export const jwksCacheKvNamespaceId = jwksCacheKv.id;
 /** KV namespace id → `web/wrangler.toml` `[[kv_namespaces]]` `id` (AUTH_PREFS). */
 export const authPrefsKvNamespaceId = authPrefsKv.id;
+
+// --- User-authored Stories: Hyperdrive → Lakebase (#1090 / #1138) ---
+/** Hyperdrive config id → `web/wrangler.toml` `[[hyperdrive]]` `id` (STORIES_HYPERDRIVE). */
+export const storiesHyperdriveId = storiesHyperdrive
+    ? storiesHyperdrive.id
+    : pulumi.output("not-configured");
 
 // --- Notification Lambda (#938/#939) ---
 /** GitHub webhook URL — register in the repo's webhook settings when notifyEnabled is true. */

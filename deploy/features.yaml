@@ -7,6 +7,11 @@
 #
 # auth is independent of all other features; it can be provisioned before or after
 # the domain is set (authEnabled in Pulumi.prod.yaml gates Cognito provisioning).
+#
+# stories controls both STORIES_ENABLED (the /api/stories Functions kill switch) and
+# PUBLIC_STORIES_ENABLED (the Astro build-time UI gate), mirroring rum. Flipping it true
+# also provisions the STORIES_HYPERDRIVE config over Lakebase, which requires the
+# bosc-deploy:storiesLakebaseUrl secret (the guard in index.ts enforces this).
 
 preLaunch: true     # serve pre-launch.astro at / and redirect all other routes to /
 submissions: false
@@ -15,3 +20,4 @@ docs: false
 mcp: false
 rum: false
 auth: false
+stories: false
