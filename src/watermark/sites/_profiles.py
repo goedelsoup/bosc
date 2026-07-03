@@ -1676,10 +1676,13 @@ _GREENVILLE = SiteProfile(
         # Darke County OGRIP layer — owner-redacted public view (31,368 parcels). LocalParcelID is a
         # district-letter prefix + 17 digits (e.g. "L45021118000010600"), verified against a live
         # Greenville sample 2026-07-03 — hence the deed_id_regex override off the Hancock-12-digit base.
+        # id_normalize="verbatim" (not the base "dashless"): dashless strips the leading letter and
+        # breaks exact fetch_parcel lookups; the IDs carry no dashes, so verbatim preserves them.
         update={
             "reference_dir": "greenville-gis",
             "query_scope": "County='Darke'",
             "deed_id_regex": r"\b[A-Z]\d{17}\b",
+            "id_normalize": "verbatim",
         }
     ),
     gis_zoning=None,  # [open] pending City of Greenville / Darke County zoning-layer discovery
