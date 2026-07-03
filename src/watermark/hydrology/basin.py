@@ -94,8 +94,9 @@ _MAINSTEM_GAGES: dict[str, dict[str, Any]] = {
     },
     # Little Miami basin (subregion 0507, → Ohio River). The mainstem proxy is the
     # long-record Milford gage (03245500, DA 1664 mi²). Todd Fork (Wilmington's
-    # receiving water) has no active USGS gage — the historical Greenfield gage
-    # (03244000) was discontinued; Todd Fork dischargers stay unscreened (no_7q10)
+    # receiving water) has no active USGS gage — the historical Todd Fork near
+    # Roachester OH gage (03244000) was discontinued; Todd Fork dischargers stay
+    # unscreened (no_7q10)
     # rather than being proxied to a larger downstream river (that would overstate
     # dilution). Milford (downstream integrator, incl. Todd Fork) and the upstream
     # Xenia reach at Oldtown (03240000) BRACKET the ungaged Todd Fork above and below;
