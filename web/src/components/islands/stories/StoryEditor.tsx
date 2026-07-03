@@ -60,6 +60,7 @@ export default function StoryEditor({ siteSlug, atomsUrl, readHref }: StoryEdito
   const [catalogError, setCatalogError] = useState(false);
   const [id, setId] = useState<string | null>(null);
   const [shareId, setShareId] = useState<string | null>(null);
+  const [stale, setStale] = useState(false);
   const [title, setTitle] = useState("");
   const [dek, setDek] = useState("");
   const [slug, setSlug] = useState("");
@@ -111,6 +112,7 @@ export default function StoryEditor({ siteSlug, atomsUrl, readHref }: StoryEdito
         const s = res.value.story;
         setId(s.id);
         setShareId(s.share_id);
+        setStale(s.stale);
         setTitle(s.title);
         setDek(s.dek);
         setSlug(s.slug);
@@ -197,6 +199,7 @@ export default function StoryEditor({ siteSlug, atomsUrl, readHref }: StoryEdito
     if (res.ok) {
       if (!id) setId(res.value.id);
       setShareId(res.value.share_id);
+      setStale(false); // a successful save re-validated every handle against the current catalog
       setStatus(nextStatus);
       if (nextStatus === "published") setPublishOpen(true);
       else setSavedNote("Draft saved.");
@@ -232,6 +235,12 @@ export default function StoryEditor({ siteSlug, atomsUrl, readHref }: StoryEdito
         <Banner tone="warn">
           <b>Couldn't load the catalog.</b> Cited atoms may not preview correctly and the grab panel is empty.
           Reload the page to try again.
+        </Banner>
+      )}
+      {stale && (
+        <Banner tone="warn">
+          <b>A reference needs attention.</b> A cited record changed in the archive, so one citation no longer
+          resolves (it shows as a placeholder below). Remove or replace it, then save to clear the flag.
         </Banner>
       )}
       {savedNote && <Banner tone="ok">{savedNote}</Banner>}

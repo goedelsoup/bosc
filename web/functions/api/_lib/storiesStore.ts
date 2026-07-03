@@ -59,6 +59,10 @@ export interface StoryRow {
   catalog_version: string;
   moderation: StoryModeration;
   published_at: string | null;
+  /** 1 when the story cites a handle that no longer resolves (#1099); cleared on a clean re-save/heal. */
+  stale: number;
+  /** ISO-8601 of the last revalidation check, or null (#1099). */
+  revalidated_at: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -89,7 +93,7 @@ export interface StoryWrite {
 }
 
 const STORY_COLUMNS =
-  "id, owner_kind, owner_id, site, slug, title, dek, status, share_id, source_format, source_text, sdm_json, catalog_version, moderation, published_at, created_at, updated_at";
+  "id, owner_kind, owner_id, site, slug, title, dek, status, share_id, source_format, source_text, sdm_json, catalog_version, moderation, published_at, stale, revalidated_at, created_at, updated_at";
 
 /** Sticky publish state: once a story has a `share_id`/`published_at`, keep it across an
  *  unpublish→republish; otherwise mint (only when going public) from the injected candidate. */
@@ -161,7 +165,7 @@ export async function createStory(
   await db.batch([
     db
       .prepare(
-        `INSERT INTO stories (${STORY_COLUMNS}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        `INSERT INTO stories (${STORY_COLUMNS}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       )
       .bind(
         id,
@@ -179,6 +183,8 @@ export async function createStory(
         write.catalog_version,
         "ok", // moderation — admin-only from here
         pub.publishedAt,
+        0, // stale — validated clean at write time (#1099)
+        null, // revalidated_at — set by the revalidation job
         now,
         now,
       ),
@@ -209,7 +215,7 @@ export async function updateStory(
     db
       .prepare(
         `UPDATE stories SET site = ?, slug = ?, title = ?, dek = ?, status = ?, source_format = ?,
-           source_text = ?, sdm_json = ?, catalog_version = ?, share_id = ?, published_at = ?, updated_at = ?
+           source_text = ?, sdm_json = ?, catalog_version = ?, share_id = ?, published_at = ?, stale = 0, updated_at = ?
          WHERE id = ? AND owner_kind = ? AND owner_id = ?`,
       )
       .bind(
@@ -315,4 +321,58 @@ export async function listReports(
 export async function resolveReport(db: D1Like, reportId: string): Promise<boolean> {
   const res = await db.prepare("UPDATE story_reports SET resolved = 1 WHERE id = ?").bind(reportId).run();
   return (res.meta?.changes ?? 0) > 0;
+}
+
+// --- revalidation (#1099) -------------------------------------------------------------------
+
+/** One Story the revalidation job needs to re-check: its stored SDM + its cited refs. */
+export interface RevalidationTarget {
+  id: string;
+  catalog_version: string;
+  sdm_json: string;
+  refs: StoryRef[];
+}
+
+/** Every Story not yet validated against the current catalog_version (the job's work-list). Skips
+ *  stories already at the current version, so a no-op pass after a non-bump touches nothing. */
+export async function storiesToRevalidate(db: D1Like, currentVersion: string): Promise<RevalidationTarget[]> {
+  const rows = await db
+    .prepare("SELECT id, catalog_version, sdm_json FROM stories WHERE catalog_version != ?")
+    .bind(currentVersion)
+    .all<{ id: string; catalog_version: string; sdm_json: string }>();
+  const out: RevalidationTarget[] = [];
+  for (const r of rows.results ?? []) {
+    const refs = await db
+      .prepare("SELECT ord, handle, kind, title FROM story_refs WHERE story_id = ? ORDER BY ord")
+      .bind(r.id)
+      .all<StoryRef>();
+    out.push({
+      id: r.id,
+      catalog_version: r.catalog_version,
+      sdm_json: r.sdm_json,
+      refs: refs.results ?? [],
+    });
+  }
+  return out;
+}
+
+/**
+ * Apply a revalidation result to one Story atomically: rewrite the (possibly-healed) SDM + refs, mark
+ * it checked against `catalogVersion` at `now`, and set/clear the `stale` flag. One `batch`, so the
+ * refs never drift from the SDM.
+ */
+export async function applyStoryRevalidation(
+  db: D1Like,
+  id: string,
+  args: { sdmJson: string; refs: StoryRef[]; catalogVersion: string; stale: boolean; now: string },
+): Promise<void> {
+  await db.batch([
+    db
+      .prepare(
+        "UPDATE stories SET sdm_json = ?, catalog_version = ?, stale = ?, revalidated_at = ? WHERE id = ?",
+      )
+      .bind(args.sdmJson, args.catalogVersion, args.stale ? 1 : 0, args.now, id),
+    db.prepare("DELETE FROM story_refs WHERE story_id = ?").bind(id),
+    ...refInserts(db, id, args.refs),
+  ]);
 }

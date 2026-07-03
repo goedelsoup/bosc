@@ -108,6 +108,8 @@ export function storySummary(row: StoryRow) {
     share_id: row.share_id,
     catalog_version: row.catalog_version,
     published_at: row.published_at,
+    /** #1099 — a cited handle no longer resolves; the author's account nudges them to re-check. */
+    stale: row.stale === 1,
     created_at: row.created_at,
     updated_at: row.updated_at,
   };

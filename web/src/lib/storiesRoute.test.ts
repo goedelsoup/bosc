@@ -320,3 +320,40 @@ describe("/api/admin/stories — moderation (#1098)", () => {
     expect(pub.status).toBe(404);
   });
 });
+
+describe("/api/admin/stories — revalidation (#1099)", () => {
+  it("runs the revalidation job for an admin and returns a summary", async () => {
+    stubFetch();
+    const db = fakeD1();
+    // Seed a published story (validated against the stubbed catalog v1).
+    await onRequestPost(
+      ctx(postJson(BASE, validBody({ status: "published" }), await bearer("u", ["early-access"])), env(db)),
+    );
+
+    const ADMIN = "https://bosc.test/api/admin/stories";
+    const res = await adminAct(
+      anyCtx(postJson(ADMIN, { action: "revalidate" }, await bearer("admin-1", ["admin"])), env(db)),
+    );
+    expect(res.status).toBe(200);
+    const summary = (await res.json()) as { checked: number; healed: number; flagged: number };
+    // The story is already at the current catalog_version, so the pass touches nothing.
+    expect(summary.checked).toBe(0);
+    expect(summary.flagged).toBe(0);
+  });
+
+  it("forbids a non-admin from running revalidation", async () => {
+    stubFetch();
+    const db = fakeD1();
+    const res = await adminAct(
+      anyCtx(
+        postJson(
+          "https://bosc.test/api/admin/stories",
+          { action: "revalidate" },
+          await bearer("u", ["early-access"]),
+        ),
+        env(db),
+      ),
+    );
+    expect(res.status).toBe(403);
+  });
+});

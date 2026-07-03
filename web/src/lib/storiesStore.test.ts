@@ -18,6 +18,7 @@ import {
   storyIdForShareId,
   updateStory,
 } from "@fn/api/_lib/storiesStore";
+import { revalidateAll } from "@fn/api/_lib/revalidateStories";
 import { fakeD1 } from "./_routeHarness";
 
 const owner: StoryOwner = { kind: "user", id: "user-1" };
@@ -233,5 +234,65 @@ describe("stories store — reports (#1098)", () => {
     });
     await deleteStory(db, owner, "s1");
     expect((await listReports(db)).length).toBe(0);
+  });
+});
+
+describe("stories store — revalidation (#1099)", () => {
+  // A story citing one handle, with the SDM + refs consistent, at catalog_version `cv`.
+  function storyWith(handle: string, cv = "v1", slug = "my-story"): StoryWrite {
+    return write({
+      slug,
+      catalog_version: cv,
+      sdm_json: JSON.stringify({
+        version: "1.0.0",
+        blocks: [{ type: "atom", handle, kind: "record", title: "R" }],
+      }),
+      refs: [{ ord: 0, handle, kind: "record", title: "R" }],
+    });
+  }
+
+  it("flags a story whose cited handle no longer resolves; skips current-version stories", async () => {
+    const db = fakeD1();
+    await createStory(db, owner, "gone", storyWith("record:lima:gone", "v1", "gone"), NOW, "s1");
+    await createStory(db, owner, "fresh", storyWith("record:lima:a", "v2", "fresh"), NOW, "s2"); // already at v2
+
+    const summary = await revalidateAll(db, { handles: new Set(["record:lima:a"]), version: "v2" }, {}, NOW);
+
+    expect(summary.checked).toBe(1); // only "gone" is behind v2; "fresh" is skipped (untouched)
+    expect(summary.flagged).toBe(1);
+    expect(summary.flaggedIds).toEqual(["gone"]);
+    expect((await getStory(db, owner, "gone"))?.story.stale).toBe(1);
+    expect((await getStory(db, owner, "fresh"))?.story.stale).toBe(0);
+  });
+
+  it("auto-heals a renamed handle: rewrites the ref + stored SDM, and does not flag", async () => {
+    const db = fakeD1();
+    await createStory(db, owner, "s1", storyWith("record:lima:old", "v1"), NOW, "sh");
+
+    const summary = await revalidateAll(
+      db,
+      { handles: new Set(["record:lima:new"]), version: "v2" },
+      { "record:lima:old": "record:lima:new" },
+      NOW,
+    );
+
+    expect(summary.healed).toBe(1);
+    expect(summary.flagged).toBe(0);
+    const got = await getStory(db, owner, "s1");
+    expect(got).not.toBeNull();
+    if (!got) return;
+    expect(got.story.stale).toBe(0);
+    expect(got.story.catalog_version).toBe("v2");
+    expect(got.refs[0].handle).toBe("record:lima:new");
+    const doc = JSON.parse(got.story.sdm_json) as { blocks: { handle: string }[] };
+    expect(doc.blocks[0].handle).toBe("record:lima:new");
+  });
+
+  it("is idempotent — a second pass over the same catalog checks nothing", async () => {
+    const db = fakeD1();
+    await createStory(db, owner, "s1", storyWith("record:lima:a", "v1"), NOW, "sh");
+    await revalidateAll(db, { handles: new Set(["record:lima:a"]), version: "v2" }, {}, NOW);
+    const second = await revalidateAll(db, { handles: new Set(["record:lima:a"]), version: "v2" }, {}, NOW);
+    expect(second.checked).toBe(0);
   });
 });
