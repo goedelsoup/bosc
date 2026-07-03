@@ -132,9 +132,20 @@ function webOnlyAtoms(site: string): CatalogAtom[] {
       // have no addressable anchor in v1 (mirrors the Python timeline `ref` gate).
       if (t.recordRel) atoms.push(atom("teardown", site, t.recordRel, t.title, "teardowns"));
     }
-    for (const d of NARRATIVE) atoms.push(atom("doc", site, d.slug, d.title, "narrative"));
-    for (const d of LEGAL) atoms.push(atom("doc", site, d.slug, d.title, "legal"));
-    for (const d of REFERENCE) atoms.push(atom("doc", site, d.slug, d.title, "reference"));
+    // doc — three collections fold into one `doc` kind; a slug is unique within a collection but
+    // could collide *across* them (`narrative`/`legal`/`reference`). Keep the first (narrative →
+    // legal → reference order) so a later collection can't silently clobber an earlier doc when
+    // `mergeAtoms` collapses by handle. The `feed` label records which collection won.
+    const seenDoc = new Set<string>();
+    const pushDoc = (slug: string, title: string, feed: string): void => {
+      const handle = `doc:${site}:${slug}`;
+      if (seenDoc.has(handle)) return;
+      seenDoc.add(handle);
+      atoms.push(atom("doc", site, slug, title, feed));
+    };
+    for (const d of NARRATIVE) pushDoc(d.slug, d.title, "narrative");
+    for (const d of LEGAL) pushDoc(d.slug, d.title, "legal");
+    for (const d of REFERENCE) pushDoc(d.slug, d.title, "reference");
     for (const f of FIGURES) atoms.push(atom("figure", site, f.localId, f.title, "figure"));
   }
 

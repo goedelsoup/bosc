@@ -1,9 +1,10 @@
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
 import type { Catalog, CatalogAtom } from "./catalog";
-import { parseHandle, resolveHandle } from "./catalog";
+import { CATALOG_KINDS, parseHandle, resolveHandle } from "./catalog";
 
 // --- parseHandle: pure, no bundle -----------------------------------------------------------
 describe("parseHandle", () => {
@@ -168,5 +169,47 @@ describe("loadCatalog", () => {
     const catalog = m.loadCatalog("lima");
     expect(catalog.version).toBe(""); // no feed
     expect(catalog.byHandle.size).toBeGreaterThan(0); // overlay still populated
+  });
+
+  it("keeps the first doc atom on a cross-collection slug collision (narrative wins)", async () => {
+    // The three doc collections fold into one `doc` kind; a slug unique within a collection can
+    // still collide across them. Force it, and assert keep-first (narrative → legal → reference)
+    // so a later collection can't silently clobber an earlier doc when the catalog merges by handle.
+    vi.doMock("./narrative", () => ({ NARRATIVE: [{ slug: "dup", title: "From narrative" }] }));
+    vi.doMock("./legal", () => ({ LEGAL: [{ slug: "dup", title: "From legal" }] }));
+    vi.doMock("./reference", () => ({ REFERENCE: [{ slug: "dup", title: "From reference" }] }));
+    try {
+      const dir = makeBundle([]); // overlay-only; the collision is in the web-only doc kind
+      const m = await loadCatalogModule(dir);
+      const catalog = m.loadCatalog("lima");
+
+      const doc = catalog.byHandle.get("doc:lima:dup");
+      expect(doc?.title).toBe("From narrative"); // first wins
+      expect(doc?.feed).toBe("narrative");
+      // Exactly one atom for the colliding handle — the legal/reference dups were dropped, not kept.
+      const dups = [...catalog.byHandle.values()].filter((a) => a.handle === "doc:lima:dup");
+      expect(dups).toHaveLength(1);
+    } finally {
+      vi.doUnmock("./narrative");
+      vi.doUnmock("./legal");
+      vi.doUnmock("./reference");
+      vi.resetModules();
+    }
+  });
+});
+
+// --- cross-tier parity: the closed kind set can't drift from the Python data tier -----------
+describe("catalog kind parity (#1093)", () => {
+  it("CATALOG_KINDS matches the committed catalog-index.schema.json `kind` enum", () => {
+    // The schema is generated from `bosc.site.feeds.CatalogKind`, so this pins the two tiers'
+    // kind vocabularies together — adding a kind on one side without the other fails CI.
+    const schemaPath = fileURLToPath(
+      new URL("../../../data/site/bundle/schemas/catalog-index.schema.json", import.meta.url),
+    );
+    const schema = JSON.parse(readFileSync(schemaPath, "utf-8")) as {
+      $defs: { CatalogAtom: { properties: { kind: { enum: string[] } } } };
+    };
+    const enumKinds = schema.$defs.CatalogAtom.properties.kind.enum;
+    expect([...enumKinds].sort()).toEqual([...CATALOG_KINDS].sort());
   });
 });

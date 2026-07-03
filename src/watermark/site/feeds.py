@@ -536,6 +536,29 @@ class AskEmbeddingEntry(BaseModel):
 
 
 # --- hydrated catalog index feed (epic #1090 / #1093) -------------------------
+# The closed catalog kind set — the shared vocabulary of both tiers. The Python builder emits only
+# the feed-backed kinds; the Astro overlay (`web/src/lib/catalog.ts`) adds the web-only ones
+# (teardown/doc/chapter/figure). Typing `kind` as this Literal makes the generated
+# `catalog-index.schema.json` carry a `kind` enum, which the frontend parity-tests against so the
+# two tiers' kind sets can't silently drift (`watermark.site.catalog_index.CATALOG_KINDS`).
+CatalogKind = Literal[
+    "record",
+    "timeline",
+    "entity",
+    "person",
+    "place",
+    "meeting",
+    "exhibit",
+    "concept",
+    "lead",
+    "dataset",
+    "teardown",
+    "doc",
+    "chapter",
+    "figure",
+]
+
+
 class CatalogAtom(BaseModel):
     """One addressable, "grabbable" atom in the hydrated catalog (#1093).
 
@@ -549,7 +572,7 @@ class CatalogAtom(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     handle: str  # canonical address: <kind>:<site>:<local_id>
-    kind: str  # one of the closed catalog kinds (record, entity, timeline, meeting, ...)
+    kind: CatalogKind  # one of the closed catalog kinds (record, entity, timeline, meeting, ...)
     site: str  # the network-site slug this atom belongs to
     local_id: str  # the source feed's existing stable key
     title: str  # human-readable label for the grab UI

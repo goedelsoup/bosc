@@ -21,10 +21,10 @@ from __future__ import annotations
 import hashlib
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, get_args
 
 from watermark.logging import get_logger
-from watermark.site.feeds import CatalogAtom, CatalogIndex
+from watermark.site.feeds import CatalogAtom, CatalogIndex, CatalogKind
 
 log = get_logger(__name__)
 
@@ -40,7 +40,7 @@ class _KindSpec:
     (e.g. a timeline event with no ``ref``). ``title`` yields the human-readable grab-UI label.
     """
 
-    kind: str
+    kind: CatalogKind
     feed: str
     local_id: Callable[[Row], str | None]
     title: Callable[[Row], str]
@@ -86,12 +86,20 @@ _SPECS: tuple[_KindSpec, ...] = (
     _KindSpec("dataset", "catalog", lambda r: _get(r, "id") or None, lambda r: _get(r, "title")),
 )
 
-# The full closed kind set, feed-backed + web-only — the resolver's `unknown_kind` guard reads it
-# (kept here as the single source of truth so the two tiers can't drift). The web overlay adds
-# atoms for the web-only kinds; they are still valid handle kinds everywhere.
-FEED_BACKED_KINDS: tuple[str, ...] = tuple(spec.kind for spec in _SPECS)
-WEB_ONLY_KINDS: tuple[str, ...] = ("teardown", "doc", "chapter", "figure")
-CATALOG_KINDS: tuple[str, ...] = FEED_BACKED_KINDS + WEB_ONLY_KINDS
+# The full closed kind set, feed-backed + web-only. `CatalogKind` (feeds.py) is the single source
+# of truth — it types the emitted `kind` field, so the generated `catalog-index.schema.json` carries
+# a `kind` enum the frontend parity-tests against (the two tiers' kind sets can't silently drift).
+# The web overlay adds atoms for the web-only kinds; they are still valid handle kinds everywhere.
+FEED_BACKED_KINDS: tuple[CatalogKind, ...] = tuple(spec.kind for spec in _SPECS)
+WEB_ONLY_KINDS: tuple[CatalogKind, ...] = ("teardown", "doc", "chapter", "figure")
+CATALOG_KINDS: tuple[CatalogKind, ...] = FEED_BACKED_KINDS + WEB_ONLY_KINDS
+# The (feed-backed + web-only) partition must exactly cover the `CatalogKind` vocabulary — a guard
+# that adding a kind to the Literal without wiring it (or vice versa) fails fast at import.
+assert set(CATALOG_KINDS) == set(get_args(CatalogKind)), (
+    "catalog kind partition drifted from CatalogKind (feeds.py) — "
+    f"missing: {set(get_args(CatalogKind)) - set(CATALOG_KINDS)}, "
+    f"extra: {set(CATALOG_KINDS) - set(get_args(CatalogKind))}"
+)
 
 
 def catalog_version(atoms: Sequence[CatalogAtom]) -> str:

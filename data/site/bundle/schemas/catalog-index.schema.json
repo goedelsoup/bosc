@@ -9,6 +9,22 @@
           "type": "string"
         },
         "kind": {
+          "enum": [
+            "record",
+            "timeline",
+            "entity",
+            "person",
+            "place",
+            "meeting",
+            "exhibit",
+            "concept",
+            "lead",
+            "dataset",
+            "teardown",
+            "doc",
+            "chapter",
+            "figure"
+          ],
           "title": "Kind",
           "type": "string"
         },
