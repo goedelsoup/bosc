@@ -4,12 +4,11 @@
  * shape the `RecordBlock.astro` component renders, plus a mapper from a live
  * `records`-feed row so the library and the walk read the same feed.
  */
-import { siteUrl } from "./routes";
 import type { TagKind } from "./teardown";
 import { evidenceKind, slugify, type RecordItem } from "./feeds";
 import { formatScalar, groupLabel, isApproximate, isStructured, withApproxMark } from "./records";
 import { walkAnchorFor } from "./walk";
-import { withBase, withSite, withStory } from "./site";
+import { withSite, withStory } from "./site";
 
 export interface BlockField {
   label: string;
@@ -143,10 +142,8 @@ export function recordToBlock(r: RecordItem): LibraryRecord {
     // The record's own screen (/network/american-sugar-creek-allen-co/site/records/<group>/<id>) — the compact row links
     // here; the full block ignores it (it IS the screen).
     href: withSite(`/site/records/${r.group}/${slugify(r.rel)}`),
-    correctHref: withBase(
-      siteUrl(
-        `/submit?ref_kind=record&ref_id=${encodeURIComponent(r.rel)}&ref_label=${encodeURIComponent(r.title)}`,
-      ),
+    correctHref: withSite(
+      `/submit?ref_kind=record&ref_id=${encodeURIComponent(r.rel)}&ref_label=${encodeURIComponent(r.title)}`,
     ),
     connect,
   };

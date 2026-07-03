@@ -10,7 +10,7 @@ import type { PlaceItem } from "~/lib/feeds";
 import type { ProfileAttr, ProfileHeaderData } from "~/lib/profile";
 import type { FigureStatData } from "~/lib/viz";
 import { entityHref } from "~/lib/entityLinks";
-import { withBase, withSite, siteUrl } from "~/lib/site";
+import { withSite } from "~/lib/site";
 import { renderBody } from "~/lib/wiki";
 
 export const getStaticPaths: GetStaticPaths = () =>
@@ -51,10 +51,8 @@ const header: ProfileHeaderData = {
   attrs: attrs.length ? attrs : undefined,
   relLabel: "Relationships",
   relationships: rels.length ? rels : undefined,
-  correctHref: withBase(
-    siteUrl(
-      `/submit?ref_kind=place&ref_id=${encodeURIComponent(place.slug)}&ref_label=${encodeURIComponent(place.name)}`,
-    ),
+  correctHref: withSite(
+    `/submit?ref_kind=place&ref_id=${encodeURIComponent(place.slug)}&ref_label=${encodeURIComponent(place.name)}`,
   ),
 };
 

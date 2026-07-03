@@ -10,7 +10,7 @@ export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed } from "~/lib/bundle";
 import type { EconomicBaseline } from "~/lib/feeds";
-import { withBase, siteUrl, storyUrl } from "~/lib/site";
+import { withBase, withSite, storyUrl } from "~/lib/site";
 
 const eb = hasFeed("economics-baseline") ? loadFeed<EconomicBaseline>("economics-baseline") : null;
 const area = eb?.area_name ?? "the corridor";
@@ -31,7 +31,7 @@ const doors: Door[] = [
   {
     id: "baseline",
     kind: "Baseline data",
-    href: siteUrl("/watershed/economics-baseline"),
+    href: withSite("/watershed/economics-baseline"),
     count: sectorCount ? String(sectorCount) : "—",
     title: "Localized labor baseline",
     desc: `What ${area}'s economy actually is — employment by NAICS sector with each sector's location quotient, and population. BLS QCEW + US Census, every figure connector-sourced.`,
@@ -40,7 +40,7 @@ const doors: Door[] = [
   {
     id: "end-use",
     kind: "Load & workloads",
-    href: siteUrl("/reports/end-use-and-workloads"),
+    href: withSite("/reports/end-use-and-workloads"),
     count: "—",
     title: "End-use & workloads",
     desc: "Where the campus load actually goes — the end-use mix and the workload profile behind the megawatts, against the grid backdrop the site sits on.",
@@ -49,7 +49,9 @@ const doors: Door[] = [
   {
     id: "cost",
     kind: "Narrative",
-    href: storyUrl("/cost"),
+    // The story chapter is Lima's narrative; a non-Lima economy page still links it (no per-site
+    // story yet). Base-applied here so the door template can stay ambient (`d.href`).
+    href: withBase(storyUrl("/cost")),
     count: "—",
     title: "The cost of opacity",
     desc: "The deal as the public can see it — incentives, abatement, and load-not-jobs — read against what stays sealed. A chapter of the story.",
@@ -58,7 +60,7 @@ const doors: Door[] = [
   {
     id: "demand",
     kind: "Reference",
-    href: siteUrl("/docs/economics"),
+    href: withSite("/docs/economics"),
     count: "—",
     title: "Demand & public benefits",
     desc: "The prose companion: how the demand pressure and the public-benefit case are built from the record — the method behind the figures.",
@@ -85,7 +87,7 @@ const doors: Door[] = [
     <div class="hub-grid">
       {
         doors.map((d) => (
-          <a class="hub-door" id={d.id} href={withBase(d.href)}>
+          <a class="hub-door" id={d.id} href={d.href}>
             <div class="hub-door-top">
               <span class="hub-door-kind">{d.kind}</span>
               <span class="hub-door-count">{d.count}</span>

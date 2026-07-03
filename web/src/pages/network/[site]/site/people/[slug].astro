@@ -9,7 +9,7 @@ import { hasFeed, loadFeed } from "~/lib/bundle";
 import { evidenceKind, type PersonItem } from "~/lib/feeds";
 import type { ProfileAttr, ProfileHeaderData } from "~/lib/profile";
 import { entityHref } from "~/lib/entityLinks";
-import { withBase, withSite, siteUrl } from "~/lib/site";
+import { withSite } from "~/lib/site";
 import { renderBody } from "~/lib/wiki";
 
 export const getStaticPaths: GetStaticPaths = () =>
@@ -38,10 +38,8 @@ const header: ProfileHeaderData = {
   relationships: person.entity_key
     ? [{ kind: "entity", label: person.name, href: entityHref(person.entity_key) }]
     : undefined,
-  correctHref: withBase(
-    siteUrl(
-      `/submit?ref_kind=person&ref_id=${encodeURIComponent(person.slug)}&ref_label=${encodeURIComponent(person.name)}`,
-    ),
+  correctHref: withSite(
+    `/submit?ref_kind=person&ref_id=${encodeURIComponent(person.slug)}&ref_label=${encodeURIComponent(person.name)}`,
   ),
 };
 

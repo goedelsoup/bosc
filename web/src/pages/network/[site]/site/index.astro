@@ -5,7 +5,7 @@ import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed, loadManifest } from "~/lib/bundle";
 import type { DocumentCollectionItem, MeetingItem, TimelineEntry } from "~/lib/feeds";
 import { REFERENCE } from "~/lib/reference";
-import { withBase, siteUrl } from "~/lib/site";
+import { withSite } from "~/lib/site";
 
 const manifest = loadManifest();
 const byName = new Map(manifest.feeds.map((f) => [f.name, f]));
@@ -22,7 +22,7 @@ const doors = [
   {
     id: "documents",
     kind: "Catalog",
-    href: siteUrl("/site/documents/"),
+    href: withSite("/site/documents/"),
     count: num(nFiles),
     title: "Documents",
     desc: "Source-document catalog, grouped by collection — names, types, sizes, LFS status.",
@@ -31,7 +31,7 @@ const doors = [
   {
     id: "records",
     kind: "Structured records",
-    href: siteUrl("/site/records/"),
+    href: withSite("/site/records/"),
     count: num(count("records")),
     title: "Records",
     desc: "Structured record groups read from the corpus — deeds, permits, filings, plans, cost estimates.",
@@ -40,7 +40,7 @@ const doors = [
   {
     id: "timeline",
     kind: "Chronology",
-    href: siteUrl("/timeline"),
+    href: withSite("/timeline"),
     count: num(timeline.length),
     title: "Timeline",
     desc: "Events in sequence — the spine the story pays off into.",
@@ -49,7 +49,7 @@ const doors = [
   {
     id: "exhibits",
     kind: "Curated excerpts",
-    href: siteUrl("/site/exhibits"),
+    href: withSite("/site/exhibits"),
     count: num(count("exhibits")),
     title: "Exhibits",
     desc: "Curated, citable slices of the source record.",
@@ -58,7 +58,7 @@ const doors = [
   {
     id: "people",
     kind: "Profiles",
-    href: siteUrl("/site/people/"),
+    href: withSite("/site/people/"),
     count: num(count("people")),
     title: "People",
     desc: "Individual profiles — roles, affiliations, aliases, sources.",
@@ -67,7 +67,7 @@ const doors = [
   {
     id: "places",
     kind: "Geography",
-    href: siteUrl("/site/places/"),
+    href: withSite("/site/places/"),
     count: num(count("places")),
     title: "Places & parcels",
     desc: "The campus, the corridor sites, and the parcels the record turns on.",
@@ -76,7 +76,7 @@ const doors = [
   {
     id: "legal",
     kind: "Filings & analysis",
-    href: siteUrl("/site/legal"),
+    href: withSite("/site/legal"),
     count: num(meetings.length),
     title: "Legal history",
     desc: "Meeting summaries, PRR & mandamus, and Select-Committee testimony.",
@@ -85,7 +85,7 @@ const doors = [
   {
     id: "reference",
     kind: "External data",
-    href: siteUrl("/site/reference/"),
+    href: withSite("/site/reference/"),
     count: num(REFERENCE.length),
     title: "Reference datasets",
     desc: "Authoritative external datasets, each documented with its provenance and gaps.",
@@ -94,7 +94,7 @@ const doors = [
   {
     id: "watershed",
     kind: "Hydrology & toxics",
-    href: siteUrl("/watershed/"),
+    href: withSite("/watershed/"),
     count: "live",
     title: "The watershed",
     desc: "Hydrology dashboards, the Maumee map, before/during/after imagery, and RSEI toxics — the basin the campus sits in.",
@@ -120,7 +120,7 @@ const doors = [
     <div class="hub-grid">
       {
         doors.map((d) => (
-          <a class="hub-door" id={d.id} href={withBase(d.href)}>
+          <a class="hub-door" id={d.id} href={d.href}>
             <div class="hub-door-top">
               <span class="hub-door-kind">{d.kind}</span>
               <span class="hub-door-count">{d.count}</span>
