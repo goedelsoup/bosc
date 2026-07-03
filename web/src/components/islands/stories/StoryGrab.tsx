@@ -78,13 +78,22 @@ export function GrabPin({
 
 // --- the demo host --------------------------------------------------------------------------
 const DEED = FIXTURE_CATALOG["record:lima:deed-0008300"];
+const CLEARING = FIXTURE_CATALOG["timeline:lima:site-clearing"];
 const FIGURE = FIXTURE_CATALOG["figure:lima:dilution-curve"];
 
+const grab = (a: { handle: string; kind: TrayItem["kind"]; title: string }): TrayItem => ({
+  handle: a.handle,
+  kind: a.kind,
+  title: a.title,
+});
+
 const GRABBABLE: Record<string, TrayItem> = {
-  deed: { handle: DEED.handle, kind: DEED.kind, title: DEED.title },
+  deed: grab(DEED),
+  // e1 has no separate fixture atom (the shared catalog models one timeline event); it's a demo-only
+  // row, so it carries an inline snapshot rather than a resolved catalog handle.
   e1: { handle: "timeline:lima:deed-recorded", kind: "timeline", title: "Seven-parcel deed recorded" },
-  e2: { handle: "timeline:lima:site-clearing", kind: "timeline", title: "Site clearing begins" },
-  figure: { handle: FIGURE.handle, kind: FIGURE.kind, title: FIGURE.title },
+  e2: grab(CLEARING),
+  figure: grab(FIGURE),
 };
 
 export default function StoryGrab({ composeHref = "#" }: { composeHref?: string }) {
@@ -369,22 +378,40 @@ export function StoryTray({ tray, composeHref = "#" }: { tray: TrayItem[]; compo
           </span>
         ))}
       </div>
-      <a
-        href={composeHref}
-        style={{
-          flex: "0 0 auto",
-          fontSize: 13,
-          fontWeight: 700,
-          color: "var(--bone-surface)",
-          background: "var(--forest)",
-          padding: "8px 16px",
-          textDecoration: "none",
-          opacity: has ? 1 : 0.5,
-          pointerEvents: has ? "auto" : "none",
-        }}
-      >
-        Open in editor →
-      </a>
+      {has ? (
+        <a
+          href={composeHref}
+          style={{
+            flex: "0 0 auto",
+            fontSize: 13,
+            fontWeight: 700,
+            color: "var(--bone-surface)",
+            background: "var(--forest)",
+            padding: "8px 16px",
+            textDecoration: "none",
+          }}
+        >
+          Open in editor →
+        </a>
+      ) : (
+        // Empty tray: a non-link (no href, out of tab order, not announced as actionable) rather than
+        // a visually-disabled anchor that stays keyboard-focusable.
+        <span
+          aria-disabled="true"
+          style={{
+            flex: "0 0 auto",
+            fontSize: 13,
+            fontWeight: 700,
+            color: "var(--bone-surface)",
+            background: "var(--forest)",
+            padding: "8px 16px",
+            opacity: 0.5,
+            cursor: "default",
+          }}
+        >
+          Open in editor →
+        </span>
+      )}
     </div>
   );
 }

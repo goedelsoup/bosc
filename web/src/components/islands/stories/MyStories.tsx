@@ -7,7 +7,7 @@
  * Chain of custody framing carried through: a reader's prose is plainly theirs; every cited record
  * keeps its own source + evidence tag and is never forked here.
  */
-import { useEffect, useState } from "react";
+import { type CSSProperties, useEffect, useState } from "react";
 import { currentUser } from "~/lib/auth";
 import { type StorySummary, deleteStory, listStories } from "./client";
 import { mono } from "./parts";
@@ -63,6 +63,7 @@ export default function MyStories({ newHref, composeHref, readHref }: MyStoriesP
     stories?: StorySummary[];
     message?: string;
   }>({ status: "loading" });
+  const [actionError, setActionError] = useState<string | null>(null);
 
   useEffect(() => {
     let live = true;
@@ -92,8 +93,17 @@ export default function MyStories({ newHref, composeHref, readHref }: MyStoriesP
 
   async function onDelete(id: string) {
     if (!window.confirm("Delete this story? This can't be undone.")) return;
+    setActionError(null);
     const res = await deleteStory(id);
-    if (res.ok) setState((s) => ({ ...s, stories: (s.stories ?? []).filter((x) => x.id !== id) }));
+    // Optimistic removal only on success; on failure keep the story and surface the error (the same
+    // kind of feedback the editor's save flow gives) rather than silently leaving the list unchanged.
+    if (res.ok) {
+      setState((s) => ({ ...s, stories: (s.stories ?? []).filter((x) => x.id !== id) }));
+    } else {
+      setActionError(
+        res.status === 401 ? "Sign in to delete this story." : "Couldn't delete the story. Try again.",
+      );
+    }
   }
 
   return (
@@ -150,6 +160,38 @@ export default function MyStories({ newHref, composeHref, readHref }: MyStoriesP
         Your prose is plainly yours. Every record you cite keeps its own source and its own evidence tag —
         nothing here forks the record.
       </div>
+
+      {actionError && (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 10,
+            border: "1px solid var(--ev-gap-border)",
+            background: "var(--ev-gap-bg)",
+            color: "var(--ev-gap-fg)",
+            fontSize: 13,
+            padding: "10px 14px",
+            marginBottom: 18,
+          }}
+        >
+          <span>{actionError}</span>
+          <button
+            type="button"
+            onClick={() => setActionError(null)}
+            style={{
+              border: "none",
+              background: "transparent",
+              cursor: "pointer",
+              color: "var(--ev-gap-fg)",
+              fontSize: 13,
+            }}
+          >
+            ✕
+          </button>
+        </div>
+      )}
 
       {state.status === "loading" && (
         <div style={{ padding: "40px 0", textAlign: "center", color: "var(--ink-muted)" }}>Loading…</div>
@@ -268,7 +310,7 @@ function StoryRow({
             type="button"
             onClick={onDelete}
             style={{
-              ...rowLink("var(--ev-gap-fg)"),
+              ...rowLink("var(--ink-muted)"),
               border: "none",
               background: "transparent",
               cursor: "pointer",
@@ -282,7 +324,7 @@ function StoryRow({
   );
 }
 
-const forestBtn: React.CSSProperties = {
+const forestBtn: CSSProperties = {
   fontFamily: "var(--font-sans)",
   fontSize: 14,
   fontWeight: 700,
@@ -293,7 +335,7 @@ const forestBtn: React.CSSProperties = {
   textDecoration: "none",
 };
 
-const rowLink = (color: string): React.CSSProperties => ({
+const rowLink = (color: string): CSSProperties => ({
   fontSize: 12.5,
   fontWeight: 600,
   color,

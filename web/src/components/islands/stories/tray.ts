@@ -27,7 +27,12 @@ export function readTray(): TrayItem[] {
 }
 
 function writeTray(items: TrayItem[]): void {
-  sessionStorage.setItem(TRAY_KEY, JSON.stringify(items));
+  try {
+    sessionStorage.setItem(TRAY_KEY, JSON.stringify(items));
+  } catch {
+    // storage full / disabled (private mode) — the tray degrades to in-memory for this turn;
+    // toggleTray still returns the computed next tray so the grab-pin flow keeps working.
+  }
 }
 
 /** Toggle an atom in the tray by handle; returns the new tray. */
