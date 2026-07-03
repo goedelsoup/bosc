@@ -120,6 +120,16 @@ watermark catalog run onboard-bundle --site <slug> --dry-run   # preview the res
 watermark catalog run onboard-bundle --site <slug>             # execute it
 ```
 
+Before committing the regenerated outputs, preview which catalogued datasets actually moved
+with `watermark catalog diff` (the committed `_observed.yaml` snapshot vs. live disk — the
+`git diff` to reconcile's `git add`), then record the new baseline:
+
+```sh
+watermark catalog diff --site <slug>   # what content/membership/freshness moved (observes only)
+watermark catalog reconcile            # write the new data/catalog/_observed.yaml baseline
+watermark catalog audit --apply        # regenerate COMPLETENESS.md (else `catalog check`/CI fails)
+```
+
 (`mise run onboard-site <slug>` prints the same dry-run plan.) Every value is
 an **onboarding seed** until reviewed against a cited source — keep the
 `[verified]`/`[inference]`/`[reference]`/`[open]` discipline (see

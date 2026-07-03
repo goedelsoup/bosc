@@ -25,6 +25,10 @@ subsystem audits). Driven by `watermark catalog …` (`cli/catalog.py`).
   subprocess — virtual nodes (no command) only order the graph.
 - **The commands, by what they touch:**
   - `reconcile` (`reconcile.py`) — observe disk → write `_observed.yaml`. Observes only; never gates.
+  - `diff` (`diff.py`) — committed `_observed.yaml` snapshot ↔ a fresh live reconcile: what content /
+    membership / freshness moved (`added`/`removed`/`changed` per entry) since the last reconcile.
+    The `git diff` analogue to reconcile's `git add`. Observes only, never gates, always exits 0 —
+    distinct from `check` (declared ↔ disk).
   - `check` (`check.py`) — **the gate**: schema validity, missing/orphan files, staleness,
     checksum drift, render drift, audit drift, DAG integrity. LFS-aware (an unmaterialized pointer
     is not "missing"); staleness warns unless `--strict`.
