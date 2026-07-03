@@ -306,3 +306,29 @@ streams:
     citation: LP3 7Q10 from USGS 03240000 (Little Miami River near Oldtown OH), 44 climatic years 1980-2024
       (gage value; screening proxy for the discharge reach)
     confidence: medium
+  maumee river near defiance:
+    seven_q10_cfs: 139.24
+    source: derived
+    gage: 04192500
+    gage_name: Maumee River near Defiance OH
+    period: 1980-01-01..2024-12-31
+    complete_years: 44
+    aliases:
+    - maumee river near defiance
+    - maumee r near defiance
+    citation: LP3 7Q10 from USGS 04192500 (Maumee River near Defiance OH), 44 climatic years 1980-2024
+      (gage value; screening proxy for the discharge reach)
+    confidence: medium
+  auglaize river near defiance:
+    seven_q10_cfs: 18.62
+    source: derived
+    gage: 04191500
+    gage_name: Auglaize River near Defiance OH
+    period: 1980-01-01..2024-12-31
+    complete_years: 44
+    aliases:
+    - auglaize river near defiance
+    - auglaize r near defiance
+    citation: LP3 7Q10 from USGS 04191500 (Auglaize River near Defiance OH), 44 climatic years 1980-2024
+      (gage value; screening proxy for the discharge reach)
+    confidence: medium

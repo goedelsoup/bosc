@@ -52,12 +52,28 @@ First automated-research pass (`watermark research run`, 21 turns, $1.58, read-o
 `data/research/onboard-defiance-maumee-mainstem-2026-06-19/` (`findings.md` + `manifest.yaml`).
 
 **Headline — the mainstem thesis confirmed.** Defiance WWTP (OH0024899, 12 MGD ≈ 18.6 cfs) → Maumee
-mainstem, dilution ≈ **6.2:1** ("tight," not a violation) vs. Lima's tributary plants at **0.01–0.42:1
-(violations)** on the same screen. Same model, same basin, comparable plant size — the only variable
-is the receiving water. **Lima's effluent-dominance is driven by receiving-water *choice*, not plant
-size; Defiance is the clean confirmation** (cf. `docs/bigger-picture.md` §2). Caveat: the 6.2:1 uses
-the Waterville (04193500) proxy ~50 mi downstream; the reach gage 04192500 is registered but not in
-the derived 7Q10, so the true reach dilution is **likely tighter** (proposal #1 below).
+mainstem, reach-specific dilution ≈ **7.5:1** ("tight," not a violation) vs. Lima's tributary plants
+at **0.01–0.42:1 (violations)** on the same screen. Same model, same basin, comparable plant size — the
+only variable is the receiving water. **Lima's effluent-dominance is driven by receiving-water *choice*,
+not plant size; Defiance is the clean confirmation** (cf. `docs/bigger-picture.md` §2).
+
+**Reach-specific 7Q10 — RESOLVED (#391, 2026-07-03).** The earlier 6.2:1 used the Waterville gage
+(04193500, DA 6330 mi²) ~50 river-miles downstream as the mainstem proxy. The honest at-reach
+denominator is now derived: **USGS 04192500 (Maumee River near Defiance), LP3 7Q10 = 139.24 cfs**
+(44 climatic years 1980–2024) → **7.5:1** (139.24 / 18.56 cfs). The a-priori expectation was that the
+reach number would be *tighter* than 6.2:1 (Waterville drains more area) — the data **refutes** it:
+the near-Defiance gage sits just downstream of the city and, per NWIS drainage areas (5545 mi²),
+**already includes the Auglaize** (it is the mainstem *below* the confluence, not above), and its LP3
+7Q10 comes out **higher** than Waterville's 114.15 cfs — so the reach-specific dilution is slightly
+**looser (7.5:1), not tighter**. The Auglaize arm just above the junction is also derived (04191500,
+18.62 cfs) for completeness. Net effect: the clean-confirmation thesis is **reinforced**, not
+threatened — well above the 4:1 re-evaluation flag. Both values live in
+`data/reference/hydrology/low-flow-7q10.derived.yaml` (source=derived, confidence medium: gage-value
+proxies for the discharge reach; the exact outfall position relative to 04192500 and the OH0024899
+permit-cited 7Q10 remain the open refinements — proposal #2). NB: `watermark basin-screen` still
+reports 6.2:1 for Defiance because ECHO's bare "maumee river" receiving water aliases to the basin-wide
+Waterville proxy by design; 7.5:1 is the documented site-level reach characterization, not an
+auto-applied screen value (same convention as the Sidney/WPAFB/Fort Wayne reach entries).
 
 **Data-center activity:** nothing on the BOSC record today (no permits / deeds / entity-graph parties
 / land assembly) — a finding, but **provisional** pending the GIS + `--research` discovery the
@@ -73,7 +89,7 @@ the distilled "verify serving utility" proposal is **resolved here and not filed
 
 **Proposals filed as sub-issues of #238** (4 of the 5 distilled; the utility proposal is resolved above):
 
-1. **Derive reach-specific Defiance 7Q10** (USGS 04192500 + 04191500) — replace the Waterville proxy; the reach dilution is likely tighter than 6.2:1.
+1. **Derive reach-specific Defiance 7Q10** (USGS 04192500 + 04191500) — replace the Waterville proxy; the reach dilution is likely tighter than 6.2:1. — **RESOLVED (#391, 2026-07-03):** both gages derived (04192500 = 139.24 cfs, 04191500 = 18.62 cfs; LP3, 44 yr); the mainstem reach 7Q10 (04192500, below the Auglaize confluence) is **higher** than the Waterville proxy, so the reach dilution is **7.5:1 — looser, not tighter**. See the "Reach-specific 7Q10" note above.
 2. **Pull the OH0024899 NPDES fact sheet** — characterize the 1 informal + 1 formal enforcement action, anchor the permit-cited 7Q10, populate `plant_receiving`.
 3. **Audit RSEI currency** (all 19 facilities cap at `last_year: 2014`) + define a non-zero `toxic_corridor_bbox`. — **RESOLVED (#393, 2026-06-21):**
    - *Currency is the RSEI v234 vintage ceiling, NOT a Defiance truncation.* Every one of the network's 7 committed site inventories (Lima/Findlay/Ottawa/Van Wert/Fort Wayne/Toledo/Bryan) caps at `last_year: 2014` — that is the data ceiling of EPA RSEI **v234** (`Settings.rsei_version`), not a partial pull. A post-2014 refresh requires a *global* `rsei_version` bump (all sites + the network), filed as **#436** — **not** a per-site re-pull.
