@@ -265,6 +265,23 @@ sites:
     map_lon: -83.8285
     map_zoom: 12
 
+  # First Ohio River (direct) node — unglaciated Appalachian Adams County OH (Ohio Brush Creek →
+  # Ohio River), the network's first non-Lake-Erie / non-Miami-Scioto branch. NB: the ADAMS COUNTY
+  # NPDES rows in the Maumee reference data are Adams County INDIANA — a different place.
+  - slug: west-union
+    place: "West Union · Adams Co"
+    basin_label: "Ohio Brush Creek · Ohio River"
+    receiving_water: "Ohio Brush Creek"
+    state: "OH"
+    codename: null
+    mono: "WUN"
+    status: "queued"
+    selectable: false
+    issue: "1117"
+    map_lat: 38.7945
+    map_lon: -83.5452
+    map_zoom: 13
+
   # ── Tracking with onboarded Python profiles ─────────────────────────────────────────────
 
   - slug: new-albany
@@ -515,23 +532,3 @@ sites:
     map_lat: null
     map_lon: null
     map_zoom: null
-
-  # Ohio River (direct) basin — the network's first node draining straight to the Ohio River
-  # (not via a Lake Erie or Muskingum loop). Far-southern, unglaciated Appalachian Adams County
-  # OHIO (FIPS 39001): no buried-valley aquifer, no till plain. Ohio Brush Creek → Ohio River.
-  # NB: the ADAMS COUNTY NPDES rows in data/reference/echo/maumee-wwtp.all-npdes.yaml are Adams
-  # County INDIANA (St. Marys headwaters) — a different place; nothing feeds this site yet.
-
-  - slug: west-union
-    place: "West Union · Adams Co"
-    basin_label: "Ohio Brush Creek · Ohio River"
-    receiving_water: "Ohio Brush Creek"
-    state: "OH"
-    codename: null
-    mono: "WUN"
-    status: "queued"
-    selectable: false
-    issue: "1117"
-    map_lat: 38.7945
-    map_lon: -83.5452
-    map_zoom: 13
