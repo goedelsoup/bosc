@@ -27,11 +27,12 @@ now" against a real event. Feeds the existing :func:`watermark.air.scenario.eval
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any, cast
+from typing import Any, NamedTuple, cast
 
 import yaml
 from pydantic import BaseModel, ConfigDict
 
+from watermark.air.model import FactorBasis
 from watermark.air.scenario import AirScenario, reliability_dispatch_scenario
 from watermark.config import Settings, get_settings
 from watermark.hydrology.model import ProvenancedValue
@@ -122,11 +123,23 @@ def _parse_dt(value: str) -> datetime | None:
         return None
 
 
-def _authorized_window(doc: dict[str, Any]) -> tuple[str | None, float, str, bool]:
-    """Return (order_id, hours, citation, verified) for the backup-gen authorization window.
+class _Window(NamedTuple):
+    """The window used to dimension the runtime — bounds, hours, and citation stay together."""
+
+    order_id: str | None
+    hours: float
+    citation: str
+    verified: bool
+    start: str  # the same bound the hours are measured from (order effective, or emergency start)
+    end: str
+
+
+def _authorized_window(doc: dict[str, Any]) -> _Window:
+    """The backup-gen authorization window: its bounds, hours, and citation as one consistent set.
 
     Prefers the order carrying both ``effective`` and ``expires`` timestamps (the bounded
-    backup-generation authorization). Falls back to the statutory-emergency window dates when
+    backup-generation authorization) — and reports *those* bounds, so ``start``/``end`` always
+    match the window ``hours`` measures. Falls back to the statutory-emergency window dates when
     no order isolates an explicit window.
     """
     orders = doc.get("orders") or []
@@ -141,28 +154,49 @@ def _authorized_window(doc: dict[str, Any]) -> tuple[str | None, float, str, boo
         if hours <= 0:
             continue
         oid = order.get("id")
-        return (str(oid) if oid is not None else None, hours, f"DOE Order {oid} {eff}..{exp}", True)
+        return _Window(
+            order_id=str(oid) if oid is not None else None,
+            hours=hours,
+            citation=f"DOE Order {oid} {eff}..{exp}",
+            verified=True,
+            start=str(eff),
+            end=str(exp),
+        )
 
     # Fallback: the statutory emergency window (dates only) — a looser bound.
     win = (doc.get("event") or {}).get("statutory_emergency_window") or {}
-    start, end = _parse_dt(str(win.get("start", ""))), _parse_dt(str(win.get("end", "")))
+    ws, we = str(win.get("start", "")), str(win.get("end", ""))
+    start, end = _parse_dt(ws), _parse_dt(we)
     if start is not None and end is not None:
         hours = round((end - start).total_seconds() / 3600.0, 1)
         if hours > 0:
-            return (
-                None,
-                hours,
-                f"statutory emergency window {win.get('start')}..{win.get('end')}",
-                True,
+            return _Window(
+                order_id=None,
+                hours=hours,
+                citation=f"statutory emergency window {ws}..{we}",
+                verified=True,
+                start=ws,
+                end=we,
             )
-    return (None, 0.0, "no bounded window in the captured event", False)
+    return _Window(None, 0.0, "no bounded window in the captured event", False, "", "")
 
 
-def _linkage_tag(doc: dict[str, Any], *needles: str) -> str | None:
-    """The provenance tag of the first ``corridor_linkage`` entry whose key matches a needle."""
+# The corridor_linkage keys this reader consumes. Facility keys carry a site-specific middle
+# (e.g. ``facility_p0138965_gensets_dispatched``), so it is matched by its stable prefix; the
+# authorization key is matched exactly. Explicit, so an unrelated entry never flips a tag.
+_BACKUP_LINKAGE_KEY = "data_center_backup_dispatch_authorized"
+_FACILITY_LINKAGE_PREFIX = "facility_"
+
+
+def _linkage_tag(doc: dict[str, Any], *key_prefixes: str) -> str | None:
+    """The provenance tag of the first ``corridor_linkage`` entry whose key starts with a prefix.
+
+    Prefix-anchored (not arbitrary substring), and the prefixes are the explicit keys/prefixes
+    above — so only the intended linkage entries are read.
+    """
     linkage = doc.get("corridor_linkage") or {}
     for key, body in linkage.items():
-        if any(n in key for n in needles) and isinstance(body, dict):
+        if isinstance(body, dict) and any(key.startswith(p) for p in key_prefixes):
             return cast("str | None", body.get("tag"))
     return None
 
@@ -185,18 +219,15 @@ def load_captured_event(
     doc = cast("dict[str, Any]", yaml.safe_load(path.read_text(encoding="utf-8")))
 
     event = doc.get("event") or {}
-    win = event.get("statutory_emergency_window") or {}
-    order_id, hours, cite, verified = _authorized_window(doc)
+    win = _authorized_window(doc)
 
-    backup_authorized = (
-        _linkage_tag(doc, "backup_dispatch_authorized", "dispatch_authorized") == "[verified]"
-    )
-    facility_confirmed = _linkage_tag(doc, "facility", "genset") == "[verified]"
+    backup_authorized = _linkage_tag(doc, _BACKUP_LINKAGE_KEY) == "[verified]"
+    facility_confirmed = _linkage_tag(doc, _FACILITY_LINKAGE_PREFIX) == "[verified]"
 
     window_pv = (
-        ProvenancedValue.from_document(hours, "hr", citation=cite, confidence="high")
-        if verified
-        else ProvenancedValue.assume(0.0, "hr", why=cite)
+        ProvenancedValue.from_document(win.hours, "hr", citation=win.citation, confidence="high")
+        if win.verified
+        else ProvenancedValue.assume(0.0, "hr", why=win.citation)
     )
 
     caveats = [
@@ -211,21 +242,21 @@ def load_captured_event(
 
     captured = CapturedDispatchEvent(
         name=str(event.get("name") or doc.get("meta", {}).get("subject") or path.stem),
-        order_id=order_id,
-        window_start=str(win.get("start", "")),
-        window_end=str(win.get("end", "")),
+        order_id=win.order_id,
+        window_start=win.start,
+        window_end=win.end,
         authorized_window_hours=window_pv,
         backup_generation_authorized=backup_authorized,
         facility_dispatch_confirmed=facility_confirmed,
         source_relpath=event_relpath,
-        citations=[cite],
+        citations=[win.citation],
         caveats=caveats,
     )
     log.info(
         "air.calibration.loaded_event",
         name=captured.name,
-        order_id=order_id,
-        window_hours=hours,
+        order_id=win.order_id,
+        window_hours=win.hours,
         facility_confirmed=facility_confirmed,
     )
     return captured
@@ -311,7 +342,7 @@ def event_anchored_scenario(
     runtime: EventAnchoredRuntime,
     *,
     band: str = "high",
-    factors_basis: str = "permit",
+    factors_basis: FactorBasis = "permit",
 ) -> AirScenario:
     """Build an emissions scenario from an event-anchored runtime band point.
 
@@ -335,6 +366,6 @@ def event_anchored_scenario(
         point.value,
         band=f"event_{band}",
         citation=citation,
-        factors_basis=cast("Any", factors_basis),
+        factors_basis=factors_basis,
     )
     return scenario

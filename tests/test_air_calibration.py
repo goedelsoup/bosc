@@ -40,6 +40,10 @@ def test_load_captured_event_reads_verified_window(air_settings: Settings) -> No
     # The backup-gen order (202-26-33) runs 2026-06-30T23:59 -> 2026-07-03T23:59 = 72 h.
     assert ev.order_id == "202-26-33"
     assert ev.authorized_window_hours.value == pytest.approx(72.0)
+    # Window bounds are the SAME source the hours are measured from (the order's effective/
+    # expires), not the broader statutory-emergency window — so bounds and hours are consistent.
+    assert ev.window_start == "2026-06-30T23:59 ET"
+    assert ev.window_end == "2026-07-03T23:59 ET"
     # The window is read straight from the captured order -> a document-grounded value.
     assert ev.authorized_window_hours.source == "document"
     assert ev.authorized_window_hours.verified
