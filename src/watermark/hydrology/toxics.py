@@ -23,7 +23,7 @@ Provenance discipline (the corpus is litigation evidence):
 * The **screening concentration** (annual reported water pounds carried at the
   receiving stream's 7Q10) is a coarse, order-of-magnitude ``derived`` value: it
   assumes the reported water releases enter that reach, annualized over the
-  reporting span, fully mixed at design low flow, with no decay or mixing zone.
+  facility's reporting years, fully mixed at design low flow, with no decay or mixing zone.
   It is a *screen*, not a permit determination or a measured concentration.
 """
 
@@ -78,7 +78,7 @@ class ToxicDischargeScreen(BaseModel):
     score: float
     cancer_score: float
     water_pounds: float  # cumulative pounds released to water over the record
-    annual_water_pounds: float  # derived: water_pounds / reporting-year span
+    annual_water_pounds: float  # derived: water_pounds / count of reporting years
     year_span: str | None = None  # "1988-2022"
     top_water_chemical: str | None = None
 
@@ -171,6 +171,21 @@ def _resolve_receiving_water(
     return None, None, None, npdes
 
 
+def _annual_water_pounds(fac: RseiFacility) -> float:
+    """Cumulative water pounds annualized over the years the facility actually reported.
+
+    `fac.pounds_by_media["water"]` is the cumulative total across `fac.years` only, so
+    the divisor is the *count of reporting years*, never the calendar interval spanned.
+    An intermittent reporter (e.g. 1988 and 2022, nothing between) has a 2-year total,
+    not a 35-year one; dividing by the span would understate the annual load by the gap
+    ratio and drag the screening mg/L below its band threshold. Load-bearing for the
+    critical/elevated flag (`_flag`).
+    """
+    water_lbs = (fac.pounds_by_media or {}).get("water", 0.0)
+    reporting_years = len(fac.years) or 1
+    return water_lbs / reporting_years
+
+
 def _screening_concentration(annual_lbs: float, q7: ProvenancedValue) -> ProvenancedValue | None:
     """mg/L if the annual reported water pounds entered the reach at its 7Q10 (screen-only)."""
     mgd = units.cfs_to_mgd(q7.value)
@@ -254,12 +269,7 @@ def build_screen(settings: Settings | None = None) -> ToxicDischargeInventory:
     screens: list[ToxicDischargeScreen] = []
     for fac in _water_releasers(inv.facilities):
         water_lbs = (fac.pounds_by_media or {}).get("water", 0.0)
-        span = (
-            fac.last_year - fac.first_year + 1
-            if fac.first_year and fac.last_year and fac.last_year >= fac.first_year
-            else 1
-        )
-        annual_lbs = water_lbs / span
+        annual_lbs = _annual_water_pounds(fac)
         top_water_chem = fac.top_chemicals[0].chemical if fac.top_chemicals else None
 
         water, src, cite, npdes = _resolve_receiving_water(fac, echo, settings=settings)
