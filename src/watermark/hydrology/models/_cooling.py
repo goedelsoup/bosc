@@ -38,7 +38,14 @@ class CoolingBasis(BaseModel):
     consumptive_fraction: ProvenancedValue  # evaporated share of makeup_demand (the intake)
     makeup_demand: ProvenancedValue  # MGD, the cooling intake / withdrawal (central)
     consumptive_low: ProvenancedValue  # MGD, low bound of the consumptive range
-    consumptive_high: ProvenancedValue  # MGD, upper bound of the consumptive range
+    # MGD, upper bound of the consumptive range. WARNING for consumers: this is an
+    # *independent* estimate on its own basis, NOT the evaporated share of ``makeup_demand``.
+    # For ``evaporative_tower`` it is the blowdown-method evaporation (blowdown x (CoC-1)),
+    # whose implied intake is the *larger* ``makeup_high`` (blowdown x CoC), not
+    # ``makeup_demand`` (the power-method central intake). Pairing ``consumptive_high`` with
+    # ``makeup_demand`` as one stream yields a >100% evaporative fraction (Lima: 10 vs 3.93
+    # MGD) — divide by the matching intake via ``headline_makeup_high()`` instead (#1170).
+    consumptive_high: ProvenancedValue
     # The intake at the upper consumptive bound (MGD). For the evaporative tower the
     # blowdown-method upper bound implies a *larger* intake (blowdown x CoC); for the
     # fraction-uncertainty archetypes (once_through) the intake is unchanged, so this stays
