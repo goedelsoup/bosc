@@ -27,6 +27,9 @@ costs, plus the stylized facility→price-pressure sensitivity. Defers to the ro
   `households_equivalent` (robust, cited) plus a `price_pressure_pct_low/high` band that is
   **deliberately STYLIZED screening, not a forecast** — keep the caveat in the model, never
   present the band as a projection. Requires an active `SiteProfile.facility` (else `ValueError`).
+  Persisted per-site to `demand_pressure_relpath` via `write_demand_pressure`/`load_demand_pressure`
+  and exported as the **`economics-demand-pressure`** bundle feed (`watermark.site.economics`, #1105);
+  both the write (`watermark eia`) and the feed are facility-gated — a thin site simply omits them.
 - **Per-site config flows in through the profile, not constants.** `econ_fips`, `eia_state`,
   `eia861_utility_number` come off `active_profile(settings)`/`Settings` (see
   [`watermark.sites`](../sites/CLAUDE.md)); the output relpaths are per-site (#326/#606). **Never

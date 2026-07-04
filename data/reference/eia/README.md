@@ -112,6 +112,17 @@ Regenerate: `watermark eia`
 | `reference/eia/consumer-energy.yaml` | application/x-yaml | no |
 | `reference/eia/{site}/consumer-energy.yaml` | application/x-yaml | no |
 
+### `eia-demand-pressure` — Facility Demand → Consumer Price-Pressure Sensitivity (EIA + facility load)
+
+Source: Derived — facility draw (air permit, #87) sized against EIA state retail sales + residential price (#91) · License: U.S. Government work (public domain) · Access: keyed · Site scope: slug-scoped · Refresh: annual
+
+Regenerate: `watermark eia`
+
+| file | type | lfs |
+| --- | --- | --- |
+| `reference/eia/demand-pressure.yaml` | application/x-yaml | no |
+| `reference/eia/{site}/demand-pressure.yaml` | application/x-yaml | no |
+
 ### `eia-grid-profile` — Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)
 
 Source: U.S. EIA — Form EIA-861 (AEP Ohio retail sales) + Form EIA-930 (PJM hourly demand) · License: U.S. Government work (public domain) · Access: keyed · Site scope: slug-scoped · Refresh: annual

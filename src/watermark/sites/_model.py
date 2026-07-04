@@ -233,6 +233,7 @@ class SiteProfile(BaseModel):
     baseline_relpath: str  # Census+QCEW county baseline (economics/baseline.py)
     rsei_relpath: str  # EPA RSEI county toxics inventory (rsei.py)
     consumer_energy_relpath: str  # EIA consumer energy prices (economics/energy.py)
+    demand_pressure_relpath: str  # facility demand→price-pressure sensitivity (economics/energy.py)
     grid_relpath: str  # EIA-861 utility + grid profile (grid/utility.py)
 
     # --- Toxics corridor inference (hydrology/toxics.py) ---------------------------------

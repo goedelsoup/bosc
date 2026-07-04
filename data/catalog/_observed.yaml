@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-03T22:01:31.364540+00:00'
+reconciled_at: '2026-07-04T00:36:51.933102+00:00'
 entries:
   aedg:
     exists: true
@@ -286,6 +286,16 @@ entries:
     size_bytes: 27481
     lfs_materialized: true
     file_count: 19
+    missing: []
+    asof: null
+    stale: false
+    site_scope: slug-scoped
+  eia-demand-pressure:
+    exists: true
+    sha256: dd603fddc8d36e89143404f20a7e927883f17e0e50e7e8577b55a8a8f4ee2fe6
+    size_bytes: 2743
+    lfs_materialized: true
+    file_count: 1
     missing: []
     asof: null
     stale: false

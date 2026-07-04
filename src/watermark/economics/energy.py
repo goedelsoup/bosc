@@ -83,10 +83,14 @@ def derive_demand_pressure(
 
     draw_mw = power.facility_draw.value
     consumption_gwh = annual_consumption_gwh(draw_mw)
+    # The consumption figure the datum displays (1-decimal). The households-equivalent derives
+    # from *this* shown value, not the raw float, so a reader can reproduce it from the two cited
+    # fields (annual demand ÷ per-household use) — the reference stays internally consistent.
+    consumption_shown = round(consumption_gwh, 1)
     # EIA "million kWh" is numerically GWh (1 million kWh = 1 GWh).
     sales_gwh = sales.value.value
     share_pct = consumption_gwh / sales_gwh * 100.0 if sales_gwh else 0.0
-    households = consumption_gwh * 1_000_000.0 / _AVG_HOUSEHOLD_KWH_YR  # GWh -> kWh / per-household
+    households = consumption_shown * 1_000_000.0 / _AVG_HOUSEHOLD_KWH_YR  # GWh -> kWh per household
     kappa_central = (_KAPPA_LOW + _KAPPA_HIGH) / 2.0
 
     return FacilityDemandPressure(
@@ -98,7 +102,7 @@ def derive_demand_pressure(
         ),
         load_factor=ProvenancedValue.assume(_LOAD_FACTOR, "fraction", why=_LOAD_FACTOR_CITE),
         annual_consumption_gwh=ProvenancedValue.derived(
-            round(consumption_gwh, 1),
+            consumption_shown,
             "GWh/yr",
             citation=f"{draw_mw:g} MW x {_HOURS_PER_YEAR:g} h x {_LOAD_FACTOR:g} load factor",
         ),
@@ -118,7 +122,7 @@ def derive_demand_pressure(
         households_equivalent=ProvenancedValue.derived(
             round(households),
             "households",
-            citation=f"campus {consumption_gwh:.0f} GWh / {_AVG_HOUSEHOLD_KWH_YR:g} kWh per household",
+            citation=f"campus {consumption_shown:g} GWh / {_AVG_HOUSEHOLD_KWH_YR:g} kWh per household",
         ),
         residential_price=ProvenancedValue.from_connector(
             price.value.value,
@@ -184,3 +188,40 @@ def load_consumer_energy(settings: Settings | None = None) -> ConsumerEnergyCost
     if not isinstance(data, dict):
         return None
     return ConsumerEnergyCosts.model_validate(data)
+
+
+def write_demand_pressure(
+    pressure: FacilityDemandPressure, *, settings: Settings | None = None
+) -> str:
+    """Persist the facility demand-pressure sensitivity as committed reference YAML (issue #1105).
+
+    Per-site: the active site's ``demand_pressure_relpath`` (Lima = the un-slugged legacy path),
+    mirroring ``write_consumer_energy``. Only meaningful for a site with a documented facility —
+    ``derive_demand_pressure`` raises for a facility-less site, so callers gate on the profile.
+    """
+    settings = settings or get_settings()
+    path = settings.data_dir / active_profile(settings).demand_pressure_relpath
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        yaml.safe_dump(pressure.model_dump(), sort_keys=False, allow_unicode=True),
+        encoding="utf-8",
+    )
+    log.info("econ.demand_pressure.wrote", path=str(path))
+    return str(path)
+
+
+def load_demand_pressure(settings: Settings | None = None) -> FacilityDemandPressure | None:
+    """Read the committed demand-pressure YAML for the active site, or ``None``.
+
+    Per-site: resolves ``demand_pressure_relpath`` off the active profile. Absent for a thin
+    (facility-less) site — the caller (the ``economics-demand-pressure`` bundle feed) simply
+    omits the feed, exactly as the derivation is gated on ``SiteProfile.facility``.
+    """
+    settings = settings or get_settings()
+    path = settings.data_dir / active_profile(settings).demand_pressure_relpath
+    if not path.is_file():
+        return None
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        return None
+    return FacilityDemandPressure.model_validate(data)

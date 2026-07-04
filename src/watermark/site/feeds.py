@@ -62,7 +62,11 @@ from watermark.provenance import source_is_verified
 # 1.11.0: adds the `catalog-index` object feed — the hydrated catalog of addressable "grabbable"
 #   atoms (handle grammar `<kind>:<site>:<local_id>`) the user-authored Stories write/read paths
 #   resolve against, plus `catalog_version` for handle-drift revalidation (epic #1090 / #1093).
-CONTRACT_VERSION = "1.11.0"
+# 1.12.0: adds the `economics-demand-pressure` object feed (#1105) — the facility demand→consumer-
+#   price-pressure sensitivity (`FacilityDemandPressure`): households-equivalent, demand share, and
+#   the STYLIZED price-pressure band, each a `ProvenancedValue`. Facility-gated — absent for a thin
+#   site with no documented facility (mirrors `derive_demand_pressure`'s own gate).
+CONTRACT_VERSION = "1.12.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

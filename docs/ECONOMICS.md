@@ -111,7 +111,11 @@ against **committed EIA consumer prices** (`watermark eia` →
 residential natural gas ($/Mcf), and total state retail electricity sales.
 
 The link is the facility's first-class total **`facility_draw`** (§1 + the PUE model,
-issue #87 — IT load × PUE), not IT load alone:
+issue #87 — IT load × PUE), not IT load alone. `derive_demand_pressure` persists this
+sensitivity to [`data/reference/eia/demand-pressure.yaml`](../data/reference/eia/demand-pressure.yaml)
+(per-site, facility-gated) and exposes it as the `economics-demand-pressure` bundle feed
+(issue #1105), so the frontend sources these figures rather than the docs hand-copying a
+console printout:
 
 | Quantity | Value | Tag |
 |---|---|---|

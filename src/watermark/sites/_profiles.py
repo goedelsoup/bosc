@@ -85,6 +85,7 @@ _LIMA = SiteProfile(
     baseline_relpath="reference/economics/baseline.yaml",
     rsei_relpath="reference/rsei/inventory.yaml",
     consumer_energy_relpath="reference/eia/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/demand-pressure.yaml",
     grid_relpath="reference/eia/grid-profile.yaml",
     # civil plan artifact (#901)
     storm_inventory_relpath="extracted/plans/lma1a.storm-inventory.yaml",
@@ -246,6 +247,7 @@ _FINDLAY = SiteProfile(
     baseline_relpath="reference/economics/findlay/baseline.yaml",
     rsei_relpath="reference/rsei/findlay/inventory.yaml",
     consumer_energy_relpath="reference/eia/findlay/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/findlay/demand-pressure.yaml",
     grid_relpath="reference/eia/findlay/grid-profile.yaml",
     # toxics (no identified industrial corridor yet)
     toxic_corridor_bbox=(
@@ -377,6 +379,7 @@ _FORT_WAYNE = SiteProfile(
     baseline_relpath="reference/economics/fort-wayne/baseline.yaml",
     rsei_relpath="reference/rsei/fort-wayne/inventory.yaml",
     consumer_energy_relpath="reference/eia/fort-wayne/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/fort-wayne/demand-pressure.yaml",
     grid_relpath="reference/eia/fort-wayne/grid-profile.yaml",
     # toxics (no identified industrial corridor yet)
     toxic_corridor_bbox=(0.0, 0.0, 0.0, 0.0),  # [open] pending an identified corridor on the Maumee
@@ -519,6 +522,7 @@ _VAN_WERT = SiteProfile(
     baseline_relpath="reference/economics/van-wert/baseline.yaml",
     rsei_relpath="reference/rsei/van-wert/inventory.yaml",
     consumer_energy_relpath="reference/eia/van-wert/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/van-wert/demand-pressure.yaml",
     grid_relpath="reference/eia/van-wert/grid-profile.yaml",
     # toxics (no identified industrial corridor yet)
     toxic_corridor_bbox=(0.0, 0.0, 0.0, 0.0),  # [open] pending an identified corridor on Town Creek
@@ -626,6 +630,7 @@ _TOLEDO = SiteProfile(
     baseline_relpath="reference/economics/toledo/baseline.yaml",
     rsei_relpath="reference/rsei/toledo/inventory.yaml",
     consumer_energy_relpath="reference/eia/toledo/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/toledo/demand-pressure.yaml",
     grid_relpath="reference/eia/toledo/grid-profile.yaml",
     # toxics (no identified industrial corridor yet)
     toxic_corridor_bbox=(
@@ -727,6 +732,7 @@ _DEFIANCE = SiteProfile(
     baseline_relpath="reference/economics/defiance/baseline.yaml",
     rsei_relpath="reference/rsei/defiance/inventory.yaml",
     consumer_energy_relpath="reference/eia/defiance/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/defiance/demand-pressure.yaml",
     grid_relpath="reference/eia/defiance/grid-profile.yaml",
     # toxics (no identified industrial corridor yet)
     # [inference] the Defiance industrial cluster on the Maumee/Auglaize mainstem from the
@@ -847,6 +853,7 @@ _BRYAN = SiteProfile(
     baseline_relpath="reference/economics/bryan/baseline.yaml",
     rsei_relpath="reference/rsei/bryan/inventory.yaml",
     consumer_energy_relpath="reference/eia/bryan/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/bryan/demand-pressure.yaml",
     grid_relpath="reference/eia/bryan/grid-profile.yaml",
     # [inference] the City of Bryan reach of Prairie Creek (#412): covers the Bryan-city industrial
     # cluster — NEW ERA OHIO (41.478/-84.559; now CLOSED, a legacy emitter), Titan Tire of Bryan
@@ -957,6 +964,7 @@ _OTTAWA = SiteProfile(
     baseline_relpath="reference/economics/ottawa/baseline.yaml",
     rsei_relpath="reference/rsei/ottawa/inventory.yaml",
     consumer_energy_relpath="reference/eia/ottawa/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/ottawa/demand-pressure.yaml",
     grid_relpath="reference/eia/ottawa/grid-profile.yaml",
     # toxics (no identified industrial corridor yet)
     toxic_corridor_bbox=(
@@ -1054,6 +1062,7 @@ _URBANA = SiteProfile(
     baseline_relpath="reference/economics/urbana/baseline.yaml",
     rsei_relpath="reference/rsei/urbana/inventory.yaml",
     consumer_energy_relpath="reference/eia/urbana/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/urbana/demand-pressure.yaml",
     grid_relpath="reference/eia/urbana/grid-profile.yaml",
     toxic_corridor_bbox=(
         0.0,
@@ -1149,6 +1158,7 @@ _SPRINGFIELD = SiteProfile(
     baseline_relpath="reference/economics/springfield/baseline.yaml",
     rsei_relpath="reference/rsei/springfield/inventory.yaml",
     consumer_energy_relpath="reference/eia/springfield/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/springfield/demand-pressure.yaml",
     grid_relpath="reference/eia/springfield/grid-profile.yaml",
     toxic_corridor_bbox=(
         0.0,
@@ -1231,6 +1241,7 @@ _XENIA = SiteProfile(
     baseline_relpath="reference/economics/xenia/baseline.yaml",
     rsei_relpath="reference/rsei/xenia/inventory.yaml",
     consumer_energy_relpath="reference/eia/xenia/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/xenia/demand-pressure.yaml",
     grid_relpath="reference/eia/xenia/grid-profile.yaml",
     toxic_corridor_bbox=(
         0.0,
@@ -1318,6 +1329,7 @@ _WPAFB = SiteProfile(
     baseline_relpath="reference/economics/wpafb/baseline.yaml",
     rsei_relpath="reference/rsei/wpafb/inventory.yaml",
     consumer_energy_relpath="reference/eia/wpafb/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/wpafb/demand-pressure.yaml",
     grid_relpath="reference/eia/wpafb/grid-profile.yaml",
     toxic_corridor_bbox=(
         0.0,
@@ -1437,6 +1449,7 @@ _HAMILTON_MIDDLETOWN = SiteProfile(
     baseline_relpath="reference/economics/hamilton-middletown/baseline.yaml",
     rsei_relpath="reference/rsei/hamilton-middletown/inventory.yaml",
     consumer_energy_relpath="reference/eia/hamilton-middletown/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/hamilton-middletown/demand-pressure.yaml",
     grid_relpath="reference/eia/hamilton-middletown/grid-profile.yaml",
     toxic_corridor_bbox=(
         0.0,
@@ -1516,6 +1529,7 @@ _TROY_PIQUA = SiteProfile(
     baseline_relpath="reference/economics/troy-piqua/baseline.yaml",
     rsei_relpath="reference/rsei/troy-piqua/inventory.yaml",
     consumer_energy_relpath="reference/eia/troy-piqua/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/troy-piqua/demand-pressure.yaml",
     grid_relpath="reference/eia/troy-piqua/grid-profile.yaml",
     toxic_corridor_bbox=(
         0.0,
@@ -1599,6 +1613,7 @@ _SIDNEY = SiteProfile(
     baseline_relpath="reference/economics/sidney/baseline.yaml",
     rsei_relpath="reference/rsei/sidney/inventory.yaml",
     consumer_energy_relpath="reference/eia/sidney/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/sidney/demand-pressure.yaml",
     grid_relpath="reference/eia/sidney/grid-profile.yaml",
     # [inference] the Sidney manufacturing reach: Emerson Climate Technologies (1675 W Campbell Rd,
     # 40.280/-84.182) + Copeland Shelby Mfg (320 Adams St, 40.289/-84.152) + Copeland Condensing
@@ -1720,6 +1735,7 @@ _GREENVILLE = SiteProfile(
     baseline_relpath="reference/economics/greenville/baseline.yaml",
     rsei_relpath="reference/rsei/greenville/inventory.yaml",
     consumer_energy_relpath="reference/eia/greenville/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/greenville/demand-pressure.yaml",
     grid_relpath="reference/eia/greenville/grid-profile.yaml",
     # [inference] Greenville urban-industrial corridor: the RSEI-dominant cluster is NOT
     # ag/food-processing (as expected going in) but a mixed manufacturing core —
@@ -1827,6 +1843,7 @@ _WILMINGTON = SiteProfile(
     baseline_relpath="reference/economics/wilmington/baseline.yaml",
     rsei_relpath="reference/rsei/wilmington/inventory.yaml",
     consumer_energy_relpath="reference/eia/wilmington/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/wilmington/demand-pressure.yaml",
     grid_relpath="reference/eia/wilmington/grid-profile.yaml",
     toxic_corridor_bbox=(0.0, 0.0, 0.0, 0.0),  # [open] pending the corridor (the Air Park reach)
     plant_receiving={
@@ -1923,6 +1940,7 @@ _NEW_ALBANY = SiteProfile(
     baseline_relpath="reference/economics/new-albany/baseline.yaml",
     rsei_relpath="reference/rsei/new-albany/inventory.yaml",
     consumer_energy_relpath="reference/eia/new-albany/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/new-albany/demand-pressure.yaml",
     grid_relpath="reference/eia/new-albany/grid-profile.yaml",
     toxic_corridor_bbox=(
         0.0,
@@ -2010,6 +2028,7 @@ _COLUMBUS = SiteProfile(
     baseline_relpath="reference/economics/columbus/baseline.yaml",
     rsei_relpath="reference/rsei/columbus/inventory.yaml",
     consumer_energy_relpath="reference/eia/columbus/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/columbus/demand-pressure.yaml",
     grid_relpath="reference/eia/columbus/grid-profile.yaml",
     toxic_corridor_bbox=(
         0.0,
@@ -2094,6 +2113,7 @@ _COSHOCTON = SiteProfile(
     baseline_relpath="reference/economics/coshocton/baseline.yaml",
     rsei_relpath="reference/rsei/coshocton/inventory.yaml",
     consumer_energy_relpath="reference/eia/coshocton/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/coshocton/demand-pressure.yaml",
     grid_relpath="reference/eia/coshocton/grid-profile.yaml",
     toxic_corridor_bbox=(0.0, 0.0, 0.0, 0.0),  # [open] pending an identified corridor
     plant_receiving={},  # [open] pending the Coshocton WWTP NPDES fact sheet (4.4 MGD → Muskingum River)
@@ -2173,6 +2193,7 @@ _PIKETON = SiteProfile(
     baseline_relpath="reference/economics/piketon/baseline.yaml",
     rsei_relpath="reference/rsei/piketon/inventory.yaml",
     consumer_energy_relpath="reference/eia/piketon/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/piketon/demand-pressure.yaml",
     grid_relpath="reference/eia/piketon/grid-profile.yaml",
     toxic_corridor_bbox=(0.0, 0.0, 0.0, 0.0),  # [open] pending an identified corridor
     plant_receiving={},  # [open] the PORTS water/wastewater plan is officially undisclosed (no NPDES issued)
@@ -2255,6 +2276,7 @@ _SANDUSKY = SiteProfile(
     baseline_relpath="reference/economics/sandusky/baseline.yaml",
     rsei_relpath="reference/rsei/sandusky/inventory.yaml",
     consumer_energy_relpath="reference/eia/sandusky/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/sandusky/demand-pressure.yaml",
     grid_relpath="reference/eia/sandusky/grid-profile.yaml",
     toxic_corridor_bbox=(0.0, 0.0, 0.0, 0.0),  # [open] pending an identified corridor
     plant_receiving={},  # [open] the Aligned site water/wastewater plan is undisclosed; Sandusky WWTP (3.8 MGD) → Sandusky Bay/Lake Erie
@@ -2346,6 +2368,7 @@ _WEST_UNION = SiteProfile(
     baseline_relpath="reference/economics/west-union/baseline.yaml",
     rsei_relpath="reference/rsei/west-union/inventory.yaml",
     consumer_energy_relpath="reference/eia/west-union/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/west-union/demand-pressure.yaml",
     grid_relpath="reference/eia/west-union/grid-profile.yaml",
     # toxics (no identified industrial corridor yet)
     toxic_corridor_bbox=(
@@ -2429,5 +2452,6 @@ PER_SITE_OUTPUT_FIELDS: tuple[str, ...] = (
     "baseline_relpath",
     "rsei_relpath",
     "consumer_energy_relpath",
+    "demand_pressure_relpath",
     "grid_relpath",
 )

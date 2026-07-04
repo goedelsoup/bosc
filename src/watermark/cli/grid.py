@@ -230,10 +230,12 @@ def eia_cmd(
         build_consumer_energy,
         derive_demand_pressure,
         write_consumer_energy,
+        write_demand_pressure,
     )
 
     settings = offline_settings("econ", offline)
     costs = build_consumer_energy(settings=settings)
+    dp = None
 
     console.print(f"[bold]{costs.area_name} consumer energy costs[/] [dim](EIA API v2)[/]")
     table = Table("series", "metric", "period", "value")
@@ -272,6 +274,8 @@ def eia_cmd(
     if write:
         path = write_consumer_energy(costs, settings=settings)
         wrote(path)
+        if dp is not None:  # persist the sensitivity for the bundle feed + docs (#1105)
+            wrote(write_demand_pressure(dp, settings=settings))
 
 
 @app.command(name="grid")
