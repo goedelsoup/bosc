@@ -71,6 +71,7 @@ class EstimateDrainageScope(BaseModel):
     sized_amount: int | None = None  # sum of quantified conveyance items (non-LS)
     sized_amount_approximate: bool = False  # any summed sized item was a ``~`` approximate read
     lump_sum_amount: int | None = None  # sum of lump-sum (LS) allocations
+    lump_sum_amount_approximate: bool = False  # any summed lump-sum item was a ``~`` read
     sized_fraction: float | None = None  # sized / drainage_subtotal
     sized_items: list[str] = []
     lump_sum_items: list[str] = []
@@ -214,6 +215,7 @@ def _scope_for(
     sized_amt = sum(_num(it.get("total_amount")) or 0 for it in sized)
     lump_amt = sum(_num(it.get("total_amount")) or 0 for it in lump)
     sized_approx = any(_is_approx(it.get("total_amount")) for it in sized)
+    lump_approx = any(_is_approx(it.get("total_amount")) for it in lump)
     frac = round(sized_amt / sub, 3) if sub else None
     return EstimateDrainageScope(
         name=name,
@@ -223,6 +225,7 @@ def _scope_for(
         sized_amount=sized_amt,
         sized_amount_approximate=sized_approx,
         lump_sum_amount=lump_amt,
+        lump_sum_amount_approximate=lump_approx,
         sized_fraction=frac,
         sized_items=[str(it.get("description", "")) for it in sized],
         lump_sum_items=[str(it.get("description", "")) for it in lump],

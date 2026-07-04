@@ -24,10 +24,11 @@ from pathlib import Path
 from typing import Any
 
 import yaml
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 from watermark.config import Settings, get_settings
 from watermark.hydrology.assimilative import dilution_flag
+from watermark.hydrology.connectors import HydroOfflineError
 from watermark.hydrology.lowflow import load_low_flows
 from watermark.hydrology.lowflow_frequency import compute_low_flow_frequency
 from watermark.hydrology.model import AssimilativeCheck, ProvenancedValue
@@ -62,7 +63,7 @@ class MainstemGage(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     gage: str
-    aliases: list[str]
+    aliases: list[str] = Field(min_length=1)  # a gage with no alias could never be matched
     note: str | None = None
 
 
@@ -80,40 +81,57 @@ class HeadwatersConfluence(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    components: list[ConfluenceComponent]
-    aliases: list[str]
+    # Exactly the two tributaries whose 7Q10s sum to the confluence denominator: a single-
+    # tributary "confluence" is meaningless (it would just be that gage), so the schema
+    # forbids YAML edits that drop one.
+    components: list[ConfluenceComponent] = Field(min_length=2, max_length=2)
+    aliases: list[str] = Field(min_length=1)
     note: str | None = None
+
+
+class _GageTable(BaseModel):
+    """The whole committed ``mainstem-gages.yaml``, structure-validated in one pass.
+
+    Both sections are required: a missing/renamed top-level key is a reference-file error,
+    not a silently-empty screen. The ``meta`` block (and any future annotation keys) is
+    ignored, but every gage/confluence entry is validated by its nested model.
+    """
+
+    model_config = ConfigDict(extra="ignore")
+
+    mainstems: dict[str, MainstemGage]
+    headwaters_confluences: dict[str, HeadwatersConfluence]
 
 
 def _mainstem_gages_path(settings: Settings) -> Path:
     return settings.reference_dir / "hydrology" / _MAINSTEM_GAGES_FILE
 
 
-def _load_gage_table(settings: Settings) -> dict[str, Any]:
-    """Read the committed curated gage table (raises if the reference input is absent)."""
+def _load_gage_table(settings: Settings) -> _GageTable:
+    """Read + schema-validate the committed curated gage table.
+
+    Raises ``FileNotFoundError`` if the reference input is absent, and a Pydantic
+    ``ValidationError`` if its top-level shape (or any gage/confluence entry) is malformed —
+    never a silently-empty screen from a wrong-shaped or truncated file.
+    """
     path = _mainstem_gages_path(settings)
     if not path.is_file():
         raise FileNotFoundError(
             f"curated mainstem-gage table missing: {path} "
             "(committed reference input for the basin low-flow screen)"
         )
-    return yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    return _GageTable.model_validate(raw)
 
 
 def load_mainstem_gages(*, settings: Settings) -> dict[str, MainstemGage]:
     """``{river name -> MainstemGage}`` validated from the committed reference table."""
-    return {
-        river: MainstemGage.model_validate(spec)
-        for river, spec in (_load_gage_table(settings).get("mainstems") or {}).items()
-    }
+    return _load_gage_table(settings).mainstems
 
 
 def load_headwaters_confluences(*, settings: Settings) -> dict[str, HeadwatersConfluence]:
     """``{confluence name -> HeadwatersConfluence}`` validated from the committed table."""
-    return {
-        name: HeadwatersConfluence.model_validate(spec)
-        for name, spec in (_load_gage_table(settings).get("headwaters_confluences") or {}).items()
-    }
+    return _load_gage_table(settings).headwaters_confluences
 
 
 def _norm(name: str) -> str:
@@ -140,6 +158,11 @@ def derive_basin_low_flows(
             lff = compute_low_flow_frequency(
                 site_no=spec.gage, receiving_water=river, settings=settings
             )
+        except HydroOfflineError:
+            # A missing offline fixture is an infra gap, not a real data absence — surface it
+            # loudly (the connector names the key to record) instead of silently omitting the
+            # gage into a wrong "no 7Q10" result.
+            raise
         except Exception as exc:
             # NWIS returned no data (e.g. a stage-only gage, or a gap in the
             # record window) — omit-don't-guess, same discipline as min_years.
@@ -198,6 +221,9 @@ def _derive_confluences(*, settings: Settings, min_years: int) -> dict[str, dict
                 lff = compute_low_flow_frequency(
                     site_no=gage, receiving_water=name, settings=settings
                 )
+            except HydroOfflineError:
+                # Offline fixture gap — fail loud, don't silently drop the confluence.
+                raise
             except Exception as exc:
                 log.warning(
                     "basin.lowflow.confluence_gage_error",

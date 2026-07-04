@@ -46,6 +46,7 @@ def test_only_diller_is_itemized_and_is_lump_sum_dominated() -> None:
     # ...transcribed ~20440 (approximate quantity ~2044 FT) — the marker survives as a flag.
     assert diller.sized_amount_approximate is True
     assert diller.lump_sum_amount == 100_000  # "Drainage improvements" LS
+    assert diller.lump_sum_amount_approximate is False  # the LS is an exact round allocation
     assert diller.sized_fraction is not None and diller.sized_fraction < 0.2
     assert any("underdrain" in d.lower() for d in diller.sized_items)
     assert any("Drainage improvements" in d for d in diller.lump_sum_items)

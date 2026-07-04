@@ -808,12 +808,17 @@ def drainage_audit_cmd(
                 if s.sized_amount is not None
                 else "—"
             )
+            lump = (
+                f"{'~' if s.lump_sum_amount_approximate else ''}{s.lump_sum_amount:,}"
+                if s.lump_sum_amount is not None
+                else "—"
+            )
             table.add_row(
                 s.name[:34],
                 f"{s.drainage_subtotal:,}" if s.drainage_subtotal else "—",
                 "itemized",
                 sized,
-                f"{s.lump_sum_amount:,}" if s.lump_sum_amount is not None else "—",
+                lump,
                 frac,
             )
         else:
