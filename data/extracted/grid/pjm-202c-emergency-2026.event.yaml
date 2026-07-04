@@ -41,8 +41,10 @@ event:
   forecast_peak_load:
     tag: '[verified]'
     pjm_application_mw:
-      '2026-07-01': 159563   # ~ MW, PJM application as quoted in Order 202-26-32
-      '2026-07-02': 162860   # ~ MW
+      # Approximate — the application reads "peak loads of approximately 159,563 MW ...
+      # and approximately 162,860 MW"; the ~ marker keeps that signal (models._coerce_number).
+      '2026-07-01': ~159563   # approx MW, PJM application as quoted in Order 202-26-32 p.1
+      '2026-07-02': ~162860   # approx MW
     note: >-
       PJM's later 2026-06-30 operations update revised the July-2 forecast to
       166,304 MW (vs the 2006 all-time summer peak of 165,563 MW). [reference]
@@ -89,6 +91,7 @@ corridor_linkage:
       A federal §202(c) order (202-26-33) authorized reliability-triggered dispatch
       of data-center backup generation across PJM during 2026-06-30 → 2026-07-03.
       This is the real-world instance of the exact mechanism Epic #1172 models.
+    source: doe-order-202-26-33.pdf §A (p.~9, the ordering clause) + §J effective clause (p.~10)
   facility_p0138965_gensets_dispatched:
     tag: '[open]'
     statement: >-
@@ -98,6 +101,10 @@ corridor_linkage:
       Final Air PTI issued only 2026-05-28 and it remains under construction (active
       NPDES construction-stormwater NOI, 2026-06), so it is most likely not yet
       operational. No facility-level runtime record exists in the corpus.
+    source: >-
+      Sourced by absence — no facility runtime record in the corpus; doe-order-202-26-33.pdf
+      names no facility, and data/extracted/permits/4132514.epa.yaml (Final Air PTI, issued
+      2026-05-28) with the 2026-06 NPDES construction NOI shows the site pre-operational.
     would_close_with:
       - OEPA deviation/malfunction or PTI compliance report naming the facility
       - a utility/PJM behind-the-meter activation record for the site
@@ -109,6 +116,9 @@ corridor_linkage:
       NSR caps the permit was engineered to stay under (NOx 235.62 tpy / CO 96.06 tpy)
       could be pressured — but with no observed facility runtime this remains a
       modeled hypothesis (#1172 Tier-1), not an observed breach.
+    source: >-
+      Derived — NSR caps from data/extracted/permits/4132514.epa.yaml; dispatch pathway from
+      doe-order-202-26-33.pdf §A. No observed runtime, so this stays [inference], not a breach.
 
 acceptance:  # per issue #1174
   citable_primary_source_in_corpus: true   # 3 federal/PJM PDFs under data/documents/grid/pjm-202c-2026/
