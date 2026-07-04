@@ -110,6 +110,18 @@ def test_discharge_findings_surface_each_dimension(hydro_settings: Settings) -> 
     } <= checks
 
 
+def test_wet_antecedent_bound_brackets_the_as_permitted_peak(hydro_settings: Settings) -> None:
+    # The AMC-III (wet-antecedent) bound raises the as-permitted post peak the outfall and
+    # Dug Run must absorb — a disclosed conservative bracket, not the headline number.
+    screen = screen_campus_discharge(settings=hydro_settings, live=True)
+    for p in screen.peaks:
+        assert p.post_peak_wet_cfs is not None
+        assert p.post_peak_cfs < p.post_peak_wet_cfs
+    # The design finding surfaces the wet bound so a reader knows the peaks aren't wet.
+    calib = next(f for f in discharge_findings(screen) if f.check == "impervious-calibration")
+    assert "AMC-III" in calib.detail
+
+
 def test_committed_discharge_screen_loads_and_matches(hydro_settings: Settings) -> None:
     committed = load_discharge_screen(hydro_settings)
     assert committed is not None, (
@@ -124,3 +136,6 @@ def test_committed_discharge_screen_loads_and_matches(hydro_settings: Settings) 
     c25, f25 = committed.design_peak, fresh.design_peak
     assert c25 is not None and f25 is not None
     assert c25.post_peak_cfs == pytest.approx(f25.post_peak_cfs, rel=0.01)
+    # The committed wet-antecedent (AMC-III) bound also round-trips and matches.
+    assert c25.post_peak_wet_cfs is not None and f25.post_peak_wet_cfs is not None
+    assert c25.post_peak_wet_cfs == pytest.approx(f25.post_peak_wet_cfs, rel=0.01)

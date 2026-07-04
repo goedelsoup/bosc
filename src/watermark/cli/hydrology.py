@@ -293,13 +293,21 @@ def storm_discharge(
         f"({screen.cover_breakdown}) vs pre {screen.pre_cn:g} "
         f"[dim]| full-buildout bound {screen.post_cn_full_buildout:g}[/]"
     )
-    table = Table("storm", "depth (in)", "pre (cfs)", "post (cfs)", "full-buildout (cfs)")
+    table = Table(
+        "storm",
+        "depth (in)",
+        "pre (cfs)",
+        "post (cfs)",
+        "post wet AMC-III (cfs)",
+        "full-buildout (cfs)",
+    )
     for p in screen.peaks:
         table.add_row(
             f"{p.return_period_yr}-yr",
             f"{p.depth_in:.2f}",
             f"{p.pre_peak_cfs:,.0f}",
             f"{p.post_peak_cfs:,.0f}",
+            f"{p.post_peak_wet_cfs:,.0f}" if p.post_peak_wet_cfs is not None else "-",
             f"{p.full_buildout_peak_cfs:,.0f}",
         )
     console.print(table)

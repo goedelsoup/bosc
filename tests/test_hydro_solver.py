@@ -77,6 +77,18 @@ def test_higher_cn_yields_higher_peak() -> None:
     assert high.volume_acft > low.volume_acft
 
 
+def test_runoff_amc_iii_raises_peak_and_records_condition() -> None:
+    # A wet-antecedent (AMC-III) run adjusts the AMC-II CN upward, so the same storm
+    # yields a higher peak, and the hydrograph records the condition it ran under.
+    common = {"area_acres": 200.0, "curve_number": 80.0, "tc_hr": 0.75, "storm_depth_in": 4.0}
+    avg = simulate_runoff(**common)
+    wet = simulate_runoff(**common, amc="III")
+    assert avg.amc == "II"  # default is average antecedent moisture
+    assert wet.amc == "III"
+    assert wet.curve_number > avg.curve_number == 80.0  # AMC-II passes the CN through
+    assert wet.peak_cfs > avg.peak_cfs
+
+
 def test_muskingum_coefficients_sum_to_one() -> None:
     c1, c2, c3 = routing.muskingum_coeffs(
         500.0,

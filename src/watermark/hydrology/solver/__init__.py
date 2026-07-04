@@ -10,6 +10,7 @@ are not a substitute for EPA SWMM or HEC-RAS.
 from __future__ import annotations
 
 from watermark.hydrology.solver.curve_number import (
+    adjust_amc,
     composite_cn,
     excess_rainfall,
     storage_s,
@@ -19,6 +20,7 @@ from watermark.hydrology.solver.routing import muskingum_coeffs, route
 from watermark.hydrology.solver.runoff import simulate_runoff
 
 __all__ = [
+    "adjust_amc",
     "composite_cn",
     "excess_rainfall",
     "muskingum_coeffs",

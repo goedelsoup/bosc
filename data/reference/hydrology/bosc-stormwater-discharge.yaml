@@ -38,16 +38,19 @@ peaks:
   pre_peak_cfs: 209.493
   post_peak_cfs: 237.548
   full_buildout_peak_cfs: 374.346
+  post_peak_wet_cfs: 356.911
 - return_period_yr: 25
   depth_in: 4.25
   pre_peak_cfs: 284.478
   post_peak_cfs: 317.189
   full_buildout_peak_cfs: 460.45
+  post_peak_wet_cfs: 443.135
 - return_period_yr: 100
   depth_in: 5.39
   pre_peak_cfs: 421.339
   post_peak_cfs: 458.034
   full_buildout_peak_cfs: 606.243
+  post_peak_wet_cfs: 589.568
 design_return_period_yr: 25
 outfall_diameter_in:
   value: 60.0
@@ -86,11 +89,14 @@ basin_chronology_note: The 95% SPS grading sheet shows NO detention/retention st
   storage appearing after the 95% design. Undetained, the post-development peak discharges
   straight to the 60-inch outfall.
 method: Tier-0 SCS-CN screening over the measured parcel footprint; post CN = area-weighted
-  composite from the ASWCD-declared impervious/developed split; outfall capacity =
-  Manning full-flow (n=0.013) across an assumed slope band; receiving 7Q10 cited from
-  the OEPA NPDES fact sheet (2PH00006).
+  composite from the ASWCD-declared impervious/developed split; peaks are AMC-II (average
+  antecedent moisture) with a wet-antecedent (AMC-III) conservative bound on the as-permitted
+  post peak; outfall capacity = Manning full-flow (n=0.013) across an assumed slope
+  band; receiving 7Q10 cited from the OEPA NPDES fact sheet (2PH00006).
 caveats:
 - Screening-grade — not a routed hydraulic model or a permit determination.
+- Headline peaks are AMC-II; post_peak_wet_cfs is the AMC-III (wet-antecedent) upper
+  bound — the storm falling on ground already saturated by prior rain.
 - The outfall pipe slope is not in the record; capacity is bracketed across 0.3-1.0%.
 - The peak is computed over the whole measured footprint; the tributary area to the
   single 60-inch trunk is not stated, so the capacity comparison is a bracket.
