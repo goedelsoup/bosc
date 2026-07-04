@@ -137,7 +137,7 @@ def test_non_reference_site_does_not_silently_load_lima_permit() -> None:
         econ_offline=True,
         econ_fixtures_dir=REPO_ROOT / "tests" / "fixtures" / "economics",
     )
-    with pytest.raises(NotImplementedError, match="air_permit_relpath|permit_path"):
+    with pytest.raises(NotImplementedError, match=r"air_permit_relpath|permit_path"):
         load_emission_factors(basis="permit", settings=fw)
     assert load_nsr_caps(settings=fw) == {}
 
