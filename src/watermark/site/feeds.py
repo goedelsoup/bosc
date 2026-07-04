@@ -71,7 +71,11 @@ from watermark.provenance import source_is_verified
 #   routed vs. naive-summed outlet hydrograph series, the peak `attenuation_pct` + `lag_hr`, the
 #   per-reach attenuation/lag table, and the `site` label. Absent when the topology or reach
 #   table is missing.
-CONTRACT_VERSION = "1.13.0"
+# 1.14.0: the cooling `basis` (`CoolingBasis`, embedded in `hydrology-scenarios`) gains the optional
+#   `makeup_high` ProvenancedValue — the campus intake at the upper consumptive bound (#1153), read
+#   by refill instead of back-calculating consumptive_high/consumptive_fraction across incompatible
+#   per-archetype bases. Additive/optional: absent (null) for the fraction-uncertainty archetypes.
+CONTRACT_VERSION = "1.14.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

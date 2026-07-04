@@ -177,11 +177,13 @@ def compute_refill_adequacy(
     basis = derive_cooling_basis()
     municipal = supply.current_production.value
     gross = budget.gross_production_mgd
-    makeup_high = (
-        basis.consumptive_high.value / basis.consumptive_fraction.value
-        if basis.consumptive_fraction.value
-        else basis.makeup_demand.value
-    )
+    # The intake at the upper consumptive bound — read straight off the basis rather than
+    # back-calculating consumptive_high / consumptive_fraction, which divides across
+    # incompatible bases for a fraction-uncertainty archetype (once_through) and is only
+    # valid for the tower's method bracket (#1153). headline_makeup_high() returns the
+    # blowdown-method intake for the tower and falls back to makeup_demand elsewhere.
+    makeup_high_pv = basis.headline_makeup_high()
+    makeup_high = makeup_high_pv.value if makeup_high_pv is not None else basis.makeup_demand.value
     gross_high = round(municipal + makeup_high, 2)
     demand_scenarios = [
         ("baseline city", round(municipal, 2)),

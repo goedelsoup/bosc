@@ -119,6 +119,12 @@ class SiteFacility(BaseModel):
     wue_citation: str | None = None
     cycles_of_concentration: float | None = None
     cycles_citation: str | None = None
+    # Condenser heat-rejection overhead for the once_through withdrawal (#1153): heat
+    # rejected = IT load x this multiplier (server load + cooling-system work). None = use
+    # the archetype default (~1.15). Only the once_through math reads it; the tower/hybrid
+    # fold cooling overhead into their empirical WUE instead.
+    heat_reject_multiplier: float | None = None
+    heat_reject_multiplier_citation: str | None = None
 
     @model_validator(mode="after")
     def _override_citations_paired(self) -> SiteFacility:
@@ -126,6 +132,10 @@ class SiteFacility(BaseModel):
             raise ValueError("wue_l_per_kwh and wue_citation must be set together")
         if (self.cycles_of_concentration is None) != (self.cycles_citation is None):
             raise ValueError("cycles_of_concentration and cycles_citation must be set together")
+        if (self.heat_reject_multiplier is None) != (self.heat_reject_multiplier_citation is None):
+            raise ValueError(
+                "heat_reject_multiplier and heat_reject_multiplier_citation must be set together"
+            )
         return self
 
 

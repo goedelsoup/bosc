@@ -29,10 +29,23 @@ class CoolingBasis(BaseModel):
     it_load: ProvenancedValue  # MW (from the air-permit genset count; 0 for `off`)
     wue: ProvenancedValue | None = None  # L/kWh, consumptive water per IT energy (wet modes)
     cycles_of_concentration: ProvenancedValue | None = None  # cooling-tower CoC (tower modes)
-    consumptive_fraction: ProvenancedValue  # evaporated share of the intake
-    makeup_demand: ProvenancedValue  # MGD, the cooling intake / withdrawal
-    consumptive_low: ProvenancedValue  # MGD, low bound
-    consumptive_high: ProvenancedValue  # MGD, upper bound
+    # Single, uniform basis (#1153): evaporated share of ``makeup_demand`` (the intake),
+    # for *every* archetype — ``makeup_demand`` is the intake in each (the tower's makeup,
+    # the once-through withdrawal). So the central consumptive is ``makeup_demand x
+    # consumptive_fraction`` universally; ``headline_consumptive()`` returns exactly that,
+    # never ``consumptive_low`` (which is the range low, and only *coincides* with the
+    # central for the tower/hybrid, not for once_through).
+    consumptive_fraction: ProvenancedValue  # evaporated share of makeup_demand (the intake)
+    makeup_demand: ProvenancedValue  # MGD, the cooling intake / withdrawal (central)
+    consumptive_low: ProvenancedValue  # MGD, low bound of the consumptive range
+    consumptive_high: ProvenancedValue  # MGD, upper bound of the consumptive range
+    # The intake at the upper consumptive bound (MGD). For the evaporative tower the
+    # blowdown-method upper bound implies a *larger* intake (blowdown x CoC); for the
+    # fraction-uncertainty archetypes (once_through) the intake is unchanged, so this stays
+    # None and ``headline_makeup_high()`` falls back to ``makeup_demand``. This is what
+    # ``refill`` reads instead of dividing ``consumptive_high`` by ``consumptive_fraction``
+    # (incompatible bases when the bracket varies the fraction, not the method — #1153).
+    makeup_high: ProvenancedValue | None = None
     method: str = "power x WUE (central); blowdown x cycles (upper bound)"
     method_disclosed: bool = True  # False = archetype not on record (`unknown`)
     is_bracketed: bool = False  # True = low/high span candidate archetypes, no single estimate
@@ -43,15 +56,32 @@ class CoolingBasis(BaseModel):
     def headline_consumptive(self) -> ProvenancedValue | None:
         """The single central consumptive draw (MGD), or ``None`` for a bracketed basis.
 
-        For a disclosed archetype this is the central (power x WUE) estimate —
-        ``consumptive_low``, the low end of the two-method [power, blowdown] bracket, and
-        equal to ``makeup_demand x consumptive_fraction`` for the wet modes. For the
-        ``unknown`` archetype (``is_bracketed``) there is **no single headline**: callers
-        must present ``consumptive_low``..``consumptive_high`` as a range and lock the
-        headline (CLAUDE.md: never a single headline for an undisclosed method). Enforce
+        The archetype's **central** consumptive: ``makeup_demand x consumptive_fraction``,
+        by construction, for every disclosed archetype (#1153). This coincides with
+        ``consumptive_low`` for the tower/hybrid (where the range low *is* the central
+        power x WUE estimate) but **not** for ``once_through``, whose range is a
+        fraction-uncertainty bracket around a *central* fraction — there ``consumptive_low``
+        is the range low (evap x 1%), not the central (evap x 1.5%). Returning the product
+        keeps ``balance`` (this headline) and ``scenario``/``supply`` (which both compute
+        ``demand x fraction``) in agreement for every archetype.
+
+        For the ``unknown`` archetype (``is_bracketed``) there is **no single headline**:
+        callers must present ``consumptive_low``..``consumptive_high`` as a range and lock
+        the headline (CLAUDE.md: never a single headline for an undisclosed method). Enforce
         the guard here, in the data tier, not only in the presentation tier.
         """
-        return None if self.is_bracketed else self.consumptive_low
+        if self.is_bracketed:
+            return None
+        return ProvenancedValue.derived(
+            self.makeup_demand.value * self.consumptive_fraction.value,
+            "MGD",
+            citation=(
+                f"central consumptive = {self.makeup_demand.value:g} MGD intake x "
+                f"{self.consumptive_fraction.value:g} consumptive fraction "
+                f"({self.consumptive_fraction.citation})"
+            ),
+            confidence=self.consumptive_low.confidence,
+        )
 
     def headline_makeup(self) -> ProvenancedValue | None:
         """The single central makeup / intake (MGD), or ``None`` for a bracketed basis.
@@ -61,6 +91,22 @@ class CoolingBasis(BaseModel):
         completeness, but it is not an estimate — callers must not publish it as a headline.
         """
         return None if self.is_bracketed else self.makeup_demand
+
+    def headline_makeup_high(self) -> ProvenancedValue | None:
+        """The campus intake at the **upper** consumptive bound (MGD), or ``None`` if bracketed.
+
+        Only the evaporative tower's upper (blowdown-method) bound implies a genuinely
+        larger intake; there ``makeup_high`` is set (blowdown x CoC). For the archetypes
+        whose consumptive range is a *fraction* uncertainty at a fixed intake (once_through)
+        the intake does not grow, so ``makeup_high`` is ``None`` and this falls back to
+        ``makeup_demand``. ``refill`` reads this instead of back-calculating
+        ``consumptive_high / consumptive_fraction`` — a division that is only valid when the
+        bracket varies the method at a constant fraction, and produces a physically
+        meaningless number otherwise (#1153).
+        """
+        if self.is_bracketed:
+            return None
+        return self.makeup_high or self.makeup_demand
 
 
 class Scenario(BaseModel):

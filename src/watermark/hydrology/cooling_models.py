@@ -69,6 +69,17 @@ _OT_DELTA_T_CITE = "once-through condenser temperature rise dT ~10 degC (typical
 # scaled kW->MW and s->day (kg ~= L for water). The forward flow and its inverse share this
 # one factor so the unit chain can never drift between them.
 _OT_LPD_PER_MW = 1_000.0 * 86_400.0 / (4.186 * _OT_DELTA_T_C)
+# Heat *rejected* at the condenser is the IT (server) load plus the cooling-system work that
+# moves it — pumps, chillers/compressors, fans — so the rejected-heat load driving the
+# withdrawal is IT x an overhead multiplier, not bare IT (#1153). ~1.15 is a screening
+# central; a chiller-heavy plant runs higher. Per-facility override via
+# ``SiteFacility.heat_reject_multiplier`` / ``CoolingParams.heat_reject_multiplier``.
+_OT_HEAT_REJECT_MULT = 1.15
+_OT_HEAT_REJECT_CITE = (
+    "condenser heat rejection = IT load x ~1.15 cooling overhead (heat rejected is server "
+    "load + cooling-system work — pumps/chillers/fans; ~1.1-1.4 typical, chiller-heavy higher; "
+    "per PUE/mechanical-load screening convention, e.g. ASHRAE Datacom / DOE DC energy guides)"
+)
 _OT_EVAP_FRAC_LOW = 0.01
 _OT_EVAP_FRAC_HIGH = 0.02
 _OT_EVAP_CITE = (
@@ -103,16 +114,21 @@ def _consumptive_mgd_from_power(it_load_mw: float, wue_l_per_kwh: float) -> floa
     return _mgd_from_liters_per_day(liters_per_day)
 
 
-def it_load_mw_from_once_through_withdrawal(withdrawal_mgd: float) -> float:
-    """Invert :func:`_derive_once_through`: withdrawal (MGD) -> IT heat-rejection load (MW).
+def it_load_mw_from_once_through_withdrawal(
+    withdrawal_mgd: float, *, heat_reject_multiplier: float = _OT_HEAT_REJECT_MULT
+) -> float:
+    """Invert :func:`_derive_once_through`: withdrawal (MGD) -> IT load (MW).
 
     The once-through *consumptive* is only ~1-2% forced evaporation of the withdrawal, so
     it does not invert through a tower WUE. The withdrawal itself is the heat-rejection
-    basis (``withdrawal = heat rejection / (rho x c x dT)``); this reverses that through the
-    same :data:`_OT_LPD_PER_MW` factor the forward derivation used, so a Method-2 cross-check
-    reconciles to the facility's own IT load.
+    basis (``withdrawal = heat rejection / (rho x c x dT)``, heat rejection = IT x the
+    cooling-overhead multiplier); this reverses that through the same :data:`_OT_LPD_PER_MW`
+    factor **and** divides the ``heat_reject_multiplier`` back out (#1153), so a Method-2
+    cross-check reconciles to the facility's own *IT* load — not the inflated rejected-heat
+    load. Pass the facility's own multiplier when it overrides the ~1.15 default.
     """
-    return _liters_per_day_from_mgd(withdrawal_mgd) / _OT_LPD_PER_MW
+    reject_mw = _liters_per_day_from_mgd(withdrawal_mgd) / _OT_LPD_PER_MW
+    return reject_mw / heat_reject_multiplier
 
 
 _MONTH_ORDER = ("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC")
@@ -156,6 +172,7 @@ class CoolingParams:
     blowdown_mgd: float | None = None
     wue_l_per_kwh: float | None = None
     cycles_of_concentration: float | None = None
+    heat_reject_multiplier: float | None = None
 
 
 DeriveFn = Callable[[SiteFacility | None, CoolingParams, Settings], CoolingBasis]
@@ -232,6 +249,19 @@ def _resolve_cycles(facility: SiteFacility | None, params: CoolingParams) -> tup
     return _CYCLES, _CYCLES_CITE
 
 
+def _resolve_heat_reject_mult(
+    facility: SiteFacility | None, params: CoolingParams
+) -> tuple[float, str]:
+    if params.heat_reject_multiplier is not None:
+        return params.heat_reject_multiplier, _OT_HEAT_REJECT_CITE
+    if facility is not None and facility.heat_reject_multiplier is not None:
+        return (
+            facility.heat_reject_multiplier,
+            facility.heat_reject_multiplier_citation or _OT_HEAT_REJECT_CITE,
+        )
+    return _OT_HEAT_REJECT_MULT, _OT_HEAT_REJECT_CITE
+
+
 # --- archetype derivations --------------------------------------------------------------
 
 
@@ -304,6 +334,15 @@ def _derive_evaporative_tower(
             "MGD",
             citation=f"{it_load_mw:g} MW x {wue_l_per_kwh:g} L/kWh / evap fraction",
         ),
+        # Intake at the upper (blowdown-method) consumptive bound: a genuinely larger
+        # withdrawal, blowdown x CoC = consumptive_high / (CoC-1)/CoC (#1153). This is what
+        # `refill` reads for its high-bound gross production, rather than dividing
+        # consumptive_high by the fraction itself.
+        makeup_high=ProvenancedValue.derived(
+            round(consumptive_high / frac, 2) if frac > 0 else round(makeup, 2),
+            "MGD",
+            citation=f"upper-bound intake = {high_cite} / evap fraction (blowdown x CoC)",
+        ),
         consumptive_low=ProvenancedValue.derived(
             round(consumptive_low, 2),
             "MGD",
@@ -323,11 +362,18 @@ def _derive_once_through(
     """Surface-water pass-through (alias "open once-through") — big withdrawal, small loss.
 
     Withdrawal = heat rejection / (rho x c x dT); nearly all of it returns warmer.
-    The consumptive share is the downstream forced evaporation induced by the thermal
-    rise, ~1-2% of withdrawal (Diehl & Harris 2014). No tower, so no WUE/CoC.
+    Heat rejected at the condenser is the IT load **plus** cooling-system work, so the
+    driving load is ``IT x heat_reject_multiplier`` (~1.15), not bare IT (#1153) — bare IT
+    understates the withdrawal 10-40%. The consumptive share is the downstream forced
+    evaporation induced by the thermal rise, ~1-2% of withdrawal (Diehl & Harris 2014).
+    No tower, so no WUE/CoC.
     """
     it_load_mw, it_load_cite = _resolve_it_load(facility, params)
-    withdrawal_mgd = _mgd_from_liters_per_day(it_load_mw * _OT_LPD_PER_MW)
+    mult, mult_cite = _resolve_heat_reject_mult(facility, params)
+    reject_mw = it_load_mw * mult
+    # Rejected heat -> withdrawal through the single-source per-MW flow factor, so the forward
+    # and its inverse (it_load_mw_from_once_through_withdrawal) can never drift.
+    withdrawal_mgd = _mgd_from_liters_per_day(reject_mw * _OT_LPD_PER_MW)
     frac_central = (_OT_EVAP_FRAC_LOW + _OT_EVAP_FRAC_HIGH) / 2.0
     return CoolingBasis(
         cooling_model=CoolingModelType.ONCE_THROUGH,
@@ -339,8 +385,9 @@ def _derive_once_through(
             round(withdrawal_mgd, 2),
             "MGD",
             citation=(
-                f"{it_load_mw:g} MW heat rejection / (rho x c x dT); {_OT_DELTA_T_CITE} — "
-                "once-through withdrawal, nearly all returned"
+                f"{it_load_mw:g} MW IT x {mult:g} heat-rejection overhead = {reject_mw:g} MW "
+                f"rejected / (rho x c x dT); {_OT_DELTA_T_CITE}; {mult_cite} — once-through "
+                "withdrawal, nearly all returned"
             ),
         ),
         consumptive_low=ProvenancedValue.derived(
@@ -354,7 +401,8 @@ def _derive_once_through(
             citation=f"withdrawal x {_OT_EVAP_FRAC_HIGH:g} forced evaporation; {_OT_EVAP_CITE}",
         ),
         method=(
-            "once-through pass-through: withdrawal = heat rejection / (rho x c x dT); "
+            "once-through pass-through: withdrawal = heat rejection / (rho x c x dT), "
+            "heat rejection = IT x cooling-overhead multiplier; "
             "consumptive = ~1-2% forced evaporation of the thermal rise"
         ),
     )

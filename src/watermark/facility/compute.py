@@ -60,11 +60,12 @@ from watermark.facility.power import derive_power_basis
 from watermark.hydrology import geo
 from watermark.hydrology.cooling import derive_cooling_basis
 from watermark.hydrology.cooling_models import (
+    _OT_HEAT_REJECT_MULT,
     _WUE_L_PER_KWH,
     it_load_mw_from_once_through_withdrawal,
 )
 from watermark.hydrology.model import ProvenancedValue
-from watermark.sites import CoolingModelType
+from watermark.sites import CoolingModelType, active_profile
 
 _L_PER_GAL = 3.785411784
 _SQFT_PER_ACRE = 43560.0
@@ -308,9 +309,17 @@ def derive_compute_capacity(
         # Once-through consumptive is only ~1-2% forced evaporation of the withdrawal, not
         # it_load x WUE — inverting it with a tower WUE badly understates the load. The
         # withdrawal is the heat-rejection basis, so recover the IT load from it instead.
-        # Both consumptive bounds share one withdrawal, so the cross-check is a point.
+        # Both consumptive bounds share one withdrawal, so the cross-check is a point. Divide
+        # the same cooling-overhead multiplier the forward applied back out (#1153), so this
+        # recovers the *IT* load, not the inflated rejected-heat load.
+        facility = active_profile(settings).facility
+        heat_reject_mult = (
+            facility.heat_reject_multiplier
+            if facility is not None and facility.heat_reject_multiplier is not None
+            else _OT_HEAT_REJECT_MULT
+        )
         it_water_low = it_water_high = it_load_mw_from_once_through_withdrawal(
-            cooling.makeup_demand.value
+            cooling.makeup_demand.value, heat_reject_multiplier=heat_reject_mult
         )
         water_low_cite = (
             f"once-through withdrawal {cooling.makeup_demand.value:g} MGD / heat-rejection "

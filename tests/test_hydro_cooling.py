@@ -108,6 +108,36 @@ def test_once_through_low_consumptive_fraction() -> None:
     assert b.wue is None and b.cycles_of_concentration is None
 
 
+def test_once_through_withdrawal_reflects_total_rejected_heat() -> None:
+    # Heat rejected at the condenser is IT + cooling-system work, so the withdrawal must be
+    # driven by IT x the overhead multiplier (~1.15), not bare IT (#1153). A bare-IT basis
+    # is understated ~13%.
+    from watermark.hydrology.cooling_models import _OT_HEAT_REJECT_MULT
+
+    base = derive_cooling_basis(cooling_model="once_through")
+    unity = derive_cooling_basis(cooling_model="once_through", heat_reject_multiplier=1.0)
+    assert base.makeup_demand.value == pytest.approx(
+        unity.makeup_demand.value * _OT_HEAT_REJECT_MULT, rel=0.01
+    )
+    assert base.makeup_demand.value > unity.makeup_demand.value
+
+
+def test_once_through_headline_is_central_not_range_low() -> None:
+    # The once_through range is a *fraction* bracket (1% low, 2% high) around a *central*
+    # fraction (1.5%). headline_consumptive() must return the central (makeup x 1.5%), not
+    # consumptive_low (makeup x 1%), so balance/scenario agree (#1153).
+    b = derive_cooling_basis(cooling_model="once_through")
+    headline = b.headline_consumptive()
+    assert headline is not None
+    assert headline.value == pytest.approx(b.makeup_demand.value * b.consumptive_fraction.value)
+    assert headline.value > b.consumptive_low.value  # central sits above the range low
+    assert headline.value < b.consumptive_high.value
+    # The intake does not grow with the consumptive fraction: the high-bound makeup is the
+    # same withdrawal, so refill must not inflate it by dividing consumptive_high / fraction.
+    makeup_high = b.headline_makeup_high()
+    assert makeup_high is not None and makeup_high.value == pytest.approx(b.makeup_demand.value)
+
+
 # ---------------------------------------------------------------------------------------
 # unknown — bracketed range, honesty flags (#1057)
 # ---------------------------------------------------------------------------------------
@@ -137,9 +167,15 @@ def test_bracketed_basis_has_no_headline_and_guards_data_tier(hydro_settings: Se
     assert b.is_bracketed
     assert b.headline_consumptive() is None
     assert b.headline_makeup() is None
-    # A disclosed archetype does expose a headline (the power x WUE central).
+    # A disclosed archetype does expose a headline: the central consumptive, which is
+    # makeup x fraction (== the power x WUE central for the tower), not consumptive_low
+    # doubling as headline (#1153).
     tower = derive_cooling_basis(cooling_model="evaporative_tower")
-    assert tower.headline_consumptive() is tower.consumptive_low
+    headline = tower.headline_consumptive()
+    assert headline is not None
+    assert headline.value == pytest.approx(
+        tower.makeup_demand.value * tower.consumptive_fraction.value
+    )
     assert tower.headline_makeup() is tower.makeup_demand
 
     system = sup.load_supply(settings=hydro_settings)
