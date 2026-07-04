@@ -1675,7 +1675,7 @@ _GREENVILLE = SiteProfile(
     nasa_power_lon=-84.6330,
     rsei_fips="39037",  # [verified] Darke County, OH
     econ_fips="39037",
-    eia861_utility_number=4922,  # Dayton Power & Light (AES Ohio) — EIA-861 2024 Service_Territory, Greenville city LSE [verified]; rural Darke is a co-op/AEP/muni patchwork
+    eia861_utility_number=4922,  # Dayton Power & Light (AES Ohio) — the City of Greenville distribution LSE [verified]; rural Darke is a Darke-REC-co-op / AEP / muni patchwork (#514 reconciled — same IOU-over-co-op convention as West Union)
     parcels_url=(  # [reference] OGRIP Ohio statewide parcels, scoped to County='Darke' (39037) —
         # Darke County self-hosts no public parcel ArcGIS REST (the auditor's darkecountyrealestate.org
         # is a Cloudflare-fronted vendor SPA with no exposed service), so use the shared OGRIP view.
@@ -1771,12 +1771,32 @@ _GREENVILLE = SiteProfile(
     facility=None,  # [verified] zero Greenville/Darke-County data-center records in RSEI, ECHO NPDES,
     # and the onboarding self-research pass (#482/#515); the site angle is greenfield ag-land
     # conversion — no disclosed facility as of 2026-07-02.
-    serving_utility_citation="EIA-861 2024 Service_Territory: Darke County, OH is a patchwork (DP&L #4922, AEP #14006 on the east fringe, Darke Rural Electric co-op #4796, village munis Arcanum/Versailles); the City of Greenville LSE is Dayton Power & Light (#4922). [verified]",
+    serving_utility_citation=(
+        # #514 reconciliation: the issue's premise was that heavily-rural Darke County is likely
+        # served by a co-op (Darke REC / Pioneer), so #4922 (an IOU) might be wrong. Resolved to
+        # the IOU for the site as defined: AES Ohio (DP&L)'s published delivery-service territory
+        # explicitly lists the City of Greenville (with Dayton/Springfield/Troy/Xenia/Piqua), and
+        # Greenville has no municipal electric — so the city/industrial-core distribution LSE is
+        # DP&L #4922. Darke Rural Electric Cooperative (#4796; HQ 1120 Fort Jefferson Ave, Greenville)
+        # serves the RURAL remainder of Darke/Preble/Mercer (~5,000 meters), not the city core — being
+        # HQ'd in the county seat ≠ serving it, and Ohio co-ops sit outside retail choice. EIA IDs
+        # 4922 (DP&L) and 4796 (Darke REC) both cross-checked against OpenEI's EIA-861 records. Pinned
+        # #4922 as the design-point (city + RSEI industrial corridor) distribution IOU, per the same
+        # IOU-over-rural-co-op convention as West Union (#4796/#14006 are the fallbacks a rural-
+        # greenfield facility would flip the pin to).
+        "EIA-861 2024 Service_Territory: Darke County, OH is a patchwork — DP&L (AES Ohio) #4922, "
+        "AEP #14006 on the east fringe, Darke Rural Electric co-op #4796 (rural Darke/Preble/Mercer), "
+        "village munis Arcanum/Versailles. The City of Greenville LSE is Dayton Power & Light #4922: "
+        "AES Ohio's delivery territory lists Greenville and the city has no municipal electric; Darke "
+        "REC (HQ in Greenville) serves the rural remainder, not the city core. Pinned #4922 as the "
+        "design-point distribution IOU; a rural-greenfield facility would flip the LSE to Darke REC "
+        "#4796 or AEP #14006 (cf. West Union). EIA IDs 4922/4796 cross-checked against OpenEI. [verified]"
+    ),
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(
         "PJM Data Miner 2 da_hrl_lmps, DAY zone (pnode 34508503), 2025 day-ahead annual mean "
         "$46.42/MWh (8760 h); connector-sourced 2026-07-01 (watermark lmp) — City of Greenville LSE "
-        "is AES Ohio (DP&L) #4922; Darke REC co-op also in DAY zone [verified]"
+        "is AES Ohio (DP&L) #4922, whose PJM transmission zone is DAY (Dayton). [verified]"
     ),
     lmp_pnode_id=34508503,  # [verified] PJM DAY zone (AES Ohio / Dayton Power & Light)
     lmp_pnode_name="DAY",
