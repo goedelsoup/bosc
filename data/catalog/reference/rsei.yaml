@@ -8,7 +8,7 @@ producer:
   connector_ref: watermark.rsei
   source: EPA RSEI (water-media releases) × EPA ECHO (receiving water) × Ohio EPA cited 7Q10 — a multi-source
     derivation
-  external_url: https://registry.opendata.aws/epa-rsei-pds/
+  external_url: https://www.epa.gov/rsei/ways-get-rsei-results
 license: U.S. Government work (public domain)
 access_tier: public
 site_scope: basin-shared

@@ -68,3 +68,7 @@ runs/
 # Legacy single-site output path (pre-#727); ignored so a stale local bundle never lands.
 /data/site/bundle/feeds/
 /data/site/bundle/manifest.json
+
+# RSEI v2.3.12 offline test fixture (a small committed Allen County slice zip). The
+# user's global gitignore excludes *.zip, so re-include just this fixture (#1148).
+!tests/fixtures/rsei/*.zip

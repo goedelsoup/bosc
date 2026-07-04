@@ -1,8 +1,12 @@
 """EPA RSEI (Risk-Screening Environmental Indicators) — per-county toxic-release inventory.
 
-Pulls the EPA **RSEI Public Data Set** (AWS Open Data ``s3://epa-rsei-pds``, served
-at the public HTTPS endpoint) and reduces it to the facilities in one county (Allen
-County, OH by default). Each facility carries its modeled, population-weighted RSEI
+Pulls the EPA **RSEI Public Data Set** — the current release **v2.3.12** (March 2024,
+TRI reporting years 1988-2022), distributed as a single zip of per-table CSVs on EPA's
+public ``gaftp`` site (``rsei_distribution="archive"``), **not** the frozen
+``epa-rsei-pds`` S3 bucket, which stalled at ``v234``/2016 (#1148) — and reduces it to
+the facilities in one county (Allen County, OH by default). The legacy per-table-gzip
+bucket is still reachable via ``rsei_distribution="s3_gz"``. Each facility carries its
+modeled, population-weighted RSEI
 **Score** (with the cancer / non-cancer split), the toxicity-weighted **Hazard**,
 and **pounds released** — as a cumulative total, a per-year time series, a by-media
 breakdown, and the top contributing chemicals.
@@ -15,9 +19,10 @@ RSEI is a relational dump; the reduction joins five tables (keys in parentheses)
       via facility   (FacilityNumber -> name, coords, parent, NPDES permit, ...)
       via chemical   (ChemicalNumber -> name, CAS, toxicity category)
 
-The bulk ``.gz`` tables (``elements`` alone is ~250 MB) are **not** committed: they
-cache under the git-ignored ``data/cache/rsei/`` and the committed artifact is the
-small per-county YAML under ``data/reference/rsei/``. Regenerate with ``watermark rsei``.
+The bulk archive (~447 MB; ``elements`` alone is ~1.2 GB unzipped) is **not** committed:
+it caches under the git-ignored ``data/cache/rsei/`` and tables are streamed straight out
+of the zip, never extracted. The committed artifact is the small per-county YAML under
+``data/reference/rsei/``. Regenerate with ``watermark rsei``.
 
 Nothing here is fabricated. Pounds are summed from the reported ``release`` rows;
 Score / Cancer / Non-cancer / Hazard are summed from EPA's modeled ``elements``
@@ -30,6 +35,8 @@ from __future__ import annotations
 
 import csv
 import gzip
+import io
+import zipfile
 from collections import defaultdict
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
@@ -48,10 +55,22 @@ log = get_logger(__name__)
 
 # --- Source layout ---------------------------------------------------------
 # Every table the per-county reduction reads, ensured (downloaded if absent) up front.
-# `elements` (the ~250 MB modeled-score table, joined at the end via ReleaseNumber) must
+# `elements` (the ~1.2 GB modeled-score table, joined at the end via ReleaseNumber) must
 # be in this set too — it's read like the rest, so omitting it left the connector unable
-# to self-serve and every uncached site skipped on an `elements.csv.gz` miss.
+# to self-serve and every uncached site skipped on an `elements` miss.
 _TABLES = ("facility", "submission", "release", "chemical", "media", "elements")
+# The current release (v2.3.12) ships as a single zip of per-table CSVs on EPA's gaftp
+# site, where EPA uses its own filenames: `submission`/`release` are pluralized and every
+# member is `<table>_data_rsei_<version>.csv`. Map our canonical join names to that
+# basename; the frozen-bucket ("s3_gz") layout uses the canonical name verbatim (#1148).
+_ARCHIVE_TABLE = {
+    "facility": "facility",
+    "chemical": "chemical",
+    "media": "media",
+    "submission": "submissions",
+    "release": "releases",
+    "elements": "elements",
+}
 # RSEI text uses Latin-1 (facility/chemical names carry bytes that aren't UTF-8).
 _ENC = "latin-1"
 # MediaCode (media.csv last column) -> the bucket we report pounds under.
@@ -60,7 +79,7 @@ _MEDIA_GROUP = {1: "air", 3: "water", 4: "underground", 5: "land", 6: "potw", 7:
 # from the active SiteProfile.county_name (Lima = Allen County, OH / 39003).
 _TOP_CHEMICALS = 8
 
-_SOURCE = "EPA RSEI Public Data Set (AWS Open Data s3://epa-rsei-pds)"
+_SOURCE = "EPA RSEI Public Data Set v2.3.12 (EPA gaftp Public Release Data)"
 _CAVEATS = [
     "Pounds are summed from reported `release` rows; Score/Cancer/NonCancer/Hazard "
     "from EPA's modeled `elements` rows. Nothing is estimated by BOSC.",
@@ -154,42 +173,31 @@ def _clean(x: str | None) -> str | None:
     return None if x in ("", "NA", "<Not Assigned>") else x
 
 
+def _truthy(x: str | None) -> bool:
+    """Parse an RSEI boolean flag: v2312 writes ``TRUE``/blank; v234 wrote a numeric count."""
+    v = (x or "").strip().upper()
+    if v in ("", "0", "N", "NA", "FALSE"):
+        return False
+    if v in ("TRUE", "T", "Y", "YES"):
+        return True
+    try:
+        return float(v) > 0
+    except ValueError:
+        return False
+
+
 def _code(x: str | None) -> str | None:
     """Like :func:`_clean` but also drops RSEI's ``0`` unassigned-code sentinel."""
     v = _clean(x)
     return None if v == "0" else v
 
 
-def _read_csv_gz(path: Path) -> Iterator[dict[str, str]]:
-    with gzip.open(path, "rt", encoding=_ENC, newline="") as fh:
-        yield from csv.DictReader(fh)
-
-
-def table_path(settings: Settings, name: str) -> Path:
-    """Cache path for an RSEI table's gzip (under the git-ignored data/cache)."""
-    return settings.rsei_cache_dir / settings.rsei_version / "data_tables" / f"{name}.csv.gz"
-
-
-def _ensure_table(settings: Settings, name: str) -> Path:
-    """Return the local gzip for ``name``, downloading it to cache if absent.
-
-    Bulk tables are large (``elements`` ~250 MB) — they live only in the git-ignored
-    cache, never committed. Download is skipped when the file is already present, so a
-    pre-warmed cache makes regeneration fully offline.
-    """
-    path = table_path(settings, name)
-    if path.is_file() and path.stat().st_size > 0:
-        return path
-    if settings.rsei_offline:
-        raise FileNotFoundError(
-            f"RSEI table {name!r} not in cache ({path}) and rsei_offline is set. "
-            f"Pre-warm the cache or run online."
-        )
+def _download(settings: Settings, url: str, path: Path) -> None:
+    """Stream ``url`` to ``path`` (used for both the v2312 zip and legacy gz tables)."""
     import httpx
 
-    url = f"{settings.rsei_base_url}/{settings.rsei_version}/data_tables/{name}.csv.gz"
     path.parent.mkdir(parents=True, exist_ok=True)
-    log.info("rsei.download", table=name, url=url)
+    log.info("rsei.download", url=url, dest=str(path))
     with (
         httpx.stream(
             "GET", url, timeout=settings.rsei_request_timeout_s, follow_redirects=True
@@ -199,7 +207,78 @@ def _ensure_table(settings: Settings, name: str) -> Path:
         resp.raise_for_status()
         for chunk in resp.iter_bytes():
             out.write(chunk)
+
+
+def table_path(settings: Settings, name: str) -> Path:
+    """Legacy (``s3_gz``) cache path for one table's gzip, under the git-ignored cache."""
+    return settings.rsei_cache_dir / settings.rsei_version / "data_tables" / f"{name}.csv.gz"
+
+
+def archive_path(settings: Settings) -> Path:
+    """Cache path for the RSEI distribution zip (git-ignored; ``archive`` distribution)."""
+    return settings.rsei_cache_dir / settings.rsei_version / settings.rsei_archive_name
+
+
+def _ensure_archive(settings: Settings) -> Path:
+    """Return the local RSEI zip, downloading it once to cache if absent.
+
+    The v2312 distribution is a single ~447 MB zip of per-table CSVs. It lives only in
+    the git-ignored cache, never committed; a pre-warmed cache makes regeneration fully
+    offline. Members (``elements`` is ~1.2 GB unzipped) are streamed, never extracted.
+    """
+    path = archive_path(settings)
+    if path.is_file() and path.stat().st_size > 0:
+        return path
+    if settings.rsei_offline:
+        raise FileNotFoundError(
+            f"RSEI archive not in cache ({path}) and rsei_offline is set. "
+            f"Pre-warm the cache or run online."
+        )
+    _download(settings, f"{settings.rsei_base_url}/{settings.rsei_archive_name}", path)
     return path
+
+
+def _ensure_gz_table(settings: Settings, name: str) -> Path:
+    """Return the local gzip for ``name`` (legacy ``s3_gz`` bucket), downloading if absent."""
+    path = table_path(settings, name)
+    if path.is_file() and path.stat().st_size > 0:
+        return path
+    if settings.rsei_offline:
+        raise FileNotFoundError(
+            f"RSEI table {name!r} not in cache ({path}) and rsei_offline is set. "
+            f"Pre-warm the cache or run online."
+        )
+    url = f"{settings.rsei_base_url}/{settings.rsei_version}/data_tables/{name}.csv.gz"
+    _download(settings, url, path)
+    return path
+
+
+def _ensure_source(settings: Settings) -> None:
+    """Ensure the configured RSEI source is present locally (one download if online)."""
+    if settings.rsei_distribution == "archive":
+        _ensure_archive(settings)
+    else:
+        for name in _TABLES:
+            _ensure_gz_table(settings, name)
+
+
+def _iter_table(settings: Settings, name: str) -> Iterator[dict[str, str]]:
+    """Yield the rows of one RSEI table from whichever distribution is configured.
+
+    ``archive`` reads the member straight out of the cached zip (streamed, so the
+    ~1.2 GB ``elements`` table is never extracted to disk); ``s3_gz`` reads the legacy
+    per-table gzip.
+    """
+    if settings.rsei_distribution == "archive":
+        member = f"{_ARCHIVE_TABLE[name]}_data_rsei_{settings.rsei_version}.csv"
+        with (
+            zipfile.ZipFile(_ensure_archive(settings)) as zf,
+            zf.open(member) as raw,
+        ):
+            yield from csv.DictReader(io.TextIOWrapper(raw, encoding=_ENC, newline=""))
+    else:
+        with gzip.open(_ensure_gz_table(settings, name), "rt", encoding=_ENC, newline="") as fh:
+            yield from csv.DictReader(fh)
 
 
 # --- Build -----------------------------------------------------------------
@@ -213,12 +292,11 @@ def build_inventory(
     settings = settings or get_settings()
     fips = fips or settings.rsei_fips
     county_name = county_name or active_profile(settings).county_name
-    for name in _TABLES:
-        _ensure_table(settings, name)
+    _ensure_source(settings)
 
     # media code -> reporting bucket (air/water/land/...)
     media_group: dict[str, str] = {}
-    for row in _read_csv_gz(table_path(settings, "media")):
+    for row in _iter_table(settings, "media"):
         try:
             media_group[row["Media"]] = _MEDIA_GROUP.get(int(row["MediaCode"]), "other")
         except (ValueError, KeyError):
@@ -226,7 +304,7 @@ def build_inventory(
 
     # chemical lookup
     chem: dict[str, dict[str, str | None]] = {}
-    for row in _read_csv_gz(table_path(settings, "chemical")):
+    for row in _iter_table(settings, "chemical"):
         chem[row["ChemicalNumber"]] = {
             "name": _clean(row.get("Chemical")),
             "cas": _clean(row.get("CASStandard")),
@@ -235,7 +313,7 @@ def build_inventory(
 
     # facility roster for the county, keyed by FacilityNumber
     facilities: dict[str, RseiFacility] = {}
-    for row in _read_csv_gz(table_path(settings, "facility")):
+    for row in _iter_table(settings, "facility"):
         if row.get("FIPS") != fips:
             continue
         facilities[row["FacilityNumber"]] = RseiFacility(
@@ -243,9 +321,12 @@ def build_inventory(
             facility_number=row["FacilityNumber"],
             name=row.get("FacilityName") or row["FacilityID"],
             parent_name=_clean(row.get("ParentName")),
-            # FederalFacilityFlag is an agency code (e.g. "D" = DoD), blank for private
-            # sites; any non-empty, non-negative value marks a federal facility.
-            federal_facility=(row.get("FederalFacilityFlag") or "").strip() not in ("", "N", "NA"),
+            # FederalFacilityFlag codes federal status (EO 12856). v2312 uses "C"
+            # (commercial), "F" (federal), "G" (government-owned) — so "C"/blank is NOT
+            # federal; v234 wrote an agency letter (e.g. "D" = DoD). Excluding "C" too
+            # keeps both readings correct.
+            federal_facility=(row.get("FederalFacilityFlag") or "").strip().upper()
+            not in ("", "N", "NA", "C"),
             latitude=_f(row.get("Latitude")) or None,
             longitude=_f(row.get("Longitude")) or None,
             street=_clean(row.get("Street")),
@@ -257,13 +338,13 @@ def build_inventory(
             # reported code lives in NAICS1/SIC1.
             naics=_code(row.get("NAICS1")),
             sic=_code(row.get("SIC1")),
-            water_releases=_f(row.get("WaterReleases")) > 0,
+            water_releases=_truthy(row.get("WaterReleases")),
         )
     log.info("rsei.facilities", county=county_name, n=len(facilities))
 
     # submission -> (FacilityNumber, year, ChemicalNumber), county only
     sub: dict[str, tuple[str, int, str]] = {}
-    for row in _read_csv_gz(table_path(settings, "submission")):
+    for row in _iter_table(settings, "submission"):
         fn = row["FacilityNumber"]
         if fn not in facilities:
             continue
@@ -279,7 +360,7 @@ def build_inventory(
     pounds_fy: dict[tuple[str, int], float] = defaultdict(float)
     pounds_media: dict[tuple[str, str], float] = defaultdict(float)
     pounds_chem: dict[tuple[str, str], float] = defaultdict(float)
-    for row in _read_csv_gz(table_path(settings, "release")):
+    for row in _iter_table(settings, "release"):
         meta = sub.get(row["SubmissionNumber"])
         if meta is None:
             continue
@@ -294,7 +375,7 @@ def build_inventory(
     score_fy: dict[tuple[str, int], list[float]] = defaultdict(lambda: [0.0, 0.0, 0.0, 0.0])
     score_chem: dict[tuple[str, str], float] = defaultdict(float)
     n_elem = 0
-    for row in _read_csv_gz(table_path(settings, "elements")):
+    for row in _iter_table(settings, "elements"):
         meta = rel.get(row["ReleaseNumber"])
         if meta is None:
             continue
