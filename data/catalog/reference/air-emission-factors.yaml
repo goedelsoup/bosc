@@ -1,0 +1,24 @@
+id: air-emission-factors
+title: Genset Emission Factors (EPA AP-42 §3.4)
+scope: reference
+status: reviewed
+producer:
+  kind: manual
+  source: EPA AP-42, 5th ed., Vol. I, Ch. 3.4 (Large Stationary Diesel Engines, 10/96) — verbatim transcription of Table 3.4-1 (gaseous) and Table 3.4-2 (particle sizing) from the cited EPA PDF
+license: U.S. public domain (EPA publication)
+access_tier: public
+site_scope: basin-shared
+storage:
+- relpath: reference/air/emission-factors/ap42-3.4.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: reference
+tags:
+- air
+- emission-factors
+- ap42
+- diesel-genset
+- reference
+notes: The generic AP-42 §3.4 uncontrolled prior read by watermark.air.emissions (#1175, epic #1172); reconciled against the site air-permit certified rates. Static published table — re-transcribe from the cited PDF if EPA revises §3.4; not connector-regenerable.

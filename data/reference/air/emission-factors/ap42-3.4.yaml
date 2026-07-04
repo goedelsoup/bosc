@@ -1,0 +1,72 @@
+# EPA AP-42 §3.4 — Large Stationary Diesel And All Stationary Dual-fuel Engines
+# Fifth Edition, Volume I, Chapter 3.4 (October 1996). Uncontrolled emission factors
+# for large (>600 hp) stationary compression-ignition diesel engines.
+#
+# Verbatim transcription of Table 3.4-1 (gaseous, power-output + fuel-input bases) and
+# Table 3.4-2 (particulate size-sizing, fuel-input basis). These are the GENERIC AP-42
+# priors — a modeling default for a large stationary diesel genset. They are NOT the
+# site's certified rates: a modern EPA Tier-2 (40 CFR 60 Subpart IIII) engine is far
+# cleaner than AP-42 "uncontrolled", so the site's own air-permit rates are carried
+# separately (data/extracted/permits/*.epa.yaml) and reconciled against these. See
+# README.md. Regenerable — nothing here is fabricated; every value is from the cited PDF.
+source:
+  document: EPA AP-42, Fifth Edition, Volume I, Chapter 3, Section 3.4
+  title: Large Stationary Diesel And All Stationary Dual-fuel Engines
+  edition: 10/96
+  url: https://www.epa.gov/air-emissions-factors-and-quantification/ap-42-fifth-edition-volume-i-chapter-3-stationary-0
+  scc: 2-02-004-01  # diesel fuel
+  fuel: diesel
+
+# Table 3.4-1 — gaseous emission factors, DIESEL fuel column. Two bases per pollutant:
+#   power_output_lb_per_hp_hr : lb per brake-horsepower-hour (engine shaft output)
+#   fuel_input_lb_per_mmbtu   : lb per million Btu of fuel heat input
+# EMISSION FACTOR RATING as printed (A best … E worst).
+table_3_4_1_gaseous:
+  nox_uncontrolled:
+    power_output_lb_per_hp_hr: 0.024
+    fuel_input_lb_per_mmbtu: 3.2
+    rating: B
+  nox_controlled:  # by ignition timing retard (ITR); footnote c
+    power_output_lb_per_hp_hr: 0.013
+    fuel_input_lb_per_mmbtu: 1.9
+    rating: B
+  co:
+    power_output_lb_per_hp_hr: 5.5e-3
+    fuel_input_lb_per_mmbtu: 0.85
+    rating: C
+  sox:  # SOx as SO2; both bases scale with S1 = weight-% sulfur in the fuel oil (footnote d)
+    power_output_lb_per_hp_hr_per_pct_s: 8.09e-3
+    fuel_input_lb_per_mmbtu_per_pct_s: 1.01
+    rating: B
+  pm:  # single combined-PM factor (Table 3.4-1); size split comes from Table 3.4-2
+    power_output_lb_per_hp_hr: 7.0e-4
+    fuel_input_lb_per_mmbtu: 0.1
+    rating: B
+  toc_as_ch4:  # total organic compounds as methane
+    power_output_lb_per_hp_hr: 7.05e-4
+    fuel_input_lb_per_mmbtu: 0.09
+    rating: C
+  # Speciation footnote f: TOC is ~9 wt-% methane / 91 wt-% nonmethane (1-engine basis).
+  toc_nonmethane_weight_fraction: 0.91
+
+# Table 3.4-2 — particulate & particle-sizing emission factors (fuel-input basis,
+# lb/MMBtu), EMISSION FACTOR RATING E. Used only to split the Table 3.4-1 combined PM
+# into PM10 / PM2.5 fractions (the two tables are different vintages — do not add them).
+table_3_4_2_particulate:
+  filterable_lt_1um_lb_per_mmbtu: 0.0478
+  filterable_lt_3um_lb_per_mmbtu: 0.0479
+  filterable_lt_10um_lb_per_mmbtu: 0.0496
+  total_filterable_lb_per_mmbtu: 0.0620
+  condensable_lb_per_mmbtu: 0.0077
+  total_pm10_lb_per_mmbtu: 0.0573       # filterable <10µm + condensable (footnote c)
+  total_particulate_lb_per_mmbtu: 0.0697
+  rating: E
+
+# Unit-conversion constants printed in the table footnotes (for auditability).
+conversions:
+  lb_per_hp_hr_to_kg_per_kwh: 0.608
+  lb_per_mmbtu_to_ng_per_j: 430
+  hp_per_kw: 1.34102                    # 1 kW = 1.34102 hp (so 1341.02 hp-hr per MWh)
+  diesel_heating_value_btu_per_lb: 19300
+  diesel_density_lb_per_gal: 7.1
+  avg_bsfc_btu_per_hp_hr: 7000
