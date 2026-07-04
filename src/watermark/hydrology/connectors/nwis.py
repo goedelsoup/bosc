@@ -82,7 +82,11 @@ def _nwis_request(settings: Settings, service: str, query: dict[str, Any]) -> di
         resp.raise_for_status()
         return resp.json()
 
-    return cast("dict[str, Any]", cached_get("nwis", query, fetch, settings=settings))
+    # Namespace the cache key by service so iv and dv requests never collide.
+    return cast(
+        "dict[str, Any]",
+        cached_get("nwis", {"_service": service, **query}, fetch, settings=settings),
+    )
 
 
 def _iv_request(settings: Settings, params: dict[str, Any]) -> dict[str, Any]:
