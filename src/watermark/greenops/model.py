@@ -17,6 +17,7 @@ assumptions land in #1078-#1083.
 from __future__ import annotations
 
 from datetime import datetime, timedelta
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
 
@@ -312,7 +313,7 @@ class WueBenchmark(BaseModel):
     facility_type: str  # "hyperscale_evaporative" | "closed_loop_airside" | "grid_upstream" | ...
     label: str  # "Hyperscale, evaporative cooling", ...
     wue: ProvenancedValue  # L/kWh, reference
-    basis: str  # "site" | "source"
+    basis: Literal["site", "source"]  # site = direct on-site cooling; source = incl. upstream
     note: str = ""
 
 
