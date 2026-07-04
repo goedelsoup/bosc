@@ -104,11 +104,39 @@ _LIMA = SiteProfile(
         ),
     },
     abstraction_gage="04187100",
+    # the Lima WTP intake reach (#1159): grounded with live Ottawa-at-Lima streamflow
+    abstraction_node_id="lima-wtp",
+    abstraction_node_name="Lima WTP intake (Ottawa/Auglaize)",
+    abstraction_river="Ottawa River",
     # refill (primary = Auglaize @ Fort Jennings; secondary = Ottawa @ Lima)
     supply_gage_primary="04186500",
     supply_gage_secondary="04187100",
     passby_primary_cfs=2.5,
     passby_secondary_cfs=0.2,
+    supply_river_primary="Auglaize River",
+    supply_river_secondary="Ottawa River",
+    supply_note_primary=(
+        "gauged at Fort Jennings, DOWNSTREAM of Lima's Auglaize intakes with more "
+        "drainage area — overstates the flow at the intake (optimistic refill)"
+    ),
+    supply_note_secondary="net of Lima's upstream Ottawa intakes; reaches 0 cfs in drought",
+    # tier-1 SWMM campus sanitary routing (#1159): FM labels, receiving-plant names, the
+    # dry-weather base + capacity fallback consulted only when the cited basis is absent
+    forcemain_labels={"bosc-fm1": "FM-1", "bosc-fm2": "FM-2"},
+    sanitary_receiver_names={
+        "watch-lima-fm2-terminus": "City of Lima WWTP",
+        "watch-american-bath-wwtp": "American Bath WWTP",
+        "watch-american-ii-wwtp": "American II WWTP",
+    },
+    sanitary_capacity_fallback=[
+        (
+            "American II WWTP",
+            3.6,
+            "FM-1",
+            "Ohio EPA fact sheet 2PH00006: peak hydraulic capacity 3.6 MGD",
+        ),
+    ],
+    campus_dry_weather_mgd=2.5,  # documented FM-2 industrial discharge (fallback dry base)
     # grid / facility (the disclosed Lima campus; serving-utility provenance = the corpus)
     facility=SiteFacility(
         genset_count=114,

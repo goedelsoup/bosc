@@ -135,7 +135,7 @@ def _wwtp_nodes(
     return nodes
 
 
-def _campus_node(path: Path, warnings: list[str]) -> WaterBalanceNode:
+def _campus_node(path: Path, warnings: list[str], *, settings: Settings) -> WaterBalanceNode:
     """The BOSC data-center campus: documented FM-2 discharge + a derived cooling loss."""
     fm2_mgd: float | None = None
     for feat in _features(path):
@@ -160,7 +160,7 @@ def _campus_node(path: Path, warnings: list[str]) -> WaterBalanceNode:
     # central (power x WUE) estimate as the campus's projected consumptive (net basin)
     # loss — `derived`, not a 0 placeholder. The scenario layer (`watermark scenario`)
     # re-derives baseline-vs-buildout and can override via `--cooling-demand`.
-    basis = derive_cooling_basis()
+    basis = derive_cooling_basis(settings)
     low, high = basis.consumptive_low.value, basis.consumptive_high.value
     node = Node(id="bosc-campus", name="BOSC data-center campus", role="demand")
 
@@ -196,19 +196,30 @@ def _campus_node(path: Path, warnings: list[str]) -> WaterBalanceNode:
     return WaterBalanceNode(node=node, return_flow=return_flow, consumptive_use=consumptive)
 
 
-def _abstraction_node(settings: Settings, warnings: list[str]) -> WaterBalanceNode:
-    """Lima WTP intake reach, grounded with live Ottawa-at-Lima streamflow when available."""
+def _abstraction_node(settings: Settings, warnings: list[str]) -> WaterBalanceNode | None:
+    """The municipal WTP intake reach, grounded with live streamflow when available.
+
+    Per-site (#1159): the intake node identity (id/name/river) and the abstraction gage come
+    from the active ``SiteProfile``. A site with no configured intake node
+    (``abstraction_node_id`` empty) yields ``None`` — the balance omits the abstraction reach
+    rather than labeling another site's gage as Lima's WTP.
+    """
+    prof = active_profile(settings)
+    if not prof.abstraction_node_id:
+        warnings.append(
+            f"no abstraction node configured for site {settings.site!r}; "
+            "the water balance omits the intake reach."
+        )
+        return None
     node = Node(
-        id="lima-wtp",
-        name="Lima WTP intake (Ottawa/Auglaize)",
+        id=prof.abstraction_node_id,
+        name=prof.abstraction_node_name,
         role="abstraction",
-        receiving_water="Ottawa River",
+        receiving_water=prof.abstraction_river or None,
     )
     inflow: ProvenancedValue | None = None
     try:
-        readings = fetch_streamflow(
-            sites=[active_profile(settings).abstraction_gage], settings=settings
-        )
+        readings = fetch_streamflow(sites=[prof.abstraction_gage], settings=settings)
         flow = next(
             (r for r in readings if r.parameter_cd == DISCHARGE_CFS and r.value is not None),
             None,
@@ -218,9 +229,12 @@ def _abstraction_node(settings: Settings, warnings: list[str]) -> WaterBalanceNo
                 flow.value, "cfs", citation=f"NWIS {flow.site_no} ({flow.name})", asof=flow.datetime
             )
     except Exception as exc:
-        warnings.append(f"live Ottawa streamflow unavailable: {type(exc).__name__}")
+        warnings.append(
+            f"live {prof.abstraction_river or 'river'} streamflow unavailable: {type(exc).__name__}"
+        )
     warnings.append(
-        "Lima WTP withdrawal rate is not documented; abstraction shown as river-flow context only."
+        f"{prof.abstraction_node_name} withdrawal rate is not documented; "
+        "abstraction shown as river-flow context only."
     )
     return WaterBalanceNode(node=node, inflow=inflow)
 
@@ -243,9 +257,11 @@ def build_water_balance(
     routing = load_routing(settings=settings)
     nodes = _wwtp_nodes(path, warnings, routing, settings=settings)
     _surface_bosc_routing(routing, warnings)
-    nodes.append(_campus_node(path, warnings))
+    nodes.append(_campus_node(path, warnings, settings=settings))
     if live:
-        nodes.append(_abstraction_node(settings, warnings))
+        abstraction = _abstraction_node(settings, warnings)
+        if abstraction is not None:
+            nodes.append(abstraction)
 
     log.info("hydro.balance", nodes=len(nodes), wwtp=sum(1 for n in nodes if n.node.role == "wwtp"))
     return WaterBalance(nodes=nodes, warnings=warnings)

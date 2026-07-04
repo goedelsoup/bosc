@@ -41,6 +41,7 @@ from watermark.hydrology.stormwater import _parcels_path
 from watermark.hydrology.swmm import engine, inp
 from watermark.hydrology.units import cfs_to_mgd
 from watermark.logging import get_logger
+from watermark.sites import active_profile
 
 log = get_logger(__name__)
 
@@ -56,29 +57,13 @@ _RDII_R = 0.05
 _SWMM_SUBDIR = "swmm"
 _FILENAME = "tier1-swmm.yaml"
 
-# Forcemain + receiver labels for the campus sanitary routing (routing.yaml).
-_FM = {"bosc-fm1": "FM-1", "bosc-fm2": "FM-2"}
-_RECEIVER_NAMES = {
-    "watch-lima-fm2-terminus": "City of Lima WWTP",
-    "watch-american-bath-wwtp": "American Bath WWTP",
-    "watch-american-ii-wwtp": "American II WWTP",
-}
-
-# Fallback peak hydraulic capacity, used only if the cited sanitary basis is absent.
-# Shawnee II is deliberately NOT here: it receives no campus flow (FM-3 is theorized
-# and excluded — routing.yaml). American II is the FM-1 receiver with a cited capacity.
-_PLANT_CAPACITY: list[tuple[str, float, str, str]] = [
-    (
-        "American II WWTP",
-        3.6,
-        "FM-1",
-        "Ohio EPA fact sheet 2PH00006: peak hydraulic capacity 3.6 MGD",
-    ),
-]
+# The campus forcemain labels, receiving-plant names, dry-weather base, and capacity fallback
+# are per-site (#1159): they come from the active ``SiteProfile`` (forcemain_labels,
+# sanitary_receiver_names, campus_dry_weather_mgd, sanitary_capacity_fallback), not baked in.
 
 
-def _forcemain_label(via: str | None) -> str | None:
-    return _FM.get(via or "", via)
+def _forcemain_label(via: str | None, labels: dict[str, str]) -> str | None:
+    return labels.get(via or "", via)
 
 
 def _design_depth_in(settings: Settings, *, return_period_yr: int, live: bool) -> float:
@@ -129,6 +114,8 @@ def _build_surcharge(
     wet_pv: ProvenancedValue,
     *,
     receivers: dict[str, str],
+    forcemain_labels: dict[str, str],
+    capacity_fallback: list[tuple[str, float, str, str]],
 ) -> list[SanitarySurcharge]:
     """Judge the campus wet-weather contribution against each *receiving* plant's headroom.
 
@@ -148,7 +135,7 @@ def _build_surcharge(
                 exceeds=wet_peak_mgd > cap,
                 margin_mgd=round(cap - wet_peak_mgd, 2),
             )
-            for name, cap, fm, cite in _PLANT_CAPACITY
+            for name, cap, fm, cite in capacity_fallback
         ]
     out: list[SanitarySurcharge] = []
     for p in basis.plants:
@@ -160,7 +147,7 @@ def _build_surcharge(
         out.append(
             SanitarySurcharge(
                 plant=p.plant,
-                forcemain=_forcemain_label(receivers.get(p.routing_id)),
+                forcemain=_forcemain_label(receivers.get(p.routing_id), forcemain_labels),
                 capacity=p.peak_capacity,
                 avg_design_flow=p.avg_design_flow,
                 peaking_factor=p.peaking_factor,
@@ -173,7 +160,13 @@ def _build_surcharge(
     return out
 
 
-def _surcharge_note(basis: SanitaryBasis | None, receivers: dict[str, str]) -> str:
+def _surcharge_note(
+    basis: SanitaryBasis | None,
+    receivers: dict[str, str],
+    *,
+    forcemain_labels: dict[str, str],
+    receiver_names: dict[str, str],
+) -> str:
     """Auditable record of where the campus flow goes and who is / isn't judged.
 
     Keeps the omission honest: Shawnee II is excluded because it receives no campus
@@ -184,11 +177,13 @@ def _surcharge_note(basis: SanitaryBasis | None, receivers: dict[str, str]) -> s
         return ""
     by_fm: dict[str, list[str]] = {}
     for node_id, via in receivers.items():
-        by_fm.setdefault(_FM.get(via, via or "?"), []).append(_RECEIVER_NAMES.get(node_id, node_id))
+        by_fm.setdefault(forcemain_labels.get(via, via or "?"), []).append(
+            receiver_names.get(node_id, node_id)
+        )
     split = "; ".join(f"{fm} → {' + '.join(sorted(rs))}" for fm, rs in sorted(by_fm.items()))
 
     cited = {p.routing_id for p in basis.plants if p.peak_capacity is not None and p.routing_id}
-    uncited = sorted(_RECEIVER_NAMES.get(n, n) for n in receivers if n not in cited)
+    uncited = sorted(receiver_names.get(n, n) for n in receivers if n not in cited)
     excluded = sorted(
         p.plant for p in basis.plants if p.routing_id and p.routing_id not in receivers
     )
@@ -298,10 +293,13 @@ def run_tier1(
     from watermark.hydrology.routing import load_routing
     from watermark.hydrology.sanitary import load_sanitary_basis
 
+    prof = active_profile(settings)
     basis = load_sanitary_basis(settings=settings)
     routing = load_routing(settings=settings)
     receivers = routing.campus_receivers() if routing is not None else {}
-    campus_base = basis.campus_industrial.value if basis is not None else 2.5
+    campus_base = (
+        basis.campus_industrial.value if basis is not None else prof.campus_dry_weather_mgd
+    )
     san_text, wwtp = inp.sanitary_inp(
         base_mgd=campus_base, sewershed_acres=area, rdii_r=_RDII_R, depth_in=depth
     )
@@ -326,8 +324,20 @@ def run_tier1(
             f"campus dry base (FM-2, document), {return_period_yr}-yr storm"
         ),
     )
-    surcharge = _build_surcharge(basis, wet_peak_mgd, wet_pv, receivers=receivers)
-    surcharge_note = _surcharge_note(basis, receivers)
+    surcharge = _build_surcharge(
+        basis,
+        wet_peak_mgd,
+        wet_pv,
+        receivers=receivers,
+        forcemain_labels=prof.forcemain_labels,
+        capacity_fallback=prof.sanitary_capacity_fallback,
+    )
+    surcharge_note = _surcharge_note(
+        basis,
+        receivers,
+        forcemain_labels=prof.forcemain_labels,
+        receiver_names=prof.sanitary_receiver_names,
+    )
 
     # Ground the detention result in the real 95% SPS drainage design, if extracted.
     from watermark.hydrology.stormplan import load_inventory

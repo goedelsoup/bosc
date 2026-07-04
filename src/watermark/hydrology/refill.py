@@ -174,7 +174,7 @@ def compute_refill_adequacy(
         raise ValueError("water-supply.yaml absent — cannot scale refill against storage")
 
     budget = campus_budget_from_cooling(supply)
-    basis = derive_cooling_basis()
+    basis = derive_cooling_basis(settings)
     municipal = supply.current_production.value
     gross = budget.gross_production_mgd
     makeup_high = (
@@ -205,23 +205,20 @@ def compute_refill_adequacy(
         _river_stat(
             aug.site_no,
             aug.name,
-            "Auglaize River",
+            prof.supply_river_primary,
             aug_pts,
             passby_cfs=passby_primary_cfs,
             demand_cfs=demand_cfs,
-            note=(
-                "gauged at Fort Jennings, DOWNSTREAM of Lima's Auglaize intakes with more "
-                "drainage area — overstates the flow at the intake (optimistic refill)"
-            ),
+            note=prof.supply_note_primary,
         ),
         _river_stat(
             ott.site_no,
             ott.name,
-            "Ottawa River",
+            prof.supply_river_secondary,
             ott_pts,
             passby_cfs=passby_secondary_cfs,
             demand_cfs=demand_cfs,
-            note="net of Lima's upstream Ottawa intakes; reaches 0 cfs in drought",
+            note=prof.supply_note_secondary,
         ),
     ]
 

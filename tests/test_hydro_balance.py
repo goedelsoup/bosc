@@ -115,6 +115,17 @@ def test_balance_locks_bracketed_campus_consumptive(
     assert "undisclosed" in joined and "bracket" in joined
 
 
+def test_abstraction_node_is_profile_driven(hydro_settings: Settings) -> None:
+    # The intake node identity comes from the active SiteProfile (#1159). A non-Lima site
+    # with no configured abstraction node omits the reach rather than labeling its gage as
+    # Lima's WTP — so no "lima-wtp" literal leaks under a second --site.
+    fs = hydro_settings.model_copy(update={"site": "findlay"})
+    balance = build_water_balance(settings=fs, live=True)
+    assert balance.node("lima-wtp") is None
+    assert not any(n.node.role == "abstraction" for n in balance.nodes)
+    assert any("no abstraction node configured" in w for w in balance.warnings)
+
+
 def test_check_skips_uncited_receiving_water(hydro_settings: Settings) -> None:
     # A receiving water with no cited 7Q10 is skipped, not invented. (All three real
     # streams are now cited, so inject a plant whose receiving water is uncited.)
