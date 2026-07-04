@@ -4,20 +4,19 @@
 // admin: may set any sites.
 // site-admin: may only assign sites that are a subset of their own adminSites.
 //
-// Writes an audit record to AUTH_PREFS KV on success (best-effort).
+// Writes an audit record to the Lakebase audit_log on success (best-effort).
 // Ships dark: AUTH_ENABLED kill switch must be "true".
 
 import { requireAuth, type AuthEnv } from "../../../_lib/auth";
+import { type AuthDbEnv, resolveAuthDb } from "../../../_lib/authDb";
+import { writeAuditEntry, type AuditEntry } from "../../../_lib/authStore";
 import { json, parseJsonBody } from "../../../_lib/http";
 import { setAdminSites, getUser, type CognitoAdminEnv } from "../../../_lib/cognitoAdmin";
-import { writeAuditEntry, type AuditEntry } from "../../../_lib/audit";
-import type { KVLike } from "../../../_lib/ratelimit";
 
 const SLUG_RE = /^[a-z0-9][a-z0-9-]*$/;
 
-interface Env extends AuthEnv, CognitoAdminEnv {
+interface Env extends AuthEnv, AuthDbEnv, CognitoAdminEnv {
   AUTH_ENABLED?: string;
-  AUTH_PREFS?: KVLike;
 }
 
 interface RequestContext {
@@ -74,7 +73,8 @@ export const onRequestPost = async ({ request, env, params }: RequestContext): P
     return json(502, { error: `Cognito error: ${msg}` });
   }
 
-  if (env.AUTH_PREFS) {
+  const db = resolveAuthDb(env);
+  if (db) {
     const entry: AuditEntry = {
       actor: auth.ctx.sub,
       target: sub,
@@ -83,7 +83,7 @@ export const onRequestPost = async ({ request, env, params }: RequestContext): P
       after: newSites,
       at: new Date().toISOString(),
     };
-    await writeAuditEntry(env.AUTH_PREFS, entry);
+    await writeAuditEntry(db, entry, crypto.randomUUID());
   }
 
   return json(200, { sub, adminSites: newSites });

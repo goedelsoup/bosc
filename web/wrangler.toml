@@ -140,12 +140,17 @@ GITHUB_REPO = "the-watermark-directory"
 # binding = "JWKS_CACHE"
 # id = "<from pulumi stack output jwksCacheKvNamespaceId>"
 #
-# AUTH_PREFS KV: per-user profile + notification prefs, keyed by Cognito sub (Epic #921).
-# Binding ID comes from `pulumi stack output authPrefsKvNamespaceId`.
-#   npx wrangler kv namespace create AUTH_PREFS
-# [[kv_namespaces]]
-# binding = "AUTH_PREFS"
-# id = "<from pulumi stack output authPrefsKvNamespaceId>"
+# AUTH prefs + role audit: per-user profile + notification prefs + the role-change audit trail
+# (Epic #921 / #1171). Moved OFF KV onto Databricks Lakebase (Postgres) — durable identity data, not
+# edge-ephemeral state, and the audit trail is append-only history meant to be queried across records
+# (see the Stories store block below for the Hyperdrive→Lakebase mechanics). Reuses the SAME Lakebase
+# instance + Hyperdrive config as Stories: bind `AUTH_HYPERDRIVE` to the same Hyperdrive `id` as
+# STORIES_HYPERDRIVE (one provisioned config over one database — see web/migrations/0004). Absent →
+# the account/audit endpoints return 503 (fail-closed, same as the old KV-absent path). Uncomment
+# alongside STORIES_HYPERDRIVE when the Lakebase milestone lands:
+# [[hyperdrive]]
+# binding = "AUTH_HYPERDRIVE"
+# id = "<same as storiesHyperdriveId>"
 
 # --- Browser RUM (#961) ----------------------------------------------------------
 # Two kill switches must both be on for events to reach Honeycomb:

@@ -7,13 +7,13 @@
 // Ships dark: AUTH_ENABLED kill switch must be "true".
 
 import { requireAuth, type AuthEnv } from "../_lib/auth";
+import { type AuthDbEnv, resolveAuthDb } from "../_lib/authDb";
+import { listAuditEntries } from "../_lib/authStore";
 import { json } from "../_lib/http";
-import { listAuditEntries, type KVListable } from "../_lib/audit";
 import { getUser, type CognitoAdminEnv } from "../_lib/cognitoAdmin";
 
-interface Env extends AuthEnv, CognitoAdminEnv {
+interface Env extends AuthEnv, AuthDbEnv, CognitoAdminEnv {
   AUTH_ENABLED?: string;
-  AUTH_PREFS?: KVListable;
 }
 
 interface RequestContext {
@@ -31,7 +31,8 @@ export const onRequestGet = async ({ request, env }: RequestContext): Promise<Re
     return json(403, { error: "forbidden" });
   }
 
-  if (!env.AUTH_PREFS) return json(503, { error: "prefs store not configured" });
+  const db = resolveAuthDb(env);
+  if (!db) return json(503, { error: "prefs store not configured" });
 
   const url = new URL(request.url);
   const sub = url.searchParams.get("sub");
@@ -47,6 +48,6 @@ export const onRequestGet = async ({ request, env }: RequestContext): Promise<Re
     }
   }
 
-  const entries = await listAuditEntries(env.AUTH_PREFS, sub);
+  const entries = await listAuditEntries(db, sub);
   return json(200, entries);
 };

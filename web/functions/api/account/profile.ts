@@ -2,16 +2,15 @@
 // PATCH /api/account/profile — Update display_name (1–80 chars; omit to clear).
 //
 // Auth-gated: requires a valid Cognito Bearer token. Ships dark (AUTH_ENABLED kill switch).
-// AUTH_PREFS KV must be bound; absent → 503.
+// The prefs store (Lakebase via AUTH_HYPERDRIVE) must be bound; absent → 503.
 
 import { requireAuth, type AuthEnv } from "../_lib/auth";
+import { type AuthDbEnv, resolveAuthDb } from "../_lib/authDb";
+import { getPrefs, putPrefs } from "../_lib/authStore";
 import { json, parseJsonBody } from "../_lib/http";
-import { getPrefs, putPrefs } from "../_lib/prefs";
-import type { KVLike } from "../_lib/ratelimit";
 
-interface Env extends AuthEnv {
+interface Env extends AuthEnv, AuthDbEnv {
   AUTH_ENABLED?: string;
-  AUTH_PREFS?: KVLike;
 }
 
 interface RequestContext {
@@ -23,9 +22,10 @@ export const onRequestGet = async ({ request, env }: RequestContext): Promise<Re
   if (env.AUTH_ENABLED !== "true") return json(503, { error: "auth not enabled" });
   const auth = await requireAuth(request, env);
   if (!auth.ok) return auth.response;
-  if (!env.AUTH_PREFS) return json(503, { error: "prefs store not configured" });
+  const db = resolveAuthDb(env);
+  if (!db) return json(503, { error: "prefs store not configured" });
 
-  const prefs = await getPrefs(env.AUTH_PREFS, auth.ctx.sub);
+  const prefs = await getPrefs(db, auth.ctx.sub);
   return json(200, {
     sub: auth.ctx.sub,
     email: auth.ctx.email,
@@ -39,7 +39,8 @@ export const onRequestPatch = async ({ request, env }: RequestContext): Promise<
   if (env.AUTH_ENABLED !== "true") return json(503, { error: "auth not enabled" });
   const auth = await requireAuth(request, env);
   if (!auth.ok) return auth.response;
-  if (!env.AUTH_PREFS) return json(503, { error: "prefs store not configured" });
+  const db = resolveAuthDb(env);
+  if (!db) return json(503, { error: "prefs store not configured" });
 
   const body = await parseJsonBody(request);
   if (!body.ok) return body.response;
@@ -56,7 +57,7 @@ export const onRequestPatch = async ({ request, env }: RequestContext): Promise<
     if (trimmed.length > 80) return json(400, { error: "display_name too long (max 80 chars)" });
   }
 
-  const prefs = await getPrefs(env.AUTH_PREFS, auth.ctx.sub);
+  const prefs = await getPrefs(db, auth.ctx.sub);
 
   if (rawName === null) {
     delete prefs.display_name;
@@ -69,7 +70,7 @@ export const onRequestPatch = async ({ request, env }: RequestContext): Promise<
     }
   }
 
-  await putPrefs(env.AUTH_PREFS, auth.ctx.sub, prefs);
+  await putPrefs(db, auth.ctx.sub, prefs, new Date().toISOString(), auth.ctx.email);
   return json(200, {
     sub: auth.ctx.sub,
     email: auth.ctx.email,

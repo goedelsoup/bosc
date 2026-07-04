@@ -4,20 +4,19 @@
 // admin: may set any of ["admin", "site-admin", "standard"].
 // site-admin: forbidden — only full admins may change group assignments.
 //
-// Writes an audit record to AUTH_PREFS KV on success (best-effort).
+// Writes an audit record to the Lakebase audit_log on success (best-effort).
 // Ships dark: AUTH_ENABLED kill switch must be "true".
 
 import { requireAuth, type AuthEnv } from "../../../_lib/auth";
+import { type AuthDbEnv, resolveAuthDb } from "../../../_lib/authDb";
+import { writeAuditEntry, type AuditEntry } from "../../../_lib/authStore";
 import { json, parseJsonBody } from "../../../_lib/http";
 import { setGroupsForUser, listGroupsForUser, type CognitoAdminEnv } from "../../../_lib/cognitoAdmin";
-import { writeAuditEntry, type AuditEntry } from "../../../_lib/audit";
-import type { KVLike } from "../../../_lib/ratelimit";
 
 const MANAGED_GROUPS = ["admin", "site-admin", "standard"];
 
-interface Env extends AuthEnv, CognitoAdminEnv {
+interface Env extends AuthEnv, AuthDbEnv, CognitoAdminEnv {
   AUTH_ENABLED?: string;
-  AUTH_PREFS?: KVLike;
 }
 
 interface RequestContext {
@@ -66,7 +65,8 @@ export const onRequestPost = async ({ request, env, params }: RequestContext): P
   }
 
   // Audit log (best-effort — failure doesn't roll back the Cognito change).
-  if (env.AUTH_PREFS) {
+  const db = resolveAuthDb(env);
+  if (db) {
     const entry: AuditEntry = {
       actor: auth.ctx.sub,
       target: sub,
@@ -75,7 +75,7 @@ export const onRequestPost = async ({ request, env, params }: RequestContext): P
       after: newGroups,
       at: new Date().toISOString(),
     };
-    await writeAuditEntry(env.AUTH_PREFS, entry);
+    await writeAuditEntry(db, entry, crypto.randomUUID());
   }
 
   return json(200, { sub, groups: newGroups });
