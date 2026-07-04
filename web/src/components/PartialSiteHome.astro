@@ -18,7 +18,7 @@
 import SiteNeeds from "./SiteNeeds.astro";
 import { loadManifest } from "../lib/bundle";
 import { type ReadinessSection, SECTION_META, isAvailable, lockedSections } from "../lib/readiness";
-import { withSite, withStory } from "../lib/site";
+import { withBase, withSite, withStory } from "../lib/site";
 import { FACILITY_STATUS_META, type NetworkSite, facilityStatus } from "../lib/sites";
 
 interface Props {
@@ -153,7 +153,7 @@ const needsCount = lockedSections(slug).length;
   }
 
   {/* The third way in — a question, drawn only from what's on the record. */}
-  <a class="psite-ask" href="/ask">
+  <a class="psite-ask" href={withBase("/ask")}>
     <span class="psite-ask-mark" aria-hidden="true">✦</span>
     <span class="psite-ask-text">
       <strong>Or ask the record what it already holds.</strong> Answers are drawn only from this

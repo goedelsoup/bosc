@@ -1,9 +1,17 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
+import { selectableSitePaths, siteForSlug } from "~/lib/sites";
 export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
 import { hasFeed, loadManifest } from "~/lib/bundle";
+import { isReferenceSite } from "~/lib/readiness";
 import { withSite } from "~/lib/site";
+
+// The section-lead + hub-count are Lima's real hydrology (the 7Q10 design low flow), so they're
+// gated to the reference build; a peer site reads its own place + receiving water from the
+// profile rather than inheriting Lima's numbers (#1217).
+const { slug } = Astro.props as { slug: string };
+const site = siteForSlug(slug);
+const isRef = isReferenceSite(slug);
 
 const manifest = loadManifest();
 const byName = new Map(manifest.feeds.map((f) => [f.name, f]));
@@ -80,11 +88,11 @@ if (hasFeed("economics-baseline")) {
         <div class="hub-eyebrow">Section · the Maumee watershed</div>
         <h1>The water it sits in</h1>
         <p class="hub-lead">
-          Stormwater and water-balance modeling of the Lima municipal loop, the
+          Stormwater and water-balance modeling of the {site?.place} municipal loop, the
           watershed map, dated imagery, and the RSEI toxic-release picture.
         </p>
       </div>
-      <span class="hub-count">Ottawa River · 7Q10 ≈ 0.2 cfs</span>
+      <span class="hub-count">{isRef ? "Ottawa River · 7Q10 ≈ 0.2 cfs" : site?.basin}</span>
     </div>
     <div class="hub-grid">
       {

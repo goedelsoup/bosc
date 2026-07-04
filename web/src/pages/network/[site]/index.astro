@@ -24,7 +24,7 @@ import {
 } from "~/lib/sites";
 import type { FigureStatData } from "~/lib/viz";
 import { WALK_CHAPTERS, walkHref } from "~/lib/walk";
-import { withSite, withStory } from "~/lib/site";
+import { withBase, withSite, withStory } from "~/lib/site";
 
 // One `network/[site]/…` route per selectable site (#724/#734); Lima alone today.
 export const getStaticPaths = selectableSitePaths;
@@ -174,7 +174,7 @@ const stats: FigureStatData[] = [
     </div>
 
     {/* The third way in — a question, not a path. Answers are cited and drawn only from the corpus. */}
-    <a class="home-ask" href="/ask">
+    <a class="home-ask" href={withBase("/ask")}>
       <span class="home-ask-mark" aria-hidden="true">✦</span>
       <span class="home-ask-text">
         <strong>Or just ask the record a question.</strong> Answers are drawn only from the

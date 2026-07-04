@@ -107,7 +107,7 @@ export function recordToBlock(r: RecordItem): LibraryRecord {
     {
       kind: "records",
       label: groupName,
-      href: withSite(`/site/records/${r.group}`),
+      href: withSite(`/site/records/${r.group}/`),
     },
   ];
   if (anchor) {
