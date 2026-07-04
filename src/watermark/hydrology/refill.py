@@ -61,11 +61,14 @@ log = get_logger(__name__)
 _START, _END = "1980-01-01", "2024-12-31"
 _DAYS_PER_YEAR = 365.0
 _MONTH_KEYS = ("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC")
+# ET0 -> open-water evaporation multiplier. Kept as one constant so the rate fed to
+# reservoir_evaporation_mgd() and the value recorded on ReservoirEvaporation cannot drift.
+_OPEN_WATER_COEFFICIENT = 1.0
 _FILENAME = "refill-adequacy.yaml"
 _METHOD = (
-    "sequent-peak (Rippl) storage requirement on aligned daily NWIS discharge, passby-adjusted, "
-    "net of a first-order reservoir-evaporation sink (ET0 x surface area)"
+    "sequent-peak (Rippl) storage requirement on aligned daily NWIS discharge, passby-adjusted"
 )
+_METHOD_EVAP = ", net of a first-order reservoir-evaporation sink (ET0 x surface area)"
 
 
 def _exceedance(asc: list[float], frac: float) -> float:
@@ -162,12 +165,15 @@ def _reservoir_evaporation(
         log.warning("hydro.refill.evap_skipped", reason=str(exc))
         return None, available_mgd
 
-    monthly_evap = reservoir_evaporation_mgd(et0, surface_acres)
+    monthly_evap = reservoir_evaporation_mgd(
+        et0, surface_acres, coefficient=_OPEN_WATER_COEFFICIENT
+    )
     annual_evap = annual_evaporation_mg(monthly_evap)
     peak_month = max(monthly_evap, key=lambda m: monthly_evap[m])
     evaporation = ReservoirEvaporation(
         surface_area_acres=surface_acres,
         et0_annual_mm=et0.annual_mm,
+        open_water_coefficient=_OPEN_WATER_COEFFICIENT,
         monthly_evap_mgd=monthly_evap,
         annual_evap_mg=annual_evap,
         mean_evap_mgd=round(annual_evap / _DAYS_PER_YEAR, 3),
@@ -175,7 +181,7 @@ def _reservoir_evaporation(
         peak_evap_mgd=monthly_evap[peak_month],
         citation=(
             "ET0 FAO-56 Penman-Monteith (NASA POWER climatology) over "
-            f"{surface_acres:g} ac ODNR reservoir surface area"
+            f"{surface_acres:g} ac of committed reservoir surface area (water-supply.yaml)"
         ),
         note=(
             "first-order screening sink; ET0 used directly as the open-water rate and "
@@ -343,7 +349,7 @@ def compute_refill_adequacy(
     if evaporation is not None:
         caveats.append(
             "A first-order reservoir-evaporation sink IS subtracted: FAO-56 ET0 over the "
-            f"{evaporation.surface_area_acres:g}-acre ODNR pool surface "
+            f"{evaporation.surface_area_acres:g}-acre committed pool surface "
             f"(~{evaporation.mean_evap_mgd:g} MGD mean, {evaporation.peak_evap_mgd:g} MGD in "
             f"{evaporation.peak_month}), folded in monthly `[derived]`. ET0 is used directly as "
             "the open-water rate and rain onto the pool is not credited, so the sink is a "
@@ -366,7 +372,7 @@ def compute_refill_adequacy(
         rivers=rivers,
         scenarios=scenarios,
         evaporation=evaporation,
-        method=_METHOD,
+        method=_METHOD + (_METHOD_EVAP if evaporation is not None else ""),
         warnings=[],
         caveats=caveats,
     )
