@@ -1,4 +1,4 @@
-# Watermark.
+# Watermark
 
 > **A PUBLIC RECORD OF THE BUILD-OUT** · `watermark.directory`
 
