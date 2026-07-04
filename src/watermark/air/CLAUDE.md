@@ -34,6 +34,14 @@ backup fleet into runtime, what is the air burden — and does forced generation
   The grid→runtime magnitude is `[inference]` (the escalation fraction) and stays so until
   the real reliability-triggered event is captured (#1174). For PJM's comfortable window
   the BA-wide band is small and honestly says so — don't inflate it.
+- **Event-anchored calibration** (`calibration.py`, #1174 → the Tier-0 half of #1182):
+  #1174 captured a real event — the PJM §202(c) order (`data/extracted/grid/*.event.yaml`).
+  The calibration reads it and dimensions the runtime band by the order's **verified
+  authorization window** (`runtime = window_hours × duty_fraction × events_per_year`),
+  a firmer anchor than the abstract fraction. Discipline: the window is `[verified]`/
+  `[derived]`; the intra-window **duty** and the annual **recurrence** stay `[inference]`;
+  and `facility_dispatch_confirmed` stays **False** — the order is RTO-wide and names no
+  facility, so this never asserts a specific fleet ran (omission over invention).
 - **Site-agnostic.** Engine rating, fleet count, permit rates, and caps resolve from the
   active site's `SiteFacility` / permit extraction — never hardcoded to Bistrozzi/Lima. A
   site with `facility=None` has no fleet: the loaders return `None` (grid-backdrop only,
@@ -41,5 +49,7 @@ backup fleet into runtime, what is the air burden — and does forced generation
   (`_DEFAULT_PERMIT_RELPATH`) — the seam for **#1180**, which adds
   `SiteFacility.air_permit_relpath`.
 - **Deferred (gated behind Tier-0):** AERMOD engine (`air/aermod/`, #1178), AERMET/AERMAP
-  connectors (#1179), receptor grid + NAAQS + event-anchored calibration (#1182), the
-  site-profile knobs (#1180), and feeds/CLI/ledger wiring (#1181). Tier-0 ships standalone.
+  connectors (#1179), the receptor grid + NAAQS dispersion half of #1182, the
+  site-profile knobs (#1180), and feeds/CLI/ledger wiring (#1181). Tier-0 ships standalone —
+  including the event-anchored **calibration** half of #1182 (`calibration.py`), which needs
+  only the captured event, not AERMOD.

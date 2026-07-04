@@ -13,6 +13,9 @@ Tier-0 pieces:
   reconciliation.
 - :mod:`watermark.air.dispatch` — the reliability dispatch-trigger model (grid stress
   signals → a genset runtime-hours band).
+- :mod:`watermark.air.calibration` — anchors that band to a **captured real event**
+  (the PJM §202(c) order, #1174): the event's verified authorization window dimensions
+  the runtime, replacing the pure BA-wide escalation fraction.
 - :mod:`watermark.air.scenario` — the scenario runner + synthetic-minor NSR
   cap-exceedance check.
 

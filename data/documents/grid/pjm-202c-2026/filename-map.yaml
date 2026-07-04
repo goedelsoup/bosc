@@ -1,0 +1,76 @@
+# Capture / alias manifest — PJM 2026 hot-weather FPA §202(c) emergency orders.
+#
+# Web-captured primary evidence (DOE CESER + PJM). Raw bytes are never edited.
+# These federal documents are served from slug URLs with no server-provided
+# filename, so the stored name is the canonical DOE/PJM document handle
+# (order number / "pjm-application-<order>"), derived from the source URL — not a
+# server filename that must be preserved. The `content_verified` date is read from
+# each file's OWN text layer (issuance / signature line), never from the URL.
+#
+# evidence: native_text = PDF text layer (pypdf) confirms the document identity
+#           and date quoted below.
+meta:
+  subject: PJM Interconnection FPA §202(c) hot-weather emergency orders (June–July 2026)
+  collection: grid/
+  captured_by: issue #1174 (reliability-triggered dispatch capture)
+  generated_at: '2026-07-04'
+  source: DOE Office of Cybersecurity, Energy Security, and Emergency Response (CESER)
+    2026 §202(c) orders index — https://www.energy.gov/ceser/2026-doe-202c-orders
+  policy: non-destructive — as-served bytes, canonical DOE/PJM handle as filename.
+
+documents:
+  - filename: doe-order-202-26-33.pdf
+    canonical: doe-order-202-26-33.pdf
+    title: DOE Order No. 202-26-33 (PJM Interconnection) — backup generation authority
+    issuer: U.S. Department of Energy (Secretary Chris Wright)
+    source_url: https://www.energy.gov/documents/doe-order-no-202-26-33
+    landing_page: https://www.energy.gov/ceser/federal-power-act-section-202c-pjm-interconnection-llc-pjm-order-no-202-26-33
+    sha256: e97db5c2df38ba7ccb3d7dda1f478d4e0dc6c3e6ae5103df79dc130fd82fcad7
+    bytes: 622776
+    content_type: application/pdf
+    pages: 11
+    fetched_at: '2026-07-04T19:17:00Z'
+    content_verified: '2026-06-30'   # §J issuance / effective date, read from order text
+    evidence: native_text
+    status: downloaded
+    note: >-
+      Authorizes PJM, with its Transmission Owners and Electric Distribution
+      Companies, to direct backup generation resources at data centers (incl.
+      hyperscaler facilities) and other large loads as a last resort before/during
+      an EEA 3. Effective 11:59 PM ET 2026-06-30 → 11:59 PM ET 2026-07-03.
+      Extended by Order 202-26-33A (2026-07-03, through 2026-07-07) — not captured.
+  - filename: doe-order-202-26-32.pdf
+    canonical: doe-order-202-26-32.pdf
+    title: DOE Order No. 202-26-32 (PJM Interconnection) — specified resources dispatch
+    issuer: U.S. Department of Energy (Secretary Chris Wright)
+    source_url: https://www.energy.gov/documents/doe-order-no-202-26-32
+    landing_page: https://www.energy.gov/ceser/federal-power-act-section-202c-pjm-interconnection-llc-pjm-order-no-202-26-32
+    sha256: 06de9a956025fe6519e26ac6f2922432423ce830d3f5f04a149b91cf92644546
+    bytes: 357058
+    content_type: application/pdf
+    pages: 7
+    fetched_at: '2026-07-04T19:17:00Z'
+    content_verified: '2026-06-30'   # order text, page 1; cites PJM 2026-06-29 application
+    evidence: native_text
+    status: downloaded
+    note: >-
+      Companion order directing PJM to dispatch specified generating units and
+      order their operation as needed to maintain reliability. Same emergency
+      window. Extended by Order 202-26-32A (2026-07-02) — not captured.
+  - filename: pjm-application-202-26-33.pdf
+    canonical: pjm-application-202-26-33.pdf
+    title: PJM application for FPA §202(c) emergency order (backup generation)
+    issuer: PJM Interconnection, L.L.C. (Michael E. Bryson, SVP Operations)
+    source_url: https://www.energy.gov/documents/pjm-application-202-26-33
+    sha256: c724f785fcd5f735c456b5e10458dc290e1cc3b7ae8e0882c5f93d3d5b2fafcc
+    bytes: 156301
+    content_type: application/pdf
+    pages: 4
+    fetched_at: '2026-07-04T19:17:00Z'
+    content_verified: '2026-06-27'   # letter date on the application, read from text
+    evidence: native_text
+    status: downloaded
+    note: >-
+      PJM's underlying request (letter dated 2026-06-27, to Secretary Wright)
+      that produced Order 202-26-33. Establishes the trigger PJM asserted:
+      forecast hot weather ≥95°F region-wide, projected peaks.
