@@ -36,6 +36,30 @@ def test_water_backsolve_inverts_cooling_basis() -> None:
     assert _it_load_from_consumptive_mgd(3.14, 1.8) == pytest.approx(275.1, abs=1.0)
 
 
+def test_method2_uses_the_basis_wue_not_a_fixed_constant(
+    facility_settings: Settings, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # A facility that overrides WUE derives its cooling consumptive with that WUE;
+    # Method-2 must invert with the *same* WUE so it round-trips to the facility's own
+    # IT load — not a fixed 1.8 that silently disagrees with the basis (#1169).
+    import watermark.sites as sites
+
+    lima = sites.SITES["lima"]
+    assert lima.facility is not None
+    override_facility = lima.facility.model_copy(
+        update={"wue_l_per_kwh": 2.6, "wue_citation": "test override"}
+    )
+    monkeypatch.setitem(
+        sites.SITES, "lima", lima.model_copy(update={"facility": override_facility})
+    )
+
+    cap = derive_compute_capacity(settings=facility_settings)
+    # With the fix the loop still closes; with the old fixed 1.8 the 2.6 basis would
+    # invert to ~397 MW, well outside this tolerance.
+    assert cap.it_load_water_low.value == pytest.approx(cap.it_load_power.value, abs=2.0)
+    assert "2.6 L/kWh" in (cap.it_load_water_low.citation or "")
+
+
 def test_method3_footprint_is_weakest_and_flagged(facility_settings: Settings) -> None:
     cap = derive_compute_capacity(settings=facility_settings)
     # Footprint is an assumption (not document/derived) and dwarfs the power method —
