@@ -2,10 +2,15 @@ serving_utility:
   utility:
     value: Dayton Power & Light Co
     source: reference
-    citation: 'EIA-861 2024 Service_Territory: Darke County, OH is a patchwork (DP&L
-      #4922, AEP #14006 on the east fringe, Darke Rural Electric co-op #4796, village
-      munis Arcanum/Versailles); the City of Greenville LSE is Dayton Power & Light
-      (#4922). [verified]'
+    citation: 'EIA-861 2024 Service_Territory: Darke County, OH is a patchwork — DP&L
+      (AES Ohio) #4922, AEP #14006 on the east fringe, Darke Rural Electric co-op
+      #4796 (rural Darke/Preble/Mercer), village munis Arcanum/Versailles. The City
+      of Greenville LSE is Dayton Power & Light #4922: AES Ohio''s delivery territory
+      lists Greenville and the city has no municipal electric; Darke REC (HQ in Greenville)
+      serves the rural remainder, not the city core. Pinned #4922 as the design-point
+      distribution IOU; a rural-greenfield facility would flip the LSE to Darke REC
+      #4796 or AEP #14006 (cf. West Union). EIA IDs 4922/4796 cross-checked against
+      OpenEI. [verified]'
     confidence: high
   holding_company:
     value: Dayton Power & Light Co
