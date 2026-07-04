@@ -165,3 +165,29 @@ def test_gage_schema_rejects_malformed_reference_data() -> None:
     with pytest.raises(ValidationError):
         # a top-level table missing the mainstems section is not a silently-empty screen
         basin._GageTable.model_validate({"headwaters_confluences": {}})
+
+
+def test_gage_table_rejects_empty_sections() -> None:
+    # A truncated mainstem-gages.yaml that keeps the keys but empties a section must fail
+    # fast, not load into a silently-partial (or empty) basin screen.
+    from pydantic import ValidationError
+
+    good_main = {"maumee river": {"gage": "04193500", "aliases": ["maumee river"]}}
+    good_conf = {
+        "maumee headwaters": {
+            "components": [
+                {"gage": "04180500", "label": "St. Joseph"},
+                {"gage": "04182000", "label": "St. Marys"},
+            ],
+            "aliases": ["maumee river at fort wayne"],
+        }
+    }
+    # A fully-populated table is accepted (the baseline for the negatives below).
+    basin._GageTable.model_validate({"mainstems": good_main, "headwaters_confluences": good_conf})
+
+    with pytest.raises(ValidationError):  # empty mainstems -> useless screen
+        basin._GageTable.model_validate({"mainstems": {}, "headwaters_confluences": good_conf})
+    with pytest.raises(ValidationError):  # empty confluences
+        basin._GageTable.model_validate({"mainstems": good_main, "headwaters_confluences": {}})
+    with pytest.raises(ValidationError):  # both empty
+        basin._GageTable.model_validate({"mainstems": {}, "headwaters_confluences": {}})

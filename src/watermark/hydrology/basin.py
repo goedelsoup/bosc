@@ -92,15 +92,16 @@ class HeadwatersConfluence(BaseModel):
 class _GageTable(BaseModel):
     """The whole committed ``mainstem-gages.yaml``, structure-validated in one pass.
 
-    Both sections are required: a missing/renamed top-level key is a reference-file error,
-    not a silently-empty screen. The ``meta`` block (and any future annotation keys) is
-    ignored, but every gage/confluence entry is validated by its nested model.
+    Both sections are required *and non-empty*: a missing/renamed top-level key or a
+    truncated (empty) section is a reference-file error, not a silently-partial screen. The
+    ``meta`` block (and any future annotation keys) is ignored, but every gage/confluence
+    entry is validated by its nested model.
     """
 
     model_config = ConfigDict(extra="ignore")
 
-    mainstems: dict[str, MainstemGage]
-    headwaters_confluences: dict[str, HeadwatersConfluence]
+    mainstems: dict[str, MainstemGage] = Field(min_length=1)
+    headwaters_confluences: dict[str, HeadwatersConfluence] = Field(min_length=1)
 
 
 def _mainstem_gages_path(settings: Settings) -> Path:
