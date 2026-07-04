@@ -241,6 +241,7 @@ class RoutedHydrographNetwork(BaseModel):
 
     tier: Literal["tier0"] = "tier0"
     scenario: str = "design-storm"
+    site: str = ""  # the loop's site label (SiteProfile.place) for a site-correct headline
     return_period_yr: int
     storm_depth_in: float
     dt_hr: float

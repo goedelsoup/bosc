@@ -17,6 +17,7 @@ depends_on:
 - eia-demand-pressure
 - eia-grid-profile
 - gleif
+- hydrology
 - hydrology-low-flow-7q10
 - hydrology-wbd
 - rsei-inventory
@@ -37,5 +38,7 @@ notes: >-
   as the `consumer-energy` feed for charting (#1111). The export also emits the `catalog-index`
   feed — the hydrated catalog of addressable "grabbable" atoms the user-authored Stories write/read
   paths resolve against (#1090/#1093), derived from the feeds above so it adds no new committed
-  upstream. `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
+  upstream. The `routed-hydrograph` feed (#1184) routes the loop's design-storm hydrographs down the
+  cited confluence graph, reading the `hydrology` bundle's network topology + reach geometry.
+  `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.

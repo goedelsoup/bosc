@@ -90,15 +90,18 @@ def route_storm_network(
     *,
     return_period_yr: int,
     storm_depth_in: float,
+    site_label: str = "",
     dt_hr: float = _DEFAULT_DT_HR,
     duration_hr: float = _DEFAULT_DURATION_HR,
 ) -> RoutedHydrographNetwork:
     """Route one design storm's hydrographs down the topology and superpose at confluences (pure).
 
     ``nodes`` is the cited confluence graph; ``table`` supplies each contributing node's
-    subcatchment and each reach's channel geometry. All series share one time grid (padded with
-    a routing-headroom tail so a lagged peak is never clipped). Returns the routed outlet
-    hydrograph, the naive summed (un-routed) hydrograph, and per-reach attenuation/lag.
+    subcatchment and each reach's channel geometry. ``site_label`` names the loop for the
+    finding/CLI headline (e.g. the active site's place); it is carried on the result. All series
+    share one time grid (padded with a routing-headroom tail so a lagged peak is never clipped).
+    Returns the routed outlet hydrograph, the naive summed (un-routed) hydrograph, and per-reach
+    attenuation/lag.
     """
     warnings: list[str] = []
 
@@ -120,9 +123,15 @@ def route_storm_network(
         local[node.id] = np.asarray(hg.flows_cfs, dtype=np.float64)
         base_len = max(base_len, local[node.id].size)
 
+    # Report typo'd reaches.yaml keys (both blocks) instead of silently ignoring them: a
+    # catchment/reach keyed to a non-existent node contributes nothing and is a data error.
+    node_ids = {n.id for n in nodes}
     for cid in table.catchments:
-        if cid not in {n.id for n in nodes}:
+        if cid not in node_ids:
             warnings.append(f"reaches.yaml catchment {cid!r} is not a node in network.yaml")
+    for rid in table.reaches:
+        if rid not in node_ids:
+            warnings.append(f"reaches.yaml reach {rid!r} is not a node in network.yaml")
 
     if base_len == 0:
         warnings.append("no contributing subcatchments resolved; nothing to route")
@@ -139,10 +148,11 @@ def route_storm_network(
         if n.downstream is not None and n.downstream in upstream:
             upstream[n.downstream].append(n.id)
 
+    order = network.toposort(nodes)  # computed once; reused for the outlet fallback below
     node_inflow: dict[str, NDArray[np.float64]] = {}
     node_outflow: dict[str, NDArray[np.float64]] = {}
     reach_results: list[ReachRouting] = []
-    for node in network._toposort(nodes):
+    for node in order:
         inflow = np.zeros(horizon, dtype=np.float64)
         for u in upstream[node.id]:
             inflow = inflow + node_outflow[u]
@@ -187,7 +197,7 @@ def route_storm_network(
     outlet_id = next((n.id for n in nodes if n.kind == "outlet"), None)
     if outlet_id is None:
         warnings.append("no outlet node in topology; using the last toposorted node as the outlet")
-        outlet_id = network._toposort(nodes)[-1].id
+        outlet_id = order[-1].id
     routed = node_inflow[outlet_id]
     summed = np.zeros(horizon, dtype=np.float64)
     for series in local.values():
@@ -198,6 +208,7 @@ def route_storm_network(
     atten = round(100.0 * (summed_peak - routed_peak) / summed_peak, 2) if summed_peak else 0.0
 
     rn = RoutedHydrographNetwork(
+        site=site_label,
         return_period_yr=return_period_yr,
         storm_depth_in=round(storm_depth_in, 3),
         dt_hr=dt_hr,
@@ -267,6 +278,8 @@ def build_routed_hydrograph(
     corridor-point depth the campus storm chain uses), and routes. Returns ``None`` if either
     committed input is absent, so ``watermark export`` skips the feed rather than fabricating one.
     """
+    from watermark.sites import active_profile
+
     settings = settings or get_settings()
     nodes = network.load_topology(settings=settings)
     table = load_reaches(settings=settings)
@@ -275,7 +288,11 @@ def build_routed_hydrograph(
         return None
     storm = stormwater._resolve_storm(return_period_yr, settings=settings, live=live)
     return route_storm_network(
-        nodes, table, return_period_yr=return_period_yr, storm_depth_in=storm.depth.value
+        nodes,
+        table,
+        return_period_yr=return_period_yr,
+        storm_depth_in=storm.depth.value,
+        site_label=active_profile(settings).place,
     )
 
 
@@ -312,9 +329,10 @@ def hydrograph_findings(rn: RoutedHydrographNetwork) -> list[HydroFinding]:
     """The routing headline as an evidence-tagged finding: attenuation + lag over the naive sum."""
     if not rn.reaches:
         return []
+    loop = f"{rn.site} loop" if rn.site else "The loop"
     return [
         HydroFinding(
-            subject="Lima loop design-storm peak at the outlet",
+            subject=f"{loop} design-storm peak at the outlet",
             check="routed-vs-summed-peak",
             ok=rn.peak_attenuation_pct >= 0.0,
             detail=(

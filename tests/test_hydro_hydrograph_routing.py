@@ -123,12 +123,29 @@ def test_node_without_a_reach_passes_flow_through_unrouted() -> None:
     assert rn.routed_peak_cfs > 0
 
 
-def test_route_storm_network_warns_on_orphan_catchment() -> None:
-    """A catchment keyed to a node absent from the topology is surfaced, not silently dropped."""
-    nodes = [NetworkNode(id="outlet", name="Outlet", kind="outlet")]
-    table = ReachTable(catchments={"ghost": _catchment(1000, 80, 1.0)}, reaches={})
+def test_route_storm_network_warns_on_orphan_catchment_and_reach() -> None:
+    """A catchment OR reach keyed to a node absent from the topology is surfaced, not dropped."""
+    nodes = [
+        NetworkNode(id="head", name="Head", kind="headwater", downstream="outlet"),
+        NetworkNode(id="outlet", name="Outlet", kind="outlet"),
+    ]
+    table = ReachTable(
+        catchments={"head": _catchment(5000, 80, 2.0), "ghost-catch": _catchment(1000, 80, 1.0)},
+        reaches={"head": _reach(20000, 0.002), "ghost-reach": _reach(1000, 0.001)},
+    )
     rn = hr.route_storm_network(nodes, table, return_period_yr=25, storm_depth_in=4.0)
-    assert any("ghost" in w for w in rn.warnings)
+    assert any("ghost-catch" in w and "catchment" in w for w in rn.warnings)
+    assert any("ghost-reach" in w and "reach" in w for w in rn.warnings)
+
+
+def test_route_storm_network_carries_the_site_label() -> None:
+    """The site label flows onto the result and into the finding subject (not hardcoded Lima)."""
+    nodes, table = _two_tributary_dag()
+    rn = hr.route_storm_network(
+        nodes, table, return_period_yr=25, storm_depth_in=4.0, site_label="Findlay"
+    )
+    assert rn.site == "Findlay"
+    assert hr.hydrograph_findings(rn)[0].subject.startswith("Findlay loop")
 
 
 # ----------------------------------------------------------------- loader + committed loop
@@ -159,6 +176,8 @@ def test_committed_lima_loop_routes_and_attenuates(hydro_settings: Settings) -> 
     assert rn.lag_hr > 0.0
     assert rn.reaches, "the committed loop should route several reaches"
     assert not rn.warnings, "every routed node in the committed topology has reach geometry"
-    # The findings headline reports the attenuation and passes (attenuation is non-negative).
+    assert rn.site == "Lima", "the reference-build loop is labelled from the active SiteProfile"
+    # The findings headline is site-labelled, reports the attenuation, and passes.
     findings = hr.hydrograph_findings(rn)
     assert findings and findings[0].ok and "attenuat" in findings[0].detail.lower()
+    assert findings[0].subject.startswith("Lima loop")

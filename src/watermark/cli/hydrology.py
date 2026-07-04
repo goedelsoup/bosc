@@ -194,8 +194,9 @@ def basin_route(
         )
         raise typer.Exit(1)
 
+    loop = f"{rn.site} loop" if rn.site else "The loop"
     console.print(
-        f"[bold]Lima loop {rn.return_period_yr}-yr storm[/] "
+        f"[bold]{loop} {rn.return_period_yr}-yr storm[/] "
         f"({rn.storm_depth_in:.2f} in, 24-hr) — routed down the cited confluence graph"
     )
     table = Table(
