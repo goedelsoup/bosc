@@ -105,7 +105,10 @@ def fetch_population_series(
             PopulationPoint(
                 year=year,
                 population=ProvenancedValue.from_connector(
-                    pop, "people", citation=f"US Census ACS5 {year} {_POP_VAR} ({area_name})"
+                    pop,
+                    "people",
+                    citation=f"US Census ACS5 {year} {_POP_VAR} ({area_name})",
+                    asof=str(year),
                 ),
             )
         )

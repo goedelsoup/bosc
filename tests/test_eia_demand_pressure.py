@@ -84,6 +84,8 @@ def test_eia_series_retains_points_with_latest_convenience(econ_settings: Settin
     assert price.period == price.points[-1].period
     assert price.value.value == price.points[-1].value
     assert price.value.verified and price.value.unit == "cents/kWh"
+    # ``asof`` is the series period, so a stale price is machine-flaggable (issue #1107).
+    assert price.value.asof == price.period
 
 
 def test_eia_series_resorts_untrusted_cache_order(econ_settings: Settings, monkeypatch) -> None:  # type: ignore[no-untyped-def]

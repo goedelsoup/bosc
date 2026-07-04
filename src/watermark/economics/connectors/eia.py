@@ -238,7 +238,9 @@ def fetch_eia_series(series_id: str, *, settings: Settings | None = None) -> Con
         metric=meta["metric"],
         period=latest.period,
         area=meta.get("area", settings.eia_state),  # national series set area="US"
-        value=ProvenancedValue.from_connector(latest.value, meta["unit"], citation=cite),
+        value=ProvenancedValue.from_connector(
+            latest.value, meta["unit"], citation=cite, asof=latest.period
+        ),
         points=points,
     )
 
