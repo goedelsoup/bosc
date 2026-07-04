@@ -14,6 +14,7 @@ from __future__ import annotations
 # Import the command submodules so their @app.command / @<sub>_app.command
 # decorators run and register on the shared app + sub-apps in _base.
 from watermark.cli import (  # noqa: F401
+    air,
     catalog,
     gis,
     greenops,

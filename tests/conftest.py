@@ -69,6 +69,24 @@ def gis_settings() -> Settings:
 
 
 @pytest.fixture
+def air_settings() -> Settings:
+    """Offline air settings: AERMET/AERMAP connector fixtures, no network.
+
+    The met/terrain station IDs are set explicitly (they are the #1180 SiteProfile seam,
+    not yet a profile knob); ``nasa_power_lat/lon`` and ``hydro_utm_epsg`` auto-fill from
+    the active (Lima) profile like the other connector fixtures.
+    """
+    return Settings(
+        data_dir=REPO_ROOT / "data",
+        air_offline=True,
+        air_fixtures_dir=FIXTURES / "air",
+        air_surface_station="725330-14827",  # Fort Wayne Intl (KFWA) — Lima representative
+        air_upperair_station="USM00072426",  # Wilmington, OH (ILN) radiosonde
+        air_met_year=2023,
+    )
+
+
+@pytest.fixture
 def civic_settings() -> Settings:
     """Offline civic settings: real repo data dir, civic page fixtures, no network."""
     return Settings(

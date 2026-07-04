@@ -48,8 +48,25 @@ backup fleet into runtime, what is the air burden — and does forced generation
   per the readiness layer). The permit path is currently the Lima default in `emissions.py`
   (`_DEFAULT_PERMIT_RELPATH`) — the seam for **#1180**, which adds
   `SiteFacility.air_permit_relpath`.
-- **Deferred (gated behind Tier-0):** AERMOD engine (`air/aermod/`, #1178), AERMET/AERMAP
-  connectors (#1179), the receptor grid + NAAQS dispersion half of #1182, the
-  site-profile knobs (#1180), and feeds/CLI/ledger wiring (#1181). Tier-0 ships standalone —
-  including the event-anchored **calibration** half of #1182 (`calibration.py`), which needs
-  only the captured event, not AERMOD.
+- **AERMET/AERMAP preprocessing connectors** (`connectors/`, #1179): the AERMOD met/terrain
+  input layer, under the same offline/cache/committed-fixture discipline as hydrology
+  (`connectors/_cache.py` → `AirOfflineError`, fixtures at `tests/fixtures/air/<connector>/`).
+  Three live pulls — `isd.py` (NOAA ISD hourly surface, the AERMET SURFACE/ISHD input),
+  `igra.py` (NOAA IGRA v2 upper-air soundings, the AERMET UPPERAIR input), `ned.py` (USGS
+  3DEP/NED DEM raster, the AERMAP terrain input; a raster, so it follows `gis/raster.py`'s
+  fixture-GeoTIFF discipline, **not** the JSON cache) — and two emitters, `aermet.py`
+  (surface + upper-air → AERMET-ready files + a Stage-1→MERGE runstream) and `aermap.py`
+  (DEM → bilinearly-sampled receptor/source elevations + an AERMAP control file). CLI:
+  `watermark aermet` / `watermark aermap`. **No fabricated meteorology:** the AERMET runstream
+  stops at MERGE — the METPREP surface characteristics (albedo/Bowen/roughness) are the
+  modeller's land-use inputs, emitted only as a commented template; the `.SFC`/`.PFL` and the
+  AERMAP hill-height scale come from the **binaries** (#1178). Sampled elevations are a
+  deterministic DEM read, tagged `[derived]`. Per-site station IDs / terrain domain live in
+  `air_*` **Settings** knobs today (env/kwarg-driven, not hardcoded); promoting them onto
+  `SiteProfile` is the **#1180** "met/terrain endpoints" seam — the same idiom as the
+  `_DEFAULT_PERMIT_RELPATH` seam above.
+- **Deferred (gated behind Tier-0):** AERMOD engine (`air/aermod/`, #1178), the
+  receptor-grid + NAAQS dispersion half of #1182, the site-profile knobs (#1180), and
+  feeds/CLI/ledger wiring (#1181). Tier-0 ships standalone — including the event-anchored
+  **calibration** half of #1182 (`calibration.py`), which needs only the captured event,
+  not AERMOD.
