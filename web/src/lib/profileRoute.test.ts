@@ -6,7 +6,7 @@
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { onRequestGet as profileGet, onRequestPatch as profilePatch } from "@fn/api/account/profile";
 import { onRequestGet as notifGet, onRequestPatch as notifPatch } from "@fn/api/account/notifications";
-import { putPrefs, type UserPrefs } from "@fn/api/_lib/authStore";
+import { setDisplayName, setNotifications, type UserPrefs } from "@fn/api/_lib/authStore";
 import {
   type CognitoTestKeyPair,
   type FakePg,
@@ -32,9 +32,11 @@ beforeAll(async () => {
 });
 
 let db: FakePg;
+// Generous hook timeout: the first pglite WASM boot (per worker) can be slow under full-suite
+// parallelism, and the default 10s hook timeout is tighter than the 15s per-test one.
 beforeEach(async () => {
   db = await fakePg();
-});
+}, 30000);
 
 afterEach(() => {
   vi.unstubAllGlobals();
@@ -83,7 +85,9 @@ function bearerRequest(url: string, method: "GET" | "PATCH", token: string, body
 
 /** Seed a prefs row for `sub` directly through the store (the DB analog of the old KV seed). */
 async function seedPrefs(sub: string, prefs: UserPrefs): Promise<void> {
-  await putPrefs(db, sub, prefs, "2026-01-01T00:00:00.000Z", "seed@example.com");
+  const at = "2026-01-01T00:00:00.000Z";
+  await setNotifications(db, sub, prefs.notifications, at, "seed@example.com");
+  if (prefs.display_name !== undefined) await setDisplayName(db, sub, prefs.display_name, at);
 }
 
 // ---------------------------------------------------------------------------

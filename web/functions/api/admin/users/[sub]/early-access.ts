@@ -39,6 +39,11 @@ async function handle(method: "PUT" | "DELETE", { request, env, params }: Reques
 
   const { sub } = params;
 
+  // Fail closed BEFORE the Cognito mutation: refuse an unauditable role change if the audit store
+  // isn't bound, rather than grant/revoke without a record.
+  const db = resolveAuthDb(env);
+  if (!db) return json(503, { error: "audit store not configured" });
+
   // Fetch before-state first so the audit record is accurate.
   // Propagate failures (502) rather than swallowing them — a fabricated empty
   // before[] would make the audit log useless for the revoke path.
@@ -63,18 +68,16 @@ async function handle(method: "PUT" | "DELETE", { request, env, params }: Reques
 
   const after = method === "PUT" ? [...new Set([...before, GROUP])] : before.filter((g) => g !== GROUP);
 
-  const db = resolveAuthDb(env);
-  if (db) {
-    const entry: AuditEntry = {
-      actor: auth.ctx.sub,
-      target: sub,
-      action: method === "PUT" ? "grant-early-access" : "revoke-early-access",
-      before,
-      after,
-      at: new Date().toISOString(),
-    };
-    await writeAuditEntry(db, entry, crypto.randomUUID());
-  }
+  // Best-effort on transient write failure — the Cognito change already committed.
+  const entry: AuditEntry = {
+    actor: auth.ctx.sub,
+    target: sub,
+    action: method === "PUT" ? "grant-early-access" : "revoke-early-access",
+    before,
+    after,
+    at: new Date().toISOString(),
+  };
+  await writeAuditEntry(db, entry, crypto.randomUUID());
 
   return json(200, { sub, earlyAccess: method === "PUT" });
 }

@@ -66,6 +66,11 @@ export const onRequestPost = async ({ request, env, params }: RequestContext): P
     }
   }
 
+  // Fail closed BEFORE the Cognito mutation: refuse an unauditable role change if the audit store
+  // isn't bound, rather than mutate without a record.
+  const db = resolveAuthDb(env);
+  if (!db) return json(503, { error: "audit store not configured" });
+
   try {
     await setAdminSites(env, sub, newSites);
   } catch (e) {
@@ -73,18 +78,16 @@ export const onRequestPost = async ({ request, env, params }: RequestContext): P
     return json(502, { error: `Cognito error: ${msg}` });
   }
 
-  const db = resolveAuthDb(env);
-  if (db) {
-    const entry: AuditEntry = {
-      actor: auth.ctx.sub,
-      target: sub,
-      action: "set-admin-sites",
-      before,
-      after: newSites,
-      at: new Date().toISOString(),
-    };
-    await writeAuditEntry(db, entry, crypto.randomUUID());
-  }
+  // Best-effort on transient write failure — the Cognito change already committed.
+  const entry: AuditEntry = {
+    actor: auth.ctx.sub,
+    target: sub,
+    action: "set-admin-sites",
+    before,
+    after: newSites,
+    at: new Date().toISOString(),
+  };
+  await writeAuditEntry(db, entry, crypto.randomUUID());
 
   return json(200, { sub, adminSites: newSites });
 };
