@@ -1,0 +1,24 @@
+{
+  "params": {
+    "connector": "census",
+    "dataset": "acs/acs5",
+    "year": 2023,
+    "var": "B19013_001E",
+    "fips": "39003"
+  },
+  "fetched_at": "2026-07-04T19:23:05.590592+00:00",
+  "payload": [
+    [
+      "NAME",
+      "B19013_001E",
+      "state",
+      "county"
+    ],
+    [
+      "Allen County, Ohio",
+      "62001",
+      "39",
+      "003"
+    ]
+  ]
+}

@@ -1,0 +1,61 @@
+vintage: EPRI 2024 / Uptime Institute 2023 / NREL 2012
+benchmarks:
+- facility_type: industry_average_site
+  label: Data center, industry-average site WUE
+  wue:
+    value: 1.8
+    unit: L/kWh
+    source: reference
+    citation: Uptime Institute Global Data Center Survey — average site WUE across
+      operators that measure it
+    confidence: medium
+    asof: null
+  basis: site
+  note: Direct on-site cooling water per kWh of IT load; operators that measure WUE,
+    so it skews toward the more instrumented (often more efficient) fleet.
+- facility_type: hyperscale_evaporative
+  label: Hyperscale, evaporative-tower cooling
+  wue:
+    value: 2.2
+    unit: L/kWh
+    source: reference
+    citation: EPRI data-center water-use characterization — evaporative (open-loop
+      cooling-tower) facilities
+    confidence: low
+    asof: null
+  basis: site
+  note: Wet cooling trades electricity for water; a representative upper-range site
+    WUE for evaporatively cooled campuses.
+- facility_type: closed_loop_airside
+  label: Closed-loop / air-side economized cooling
+  wue:
+    value: 0.3
+    unit: L/kWh
+    source: reference
+    citation: EPRI / industry closed-loop + air-side-economizer data-center WUE
+    confidence: low
+    asof: null
+  basis: site
+  note: Dry / closed-loop cooling draws little on-site water but more electricity;
+    a representative low-water site WUE.
+- facility_type: grid_upstream
+  label: Grid generation, upstream (source WUE)
+  wue:
+    value: 1.9
+    unit: L/kWh
+    source: reference
+    citation: Macknick et al. (NREL 2012) operational water-consumption factors /
+      EPRI water-for-electricity — US thermoelectric fleet average
+    confidence: low
+    asof: null
+  basis: source
+  note: Water consumed upstream to generate 1 kWh delivered — added to site WUE for
+    a source WUE; varies with the subregion generation mix (eGRID), so the derivation
+    scales it by the workload's subregion.
+note: Water Usage Effectiveness benchmarks (liters of water per kWh), hand-curated
+  from published sources (EPRI 2024 / Uptime Institute 2023 / NREL 2012). SITE WUE
+  is direct on-site cooling water; SOURCE WUE is the water consumed upstream to generate
+  the electricity drawn — the two are on different bases and must never be summed
+  across bases or compared. Every figure is `reference` (a published benchmark), never
+  a metered fact about our own cooling; the derivation (#1083) applies them and stays
+  `derived`. Representative rows are marked low-confidence.

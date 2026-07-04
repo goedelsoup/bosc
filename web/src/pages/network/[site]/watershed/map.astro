@@ -1,12 +1,21 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
+import { selectableSitePaths, siteForSlug } from "~/lib/sites";
 export const getStaticPaths = selectableSitePaths;
 import BackLink from "~/components/BackLink.astro";
 import CorridorMap from "~/components/islands/CorridorMap.tsx";
 import Base from "~/layouts/Base.astro";
 import { mergedGeo } from "~/lib/geo";
 import { layerLabel, layersPresent, type GeoFeature } from "~/lib/geoStyle";
+import { isReferenceSite } from "~/lib/readiness";
 import { withBase, withSite } from "~/lib/site";
+
+// The section-lead names Lima's specific parcels/corridor/subwatershed, so it's gated to the
+// reference build; a peer site gets a generic layer description keyed off its own place (#1217).
+const { slug } = Astro.props as { slug: string };
+const site = siteForSlug(slug);
+const boundaryLead = isReferenceSite(slug)
+  ? "The USGS WBD watershed boundary (the Pike Run subwatershed within the Ottawa River watershed) framing the campus, the JSMC parcels, the North Cole Street corridor and roadwork, FEMA floodway/floodplain, WWTP discharge points,"
+  : `The USGS WBD watershed boundary framing ${site?.place}'s campus, parcels, and corridor, FEMA floodway/floodplain, WWTP discharge points,`;
 
 // Build-time: the same merged feed the island fetches, used here to server-render
 // the legend + feature table — the no-JS fallback and a plain data view.
@@ -32,9 +41,7 @@ const mapSrc = withBase("/feeds/geo/corridor-map.geojson");
     <BackLink href={withSite("/watershed/")} label="The Maumee watershed" />
     <h1>Watershed &amp; corridor map</h1>
     <p class="section-lead">
-      The USGS WBD watershed boundary (the Pike Run subwatershed within the Ottawa
-      River watershed) framing the campus, the JSMC parcels, the North Cole Street
-      corridor and roadwork, FEMA floodway/floodplain, WWTP discharge points, and the
+      {boundaryLead} and the
       RSEI toxic-release overlay (off by default). Pan/zoom, toggle layers, switch
       basemaps (street, Esri aerial, dated 2014/2024 Wayback aerials), and click a
       feature for its record. {features.length} features across {present.length} layers.

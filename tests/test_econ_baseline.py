@@ -19,7 +19,10 @@ from watermark.economics.baseline import (
     load_baseline,
     write_baseline,
 )
-from watermark.economics.connectors.census import fetch_population_series
+from watermark.economics.connectors.census import (
+    fetch_median_household_income,
+    fetch_population_series,
+)
 from watermark.economics.connectors.qcew import (
     QcewError,
     _reduce_csv,
@@ -100,6 +103,25 @@ def test_census_population_offline(econ_settings: Settings) -> None:
     assert series.points[-1].population.value < series.points[0].population.value
     # Each ACS5 point's ``asof`` is its data year (issue #1107).
     assert [p.population.asof for p in series.points] == ["2010", "2023"]
+
+
+def test_census_median_income_offline(econ_settings: Settings) -> None:
+    """The B19013 income pull (#1110) replays offline from its committed fixture, reads the
+    value by name, and is connector-sourced with a citation naming the ACS variable."""
+    inc = fetch_median_household_income(year=2023, fips="39003", settings=econ_settings)
+    assert inc.unit == "USD/yr" and inc.verified  # connector-sourced
+    assert 40_000 < inc.value < 100_000  # a sane county median household income
+    assert "B19013" in (inc.citation or "") and "Allen County, Ohio" in (inc.citation or "")
+    assert inc.asof == "2023"  # ACS vintage carried for staleness, like population (#1107)
+
+
+def test_build_baseline_folds_median_income(econ_settings: Settings) -> None:
+    """The baseline carries median household income (Census B19013) alongside population (#1110)."""
+    baseline = build_baseline(years=[2018, 2023], settings=econ_settings)
+    assert baseline.median_household_income is not None
+    assert baseline.median_household_income.unit == "USD/yr"
+    assert baseline.median_household_income.verified
+    assert "B19013" in baseline.note
 
 
 def test_build_baseline_trend(econ_settings: Settings) -> None:
@@ -198,6 +220,9 @@ def test_committed_baseline_loads() -> None:
     assert baseline is not None
     assert baseline.fips == "39003"
     assert baseline.latest.sectors
+    # The committed baseline carries median household income (#1110) — the energy-burden input.
+    assert baseline.median_household_income is not None
+    assert baseline.median_household_income.value > 0
 
 
 def test_build_baseline_preserves_population_on_keyless_rerun(

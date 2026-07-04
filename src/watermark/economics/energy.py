@@ -19,7 +19,7 @@ import yaml
 
 from watermark.config import Settings, get_settings
 from watermark.economics.connectors.eia import fetch_consumer_energy
-from watermark.economics.model import ConsumerEnergyCosts, FacilityDemandPressure
+from watermark.economics.model import ConsumerEnergyCosts, EnergyBurden, FacilityDemandPressure
 from watermark.facility.consumption import HOURS_PER_YEAR as _HOURS_PER_YEAR
 from watermark.facility.consumption import LOAD_FACTOR as _LOAD_FACTOR
 from watermark.facility.consumption import annual_consumption_gwh
@@ -34,6 +34,12 @@ _LOAD_FACTOR_CITE = "data-center capacity utilization ~0.9 (near-flat 24x7 load)
 # EIA: US average annual residential electricity consumption ~10,500 kWh/household.
 _AVG_HOUSEHOLD_KWH_YR = 10500.0
 _HOUSEHOLD_CITE = "US avg residential use ~10,500 kWh/household/yr (EIA FAQ); assumption"
+# EIA: US average residential natural-gas consumption ~70 Mcf/customer/yr (thousand cu ft).
+_AVG_HOUSEHOLD_MCF_YR = 70.0
+_HOUSEHOLD_GAS_CITE = (
+    "US avg residential natural-gas use ~70 Mcf/household/yr (EIA consumption per "
+    "customer); assumption — applies to gas-heated homes"
+)
 # Stylized demand-to-price transmission: % price pressure per % demand increase, under
 # tight short-run supply. A SCREENING band, not an estimated elasticity.
 _KAPPA_LOW, _KAPPA_HIGH = 0.5, 1.0
@@ -161,6 +167,126 @@ def derive_demand_pressure(
             "Facility draw is itself an assumption-laden estimate (air-permit IT load x "
             "PUE band, #87); the load factor and transmission coefficient are assumptions.",
         ],
+    )
+
+
+def derive_energy_burden(
+    *,
+    costs: ConsumerEnergyCosts | None = None,
+    income: ProvenancedValue | None = None,
+    settings: Settings | None = None,
+) -> EnergyBurden:
+    """Household energy burden = annual home-energy spend / median household income (#1110).
+
+    ``costs`` defaults to the EIA pull/fixture; ``income`` is the Census B19013 median
+    household income (:func:`watermark.economics.connectors.census.fetch_median_household_income`),
+    defaulting to a fresh pull for the active site's latest ACS5 vintage. A fully **[derived]**
+    consumer-impact metric — unlike the stylized demand→price band, every input is cited. This
+    also gives the fetched-but-unused residential natural-gas price a job.
+    """
+    settings = settings or get_settings()
+    costs = costs or build_consumer_energy(settings=settings)
+    if income is None:
+        # Deferred import: the income pull lives with the population pull on the baseline's
+        # Census connector, and the baseline year constant is that module's business.
+        from watermark.economics.baseline import _INCOME_YEAR
+        from watermark.economics.connectors.census import fetch_median_household_income
+
+        income = fetch_median_household_income(year=_INCOME_YEAR, settings=settings)
+
+    elec = costs.by_metric("electricity", "price")
+    gas = costs.by_metric("natural_gas", "price")
+    if elec is None or gas is None:
+        raise ValueError(
+            f"energy burden needs residential electricity + natural-gas prices; the "
+            f"{costs.area} consumer-energy dataset is missing one"
+        )
+    income_usd = income.value
+    if income_usd <= 0:
+        raise ValueError(f"median household income must be positive, got {income_usd}")
+
+    # Electricity: kWh/yr x cents/kWh / 100 -> $/yr. Gas: Mcf/yr x $/Mcf -> $/yr.
+    elec_price = elec.value.value  # cents/kWh
+    elec_cost = _AVG_HOUSEHOLD_KWH_YR * elec_price / 100.0
+    gas_price = gas.value.value  # $/Mcf
+    gas_cost = _AVG_HOUSEHOLD_MCF_YR * gas_price
+    combined_cost = elec_cost + gas_cost
+
+    return EnergyBurden(
+        area=costs.area,
+        area_name=costs.area_name,
+        median_household_income=income,
+        avg_household_kwh_yr=ProvenancedValue.assume(
+            _AVG_HOUSEHOLD_KWH_YR, "kWh/yr", why=_HOUSEHOLD_CITE
+        ),
+        residential_electricity_price=ProvenancedValue.from_connector(
+            elec_price, elec.value.unit, citation=f"EIA {elec.series_id} ({elec.period})"
+        ),
+        electricity_annual_cost=ProvenancedValue.derived(
+            round(elec_cost, 2),
+            "USD/yr",
+            citation=f"{_AVG_HOUSEHOLD_KWH_YR:g} kWh/yr x {elec_price:g} cents/kWh",
+        ),
+        electricity_burden_pct=ProvenancedValue.derived(
+            round(elec_cost / income_usd * 100.0, 2),
+            "percent",
+            citation=f"${elec_cost:,.0f}/yr electricity / ${income_usd:,.0f} median household income",
+        ),
+        avg_household_mcf_yr=ProvenancedValue.assume(
+            _AVG_HOUSEHOLD_MCF_YR, "Mcf/yr", why=_HOUSEHOLD_GAS_CITE
+        ),
+        residential_gas_price=ProvenancedValue.from_connector(
+            gas_price, gas.value.unit, citation=f"EIA {gas.series_id} ({gas.period})"
+        ),
+        gas_annual_cost=ProvenancedValue.derived(
+            round(gas_cost, 2),
+            "USD/yr",
+            citation=f"{_AVG_HOUSEHOLD_MCF_YR:g} Mcf/yr x {gas_price:g} $/Mcf",
+        ),
+        gas_burden_pct=ProvenancedValue.derived(
+            round(gas_cost / income_usd * 100.0, 2),
+            "percent",
+            citation=f"${gas_cost:,.0f}/yr gas / ${income_usd:,.0f} median household income",
+        ),
+        combined_annual_cost=ProvenancedValue.derived(
+            round(combined_cost, 2),
+            "USD/yr",
+            citation=f"${elec_cost:,.0f}/yr electricity + ${gas_cost:,.0f}/yr gas",
+        ),
+        combined_burden_pct=ProvenancedValue.derived(
+            round(combined_cost / income_usd * 100.0, 2),
+            "percent",
+            citation=f"${combined_cost:,.0f}/yr electricity+gas / ${income_usd:,.0f} income",
+        ),
+        caveats=[
+            "Median household income is county-level (Census B19013); residential energy "
+            "prices are state averages (EIA) — the burden mixes a county denominator with "
+            "state prices.",
+            "The gas and combined burdens assume a gas-heated home at average use; a home "
+            "heating with electricity or another fuel carries no gas burden.",
+            "Household electricity/gas use are national-average assumptions — actual use "
+            "varies with climate, home size, and efficiency.",
+        ],
+    )
+
+
+def build_energy_burden(settings: Settings | None = None) -> EnergyBurden | None:
+    """Assemble the household energy burden from committed reference data, or ``None``.
+
+    Reads the committed EIA consumer-energy prices (:func:`load_consumer_energy`) and the
+    committed baseline's median household income (Census B19013) — both offline artifacts,
+    so the site build needs no live pull. Returns ``None`` when either is absent (a site that
+    hasn't onboarded income yet), so the feed is skipped and the section degrades (#781).
+    """
+    settings = settings or get_settings()
+    from watermark.economics.baseline import load_baseline
+
+    costs = load_consumer_energy(settings)
+    baseline = load_baseline(settings)
+    if costs is None or baseline is None or baseline.median_household_income is None:
+        return None
+    return derive_energy_burden(
+        costs=costs, income=baseline.median_household_income, settings=settings
     )
 
 

@@ -7,8 +7,8 @@ import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed } from "~/lib/bundle";
 import type { RecordItem } from "~/lib/feeds";
 import { groupLabel, groupsOf } from "~/lib/records";
-import { withSite } from "~/lib/site";
-import { SITE_BASE } from "~/lib/routes";
+import { siteHref, withSite } from "~/lib/site";
+import { LIMA_SLUG } from "~/lib/routes";
 
 const records = hasFeed("records") ? loadFeed<RecordItem[]>("records") : [];
 const groups = groupsOf(records);
@@ -33,7 +33,10 @@ const byGroup = groups.map((g) => ({ label: groupLabel(g), value: countOf(g) }))
     </div>
     {byGroup.length > 1 && <DonutChart title="Records by document kind" centerLabel="records" slices={byGroup} />}
     <p class="hub-lead">
-      New to the record? <a href={`${SITE_BASE}/site/records/how-to-read`}>How to read any record</a> —
+      {/* how-to-read is Lima-only (its example teardowns use Lima records), so this stays
+          Lima-pinned — but via `siteHref` so it carries the deploy base, not the base-free
+          `SITE_BASE` it used before (#1217). */}
+      New to the record? <a href={siteHref(LIMA_SLUG, "/site/records/how-to-read")}>How to read any record</a> —
       the five-beat grammar behind every figure here, shown across a cost estimate, an air permit, and a
       water screen.
     </p>

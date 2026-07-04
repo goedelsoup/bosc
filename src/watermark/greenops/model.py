@@ -17,6 +17,7 @@ assumptions land in #1078-#1083.
 from __future__ import annotations
 
 from datetime import datetime, timedelta
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
 
@@ -228,6 +229,112 @@ class AwsCarbonReport(BaseModel):
         for m in self.monthly:
             values += [m.mbm_emissions, m.lbm_emissions]
         return values
+
+
+# --- eGRID factors + WUE benchmarks (#1082) ------------------------------------------------
+# The reference factor tables the derivation (#1083) applies: EPA eGRID subregion
+# carbon-intensity (lb CO2e/MWh) + generation mix, pulled by the egrid connector, and the
+# hand-curated WUE (Water Usage Effectiveness) benchmark table (EPRI / Uptime Institute).
+# Every figure is `reference` — an authoritative published factor, NEVER a metered fact
+# about our own consumption. The derivation multiplies electricity by these; PUE /
+# utilization / which-subregion remain stated `assumption`s upstream.
+
+
+class EgridResourceShare(BaseModel):
+    """One fuel's share of an eGRID subregion's generation mix (resource mix, percent)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    fuel: str  # "coal" | "gas" | "nuclear" | "hydro" | "wind" | "solar" | ...
+    label: str  # "Coal", "Natural gas", "Nuclear", ...
+    percent: float  # generation share 0-100 (eGRID reports a 0-1 fraction, scaled x100 here)
+    renewable: bool  # our declared classification (hydro/biomass/wind/solar/geothermal)
+
+
+class EgridSubregion(BaseModel):
+    """One eGRID subregion's carbon-intensity + generation-mix factors.
+
+    ``co2e_rate`` is the annual CO2-equivalent total output emission rate (SRC2ERTA,
+    lb/MWh) — the electricity→CO2e factor; ``renewable_pct`` is eGRID's total-renewables
+    share (SRTRPR). ``resource_mix`` keeps the per-fuel breakdown (fuels with a nonzero
+    share, ranked desc). Both provenanced figures are ``reference``.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    code: str  # eGRID subregion acronym, e.g. "RFCW"
+    name: str  # eGRID subregion name, e.g. "RFC West"
+    co2e_rate: ProvenancedValue  # lb CO2e/MWh, reference
+    renewable_pct: ProvenancedValue  # % of generation from renewables, reference
+    resource_mix: list[EgridResourceShare]  # ranked by share desc
+
+    def all_values(self) -> list[ProvenancedValue]:
+        """Every :class:`ProvenancedValue` in the subregion, for provenance auditing."""
+        return [self.co2e_rate, self.renewable_pct]
+
+
+class EgridFactors(BaseModel):
+    """The reduced EPA eGRID subregion factor table (the connector's ``--write`` artifact).
+
+    Every subregion in the published vintage, so the derivation can apportion electricity
+    by whichever subregion a workload runs in. Values are read **by field code** (SUBRGN,
+    SRNAME, SRC2ERTA, SRTRPR, the SR*PR mix columns) from the workbook's own header row,
+    never by index. Every figure is ``reference``.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    year: int  # eGRID data year, e.g. 2023
+    vintage: str  # release label, e.g. "eGRID2023"
+    source_url: str  # the workbook the factors were pulled from
+    subregions: list[EgridSubregion]  # ranked by code
+    note: str = ""
+
+    def all_values(self) -> list[ProvenancedValue]:
+        """Every :class:`ProvenancedValue` in the table, for provenance auditing."""
+        return [v for sr in self.subregions for v in sr.all_values()]
+
+    def by_code(self) -> dict[str, EgridSubregion]:
+        """Subregions keyed by acronym, for the derivation's lookup by region."""
+        return {sr.code: sr for sr in self.subregions}
+
+
+class WueBenchmark(BaseModel):
+    """One Water Usage Effectiveness benchmark — liters of water per kWh, for a facility type.
+
+    ``basis`` distinguishes **site** WUE (direct on-site cooling water only) from **source**
+    WUE (adds the water withdrawn/consumed upstream to generate the electricity drawn) — the
+    two must never be summed or compared across bases. The figure is ``reference`` (a
+    published benchmark), never a metered fact about our own cooling.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    facility_type: str  # "hyperscale_evaporative" | "closed_loop_airside" | "grid_upstream" | ...
+    label: str  # "Hyperscale, evaporative cooling", ...
+    wue: ProvenancedValue  # L/kWh, reference
+    basis: Literal["site", "source"]  # site = direct on-site cooling; source = incl. upstream
+    note: str = ""
+
+
+class WueTable(BaseModel):
+    """The committed WUE benchmark table (EPRI / Uptime Institute), tagged ``reference``.
+
+    Hand-curated from published data-center water benchmarks (site WUE) plus the upstream
+    water-for-electricity intensity (source WUE) — not a live pull. The derivation (#1083)
+    multiplies the electricity figure by the site + source benchmarks for the modeled
+    facility type; every figure here stays ``reference``, never ``verified``.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    vintage: str  # "EPRI 2024 / Uptime Institute 2023"
+    benchmarks: list[WueBenchmark]
+    note: str = ""
+
+    def all_values(self) -> list[ProvenancedValue]:
+        """Every :class:`ProvenancedValue` in the table, for provenance auditing."""
+        return [b.wue for b in self.benchmarks]
 
 
 class GreenopsReport(BaseModel):

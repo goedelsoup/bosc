@@ -25,14 +25,10 @@ export interface NarrativeDoc {
 }
 
 export const NARRATIVE: NarrativeDoc[] = [
-  {
-    repo: "methodology.md",
-    slug: "methodology",
-    title: "Methodology — how we read the record",
-    section: "home",
-    blurb:
-      "How a deliberately thin public record is read from primary documents into cited, structured data.",
-  },
+  // Methodology retired from the per-site docs set (#1132): it's now the network-global
+  // `/methodology` hub (epic #1126), not a site-scoped narrative. The old route
+  // `/network/[site]/docs/methodology` redirects there via a catch page
+  // (pages/network/[site]/docs/methodology.astro).
   {
     repo: "COURSE.md",
     slug: "course",

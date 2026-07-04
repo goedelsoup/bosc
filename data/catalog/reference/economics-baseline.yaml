@@ -6,7 +6,7 @@ producer:
   kind: connector
   command: economics
   connector_ref: watermark.economics.connectors.qcew
-  source: BLS QCEW annual averages (keyless) + US Census ACS 5-year (B01003_001E)
+  source: BLS QCEW annual averages (keyless) + US Census ACS 5-year (B01003_001E population, B19013_001E median household income)
   external_url: https://www.bls.gov/cew/
 license: U.S. Government work (public domain)
 access_tier: keyed
@@ -28,9 +28,11 @@ tags:
 - census
 - employment
 - wages
+- income
 - baseline
 notes: Connector-regenerated county employment-by-NAICS with location quotients and QCEW wages
   (avg_annual_pay and avg_weekly_wage, on the county total and per sector) plus an ACS population
-  series (population needs WATERMARK_CENSUS_API_KEY; QCEW is keyless); site-scoped under reference/economics/{site}/.
+  series and ACS median household income — B19013, the energy-burden denominator (#1110); population
+  and income need WATERMARK_CENSUS_API_KEY, QCEW is keyless; site-scoped under reference/economics/{site}/.
   Connector values carry asof (the QCEW annual-average year / ACS data year) for machine-checkable
   staleness (#1107).

@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import { withBase, withSite } from "../lib/site";
+import { withBase } from "../lib/site";
 ---
 
 <Base
@@ -37,7 +37,7 @@ import { withBase, withSite } from "../lib/site";
       <li>
         <strong>Accountable to the source.</strong> The standard is the same one we hold
         the record to: cite it, or don't claim it. Read the
-        <a href={withSite("/docs/methodology")}>methodology</a>.
+        <a href={withBase("/methodology")}>methodology</a>.
       </li>
     </ul>
   </article>
