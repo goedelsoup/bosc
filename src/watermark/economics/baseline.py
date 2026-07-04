@@ -14,9 +14,14 @@ import yaml
 
 from watermark.config import Settings, get_settings
 from watermark.connectors import OfflineError
-from watermark.economics.connectors.census import CensusError, fetch_population_series
+from watermark.economics.connectors.census import (
+    CensusError,
+    fetch_median_household_income,
+    fetch_population_series,
+)
 from watermark.economics.connectors.qcew import fetch_county_industries
 from watermark.economics.model import EconomicBaseline, PopulationSeries, YearTotal
+from watermark.hydrology.model import ProvenancedValue
 from watermark.logging import get_logger
 from watermark.sites import active_profile
 
@@ -28,6 +33,24 @@ log = get_logger(__name__)
 _DEFAULT_YEARS = list(range(2014, 2025))
 # Census ACS5 population points — a longer span (the county's slow decline).
 _POP_YEARS = [2010, 2015, 2020, 2023]
+# Census ACS5 median household income (B19013, #1110) — the latest 5-year vintage.
+_INCOME_YEAR = max(_POP_YEARS)
+
+
+def _maybe_income(settings: Settings) -> ProvenancedValue | None:
+    """ACS5 median household income (B19013), best-effort — mirrors :func:`_maybe_population`.
+
+    A live fetch (cache miss) needs ``WATERMARK_CENSUS_API_KEY``; a warm cache/fixture is
+    served keyless. Returns ``None`` rather than raising when it can't be satisfied, so the
+    baseline (and the derived energy burden) degrade gracefully instead of fabricating income.
+    """
+    try:
+        return fetch_median_household_income(
+            year=_INCOME_YEAR, fips=settings.econ_fips, settings=settings
+        )
+    except (OfflineError, httpx.HTTPError, CensusError) as exc:
+        log.warning("econ.income.skipped", error=str(exc).splitlines()[0])
+        return None
 
 
 def _maybe_population(settings: Settings) -> PopulationSeries | None:
@@ -56,17 +79,23 @@ def build_baseline(
     settings = settings or get_settings()
     years = sorted(years or _DEFAULT_YEARS)
     population = _maybe_population(settings)
+    income = _maybe_income(settings)
     population_preserved = False
-    if population is None:
-        # The live ACS5 pull couldn't be satisfied (offline miss / missing key / HTTP /
-        # Census error) and nothing warm in the cache — preserve the existing committed
-        # population rather than overwriting it with null. A failed re-run must not drop
-        # real data. Track that it's carried over (possibly stale) for an honest note.
+    income_preserved = False
+    if population is None or income is None:
+        # A live ACS5 pull couldn't be satisfied (offline miss / missing key / HTTP / Census
+        # error) and nothing warm in the cache — preserve the existing committed value rather
+        # than overwriting it with null. A failed re-run must not drop real data. Track what's
+        # carried over (possibly stale) for an honest note.
         existing = load_baseline(settings)
-        if existing is not None and existing.population is not None:
+        if population is None and existing is not None and existing.population is not None:
             population = existing.population
             population_preserved = True
             log.info("econ.population.preserved", fips=settings.econ_fips)
+        if income is None and existing is not None and existing.median_household_income is not None:
+            income = existing.median_household_income
+            income_preserved = True
+            log.info("econ.income.preserved", fips=settings.econ_fips)
     # Authoritative per-county label from the Census ACS NAME (e.g. "Hancock County, Ohio");
     # falls back to the active profile's county when the population series is unavailable.
     area_name = (
@@ -102,6 +131,18 @@ def build_baseline(
         )
     else:
         pop_note = "Population from US Census ACS 5-year (B01003)."
+    if income is None:
+        income_note = (
+            "Median household income unavailable (no cached/committed ACS5 B19013 and the "
+            "live pull could not be reached)."
+        )
+    elif income_preserved:
+        income_note = (
+            "Median household income carried from the previously committed US Census ACS "
+            "5-year (B19013) — this run's live pull was unavailable, so it may be stale."
+        )
+    else:
+        income_note = f"Median household income from US Census ACS 5-year (B19013, {_INCOME_YEAR})."
     # An optional per-site economic-unit caveat (e.g. WPAFB's Greene/Montgomery straddle) — the
     # site's own note, surfaced so a reader of this single-county baseline isn't misled.
     unit_note = active_profile(settings).econ_unit_note
@@ -111,10 +152,12 @@ def build_baseline(
         latest=latest,
         trend=trend,
         population=population,
+        median_household_income=income,
         note=(
             "Employment from BLS QCEW (keyless open data). Location quotient = county "
             "sector share / national share (export-orientation; the county-level proxy "
-            f"for an import/export ratio). {pop_note}" + (f" {unit_note}" if unit_note else "")
+            f"for an import/export ratio). {pop_note} {income_note}"
+            + (f" {unit_note}" if unit_note else "")
         ),
     )
 

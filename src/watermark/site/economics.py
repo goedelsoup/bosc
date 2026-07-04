@@ -11,6 +11,7 @@ from __future__ import annotations
 from watermark.economics.model import (
     ConsumerEnergyCosts,
     EconomicBaseline,
+    EnergyBurden,
     FacilityDemandPressure,
 )
 
@@ -45,3 +46,13 @@ def export_demand_pressure(pressure: FacilityDemandPressure) -> FacilityDemandPr
     Absent for a thin (facility-less) site; the exporter is only called when the data exists.
     """
     return pressure
+
+
+def export_energy_burden(burden: EnergyBurden) -> EnergyBurden:
+    """Export the household energy burden as a feed (already feed-ready, #1110).
+
+    A fully ``[derived]`` consumer-impact metric — % of median household income (Census
+    B19013) spent on residential electricity + heating (EIA). Every figure carries its
+    citation, so like :func:`export_economics` the feed is the provenanced model itself.
+    """
+    return burden

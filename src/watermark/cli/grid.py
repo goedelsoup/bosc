@@ -235,9 +235,14 @@ def eia_cmd(
     ),
 ) -> None:
     """Consumer energy costs (EIA) + the data-center demand → price-pressure sensitivity."""
+    import httpx
+
+    from watermark.connectors import OfflineError
+    from watermark.economics.connectors.census import CensusError
     from watermark.economics.energy import (
         build_consumer_energy,
         derive_demand_pressure,
+        derive_energy_burden,
         write_consumer_energy,
         write_demand_pressure,
     )
@@ -251,6 +256,29 @@ def eia_cmd(
     for p in costs.prices:
         table.add_row(p.label, p.metric, p.period, f"{p.value.value:,.2f} {p.value.unit}")
     console.print(table)
+
+    # Household energy burden (#1110): % of median household income (Census B19013) on
+    # residential electricity + heating — a fully derived consumer-impact metric. Needs the
+    # income pull (keyed/offline), so it degrades to a note when income can't be resolved.
+    try:
+        burden = derive_energy_burden(costs=costs, settings=settings)
+    except (CensusError, OfflineError, httpx.HTTPError, ValueError) as exc:
+        msg = next(iter(str(exc).splitlines()), repr(exc))
+        console.print(f"\n[yellow]Energy burden unavailable: {msg}[/]")
+    else:
+        inc = burden.median_household_income
+        console.print(
+            f"\n[bold]Household energy burden[/] [dim](% of median household income on energy)[/]\n"
+            f"  Median household income [bold]${inc.value:,.0f}/yr[/] "
+            f"[dim](Census B19013)[/]\n"
+            f"  Electricity [bold]{burden.electricity_burden_pct.value:g}%[/] "
+            f"([dim]${burden.electricity_annual_cost.value:,.0f}/yr[/]) + "
+            f"gas [bold]{burden.gas_burden_pct.value:g}%[/] "
+            f"([dim]${burden.gas_annual_cost.value:,.0f}/yr[/]) "
+            f"= combined [bold]{burden.combined_burden_pct.value:g}%[/]\n"
+            f"  [dim]Derived from EIA residential prices + Census income; gas burden assumes a "
+            f"gas-heated home.[/]"
+        )
 
     from watermark.sites import active_profile
 

@@ -31,4 +31,6 @@ tags:
 notes: Ohio residential electricity/natural-gas price and total retail electricity sales as provenance-tagged
   annual points from EIA API v2; the 2025 vintage is a recorded keyed pull (#120), not a transcription.
   Each series now keeps its full annual history (`points`) alongside the latest cited value, so the site can
-  chart price/sales trends (#1111).
+  chart price/sales trends (#1111). The residential electricity + natural-gas prices also feed the derived
+  household energy-burden metric (`derive_energy_burden`) — % of median household income spent on home
+  energy — surfaced as the `energy-burden` bundle feed (#1110).

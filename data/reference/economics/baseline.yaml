@@ -929,6 +929,15 @@ population:
       confidence: high
       asof: '2023'
   source: US Census ACS 5-year (B01003)
+median_household_income:
+  value: 62001.0
+  unit: USD/yr
+  source: connector
+  citation: US Census ACS5 2023 B19013_001E median household income (Allen County,
+    Ohio)
+  confidence: high
+  asof: '2023'
 note: Employment from BLS QCEW (keyless open data). Location quotient = county sector
   share / national share (export-orientation; the county-level proxy for an import/export
-  ratio). Population from US Census ACS 5-year (B01003).
+  ratio). Population from US Census ACS 5-year (B01003). Median household income from
+  US Census ACS 5-year (B19013, 2023).
