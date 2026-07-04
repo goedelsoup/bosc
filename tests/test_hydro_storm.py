@@ -50,6 +50,20 @@ def test_storm_scenario_post_exceeds_pre(hydro_settings: Settings) -> None:
     assert checks == {"post-vs-pre-peak", "detention-deficit"}
 
 
+def test_storm_runoff_volume_matches_depth_over_area(hydro_settings: Settings) -> None:
+    # Self-consistency invariant for the *pipeline* runoff (real parcel area, both the
+    # pre- and post-development branches): the hydrograph volume must equal the runoff
+    # depth spread over the footprint, `volume_acft ~= runoff_depth_in/12 * area_acres`.
+    # test_hydro_solver.py locks this for one hand-built `simulate_runoff` call; this
+    # locks it end-to-end through `run_storm`, so the two SCS outputs can't silently
+    # diverge in the real footprint the site actually screens.
+    runoff, _findings = run_storm(return_period_yr=25, settings=hydro_settings, live=True)
+    area_acres = runoff.area.value
+    for branch in (runoff.pre, runoff.post):
+        expected_acft = branch.runoff_depth_in / 12.0 * area_acres
+        assert branch.volume_acft == pytest.approx(expected_acft, rel=0.03)  # UH-tail trunc tol
+
+
 def test_storm_offline_fallback_is_flagged(tmp_path: Path) -> None:
     # Empty data dir => no cache, no fixtures => cited fallback depth, tagged assumption.
     from watermark.hydrology.stormwater import _resolve_storm
