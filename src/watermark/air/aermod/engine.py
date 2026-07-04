@@ -99,6 +99,19 @@ def engine_version(settings: Settings | None = None) -> str:
     return f"aermod ({p})" if p else ""
 
 
+def _scratch_path(work: Path, name: str) -> Path:
+    """Resolve a met-file ``name`` inside the scratch dir, rejecting any path escape.
+
+    ``met_files`` keys become filenames in AERMOD's working directory; a name containing
+    ``..`` or an absolute path would otherwise let ``work / name`` write outside the temp
+    dir. Only safe, relative names are accepted.
+    """
+    dest = (work / name).resolve()
+    if not dest.is_relative_to(work.resolve()):
+        raise ValueError(f"unsafe met-file name escapes the scratch dir: {name!r}")
+    return dest
+
+
 def _parse_out_banner(out_text: str) -> str:
     """Pull the AERMOD version banner (e.g. ``VERSION 23132``) from ``aermod.out``."""
     for line in out_text.splitlines():
@@ -158,15 +171,24 @@ def run(
         work = Path(tmp)
         (work / _CONTROL_NAME).write_text(inp_text, encoding="utf-8")
         for name, content in met_files.items():
-            (work / name).write_text(content, encoding="utf-8")
+            _scratch_path(work, name).write_text(content, encoding="utf-8")
 
-        proc = subprocess.run(
-            [str(binary)],
-            cwd=work,
-            capture_output=True,
-            timeout=timeout_s,
-            text=True,
-        )
+        try:
+            proc = subprocess.run(
+                [str(binary)],
+                cwd=work,
+                capture_output=True,
+                timeout=timeout_s,
+                text=True,
+            )
+        except subprocess.TimeoutExpired:
+            log.info("aermod.run_failed", timeout_s=timeout_s)
+            return AermodResult(
+                available=True,
+                pollutant=pollutant,
+                engine_version=engine_version(settings),
+                note=f"AERMOD timed out after {timeout_s}s",
+            )
         out_text = (
             (work / _OUTPUT_NAME).read_text(encoding="utf-8")
             if (work / _OUTPUT_NAME).is_file()

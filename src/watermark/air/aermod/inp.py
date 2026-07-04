@@ -35,20 +35,28 @@ _AERMOD_POLLUTID: dict[Pollutant, str] = {
 }
 
 
-def assumed_stack_params() -> GensetStackParams:
+# Site-agnostic default rationale for the screening stack geometry. Callers with a
+# site-specific reason (e.g. that site's permit redacts engine specs as CBI) pass their
+# own ``why`` so the assumption is never misattributed to another site's permit.
+_STACK_ASSUMPTION_WHY = (
+    "typical large (~2.75 MW) stationary CI diesel genset exhaust — a screening assumption "
+    "used where the engine make/model/size is not in the record (e.g. redacted as CBI); "
+    "supersede with manufacturer stack data when disclosed (#1180)"
+)
+
+
+def assumed_stack_params(*, why: str | None = None) -> GensetStackParams:
     """Screening stack geometry for a ~2.75 MW stationary diesel genset — **all assumption**.
 
-    The Lima permit (P0138965) redacts engine make/model/size as CBI, so no certified stack
-    dimensions exist in the record. These are typical published values for a large stationary
-    CI diesel engine exhaust, tagged ``assumption`` with the rationale — a stated modeling
-    input, **never** presented as the permit's. A site with disclosed manufacturer data
-    builds a ``document``-tagged :class:`GensetStackParams` instead.
+    Used where no certified stack dimensions exist in the record (for Lima, the permit
+    redacts engine make/model/size as CBI). These are typical published values for a large
+    stationary CI diesel engine exhaust, tagged ``assumption`` — a stated modeling input,
+    **never** presented as a permit fact. ``why`` overrides the site-agnostic default
+    rationale with a site-specific citation (so a non-Lima run isn't tagged with Lima's
+    permit); a site with disclosed manufacturer data builds a ``document``-tagged
+    :class:`GensetStackParams` instead (the #1180 seam).
     """
-    why = (
-        "typical large (~2.75 MW) stationary CI diesel genset exhaust; the site permit "
-        "P0138965 redacts engine specs as CBI (Comments 16/19) so no certified stack "
-        "geometry is on record — screening assumption pending manufacturer data (#1180)"
-    )
+    why = why or _STACK_ASSUMPTION_WHY
     return GensetStackParams(
         height_m=ProvenancedValue.assume(10.0, "m", why=why),
         diameter_m=ProvenancedValue.assume(0.6, "m", why=why),

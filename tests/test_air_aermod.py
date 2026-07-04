@@ -8,6 +8,7 @@ it isn't (mirroring the SWMM tests).
 
 from __future__ import annotations
 
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -173,6 +174,38 @@ def test_run_degrades_when_binary_absent(air_settings: Settings) -> None:
     assert res.available is False
     assert res.max_conc == {}
     assert "unavailable" in res.note
+
+
+@pytest.mark.parametrize("bad", ["../escape.sfc", "/etc/passwd", "sub/../../x.sfc"])
+def test_scratch_path_rejects_escaping_met_file_names(tmp_path: Path, bad: str) -> None:
+    with pytest.raises(ValueError, match="escapes the scratch dir"):
+        engine._scratch_path(tmp_path, bad)
+
+
+def test_scratch_path_allows_safe_relative_names(tmp_path: Path) -> None:
+    assert engine._scratch_path(tmp_path, "canned.sfc").parent == tmp_path.resolve()
+
+
+def test_run_degrades_on_timeout(monkeypatch: pytest.MonkeyPatch, air_settings: Settings) -> None:
+    # A fake located binary + a subprocess that times out: run() must return a structured
+    # AermodResult, not let TimeoutExpired escape the graceful-degradation path.
+    monkeypatch.setattr(engine, "aermod_bin", lambda *_a, **_k: Path("/usr/bin/true"))
+
+    def _raise(*_a: object, **_k: object) -> None:
+        raise subprocess.TimeoutExpired(cmd="aermod", timeout=1)
+
+    monkeypatch.setattr(subprocess, "run", _raise)
+    res = engine.run(
+        "CO STARTING\nCO FINISHED\n",
+        met_files={},
+        plotfiles={"ANNUAL": "annual.plt"},
+        pollutant="NOx",
+        timeout_s=1,
+        settings=air_settings,
+    )
+    assert res.available is True
+    assert res.pollutant == "NOx"
+    assert "timed out" in res.note
 
 
 # --- end-to-end (skipped unless a real AERMOD binary is present) ---------------------
