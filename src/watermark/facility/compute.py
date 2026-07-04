@@ -59,8 +59,12 @@ from watermark.facility.model import (
 from watermark.facility.power import derive_power_basis
 from watermark.hydrology import geo
 from watermark.hydrology.cooling import derive_cooling_basis
-from watermark.hydrology.cooling_models import _WUE_L_PER_KWH
+from watermark.hydrology.cooling_models import (
+    _WUE_L_PER_KWH,
+    it_load_mw_from_once_through_withdrawal,
+)
 from watermark.hydrology.model import ProvenancedValue
+from watermark.sites import CoolingModelType
 
 _L_PER_GAL = 3.785411784
 _SQFT_PER_ACRE = 43560.0
@@ -300,12 +304,34 @@ def derive_compute_capacity(
     # would be an additional consumptive pathway (see power.py GenerationConfig /
     # issue #90), biasing this back-solve high — but that is unproven (the disclosed
     # gensets are backup), so we do not add it here.
-    # Invert with the exact WUE the consumptive basis was built from (which honours a
-    # per-facility SiteFacility.wue_l_per_kwh override), falling back to the archetype
-    # default only when the basis carries no WUE (e.g. non-tower modes).
-    wue_basis = cooling.wue.value if cooling.wue is not None else _WUE_L_PER_KWH
-    it_water_low = _it_load_from_consumptive_mgd(cooling.consumptive_low.value, wue_basis)
-    it_water_high = _it_load_from_consumptive_mgd(cooling.consumptive_high.value, wue_basis)
+    if cooling.cooling_model is CoolingModelType.ONCE_THROUGH:
+        # Once-through consumptive is only ~1-2% forced evaporation of the withdrawal, not
+        # it_load x WUE — inverting it with a tower WUE badly understates the load. The
+        # withdrawal is the heat-rejection basis, so recover the IT load from it instead.
+        # Both consumptive bounds share one withdrawal, so the cross-check is a point.
+        it_water_low = it_water_high = it_load_mw_from_once_through_withdrawal(
+            cooling.makeup_demand.value
+        )
+        water_low_cite = (
+            f"once-through withdrawal {cooling.makeup_demand.value:g} MGD / heat-rejection "
+            "basis (recovers the power method; shares its dT)"
+        )
+        water_high_cite = water_low_cite
+    else:
+        # Invert with the exact WUE the consumptive basis was built from (which honours a
+        # per-facility SiteFacility.wue_l_per_kwh override), falling back to the archetype
+        # default only when the basis carries no WUE (e.g. dry modes with ~0 consumptive).
+        wue_basis = cooling.wue.value if cooling.wue is not None else _WUE_L_PER_KWH
+        it_water_low = _it_load_from_consumptive_mgd(cooling.consumptive_low.value, wue_basis)
+        it_water_high = _it_load_from_consumptive_mgd(cooling.consumptive_high.value, wue_basis)
+        water_low_cite = (
+            f"cooling consumptive {cooling.consumptive_low.value:g} MGD / "
+            f"{wue_basis:g} L/kWh (recovers the power method; shares its WUE)"
+        )
+        water_high_cite = (
+            f"FM-2 {cooling.consumptive_high.value:g} MGD upper bound / "
+            f"{wue_basis:g} L/kWh — UPPER BOUND only; FM-2 is not purely cooling"
+        )
 
     # --- Method 3: footprint (WEAKEST, physical upper envelope) --------------
     it_fp_low, it_fp_high, land_acres = _footprint_it_load_mw(settings, density)
@@ -432,17 +458,10 @@ def derive_compute_capacity(
             round(it_power, 1), "MW", citation=power.it_load.citation or ""
         ),
         it_load_water_low=ProvenancedValue.derived(
-            round(it_water_low, 1),
-            "MW",
-            citation=f"cooling consumptive {cooling.consumptive_low.value:g} MGD / "
-            f"{wue_basis:g} L/kWh (recovers the power method; shares its WUE)",
+            round(it_water_low, 1), "MW", citation=water_low_cite
         ),
         it_load_water_high=ProvenancedValue.derived(
-            round(it_water_high, 1),
-            "MW",
-            citation=f"FM-2 {cooling.consumptive_high.value:g} MGD upper bound / "
-            f"{wue_basis:g} L/kWh — UPPER BOUND only; FM-2 is not purely cooling",
-            confidence="low",
+            round(it_water_high, 1), "MW", citation=water_high_cite, confidence="low"
         ),
         it_load_footprint_low=ProvenancedValue.assume(
             round(it_fp_low, 0),
