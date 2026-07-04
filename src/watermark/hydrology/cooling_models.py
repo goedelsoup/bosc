@@ -327,6 +327,16 @@ def _derive_evaporative_tower(
             "upper-bound intake = central power-method makeup (no disclosed blowdown)"
         )
 
+    if frac > 0:
+        makeup_high_value = round(consumptive_high / frac, 2)
+    else:
+        # Degenerate CoC <= 1 (evap fraction non-positive): the value falls back to the
+        # central makeup, so the citation must describe that, not the blowdown scaling.
+        makeup_high_value = round(makeup, 2)
+        makeup_high_cite = (
+            "upper-bound intake = central makeup (CoC <= 1, evap fraction non-positive)"
+        )
+
     return CoolingBasis(
         cooling_model=CoolingModelType.EVAPORATIVE_TOWER,
         it_load=ProvenancedValue.from_document(it_load_mw, "MW", citation=it_load_cite),
@@ -346,7 +356,7 @@ def _derive_evaporative_tower(
         # the central makeup (#1153). Either way `refill` reads this rather than dividing
         # consumptive_high by the fraction itself.
         makeup_high=ProvenancedValue.derived(
-            round(consumptive_high / frac, 2) if frac > 0 else round(makeup, 2),
+            makeup_high_value,
             "MGD",
             citation=makeup_high_cite,
         ),
