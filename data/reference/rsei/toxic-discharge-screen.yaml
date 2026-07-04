@@ -1,6 +1,6 @@
 meta:
   subject: Industrial toxic water dischargers vs cited receiving-stream 7Q10
-  source: EPA RSEI (water-media releases) × EPA ECHO (receiving water) × Ohio EPA
+  source: EPA RSEI (water-media releases) x EPA ECHO (receiving water) x Ohio EPA
     cited 7Q10 (data/reference/hydrology/low-flow-7q10.yaml)
   county_fips: '39003'
   county_name: Allen County, OH
@@ -232,7 +232,7 @@ screens:
   score: 53858.3
   cancer_score: 49904.5
   water_pounds: 124.2
-  annual_water_pounds: 4.6
+  annual_water_pounds: 4.8
   year_span: 1988-2014
   top_water_chemical: Chromium and chromium compounds
   npdes_id: null
@@ -270,7 +270,7 @@ screens:
   score: 4828.1
   cancer_score: 4275.3
   water_pounds: 2775.0
-  annual_water_pounds: 154.2
+  annual_water_pounds: 231.2
   year_span: 1988-2005
   top_water_chemical: Trichloroethylene
   npdes_id: null

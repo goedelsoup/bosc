@@ -82,6 +82,44 @@ def test_screening_concentration_conversion() -> None:
     assert conc.confidence == "low"
 
 
+def _fac_with_years(water_lbs: float, years: list[int]) -> object:
+    from watermark.rsei import RseiFacility, RseiYearScore
+
+    return RseiFacility(
+        facility_id="TEST",
+        facility_number="0",
+        name="TEST",
+        fips="39003",
+        pounds_by_media={"water": water_lbs},
+        first_year=years[0] if years else None,
+        last_year=years[-1] if years else None,
+        years=[
+            RseiYearScore(year=y, score=0, cancer_score=0, noncancer_score=0, hazard=0, pounds=0)
+            for y in years
+        ],
+    )
+
+
+def test_annualizes_over_reporting_years_not_span() -> None:
+    """An intermittent reporter divides by its reporting-year count, not the calendar span."""
+    # 1000 lb reported across only 1988 and 2022 (35 calendar years, 2 reporting years).
+    fac = _fac_with_years(1000.0, [1988, 2022])
+    # Correct: 1000 / 2 reporting years. Buggy span divisor would give 1000 / 35 ≈ 28.6.
+    assert toxics._annual_water_pounds(fac) == 500.0
+
+
+def test_annualizes_contiguous_reporter_matches_span() -> None:
+    """When every calendar year is reported, reporting-year count equals the span."""
+    fac = _fac_with_years(300.0, [2020, 2021, 2022])
+    assert toxics._annual_water_pounds(fac) == 100.0
+
+
+def test_annualize_guards_empty_year_record() -> None:
+    """No reporting years -> divisor floors at 1, never a ZeroDivisionError."""
+    fac = _fac_with_years(50.0, [])
+    assert toxics._annual_water_pounds(fac) == 50.0
+
+
 def test_zero_flow_or_zero_load_yields_no_concentration() -> None:
     q7 = ProvenancedValue.from_document(0.0, "cfs", "test")
     assert toxics._screening_concentration(1000.0, q7) is None
