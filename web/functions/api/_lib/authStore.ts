@@ -80,40 +80,100 @@ export async function getPrefs(db: PgLike, sub: string): Promise<UserPrefs> {
   };
 }
 
+/** Upsert the backing `users` row (identity + FK target). `email` is opportunistic — a null never
+ *  clobbers a previously-known email. Called inside the field-scoped prefs writers' transaction. */
+async function upsertUser(tx: PgLike, sub: string, now: string, email?: string): Promise<void> {
+  await tx.query(
+    `INSERT INTO users (sub, email, created_at, updated_at) VALUES ($1, $2, $3, $3)
+     ON CONFLICT (sub) DO UPDATE SET email = COALESCE(EXCLUDED.email, users.email), updated_at = $3`,
+    [sub, email ?? null, now],
+  );
+}
+
 /**
- * Upsert a user's prefs (and the backing `users` row) atomically. `now`/`email` are injected by the
- * route — `email` is the caller's own JWT email when available (opportunistic denormalization; a
- * null never clobbers a previously-known email). `email_verified` is intentionally not persisted.
+ * Set ONLY the `display_name` column (+ the backing `users` row) atomically. Column-scoped on
+ * purpose: the profile and notifications endpoints write disjoint columns, so a concurrent
+ * notifications PATCH can't clobber the display name (and vice-versa) — no read-modify-write of the
+ * whole row. On first write the notification columns take their schema defaults. `now`/`email` are
+ * injected by the route (`email` = the caller's own JWT email). `email_verified` is never persisted.
  */
-export async function putPrefs(
+export async function setDisplayName(
   db: PgLike,
   sub: string,
-  prefs: UserPrefs,
+  displayName: string | null,
   now: string,
   email?: string,
 ): Promise<void> {
-  const displayName = prefs.display_name ?? null;
-  const sites = JSON.stringify(prefs.notifications.sites);
-  const categories = JSON.stringify(prefs.notifications.categories);
-  const frequency = prefs.notifications.frequency;
   await db.begin(async (tx) => {
+    await upsertUser(tx, sub, now, email);
     await tx.query(
-      `INSERT INTO users (sub, email, created_at, updated_at) VALUES ($1, $2, $3, $3)
-       ON CONFLICT (sub) DO UPDATE SET email = COALESCE(EXCLUDED.email, users.email), updated_at = $3`,
-      [sub, email ?? null, now],
+      `INSERT INTO user_prefs (sub, display_name, updated_at) VALUES ($1, $2, $3)
+       ON CONFLICT (sub) DO UPDATE SET display_name = EXCLUDED.display_name, updated_at = EXCLUDED.updated_at`,
+      [sub, displayName, now],
     );
+  });
+}
+
+/**
+ * Set ONLY the notification columns (+ the backing `users` row) atomically — disjoint from
+ * `display_name`, so the two account endpoints never clobber each other's fields. `email_verified`
+ * is not a column (JWT-derived), so it's ignored here.
+ */
+export async function setNotifications(
+  db: PgLike,
+  sub: string,
+  notifications: UserPrefs["notifications"],
+  now: string,
+  email?: string,
+): Promise<void> {
+  await db.begin(async (tx) => {
+    await upsertUser(tx, sub, now, email);
     await tx.query(
-      `INSERT INTO user_prefs (sub, display_name, notif_sites, notif_categories, notif_frequency, updated_at)
-       VALUES ($1, $2, $3, $4, $5, $6)
+      `INSERT INTO user_prefs (sub, notif_sites, notif_categories, notif_frequency, updated_at)
+       VALUES ($1, $2, $3, $4, $5)
        ON CONFLICT (sub) DO UPDATE SET
-         display_name = EXCLUDED.display_name,
          notif_sites = EXCLUDED.notif_sites,
          notif_categories = EXCLUDED.notif_categories,
          notif_frequency = EXCLUDED.notif_frequency,
          updated_at = EXCLUDED.updated_at`,
-      [sub, displayName, sites, categories, frequency, now],
+      [
+        sub,
+        JSON.stringify(notifications.sites),
+        JSON.stringify(notifications.categories),
+        notifications.frequency,
+        now,
+      ],
     );
   });
+}
+
+/**
+ * Remove a category from an EXISTING prefs row — the one-click unsubscribe path. Update-only: it
+ * NEVER upserts a `users`/`user_prefs` row, so an (unauthenticated) unsubscribe token for a sub that
+ * has no prefs is a success no-op rather than materializing an identity row. Returns the remaining
+ * categories (idempotent — removing an absent category is fine).
+ */
+export async function unsubscribeCategory(
+  db: PgLike,
+  sub: string,
+  category: NotifCategory,
+  now: string,
+): Promise<NotifCategory[]> {
+  const rows = await db.query<{ notif_categories: string }>(
+    "SELECT notif_categories FROM user_prefs WHERE sub = $1",
+    [sub],
+  );
+  const row = rows[0];
+  if (!row) return []; // nothing subscribed → nothing to remove
+  const remaining = parseStringArray(row.notif_categories)
+    .filter((c): c is NotifCategory => VALID_CATEGORIES.includes(c as NotifCategory))
+    .filter((c) => c !== category);
+  await db.query("UPDATE user_prefs SET notif_categories = $1, updated_at = $2 WHERE sub = $3", [
+    JSON.stringify(remaining),
+    now,
+    sub,
+  ]);
+  return remaining;
 }
 
 // --- role-change audit trail ----------------------------------------------------------------
@@ -166,10 +226,12 @@ export async function writeAuditEntry(db: PgLike, entry: AuditEntry, id: string)
 /**
  * The most recent audit entries for a user (up to `limit`, default 20), newest first — the
  * `SELECT ... WHERE target = $1 ORDER BY at DESC` that KV couldn't answer without a keyspace scan.
+ * The `id` tiebreak keeps the order deterministic when two entries share a timestamp (else same-`at`
+ * rows could reshuffle between calls and break the tail / pagination).
  */
 export async function listAuditEntries(db: PgLike, targetSub: string, limit = 20): Promise<AuditEntry[]> {
   const rows = await db.query<AuditRow>(
-    "SELECT actor, target, action, before, after, at FROM audit_log WHERE target = $1 ORDER BY at DESC LIMIT $2",
+    "SELECT actor, target, action, before, after, at FROM audit_log WHERE target = $1 ORDER BY at DESC, id DESC LIMIT $2",
     [targetSub, limit],
   );
   return rows.map((r) => ({

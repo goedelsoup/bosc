@@ -7,7 +7,7 @@
 
 import { requireAuth, type AuthEnv } from "../_lib/auth";
 import { type AuthDbEnv, resolveAuthDb } from "../_lib/authDb";
-import { getPrefs, putPrefs, VALID_CATEGORIES, VALID_FREQUENCIES } from "../_lib/authStore";
+import { getPrefs, setNotifications, VALID_CATEGORIES, VALID_FREQUENCIES } from "../_lib/authStore";
 import type { NotifCategory, NotifFrequency } from "../_lib/authStore";
 import { json, parseJsonBody } from "../_lib/http";
 
@@ -91,6 +91,7 @@ export const onRequestPatch = async ({ request, env }: RequestContext): Promise<
   // Sync email_verified from the live JWT — not user-settable.
   prefs.notifications.email_verified = auth.ctx.emailVerified;
 
-  await putPrefs(db, auth.ctx.sub, prefs, new Date().toISOString(), auth.ctx.email);
+  // Column-scoped write — only the notification columns, so a concurrent profile PATCH isn't clobbered.
+  await setNotifications(db, auth.ctx.sub, prefs.notifications, new Date().toISOString(), auth.ctx.email);
   return json(200, prefs.notifications);
 };

@@ -7,7 +7,7 @@
 // The prefs store (Lakebase via AUTH_HYPERDRIVE) must be bound (same store as the notifications prefs).
 
 import { type AuthDbEnv, resolveAuthDb } from "../_lib/authDb";
-import { getPrefs, putPrefs, VALID_CATEGORIES } from "../_lib/authStore";
+import { unsubscribeCategory, VALID_CATEGORIES } from "../_lib/authStore";
 import type { NotifCategory } from "../_lib/authStore";
 import { json } from "../_lib/http";
 import { verifyUnsubToken } from "../_lib/unsub";
@@ -39,10 +39,9 @@ export const onRequestGet = async ({ request, env }: RequestContext): Promise<Re
     return json(400, { error: "unknown category" });
   }
 
-  const prefs = await getPrefs(db, sub);
-  const before = prefs.notifications.categories;
-  prefs.notifications.categories = before.filter((c) => c !== category);
-  await putPrefs(db, sub, prefs, new Date().toISOString());
+  // Update-only: never materializes a prefs/users row from this unauthenticated token. A sub with no
+  // prefs is a success no-op (nothing was subscribed).
+  const remaining = await unsubscribeCategory(db, sub, category as NotifCategory, new Date().toISOString());
 
-  return json(200, { ok: true, removed: category, remaining: prefs.notifications.categories });
+  return json(200, { ok: true, removed: category, remaining });
 };

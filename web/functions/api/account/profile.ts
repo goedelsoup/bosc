@@ -6,7 +6,7 @@
 
 import { requireAuth, type AuthEnv } from "../_lib/auth";
 import { type AuthDbEnv, resolveAuthDb } from "../_lib/authDb";
-import { getPrefs, putPrefs } from "../_lib/authStore";
+import { getPrefs, setDisplayName } from "../_lib/authStore";
 import { json, parseJsonBody } from "../_lib/http";
 
 interface Env extends AuthEnv, AuthDbEnv {
@@ -57,25 +57,24 @@ export const onRequestPatch = async ({ request, env }: RequestContext): Promise<
     if (trimmed.length > 80) return json(400, { error: "display_name too long (max 80 chars)" });
   }
 
-  const prefs = await getPrefs(db, auth.ctx.sub);
+  const reply = (displayName: string | null): Response =>
+    json(200, {
+      sub: auth.ctx.sub,
+      email: auth.ctx.email,
+      email_verified: auth.ctx.emailVerified,
+      display_name: displayName,
+      role: auth.ctx.role,
+    });
 
-  if (rawName === null) {
-    delete prefs.display_name;
-  } else if (typeof rawName === "string") {
-    const trimmed = rawName.trim();
-    if (trimmed) {
-      prefs.display_name = trimmed;
-    } else {
-      delete prefs.display_name;
-    }
+  // Omitting display_name leaves it unchanged — no write, just echo the current value.
+  if (rawName === undefined) {
+    const prefs = await getPrefs(db, auth.ctx.sub);
+    return reply(prefs.display_name ?? null);
   }
 
-  await putPrefs(db, auth.ctx.sub, prefs, new Date().toISOString(), auth.ctx.email);
-  return json(200, {
-    sub: auth.ctx.sub,
-    email: auth.ctx.email,
-    email_verified: auth.ctx.emailVerified,
-    display_name: prefs.display_name ?? null,
-    role: auth.ctx.role,
-  });
+  // A blank/whitespace string clears the name, same as an explicit null.
+  const displayName = rawName === null ? null : rawName.trim() || null;
+  // Column-scoped write — only display_name, so a concurrent notifications PATCH isn't clobbered.
+  await setDisplayName(db, auth.ctx.sub, displayName, new Date().toISOString(), auth.ctx.email);
+  return reply(displayName);
 };

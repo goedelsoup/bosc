@@ -54,6 +54,11 @@ export const onRequestPost = async ({ request, env, params }: RequestContext): P
 
   const newGroups = patch.groups as string[];
 
+  // Fail closed BEFORE the Cognito mutation: a role change we can't record is exactly what the audit
+  // trail exists to prevent, so refuse if the audit store isn't bound (rather than mutate unaudited).
+  const db = resolveAuthDb(env);
+  if (!db) return json(503, { error: "audit store not configured" });
+
   // Read current state for the audit record.
   const before = await listGroupsForUser(env, sub).catch(() => [] as string[]);
 
@@ -64,19 +69,16 @@ export const onRequestPost = async ({ request, env, params }: RequestContext): P
     return json(502, { error: `Cognito error: ${msg}` });
   }
 
-  // Audit log (best-effort — failure doesn't roll back the Cognito change).
-  const db = resolveAuthDb(env);
-  if (db) {
-    const entry: AuditEntry = {
-      actor: auth.ctx.sub,
-      target: sub,
-      action: "set-groups",
-      before,
-      after: newGroups,
-      at: new Date().toISOString(),
-    };
-    await writeAuditEntry(db, entry, crypto.randomUUID());
-  }
+  // Audit log (best-effort on transient write failure — the Cognito change already committed).
+  const entry: AuditEntry = {
+    actor: auth.ctx.sub,
+    target: sub,
+    action: "set-groups",
+    before,
+    after: newGroups,
+    at: new Date().toISOString(),
+  };
+  await writeAuditEntry(db, entry, crypto.randomUUID());
 
   return json(200, { sub, groups: newGroups });
 };
