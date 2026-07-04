@@ -265,6 +265,28 @@ def test_override_without_citation_is_rejected() -> None:
         _stub_facility(cycles_of_concentration=4.0)
 
 
+def test_cycles_at_or_below_one_is_rejected() -> None:
+    # CoC is the makeup/blowdown ratio — always > 1. A `cycles <= 1` override makes the
+    # evaporative fraction (CoC-1)/CoC zero or negative (and CoC=0 divides by zero), so the
+    # basis is non-physical; reject it at the source for both tower and hybrid (#1170).
+    for model in ("evaporative_tower", "hybrid_adiabatic"):
+        with pytest.raises(ValueError, match="cycles of concentration must be > 1"):
+            derive_cooling_basis(cooling_model=model, cycles=1.0)
+        with pytest.raises(ValueError, match="cycles of concentration must be > 1"):
+            derive_cooling_basis(cooling_model=model, cycles=0.0)
+
+
+def test_consumptive_high_pairs_with_makeup_high_not_makeup_demand() -> None:
+    # The trap #1170 guards: consumptive_high is the blowdown-method evaporation, whose
+    # implied intake is the larger makeup_high — not makeup_demand (the power-method
+    # central). Dividing consumptive_high by the matching intake stays a valid fraction.
+    b = derive_cooling_basis(cooling_model="evaporative_tower")
+    assert b.consumptive_high.value > b.makeup_demand.value  # non-physical if paired as a stream
+    makeup_high = b.headline_makeup_high()
+    assert makeup_high is not None and makeup_high.value > b.makeup_demand.value
+    assert 0.0 < b.consumptive_high.value / makeup_high.value <= 1.0
+
+
 def test_consumptive_range_label_collapses_point_estimates() -> None:
     from watermark.hydrology.cooling_models import consumptive_range_label
 
@@ -311,6 +333,18 @@ def test_hybrid_seasonal_screen_zeroes_winter(hydro_settings: Settings) -> None:
     assert sw.consumptive_cfs == pytest.approx(warm_rate_cfs, abs=0.01)
     if sw.summer_multiple is not None and sw.summer_30q10_cfs:
         assert sw.summer_multiple == pytest.approx(warm_rate_cfs / sw.summer_30q10_cfs, abs=0.1)
+
+
+def test_assist_window_matches_seasonal_growing_months(hydro_settings: Settings) -> None:
+    # The assist window recorded on the basis (_assist_months) and the growing-season
+    # months from scenario.evaluate_seasonal must agree — both round net (ET0 - precip)
+    # to 3 dp before the > 0 test, so no boundary month is assist in one path but not the
+    # other (#1170).
+    basis = derive_cooling_basis(hydro_settings, cooling_model="hybrid_adiabatic")
+    warm_cfs = mgd_to_cfs(basis.consumptive_high.value)
+    sw = scenario.evaluate_seasonal(warm_cfs, settings=hydro_settings, basis=basis)
+    assert sw is not None
+    assert basis.seasonal_months == sw.growing_season_months
 
 
 def test_constant_archetype_seasonal_screen_unchanged(hydro_settings: Settings) -> None:

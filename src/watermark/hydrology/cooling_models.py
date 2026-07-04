@@ -243,10 +243,22 @@ def _resolve_wue(facility: SiteFacility | None, params: CoolingParams) -> tuple[
 
 def _resolve_cycles(facility: SiteFacility | None, params: CoolingParams) -> tuple[float, str]:
     if params.cycles_of_concentration is not None:
-        return params.cycles_of_concentration, _CYCLES_CITE
-    if facility is not None and facility.cycles_of_concentration is not None:
-        return facility.cycles_of_concentration, facility.cycles_citation or _CYCLES_CITE
-    return _CYCLES, _CYCLES_CITE
+        cycles, cite = params.cycles_of_concentration, _CYCLES_CITE
+    elif facility is not None and facility.cycles_of_concentration is not None:
+        cycles, cite = facility.cycles_of_concentration, facility.cycles_citation or _CYCLES_CITE
+    else:
+        cycles, cite = _CYCLES, _CYCLES_CITE
+    # Cycles of concentration is the makeup/blowdown ratio — physically always > 1. A
+    # ``cycles <= 1`` override makes the evaporative fraction (CoC-1)/CoC zero or negative
+    # (and CoC=0 divides by zero), silently yielding a non-physical basis. Reject it at the
+    # source rather than propagating a bad ``frac`` through both tower and hybrid math (#1170).
+    if cycles <= 1.0:
+        raise ValueError(
+            f"cycles of concentration must be > 1 (got {cycles:g}); CoC <= 1 gives a "
+            "zero/negative evaporative fraction (CoC-1)/CoC — non-physical for a "
+            f"recirculating tower. Check the cited override: {cite}"
+        )
+    return cycles, cite
 
 
 def _resolve_heat_reject_mult(
@@ -467,7 +479,11 @@ def _assist_months(settings: Settings) -> tuple[list[str], str]:
     if clim is None or precip is None:
         return list(_HYBRID_FALLBACK_MONTHS), _HYBRID_FALLBACK_CITE
     et0 = et.penman_monteith_et0(clim)
-    months = [m for m in et._MONTHS if et0.monthly_mm_day[m] - precip.monthly[m] > 0]
+    # Round the net-atmospheric deficit to 3 dp before the > 0 test so this assist window
+    # and ``scenario.evaluate_seasonal``'s growing-season screen agree at the boundary — an
+    # unrounded compare would flag a month with net in (0, 0.0005] as assist here but not
+    # there, disagreeing on the derived annual average vs the seasonal screen (#1170).
+    months = [m for m in et._MONTHS if round(et0.monthly_mm_day[m] - precip.monthly[m], 3) > 0]
     cite = (
         "assist window = ET0 > precip months from the committed NASA POWER normals "
         "+ FAO-56 ET0 (see hydrology climatology artifact)"
