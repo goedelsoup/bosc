@@ -177,7 +177,9 @@ def _surcharge_note(
         return ""
     by_fm: dict[str, list[str]] = {}
     for node_id, via in receivers.items():
-        by_fm.setdefault(forcemain_labels.get(via, via or "?"), []).append(
+        # Reuse _forcemain_label so empty/missing via resolves the same way as in the
+        # surcharge itself; "?" is only the display placeholder for a truly unlabeled via.
+        by_fm.setdefault(_forcemain_label(via, forcemain_labels) or "?", []).append(
             receiver_names.get(node_id, node_id)
         )
     split = "; ".join(f"{fm} → {' + '.join(sorted(rs))}" for fm, rs in sorted(by_fm.items()))
@@ -300,6 +302,13 @@ def run_tier1(
     campus_base = (
         basis.campus_industrial.value if basis is not None else prof.campus_dry_weather_mgd
     )
+    # Keep the wet_pv provenance honest with the branch actually used: the cited sanitary
+    # basis is document-sourced; the profile fallback is a modeling assumption, not a document.
+    campus_base_cite = (
+        "campus industrial discharge, document"
+        if basis is not None
+        else f"{settings.site} profile dry-weather base, assumption"
+    )
     san_text, wwtp = inp.sanitary_inp(
         base_mgd=campus_base, sewershed_acres=area, rdii_r=_RDII_R, depth_in=depth
     )
@@ -321,7 +330,7 @@ def run_tier1(
         "MGD",
         citation=(
             f"SWMM RDII (R={_RDII_R}, assumption) over {area:.0f} ac + {campus_base:g} MGD "
-            f"campus dry base (FM-2, document), {return_period_yr}-yr storm"
+            f"campus dry base ({campus_base_cite}), {return_period_yr}-yr storm"
         ),
     )
     surcharge = _build_surcharge(
