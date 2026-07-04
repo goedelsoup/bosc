@@ -113,7 +113,7 @@ reaches:
       value: 82000.0
       unit: ft
       source: assumption
-      citation: "Upper split of the Hack's-law Ottawa mainstem length (L=1.4·272.53^0.6 km ≈ 40.5 km / 133k ft over the HU10); ~15.5 mi above the Lima reach"
+      citation: "Upper Ottawa mainstem reach above the Lima abstraction, ~15.5 mi (screening estimate; the WBD HU10 main-channel length by Hack's law, L=1.4·272.53^0.6 km ≈ 40.5 km / 133k ft, is order-of-magnitude context — NOT a total these three mainstem segment lengths are partitioned to reconcile against)"
       confidence: low
     slope:
       value: 0.0010
@@ -138,7 +138,7 @@ reaches:
       value: 12000.0
       unit: ft
       source: assumption
-      citation: "Ottawa mainstem reach through the Lima abstraction/gage segment (screening split of the Hack's-law length)"
+      citation: "Ottawa mainstem reach through the Lima abstraction/gage segment (screening estimate)"
       confidence: low
     slope:
       value: 0.0010
@@ -215,7 +215,7 @@ reaches:
       value: 20000.0
       unit: ft
       source: assumption
-      citation: "Ottawa mainstem reach below the Lima gage to the outlet (screening split of the Hack's-law length)"
+      citation: "Ottawa mainstem reach below the Lima gage to the outlet (screening estimate)"
       confidence: low
     slope:
       value: 0.0010

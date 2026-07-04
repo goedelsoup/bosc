@@ -528,6 +528,7 @@ export interface ReachRouting {
 export interface RoutedHydrographNetwork {
   tier: "tier0";
   scenario: string;
+  site: string; // the loop's site label (e.g. "Lima")
   return_period_yr: number;
   storm_depth_in: number;
   dt_hr: number;

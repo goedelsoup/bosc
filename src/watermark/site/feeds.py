@@ -68,8 +68,9 @@ from watermark.provenance import source_is_verified
 #   site with no documented facility (mirrors `derive_demand_pressure`'s own gate).
 # 1.13.0: adds the `routed-hydrograph` object feed (#1184) — the loop's design-storm hydrograph
 #   routed down the cited confluence graph via Muskingum-Cunge (`RoutedHydrographNetwork`): the
-#   routed vs. naive-summed outlet hydrograph series, the peak `attenuation_pct` + `lag_hr`, and the
-#   per-reach attenuation/lag table. Absent when the topology or reach table is missing.
+#   routed vs. naive-summed outlet hydrograph series, the peak `attenuation_pct` + `lag_hr`, the
+#   per-reach attenuation/lag table, and the `site` label. Absent when the topology or reach
+#   table is missing.
 CONTRACT_VERSION = "1.13.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +

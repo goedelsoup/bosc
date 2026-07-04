@@ -75,6 +75,11 @@
       "title": "Scenario",
       "type": "string"
     },
+    "site": {
+      "default": "",
+      "title": "Site",
+      "type": "string"
+    },
     "return_period_yr": {
       "title": "Return Period Yr",
       "type": "integer"

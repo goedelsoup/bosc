@@ -135,8 +135,12 @@ def apply_theories(
     return out, warnings
 
 
-def _toposort(nodes: list[NetworkNode]) -> list[NetworkNode]:
-    """Order nodes so every contributor precedes the node it drains into (Kahn)."""
+def toposort(nodes: list[NetworkNode]) -> list[NetworkNode]:
+    """Order nodes so every contributor precedes the node it drains into (Kahn).
+
+    Public topology helper — shared by the steady-state solver here and the storm-hydrograph
+    router (:mod:`watermark.hydrology.hydrograph_routing`). Raises on a cycle or dangling edge.
+    """
     by_id = {n.id: n for n in nodes}
     upstream: dict[str, list[str]] = {n.id: [] for n in nodes}
     for n in nodes:
@@ -155,6 +159,10 @@ def _toposort(nodes: list[NetworkNode]) -> list[NetworkNode]:
             done.add(n.id)
         remaining = [n for n in remaining if n.id not in done]
     return solved
+
+
+# Back-compat alias: internal callers here and the existing tests reference ``_toposort``.
+_toposort = toposort
 
 
 def route_network(

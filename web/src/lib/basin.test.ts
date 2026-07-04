@@ -170,6 +170,7 @@ const reach = (name: string, atten: number, lag: number, over: Partial<ReachRout
 const routedNet = (over: Partial<RoutedHydrographNetwork> = {}): RoutedHydrographNetwork => ({
   tier: "tier0",
   scenario: "design-storm",
+  site: "Lima",
   return_period_yr: 25,
   storm_depth_in: 4.25,
   dt_hr: 1,
