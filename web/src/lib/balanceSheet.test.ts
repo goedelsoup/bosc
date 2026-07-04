@@ -3,7 +3,7 @@ import { buildBalanceSheet } from "./balanceSheet";
 
 // The feed's discharge constants (buildDilution): WWTP 8.82 + FM-2 3.87 = 12.69 cfs
 // effluent; ~1.01 cfs summed natural low flow at the annual 7Q10.
-const sheet = buildBalanceSheet(12.69, 1.01);
+const sheet = buildBalanceSheet(12.69, 1.01, "lima");
 
 describe("balanceSheet — composes every narrative's band (#273)", () => {
   it("has one row per quantitative narrative, each carrying a register + resolving record", () => {
@@ -30,6 +30,13 @@ describe("balanceSheet — composes every narrative's band (#273)", () => {
     expect(sheet.resolvingRecords.length).toBeGreaterThanOrEqual(4);
     expect(sheet.resolvingRecords.every((s) => s.length > 0)).toBe(true);
     expect(new Set(sheet.resolvingRecords).size).toBe(sheet.resolvingRecords.length); // deduped
+  });
+
+  it("scopes each band's companion link to the given site, not Lima (#1145)", () => {
+    const peer = buildBalanceSheet(12.69, 1.01, "fort-wayne");
+    for (const r of peer.rows) {
+      expect(r.href.startsWith("/network/fort-wayne/reports/")).toBe(true);
+    }
   });
 
   it("monetizes the public exposure as the economic net-subsidy band", () => {

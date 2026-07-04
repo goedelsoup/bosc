@@ -6,7 +6,7 @@ import SectionLocked from "~/components/SectionLocked.astro";
 import { NARRATIVE } from "~/lib/narrative";
 import { sectionStatus } from "~/lib/readiness";
 import { hasInteractive, reportUrl } from "~/lib/reports";
-import { withBase, withStory, withSite, siteUrl } from "~/lib/site";
+import { withStory, withSite } from "~/lib/site";
 
 // The reports are the network-global `docs/` narrative — Lima's, today. A thinner peer locks the
 // section (and is invited to contribute) rather than borrow another site's analysis (#781).
@@ -33,9 +33,10 @@ const bySlug = new Map(NARRATIVE.map((d) => [d.slug, d]));
 const published = ORDER.map((s) => bySlug.get(s)).filter((d): d is NonNullable<typeof d> => Boolean(d));
 
 // Reports with an interactive companion page (registry SSOT, lib/reports) link there
-// instead of the plain essay (the companion links onward to the full cited text).
-const reportHref = (slug: string): string =>
-  hasInteractive(slug) ? reportUrl(slug) : siteUrl(`/docs/${slug}`);
+// instead of the plain essay (the companion links onward to the full cited text). Both
+// branches resolve to the active site (`slug`) and already carry the deploy base (#1145).
+const reportHref = (docSlug: string): string =>
+  hasInteractive(docSlug) ? reportUrl(docSlug, slug) : withSite(`/docs/${docSlug}`);
 
 // Forthcoming: the extension narratives tracked in epic #233 — deeper dives that the
 // corpus is being assembled to support. Carried here as drafting, not findings. The
@@ -84,7 +85,7 @@ const forthcoming: { title: string; blurb: string }[] = [];
   <div class="doors">
     {
       published.map((d) => (
-        <a class="door" href={withBase(reportHref(d.slug))}>
+        <a class="door" href={reportHref(d.slug)}>
           <span class="door-label">
             {d.title}
             {hasInteractive(d.slug) && <span class="door-badge">interactive</span>}

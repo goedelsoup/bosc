@@ -39,10 +39,12 @@ export interface BalanceSheetData {
 /**
  * Compose the balance sheet. `toxicsEffluentCfs` / `toxicsNaturalAnnualCfs` come from the
  * hydrology feed (`buildDilution().discharge`) so the toxics band matches its narrative.
+ * `siteSlug` scopes each band's narrative companion link to the active site (#1145).
  */
 export function buildBalanceSheet(
   toxicsEffluentCfs: number,
   toxicsNaturalAnnualCfs: number,
+  siteSlug: string,
 ): BalanceSheetData {
   const econ = netSubsidyOutcome();
   const grid = facilityDrawOutcome();
@@ -52,19 +54,19 @@ export function buildBalanceSheet(
     {
       outcome: econ,
       unit: "usd",
-      href: reportUrl("the-economic-ledger"),
+      href: reportUrl("the-economic-ledger", siteSlug),
       narrative: "The economic ledger",
     },
     {
       outcome: grid,
       unit: "mw",
-      href: reportUrl("the-load-and-the-grid"),
+      href: reportUrl("the-load-and-the-grid", siteSlug),
       narrative: "The load and the grid",
     },
     {
       outcome: toxics,
       unit: "pct",
-      href: reportUrl("toxics-and-the-corridor"),
+      href: reportUrl("toxics-and-the-corridor", siteSlug),
       narrative: "Toxics and the corridor",
     },
   ];
