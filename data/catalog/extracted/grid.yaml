@@ -1,0 +1,30 @@
+id: grid
+title: Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: U.S. Department of Energy (CESER) FPA §202(c) emergency orders 202-26-33 / 202-26-32
+    and PJM Interconnection's underlying application — captured under data/documents/grid/pjm-202c-2026/
+license: Public record (federal agency order / regulatory filing)
+access_tier: public
+site_scope: basin-shared
+storage:
+- relpath: extracted/grid/pjm-202c-emergency-2026.event.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- grid
+- reliability-event
+- backup-generation
+- pjm
+- section-202c
+- dispatch
+notes: >-
+  Structured read of the June–July 2026 PJM hot-weather §202(c) emergency — the federal
+  authorization for reliability-triggered dispatch of data-center backup generation (Epic
+  #1172 calibration anchor, #1174). Grid event tagged [verified]; the Bistrozzi P0138965
+  facility's own genset runtime is tracked [open] (pre-operational) — no runtime fabricated.

@@ -1,0 +1,117 @@
+# Structured event record — PJM hot-weather FPA §202(c) emergency, June–July 2026.
+#
+# Provenance vocabulary (see docs/investigative-method/ENRICHMENT.md):
+#   [verified]  = stated in a captured primary record (cite file + page)
+#   [reference] = secondary / self-published source, not a controlling record
+#   [inference] = reasoned from verified facts, labelled as such
+#   [open]      = not established by any captured source — do NOT assert
+#
+# Source bytes: data/documents/grid/pjm-202c-2026/ (see that dir's filename-map.yaml).
+meta:
+  subject: PJM Interconnection FPA §202(c) hot-weather emergency — backup-generation dispatch authorization
+  kind: grid-reliability-event
+  captured_for: issue #1174 (Part of #1172; blocks #6 event-anchored calibration)
+  extracted_at: '2026-07-04'
+  method: manual read of captured DOE order + PJM application text layers (pypdf); figures quoted from the documents' own text, not secondary reporting
+  sources:
+    primary:
+      - file: data/documents/grid/pjm-202c-2026/doe-order-202-26-33.pdf   # backup-gen authority
+      - file: data/documents/grid/pjm-202c-2026/doe-order-202-26-32.pdf   # specified-resources dispatch
+      - file: data/documents/grid/pjm-202c-2026/pjm-application-202-26-33.pdf
+    secondary:
+      - url: https://insidelines.pjm.com/pjm-operations-update-june-30-2026/   # PJM self-published ops update
+      - url: https://www.utilitydive.com/news/pjm-doe-emergency-order-curtail-data-centers/820571/
+
+event:
+  name: PJM 2026 hot-weather §202(c) emergency
+  tag: '[verified]'
+  statutory_emergency_window:
+    start: '2026-06-29'
+    end: '2026-07-03'
+    basis: 'DOE Order 202-26-32 / 202-26-33: "a statutory emergency exists in the PJM region from June 29, 2026, through July 3, 2026."'
+    tag: '[verified]'
+  trigger:
+    tag: '[verified]'
+    description: >-
+      Forecast hot weather across the PJM region — PJM's application asserted
+      temperatures "at or around 95 degrees Fahrenheit or higher affecting all
+      states within PJM's region," exceeding 100°F in the BGE/PEPCO/Dominion zones,
+      against a tightening capacity position (retirements + project delays).
+    source: pjm-application-202-26-33.pdf (letter 2026-06-27); quoted in doe-order-202-26-32.pdf p.1
+  forecast_peak_load:
+    tag: '[verified]'
+    pjm_application_mw:
+      '2026-07-01': 159563   # ~ MW, PJM application as quoted in Order 202-26-32
+      '2026-07-02': 162860   # ~ MW
+    note: >-
+      PJM's later 2026-06-30 operations update revised the July-2 forecast to
+      166,304 MW (vs the 2006 all-time summer peak of 165,563 MW). [reference]
+
+orders:
+  - id: 202-26-33
+    tag: '[verified]'
+    issuer: U.S. Department of Energy (Secretary Chris Wright)
+    issued: '2026-06-30'
+    effective: '2026-06-30T23:59 ET'
+    expires: '2026-07-03T23:59 ET'
+    authorizes: >-
+      Order §A — "From June 30, 2026, PJM, in collaboration with its Transmission
+      Owners and Electric Distribution Companies, is authorized to direct backup
+      generation resources (whether auxiliary, standby, directly-connected, battery
+      storage or other …) at data centers (including, but not limited to, hyperscaler
+      facilities), and at other large load industrial and commercial customer sites"
+      as a last resort before/during an EEA 3.
+    runtime_hours: null   # [open] — the order authorizes AVAILABILITY in the window; it does NOT specify or record run-hours. No runtime fabricated.
+    source: doe-order-202-26-33.pdf §A (p.~9), §J effective clause (p.~10)
+    extension:
+      id: 202-26-33A
+      issued: '2026-07-03'
+      through: '2026-07-07'
+      tag: '[reference]'
+      captured: false   # noted only; not pulled into the corpus
+  - id: 202-26-32
+    tag: '[verified]'
+    issuer: U.S. Department of Energy (Secretary Chris Wright)
+    issued: '2026-06-30'
+    directs: PJM to dispatch specified generating units and order their operation as needed to maintain reliability.
+    source: doe-order-202-26-32.pdf p.1
+    extension:
+      id: 202-26-32A
+      issued: '2026-07-02'
+      captured: false
+      tag: '[reference]'
+
+# --- The corridor question (#1172): what does this event establish, and what does it NOT ---
+corridor_linkage:
+  data_center_backup_dispatch_authorized:
+    tag: '[verified]'
+    statement: >-
+      A federal §202(c) order (202-26-33) authorized reliability-triggered dispatch
+      of data-center backup generation across PJM during 2026-06-30 → 2026-07-03.
+      This is the real-world instance of the exact mechanism Epic #1172 models.
+  facility_p0138965_gensets_dispatched:
+    tag: '[open]'
+    statement: >-
+      Whether the Bistrozzi P0138965 facility (Allen County; 115 emergency gensets,
+      ~313 MW) actually ran its gensets under this order is NOT established by any
+      captured source. The order is region-wide and names no facility. The facility's
+      Final Air PTI issued only 2026-05-28 and it remains under construction (active
+      NPDES construction-stormwater NOI, 2026-06), so it is most likely not yet
+      operational. No facility-level runtime record exists in the corpus.
+    would_close_with:
+      - OEPA deviation/malfunction or PTI compliance report naming the facility
+      - a utility/PJM behind-the-meter activation record for the site
+      - contemporaneous reporting placing this specific facility in dispatch
+  nsr_cap_pressure:
+    tag: '[inference]'
+    statement: >-
+      Forced runtime under such an order is the pathway by which the synthetic-minor
+      NSR caps the permit was engineered to stay under (NOx 235.62 tpy / CO 96.06 tpy)
+      could be pressured — but with no observed facility runtime this remains a
+      modeled hypothesis (#1172 Tier-1), not an observed breach.
+
+acceptance:  # per issue #1174
+  citable_primary_source_in_corpus: true   # 3 federal/PJM PDFs under data/documents/grid/pjm-202c-2026/
+  provenance_true_tagged: true             # grid event [verified]; facility dispatch [open]
+  no_fabricated_runtime: true              # runtime_hours: null — omission over invention
+  blocks_issue_6_unblocked: true           # #6 gets the authorization window + PJM load as its anchor
