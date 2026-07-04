@@ -59,8 +59,15 @@ export const onRequestPost = async ({ request, env, params }: RequestContext): P
   const db = resolveAuthDb(env);
   if (!db) return json(503, { error: "audit store not configured" });
 
-  // Read current state for the audit record.
-  const before = await listGroupsForUser(env, sub).catch(() => [] as string[]);
+  // Read current state for the audit record. Propagate a read failure (502) before mutating rather
+  // than swallowing it — a fabricated empty before[] would make the audit record a lie.
+  let before: string[];
+  try {
+    before = await listGroupsForUser(env, sub);
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    return json(502, { error: `Cognito error: ${msg}` });
+  }
 
   try {
     await setGroupsForUser(env, sub, newGroups);
