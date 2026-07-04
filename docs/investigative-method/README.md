@@ -55,7 +55,7 @@ describe. The enrichment layer documents the mapping in full; the short version:
 
 | Skill | Lives in this repo as |
 |---|---|
-| evidentiary-discipline | the `[verified]` / `[inference]` / `[reference]` / `[open]` tag vocabulary (`docs/methodology.md`, `CLAUDE.md`) |
+| evidentiary-discipline | the `[verified]` / `[inference]` / `[reference]` / `[open]` tag vocabulary (`web/src/lib/evidence.ts`, `CLAUDE.md`, surfaced on the network `/methodology` hub) |
 | public-records-and-legal-strategy | `docs/legal/` (`mandamus-analysis.md`, `proponent-analysis.md`) |
 | gis-and-siting-analysis | `watermark.gis` + the `ProvenancedValue` model in `watermark.hydrology.model` |
 | entity-and-document-deconstruction | `watermark.pipeline.entities` (`EntityGraph`) + `watermark.pipeline.timeline`; gap audit at `data/extracted/legal/corpus-completeness-audit.md` |
