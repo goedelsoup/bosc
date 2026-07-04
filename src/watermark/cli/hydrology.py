@@ -803,11 +803,16 @@ def drainage_audit_cmd(
     for s in audit.scopes:
         if s.itemized:
             frac = f"{s.sized_fraction:.0%}" if s.sized_fraction is not None else "—"
+            sized = (
+                f"{'~' if s.sized_amount_approximate else ''}{s.sized_amount:,}"
+                if s.sized_amount is not None
+                else "—"
+            )
             table.add_row(
                 s.name[:34],
                 f"{s.drainage_subtotal:,}" if s.drainage_subtotal else "—",
                 "itemized",
-                f"{s.sized_amount:,}" if s.sized_amount is not None else "—",
+                sized,
                 f"{s.lump_sum_amount:,}" if s.lump_sum_amount is not None else "—",
                 frac,
             )
