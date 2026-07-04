@@ -162,7 +162,8 @@ def compute_refill_adequacy(
     )
     # Fail loud rather than silently apply Lima's rivers: the refill / water-balance supply model
     # is Lima-only today (non-Lima profiles leave the supply gages [open] as "TODO"). The river
-    # names + caveats below are Lima-specific, so refuse a site whose gages aren't configured.
+    # names, notes, and caveats below are now profile-driven (#1159), but the storage math is
+    # still Lima-calibrated — so refuse a site whose supply gages aren't configured.
     if primary_site in ("", "TODO") or secondary_site in ("", "TODO"):
         raise ValueError(
             f"refill model is not configured for site {settings.site!r}: "
@@ -254,6 +255,22 @@ def compute_refill_adequacy(
 
     annual_demand_mg = round(gross * _DAYS_PER_YEAR, 0)
     combined_mean_mgd = cfs_to_mgd(combined_mean_cfs)
+    # Site-driven caveats (#1159): river names, the primary gage's downstream note, and the
+    # passby values come from the active profile so no Lima literal leaks into another site.
+    record_span = (
+        f"{(dates[0] if dates else start_date)[:4]}-{(dates[-1] if dates else end_date)[:4]}"
+    )
+    caveats = [
+        f"{prof.supply_river_primary} {prof.supply_note_primary}; the storage requirement is "
+        "therefore an UNDER-estimate (optimistic).",
+        "Pure sequent-peak captures all surplus above passby (no pump-rate cap) — also "
+        "optimistic; a real pump-capacity limit would raise the storage requirement.",
+        f"Passby flows are screening assumptions ({prof.supply_river_secondary} "
+        f"{passby_secondary_cfs:g} cfs; {prof.supply_river_primary} {passby_primary_cfs:g} cfs); "
+        "reservoir evaporation is not subtracted.",
+        "The binding drought is the worst in the GAUGED record — a longer/deeper drought than "
+        f"the {record_span} record would call on more storage than shown.",
+    ]
     ra = RefillAdequacy(
         period_start=dates[0] if dates else start_date,
         period_end=dates[-1] if dates else end_date,
@@ -266,16 +283,7 @@ def compute_refill_adequacy(
         scenarios=scenarios,
         method=_METHOD,
         warnings=[],
-        caveats=[
-            "Auglaize gauged at Fort Jennings (downstream, larger drainage area) — overstates "
-            "intake flow, so the storage requirement is an UNDER-estimate (optimistic).",
-            "Pure sequent-peak captures all surplus above passby (no pump-rate cap) — also "
-            "optimistic; a real pump-capacity limit would raise the storage requirement.",
-            "Passby flows are screening assumptions (Ottawa = cited 7Q10 0.2 cfs; Auglaize 2.5 "
-            "cfs, no cited 7Q10); reservoir evaporation is not subtracted.",
-            "The binding drought is the worst in the GAUGED record — a longer/deeper drought "
-            "than ~1988-2024 would call on more storage than shown.",
-        ],
+        caveats=caveats,
     )
     log.info(
         "hydro.refill",

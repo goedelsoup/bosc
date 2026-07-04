@@ -97,6 +97,14 @@ _LIMA_GOLDEN = {
         "watch-american-bath-wwtp": "American Bath WWTP",
         "watch-american-ii-wwtp": "American II WWTP",
     },
+    "sanitary_capacity_fallback": [
+        (
+            "American II WWTP",
+            3.6,
+            "FM-1",
+            "Ohio EPA fact sheet 2PH00006: peak hydraulic capacity 3.6 MGD",
+        ),
+    ],
     "campus_dry_weather_mgd": 2.5,
     "lmp_usd_mwh": 45.81,  # connector-sourced AEP-zone 2025 day-ahead annual mean (#121)
     "county_name": "Allen County, OH",
