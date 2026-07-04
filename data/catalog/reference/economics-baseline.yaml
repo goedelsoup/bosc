@@ -32,3 +32,5 @@ tags:
 notes: Connector-regenerated county employment-by-NAICS with location quotients and QCEW wages
   (avg_annual_pay and avg_weekly_wage, on the county total and per sector) plus an ACS population
   series (population needs WATERMARK_CENSUS_API_KEY; QCEW is keyless); site-scoped under reference/economics/{site}/.
+  Connector values carry asof (the QCEW annual-average year / ACS data year) for machine-checkable
+  staleness (#1107).

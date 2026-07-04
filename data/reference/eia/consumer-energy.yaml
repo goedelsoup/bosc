@@ -13,7 +13,7 @@ prices:
     source: connector
     citation: EIA API v2 seriesid ELEC.PRICE.OH-RES.A (2025)
     confidence: high
-    asof: null
+    asof: '2025'
   points:
   - period: '2001'
     value: 8.37
@@ -77,7 +77,7 @@ prices:
     source: connector
     citation: EIA API v2 seriesid ELEC.SALES.OH-ALL.A (2025)
     confidence: high
-    asof: null
+    asof: '2025'
   points:
   - period: '2001'
     value: 155797.714
@@ -141,7 +141,7 @@ prices:
     source: connector
     citation: EIA API v2 seriesid NG.N3010OH3.A (2025)
     confidence: high
-    asof: null
+    asof: '2025'
   points:
   - period: '1967'
     value: 0.86

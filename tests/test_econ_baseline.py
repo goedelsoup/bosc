@@ -75,6 +75,21 @@ def test_reduce_csv_keeps_wage_columns() -> None:
     assert reduced["sectors"][0]["pay"] == 92000.0 and reduced["sectors"][0]["wkly"] == 1770.0
 
 
+def test_qcew_sets_asof_to_data_year(econ_settings: Settings) -> None:
+    """Connector values carry the annual-average year as ``asof`` (issue #1107), so a stale
+    baseline is machine-flaggable rather than buried in citation prose."""
+    ie = fetch_county_industries(year=2023, fips="39003", settings=econ_settings)
+    assert ie.total_employment.asof == "2023"
+    assert ie.establishments is not None and ie.establishments.asof == "2023"
+    # Wages ride the same data year (issue #1109 + #1107).
+    assert ie.avg_annual_pay is not None and ie.avg_annual_pay.asof == "2023"
+    # Every sector value (employment, establishments, LQ) is tagged, not just the total.
+    for s in ie.sectors:
+        assert s.annual_avg_employment.asof == "2023"
+        assert s.establishments is None or s.establishments.asof == "2023"
+        assert s.location_quotient is None or s.location_quotient.asof == "2023"
+
+
 def test_census_population_offline(econ_settings: Settings) -> None:
     series = fetch_population_series(years=[2010, 2023], fips="39003", settings=econ_settings)
     assert series.fips == "39003" and series.area_name == "Allen County, Ohio"
@@ -82,6 +97,8 @@ def test_census_population_offline(econ_settings: Settings) -> None:
     assert all(p.population.verified for p in series.points)  # connector-sourced
     # Allen County's population declined over the span (the documented trend).
     assert series.points[-1].population.value < series.points[0].population.value
+    # Each ACS5 point's ``asof`` is its data year (issue #1107).
+    assert [p.population.asof for p in series.points] == ["2010", "2023"]
 
 
 def test_build_baseline_trend(econ_settings: Settings) -> None:

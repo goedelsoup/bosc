@@ -133,6 +133,9 @@ def fetch_county_industries(
         ),
     )
     cite = f"BLS QCEW {year} annual averages, area {fips}"
+    # The annual-average year is the natural staleness marker (issue #1107); a bare year is
+    # valid reduced-precision ISO 8601. The human citation already carries it in prose.
+    asof = str(year)
 
     def _pay(row: dict[str, Any], key: str, unit: str) -> ProvenancedValue | None:
         """A wage figure as a connector value — omitted (never $0) when QCEW reports
@@ -140,7 +143,7 @@ def fetch_county_industries(
         val = row.get(key)
         if val is None or float(val) <= 0:
             return None
-        return ProvenancedValue.from_connector(float(val), unit, citation=cite)
+        return ProvenancedValue.from_connector(float(val), unit, citation=cite, asof=asof)
 
     total = payload.get("total") or {}
     emp = total.get("emp")
@@ -149,10 +152,12 @@ def fetch_county_industries(
             f"QCEW response for area {fips} ({year}) carried no county-total employment row "
             f"(agg {_TOTAL_AGG}, own {_TOTAL_OWN}) — refusing to fabricate a zero from missing data"
         )
-    total_emp = ProvenancedValue.from_connector(float(emp), "jobs", citation=cite)
+    total_emp = ProvenancedValue.from_connector(float(emp), "jobs", citation=cite, asof=asof)
     estabs_val = total.get("estabs")
     establishments = (
-        ProvenancedValue.from_connector(float(estabs_val), "establishments", citation=cite)
+        ProvenancedValue.from_connector(
+            float(estabs_val), "establishments", citation=cite, asof=asof
+        )
         if estabs_val is not None
         else None
     )
@@ -173,11 +178,11 @@ def fetch_county_industries(
                 naics=naics,
                 sector_name=_SECTOR_NAMES.get(naics, naics),
                 annual_avg_employment=ProvenancedValue.from_connector(
-                    float(emp), "jobs", citation=cite
+                    float(emp), "jobs", citation=cite, asof=asof
                 ),
                 establishments=(
                     ProvenancedValue.from_connector(
-                        float(s["estabs"]), "establishments", citation=cite
+                        float(s["estabs"]), "establishments", citation=cite, asof=asof
                     )
                     if s.get("estabs") is not None
                     else None
@@ -185,7 +190,7 @@ def fetch_county_industries(
                 avg_annual_pay=_pay(s, "pay", "USD/year") if has_jobs else None,
                 avg_weekly_wage=_pay(s, "wkly", "USD/week") if has_jobs else None,
                 location_quotient=(
-                    ProvenancedValue.from_connector(float(lq), "ratio", citation=cite)
+                    ProvenancedValue.from_connector(float(lq), "ratio", citation=cite, asof=asof)
                     if lq is not None
                     else None
                 ),
