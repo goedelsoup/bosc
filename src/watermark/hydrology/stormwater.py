@@ -297,6 +297,12 @@ def screen_campus_discharge(
         post = simulate_runoff(
             area_acres=acres, curve_number=post_cn, tc_hr=_TC_HR, storm_depth_in=depth
         )
+        # Conservative wet-antecedent bound: the same as-permitted composite CN under
+        # AMC-III (ground already saturated by prior rain), which raises the peak the
+        # 60-inch outfall and Dug Run's low flow have to absorb.
+        post_wet = simulate_runoff(
+            area_acres=acres, curve_number=post_cn, tc_hr=_TC_HR, storm_depth_in=depth, amc="III"
+        )
         full = simulate_runoff(
             area_acres=acres, curve_number=full_cn, tc_hr=_TC_HR, storm_depth_in=depth
         )
@@ -307,6 +313,7 @@ def screen_campus_discharge(
                 pre_peak_cfs=pre.peak_cfs,
                 post_peak_cfs=post.peak_cfs,
                 full_buildout_peak_cfs=full.peak_cfs,
+                post_peak_wet_cfs=post_wet.peak_cfs,
             )
         )
 
@@ -373,11 +380,15 @@ def screen_campus_discharge(
         method=(
             "Tier-0 SCS-CN screening over the measured parcel footprint; post CN = "
             "area-weighted composite from the ASWCD-declared impervious/developed split; "
-            "outfall capacity = Manning full-flow (n=0.013) across an assumed slope band; "
-            "receiving 7Q10 cited from the OEPA NPDES fact sheet (2PH00006)."
+            "peaks are AMC-II (average antecedent moisture) with a wet-antecedent (AMC-III) "
+            "conservative bound on the as-permitted post peak; outfall capacity = Manning "
+            "full-flow (n=0.013) across an assumed slope band; receiving 7Q10 cited from the "
+            "OEPA NPDES fact sheet (2PH00006)."
         ),
         caveats=[
             "Screening-grade — not a routed hydraulic model or a permit determination.",
+            "Headline peaks are AMC-II; post_peak_wet_cfs is the AMC-III (wet-antecedent) "
+            "upper bound — the storm falling on ground already saturated by prior rain.",
             "The outfall pipe slope is not in the record; capacity is bracketed across 0.3-1.0%.",
             "The peak is computed over the whole measured footprint; the tributary area to the "
             "single 60-inch trunk is not stated, so the capacity comparison is a bracket.",
@@ -441,6 +452,11 @@ def discharge_findings(screen: CampusDischargeScreen) -> list[HydroFinding]:
                     f"pre {screen.pre_cn:g}; full-buildout bound CN {screen.post_cn_full_buildout:g}. "
                     f"{rp}-yr peak pre {dp.pre_peak_cfs:,.0f} -> as-permitted {dp.post_peak_cfs:,.0f} "
                     f"-> full-buildout {dp.full_buildout_peak_cfs:,.0f} cfs"
+                    + (
+                        f" (as-permitted wet-antecedent AMC-III bound {dp.post_peak_wet_cfs:,.0f} cfs)"
+                        if dp.post_peak_wet_cfs is not None
+                        else ""
+                    )
                 ),
             )
         )

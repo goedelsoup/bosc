@@ -73,7 +73,8 @@ class Hydrograph(BaseModel):
     time_to_peak_hr: float
     volume_acft: float
     runoff_depth_in: float
-    curve_number: float
+    curve_number: float  # the effective CN the chain ran on (AMC-adjusted when amc != "II")
+    amc: Literal["I", "II", "III"] = "II"  # antecedent moisture condition; "III" = wet
     tier: Literal["tier0"] = "tier0"
 
 
@@ -148,8 +149,12 @@ class DischargePeak(BaseModel):
     return_period_yr: int
     depth_in: float
     pre_peak_cfs: float  # prior cropland cover
-    post_peak_cfs: float  # as-permitted composite (only impervious_acres paved)
+    post_peak_cfs: float  # as-permitted composite (only impervious_acres paved), AMC-II
     full_buildout_peak_cfs: float  # blanket near-impervious upper bound (whole parcel)
+    # As-permitted post peak under wet antecedent (AMC-III) — the conservative bound when
+    # the design storm falls on ground already saturated by prior rain. Optional so
+    # pre-#1160 committed artifacts still load.
+    post_peak_wet_cfs: float | None = None
 
 
 class CampusDischargeScreen(BaseModel):

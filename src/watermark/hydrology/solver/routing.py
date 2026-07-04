@@ -1,5 +1,12 @@
 """Muskingum-Cunge channel routing (constant-parameter, Tier-0).
 
+Library primitive: this routes a *time-varying* hydrograph, unlike the steady-state
+mass balance in :mod:`watermark.hydrology.network`. It has no production caller yet — its
+intended home is the ``/basin`` view (route storm hydrographs down the cited confluence
+graph so a downstream peak is attenuated and lagged, not summed). Tracked by #1184; kept
+here as a tested primitive rather than removed. (The AMC-III adjuster from the sibling
+cleanup #1160 *is* wired in, via ``solver.runoff.simulate_runoff``.)
+
 Routes an inflow hydrograph down a trapezoidal reach, attenuating and lagging the
 peak. Parameters are derived once at a reference discharge (the inflow peak):
 

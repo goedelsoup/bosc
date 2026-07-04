@@ -17,7 +17,7 @@ import numpy as np
 from numpy.typing import NDArray
 
 from watermark.hydrology.model import Hydrograph
-from watermark.hydrology.solver.curve_number import excess_rainfall
+from watermark.hydrology.solver.curve_number import adjust_amc, excess_rainfall
 from watermark.hydrology.solver.rainfall import scs_type_ii_hyetograph
 
 # Dimensionless SCS unit hydrograph: t/Tp -> q/Qp (NEH-630 Table 16-1, abridged).
@@ -101,13 +101,23 @@ def simulate_runoff(
     curve_number: float,
     tc_hr: float,
     storm_depth_in: float,
+    amc: str = "II",
     dt_hr: float = 0.1,
     duration_hr: float = 24.0,
 ) -> Hydrograph:
-    """Run the Tier-0 SCS chain for one footprint and one design storm."""
+    """Run the Tier-0 SCS chain for one footprint and one design storm.
+
+    ``curve_number`` is the tabulated AMC-II (average antecedent moisture) value;
+    ``amc`` selects the antecedent condition the storm falls on — ``"III"`` (wet, prior
+    rain has saturated the ground) raises the effective CN and yields the conservative
+    upper-bound peak, ``"I"`` (dry) lowers it. The returned hydrograph records both the
+    effective ``curve_number`` and the ``amc`` it was run under, so a reader can tell
+    whether a reported peak is wet-antecedent.
+    """
     area_sqmi = area_acres / 640.0
+    effective_cn = adjust_amc(curve_number, amc)
     _, cumulative, _ = scs_type_ii_hyetograph(storm_depth_in, dt_hr=dt_hr, duration_hr=duration_hr)
-    cum_excess = excess_rainfall(cumulative, curve_number)
+    cum_excess = excess_rainfall(cumulative, effective_cn)
     inc_excess = np.diff(cum_excess, prepend=0.0)  # inches per step
     uh = _unit_hydrograph(area_sqmi, tc_hr, dt_hr)
 
@@ -123,5 +133,6 @@ def simulate_runoff(
         time_to_peak_hr=round(float(times[peak_idx]), 3),
         volume_acft=round(volume_acft, 3),
         runoff_depth_in=round(float(cum_excess[-1]), 4),
-        curve_number=round(curve_number, 1),
+        curve_number=round(effective_cn, 1),
+        amc=amc,  # str param, validated against the Hydrograph Literal at construction
     )
