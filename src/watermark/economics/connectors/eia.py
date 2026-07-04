@@ -119,16 +119,32 @@ def _row_value(row: dict[str, Any], col: str) -> float | None:
     Reads ``row[col]`` when present; otherwise falls back to the sole numeric column
     that is not ``period``, a dimension label, or a ``*-units`` string — so a series
     whose column EIA renames still resolves rather than silently returning nothing.
+
+    The fallback is safe *only* because exactly one such column exists. If EIA ever adds
+    a second numeric non-dimension field (a revision counter, a secondary measure),
+    guessing which one is the value would return a wrong number with full ``[verified]``
+    provenance — exactly the drift by-name reads exist to prevent — so an ambiguous row
+    raises :class:`EiaError` (the declared column name must be updated) rather than
+    silently grabbing whichever iterates first.
     """
     v = row.get(col)
     if v is not None and not isinstance(v, bool):
         return float(v)
-    for k, val in row.items():
-        if k in _NON_VALUE_FIELDS or k.endswith("-units"):
-            continue
-        if isinstance(val, (int, float)) and not isinstance(val, bool):
-            return float(val)
-    return None
+    candidates = [
+        val
+        for k, val in row.items()
+        if k not in _NON_VALUE_FIELDS
+        and not k.endswith("-units")
+        and isinstance(val, (int, float))
+        and not isinstance(val, bool)
+    ]
+    if len(candidates) > 1:
+        raise EiaError(
+            f"EIA row has {len(candidates)} numeric non-dimension columns; the value "
+            f"column {col!r} is absent and the fallback is ambiguous — update the "
+            f"declared column name for this series."
+        )
+    return float(candidates[0]) if candidates else None
 
 
 class EiaError(RuntimeError):

@@ -176,7 +176,7 @@ def economics(
     ),
 ) -> None:
     """Pull the localized economic baseline (BLS QCEW) — employment mix + export-orientation."""
-    from watermark.economics.baseline import build_baseline, write_baseline
+    from watermark.economics import build_baseline, write_baseline
 
     settings = offline_settings("econ", offline)
     baseline = build_baseline(settings=settings)

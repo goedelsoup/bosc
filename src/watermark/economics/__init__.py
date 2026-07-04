@@ -10,7 +10,7 @@ pydantic`` through the shared ``cached_get`` cache/offline/fixture machinery).
 
 from __future__ import annotations
 
-from watermark.economics.baseline import build_baseline, load_baseline
+from watermark.economics.baseline import build_baseline, load_baseline, write_baseline
 from watermark.economics.energy import (
     build_consumer_energy,
     derive_demand_pressure,
@@ -40,5 +40,6 @@ __all__ = [
     "derive_demand_pressure",
     "load_baseline",
     "load_consumer_energy",
+    "write_baseline",
     "write_consumer_energy",
 ]
