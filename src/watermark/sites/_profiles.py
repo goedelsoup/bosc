@@ -2416,12 +2416,15 @@ _WEST_UNION = SiteProfile(
     # grid / facility (no identified data-center facility → grid backdrop only, no campus share)
     facility=None,  # [open] the data-center dimension onboarding doesn't capture (no disclosed facility)
     serving_utility_citation=(  # [reference] not corpus
-        "Adams County, OH is predominantly served by Adams Rural Electric Cooperative, Inc. (EIA ~118, "
-        "~9,274 meters; HQ West Union; a Buckeye Power / Ohio's Electric Cooperatives member), with "
-        "Ohio Power Co (AEP Ohio, EIA-861 #14006) serving the Village of West Union edge and providing "
-        "the AEP transmission + PJM-settlement footprint (AEP 'West Union Loop' projects). The profile "
-        "uses AEP Ohio / the PJM AEP zone as the grid backdrop; confirming the co-op's EIA-861 utility "
-        "id + short-form retail line against the primary EIA-861 file is a flagged follow-up."
+        "Adams County, OH is predominantly served by Adams Rural Electric Cooperative, Inc. — EIA-861 "
+        "#118 [verified] against the primary EIA-861 2024 Service_Territory file (utility 'Adams Rural "
+        "Electric Coop, Inc', OH; counties Adams/Brown/Highland/Pike/Scioto; ~9,274 meters secondary; "
+        "HQ West Union; a Buckeye Power / Ohio's Electric Cooperatives member). #118 is a short-form "
+        "EIA-861 filer, so it reports no Sales_Ult_Cust retail line — the co-op cannot back a "
+        "connector-sourced retail denominator. Ohio Power Co (AEP Ohio, EIA-861 #14006, full-filing) "
+        "serves the Village of West Union edge and provides the AEP transmission + PJM-settlement "
+        "footprint (AEP 'West Union Loop' projects); the profile therefore keeps AEP Ohio / the PJM AEP "
+        "zone as the resolvable grid backdrop rather than the co-op's (unavailable) retail line."
     ),
     # grid (same PJM AEP zone as the AEP-Ohio sites — Ohio Power / co-op both settle in AEP)
     lmp_usd_mwh=45.81,  # connector-sourced AEP-zone 2025 day-ahead annual mean (same zone as Lima)
