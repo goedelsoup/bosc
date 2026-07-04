@@ -17,6 +17,7 @@ from watermark.economics.baseline import (
     _maybe_population,
     build_baseline,
     load_baseline,
+    write_baseline,
 )
 from watermark.economics.connectors.census import fetch_population_series
 from watermark.economics.connectors.qcew import (
@@ -197,3 +198,55 @@ def test_committed_baseline_loads() -> None:
     assert baseline is not None
     assert baseline.fips == "39003"
     assert baseline.latest.sectors
+
+
+def test_build_baseline_preserves_population_on_keyless_rerun(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A re-run without a Census key must not drop a previously-committed population series
+    (``baseline.py``: "A failed re-run must not drop real data"). When the live ACS5 pull
+    can't be satisfied and nothing is warm in the cache, ``build_baseline`` carries the
+    committed population over — marking the note as a (possibly stale) carry-forward — rather
+    than overwriting the real series with ``null``.
+    """
+    settings = Settings(
+        data_dir=tmp_path, econ_offline=True, econ_fixtures_dir=FIXTURES / "economics"
+    )
+    # First run: population folded in from the committed ACS5 fixtures, then committed to disk.
+    first = build_baseline(years=[2018, 2023], settings=settings)
+    assert first.population is not None
+    write_baseline(first, settings=settings)
+
+    # Re-run with the population pull unsatisfiable (keyless live miss / offline miss / Census
+    # error) — the branch that must preserve the committed series rather than drop it.
+    monkeypatch.setattr("watermark.economics.baseline._maybe_population", lambda _s: None)
+    rerun = build_baseline(years=[2018, 2023], settings=settings)
+
+    # The committed series is preserved verbatim — not dropped to ``None``, not fabricated.
+    assert rerun.population == first.population
+    # ...and the provenance note is honest that it's carried over (possibly stale), not fresh.
+    assert "carried" in rerun.note.lower()
+
+
+def test_non_lima_baseline_write_load_roundtrip(tmp_path: Path) -> None:
+    """A non-Lima profile round-trips through its own slug-scoped baseline path (#326/#606):
+    ``write_baseline`` lands under ``reference/economics/<slug>/baseline.yaml`` and
+    ``load_baseline`` reads it back — without touching Lima's un-slugged legacy path.
+    """
+    # A valid baseline payload — the committed Lima model; its content is irrelevant to the
+    # per-site path resolution this test exercises.
+    payload = load_baseline(Settings(data_dir=REPO_ROOT / "data"))
+    assert payload is not None
+
+    findlay = Settings(data_dir=tmp_path, site="findlay")
+    written = write_baseline(payload, settings=findlay)
+    # Slug-scoped, not the Lima legacy path.
+    assert written.endswith("reference/economics/findlay/baseline.yaml")
+    assert (tmp_path / "reference" / "economics" / "findlay" / "baseline.yaml").is_file()
+    # Lima's un-slugged path is never written (no clobber of the reference build).
+    assert not (tmp_path / "reference" / "economics" / "baseline.yaml").exists()
+
+    # Round-trips back through the findlay profile...
+    assert load_baseline(findlay) == payload
+    # ...and a Lima-profile read of the same data dir finds nothing (per-site path isolation).
+    assert load_baseline(Settings(data_dir=tmp_path, site="lima")) is None
