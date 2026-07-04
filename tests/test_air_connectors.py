@@ -160,9 +160,15 @@ def test_aermap_build_offline(air_settings: Settings, tmp_path: Path) -> None:
     assert outputs.dem_source == "fixture DEM (offline)"
     assert outputs.elevations[0].elevation_m is not None
 
-    control = Path(outputs.control_path).read_text()
-    assert "CO STARTING" in control and "DATAFILE" in control
-    assert "SO STARTING" in control and "RE STARTING" in control
+    # Exact control-file lines — malformed formatting (missing DATATYPE/RUNORNOT, a bad
+    # ANCHORXY, or a dropped pathway prefix) must fail the test, not just a keyword search.
+    control = Path(outputs.control_path).read_text().splitlines()
+    assert "CO DATATYPE  NED" in control
+    assert "CO DATAFILE  47ab9dcd154a7e01.tif" in control
+    assert "CO ANCHORXY  237399.8 4514549.0 237399.8 4514549.0 17 0" in control
+    assert "CO RUNORNOT  RUN" in control
+    assert "SO LOCATION  REC1  POINT  237399.8 4514549.0" in control
+    assert "RE DISCCART  237399.8 4514549.0" in control
 
     elev_doc = Path(outputs.elevations_path).read_text()
     assert "[derived]" in elev_doc

@@ -145,6 +145,12 @@ def _kept(raw_val: str, flag: str, *, scale: float, signed: bool) -> float | Non
     return _num(raw_val, scale=scale, signed=signed)
 
 
+def _kept_int(raw_val: str, flag: str) -> int | None:
+    """A QC-kept unscaled integer mandatory field (wind direction °, ceiling m), or ``None``."""
+    val = _kept(raw_val, flag, scale=1.0, signed=False)
+    return int(val) if val is not None else None
+
+
 def _parse(text: str, *, usaf: str, wban: str, year: int) -> SurfaceSeries:
     """Parse the ISH mandatory section of each line; keep the raw text for AERMET."""
     obs: list[SurfaceObservation] = []
@@ -161,17 +167,16 @@ def _parse(text: str, *, usaf: str, wban: str, year: int) -> SurfaceSeries:
             call = call_raw if call_raw and call_raw != "99999" else None
         date, hhmm = line[_SL_DATE], line[_SL_TIME]
         iso = f"{date[0:4]}-{date[4:6]}-{date[6:8]}T{hhmm[0:2]}:{hhmm[2:4]}:00Z"
-        wdir = _kept(line[_SL_WIND_DIR], line[_SL_WIND_DIR_Q], scale=1.0, signed=False)
         obs.append(
             SurfaceObservation(
                 time=iso,
-                wind_dir_deg=int(wdir) if wdir is not None else None,
+                wind_dir_deg=_kept_int(line[_SL_WIND_DIR], line[_SL_WIND_DIR_Q]),
                 wind_speed_ms=_kept(
                     line[_SL_WIND_SPD], line[_SL_WIND_SPD_Q], scale=10.0, signed=True
                 ),
                 air_temp_c=_kept(line[_SL_TEMP], line[_SL_TEMP_Q], scale=10.0, signed=True),
                 dew_point_c=_kept(line[_SL_DEW], line[_SL_DEW_Q], scale=10.0, signed=True),
-                ceiling_m=_ceiling(line),
+                ceiling_m=_kept_int(line[_SL_CEIL], line[_SL_CEIL_Q]),
                 sea_level_pressure_hpa=_kept(
                     line[_SL_SLP], line[_SL_SLP_Q], scale=10.0, signed=True
                 ),
@@ -189,8 +194,3 @@ def _parse(text: str, *, usaf: str, wban: str, year: int) -> SurfaceSeries:
         observations=obs,
         raw_ishd=text,
     )
-
-
-def _ceiling(line: str) -> int | None:
-    val = _kept(line[_SL_CEIL], line[_SL_CEIL_Q], scale=1.0, signed=False)
-    return int(val) if val is not None else None

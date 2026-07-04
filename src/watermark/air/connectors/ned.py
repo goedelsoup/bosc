@@ -63,8 +63,10 @@ class TerrainDomain(BaseModel):
     epsg: int | None
     width: int
     height: int
+    cell_size_deg: float  # actual DEM pixel size (degrees), read from the raster — QA sees the
+    # true export resolution even when the request was clamped by _MAX_PIXELS.
     dem_path: str
-    source: str  # "fixture DEM (offline)" or "USGS 3DEP ImageServer"
+    source: str  # "fixture DEM (offline)" / "USGS 3DEP ImageServer" / "... (cached)"
 
 
 def _bbox(center_lat: float, center_lon: float, half: float) -> tuple[float, float, float, float]:
@@ -85,9 +87,23 @@ def _resolve_dem(
             )
         return path, "fixture DEM (offline)"
 
+    dest = settings.air_cache_dir / _CONNECTOR / f"{key}.tif"
+    if dest.is_file():  # deterministic key already exported — reuse, skip the network
+        return dest, "USGS 3DEP ImageServer (cached)"
+
     minlon, minlat, maxlon, maxlat = bbox
     span = max(maxlon - minlon, maxlat - minlat)
-    size = min(_MAX_PIXELS, max(1, round(span / _CELLSIZE_DEG)))
+    requested_px = max(1, round(span / _CELLSIZE_DEG))
+    size = min(_MAX_PIXELS, requested_px)
+    if requested_px > _MAX_PIXELS:  # clamped — the export is coarser than 3DEP native; say so
+        log.warning(
+            "ned.resolution_clamped",
+            key=key,
+            requested_px=requested_px,
+            capped_px=_MAX_PIXELS,
+            requested_cell_deg=_CELLSIZE_DEG,
+            achieved_cell_deg=round(span / size, 8),
+        )
     query = {
         "bbox": f"{minlon},{minlat},{maxlon},{maxlat}",
         "bboxSR": "4326",
@@ -103,9 +119,10 @@ def _resolve_dem(
         url, params=query, timeout=settings.air_request_timeout_s, follow_redirects=True
     )
     resp.raise_for_status()
-    dest = settings.air_cache_dir / _CONNECTOR / f"{key}.tif"
     dest.parent.mkdir(parents=True, exist_ok=True)
-    dest.write_bytes(resp.content)
+    tmp = dest.with_suffix(".tif.part")
+    tmp.write_bytes(resp.content)
+    tmp.replace(dest)  # atomic: only a fully-fetched file lands at the cache key
     log.info("connector.fetch", connector=_CONNECTOR, key=key)
     return dest, "USGS 3DEP ImageServer"
 
@@ -133,6 +150,7 @@ def fetch_terrain(
     with rasterio.open(path) as dem:
         epsg = dem.crs.to_epsg() if dem.crs else None
         width, height = dem.width, dem.height
+        cell = abs(dem.res[0])  # actual pixel size (degrees) — reflects any export clamp
     return TerrainDomain(
         center_lat=center_lat,
         center_lon=center_lon,
@@ -140,6 +158,7 @@ def fetch_terrain(
         epsg=epsg,
         width=width,
         height=height,
+        cell_size_deg=cell,
         dem_path=str(path),
         source=source,
     )

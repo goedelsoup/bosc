@@ -30,6 +30,10 @@ _CONNECTOR = "igra"
 _MISSING = {-9999, -8888}  # IGRA v2: -9999 = missing, -8888 = removed / not applicable
 
 
+class IgraArchiveError(RuntimeError):
+    """A fetched IGRA station archive didn't contain the expected ``*-data.txt`` member."""
+
+
 class SoundingLevel(BaseModel):
     """One pressure level of a sounding (missing fields → ``None``)."""
 
@@ -94,8 +98,13 @@ def fetch_upperair(
         resp = httpx.get(url, timeout=settings.air_request_timeout_s, follow_redirects=True)
         resp.raise_for_status()
         with zipfile.ZipFile(io.BytesIO(resp.content)) as zf:
-            name = next(n for n in zf.namelist() if n.endswith(".txt"))
-            text = zf.read(name).decode("latin-1")
+            members = [n for n in zf.namelist() if n.endswith(".txt")]
+            if not members:
+                raise IgraArchiveError(
+                    f"IGRA archive for station {station} ({url}) has no .txt data member "
+                    f"(got {zf.namelist()})"
+                )
+            text = zf.read(members[0]).decode("latin-1")
         return _filter_year(text, year)
 
     text: str = cached_get(_CONNECTOR, params, fetch, settings=settings)

@@ -30,10 +30,10 @@ def aermet_cmd(
         "", "--upperair-station", help="IGRA upper-air station id (default: settings/profile)."
     ),
     year: int = typer.Option(
-        0, "--year", help="Meteorological year (default: settings.air_met_year)."
+        None, "--year", help="Meteorological year (default: settings.air_met_year)."
     ),
     utc_offset: int = typer.Option(
-        -99, "--utc-offset", help="AERMET GMT offset (hrs local→UTC); default solar-nominal."
+        None, "--utc-offset", help="AERMET GMT offset (hrs local→UTC); default solar-nominal."
     ),
     out: str = typer.Option("", "--out", help="Output dir (default: <cache>/air/aermet)."),
     offline: bool = typer.Option(
@@ -50,15 +50,11 @@ def aermet_cmd(
     from watermark.air.connectors import aermet, igra, isd
 
     settings = _air_settings(offline)
-    surf = isd.fetch_surface(station=surface_station or None, year=year or None, settings=settings)
-    ua = igra.fetch_upperair(station=upperair_station or None, year=year or None, settings=settings)
+    surf = isd.fetch_surface(station=surface_station or None, year=year, settings=settings)
+    ua = igra.fetch_upperair(station=upperair_station or None, year=year, settings=settings)
     out_dir = Path(out) if out else settings.air_cache_dir / "aermet"
     inputs = aermet.write_aermet_inputs(
-        surf,
-        ua,
-        out_dir=out_dir,
-        site_label=settings.site,
-        utc_offset=None if utc_offset == -99 else utc_offset,
+        surf, ua, out_dir=out_dir, site_label=settings.site, utc_offset=utc_offset
     )
 
     console.print(
@@ -76,13 +72,13 @@ def aermet_cmd(
 @app.command(name="aermap")
 def aermap_cmd(
     center_lat: float = typer.Option(
-        -999.0, "--lat", help="Domain centre latitude (default: settings.nasa_power_lat)."
+        None, "--lat", help="Domain centre latitude (default: settings.nasa_power_lat)."
     ),
     center_lon: float = typer.Option(
-        -999.0, "--lon", help="Domain centre longitude (default: settings.nasa_power_lon)."
+        None, "--lon", help="Domain centre longitude (default: settings.nasa_power_lon)."
     ),
     utm_epsg: int = typer.Option(
-        0, "--utm-epsg", help="UTM EPSG (default: settings.hydro_utm_epsg)."
+        None, "--utm-epsg", help="UTM EPSG (default: settings.hydro_utm_epsg)."
     ),
     out: str = typer.Option("", "--out", help="Output dir (default: <cache>/air/aermap)."),
     offline: bool = typer.Option(
@@ -97,18 +93,14 @@ def aermap_cmd(
     """
     from watermark.air.connectors import aermap
 
-    settings = (
-        Settings(air_offline=True, air_fixtures_dir=repo_fixtures_dir("air"))
-        if offline
-        else get_settings()
-    )
+    settings = _air_settings(offline)
     out_dir = Path(out) if out else settings.air_cache_dir / "aermap"
     outputs = aermap.build_aermap(
         out_dir=out_dir,
         site_label=settings.site,
-        center_lat=None if center_lat == -999.0 else center_lat,
-        center_lon=None if center_lon == -999.0 else center_lon,
-        utm_epsg=None if utm_epsg == 0 else utm_epsg,
+        center_lat=center_lat,
+        center_lon=center_lon,
+        utm_epsg=utm_epsg,
         settings=settings,
     )
 
