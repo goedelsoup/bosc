@@ -140,6 +140,19 @@ def test_latest_point_fallback_and_empty() -> None:
         _latest_point(_seriesid_payload([]), "price")
 
 
+def test_row_value_ambiguous_two_numeric_columns_raises() -> None:
+    """The fallback is only safe when exactly one numeric non-dimension column exists.
+    If EIA adds a second (a revision counter, a secondary measure) while the declared
+    column is absent, guessing which is the value would emit a wrong number with full
+    ``[verified]`` provenance — so an ambiguous row raises rather than picking one (#1104).
+    """
+    ambiguous = _seriesid_payload(
+        [{"period": 2025, "stateid": "OH", "cents_per_kwh": 16.96, "revision": 2}]
+    )
+    with pytest.raises(EiaError):
+        _latest_point(ambiguous, "price")
+
+
 def test_eia_series_offline(econ_settings: Settings) -> None:
     price = fetch_eia_series("ELEC.PRICE.OH-RES.A", settings=econ_settings)
     assert price.fuel == "electricity" and price.metric == "price"
