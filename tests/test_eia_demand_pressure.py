@@ -216,6 +216,33 @@ def test_committed_consumer_energy_loads() -> None:
     assert costs.by_metric("electricity", "price") is not None
 
 
+def test_demand_pressure_rejects_zero_retail_sales(econ_settings: Settings, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    """A zero/missing retail-sales denominator means the dataset is broken (upstream gap,
+    fixture drift), not that the campus is a negligible share (#1103): refuse to synthesize a
+    committed "0% demand share" from absent data — raise, matching the missing-series guard."""
+    from watermark.economics import energy
+    from watermark.economics.model import ConsumerEnergyCosts
+
+    basis = derive_power_basis(settings=econ_settings)
+    monkeypatch.setattr(energy, "derive_power_basis", lambda **_: basis)
+
+    costs = load_consumer_energy(econ_settings)
+    assert costs is not None
+    sales = costs.series(f"ELEC.SALES.{costs.area}-ALL.A")
+    assert sales is not None
+    # Zero the retail-sales series (empty points sidesteps the latest-mirrors-points validator).
+    zeroed = sales.model_copy(
+        update={"points": [], "value": sales.value.model_copy(update={"value": 0.0})}
+    )
+    broken = costs.model_copy(
+        update={"prices": [zeroed if p is sales else p for p in costs.prices]}
+    )
+    assert isinstance(broken, ConsumerEnergyCosts)
+
+    with pytest.raises(ValueError, match="zero/missing retail sales"):
+        energy.derive_demand_pressure(costs=broken, settings=econ_settings)
+
+
 def test_demand_pressure_resolves_the_dataset_state_not_ohio(
     econ_settings: Settings, monkeypatch
 ) -> None:  # type: ignore[no-untyped-def]

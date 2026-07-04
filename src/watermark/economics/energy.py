@@ -89,7 +89,15 @@ def derive_demand_pressure(
     consumption_shown = round(consumption_gwh, 1)
     # EIA "million kWh" is numerically GWh (1 million kWh = 1 GWh).
     sales_gwh = sales.value.value
-    share_pct = consumption_gwh / sales_gwh * 100.0 if sales_gwh else 0.0
+    if not sales_gwh:
+        # A zero/missing denominator means the retail-sales series is broken (upstream gap,
+        # fixture drift), not that the campus is a negligible share. Refuse to synthesize a
+        # "0% demand share" from absent data — matching the missing-series guard above.
+        raise ValueError(
+            f"consumer-energy dataset has zero/missing retail sales for {sales_id} "
+            f"({sales_gwh!r}) — cannot derive a demand share from an absent denominator"
+        )
+    share_pct = consumption_gwh / sales_gwh * 100.0
     households = consumption_shown * 1_000_000.0 / _AVG_HOUSEHOLD_KWH_YR  # GWh -> kWh per household
     kappa_central = (_KAPPA_LOW + _KAPPA_HIGH) / 2.0
 
