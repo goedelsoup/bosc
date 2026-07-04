@@ -228,8 +228,8 @@ def rsei_cmd(
 
     Joins elements -> release -> submission -> facility (+ chemical, media) and rolls
     up each facility's population-weighted RSEI Score (cancer/non-cancer split),
-    Hazard, and pounds released. Bulk tables cache under data/cache/rsei (~340 MB on
-    first run); the committed artifact is a small per-county YAML.
+    Hazard, and pounds released. The v2.3.12 archive caches under data/cache/rsei
+    (~447 MB zip on first run); the committed artifact is a small per-county YAML.
     """
     import json
 

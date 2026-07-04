@@ -139,13 +139,22 @@ class Settings(BaseSettings):
     # digit count (8 = Subbasin, 10 = Watershed, 12 = Subwatershed); the WBD connector
     # appends `/<layer>/query`. Served through the shared hydrology cache/fixture path.
     wbd_url: str = "https://hydro.nationalmap.gov/arcgis/rest/services/wbd/MapServer"
-    # EPA RSEI Public Data Set (AWS Open Data s3://epa-rsei-pds). Bulk relational
-    # tables; `watermark rsei` reduces them to one county's toxic-release inventory.
-    rsei_base_url: str = "https://epa-rsei-pds.s3.amazonaws.com"
-    rsei_version: str = "v234"
+    # EPA RSEI Public Data Set. The current release — v2.3.12 (March 2024, TRI 1988-2022)
+    # — ships as a single ~447 MB zip of per-table CSVs on EPA's public gaftp site, NOT
+    # the frozen `epa-rsei-pds` S3 bucket, which stalled at v234/2016 (#1148). `watermark
+    # rsei` reduces the relational tables to one county's toxic-release inventory.
+    rsei_base_url: str = (
+        "https://gaftp.epa.gov/rsei/Current_Version/V2312_RY2022/Public_Release_Data"
+    )
+    rsei_version: str = "v2312"
+    # Distribution layout, so the new source and the frozen bucket don't share one URL
+    # template (#1148): "archive" = one zip of per-table CSVs (v2312+, streamed in place);
+    # "s3_gz" = the legacy bucket's `{base}/{version}/data_tables/{name}.csv.gz` per table.
+    rsei_distribution: str = "archive"
+    rsei_archive_name: str = "RSEIv2312_Public_Release_Data.zip"  # archive-mode zip filename
     rsei_fips: str = ""  # per-site (from the active SiteProfile); Lima = Allen County 39003
     rsei_offline: bool = False  # serve cached tables only; never download
-    rsei_request_timeout_s: float = 300.0  # elements.csv.gz is ~250 MB
+    rsei_request_timeout_s: float = 600.0  # the v2312 archive is ~447 MB
     # NASA POWER (AWS Open Data s3://nasa-power) — satellite meteorology/solar. The
     # bucket is gridded zarr/netCDF; for a point we use the supported REST API, which
     # returns small JSON (connector cache + fixture). Default point = Lima loop centroid.

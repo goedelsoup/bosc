@@ -15,19 +15,19 @@ meta:
 entities:
   - name: General Dynamics Corporation
     lei: 9C1X8XOOTYY2FNYTVH06
-    note: Ultimate parent of the JSMC operator (defense thread; RSEI #3 facility).
+    note: Ultimate parent of the JSMC operator (defense thread; RSEI #4 facility).
   - name: General Dynamics Land Systems Inc.
     lei: 875500ULXB4CYQSJVA03
-    note: JSMC / Lima Army Tank Plant operator — Allen County RSEI #3 toxic-release Score.
+    note: JSMC / Lima Army Tank Plant operator — Allen County RSEI #4 toxic-release Score.
     rsei_parents: ["GENERAL DYNAMICS"]
   - name: Cenovus Energy Inc.
     lei: 254900LJGL2N2XEMD470
     note: Successor to Husky Energy (the RSEI Lima Refining Co parent), post-2021 merger.
-    rsei_parents: ["HUSKY ENERGY INC"]
+    rsei_parents: ["CENOVUS ENERGY INC.", "HUSKY ENERGY INC"]
   - name: Marathon Petroleum Corporation
     lei: 3BNYRYQHD39K4LCKQF12
     note: Parent of the Marathon Lima terminal (RSEI facility).
-    rsei_parents: ["MARATHON PETROLUEM CORORPATION"]
+    rsei_parents: ["MARATHON PETROLEUM CORP", "MARATHON PETROLUEM CORORPATION"]
   - name: Ford Motor Company
     lei: 20S05OYHG0MQM4VUIC57
     note: Parent of the Ford Lima Engine Plant (RSEI facility).
@@ -35,7 +35,7 @@ entities:
   - name: Dana Incorporated
     lei: KVWHW7YLZPFJM8QYNJ51
     note: Parent of Dana Driveshaft Manufacturing (RSEI facility).
-    rsei_parents: ["DANA HOLDING CORP"]
+    rsei_parents: ["DANA INC", "DANA HOLDING CORP"]
   - name: Textron Inc.
     lei: 3PPKBHUG1HD6BO7RNR87
     note: Parent of Airfoil Textron (RSEI facility).
@@ -54,6 +54,6 @@ entities:
       RSEI #1 Allen County facility. Resolved by exact legal-name match to the
       Delaware-registered INEOS USA LLC (US-DE, ACTIVE) — distinct from the Belgian
       INEOS parent that a fuzzy search surfaces. GLEIF reports no ultimate parent.
-    rsei_parents: ["INEOS USA LLC"]
+    rsei_parents: ["INEOS NITRILES USA LLC", "INEOS USA LLC"]
 # Unresolved leads (no verified, unambiguous legal entity pinned yet).
 leads: []

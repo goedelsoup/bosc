@@ -197,27 +197,28 @@ corridor the post-development stormwater increase drains toward (see
 [hydrology](HYDROLOGY.md)). `[verified: data/reference/hydrology/campus-floodzone.yaml]`
 
 **Toxic-release baseline (EPA RSEI).** The corridor sits in a long-industrial county.
-EPA's Risk-Screening Environmental Indicators set ranks **45** Allen County TRI
-facilities by modeled, population-weighted Score; the top emitters are **INEOS USA**,
-the **WHEMCO-Ohio foundry**, and — notably for the defense thread — the **JSMC /
-General Dynamics Land Systems** plant at **#3** (~3.6 M Score, 99% cancer-weighted,
-chiefly nickel compounds, reported 1988–1993). That is an independent federal dataset
+EPA's Risk-Screening Environmental Indicators set ranks **49** Allen County TRI
+facilities by modeled, population-weighted Score; the top emitters are **INEOS
+Nitriles**, the **WHEMCO-Ohio foundry**, and **Lima Refining** — and, notably for the
+defense thread, the **JSMC / General Dynamics Land Systems** plant at **#4** (~3.05 M
+Score, 98% cancer-weighted, chiefly nickel compounds, reported 1988–1993). That is an independent federal dataset
 naming **GDLS at the JSMC**, corroborating the
 [defense-contractor scan](../data/reference/allen-gis/README.md)'s reading of the
 Army-owned footprint — and the **GLEIF** registry independently records that
 *General Dynamics Land Systems Inc.* (LEI `875500ULXB4CYQSJVA03`) reports its
 **ultimate parent** as *General Dynamics Corporation*, confirming the ownership chain
-`[verified: data/reference/gleif/lei-records.yaml]`. Several RSEI facilities also carry NPDES permits that join to
-the [Maumee NPDES inventory](../data/reference/echo/README.md), and the per-facility
-*water* release bucket ties into the dilution analysis above. `[verified:
+`[verified: data/reference/gleif/lei-records.yaml]`. The per-facility *water* release
+bucket ties into the dilution analysis above and the
+[Maumee NPDES inventory](../data/reference/echo/README.md) via ECHO coordinate matches
+(RSEI v2.3.12 no longer carries a facility NPDES permit). `[verified:
 data/reference/rsei/inventory.yaml]`
 
 **Toxic load meets the lowest dilution (RSEI × 7Q10).** Extending the low-flow
 assimilative screen from the three municipal WWTPs to the *industrial* dischargers
-exposes a sharper coincidence: of the **12** county facilities that release toxics to
-water, the **three** largest — **INEOS, Lima Refining, and PCS Nitrogen** — all cluster
+exposes a sharper coincidence: of the **13** county facilities that release toxics to
+water, the **three** largest — **INEOS Nitriles, Lima Refining, and PCS Nitrogen** — all cluster
 on the **Ottawa River at Lima**, whose cited design low flow is **0.2 cfs (1Q10 = 0)**.
-Their reported water releases screen at roughly **66 / 165 / 274 mg/L** if carried at
+Their reported water releases screen at roughly **51 / 131 / 263 mg/L** if carried at
 that 7Q10 — i.e. the county's heaviest toxic loads enter the one reach with essentially
 no assimilative capacity, and that floor falls in the same **May–Oct** window the
 atmospheric budget runs to deficit. Only Lima Refining's receiving water is
