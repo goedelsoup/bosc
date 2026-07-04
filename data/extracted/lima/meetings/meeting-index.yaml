@@ -8,9 +8,9 @@ meta:
   date_evidence: date_verified is the listing date CONFIRMED in the file's own text;
     null means unconfirmed (date_listing still stands).
   counts:
-    total: 52
-    text_extracted: 41
-    date_verified: 36
+    total: 50
+    text_extracted: 39
+    date_verified: 34
     with_corridor_hits: 15
 documents:
 - filename: 2024-05-06.pdf
@@ -563,18 +563,6 @@ documents:
   title: null
   source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_01112023-809
   sha256: 2144c98e44722222c641b9ed7a48ff25b40a13922f2c8896a4f165c4b5dc447d
-- filename: September 2020 Minutes.pdf
-  kind: agenda
-  body: Design Review Board
-  date_listing: '2020-09-10'
-  date_verified: '2020-09-10'
-  date_evidence: pdf_text
-  text_method: pdf_text
-  char_count: 5624
-  hits: []
-  title: Design Review Board | September 10, 2020
-  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_09102020-708
-  sha256: a3d7a3ac777c34269b80d196b4c10dfef2b1ae31dfe05a57bf82cfbb928b6a86
 - filename: _09102020-708.pdf
   kind: minutes
   body: Design Review Board
@@ -587,18 +575,6 @@ documents:
   title: null
   source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_09102020-708
   sha256: a3d7a3ac777c34269b80d196b4c10dfef2b1ae31dfe05a57bf82cfbb928b6a86
-- filename: July 2020 DRB Minutes.pdf
-  kind: agenda
-  body: Design Review Board
-  date_listing: '2020-07-09'
-  date_verified: '2020-07-09'
-  date_evidence: pdf_text
-  text_method: pdf_text
-  char_count: 2516
-  hits: []
-  title: Design Review Board | July 9, 2020 Meeting Minutes
-  source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_07092020-707
-  sha256: e06c5d6950ec382501e326ef5b7681fd949f0f3e461b7b36858269c964133441
 - filename: _07092020-707.pdf
   kind: minutes
   body: Design Review Board
@@ -637,7 +613,7 @@ documents:
   sha256: 089b8707affbc00d1625a71867c8c4b3f13210e60a2907611591c85f12a5a167
 - filename: _03042020-669.pdf
   kind: minutes
-  body: Urban Forest Commision
+  body: Urban Forest Commission
   date_listing: '2020-03-04'
   date_verified: '2020-03-04'
   date_evidence: pdf_text
@@ -649,7 +625,7 @@ documents:
   sha256: c6a2de56d2672fcf19deef5a81bb88c393ac73a80e5644dfa59f49c548f2c0de
 - filename: 03042020.pdf
   kind: agenda
-  body: Urban Forest Commision
+  body: Urban Forest Commission
   date_listing: '2020-03-04'
   date_verified: null
   date_evidence: listing

@@ -2,7 +2,7 @@ meta:
   subject: lima meeting-document download manifest
   slug: lima
   source_page: https://www.limaohio.gov/AgendaCenter
-  dest_dir: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/lima/meetings
+  dest_dir: data/documents/lima/meetings
   generated_at: '2026-06-08'
   policy: non-destructive — originals keep as-received names; this is an alias/provenance
     layer only.
@@ -668,7 +668,7 @@ documents:
 - filename: _03042020-669.pdf
   canonical: 2020-03-04-minutes.pdf
   source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Minutes/_03042020-669
-  body: Urban Forest Commision
+  body: Urban Forest Commission
   kind: minutes
   date: '2020-03-04'
   title: null
@@ -681,7 +681,7 @@ documents:
 - filename: 03042020.pdf
   canonical: 2020-03-04-agenda.pdf
   source_url: https://www.limaohio.gov/AgendaCenter/ViewFile/Agenda/_03042020-669
-  body: Urban Forest Commision
+  body: Urban Forest Commission
   kind: agenda
   date: '2020-03-04'
   title: PDF

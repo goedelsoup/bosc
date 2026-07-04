@@ -2,7 +2,7 @@ meta:
   subject: perry-township meeting-document download manifest
   slug: perry-township
   source_page: https://perryallenohio.com/administration-trustees/meeting-archives/
-  dest_dir: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/perry-township/meetings
+  dest_dir: data/documents/perry-township/meetings
   generated_at: '2026-06-08'
   policy: non-destructive — originals keep as-received names; this is an alias/provenance
     layer only.

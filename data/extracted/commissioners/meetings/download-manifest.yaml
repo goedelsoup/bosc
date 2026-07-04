@@ -10,7 +10,7 @@ meta:
   - https://commissioners.allencountyohio.com/meeting-agendas-2025-archives/
   - https://commissioners.allencountyohio.com/meeting-agendas-2024-archives/
   - https://commissioners.allencountyohio.com/meeting-agendas-2023-archives/
-  dest_dir: /Users/cparent/Code/goedelsoup/bosc/data/documents/commissioners/meetings
+  dest_dir: data/documents/commissioners/meetings
   generated_at: '2026-06-12'
   policy: non-destructive — originals keep as-received names; this is an alias/provenance
     layer only.

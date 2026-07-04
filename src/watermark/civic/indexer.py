@@ -214,6 +214,52 @@ def _verify_date(text: str, listing: str | None, method: str) -> tuple[str | Non
     return None, "listing" if listing else "none"
 
 
+def _dedup_entries(entries: list[Any]) -> list[dict[str, Any]]:
+    """One index row per on-disk document.
+
+    The same bytes can be served at two provenance URLs — CivicPlus serves a meeting
+    id at both ``/Agenda/`` and ``/Minutes/`` — so the manifest records two entries. They
+    may share a filename (one written file, the duplicate ``skipped_existing``) or differ
+    only in name (Content-Disposition vs URL basename) while sharing a ``sha256``. Collapse
+    both. When a byte-identical pair is split across kinds, keep the ``minutes`` row — an
+    agenda that is byte-identical to the minutes is just the minutes served at the agenda URL.
+    """
+    valid = [
+        e
+        for e in entries
+        if isinstance(e, dict) and e.get("status") != "error" and e.get("filename")
+    ]
+    # Representative per sha256: prefer a "minutes" kind over any other.
+    rep_by_sha: dict[str, dict[str, Any]] = {}
+    for e in valid:
+        sha = e.get("sha256")
+        if not sha:
+            continue
+        cur = rep_by_sha.get(sha)
+        if cur is None or (cur.get("kind") != "minutes" and e.get("kind") == "minutes"):
+            rep_by_sha[sha] = e
+    # Emit at most one row per sha256 and per filename, in first-seen order.
+    out: list[dict[str, Any]] = []
+    seen_sha: set[str] = set()
+    seen_file: set[str] = set()
+    for e in valid:
+        sha = e.get("sha256")
+        if sha:
+            if sha in seen_sha:
+                continue
+            seen_sha.add(sha)
+            chosen = rep_by_sha[sha]
+            seen_file.add(str(chosen["filename"]))
+            out.append(chosen)
+        else:
+            fn = str(e["filename"])
+            if fn in seen_file:
+                continue
+            seen_file.add(fn)
+            out.append(e)
+    return out
+
+
 def index_meetings(
     subdivision: Subdivision,
     *,
@@ -237,21 +283,8 @@ def index_meetings(
     entries = manifest.get("documents", []) if isinstance(manifest, dict) else []
 
     indexed: list[IndexedDoc] = []
-    seen: set[str] = set()
-    for entry in entries:
-        if (
-            not isinstance(entry, dict)
-            or entry.get("status") == "error"
-            or not entry.get("filename")
-        ):
-            continue
-        # One on-disk file per index row: the same bytes can be served at two
-        # provenance URLs (CivicPlus serves an id at both /Agenda/ and /Minutes/),
-        # which the manifest records as two entries pointing at one written file.
+    for entry in _dedup_entries(entries):
         filename = str(entry["filename"])
-        if filename in seen:
-            continue
-        seen.add(filename)
         path = docs_dir / filename
         text, method = extract_text(path, ocr=ocr) if path.exists() else ("", "none")
         listing = entry.get("date")

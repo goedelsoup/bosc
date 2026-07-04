@@ -2,7 +2,7 @@ meta:
   subject: shawnee-township meeting-document download manifest
   slug: shawnee-township
   source_page: https://www.shawneetownshipohio.gov/meeting-minutes/
-  dest_dir: /Users/cparent/Code/shawnee-smart-systems/bosc/data/documents/shawnee-township/meetings
+  dest_dir: data/documents/shawnee-township/meetings
   generated_at: '2026-06-08'
   policy: non-destructive — originals keep as-received names; this is an alias/provenance
     layer only.
