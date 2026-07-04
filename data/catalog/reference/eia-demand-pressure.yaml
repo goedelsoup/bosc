@@ -1,0 +1,38 @@
+id: eia-demand-pressure
+title: Facility Demand → Consumer Price-Pressure Sensitivity (EIA + facility load)
+scope: reference
+status: reviewed
+producer:
+  kind: derived
+  command: eia
+  connector_ref: watermark.economics.energy
+  source: "Derived — facility draw (air permit, #87) sized against EIA state retail sales + residential price (#91)"
+  external_url: https://www.eia.gov/opendata/
+depends_on:
+- eia-consumer-energy
+license: U.S. Government work (public domain)
+access_tier: keyed
+site_scope: slug-scoped
+storage:
+- relpath: reference/eia/demand-pressure.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/eia/{site}/demand-pressure.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: annual
+provenance: derived
+schema_ref: watermark.economics.model.FacilityDemandPressure
+tags:
+- eia
+- electricity
+- energy-prices
+- data-center
+- demand
+notes: The headline consumer-impact numbers for a site with a documented facility (#1105) — the
+  campus's annual electricity demand as a households-equivalent and a share of state retail sales
+  (robust, EIA-cited) plus a STYLIZED price-pressure band from a stated short-run transmission
+  coefficient (a screening sensitivity, not a forecast). Facility-gated — written only for sites
+  whose SiteProfile carries a documented facility; thin sites omit it. Exposed as the
+  economics-demand-pressure bundle feed.

@@ -14,6 +14,7 @@ depends_on:
 - echo-maumee-npdes
 - economics-baseline
 - eia-consumer-energy
+- eia-demand-pressure
 - eia-grid-profile
 - gleif
 - hydrology-low-flow-7q10

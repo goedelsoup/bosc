@@ -43,7 +43,7 @@ from watermark.candidates import (
 from watermark.civic.summarize import load_committed_summaries
 from watermark.config import Settings, get_settings
 from watermark.economics.baseline import load_baseline as load_econ_baseline
-from watermark.economics.energy import load_consumer_energy
+from watermark.economics.energy import load_consumer_energy, load_demand_pressure
 from watermark.gleif import load_inventory as load_lei_inventory
 from watermark.hydrology.model import ScenarioResult
 from watermark.hypotheses import HYPOTHESES, Hypothesis, HypothesisAssessment, load_assessments
@@ -327,6 +327,7 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
     )
     econ = load_econ_baseline(settings)
     econ_energy = load_consumer_energy(settings)
+    econ_demand = load_demand_pressure(settings)
 
     # The feed registry — one row per feed, in bundle order. ``model`` set => a collection feed
     # of that item type; ``None`` => an already-provenanced object feed (its own Pydantic model,
@@ -387,6 +388,16 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
             None,
             lambda: (
                 None if econ_energy is None else economics_mod.export_consumer_energy(econ_energy)
+            ),
+        ),
+        # The facility demand→consumer-price-pressure sensitivity (#1105): households-equivalent,
+        # demand share, and the STYLIZED price-pressure band. Facility-gated — absent (feed skipped)
+        # for a thin site with no documented facility, exactly as the derivation is gated.
+        (
+            "economics-demand-pressure",
+            None,
+            lambda: (
+                None if econ_demand is None else economics_mod.export_demand_pressure(econ_demand)
             ),
         ),
         # Cross-site basin synthesis (#308/#323): the watershed points as one connected basin.

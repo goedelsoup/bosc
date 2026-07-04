@@ -380,6 +380,24 @@ def _exec_consumer_energy(settings: Settings) -> OnboardStep:
     )
 
 
+def _exec_demand_pressure(settings: Settings, prof: SiteProfile) -> OnboardStep:
+    # Facility demand→consumer-price-pressure sensitivity (#1105) — needs a documented facility.
+    if prof.facility is None:
+        return OnboardStep(
+            name="demand-pressure",
+            status="skipped",
+            detail="no documented facility (SiteProfile.facility is None)",
+        )
+    pressure = econ_energy.derive_demand_pressure(settings=settings)
+    path = econ_energy.write_demand_pressure(pressure, settings=settings)
+    return OnboardStep(
+        name="demand-pressure",
+        status="ok",
+        detail="per-site (facility load vs state EIA sales)",
+        output_path=_rel(settings, Path(path)),
+    )
+
+
 def _exec_grid(settings: Settings) -> OnboardStep:
     # EIA-861 utility + grid profile (per utility; sparse without a documented facility load).
     path = grid_utility.write_grid_profile(
@@ -442,6 +460,12 @@ def _step_specs(settings: Settings, prof: SiteProfile, research: bool) -> list[_
             "per-site (state)",
             prof.consumer_energy_relpath,
             lambda: _exec_consumer_energy(settings),
+        ),
+        _StepSpec(
+            "demand-pressure",
+            "per-site (facility-gated; skipped without a documented facility)",
+            prof.demand_pressure_relpath if prof.facility is not None else None,
+            lambda: _exec_demand_pressure(settings, prof),
         ),
         _StepSpec(
             "grid-profile",

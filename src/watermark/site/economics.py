@@ -8,7 +8,11 @@ SSG-cutover cleanup, #603.)
 
 from __future__ import annotations
 
-from watermark.economics.model import ConsumerEnergyCosts, EconomicBaseline
+from watermark.economics.model import (
+    ConsumerEnergyCosts,
+    EconomicBaseline,
+    FacilityDemandPressure,
+)
 
 
 def export_economics(baseline: EconomicBaseline) -> EconomicBaseline:
@@ -29,3 +33,15 @@ def export_consumer_energy(costs: ConsumerEnergyCosts) -> ConsumerEnergyCosts:
     :func:`export_economics`, the feed is the provenanced model itself (#60/#59).
     """
     return costs
+
+
+def export_demand_pressure(pressure: FacilityDemandPressure) -> FacilityDemandPressure:
+    """Export the facility demand→price-pressure sensitivity as a feed (already feed-ready).
+
+    The headline consumer-impact numbers (households-equivalent, demand-share, the STYLIZED
+    price-pressure band) for a site with a documented facility (issue #1105). Every figure is a
+    :class:`~watermark.economics.model.ProvenancedValue` carrying its citation and the caveats
+    ride on the model, so — like :func:`export_economics` — the feed is the model itself (#60/#59).
+    Absent for a thin (facility-less) site; the exporter is only called when the data exists.
+    """
+    return pressure

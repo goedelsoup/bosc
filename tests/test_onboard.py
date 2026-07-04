@@ -29,6 +29,7 @@ def _fw(monkeypatch) -> None:  # type: ignore[no-untyped-def]
             "baseline_relpath": "reference/economics/fw/baseline.yaml",
             "rsei_relpath": "reference/rsei/fw/inventory.yaml",
             "consumer_energy_relpath": "reference/eia/fw/consumer-energy.yaml",
+            "demand_pressure_relpath": "reference/eia/fw/demand-pressure.yaml",
             "grid_relpath": "reference/eia/fw/grid-profile.yaml",
         }
     )
