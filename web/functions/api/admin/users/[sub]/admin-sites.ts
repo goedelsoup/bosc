@@ -66,6 +66,13 @@ export const onRequestPost = async ({ request, env, params }: RequestContext): P
     }
   }
 
+  // A full admin can reach here with targetUser === null (getUser swallows a Cognito error to null,
+  // or the user doesn't exist). Refuse rather than audit a fabricated empty before-state — `before`
+  // must be real. (A site-admin already 403'd on null above.)
+  if (!targetUser) {
+    return json(502, { error: "Cognito error: could not load target user" });
+  }
+
   // Fail closed BEFORE the Cognito mutation: refuse an unauditable role change if the audit store
   // isn't bound, rather than mutate without a record.
   const db = resolveAuthDb(env);
