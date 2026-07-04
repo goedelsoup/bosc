@@ -21,8 +21,10 @@ meta:
   disclaimer: >
     Analysis, not legal advice or a determination. The sequence is what the produced records
     show; it does not establish that any authorization was or was not required, obtained, or
-    timely. The dispositive NPDES Construction General Permit coverage record is NOT in the
-    corpus (see gap below) — the timing question stays open pending that record (#143).
+    timely. The dispositive NPDES Construction General Permit coverage record was acquired
+    2026-06-16 (permits/lma1a-npdes-cgp-coverage.epa.yaml; see npdes_cgp_context + gap below) —
+    Turner's 2GC08468*AG was effective 2025-11-10, ~4 weeks before the earliest documented
+    disturbance (2025-12-08), closing the timing question (#143 record + #154 timing).
   relator: Cory Parent
   npdes_cgp_context: >
     Ohio's NPDES Construction General Permit (the current generation is OHC000006, now committed at

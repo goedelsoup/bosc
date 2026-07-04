@@ -9,8 +9,9 @@ County stormwater permit (SW1225), and the Allen SWCD ESC inspection series.
 > **Analysis, not legal advice or a determination.** This lays the sequence the produced records
 > show. It does **not** assert that any authorization was required, obtained, or untimely. The
 > one record that would settle the central question — the NPDES Construction General Permit
-> coverage — is **not in the corpus** (the SWCD left it "TBD" and pointed to Ohio EPA); the
-> timing question stays open pending that record ([#143](../corpus-completeness-audit.md)).
+> coverage — was **acquired 2026-06-16** (the SWCD had left it "TBD" and pointed to Ohio EPA):
+> Turner's `2GC08468*AG`, effective 2025-11-10, ~4 weeks before the 2025-12-08 disturbance —
+> closing the timing question ([#143](../corpus-completeness-audit.md) record + #154 timing).
 
 ## The chronology
 

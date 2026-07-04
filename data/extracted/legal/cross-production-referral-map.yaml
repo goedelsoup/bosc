@@ -72,7 +72,7 @@ referrals:
     referred_to: [Ohio EPA]
     quote: 'produces the ESC forms but no coverage number ("TBD"); points the relator to Ohio EPA for the NPDES permit records'
     source: 'bosc-prr-production-2026-06-12-aswcd.response-index.yaml — item 1'
-    outcome: UNPRODUCED (coverage number) — pursued under #143 / #154; the timing question lives in bosc-site-permit-sequence.yaml.
+    outcome: RESOLVED 2026-06-16 — the campus coverage number was later acquired from Ohio EPA (Turner's 2GC08468*AG, permits/lma1a-npdes-cgp-coverage.epa.yaml), effective 2025-11-10 (~4 weeks before the 2025-12-08 disturbance); closes #143 (record) + #154 (timing). The "TBD" was a recording gap on the SWCD forms, not an absence of coverage. Full sequence in bosc-site-permit-sequence.yaml.
   - item: ASWCD 6
     subject: BOSC-1A pump-station & forcemain corridor — NPDES CGP / SWPPP / ESC reviews+inspections
     from_body: ASWCD
@@ -176,7 +176,7 @@ fulfilled_referrals:
     note: Shows the deferral can resolve; the still-referred remainder is the ENVIRONMENTAL/stormwater sub-layer + construction bids + named permits (some independently in-corpus).
 
 followups:
-  - 'Ohio EPA: the NPDES construction-stormwater coverage + SWPPP/ESC for the BOSC-1A forcemain corridor and Shawnee II Phase 2 (#143 covers the 4110 N. Cole site coverage number).'
+  - 'Ohio EPA: the NPDES construction-stormwater coverage + SWPPP/ESC for the BOSC-1A forcemain corridor and Shawnee II Phase 2 (the 4110 N. Cole campus coverage number, #143, was acquired 2026-06-16 — 2GC08468*AG; the forcemain-corridor + Shawnee II Phase 2 stormwater records remain outstanding).'
   - 'Allen County Sanitary Engineer: the Hume/Shawnee forcemain design-capacity (MGD) engineering deliverable (ASWCD item 9).'
   - 'Townships (American / Sugar Creek / Shawnee): not yet a requested custodian — the ASWCD item-7 referral target.'
   - 'Third-party web host (AhelioTech / CorpComm): the CMS revision history for the Sanitary Engineering pages (County item 16) — see the web-vendor audit.'

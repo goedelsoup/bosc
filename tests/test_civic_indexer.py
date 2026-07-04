@@ -160,6 +160,46 @@ def test_index_dedupes_one_file_served_at_two_urls(tmp_path: Path) -> None:
     assert report.docs[0].filename == "notice.docx"
 
 
+def test_index_dedupes_byte_identical_across_kinds(tmp_path: Path) -> None:
+    # The county serves one id at both /Agenda/ and /Minutes/ with IDENTICAL bytes, but
+    # the two entries get DIFFERENT filenames (Content-Disposition vs URL basename) and
+    # conflicting kinds. Collapse by sha256, keeping the substantive `minutes` row.
+    settings = Settings(data_dir=tmp_path)
+    docs_dir = settings.documents_dir / "bath-township" / "meetings"
+    _make_docx(docs_dir / "September Minutes.docx", "Design Review Board, January 6, 2026")
+    _make_docx(docs_dir / "_01062026-708.docx", "Design Review Board, January 6, 2026")
+    manifest = {
+        "meta": {"slug": "bath-township"},
+        "documents": [
+            {
+                "filename": "September Minutes.docx",
+                "kind": "agenda",
+                "date": "2026-01-06",
+                "title": "Design Review Board | January 6, 2026",
+                "sha256": "samebytes",
+                "source_url": "https://x.test/Agenda/_01062026-708",
+                "status": "downloaded",
+            },
+            {
+                "filename": "_01062026-708.docx",
+                "kind": "minutes",
+                "date": "2026-01-06",
+                "title": None,
+                "sha256": "samebytes",
+                "source_url": "https://x.test/Minutes/_01062026-708",
+                "status": "downloaded",
+            },
+        ],
+    }
+    man_dir = settings.extracted_dir / "bath-township" / "meetings"
+    man_dir.mkdir(parents=True, exist_ok=True)
+    (man_dir / "download-manifest.yaml").write_text(yaml.safe_dump(manifest), encoding="utf-8")
+    report = index_meetings(_body(), settings=settings)
+    assert len(report.docs) == 1
+    assert report.docs[0].kind == "minutes"
+    assert report.docs[0].filename == "_01062026-708.docx"
+
+
 def test_subdivision_meeting_events_surface_only_corridor_hits(tmp_path: Path) -> None:
     settings = Settings(data_dir=tmp_path)
     idx = {

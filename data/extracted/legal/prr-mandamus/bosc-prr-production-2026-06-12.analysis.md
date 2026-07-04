@@ -30,7 +30,7 @@ The **second rolling production** — and specifically the **Category-B wastewat
 | **Shawnee II Phase 2** | #220-24, #478-20, #228-23, #937-23 | OWDA agreement, CMAR RFQ, $1.5M MOU, Mod #4 ($1.29M) |
 | **Stormwater** | #651-23 | updated SWMP to OEPA (MS4 permit) |
 
-**Still outstanding** (watch later batches): the BOSC construction **bids/award** (the CMAR is at pre-construction/design stage), the named permits **SWPTI-260294 / DSW-6756**, the **1996 CWA consent decree**, and **Cridersville WWTP** records.
+**Still outstanding** (watch later batches): the BOSC construction **bids/award** (the CMAR is at pre-construction/design stage), the named permits **DSWPTI-260294 / DSW-6756**, the **1996 CWA consent decree**, and **Cridersville WWTP** records.
 
 ## One correction to the corpus
 
