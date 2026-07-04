@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-04T15:07:13.818588+00:00'
+reconciled_at: '2026-07-04T15:37:55.353296+00:00'
 entries:
   aedg:
     exists: true
@@ -20,6 +20,16 @@ entries:
     asof: null
     stale: false
     site_scope: lima-legacy
+  air-emission-factors:
+    exists: true
+    sha256: 942c0aebcb1442054eba4b822bd02f47134c33cc71cc6d763f915fb02f2e175a
+    size_bytes: 3463
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: basin-shared
   allen-boe:
     exists: true
     sha256: 6cfa719a0612de2530e0d4e0cc80b3b8233d6d24ca9161ee342bf62fb4faaaf0
