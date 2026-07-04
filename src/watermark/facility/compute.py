@@ -59,6 +59,7 @@ from watermark.facility.model import (
 from watermark.facility.power import derive_power_basis
 from watermark.hydrology import geo
 from watermark.hydrology.cooling import derive_cooling_basis
+from watermark.hydrology.cooling_models import _WUE_L_PER_KWH
 from watermark.hydrology.model import ProvenancedValue
 
 _L_PER_GAL = 3.785411784
@@ -77,7 +78,6 @@ _RACK_CITE = (
     "(assumptions from the 2026-06-10 facility-design call: 32U+ racks, 1 InfiniBand "
     "+ 1 NIC, non-standard depth for GPU/cooling layouts)"
 )
-_WUE_L_PER_KWH = 1.8  # shared with cooling.py — the method-2 dependency we flag
 
 # A defensible cap on the water method's high IT load: the FM-2 10 MGD upper bound,
 # if taken as pure evaporative cooling at WUE 1.8, implies ~876 MW — but FM-2 is not
@@ -300,8 +300,12 @@ def derive_compute_capacity(
     # would be an additional consumptive pathway (see power.py GenerationConfig /
     # issue #90), biasing this back-solve high — but that is unproven (the disclosed
     # gensets are backup), so we do not add it here.
-    it_water_low = _it_load_from_consumptive_mgd(cooling.consumptive_low.value, _WUE_L_PER_KWH)
-    it_water_high = _it_load_from_consumptive_mgd(cooling.consumptive_high.value, _WUE_L_PER_KWH)
+    # Invert with the exact WUE the consumptive basis was built from (which honours a
+    # per-facility SiteFacility.wue_l_per_kwh override), falling back to the archetype
+    # default only when the basis carries no WUE (e.g. non-tower modes).
+    wue_basis = cooling.wue.value if cooling.wue is not None else _WUE_L_PER_KWH
+    it_water_low = _it_load_from_consumptive_mgd(cooling.consumptive_low.value, wue_basis)
+    it_water_high = _it_load_from_consumptive_mgd(cooling.consumptive_high.value, wue_basis)
 
     # --- Method 3: footprint (WEAKEST, physical upper envelope) --------------
     it_fp_low, it_fp_high, land_acres = _footprint_it_load_mw(settings, density)
@@ -431,13 +435,13 @@ def derive_compute_capacity(
             round(it_water_low, 1),
             "MW",
             citation=f"cooling consumptive {cooling.consumptive_low.value:g} MGD / "
-            f"{_WUE_L_PER_KWH:g} L/kWh (recovers the power method; shares its WUE)",
+            f"{wue_basis:g} L/kWh (recovers the power method; shares its WUE)",
         ),
         it_load_water_high=ProvenancedValue.derived(
             round(it_water_high, 1),
             "MW",
             citation=f"FM-2 {cooling.consumptive_high.value:g} MGD upper bound / "
-            f"{_WUE_L_PER_KWH:g} L/kWh — UPPER BOUND only; FM-2 is not purely cooling",
+            f"{wue_basis:g} L/kWh — UPPER BOUND only; FM-2 is not purely cooling",
             confidence="low",
         ),
         it_load_footprint_low=ProvenancedValue.assume(
