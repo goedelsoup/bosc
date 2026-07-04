@@ -69,7 +69,7 @@ class GensetEmissionFactors(BaseModel):
     load_regime: LoadRegime  # the engine load point these per-hour factors represent
     engine_mw: ProvenancedValue  # rated electrical output per engine
     fuel: str  # "ULSD / renewable diesel (HVO)", "diesel", ...
-    factors: dict[str, EmissionFactor]  # keyed by Pollutant label
+    factors: dict[Pollutant, EmissionFactor]  # keyed by Pollutant label (typo-checked)
     citation: str  # the grounding source (reference file / permit extraction)
     note: str = ""
 
@@ -77,7 +77,7 @@ class GensetEmissionFactors(BaseModel):
         """The factor for a pollutant, or ``None`` if this basis does not ground it."""
         return self.factors.get(pollutant)
 
-    def pollutants(self) -> list[str]:
+    def pollutants(self) -> list[Pollutant]:
         return list(self.factors.keys())
 
 
