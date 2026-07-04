@@ -19,6 +19,24 @@ SourceKind = Literal["document", "connector", "reference", "assumption", "derive
 Confidence = Literal["high", "medium", "low"]
 
 
+def as_confidence(value: object) -> Confidence:
+    """Narrow an arbitrary (e.g. YAML-loaded) value to a :data:`Confidence` literal.
+
+    Accepts ``high`` / ``medium`` / ``low`` case-insensitively. A present-but-unrecognized
+    value is a real provenance error in the source table, so it raises rather than being
+    silently masked by a ``# type: ignore`` on the ``str(...)`` — pass a known default
+    (``entry.get("confidence", "high")``) for the absent case.
+    """
+    text = str(value).strip().lower()
+    if text == "high":
+        return "high"
+    if text == "medium":
+        return "medium"
+    if text == "low":
+        return "low"
+    raise ValueError(f"invalid confidence {value!r}; expected one of high|medium|low")
+
+
 def source_is_verified(source_kind: SourceKind) -> bool:
     """True for a value grounded in a record or a live gauge (the ``[verified]`` tag).
 

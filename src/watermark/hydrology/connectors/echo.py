@@ -40,6 +40,7 @@ import yaml
 from pydantic import BaseModel, ConfigDict
 
 from watermark.config import Settings, get_settings
+from watermark.connectors import to_float, to_int, to_str
 from watermark.hydrology.connectors._cache import cached_get
 from watermark.logging import get_logger
 
@@ -232,24 +233,24 @@ class Facility(BaseModel):
     @classmethod
     def from_row(cls, row: dict[str, Any], *, queried_huc8: str) -> Facility:
         return cls(
-            name=_s(row.get("CWPName")),
-            frs_registry_id=_s(row.get("RegistryID")),
-            npdes_id=_s(row.get("SourceID")),
-            npdes_ids_all=_s(row.get("NPDESIDs")),
-            facility_type=_s(row.get("CWPFacilityTypeIndicator")),
-            facility_type_code=_s(row.get("CWPFacilityTypeCode")),
-            permit_type=_s(row.get("CWPPermitTypeDesc")),
-            design_flow_mgd=_f(row.get("CWPTotalDesignFlowNmbr")),
-            receiving_water=_s(row.get("CWPStateWaterBodyName")),
-            huc8=_s(row.get("FacDerivedHuc")),
-            huc12=_s(row.get("RadWBDHuc12")),
-            latitude=_f(row.get("FacLat")),
-            longitude=_f(row.get("FacLong")),
-            county=_s(row.get("FacCountyName")),
-            federal_agency=_s(row.get("FacFederalAgencyName")),
-            compliance_status=_s(row.get("CWPSNCStatus")),
-            informal_enf_count=_i(row.get("CWPInformalEnfActCount")),
-            formal_enf_count=_i(row.get("CWPFormalEaCnt")),
+            name=to_str(row.get("CWPName")),
+            frs_registry_id=to_str(row.get("RegistryID")),
+            npdes_id=to_str(row.get("SourceID")),
+            npdes_ids_all=to_str(row.get("NPDESIDs")),
+            facility_type=to_str(row.get("CWPFacilityTypeIndicator")),
+            facility_type_code=to_str(row.get("CWPFacilityTypeCode")),
+            permit_type=to_str(row.get("CWPPermitTypeDesc")),
+            design_flow_mgd=to_float(row.get("CWPTotalDesignFlowNmbr")),
+            receiving_water=to_str(row.get("CWPStateWaterBodyName")),
+            huc8=to_str(row.get("FacDerivedHuc")),
+            huc12=to_str(row.get("RadWBDHuc12")),
+            latitude=to_float(row.get("FacLat")),
+            longitude=to_float(row.get("FacLong")),
+            county=to_str(row.get("FacCountyName")),
+            federal_agency=to_str(row.get("FacFederalAgencyName")),
+            compliance_status=to_str(row.get("CWPSNCStatus")),
+            informal_enf_count=to_int(row.get("CWPInformalEnfActCount")),
+            formal_enf_count=to_int(row.get("CWPFormalEaCnt")),
             queried_huc8=queried_huc8,
         )
 
@@ -274,27 +275,6 @@ class HucResult(BaseModel):
     reported_count: int | None  # ECHO's QueryRows
     stats: dict[str, str]
     facilities: list[Facility]
-
-
-def _s(value: Any) -> str | None:
-    if value is None:
-        return None
-    text = str(value).strip()
-    return text or None
-
-
-def _f(value: Any) -> float | None:
-    try:
-        return float(value)
-    except (TypeError, ValueError):
-        return None
-
-
-def _i(value: Any) -> int | None:
-    try:
-        return int(float(value))
-    except (TypeError, ValueError):
-        return None
 
 
 def _get(settings: Settings, service: str, params: dict[str, Any]) -> dict[str, Any]:
@@ -343,8 +323,8 @@ def fetch_huc_facilities(
     qcolumns = ",".join(str(cid) for cid in _COLUMNS.values())
 
     summary = _get(settings, "get_facilities", {"p_huc": huc8, "p_act": "Y"})
-    qid = _s(summary.get("QueryID"))
-    reported = _i(summary.get("QueryRows"))
+    qid = to_str(summary.get("QueryID"))
+    reported = to_int(summary.get("QueryRows"))
     stats = {k: str(summary[k]) for k in _STAT_KEYS if summary.get(k) is not None}
     log.info("echo.huc", huc8=huc8, name=name, qid=qid, reported=reported)
 

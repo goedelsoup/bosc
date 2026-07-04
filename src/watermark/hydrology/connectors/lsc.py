@@ -33,6 +33,7 @@ import yaml
 from pydantic import BaseModel, ConfigDict
 
 from watermark.config import Settings, get_settings
+from watermark.connectors import to_str
 from watermark.hydrology.connectors._cache import cached_get
 from watermark.logging import get_logger
 
@@ -101,32 +102,32 @@ class Bill(BaseModel):
 
     @classmethod
     def from_row(cls, row: dict[str, str | None]) -> Bill:
-        bill_type = _s(row.get("bill_type"))
-        number = _s(row.get("number"))
-        sponsors = [s for s in (_s(row.get("sponsor_1")), _s(row.get("sponsor_2"))) if s]
+        bill_type = to_str(row.get("bill_type"))
+        number = to_str(row.get("number"))
+        sponsors = [s for s in (to_str(row.get("sponsor_1")), to_str(row.get("sponsor_2"))) if s]
         return cls(
             identifier=_identifier(bill_type, number),
             bill_type=bill_type,
             number=number,
             sponsors=sponsors,
-            short_title=_s(row.get("short_title")),
+            short_title=to_str(row.get("short_title")),
             house=ChamberProgress(
-                introduced=_s(row.get("house_introduced")),
-                cmte_assigned=_s(row.get("house_cmte_assigned")),
-                cmte_reported=_s(row.get("house_cmte_reported")),
-                passed_3rd=_s(row.get("house_passed_3rd")),
+                introduced=to_str(row.get("house_introduced")),
+                cmte_assigned=to_str(row.get("house_cmte_assigned")),
+                cmte_reported=to_str(row.get("house_cmte_reported")),
+                passed_3rd=to_str(row.get("house_passed_3rd")),
             ),
             senate=ChamberProgress(
-                introduced=_s(row.get("senate_introduced")),
-                cmte_assigned=_s(row.get("senate_cmte_assigned")),
-                cmte_reported=_s(row.get("senate_cmte_reported")),
-                passed_3rd=_s(row.get("senate_passed_3rd")),
+                introduced=to_str(row.get("senate_introduced")),
+                cmte_assigned=to_str(row.get("senate_cmte_assigned")),
+                cmte_reported=to_str(row.get("senate_cmte_reported")),
+                passed_3rd=to_str(row.get("senate_passed_3rd")),
             ),
-            to_conf_cmte=_s(row.get("to_conf_cmte")),
-            concurrence=_s(row.get("concurrence")),
-            gov_action=_s(row.get("gov_action")),
-            effective_date=_s(row.get("effective_date")),
-            note=_s(row.get("note")),
+            to_conf_cmte=to_str(row.get("to_conf_cmte")),
+            concurrence=to_str(row.get("concurrence")),
+            gov_action=to_str(row.get("gov_action")),
+            effective_date=to_str(row.get("effective_date")),
+            note=to_str(row.get("note")),
         )
 
 
@@ -139,13 +140,6 @@ class StatusReport(BaseModel):
     as_of: str | None  # the workbook's "Reflects legislative action through ..." note
     source_url: str
     bills: list[Bill]
-
-
-def _s(value: Any) -> str | None:
-    if value is None:
-        return None
-    text = str(value).strip()
-    return text or None
 
 
 def _identifier(bill_type: str | None, number: str | None) -> str:

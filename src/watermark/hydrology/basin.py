@@ -48,189 +48,35 @@ _BASIN_POTW_INVENTORY: dict[str, tuple[str, str]] = {
 }
 _MIN_YEARS = 20  # climatic years of record needed for a defensible LP3 7Q10
 
-# Curated major network mainstems with a long-record USGS gage, grouped by basin.
-# ``aliases`` are the exact ECHO ``receiving_water`` surface forms (comma-split) that
-# mean a *direct* discharge to this mainstem — not a tributary "via"/"to" it. Each gage
-# is verified to return a multi-decade daily-discharge record from NWIS, and is the
-# lower/mouth-ward mainstem gage (the Maumee-at-Waterville convention): one
-# medium-confidence screening proxy per mainstem, applied basin-wide by receiving-water
-# name. (Little Auglaize is omitted: its only gage, 04191058, has <10 yr of record.)
-# The derived table is a single shared file keyed by receiving-water name across basins;
-# names don't collide between the Maumee and Great Miami, so one merged lookup is safe.
-_MAINSTEM_GAGES: dict[str, dict[str, Any]] = {
-    # Maumee basin (subregion 0410, Western Lake Erie).
-    "Maumee River": {"gage": "04193500", "aliases": ["maumee river"]},
-    "Auglaize River": {"gage": "04186500", "aliases": ["auglaize river", "auglaze river"]},
-    # Blanchard River (Auglaize subtree, HUC-8 04100008) — the network's only along-one-river
-    # pair, Findlay (upstream) + Ottawa (downstream), both discharge here (#414/#417). The only
-    # long-record daily-discharge gage on the Blanchard is near Findlay (04189000, DA ~346 mi²,
-    # 44 climatic yr). The at-Ottawa gage (04189260) has ~14 yr — below _MIN_YEARS, so it is
-    # omitted here (documented as a cross-check in the Findlay↔Ottawa comparison artifact); the
-    # at-Glandorf gage (04189500) has no daily-discharge record in the modern window. So this one
-    # gage is the shared Blanchard denominator for both plants — the 14-yr Ottawa gage confirms
-    # the low flow barely grows over the 40-mi reach (8.98 vs 8.67 cfs), so it is basin-representative.
-    "Blanchard River": {"gage": "04189000", "aliases": ["blanchard river", "blanchard r"]},
-    # Defiance reach (#391). The basin-wide "MAUMEE RIVER" ECHO screen proxy is the mouth-ward
-    # Waterville gage (04193500, DA 6330 mi²) — but it sits ~50 river-miles DOWNSTREAM of the
-    # Defiance WWTP outfall (OH0024899), so it is the wrong denominator for the actual discharge
-    # reach. The honest at-reach mainstem denominator is the Maumee-near-Defiance gage (04192500,
-    # DA 5545 mi²): it sits just EAST/downstream of the city and — per NWIS drainage areas —
-    # ALREADY INCLUDES the Auglaize (its 5545 mi² > Waterville's 6330 minus the Tiffin), so it is
-    # the mainstem BELOW the Auglaize confluence, not above it. No confluence SUM is synthesized
-    # here (that would double-count the Auglaize, unlike the ungaged Fort Wayne junction). Counter-
-    # intuitively the near-Defiance 7Q10 comes out HIGHER than Waterville's, so the reach-specific
-    # dilution is slightly LOOSER, not tighter — the honest number regardless (see ONBOARDING.md).
-    # The Auglaize-near-Defiance gage (04191500, DA 2318 mi²) is the tributary-arm denominator for a
-    # discharger on the Auglaize just above the junction. Non-colliding aliases only: a bare "maumee
-    # river"/"auglaize river" would capture ECHO's basin-wide receiving water (already aliased to the
-    # Waterville / Fort Jennings proxies above).
-    "Maumee River near Defiance": {
-        "gage": "04192500",
-        "aliases": ["maumee river near defiance", "maumee r near defiance"],
-    },
-    "Auglaize River near Defiance": {
-        "gage": "04191500",
-        "aliases": ["auglaize river near defiance", "auglaize r near defiance"],
-    },
-    "St. Marys River": {
-        "gage": "04182000",
-        "aliases": ["st marys river", "st. marys river", "saint marys river"],
-    },
-    "St. Joseph River": {
-        "gage": "04178000",
-        "aliases": ["st joseph river", "st. joseph river", "saint joseph river", "st joseph r"],
-    },
-    # Great Miami basin (subregion 0508, → Ohio River). Mad River uses the lower-reach
-    # gage near Springfield (03269500, DA 490 mi²); the upper reach near Urbana
-    # (03267000, DA ~160 mi², a smaller 7Q10) is the site abstraction gage, not the
-    # basin-screen proxy. Great Miami River uses the mouth-ward gage at Hamilton.
-    "Mad River": {"gage": "03269500", "aliases": ["mad river"]},
-    "Great Miami River": {
-        "gage": "03274000",
-        "aliases": ["great miami river", "great miami r", "miami river"],
-    },
-    # Scioto basin (subregion 0506, → Ohio River). Scioto River uses the mouth-ward gage
-    # at Higby (03234500, DA 5131 mi²). Big Walnut Creek (03229500) is the New Albany
-    # Scioto-side receiving water; the Olentangy uses the near-Worthington gage (03227000
-    # at Columbus has no discharge record in-window).
-    "Scioto River": {"gage": "03234500", "aliases": ["scioto river", "scioto r"]},
-    "Olentangy River": {"gage": "03226800", "aliases": ["olentangy river", "olentangy r"]},
-    "Big Walnut Creek": {
-        "gage": "03229500",
-        "aliases": ["big walnut creek", "big walnut cr", "big walnut"],
-    },
-    "Big Darby Creek": {
-        "gage": "03230500",
-        "aliases": ["big darby creek", "big darby cr", "big darby"],
-    },
-    # Little Miami basin (subregion 0507, → Ohio River). The mainstem proxy is the
-    # long-record Milford gage (03245500, DA 1664 mi²). Todd Fork (Wilmington's
-    # receiving water) has no active USGS gage — the historical Todd Fork near
-    # Roachester OH gage (03244000) was discontinued; Todd Fork dischargers stay
-    # unscreened (no_7q10)
-    # rather than being proxied to a larger downstream river (that would overstate
-    # dilution). Milford (downstream integrator, incl. Todd Fork) and the upstream
-    # Xenia reach at Oldtown (03240000) BRACKET the ungaged Todd Fork above and below;
-    # a drainage-area-ratio interpolation off these two brackets is the documented
-    # at-site 7Q10 basis for the Wilmington Air Park / WWTP screen (#516; derivation +
-    # cited drainage areas in data/extracted/wilmington/low-flow-screen.md), NOT an
-    # auto-applied ECHO proxy. Oldtown uses a non-colliding alias so it does not
-    # capture ECHO's bare "little miami river" (aliased to Milford above). Caesar
-    # Creek (03242350, below Caesar Creek Lake) reflects a regulated low-flow regime.
-    # NWIS currently returns no daily discharge values for this gage (possibly a
-    # stage-only installation); it is skipped gracefully by the per-gage error guard
-    # and Caesar Creek dischargers remain no_7q10.
-    "Little Miami River": {
-        "gage": "03245500",
-        "aliases": ["little miami river", "little miami"],
-    },
-    "Little Miami River near Oldtown": {
-        "gage": "03240000",
-        "aliases": ["little miami river near oldtown", "little miami r near oldtown"],
-    },
-    "Caesar Creek": {
-        "gage": "03242350",
-        "aliases": ["caesar creek"],
-    },
-    # Ohio Brush Creek basin (subregion 0509, HUC-8 05090201 "Ohio Brush-Whiteoak", direct to the
-    # Ohio River — the network's first non-Lake-Erie / non-glaciated Appalachian branch, West Union
-    # #1117). The only substantive active gage on the creek is Ohio Brush Creek near West Union
-    # (03237500, DA 387 mi², daily discharge since 1926); the West Fork gages (03237400 Lawshe,
-    # 03237295 Peebles) are trivial/short-record and are omitted rather than proxied.
-    # Non-colliding aliases only: a bare "brush creek" would capture ECHO's unrelated Maumee-basin
-    # "BRUSH CREEK" receiving water (a different stream) and misroute it to this southern-Ohio gage.
-    "Ohio Brush Creek": {
-        "gage": "03237500",
-        "aliases": ["ohio brush creek", "ohio brush ck"],
-    },
-    # Greenville (Darke Co.) receiving waters. Greenville Creek is the primary at-site
-    # gage (Bradford gage 03264000, DA 193 mi²); Stillwater River at Pleasant Hill
-    # (03265000, DA 503 mi²) is the downstream context after Greenville Creek enters the
-    # Stillwater mainstem. These are the only actively gaged reaches on the site's
-    # Stillwater/Greenville Creek corridor.
-    "Greenville Creek": {
-        "gage": "03264000",
-        "aliases": ["greenville creek", "greenville ck"],
-    },
-    "Stillwater River": {
-        "gage": "03265000",
-        "aliases": ["stillwater river", "stillwater r"],
-    },
-    # Great Miami basin — Sidney reach. The mouth-ward Hamilton gage (03274000) above is the
-    # basin-wide "GREAT MIAMI RIVER" ECHO screen proxy. These two entries serve the Sidney
-    # site-level 7Q10 (the at-site upper reach) and the Loramie Creek tributary screen.
-    # Great Miami at Sidney (03261500, DA 601 mi²) uses a non-colliding alias so it doesn't
-    # capture ECHO's bare "GREAT MIAMI RIVER" (already aliased to Hamilton above).
-    "Great Miami River at Sidney": {
-        "gage": "03261500",
-        "aliases": ["great miami river at sidney", "great miami r at sidney"],
-    },
-    "Loramie Creek": {
-        "gage": "03262000",
-        "aliases": ["loramie creek"],
-    },
-    # Great Miami basin — WPAFB / Dayton reaches (#464). The mouth-ward Hamilton gage (03274000)
-    # is the basin-wide "GREAT MIAMI RIVER" ECHO proxy; these two serve the WPAFB site-level 7Q10
-    # at the at-base reaches (the Mad River near Dayton is WPAFB's abstraction/supply gage; the
-    # Great Miami at Dayton is the well-field mainstem). Both use non-colliding aliases so they
-    # don't capture ECHO's bare "MAD RIVER" / "GREAT MIAMI RIVER" (aliased to Springfield/Hamilton
-    # above). NB: values populate on the next connectivity-permitting `derive-low-flows` run —
-    # this step hit a transient USGS 503 at WPAFB onboarding (2026-06-22); the derived table is
-    # otherwise committed and unchanged.
-    "Mad River at Dayton": {
-        "gage": "03270000",  # Mad River near Dayton OH (WPAFB at-base reach; DA ~635 mi²)
-        "aliases": ["mad river at dayton", "mad river near dayton", "mad river (dayton reach)"],
-    },
-    "Great Miami River at Dayton": {
-        "gage": "03270500",  # Great Miami River at Dayton OH (well-field mainstem reach)
-        "aliases": ["great miami river at dayton", "great miami r at dayton"],
-    },
-}
+# Curated major-network mainstem gages + synthesized headwaters confluences live as
+# auditable reference DATA, not code: the committed ``mainstem-gages.yaml`` (gage IDs,
+# aliases, and the drainage-area rationale). Loaded here and fed to the LP3 derivation.
+_MAINSTEM_GAGES_FILE = "mainstem-gages.yaml"
 
-# Synthesized headwaters-confluence 7Q10s: a mainstem formed by the junction of two gaged
-# tributaries, where no single LONG-record gage sits at the confluence itself (the Maumee
-# mainstem gage at Fort Wayne, 04182900, has only ~13 yr — below ``_MIN_YEARS``). The
-# confluence 7Q10 is the SUM of the component tributaries' 7Q10s — a CONSERVATIVE proxy:
-# the two streams' annual 7-day minima need not coincide, so the true confluence 7Q10 is
-# ``>=`` the sum (#358). Aliases are point-specific and deliberately EXCLUDE the bare
-# "maumee river" (that is the lower-basin Waterville proxy, 114 cfs). They are screen-inert
-# by design: the Fort Wayne WWTP (IN0032191) discharges to an ungaged ditch ("Baldwin Ditch,
-# Maumee R …"), so it is screened only on that primary receiver (left unscreened, omit-don't-
-# guess) — this entry is the documented at-mainstem denominator for the manual receiving-water
-# characterization, not an auto-applied screen value.
-_HEADWATERS_CONFLUENCES: dict[str, dict[str, Any]] = {
-    "Maumee River (Fort Wayne headwaters)": {
-        "components": [
-            ("04180500", "St. Joseph River near Fort Wayne, IN"),
-            ("04182000", "St. Marys River near Fort Wayne, IN"),
-        ],
-        "aliases": [
-            "maumee river at fort wayne",
-            "maumee river (fort wayne headwaters)",
-            "maumee river headwaters",
-        ],
-    },
-}
+
+def _mainstem_gages_path(settings: Settings) -> Path:
+    return settings.reference_dir / "hydrology" / _MAINSTEM_GAGES_FILE
+
+
+def _load_gage_table(settings: Settings) -> dict[str, Any]:
+    """Read the committed curated gage table (raises if the reference input is absent)."""
+    path = _mainstem_gages_path(settings)
+    if not path.is_file():
+        raise FileNotFoundError(
+            f"curated mainstem-gage table missing: {path} "
+            "(committed reference input for the basin low-flow screen)"
+        )
+    return yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+
+
+def load_mainstem_gages(*, settings: Settings) -> dict[str, dict[str, Any]]:
+    """``{river name -> {gage, aliases, ...}}`` from the committed reference table."""
+    return dict(_load_gage_table(settings).get("mainstems") or {})
+
+
+def load_headwaters_confluences(*, settings: Settings) -> dict[str, dict[str, Any]]:
+    """``{confluence name -> {components, aliases, ...}}`` from the committed reference table."""
+    return dict(_load_gage_table(settings).get("headwaters_confluences") or {})
 
 
 def _norm(name: str) -> str:
@@ -252,7 +98,7 @@ def derive_basin_low_flows(
     """
     settings = settings or get_settings()
     streams: dict[str, dict[str, Any]] = {}
-    for river, spec in _MAINSTEM_GAGES.items():
+    for river, spec in load_mainstem_gages(settings=settings).items():
         try:
             lff = compute_low_flow_frequency(
                 site_no=spec["gage"], receiving_water=river, settings=settings
@@ -307,9 +153,10 @@ def _derive_confluences(*, settings: Settings, min_years: int) -> dict[str, dict
     records its components and is tagged ``confidence: low`` accordingly.
     """
     out: dict[str, dict[str, Any]] = {}
-    for name, spec in _HEADWATERS_CONFLUENCES.items():
+    for name, spec in load_headwaters_confluences(settings=settings).items():
         parts: list[dict[str, Any]] = []
-        for gage, label in spec["components"]:
+        for component in spec["components"]:
+            gage, label = component["gage"], component["label"]
             try:
                 lff = compute_low_flow_frequency(
                     site_no=gage, receiving_water=name, settings=settings

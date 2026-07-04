@@ -100,14 +100,18 @@ class DrainageAudit(BaseModel):
 
 # --- Helpers ---------------------------------------------------------------
 def _num(x: Any) -> int | None:
-    """Coerce a transcribed figure (possibly the ``~12345`` approximate marker) to int."""
+    """Coerce a transcribed figure (possibly the ``~12345`` approximate marker) to int.
+
+    Rounds rather than truncates: these are dollar figures rolled up into subtotals, so
+    ``int(float(...))`` would bias every subtotal downward by up to a dollar per item.
+    """
     if x is None:
         return None
     if isinstance(x, int | float):
-        return int(x)
+        return round(x)
     s = str(x).strip().lstrip("~").replace(",", "")
     try:
-        return int(float(s))
+        return round(float(s))
     except ValueError:
         return None
 

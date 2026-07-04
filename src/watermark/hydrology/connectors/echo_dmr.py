@@ -37,6 +37,7 @@ import httpx
 from pydantic import BaseModel, ConfigDict
 
 from watermark.config import Settings, get_settings
+from watermark.connectors import to_float, to_str
 from watermark.hydrology.connectors._cache import cached_get
 from watermark.hydrology.units import mgd_to_cfs
 from watermark.logging import get_logger
@@ -61,20 +62,6 @@ _MONTHS = {
 
 class EchoDmrError(RuntimeError):
     """ECHO returned an Error object or an unparseable effluent chart."""
-
-
-def _s(value: Any) -> str | None:
-    if value is None:
-        return None
-    text = str(value).strip()
-    return text or None
-
-
-def _f(value: Any) -> float | None:
-    try:
-        return float(value)
-    except (TypeError, ValueError):
-        return None
 
 
 def _iso_period(token: str | None) -> str | None:
@@ -212,15 +199,17 @@ def _parse_rows(dmrs: list[dict[str, Any]]) -> list[DmrRow]:
     for dm in dmrs:
         rows.append(
             DmrRow(
-                period_end=_iso_period(_s(dm.get("MonitoringPeriodEndDate"))),
-                value=_f(dm.get("DMRValueNmbr")),
-                unit=_s(dm.get("DMRUnitDesc")),
-                qualifier=_s(dm.get("DMRValueQualifierCode")),
-                stat_base=_s(dm.get("StatisticalBaseShortDesc") or dm.get("StatisticalBaseDesc")),
-                limit=_f(dm.get("LimitValueNmbr")),
-                limit_type=_s(dm.get("LimitValueTypeDesc")),
-                exceedance_pct=_f(dm.get("ExceedencePct")),
-                nodi=_s(dm.get("NODICode")),
+                period_end=_iso_period(to_str(dm.get("MonitoringPeriodEndDate"))),
+                value=to_float(dm.get("DMRValueNmbr")),
+                unit=to_str(dm.get("DMRUnitDesc")),
+                qualifier=to_str(dm.get("DMRValueQualifierCode")),
+                stat_base=to_str(
+                    dm.get("StatisticalBaseShortDesc") or dm.get("StatisticalBaseDesc")
+                ),
+                limit=to_float(dm.get("LimitValueNmbr")),
+                limit_type=to_str(dm.get("LimitValueTypeDesc")),
+                exceedance_pct=to_float(dm.get("ExceedencePct")),
+                nodi=to_str(dm.get("NODICode")),
             )
         )
     return rows
@@ -257,27 +246,27 @@ def fetch_effluent_chart(
 
     parameters: list[DmrParameter] = []
     for feat in res.get("PermFeatures") or []:
-        outfall = _s(feat.get("PermFeatureNmbr")) or "?"
-        outfall_type = _s(feat.get("PermFeatureTypeDesc"))
+        outfall = to_str(feat.get("PermFeatureNmbr")) or "?"
+        outfall_type = to_str(feat.get("PermFeatureTypeDesc"))
         for param in feat.get("Parameters") or []:
             parameters.append(
                 DmrParameter(
                     outfall=outfall,
                     outfall_type=outfall_type,
-                    parameter_code=_s(param.get("ParameterCode")) or "?",
-                    parameter_desc=_s(param.get("ParameterDesc")),
-                    monitoring_location=_s(param.get("MonitoringLocationDesc")),
+                    parameter_code=to_str(param.get("ParameterCode")) or "?",
+                    parameter_desc=to_str(param.get("ParameterDesc")),
+                    monitoring_location=to_str(param.get("MonitoringLocationDesc")),
                     rows=_parse_rows(param.get("DischargeMonitoringReports") or []),
                 )
             )
 
     chart = EffluentChart(
-        npdes_id=_s(res.get("SourceId")) or npdes_id,
-        name=_s(res.get("CWPName")),
-        permit_type=_s(res.get("CWPPermitTypeDesc")),
-        permit_status=_s(res.get("CWPPermitStatusDesc")),
-        major_minor=_s(res.get("CWPMajorMinorStatusFlag")),
-        snc_status=_s(res.get("CWPCurrentSNCStatus")),
+        npdes_id=to_str(res.get("SourceId")) or npdes_id,
+        name=to_str(res.get("CWPName")),
+        permit_type=to_str(res.get("CWPPermitTypeDesc")),
+        permit_status=to_str(res.get("CWPPermitStatusDesc")),
+        major_minor=to_str(res.get("CWPMajorMinorStatusFlag")),
+        snc_status=to_str(res.get("CWPCurrentSNCStatus")),
         start_date=start_date,
         end_date=end_date,
         parameters=parameters,
