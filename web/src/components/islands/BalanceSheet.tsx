@@ -9,7 +9,7 @@
 import { type BalanceUnit, buildBalanceSheet } from "~/lib/balanceSheet";
 import { fmtMw } from "~/lib/format";
 import { fmtUsdM } from "~/lib/money";
-import { siteHref, withBase } from "~/lib/base";
+import { siteHref } from "~/lib/base";
 import { DistributionStrip, RegisterMark } from "./uncertaintyGrammar";
 
 function formatter(unit: BalanceUnit): (n: number) => string {
@@ -28,7 +28,7 @@ export default function BalanceSheet({
   /** Active site slug — the page passes it so in-island links resolve to this site (#740). */
   site?: string;
 }): JSX.Element {
-  const sheet = buildBalanceSheet(toxicsEffluentCfs, toxicsNaturalCfs);
+  const sheet = buildBalanceSheet(toxicsEffluentCfs, toxicsNaturalCfs, site);
   const e = sheet.econExposure;
 
   return (
@@ -53,7 +53,7 @@ export default function BalanceSheet({
             <div className="unc-bs-row" key={o.key}>
               <div className="unc-bs-rowhead">
                 <RegisterMark register={o.register} />
-                <a className="unc-bs-name" href={withBase(row.href)}>
+                <a className="unc-bs-name" href={row.href}>
                   {row.narrative}
                 </a>
                 <span className="unc-bs-central">{fmt(o.central)}</span>

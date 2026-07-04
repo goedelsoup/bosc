@@ -6,11 +6,13 @@
  * public balance sheet (`balanceSheet.ts`, linking each band back to its narrative).
  *
  * The slug is also the docs-essay slug (`docs/<slug>.md`); a report with no companion
- * falls back to that essay. URLs are built with `siteUrl` (site-base only, no deploy
- * base) so both call sites stay byte-identical — the index wraps the result in
- * `withBase`, the client-safe balance sheet consumes it raw.
+ * falls back to that essay. URLs are built with `siteHref(siteSlug, …)` — the client-safe,
+ * slug-parameterized peer of `withSite` (`./base`) — so a companion link resolves to the
+ * *active* site, not a Lima-pinned root (#1145). Both call sites (the build-time reports
+ * index and the client balance-sheet island) thread the active site slug; the result already
+ * carries the deploy base, so neither wraps it in `withBase`.
  */
-import { siteUrl } from "./routes";
+import { siteHref } from "./base";
 
 export interface ReportEntry {
   /** `/reports/<slug>` and `docs/<slug>.md`. */
@@ -30,9 +32,9 @@ export const INTERACTIVE_REPORTS: ReportEntry[] = [
 
 const BY_SLUG = new Map(INTERACTIVE_REPORTS.map((r) => [r.slug, r]));
 
-/** The companion page URL for a report slug (site-base only; caller applies the deploy base). */
-export function reportUrl(slug: string): string {
-  return siteUrl(`/reports/${slug}`);
+/** The companion page URL for a report slug on a given site (deploy base included). */
+export function reportUrl(slug: string, siteSlug: string): string {
+  return siteHref(siteSlug, `/reports/${slug}`);
 }
 
 /** True when the report has an interactive companion (vs only the docs essay). */

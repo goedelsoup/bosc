@@ -20,7 +20,7 @@ import { withSite } from "~/lib/site";
 
 const dc = buildDilution().discharge;
 const effluentCfs = dc.wwtpCfs + dc.campusFm2Cfs;
-const sheet = buildBalanceSheet(effluentCfs, dc.naturalCfs);
+const sheet = buildBalanceSheet(effluentCfs, dc.naturalCfs, Astro.locals.site);
 
 const fmt = (n: number, unit: BalanceUnit): string =>
   unit === "usd" ? fmtUsdM(n) : unit === "mw" ? `${Math.round(n)} MW` : `${n.toFixed(0)}%`;

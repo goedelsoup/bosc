@@ -2,9 +2,12 @@ import { describe, expect, it } from "vitest";
 import { hasInteractive, INTERACTIVE_REPORTS, reportUrl } from "./reports";
 
 describe("reports registry (#584)", () => {
-  it("reportUrl builds the site-based companion path", () => {
-    expect(reportUrl("the-economic-ledger")).toBe(
+  it("reportUrl builds the companion path for the given site (not Lima-pinned)", () => {
+    expect(reportUrl("the-economic-ledger", "lima")).toBe(
       "/network/american-sugar-creek-allen-co/reports/the-economic-ledger",
+    );
+    expect(reportUrl("the-economic-ledger", "fort-wayne")).toBe(
+      "/network/fort-wayne/reports/the-economic-ledger",
     );
   });
 
