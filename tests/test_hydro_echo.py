@@ -73,6 +73,32 @@ def test_fetch_blanchard_from_fixture(hydro_settings: Settings) -> None:
     assert blue_beacon.facility_type == "NON-POTW"
 
 
+def test_stale_low_reported_does_not_truncate(
+    hydro_settings: Settings, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # ECHO's QueryRows (`reported`) is a summary stat that can be stale-low. It must
+    # never terminate pagination early: only a short/empty page ends the pull (#1157).
+    page_size = 2
+    rows_by_page = {1: 2, 2: 2, 3: 1}  # two full pages then a short page: 5 rows total
+
+    def fake_get(settings: Settings, service: str, params: dict[str, object]) -> dict[str, object]:
+        if service == "get_facilities":
+            return {"QueryID": "QID-STALE", "QueryRows": 2}  # stale-low: claims only 2
+        n = rows_by_page.get(int(params["pageno"]), 0)  # type: ignore[call-overload]
+        return {
+            "Facilities": [
+                {"CWPName": f"F{params['pageno']}-{i}", "RegistryID": f"{params['pageno']}{i}"}
+                for i in range(n)
+            ]
+        }
+
+    monkeypatch.setattr(echo, "_get", fake_get)
+    result = echo.fetch_huc_facilities("04100008", page_size=page_size, settings=hydro_settings)
+
+    assert result.reported_count == 2  # the stale stat is recorded verbatim...
+    assert len(result.facilities) == 5  # ...but every row is pulled, not truncated at 2
+
+
 def test_offline_cache_miss_raises(hydro_settings: Settings) -> None:
     # A HUC with no committed fixture (and never queried) -> offline miss must be
     # loud, not silent. 00000000 is deliberately not a real Maumee subbasin.

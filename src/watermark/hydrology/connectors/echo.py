@@ -349,7 +349,7 @@ def fetch_huc_facilities(
     log.info("echo.huc", huc8=huc8, name=name, qid=qid, reported=reported)
 
     facilities: list[Facility] = []
-    if qid and (reported or 0) > 0:
+    if qid:
         page = 1
         while True:
             res = _get(
@@ -359,9 +359,20 @@ def fetch_huc_facilities(
             )
             rows = res.get("Facilities") or []
             facilities.extend(Facility.from_row(r, queried_huc8=huc8) for r in rows)
-            if len(rows) < page_size or len(facilities) >= (reported or 0):
+            # A short/empty page is the real end-of-data signal. ECHO's `reported`
+            # (QueryRows) is a summary-stat estimate that can be stale-low; using it
+            # to terminate the loop silently truncates the inventory (#1157). It is a
+            # cross-check only — logged below when it disagrees, never a terminator.
+            if len(rows) < page_size:
                 break
             page += 1
+
+    pulled = len(facilities)
+    if reported is not None and pulled != reported:
+        # A complete pull that disagrees with the stale summary stat: keep every row
+        # (truncation is worse than an extra page for a verified inventory), but
+        # surface the mismatch — the count manifest records reported vs rows_pulled.
+        log.warning("echo.count_mismatch", huc8=huc8, name=name, reported=reported, pulled=pulled)
 
     return HucResult(
         huc8=huc8,
