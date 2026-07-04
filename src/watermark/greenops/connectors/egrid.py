@@ -98,11 +98,13 @@ def _download_workbook(settings: Settings) -> bytes:
     if cache.is_file():
         return cache.read_bytes()
     log.info("greenops.egrid.download", url=settings.egrid_data_url, year=settings.egrid_year)
-    data = httpx.get(
+    resp = httpx.get(
         settings.egrid_data_url,
         timeout=max(settings.greenops_request_timeout_s, 120.0),
         follow_redirects=True,
-    ).content
+    )
+    resp.raise_for_status()  # an EPA error page must not be cached as if it were the workbook
+    data = resp.content
     cache.parent.mkdir(parents=True, exist_ok=True)
     cache.write_bytes(data)
     return data
@@ -129,7 +131,15 @@ def _reduce_subregions(ws: Any, header: tuple[int, dict[str, int]]) -> list[dict
     :class:`EgridFormatError`; a ``'--'`` (eGRID's N/A) coerces to 0.
     """
     header_row, index = header
-    for required in (_CODE_NAME, _CODE_CO2E_RATE, _CODE_RENEWABLE):
+    # Every selected code must be present, including each SR*PR mix column: a missing/renamed
+    # field must be a loud EgridFormatError, not a silent 0.0 flattening the resource mix.
+    required_codes = [
+        _CODE_NAME,
+        _CODE_CO2E_RATE,
+        _CODE_RENEWABLE,
+        *(c for c, _, _ in _MIX_COLUMNS),
+    ]
+    for required in required_codes:
         if required not in index:
             raise EgridFormatError(f"eGRID subregion sheet missing required field {required!r}")
 

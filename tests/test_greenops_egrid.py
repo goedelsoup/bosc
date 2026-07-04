@@ -79,12 +79,29 @@ def _synthetic_subregion_sheet() -> object:
 
     Column order is deliberately shuffled so the test proves selection is BY NAME, not index.
     """
+    # Field codes deliberately shuffled + the full SR*PR mix set (all required up front). The
+    # named identity/rate/renewable columns sit next to unrelated shares to prove by-name reads.
+    codes = ["SRNAME", "SRGSPR", "SUBRGN", "SRC2ERTA", "SRTRPR", "SRWIPR"]
+    data: list[object] = ["Test Region", 0.60, "TEST", 500.0, 0.40, 0.40]
+    for code in (
+        "SRCLPR",
+        "SROLPR",
+        "SRNCPR",
+        "SRHYPR",
+        "SRBMPR",
+        "SRSOPR",
+        "SRGTPR",
+        "SROFPR",
+        "SROPPR",
+    ):
+        codes.append(code)
+        data.append(0.0)
     wb = openpyxl.Workbook()
     ws = wb.active
-    ws.append(["desc a", "desc b", "desc c", "desc d", "desc e", "desc f"])  # row 1 (ignored)
-    ws.append(["SRNAME", "SRGSPR", "SUBRGN", "SRC2ERTA", "SRTRPR", "SRWIPR"])  # row 2: codes
-    ws.append(["Test Region", 0.60, "TEST", 500.0, 0.40, 0.40])  # data
-    ws.append([None, None, None, None, None, None])  # trailing blank
+    ws.append(["desc"] * len(codes))  # row 1 (ignored)
+    ws.append(codes)  # row 2: field codes
+    ws.append(data)  # data
+    ws.append([None] * len(codes))  # trailing blank
     return ws
 
 
@@ -110,6 +127,15 @@ def test_reduce_raises_on_missing_field_code() -> None:
     ws.append(["TEST", "Test Region"])
     with pytest.raises(EgridFormatError):
         _reduce_subregions(ws, _header_index(ws))
+
+
+def test_reduce_raises_on_missing_mix_column() -> None:
+    # A renamed/absent SR*PR mix column must fail loud, not silently flatten the mix to 0.
+    ws = _synthetic_subregion_sheet()
+    header_row, index = _header_index(ws)
+    del index["SRCLPR"]  # simulate coal-share column drift
+    with pytest.raises(EgridFormatError, match="SRCLPR"):
+        _reduce_subregions(ws, (header_row, index))
 
 
 def test_header_index_raises_without_subrgn() -> None:
