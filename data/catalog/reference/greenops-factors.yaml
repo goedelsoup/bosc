@@ -1,0 +1,39 @@
+id: greenops-factors
+title: GreenOps — eGRID carbon-intensity & WUE water factors
+scope: reference
+status: reviewed
+producer:
+  kind: connector
+  command: greenops egrid
+  connector_ref: watermark.greenops.connectors.egrid
+  source: EPA eGRID (Emissions & Generation Resource Integrated Database) subregion file
+    + hand-curated WUE benchmarks (EPRI / Uptime Institute / NREL)
+  external_url: https://www.epa.gov/egrid/download-data
+access_tier: public
+site_scope: basin-shared
+storage:
+- relpath: reference/greenops/factors/egrid-2023.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/greenops/factors/wue-benchmarks.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: reference
+tags:
+- greenops
+- egrid
+- carbon
+- water
+- wue
+notes: The `reference` factor tables the footprint derivation (#1076/#1082/#1083) multiplies
+  our electricity figure by. egrid-<year>.yaml is EPA eGRID's per-subregion CO2-equivalent
+  output rate (SRC2ERTA, lb/MWh) + generation resource mix (SR*PR), read by field code from
+  the workbook's own header row (never by index); regenerate with `watermark greenops egrid
+  --write` (public workbook, no key — a new vintage is a config change that bumps egrid_year
+  + egrid_data_url). wue-benchmarks.yaml is a hand-curated Water Usage Effectiveness table
+  (site vs source WUE, L/kWh) emitted from an in-code canonical alongside the eGRID pull.
+  Every figure is `reference` (an authoritative published factor), never metered; the
+  derivation that applies them stays `derived`, and PUE / utilization / which-subregion
+  remain stated `assumption`s upstream.

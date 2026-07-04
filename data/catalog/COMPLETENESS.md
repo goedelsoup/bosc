@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-07-04T21:48:29.601718+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-07-04T21:55:31.056489+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
-- **101** catalogued datasets — **100** reviewed.
-- **101** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **102** catalogued datasets — **101** reviewed.
+- **102** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -56,7 +56,7 @@ Snapshot reconciled: **2026-07-04T21:48:29.601718+00:00**. Regenerate with `wate
 | reference | ferc | 1 | 1 | 0 | 0 |
 | reference | findlay-gis | 1 | 1 | 0 | 0 |
 | reference | gleif | 1 | 1 | 0 | 0 |
-| reference | greenops | 2 | 2 | 0 | 0 |
+| reference | greenops | 3 | 3 | 0 | 0 |
 | reference | hydrology | 7 | 7 | 0 | 0 |
 | reference | lima-gis | 1 | 1 | 0 | 0 |
 | reference | lsc | 1 | 1 | 0 | 0 |
@@ -77,29 +77,29 @@ Snapshot reconciled: **2026-07-04T21:48:29.601718+00:00**. Regenerate with `wate
 
 | site | relevant | present | missing |
 | --- | --- | --- | --- |
-| bryan | 42 | 36 | 6 |
-| columbus | 41 | 36 | 5 |
-| coshocton | 41 | 29 | 12 |
-| defiance | 42 | 36 | 6 |
-| findlay | 43 | 37 | 6 |
-| fort-wayne | 36 | 29 | 7 |
-| greenville | 42 | 36 | 6 |
-| hamilton-middletown | 43 | 38 | 5 |
-| lima | 80 | 76 | 4 |
-| new-albany | 41 | 36 | 5 |
-| ottawa | 42 | 36 | 6 |
-| piketon | 41 | 29 | 12 |
-| sandusky | 41 | 29 | 12 |
-| sidney | 45 | 40 | 5 |
-| springfield | 42 | 37 | 5 |
-| toledo | 42 | 36 | 6 |
-| troy-piqua | 44 | 39 | 5 |
-| urbana | 43 | 37 | 6 |
-| van-wert | 44 | 39 | 5 |
-| west-union | 41 | 35 | 6 |
-| wilmington | 46 | 41 | 5 |
-| wpafb | 44 | 39 | 5 |
-| xenia | 43 | 38 | 5 |
+| bryan | 43 | 37 | 6 |
+| columbus | 42 | 37 | 5 |
+| coshocton | 42 | 30 | 12 |
+| defiance | 43 | 37 | 6 |
+| findlay | 44 | 38 | 6 |
+| fort-wayne | 37 | 30 | 7 |
+| greenville | 43 | 37 | 6 |
+| hamilton-middletown | 44 | 39 | 5 |
+| lima | 81 | 77 | 4 |
+| new-albany | 42 | 37 | 5 |
+| ottawa | 43 | 37 | 6 |
+| piketon | 42 | 30 | 12 |
+| sandusky | 42 | 30 | 12 |
+| sidney | 46 | 41 | 5 |
+| springfield | 43 | 38 | 5 |
+| toledo | 43 | 37 | 6 |
+| troy-piqua | 45 | 40 | 5 |
+| urbana | 44 | 38 | 6 |
+| van-wert | 45 | 40 | 5 |
+| west-union | 42 | 36 | 6 |
+| wilmington | 47 | 42 | 5 |
+| wpafb | 45 | 40 | 5 |
+| xenia | 44 | 39 | 5 |
 
 ## Integrity gaps
 

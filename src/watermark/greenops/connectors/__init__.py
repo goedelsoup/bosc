@@ -8,8 +8,9 @@ actionable :class:`GreenopsOfflineError` naming the key to record. Credentials c
 ``settings`` (AWS SDK names, ``anthropic_admin_key``), excluded from the cache key and added
 only in the live fetch, mirroring the EIA connector template.
 
-Landed: the Anthropic Admin usage/cost connector (#1078) and the AWS Cost Explorer +
-Sustainability (CCFT successor) connector (#1079). GitHub/eGRID follow.
+Landed: the Anthropic Admin usage/cost connector (#1078), the AWS Cost Explorer +
+Sustainability (CCFT successor) connector (#1079), and the EPA eGRID subregion-factor +
+WUE benchmark connector (#1082 — the derivation's ``reference`` factor tables). GitHub follows.
 """
 
 from __future__ import annotations
@@ -46,6 +47,16 @@ from watermark.greenops.connectors.aws import (  # noqa: E402  (after the error 
     write_aws_carbon,
     write_aws_costs,
 )
+from watermark.greenops.connectors.egrid import (  # noqa: E402  (after the error class)
+    EgridFormatError,
+    build_egrid_factors,
+    build_wue_table,
+    fetch_egrid_factors,
+    load_egrid_factors,
+    load_wue_table,
+    write_egrid_factors,
+    write_wue_table,
+)
 
 __all__ = [
     "AnthropicAdminError",
@@ -53,17 +64,25 @@ __all__ = [
     "AnthropicUsageByWorkspace",
     "AnthropicUsageReport",
     "AwsCredentialsError",
+    "EgridFormatError",
     "GreenopsOfflineError",
     "build_carbon_report",
     "build_cost_report",
+    "build_egrid_factors",
     "build_usage_report",
+    "build_wue_table",
     "fetch_anthropic_usage",
     "fetch_aws_carbon",
     "fetch_aws_costs",
+    "fetch_egrid_factors",
     "load_anthropic_usage",
     "load_aws_carbon",
     "load_aws_costs",
+    "load_egrid_factors",
+    "load_wue_table",
     "write_anthropic_usage",
     "write_aws_carbon",
     "write_aws_costs",
+    "write_egrid_factors",
+    "write_wue_table",
 ]

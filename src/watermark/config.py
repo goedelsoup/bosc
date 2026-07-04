@@ -254,6 +254,16 @@ class Settings(BaseSettings):
     # WATERMARK_-prefixed and distinct from the inference ANTHROPIC_API_KEY. Absent =>
     # the Anthropic source degrades to a modeled assumption.
     anthropic_admin_key: str = Field(default="", alias="ANTHROPIC_ADMIN_KEY")
+    # EPA eGRID subregion carbon-intensity + generation-mix factors (#1082). A public
+    # annual workbook (no key); the electricity -> CO2e / source-mix conversion reads these
+    # rather than a hand-maintained table. A new vintage is a config change: bump the year
+    # and point the URL at that release's workbook (the subregion sheet is SRL<yy>). The
+    # download lands under greenops_cache_dir/egrid/ on the live path only; offline replays
+    # the committed fixture (the reduced subregion rows, not the 20 MB xlsx).
+    egrid_year: int = 2023  # latest published eGRID vintage
+    egrid_data_url: str = (
+        "https://www.epa.gov/system/files/documents/2025-06/egrid2023_data_rev2.xlsx"
+    )
 
     # --- GIS / satellite imagery -------------------------------------------
     # Pull AOI-clipped satellite imagery for tracking sites (the campus/footprints

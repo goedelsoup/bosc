@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-04T21:48:29.601718+00:00'
+reconciled_at: '2026-07-04T21:55:31.056489+00:00'
 entries:
   aedg:
     exists: true
@@ -374,6 +374,16 @@ entries:
     exists: true
     sha256: ba1fab19e873492150f571a993c1d2a6758116b1c5366ba8c8e96718ae1f17c0
     size_bytes: 8468
+    lfs_materialized: true
+    file_count: 2
+    missing: []
+    asof: null
+    stale: false
+    site_scope: basin-shared
+  greenops-factors:
+    exists: true
+    sha256: 1140d87f292f822ec9588ecd4b44a6cc7e6fa944dbc3edf48c33b22dd557a83d
+    size_bytes: 28705
     lfs_materialized: true
     file_count: 2
     missing: []
