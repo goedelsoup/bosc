@@ -1,0 +1,1313 @@
+year: 2023
+vintage: eGRID2023
+source_url: https://www.epa.gov/system/files/documents/2025-06/egrid2023_data_rev2.xlsx
+subregions:
+- code: AKGD
+  name: ASCC Alaska Grid
+  co2e_rate:
+    value: 905.109
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 16.3
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: gas
+    label: Natural gas
+    percent: 60.4
+    renewable: false
+  - fuel: coal
+    label: Coal
+    percent: 14.3
+    renewable: false
+  - fuel: hydro
+    label: Hydro
+    percent: 13.9
+    renewable: true
+  - fuel: oil
+    label: Oil
+    percent: 9.0
+    renewable: false
+  - fuel: wind
+    label: Wind
+    percent: 1.6
+    renewable: true
+  - fuel: biomass
+    label: Biomass
+    percent: 0.8
+    renewable: true
+- code: AKMS
+  name: ASCC Miscellaneous
+  co2e_rate:
+    value: 522.4
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 69.0
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: hydro
+    label: Hydro
+    percent: 67.2
+    renewable: true
+  - fuel: oil
+    label: Oil
+    percent: 24.6
+    renewable: false
+  - fuel: gas
+    label: Natural gas
+    percent: 6.5
+    renewable: false
+  - fuel: wind
+    label: Wind
+    percent: 1.8
+    renewable: true
+- code: AZNM
+  name: WECC Southwest
+  co2e_rate:
+    value: 706.189
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 22.3
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: gas
+    label: Natural gas
+    percent: 48.7
+    renewable: false
+  - fuel: nuclear
+    label: Nuclear
+    percent: 18.0
+    renewable: false
+  - fuel: coal
+    label: Coal
+    percent: 11.1
+    renewable: false
+  - fuel: solar
+    label: Solar
+    percent: 8.2
+    renewable: true
+  - fuel: wind
+    label: Wind
+    percent: 7.7
+    renewable: true
+  - fuel: geothermal
+    label: Geothermal
+    percent: 3.6
+    renewable: true
+  - fuel: hydro
+    label: Hydro
+    percent: 2.6
+    renewable: true
+  - fuel: biomass
+    label: Biomass
+    percent: 0.3
+    renewable: true
+- code: CAMX
+  name: WECC California
+  co2e_rate:
+    value: 429.983
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 46.5
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: gas
+    label: Natural gas
+    percent: 42.9
+    renewable: false
+  - fuel: solar
+    label: Solar
+    percent: 20.1
+    renewable: true
+  - fuel: hydro
+    label: Hydro
+    percent: 14.1
+    renewable: true
+  - fuel: nuclear
+    label: Nuclear
+    percent: 8.0
+    renewable: false
+  - fuel: wind
+    label: Wind
+    percent: 6.6
+    renewable: true
+  - fuel: geothermal
+    label: Geothermal
+    percent: 3.6
+    renewable: true
+  - fuel: biomass
+    label: Biomass
+    percent: 2.2
+    renewable: true
+  - fuel: coal
+    label: Coal
+    percent: 2.1
+    renewable: false
+  - fuel: other_fossil
+    label: Other fossil
+    percent: 0.7
+    renewable: false
+- code: ERCT
+  name: ERCOT All
+  co2e_rate:
+    value: 736.629
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 28.7
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: gas
+    label: Natural gas
+    percent: 49.6
+    renewable: false
+  - fuel: wind
+    label: Wind
+    percent: 22.6
+    renewable: true
+  - fuel: coal
+    label: Coal
+    percent: 12.7
+    renewable: false
+  - fuel: nuclear
+    label: Nuclear
+    percent: 8.5
+    renewable: false
+  - fuel: solar
+    label: Solar
+    percent: 5.9
+    renewable: true
+  - fuel: other_fossil
+    label: Other fossil
+    percent: 0.4
+    renewable: false
+  - fuel: biomass
+    label: Biomass
+    percent: 0.2
+    renewable: true
+  - fuel: hydro
+    label: Hydro
+    percent: 0.1
+    renewable: true
+- code: FRCC
+  name: FRCC All
+  co2e_rate:
+    value: 784.785
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 6.6
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: gas
+    label: Natural gas
+    percent: 75.5
+    renewable: false
+  - fuel: nuclear
+    label: Nuclear
+    percent: 12.0
+    renewable: false
+  - fuel: solar
+    label: Solar
+    percent: 5.4
+    renewable: true
+  - fuel: coal
+    label: Coal
+    percent: 4.5
+    renewable: false
+  - fuel: biomass
+    label: Biomass
+    percent: 1.1
+    renewable: true
+  - fuel: other_fossil
+    label: Other fossil
+    percent: 0.6
+    renewable: false
+  - fuel: oil
+    label: Oil
+    percent: 0.5
+    renewable: false
+  - fuel: other
+    label: Other/unknown
+    percent: 0.4
+    renewable: false
+  - fuel: hydro
+    label: Hydro
+    percent: 0.1
+    renewable: true
+- code: HIMS
+  name: HICC Miscellaneous
+  co2e_rate:
+    value: 1133.294
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 34.2
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: oil
+    label: Oil
+    percent: 65.9
+    renewable: false
+  - fuel: wind
+    label: Wind
+    percent: 12.1
+    renewable: true
+  - fuel: geothermal
+    label: Geothermal
+    percent: 7.4
+    renewable: true
+  - fuel: solar
+    label: Solar
+    percent: 6.4
+    renewable: true
+  - fuel: biomass
+    label: Biomass
+    percent: 4.7
+    renewable: true
+  - fuel: hydro
+    label: Hydro
+    percent: 3.6
+    renewable: true
+- code: HIOA
+  name: HICC Oahu
+  co2e_rate:
+    value: 1498.947
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 14.2
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: oil
+    label: Oil
+    percent: 83.1
+    renewable: false
+  - fuel: solar
+    label: Solar
+    percent: 7.4
+    renewable: true
+  - fuel: wind
+    label: Wind
+    percent: 4.3
+    renewable: true
+  - fuel: other_fossil
+    label: Other fossil
+    percent: 2.7
+    renewable: false
+  - fuel: biomass
+    label: Biomass
+    percent: 2.5
+    renewable: true
+- code: MROE
+  name: MRO East
+  co2e_rate:
+    value: 1404.963
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 17.3
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: gas
+    label: Natural gas
+    percent: 42.9
+    renewable: false
+  - fuel: coal
+    label: Coal
+    percent: 39.5
+    renewable: false
+  - fuel: wind
+    label: Wind
+    percent: 5.4
+    renewable: true
+  - fuel: solar
+    label: Solar
+    percent: 4.7
+    renewable: true
+  - fuel: hydro
+    label: Hydro
+    percent: 4.3
+    renewable: true
+  - fuel: biomass
+    label: Biomass
+    percent: 3.0
+    renewable: true
+  - fuel: oil
+    label: Oil
+    percent: 0.3
+    renewable: false
+- code: MROW
+  name: MRO West
+  co2e_rate:
+    value: 926.552
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 43.5
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: wind
+    label: Wind
+    percent: 37.6
+    renewable: true
+  - fuel: coal
+    label: Coal
+    percent: 35.2
+    renewable: false
+  - fuel: gas
+    label: Natural gas
+    percent: 13.1
+    renewable: false
+  - fuel: nuclear
+    label: Nuclear
+    percent: 7.8
+    renewable: false
+  - fuel: hydro
+    label: Hydro
+    percent: 4.1
+    renewable: true
+  - fuel: solar
+    label: Solar
+    percent: 1.2
+    renewable: true
+  - fuel: biomass
+    label: Biomass
+    percent: 0.7
+    renewable: true
+  - fuel: other_fossil
+    label: Other fossil
+    percent: 0.2
+    renewable: false
+  - fuel: oil
+    label: Oil
+    percent: 0.1
+    renewable: false
+  - fuel: other
+    label: Other/unknown
+    percent: 0.1
+    renewable: false
+- code: NEWE
+  name: NPCC New England
+  co2e_rate:
+    value: 543.178
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 19.2
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: gas
+    label: Natural gas
+    percent: 55.9
+    renewable: false
+  - fuel: nuclear
+    label: Nuclear
+    percent: 22.6
+    renewable: false
+  - fuel: hydro
+    label: Hydro
+    percent: 8.0
+    renewable: true
+  - fuel: biomass
+    label: Biomass
+    percent: 4.3
+    renewable: true
+  - fuel: solar
+    label: Solar
+    percent: 3.6
+    renewable: true
+  - fuel: wind
+    label: Wind
+    percent: 3.4
+    renewable: true
+  - fuel: other_fossil
+    label: Other fossil
+    percent: 1.6
+    renewable: false
+  - fuel: oil
+    label: Oil
+    percent: 0.4
+    renewable: false
+  - fuel: coal
+    label: Coal
+    percent: 0.2
+    renewable: false
+  - fuel: other
+    label: Other/unknown
+    percent: 0.1
+    renewable: false
+- code: NWPP
+  name: WECC Northwest
+  co2e_rate:
+    value: 635.267
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 55.1
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: hydro
+    label: Hydro
+    percent: 38.7
+    renewable: true
+  - fuel: gas
+    label: Natural gas
+    percent: 24.8
+    renewable: false
+  - fuel: coal
+    label: Coal
+    percent: 16.4
+    renewable: false
+  - fuel: wind
+    label: Wind
+    percent: 11.6
+    renewable: true
+  - fuel: nuclear
+    label: Nuclear
+    percent: 3.1
+    renewable: false
+  - fuel: solar
+    label: Solar
+    percent: 3.1
+    renewable: true
+  - fuel: biomass
+    label: Biomass
+    percent: 1.0
+    renewable: true
+  - fuel: geothermal
+    label: Geothermal
+    percent: 0.7
+    renewable: true
+  - fuel: other_fossil
+    label: Other fossil
+    percent: 0.3
+    renewable: false
+  - fuel: oil
+    label: Oil
+    percent: 0.2
+    renewable: false
+  - fuel: other
+    label: Other/unknown
+    percent: 0.1
+    renewable: false
+- code: NYCW
+  name: NPCC NYC/Westchester
+  co2e_rate:
+    value: 865.744
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 0.6
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: gas
+    label: Natural gas
+    percent: 98.2
+    renewable: false
+  - fuel: other_fossil
+    label: Other fossil
+    percent: 0.7
+    renewable: false
+  - fuel: oil
+    label: Oil
+    percent: 0.5
+    renewable: false
+  - fuel: biomass
+    label: Biomass
+    percent: 0.5
+    renewable: true
+  - fuel: solar
+    label: Solar
+    percent: 0.1
+    renewable: true
+- code: NYLI
+  name: NPCC Long Island
+  co2e_rate:
+    value: 1189.333
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 6.5
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: gas
+    label: Natural gas
+    percent: 87.2
+    renewable: false
+  - fuel: other_fossil
+    label: Other fossil
+    percent: 4.8
+    renewable: false
+  - fuel: biomass
+    label: Biomass
+    percent: 4.0
+    renewable: true
+  - fuel: solar
+    label: Solar
+    percent: 2.5
+    renewable: true
+  - fuel: oil
+    label: Oil
+    percent: 1.5
+    renewable: false
+- code: NYUP
+  name: NPCC Upstate NY
+  co2e_rate:
+    value: 242.776
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 41.8
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: hydro
+    label: Hydro
+    percent: 32.9
+    renewable: true
+  - fuel: nuclear
+    label: Nuclear
+    percent: 32.3
+    renewable: false
+  - fuel: gas
+    label: Natural gas
+    percent: 25.5
+    renewable: false
+  - fuel: wind
+    label: Wind
+    percent: 5.6
+    renewable: true
+  - fuel: solar
+    label: Solar
+    percent: 2.1
+    renewable: true
+  - fuel: biomass
+    label: Biomass
+    percent: 1.2
+    renewable: true
+  - fuel: other_fossil
+    label: Other fossil
+    percent: 0.3
+    renewable: false
+  - fuel: oil
+    label: Oil
+    percent: 0.1
+    renewable: false
+- code: PRMS
+  name: Puerto Rico Miscellaneous
+  co2e_rate:
+    value: 1548.53
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 2.3
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: gas
+    label: Natural gas
+    percent: 43.6
+    renewable: false
+  - fuel: oil
+    label: Oil
+    percent: 39.0
+    renewable: false
+  - fuel: coal
+    label: Coal
+    percent: 15.2
+    renewable: false
+  - fuel: solar
+    label: Solar
+    percent: 1.5
+    renewable: true
+  - fuel: wind
+    label: Wind
+    percent: 0.6
+    renewable: true
+  - fuel: hydro
+    label: Hydro
+    percent: 0.2
+    renewable: true
+- code: RFCE
+  name: RFC East
+  co2e_rate:
+    value: 599.17
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 4.0
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: gas
+    label: Natural gas
+    percent: 54.1
+    renewable: false
+  - fuel: nuclear
+    label: Nuclear
+    percent: 36.4
+    renewable: false
+  - fuel: coal
+    label: Coal
+    percent: 4.7
+    renewable: false
+  - fuel: hydro
+    label: Hydro
+    percent: 1.1
+    renewable: true
+  - fuel: wind
+    label: Wind
+    percent: 1.0
+    renewable: true
+  - fuel: solar
+    label: Solar
+    percent: 1.0
+    renewable: true
+  - fuel: biomass
+    label: Biomass
+    percent: 0.9
+    renewable: true
+  - fuel: other_fossil
+    label: Other fossil
+    percent: 0.7
+    renewable: false
+  - fuel: oil
+    label: Oil
+    percent: 0.1
+    renewable: false
+- code: RFCM
+  name: RFC Michigan
+  co2e_rate:
+    value: 975.978
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 11.2
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: gas
+    label: Natural gas
+    percent: 49.8
+    renewable: false
+  - fuel: coal
+    label: Coal
+    percent: 25.7
+    renewable: false
+  - fuel: nuclear
+    label: Nuclear
+    percent: 10.2
+    renewable: false
+  - fuel: wind
+    label: Wind
+    percent: 8.8
+    renewable: true
+  - fuel: other_fossil
+    label: Other fossil
+    percent: 1.6
+    renewable: false
+  - fuel: oil
+    label: Oil
+    percent: 1.5
+    renewable: false
+  - fuel: biomass
+    label: Biomass
+    percent: 1.5
+    renewable: true
+  - fuel: solar
+    label: Solar
+    percent: 1.3
+    renewable: true
+- code: RFCW
+  name: RFC West
+  co2e_rate:
+    value: 916.054
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 7.6
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: gas
+    label: Natural gas
+    percent: 37.8
+    renewable: false
+  - fuel: nuclear
+    label: Nuclear
+    percent: 28.4
+    renewable: false
+  - fuel: coal
+    label: Coal
+    percent: 25.0
+    renewable: false
+  - fuel: wind
+    label: Wind
+    percent: 5.5
+    renewable: true
+  - fuel: hydro
+    label: Hydro
+    percent: 1.0
+    renewable: true
+  - fuel: solar
+    label: Solar
+    percent: 0.8
+    renewable: true
+  - fuel: other_fossil
+    label: Other fossil
+    percent: 0.7
+    renewable: false
+  - fuel: oil
+    label: Oil
+    percent: 0.3
+    renewable: false
+  - fuel: biomass
+    label: Biomass
+    percent: 0.3
+    renewable: true
+  - fuel: other
+    label: Other/unknown
+    percent: 0.1
+    renewable: false
+- code: RMPA
+  name: WECC Rockies
+  co2e_rate:
+    value: 1042.539
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 41.9
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: coal
+    label: Coal
+    percent: 31.7
+    renewable: false
+  - fuel: gas
+    label: Natural gas
+    percent: 26.4
+    renewable: false
+  - fuel: wind
+    label: Wind
+    percent: 25.8
+    renewable: true
+  - fuel: hydro
+    label: Hydro
+    percent: 10.5
+    renewable: true
+  - fuel: solar
+    label: Solar
+    percent: 5.4
+    renewable: true
+  - fuel: biomass
+    label: Biomass
+    percent: 0.2
+    renewable: true
+  - fuel: oil
+    label: Oil
+    percent: 0.1
+    renewable: false
+- code: SPNO
+  name: SPP North
+  co2e_rate:
+    value: 867.74
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 40.1
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: wind
+    label: Wind
+    percent: 39.7
+    renewable: true
+  - fuel: coal
+    label: Coal
+    percent: 31.6
+    renewable: false
+  - fuel: gas
+    label: Natural gas
+    percent: 14.0
+    renewable: false
+  - fuel: nuclear
+    label: Nuclear
+    percent: 14.0
+    renewable: false
+  - fuel: oil
+    label: Oil
+    percent: 0.2
+    renewable: false
+  - fuel: solar
+    label: Solar
+    percent: 0.2
+    renewable: true
+  - fuel: hydro
+    label: Hydro
+    percent: 0.1
+    renewable: true
+  - fuel: biomass
+    label: Biomass
+    percent: 0.1
+    renewable: true
+- code: SPSO
+  name: SPP South
+  co2e_rate:
+    value: 875.567
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 36.7
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: gas
+    label: Natural gas
+    percent: 46.1
+    renewable: false
+  - fuel: wind
+    label: Wind
+    percent: 32.5
+    renewable: true
+  - fuel: coal
+    label: Coal
+    percent: 16.2
+    renewable: false
+  - fuel: hydro
+    label: Hydro
+    percent: 2.5
+    renewable: true
+  - fuel: biomass
+    label: Biomass
+    percent: 1.2
+    renewable: true
+  - fuel: oil
+    label: Oil
+    percent: 0.5
+    renewable: false
+  - fuel: solar
+    label: Solar
+    percent: 0.4
+    renewable: true
+  - fuel: other_fossil
+    label: Other fossil
+    percent: 0.2
+    renewable: false
+  - fuel: other
+    label: Other/unknown
+    percent: 0.2
+    renewable: false
+- code: SRMV
+  name: SERC Mississippi Valley
+  co2e_rate:
+    value: 741.741
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 3.0
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: gas
+    label: Natural gas
+    percent: 65.2
+    renewable: false
+  - fuel: nuclear
+    label: Nuclear
+    percent: 22.1
+    renewable: false
+  - fuel: coal
+    label: Coal
+    percent: 8.2
+    renewable: false
+  - fuel: hydro
+    label: Hydro
+    percent: 1.3
+    renewable: true
+  - fuel: other_fossil
+    label: Other fossil
+    percent: 1.2
+    renewable: false
+  - fuel: biomass
+    label: Biomass
+    percent: 1.0
+    renewable: true
+  - fuel: solar
+    label: Solar
+    percent: 0.7
+    renewable: true
+  - fuel: oil
+    label: Oil
+    percent: 0.1
+    renewable: false
+  - fuel: other
+    label: Other/unknown
+    percent: 0.1
+    renewable: false
+- code: SRMW
+  name: SERC Midwest
+  co2e_rate:
+    value: 1248.582
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 15.2
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: coal
+    label: Coal
+    percent: 51.1
+    renewable: false
+  - fuel: gas
+    label: Natural gas
+    percent: 16.9
+    renewable: false
+  - fuel: nuclear
+    label: Nuclear
+    percent: 16.4
+    renewable: false
+  - fuel: wind
+    label: Wind
+    percent: 12.5
+    renewable: true
+  - fuel: solar
+    label: Solar
+    percent: 1.6
+    renewable: true
+  - fuel: hydro
+    label: Hydro
+    percent: 0.9
+    renewable: true
+  - fuel: other
+    label: Other/unknown
+    percent: 0.3
+    renewable: false
+  - fuel: oil
+    label: Oil
+    percent: 0.1
+    renewable: false
+  - fuel: biomass
+    label: Biomass
+    percent: 0.1
+    renewable: true
+  - fuel: other_fossil
+    label: Other fossil
+    percent: 0.1
+    renewable: false
+- code: SRSO
+  name: SERC South
+  co2e_rate:
+    value: 846.007
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 9.5
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: gas
+    label: Natural gas
+    percent: 55.4
+    renewable: false
+  - fuel: nuclear
+    label: Nuclear
+    percent: 20.4
+    renewable: false
+  - fuel: coal
+    label: Coal
+    percent: 14.5
+    renewable: false
+  - fuel: biomass
+    label: Biomass
+    percent: 3.6
+    renewable: true
+  - fuel: solar
+    label: Solar
+    percent: 3.6
+    renewable: true
+  - fuel: hydro
+    label: Hydro
+    percent: 2.4
+    renewable: true
+  - fuel: oil
+    label: Oil
+    percent: 0.1
+    renewable: false
+- code: SRTV
+  name: SERC Tennessee Valley
+  co2e_rate:
+    value: 903.306
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 9.1
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: nuclear
+    label: Nuclear
+    percent: 32.8
+    renewable: false
+  - fuel: gas
+    label: Natural gas
+    percent: 29.8
+    renewable: false
+  - fuel: coal
+    label: Coal
+    percent: 28.2
+    renewable: false
+  - fuel: hydro
+    label: Hydro
+    percent: 7.6
+    renewable: true
+  - fuel: solar
+    label: Solar
+    percent: 0.8
+    renewable: true
+  - fuel: biomass
+    label: Biomass
+    percent: 0.7
+    renewable: true
+  - fuel: oil
+    label: Oil
+    percent: 0.1
+    renewable: false
+- code: SRVC
+  name: SERC Virginia/Carolina
+  co2e_rate:
+    value: 596.326
+    unit: lb CO2e/MWh
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  renewable_pct:
+    value: 9.9
+    unit: '%'
+    source: reference
+    citation: EPA eGRID2023 subregion file (SRL sheet)
+    confidence: high
+    asof: null
+  resource_mix:
+  - fuel: nuclear
+    label: Nuclear
+    percent: 39.9
+    renewable: false
+  - fuel: gas
+    label: Natural gas
+    percent: 39.3
+    renewable: false
+  - fuel: coal
+    label: Coal
+    percent: 10.5
+    renewable: false
+  - fuel: solar
+    label: Solar
+    percent: 6.0
+    renewable: true
+  - fuel: biomass
+    label: Biomass
+    percent: 2.1
+    renewable: true
+  - fuel: hydro
+    label: Hydro
+    percent: 1.4
+    renewable: true
+  - fuel: wind
+    label: Wind
+    percent: 0.5
+    renewable: true
+  - fuel: other_fossil
+    label: Other fossil
+    percent: 0.2
+    renewable: false
+  - fuel: oil
+    label: Oil
+    percent: 0.1
+    renewable: false
+  - fuel: other
+    label: Other/unknown
+    percent: 0.1
+    renewable: false
+note: 'EPA eGRID2023 subregion file: annual CO2-equivalent total output emission rate
+  (SRC2ERTA, lb/MWh) + generation resource mix (SR*PR), read by field code from the
+  workbook''s own header row. Every figure is `reference` (an authoritative published
+  factor), never metered. The renewable classification (hydro/biomass/wind/solar/geothermal)
+  is our declared grouping, cross-checked against eGRID''s own total-renewables share
+  (SRTRPR).'

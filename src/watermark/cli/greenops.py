@@ -183,3 +183,59 @@ def aws(
     if write:
         wrote(write_aws_costs(costs, settings=settings))
         wrote(write_aws_carbon(carbon, settings=settings))
+
+
+@greenops_app.command("egrid")
+def egrid(
+    write: bool = typer.Option(
+        False,
+        "--write",
+        help="Write data/reference/greenops/factors/egrid-*.yaml + wue-benchmarks.yaml + README.",
+    ),
+    offline: bool = typer.Option(
+        False, "--offline", help="Replay committed fixtures only; never hit EPA."
+    ),
+) -> None:
+    """Pull EPA eGRID subregion carbon-intensity + generation-mix factors; emit the WUE table.
+
+    eGRID is a public workbook (no API key); ``--offline`` replays the committed fixture (the
+    reduced subregion rows, not the ~20 MB xlsx). Both tables are ``reference`` — authoritative
+    published factors, never metered. The WUE benchmark table is a hand-curated in-code
+    canonical emitted alongside the eGRID factors so it stays regenerable.
+    """
+    from watermark.greenops.connectors import (
+        build_wue_table,
+        fetch_egrid_factors,
+        write_egrid_factors,
+        write_wue_table,
+    )
+
+    settings = offline_settings("greenops", offline)
+    factors = fetch_egrid_factors(settings=settings)
+    wue = build_wue_table()
+
+    console.print(
+        f"[bold]EPA {factors.vintage} subregion factors[/] "
+        f"[dim]({len(factors.subregions)} subregions)[/]  "
+        f"[dim]reference — an authoritative published factor, not metered[/]"
+    )
+    table = Table("subregion", "name", "CO2e (lb/MWh)", "renewable %")
+    for sr in factors.subregions:
+        table.add_row(
+            sr.code, sr.name, f"{sr.co2e_rate.value:,.0f}", f"{sr.renewable_pct.value:g}%"
+        )
+    console.print(table)
+
+    console.print(
+        f"\n[bold]WUE benchmarks[/] [dim]({wue.vintage})[/]  "
+        f"[dim]reference — published water-use benchmarks, not metered[/]"
+    )
+    wue_table = Table("facility type", "WUE (L/kWh)", "basis", "confidence")
+    for b in wue.benchmarks:
+        wue_table.add_row(b.label, f"{b.wue.value:g}", b.basis, b.wue.confidence)
+    console.print(wue_table)
+
+    console.print(f"\n[dim]{factors.note}[/]")
+    if write:
+        wrote(write_egrid_factors(factors, settings=settings))
+        wrote(write_wue_table(wue, settings=settings))
