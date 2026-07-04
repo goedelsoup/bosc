@@ -66,7 +66,12 @@ def test_runoff_volume_conserves() -> None:
         area_acres=200.0, curve_number=88.0, tc_hr=0.75, storm_depth_in=4.0, dt_hr=0.05
     )
     expected_acft = h.runoff_depth_in / 12.0 * 200.0
-    assert h.volume_acft == pytest.approx(expected_acft, rel=0.03)  # UH-tail truncation tol
+    # Keeping the full convolution recession tail makes reported volume reconcile with
+    # reported depth; residual gap is UH-ordinate discretization, not tail truncation.
+    assert h.volume_acft == pytest.approx(expected_acft, rel=0.02)
+    # Guard against re-truncating to the input length: the recession tail runs past the
+    # 24 hr storm, so the hydrograph must be longer than the hyetograph it convolved.
+    assert h.times_hr[-1] > 24.0
 
 
 def test_higher_cn_yields_higher_peak() -> None:

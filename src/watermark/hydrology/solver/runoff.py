@@ -121,7 +121,10 @@ def simulate_runoff(
     inc_excess = np.diff(cum_excess, prepend=0.0)  # inches per step
     uh = _unit_hydrograph(area_sqmi, tc_hr, dt_hr)
 
-    flows = np.convolve(inc_excess, uh)[: len(inc_excess)]
+    # Keep the full convolution (len(inc_excess)+len(uh)-1 samples): truncating to the
+    # input length would drop the recession tail after the last rainfall increment,
+    # so flows.sum() (and thus volume_acft) would understate the reported runoff depth.
+    flows = np.convolve(inc_excess, uh)
     times = np.arange(1, len(flows) + 1, dtype=np.float64) * dt_hr
     volume_acft = float(flows.sum() * dt_hr * _SEC_PER_HR / _SQFT_PER_ACRE)
     peak_idx = int(np.argmax(flows))
