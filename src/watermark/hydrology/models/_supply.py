@@ -18,6 +18,7 @@ class Reservoir(BaseModel):
     name: str
     built: int  # year completed
     capacity_mg: float  # million gallons
+    surface_area_acres: float | None = None  # open-water pool area (for the evaporation sink)
     source_river: str  # the river its pump stations lift from
     citation: str | None = None
 
@@ -55,6 +56,14 @@ class WaterSupplySystem(BaseModel):
     @property
     def total_storage_mg(self) -> float:
         return round(sum(r.capacity_mg for r in self.reservoirs), 1)
+
+    @property
+    def total_surface_area_acres(self) -> float | None:
+        """Combined open-water surface area, or ``None`` if no reservoir carries one."""
+        present = [
+            r.surface_area_acres for r in self.reservoirs if r.surface_area_acres is not None
+        ]
+        return round(sum(present), 1) if present else None
 
     def storage_by_river(self) -> dict[str, float]:
         out: dict[str, float] = {}
@@ -148,6 +157,33 @@ class DroughtDrawdown(BaseModel):
     survives: bool = True  # required_storage < capacity
 
 
+class ReservoirEvaporation(BaseModel):
+    """First-order open-water evaporation sink on the reservoir storage (``derived``).
+
+    Reference ET0 (FAO-56 Penman-Monteith, from the committed NASA POWER climatology) over
+    the reservoirs' combined open-water surface area (ODNR Division of Wildlife fishing-map
+    acreages). A *screening* sink: ET0 is used directly as a first-order proxy for open-water
+    evaporation and precipitation onto the pool is not credited, so the term is conservative —
+    it can only tighten the drought bound. Folded into the sequent-peak as an added monthly
+    loss on storage (subtracted from the pumpable inflow, by calendar month).
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    source: Literal["derived"] = "derived"
+    surface_area_acres: float
+    et0_method: str = "FAO-56 Penman-Monteith"
+    et0_annual_mm: float  # reference ET0 depth (grass), mm/yr
+    open_water_coefficient: float = 1.0  # ET0 -> open-water evaporation multiplier
+    monthly_evap_mgd: dict[str, float]  # JAN..DEC
+    annual_evap_mg: float  # days-weighted annual volume
+    mean_evap_mgd: float  # annual_evap_mg / 365
+    peak_month: str  # month of the largest evaporative loss
+    peak_evap_mgd: float
+    citation: str
+    note: str = ""
+
+
 class RefillAdequacy(BaseModel):
     """Can high-flow pumping refill Lima's reservoirs against demand, incl. the campus?
 
@@ -171,6 +207,7 @@ class RefillAdequacy(BaseModel):
     annual_supply_multiple: float  # mean annual river supply / annual buildout demand
     rivers: list[RiverFlowStat]
     scenarios: list[DroughtDrawdown]
+    evaporation: ReservoirEvaporation | None = None  # the reservoir-evaporation sink, if derived
     method: str
     warnings: list[str] = []
     caveats: list[str] = []

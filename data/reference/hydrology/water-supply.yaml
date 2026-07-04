@@ -25,6 +25,7 @@ meta:
     - "City of Lima, Dept. of Utilities — Water Supply & Treatment (https://www.limaohio.gov/249/Water-Supply-Treatment), accessed 2026-06-09: reservoir names, build years, capacities, river sourcing, pump-station counts, ~15 MGD treated."
     - "City of Lima Vision 2040 Plan (LACRPC), Infrastructure section — '30 million gallons per day' plant capacity (data/documents/lacrpc/City of Lima Vision 2040 Plan (PDF).pdf)."
     - "USGS NWIS gages: 04185750 Auglaize River near Lima OH (Auglaize refill); 04187100 Ottawa River at Lima OH (Ottawa refill + the receiving reach)."
+    - "ODNR Division of Wildlife reservoir fishing maps (ohiodnr.gov, accessed 2026-07-04) — 'Acres of Water' surface areas: Lost Creek 130, Metzger 157, Ferguson 308, Williams 426, Bresler 582 (used for the first-order reservoir-evaporation sink)."
     - "Ottawa River (Auglaize tributary) geography: rises in N. Hardin County ('Hog Creek'), flows W-SW through Lima, joins the Auglaize NW of Lima in W. Putnam County (USGS NHD; Ottawa River (Lima Area) TMDL)."
   caveats:
     - "Upground reservoirs are OFF-STREAM: filled by pumping at HIGH flow, drawn down at low flow — withdrawal is decoupled from the instantaneous 7Q10."
@@ -65,29 +66,34 @@ reservoirs:
     name: Lost Creek Reservoir
     built: 1918
     capacity_mg: 893
+    surface_area_acres: 130
     source_river: Ottawa River
-    citation: "limaohio.gov/249 — Lost Creek, built 1918, 893 MG, Ottawa-fed"
+    citation: "limaohio.gov/249 — Lost Creek, built 1918, 893 MG, Ottawa-fed; ODNR fishing map 130 acres (surveyed 2015)"
   - id: metzger
     name: Metzger Reservoir
     built: 1946
     capacity_mg: 1200
+    surface_area_acres: 157
     source_river: Ottawa River
-    citation: "limaohio.gov/249 — Metzger, built 1946, 1.2 BG, Ottawa-fed"
+    citation: "limaohio.gov/249 — Metzger, built 1946, 1.2 BG, Ottawa-fed; ODNR fishing map 157 acres (surveyed 2008)"
   - id: ferguson
     name: Ferguson Reservoir
     built: 1958
     capacity_mg: 2200
+    surface_area_acres: 308
     source_river: Ottawa River
-    citation: "limaohio.gov/249 — Ferguson, built 1958, 2.2 BG, Ottawa-fed"
+    citation: "limaohio.gov/249 — Ferguson, built 1958, 2.2 BG, Ottawa-fed; ODNR fishing map 308 acres (surveyed 2006)"
   - id: bresler
     name: Bresler Reservoir
     built: 1970
     capacity_mg: 4920
+    surface_area_acres: 582
     source_river: Auglaize River
-    citation: "limaohio.gov/249 — Bresler, built 1970, 4.92 BG, Auglaize-fed"
+    citation: "limaohio.gov/249 — Bresler, built 1970, 4.92 BG, Auglaize-fed; ODNR fishing map 582 acres (surveyed 2004)"
   - id: williams
     name: Williams Reservoir
     built: 2012
     capacity_mg: 5200
+    surface_area_acres: 426
     source_river: Auglaize River
-    citation: "limaohio.gov/249 — Williams, built 2012, 5.2 BG, Auglaize-fed"
+    citation: "limaohio.gov/249 — Williams, built 2012, 5.2 BG, Auglaize-fed; ODNR fishing map 426 acres (surveyed 2012)"

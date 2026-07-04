@@ -2,7 +2,8 @@ meta:
   subject: Refill adequacy / drought storage requirement — Lima reservoir system
   source: 'USGS NWIS daily discharge: Auglaize 04186500 (Fort Jennings) + Ottawa 04187100 (Lima); storage
     from water-supply.yaml'
-  method: sequent-peak (Rippl) storage requirement on aligned daily NWIS discharge, passby-adjusted
+  method: sequent-peak (Rippl) storage requirement on aligned daily NWIS discharge, passby-adjusted, net
+    of a first-order reservoir-evaporation sink (ET0 x surface area)
   discipline: 'Derived screening: sequent-peak storage requirement vs committed reservoir storage. Refill
     is amply adequate in normal years; the binding case is the worst gauged drought, and the residual
     risk is a drought beyond the record.'
@@ -50,33 +51,65 @@ refill:
   scenarios:
   - label: baseline city
     demand_mgd: 15.0
-    required_storage_mg: 1997.8
-    pct_of_capacity: 13.9
-    worst_spell_start: '1999-08-01'
-    worst_spell_days: 200
+    required_storage_mg: 3507.5
+    pct_of_capacity: 24.3
+    worst_spell_start: '1999-07-05'
+    worst_spell_days: 251
     survives: true
   - label: +campus (central)
     demand_mgd: 18.92
-    required_storage_mg: 2844.2
-    pct_of_capacity: 19.7
-    worst_spell_start: '1999-07-27'
-    worst_spell_days: 229
+    required_storage_mg: 4629.6
+    pct_of_capacity: 32.1
+    worst_spell_start: '1999-07-05'
+    worst_spell_days: 310
     survives: true
   - label: +campus (high bound)
     demand_mgd: 27.5
-    required_storage_mg: 5627.1
-    pct_of_capacity: 39.0
-    worst_spell_start: '1999-07-05'
-    worst_spell_days: 320
+    required_storage_mg: 7696.2
+    pct_of_capacity: 53.4
+    worst_spell_start: '1999-06-22'
+    worst_spell_days: 337
     survives: true
-  method: sequent-peak (Rippl) storage requirement on aligned daily NWIS discharge, passby-adjusted
+  evaporation:
+    source: derived
+    surface_area_acres: 1603.0
+    et0_method: FAO-56 Penman-Monteith
+    et0_annual_mm: 1085.2
+    open_water_coefficient: 1.0
+    monthly_evap_mgd:
+      JAN: 1.5098
+      FEB: 2.2141
+      MAR: 3.7016
+      APR: 5.0966
+      MAY: 6.4538
+      JUN: 8.3355
+      JUL: 8.8479
+      AUG: 7.9088
+      SEP: 6.8617
+      OCT: 5.2508
+      NOV: 3.0487
+      DEC: 1.7309
+    annual_evap_mg: 1859.8
+    mean_evap_mgd: 5.095
+    peak_month: JUL
+    peak_evap_mgd: 8.8479
+    citation: ET0 FAO-56 Penman-Monteith (NASA POWER climatology) over 1603 ac of committed reservoir
+      surface area (water-supply.yaml)
+    note: first-order screening sink; ET0 used directly as the open-water rate and precipitation onto
+      the pool not credited (conservative)
+  method: sequent-peak (Rippl) storage requirement on aligned daily NWIS discharge, passby-adjusted, net
+    of a first-order reservoir-evaporation sink (ET0 x surface area)
   warnings: []
   caveats:
-  - Auglaize gauged at Fort Jennings (downstream, larger drainage area) — overstates intake flow, so the
-    storage requirement is an UNDER-estimate (optimistic).
+  - Auglaize River gauged at Fort Jennings, DOWNSTREAM of Lima's Auglaize intakes with more drainage area
+    — overstates the flow at the intake (optimistic refill); the storage requirement is therefore an UNDER-estimate
+    (optimistic).
   - Pure sequent-peak captures all surplus above passby (no pump-rate cap) — also optimistic; a real pump-capacity
     limit would raise the storage requirement.
-  - Passby flows are screening assumptions (Ottawa = cited 7Q10 0.2 cfs; Auglaize 2.5 cfs, no cited 7Q10);
-    reservoir evaporation is not subtracted.
-  - The binding drought is the worst in the GAUGED record — a longer/deeper drought than ~1988-2024 would
-    call on more storage than shown.
+  - Passby flows are screening assumptions (Ottawa River 0.2 cfs; Auglaize River 2.5 cfs).
+  - 'A first-order reservoir-evaporation sink IS subtracted: FAO-56 ET0 over the 1603-acre committed pool
+    surface (~5.095 MGD mean, 8.8479 MGD in JUL), folded in monthly `[derived]`. ET0 is used directly
+    as the open-water rate and rain onto the pool is not credited, so the sink is a conservative lower
+    bound on the true evaporative loss.'
+  - The binding drought is the worst in the GAUGED record — a longer/deeper drought than the 1988-2024
+    record would call on more storage than shown.

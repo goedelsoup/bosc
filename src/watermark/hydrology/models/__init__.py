@@ -179,6 +179,9 @@ from watermark.hydrology.models._supply import (
     Reservoir as Reservoir,
 )
 from watermark.hydrology.models._supply import (
+    ReservoirEvaporation as ReservoirEvaporation,
+)
+from watermark.hydrology.models._supply import (
     RiverFlowStat as RiverFlowStat,
 )
 from watermark.hydrology.models._supply import (
@@ -221,6 +224,7 @@ __all__ = [
     "ReachTable",
     "RefillAdequacy",
     "Reservoir",
+    "ReservoirEvaporation",
     "RiverFlowStat",
     "RoundaboutFlow",
     "RoundaboutStormPeak",

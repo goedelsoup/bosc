@@ -30,12 +30,19 @@ from typing import Any
 import yaml
 
 from watermark.config import Settings, get_settings
+from watermark.hydrology.climate import load_climatology
 from watermark.hydrology.connectors.nwis import fetch_daily_discharge
 from watermark.hydrology.cooling import derive_cooling_basis
+from watermark.hydrology.et import (
+    annual_evaporation_mg,
+    penman_monteith_et0,
+    reservoir_evaporation_mgd,
+)
 from watermark.hydrology.model import (
     DroughtDrawdown,
     HydroFinding,
     RefillAdequacy,
+    ReservoirEvaporation,
     RiverFlowStat,
 )
 from watermark.hydrology.supply import campus_budget_from_cooling, load_supply
@@ -53,10 +60,15 @@ log = get_logger(__name__)
 # assumption near its 99% exceedance (no cited 7Q10 in the corpus).
 _START, _END = "1980-01-01", "2024-12-31"
 _DAYS_PER_YEAR = 365.0
+_MONTH_KEYS = ("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC")
+# ET0 -> open-water evaporation multiplier. Kept as one constant so the rate fed to
+# reservoir_evaporation_mgd() and the value recorded on ReservoirEvaporation cannot drift.
+_OPEN_WATER_COEFFICIENT = 1.0
 _FILENAME = "refill-adequacy.yaml"
 _METHOD = (
     "sequent-peak (Rippl) storage requirement on aligned daily NWIS discharge, passby-adjusted"
 )
+_METHOD_EVAP = ", net of a first-order reservoir-evaporation sink (ET0 x surface area)"
 
 
 def _exceedance(asc: list[float], frac: float) -> float:
@@ -129,6 +141,60 @@ def _river_stat(
         pct_days_below_demand=round(100.0 * below / n, 1) if n else None,
         note=note,
     )
+
+
+def _reservoir_evaporation(
+    surface_acres: float | None,
+    available_mgd: list[float],
+    dates: list[str],
+    settings: Settings,
+) -> tuple[ReservoirEvaporation | None, list[float]]:
+    """Derive the reservoir-evaporation sink and the evaporation-adjusted pumpable series.
+
+    Returns ``(evaporation, available_for_drawdown)``. When the climatology or the surface
+    areas are absent the sink is ``None`` and the pumpable series is returned unchanged.
+    """
+    if not surface_acres:
+        return None, available_mgd
+    clim = load_climatology(settings=settings)
+    if clim is None:
+        return None, available_mgd
+    try:
+        et0 = penman_monteith_et0(clim)
+    except ValueError as exc:
+        log.warning("hydro.refill.evap_skipped", reason=str(exc))
+        return None, available_mgd
+
+    monthly_evap = reservoir_evaporation_mgd(
+        et0, surface_acres, coefficient=_OPEN_WATER_COEFFICIENT
+    )
+    annual_evap = annual_evaporation_mg(monthly_evap)
+    peak_month = max(monthly_evap, key=lambda m: monthly_evap[m])
+    evaporation = ReservoirEvaporation(
+        surface_area_acres=surface_acres,
+        et0_annual_mm=et0.annual_mm,
+        open_water_coefficient=_OPEN_WATER_COEFFICIENT,
+        monthly_evap_mgd=monthly_evap,
+        annual_evap_mg=annual_evap,
+        mean_evap_mgd=round(annual_evap / _DAYS_PER_YEAR, 3),
+        peak_month=peak_month,
+        peak_evap_mgd=monthly_evap[peak_month],
+        citation=(
+            "ET0 FAO-56 Penman-Monteith (NASA POWER climatology) over "
+            f"{surface_acres:g} ac of committed reservoir surface area (water-supply.yaml)"
+        ),
+        note=(
+            "first-order screening sink; ET0 used directly as the open-water rate and "
+            "precipitation onto the pool not credited (conservative)"
+        ),
+    )
+    # Subtract each day's calendar-month evaporation from the pumpable inflow (may go
+    # negative — evaporation exceeds inflow, correctly deepening the drawdown).
+    available_for_drawdown = [
+        avail - monthly_evap[_MONTH_KEYS[int(d[5:7]) - 1]]
+        for avail, d in zip(available_mgd, dates, strict=True)
+    ]
+    return evaporation, available_for_drawdown
 
 
 def compute_refill_adequacy(
@@ -240,9 +306,19 @@ def compute_refill_adequacy(
         round(sum(aug_by_date[d] + ott_by_date[d] for d in dates) / len(dates), 1) if dates else 0.0
     )
 
+    # Reservoir-evaporation sink (#1164): a first-order open-water loss on storage — reference
+    # ET0 (FAO-56 Penman-Monteith over the committed NASA POWER climatology) x the reservoirs'
+    # combined ODNR surface area — folded into the sequent-peak as an added monthly draw on
+    # storage (subtracted from the pumpable inflow by calendar month). Conservative: ET0 is used
+    # directly as the open-water rate and precipitation onto the pool is not credited, so it can
+    # only tighten the drought bound. Absent a climatology or surface areas the sink is omitted.
+    evaporation, available_for_drawdown = _reservoir_evaporation(
+        supply.total_surface_area_acres, available_mgd, dates, settings
+    )
+
     scenarios: list[DroughtDrawdown] = []
     for label, demand in demand_scenarios:
-        required, w_start, w_len = _sequent_peak(available_mgd, demand)
+        required, w_start, w_len = _sequent_peak(available_for_drawdown, demand)
         scenarios.append(
             DroughtDrawdown(
                 label=label,
@@ -268,11 +344,23 @@ def compute_refill_adequacy(
         "Pure sequent-peak captures all surplus above passby (no pump-rate cap) — also "
         "optimistic; a real pump-capacity limit would raise the storage requirement.",
         f"Passby flows are screening assumptions ({prof.supply_river_secondary} "
-        f"{passby_secondary_cfs:g} cfs; {prof.supply_river_primary} {passby_primary_cfs:g} cfs); "
-        "reservoir evaporation is not subtracted.",
-        "The binding drought is the worst in the GAUGED record — a longer/deeper drought than "
-        f"the {record_span} record would call on more storage than shown.",
+        f"{passby_secondary_cfs:g} cfs; {prof.supply_river_primary} {passby_primary_cfs:g} cfs).",
     ]
+    if evaporation is not None:
+        caveats.append(
+            "A first-order reservoir-evaporation sink IS subtracted: FAO-56 ET0 over the "
+            f"{evaporation.surface_area_acres:g}-acre committed pool surface "
+            f"(~{evaporation.mean_evap_mgd:g} MGD mean, {evaporation.peak_evap_mgd:g} MGD in "
+            f"{evaporation.peak_month}), folded in monthly `[derived]`. ET0 is used directly as "
+            "the open-water rate and rain onto the pool is not credited, so the sink is a "
+            "conservative lower bound on the true evaporative loss."
+        )
+    else:
+        caveats.append("Reservoir evaporation is not subtracted (no climatology/surface areas).")
+    caveats.append(
+        "The binding drought is the worst in the GAUGED record — a longer/deeper drought than "
+        f"the {record_span} record would call on more storage than shown."
+    )
     ra = RefillAdequacy(
         period_start=dates[0] if dates else start_date,
         period_end=dates[-1] if dates else end_date,
@@ -283,7 +371,8 @@ def compute_refill_adequacy(
         annual_supply_multiple=round(combined_mean_mgd / gross, 1) if gross else 0.0,
         rivers=rivers,
         scenarios=scenarios,
-        method=_METHOD,
+        evaporation=evaporation,
+        method=_METHOD + (_METHOD_EVAP if evaporation is not None else ""),
         warnings=[],
         caveats=caveats,
     )
@@ -341,6 +430,23 @@ def refill_findings(ra: RefillAdequacy) -> list[HydroFinding]:
                     f"({base.pct_of_capacity:g}% -> {campus.pct_of_capacity:g}% of capacity) and "
                     f"lengthens the binding drawdown {base.worst_spell_days} -> "
                     f"{campus.worst_spell_days} days."
+                ),
+            )
+        )
+    if ra.evaporation is not None:
+        ev = ra.evaporation
+        findings.append(
+            HydroFinding(
+                subject="reservoir-evaporation sink",
+                check="refill-reservoir-evaporation",
+                ok=True,  # informational: a modeled loss now in the drought bound
+                detail=(
+                    f"a first-order open-water evaporation loss (~{ev.mean_evap_mgd:g} MGD mean, "
+                    f"{ev.peak_evap_mgd:g} MGD in {ev.peak_month}; ~{ev.annual_evap_mg:,.0f} MG/yr) "
+                    f"off the {ev.surface_area_acres:g}-acre reservoir surface is subtracted from "
+                    f"pumpable inflow in the sequent-peak, tightening every drought bound. FAO-56 "
+                    f"ET0 over the committed climatology `[derived]`; conservative (rain onto the "
+                    "pool is not credited)."
                 ),
             )
         )

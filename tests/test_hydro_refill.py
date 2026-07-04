@@ -53,6 +53,46 @@ def test_committed_refill_artifact_is_well_formed(hydro_settings: Settings) -> N
     assert ra.caveats  # the optimism caveats are recorded
 
 
+def test_committed_refill_has_a_reservoir_evaporation_sink(hydro_settings: Settings) -> None:
+    # #1164: a first-order reservoir-evaporation sink (ET0 x surface area), tagged derived and
+    # disclosed in the caveats, folded into the drought bound.
+    ra = refill.load_refill_adequacy(settings=hydro_settings)
+    assert ra is not None
+    ev = ra.evaporation
+    assert ev is not None, "the drought bound must reflect reservoir evaporation"
+    assert ev.source == "derived"
+    assert ev.surface_area_acres == pytest.approx(1603.0, abs=1.0)  # summed ODNR acreages
+    assert set(ev.monthly_evap_mgd) == {
+        "JAN",
+        "FEB",
+        "MAR",
+        "APR",
+        "MAY",
+        "JUN",
+        "JUL",
+        "AUG",
+        "SEP",
+        "OCT",
+        "NOV",
+        "DEC",
+    }
+    # Summer evaporation exceeds winter (peak in the warm months).
+    assert ev.peak_evap_mgd == max(ev.monthly_evap_mgd.values())
+    assert ev.peak_evap_mgd > ev.monthly_evap_mgd["JAN"]
+    assert ev.mean_evap_mgd > 0.0
+    # The ET provenance is disclosed in the caveats.
+    assert any("evaporation" in c.lower() and "derived" in c.lower() for c in ra.caveats)
+
+
+def test_evaporation_tightens_the_drought_bound(hydro_settings: Settings) -> None:
+    # The evaporation sink is subtracted from pumpable inflow, so the storage requirement is
+    # strictly larger than a pure passby-only sequent-peak on the same demand.
+    ra = refill.load_refill_adequacy(settings=hydro_settings)
+    assert ra is not None and ra.evaporation is not None
+    findings = refill.refill_findings(ra)
+    assert any(f.check == "refill-reservoir-evaporation" for f in findings)
+
+
 def test_campus_raises_the_drought_storage_requirement(hydro_settings: Settings) -> None:
     ra = refill.load_refill_adequacy(settings=hydro_settings)
     assert ra is not None
