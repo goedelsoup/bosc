@@ -43,7 +43,11 @@ from watermark.candidates import (
 from watermark.civic.summarize import load_committed_summaries
 from watermark.config import Settings, get_settings
 from watermark.economics.baseline import load_baseline as load_econ_baseline
-from watermark.economics.energy import load_consumer_energy, load_demand_pressure
+from watermark.economics.energy import (
+    derive_energy_burden,
+    load_consumer_energy,
+    load_demand_pressure,
+)
 from watermark.gleif import load_inventory as load_lei_inventory
 from watermark.hydrology.hydrograph_routing import build_routed_hydrograph
 from watermark.hydrology.model import ScenarioResult
@@ -329,6 +333,24 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
     econ = load_econ_baseline(settings)
     econ_energy = load_consumer_energy(settings)
     econ_demand = load_demand_pressure(settings)
+    # Household energy burden (#1110): a fully derived metric from the committed baseline's
+    # Census median household income + the committed EIA prices — no live pull. Absent when a
+    # site hasn't onboarded income yet OR its consumer-energy dataset lacks a residential
+    # electricity/gas price, so the feed is skipped and the section degrades (#781) rather than
+    # crashing the whole export on `derive_energy_burden`'s missing-price ValueError.
+    econ_burden = (
+        None
+        if (
+            econ is None
+            or econ_energy is None
+            or econ.median_household_income is None
+            or econ_energy.by_metric("electricity", "price") is None
+            or econ_energy.by_metric("natural_gas", "price") is None
+        )
+        else derive_energy_burden(
+            costs=econ_energy, income=econ.median_household_income, settings=settings
+        )
+    )
 
     # The feed registry — one row per feed, in bundle order. ``model`` set => a collection feed
     # of that item type; ``None`` => an already-provenanced object feed (its own Pydantic model,
@@ -399,6 +421,15 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
             None,
             lambda: (
                 None if econ_demand is None else economics_mod.export_demand_pressure(econ_demand)
+            ),
+        ),
+        # Household energy burden (#1110): % of median household income (Census B19013) on
+        # residential electricity + heating (EIA) — a fully derived consumer-impact metric.
+        (
+            "energy-burden",
+            None,
+            lambda: (
+                None if econ_burden is None else economics_mod.export_energy_burden(econ_burden)
             ),
         ),
         # Cross-site basin synthesis (#308/#323): the watershed points as one connected basin.

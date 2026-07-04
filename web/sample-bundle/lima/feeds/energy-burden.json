@@ -1,0 +1,98 @@
+{
+  "area": "OH",
+  "area_name": "Ohio",
+  "median_household_income": {
+    "value": 62001.0,
+    "unit": "USD/yr",
+    "source": "connector",
+    "citation": "US Census ACS5 2023 B19013_001E median household income (Allen County, Ohio)",
+    "confidence": "high",
+    "asof": "2023"
+  },
+  "avg_household_kwh_yr": {
+    "value": 10500.0,
+    "unit": "kWh/yr",
+    "source": "assumption",
+    "citation": "US avg residential use ~10,500 kWh/household/yr (EIA FAQ); assumption",
+    "confidence": "low",
+    "asof": null
+  },
+  "residential_electricity_price": {
+    "value": 16.96,
+    "unit": "cents/kWh",
+    "source": "connector",
+    "citation": "EIA ELEC.PRICE.OH-RES.A (2025)",
+    "confidence": "high",
+    "asof": null
+  },
+  "electricity_annual_cost": {
+    "value": 1780.8,
+    "unit": "USD/yr",
+    "source": "derived",
+    "citation": "10500 kWh/yr x 16.96 cents/kWh",
+    "confidence": "medium",
+    "asof": null
+  },
+  "electricity_burden_pct": {
+    "value": 2.87,
+    "unit": "percent",
+    "source": "derived",
+    "citation": "$1,781/yr electricity / $62,001 median household income",
+    "confidence": "medium",
+    "asof": null
+  },
+  "avg_household_mcf_yr": {
+    "value": 70.0,
+    "unit": "Mcf/yr",
+    "source": "assumption",
+    "citation": "US avg residential natural-gas use ~70 Mcf/household/yr (EIA consumption per customer); assumption — applies to gas-heated homes",
+    "confidence": "low",
+    "asof": null
+  },
+  "residential_gas_price": {
+    "value": 13.85,
+    "unit": "$/Mcf",
+    "source": "connector",
+    "citation": "EIA NG.N3010OH3.A (2025)",
+    "confidence": "high",
+    "asof": null
+  },
+  "gas_annual_cost": {
+    "value": 969.5,
+    "unit": "USD/yr",
+    "source": "derived",
+    "citation": "70 Mcf/yr x 13.85 $/Mcf",
+    "confidence": "medium",
+    "asof": null
+  },
+  "gas_burden_pct": {
+    "value": 1.56,
+    "unit": "percent",
+    "source": "derived",
+    "citation": "$970/yr gas / $62,001 median household income",
+    "confidence": "medium",
+    "asof": null
+  },
+  "combined_annual_cost": {
+    "value": 2750.3,
+    "unit": "USD/yr",
+    "source": "derived",
+    "citation": "$1,781/yr electricity + $970/yr gas",
+    "confidence": "medium",
+    "asof": null
+  },
+  "combined_burden_pct": {
+    "value": 4.44,
+    "unit": "percent",
+    "source": "derived",
+    "citation": "$2,750/yr electricity+gas / $62,001 income",
+    "confidence": "medium",
+    "asof": null
+  },
+  "method": "annual home-energy spend / median household income. Electricity = avg household kWh/yr x EIA residential cents/kWh; gas = avg household Mcf/yr x EIA residential $/Mcf (gas-heated home); burden = spend / Census B19013 median household income.",
+  "caveats": [
+    "Median household income is county-level (Census B19013); residential energy prices are state averages (EIA) — the burden mixes a county denominator with state prices.",
+    "The gas and combined burdens assume a gas-heated home at average use; a home heating with electricity or another fuel carries no gas burden.",
+    "Household electricity/gas use are national-average assumptions — actual use varies with climate, home size, and efficiency."
+  ]
+}

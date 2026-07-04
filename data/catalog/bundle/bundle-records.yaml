@@ -40,5 +40,8 @@ notes: >-
   paths resolve against (#1090/#1093), derived from the feeds above so it adds no new committed
   upstream. The `routed-hydrograph` feed (#1184) routes the loop's design-storm hydrographs down the
   cited confluence graph, reading the `hydrology` bundle's network topology + reach geometry.
+  The `energy-burden` feed (#1110) derives the household energy burden — % of median household
+  income (economics-baseline B19013) spent on residential electricity + heating (eia-consumer-energy)
+  — adding no new committed upstream (both inputs are already declared dependencies).
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.

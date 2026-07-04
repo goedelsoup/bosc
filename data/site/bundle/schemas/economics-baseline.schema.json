@@ -325,6 +325,17 @@
       ],
       "default": null
     },
+    "median_household_income": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
     "note": {
       "default": "",
       "title": "Note",

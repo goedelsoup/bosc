@@ -196,6 +196,43 @@ class FacilityDemandPressure(BaseModel):
     caveats: list[str] = []
 
 
+class EnergyBurden(BaseModel):
+    """Household energy burden: annual home-energy spend as a % of median household income.
+
+    A fully **[derived]** consumer-impact metric (issue #1110) — every input carries its
+    citation (EIA residential electricity + natural-gas prices, Census B19013 median
+    household income), unlike the deliberately-STYLIZED facility price-pressure band
+    (:class:`FacilityDemandPressure`). Electricity burden uses the average household's
+    annual electricity use; the gas burden applies to a **gas-heated** household (a stated
+    assumption — not every home heats with gas), so the combined burden is the burden on a
+    gas-heated home at average use, a reference figure rather than a population mean.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    area: str  # "OH" — residential energy prices are state-level
+    area_name: str  # "Ohio"
+    median_household_income: ProvenancedValue  # Census B19013 (connector); county-level
+    avg_household_kwh_yr: ProvenancedValue  # assumption: avg residential annual electricity use
+    residential_electricity_price: ProvenancedValue  # EIA (connector): cents/kWh
+    electricity_annual_cost: ProvenancedValue  # derived: kWh/yr x price
+    electricity_burden_pct: ProvenancedValue  # derived: electricity cost / income
+    avg_household_mcf_yr: (
+        ProvenancedValue  # assumption: avg residential annual gas use (heated home)
+    )
+    residential_gas_price: ProvenancedValue  # EIA (connector): $/Mcf
+    gas_annual_cost: ProvenancedValue  # derived: Mcf/yr x price
+    gas_burden_pct: ProvenancedValue  # derived: gas cost / income
+    combined_annual_cost: ProvenancedValue  # derived: electricity + gas $/yr
+    combined_burden_pct: ProvenancedValue  # derived: (electricity + gas) / income
+    method: str = (
+        "annual home-energy spend / median household income. Electricity = avg household "
+        "kWh/yr x EIA residential cents/kWh; gas = avg household Mcf/yr x EIA residential "
+        "$/Mcf (gas-heated home); burden = spend / Census B19013 median household income."
+    )
+    caveats: list[str] = []
+
+
 class EconomicBaseline(BaseModel):
     """The assembled localized baseline: latest industry mix + employment trend (+ population)."""
 
@@ -206,4 +243,7 @@ class EconomicBaseline(BaseModel):
     latest: IndustryEmployment
     trend: list[YearTotal] = []  # total covered employment over years
     population: PopulationSeries | None = None  # ACS5 (live fetch keyed); omitted if unreachable
+    # ACS5 median household income (B19013, #1110) — the energy-burden denominator; keyed live
+    # fetch, so omitted (not faked) when unreachable. Optional keeps pre-#1110 baselines valid.
+    median_household_income: ProvenancedValue | None = None
     note: str = ""

@@ -10,6 +10,7 @@ import type {
   ConsumerEnergyCosts,
   ConsumerEnergyPrice,
   EconomicBaseline,
+  EnergyBurden,
   ProvenancedValue,
 } from "~/lib/feeds";
 import { withSite } from "~/lib/site";
@@ -18,11 +19,18 @@ const eb = hasFeed("economics-baseline") ? loadFeed<EconomicBaseline>("economics
 // State-level EIA consumer energy costs (issue #1125) — guarded independently of the county
 // baseline so a site can carry one without the other; degrades to nothing when the feed is absent.
 const ce = hasFeed("consumer-energy") ? loadFeed<ConsumerEnergyCosts>("consumer-energy") : null;
+// Household energy burden (issue #1110) — a fully derived consumer-impact metric; present only
+// where the site's baseline carries median household income, absent (section hidden) otherwise.
+const burden = hasFeed("energy-burden") ? loadFeed<EnergyBurden>("energy-burden") : null;
 const num = (v?: ProvenancedValue | null): string =>
   v?.value == null ? "—" : Math.round(v.value).toLocaleString("en-US");
-// QCEW pay figures are dollars — render with a currency prefix (issue #1109).
+// QCEW pay figures (#1109) and household energy-burden dollars (#1110) — currency prefix.
 const usd = (v?: ProvenancedValue | null): string =>
   v?.value == null ? "—" : `$${Math.round(v.value).toLocaleString("en-US")}`;
+const pctStr = (v?: ProvenancedValue | null): string => (v?.value == null ? "—" : `${v.value.toFixed(2)}%`);
+// The combined home-energy spend (electricity + gas) behind the combined burden % — the
+// backend-derived value, not a re-sum, so the page and feed agree by construction (#1110).
+const combinedEnergyCost = burden?.combined_annual_cost.value ?? 0;
 const lq = (v?: ProvenancedValue | null): number | null => (v?.value == null ? null : v.value);
 // A location quotient is the county's employment share over the national share:
 // ≥ 1.25 means the county does much more of that work than the nation (it exports).
@@ -233,6 +241,50 @@ const energyCharts = [
             ))}
           </div>
           {ce.note && <p class="card-meta">{ce.note}</p>}
+        </>
+      )
+    }
+
+    {
+      burden && (
+        <>
+          <h2 id="energy-burden">Household energy burden</h2>
+          <p class="section-lead">
+            What that energy costs a typical household: the share of <strong>{burden.area_name}</strong>'s
+            median household income (<strong>{usd(burden.median_household_income)}/yr</strong>, US Census
+            B19013) spent on residential electricity and heating. A fully <code>[derived]</code> figure —
+            annual spend = average household use × the EIA residential price — unlike the stylized
+            demand→price band. The gas and combined rows assume a gas-heated home at average use.
+          </p>
+          <table>
+            <thead>
+              <tr><th>Fuel</th><th>Annual cost</th><th>Burden (% of income)</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Electricity</td>
+                <td>{usd(burden.electricity_annual_cost)}</td>
+                <td>{pctStr(burden.electricity_burden_pct)}</td>
+              </tr>
+              <tr>
+                <td>Natural gas (heated home)</td>
+                <td>{usd(burden.gas_annual_cost)}</td>
+                <td>{pctStr(burden.gas_burden_pct)}</td>
+              </tr>
+              <tr>
+                <td><strong>Combined</strong></td>
+                <td><strong>${Math.round(combinedEnergyCost).toLocaleString("en-US")}</strong></td>
+                <td><strong>{pctStr(burden.combined_burden_pct)}</strong></td>
+              </tr>
+            </tbody>
+          </table>
+          {burden.caveats && burden.caveats.length > 0 && (
+            <ul class="card-meta">
+              {burden.caveats.map((c) => (
+                <li>{c}</li>
+              ))}
+            </ul>
+          )}
         </>
       )
     }

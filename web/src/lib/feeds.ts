@@ -421,7 +421,29 @@ export interface EconomicBaseline {
   };
   trend: EconTrendPoint[];
   population?: { points: EconPopPoint[]; [k: string]: unknown } | null;
+  median_household_income?: ProvenancedValue | null; // ACS5 B19013 (#1110)
   note?: string | null;
+}
+
+/** Household energy burden (`energy-burden` feed, #1110): % of median household income
+ *  (Census B19013) spent on residential electricity + heating (EIA). A fully `[derived]`
+ *  consumer-impact metric — every figure carries its citation. */
+export interface EnergyBurden {
+  area: string;
+  area_name: string;
+  median_household_income: ProvenancedValue; // connector (Census B19013)
+  avg_household_kwh_yr: ProvenancedValue; // assumption
+  residential_electricity_price: ProvenancedValue; // connector (EIA)
+  electricity_annual_cost: ProvenancedValue; // derived
+  electricity_burden_pct: ProvenancedValue; // derived
+  avg_household_mcf_yr: ProvenancedValue; // assumption
+  residential_gas_price: ProvenancedValue; // connector (EIA)
+  gas_annual_cost: ProvenancedValue; // derived
+  gas_burden_pct: ProvenancedValue; // derived
+  combined_annual_cost: ProvenancedValue; // derived: electricity + gas $/yr
+  combined_burden_pct: ProvenancedValue; // derived
+  method?: string;
+  caveats?: string[];
 }
 
 /** One annual point on an EIA series (`consumer-energy` feed): `period` + native-unit `value`.

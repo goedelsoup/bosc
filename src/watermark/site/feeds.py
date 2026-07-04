@@ -79,7 +79,11 @@ from watermark.provenance import source_is_verified
 #   `avg_annual_pay` (USD/year) and `avg_weekly_wage` (USD/week) `ProvenancedValue`s (already in the
 #   fetched CSV, previously dropped). Optional/backward-compatible: a suppressed or zero-wage slice
 #   omits the field rather than asserting a fabricated $0.
-CONTRACT_VERSION = "1.15.0"
+# 1.16.0: adds the `energy-burden` object feed (#1110) — median household income (Census B19013)
+#   with derived electricity / gas / combined household energy burden (% of income), a fully
+#   `[derived]` consumer-impact metric alongside `consumer-energy`. Present only where the site's
+#   committed baseline carries income; absent (section degrades) otherwise.
+CONTRACT_VERSION = "1.16.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
