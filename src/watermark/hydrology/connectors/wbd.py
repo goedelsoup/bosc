@@ -25,6 +25,7 @@ import httpx
 from pydantic import BaseModel, ConfigDict
 
 from watermark.config import Settings, get_settings
+from watermark.connectors import to_float, to_str
 from watermark.hydrology.connectors._cache import cached_get
 from watermark.logging import get_logger
 
@@ -53,20 +54,6 @@ class HucBoundary(BaseModel):
     area_sqkm: float | None  # the published HU area
     to_huc: str | None  # the downstream HUC the unit drains to (tohuc), where present
     geometry: dict[str, Any]  # GeoJSON geometry (Polygon/MultiPolygon), WGS84 verbatim
-
-
-def _s(value: Any) -> str | None:
-    if value is None:
-        return None
-    text = str(value).strip()
-    return text or None
-
-
-def _f(value: Any) -> float | None:
-    try:
-        return float(value)
-    except (TypeError, ValueError):
-        return None
 
 
 def fetch_huc_at_point(
@@ -126,9 +113,9 @@ def fetch_huc_at_point(
         level=level,
         hu_label=_HU_LABEL[level],
         name=str(props.get("name") or "").strip(),
-        states=_s(props.get("states")),
-        area_sqkm=_f(props.get("areasqkm")),
-        to_huc=_s(props.get("tohuc")),
+        states=to_str(props.get("states")),
+        area_sqkm=to_float(props.get("areasqkm")),
+        to_huc=to_str(props.get("tohuc")),
         geometry=geometry,
     )
 

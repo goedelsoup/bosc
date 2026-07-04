@@ -21,6 +21,9 @@ storage:
 - relpath: reference/hydrology/low-flow-7q10.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: reference/hydrology/mainstem-gages.yaml
+  media_type: application/x-yaml
+  lfs: false
 refresh:
   cadence: on-demand
 provenance: derived
@@ -30,5 +33,6 @@ tags:
 - assimilative-capacity
 - npdes
 - usgs-nwis
-notes: 'Two files under one entry: low-flow-7q10.yaml is document-cited (Ohio EPA fact sheets), low-flow-7q10.derived.yaml
-  is NWIS→LP3-derived — they are not interchangeable.'
+notes: 'Three files under one entry: low-flow-7q10.yaml is document-cited (Ohio EPA fact sheets), low-flow-7q10.derived.yaml
+  is NWIS→LP3-derived, and mainstem-gages.yaml is the hand-curated input table (gage IDs + ECHO aliases)
+  the derivation reads — they are not interchangeable.'

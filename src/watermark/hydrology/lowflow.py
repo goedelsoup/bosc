@@ -10,6 +10,7 @@ only cross-checks it.
 from __future__ import annotations
 
 import re
+from pathlib import Path
 from typing import Any
 
 import yaml
@@ -27,7 +28,7 @@ def _normalize(water: str) -> str:
     return base.strip().lower()
 
 
-def _reference_path(settings: Settings) -> Any:
+def _reference_path(settings: Settings) -> Path:
     return settings.data_dir / "reference" / "hydrology" / "low-flow-7q10.yaml"
 
 

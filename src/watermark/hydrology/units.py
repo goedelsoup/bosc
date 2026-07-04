@@ -10,8 +10,10 @@ are quoted in **MGD** (million gallons per day) per the source documents.
 from __future__ import annotations
 
 # 1 MGD = 10^6 gal/day. 1 ft^3 = 7.480519 gal; 1 day = 86_400 s.
-#   (10^6 / 7.480519) / 86_400 = 1.54723 ft^3/s.  (USGS conversion factor.)
-MGD_TO_CFS: float = 1.547
+#   (10^6 / 7.480519) / 86_400 = 1.5472287516513326 ft^3/s.  (USGS conversion factor.)
+# Carry the full-precision quotient, not the 1.547 round-off (a -0.015% bias in the one
+# module that claims conversion rigor).
+MGD_TO_CFS: float = 1.5472287516513326
 CFS_TO_MGD: float = 1.0 / MGD_TO_CFS
 
 # 1 square mile = 640 acres.

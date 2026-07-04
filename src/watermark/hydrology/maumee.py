@@ -13,15 +13,16 @@ committed, cited reference table is the grounded source; we never invent a WLA.
 
 from __future__ import annotations
 
-from typing import Any
+from pathlib import Path
 
 import yaml
 
 from watermark.config import Settings, get_settings
 from watermark.hydrology.model import MaumeeTmdl, ProvenancedValue, TmdlWla
+from watermark.provenance import as_confidence
 
 
-def _reference_path(settings: Settings) -> Any:
+def _reference_path(settings: Settings) -> Path:
     return settings.data_dir / "reference" / "hydrology" / "maumee-tmdl-wla.yaml"
 
 
@@ -41,13 +42,13 @@ def load_maumee_tmdl(*, settings: Settings | None = None) -> MaumeeTmdl | None:
                 float(entry["spring_tp_metric_tons"]),
                 "metric tons",
                 citation,
-                confidence=str(entry.get("confidence", "high")),  # type: ignore[arg-type]
+                confidence=as_confidence(entry.get("confidence", "high")),
             ),
             daily_tp=ProvenancedValue.from_document(
                 float(entry["daily_tp_kg"]),
                 "kg/day",
                 citation,
-                confidence=str(entry.get("confidence", "high")),  # type: ignore[arg-type]
+                confidence=as_confidence(entry.get("confidence", "high")),
             ),
             note=entry.get("note"),
         )

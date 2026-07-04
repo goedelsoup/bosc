@@ -80,7 +80,7 @@ scenario:
     seasonal_months: null
 cooling_model: evaporative_tower
 consumptive_loss:
-  value: 4.851392
+  value: 4.852109365178579
   unit: cfs
   source: derived
   citation: 3.92 MGD x 0.8 consumptive (scenario buildout)
@@ -114,7 +114,7 @@ balance:
     inflow: null
     consumptive_use: null
     return_flow:
-      value: 4.641
+      value: 4.6416862549539974
       unit: cfs
       source: document
       citation: watch-shawnee-ii-wwtp (3.0 MGD design)
@@ -131,7 +131,7 @@ balance:
     inflow: null
     consumptive_use: null
     return_flow:
-      value: 2.3205
+      value: 2.3208431274769987
       unit: cfs
       source: document
       citation: watch-american-bath-wwtp (1.5 MGD design)
@@ -148,7 +148,7 @@ balance:
     inflow: null
     consumptive_use: null
     return_flow:
-      value: 1.8563999999999998
+      value: 1.856674501981599
       unit: cfs
       source: document
       citation: watch-american-ii-wwtp (1.2 MGD design)
@@ -164,14 +164,14 @@ balance:
       lon: null
     inflow: null
     consumptive_use:
-      value: 4.851392
+      value: 4.852109365178579
       unit: cfs
       source: derived
       citation: 3.92 MGD x 0.8 consumptive (scenario buildout)
       confidence: medium
       asof: null
     return_flow:
-      value: 3.8674999999999997
+      value: 3.8680718791283315
       unit: cfs
       source: document
       citation: bosc-fm2 (2.5 MGD industrial discharge to Lima)
@@ -213,14 +213,14 @@ assimilative:
     confidence: high
     asof: null
   discharge:
-    value: 4.641
+    value: 4.6416862549539974
     unit: cfs
     source: document
     citation: watch-shawnee-ii-wwtp (3.0 MGD design)
     confidence: high
     asof: null
   upstream_returns: null
-  dilution_ratio: 0.043094160741219564
+  dilution_ratio: 0.04308778944
   flag: violation
   detail: Ottawa River 7Q10 0.20 cfs vs discharge 4.64 cfs -> 0.04:1 dilution (violation)
 - receiving_water: Pike Run
@@ -234,14 +234,14 @@ assimilative:
     confidence: high
     asof: null
   discharge:
-    value: 2.3205
+    value: 2.3208431274769987
     unit: cfs
     source: document
     citation: watch-american-bath-wwtp (1.5 MGD design)
     confidence: high
     asof: null
   upstream_returns: null
-  dilution_ratio: 0.012928248222365869
+  dilution_ratio: 0.012926336832
   flag: violation
   detail: Pike Run 7Q10 0.03 cfs vs discharge 2.32 cfs -> 0.01:1 dilution (violation)
 - receiving_water: Dug Run
@@ -255,13 +255,13 @@ assimilative:
     confidence: high
     asof: null
   discharge:
-    value: 1.8563999999999998
+    value: 1.856674501981599
     unit: cfs
     source: document
     citation: watch-american-ii-wwtp (1.2 MGD design)
     confidence: high
     asof: null
   upstream_returns: null
-  dilution_ratio: 0.4201680672268908
+  dilution_ratio: 0.42010594704000004
   flag: violation
   detail: Dug Run 7Q10 0.78 cfs vs discharge 1.86 cfs -> 0.42:1 dilution (violation)
