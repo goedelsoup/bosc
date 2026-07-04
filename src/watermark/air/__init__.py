@@ -19,6 +19,12 @@ Tier-0 pieces:
 - :mod:`watermark.air.scenario` — the scenario runner + synthetic-minor NSR
   cap-exceedance check.
 
+Tier-1 (gated behind Tier-0):
+
+- :mod:`watermark.air.aermod` — the EPA AERMOD dispersion engine (#1178): build a
+  control + source deck from the genset stack params and permit emission rates, run the
+  vendored binary (degrades gracefully when absent), parse the modeled concentrations.
+
 Every figure carries a :class:`watermark.hydrology.model.ProvenancedValue`; nothing is
 hardcoded to a single site — emission factors, engine rating, fleet, and permit caps
 resolve from the active site's profile / permit extraction.

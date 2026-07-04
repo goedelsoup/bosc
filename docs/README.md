@@ -14,6 +14,7 @@ artifacts.
 | `HYDROLOGY.md` | Tier-0 municipal water-flow findings. | **`watermark`-generated** (`watermark.hydrology`); figures tagged `[verified]`/`[assumption]` |
 | `COMPUTE.md` | The facility's compute / AI capacity, derived from disclosed power/water/footprint by three bracketing methods. | **hand-written** — figures derived by `watermark compute` (`watermark.facility`), which prints to console; the doc is authored from that output (no compute-doc writer yet). Figures tagged `[verified]`/`[reference]`/`[inference]` |
 | `ECONOMICS.md` | Demand-side companion to HYDROLOGY — regional cloud-consumer demand & public benefits. | hand-assembled over cited sources |
+| `AERMOD.md` | Tier-1 air-dispersion engine (`watermark.air.aermod`): binary provenance/pinning + the assumed-stack-geometry caveat. | hand-written (technical note, `**Status:**`-headed) |
 | `onboarding.md` | Runbook for bringing a new watershed-point site online (`watermark onboard <slug>` → review gate → manual promotion). | hand-written |
 
 ## Subdirs
