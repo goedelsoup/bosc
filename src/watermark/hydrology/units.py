@@ -19,6 +19,12 @@ CFS_TO_MGD: float = 1.0 / MGD_TO_CFS
 # 1 square mile = 640 acres.
 ACRES_PER_SQMI: float = 640.0
 
+# 1 acre = 43_560 ft^2; 1 ft^3 = 7.480519 gal -> 1 acre-ft = 325_851 gal = 0.325851 MG.
+MG_PER_ACRE_FT: float = 43_560.0 * 7.480519 / 1e6
+# 1 ft = 304.8 mm, so 1 mm of depth over 1 acre = MG_PER_ACRE_FT / 304.8 MG. The screening
+# reservoir-evaporation sink (depth of ET0 over the pool surface) is quoted in mm over acres.
+MG_PER_ACRE_MM: float = MG_PER_ACRE_FT / 304.8
+
 
 def mgd_to_cfs(mgd: float) -> float:
     """Million gallons/day -> cubic feet/second."""
@@ -38,3 +44,8 @@ def acres_to_sqmi(acres: float) -> float:
 def sqmi_to_acres(sqmi: float) -> float:
     """Square miles -> acres."""
     return sqmi * ACRES_PER_SQMI
+
+
+def acre_mm_to_mg(mm: float, acres: float) -> float:
+    """A depth (mm) spread over a surface (acres) -> volume (million gallons)."""
+    return mm * acres * MG_PER_ACRE_MM

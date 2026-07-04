@@ -56,3 +56,16 @@ def test_et0_missing_parameter_raises() -> None:
     )
     with pytest.raises(ValueError, match=r"ALLSKY_SFC_SW_DWN|T2M_MAX|RH2M|WS2M"):
         et.penman_monteith_et0(thin)
+
+
+def test_reservoir_evaporation_scales_with_area_and_matches_units() -> None:
+    et0 = et.Et0Climatology(monthly_mm_day=dict.fromkeys(et._MONTHS, 5.0), annual_mm=1825.0)
+    evap = et.reservoir_evaporation_mgd(et0, 1000.0)
+    assert set(evap) == set(et._MONTHS)
+    # 5 mm/day over 1000 acres = 5 * 1000 * 0.00106906 MG/day.
+    assert evap["JUL"] == pytest.approx(5.0 * 1000.0 * 0.00106906, abs=1e-3)
+    # Doubling the surface area doubles the loss (modulo 4-dp rounding).
+    doubled = et.reservoir_evaporation_mgd(et0, 2000.0)
+    assert doubled["JUL"] == pytest.approx(2 * evap["JUL"], abs=1e-3)
+    # Days-weighted annual volume (flat 5 mm/day -> 365 * daily MGD).
+    assert et.annual_evaporation_mg(evap) == pytest.approx(365 * evap["JAN"], abs=0.2)

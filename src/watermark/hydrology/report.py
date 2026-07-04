@@ -355,9 +355,20 @@ def _render_refill_adequacy(emit: Callable[[str], None], settings: Settings) -> 
         f"drawdown).{high_txt} `[inference: derived]` So refill is adequate and the system survives the "
         "historical record — but the campus measurably erodes the buffer, and **a drought longer or "
         f"deeper than {ra.period_start[:4]}—{ra.period_end[:4]} is the residual exposure** this "
-        "screen cannot bound. The estimate is "
-        "*optimistic* (the Auglaize gage is downstream of the intakes; no pump-rate cap or reservoir "
-        "evaporation), so the real margin is tighter.\n"
+        "screen cannot bound.\n"
+    )
+    ev = ra.evaporation
+    evap_txt = (
+        " A first-order reservoir-evaporation sink is folded in — FAO-56 ET0 over the "
+        f"{ev.surface_area_acres:g}-acre reservoir surface, ~**{ev.mean_evap_mgd:g} MGD** mean "
+        f"(peaking at {ev.peak_evap_mgd:g} MGD in {ev.peak_month}) `[derived]`, which tightens the "
+        "drought bound above."
+        if ev is not None
+        else " Reservoir evaporation is not yet subtracted."
+    )
+    emit(
+        f"\nThe estimate remains *optimistic* (the Auglaize gage is downstream of the intakes; no "
+        f"pump-rate cap), so the real margin is still somewhat tighter than shown.{evap_txt}\n"
     )
 
 

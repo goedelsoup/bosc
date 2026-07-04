@@ -22,6 +22,7 @@ import math
 from pydantic import BaseModel, ConfigDict
 
 from watermark.hydrology.connectors.nasa_power import NasaPowerClimatology
+from watermark.hydrology.units import acre_mm_to_mg
 
 _MONTHS = ("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC")
 _DAYS = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)  # climatology: leap years ignored
@@ -122,3 +123,27 @@ def penman_monteith_et0(
 
     annual = round(sum(monthly[m] * _DAYS[i] for i, m in enumerate(_MONTHS)), 1)
     return Et0Climatology(monthly_mm_day=monthly, annual_mm=annual)
+
+
+# --- Open-water evaporation ------------------------------------------------------------
+# A first-order screening sink for a standing water surface (e.g. a reservoir). Reference
+# ET0 (grass) is used *directly* as the open-water evaporation depth — a defensible
+# screening proxy: on an annual basis lake evaporation is comparable to ET0, though a deep
+# reservoir's heat storage shifts the seasonal timing (summer lake evaporation runs a
+# little below ET0, autumn a little above). The ``coefficient`` knob leaves room to apply a
+# pan/lake factor later; it defaults to 1.0 (ET0 as-is).
+
+
+def reservoir_evaporation_mgd(
+    et0: Et0Climatology, surface_acres: float, *, coefficient: float = 1.0
+) -> dict[str, float]:
+    """Monthly open-water evaporation (MGD) = ET0(mm/day) x surface(acres), JAN..DEC."""
+    return {
+        m: round(acre_mm_to_mg(et0.monthly_mm_day[m] * coefficient, surface_acres), 4)
+        for m in _MONTHS
+    }
+
+
+def annual_evaporation_mg(monthly_mgd: dict[str, float]) -> float:
+    """Annual evaporation volume (MG) from a JAN..DEC monthly-MGD map (days-weighted)."""
+    return round(sum(monthly_mgd[m] * _DAYS[i] for i, m in enumerate(_MONTHS)), 1)
