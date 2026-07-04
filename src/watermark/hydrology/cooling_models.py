@@ -323,7 +323,9 @@ def _derive_evaporative_tower(
         high_cite = (
             f"{it_load_mw:g} MW x {wue_l_per_kwh:g} L/kWh (power x WUE; no disclosed blowdown)"
         )
-        makeup_high_cite = "upper-bound intake = central power-method makeup (no disclosed blowdown)"
+        makeup_high_cite = (
+            "upper-bound intake = central power-method makeup (no disclosed blowdown)"
+        )
 
     return CoolingBasis(
         cooling_model=CoolingModelType.EVAPORATIVE_TOWER,
