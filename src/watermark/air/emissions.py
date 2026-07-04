@@ -37,7 +37,7 @@ from watermark.air.model import (
 from watermark.config import Settings, get_settings
 from watermark.hydrology.model import ProvenancedValue
 from watermark.logging import get_logger
-from watermark.sites import active_profile
+from watermark.sites import active_profile, is_reference_site
 
 log = get_logger(__name__)
 
@@ -125,7 +125,7 @@ def ap42_factors(
         "VOC": (voc_out, "Table 3.4-1 TOC x 0.91 non-methane fraction"),
     }
 
-    factors: dict[str, EmissionFactor] = {}
+    factors: dict[Pollutant, EmissionFactor] = {}
     for pol in POLLUTANTS:
         lb_per_hp_hr, why = out_factors[pol]
         per_mwh = lb_per_hp_hr * hp_hr_per_mwh
@@ -207,7 +207,7 @@ def permit_factors(
             ),
         )
 
-    factors: dict[str, EmissionFactor] = {
+    factors: dict[Pollutant, EmissionFactor] = {
         "NOx": _factor(
             "NOx", nox_hr, nox_hr / engine_mw.value, f"per-engine NOx at {load_label} (B.4.b)"
         ),
@@ -255,22 +255,29 @@ def reconcile(
     for pol in POLLUTANTS:
         a = ap42.factor(pol)
         p = permit.factor(pol)
-        a_hr = a.per_engine_hour.value if a else None
-        p_hr = p.per_engine_hour.value if p else None
-        ratio = round(a_hr / p_hr, 3) if (a_hr and p_hr and p_hr > 0) else None
+        a_hr = a.per_engine_hour.value if a is not None else None
+        p_hr = p.per_engine_hour.value if p is not None else None
         if a_hr is None and p_hr is None:
             continue
-        if ratio is None:
+        # Explicit None checks — a valid 0.0 rate is "present", not absent, so it must not
+        # be misread as ungrounded. Division still guards against a zero denominator.
+        if a_hr is None or p_hr is None:
+            ratio = None
             note = (
                 "only AP-42 grounds this pollutant"
                 if p_hr is None
                 else "only the permit grounds this"
             )
-        elif pol in CAPPED_POLLUTANTS:
-            hot = "over" if ratio >= 1 else "under"
-            note = f"AP-42 uncontrolled {hot}-predicts the certified Tier-2 rate by {abs(ratio - 1) * 100:.0f}%"
+        elif p_hr == 0:
+            ratio = None
+            note = "permit rate is zero — ratio undefined"
         else:
-            note = "AP-42 generic vs permit Tier-2 standard"
+            ratio = round(a_hr / p_hr, 3)
+            if pol in CAPPED_POLLUTANTS:
+                hot = "over" if ratio >= 1 else "under"
+                note = f"AP-42 uncontrolled {hot}-predicts the certified Tier-2 rate by {abs(ratio - 1) * 100:.0f}%"
+            else:
+                note = "AP-42 generic vs permit Tier-2 standard"
         out.append(
             FactorReconciliation(
                 pollutant=pol,
@@ -284,7 +291,19 @@ def reconcile(
 
 
 def _permit_path(settings: Settings) -> Path:
-    """The active site's air-permit extraction path (the #1180 seam — Lima default today)."""
+    """The active site's air-permit extraction path (the #1180 seam — Lima default today).
+
+    Guarded to the reference site: ``settings.extracted_dir`` is a *shared* tree, so the
+    Lima permit relpath resolves for every site — without this a facility-bearing non-Lima
+    site (e.g. fort-wayne) would silently load Lima's rates/caps. Until #1180 wires
+    ``SiteFacility.air_permit_relpath``, another site must pass an explicit ``permit_path``.
+    """
+    if not is_reference_site(settings.site):
+        raise NotImplementedError(
+            f"site {settings.site!r} has no wired air-permit path — permit-based factors "
+            "and NSR caps are the reference site's until #1180 adds "
+            "SiteFacility.air_permit_relpath. Pass an explicit permit_path to permit_factors()."
+        )
     return settings.extracted_dir / _DEFAULT_PERMIT_RELPATH
 
 
@@ -309,9 +328,15 @@ def nsr_caps(permit_path: Path) -> dict[str, ProvenancedValue]:
 
 
 def load_nsr_caps(*, settings: Settings | None = None) -> dict[str, ProvenancedValue]:
-    """Profile-driven NSR caps for the active site (empty if it has no permit facility)."""
+    """Profile-driven NSR caps for the active site.
+
+    Empty when the site has no disclosed facility, or no wired air permit yet (a non-
+    reference site pre-#1180): honestly "no caps known" rather than silently inheriting
+    the reference site's caps. An AP-42 tonnage run on such a site simply skips the cap
+    check; a permit-basis run raises via :func:`_permit_path`.
+    """
     settings = settings or get_settings()
-    if active_profile(settings).facility is None:
+    if active_profile(settings).facility is None or not is_reference_site(settings.site):
         return {}
     return nsr_caps(_permit_path(settings))
 

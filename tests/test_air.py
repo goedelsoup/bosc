@@ -127,6 +127,21 @@ def test_ap42_idle_regime_is_unsupported(air_settings: Settings) -> None:
         load_emission_factors(basis="ap42", load_regime="idle", settings=air_settings)
 
 
+def test_non_reference_site_does_not_silently_load_lima_permit() -> None:
+    # fort-wayne has a facility but no wired air permit; the shared extracted tree means
+    # the Lima permit relpath would otherwise resolve. Permit-basis factors must fail
+    # clearly, and its NSR caps must be empty — never Lima's 235.62 / 96.06.
+    fw = Settings(
+        site="fort-wayne",
+        data_dir=REPO_ROOT / "data",
+        econ_offline=True,
+        econ_fixtures_dir=REPO_ROOT / "tests" / "fixtures" / "economics",
+    )
+    with pytest.raises(NotImplementedError, match="air_permit_relpath|permit_path"):
+        load_emission_factors(basis="permit", settings=fw)
+    assert load_nsr_caps(settings=fw) == {}
+
+
 # --- #1176: reliability dispatch-trigger model --------------------------------------
 
 

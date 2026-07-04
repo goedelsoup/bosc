@@ -20,7 +20,13 @@ import yaml
 from pydantic import BaseModel, ConfigDict
 
 from watermark.air.emissions import load_emission_factors, load_nsr_caps
-from watermark.air.model import POLLUTANTS, FactorBasis, GensetEmissionFactors, LoadRegime
+from watermark.air.model import (
+    POLLUTANTS,
+    FactorBasis,
+    GensetEmissionFactors,
+    LoadRegime,
+    Pollutant,
+)
 from watermark.config import Settings, get_settings
 from watermark.hydrology.model import ProvenancedValue
 from watermark.logging import get_logger
@@ -72,7 +78,7 @@ class AirScenarioResult(BaseModel):
 
     scenario: AirScenario
     engine_mw: ProvenancedValue
-    fleet_size: int  # data-hall gensets modeled (HUBGEN P115 excluded — see note)
+    fleet_size: int  # gensets modeled (the site's disclosed count; smaller units not split out)
     fuel: str
     emissions: list[PollutantTonnage]
     any_cap_exceeded: bool
@@ -217,9 +223,9 @@ def evaluate(
         any_cap_exceeded=bool(breached),
         breached_pollutants=breached,
         note=(
-            f"Fleet = {fleet} data-hall gensets at the standard-unit factor; the single smaller "
-            "HUBGEN (P115) is excluded (< 1% of fleet, conservative). Caps are rolling-12-month "
-            "synthetic-minor limits (P001-P115 combined)."
+            f"Fleet = {fleet} gensets at the standard-unit factor (the site's disclosed count); "
+            "any separate smaller units are not modeled individually (conservative). Caps, where "
+            "present, are the facility-wide synthetic-minor limits."
         ),
     )
     log.info(
@@ -233,7 +239,7 @@ def evaluate(
 
 
 def cap_breach_runtime(
-    pollutant: str,
+    pollutant: Pollutant,
     *,
     settings: Settings | None = None,
     factors: GensetEmissionFactors | None = None,
@@ -249,7 +255,7 @@ def cap_breach_runtime(
     )
     if factors is None:
         return None
-    ef = factors.factor(pollutant)  # type: ignore[arg-type]
+    ef = factors.factor(pollutant)
     cap = load_nsr_caps(settings=settings).get(pollutant)
     if ef is None or cap is None:
         return None
