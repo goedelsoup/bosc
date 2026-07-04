@@ -63,6 +63,7 @@ def derive_cooling_basis(
     blowdown_mgd: float | None = None,
     wue_l_per_kwh: float | None = None,
     cycles: float | None = None,
+    heat_reject_multiplier: float | None = None,
 ) -> CoolingBasis:
     """Derive the cooling design basis for the active site's cooling archetype.
 
@@ -96,5 +97,6 @@ def derive_cooling_basis(
         blowdown_mgd=blowdown_mgd,
         wue_l_per_kwh=wue_l_per_kwh,
         cycles_of_concentration=cycles,
+        heat_reject_multiplier=heat_reject_multiplier,
     )
     return spec.derive(facility, params, settings)

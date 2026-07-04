@@ -182,6 +182,17 @@
         "consumptive_high": {
           "$ref": "#/$defs/ProvenancedValue"
         },
+        "makeup_high": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "method": {
           "default": "power x WUE (central); blowdown x cycles (upper bound)",
           "title": "Method",
