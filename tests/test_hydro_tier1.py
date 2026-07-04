@@ -56,6 +56,46 @@ def test_hyetograph_timeseries_conserves_depth() -> None:
     assert total == pytest.approx(4.0, abs=1e-6)
 
 
+# --- sanitary surcharge: profile-threaded, no engine needed (#1159) ---
+
+
+def test_surcharge_fallback_reads_the_site_profile() -> None:
+    # With no cited sanitary basis, the fallback plant capacities come from the active
+    # SiteProfile — not a baked-in Lima list. Lima's profile carries American II @ FM-1.
+    from watermark.hydrology.model import ProvenancedValue
+    from watermark.hydrology.tier1 import _build_surcharge, _forcemain_label
+    from watermark.sites import get_profile
+
+    lima = get_profile("lima")
+    wet_pv = ProvenancedValue.derived(9.0, "MGD", citation="test")
+    surcharge = _build_surcharge(
+        None,
+        9.0,
+        wet_pv,
+        receivers={},
+        forcemain_labels=lima.forcemain_labels,
+        capacity_fallback=lima.sanitary_capacity_fallback,
+    )
+    assert [s.plant for s in surcharge] == ["American II WWTP"]
+    assert surcharge[0].forcemain == "FM-1" and surcharge[0].exceeds  # 9.0 > 3.6 MGD
+    assert _forcemain_label("bosc-fm2", lima.forcemain_labels) == "FM-2"
+
+    # A site with no modeled campus sanitary routing (empty fallback) surcharges nothing —
+    # no Lima plant leaks in.
+    empty = lima.model_copy(update={"sanitary_capacity_fallback": [], "forcemain_labels": {}})
+    assert (
+        _build_surcharge(
+            None,
+            9.0,
+            wet_pv,
+            receivers={},
+            forcemain_labels=empty.forcemain_labels,
+            capacity_fallback=empty.sanitary_capacity_fallback,
+        )
+        == []
+    )
+
+
 # --- engine runs ---
 
 

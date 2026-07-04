@@ -253,6 +253,13 @@ class SiteProfile(BaseModel):
     # --- Water-balance routing fallback (hydrology/balance.py) ---------------------------
     plant_receiving: dict[str, tuple[str, str]]  # fid -> (receiving water, citation)
     abstraction_gage: str
+    # The municipal WTP intake reach, grounded with the abstraction gage's live streamflow.
+    # Per-site (#1159): an empty ``abstraction_node_id`` means this site has no modeled
+    # intake node, so ``build_water_balance`` omits it rather than labeling another site's
+    # gage as Lima's WTP. ``abstraction_river`` fills the node's ``receiving_water``.
+    abstraction_node_id: str = ""
+    abstraction_node_name: str = ""
+    abstraction_river: str = ""
 
     # --- Refill supply rivers (hydrology/refill.py) -------------------------------------
     # The site's two refill supply rivers (the model sums both, each passby-adjusted). Named
@@ -261,6 +268,25 @@ class SiteProfile(BaseModel):
     supply_gage_secondary: str
     passby_primary_cfs: float
     passby_secondary_cfs: float
+    # The supply rivers' display names + per-gauge caveats (#1159). Per-site so no Lima river
+    # name or Fort-Jennings caveat leaks into another site's refill screen. Empty = unset.
+    supply_river_primary: str = ""
+    supply_river_secondary: str = ""
+    supply_note_primary: str = ""
+    supply_note_secondary: str = ""
+
+    # --- Tier-1 SWMM sanitary campus routing (hydrology/tier1.py, #1159) -----------------
+    # The campus forcemain display labels (routing ``via`` id -> label, e.g. bosc-fm2 -> FM-2)
+    # and the receiving-plant node-id -> name map used to render the sanitary surcharge, plus
+    # the dry-weather industrial base and capacity fallback consulted ONLY when the cited
+    # sanitary basis is absent. All empty/zero for a site with no modeled campus sanitary
+    # routing — the surcharge then degrades to the cited basis rather than Lima's plants.
+    forcemain_labels: dict[str, str] = {}
+    sanitary_receiver_names: dict[str, str] = {}
+    # Fallback peak hydraulic capacity: (plant, peak_capacity_mgd, forcemain_label, citation).
+    sanitary_capacity_fallback: list[tuple[str, float, str, str]] = []
+    # Campus dry-weather industrial base (MGD) used only when no cited sanitary basis loads.
+    campus_dry_weather_mgd: float = 0.0
 
     # --- Grid / facility (grid/*.py, facility/power.py) ---------------------------------
     # The disclosed DC facility (None = no identified facility yet → grid backdrop only, no
