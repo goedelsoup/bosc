@@ -32,7 +32,7 @@ It is the first window into the **site-level stormwater regime**: monthly erosio
 
 | Items | Subject | SWCD answer |
 |---|---|---|
-| **6–7** | BOSC-1A pump station & forcemain corridor (SWPTI-260294 / DSW-6756) | No records → *Ohio EPA / Sanitary Engineer / townships* |
+| **6–7** | BOSC-1A pump station & forcemain corridor (DSWPTI-260294 / DSW-6756) | No records → *Ohio EPA / Sanitary Engineer / townships* |
 | **8** | Shawnee II Phase 2 (3640 Spencerville Rd) | No records → *Ohio EPA / Sanitary Engineer* |
 | **9** | Hume/Shawnee Rd forcemain incl. **design capacity (MGD)** | No records → *Ohio EPA / Sanitary Engineer* |
 | **10** | ASWCD ⇄ **MS Consultants** comms | No records |

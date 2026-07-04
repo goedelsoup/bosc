@@ -136,7 +136,14 @@ claims:
       expiry) or 2026-06-01. Confirms the 'draft as leverage' thesis (§II).
   - claim: "Google has achieved DoD Impact Level 6 (IL-6)"
     status: verified
-    note: "Corroborated — Google Distributed Cloud + air-gapped appliance reached IL-6 (see §IV [DEF])."
+    note: >-
+      Corroborated at the product level (see §IV [DEF]): Google *Cloud* (commercial/GovCloud)
+      holds IL5 + FedRAMP High, while the *Google Distributed Cloud air-gapped appliance* reached
+      IL6 / Top Secret — Google's own announcement (cloud.google.com blog: "GDC air-gapped
+      appliance achieve DoD IL6 authorization"). The relator's written testimony fn 8 characterizes
+      the air-gapped appliance more narrowly as IL5 (MIL-STD-810H); the IL6 authorization is the
+      later/product-specific figure, so both are reconciled to the same source line rather than in
+      tension. Entity-level, not tied to the Lima site.
   - claim: "Allen County (BOSC site) is co-located with the JSMC defense facility"
     status: verified
     note: "JSMC = Lima Army Tank Plant (GD Land Systems); same corridor the PRR Category 5 targets. Site-level DoD nexus remains an open question, not a finding."

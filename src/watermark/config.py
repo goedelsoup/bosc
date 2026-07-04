@@ -102,6 +102,13 @@ class Settings(BaseSettings):
         False  # WATERMARK_OTEL_TRACE_CONTENT; opt-in to exporting prompts/completions
     )
 
+    # --- Air / AERMOD (Tier-1 dispersion; #1178) ---------------------------
+    # The EPA AERMOD executable. AERMOD is a Fortran build distributed by EPA SCRAM,
+    # not a pip wheel — so unlike SWMM (pyswmm) it is located on disk, not imported.
+    # Resolution: this path → `aermod` on PATH → nothing (the engine then degrades to
+    # AermodResult(available=False), like swmm_available()). Provenance/pinning: docs/AERMOD.md.
+    aermod_bin: str = ""
+
     # --- Hydrology (live connectors + Tier-0 simulation) -------------------
     # When true, connectors never touch the network: they serve cached/fixture
     # responses only (so tests and CI stay hermetic). A cache miss raises.

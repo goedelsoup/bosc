@@ -2,8 +2,9 @@
 
 Air-quality & backup-generation dispatch modeling (epic #1172). The direct sibling of
 [`watermark.hydrology`](../hydrology/CLAUDE.md): a **Tier-0 analytic emissions inventory**
-(this package today) escalating to a **Tier-1 AERMOD dispersion** run (`air/aermod/`,
-gated behind Tier-0, not yet built). Defers to the root [`CLAUDE.md`](../../../CLAUDE.md).
+(this package) escalating to a **Tier-1 AERMOD dispersion** engine
+([`air/aermod/`](aermod/CLAUDE.md), #1178 — deck generation + binary wrapper built, gated
+behind Tier-0). Defers to the root [`CLAUDE.md`](../../../CLAUDE.md).
 
 The investigable question: when grid reliability stress forces the "emergency" diesel
 backup fleet into runtime, what is the air burden — and does forced generation breach the
@@ -48,25 +49,29 @@ backup fleet into runtime, what is the air burden — and does forced generation
   per the readiness layer). The permit path is currently the Lima default in `emissions.py`
   (`_DEFAULT_PERMIT_RELPATH`) — the seam for **#1180**, which adds
   `SiteFacility.air_permit_relpath`.
-- **AERMET/AERMAP preprocessing connectors** (`connectors/`, #1179): the AERMOD met/terrain
-  input layer, under the same offline/cache/committed-fixture discipline as hydrology
-  (`connectors/_cache.py` → `AirOfflineError`, fixtures at `tests/fixtures/air/<connector>/`).
-  Three live pulls — `isd.py` (NOAA ISD hourly surface, the AERMET SURFACE/ISHD input),
-  `igra.py` (NOAA IGRA v2 upper-air soundings, the AERMET UPPERAIR input), `ned.py` (USGS
-  3DEP/NED DEM raster, the AERMAP terrain input; a raster, so it follows `gis/raster.py`'s
-  fixture-GeoTIFF discipline, **not** the JSON cache) — and two emitters, `aermet.py`
-  (surface + upper-air → AERMET-ready files + a Stage-1→MERGE runstream) and `aermap.py`
-  (DEM → bilinearly-sampled receptor/source elevations + an AERMAP control file). CLI:
-  `watermark aermet` / `watermark aermap`. **No fabricated meteorology:** the AERMET runstream
-  stops at MERGE — the METPREP surface characteristics (albedo/Bowen/roughness) are the
-  modeller's land-use inputs, emitted only as a commented template; the `.SFC`/`.PFL` and the
-  AERMAP hill-height scale come from the **binaries** (#1178). Sampled elevations are a
-  deterministic DEM read, tagged `[derived]`. Per-site station IDs / terrain domain live in
-  `air_*` **Settings** knobs today (env/kwarg-driven, not hardcoded); promoting them onto
-  `SiteProfile` is the **#1180** "met/terrain endpoints" seam — the same idiom as the
-  `_DEFAULT_PERMIT_RELPATH` seam above.
-- **Deferred (gated behind Tier-0):** AERMOD engine (`air/aermod/`, #1178), the
-  receptor-grid + NAAQS dispersion half of #1182, the site-profile knobs (#1180), and
-  feeds/CLI/ledger wiring (#1181). Tier-0 ships standalone — including the event-anchored
-  **calibration** half of #1182 (`calibration.py`), which needs only the captured event,
-  not AERMOD.
+- **Tier-1 AERMOD engine** (`air/aermod/`, #1178) **is built**: the deck builders + the
+  binary wrapper (located on disk, degrades when absent) + plotfile parsing. Stack geometry
+  is `assumption` (the permit redacts engine specs as CBI); the emission rate is grounded.
+  See [`aermod/CLAUDE.md`](aermod/CLAUDE.md) and [`docs/AERMOD.md`](../../../docs/AERMOD.md).
+- **AERMET/AERMAP preprocessing connectors** (`connectors/`, #1179) **are built**: the AERMOD
+  met/terrain input layer, under the same offline/cache/committed-fixture discipline as
+  hydrology (`connectors/_cache.py` → `AirOfflineError`, fixtures at
+  `tests/fixtures/air/<connector>/`). Three live pulls — `isd.py` (NOAA ISD hourly surface,
+  the AERMET SURFACE/ISHD input), `igra.py` (NOAA IGRA v2 upper-air soundings, the AERMET
+  UPPERAIR input), `ned.py` (USGS 3DEP/NED DEM raster, the AERMAP terrain input; a raster, so
+  it follows `gis/raster.py`'s fixture-GeoTIFF discipline, **not** the JSON cache) — and two
+  emitters, `aermet.py` (surface + upper-air → AERMET-ready files + a Stage-1→MERGE runstream)
+  and `aermap.py` (DEM → bilinearly-sampled receptor/source elevations + an AERMAP control
+  file). CLI: `watermark aermet` / `watermark aermap`. **No fabricated meteorology:** the
+  AERMET runstream stops at MERGE — the METPREP surface characteristics (albedo/Bowen/
+  roughness) are the modeller's land-use inputs, emitted only as a commented template; the
+  `.SFC`/`.PFL` and the AERMAP hill-height scale come from the **binaries** (#1178). Sampled
+  elevations are a deterministic DEM read, tagged `[derived]`. Per-site station IDs / terrain
+  domain live in `air_*` **Settings** knobs today (env/kwarg-driven, not hardcoded); promoting
+  them onto `SiteProfile` is the **#1180** "met/terrain endpoints" seam — the same idiom as
+  the `_DEFAULT_PERMIT_RELPATH` seam above. The #1178 minimal run still defaults to flat
+  terrain + canned met until **#1182** wires these connectors into a receptor-grid run.
+- **Deferred (gated behind Tier-0):** the NAAQS-comparison dispersion half of #1182 (receptor
+  grid + met/terrain wiring), the site-profile stack/permit knobs (#1180), and feeds/CLI/
+  ledger wiring (#1181). Tier-0 ships standalone — including the event-anchored **calibration**
+  half of #1182 (`calibration.py`), which needs only the captured event, not AERMOD.
