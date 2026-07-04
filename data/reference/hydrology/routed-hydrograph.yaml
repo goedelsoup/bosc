@@ -1,0 +1,85 @@
+tier: tier0
+scenario: design-storm
+return_period_yr: 25
+storm_depth_in: 4.25
+dt_hr: 0.1
+routed_peak_cfs: 13275.779
+summed_peak_cfs: 14364.999
+peak_attenuation_pct: 7.58
+routed_time_to_peak_hr: 19.6
+summed_time_to_peak_hr: 17.0
+lag_hr: 2.6
+reaches:
+- node_id: ottawa-head
+  name: Ottawa River upstream of Lima
+  length_ft: 82000.0
+  slope: 0.001
+  inflow_peak_cfs: 12838.533
+  inflow_time_to_peak_hr: 17.3
+  outflow_peak_cfs: 12393.565
+  outflow_time_to_peak_hr: 19.1
+  attenuation_pct: 3.47
+  lag_hr: 1.8
+- node_id: dug-run-head
+  name: Dug Run (headwater)
+  length_ft: 21000.0
+  slope: 0.002
+  inflow_peak_cfs: 2531.323
+  inflow_time_to_peak_hr: 13.4
+  outflow_peak_cfs: 2462.111
+  outflow_time_to_peak_hr: 14.0
+  attenuation_pct: 2.73
+  lag_hr: 0.6
+- node_id: pike-run-head
+  name: Pike Run (headwater)
+  length_ft: 38000.0
+  slope: 0.0025
+  inflow_peak_cfs: 5392.886
+  inflow_time_to_peak_hr: 13.1
+  outflow_peak_cfs: 5088.594
+  outflow_time_to_peak_hr: 13.8
+  attenuation_pct: 5.64
+  lag_hr: 0.7
+- node_id: lima-abstraction
+  name: Lima supply abstraction reach (cooling draw — unbuffered bound)
+  length_ft: 12000.0
+  slope: 0.001
+  inflow_peak_cfs: 12393.565
+  inflow_time_to_peak_hr: 19.1
+  outflow_peak_cfs: 12357.643
+  outflow_time_to_peak_hr: 19.4
+  attenuation_pct: 0.29
+  lag_hr: 0.3
+- node_id: dug-run-confluence
+  name: Dug Run -> Ottawa River
+  length_ft: 6000.0
+  slope: 0.0015
+  inflow_peak_cfs: 2462.111
+  inflow_time_to_peak_hr: 14.0
+  outflow_peak_cfs: 2441.735
+  outflow_time_to_peak_hr: 14.2
+  attenuation_pct: 0.83
+  lag_hr: 0.2
+- node_id: pike-run-confluence
+  name: Pike Run -> Ottawa River
+  length_ft: 4000.0
+  slope: 0.0015
+  inflow_peak_cfs: 5088.594
+  inflow_time_to_peak_hr: 13.8
+  outflow_peak_cfs: 5057.826
+  outflow_time_to_peak_hr: 13.9
+  attenuation_pct: 0.6
+  lag_hr: 0.1
+- node_id: lima-reach
+  name: Ottawa River at Lima (assimilative reach / USGS 04187100)
+  length_ft: 20000.0
+  slope: 0.001
+  inflow_peak_cfs: 13330.563
+  inflow_time_to_peak_hr: 19.2
+  outflow_peak_cfs: 13275.779
+  outflow_time_to_peak_hr: 19.6
+  attenuation_pct: 0.41
+  lag_hr: 0.4
+warnings: []
+series_note: 480 timesteps at dt=0.1 hr omitted here; the full outlet + summed series ship in the site
+  bundle's routed-hydrograph feed. Regenerate with `watermark basin-route --write`.

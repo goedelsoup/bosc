@@ -11,7 +11,7 @@
  */
 import type { LinePoint, RankedBarDatum } from "./charts";
 import type { EvidenceKind, TagKind } from "./evidence";
-import type { WatershedNode } from "./feeds";
+import type { ReachRouting, RoutedHydrographNetwork, WatershedNode } from "./feeds";
 import {
   type FacilityStatus,
   facilityStatus,
@@ -161,6 +161,53 @@ export function totalDesignFlow(nodes: readonly WatershedNode[]): { mgd: number;
     mgd: Math.round(withFlow.reduce((a, n) => a + (n.screen.design_flow_mgd as number), 0) * 10) / 10,
     count: withFlow.length,
   };
+}
+
+// --- routed storm hydrograph (#1184) ------------------------------------------------------
+
+/**
+ * Downsample the routed outlet hydrograph to ~`target` evenly-spaced points for the SSR
+ * LineChart — the raw feed is ~480 dt-steps, far too many dots/x-labels to render. Labels are
+ * the whole hour; the final step is always kept so the recession tail closes the curve.
+ */
+export function outletHydrographSeries(rn: RoutedHydrographNetwork, target = 16): LinePoint[] {
+  const t = rn.times_hr;
+  const q = rn.outlet_hydrograph_cfs;
+  const n = Math.min(t.length, q.length);
+  if (n === 0) return [];
+  const stride = Math.max(1, Math.ceil(n / target));
+  const points: LinePoint[] = [];
+  for (let i = 0; i < n; i += stride) {
+    points.push({ label: `${Math.round(t[i])}h`, value: Math.round(q[i]) });
+  }
+  if ((n - 1) % stride !== 0) {
+    points.push({ label: `${Math.round(t[n - 1])}h`, value: Math.round(q[n - 1]) });
+  }
+  return points;
+}
+
+export interface ReachAttenuationRow {
+  reach: string;
+  lengthFt: number;
+  inflowPeakCfs: number;
+  outflowPeakCfs: number;
+  attenuationPct: number;
+  lagHr: number;
+}
+
+/** Per-reach attenuation/lag rows, most-attenuating reach first — the screening detail behind
+ *  the outlet headline (each reach is where a channel took a bite out of the peak). */
+export function reachAttenuationRows(reaches: readonly ReachRouting[]): ReachAttenuationRow[] {
+  return reaches
+    .map((r) => ({
+      reach: r.name,
+      lengthFt: r.length_ft,
+      inflowPeakCfs: r.inflow_peak_cfs,
+      outflowPeakCfs: r.outflow_peak_cfs,
+      attenuationPct: r.attenuation_pct,
+      lagHr: r.lag_hr,
+    }))
+    .sort((a, b) => b.attenuationPct - a.attenuationPct);
 }
 
 // The screen-status gloss the old scorecard used — kept verbatim so the gap reads as a finding.

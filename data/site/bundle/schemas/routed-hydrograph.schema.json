@@ -1,0 +1,169 @@
+{
+  "$defs": {
+    "ReachRouting": {
+      "additionalProperties": false,
+      "description": "How one reach's channel attenuated and lagged the hydrograph passing through it.\n\n``attenuation_pct`` is the peak reduction (inflow peak -> outflow peak) and ``lag_hr`` the\ndelay in time-to-peak — the two signatures of Muskingum-Cunge routing that a naive\npeak-sum ignores.",
+      "properties": {
+        "node_id": {
+          "title": "Node Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "length_ft": {
+          "title": "Length Ft",
+          "type": "number"
+        },
+        "slope": {
+          "title": "Slope",
+          "type": "number"
+        },
+        "inflow_peak_cfs": {
+          "title": "Inflow Peak Cfs",
+          "type": "number"
+        },
+        "inflow_time_to_peak_hr": {
+          "title": "Inflow Time To Peak Hr",
+          "type": "number"
+        },
+        "outflow_peak_cfs": {
+          "title": "Outflow Peak Cfs",
+          "type": "number"
+        },
+        "outflow_time_to_peak_hr": {
+          "title": "Outflow Time To Peak Hr",
+          "type": "number"
+        },
+        "attenuation_pct": {
+          "title": "Attenuation Pct",
+          "type": "number"
+        },
+        "lag_hr": {
+          "title": "Lag Hr",
+          "type": "number"
+        }
+      },
+      "required": [
+        "node_id",
+        "name",
+        "length_ft",
+        "slope",
+        "inflow_peak_cfs",
+        "inflow_time_to_peak_hr",
+        "outflow_peak_cfs",
+        "outflow_time_to_peak_hr",
+        "attenuation_pct",
+        "lag_hr"
+      ],
+      "title": "ReachRouting",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "A design-storm runoff hydrograph routed down the cited confluence graph.\n\nThe time-varying counterpart to :class:`RoutedNetwork` (which routes steady-state low\nflow): each contributing subcatchment's SCS design-storm hydrograph is routed downstream\nthrough Muskingum-Cunge and superposed at confluences, so the outlet peak is **attenuated\nand lagged**, not the arithmetic sum of the tributary peaks. The headline is the routed\noutlet hydrograph vs. the naive ``summed`` hydrograph (the local inflows superposed with no\nrouting): ``peak_attenuation_pct`` and ``lag_hr`` quantify what routing buys over the sum.\nTier-0 screening — not a calibrated HEC-HMS/HEC-RAS model.",
+  "properties": {
+    "tier": {
+      "const": "tier0",
+      "default": "tier0",
+      "title": "Tier",
+      "type": "string"
+    },
+    "scenario": {
+      "default": "design-storm",
+      "title": "Scenario",
+      "type": "string"
+    },
+    "return_period_yr": {
+      "title": "Return Period Yr",
+      "type": "integer"
+    },
+    "storm_depth_in": {
+      "title": "Storm Depth In",
+      "type": "number"
+    },
+    "dt_hr": {
+      "title": "Dt Hr",
+      "type": "number"
+    },
+    "times_hr": {
+      "items": {
+        "type": "number"
+      },
+      "title": "Times Hr",
+      "type": "array"
+    },
+    "outlet_hydrograph_cfs": {
+      "items": {
+        "type": "number"
+      },
+      "title": "Outlet Hydrograph Cfs",
+      "type": "array"
+    },
+    "summed_hydrograph_cfs": {
+      "items": {
+        "type": "number"
+      },
+      "title": "Summed Hydrograph Cfs",
+      "type": "array"
+    },
+    "routed_peak_cfs": {
+      "title": "Routed Peak Cfs",
+      "type": "number"
+    },
+    "summed_peak_cfs": {
+      "title": "Summed Peak Cfs",
+      "type": "number"
+    },
+    "peak_attenuation_pct": {
+      "title": "Peak Attenuation Pct",
+      "type": "number"
+    },
+    "routed_time_to_peak_hr": {
+      "title": "Routed Time To Peak Hr",
+      "type": "number"
+    },
+    "summed_time_to_peak_hr": {
+      "title": "Summed Time To Peak Hr",
+      "type": "number"
+    },
+    "lag_hr": {
+      "title": "Lag Hr",
+      "type": "number"
+    },
+    "reaches": {
+      "items": {
+        "$ref": "#/$defs/ReachRouting"
+      },
+      "title": "Reaches",
+      "type": "array"
+    },
+    "warnings": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "return_period_yr",
+    "storm_depth_in",
+    "dt_hr",
+    "times_hr",
+    "outlet_hydrograph_cfs",
+    "summed_hydrograph_cfs",
+    "routed_peak_cfs",
+    "summed_peak_cfs",
+    "peak_attenuation_pct",
+    "routed_time_to_peak_hr",
+    "summed_time_to_peak_hr",
+    "lag_hr",
+    "reaches"
+  ],
+  "title": "RoutedHydrographNetwork",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

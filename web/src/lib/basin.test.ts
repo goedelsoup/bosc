@@ -12,10 +12,12 @@ import {
   drawRecordKind,
   hucRange,
   nodeIndex,
+  outletHydrographSeries,
   phaseSplit,
+  reachAttenuationRows,
   totalDesignFlow,
 } from "./basin";
-import type { WatershedNode } from "./feeds";
+import type { ReachRouting, RoutedHydrographNetwork, WatershedNode } from "./feeds";
 import type { NetworkSite } from "./sites";
 
 const site = (slug: string, over: Partial<NetworkSite> = {}): NetworkSite => ({
@@ -146,5 +148,71 @@ describe("basin view model (design Basin — Maumee)", () => {
     expect(rows[1]).toMatchObject({ evidence: "open", flag: null, flow: "—" });
     expect(rows[1].meta).toContain("(GCP)");
     expect(rows[1].meta).toContain("unscreened · ungaged tributary");
+  });
+});
+
+// --- routed storm hydrograph (#1184) ------------------------------------------------------
+
+const reach = (name: string, atten: number, lag: number, over: Partial<ReachRouting> = {}): ReachRouting => ({
+  node_id: name,
+  name,
+  length_ft: 10000,
+  slope: 0.001,
+  inflow_peak_cfs: 1000,
+  inflow_time_to_peak_hr: 12,
+  outflow_peak_cfs: 1000 * (1 - atten / 100),
+  outflow_time_to_peak_hr: 12 + lag,
+  attenuation_pct: atten,
+  lag_hr: lag,
+  ...over,
+});
+
+const routedNet = (over: Partial<RoutedHydrographNetwork> = {}): RoutedHydrographNetwork => ({
+  tier: "tier0",
+  scenario: "design-storm",
+  return_period_yr: 25,
+  storm_depth_in: 4.25,
+  dt_hr: 1,
+  times_hr: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+  outlet_hydrograph_cfs: [10.4, 20, 30, 40.6, 50, 60, 70.5, 80, 90, 100.4],
+  summed_hydrograph_cfs: [12, 22, 33, 44, 55, 66, 77, 88, 99, 110],
+  routed_peak_cfs: 100.4,
+  summed_peak_cfs: 110,
+  peak_attenuation_pct: 8.7,
+  routed_time_to_peak_hr: 10,
+  summed_time_to_peak_hr: 8,
+  lag_hr: 2,
+  reaches: [],
+  warnings: [],
+  ...over,
+});
+
+describe("routed storm hydrograph view model (#1184)", () => {
+  it("outletHydrographSeries downsamples to ~target points, labels by whole hour, and keeps the tail", () => {
+    const pts = outletHydrographSeries(routedNet(), 4);
+    // stride = ceil(10/4) = 3 → indices 0,3,6,9; the last step (idx 9) lands on the stride so no extra append.
+    expect(pts).toEqual([
+      { label: "1h", value: 10 }, // values rounded to whole cfs
+      { label: "4h", value: 41 },
+      { label: "7h", value: 71 },
+      { label: "10h", value: 100 },
+    ]);
+  });
+
+  it("outletHydrographSeries always includes the final step even when it is off-stride", () => {
+    const pts = outletHydrographSeries(routedNet(), 3); // stride = ceil(10/3) = 4 → 0,4,8, then append 9
+    expect(pts.map((p) => p.label)).toEqual(["1h", "5h", "9h", "10h"]);
+    expect(pts[pts.length - 1]).toEqual({ label: "10h", value: 100 });
+  });
+
+  it("outletHydrographSeries is empty when the series is absent", () => {
+    expect(outletHydrographSeries(routedNet({ times_hr: [], outlet_hydrograph_cfs: [] }))).toEqual([]);
+  });
+
+  it("reachAttenuationRows orders reaches by attenuation (most first) and maps the fields", () => {
+    const rows = reachAttenuationRows([reach("gentle", 2, 0.5), reach("steep", 9, 1.5), reach("mid", 5, 1)]);
+    expect(rows.map((r) => r.reach)).toEqual(["steep", "mid", "gentle"]);
+    expect(rows[0]).toMatchObject({ reach: "steep", attenuationPct: 9, lagHr: 1.5, inflowPeakCfs: 1000 });
+    expect(rows[0].outflowPeakCfs).toBeCloseTo(910);
   });
 });

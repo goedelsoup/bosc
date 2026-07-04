@@ -24,13 +24,15 @@ import {
   disclosedLoad,
   hucRange,
   nodeIndex,
+  outletHydrographSeries,
   PHASE_INK,
   phaseSplit,
+  reachAttenuationRows,
   totalDesignFlow,
 } from "../lib/basin";
 import { hasFeed, loadFeed } from "../lib/bundle";
 import type { EvidenceKind } from "../lib/evidence";
-import type { BasinNetwork } from "../lib/feeds";
+import type { BasinNetwork, RoutedHydrographNetwork } from "../lib/feeds";
 import { withBase } from "../lib/site";
 import { groupSites, siteState } from "../lib/sites";
 
@@ -40,6 +42,10 @@ const sites = group?.sites ?? [];
 const net = hasFeed("network") ? loadFeed<BasinNetwork>("network") : null;
 const nodes = net?.nodes ?? [];
 const byNode = nodeIndex(nodes);
+
+// The loop's design-storm hydrograph routed down the cited confluence graph (#1184) — present
+// only for the reference build (the routed feed is Lima-loop-specific). Absent → the section hides.
+const routed = hasFeed("routed-hydrograph") ? loadFeed<RoutedHydrographNetwork>("routed-hydrograph") : null;
 
 // --- hero ledger — registry counts + what the feed actually carries ------------------------
 const states = [...new Set(sites.map((s) => siteState(s.slug)).filter(Boolean))];
@@ -101,6 +107,8 @@ const phases = phaseSplit(sites);
 const phaseTotal = phases.reduce((a, p) => a + p.count, 0);
 const rows = basinSiteRows(sites, byNode);
 const outfalls = dischargeRows(nodes, sites);
+const outletSeries = routed ? outletHydrographSeries(routed) : [];
+const reachRows = routed ? reachAttenuationRows(routed.reaches) : [];
 const screenedCount = outfalls.filter((o) => o.evidence === "verified").length;
 const openCount = rows.filter((r) => r.evidence === "open").length;
 const verifiedCount = rows.filter((r) => r.evidence === "verified").length;
@@ -347,6 +355,96 @@ const EV_INK: Record<string, string> = {
         }
       </div>
     </section>
+
+    <!-- ===================== ROUTED STORM HYDROGRAPH (#1184) ===================== -->
+    {
+      routed && (
+        <section class="basin-sec" aria-label="Routed storm hydrograph">
+          <div class="basin-sec-head">
+            <span class="basin-kicker">Routed downstream · Tier-0 Muskingum–Cunge</span>
+            <h2>The design-storm peak, routed — attenuated and lagged, not summed</h2>
+          </div>
+          <p class="basin-sec-dek">
+            The {routed.return_period_yr}-yr, 24-hr design storm ({routed.storm_depth_in.toFixed(2)} in) generated at each
+            contributing subcatchment and routed down the cited confluence graph. A downstream reach sees a peak that is
+            attenuated and delayed — not the arithmetic sum of the tributary peaks a naive stack would give.
+          </p>
+          <div class="basin-agg-grid">
+            <div class="basin-panel">
+              <div class="basin-panel-t">Routed outlet hydrograph (cfs)</div>
+              <div class="basin-panel-s">
+                Ottawa River at the outlet; the dashed line marks the naive summed peak the outlet would see with no channel
+                routing — the routed line peaks below it, and later.
+              </div>
+              <LineChart
+                kicker="Line · outlet hydrograph"
+                title={`Routed discharge at the outlet · ${routed.return_period_yr}-yr storm`}
+                data={outletSeries}
+                max={Math.ceil((routed.summed_peak_cfs * 1.08) / 100) * 100}
+                endLabel={`${Math.round(routed.routed_peak_cfs).toLocaleString("en-US")} cfs`}
+                refs={[
+                  {
+                    value: routed.summed_peak_cfs,
+                    label: `naive sum ${Math.round(routed.summed_peak_cfs).toLocaleString("en-US")} cfs`,
+                    color: "#9a6a14",
+                  },
+                ]}
+                evidence="inference"
+                source="Tier-0 Muskingum–Cunge routing of the SCS design-storm hydrographs (watermark basin-route)"
+              />
+            </div>
+            <div class="basin-panel">
+              <div class="basin-panel-t">What routing buys over the naive sum</div>
+              <div class="basin-hydro-stats">
+                <div class="basin-hydro-stat">
+                  <b>{routed.peak_attenuation_pct.toFixed(1)}%</b>
+                  <span>peak attenuation</span>
+                </div>
+                <div class="basin-hydro-stat">
+                  <b>{routed.lag_hr.toFixed(1)} h</b>
+                  <span>peak lag</span>
+                </div>
+                <div class="basin-hydro-stat">
+                  <b>
+                    {Math.round(routed.summed_peak_cfs).toLocaleString("en-US")} →{" "}
+                    {Math.round(routed.routed_peak_cfs).toLocaleString("en-US")}
+                  </b>
+                  <span>summed → routed peak (cfs)</span>
+                </div>
+              </div>
+              <div class="basin-panel-rule" />
+              <div class="basin-panel-t">Per-reach attenuation + lag</div>
+              <div class="basin-table basin-hydro-table">
+                <div class="basin-tr basin-th">
+                  <span>Reach</span>
+                  <span class="ta-r">Length (ft)</span>
+                  <span class="ta-r">In peak</span>
+                  <span class="ta-r">Out peak</span>
+                  <span class="ta-r">Atten.</span>
+                  <span class="ta-r">Lag</span>
+                </div>
+                {reachRows.map((r) => (
+                  <div class="basin-tr">
+                    <span class="basin-row-place">{r.reach}</span>
+                    <span class="ta-r">{r.lengthFt.toLocaleString("en-US")}</span>
+                    <span class="ta-r">{Math.round(r.inflowPeakCfs).toLocaleString("en-US")}</span>
+                    <span class="ta-r">{Math.round(r.outflowPeakCfs).toLocaleString("en-US")}</span>
+                    <span class="ta-r">{r.attenuationPct.toFixed(1)}%</span>
+                    <span class="ta-r">{r.lagHr.toFixed(1)} h</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <p class="basin-agg-note">
+            Tier-0 screening — constant-parameter Muskingum–Cunge over reach geometry + subcatchments that are cited where
+            derivable (WBD watershed areas, Hack's-law channel lengths) and stated assumptions otherwise (slopes, curve
+            numbers), not a calibrated HEC-RAS model. The attenuation + lag are robust to the absolute areas; the finding is
+            that the routed peak is smaller and later than the sum, so a downstream reach is not sized by stacking tributary peaks.
+          </p>
+        </section>
+      )
+    }
 
     <!-- ===================== DISCHARGE POINTS ===================== -->
     <section class="basin-sec" aria-label="Discharge points">
@@ -766,6 +864,41 @@ const EV_INK: Record<string, string> = {
     color: var(--ink-faint);
     line-height: 1.5;
     max-width: 820px;
+  }
+
+  /* Routed storm hydrograph (#1184) — stat tiles + the per-reach attenuation table */
+  .basin-hydro-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+    margin: 4px 0 12px;
+  }
+  .basin-hydro-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .basin-hydro-stat b {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .basin-hydro-stat span {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .basin-hydro-table .basin-tr {
+    grid-template-columns: minmax(0, 1.7fr) 84px 78px 78px 62px 56px;
+    font-variant-numeric: tabular-nums;
+  }
+  .basin-hydro-table .ta-r {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-muted);
   }
 
   /* Site table */
