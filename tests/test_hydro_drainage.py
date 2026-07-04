@@ -43,6 +43,8 @@ def test_only_diller_is_itemized_and_is_lump_sum_dominated() -> None:
     diller = itemized[0]
     assert "Diller" in diller.name
     assert diller.sized_amount == 20_440  # the 6-in underdrain
+    # ...transcribed ~20440 (approximate quantity ~2044 FT) — the marker survives as a flag.
+    assert diller.sized_amount_approximate is True
     assert diller.lump_sum_amount == 100_000  # "Drainage improvements" LS
     assert diller.sized_fraction is not None and diller.sized_fraction < 0.2
     assert any("underdrain" in d.lower() for d in diller.sized_items)

@@ -69,6 +69,7 @@ class EstimateDrainageScope(BaseModel):
     drainage_subtotal: int | None = None
     itemized: bool = False  # was a line-item breakdown extracted at all?
     sized_amount: int | None = None  # sum of quantified conveyance items (non-LS)
+    sized_amount_approximate: bool = False  # any summed sized item was a ``~`` approximate read
     lump_sum_amount: int | None = None  # sum of lump-sum (LS) allocations
     sized_fraction: float | None = None  # sized / drainage_subtotal
     sized_items: list[str] = []
@@ -103,7 +104,9 @@ def _num(x: Any) -> int | None:
     """Coerce a transcribed figure (possibly the ``~12345`` approximate marker) to int.
 
     Rounds rather than truncates: these are dollar figures rolled up into subtotals, so
-    ``int(float(...))`` would bias every subtotal downward by up to a dollar per item.
+    ``int(float(...))`` would bias every subtotal downward by up to a dollar per item. The
+    ``~`` marker is stripped here (an int can't carry it); callers that sum ``~`` reads flag
+    the aggregate via :func:`_is_approx` so the uncertainty stays visible (data-discipline).
     """
     if x is None:
         return None
@@ -114,6 +117,11 @@ def _num(x: Any) -> int | None:
         return round(float(s))
     except ValueError:
         return None
+
+
+def _is_approx(x: Any) -> bool:
+    """True iff a raw transcribed figure carries the ``~`` approximate marker."""
+    return isinstance(x, str) and x.strip().startswith("~")
 
 
 def _is_lump_sum(item: dict[str, Any]) -> bool:
@@ -205,6 +213,7 @@ def _scope_for(
     lump = [it for it in items if _is_lump_sum(it)]
     sized_amt = sum(_num(it.get("total_amount")) or 0 for it in sized)
     lump_amt = sum(_num(it.get("total_amount")) or 0 for it in lump)
+    sized_approx = any(_is_approx(it.get("total_amount")) for it in sized)
     frac = round(sized_amt / sub, 3) if sub else None
     return EstimateDrainageScope(
         name=name,
@@ -212,6 +221,7 @@ def _scope_for(
         drainage_subtotal=sub,
         itemized=True,
         sized_amount=sized_amt,
+        sized_amount_approximate=sized_approx,
         lump_sum_amount=lump_amt,
         sized_fraction=frac,
         sized_items=[str(it.get("description", "")) for it in sized],

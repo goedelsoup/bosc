@@ -50,8 +50,39 @@ _MIN_YEARS = 20  # climatic years of record needed for a defensible LP3 7Q10
 
 # Curated major-network mainstem gages + synthesized headwaters confluences live as
 # auditable reference DATA, not code: the committed ``mainstem-gages.yaml`` (gage IDs,
-# aliases, and the drainage-area rationale). Loaded here and fed to the LP3 derivation.
+# aliases, and the drainage-area rationale). Loaded + schema-validated here (so a typo or a
+# missing key in the reference table fails fast with a clear error, not a KeyError deep in
+# the derivation) and fed to the LP3 derivation.
 _MAINSTEM_GAGES_FILE = "mainstem-gages.yaml"
+
+
+class MainstemGage(BaseModel):
+    """One curated mainstem screening gage: USGS id + the ECHO receiving-water aliases."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    gage: str
+    aliases: list[str]
+    note: str | None = None
+
+
+class ConfluenceComponent(BaseModel):
+    """One gaged tributary summed into a synthesized headwaters-confluence 7Q10."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    gage: str
+    label: str
+
+
+class HeadwatersConfluence(BaseModel):
+    """A mainstem formed by two gaged tributaries, with no long-record gage at the junction."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    components: list[ConfluenceComponent]
+    aliases: list[str]
+    note: str | None = None
 
 
 def _mainstem_gages_path(settings: Settings) -> Path:
@@ -69,14 +100,20 @@ def _load_gage_table(settings: Settings) -> dict[str, Any]:
     return yaml.safe_load(path.read_text(encoding="utf-8")) or {}
 
 
-def load_mainstem_gages(*, settings: Settings) -> dict[str, dict[str, Any]]:
-    """``{river name -> {gage, aliases, ...}}`` from the committed reference table."""
-    return dict(_load_gage_table(settings).get("mainstems") or {})
+def load_mainstem_gages(*, settings: Settings) -> dict[str, MainstemGage]:
+    """``{river name -> MainstemGage}`` validated from the committed reference table."""
+    return {
+        river: MainstemGage.model_validate(spec)
+        for river, spec in (_load_gage_table(settings).get("mainstems") or {}).items()
+    }
 
 
-def load_headwaters_confluences(*, settings: Settings) -> dict[str, dict[str, Any]]:
-    """``{confluence name -> {components, aliases, ...}}`` from the committed reference table."""
-    return dict(_load_gage_table(settings).get("headwaters_confluences") or {})
+def load_headwaters_confluences(*, settings: Settings) -> dict[str, HeadwatersConfluence]:
+    """``{confluence name -> HeadwatersConfluence}`` validated from the committed table."""
+    return {
+        name: HeadwatersConfluence.model_validate(spec)
+        for name, spec in (_load_gage_table(settings).get("headwaters_confluences") or {}).items()
+    }
 
 
 def _norm(name: str) -> str:
@@ -101,7 +138,7 @@ def derive_basin_low_flows(
     for river, spec in load_mainstem_gages(settings=settings).items():
         try:
             lff = compute_low_flow_frequency(
-                site_no=spec["gage"], receiving_water=river, settings=settings
+                site_no=spec.gage, receiving_water=river, settings=settings
             )
         except Exception as exc:
             # NWIS returned no data (e.g. a stage-only gage, or a gap in the
@@ -109,7 +146,7 @@ def derive_basin_low_flows(
             log.warning(
                 "basin.lowflow.gage_error",
                 river=river,
-                gage=spec["gage"],
+                gage=spec.gage,
                 error=str(exc).splitlines()[0],
             )
             continue
@@ -119,7 +156,7 @@ def derive_basin_low_flows(
             log.warning(
                 "basin.lowflow.omit",
                 river=river,
-                gage=spec["gage"],
+                gage=spec.gage,
                 years=lff.complete_years,
                 q7=q7,
             )
@@ -127,13 +164,13 @@ def derive_basin_low_flows(
         streams[river.lower()] = {
             "seven_q10_cfs": round(q7, 2),
             "source": "derived",
-            "gage": spec["gage"],
+            "gage": spec.gage,
             "gage_name": lff.site_name,
             "period": f"{lff.period_start}..{lff.period_end}",
             "complete_years": lff.complete_years,
-            "aliases": spec["aliases"],
+            "aliases": spec.aliases,
             "citation": (
-                f"LP3 7Q10 from USGS {spec['gage']} ({lff.site_name}), "
+                f"LP3 7Q10 from USGS {spec.gage} ({lff.site_name}), "
                 f"{lff.complete_years} climatic years {lff.period_start[:4]}-{lff.period_end[:4]} "
                 f"(gage value; screening proxy for the discharge reach)"
             ),
@@ -155,8 +192,8 @@ def _derive_confluences(*, settings: Settings, min_years: int) -> dict[str, dict
     out: dict[str, dict[str, Any]] = {}
     for name, spec in load_headwaters_confluences(settings=settings).items():
         parts: list[dict[str, Any]] = []
-        for component in spec["components"]:
-            gage, label = component["gage"], component["label"]
+        for component in spec.components:
+            gage, label = component.gage, component.label
             try:
                 lff = compute_low_flow_frequency(
                     site_no=gage, receiving_water=name, settings=settings
@@ -211,7 +248,7 @@ def _derive_confluences(*, settings: Settings, min_years: int) -> dict[str, dict
                 }
                 for p in parts
             ],
-            "aliases": spec["aliases"],
+            "aliases": spec.aliases,
             "citation": (
                 f"sum of LP3 7Q10s ({terms}) — the St. Joseph + St. Marys junction that forms "
                 "the Maumee at Fort Wayne; conservative (component annual minima need not "

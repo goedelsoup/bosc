@@ -440,9 +440,10 @@ def _render_drainage_audit(emit: Callable[[str], None], settings: Settings) -> N
     emit("|---|--:|---|--:|--:|")
     for s in audit.scopes:
         if s.itemized:
+            sized = f"{'~' if s.sized_amount_approximate else ''}{s.sized_amount:,}"
             emit(
                 f"| {s.name} | {s.drainage_subtotal:,} | itemized | "
-                f"{s.sized_amount:,} | {s.lump_sum_amount:,} |"
+                f"{sized} | {s.lump_sum_amount:,} |"
             )
         else:
             emit(f"| {s.name} | {s.drainage_subtotal:,} | *subtotal only* | — | — |")
