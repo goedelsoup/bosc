@@ -284,11 +284,12 @@ def storm(
         f"storm {runoff.storm.return_period_yr}-yr 24-hr "
         f"{runoff.storm.depth.value:.2f} in [dim]({tag[runoff.storm.depth.source]})[/]"
     )
-    table = Table("case", "land cover", "CN", "peak (cfs)", "volume (ac-ft)")
+    table = Table("case", "land cover", "CN", "Tc (hr)", "peak (cfs)", "volume (ac-ft)")
     table.add_row(
         "pre-development",
         "cropland",
         f"{runoff.pre.curve_number:.0f}",
+        f"{runoff.pre.tc_hr:g}",
         f"{runoff.pre.peak_cfs:,.0f}",
         f"{runoff.pre.volume_acft:,.0f}",
     )
@@ -296,6 +297,7 @@ def storm(
         "post-development",
         post_cover,
         f"{runoff.post.curve_number:.0f}",
+        f"{runoff.post.tc_hr:g}",
         f"{runoff.post.peak_cfs:,.0f}",
         f"{runoff.post.volume_acft:,.0f}",
     )

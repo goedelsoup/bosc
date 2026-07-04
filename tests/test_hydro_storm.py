@@ -40,6 +40,10 @@ def test_storm_scenario_post_exceeds_pre(hydro_settings: Settings) -> None:
     assert runoff.peak_increase_cfs > 0
     assert runoff.volume_increase_acft > 0
 
+    # Impervious development shortens travel time: the post scenario runs on a shorter Tc
+    # than the pervious pre scenario (#1163), so it doesn't understate the post/pre ratio.
+    assert 0 < runoff.post.tc_hr < runoff.pre.tc_hr
+
     # The footprint is document-sourced; the storm is connector-sourced (fixture).
     assert runoff.area.source == "document"
     assert runoff.storm.depth.source == "connector"
