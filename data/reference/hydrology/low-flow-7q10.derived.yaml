@@ -332,3 +332,16 @@ streams:
     citation: LP3 7Q10 from USGS 04191500 (Auglaize River near Defiance OH), 44 climatic years 1980-2024
       (gage value; screening proxy for the discharge reach)
     confidence: medium
+  great miami river at troy:
+    seven_q10_cfs: 44.75
+    source: derived
+    gage: '03262700'
+    gage_name: Great Miami River at Troy OH
+    period: 1980-01-01..2024-12-31
+    complete_years: 44
+    aliases:
+    - great miami river at troy
+    - great miami r at troy
+    citation: LP3 7Q10 from USGS 03262700 (Great Miami River at Troy OH), 44 climatic years 1980-2024
+      (gage value; screening proxy for the discharge reach)
+    confidence: medium

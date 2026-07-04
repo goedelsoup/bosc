@@ -160,6 +160,19 @@ mainstems:
     gage: "03262000"
     aliases: [loramie creek]
 
+  # --- Great Miami basin — Troy/Piqua reach (#829) ----------------------------
+  # The at-site 7Q10 for the troy-piqua site (upper Great Miami, HUC-8 05080001): the mainstem
+  # reach between Sidney (03261500, upstream) and Dayton (03270500, downstream). Great Miami at
+  # Troy (03262700, DA ~926 mi², daily discharge since 1962 — 44 climatic yr in the 1980-2024
+  # window) is the county-seat receiving reach and the site's abstraction/supply gage; it serves
+  # both the Troy and Piqua municipal WWTP screens. The upstream Great Miami at Piqua gage
+  # (03262500) is NOT curated here: its daily-discharge record starts 2012 (~13 yr, below the
+  # 20-yr floor), so it would be omitted at derivation — the Troy gage is the reach denominator.
+  # Non-colliding alias only: the bare "great miami river" already routes to Hamilton (03274000).
+  Great Miami River at Troy:
+    gage: "03262700"
+    aliases: [great miami river at troy, great miami r at troy]
+
   # --- Great Miami basin — WPAFB / Dayton reaches (#464) ----------------------
   # The mouth-ward Hamilton gage (03274000) is the basin-wide "GREAT MIAMI RIVER" ECHO proxy; these
   # two serve the WPAFB site-level 7Q10 at the at-base reaches (the Mad River near Dayton is WPAFB's

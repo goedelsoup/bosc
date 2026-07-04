@@ -1574,8 +1574,11 @@ _TROY_PIQUA = SiteProfile(
     abstraction_gage="03262700",  # [verified] Great Miami River at Troy OH
     supply_gage_primary="03262700",  # [verified] Great Miami River at Troy
     supply_gage_secondary="03262500",  # [verified] Great Miami River at Piqua (the upstream reach)
-    passby_primary_cfs=0.0,  # [open] pending the in-stream passby minimum
-    passby_secondary_cfs=0.0,  # [open]
+    # [derived] LP3 7Q10 at USGS 03262700 (Great Miami River at Troy OH, 44 yr 1980-2024) —
+    # conservative abstraction screen floor and the receiving-reach denominator for the Troy/Piqua
+    # WWTP assimilative screen; regulatory passby minimum pending the OEPA NPDES fact sheet (#828).
+    passby_primary_cfs=44.75,
+    passby_secondary_cfs=0.0,  # [open] Great Miami at Piqua (03262500) daily record starts 2012 (<20 yr) — no derived 7Q10; passby pending
     facility=None,  # [open] the I-75-corridor data-center dimension is the research target (#475)
     serving_utility_citation="EIA-861 2024 Service_Territory: Miami County, OH is split — Dayton Power & Light (AES Ohio, #4922) serves Troy + most of the county; the City of Piqua municipal (#15095) serves Piqua. Pinned to DP&L #4922 (county-dominant IOU); the Piqua-muni share is [inference]. [verified]",
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]
