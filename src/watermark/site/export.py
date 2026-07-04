@@ -45,6 +45,7 @@ from watermark.config import Settings, get_settings
 from watermark.economics.baseline import load_baseline as load_econ_baseline
 from watermark.economics.energy import load_consumer_energy, load_demand_pressure
 from watermark.gleif import load_inventory as load_lei_inventory
+from watermark.hydrology.hydrograph_routing import build_routed_hydrograph
 from watermark.hydrology.model import ScenarioResult
 from watermark.hypotheses import HYPOTHESES, Hypothesis, HypothesisAssessment, load_assessments
 from watermark.logging import get_logger
@@ -402,6 +403,19 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         ),
         # Cross-site basin synthesis (#308/#323): the watershed points as one connected basin.
         ("network", None, lambda: build_basin_network(settings=settings)),
+        # The loop's design-storm hydrograph routed down the cited confluence graph (#1184):
+        # routed vs. naive-summed outlet peak, attenuation + lag. Reference-only: network.yaml +
+        # reaches.yaml describe the Lima loop and aren't slug-scoped, so a sibling site must not
+        # inherit them — it carries no routed-hydrograph feed until it commits its own reach table.
+        (
+            "routed-hydrograph",
+            None,
+            lambda: (
+                build_routed_hydrograph(settings=settings)
+                if is_reference_site(settings.site)
+                else None
+            ),
+        ),
         # The boom-origin hypotheses (directory lenses) + their (site x hypothesis) evidence
         # cells (#308) — each cell carries a Citation, so the directory shows provenance.
         ("hypotheses", Hypothesis, lambda: list(HYPOTHESES.values())),

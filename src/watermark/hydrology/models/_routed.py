@@ -149,3 +149,112 @@ class NetworkTheory(BaseModel):
     citation: str | None = None
     add_nodes: list[NetworkNode] = []  # directed-inflow nodes this theory introduces
     repoint: dict[str, str] = {}  # existing node_id -> new downstream id (re-route an edge)
+
+
+# ------------------------------------------------------------------ storm-hydrograph routing
+
+
+class Catchment(BaseModel):
+    """The contributing subcatchment that generates a node's design-storm inflow hydrograph.
+
+    Fed to :func:`watermark.hydrology.solver.runoff.simulate_runoff`. Every parameter carries
+    its own provenance (``area_acres`` derived from a committed WBD HU polygon where available;
+    ``curve_number`` / ``tc_hr`` are stated Tier-0 screening assumptions). Lives in the
+    committed ``data/reference/hydrology/reaches.yaml`` companion to the magnitude-free
+    ``network.yaml`` topology.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    area_acres: ProvenancedValue
+    curve_number: ProvenancedValue
+    tc_hr: ProvenancedValue
+
+
+class Reach(BaseModel):
+    """The trapezoidal channel a node's hydrograph is routed through to its downstream node.
+
+    Fed to :func:`watermark.hydrology.solver.routing.route` (constant-parameter Muskingum-Cunge).
+    ``length_ft`` / ``slope`` are required; the channel-geometry fields are optional and fall
+    back to the ``route`` defaults (10 ft bottom width, 2:1 side slope, Manning ``n`` 0.04) when
+    omitted — a wide mainstem overrides them, a narrow tributary ditch does not.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    length_ft: ProvenancedValue
+    slope: ProvenancedValue
+    bottom_width_ft: ProvenancedValue | None = None
+    side_slope_z: ProvenancedValue | None = None
+    manning_n: ProvenancedValue | None = None
+
+
+class ReachTable(BaseModel):
+    """The committed reach geometry + contributing subcatchments, keyed by network node id.
+
+    A node absent from ``catchments`` contributes no storm inflow of its own (a WWTP outfall,
+    whose flow is continuous effluent, not a storm event); a node absent from ``reaches`` is a
+    pass-through (an outfall sitting at a confluence, or the terminal outlet).
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    catchments: dict[str, Catchment] = {}
+    reaches: dict[str, Reach] = {}
+
+
+class ReachRouting(BaseModel):
+    """How one reach's channel attenuated and lagged the hydrograph passing through it.
+
+    ``attenuation_pct`` is the peak reduction (inflow peak -> outflow peak) and ``lag_hr`` the
+    delay in time-to-peak — the two signatures of Muskingum-Cunge routing that a naive
+    peak-sum ignores.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    node_id: str
+    name: str
+    length_ft: float
+    slope: float
+    inflow_peak_cfs: float
+    inflow_time_to_peak_hr: float
+    outflow_peak_cfs: float
+    outflow_time_to_peak_hr: float
+    attenuation_pct: float  # 100 * (inflow_peak - outflow_peak) / inflow_peak, >= 0
+    lag_hr: float  # outflow_time_to_peak - inflow_time_to_peak, >= 0
+
+
+class RoutedHydrographNetwork(BaseModel):
+    """A design-storm runoff hydrograph routed down the cited confluence graph.
+
+    The time-varying counterpart to :class:`RoutedNetwork` (which routes steady-state low
+    flow): each contributing subcatchment's SCS design-storm hydrograph is routed downstream
+    through Muskingum-Cunge and superposed at confluences, so the outlet peak is **attenuated
+    and lagged**, not the arithmetic sum of the tributary peaks. The headline is the routed
+    outlet hydrograph vs. the naive ``summed`` hydrograph (the local inflows superposed with no
+    routing): ``peak_attenuation_pct`` and ``lag_hr`` quantify what routing buys over the sum.
+    Tier-0 screening — not a calibrated HEC-HMS/HEC-RAS model.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    tier: Literal["tier0"] = "tier0"
+    scenario: str = "design-storm"
+    return_period_yr: int
+    storm_depth_in: float
+    dt_hr: float
+    times_hr: list[float]
+    outlet_hydrograph_cfs: list[float]  # routed flow leaving the outlet
+    summed_hydrograph_cfs: list[float]  # naive superposition of local inflows (unrouted)
+    routed_peak_cfs: float
+    summed_peak_cfs: float
+    peak_attenuation_pct: float  # 100 * (summed_peak - routed_peak) / summed_peak
+    routed_time_to_peak_hr: float
+    summed_time_to_peak_hr: float
+    lag_hr: float  # routed_time_to_peak - summed_time_to_peak
+    reaches: list[ReachRouting]
+    warnings: list[str] = []
+
+    def reach(self, node_id: str) -> ReachRouting | None:
+        return next((r for r in self.reaches if r.node_id == node_id), None)

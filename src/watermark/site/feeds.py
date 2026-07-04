@@ -66,7 +66,11 @@ from watermark.provenance import source_is_verified
 #   price-pressure sensitivity (`FacilityDemandPressure`): households-equivalent, demand share, and
 #   the STYLIZED price-pressure band, each a `ProvenancedValue`. Facility-gated — absent for a thin
 #   site with no documented facility (mirrors `derive_demand_pressure`'s own gate).
-CONTRACT_VERSION = "1.12.0"
+# 1.13.0: adds the `routed-hydrograph` object feed (#1184) — the loop's design-storm hydrograph
+#   routed down the cited confluence graph via Muskingum-Cunge (`RoutedHydrographNetwork`): the
+#   routed vs. naive-summed outlet hydrograph series, the peak `attenuation_pct` + `lag_hr`, and the
+#   per-reach attenuation/lag table. Absent when the topology or reach table is missing.
+CONTRACT_VERSION = "1.13.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

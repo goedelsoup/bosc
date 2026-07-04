@@ -1,0 +1,237 @@
+# Reach geometry + contributing subcatchments for storm-hydrograph routing.
+#
+# The companion to network.yaml (which is TOPOLOGY only — a magnitude-free directed
+# graph). Storm-hydrograph routing (watermark.hydrology.hydrograph_routing) needs two
+# magnitudes the topology deliberately omits:
+#
+#   catchments:  per contributing (headwater) node — the subcatchment that generates a
+#                design-storm runoff hydrograph (area, curve number, time of concentration),
+#                fed to watermark.hydrology.solver.runoff.simulate_runoff.
+#   reaches:     per node's downstream edge — the trapezoidal channel the node's hydrograph
+#                is routed through (length, slope, optional geometry), fed to
+#                watermark.hydrology.solver.routing.route (constant-parameter Muskingum-Cunge).
+#
+# Keys are network.yaml node ids. A node absent from `reaches` is a pass-through (its
+# inflow leaves unrouted — outfalls that sit AT a confluence, and the terminal outlet). A
+# node absent from `catchments` contributes no storm inflow of its own (the WWTP outfalls:
+# their flow is continuous EFFLUENT, modeled by the steady-state network, not a storm event).
+#
+# DISCIPLINE (Tier-0 screening; every value carries its own provenance tag):
+#   * area_acres for pike-run-head is DERIVED from the committed WBD HU12 polygon
+#     (wbd/041000070404-pike-run.geojson, 34.28 km²); ottawa-head from the WBD HU10
+#     (wbd/0410000704-middle-ottawa-river.geojson, 272.53 km²). dug-run-head has no committed
+#     delineation, so its area is a stated ASSUMPTION scaled to Pike Run's order.
+#   * Reach lengths for the tributaries are DERIVED by Hack's law L(km)=1.4·A(km²)^0.6 on the
+#     WBD HU area (a standard main-channel-length estimator, fully reproducible); the mainstem
+#     reach splits and every slope/geometry are stated ASSUMPTIONS with a basis (gentle
+#     glaciated-till-plain gradients, a wide mainstem vs. narrow tributary ditches).
+#   * CN and Tc are stated screening ASSUMPTIONS consistent with the campus storm chain
+#     (pre-development mixed row-crop CN≈74; the urbanizing Pike Run campus catchment CN≈80).
+#
+# CAVEAT (recorded, not hidden): the three catchments are independent screening contributing
+# areas, NOT a partitioned delineation — the Ottawa HU10 nominally contains the Pike/Dug
+# HU12s, so the NAIVE SUMMED peak double-counts them. That only makes the un-routed sum a MORE
+# conservative baseline, which strengthens (never inflates) the routed-vs-summed attenuation
+# the model reports. The headline is the attenuation+lag of routing, not an absolute peak.
+
+meta:
+  subject: Reach geometry + contributing subcatchments for Tier-0 storm-hydrograph routing (Lima loop)
+  tier: tier0
+  method: >-
+    Muskingum-Cunge channel routing of SCS design-storm hydrographs down the cited network.yaml
+    confluence graph. Tributary reach lengths via Hack's law on the committed WBD HU areas; CN/Tc
+    and slopes are stated screening assumptions.
+  caveats:
+    - "Catchments are independent screening contributing areas, not a partitioned delineation; the summed (un-routed) peak conservatively double-counts the nested tributaries."
+    - "Only confluence ORDER and reach geometry are modeling choices; the attenuation+lag headline is robust to the absolute areas."
+    - "Not a calibrated HEC-HMS/HEC-RAS model — Tier-0 screening only."
+
+# --- Contributing subcatchments (generate the design-storm inflow hydrograph) --------------
+catchments:
+  ottawa-head:
+    area_acres:
+      value: 67341.0
+      unit: acre
+      source: derived
+      citation: "WBD HU10 Middle Ottawa River 272.53 km² (wbd/0410000704-middle-ottawa-river.geojson) × 247.105 ac/km²; screening mainstem contributing area through Lima"
+      confidence: medium
+    curve_number:
+      value: 74.0
+      unit: ""
+      source: assumption
+      citation: "Mixed row-crop/pasture on HSG C/D glaciated till (matches the pre-development cropland CN used by the campus storm chain)"
+      confidence: low
+    tc_hr:
+      value: 8.0
+      unit: hr
+      source: assumption
+      citation: "Time of concentration for a ~105 mi² rural basin (screening estimate)"
+      confidence: low
+  dug-run-head:
+    area_acres:
+      value: 4940.0
+      unit: acre
+      source: assumption
+      citation: "No committed WBD delineation for Dug Run; assumed ~20 km² (Pike Run order) — a small Ottawa (Lima area) tributary"
+      confidence: low
+    curve_number:
+      value: 78.0
+      unit: ""
+      source: assumption
+      citation: "Suburban Shawnee/Lima fringe on HSG C (screening)"
+      confidence: low
+    tc_hr:
+      value: 2.5
+      unit: hr
+      source: assumption
+      citation: "Time of concentration for a small partly-developed tributary (screening estimate)"
+      confidence: low
+  pike-run-head:
+    area_acres:
+      value: 8470.0
+      unit: acre
+      source: derived
+      citation: "WBD HU12 Pike Run 34.28 km² (wbd/041000070404-pike-run.geojson) × 247.105 ac/km² — the campus's immediate subwatershed"
+      confidence: medium
+    curve_number:
+      value: 80.0
+      unit: ""
+      source: assumption
+      citation: "Urbanizing campus catchment on HSG C (higher CN than the rural mainstem; screening)"
+      confidence: low
+    tc_hr:
+      value: 2.0
+      unit: hr
+      source: assumption
+      citation: "Time of concentration for the Pike Run campus subwatershed (screening estimate)"
+      confidence: low
+
+# --- Reaches (each keyed by its UPSTREAM node; the channel node->downstream) ----------------
+reaches:
+  ottawa-head:
+    length_ft:
+      value: 82000.0
+      unit: ft
+      source: assumption
+      citation: "Upper split of the Hack's-law Ottawa mainstem length (L=1.4·272.53^0.6 km ≈ 40.5 km / 133k ft over the HU10); ~15.5 mi above the Lima reach"
+      confidence: low
+    slope:
+      value: 0.0010
+      unit: ft/ft
+      source: assumption
+      citation: "Gentle glaciated-till-plain mainstem gradient (screening)"
+      confidence: low
+    bottom_width_ft:
+      value: 60.0
+      unit: ft
+      source: assumption
+      citation: "Ottawa mainstem trapezoid bottom width (screening; vs. the 10 ft tributary default)"
+      confidence: low
+    manning_n:
+      value: 0.035
+      unit: ""
+      source: assumption
+      citation: "Natural mainstem channel roughness (screening)"
+      confidence: low
+  lima-abstraction:
+    length_ft:
+      value: 12000.0
+      unit: ft
+      source: assumption
+      citation: "Ottawa mainstem reach through the Lima abstraction/gage segment (screening split of the Hack's-law length)"
+      confidence: low
+    slope:
+      value: 0.0010
+      unit: ft/ft
+      source: assumption
+      citation: "Gentle glaciated-till-plain mainstem gradient (screening)"
+      confidence: low
+    bottom_width_ft:
+      value: 60.0
+      unit: ft
+      source: assumption
+      citation: "Ottawa mainstem trapezoid bottom width (screening)"
+      confidence: low
+    manning_n:
+      value: 0.035
+      unit: ""
+      source: assumption
+      citation: "Natural mainstem channel roughness (screening)"
+      confidence: low
+  dug-run-head:
+    length_ft:
+      value: 21000.0
+      unit: ft
+      source: assumption
+      citation: "Dug Run main-channel length (screening; no WBD delineation to derive from)"
+      confidence: low
+    slope:
+      value: 0.0020
+      unit: ft/ft
+      source: assumption
+      citation: "Small-tributary gradient, steeper than the mainstem (screening)"
+      confidence: low
+  dug-run-confluence:
+    length_ft:
+      value: 6000.0
+      unit: ft
+      source: assumption
+      citation: "Lower Dug Run reach to the Ottawa confluence (screening)"
+      confidence: low
+    slope:
+      value: 0.0015
+      unit: ft/ft
+      source: assumption
+      citation: "Lower-tributary gradient (screening)"
+      confidence: low
+  pike-run-head:
+    length_ft:
+      value: 38000.0
+      unit: ft
+      source: derived
+      citation: "Hack's law L=1.4·34.28^0.6 km ≈ 11.7 km ≈ 38,300 ft on the WBD Pike Run HU12 area"
+      confidence: medium
+    slope:
+      value: 0.0025
+      unit: ft/ft
+      source: assumption
+      citation: "Pike Run campus-subwatershed gradient (screening)"
+      confidence: low
+  pike-run-confluence:
+    length_ft:
+      value: 4000.0
+      unit: ft
+      source: assumption
+      citation: "Lower Pike Run reach to the Ottawa confluence (screening)"
+      confidence: low
+    slope:
+      value: 0.0015
+      unit: ft/ft
+      source: assumption
+      citation: "Lower-tributary gradient (screening)"
+      confidence: low
+  lima-reach:
+    length_ft:
+      value: 20000.0
+      unit: ft
+      source: assumption
+      citation: "Ottawa mainstem reach below the Lima gage to the outlet (screening split of the Hack's-law length)"
+      confidence: low
+    slope:
+      value: 0.0010
+      unit: ft/ft
+      source: assumption
+      citation: "Gentle glaciated-till-plain mainstem gradient (screening)"
+      confidence: low
+    bottom_width_ft:
+      value: 60.0
+      unit: ft
+      source: assumption
+      citation: "Ottawa mainstem trapezoid bottom width (screening)"
+      confidence: low
+    manning_n:
+      value: 0.035
+      unit: ""
+      source: assumption
+      citation: "Natural mainstem channel roughness (screening)"
+      confidence: low

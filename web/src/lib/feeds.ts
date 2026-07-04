@@ -506,6 +506,44 @@ export interface BasinNetwork {
   nodes: WatershedNode[];
 }
 
+// --- routed storm hydrograph (#1184) ------------------------------------------------------
+// The loop's design-storm hydrograph routed down the cited confluence graph via Muskingum-Cunge:
+// how much a channel attenuates + lags one reach's inflow peak. Mirrors the Python
+// `watermark.hydrology.model.ReachRouting`.
+export interface ReachRouting {
+  node_id: string;
+  name: string;
+  length_ft: number;
+  slope: number;
+  inflow_peak_cfs: number;
+  inflow_time_to_peak_hr: number;
+  outflow_peak_cfs: number;
+  outflow_time_to_peak_hr: number;
+  attenuation_pct: number; // peak reduction across the reach, >= 0
+  lag_hr: number; // delay in time-to-peak across the reach, >= 0
+}
+
+// The `routed-hydrograph` object feed — the routed outlet hydrograph vs. the naive summed
+// (un-routed) one, plus the per-reach attenuation/lag. Mirrors `RoutedHydrographNetwork`.
+export interface RoutedHydrographNetwork {
+  tier: "tier0";
+  scenario: string;
+  return_period_yr: number;
+  storm_depth_in: number;
+  dt_hr: number;
+  times_hr: number[];
+  outlet_hydrograph_cfs: number[]; // routed at the outlet
+  summed_hydrograph_cfs: number[]; // naive superposition of local inflows (un-routed)
+  routed_peak_cfs: number;
+  summed_peak_cfs: number;
+  peak_attenuation_pct: number; // 100 * (summed_peak - routed_peak) / summed_peak
+  routed_time_to_peak_hr: number;
+  summed_time_to_peak_hr: number;
+  lag_hr: number; // routed_time_to_peak - summed_time_to_peak
+  reaches: ReachRouting[];
+  warnings: string[];
+}
+
 // --- boom-origin hypotheses (the directory lenses) + their evidence cells (#308) ----------
 /** One reading of the boom — content of a directory lens (`bosc.hypotheses.Hypothesis`). */
 export interface HypothesisItem {

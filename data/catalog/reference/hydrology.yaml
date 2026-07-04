@@ -38,7 +38,13 @@ storage:
 - relpath: reference/hydrology/ottawa-lima-tmdl.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: reference/hydrology/reaches.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: reference/hydrology/refill-adequacy.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/hydrology/routed-hydrograph.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: reference/hydrology/routing.yaml
@@ -68,5 +74,6 @@ tags:
 - tmdl
 - stormwater
 - routing
-notes: A 17-file mixed-provenance hydrology working set; each file carries its own per-quantity provenance
-  tags — do not assert one source/license for the whole bundle.
+notes: A mixed-provenance hydrology working set; each file carries its own per-quantity provenance
+  tags — do not assert one source/license for the whole bundle. Includes the storm-hydrograph
+  routing pair (reaches.yaml geometry + the derived routed-hydrograph.yaml summary, #1184).

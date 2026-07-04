@@ -10,6 +10,7 @@ from __future__ import annotations
 from collections.abc import Sequence
 
 from watermark.config import Settings, get_settings
+from watermark.hydrology import hydrograph_routing as hydrograph_stage
 from watermark.hydrology import network as network_stage
 from watermark.hydrology import refill as refill_stage
 from watermark.hydrology import roundabout as roundabout_stage
@@ -23,6 +24,7 @@ from watermark.hydrology.model import (
     HydroFinding,
     RefillAdequacy,
     RoundaboutFlow,
+    RoutedHydrographNetwork,
     RoutedNetwork,
     RoutedNetworkDiff,
     ScenarioDiff,
@@ -267,6 +269,38 @@ def run_network(
         mainstem_runs_dry=delta.mainstem_runs_dry,
     )
     return baseline, buildout, delta
+
+
+def run_storm_network(
+    *,
+    return_period_yr: int = 25,
+    settings: Settings | None = None,
+    live: bool = False,
+) -> tuple[RoutedHydrographNetwork | None, list[HydroFinding]]:
+    """Route the loop's design-storm hydrographs down the cited confluence graph (#1184).
+
+    The time-varying counterpart to :func:`run_network` (which routes steady-state low flow):
+    each contributing subcatchment's SCS design-storm hydrograph is routed downstream through
+    Muskingum-Cunge and superposed at confluences, so the outlet peak is attenuated and lagged
+    rather than the arithmetic sum of the tributary peaks. Returns ``(None, [])`` if the
+    committed topology or reach table is absent.
+    """
+    settings = settings or get_settings()
+    rn = hydrograph_stage.build_routed_hydrograph(
+        return_period_yr=return_period_yr, settings=settings, live=live
+    )
+    if rn is None:
+        return None, []
+    findings = hydrograph_stage.hydrograph_findings(rn)
+    log.info(
+        "hydro.storm_network",
+        return_period=return_period_yr,
+        routed_peak_cfs=rn.routed_peak_cfs,
+        summed_peak_cfs=rn.summed_peak_cfs,
+        attenuation_pct=rn.peak_attenuation_pct,
+        lag_hr=rn.lag_hr,
+    )
+    return rn, findings
 
 
 def compare_theory(

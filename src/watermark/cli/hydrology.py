@@ -159,6 +159,76 @@ def basin_network(
         console.print(f"[green]wrote[/] {out}")
 
 
+@app.command(name="basin-route")
+def basin_route(
+    return_period: int = typer.Option(
+        25, "--return-period", help="Design storm return period (yr)."
+    ),
+    offline: bool = typer.Option(
+        False, "--offline", help="Use cached/fixture rainfall only; no NOAA fetch."
+    ),
+    write: bool = typer.Option(
+        False, "--write", help="Persist data/reference/hydrology/routed-hydrograph.yaml."
+    ),
+) -> None:
+    """Route the loop's design-storm hydrographs down the cited confluence graph (#1184).
+
+    Generates an SCS design-storm hydrograph at each contributing subcatchment (reaches.yaml),
+    routes each downstream through Muskingum-Cunge, and superposes them at confluences — so the
+    outlet peak is ATTENUATED and LAGGED, not the arithmetic sum of the tributary peaks. The
+    time-varying counterpart to `watermark network` (which routes steady-state low flow).
+    Tier-0 screening, not a calibrated HEC-RAS model.
+    """
+    from watermark.hydrology import hydrograph_routing as hydrograph
+    from watermark.pipeline import hydrology as hydro_stage
+
+    settings = get_settings()
+    if offline:
+        settings = Settings(hydro_offline=True)
+    rn, findings = hydro_stage.run_storm_network(
+        return_period_yr=return_period, settings=settings, live=True
+    )
+    if rn is None:
+        console.print(
+            "[yellow]No routing inputs[/] (data/reference/hydrology/network.yaml + reaches.yaml)."
+        )
+        raise typer.Exit(1)
+
+    console.print(
+        f"[bold]Lima loop {rn.return_period_yr}-yr storm[/] "
+        f"({rn.storm_depth_in:.2f} in, 24-hr) — routed down the cited confluence graph"
+    )
+    table = Table(
+        "reach", "length (ft)", "in peak (cfs)", "out peak (cfs)", "attenuation", "lag (hr)"
+    )
+    for r in rn.reaches:
+        table.add_row(
+            r.name,
+            f"{r.length_ft:,.0f}",
+            f"{r.inflow_peak_cfs:,.0f}",
+            f"{r.outflow_peak_cfs:,.0f}",
+            f"{r.attenuation_pct:g}%",
+            f"{r.lag_hr:g}",
+        )
+    console.print(table)
+    console.print(
+        f"\n[bold]Outlet peak[/]: naive sum Σ[bold]{rn.summed_peak_cfs:,.0f}[/] cfs → routed "
+        f"[bold]{rn.routed_peak_cfs:,.0f}[/] cfs "
+        f"([green]{rn.peak_attenuation_pct:g}% attenuated[/], lagged [bold]{rn.lag_hr:g} hr[/])."
+    )
+    for f in findings:
+        console.print(f"[{'green' if f.ok else 'red'}]{f}[/]")
+    for w in rn.warnings:
+        console.print(f"[dim]! {w}[/]")
+    console.print(
+        "\n[dim]Tier-0 Muskingum-Cunge screening; reach geometry + subcatchments are "
+        "cited/assumed (reaches.yaml), not a calibrated HEC-RAS model.[/]"
+    )
+    if write:
+        path = hydrograph.write_routed_hydrograph(rn, settings=settings)
+        console.print(f"[green]wrote[/] {path}")
+
+
 @app.command(name="derive-low-flows")
 def derive_low_flows(
     offline: bool = typer.Option(

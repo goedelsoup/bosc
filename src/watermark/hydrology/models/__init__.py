@@ -80,6 +80,9 @@ from watermark.hydrology.models._lowflow import (
     LowFlowStatistic as LowFlowStatistic,
 )
 from watermark.hydrology.models._routed import (
+    Catchment as Catchment,
+)
+from watermark.hydrology.models._routed import (
     NetworkNode as NetworkNode,
 )
 from watermark.hydrology.models._routed import (
@@ -89,7 +92,19 @@ from watermark.hydrology.models._routed import (
     NetworkTheory as NetworkTheory,
 )
 from watermark.hydrology.models._routed import (
+    Reach as Reach,
+)
+from watermark.hydrology.models._routed import (
     ReachFlow as ReachFlow,
+)
+from watermark.hydrology.models._routed import (
+    ReachRouting as ReachRouting,
+)
+from watermark.hydrology.models._routed import (
+    ReachTable as ReachTable,
+)
+from watermark.hydrology.models._routed import (
+    RoutedHydrographNetwork as RoutedHydrographNetwork,
 )
 from watermark.hydrology.models._routed import (
     RoutedNetwork as RoutedNetwork,
@@ -179,6 +194,7 @@ __all__ = [
     "AnnualMinimum",
     "AssimilativeCheck",
     "CampusDischargeScreen",
+    "Catchment",
     "CoolingBasis",
     "DesignStorm",
     "DetentionDesign",
@@ -199,12 +215,16 @@ __all__ = [
     "OutfallCapacity",
     "ProvenancedValue",
     "PumpStation",
+    "Reach",
     "ReachFlow",
+    "ReachRouting",
+    "ReachTable",
     "RefillAdequacy",
     "Reservoir",
     "RiverFlowStat",
     "RoundaboutFlow",
     "RoundaboutStormPeak",
+    "RoutedHydrographNetwork",
     "RoutedNetwork",
     "RoutedNetworkDiff",
     "SanitaryBasis",
