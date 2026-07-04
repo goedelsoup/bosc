@@ -42,6 +42,35 @@ def test_qcew_connector_offline(econ_settings: Settings) -> None:
     assert emps == sorted(emps, reverse=True)
 
 
+def test_qcew_surfaces_wages(econ_settings: Settings) -> None:
+    """QCEW wages ride along on the county total and each sector (issue #1109), and a
+    sector with no covered wages omits pay rather than asserting a fabricated $0."""
+    ie = fetch_county_industries(year=2023, fips="39003", settings=econ_settings)
+    # County-wide average pay (all ownerships) is surfaced and connector-sourced.
+    assert ie.avg_annual_pay is not None
+    assert ie.avg_annual_pay.value > 0 and ie.avg_annual_pay.unit == "USD/year"
+    assert ie.avg_annual_pay.verified
+    assert ie.avg_weekly_wage is not None and ie.avg_weekly_wage.unit == "USD/week"
+    # A dominant sector carries per-sector pay.
+    mfg = next(s for s in ie.sectors if s.naics == "31-33")
+    assert mfg.avg_annual_pay is not None and mfg.avg_annual_pay.value > 0
+    # Pay is never surfaced as a fabricated $0 — a suppressed/zero-wage slice is omitted.
+    assert all(s.avg_annual_pay is None or s.avg_annual_pay.value > 0 for s in ie.sectors)
+
+
+def test_reduce_csv_keeps_wage_columns() -> None:
+    """`_reduce_csv` selects the wage columns by name, on both the total and sector rows."""
+    csv = (
+        "own_code,agglvl_code,industry_code,annual_avg_emplvl,annual_avg_estabs,"
+        "avg_annual_pay,annual_avg_wkly_wage,lq_annual_avg_emplvl\n"
+        "0,70,10,50000,2500,55000,1050,1.0\n"
+        "5,74,31-33,8000,140,92000,1770,2.0\n"
+    )
+    reduced = _reduce_csv(csv)
+    assert reduced["total"]["pay"] == 55000.0 and reduced["total"]["wkly"] == 1050.0
+    assert reduced["sectors"][0]["pay"] == 92000.0 and reduced["sectors"][0]["wkly"] == 1770.0
+
+
 def test_census_population_offline(econ_settings: Settings) -> None:
     series = fetch_population_series(years=[2010, 2023], fips="39003", settings=econ_settings)
     assert series.fips == "39003" and series.area_name == "Allen County, Ohio"

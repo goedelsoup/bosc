@@ -22,6 +22,12 @@ class SectorEmployment(BaseModel):
     sector_name: str
     annual_avg_employment: ProvenancedValue  # connector (QCEW)
     establishments: ProvenancedValue | None = None
+    # QCEW annual pay (connector): the sector's average annual pay per covered job
+    # (USD/year) and average weekly wage (USD/week). The pay counterpoint to a
+    # data-center job-count claim — how the promised jobs compare to prevailing county
+    # pay. Omitted (not zeroed) for a sector QCEW reports with no covered wages.
+    avg_annual_pay: ProvenancedValue | None = None
+    avg_weekly_wage: ProvenancedValue | None = None
     # Location quotient = county sector share / national sector share. >1 => the sector
     # is over-represented here, i.e. export-oriented (the closest county-level proxy for
     # an import/export ratio — no clean county trade series exists; see the README).
@@ -38,6 +44,10 @@ class IndustryEmployment(BaseModel):
     year: int
     total_employment: ProvenancedValue
     establishments: ProvenancedValue | None = None
+    # County-wide average pay across all ownerships (QCEW total row): the overall
+    # "what the place pays" figure, alongside the per-sector pay in ``sectors``.
+    avg_annual_pay: ProvenancedValue | None = None
+    avg_weekly_wage: ProvenancedValue | None = None
     sectors: list[SectorEmployment]
     source: str = "BLS QCEW (annual averages, private ownership by NAICS sector)"
 

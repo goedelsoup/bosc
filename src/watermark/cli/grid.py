@@ -193,21 +193,30 @@ def economics(
             f"[{'green' if delta >= 0 else 'red'}]{pct:+.1f}%[/]"
         )
 
-    table = Table("NAICS", "sector", "jobs", "estabs", "location quotient")
+    if latest.avg_annual_pay is not None:
+        console.print(
+            f"[bold]{latest.area_name}[/] average annual pay "
+            f"[green]${latest.avg_annual_pay.value:,.0f}[/] ({latest.year}, all ownerships)"
+        )
+
+    table = Table("NAICS", "sector", "jobs", "estabs", "avg pay", "location quotient")
     for s in latest.sectors:
         lq = s.location_quotient.value if s.location_quotient else None
         estabs = f"{s.establishments.value:,.0f}" if s.establishments else "—"
+        pay = f"${s.avg_annual_pay.value:,.0f}" if s.avg_annual_pay else "—"
         tag = " [green](exports)[/]" if lq is not None and lq >= 1.2 else ""
         table.add_row(
             s.naics,
             s.sector_name[:38],
             f"{s.annual_avg_employment.value:,.0f}",
             estabs,
+            pay,
             (f"{lq:.2f}{tag}" if lq is not None else "—"),
         )
     console.print(table)
     console.print(
-        "\n[dim]BLS QCEW (keyless); location quotient = county share / national share "
+        "\n[dim]BLS QCEW (keyless); avg pay = QCEW average annual pay per covered job; "
+        "location quotient = county share / national share "
         "(>1 = export-oriented). Population from US Census ACS5 (live fetch needs "
         "WATERMARK_CENSUS_API_KEY; a warm cache/fixture is served keyless).[/]"
     )

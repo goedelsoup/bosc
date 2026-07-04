@@ -30,6 +30,28 @@
           ],
           "default": null
         },
+        "avg_annual_pay": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "avg_weekly_wage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "sectors": {
           "items": {
             "$ref": "#/$defs/SectorEmployment"
@@ -187,6 +209,28 @@
           "$ref": "#/$defs/ProvenancedValue"
         },
         "establishments": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "avg_annual_pay": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "avg_weekly_wage": {
           "anyOf": [
             {
               "$ref": "#/$defs/ProvenancedValue"

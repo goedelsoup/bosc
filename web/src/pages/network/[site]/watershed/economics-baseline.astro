@@ -20,6 +20,9 @@ const eb = hasFeed("economics-baseline") ? loadFeed<EconomicBaseline>("economics
 const ce = hasFeed("consumer-energy") ? loadFeed<ConsumerEnergyCosts>("consumer-energy") : null;
 const num = (v?: ProvenancedValue | null): string =>
   v?.value == null ? "—" : Math.round(v.value).toLocaleString("en-US");
+// QCEW pay figures are dollars — render with a currency prefix (issue #1109).
+const usd = (v?: ProvenancedValue | null): string =>
+  v?.value == null ? "—" : `$${Math.round(v.value).toLocaleString("en-US")}`;
 const lq = (v?: ProvenancedValue | null): number | null => (v?.value == null ? null : v.value);
 // A location quotient is the county's employment share over the national share:
 // ≥ 1.25 means the county does much more of that work than the nation (it exports).
@@ -174,10 +177,19 @@ const energyCharts = [
           )}
 
           <h2 id="industry">Industry mix &amp; export-orientation</h2>
-          <p>Employment by NAICS sector, {eb.latest.year}, ranked by jobs.</p>
+          <p>
+            Employment by NAICS sector, {eb.latest.year}, ranked by jobs.
+            {eb.latest.avg_annual_pay?.value != null && (
+              <>
+                {" "}County-wide average annual pay is <strong>{usd(eb.latest.avg_annual_pay)}</strong>{" "}
+                (BLS QCEW, all ownerships) — the prevailing-wage yardstick the campus's ~50 promised jobs
+                are measured against.
+              </>
+            )}
+          </p>
           <table>
             <thead>
-              <tr><th>Sector</th><th>Jobs</th><th>Establishments</th><th>Location quotient</th></tr>
+              <tr><th>Sector</th><th>Jobs</th><th>Establishments</th><th>Avg annual pay</th><th>Location quotient</th></tr>
             </thead>
             <tbody>
               {sectors.map((s) => (
@@ -185,6 +197,7 @@ const energyCharts = [
                   <td>{s.naics} · {s.sector_name}</td>
                   <td>{num(s.annual_avg_employment)}</td>
                   <td>{num(s.establishments)}</td>
+                  <td>{usd(s.avg_annual_pay)}</td>
                   <td>{orientation(lq(s.location_quotient))}</td>
                 </tr>
               ))}

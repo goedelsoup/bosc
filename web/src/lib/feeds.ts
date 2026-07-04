@@ -394,6 +394,8 @@ export interface EconSector {
   sector_name: string;
   annual_avg_employment: ProvenancedValue;
   establishments?: ProvenancedValue | null;
+  avg_annual_pay?: ProvenancedValue | null; // QCEW average annual pay per covered job (USD/year)
+  avg_weekly_wage?: ProvenancedValue | null; // QCEW average weekly wage (USD/week)
   location_quotient?: ProvenancedValue | null;
 }
 export interface EconTrendPoint {
@@ -413,6 +415,8 @@ export interface EconomicBaseline {
     area_name?: string;
     total_employment?: ProvenancedValue;
     establishments?: ProvenancedValue;
+    avg_annual_pay?: ProvenancedValue | null; // county-wide average annual pay (all ownerships)
+    avg_weekly_wage?: ProvenancedValue | null;
     sectors: EconSector[];
   };
   trend: EconTrendPoint[];
