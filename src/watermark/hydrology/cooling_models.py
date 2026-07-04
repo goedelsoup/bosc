@@ -314,12 +314,16 @@ def _derive_evaporative_tower(
     if blowdown_mgd is not None:
         consumptive_high = blowdown_mgd * (cycles - 1.0)  # blowdown x (CoC-1) = evaporation
         high_cite = f"{blowdown_mgd:g} MGD blowdown x (CoC-1); {blowdown_cite}"
+        # The blowdown method implies a genuinely larger intake: blowdown x CoC.
+        makeup_high_cite = f"upper-bound intake = {high_cite} / evap fraction (blowdown x CoC)"
     else:
-        # No disclosed discharge for this site — the power-method consumptive is the high bound.
+        # No disclosed discharge for this site — the power-method consumptive is the high bound,
+        # and the intake at that bound is unchanged from the central power-method makeup.
         consumptive_high = consumptive_low
         high_cite = (
             f"{it_load_mw:g} MW x {wue_l_per_kwh:g} L/kWh (power x WUE; no disclosed blowdown)"
         )
+        makeup_high_cite = "upper-bound intake = central power-method makeup (no disclosed blowdown)"
 
     return CoolingBasis(
         cooling_model=CoolingModelType.EVAPORATIVE_TOWER,
@@ -334,14 +338,15 @@ def _derive_evaporative_tower(
             "MGD",
             citation=f"{it_load_mw:g} MW x {wue_l_per_kwh:g} L/kWh / evap fraction",
         ),
-        # Intake at the upper (blowdown-method) consumptive bound: a genuinely larger
-        # withdrawal, blowdown x CoC = consumptive_high / (CoC-1)/CoC (#1153). This is what
-        # `refill` reads for its high-bound gross production, rather than dividing
+        # Intake at the upper consumptive bound. With disclosed blowdown this is a genuinely
+        # larger withdrawal (blowdown x CoC = consumptive_high / (CoC-1)/CoC); with no disclosed
+        # blowdown the high bound is the power method itself, so the intake is unchanged from
+        # the central makeup (#1153). Either way `refill` reads this rather than dividing
         # consumptive_high by the fraction itself.
         makeup_high=ProvenancedValue.derived(
             round(consumptive_high / frac, 2) if frac > 0 else round(makeup, 2),
             "MGD",
-            citation=f"upper-bound intake = {high_cite} / evap fraction (blowdown x CoC)",
+            citation=makeup_high_cite,
         ),
         consumptive_low=ProvenancedValue.derived(
             round(consumptive_low, 2),
