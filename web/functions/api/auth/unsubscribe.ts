@@ -1,20 +1,18 @@
 // GET /api/auth/unsubscribe?token=<token>
 // One-click unsubscribe handler (#939 E2). No login required — the signed token is the
-// credential. On success: removes the category from the user's AUTH_PREFS and returns 200.
+// credential. On success: removes the category from the user's stored prefs and returns 200.
 // On bad/expired token: returns 400.
 //
 // The UNSUB_SECRET must match the secret used by the Lambda to mint the token (E1 #938).
-// AUTH_PREFS KV must be bound (same namespace as the notifications prefs).
+// The prefs store (Lakebase via AUTH_HYPERDRIVE) must be bound (same store as the notifications prefs).
 
+import { type AuthDbEnv, resolveAuthDb } from "../_lib/authDb";
+import { getPrefs, putPrefs, VALID_CATEGORIES } from "../_lib/authStore";
+import type { NotifCategory } from "../_lib/authStore";
 import { json } from "../_lib/http";
 import { verifyUnsubToken } from "../_lib/unsub";
-import { getPrefs, putPrefs } from "../_lib/prefs";
-import type { KVLike } from "../_lib/ratelimit";
-import type { NotifCategory } from "../_lib/prefs";
-import { VALID_CATEGORIES } from "../_lib/prefs";
 
-interface Env {
-  AUTH_PREFS?: KVLike;
+interface Env extends AuthDbEnv {
   UNSUB_SECRET?: string;
 }
 
@@ -25,7 +23,8 @@ interface RequestContext {
 
 export const onRequestGet = async ({ request, env }: RequestContext): Promise<Response> => {
   if (!env.UNSUB_SECRET) return json(503, { error: "unsubscribe not configured" });
-  if (!env.AUTH_PREFS) return json(503, { error: "prefs store not configured" });
+  const db = resolveAuthDb(env);
+  if (!db) return json(503, { error: "prefs store not configured" });
 
   const url = new URL(request.url);
   const token = url.searchParams.get("token");
@@ -40,10 +39,10 @@ export const onRequestGet = async ({ request, env }: RequestContext): Promise<Re
     return json(400, { error: "unknown category" });
   }
 
-  const prefs = await getPrefs(env.AUTH_PREFS, sub);
+  const prefs = await getPrefs(db, sub);
   const before = prefs.notifications.categories;
   prefs.notifications.categories = before.filter((c) => c !== category);
-  await putPrefs(env.AUTH_PREFS, sub, prefs);
+  await putPrefs(db, sub, prefs, new Date().toISOString());
 
   return json(200, { ok: true, removed: category, remaining: prefs.notifications.categories });
 };

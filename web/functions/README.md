@@ -39,6 +39,19 @@ Two endpoints live here:
   (`src/lib/handleRenames.ts` — rewrites the ref + the stored SDM), and flags the rest `stale` so the
   author is nudged in their account view. Idempotent; the pure core is `src/lib/revalidate.ts` and the
   job is `_lib/revalidateStories.ts`.
+- the **auth prefs + role-audit endpoints** (`api/account/profile`, `api/account/notifications`,
+  `api/auth/unsubscribe`, `api/admin/audit`, `api/admin/users/[sub]/*`, epic #921 / #1171) — per-user
+  profile + notification prefs and the append-only role-change audit trail. **Moved off Cloudflare KV
+  onto the same Databricks Lakebase** the Stories store uses: this is durable identity data, not
+  edge-ephemeral state, and the audit trail is history meant to be queried across records (a
+  `WHERE target = $1 ORDER BY at` the KV keyspace couldn't answer). Same driver-agnostic `PgLike`
+  slice (`_lib/authStore.ts`; prod driver resolved in `_lib/authDb.ts`), same pglite-in-tests
+  harness. Schema in [`../migrations/0004_create_auth_prefs.sql`](../migrations/0004_create_auth_prefs.sql)
+  — `users` (a real join target for Stories ownership), `user_prefs`, `audit_log`. Binds
+  `AUTH_HYPERDRIVE` to the **same** Hyperdrive config as `STORIES_HYPERDRIVE` (one Lakebase, one
+  milestone); absent → 503 (fail-closed). **Follow-up:** the AWS `lambda/notify` digest still reads
+  subscribers from KV — it runs outside the Workers runtime (no Hyperdrive) and needs a direct-Lakebase
+  migration before it can source the moved prefs (out of scope for #1171).
 
 ## Constraints
 

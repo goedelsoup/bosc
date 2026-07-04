@@ -1,13 +1,17 @@
 // Tier A integration tests for the /api/account/profile and /api/account/notifications
-// Pages Functions (Epic #921 C1/C2). Drives the exported onRequest* handlers in-process
-// with a faked Env + faked KV, so the full request path is exercised offline.
+// Pages Functions (Epic #921 C1/C2, moved to Lakebase in #1171). Drives the exported onRequest*
+// handlers in-process with a faked Env + a real in-memory Postgres (pglite) bound as AUTH_DB, so the
+// full request path — kill switch → auth → prefs store — is exercised offline.
 
-import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { onRequestGet as profileGet, onRequestPatch as profilePatch } from "@fn/api/account/profile";
 import { onRequestGet as notifGet, onRequestPatch as notifPatch } from "@fn/api/account/notifications";
+import { putPrefs, type UserPrefs } from "@fn/api/_lib/authStore";
 import {
   type CognitoTestKeyPair,
+  type FakePg,
   fakeKV,
+  fakePg,
   generateCognitoKeyPair,
   mintIdToken,
   routingFetch,
@@ -27,6 +31,11 @@ beforeAll(async () => {
   keypair = await generateCognitoKeyPair();
 });
 
+let db: FakePg;
+beforeEach(async () => {
+  db = await fakePg();
+});
+
 afterEach(() => {
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
@@ -38,8 +47,9 @@ function authEnv(overrides: Record<string, unknown> = {}): Record<string, unknow
     COGNITO_REGION: REGION,
     COGNITO_USER_POOL_ID: USER_POOL_ID,
     COGNITO_CLIENT_ID: CLIENT_ID,
+    // JWKS_CACHE stays on KV (a TTL'd edge cache) — only AUTH_PREFS moved to Postgres.
     JWKS_CACHE: fakeKV({ jwks: JSON.stringify({ keys: [keypair.jwk] }) }),
-    AUTH_PREFS: fakeKV(),
+    AUTH_DB: db,
     ...overrides,
   };
 }
@@ -71,6 +81,11 @@ function bearerRequest(url: string, method: "GET" | "PATCH", token: string, body
   });
 }
 
+/** Seed a prefs row for `sub` directly through the store (the DB analog of the old KV seed). */
+async function seedPrefs(sub: string, prefs: UserPrefs): Promise<void> {
+  await putPrefs(db, sub, prefs, "2026-01-01T00:00:00.000Z", "seed@example.com");
+}
+
 // ---------------------------------------------------------------------------
 // GET /api/account/profile
 // ---------------------------------------------------------------------------
@@ -88,11 +103,11 @@ describe("GET /api/account/profile", () => {
     expect(res.status).toBe(401);
   });
 
-  it("returns 503 when AUTH_PREFS not bound", async () => {
+  it("returns 503 when the prefs store is not bound", async () => {
     stubJwks();
     const token = await validToken();
     const req = bearerRequest(PROFILE_URL, "GET", token);
-    const res = await profileGet({ request: req, env: authEnv({ AUTH_PREFS: undefined }) as never });
+    const res = await profileGet({ request: req, env: authEnv({ AUTH_DB: undefined }) as never });
     expect(res.status).toBe(503);
   });
 
@@ -144,8 +159,7 @@ describe("PATCH /api/account/profile", () => {
   it("updates display_name and returns it in profile", async () => {
     stubJwks();
     const token = await validToken("sub-patch", "patch@example.com");
-    const kv = fakeKV();
-    const env = authEnv({ AUTH_PREFS: kv });
+    const env = authEnv();
     const req = bearerRequest(PROFILE_URL, "PATCH", token, { display_name: "Alice" });
     const res = await profilePatch({ request: req, env: env as never });
     expect(res.status).toBe(200);
@@ -163,15 +177,12 @@ describe("PATCH /api/account/profile", () => {
   it("clears display_name when patched to null", async () => {
     stubJwks();
     const token = await validToken("sub-clear", "clear@example.com");
-    const kv = fakeKV({
-      "prefs:sub-clear": JSON.stringify({
-        display_name: "Bob",
-        notifications: { sites: [], categories: [], frequency: "immediate", email_verified: false },
-      }),
+    await seedPrefs("sub-clear", {
+      display_name: "Bob",
+      notifications: { sites: [], categories: [], frequency: "immediate", email_verified: false },
     });
-    const env = authEnv({ AUTH_PREFS: kv });
     const req = bearerRequest(PROFILE_URL, "PATCH", token, { display_name: null });
-    const res = await profilePatch({ request: req, env: env as never });
+    const res = await profilePatch({ request: req, env: authEnv() as never });
     expect(res.status).toBe(200);
     const body = (await res.json()) as Record<string, unknown>;
     expect(body.display_name).toBeNull();
@@ -228,13 +239,11 @@ describe("GET /api/account/notifications", () => {
     expect(body.email_verified).toBe(true);
   });
 
-  it("syncs email_verified from JWT (overrides stale KV value)", async () => {
+  it("syncs email_verified from JWT (email_verified is never persisted)", async () => {
     stubJwks();
-    // Store stale prefs with email_verified=true; JWT has email_verified=false (default in mintIdToken)
-    const kv = fakeKV({
-      "prefs:sub-ev": JSON.stringify({
-        notifications: { sites: [], categories: [], frequency: "immediate", email_verified: true },
-      }),
+    // Store prefs (email_verified isn't a stored column); the JWT drives the response value.
+    await seedPrefs("sub-ev", {
+      notifications: { sites: [], categories: [], frequency: "immediate", email_verified: false },
     });
     const token = await mintIdToken(keypair, {
       sub: "sub-ev",
@@ -244,9 +253,9 @@ describe("GET /api/account/notifications", () => {
       region: REGION,
     });
     const req = bearerRequest(NOTIF_URL, "GET", token);
-    const res = await notifGet({ request: req, env: authEnv({ AUTH_PREFS: kv }) as never });
+    const res = await notifGet({ request: req, env: authEnv() as never });
     expect(res.status).toBe(200);
-    // Cognito's email_verified in the token determines the response, not the KV value
+    // Cognito's email_verified in the token determines the response.
     const body = (await res.json()) as Record<string, unknown>;
     expect(body.email_verified).toBe(true); // mintIdToken sets email_verified: true
   });
@@ -312,8 +321,7 @@ describe("PATCH /api/account/notifications", () => {
   it("updates sites, categories, and frequency", async () => {
     stubJwks();
     const token = await validToken("sub-notif-patch");
-    const kv = fakeKV();
-    const env = authEnv({ AUTH_PREFS: kv });
+    const env = authEnv();
     const req = bearerRequest(NOTIF_URL, "PATCH", token, {
       sites: ["lima", "fort-wayne"],
       categories: ["tip", "correction"],
@@ -325,6 +333,11 @@ describe("PATCH /api/account/notifications", () => {
     expect(body.sites).toEqual(["lima", "fort-wayne"]);
     expect(body.categories).toEqual(["tip", "correction"]);
     expect(body.frequency).toBe("daily");
+
+    // GET confirms the write landed in Postgres.
+    const getRes = await notifGet({ request: bearerRequest(NOTIF_URL, "GET", token), env: env as never });
+    const getBody = (await getRes.json()) as Record<string, unknown>;
+    expect(getBody.sites).toEqual(["lima", "fort-wayne"]);
   });
 
   it("email_verified cannot be patched by the user", async () => {
@@ -342,12 +355,10 @@ describe("PATCH /api/account/notifications", () => {
   it("partial patch only updates provided fields", async () => {
     stubJwks();
     const token = await validToken("sub-partial");
-    const kv = fakeKV({
-      "prefs:sub-partial": JSON.stringify({
-        notifications: { sites: ["lima"], categories: ["tip"], frequency: "daily", email_verified: false },
-      }),
+    await seedPrefs("sub-partial", {
+      notifications: { sites: ["lima"], categories: ["tip"], frequency: "daily", email_verified: false },
     });
-    const env = authEnv({ AUTH_PREFS: kv });
+    const env = authEnv();
     // Only update frequency
     const req = bearerRequest(NOTIF_URL, "PATCH", token, { frequency: "immediate" });
     const res = await notifPatch({ request: req, env: env as never });

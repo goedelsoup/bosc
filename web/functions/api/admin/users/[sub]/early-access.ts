@@ -5,6 +5,8 @@
 // Ships dark: AUTH_ENABLED kill switch must be "true".
 
 import { requireAuth, type AuthEnv } from "../../../_lib/auth";
+import { type AuthDbEnv, resolveAuthDb } from "../../../_lib/authDb";
+import { writeAuditEntry, type AuditEntry } from "../../../_lib/authStore";
 import { json } from "../../../_lib/http";
 import {
   listGroupsForUser,
@@ -12,14 +14,11 @@ import {
   removeUserFromGroup,
   type CognitoAdminEnv,
 } from "../../../_lib/cognitoAdmin";
-import { writeAuditEntry, type AuditEntry } from "../../../_lib/audit";
-import type { KVLike } from "../../../_lib/ratelimit";
 
 const GROUP = "early-access";
 
-interface Env extends AuthEnv, CognitoAdminEnv {
+interface Env extends AuthEnv, AuthDbEnv, CognitoAdminEnv {
   AUTH_ENABLED?: string;
-  AUTH_PREFS?: KVLike;
 }
 
 interface RequestContext {
@@ -64,7 +63,8 @@ async function handle(method: "PUT" | "DELETE", { request, env, params }: Reques
 
   const after = method === "PUT" ? [...new Set([...before, GROUP])] : before.filter((g) => g !== GROUP);
 
-  if (env.AUTH_PREFS) {
+  const db = resolveAuthDb(env);
+  if (db) {
     const entry: AuditEntry = {
       actor: auth.ctx.sub,
       target: sub,
@@ -73,7 +73,7 @@ async function handle(method: "PUT" | "DELETE", { request, env, params }: Reques
       after,
       at: new Date().toISOString(),
     };
-    await writeAuditEntry(env.AUTH_PREFS, entry);
+    await writeAuditEntry(db, entry, crypto.randomUUID());
   }
 
   return json(200, { sub, earlyAccess: method === "PUT" });
