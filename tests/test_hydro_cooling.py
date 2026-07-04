@@ -127,6 +127,29 @@ def test_unknown_yields_bracket_not_estimate() -> None:
     assert "undisclosed" in (b.makeup_demand.citation or "")
 
 
+def test_bracketed_basis_has_no_headline_and_guards_data_tier(hydro_settings: Settings) -> None:
+    # The `is_bracketed` honesty guard must live in the data tier, not only the
+    # presentation tier: an undisclosed-method basis exposes no single headline, and the
+    # data-tier consumers (supply budget, scenario knob) refuse to publish the envelope.
+    from watermark.hydrology import supply as sup
+
+    b = derive_cooling_basis(cooling_model="unknown")
+    assert b.is_bracketed
+    assert b.headline_consumptive() is None
+    assert b.headline_makeup() is None
+    # A disclosed archetype does expose a headline (the power x WUE central).
+    tower = derive_cooling_basis(cooling_model="evaporative_tower")
+    assert tower.headline_consumptive() is tower.consumptive_low
+    assert tower.headline_makeup() is tower.makeup_demand
+
+    system = sup.load_supply(settings=hydro_settings)
+    assert system is not None
+    with pytest.raises(ValueError, match="bracketed"):
+        sup.campus_budget_from_cooling(system, basis=b)
+    with pytest.raises(ValueError, match="bracketed"):
+        scenario.buildout_scenario(basis=b)
+
+
 def test_fort_wayne_is_unknown_and_leaks_no_lima_figure() -> None:
     # hydro_settings is lima-pinned, so the site override needs its own Settings;
     # hydro_offline keeps it hermetic like the fixture (tests/conftest.py).

@@ -157,28 +157,42 @@ def _campus_node(path: Path, warnings: list[str]) -> WaterBalanceNode:
     # Cooling consumptive loss isn't metered, but the design basis is now sourced:
     # derive_cooling_basis() brackets the evaporative consumptive draw from the disclosed
     # air-permit power figure (x WUE) and the documented FM-2 blowdown. Carry the
-    # conservative power-based central as the campus's projected consumptive (net basin)
+    # central (power x WUE) estimate as the campus's projected consumptive (net basin)
     # loss — `derived`, not a 0 placeholder. The scenario layer (`watermark scenario`)
     # re-derives baseline-vs-buildout and can override via `--cooling-demand`.
     basis = derive_cooling_basis()
     low, high = basis.consumptive_low.value, basis.consumptive_high.value
-    loss_cfs = mgd_to_cfs(low)
+    node = Node(id="bosc-campus", name="BOSC data-center campus", role="demand")
+
+    # Honesty guard (CLAUDE.md): an undisclosed cooling method is a bracket, never a
+    # single headline. `headline_consumptive()` returns None for the `unknown` archetype
+    # — carry no scalar consumptive into the balance and let the presentation tier render
+    # the range, rather than leaking the evaporative envelope as a headline.
+    headline = basis.headline_consumptive()
+    if headline is None:
+        warnings.append(
+            f"BOSC campus cooling method is undisclosed ({basis.cooling_model.value}): "
+            f"consumptive is a bracket ({low:g}-{high:g} MGD), not a single estimate — no "
+            "headline consumptive is carried into the balance; the range is rendered instead."
+        )
+        return WaterBalanceNode(node=node, return_flow=return_flow, consumptive_use=None)
+
+    loss_cfs = mgd_to_cfs(headline.value)
     wue_txt = f" x {basis.wue.value:g} L/kWh" if basis.wue is not None else ""
     consumptive = ProvenancedValue.derived(
         round(loss_cfs, 3),
         "cfs",
         citation=(
-            f"derived cooling basis ({basis.cooling_model.value}): {low:g} MGD consumptive "
-            f"(range {low:g}-{high:g} MGD), {basis.it_load.value:g} MW IT{wue_txt} "
-            f"— see watermark.hydrology.cooling"
+            f"derived cooling basis ({basis.cooling_model.value}): {headline.value:g} MGD "
+            f"central consumptive (range {low:g}-{high:g} MGD), {basis.it_load.value:g} MW "
+            f"IT{wue_txt} — see watermark.hydrology.cooling"
         ),
     )
     warnings.append(
-        f"BOSC campus consumptive cooling is a derived estimate (~{loss_cfs:.1f} cfs central; "
-        f"{low:g}-{high:g} MGD evaporative) from the air-permit power figure x WUE — not a "
-        f"metered or permitted value."
+        f"BOSC campus consumptive cooling is a derived central estimate (~{loss_cfs:.1f} cfs; "
+        f"{low:g}-{high:g} MGD evaporative range) from the air-permit power figure x WUE — not "
+        f"a metered or permitted value."
     )
-    node = Node(id="bosc-campus", name="BOSC data-center campus", role="demand")
     return WaterBalanceNode(node=node, return_flow=return_flow, consumptive_use=consumptive)
 
 

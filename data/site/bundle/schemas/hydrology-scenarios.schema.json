@@ -80,7 +80,7 @@
   "$defs": {
     "AssimilativeCheck": {
       "additionalProperties": false,
-      "description": "Low-flow dilution of one discharge into its receiving water.\n\nThe dilution ratio is ``(design_low_flow + upstream_returns) / discharge``.\nA screening heuristic flags the result; it is **not** a permit determination.",
+      "description": "Low-flow dilution of one discharge into its receiving water.\n\nThe dilution ratio is ``design_low_flow / discharge`` — parts of receiving-water low\nflow per part of effluent. ``upstream_returns`` is a **reserved** field for crediting\nan upstream WWTP's effluent return to the low-flow denominator; it is not yet computed,\nis always ``None`` today, and the ratio does **not** credit it. A screening heuristic\nflags the result; it is **not** a permit determination.",
       "properties": {
         "receiving_water": {
           "title": "Receiving Water",

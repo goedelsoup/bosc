@@ -152,7 +152,17 @@ def campus_budget_from_cooling(
     rides along as a warning, since the two methods disagree ~3x.
     """
     basis = basis or derive_cooling_basis()
-    makeup = basis.makeup_demand.value
+    # Honesty guard (CLAUDE.md): a bracketed (undisclosed-method) basis has no single
+    # makeup/consumptive headline, so a scalar water budget cannot be derived from it —
+    # refuse rather than silently publishing the evaporative envelope.
+    makeup_pv = basis.headline_makeup()
+    if makeup_pv is None:
+        raise ValueError(
+            f"cooling basis for {basis.cooling_model.value} is bracketed (undisclosed "
+            "method) — no single makeup/consumptive headline; supply an explicit scenario "
+            "demand instead of deriving a water budget from the bracket envelope"
+        )
+    makeup = makeup_pv.value
     consumptive = round(makeup * basis.consumptive_fraction.value, 3)
     budget = compute_water_budget(
         supply,
