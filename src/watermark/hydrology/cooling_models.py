@@ -65,6 +65,10 @@ _FM2_CITE = (
 # --- once_through parameters ------------------------------------------------------------
 _OT_DELTA_T_C = 10.0
 _OT_DELTA_T_CITE = "once-through condenser temperature rise dT ~10 degC (typical 8-12 design)"
+# L/day of once-through condenser flow per MW of rejected heat: kg/s per kW = 1/(c_p x dT),
+# scaled kW->MW and s->day (kg ~= L for water). The forward flow and its inverse share this
+# one factor so the unit chain can never drift between them.
+_OT_LPD_PER_MW = 1_000.0 * 86_400.0 / (4.186 * _OT_DELTA_T_C)
 _OT_EVAP_FRAC_LOW = 0.01
 _OT_EVAP_FRAC_HIGH = 0.02
 _OT_EVAP_CITE = (
@@ -83,10 +87,20 @@ _HYBRID_FALLBACK_CITE = (
 )
 
 
+def _liters_per_day_from_mgd(mgd: float) -> float:
+    """Volumetric flow: million gallons/day -> liters/day."""
+    return mgd * 1_000_000.0 * _L_PER_GAL
+
+
+def _mgd_from_liters_per_day(liters_per_day: float) -> float:
+    """Volumetric flow: liters/day -> million gallons/day."""
+    return liters_per_day / _L_PER_GAL / 1_000_000.0
+
+
 def _consumptive_mgd_from_power(it_load_mw: float, wue_l_per_kwh: float) -> float:
     """Evaporative consumptive water (MGD) = IT energy x WUE."""
     liters_per_day = it_load_mw * 1_000.0 * 24.0 * wue_l_per_kwh  # kW x h/day x L/kWh
-    return liters_per_day / _L_PER_GAL / 1_000_000.0
+    return _mgd_from_liters_per_day(liters_per_day)
 
 
 def it_load_mw_from_once_through_withdrawal(withdrawal_mgd: float) -> float:
@@ -94,12 +108,11 @@ def it_load_mw_from_once_through_withdrawal(withdrawal_mgd: float) -> float:
 
     The once-through *consumptive* is only ~1-2% forced evaporation of the withdrawal, so
     it does not invert through a tower WUE. The withdrawal itself is the heat-rejection
-    basis (``withdrawal = heat rejection / (rho x c x dT)``); this reverses that with the
-    same ``dT``/``c_p`` the forward derivation used, so a Method-2 cross-check reconciles
-    to the facility's own IT load.
+    basis (``withdrawal = heat rejection / (rho x c x dT)``); this reverses that through the
+    same :data:`_OT_LPD_PER_MW` factor the forward derivation used, so a Method-2 cross-check
+    reconciles to the facility's own IT load.
     """
-    liters_per_day = withdrawal_mgd * 1_000_000.0 * _L_PER_GAL
-    return liters_per_day * (4.186 * _OT_DELTA_T_C) / (1_000.0 * 86_400.0)
+    return _liters_per_day_from_mgd(withdrawal_mgd) / _OT_LPD_PER_MW
 
 
 _MONTH_ORDER = ("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC")
@@ -314,9 +327,7 @@ def _derive_once_through(
     rise, ~1-2% of withdrawal (Diehl & Harris 2014). No tower, so no WUE/CoC.
     """
     it_load_mw, it_load_cite = _resolve_it_load(facility, params)
-    # kg/s per kW of rejected heat = 1 / (c_p x dT); kg ~= L for water.
-    liters_per_day = it_load_mw * 1_000.0 * 86_400.0 / (4.186 * _OT_DELTA_T_C)
-    withdrawal_mgd = liters_per_day / _L_PER_GAL / 1_000_000.0
+    withdrawal_mgd = _mgd_from_liters_per_day(it_load_mw * _OT_LPD_PER_MW)
     frac_central = (_OT_EVAP_FRAC_LOW + _OT_EVAP_FRAC_HIGH) / 2.0
     return CoolingBasis(
         cooling_model=CoolingModelType.ONCE_THROUGH,
