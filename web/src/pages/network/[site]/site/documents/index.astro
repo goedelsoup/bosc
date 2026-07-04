@@ -31,6 +31,11 @@ const rows = collections.flatMap((c) =>
     access: docAccess(e),
   })),
 );
+// The first row of each collection carries the `doc-<slug>` anchor the document-page breadcrumb
+// jumps to (#1217). Rows are grouped by collection (the flatMap preserves collection order), so
+// keying the id off the first `rel` seen per slug lands it once per collection and stays unique.
+const anchorRelForSlug = new Map<string, string>();
+for (const r of rows) if (!anchorRelForSlug.has(r.slug)) anchorRelForSlug.set(r.slug, r.rel);
 const collectionNames = [...new Set(rows.map((r) => r.collection))].sort((a, b) => a.localeCompare(b));
 const types = [...new Set(rows.map((r) => r.type))].sort((a, b) => a.localeCompare(b));
 const accesses = [...new Set(rows.map((r) => r.access))];
@@ -94,6 +99,7 @@ const accesses = [...new Set(rows.map((r) => r.access))];
         {
           rows.map((r) => (
             <tr
+              id={anchorRelForSlug.get(r.slug) === r.rel ? `doc-${r.slug}` : undefined}
               data-collection={r.collection}
               data-slug={r.slug}
               data-name={r.name.toLowerCase()}
