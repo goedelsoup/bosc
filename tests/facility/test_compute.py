@@ -60,6 +60,27 @@ def test_method2_uses_the_basis_wue_not_a_fixed_constant(
     assert "2.6 L/kWh" in (cap.it_load_water_low.citation or "")
 
 
+def test_method2_once_through_recovers_load_from_withdrawal(
+    facility_settings: Settings, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # A once-through facility's consumptive is ~1-2% forced evaporation of its withdrawal,
+    # not it_load x WUE. Inverting it with a tower WUE (the old None-> 1.8 fallback) would
+    # badly understate the load; Method-2 must recover it from the withdrawal's heat-
+    # rejection basis instead, closing the loop to the facility's own IT load.
+    import watermark.sites as sites
+    from watermark.sites import CoolingModelType
+
+    lima = sites.SITES["lima"]
+    assert lima.facility is not None
+    once_through = lima.facility.model_copy(update={"cooling_model": CoolingModelType.ONCE_THROUGH})
+    monkeypatch.setitem(sites.SITES, "lima", lima.model_copy(update={"facility": once_through}))
+
+    cap = derive_compute_capacity(settings=facility_settings)
+    assert cap.it_load_water_low.value == pytest.approx(cap.it_load_power.value, abs=2.0)
+    assert cap.it_load_water_high.value == pytest.approx(cap.it_load_power.value, abs=2.0)
+    assert "once-through withdrawal" in (cap.it_load_water_low.citation or "")
+
+
 def test_method3_footprint_is_weakest_and_flagged(facility_settings: Settings) -> None:
     cap = derive_compute_capacity(settings=facility_settings)
     # Footprint is an assumption (not document/derived) and dwarfs the power method —

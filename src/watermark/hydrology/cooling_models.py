@@ -89,6 +89,19 @@ def _consumptive_mgd_from_power(it_load_mw: float, wue_l_per_kwh: float) -> floa
     return liters_per_day / _L_PER_GAL / 1_000_000.0
 
 
+def it_load_mw_from_once_through_withdrawal(withdrawal_mgd: float) -> float:
+    """Invert :func:`_derive_once_through`: withdrawal (MGD) -> IT heat-rejection load (MW).
+
+    The once-through *consumptive* is only ~1-2% forced evaporation of the withdrawal, so
+    it does not invert through a tower WUE. The withdrawal itself is the heat-rejection
+    basis (``withdrawal = heat rejection / (rho x c x dT)``); this reverses that with the
+    same ``dT``/``c_p`` the forward derivation used, so a Method-2 cross-check reconciles
+    to the facility's own IT load.
+    """
+    liters_per_day = withdrawal_mgd * 1_000_000.0 * _L_PER_GAL
+    return liters_per_day * (4.186 * _OT_DELTA_T_C) / (1_000.0 * 86_400.0)
+
+
 _MONTH_ORDER = ("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC")
 
 
