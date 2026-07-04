@@ -18,6 +18,20 @@ latest:
     citation: BLS QCEW 2024 annual averages, area 39003
     confidence: high
     asof: null
+  avg_annual_pay:
+    value: 58790.0
+    unit: USD/year
+    source: connector
+    citation: BLS QCEW 2024 annual averages, area 39003
+    confidence: high
+    asof: null
+  avg_weekly_wage:
+    value: 1131.0
+    unit: USD/week
+    source: connector
+    citation: BLS QCEW 2024 annual averages, area 39003
+    confidence: high
+    asof: null
   sectors:
   - naics: '62'
     sector_name: Health Care & Social Assistance
@@ -31,6 +45,20 @@ latest:
     establishments:
       value: 325.0
       unit: establishments
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_annual_pay:
+      value: 60348.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_weekly_wage:
+      value: 1161.0
+      unit: USD/week
       source: connector
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
@@ -58,6 +86,20 @@ latest:
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
       asof: null
+    avg_annual_pay:
+      value: 92093.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_weekly_wage:
+      value: 1771.0
+      unit: USD/week
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
     location_quotient:
       value: 2.15
       unit: ratio
@@ -77,6 +119,20 @@ latest:
     establishments:
       value: 380.0
       unit: establishments
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_annual_pay:
+      value: 34262.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_weekly_wage:
+      value: 659.0
+      unit: USD/week
       source: connector
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
@@ -104,6 +160,20 @@ latest:
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
       asof: null
+    avg_annual_pay:
+      value: 20846.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_weekly_wage:
+      value: 401.0
+      unit: USD/week
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
     location_quotient:
       value: 1.05
       unit: ratio
@@ -123,6 +193,20 @@ latest:
     establishments:
       value: 140.0
       unit: establishments
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_annual_pay:
+      value: 52429.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_weekly_wage:
+      value: 1008.0
+      unit: USD/week
       source: connector
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
@@ -150,6 +234,20 @@ latest:
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
       asof: null
+    avg_annual_pay:
+      value: 66162.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_weekly_wage:
+      value: 1272.0
+      unit: USD/week
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
     location_quotient:
       value: 1.22
       unit: ratio
@@ -169,6 +267,20 @@ latest:
     establishments:
       value: 212.0
       unit: establishments
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_annual_pay:
+      value: 70217.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_weekly_wage:
+      value: 1350.0
+      unit: USD/week
       source: connector
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
@@ -196,6 +308,20 @@ latest:
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
       asof: null
+    avg_annual_pay:
+      value: 36657.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_weekly_wage:
+      value: 705.0
+      unit: USD/week
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
     location_quotient:
       value: 1.08
       unit: ratio
@@ -215,6 +341,20 @@ latest:
     establishments:
       value: 189.0
       unit: establishments
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_annual_pay:
+      value: 74796.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_weekly_wage:
+      value: 1438.0
+      unit: USD/week
       source: connector
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
@@ -242,6 +382,20 @@ latest:
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
       asof: null
+    avg_annual_pay:
+      value: 61361.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_weekly_wage:
+      value: 1180.0
+      unit: USD/week
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
     location_quotient:
       value: 0.55
       unit: ratio
@@ -261,6 +415,20 @@ latest:
     establishments:
       value: 26.0
       unit: establishments
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_annual_pay:
+      value: 34855.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_weekly_wage:
+      value: 670.0
+      unit: USD/week
       source: connector
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
@@ -288,6 +456,20 @@ latest:
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
       asof: null
+    avg_annual_pay:
+      value: 70088.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_weekly_wage:
+      value: 1348.0
+      unit: USD/week
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
     location_quotient:
       value: 0.44
       unit: ratio
@@ -307,6 +489,20 @@ latest:
     establishments:
       value: 38.0
       unit: establishments
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_annual_pay:
+      value: 20308.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_weekly_wage:
+      value: 391.0
+      unit: USD/week
       source: connector
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
@@ -334,6 +530,20 @@ latest:
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
       asof: null
+    avg_annual_pay:
+      value: 88987.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_weekly_wage:
+      value: 1711.0
+      unit: USD/week
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
     location_quotient:
       value: 0.38
       unit: ratio
@@ -353,6 +563,20 @@ latest:
     establishments:
       value: 86.0
       unit: establishments
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_annual_pay:
+      value: 42132.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_weekly_wage:
+      value: 810.0
+      unit: USD/week
       source: connector
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
@@ -380,6 +604,20 @@ latest:
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
       asof: null
+    avg_annual_pay:
+      value: 110425.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
+    avg_weekly_wage:
+      value: 2124.0
+      unit: USD/week
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: null
     location_quotient:
       value: 0.65
       unit: ratio
@@ -403,6 +641,8 @@ latest:
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.0
       unit: ratio
@@ -426,6 +666,8 @@ latest:
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.0
       unit: ratio
@@ -449,6 +691,8 @@ latest:
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.0
       unit: ratio
@@ -472,6 +716,8 @@ latest:
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.0
       unit: ratio

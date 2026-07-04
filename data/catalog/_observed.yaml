@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-04T13:41:14.930317+00:00'
+reconciled_at: '2026-07-04T14:10:19.001234+00:00'
 entries:
   aedg:
     exists: true
@@ -262,8 +262,8 @@ entries:
     site_scope: basin:maumee
   economics-baseline:
     exists: true
-    sha256: db5ca132ce616015464690f15c961bcb9c096be2480dcfa6d5bf7e4b87e5f0b9
-    size_bytes: 286531
+    sha256: f9c62368b8c5901bf5f11869852e5352f962b76572769cb3952b272c803f2c64
+    size_bytes: 292958
     lfs_materialized: true
     file_count: 20
     missing: []

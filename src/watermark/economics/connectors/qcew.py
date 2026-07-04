@@ -67,7 +67,11 @@ _PRIVATE_OWN = "5"  # private (for the sector mix)
 
 
 def _reduce_csv(text: str) -> dict[str, Any]:
-    """Reduce the full county CSV to the county total + private NAICS-sector rows."""
+    """Reduce the full county CSV to the county total + private NAICS-sector rows.
+
+    Wage columns (``avg_annual_pay``, ``annual_avg_wkly_wage``) ride along on both the
+    total and each sector — selected by name, same as everything else (issue #1109).
+    """
     total: dict[str, Any] | None = None
     sectors: list[dict[str, Any]] = []
     for row in csv.DictReader(io.StringIO(text)):
@@ -76,6 +80,8 @@ def _reduce_csv(text: str) -> dict[str, Any]:
             total = {
                 "emp": to_float(row.get("annual_avg_emplvl", "")),
                 "estabs": to_float(row.get("annual_avg_estabs", "")),
+                "pay": to_float(row.get("avg_annual_pay", "")),
+                "wkly": to_float(row.get("annual_avg_wkly_wage", "")),
             }
         elif own == _PRIVATE_OWN and agg == _SECTOR_AGG:
             sectors.append(
@@ -83,6 +89,8 @@ def _reduce_csv(text: str) -> dict[str, Any]:
                     "naics": row.get("industry_code", ""),
                     "emp": to_float(row.get("annual_avg_emplvl", "")),
                     "estabs": to_float(row.get("annual_avg_estabs", "")),
+                    "pay": to_float(row.get("avg_annual_pay", "")),
+                    "wkly": to_float(row.get("annual_avg_wkly_wage", "")),
                     "lq": to_float(row.get("lq_annual_avg_emplvl", "")),
                 }
             )
@@ -125,6 +133,15 @@ def fetch_county_industries(
         ),
     )
     cite = f"BLS QCEW {year} annual averages, area {fips}"
+
+    def _pay(row: dict[str, Any], key: str, unit: str) -> ProvenancedValue | None:
+        """A wage figure as a connector value — omitted (never $0) when QCEW reports
+        no covered wages for the row (a suppressed or zero-employment slice)."""
+        val = row.get(key)
+        if val is None or float(val) <= 0:
+            return None
+        return ProvenancedValue.from_connector(float(val), unit, citation=cite)
+
     total = payload.get("total") or {}
     emp = total.get("emp")
     if emp is None:
@@ -161,6 +178,8 @@ def fetch_county_industries(
                     if s.get("estabs") is not None
                     else None
                 ),
+                avg_annual_pay=_pay(s, "pay", "USD/year"),
+                avg_weekly_wage=_pay(s, "wkly", "USD/week"),
                 location_quotient=(
                     ProvenancedValue.from_connector(float(lq), "ratio", citation=cite)
                     if lq is not None
@@ -175,5 +194,7 @@ def fetch_county_industries(
         year=year,
         total_employment=total_emp,
         establishments=establishments,
+        avg_annual_pay=_pay(total, "pay", "USD/year"),
+        avg_weekly_wage=_pay(total, "wkly", "USD/week"),
         sectors=sectors,
     )

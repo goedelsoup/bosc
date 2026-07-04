@@ -75,7 +75,11 @@ from watermark.provenance import source_is_verified
 #   `makeup_high` ProvenancedValue — the campus intake at the upper consumptive bound (#1153), read
 #   by refill instead of back-calculating consumptive_high/consumptive_fraction across incompatible
 #   per-archetype bases. Additive/optional: absent (null) for the fraction-uncertainty archetypes.
-CONTRACT_VERSION = "1.14.0"
+# 1.15.0: `economics-baseline` surfaces QCEW wages (#1109) — the county total and each sector gain
+#   `avg_annual_pay` (USD/year) and `avg_weekly_wage` (USD/week) `ProvenancedValue`s (already in the
+#   fetched CSV, previously dropped). Optional/backward-compatible: a suppressed or zero-wage slice
+#   omits the field rather than asserting a fabricated $0.
+CONTRACT_VERSION = "1.15.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
