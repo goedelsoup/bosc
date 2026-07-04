@@ -5,9 +5,12 @@ from __future__ import annotations
 import pytest
 
 from watermark.config import Settings
+from watermark.hydrology import balance as bal
 from watermark.hydrology import lowflow
 from watermark.hydrology.assimilative import assimilative_findings, check_assimilative
 from watermark.hydrology.balance import build_water_balance
+from watermark.hydrology.cooling import derive_cooling_basis
+from watermark.hydrology.model import Node, ProvenancedValue, WaterBalance, WaterBalanceNode
 from watermark.pipeline.hydrology import run_baseline
 
 
@@ -76,6 +79,40 @@ def test_campus_consumptive_is_derived_not_placeholder(hydro_settings: Settings)
     assert "placeholder" not in joined
     assert "unsourced" not in joined
     assert "tbd" not in joined
+
+
+def test_assimilative_matches_suffixed_receiving_water(hydro_settings: Settings) -> None:
+    # A receiving water carrying a river-mile / place suffix ("Dug Run at River Mile 3.1")
+    # must still resolve its cited 7Q10 ("dug run"): the lookup normalizes the same way
+    # the cited table was keyed. Regression for the silent-skip bug where the suffixed
+    # name missed the table and the discharge vanished from the screen.
+    node = Node(
+        id="x-wwtp", name="X WWTP", role="wwtp", receiving_water="Dug Run at River Mile 3.1"
+    )
+    wbn = WaterBalanceNode(
+        node=node, return_flow=ProvenancedValue.from_document(2.0, "cfs", citation="test 2 cfs")
+    )
+    balance = WaterBalance(nodes=[wbn], warnings=[])
+    checks = check_assimilative(balance, dict(lowflow.load_low_flows(settings=hydro_settings)))
+    dug = next((c for c in checks if "Dug Run" in c.receiving_water), None)
+    assert dug is not None, "suffixed receiving water must still resolve its cited 7Q10"
+    assert dug.design_low_flow.value == pytest.approx(0.78)
+
+
+def test_balance_locks_bracketed_campus_consumptive(
+    hydro_settings: Settings, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # An undisclosed cooling method is a bracket, never a single headline (CLAUDE.md). When
+    # the campus basis is bracketed, the balance carries NO scalar consumptive and says so —
+    # it must not leak the evaporative envelope as a headline through the data tier.
+    unknown = derive_cooling_basis(cooling_model="unknown")
+    assert unknown.is_bracketed
+    monkeypatch.setattr(bal, "derive_cooling_basis", lambda *a, **k: unknown)
+    balance = bal.build_water_balance(settings=hydro_settings, live=False)
+    campus = balance.node("bosc-campus")
+    assert campus is not None and campus.consumptive_use is None
+    joined = " ".join(balance.warnings).lower()
+    assert "undisclosed" in joined and "bracket" in joined
 
 
 def test_check_skips_uncited_receiving_water(hydro_settings: Settings) -> None:

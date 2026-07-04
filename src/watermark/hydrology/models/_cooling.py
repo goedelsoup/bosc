@@ -40,6 +40,28 @@ class CoolingBasis(BaseModel):
     # consumptive draw is ~0 outside them. None for the constant-draw archetypes.
     seasonal_months: list[str] | None = None
 
+    def headline_consumptive(self) -> ProvenancedValue | None:
+        """The single central consumptive draw (MGD), or ``None`` for a bracketed basis.
+
+        For a disclosed archetype this is the central (power x WUE) estimate —
+        ``consumptive_low``, the low end of the two-method [power, blowdown] bracket, and
+        equal to ``makeup_demand x consumptive_fraction`` for the wet modes. For the
+        ``unknown`` archetype (``is_bracketed``) there is **no single headline**: callers
+        must present ``consumptive_low``..``consumptive_high`` as a range and lock the
+        headline (CLAUDE.md: never a single headline for an undisclosed method). Enforce
+        the guard here, in the data tier, not only in the presentation tier.
+        """
+        return None if self.is_bracketed else self.consumptive_low
+
+    def headline_makeup(self) -> ProvenancedValue | None:
+        """The single central makeup / intake (MGD), or ``None`` for a bracketed basis.
+
+        Same honesty guard as :meth:`headline_consumptive`: an ``unknown`` archetype
+        carries the evaporative upper-bound *envelope* in ``makeup_demand`` for plumbing
+        completeness, but it is not an estimate — callers must not publish it as a headline.
+        """
+        return None if self.is_bracketed else self.makeup_demand
+
 
 class Scenario(BaseModel):
     """A what-if over the municipal loop, parameterized by the cooling knob.

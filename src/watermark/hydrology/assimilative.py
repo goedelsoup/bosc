@@ -9,7 +9,7 @@ determination; the real wasteload allocation is in the Ohio EPA fact sheets.
 
 from __future__ import annotations
 
-from watermark.hydrology.lowflow import load_low_flows
+from watermark.hydrology.lowflow import _normalize, load_low_flows
 from watermark.hydrology.model import (
     DILUTION_TIGHT,
     DILUTION_VIOLATION,
@@ -39,7 +39,11 @@ def check_assimilative(
 ) -> list[AssimilativeCheck]:
     """One dilution check per WWTP discharge with a cited receiving-water 7Q10."""
     flows = load_low_flows() if low_flows is None else low_flows
-    norm = {k.strip().lower(): v for k, v in flows.items()}
+    # Key and look up through the SAME normalizer the table was built with, so a
+    # receiving water carrying a river-mile / place suffix ("Ottawa River at Lima")
+    # still resolves its cited 7Q10 ("ottawa river"). `_normalize` is idempotent, so
+    # this is safe whether `flows` arrives pre-normalized or not.
+    norm = {_normalize(k): v for k, v in flows.items()}
     checks: list[AssimilativeCheck] = []
 
     for wbn in balance.by_role("wwtp"):
@@ -47,7 +51,7 @@ def check_assimilative(
         discharge = wbn.return_flow
         if water is None or discharge is None:
             continue
-        q7 = norm.get(water.strip().lower())
+        q7 = norm.get(_normalize(water))
         if q7 is None:
             log.info("hydro.assim.skip", plant=wbn.node.name, reason="no cited 7Q10", water=water)
             continue

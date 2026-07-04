@@ -14,8 +14,11 @@ Flag = Literal["ok", "tight", "violation"]
 class AssimilativeCheck(BaseModel):
     """Low-flow dilution of one discharge into its receiving water.
 
-    The dilution ratio is ``(design_low_flow + upstream_returns) / discharge``.
-    A screening heuristic flags the result; it is **not** a permit determination.
+    The dilution ratio is ``design_low_flow / discharge`` — parts of receiving-water low
+    flow per part of effluent. ``upstream_returns`` is a **reserved** field for crediting
+    an upstream WWTP's effluent return to the low-flow denominator; it is not yet computed,
+    is always ``None`` today, and the ratio does **not** credit it. A screening heuristic
+    flags the result; it is **not** a permit determination.
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -24,6 +27,8 @@ class AssimilativeCheck(BaseModel):
     discharger: str
     design_low_flow: ProvenancedValue  # the 7Q10 (cited)
     discharge: ProvenancedValue
+    # Reserved: not yet credited into `dilution_ratio` (see the hydrology review). Kept on
+    # the model (defaulted None) so the committed bundle contract stays stable.
     upstream_returns: ProvenancedValue | None = None
     dilution_ratio: float
     flag: Flag

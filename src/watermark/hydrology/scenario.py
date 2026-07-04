@@ -67,7 +67,17 @@ def buildout_scenario(
     """
     basis = basis or derive_cooling_basis(settings, cooling_model=cooling_model)
     if cooling_demand_mgd is None:
-        cooling_demand = basis.makeup_demand
+        # Honesty guard (CLAUDE.md): a bracketed (undisclosed-method) basis carries the
+        # evaporative envelope in `makeup_demand` for plumbing completeness, but it is not
+        # an estimate — don't default the scenario knob to it. Require an explicit demand.
+        makeup_pv = basis.headline_makeup()
+        if makeup_pv is None:
+            raise ValueError(
+                f"cooling basis for {basis.cooling_model.value} is bracketed (undisclosed "
+                "method) — pass an explicit cooling_demand_mgd for the sensitivity instead of "
+                "defaulting to the bracket envelope"
+            )
+        cooling_demand = makeup_pv
     else:
         cooling_demand = ProvenancedValue.assume(
             cooling_demand_mgd, "MGD", why="campus cooling intake — scenario override"
