@@ -52,6 +52,36 @@ def test_composite_post_cn_is_far_below_full_buildout(hydro_settings: Settings) 
     assert as_permitted_bump < blanket_bump / 3.0
 
 
+def test_tc_shortens_with_imperviousness(hydro_settings: Settings) -> None:
+    # #1163: Tc is scenario-dependent — pervious pre is the longest, the as-permitted
+    # composite is shorter (partly paved), and the blanket full-buildout is the shortest.
+    from watermark.hydrology.stormwater import _scenario_tc_hr
+    from watermark.sites import active_profile
+
+    prof = active_profile(hydro_settings)
+    pre_tc = _scenario_tc_hr(0.0, settings=hydro_settings)
+    mid_tc = _scenario_tc_hr(0.34, settings=hydro_settings)  # ~115/340 ac impervious
+    full_tc = _scenario_tc_hr(1.0, settings=hydro_settings)
+    assert pre_tc == pytest.approx(prof.pre_tc_hr)
+    assert full_tc == pytest.approx(prof.post_tc_hr)
+    assert pre_tc > mid_tc > full_tc > 0
+    # Out-of-range fractions clamp to the two bounds rather than extrapolating.
+    assert _scenario_tc_hr(-1.0, settings=hydro_settings) == pytest.approx(prof.pre_tc_hr)
+    assert _scenario_tc_hr(2.0, settings=hydro_settings) == pytest.approx(prof.post_tc_hr)
+
+
+def test_screen_peaks_bracket_the_development_impact(hydro_settings: Settings) -> None:
+    # The shorter post/full-buildout Tc sharpens their peaks, so the design-storm peaks are
+    # strictly ordered pre < as-permitted < full-buildout, and the method documents the Tc
+    # bracket — the screen honestly brackets the impact rather than holding Tc fixed (#1163).
+    screen = screen_campus_discharge(settings=hydro_settings, live=True)
+    p = screen.design_peak
+    assert p is not None
+    assert p.pre_peak_cfs < p.post_peak_cfs < p.full_buildout_peak_cfs
+    assert p.post_peak_wet_cfs is not None and p.post_peak_wet_cfs > p.post_peak_cfs
+    assert "time of concentration shortens with imperviousness" in screen.method
+
+
 def test_run_storm_default_uses_the_calibrated_composite(hydro_settings: Settings) -> None:
     # The committed footprint calibrates run_storm's post cover: post CN is the composite,
     # strictly between the cropland pre CN and the blanket near-impervious bound.

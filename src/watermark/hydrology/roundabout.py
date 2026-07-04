@@ -48,7 +48,8 @@ _ACRE_FT_TO_CF = 43560.0
 
 # Stated assumptions for the runoff chain.
 _DEFAULT_CN = 98.0  # asphalt/concrete impervious (TR-55)
-_DEFAULT_TC_HR = 0.2  # small roundabout catchment time of concentration
+# Tc for the small roundabout catchment is a per-site basin value on the SiteProfile
+# (roundabout_tc_hr), resolved in derive_roundabout_flow — not a module constant.
 _DEFAULT_RUNOFF_COEFF = 0.9  # impervious annual runoff coefficient
 _DEFAULT_RETURN_PERIODS = (2, 10, 25, 50, 100)
 
@@ -108,7 +109,7 @@ def derive_roundabout_flow(
     roundabout: str = "Cole/Beery (Primary Access Entrance)",
     impervious_acres: ProvenancedValue | None = None,
     curve_number: float = _DEFAULT_CN,
-    tc_hr: float = _DEFAULT_TC_HR,
+    tc_hr: float | None = None,
     runoff_coefficient: float = _DEFAULT_RUNOFF_COEFF,
     return_periods: tuple[int, ...] = _DEFAULT_RETURN_PERIODS,
     settings: Settings | None = None,
@@ -120,6 +121,10 @@ def derive_roundabout_flow(
     The design-low-flow value is **zero** — it does not rain at the 7Q10.
     """
     settings = settings or get_settings()
+    # The small roundabout catchment's Tc is a per-site basin value on the profile (not the
+    # campus Tc, and not a module constant); an explicit override still wins.
+    if tc_hr is None:
+        tc_hr = active_profile(settings).roundabout_tc_hr
     area_pv = impervious_acres or _derive_impervious_acres()
     area = area_pv.value
     annual_precip = _annual_precip_in(settings)

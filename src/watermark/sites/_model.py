@@ -222,6 +222,17 @@ class SiteProfile(BaseModel):
     pre_cover: str
     post_cover: str
     developed_pervious_cover: str
+    # Time of concentration (hr) for the design-storm peak. Impervious paving shortens travel
+    # time and sharpens the peak, so pre- and post-development cannot share one Tc: ``pre_tc_hr``
+    # is the pervious (prior-cover) catchment and ``post_tc_hr`` the fully-impervious bound. Each
+    # scenario's Tc is interpolated on its impervious fraction between the two
+    # (``stormwater._scenario_tc_hr``); the full-buildout peak uses the shorter ``post_tc_hr``.
+    # Screening-grade assumptions — the defaults hold for pre-parity sites; a reference site sets
+    # both from its catchment. ``roundabout_tc_hr`` is the small Cole/Beery roundabout catchment
+    # (``roundabout.py``) — a distinct single fully-impervious scenario, not a pre/post pair.
+    pre_tc_hr: float = 1.0
+    post_tc_hr: float = 0.35
+    roundabout_tc_hr: float = 0.2
     noaa_fallback_24h_depth_in: dict[int, float]
     parcels_relpath: str  # relative to settings.data_dir
     footprint_relpath: str  # relative to settings.data_dir

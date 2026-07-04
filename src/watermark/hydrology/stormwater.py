@@ -44,10 +44,9 @@ from watermark.sites import active_profile
 log = get_logger(__name__)
 
 # Per-site values (design point, dominant HSG + citation, cover taxonomy, the NOAA
-# Atlas-14 offline-fallback depth table, and the parcels/footprint paths) come from the
-# active site profile (watermark.sites); see active_profile(settings) at each use.
-
-_TC_HR = 1.0  # time of concentration (assumption, screening-grade)
+# Atlas-14 offline-fallback depth table, the pre/post time-of-concentration bounds, and the
+# parcels/footprint paths) come from the active site profile (watermark.sites); see
+# active_profile(settings) at each use.
 
 # Manning roughness for a concrete / smooth-HDPE storm trunk, and the assumed pipe-slope
 # sensitivity band for the outfall capacity screen (the slope is NOT in the record).
@@ -72,6 +71,21 @@ def load_site_footprint(settings: Settings | None = None) -> SiteFootprint | Non
         return None
     data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     return SiteFootprint.model_validate(data)
+
+
+def _scenario_tc_hr(impervious_fraction: float, *, settings: Settings) -> float:
+    """Time of concentration (hr) for a scenario at a given impervious fraction.
+
+    Impervious paving raises runoff velocity and shortens travel time, so Tc falls with
+    imperviousness. We linearly interpolate between the profile's pervious ``pre_tc_hr``
+    (fraction 0 — prior cover) and fully-impervious ``post_tc_hr`` (fraction 1 — blanket
+    buildout); the as-permitted composite lands in between at its declared impervious share.
+    Screening-grade — a single-slope proxy for the NRCS velocity method, which needs flow
+    lengths not in the record.
+    """
+    prof = active_profile(settings)
+    frac = max(0.0, min(1.0, impervious_fraction))
+    return prof.pre_tc_hr - (prof.pre_tc_hr - prof.post_tc_hr) * frac
 
 
 def _composite_post_cn(
@@ -133,12 +147,18 @@ def run_storm_scenario(
     footprint = load_site_footprint(settings)
     if footprint is not None:
         post_cn, _ = _composite_post_cn(acres, footprint, hsg_letter, settings=settings)
+        post_imperv_frac = min(footprint.impervious_acres.value, acres) / acres if acres else 0.0
     else:
         post_cn = cn_for(prof.post_cover, hsg_letter, settings=settings)
+        post_imperv_frac = 1.0  # blanket near-impervious buildout — the shortest Tc
     depth = storm.depth.value
-    pre = simulate_runoff(area_acres=acres, curve_number=pre_cn, tc_hr=_TC_HR, storm_depth_in=depth)
+    # Pre-development is fully pervious (impervious fraction 0 -> the longest Tc); the post
+    # scenario's shorter Tc scales with its impervious fraction, sharpening the post peak.
+    pre_tc = _scenario_tc_hr(0.0, settings=settings)
+    post_tc = _scenario_tc_hr(post_imperv_frac, settings=settings)
+    pre = simulate_runoff(area_acres=acres, curve_number=pre_cn, tc_hr=pre_tc, storm_depth_in=depth)
     post = simulate_runoff(
-        area_acres=acres, curve_number=post_cn, tc_hr=_TC_HR, storm_depth_in=depth
+        area_acres=acres, curve_number=post_cn, tc_hr=post_tc, storm_depth_in=depth
     )
 
     runoff = StormRunoff(
@@ -225,7 +245,8 @@ def _storm_findings(runoff: StormRunoff) -> list[HydroFinding]:
                 f"{rp}-yr 24-hr storm ({runoff.storm.depth.value:.2f} in): peak "
                 f"{runoff.pre.peak_cfs:.0f} -> {runoff.post.peak_cfs:.0f} cfs "
                 f"(+{runoff.peak_increase_cfs:.0f}, CN {runoff.pre.curve_number:.0f} -> "
-                f"{runoff.post.curve_number:.0f})"
+                f"{runoff.post.curve_number:.0f}, Tc {runoff.pre.tc_hr:g} -> "
+                f"{runoff.post.tc_hr:g} hr)"
             ),
         ),
         HydroFinding(
@@ -288,23 +309,31 @@ def screen_campus_discharge(
     post_cn, breakdown = _composite_post_cn(acres, footprint, hsg_letter, settings=settings)
     full_cn = cn_for(prof.post_cover, hsg_letter, settings=settings)
 
+    # Tc shortens with imperviousness: pre is pervious (fraction 0), the as-permitted post
+    # runs at its declared impervious share, and the full-buildout bound is blanket-impervious
+    # (fraction 1 -> the shortest Tc, the sharpest peak).
+    post_imperv_frac = min(footprint.impervious_acres.value, acres) / acres if acres else 0.0
+    pre_tc = _scenario_tc_hr(0.0, settings=settings)
+    post_tc = _scenario_tc_hr(post_imperv_frac, settings=settings)
+    full_tc = _scenario_tc_hr(1.0, settings=settings)
+
     peaks: list[DischargePeak] = []
     for rp in sorted({*return_periods, design_return_period_yr}):
         depth = _resolve_storm(rp, settings=settings, live=live).depth.value
         pre = simulate_runoff(
-            area_acres=acres, curve_number=pre_cn, tc_hr=_TC_HR, storm_depth_in=depth
+            area_acres=acres, curve_number=pre_cn, tc_hr=pre_tc, storm_depth_in=depth
         )
         post = simulate_runoff(
-            area_acres=acres, curve_number=post_cn, tc_hr=_TC_HR, storm_depth_in=depth
+            area_acres=acres, curve_number=post_cn, tc_hr=post_tc, storm_depth_in=depth
         )
-        # Conservative wet-antecedent bound: the same as-permitted composite CN under
-        # AMC-III (ground already saturated by prior rain), which raises the peak the
-        # 60-inch outfall and Dug Run's low flow have to absorb.
+        # Conservative wet-antecedent bound: the same as-permitted composite CN (and its
+        # shorter post Tc) under AMC-III (ground already saturated by prior rain), which
+        # raises the peak the 60-inch outfall and Dug Run's low flow have to absorb.
         post_wet = simulate_runoff(
-            area_acres=acres, curve_number=post_cn, tc_hr=_TC_HR, storm_depth_in=depth, amc="III"
+            area_acres=acres, curve_number=post_cn, tc_hr=post_tc, storm_depth_in=depth, amc="III"
         )
         full = simulate_runoff(
-            area_acres=acres, curve_number=full_cn, tc_hr=_TC_HR, storm_depth_in=depth
+            area_acres=acres, curve_number=full_cn, tc_hr=full_tc, storm_depth_in=depth
         )
         peaks.append(
             DischargePeak(
@@ -380,6 +409,8 @@ def screen_campus_discharge(
         method=(
             "Tier-0 SCS-CN screening over the measured parcel footprint; post CN = "
             "area-weighted composite from the ASWCD-declared impervious/developed split; "
+            f"time of concentration shortens with imperviousness (pre {pre_tc:g} hr -> "
+            f"as-permitted {post_tc:g} hr -> full-buildout {full_tc:g} hr); "
             "peaks are AMC-II (average antecedent moisture) with a wet-antecedent (AMC-III) "
             "conservative bound on the as-permitted post peak; outfall capacity = Manning "
             "full-flow (n=0.013) across an assumed slope band; receiving 7Q10 cited from the "

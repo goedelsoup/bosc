@@ -74,6 +74,7 @@ class Hydrograph(BaseModel):
     volume_acft: float
     runoff_depth_in: float
     curve_number: float  # the effective CN the chain ran on (AMC-adjusted when amc != "II")
+    tc_hr: float = 0.0  # time of concentration the unit hydrograph ran on (impervious-shortened)
     amc: Literal["I", "II", "III"] = "II"  # antecedent moisture condition; "III" = wet
     tier: Literal["tier0"] = "tier0"
 

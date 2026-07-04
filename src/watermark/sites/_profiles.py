@@ -64,6 +64,11 @@ _LIMA = SiteProfile(
     pre_cover="cropland",
     post_cover="developed_campus",
     developed_pervious_cover="open_space",
+    # Tc bounds (hr): cropland catchment ~1.0 hr; a fully-paved campus routes ~3x faster
+    # (paved gutter/pipe velocities vs sheet flow over cropland) -> ~0.35 hr. Screening-grade.
+    pre_tc_hr=1.0,
+    post_tc_hr=0.35,
+    roundabout_tc_hr=0.2,  # small Cole/Beery roundabout catchment (Pike Run theory)
     noaa_fallback_24h_depth_in={
         1: 2.11,
         2: 2.52,
