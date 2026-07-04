@@ -2,8 +2,9 @@
 
 Air-quality & backup-generation dispatch modeling (epic #1172). The direct sibling of
 [`watermark.hydrology`](../hydrology/CLAUDE.md): a **Tier-0 analytic emissions inventory**
-(this package today) escalating to a **Tier-1 AERMOD dispersion** run (`air/aermod/`,
-gated behind Tier-0, not yet built). Defers to the root [`CLAUDE.md`](../../../CLAUDE.md).
+(this package) escalating to a **Tier-1 AERMOD dispersion** engine
+([`air/aermod/`](aermod/CLAUDE.md), #1178 — deck generation + binary wrapper built, gated
+behind Tier-0). Defers to the root [`CLAUDE.md`](../../../CLAUDE.md).
 
 The investigable question: when grid reliability stress forces the "emergency" diesel
 backup fleet into runtime, what is the air burden — and does forced generation breach the
@@ -48,8 +49,13 @@ backup fleet into runtime, what is the air burden — and does forced generation
   per the readiness layer). The permit path is currently the Lima default in `emissions.py`
   (`_DEFAULT_PERMIT_RELPATH`) — the seam for **#1180**, which adds
   `SiteFacility.air_permit_relpath`.
-- **Deferred (gated behind Tier-0):** AERMOD engine (`air/aermod/`, #1178), AERMET/AERMAP
-  connectors (#1179), the receptor grid + NAAQS dispersion half of #1182, the
-  site-profile knobs (#1180), and feeds/CLI/ledger wiring (#1181). Tier-0 ships standalone —
+- **Tier-1 AERMOD engine** (`air/aermod/`, #1178) **is built**: the deck builders + the
+  binary wrapper (located on disk, degrades when absent) + plotfile parsing. Stack geometry
+  is `assumption` (the permit redacts engine specs as CBI); the emission rate is grounded.
+  See [`aermod/CLAUDE.md`](aermod/CLAUDE.md) and [`docs/AERMOD.md`](../../../docs/AERMOD.md).
+- **Deferred (gated behind Tier-0):** AERMET/AERMAP met + terrain connectors (#1179; the
+  minimal run uses flat terrain + canned met), the NAAQS-comparison dispersion half of
+  #1182, the site-profile stack/permit knobs (#1180), and feeds/CLI/ledger wiring (#1181).
+  Tier-0 ships standalone —
   including the event-anchored **calibration** half of #1182 (`calibration.py`), which needs
   only the captured event, not AERMOD.
