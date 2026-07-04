@@ -39,3 +39,23 @@ def test_climatology_offline(hydro_settings: Settings) -> None:
 def test_offline_unfetched_point_raises(hydro_settings: Settings) -> None:
     with pytest.raises(HydroOfflineError):
         nasa_power.fetch_climatology(lon=0.0, lat=0.0, settings=hydro_settings)
+
+
+def test_annual_precip_derived_from_monthly(hydro_settings: Settings) -> None:
+    """Annual depth is the days-weighted monthly sum, not ANN x 365.25."""
+    clim = nasa_power.fetch_climatology(settings=hydro_settings)
+    precip = clim.get("PRECTOTCORR")
+    assert precip is not None
+    expected = sum(precip.monthly[m] * nasa_power._DAYS_IN_MONTH[m] for m in nasa_power._MONTHS)
+    assert clim.annual_precip_mm() == pytest.approx(round(expected, 1))
+
+
+def test_annual_precip_raises_on_ann_unit_drift(hydro_settings: Settings) -> None:
+    """If POWER ships ANN as an annual total (not mm/day), the cross-check fails loud."""
+    clim = nasa_power.fetch_climatology(settings=hydro_settings)
+    precip = clim.get("PRECTOTCORR")
+    assert precip is not None
+    # Simulate ANN drifting to an annual total (~365x the mm/day rate).
+    precip.annual = round(precip.annual * nasa_power._DAYS_PER_YEAR, 1)  # type: ignore[operator]
+    with pytest.raises(nasa_power.NasaPowerUnitError):
+        clim.annual_precip_mm()

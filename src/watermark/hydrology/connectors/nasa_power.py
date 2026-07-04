@@ -28,6 +28,28 @@ from watermark.hydrology.connectors._cache import cached_get
 _CONNECTOR = "nasa_power"
 _MONTHS = ("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC")
 _FILL = -999.0  # POWER no-data sentinel
+# Non-leap calendar days per month; monthly normals are mm/day, so a days-weighted
+# sum gives the annual depth without trusting POWER's ambiguous ANN field.
+_DAYS_IN_MONTH = {
+    "JAN": 31,
+    "FEB": 28,
+    "MAR": 31,
+    "APR": 30,
+    "MAY": 31,
+    "JUN": 30,
+    "JUL": 31,
+    "AUG": 31,
+    "SEP": 30,
+    "OCT": 31,
+    "NOV": 30,
+    "DEC": 31,
+}
+_DAYS_PER_YEAR = 365.25
+_PRECIP_CROSSCHECK_TOL = 0.05  # fractional; a ~365x ANN unit flip blows past this
+
+
+class NasaPowerUnitError(RuntimeError):
+    """A POWER value failed its unit cross-check (e.g. ANN drifted off mm/day)."""
 
 
 class ClimatologyParameter(BaseModel):
@@ -57,11 +79,31 @@ class NasaPowerClimatology(BaseModel):
         return next((p for p in self.parameters if p.parameter == name), None)
 
     def annual_precip_mm(self) -> float | None:
-        """Annual precipitation depth (mm/yr) from the PRECTOTCORR mm/day normal."""
+        """Annual precipitation depth (mm/yr), summed from the 12 monthly mm/day normals.
+
+        Derived from the monthly normals (``sum(mm/day x days_in_month)``) so the total
+        is robust to what POWER ships in ``ANN`` — that field has historically been
+        either a daily-mean rate or an annual total depending on parameter/version. When
+        ``ANN`` is present it is cross-checked against the monthly-derived total on the
+        assumption that ``ANN`` is a mm/day rate; a mismatch (e.g. POWER switching ``ANN``
+        to an annual total — a ~365x drift) raises :class:`NasaPowerUnitError` rather than
+        silently mis-reporting the user-visible precip headline.
+        """
         p = self.get("PRECTOTCORR")
-        if p is None or p.annual is None:
+        if p is None or len(p.monthly) < len(_MONTHS):
             return None
-        return round(p.annual * 365.25, 1)
+        derived = sum(p.monthly[m] * _DAYS_IN_MONTH[m] for m in _MONTHS)
+        if p.annual is not None:
+            ann_as_rate = p.annual * _DAYS_PER_YEAR
+            if abs(ann_as_rate - derived) > _PRECIP_CROSSCHECK_TOL * derived:
+                raise NasaPowerUnitError(
+                    f"NASA POWER PRECTOTCORR ANN ({p.annual}) is inconsistent with the "
+                    f"monthly-normal-derived annual total ({derived:.1f} mm/yr) under a "
+                    f"mm/day reading (ANN x {_DAYS_PER_YEAR}={ann_as_rate:.1f} mm/yr, "
+                    f"drift >{_PRECIP_CROSSCHECK_TOL:.0%}) — POWER may have changed the "
+                    f"ANN unit; verify before trusting the precip headline."
+                )
+        return round(derived, 1)
 
     def wettest_month(self) -> tuple[str, float] | None:
         p = self.get("PRECTOTCORR")
