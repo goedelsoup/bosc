@@ -25,7 +25,7 @@ Living record for the Findlay watershed point (basin: maumee), scaffolded by `wa
 | grid-profile | ok | reference/eia/findlay/grid-profile.yaml |
 
 ¹ `ok` means the step ran without error — **not** that it produced a Blanchard value. On the recorded run it emitted only the four Maumee-side mainstems (no Blanchard). The Blanchard River 7Q10 (**8.67 cfs**, LP3 over USGS 04189000) was added to `low-flow-7q10.derived.yaml` later, under #417.
-² Superseded by the #416 reconciliation below (now 8/129, 2 violation/2 tight/4 ok). Neither the Findlay WPCC nor any other Blanchard mainstem POTW is in the screened set — see why.
+² Superseded by the #416 reconciliation below (now 8/129, 2 violation/2 tight/4 ok). Neither the Findlay WPCC nor any other Blanchard mainstem POTW is in the screened set — see the reconciliation section (driven by the `receiving_water` names in `data/reference/echo/maumee-wwtp.potw.yaml` and the `screen_facility` short-circuit logic in `src/watermark/hydrology/basin.py`).
 
 ## GIS pulls (manual; not part of `watermark onboard`)
 
@@ -62,7 +62,16 @@ result: **8 of 129 basin POTWs screened** (2 violation, 2 tight, 4 ok); unscreen
 guessed*: 76 `no_receiving_water` (ECHO/inventory has no receiving-water name), 43 `no_7q10` (named
 receiver on an ungaged tributary/ditch), 2 `no_design_flow`.
 
-**The 8 screened dischargers** (NPDES id → receiving water → 7Q10 source):
+*Sources:* the screen reads the POTW inventory `data/reference/echo/maumee-wwtp.potw.yaml` (129
+facilities), with denominators from `data/reference/hydrology/low-flow-7q10.yaml` (cited/`document`)
+and `data/reference/hydrology/low-flow-7q10.derived.yaml` (`derived`). The per-facility bucket
+assignment (`no_receiving_water` / `no_7q10` / `no_design_flow`) and the `BasinCoverage` totals are
+computed by `screen_facility` / `check_basin_assimilative` in `src/watermark/hydrology/basin.py` — the
+figures above reproduce a local run of that code over those committed inputs.
+
+**The 8 screened dischargers** — NPDES id, receiving water, and design flow from
+`maumee-wwtp.potw.yaml`; `document` 7Q10s from `low-flow-7q10.yaml`, `derived` 7Q10s from
+`low-flow-7q10.derived.yaml`:
 
 | NPDES | discharger | receiving water | 7Q10 | flag |
 |---|---|---|---|---|
@@ -85,7 +94,9 @@ anchor POTWs are instead excluded as **`no_receiving_water`** — `maumee-wwtp.p
 inventory. (Filling it would require the OH0025135 / OH0026921 NPDES fact sheets — the same source #352
 tracks for `plant_receiving`.)
 
-**Unscreened Blanchard-mainstem dischargers (HUC-8 04100008) — explicit coverage gap:**
+**Unscreened Blanchard-mainstem dischargers (HUC-8 04100008) — explicit coverage gap** (from
+`maumee-wwtp.potw.yaml`: facilities with `huc8_name: Blanchard`; flows are the `design_flow_mgd` field,
+receivers the `receiving_water` field):
 
 - `no_receiving_water` (null receiver in the inventory): **OH0025135 Findlay WPCC (15.0 MGD)**,
   **OH0026921 Ottawa WWTP (3.0 MGD)**, OH0020851 Bluffton WWTP (1.9), OH0047791 Rawson WWTP (0.2), and
