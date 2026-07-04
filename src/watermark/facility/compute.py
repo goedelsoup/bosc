@@ -60,8 +60,9 @@ from watermark.facility.power import derive_power_basis
 from watermark.hydrology import geo
 from watermark.hydrology.cooling import derive_cooling_basis
 from watermark.hydrology.cooling_models import (
-    _OT_HEAT_REJECT_MULT,
     _WUE_L_PER_KWH,
+    CoolingParams,
+    _resolve_heat_reject_mult,
     it_load_mw_from_once_through_withdrawal,
 )
 from watermark.hydrology.model import ProvenancedValue
@@ -309,21 +310,19 @@ def derive_compute_capacity(
         # Once-through consumptive is only ~1-2% forced evaporation of the withdrawal, not
         # it_load x WUE — inverting it with a tower WUE badly understates the load. The
         # withdrawal is the heat-rejection basis, so recover the IT load from it instead.
-        # Both consumptive bounds share one withdrawal, so the cross-check is a point. Divide
-        # the same cooling-overhead multiplier the forward applied back out (#1153), so this
-        # recovers the *IT* load, not the inflated rejected-heat load.
+        # Both consumptive bounds share one withdrawal, so the cross-check is a point. Resolve
+        # the cooling-overhead multiplier with the same precedence as _derive_once_through and
+        # divide it back out (#1153), so this recovers the *IT* load, not the inflated
+        # rejected-heat load.
         facility = active_profile(settings).facility
-        heat_reject_mult = (
-            facility.heat_reject_multiplier
-            if facility is not None and facility.heat_reject_multiplier is not None
-            else _OT_HEAT_REJECT_MULT
-        )
+        heat_reject_mult, mult_cite = _resolve_heat_reject_mult(facility, CoolingParams())
         it_water_low = it_water_high = it_load_mw_from_once_through_withdrawal(
             cooling.makeup_demand.value, heat_reject_multiplier=heat_reject_mult
         )
         water_low_cite = (
             f"once-through withdrawal {cooling.makeup_demand.value:g} MGD / heat-rejection "
-            "basis (recovers the power method; shares its dT)"
+            f"basis / {heat_reject_mult:g} cooling overhead ({mult_cite}) — recovers the power "
+            "method; shares its dT"
         )
         water_high_cite = water_low_cite
     else:
