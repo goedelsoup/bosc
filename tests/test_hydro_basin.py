@@ -146,3 +146,22 @@ def test_screen_omits_tributary_compounds(data_settings: Settings) -> None:
     assert basin._match_low_flow("Maumee River", lookup) is not None
     # The St. Joseph typo/synonym compound still matches on its primary form.
     assert basin._match_low_flow("ST JOSEPH R, ST JOSEPH RIVER", lookup) is not None
+
+
+def test_gage_schema_rejects_malformed_reference_data() -> None:
+    # The curated gage table is schema-validated at load, so a YAML edit that guts a
+    # gage/confluence fails fast rather than screening against silently-wrong data.
+    from pydantic import ValidationError
+
+    with pytest.raises(ValidationError):
+        basin.MainstemGage.model_validate({"gage": "04193500", "aliases": []})  # no alias
+    with pytest.raises(ValidationError):
+        basin.MainstemGage.model_validate({"gaeg": "04193500", "aliases": ["x"]})  # typo key
+    with pytest.raises(ValidationError):
+        # a confluence reduced to a single tributary is meaningless
+        basin.HeadwatersConfluence.model_validate(
+            {"components": [{"gage": "04180500", "label": "St. Joseph"}], "aliases": ["x"]}
+        )
+    with pytest.raises(ValidationError):
+        # a top-level table missing the mainstems section is not a silently-empty screen
+        basin._GageTable.model_validate({"headwaters_confluences": {}})
