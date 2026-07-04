@@ -197,7 +197,9 @@ def _surcharge_note(
             f"quantified): {', '.join(uncited)}."
         )
     if excluded:
-        parts.append(f"Excluded — no campus routing (FM-3 theorized): {', '.join(excluded)}.")
+        # Generic reason only — the site-specific "why" (e.g. Lima's Shawnee II FM-3 is
+        # theorized) is surfaced by the routing layer's warnings, not baked in here (#1159).
+        parts.append(f"Excluded — no campus routing: {', '.join(excluded)}.")
     return " ".join(parts)
 
 
