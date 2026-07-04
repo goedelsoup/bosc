@@ -88,7 +88,7 @@ export const OPACITY_TEARDOWN: TeardownRecord = {
     verify: "Open the withholding map & PRR analysis",
     verifyHref: withSite("/site/legal/"),
     method: "How to read a statutory exemption",
-    methodHref: withSite("/docs/methodology"),
+    methodHref: withBase("/methodology"),
   },
   connect: [
     { kind: "concept", label: "[[public-records-mandamus]]", href: withBase("/wiki/concepts/") },
@@ -145,7 +145,7 @@ export const DEED_TEARDOWN: TeardownRecord = {
     verify: "Open the deed · instrument 202508130008300",
     verifyHref: withSite("/site/records/"),
     method: "How we read a deed",
-    methodHref: withSite("/docs/methodology"),
+    methodHref: withBase("/methodology"),
   },
   connect: [
     { kind: "entity", label: "Bistrozzi LLC", href: withBase("/wiki/entities/") },
@@ -212,7 +212,7 @@ export const SHELL_TEARDOWN: TeardownRecord = {
     verify: "Open the SoS filings",
     verifyHref: withSite("/site/records/"),
     method: "Signals vs. verdicts",
-    methodHref: withSite("/docs/methodology"),
+    methodHref: withBase("/methodology"),
   },
   connect: [
     { kind: "entity", label: "Tilted Gate LLC", href: withBase("/wiki/entities/") },
@@ -279,7 +279,7 @@ export const OPC_TEARDOWN: TeardownRecord = {
     verify: "Open exhibit · pp. 317–328",
     verifyHref: withSite("/site/records/"),
     method: "Read the extraction method",
-    methodHref: withSite("/docs/methodology"),
+    methodHref: withBase("/methodology"),
   },
   connect: [
     { kind: "entity", label: "Tetra Tech", href: withBase("/wiki/entities/") },
@@ -363,7 +363,7 @@ export const AIR_TEARDOWN: TeardownRecord = {
     verify: "Open the permit · eDoc 4132514",
     verifyHref: withSite("/site/records/"),
     method: "How a CBI redaction works",
-    methodHref: withSite("/docs/methodology"),
+    methodHref: withBase("/methodology"),
   },
   connect: [
     { kind: "entity", label: "Bistrozzi LLC", href: withBase("/wiki/entities/") },
@@ -566,7 +566,7 @@ export const ASSEMBLY_TEARDOWN: TeardownRecord = {
     verify: "Open the deeds & land records",
     verifyHref: withSite("/site/records/"),
     method: "How an option-to-assignment chain works",
-    methodHref: withSite("/docs/methodology"),
+    methodHref: withBase("/methodology"),
   },
   connect: [
     { kind: "entity", label: "Port Authority of Allen County", href: withBase("/wiki/entities/") },

@@ -7,7 +7,7 @@ description: "The Project BOSC story: told through the records, with every figur
 ---
 
 import { hasFeed, loadFeed, loadManifest } from "~/lib/bundle";
-import { withSite } from "~/lib/site";
+import { withBase, withSite } from "~/lib/site";
 import { chapterHref, storyContentsHref, storyFor } from "~/lib/walk";
 
 export const story = storyFor("lima", "project-bosc");
@@ -73,7 +73,7 @@ export const nDocuments = docCollections.reduce((acc, c) => acc + c.entries.leng
     Each record is read from the <em>image</em>, not the OCR text layer (whose digits are
     unreliable), validated against a typed schema, and cited back to a source page —
     confidence surfaced inline as evidence tags. Read the full write-up:
-    <a href={withSite("/docs/methodology")}>Methodology</a> ·
+    <a href={withBase("/methodology")}>Methodology</a> ·
     the <a href={withSite("/docs/course")}>research course</a> ·
     or <a href="/about">about the method</a>.
   </p>

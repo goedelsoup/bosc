@@ -132,8 +132,10 @@ watermark catalog audit --apply        # regenerate COMPLETENESS.md (else `catal
 
 (`mise run onboard-site <slug>` prints the same dry-run plan.) Every value is
 an **onboarding seed** until reviewed against a cited source — keep the
-`[verified]`/`[inference]`/`[reference]`/`[open]` discipline (see
-[`docs/methodology.md`](methodology.md)); "no data-center here yet" is a finding, not a gap.
+`[verified]`/`[inference]`/`[reference]`/`[open]` discipline (see the
+[evidentiary-discipline skill](../.claude/skills/evidentiary-discipline/SKILL.md); the tag
+taxonomy lives in `web/src/lib/evidence.ts`, surfaced on the network `/methodology` hub);
+"no data-center here yet" is a finding, not a gap.
 
 ### 4. The review gate (blocking)
 
