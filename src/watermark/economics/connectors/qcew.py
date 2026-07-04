@@ -162,6 +162,10 @@ def fetch_county_industries(
         emp = s.get("emp")
         if emp is None:
             continue
+        # Pay is meaningless without covered employment: QCEW occasionally reports a nonzero
+        # avg_annual_pay on a sector whose annual_avg_emplvl rounds to 0 (e.g. an "Unclassified"
+        # slice) — surfacing "$X pay, 0 jobs" would read as real, so omit pay when emp is 0 (#1109).
+        has_jobs = float(emp) > 0
         naics = str(s.get("naics", ""))
         lq = s.get("lq")
         sectors.append(
@@ -178,8 +182,8 @@ def fetch_county_industries(
                     if s.get("estabs") is not None
                     else None
                 ),
-                avg_annual_pay=_pay(s, "pay", "USD/year"),
-                avg_weekly_wage=_pay(s, "wkly", "USD/week"),
+                avg_annual_pay=_pay(s, "pay", "USD/year") if has_jobs else None,
+                avg_weekly_wage=_pay(s, "wkly", "USD/week") if has_jobs else None,
                 location_quotient=(
                     ProvenancedValue.from_connector(float(lq), "ratio", citation=cite)
                     if lq is not None

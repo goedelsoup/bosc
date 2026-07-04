@@ -54,8 +54,12 @@ def test_qcew_surfaces_wages(econ_settings: Settings) -> None:
     # A dominant sector carries per-sector pay.
     mfg = next(s for s in ie.sectors if s.naics == "31-33")
     assert mfg.avg_annual_pay is not None and mfg.avg_annual_pay.value > 0
-    # Pay is never surfaced as a fabricated $0 — a suppressed/zero-wage slice is omitted.
-    assert all(s.avg_annual_pay is None or s.avg_annual_pay.value > 0 for s in ie.sectors)
+    # Pay is never surfaced as a fabricated $0, and a zero-employment sector omits pay entirely
+    # (QCEW can report a nonzero avg pay on an emp-0 "Unclassified" slice — "$X pay, 0 jobs").
+    for s in ie.sectors:
+        assert s.avg_annual_pay is None or s.avg_annual_pay.value > 0
+        if s.annual_avg_employment.value == 0:
+            assert s.avg_annual_pay is None and s.avg_weekly_wage is None
 
 
 def test_reduce_csv_keeps_wage_columns() -> None:
