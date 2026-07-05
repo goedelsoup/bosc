@@ -57,6 +57,13 @@ from watermark.greenops.connectors.egrid import (  # noqa: E402  (after the erro
     write_egrid_factors,
     write_wue_table,
 )
+from watermark.greenops.connectors.github import (  # noqa: E402  (after the error class)
+    GithubBillingError,
+    build_github_usage_report,
+    fetch_github_usage,
+    load_github_usage,
+    write_github_usage,
+)
 
 __all__ = [
     "AnthropicAdminError",
@@ -65,24 +72,29 @@ __all__ = [
     "AnthropicUsageReport",
     "AwsCredentialsError",
     "EgridFormatError",
+    "GithubBillingError",
     "GreenopsOfflineError",
     "build_carbon_report",
     "build_cost_report",
     "build_egrid_factors",
+    "build_github_usage_report",
     "build_usage_report",
     "build_wue_table",
     "fetch_anthropic_usage",
     "fetch_aws_carbon",
     "fetch_aws_costs",
     "fetch_egrid_factors",
+    "fetch_github_usage",
     "load_anthropic_usage",
     "load_aws_carbon",
     "load_aws_costs",
     "load_egrid_factors",
+    "load_github_usage",
     "load_wue_table",
     "write_anthropic_usage",
     "write_aws_carbon",
     "write_aws_costs",
     "write_egrid_factors",
+    "write_github_usage",
     "write_wue_table",
 ]
