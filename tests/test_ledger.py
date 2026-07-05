@@ -89,3 +89,28 @@ def test_burdens_span_the_prior_threads(hydro_settings: Settings) -> None:
     assert any("genset" in b.headline for b in led.burdens)
     # Every burden cites a committed source.
     assert all(b.source for b in led.burdens)
+
+
+def test_air_burden_cites_the_modeled_cap_breach(hydro_settings: Settings) -> None:
+    """The air burden is model-cited now (#1181): the committed Tier-0 air scenario, not a static
+    headline — the event-anchored ceiling breaches the synthetic-minor NOx cap."""
+    air = next(b for b in ledger.build_ledger(hydro_settings).burdens if b.thread == "air permit")
+    assert "235.62 tpy" in air.headline  # the exact synthetic-minor NOx cap survives (not rounded)
+    assert "breach" in air.headline and "132% of cap" in air.headline
+    # The source points at the committed air scenario artifact, not just the static permit.
+    assert "data/scenarios/lima.air-reliability_dispatch_event_high.scenario.yaml" in air.source
+
+
+def test_air_burden_falls_back_to_static_permit_fact(tmp_path: Path) -> None:
+    """Without a committed air scenario, _burden_air degrades to the static permit fact (#1181)."""
+    # A minimal data dir with the permit extraction but no air scenario artifact (scenarios_dir
+    # is derived from data_dir, so a fresh tmp tree has an empty scenarios/).
+    permit_src = REPO_ROOT / "data" / "extracted" / "permits" / "4132514.epa.yaml"
+    permit_dst = tmp_path / "extracted" / "permits" / "4132514.epa.yaml"
+    permit_dst.parent.mkdir(parents=True)
+    permit_dst.write_text(permit_src.read_text(encoding="utf-8"), encoding="utf-8")
+    (tmp_path / "scenarios").mkdir()
+    item = ledger._burden_air(Settings(data_dir=tmp_path))
+    assert item is not None
+    assert "synthetic-minor" in item.headline
+    assert "P0138965" in item.source  # the static permit citation, not the scenario

@@ -1,0 +1,24 @@
+id: air-naaqs
+title: National Ambient Air Quality Standards (NAAQS)
+scope: reference
+status: reviewed
+producer:
+  kind: manual
+  source: 40 CFR Part 50 / EPA NAAQS Table — verbatim transcription of the primary criteria-pollutant standards (µg/m³) from the cited EPA source
+license: U.S. public domain (EPA / CFR publication)
+access_tier: public
+site_scope: basin-shared
+storage:
+- relpath: reference/air/naaqs/naaqs.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: reference
+tags:
+- air
+- naaqs
+- criteria-pollutants
+- dispersion
+- reference
+notes: The federal criteria-pollutant concentration limits the Tier-1 AERMOD dispersion screen compares modeled ground-level concentrations against (watermark.air.aermod.dispersion, #1182, epic #1172). Screening reference (single source, no background) — a modeled peak over the standard flags a full demonstration, not an automatic violation. Static published standards — re-transcribe from the cited CFR/EPA table on a revision (e.g. the 2024 annual PM2.5 cut to 9.0 µg/m³); not connector-regenerable.

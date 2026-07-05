@@ -37,17 +37,12 @@ from watermark.air.model import (
 from watermark.config import Settings, get_settings
 from watermark.hydrology.model import ProvenancedValue
 from watermark.logging import get_logger
-from watermark.sites import active_profile, is_reference_site
+from watermark.sites import active_profile
 
 log = get_logger(__name__)
 
 # The committed AP-42 §3.4 reference dataset, relative to ``settings.reference_dir``.
 _AP42_RELPATH = "air/emission-factors/ap42-3.4.yaml"
-
-# The site air-permit extraction. Site-specific: this is the Lima default and the seam
-# for #1180, which adds ``SiteFacility.air_permit_relpath`` — until then callers pass an
-# explicit ``permit_path`` for another site. Relative to ``settings.extracted_dir``.
-_DEFAULT_PERMIT_RELPATH = "permits/4132514.epa.yaml"
 
 # Ultra-low-sulfur diesel cap (40 CFR 1090.305): 15 ppm S = 0.0015 wt-%. The AP-42 SOx
 # factor scales with fuel sulfur; evaluated here at the permit fuel spec.
@@ -291,20 +286,23 @@ def reconcile(
 
 
 def _permit_path(settings: Settings) -> Path:
-    """The active site's air-permit extraction path (the #1180 seam — Lima default today).
+    """The active site's air-permit extraction path from its profile (#1180).
 
-    Guarded to the reference site: ``settings.extracted_dir`` is a *shared* tree, so the
-    Lima permit relpath resolves for every site — without this a facility-bearing non-Lima
-    site (e.g. fort-wayne) would silently load Lima's rates/caps. Until #1180 wires
-    ``SiteFacility.air_permit_relpath``, another site must pass an explicit ``permit_path``.
+    Resolved from ``SiteFacility.air_permit_relpath`` — per-site, never a hardcoded Lima
+    default. ``settings.extracted_dir`` is a *shared* tree, so a facility-bearing site that
+    hasn't wired its own permit (``air_permit_relpath is None``) must refuse rather than
+    silently resolve another site's relpath: it raises ``NotImplementedError`` (a caller with
+    an out-of-band permit can still pass an explicit ``permit_path`` to ``permit_factors``).
     """
-    if not is_reference_site(settings.site):
+    fac = active_profile(settings).facility
+    relpath = fac.air_permit_relpath if fac is not None else None
+    if relpath is None:
         raise NotImplementedError(
-            f"site {settings.site!r} has no wired air-permit path — permit-based factors "
-            "and NSR caps are the reference site's until #1180 adds "
-            "SiteFacility.air_permit_relpath. Pass an explicit permit_path to permit_factors()."
+            f"site {settings.site!r} has no wired air-permit path — set "
+            "SiteFacility.air_permit_relpath in its profile (#1180) to ground permit-based "
+            "factors + NSR caps, or pass an explicit permit_path to permit_factors()."
         )
-    return settings.extracted_dir / _DEFAULT_PERMIT_RELPATH
+    return settings.extracted_dir / relpath
 
 
 def nsr_caps(permit_path: Path) -> dict[str, ProvenancedValue]:
@@ -330,13 +328,14 @@ def nsr_caps(permit_path: Path) -> dict[str, ProvenancedValue]:
 def load_nsr_caps(*, settings: Settings | None = None) -> dict[str, ProvenancedValue]:
     """Profile-driven NSR caps for the active site.
 
-    Empty when the site has no disclosed facility, or no wired air permit yet (a non-
-    reference site pre-#1180): honestly "no caps known" rather than silently inheriting
-    the reference site's caps. An AP-42 tonnage run on such a site simply skips the cap
-    check; a permit-basis run raises via :func:`_permit_path`.
+    Empty when the site has no disclosed facility, or no wired air permit yet
+    (``SiteFacility.air_permit_relpath is None``): honestly "no caps known" rather than
+    silently inheriting another site's caps. An AP-42 tonnage run on such a site simply
+    skips the cap check; a permit-basis run raises via :func:`_permit_path`.
     """
     settings = settings or get_settings()
-    if active_profile(settings).facility is None or not is_reference_site(settings.site):
+    fac = active_profile(settings).facility
+    if fac is None or fac.air_permit_relpath is None:
         return {}
     return nsr_caps(_permit_path(settings))
 

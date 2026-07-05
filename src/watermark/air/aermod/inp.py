@@ -21,7 +21,9 @@ from watermark.air.aermod.model import (
     lb_per_hr_to_g_per_s,
 )
 from watermark.air.model import Pollutant
+from watermark.config import Settings, get_settings
 from watermark.hydrology.model import ProvenancedValue
+from watermark.sites import active_profile
 
 # Our Pollutant labels -> the AERMOD POLLUTID token. AERMOD has no VOC species, so VOC
 # maps to the generic OTHER (no built-in decay/chemistry assumptions apply either way).
@@ -63,6 +65,44 @@ def assumed_stack_params(*, why: str | None = None) -> GensetStackParams:
         exit_velocity_ms=ProvenancedValue.assume(40.0, "m/s", why=why),
         exit_temp_k=ProvenancedValue.assume(720.0, "K", why=why),
     )
+
+
+def stack_params_from_profile(settings: Settings | None = None) -> GensetStackParams:
+    """The active site's genset stack geometry — ``document`` if disclosed, else assumed (#1180).
+
+    A site whose ``SiteFacility`` discloses the four stack dimensions (with a citation) gets a
+    ``document``-tagged :class:`GensetStackParams`; otherwise this returns
+    :func:`assumed_stack_params` with a site-specific ``why`` (so a non-Lima run is never
+    tagged with Lima's CBI rationale). Lima leaves the dimensions ``None`` — the permit
+    redacts engine specs as CBI — so it screens on the assumption.
+    """
+    settings = settings or get_settings()
+    fac = active_profile(settings).facility
+    if fac is not None and fac.has_disclosed_stack:
+        cite = fac.genset_stack_citation
+        assert (  # the model validator guarantees these are set together; narrow for mypy
+            fac.genset_stack_height_m is not None
+            and fac.genset_stack_diameter_m is not None
+            and fac.genset_stack_exit_velocity_ms is not None
+            and fac.genset_stack_exit_temp_k is not None
+            and cite is not None
+        )
+        return GensetStackParams(
+            height_m=ProvenancedValue.from_document(fac.genset_stack_height_m, "m", citation=cite),
+            diameter_m=ProvenancedValue.from_document(
+                fac.genset_stack_diameter_m, "m", citation=cite
+            ),
+            exit_velocity_ms=ProvenancedValue.from_document(
+                fac.genset_stack_exit_velocity_ms, "m/s", citation=cite
+            ),
+            exit_temp_k=ProvenancedValue.from_document(
+                fac.genset_stack_exit_temp_k, "K", citation=cite
+            ),
+        )
+    why = (
+        f"no disclosed genset stack geometry for site {settings.site!r} — " + _STACK_ASSUMPTION_WHY
+    )
+    return assumed_stack_params(why=why)
 
 
 def genset_point_source(

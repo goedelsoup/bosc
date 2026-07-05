@@ -35,6 +35,10 @@ from typing import Any, cast
 import yaml
 from pydantic import BaseModel
 
+from watermark.air.aermod.dispersion import DispersionResult, run_calibration_dispersion
+from watermark.air.aermod.model import AveragePeriod
+from watermark.air.model import Pollutant
+from watermark.air.scenario import AirScenarioResult
 from watermark.candidates import (
     load_cloud_consumer_candidates,
     load_defense_contractors,
@@ -262,6 +266,52 @@ def _load_scenarios(settings: Settings) -> list[ScenarioResult]:
     return out
 
 
+def _load_air_scenarios(settings: Settings) -> list[AirScenarioResult]:
+    """Load the committed air emissions scenarios (Tier-0, #1177/#1181).
+
+    ``watermark.air.scenario.write_scenario`` writes ``<slug>.air-<name>.scenario.yaml`` into
+    ``scenarios_dir`` (slug-prefixed, so a sibling never clobbers Lima). A site with no committed
+    air scenarios yields an empty list → the feed carries zero rows and the air section locks.
+    """
+    out: list[AirScenarioResult] = []
+    for path in sorted(settings.scenarios_dir.glob(f"{settings.site}.air-*.scenario.yaml")):
+        try:
+            data = yaml.safe_load(path.read_text(encoding="utf-8"))
+            out.append(AirScenarioResult.model_validate(data))
+        except Exception as exc:  # a malformed scenario must not kill the whole export
+            log.warning("bundle.air_scenario.bad", path=str(path), error=str(exc).splitlines()[0])
+    return out
+
+
+def _air_dispersion(settings: Settings) -> list[DispersionResult] | None:
+    """The Tier-1 AERMOD dispersion screen for the active site (#1178/#1182), or ``None``.
+
+    Facility- and permit-gated: a site with no documented facility, or no wired air permit
+    (``SiteFacility.air_permit_relpath is None``), has no fleet/rates to model → ``None`` (feed
+    skipped, section locks). Each run is the event-anchored calibration (permit load-point rate,
+    cited to the captured dispatch event). When the AERMOD binary/met is absent the runs carry
+    ``available=False`` with empty screens — the deck + NAAQS basis are real, no concentration is
+    fabricated.
+    """
+    fac = active_profile(settings).facility
+    if fac is None or fac.air_permit_relpath is None:
+        return None
+    runs: list[DispersionResult] = []
+    # The two capped / short-term-critical criteria pollutants: NOx (1-hr + annual NO2 NAAQS)
+    # and CO (1-hr + 8-hr). Averaging periods chosen to line up with the operative standards.
+    spec: list[tuple[Pollutant, tuple[AveragePeriod, ...]]] = [
+        ("NOx", ("1", "ANNUAL")),
+        ("CO", ("1", "8")),
+    ]
+    for pollutant, periods in spec:
+        dr = run_calibration_dispersion(
+            pollutant=pollutant, averaging_periods=periods, settings=settings
+        )
+        if dr is not None:
+            runs.append(dr)
+    return runs or None
+
+
 def _collect_feeds(settings: Settings) -> list[_Feed]:
     """Load the corpus once and assemble every feed."""
     feeds: list[_Feed] = []
@@ -458,6 +508,12 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
             lambda: _scoped_assessments(settings),
         ),
         ("hydrology-scenarios", ScenarioResult, lambda: _load_scenarios(settings)),
+        # Air-quality & backup-generation dispatch modeling (epic #1172). Tier-0 emissions
+        # scenarios + their synthetic-minor NSR cap check (#1177); Tier-1 AERMOD dispersion
+        # screen vs NAAQS, event-anchored (#1182). Dispersion is facility+permit-gated (None →
+        # skipped, section locks); scenarios carry zero rows for a site without committed ones.
+        ("air-scenarios", AirScenarioResult, lambda: _load_air_scenarios(settings)),
+        ("air-dispersion", DispersionResult, lambda: _air_dispersion(settings)),
         # The published data catalog (epic #631 Phase 3 / #659) — the data tier /about/data reads.
         ("catalog", CatalogItem, lambda: catalog_mod.export_catalog(settings)),
     ]

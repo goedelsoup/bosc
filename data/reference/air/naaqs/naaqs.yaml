@@ -1,0 +1,67 @@
+# National Ambient Air Quality Standards (NAAQS) — the federal criteria-pollutant
+# concentration limits the Tier-1 AERMOD dispersion screen compares modeled ground-level
+# concentrations against (epic #1172, #1182). Read by watermark.air.aermod.dispersion.
+#
+# These are PUBLISHED FEDERAL STANDARDS (40 CFR Part 50), not facility facts — tagged
+# `reference` when surfaced as ProvenancedValues. Every threshold below is the primary
+# (health-based) standard expressed in µg/m³ so it lines up with AERMOD's output unit;
+# where the promulgated standard is a mixing-ratio (ppb/ppm), the µg/m³ value is EPA's
+# published equivalent at 25 °C / 1 atm (recorded in `basis`). Regenerable — re-transcribe
+# from the cited CFR / EPA table if a standard is revised (e.g. the 2024 annual PM2.5 cut).
+source:
+  document: 40 CFR Part 50 — National Primary and Secondary Ambient Air Quality Standards
+  title: NAAQS Table
+  url: https://www.epa.gov/criteria-air-pollutants/naaqs-table
+  retrieved: 2026-07-04
+  note: >-
+    Screening reference only. A NAAQS compliance demonstration adds a monitored background
+    concentration and (for NO2/SO2/CO) may credit chemistry/tiering; this table drives a
+    single-source, no-background screen — a modeled value below the standard is reassuring,
+    a value above it flags the need for a full demonstration, not an automatic violation.
+
+# Each entry maps one of our criteria pollutants (watermark.air.model.Pollutant) to the
+# NAAQS species AERMOD screens it as, at one averaging period (AERMOD AVE token), with the
+# primary standard in µg/m³. AERMOD models NOx as NO2 (full-conversion screening assumption),
+# so NOx is screened against the NO2 standards. VOC has no NAAQS (an ozone precursor, not a
+# directly-modeled criteria pollutant) and is intentionally absent.
+standards:
+  - pollutant: NOx
+    naaqs_species: NO2
+    averaging_period: "1"
+    standard_ug_m3: 188.0
+    basis: primary 1-hour, 100 ppb (98th percentile of daily max 1-hr, 3-yr avg); NOx modeled as NO2
+  - pollutant: NOx
+    naaqs_species: NO2
+    averaging_period: ANNUAL
+    standard_ug_m3: 100.0
+    basis: primary + secondary annual mean, 53 ppb; NOx modeled as NO2
+  - pollutant: CO
+    naaqs_species: CO
+    averaging_period: "1"
+    standard_ug_m3: 40000.0
+    basis: primary 1-hour, 35 ppm (not to be exceeded more than once per year)
+  - pollutant: CO
+    naaqs_species: CO
+    averaging_period: "8"
+    standard_ug_m3: 10000.0
+    basis: primary 8-hour, 9 ppm (not to be exceeded more than once per year)
+  - pollutant: PM10
+    naaqs_species: PM10
+    averaging_period: "24"
+    standard_ug_m3: 150.0
+    basis: primary + secondary 24-hour, not to be exceeded more than once/yr on avg over 3 yrs
+  - pollutant: PM2.5
+    naaqs_species: PM2.5
+    averaging_period: "24"
+    standard_ug_m3: 35.0
+    basis: primary + secondary 24-hour, 98th percentile averaged over 3 years
+  - pollutant: PM2.5
+    naaqs_species: PM2.5
+    averaging_period: ANNUAL
+    standard_ug_m3: 9.0
+    basis: primary annual mean (3-yr avg), lowered from 12.0 to 9.0 by the 2024 reconsideration final rule (89 FR 16202)
+  - pollutant: SO2
+    naaqs_species: SO2
+    averaging_period: "1"
+    standard_ug_m3: 196.0
+    basis: primary 1-hour, 75 ppb (99th percentile of daily max 1-hr, 3-yr avg)

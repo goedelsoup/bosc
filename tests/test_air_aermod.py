@@ -66,6 +66,65 @@ def test_genset_point_source_grounds_rate_assumes_geometry() -> None:
     assert src.stack.all_assumption  # geometry stays assumption even with a grounded rate
 
 
+# --- profile-driven stack geometry (#1180) ------------------------------------------
+
+
+def test_stack_params_from_profile_lima_is_assumption(air_settings: Settings) -> None:
+    """Lima's permit redacts engine specs as CBI → the profile-resolved stack is all-assumption,
+    tagged with a Lima-specific rationale (never Lima's permit)."""
+    stack = inp.stack_params_from_profile(air_settings)
+    assert stack.all_assumption
+    assert "'lima'" in (stack.height_m.citation or "")  # site-specific why, not another site's
+
+
+def test_stack_params_from_profile_documents_disclosed_geometry(
+    monkeypatch: pytest.MonkeyPatch, air_settings: Settings
+) -> None:
+    """A site that discloses the four stack dimensions gets a document-tagged geometry (#1180)."""
+    from types import SimpleNamespace
+
+    from watermark.sites import SiteFacility
+
+    fac = SiteFacility(
+        genset_count=10,
+        genset_mw=3.0,
+        it_load_mw=25.0,
+        it_load_low_mw=20.0,
+        it_load_high_mw=30.0,
+        air_permit_citation="test permit",
+        genset_stack_height_m=12.0,
+        genset_stack_diameter_m=0.7,
+        genset_stack_exit_velocity_ms=45.0,
+        genset_stack_exit_temp_k=700.0,
+        genset_stack_citation="manufacturer stack data sheet (test)",
+    )
+    monkeypatch.setattr(inp, "active_profile", lambda _s: SimpleNamespace(facility=fac))
+    stack = inp.stack_params_from_profile(air_settings)
+    assert not stack.all_assumption
+    for v in (stack.height_m, stack.diameter_m, stack.exit_velocity_ms, stack.exit_temp_k):
+        assert v.source == "document"
+        assert v.citation == "manufacturer stack data sheet (test)"
+    assert stack.height_m.value == 12.0
+
+
+def test_sitefacility_partial_stack_geometry_rejected() -> None:
+    """Stack geometry is all-or-nothing — a partial set would mix disclosed + assumed silently."""
+    from pydantic import ValidationError
+
+    from watermark.sites import SiteFacility
+
+    with pytest.raises(ValidationError, match="stack geometry"):
+        SiteFacility(
+            genset_count=10,
+            genset_mw=3.0,
+            it_load_mw=25.0,
+            it_load_low_mw=20.0,
+            it_load_high_mw=30.0,
+            air_permit_citation="test",
+            genset_stack_height_m=12.0,  # only one dimension set → invalid
+        )
+
+
 # --- deck generation ----------------------------------------------------------------
 
 

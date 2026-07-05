@@ -1,0 +1,77 @@
+scenario:
+  name: baseline
+  description: Emergency fleet at the maintenance & readiness-testing allowance only.
+  runtime_hours:
+    value: 100.0
+    unit: hr/yr
+    source: assumption
+    citation: emergency-engine maintenance & readiness-testing allowance (40 CFR 60.4211(f)
+      / NFPA 110); per engine
+    confidence: low
+    asof: null
+  factors_basis: permit
+  load_regime: idle
+engine_mw:
+  value: 2.75
+  unit: MW
+  source: document
+  citation: 'OEPA Air PTI P0138965 (Facility 0302022054), committed data/extracted/permits/4132514.epa.yaml
+    (final, 2026-05-28): 114 hall gensets x 2.75 ekW = ~313 MW backup; IT ~250-300
+    MW (N+1). Per-engine ekW from the draft public notice (3987141/3987144); engine
+    size CBI-redacted in the final permit under an Ohio EPA trade-secret grant (OAC
+    3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).'
+  confidence: medium
+  asof: null
+fleet_size: 114
+fuel: ultra-low sulfur diesel (ULSD) or renewable diesel (HVO / hydrotreated vegetable
+  oil)
+emissions:
+- pollutant: NOx
+  tpy:
+    value: 69.255
+    unit: tpy
+    source: derived
+    citation: 100 hr/yr x 12.15 lb/hr x 114 engines / 2000 (permit factors)
+    confidence: medium
+    asof: null
+  cap_tpy: 235.62
+  pct_of_cap: 29.4
+  exceeds_cap: false
+- pollutant: CO
+  tpy:
+    value: 40.356
+    unit: tpy
+    source: derived
+    citation: 100 hr/yr x 7.08 lb/hr x 114 engines / 2000 (permit factors)
+    confidence: medium
+    asof: null
+  cap_tpy: 96.06
+  pct_of_cap: 42.0
+  exceeds_cap: false
+- pollutant: PM10
+  tpy:
+    value: 6.911
+    unit: tpy
+    source: derived
+    citation: 100 hr/yr x 1.2125 lb/hr x 114 engines / 2000 (permit factors)
+    confidence: medium
+    asof: null
+  cap_tpy: null
+  pct_of_cap: null
+  exceeds_cap: false
+- pollutant: PM2.5
+  tpy:
+    value: 6.911
+    unit: tpy
+    source: derived
+    citation: 100 hr/yr x 1.2125 lb/hr x 114 engines / 2000 (permit factors)
+    confidence: medium
+    asof: null
+  cap_tpy: null
+  pct_of_cap: null
+  exceeds_cap: false
+any_cap_exceeded: false
+breached_pollutants: []
+note: Fleet = 114 gensets at the standard-unit factor (the site's disclosed count);
+  any separate smaller units are not modeled individually (conservative). Caps, where
+  present, are the facility-wide synthetic-minor limits.

@@ -169,3 +169,12 @@ greenops_app = typer.Typer(
     add_completion=False,
 )
 app.add_typer(greenops_app, name="greenops")
+
+
+air_app = typer.Typer(
+    name="air",
+    help="Air-quality & backup-generation dispatch modeling (Tier-0 inventory → Tier-1 AERMOD) — epic #1172.",
+    no_args_is_help=True,
+    add_completion=False,
+)
+app.add_typer(air_app, name="air")
