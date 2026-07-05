@@ -59,3 +59,16 @@ Regenerate both with `watermark greenops aws --write` (needs `AWS_ACCESS_KEY_ID`
   taxonomy (`ci_compute` = Actions minutes, `storage` = any GB-hours/GB line, `other` =
   Copilot / Codespaces / …); unmapped products land in `other`, never dropped. Quantity
   units vary per line and must not be summed across lines of differing units.
+
+## Derived footprint (`footprint.yaml`, #1083)
+
+The assembled report the `/about/sustainability` feed lifts (#1084) — **not** a provider
+export but the modeled derivation over the exports above. Regenerate with
+`watermark greenops footprint --write`. It lifts the AWS / GitHub / Anthropic exports and
+the `factors/` tables (eGRID, WUE) and runs the chain: vCPU/GPU-hours x(W/vCPU*PUE) →
+electricity, x(eGRID lb/MWh) → CO2e / source mix (reconciled against the AWS CCFT total),
+x(WUE L/kWh) → water (direct on-site cooling + upstream generation). Every conversion is
+`derived`; the modeling levers (per-vCPU watts, PUE, which eGRID subregion the compute runs
+in via `WATERMARK_GREENOPS_GRID_SUBREGION`, average tokens per call, the water budget) are
+stated `assumption`s — never metered. A source not on disk degrades that dimension to a
+modeled assumption rather than fabricating a figure.

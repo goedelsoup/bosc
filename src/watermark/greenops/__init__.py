@@ -19,7 +19,15 @@ contract, CLI group; the connectors and the usage→electricity→water derivati
 
 from __future__ import annotations
 
-from watermark.greenops.footprint import load_footprint, placeholder_report, write_footprint
+from watermark.greenops.footprint import (
+    FootprintInputs,
+    derive_footprint,
+    footprint_reference_path,
+    load_footprint,
+    load_footprint_inputs,
+    placeholder_report,
+    write_footprint,
+)
 from watermark.greenops.model import (
     AiByTask,
     ComputeByFunction,
@@ -36,13 +44,17 @@ __all__ = [
     "AiByTask",
     "ComputeByFunction",
     "ElectricitySeries",
+    "FootprintInputs",
     "GreenopsPeriod",
     "GreenopsReport",
     "HeadlineFigure",
     "MethodologyItem",
     "NamedQuantity",
     "WaterDraw",
+    "derive_footprint",
+    "footprint_reference_path",
     "load_footprint",
+    "load_footprint_inputs",
     "placeholder_report",
     "write_footprint",
 ]

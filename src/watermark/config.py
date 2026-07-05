@@ -331,6 +331,12 @@ class Settings(BaseSettings):
     # from the cache key. Absent token on a live pull => the GitHub source degrades to a
     # modeled assumption, never a crash. Overridable so tests can point at another org.
     github_billing_org: str = "watermark-directory"
+    # Which eGRID subregion the compute runs in (#1083) — the electricity → CO2e / source-mix
+    # / upstream-water conversion apportions the derived electricity by this subregion's
+    # factors. A stated modeling `assumption`, not a metered fact: our primary AWS region is
+    # us-east-1 (Northern Virginia), whose eGRID subregion is SERC Virginia/Carolina (SRVC).
+    # Override when the workload's region changes; must be a code present in the eGRID table.
+    greenops_grid_subregion: str = "SRVC"
 
     # --- GIS / satellite imagery -------------------------------------------
     # Pull AOI-clipped satellite imagery for tracking sites (the campus/footprints
