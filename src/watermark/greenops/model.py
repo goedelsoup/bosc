@@ -255,7 +255,7 @@ class GithubUsageLine(BaseModel):
     product: str  # billing product, e.g. "Actions", "Git LFS", "Packages", "Shared Storage"
     sku: str  # billing SKU, e.g. "Actions Linux", "Actions macOS", "Git LFS Data"
     unit_type: str  # "Minutes" | "GigabyteHours" | ...
-    category: str  # our taxonomy bucket: "ci_compute" | "storage" | "other"
+    category: Literal["ci_compute", "storage", "other"]  # our taxonomy bucket
     quantity: float  # summed usage in unit_type
     cost: ProvenancedValue  # net USD, reference
 

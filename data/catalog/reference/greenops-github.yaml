@@ -30,6 +30,7 @@ notes: The CI-compute slice of Watermark's own compute footprint (#1076/#1081) �
   are the corpus-at-rest input. Line items are summed by (product, sku, unit) and folded into a
   category taxonomy (ci_compute / storage / other; unmapped products land in `other`). Every figure
   is `reference` (a billing export), never metered. Regenerate with `watermark greenops github --write`
-  (needs GITHUB_TOKEN with the "Plan" read scope; org login = WATERMARK_GITHUB_BILLING_ORG). The folder
+  (needs GITHUB_TOKEN with organization billing access — an org owner/billing manager, or a fine-grained
+  token with "Administration" org permissions read; org login = WATERMARK_GITHUB_BILLING_ORG). The folder
   README is shared across the greenops connectors (composed by `greenops.connectors._readme`), so any
   `--write` regenerates the whole document — see also `greenops` and `greenops-aws`.

@@ -8,8 +8,11 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import httpx
 import pytest
+from typer.testing import CliRunner
 
+from watermark.cli import app
 from watermark.config import Settings
 from watermark.greenops.connectors import (
     GithubBillingError,
@@ -18,6 +21,9 @@ from watermark.greenops.connectors import (
     load_github_usage,
     write_github_usage,
 )
+from watermark.greenops.connectors import github as gh
+
+runner = CliRunner()
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 REFERENCE = REPO_ROOT / "data" / "reference" / "greenops" / "github-usage.yaml"
@@ -98,6 +104,26 @@ def test_live_pull_without_token_raises() -> None:
     settings = Settings(data_dir=REPO_ROOT / "data", github_token="")
     with pytest.raises(GithubBillingError, match="GITHUB_TOKEN"):
         fetch_github_usage(*WINDOW, settings=settings)
+
+
+def test_http_error_wraps_as_billing_error(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    # A non-2xx billing response (e.g. 403 from insufficient permissions) degrades via
+    # GithubBillingError, not a raw httpx.HTTPStatusError the greenops assembly won't catch.
+    request = httpx.Request("GET", "https://api.github.com/organizations/x/settings/billing/usage")
+    response = httpx.Response(403, json={"message": "Resource protected"}, request=request)
+    monkeypatch.setattr(gh.httpx, "get", lambda *a, **k: response)
+    monkeypatch.setenv("GITHUB_TOKEN", "ghp_test")  # alias-only field; set via env, not kwarg
+    settings = Settings(data_dir=tmp_path, github_billing_org="x")
+    with pytest.raises(GithubBillingError, match="403"):
+        fetch_github_usage(*WINDOW, settings=settings)
+
+
+def test_offline_write_is_refused() -> None:
+    # --offline serves fixture-derived data; writing it would clobber the committed reference
+    # artifact, so the combination is refused before any fetch/write happens.
+    result = runner.invoke(app, ["greenops", "github", "--offline", "--write"])
+    assert result.exit_code != 0
+    assert "overwrite" in result.output.lower()
 
 
 def test_committed_reference_round_trips(greenops_settings: Settings, tmp_path: Path) -> None:
