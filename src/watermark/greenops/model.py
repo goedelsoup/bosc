@@ -231,6 +231,97 @@ class AwsCarbonReport(BaseModel):
         return values
 
 
+# --- GitHub Actions/storage billing (#1081) ------------------------------------------------
+# The reduced shape of the enhanced-billing usage pull
+# (/organizations/{org}/settings/billing/usage): per-day line items with a product, SKU,
+# quantity + unit, and net dollars, summed over the window and folded into a small category
+# taxonomy (ci_compute = Actions minutes, storage = Git LFS / Packages / shared storage,
+# other = everything else). The Actions minutes are the metered CI-compute input the
+# footprint derivation (#1083) turns into vCPU-hrs (the runner SKU sets the core count);
+# storage GB-hours are the corpus-at-rest input. Every figure is `reference` — a billing
+# export, not a metered fact about our own consumption.
+
+
+class GithubUsageLine(BaseModel):
+    """One GitHub billing usage line — a (product, sku, unit_type) summed over the window.
+
+    ``quantity`` carries the API's ``quantity`` metric verbatim; its unit is ``unit_type``
+    (Minutes, GigabyteHours, …) and is only meaningful within a single line — never sum
+    amounts across lines of differing units.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    product: str  # billing product, e.g. "Actions", "Git LFS", "Packages", "Shared Storage"
+    sku: str  # billing SKU, e.g. "Actions Linux", "Actions macOS", "Git LFS Data"
+    unit_type: str  # "Minutes" | "GigabyteHours" | ...
+    category: str  # our taxonomy bucket: "ci_compute" | "storage" | "other"
+    quantity: float  # summed usage in unit_type
+    cost: ProvenancedValue  # net USD, reference
+
+
+class GithubRunnerMinutes(BaseModel):
+    """Actions minutes for one runner SKU — the CI-compute → vCPU-hrs split hangs off the SKU.
+
+    The runner SKU (Linux / Windows / macOS, and the multi-core variants) sets the core
+    count the derivation multiplies minutes by, so the by-runner split is what the footprint
+    (#1083) needs; the minutes themselves stay a ``reference`` billing figure.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    sku: str  # "Actions Linux", "Actions Windows", "Actions macOS", "Actions Linux 4-core", …
+    label: str  # display name (the SKU as billed)
+    minutes: ProvenancedValue  # minutes, reference
+    cost: ProvenancedValue  # net USD, reference
+
+
+class GithubStorageProduct(BaseModel):
+    """Storage usage for one (product, unit) — Git LFS / Packages / Actions / shared storage.
+
+    Grouped by ``(product, unit_type)`` so incompatible units (GB-hours vs GB) are never
+    summed together; the derivation reads the GB-hours lines as the corpus-at-rest input.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    product: str  # "Git LFS", "Packages", "Actions", "Shared Storage", …
+    label: str  # display name (the product as billed)
+    unit_type: str  # "GigabyteHours" | "Gigabytes" | …
+    quantity: ProvenancedValue  # in unit_type, reference
+    cost: ProvenancedValue  # net USD, reference
+
+
+class GithubUsageReport(BaseModel):
+    """The reduced GitHub enhanced-billing usage pull over the window.
+
+    ``total_minutes`` is every Actions minute (CI compute); ``by_runner`` splits it by runner
+    SKU (ranked by minutes, desc). ``storage`` keeps the storage products (ranked by cost,
+    desc); ``lines`` keeps the full (product, sku, unit) detail the folds came from. Every
+    figure is ``reference`` — a billing export, not a metered fact.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    period: GreenopsPeriod
+    total_minutes: ProvenancedValue  # Actions minutes across every runner, reference
+    total_cost: ProvenancedValue  # net USD across every product, reference
+    by_runner: list[GithubRunnerMinutes]  # ranked by minutes desc
+    storage: list[GithubStorageProduct]  # ranked by cost desc
+    lines: list[GithubUsageLine]  # full detail, ranked by cost desc
+    note: str = ""
+
+    def all_values(self) -> list[ProvenancedValue]:
+        """Every :class:`ProvenancedValue` in the report, for provenance auditing."""
+        values = [self.total_minutes, self.total_cost]
+        for r in self.by_runner:
+            values += [r.minutes, r.cost]
+        for s in self.storage:
+            values += [s.quantity, s.cost]
+        values += [line.cost for line in self.lines]
+        return values
+
+
 # --- eGRID factors + WUE benchmarks (#1082) ------------------------------------------------
 # The reference factor tables the derivation (#1083) applies: EPA eGRID subregion
 # carbon-intensity (lb CO2e/MWh) + generation mix, pulled by the egrid connector, and the

@@ -1,0 +1,212 @@
+period:
+  label: Jul 2025-Jun 2026
+  start: 2025-07
+  end: 2026-06
+  kind: trailing_12_months
+total_minutes:
+  value: 15000.0
+  unit: minutes
+  source: reference
+  citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+  confidence: high
+  asof: null
+total_cost:
+  value: 871.62
+  unit: USD
+  source: reference
+  citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+  confidence: high
+  asof: null
+by_runner:
+- sku: Actions Linux
+  label: Actions Linux
+  minutes:
+    value: 12000.0
+    unit: minutes
+    source: reference
+    citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  cost:
+    value: 96.0
+    unit: USD
+    source: reference
+    citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+- sku: Actions Windows
+  label: Actions Windows
+  minutes:
+    value: 2400.0
+    unit: minutes
+    source: reference
+    citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  cost:
+    value: 38.4
+    unit: USD
+    source: reference
+    citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+- sku: Actions macOS
+  label: Actions macOS
+  minutes:
+    value: 600.0
+    unit: minutes
+    source: reference
+    citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  cost:
+    value: 48.0
+    unit: USD
+    source: reference
+    citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+storage:
+- product: Actions
+  label: Actions
+  unit_type: GigabyteHours
+  quantity:
+    value: 360.0
+    unit: GigabyteHours
+    source: reference
+    citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  cost:
+    value: 2.88
+    unit: USD
+    source: reference
+    citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+- product: Packages
+  label: Packages
+  unit_type: GigabyteHours
+  quantity:
+    value: 240.0
+    unit: GigabyteHours
+    source: reference
+    citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  cost:
+    value: 1.92
+    unit: USD
+    source: reference
+    citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+- product: Git LFS
+  label: Git LFS
+  unit_type: GigabyteHours
+  quantity:
+    value: 600.0
+    unit: GigabyteHours
+    source: reference
+    citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+  cost:
+    value: 0.42
+    unit: USD
+    source: reference
+    citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+lines:
+- product: Copilot
+  sku: Copilot for Business
+  unit_type: Seats
+  category: other
+  quantity: 36.0
+  cost:
+    value: 684.0
+    unit: USD
+    source: reference
+    citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+- product: Actions
+  sku: Actions Linux
+  unit_type: Minutes
+  category: ci_compute
+  quantity: 12000.0
+  cost:
+    value: 96.0
+    unit: USD
+    source: reference
+    citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+- product: Actions
+  sku: Actions macOS
+  unit_type: Minutes
+  category: ci_compute
+  quantity: 600.0
+  cost:
+    value: 48.0
+    unit: USD
+    source: reference
+    citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+- product: Actions
+  sku: Actions Windows
+  unit_type: Minutes
+  category: ci_compute
+  quantity: 2400.0
+  cost:
+    value: 38.4
+    unit: USD
+    source: reference
+    citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+- product: Actions
+  sku: Actions Storage
+  unit_type: GigabyteHours
+  category: storage
+  quantity: 360.0
+  cost:
+    value: 2.88
+    unit: USD
+    source: reference
+    citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+- product: Packages
+  sku: Packages Data
+  unit_type: GigabyteHours
+  category: storage
+  quantity: 240.0
+  cost:
+    value: 1.92
+    unit: USD
+    source: reference
+    citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+- product: Git LFS
+  sku: Git LFS Data
+  unit_type: GigabyteHours
+  category: storage
+  quantity: 600.0
+  cost:
+    value: 0.42
+    unit: USD
+    source: reference
+    citation: GitHub enhanced-billing usage (Jul 2025-Jun 2026)
+    confidence: high
+    asof: null
+note: GitHub enhanced-billing usage (/organizations/{org}/settings/billing/usage)
+  over the window, one calendar month per request, merged. Figures are `reference`
+  (a billing export), not metered facts. Categories (ci_compute = Actions minutes,
+  storage = Git LFS / Packages / shared storage GB-hours, other) are our declared
+  classification of GitHub's product dimension — unmapped products land in `other`,
+  never dropped. Quantity units vary per line and must not be summed across lines
+  of differing units.

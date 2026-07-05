@@ -1,0 +1,35 @@
+id: greenops-github
+title: GreenOps — GitHub Actions minutes & storage
+scope: reference
+status: reviewed
+producer:
+  kind: connector
+  command: greenops github
+  connector_ref: watermark.greenops.connectors.github
+  source: GitHub enhanced billing platform — /organizations/{org}/settings/billing/usage (Actions minutes by runner + Git LFS/Packages/shared storage, net cost)
+  external_url: https://docs.github.com/en/rest/billing/enhanced-billing
+access_tier: keyed
+site_scope: basin-shared
+storage:
+- relpath: reference/greenops/github-usage.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: reference
+tags:
+- greenops
+- github
+- actions
+- usage
+- storage
+notes: The CI-compute slice of Watermark's own compute footprint (#1076/#1081) — GitHub
+  enhanced-billing usage over a trailing window, one calendar month per request and merged.
+  Actions minutes are the metered CI-compute input the derivation (#1083) turns into vCPU-hrs
+  (split by runner SKU, which sets the core count); Git LFS / Packages / shared storage GB-hours
+  are the corpus-at-rest input. Line items are summed by (product, sku, unit) and folded into a
+  category taxonomy (ci_compute / storage / other; unmapped products land in `other`). Every figure
+  is `reference` (a billing export), never metered. Regenerate with `watermark greenops github --write`
+  (needs GITHUB_TOKEN with the "Plan" read scope; org login = WATERMARK_GITHUB_BILLING_ORG). The folder
+  README is shared across the greenops connectors (composed by `greenops.connectors._readme`), so any
+  `--write` regenerates the whole document — see also `greenops` and `greenops-aws`.

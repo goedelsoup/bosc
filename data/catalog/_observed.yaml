@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-05T15:20:10.083127+00:00'
+reconciled_at: '2026-07-05T17:15:02.159942+00:00'
 entries:
   aedg:
     exists: true
@@ -396,6 +396,16 @@ entries:
     size_bytes: 28705
     lfs_materialized: true
     file_count: 2
+    missing: []
+    asof: null
+    stale: false
+    site_scope: basin-shared
+  greenops-github:
+    exists: true
+    sha256: 9428e8ced535c9c282fbf67f61851d0343fe47aa96fa2f2867ec7c13dc4e8eca
+    size_bytes: 5126
+    lfs_materialized: true
+    file_count: 1
     missing: []
     asof: null
     stale: false

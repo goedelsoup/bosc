@@ -318,6 +318,13 @@ class Settings(BaseSettings):
     egrid_data_url: str = (
         "https://www.epa.gov/system/files/documents/2025-06/egrid2023_data_rev2.xlsx"
     )
+    # GitHub Actions minutes + Packages/LFS storage (#1081). The enhanced billing platform
+    # is per-organization (/organizations/{org}/settings/billing/usage); this is the org
+    # login whose usage the connector pulls, monthly across the window. Auth reuses the
+    # existing settings.github_token (a PAT/App token with the "Plan" read scope), excluded
+    # from the cache key. Absent token on a live pull => the GitHub source degrades to a
+    # modeled assumption, never a crash. Overridable so tests can point at another org.
+    github_billing_org: str = "watermark-directory"
 
     # --- GIS / satellite imagery -------------------------------------------
     # Pull AOI-clipped satellite imagery for tracking sites (the campus/footprints
