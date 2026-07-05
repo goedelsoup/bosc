@@ -202,11 +202,20 @@ def github(
 ) -> None:
     """Pull GitHub Actions minutes (by runner) + Git LFS/Packages storage from billing.
 
-    Needs ``GITHUB_TOKEN`` (a PAT or App token with the "Plan" read scope) for a live pull;
+    Needs ``GITHUB_TOKEN`` with organization billing access (an org owner/billing manager, or
+    a fine-grained token with "Administration" org permissions read) for a live pull;
     ``--offline`` replays committed fixtures. Figures are ``reference`` (a billing export),
     never metered. Actions minutes feed the CI vCPU-hrs derivation (#1083).
     """
     from watermark.greenops.connectors import fetch_github_usage, write_github_usage
+
+    # --offline serves fixture-derived data; writing it would clobber the committed reference
+    # artifact (regenerated only from a live pull), so refuse the combination.
+    if offline and write:
+        raise typer.BadParameter(
+            "--offline --write would overwrite data/reference/greenops/github-usage.yaml with "
+            "fixture-derived data; regenerate the committed artifact from a live pull instead."
+        )
 
     settings = offline_settings("greenops", offline)
     default_start, default_end = _trailing_12_months()

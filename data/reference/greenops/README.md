@@ -48,8 +48,9 @@ Regenerate both with `watermark greenops aws --write` (needs `AWS_ACCESS_KEY_ID`
 - Pulled from the enhanced billing platform
   `/organizations/{org}/settings/billing/usage`, one calendar month per request
   (`?year=&month=`) across the trailing window, merged. Regenerate with
-  `watermark greenops github --write` (needs `GITHUB_TOKEN` — a PAT or App token with the
-  "Plan" read scope; the org login is `WATERMARK_GITHUB_BILLING_ORG`).
+  `watermark greenops github --write` (needs `GITHUB_TOKEN` with organization billing
+  access — an org owner/billing manager, or a fine-grained token with "Administration" org
+  permissions read; the org login is `WATERMARK_GITHUB_BILLING_ORG`).
 - **Actions minutes** are the metered CI-compute input the footprint derivation (#1083)
   turns into vCPU-hrs — the runner SKU (Linux / Windows / macOS, and the multi-core
   variants) sets the core count, so minutes are split by runner. **Git LFS / Packages /

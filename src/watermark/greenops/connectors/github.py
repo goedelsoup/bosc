@@ -13,11 +13,13 @@ and merges the ``usageItems`` into one payload — the merged blob is what lands
 cache/fixture (the same "merge across pages, cache the whole window" shape as the AWS and
 Anthropic connectors).
 
-**Auth.** The existing ``settings.github_token`` (``GITHUB_TOKEN`` — a PAT or App token
-with the "Plan" read scope), **excluded from the cache key** (a secret must never vary the
-key or land in a committed fixture) and sent only on the live request. Absent token + live
-path ⇒ :class:`GithubBillingError`; the caller (the greenops assembly) degrades the GitHub
-source to a modeled assumption rather than crashing. The org login comes from
+**Auth.** The existing ``settings.github_token`` (``GITHUB_TOKEN`` — a token with
+organization billing access: an org owner/billing manager, or a fine-grained token with
+"Administration" org permissions read), **excluded from the cache key** (a secret must never
+vary the key or land in a committed fixture) and sent only on the live request. A missing
+token or a non-2xx billing response (e.g. a 403 from insufficient permissions) ⇒
+:class:`GithubBillingError`; the caller (the greenops assembly) degrades the GitHub source
+to a modeled assumption rather than crashing. The org login comes from
 ``settings.github_billing_org``.
 
 **Discipline.** Every figure is ``reference`` — an authoritative billing/usage export, not
@@ -32,7 +34,7 @@ from __future__ import annotations
 import re
 from datetime import datetime
 from pathlib import Path
-from typing import Any, cast
+from typing import Any, Literal, cast
 
 import httpx
 import yaml
@@ -105,8 +107,9 @@ def _fetch_usage(starting_at: str, ending_at: str, settings: Settings) -> dict[s
         if not settings.github_token:
             raise GithubBillingError(
                 "no GITHUB_TOKEN set; the enhanced-billing usage report "
-                "(/organizations/{org}/settings/billing/usage) needs a token with the "
-                "'Plan' read scope"
+                "(/organizations/{org}/settings/billing/usage) needs a token with "
+                "organization billing access — an org owner or billing manager, or a "
+                "fine-grained token with 'Administration' organization permissions (read)"
             )
         headers = {
             "Accept": _GH_ACCEPT,
@@ -122,7 +125,16 @@ def _fetch_usage(starting_at: str, ending_at: str, settings: Settings) -> dict[s
                 headers=headers,
                 timeout=settings.greenops_request_timeout_s,
             )
-            resp.raise_for_status()
+            # Wrap a non-2xx as GithubBillingError so an auth/permission failure degrades the
+            # source to a modeled assumption (the docstring's promise) instead of surfacing a
+            # raw httpx.HTTPStatusError the greenops assembly won't catch.
+            try:
+                resp.raise_for_status()
+            except httpx.HTTPStatusError as exc:
+                raise GithubBillingError(
+                    f"GitHub billing usage request failed ({exc.response.status_code}) for "
+                    f"{year}-{month:02d}: {exc.response.text[:200]}"
+                ) from exc
             items.extend(resp.json().get("usageItems") or [])
         return {"usageItems": items}
 
@@ -146,7 +158,7 @@ def _norm_unit(unit_type: str) -> str:
     return re.sub(r"[\s_-]", "", unit_type.strip().lower())
 
 
-def _categorize(product: str, unit_type: str) -> str:
+def _categorize(product: str, unit_type: str) -> Literal["ci_compute", "storage", "other"]:
     """Our declared taxonomy bucket for a billing line.
 
     ``ci_compute`` = Actions minutes (the metered CI-compute input); ``storage`` = any
