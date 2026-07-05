@@ -290,7 +290,10 @@ class FieldRasterLayer extends BitmapLayer<FieldRasterExtraProps> {
   override updateState(params: UpdateParameters<this>): void {
     super.updateState(params);
     const { props, oldProps } = params;
-    if (!this.state.fieldTexture || props.grid !== oldProps.grid) {
+    // Compare the underlying sample array, not the grid wrapper: FieldLayer.renderLayers
+    // rebuilds a fresh `{...grid}` object every update, so an identity check on `grid`
+    // would re-upload the texture on every frame even when the data is unchanged.
+    if (!this.state.fieldTexture || props.grid.values !== oldProps.grid?.values) {
       this.state.fieldTexture?.destroy();
       this.state.fieldTexture = buildFieldTexture(this.context.device, props.grid);
     }

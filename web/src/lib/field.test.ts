@@ -198,4 +198,16 @@ describe("gridFromSamples", () => {
       ]),
     ).toThrow(/regular/);
   });
+
+  it("throws on a duplicate coordinate that would leave a cell unfilled", () => {
+    // Count is 4 = 2×2, but (0,0) is repeated and (1,1) is missing.
+    expect(() =>
+      gridFromSamples([
+        { x: 0, y: 0, value: 1 },
+        { x: 0, y: 0, value: 9 },
+        { x: 1, y: 0, value: 2 },
+        { x: 0, y: 1, value: 3 },
+      ]),
+    ).toThrow(/duplicate/);
+  });
 });
