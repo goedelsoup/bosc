@@ -68,6 +68,17 @@ const doors: Door[] = [
     note: "release sites",
   },
 ];
+if (hasFeed("air-dispersion-field")) {
+  doors.push({
+    id: "air",
+    kind: "Interactive field",
+    href: withSite("/watershed/air"),
+    count: "—",
+    title: "Air dispersion",
+    desc: "A Tier-1 AERMOD screening field of criteria-pollutant concentrations over the campus grid — modeled, [inference].",
+    note: "modeled screen",
+  });
+}
 if (hasFeed("economics-baseline")) {
   doors.push({
     id: "economics",

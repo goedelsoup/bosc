@@ -162,6 +162,7 @@ export function sections(): Section[] {
         { label: "Watershed map", anchor: "map" },
         { label: "Imagery", anchor: "imagery" },
         { label: "RSEI / toxics", anchor: "rsei" },
+        { label: "Air dispersion", anchor: "air" },
       ],
     },
     {
@@ -384,6 +385,7 @@ export function siteTabs(): NavItem[] {
               { label: "Watershed map", href: `${base}/watershed/#map`, locked: watershedLocked },
               { label: "Imagery", href: `${base}/watershed/#imagery`, locked: watershedLocked },
               { label: "RSEI / toxics", href: `${base}/watershed/#rsei`, locked: watershedLocked },
+              { label: "Air dispersion", href: `${base}/watershed/#air`, locked: watershedLocked },
             ],
           },
           {
