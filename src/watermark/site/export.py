@@ -448,7 +448,13 @@ def _reach_network(settings: Settings) -> ReachNetwork | None:
         geom = feat.get("geometry") or {}
         if geom.get("type") != "LineString":
             continue
-        coords = [(float(x), float(y)) for x, y, *_ in geom.get("coordinates") or []]
+        coords: list[tuple[float, float]] = []
+        for pt in geom.get("coordinates") or []:
+            try:
+                x, y, *_ = pt
+                coords.append((float(x), float(y)))
+            except (TypeError, ValueError):
+                continue  # skip a malformed vertex rather than crashing the whole export
         if len(coords) < 2:
             continue
         reaches.append(

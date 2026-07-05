@@ -121,7 +121,7 @@ Regenerate: `watermark reaches --write`
 
 | file | type | lfs |
 | --- | --- | --- |
-| `reference/hydrology/reach-nav.yaml` | application/yaml | no |
+| `reference/hydrology/reach-nav.yaml` | application/x-yaml | no |
 | `reference/hydrology/reaches/lima.geojson` | application/geo+json | no |
 
 ### `hydrology-swmm` — Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)

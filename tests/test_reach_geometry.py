@@ -15,18 +15,12 @@ import pytest
 from watermark.config import Settings
 from watermark.hydrology import reach_geometry as rg
 
-from .conftest import FIXTURES, REPO_ROOT
-
 
 @pytest.fixture
-def reach_settings(tmp_path: Path) -> Settings:
-    """Offline hydrology settings with a sandboxed cache so only the fixtures are read."""
-    return Settings(
-        data_dir=REPO_ROOT / "data",
-        hydro_offline=True,
-        hydro_fixtures_dir=FIXTURES / "hydrology",
-        hydro_cache_dir=tmp_path / "cache",
-    )
+def reach_settings(hydro_settings: Settings, tmp_path: Path) -> Settings:
+    """The shared offline `hydro_settings`, with a sandboxed cache so only fixtures are read
+    (a stale on-disk cache from a prior live pull can't shadow the committed NLDI fixture)."""
+    return hydro_settings.model_copy(update={"hydro_cache_dir": tmp_path / "cache"})
 
 
 # --- pure geometry ----------------------------------------------------------------------
@@ -81,6 +75,14 @@ def test_cut_by_fractions_tiles_the_line_exactly() -> None:
 def test_cut_by_fractions_single_piece_is_identity() -> None:
     line = [(0.0, 0.0), (1.0, 0.0)]
     assert rg.cut_by_fractions(line, [1.0]) == [line]
+
+
+def test_cut_by_fractions_degenerate_keeps_one_piece_per_fraction() -> None:
+    # A <2-vertex line still yields one result per fraction (empties for the rest), so a caller
+    # zipping reach ids to pieces never silently drops a reach.
+    pieces = rg.cut_by_fractions([(0.0, 0.0)], [1.0, 2.0, 3.0])
+    assert len(pieces) == 3
+    assert pieces[1] == [] and pieces[2] == []
 
 
 # --- offline NLDI assembly --------------------------------------------------------------

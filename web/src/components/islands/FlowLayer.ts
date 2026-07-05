@@ -256,7 +256,9 @@ class FlowParticleLayer extends Layer<FlowParticleProps> {
 
   override updateState(params: UpdateParameters<this>): void {
     const { props, oldProps, changeFlags } = params;
-    if (changeFlags.dataChanged || props.reaches !== oldProps.reaches) {
+    // `time` ticks every frame but doesn't touch the geometry/instances — only rebuild the
+    // (expensive) model + texture when the reaches or the palette actually change.
+    if (changeFlags.dataChanged || props.reaches !== oldProps.reaches || props.colors !== oldProps.colors) {
       this.state.model?.destroy();
       this.state.posTexture?.destroy();
       this._build();
@@ -351,11 +353,26 @@ export type FlowLayerProps = {
 export default class FlowLayer extends CompositeLayer<FlowLayerProps> {
   static override layerName = "FlowLayer";
 
+  declare state: { valid: FlowReach[] };
+
+  override initializeState(): void {
+    this.state = { valid: [] };
+  }
+
+  override updateState(params: UpdateParameters<this>): void {
+    const { props, oldProps } = params;
+    // Cache the filtered reaches so the reference is stable across `time` ticks — otherwise a
+    // fresh array every frame makes FlowParticleLayer think `reaches` changed and rebuild.
+    if (props.reaches !== oldProps.reaches) {
+      this.setState({ valid: props.reaches.filter((r) => r.path.length >= 2) });
+    }
+  }
+
   renderLayers(): Layer[] {
-    const { reaches, time } = this.props;
+    const { time } = this.props;
     const colors = this.props.colors ?? DEFAULT_FLOW_COLORS;
     const opacity = this.props.opacity ?? 1;
-    const valid = reaches.filter((r) => r.path.length >= 2);
+    const valid = this.state.valid;
     if (valid.length === 0) return [];
 
     const layers: Layer[] = [];

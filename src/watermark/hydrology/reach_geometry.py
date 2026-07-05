@@ -138,10 +138,14 @@ def cut_by_fractions(coords: list[Point], fractions: list[float]) -> list[list[P
     to exactly 1 — they're normalized). A new vertex is interpolated at each internal cut so
     the pieces tile the line exactly and share the boundary vertex (contiguous advection).
     Returns one polyline per fraction; empty fractions yield 2-point degenerate stubs skipped
-    by the caller. With a single fraction, returns ``[coords]`` unchanged.
+    by the caller. With a single fraction, returns ``[coords]`` unchanged. A degenerate line
+    (< 2 vertices) still returns one piece per fraction (the first carries the stub, the rest
+    are empty) so callers zipping reaches to pieces don't silently drop a reach.
     """
-    if len(coords) < 2 or len(fractions) <= 1:
+    if len(fractions) <= 1:
         return [coords]
+    if len(coords) < 2:
+        return [coords, *([[]] * (len(fractions) - 1))]
     total = polyline_length_km(coords)
     norm = sum(fractions) or 1.0
     # Cumulative cut distances (exclude the final endpoint; the last piece takes the remainder).
@@ -217,12 +221,23 @@ def _nav_path(settings: Settings) -> Path:
 
 
 def load_nav_plan(*, settings: Settings | None = None) -> ReachNavPlan | None:
-    """Load the committed reach-nav plan, or ``None`` when the file is absent."""
+    """Load the committed reach-nav plan for the active site, or ``None`` when absent/foreign.
+
+    The plan file is not slug-scoped, so its ``meta.site`` is validated against the active
+    site: a mismatch returns ``None`` (rather than writing one site's geometry under another
+    site's slug), keeping ``reaches --write`` from persisting cross-site data.
+    """
     settings = settings or get_settings()
     path = _nav_path(settings)
     if not path.is_file():
         return None
     data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    plan_site = (data.get("meta") or {}).get("site")
+    if plan_site is not None and plan_site != settings.site:
+        log.warning(
+            "reach_geometry.nav_plan_site_mismatch", plan_site=plan_site, site=settings.site
+        )
+        return None
     return ReachNavPlan.model_validate(data)
 
 

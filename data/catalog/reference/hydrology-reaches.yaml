@@ -13,7 +13,7 @@ access_tier: public
 site_scope: slug-scoped
 storage:
 - relpath: reference/hydrology/reach-nav.yaml
-  media_type: application/yaml
+  media_type: application/x-yaml
   lfs: false
 - relpath: reference/hydrology/reaches/lima.geojson
   media_type: application/geo+json

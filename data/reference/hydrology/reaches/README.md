@@ -11,7 +11,7 @@ USGS **NLDI** (Network-Linked Data Index) navigation over the **NHDPlus** flowli
 `watermark.hydrology.reach_geometry`. Regenerate with:
 
 ```sh
-watermark reaches --site lima --write
+watermark --site lima reaches --write
 ```
 
 The navigation plan (gage id, tributary WWTP anchors, nav distances, the head/reach split

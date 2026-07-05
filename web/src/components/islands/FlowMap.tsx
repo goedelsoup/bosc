@@ -109,6 +109,9 @@ export default function FlowMap({ src }: { src: string }): JSX.Element {
     return out;
   }, [reaches, basemap, showChannels, time, colors]);
 
+  // Distinguish still-loading (`reaches === null`) from a loaded-but-empty network so the probe
+  // doesn't claim "no deficit reaches" before the fetch resolves.
+  const loading = reaches === null;
   const deficitCount = reaches?.filter((r) => r.deficit).length ?? 0;
 
   if (reaches && reaches.length === 0) {
@@ -154,9 +157,11 @@ export default function FlowMap({ src }: { src: string }): JSX.Element {
       <div className="deck-probe" aria-live="polite">
         <span className="deck-probe-label">Reach network · {reaches?.length ?? "—"} reaches</span>
         <span className="deck-probe-value">
-          {deficitCount > 0
-            ? `${deficitCount} deficit reach${deficitCount === 1 ? "" : "es"} (oxblood)`
-            : "no deficit reaches"}
+          {loading
+            ? "loading…"
+            : deficitCount > 0
+              ? `${deficitCount} deficit reach${deficitCount === 1 ? "" : "es"} (oxblood)`
+              : "no deficit reaches"}
         </span>
         <span className="deck-probe-meta">density · speed = routed storm peak · [inference]</span>
       </div>

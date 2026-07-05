@@ -37,8 +37,10 @@ _ZERO_GEO = DispersionGeoRef(
 
 def test_contract_version_bumped() -> None:
     """The air-dispersion-field feed advanced the contract to 1.19.0 (MINOR); it has since
-    moved on additively — assert it is at least there."""
-    assert CONTRACT_VERSION >= "1.19.0"
+    moved on additively — assert it is at least there (compare parsed components, not strings,
+    so multi-digit minors/patches order correctly)."""
+    version = tuple(int(p) for p in CONTRACT_VERSION.split("."))
+    assert version >= (1, 19, 0)
 
 
 def test_sample_plotfile_round_trips_onto_the_grid() -> None:
