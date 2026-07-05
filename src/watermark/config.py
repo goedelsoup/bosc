@@ -200,6 +200,40 @@ class Settings(BaseSettings):
     usaspending_offline: bool = False  # serve cached API responses only; never fetch
     usaspending_request_timeout_s: float = 60.0
 
+    # --- Air (AERMOD preprocessing connectors; epic #1172, #1179) --------------
+    # AERMET (meteorology) + AERMAP (terrain) input connectors, following the same
+    # offline/cache/committed-fixture discipline as hydrology. When true, connectors never
+    # touch the network: cached/fixture responses only (tests/CI stay hermetic). A miss raises.
+    air_offline: bool = False
+    air_cache_ttl_hours: int = DEFAULT_CACHE_TTL_HOURS  # met/terrain archives are static
+    air_request_timeout_s: float = 120.0  # ISD/IGRA year files + 3DEP raster exports are large
+    air_fixtures_dir: Path | None = None  # committed connector fixtures (tests/CI)
+    # The meteorological year the AERMET connectors pull (ISD surface + IGRA upper-air). A real
+    # AERMOD data set uses 1-5 recent, quality-assured years; #1179 pulls one representative year.
+    air_met_year: int = 2023
+    # NOAA ISD (Integrated Surface Database) — hourly surface obs, the AERMET SURFACE input in
+    # ISHD format. Raw ISH per station-year lives at {base}/{year}/{usaf}-{wban}-{year}.gz.
+    isd_base_url: str = "https://www.ncei.noaa.gov/pub/data/noaa"
+    # Per-site (SiteProfile seam → #1180 "met/terrain endpoints"): the representative surface
+    # station USAF-WBAN id, e.g. "725330-14827" (Fort Wayne Intl / KFWA). "" disables the pull.
+    air_surface_station: str = ""
+    # NOAA IGRA v2 (Integrated Global Radiosonde Archive) — twice-daily soundings, the AERMET
+    # UPPERAIR input. Per-station year files under {base}/access/data-y2d/{station}-data.txt.zip.
+    igra_base_url: str = "https://www.ncei.noaa.gov/data/integrated-global-radiosonde-archive"
+    # Per-site (SiteProfile seam → #1180): the representative upper-air station IGRA id, e.g.
+    # "USM00072426" (Wilmington, OH / ILN — the region's NWS radiosonde). "" disables the pull.
+    air_upperair_station: str = ""
+    # USGS 3DEP/NED elevation — the AERMAP terrain input. The 3DEPElevation ImageServer's
+    # exportImage returns a GeoTIFF DEM for a bbox (3DEP is the NED successor); rasterio samples
+    # receptor/source elevations. Committed-fixture-GeoTIFF discipline (like gis/raster.py), NOT
+    # the JSON connector cache — a raster payload doesn't fit the JSON cache/fixture shape.
+    ned_base_url: str = (
+        "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer"
+    )
+    # Terrain-domain half-width (degrees) around the AERMAP center point (defaults to the
+    # nasa_power loop centroid). Lima's Cole/Bluelick corridor sits well inside ~0.1° (~11 km).
+    air_terrain_halfwidth_deg: float = 0.1
+
     # --- Economics (localized baselines: Census population, BLS employment) -----
     # The "what the campus consumes / what the place is" axis beyond utility draw.
     # Census ACS5 needs a key for a live fetch (a warm cache/fixture is served keyless);
@@ -392,6 +426,11 @@ class Settings(BaseSettings):
         """Cached GreenOps connector responses (AWS billing/CCFT, Anthropic usage, GitHub,
         eGRID). Regenerable, not committed."""
         return self.cache_dir / "greenops"
+
+    @property
+    def air_cache_dir(self) -> Path:
+        """Cached AERMET/AERMAP connector pulls (ISD surface, IGRA upper-air, NED DEM). Not committed."""
+        return self.cache_dir / "air"
 
     @property
     def gis_cache_dir(self) -> Path:
