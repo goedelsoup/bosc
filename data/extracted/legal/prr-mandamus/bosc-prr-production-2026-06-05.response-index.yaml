@@ -135,7 +135,7 @@ new_findings:
       Google confirmation (2026-03-16) and ~10 months before "Bistrozzi Addition LLC" was even registered.
     implication: Sharpens the opacity narrative (memo §III) and predates the timeline materially. The memo currently names only "Bistrozzi Addition LLC" — distinguish the two.
   - id: cms-custody-confirmed
-    finding: County (item 16) expressly disclaims managing its own website; CMS audit logs therefore sit with the web vendor (CorpComm Group, Inc.).
+    finding: County (item 16) expressly disclaims managing its own website; CMS audit logs therefore sit with the host of record (AhelioTech Services, Ltd.) — not the developer of record, CorpComm Group, Inc. (dissolved 2023-06-05).
     implication: Confirms the records-custody point in data/extracted/legal/web-vendor-audit/allen-county-web-vendor-audit.{md,yaml}. A §149.43 request for CMS logs implicates the third-party processor.
   - id: nda-section-6-notice-mechanism
     finding: >
