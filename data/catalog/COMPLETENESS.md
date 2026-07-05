@@ -4,7 +4,7 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-07-05T01:23:37.438603+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-07-05T15:20:10.083127+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
