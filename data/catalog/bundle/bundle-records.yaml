@@ -52,5 +52,8 @@ notes: >-
   vs the synthetic-minor NSR caps) and `air-dispersion` (Tier-1 AERMOD concentration screen vs
   NAAQS) — read the committed `air-emission-factors` (AP-42 §3.4) and `air-naaqs` reference datasets
   plus the site air permit + committed air scenarios (facility+permit-gated; absent → section locks).
+  The `air-dispersion-field` feed (#1232/#1237, contract 1.19.0) reshapes the same AERMOD screening
+  run into the gridded concentration surface the deck.gl field viz renders (reference-site gated,
+  `assumption`-provenanced) — reading the same air upstreams, so it adds no new committed dependency.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.
