@@ -1,0 +1,306 @@
+period:
+  label: Jul 2025-Jun 2026
+  start: 2025-07
+  end: 2026-06
+  kind: trailing_12_months
+headline:
+- key: compute
+  label: Compute
+  value:
+    value: 6366.0
+    unit: vCPU-hrs
+    source: derived
+    citation: AWS billed instance-hours x vCPU/instance + GitHub Actions minutes x
+      runner cores
+    confidence: medium
+    asof: null
+  sub: hosting, search, CI/CD
+  source_label: AWS Cost Explorer + GitHub Actions billing
+- key: ai_inferences
+  label: AI inferences run
+  value:
+    value: 1395.0
+    unit: calls
+    source: derived
+    citation: Anthropic total tokens (5,580,000) ÷ 4000 avg tokens/call (the Admin
+      API exposes no per-message count)
+    confidence: low
+    asof: null
+  sub: extraction, ask, corroboration, drafting
+  source_label: Anthropic Admin usage (derived call count)
+- key: electricity
+  label: Electricity drawn
+  value:
+    value: 0.0535
+    unit: MWh
+    source: derived
+    citation: 6366 vCPU-hrs x 7 W/vCPU x PUE 1.2
+    confidence: low
+    asof: null
+  sub: compute + cooling, all regions
+  source_label: power-draw specs x PUE
+- key: water
+  label: Water drawn
+  value:
+    value: 52.2
+    unit: gal
+    source: derived
+    citation: direct on-site cooling (site WUE) + upstream generation (source WUE)
+    confidence: low
+    asof: null
+  sub: direct cooling + generation upstream
+  source_label: WUE benchmarks
+compute_by_function:
+  unit: vCPU-hrs
+  functions:
+  - label: Hosting
+    value:
+      value: 2928.0
+      unit: vCPU-hrs
+      source: derived
+      citation: billed instance-hours x vCPU/instance (AWS CE) + Actions minutes x
+        runner cores (GitHub) over the window
+      confidence: medium
+      asof: null
+  - label: Search
+    value:
+      value: 2928.0
+      unit: vCPU-hrs
+      source: derived
+      citation: billed instance-hours x vCPU/instance (AWS CE) + Actions minutes x
+        runner cores (GitHub) over the window
+      confidence: medium
+      asof: null
+  - label: CI/CD
+    value:
+      value: 510.0
+      unit: vCPU-hrs
+      source: derived
+      citation: billed instance-hours x vCPU/instance (AWS CE) + Actions minutes x
+        runner cores (GitHub) over the window
+      confidence: medium
+      asof: null
+ai_by_task:
+  unit: calls
+  tasks:
+  - label: Structured extraction
+    value:
+      value: 767.0
+      unit: calls
+      source: assumption
+      citation: modeled share of calls by task — asserted until the per-task workspace
+        keys (#1080) are named so the Anthropic by-workspace split can be labeled
+        and metered by task
+      confidence: low
+      asof: null
+  - label: Search & Ask
+    value:
+      value: 418.0
+      unit: calls
+      source: assumption
+      citation: modeled share of calls by task — asserted until the per-task workspace
+        keys (#1080) are named so the Anthropic by-workspace split can be labeled
+        and metered by task
+      confidence: low
+      asof: null
+  - label: Corroboration assist
+    value:
+      value: 140.0
+      unit: calls
+      source: assumption
+      citation: modeled share of calls by task — asserted until the per-task workspace
+        keys (#1080) are named so the Anthropic by-workspace split can be labeled
+        and metered by task
+      confidence: low
+      asof: null
+  - label: Drafting summaries
+    value:
+      value: 70.0
+      unit: calls
+      source: assumption
+      citation: modeled share of calls by task — asserted until the per-task workspace
+        keys (#1080) are named so the Anthropic by-workspace split can be labeled
+        and metered by task
+      confidence: low
+      asof: null
+electricity:
+  unit: MWh
+  monthly:
+  - label: Jul
+    value:
+      value: 0.0045
+      unit: MWh
+      source: derived
+      citation: vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed
+        evenly across the window
+      confidence: low
+      asof: null
+  - label: Aug
+    value:
+      value: 0.0045
+      unit: MWh
+      source: derived
+      citation: vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed
+        evenly across the window
+      confidence: low
+      asof: null
+  - label: Sep
+    value:
+      value: 0.0045
+      unit: MWh
+      source: derived
+      citation: vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed
+        evenly across the window
+      confidence: low
+      asof: null
+  - label: Oct
+    value:
+      value: 0.0045
+      unit: MWh
+      source: derived
+      citation: vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed
+        evenly across the window
+      confidence: low
+      asof: null
+  - label: Nov
+    value:
+      value: 0.0045
+      unit: MWh
+      source: derived
+      citation: vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed
+        evenly across the window
+      confidence: low
+      asof: null
+  - label: Dec
+    value:
+      value: 0.0045
+      unit: MWh
+      source: derived
+      citation: vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed
+        evenly across the window
+      confidence: low
+      asof: null
+  - label: Jan
+    value:
+      value: 0.0045
+      unit: MWh
+      source: derived
+      citation: vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed
+        evenly across the window
+      confidence: low
+      asof: null
+  - label: Feb
+    value:
+      value: 0.0045
+      unit: MWh
+      source: derived
+      citation: vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed
+        evenly across the window
+      confidence: low
+      asof: null
+  - label: Mar
+    value:
+      value: 0.0045
+      unit: MWh
+      source: derived
+      citation: vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed
+        evenly across the window
+      confidence: low
+      asof: null
+  - label: Apr
+    value:
+      value: 0.0045
+      unit: MWh
+      source: derived
+      citation: vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed
+        evenly across the window
+      confidence: low
+      asof: null
+  - label: May
+    value:
+      value: 0.0045
+      unit: MWh
+      source: derived
+      citation: vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed
+        evenly across the window
+      confidence: low
+      asof: null
+  - label: Jun
+    value:
+      value: 0.0045
+      unit: MWh
+      source: derived
+      citation: vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed
+        evenly across the window
+      confidence: low
+      asof: null
+  grid:
+    value: 0.0482
+    unit: MWh
+    source: derived
+    citation: electricity x eGRID SRVC renewables share 9.9% (SERC Virginia/Carolina)
+    confidence: low
+    asof: null
+  renewable:
+    value: 0.0053
+    unit: MWh
+    source: derived
+    citation: electricity x eGRID SRVC renewables share 9.9% (SERC Virginia/Carolina)
+    confidence: low
+    asof: null
+water:
+  unit: gal
+  direct:
+    value: 25.4
+    unit: gal
+    source: derived
+    citation: electricity x 1.8 L/kWh site WUE (direct on-site cooling), L → gal
+    confidence: low
+    asof: null
+  indirect:
+    value: 26.8
+    unit: gal
+    source: derived
+    citation: electricity x 1.9 L/kWh source WUE (upstream generation), L → gal
+    confidence: low
+    asof: null
+  budget_cap:
+    value: 150.0
+    unit: gal
+    source: assumption
+    citation: stated internal annual water-draw budget (a target, not metered)
+    confidence: low
+    asof: null
+methodology:
+- title: Compute
+  body: AWS Cost Explorer instance-hours (by service, folded into platform functions)
+    converted to vCPU-hours by instance size, plus GitHub Actions minutes converted
+    by runner core count. Model inference runs on third-party/serverless infra (Anthropic,
+    Bedrock) and is reported as AI volume, not our vCPU-hours; we run no GPU instances.
+- title: Electricity & carbon
+  body: vCPU-hours x 7 W per allocated vCPU (an average-operational assumption folding
+    utilization) x PUE 1.2. Derived ~0.0145 MTCO2e (electricity x 596.326 lb/MWh,
+    SRVC) vs AWS's location-based estimate 0.045 MTCO2e — ~32% of it. The two agree
+    in order of magnitude; they differ because the vCPU model captures only active
+    instance compute, whereas AWS's estimate spans every service (storage, transfer,
+    managed-service and idle-capacity overhead).
+- title: Water
+  body: Modeled from electricity using published Water Usage Effectiveness (WUE) benchmarks
+    — a site WUE for direct on-site cooling and a source WUE for the water withdrawn
+    upstream to generate the power drawn. The two bases are reported separately, never
+    summed across bases.
+- title: AI inferences
+  body: The Anthropic Admin API exposes token aggregates only, so the call count is
+    total tokens ÷ 4000 avg tokens/call (a stated assumption), and the by-task split
+    is modeled until the per-task workspace keys (#1080) are named so the by-workspace
+    usage can be labeled and metered by task.
+sources:
+- AWS Cost Explorer + Sustainability/CCFT (Jul 2025-Jun 2026)
+- GitHub Actions/storage billing (Jul 2025-Jun 2026)
+- Anthropic Admin usage + cost (Jul 2025-Jun 2026)
+- EPA eGRID2023 subregion SRVC factors
+- WUE benchmarks (EPRI 2024 / Uptime Institute 2023 / NREL 2012)
+note: 'Derived footprint (#1083): usage → electricity → water from the committed connector
+  exports and reference factor tables. Every conversion is `derived`; the modeling
+  levers (≈7 W/vCPU, PUE 1.2, eGRID subregion SRVC, 4000 tokens/call, the water budget)
+  are stated `assumption`s. Nothing here is metered.'

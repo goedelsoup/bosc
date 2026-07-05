@@ -1,0 +1,41 @@
+id: greenops-footprint
+title: GreenOps — derived compute footprint (usage → electricity → water)
+scope: reference
+status: reviewed
+producer:
+  kind: derived
+  command: greenops footprint --write
+  connector_ref: watermark.greenops.footprint
+  source: derived from the GreenOps connector exports (AWS / GitHub / Anthropic) + the eGRID/WUE
+    factor tables — the modeled usage → electricity → CO2e → water assembly
+access_tier: public
+site_scope: basin-shared
+depends_on:
+- greenops
+- greenops-aws
+- greenops-github
+- greenops-factors
+storage:
+- relpath: reference/greenops/footprint.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: derived
+schema_ref: watermark.greenops.model.GreenopsReport
+tags:
+- greenops
+- footprint
+- electricity
+- carbon
+- water
+notes: The assembled compute-footprint report the /about/sustainability feed lifts (#1076/#1083/#1084)
+  — not a provider export but the modeled derivation over them. `watermark greenops footprint
+  --write` lifts the AWS Cost Explorer/CCFT, GitHub Actions and Anthropic Admin exports plus the
+  eGRID subregion + WUE factor tables and runs vCPU/GPU-hours ×(W/vCPU·PUE) → electricity, ×(eGRID
+  lb/MWh) → CO2e / source mix (reconciled against the AWS CCFT total), ×(WUE L/kWh) → water (direct
+  on-site cooling + upstream generation). Every conversion is `derived`; the modeling levers
+  (per-vCPU watts, PUE, the eGRID subregion via WATERMARK_GREENOPS_GRID_SUBREGION, average
+  tokens/call, the internal water budget) are stated `assumption`s — nothing is
+  `connector`-`verified` as a metered fact about our own consumption. A source not on disk degrades
+  that dimension to a modeled assumption rather than fabricating a figure.
