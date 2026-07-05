@@ -244,8 +244,9 @@ export function segmentToWorld(grid: FieldGrid, seg: Segment): [[number, number]
 /**
  * Build a {@link FieldGrid} from irregular `{x, y, value}` samples laid out on a
  * regular lattice. Unique `x`s become columns (west→east) and unique `y`s become
- * rows (north→south). Missing cells are filled with `NaN`. Throws if the distinct
- * x/y counts don't multiply to the sample count (i.e. the lattice isn't regular).
+ * rows (north→south). Throws if the samples don't fill every cell of the distinct
+ * x/y lattice exactly once — a duplicate `(x, y)` or a missing cell (either of
+ * which the sample-count check alone would miss) is rejected as non-regular.
  */
 export function gridFromSamples(samples: FieldSample[]): FieldGrid {
   if (samples.length === 0) return { width: 0, height: 0, values: [] };
@@ -254,20 +255,26 @@ export function gridFromSamples(samples: FieldSample[]): FieldGrid {
   const ys = [...new Set(samples.map((s) => s.y))].sort((p, q) => q - p); // north (max y) first
   const width = xs.length;
   const height = ys.length;
-  if (width * height !== samples.length) {
-    throw new Error(
-      `gridFromSamples: ${samples.length} samples do not form a regular ${width}×${height} lattice`,
-    );
-  }
 
   const colOf = new Map(xs.map((x, i) => [x, i]));
   const rowOf = new Map(ys.map((y, i) => [y, i]));
   const values = new Float32Array(width * height).fill(Number.NaN);
+  const filled = new Set<number>();
   for (const s of samples) {
     const col = colOf.get(s.x);
     const row = rowOf.get(s.y);
     if (col === undefined || row === undefined) continue;
-    values[row * width + col] = s.value;
+    const cell = row * width + col;
+    if (filled.has(cell)) {
+      throw new Error(`gridFromSamples: duplicate sample at (${s.x}, ${s.y})`);
+    }
+    filled.add(cell);
+    values[cell] = s.value;
+  }
+  if (filled.size !== width * height) {
+    throw new Error(
+      `gridFromSamples: ${samples.length} samples do not fill a regular ${width}×${height} lattice`,
+    );
   }
 
   return {
