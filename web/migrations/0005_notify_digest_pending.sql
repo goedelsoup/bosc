@@ -1,0 +1,11 @@
+-- Notify digest counter → Postgres (#1206). The `lambda/notify` daily-digest path used to
+-- increment a KV `digest:pending:<sub>` counter in the AUTH_PREFS namespace; #1206 moves the
+-- Lambda off KV entirely (direct Lakebase read of `user_prefs`), so this counter comes with it —
+-- otherwise the KV namespace couldn't be retired (the digest write was its last remaining reader).
+--
+-- One integer per user: the number of `daily`-frequency notifications queued since the last flush.
+-- The webhook path does `UPDATE ... SET digest_pending = digest_pending + 1`; the (still-stubbed,
+-- #938 follow-up) EventBridge flush will `SELECT sub, digest_pending FROM user_prefs WHERE
+-- digest_pending > 0`, send one digest, and reset to 0. Additive column with a default, so the
+-- column-scoped `user_prefs` upserts in `authStore.ts` are unaffected (they never touch it).
+ALTER TABLE user_prefs ADD COLUMN IF NOT EXISTS digest_pending INTEGER NOT NULL DEFAULT 0;

@@ -49,9 +49,12 @@ Two endpoints live here:
   harness. Schema in [`../migrations/0004_create_auth_prefs.sql`](../migrations/0004_create_auth_prefs.sql)
   — `users` (a real join target for Stories ownership), `user_prefs`, `audit_log`. Binds
   `AUTH_HYPERDRIVE` to the **same** Hyperdrive config as `STORIES_HYPERDRIVE` (one Lakebase, one
-  milestone); absent → 503 (fail-closed). **Follow-up:** the AWS `lambda/notify` digest still reads
-  subscribers from KV — it runs outside the Workers runtime (no Hyperdrive) and needs a direct-Lakebase
-  migration before it can source the moved prefs (out of scope for #1171).
+  milestone); absent → 503 (fail-closed). The AWS `lambda/notify` digest reads the same
+  subscribers — it runs outside the Workers runtime (no Hyperdrive), so #1206 gave it its own direct
+  Postgres connection (reusing the Stories/auth `storiesLakebaseUrl` secret as `LAKEBASE_URL`) that
+  enumerates `user_prefs` and increments the `digest_pending` counter
+  ([`../migrations/0005_notify_digest_pending.sql`](../migrations/0005_notify_digest_pending.sql)),
+  which retired the old `AUTH_PREFS` KV namespace.
 
 ## Constraints
 

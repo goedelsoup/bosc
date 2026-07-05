@@ -219,8 +219,8 @@ const route53Record =
 // once and leave `authEnabled` true. Flip to false only when decommissioning.
 //   pulumi config set bosc-deploy:authEnabled true
 //
-// The KV namespaces (JWKS_CACHE, AUTH_PREFS) are always created — they're cheap and
-// the bind-in-wrangler.toml step is the actual activation gate, not Pulumi.
+// The JWKS_CACHE KV namespace is always created — it's cheap and the bind-in-wrangler.toml
+// step is the actual activation gate, not Pulumi. (Auth prefs live in Lakebase, not KV — #1171.)
 const authEnabled = config.getBoolean("authEnabled") ?? false;
 
 // Hosted UI domain prefix. The full domain becomes:
@@ -375,12 +375,9 @@ const jwksCacheKv = new cloudflare.WorkersKvNamespace("auth-jwks-cache", {
     title: "watermark-auth-jwks-cache",
 });
 
-// User profile + notification prefs, keyed by Cognito sub (Epic #921).
-// Wire the id as AUTH_PREFS in wrangler.toml.
-const authPrefsKv = new cloudflare.WorkersKvNamespace("auth-prefs", {
-    accountId,
-    title: "watermark-auth-prefs",
-});
+// The AUTH_PREFS KV namespace was retired in #1206: user profiles + notification prefs moved to
+// Lakebase in #1171 (Worker side, via Hyperdrive) and the `lambda/notify` digest — the last KV
+// reader — moved to a direct Lakebase read in #1206, so nothing binds AUTH_PREFS anymore.
 
 // ---------------------------------------------------------------------------
 // User-authored Stories: Hyperdrive → Lakebase (Epic #1090 / issue #1138)
@@ -455,13 +452,16 @@ const storiesHyperdrive =
 // ---------------------------------------------------------------------------
 // Notification Lambda (Epic E #938/#939)
 // ---------------------------------------------------------------------------
-// GitHub webhook → Lambda → AUTH_PREFS lookup → SES email dispatch.
+// GitHub webhook → Lambda → Lakebase subscriber lookup → SES email dispatch.
 // Gated on `notifyEnabled` (defaults false) — SES identity + Lambda are created
 // only when explicitly enabled. Flip once SES domain verification is complete.
 //   pulumi config set bosc-deploy:notifyEnabled true
 //   pulumi config set --secret bosc-deploy:githubWebhookSecret <secret>
 //   pulumi config set --secret bosc-deploy:unsubSecret <secret>
 //   pulumi config set bosc-deploy:sesFromAddress notifications@watermarkdirectory.org
+// The Lambda reads subscribers directly from Lakebase (#1206) — it reuses the same
+// `bosc-deploy:storiesLakebaseUrl` secret the Stories/auth Hyperdrive uses, so notify
+// also requires that secret to be set (guarded below).
 //
 // The Lambda zip must be built before `pulumi up`:
 //   cd lambda/notify && npm install && npm run build
@@ -475,9 +475,17 @@ const sesFromAddress = config.get("sesFromAddress") ?? "";
 // Secrets (set out of band via `pulumi config set --secret`).
 const githubWebhookSecret = config.getSecret("githubWebhookSecret");
 const unsubSecret = config.getSecret("unsubSecret");
-// Cloudflare API token for KV access from Lambda (separate from the CF provider env var).
-//   pulumi config set --secret bosc-deploy:cloudflareApiToken <token>
-const notifyCloudflareApiToken = config.getSecret("cloudflareApiToken");
+
+// The notify Lambda reads subscribers directly from Lakebase (#1206). It runs outside the Workers
+// runtime, so it can't use the Hyperdrive binding — it opens its own Postgres connection using the
+// same connection-string secret Stories/auth already provisions.
+if (notifyEnabled && !storiesLakebaseUrl) {
+    throw new Error(
+        "notifyEnabled=true but bosc-deploy:storiesLakebaseUrl is not set in Pulumi config. " +
+        "The notify Lambda reads subscribers from Lakebase (#1206). " +
+        "Run: pulumi config set --secret bosc-deploy:storiesLakebaseUrl postgres://user:password@host:5432/database",
+    );
+}
 
 // SES email identity (domain or address). Created in the same region as Cognito.
 // Operator must complete DNS verification in Route53 after the first `pulumi up`.
@@ -549,16 +557,13 @@ const notifyLambda =
             environment: {
               variables: {
                 SES_FROM_ADDRESS: sesFromAddress,
-                CLOUDFLARE_ACCOUNT_ID: accountId,
-                AUTH_PREFS_NAMESPACE_ID: authPrefsKv.id,
                 SITE_URL: siteDomain
                   ? `https://${siteDomain}`
                   : `https://${pagesProject}.pages.dev`,
                 ...(githubWebhookSecret ? { GITHUB_WEBHOOK_SECRET: githubWebhookSecret } : {}),
                 ...(unsubSecret ? { UNSUB_SECRET: unsubSecret } : {}),
-                ...(notifyCloudflareApiToken
-                  ? { CLOUDFLARE_API_TOKEN: notifyCloudflareApiToken }
-                  : {}),
+                // Subscriber source: direct Lakebase connection (#1206), same secret as Stories.
+                ...(storiesLakebaseUrl ? { LAKEBASE_URL: storiesLakebaseUrl } : {}),
               },
             },
           },
@@ -581,7 +586,7 @@ const notifyDigestRule =
   notifyEnabled && notifyLambda
     ? new aws.cloudwatch.EventRule("notify-digest-rule", {
           name: "watermark-notify-daily-digest",
-          description: "Daily notification digest flush for AUTH_PREFS subscribers",
+          description: "Daily notification digest flush for Lakebase subscribers",
           scheduleExpression: "cron(0 8 * * ? *)", // 08:00 UTC daily
       }, { provider: cognitoProvider })
     : undefined;
@@ -747,8 +752,7 @@ export const cognitoRegionOut = pulumi.output(cognitoRegion);
 // --- Auth: KV namespaces (#919) ---
 /** KV namespace id → `web/wrangler.toml` `[[kv_namespaces]]` `id` (JWKS_CACHE). */
 export const jwksCacheKvNamespaceId = jwksCacheKv.id;
-/** KV namespace id → `web/wrangler.toml` `[[kv_namespaces]]` `id` (AUTH_PREFS). */
-export const authPrefsKvNamespaceId = authPrefsKv.id;
+// AUTH_PREFS KV namespace retired in #1206 — auth prefs + notify subscribers live in Lakebase.
 
 // --- User-authored Stories: Hyperdrive → Lakebase (#1090 / #1138) ---
 /** Hyperdrive config id → `web/wrangler.toml` `[[hyperdrive]]` `id` (STORIES_HYPERDRIVE). */
