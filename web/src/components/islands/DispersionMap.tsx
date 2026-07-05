@@ -107,16 +107,23 @@ export default function DispersionMap({ src }: { src: string }): JSX.Element {
   const grid = useMemo(() => (field && period ? toGrid(field, period) : null), [field, period]);
   const naaqs = period?.naaqs_ug_m3 ?? null;
 
-  const initialViewState = useMemo(() => {
-    const g = field?.geo_ref;
-    return {
-      longitude: g?.source_lon ?? -84.122,
-      latitude: g?.source_lat ?? 40.792,
-      zoom: 12,
-      pitch: 0,
-      bearing: 0,
-    };
-  }, [field]);
+  // Controlled camera: DeckGL treats `initialViewState` as mount-only, but the field loads
+  // after mount, so we drive `viewState` ourselves and recenter on the field's source anchor
+  // whenever it changes (first load, or a field whose grid is centered elsewhere), leaving the
+  // user's own pan/zoom untouched in between.
+  const [viewState, setViewState] = useState({
+    longitude: -84.122,
+    latitude: 40.792,
+    zoom: 12,
+    pitch: 0,
+    bearing: 0,
+  });
+  const srcLon = field?.geo_ref.source_lon;
+  const srcLat = field?.geo_ref.source_lat;
+  useEffect(() => {
+    if (srcLon == null || srcLat == null) return;
+    setViewState((v) => ({ ...v, longitude: srcLon, latitude: srcLat }));
+  }, [srcLon, srcLat]);
 
   const layers = useMemo(() => {
     const out: Layer[] = [];
@@ -133,7 +140,7 @@ export default function DispersionMap({ src }: { src: string }): JSX.Element {
           thresholdLabel: showNaaqs && naaqs != null ? `NAAQS ${naaqs} µg/m³` : undefined,
           colors,
           opacity: 1,
-        }) as unknown as Layer,
+        }),
       );
     }
     return out;
@@ -157,7 +164,8 @@ export default function DispersionMap({ src }: { src: string }): JSX.Element {
       aria-label="Interactive modeled air-dispersion field over the campus (deck.gl); the peak concentrations are also listed as a table on this page."
     >
       <DeckGL
-        initialViewState={initialViewState}
+        viewState={viewState}
+        onViewStateChange={(e) => setViewState(e.viewState as typeof viewState)}
         controller
         layers={layers}
         onHover={({ coordinate }) => {

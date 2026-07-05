@@ -1563,8 +1563,6 @@ a.card:hover { border-color: var(--bosc-forest); background: var(--bosc-surface)
   border: 1px solid var(--td-card-line);
   border-left: 3px solid var(--bosc-inference);
   padding: var(--sp-2) var(--sp-3);
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(20, 24, 40, 0.12);
 }
 .deck-probe-label { font-size: var(--fs-micro); letter-spacing: 0.04em; text-transform: uppercase; color: var(--td-faint); font-weight: 700; }
 .deck-probe-value { font-family: var(--bosc-mono); font-size: var(--fs-sm); font-weight: 600; color: var(--bosc-ink); }
