@@ -256,9 +256,15 @@ export const handler = async (
   }
 
   // Enumerate subscribers from Lakebase. The KV keyspace scan (`prefs:*`) becomes a single
-  // `SELECT` over `user_prefs`, left-joined to `users` for the last-seen email. Category/site
-  // filtering stays in code (the lists are JSON-encoded TEXT, parsed like the store does) —
-  // subscriber volume is small, so a full read + in-memory filter mirrors the old KV behavior.
+  // `SELECT` over `user_prefs`, left-joined to `users` for the last-seen email.
+  //
+  // Deliberate tradeoff — this reads the whole table and filters category/site in memory rather
+  // than in SQL. Two reasons it stays a full scan: (1) the filter is malformed-tolerant — a row
+  // with bad JSON in `notif_sites`/`notif_categories` is skipped (`parseStringArray` returns []),
+  // whereas a `notif_categories::jsonb ? $1` predicate would throw on that row and abort the whole
+  // dispatch; (2) this handler only fires on `issues.opened` webhooks (rare, not user traffic), so
+  // an O(subscribers) read per invocation is fine. Revisit (push filtering into SQL on an indexed
+  // jsonb/GIN column) only if subscriber volume grows into the thousands.
   const sql = lakebase(env.LAKEBASE_URL);
   const rows = await sql<SubscriberRow[]>`
     SELECT p.sub, p.notif_sites, p.notif_categories, p.notif_frequency, u.email
@@ -294,9 +300,10 @@ export const handler = async (
     // Immediate dispatch. `users.email` is a non-authoritative last-seen value and `email_verified`
     // is a live Cognito claim not stored in Postgres — so the actual SES send (with an AdminGetUser
     // verification check) is still the #938 follow-up. Until then, log and skip without counting as
-    // sent. The address is now sourced here so wiring the send is a local change.
+    // sent. Log only whether an address resolved (not the address itself — CloudWatch logs are not a
+    // place for subscriber PII); the real send will source the verified address from Cognito.
     console.log(
-      `TODO: send immediate email to sub=${sub} category=${category} email=${row.email ?? "unknown"}`,
+      `TODO: send immediate email to sub=${sub} category=${category} email=${row.email ? "present" : "missing"}`,
     );
   }
 
