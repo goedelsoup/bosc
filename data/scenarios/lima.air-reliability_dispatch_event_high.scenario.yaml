@@ -17,10 +17,10 @@ engine_mw:
   unit: MW
   source: document
   citation: 'OEPA Air PTI P0138965 (Facility 0302022054), committed data/extracted/permits/4132514.epa.yaml
-    (final, 2026-05-28): 114 hall gensets x 2.75 ekW = ~313 MW backup; IT ~250-300
-    MW (N+1). Per-engine ekW from the draft public notice (3987141/3987144); engine
-    size CBI-redacted in the final permit under an Ohio EPA trade-secret grant (OAC
-    3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).'
+    (final, 2026-05-28): 114 hall gensets x 2.75 MW (~2,750 ekW) = ~313 MW backup;
+    IT ~250-300 MW (N+1). Per-engine rating from the draft public notice (3987141/3987144);
+    engine size CBI-redacted in the final permit under an Ohio EPA trade-secret grant
+    (OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).'
   confidence: medium
   asof: null
 fleet_size: 114

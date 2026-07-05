@@ -174,7 +174,7 @@ def test_power_basis_traces_to_the_active_facilitys_permit_not_lima(
     fw_settings: Settings, lima_settings: Settings
 ) -> None:
     # #360/#607: Fort Wayne's power basis (the first non-Lima facility) must carry ITS OWN IDEM
-    # permit + derived figures, never Lima's hardcoded P0138965 / 313 MW / 114 x 2.75 ekW.
+    # permit + derived figures, never Lima's hardcoded P0138965 / 313 MW / 114 x 2.75 MW.
     fw = derive_power_basis(settings=fw_settings)
     assert fw is not None and fw.it_load.value == pytest.approx(90.0)
     assert fw.backup_power.value == pytest.approx(102.0, abs=0.1)  # 34 x 3.0
