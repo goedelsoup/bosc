@@ -335,9 +335,10 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
 export function siteTabs(): NavItem[] {
   const { base, storyRoot, story } = siteRoots();
   const chapters = story?.chapters ?? [];
-  // Per-site readiness (#781): on a thinner peer some of these destinations aren't on the record
-  // yet. Mark them `locked` so the menu itself distinguishes available from coming — the reference
-  // build is never locked (`sectionStatus` short-circuits), so Lima's menu is unchanged.
+  // Per-site readiness (#781/#1220): on a thinner peer some of these destinations aren't on the
+  // record yet. Mark them `locked` so the menu itself distinguishes available from coming —
+  // `sectionStatus` reads the bundle's domain-activation block, so Lima's menu is unchanged (every
+  // domain live) without any reference-site special-case.
   const slug = activeSite();
   const storyLocked = sectionStatus(slug, "story") === "locked";
   const watershedLocked = sectionStatus(slug, "watershed") === "locked";

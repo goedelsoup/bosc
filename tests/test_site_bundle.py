@@ -266,6 +266,45 @@ def test_urbana_sample_bundle_tracks_the_export_contract(urbana_bundle: Path) ->
     )
 
 
+# --- Backdrop-tier network sites (#1220 / #1224) --------------------------------------------
+# The epic's promotion-candidate proof: the backdrop-staged sites bundle at `backdrop` tier off
+# their committed floor data alone (no fabricated corpus), and the true stubs stay `stub`. We
+# assert the derived readiness end-to-end through the real export rather than committing ~370
+# unrendered fixture files for these non-selectable sites (their bundles regenerate on promotion).
+@pytest.mark.parametrize("slug", ["findlay", "toledo", "west-union", "wpafb"])
+def test_backdrop_staged_site_exports_at_backdrop_tier(
+    slug: str, tmp_path_factory: pytest.TempPathFactory
+) -> None:
+    out = tmp_path_factory.mktemp(f"backdrop-{slug}") / "b"
+    settings = Settings(data_dir=REPO_ROOT / "data", site=slug)
+    export_bundle(
+        settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
+    )
+    manifest = _manifest(out)
+    assert manifest["contract_version"] == "1.17.0"
+    readiness = manifest["readiness"]
+    assert readiness["tier"] == "backdrop", f"{slug} should be a Backdrop site, got {readiness}"
+    domains = readiness["domains"]
+    # The floor is live; nothing above it is scaffolded (the epic's additive rule).
+    assert domains["backdrop"] == "live"
+    for above_floor in ("facility", "places", "record"):
+        assert domains[above_floor] == "absent", f"{slug} {above_floor} must not scaffold"
+
+
+@pytest.mark.parametrize("slug", ["coshocton", "piketon", "sandusky"])
+def test_stub_site_exports_at_stub_tier(
+    slug: str, tmp_path_factory: pytest.TempPathFactory
+) -> None:
+    out = tmp_path_factory.mktemp(f"stub-{slug}") / "b"
+    settings = Settings(data_dir=REPO_ROOT / "data", site=slug)
+    export_bundle(
+        settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
+    )
+    readiness = _manifest(out)["readiness"]
+    assert readiness["tier"] == "stub", f"{slug} is profile-only, expected stub, got {readiness}"
+    assert readiness["domains"]["backdrop"] != "live"
+
+
 @pytest.fixture(scope="module")
 def fort_wayne_bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
     """A Fort Wayne bundle exported off the committed corpus — the sibling site used to

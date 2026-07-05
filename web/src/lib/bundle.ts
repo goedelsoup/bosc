@@ -64,6 +64,25 @@ export interface FeedRef {
   count: number;
 }
 
+/** A domain's activation state (`bosc.site.readiness.State`). */
+export type DomainState = "absent" | "seeded" | "live";
+/** A site's readiness tier (`bosc.site.readiness.Tier`). */
+export type SiteTier = "stub" | "backdrop" | "case" | "reference";
+
+/** The standing domain-activation readiness (`bosc.site.feeds.SiteReadiness`, #1220) — the five
+ *  domains' states plus the derived tier, recomputed at every export. The frontend reads this
+ *  instead of re-deriving section gating from raw feed counts (`readiness.ts`). */
+export interface Readiness {
+  tier: SiteTier;
+  domains: {
+    backdrop: DomainState;
+    facility: DomainState;
+    places: DomainState;
+    record: DomainState;
+    story: DomainState;
+  };
+}
+
 /** The bundle index (`bosc.site.feeds.Manifest`). Read this first. */
 export interface Manifest {
   /** The network-site slug this bundle is for (#762) — so a bundle self-identifies. */
@@ -73,6 +92,9 @@ export interface Manifest {
   generated_at: string;
   feed_count: number;
   row_total: number;
+  /** Standing domain-activation readiness (#1220 / contract 1.17.0). Optional only so a
+   *  synthetic/pre-1.17 fixture without the block degrades (all-absent) rather than crashing. */
+  readiness?: Readiness;
   feeds: FeedRef[];
 }
 

@@ -9,7 +9,9 @@ import {
   SECTION_META,
   type ReadinessSection,
   sectionStatus,
+  siteDomainStates,
   siteReadiness,
+  siteTier,
 } from "./readiness";
 
 // Pinned against the committed full-vs-partial fixture pair: `sample-bundle/lima` (the live
@@ -69,6 +71,39 @@ describe("a partial peer (Fort Wayne)", () => {
   });
 });
 
+// --- the domain-activation block (#1220 / #1223) ----------------------------------------
+describe("domain activation (manifest readiness block)", () => {
+  it("reads the tier straight from each site's manifest", () => {
+    // The Python tier (bosc.site.readiness.site_tier) written at export — the frontend is a reader.
+    expect(siteTier("lima")).toBe("reference");
+    expect(siteTier("fort-wayne")).toBe("case");
+    // Urbana is a floor + leads-board site (no structured corpus, no parcels) → Backdrop tier.
+    expect(siteTier("urbana")).toBe("backdrop");
+  });
+
+  it("exposes the five domain states from the manifest", () => {
+    const lima = siteDomainStates("lima");
+    for (const d of ["backdrop", "facility", "places", "record", "story"] as const) {
+      expect(lima[d]).toBe("live"); // Lima: every domain lit
+    }
+    const urbana = siteDomainStates("urbana");
+    expect(urbana.backdrop).toBe("live"); // the floor is real
+    expect(urbana.record).toBe("absent"); // markdown findings only, no structured corpus
+    expect(urbana.places).toBe("absent"); // no committed parcels — the section locks
+    expect(urbana.facility).toBe("absent");
+  });
+
+  it("opens Urbana's own leads board (feed-driven, #796) without borrowing Lima's", () => {
+    // Urbana carries a `leads` feed but no registered story — leads open, the guided walk stays shut.
+    expect(sectionStatus("urbana", "leads")).toBe("available");
+    expect(sectionStatus("urbana", "story")).toBe("locked");
+    // Its floor stands up (watershed/economy), but its record domain is absent → record locks.
+    expect(sectionStatus("urbana", "economy")).toBe("available");
+    expect(sectionStatus("urbana", "record")).toBe("locked");
+    expect(sectionStatus("urbana", "places")).toBe("locked");
+  });
+});
+
 describe("SECTION_META", () => {
   it("carries a label + a 'what lands here' line for every gateable section", () => {
     for (const meta of Object.values(SECTION_META)) {
@@ -105,8 +140,21 @@ function scenarioRow(coolingModel: string, methodDisclosed: boolean) {
   };
 }
 
-/** A minimal per-site bundle whose only feed is hydrology-scenarios. */
-function makePeerBundle(slug: string, scenarios: object[]): string {
+const LIVE = {
+  backdrop: "live",
+  facility: "seeded",
+  places: "absent",
+  record: "absent",
+  story: "absent",
+} as const;
+
+/** A minimal per-site bundle: a `hydrology-scenarios` feed + a `readiness` block (backdrop live by
+ *  default, so the watershed section opens unless a cooling lock or an explicit block says otherwise). */
+function makePeerBundle(
+  slug: string,
+  scenarios: object[],
+  readiness: object = { tier: "backdrop", domains: LIVE },
+): string {
   const root = mkdtempSync(join(tmpdir(), "bosc-readiness-"));
   tmpDirs.push(root);
   const dir = join(root, slug);
@@ -126,10 +174,11 @@ function makePeerBundle(slug: string, scenarios: object[]): string {
     JSON.stringify({
       site: slug,
       bundle_version: "test",
-      contract_version: "1.9.0",
+      contract_version: "1.17.0",
       generated_at: "2026-01-01T00:00:00Z",
       feed_count: feeds.length,
       row_total: scenarios.length,
+      readiness,
       feeds,
     }),
   );
@@ -175,5 +224,58 @@ describe("coolingMethodUndisclosed (#1057)", () => {
     const root = makePeerBundle("peer", []);
     const r = await loadReadiness(root);
     expect(r.coolingMethodUndisclosed("peer")).toBe(false);
+  });
+});
+
+// --- a Backdrop-tier peer renders a real page, not a wall of locks (#1220 acceptance) -----
+describe("a Backdrop-staged peer (floor data only)", () => {
+  const originalBundleDir = process.env.WATERMARK_BUNDLE_DIR;
+  afterEach(() => {
+    if (originalBundleDir === undefined) delete process.env.WATERMARK_BUNDLE_DIR;
+    else process.env.WATERMARK_BUNDLE_DIR = originalBundleDir;
+    vi.resetModules();
+  });
+  afterAll(() => {
+    for (const d of tmpDirs) rmSync(d, { recursive: true, force: true });
+  });
+
+  it("opens watershed + economy off the backdrop domain, locks the above-floor domains", async () => {
+    const backdropOnly = {
+      tier: "backdrop",
+      domains: { backdrop: "live", facility: "absent", places: "absent", record: "absent", story: "absent" },
+    };
+    const root = makePeerBundle("backdrop-peer", [], backdropOnly);
+    const r = await loadReadiness(root);
+    expect(r.siteTier("backdrop-peer")).toBe("backdrop");
+    // The floor reads stand on their own — no fabricated corpus needed.
+    expect(r.sectionStatus("backdrop-peer", "watershed")).toBe("available");
+    expect(r.sectionStatus("backdrop-peer", "economy")).toBe("available");
+    // Above the floor: nothing on the record yet → locked, not scaffolded.
+    for (const s of ["record", "places", "story", "leads", "reports"] as const) {
+      expect(r.sectionStatus("backdrop-peer", s)).toBe("locked");
+    }
+  });
+
+  it("degrades to all-locked when the bundle predates the readiness block", async () => {
+    // No readiness field in the manifest → the safe all-absent fallback, nothing crashes.
+    const root = mkdtempSync(join(tmpdir(), "bosc-readiness-"));
+    tmpDirs.push(root);
+    const dir = join(root, "legacy");
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(
+      join(dir, "manifest.json"),
+      JSON.stringify({
+        site: "legacy",
+        bundle_version: "test",
+        contract_version: "1.16.0",
+        generated_at: "2026-01-01T00:00:00Z",
+        feed_count: 0,
+        row_total: 0,
+        feeds: [],
+      }),
+    );
+    const r = await loadReadiness(root);
+    expect(r.siteTier("legacy")).toBe("stub");
+    expect(r.sectionStatus("legacy", "watershed")).toBe("locked");
   });
 });
