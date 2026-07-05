@@ -43,8 +43,8 @@ Always created (cheap; activation gate is wiring in `wrangler.toml`):
 
 - **`cloudflare.WorkersKvNamespace` — `JWKS_CACHE`** — Cognito public-key cache (1-hour
   TTL), avoiding a cold JWKS fetch on every JWT verification.
-- **`cloudflare.WorkersKvNamespace` — `AUTH_PREFS`** — per-user profile + notification
-  prefs, keyed by Cognito `sub` (#921).
+  (Per-user profile + notification prefs used to live in an `AUTH_PREFS` KV namespace here;
+  it moved to Lakebase in #1171 and was retired in #1206 once `lambda/notify` stopped reading it.)
 
 ### User-authored Stories — Hyperdrive → Lakebase (#1090 / #1138)
 
@@ -118,7 +118,6 @@ project by name, so the two don't fight.
 | `cognitoDomain` | `web/wrangler.toml` `[vars]` `COGNITO_DOMAIN` **and** `PUBLIC_COGNITO_DOMAIN` build var |
 | `cognitoRegionOut` | `web/wrangler.toml` `[vars]` `COGNITO_REGION` |
 | `jwksCacheKvNamespaceId` | `web/wrangler.toml` → `[[kv_namespaces]]` `id` (JWKS_CACHE) |
-| `authPrefsKvNamespaceId` | `web/wrangler.toml` → `[[kv_namespaces]]` `id` (AUTH_PREFS) |
 
 ### Stories
 
@@ -141,8 +140,8 @@ project by name, so the two don't fight.
 
 Until `siteDomain` is set the stack manages KV + R2 + Turnstile only and the site stays on
 `watermark.pages.dev`. Until `authEnabled` is set the Cognito pool is not created (the
-JWKS_CACHE and AUTH_PREFS KV namespaces are always created — they're cheap and needed before
-the auth wiring can be tested).
+JWKS_CACHE KV namespace is always created — it's cheap and needed before the auth wiring can
+be tested; auth prefs live in Lakebase, not KV, since #1171).
 
 Provider auth: the Cloudflare **token** is never committed — supply it via
 `CLOUDFLARE_API_TOKEN` (or the `cloudflare:apiToken` Pulumi secret), scoped to **Workers

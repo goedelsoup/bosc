@@ -1,14 +1,15 @@
 {
   "name": "watermark-notify-lambda",
   "version": "0.1.0",
-  "description": "GitHub webhook → AUTH_PREFS lookup → SES email dispatch",
+  "description": "GitHub webhook → Lakebase subscriber lookup → SES email dispatch",
   "main": "dist/index.js",
   "scripts": {
     "build": "esbuild index.ts --bundle --platform=node --target=node22 --outfile=dist/index.js --external:@aws-sdk/*",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@aws-sdk/client-ses": "^3.0.0"
+    "@aws-sdk/client-ses": "^3.0.0",
+    "postgres": "^3.4.9"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.0",

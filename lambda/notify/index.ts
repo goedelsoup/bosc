@@ -1,4 +1,4 @@
-// Lambda handler: GitHub webhook → AUTH_PREFS lookup → SES email dispatch (#938 E1).
+// Lambda handler: GitHub webhook → Lakebase subscriber lookup → SES email dispatch (#938 E1).
 //
 // Triggered by an API Gateway (Lambda URL) receiving `issues.opened` events from the
 // GitHub webhook on the `watermark-directory/the-watermark-directory` repository.
@@ -6,19 +6,21 @@
 // Flow:
 //   1. Verify the GitHub webhook signature (X-Hub-Signature-256).
 //   2. Parse the issue labels to determine notification category.
-//   3. Enumerate AUTH_PREFS KV (via Cloudflare REST API) for subscribers matching
-//      the category + a site that matches the issue's site label.
+//   3. Enumerate subscribers from the `user_prefs` table in Databricks Lakebase (managed
+//      Postgres) matching the category + a site that matches the issue's site label.
 //   4. Send an immediate SES email for each `immediate`-frequency subscriber.
-//   5. Increment a `digest:pending:<sub>` counter for `daily` subscribers
+//   5. Increment the `user_prefs.digest_pending` counter for `daily` subscribers
 //      (flushed by a separate EventBridge-triggered digest Lambda, future work).
-//   6. On first successful delivery, note `email_verified: true` is set by the
-//      subscriber's own prefs write path — the Lambda doesn't touch that field.
+//
+// Subscriber prefs moved off Cloudflare KV onto Lakebase in #1171 (Worker side) / #1206 (this
+// Lambda). Because the Lambda runs in AWS — outside the Workers runtime — it can't use the
+// `AUTH_HYPERDRIVE` binding the Pages Functions use; it opens its own direct Postgres connection.
+// The `notif_sites` / `notif_categories` columns are JSON-encoded TEXT (mirroring the store), not
+// Postgres arrays — parsed here the same way `web/functions/api/_lib/authStore.ts` does.
 //
 // Required environment variables (set in Lambda console / Pulumi secrets):
 //   GITHUB_WEBHOOK_SECRET       — shared secret used to verify X-Hub-Signature-256
-//   CLOUDFLARE_API_TOKEN        — CF API token with KV read/write permission
-//   CLOUDFLARE_ACCOUNT_ID       — Cloudflare account ID
-//   AUTH_PREFS_NAMESPACE_ID     — the AUTH_PREFS KV namespace ID
+//   LAKEBASE_URL                — postgres:// connection string to Lakebase (same secret Stories uses)
 //   SES_FROM_ADDRESS            — verified SES sender address
 //   SITE_URL                    — base URL for unsubscribe links (e.g. https://watermarkdirectory.org)
 //   UNSUB_SECRET                — shared HMAC secret (same as Pages Function UNSUB_SECRET)
@@ -30,6 +32,7 @@ import {
 } from "aws-lambda";
 import { createHmac, timingSafeEqual } from "crypto";
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+import postgres, { type Sql } from "postgres";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -48,13 +51,15 @@ interface IssueEvent {
   };
 }
 
-interface UserPrefs {
-  notifications?: {
-    sites?: string[];
-    categories?: string[];
-    frequency?: "immediate" | "daily";
-    email_verified?: boolean;
-  };
+// One `user_prefs` row joined with the subscriber's last-seen email from `users`. The site/category
+// lists are JSON-encoded TEXT (parsed below), `email` is nullable (unsubscribe rows carry no email,
+// and it's a non-authoritative last-seen value — the live Cognito claim wins when a send is wired).
+interface SubscriberRow {
+  sub: string;
+  notif_sites: string;
+  notif_categories: string;
+  notif_frequency: string;
+  email: string | null;
 }
 
 type NotifCategory = "tip" | "correction" | "new_source" | "hypothesis";
@@ -80,52 +85,31 @@ function verifySignature(secret: string, body: string, signature: string): boole
 }
 
 // ---------------------------------------------------------------------------
-// Cloudflare KV REST API helpers
+// Lakebase (Postgres) client
 // ---------------------------------------------------------------------------
 
-async function cfKvListKeys(
-  token: string,
-  accountId: string,
-  namespaceId: string,
-  prefix: string,
-): Promise<string[]> {
-  const url = `https://api.cloudflare.com/client/v4/accounts/${accountId}/storage/kv/namespaces/${namespaceId}/keys?prefix=${encodeURIComponent(prefix)}&limit=1000`;
-  const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-  if (!res.ok) throw new Error(`CF KV list failed: ${res.status}`);
-  const data = (await res.json()) as {
-    result?: Array<{ name: string }>;
-    success?: boolean;
-  };
-  return (data.result ?? []).map((k) => k.name);
+// Memoized per connection string: a warm Lambda container reuses the module-global client across
+// invocations rather than reconnecting per webhook. `ssl: "require"` — Lakebase (managed Postgres)
+// only accepts TLS connections. Unlike the Worker-side `pg.ts`, there's no Hyperdrive in front, so
+// this is a direct pooled connection (`max: 1` — a Lambda container serves one request at a time).
+let cached: { key: string; sql: Sql } | undefined;
+
+function lakebase(connectionString: string): Sql {
+  if (cached?.key === connectionString) return cached.sql;
+  const sql = postgres(connectionString, { max: 1, ssl: "require" });
+  cached = { key: connectionString, sql };
+  return sql;
 }
 
-async function cfKvGetValue(
-  token: string,
-  accountId: string,
-  namespaceId: string,
-  key: string,
-): Promise<string | null> {
-  const url = `https://api.cloudflare.com/client/v4/accounts/${accountId}/storage/kv/namespaces/${namespaceId}/values/${encodeURIComponent(key)}`;
-  const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-  if (res.status === 404) return null;
-  if (!res.ok) throw new Error(`CF KV get failed: ${res.status}`);
-  return res.text();
-}
-
-async function cfKvPutValue(
-  token: string,
-  accountId: string,
-  namespaceId: string,
-  key: string,
-  value: string,
-): Promise<void> {
-  const url = `https://api.cloudflare.com/client/v4/accounts/${accountId}/storage/kv/namespaces/${namespaceId}/values/${encodeURIComponent(key)}`;
-  const res = await fetch(url, {
-    method: "PUT",
-    headers: { Authorization: `Bearer ${token}`, "Content-Type": "text/plain" },
-    body: value,
-  });
-  if (!res.ok) throw new Error(`CF KV put failed: ${res.status}`);
+/** Parse a JSON-array TEXT column back to a string[]; tolerates malformed/non-array values.
+ *  Mirrors `parseStringArray` in `web/functions/api/_lib/authStore.ts` (same stored shape). */
+function parseStringArray(raw: string): string[] {
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed.filter((v): v is string => typeof v === "string") : [];
+  } catch {
+    return [];
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -208,9 +192,7 @@ export const handler = async (
 ): Promise<APIGatewayProxyResultV2 | void> => {
   const env = {
     GITHUB_WEBHOOK_SECRET: process.env.GITHUB_WEBHOOK_SECRET ?? "",
-    CLOUDFLARE_API_TOKEN: process.env.CLOUDFLARE_API_TOKEN ?? "",
-    CLOUDFLARE_ACCOUNT_ID: process.env.CLOUDFLARE_ACCOUNT_ID ?? "",
-    AUTH_PREFS_NAMESPACE_ID: process.env.AUTH_PREFS_NAMESPACE_ID ?? "",
+    LAKEBASE_URL: process.env.LAKEBASE_URL ?? "",
     SES_FROM_ADDRESS: process.env.SES_FROM_ADDRESS ?? "",
     SITE_URL: process.env.SITE_URL ?? "",
     UNSUB_SECRET: process.env.UNSUB_SECRET ?? "",
@@ -273,75 +255,49 @@ export const handler = async (
     return { statusCode: 200, body: "no matching site label" };
   }
 
-  // Enumerate AUTH_PREFS subscribers.
-  const keys = await cfKvListKeys(
-    env.CLOUDFLARE_API_TOKEN,
-    env.CLOUDFLARE_ACCOUNT_ID,
-    env.AUTH_PREFS_NAMESPACE_ID,
-    "prefs:",
-  );
+  // Enumerate subscribers from Lakebase. The KV keyspace scan (`prefs:*`) becomes a single
+  // `SELECT` over `user_prefs`, left-joined to `users` for the last-seen email. Category/site
+  // filtering stays in code (the lists are JSON-encoded TEXT, parsed like the store does) —
+  // subscriber volume is small, so a full read + in-memory filter mirrors the old KV behavior.
+  const sql = lakebase(env.LAKEBASE_URL);
+  const rows = await sql<SubscriberRow[]>`
+    SELECT p.sub, p.notif_sites, p.notif_categories, p.notif_frequency, u.email
+    FROM user_prefs p
+    LEFT JOIN users u ON u.sub = p.sub
+  `;
 
   let sent = 0;
   let digest = 0;
 
-  for (const key of keys) {
-    const raw = await cfKvGetValue(
-      env.CLOUDFLARE_API_TOKEN,
-      env.CLOUDFLARE_ACCOUNT_ID,
-      env.AUTH_PREFS_NAMESPACE_ID,
-      key,
-    ).catch(() => null);
-    if (!raw) continue;
-
-    let prefs: UserPrefs;
-    try {
-      prefs = JSON.parse(raw) as UserPrefs;
-    } catch {
-      continue;
-    }
-
-    const notif = prefs.notifications;
-    if (!notif) continue;
+  for (const row of rows) {
+    const categories = parseStringArray(row.notif_categories);
+    const sites = parseStringArray(row.notif_sites);
 
     // Check category subscription.
-    if (!notif.categories?.includes(category)) continue;
+    if (!categories.includes(category)) continue;
 
-    // Check site subscription.
-    if (siteSlug && notif.sites?.length && !notif.sites.includes(siteSlug)) continue;
+    // Check site subscription (an empty site list means "all sites").
+    if (siteSlug && sites.length && !sites.includes(siteSlug)) continue;
 
-    // The KV key is `prefs:<sub>`.
-    const sub = key.slice("prefs:".length);
+    const sub = row.sub;
 
-    if (notif.frequency === "daily") {
-      // Increment digest counter (flushed by scheduled Lambda).
-      const digestKey = `digest:pending:${sub}`;
-      const current = Number(
-        (await cfKvGetValue(
-          env.CLOUDFLARE_API_TOKEN,
-          env.CLOUDFLARE_ACCOUNT_ID,
-          env.AUTH_PREFS_NAMESPACE_ID,
-          digestKey,
-        ).catch(() => null)) ?? "0",
-      );
-      await cfKvPutValue(
-        env.CLOUDFLARE_API_TOKEN,
-        env.CLOUDFLARE_ACCOUNT_ID,
-        env.AUTH_PREFS_NAMESPACE_ID,
-        digestKey,
-        String(current + 1),
-      ).catch((e: unknown) => console.error("digest increment failed", sub, e));
+    if (row.notif_frequency === "daily") {
+      // Increment the pending-digest counter (flushed by the scheduled Lambda, #938 follow-up).
+      // Best-effort: a failure here must not abort the rest of the fan-out.
+      await sql`
+        UPDATE user_prefs SET digest_pending = digest_pending + 1 WHERE sub = ${sub}
+      `.catch((e: unknown) => console.error("digest increment failed", sub, e));
       digest++;
       continue;
     }
 
-    // Immediate dispatch. The user's email lives in Cognito, not in KV — the prefs
-    // record doesn't store it. We skip users whose prefs don't have email_verified
-    // as a light guard; the from-address bounce handling covers the rest.
-    if (!notif.email_verified) continue;
-
-    // The subscriber's email lives in Cognito, not in KV. Until AdminGetUser is
-    // wired here, log and skip without counting as sent (#938 follow-up).
-    console.log(`TODO: send immediate email to sub=${sub} category=${category}`);
+    // Immediate dispatch. `users.email` is a non-authoritative last-seen value and `email_verified`
+    // is a live Cognito claim not stored in Postgres — so the actual SES send (with an AdminGetUser
+    // verification check) is still the #938 follow-up. Until then, log and skip without counting as
+    // sent. The address is now sourced here so wiring the send is a local change.
+    console.log(
+      `TODO: send immediate email to sub=${sub} category=${category} email=${row.email ?? "unknown"}`,
+    );
   }
 
   console.log(`Dispatched: ${sent} immediate, ${digest} queued for digest`);
