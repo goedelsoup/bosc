@@ -1,5 +1,65 @@
 {
   "$defs": {
+    "DomainReadiness": {
+      "additionalProperties": false,
+      "description": "Per-domain activation state (#1220): each of the five domains is ``absent|seeded|live``.\n\nComputed at export from feed counts + the ``SiteProfile`` by :mod:`watermark.site.readiness`\n(the SSOT for the predicates); this is only the wire shape. The ``State``/``Domain``\nvocabulary lives there so the schema and the computation can never drift.",
+      "properties": {
+        "backdrop": {
+          "enum": [
+            "absent",
+            "seeded",
+            "live"
+          ],
+          "title": "Backdrop",
+          "type": "string"
+        },
+        "facility": {
+          "enum": [
+            "absent",
+            "seeded",
+            "live"
+          ],
+          "title": "Facility",
+          "type": "string"
+        },
+        "places": {
+          "enum": [
+            "absent",
+            "seeded",
+            "live"
+          ],
+          "title": "Places",
+          "type": "string"
+        },
+        "record": {
+          "enum": [
+            "absent",
+            "seeded",
+            "live"
+          ],
+          "title": "Record",
+          "type": "string"
+        },
+        "story": {
+          "enum": [
+            "absent",
+            "seeded",
+            "live"
+          ],
+          "title": "Story",
+          "type": "string"
+        }
+      },
+      "required": [
+        "backdrop",
+        "facility",
+        "places",
+        "record",
+        "story"
+      ],
+      "title": "DomainReadiness",
+      "type": "object"
+    },
     "FeedRef": {
       "additionalProperties": false,
       "description": "One entry in the manifest's feed index — what it is and how to read it.",
@@ -44,6 +104,31 @@
       ],
       "title": "FeedRef",
       "type": "object"
+    },
+    "SiteReadiness": {
+      "additionalProperties": false,
+      "description": "The manifest's standing **readiness** block (#1220 / #1222): the per-domain states plus\nthe tier :func:`watermark.site.readiness.site_tier` derives from them.\n\nRecomputed at every ``watermark export``, so it rises when a source lands and falls when one\ndries up — a standing property, not an onboard-time snapshot. The frontend\n(``web/src/lib/readiness.ts``) reads this instead of re-deriving section gating from raw\nfeed counts (#1223).",
+      "properties": {
+        "tier": {
+          "enum": [
+            "stub",
+            "backdrop",
+            "case",
+            "reference"
+          ],
+          "title": "Tier",
+          "type": "string"
+        },
+        "domains": {
+          "$ref": "#/$defs/DomainReadiness"
+        }
+      },
+      "required": [
+        "tier",
+        "domains"
+      ],
+      "title": "SiteReadiness",
+      "type": "object"
     }
   },
   "additionalProperties": false,
@@ -73,6 +158,9 @@
       "title": "Row Total",
       "type": "integer"
     },
+    "readiness": {
+      "$ref": "#/$defs/SiteReadiness"
+    },
     "feeds": {
       "items": {
         "$ref": "#/$defs/FeedRef"
@@ -87,7 +175,8 @@
     "contract_version",
     "generated_at",
     "feed_count",
-    "row_total"
+    "row_total",
+    "readiness"
   ],
   "title": "Manifest",
   "type": "object",

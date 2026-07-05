@@ -97,8 +97,10 @@ from watermark.site.feeds import (
     PlaceItem,
     RecordItem,
     RelationshipEdge,
+    SiteReadiness,
     TimelineEntry,
 )
+from watermark.site.readiness import compute_readiness
 from watermark.sites import (
     active_profile,
     effective_corpus_scope,
@@ -615,6 +617,14 @@ def export_bundle(
     )
 
     row_total = sum(r.count for r in refs)
+    # Standing domain-activation readiness (#1220/#1222): computed here, at the end of every
+    # export, from the just-assembled feed counts + the active profile — so it rises when a
+    # source lands and falls when one dries up, without re-running onboard. The frontend reads
+    # this block instead of re-deriving section gating (watermark.site.readiness is the SSOT).
+    feed_counts = {r.name: r.count for r in refs}
+    readiness = SiteReadiness.model_validate(
+        compute_readiness(active_profile(settings), feed_counts)
+    )
     manifest = Manifest(
         site=settings.site,
         bundle_version=BUNDLE_VERSION,
@@ -622,6 +632,7 @@ def export_bundle(
         generated_at=generated_at or _now_iso(),
         feed_count=len(refs),
         row_total=row_total,
+        readiness=readiness,
         feeds=refs,
     )
     (out / "manifest.json").write_text(

@@ -43,5 +43,8 @@ notes: >-
   The `energy-burden` feed (#1110) derives the household energy burden — % of median household
   income (economics-baseline B19013) spent on residential electricity + heating (eia-consumer-energy)
   — adding no new committed upstream (both inputs are already declared dependencies).
+  The manifest also carries a `readiness` block (#1220, contract 1.17.0) — the standing
+  domain-activation readiness (five domains × absent|seeded|live + a derived tier) computed from
+  the assembled feed counts + the site profile at every export, so it adds no new committed upstream.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.

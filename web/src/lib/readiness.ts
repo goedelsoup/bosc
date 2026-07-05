@@ -1,30 +1,43 @@
 /**
- * Per-site section readiness (#781) — the gating engine for a partial network site.
+ * Per-site readiness — the gating engine for a network site, driven by **domain activation**
+ * (#1220 / #1223).
  *
- * A new watershed-point site rarely has the whole record on day one (Fort Wayne today: the
- * Project Zodiac campus + rsei/econ/network slices, but no timeline / people / exhibits). The
- * site must still be navigable and useful, and actively solicit sources — so each section is
- * classified `available` or `locked` from what *that site's* bundle actually carries, never from
- * Lima's. Pages read this to either render their real partial data or show a coherent "not on the
- * record yet" lock with a contribute CTA: degrade, don't break; lock what isn't ready; and — the
- * repo's spine — never fabricate Lima's record onto a thinner peer.
+ * The network is *additive*: a site is defined by the **domains that actually have a story
+ * there**, not by its deficits against Lima's full section taxonomy. Readiness is computed **in
+ * Python at export** (`bosc.site.readiness`) and written into the bundle `manifest.json` as a
+ * `readiness` block (five domains × `absent|seeded|live`, plus a derived `tier`). This module reads
+ * that block — it is the SSOT for the site-level gating and the chrome tier, and there is no
+ * "reference site ⇒ everything available" shortcut: Lima renders as available because its manifest
+ * says every domain is `live`, not because it is special-cased.
  *
- * The reference build (Lima) is the deliberate exception: it hosts the network-global narrative
- * and leads (the root `/reports`, `/leads` read it), so its sections are always `available`
- * regardless of counts. Mirrors the backend reference-host asymmetry (`bosc.sites`).
- *
- * Gating is read off the bundle `manifest.json` feed counts (+ the site registry for the story),
- * so it's pure and testable: the committed `sample-bundle/{lima,fort-wayne}` fixtures are a real
- * full-vs-partial pair the unit tests pin against.
+ * Sections gate in two bands:
+ *   - **Primary sections** (`record` / `places` / `watershed` / `economy`) read their parent
+ *     **domain** state from the manifest block — a domain with any evidence (`seeded` or `live`)
+ *     opens them. This is what lets a Backdrop-tier peer (floor data only) render a real watershed +
+ *     economy page instead of a wall of locks.
+ *   - **Leaf facets** (`timeline` / `people` / `exhibits` / `story` / `leads`) additionally require
+ *     their own feed/registry signal, so an active domain never opens an *empty* facet page (a
+ *     timeline with no events reads as a lock + needs-board ask, not a barren page).
+ * Two sections are network-global rather than per-site: `reports` (the `docs/` long-form the
+ * reference build hosts) stays reference-only (`isReferenceSite`, the surviving network-global-host
+ * role, #1220); `watershed` also locks when the facility's cooling method is undisclosed (#1057).
  */
 import { hasFeed, loadFeed, loadManifest } from "./bundle";
+import type { DomainState, Readiness, SiteTier } from "./bundle";
 import type { ScenarioResult } from "./feeds";
 import { LIMA_SLUG } from "./routes";
 import { siteForSlug } from "./sites";
 
+export type { DomainState, SiteTier } from "./bundle";
+
+/** The five activation domains (`bosc.site.readiness.Domain`). */
+export type Domain = "backdrop" | "facility" | "places" | "record" | "story";
+
 /**
- * The live reference build hosts the network-global content (the `docs/` narrative, the Lima
- * leads board); its sections never lock. The frontend peer of `bosc.sites.is_reference_site`.
+ * The live reference build (Lima) hosts the network-global content — the `docs/` narrative that
+ * the `reports` section reads, the cross-site hypothesis matrix, the whole-data-tier catalog. This
+ * is the **network-global-host role** (the peer of `bosc.sites.is_reference_site`), NOT a readiness
+ * backdoor: it no longer forces every section available (#1220). Only `reports` still keys off it.
  */
 export function isReferenceSite(slug: string): boolean {
   return slug === LIMA_SLUG;
@@ -90,14 +103,31 @@ export const SECTION_META: Record<ReadinessSection, { label: string; holds: stri
   },
 };
 
+/** All-absent readiness — the safe fallback when a bundle predates the `readiness` block (contract
+ *  < 1.17.0) or a synthetic fixture omits it: sections lock (degrade), nothing crashes. */
+const ABSENT_READINESS: Readiness = {
+  tier: "stub",
+  domains: { backdrop: "absent", facility: "absent", places: "absent", record: "absent", story: "absent" },
+};
+
+/** The site's computed readiness block, read straight from its bundle manifest (#1220). */
+export function siteReadinessBlock(slug: string): Readiness {
+  return loadManifest(slug).readiness ?? ABSENT_READINESS;
+}
+
+/** The five domains' `absent|seeded|live` states for a site (the manifest block, domain axis). */
+export function siteDomainStates(slug: string): Record<Domain, DomainState> {
+  return siteReadinessBlock(slug).domains;
+}
+
+/** A site's readiness tier (`stub|backdrop|case|reference`) — the chrome/tab tier reads this. */
+export function siteTier(slug: string): SiteTier {
+  return siteReadinessBlock(slug).tier;
+}
+
 /** Count a feed's rows from the manifest (0 when the feed is absent). */
 function feedCount(slug: string, name: string): number {
   return loadManifest(slug).feeds.find((f) => f.name === name)?.count ?? 0;
-}
-
-/** Sum a set of feeds' row counts. */
-function feedSum(slug: string, names: readonly string[]): number {
-  return names.reduce((n, name) => n + feedCount(slug, name), 0);
 }
 
 /**
@@ -108,7 +138,7 @@ function feedSum(slug: string, names: readonly string[]): number {
  * an estimate — the facility exists but no record says how it rejects heat. Rendering its
  * single consumptive/7Q10-multiple headline as if confirmed would fabricate the site's most
  * load-bearing number, so the watershed section locks and the needs board asks for the
- * disclosure instead. Content-based (reads feed rows), unlike the count-based predicates.
+ * disclosure instead. Content-based (reads feed rows), so it stands apart from the domain block.
  */
 export function coolingMethodUndisclosed(slug: string): boolean {
   if (!hasFeed("hydrology-scenarios", slug)) return false;
@@ -120,47 +150,53 @@ export function coolingMethodUndisclosed(slug: string): boolean {
   );
 }
 
+/** A domain carries evidence (is worth opening its sections for) when it is `seeded` or `live`. */
+function domainPresent(slug: string, domain: Domain): boolean {
+  return siteDomainStates(slug)[domain] !== "absent";
+}
+
 /**
- * Whether a section has enough of *this site's* own data to stand on its own. The reference site
- * short-circuits to `available` everywhere (it carries the network-global content). Each predicate
- * reads only feed counts (+ the registry for the story), so it's deterministic per bundle.
+ * Whether a section has enough of *this site's* own data to stand on its own — the additive gate.
+ * Primary sections read the manifest `readiness` block (their parent domain); leaf facets add a
+ * feed/registry check so an active domain never opens an empty page. Deterministic per bundle.
  */
 function hasEnough(section: ReadinessSection, slug: string): boolean {
   switch (section) {
+    // --- primary sections: gated by their parent domain's activation state (the manifest block) ---
     case "record":
-      // The library spine — any of the document/record/entity feeds is enough to open the door.
-      return feedSum(slug, ["records", "documents", "entities"]) > 0;
-    case "timeline":
-      return feedCount(slug, "timeline") > 0;
-    case "people":
-      return feedCount(slug, "people") > 0;
+      return domainPresent(slug, "record");
     case "places":
-      return feedCount(slug, "places") > 0;
-    case "exhibits":
-      return feedCount(slug, "exhibits") > 0;
-    case "watershed":
-      // An undisclosed cooling method locks the section outright (#1057): its scenario rows
-      // are bracketed ranges, and no fabricated single-figure headline may stand in.
-      if (coolingMethodUndisclosed(slug)) return false;
-      return feedSum(slug, ["geo/campus", "geo/watershed", "geo/imagery", "hydrology-scenarios", "rsei"]) > 0;
+      return domainPresent(slug, "places");
     case "economy":
-      return feedSum(slug, ["economics-baseline", "network"]) > 0;
-    case "reports":
-      // The reports are the network-global `docs/` narrative — Lima's only, today. A peer locks it
-      // until it grows its own long-form (no per-site narrative feed exists yet).
-      return false;
+      return domainPresent(slug, "backdrop");
+    case "watershed":
+      // The floor's watershed read (hydrology + toxics) opens with the backdrop domain — but an
+      // undisclosed cooling method locks it outright (#1057): its scenario rows are bracketed
+      // ranges, and no fabricated single-figure headline may stand in.
+      return domainPresent(slug, "backdrop") && !coolingMethodUndisclosed(slug);
+    // --- leaf facets: the domain plus the facet's own feed/registry signal (no empty pages) ---
+    case "timeline":
+      return domainPresent(slug, "record") && feedCount(slug, "timeline") > 0;
+    case "people":
+      return domainPresent(slug, "record") && feedCount(slug, "people") > 0;
+    case "exhibits":
+      return domainPresent(slug, "record") && feedCount(slug, "exhibits") > 0;
     case "story":
+      // The guided walk needs a registered story (the `sites.ts` overlay) — a leads-only story
+      // domain (Urbana) has no walk to open.
       return (siteForSlug(slug)?.stories?.length ?? 0) > 0;
     case "leads":
-      // The leads board is the Lima corpus-audit, network-global today — reference-only until a
-      // per-site leads feed lands (#781 follow-up).
-      return false;
+      // The leads board is feed-driven per site (#796); the reference build also hosts the
+      // network-global curated board.
+      return feedCount(slug, "leads") > 0 || isReferenceSite(slug);
+    // --- network-global: the reference build hosts the long-form `docs/` narrative ---
+    case "reports":
+      return isReferenceSite(slug);
   }
 }
 
 /** A section's status for a site: `available` (render its real data) or `locked` (show the lock). */
 export function sectionStatus(slug: string, section: ReadinessSection): SectionStatus {
-  if (isReferenceSite(slug)) return "available";
   return hasEnough(section, slug) ? "available" : "locked";
 }
 
@@ -178,7 +214,7 @@ export function siteReadiness(slug: string): Record<ReadinessSection, SectionSta
   return out;
 }
 
-/** The sections currently locked for a site (empty for the reference build). */
+/** The sections currently locked for a site (empty for a site whose domains are all lit). */
 export function lockedSections(slug: string): ReadinessSection[] {
   return (Object.keys(SECTION_META) as ReadinessSection[]).filter((s) => sectionStatus(slug, s) === "locked");
 }

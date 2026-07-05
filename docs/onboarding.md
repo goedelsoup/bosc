@@ -11,6 +11,22 @@ so onboarding is a short, ordered chain — `watermark onboard <slug>` runs the 
 > blocking checklist — nothing it writes is a finding until a human verifies it against a
 > cited source.
 
+**Readiness is a standing property, not an onboard endpoint** (epic
+[#1220](https://github.com/watermark-directory/the-watermark-directory/issues/1220)). Onboarding's real job is
+to **seed the floor** — the coordinate/FIPS/state-keyed connectors (climatology, Atlas-14,
+WBD, SSURGO, Census/QCEW economics, EIA consumer-energy, RSEI) that carry zero curation and
+no fabrication risk. Once a site has them and runs `watermark export`, it bundles at **Backdrop
+tier** and renders a real watershed + economy page. Readiness itself is **computed in Python at
+every `watermark export`** (`watermark.site.readiness`) and written into the bundle
+`manifest.json` as a `readiness` block: the five domains (**backdrop, facility, places, record,
+story**), each `absent | seeded | live`, plus a derived **tier** (`stub → backdrop → case →
+reference`). It **rises when a source lands and falls when one dries up** — you never re-run
+`onboard` to recompute it. The floor is always pulled; **above the floor lights up only on its
+own evidence** (a disclosed facility, committed parcel geometry, an extracted corpus, a
+registered story) — never scaffolded. The **blocking checklist below governs promotion**
+(step 5), **not** readiness: a registered site is renderable at whatever tier its data earns
+long before it is `selectable`.
+
 ## The chain
 
 ### 1. Register the `SiteProfile` (code edit)

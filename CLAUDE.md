@@ -96,10 +96,24 @@ repo-working agents now.
   outputs stay shared), and prints a **blocking review checklist** — promotion to
   `live`/`selectable` in `web/src/lib/sites.ts` stays a manual, parity-gated edit.
   **Registered ≠ selectable, and a thin peer is still engageable** (#781/#782): a
-  non-reference `/network/<site>` page **degrades, doesn't break** — the frontend
-  readiness layer (`web/src/lib/readiness.ts`, the peer of `watermark.sites.is_reference_site`)
-  classifies each section `available|locked` from the bundle's `manifest.json` feed counts,
-  locks the thin ones, and surfaces a needs/leads board instead. Chrome is **two-tier by the
+  non-reference `/network/<site>` page **degrades, doesn't break**. Readiness is **domain
+  activation, not Lima-shape-matching** (#1220): a site is defined by the **domains that
+  actually have a story there**, not by its deficits against Lima's taxonomy. It is computed
+  **in Python at export** (`watermark.site.readiness`) and written into `manifest.json` as a
+  `readiness` block — the five domains (**backdrop, facility, places, record, story**), each
+  `absent | seeded | live`, plus a derived **tier** (`stub → backdrop → case → reference`). It
+  is a **standing property recomputed at every `watermark export`**: it rises when a source
+  lands and falls when one dries up — never an onboard-time snapshot. The **floor is always
+  pulled** (backdrop = the coordinate/FIPS/state-keyed connectors — economics-baseline,
+  consumer-energy, RSEI); **above the floor triggers on evidence, never scaffolds** (facility on
+  a disclosed permit + its feed, places on committed campus/footprint geometry, record on
+  extracted `records`/`documents`, story on a registered story + leads). The frontend
+  (`web/src/lib/readiness.ts`) is a **thin reader** of the block: primary sections gate on their
+  parent domain, leaf facets add a feed/registry check so an active domain never opens an empty
+  page, and it surfaces a needs/leads board for the locked ones. `is_reference_site` survives
+  **only** for the **network-global-host role** (routed-hydrograph, the hypothesis matrix, the
+  catalog, concepts, the `docs/` long-form) — it is **not** a readiness backdoor: Lima renders
+  as available because its manifest says every domain is `live`. Chrome is **two-tier by the
   current path** — site-level tabs when standing on a site (locked tabs render non-navigable),
   network tabs otherwise; a non-`selectable` site gets registry-only locked tabs. So **never
   fake a value to make a partial site look complete** — let it lock and ask for the source.

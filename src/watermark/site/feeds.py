@@ -31,6 +31,7 @@ from pydantic import BaseModel, ConfigDict, Field, computed_field
 from watermark.provenance import Confidence as Confidence
 from watermark.provenance import SourceKind as SourceKind
 from watermark.provenance import source_is_verified
+from watermark.site.readiness import State, Tier  # the readiness vocabulary SSOT (#1220)
 
 # --- bundle contract version ---------------------------------------------------
 # Bumped per the back-compat policy in data/site/bundle/README.md: PATCH for additive
@@ -83,7 +84,11 @@ from watermark.provenance import source_is_verified
 #   with derived electricity / gas / combined household energy burden (% of income), a fully
 #   `[derived]` consumer-impact metric alongside `consumer-energy`. Present only where the site's
 #   committed baseline carries income; absent (section degrades) otherwise.
-CONTRACT_VERSION = "1.16.0"
+# 1.17.0: the manifest gains the `readiness` block (#1220/#1222) — the standing domain-activation
+#   readiness (`SiteReadiness`): the five domains' `absent|seeded|live` states plus the derived
+#   `tier` (`stub|backdrop|case|reference`), recomputed at every export from feed counts + the
+#   profile (watermark.site.readiness). The frontend reads it instead of re-deriving section gating.
+CONTRACT_VERSION = "1.17.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -635,6 +640,39 @@ class FeedRef(BaseModel):
     count: int  # rows (collection), features (geojson), or 1 (object)
 
 
+class DomainReadiness(BaseModel):
+    """Per-domain activation state (#1220): each of the five domains is ``absent|seeded|live``.
+
+    Computed at export from feed counts + the ``SiteProfile`` by :mod:`watermark.site.readiness`
+    (the SSOT for the predicates); this is only the wire shape. The ``State``/``Domain``
+    vocabulary lives there so the schema and the computation can never drift.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    backdrop: State
+    facility: State
+    places: State
+    record: State
+    story: State
+
+
+class SiteReadiness(BaseModel):
+    """The manifest's standing **readiness** block (#1220 / #1222): the per-domain states plus
+    the tier :func:`watermark.site.readiness.site_tier` derives from them.
+
+    Recomputed at every ``watermark export``, so it rises when a source lands and falls when one
+    dries up — a standing property, not an onboard-time snapshot. The frontend
+    (``web/src/lib/readiness.ts``) reads this instead of re-deriving section gating from raw
+    feed counts (#1223).
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    tier: Tier
+    domains: DomainReadiness
+
+
 class Manifest(BaseModel):
     """The bundle index: version, provenance of the generation, and the feed list."""
 
@@ -646,4 +684,5 @@ class Manifest(BaseModel):
     generated_at: str  # ISO-8601 UTC
     feed_count: int
     row_total: int  # sum of feed counts — a quick internal-consistency check
+    readiness: SiteReadiness  # standing domain-activation readiness (#1220) — tier + per-domain
     feeds: list[FeedRef] = Field(default_factory=list)
