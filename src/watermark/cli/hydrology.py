@@ -1025,3 +1025,55 @@ def refill_cmd(
         console.print(f"  {'·' if f.ok else '!'} {f.detail}", markup=False)
     for c in ra.caveats:
         console.print(f"  ~ {c}", markup=False)
+
+
+@app.command(name="reaches")
+def reaches(
+    offline: bool = typer.Option(
+        False, "--offline", help="Use cached/fixture NLDI responses only; never touch the network."
+    ),
+    write: bool = typer.Option(
+        False, "--write", help="Write data/reference/hydrology/reaches/<site>.geojson."
+    ),
+    out: str | None = typer.Option(
+        None,
+        "--out",
+        help="Output path (default: data/reference/hydrology/reaches/<site>.geojson).",
+    ),
+) -> None:
+    """Navigate the real river centerlines for the reach network (NLDI/NHDPlus, #1235).
+
+    The model reaches (network.yaml/reaches.yaml) carry topology + channel length only —
+    no coordinates. This snaps the site's gage + tributary outfalls to the NHDPlus flowline
+    network via USGS NLDI, stitches one centerline per reach node, and (with --write) lands
+    them as committed reference GeoJSON — the geometry the ReachNetwork feed + FlowLayer viz
+    (epic #1237) advect over. Nothing is invented: reaches with no NLDI geometry are skipped.
+    """
+    from pathlib import Path
+
+    from watermark.hydrology import reach_geometry
+
+    settings = offline_settings("hydro", offline)
+    centerlines, warnings = reach_geometry.assemble_reach_network(settings=settings)
+
+    if not centerlines:
+        console.print("[yellow]No reach centerlines resolved.[/]")
+        for w in warnings:
+            console.print(f"[dim]! {w}[/]")
+        raise typer.Exit(1)
+
+    table = Table("reach", "name", "→ downstream", "km")
+    for c in centerlines:
+        table.add_row(c.node_id, c.name, c.downstream or "—", f"{c.length_km:.2f}")
+    console.print(table)
+    for w in warnings:
+        console.print(f"[dim]! {w}[/]")
+
+    if write:
+        target = (
+            Path(out)
+            if out
+            else settings.reference_dir / "hydrology" / "reaches" / f"{settings.site}.geojson"
+        )
+        path = reach_geometry.write_reach_network(centerlines, target)
+        wrote(path)

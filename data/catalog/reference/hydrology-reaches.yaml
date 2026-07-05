@@ -1,0 +1,35 @@
+id: hydrology-reaches
+title: Reach-network river centerlines — NHDPlus geometry (USGS NLDI)
+scope: reference
+status: reviewed
+producer:
+  kind: connector
+  command: reaches --write
+  connector_ref: watermark.hydrology.connectors.nldi
+  source: USGS NLDI navigation over the NHDPlus flowline network (mainstem from gage 04187100 + tributary WWTP snaps)
+  external_url: https://api.water.usgs.gov/nldi
+license: U.S. Government work (public domain)
+access_tier: public
+site_scope: slug-scoped
+storage:
+- relpath: reference/hydrology/reach-nav.yaml
+  media_type: application/yaml
+  lfs: false
+- relpath: reference/hydrology/reaches/lima.geojson
+  media_type: application/geo+json
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: connector
+schema_ref: watermark.hydrology.reach_geometry.ReachCenterline
+tags:
+- nldi
+- nhdplus
+- reach
+- flowline
+- centerline
+- usgs
+- geojson
+notes: Verbatim WGS84 NHDPlus river centerlines, one per model reach node (network.yaml), stitched +
+  cut by watermark.hydrology.reach_geometry per the committed reach-nav.yaml plan. Display geometry
+  feeding the bundle's reach-network feed — the deck.gl FlowLayer particle-advection viz (#1237/#1235).

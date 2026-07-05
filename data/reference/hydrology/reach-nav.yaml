@@ -1,0 +1,58 @@
+# Reach-network navigation plan — how each model reach's real river centerline is pulled.
+#
+# The companion to network.yaml (topology) and reaches.yaml (channel length/slope). Those
+# carry NO coordinates, so the reach-network's map geometry is navigated from the USGS NLDI
+# NHDPlus flowline network (watermark.hydrology.connectors.nldi) and stitched per reach by
+# watermark.hydrology.reach_geometry. `watermark reaches --site lima --write` reads this plan
+# and writes data/reference/hydrology/reaches/<slug>.geojson (a committed, regenerable
+# reference dataset; the ReachNetwork feed and the FlowLayer viz, epic #1237/#1235, read it).
+#
+# DISCIPLINE: the geometry is verbatim NHDPlus (real river lines). The only modeling choice
+# is where one navigated mainstem is CUT into its named model reaches — done by those reaches'
+# own reaches.yaml length RATIOS (a proportional cut of the real arc length), so no reach
+# boundary is asserted as an NHDPlus segment break. Tributary anchors are the cited WWTP
+# outfall coordinates already on the hydrology record (network balance nodes); the outlet
+# anchor only orients flow direction (it is not rendered).
+
+meta:
+  site: lima
+  subject: Reach-network centerline navigation plan (Lima Ottawa River loop)
+  source: >-
+    USGS NLDI (Network-Linked Data Index) over the NHDPlus flowline network. Mainstem
+    navigated from USGS gage 04187100 (Ottawa River at Lima); tributaries snapped from the
+    American II / American Bath WWTP outfall coordinates on the hydrology balance record.
+  crs: WGS84 (EPSG:4326)
+  caveats:
+    - "Centerline geometry is verbatim NHDPlus, display-only — no reprojection or simplification."
+    - "Mainstem reach boundaries are a proportional cut by reaches.yaml lengths, not NHDPlus breaks."
+    - "Tier-0 screening geometry for a flow visualization; not a calibrated hydraulic network."
+
+# Orients every reach so particles advect downstream (the vertex nearest this point is last).
+# A real Ottawa-River point ~21 km below the gage toward the Auglaize confluence (NLDI DM).
+outlet_anchor: [-84.20787, 40.91735]
+
+# The Ottawa River mainstem — one navigated line head -> outlet, split at the real gage point:
+# the portion ABOVE the gage is cut into [ottawa-head, lima-abstraction] by their reaches.yaml
+# length ratios (82000 : 12000 ft); the portion BELOW is lima-reach (the assimilative reach that
+# gathers the tributary confluences on its way to the outlet).
+mainstem:
+  gage: USGS-04187100
+  gage_point: [-84.12634, 40.72477]  # NLDI gage location — the head/reach split anchor
+  upstream_km: 29.0    # covers ottawa-head + the abstraction reach above the gage
+  downstream_km: 45.0  # the assimilative reach past both tributary confluences to the outlet
+  above_gage: [ottawa-head, lima-abstraction]
+  below_gage: lima-reach
+
+# Each tributary: snap the WWTP outfall to its NHDPlus comid, navigate upstream for the
+# headwater reach and downstream for the reach to the Ottawa confluence.
+tributaries:
+  - head: dug-run-head
+    confluence: dug-run-confluence
+    anchor: [-84.203546, 40.799167]  # American II WWTP outfall (Dug Run)
+    upstream_km: 8.0
+    downstream_km: 9.0
+  - head: pike-run-head
+    confluence: pike-run-confluence
+    anchor: [-84.125966, 40.783789]  # American Bath WWTP outfall (Pike Run)
+    upstream_km: 4.0
+    downstream_km: 8.0

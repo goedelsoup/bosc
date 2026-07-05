@@ -113,6 +113,17 @@ Source: Ohio DNR, Division of Water — 'Principal Streams and Their Drainage Ar
 | --- | --- | --- |
 | `reference/hydrology/ohio-principal-streams/principal-streams-and-drainage-areas.pdf` | application/pdf | yes |
 
+### `hydrology-reaches` — Reach-network river centerlines — NHDPlus geometry (USGS NLDI)
+
+Source: USGS NLDI navigation over the NHDPlus flowline network (mainstem from gage 04187100 + tributary WWTP snaps) · License: U.S. Government work (public domain) · Access: public · Site scope: slug-scoped · Refresh: on-demand
+
+Regenerate: `watermark reaches --write`
+
+| file | type | lfs |
+| --- | --- | --- |
+| `reference/hydrology/reach-nav.yaml` | application/yaml | no |
+| `reference/hydrology/reaches/lima.geojson` | application/geo+json | no |
+
 ### `hydrology-swmm` — Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)
 
 Source: BOSC-generated EPA SWMM5 (.inp) model decks over the campus parcels + Atlas-14 design storm · License: BOSC work product (derived model decks; EPA SWMM engine is public-domain) · Access: public · Site scope: basin-shared · Refresh: on-demand

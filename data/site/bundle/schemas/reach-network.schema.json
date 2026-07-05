@@ -1,0 +1,109 @@
+{
+  "$defs": {
+    "ReachLine": {
+      "additionalProperties": false,
+      "description": "One reach node's river centerline — a downstream-oriented (lon, lat) polyline.",
+      "properties": {
+        "node_id": {
+          "title": "Node Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "receiving_water": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Receiving Water"
+        },
+        "downstream": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Downstream"
+        },
+        "length_km": {
+          "title": "Length Km",
+          "type": "number"
+        },
+        "coordinates": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "title": "Coordinates",
+          "type": "array"
+        }
+      },
+      "required": [
+        "node_id",
+        "name",
+        "length_km",
+        "coordinates"
+      ],
+      "title": "ReachLine",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "The reach network's river-centerline geometry for the FlowLayer viz (#1235).",
+  "properties": {
+    "site": {
+      "title": "Site",
+      "type": "string"
+    },
+    "crs": {
+      "default": "WGS84 (EPSG:4326)",
+      "title": "Crs",
+      "type": "string"
+    },
+    "reaches": {
+      "items": {
+        "$ref": "#/$defs/ReachLine"
+      },
+      "title": "Reaches",
+      "type": "array"
+    },
+    "note": {
+      "default": "",
+      "title": "Note",
+      "type": "string"
+    },
+    "caveats": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Caveats",
+      "type": "array"
+    }
+  },
+  "required": [
+    "site"
+  ],
+  "title": "ReachNetwork",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

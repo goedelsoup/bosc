@@ -100,7 +100,14 @@ from watermark.site.readiness import State, Tier  # the readiness vocabulary SSO
 #   corner box, per-period NAAQS lines, and a fixed `provenance: assumption` marker (the CBI-redacted
 #   stack ⇒ [inference]). Reference-site gated; `available=False` with empty `values` when the AERMOD
 #   binary/met is absent (geometry real, no fabricated concentration).
-CONTRACT_VERSION = "1.19.0"
+# 1.20.0: adds the `reach-network` object feed (epic #1237 / #1235) — the real river-centerline
+#   geometry (`ReachNetwork`) the deck.gl FlowLayer particle-advection viz advects over: one
+#   downstream-oriented `ReachLine` (lon/lat polyline) per model reach node, keyed by `node_id`
+#   so the frontend joins flow magnitude (routed-hydrograph) + deficit (hydrology-scenarios) by
+#   node. Geometry is verbatim NHDPlus via USGS NLDI (watermark.hydrology.reach_geometry),
+#   committed under data/reference/hydrology/reaches/. Reference-site gated like routed-hydrograph;
+#   absent when the committed centerline file is missing (nothing invented).
+CONTRACT_VERSION = "1.20.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -778,6 +785,39 @@ class DispersionField(BaseModel):
             caveats=caveats or [],
             note=note,
         )
+
+
+# --- reach-network centerlines (GPU flow viz, epic #1237 / #1235) --------------------------
+# The real river-centerline geometry the deck.gl FlowLayer advects particles over. The model
+# reaches (network.yaml / reaches.yaml) carry no coordinates, so this is verbatim NHDPlus via
+# USGS NLDI (watermark.hydrology.reach_geometry), committed under data/reference/hydrology/reaches/.
+# Keyed by `node_id`, so the frontend joins each reach's flow magnitude (from routed-hydrograph)
+# and deficit state (from hydrology-scenarios) without re-carrying those numbers here.
+
+
+class ReachLine(BaseModel):
+    """One reach node's river centerline — a downstream-oriented (lon, lat) polyline."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    node_id: str  # the network.yaml node id (join key)
+    name: str
+    receiving_water: str | None = None
+    downstream: str | None = None  # the node this reach drains into (None at the outlet)
+    length_km: float
+    coordinates: list[tuple[float, float]]  # (lon, lat), ordered head → downstream
+
+
+class ReachNetwork(BaseModel):
+    """The reach network's river-centerline geometry for the FlowLayer viz (#1235)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    site: str
+    crs: str = "WGS84 (EPSG:4326)"
+    reaches: list[ReachLine] = Field(default_factory=list)
+    note: str = ""
+    caveats: list[str] = Field(default_factory=list)
 
 
 # --- manifest ------------------------------------------------------------------
