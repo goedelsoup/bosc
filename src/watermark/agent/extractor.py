@@ -18,6 +18,7 @@ from pydantic import BaseModel
 
 from watermark.config import Settings, get_settings
 from watermark.logging import get_logger
+from watermark.tasks import PipelineTask
 
 log = get_logger(__name__)
 
@@ -79,10 +80,15 @@ class StructuredExtractor:
         settings: Settings | None = None,
         client: Any | None = None,
         max_tokens: int = 4096,
+        task: PipelineTask | str = PipelineTask.EXTRACT,
     ) -> None:
         self.settings = settings or get_settings()
         self.model = model or self.settings.extract_model
         self.max_tokens = max_tokens
+        # The pipeline task this extractor's calls are attributed to (#1080): selects the
+        # per-task workspace key. Extraction is the common case; the distill/repair callers
+        # pass their own (DRAFT / CORROBORATE) so the Admin usage report splits by workspace.
+        self.task = task
         self._client = client
 
     @property
@@ -90,7 +96,7 @@ class StructuredExtractor:
         if self._client is None:
             from anthropic import Anthropic
 
-            self._client = Anthropic(api_key=self.settings.anthropic_api_key or None)
+            self._client = Anthropic(api_key=self.settings.anthropic_key_for(self.task) or None)
         return self._client
 
     def _force_tool(

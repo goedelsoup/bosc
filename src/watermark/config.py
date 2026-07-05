@@ -15,6 +15,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from watermark.connectors import DEFAULT_CACHE_TTL_HOURS
 from watermark.sites import PROFILE_SETTINGS_FIELDS, SITES
+from watermark.tasks import PipelineTask
 
 # Repo root = two levels up from this file (src/watermark/config.py -> repo root).
 _REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -50,6 +51,18 @@ class Settings(BaseSettings):
     # --- Credentials -------------------------------------------------------
     # Not prefixed: the Anthropic SDK and Claude Agent SDK read this name.
     anthropic_api_key: str = Field(default="", alias="ANTHROPIC_API_KEY")
+    # Per-task inference keys (GreenOps usage attribution; #1080). Route each pipeline stage
+    # (watermark.tasks.PipelineTask) through a distinct Anthropic key — each bound to its own
+    # Anthropic workspace — so the Admin usage report (#1078) attributes calls by workspace,
+    # which is what turns the "AI by task" donut (#1083) from a modeled assumption into a
+    # connector figure. WATERMARK_-prefixed (our `anthropic_key_for` resolver reads them, then
+    # hands the key to the SDK explicitly); an empty task key falls back to ANTHROPIC_API_KEY,
+    # so a single-key deploy is unchanged. Provisioning: data/reference/greenops/README.md.
+    # NEVER logged and NEVER part of any cache key (like every other secret here).
+    anthropic_key_extract: str = ""  # WATERMARK_ANTHROPIC_KEY_EXTRACT
+    anthropic_key_corroborate: str = ""  # WATERMARK_ANTHROPIC_KEY_CORROBORATE (#40 repair loop)
+    anthropic_key_ask: str = ""  # WATERMARK_ANTHROPIC_KEY_ASK (in-process research agent)
+    anthropic_key_draft: str = ""  # WATERMARK_ANTHROPIC_KEY_DRAFT
     # Not prefixed: the standard GitHub Actions / gh CLI env-var name.
     github_token: str = Field(default="", alias="GITHUB_TOKEN")
     # Override for tests (points at a mock server or fixture endpoint).
@@ -529,6 +542,24 @@ class Settings(BaseSettings):
         where it came from, its license/access tier, and how it regenerates. Committed
         (epic #631). The peer of ``hypotheses_dir``; validated by ``watermark catalog check``."""
         return self.data_dir / "catalog"
+
+    def anthropic_key_for(self, task: PipelineTask | str | None = None) -> str:
+        """The Anthropic API key for a pipeline ``task``, or the base inference key.
+
+        Routes a stage's calls to its own workspace key
+        (``WATERMARK_ANTHROPIC_KEY_<TASK>``) for usage attribution (#1080). An unset task
+        key — or ``None``/an unknown task — falls back to :attr:`anthropic_api_key`, so a
+        single-key deploy behaves exactly as before per-task keys existed.
+        """
+        if task is not None:
+            try:
+                slug = PipelineTask(task).value
+            except ValueError:
+                slug = ""
+            value: str = getattr(self, f"anthropic_key_{slug}", "") if slug else ""
+            if value:
+                return value
+        return self.anthropic_api_key
 
     def ensure_dirs(self) -> None:
         """Create the data directories if they do not yet exist."""

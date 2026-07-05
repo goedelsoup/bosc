@@ -15,9 +15,11 @@ from claude_agent_sdk import AssistantMessage, ResultMessage, TextBlock, ToolUse
 from watermark.agent import client as client_mod
 from watermark.agent import tools
 from watermark.agent.client import DEFAULT_SYSTEM_PROMPT, RESEARCH_SKILLS, ResearchAgent
+from watermark.agent.extractor import StructuredExtractor
 from watermark.config import Settings
 from watermark.models import Estimate, PageExtraction
 from watermark.pipeline.extract import save_extraction
+from watermark.tasks import PipelineTask
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -163,6 +165,37 @@ def test_options_wire_the_discipline_prompt_and_research_skills() -> None:
     assert opts.allowed_tools == tools.ALLOWED_TOOL_NAMES
     assert len(tools.ALLOWED_TOOL_NAMES) == 25  # +search_web, +fetch_url (#1048)
     assert "data-center-sweep" in RESEARCH_SKILLS  # +data-center-sweep (#1049)
+
+
+def test_per_task_key_routes_into_the_agent_subprocess_env() -> None:
+    # #1080: the ASK agent's calls go out on the ask-workspace key, injected via the SDK's
+    # `env` (which merges over the inherited process env, so only ANTHROPIC_API_KEY changes).
+    settings = Settings.model_validate({"ANTHROPIC_API_KEY": "base", "anthropic_key_ask": "k-ask"})
+    opts = ResearchAgent(settings=settings)._options()
+    assert opts.env == {"ANTHROPIC_API_KEY": "k-ask"}
+
+
+def test_agent_falls_back_to_the_base_key_when_no_task_key_is_set() -> None:
+    settings = Settings.model_validate({"ANTHROPIC_API_KEY": "base"})
+    assert ResearchAgent(settings=settings)._options().env == {"ANTHROPIC_API_KEY": "base"}
+    # With no key at all, `env` is left unset so ambient auth (e.g. a session token) is untouched.
+    assert not ResearchAgent(settings=Settings.model_validate({}))._options().env
+
+
+def test_extractor_selects_its_task_key() -> None:
+    # #1080: the extractor builds its Anthropic client with the per-task workspace key.
+    settings = Settings.model_validate(
+        {"ANTHROPIC_API_KEY": "base", "anthropic_key_extract": "k-ext"}
+    )
+    assert StructuredExtractor(settings=settings).client.api_key == "k-ext"
+    # A DRAFT-tagged extractor (the research distill pass) picks its own key.
+    draft_settings = Settings.model_validate(
+        {"ANTHROPIC_API_KEY": "base", "anthropic_key_draft": "k-draft"}
+    )
+    assert (
+        StructuredExtractor(settings=draft_settings, task=PipelineTask.DRAFT).client.api_key
+        == "k-draft"
+    )
 
 
 def test_held_back_skills_are_not_active() -> None:
