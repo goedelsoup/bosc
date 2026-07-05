@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-04T23:15:00.957085+00:00'
+reconciled_at: '2026-07-05T01:23:37.438603+00:00'
 entries:
   aedg:
     exists: true
@@ -24,6 +24,16 @@ entries:
     exists: true
     sha256: 942c0aebcb1442054eba4b822bd02f47134c33cc71cc6d763f915fb02f2e175a
     size_bytes: 3463
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: basin-shared
+  air-naaqs:
+    exists: true
+    sha256: 2aad08503a34a32a25836da094f97d60298bdc569e22af1eaf751f583fb32aec
+    size_bytes: 3301
     lfs_materialized: true
     file_count: 1
     missing: []

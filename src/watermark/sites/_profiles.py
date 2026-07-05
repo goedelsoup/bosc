@@ -182,6 +182,11 @@ _LIMA = SiteProfile(
         ),
         cycles_of_concentration=5.0,  # cooling-tower cycles of concentration (typical 4-6)
         cycles_citation="cooling-tower cycles of concentration ~5 (typical 4-6)",
+        # Air-quality modeling (#1172/#1180): the committed OEPA PTI P0138965 extraction that
+        # grounds the fleet's emission rates + synthetic-minor NSR caps. Stack geometry is
+        # deliberately left unset — the final permit redacts engine make/model/size as CBI, so
+        # the AERMOD deck uses the assumption-tagged screening geometry, never a fabricated fact.
+        air_permit_relpath="permits/4132514.epa.yaml",
     ),
     serving_utility_source="document",
     serving_utility_citation=(

@@ -126,6 +126,25 @@ class SiteFacility(BaseModel):
     heat_reject_multiplier: float | None = None
     heat_reject_multiplier_citation: str | None = None
 
+    # --- Air-quality / backup-generation dispatch modeling (watermark.air, epic #1172) ----
+    # The committed air-permit extraction that grounds the fleet's emission rates + the
+    # synthetic-minor NSR caps, relative to ``settings.extracted_dir`` (the #1180 seam that
+    # retires the Lima-default in ``air.emissions``). ``None`` = no wired air permit for this
+    # facility yet: permit-basis factors refuse cleanly and the NSR caps come back empty
+    # (``air.emissions.load_nsr_caps``) rather than silently inheriting another site's permit.
+    air_permit_relpath: str | None = None
+    # Per-unit genset exhaust-stack geometry for the AERMOD dispersion deck (Tier-1, #1178).
+    # Present ONLY for a site whose permit / manufacturer data discloses the engine specs —
+    # for Lima the permit redacts make/model/size as CBI, so these stay ``None`` and
+    # ``air.aermod.inp`` falls back to the ``assumption``-tagged screening geometry (never
+    # presented as the permit's). Set together with a citation (paired below); when set they
+    # travel as ``document`` provenance.
+    genset_stack_height_m: float | None = None
+    genset_stack_diameter_m: float | None = None
+    genset_stack_exit_velocity_ms: float | None = None
+    genset_stack_exit_temp_k: float | None = None
+    genset_stack_citation: str | None = None
+
     @model_validator(mode="after")
     def _override_citations_paired(self) -> SiteFacility:
         if (self.wue_l_per_kwh is None) != (self.wue_citation is None):
@@ -136,7 +155,27 @@ class SiteFacility(BaseModel):
             raise ValueError(
                 "heat_reject_multiplier and heat_reject_multiplier_citation must be set together"
             )
+        # Genset stack geometry is all-or-nothing: a partial set would silently mix a
+        # disclosed dimension with an assumed one under one citation. Either the site
+        # discloses the full geometry (+ its citation) or it leaves all five None.
+        stack = (
+            self.genset_stack_height_m,
+            self.genset_stack_diameter_m,
+            self.genset_stack_exit_velocity_ms,
+            self.genset_stack_exit_temp_k,
+            self.genset_stack_citation,
+        )
+        if any(v is not None for v in stack) and any(v is None for v in stack):
+            raise ValueError(
+                "genset stack geometry (height/diameter/exit_velocity/exit_temp) and its "
+                "citation must all be set together, or all left None (assumed screening geometry)"
+            )
         return self
+
+    @property
+    def has_disclosed_stack(self) -> bool:
+        """True if the site discloses a documented genset stack geometry (not the CBI case)."""
+        return self.genset_stack_citation is not None
 
 
 class SiteProfile(BaseModel):
@@ -312,6 +351,18 @@ class SiteProfile(BaseModel):
         "reference"
     )
 
+    # --- Air-quality met stations (watermark.air.connectors, #1179 → #1180 seam) ----------
+    # The AERMET surface + upper-air observing stations a Tier-1 AERMOD run for this site draws
+    # its meteorology from. These are the per-site knobs the #1179 met connectors (`isd.py` /
+    # `igra.py`) read off ``Settings`` — this is the ``SiteProfile`` half they name as the
+    # "#1180 seam": both feed ``Settings.air_surface_station`` / ``air_upperair_station`` via
+    # ``PROFILE_SETTINGS_FIELDS`` (env/kwarg still wins). Empty = not pinned; the connector then
+    # refuses cleanly rather than fabricating a station, and the minimal AERMOD run stays
+    # flat-terrain + operator-supplied canned met. The AERMAP terrain domain needs no separate
+    # knob — it centres on the profile's ``nasa_power_lat``/``lon`` + ``air_terrain_halfwidth_deg``.
+    air_surface_station: str = ""  # NOAA ISD 'USAF-WBAN' surface station id
+    air_upperair_station: str = ""  # NOAA IGRA v2 upper-air sounding station id
+
     # --- Grid market (grid/market.py) ---------------------------------------------------
     lmp_usd_mwh: float  # zonal day-ahead LMP fallback (connector-sourced when lmp_pnode_id is set)
     lmp_citation: str
@@ -381,4 +432,6 @@ PROFILE_SETTINGS_FIELDS: tuple[str, ...] = (
     "gnis_default_state",
     "hydro_utm_epsg",
     "lsc_default_ga",
+    "air_surface_station",
+    "air_upperair_station",
 )

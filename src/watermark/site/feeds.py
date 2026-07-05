@@ -88,7 +88,13 @@ from watermark.site.readiness import State, Tier  # the readiness vocabulary SSO
 #   readiness (`SiteReadiness`): the five domains' `absent|seeded|live` states plus the derived
 #   `tier` (`stub|backdrop|case|reference`), recomputed at every export from feed counts + the
 #   profile (watermark.site.readiness). The frontend reads it instead of re-deriving section gating.
-CONTRACT_VERSION = "1.17.0"
+# 1.18.0: adds the air-quality & backup-generation dispatch feeds (epic #1172, #1181) —
+#   `air-scenarios` (Tier-0 emissions scenarios + synthetic-minor NSR cap check, #1177) and
+#   `air-dispersion` (Tier-1 AERMOD concentration screen vs NAAQS, event-anchored, #1182).
+#   Dispersion is facility+permit-gated (absent → section locks); dispersion runs carry
+#   `available=False` when the AERMOD binary/met is absent (deck + NAAQS basis real, no
+#   fabricated concentration). Both reuse the domain models (watermark.air), like hydrology-scenarios.
+CONTRACT_VERSION = "1.18.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

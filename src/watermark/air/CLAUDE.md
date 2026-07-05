@@ -46,13 +46,25 @@ backup fleet into runtime, what is the air burden — and does forced generation
 - **Site-agnostic.** Engine rating, fleet count, permit rates, and caps resolve from the
   active site's `SiteFacility` / permit extraction — never hardcoded to Bistrozzi/Lima. A
   site with `facility=None` has no fleet: the loaders return `None` (grid-backdrop only,
-  per the readiness layer). The permit path is currently the Lima default in `emissions.py`
-  (`_DEFAULT_PERMIT_RELPATH`) — the seam for **#1180**, which adds
-  `SiteFacility.air_permit_relpath`.
+  per the readiness layer). The air-permit path is `SiteFacility.air_permit_relpath` (**#1180**,
+  wired): `emissions._permit_path` resolves it per-site (Lima sets `permits/4132514.epa.yaml`);
+  a facility-bearing site that hasn't wired its own (`air_permit_relpath is None`) refuses cleanly
+  rather than inheriting another site's rates/caps.
 - **Tier-1 AERMOD engine** (`air/aermod/`, #1178) **is built**: the deck builders + the
-  binary wrapper (located on disk, degrades when absent) + plotfile parsing. Stack geometry
-  is `assumption` (the permit redacts engine specs as CBI); the emission rate is grounded.
-  See [`aermod/CLAUDE.md`](aermod/CLAUDE.md) and [`docs/AERMOD.md`](../../../docs/AERMOD.md).
+  binary wrapper (located on disk, degrades when absent) + plotfile parsing + the NAAQS
+  concentration screen (`aermod/dispersion.py`, **#1182**). Stack geometry is `assumption`
+  (the permit redacts engine specs as CBI) unless the site discloses it via
+  `SiteFacility.genset_stack_*` (`inp.stack_params_from_profile`, **#1180**); the emission
+  rate is grounded. See [`aermod/CLAUDE.md`](aermod/CLAUDE.md) and
+  [`docs/AERMOD.md`](../../../docs/AERMOD.md).
+- **NAAQS screen** (`aermod/dispersion.py`, **#1182**): `run_dispersion` /
+  `run_calibration_dispersion` build the deck, run the (absent-degrading) engine, and screen the
+  peak concentration per averaging period against the committed NAAQS reference table
+  (`data/reference/air/naaqs/naaqs.yaml`, `reference`). Screening only — one source, no
+  monitored background: a peak over the standard flags a full demonstration, not a violation.
+  The calibration run is event-anchored (permit load-point rate, cited to the captured order);
+  the window is `[verified]`, facility dispatch stays `[open]`. Absent binary ⇒ `available=False`,
+  empty screens — the deck + NAAQS basis are real, no concentration is fabricated.
 - **AERMET/AERMAP preprocessing connectors** (`connectors/`, #1179) **are built**: the AERMOD
   met/terrain input layer, under the same offline/cache/committed-fixture discipline as
   hydrology (`connectors/_cache.py` → `AirOfflineError`, fixtures at
@@ -62,16 +74,21 @@ backup fleet into runtime, what is the air burden — and does forced generation
   it follows `gis/raster.py`'s fixture-GeoTIFF discipline, **not** the JSON cache) — and two
   emitters, `aermet.py` (surface + upper-air → AERMET-ready files + a Stage-1→MERGE runstream)
   and `aermap.py` (DEM → bilinearly-sampled receptor/source elevations + an AERMAP control
-  file). CLI: `watermark aermet` / `watermark aermap`. **No fabricated meteorology:** the
+  file). CLI: `watermark air aermet` / `watermark air aermap`. **No fabricated meteorology:** the
   AERMET runstream stops at MERGE — the METPREP surface characteristics (albedo/Bowen/
   roughness) are the modeller's land-use inputs, emitted only as a commented template; the
   `.SFC`/`.PFL` and the AERMAP hill-height scale come from the **binaries** (#1178). Sampled
-  elevations are a deterministic DEM read, tagged `[derived]`. Per-site station IDs / terrain
-  domain live in `air_*` **Settings** knobs today (env/kwarg-driven, not hardcoded); promoting
-  them onto `SiteProfile` is the **#1180** "met/terrain endpoints" seam — the same idiom as
-  the `_DEFAULT_PERMIT_RELPATH` seam above. The #1178 minimal run still defaults to flat
-  terrain + canned met until **#1182** wires these connectors into a receptor-grid run.
-- **Deferred (gated behind Tier-0):** the NAAQS-comparison dispersion half of #1182 (receptor
-  grid + met/terrain wiring), the site-profile stack/permit knobs (#1180), and feeds/CLI/
-  ledger wiring (#1181). Tier-0 ships standalone — including the event-anchored **calibration**
-  half of #1182 (`calibration.py`), which needs only the captured event, not AERMOD.
+  elevations are a deterministic DEM read, tagged `[derived]`. Per-site station IDs are now
+  `SiteProfile.air_surface_station` / `air_upperair_station` (**#1180**, `PROFILE_SETTINGS_FIELDS`
+  → the `air_*` `Settings` knobs); the terrain domain is the profile's centroid +
+  `air_terrain_halfwidth_deg`. The minimal run still defaults to flat terrain + canned met.
+- **Feeds / CLI / ledger** (**#1181**, wired): the bundle exports `air-scenarios` (Tier-0) +
+  `air-dispersion` (Tier-1) feeds (`site/export.py`, contract 1.17.0, facility+permit-gated);
+  `watermark air scenarios|calibrate|dispersion` (`cli/air.py`, alongside `aermet`/`aermap`)
+  is the thin CLI; `ledger._burden_air` now cites the modeled cap-exceedance from the committed
+  air scenario (degrades to the static permit fact when unmodeled).
+- **Status.** The epic's threads have landed: the Tier-0 inventory + dispatch + event-anchored
+  calibration, the #1179 AERMET/AERMAP connectors, the #1182 NAAQS dispersion screen, the #1180
+  profile stack/permit/met knobs, and the #1181 feeds/CLI/ledger wiring. What's *not* automated
+  is a real AERMOD run in CI (no vendored binary + no validated canned met) — the engine + screen
+  degrade honestly rather than fabricating a concentration.

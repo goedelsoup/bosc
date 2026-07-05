@@ -1,0 +1,386 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "air-dispersion feed",
+  "type": "array",
+  "items": {
+    "additionalProperties": false,
+    "description": "A screened AERMOD concentration run for one pollutant — the #1182 deliverable.\n\n``available`` is False (with empty ``screens``) when the AERMOD binary or the canned met\nis absent: the deck + NAAQS table still resolve, but no concentration is fabricated. When\n``event`` is set the run is the **event-anchored calibration** (the permit load-point rate,\ncited to the captured order); ``event`` is ``None`` for a plain screening run.",
+    "properties": {
+      "site": {
+        "title": "Site",
+        "type": "string"
+      },
+      "pollutant": {
+        "title": "Pollutant",
+        "type": "string"
+      },
+      "factors_basis": {
+        "enum": [
+          "ap42",
+          "permit"
+        ],
+        "title": "Factors Basis",
+        "type": "string"
+      },
+      "load_regime": {
+        "enum": [
+          "idle",
+          "load"
+        ],
+        "title": "Load Regime",
+        "type": "string"
+      },
+      "available": {
+        "title": "Available",
+        "type": "boolean"
+      },
+      "engine_version": {
+        "default": "",
+        "title": "Engine Version",
+        "type": "string"
+      },
+      "source_emission_g_s": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Source Emission G S"
+      },
+      "stack": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/GensetStackParams"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "stack_is_assumption": {
+        "default": true,
+        "title": "Stack Is Assumption",
+        "type": "boolean"
+      },
+      "receptor_grid": {
+        "additionalProperties": {
+          "type": "number"
+        },
+        "default": {},
+        "title": "Receptor Grid",
+        "type": "object"
+      },
+      "averaging_periods": {
+        "default": [],
+        "items": {
+          "type": "string"
+        },
+        "title": "Averaging Periods",
+        "type": "array"
+      },
+      "screens": {
+        "default": [],
+        "items": {
+          "$ref": "#/$defs/ConcentrationScreen"
+        },
+        "title": "Screens",
+        "type": "array"
+      },
+      "any_naaqs_exceeded": {
+        "default": false,
+        "title": "Any Naaqs Exceeded",
+        "type": "boolean"
+      },
+      "exceeded": {
+        "default": [],
+        "items": {
+          "type": "string"
+        },
+        "title": "Exceeded",
+        "type": "array"
+      },
+      "event": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/CapturedDispatchEvent"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "caveats": {
+        "default": [],
+        "items": {
+          "type": "string"
+        },
+        "title": "Caveats",
+        "type": "array"
+      },
+      "note": {
+        "default": "",
+        "title": "Note",
+        "type": "string"
+      }
+    },
+    "required": [
+      "site",
+      "pollutant",
+      "factors_basis",
+      "load_regime",
+      "available"
+    ],
+    "title": "DispersionResult",
+    "type": "object"
+  },
+  "$defs": {
+    "CapturedDispatchEvent": {
+      "additionalProperties": false,
+      "description": "A captured, real reliability event that dimensions the dispatch model (#1174).\n\n``authorized_window_hours`` is the backup-generation authorization window read from the\ncaptured order (verified). ``backup_generation_authorized`` records that the order\nauthorized data-center backup-gen dispatch; ``facility_dispatch_confirmed`` stays ``False``\nuntil a facility-level runtime record lands — the event does **not** establish that any\nspecific facility ran (omission over invention).",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "order_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Order Id"
+        },
+        "window_start": {
+          "title": "Window Start",
+          "type": "string"
+        },
+        "window_end": {
+          "title": "Window End",
+          "type": "string"
+        },
+        "authorized_window_hours": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "backup_generation_authorized": {
+          "title": "Backup Generation Authorized",
+          "type": "boolean"
+        },
+        "facility_dispatch_confirmed": {
+          "title": "Facility Dispatch Confirmed",
+          "type": "boolean"
+        },
+        "source_relpath": {
+          "title": "Source Relpath",
+          "type": "string"
+        },
+        "citations": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Citations",
+          "type": "array"
+        },
+        "caveats": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Caveats",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "order_id",
+        "window_start",
+        "window_end",
+        "authorized_window_hours",
+        "backup_generation_authorized",
+        "facility_dispatch_confirmed",
+        "source_relpath"
+      ],
+      "title": "CapturedDispatchEvent",
+      "type": "object"
+    },
+    "ConcentrationScreen": {
+      "additionalProperties": false,
+      "description": "A modeled peak concentration for one averaging period, screened against the NAAQS.",
+      "properties": {
+        "pollutant": {
+          "title": "Pollutant",
+          "type": "string"
+        },
+        "averaging_period": {
+          "title": "Averaging Period",
+          "type": "string"
+        },
+        "max_conc_ug_m3": {
+          "title": "Max Conc Ug M3",
+          "type": "number"
+        },
+        "naaqs_ug_m3": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Naaqs Ug M3"
+        },
+        "naaqs_species": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Naaqs Species"
+        },
+        "naaqs_basis": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Naaqs Basis"
+        },
+        "pct_of_naaqs": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pct Of Naaqs"
+        },
+        "exceeds_naaqs": {
+          "default": false,
+          "title": "Exceeds Naaqs",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "pollutant",
+        "averaging_period",
+        "max_conc_ug_m3"
+      ],
+      "title": "ConcentrationScreen",
+      "type": "object"
+    },
+    "GensetStackParams": {
+      "additionalProperties": false,
+      "description": "Per-unit exhaust-stack geometry for one genset — the AERMOD ``SRCPARAM`` physicals.\n\nEvery field is a :class:`ProvenancedValue`. For Lima these are ``assumption``-tagged\nscreening values (the permit redacts engine specs as CBI); a site with disclosed\nmanufacturer data supplies ``document`` values instead. See\n:func:`watermark.air.aermod.inp.assumed_stack_params`.",
+      "properties": {
+        "height_m": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "diameter_m": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "exit_velocity_ms": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "exit_temp_k": {
+          "$ref": "#/$defs/ProvenancedValue"
+        }
+      },
+      "required": [
+        "height_m",
+        "diameter_m",
+        "exit_velocity_ms",
+        "exit_temp_k"
+      ],
+      "title": "GensetStackParams",
+      "type": "object"
+    },
+    "ProvenancedValue": {
+      "additionalProperties": false,
+      "description": "A single numeric quantity tagged with its provenance.\n\nConstruct via the classmethods (:meth:`from_document`, :meth:`from_connector`,\n:meth:`assume`, :meth:`derived`) so the ``source`` tag is never forgotten.",
+      "properties": {
+        "value": {
+          "title": "Value",
+          "type": "number"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "document",
+            "connector",
+            "reference",
+            "assumption",
+            "derived"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "citation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Citation"
+        },
+        "confidence": {
+          "default": "medium",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "asof": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Asof"
+        }
+      },
+      "required": [
+        "value",
+        "unit",
+        "source"
+      ],
+      "title": "ProvenancedValue",
+      "type": "object"
+    }
+  }
+}

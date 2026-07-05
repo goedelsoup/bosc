@@ -11,6 +11,8 @@ license: Site content — CC BY 4.0 over public-record sources (see web/README.m
 access_tier: public
 site_scope: slug-scoped
 depends_on:
+- air-emission-factors
+- air-naaqs
 - echo-maumee-npdes
 - economics-baseline
 - eia-consumer-energy
@@ -46,5 +48,9 @@ notes: >-
   The manifest also carries a `readiness` block (#1220, contract 1.17.0) — the standing
   domain-activation readiness (five domains × absent|seeded|live + a derived tier) computed from
   the assembled feed counts + the site profile at every export, so it adds no new committed upstream.
+  The air-quality feeds (#1172, contract 1.18.0) — `air-scenarios` (Tier-0 backup-genset emissions
+  vs the synthetic-minor NSR caps) and `air-dispersion` (Tier-1 AERMOD concentration screen vs
+  NAAQS) — read the committed `air-emission-factors` (AP-42 §3.4) and `air-naaqs` reference datasets
+  plus the site air permit + committed air scenarios (facility+permit-gated; absent → section locks).
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.

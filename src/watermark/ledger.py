@@ -256,8 +256,61 @@ def _burden_federal(settings: Settings) -> BurdenItem | None:
     )
 
 
+def _air_cap_breach_headline(settings: Settings) -> tuple[str, str] | None:
+    """The modeled cap-exceedance headline + source from the committed event-anchored scenario.
+
+    Reads the Tier-0 air scenario runner's committed output (``<site>.air-reliability_dispatch_
+    event_high.scenario.yaml``, epic #1172) rather than a static string: at the captured event's
+    verified authorized-window ceiling, does forced dispatch breach the synthetic-minor NSR cap?
+    Returns ``None`` when no committed air scenario exists (caller falls back to the static
+    permit fact) — a peer site without the modeling degrades, it doesn't break.
+    """
+    path = (
+        settings.scenarios_dir
+        / f"{settings.site}.air-reliability_dispatch_event_high.scenario.yaml"
+    )
+    if not path.is_file():
+        return None
+    try:
+        data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        fleet = int(data["fleet_size"])
+        runtime = round(float(data["scenario"]["runtime_hours"]["value"]), 1)
+        by_pol = {e["pollutant"]: e for e in data["emissions"]}
+        nox = by_pol.get("NOx")
+        if nox is None or nox.get("cap_tpy") is None:
+            return None
+        # Float, not _num: the cap is a federally-enforceable limit (235.62 tpy) — its decimals
+        # must survive; the tonnage is rounded for the headline but the cap is quoted exactly.
+        tpy = round(float(nox["tpy"]["value"]), 1)
+        cap = float(nox["cap_tpy"])
+        pct = nox.get("pct_of_cap")
+        breached = bool(data.get("any_cap_exceeded"))
+    except (KeyError, TypeError, ValueError):
+        return None
+    verb = (
+        f"would breach the {cap:g} tpy synthetic-minor NOx NSR cap ({tpy:g} tpy, {pct:g}% of cap)"
+        if breached
+        else f"reaches {tpy:g} tpy NOx ({pct:g}% of the {cap:g} tpy cap)"
+    )
+    headline = (
+        f"{fleet} diesel emergency gensets (~313 MW backup) permitted synthetic-minor to stay "
+        f"under major-source NSR — but a reliability-forced dispatch at the captured event's "
+        f"verified {runtime:g}-hour authorized-window ceiling {verb}"
+    )
+    source = (
+        f"data/scenarios/{path.name} (Tier-0 air emissions inventory, epic #1172; permit "
+        "P0138965 caps x AP-42/permit factors x the PJM §202(c) event window, #1177/#1182)"
+    )
+    return headline, source
+
+
 def _burden_air(settings: Settings) -> BurdenItem | None:
-    # A document-cited static fact (the extraction structure is permit-specific).
+    # Prefer the modeled cap-exceedance headline (the committed air scenario, epic #1172); fall
+    # back to the static permit fact when the modeling hasn't been run for this site.
+    modeled = _air_cap_breach_headline(settings)
+    if modeled is not None:
+        headline, source = modeled
+        return BurdenItem(thread="air permit", headline=headline, source=source)
     if not (settings.extracted_dir / "permits" / "4132514.epa.yaml").is_file():
         return None
     return BurdenItem(

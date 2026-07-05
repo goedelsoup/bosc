@@ -9,7 +9,11 @@ default (the permit redacts engine specs as CBI); the emission rate is grounded.
 
 from __future__ import annotations
 
-from watermark.air.aermod.inp import build_aermod_inp, genset_point_source
+from watermark.air.aermod.inp import (
+    build_aermod_inp,
+    genset_point_source,
+    stack_params_from_profile,
+)
 from watermark.air.aermod.model import AermodControl, AveragePeriod, ReceptorGrid
 from watermark.air.emissions import load_emission_factors
 from watermark.air.model import FactorBasis, LoadRegime, Pollutant
@@ -54,6 +58,9 @@ def build_screening_deck(
         pollutant=pollutant,
         per_engine_lb_per_hr=ef.per_engine_hour.value,
         rate_citation=f"{factors.basis} per-engine {pollutant} at {factors.load_regime} load",
+        # Profile-resolved stack geometry (#1180): document-tagged if the site discloses it,
+        # else the assumption default with a site-specific rationale (Lima = CBI-redacted).
+        stack=stack_params_from_profile(settings),
     )
     control = AermodControl(
         title=f"Watermark AERMOD screening: {settings.site} {pollutant} ({factors.basis})",
