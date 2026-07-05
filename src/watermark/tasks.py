@@ -30,6 +30,22 @@ class PipelineTask(StrEnum):
     ASK = "ask"  # Search & Ask + free-form research (watermark.agent.client)
     DRAFT = "draft"  # distilling findings into drafted prose/proposals
 
+    @classmethod
+    def coerce(cls, value: PipelineTask | str | None, *, default: PipelineTask) -> PipelineTask:
+        """Best-effort convert ``value`` to a task, falling back to ``default``.
+
+        Mirrors the tolerant lookup in :meth:`watermark.config.Settings.anthropic_key_for`:
+        an unknown string (or ``None``) never raises — it resolves to ``default``. Normalizing
+        a caller-supplied ``PipelineTask | str`` once, up front, keeps later ``.value`` access
+        safe (e.g. a trace attribute set mid-turn) instead of risking a ``ValueError`` there.
+        """
+        if value is None:
+            return default
+        try:
+            return cls(value)
+        except ValueError:
+            return default
+
     @property
     def label(self) -> str:
         """The human label this task carries on the /about/sustainability by-task donut."""
