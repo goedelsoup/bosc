@@ -94,7 +94,13 @@ from watermark.site.readiness import State, Tier  # the readiness vocabulary SSO
 #   Dispersion is facility+permit-gated (absent → section locks); dispersion runs carry
 #   `available=False` when the AERMOD binary/met is absent (deck + NAAQS basis real, no
 #   fabricated concentration). Both reuse the domain models (watermark.air), like hydrology-scenarios.
-CONTRACT_VERSION = "1.18.0"
+# 1.19.0: adds the `air-dispersion-field` collection feed (epic #1237 / #1232) — the gridded AERMOD
+#   concentration surface per pollutant (`DispersionField`) the deck.gl FieldLayer renders: the
+#   receptor grid reshaped into per-averaging-period `values[]`, the model-grid→lon/lat `geo_ref`
+#   corner box, per-period NAAQS lines, and a fixed `provenance: assumption` marker (the CBI-redacted
+#   stack ⇒ [inference]). Reference-site gated; `available=False` with empty `values` when the AERMOD
+#   binary/met is absent (geometry real, no fabricated concentration).
+CONTRACT_VERSION = "1.19.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -627,6 +633,151 @@ class CatalogIndex(BaseModel):
     catalog_version: str  # sha256 over the sorted atom handles — stable across identical corpora
     contract_version: str  # the bundle contract these atoms were indexed under
     atoms: list[CatalogAtom] = Field(default_factory=list)
+
+
+# --- air dispersion field (GPU field/flow viz, epic #1237 / #1232) ------------------------
+# A gridded AERMOD concentration surface for one pollutant — the deck.gl FieldLayer reads it
+# (epic #1237). Distinct from the `air-dispersion` NAAQS *screen* feed (peak-vs-standard, per
+# period): this is the full receptor grid reshaped into per-period `values[]` arrays plus the
+# model-grid→lon/lat `geo_ref` the frontend georeferences the field with.
+
+
+class DispersionGrid(BaseModel):
+    """The receptor-grid geometry in AERMOD model metres (source at the origin, X=east, Y=north).
+
+    ``x0_m``/``y0_m`` are the SW corner; ``nx``/``ny`` the counts; ``dx_m``/``dy_m`` the spacing.
+    A period's ``values[]`` is row-major over this grid — ``values[iy * nx + ix]`` — so the
+    frontend can index it without carrying per-cell coordinates.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    nx: int = Field(ge=1)
+    ny: int = Field(ge=1)
+    dx_m: float = Field(gt=0)
+    dy_m: float = Field(gt=0)
+    x0_m: float  # SW-corner easting, relative to the source at (0, 0)
+    y0_m: float  # SW-corner northing
+
+
+class DispersionGeoRef(BaseModel):
+    """The model grid's WGS84 corner box — how the frontend places the field on the map.
+
+    The source sits at ``(source_lon, source_lat)``; ``sw``/``ne`` bound the axis-aligned grid
+    (a deck.gl ``[west, south, east, north]`` box). Derived by a local flat-earth projection of
+    the metre grid about the source, so it inherits the field's ``assumption`` provenance.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    crs: str = "WGS84 (EPSG:4326)"
+    source_lon: float
+    source_lat: float
+    sw_lon: float
+    sw_lat: float
+    ne_lon: float
+    ne_lat: float
+
+
+class DispersionPeriodField(BaseModel):
+    """One averaging period's gridded concentration surface + its NAAQS reference line."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    averaging_period: str  # the AERMOD AVE token: "1", "8", "24", "ANNUAL", ...
+    values: list[float | None] = Field(default_factory=list)  # µg/m³, row-major; null = no receptor
+    max_conc_ug_m3: float | None = None  # peak over the grid, when receptors are present
+    naaqs_ug_m3: float | None = None  # the standard for this (pollutant, period), when one exists
+    exceeds_naaqs: bool = False  # peak > standard (screening only — a flag, not a violation)
+
+
+class DispersionField(BaseModel):
+    """A gridded AERMOD dispersion surface for one pollutant — the #1232 deliverable.
+
+    ``provenance`` is fixed to ``assumption``: the Lima permit redacts the genset stack geometry
+    as CBI, so every modeled concentration inherits that assumed input and the frontend must
+    render it ``[inference]``, never ``[verified]``. ``available`` is False (with empty ``values``)
+    when the AERMOD binary/met is absent — the grid geometry, ``geo_ref`` and NAAQS lines still
+    resolve, but no concentration is fabricated (the same honest degrade as ``air-dispersion``).
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    site: str
+    pollutant: str
+    unit: str = "ug/m3"
+    provenance: Literal["assumption"] = (
+        "assumption"  # CBI-redacted stack ⇒ [inference], not [verified]
+    )
+    available: bool = False
+    grid: DispersionGrid
+    geo_ref: DispersionGeoRef
+    periods: list[DispersionPeriodField] = Field(default_factory=list)
+    stack_is_assumption: bool = True
+    engine_version: str = ""
+    caveats: list[str] = Field(default_factory=list)
+    note: str = ""
+
+    @classmethod
+    def from_receptors(
+        cls,
+        *,
+        site: str,
+        pollutant: str,
+        grid: DispersionGrid,
+        geo_ref: DispersionGeoRef,
+        period_receptors: dict[str, list[tuple[float, float, float]]],
+        naaqs: dict[str, float | None],
+        available: bool,
+        unit: str = "ug/m3",
+        stack_is_assumption: bool = True,
+        engine_version: str = "",
+        caveats: list[str] | None = None,
+        note: str = "",
+    ) -> DispersionField:
+        """Reshape per-period ``(x_m, y_m, conc)`` receptors onto ``grid`` → a ``DispersionField``.
+
+        Each period in ``period_receptors`` becomes a :class:`DispersionPeriodField` whose
+        ``values[]`` is the row-major grid (null where no receptor landed — e.g. the source cell).
+        ``naaqs`` supplies the per-period standard (µg/m³, or ``None`` where none is defined). An
+        empty ``period_receptors`` (the binary/met-absent degrade) yields periods with empty
+        ``values`` — the geometry is real, nothing is invented.
+        """
+        cells = grid.nx * grid.ny
+        periods: list[DispersionPeriodField] = []
+        for ave in period_receptors:
+            recs = period_receptors[ave]
+            values: list[float | None] = [None] * cells if recs else []
+            peak: float | None = None
+            for x_m, y_m, conc in recs:
+                ix = round((x_m - grid.x0_m) / grid.dx_m)
+                iy = round((y_m - grid.y0_m) / grid.dy_m)
+                if 0 <= ix < grid.nx and 0 <= iy < grid.ny:
+                    values[iy * grid.nx + ix] = conc
+                    peak = conc if peak is None else max(peak, conc)
+            std = naaqs.get(ave)
+            periods.append(
+                DispersionPeriodField(
+                    averaging_period=ave,
+                    values=values,
+                    max_conc_ug_m3=peak,
+                    naaqs_ug_m3=std,
+                    exceeds_naaqs=bool(std is not None and peak is not None and peak > std),
+                )
+            )
+        return cls(
+            site=site,
+            pollutant=pollutant,
+            unit=unit,
+            available=available,
+            grid=grid,
+            geo_ref=geo_ref,
+            periods=periods,
+            stack_is_assumption=stack_is_assumption,
+            engine_version=engine_version,
+            caveats=caveats or [],
+            note=note,
+        )
 
 
 # --- manifest ------------------------------------------------------------------
