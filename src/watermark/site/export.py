@@ -26,6 +26,7 @@ The contract itself (README, schemas, an example manifest) is committed; the gen
 from __future__ import annotations
 
 import json
+import math
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
@@ -35,8 +36,10 @@ from typing import Any, cast
 import yaml
 from pydantic import BaseModel
 
-from watermark.air.aermod.dispersion import DispersionResult, run_calibration_dispersion
-from watermark.air.aermod.model import AveragePeriod
+from watermark.air.aermod.dispersion import DispersionResult, naaqs_for, run_calibration_dispersion
+from watermark.air.aermod.engine import run as run_aermod
+from watermark.air.aermod.model import AveragePeriod, ReceptorGrid
+from watermark.air.aermod.screening import build_screening_deck
 from watermark.air.model import Pollutant
 from watermark.air.scenario import AirScenarioResult
 from watermark.candidates import (
@@ -88,6 +91,9 @@ from watermark.site.feeds import (
     CatalogItem,
     Citation,
     ConceptItem,
+    DispersionField,
+    DispersionGeoRef,
+    DispersionGrid,
     DocumentCollectionItem,
     EntityNode,
     ExhibitItem,
@@ -283,6 +289,17 @@ def _load_air_scenarios(settings: Settings) -> list[AirScenarioResult]:
     return out
 
 
+# The two capped / short-term-critical criteria pollutants modeled by both air-dispersion feeds:
+# NOx (1-hr + annual NO2 NAAQS) and CO (1-hr + 8-hr). Averaging periods line up with the operative
+# standards. The screening receptor grid: ±2.5 km at 100 m spacing (a 51x51 single-source grid).
+_DISPERSION_SPEC: list[tuple[Pollutant, tuple[AveragePeriod, ...]]] = [
+    ("NOx", ("1", "ANNUAL")),
+    ("CO", ("1", "8")),
+]
+_FIELD_GRID_HALF_EXTENT_M = 2500.0
+_FIELD_GRID_SPACING_M = 100.0
+
+
 def _air_dispersion(settings: Settings) -> list[DispersionResult] | None:
     """The Tier-1 AERMOD dispersion screen for the active site (#1178/#1182), or ``None``.
 
@@ -297,19 +314,115 @@ def _air_dispersion(settings: Settings) -> list[DispersionResult] | None:
     if fac is None or fac.air_permit_relpath is None:
         return None
     runs: list[DispersionResult] = []
-    # The two capped / short-term-critical criteria pollutants: NOx (1-hr + annual NO2 NAAQS)
-    # and CO (1-hr + 8-hr). Averaging periods chosen to line up with the operative standards.
-    spec: list[tuple[Pollutant, tuple[AveragePeriod, ...]]] = [
-        ("NOx", ("1", "ANNUAL")),
-        ("CO", ("1", "8")),
-    ]
-    for pollutant, periods in spec:
+    for pollutant, periods in _DISPERSION_SPEC:
         dr = run_calibration_dispersion(
             pollutant=pollutant, averaging_periods=periods, settings=settings
         )
         if dr is not None:
             runs.append(dr)
     return runs or None
+
+
+def _grid_geo_ref(grid: ReceptorGrid, *, lon0: float, lat0: float) -> DispersionGeoRef:
+    """Project the metre receptor grid onto WGS84 about the source at ``(lon0, lat0)``.
+
+    A local flat-earth approximation (adequate for a ±2.5 km screening grid): metres → degrees at
+    ~111,320 m/°lat and ``111,320·cos(lat)`` m/°lon. Inherits the field's ``assumption`` provenance
+    (the source anchor is the site's map centre, not a surveyed stack location).
+    """
+    m_per_deg_lat = 111_320.0
+    m_per_deg_lon = m_per_deg_lat * math.cos(math.radians(lat0))
+    x_max = grid.x0_m + (grid.nx - 1) * grid.dx_m
+    y_max = grid.y0_m + (grid.ny - 1) * grid.dy_m
+    return DispersionGeoRef(
+        source_lon=lon0,
+        source_lat=lat0,
+        sw_lon=lon0 + grid.x0_m / m_per_deg_lon,
+        sw_lat=lat0 + grid.y0_m / m_per_deg_lat,
+        ne_lon=lon0 + x_max / m_per_deg_lon,
+        ne_lat=lat0 + y_max / m_per_deg_lat,
+    )
+
+
+def _dispersion_field(settings: Settings) -> list[DispersionField] | None:
+    """The gridded AERMOD concentration surfaces (one per pollutant) for the deck.gl field viz.
+
+    Reference-site gated like ``routed-hydrograph`` (the field is a single-site screening artifact,
+    not something a thin peer inherits). For each pollutant it builds the same screening deck as the
+    ``air-dispersion`` screen, runs the (absent-degrading) engine, and reshapes the receptor grid
+    into per-averaging-period ``values[]`` via :meth:`DispersionField.from_receptors`. When the
+    binary/met is absent the runs carry ``available=False`` with empty ``values`` — the grid,
+    ``geo_ref`` and NAAQS lines are real, no concentration is fabricated. Every value is
+    ``assumption``-provenanced (the permit redacts the genset stack as CBI).
+    """
+    if not is_reference_site(settings.site):
+        return None
+    profile = active_profile(settings)
+    if profile.facility is None:
+        return None
+    fields: list[DispersionField] = []
+    for pollutant, periods in _DISPERSION_SPEC:
+        built = build_screening_deck(
+            pollutant=pollutant,
+            averaging_periods=periods,
+            grid_half_extent_m=_FIELD_GRID_HALF_EXTENT_M,
+            grid_spacing_m=_FIELD_GRID_SPACING_M,
+            settings=settings,
+        )
+        if built is None:
+            continue
+        inp_text, plotfiles = built
+        result = run_aermod(
+            inp_text, met_files={}, plotfiles=plotfiles, pollutant=pollutant, settings=settings
+        )
+        rgrid = ReceptorGrid.centered(
+            half_extent_m=_FIELD_GRID_HALF_EXTENT_M, spacing_m=_FIELD_GRID_SPACING_M
+        )
+        per_period: dict[str, list[tuple[float, float, float]]] = {str(p): [] for p in periods}
+        for rec in result.receptors:
+            per_period.setdefault(rec.ave_period, []).append((rec.x_m, rec.y_m, rec.conc))
+        naaqs = {
+            str(p): (
+                std.standard_ug_m3
+                if (std := naaqs_for(pollutant, str(p), settings=settings))
+                else None
+            )
+            for p in periods
+        }
+        available = result.available and bool(result.receptors)
+        fields.append(
+            DispersionField.from_receptors(
+                site=settings.site,
+                pollutant=pollutant,
+                grid=DispersionGrid(
+                    nx=rgrid.nx,
+                    ny=rgrid.ny,
+                    dx_m=rgrid.dx_m,
+                    dy_m=rgrid.dy_m,
+                    x0_m=rgrid.x0_m,
+                    y0_m=rgrid.y0_m,
+                ),
+                geo_ref=_grid_geo_ref(rgrid, lon0=profile.map_view_lon, lat0=profile.map_view_lat),
+                period_receptors=per_period,
+                naaqs=naaqs,
+                available=available,
+                unit=result.unit or "ug/m3",
+                engine_version=result.engine_version,
+                caveats=[
+                    "Screening field: a single modeled genset source, flat terrain + canned met, "
+                    "no monitored background. The genset stack geometry is a CBI-redacted "
+                    "assumption, so every concentration is [inference], never [verified].",
+                ],
+                note=result.note
+                or (
+                    "AERMOD field gridded from the screening deck."
+                    if available
+                    else "Deck + NAAQS lines resolved; AERMOD engine/met unavailable, so the field "
+                    "carries geometry only (degraded, not fabricated)."
+                ),
+            )
+        )
+    return fields or None
 
 
 def _collect_feeds(settings: Settings) -> list[_Feed]:
@@ -514,6 +627,9 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         # skipped, section locks); scenarios carry zero rows for a site without committed ones.
         ("air-scenarios", AirScenarioResult, lambda: _load_air_scenarios(settings)),
         ("air-dispersion", DispersionResult, lambda: _air_dispersion(settings)),
+        # The gridded concentration surface for the deck.gl field viz (epic #1237 / #1232) —
+        # reference-site gated like routed-hydrograph, `assumption`-provenanced (CBI-redacted stack).
+        ("air-dispersion-field", DispersionField, lambda: _dispersion_field(settings)),
         # The published data catalog (epic #631 Phase 3 / #659) — the data tier /about/data reads.
         ("catalog", CatalogItem, lambda: catalog_mod.export_catalog(settings)),
     ]

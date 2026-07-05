@@ -1,0 +1,227 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "air-dispersion-field feed",
+  "type": "array",
+  "items": {
+    "additionalProperties": false,
+    "description": "A gridded AERMOD dispersion surface for one pollutant — the #1232 deliverable.\n\n``provenance`` is fixed to ``assumption``: the Lima permit redacts the genset stack geometry\nas CBI, so every modeled concentration inherits that assumed input and the frontend must\nrender it ``[inference]``, never ``[verified]``. ``available`` is False (with empty ``values``)\nwhen the AERMOD binary/met is absent — the grid geometry, ``geo_ref`` and NAAQS lines still\nresolve, but no concentration is fabricated (the same honest degrade as ``air-dispersion``).",
+    "properties": {
+      "site": {
+        "title": "Site",
+        "type": "string"
+      },
+      "pollutant": {
+        "title": "Pollutant",
+        "type": "string"
+      },
+      "unit": {
+        "default": "ug/m3",
+        "title": "Unit",
+        "type": "string"
+      },
+      "provenance": {
+        "const": "assumption",
+        "default": "assumption",
+        "title": "Provenance",
+        "type": "string"
+      },
+      "available": {
+        "default": false,
+        "title": "Available",
+        "type": "boolean"
+      },
+      "grid": {
+        "$ref": "#/$defs/DispersionGrid"
+      },
+      "geo_ref": {
+        "$ref": "#/$defs/DispersionGeoRef"
+      },
+      "periods": {
+        "items": {
+          "$ref": "#/$defs/DispersionPeriodField"
+        },
+        "title": "Periods",
+        "type": "array"
+      },
+      "stack_is_assumption": {
+        "default": true,
+        "title": "Stack Is Assumption",
+        "type": "boolean"
+      },
+      "engine_version": {
+        "default": "",
+        "title": "Engine Version",
+        "type": "string"
+      },
+      "caveats": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Caveats",
+        "type": "array"
+      },
+      "note": {
+        "default": "",
+        "title": "Note",
+        "type": "string"
+      }
+    },
+    "required": [
+      "site",
+      "pollutant",
+      "grid",
+      "geo_ref"
+    ],
+    "title": "DispersionField",
+    "type": "object"
+  },
+  "$defs": {
+    "DispersionGeoRef": {
+      "additionalProperties": false,
+      "description": "The model grid's WGS84 corner box — how the frontend places the field on the map.\n\nThe source sits at ``(source_lon, source_lat)``; ``sw``/``ne`` bound the axis-aligned grid\n(a deck.gl ``[west, south, east, north]`` box). Derived by a local flat-earth projection of\nthe metre grid about the source, so it inherits the field's ``assumption`` provenance.",
+      "properties": {
+        "crs": {
+          "default": "WGS84 (EPSG:4326)",
+          "title": "Crs",
+          "type": "string"
+        },
+        "source_lon": {
+          "title": "Source Lon",
+          "type": "number"
+        },
+        "source_lat": {
+          "title": "Source Lat",
+          "type": "number"
+        },
+        "sw_lon": {
+          "title": "Sw Lon",
+          "type": "number"
+        },
+        "sw_lat": {
+          "title": "Sw Lat",
+          "type": "number"
+        },
+        "ne_lon": {
+          "title": "Ne Lon",
+          "type": "number"
+        },
+        "ne_lat": {
+          "title": "Ne Lat",
+          "type": "number"
+        }
+      },
+      "required": [
+        "source_lon",
+        "source_lat",
+        "sw_lon",
+        "sw_lat",
+        "ne_lon",
+        "ne_lat"
+      ],
+      "title": "DispersionGeoRef",
+      "type": "object"
+    },
+    "DispersionGrid": {
+      "additionalProperties": false,
+      "description": "The receptor-grid geometry in AERMOD model metres (source at the origin, X=east, Y=north).\n\n``x0_m``/``y0_m`` are the SW corner; ``nx``/``ny`` the counts; ``dx_m``/``dy_m`` the spacing.\nA period's ``values[]`` is row-major over this grid — ``values[iy * nx + ix]`` — so the\nfrontend can index it without carrying per-cell coordinates.",
+      "properties": {
+        "nx": {
+          "minimum": 1,
+          "title": "Nx",
+          "type": "integer"
+        },
+        "ny": {
+          "minimum": 1,
+          "title": "Ny",
+          "type": "integer"
+        },
+        "dx_m": {
+          "exclusiveMinimum": 0,
+          "title": "Dx M",
+          "type": "number"
+        },
+        "dy_m": {
+          "exclusiveMinimum": 0,
+          "title": "Dy M",
+          "type": "number"
+        },
+        "x0_m": {
+          "title": "X0 M",
+          "type": "number"
+        },
+        "y0_m": {
+          "title": "Y0 M",
+          "type": "number"
+        }
+      },
+      "required": [
+        "nx",
+        "ny",
+        "dx_m",
+        "dy_m",
+        "x0_m",
+        "y0_m"
+      ],
+      "title": "DispersionGrid",
+      "type": "object"
+    },
+    "DispersionPeriodField": {
+      "additionalProperties": false,
+      "description": "One averaging period's gridded concentration surface + its NAAQS reference line.",
+      "properties": {
+        "averaging_period": {
+          "title": "Averaging Period",
+          "type": "string"
+        },
+        "values": {
+          "items": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": "Values",
+          "type": "array"
+        },
+        "max_conc_ug_m3": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Conc Ug M3"
+        },
+        "naaqs_ug_m3": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Naaqs Ug M3"
+        },
+        "exceeds_naaqs": {
+          "default": false,
+          "title": "Exceeds Naaqs",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "averaging_period"
+      ],
+      "title": "DispersionPeriodField",
+      "type": "object"
+    }
+  }
+}

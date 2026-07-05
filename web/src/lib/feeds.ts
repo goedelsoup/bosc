@@ -571,6 +571,61 @@ export interface RoutedHydrographNetwork {
   warnings: string[];
 }
 
+// --- air dispersion field (GPU field/flow viz, epic #1237 / #1232) ------------------------
+// The gridded AERMOD concentration surface the deck.gl FieldLayer renders. Distinct from the
+// `air-dispersion` NAAQS *screen* feed. Mirrors `bosc.site.feeds.DispersionField`.
+
+/** The receptor-grid geometry in AERMOD model metres (source at the origin, X=east, Y=north). */
+export interface DispersionGrid {
+  nx: number;
+  ny: number;
+  dx_m: number;
+  dy_m: number;
+  x0_m: number; // SW-corner easting, relative to the source at (0, 0)
+  y0_m: number; // SW-corner northing
+}
+
+/** The model grid's WGS84 corner box — a deck.gl `[west, south, east, north]` bounds box. */
+export interface DispersionGeoRef {
+  crs: string; // "WGS84 (EPSG:4326)"
+  source_lon: number;
+  source_lat: number;
+  sw_lon: number;
+  sw_lat: number;
+  ne_lon: number;
+  ne_lat: number;
+}
+
+/** One averaging period's gridded surface + its NAAQS reference line. */
+export interface DispersionPeriodField {
+  averaging_period: string; // AERMOD AVE token: "1" | "8" | "24" | "ANNUAL" | ...
+  values: (number | null)[]; // µg/m³, row-major `values[iy * nx + ix]`; null = no receptor
+  max_conc_ug_m3: number | null;
+  naaqs_ug_m3: number | null;
+  exceeds_naaqs: boolean; // peak > standard (screening only — a flag, not a violation)
+}
+
+/**
+ * A gridded AERMOD dispersion surface for one pollutant (`bosc.site.feeds.DispersionField`).
+ * `provenance` is fixed to `"assumption"` — the permit redacts the genset stack as CBI, so every
+ * concentration is `[inference]`, never `[verified]`. `available` is false (with empty `values`)
+ * when the AERMOD binary/met was absent: the geometry/geo_ref/NAAQS lines are real, nothing faked.
+ */
+export interface DispersionField {
+  site: string;
+  pollutant: string;
+  unit: string; // "ug/m3"
+  provenance: "assumption";
+  available: boolean;
+  grid: DispersionGrid;
+  geo_ref: DispersionGeoRef;
+  periods: DispersionPeriodField[];
+  stack_is_assumption: boolean;
+  engine_version: string;
+  caveats: string[];
+  note: string;
+}
+
 // --- boom-origin hypotheses (the directory lenses) + their evidence cells (#308) ----------
 /** One reading of the boom — content of a directory lens (`bosc.hypotheses.Hypothesis`). */
 export interface HypothesisItem {
