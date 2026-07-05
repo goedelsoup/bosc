@@ -182,6 +182,18 @@ def test_agent_falls_back_to_the_base_key_when_no_task_key_is_set() -> None:
     assert not ResearchAgent(settings=Settings.model_validate({}))._options().env
 
 
+def test_agent_normalizes_an_unknown_task_instead_of_raising_mid_turn() -> None:
+    # #1080: `task` is normalized once in __init__, so a bad string never reaches the
+    # `.value` access in converse() (which used to construct PipelineTask(self.task) live).
+    agent = ResearchAgent(settings=Settings.model_validate({}), task="not-a-task")
+    assert agent.task is PipelineTask.ASK  # falls back to the default, like anthropic_key_for
+    assert agent.task.value == "ask"  # safe for the trace attribute
+    # A valid string still round-trips to its member.
+    assert (
+        ResearchAgent(settings=Settings.model_validate({}), task="draft").task is PipelineTask.DRAFT
+    )
+
+
 def test_extractor_selects_its_task_key() -> None:
     # #1080: the extractor builds its Anthropic client with the per-task workspace key.
     settings = Settings.model_validate(

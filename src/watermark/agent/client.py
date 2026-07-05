@@ -79,7 +79,9 @@ class ResearchAgent:
         self.skills = RESEARCH_SKILLS if skills is None else skills
         # The pipeline task this agent's calls are attributed to (#1080): selects the per-task
         # workspace key, routed into the Agent SDK subprocess via ClaudeAgentOptions.env below.
-        self.task = task
+        # Normalize once so later `.value` access (the trace attribute in converse) is always
+        # safe; an unknown task string falls back to the default rather than raising mid-turn.
+        self.task: PipelineTask = PipelineTask.coerce(task, default=PipelineTask.ASK)
 
     def _options(self) -> ClaudeAgentOptions:
         kwargs: dict[str, object] = {
@@ -117,7 +119,7 @@ class ResearchAgent:
         tracer = opentelemetry.trace.get_tracer(__name__)
         with tracer.start_as_current_span("agent.research") as span:
             span.set_attribute("agent.model", self.model)
-            span.set_attribute("agent.task", PipelineTask(self.task).value)
+            span.set_attribute("agent.task", self.task.value)
             span.set_attribute("agent.max_turns", self.max_turns)
             span.set_attribute(
                 "agent.tool_names",
