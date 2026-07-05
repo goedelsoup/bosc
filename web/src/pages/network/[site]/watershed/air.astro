@@ -1,0 +1,140 @@
+---
+import { selectableSitePaths, siteForSlug } from "~/lib/sites";
+export const getStaticPaths = selectableSitePaths;
+import BackLink from "~/components/BackLink.astro";
+import EvidenceTag from "~/components/EvidenceTag.astro";
+import DispersionMap from "~/components/islands/DispersionMap.tsx";
+import Base from "~/layouts/Base.astro";
+import { hasFeed, loadFeed } from "~/lib/bundle";
+import type { DispersionField } from "~/lib/feeds";
+import { isReferenceSite } from "~/lib/readiness";
+import { withBase, withSite } from "~/lib/site";
+
+// The air-dispersion field view (#1234, epic #1237): the deck.gl FieldLayer island over the
+// gridded AERMOD screening surface, plus the always-rendered peak-concentration table that is the
+// no-JS / no-WebGL fallback. The whole field is modeled screening — the permit redacts the genset
+// stack as CBI — so every figure is [inference], flagged by the banner and every table tag.
+const { slug } = Astro.props as { slug: string };
+const site = siteForSlug(slug);
+const isRef = isReferenceSite(slug);
+
+// Build-time: the same feed the island fetches, used here to server-render the peak table.
+const fields: DispersionField[] = hasFeed("air-dispersion-field")
+  ? loadFeed<DispersionField[]>("air-dispersion-field")
+  : [];
+
+const periodLabel = (ave: string): string => (ave.toUpperCase() === "ANNUAL" ? "Annual" : `${ave}-hour`);
+
+interface PeakRow {
+  pollutant: string;
+  period: string;
+  peak: number | null;
+  naaqs: number | null;
+  exceeds: boolean;
+  available: boolean;
+}
+const rows: PeakRow[] = fields.flatMap((f) =>
+  f.periods.map((p) => ({
+    pollutant: f.pollutant,
+    period: periodLabel(p.averaging_period),
+    peak: p.max_conc_ug_m3,
+    naaqs: p.naaqs_ug_m3,
+    exceeds: p.exceeds_naaqs,
+    available: f.available,
+  })),
+);
+const fmt = (v: number | null): string => (v == null ? "—" : v.toFixed(2));
+
+const fieldLead = isRef
+  ? "the JSMC campus emergency-generator plant (114 gensets, ~2,750 ekW/engine)"
+  : `${site?.place}'s disclosed emergency-generator plant`;
+const mapSrc = withBase("/feeds/air/dispersion.json");
+---
+
+<Base title="Air dispersion" section="watershed">
+  <article class="prose">
+    <BackLink href={withSite("/watershed/")} label="The Maumee watershed" />
+    <h1>Air dispersion</h1>
+    <p class="section-lead">
+      A Tier-1 AERMOD screening of the criteria-pollutant concentrations {fieldLead} would
+      disperse across the surrounding grid. Switch pollutant and averaging period, toggle the
+      NAAQS isopleth, and hover the field for the modeled µg/m³ at a receptor. Cells over the
+      national ambient standard tint oxblood.
+    </p>
+
+    <div class="callout callout--inference">
+      <p class="callout-title">Modeled screening data — <EvidenceTag kind="inference" /></p>
+      <p>
+        The issued Air PTI withholds the emergency-generator make, model, and stack geometry as
+        confidential business information, so the stack parameters driving this run are an
+        <strong>assumption</strong>. Every concentration on this field is <code>[inference]</code> —
+        a labelled screening estimate, <strong>never <code>[verified]</code></strong> and not a
+        measured value or a permit-violation finding. It shows where a modeled plume would fall, not
+        what a monitor recorded.
+      </p>
+    </div>
+
+    <div class="deck-surface">
+      <DispersionMap client:only="react" src={mapSrc} />
+      <noscript>
+        <div class="deck-loading">
+          The interactive field needs JavaScript and WebGL — the peak-concentration table below
+          carries the same modeled figures.
+        </div>
+      </noscript>
+    </div>
+
+    <h2 id="peaks">Peak modeled concentrations</h2>
+    {
+      rows.length === 0 ? (
+        <p class="section-lead">
+          No modeled air-dispersion field is on the record for this site yet. When the disclosed
+          permit and a completed AERMOD run land, the screening surface appears here.
+        </p>
+      ) : (
+        <p class="card-meta">
+          Peak modeled concentration per pollutant and averaging period, against the National
+          Ambient Air Quality Standard. Every figure is <EvidenceTag kind="inference" /> — a
+          screening estimate on an assumed stack.
+        </p>
+      )
+    }
+  </article>
+
+  {
+    rows.length > 0 && (
+      <div class="dtable">
+        <table>
+          <thead>
+            <tr>
+              <th>Pollutant</th>
+              <th>Averaging period</th>
+              <th>Peak modeled (µg/m³)</th>
+              <th>NAAQS (µg/m³)</th>
+              <th>Screening flag</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr>
+                <td>{r.pollutant}</td>
+                <td>{r.period}</td>
+                <td class="num">{r.available ? fmt(r.peak) : "—"}</td>
+                <td class="num">{fmt(r.naaqs)}</td>
+                <td>
+                  {!r.available ? (
+                    <EvidenceTag kind="open" label="not modeled" />
+                  ) : r.exceeds ? (
+                    <EvidenceTag kind="gap" label="over NAAQS" />
+                  ) : (
+                    <EvidenceTag kind="inference" label="under NAAQS" />
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+</Base>
