@@ -55,6 +55,23 @@ Regenerate both with `watermark greenops aws --write` (needs `AWS_ACCESS_KEY_ID`
   `footprint.py` (#1082/#1083), never read from this export. Emissions data lags roughly
   **three months** behind the calendar (the CCFT's documented lag, carried over), so the
   monthly series ends at AWS's latest published month, not the request window's end.
+
+## GitHub (`github-usage.yaml`, #1081)
+
+- Pulled from the enhanced billing platform
+  `/organizations/{org}/settings/billing/usage`, one calendar month per request
+  (`?year=&month=`) across the trailing window, merged. Regenerate with
+  `watermark greenops github --write` (needs `GITHUB_TOKEN` with organization billing
+  access — an org owner/billing manager, or a fine-grained token with "Administration" org
+  permissions read; the org login is `WATERMARK_GITHUB_BILLING_ORG`).
+- **Actions minutes** are the metered CI-compute input the footprint derivation (#1083)
+  turns into vCPU-hrs — the runner SKU (Linux / Windows / macOS, and the multi-core
+  variants) sets the core count, so minutes are split by runner. **Git LFS / Packages /
+  shared storage** GB-hours are the corpus-at-rest input.
+- Line items are summed by `(product, sku, unit_type)` and folded into a small category
+  taxonomy (`ci_compute` = Actions minutes, `storage` = any GB-hours/GB line, `other` =
+  Copilot / Codespaces / …); unmapped products land in `other`, never dropped. Quantity
+  units vary per line and must not be summed across lines of differing units.
 """
 
 

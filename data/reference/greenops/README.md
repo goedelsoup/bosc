@@ -21,36 +21,6 @@ the modeled derivation (kWh, water) happens downstream in `footprint.py` (#1083)
   `/about/sustainability` "AI inferences run" headline is therefore derived downstream
   (#4/#1083), never metered here.
 
-### Per-task workspaces (usage attribution, #1080)
-
-The Admin usage report groups `by_workspace`. To turn that into the "AI · by task type"
-donut (upgrading it from a modeled `assumption` to a `connector` figure, #1083), route each
-pipeline stage through a **distinct Anthropic API key bound to its own workspace**, so a
-workspace maps 1:1 to a task. The task taxonomy is `watermark.tasks.PipelineTask`.
-
-Provisioning (one-time, in the [Anthropic Console](https://console.anthropic.com/) →
-**Workspaces**):
-
-1. Create one workspace per task — suggested names **Extraction**, **Corroboration**,
-   **Ask**, **Drafting** — and mint a workspace-scoped API key in each.
-2. Set the backend keys in the deploy environment (resolver:
-   `Settings.anthropic_key_for`, fallback: `ANTHROPIC_API_KEY`):
-   - `WATERMARK_ANTHROPIC_KEY_EXTRACT` → Extraction (`watermark.agent.extractor`, the
-     `watermark extract` / civic-summarize reads)
-   - `WATERMARK_ANTHROPIC_KEY_DRAFT` → Drafting (the research-run distill pass)
-   - `WATERMARK_ANTHROPIC_KEY_ASK` → Ask (the in-process `ResearchAgent`: `sweep`,
-     `research`, the analyze `research_question`)
-   - `WATERMARK_ANTHROPIC_KEY_CORROBORATE` → Corroboration (reserved for the live
-     self-correcting reconcile/repair pass, #40 — no live caller yet)
-3. Set the **public Search & Ask** key on the Cloudflare Worker, not here: the
-   `/api/ask` call runs in `web/functions/api/ask.ts`, so bind the **Ask** workspace key
-   as the Worker's `ANTHROPIC_API_KEY` secret (`wrangler secret put ANTHROPIC_API_KEY`).
-
-Any key left unset falls back to `ANTHROPIC_API_KEY`, so a single-key deploy keeps working —
-the by-task split just collapses onto the default workspace until the keys are provisioned.
-Keys are handed to the SDK explicitly (the extractor's client, the Agent SDK subprocess
-`env`); they are never logged and never part of a cache key.
-
 ## AWS (`aws-costs.yaml` + `aws-carbon.yaml`, #1079)
 
 Regenerate both with `watermark greenops aws --write` (needs `AWS_ACCESS_KEY_ID` /
@@ -72,3 +42,20 @@ Regenerate both with `watermark greenops aws --write` (needs `AWS_ACCESS_KEY_ID`
   `footprint.py` (#1082/#1083), never read from this export. Emissions data lags roughly
   **three months** behind the calendar (the CCFT's documented lag, carried over), so the
   monthly series ends at AWS's latest published month, not the request window's end.
+
+## GitHub (`github-usage.yaml`, #1081)
+
+- Pulled from the enhanced billing platform
+  `/organizations/{org}/settings/billing/usage`, one calendar month per request
+  (`?year=&month=`) across the trailing window, merged. Regenerate with
+  `watermark greenops github --write` (needs `GITHUB_TOKEN` with organization billing
+  access — an org owner/billing manager, or a fine-grained token with "Administration" org
+  permissions read; the org login is `WATERMARK_GITHUB_BILLING_ORG`).
+- **Actions minutes** are the metered CI-compute input the footprint derivation (#1083)
+  turns into vCPU-hrs — the runner SKU (Linux / Windows / macOS, and the multi-core
+  variants) sets the core count, so minutes are split by runner. **Git LFS / Packages /
+  shared storage** GB-hours are the corpus-at-rest input.
+- Line items are summed by `(product, sku, unit_type)` and folded into a small category
+  taxonomy (`ci_compute` = Actions minutes, `storage` = any GB-hours/GB line, `other` =
+  Copilot / Codespaces / …); unmapped products land in `other`, never dropped. Quantity
+  units vary per line and must not be summed across lines of differing units.
