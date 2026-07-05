@@ -149,6 +149,7 @@ def scenarios_cmd(
     """
     from watermark.air import calibration as cal
     from watermark.air.scenario import (
+        PollutantTonnage,
         baseline_scenario,
         cap_breach_runtime,
         evaluate,
@@ -190,12 +191,12 @@ def scenarios_cmd(
         by = {e.pollutant: e for e in r.emissions}
         nox, co = by.get("NOx"), by.get("CO")
 
-        def _cell(e: object) -> str:
+        def _cell(e: PollutantTonnage | None) -> str:
             if e is None:
                 return "—"
-            pct = f" [dim]({e.pct_of_cap:g}% of cap)[/]" if e.pct_of_cap is not None else ""  # type: ignore[attr-defined]
-            colour = "red" if e.exceeds_cap else "green"  # type: ignore[attr-defined]
-            return f"[{colour}]{e.tpy.value:g}[/]{pct}"  # type: ignore[attr-defined]
+            pct = f" [dim]({e.pct_of_cap:g}% of cap)[/]" if e.pct_of_cap is not None else ""
+            colour = "red" if e.exceeds_cap else "green"
+            return f"[{colour}]{e.tpy.value:g}[/]{pct}"
 
         breach = (
             f"[red]BREACH: {', '.join(r.breached_pollutants)}[/]"
@@ -284,7 +285,17 @@ def dispersion_cmd(
     if pollutant not in POLLUTANTS:
         raise typer.BadParameter(f"unknown pollutant {pollutant!r}; known: {list(POLLUTANTS)}")
 
-    periods: tuple[AveragePeriod, ...] = ("1", "8") if pollutant == "CO" else ("1", "ANNUAL")
+    # The NAAQS-relevant averaging periods per pollutant — line the run up with the operative
+    # standards (NO2 1-hr/annual, CO 1-hr/8-hr, PM10 24-hr, PM2.5 24-hr/annual, SO2 1-hr). VOC
+    # has no NAAQS, so its periods are informational only (the screen reports "no comparison").
+    naaqs_periods: dict[str, tuple[AveragePeriod, ...]] = {
+        "NOx": ("1", "ANNUAL"),
+        "CO": ("1", "8"),
+        "PM10": ("24",),
+        "PM2.5": ("24", "ANNUAL"),
+        "SO2": ("1",),
+    }
+    periods = naaqs_periods.get(pollutant, ("1", "ANNUAL"))
     result = run_calibration_dispersion(
         pollutant=pollutant,
         averaging_periods=periods,

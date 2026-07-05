@@ -47,13 +47,17 @@ _NAAQS_RELPATH = "air/naaqs/naaqs.yaml"
 
 
 class NaaqsStandard(BaseModel):
-    """One federal ambient standard: our pollutant, the NAAQS species, period, and limit."""
+    """One federal ambient standard: our pollutant, the NAAQS species, period, and limit.
+
+    ``pollutant`` / ``averaging_period`` are the typed literals so the committed reference YAML
+    is validated at load time — a typo or mismatched casing/spacing is rejected, not screened.
+    """
 
     model_config = ConfigDict(extra="forbid")
 
-    pollutant: str  # our Pollutant label (NOx is screened as NO2)
+    pollutant: Pollutant  # our Pollutant label (NOx is screened as NO2)
     naaqs_species: str
-    averaging_period: str  # AERMOD AVE token: "1", "8", "24", "ANNUAL", ...
+    averaging_period: AveragePeriod  # AERMOD AVE token: "1", "8", "24", "ANNUAL", ...
     standard_ug_m3: float
     basis: str
 
@@ -137,8 +141,11 @@ def screen_concentrations(
     modeled peak, just with no comparison.
     """
     settings = settings or get_settings()
-    table = {
-        s.averaging_period: s for s in load_naaqs(settings=settings) if s.pollutant == pollutant
+    # Key by plain str: ``max_conc`` keys are AERMOD's output tokens (str), not typed literals.
+    table: dict[str, NaaqsStandard] = {
+        str(s.averaging_period): s
+        for s in load_naaqs(settings=settings)
+        if s.pollutant == pollutant
     }
     out: list[ConcentrationScreen] = []
     for ave, conc in max_conc.items():

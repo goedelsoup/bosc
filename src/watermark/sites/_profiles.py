@@ -145,15 +145,15 @@ _LIMA = SiteProfile(
     # grid / facility (the disclosed Lima campus; serving-utility provenance = the corpus)
     facility=SiteFacility(
         genset_count=114,
-        genset_mw=2.75,  # ekW each, per the air permit
+        genset_mw=2.75,  # MW each (~2,750 ekW), per the air permit
         it_load_mw=275.0,  # midpoint of the 250-300 MW estimate (IT ~= backup at N+1)
         it_load_low_mw=250.0,
         it_load_high_mw=300.0,
         air_permit_citation=(
             "OEPA Air PTI P0138965 (Facility 0302022054), committed "
             "data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): "
-            "114 hall gensets x 2.75 ekW = ~313 MW backup; IT ~250-300 MW (N+1). "
-            "Per-engine ekW from the draft public notice (3987141/3987144); engine "
+            "114 hall gensets x 2.75 MW (~2,750 ekW) = ~313 MW backup; IT ~250-300 MW (N+1). "
+            "Per-engine rating from the draft public notice (3987141/3987144); engine "
             "size CBI-redacted in the final permit under an Ohio EPA trade-secret grant "
             "(OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml)."
         ),
