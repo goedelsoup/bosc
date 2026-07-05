@@ -37,6 +37,7 @@ from watermark.research.models import (
     ResearchRunManifest,
     RunProvenance,
 )
+from watermark.tasks import PipelineTask
 
 log = get_logger(__name__)
 
@@ -478,7 +479,11 @@ async def run_research(
         enable_tools=enable_tools,
         skills=list(recipe.skills) if recipe.skills is not None else None,
     )
-    extractor = extractor or StructuredExtractor(settings=settings, max_tokens=_DISTILL_MAX_TOKENS)
+    # The distill pass drafts issue proposals from the run's findings, so it attributes to the
+    # DRAFT task (its own workspace key) rather than the default EXTRACT one (#1080).
+    extractor = extractor or StructuredExtractor(
+        settings=settings, max_tokens=_DISTILL_MAX_TOKENS, task=PipelineTask.DRAFT
+    )
 
     result: AgentResult = await agent.converse(
         recipe.build_prompt(topic=topic, ctx=ctx), on_text=on_text

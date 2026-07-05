@@ -21,6 +21,36 @@ the modeled derivation (kWh, water) happens downstream in `footprint.py` (#1083)
   `/about/sustainability` "AI inferences run" headline is therefore derived downstream
   (#4/#1083), never metered here.
 
+### Per-task workspaces (usage attribution, #1080)
+
+The Admin usage report groups `by_workspace`. To turn that into the "AI · by task type"
+donut (upgrading it from a modeled `assumption` to a `connector` figure, #1083), route each
+pipeline stage through a **distinct Anthropic API key bound to its own workspace**, so a
+workspace maps 1:1 to a task. The task taxonomy is `watermark.tasks.PipelineTask`.
+
+Provisioning (one-time, in the [Anthropic Console](https://console.anthropic.com/) →
+**Workspaces**):
+
+1. Create one workspace per task — suggested names **Extraction**, **Corroboration**,
+   **Ask**, **Drafting** — and mint a workspace-scoped API key in each.
+2. Set the backend keys in the deploy environment (resolver:
+   `Settings.anthropic_key_for`, fallback: `ANTHROPIC_API_KEY`):
+   - `WATERMARK_ANTHROPIC_KEY_EXTRACT` → Extraction (`watermark.agent.extractor`, the
+     `watermark extract` / civic-summarize reads)
+   - `WATERMARK_ANTHROPIC_KEY_DRAFT` → Drafting (the research-run distill pass)
+   - `WATERMARK_ANTHROPIC_KEY_ASK` → Ask (the in-process `ResearchAgent`: `sweep`,
+     `research`, the analyze `research_question`)
+   - `WATERMARK_ANTHROPIC_KEY_CORROBORATE` → Corroboration (reserved for the live
+     self-correcting reconcile/repair pass, #40 — no live caller yet)
+3. Set the **public Search & Ask** key on the Cloudflare Worker, not here: the
+   `/api/ask` call runs in `web/functions/api/ask.ts`, so bind the **Ask** workspace key
+   as the Worker's `ANTHROPIC_API_KEY` secret (`wrangler secret put ANTHROPIC_API_KEY`).
+
+Any key left unset falls back to `ANTHROPIC_API_KEY`, so a single-key deploy keeps working —
+the by-task split just collapses onto the default workspace until the keys are provisioned.
+Keys are handed to the SDK explicitly (the extractor's client, the Agent SDK subprocess
+`env`); they are never logged and never part of a cache key.
+
 ## AWS (`aws-costs.yaml` + `aws-carbon.yaml`, #1079)
 
 Regenerate both with `watermark greenops aws --write` (needs `AWS_ACCESS_KEY_ID` /

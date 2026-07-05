@@ -25,6 +25,7 @@ from opentelemetry.trace import StatusCode
 from watermark.agent import tools
 from watermark.config import Settings, get_settings
 from watermark.logging import get_logger
+from watermark.tasks import PipelineTask
 
 log = get_logger(__name__)
 
@@ -68,6 +69,7 @@ class ResearchAgent:
         settings: Settings | None = None,
         enable_tools: bool = True,
         skills: list[str] | None = None,
+        task: PipelineTask | str = PipelineTask.ASK,
     ) -> None:
         self.settings = settings or get_settings()
         self.model = model or self.settings.model
@@ -75,6 +77,9 @@ class ResearchAgent:
         self.max_turns = max_turns or self.settings.max_turns
         self.enable_tools = enable_tools
         self.skills = RESEARCH_SKILLS if skills is None else skills
+        # The pipeline task this agent's calls are attributed to (#1080): selects the per-task
+        # workspace key, routed into the Agent SDK subprocess via ClaudeAgentOptions.env below.
+        self.task = task
 
     def _options(self) -> ClaudeAgentOptions:
         kwargs: dict[str, object] = {
@@ -93,6 +98,12 @@ class ResearchAgent:
         if self.enable_tools:
             kwargs["mcp_servers"] = {tools.SERVER_NAME: tools.build_server()}
             kwargs["allowed_tools"] = tools.ALLOWED_TOOL_NAMES
+        # Route this task's calls through its own workspace key (#1080). The SDK merges
+        # `env` over the inherited process env, so we override only ANTHROPIC_API_KEY — and
+        # only when a key actually resolves, leaving ambient auth untouched otherwise.
+        task_key = self.settings.anthropic_key_for(self.task)
+        if task_key:
+            kwargs["env"] = {"ANTHROPIC_API_KEY": task_key}
         return ClaudeAgentOptions(**kwargs)  # type: ignore[arg-type]
 
     async def converse(
@@ -106,6 +117,7 @@ class ResearchAgent:
         tracer = opentelemetry.trace.get_tracer(__name__)
         with tracer.start_as_current_span("agent.research") as span:
             span.set_attribute("agent.model", self.model)
+            span.set_attribute("agent.task", PipelineTask(self.task).value)
             span.set_attribute("agent.max_turns", self.max_turns)
             span.set_attribute(
                 "agent.tool_names",
