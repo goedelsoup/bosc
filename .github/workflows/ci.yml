@@ -205,7 +205,7 @@ jobs:
           echo "All backend legs passed or were skipped."
 
   # Build the Astro/MDX site (Epic #54). Decoupled from the Python job: it
-  # builds against the committed web/sample-bundle/ fixture via WATERMARK_BUNDLE_DIR,
+  # builds against the committed web/sites/ fixtures via WATERMARK_BUNDLE_DIR,
   # so no uv/LFS and no Python export are needed here. WATERMARK_SKIP_EXPORT tells the
   # watermarkBundle Vite plugin to skip its buildStart shell-out; WATERMARK_BUNDLE_DIR
   # points bundle.ts at the committed fixtures (an explicit opt-in — no longer a silent
@@ -216,7 +216,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       WATERMARK_SKIP_EXPORT: "1"
-      WATERMARK_BUNDLE_DIR: sample-bundle
+      WATERMARK_BUNDLE_DIR: sites
     defaults:
       run:
         working-directory: web
