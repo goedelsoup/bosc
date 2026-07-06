@@ -776,6 +776,67 @@ export function catalogFreshness(o: CatalogObserved | null | undefined): Catalog
   return "fresh";
 }
 
+// --- greenops: Watermark's own compute footprint (`bosc.greenops.model.GreenopsReport`) ---
+// The self-reported usage → electricity → water derivation the sustainability page reads
+// (#1076/#1084, bundle contract 1.21.0). Intentionally a PARTIAL mirror — only the fields
+// `/about/sustainability` renders; the committed `schemas/greenops.schema.json` stays
+// authoritative. Every numeric is a `ProvenancedValue` whose `source` is `derived` or
+// `assumption` — never `document`/`connector`, so no figure ever renders `[verified]`
+// (enforced Python-side by `GreenopsReport.assert_no_verified`).
+
+/** A labeled provenanced quantity — one bar / slice / month in a breakdown series. */
+export interface GreenopsQuantity {
+  label: string;
+  value: ProvenancedValue;
+}
+
+/** One of the four report headline stats (compute / AI inferences / electricity / water). */
+export interface GreenopsHeadline {
+  key: string;
+  label: string;
+  value: ProvenancedValue;
+  sub: string;
+  source_label: string; // display name of where it came from (not the ProvenancedValue citation)
+}
+
+/** One derivation note under the methodology block. */
+export interface GreenopsMethodology {
+  title: string;
+  body: string;
+}
+
+/** The assembled compute-footprint report the sustainability page reads. */
+export interface GreenopsReport {
+  period: { label: string; start: string; end: string; kind: string };
+  headline: GreenopsHeadline[];
+  compute_by_function: { unit: string; functions: GreenopsQuantity[] };
+  ai_by_task: { unit: string; tasks: GreenopsQuantity[] };
+  electricity: {
+    unit: string;
+    monthly: GreenopsQuantity[];
+    grid: ProvenancedValue;
+    renewable: ProvenancedValue;
+  };
+  water: {
+    unit: string;
+    direct: ProvenancedValue;
+    indirect: ProvenancedValue;
+    budget_cap: ProvenancedValue;
+  };
+  methodology: GreenopsMethodology[];
+  sources: string[];
+  note: string;
+}
+
+/** Map a provenanced value's `source` onto an evidence badge — greenops figures are modeled,
+ *  so `derived`/`assumption` (and anything not `document`/`connector`) render `[inference]`,
+ *  never `[verified]`. */
+export function provenanceEvidence(
+  pv: Pick<ProvenancedValue, "source"> | null | undefined,
+): "verified" | "inference" {
+  return pv?.source === "document" || pv?.source === "connector" ? "verified" : "inference";
+}
+
 // --- helpers -----------------------------------------------------------------
 
 /** A URL-safe slug from any label/key (e.g. an entity key "AMAZON COM SERVICES"). */

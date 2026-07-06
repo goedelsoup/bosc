@@ -12,8 +12,12 @@ import LineChart from "~/components/charts/LineChart.astro";
 import RankedBarChart from "~/components/charts/RankedBarChart.astro";
 import type { DonutSlice, LinePoint, RankedBarDatum } from "~/lib/charts";
 import type { FigureStatData } from "~/lib/viz";
+import { hasFeed, loadFeed } from "~/lib/bundle";
+import { type GreenopsReport, provenanceEvidence } from "~/lib/feeds";
 
-const greenops: { icon: string; title: string; body: string }[] = [
+// Editorial cards (the architecture principles + how models touch the record) are prose, not
+// metered data — they stay authored here. Everything numeric comes from the greenops feed below.
+const greenopsPrinciples: { icon: string; title: string; body: string }[] = [
   {
     icon: "archive",
     title: "Read once, cite forever",
@@ -73,99 +77,171 @@ const aiUses: { tag: string; title: string; body: string; model: string }[] = [
   },
 ];
 
-const headline: FigureStatData[] = [
-  {
-    label: "Compute",
-    value: "14,220",
+// The compute footprint is a global bundle feed (#1076/#1084). Read it when present; degrade to
+// a modeled fallback (identical shape, all `assumption`) so the page never 500s or blanks.
+const pv = (value: number, unit: string): { value: number; unit: string; source: string } => ({
+  value,
+  unit,
+  source: "assumption",
+});
+const FALLBACK: GreenopsReport = {
+  period: { label: "Jul 2025–Jun 2026", start: "2025-07", end: "2026-06", kind: "trailing_12_months" },
+  headline: [
+    {
+      key: "compute",
+      label: "Compute",
+      value: pv(14220, "vCPU-hrs"),
+      sub: "hosting, ingestion, search, AI",
+      source_label: "cloud billing export",
+    },
+    {
+      key: "ai_inferences",
+      label: "AI inferences run",
+      value: pv(2340000, "calls"),
+      sub: "extraction, ask, corroboration, drafting",
+      source_label: "model-provider usage logs",
+    },
+    {
+      key: "electricity",
+      label: "Electricity drawn",
+      value: pv(37.4, "MWh"),
+      sub: "compute + cooling, all regions",
+      source_label: "eGRID RFCW factors",
+    },
+    {
+      key: "water",
+      label: "Water drawn",
+      value: pv(37500, "gal"),
+      sub: "direct cooling + generation upstream",
+      source_label: "EPRI / Uptime WUE benchmarks",
+    },
+  ],
+  compute_by_function: {
     unit: "vCPU-hrs",
-    evidence: "inference",
-    basis: "modeled",
-    sub: "hosting, ingestion, search, AI",
-    source: "cloud billing export",
+    functions: [
+      { label: "Hosting", value: pv(6200, "vCPU-hrs") },
+      { label: "Ingestion", value: pv(3400, "vCPU-hrs") },
+      { label: "AI inference", value: pv(3050, "vCPU-hrs") },
+      { label: "Search index", value: pv(980, "vCPU-hrs") },
+      { label: "Corroboration", value: pv(590, "vCPU-hrs") },
+    ],
   },
-  {
-    label: "AI inferences run",
-    value: "2.34M",
+  ai_by_task: {
     unit: "calls",
-    evidence: "inference",
-    basis: "modeled",
-    sub: "extraction, ask, corroboration, drafting",
-    source: "model-provider usage logs",
+    tasks: [
+      { label: "Structured extraction", value: pv(1220000, "calls") },
+      { label: "Search & Ask", value: pv(725000, "calls") },
+      { label: "Corroboration assist", value: pv(255000, "calls") },
+      { label: "Drafting summaries", value: pv(140000, "calls") },
+    ],
   },
-  {
-    label: "Electricity drawn",
-    value: "37.4",
+  electricity: {
     unit: "MWh",
-    evidence: "inference",
-    basis: "modeled",
-    sub: "compute + cooling, all regions",
-    source: "eGRID RFCW factors",
+    monthly: [
+      { label: "Jul", value: pv(2.8, "MWh") },
+      { label: "Aug", value: pv(3.1, "MWh") },
+      { label: "Sep", value: pv(3.3, "MWh") },
+      { label: "Oct", value: pv(3.0, "MWh") },
+      { label: "Nov", value: pv(2.9, "MWh") },
+      { label: "Dec", value: pv(3.2, "MWh") },
+      { label: "Jan", value: pv(3.6, "MWh") },
+      { label: "Feb", value: pv(3.3, "MWh") },
+      { label: "Mar", value: pv(3.0, "MWh") },
+      { label: "Apr", value: pv(2.9, "MWh") },
+      { label: "May", value: pv(3.1, "MWh") },
+      { label: "Jun", value: pv(3.2, "MWh") },
+    ],
+    grid: pv(23.2, "MWh"),
+    renewable: pv(14.2, "MWh"),
   },
-  {
-    label: "Water drawn",
-    value: "37,500",
+  water: {
     unit: "gal",
-    evidence: "inference",
-    basis: "modeled",
-    sub: "direct cooling + generation upstream",
-    source: "EPRI / Uptime WUE benchmarks",
+    direct: pv(15800, "gal"),
+    indirect: pv(21700, "gal"),
+    budget_cap: pv(45000, "gal"),
   },
-];
+  methodology: [
+    {
+      title: "Compute",
+      body: "Read from cloud vendor billing exports, split by service tag (hosting, ingestion, search, model inference).",
+    },
+    {
+      title: "Electricity",
+      body: "vCPU- and GPU-hours converted with vendor power-draw specs, then apportioned by EPA eGRID subregion carbon-intensity factors for where each workload runs.",
+    },
+    {
+      title: "Water",
+      body: "Modeled from the electricity figure using published Water Usage Effectiveness (WUE) benchmarks for the relevant facility types — direct on-site cooling plus the water withdrawn upstream to generate the power we draw.",
+    },
+  ],
+  sources: [
+    "cloud billing export FY26",
+    "EPA eGRID subregion RFCW factors 2025",
+    "EPRI / Uptime Institute WUE benchmarks 2024",
+  ],
+  note: "figures are inferred, not metered — see methodology below",
+};
 
-const computeData: RankedBarDatum[] = [
-  { label: "Hosting", value: 6200 },
-  { label: "Ingestion", value: 3400 },
-  { label: "AI inference", value: 3050 },
-  { label: "Search index", value: 980 },
-  { label: "Corroboration", value: 590 },
-];
+const report = hasFeed("greenops") ? loadFeed<GreenopsReport>("greenops") : FALLBACK;
 
-const aiSlices: DonutSlice[] = [
-  { label: "Structured extraction", value: 1220000 },
-  { label: "Search & Ask", value: 725000 },
-  { label: "Corroboration assist", value: 255000 },
-  { label: "Drafting summaries", value: 140000 },
-];
+// Display a modeled number readably: group thousands, keep a couple of decimals above 1, and
+// preserve significant figures for sub-unit values (e.g. 0.0045 MWh) rather than rounding to 0.
+const fmt = (n: number): string => {
+  const a = Math.abs(n);
+  if (a === 0) return "0";
+  if (a >= 1000) return n.toLocaleString("en-US", { maximumFractionDigits: 0 });
+  if (a >= 1) return n.toLocaleString("en-US", { maximumFractionDigits: 2 });
+  return parseFloat(n.toPrecision(3)).toString();
+};
 
-const elecLine: LinePoint[] = [
-  { label: "Jul", value: 2.8 },
-  { label: "Aug", value: 3.1 },
-  { label: "Sep", value: 3.3 },
-  { label: "Oct", value: 3.0 },
-  { label: "Nov", value: 2.9 },
-  { label: "Dec", value: 3.2 },
-  { label: "Jan", value: 3.6 },
-  { label: "Feb", value: 3.3 },
-  { label: "Mar", value: 3.0 },
-  { label: "Apr", value: 2.9 },
-  { label: "May", value: 3.1 },
-  { label: "Jun", value: 3.2 },
-];
+const PERIOD_KIND_LABEL: Record<string, string> = { trailing_12_months: "Trailing 12 months" };
+const periodLabel = `${PERIOD_KIND_LABEL[report.period.kind] ?? report.period.kind} · ${report.period.label}`;
 
-// Electricity source mix: grid 23.2 MWh / matched renewable 14.2 MWh
-const elecTotal = 23.2 + 14.2;
-const elecGridPct = ((23.2 / elecTotal) * 100).toFixed(1);
-const elecRenewPct = ((14.2 / elecTotal) * 100).toFixed(1);
+const headline: FigureStatData[] = report.headline.map((h) => ({
+  label: h.label,
+  value: fmt(h.value.value ?? 0),
+  unit: h.value.unit ?? undefined,
+  evidence: provenanceEvidence(h.value),
+  basis: provenanceEvidence(h.value) === "verified" ? "grounded" : "modeled",
+  sub: h.sub,
+  source: h.source_label,
+}));
 
-// Water draw breakdown: direct 15,800 gal / indirect 21,700 gal
-const waterTotal = 15800 + 21700;
-const waterDirectPct = ((15800 / waterTotal) * 100).toFixed(1);
-const waterIndirectPct = ((21700 / waterTotal) * 100).toFixed(1);
+const computeData: RankedBarDatum[] = report.compute_by_function.functions.map((f) => ({
+  label: f.label,
+  value: f.value.value ?? 0,
+}));
 
-const methodology: { title: string; body: string }[] = [
-  {
-    title: "Compute",
-    body: "Read from cloud vendor billing exports, split by service tag (hosting, ingestion, search, model inference).",
-  },
-  {
-    title: "Electricity",
-    body: "vCPU- and GPU-hours converted with vendor power-draw specs, then apportioned by EPA eGRID subregion carbon-intensity factors for where each workload runs.",
-  },
-  {
-    title: "Water",
-    body: "Modeled from the electricity figure using published Water Usage Effectiveness (WUE) benchmarks for the relevant facility types — direct on-site cooling plus the water withdrawn upstream to generate the power we draw.",
-  },
-];
+const aiSlices: DonutSlice[] = report.ai_by_task.tasks.map((t) => ({
+  label: t.label,
+  value: t.value.value ?? 0,
+}));
+
+const elecLine: LinePoint[] = report.electricity.monthly.map((m) => ({
+  label: m.label,
+  value: m.value.value ?? 0,
+}));
+const elecUnit = report.electricity.unit;
+const elecEndLabel = elecLine.length ? `${fmt(elecLine[elecLine.length - 1].value)} ${elecUnit}` : "";
+
+// Electricity source mix — grid vs matched renewable, as shares of the two combined.
+const elecGrid = report.electricity.grid.value ?? 0;
+const elecRenew = report.electricity.renewable.value ?? 0;
+const elecMixTotal = elecGrid + elecRenew || 1;
+const elecGridPct = ((elecGrid / elecMixTotal) * 100).toFixed(1);
+const elecRenewPct = ((elecRenew / elecMixTotal) * 100).toFixed(1);
+
+// Water draw breakdown — direct on-site cooling vs upstream generation, against the budget cap.
+const waterDirect = report.water.direct.value ?? 0;
+const waterIndirect = report.water.indirect.value ?? 0;
+const waterTotal = waterDirect + waterIndirect;
+const waterCap = report.water.budget_cap.value ?? 0;
+const waterUnit = report.water.unit;
+const waterDirectPct = (waterTotal ? (waterDirect / waterTotal) * 100 : 0).toFixed(1);
+const waterIndirectPct = (waterTotal ? (waterIndirect / waterTotal) * 100 : 0).toFixed(1);
+
+const methodology = report.methodology;
+const sourcesLine = `sources · ${report.sources.join(" · ")}`;
 ---
 
 <Base
@@ -196,7 +272,7 @@ const methodology: { title: string; body: string }[] = [
       </p>
       <div class="sust-greenops-grid">
         {
-          greenops.map((g) => (
+          greenopsPrinciples.map((g) => (
             <div class="sust-gop-card">
               <div class="sust-gop-head">
                 <span class="sust-gop-icon">
@@ -246,7 +322,7 @@ const methodology: { title: string; body: string }[] = [
       <div class="sust-eyebrow-sm">The usage report</div>
       <h2 class="sust-h2">Compute, AI, electricity &amp; water</h2>
       <div class="sust-report-meta">
-        <span class="sust-report-period">Trailing 12 months · Jul 2025–Jun 2026</span>
+        <span class="sust-report-period">{periodLabel}</span>
         <span class="sust-report-note">figures are inferred, not metered — see methodology below</span>
       </div>
 
@@ -304,7 +380,7 @@ const methodology: { title: string; body: string }[] = [
             data={elecLine}
             kicker="Line · monthly (MWh)"
             title="Electricity drawn by month"
-            endLabel="3.2 MWh"
+            endLabel={elecEndLabel}
           />
           <hr class="sust-divider" />
           <div class="sust-stack-label">Source mix</div>
@@ -315,11 +391,11 @@ const methodology: { title: string; body: string }[] = [
           <ul class="sust-stack-legend">
             <li class="sust-stack-item">
               <span class="sust-stack-dot sust-stack-dot--1" aria-hidden="true"></span>
-              Grid (regional mix) · 23.2 MWh · {elecGridPct}%
+              Grid (regional mix) · {fmt(elecGrid)} {elecUnit} · {elecGridPct}%
             </li>
             <li class="sust-stack-item">
               <span class="sust-stack-dot sust-stack-dot--2" aria-hidden="true"></span>
-              Matched renewable (RECs) · 14.2 MWh · {elecRenewPct}%
+              Matched renewable (RECs) · {fmt(elecRenew)} {elecUnit} · {elecRenewPct}%
             </li>
           </ul>
         </div>
@@ -331,9 +407,9 @@ const methodology: { title: string; body: string }[] = [
             <span class="sust-panel-label">Water · against internal budget</span>
           </div>
           <GaugeBar
-            value={37500}
-            cap={45000}
-            unit="gal"
+            value={waterTotal}
+            cap={waterCap}
+            unit={waterUnit}
             label="of the internal annual water budget"
             kicker="Gauge · against the cap"
             title="Water drawn vs budget"
@@ -347,11 +423,11 @@ const methodology: { title: string; body: string }[] = [
           <ul class="sust-stack-legend">
             <li class="sust-stack-item">
               <span class="sust-stack-dot sust-stack-dot--1" aria-hidden="true"></span>
-              Direct — on-site cooling · 15,800 gal · {waterDirectPct}%
+              Direct — on-site cooling · {fmt(waterDirect)} {waterUnit} · {waterDirectPct}%
             </li>
             <li class="sust-stack-item">
               <span class="sust-stack-dot sust-stack-dot--2" aria-hidden="true"></span>
-              Indirect — grid generation upstream · 21,700 gal · {waterIndirectPct}%
+              Indirect — grid generation upstream · {fmt(waterIndirect)} {waterUnit} · {waterIndirectPct}%
             </li>
           </ul>
         </div>
@@ -374,10 +450,7 @@ const methodology: { title: string; body: string }[] = [
           ))
         }
       </div>
-      <p class="sust-method-sources">
-        sources · cloud billing export FY26 · EPA eGRID subregion RFCW factors 2025 · EPRI /
-        Uptime Institute WUE benchmarks 2024
-      </p>
+      <p class="sust-method-sources">{sourcesLine}</p>
     </div>
 
     <!-- ── CTA ───────────────────────────────────────────────────────── -->
