@@ -76,6 +76,7 @@ from watermark.site import exhibits as exhibits_mod
 from watermark.site import gismap as gismap_mod
 from watermark.site import gleif as gleif_mod
 from watermark.site import graph as graph_mod
+from watermark.site import greenops as greenops_mod
 from watermark.site import leads as leads_mod
 from watermark.site import meetings as meetings_mod
 from watermark.site import people as people_mod
@@ -652,6 +653,11 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         ),
         # Cross-site basin synthesis (#308/#323): the watershed points as one connected basin.
         ("network", None, lambda: build_basin_network(settings=settings)),
+        # Watermark's own compute footprint (the GreenOps report, #1076/#1084) — the platform's
+        # usage → electricity → water derivation. Global like `network`: a property of the
+        # platform, emitted into every bundle identically (reads the committed footprint.yaml, or
+        # a modeled placeholder when absent — never skipped, never faked).
+        ("greenops", None, lambda: greenops_mod.export_greenops(settings)),
         # The loop's design-storm hydrograph routed down the cited confluence graph (#1184):
         # routed vs. naive-summed outlet peak, attenuation + lag. Reference-only: network.yaml +
         # reaches.yaml describe the Lima loop and aren't slug-scoped, so a sibling site must not

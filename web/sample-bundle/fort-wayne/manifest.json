@@ -1,10 +1,10 @@
 {
   "site": "fort-wayne",
   "bundle_version": "1.0.0",
-  "contract_version": "1.20.0",
+  "contract_version": "1.21.0",
   "generated_at": "2026-07-01T18:23:56+00:00",
-  "feed_count": 21,
-  "row_total": 87,
+  "feed_count": 22,
+  "row_total": 88,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -125,6 +125,14 @@
       "path": "feeds/network.json",
       "media_type": "application/json",
       "schema": "schemas/network.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "greenops",
+      "path": "feeds/greenops.json",
+      "media_type": "application/json",
+      "schema": "schemas/greenops.schema.json",
       "kind": "object",
       "count": 1
     },

@@ -107,7 +107,14 @@ from watermark.site.readiness import State, Tier  # the readiness vocabulary SSO
 #   node. Geometry is verbatim NHDPlus via USGS NLDI (watermark.hydrology.reach_geometry),
 #   committed under data/reference/hydrology/reaches/. Reference-site gated like routed-hydrograph;
 #   absent when the committed centerline file is missing (nothing invented).
-CONTRACT_VERSION = "1.20.0"
+# 1.21.0: adds the `greenops` object feed (#1076/#1084) — Watermark's own compute footprint
+#   (`GreenopsReport`): the usage → electricity → water derivation, with headline stats,
+#   compute-by-function / AI-by-task / monthly-electricity / water breakdowns, and a methodology
+#   block, every figure a `ProvenancedValue` tagged reference/derived/assumption (never verified —
+#   our own consumption is modeled, not metered). Global like `network`: emitted into every
+#   bundle identically from the committed data/reference/greenops/footprint.yaml (a modeled
+#   placeholder when that artifact is absent, so the feed is never skipped).
+CONTRACT_VERSION = "1.21.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
