@@ -159,6 +159,12 @@ class Settings(BaseSettings):
     # digit count (8 = Subbasin, 10 = Watershed, 12 = Subwatershed); the WBD connector
     # appends `/<layer>/query`. Served through the shared hydrology cache/fixture path.
     wbd_url: str = "https://hydro.nationalmap.gov/arcgis/rest/services/wbd/MapServer"
+    # USGS NLDI (Network-Linked Data Index) — the hydro-network navigation service over the
+    # NHDPlus flowline network. The `nldi` connector snaps a point / gage to its NHDPlus
+    # `comid` and navigates upstream/downstream to return real river-centerline geometry
+    # (the reach-network the FlowLayer viz advects over). Served through the shared hydrology
+    # cache/fixture path. The connector appends `/linked-data/...`.
+    nldi_base_url: str = "https://api.water.usgs.gov/nldi"
     # EPA RSEI Public Data Set. The current release — v2.3.12 (March 2024, TRI 1988-2022)
     # — ships as a single ~447 MB zip of per-table CSVs on EPA's public gaftp site, NOT
     # the frozen `epa-rsei-pds` S3 bucket, which stalled at v234/2016 (#1148). `watermark

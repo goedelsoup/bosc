@@ -36,8 +36,11 @@ _ZERO_GEO = DispersionGeoRef(
 
 
 def test_contract_version_bumped() -> None:
-    """The feed is additive/MINOR — the bundle contract advanced to 1.19.0."""
-    assert CONTRACT_VERSION == "1.19.0"
+    """The air-dispersion-field feed advanced the contract to 1.19.0 (MINOR); it has since
+    moved on additively — assert it is at least there (compare parsed components, not strings,
+    so multi-digit minors/patches order correctly)."""
+    version = tuple(int(p) for p in CONTRACT_VERSION.split("."))
+    assert version >= (1, 19, 0)
 
 
 def test_sample_plotfile_round_trips_onto_the_grid() -> None:
@@ -106,7 +109,7 @@ def test_reference_export_emits_the_field_feed(lima_bundle: Path) -> None:
     """The reference build ships `air-dispersion-field` with real geometry, geo_ref and NAAQS
     lines — `assumption`-provenanced, degrading to empty `values` when AERMOD is absent (CI)."""
     manifest = json.loads((lima_bundle / "manifest.json").read_text(encoding="utf-8"))
-    assert manifest["contract_version"] == "1.19.0"
+    assert manifest["contract_version"] == "1.20.0"
     ref = next((f for f in manifest["feeds"] if f["name"] == "air-dispersion-field"), None)
     assert ref is not None, "reference build must emit the air-dispersion-field feed"
 

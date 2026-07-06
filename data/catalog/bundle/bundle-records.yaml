@@ -21,6 +21,7 @@ depends_on:
 - gleif
 - hydrology
 - hydrology-low-flow-7q10
+- hydrology-reaches
 - hydrology-wbd
 - rsei-inventory
 refresh:
@@ -55,5 +56,8 @@ notes: >-
   The `air-dispersion-field` feed (#1232/#1237, contract 1.19.0) reshapes the same AERMOD screening
   run into the gridded concentration surface the deck.gl field viz renders (reference-site gated,
   `assumption`-provenanced) — reading the same air upstreams, so it adds no new committed dependency.
+  The `reach-network` feed (#1235/#1237, contract 1.20.0) carries the real river-centerline geometry
+  the deck.gl FlowLayer particle-advection viz advects over — reading the committed `hydrology-reaches`
+  NHDPlus centerlines (regenerated from USGS NLDI), reference-site gated.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.

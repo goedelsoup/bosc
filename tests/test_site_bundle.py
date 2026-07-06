@@ -281,7 +281,7 @@ def test_backdrop_staged_site_exports_at_backdrop_tier(
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.19.0"
+    assert manifest["contract_version"] == "1.20.0"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "backdrop", f"{slug} should be a Backdrop site, got {readiness}"
     domains = readiness["domains"]

@@ -79,6 +79,17 @@ if (hasFeed("air-dispersion-field")) {
     note: "modeled screen",
   });
 }
+if (hasFeed("reach-network")) {
+  doors.push({
+    id: "flow",
+    kind: "Interactive flow",
+    href: withSite("/watershed/flow"),
+    count: "—",
+    title: "Water flow",
+    desc: "GPU particles advecting down the real reach-network river centerlines — density/speed encode the routed storm peak, deficit reaches oxblood. Modeled, [inference].",
+    note: "animated flow",
+  });
+}
 if (hasFeed("economics-baseline")) {
   doors.push({
     id: "economics",
