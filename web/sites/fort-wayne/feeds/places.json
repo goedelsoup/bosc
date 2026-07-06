@@ -1,0 +1,90 @@
+[
+  {
+    "slug": "project-zodiac-campus",
+    "name": "Project Zodiac campus",
+    "kind": "composite",
+    "depth": "watched",
+    "parcels": [
+      "021327100001000077",
+      "021327451001000077",
+      "021327451001003039",
+      "021327451001004039",
+      "021327476001001039",
+      "021327476002000039",
+      "021327476003000039",
+      "021327476004000039",
+      "021327476005000039",
+      "021327476006000039",
+      "021327476007000039"
+    ],
+    "members": [],
+    "aliases": [
+      "Hatchworks campus",
+      "Google Fort Wayne data center"
+    ],
+    "tags": [
+      "datacenter",
+      "campus",
+      "project-zodiac",
+      "hatchworks",
+      "google"
+    ],
+    "location": {
+      "method": "parcel-cama",
+      "confidence": "high",
+      "asof": "2026-06-26",
+      "bbox": [
+        -85.057758,
+        41.018893,
+        -85.036133,
+        41.040715
+      ]
+    },
+    "track": {
+      "enabled": true,
+      "collections": [
+        "sentinel-2-l2a",
+        "naip",
+        "landsat-c2-l2"
+      ],
+      "since": "2023-01-01"
+    },
+    "relationships": [
+      {
+        "role": "owner",
+        "entity": "Hatchworks LLC"
+      },
+      {
+        "role": "operator",
+        "entity": "Google"
+      }
+    ],
+    "citations": [
+      {
+        "source": "data/reference/fort-wayne/bosc-parcels.geojson",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": "(Allen County, IN iMap — 11 parcels, owner of record Hatchworks LLC; bbox derived from the committed geometry)",
+        "verified": true
+      },
+      {
+        "source": "data/extracted/fort-wayne/datacenter-facility.md",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": "(Google \"Project Zodiac\", $2B, ~700 ac, operational Dec 11 2025; serving utility I&M)",
+        "verified": true
+      },
+      {
+        "source": "data/extracted/idem/fort-wayne/wqc001454.idem.yaml",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": "(IDEM §401 WQC001454; applicant Marc Stern, Hatchworks LLC; 7510 Zodiac Way)",
+        "verified": true
+      }
+    ],
+    "body": "Composite POI of the **11 Hatchworks LLC parcels** that make up the Project Zodiac data-center\ncampus in southeast Fort Wayne, Allen County, **Indiana** — the network's first confirmed\noperational data-center facility ([`datacenter-facility.md`](../../extracted/fort-wayne/datacenter-facility.md),\n#360). It is the active imagery tracking site (`depth: watched`); the AOI `bbox` here — derived\nfrom the committed parcel geometry — is what `watermark imagery search/pull` clips to.\n\nGeometry and identity are the Allen County, IN CAMA parcels listed in `parcels` (the county\niMap `QueryLayers` Parcel_Poly layer, owner-of-record joined), committed verbatim as\n[`bosc-parcels.geojson`](../../reference/fort-wayne/bosc-parcels.geojson). The campus grouping is\nan analyst composite, not a county object; member parcels are not yet broken out as atomic POIs.\n\n**The assemblage tells the story.** The block was bought in **two waves** — four parcels in\nJanuary 2024 (around the April 2024 $2B groundbreaking) and seven more on **2025-10-31** (the\nPhase II/III expansion). Every parcel is held by **Hatchworks LLC**, a Delaware-registered-agent\nshell (mailing `2801 Centerville Rd, Wilmington DE 19808`) — except the situs parcel **6015 Adams\nCenter Rd**, whose owner mailing is **Mountain View, CA 94043**: the on-record link from the shell\nto **Google**, the operator the local \"Project Zodiac\" filings keep at arm's length."
+  }
+]

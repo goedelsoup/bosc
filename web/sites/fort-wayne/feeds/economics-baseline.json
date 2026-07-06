@@ -1,0 +1,679 @@
+{
+  "fips": "18003",
+  "area_name": "Allen County, Indiana",
+  "latest": {
+    "fips": "18003",
+    "area_name": "Allen County, Indiana",
+    "year": 2023,
+    "total_employment": {
+      "value": 196725.0,
+      "unit": "jobs",
+      "source": "connector",
+      "citation": "BLS QCEW 2023 annual averages, area 18003",
+      "confidence": "high",
+      "asof": null
+    },
+    "establishments": {
+      "value": 10214.0,
+      "unit": "establishments",
+      "source": "connector",
+      "citation": "BLS QCEW 2023 annual averages, area 18003",
+      "confidence": "high",
+      "asof": null
+    },
+    "avg_annual_pay": null,
+    "avg_weekly_wage": null,
+    "sectors": [
+      {
+        "naics": "62",
+        "sector_name": "Health Care & Social Assistance",
+        "annual_avg_employment": {
+          "value": 37294.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 983.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "avg_annual_pay": null,
+        "avg_weekly_wage": null,
+        "location_quotient": {
+          "value": 1.36,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "31-33",
+        "sector_name": "Manufacturing",
+        "annual_avg_employment": {
+          "value": 29404.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 521.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "avg_annual_pay": null,
+        "avg_weekly_wage": null,
+        "location_quotient": {
+          "value": 1.78,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "44-45",
+        "sector_name": "Retail Trade",
+        "annual_avg_employment": {
+          "value": 21803.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 1185.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "avg_annual_pay": null,
+        "avg_weekly_wage": null,
+        "location_quotient": {
+          "value": 1.09,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "72",
+        "sector_name": "Accommodation & Food Services",
+        "annual_avg_employment": {
+          "value": 17297.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 839.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "avg_annual_pay": null,
+        "avg_weekly_wage": null,
+        "location_quotient": {
+          "value": 0.96,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "23",
+        "sector_name": "Construction",
+        "annual_avg_employment": {
+          "value": 10908.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 1017.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "avg_annual_pay": null,
+        "avg_weekly_wage": null,
+        "location_quotient": {
+          "value": 1.07,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "56",
+        "sector_name": "Administrative & Support & Waste Management",
+        "annual_avg_employment": {
+          "value": 10574.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 612.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "avg_annual_pay": null,
+        "avg_weekly_wage": null,
+        "location_quotient": {
+          "value": 0.88,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "48-49",
+        "sector_name": "Transportation & Warehousing",
+        "annual_avg_employment": {
+          "value": 8950.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 358.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "avg_annual_pay": null,
+        "avg_weekly_wage": null,
+        "location_quotient": {
+          "value": 1.08,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "42",
+        "sector_name": "Wholesale Trade",
+        "annual_avg_employment": {
+          "value": 8880.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 678.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "avg_annual_pay": null,
+        "avg_weekly_wage": null,
+        "location_quotient": {
+          "value": 1.13,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "52",
+        "sector_name": "Finance & Insurance",
+        "annual_avg_employment": {
+          "value": 8356.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 704.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "avg_annual_pay": null,
+        "avg_weekly_wage": null,
+        "location_quotient": {
+          "value": 1.03,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "54",
+        "sector_name": "Professional, Scientific & Technical Services",
+        "annual_avg_employment": {
+          "value": 6746.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 1203.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "avg_annual_pay": null,
+        "avg_weekly_wage": null,
+        "location_quotient": {
+          "value": 0.49,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "81",
+        "sector_name": "Other Services (except Public Administration)",
+        "annual_avg_employment": {
+          "value": 6306.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 818.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "avg_annual_pay": null,
+        "avg_weekly_wage": null,
+        "location_quotient": {
+          "value": 1.07,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "61",
+        "sector_name": "Educational Services",
+        "annual_avg_employment": {
+          "value": 3021.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 122.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "avg_annual_pay": null,
+        "avg_weekly_wage": null,
+        "location_quotient": {
+          "value": 0.75,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "71",
+        "sector_name": "Arts, Entertainment & Recreation",
+        "annual_avg_employment": {
+          "value": 2461.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 162.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "avg_annual_pay": null,
+        "avg_weekly_wage": null,
+        "location_quotient": {
+          "value": 0.77,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "55",
+        "sector_name": "Management of Companies & Enterprises",
+        "annual_avg_employment": {
+          "value": 2226.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 79.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "avg_annual_pay": null,
+        "avg_weekly_wage": null,
+        "location_quotient": {
+          "value": 0.68,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "53",
+        "sector_name": "Real Estate & Rental & Leasing",
+        "annual_avg_employment": {
+          "value": 2193.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 504.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "avg_annual_pay": null,
+        "avg_weekly_wage": null,
+        "location_quotient": {
+          "value": 0.71,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "51",
+        "sector_name": "Information",
+        "annual_avg_employment": {
+          "value": 1677.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 129.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "avg_annual_pay": null,
+        "avg_weekly_wage": null,
+        "location_quotient": {
+          "value": 0.44,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "22",
+        "sector_name": "Utilities",
+        "annual_avg_employment": {
+          "value": 468.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 18.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "avg_annual_pay": null,
+        "avg_weekly_wage": null,
+        "location_quotient": {
+          "value": 0.63,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "11",
+        "sector_name": "Agriculture, Forestry, Fishing & Hunting",
+        "annual_avg_employment": {
+          "value": 239.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 43.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "avg_annual_pay": null,
+        "avg_weekly_wage": null,
+        "location_quotient": {
+          "value": 0.15,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "naics": "21",
+        "sector_name": "Mining, Quarrying, Oil & Gas Extraction",
+        "annual_avg_employment": {
+          "value": 118.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "establishments": {
+          "value": 5.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        },
+        "avg_annual_pay": null,
+        "avg_weekly_wage": null,
+        "location_quotient": {
+          "value": 0.16,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 18003",
+          "confidence": "high",
+          "asof": null
+        }
+      }
+    ],
+    "source": "BLS QCEW (annual averages, private ownership by NAICS sector)"
+  },
+  "trend": [
+    {
+      "year": 2018,
+      "total_employment": {
+        "value": 188032.0,
+        "unit": "jobs",
+        "source": "connector",
+        "citation": "BLS QCEW 2018 annual averages, area 18003",
+        "confidence": "high",
+        "asof": null
+      },
+      "establishments": null
+    },
+    {
+      "year": 2023,
+      "total_employment": {
+        "value": 196725.0,
+        "unit": "jobs",
+        "source": "connector",
+        "citation": "BLS QCEW 2023 annual averages, area 18003",
+        "confidence": "high",
+        "asof": null
+      },
+      "establishments": null
+    }
+  ],
+  "population": {
+    "fips": "18003",
+    "area_name": "Allen County, Indiana",
+    "points": [
+      {
+        "year": 2010,
+        "population": {
+          "value": 351332.0,
+          "unit": "people",
+          "source": "connector",
+          "citation": "US Census ACS5 2010 B01003_001E (Allen County, Indiana)",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "year": 2015,
+        "population": {
+          "value": 363453.0,
+          "unit": "people",
+          "source": "connector",
+          "citation": "US Census ACS5 2015 B01003_001E (Allen County, Indiana)",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "year": 2020,
+        "population": {
+          "value": 375520.0,
+          "unit": "people",
+          "source": "connector",
+          "citation": "US Census ACS5 2020 B01003_001E (Allen County, Indiana)",
+          "confidence": "high",
+          "asof": null
+        }
+      },
+      {
+        "year": 2023,
+        "population": {
+          "value": 388791.0,
+          "unit": "people",
+          "source": "connector",
+          "citation": "US Census ACS5 2023 B01003_001E (Allen County, Indiana)",
+          "confidence": "high",
+          "asof": null
+        }
+      }
+    ],
+    "source": "US Census ACS 5-year (B01003)"
+  },
+  "median_household_income": null,
+  "note": "Employment from BLS QCEW (keyless open data). Location quotient = county sector share / national share (export-orientation; the county-level proxy for an import/export ratio). Population from US Census ACS 5-year (B01003)."
+}

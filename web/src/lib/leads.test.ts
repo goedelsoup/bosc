@@ -11,7 +11,7 @@ import {
 } from "./leads";
 
 // The lead DATA now lives in the per-site `leads` bundle feed (#796), not a frontend constant —
-// so the data-discipline checks run against Lima's committed feed (the `sample-bundle/lima`
+// so the data-discipline checks run against Lima's committed feed (the `sites/lima`
 // fixture), and the presentation helpers are exercised against it.
 const LEADS = loadFeed<Lead[]>("leads", "lima");
 

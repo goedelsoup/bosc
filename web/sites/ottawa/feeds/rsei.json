@@ -1,0 +1,2183 @@
+{
+  "meta": {
+    "subject": "RSEI toxic-release inventory — Putnam County, OH",
+    "source": "EPA RSEI Public Data Set (AWS Open Data s3://epa-rsei-pds)",
+    "version": "v234",
+    "county_fips": "39137",
+    "facility_count": 14,
+    "scored_facility_count": 12,
+    "join": "elements -> release -> submission -> facility (+ chemical, media)",
+    "caveats": [
+      "Pounds are summed from reported `release` rows; Score/Cancer/NonCancer/Hazard from EPA's modeled `elements` rows. Nothing is estimated by BOSC.",
+      "Score is EPA's modeled, population-weighted Risk-Screening Score (unitless, comparative only — NOT a risk or a concentration). Hazard = pounds x toxicity weight (no exposure/population term).",
+      "A facility with reported pounds but a zero Score released only non-modeled media/chemicals in the modeled years — faithful to the data, not a gap.",
+      "RSEI tracks TRI reporters; small/unpermitted sources and non-TRI chemicals are out of scope by construction."
+    ]
+  },
+  "county_fips": "39137",
+  "county_name": "Putnam County, OH",
+  "facilities": [
+    {
+      "facility_id": "45875PHLPS700NO",
+      "facility_number": "28045",
+      "name": "LG.PHILIPS DISPLAYS USA INC.",
+      "parent_name": "LGPHILIPS DISPLAYS USA INC",
+      "federal_facility": false,
+      "latitude": 41.02434,
+      "longitude": -84.03721,
+      "street": "700 N. PRATT ST.",
+      "city": "OTTAWA",
+      "state": "OH",
+      "fips": "39137",
+      "npdes_permit": "2IN00028ED",
+      "naics": "334411",
+      "sic": "3671",
+      "water_releases": true,
+      "score": 513121.4,
+      "cancer_score": 495270.7,
+      "noncancer_score": 77936.6,
+      "hazard": 17965553843.1,
+      "pounds": 34053270.0,
+      "pounds_by_media": {
+        "offsite": 28198601.0,
+        "air": 3149506.0,
+        "potw": 2700703.0,
+        "land": 4000.0,
+        "water": 460.0
+      },
+      "first_year": 1988,
+      "last_year": 2002,
+      "years": [
+        {
+          "year": 1988,
+          "score": 94657.0,
+          "cancer_score": 86774.0,
+          "noncancer_score": 18354.5,
+          "hazard": 3300393719.9,
+          "pounds": 1090400.0
+        },
+        {
+          "year": 1989,
+          "score": 80171.9,
+          "cancer_score": 72554.6,
+          "noncancer_score": 16369.0,
+          "hazard": 2847773433.3,
+          "pounds": 3078450.0
+        },
+        {
+          "year": 1990,
+          "score": 46133.0,
+          "cancer_score": 45543.9,
+          "noncancer_score": 6096.0,
+          "hazard": 1582083041.3,
+          "pounds": 1823880.0
+        },
+        {
+          "year": 1991,
+          "score": 42923.1,
+          "cancer_score": 42433.0,
+          "noncancer_score": 5625.0,
+          "hazard": 1478836427.2,
+          "pounds": 2348459.0
+        },
+        {
+          "year": 1992,
+          "score": 37936.6,
+          "cancer_score": 37443.2,
+          "noncancer_score": 5036.6,
+          "hazard": 1328662460.3,
+          "pounds": 2010615.0
+        },
+        {
+          "year": 1993,
+          "score": 72096.7,
+          "cancer_score": 71987.4,
+          "noncancer_score": 8797.8,
+          "hazard": 2403433038.3,
+          "pounds": 2236180.0
+        },
+        {
+          "year": 1994,
+          "score": 60446.7,
+          "cancer_score": 60331.3,
+          "noncancer_score": 7405.3,
+          "hazard": 2055758841.3,
+          "pounds": 2384195.0
+        },
+        {
+          "year": 1995,
+          "score": 33564.1,
+          "cancer_score": 33452.4,
+          "noncancer_score": 4176.1,
+          "hazard": 1344503883.9,
+          "pounds": 2660894.0
+        },
+        {
+          "year": 1996,
+          "score": 44585.4,
+          "cancer_score": 44505.3,
+          "noncancer_score": 5470.8,
+          "hazard": 1571457023.9,
+          "pounds": 2107645.0
+        },
+        {
+          "year": 1997,
+          "score": 134.5,
+          "cancer_score": 52.3,
+          "noncancer_score": 133.9,
+          "hazard": 6025169.6,
+          "pounds": 2535440.0
+        },
+        {
+          "year": 1998,
+          "score": 124.7,
+          "cancer_score": 52.3,
+          "noncancer_score": 124.5,
+          "hazard": 5300239.7,
+          "pounds": 2633290.0
+        },
+        {
+          "year": 1999,
+          "score": 125.8,
+          "cancer_score": 52.3,
+          "noncancer_score": 125.5,
+          "hazard": 5391373.7,
+          "pounds": 2387290.0
+        },
+        {
+          "year": 2000,
+          "score": 125.2,
+          "cancer_score": 52.3,
+          "noncancer_score": 125.1,
+          "hazard": 5272603.7,
+          "pounds": 2108303.0
+        },
+        {
+          "year": 2001,
+          "score": 68.8,
+          "cancer_score": 27.2,
+          "noncancer_score": 68.7,
+          "hazard": 29359161.6,
+          "pounds": 1854314.0
+        },
+        {
+          "year": 2002,
+          "score": 27.9,
+          "cancer_score": 9.2,
+          "noncancer_score": 27.8,
+          "hazard": 1303425.4,
+          "pounds": 2793915.0
+        }
+      ],
+      "top_chemicals": [
+        {
+          "chemical": "Trichloroethylene",
+          "cas": "79-01-6",
+          "toxicity_category": "Carcinogen",
+          "score": 494489.2,
+          "pounds": 1481375.0
+        },
+        {
+          "chemical": "Lead and lead compounds",
+          "cas": "7439-92-1",
+          "toxicity_category": "Non-carcinogen",
+          "score": 16935.5,
+          "pounds": 11416735.0
+        },
+        {
+          "chemical": "Hydrogen fluoride",
+          "cas": "7664-39-3",
+          "toxicity_category": "Non-carcinogen",
+          "score": 599.1,
+          "pounds": 144330.0
+        },
+        {
+          "chemical": "Barium and barium compounds",
+          "cas": "7440-39-3",
+          "toxicity_category": "Non-carcinogen",
+          "score": 434.4,
+          "pounds": 4122780.0
+        },
+        {
+          "chemical": "Nitric acid",
+          "cas": "7697-37-2",
+          "toxicity_category": "Non-carcinogen",
+          "score": 302.2,
+          "pounds": 1867694.0
+        },
+        {
+          "chemical": "Sulfuric acid",
+          "cas": "7664-93-9",
+          "toxicity_category": "Non-carcinogen",
+          "score": 139.7,
+          "pounds": 5500.0
+        },
+        {
+          "chemical": "Arsenic and arsenic compounds",
+          "cas": "7440-38-2",
+          "toxicity_category": "Carcinogen",
+          "score": 76.7,
+          "pounds": 41175.0
+        },
+        {
+          "chemical": "Zinc and zinc compounds",
+          "cas": "7440-66-6",
+          "toxicity_category": "Non-carcinogen",
+          "score": 66.8,
+          "pounds": 2775440.0
+        }
+      ]
+    },
+    {
+      "facility_id": "4585WPTBRF3875S",
+      "facility_number": "28032",
+      "name": "SUMMIT ETHANOL D/B/A POET BIOREFINING-LEIPSIC",
+      "parent_name": "POET BIOREFINING",
+      "federal_facility": false,
+      "latitude": 41.119594,
+      "longitude": -83.971018,
+      "street": "3875 STATE RT 65",
+      "city": "LEIPSIC",
+      "state": "OH",
+      "fips": "39137",
+      "npdes_permit": null,
+      "naics": "325193",
+      "sic": "2869",
+      "water_releases": false,
+      "score": 6455.1,
+      "cancer_score": 1379.0,
+      "noncancer_score": 5144.2,
+      "hazard": 1023567635.2,
+      "pounds": 76824.0,
+      "pounds_by_media": {
+        "air": 76824.0
+      },
+      "first_year": 2008,
+      "last_year": 2014,
+      "years": [
+        {
+          "year": 2008,
+          "score": 137.0,
+          "cancer_score": 135.5,
+          "noncancer_score": 8.2,
+          "hazard": 20899790.0,
+          "pounds": 11697.0
+        },
+        {
+          "year": 2009,
+          "score": 122.0,
+          "cancer_score": 120.4,
+          "noncancer_score": 7.5,
+          "hazard": 18712012.8,
+          "pounds": 12079.0
+        },
+        {
+          "year": 2010,
+          "score": 136.7,
+          "cancer_score": 135.0,
+          "noncancer_score": 8.4,
+          "hazard": 21085335.4,
+          "pounds": 13158.0
+        },
+        {
+          "year": 2011,
+          "score": 262.8,
+          "cancer_score": 261.1,
+          "noncancer_score": 14.6,
+          "hazard": 40597059.7,
+          "pounds": 15365.0
+        },
+        {
+          "year": 2012,
+          "score": 1943.3,
+          "cancer_score": 258.8,
+          "noncancer_score": 1697.3,
+          "hazard": 309825609.7,
+          "pounds": 10578.0
+        },
+        {
+          "year": 2013,
+          "score": 1925.1,
+          "cancer_score": 232.8,
+          "noncancer_score": 1703.8,
+          "hazard": 306437758.8,
+          "pounds": 6929.0
+        },
+        {
+          "year": 2014,
+          "score": 1928.2,
+          "cancer_score": 235.4,
+          "noncancer_score": 1704.4,
+          "hazard": 306010068.8,
+          "pounds": 7018.0
+        }
+      ],
+      "top_chemicals": [
+        {
+          "chemical": "Acrolein",
+          "cas": "107-02-8",
+          "toxicity_category": "Non-carcinogen",
+          "score": 5069.5,
+          "pounds": 4501.0
+        },
+        {
+          "chemical": "Acetaldehyde",
+          "cas": "75-07-0",
+          "toxicity_category": "Carcinogen",
+          "score": 1379.1,
+          "pounds": 26900.0
+        },
+        {
+          "chemical": "Ammonia",
+          "cas": "7664-41-7",
+          "toxicity_category": "Non-carcinogen",
+          "score": 6.0,
+          "pounds": 22733.0
+        },
+        {
+          "chemical": "n-Hexane",
+          "cas": "110-54-3",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.6,
+          "pounds": 16161.0
+        },
+        {
+          "chemical": "Methanol",
+          "cas": "67-56-1",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.0,
+          "pounds": 6529.0
+        }
+      ]
+    },
+    {
+      "facility_id": "45853NVRFR18107",
+      "facility_number": "28028",
+      "name": "UNVERFERTH MANUFACTURING CO INC",
+      "parent_name": "UNVERFERTH MANUFACTURING CO INC",
+      "federal_facility": false,
+      "latitude": 40.9736,
+      "longitude": -84.2089,
+      "street": "601 S BROAD ST",
+      "city": "KALIDA",
+      "state": "OH",
+      "fips": "39137",
+      "npdes_permit": null,
+      "naics": "333111",
+      "sic": "3523",
+      "water_releases": true,
+      "score": 2430.1,
+      "cancer_score": 1971.6,
+      "noncancer_score": 484.6,
+      "hazard": 194161725.3,
+      "pounds": 3514560.0,
+      "pounds_by_media": {
+        "offsite": 3253905.6,
+        "air": 260604.3,
+        "water": 30.1,
+        "potw": 20.0
+      },
+      "first_year": 1993,
+      "last_year": 2014,
+      "years": [
+        {
+          "year": 1993,
+          "score": 17.3,
+          "cancer_score": 0.0,
+          "noncancer_score": 17.3,
+          "hazard": 1917825.0,
+          "pounds": 54795.0
+        },
+        {
+          "year": 1994,
+          "score": 16.3,
+          "cancer_score": 0.0,
+          "noncancer_score": 16.3,
+          "hazard": 2146515.0,
+          "pounds": 61329.0
+        },
+        {
+          "year": 1995,
+          "score": 14.8,
+          "cancer_score": 0.0,
+          "noncancer_score": 14.8,
+          "hazard": 1693055.0,
+          "pounds": 48373.0
+        },
+        {
+          "year": 1996,
+          "score": 14.2,
+          "cancer_score": 0.0,
+          "noncancer_score": 14.2,
+          "hazard": 1660050.1,
+          "pounds": 47430.0
+        },
+        {
+          "year": 1997,
+          "score": 14.2,
+          "cancer_score": 0.0,
+          "noncancer_score": 14.2,
+          "hazard": 1676500.0,
+          "pounds": 47900.0
+        },
+        {
+          "year": 1998,
+          "score": 5.3,
+          "cancer_score": 0.0,
+          "noncancer_score": 5.3,
+          "hazard": 525000.0,
+          "pounds": 17800.0
+        },
+        {
+          "year": 1999,
+          "score": 139.7,
+          "cancer_score": 101.6,
+          "noncancer_score": 42.3,
+          "hazard": 12360000.0,
+          "pounds": 32015.0
+        },
+        {
+          "year": 2000,
+          "score": 139.4,
+          "cancer_score": 101.5,
+          "noncancer_score": 42.2,
+          "hazard": 12360000.0,
+          "pounds": 21695.0
+        },
+        {
+          "year": 2001,
+          "score": 141.2,
+          "cancer_score": 102.7,
+          "noncancer_score": 42.9,
+          "hazard": 12360000.0,
+          "pounds": 43675.0
+        },
+        {
+          "year": 2002,
+          "score": 143.0,
+          "cancer_score": 103.9,
+          "noncancer_score": 43.5,
+          "hazard": 12360000.0,
+          "pounds": 41275.0
+        },
+        {
+          "year": 2003,
+          "score": 15.3,
+          "cancer_score": 5.6,
+          "noncancer_score": 9.8,
+          "hazard": 1198313.7,
+          "pounds": 199149.6
+        },
+        {
+          "year": 2004,
+          "score": 39.4,
+          "cancer_score": 27.0,
+          "noncancer_score": 12.6,
+          "hazard": 3019032.8,
+          "pounds": 230567.8
+        },
+        {
+          "year": 2005,
+          "score": 893.2,
+          "cancer_score": 851.6,
+          "noncancer_score": 46.2,
+          "hazard": 75095919.5,
+          "pounds": 220739.0
+        },
+        {
+          "year": 2006,
+          "score": 52.2,
+          "cancer_score": 43.4,
+          "noncancer_score": 9.0,
+          "hazard": 2506468.2,
+          "pounds": 99595.6
+        },
+        {
+          "year": 2007,
+          "score": 13.3,
+          "cancer_score": 0.0,
+          "noncancer_score": 13.3,
+          "hazard": 960000.0,
+          "pounds": 198926.0
+        },
+        {
+          "year": 2008,
+          "score": 18.7,
+          "cancer_score": 0.0,
+          "noncancer_score": 18.5,
+          "hazard": 1327500.0,
+          "pounds": 295989.0
+        },
+        {
+          "year": 2009,
+          "score": 118.1,
+          "cancer_score": 101.9,
+          "noncancer_score": 16.8,
+          "hazard": 8306591.0,
+          "pounds": 279596.0
+        },
+        {
+          "year": 2010,
+          "score": 122.7,
+          "cancer_score": 103.3,
+          "noncancer_score": 20.0,
+          "hazard": 8509591.0,
+          "pounds": 335603.0
+        },
+        {
+          "year": 2011,
+          "score": 124.5,
+          "cancer_score": 104.8,
+          "noncancer_score": 20.3,
+          "hazard": 8509591.0,
+          "pounds": 414081.0
+        },
+        {
+          "year": 2012,
+          "score": 126.3,
+          "cancer_score": 106.4,
+          "noncancer_score": 20.6,
+          "hazard": 8509591.0,
+          "pounds": 286500.0
+        },
+        {
+          "year": 2013,
+          "score": 128.3,
+          "cancer_score": 108.0,
+          "noncancer_score": 20.9,
+          "hazard": 8509591.0,
+          "pounds": 289771.0
+        },
+        {
+          "year": 2014,
+          "score": 132.7,
+          "cancer_score": 109.9,
+          "noncancer_score": 23.6,
+          "hazard": 8650591.0,
+          "pounds": 247755.0
+        }
+      ],
+      "top_chemicals": [
+        {
+          "chemical": "Chromium and chromium compounds",
+          "cas": "7440-47-3",
+          "toxicity_category": "Carcinogen",
+          "score": 1363.2,
+          "pounds": 877604.6
+        },
+        {
+          "chemical": "Nickel and nickel compounds",
+          "cas": "7440-02-0",
+          "toxicity_category": "Mixed",
+          "score": 608.1,
+          "pounds": 1013059.8
+        },
+        {
+          "chemical": "Manganese and manganese compounds",
+          "cas": "7439-96-5",
+          "toxicity_category": "Non-carcinogen",
+          "score": 373.5,
+          "pounds": 897407.4
+        },
+        {
+          "chemical": "Xylene (mixed isomers)",
+          "cas": "1330-20-7",
+          "toxicity_category": "Non-carcinogen",
+          "score": 82.1,
+          "pounds": 277627.0
+        },
+        {
+          "chemical": "Lead and lead compounds",
+          "cas": "7439-92-1",
+          "toxicity_category": "Non-carcinogen",
+          "score": 2.2,
+          "pounds": 9062.1
+        },
+        {
+          "chemical": "Copper and copper compounds",
+          "cas": "7440-50-8",
+          "toxicity_category": "Non-carcinogen",
+          "score": 1.0,
+          "pounds": 439799.2
+        }
+      ]
+    },
+    {
+      "facility_id": "45875WCWDC9444W",
+      "facility_number": "28046",
+      "name": "WHIRLPOOL CORP",
+      "parent_name": "WHIRLPOOL CORP",
+      "federal_facility": false,
+      "latitude": 40.99976,
+      "longitude": -84.03979,
+      "street": "677 WOODLAND DR",
+      "city": "OTTAWA",
+      "state": "OH",
+      "fips": "39137",
+      "npdes_permit": null,
+      "naics": "335222",
+      "sic": "3632",
+      "water_releases": false,
+      "score": 568.3,
+      "cancer_score": 5.2,
+      "noncancer_score": 565.6,
+      "hazard": 43716250.7,
+      "pounds": 1104165.0,
+      "pounds_by_media": {
+        "offsite": 936437.7,
+        "air": 167637.2,
+        "potw": 90.2
+      },
+      "first_year": 1990,
+      "last_year": 2014,
+      "years": [
+        {
+          "year": 1990,
+          "score": 0.7,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.7,
+          "hazard": 58000.0,
+          "pounds": 10.0
+        },
+        {
+          "year": 1991,
+          "score": 1.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 1.0,
+          "hazard": 83045.0,
+          "pounds": 6078.0
+        },
+        {
+          "year": 1992,
+          "score": 1.2,
+          "cancer_score": 0.0,
+          "noncancer_score": 1.2,
+          "hazard": 105455.0,
+          "pounds": 11593.0
+        },
+        {
+          "year": 1993,
+          "score": 1.3,
+          "cancer_score": 0.0,
+          "noncancer_score": 1.3,
+          "hazard": 113410.0,
+          "pounds": 18454.0
+        },
+        {
+          "year": 1994,
+          "score": 1.2,
+          "cancer_score": 0.0,
+          "noncancer_score": 1.2,
+          "hazard": 105745.0,
+          "pounds": 12741.0
+        },
+        {
+          "year": 1995,
+          "score": 45.1,
+          "cancer_score": 0.0,
+          "noncancer_score": 45.0,
+          "hazard": 3520050.0,
+          "pounds": 41705.0
+        },
+        {
+          "year": 1996,
+          "score": 51.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 51.0,
+          "hazard": 4200053.1,
+          "pounds": 34037.0
+        },
+        {
+          "year": 1997,
+          "score": 44.8,
+          "cancer_score": 0.0,
+          "noncancer_score": 44.8,
+          "hazard": 3500275.2,
+          "pounds": 17524.0
+        },
+        {
+          "year": 1998,
+          "score": 44.7,
+          "cancer_score": 0.0,
+          "noncancer_score": 44.7,
+          "hazard": 3500310.2,
+          "pounds": 34543.0
+        },
+        {
+          "year": 1999,
+          "score": 44.7,
+          "cancer_score": 0.0,
+          "noncancer_score": 44.7,
+          "hazard": 3500388.4,
+          "pounds": 37410.0
+        },
+        {
+          "year": 2000,
+          "score": 44.7,
+          "cancer_score": 0.0,
+          "noncancer_score": 44.7,
+          "hazard": 3500450.5,
+          "pounds": 26406.0
+        },
+        {
+          "year": 2001,
+          "score": 44.4,
+          "cancer_score": 0.0,
+          "noncancer_score": 44.4,
+          "hazard": 3500361.5,
+          "pounds": 24611.0
+        },
+        {
+          "year": 2002,
+          "score": 44.4,
+          "cancer_score": 0.0,
+          "noncancer_score": 44.2,
+          "hazard": 3507999.3,
+          "pounds": 31637.0
+        },
+        {
+          "year": 2003,
+          "score": 46.3,
+          "cancer_score": 1.1,
+          "noncancer_score": 46.2,
+          "hazard": 3572299.9,
+          "pounds": 25888.0
+        },
+        {
+          "year": 2004,
+          "score": 26.5,
+          "cancer_score": 0.7,
+          "noncancer_score": 26.4,
+          "hazard": 1800333.9,
+          "pounds": 22424.5
+        },
+        {
+          "year": 2005,
+          "score": 26.1,
+          "cancer_score": 0.6,
+          "noncancer_score": 25.9,
+          "hazard": 1793880.2,
+          "pounds": 21464.0
+        },
+        {
+          "year": 2006,
+          "score": 44.8,
+          "cancer_score": 0.6,
+          "noncancer_score": 44.6,
+          "hazard": 3549307.8,
+          "pounds": 24309.3
+        },
+        {
+          "year": 2007,
+          "score": 6.7,
+          "cancer_score": 0.8,
+          "noncancer_score": 6.5,
+          "hazard": 408182.4,
+          "pounds": 16171.2
+        },
+        {
+          "year": 2008,
+          "score": 6.4,
+          "cancer_score": 0.6,
+          "noncancer_score": 6.2,
+          "hazard": 399595.9,
+          "pounds": 31670.3
+        },
+        {
+          "year": 2009,
+          "score": 6.7,
+          "cancer_score": 0.8,
+          "noncancer_score": 6.5,
+          "hazard": 409842.4,
+          "pounds": 7975.9
+        },
+        {
+          "year": 2010,
+          "score": 4.9,
+          "cancer_score": 0.0,
+          "noncancer_score": 4.8,
+          "hazard": 355850.0,
+          "pounds": 57521.9
+        },
+        {
+          "year": 2011,
+          "score": 4.9,
+          "cancer_score": 0.0,
+          "noncancer_score": 4.8,
+          "hazard": 355685.0,
+          "pounds": 115643.2
+        },
+        {
+          "year": 2012,
+          "score": 4.9,
+          "cancer_score": 0.0,
+          "noncancer_score": 4.7,
+          "hazard": 356600.0,
+          "pounds": 129464.2
+        },
+        {
+          "year": 2013,
+          "score": 9.5,
+          "cancer_score": 0.0,
+          "noncancer_score": 9.0,
+          "hazard": 685175.0,
+          "pounds": 171842.0
+        },
+        {
+          "year": 2014,
+          "score": 11.4,
+          "cancer_score": 0.0,
+          "noncancer_score": 11.1,
+          "hazard": 833955.0,
+          "pounds": 183041.5
+        }
+      ],
+      "top_chemicals": [
+        {
+          "chemical": "Diisocyanates",
+          "cas": "N120",
+          "toxicity_category": "Non-carcinogen",
+          "score": 549.2,
+          "pounds": 20413.2
+        },
+        {
+          "chemical": "Lead and lead compounds",
+          "cas": "7439-92-1",
+          "toxicity_category": "Non-carcinogen",
+          "score": 10.9,
+          "pounds": 452.8
+        },
+        {
+          "chemical": "4,4'-Diphenylmethane diisocyanate",
+          "cas": "101-68-8",
+          "toxicity_category": "Non-carcinogen",
+          "score": 3.5,
+          "pounds": 3525.0
+        },
+        {
+          "chemical": "Copper and copper compounds",
+          "cas": "7440-50-8",
+          "toxicity_category": "Non-carcinogen",
+          "score": 2.5,
+          "pounds": 225143.4
+        },
+        {
+          "chemical": "CFC-11 (trichlorofluoromethane)",
+          "cas": "75-69-4",
+          "toxicity_category": "Non-carcinogen",
+          "score": 2.0,
+          "pounds": 50661.0
+        },
+        {
+          "chemical": "CFC-12 (dichlorodifluoromethane)",
+          "cas": "75-71-8",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.1,
+          "pounds": 17080.0
+        },
+        {
+          "chemical": "Chlorodifluoromethane (HCFC-22)",
+          "cas": "75-45-6",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.1,
+          "pounds": 103492.0
+        },
+        {
+          "chemical": "Manganese and manganese compounds",
+          "cas": "7439-96-5",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.0,
+          "pounds": 347301.9
+        }
+      ]
+    },
+    {
+      "facility_id": "45831NWMLL21739",
+      "facility_number": "27988",
+      "name": "NEW MILLENNIUM BUILDING SYSTEMS",
+      "parent_name": "STEEL DYNAMICS INC",
+      "federal_facility": false,
+      "latitude": 41.10011,
+      "longitude": -84.280909,
+      "street": "21739 RD E-16",
+      "city": "CONTINENTAL",
+      "state": "OH",
+      "fips": "39137",
+      "npdes_permit": null,
+      "naics": "332312",
+      "sic": "3441",
+      "water_releases": false,
+      "score": 165.9,
+      "cancer_score": 0.0,
+      "noncancer_score": 165.9,
+      "hazard": 5689920.0,
+      "pounds": 294125.2,
+      "pounds_by_media": {
+        "offsite": 293651.0,
+        "air": 474.2
+      },
+      "first_year": 2001,
+      "last_year": 2014,
+      "years": [
+        {
+          "year": 2001,
+          "score": 18.9,
+          "cancer_score": 0.0,
+          "noncancer_score": 18.9,
+          "hazard": 624000.0,
+          "pounds": 20221.0
+        },
+        {
+          "year": 2002,
+          "score": 13.3,
+          "cancer_score": 0.0,
+          "noncancer_score": 13.3,
+          "hazard": 444000.0,
+          "pounds": 22393.0
+        },
+        {
+          "year": 2003,
+          "score": 13.9,
+          "cancer_score": 0.0,
+          "noncancer_score": 13.9,
+          "hazard": 468000.0,
+          "pounds": 24922.0
+        },
+        {
+          "year": 2004,
+          "score": 19.5,
+          "cancer_score": 0.0,
+          "noncancer_score": 19.5,
+          "hazard": 660000.0,
+          "pounds": 24730.0
+        },
+        {
+          "year": 2005,
+          "score": 16.8,
+          "cancer_score": 0.0,
+          "noncancer_score": 16.8,
+          "hazard": 576000.0,
+          "pounds": 25330.0
+        },
+        {
+          "year": 2006,
+          "score": 27.1,
+          "cancer_score": 0.0,
+          "noncancer_score": 27.1,
+          "hazard": 936000.0,
+          "pounds": 37858.0
+        },
+        {
+          "year": 2007,
+          "score": 26.5,
+          "cancer_score": 0.0,
+          "noncancer_score": 26.5,
+          "hazard": 924000.0,
+          "pounds": 86452.0
+        },
+        {
+          "year": 2008,
+          "score": 25.2,
+          "cancer_score": 0.0,
+          "noncancer_score": 25.2,
+          "hazard": 888000.0,
+          "pounds": 32134.0
+        },
+        {
+          "year": 2009,
+          "score": 3.4,
+          "cancer_score": 0.0,
+          "noncancer_score": 3.4,
+          "hazard": 120000.0,
+          "pounds": 15633.0
+        },
+        {
+          "year": 2014,
+          "score": 1.3,
+          "cancer_score": 0.0,
+          "noncancer_score": 1.3,
+          "hazard": 49920.0,
+          "pounds": 4452.2
+        }
+      ],
+      "top_chemicals": [
+        {
+          "chemical": "Manganese and manganese compounds",
+          "cas": "7439-96-5",
+          "toxicity_category": "Non-carcinogen",
+          "score": 166.0,
+          "pounds": 131711.2
+        },
+        {
+          "chemical": "Copper and copper compounds",
+          "cas": "7440-50-8",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.0,
+          "pounds": 94653.0
+        },
+        {
+          "chemical": "Nickel and nickel compounds",
+          "cas": "7440-02-0",
+          "toxicity_category": "Mixed",
+          "score": 0.0,
+          "pounds": 50776.0
+        },
+        {
+          "chemical": "Chromium and chromium compounds",
+          "cas": "7440-47-3",
+          "toxicity_category": "Carcinogen",
+          "score": 0.0,
+          "pounds": 8963.0
+        },
+        {
+          "chemical": "Lead and lead compounds",
+          "cas": "7439-92-1",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.0,
+          "pounds": 8022.0
+        }
+      ]
+    },
+    {
+      "facility_id": "45856PRTCC5000C",
+      "facility_number": "28030",
+      "name": "PRO-TEC COATING CO",
+      "parent_name": "KOBE COATING CO & USS GALVANIZING INC",
+      "federal_facility": false,
+      "latitude": 41.11111,
+      "longitude": -83.96611,
+      "street": "5500 PRO-TEC PKWY",
+      "city": "LEIPSIC",
+      "state": "OH",
+      "fips": "39137",
+      "npdes_permit": null,
+      "naics": "332812",
+      "sic": "3479",
+      "water_releases": false,
+      "score": 48.3,
+      "cancer_score": 9.8,
+      "noncancer_score": 48.3,
+      "hazard": 3751509.8,
+      "pounds": 2832251.7,
+      "pounds_by_media": {
+        "offsite": 2739480.1,
+        "air": 92261.6,
+        "potw": 510.0
+      },
+      "first_year": 2001,
+      "last_year": 2014,
+      "years": [
+        {
+          "year": 2001,
+          "score": 4.3,
+          "cancer_score": 0.0,
+          "noncancer_score": 4.3,
+          "hazard": 537650.0,
+          "pounds": 15110.8
+        },
+        {
+          "year": 2002,
+          "score": 4.9,
+          "cancer_score": 0.0,
+          "noncancer_score": 4.9,
+          "hazard": 611330.0,
+          "pounds": 17145.2
+        },
+        {
+          "year": 2003,
+          "score": 4.3,
+          "cancer_score": 0.0,
+          "noncancer_score": 4.3,
+          "hazard": 540640.0,
+          "pounds": 15152.9
+        },
+        {
+          "year": 2004,
+          "score": 3.5,
+          "cancer_score": 0.0,
+          "noncancer_score": 3.5,
+          "hazard": 435640.0,
+          "pounds": 12155.3
+        },
+        {
+          "year": 2005,
+          "score": 6.7,
+          "cancer_score": 1.5,
+          "noncancer_score": 6.7,
+          "hazard": 483335.5,
+          "pounds": 14803.3
+        },
+        {
+          "year": 2006,
+          "score": 4.5,
+          "cancer_score": 1.7,
+          "noncancer_score": 4.5,
+          "hazard": 156470.8,
+          "pounds": 293881.8
+        },
+        {
+          "year": 2007,
+          "score": 4.6,
+          "cancer_score": 1.8,
+          "noncancer_score": 4.6,
+          "hazard": 158503.1,
+          "pounds": 304089.3
+        },
+        {
+          "year": 2008,
+          "score": 4.2,
+          "cancer_score": 1.6,
+          "noncancer_score": 4.2,
+          "hazard": 146897.4,
+          "pounds": 291145.2
+        },
+        {
+          "year": 2009,
+          "score": 3.7,
+          "cancer_score": 1.4,
+          "noncancer_score": 3.7,
+          "hazard": 129556.8,
+          "pounds": 229913.6
+        },
+        {
+          "year": 2010,
+          "score": 4.6,
+          "cancer_score": 1.8,
+          "noncancer_score": 4.6,
+          "hazard": 162432.1,
+          "pounds": 297142.6
+        },
+        {
+          "year": 2011,
+          "score": 0.8,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.8,
+          "hazard": 105267.4,
+          "pounds": 314408.1
+        },
+        {
+          "year": 2012,
+          "score": 0.8,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.8,
+          "hazard": 106234.8,
+          "pounds": 331159.7
+        },
+        {
+          "year": 2013,
+          "score": 0.7,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.7,
+          "hazard": 88082.2,
+          "pounds": 346116.4
+        },
+        {
+          "year": 2014,
+          "score": 0.7,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.7,
+          "hazard": 89469.7,
+          "pounds": 350027.5
+        }
+      ],
+      "top_chemicals": [
+        {
+          "chemical": "Ammonia",
+          "cas": "7664-41-7",
+          "toxicity_category": "Non-carcinogen",
+          "score": 25.6,
+          "pounds": 92659.2
+        },
+        {
+          "chemical": "Lead and lead compounds",
+          "cas": "7439-92-1",
+          "toxicity_category": "Non-carcinogen",
+          "score": 22.6,
+          "pounds": 2722.1
+        },
+        {
+          "chemical": "Zinc and zinc compounds",
+          "cas": "7440-66-6",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.0,
+          "pounds": 2736870.3
+        }
+      ]
+    },
+    {
+      "facility_id": "45877CLYMR407EW",
+      "facility_number": "28048",
+      "name": "CLYMER ENTERPRISES",
+      "parent_name": "AMERICAN CAPITAL PARTNERS",
+      "federal_facility": false,
+      "latitude": 40.950076,
+      "longitude": -83.956334,
+      "street": "407 E WASHINGTON",
+      "city": "PANDORA",
+      "state": "OH",
+      "fips": "39137",
+      "npdes_permit": null,
+      "naics": "333111",
+      "sic": "2542",
+      "water_releases": false,
+      "score": 35.5,
+      "cancer_score": 0.0,
+      "noncancer_score": 35.5,
+      "hazard": 3713007.2,
+      "pounds": 117563.0,
+      "pounds_by_media": {
+        "air": 117058.0,
+        "offsite": 505.0
+      },
+      "first_year": 2000,
+      "last_year": 2003,
+      "years": [
+        {
+          "year": 2000,
+          "score": 6.3,
+          "cancer_score": 0.0,
+          "noncancer_score": 6.3,
+          "hazard": 660205.0,
+          "pounds": 18863.0
+        },
+        {
+          "year": 2001,
+          "score": 13.1,
+          "cancer_score": 0.0,
+          "noncancer_score": 13.1,
+          "hazard": 1368707.2,
+          "pounds": 50341.0
+        },
+        {
+          "year": 2002,
+          "score": 8.5,
+          "cancer_score": 0.0,
+          "noncancer_score": 8.5,
+          "hazard": 889980.0,
+          "pounds": 25578.0
+        },
+        {
+          "year": 2003,
+          "score": 7.6,
+          "cancer_score": 0.0,
+          "noncancer_score": 7.6,
+          "hazard": 794115.0,
+          "pounds": 22781.0
+        }
+      ],
+      "top_chemicals": [
+        {
+          "chemical": "Xylene (mixed isomers)",
+          "cas": "1330-20-7",
+          "toxicity_category": "Non-carcinogen",
+          "score": 35.6,
+          "pounds": 105862.0
+        },
+        {
+          "chemical": "Toluene",
+          "cas": "108-88-3",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.1,
+          "pounds": 11196.0
+        },
+        {
+          "chemical": "Lead and lead compounds",
+          "cas": "7439-92-1",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.0,
+          "pounds": 505.0
+        }
+      ]
+    },
+    {
+      "facility_id": "45877NTNWD501SB",
+      "facility_number": "28049",
+      "name": "SNAP PRODS. INC.",
+      "parent_name": null,
+      "federal_facility": false,
+      "latitude": 40.9451,
+      "longitude": -83.95705,
+      "street": "501 S. BASINGER RD.",
+      "city": "PANDORA",
+      "state": "OH",
+      "fips": "39137",
+      "npdes_permit": null,
+      "naics": "324191",
+      "sic": "2992",
+      "water_releases": false,
+      "score": 16.2,
+      "cancer_score": 0.0,
+      "noncancer_score": 16.2,
+      "hazard": 337030.6,
+      "pounds": 116261.0,
+      "pounds_by_media": {
+        "offsite": 101338.0,
+        "air": 14923.0
+      },
+      "first_year": 1988,
+      "last_year": 1994,
+      "years": [
+        {
+          "year": 1988,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 369.0,
+          "pounds": 2050.0
+        },
+        {
+          "year": 1989,
+          "score": 5.4,
+          "cancer_score": 0.0,
+          "noncancer_score": 5.4,
+          "hazard": 138504.0,
+          "pounds": 4664.0
+        },
+        {
+          "year": 1991,
+          "score": 10.8,
+          "cancer_score": 0.0,
+          "noncancer_score": 10.8,
+          "hazard": 198157.6,
+          "pounds": 56947.0
+        },
+        {
+          "year": 1993,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 34700.0
+        },
+        {
+          "year": 1994,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 17900.0
+        }
+      ],
+      "top_chemicals": [
+        {
+          "chemical": "Xylene (mixed isomers)",
+          "cas": "1330-20-7",
+          "toxicity_category": "Non-carcinogen",
+          "score": 13.0,
+          "pounds": 17697.0
+        },
+        {
+          "chemical": "Glycol ethers",
+          "cas": "N230",
+          "toxicity_category": "Non-carcinogen",
+          "score": 3.1,
+          "pounds": 14330.0
+        },
+        {
+          "chemical": "Methanol",
+          "cas": "67-56-1",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.1,
+          "pounds": 83734.0
+        },
+        {
+          "chemical": "Toluene",
+          "cas": "108-88-3",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.0,
+          "pounds": 500.0
+        }
+      ]
+    },
+    {
+      "facility_id": "45830PRDCT2SUGA",
+      "facility_number": "27987",
+      "name": "PRODUCTION PRODUCTS INC",
+      "parent_name": "MIDWAY PRODUCTS GROUP",
+      "federal_facility": false,
+      "latitude": 40.93051,
+      "longitude": -84.06247,
+      "street": "200 SUGAR GROVE LN",
+      "city": "COLUMBUS GROVE",
+      "state": "OH",
+      "fips": "39137",
+      "npdes_permit": null,
+      "naics": "336370",
+      "sic": "3465",
+      "water_releases": false,
+      "score": 14.7,
+      "cancer_score": 1.8,
+      "noncancer_score": 14.7,
+      "hazard": 468245.9,
+      "pounds": 1433607.0,
+      "pounds_by_media": {
+        "offsite": 1433560.0,
+        "air": 30.0,
+        "potw": 17.0
+      },
+      "first_year": 2006,
+      "last_year": 2014,
+      "years": [
+        {
+          "year": 2006,
+          "score": 1.3,
+          "cancer_score": 0.6,
+          "noncancer_score": 1.3,
+          "hazard": 36021.3,
+          "pounds": 2693.0
+        },
+        {
+          "year": 2007,
+          "score": 1.3,
+          "cancer_score": 0.6,
+          "noncancer_score": 1.3,
+          "hazard": 36112.3,
+          "pounds": 253434.0
+        },
+        {
+          "year": 2008,
+          "score": 1.3,
+          "cancer_score": 0.6,
+          "noncancer_score": 1.3,
+          "hazard": 36112.3,
+          "pounds": 158800.0
+        },
+        {
+          "year": 2009,
+          "score": 1.8,
+          "cancer_score": 0.0,
+          "noncancer_score": 1.8,
+          "hazard": 60000.0,
+          "pounds": 160105.0
+        },
+        {
+          "year": 2010,
+          "score": 1.8,
+          "cancer_score": 0.0,
+          "noncancer_score": 1.8,
+          "hazard": 60000.0,
+          "pounds": 171405.0
+        },
+        {
+          "year": 2011,
+          "score": 1.8,
+          "cancer_score": 0.0,
+          "noncancer_score": 1.8,
+          "hazard": 60000.0,
+          "pounds": 167715.0
+        },
+        {
+          "year": 2012,
+          "score": 1.8,
+          "cancer_score": 0.0,
+          "noncancer_score": 1.8,
+          "hazard": 60000.0,
+          "pounds": 171455.0
+        },
+        {
+          "year": 2013,
+          "score": 1.8,
+          "cancer_score": 0.0,
+          "noncancer_score": 1.8,
+          "hazard": 60000.0,
+          "pounds": 173995.0
+        },
+        {
+          "year": 2014,
+          "score": 1.8,
+          "cancer_score": 0.0,
+          "noncancer_score": 1.8,
+          "hazard": 60000.0,
+          "pounds": 174005.0
+        }
+      ],
+      "top_chemicals": [
+        {
+          "chemical": "Manganese and manganese compounds",
+          "cas": "7439-96-5",
+          "toxicity_category": "Non-carcinogen",
+          "score": 10.6,
+          "pounds": 1210559.0
+        },
+        {
+          "chemical": "Lead and lead compounds",
+          "cas": "7439-92-1",
+          "toxicity_category": "Non-carcinogen",
+          "score": 4.0,
+          "pounds": 13741.0
+        },
+        {
+          "chemical": "Nickel and nickel compounds",
+          "cas": "7440-02-0",
+          "toxicity_category": "Mixed",
+          "score": 0.0,
+          "pounds": 209307.0
+        }
+      ]
+    },
+    {
+      "facility_id": "45876PRGRS2PRGR",
+      "facility_number": "28047",
+      "name": "PROGRESSIVE STAMPING INC",
+      "parent_name": "MIDWAY PRODUCTS GROUP",
+      "federal_facility": false,
+      "latitude": 40.939712,
+      "longitude": -84.333007,
+      "street": "200 PROGRESSIVE DR",
+      "city": "OTTOVILLE",
+      "state": "OH",
+      "fips": "39137",
+      "npdes_permit": null,
+      "naics": "336370",
+      "sic": "3465",
+      "water_releases": false,
+      "score": 1.5,
+      "cancer_score": 0.0,
+      "noncancer_score": 1.5,
+      "hazard": 155878.9,
+      "pounds": 2661733.0,
+      "pounds_by_media": {
+        "offsite": 2660513.0,
+        "potw": 1208.0,
+        "air": 12.0
+      },
+      "first_year": 2003,
+      "last_year": 2014,
+      "years": [
+        {
+          "year": 2003,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 463999.0
+        },
+        {
+          "year": 2004,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 465927.0
+        },
+        {
+          "year": 2005,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 56.8,
+          "pounds": 424386.0
+        },
+        {
+          "year": 2006,
+          "score": 0.1,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.1,
+          "hazard": 1643.1,
+          "pounds": 278528.0
+        },
+        {
+          "year": 2007,
+          "score": 0.4,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.4,
+          "hazard": 39038.5,
+          "pounds": 127848.0
+        },
+        {
+          "year": 2008,
+          "score": 1.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 1.0,
+          "hazard": 112842.4,
+          "pounds": 57255.0
+        },
+        {
+          "year": 2009,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 6.6,
+          "pounds": 114866.0
+        },
+        {
+          "year": 2010,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 458.3,
+          "pounds": 112010.0
+        },
+        {
+          "year": 2011,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 458.3,
+          "pounds": 152383.0
+        },
+        {
+          "year": 2012,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 458.3,
+          "pounds": 153760.0
+        },
+        {
+          "year": 2013,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 458.3,
+          "pounds": 155261.0
+        },
+        {
+          "year": 2014,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 458.3,
+          "pounds": 155510.0
+        }
+      ],
+      "top_chemicals": [
+        {
+          "chemical": "Manganese and manganese compounds",
+          "cas": "7439-96-5",
+          "toxicity_category": "Non-carcinogen",
+          "score": 1.4,
+          "pounds": 2353593.0
+        },
+        {
+          "chemical": "Nickel and nickel compounds",
+          "cas": "7440-02-0",
+          "toxicity_category": "Mixed",
+          "score": 0.2,
+          "pounds": 281075.0
+        },
+        {
+          "chemical": "Sodium nitrite",
+          "cas": "7632-00-0",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.0,
+          "pounds": 42.0
+        },
+        {
+          "chemical": "Zinc and zinc compounds",
+          "cas": "7440-66-6",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.0,
+          "pounds": 4480.0
+        },
+        {
+          "chemical": "Lead and lead compounds",
+          "cas": "7439-92-1",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.0,
+          "pounds": 22463.0
+        },
+        {
+          "chemical": "Nitrate compounds",
+          "cas": "N511",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.0,
+          "pounds": 80.0
+        }
+      ]
+    },
+    {
+      "facility_id": "45853KLDMN81TTA",
+      "facility_number": "28027",
+      "name": "KALIDA MANUFACTURING INC",
+      "parent_name": "KTH PARTS INDUSTRIES INC",
+      "federal_facility": false,
+      "latitude": 40.98122,
+      "longitude": -84.17968,
+      "street": "801 OTTAWA ST",
+      "city": "KALIDA",
+      "state": "OH",
+      "fips": "39137",
+      "npdes_permit": null,
+      "naics": "336370",
+      "sic": "3465",
+      "water_releases": false,
+      "score": 1.1,
+      "cancer_score": 0.0,
+      "noncancer_score": 1.1,
+      "hazard": 151500.0,
+      "pounds": 659243.0,
+      "pounds_by_media": {
+        "offsite": 659219.0,
+        "air": 24.0
+      },
+      "first_year": 2007,
+      "last_year": 2014,
+      "years": [
+        {
+          "year": 2007,
+          "score": 1.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 1.0,
+          "hazard": 120000.0,
+          "pounds": 15564.0
+        },
+        {
+          "year": 2008,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 27437.0
+        },
+        {
+          "year": 2009,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 54067.0
+        },
+        {
+          "year": 2010,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 71819.0
+        },
+        {
+          "year": 2011,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 6000.0,
+          "pounds": 91821.0
+        },
+        {
+          "year": 2012,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 4500.0,
+          "pounds": 78782.0
+        },
+        {
+          "year": 2013,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 4500.0,
+          "pounds": 151674.0
+        },
+        {
+          "year": 2014,
+          "score": 0.1,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.1,
+          "hazard": 16500.0,
+          "pounds": 168079.0
+        }
+      ],
+      "top_chemicals": [
+        {
+          "chemical": "Manganese and manganese compounds",
+          "cas": "7439-96-5",
+          "toxicity_category": "Non-carcinogen",
+          "score": 1.1,
+          "pounds": 586591.0
+        },
+        {
+          "chemical": "Copper and copper compounds",
+          "cas": "7440-50-8",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.2,
+          "pounds": 69936.0
+        },
+        {
+          "chemical": "Lead and lead compounds",
+          "cas": "7439-92-1",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.0,
+          "pounds": 2716.0
+        }
+      ]
+    },
+    {
+      "facility_id": "4585WTHMSC37STA",
+      "facility_number": "28033",
+      "name": "THE IAMS CO",
+      "parent_name": "MARS INC",
+      "federal_facility": false,
+      "latitude": 41.12596,
+      "longitude": -83.96101,
+      "street": "3700 STATE RT 65",
+      "city": "LEIPSIC",
+      "state": "OH",
+      "fips": "39137",
+      "npdes_permit": null,
+      "naics": "311111",
+      "sic": "2047",
+      "water_releases": false,
+      "score": 0.6,
+      "cancer_score": 0.0,
+      "noncancer_score": 0.6,
+      "hazard": 78975.0,
+      "pounds": 9888.0,
+      "pounds_by_media": {
+        "offsite": 8373.0,
+        "air": 765.0,
+        "potw": 750.0
+      },
+      "first_year": 2009,
+      "last_year": 2011,
+      "years": [
+        {
+          "year": 2009,
+          "score": 0.2,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.2,
+          "hazard": 26325.0,
+          "pounds": 1255.0
+        },
+        {
+          "year": 2010,
+          "score": 0.2,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.2,
+          "hazard": 26325.0,
+          "pounds": 7135.0
+        },
+        {
+          "year": 2011,
+          "score": 0.2,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.2,
+          "hazard": 26325.0,
+          "pounds": 1498.0
+        }
+      ],
+      "top_chemicals": [
+        {
+          "chemical": "Zinc and zinc compounds",
+          "cas": "7440-66-6",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.7,
+          "pounds": 9888.0
+        }
+      ]
+    },
+    {
+      "facility_id": "4587WCMMCH111PR",
+      "facility_number": "28055",
+      "name": "ACME MACHINE AUTOMATICS INC",
+      "parent_name": null,
+      "federal_facility": false,
+      "latitude": 40.936109,
+      "longitude": -84.333115,
+      "street": "111 PROGRESSIVE DR",
+      "city": "OTTOVILLE",
+      "state": "OH",
+      "fips": "39137",
+      "npdes_permit": null,
+      "naics": "332721",
+      "sic": "3451",
+      "water_releases": false,
+      "score": 0.0,
+      "cancer_score": 0.0,
+      "noncancer_score": 0.0,
+      "hazard": 0.0,
+      "pounds": 1514770.0,
+      "pounds_by_media": {
+        "offsite": 1514770.0
+      },
+      "first_year": 2009,
+      "last_year": 2014,
+      "years": [
+        {
+          "year": 2009,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 79983.0
+        },
+        {
+          "year": 2010,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 369199.0
+        },
+        {
+          "year": 2011,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 304390.0
+        },
+        {
+          "year": 2012,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 212544.0
+        },
+        {
+          "year": 2013,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 244036.0
+        },
+        {
+          "year": 2014,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 304618.0
+        }
+      ],
+      "top_chemicals": [
+        {
+          "chemical": "Copper and copper compounds",
+          "cas": "7440-50-8",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.0,
+          "pounds": 1168400.0
+        },
+        {
+          "chemical": "Manganese and manganese compounds",
+          "cas": "7439-96-5",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.0,
+          "pounds": 333234.0
+        },
+        {
+          "chemical": "Lead and lead compounds",
+          "cas": "7439-92-1",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.0,
+          "pounds": 13136.0
+        }
+      ]
+    },
+    {
+      "facility_id": "45875CLDMT740WI",
+      "facility_number": "28044",
+      "name": "STEEL TECHNOLOGIES LLC",
+      "parent_name": "MITSUI USA",
+      "federal_facility": false,
+      "latitude": 41.00884,
+      "longitude": -84.03694,
+      "street": "740 WILLIAMSTOWN RD",
+      "city": "OTTAWA",
+      "state": "OH",
+      "fips": "39137",
+      "npdes_permit": null,
+      "naics": "331221",
+      "sic": "3316",
+      "water_releases": false,
+      "score": 0.0,
+      "cancer_score": 0.0,
+      "noncancer_score": 0.0,
+      "hazard": 0.0,
+      "pounds": 1395513.0,
+      "pounds_by_media": {
+        "offsite": 1395513.0
+      },
+      "first_year": 1992,
+      "last_year": 2014,
+      "years": [
+        {
+          "year": 1992,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 61600.0
+        },
+        {
+          "year": 1993,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 165954.0
+        },
+        {
+          "year": 1994,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 143514.0
+        },
+        {
+          "year": 1995,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 86478.0
+        },
+        {
+          "year": 1996,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 87121.0
+        },
+        {
+          "year": 1997,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 62753.0
+        },
+        {
+          "year": 1998,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 124671.0
+        },
+        {
+          "year": 1999,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 123561.0
+        },
+        {
+          "year": 2000,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 146583.0
+        },
+        {
+          "year": 2001,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 115655.0
+        },
+        {
+          "year": 2002,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 69500.0
+        },
+        {
+          "year": 2003,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 45300.0
+        },
+        {
+          "year": 2006,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 750.0
+        },
+        {
+          "year": 2007,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 52642.0
+        },
+        {
+          "year": 2009,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 1994.0
+        },
+        {
+          "year": 2010,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 7165.0
+        },
+        {
+          "year": 2011,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 13657.0
+        },
+        {
+          "year": 2012,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 19692.0
+        },
+        {
+          "year": 2013,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 37587.0
+        },
+        {
+          "year": 2014,
+          "score": 0.0,
+          "cancer_score": 0.0,
+          "noncancer_score": 0.0,
+          "hazard": 0.0,
+          "pounds": 29336.0
+        }
+      ],
+      "top_chemicals": [
+        {
+          "chemical": "Chromium and chromium compounds",
+          "cas": "7440-47-3",
+          "toxicity_category": "Carcinogen",
+          "score": 0.0,
+          "pounds": 624254.0
+        },
+        {
+          "chemical": "Manganese and manganese compounds",
+          "cas": "7439-96-5",
+          "toxicity_category": "Non-carcinogen",
+          "score": 0.0,
+          "pounds": 538872.0
+        },
+        {
+          "chemical": "Nickel and nickel compounds",
+          "cas": "7440-02-0",
+          "toxicity_category": "Mixed",
+          "score": 0.0,
+          "pounds": 232387.0
+        }
+      ]
+    }
+  ]
+}

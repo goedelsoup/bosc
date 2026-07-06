@@ -1,0 +1,94 @@
+[
+  {
+    "site": "lima",
+    "pollutant": "NOx",
+    "unit": "ug/m3",
+    "provenance": "assumption",
+    "available": false,
+    "grid": {
+      "nx": 51,
+      "ny": 51,
+      "dx_m": 100.0,
+      "dy_m": 100.0,
+      "x0_m": -2500.0,
+      "y0_m": -2500.0
+    },
+    "geo_ref": {
+      "crs": "WGS84 (EPSG:4326)",
+      "source_lon": -84.122,
+      "source_lat": 40.792,
+      "sw_lon": -84.15166343451078,
+      "sw_lat": 40.769542220625226,
+      "ne_lon": -84.09233656548922,
+      "ne_lat": 40.81445777937478
+    },
+    "periods": [
+      {
+        "averaging_period": "1",
+        "values": [],
+        "max_conc_ug_m3": null,
+        "naaqs_ug_m3": 188.0,
+        "exceeds_naaqs": false
+      },
+      {
+        "averaging_period": "ANNUAL",
+        "values": [],
+        "max_conc_ug_m3": null,
+        "naaqs_ug_m3": 100.0,
+        "exceeds_naaqs": false
+      }
+    ],
+    "stack_is_assumption": true,
+    "engine_version": "",
+    "caveats": [
+      "Screening field: a single modeled genset source, flat terrain + canned met, no monitored background. The genset stack geometry is a CBI-redacted assumption, so every concentration is [inference], never [verified]."
+    ],
+    "note": "AERMOD engine unavailable (binary not located)"
+  },
+  {
+    "site": "lima",
+    "pollutant": "CO",
+    "unit": "ug/m3",
+    "provenance": "assumption",
+    "available": false,
+    "grid": {
+      "nx": 51,
+      "ny": 51,
+      "dx_m": 100.0,
+      "dy_m": 100.0,
+      "x0_m": -2500.0,
+      "y0_m": -2500.0
+    },
+    "geo_ref": {
+      "crs": "WGS84 (EPSG:4326)",
+      "source_lon": -84.122,
+      "source_lat": 40.792,
+      "sw_lon": -84.15166343451078,
+      "sw_lat": 40.769542220625226,
+      "ne_lon": -84.09233656548922,
+      "ne_lat": 40.81445777937478
+    },
+    "periods": [
+      {
+        "averaging_period": "1",
+        "values": [],
+        "max_conc_ug_m3": null,
+        "naaqs_ug_m3": 40000.0,
+        "exceeds_naaqs": false
+      },
+      {
+        "averaging_period": "8",
+        "values": [],
+        "max_conc_ug_m3": null,
+        "naaqs_ug_m3": 10000.0,
+        "exceeds_naaqs": false
+      }
+    ],
+    "stack_is_assumption": true,
+    "engine_version": "",
+    "caveats": [
+      "Screening field: a single modeled genset source, flat terrain + canned met, no monitored background. The genset stack geometry is a CBI-redacted assumption, so every concentration is [inference], never [verified]."
+    ],
+    "note": "AERMOD engine unavailable (binary not located)"
+  }
+]

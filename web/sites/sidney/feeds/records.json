@@ -1,0 +1,30 @@
+[
+  {
+    "rel": "sidney/wwtp-oh0027421.dmr.yaml",
+    "group": "permits-npdes",
+    "title": "SIDNEY WWTP",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "npdes_id": "OH0027421",
+      "name": "SIDNEY WWTP",
+      "permit_type": "NPDES Individual Permit",
+      "permit_status": "Effective",
+      "major_minor": "M",
+      "snc_status": null,
+      "window": "2023-01-01..2023-12-31"
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "sidney/wwtp-oh0027421.dmr.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": null,
+    "source_doc_render_class": null,
+    "source_doc_published": false
+  }
+]

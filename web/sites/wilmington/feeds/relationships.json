@@ -1,0 +1,22 @@
+[
+  {
+    "src": "GENERAL DYNAMICS LAND SYSTEMS",
+    "rel": "owned_by",
+    "dst": "GENERAL DYNAMICS",
+    "date": "",
+    "ref": "GLEIF 875500ULXB4CYQSJVA03 → 9C1X8XOOTYY2FNYTVH06",
+    "source": "data/reference/gleif/lei-records.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "KAUTEX TEXTRON",
+    "rel": "owned_by",
+    "dst": "TEXTRON",
+    "date": "",
+    "ref": "RSEI parent / GLEIF 3PPKBHUG1HD6BO7RNR87",
+    "source": "data/reference/rsei/inventory.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  }
+]

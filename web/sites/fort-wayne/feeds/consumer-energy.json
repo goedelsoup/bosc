@@ -1,0 +1,59 @@
+{
+  "area": "IN",
+  "area_name": "Indiana",
+  "prices": [
+    {
+      "series_id": "ELEC.PRICE.IN-RES.A",
+      "label": "Indiana residential electricity price",
+      "fuel": "electricity",
+      "metric": "price",
+      "period": "2025",
+      "area": "IN",
+      "value": {
+        "value": 16.23,
+        "unit": "cents/kWh",
+        "source": "connector",
+        "citation": "EIA API v2 seriesid ELEC.PRICE.IN-RES.A (2025)",
+        "confidence": "high",
+        "asof": null
+      },
+      "points": []
+    },
+    {
+      "series_id": "ELEC.SALES.IN-ALL.A",
+      "label": "Indiana electricity retail sales (all sectors)",
+      "fuel": "electricity",
+      "metric": "sales",
+      "period": "2025",
+      "area": "IN",
+      "value": {
+        "value": 103487.47704,
+        "unit": "million kWh",
+        "source": "connector",
+        "citation": "EIA API v2 seriesid ELEC.SALES.IN-ALL.A (2025)",
+        "confidence": "high",
+        "asof": null
+      },
+      "points": []
+    },
+    {
+      "series_id": "NG.N3010IN3.A",
+      "label": "Indiana residential natural-gas price",
+      "fuel": "natural_gas",
+      "metric": "price",
+      "period": "2025",
+      "area": "IN",
+      "value": {
+        "value": 11.49,
+        "unit": "$/Mcf",
+        "source": "connector",
+        "citation": "EIA API v2 seriesid NG.N3010IN3.A (2025)",
+        "confidence": "high",
+        "asof": null
+      },
+      "points": []
+    }
+  ],
+  "source": "US EIA API v2 (seriesid route): residential prices + retail sales",
+  "note": "EIA API v2 (seriesid route): residential electricity + natural-gas prices and total electricity retail sales for Indiana. Annual averages; regenerable via `bosc eia` with WATERMARK_EIA_API_KEY."
+}

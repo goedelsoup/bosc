@@ -1,0 +1,3667 @@
+[
+  {
+    "date": "2021-02-11",
+    "category": "zoning_amendment",
+    "title": "American Township Zoning Resolution — amended & adopted by Trustees",
+    "ref": "amtwp-zoning-2021-02-11",
+    "parties": [],
+    "detail": "defines Data Center / Hyperscale Data Center; M-2 conditional use (11.2.4)",
+    "source": "lacrpc/american-township-zoning.zoning.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "lacrpc/american-township-zoning.zoning.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2022-10-31",
+    "category": "npdes_public_notice",
+    "title": "NPDES 1PT00125*BD (Clinton County Board of Developmental Disabilities) — public notice",
+    "ref": "1PT00125*BD",
+    "parties": [
+      "Clinton County Board of Developmental Disabilities",
+      "Clinton County Board of Developmental Disabilities"
+    ],
+    "detail": "action renewal; receiving unnamed tributary of Wilson Creek",
+    "source": "oepa/1PT00125.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/1PT00125.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2023-05-05",
+    "category": "npdes_public_notice",
+    "title": "NPDES 2PK00002*LD (Shawnee II WWTP) — public notice",
+    "ref": "2PK00002*LD",
+    "parties": [
+      "Allen County Board of Commissioners",
+      "Shawnee II WWTP"
+    ],
+    "detail": "action modification; receiving Ottawa River",
+    "source": "oepa/oepa-2PK00002-shawnee-ii-permit.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/oepa-2PK00002-shawnee-ii-permit.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2023-05-12",
+    "category": "npdes_public_notice",
+    "title": "NPDES 1PD00013*QD (City of Wilmington WWTP) — public notice",
+    "ref": "1PD00013*QD",
+    "parties": [
+      "City of Wilmington, Steven Honeycutt",
+      "City of Wilmington WWTP"
+    ],
+    "detail": "action modification; receiving Lytle Creek",
+    "source": "oepa/1PD00013.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/1PD00013.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2023-05-12",
+    "category": "npdes_public_notice",
+    "title": "NPDES 2PK00002*LD (Shawnee II Wastewater Treatment Works (Shawnee II WWTP)) — public notice",
+    "ref": "2PK00002*LD",
+    "parties": [
+      "Allen County Board of Commissioners, 4140 Diller Rd, Lima, Ohio 45807",
+      "Shawnee II Wastewater Treatment Works (Shawnee II WWTP)"
+    ],
+    "detail": "action modification; receiving Ottawa River",
+    "source": "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2023-05-19",
+    "category": "npdes_public_notice",
+    "title": "NPDES 1PD00013*QD (Wilmington Wastewater Treatment Plant (WWTP)) — public notice",
+    "ref": "1PD00013*QD",
+    "parties": [
+      "City of Wilmington, 69 North South Street, Wilmington, OH 45177",
+      "Wilmington Wastewater Treatment Plant (WWTP)"
+    ],
+    "detail": "action modification; receiving Lytle Creek",
+    "source": "oepa/1PD00013.fs.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/1PD00013.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2023-06-11",
+    "category": "npdes_comment_deadline",
+    "title": "NPDES 2PK00002*LD (Shawnee II Wastewater Treatment Works (Shawnee II WWTP)) — comment period ends",
+    "ref": "2PK00002*LD",
+    "parties": [
+      "Allen County Board of Commissioners, 4140 Diller Rd, Lima, Ohio 45807",
+      "Shawnee II Wastewater Treatment Works (Shawnee II WWTP)"
+    ],
+    "detail": "",
+    "source": "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2023-06-19",
+    "category": "npdes_comment_deadline",
+    "title": "NPDES 1PD00013*QD (Wilmington Wastewater Treatment Plant (WWTP)) — comment period ends",
+    "ref": "1PD00013*QD",
+    "parties": [
+      "City of Wilmington, 69 North South Street, Wilmington, OH 45177",
+      "Wilmington Wastewater Treatment Plant (WWTP)"
+    ],
+    "detail": "",
+    "source": "oepa/1PD00013.fs.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/1PD00013.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2023-12-05",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: google)",
+    "ref": "mtg-perry-township-2023-12-05-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "The meeting is flagged solely because guest Doug Mooney asked the trustees if they had heard anything about \"Google coming to Lima,\" to which the trustees replied they had not — no further corridor-related business was discussed or acted upon. · figures: $44,581.76 (bills); $.05 per hour (longevity raise for Corey Lehman); $685,902 (2023 U.S. Fire Custom Pumper); $242,639.74 (remaining unallocated ARPA funds); $115,000 (transfer from General Fund to Road and Bridge Fund 2031); $140,000 (estimated purchase of new dump truck); $65K (quote from Kalida Truck for dump bed); $15K (Engine 4 listing on GovDeals.com); $1,445 (Rapid Intervention Team Bottle); $33K (dispatch contract, next year); $255 (Toys for Tots)",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-01-08",
+    "category": "zoning_amendment",
+    "title": "American Township Zoning Resolution — amended & adopted by Trustees",
+    "ref": "amtwp-zoning-2024-01-08",
+    "parties": [],
+    "detail": "defines Data Center / Hyperscale Data Center; M-2 conditional use (11.2.4)",
+    "source": "lacrpc/american-township-zoning.zoning.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "lacrpc/american-township-zoning.zoning.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-03-01",
+    "category": "npdes_public_notice",
+    "title": "NPDES 2PH00007*MD (American Bath WWTP) — public notice",
+    "ref": "2PH00007*MD",
+    "parties": [
+      "Allen County Board of Commissioners, 3230 N. Cole St., Lima, OH, 45801",
+      "American Bath WWTP"
+    ],
+    "detail": "action renewal; receiving Pike Run",
+    "source": "oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.npdes.yaml",
+    "also_sources": [
+      "oepa/oepa-2PH00007-american-bath-fact-sheet.npdes.yaml"
+    ],
+    "citation": {
+      "source": "oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-03-21",
+    "category": "county_resolution",
+    "title": "Res #220-24: Apply for / enter a cooperative agreement for construction of the Shawnee II Phase II WWTP improvements project.",
+    "ref": "res-220-24",
+    "parties": [],
+    "detail": "shawnee_ii",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-03-28",
+    "category": "county_resolution",
+    "title": "Res #251-24: Approve GMP Amendment No. 3 with Peterson Construction Company (final guaranteed maximum price) for the Shawnee II Phase 2 POTW Improvement Project.",
+    "ref": "res-251-24",
+    "parties": [],
+    "detail": "shawnee_ii",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-03-31",
+    "category": "npdes_comment_deadline",
+    "title": "NPDES 2PH00007*MD (American Bath WWTP) — comment period ends",
+    "ref": "2PH00007*MD",
+    "parties": [
+      "Allen County Board of Commissioners, 3230 N. Cole St., Lima, OH, 45801",
+      "American Bath WWTP"
+    ],
+    "detail": "",
+    "source": "oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.npdes.yaml",
+    "also_sources": [
+      "oepa/oepa-2PH00007-american-bath-fact-sheet.npdes.yaml"
+    ],
+    "citation": {
+      "source": "oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-04-02",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2024-04-02-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "This meeting is directly connected to the corridor project because attorney Jill Hageman appeared on behalf of an unnamed Fortune 500 data center client, facilitated by Allen Economic Development, to present a proposal for a hyperscale data center on approximately 350 acres in Perry Township south of Breese Road and east of St. Johns Road. · figures: $106,498.28 (bills approved); $133,339.87 (2024 Road Program — Resolution 2024.0402-01); $22,160.40 (Reclamite Sealing contract — Pavement Technologies); $4,495.00 (crack patching estimate — Suever Sweeping); $18.00 per hour (Nick Myers pay raise — Level 1 Paramedic); $14.50 per hour (Gage Stemen — part-time EMT/volunteer firefighter); $17,513 (cost of radios replaced in 2023); $2,487 (remaining balance in line item 252 after 2023 radios); $57,479.90 (cost of radios to be replaced in 2024); $50,000 (grant and insurance claim coverage toward 2024 radios); $4,792.70 (remaining balance after grant/insurance for 2024 radios); $2,245.97 (shortfall in line item 252); $17,000 (supplemental appropriation needed to cover shortfall); $24 per hour (John Iten — Interim Police Chief, not to exceed 100 hours per month)",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-04-16",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2024-04-16-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "This meeting is connected to the corridor project because community members directly questioned the Trustees about the data center's noise levels and power infrastructure, reflecting ongoing public concern about the hyperscale data center development in the area.",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-04-23",
+    "category": "county_resolution",
+    "title": "Res #331-24: Accept Permanent Easement from Verne L. Bellinger for the U.S. 30 Rest Area force main relocation.",
+    "ref": "res-331-24",
+    "parties": [],
+    "detail": "forcemain",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-05-07",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2024-05-07-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "This meeting is connected to the data-center corridor project through resident and trustee questions about \"the data center,\" discussion of potential zoning amendments/rezoning, and a reference to AEDG and regional planning contacts involved in the process. · figures: $150,074.83 (bills to be paid); $3 million (total coverage for buildings and contents); $500 (deductible); $5,000 (personal property coverage per employee, no deductible); $850 (premium increase, approximately 2%); $11,319.36 (estimate from Commercial Communications for three portable radios and one base unit); $3,800 (budgeted for one radio, line item 72); $3,411 (amount to cover portable radios from line item 72); $389 (remaining in telephone fund after portable radios); $7,908.86 (cost of portable radios); $5,000 (requested move from ammo line item 78); $2,908.86; $2,519.86; $2,000 (replacement taser, line item 83); $519.86; $10,670.00 (estimate for sealing and striping parking lot); $10,670 (motion amount, Blacktop Sealing Inc.); $2,331.00 (zoning permit receipts for April 2024); $15/hr (Caitlin Stover starting rate); $2/hour (additional if paramedic license obtained); $13,400 (overtime prevented year-to-date by part-time staff); $88,400 (savings year-to-date); $50,000 (appropriated from Ohio Dept of Commerce Grant for MARCS radios)",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-05-21",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2024-05-21-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "This meeting directly addresses the proposed hyperscale data center (a Fortune 500 company's project) on a site between Breese and Hume Road in Perry Township, with presenters requesting the township initiate I-2 zoning amendments to permit data centers and trustees deliberating whether to begin that process. · figures: $50 – $75 million (estimated market value per data center building); $125,000 annually (estimated tax to Perry Township per building per year); almost $400,000 (estimated tax to Perry Schools per building per year); over $2.4 million (estimated tax to Perry Schools for 6-building project); about $750,000 (estimated tax to Perry Township for 6-building project); $73,000.59 (bills approved for payment); $3,411 (purchase request for MARCS radios from Commercial Communications); $10,000 - $15,000 (estimated cost of new septic system, Patton property); $36,000 (insurance money held by Perry Township, Patton property); $1,000 (disaster relief grant approved for fire department payroll funds)",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-05-30",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: datacenter)",
+    "ref": "mtg-commissioners-2024-05-30-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "datacenter",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [
+      "commissioners/meetings/meeting-index.yaml"
+    ],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-06-04",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2024-06-04-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "This meeting directly concerns the proposed hyperscale data center project, as trustees, residents, landowners, and regional officials debated whether to amend Perry Township's I-2 zoning text to permit data centers, with Rex Huffman of the Port Authority of Allen County and Wood County, Cindy Leis, and Lima Mayor Sharetta Smith among those advocating for the zoning amendment process to begin. · figures: $73,701.00 (bills payment); $38,372.00 (VFIS Insurance payment); $100,000 or more for 6 months CD at 4.49% interest rate (Chase Bank); 100% tax abatement (referenced by Mark Sidener as what the company will seek)",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-06-06",
+    "category": "county_event",
+    "title": "Cindy Leis (AEDG) overview of the AEDG / Allen County Port Authority partnership; 'Discussion on proposed Data Center project -- Zoning Resolutions will need to be amended to include Data Centers prior to project moving forward' + Access Management discussion.",
+    "ref": "",
+    "parties": [],
+    "detail": "Verifies the data-center ZONING AMENDMENT was project-driven -- corroborates lacrpc/american-township-zoning.zoning.yaml (was inference, now county-minuted).",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-06-06",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: datacenter)",
+    "ref": "mtg-commissioners-2024-06-06-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "datacenter",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-06-18",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2024-06-18-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "This meeting connects directly to the corridor project because it centers on a proposed data center development on industrially-zoned Perry Township land, with AEDG officials, the zoning inspector, trustees, and numerous residents debating the process for amending zoning language to permit data centers and the project's community impacts. · figures: $30,000 – saved in overtime by fire department full time staff and chief covering at time and a half; $2,000 – saved by adjusting full timers' schedules to cover vacations; $30,000 – amount Ronald Wieterman stated he just paid for tile work on his property across from the proposed site; $80 per week – property tax paid by Marc Pescosolido; $90,000 – $100,000 – amount one mill generates, per Greg Kessen; 75% tax abatement for 10 years – scenario cited by Dave Stratton (not agreed upon); 100% tax abatement – referenced by Larry Sidener as what New Albany has; Cindy Leis stated Allen County has not agreed to 100% tax abatement on any project",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-06-25",
+    "category": "county_resolution",
+    "title": "Res #533-24: Award to Degen Excavating Company for the Stewart & Bible Roads Low Pressure Force Main Project, Bath Township.",
+    "ref": "res-533-24",
+    "parties": [],
+    "detail": "forcemain",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-07-02",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter, google)",
+    "ref": "mtg-perry-township-2024-07-02-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "This meeting directly addresses the data-center corridor project through the Zoning Inspector's update on the zoning amendment adding \"data center\" language — now forwarded to Regional Planning — and through extensive public comment both supporting and questioning the project's impacts on land, taxes, noise, and public safety staffing. · figures: $9,171.90 (flail mower purchase order); $800–$1,000 (estimated cost to fix computer issues if owned); $995 (100 feet of 5-inch fire hose); $3,980.00 (approximately, for four sections of 5-inch fire hose); $61,003.33 (insurance funds appropriated, Resolution 2024.0702-01, from Fund 9001-892 reallocated to Fund 9001-785-599-0000); $18,000 (additional appropriation to Revenue Fund 1000-533-000, Resolution 2024.0702-02); $2,000 (original budgeted amount for Liquor Permit Fees — stated as an error); $20,000 (correct budgeted amount for Liquor Permit Fees); $67,381.08 (bills payment motion); $2,000/month (John Iten Police Chief salary)",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-07-16",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2024-07-16-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "This meeting directly addresses the hyperscale data center corridor project through discussion of related rezoning applications for the Henderson and Cira properties, a status update from project representative Cindy Leis confirming continued company interest, and community Q&A on noise, taxes, and abatements tied to the proposed data center. · figures: $42,012.83 — Township share of County and Township Roads Resurfacing 2024 Project (Resolution 2024.0716-01); $56,154.37 — bills approved for payment; $750 — indigent funeral expenses to Bayliff and Son Funeral Home in Cridersville; $8,077.62 — 3 Kenwood Portable Radios from Commercial Communications; $321.00 — June Zoning Receipts; $3,980.00 — purchase request for hose (line item 270); $3,500.00 — Thermal Imaging Camera (covered by donations); $2,750 — donation from Guardian of Lima toward Thermal Imaging Camera; $1,000 — donation from VFW toward Thermal Imaging Camera; $250 — extra donation amount to be directed or reimbursed to Guardian; $935 — GovDeals payment for expired Personal Protective Equipment; $69,000 — year-to-date savings from grants and donations (Fire Department)",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-08-13",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2024-08-13-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "This meeting directly addresses the data-center corridor project through the Regional Planning recommendation to add data centers to I-1 zoning, the scheduling of a public hearing, identification of the client as Microsoft, and discussion of site access routes involving the CIRA and Henderson properties. · figures: $750 (indigent burial funds for Perry Spradlin — Hanson-Neely Allison Funeral and Cremation Services); $8,000 to $10,000 cheaper (Chevy Tahoe vs. Dodge Durango); $500 per piece (body cameras); $3,500 (digital speed camera, stationary); $10,000 (digital speed camera, on wheels); $220,000 (approximate cost of new truck); $125,000 (ARPA funds remaining); $95,000 (remaining amount after ARPA funds); $560.02 (payroll reimbursement check from Auxiliary — fire); $988.41 (reimbursement check from Public Safety for Eclipse, covering 75% of cost); $10,575 (3 sets of turn-out gear); $25,000 (available in Line Item 274 — small equipment); $123,988.51 (bills payment); $3,577 (Miller Brothers repairs and maintenance); $10,000 (insurance hold release — Phalen property)",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-08-20",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: datacenter)",
+    "ref": "mtg-commissioners-2024-08-20-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "datacenter, easement",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-08-22",
+    "category": "county_resolution",
+    "title": "Res #679-24: Task Order No. 5 with MS Consultants ($47,600) — 'WWTP Data Center Flows Treatment Evaluation' of the campus BLOWDOWN stream (storage + treatment @ American Bath WWTP); County to gather data from 'the developer and data center manufacturer'.",
+    "ref": "res-679-24",
+    "parties": [],
+    "detail": "shawnee_ii",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-08-22",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: datacenter)",
+    "ref": "mtg-commissioners-2024-08-22-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "datacenter, solar",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-08-28",
+    "category": "zoning_amendment",
+    "title": "American Township Zoning Resolution — amended & adopted by Trustees",
+    "ref": "amtwp-zoning-2024-08-28",
+    "parties": [],
+    "detail": "defines Data Center / Hyperscale Data Center; M-2 conditional use (11.2.4)",
+    "source": "lacrpc/american-township-zoning.zoning.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "lacrpc/american-township-zoning.zoning.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-09-03",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2024-09-03-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "The meeting directly references two public hearings related to a proposed data center (Trustees Public Hearing on September 5th and a Zoning Public Hearing on September 16th), a Microsoft open house on September 12th, and the Zoning Board's decision to delay its rezoning recommendation until after that open house. · figures: $84.98 (banquet tables, Sam's Club, white); $84.98 (banquet tables, online, black); $220.00 (7.5 cubic feet refrigerator, Sam's Club); $379 (9.7 cubic feet refrigerator, Lowes or Menards); $400 - $600 (standard size 18–20 cubic feet refrigerator); $10,000 (hoped sale price for 2005 GMC on GovDeals); $40,000 (price increase in 2027 due to emissions); $15,000 (TASC cards spent this year due to turnover, fire department); $3,000 (OP&F cost, fire department); $3,000 (uniforms, fire department); $3,500 (training for another full-time employee, fire department); $17.75 (applicable rate for Jacob Aldrich); $20/hour (Alger part-time paramedic rate); $15.50/hour (next lowest paying fire department part-time rate); $3,500 (speed camera quotes); $92,319.85 (bills payment motion); $1,000 per month (Attorney Blaine Brock, 6 hours/month, zoning purposes); $111,111.00 (2024 Freightliner from Stoops Freightliner, ARPA funds); $108,900.00 (Kalida Trucking for outfitting the truck); $750 (not to exceed, refrigerator for administration offices)",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-09-05",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter, google)",
+    "ref": "mtg-perry-township-2024-09-05-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "This meeting directly concerns the hyperscale data center corridor project, with trustees amending Perry Township's zoning resolution to add data center language to I-2 industrial zoning, and references to Microsoft as the named company and two parcels being rezoned from Agricultural to I-2 for the same project. · figures: 25,000 homes had a 3% higher electric bills (referenced in resident discussion about West Virginia documentary)",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-09-12",
+    "category": "county_resolution",
+    "title": "Res #739-24: Accept Temporary Easement for the new Biosolids Handling Facility, Shawnee II WWTP Phase 2 Improvements.",
+    "ref": "res-739-24",
+    "parties": [],
+    "detail": "shawnee_ii",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-09-12",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: datacenter)",
+    "ref": "mtg-commissioners-2024-09-12-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "datacenter, easement",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-09-17",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: datacenter)",
+    "ref": "mtg-commissioners-2024-09-17-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "datacenter",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-09-17",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2024-09-17-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "This meeting directly addresses the data center corridor project through the Zoning Board's recommendation to rezone both parcels in question, public comments both opposing and questioning the data center, a resident's public records request for all data center-related communications, and an executive session held with Microsoft representatives. · figures: $30,000 (supplemental appropriation increase to Gas Tax, Machinery and Equipment Fund); $50,000 (transfer to Gas Tax Fund Transfer In from General Fund Transfer Out for new plow truck); $1,214.05 (increase in appropriations for ARPA Fund); $10.18 (revenue budget adjustment for ARPA Fund interest); $81,000 (increase in estimated revenue budget for Gas Tax Transfer; increase in appropriations in Gas Tax Fund, Machinery and Equipment Account for Kalida Truck Equipment); $122,214.05 (remaining ARPA funds appropriated for 2024 Freightliner 1085D Plus Cab and Chassis, Dump Bed and Plow Package); $121,180.69 (bills to be paid); $2,500 (yearly contract with Now Marketing Group for up to 30 hours of website support); $4,000.00 (new payroll fund for legal council)",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-09-24",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: datacenter)",
+    "ref": "mtg-commissioners-2024-09-24-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "datacenter, easement",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-10-01",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2024-10-01-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "This meeting directly addresses the proposed data center project through discussion of rezoning parcels to industrial along Greeley Chapel and Breese Road, conflicting recommendations from the Zoning Board and Regional Planning, and a Microsoft representative providing updated public contact information for the project. · figures: $81,000 (transfer to Gas Tax Fund for purchase from Kalida Truck); $8,000 (savings on 2024 Chevy Tahoe vs. Dodge Durango); $64,654 (cost of 2024 Chevy Tahoe fully outfitted except graphics); $55,000 (current funds in police vehicle fund); $3,500 each (speed cameras attached to a post); $9,000 (3 speed cameras); $2,300 (possible lower price for speed cameras); $9,200 (2005 GMC sold on GovDeals); $260 (September zoning permit fees); $117,149.28 (bills approved for payment); $100 (Fiscal Officer training cost in Perrysburg); $14/hr (rate for Lori Iten, Police Administrative Assistant); $1,200 (educational reimbursement grant)",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-10-15",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2024-10-15-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "This meeting directly concerns the hyperscale data center corridor project, as it documents Microsoft's withdrawal from the Perry Township site and a public hearing on the rezoning of two parcels that had been sought in connection with that project.",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [
+      "perry-township/meetings/meeting-index.yaml"
+    ],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-10-29",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2024-10-29-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "This meeting directly concerns the data center corridor project, as the rezoning of two parcels from Agricultural to Industrial had been pursued in connection with a prospective data center (referenced as a Microsoft prospect), and the trustees' denial of that rezoning was explicitly tied to Microsoft's withdrawal from the project.",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-11-25",
+    "category": "subdivision_meeting",
+    "title": "American Township — minutes (corridor: bosc, datacenter)",
+    "ref": "mtg-american-township-2024-11-25-American Township",
+    "parties": [
+      "American Township"
+    ],
+    "detail": "This meeting directly concerns Project BOSC, the codename for the hyperscale data center development, as the trustees received, discussed, and referred to the Board of Zoning Appeals a Conditional Use Permit application filed by Project BOSC c/o Jill Tangeman, Esq. for construction of data centers on 162.5 acres in American Township. · figures: $1000 (Midwest Electric donation for MARCS radios systems to ATPD); $10,967.77 (Moose Lodge donation to ATFD); $500 (check #2 from Jonathan Sickles towards debt owed to the township)",
+    "source": "american-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "american-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2024-12-09",
+    "category": "subdivision_meeting",
+    "title": "American Township — minutes (corridor: datacenter)",
+    "ref": "mtg-american-township-2024-12-09-American Township",
+    "parties": [
+      "American Township"
+    ],
+    "detail": "This meeting connects to the data-center corridor project through extensive public comment from neighboring residents opposing a proposed data center, and through Zoning Inspector Bishop's explanation of the upcoming Board of Zoning Appeals hearing on December 11, 2024 that will address the project's zoning matters. · figures: $150/day (seasonal snow plow operators); $3618.62 (donation from Lima Eagles for MARCS Radios); $46,717.98 (grant from State of Ohio for ATFD MARCS Radio systems); 33% decrease from 2024 rates (Aetna/Delta Dental health and dental insurance plan)",
+    "source": "american-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "american-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-01-13",
+    "category": "subdivision_meeting",
+    "title": "American Township — minutes (corridor: datacenter)",
+    "ref": "mtg-american-township-2025-01-13-American Township",
+    "parties": [
+      "American Township"
+    ],
+    "detail": "A resident raised concerns about the handling of noise complaints related to a data center and the developer's legal counsel's access to a video her group submitted, directly referencing the data-center corridor project. · figures: $7300/year; $20/hr; $20 per hour",
+    "source": "american-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "american-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-01-21",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2025-01-21-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "The meeting is flagged for corridor relevance due to Trustee Sidener's remarks referencing AEP issues in American Township, an undisclosed project in Bowling Green, and news reports of large companies discussing data centers — language consistent with the hyperscale data-center corridor project.",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-02-14",
+    "category": "county_event",
+    "title": "CRA Discussion -- John Willamowski Jr., Rachael Gilroy, Kathy Henry, Keith Cheney, Cindy Leis, Jon Stock (via phone), Rex Huffman (via phone). 'Possible CRA for an area of land for a potential Data Center in American Township'; Jon Stock walks the Board through CRA process + required Housing Study; target creation 'February 27'.",
+    "ref": "",
+    "parties": [],
+    "detail": "",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-02-14",
+    "category": "executive_session",
+    "title": "Executive session (G)(2) — \"to discuss two (1) [sic] po[t]ential purposes of property for public purposes and one (1)",
+    "ref": "exec-2025-02-14-(G)(2)",
+    "parties": [],
+    "detail": "",
+    "source": "commissioners/closed-deliberation-and-corridor.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/closed-deliberation-and-corridor.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-02-14",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: datacenter)",
+    "ref": "mtg-commissioners-2025-02-14-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "datacenter, tax_abatement",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-03-04",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bosc)",
+    "ref": "mtg-commissioners-2025-03-04-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "bosc, easement, hume, pump_station",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-03-11",
+    "category": "npdes_public_notice",
+    "title": "NPDES 1II00129*HD (Wilmington Sanitary Landfill) — public notice",
+    "ref": "1II00129*HD",
+    "parties": [
+      "City of Wilmington",
+      "Wilmington Sanitary Landfill"
+    ],
+    "detail": "action modification; receiving Lytle Creek at River Mile 6.5",
+    "source": "oepa/1II00129.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/1II00129.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-03-17",
+    "category": "npdes_public_notice",
+    "title": "NPDES 2PD00006*VD (Van Wert Wastewater Treatment Plant (WWTP)) — public notice",
+    "ref": "2PD00006*VD",
+    "parties": [
+      "City of Van Wert, 515 North Main Street, Van Wert, OH 45891",
+      "Van Wert Wastewater Treatment Plant (WWTP)"
+    ],
+    "detail": "action renewal; receiving Town Creek",
+    "source": "oepa/2PD00006.fs.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/2PD00006.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-03-18",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2025-03-18-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "The meeting references the data center project directly, with Trustee Sidener stating that Allen Economic and Port Authority has not contacted Perry Township since \"the data center went out,\" and Jason Stombaugh raising questions about Microsoft's option-to-purchase contracts with landowners in connection with a potential rezoning of industrial land. · figures: $750.00 (indigent burial, Chiles-Laman Funeral Service); $1000 (Blain Brock, renewal levy process paperwork); $1,650 (Parr/PAR, decals for 2024 Chevy Tahoe); $3,200 (JBL Graphics — rescinded); $8,000 to $9,000 (estimated cost for two digital speed signs); $13,975.10 (Reclamite Sealing estimate, Pavement Tech Inc, Amherst and Kerr Road); $114,935.55 (bills approved); $208,000 (road striping program total after county's $8,000 share); $8,000 (county share of road striping); $600 (rebate check, Perry Protech contract); $700 (discounts for security, Perry Protech contract); $533.20 (current monthly bill, Perry Protech); $524.94 (new monthly bill, Perry Protech); $15 per hour (Bill Foster, part-time fire inspector); $17.25 per hour (Ashlyn Tracy, Fire Administrative Assistant)",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-04-15",
+    "category": "county_event",
+    "title": "Revised CRA sent to Cindy Leis and John Stock for review.",
+    "ref": "",
+    "parties": [],
+    "detail": "",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-04-16",
+    "category": "npdes_comment_deadline",
+    "title": "NPDES 2PD00006*VD (Van Wert Wastewater Treatment Plant (WWTP)) — comment period ends",
+    "ref": "2PD00006*VD",
+    "parties": [
+      "City of Van Wert, 515 North Main Street, Van Wert, OH 45891",
+      "Van Wert Wastewater Treatment Plant (WWTP)"
+    ],
+    "detail": "",
+    "source": "oepa/2PD00006.fs.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/2PD00006.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-04-28",
+    "category": "npdes_public_notice",
+    "title": "NPDES 2PH00006*LD (American II Wastewater Treatment Plant) — public notice",
+    "ref": "2PH00006*LD",
+    "parties": [
+      "Allen County Board of Commissioners, 4140 Diller Road, Lima, OH, 45807",
+      "American II Wastewater Treatment Plant"
+    ],
+    "detail": "action renewal; receiving Dug Run at River Mile 3.1",
+    "source": "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.npdes.yaml",
+    "also_sources": [
+      "oepa/oepa-2PH00006-american-ii-fact-sheet.npdes.yaml"
+    ],
+    "citation": {
+      "source": "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-05-20",
+    "category": "county_event",
+    "title": "Asst. Prosecutor John Willamowski Jr. requests a meeting with the Commissioners to discuss the CRA process prior to meeting with Project BOSC Attorney John Stock.",
+    "ref": "",
+    "parties": [],
+    "detail": "",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-05-20",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bosc)",
+    "ref": "mtg-commissioners-2025-05-20-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "annexation, bosc, hume, tax_abatement",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-05-20",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2025-05-20-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "The meeting directly references the proposed data center in the context of disputed zoning meeting minutes and community concerns about power grid impacts (AEP rate increases and brownouts) tied to the project. · figures: $3,000 (Ashlyn Tracy updated credit card limit); $2,000 (previous credit card limit); $700.00 (FLIR Thermal Camera donation value); $3,627.74 (hydrant repair parts for Breese Rd); $1,872 (MARCS pagers update – building); $4,000 (MARCS pagers update – 5 pagers); $500 (hose bed replacements, less than); $116,863.03 (bills approved for payment); $1,305.00 (March and April zoning receipts); $50 (permit fee for temporary storage containers, per Resolution #2025.0520-01)",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-05-22",
+    "category": "county_event",
+    "title": "Board reviews a proposed Non-Disclosure Agreement with 'a company proposing a CRA in Allen County for a data center'; discussion on Elida Schools agreeing to accept PILOT.",
+    "ref": "",
+    "parties": [],
+    "detail": "",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-05-22",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: datacenter)",
+    "ref": "mtg-commissioners-2025-05-22-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "datacenter, tax_abatement",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-05-27",
+    "category": "county_resolution",
+    "title": "Res #417-25: Enter into a Mutual Non-Disclosure Agreement with Bistrozzi, LLC.",
+    "ref": "res-417-25",
+    "parties": [],
+    "detail": "nda",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-05-27",
+    "category": "executive_session",
+    "title": "Executive session (G)(8) — Consideration of the proposed CRA Agreement. The minutes state: \"agreements that permit co",
+    "ref": "exec-2025-05-27-(G)(8)",
+    "parties": [],
+    "detail": "",
+    "source": "commissioners/closed-deliberation-and-corridor.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/closed-deliberation-and-corridor.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-05-27",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bistrozzi, bosc)",
+    "ref": "mtg-commissioners-2025-05-27-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "bistrozzi, bosc, hume, tax_abatement",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [
+      "commissioners/meetings/meeting-index.yaml"
+    ],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-05-28",
+    "category": "npdes_comment_deadline",
+    "title": "NPDES 2PH00006*LD (American II Wastewater Treatment Plant) — comment period ends",
+    "ref": "2PH00006*LD",
+    "parties": [
+      "Allen County Board of Commissioners, 4140 Diller Road, Lima, OH, 45807",
+      "American II Wastewater Treatment Plant"
+    ],
+    "detail": "",
+    "source": "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.npdes.yaml",
+    "also_sources": [
+      "oepa/oepa-2PH00006-american-ii-fact-sheet.npdes.yaml"
+    ],
+    "citation": {
+      "source": "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-06-03",
+    "category": "county_event",
+    "title": "Commissioner Cory Noonan gives an overview of a meeting with constituents regarding Project BOSC.",
+    "ref": "",
+    "parties": [],
+    "detail": "",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-06-03",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bosc, datacenter)",
+    "ref": "mtg-commissioners-2025-06-03-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "bosc, datacenter",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-06-03",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2025-06-03-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "This meeting connects to the data-center corridor project through Cindy Leis's guest presentation, which referenced Thor Equities being assigned 196 acres at the Perry Industrial Site for data center clients, a developer conducting a power study on those acres, and the imminent announcement of the American Township data center project. · figures: $50,000 (transfer from Chase to STAR Ohio); $64,911.30 (bills payment); $2,750.00 (payment to Huffman, Kelley & Brock for legal work for Victory Lounge); $350 (tree removal on McPheron Road); $50 per month (Jerry Hunt cleaning, approximately 3 hours)",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-06-09",
+    "category": "subdivision_meeting",
+    "title": "American Township — minutes (corridor: datacenter)",
+    "ref": "mtg-american-township-2025-06-09-American Township",
+    "parties": [
+      "American Township"
+    ],
+    "detail": "This meeting is connected to the corridor project because a resident directly questioned trustees about the data center planned on Bluelick Road, including zoning implications and potential NDA agreements signed by trustees. · figures: $5821.99 (Progressive Insurance offer/payment for missing fence at Greenlawn Cemetery); $1000 (yearly contribution request from AEDG); $500 (fee certified to Roxanne Ledbetter at 2430 Windsor Dr for junk vehicles and other trash — Resolution #2025-0609); $1000 (new citation to be issued to Roxanne Ledbetter if unresolved); $15,884.46 (quarterly donation from the Moose to ATFD)",
+    "source": "american-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "american-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-06-12",
+    "category": "county_resolution",
+    "title": "Res #469-25: Authorize the Clerk of Board to post notice and advertise for Professional Engineering Services for the Project BOSC Pump Station and Forcemain Project.",
+    "ref": "res-469-25",
+    "parties": [],
+    "detail": "wastewater",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-06-12",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bosc)",
+    "ref": "mtg-commissioners-2025-06-12-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "bosc, forcemain, pump_station",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [
+      "commissioners/meetings/meeting-index.yaml",
+      "commissioners/meetings/meeting-index.yaml"
+    ],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-06-17",
+    "category": "npdes_public_notice",
+    "title": "NPDES 2PH00006*LD (American II Wastewater Treatment Plant) — public notice",
+    "ref": "2PH00006*LD",
+    "parties": [
+      "Allen County Board of Commissioners",
+      "American II Wastewater Treatment Plant"
+    ],
+    "detail": "action renewal; receiving Dug Run at River Mile 3.1",
+    "source": "oepa/oepa-2PH00006-american-ii-permit.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/oepa-2PH00006-american-ii-permit.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-06-24",
+    "category": "county_resolution",
+    "title": "Res #494-25: Authorize notice to the Elida Local School District and Apollo Career Center that the Commissioners seek to enter into a Community Reinvestment Area Agreement with Bistrozzi, LLC and will consider the same on July 10, 2025.",
+    "ref": "res-494-25",
+    "parties": [],
+    "detail": "cra_school_notice",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-06-24",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bistrozzi)",
+    "ref": "mtg-commissioners-2025-06-24-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "bistrozzi, easement, hume, tax_abatement",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-06-30",
+    "category": "subdivision_meeting",
+    "title": "American Township — minutes (corridor: datacenter)",
+    "ref": "mtg-american-township-2025-06-30-American Township",
+    "parties": [
+      "American Township"
+    ],
+    "detail": "Two residents addressed the Trustees directly about the data center corridor project, referencing NDA discussions with commissioners, the Neff Farm rezoning from M1 to M2, eminent domain concerns, and township/resident protections. · figures: $2654 (donation from Lima 370 Charity Foundation to ATPD toward a new radar gun)",
+    "source": "american-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "american-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-07-02",
+    "category": "epa_permit_action",
+    "title": "401 Water Quality Certification 445754445 — application (Project Bosc)",
+    "ref": "445754445",
+    "parties": [
+      "Bistrozzi LLC",
+      "Jill Tangeman",
+      "EMH&T"
+    ],
+    "detail": "affected Wetlands (0.33 acres); Fill impacts to waters of the state — Pike Run and Sugar Creek watersheds, Allen County, Ohio",
+    "source": "permits/3702676.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/3702676.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-07-10",
+    "category": "county_resolution",
+    "title": "Res #548-25: Enter into a Community Reinvestment Area Agreement in Community Reinvestment Area No. 1 with Bistrozzi, LLC.",
+    "ref": "res-548-25",
+    "parties": [],
+    "detail": "cra",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-07-10",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bistrozzi)",
+    "ref": "mtg-commissioners-2025-07-10-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "annexation, bistrozzi",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [
+      "commissioners/meetings/meeting-index.yaml",
+      "commissioners/meetings/meeting-index.yaml"
+    ],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-07-11",
+    "category": "opc_estimate",
+    "title": "OPC estimate: Project BOSC Roadwork (privately funded; BOSC Team deposit to PAAC; dedicated to County on completion)",
+    "ref": "",
+    "parties": [
+      "Tetra Tech (RJS), checked AMD"
+    ],
+    "detail": "program total ~14,233,081",
+    "source": "aedg/roundabouts.summary.opc.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "aedg/roundabouts.summary.opc.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-07-15",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2025-07-15-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "This meeting directly addresses the data-center corridor project by formalizing Perry Township's zoning resolution to permit data centers under I-2 zoning, and includes trustee commentary confirming Microsoft's withdrawal from the Perry Township project while noting continued interest from other data center parties.",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-07-17",
+    "category": "epa_permit_action",
+    "title": "Isolated Wetland Permit DSW401251760W — incomplete (Project Bosc)",
+    "ref": "DSW401251760W",
+    "parties": [
+      "Bistrozzi LLC",
+      "Jill Tangeman",
+      "Vorys"
+    ],
+    "detail": "affected Isolated wetlands",
+    "source": "permits/3727059.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/3727059.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-07-17",
+    "category": "epa_permit_action",
+    "title": "401 Water Quality Certification 445754445 — application (Project Bosc)",
+    "ref": "445754445",
+    "parties": [
+      "Bistrozzi LLC",
+      "Jill Tangeman",
+      "EMH&T"
+    ],
+    "detail": "affected Wetlands (0.33 acres); Fill impacts to waters of the state — Pike Run and Sugar Creek watersheds, Allen County, Ohio",
+    "source": "permits/3727544.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/3727544.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-07-17",
+    "category": "epa_permit_action",
+    "title": "Wetland Mitigation Bank Credit Purchase PMP-212 — correspondence (Project BOSC)",
+    "ref": "PMP-212",
+    "parties": [
+      "Bistrozzi LLC",
+      "Scott Ziance",
+      "EMH&T, LLC"
+    ],
+    "detail": "affected Forested wetland credits (0.7 acres) — Pearson Metropark Wetlands Mitigation Bank",
+    "source": "permits/3789048.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/3789048.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-07-21",
+    "category": "npdes_public_notice",
+    "title": "NPDES 1PV00037*ED (Hidden Valley Mobile Home Park) — public notice",
+    "ref": "1PV00037*ED",
+    "parties": [
+      "Alexander R. Reck dba Hidden Valley MHP",
+      "Hidden Valley Mobile Home Park"
+    ],
+    "detail": "action renewal; receiving Tawawa Creek at River Mile 3.3",
+    "source": "oepa/1PV00037.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/1PV00037.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-07-24",
+    "category": "county_resolution",
+    "title": "Res #575-25: Enter into a Sanitary Sewer Developer Agreement with Project BOSC Developer.",
+    "ref": "res-575-25",
+    "parties": [],
+    "detail": "wastewater",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-07-24",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bosc)",
+    "ref": "mtg-commissioners-2025-07-24-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "bosc",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [
+      "commissioners/meetings/meeting-index.yaml"
+    ],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-07-29",
+    "category": "county_event",
+    "title": "Project BOSC Developer Agreement noted as approved the prior week (Res #575-25).",
+    "ref": "",
+    "parties": [],
+    "detail": "",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-07-29",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bosc)",
+    "ref": "mtg-commissioners-2025-07-29-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "annexation, bosc, hume",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-07-31",
+    "category": "county_resolution",
+    "title": "Res #588-25: Enter into a Roadway Development Agreement with the Allen County Port Authority and Bistrozzi LLC. (Project BOSC Developer).",
+    "ref": "res-588-25",
+    "parties": [],
+    "detail": "roadwork",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-07-31",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bistrozzi, bosc)",
+    "ref": "mtg-commissioners-2025-07-31-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "bistrozzi, bosc, tax_abatement",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [
+      "commissioners/meetings/meeting-index.yaml"
+    ],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-08-11",
+    "category": "subdivision_meeting",
+    "title": "American Township — minutes (corridor: datacenter)",
+    "ref": "mtg-american-township-2025-08-11-American Township",
+    "parties": [
+      "American Township"
+    ],
+    "detail": "The meeting is connected to the corridor project through public comments from residents asking about the data center site's sub-station type and the possible use of the Neff property in Sugar Creek Township, to which the trustees disclaimed any direct involvement. · figures: $14,38.05 (Moose Lodge quarterly donation to ATFD)",
+    "source": "american-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "american-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-08-12",
+    "category": "epa_permit_action",
+    "title": "Isolated Wetland Permit DSW401251760W — approved (Project Bosc)",
+    "ref": "DSW401251760W",
+    "parties": [
+      "Bistrozzi LLC",
+      "Jill Tangeman",
+      "Vorys"
+    ],
+    "detail": "affected Isolated wetlands (0.29 acres forested and 0.04 acres non-forested Category 1 wetlands)",
+    "source": "permits/3788677.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/3788677.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-08-13",
+    "category": "deed_recorded",
+    "title": "Limited Warranty Deed 202508130008300: Kyle C. Brenneman and Sarah N. Brenneman, Co-Trustees of the Kyle C. Brenneman Living Trust dated March 30, 2023, and any amendments thereto, Keaton A. Brenneman and Kristen M. Brenneman, Co-Trustees of the Keaton A. Brenneman Living Trust dated March 2, 2023, and any amendments thereto → BISTROZZI LLC, a Delaware limited liability company",
+    "ref": "202508130008300",
+    "parties": [
+      "Kyle C. Brenneman and Sarah N. Brenneman, Co-Trustees of the Kyle C. Brenneman Living Trust dated March 30, 2023, and any amendments thereto",
+      "Keaton A. Brenneman and Kristen M. Brenneman, Co-Trustees of the Keaton A. Brenneman Living Trust dated March 2, 2023, and any amendments thereto",
+      "BISTROZZI LLC, a Delaware limited liability company"
+    ],
+    "detail": "7 parcel(s)",
+    "source": "recorder/202508130008300.deed.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "recorder/202508130008300.deed.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-08-13",
+    "category": "deed_recorded",
+    "title": "Limited Warranty Deed 202508130008312: NEFF FARMS, INC. → BISTROZZI LLC",
+    "ref": "202508130008312",
+    "parties": [
+      "NEFF FARMS, INC.",
+      "BISTROZZI LLC"
+    ],
+    "detail": "2 parcel(s)",
+    "source": "recorder/202508130008312.deed.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "recorder/202508130008312.deed.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-08-13",
+    "category": "deed_recorded",
+    "title": "Limited Warranty Deed 202508130008316: PIKE RUN FARMS LLC → BISTROZZI LLC",
+    "ref": "202508130008316",
+    "parties": [
+      "PIKE RUN FARMS LLC",
+      "BISTROZZI LLC"
+    ],
+    "detail": "1 parcel(s)",
+    "source": "recorder/202508130008316.deed.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "recorder/202508130008316.deed.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-08-14",
+    "category": "county_resolution",
+    "title": "Res #612-25: Establish the Project Bosc Fund.",
+    "ref": "res-612-25",
+    "parties": [],
+    "detail": "finance",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-08-14",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bosc)",
+    "ref": "mtg-commissioners-2025-08-14-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "annexation, bosc",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [
+      "commissioners/meetings/meeting-index.yaml"
+    ],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-08-18",
+    "category": "epa_permit_action",
+    "title": "Isolated Wetland Permit DSW401251760W — correspondence (Project Bosc)",
+    "ref": "DSW401251760W",
+    "parties": [
+      "Bistrozzi LLC",
+      "Jill Tangeman",
+      "Vorys"
+    ],
+    "detail": "affected isolated wetland",
+    "source": "permits/3796349.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/3796349.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-09-08",
+    "category": "subdivision_meeting",
+    "title": "American Township — minutes (corridor: datacenter)",
+    "ref": "mtg-american-township-2025-09-08-American Township",
+    "parties": [
+      "American Township"
+    ],
+    "detail": "The meeting is connected to the project because a resident formally raised the data center project during Privilege of the Floor, prompting Trustee Harmon to commit to contacting county commissioners about public engagement opportunities. · figures: $15,000 (not to exceed, for East Rd. asphalt issues)",
+    "source": "american-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "american-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-09-08",
+    "category": "zoning_amendment",
+    "title": "American Township Zoning Resolution — amended & adopted by Trustees",
+    "ref": "amtwp-zoning-2025-09-08",
+    "parties": [],
+    "detail": "defines Data Center / Hyperscale Data Center; M-2 conditional use (11.2.4)",
+    "source": "lacrpc/american-township-zoning.zoning.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "lacrpc/american-township-zoning.zoning.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-09-16",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: google)",
+    "ref": "mtg-perry-township-2025-09-16-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "This meeting is flagged for corridor relevance solely due to the extensive discussion of a proposed large-scale poultry facility (CAFF) by Keiran Fetter in Perry Township, which appears to be the \"chicken farm\" project referenced in connection with permitting, zoning, and community opposition — not directly referencing Project BOSC / Bistrozzi LLC / a hyperscale data center; the document contains no mention of a data center, Google, Project BOSC, or Bistrozzi LLC. · figures: $2,500.00 – NOW Marketing invoice for 30 hours of support; $1,000 each month (September 2025 – December 2025) – Attorney Blain Brock retainer; -$2,450.61 – credit on 1st invoice for Road Program; $5,549.39 – Road Program invoice amount; $8,000 – credit for 2025 mowing; $110 – Fiscal Officer training cost in Perrysburg, October 2nd; $10,600 – ACH payment received from GovDeals for the 2000 Sterling; $4,500 – sign grant approved; $4,005.00 – cost for 100 foot, 3 sections of 5\" rubber hose replacement with synthetic (Fire Dept); $15,200 – cost for personal protection equipment for firefighters (turn out gear, 4 employees); $16,000 – budgeted line item for turn out gear; $553.00 – Wings and Rings donation to Fire Auxiliary account",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-09-18",
+    "category": "county_resolution",
+    "title": "Res #713-25: Enter into a contract with MS Consultants, Inc. to provide professional engineering services for the Project BOSC Pump Station and Forcemain Project.",
+    "ref": "res-713-25",
+    "parties": [],
+    "detail": "wastewater",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-09-18",
+    "category": "county_resolution",
+    "title": "Res #715-25: Supplemental appropriation for the BOSC Fund 5040.",
+    "ref": "res-715-25",
+    "parties": [],
+    "detail": "finance",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-09-18",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bosc)",
+    "ref": "mtg-commissioners-2025-09-18-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "annexation, bosc, forcemain, pump_station, tax_abatement",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [
+      "commissioners/meetings/meeting-index.yaml"
+    ],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-10-01",
+    "category": "executive_session",
+    "title": "Executive session (G)(8) — \"Rex Huffman asked to enter executive session to discuss the terms of the Port Authority p",
+    "ref": "exec-2025-10-01-(G)(8)",
+    "parties": [],
+    "detail": "",
+    "source": "commissioners/closed-deliberation-and-corridor.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/closed-deliberation-and-corridor.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-10-07",
+    "category": "epa_permit_action",
+    "title": "Permit-to-Install / Permit-to-Install and Operate (PTI/PTIO) - Air Pollution Control P0138965 — application (Bistrozzi LLC - Allen County Air Pollution Source)",
+    "ref": "P0138965",
+    "parties": [
+      "Bistrozzi LLC",
+      "Michael Montfort",
+      "Bistrozzi LLC"
+    ],
+    "detail": "affected Air pollution source(s)",
+    "source": "permits/3866942.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/3866942.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-10-08",
+    "category": "epa_permit_action",
+    "title": "Trade Secret recognition (OAC 3745-49-03 / ORC 3734.12(G)) on the Initial Air PTI application A0080278 (+ PBR21722) — trade-secret-granted (Lima Facility (Bistrozzi greenfield data center))",
+    "ref": "A0080278 (+ PBR21722)",
+    "parties": [
+      "Bistrozzi LLC",
+      "Michael Montfort",
+      "Wilson Sonsini Goodrich & Rosati (WSGR)"
+    ],
+    "detail": "affected air permit application (DAPC) — emission-unit equipment specifications",
+    "source": "permits/3859883.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/3859883.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-10-21",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2025-10-21-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "The meeting references the data center project only as a past example cited during a transparency debate — Trustee Sidener noted comment time was limited at \"the data center meetings last year,\" and a resident asked the trustees to share their personal views on the data center with the public. · figures: $13,661.56 – Pavement Technologies, road program; $17,609.04 – Lima Allen County Convention Center, regular monthly payment; $4,000 – Gueye and Associates, audit; $250.00 – Ohio Township Association 2026 education subscription; $180,000.00 – increase revenue for Fire Fund, Contracts for Emergency Medical Services (2111-202-0001); $8,000 – increase appropriations for Fire Fund, Contracted Services (2111-220-360-0000); $50,000 – decrease revenue for Fire Fund, Other State Receipts (2111-539-0000); $66,403.88 – bills paid; $3,294.00 – Smith Boughan furnace contract, 1st year; $3,442.00 – Smith Boughan furnace contract, 2nd year; $3,597.00 – Smith Boughan furnace contract, 3rd year; $2,400.00 – Culp Tree Service, two tree removals; $14.21 per lot – Lighting District Linneman assessment; $14.50 per lot – Lighting District St. Johns assessment; $18.30 per lot – Lighting District Glenn Ave. assessment; $17,000 – funds held re: Patton property",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-10-28",
+    "category": "site_plan",
+    "title": "Grading & Storm Plan (95% SPS Design) — American Industrial Park Site",
+    "ref": "1A-C-3104",
+    "parties": [
+      "EMH&T",
+      "CI Design, Inc",
+      "WSP USA Buildings Inc."
+    ],
+    "detail": "",
+    "source": "plans/LMA1A-95-SPS-2025-10-28.plan.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "plans/LMA1A-95-SPS-2025-10-28.plan.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-11-10",
+    "category": "epa_permit_action",
+    "title": "NPDES Construction Site Stormwater General Permit (OHC000006) coverage 2GC08468*AG — approved (LMA 1A (BOSC / Bistrozzi data-center campus))",
+    "ref": "2GC08468*AG",
+    "parties": [
+      "Turner Construction Company",
+      "Jared Grigg (Project EHS Manager)",
+      "Turner Construction Company"
+    ],
+    "detail": "affected construction stormwater; receiving water Pike Run",
+    "source": "permits/lma1a-npdes-cgp-coverage.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/lma1a-npdes-cgp-coverage.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-11-18",
+    "category": "deed_recorded",
+    "title": "Limited Warranty Deed 202511180011830: THE PORT AUTHORITY OF ALLEN COUNTY, OHIO → Amazon.com Services LLC",
+    "ref": "202511180011830",
+    "parties": [
+      "THE PORT AUTHORITY OF ALLEN COUNTY, OHIO",
+      "Amazon.com Services LLC"
+    ],
+    "detail": "1 parcel(s)",
+    "source": "recorder/202511180011830-amazon-deed.deed.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "recorder/202511180011830-amazon-deed.deed.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-11-20",
+    "category": "county_event",
+    "title": "County Engineer Brion Rhodes discusses potential concerns with the Project BOSC Development Project.",
+    "ref": "",
+    "parties": [],
+    "detail": "",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-11-20",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bosc)",
+    "ref": "mtg-commissioners-2025-11-20-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "bosc",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-11-24",
+    "category": "subdivision_meeting",
+    "title": "American Township — minutes (corridor: datacenter)",
+    "ref": "mtg-american-township-2025-11-24-American Township",
+    "parties": [
+      "American Township"
+    ],
+    "detail": "Two neighboring residents appeared during privilege of the floor to raise concerns about groundwater and dewatering activities associated with the data center under construction in American Township. · figures: 6.2% (insurance cost increase for 2026 health insurance plan); $250 donation from Tractor Supply (to Chief Haines / law enforcement); $250 donation from Tractor Supply (to fire department); $46,000 (Homeland Security quote for security systems at new station); $17,312 (Lima Security quote for security systems at new station)",
+    "source": "american-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "american-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-12-02",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2025-12-02-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "This meeting directly references the data center corridor project, including the denial of an earlier data center application, a potential lawsuit threat, approval of data center zoning language, and new data center inquiries in an industrially zoned area of Perry Township. · figures: $2,999.99 — Steve Myers, multiple invoices; $14,808.56 — Allen County Engineers, road program; $5,359.95 — Miller Auto, approved at November 18th meeting; $30,459.53 — Atlantic Emergency Solutions, approved at October 7th meeting for turn-outs; $58,000.00 — transfer from General Fund to Road & Bridge for Allen County Engineers invoice; $112,777.02 — bills payment motion; $100,000 — transfer to STAR Ohio; $7,500 — proposed TASC card amount for employees with dependents",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-12-05",
+    "category": "epa_permit_action",
+    "title": "401 Water Quality Certification and Isolated Wetland Permit 495265945 — application (Project Dazzler)",
+    "ref": "495265945",
+    "parties": [
+      "Tilted Gate LLC",
+      "Heather Dardinger",
+      "EMH&T"
+    ],
+    "detail": "affected jurisdictional wetland, isolated wetlands, and a non-jurisdictional pond",
+    "source": "permits/4081897.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/4081897.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-12-10",
+    "category": "epa_permit_action",
+    "title": "Air Pollution Permit-to-Install P0138965 — correspondence (Bistrozzi LLC Data Center – Initial Installation)",
+    "ref": "P0138965",
+    "parties": [
+      "Bistrozzi LLC",
+      "Michael Montfort",
+      "Bistrozzi LLC"
+    ],
+    "detail": "affected 114/115 diesel-fired emergency generators (2,750 ekW) at proposed data center",
+    "source": "permits/3987141.epa.yaml",
+    "also_sources": [
+      "permits/3987144.epa.yaml"
+    ],
+    "citation": {
+      "source": "permits/3987141.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-12-18",
+    "category": "county_resolution",
+    "title": "Res #974-25: Enter into an agreement with AEP-Ohio Power and grant easement to upgrade electrical services for conversion to three-phase power to Indian Brook [Indianbrook] Pump Station.",
+    "ref": "res-974-25",
+    "parties": [],
+    "detail": "wastewater",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-12-18",
+    "category": "executive_session",
+    "title": "Executive session (G)(8) + (G)(2) — Re a property matter: \"the ORC does state that it is able to be discussed in executive ses",
+    "ref": "exec-2025-12-18-(G)(8) + (G)(2)",
+    "parties": [],
+    "detail": "",
+    "source": "commissioners/closed-deliberation-and-corridor.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/closed-deliberation-and-corridor.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-12-18",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bosc)",
+    "ref": "mtg-commissioners-2025-12-18-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "bosc, easement, pump_station",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [
+      "commissioners/meetings/meeting-index.yaml"
+    ],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-12-23",
+    "category": "county_resolution",
+    "title": "Res #975-25: Approve the First Amendment to the Sanitary Sewer Development Agreement with Project BOSC Developer.",
+    "ref": "res-975-25",
+    "parties": [],
+    "detail": "wastewater",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-12-23",
+    "category": "county_resolution",
+    "title": "Res #994-25: Authorize the Allen County Engineer's Office to enter into contract with EMH&T, Inc. for surveying, engineering and plan preparation for the Bixe[l?] ... project.",
+    "ref": "res-994-25",
+    "parties": [],
+    "detail": "roadwork",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-12-23",
+    "category": "epa_permit_action",
+    "title": "Isolated Wetland Permit DSW401252260W — incomplete (Project Bosc Lvl 2 IWP)",
+    "ref": "DSW401252260W",
+    "parties": [
+      "Bistrozzi LLC",
+      "Jill Tangeman",
+      "Vorys"
+    ],
+    "detail": "affected isolated wetland",
+    "source": "permits/3949585.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/3949585.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2025-12-23",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bosc)",
+    "ref": "mtg-commissioners-2025-12-23-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "bosc",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [
+      "commissioners/meetings/meeting-index.yaml"
+    ],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-01-06",
+    "category": "epa_permit_action",
+    "title": "Isolated Wetland Permit DSW401252260W — correspondence (Project BOSC)",
+    "ref": "DSW401252260W",
+    "parties": [
+      "Bistrozzi LLC",
+      "Melissa Queen Darby",
+      "EMH&T"
+    ],
+    "detail": "affected isolated wetland (Wetland A)",
+    "source": "permits/3966517.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/3966517.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-01-07",
+    "category": "epa_permit_action",
+    "title": "Section 404 / Waters of the United States Investigation (Jurisdictional Determination) 20250390 — application (Project Dazzler)",
+    "ref": "20250390",
+    "parties": [
+      "Tilted Gate LLC",
+      "EMH&T"
+    ],
+    "detail": "affected Waters of the United States, including wetlands, streams, ponds, and other surface water features; approximately 914-acre property in Green Township, Scioto County, Ohio",
+    "source": "permits/4071697.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/4071697.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-01-07",
+    "category": "epa_permit_action",
+    "title": "Section 404 / Waters of the United States Investigation (Jurisdictional Determination) — application (Project Dazzler)",
+    "ref": "",
+    "parties": [
+      "Tilted Gate LLC",
+      "EMH&T (Engineers, Surveyors, Planners, Scientists)"
+    ],
+    "detail": "affected Waters of the United States, including wetlands, streams, ponds, and other surface water features; Ginat Creek subbasin (HUC: 05090103-01-06) and Grays Branch-Ohio River subbasin (HUC: 05090103-01-07)",
+    "source": "permits/4081896.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/4081896.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-01-08",
+    "category": "executive_session",
+    "title": "Executive session (G)(2) + (G)(8) — \"to discuss consideration of sale of property per ORC 121.22(G)(2) and considering confide",
+    "ref": "exec-2026-01-08-(G)(2) + (G)(8)",
+    "parties": [],
+    "detail": "",
+    "source": "commissioners/closed-deliberation-and-corridor.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/closed-deliberation-and-corridor.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-01-13",
+    "category": "county_event",
+    "title": "Discussion on General Permits for Discharges from Data Centers -- 'the State is lumping Wastewaters from Data Centers into a [general permit]'.",
+    "ref": "",
+    "parties": [],
+    "detail": "Ties to the OEPA/TMDL discharge thread (maumee-tmdl-responsiveness; new-discharger rule).",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-01-13",
+    "category": "epa_permit_action",
+    "title": "Isolated Wetland Permit DSW401252260W — incomplete (Project Bosc Lvl 2 IWP)",
+    "ref": "DSW401252260W",
+    "parties": [
+      "Bistrozzi LLC",
+      "Jill Tangeman",
+      "Vorys"
+    ],
+    "detail": "affected Isolated wetland (Category 2 forested wetland)",
+    "source": "permits/3969235.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/3969235.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-01-13",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: datacenter)",
+    "ref": "mtg-commissioners-2026-01-13-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "annexation, datacenter",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-01-15",
+    "category": "subdivision_meeting",
+    "title": "Community Development Committee (CDC) — minutes (corridor: datacenter)",
+    "ref": "mtg-lacrpc-2026-01-15-Community Development Committee (CDC)",
+    "parties": [
+      "Community Development Committee (CDC)"
+    ],
+    "detail": "The meeting connects to the corridor project through two passing references: a statement that \"a data center is coming\" and may drive transit demand, and a listing of \"Cole Street data center\" as a recent area development in the AEDG update.",
+    "source": "lacrpc/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "lacrpc/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-01-19",
+    "category": "epa_permit_action",
+    "title": "401 Water Quality Certification / Isolated Wetland Permit (Level 2) Ohio EPA ID No. 251760W (prior Level 1 IWP referenced); Application ID: 495612045 — application (Project Bosc Lvl 2 IWP)",
+    "ref": "Ohio EPA ID No. 251760W (prior Level 1 IWP referenced); Application ID: 495612045",
+    "parties": [
+      "Bistrozzi LLC",
+      "Jill Tangeman",
+      "EMH&T"
+    ],
+    "detail": "affected Isolated wetlands — 1.86 acres of forested Modified Category 2 isolated wetland (Wetland A), plus 0.33 acre of Category 1 isolated wetland previously authorized; Sugar Creek and Pike Run watersheds, Allen County, Ohio",
+    "source": "permits/3974496.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/3974496.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-01-21",
+    "category": "epa_permit_action",
+    "title": "Isolated Wetland Permit DSW401252260W — comments (Project Bosc Lvl 2 IWP)",
+    "ref": "DSW401252260W",
+    "parties": [
+      "Bistrozzi LLC",
+      "Jill Tangeman",
+      "Vorys"
+    ],
+    "detail": "affected isolated wetland (category 2 forested wetland)",
+    "source": "permits/3977737.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/3977737.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-01-29",
+    "category": "county_resolution",
+    "title": "Res #51-26: Authorization to deposit Project Funds into the county Star Ohio Pooled Account.",
+    "ref": "res-51-26",
+    "parties": [],
+    "detail": "finance",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-01-30",
+    "category": "epa_permit_action",
+    "title": "Isolated Wetland Permit DSW401252260W — correspondence (Project BOSC)",
+    "ref": "DSW401252260W",
+    "parties": [
+      "Bistrozzi LLC",
+      "Melissa Queen Darby",
+      "EMH&T"
+    ],
+    "detail": "affected isolated wetland (category 2 forested wetland)",
+    "source": "permits/4009043.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/4009043.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-02-03",
+    "category": "county_event",
+    "title": "Sanitary Engineer Brad Niemeyer and Treasurer Krista Bohn request authority to deposit Project BOSC funds into the county's Star Ohio Pooled Account.",
+    "ref": "",
+    "parties": [],
+    "detail": "",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-02-03",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bosc)",
+    "ref": "mtg-commissioners-2026-02-03-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "bosc, easement",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-02-05",
+    "category": "epa_permit_action",
+    "title": "Section 404 / Jurisdictional Determination LRH-2025-00939-OHR — correspondence (Project Dazzler Property)",
+    "ref": "LRH-2025-00939-OHR",
+    "parties": [
+      "Randy Barrera, Tilted Gate, LLC",
+      "Katie Samples",
+      "EMH&T"
+    ],
+    "detail": "affected Wetlands (23.18 acres, 6 wetlands), streams (14,306 linear feet, 8 streams including Ohio River), open water marina (6.52 acres); and non-jurisdictional wetlands (36.15 acres, 43 wetlands), streams, swales, ditch, drainage feature, and ponds",
+    "source": "permits/4081903.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/4081903.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-02-09",
+    "category": "subdivision_meeting",
+    "title": "American Township — minutes (corridor: bosc, datacenter)",
+    "ref": "mtg-american-township-2026-02-09-American Township",
+    "parties": [
+      "American Township"
+    ],
+    "detail": "This meeting is connected to the corridor project because two residents addressed the trustees with concerns about the incoming data center (referenced as \"Project Bosch\"), prompting the trustees and zoning inspector to acknowledge limited knowledge and inability to publicly discuss the project. · figures: $7300/year (MOU between ASWCD and American Township for MS4 Stormwater Program Administration); $550 per year (Andrew Follas, webmaster); $10,170,250 (permanent appropriations for 2026); $2246.44 (EMS Grant received by fire department)",
+    "source": "american-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "american-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-02-09",
+    "category": "zoning_amendment",
+    "title": "American Township Zoning Resolution — amended & adopted by Trustees",
+    "ref": "amtwp-zoning-2026-02-09",
+    "parties": [],
+    "detail": "defines Data Center / Hyperscale Data Center; M-2 conditional use (11.2.4)",
+    "source": "lacrpc/american-township-zoning.zoning.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "lacrpc/american-township-zoning.zoning.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-02-13",
+    "category": "epa_permit_action",
+    "title": "Isolated Wetland Permit DSW401252260W — comments (Project Bosc Lvl 2 IWP)",
+    "ref": "DSW401252260W",
+    "parties": [
+      "Bistrozzi LLC",
+      "Jill Tangeman",
+      "Vorys"
+    ],
+    "detail": "affected Isolated wetland (Wetland A) and forested buffer",
+    "source": "permits/4006230.epa.yaml",
+    "also_sources": [
+      "permits/4007485.epa.yaml"
+    ],
+    "citation": {
+      "source": "permits/4006230.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-02-17",
+    "category": "county_event",
+    "title": "Project BOSC: '$32M will be put toward the pump station from the developer'; general discussion on capital permit/tap fees.",
+    "ref": "",
+    "parties": [],
+    "detail": "",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-02-17",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bosc)",
+    "ref": "mtg-commissioners-2026-02-17-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "annexation, bosc, cmar, hume, pump_station",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-02-17",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: google)",
+    "ref": "mtg-perry-township-2026-02-17-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "The meeting was flagged due to an approved MOU with the Lima-Allen County Regional Planning Commission (LARPC), an agency involved in corridor-area planning, and a passing reference by Interim Fire Chief Roberts that a drop in ISO fire rating \"would have also stunted the future growth of businesses in the area,\" though neither the data center project nor Bistrozzi LLC is explicitly named in the document. · figures: $300 (Local Government Conference registration fee); $7,558.00 (upfront cost for 7 police vests); $1,889 (final cost for 7 police vests after 75% state reimbursement); $75/hour up to $750.00 (dash cam/body cam video records requests per House Bill 315); $48,359.01 (bills payment); $1,352.80 (MOU payment to LARPC); $750.00 (indigent funeral expenses for Randy Pugin, paid to Chiles and Sons); $2,000 (credit card limit for Todd Gardner); $3,000 (credit card limit change from); $7,500 (new credit card limit for Ashlyn Tracy); $1,000/month (Attorney Sam Huffman retainer for up to 6 hours/month); $225.00 (Attorney Sam Huffman hourly rate after 6 hours); $355 (average per transport over last year, per Medicount); $7/month per user (Google email, 10 users); $840 annually (Google email total cost); $5,538.00 (hose testing: 10,650 feet at 52 cents a foot); $969.50 (ground ladder testing); $6,507.50 (total hose and ground ladder testing contract); $1,280.00 (inverter replacement for Medic 1); $3,000/week (Interim Fire Chief Justin Roberts contract, renegotiated after 12 weeks); $3,000 (referenced by Brooke Hedges in context of Roberts' compensation)",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-02-19",
+    "category": "county_resolution",
+    "title": "Res #113-26: Enter into contract with Garman/Miller & Associates, Inc. DBA Access Engineering Services for the Shawnee Oaks Sewer System Project.",
+    "ref": "res-113-26",
+    "parties": [],
+    "detail": "shawnee_oaks",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-02-23",
+    "category": "subdivision_meeting",
+    "title": "American Township — minutes (corridor: datacenter)",
+    "ref": "mtg-american-township-2026-02-23-American Township",
+    "parties": [
+      "American Township"
+    ],
+    "detail": "Trustee Basinger explicitly mentioned that HB 706 is on the docket \"pertaining to data center concerns,\" directly connecting this meeting to the hyperscale data center corridor project. · figures: $14,750 (street sweeping contract with Best Rents, cost shared by Bath and Shawnee township); $7424.31 (received by ATFD from the Moose Lodge for their 1st quarter pledge); $1000 (received from Midwest for dispatch services)",
+    "source": "american-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "american-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-02-26",
+    "category": "county_resolution",
+    "title": "Res #137-26: Authorize the Engineer to post RFQ electronically for Construction Manager at Risk (CMAR) Services for the BOSC Pump Station and Forcemain Project.",
+    "ref": "res-137-26",
+    "parties": [],
+    "detail": "wastewater",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-02-26",
+    "category": "county_resolution",
+    "title": "Res #138-26: Approve Evaluation Committee to review the CMAR RFQ for the BOSC Pump Station and Forcemain Project.",
+    "ref": "res-138-26",
+    "parties": [],
+    "detail": "wastewater",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-02-26",
+    "category": "county_resolution",
+    "title": "Res #135-26: WPCLF principal-forgiveness loan on behalf of the Hamlet of Hume (sewer + pump station + force main to Shawnee II WWTP).",
+    "ref": "res-135-26",
+    "parties": [],
+    "detail": "hume",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-02-26",
+    "category": "county_resolution",
+    "title": "Res #136-26: WPCLF principal-forgiveness loan on behalf of an unincorporated area of Shawnee Township (Shawnee Rd / Hume Rd / 'Shawnee Oaks subdivision').",
+    "ref": "res-136-26",
+    "parties": [],
+    "detail": "shawnee_oaks",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-02-26",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bosc)",
+    "ref": "mtg-commissioners-2026-02-26-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "bosc, cmar, forcemain, hume, pump_station, tax_abatement",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [
+      "commissioners/meetings/meeting-index.yaml"
+    ],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-03-03",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: google)",
+    "ref": "mtg-perry-township-2026-03-03-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "The meeting was flagged due to the mention of \"Google,\" but the sole reference is an administrative vote to adopt Google Workspace for internal township email — no discussion of Project BOSC, Bistrozzi LLC, a hyperscale data center, or any corridor-related land, zoning, or infrastructure matter appears anywhere in the document text. · figures: $2,276.00 (BWC True-Up for 2024); $2,165.90 (Atlantic Emergency Solutions, Pump Hale Pack); $3,294.00 (Smith Boughan, contract for service); $4,775.00 (Huffman, Kelley, and Brock, Victory Lounge legal case); $4,480.00 (Clemans-Nelson, personnel issues at fire department); $3,000 (Culp Tree Service, two dead trees on Breese and Hume Roads); $33,433.75 (Reclamite for roads paved in 2024); $1,951.19 (zoning receipts, January and February 2026); $90,986.18 (bills); $300 (Orkin extra charge for cockroach treatment); $2,100 (Google Workspace for 25 users); $500 (fair board offer for ambulance/EMTs); $2.9 million (tourism brought into county by Hearse Mania); $122,948 (grants totaling, Visit Greater Lima); $1,500 (Attorney Sam Huffman, $500 for February, $1,000 for March)",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-03-04",
+    "category": "deed_recorded",
+    "title": "General Warranty Deed 202603040002064: James W. Neighbors, Suzanne M. Neighbors → Bistrozzi LLC, a Delaware Limited Liability Company",
+    "ref": "202603040002064",
+    "parties": [
+      "James W. Neighbors",
+      "Suzanne M. Neighbors",
+      "Bistrozzi LLC, a Delaware Limited Liability Company"
+    ],
+    "detail": "1 parcel(s); consideration 1",
+    "source": "recorder/202603040002064.deed.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "recorder/202603040002064.deed.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-03-09",
+    "category": "subdivision_meeting",
+    "title": "Shawnee Township — minutes (corridor: datacenter)",
+    "ref": "mtg-shawnee-township-2026-03-09-Shawnee Township",
+    "parties": [
+      "Shawnee Township"
+    ],
+    "detail": "The meeting is connected to the data-center corridor project because a resident, Jim Thompson, formally addressed the Board requesting a temporary moratorium on data centers in agricultural districts in Shawnee Township, prompting a discussion that the Trustees tabled pending legal review. · figures: $25.00 per hour (Todd Lause, Safe Routes to School Program); $20.00 per hour (Albert Hughes IV, part-time civilian Police Department employee); $27,429.00 (purchase of double-sided, full color, 6mm EMC CIRRUS sign from New Signs Ohio LLC, including removal, disposal, and installation)",
+    "source": "shawnee-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "shawnee-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-03-17",
+    "category": "epa_permit_action",
+    "title": "Surface Water Permit-to-Install DSWPTI-260294 — application (BOSC-1A Private Sanitary Sewer Improvement Plan)",
+    "ref": "DSWPTI-260294",
+    "parties": [
+      "BISTROZZI LLC"
+    ],
+    "detail": "affected Private sanitary sewer",
+    "source": "permits/4074551.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/4074551.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-03-23",
+    "category": "subdivision_meeting",
+    "title": "Shawnee Township — minutes (corridor: datacenter)",
+    "ref": "mtg-shawnee-township-2026-03-23-Shawnee Township",
+    "parties": [
+      "Shawnee Township"
+    ],
+    "detail": "This meeting connects to the data-center corridor project through a public comment by Jim Thompson explicitly raising concerns about a potential large-scale data center in Shawnee Township, referencing community anxieties about secrecy and NDAs, and requesting on-the-record denials from the Trustees of any private discussions with data center interests. · figures: $9,268,000.00 (Fund Status); $46,000.00 (estimated cost for new signage)",
+    "source": "shawnee-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "shawnee-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-03-24",
+    "category": "npdes_public_notice",
+    "title": "NPDES 2PK00002*MD (Shawnee II WWTP) — public notice",
+    "ref": "2PK00002*MD",
+    "parties": [
+      "Allen County Sanitary Engineering Department",
+      "Shawnee II WWTP"
+    ],
+    "detail": "action renewal; receiving Ottawa River",
+    "source": "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-03-26",
+    "category": "subdivision_meeting",
+    "title": "Executive Committee (EC) — minutes (corridor: datacenter)",
+    "ref": "mtg-lacrpc-2026-03-26-Executive Committee (EC)",
+    "parties": [
+      "Executive Committee (EC)"
+    ],
+    "detail": "The meeting references \"the data center\" during the Director's Report and notes an upcoming March 30th informational meeting presented by Regional Growth Partnership at the Ohio Job and Family Services Center to discuss the data center.",
+    "source": "lacrpc/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "lacrpc/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-03-30",
+    "category": "subdivision_meeting",
+    "title": "American Township — minutes (corridor: datacenter, google)",
+    "ref": "mtg-american-township-2026-03-30-American Township",
+    "parties": [
+      "American Township"
+    ],
+    "detail": "Zoning Inspector Bishop delivered an update from Google and Turner Construction specifically addressing well water issues affecting residents near the data center location, connecting this meeting directly to the Project BOSC/hyperscale data center corridor. · figures: $25/hr (rate for Robert Gehr IV); 50% reimbursement grant from Solid Waste District for township clean-up day",
+    "source": "american-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "american-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-04-01",
+    "category": "epa_permit_action",
+    "title": "Huntington In-Lieu Fee Program (Wetland Mitigation) LST-002 — correspondence (Project Dazzler Site Wetland Mitigation)",
+    "ref": "LST-002",
+    "parties": [
+      "Randy Barrera, Tilted Gate LLC",
+      "Heather Dardinger",
+      "EMH&T"
+    ],
+    "detail": "affected Jurisdictional wetlands / aquatic resources — 5.2 acres forested wetland mitigation credits and 2.2 acres non-forested wetland mitigation credits",
+    "source": "permits/4071709.epa.yaml",
+    "also_sources": [
+      "permits/4081908.epa.yaml"
+    ],
+    "citation": {
+      "source": "permits/4071709.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-04-03",
+    "category": "epa_permit_action",
+    "title": "Section 404 / 401 Water Quality Certification — application (Project Dazzler)",
+    "ref": "",
+    "parties": [
+      "Tilted Gate LLC",
+      "EMH&T"
+    ],
+    "detail": "affected Jurisdictional waters of the U.S. (wetlands, streams, open waters)",
+    "source": "permits/4071710.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/4071710.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-04-03",
+    "category": "epa_permit_action",
+    "title": "Section 404 / 401 Water Quality Certification 20250390 — application (Project Dazzler)",
+    "ref": "20250390",
+    "parties": [
+      "Tilted Gate LLC",
+      "EMH&T"
+    ],
+    "detail": "",
+    "source": "permits/4081909.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/4081909.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-04-07",
+    "category": "epa_permit_action",
+    "title": "Surface Water Permit-to-Install DSWPTI-260294 — approved (BOSC-1A Private Sanitary Sewer Improvement Plan)",
+    "ref": "DSWPTI-260294",
+    "parties": [
+      "Bistrozzi LLC",
+      "Scott Ziance",
+      "EMH&T"
+    ],
+    "detail": "affected private sanitary sewer",
+    "source": "permits/4074527.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/4074527.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-04-07",
+    "category": "epa_permit_action",
+    "title": "Surface Water Permit-to-Install DSW-6756 — application (Project Bosc)",
+    "ref": "DSW-6756",
+    "parties": [
+      "BISTROZZI LLC",
+      "Robert Zizzo",
+      "EMH&T"
+    ],
+    "detail": "affected Private sanitary sewer, storm sewer, temporary lift station, future booster pump station",
+    "source": "permits/4074529.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/4074529.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-04-07",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2026-04-07-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "The meeting connects to the project through Trustee Clementz's report of a meeting with Allen County Regional Planning about data centers and a community petition investigating the pros and cons of power and water usage, with reference to 10 more data centers expected in Northwest Ohio.",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-04-13",
+    "category": "subdivision_meeting",
+    "title": "Shawnee Township — other (corridor: datacenter)",
+    "ref": "mtg-shawnee-township-2026-04-13-Shawnee Township",
+    "parties": [
+      "Shawnee Township"
+    ],
+    "detail": "This meeting directly connects to the data-center corridor project through Resolution 65-26, which enacts a moratorium on Data Centers, BESS, and Commercial Renewable Energy Facilities in Shawnee Township, as recommended by the Shawnee Township Zoning Commission. · figures: $7,264.00 — purchase of 8 Dell computer systems for the Shawnee Township Police Department; $1,000.00 — MORE grant through OTARMA for the Shawnee Police Department; $60,161.93 — 2026 Road Program (amount not to exceed); $25.00 per hour — Todd Lause's hourly wage as Representative Liaison for the Comprehensive Plan; $50,000.00 — Donation from Texas Oil School",
+    "source": "shawnee-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "shawnee-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-04-14",
+    "category": "epa_permit_action",
+    "title": "401 Water Quality Certification LRH-2025-00939OHR — application (Project Dazzler)",
+    "ref": "LRH-2025-00939OHR",
+    "parties": [
+      "Tilted Gate LLC",
+      "Heather Dardinger",
+      "EMH&T"
+    ],
+    "detail": "affected Wetlands (3.12 acres), Ginat Creek watershed (HUC 050901030106), Grays Branch-Ohio River watershed (HUC 050901030107)",
+    "source": "permits/4081890.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/4081890.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-04-14",
+    "category": "epa_permit_action",
+    "title": "Section 404 LRH-2025-00939-OHR — application (Project Dazzler)",
+    "ref": "LRH-2025-00939-OHR",
+    "parties": [
+      "Timothy Chadwick, Tilted Gate LLC"
+    ],
+    "detail": "affected 3.12 acres of one (1) wetland (Wetland P), including 2.05 acres of forested wetland and 1.07 acres of emergent wetland; waters of the United States",
+    "source": "permits/4081910.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/4081910.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-04-21",
+    "category": "deed_recorded",
+    "title": "Limited Warranty Deed 202604210003890: Timothy R. Pieper, RaeAnn Pieper → Bistrozzi Addition LLC",
+    "ref": "202604210003890",
+    "parties": [
+      "Timothy R. Pieper",
+      "RaeAnn Pieper",
+      "Bistrozzi Addition LLC"
+    ],
+    "detail": "1 parcel(s)",
+    "source": "recorder/202604210003890.deed.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "recorder/202604210003890.deed.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-04-21",
+    "category": "subdivision_meeting",
+    "title": "Perry Township — minutes (corridor: datacenter)",
+    "ref": "mtg-perry-township-2026-04-21-Perry Township",
+    "parties": [
+      "Perry Township"
+    ],
+    "detail": "This meeting connects to the corridor project through a guest's inquiry about Shawnee Township's data center moratorium, prompting Perry Township Trustees to discuss whether they should impose a similar temporary hold and explore zoning regulations related to water sourcing for data centers. · figures: $5,000 – reallocation of funds for legal and accounting fees; approved purchase order; $414.00 – reimbursement check from Ohio Attorney General for police training; $30/hr – rate for Sasha Weigt; maximum of $500; $8,857.25 – maximum amount for Ashlyn Tracy to attend Rhodes State for paramedic school; $66,000 – annual salary for Nick Adams as Fire Chief starting June 29th; $27.00 per hour – Nick Adams as temporary Full-Time Assistant Fire Chief until June 28th; $40/run – runners' pay; $300/month – Brooke Hedges as Assistant EMS Chief; $15.50/hour – Basic EMT part-time rate; $16.00/hour – Advanced EMT part-time rate; $16.50/hour – Paramedic part-time rate; $17.00/hour – Fire Inspector part-time rate; $21.00 per hour – Ashlyn Tracy's hourly rate starting May 4, 2026; $41,921.18 – bills approved for payment; $8,700 – total proceeds from Perry Rental Hall in 2025",
+    "source": "perry-township/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "perry-township/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-04-23",
+    "category": "npdes_comment_deadline",
+    "title": "NPDES 2PK00002*MD (Shawnee II WWTP) — comment period ends",
+    "ref": "2PK00002*MD",
+    "parties": [
+      "Allen County Sanitary Engineering Department",
+      "Shawnee II WWTP"
+    ],
+    "detail": "",
+    "source": "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-04-23",
+    "category": "subdivision_meeting",
+    "title": "Executive Committee (EC) — minutes (corridor: bosc, datacenter, google)",
+    "ref": "mtg-lacrpc-2026-04-23-Executive Committee (EC)",
+    "parties": [
+      "Executive Committee (EC)"
+    ],
+    "detail": "The DCC's April 21, 2026 presentation explicitly discussed \"project BOSC (Google data center),\" covering job creation, phased investment totals, and a payment to Elida Schools, directly connecting this meeting to the hyperscale data center corridor project. · figures: $250,000 given to Elida Schools (initially); 1.5 billion invested if all three phases go through",
+    "source": "lacrpc/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "lacrpc/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-04-28",
+    "category": "county_event",
+    "title": "AEDG economic-development update: Cory Noonan reports an 'AEP Open House regarding the new Data Center in American Township' (calling AEP Government Affairs); AEDG holds '500 acres under option in Perry Township' (party unnamed) + Port Authority's 25 acres; 'Amazon has committed $2.6M for roadwork' on the Commerce Pkwy/McClain Rd area (ODOT matching).",
+    "ref": "",
+    "parties": [],
+    "detail": "Confirms the BOSC (American Township) data center is in AEP power-servicing as of 2026-04. CAUTION (see keyword_false_positives): the Amazon $2.6M is WAREHOUSE roadwork, NOT a data center; the Perry Twp 500-acre option names NO party — the former Microsoft/Nadella site (terminated 2024-10-24) is in Perry Twp, so this is a watch item, not an assertion.",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-04-28",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: datacenter)",
+    "ref": "mtg-commissioners-2026-04-28-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "amazon, datacenter, tax_abatement",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-05-05",
+    "category": "county_event",
+    "title": "'Discussion on Project BOSC Records Request — all staff is working on pulling records and John Wilamowski Jr. is reviewing request'; separately, General-Fund interest revenue discussion: 'which projects the BOSC interest will be used toward'.",
+    "ref": "",
+    "parties": [],
+    "detail": "The producing body's own minutes record it processing the Project BOSC public-records request (the mandamus thread) and earmarking interest earned on BOSC project funds for 'projects in the area of BOSC'.",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-05-05",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bosc)",
+    "ref": "mtg-commissioners-2026-05-05-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "bosc",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-05-12",
+    "category": "county_event",
+    "title": "Sanitary update: 'contract with Peterson Construction Company for CMAR will be on Thursday's agenda for approval, as they were the only contractor to' respond (⇒ Res #378-26, 2026-05-14); Hamlet of Hume — public meeting set for June 2 2026, $2.0M principal forgiveness approved, HB 168 to fund DESIGN at $217,500, '.099 acres … the last piece of property' bought for the pump station; Cridersville/Shawnee Oaks reroute easement letter to the Village; Indianbrook PS upgrade to bid this summer.",
+    "ref": "",
+    "parties": [],
+    "detail": "Peterson was the SOLE CMAR bidder — strengthens the #137-26→#378-26 sole-source posture. Adds the Hume HB 168 $217,500 design line and the final pump-station parcel.",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-05-12",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bosc)",
+    "ref": "mtg-commissioners-2026-05-12-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "bosc, cmar, easement, hume, pump_station",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-05-14",
+    "category": "county_resolution",
+    "title": "Res #378-26: Enter into contract with Peterson Construction Company ($108,000 lump sum) for CMAR Pre-Construction Design Services for the BOSC Pump Station and Forcemain Project.",
+    "ref": "res-378-26",
+    "parties": [],
+    "detail": "wastewater",
+    "source": "commissioners/bosc-resolution-ledger.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "commissioners/bosc-resolution-ledger.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-05-14",
+    "category": "subdivision_meeting",
+    "title": "Commissioners — minutes (corridor: bosc)",
+    "ref": "mtg-commissioners-2026-05-14-Commissioners",
+    "parties": [
+      "Commissioners"
+    ],
+    "detail": "bosc, cmar, forcemain, pump_station",
+    "source": "commissioners/meetings/meeting-index.yaml",
+    "also_sources": [
+      "commissioners/meetings/meeting-index.yaml"
+    ],
+    "citation": {
+      "source": "commissioners/meetings/meeting-index.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-05-28",
+    "category": "epa_permit_action",
+    "title": "Air Pollution Permit-to-Install (Final, Division of Air Pollution Control) P0138965 — issued (Bistrozzi LLC Data Center (Project BOSC) - Initial Installation)",
+    "ref": "P0138965",
+    "parties": [
+      "Bistrozzi LLC",
+      "Michael Montfort",
+      "Bistrozzi LLC"
+    ],
+    "detail": "affected 115 emergency CI diesel-fired gensets (P001-P115; 114 data-hall gensets + 1 HUBGEN) and 36 cooling towers (P120-P155) for a data center",
+    "source": "permits/4132514.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "permits/4132514.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  }
+]

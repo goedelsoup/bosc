@@ -1,0 +1,3607 @@
+[
+  {
+    "rel": "recorder/202508130008300.deed.yaml",
+    "group": "deeds",
+    "title": "Limited Warranty Deed",
+    "confidence": "high",
+    "warnings": [
+      "Consideration amount not stated — only 'valuable consideration paid' appears in the document.",
+      "Prior instrument reference numbers partially handwritten (2025-8298 and 2025-8299) — read from image; OCR layer unreliable.",
+      "Page 10 of 10 not provided in images; full exhibit set may include additional descriptions."
+    ],
+    "fields": {
+      "instrument_type": "Limited Warranty Deed",
+      "instrument_no": "202508130008300",
+      "recording_date": "2025-08-13",
+      "grantors": [
+        "Kyle C. Brenneman and Sarah N. Brenneman, Co-Trustees of the Kyle C. Brenneman Living Trust dated March 30, 2023, and any amendments thereto",
+        "Keaton A. Brenneman and Kristen M. Brenneman, Co-Trustees of the Keaton A. Brenneman Living Trust dated March 2, 2023, and any amendments thereto"
+      ],
+      "grantees": [
+        "BISTROZZI LLC, a Delaware limited liability company"
+      ],
+      "consideration": null,
+      "parcel_ids": [
+        "36-1200-03-001.001",
+        "36-1200-03-001.000",
+        "36-1200-03-001.002",
+        "36-1200-03-001.003",
+        "36-1200-03-001.004",
+        "36-1200-03-001.005",
+        "36-1200-03-001.006"
+      ],
+      "county": "Allen",
+      "legal_description": "Multiple tracts in the southwest Quarter of Section twelve, Township three South, Range six East, American Township, Allen County, Ohio; addressed at West Bluelick Road and 950 West Bluelick Road, Lima, Ohio 45801. See Exhibits A–E (Tracts A, B, C, E, F, G) prepared by Accu-Trace Land Surveys, Inc., dated March 16–17, 2006, surveyed by George E. Woolley, Ohio Registered Surveyor No. 5772.",
+      "note": "Deed executed July 11, 2025 (originally typed as June, corrected by hand to July). Prior instrument references: 2025-8298 and 2025-8299, Recorder's Office, Allen County, Ohio. Grantee mailing address: 2801 Centerville Road, 1st Floor, PMB 811, Wilmington, Delaware 19808. Instrument prepared by Jill S. Tangeman, Esq., Vorys, Sater, Seymour and Pease LLP. Consideration stated as \"valuable consideration paid\" — no specific dollar amount disclosed."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "recorder/202508130008300.deed.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5, 6, 7]",
+      "verified": true
+    },
+    "source_doc_rel": "recorder/bistrozzi-deeds/202508130008300.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "recorder/202508130008312.deed.yaml",
+    "group": "deeds",
+    "title": "Limited Warranty Deed",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "instrument_type": "Limited Warranty Deed",
+      "instrument_no": "202508130008312",
+      "recording_date": "2025-08-13",
+      "grantors": [
+        "NEFF FARMS, INC."
+      ],
+      "grantees": [
+        "BISTROZZI LLC"
+      ],
+      "consideration": null,
+      "parcel_ids": [
+        "36-0100-03-002.000",
+        "36-1200-02-001.001"
+      ],
+      "county": "Allen",
+      "legal_description": "Parcel 1 (36-0100-03-002.000): SE Quarter of SW Quarter of Section 1, Township 3 South, Range 6 East, Sugar Creek Township, Allen County, Ohio, excepting 2.92 acres, plus a 3-acre tract in the NE corner of the South Half of the SW Quarter. Parcel 2 (36-1200-02-001.001): 137.490 ac. and 25.000 ac. portions in the NW Quarter of Section 12, Township 3 South, Range 6 East, American Township, Allen County, Ohio (Cole Street / 4110 N. Cole Street, Lima).",
+      "note": "Transfer date stamped 8/13/2025. Transfer fee $25,572.90; additional fee $1.00. Deed executed July 3, 2025 by William Neff, President of Neff Farms, Inc. Grantee address: 2801 Centerville Road, 1st Floor, PMB 811, Wilmington, DE 19808. Prior instruments: O.R. 2018 Page 2723 (both parcels) and O.R. 2018 Page 7339 (parcel 2 only). Prepared by Jill S. Tangeman, Esq., Vorys, Sater, Seymour and Pease LLP. File Number: GUU24011754."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "recorder/202508130008312.deed.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4]",
+      "verified": true
+    },
+    "source_doc_rel": "recorder/bistrozzi-deeds/202508130008312.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "recorder/202508130008316.deed.yaml",
+    "group": "deeds",
+    "title": "Limited Warranty Deed",
+    "confidence": "high",
+    "warnings": [
+      "Consideration amount not expressly stated in the deed body ('for valuable consideration paid'); the conveyance fee of $1,041.00 is noted but does not directly state a purchase price.",
+      "File number on the deed appears to read 'GUU2401178' but handwritten characters make exact digits uncertain (could be GUU240I178)."
+    ],
+    "fields": {
+      "instrument_type": "Limited Warranty Deed",
+      "instrument_no": "202508130008316",
+      "recording_date": "2025-08-13",
+      "grantors": [
+        "PIKE RUN FARMS LLC"
+      ],
+      "grantees": [
+        "BISTROZZI LLC"
+      ],
+      "consideration": null,
+      "parcel_ids": [
+        "36-1200-03-002.000"
+      ],
+      "county": "Allen",
+      "legal_description": "Situated in the State of Ohio, County of Allen, Township of American, in the southwest quarter of Section 12, Township 3, Range 6, South and East of the First Principal Meridian, being all of the remainder of that tract of land conveyed as Tract 11 to Pike Run Farms LLC by deed of record in Official Record 2024, Page 981; containing 55.881 acres more or less. Property Address: West Bluelick Road, Lima, Ohio 45801.",
+      "note": "Prior Instrument Reference: OR 2024, Page 981, Recorder's Office, Allen County, Ohio. Deed executed June 11, 2025; recorded August 13, 2025. Grantor signatory: Merle M. Miller, Member. Conveyance fee: $1,041.00; transfer fee: $50.00. File No. GUU240I178 (Fidelity National Title Insurance Company)."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "recorder/202508130008316.deed.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3]",
+      "verified": true
+    },
+    "source_doc_rel": "recorder/bistrozzi-deeds/202508130008316.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "recorder/202511180011830-amazon-deed.deed.yaml",
+    "group": "deeds",
+    "title": "Limited Warranty Deed",
+    "confidence": "high",
+    "warnings": [
+      "Consideration amount not expressly stated in the deed body; conveyance fee of $7,580.90 is noted on the face but does not directly equate to a stated purchase price."
+    ],
+    "fields": {
+      "instrument_type": "Limited Warranty Deed",
+      "instrument_no": "202511180011830",
+      "recording_date": "2025-11-18",
+      "grantors": [
+        "THE PORT AUTHORITY OF ALLEN COUNTY, OHIO"
+      ],
+      "grantees": [
+        "Amazon.com Services LLC"
+      ],
+      "consideration": null,
+      "parcel_ids": [
+        "46-1300-04-001.005"
+      ],
+      "county": "Allen",
+      "legal_description": "Part of 46-1300-04-001.005; Combination Split-Prop ROW Parcel – 26.033 acres; located in the Southeast Quarter of Section 13, Town 4 South, Range 6 East, Shawnee Township, Allen County, Ohio. Property address: Jay Begg Parkway, Lima, OH 45804. Prior instrument: OR Volume 2010, Page 08947.",
+      "note": "Consideration not explicitly stated; deed recites \"good and valuable consideration.\" Conveyance fee stamp shows $7,580.90. Deed executed October 24, 2025 by Drew Fields, Vice Chairman. Instrument prepared by Rex Huffman, Spitler Huffman LLP. Legal description prepared by DGL Consulting Engineers, LLC (Ronald J. Lumbrezer, Ohio PS #8029). Subject to Permitted Exceptions in Exhibit B including plat recorded Vol. 2021, Pg. 12186 and a Storm Water Drainage and Detention Easement Agreement dated November 4, 2025."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "recorder/202511180011830-amazon-deed.deed.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "recorder/port-authority/202511180011830-amazon-deed.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "recorder/202603040002064.deed.yaml",
+    "group": "deeds",
+    "title": "General Warranty Deed",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "instrument_type": "General Warranty Deed",
+      "instrument_no": "202603040002064",
+      "recording_date": "2026-03-04",
+      "grantors": [
+        "James W. Neighbors",
+        "Suzanne M. Neighbors"
+      ],
+      "grantees": [
+        "Bistrozzi LLC, a Delaware Limited Liability Company"
+      ],
+      "consideration": 1,
+      "parcel_ids": [
+        "36-1200-03-015.000"
+      ],
+      "county": "Allen",
+      "legal_description": "Situated in the State of Ohio, Allen County, American Township, being part of the Southwest Quarter, Section 12, Township 3 South, Range 6 East, being a part of a 71.4 acre tract described in deed records Volume 673, Page 658 in the Allen County Recorder's Office; containing 5.001 acres more or less. Property Address: 1108 W. Bluelick Road, Lima, Ohio 45801. Prior Deed Reference: Vol 817, Page 879.",
+      "note": "Executed February 13, 2026. Instrument prepared by Robert H. Meyer, IV, Esq., Kendall & Meyer Law, Ltd., Lima, OH. Fee $1,800.00; Transferred 3.4.76 acres; Transfer fee $500.00. Grantee tax mailing address: 2801 Centerville Road, 1st Floor, PMB 811, Wilmington, Delaware 19808."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "recorder/202603040002064.deed.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "recorder/bistrozzi-deeds/202603040002064.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "recorder/202604210003890.deed.yaml",
+    "group": "deeds",
+    "title": "Limited Warranty Deed",
+    "confidence": "high",
+    "warnings": [
+      "The second prior instrument number is partially handwritten and difficult to read precisely — recorded as '20260421000J889' but may be '202604210003889'; verify against image.",
+      "Consideration amount not explicitly stated; described only as 'valuable consideration paid'.",
+      "Parcel ID on Exhibit A legal description states 'Part of 36-1100-04-001', while page 1 states '36-1100-04-001.001' — both noted."
+    ],
+    "fields": {
+      "instrument_type": "Limited Warranty Deed",
+      "instrument_no": "202604210003890",
+      "recording_date": "2026-04-21",
+      "grantors": [
+        "Timothy R. Pieper",
+        "RaeAnn Pieper"
+      ],
+      "grantees": [
+        "Bistrozzi Addition LLC"
+      ],
+      "consideration": null,
+      "parcel_ids": [
+        "36-1100-04-001.001"
+      ],
+      "county": "Allen",
+      "legal_description": "Being a parcel of land in the SE¼ of Section 11, T3S, R6E in American Township, Allen County, Ohio; containing 7.215 acres more or less. Property address: 1337 Beery Road, Lima, Ohio 45807.",
+      "note": "Statutory Form per Ohio Revised Code Section 5302.07. Prior instrument references: Official Record 2023, Page 6039, Instrument Number 202307140006039; and Official Record 2026, Page 3889, Instrument Number 20260421000J889, Allen County, Ohio. RaeAnn Pieper releases all dower rights. Recorded by Mona S. Losh, Allen County Recorder. Fee $575.00. Transferred 4/21/2026, Fee $0.50."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "recorder/202604210003890.deed.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3]",
+      "verified": true
+    },
+    "source_doc_rel": "recorder/bistrozzi-deeds/202604210003890.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "aedg/roundabouts.detail.opc.yaml",
+    "group": "opc",
+    "title": "roundabouts.detail.opc",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "estimate_template": {
+        "estimator": "Tetra Tech (RJS, checked AMD)",
+        "date": "2025-07-11",
+        "basis": "CONCEPTUAL",
+        "contingency_rate": 0.25,
+        "sections": [
+          "ROADWAY",
+          "EROSION_CONTROL",
+          "DRAINAGE",
+          "PAVEMENT",
+          "WATER_WORK",
+          "LIGHTING",
+          "TRAFFIC_CONTROL",
+          "LANDSCAPING",
+          "RIGHT_OF_WAY",
+          "INCIDENTALS",
+          "DESIGN_SURVEY_INSPECTION"
+        ]
+      },
+      "page_319_diller": {
+        "title": "Cole Street / Diller Road Roundabout",
+        "pdf_page": 319,
+        "work_description": "Roundabout at Cole/Diller intersection (North Cole & West Diller)",
+        "construction_subtotal": 1228174,
+        "contingency_and_inflation_25pct": 307044,
+        "total": 1535218,
+        "line_items": {
+          "ROADWAY": {
+            "items": [
+              {
+                "item_no": "201E11000",
+                "description": "Clearing and grubbing",
+                "quantity": 1,
+                "unit": "LS",
+                "unit_amount": 20000,
+                "total_amount": 20000
+              },
+              {
+                "item_no": "203E10000",
+                "description": "Excavation, as per plan",
+                "quantity": "~2490",
+                "unit": "CY",
+                "unit_amount": "~17.0",
+                "total_amount": "~42315",
+                "note": "qty/rate est. from total; Diller-specific geometry"
+              },
+              {
+                "item_no": "203E20001",
+                "description": "Embankment, as per plan",
+                "quantity": "~3100",
+                "unit": "CY",
+                "unit_amount": "~1.0",
+                "total_amount": "~3100"
+              },
+              {
+                "item_no": "204E10001",
+                "description": "Subgrade compaction, as per plan",
+                "quantity": "~6200",
+                "unit": "SY",
+                "unit_amount": "~1.0",
+                "total_amount": "~6200"
+              },
+              {
+                "item_no": "623E38500",
+                "description": "Monument assembly, Type C",
+                "quantity": 3,
+                "unit": "EACH",
+                "unit_amount": 500,
+                "total_amount": 1500
+              },
+              {
+                "item_no": "653E10001",
+                "description": "Topsoil furnished and placed, as per plan",
+                "quantity": "~290",
+                "unit": "CY",
+                "unit_amount": "~50.0",
+                "total_amount": "~14500",
+                "note": "splitter island preparation"
+              },
+              {
+                "item_no": "custom_walk",
+                "description": "Decorative plain concrete walk, 6\" thick (splitter island), as per plan",
+                "quantity": "~2650",
+                "unit": "SF",
+                "unit_amount": "~10.0",
+                "total_amount": "~26500"
+              }
+            ],
+            "subtotal": "~109307"
+          },
+          "EROSION_CONTROL": {
+            "items": [],
+            "subtotal": "~85000",
+            "note": "Line-item detail not fully legible; typically silt fence, inlet protection, etc."
+          },
+          "DRAINAGE": {
+            "items": [
+              {
+                "item_no": "605E11111",
+                "description": "6\" shallow pipe underdrains with geotextile fabric, as per plan",
+                "quantity": "~2044",
+                "unit": "FT",
+                "unit_amount": 10.0,
+                "total_amount": "~20440"
+              },
+              {
+                "item_no": "custom_drain_ls",
+                "description": "Drainage improvements",
+                "quantity": 1,
+                "unit": "LS",
+                "unit_amount": 100000,
+                "total_amount": 100000
+              }
+            ],
+            "subtotal": "~120440"
+          },
+          "PAVEMENT": {
+            "items": [
+              {
+                "item_no": "301E56000",
+                "description": "Asphalt concrete base, PG64-22 (449)",
+                "quantity": "~841",
+                "unit": "CY",
+                "unit_amount": "~145.0",
+                "total_amount": "~121945"
+              },
+              {
+                "item_no": "304E20000",
+                "description": "Aggregate base",
+                "quantity": "~841",
+                "unit": "CY",
+                "unit_amount": "~50.0",
+                "total_amount": "~42050"
+              },
+              {
+                "item_no": "407E10000",
+                "description": "Tack coat",
+                "quantity": "~456",
+                "unit": "GAL",
+                "unit_amount": 2.0,
+                "total_amount": "~912"
+              },
+              {
+                "item_no": "442E22100",
+                "description": "Asphalt concrete surface course, 12.5mm, Type A (449)",
+                "quantity": "~173",
+                "unit": "CY",
+                "unit_amount": "~185.0",
+                "total_amount": "~31995"
+              },
+              {
+                "item_no": "442E22400",
+                "description": "Asphalt concrete intermediate course, 19mm, Type A (449)",
+                "quantity": "~269",
+                "unit": "CY",
+                "unit_amount": "~200.0",
+                "total_amount": "~53800"
+              },
+              {
+                "item_no": "609E12001",
+                "description": "Combination curb and gutter, Type 2, as per plan",
+                "quantity": "~717",
+                "unit": "FT",
+                "unit_amount": "~35.0",
+                "total_amount": "~25095"
+              },
+              {
+                "item_no": "609E31000",
+                "description": "Combination curb and gutter, Type 9",
+                "quantity": "~280",
+                "unit": "FT",
+                "unit_amount": "~30.0",
+                "total_amount": "~8400"
+              },
+              {
+                "item_no": "609E26000",
+                "description": "Curb, Type 6",
+                "quantity": "~779",
+                "unit": "FT",
+                "unit_amount": "~20.0",
+                "total_amount": "~15580"
+              },
+              {
+                "item_no": "custom_pavement",
+                "description": "Decorative reinforced concrete pavement, 8\" thick (truck apron), as per plan",
+                "quantity": "~240",
+                "unit": "SY",
+                "unit_amount": "~80.0",
+                "total_amount": "~19200"
+              }
+            ],
+            "subtotal": "~302631"
+          },
+          "WATER_WORK": {
+            "items": [],
+            "subtotal": "~50000",
+            "note": "Line-item detail not fully legible; typically water main connections, drainage structures"
+          },
+          "LIGHTING": {
+            "items": [],
+            "subtotal": "~100000",
+            "note": "Traffic signal and pedestrian lighting; LS or unit costs not separately itemized in OCR"
+          },
+          "TRAFFIC_CONTROL": {
+            "items": [
+              {
+                "item_no": "custom_tc",
+                "description": "Traffic control devices and signage",
+                "quantity": 1,
+                "unit": "LS",
+                "unit_amount": 75000,
+                "total_amount": 75000
+              }
+            ],
+            "subtotal": "~75000"
+          },
+          "LANDSCAPING": {
+            "items": [],
+            "subtotal": "~20000",
+            "note": "Typical seeding, sod, planting per site plan; lump-sum estimate"
+          },
+          "RIGHT_OF_WAY": {
+            "items": [
+              {
+                "item_no": "custom_ag_land",
+                "description": "Agricultural land",
+                "quantity": "~0.26",
+                "unit": "AC",
+                "unit_amount": 20000,
+                "total_amount": "~5200"
+              },
+              {
+                "item_no": "custom_res_land",
+                "description": "Residential land",
+                "quantity": "~0.07",
+                "unit": "AC",
+                "unit_amount": 40000,
+                "total_amount": "~2800"
+              },
+              {
+                "item_no": "custom_row_contingency",
+                "description": "Right-of-way contingency / easements",
+                "quantity": 1,
+                "unit": "LS",
+                "unit_amount": 161,
+                "total_amount": "~161"
+              }
+            ],
+            "subtotal": "~8161"
+          },
+          "INCIDENTALS": {
+            "items": [
+              {
+                "item_no": "614E11000",
+                "description": "Maintaining traffic",
+                "quantity": 1,
+                "unit": "LS",
+                "unit_amount": 50000,
+                "total_amount": 50000
+              },
+              {
+                "item_no": "623E10000",
+                "description": "Construction layout stakes and surveying",
+                "quantity": 1,
+                "unit": "LS",
+                "unit_amount": 20000,
+                "total_amount": 20000
+              },
+              {
+                "item_no": "624E10000",
+                "description": "Mobilization",
+                "quantity": 1,
+                "unit": "LS",
+                "unit_amount": 50000,
+                "total_amount": 50000
+              }
+            ],
+            "subtotal": 120000
+          },
+          "DESIGN_SURVEY_INSPECTION": {
+            "items": [
+              {
+                "item_no": "design_15pct",
+                "description": "Design (15% of construction subtotal)",
+                "quantity": 1,
+                "unit": "LS",
+                "unit_amount": "~192633",
+                "total_amount": "~192633"
+              },
+              {
+                "item_no": "survey",
+                "description": "Survey",
+                "quantity": 1,
+                "unit": "LS",
+                "unit_amount": 20000,
+                "total_amount": 20000
+              },
+              {
+                "item_no": "ca_inspection",
+                "description": "Construction admin & inspection",
+                "quantity": 1,
+                "unit": "LS",
+                "unit_amount": 60000,
+                "total_amount": 60000
+              }
+            ],
+            "subtotal": "~272633"
+          }
+        }
+      },
+      "extraction_notes": {
+        "confidence_levels": {
+          "dollar_totals": "HIGH - directly read from printed summary and rollup pages",
+          "section_subtotals": "HIGH - summed from itemized costs on each estimate page",
+          "unit_costs": "MEDIUM-HIGH - some read, some derived by reverse calculation",
+          "quantities": "MEDIUM - extracted from 300 DPI scan with OCR degradation on small numbers",
+          "item_descriptions": "HIGH - ODOT standard items or clearly labeled custom items"
+        },
+        "data_quality_issues": [
+          "Quantities are best-effort; verify against Tetra Tech native .xlsx for final precision",
+          "Some LS items show in OCR with no unit cost or quantity; cost is the total",
+          "Decorative/custom items not in standard ODOT tables may have slightly different labeling across pages",
+          "Corridors omit RIGHT_OF_WAY, LIGHTING, TRAFFIC_CONTROL, LANDSCAPING sections",
+          "Small-text unit rates (e.g., $2/gal) less reliable than large-text subtotals"
+        ],
+        "recommended_next_steps": [
+          "Cross-check high-quantity items (excavation, asphalt CY) against actual site survey",
+          "Verify Design cost is actually 12-15% (vs. fixed fee) in original spreadsheet",
+          "Confirm whether decorative pavement (truck apron) appears on all roundabouts or is site-specific",
+          "Clarify whether DRAINAGE LS items ($100k-$150k) include detention basin or are just site drainage",
+          "Obtain original Tetra Tech .xlsx for definitive line-item costs; this YAML is investigative/analytical extraction"
+        ]
+      }
+    },
+    "approximate_paths": [
+      "page_319_diller.line_items.DESIGN_SURVEY_INSPECTION.items.0.total_amount",
+      "page_319_diller.line_items.DESIGN_SURVEY_INSPECTION.items.0.unit_amount",
+      "page_319_diller.line_items.DESIGN_SURVEY_INSPECTION.subtotal",
+      "page_319_diller.line_items.DRAINAGE.items.0.quantity",
+      "page_319_diller.line_items.DRAINAGE.items.0.total_amount",
+      "page_319_diller.line_items.DRAINAGE.subtotal",
+      "page_319_diller.line_items.EROSION_CONTROL.subtotal",
+      "page_319_diller.line_items.LANDSCAPING.subtotal",
+      "page_319_diller.line_items.LIGHTING.subtotal",
+      "page_319_diller.line_items.PAVEMENT.items.0.quantity",
+      "page_319_diller.line_items.PAVEMENT.items.0.total_amount",
+      "page_319_diller.line_items.PAVEMENT.items.0.unit_amount",
+      "page_319_diller.line_items.PAVEMENT.items.1.quantity",
+      "page_319_diller.line_items.PAVEMENT.items.1.total_amount",
+      "page_319_diller.line_items.PAVEMENT.items.1.unit_amount",
+      "page_319_diller.line_items.PAVEMENT.items.2.quantity",
+      "page_319_diller.line_items.PAVEMENT.items.2.total_amount",
+      "page_319_diller.line_items.PAVEMENT.items.3.quantity",
+      "page_319_diller.line_items.PAVEMENT.items.3.total_amount",
+      "page_319_diller.line_items.PAVEMENT.items.3.unit_amount",
+      "page_319_diller.line_items.PAVEMENT.items.4.quantity",
+      "page_319_diller.line_items.PAVEMENT.items.4.total_amount",
+      "page_319_diller.line_items.PAVEMENT.items.4.unit_amount",
+      "page_319_diller.line_items.PAVEMENT.items.5.quantity",
+      "page_319_diller.line_items.PAVEMENT.items.5.total_amount",
+      "page_319_diller.line_items.PAVEMENT.items.5.unit_amount",
+      "page_319_diller.line_items.PAVEMENT.items.6.quantity",
+      "page_319_diller.line_items.PAVEMENT.items.6.total_amount",
+      "page_319_diller.line_items.PAVEMENT.items.6.unit_amount",
+      "page_319_diller.line_items.PAVEMENT.items.7.quantity",
+      "page_319_diller.line_items.PAVEMENT.items.7.total_amount",
+      "page_319_diller.line_items.PAVEMENT.items.7.unit_amount",
+      "page_319_diller.line_items.PAVEMENT.items.8.quantity",
+      "page_319_diller.line_items.PAVEMENT.items.8.total_amount",
+      "page_319_diller.line_items.PAVEMENT.items.8.unit_amount",
+      "page_319_diller.line_items.PAVEMENT.subtotal",
+      "page_319_diller.line_items.RIGHT_OF_WAY.items.0.quantity",
+      "page_319_diller.line_items.RIGHT_OF_WAY.items.0.total_amount",
+      "page_319_diller.line_items.RIGHT_OF_WAY.items.1.quantity",
+      "page_319_diller.line_items.RIGHT_OF_WAY.items.1.total_amount",
+      "page_319_diller.line_items.RIGHT_OF_WAY.items.2.total_amount",
+      "page_319_diller.line_items.RIGHT_OF_WAY.subtotal",
+      "page_319_diller.line_items.ROADWAY.items.1.quantity",
+      "page_319_diller.line_items.ROADWAY.items.1.total_amount",
+      "page_319_diller.line_items.ROADWAY.items.1.unit_amount",
+      "page_319_diller.line_items.ROADWAY.items.2.quantity",
+      "page_319_diller.line_items.ROADWAY.items.2.total_amount",
+      "page_319_diller.line_items.ROADWAY.items.2.unit_amount",
+      "page_319_diller.line_items.ROADWAY.items.3.quantity",
+      "page_319_diller.line_items.ROADWAY.items.3.total_amount",
+      "page_319_diller.line_items.ROADWAY.items.3.unit_amount",
+      "page_319_diller.line_items.ROADWAY.items.5.quantity",
+      "page_319_diller.line_items.ROADWAY.items.5.total_amount",
+      "page_319_diller.line_items.ROADWAY.items.5.unit_amount",
+      "page_319_diller.line_items.ROADWAY.items.6.quantity",
+      "page_319_diller.line_items.ROADWAY.items.6.total_amount",
+      "page_319_diller.line_items.ROADWAY.items.6.unit_amount",
+      "page_319_diller.line_items.ROADWAY.subtotal",
+      "page_319_diller.line_items.TRAFFIC_CONTROL.subtotal",
+      "page_319_diller.line_items.WATER_WORK.subtotal"
+    ],
+    "citation": {
+      "source": "aedg/roundabouts.detail.opc.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": null,
+    "source_doc_render_class": null,
+    "source_doc_published": false
+  },
+  {
+    "rel": "aedg/roundabouts.summary.opc.yaml",
+    "group": "opc",
+    "title": "Project BOSC Roadwork (privately funded; BOSC Team deposit to PAAC; dedicated to County on completion)",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "meta": {
+        "program": "Project BOSC Roadwork (privately funded; BOSC Team deposit to PAAC; dedicated to County on completion)",
+        "estimator": "Tetra Tech (RJS), checked AMD",
+        "basis": "Conceptual",
+        "date": "2025-07-11",
+        "source_file": "Conceptual OPC_Cole St.xlsx",
+        "pdf_pages": "318 (summary), 319-328 (detail)",
+        "contingency_and_inflation_pct": 25,
+        "summary_construction_total": 14223081
+      },
+      "section_schema": [
+        "ROADWAY",
+        "EROSION_CONTROL",
+        "DRAINAGE",
+        "PAVEMENT",
+        "WATER_WORK",
+        "LIGHTING",
+        "TRAFFIC_CONTROL",
+        "LANDSCAPING",
+        "RIGHT_OF_WAY",
+        "INCIDENTALS",
+        "DESIGN_SURVEY_INSPECTION"
+      ],
+      "item_reference": {
+        "201E11000": "Clearing and grubbing (LS)",
+        "203E10000": "Excavation, as per plan (CY)",
+        "203E20001": "Embankment, as per plan (CY)",
+        "204E10001": "Subgrade compaction, as per plan (SY)",
+        "623E38500": "Monument assembly, Type C (EACH)",
+        "653E10001": "Topsoil furnished and placed, as per plan (CY)",
+        "decorative_walk": "Decorative plain concrete walk, 6\" thick (splitter island), as per plan (SF)",
+        "605E11111": "6\" shallow pipe underdrains with geotextile fabric, as per plan (FT)",
+        "SPECIAL_drainage": "Drainage improvements (LS)",
+        "301E56000": "Asphalt concrete base, PG64-22 (449) (CY)",
+        "304E20000": "Aggregate base (CY)",
+        "407E10000": "Tack coat (GAL)",
+        "442E22100": "Asphalt concrete surface course, 12.5mm, Type A (449) (CY)",
+        "442E22400": "Asphalt concrete intermediate course, 19mm, Type A (449) (CY)",
+        "609E12001": "Combination curb and gutter, Type 2, as per plan (FT)",
+        "609E31000": "Combination curb and gutter, Type 9 (FT)",
+        "609E26000": "Curb, Type 6 (FT)",
+        "decorative_pavement": "Decorative reinforced concrete pavement, 6\" thick (truck apron), as per plan (SY)",
+        "614E11000": "Maintaining traffic (LS)",
+        "623E10000": "Construction layout stakes and surveying (LS)",
+        "624E10000": "Mobilization (LS)"
+      },
+      "sub_estimates": [
+        {
+          "name": "Cole Street / Diller Road Roundabout",
+          "pdf_page": 319,
+          "work": "Roundabout at Cole/Diller intersection",
+          "construction_subtotal": 1228174,
+          "contingency_inflation_25pct": "~307043",
+          "total": 1535218,
+          "section_subtotals": {
+            "roadway": 109307,
+            "erosion_control": 85000,
+            "drainage": 120440,
+            "pavement": 302631,
+            "water_work": 50000,
+            "lighting": 100000,
+            "traffic_control": 75000,
+            "landscaping": 20000,
+            "right_of_way": 8161,
+            "incidentals": 120000,
+            "design_survey_inspection": 272633
+          }
+        },
+        {
+          "name": "Cole Street / Bluelick Road Roundabout",
+          "pdf_page": 321,
+          "work": "Roundabout at Cole/Bluelick intersection",
+          "construction_subtotal": 1363602,
+          "contingency_inflation_25pct": 340900,
+          "total": 1704502,
+          "section_subtotals": {
+            "roadway": 113984,
+            "erosion_control": 80000,
+            "drainage": 146440,
+            "pavement": 252402,
+            "water_work": 100000,
+            "lighting": 100000,
+            "traffic_control": 75000,
+            "landscaping": 20000,
+            "right_of_way": 12314,
+            "incidentals": 120000,
+            "design_survey_inspection": 373341
+          }
+        },
+        {
+          "name": "Primary Access Entrance to Project Site (Roundabout)",
+          "note": "Main BOSC facility entrance; at Beery Road & North Cole Street (per agreement narrative). Largest roundabout.",
+          "pdf_page": 323,
+          "construction_subtotal": 2122436,
+          "contingency_inflation_25pct": 530609,
+          "total": 2663045,
+          "section_subtotals": {
+            "roadway": 241889,
+            "erosion_control": 100000,
+            "drainage": 208200,
+            "pavement": 681232,
+            "water_work": 50000,
+            "lighting": 150000,
+            "traffic_control": 75000,
+            "landscaping": 20000,
+            "right_of_way": 275,
+            "incidentals": 140000,
+            "design_survey_inspection": 455078
+          }
+        },
+        {
+          "name": "Cole Street / West Street (SR 115) Roundabout",
+          "note": "ODOT District One reviewing whether this roundabout is needed.",
+          "pdf_page": 325,
+          "construction_subtotal": 1799687,
+          "contingency_inflation_25pct": 449922,
+          "total": 2249609,
+          "section_subtotals": {
+            "roadway": 170516,
+            "erosion_control": 75000,
+            "drainage": 156010,
+            "pavement": 514322,
+            "water_work": 50000,
+            "lighting": 100000,
+            "traffic_control": 75000,
+            "landscaping": 20000,
+            "right_of_way": 13627,
+            "incidentals": 130000,
+            "design_survey_inspection": 437212
+          }
+        },
+        {
+          "name": "Cole Street Corridor",
+          "type": "corridor (widening/rehab, not an intersection)",
+          "pdf_page": 327,
+          "construction_subtotal": 3119840,
+          "contingency_inflation_25pct": 779960,
+          "total": 3899800,
+          "section_subtotals": {
+            "roadway": 392686,
+            "erosion_control": 65000,
+            "drainage": 284040,
+            "pavement": 1777183,
+            "water_work": 65000,
+            "incidentals": 90000,
+            "design_survey_inspection": 441848
+          },
+          "notes": "Corridor sheets omit RIGHT_OF_WAY, LIGHTING, TRAFFIC_CONTROL, LANDSCAPING line sections present on roundabout sheets."
+        },
+        {
+          "name": "Bluelick Road Corridor",
+          "type": "corridor (widening/rehab, not an intersection)",
+          "pdf_page": 328,
+          "construction_subtotal": 1744725,
+          "contingency_inflation_25pct": 436181,
+          "total": 2180907,
+          "section_subtotals": {
+            "roadway": 223596,
+            "erosion_control": 35000,
+            "drainage": 153400,
+            "pavement": 898471,
+            "water_work": 35000,
+            "incidentals": 60000,
+            "design_survey_inspection": 348858
+          }
+        }
+      ],
+      "reconciliation": {
+        "diller_ocr_correction": "OCR earlier rendered Diller total as $4,535,217.80; the correct figure is $1,535,217.80 (leading digit is a 1, not a 4). Construction total of $14,223,081 only reconciles with the $1.535M figure.",
+        "agreement_vs_opc_bluelick": "Roadwork agreement narrative states $2.5M 'specifically budgeted' for the Bluelick & N. Cole roundabout. The OPC lists that roundabout at $1,704,502. The $2.5M likely bundles the Bluelick roundabout + Bluelick corridor work + contingency/ROW, or reflects a budgeting allowance distinct from the engineer's estimate. Flag for the County Engineer.",
+        "state_route_label": "Agreement and design-build minutes variously reference SR 115 and SR 65 for the Cole Street west roundabout. OPC labels it 'Cole Street / West Street (SR 115).' Confirm correct route designation.",
+        "quantities_caveat": "Line-item quantities transcribed from a degraded scan are approximate. Dollar totals/subtotals are high-confidence."
+      }
+    },
+    "approximate_paths": [
+      "sub_estimates.0.contingency_inflation_25pct"
+    ],
+    "citation": {
+      "source": "aedg/roundabouts.summary.opc.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": null,
+    "source_doc_render_class": null,
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/3702676.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Bosc",
+    "confidence": "high",
+    "warnings": [
+      "No permit number assigned yet — '445754445' is the Application ID, not a final permit number.",
+      "OCR notes HUC numbers as 041000070404 and 041000070501 — verified against image as plausible but last digits may be uncertain.",
+      "Contact name 'Jill Tangeman' listed under applicant column with email jstangeman@vorys.com, suggesting she is from the law firm Vorys; contact_firm set to EMH&T as the consultant/agent firm, but Vorys is also a relevant firm."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "program": "401 Water Quality Certification",
+      "permit_no": "445754445",
+      "action": "application",
+      "action_date": "2025-07-02",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Bistrozzi LLC",
+      "applicant_address": "2801 Centerville Road, Wilmington, DE 19808",
+      "contact_name": "Jill Tangeman",
+      "contact_email": "jstangeman@vorys.com",
+      "contact_firm": "EMH&T",
+      "project_name": "Project Bosc",
+      "site_address": "950 W Bluelick Rd, Lima, OH 45801",
+      "affected_resource": "Wetlands (0.33 acres); Fill impacts to waters of the state — Pike Run and Sugar Creek watersheds, Allen County, Ohio",
+      "parcel_ids": [],
+      "note": "Application ID: 445754445. Construction start 07/31/2025, end 07/31/2027. Project involves development of ~358-acre property with 3 data centers, substations, stormwater basins, access roads, and utilities. Proposed impact type: Fill. USACE District: Buffalo. Related permits: Individual 404 Permit, NPDES General Permit (to be submitted 06/28/2025), Permit to Install (to be submitted 06/28/2025). Consultant/Agent: Bryan Lombard, Senior Env Scientist, EMH&T, blombard@emht.com. Total application fee: $365.00. Electronically submitted 07/02/2025."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/3702676.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/3702676.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/3727059.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Bosc",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Isolated Wetland Permit",
+      "permit_no": "DSW401251760W",
+      "action": "incomplete",
+      "action_date": "2025-07-17",
+      "plans_received_date": "2025-07-02",
+      "expiration_date": null,
+      "applicant": "Bistrozzi LLC",
+      "applicant_address": "2801 Centerville Road, Wilmington, DE 19808",
+      "contact_name": "Jill Tangeman",
+      "contact_email": "jstangeman@vorys.com",
+      "contact_firm": "Vorys",
+      "project_name": "Project Bosc",
+      "site_address": "North of West Bluelick Road, east of North Cole Street, and west of State Route 65, Allen County, Ohio (40.795845, -84.123601)",
+      "affected_resource": "Isolated wetlands",
+      "parcel_ids": [],
+      "note": "Incomplete Pre-Activity Notice (PAN) for Isolated Wetland General Permit. Deficient items include: wetland delineation missing information for wetlands D and E (only A, B, C submitted); applicable permit fees not submitted. Preliminary technical comment: provide wetland determination data point or rationale for area circled in green. CC: Bryan Lombard (blombard@emht.com, EMH&T); Rachel Secrest (Rachel.secrest@epa.ohio.gov, Ohio EPA Statewide 401 Supervisor). Ohio EPA contact: Heather Allamon, Heather.Allamon@epa.ohio.gov, (419) 373-3024."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/3727059.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/3727059.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/3727544.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Bosc",
+    "confidence": "high",
+    "warnings": [
+      "Permit number field uses Application ID (445754445) as no formal permit number has been assigned yet — this is an application, not an issued permit.",
+      "OCR layer shows '445754445' for Application ID; verified against image.",
+      "Contact name 'Jill Tangeman' is listed under applicant but email domain is @vorys.com, suggesting she is legal counsel/agent at Vorys law firm acting on behalf of Bistrozzi LLC; contact_firm set to EMH&T (the engineering consultant) per the Consultant/Agent column."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "401 Water Quality Certification",
+      "permit_no": "445754445",
+      "action": "application",
+      "action_date": "2025-07-17",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Bistrozzi LLC",
+      "applicant_address": "2801 Centerville Road, Wilmington, DE 19808",
+      "contact_name": "Jill Tangeman",
+      "contact_email": "jstangeman@vorys.com",
+      "contact_firm": "EMH&T",
+      "project_name": "Project Bosc",
+      "site_address": "950 W Bluelick Rd, Lima, OH 45801",
+      "affected_resource": "Wetlands (0.33 acres); Fill impacts to waters of the state — Pike Run and Sugar Creek watersheds, Allen County, Ohio",
+      "parcel_ids": [],
+      "note": "Application for Section 401 Water Quality Certification submitted electronically on 07/17/2025. Construction Start Date: 07/31/2025; End Date: 07/31/2027. Project involves development of ~358-acre property with three data centers, substations, stormwater basins, access roads, and utilities. Proposed impact type: Fill. USACE District: Buffalo. HUC: 041000070404 (Pike Run), 041000070501 (Sugar Creek). Other permits noted: Individual 404 Permit, Isolated Wetland Permit, NPDES General Permit, Permit to Install. Consultant/Agent: Bryan Lombard, Senior Env Scientist, EMH&T, blombard@emht.com. Total fees due: $365.00."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/3727544.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/3727544.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/3788677.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Bosc",
+    "confidence": "high",
+    "warnings": [
+      "Contact firm inferred as 'Vorys' from email domain 'vorys.com'; not explicitly stated in letter header.",
+      "Plans received date set to July 2, 2025 (PAN received date); subsequent information also received July 18, 2025.",
+      "EMH&T (Bryan Lombard) appears to be the engineering firm (copied on letter) rather than the contact firm for the applicant."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Isolated Wetland Permit",
+      "permit_no": "DSW401251760W",
+      "action": "approved",
+      "action_date": "2025-08-12",
+      "plans_received_date": "2025-07-02",
+      "expiration_date": "2027-08-12",
+      "applicant": "Bistrozzi LLC",
+      "applicant_address": "2801 Centerville Road, Wilmington, DE 19808",
+      "contact_name": "Jill Tangeman",
+      "contact_email": "jstangeman@vorys.com",
+      "contact_firm": "Vorys",
+      "project_name": "Project Bosc",
+      "site_address": "North of West Bluelick Road, east of North Cole Street, and west of State Route 65, American Township and Sugar Creek Township, Allen County, Ohio (40.795845, -84.123601)",
+      "affected_resource": "Isolated wetlands (0.29 acres forested and 0.04 acres non-forested Category 1 wetlands)",
+      "parcel_ids": [],
+      "note": "Grant Authorization under Isolated Wetland General Permit (Level One) — Ohio General Permit for Filling Category 1 and Category 2 Wetlands. PAN received July 2, 2025; subsequent information received July 18, 2025. Compensatory mitigation: 0.7 forested credits reserved at Pearson Metropark Wetlands Mitigation Bank. Filling must be completed by August 12, 2027. Contact agency: Heather Allamon, Application Coordinator, 401/Wetlands/Mitigation Section, (419) 373-3024, Heather.Allamon@epa.ohio.gov. EMH&T (Bryan Lombard) copied as engineering firm."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/3788677.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/3788677.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/3789048.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project BOSC",
+    "confidence": "high",
+    "warnings": [
+      "Ohio EPA ID No. field is blank — no permit number assigned or recorded on this letter.",
+      "This letter is from a mitigation bank (Stream and Wetlands Foundation), not directly from Ohio EPA or USACE, though both agencies are CC'd.",
+      "Contact firm EMH&T, LLC is inferred from the CC line (Christian Franczek), not directly stated as the applicant's firm."
+    ],
+    "fields": {
+      "agency": "Stream and Wetlands Foundation",
+      "program": "Wetland Mitigation Bank Credit Purchase",
+      "permit_no": "PMP-212",
+      "action": "correspondence",
+      "action_date": "2025-07-17",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Bistrozzi LLC",
+      "applicant_address": "52 East Gay Street, Columbus, OH 43215",
+      "contact_name": "Scott Ziance",
+      "contact_email": null,
+      "contact_firm": "EMH&T, LLC",
+      "project_name": "Project BOSC",
+      "site_address": "East of N. Cole Street, American Township and Sugar Creek Township, Allen County, Ohio",
+      "affected_resource": "Forested wetland credits (0.7 acres) — Pearson Metropark Wetlands Mitigation Bank",
+      "parcel_ids": [],
+      "note": "This is a payment receipt/confirmation letter from Stream + Wetlands Foundation acknowledging receipt of $38,675 (check #208865) for the purchase of 0.7 acres of forested wetland credits at the Pearson Metropark Wetlands Mitigation Bank. Ohio EPA ID No. is blank/not assigned on the letter. CC'd to Christian Franczek (EMH&T, LLC), Peter J. Krakowiak (U.S. Army Corps of Engineers), and Andrea Kibourne (Ohio EPA). Letter signed by Vincent E. Messerly, P.E., President of Stream + Wetlands Foundation."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/3789048.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/3789048.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/3796349.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Bosc",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Isolated Wetland Permit",
+      "permit_no": "DSW401251760W",
+      "action": "correspondence",
+      "action_date": "2025-08-18",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Bistrozzi LLC",
+      "applicant_address": "2801 Centerville Road, Wilmington, DE 19808",
+      "contact_name": "Jill Tangeman",
+      "contact_email": "Jstangeman@vorys.com",
+      "contact_firm": "Vorys",
+      "project_name": "Project Bosc",
+      "site_address": null,
+      "affected_resource": "isolated wetland",
+      "parcel_ids": [],
+      "note": "Ohio EPA issued the Isolated Wetland Permit on August 12, 2025. This letter confirms that the mitigation credit proof of purchase requirement (Mitigation Purchase Agreement) is complete and no further action is necessary. Ohio EPA ID No. 251760W. CC: Bryan Lombard (EMH&T), Heather Allamon (Ohio EPA DSW), Jeff Boyles (Ohio EPA DSW)."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/3796349.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/3796349.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/3859883.epa.yaml",
+    "group": "permits-epa",
+    "title": "Lima Facility (Bistrozzi greenfield data center)",
+    "confidence": "high",
+    "warnings": [
+      "This is a trade-secret RECOGNITION letter, not a permit issuance — captured with action: trade-secret-granted. The substantive withheld content is NOT in the corpus (it lives only in the confidential version of Application A0080278); what is captured here is the SCOPE of the redaction and the agency grant, read from the public justification + grant letters."
+    ],
+    "fields": {
+      "agency": "Ohio EPA (DAPC; Office of the Supervising Attorney)",
+      "program": "Trade Secret recognition (OAC 3745-49-03 / ORC 3734.12(G)) on the Initial Air PTI application",
+      "permit_no": "A0080278 (+ PBR21722)",
+      "action": "trade-secret-granted",
+      "action_date": "2025-10-08",
+      "plans_received_date": "2025-10-02",
+      "applicant": "Bistrozzi LLC",
+      "applicant_address": "N. Cole Rd. and W. Bluelick Rd., Lima, Ohio 45081 (Secondary ID 0302022054)",
+      "contact_name": "Michael Montfort",
+      "contact_email": "mmontfort@wsgr.com",
+      "contact_firm": "Wilson Sonsini Goodrich & Rosati (WSGR)",
+      "project_name": "Lima Facility (Bistrozzi greenfield data center)",
+      "site_address": "N. Cole Rd. and W. Bluelick Rd., Lima, Allen County, OH 45081 (OEPA Facility/Secondary ID 0302022054)",
+      "affected_resource": "air permit application (DAPC) — emission-unit equipment specifications",
+      "note": "Ohio EPA (Marc Glasgow, Supervising Attorney; CC Robert Hodanbosi, Chief DAPC, and Andrea Moore, DAPC NWDO) GRANTS trade-secret recognition (2025-10-08) for business-sensitive information in Bistrozzi's Initial Air PTI application A0080278 + permit-by-rule PBR21722, per the Trade Secret Justification Letter submitted 2025-10-02 (Trinity Consultants, signed Michael Montfort/WSGR, to John Pasquarette, Ohio EPA NWDO). The information is held confidential and exempt from disclosure; if the designation is challenged in any judicial/quasi-judicial forum, Bistrozzi bears the sole burden of proving it meets the trade-secret standard."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/3859883.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/3859883.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/3866942.epa.yaml",
+    "group": "permits-epa",
+    "title": "Bistrozzi LLC - Allen County Air Pollution Source",
+    "confidence": "high",
+    "warnings": [
+      "This letter is from Ohio EPA's Division of Air Pollution Control (DAPC), not the Division of Surface Water or U.S. Army Corps of Engineers. The program is PTI/PTIO for air pollution sources, not a surface water or wetland permit.",
+      "The contact email mark.barber@epa.ohio.gov belongs to the Ohio EPA reviewer/signatory Mark Barber, not the applicant contact Michael Montfort.",
+      "Facility ID # 0302022054 noted in Re: block."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Permit-to-Install / Permit-to-Install and Operate (PTI/PTIO) - Air Pollution Control",
+      "permit_no": "P0138965",
+      "action": "application",
+      "action_date": "2025-10-07",
+      "plans_received_date": "2025-10-06",
+      "expiration_date": null,
+      "applicant": "Bistrozzi LLC",
+      "applicant_address": "1700 K Street, NW, Fifth Floor, Washington, DC 20006-3817",
+      "contact_name": "Michael Montfort",
+      "contact_email": "mark.barber@epa.ohio.gov",
+      "contact_firm": "Bistrozzi LLC",
+      "project_name": "Bistrozzi LLC - Allen County Air Pollution Source",
+      "site_address": null,
+      "affected_resource": "Air pollution source(s)",
+      "parcel_ids": [],
+      "note": "Letter confirms application P0138965 is preliminarily and administratively complete. Facility ID # 0302022054. Northwest District Office (NWDO) letter signed by Mark Barber, Ohio EPA DAPC, reachable at 419.373.3131 or mark.barber@epa.ohio.gov. NOTE: This is a Division of Air Pollution Control (DAPC) PTI/PTIO letter, NOT a Division of Surface Water or USACE action."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/3866942.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/3866942.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/3949585.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Bosc Lvl 2 IWP",
+    "confidence": "high",
+    "warnings": [
+      "Applicant address contains apparent typo 'Centervillle' (triple 'l') — copied exactly as printed.",
+      "contact_firm inferred as 'Vorys' from contact email domain (vorys.com); no firm name explicitly stated for Jill Tangeman.",
+      "EMH&T (Melissa Darby) appears as a cc'd engineering firm, not the primary contact firm."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Isolated Wetland Permit",
+      "permit_no": "DSW401252260W",
+      "action": "incomplete",
+      "action_date": "2025-12-23",
+      "plans_received_date": "2025-12-09",
+      "expiration_date": null,
+      "applicant": "Bistrozzi LLC",
+      "applicant_address": "2801 Centervillle Rd., Wilmington, DE 19808",
+      "contact_name": "Jill Tangeman",
+      "contact_email": "jstangeman@vorys.com",
+      "contact_firm": "Vorys",
+      "project_name": "Project Bosc Lvl 2 IWP",
+      "site_address": "North of W. Bluelick Road, east of N. Cole Street, and west of State Route 65, American Township and Sugar Creek Township, Allen County, Ohio (40.795845, -84.123601)",
+      "affected_resource": "isolated wetland",
+      "parcel_ids": [],
+      "note": "Application declared INCOMPLETE due to missing analysis of practicable on-site alternatives to proposed filling. The Delineation Report covers over 358 acres, almost all farm field; applicant must revise the alternatives analysis to consider the entire site. Ohio EPA ID No. 252260W. Signed by Joe Loucek, Application Coordinator, 401/Wetlands/Mitigation Section. CC: Rachel Secrest (Ohio EPA DSW), Melissa Darby (EMH&T, mqueendarby@emht.com)."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/3949585.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/3949585.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/3966517.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project BOSC",
+    "confidence": "high",
+    "warnings": [
+      "No applicant mailing address provided in the letter — only the applicant name (Bistrozzi LLC) is mentioned in the body text.",
+      "Contact email not listed; only a phone number (614-775-4525) is provided for Melissa Queen Darby.",
+      "The action field is set to 'correspondence' as this is a response letter to an incomplete notice, not a direct permit action by the agency."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Isolated Wetland Permit",
+      "permit_no": "DSW401252260W",
+      "action": "correspondence",
+      "action_date": "2026-01-06",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Bistrozzi LLC",
+      "applicant_address": null,
+      "contact_name": "Melissa Queen Darby",
+      "contact_email": null,
+      "contact_firm": "EMH&T",
+      "project_name": "Project BOSC",
+      "site_address": "American Township and Sugar Creek Township, Allen County, Ohio",
+      "affected_resource": "isolated wetland (Wetland A)",
+      "parcel_ids": [],
+      "note": "This is a response letter from EMH&T (on behalf of applicant Bistrozzi LLC) to Ohio EPA's Incomplete notification (received December 23, 2025) for the Level 2 Isolated Wetland Permit application (submitted December 9, 2025). The response addresses the requested revision to the on-site alternatives analysis for the ~358-acre site (Project BOSC data center campus). Letter addressed to Mr. Joe Loucek, Application Coordinator, 401/Wetlands/Mitigation Section, Ohio EPA, 50 W. Town Street, Suite 700, Columbus, OH 43215. Contact phone: 614-775-4525."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/3966517.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/3966517.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/3969235.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Bosc Lvl 2 IWP",
+    "confidence": "high",
+    "warnings": [
+      "Applicant address contains a likely OCR/typo: '2801 Centervillle Rd.' has triple-l; copied exactly as printed.",
+      "OCR and letter body state the application was found incomplete on 'December 23, 2026' — this is almost certainly a typo for December 23, 2025 given the surrounding dates.",
+      "The Re: block lists both 'Permit - Intermediate Correspondence' and '401 Wetlands' — program recorded as Isolated Wetland Permit per subject line and body text.",
+      "Contact firm inferred as Vorys from the email domain jstangeman@vorys.com; not explicitly stated in the letter."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Isolated Wetland Permit",
+      "permit_no": "DSW401252260W",
+      "action": "incomplete",
+      "action_date": "2026-01-13",
+      "plans_received_date": "2025-12-09",
+      "expiration_date": null,
+      "applicant": "Bistrozzi LLC",
+      "applicant_address": "2801 Centervillle Rd., Wilmington, DE 19808",
+      "contact_name": "Jill Tangeman",
+      "contact_email": "jstangeman@vorys.com",
+      "contact_firm": "Vorys",
+      "project_name": "Project Bosc Lvl 2 IWP",
+      "site_address": "North of W. Bluelick Road, east of N. Cole Street, and west of State Route 65, American Township and Sugar Creek Township, Allen County, Ohio",
+      "affected_resource": "Isolated wetland (Category 2 forested wetland)",
+      "parcel_ids": [],
+      "note": "Letter notifies applicant that the Level Two Isolated Wetland Permit application remains INCOMPLETE as of January 13, 2026 — a second incomplete notice following the applicant's January 6, 2026 response to the original December 23, 2025 incomplete determination. Ohio EPA ID No. 252260W. Project is to construct a data center facility (coordinates 40.795845, -84.123601). EMH&T (Melissa Darby, mqueendarby@emht.com) is copied as the engineering firm. The OCR reads \"December 23, 2026\" for the first incomplete determination date, which is clearly a typo for December 23, 2025 based on context."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/3969235.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/3969235.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/3974496.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Bosc Lvl 2 IWP",
+    "confidence": "high",
+    "warnings": [
+      "Applicant address on form reads '2801 Centervillle Rd.' (triple-l) — likely typo for 'Centerville'; recorded as printed.",
+      "OCR shows 'jstangeman@vorys.com' for applicant contact — Jill Tangeman appears to be with Vorys law firm acting as agent/partner, not the engineering firm.",
+      "Permit number field: no new permit number assigned yet (application stage); prior IWP Ohio EPA ID No. 251760W and Application ID 495612045 noted as reference numbers."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "program": "401 Water Quality Certification / Isolated Wetland Permit (Level 2)",
+      "permit_no": "Ohio EPA ID No. 251760W (prior Level 1 IWP referenced); Application ID: 495612045",
+      "action": "application",
+      "action_date": "2026-01-19",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Bistrozzi LLC",
+      "applicant_address": "2801 Centerville Rd., Wilmington, DE 19808",
+      "contact_name": "Jill Tangeman",
+      "contact_email": "jstangeman@vorys.com",
+      "contact_firm": "EMH&T",
+      "project_name": "Project Bosc Lvl 2 IWP",
+      "site_address": "950 W. Bluelick Rd., Lima, OH 45801",
+      "affected_resource": "Isolated wetlands — 1.86 acres of forested Modified Category 2 isolated wetland (Wetland A), plus 0.33 acre of Category 1 isolated wetland previously authorized; Sugar Creek and Pike Run watersheds, Allen County, Ohio",
+      "parcel_ids": [],
+      "note": "This is a Level 2 Isolated Wetland Permit / 401 WQC application. The applicant previously received Level 1 IWP Ohio EPA ID No. 251760W (issued August 12, 2025) for 0.29 ac forested + 0.04 ac non-forested Category 1 isolated wetland impacts. This application adds 1.86 ac of forested Modified Category 2 wetland impact for an overhead high-voltage electrical corridor. Total proposed impact: 2.19 ac. Construction start: 11/10/2025; end: 11/12/2027. USACE District: Buffalo. Consultant/Agent: Melissa Darby, EMH&T, mqueendarby@emht.com, (614) 775-4525."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/3974496.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/3974496.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/3977737.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Bosc Lvl 2 IWP",
+    "confidence": "high",
+    "warnings": [
+      "Applicant address has apparent typo 'Centervillle' (three l's) — copied exactly as printed from the letter.",
+      "The Re: block labels the program as '401 Wetlands' but the subject and body clearly describe a Level Two Isolated Wetlands Permit (IWP); program recorded as Isolated Wetland Permit accordingly.",
+      "Contact firm 'Vorys' is inferred from the email domain 'vorys.com'; full firm name not explicitly stated.",
+      "Secondary contact Melissa Darby is from EMH&T (engineering firm); recorded in note only."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Isolated Wetland Permit",
+      "permit_no": "DSW401252260W",
+      "action": "comments",
+      "action_date": "2026-01-21",
+      "plans_received_date": "2025-12-09",
+      "expiration_date": null,
+      "applicant": "Bistrozzi LLC",
+      "applicant_address": "2801 Centervillle Rd., Wilmington, DE 19808",
+      "contact_name": "Jill Tangeman",
+      "contact_email": "jstangeman@vorys.com",
+      "contact_firm": "Vorys",
+      "project_name": "Project Bosc Lvl 2 IWP",
+      "site_address": null,
+      "affected_resource": "isolated wetland (category 2 forested wetland)",
+      "parcel_ids": [],
+      "note": "Application received December 9, 2025; subsequent information provided January 6, 2026; determined administratively complete. Technical review comments issued; response requested by February 5, 2026. Ohio EPA ID No. 252260W. County: Allen. Joe Loucek (Application Coordinator, 401/Wetlands/Mitigation Section) is the signing officer; contact at (330) 963-1258 or Joseph.Loucek@epa.ohio.gov. cc: Rachel Secrest (Ohio EPA DSW), Melissa Darby (EMH&T, mqueendarby@emht.com). Applicant address has a typo in source: \"Centervillle\" (three l's) — copied exactly as printed."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/3977737.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/3977737.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/3987141.epa.yaml",
+    "group": "permits-epa",
+    "title": "Bistrozzi LLC Data Center – Initial Installation",
+    "confidence": "high",
+    "warnings": [
+      "This is an Air Pollution Permit-to-Install (Division of Air Pollution Control), not a Division of Surface Water or USACE surface-water permit — it does not fall within the typical scope of DSW/404 actions.",
+      "OCR rendered 'Yes' as 'Ycs' for MODELING SUBMITTED row — verified against image.",
+      "Public notice references 114 generators (2,750 ekW) while permit strategy write-up references 115 generators — minor discrepancy noted; both values captured in note."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Air Pollution Permit-to-Install",
+      "permit_no": "P0138965",
+      "action": "correspondence",
+      "action_date": "2025-12-10",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Bistrozzi LLC",
+      "applicant_address": "1700 K Street, N.W., Fifth Floor, Washington, DC 20006-3817",
+      "contact_name": "Michael Montfort",
+      "contact_email": null,
+      "contact_firm": "Bistrozzi LLC",
+      "project_name": "Bistrozzi LLC Data Center – Initial Installation",
+      "site_address": "N Cole Rd. and W Bluelick Rd., Lima, OH 45801",
+      "affected_resource": "114/115 diesel-fired emergency generators (2,750 ekW) at proposed data center",
+      "parcel_ids": [],
+      "note": "Draft Air Pollution Permit-to-Install for Initial Installation in Allen County. Facility ID: 0302022054. Permit Type: Initial Installation. Draft issued for public comment; not an authorization to begin construction. Synthetic Minor to avoid Major NSR (NOx and CO limited to 235.62 TPY and 96.06 TPY respectively). MACT/GACT and NSPS apply. Modeling submitted. Contact for questions: Alyse Wineland, Ohio EPA DAPC, Northwest District Office, 347 North Dunbridge Rd., Bowling Green, OH 43402, (419)352-8461. Signed by Robert Hodanbosi, Chief, Division of Air Pollution Control."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/3987141.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/3987141.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/3987144.epa.yaml",
+    "group": "permits-epa",
+    "title": "Bistrozzi LLC Data Center - Initial Installation",
+    "confidence": "high",
+    "warnings": [
+      "This letter is a Draft permit issued for public comment, not a final authorization — action recorded as 'correspondence' (draft issuance for public notice).",
+      "OCR rendered permit number as 'P0138965' — confirmed against image.",
+      "The public notice references 114 generators (2,750 ekW) while the permit strategy write-up references 115 generators; both figures noted.",
+      "This is an Air Pollution permit (Division of Air Pollution Control), not a Surface Water / 401 / wetland permit — outside the typical DSW scope of this extraction schema."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Air Pollution Permit-to-Install",
+      "permit_no": "P0138965",
+      "action": "correspondence",
+      "action_date": "2025-12-10",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Bistrozzi LLC",
+      "applicant_address": "1700 K Street, N.W., Fifth Floor, Washington, DC 20006-3817",
+      "contact_name": "Michael Montfort",
+      "contact_email": null,
+      "contact_firm": "Bistrozzi LLC",
+      "project_name": "Bistrozzi LLC Data Center - Initial Installation",
+      "site_address": "N Cole Rd. and W Bluelick Rd., Lima, OH 45801",
+      "affected_resource": "114–115 diesel-fired emergency generators (2,750 ekW) for a proposed data center",
+      "parcel_ids": [],
+      "note": "This is a Draft Air Pollution Permit-to-Install issued for public comment. Permit Type: Initial Installation. Facility ID: 0302022054. County: Allen. The facility is a synthetic minor to avoid major NSR (NOx and CO federally enforceable limits). Applicable: MACT/GACT, NSPS, Modeling Submitted. Not applicable: Toxic Review, PSD, CEMS, NESHAPS, Netting, Major Non-Attainment, Major GHG, Synthetic Minor to Avoid Major GHG. Contact for comments: Andrea Moore, Permitting Section, Ohio EPA DAPC, 50 West Town Street, Suite 700, P.O. Box 1049, Columbus, Ohio 43216-1049 AND Ohio EPA DAPC, Northwest District Office, 347 North Dunbridge Rd., Bowling Green, OH 43402. Permit contact: Alyse Wineland, Ohio EPA DAPC, Northwest District Office, (419)352-8461. Signed by Robert Hodanbosi, Chief, Division of Air Pollution Control."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/3987144.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/3987144.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/4006230.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Bosc Lvl 2 IWP",
+    "confidence": "high",
+    "warnings": [
+      "Applicant address 'Centervillle Rd.' contains an apparent typo (triple-l) — copied exactly as printed.",
+      "Contact email domain 'vorys.com' suggests Jill Tangeman is an attorney at the Vorys law firm, though the firm name is not explicitly stated in the letter.",
+      "EMH&T (Melissa Darby) appears to be the engineering consultant but is only listed in the cc line, not the applicant block."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Isolated Wetland Permit",
+      "permit_no": "DSW401252260W",
+      "action": "comments",
+      "action_date": "2026-02-13",
+      "plans_received_date": "2025-12-09",
+      "expiration_date": null,
+      "applicant": "Bistrozzi LLC",
+      "applicant_address": "2801 Centervillle Rd., Wilmington, DE 19808",
+      "contact_name": "Jill Tangeman",
+      "contact_email": "jstangeman@vorys.com",
+      "contact_firm": "Vorys",
+      "project_name": "Project Bosc Lvl 2 IWP",
+      "site_address": "North of W. Bluelick Road, east of N. Cole Street, and west of State Route 65, American Township and Sugar Creek Township, Allen County, Ohio (40.795845, -84.123601)",
+      "affected_resource": "Isolated wetland (Wetland A) and forested buffer",
+      "parcel_ids": [],
+      "note": "Application received December 9, 2025; subsequent submittal January 6, 2026; administratively complete January 21, 2026; technical comment response received January 30, 2026. This letter constitutes additional technical comments; applicant must respond by February 27, 2026. Project is a data center facility with associated AEP 345 kV transmission line. Contact for comments: Joe Loucek, (330) 963-1258, Joseph.Loucek@epa.ohio.gov. CC: Anna Kamnyev and Rachel Secrest (Ohio EPA DSW); Melissa Darby, EMH&T (mqueendarby@emht.com). Applicant address contains a typo as printed: \"Centervillle\" (triple-l)."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/4006230.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/4006230.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/4007485.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Bosc Lvl 2 IWP",
+    "confidence": "high",
+    "warnings": [
+      "Applicant address contains apparent typo 'Centervillle' (triple-l) — copied exactly as printed.",
+      "Contact firm inferred as 'Vorys' from email domain 'vorys.com'; not explicitly stated in letter.",
+      "EMH&T (Melissa Darby) appears as a CC recipient and may be the engineering consultant firm rather than the applicant contact firm."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Isolated Wetland Permit",
+      "permit_no": "DSW401252260W",
+      "action": "comments",
+      "action_date": "2026-02-13",
+      "plans_received_date": "2025-12-09",
+      "expiration_date": null,
+      "applicant": "Bistrozzi LLC",
+      "applicant_address": "2801 Centervillle Rd., Wilmington, DE 19808",
+      "contact_name": "Jill Tangeman",
+      "contact_email": "jstangeman@vorys.com",
+      "contact_firm": "Vorys",
+      "project_name": "Project Bosc Lvl 2 IWP",
+      "site_address": "North of W. Bluelick Road, east of N. Cole Street, and west of State Route 65, American Township and Sugar Creek Township, Allen County, Ohio",
+      "affected_resource": "Isolated wetland (Wetland A) and forested buffer",
+      "parcel_ids": [],
+      "note": "Application received December 9, 2025; administratively complete January 21, 2026 after January 6, 2026 subsequent submittal. Response to technical comments received January 30, 2026. This letter provides additional technical comments; applicant must respond by February 27, 2026. Project involves construction of a data center facility. AEP 345 kV transmission line corridor alternatives analysis flagged as inadequate. Contact: Joe Loucek, (330) 963-1258, Joseph.Loucek@epa.ohio.gov. CC: Melissa Darby, EMH&T (mqueendarby@emht.com)."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/4007485.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/4007485.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/4009043.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project BOSC",
+    "confidence": "high",
+    "warnings": [
+      "Applicant address for Bistrozzi LLC is not provided in the letter.",
+      "contact_email not listed; only a phone number (614-775-4525) is provided for Melissa Queen Darby.",
+      "The permit number in the OCR reads 'DSW401252260W' — verified against image as printed."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Isolated Wetland Permit",
+      "permit_no": "DSW401252260W",
+      "action": "correspondence",
+      "action_date": "2026-01-30",
+      "plans_received_date": "2025-12-09",
+      "expiration_date": null,
+      "applicant": "Bistrozzi LLC",
+      "applicant_address": null,
+      "contact_name": "Melissa Queen Darby",
+      "contact_email": null,
+      "contact_firm": "EMH&T",
+      "project_name": "Project BOSC",
+      "site_address": "American Township and Sugar Creek Township, Allen County, Ohio",
+      "affected_resource": "isolated wetland (category 2 forested wetland)",
+      "parcel_ids": [],
+      "note": "Letter from EMH&T to Mr. Joe Loucek (Application Coordinator, 401/Wetlands/Mitigation Section, Ohio EPA) providing additional information in response to a \"Complete\" notification received January 21, 2026 for the Project BOSC Level 2 Isolated Wetland Permit application. The additional information addresses practicable on-site alternatives, specifically: (1) why existing 138 kV corridors cannot be upgraded to 345 kV, and (2) why the preferred transmission route cannot be shifted to minimize impacts to the category 2 forested wetland in Area 3. Construction of the data center facility is currently underway with footers already poured."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/4009043.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/4009043.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/4071697.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Dazzler",
+    "confidence": "medium",
+    "warnings": [
+      "No formal permit number printed — '20250390' appears to be EMH&T's internal project number, not a USACE permit or action number.",
+      "No agency letterhead or formal permit action letter present; this is a delineation report/study, not a permit issuance or correspondence letter.",
+      "Applicant mailing address not provided in the visible text.",
+      "Contact name (individual) not identified in the visible text.",
+      "Action date is the report revision date (January 7, 2026), not a formal agency action date."
+    ],
+    "fields": {
+      "agency": "U.S. Army Corps of Engineers",
+      "program": "Section 404 / Waters of the United States Investigation (Jurisdictional Determination)",
+      "permit_no": "20250390",
+      "action": "application",
+      "action_date": "2026-01-07",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Tilted Gate LLC",
+      "applicant_address": null,
+      "contact_name": null,
+      "contact_email": null,
+      "contact_firm": "EMH&T",
+      "project_name": "Project Dazzler",
+      "site_address": "West of U.S. Route 52, east of the Ohio River, south of County Road 7 (Jr. Furnace Powellsville Road), Green Township, Scioto County, Ohio",
+      "affected_resource": "Waters of the United States, including wetlands, streams, ponds, and other surface water features; approximately 914-acre property in Green Township, Scioto County, Ohio",
+      "parcel_ids": [],
+      "note": "This is a delineation report (Investigation of Waters of the United States) prepared by EMH&T for Tilted Gate LLC, revised January 7, 2026. The applicant is requesting an Approved Jurisdictional Determination for potentially non-jurisdictional features and a Preliminary Jurisdictional Determination for jurisdictional resources. Regulated by the USACE Huntington District. Field investigations conducted June 17–19, July 30–31, and August 13, 18, and 26, 2025."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/4071697.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/dazzler-permits/4071697.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/4071709.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Dazzler Site Wetland Mitigation",
+    "confidence": "high",
+    "warnings": [
+      "This letter originates from Stream + Wetlands Foundation, a mitigation bank/ILF program provider, not directly from Ohio EPA or USACE — agency field reflects the issuing organization.",
+      "No Ohio EPA or USACE permit number is referenced in this letter; LST-002 is the S+W account number.",
+      "Contact name defaults to Heather Dardinger (Cc'd engineer of record at EMH&T) as the primary technical contact; the letter is addressed to Randy Barrera as applicant."
+    ],
+    "fields": {
+      "agency": "Stream and Wetlands Foundation",
+      "program": "Huntington In-Lieu Fee Program (Wetland Mitigation)",
+      "permit_no": "LST-002",
+      "action": "correspondence",
+      "action_date": "2026-04-01",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Randy Barrera, Tilted Gate LLC",
+      "applicant_address": "2801 Centerville Rd., 1st FL. (PMP 160), Wilmington, DE 19808",
+      "contact_name": "Heather Dardinger",
+      "contact_email": "hdardinger@emht.com",
+      "contact_firm": "EMH&T",
+      "project_name": "Project Dazzler Site Wetland Mitigation",
+      "site_address": "Gallia Pike & Braunlin Rd., Green Township, Scioto County, Ohio",
+      "affected_resource": "Jurisdictional wetlands / aquatic resources — 5.2 acres forested wetland mitigation credits and 2.2 acres non-forested wetland mitigation credits",
+      "parcel_ids": [],
+      "note": "Letter is from Stream + Wetlands Foundation (not Ohio EPA or USACE directly) confirming reservation of wetland mitigation credits under the Huntington In-Lieu Fee Program for compensatory mitigation. Signed by Vincent E. Messerly, P.E., President. Cc also includes Scott J. Ziance, Vorys, Sater, Seymour, and Pease (SJZiance@vorys.com). Final payment required within 30 days of permit issuance date."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/4071709.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/dazzler-permits/4071709.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/4071710.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Dazzler",
+    "confidence": "high",
+    "warnings": [
+      "No permit number present — application not yet assigned a permit number.",
+      "Applicant mailing address not explicitly stated on cover page.",
+      "Agency is the submitting firm (EMH&T), not a government issuing agency — this is an application package, not an agency action letter.",
+      "Site address not explicitly stated on cover page; Scioto County inferred from Exhibit 4A reference."
+    ],
+    "fields": {
+      "agency": "U.S. Army Corps of Engineers / Ohio EPA",
+      "program": "Section 404 / 401 Water Quality Certification",
+      "permit_no": null,
+      "action": "application",
+      "action_date": "2026-04-03",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Tilted Gate LLC",
+      "applicant_address": null,
+      "contact_name": null,
+      "contact_email": null,
+      "contact_firm": "EMH&T",
+      "project_name": "Project Dazzler",
+      "site_address": null,
+      "affected_resource": "Jurisdictional waters of the U.S. (wetlands, streams, open waters)",
+      "parcel_ids": [],
+      "note": "Cover page of an Individual Section 404/401 Permit Application package prepared by EMH&T (project no. 20250390) on behalf of Tilted Gate LLC. The document is a proposal/application, not an agency issuance letter. No permit number has been assigned yet. Site is located in Scioto County, Ohio (based on soil survey reference). Contact firm address: 5500 New Albany Rd., Columbus, OH 43054."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/4071710.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/dazzler-permits/4071710.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/4074527.epa.yaml",
+    "group": "permits-epa",
+    "title": "BOSC-1A Private Sanitary Sewer Improvement Plan",
+    "confidence": "high",
+    "warnings": [
+      "Contact email MBEINE@EMHT.COM may belong to a different individual at EMH&T, not necessarily Scott Ziance himself.",
+      "No expiration date explicitly stated; permit expires if construction not initiated within 60 months of 4/7/2026 (i.e., 4/7/2031)."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Surface Water Permit-to-Install",
+      "permit_no": "DSWPTI-260294",
+      "action": "approved",
+      "action_date": "2026-04-07",
+      "plans_received_date": "2026-03-25",
+      "expiration_date": null,
+      "applicant": "Bistrozzi LLC",
+      "applicant_address": "4110 N Cole St, Lima, OH 45801",
+      "contact_name": "Scott Ziance",
+      "contact_email": "MBEINE@EMHT.COM",
+      "contact_firm": "EMH&T",
+      "project_name": "BOSC-1A Private Sanitary Sewer Improvement Plan",
+      "site_address": "4110 N Cole St, Lima, OH 45801",
+      "affected_resource": "private sanitary sewer",
+      "parcel_ids": [],
+      "note": "Permit issued with 60-month construction initiation window from effective date of 4/7/2026. Appropriate District Office: Northwest District Office. Appropriate Health Department: Allen County Combined Health District. Contact email (MBEINE@EMHT.COM) appears to belong to a firm contact rather than Scott Ziance directly; contact firm inferred as EMH&T from email domain."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/4074527.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/4074527.PDF",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/4074529.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Bosc",
+    "confidence": "medium",
+    "warnings": [
+      "Permit number DSW-6756 and date 04/07/2026 appear only in the lower-left corner of plan sheets; no formal Ohio EPA cover letter is present in this image set — these may be a tracking/reference number rather than an issued permit number.",
+      "Action inferred as 'application' because the plans are stamped 'OHIO EPA SUBMISSION DATE: 4/2/2026' and 'ISSUE FOR PERMIT'; no approval letter is visible.",
+      "The 04/07/2026 date adjacent to DSW-6756 may be a received/logged date by Ohio EPA rather than a letter date.",
+      "Contact name Robert Zizzo is listed as the Developer (Turner Construction) representative, not the engineer of record; engineer of record is Jeremy Eisele PE of EMH&T."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Surface Water Permit-to-Install",
+      "permit_no": "DSW-6756",
+      "action": "application",
+      "action_date": "2026-04-07",
+      "plans_received_date": "2026-04-02",
+      "expiration_date": null,
+      "applicant": "BISTROZZI LLC",
+      "applicant_address": "4110 N COLE ST, LIMA, OH 45801",
+      "contact_name": "Robert Zizzo",
+      "contact_email": "RZIZZO@TCCO.COM",
+      "contact_firm": "EMH&T",
+      "project_name": "Project Bosc",
+      "site_address": "American Industrial Park Site, Lima, OH 45801",
+      "affected_resource": "Private sanitary sewer, storm sewer, temporary lift station, future booster pump station",
+      "parcel_ids": [
+        "36-0100-03-001.000",
+        "36-0100-04-010.001",
+        "36-0100-04-011.001",
+        "36-1200-01-003.001",
+        "36-1200-01-003.000",
+        "36-1200-03-001.001",
+        "36-1200-03-015.001",
+        "36-1200-03-008.001",
+        "36-1301-04-001.000",
+        "36-1302-02-001.000",
+        "36-1302-02-002.000",
+        "36-1302-01-001.000",
+        "36-1302-01-002.000",
+        "36-1302-01-003.000",
+        "36-1302-01-004.000",
+        "36-1302-02-024.000",
+        "36-1302-02-025.000",
+        "36-1302-02-026.000",
+        "36-1302-02-029.000",
+        "36-1302-02-027.000",
+        "36-1302-02-028.000",
+        "36-1200-03-014.000",
+        "36-1100-04-005.000",
+        "36-1100-04-006.000",
+        "36-1100-04-001.000",
+        "36-1100-01-007.005",
+        "36-1100-01-007.002",
+        "36-1100-01-008.000",
+        "36-1100-01-009.000",
+        "36-1100-01-015.000",
+        "36-1100-01-015.001",
+        "36-1100-01-018.000",
+        "36-1100-01-020.000",
+        "36-1100-01-020.001",
+        "36-1100-01-001.000",
+        "36-0200-04-001.000",
+        "36-0100-03-002.000",
+        "36-1200-02-001.001",
+        "36-1200-03-001.000",
+        "36-1200-03-002.000",
+        "36-1200-03-001.002",
+        "36-1200-03-001.003",
+        "36-1200-03-001.004",
+        "36-1200-03-001.005",
+        "36-1200-03-001.006"
+      ],
+      "note": "Site Construction Plan for Project Bosc 2026, American Township, Allen County, Ohio. Total site: 335.59 AC; total disturbed area: 69.19 AC. Developer: Turner Construction (Robert Zizzo). Engineer of record: Jeremy Eisele, PE, EMH&T Inc., 5500 New Albany Road, Columbus, Ohio 43054. Plan prepared by EMH&T. Ohio EPA Submission Date stamped on plan sheets as 4/2/2026; permit number DSW-6756 and date 04/07/2026 appear in lower-left corner of each sheet. Owner of primary parcels: Bistrozzi LLC. The plan is marked CLIENT CONFIDENTIAL / ISSUE FOR PERMIT."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/4074529.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/4074529.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/4074551.epa.yaml",
+    "group": "permits-epa",
+    "title": "BOSC-1A Private Sanitary Sewer Improvement Plan",
+    "confidence": "high",
+    "warnings": [
+      "No applicant mailing address printed on this page",
+      "No contact name or contact firm visible",
+      "No expiration date present",
+      "Action date inferred from Invoice Sent Date (03/17/2026) as no explicit letter date is shown",
+      "OCR layer noted as unreliable; all values verified against image"
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Surface Water Permit-to-Install",
+      "permit_no": "DSWPTI-260294",
+      "action": "application",
+      "action_date": "2026-03-17",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "BISTROZZI LLC",
+      "applicant_address": null,
+      "contact_name": null,
+      "contact_email": null,
+      "contact_firm": null,
+      "project_name": "BOSC-1A Private Sanitary Sewer Improvement Plan",
+      "site_address": "Allen County, Ohio",
+      "affected_resource": "Private sanitary sewer",
+      "parcel_ids": [],
+      "note": "EPR Status is DIVISION REVIEW IN PROGRESS. WF District: NWDO. Core ID: 658969. Revenue ID: 1779509. Invoiced Amount: $10,593.50. Invoice Sent Date: 03/17/2026. Payment Status: PAID. Invoice Paid Date: 03/25/2026. DSW Division; CDA Type: Surface Water PTI Area; Place Type: Custom Defined Area. No applicant mailing address, contact name, contact firm, or expiration date provided in the document."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/4074551.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/4074551.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/4081890.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Dazzler",
+    "confidence": "high",
+    "warnings": [
+      "Permit number field populated with USACE Individual 404 Public Notice Number (LRH-2025-00939OHR) as no Ohio EPA 401 WQC permit number has been assigned yet — this is a new application.",
+      "OCR notes 'Ginat Creek' for HUC 050901030106 — may be 'Gnat Creek'; verify spelling against image.",
+      "Application ID 537676645 is a form tracking number, not a permit number."
+    ],
+    "fields": {
+      "agency": "Ohio EPA, Division of Surface Water",
+      "program": "401 Water Quality Certification",
+      "permit_no": "LRH-2025-00939OHR",
+      "action": "application",
+      "action_date": "2026-04-14",
+      "plans_received_date": "2026-04-14",
+      "expiration_date": null,
+      "applicant": "Tilted Gate LLC",
+      "applicant_address": "2801 Centerville Rd., 1st Floor (PMB160), Wilmington, DE 19808",
+      "contact_name": "Heather Dardinger",
+      "contact_email": "hdardinger@emht.com",
+      "contact_firm": "EMH&T",
+      "project_name": "Project Dazzler",
+      "site_address": "Gallia Pike & Braunlin Road, Franklin Furnace, OH 45629",
+      "affected_resource": "Wetlands (3.12 acres), Ginat Creek watershed (HUC 050901030106), Grays Branch-Ohio River watershed (HUC 050901030107)",
+      "parcel_ids": [],
+      "note": "Application ID: 537676645. Applicant contact: Randy Barrera (randybarrera@google.com), DC Project Lead, (323) 365-0517. Signatory: Robert Milligan, Director of Environmental (signed electronically by EMHTEnvDept on 04/14/2026). Pre-application reviewer: Graves; pre-filing meeting request submittal: 12/05/2025. Proposed impact type: Fill. Also includes Isolated Wetland Permit (Level 3, submitted 02/13/2026), Individual 404 Permit (Public Notice LRH-2025-00939OHR), and NPDES General Permit (to be submitted 04/03/2026). USACE District: Huntington. Construction start: 07/01/2026; end: 06/30/2031. Total fees: $1,760.00. Property is 792 acres in Green Township, Scioto County, Ohio."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/4081890.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/dazzler-permits/4081890.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/4081896.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Dazzler",
+    "confidence": "medium",
+    "warnings": [
+      "No permit number present — this is a delineation/investigation report, not a formal permit issuance letter.",
+      "No applicant mailing address provided in the document.",
+      "Action date is the revised report date (January 7, 2026); no formal agency letter date is present.",
+      "Agency identified as USACE Huntington District based on document text, not a letterhead.",
+      "Contact name for EMH&T project manager not specified in the visible text."
+    ],
+    "fields": {
+      "agency": "U.S. Army Corps of Engineers",
+      "program": "Section 404 / Waters of the United States Investigation (Jurisdictional Determination)",
+      "permit_no": null,
+      "action": "application",
+      "action_date": "2026-01-07",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Tilted Gate LLC",
+      "applicant_address": null,
+      "contact_name": null,
+      "contact_email": null,
+      "contact_firm": "EMH&T (Engineers, Surveyors, Planners, Scientists)",
+      "project_name": "Project Dazzler",
+      "site_address": "West of U.S. Route 52, east of the Ohio River, south of County Road 7 (Jr. Furnace Powellsville Road), Green Township, Scioto County, Ohio",
+      "affected_resource": "Waters of the United States, including wetlands, streams, ponds, and other surface water features; Ginat Creek subbasin (HUC: 05090103-01-06) and Grays Branch-Ohio River subbasin (HUC: 05090103-01-07)",
+      "parcel_ids": [],
+      "note": "Approximately 914-acre subject property. EMH&T performed delineation of Waters of the United States on behalf of Tilted Gate LLC. Applicant is requesting an Approved Jurisdictional Determination for potentially non-jurisdictional features and a Preliminary Jurisdictional Determination for jurisdictional resources. Regulated by USACE Huntington District. EMH&T project number: 20250390. Document is a revised report dated January 7, 2026; no permit number assigned at this stage."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/4081896.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/dazzler-permits/4081896.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/4081897.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Dazzler",
+    "confidence": "high",
+    "warnings": [
+      "Permit number field contains the Application ID (495265945) as no formal permit number has been assigned at pre-application stage.",
+      "Two agents listed: EMH&T (Heather Dardinger) and Vorys law firm (Scott Ziance, Esq.); contact_firm set to EMH&T as primary technical consultant; Vorys noted in note field.",
+      "Watershed name 'Ginat Creek' may be a transcription of 'Giant Creek' — copied exactly as printed per instructions."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "401 Water Quality Certification and Isolated Wetland Permit",
+      "permit_no": "495265945",
+      "action": "application",
+      "action_date": "2025-12-05",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Tilted Gate LLC",
+      "applicant_address": "2801 Centerville Rd., 1st Floor (PMB160), Wilmington, DE 19808",
+      "contact_name": "Heather Dardinger",
+      "contact_email": "hdardinger@emht.com",
+      "contact_firm": "EMH&T",
+      "project_name": "Project Dazzler",
+      "site_address": "Gallia Pike, Franklin Furnace, OH 45629",
+      "affected_resource": "jurisdictional wetland, isolated wetlands, and a non-jurisdictional pond",
+      "parcel_ids": [],
+      "note": "Pre-application submittal for DSW 401 WQC and Level 3 Isolated Wetland Permit. Applicant proposes a ~792-acre data center campus (two buildings, ~1.7M sq ft) in Green Township, Scioto County, Ohio. PJD/AJD pending from USACE as of submission date. Also seeking Ohio EPA concurrence on wetland ORAM scores. Authorization also needed under Section 404/401 Individual Permit. Contact Scott Ziance (sjziance@vorys.com, Vorys) is the applicant's legal agent. Applicant signatory: Robert Milligan, Director of Environmental. Corps District: Huntington. HUCs: 050901030106 (Ginat Creek), 050901030107 (Grays Branch-Ohio River). Construction anticipated to commence upon isolated wetland permit issuance in 2026, completion by 2030."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/4081897.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/dazzler-permits/4081897.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/4081903.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Dazzler Property",
+    "confidence": "high",
+    "warnings": [
+      "Expiration date of 5 years calculated from letter date (2026-02-05), not explicitly stated as 2031-02-05.",
+      "OCR note: address zip for USACE HQ reads 25701-2018; verified against image as printed."
+    ],
+    "fields": {
+      "agency": "U.S. Army Corps of Engineers",
+      "program": "Section 404 / Jurisdictional Determination",
+      "permit_no": "LRH-2025-00939-OHR",
+      "action": "correspondence",
+      "action_date": "2026-02-05",
+      "plans_received_date": "2025-10-15",
+      "expiration_date": "2031-02-05",
+      "applicant": "Randy Barrera, Tilted Gate, LLC",
+      "applicant_address": "2801 Centerville Road, Wilmington, DE 19808",
+      "contact_name": "Katie Samples",
+      "contact_email": "katie.e.samples@usace.army.mil",
+      "contact_firm": "EMH&T",
+      "project_name": "Project Dazzler Property",
+      "site_address": "West of U.S. Route 52, east of the Ohio River, and south of County Road 7 (Jr. Furnace Powellsville Road), Green Township, Scioto County, Ohio",
+      "affected_resource": "Wetlands (23.18 acres, 6 wetlands), streams (14,306 linear feet, 8 streams including Ohio River), open water marina (6.52 acres); and non-jurisdictional wetlands (36.15 acres, 43 wetlands), streams, swales, ditch, drainage feature, and ponds",
+      "parcel_ids": [],
+      "note": "Letter issues both a Preliminary JD (23.18 ac of 6 wetlands, 14,306 lf of 8 streams, 6.52 ac open water marina found potentially jurisdictional) and an Approved JD (36.15 ac of 43 wetlands, 294 lf of 2 streams, 1,162 lf of 3 swales, 1,050 lf of 1 ditch, 197 lf of 1 drainage feature, 0.37 ac of 2 ponds found NON-jurisdictional). Revisions received November 24, 2025 and December 19, 2025. Appeal deadline: April 6, 2026. Agency point of contact for appeal: Suzanne Chubb, Great Lakes and Ohio River Division, suzanne.l.chubb@usace.army.mil. CC'd: Heather Dardiner (EMH&T), Bryan Lombard (EMH&T), Rachel Secrest (Ohio EPA), Anna Kamnyev (Ohio EPA). Signed by Teresa D. Spagna, Chief, North Branch. 914-acre study area; coordinates 38.606958 lat, -82.838389 lon."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/4081903.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/dazzler-permits/4081903.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/4081908.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Dazzler Site Wetland Mitigation",
+    "confidence": "high",
+    "warnings": [
+      "This letter is from the Stream and Wetlands Foundation (a mitigation bank/ILF provider), not directly from Ohio EPA or USACE — agency field reflects the issuing organization.",
+      "No Ohio EPA or USACE permit number is referenced; LST-002 is the S+W internal account number.",
+      "Multiple contacts cc'd with different firms; both listed in contact fields."
+    ],
+    "fields": {
+      "agency": "Stream and Wetlands Foundation",
+      "program": "Huntington In-Lieu Fee Program (Wetland Mitigation)",
+      "permit_no": "LST-002",
+      "action": "correspondence",
+      "action_date": "2026-04-01",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Randy Barrera, Tilted Gate LLC",
+      "applicant_address": "2801 Centerville Rd., 1st FL. (PMP 160), Wilmington, DE 19808",
+      "contact_name": "Heather Dardinger; Scott J. Ziance",
+      "contact_email": "hdardinger@emht.com; SJZiance@vorys.com",
+      "contact_firm": "EMH&T; Vorys, Sater, Seymour, and Pease",
+      "project_name": "Project Dazzler Site Wetland Mitigation",
+      "site_address": "Gallia Pike & Braunlin Rd., Green Township, Scioto County, Ohio",
+      "affected_resource": "5.2 acres forested wetland mitigation credits and 2.2 acres non-forested wetland mitigation credits; jurisdictional impacts to various aquatic resources",
+      "parcel_ids": [],
+      "note": "Letter from Stream + Wetlands Foundation (S+W) confirming reservation of wetland mitigation credits from the Huntington In-Lieu Fee Program for compensatory mitigation at the Project Dazzler Site. 15% deposit payment requested; final payment due within 30 days of permit issuance. Signed by Vincent E. Messerly, P.E., President. This is not an Ohio EPA or USACE letter directly, but is mitigation correspondence supporting a surface water permit action."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/4081908.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/dazzler-permits/4081908.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/4081909.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Dazzler",
+    "confidence": "medium",
+    "warnings": [
+      "No formal agency-issued permit number visible on cover — '20250390' is likely the EMH&T internal project number, not an EPA/USACE permit number.",
+      "Applicant address not provided on this cover page.",
+      "Site address not explicitly stated on cover page; Scioto County inferred from Exhibit 4A reference to 'Soil Survey of Scioto County'.",
+      "Both USACE (Section 404) and Ohio EPA (Section 401) are target agencies; single agency field cannot capture both.",
+      "Action date is the document date on the cover; no agency receipt or issuance date is present."
+    ],
+    "fields": {
+      "agency": "U.S. Army Corps of Engineers / Ohio EPA",
+      "program": "Section 404 / 401 Water Quality Certification",
+      "permit_no": "20250390",
+      "action": "application",
+      "action_date": "2026-04-03",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Tilted Gate LLC",
+      "applicant_address": null,
+      "contact_name": null,
+      "contact_email": null,
+      "contact_firm": "EMH&T",
+      "project_name": "Project Dazzler",
+      "site_address": null,
+      "affected_resource": null,
+      "parcel_ids": [],
+      "note": "Cover page of an Individual Section 404/401 Permit Application package prepared by EMH&T (project number 20250390) on behalf of Tilted Gate LLC for Project Dazzler, dated April 3, 2026. The document is a proposal/application — no permit number issued yet; 20250390 appears to be the EMH&T internal project number. Site is referenced in Scioto County based on Soil Survey exhibit reference."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/4081909.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/dazzler-permits/4081909.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/4081910.epa.yaml",
+    "group": "permits-epa",
+    "title": "Project Dazzler",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "agency": "U.S. Army Corps of Engineers",
+      "program": "Section 404",
+      "permit_no": "LRH-2025-00939-OHR",
+      "action": "application",
+      "action_date": "2026-04-14",
+      "plans_received_date": null,
+      "expiration_date": "2026-05-14",
+      "applicant": "Timothy Chadwick, Tilted Gate LLC",
+      "applicant_address": "2801 Centerville Road, 1st Floor (PMB 160), Wilmington, Delaware 19808",
+      "contact_name": null,
+      "contact_email": null,
+      "contact_firm": null,
+      "project_name": "Project Dazzler",
+      "site_address": "East of the Ohio River and west of U.S. Route 52, Green Township, Scioto County, Ohio (approx. 38.606686 latitude, -82.839197 longitude)",
+      "affected_resource": "3.12 acres of one (1) wetland (Wetland P), including 2.05 acres of forested wetland and 1.07 acres of emergent wetland; waters of the United States",
+      "parcel_ids": [],
+      "note": "Public Notice issued by USACE Huntington District. Applicant requests DA permit to permanently discharge dredged and/or fill material into 3.12 acres of Wetland P in conjunction with construction of 1.7 million sq ft of data center building space and associated infrastructure on a 792-acre site. Mitigation proposed via purchase of wetland credits from Stream + Wetland Foundation In-Lieu Fee Program (2.2 acres non-forested + 5.2 acres forested wetland credit). Comment period expires May 14, 2026."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/4081910.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/dazzler-permits/4081910.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/4132514.epa.yaml",
+    "group": "permits-epa",
+    "title": "Bistrozzi LLC Data Center (Project BOSC) - Initial Installation",
+    "confidence": "high",
+    "warnings": [
+      "This is the FINAL Air Pollution Permit-to-Install (DAPC), issued 2026-05-28 — it supersedes the 2025-12-10 DRAFT of the same permit number P0138965 already in the corpus (eDocs 3987141, 3987144). Action recorded as 'issued'.",
+      "Air Pollution permit (Division of Air Pollution Control), not Division of Surface Water / 401 / wetland — outside the typical DSW scope of the EpaPermitAction schema; air-specific substance captured in the extra structured fields below.",
+      "Per-engine nameplate power is NOT stated in this final permit — engine make/model/size is redacted as Confidential Business Information / trade secret (Comments 16, 19; Response 16). The ~2,750 ekW/engine figure behind the ~313 MW backup total comes from the DRAFT public notice (eDocs 3987141/3987144), not this document. This permit confirms the unit COUNT (114 hall gensets + 1 HUBGEN = 115) and emission RATES, not the per-unit ekW.",
+      "The draft extractions flagged a 114-vs-115 generator discrepancy; the final permit resolves it — 115 emissions units P001-P115, of which P001-P114 are identical data-hall gensets and P115 is a separate, smaller HUBGEN (distinct emission rates, Table 1/2).",
+      "Manual review (dpi=0 sentinel). Dollar/limit figures are high-confidence (printed in the issued permit body, not OCR); see pages cited inline."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "program": "Air Pollution Permit-to-Install (Final, Division of Air Pollution Control)",
+      "permit_no": "P0138965",
+      "action": "issued",
+      "action_date": "2026-05-28",
+      "plans_received_date": null,
+      "expiration_date": null,
+      "applicant": "Bistrozzi LLC",
+      "applicant_address": "1700 K Street, N.W., Fifth Floor, Washington, DC 20006-3817",
+      "contact_name": "Michael Montfort",
+      "contact_email": null,
+      "contact_firm": "Bistrozzi LLC",
+      "project_name": "Bistrozzi LLC Data Center (Project BOSC) - Initial Installation",
+      "site_address": "N Cole Rd. and W Bluelick Rd., Lima, OH 45801",
+      "affected_resource": "115 emergency CI diesel-fired gensets (P001-P115; 114 data-hall gensets + 1 HUBGEN) and 36 cooling towers (P120-P155) for a data center",
+      "parcel_ids": [],
+      "facility_id": "0302022054",
+      "permit_type": "Initial Installation",
+      "effective_date": "2026-05-28",
+      "issued_date": "2026-05-28",
+      "permit_fee_usd": 71755,
+      "applications": [
+        "A0080713",
+        "A0080278"
+      ],
+      "permit_description": "Installation of a data center with 115 diesel-fired generators and 36 cooling towers.",
+      "issuing_officials": {
+        "director": "John Logue (Director, Ohio EPA)",
+        "dapc_chief": "Robert Hodanbosi (Chief, Division of Air Pollution Control)",
+        "district_office": "Ohio EPA DAPC, Northwest District Office, 347 North Dunbridge Rd., Bowling Green, OH 43402, (419)352-8461"
+      },
+      "regulatory_status": {
+        "nsr": "synthetic minor to avoid major New Source Review (federally enforceable NOx/CO caps; see facility_wide_limits)",
+        "title_v": "major source — Title V operating-permit application due within 12 months of commencing operation (Response 40)",
+        "neshap": "area-source 40 CFR 63 Subpart ZZZZ, met via compliance with 40 CFR 60 Subpart IIII (implemented/enforced by U.S. EPA Region 5; Ohio EPA not taking delegation)",
+        "psd": "no",
+        "pte_basis": "potential-to-emit based on 500 hr/yr per engine (U.S. EPA 1995 PTE-for-emergency-generators memo; Response 51)"
+      },
+      "emission_unit_groups": {
+        "emergency_generators": {
+          "ids": "P001-P115",
+          "count": 115,
+          "detail": "P001-P114 = data-hall gensets GEN 1-1..1-38, GEN 2-1..2-38, GEN 3-1..3-38 (three groups of 38); P115 = HUBGEN (separate, smaller unit)",
+          "rule_basis": "40 CFR 60 Subpart IIII; Tier 2 CI ICE > 560 kW, < 10 L/cylinder, Model Year 2006+"
+        },
+        "cooling_towers": {
+          "ids": "P120-P155",
+          "count": 36,
+          "detail": "non-contact cooling towers w/ drift eliminators TWR 1-1..1-12, TWR 2-1..2-12, TWR 3-1..3-12 (three groups of 12)"
+        }
+      },
+      "data_hall_grouping": "Three generator groups of 38 (GEN 1/2/3) and three cooling-tower groups of 12 (TWR 1/2/3) — the emission-unit grouping corroborates a THREE-data-hall campus layout (resolves the audit's anticipated \"approx three halls\"). Per-hall: 38 gensets + 12 cooling towers. (Plot plan / building footprint itself is not an attachment to this issued-permit PDF.)",
+      "facility_wide_limits": {
+        "nox_tpy": 235.62,
+        "co_tpy": 96.06,
+        "basis": "synthetic-minor caps to stay under major-source NSR; tracked by hours-at-load formulas (B.4.b) using per-engine rates below",
+        "per_engine_rates_lb_per_hr": {
+          "P001-P114": {
+            "nox_le_25pct_load": 12.15,
+            "nox_gt_25pct_load": 75.78,
+            "co_le_25pct_load": 7.08,
+            "co_gt_25pct_load": 17.62
+          },
+          "P115": {
+            "nox": 13.71,
+            "co": 7.72
+          }
+        }
+      },
+      "engine_emission_standards": {
+        "pm_g_per_kwh": 0.2,
+        "nox_plus_nmhc_g_per_kwh": 6.4,
+        "co_g_per_kwh": 3.5,
+        "opacity": "20% accel / 15% lugging / 50% peaks (40 CFR 1039.105)"
+      },
+      "fuel_spec": {
+        "fuels": "ultra-low sulfur diesel (ULSD) or renewable diesel (HVO / hydrotreated vegetable oil)",
+        "sulfur_max_ppm": 15,
+        "cetane_or_aromatics": "min cetane index 40 OR max aromatic content 35 vol%",
+        "note": "HVO is not a fossil fuel (Response 11); air-toxics modeling not required because combined toxic-air-contaminant PTE < 1.0 tpy (ORC 3704.03(F); OAC 3745-114-01)"
+      },
+      "cooling_tower_limits": {
+        "pm10_tpy_per_unit": 0.11,
+        "pm25_tpy_per_unit": 0.04,
+        "combined_pm10_tpy": "~4.0",
+        "combined_pm25_tpy": "~1.4",
+        "drift_loss_max_pct": 0.001
+      },
+      "reported_facility_emissions": {
+        "nox_tpy": 235.62,
+        "co_tpy": 96.06,
+        "pm10_tpy": "~4.0",
+        "pm25_tpy": "~1.4",
+        "so2_and_haps_tpy": "< 1 each (facility-wide)"
+      },
+      "response_to_comments": {
+        "count": 64,
+        "public_notice_date": "2026-02-09",
+        "hearing_date": "2026-03-11",
+        "comment_period_end": "2026-03-25",
+        "topics": [
+          "Public Health and Air Emissions (asthma/cancer concerns, NAAQS, PFAS in cooling-water additives)",
+          "Environmental Justice (EJScreen / Title VI)",
+          "Air Quality / Monitoring (SLAMS; Lima monitor AQS 39-003-0009 at 2650 Bible Rd; no fenceline monitoring required)",
+          "Air Quality Analysis (NOx state-only dispersion modeling, GAII 12.5 vs modeled 11.66 ug/m3; PSD/NSR thresholds not triggered)",
+          "Transparency and Public Process (trade-secret/CBI redactions of engine specs; ORC 3704.08)",
+          "Permitting Process (synthetic-minor; 180-day clock; app 10/19/25, revised 12/2/25)",
+          "Diesel Engine Emissions and Operations (BAT/Tier 2; 100-hr non-emergency cap; 500-hr PTE; no required testing)",
+          "Water Use and Wastewater (referred to ODNR / ODH; cooling-water blowdown may need an NPDES permit — out of air-permit scope)",
+          "Power Grid (referred to PUCO / utility)",
+          "Wildlife, Animals, Agriculture, and Ecosystems (NPDES CGP 2GC08468 to Turner Construction 2025-11-10; level-1 isolated wetland permit after withdrawing a level-2 application)",
+          "Noise (referred to American Township)",
+          "Grave Site (burial site on property; company to contact commenter)",
+          "General Comments Against the Project"
+        ]
+      },
+      "supersedes": {
+        "draft_permit": "P0138965 (DRAFT, 2025-12-10)",
+        "draft_extractions": [
+          "permits/3987141.epa.yaml",
+          "permits/3987144.epa.yaml"
+        ]
+      },
+      "note": "FINAL Ohio EPA Air Pollution Permit-to-Install P0138965 for Bistrozzi LLC (Project BOSC), Facility ID 0302022054, Allen County — issued and effective 2026-05-28, permit fee $71,755, applications A0080713 (12/02/2025) + A0080278. Authorizes a data center with 115 diesel-fired emergency generators (P001-P115: 114 identical data-hall gensets in three groups of 38 + one HUBGEN) and 36 non-contact cooling towers (P120-P155, three groups of 12) — the three-group emission-unit structure corroborates a three-data-hall campus. Federally enforceable synthetic-minor caps keep the facility under major-source NSR: NOx 235.62 tpy and CO 96.06 tpy (rolling 12-month, combined), demonstrated by per-engine hours-at-load recordkeeping (Table 1/2 rates). Engines are Tier 2 CI ICE > 560 kW under 40 CFR 60 Subpart IIII (0.20 g PM, 6.4 g NOx+NMHC, 3.5 g CO per kW-hr), fueled on ULSD or HVO renewable diesel (<= 15 ppm S). Cooling towers limited to ~4.0 tpy PM10 / ~1.4 tpy PM2.5 combined via 0.001% drift eliminators. The facility is MAJOR for Title V (operating-permit app due within 12 months of commencing operation). Engine make/model/size is withheld as trade secret (Comments 16/19), so the per-engine ekW (and thus the ~313 MW backup figure) is NOT in this document — it derives from the draft public notice. Document includes a 64-item Response to Comments (public notice 2026-02-09; hearing 2026-03-11; comment period closed 2026-03-25). Supersedes the 2025-12-10 DRAFT of the same permit (eDocs 3987141/3987144). Source eDocument 4132514 (Ohio EPA eDocument/eBusiness; Facility 0302022054)."
+    },
+    "approximate_paths": [
+      "cooling_tower_limits.combined_pm10_tpy",
+      "cooling_tower_limits.combined_pm25_tpy",
+      "reported_facility_emissions.pm10_tpy",
+      "reported_facility_emissions.pm25_tpy"
+    ],
+    "citation": {
+      "source": "permits/4132514.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 49, 50, 51, 52, 53, 55, 56, 57, 58, 59, 63, 64, 65]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/4132514.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "permits/lma1a-npdes-cgp-coverage.epa.yaml",
+    "group": "permits-epa",
+    "title": "LMA 1A (BOSC / Bistrozzi data-center campus)",
+    "confidence": "high",
+    "warnings": [
+      "The *AG -> *BG suffix mechanics are inferred from the document set, not stated: *AG is Turner's initial \"New\" coverage (eff 2025-11-10); *BG carries an effective date of 2025-11-12 on the Igel co-permittee approval and is the number on the 2026-06-01 Modification (approved 2026-06-10). The continuous-coverage-from-2025-11-10 finding does NOT depend on the suffix mechanics.",
+      "Each NOI's \"Proposed Project Start Date\" is 2025-11-03 (a planning date on the form), 7 days before the *AG effective date (2025-11-10); but the earliest DOCUMENTED earth disturbance is 2025-12-08 (ASWCD ESC #177506). The declared start is not evidence of actual commencement.",
+      "NOI lat/long 40.79391703, -84.12460022 differs slightly from the 401 permits' 40.795845, -84.123601 — same campus, different reported point. Facility name \"LMA 1A\" and address \"N of W Bluelick Rd, E of N Cole St\" preserved exactly as printed."
+    ],
+    "fields": {
+      "agency": "Ohio EPA (Division of Surface Water)",
+      "program": "NPDES Construction Site Stormwater General Permit (OHC000006) coverage",
+      "permit_no": "2GC08468*AG",
+      "action": "approved",
+      "permit_action": "new",
+      "action_date": "2025-11-10",
+      "plans_received_date": "2025-10-29",
+      "expiration_date": "2028-04-22",
+      "applicant": "Turner Construction Company",
+      "applicant_address": "28 N St. Clair Street Suite 200, Toledo, OH 43604",
+      "contact_name": "Jared Grigg (Project EHS Manager)",
+      "contact_email": "jgrigg@tcco.com",
+      "contact_firm": "Turner Construction Company",
+      "project_name": "LMA 1A (BOSC / Bistrozzi data-center campus)",
+      "site_address": "N of W Bluelick Rd, E of N Cole St, Lima, Allen County, OH 45801 (40.79391703, -84.12460022)",
+      "affected_resource": "construction stormwater; receiving water Pike Run",
+      "note": "Initial NPDES Construction General Permit coverage for the data-center campus, granted to Turner Construction effective 2025-11-10 under OHC000006 (approval letter eDoc 3898357; New NOI eDoc 3898350, submitted 2025-10-29). This is the campus coverage record the ASWCD left \"TBD\"; it RESOLVES the audit's #143 and the #154 timing question — coverage attached 2025-11-10, ~4 weeks before the earliest documented earth disturbance (2025-12-08). Signed John Logue, Director."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/lma1a-npdes-cgp-coverage.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/3898357.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "idem/fort-wayne/47378f.idem.yaml",
+    "group": "permits-idem",
+    "title": "Hatchworks LLC (Project Zodiac) — IDEM Title V air permit, power basis",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "subject": "Hatchworks LLC (Project Zodiac) — IDEM Title V air permit, power basis",
+      "kind": "idem",
+      "source_document": "data/documents/idem/fort-wayne/47378f.pdf",
+      "permit_number": "003-47378-00530",
+      "permit_level": "Title V New Source Construction (Minor PSD/EO)",
+      "issued": "2024-09-06",
+      "issuing_agency": "Indiana DEM, Office of Air Quality",
+      "facility_ai_id": "133680",
+      "oaq_stationary_source_id": "1800300530",
+      "extracted_at": "2026-06-27",
+      "method": "hand extraction from the PDF text layer (pypdf); figures verbatim unless tagged [inference]"
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "idem/fort-wayne/47378f.idem.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": null,
+    "source_doc_render_class": null,
+    "source_doc_published": false
+  },
+  {
+    "rel": "idem/fort-wayne/wqc001454.idem.yaml",
+    "group": "permits-idem",
+    "title": "Project Zodiac Phase 3 — IDEM §401 Water Quality Certification WQC001454",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "subject": "Project Zodiac Phase 3 — IDEM §401 Water Quality Certification WQC001454",
+      "kind": "idem",
+      "permit_number": "WQC001454",
+      "corps_id": "LRE-2023-00646-102",
+      "issuing_agency": "Indiana DEM, Office of Water Quality (Waterways Section)",
+      "source_documents": [
+        "data/documents/idem/fort-wayne/notice_20260403_401_wqc001454.pdf",
+        "data/documents/idem/fort-wayne/043026-IDEM-Hearing-ORIGINAL.pdf",
+        "data/documents/idem/fort-wayne/public-comments-compiled.pdf",
+        "data/documents/idem/fort-wayne/Response-to-Public-Comments-WQC001454-Project-Zodiac-Phase-3-Google-Data-Center.pdf",
+        "data/documents/idem/fort-wayne/WQC001454-Section-401-WQC-Approval.pdf"
+      ],
+      "extracted_at": "2026-06-27",
+      "method": "hand extraction from the PDF text layer (pypdf); figures verbatim unless tagged [inference]"
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "idem/fort-wayne/wqc001454.idem.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": null,
+    "source_doc_render_class": null,
+    "source_doc_published": false
+  },
+  {
+    "rel": "fort-wayne/wwtp-in0032191.dmr.yaml",
+    "group": "permits-npdes",
+    "title": "FORT WAYNE WWTP",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "npdes_id": "IN0032191",
+      "name": "FORT WAYNE WWTP",
+      "permit_type": "NPDES Individual Permit",
+      "permit_status": "Admin Continued",
+      "major_minor": "M",
+      "snc_status": "Effluent - Monthly Average Limit",
+      "window": "2023-01-01..2023-12-31"
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "fort-wayne/wwtp-in0032191.dmr.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": null,
+    "source_doc_render_class": null,
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/1II00129.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Wilmington Sanitary Landfill",
+    "confidence": "high",
+    "warnings": [
+      "No public notice number found in document",
+      "No comment period end date found in document",
+      "Permit number updated from 1II00129*GD to 1II00129*HD upon modification effective date; recorded as the updated number per the permit text"
+    ],
+    "fields": {
+      "facility_name": "Wilmington Sanitary Landfill",
+      "permit_no": "1II00129*HD",
+      "permit_action": "modification",
+      "applicant": "City of Wilmington",
+      "application_no": "OH0131946",
+      "public_notice_no": null,
+      "public_notice_date": "2025-03-11",
+      "comment_period_end": null,
+      "facility_address": "397 South Nelson Avenue, Wilmington, OH 45177",
+      "discharge_address": null,
+      "receiving_water": "Lytle Creek at River Mile 6.5",
+      "stream_network": null,
+      "outfalls": [
+        "001",
+        "002",
+        "101"
+      ],
+      "note": "Permit modified from 1II00129*GD to 1II00129*HD, effective May 1, 2025. Modification adds Stormwater Outfall 101 for reporting during new cell construction or sedimentation pond construction activities impacting sedimentation pond 1. Previous permit number was 1II00129*GD. Application number remains OH0131946. Permit expires September 30, 2028."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/1II00129.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/wilmington/1II00129.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/1IW00240.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Wilmington Water Plant",
+    "confidence": "high",
+    "warnings": [
+      "No public notice number, date, or comment period end date found in the document.",
+      "Permit action inferred as 'renewal' based on context (existing permit with new effective/expiration dates); not explicitly stated.",
+      "The OCR header shows '1IW00240*ID' which matches the permit number in the body text — verified against image."
+    ],
+    "fields": {
+      "facility_name": "Wilmington Water Plant",
+      "permit_no": "1IW00240*ID",
+      "permit_action": "renewal",
+      "applicant": "Wilmington Water Plant",
+      "application_no": "OH0041891",
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "1142 Prairie Avenue, Wilmington, Ohio, Clinton County",
+      "discharge_address": null,
+      "receiving_water": "Unnamed Tributary of Lytle Creek",
+      "stream_network": null,
+      "outfalls": [
+        "1IW00240001",
+        "1IW00240002",
+        "1IW00240003"
+      ],
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/1IW00240.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/wilmington/1IW00240.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/1MP00060.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Wilmington Nursery",
+    "confidence": "high",
+    "warnings": [
+      "This is a Land Application Management Plan permit, not a standard NPDES discharge permit — outfall IDs are monitoring stations, not traditional discharge outfalls.",
+      "Expiration date in document reads 'September 31, 2030' which is an invalid calendar date; likely intended as September 30, 2030.",
+      "No public notice number or comment period end date found in the document.",
+      "Application number and permit number appear identical (1MP00060*AM).",
+      "OCR rendered the action date as 'September 1, 2025' but the image header and stamp clearly show 09/17/2025."
+    ],
+    "fields": {
+      "facility_name": "Wilmington Nursery",
+      "permit_no": "1MP00060*AM",
+      "permit_action": "new",
+      "applicant": "Kyle Isler, Wilmington Nursery",
+      "application_no": "1MP00060*AM",
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "8600 East Pleasant Valley Road, Independence, Ohio 44131",
+      "discharge_address": "2065 Rombach Avenue, Wilmington, Ohio (Clinton County)",
+      "receiving_water": null,
+      "stream_network": null,
+      "outfalls": [
+        "1MP00060901",
+        "1MP00060902"
+      ],
+      "note": "LAMP (Land Application Management Plan) — NOT a discharge authorization. The permit explicitly states it is not an authorization for a discharging land application system; receiving_water is cleared to prevent a spurious discharges_to edge in the entity graph. Monitoring water context: northern swale (station 1MP00060901) and southern swale (station 1MP00060902), both upstream of an agricultural pond at 2065 Rombach Ave, Wilmington, OH, Clinton County. The swales drain to the ag pond, not to a regulated surface water. Exclude from any surface-water load screen or assimilative capacity calculation. Action date: 2025-09-17; Effective date: 2025-10-01; Expiration date: 2030-09-30 (document reads 'September 31, 2030', an invalid date — likely September 30, 2030). Applicant mailing address is Independence, OH (Cuyahoga County); land-application site is Clinton County. Application number and permit number are the same (1MP00060*AM)."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/1MP00060.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/wilmington/1MP00060.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/1PD00008.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "City of Piqua wastewater treatment works",
+    "confidence": "high",
+    "warnings": [
+      "No public notice number or comment period end date present in the document",
+      "Permit action not explicitly stated; 'renewal' inferred from context",
+      "Stream network downstream of Great Miami River not stated in document"
+    ],
+    "fields": {
+      "facility_name": "City of Piqua wastewater treatment works",
+      "permit_no": "1PD00008*WD",
+      "permit_action": "renewal",
+      "applicant": "City of Piqua",
+      "application_no": "OH0027049",
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "121 Bridge Street, Piqua, Ohio, Miami County",
+      "discharge_address": null,
+      "receiving_water": "Great Miami River",
+      "stream_network": "Great Miami River → Ohio River (Great Miami basin, Miami County, OH; HUC-8 05080002)",
+      "outfalls": [
+        "1PD00008001",
+        "1PD00008300",
+        "1PD00008581"
+      ],
+      "note": "Action Date: August 9, 2022. Effective Date: September 1, 2022. Expiration Date: August 31, 2027. No public notice number or comment period end date found in the document. Outfall 1PD00008300 is SSO monitoring; 1PD00008581 is sludge monitoring. Permit action inferred as renewal based on context (existing facility, expiration/effective dates); no explicit label present. Basin attribution: Great Miami basin, Miami County — not a Little Miami / Wilmington discharger."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/1PD00008.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/troy-piqua/1PD00008.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/1PD00013.fs.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Wilmington Wastewater Treatment Plant (WWTP)",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "facility_name": "Wilmington Wastewater Treatment Plant (WWTP)",
+      "permit_no": "1PD00013*QD",
+      "permit_action": "modification",
+      "applicant": "City of Wilmington, 69 North South Street, Wilmington, OH 45177",
+      "application_no": "OH0028134",
+      "public_notice_no": "183881",
+      "public_notice_date": "2023-05-19",
+      "comment_period_end": "2023-06-19",
+      "facility_address": "Wilmington Wastewater Treatment Plant, 475 South Nelson Avenue, Wilmington, OH 45177, Clinton County",
+      "discharge_address": null,
+      "receiving_water": "Lytle Creek",
+      "stream_network": "Lytle Creek to Todd Fork to Little Miami River to Ohio River",
+      "outfalls": [
+        "001",
+        "1PD00013602",
+        "1PD00013586"
+      ],
+      "note": "Permit modification basis: City of Wilmington applied for PTI #1543170 to expand WWTP capacity from 3.0 to 4.5 MGD average daily design flow. New outfall 001 limits effective March 1, 2026. Station 1PD00013602 is the secondary treatment bypass (to be eliminated with expansion). Station 1PD00013586 is a new station proposed for sludge disposal monitoring. Discharge occurs at Lytle Creek at River Mile 6.83."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/1PD00013.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/wilmington/1PD00013.fs.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/1PD00013.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "City of Wilmington WWTP",
+    "confidence": "high",
+    "warnings": [
+      "No public notice number found in document.",
+      "No comment period end date found in document.",
+      "Permit number on cover letter is 1PD00013*PD (prior) being changed to 1PD00013*QD (new/modified); recorded the new number per document body."
+    ],
+    "fields": {
+      "facility_name": "City of Wilmington WWTP",
+      "permit_no": "1PD00013*QD",
+      "permit_action": "modification",
+      "applicant": "City of Wilmington, Steven Honeycutt",
+      "application_no": "OH0028134",
+      "public_notice_no": null,
+      "public_notice_date": "2023-05-12",
+      "comment_period_end": null,
+      "facility_address": "475 South Nelson Avenue, Wilmington, Ohio 45177, Clinton County",
+      "discharge_address": null,
+      "receiving_water": "Lytle Creek",
+      "stream_network": null,
+      "outfalls": [
+        "001",
+        "1PD00013001"
+      ],
+      "note": "Modification letter dated May 12, 2023; prior permit number was 1PD00013*PD, changed to 1PD00013*QD upon modification effective July 1, 2023. Expiration date: September 30, 2026. Application number remains OH0028134. Interim limits apply through Feb 28, 2026; final limits from March 1, 2026."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/1PD00013.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/wilmington/1PD00013.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/1PT00125.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Clinton County Board of Developmental Disabilities",
+    "confidence": "high",
+    "warnings": [
+      "No public notice number found in document",
+      "No comment period end date found in document",
+      "Permit action (renewal) inferred from context, not explicitly stated",
+      "Station 1PT00125888 appears in Part II text but as '588' in Part I sludge table — possible OCR/numbering discrepancy",
+      "Stream network beyond Wilson Creek not stated in document"
+    ],
+    "fields": {
+      "facility_name": "Clinton County Board of Developmental Disabilities",
+      "permit_no": "1PT00125*BD",
+      "permit_action": "renewal",
+      "applicant": "Clinton County Board of Developmental Disabilities",
+      "application_no": "OH0147907",
+      "public_notice_no": null,
+      "public_notice_date": "2022-10-31",
+      "comment_period_end": null,
+      "facility_address": "4425 State Route 730, Wilmington, Ohio, Clinton County",
+      "discharge_address": null,
+      "receiving_water": "unnamed tributary of Wilson Creek",
+      "stream_network": "unnamed tributary of Wilson Creek",
+      "outfalls": [
+        "1PT00125001",
+        "1PT00125588",
+        "1PT00125888",
+        "1PT00125586"
+      ],
+      "note": "Action Date: October 31, 2022; Effective Date: January 1, 2023; Expiration Date: December 31, 2027. Signed by Laurie A. Stevenson, Director. No public notice number or comment period end date found in document. Outfall 1PT00125001 is the final effluent outfall; 1PT00125588/888 are sludge stations; 1PT00125586 is emergency landfill sludge disposal station. Permit action inferred as renewal based on application type language."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/1PT00125.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/wilmington/1PT00125.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/1PV00037.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Hidden Valley Mobile Home Park",
+    "confidence": "high",
+    "warnings": [
+      "No public notice number found in document",
+      "No comment period end date found in document",
+      "Discharge address appears same as facility address; no distinct discharge address stated",
+      "Stream network downstream of Tawawa Creek not stated in document",
+      "Action date used as public_notice_date proxy; actual public notice date not explicitly stated"
+    ],
+    "fields": {
+      "facility_name": "Hidden Valley Mobile Home Park",
+      "permit_no": "1PV00037*ED",
+      "permit_action": "renewal",
+      "applicant": "Alexander R. Reck dba Hidden Valley MHP",
+      "application_no": "OH0040657",
+      "public_notice_no": null,
+      "public_notice_date": "2025-07-21",
+      "comment_period_end": null,
+      "facility_address": "5880 State Route 29 East, Sidney, Ohio, Shelby County",
+      "discharge_address": null,
+      "receiving_water": "Tawawa Creek at River Mile 3.3",
+      "stream_network": "Tawawa Creek → Great Miami River → Ohio River (Great Miami basin, Shelby County, OH; HUC-8 05080001)",
+      "outfalls": [
+        "1PV00037001",
+        "1PV00037588"
+      ],
+      "note": "Action Date: 2025-07-21; Effective Date: 2025-09-01; Expiration Date: 2030-08-31. Outfall 1PV00037001 is the final effluent discharge after UV disinfection; 1PV00037588 is the sludge/biosolids transfer station. Design flow is 0.015 MGD. Basin attribution: Great Miami basin, Shelby County — not a Little Miami / Wilmington discharger; do not count this design-flow figure toward Lytle Creek or any Little Miami assimilative screen."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/1PV00037.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/sidney/1PV00037.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/1PV00089.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Pine Hills Mobile Home Park",
+    "confidence": "high",
+    "warnings": [
+      "No public notice number, public notice date, or comment period end date found in document.",
+      "permit_action inferred as 'renewal' based on context (existing permit with new action/effective/expiration dates); no explicit label present.",
+      "1PV00089588 is a sludge monitoring station, not a discharge outfall; listed under outfalls for completeness.",
+      "Stream network downstream chain beyond Lytle Creek not stated in document."
+    ],
+    "fields": {
+      "facility_name": "Pine Hills Mobile Home Park",
+      "permit_no": "1PV00089*DD",
+      "permit_action": "renewal",
+      "applicant": "RLR Investments, LLC dba Pine Hills Mobile Home Park",
+      "application_no": "OH0141232",
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "2671 State Route 22/3, Wilmington, Ohio, Clinton County",
+      "discharge_address": null,
+      "receiving_water": "unnamed tributary of Lytle Creek",
+      "stream_network": "unnamed tributary of Lytle Creek",
+      "outfalls": [
+        "1PV00089001",
+        "1PV00089588"
+      ],
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/1PV00089.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/wilmington/1PV00089.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/1PX00010.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Wilmington RV Resort",
+    "confidence": "high",
+    "warnings": [
+      "permit_action inferred as 'new' — document does not explicitly state renewal or new; application number OH0085863 suggests a new facility",
+      "No public notice number or comment period end date present in the document",
+      "stream_network only partially stated: unnamed tributary of Todd Fork — no further downstream chain provided"
+    ],
+    "fields": {
+      "facility_name": "Wilmington RV Resort",
+      "permit_no": "1PX00010*HD",
+      "permit_action": "new",
+      "applicant": "MHC TT, L.P.",
+      "application_no": "OH0085863",
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "1786 OH-380, Wilmington, Ohio, Clinton County",
+      "discharge_address": null,
+      "receiving_water": "unnamed tributary of Todd Fork",
+      "stream_network": "unnamed tributary to Todd Fork",
+      "outfalls": [
+        "1PX00010001",
+        "1PX00010588"
+      ],
+      "note": "Action Date: March 4, 2026; Effective Date: April 1, 2026; Expiration Date: March 31, 2031. No public notice number or comment period end date found in the document. Permit action is likely 'new' given application number OH0085863 (no prior permit cited), but could be a renewal — document does not explicitly state. Outfall 1PX00010588 is a sludge monitoring station (not a discharge outfall). Sampling station 1PX00010001 coordinates: N 39.454167, W -83.932778."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/1PX00010.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/wilmington/1PX00010.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/2PD00006.fs.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Van Wert Wastewater Treatment Plant (WWTP)",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "facility_name": "Van Wert Wastewater Treatment Plant (WWTP)",
+      "permit_no": "2PD00006*VD",
+      "permit_action": "renewal",
+      "applicant": "City of Van Wert, 515 North Main Street, Van Wert, OH 45891",
+      "application_no": "OH0027910",
+      "public_notice_no": "210566",
+      "public_notice_date": "2025-03-17",
+      "comment_period_end": "2025-04-16",
+      "facility_address": "Van Wert WWTP, 7998 State Route 127 North, Van Wert, OH 45891, Van Wert County",
+      "discharge_address": null,
+      "receiving_water": "Town Creek",
+      "stream_network": "Middle Creek, Little Auglaize River, Auglaize River, Maumee River, Lake Erie",
+      "outfalls": [
+        "001"
+      ],
+      "note": "Discharge address (facility where discharge occurs) is the same as the facility address. Outfall 001 is referenced in multiple tables (e.g., Table 2, Table 8, Table 15) throughout the document. Applicant address is distinct from discharge/facility address."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/2PD00006.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/van-wert/2PD00006.fs.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/2PD00006.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Van Wert WWTP",
+    "confidence": "high",
+    "warnings": [
+      "No public notice number, public notice date, or comment period end date found in the document.",
+      "Permit action inferred as 'renewal' based on context (existing facility, expiration/effective dates, reissuance format); not explicitly stated.",
+      "Stream network downstream of Town Creek not stated in the document."
+    ],
+    "fields": {
+      "facility_name": "Van Wert WWTP",
+      "permit_no": "2PD00006*VD",
+      "permit_action": "renewal",
+      "applicant": "Van Wert WWTP",
+      "application_no": "OH0027910",
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "7998 S.R. 127 N., Van Wert, Ohio, Van Wert County",
+      "discharge_address": null,
+      "receiving_water": "Town Creek at River Mile 13.87",
+      "stream_network": null,
+      "outfalls": [
+        "2PD00006001",
+        "2PD00006004"
+      ],
+      "note": "Action Date: 2025-04-18. Effective Date: 2025-06-01. Expiration Date: 2030-05-31. Outfall 001 has interim limits (first 36 months) and final limits (remaining period). Outfall 004 is a CSO monitoring station. No public notice number, date, or comment period end found in the document."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/2PD00006.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/van-wert/2PD00006.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "American II Wastewater Treatment Plant",
+    "confidence": "high",
+    "warnings": [
+      "Comment period end date (2025-05-28) is calculated as 30 days after public notice date; not explicitly printed.",
+      "Stream network beyond Dug Run not stated in document.",
+      "permit_action inferred as 'renewal' based on the document referencing a 'timely submitted NPDES permit renewal application'."
+    ],
+    "fields": {
+      "facility_name": "American II Wastewater Treatment Plant",
+      "permit_no": "2PH00006*LD",
+      "permit_action": "renewal",
+      "applicant": "Allen County Board of Commissioners, 4140 Diller Road, Lima, OH, 45807",
+      "application_no": "OH0037338",
+      "public_notice_no": "211697",
+      "public_notice_date": "2025-04-28",
+      "comment_period_end": "2025-05-28",
+      "facility_address": "4140 Diller Road, Lima, OH, 45807, Allen County",
+      "discharge_address": null,
+      "receiving_water": "Dug Run at River Mile 3.1",
+      "stream_network": null,
+      "outfalls": [
+        "001"
+      ],
+      "note": "Comment period end is 30 days after public notice date (2025-04-28), calculated as 2025-05-28. Stream network downstream of Dug Run not stated. Nature of business: Municipal Wastewater Treatment Plant. Design flow: 1.2 MGD. Outfall station number listed as 2PH00006001."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/oepa-2PH00006-american-ii-fact-sheet.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Allen County American II Wastewater Treatment Plant (WWTP)",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "facility_name": "Allen County American II Wastewater Treatment Plant (WWTP)",
+      "permit_no": "2PH00006*LD",
+      "permit_action": "renewal",
+      "applicant": "Allen County Board of Commissioners, 3230 North Cole Street, Lima, OH 45801",
+      "application_no": "OH0037338",
+      "public_notice_no": "211697",
+      "public_notice_date": "2025-04-28",
+      "comment_period_end": "2025-05-28",
+      "facility_address": "American II WWTP, 4140 Diller Road, Lima, OH 45807, Allen County",
+      "discharge_address": null,
+      "receiving_water": "Dug Run",
+      "stream_network": "Ottawa River, Auglaize River, Maumee River, Maumee Bay, Lake Erie",
+      "outfalls": [
+        "001"
+      ],
+      "note": "Revised Final June 2025. Permit action described as renewal throughout. Outfall 001 referenced in tables and text (e.g., Table 12, influent monitoring station 601). No discharge address distinct from facility address."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/oepa-2PH00006-american-ii-fact-sheet.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/oepa-2PH00006-american-ii-fact-sheet.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/oepa-2PH00006-american-ii-permit.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "American II Wastewater Treatment Plant",
+    "confidence": "high",
+    "warnings": [
+      "No public notice number found in document",
+      "No comment period end date found in document",
+      "Action Date (June 17, 2025) used as public_notice_date; this is the permit action date, not necessarily a formal public notice date",
+      "No downstream stream network chain stated beyond Dug Run"
+    ],
+    "fields": {
+      "facility_name": "American II Wastewater Treatment Plant",
+      "permit_no": "2PH00006*LD",
+      "permit_action": "renewal",
+      "applicant": "Allen County Board of Commissioners",
+      "application_no": "OH0037338",
+      "public_notice_no": null,
+      "public_notice_date": "2025-06-17",
+      "comment_period_end": null,
+      "facility_address": "4140 Diller Road, Lima, Ohio, Allen County",
+      "discharge_address": null,
+      "receiving_water": "Dug Run at River Mile 3.1",
+      "stream_network": null,
+      "outfalls": [
+        "2PH00006001"
+      ],
+      "note": "Permit effective August 1, 2025; expires July 31, 2030. Two discharge periods: Initial (first 36 months) and Final (month 37 through expiration), with toxicity limits added in Final period. Design flow 1.2 MGD."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/oepa-2PH00006-american-ii-permit.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/oepa-2PH00006-american-ii-permit.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "American Bath WWTP",
+    "confidence": "high",
+    "warnings": [
+      "Permit action inferred as 'renewal' based on document context referencing a renewal application, but the permit number suffix '*MD' may indicate a modification — verify with issuing agency.",
+      "Comment period end date (2024-03-31) is inferred as 30 days after public notice date; not explicitly stated on this page.",
+      "Stream network downstream of Pike Run not specified in the document.",
+      "Facility address and discharge address appear to be the same location (3226 N. Cole St.) while applicant address is 3230 N. Cole St."
+    ],
+    "fields": {
+      "facility_name": "American Bath WWTP",
+      "permit_no": "2PH00007*MD",
+      "permit_action": "renewal",
+      "applicant": "Allen County Board of Commissioners, 3230 N. Cole St., Lima, OH, 45801",
+      "application_no": "OH0023841",
+      "public_notice_no": "196911",
+      "public_notice_date": "2024-03-01",
+      "comment_period_end": "2024-03-31",
+      "facility_address": "3226 N. Cole St., Lima, OH, 45801, Allen County",
+      "discharge_address": "3226 N. Cole St., Lima, OH, 45801, Allen County",
+      "receiving_water": "Pike Run",
+      "stream_network": null,
+      "outfalls": [
+        "001"
+      ],
+      "note": "Outfall identifier is also referenced as 2PH00007001 in the permit body. Comment period end is inferred as 30 days after public notice date (2024-03-01), yielding 2024-03-31. Nature of Business: POTW. Permit action labeled as renewal based on context (NPDES renewal application referenced in document); the permit number suffix *MD may indicate modification — flagged in warnings. Stream network downstream of Pike Run not stated in document."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/oepa-2PH00007-american-bath-fact-sheet.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "American Bath WWTP",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "facility_name": "American Bath WWTP",
+      "permit_no": "2PH00007*MD",
+      "permit_action": "renewal",
+      "applicant": "Allen County Board of Commissioners, 301 North Main Street, P.O. Box 1243, Lima, OH 45802",
+      "application_no": "OH0023841",
+      "public_notice_no": "196911",
+      "public_notice_date": "2024-03-01",
+      "comment_period_end": "2024-03-31",
+      "facility_address": "American Bath WWTP, 3226 N. Cole Street, Lima, OH 45801, Allen County",
+      "discharge_address": null,
+      "receiving_water": "Pike Run",
+      "stream_network": "Ottawa River to Auglaize River to Maumee River to Lake Erie",
+      "outfalls": [
+        "001"
+      ],
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/oepa-2PH00007-american-bath-fact-sheet.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/oepa-2PH00007-american-bath-fact-sheet.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/oepa-2PH00007-american-bath-permit.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "American Bath wastewater treatment works",
+    "confidence": "high",
+    "warnings": [
+      "No public notice date or comment period end date found in the document.",
+      "Permit action 'modification' inferred from '*MD' suffix in permit number — not explicitly stated as such.",
+      "Stream network downstream of Pike Run not explicitly stated; Maumee Watershed referenced obliquely."
+    ],
+    "fields": {
+      "facility_name": "American Bath wastewater treatment works",
+      "permit_no": "2PH00007*MD",
+      "permit_action": "modification",
+      "applicant": "Allen County Board of Commissioners",
+      "application_no": "OH0023841",
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "3226 N. Cole St., Lima, Ohio, Allen County",
+      "discharge_address": null,
+      "receiving_water": "Pike Run",
+      "stream_network": null,
+      "outfalls": [
+        "2PH00007001",
+        "2PH00007300",
+        "2PH00007581"
+      ],
+      "note": "Action Date: 2024-04-04; Effective Date: 2024-05-01; Expiration Date: 2029-04-30. Permit action inferred as modification from the \"*MD\" suffix. No public notice date or comment period end found in the document. Outfall 2PH00007300 is SSO monitoring; 2PH00007581 is sludge monitoring. Note in permit references Maumee Watershed Nutrient TMDL (Part II, Item Z), suggesting Pike Run is a tributary of the Maumee watershed, but no explicit downstream chain is stated in this document."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/oepa-2PH00007-american-bath-permit.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/oepa-2PH00007-american-bath-permit.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Shawnee II WWTP",
+    "confidence": "high",
+    "warnings": [
+      "Comment period end date (2026-04-23) is calculated as 30 days after public notice date (2026-03-24); not explicitly stated in the document.",
+      "Public notice date year is 2026 — verify this is not a typo for 2024 or 2025.",
+      "Permit action inferred as 'renewal' based on document referencing a renewal application; not explicitly labeled as such on the permit face."
+    ],
+    "fields": {
+      "facility_name": "Shawnee II WWTP",
+      "permit_no": "2PK00002*MD",
+      "permit_action": "renewal",
+      "applicant": "Allen County Sanitary Engineering Department",
+      "application_no": "OH0023850",
+      "public_notice_no": "219931",
+      "public_notice_date": "2026-03-24",
+      "comment_period_end": "2026-04-23",
+      "facility_address": "3640 Spencerville Road, Lima, OH 45805, Allen County",
+      "discharge_address": "Ottawa River at River Mile 32.5",
+      "receiving_water": "Ottawa River",
+      "stream_network": "Ottawa River",
+      "outfalls": [
+        "001"
+      ],
+      "note": null
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Shawnee II Wastewater Treatment Works (Shawnee II WWTP)",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "facility_name": "Shawnee II Wastewater Treatment Works (Shawnee II WWTP)",
+      "permit_no": "2PK00002*LD",
+      "permit_action": "modification",
+      "applicant": "Allen County Board of Commissioners, 4140 Diller Rd, Lima, Ohio 45807",
+      "application_no": "OH0023850",
+      "public_notice_no": "183565",
+      "public_notice_date": "2023-05-12",
+      "comment_period_end": "2023-06-11",
+      "facility_address": "Shawnee II WWTP, 3640 Spencerville Road, Lima, Ohio 45805, Allen County",
+      "discharge_address": null,
+      "receiving_water": "Ottawa River",
+      "stream_network": "Auglaize River to Maumee River to Lake Erie",
+      "outfalls": [
+        "001"
+      ],
+      "note": "The permit number in the OCR reads \"2PK00002*L D\" (with a space), but the image clearly shows \"2PK00002*LD\" without a space. Outfall 001 is referenced in the facility description text. The stream network begins from the Ottawa River (receiving water) continuing to Auglaize River to Maumee River to Lake Erie."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "oepa/oepa-2PK00002-shawnee-ii-permit.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Shawnee II WWTP",
+    "confidence": "high",
+    "warnings": [
+      "No public notice number found in document",
+      "No comment period end date stated",
+      "Facility address on cover page lists 'Lima, OH 45805' but permit body states 'Shawnee Township, Ohio' — same physical address",
+      "Downstream stream network beyond Ottawa River not specified in document"
+    ],
+    "fields": {
+      "facility_name": "Shawnee II WWTP",
+      "permit_no": "2PK00002*LD",
+      "permit_action": "modification",
+      "applicant": "Allen County Board of Commissioners",
+      "application_no": "OH0023850",
+      "public_notice_no": null,
+      "public_notice_date": "2023-05-05",
+      "comment_period_end": null,
+      "facility_address": "3640 Spencerville Road, Lima, OH 45805, Allen County",
+      "discharge_address": "3640 Spencerville Road, Shawnee Township, Ohio, Allen County",
+      "receiving_water": "Ottawa River",
+      "stream_network": null,
+      "outfalls": [
+        "2PK00002001"
+      ],
+      "note": "Existing permit 2PK00002*KD modified; new permit number 2PK00002*LD effective July 1, 2023. Modification includes Antidegradation Paragraph, added Final Effluent table for outfall 2PK00002001 effective after plant upgrades, and Schedule of Compliance marked complete. Expiration date: October 31, 2025. Action date (public notice date) is May 5, 2023; no separate public notice number or comment period end date is stated."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/oepa-2PK00002-shawnee-ii-permit.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/oepa-2PK00002-shawnee-ii-permit.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "regulatory/ohc000006-construction-stormwater-gp.yaml",
+    "group": "permits-npdes",
+    "title": "ohc000006-construction-stormwater-gp",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "permit_no": "OHC000006",
+      "title": "General Permit Authorization for Stormwater Discharges Associated with Construction Activity under the NPDES",
+      "issuing_agency": "Ohio EPA, Division of Surface Water",
+      "director_signed": "Anne M. Vogel, Director",
+      "effective_date": "2023-04-23",
+      "expiration_date": "2028-04-22",
+      "generation": "current generation of the statewide construction-stormwater GP; the permit provides for continuing coverage from its 'previous generations'",
+      "authority": "Federal Water Pollution Control Act (33 U.S.C. 1251 et seq.) + ORC Ch. 6111; coverage granted per OAC Rule 3745-38-02"
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "regulatory/ohc000006-construction-stormwater-gp.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": null,
+    "source_doc_render_class": null,
+    "source_doc_published": false
+  },
+  {
+    "rel": "sidney/wwtp-oh0027421.dmr.yaml",
+    "group": "permits-npdes",
+    "title": "SIDNEY WWTP",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "npdes_id": "OH0027421",
+      "name": "SIDNEY WWTP",
+      "permit_type": "NPDES Individual Permit",
+      "permit_status": "Effective",
+      "major_minor": "M",
+      "snc_status": null,
+      "window": "2023-01-01..2023-12-31"
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "sidney/wwtp-oh0027421.dmr.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": null,
+    "source_doc_render_class": null,
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/sos-bistrozzi-addition-llc-2026-04-08.sos.yaml",
+    "group": "permits-sos",
+    "title": "Bistrozzi Addition LLC",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "entity_name": "Bistrozzi Addition LLC",
+      "filing_id": "202609704236",
+      "filing_type": "Registration of a Foreign Limited Liability Company",
+      "entity_type": "foreign LLC",
+      "jurisdiction": "Delaware",
+      "filing_date": "2026-04-08",
+      "effective_date": "2026-04-06",
+      "registered_agent": "C T Corporation",
+      "agent_address": "4400 East Commons Way, Suite 125, Columbus, OH 43219",
+      "organizer": "Scott J. Ziance",
+      "organizer_address": null,
+      "principal_address": null,
+      "officers": [],
+      "note": "Filing submitted via Vorys, Sater, Seymour and Pease LLP, Attn: Hannah Bragg, 52 East Gay Street, Columbus, OH 43215. Statutory agent acceptance signed by Laura R Broderick, Assistant Secretary of CT Corporation. Signer/authorized representative on the filing is Scott J. Ziance. Form 617 (106-LFA), filing fee $99."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/sos-bistrozzi-addition-llc-2026-04-08.sos.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/sos-bistrozzi-addition-llc-2026-04-08.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "permits/sos-magenta-capital-llc-2025-10-17.sos.yaml",
+    "group": "permits-sos",
+    "title": "Magenta Capital (Ohio) LLC (Magenta Capital LLC)",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "entity_name": "Magenta Capital (Ohio) LLC (Magenta Capital LLC)",
+      "filing_id": "202529003142",
+      "filing_type": "Registration of a Foreign Limited Liability Company",
+      "entity_type": "foreign LLC",
+      "jurisdiction": "Delaware",
+      "filing_date": "2025-10-17",
+      "effective_date": "2025-10-17",
+      "registered_agent": "Corporation Service Company",
+      "agent_address": "1160 Dublin Rd Ste 400, Columbus, OH 43215",
+      "organizer": "Michael Montfort",
+      "organizer_address": null,
+      "principal_address": null,
+      "officers": [
+        "Michael Montfort (Manager)"
+      ],
+      "note": "Entity's name in its jurisdiction of formation is \"Magenta Capital LLC\"; assumed name in Ohio is \"Magenta Capital (Ohio) LLC\". Filing signed by Michael Montfort as Manager. Statutory agent acceptance signed by Alix Anast on behalf of Corporation Service Company. Certificate also references SoS charter number 5491095."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/sos-magenta-capital-llc-2025-10-17.sos.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/sos-magenta-capital-llc-2025-10-17.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "permits/sos-tilted-gate-llc-2025-09-29.sos.yaml",
+    "group": "permits-sos",
+    "title": "Tilted Gate LLC",
+    "confidence": "high",
+    "warnings": [
+      "Principal address not stated in the filing — the receipt addressee (National Service Information, Inc., 145 Baker Street, Marion, OH 43302) appears to be the filing agent/submitter, not the LLC's principal office.",
+      "No organizer address was provided in the document."
+    ],
+    "fields": {
+      "entity_name": "Tilted Gate LLC",
+      "filing_id": "202527204518",
+      "filing_type": "Registration of a Foreign Limited Liability Company",
+      "entity_type": "foreign LLC",
+      "jurisdiction": "Delaware",
+      "filing_date": "2025-09-29",
+      "effective_date": "2025-09-29",
+      "registered_agent": "Corporation Service Company",
+      "agent_address": "1160 Dublin Rd Ste 400, Columbus, OH 43215",
+      "organizer": "Michael Montfort, Manager",
+      "organizer_address": null,
+      "principal_address": null,
+      "officers": [
+        "Michael Montfort, Manager"
+      ],
+      "note": "Filing submitted electronically on 9/29/2025. Statutory agent acceptance signed by Benjamin Bolen on behalf of Corporation Service Company. The certificate number referenced on the Ohio SoS certificate is 5481299. Receipt addressed to National Service Information, Inc., 145 Baker Street, Marion, OH 43302 (likely the filing agent/submitter, not the principal office)."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "permits/sos-tilted-gate-llc-2025-09-29.sos.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3]",
+      "verified": true
+    },
+    "source_doc_rel": "permits/bistrozzi-permits/sos-tilted-gate-llc-2025-09-29.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "plans/LMA1A-95-SPS-2025-10-28.plan.yaml",
+    "group": "plans",
+    "title": "American Industrial Park Site",
+    "confidence": "high",
+    "warnings": [
+      "OCR digit reliability is noted as low — rim and pad elevations (e.g. RIM=828.75, PAD=28.75) have been transcribed as-is but should be field-verified against the drawing.",
+      "Sheet drawn/approved initials were not legible in OCR; left blank."
+    ],
+    "fields": {
+      "project_name": "American Industrial Park Site",
+      "sheet_id": "1A-C-3104",
+      "discipline": "Grading & Storm Plan",
+      "phase": "95% SPS Design",
+      "scale": "1\" = 30'",
+      "project_no": "US0047417.9689",
+      "site_address": "Lima, OH 45801",
+      "date": "2025-10-28",
+      "status": "Not For Construction",
+      "prepared_by": [
+        {
+          "name": "EMH&T",
+          "discipline": "Civil",
+          "location": "5500 New Albany Road, Columbus, OH 43054"
+        },
+        {
+          "name": "CI Design, Inc",
+          "discipline": "Architecture",
+          "location": "250 Summer Street, Boston, MA 02210"
+        },
+        {
+          "name": "WSP USA Buildings Inc.",
+          "discipline": "MEP / Structure",
+          "location": "433 River Street, 7th floor, Troy, NY 12180"
+        }
+      ],
+      "key_features": [
+        "Grading & storm drainage plan",
+        "Storm sewer system",
+        "Sanitary sewer main",
+        "Water main (domestic and fire water service)",
+        "Fiber duct bank / fiber trench",
+        "Underground electric service / electric trench / overhead electric",
+        "Underdrain",
+        "Transformer",
+        "Catch basin / curb & gutter inlet / inlet manhole",
+        "Headwall with rock channel protection",
+        "Proposed security fence (permanent and temporary)",
+        "Anti-ram barrier",
+        "MYD structural foundation pad",
+        "Containment area",
+        "Major flood routing / drainage flow direction",
+        "Rock check dam",
+        "Post indicator valve / fire hydrant",
+        "Fire department connection",
+        "Overall limits of disturbance",
+        "SSS and GPS buildings on piers (elevated above surrounding grade)"
+      ],
+      "note": null,
+      "summary": "This sheet (1A-C-3104) is a Grading & Storm Plan for the American Industrial Park Site in Lima, OH, prepared at 95% SPS Design and marked Not For Construction. It depicts proposed grading, storm sewer infrastructure, sanitary and water mains, fiber duct bank, electric services, security fencing with anti-ram barriers, and containment areas. The site includes elevated SSS and GPS buildings on structural piers, with finished floor/top-of-pad elevations referenced at 828.75 (NAVD88 + 800 offset)."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "plans/LMA1A-95-SPS-2025-10-28.plan.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0]",
+      "verified": true
+    },
+    "source_doc_rel": "plans/bistrozzi-plans/LMA1A-95-SPS-2025-10-28.odg",
+    "source_doc_render_class": "office",
+    "source_doc_published": false
+  }
+]

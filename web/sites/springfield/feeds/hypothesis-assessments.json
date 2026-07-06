@@ -1,0 +1,24 @@
+[
+  {
+    "site": "springfield",
+    "hypothesis": "defense",
+    "signal": "moderate",
+    "tag": "verified",
+    "sub_thesis": null,
+    "group": "arsenal",
+    "fields": {
+      "nexus": "Springfield-Beckley ANGB",
+      "linkage": "Adjacent · NASIC nearby"
+    },
+    "citations": [
+      {
+        "source": "docs/defense-nexus.md",
+        "source_kind": "reference",
+        "page": null,
+        "confidence": "medium",
+        "note": "Springfield-Beckley Air National Guard Base is adjacent; the National Air and Space Intelligence Center (NASIC, at Wright-Patterson) is in the same corridor. Adjacency is documented; the NASIC linkage is the softer signal.",
+        "verified": false
+      }
+    ]
+  }
+]

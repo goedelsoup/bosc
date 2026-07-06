@@ -16,7 +16,7 @@
  *
  * The feeds under (3)/(4) are git-ignored. The watermarkBundle Vite plugin runs
  * `watermark --site <slug> export` in buildStart so they exist before Astro reads them.
- * For the offline `//web:check` gate, set WATERMARK_BUNDLE_DIR=sample-bundle — the
+ * For the offline `//web:check` gate, set WATERMARK_BUNDLE_DIR=sites — the
  * committed fixtures are an explicit opt-in, not a silent fallback.
  */
 import { AsyncLocalStorage } from "node:async_hooks";
@@ -127,7 +127,7 @@ export function bundleDir(slug: string = activeSite()): string {
   }
   throw new Error(
     `No content bundle found for site "${slug}". Run \`npm run build\` (plugin exports ` +
-      `automatically) or set WATERMARK_BUNDLE_DIR=sample-bundle to use the committed ` +
+      `automatically) or set WATERMARK_BUNDLE_DIR=sites to use the committed ` +
       `fixtures. Looked in:\n  ${candidateDirs(slug).join("\n  ")}`,
   );
 }
@@ -162,7 +162,7 @@ export function loadManifest(slug: string = activeSite()): Manifest {
 }
 
 /** Whether a site's bundle exposes a feed by this name. Section pages and the search
- * index guard on this because the committed sample bundle ships a subset. */
+ * index guard on this because the committed committed site bundle ships a subset. */
 export function hasFeed(name: string, slug: string = activeSite()): boolean {
   return loadManifest(slug).feeds.some((f) => f.name === name);
 }

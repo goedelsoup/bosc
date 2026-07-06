@@ -8,7 +8,7 @@
 // Pipeline:
 //   1. ensure frontend/.dev.vars exists (generate a throwaway App key for JWT signing)
 //   2. astro build with the dummy Turnstile site key so the widgets render (not the disabled
-//      placeholder) — reads $BOSC_BUNDLE_DIR if set, else the committed sample-bundle/
+//      placeholder) — reads $BOSC_BUNDLE_DIR if set, else the committed sites/
 //   3. seed the local R2 with the published documents so /api/doc serves real bytes
 //      (scripts/seed-r2.mjs; skip with DEV_STACK_NO_SEED=1)
 //   4. start the mock origin (scripts/dev-mocks.mjs)

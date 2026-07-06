@@ -1,6 +1,6 @@
 # mise tasks for the `frontend` project (the Astro site) — part of the BOSC monorepo
 # (root mise.toml declares `[monorepo] config_roots = ["frontend"]`). It's pure Node:
-# no uv/LFS, builds against the committed sample-bundle/ offline.
+# no uv/LFS, builds against the committed sites/ offline.
 #
 # Run from inside frontend/ with a bare name (`mise run dev`), or from anywhere with the
 # project path (`mise run //frontend:dev`). The node version is inherited from the root
@@ -26,14 +26,14 @@ run = "npm run dev:stack"
 
 [tasks.check]
 description = "Frontend gate (CI parity): Biome lint + astro/tsc types + vitest + build + link check"
-# Skip the Python export and point bundle.ts at the committed sample-bundle/ fixtures.
-# sample-bundle is an explicit opt-in here — not a silent fallback from bundle.ts.
-env = { WATERMARK_SKIP_EXPORT = "1", WATERMARK_BUNDLE_DIR = "sample-bundle" }
+# Skip the Python export and point bundle.ts at the committed sites/ fixtures.
+# sites is an explicit opt-in here — not a silent fallback from bundle.ts.
+env = { WATERMARK_SKIP_EXPORT = "1", WATERMARK_BUNDLE_DIR = "sites" }
 run = [
   "npm run lint",        # Biome (format + lint) — the gate CI runs that `npm run check` omits
   "npm run check",       # astro check + tsc (functions)
   "npm test",            # vitest
-  "npm run build",       # astro build against sample-bundle/ (offline, no Python)
+  "npm run build",       # astro build against sites/ (offline, no Python)
   "npm run check:links", # internal-link check over the build
 ]
 

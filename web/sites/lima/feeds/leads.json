@@ -1,0 +1,233 @@
+[
+  {
+    "id": "PRR-04",
+    "kind": "redaction",
+    "status": "withheld",
+    "tag": "open",
+    "title": "The project's cost-benefit analysis is withheld",
+    "detail": "Item 4 of the BOSC public-records request — the projected tax-revenue impact and public-ROI inputs and assumptions — is held by county legal counsel under R.C. 149.43 and the §9.66(D) data-center exemption. Not produced.",
+    "source": "Allen County PRR · item 4",
+    "issue": null,
+    "note": "the one to watch"
+  },
+  {
+    "id": "PTI-313MW",
+    "kind": "redaction",
+    "status": "withheld",
+    "tag": "open",
+    "title": "The per-engine output behind the 313 MW figure is trade-secret-redacted",
+    "detail": "The final air permit-to-install (eDoc 4132514, 2026-05-28) confirms the generator count and three-hall emission-unit grouping on a primary footing, but the per-engine ekW behind the disclosed 313 MW is redacted as trade secret.",
+    "source": "OEPA PTI · eDoc 4132514",
+    "issue": null,
+    "note": null
+  },
+  {
+    "id": "ASWCD-PLANS",
+    "kind": "redaction",
+    "status": "withheld",
+    "tag": "open",
+    "title": "The site plan sets are withheld twice over",
+    "detail": "The County withholds the BOSC-1A plan sets; the Soil & Water district shields the same documents again under R.C. 149.433 (infrastructure records) and R.C. 1333.61 (trade secret — “water and wastewater usage for a data center”), a ground that reaches even the plan-share links inside produced emails.",
+    "source": "Allen SWCD · §149.433 / §1333.61",
+    "issue": null,
+    "note": null
+  },
+  {
+    "id": "PRR-16",
+    "kind": "redaction",
+    "status": "withheld",
+    "tag": "open",
+    "title": "The county website's edit history is disclaimed, not absent",
+    "detail": "Item 16 (the CMS audit trail for the Sanitary Engineering pages) was answered “no records — we don't manage the website,” yet the WordPress /revisions endpoint returns HTTP 401 (gated, not 404). The version history exists; custody sits with the host.",
+    "source": "Allen County PRR · item 16 · contested",
+    "issue": null,
+    "note": null
+  },
+  {
+    "id": "ASWCD-03",
+    "kind": "question",
+    "status": "review",
+    "tag": "open",
+    "title": "Wetland determination: “no records” — but a produced inspection says otherwise",
+    "detail": "The SWCD answered “no records” for the 0.7-acre forested wetland (DSW401251760W), yet a produced site inspection records that “the existing wetland was mitigated.” A produced record contradicts the answer.",
+    "source": "Allen SWCD · item 3",
+    "issue": null,
+    "note": null
+  },
+  {
+    "id": "ASWCD-04",
+    "kind": "question",
+    "status": "review",
+    "tag": "open",
+    "title": "Farm-tile drainage impact: “no records” — yet a failure is photographed",
+    "detail": "The SWCD answered “no records” on tile / agricultural-drainage impact, but the 2026-06-05 inspection documents an east farm-tile diversion-swale failure (photo captioned “East farm tile bypass”).",
+    "source": "Allen SWCD · item 4",
+    "issue": null,
+    "note": null
+  },
+  {
+    "id": "FORCEMAIN-MGD",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Nobody owns the forcemain's MGD design capacity",
+    "detail": "The Hume / Shawnee forcemain's design capacity (item 9) is disclaimed by every county body — each points to Ohio EPA or the townships. Batch 2 produced the financing and the engineering contract, not the MGD figure.",
+    "source": "Cross-production referral · item 9",
+    "issue": null,
+    "note": null
+  },
+  {
+    "id": "PRR-02",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "County ⇄ DoD / federal-contractor comms — narrowed to nothing",
+    "detail": "Item 2 sought County communications with DoD or federal contractors (GDIT, GDLS) about the American Township facility and corridor. The county narrowed the ask and returned “no records.”",
+    "source": "Allen County PRR · item 2 · narrowed",
+    "issue": null,
+    "note": null
+  },
+  {
+    "id": "PRR-19",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "County ⇄ engineer-of-record (EMH&T) comms not produced",
+    "detail": "Item 19 sought County communications with EMH&T. None produced as to the Commissioners; the SWCD produced its own EMH&T emails, but the County's are still owed (it may supplement from Sanitary Engineering).",
+    "source": "Allen County PRR · item 19 · owed",
+    "issue": null,
+    "note": null
+  },
+  {
+    "id": "GLRI-INSTRUMENT",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "The grant instrument behind the $650k Lost Creek project",
+    "detail": "The funding source is verified — a GLRI subaward through Ohio EPA, OSU portion $327,450, term 2023–2025 — but the signed award instrument (deliverables, match, reporting) on the Maumee-headwater ag-runoff project is still owed.",
+    "source": "Ohio EPA GLRI subaward files · owed",
+    "issue": null,
+    "note": null
+  },
+  {
+    "id": "OSU-MONITORING",
+    "kind": "signal",
+    "status": "low",
+    "tag": "open",
+    "title": "The OSU monitoring data quantifying the Maumee-headwater load",
+    "detail": "Continuous flow and water-quality from three ISCO6712 sites would quantify the actual nutrient / flow reduction on Lost Creek (HUC12 041000070305). The load-reduction table is referenced on the captured SWCD page but not transcribed.",
+    "source": "Allen SWCD capture · untranscribed",
+    "issue": null,
+    "note": null
+  },
+  {
+    "id": "H2-AUTH",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "inference",
+    "title": "The campus's federal authorization posture is undisclosed",
+    "detail": "The Joint Systems Manufacturing Center (Lima Army Tank Plant) is co-located with the campus — documented geography under hypothesis H2 — but the campus's authorization posture (FedRAMP / DoD impact level) is undisclosed, so the causal link to the boom remains an inference.",
+    "source": "Hypothesis H2 · defense nexus",
+    "issue": null,
+    "note": null
+  },
+  {
+    "id": "H1-DRAW",
+    "kind": "claim",
+    "status": "low",
+    "tag": "inference",
+    "title": "The consumptive cooling draw against the river's cited 7Q10",
+    "detail": "The Ottawa's design low flow is about 0.2 cfs (cited); the campus's consumptive cooling loss is the keystone of hypothesis H1. The measured draw against that 7Q10 is predicted evidence the record still needs to close end to end.",
+    "source": "Hypothesis H1 · water & power",
+    "issue": null,
+    "note": null
+  },
+  {
+    "id": "GH-34",
+    "kind": "signal",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Acquire the GLRI / Ohio EPA Lost Creek grant instruments (subaward, design, load-reduction table, monitoring)",
+    "detail": "The corpus holds a **secondary** Allen SWCD summary of a \\$650,000 ag-runoff retention/treatment grant (Project `ALLENSWCD-FDFARM22`) on **Lost Creek HUC12 041000070305** (a Maumee headwater 2.7 mi east of I-75) — baseline nutrient-burden context for the hydrology axis. The funding source is verified (GLRI subaward via Ohio EPA, OSU portion \\$327,450, 2023-2025), but the primary instruments are not in hand.\n\n### Scope — documents still owed (see audit §2 table)\n- **Grant agreement / award instrument** — the signed GLRI / Ohio EPA subaward (deliverables, match, reporting). Source: Ohio EPA GLRI files; Allen SWCD; PRR.\n- **OSU application & conceptual design** — engineering basis for the BMPs (berm/wetland/forebay/pump-vault; saturated buffer). Source: OSU FABE (Dr. V. Shedekar).\n- **Load-reduction estimate table** — referenced on the captured page (\"table below\") but **not transcribed** in `data/extracted/watershed/osu-lima-ag-runoff-treatment.capture.yaml`. Re-capture the full page / SWCD project file.\n- **OSU monitoring data** — continuous flow + water quality (3 sites, ISCO6712 samplers).\n\n### Acceptance\n- Primary instrument(s) committed under `data/documents/watershed/` (or the load-reduction table transcribed into the existing capture YAML), with the audit §2 rows flipped to \"in hand\".\n\nSource: `data/extracted/legal/corpus-completeness-audit.md` §2; `docs/HYDROLOGY.md`.",
+    "source": "watermark-directory/the-watermark-directory#34",
+    "issue": 34,
+    "note": null
+  },
+  {
+    "id": "GH-35",
+    "kind": "signal",
+    "status": "withheld",
+    "tag": "open",
+    "title": "Pursue outstanding PRR records: item 4 cost-benefit + items 5-15 county wastewater universe",
+    "detail": "Two outstanding clusters from the county PRR production tracker (cover letter 2026-06-05). Production is rolling (\"every Friday\"); these are the items to watch in subsequent batches. This is an external-dependency tracking issue, not an engineering task.\n\n### Item 4 — Project BOSC cost-benefit analysis (WITHHELD)\nCost-benefit analysis / projected tax-revenue impact / public-ROI inputs & assumptions — withheld \"being reviewed by our legal counsel for compliance with R.C. 149.43 and R.C. 9.66.\" Watch for release in later productions.\n\n### Items 5-15 — county wastewater works (DEFERRED to the Sanitary Engineer)\nBOSC pump-station/forcemain **RFP + bids**; permits **DSWPTI-260294** & **DSW-6756**; **Shawnee II Phase 2** (the request text characterizes this as 12.6 MGD; the produced batch-2 records — Res #220-24, 2026-06-12 — document the receiving plant's influent pump-station **firm** capacity expanding **15 → 25 MGD**) design; **MS Consultants forcemain feasibility** (Res #113-26 / #136-26); **1996 CWA consent decree**; **Cridersville WWTP** records. The largest, most case-relevant hole. Note the internal contradiction already documented: Res #113-26 / #136-26 sit in the Commissioners own minutes (`M021926.pdf:3`, `M022626.pdf:3`). Consider a fresh PRR directed to the Allen County Sanitary Engineer.\n\n### Acceptance\n- Track each Friday production; as records land, ingest them (NPDES/EPA/plan kinds) and update `corpus-completeness-audit.md` §1.\n\nSource: `data/extracted/legal/corpus-completeness-audit.md` §1; `prr-mandamus/bosc-prr-production-2026-06-05.response-index.yaml`.",
+    "source": "watermark-directory/the-watermark-directory#35",
+    "issue": 35,
+    "note": null
+  },
+  {
+    "id": "GH-144",
+    "kind": "claim",
+    "status": "review",
+    "tag": "inference",
+    "title": "Follow up on Allen SWCD request items 3 & 4 (wetland determinations + tile drainage)",
+    "detail": "**Context.** In the Allen SWCD PRR production (merged in #142) the District answered **item 3** (wetland / floodplain / water-resource determinations) and **item 4** (tile / field-tile / agricultural-drainage system affected by construction) with *\"no responsive records\"* — each qualified *\"unless your request also implicates the previously identified sets of plans\"* (which it withheld).\n\n**Worth a second look.** The inspection forms the SWCD *did* produce speak directly to both subjects:\n\n- **Item 3 (wetland).** Inspections from **2025-12-08** onward record *\"the existing wetland was mitigated.\"* The on-site isolated-wetland 401 permit **DSW401251760W** (issued 2025-08-12) and its **2025-08-18 Mitigation Purchase Agreement** are already in-corpus (`permits/3788677.epa.yaml`, `permits/3796349.epa.yaml`).\n- **Item 4 (tile drainage).** The **2026-06-05** inspection documents an **east farm-tile diversion swale** failure — *\"the tile is no longer exposed and only bubbling up through soil\"* — with a labeled photo (*\"East farm tile bypass,\"* bundle p9).\n\n**Follow-ups.**\n1. Pin down the scope of the \"no records\" answers — do they exclude the produced inspection forms and/or the withheld plan sets? (The qualifier suggests the determinations may have been folded into the withheld plans.)\n2. Pursue the determination record sets elsewhere: Ohio EPA's 401 / Isolated Wetland Permit file for **DSW401251760W** and pending **DSW401252260W** (applied 2025-12-09); Army Corps if a federal nexus exists; and the County Engineer / Sanitary tile-drainage & as-built records for item 4.\n3. Roll the breached-tile + creek-west-of-site dewatering finding into the hydrology/discharge axis.\n\n**Refs.**\n- `data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-12-aswcd.response-index.yaml` — items 3 & 4 + findings `wetland-mitigated-vs-no-records`, `farm-tile-impact-vs-no-records`\n- `data/extracted/legal/corpus-completeness-audit.md` §1 (Allen SWCD production)\n- Outstanding-records trackin…",
+    "source": "watermark-directory/the-watermark-directory#144",
+    "issue": 144,
+    "note": null
+  },
+  {
+    "id": "GH-155",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Track the disposition of the Level-2 wetland permit DSW401252260W (incomplete 2025-12-23)",
+    "detail": "## Context\n\nOpen question surfaced by the permit-vs-disturbance sequence reconstruction (#150 / #153), observation **`level2-401-after-clearing`** in [`bosc-site-permit-sequence.yaml`](../blob/main/data/extracted/legal/prr-mandamus/bosc-site-permit-sequence.yaml).\n\n## The question\n\nWas the broader **Level-2** isolated-wetland fill at the BOSC site authorized before the fill area was disturbed — and what is its current disposition?\n\n## What the records show\n- The narrow **Category-1** isolated wetlands (0.33 ac) *were* authorized first: DSW401251760W, granted **2025-08-12** (before disturbance) — in-corpus (`permits/3788677`, `/3796349`).\n- The **Level-2** application (DSW401252260W) was received **2025-12-09** — the day after the first inspection records clearing/grubbing underway — and Ohio EPA declared it **INCOMPLETE** on **2025-12-23** (no practicable on-site alternatives analysis \"for the entire site\"; the delineation covers ~358 ac). In-corpus: `permits/3949585`.\n- **The corpus contains no later disposition** of DSW401252260W (a grep finds only the 2025-12-23 incompleteness letter).\n\n## Deliverable\nAcquire the subsequent Ohio EPA 401/Wetlands/Mitigation correspondence for **DSW401252260W**: was a revised application submitted, and was it **granted or denied** — when, and at what fill scope? Add the disposition event(s) to the chronology in `bosc-site-permit-sequence.yaml` and ingest the record under `data/extracted/permits/`.\n\n## Source\nOhio EPA DSW 401/Wetlands/Mitigation Section (the same Joe Loucek / Heather Allamon / Rachel Secrest contacts on the in-corpus letters); or the Bistrozzi-permits production set. Content-verify the date; no source bytes altered. Analysis, not a legal conclusion.\n",
+    "source": "watermark-directory/the-watermark-directory#155",
+    "issue": 155,
+    "note": null
+  },
+  {
+    "id": "GH-160",
+    "kind": "signal",
+    "status": "withheld",
+    "tag": "open",
+    "title": "Acquire the architectural footprint sheets / emission-unit plot plan to re-ground compute Method 3",
+    "detail": "**Refines #33.** The issued PTI **P0138965** confirms the emission-unit **grouping** (P001–P114 in three groups of 38 + 36 cooling towers in three groups of 12 → **≈ three data halls**) but carries **no plot-plan attachment and no floor area**. So compute **Method 3** (`docs/COMPUTE.md`) stays the flagged-weak **land-area envelope**, not real floor area.\n\n**To get.** The **architectural site-plan sheets** (CI Design / WSP / EMH&T) showing the data-hall building footprints, or the permit's plot-plan attachment if one exists. The committed plan set is a single grading & storm sheet (`1A-C-3104`) showing only ancillary SSS/GPS buildings on piers — the data-hall footprints sit on sheets not in hand.\n\n**Acceptance.**\n- Data-hall floor area documented from a primary source; Method 3 re-grounded from land-area envelope to floor area in `docs/COMPUTE.md` + `watermark.facility`.\n\n**Refs.** `corpus-completeness-audit.md` §4; `docs/COMPUTE.md`; #33.",
+    "source": "watermark-directory/the-watermark-directory#160",
+    "issue": 160,
+    "note": null
+  },
+  {
+    "id": "GH-161",
+    "kind": "signal",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Acquire the corridor environmental records (forcemain + Shawnee II Ph2 NPDES/SWPPP/ESC; item-9 MGD) — the #151 referral",
+    "detail": "Surfaced by the cross-production referral map (**#151**, `legal/prr-mandamus/cross-production-referral-map.yaml`). With three producing bodies now on the record, the **corridor-level environmental** records are owned by **no county body** — each disclaims and points to the next:\n\n- **ASWCD item 6** — BOSC-1A forcemain NPDES / SWPPP / ESC → \"Ohio EPA / Sanitary Eng\"\n- **ASWCD item 8** — Shawnee II Phase 2 stormwater / ESC → \"Ohio EPA / Sanitary Eng\"\n- **ASWCD item 9** — Hume/Shawnee forcemain **MGD design capacity** → \"Ohio EPA / Sanitary Eng\"\n- **ASWCD item 7** — forcemain drainage / tile / wetland → \"Sanitary Eng / **townships**\"\n\nBatch 2 produced the **procurement / financing / resolution** layer of these projects but **not** their environmental-permit layer.\n\n**To get.** Ohio EPA Division of Surface Water (NPDES construction-stormwater / SWPPP / ESC for the forcemain corridors + Shawnee II Phase 2; the item-9 MGD design capacity). The **townships** (American / Shawnee) are **not yet a requested custodian** — a candidate next PRR target.\n\n**Refs.** `legal/prr-mandamus/cross-production-referral-map.yaml`; `corpus-completeness-audit.md` §1; #35.",
+    "source": "watermark-directory/the-watermark-directory#161",
+    "issue": 161,
+    "note": null
+  },
+  {
+    "id": "GH-162",
+    "kind": "signal",
+    "status": "withheld",
+    "tag": "inference",
+    "title": "Pursue the item-16 CMS / WordPress revision history (county Sanitary pages) at the web host",
+    "detail": "PRR **item 16** asked for the CMS audit trail / edit history of the county **Sanitary Engineering** pages (2025-01-01→). The Commissioners answered \"**No records… do not manage the county website**\" — **contested**:\n\n- The Sanitary pages' WordPress `modified` dates fall **inside** the requested window.\n- The `/wp-json/wp/v2/.../revisions` endpoint returns **HTTP 401 (gated, not 404)** — the version history **exists**; custody simply sits with the **host** (AhelioTech / CorpComm-built site).\n\n**To get.** The page revision history from the **host** (or via a custody-directed request), and/or document the 401-gated-but-present finding as the standing rebuttal to the \"no records\" disclaimer.\n\n**Refs.** `legal/web-vendor-audit/allen-county-web-vendor-audit.md`, `allen-county-level-sites.md`; `corpus-completeness-audit.md` §1 (item 16).",
+    "source": "watermark-directory/the-watermark-directory#162",
+    "issue": 162,
+    "note": null
+  },
+  {
+    "id": "GH-752",
+    "kind": "signal",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "gap(extraction): extract the LACRPC CAC agenda .jpg — first use of the #703 image path",
+    "detail": "**Follow-up to #703** (the raw image-source extraction path), now on `main`.\n\n#703 built the `.png/.jpg/.tif` read path but ran **no** live extraction — the path ships, nothing uses it yet. This is its first real use.\n\n## Target\n\n`data/documents/lacrpc/meetings/20260120 CAC Agenda and Meeting Notice.jpg` — the one image-only source in the corpus (a Lima–Allen County Regional Planning Commission Citizens Advisory Committee agenda / meeting notice). Currently reference-only; the #703 path can now read it straight into the vision extractor (single image, no OCR hint).\n\n## Scope\n\n- Run the live image extraction (`extract_document(doc, kind=…)` over the `.jpg`, via the new `_read_doc` image branch) → a reviewed artifact under `data/extracted/lacrpc/`.\n- **Open question — which kind/model.** This is a meeting agenda, not one of the six current doc kinds (deed/npdes/sos/epa/wetland/engineering). Decide before extracting:\n  - map it to the LACRPC meetings/timeline layer (cf. `data/extracted/lacrpc/meetings/meeting-summaries.yaml`), or\n  - add a light generic agenda/notice kind+model, or\n  - capture it as a dated `TimelineEvent` source only.\n  Prefer the smallest change that keeps the figure/text honest.\n- **Chain of custody:** the `.jpg` is immutable evidence — don't rename/alter the source byte. Record the canonical name + a content-verified date in the collection's alias manifest if one applies.\n- Validate the new extraction against `watermark.models` (`test_extracted_yaml_valid.py` must stay green).\n\n## Why it's separate\nIt runs the API (cost) and lands a **reviewed corpus artifact** — a deliberate, gated decision distinct from shipping the code path. Tag claims `[verified]` only against the extracted artifact once committed.\n\n## Done when\nThe LACRPC CAC agenda is a committed, schema-valid extraction under `data/extracted/lacrpc/`, sourced through the #703 image path, and (if it carries a date/parties) wired into the timeline/meetings layer.\n",
+    "source": "watermark-directory/the-watermark-directory#752",
+    "issue": 752,
+    "note": null
+  }
+]

@@ -1,0 +1,196 @@
+{
+  "meta": {
+    "subject": "GLEIF LEI resolution — corridor entity parents",
+    "source": "GLEIF (AWS Open Data s3://gleif), REST API api.gleif.org; license CC0",
+    "record_count": 10,
+    "with_reported_parent": 1,
+    "lead_count": 0,
+    "method": "pinned LEIs fetched by exact ID (no fuzzy name match)"
+  },
+  "records": [
+    {
+      "watchlist_name": "Cenovus Energy Inc.",
+      "lei": "254900LJGL2N2XEMD470",
+      "legal_name": "Cenovus Energy Inc.",
+      "jurisdiction": "CA",
+      "legal_form": "UDLA",
+      "entity_status": "ACTIVE",
+      "registration_status": "ISSUED",
+      "last_update": "2026-02-19T19:01:07Z",
+      "legal_address": {
+        "city": "CALGARY",
+        "region": "CA-AB",
+        "country": "CA"
+      },
+      "direct_parent": null,
+      "ultimate_parent": null,
+      "note": "Successor to Husky Energy (the RSEI Lima Refining Co parent), post-2021 merger."
+    },
+    {
+      "watchlist_name": "Dana Incorporated",
+      "lei": "KVWHW7YLZPFJM8QYNJ51",
+      "legal_name": "DANA INCORPORATED",
+      "jurisdiction": "US-DE",
+      "legal_form": "XTIQ",
+      "entity_status": "ACTIVE",
+      "registration_status": "ISSUED",
+      "last_update": "2025-07-01T10:08:27Z",
+      "legal_address": {
+        "city": "WILMINGTON",
+        "region": "US-DE",
+        "country": "US"
+      },
+      "direct_parent": null,
+      "ultimate_parent": null,
+      "note": "Parent of Dana Driveshaft Manufacturing (RSEI facility)."
+    },
+    {
+      "watchlist_name": "Ford Motor Company",
+      "lei": "20S05OYHG0MQM4VUIC57",
+      "legal_name": "FORD MOTOR COMPANY",
+      "jurisdiction": "US-DE",
+      "legal_form": "XTIQ",
+      "entity_status": "ACTIVE",
+      "registration_status": "ISSUED",
+      "last_update": "2026-04-24T20:36:32Z",
+      "legal_address": {
+        "city": "WILMINGTON",
+        "region": "US-DE",
+        "country": "US"
+      },
+      "direct_parent": null,
+      "ultimate_parent": null,
+      "note": "Parent of the Ford Lima Engine Plant (RSEI facility)."
+    },
+    {
+      "watchlist_name": "General Dynamics Corporation",
+      "lei": "9C1X8XOOTYY2FNYTVH06",
+      "legal_name": "GENERAL DYNAMICS CORPORATION",
+      "jurisdiction": "US-DE",
+      "legal_form": "XTIQ",
+      "entity_status": "ACTIVE",
+      "registration_status": "ISSUED",
+      "last_update": "2025-09-10T09:40:59Z",
+      "legal_address": {
+        "city": "WILMINGTON",
+        "region": "US-DE",
+        "country": "US"
+      },
+      "direct_parent": null,
+      "ultimate_parent": null,
+      "note": "Ultimate parent of the JSMC operator (defense thread; RSEI"
+    },
+    {
+      "watchlist_name": "General Dynamics Land Systems Inc.",
+      "lei": "875500ULXB4CYQSJVA03",
+      "legal_name": "General Dynamics Land Systems Inc.",
+      "jurisdiction": "US-DE",
+      "legal_form": "XTIQ",
+      "entity_status": "ACTIVE",
+      "registration_status": "ISSUED",
+      "last_update": "2025-11-17T07:40:26Z",
+      "legal_address": {
+        "city": "Wilmington",
+        "region": "US-DE",
+        "country": "US"
+      },
+      "direct_parent": null,
+      "ultimate_parent": {
+        "lei": "9C1X8XOOTYY2FNYTVH06",
+        "name": "GENERAL DYNAMICS CORPORATION"
+      },
+      "note": "JSMC / Lima Army Tank Plant operator — Allen County RSEI"
+    },
+    {
+      "watchlist_name": "INEOS USA LLC",
+      "lei": "549300TWZ86K81VO8O17",
+      "legal_name": "INEOS USA LLC",
+      "jurisdiction": "US-DE",
+      "legal_form": "HZEH",
+      "entity_status": "ACTIVE",
+      "registration_status": "ISSUED",
+      "last_update": "2025-07-09T10:19:31Z",
+      "legal_address": {
+        "city": "WILMINGTON",
+        "region": "US-DE",
+        "country": "US"
+      },
+      "direct_parent": null,
+      "ultimate_parent": null,
+      "note": "RSEI #1 Allen County facility. Resolved by exact legal-name match to the Delaware-registered INEOS USA LLC (US-DE, ACTIVE) — distinct from the Belgian INEOS parent that a fuzzy search surfaces. GLEIF reports no ultimate parent."
+    },
+    {
+      "watchlist_name": "Marathon Petroleum Corporation",
+      "lei": "3BNYRYQHD39K4LCKQF12",
+      "legal_name": "MARATHON PETROLEUM CORPORATION",
+      "jurisdiction": "US-DE",
+      "legal_form": "XTIQ",
+      "entity_status": "ACTIVE",
+      "registration_status": "ISSUED",
+      "last_update": "2026-02-13T18:17:25Z",
+      "legal_address": {
+        "city": "WILMINGTON",
+        "region": "US-DE",
+        "country": "US"
+      },
+      "direct_parent": null,
+      "ultimate_parent": null,
+      "note": "Parent of the Marathon Lima terminal (RSEI facility)."
+    },
+    {
+      "watchlist_name": "Shell plc",
+      "lei": "21380068P1DRHMJ8KU70",
+      "legal_name": "SHELL PLC",
+      "jurisdiction": "GB",
+      "legal_form": "B6ES",
+      "entity_status": "ACTIVE",
+      "registration_status": "ISSUED",
+      "last_update": "2026-05-12T08:40:56Z",
+      "legal_address": {
+        "city": "LONDON",
+        "region": "GB-LND",
+        "country": "GB"
+      },
+      "direct_parent": null,
+      "ultimate_parent": null,
+      "note": "Ultimate parent behind the Equilon / Shell Lima terminals (RSEI facilities)."
+    },
+    {
+      "watchlist_name": "Textron Inc.",
+      "lei": "3PPKBHUG1HD6BO7RNR87",
+      "legal_name": "TEXTRON INC.",
+      "jurisdiction": "US-DE",
+      "legal_form": "XTIQ",
+      "entity_status": "ACTIVE",
+      "registration_status": "ISSUED",
+      "last_update": "2025-07-15T10:32:18Z",
+      "legal_address": {
+        "city": "WILMINGTON",
+        "region": "US-DE",
+        "country": "US"
+      },
+      "direct_parent": null,
+      "ultimate_parent": null,
+      "note": "Parent of Airfoil Textron (RSEI facility)."
+    },
+    {
+      "watchlist_name": "The Procter & Gamble Company",
+      "lei": "2572IBTT8CCZW6AU4141",
+      "legal_name": "THE PROCTER & GAMBLE COMPANY",
+      "jurisdiction": "US-OH",
+      "legal_form": "BTQ1",
+      "entity_status": "ACTIVE",
+      "registration_status": "ISSUED",
+      "last_update": "2025-09-09T18:05:24Z",
+      "legal_address": {
+        "city": "COLUMBUS",
+        "region": "US-OH",
+        "country": "US"
+      },
+      "direct_parent": null,
+      "ultimate_parent": null,
+      "note": "Parent of the P&G Lima plant (RSEI facility); registered in Columbus, OH."
+    }
+  ],
+  "leads": []
+}

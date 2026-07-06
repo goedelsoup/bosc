@@ -1,0 +1,92 @@
+[
+  {
+    "key": "GENERAL DYNAMICS",
+    "display": "GENERAL DYNAMICS CORPORATION",
+    "kind": "corporate",
+    "classification": "corporate_defense",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "GENERAL DYNAMICS CORPORATION"
+    ],
+    "signals": [],
+    "roles": {},
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/gleif/lei-records.yaml",
+      "data/reference/usaspending/awards.yaml"
+    ],
+    "lei": "9C1X8XOOTYY2FNYTVH06",
+    "uei": "VF58HFRNGEL8",
+    "federal_obligations": 299067439090.79
+  },
+  {
+    "key": "GENERAL DYNAMICS LAND SYSTEMS",
+    "display": "General Dynamics Land Systems Inc.",
+    "kind": "corporate",
+    "classification": "corporate_defense",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "General Dynamics Land Systems Inc."
+    ],
+    "signals": [],
+    "roles": {
+      "jsmc_operator": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/gleif/lei-records.yaml",
+      "data/reference/usaspending/awards.yaml"
+    ],
+    "lei": "875500ULXB4CYQSJVA03",
+    "uei": "HAWKSQF848W7",
+    "federal_obligations": 33579510703.85
+  },
+  {
+    "key": "TEXTRON",
+    "display": "TEXTRON INC.",
+    "kind": "corporate",
+    "classification": "corporate_parent",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "TEXTRON INC."
+    ],
+    "signals": [],
+    "roles": {},
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/gleif/lei-records.yaml"
+    ],
+    "lei": "3PPKBHUG1HD6BO7RNR87",
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "KAUTEX TEXTRON",
+    "display": "KAUTEX TEXTRON",
+    "kind": "facility",
+    "classification": "industrial_facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "KAUTEX TEXTRON"
+    ],
+    "signals": [],
+    "roles": {
+      "rsei_facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/rsei/inventory.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  }
+]

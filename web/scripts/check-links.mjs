@@ -1,6 +1,6 @@
 // Build-time internal-link validation (#178). `astro check` typechecks but never
 // crawls output links, so an emitted href that 404s — e.g. a deep-link into a
-// bundle-gated route that isn't generated in the CI sample-bundle build — passes
+// bundle-gated route that isn't generated in the CI sites build — passes
 // CI silently. This walks the built `dist/`, collects every emitted internal
 // (root-relative) href/src, and asserts each resolves to a generated page or a
 // static asset. Exits non-zero on any unresolved link.

@@ -1,0 +1,871 @@
+{
+  "type": "FeatureCollection",
+  "feed": "rsei",
+  "meta": {
+    "crs": "WGS84 (EPSG:4326)",
+    "layers": [
+      "rsei"
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.132222,
+          40.714167
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>INEOS USA LLC</b><br>RSEI Score 23,483,255 (99% cancer)<br>top: Acrylonitrile<br>1988-2014<br><b>toxic water discharger → Ottawa River</b> (critical, ~66.492 mg/L at the 0.2 cfs 7Q10; corridor-inferred)",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 23483255,
+        "radius": 21,
+        "scored": true,
+        "water_flag": "critical"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.109959,
+          40.714586
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>WHEMCO-OHIO FOUNDRY INC</b><br>RSEI Score 12,884,890 (100% cancer)<br>top: Chromium and chromium compounds<br>1991-2014",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 12884890,
+        "radius": 20,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.128767,
+          40.708654
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>US ARMY JSMC GENERAL DYNAMICS LAND SYSTEMS</b><br>RSEI Score 3,590,842 (99% cancer)<br>top: Nickel and nickel compounds<br>1988-1993",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 3590842,
+        "radius": 19,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.12127,
+          40.74975
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>AMERICAN TRIM SUPERIOR METAL PRODUCTS DIV.</b><br>RSEI Score 3,261,877 (100% cancer)<br>top: Chromium and chromium compounds<br>1989-2002",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 3261877,
+        "radius": 19,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.09248,
+          40.75131
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>AMERICAN TRIM LLC PRODUCT CENTER 1</b><br>RSEI Score 3,072,738 (100% cancer)<br>top: Chromium and chromium compounds<br>1988-2010",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 3072738,
+        "radius": 19,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.122623,
+          40.720649
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>LIMA REFINING CO</b><br>RSEI Score 1,899,615 (93% cancer)<br>top: Benzene<br>1988-2014<br><b>toxic water discharger → OTTAWA RIVER</b> (critical, ~164.656 mg/L at the 0.2 cfs 7Q10; ECHO-cited)",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 1899615,
+        "radius": 18,
+        "scored": true,
+        "water_flag": "critical"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.132274,
+          40.717499
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>PCS NITROGEN OHIO LP</b><br>RSEI Score 532,740 (82% cancer)<br>top: Formaldehyde<br>1993-2014<br><b>toxic water discharger → Ottawa River</b> (critical, ~274.375 mg/L at the 0.2 cfs 7Q10; corridor-inferred)",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 532740,
+        "radius": 17,
+        "scored": true,
+        "water_flag": "critical"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.08512,
+          40.78116
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>FORD MOTOR CO LIMA ENGINE PLANT</b><br>RSEI Score 367,105 (100% cancer)<br>top: Chromium and chromium compounds<br>1988-2014",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 367105,
+        "radius": 16,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.10831,
+          40.710346
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>SUPERIOR FORGE & STEEL CORP</b><br>RSEI Score 192,987 (98% cancer)<br>top: Chromium and chromium compounds<br>1992-2014",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 192987,
+        "radius": 16,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.08597,
+          40.75787
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>METOKOTE CORP PLANT 1</b><br>RSEI Score 190,943 (100% cancer)<br>top: Trichloroethylene<br>1988-1993",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 190943,
+        "radius": 16,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.07788,
+          40.76232
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>METOKOTE CORP PLANT 25</b><br>RSEI Score 103,384 (95% cancer)<br>top: Trichloroethylene<br>1988-2003",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 103384,
+        "radius": 15,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.11052,
+          40.71586
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>TELEDYNE OHIO STEEL</b><br>RSEI Score 80,242 (99% cancer)<br>top: Chromium and chromium compounds<br>1988-1990",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 80242,
+        "radius": 15,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.09944,
+          40.75819
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>TRINITY HIGHWAY PRODUCTS LLC PLT 1055</b><br>RSEI Score 53,858 (93% cancer)<br>top: Chromium and chromium compounds<br>1988-2014",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 53858,
+        "radius": 14,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.11689,
+          40.72531
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>EQUILON LIMA TERMINAL</b><br>RSEI Score 40,509 (100% cancer)<br>top: Benzene<br>1998-1999",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 40509,
+        "radius": 14,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.34555,
+          40.71417
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>FLEXIBLE FOAM PRODUCTS INC</b><br>RSEI Score 28,018 (80% cancer)<br>top: Toluenediisocyanate<br>1988-2014",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 28018,
+        "radius": 14,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.12393,
+          40.69669
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>MARATHON PETROLEUM CO-LIMA OH TERMINAL</b><br>RSEI Score 21,799 (97% cancer)<br>top: Benzene<br>1998-2014",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 21799,
+        "radius": 13,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.130806,
+          40.718333
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>FORT AMANDA SPECIALTIES LLC</b><br>RSEI Score 19,592 (80% cancer)<br>top: Formaldehyde<br>1993-2014",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 19592,
+        "radius": 13,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.88746,
+          40.90333
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>DTR INDUSTRIES INC</b><br>RSEI Score 18,759 (95% cancer)<br>top: Trichloroethylene<br>1990-2014",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 18759,
+        "radius": 13,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.0778,
+          40.70662
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>GUARDIAN LIMA LLC</b><br>RSEI Score 17,088 (100% cancer)<br>top: Acetaldehyde<br>2011-2014",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 17088,
+        "radius": 13,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.11434,
+          40.714269
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>SUNDSTRAND CORP. ELECTRIC POWER SYSTEMS</b><br>RSEI Score 10,081 (99% cancer)<br>top: Trichloroethylene<br>1988-1995",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 10081,
+        "radius": 13,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.080325,
+          40.84843
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>CHEMTRADE LOGISTICS INC CAIRO SULFUR PRODS</b><br>RSEI Score 9,752 (0% cancer)<br>top: Sulfuric acid<br>1988-2014",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 9752,
+        "radius": 13,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.89481,
+          40.88895
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>TRIPLETT CORP.</b><br>RSEI Score 6,679 (100% cancer)<br>top: Trichloroethylene<br>1994-1995",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 6679,
+        "radius": 12,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.116389,
+          40.718333
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>ISP LIMA LLC</b><br>RSEI Score 6,089 (0% cancer)<br>top: Acrylic acid<br>2005-2014",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 6089,
+        "radius": 12,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.13105,
+          40.71032
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>EQUILON ENTERPRISES LLC LIMA SOUTH TERMINAL</b><br>RSEI Score 5,942 (99% cancer)<br>top: Benzene<br>1998-2003<br><b>toxic water discharger → Ottawa River</b> (elevated, ~0.139 mg/L at the 0.2 cfs 7Q10; corridor-inferred)",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 5942,
+        "radius": 12,
+        "scored": true,
+        "water_flag": "elevated"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.10843,
+          40.72294
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>RANDALL BEARINGS INC</b><br>RSEI Score 5,840 (8% cancer)<br>top: Copper and copper compounds<br>1988-2014",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 5840,
+        "radius": 12,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.35204,
+          40.70496
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>OHIO DECORATIVE PRODUCTS INC</b><br>RSEI Score 4,828 (89% cancer)<br>top: Trichloroethylene<br>1988-2005",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 4828,
+        "radius": 12,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.103447,
+          40.769074
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>MARATHON ELECTRIC MANUFACTURING CORP</b><br>RSEI Score 3,821 (66% cancer)<br>top: Ethylbenzene<br>1988-2007",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 3821,
+        "radius": 12,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.09249,
+          40.77859
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>DANA DRIVESHAFT MANUFACTURING LLC</b><br>RSEI Score 3,641 (0% cancer)<br>top: Manganese and manganese compounds<br>1988-2014",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 3641,
+        "radius": 12,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.10016,
+          40.74776
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>BRP MANUFACTURING CO</b><br>RSEI Score 3,152 (90% cancer)<br>top: Di(2-ethylhexyl) phthalate<br>1988-1997",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 3152,
+        "radius": 11,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.128767,
+          40.708654
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>U S ARMY JOINT SYSTEMS MANUFACTURING CENTER</b><br>RSEI Score 1,686 (97% cancer)<br>top: Nickel and nickel compounds<br>1994-2012",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 1686,
+        "radius": 11,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.33738,
+          40.83157
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>HOLLAND BINKLEY CO.</b><br>RSEI Score 1,539 (0% cancer)<br>top: Manganese and manganese compounds<br>1995-2001",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 1539,
+        "radius": 11,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.09839,
+          40.70526
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>ACCUBUILT (S&S SUPERIOR)</b><br>RSEI Score 642 (0% cancer)<br>top: Xylene (mixed isomers)<br>1995-2000",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 642,
+        "radius": 10,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.098282,
+          40.743942
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>SUPERIOR COACHES</b><br>RSEI Score 604 (0% cancer)<br>top: Xylene (mixed isomers)<br>1988-1994",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 604,
+        "radius": 10,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.3508,
+          40.71322
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>HAYES-ALBION CORP. TRIM TRENDS DIV.</b><br>RSEI Score 367 (0% cancer)<br>top: Sulfuric acid<br>1988-1998",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 367,
+        "radius": 9,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.03453,
+          40.74755
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>PROCTER & GAMBLE MANUFACTURING CO LIMA PLANT</b><br>RSEI Score 284 (0% cancer)<br>top: Glycol ethers<br>1988-2014",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 284,
+        "radius": 9,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.14483,
+          40.75479
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>H&C MILCOR INC.</b><br>RSEI Score 240 (0% cancer)<br>top: Glycol ethers<br>2005-2005",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 240,
+        "radius": 9,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.13073,
+          40.7522
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>LAND O'LAKES PURINA FEED LLC - LIMA</b><br>RSEI Score 47 (0% cancer)<br>top: Manganese and manganese compounds<br>1991-1994",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 47,
+        "radius": 7,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.33634,
+          40.83343
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>FRUEHAUF CORP. DELPHOS PARTS PLANT</b><br>RSEI Score 31 (0% cancer)<br>top: Xylene (mixed isomers)<br>1988-1991",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 31,
+        "radius": 7,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.11769,
+          40.74793
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>AMERICAN TRIM SUPERIOR METAL PRODUCTS DIV.</b><br>RSEI Score 1 (0% cancer)<br>top: Toluene<br>1998-2002",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 1,
+        "radius": 5,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.32168,
+          40.8566
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>US GREENFIBER LLC</b><br>RSEI Score 0 (0% cancer)<br>top: Zinc and zinc compounds<br>2001-2004",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 0,
+        "radius": 5,
+        "scored": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.3155,
+          40.84948
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>VANAMATIC CO</b><br>RSEI Score 0 (reported pounds, no modeled Score)<br>top: Chromium and chromium compounds<br>2008-2009",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 0,
+        "radius": 4,
+        "scored": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.11434,
+          40.70971
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>AIRFOIL TEXTRON INC.</b><br>RSEI Score 0 (reported pounds, no modeled Score)",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 0,
+        "radius": 4,
+        "scored": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.07921,
+          40.71684
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>HEAT TREATING TECH. INC.</b><br>RSEI Score 0 (reported pounds, no modeled Score)",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 0,
+        "radius": 4,
+        "scored": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.07096,
+          40.71607
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>PEPSI-COLA GENERAL BOTTLERS OF LIMA INC.</b><br>RSEI Score 0 (reported pounds, no modeled Score)",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 0,
+        "radius": 4,
+        "scored": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.097928,
+          40.743888
+        ]
+      },
+      "properties": {
+        "layer": "rsei",
+        "label": "<b>SUPERIOR TRUCK & TRACTOR</b><br>RSEI Score 0 (reported pounds, no modeled Score)",
+        "color": "#8e24aa",
+        "role": "point",
+        "score": 0,
+        "radius": 4,
+        "scored": false
+      }
+    }
+  ]
+}

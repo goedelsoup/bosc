@@ -1,0 +1,2596 @@
+[
+  {
+    "key": "AMAZON COM SERVICES",
+    "display": "Amazon.com Services LLC",
+    "kind": "corporate",
+    "classification": "corporate_domestic",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Amazon.com Services LLC"
+    ],
+    "signals": [],
+    "roles": {
+      "grantee": 1
+    },
+    "parcels": [
+      "46-1300-04-001.005"
+    ],
+    "addresses": [
+      "MCCLAIN RD"
+    ],
+    "sources": [
+      "data/reference/usaspending/awards.yaml",
+      "recorder/202511180011830-amazon-deed.deed.yaml"
+    ],
+    "lei": null,
+    "uei": "TMKBFBRHFKH3",
+    "federal_obligations": 726730.83
+  },
+  {
+    "key": "BISTROZZI",
+    "display": "Bistrozzi",
+    "kind": "corporate",
+    "classification": "corporate_out_of_state",
+    "relation_class": "bosc_relation",
+    "relation_basis": "Developer/land-assembler of the campus; grantee on the corridor deeds, applicant on the EPA/air permits (DOSSIER §2-§4)",
+    "variants": [
+      "BISTROZZI LLC",
+      "BISTROZZI LLC, a Delaware limited liability company",
+      "Bistrozzi",
+      "Bistrozzi LLC",
+      "Bistrozzi LLC, a Delaware Limited Liability Company"
+    ],
+    "signals": [
+      "delaware"
+    ],
+    "roles": {
+      "epa_applicant": 22,
+      "grantee": 4,
+      "firm": 4,
+      "meeting_participant": 3
+    },
+    "parcels": [
+      "36-0100-03-002.000",
+      "36-1200-02-001.001",
+      "36-1200-03-001.000",
+      "36-1200-03-001.001",
+      "36-1200-03-001.002",
+      "36-1200-03-001.003",
+      "36-1200-03-001.004",
+      "36-1200-03-001.005",
+      "36-1200-03-001.006",
+      "36-1200-03-002.000",
+      "36-1200-03-015.000"
+    ],
+    "addresses": [
+      "1108 W BLUELICK RD",
+      "1700 K Street, N.W., Fifth Floor, Washington, DC 20006-3817",
+      "1700 K Street, NW, Fifth Floor, Washington, DC 20006-3817",
+      "2801 Centerville Rd., Wilmington, DE 19808",
+      "2801 Centerville Road, Wilmington, DE 19808",
+      "2801 Centervillle Rd., Wilmington, DE 19808",
+      "4110 N COLE ST",
+      "4110 N COLE ST, LIMA, OH 45801",
+      "4110 N Cole St, Lima, OH 45801",
+      "52 East Gay Street, Columbus, OH 43215",
+      "950 W BLUELICK RD",
+      "COLE ST",
+      "N. Cole Rd. and W. Bluelick Rd., Lima, Ohio 45081 (Secondary ID 0302022054)",
+      "W BLUELICK RD"
+    ],
+    "sources": [
+      "permits/3702676.epa.yaml",
+      "permits/3727059.epa.yaml",
+      "permits/3727544.epa.yaml",
+      "permits/3788677.epa.yaml",
+      "permits/3789048.epa.yaml",
+      "permits/3796349.epa.yaml",
+      "permits/3859883.epa.yaml",
+      "permits/3866942.epa.yaml",
+      "permits/3949585.epa.yaml",
+      "permits/3966517.epa.yaml",
+      "permits/3969235.epa.yaml",
+      "permits/3974496.epa.yaml",
+      "permits/3977737.epa.yaml",
+      "permits/3987141.epa.yaml",
+      "permits/3987144.epa.yaml",
+      "permits/4006230.epa.yaml",
+      "permits/4007485.epa.yaml",
+      "permits/4009043.epa.yaml",
+      "permits/4074527.epa.yaml",
+      "permits/4074529.epa.yaml",
+      "permits/4074551.epa.yaml",
+      "permits/4132514.epa.yaml",
+      "perry-township/meetings/meeting-summaries.yaml",
+      "recorder/202508130008300.deed.yaml",
+      "recorder/202508130008312.deed.yaml",
+      "recorder/202508130008316.deed.yaml",
+      "recorder/202603040002064.deed.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "BISTROZZI ADDITION",
+    "display": "Bistrozzi Addition LLC",
+    "kind": "corporate",
+    "classification": "corporate_out_of_state",
+    "relation_class": "bosc_relation",
+    "relation_basis": "Sibling Bistrozzi shell; grantee of the Pieper/Beery Road parcel (DOSSIER §11)",
+    "variants": [
+      "Bistrozzi Addition LLC"
+    ],
+    "signals": [
+      "delaware"
+    ],
+    "roles": {
+      "grantee": 1,
+      "registrant": 1
+    },
+    "parcels": [
+      "36-1100-04-001.001"
+    ],
+    "addresses": [
+      "1337 BEERY RD"
+    ],
+    "sources": [
+      "permits/sos-bistrozzi-addition-llc-2026-04-08.sos.yaml",
+      "recorder/202604210003890.deed.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "C T",
+    "display": "C T Corporation",
+    "kind": "corporate",
+    "classification": "corporate_domestic",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "C T Corporation"
+    ],
+    "signals": [],
+    "roles": {
+      "registered_agent": 1
+    },
+    "parcels": [],
+    "addresses": [
+      "4400 East Commons Way, Suite 125, Columbus, OH 43219"
+    ],
+    "sources": [
+      "permits/sos-bistrozzi-addition-llc-2026-04-08.sos.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "CENOVUS ENERGY",
+    "display": "Cenovus Energy Inc.",
+    "kind": "corporate",
+    "classification": "corporate_parent",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Cenovus Energy Inc."
+    ],
+    "signals": [],
+    "roles": {},
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/gleif/lei-records.yaml"
+    ],
+    "lei": "254900LJGL2N2XEMD470",
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "CORPORATION SERVICE",
+    "display": "Corporation Service Company",
+    "kind": "corporate",
+    "classification": "corporate_domestic",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Corporation Service Company"
+    ],
+    "signals": [],
+    "roles": {
+      "registered_agent": 2
+    },
+    "parcels": [],
+    "addresses": [
+      "1160 Dublin Rd Ste 400, Columbus, OH 43215"
+    ],
+    "sources": [
+      "permits/sos-magenta-capital-llc-2025-10-17.sos.yaml",
+      "permits/sos-tilted-gate-llc-2025-09-29.sos.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "DANA INCORPORATED",
+    "display": "DANA INCORPORATED",
+    "kind": "corporate",
+    "classification": "corporate_parent",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "DANA INCORPORATED"
+    ],
+    "signals": [],
+    "roles": {},
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/gleif/lei-records.yaml"
+    ],
+    "lei": "KVWHW7YLZPFJM8QYNJ51",
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "FORD MOTOR",
+    "display": "FORD MOTOR COMPANY",
+    "kind": "corporate",
+    "classification": "corporate_parent",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "FORD MOTOR COMPANY"
+    ],
+    "signals": [],
+    "roles": {},
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/gleif/lei-records.yaml"
+    ],
+    "lei": "20S05OYHG0MQM4VUIC57",
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "GENERAL DYNAMICS",
+    "display": "GENERAL DYNAMICS CORPORATION",
+    "kind": "corporate",
+    "classification": "corporate_defense",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "GENERAL DYNAMICS CORPORATION"
+    ],
+    "signals": [],
+    "roles": {},
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/gleif/lei-records.yaml",
+      "data/reference/usaspending/awards.yaml"
+    ],
+    "lei": "9C1X8XOOTYY2FNYTVH06",
+    "uei": "VF58HFRNGEL8",
+    "federal_obligations": 299067439090.79
+  },
+  {
+    "key": "GENERAL DYNAMICS LAND SYSTEMS",
+    "display": "General Dynamics Land Systems Inc.",
+    "kind": "corporate",
+    "classification": "corporate_defense",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "General Dynamics Land Systems Inc."
+    ],
+    "signals": [],
+    "roles": {
+      "jsmc_operator": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/gleif/lei-records.yaml",
+      "data/reference/usaspending/awards.yaml"
+    ],
+    "lei": "875500ULXB4CYQSJVA03",
+    "uei": "HAWKSQF848W7",
+    "federal_obligations": 33579510703.85
+  },
+  {
+    "key": "INEOS USA",
+    "display": "INEOS USA LLC",
+    "kind": "corporate",
+    "classification": "corporate_parent",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "INEOS USA LLC"
+    ],
+    "signals": [],
+    "roles": {},
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/gleif/lei-records.yaml"
+    ],
+    "lei": "549300TWZ86K81VO8O17",
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "MAGENTA CAPITAL OHIO LLC MAGENTA CAPITAL",
+    "display": "Magenta Capital (Ohio) LLC (Magenta Capital LLC)",
+    "kind": "corporate",
+    "classification": "corporate_out_of_state",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Magenta Capital (Ohio) LLC (Magenta Capital LLC)"
+    ],
+    "signals": [
+      "delaware",
+      "shared_agent"
+    ],
+    "roles": {
+      "registrant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/sos-magenta-capital-llc-2025-10-17.sos.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "MARATHON PETROLEUM",
+    "display": "MARATHON PETROLEUM CORPORATION",
+    "kind": "corporate",
+    "classification": "corporate_parent",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "MARATHON PETROLEUM CORPORATION"
+    ],
+    "signals": [],
+    "roles": {},
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/gleif/lei-records.yaml"
+    ],
+    "lei": "3BNYRYQHD39K4LCKQF12",
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "NEFF FARMS",
+    "display": "NEFF FARMS, INC.",
+    "kind": "corporate",
+    "classification": "corporate_domestic",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "NEFF FARMS, INC.",
+      "Neff Farms LLC, 11951 Zerkle Road, Lima, Ohio 45806"
+    ],
+    "signals": [],
+    "roles": {
+      "grantor": 1,
+      "meeting_participant": 1
+    },
+    "parcels": [
+      "36-0100-03-002.000",
+      "36-1200-02-001.001"
+    ],
+    "addresses": [
+      "4110 N COLE ST",
+      "COLE ST"
+    ],
+    "sources": [
+      "american-township/meetings/meeting-summaries.yaml",
+      "recorder/202508130008312.deed.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "PIKE RUN FARMS",
+    "display": "PIKE RUN FARMS LLC",
+    "kind": "corporate",
+    "classification": "corporate_domestic",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "PIKE RUN FARMS LLC"
+    ],
+    "signals": [],
+    "roles": {
+      "grantor": 1
+    },
+    "parcels": [
+      "36-1200-03-002.000"
+    ],
+    "addresses": [
+      "W BLUELICK RD"
+    ],
+    "sources": [
+      "recorder/202508130008316.deed.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "PROCTER GAMBLE",
+    "display": "THE PROCTER & GAMBLE COMPANY",
+    "kind": "corporate",
+    "classification": "corporate_parent",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "THE PROCTER & GAMBLE COMPANY"
+    ],
+    "signals": [],
+    "roles": {},
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/gleif/lei-records.yaml"
+    ],
+    "lei": "2572IBTT8CCZW6AU4141",
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "RLR INVESTMENTS",
+    "display": "RLR Investments, LLC dba Pine Hills Mobile Home Park",
+    "kind": "corporate",
+    "classification": "corporate_domestic",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "RLR Investments, LLC dba Pine Hills Mobile Home Park"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1PV00089.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "SHELL PLC",
+    "display": "SHELL PLC",
+    "kind": "corporate",
+    "classification": "corporate_parent",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "SHELL PLC"
+    ],
+    "signals": [],
+    "roles": {},
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/gleif/lei-records.yaml"
+    ],
+    "lei": "21380068P1DRHMJ8KU70",
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "TEXTRON",
+    "display": "TEXTRON INC.",
+    "kind": "corporate",
+    "classification": "corporate_parent",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "TEXTRON INC."
+    ],
+    "signals": [],
+    "roles": {},
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/gleif/lei-records.yaml"
+    ],
+    "lei": "3PPKBHUG1HD6BO7RNR87",
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "TILTED GATE",
+    "display": "Tilted Gate LLC",
+    "kind": "corporate",
+    "classification": "corporate_out_of_state",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Tilted Gate LLC",
+      "Tilted Gate, LLC"
+    ],
+    "signals": [
+      "delaware",
+      "shared_agent"
+    ],
+    "roles": {
+      "epa_applicant": 10,
+      "registrant": 1
+    },
+    "parcels": [],
+    "addresses": [
+      "2801 Centerville Rd., 1st FL. (PMP 160), Wilmington, DE 19808",
+      "2801 Centerville Rd., 1st Floor (PMB160), Wilmington, DE 19808",
+      "2801 Centerville Road, 1st Floor (PMB 160), Wilmington, Delaware 19808",
+      "2801 Centerville Road, Wilmington, DE 19808"
+    ],
+    "sources": [
+      "permits/4071697.epa.yaml",
+      "permits/4071709.epa.yaml",
+      "permits/4071710.epa.yaml",
+      "permits/4081890.epa.yaml",
+      "permits/4081896.epa.yaml",
+      "permits/4081897.epa.yaml",
+      "permits/4081903.epa.yaml",
+      "permits/4081908.epa.yaml",
+      "permits/4081909.epa.yaml",
+      "permits/4081910.epa.yaml",
+      "permits/sos-tilted-gate-llc-2025-09-29.sos.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "TURNER CONSTRUCTION",
+    "display": "Turner Construction",
+    "kind": "corporate",
+    "classification": "corporate_domestic",
+    "relation_class": "direct_manage",
+    "relation_basis": "General contractor on the BOSC-1A private sanitary sewer (DOSSIER §5)",
+    "variants": [
+      "Turner Construction",
+      "Turner Construction Company"
+    ],
+    "signals": [],
+    "roles": {
+      "meeting_participant": 2,
+      "epa_applicant": 1,
+      "firm": 1
+    },
+    "parcels": [],
+    "addresses": [
+      "28 N St. Clair Street Suite 200, Toledo, OH 43604"
+    ],
+    "sources": [
+      "american-township/meetings/meeting-summaries.yaml",
+      "permits/lma1a-npdes-cgp-coverage.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "AIRFOIL TEXTRON",
+    "display": "AIRFOIL TEXTRON INC",
+    "kind": "facility",
+    "classification": "industrial_facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "AIRFOIL TEXTRON INC"
+    ],
+    "signals": [],
+    "roles": {
+      "rsei_facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/rsei/inventory.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "DANA DRIVESHAFT MANUFACTURING",
+    "display": "DANA DRIVESHAFT MANUFACTURING LLC",
+    "kind": "facility",
+    "classification": "industrial_facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "DANA DRIVESHAFT MANUFACTURING LLC"
+    ],
+    "signals": [],
+    "roles": {
+      "rsei_facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/rsei/inventory.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "EQUILON LIMA TERMINAL",
+    "display": "EQUILON LIMA TERMINAL",
+    "kind": "facility",
+    "classification": "industrial_facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "EQUILON LIMA TERMINAL"
+    ],
+    "signals": [],
+    "roles": {
+      "rsei_facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/rsei/inventory.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "FORD MOTOR CO LIMA ENGINE PLANT",
+    "display": "FORD MOTOR CO LIMA ENGINE PLANT",
+    "kind": "facility",
+    "classification": "industrial_facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "FORD MOTOR CO LIMA ENGINE PLANT"
+    ],
+    "signals": [],
+    "roles": {
+      "rsei_facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/rsei/inventory.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "INEOS NITRILES USA",
+    "display": "INEOS NITRILES USA LLC",
+    "kind": "facility",
+    "classification": "industrial_facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "INEOS NITRILES USA LLC"
+    ],
+    "signals": [
+      "toxic_water_discharger"
+    ],
+    "roles": {
+      "rsei_facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/rsei/inventory.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "LIMA REFINING",
+    "display": "LIMA REFINING CO",
+    "kind": "facility",
+    "classification": "industrial_facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "LIMA REFINING CO"
+    ],
+    "signals": [
+      "toxic_water_discharger"
+    ],
+    "roles": {
+      "rsei_facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/rsei/inventory.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "MPLX TERMINALS LLC LIMA OH TERMINAL",
+    "display": "MPLX TERMINALS LLC - LIMA OH TERMINAL",
+    "kind": "facility",
+    "classification": "industrial_facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "MPLX TERMINALS LLC - LIMA OH TERMINAL"
+    ],
+    "signals": [],
+    "roles": {
+      "rsei_facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/rsei/inventory.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "PROCTER GAMBLE MANUFACTURING CO LIMA PLANT",
+    "display": "PROCTER & GAMBLE MANUFACTURING CO LIMA PLANT",
+    "kind": "facility",
+    "classification": "industrial_facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "PROCTER & GAMBLE MANUFACTURING CO LIMA PLANT"
+    ],
+    "signals": [],
+    "roles": {
+      "rsei_facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/rsei/inventory.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "VAN WERT WWTP",
+    "display": "Van Wert WWTP",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Van Wert WWTP"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/2PD00006.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:1PD00008",
+    "display": "City of Piqua wastewater treatment works",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Piqua wastewater treatment works"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1PD00008.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:1PD00013",
+    "display": "City of Wilmington WWTP",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Wilmington WWTP",
+      "Wilmington Wastewater Treatment Plant (WWTP)"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 2
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1PD00013.fs.npdes.yaml",
+      "oepa/1PD00013.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:2PD00006",
+    "display": "Van Wert WWTP",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Van Wert WWTP",
+      "Van Wert Wastewater Treatment Plant (WWTP)"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 2
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/2PD00006.fs.npdes.yaml",
+      "oepa/2PD00006.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:2PH00006",
+    "display": "American II Wastewater Treatment Plant",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Allen County American II Wastewater Treatment Plant (WWTP)",
+      "American II Wastewater Treatment Plant"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 3
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.npdes.yaml",
+      "oepa/oepa-2PH00006-american-ii-fact-sheet.npdes.yaml",
+      "oepa/oepa-2PH00006-american-ii-permit.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:2PH00007",
+    "display": "American Bath WWTP",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "American Bath WWTP",
+      "American Bath wastewater treatment works"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 3
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.npdes.yaml",
+      "oepa/oepa-2PH00007-american-bath-fact-sheet.npdes.yaml",
+      "oepa/oepa-2PH00007-american-bath-permit.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:2PK00002",
+    "display": "Shawnee II WWTP",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Shawnee II WWTP",
+      "Shawnee II Wastewater Treatment Works (Shawnee II WWTP)"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 3
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.npdes.yaml",
+      "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.npdes.yaml",
+      "oepa/oepa-2PK00002-shawnee-ii-permit.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "ALLEN COUNTY BOARD OF COMMISSIONERS",
+    "display": "Allen County Board of Commissioners",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": "direct_approval",
+    "relation_basis": "Granted the 15-yr/75% CRA abatement (Res #548-25) and approved the roadwork (Res 588-25) (DOSSIER §6-§7)",
+    "variants": [
+      "Allen County Board of Commissioners",
+      "Allen County Board of Commissioners, 301 North Main Street, P.O. Box 1243, Lima, OH 45802",
+      "Allen County Board of Commissioners, 3230 N. Cole St., Lima, OH, 45801",
+      "Allen County Board of Commissioners, 3230 North Cole Street, Lima, OH 45801",
+      "Allen County Board of Commissioners, 4140 Diller Rd, Lima, Ohio 45807",
+      "Allen County Board of Commissioners, 4140 Diller Road, Lima, OH, 45807"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 8
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.npdes.yaml",
+      "oepa/oepa-2PH00006-american-ii-fact-sheet.npdes.yaml",
+      "oepa/oepa-2PH00006-american-ii-permit.npdes.yaml",
+      "oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.npdes.yaml",
+      "oepa/oepa-2PH00007-american-bath-fact-sheet.npdes.yaml",
+      "oepa/oepa-2PH00007-american-bath-permit.npdes.yaml",
+      "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.npdes.yaml",
+      "oepa/oepa-2PK00002-shawnee-ii-permit.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "ALLEN COUNTY SANITARY ENGINEERING DEPARTMENT",
+    "display": "Allen County Sanitary Engineering Department",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": "govt_relation",
+    "relation_basis": "County operator of Shawnee II WWTP (NPDES 2PK00002)",
+    "variants": [
+      "Allen County Sanitary Engineering Department"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "ALLEN ECONOMIC DEVELOPMENT GROUP",
+    "display": "Allen Economic Development",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": "direct_manage",
+    "relation_basis": "Coordinated the abatement and drafted/served the school-district notices (Cindy Leis, President/CEO) (DOSSIER §6)",
+    "variants": [
+      "ALLEN ECONOMIC DEVELOPMENT GROUP",
+      "Allen Economic Development",
+      "Allen Economic Development Group"
+    ],
+    "signals": [],
+    "roles": {
+      "meeting_participant": 9
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "lacrpc/meetings/meeting-summaries.yaml",
+      "perry-township/meetings/meeting-summaries.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "AMERICAN TOWNSHIP",
+    "display": "American Township",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": "govt_relation",
+    "relation_basis": "Township jurisdiction over the corridor; subdivision-meeting body",
+    "variants": [
+      "American Township"
+    ],
+    "signals": [],
+    "roles": {
+      "meeting_body": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "american-township/meetings/meeting-summaries.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "CITY OF PIQUA",
+    "display": "City of Piqua",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Piqua"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1PD00008.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "CITY OF VAN WERT",
+    "display": "City of Van Wert, 515 North Main Street, Van Wert, OH 45891",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Van Wert, 515 North Main Street, Van Wert, OH 45891"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/2PD00006.fs.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "CITY OF WILMINGTON",
+    "display": "City of Wilmington",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Wilmington",
+      "City of Wilmington, 69 North South Street, Wilmington, OH 45177",
+      "City of Wilmington, Steven Honeycutt"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 3
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1II00129.npdes.yaml",
+      "oepa/1PD00013.fs.npdes.yaml",
+      "oepa/1PD00013.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "CLINTON COUNTY BOARD OF DEVELOPMENTAL DISABILITIES",
+    "display": "Clinton County Board of Developmental Disabilities",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Clinton County Board of Developmental Disabilities"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1PT00125.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "LACRPC",
+    "display": "Lacrpc",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": "govt_relation",
+    "relation_basis": "Lima-Allen County Regional Planning Commission; minutes name 'project BOSC (Google data center)'",
+    "variants": [
+      "Lacrpc"
+    ],
+    "signals": [],
+    "roles": {
+      "meeting_body": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "lacrpc/meetings/meeting-summaries.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "PERRY TOWNSHIP",
+    "display": "Perry Township",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": "govt_relation",
+    "relation_basis": "Corridor township; subdivision-meeting body",
+    "variants": [
+      "Perry Township"
+    ],
+    "signals": [],
+    "roles": {
+      "meeting_body": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "perry-township/meetings/meeting-summaries.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "PORT AUTHORITY OF ALLEN COUNTY",
+    "display": "Port Authority",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": "direct_manage",
+    "relation_basis": "Financing/land vehicle; signed the $14.5M Roadwork Development Agreement; no employees (DOSSIER §6-§7)",
+    "variants": [
+      "Allen County Port Authority",
+      "Allen Economic and Port Authority",
+      "PORT AUTHORITY OF ALLEN COUNTY",
+      "Port Authority",
+      "THE PORT AUTHORITY OF ALLEN COUNTY, OHIO"
+    ],
+    "signals": [],
+    "roles": {
+      "meeting_participant": 10,
+      "grantor": 1
+    },
+    "parcels": [
+      "46-1300-04-001.005"
+    ],
+    "addresses": [
+      "MCCLAIN RD"
+    ],
+    "sources": [
+      "perry-township/meetings/meeting-summaries.yaml",
+      "recorder/202511180011830-amazon-deed.deed.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "UNITED STATES",
+    "display": "UNITED STATES",
+    "kind": "government",
+    "classification": "government_military",
+    "relation_class": "govt_relation",
+    "relation_basis": "Federal owner of the JSMC land (GDLS operator); defense thread (DOSSIER §5)",
+    "variants": [
+      "UNITED STATES",
+      "UNITED STATES OF AMERICA"
+    ],
+    "signals": [
+      "army_controlled",
+      "defense_land"
+    ],
+    "roles": {
+      "parcel_owner": 5
+    },
+    "parcels": [
+      "46110004005000",
+      "46140001001000",
+      "46140001002000",
+      "46150504001000",
+      "46150801002000"
+    ],
+    "addresses": [
+      "1151-55-61 BUCKEYE RD",
+      "2190 REED RD",
+      "REED RD"
+    ],
+    "sources": [
+      "data/reference/allen-gis/parcels.defense.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:1PT00125",
+    "display": "Clinton County Board of Developmental Disabilities",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Clinton County Board of Developmental Disabilities"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1PT00125.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "ALEXANDER RECK DBA HIDDEN VALLEY MHP",
+    "display": "Alexander R. Reck dba Hidden Valley MHP",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Alexander R. Reck dba Hidden Valley MHP"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1PV00037.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "AMAZON",
+    "display": "Amazon",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Amazon"
+    ],
+    "signals": [],
+    "roles": {
+      "meeting_participant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "lacrpc/meetings/meeting-summaries.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "CINDY LEIS",
+    "display": "Cindy Leis",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": "direct_manage",
+    "relation_basis": "Runs both AEDG and the Port Authority — single locus of control over the econ-dev shield + records custody",
+    "variants": [
+      "Cindy Leis",
+      "Cindy Leis, AEDG",
+      "Cindy Leis, Allen Economic Development Group",
+      "Cindy Leis, Allen Economic Development Group and Allen County Port Authority"
+    ],
+    "signals": [],
+    "roles": {
+      "meeting_participant": 19
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "american-township/meetings/meeting-summaries.yaml",
+      "perry-township/meetings/meeting-summaries.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "EMH&T",
+    "display": "EMH&T",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": "direct_manage",
+    "relation_basis": "Civil engineer of record on the campus site plan and the corridor work (DOSSIER §4, §9)",
+    "variants": [
+      "EMH&T",
+      "EMH&T, LLC"
+    ],
+    "signals": [],
+    "roles": {
+      "firm": 16
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/3702676.epa.yaml",
+      "permits/3727544.epa.yaml",
+      "permits/3789048.epa.yaml",
+      "permits/3966517.epa.yaml",
+      "permits/3974496.epa.yaml",
+      "permits/4009043.epa.yaml",
+      "permits/4071697.epa.yaml",
+      "permits/4071709.epa.yaml",
+      "permits/4071710.epa.yaml",
+      "permits/4074527.epa.yaml",
+      "permits/4074529.epa.yaml",
+      "permits/4081890.epa.yaml",
+      "permits/4081897.epa.yaml",
+      "permits/4081903.epa.yaml",
+      "permits/4081908.epa.yaml",
+      "permits/4081909.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "EMH&T ENGINEERS",
+    "display": "EMH&T (Engineers, Surveyors, Planners, Scientists)",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "EMH&T (Engineers, Surveyors, Planners, Scientists)"
+    ],
+    "signals": [],
+    "roles": {
+      "firm": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/4081896.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "GOOGLE",
+    "display": "Google",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": "possible_end_user",
+    "relation_basis": "Named as the project's end user in the AEDG release ('reveal Google as the business entity behind Project Bosc', 2026-03-16) + the PAAC and LACRPC minutes (DOSSIER §1, §6, §8); held as a graph annotation rather than a fabricated end-user edge — the prose treats it as confirmed.",
+    "variants": [
+      "Google"
+    ],
+    "signals": [],
+    "roles": {
+      "meeting_participant": 6
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "american-township/meetings/meeting-summaries.yaml",
+      "data/reference/usaspending/awards.yaml",
+      "lacrpc/meetings/meeting-summaries.yaml",
+      "perry-township/meetings/meeting-summaries.yaml"
+    ],
+    "lei": null,
+    "uei": "NQV3T7DDKNT6",
+    "federal_obligations": 73521961.77
+  },
+  {
+    "key": "HEATHER DARDINGER",
+    "display": "Heather Dardinger",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Heather Dardinger"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 4
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/4071709.epa.yaml",
+      "permits/4081890.epa.yaml",
+      "permits/4081897.epa.yaml",
+      "permits/4081908.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "HUME",
+    "display": "Hume",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Hume"
+    ],
+    "signals": [],
+    "roles": {
+      "meeting_participant": 5
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "perry-township/meetings/meeting-summaries.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "JAMES NEIGHBORS",
+    "display": "James W. Neighbors",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "James W. Neighbors"
+    ],
+    "signals": [],
+    "roles": {
+      "grantor": 1
+    },
+    "parcels": [
+      "36-1200-03-015.000"
+    ],
+    "addresses": [
+      "1108 W BLUELICK RD"
+    ],
+    "sources": [
+      "recorder/202603040002064.deed.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "JARED GRIGG PROJECT EHS MANAGER",
+    "display": "Jared Grigg (Project EHS Manager)",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Jared Grigg (Project EHS Manager)"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/lma1a-npdes-cgp-coverage.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "JILL TANGEMAN",
+    "display": "Jill Tangeman",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Jill Tangeman",
+      "Jill Tangeman, Esq., Vorys, Sater, Seymour and Pease LLP, 52 East Gay Street, Columbus, Ohio"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 11,
+      "meeting_participant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "american-township/meetings/meeting-summaries.yaml",
+      "permits/3702676.epa.yaml",
+      "permits/3727059.epa.yaml",
+      "permits/3727544.epa.yaml",
+      "permits/3788677.epa.yaml",
+      "permits/3796349.epa.yaml",
+      "permits/3949585.epa.yaml",
+      "permits/3969235.epa.yaml",
+      "permits/3974496.epa.yaml",
+      "permits/3977737.epa.yaml",
+      "permits/4006230.epa.yaml",
+      "permits/4007485.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "KATIE SAMPLES",
+    "display": "Katie Samples",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Katie Samples"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/4081903.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "KEATON BRENNEMAN",
+    "display": "Keaton A. Brenneman",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Keaton A. Brenneman"
+    ],
+    "signals": [],
+    "roles": {
+      "trustee": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "recorder/202508130008300.deed.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "KRISTEN BRENNEMAN",
+    "display": "Kristen M. Brenneman",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Kristen M. Brenneman"
+    ],
+    "signals": [],
+    "roles": {
+      "trustee": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "recorder/202508130008300.deed.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "KYLE BRENNEMAN",
+    "display": "Kyle C. Brenneman",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Kyle C. Brenneman"
+    ],
+    "signals": [],
+    "roles": {
+      "trustee": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "recorder/202508130008300.deed.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "KYLE ISLER",
+    "display": "Kyle Isler, Wilmington Nursery",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Kyle Isler, Wilmington Nursery"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1MP00060.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "LEIS",
+    "display": "Leis",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Leis"
+    ],
+    "signals": [],
+    "roles": {
+      "meeting_participant": 11
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "american-township/meetings/meeting-summaries.yaml",
+      "perry-township/meetings/meeting-summaries.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "MELISSA QUEEN DARBY",
+    "display": "Melissa Queen Darby",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Melissa Queen Darby"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 2
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/3966517.epa.yaml",
+      "permits/4009043.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "MHC TT",
+    "display": "MHC TT, L.P.",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "MHC TT, L.P."
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1PX00010.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "MICHAEL MONTFORT",
+    "display": "Michael Montfort",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Michael Montfort",
+      "Michael Montfort, Manager"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 5,
+      "organizer": 2
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/3859883.epa.yaml",
+      "permits/3866942.epa.yaml",
+      "permits/3987141.epa.yaml",
+      "permits/3987144.epa.yaml",
+      "permits/4132514.epa.yaml",
+      "permits/sos-magenta-capital-llc-2025-10-17.sos.yaml",
+      "permits/sos-tilted-gate-llc-2025-09-29.sos.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "RAEANN PIEPER",
+    "display": "RaeAnn Pieper",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "RaeAnn Pieper"
+    ],
+    "signals": [],
+    "roles": {
+      "grantor": 1
+    },
+    "parcels": [
+      "36-1100-04-001.001"
+    ],
+    "addresses": [
+      "1337 BEERY RD"
+    ],
+    "sources": [
+      "recorder/202604210003890.deed.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "RANDY BARRERA",
+    "display": "Randy Barrera",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Randy Barrera"
+    ],
+    "signals": [],
+    "roles": {
+      "principal": 3
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/4071709.epa.yaml",
+      "permits/4081903.epa.yaml",
+      "permits/4081908.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "ROBERT ZIZZO",
+    "display": "Robert Zizzo",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Robert Zizzo"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/4074529.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "SANDY FLEISHANS",
+    "display": "Sandy Fleishans",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Sandy Fleishans"
+    ],
+    "signals": [],
+    "roles": {
+      "meeting_participant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "perry-township/meetings/meeting-summaries.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "SARAH BRENNEMAN",
+    "display": "Sarah N. Brenneman",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Sarah N. Brenneman"
+    ],
+    "signals": [],
+    "roles": {
+      "trustee": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "recorder/202508130008300.deed.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "SCOTT ZIANCE",
+    "display": "Scott Ziance",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Scott J. Ziance",
+      "Scott Ziance"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 3,
+      "organizer": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/3789048.epa.yaml",
+      "permits/4074527.epa.yaml",
+      "permits/4081908.epa.yaml",
+      "permits/sos-bistrozzi-addition-llc-2026-04-08.sos.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "SUZANNE NEIGHBORS",
+    "display": "Suzanne M. Neighbors",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Suzanne M. Neighbors"
+    ],
+    "signals": [],
+    "roles": {
+      "grantor": 1
+    },
+    "parcels": [
+      "36-1200-03-015.000"
+    ],
+    "addresses": [
+      "1108 W BLUELICK RD"
+    ],
+    "sources": [
+      "recorder/202603040002064.deed.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "TIMOTHY CHADWICK",
+    "display": "Timothy Chadwick",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Timothy Chadwick"
+    ],
+    "signals": [],
+    "roles": {
+      "principal": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/4081910.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "TIMOTHY PIEPER",
+    "display": "Timothy R. Pieper",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Timothy R. Pieper"
+    ],
+    "signals": [],
+    "roles": {
+      "grantor": 1
+    },
+    "parcels": [
+      "36-1100-04-001.001"
+    ],
+    "addresses": [
+      "1337 BEERY RD"
+    ],
+    "sources": [
+      "recorder/202604210003890.deed.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "UNNAMED TRIBUTARY OF TODD FORK",
+    "display": "unnamed tributary of Todd Fork",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "unnamed tributary of Todd Fork"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1PX00010.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "VORYS",
+    "display": "Vorys",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Vorys",
+      "Vorys, Sater, Seymour, and Pease"
+    ],
+    "signals": [],
+    "roles": {
+      "firm": 9
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/3727059.epa.yaml",
+      "permits/3788677.epa.yaml",
+      "permits/3796349.epa.yaml",
+      "permits/3949585.epa.yaml",
+      "permits/3969235.epa.yaml",
+      "permits/3977737.epa.yaml",
+      "permits/4006230.epa.yaml",
+      "permits/4007485.epa.yaml",
+      "permits/4081908.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "WILMINGTON WATER PLANT",
+    "display": "Wilmington Water Plant",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Wilmington Water Plant"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1IW00240.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "WILSON SONSINI GOODRICH ROSATI WSGR",
+    "display": "Wilson Sonsini Goodrich & Rosati (WSGR)",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Wilson Sonsini Goodrich & Rosati (WSGR)"
+    ],
+    "signals": [],
+    "roles": {
+      "firm": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/3859883.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:1II00129",
+    "display": "Wilmington Sanitary Landfill",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Wilmington Sanitary Landfill"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1II00129.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:1IW00240",
+    "display": "Wilmington Water Plant",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Wilmington Water Plant"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1IW00240.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:1MP00060",
+    "display": "Wilmington Nursery",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Wilmington Nursery"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1MP00060.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:1PV00037",
+    "display": "Hidden Valley Mobile Home Park",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Hidden Valley Mobile Home Park"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1PV00037.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:1PV00089",
+    "display": "Pine Hills Mobile Home Park",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Pine Hills Mobile Home Park"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1PV00089.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "npdes:1PX00010",
+    "display": "Wilmington RV Resort",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Wilmington RV Resort"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1PX00010.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "data-center-campus",
+    "display": "Data-center campus",
+    "kind": "place",
+    "classification": "place_watched",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Data-center campus"
+    ],
+    "signals": [
+      "composite",
+      "tracked"
+    ],
+    "roles": {
+      "place": 1
+    },
+    "parcels": [
+      "36-0100-03-002.000",
+      "36-1200-02-001.001",
+      "36-1200-03-001.000",
+      "36-1200-03-001.001",
+      "36-1200-03-001.002",
+      "36-1200-03-001.003",
+      "36-1200-03-001.004",
+      "36-1200-03-001.005",
+      "36-1200-03-001.006",
+      "36-1200-03-002.000"
+    ],
+    "addresses": [],
+    "sources": [
+      "data/entities/poi/data-center-campus.md"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "KEATON BRENNEMAN LIVING",
+    "display": "Keaton A. Brenneman Living Trust",
+    "kind": "trust",
+    "classification": "trust",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Keaton A. Brenneman Living Trust"
+    ],
+    "signals": [],
+    "roles": {
+      "grantor": 1
+    },
+    "parcels": [
+      "36-1200-03-001.000",
+      "36-1200-03-001.001",
+      "36-1200-03-001.002",
+      "36-1200-03-001.003",
+      "36-1200-03-001.004",
+      "36-1200-03-001.005",
+      "36-1200-03-001.006"
+    ],
+    "addresses": [
+      "950 W BLUELICK RD",
+      "W BLUELICK RD"
+    ],
+    "sources": [
+      "recorder/202508130008300.deed.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "KYLE BRENNEMAN LIVING",
+    "display": "Kyle C. Brenneman Living Trust",
+    "kind": "trust",
+    "classification": "trust",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Kyle C. Brenneman Living Trust"
+    ],
+    "signals": [],
+    "roles": {
+      "grantor": 1
+    },
+    "parcels": [
+      "36-1200-03-001.000",
+      "36-1200-03-001.001",
+      "36-1200-03-001.002",
+      "36-1200-03-001.003",
+      "36-1200-03-001.004",
+      "36-1200-03-001.005",
+      "36-1200-03-001.006"
+    ],
+    "addresses": [
+      "950 W BLUELICK RD",
+      "W BLUELICK RD"
+    ],
+    "sources": [
+      "recorder/202508130008300.deed.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "DUG RUN",
+    "display": "Dug Run",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": "environmental_beneficiary",
+    "relation_basis": "American II WWTP receiving water; undiluted at 7Q10 (HYDROLOGY)",
+    "variants": [
+      "Dug Run"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 3
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.npdes.yaml",
+      "oepa/oepa-2PH00006-american-ii-fact-sheet.npdes.yaml",
+      "oepa/oepa-2PH00006-american-ii-permit.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "GREAT MIAMI RIVER",
+    "display": "Great Miami River",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Great Miami River"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1PD00008.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "LYTLE CREEK",
+    "display": "Lytle Creek",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Lytle Creek"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 3
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1II00129.npdes.yaml",
+      "oepa/1PD00013.fs.npdes.yaml",
+      "oepa/1PD00013.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "OTTAWA RIVER",
+    "display": "Ottawa River",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": "environmental_beneficiary",
+    "relation_basis": "Shawnee II WWTP + Lima abstraction reach; 7Q10 0.2 cfs / 1Q10 0 (HYDROLOGY)",
+    "variants": [
+      "Ottawa River"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 3
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.npdes.yaml",
+      "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.npdes.yaml",
+      "oepa/oepa-2PK00002-shawnee-ii-permit.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "PIKE RUN",
+    "display": "Pike Run",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": "environmental_beneficiary",
+    "relation_basis": "American Bath WWTP receiving water; undiluted at 7Q10 (HYDROLOGY)",
+    "variants": [
+      "Pike Run"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 3
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.npdes.yaml",
+      "oepa/oepa-2PH00007-american-bath-fact-sheet.npdes.yaml",
+      "oepa/oepa-2PH00007-american-bath-permit.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "TAWAWA CREEK",
+    "display": "Tawawa Creek",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Tawawa Creek"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1PV00037.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "TOWN CREEK",
+    "display": "Town Creek",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Town Creek"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 2
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/2PD00006.fs.npdes.yaml",
+      "oepa/2PD00006.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "UNNAMED TRIBUTARY OF LYTLE CREEK",
+    "display": "unnamed tributary of Lytle Creek",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Unnamed Tributary of Lytle Creek",
+      "unnamed tributary of Lytle Creek"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 2
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1IW00240.npdes.yaml",
+      "oepa/1PV00089.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "UNNAMED TRIBUTARY OF WILSON CREEK",
+    "display": "unnamed tributary of Wilson Creek",
+    "kind": "water",
+    "classification": "receiving_water",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "unnamed tributary of Wilson Creek"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/1PT00125.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  }
+]

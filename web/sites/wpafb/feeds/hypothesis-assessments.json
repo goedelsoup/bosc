@@ -1,0 +1,24 @@
+[
+  {
+    "site": "wpafb",
+    "hypothesis": "defense",
+    "signal": "strong",
+    "tag": "verified",
+    "sub_thesis": null,
+    "group": "arsenal",
+    "fields": {
+      "nexus": "Wright-Patterson AFB",
+      "linkage": "Adjacent · Mad R. terminus"
+    },
+    "citations": [
+      {
+        "source": "docs/defense-nexus.md",
+        "source_kind": "reference",
+        "page": null,
+        "confidence": "high",
+        "note": "Wright-Patterson AFB sits at the Mad River terminus, adjacent to the watershed point. The base is the strongest documented federal-enclave signal in the network after Lima.",
+        "verified": false
+      }
+    ]
+  }
+]
