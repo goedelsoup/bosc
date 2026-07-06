@@ -19,6 +19,7 @@ depends_on:
 - eia-demand-pressure
 - eia-grid-profile
 - gleif
+- greenops-footprint
 - hydrology
 - hydrology-low-flow-7q10
 - hydrology-reaches
@@ -59,5 +60,9 @@ notes: >-
   The `reach-network` feed (#1235/#1237, contract 1.20.0) carries the real river-centerline geometry
   the deck.gl FlowLayer particle-advection viz advects over — reading the committed `hydrology-reaches`
   NHDPlus centerlines (regenerated from USGS NLDI), reference-site gated.
+  The `greenops` feed (#1076/#1084, contract 1.21.0) lifts the committed `greenops-footprint`
+  artifact (the platform's own usage → electricity → water compute footprint) into the report the
+  sustainability page reads — a global object feed emitted into every bundle identically (like the
+  basin `network` synthesis), every figure tagged reference/derived/assumption (never verified).
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.
