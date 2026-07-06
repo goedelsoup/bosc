@@ -6,29 +6,16 @@ import typer
 from rich.table import Table
 
 from watermark.cli._base import console, greenops_app, offline_settings, wrote
+from watermark.greenops.model import GreenopsReport
 
 
-@greenops_app.command("report")
-def report() -> None:
-    """Show the current GreenOps footprint report.
+def _fmt(v: float) -> str:
+    return f"{v:,.0f}" if v == int(v) else f"{v:g}"
 
-    Scaffold (#1077): renders the modeled ``assumption`` placeholder — every figure is a
-    stated modeling input, not a metered fact. The per-source connector ``--write``
-    subcommands (AWS/Anthropic/GitHub/eGRID) land here in #1078-#1082.
-    """
-    from watermark.greenops.footprint import placeholder_report
 
-    rpt = placeholder_report()
+def _render_report(rpt: GreenopsReport) -> None:
+    """Render a footprint report's headline figures + note (shared by ``report``/``footprint``)."""
     rpt.assert_no_verified()  # discipline guard: no figure may claim to be metered
-
-    console.print(
-        f"[bold]GreenOps footprint[/] [dim]({rpt.period.label})[/]  "
-        f"[yellow]modeled placeholder — every figure is an assumption pending its source[/]"
-    )
-
-    def _fmt(v: float) -> str:
-        return f"{v:,.0f}" if v == int(v) else f"{v:g}"
-
     table = Table("figure", "value", "source", "provenance")
     for h in rpt.headline:
         table.add_row(
@@ -40,6 +27,101 @@ def report() -> None:
     console.print(table)
     if rpt.note:
         console.print(f"\n[dim]{rpt.note}[/]")
+
+
+@greenops_app.command("report")
+def report() -> None:
+    """Show the current GreenOps footprint report.
+
+    Renders the committed ``data/reference/greenops/footprint.yaml`` if it exists, else the
+    freshly derived report. Every figure is `reference` / `derived` / `assumption`, never a
+    metered fact. Regenerate the committed artifact with ``watermark greenops footprint --write``.
+    """
+    from watermark.greenops.footprint import (
+        derive_footprint,
+        footprint_reference_path,
+        load_footprint,
+    )
+
+    settings = offline_settings("greenops", False)
+    path = footprint_reference_path(settings)
+    rpt = load_footprint(path) if path.exists() else derive_footprint(settings)
+
+    console.print(
+        f"[bold]GreenOps footprint[/] [dim]({rpt.period.label})[/]  "
+        f"[dim]modeled, not metered — reference/derived/assumption only[/]"
+    )
+    _render_report(rpt)
+
+
+@greenops_app.command("footprint")
+def footprint(
+    write: bool = typer.Option(
+        False, "--write", help="Write data/reference/greenops/footprint.yaml."
+    ),
+    force: bool = typer.Option(
+        False,
+        "--force",
+        help="Write even when a source export is missing (persists a degraded, modeled report).",
+    ),
+) -> None:
+    """Assemble the footprint: usage → electricity → CO2e/mix → water (#1083).
+
+    Lifts the committed connector exports (AWS, GitHub, Anthropic) + reference factor tables
+    (eGRID, WUE) into the :class:`GreenopsReport`. Every conversion is `derived`; the modeling
+    levers (W/vCPU, PUE, eGRID subregion, tokens/call, water budget) are stated `assumption`s;
+    the derived CO2e is reconciled against the AWS CCFT total. A source not on disk degrades
+    that dimension to a modeled assumption — nothing is fabricated or metered.
+
+    ``--write`` refuses to overwrite the committed artifact with a degraded report when any
+    source export is missing; pass ``--force`` to persist the partially-modeled report anyway.
+    """
+    from watermark.greenops.connectors._readme import write_reference_readme
+    from watermark.greenops.footprint import (
+        derive_footprint,
+        footprint_reference_path,
+        load_footprint_inputs,
+        write_footprint,
+    )
+
+    settings = offline_settings("greenops", False)
+    rpt = derive_footprint(settings)
+
+    console.print(
+        f"[bold]GreenOps footprint — derived[/] [dim]({rpt.period.label})[/]  "
+        f"[dim]usage → electricity → water, modeled not metered[/]"
+    )
+    _render_report(rpt)
+    for src in rpt.sources:
+        console.print(f"  [dim]· {src}[/]")
+
+    if write:
+        # Guard: a missing source export degrades that whole dimension to a modeled assumption
+        # (see rpt.note). Persisting that over the committed artifact would silently downgrade a
+        # metered-backed figure to a placeholder — so refuse unless the operator opts in.
+        inputs = load_footprint_inputs(settings)
+        missing = [
+            name
+            for name, present in (
+                ("AWS", inputs.aws_costs is not None),
+                ("GitHub", inputs.github is not None),
+                ("Anthropic", inputs.anthropic is not None),
+                ("eGRID", inputs.egrid is not None),
+                ("WUE", inputs.wue is not None),
+            )
+            if not present
+        ]
+        if missing and not force:
+            raise typer.BadParameter(
+                f"refusing to write a degraded footprint — missing source export(s): "
+                f"{', '.join(missing)}. Those dimensions would be persisted as modeled "
+                "assumptions over the committed artifact. Regenerate the missing "
+                "`watermark greenops <source> --write` export(s) first, or pass --force."
+            )
+
+        out = write_footprint(rpt, footprint_reference_path(settings))
+        write_reference_readme(out.parent)  # keep the shared folder README whole
+        wrote(out)
 
 
 def _trailing_12_months() -> tuple[str, str]:

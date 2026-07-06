@@ -159,6 +159,12 @@ class Settings(BaseSettings):
     # digit count (8 = Subbasin, 10 = Watershed, 12 = Subwatershed); the WBD connector
     # appends `/<layer>/query`. Served through the shared hydrology cache/fixture path.
     wbd_url: str = "https://hydro.nationalmap.gov/arcgis/rest/services/wbd/MapServer"
+    # USGS NLDI (Network-Linked Data Index) — the hydro-network navigation service over the
+    # NHDPlus flowline network. The `nldi` connector snaps a point / gage to its NHDPlus
+    # `comid` and navigates upstream/downstream to return real river-centerline geometry
+    # (the reach-network the FlowLayer viz advects over). Served through the shared hydrology
+    # cache/fixture path. The connector appends `/linked-data/...`.
+    nldi_base_url: str = "https://api.water.usgs.gov/nldi"
     # EPA RSEI Public Data Set. The current release — v2.3.12 (March 2024, TRI 1988-2022)
     # — ships as a single ~447 MB zip of per-table CSVs on EPA's public gaftp site, NOT
     # the frozen `epa-rsei-pds` S3 bucket, which stalled at v234/2016 (#1148). `watermark
@@ -325,6 +331,12 @@ class Settings(BaseSettings):
     # from the cache key. Absent token on a live pull => the GitHub source degrades to a
     # modeled assumption, never a crash. Overridable so tests can point at another org.
     github_billing_org: str = "watermark-directory"
+    # Which eGRID subregion the compute runs in (#1083) — the electricity → CO2e / source-mix
+    # / upstream-water conversion apportions the derived electricity by this subregion's
+    # factors. A stated modeling `assumption`, not a metered fact: our primary AWS region is
+    # us-east-1 (Northern Virginia), whose eGRID subregion is SERC Virginia/Carolina (SRVC).
+    # Override when the workload's region changes; must be a code present in the eGRID table.
+    greenops_grid_subregion: str = "SRVC"
 
     # --- GIS / satellite imagery -------------------------------------------
     # Pull AOI-clipped satellite imagery for tracking sites (the campus/footprints

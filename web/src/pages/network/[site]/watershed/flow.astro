@@ -1,0 +1,114 @@
+---
+import { selectableSitePaths, siteForSlug } from "~/lib/sites";
+export const getStaticPaths = selectableSitePaths;
+import BackLink from "~/components/BackLink.astro";
+import EvidenceTag from "~/components/EvidenceTag.astro";
+import FlowMap from "~/components/islands/FlowMap.tsx";
+import Base from "~/layouts/Base.astro";
+import { reachAttenuationRows } from "~/lib/basin";
+import { hasFeed, loadFeed } from "~/lib/bundle";
+import type { RoutedHydrographNetwork } from "~/lib/feeds";
+import { isReferenceSite } from "~/lib/readiness";
+import { withBase, withSite } from "~/lib/site";
+
+// The water-flow view (#1235, epic #1237): the deck.gl FlowLayer island advecting GPU particles
+// down the real reach-network river centerlines, plus the always-rendered reach-attenuation table
+// that is the no-JS / no-WebGL fallback. Particle density/speed encode each reach's routed
+// storm-peak magnitude (a modeled screening read → [inference]); reaches whose receiving water
+// fails its low-flow assimilative screen draw oxblood.
+const { slug } = Astro.props as { slug: string };
+const site = siteForSlug(slug);
+const isRef = isReferenceSite(slug);
+
+const routed: RoutedHydrographNetwork | null = hasFeed("routed-hydrograph")
+  ? loadFeed<RoutedHydrographNetwork>("routed-hydrograph")
+  : null;
+const rows = routed ? reachAttenuationRows(routed.reaches) : [];
+const num = (v: number): string => v.toLocaleString("en-US", { maximumFractionDigits: 0 });
+
+const subject = isRef
+  ? "the Ottawa River loop through Lima — its Muskingum–Cunge routed design-storm hydrograph"
+  : `${site?.place}'s reach network`;
+const mapSrc = withBase("/feeds/flow.json");
+---
+
+<Base title="Water flow" section="watershed">
+  <article class="prose">
+    <BackLink href={withSite("/watershed/")} label="The Maumee watershed" />
+    <h1>Water flow</h1>
+    <p class="section-lead">
+      GPU particles advect down {subject}, over the real NHDPlus river centerlines. Particle
+      density and speed encode each reach's routed storm-peak flow; reaches whose receiving water
+      can't dilute its permitted effluent at the design low flow — a deficit — thin and read
+      oxblood. Motion is deliberately restrained.
+    </p>
+
+    <div class="callout callout--inference">
+      <p class="callout-title">Modeled screening flow — <EvidenceTag kind="inference" /></p>
+      <p>
+        The particle magnitudes are the <strong>Tier-0 Muskingum–Cunge routed hydrograph</strong> —
+        a screening model over cited channel geometry, not a gauged flow record — so the flow field
+        is <code>[inference]</code>, <strong>never <code>[verified]</code></strong>. The river
+        centerlines themselves are real NHDPlus geometry; the deficit shading is the cited low-flow
+        assimilative screen. It shows where the model routes water, not a measured discharge.
+      </p>
+    </div>
+
+    <div class="deck-surface">
+      <FlowMap client:only="react" src={mapSrc} />
+      <noscript>
+        <div class="deck-loading">
+          The interactive flow needs JavaScript and WebGL — the reach-attenuation table below carries
+          the same routed figures.
+        </div>
+      </noscript>
+    </div>
+
+    <h2 id="reaches">Routed per-reach attenuation</h2>
+    {
+      rows.length === 0 ? (
+        <p class="section-lead">
+          No routed reach network is on the record for this site yet. When the confluence topology and
+          reach geometry land, the routed hydrograph and this flow view appear here.
+        </p>
+      ) : (
+        <p class="card-meta">
+          Each reach's routed inflow vs. outflow storm peak — where a channel took a bite out of the
+          peak (attenuation) and delayed it (lag). Every figure is <EvidenceTag kind="inference" /> — a
+          Tier-0 screening route, most-attenuating reach first.
+        </p>
+      )
+    }
+  </article>
+
+  {
+    rows.length > 0 && (
+      <div class="dtable">
+        <table>
+          <thead>
+            <tr>
+              <th>Reach</th>
+              <th>Length (ft)</th>
+              <th>Inflow peak (cfs)</th>
+              <th>Outflow peak (cfs)</th>
+              <th>Attenuation</th>
+              <th>Lag (hr)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr>
+                <td>{r.reach}</td>
+                <td class="num">{num(r.lengthFt)}</td>
+                <td class="num">{num(r.inflowPeakCfs)}</td>
+                <td class="num">{num(r.outflowPeakCfs)}</td>
+                <td class="num">{r.attenuationPct.toFixed(1)}%</td>
+                <td class="num">{r.lagHr.toFixed(1)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+</Base>

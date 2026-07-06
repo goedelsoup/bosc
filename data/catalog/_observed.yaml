@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-05T17:15:02.159942+00:00'
+reconciled_at: '2026-07-06T00:36:39.646369+00:00'
 entries:
   aedg:
     exists: true
@@ -400,6 +400,16 @@ entries:
     asof: null
     stale: false
     site_scope: basin-shared
+  greenops-footprint:
+    exists: true
+    sha256: 273d32241340ec91c85c2e4b59ae68c01571e904f07f6db228fd8ff0bf6e9418
+    size_bytes: 9565
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: basin-shared
   greenops-github:
     exists: true
     sha256: 9428e8ced535c9c282fbf67f61851d0343fe47aa96fa2f2867ec7c13dc4e8eca
@@ -480,6 +490,16 @@ entries:
     asof: null
     stale: false
     site_scope: basin-shared
+  hydrology-reaches:
+    exists: true
+    sha256: 88e5aba52a4b605ca188b386fabf8ca67a99732d7825f445926def682ddc355b
+    size_bytes: 89999
+    lfs_materialized: true
+    file_count: 2
+    missing: []
+    asof: null
+    stale: false
+    site_scope: slug-scoped
   hydrology-swmm:
     exists: true
     sha256: 1a72f530ba3bdd1e3914744dd57fe834109c13b45967f99e3ef3f0c27b711617

@@ -626,6 +626,31 @@ export interface DispersionField {
   note: string;
 }
 
+// --- reach-network centerlines (GPU flow viz, epic #1237 / #1235) --------------------------
+// The real river-centerline geometry the deck.gl FlowLayer advects particles over. Mirrors
+// `bosc.site.feeds.ReachNetwork`. Verbatim NHDPlus (USGS NLDI), keyed by `node_id` so the
+// FlowMap island joins each reach's flow magnitude (routed-hydrograph) and deficit state
+// (hydrology-scenarios) by node — this feed carries geometry only.
+
+/** One reach node's river centerline — a downstream-oriented (lon, lat) polyline. */
+export interface ReachLine {
+  node_id: string; // the network.yaml node id (join key into routed-hydrograph / scenarios)
+  name: string;
+  receiving_water?: string | null;
+  downstream?: string | null; // the node this reach drains into (null at the outlet)
+  length_km: number;
+  coordinates: [number, number][]; // (lon, lat), ordered head → downstream
+}
+
+/** The reach network's river-centerline geometry (`bosc.site.feeds.ReachNetwork`). */
+export interface ReachNetwork {
+  site: string;
+  crs: string;
+  reaches: ReachLine[];
+  note: string;
+  caveats: string[];
+}
+
 // --- water seasonal evaporation / net-atmospheric-withdrawal field (epic #1237 / #1236) ----
 // The seasonal climograph the deck.gl FieldLayer renders as a cartesian month-axis strip. The
 // field scalar is net atmospheric withdrawal (reference ET0 - precip, mm/day). Mirrors

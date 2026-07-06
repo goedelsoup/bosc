@@ -19,8 +19,10 @@ depends_on:
 - eia-demand-pressure
 - eia-grid-profile
 - gleif
+- greenops-footprint
 - hydrology
 - hydrology-low-flow-7q10
+- hydrology-reaches
 - hydrology-wbd
 - rsei-inventory
 refresh:
@@ -55,7 +57,14 @@ notes: >-
   The `air-dispersion-field` feed (#1232/#1237, contract 1.19.0) reshapes the same AERMOD screening
   run into the gridded concentration surface the deck.gl field viz renders (reference-site gated,
   `assumption`-provenanced) — reading the same air upstreams, so it adds no new committed dependency.
-  The `water-seasonal-field` feed (#1236/#1237, contract 1.20.0) is the Phase-2 water field — the
+  The `reach-network` feed (#1235/#1237, contract 1.20.0) carries the real river-centerline geometry
+  the deck.gl FlowLayer particle-advection viz advects over — reading the committed `hydrology-reaches`
+  NHDPlus centerlines (regenerated from USGS NLDI), reference-site gated.
+  The `greenops` feed (#1076/#1084, contract 1.21.0) lifts the committed `greenops-footprint`
+  artifact (the platform's own usage → electricity → water compute footprint) into the report the
+  sustainability page reads — a global object feed emitted into every bundle identically (like the
+  basin `network` synthesis), every figure tagged reference/derived/assumption (never verified).
+  The `water-seasonal-field` feed (#1236/#1237, contract 1.22.0) is the Phase-2 water field — the
   seasonal net-atmospheric-withdrawal climograph `evaluate_seasonal` produces (reference ET0 − precip
   from the NASA POWER normals, screened against the cited Ottawa low flows and the buildout scenario
   draw), reference-site gated and `reference`-provenanced; it reads the committed climate + low-flow

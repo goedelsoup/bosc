@@ -23,8 +23,8 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_contract_version_bumped() -> None:
-    """The feed is additive/MINOR — the bundle contract advanced to 1.20.0."""
-    assert CONTRACT_VERSION == "1.20.0"
+    """The feed is additive/MINOR — the bundle contract advanced to 1.22.0."""
+    assert CONTRACT_VERSION == "1.22.0"
 
 
 @pytest.fixture(scope="module")
@@ -51,7 +51,7 @@ def test_reference_export_emits_the_seasonal_field(lima_bundle: Path) -> None:
     """The reference build ships `water-seasonal-field` with real months (climate normals are
     committed, so it does not degrade like the AERMOD field), `reference`-provenanced."""
     manifest = json.loads((lima_bundle / "manifest.json").read_text(encoding="utf-8"))
-    assert manifest["contract_version"] == "1.20.0"
+    assert manifest["contract_version"] == "1.22.0"
 
     field = _field(lima_bundle)
     assert field["site"] == "lima"

@@ -1,10 +1,10 @@
 {
   "site": "urbana",
   "bundle_version": "1.0.0",
-  "contract_version": "1.20.0",
+  "contract_version": "1.22.0",
   "generated_at": "2026-07-01T16:35:33+00:00",
-  "feed_count": 20,
-  "row_total": 56,
+  "feed_count": 21,
+  "row_total": 57,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -133,6 +133,14 @@
       "path": "feeds/network.json",
       "media_type": "application/json",
       "schema": "schemas/network.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "greenops",
+      "path": "feeds/greenops.json",
+      "media_type": "application/json",
+      "schema": "schemas/greenops.schema.json",
       "kind": "object",
       "count": 1
     },
