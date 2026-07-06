@@ -100,7 +100,14 @@ from watermark.site.readiness import State, Tier  # the readiness vocabulary SSO
 #   corner box, per-period NAAQS lines, and a fixed `provenance: assumption` marker (the CBI-redacted
 #   stack ⇒ [inference]). Reference-site gated; `available=False` with empty `values` when the AERMOD
 #   binary/met is absent (geometry real, no fabricated concentration).
-CONTRACT_VERSION = "1.19.0"
+# 1.20.0: adds the `water-seasonal-field` object feed (epic #1237 / #1236) — the seasonal
+#   evaporation / net-atmospheric-withdrawal climograph the deck.gl FieldLayer renders as a
+#   cartesian month-axis strip (Phase 2, water). The field scalar is net atmospheric withdrawal
+#   (reference ET0 - precip, mm/day, from the cited NASA POWER normals + FAO-56 ET0); the deficit
+#   boundary (net=0) is the threshold isopleth. The per-month low-flow `multiple` rides along for
+#   the SSR table/probe and is [inference] (it screens the modeled buildout draw). Reference-site
+#   gated; `available=False` with empty `months` when the climate/scenario inputs are absent.
+CONTRACT_VERSION = "1.20.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -778,6 +785,72 @@ class DispersionField(BaseModel):
             caveats=caveats or [],
             note=note,
         )
+
+
+# --- water seasonal evaporation / net-atmospheric-withdrawal field (epic #1237 / #1236) ----
+# The seasonal climograph the deck.gl FieldLayer renders as a cartesian month-axis strip (Phase-2
+# water). The field scalar is net atmospheric withdrawal (reference ET0 - precip, mm/day) from the
+# cited NASA POWER normals + FAO-56 ET0; the deficit boundary (net=0) is the load-bearing threshold
+# isopleth. Distinct from `hydrology-scenarios` (the annual water balance): this is the month-by-
+# month seasonal read `watermark.hydrology.scenario.evaluate_seasonal` produces.
+
+
+class SeasonalMonthCell(BaseModel):
+    """One month of the seasonal climograph: the climate drivers + the low-flow screen.
+
+    ``net_atmospheric_mm_day`` (ET0 - precip) is the field scalar the FieldLayer ramps; a positive
+    value is a growing-season deficit (ET exceeds precipitation, so no rainfall buffer).
+    ``multiple`` is the draw read against ``low_flow_cfs`` (the cited seasonal floor — 30Q10 summer
+    in the growing season, else the annual 7Q10); it rests on the *modeled* buildout draw, so the
+    frontend renders it ``[inference]``, never a measured withdrawal.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    month: str  # JAN..DEC
+    growing_season: bool  # ET0 > precip this month
+    et0_mm_day: float
+    precip_mm_day: float
+    net_atmospheric_mm_day: float  # ET0 - precip — the field scalar
+    low_flow_cfs: float  # the cited design low flow applied this month
+    low_flow_basis: str  # "30Q10 summer" | "7Q10 annual"
+    consumptive_cfs: float  # this month's net consumptive draw (month-varying for hybrid)
+    multiple: float | None  # draw / low_flow (None when the floor is 0)
+
+
+class SeasonalField(BaseModel):
+    """The seasonal evaporation / net-atmospheric-withdrawal climograph — the #1236 deliverable.
+
+    A month-axis climograph the deck.gl FieldLayer renders as a cartesian strip (epic #1237, Phase
+    2). The field scalar is net atmospheric withdrawal (reference ET0 - precip, mm/day): a one-hue
+    bone->forest->ink ramp, with the deficit boundary (net=0) as the threshold isopleth — the
+    growing-season edge, where ET starts to exceed precipitation. ``provenance`` is fixed to
+    ``reference``: the climograph is the cited NASA POWER normals + FAO-56 ET0. The per-month
+    ``multiple`` overlays the *modeled* buildout consumptive draw against the cited seasonal low
+    flow, so that read is ``[inference]`` — surfaced in the SSR table/probe, never baked into the
+    mm/day raster scalar. ``available`` is False (empty ``months``) when the climate/ET inputs or
+    the buildout scenario are absent — the thresholds still resolve, nothing is fabricated.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    site: str
+    scenario: str
+    cooling_model: str | None = None
+    unit: str = "mm/day"  # the field scalar's unit (net atmospheric withdrawal)
+    # The climograph is cited climate normals; the per-month `multiple` alone is [inference].
+    provenance: Literal["reference"] = "reference"
+    available: bool = False
+    consumptive_cfs: float | None = None  # the headline draw screened (cfs)
+    annual_7q10_cfs: float | None = None
+    summer_30q10_cfs: float | None = None
+    one_q10_cfs: float | None = None  # absolute design low flow (often 0)
+    annual_multiple: float | None = None  # draw / annual 7Q10
+    summer_multiple: float | None = None  # draw / summer 30Q10 — the seasonal headline
+    growing_season_months: list[str] = Field(default_factory=list)
+    months: list[SeasonalMonthCell] = Field(default_factory=list)
+    caveats: list[str] = Field(default_factory=list)
+    note: str = ""
 
 
 # --- manifest ------------------------------------------------------------------

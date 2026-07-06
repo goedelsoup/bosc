@@ -79,6 +79,17 @@ if (hasFeed("air-dispersion-field")) {
     note: "modeled screen",
   });
 }
+if (hasFeed("water-seasonal-field")) {
+  doors.push({
+    id: "seasonal",
+    kind: "Interactive field",
+    href: withSite("/watershed/seasonal"),
+    count: "—",
+    title: "Seasonal withdrawal",
+    desc: "A month-by-month climograph of net atmospheric withdrawal (ET0 − precip) with the cooling draw read against the cited seasonal low flow.",
+    note: "climograph",
+  });
+}
 if (hasFeed("economics-baseline")) {
   doors.push({
     id: "economics",

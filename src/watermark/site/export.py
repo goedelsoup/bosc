@@ -107,6 +107,8 @@ from watermark.site.feeds import (
     PlaceItem,
     RecordItem,
     RelationshipEdge,
+    SeasonalField,
+    SeasonalMonthCell,
     SiteReadiness,
     TimelineEntry,
 )
@@ -425,6 +427,74 @@ def _dispersion_field(settings: Settings) -> list[DispersionField] | None:
     return fields or None
 
 
+def _seasonal_field(settings: Settings) -> SeasonalField | None:
+    """The seasonal net-atmospheric-withdrawal climograph — the deck.gl water field (epic #1237 / #1236).
+
+    Reference-site gated like ``routed-hydrograph`` / ``air-dispersion-field``: the buildout scenario
+    and the Ottawa low flows are Lima's, not a peer's. Reads the committed buildout scenario's
+    consumptive draw + cooling basis, screens it month-by-month via
+    :func:`watermark.hydrology.scenario.evaluate_seasonal`, and projects the result into the field
+    feed. The field scalar (net atmospheric withdrawal, ET0 - precip) is the cited climate normals
+    (``reference``); the per-month low-flow ``multiple`` rests on the *modeled* draw and is
+    ``[inference]``. Degrades to ``available=False`` with empty ``months`` (thresholds still resolve)
+    when the buildout scenario is missing or the climate/ET normals are absent — nothing fabricated.
+    """
+    if not is_reference_site(settings.site):
+        return None
+    build = next((s for s in _load_scenarios(settings) if s.scenario.name == "buildout"), None)
+    if build is None:
+        return None
+    from watermark.hydrology import scenario as hydro_scenario
+
+    sw = hydro_scenario.evaluate_seasonal(
+        build.consumptive_loss.value, settings=settings, basis=build.scenario.basis
+    )
+    caveats = [
+        "The climograph (net atmospheric withdrawal = reference ET0 - precip) is the cited NASA "
+        "POWER normals + FAO-56 ET0. The per-month low-flow multiple screens the *modeled* buildout "
+        "consumptive draw against the cited seasonal low flow (30Q10 summer / 7Q10 annual), so that "
+        "read is [inference] — not a measured withdrawal.",
+    ]
+    if sw is None or not sw.months:
+        return SeasonalField(
+            site=settings.site,
+            scenario="buildout",
+            available=False,
+            caveats=caveats,
+            note="Buildout scenario resolved; climate/ET normals unavailable, so the climograph "
+            "carries no monthly surface (degraded, not fabricated).",
+        )
+    return SeasonalField(
+        site=settings.site,
+        scenario=sw.scenario,
+        cooling_model=sw.cooling_model.value if sw.cooling_model is not None else None,
+        available=True,
+        consumptive_cfs=sw.consumptive_cfs,
+        annual_7q10_cfs=sw.annual_7q10_cfs,
+        summer_30q10_cfs=sw.summer_30q10_cfs,
+        one_q10_cfs=sw.one_q10_cfs,
+        annual_multiple=sw.annual_multiple,
+        summer_multiple=sw.summer_multiple,
+        growing_season_months=sw.growing_season_months,
+        months=[
+            SeasonalMonthCell(
+                month=m.month,
+                growing_season=m.growing_season,
+                et0_mm_day=m.et0_mm_day,
+                precip_mm_day=m.precip_mm_day,
+                net_atmospheric_mm_day=m.net_atmospheric_mm_day,
+                low_flow_cfs=m.low_flow_cfs,
+                low_flow_basis=m.low_flow_basis,
+                consumptive_cfs=m.consumptive_cfs,
+                multiple=m.multiple,
+            )
+            for m in sw.months
+        ],
+        caveats=caveats,
+        note="Seasonal climograph from evaluate_seasonal: cited ET0/precip normals + Ottawa low flows.",
+    )
+
+
 def _collect_feeds(settings: Settings) -> list[_Feed]:
     """Load the corpus once and assemble every feed."""
     feeds: list[_Feed] = []
@@ -630,6 +700,10 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         # The gridded concentration surface for the deck.gl field viz (epic #1237 / #1232) —
         # reference-site gated like routed-hydrograph, `assumption`-provenanced (CBI-redacted stack).
         ("air-dispersion-field", DispersionField, lambda: _dispersion_field(settings)),
+        # The seasonal net-atmospheric-withdrawal climograph for the deck.gl water field (epic
+        # #1237 / #1236) — an object feed, reference-site gated. The climograph is cited climate
+        # normals (`reference`); the per-month low-flow multiple screens the modeled draw ([inference]).
+        ("water-seasonal-field", None, lambda: _seasonal_field(settings)),
         # The published data catalog (epic #631 Phase 3 / #659) — the data tier /about/data reads.
         ("catalog", CatalogItem, lambda: catalog_mod.export_catalog(settings)),
     ]

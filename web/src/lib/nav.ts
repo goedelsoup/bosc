@@ -163,6 +163,7 @@ export function sections(): Section[] {
         { label: "Imagery", anchor: "imagery" },
         { label: "RSEI / toxics", anchor: "rsei" },
         { label: "Air dispersion", anchor: "air" },
+        { label: "Seasonal withdrawal", anchor: "seasonal" },
       ],
     },
     {
@@ -386,6 +387,7 @@ export function siteTabs(): NavItem[] {
               { label: "Imagery", href: `${base}/watershed/#imagery`, locked: watershedLocked },
               { label: "RSEI / toxics", href: `${base}/watershed/#rsei`, locked: watershedLocked },
               { label: "Air dispersion", href: `${base}/watershed/#air`, locked: watershedLocked },
+              { label: "Seasonal withdrawal", href: `${base}/watershed/#seasonal`, locked: watershedLocked },
             ],
           },
           {

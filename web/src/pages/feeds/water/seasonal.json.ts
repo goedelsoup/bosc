@@ -1,0 +1,13 @@
+import type { APIRoute } from "astro";
+import { hasFeed, loadFeed } from "~/lib/bundle";
+import type { SeasonalField } from "~/lib/feeds";
+
+// Static feed endpoint: exposes the `water-seasonal-field` feed (the seasonal net-atmospheric-
+// withdrawal climograph, one object per site) as a root-absolute JSON asset the deck.gl FieldLayer
+// island fetches at runtime (epic #1237 / #1236). `null` when the reference site ships no field
+// (a non-reference/peer bundle) — the island then renders the locked state.
+export const GET: APIRoute = () =>
+  new Response(
+    JSON.stringify(hasFeed("water-seasonal-field") ? loadFeed<SeasonalField>("water-seasonal-field") : null),
+    { headers: { "content-type": "application/json; charset=utf-8" } },
+  );

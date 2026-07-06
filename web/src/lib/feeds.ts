@@ -626,6 +626,50 @@ export interface DispersionField {
   note: string;
 }
 
+// --- water seasonal evaporation / net-atmospheric-withdrawal field (epic #1237 / #1236) ----
+// The seasonal climograph the deck.gl FieldLayer renders as a cartesian month-axis strip. The
+// field scalar is net atmospheric withdrawal (reference ET0 - precip, mm/day). Mirrors
+// `bosc.site.feeds.SeasonalField`.
+
+/** One month of the seasonal climograph: the climate drivers + the low-flow screen. */
+export interface SeasonalMonthCell {
+  month: string; // JAN..DEC
+  growing_season: boolean; // ET0 > precip this month
+  et0_mm_day: number;
+  precip_mm_day: number;
+  net_atmospheric_mm_day: number; // ET0 - precip — the field scalar
+  low_flow_cfs: number; // the cited design low flow applied this month
+  low_flow_basis: string; // "30Q10 summer" | "7Q10 annual"
+  consumptive_cfs: number; // this month's net consumptive draw
+  multiple: number | null; // draw / low_flow (null when the floor is 0)
+}
+
+/**
+ * The seasonal evaporation / net-atmospheric-withdrawal climograph (`bosc.site.feeds.SeasonalField`).
+ * `provenance` is fixed to `"reference"` — the climograph is the cited NASA POWER normals + FAO-56
+ * ET0. The per-month `multiple` overlays the *modeled* buildout draw against the cited seasonal low
+ * flow, so that read alone is `[inference]` (surfaced in the SSR table/probe, not the mm/day raster).
+ * `available` is false (with empty `months`) when the climate/scenario inputs were absent.
+ */
+export interface SeasonalField {
+  site: string;
+  scenario: string;
+  cooling_model: string | null;
+  unit: string; // "mm/day" — the field scalar's unit
+  provenance: "reference";
+  available: boolean;
+  consumptive_cfs: number | null; // the headline draw screened (cfs)
+  annual_7q10_cfs: number | null;
+  summer_30q10_cfs: number | null;
+  one_q10_cfs: number | null;
+  annual_multiple: number | null; // draw / annual 7Q10
+  summer_multiple: number | null; // draw / summer 30Q10 — the seasonal headline
+  growing_season_months: string[];
+  months: SeasonalMonthCell[];
+  caveats: string[];
+  note: string;
+}
+
 // --- boom-origin hypotheses (the directory lenses) + their evidence cells (#308) ----------
 /** One reading of the boom — content of a directory lens (`bosc.hypotheses.Hypothesis`). */
 export interface HypothesisItem {

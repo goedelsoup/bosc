@@ -1,0 +1,125 @@
+---
+import { selectableSitePaths, siteForSlug } from "~/lib/sites";
+export const getStaticPaths = selectableSitePaths;
+import BackLink from "~/components/BackLink.astro";
+import EvidenceTag from "~/components/EvidenceTag.astro";
+import SeasonalField from "~/components/islands/SeasonalField.tsx";
+import Base from "~/layouts/Base.astro";
+import { hasFeed, loadFeed } from "~/lib/bundle";
+import type { SeasonalField as SeasonalFieldData } from "~/lib/feeds";
+import { isReferenceSite } from "~/lib/readiness";
+import { withBase, withSite } from "~/lib/site";
+
+// The seasonal water field view (#1236, epic #1237): the deck.gl FieldLayer island over the seasonal
+// net-atmospheric-withdrawal climograph (`water-seasonal-field` feed), plus the always-rendered
+// seasonal table that is the no-JS / no-WebGL fallback. The climograph is cited climate normals
+// ([reference]); the per-month low-flow multiple screens the *modeled* buildout draw ([inference]).
+const { slug } = Astro.props as { slug: string };
+const site = siteForSlug(slug);
+const isRef = isReferenceSite(slug);
+
+// Build-time: the same object feed the island fetches, used here to server-render the table.
+const field: SeasonalFieldData | null = hasFeed("water-seasonal-field")
+  ? loadFeed<SeasonalFieldData>("water-seasonal-field")
+  : null;
+const months = field?.available ? field.months : [];
+
+const fmtNet = (v: number): string => `${v > 0 ? "+" : ""}${v.toFixed(2)}`;
+const fmtMult = (v: number | null): string => (v == null ? "—" : `${v}×`);
+
+const fieldLead = isRef
+  ? "the JSMC data-center campus's modeled cooling draw"
+  : `${site?.place}'s disclosed cooling draw`;
+const mapSrc = withBase("/feeds/water/seasonal.json");
+---
+
+<Base title="Seasonal withdrawal" section="watershed">
+  <article class="prose">
+    <BackLink href={withSite("/watershed/")} label="The Maumee watershed" />
+    <h1>Seasonal withdrawal</h1>
+    <p class="section-lead">
+      A month-by-month climograph of net atmospheric withdrawal — reference evapotranspiration
+      (ET0) minus precipitation — for the receiving basin, with {fieldLead} read against the cited
+      seasonal low flow. Switch months and hover the field: the ink hairline is the deficit
+      boundary (ET0 = precip), and the growing-season window is exactly when the river sits at its
+      summer design low flow with no rainfall buffer.
+    </p>
+
+    <div class="callout callout--inference">
+      <p class="callout-title">Cited climate normals + a modeled draw — <EvidenceTag kind="reference" /> / <EvidenceTag kind="inference" /></p>
+      <p>
+        The climograph surface (net atmospheric withdrawal = ET0 − precipitation) is the cited NASA
+        POWER climate normals with FAO-56 reference ET — <code>[reference]</code>. The per-month
+        <strong>low-flow multiple</strong> screens the <strong>modeled</strong> buildout consumptive
+        draw against the cited seasonal low flow (30Q10 summer / 7Q10 annual), so that ratio is a
+        labelled screening estimate — <code>[inference]</code>, <strong>never <code>[verified]</code></strong>
+        and not a measured withdrawal.
+      </p>
+    </div>
+
+    <SeasonalField client:only="react" src={mapSrc} />
+    <noscript>
+      <div class="deck-loading">
+        The interactive field needs JavaScript and WebGL — the seasonal table below carries the same
+        monthly figures.
+      </div>
+    </noscript>
+
+    <h2 id="months">The seasonal screen</h2>
+    {
+      months.length === 0 ? (
+        <p class="section-lead">
+          No seasonal withdrawal climograph is on the record for this site yet. When the receiving
+          water's cited low flows and a buildout scenario land, the seasonal surface appears here.
+        </p>
+      ) : (
+        <p class="card-meta">
+          Net atmospheric withdrawal (ET0 − precip, mm/day) per month, and the modeled cooling draw
+          against the cited seasonal low flow. The growing-season multiple ({fmtMult(field?.summer_multiple ?? null)}
+          the summer 30Q10) is the load-bearing read the annual figure ({fmtMult(field?.annual_multiple ?? null)}
+          the 7Q10) understates.
+        </p>
+      )
+    }
+  </article>
+
+  {
+    months.length > 0 && (
+      <div class="dtable">
+        <table>
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>ET0 − precip (mm/day)</th>
+              <th>Low flow (cfs)</th>
+              <th>Draw ÷ low flow</th>
+              <th>Screening flag</th>
+            </tr>
+          </thead>
+          <tbody>
+            {months.map((m) => (
+              <tr>
+                <td>
+                  {m.month}
+                  {m.growing_season ? " ·" : ""}
+                </td>
+                <td class="num">{fmtNet(m.net_atmospheric_mm_day)}</td>
+                <td class="num">
+                  {m.low_flow_cfs} <span class="card-meta">({m.low_flow_basis})</span>
+                </td>
+                <td class="num">{fmtMult(m.multiple)}</td>
+                <td>
+                  {m.multiple != null && m.multiple > 1 ? (
+                    <EvidenceTag kind="gap" label="over low flow" />
+                  ) : (
+                    <EvidenceTag kind="inference" label="under low flow" />
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+</Base>
