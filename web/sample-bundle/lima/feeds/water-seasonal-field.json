@@ -1,0 +1,160 @@
+{
+  "site": "lima",
+  "scenario": "buildout",
+  "cooling_model": "evaporative_tower",
+  "unit": "mm/day",
+  "provenance": "reference",
+  "available": true,
+  "consumptive_cfs": 4.852,
+  "annual_7q10_cfs": 0.2,
+  "summer_30q10_cfs": 1.6,
+  "one_q10_cfs": 0.0,
+  "annual_multiple": 24.3,
+  "summer_multiple": 3.0,
+  "growing_season_months": [
+    "MAY",
+    "JUN",
+    "JUL",
+    "AUG",
+    "SEP",
+    "OCT"
+  ],
+  "months": [
+    {
+      "month": "JAN",
+      "growing_season": false,
+      "et0_mm_day": 0.88,
+      "precip_mm_day": 2.07,
+      "net_atmospheric_mm_day": -1.189,
+      "low_flow_cfs": 0.2,
+      "low_flow_basis": "7Q10 annual",
+      "consumptive_cfs": 4.852,
+      "multiple": 24.3
+    },
+    {
+      "month": "FEB",
+      "growing_season": false,
+      "et0_mm_day": 1.29,
+      "precip_mm_day": 2.02,
+      "net_atmospheric_mm_day": -0.728,
+      "low_flow_cfs": 0.2,
+      "low_flow_basis": "7Q10 annual",
+      "consumptive_cfs": 4.852,
+      "multiple": 24.3
+    },
+    {
+      "month": "MAR",
+      "growing_season": false,
+      "et0_mm_day": 2.16,
+      "precip_mm_day": 2.54,
+      "net_atmospheric_mm_day": -0.38,
+      "low_flow_cfs": 0.2,
+      "low_flow_basis": "7Q10 annual",
+      "consumptive_cfs": 4.852,
+      "multiple": 24.3
+    },
+    {
+      "month": "APR",
+      "growing_season": false,
+      "et0_mm_day": 2.97,
+      "precip_mm_day": 3.15,
+      "net_atmospheric_mm_day": -0.176,
+      "low_flow_cfs": 0.2,
+      "low_flow_basis": "7Q10 annual",
+      "consumptive_cfs": 4.852,
+      "multiple": 24.3
+    },
+    {
+      "month": "MAY",
+      "growing_season": true,
+      "et0_mm_day": 3.77,
+      "precip_mm_day": 3.63,
+      "net_atmospheric_mm_day": 0.136,
+      "low_flow_cfs": 1.6,
+      "low_flow_basis": "30Q10 summer",
+      "consumptive_cfs": 4.852,
+      "multiple": 3.0
+    },
+    {
+      "month": "JUN",
+      "growing_season": true,
+      "et0_mm_day": 4.86,
+      "precip_mm_day": 3.53,
+      "net_atmospheric_mm_day": 1.334,
+      "low_flow_cfs": 1.6,
+      "low_flow_basis": "30Q10 summer",
+      "consumptive_cfs": 4.852,
+      "multiple": 3.0
+    },
+    {
+      "month": "JUL",
+      "growing_season": true,
+      "et0_mm_day": 5.16,
+      "precip_mm_day": 3.09,
+      "net_atmospheric_mm_day": 2.073,
+      "low_flow_cfs": 1.6,
+      "low_flow_basis": "30Q10 summer",
+      "consumptive_cfs": 4.852,
+      "multiple": 3.0
+    },
+    {
+      "month": "AUG",
+      "growing_season": true,
+      "et0_mm_day": 4.62,
+      "precip_mm_day": 2.83,
+      "net_atmospheric_mm_day": 1.785,
+      "low_flow_cfs": 1.6,
+      "low_flow_basis": "30Q10 summer",
+      "consumptive_cfs": 4.852,
+      "multiple": 3.0
+    },
+    {
+      "month": "SEP",
+      "growing_season": true,
+      "et0_mm_day": 4.0,
+      "precip_mm_day": 2.59,
+      "net_atmospheric_mm_day": 1.414,
+      "low_flow_cfs": 1.6,
+      "low_flow_basis": "30Q10 summer",
+      "consumptive_cfs": 4.852,
+      "multiple": 3.0
+    },
+    {
+      "month": "OCT",
+      "growing_season": true,
+      "et0_mm_day": 3.06,
+      "precip_mm_day": 2.5,
+      "net_atmospheric_mm_day": 0.564,
+      "low_flow_cfs": 1.6,
+      "low_flow_basis": "30Q10 summer",
+      "consumptive_cfs": 4.852,
+      "multiple": 3.0
+    },
+    {
+      "month": "NOV",
+      "growing_season": false,
+      "et0_mm_day": 1.78,
+      "precip_mm_day": 2.48,
+      "net_atmospheric_mm_day": -0.701,
+      "low_flow_cfs": 0.2,
+      "low_flow_basis": "7Q10 annual",
+      "consumptive_cfs": 4.852,
+      "multiple": 24.3
+    },
+    {
+      "month": "DEC",
+      "growing_season": false,
+      "et0_mm_day": 1.01,
+      "precip_mm_day": 2.27,
+      "net_atmospheric_mm_day": -1.26,
+      "low_flow_cfs": 0.2,
+      "low_flow_basis": "7Q10 annual",
+      "consumptive_cfs": 4.852,
+      "multiple": 24.3
+    }
+  ],
+  "caveats": [
+    "The climograph (net atmospheric withdrawal = reference ET0 - precip) is the cited NASA POWER normals + FAO-56 ET0. The per-month low-flow multiple screens the *modeled* buildout consumptive draw against the cited seasonal low flow (30Q10 summer / 7Q10 annual), so that read is [inference] — not a measured withdrawal."
+  ],
+  "note": "Seasonal climograph from evaluate_seasonal: cited ET0/precip normals + Ottawa low flows."
+}

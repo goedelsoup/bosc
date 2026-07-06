@@ -64,5 +64,10 @@ notes: >-
   artifact (the platform's own usage → electricity → water compute footprint) into the report the
   sustainability page reads — a global object feed emitted into every bundle identically (like the
   basin `network` synthesis), every figure tagged reference/derived/assumption (never verified).
+  The `water-seasonal-field` feed (#1236/#1237, contract 1.22.0) is the Phase-2 water field — the
+  seasonal net-atmospheric-withdrawal climograph `evaluate_seasonal` produces (reference ET0 − precip
+  from the NASA POWER normals, screened against the cited Ottawa low flows and the buildout scenario
+  draw), reference-site gated and `reference`-provenanced; it reads the committed climate + low-flow
+  reference datasets + the buildout scenario already declared, so it adds no new committed dependency.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.
