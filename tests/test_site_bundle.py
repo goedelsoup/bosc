@@ -264,9 +264,7 @@ def test_fort_wayne_sample_bundle_tracks_the_export_contract(fort_wayne_bundle: 
 def test_urbana_sample_bundle_tracks_the_export_contract(urbana_bundle: Path) -> None:
     """The committed Urbana fixture tracks `watermark --site urbana export` (#797) — the network's
     third live site, promoted 2026-07-01."""
-    _assert_fixture_tracks_export(
-        REPO_ROOT / "web" / "sites" / "urbana", _manifest(urbana_bundle)
-    )
+    _assert_fixture_tracks_export(REPO_ROOT / "web" / "sites" / "urbana", _manifest(urbana_bundle))
 
 
 # --- Backdrop-tier network sites (#1220 / #1224) --------------------------------------------
