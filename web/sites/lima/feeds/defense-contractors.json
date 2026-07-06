@@ -1,0 +1,310 @@
+{
+  "contractors": [
+    {
+      "name": "Lockheed Martin",
+      "note": null,
+      "patterns": [
+        "LOCKHEED MARTIN",
+        "LOCKHEED-MARTIN",
+        "LOCKHEED CORP",
+        "SIKORSKY AIRCRAFT"
+      ],
+      "matched_entities": []
+    },
+    {
+      "name": "Boeing",
+      "note": null,
+      "patterns": [
+        "BOEING"
+      ],
+      "matched_entities": []
+    },
+    {
+      "name": "RTX (Raytheon Technologies)",
+      "note": "Raytheon merged with United Technologies in 2020; subsidiaries include Pratt & Whitney and Collins Aerospace.",
+      "patterns": [
+        "RAYTHEON",
+        "RTX CORPORATION",
+        "RTX CORP",
+        "PRATT & WHITNEY",
+        "PRATT AND WHITNEY",
+        "COLLINS AEROSPACE",
+        "ROCKWELL COLLINS"
+      ],
+      "matched_entities": []
+    },
+    {
+      "name": "Northrop Grumman",
+      "note": null,
+      "patterns": [
+        "NORTHROP GRUMMAN",
+        "NORTHROP-GRUMMAN"
+      ],
+      "matched_entities": []
+    },
+    {
+      "name": "General Dynamics (broader)",
+      "note": "GDLS, GDIT, GD Ordnance, and TACOM/JSMC are caught by the Allen overlay's government_military patterns. This entry catches the parent and other GD subsidiaries (Bath Iron Works, Electric Boat, Gulfstream, NASSCO, Mission Systems) that may show up on parcels with no Allen-specific government role.",
+      "patterns": [
+        "GENERAL DYNAMICS CORPORATION",
+        "GENERAL DYNAMICS CORP",
+        "GENERAL DYNAMICS MISSION",
+        "BATH IRON WORKS",
+        "ELECTRIC BOAT CORP",
+        "GULFSTREAM AEROSPACE",
+        "NASSCO"
+      ],
+      "matched_entities": [
+        "GENERAL DYNAMICS"
+      ]
+    },
+    {
+      "name": "L3Harris Technologies",
+      "note": "Bare 'HARRIS' is intentionally excluded — it would match thousands of parcels held by Harris-surnamed individuals.",
+      "patterns": [
+        "L3HARRIS",
+        "L-3 COMMUNICATIONS",
+        "L3 TECHNOLOGIES",
+        "L-3 TECHNOLOGIES"
+      ],
+      "matched_entities": []
+    },
+    {
+      "name": "BAE Systems",
+      "note": null,
+      "patterns": [
+        "BAE SYSTEMS"
+      ],
+      "matched_entities": []
+    },
+    {
+      "name": "Booz Allen Hamilton",
+      "note": null,
+      "patterns": [
+        "BOOZ ALLEN HAMILTON",
+        "BOOZ ALLEN",
+        "BOOZ-ALLEN"
+      ],
+      "matched_entities": []
+    },
+    {
+      "name": "Leidos",
+      "note": null,
+      "patterns": [
+        "LEIDOS"
+      ],
+      "matched_entities": []
+    },
+    {
+      "name": "SAIC (Science Applications International)",
+      "note": null,
+      "patterns": [
+        "SCIENCE APPLICATIONS INTERNATIONAL",
+        "SAIC INC",
+        "SAIC CORPORATION",
+        "SAIC CORP"
+      ],
+      "matched_entities": []
+    },
+    {
+      "name": "CACI International",
+      "note": null,
+      "patterns": [
+        "CACI INTERNATIONAL",
+        "CACI INC",
+        "CACI, INC"
+      ],
+      "matched_entities": []
+    },
+    {
+      "name": "ManTech",
+      "note": null,
+      "patterns": [
+        "MANTECH"
+      ],
+      "matched_entities": []
+    },
+    {
+      "name": "Honeywell",
+      "note": "DUAL-USE. Honeywell has substantial commercial (HVAC, building controls, industrial automation) and aerospace/defense businesses. Included because Honeywell Federal Manufacturing & Technologies operates Kansas City National Security Campus on behalf of the NNSA, and Honeywell Aerospace is a top DoD prime. Reviewers should treat a Honeywell hit as a starting point, not a conclusion.",
+      "patterns": [
+        "HONEYWELL"
+      ],
+      "matched_entities": []
+    },
+    {
+      "name": "Huntington Ingalls Industries",
+      "note": null,
+      "patterns": [
+        "HUNTINGTON INGALLS",
+        "NEWPORT NEWS SHIPBUILDING",
+        "INGALLS SHIPBUILDING"
+      ],
+      "matched_entities": []
+    },
+    {
+      "name": "Textron",
+      "note": "Includes Bell (helicopters) and Textron Systems.",
+      "patterns": [
+        "TEXTRON",
+        "BELL HELICOPTER",
+        "BELL TEXTRON"
+      ],
+      "matched_entities": [
+        "AIRFOIL TEXTRON",
+        "TEXTRON"
+      ]
+    },
+    {
+      "name": "Oshkosh Defense",
+      "note": "Bare 'OSHKOSH' is left out to avoid matching unrelated entities named after the Wisconsin city; the corporate parent typically appears as 'OSHKOSH CORPORATION' or 'OSHKOSH DEFENSE'.",
+      "patterns": [
+        "OSHKOSH DEFENSE",
+        "OSHKOSH CORPORATION",
+        "OSHKOSH CORP"
+      ],
+      "matched_entities": []
+    },
+    {
+      "name": "Anduril Industries",
+      "note": null,
+      "patterns": [
+        "ANDURIL"
+      ],
+      "matched_entities": []
+    },
+    {
+      "name": "Palantir Technologies",
+      "note": null,
+      "patterns": [
+        "PALANTIR"
+      ],
+      "matched_entities": []
+    },
+    {
+      "name": "Peraton",
+      "note": null,
+      "patterns": [
+        "PERATON"
+      ],
+      "matched_entities": []
+    }
+  ],
+  "prime_owned": [],
+  "army_controlled": [
+    {
+      "parcel_no": "46110004005000",
+      "owner": "UNITED STATES",
+      "owner_2": "OF AMERICA",
+      "deeded_owner": "UNITED STATES OF AMERICA",
+      "situs_address": "1151-55-61 BUCKEYE RD",
+      "owner_address": "1151-55-61 BUCKEYE RD LIMA OH 45804",
+      "land_use_code": 600,
+      "acres": 133.78,
+      "market_land_value": 909500,
+      "market_improvement_value": 11687200,
+      "market_total_value": 12596700,
+      "cauv_value": 0,
+      "tax_district": "L35",
+      "school_code": "208",
+      "neighborhood_code": "3018",
+      "last_sale_date": "1990-01-01",
+      "last_sale_amount": 0,
+      "valid_sale": "N"
+    },
+    {
+      "parcel_no": "46140001001000",
+      "owner": "UNITED STATES",
+      "owner_2": "OF AMERICA",
+      "deeded_owner": "UNITED STATES OF AMERICA",
+      "situs_address": "REED RD",
+      "owner_address": "REED RD LIMA OH 45804",
+      "land_use_code": 600,
+      "acres": 189.96,
+      "market_land_value": 1428400,
+      "market_improvement_value": 0,
+      "market_total_value": 1428400,
+      "cauv_value": 0,
+      "tax_district": "L35",
+      "school_code": "208",
+      "neighborhood_code": "3000",
+      "last_sale_date": "1990-01-01",
+      "last_sale_amount": 0,
+      "valid_sale": "N"
+    },
+    {
+      "parcel_no": "46140001002000",
+      "owner": "UNITED STATES",
+      "owner_2": "OF AMERICA",
+      "deeded_owner": "UNITED STATES OF AMERICA",
+      "situs_address": "REED RD",
+      "owner_address": "REED RD LIMA OH 45805",
+      "land_use_code": 600,
+      "acres": 55.01,
+      "market_land_value": 168900,
+      "market_improvement_value": 0,
+      "market_total_value": 168900,
+      "cauv_value": 0,
+      "tax_district": "L35",
+      "school_code": "208",
+      "neighborhood_code": "3000",
+      "last_sale_date": "1979-03-01",
+      "last_sale_amount": 0,
+      "valid_sale": "N"
+    },
+    {
+      "parcel_no": "46150504001000",
+      "owner": "UNITED STATES",
+      "owner_2": "OF AMERICA",
+      "deeded_owner": "UNITED STATES OF AMERICA",
+      "situs_address": "REED RD",
+      "owner_address": "REED RD LIMA OH 45804",
+      "land_use_code": 600,
+      "acres": 1.38,
+      "market_land_value": 6200,
+      "market_improvement_value": 0,
+      "market_total_value": 6200,
+      "cauv_value": 0,
+      "tax_district": "L35",
+      "school_code": "208",
+      "neighborhood_code": "3000",
+      "last_sale_date": "1990-01-01",
+      "last_sale_amount": 0,
+      "valid_sale": "N"
+    },
+    {
+      "parcel_no": "46150801002000",
+      "owner": "UNITED STATES",
+      "owner_2": "OF AMERICA",
+      "deeded_owner": "UNITED STATES OF AMERICA",
+      "situs_address": "2190 REED RD",
+      "owner_address": "2190 REED RD LIMA OH 45804",
+      "land_use_code": 600,
+      "acres": 4.02,
+      "market_land_value": 39900,
+      "market_improvement_value": 448800,
+      "market_total_value": 488700,
+      "cauv_value": 0,
+      "tax_district": "L35",
+      "school_code": "208",
+      "neighborhood_code": "3000",
+      "last_sale_date": "1990-01-01",
+      "last_sale_amount": 0,
+      "valid_sale": "N"
+    }
+  ],
+  "notes": {
+    "subject": "Allen County, Ohio defense-industry land scan",
+    "source": "Allen County GIS — ArcGIS REST, Current Parcels (AGOL_NonEditLayers/1)",
+    "source_url": "https://gis.allencountyohio.com/arcgis/rest/services/AGOL/AGOL_NonEditLayers/MapServer/1",
+    "scan": "Owner-name match of the curated DoD-prime seed list (data/entities/profiles/defense-contractors.yaml) against the CAMA owner / deeded-owner / second-owner fields.",
+    "patterns_searched": 51,
+    "prime_owned_count": 0,
+    "finding": "No Allen County parcel is owned by a DoD prime in its own name. The local defense footprint is the federally-held JSMC reservation below.",
+    "army_controlled_note": "[inference] the UNITED STATES-owned cluster in tax district L35 on Buckeye/Reed Rd is the Joint Systems Manufacturing Center (Lima Army Tank Plant; 1151 Buckeye Rd), operated by General Dynamics Land Systems. Ownership is verbatim from the GIS; the JSMC identification is an analyst inference — verify against the deed/lease before relying on it.",
+    "caveats": [
+      "Values are verbatim from the county GIS; null means the service had no value.",
+      "A pattern match is a lead to verify, not a classification or accusation."
+    ]
+  }
+}

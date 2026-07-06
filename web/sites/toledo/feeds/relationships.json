@@ -1,0 +1,32 @@
+[
+  {
+    "src": "GENERAL DYNAMICS LAND SYSTEMS",
+    "rel": "owned_by",
+    "dst": "GENERAL DYNAMICS",
+    "date": "",
+    "ref": "GLEIF 875500ULXB4CYQSJVA03 → 9C1X8XOOTYY2FNYTVH06",
+    "source": "data/reference/gleif/lei-records.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "MARATHON PETROLEUM CO OREGON OH TERMINAL",
+    "rel": "owned_by",
+    "dst": "MARATHON PETROLEUM",
+    "date": "",
+    "ref": "RSEI parent / GLEIF 3BNYRYQHD39K4LCKQF12",
+    "source": "data/reference/rsei/inventory.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "FORD MOTOR CO MAUMEE STAMPING PLANT",
+    "rel": "owned_by",
+    "dst": "FORD MOTOR",
+    "date": "",
+    "ref": "RSEI parent / GLEIF 20S05OYHG0MQM4VUIC57",
+    "source": "data/reference/rsei/inventory.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  }
+]

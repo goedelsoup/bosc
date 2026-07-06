@@ -1,0 +1,438 @@
+[
+  {
+    "name": "Ford Lima Engine Plant",
+    "tier": 1,
+    "kind": "corporate",
+    "sector": "Automotive powertrain manufacturing",
+    "location": "Lima, Allen County",
+    "workload_classes": [
+      "vision_ml",
+      "industrial_telemetry"
+    ],
+    "confirmed_cloud_relationship": "Google (corporate level)",
+    "speculative": false,
+    "basis": "Vision-AI line inspection + predictive maintenance; pattern Ford pursues with Google at corporate level. No Lima-specific project in the record.",
+    "entity_key": null
+  },
+  {
+    "name": "Procter & Gamble Lima Plant",
+    "tier": 1,
+    "kind": "corporate",
+    "sector": "Consumer-goods manufacturing (detergent)",
+    "location": "Lima, Allen County",
+    "workload_classes": [
+      "industrial_telemetry",
+      "erp_data_warehouse"
+    ],
+    "confirmed_cloud_relationship": "Google Cloud (consumer-data, corporate)",
+    "speculative": false,
+    "basis": "High-volume continuous-manufacturing telemetry + supply-chain data; plant-floor data currently on a third-party MES.",
+    "entity_key": null
+  },
+  {
+    "name": "Nutrien Lima Nitrogen",
+    "tier": 1,
+    "kind": "corporate",
+    "sector": "Chemicals — ammonia / urea / nitric acid",
+    "location": "Lima, Allen County",
+    "workload_classes": [
+      "industrial_telemetry"
+    ],
+    "confirmed_cloud_relationship": "AWS; CIBO",
+    "speculative": false,
+    "basis": "Continuous chemical-plant process-control telemetry + predictive maintenance.",
+    "entity_key": null
+  },
+  {
+    "name": "Cenovus Lima Refinery",
+    "tier": 1,
+    "kind": "corporate",
+    "sector": "Petroleum refining",
+    "location": "Lima, Allen County",
+    "workload_classes": [
+      "industrial_telemetry"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "Refinery process optimization, reliability analytics, emissions monitoring; currently SAP/on-prem oriented.",
+    "entity_key": null
+  },
+  {
+    "name": "INEOS Nitriles (Lima)",
+    "tier": 1,
+    "kind": "corporate",
+    "sector": "Specialty chemicals + catalyst",
+    "location": "Lima, Allen County",
+    "workload_classes": [
+      "industrial_telemetry",
+      "regulated_data"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "Ammoxidation process control, safety-critical monitoring, shared-permit environmental reporting.",
+    "entity_key": null
+  },
+  {
+    "name": "Ashland (ISP Lima)",
+    "tier": 1,
+    "kind": "corporate",
+    "sector": "Specialty chemicals — 1,4-butanediol",
+    "location": "Lima, Allen County",
+    "workload_classes": [
+      "industrial_telemetry"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "Chemical-process telemetry + quality analytics; part of the shared-utility complex.",
+    "entity_key": null
+  },
+  {
+    "name": "Fort Amanda Specialties",
+    "tier": 1,
+    "kind": "corporate",
+    "sector": "Specialty chemicals — chelates",
+    "location": "Lima, Allen County",
+    "workload_classes": [
+      "industrial_telemetry"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "Smaller chemical operation on the shared campus; process-monitoring fit.",
+    "entity_key": null
+  },
+  {
+    "name": "MetoKote",
+    "tier": 1,
+    "kind": "corporate",
+    "sector": "Industrial coatings (multi-line)",
+    "location": "Lima, Allen County",
+    "workload_classes": [
+      "vision_ml",
+      "industrial_telemetry"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "Coating-line vision inspection + process control across modular lines.",
+    "entity_key": null
+  },
+  {
+    "name": "American Trim",
+    "tier": 1,
+    "kind": "corporate",
+    "sector": "Metal forming & decorating, coatings",
+    "location": "Lima, Allen County",
+    "workload_classes": [
+      "vision_ml",
+      "industrial_telemetry"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "Forming + finishing lines; dimensional/surface vision inspection fit.",
+    "entity_key": null
+  },
+  {
+    "name": "SumiRiko Ohio",
+    "tier": 1,
+    "kind": "corporate",
+    "sector": "Rubber / anti-vibration auto parts",
+    "location": "Allen County",
+    "workload_classes": [
+      "industrial_telemetry",
+      "vision_ml",
+      "erp_data_warehouse"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "Automotive-tier process telemetry + quality vision; multi-plant data consolidation.",
+    "entity_key": null
+  },
+  {
+    "name": "Benjamin Steel",
+    "tier": 1,
+    "kind": "corporate",
+    "sector": "Metals processing",
+    "location": "Lima area, Allen County",
+    "workload_classes": [
+      "vision_ml",
+      "industrial_telemetry"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "Metals processing — vision inspection, yield analytics, predictive maintenance on presses.",
+    "entity_key": null
+  },
+  {
+    "name": "Precision Alloy",
+    "tier": 1,
+    "kind": "corporate",
+    "sector": "Metals processing",
+    "location": "Lima area, Allen County",
+    "workload_classes": [
+      "vision_ml",
+      "industrial_telemetry"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "Metals processing — vision inspection, yield analytics, predictive maintenance.",
+    "entity_key": null
+  },
+  {
+    "name": "Orick Stamping",
+    "tier": 1,
+    "kind": "corporate",
+    "sector": "Metal stamping",
+    "location": "Lima area, Allen County",
+    "workload_classes": [
+      "vision_ml",
+      "industrial_telemetry"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "Stamping — vision inspection, yield analytics, predictive maintenance on presses.",
+    "entity_key": null
+  },
+  {
+    "name": "Ohio Logistics",
+    "tier": 2,
+    "kind": "corporate",
+    "sector": "3PL warehousing / distribution",
+    "location": "Gateway Commerce Park, Allen County",
+    "workload_classes": [
+      "low_latency_edge",
+      "erp_data_warehouse",
+      "vision_ml"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "WMS, automation, routing analytics; building two spec facilities (no identified end user); 25+ locations.",
+    "entity_key": null
+  },
+  {
+    "name": "Spartan Logistics",
+    "tier": 2,
+    "kind": "corporate",
+    "sector": "3PL warehousing",
+    "location": "Lima (McCullough St.), Allen County",
+    "workload_classes": [
+      "low_latency_edge",
+      "erp_data_warehouse"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "Multi-site 3PL marketing one-day-transit reach; warehouse + supply-chain analytics.",
+    "entity_key": null
+  },
+  {
+    "name": "SpartanNash",
+    "tier": 2,
+    "kind": "corporate",
+    "sector": "Wholesale distribution + retail",
+    "location": "corridor",
+    "workload_classes": [
+      "erp_data_warehouse",
+      "low_latency_edge"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "Distribution-network optimization, demand forecasting, large enterprise data footprint.",
+    "entity_key": null
+  },
+  {
+    "name": "Gateway Commerce Park tenants (future)",
+    "tier": 2,
+    "kind": "corporate",
+    "sector": "Spec / no-identified-end-user development",
+    "location": "Gateway Commerce Park, Allen County",
+    "workload_classes": [
+      "low_latency_edge",
+      "erp_data_warehouse"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": true,
+    "basis": "By design an open demand slot — JobsOhio-funded curbside-ready space awaiting undeclared tenants.",
+    "entity_key": null
+  },
+  {
+    "name": "General Dynamics Land Systems / Joint Systems Manufacturing Center (JSMC)",
+    "tier": 3,
+    "kind": "corporate",
+    "sector": "M1 Abrams manufacturing & heavy maintenance",
+    "location": "Lima, Allen County",
+    "workload_classes": [
+      "regulated_data",
+      "industrial_telemetry",
+      "low_latency_edge"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "Depot-level condition-based maintenance, vehicle telemetry, authorized-environment compute. Demand-fit definitional; connection an open question.",
+    "entity_key": null
+  },
+  {
+    "name": "Ohio Air National Guard 178th Wing",
+    "tier": 3,
+    "kind": "government",
+    "sector": "ISR / Air National Guard",
+    "location": "Springfield, Clark County",
+    "workload_classes": [
+      "regulated_data",
+      "low_latency_edge"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "Intelligence/surveillance/reconnaissance + remotely-piloted mission support; authorized-environment, data-intensive.",
+    "entity_key": null
+  },
+  {
+    "name": "Wright-Patterson AFB-adjacent suppliers (corridor)",
+    "tier": 3,
+    "kind": "corporate",
+    "sector": "Defense / aerospace sustainment",
+    "location": "corridor (Greene County hub)",
+    "workload_classes": [
+      "regulated_data",
+      "industrial_telemetry"
+    ],
+    "confirmed_cloud_relationship": "GDIT (WPAFB Rapid Sustainment Office hub, per published record)",
+    "speculative": false,
+    "basis": "RSO sustainment, logistics, maintenance analytics around an existing GDIT cloud hub.",
+    "entity_key": null
+  },
+  {
+    "name": "Silfex (Springfield)",
+    "tier": 3,
+    "kind": "corporate",
+    "sector": "Silicon components for semiconductors",
+    "location": "Springfield, Clark County",
+    "workload_classes": [
+      "vision_ml",
+      "industrial_telemetry",
+      "regulated_data"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "Precision semiconductor-supply-chain manufacturing; process analytics, yield/vision, sensitive supply-chain data.",
+    "entity_key": null
+  },
+  {
+    "name": "Roshel / former International (Springfield)",
+    "tier": 3,
+    "kind": "corporate",
+    "sector": "Defense / commercial vehicle manufacturing (acquisition pending)",
+    "location": "Springfield, Clark County",
+    "workload_classes": [
+      "regulated_data",
+      "low_latency_edge"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": true,
+    "basis": "Corridor-watch only. If the announced acquisition proceeds, adds a regulated-data + vehicle-telemetry workload. Context, not connection.",
+    "entity_key": null
+  },
+  {
+    "name": "Mercy Health (corridor)",
+    "tier": 4,
+    "kind": "corporate",
+    "sector": "Regional health system",
+    "location": "corridor",
+    "workload_classes": [
+      "regulated_data",
+      "vision_ml"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "HIPAA-regulated clinical data, imaging AI, operational analytics.",
+    "entity_key": null
+  },
+  {
+    "name": "Lima Memorial Health System",
+    "tier": 4,
+    "kind": "corporate",
+    "sector": "Regional health system",
+    "location": "Lima, Allen County",
+    "workload_classes": [
+      "regulated_data",
+      "vision_ml"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "HIPAA-regulated clinical data, imaging AI, operational analytics.",
+    "entity_key": null
+  },
+  {
+    "name": "Kettering Health (corridor)",
+    "tier": 4,
+    "kind": "corporate",
+    "sector": "Regional health system",
+    "location": "corridor",
+    "workload_classes": [
+      "regulated_data",
+      "vision_ml"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "HIPAA-regulated clinical data, imaging AI, operational analytics.",
+    "entity_key": null
+  },
+  {
+    "name": "Honda of America",
+    "tier": 4,
+    "kind": "corporate",
+    "sector": "Automotive manufacturing (+ announced data center)",
+    "location": "Marysville / Clark / Champaign area",
+    "workload_classes": [
+      "industrial_telemetry",
+      "vision_ml",
+      "low_latency_edge"
+    ],
+    "confirmed_cloud_relationship": "own Ohio data center (announced/investing)",
+    "speculative": false,
+    "basis": "Vehicle + manufacturing data at scale; demand-fit established by Honda's own data-center move. Location spans Union/Clark/Champaign (Marysville corridor) — no primary instrument (deed, permit, or filing) pins the investment to Urbana or Champaign County specifically. Downgraded to corridor context [2026-06-28]: excluded from Urbana promotion criteria.\n",
+    "entity_key": null
+  },
+  {
+    "name": "Topre America (Springfield)",
+    "tier": 4,
+    "kind": "corporate",
+    "sector": "High-strength steel stamping (auto supplier)",
+    "location": "Springfield, Clark County",
+    "workload_classes": [
+      "vision_ml",
+      "industrial_telemetry"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "Stamping-line vision inspection + process analytics for a multi-plant auto supplier.",
+    "entity_key": null
+  },
+  {
+    "name": "OSU Lima — agricultural-water research",
+    "tier": 4,
+    "kind": "government",
+    "sector": "Public university research",
+    "location": "Lima, Allen County",
+    "workload_classes": [
+      "industrial_telemetry",
+      "erp_data_warehouse"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "Precision-ag modeling, sensor networks, EPA-funded water-reclamation work. Confirmed funding is EPA/Ohio EPA; no vendor named.",
+    "entity_key": null
+  },
+  {
+    "name": "Crown Equipment (New Bremen)",
+    "tier": 4,
+    "kind": "corporate",
+    "sector": "Material-handling / warehouse automation",
+    "location": "New Bremen, Auglaize County (corridor-adjacent)",
+    "workload_classes": [
+      "low_latency_edge",
+      "industrial_telemetry"
+    ],
+    "confirmed_cloud_relationship": null,
+    "speculative": false,
+    "basis": "Connected-forklift telemetry + warehouse-automation software; vehicle-edge + IoT at scale.",
+    "entity_key": null
+  }
+]

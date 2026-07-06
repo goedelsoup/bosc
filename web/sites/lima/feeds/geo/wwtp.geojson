@@ -1,0 +1,63 @@
+{
+  "type": "FeatureCollection",
+  "feed": "wwtp",
+  "meta": {
+    "crs": "WGS84 (EPSG:4326)",
+    "layers": [
+      "wwtp"
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.17824,
+          40.78016
+        ]
+      },
+      "properties": {
+        "layer": "wwtp",
+        "label": "American II WWTP (NPDES OH0037338)",
+        "color": "#00897b",
+        "role": "point",
+        "npdes": "OH0037338"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.12803,
+          40.78226
+        ]
+      },
+      "properties": {
+        "layer": "wwtp",
+        "label": "American-Bath WWTP (NPDES OH0023841)",
+        "color": "#00897b",
+        "role": "point",
+        "npdes": "OH0023841"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.17776,
+          40.72264
+        ]
+      },
+      "properties": {
+        "layer": "wwtp",
+        "label": "Shawnee No 2 WWTP (NPDES OH0023850)",
+        "color": "#00897b",
+        "role": "point",
+        "npdes": "OH0023850"
+      }
+    }
+  ]
+}

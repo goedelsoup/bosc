@@ -1,17 +1,17 @@
 import { join } from "node:path";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
-// buildDefenseNexus reads geo/campus + geo/jsmc from the bundle; pin the sample-bundle
+// buildDefenseNexus reads geo/campus + geo/jsmc from the bundle; pin the sites
 // (which carries both) so the test is deterministic regardless of a local export.
 async function load(): Promise<typeof import("./defenseNexus")> {
-  process.env.WATERMARK_BUNDLE_DIR = join(process.cwd(), "sample-bundle");
+  process.env.WATERMARK_BUNDLE_DIR = join(process.cwd(), "sites");
   vi.resetModules();
   return import("./defenseNexus");
 }
 
 describe("defenseNexus — map annotations (#267)", () => {
   beforeAll(() => {
-    process.env.WATERMARK_BUNDLE_DIR = join(process.cwd(), "sample-bundle");
+    process.env.WATERMARK_BUNDLE_DIR = join(process.cwd(), "sites");
   });
   afterAll(() => {
     delete process.env.WATERMARK_BUNDLE_DIR;

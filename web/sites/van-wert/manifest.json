@@ -1,0 +1,204 @@
+{
+  "site": "van-wert",
+  "bundle_version": "1.0.0",
+  "contract_version": "1.22.0",
+  "generated_at": "2026-07-06T16:55:52+00:00",
+  "feed_count": 23,
+  "row_total": 68,
+  "readiness": {
+    "tier": "backdrop",
+    "domains": {
+      "backdrop": "live",
+      "facility": "absent",
+      "places": "absent",
+      "record": "absent",
+      "story": "absent"
+    }
+  },
+  "feeds": [
+    {
+      "name": "records",
+      "path": "feeds/records.json",
+      "media_type": "application/json",
+      "schema": "schemas/records.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
+      "name": "timeline",
+      "path": "feeds/timeline.json",
+      "media_type": "application/json",
+      "schema": "schemas/timeline.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
+      "name": "entities",
+      "path": "feeds/entities.json",
+      "media_type": "application/json",
+      "schema": "schemas/entities.schema.json",
+      "kind": "collection",
+      "count": 2
+    },
+    {
+      "name": "relationships",
+      "path": "feeds/relationships.json",
+      "media_type": "application/json",
+      "schema": "schemas/relationships.schema.json",
+      "kind": "collection",
+      "count": 1
+    },
+    {
+      "name": "people",
+      "path": "feeds/people.json",
+      "media_type": "application/json",
+      "schema": "schemas/people.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
+      "name": "concepts",
+      "path": "feeds/concepts.json",
+      "media_type": "application/json",
+      "schema": "schemas/concepts.schema.json",
+      "kind": "collection",
+      "count": 6
+    },
+    {
+      "name": "places",
+      "path": "feeds/places.json",
+      "media_type": "application/json",
+      "schema": "schemas/places.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
+      "name": "defense-contractors",
+      "path": "feeds/defense-contractors.json",
+      "media_type": "application/json",
+      "schema": "schemas/defense-contractors.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "meetings",
+      "path": "feeds/meetings.json",
+      "media_type": "application/json",
+      "schema": "schemas/meetings.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
+      "name": "documents",
+      "path": "feeds/documents.json",
+      "media_type": "application/json",
+      "schema": "schemas/documents.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
+      "name": "exhibits",
+      "path": "feeds/exhibits.json",
+      "media_type": "application/json",
+      "schema": "schemas/exhibits.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
+      "name": "rsei",
+      "path": "feeds/rsei.json",
+      "media_type": "application/json",
+      "schema": "schemas/rsei.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "economics-baseline",
+      "path": "feeds/economics-baseline.json",
+      "media_type": "application/json",
+      "schema": "schemas/economics-baseline.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "consumer-energy",
+      "path": "feeds/consumer-energy.json",
+      "media_type": "application/json",
+      "schema": "schemas/consumer-energy.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "network",
+      "path": "feeds/network.json",
+      "media_type": "application/json",
+      "schema": "schemas/network.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "greenops",
+      "path": "feeds/greenops.json",
+      "media_type": "application/json",
+      "schema": "schemas/greenops.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "hypotheses",
+      "path": "feeds/hypotheses.json",
+      "media_type": "application/json",
+      "schema": "schemas/hypotheses.schema.json",
+      "kind": "collection",
+      "count": 3
+    },
+    {
+      "name": "hypothesis-assessments",
+      "path": "feeds/hypothesis-assessments.json",
+      "media_type": "application/json",
+      "schema": "schemas/hypothesis-assessments.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
+      "name": "hydrology-scenarios",
+      "path": "feeds/hydrology-scenarios.json",
+      "media_type": "application/json",
+      "schema": "schemas/hydrology-scenarios.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
+      "name": "air-scenarios",
+      "path": "feeds/air-scenarios.json",
+      "media_type": "application/json",
+      "schema": "schemas/air-scenarios.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
+      "name": "catalog",
+      "path": "feeds/catalog.json",
+      "media_type": "application/json",
+      "schema": "schemas/catalog.schema.json",
+      "kind": "collection",
+      "count": 49
+    },
+    {
+      "name": "catalog-index",
+      "path": "feeds/catalog-index.json",
+      "media_type": "application/json",
+      "schema": "schemas/catalog-index.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "ask-embeddings",
+      "path": "feeds/ask-embeddings.json",
+      "media_type": "application/json",
+      "schema": "schemas/ask-embeddings.schema.json",
+      "kind": "collection",
+      "count": 0
+    }
+  ]
+}

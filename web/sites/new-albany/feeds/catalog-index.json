@@ -1,0 +1,455 @@
+{
+  "site": "new-albany",
+  "catalog_version": "b0a2a66208ff80e92708b75e1b943598f8c5d56b7608d1f70885a3f6d74a70c4",
+  "contract_version": "1.22.0",
+  "atoms": [
+    {
+      "handle": "concept:new-albany:7q10",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "7q10",
+      "title": "7Q10",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:assimilative-capacity",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "assimilative-capacity",
+      "title": "Assimilative capacity",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:common-control-plumbing",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "common-control-plumbing",
+      "title": "Common-control plumbing",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:consumptive-cooling",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "consumptive-cooling",
+      "title": "Consumptive cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:hyperscale-data-center",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "hyperscale-data-center",
+      "title": "Hyperscale data center",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:new-albany:public-records-mandamus",
+      "kind": "concept",
+      "site": "new-albany",
+      "local_id": "public-records-mandamus",
+      "title": "Public-records mandamus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "dataset:new-albany:air-emission-factors",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "air-emission-factors",
+      "title": "Genset Emission Factors (EPA AP-42 §3.4)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:air-naaqs",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "air-naaqs",
+      "title": "National Ambient Air Quality Standards (NAAQS)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:bundle-records",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "bundle-records",
+      "title": "The published content bundle — typed feeds + manifest (watermark export)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:compute",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "compute",
+      "title": "AI Accelerator & Rack-Density Compute Reference",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:data-centers",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "data-centers",
+      "title": "Per-Site Data-Center Activity Register",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:datacenter-industry",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "datacenter-industry",
+      "title": "Data-Center Industry Reference Priors (Uncertainty Bands)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:economics-baseline",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "economics-baseline",
+      "title": "Allen County Economic Baseline (BLS QCEW + US Census ACS)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:eia",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "eia",
+      "title": "PJM Balancing-Authority Interchange Aggregates (EIA-930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:eia-consumer-energy",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "eia-consumer-energy",
+      "title": "Ohio Consumer Energy-Cost Baseline (EIA API v2)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:eia-demand-pressure",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "eia-demand-pressure",
+      "title": "Facility Demand → Consumer Price-Pressure Sensitivity (EIA + facility load)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:eia-grid-profile",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "eia-grid-profile",
+      "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:federal",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "federal",
+      "title": "Federal Energy-Policy & National-Output Backdrop (IRA + EIA + LBNL/DOE)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:ferc",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "ferc",
+      "title": "FERC↔PUCO Regulatory Seam (Federal Power Act + FERC eLibrary)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:gleif",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "gleif",
+      "title": "Corridor Entity LEIs (GLEIF)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:greenops",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "greenops",
+      "title": "GreenOps — Anthropic Admin usage & cost",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:greenops-aws",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "greenops-aws",
+      "title": "GreenOps — AWS costs & estimated carbon",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:greenops-factors",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "greenops-factors",
+      "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:greenops-footprint",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "greenops-footprint",
+      "title": "GreenOps — derived compute footprint (usage → electricity → water)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:greenops-github",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "greenops-github",
+      "title": "GreenOps — GitHub Actions minutes & storage",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:grid",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "grid",
+      "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:hydrology",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "hydrology",
+      "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:hydrology-atlas14-corridor-ddf",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "hydrology-atlas14-corridor-ddf",
+      "title": "NOAA Atlas-14 Corridor Design-Storm Depths (Depth-Duration-Frequency)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:hydrology-low-flow-7q10",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "hydrology-low-flow-7q10",
+      "title": "Receiving-Stream Design Low Flows (7Q10) — Cited + Derived",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:hydrology-nasa-power-climatology",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "hydrology-nasa-power-climatology",
+      "title": "NASA POWER Climate Normals — site climatology",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:hydrology-ohio-principal-streams",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "hydrology-ohio-principal-streams",
+      "title": "Ohio Principal Streams & Drainage Areas (ODNR, Sherman 1925 / 1999 reprint)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:hydrology-reaches",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "hydrology-reaches",
+      "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:hydrology-swmm",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "hydrology-swmm",
+      "title": "Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:hydrology-wbd",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "hydrology-wbd",
+      "title": "USGS Watershed Boundary Dataset — Campus HUC Boundaries (HU10/HU12)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:lsc-status-report",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "lsc-status-report",
+      "title": "Ohio LSC Status Report of Legislation",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:meetings",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "meetings",
+      "title": "Per-Site Civic Meeting Records (Slug-Scoped)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:network",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "network",
+      "title": "BOSC Watershed-Point Network Synthesis (Maumee Basin)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:odd-grants-loans",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "odd-grants-loans",
+      "title": "Ohio Department of Development — Grants and Loans disbursements (statewide)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:odd-tax-incentives",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "odd-tax-incentives",
+      "title": "Ohio Department of Development — Tax Incentives (JCTC/JRTC/Historic/Datacenter)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:odd-tca-minutes",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "odd-tca-minutes",
+      "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:odot-driveohio-cv-av",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "odot-driveohio-cv-av",
+      "title": "Ohio CV/AV System Core Service Requirements (DriveOhio / AECOM)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:oepa-ohd000001-gp",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "oepa-ohd000001-gp",
+      "title": "Ohio EPA Draft General NPDES Permit for Data Center Facilities (OHD000001)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:onboard-bundle",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "onboard-bundle",
+      "title": "Full site onboarding — every reach/economics connector, in dependency order",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:orc",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "orc",
+      "title": "Ohio Revised Code — Corpus Citation Index",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:orc-orc",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "orc-orc",
+      "title": "Ohio Revised Code — Full Text (Cited Sections + Titles)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:parcel-assemblage",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "parcel-assemblage",
+      "title": "Per-Site Parcel Assemblage Geometry",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:periplus",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "periplus",
+      "title": "Periplus Corridor GIS (Frozen Fork-Point Import)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:pjm",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "pjm",
+      "title": "PJM Wholesale-Market Reference (LMP / RPM Capacity / Large-Load Queue)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:rsei",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "rsei",
+      "title": "RSEI Toxic-Discharge Water Screen",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:rsei-inventory",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "rsei-inventory",
+      "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:subdivisions",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "subdivisions",
+      "title": "Allen County Political-Subdivision Meeting-Records Registry",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:new-albany:usaspending",
+      "kind": "dataset",
+      "site": "new-albany",
+      "local_id": "usaspending",
+      "title": "Federal-Award Footprint (USASpending.gov)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "entity:new-albany:GENERAL DYNAMICS",
+      "kind": "entity",
+      "site": "new-albany",
+      "local_id": "GENERAL DYNAMICS",
+      "title": "GENERAL DYNAMICS CORPORATION",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:new-albany:GENERAL DYNAMICS LAND SYSTEMS",
+      "kind": "entity",
+      "site": "new-albany",
+      "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
+      "title": "General Dynamics Land Systems Inc.",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:new-albany:MARATHON PETROLEUM",
+      "kind": "entity",
+      "site": "new-albany",
+      "local_id": "MARATHON PETROLEUM",
+      "title": "MARATHON PETROLEUM CORPORATION",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:new-albany:MARATHON PIPELINE CO LLC HEATH TERMINAL",
+      "kind": "entity",
+      "site": "new-albany",
+      "local_id": "MARATHON PIPELINE CO LLC HEATH TERMINAL",
+      "title": "MARATHON PIPELINE CO LLC HEATH TERMINAL",
+      "feed": "entities"
+    }
+  ]
+}

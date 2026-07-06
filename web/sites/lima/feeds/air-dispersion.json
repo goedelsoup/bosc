@@ -1,0 +1,170 @@
+[
+  {
+    "site": "lima",
+    "pollutant": "NOx",
+    "factors_basis": "permit",
+    "load_regime": "load",
+    "available": false,
+    "engine_version": "",
+    "source_emission_g_s": 9.54812,
+    "stack": {
+      "height_m": {
+        "value": 10.0,
+        "unit": "m",
+        "source": "assumption",
+        "citation": "no disclosed genset stack geometry for site 'lima' — typical large (~2.75 MW) stationary CI diesel genset exhaust — a screening assumption used where the engine make/model/size is not in the record (e.g. redacted as CBI); supersede with manufacturer stack data when disclosed (#1180)",
+        "confidence": "low",
+        "asof": null
+      },
+      "diameter_m": {
+        "value": 0.6,
+        "unit": "m",
+        "source": "assumption",
+        "citation": "no disclosed genset stack geometry for site 'lima' — typical large (~2.75 MW) stationary CI diesel genset exhaust — a screening assumption used where the engine make/model/size is not in the record (e.g. redacted as CBI); supersede with manufacturer stack data when disclosed (#1180)",
+        "confidence": "low",
+        "asof": null
+      },
+      "exit_velocity_ms": {
+        "value": 40.0,
+        "unit": "m/s",
+        "source": "assumption",
+        "citation": "no disclosed genset stack geometry for site 'lima' — typical large (~2.75 MW) stationary CI diesel genset exhaust — a screening assumption used where the engine make/model/size is not in the record (e.g. redacted as CBI); supersede with manufacturer stack data when disclosed (#1180)",
+        "confidence": "low",
+        "asof": null
+      },
+      "exit_temp_k": {
+        "value": 720.0,
+        "unit": "K",
+        "source": "assumption",
+        "citation": "no disclosed genset stack geometry for site 'lima' — typical large (~2.75 MW) stationary CI diesel genset exhaust — a screening assumption used where the engine make/model/size is not in the record (e.g. redacted as CBI); supersede with manufacturer stack data when disclosed (#1180)",
+        "confidence": "low",
+        "asof": null
+      }
+    },
+    "stack_is_assumption": true,
+    "receptor_grid": {
+      "half_extent_m": 2500.0,
+      "spacing_m": 100.0
+    },
+    "averaging_periods": [
+      "1",
+      "ANNUAL"
+    ],
+    "screens": [],
+    "any_naaqs_exceeded": false,
+    "exceeded": [],
+    "event": {
+      "name": "PJM 2026 hot-weather §202(c) emergency",
+      "order_id": "202-26-33",
+      "window_start": "2026-06-30T23:59 ET",
+      "window_end": "2026-07-03T23:59 ET",
+      "authorized_window_hours": {
+        "value": 72.0,
+        "unit": "hr",
+        "source": "document",
+        "citation": "DOE Order 202-26-33 2026-06-30T23:59 ET..2026-07-03T23:59 ET",
+        "confidence": "high",
+        "asof": null
+      },
+      "backup_generation_authorized": true,
+      "facility_dispatch_confirmed": false,
+      "source_relpath": "grid/pjm-202c-emergency-2026.event.yaml",
+      "citations": [
+        "DOE Order 202-26-33 2026-06-30T23:59 ET..2026-07-03T23:59 ET"
+      ],
+      "caveats": [
+        "The authorized window is [verified] from the captured order; whether this facility ran, and for how long inside the window, is [open] — the order is RTO-wide and names no facility. facility_dispatch_confirmed stays False until a facility runtime record lands."
+      ]
+    },
+    "caveats": [
+      "Screening comparison: a single modeled source with NO monitored background concentration and flat terrain + canned met. A peak below the NAAQS is reassuring; a peak above it flags the need for a full demonstration (background + cumulative sources), not an automatic violation.",
+      "Stack geometry is a screening assumption (engine specs not in the record) — the modeled concentration inherits that uncertainty; supersede with manufacturer stack data (SiteFacility.genset_stack_*).",
+      "Event-anchored: modeled at the permit LOAD-point rate a real authorized dispatch carries, cited to PJM 2026 hot-weather §202(c) emergency (Order 202-26-33). The authorization window is [verified]; whether this facility ran is [open] (facility_dispatch_confirmed=False) — the concentrations are what such a dispatch would model, not a record that it occurred."
+    ],
+    "note": "AERMOD engine unavailable (binary not located)"
+  },
+  {
+    "site": "lima",
+    "pollutant": "CO",
+    "factors_basis": "permit",
+    "load_regime": "load",
+    "available": false,
+    "engine_version": "",
+    "source_emission_g_s": 2.22008,
+    "stack": {
+      "height_m": {
+        "value": 10.0,
+        "unit": "m",
+        "source": "assumption",
+        "citation": "no disclosed genset stack geometry for site 'lima' — typical large (~2.75 MW) stationary CI diesel genset exhaust — a screening assumption used where the engine make/model/size is not in the record (e.g. redacted as CBI); supersede with manufacturer stack data when disclosed (#1180)",
+        "confidence": "low",
+        "asof": null
+      },
+      "diameter_m": {
+        "value": 0.6,
+        "unit": "m",
+        "source": "assumption",
+        "citation": "no disclosed genset stack geometry for site 'lima' — typical large (~2.75 MW) stationary CI diesel genset exhaust — a screening assumption used where the engine make/model/size is not in the record (e.g. redacted as CBI); supersede with manufacturer stack data when disclosed (#1180)",
+        "confidence": "low",
+        "asof": null
+      },
+      "exit_velocity_ms": {
+        "value": 40.0,
+        "unit": "m/s",
+        "source": "assumption",
+        "citation": "no disclosed genset stack geometry for site 'lima' — typical large (~2.75 MW) stationary CI diesel genset exhaust — a screening assumption used where the engine make/model/size is not in the record (e.g. redacted as CBI); supersede with manufacturer stack data when disclosed (#1180)",
+        "confidence": "low",
+        "asof": null
+      },
+      "exit_temp_k": {
+        "value": 720.0,
+        "unit": "K",
+        "source": "assumption",
+        "citation": "no disclosed genset stack geometry for site 'lima' — typical large (~2.75 MW) stationary CI diesel genset exhaust — a screening assumption used where the engine make/model/size is not in the record (e.g. redacted as CBI); supersede with manufacturer stack data when disclosed (#1180)",
+        "confidence": "low",
+        "asof": null
+      }
+    },
+    "stack_is_assumption": true,
+    "receptor_grid": {
+      "half_extent_m": 2500.0,
+      "spacing_m": 100.0
+    },
+    "averaging_periods": [
+      "1",
+      "8"
+    ],
+    "screens": [],
+    "any_naaqs_exceeded": false,
+    "exceeded": [],
+    "event": {
+      "name": "PJM 2026 hot-weather §202(c) emergency",
+      "order_id": "202-26-33",
+      "window_start": "2026-06-30T23:59 ET",
+      "window_end": "2026-07-03T23:59 ET",
+      "authorized_window_hours": {
+        "value": 72.0,
+        "unit": "hr",
+        "source": "document",
+        "citation": "DOE Order 202-26-33 2026-06-30T23:59 ET..2026-07-03T23:59 ET",
+        "confidence": "high",
+        "asof": null
+      },
+      "backup_generation_authorized": true,
+      "facility_dispatch_confirmed": false,
+      "source_relpath": "grid/pjm-202c-emergency-2026.event.yaml",
+      "citations": [
+        "DOE Order 202-26-33 2026-06-30T23:59 ET..2026-07-03T23:59 ET"
+      ],
+      "caveats": [
+        "The authorized window is [verified] from the captured order; whether this facility ran, and for how long inside the window, is [open] — the order is RTO-wide and names no facility. facility_dispatch_confirmed stays False until a facility runtime record lands."
+      ]
+    },
+    "caveats": [
+      "Screening comparison: a single modeled source with NO monitored background concentration and flat terrain + canned met. A peak below the NAAQS is reassuring; a peak above it flags the need for a full demonstration (background + cumulative sources), not an automatic violation.",
+      "Stack geometry is a screening assumption (engine specs not in the record) — the modeled concentration inherits that uncertainty; supersede with manufacturer stack data (SiteFacility.genset_stack_*).",
+      "Event-anchored: modeled at the permit LOAD-point rate a real authorized dispatch carries, cited to PJM 2026 hot-weather §202(c) emergency (Order 202-26-33). The authorization window is [verified]; whether this facility ran is [open] (facility_dispatch_confirmed=False) — the concentrations are what such a dispatch would model, not a record that it occurred."
+    ],
+    "note": "AERMOD engine unavailable (binary not located)"
+  }
+]

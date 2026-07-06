@@ -1,0 +1,263 @@
+[
+  {
+    "slug": "cynthia-leis",
+    "name": "Cynthia Leis",
+    "entity_key": null,
+    "aliases": [
+      "Cindy Leis",
+      "Cynthia 'Cindy' Leis",
+      "Cynthia C. Leis"
+    ],
+    "roles": [
+      "economic-development principal",
+      "records custodian",
+      "port-authority director"
+    ],
+    "affiliations": [
+      "Allen Economic Development Group (AEDG)",
+      "Port Authority of Allen County (PAAC)"
+    ],
+    "summary": "AEDG President/CEO AND PAAC Executive Director — the single locus of control over the economic-development trade-secret shield and the records custody for Project BOSC.",
+    "expanded": true,
+    "tags": [
+      "aedg",
+      "paac",
+      "dual-role",
+      "records",
+      "locus-of-control"
+    ],
+    "sources": [
+      {
+        "source": "data/extracted/aedg/paac-records-policy.policy.yaml",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": null,
+        "verified": true
+      },
+      {
+        "source": "data/extracted/aedg/paac-board-minutes.minutes.yaml",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": null,
+        "verified": true
+      },
+      {
+        "source": "data/extracted/legal/prr-mandamus/school-district-notice-letters.notice.yaml",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": null,
+        "verified": true
+      }
+    ],
+    "body": "## How she appears in the record\n\nCynthia \"Cindy\" Leis occupies **two seats at once** in the Project BOSC corpus:\n\n- **President/CEO of the Allen Economic Development Group (AEDG)** — she signs the\n  Elida Local School District notice letters as AEDG President/CEO (`leisc@aedg.org`),\n  and the PAAC board minutes track her rise from AEDG Business Development Director\n  to President/CEO by August 2024.\n- **Executive Director of the Port Authority of Allen County (PAAC)** — she signs the\n  PAAC records policy in that capacity, and recurs throughout the board minutes\n  reporting on the deal (e.g. 2026-03-30, tying the N. Cole Street roadway\n  improvements to \"the Google data center project\").\n\n## Why the dual role matters\n\nPAAC has **no employees** of its own; it must be administered by an external entity\n([records policy](../extracted/aedg/paac-records-policy.policy.yaml)). With Leis serving as\n**both** AEDG President/CEO and PAAC Executive Director, the same individual sits on\nboth sides of the front-end developer-information shield (R.C. 4582.58 — developer\ninformation routed *through AEDG* is treated as a non-record until the employer commits\nin writing) **and** the records custody for the public authority that approves the\ndeal. That single locus of control over the econ-dev shield + records is the core of\nthe records-completeness concern. See the memory note `leis-aedg-paac-dual-role`.\n\nIn the board minutes she describes roundabout phasing to objecting residents\n(2025-08-07), and the PAAC board invokes the R.C. 4582.58(B) trade-secret shield to\nenter executive session (2026-03-30) — the shield in active use.\n\n## Research status\n\nRoles and the dual capacity are read directly from the cited extractions and are\n**common-control plumbing and leads to verify — not** statements about beneficial\nownership or wrongdoing. To extend: confirm the exact AEDG/PAAC contractual\nadministration arrangement and the dates of each appointment from primary records."
+  },
+  {
+    "slug": "jill-tangeman",
+    "name": "Jill Tangeman",
+    "entity_key": "JILL TANGEMAN",
+    "aliases": [
+      "Jill S. Tangeman",
+      "Jill S. Tangeman Esq."
+    ],
+    "roles": [
+      "company counsel",
+      "permit contact"
+    ],
+    "affiliations": [
+      "Vorys",
+      "Sater",
+      "Seymour and Pease LLP"
+    ],
+    "summary": "Vorys counsel for Bistrozzi LLC — company counsel on the Roadwork Development Agreement, the land-option assignments, and a recurring contact of record across the EPA permit file.",
+    "expanded": true,
+    "tags": [
+      "counsel",
+      "vorys",
+      "bistrozzi",
+      "land"
+    ],
+    "sources": [
+      {
+        "source": "data/extracted/permits/3949585.epa.yaml",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": null,
+        "verified": true
+      },
+      {
+        "source": "data/extracted/permits/4006230.epa.yaml",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": null,
+        "verified": true
+      },
+      {
+        "source": "data/extracted/permits/3974496.epa.yaml",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": null,
+        "verified": true
+      },
+      {
+        "source": "data/extracted/aedg/roadwork-development-agreement.rda.yaml",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": null,
+        "verified": true
+      },
+      {
+        "source": "data/extracted/aedg/seller-land-packets.land.yaml",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": null,
+        "verified": true
+      }
+    ],
+    "body": "## How she appears in the record\n\nJill S. Tangeman is **Vorys, Sater, Seymour and Pease** counsel on the company\n(Bistrozzi/BOSC) side, recurring across three threads:\n\n- **Company counsel on the Roadwork Development Agreement** — named in the RDA notice\n  block as company counsel (`jstangeman@vorys.com`)\n  ([RDA](../extracted/aedg/roadwork-development-agreement.rda.yaml)).\n- **The land-option assignments** — the PAAC purchase options (Brenneman, Neff, Pike\n  Run/Miller) were **assigned to Bistrozzi LLC** through Vorys/Tangeman (2025-07-03),\n  closing 2025-07-14 ([seller-land-packets](../extracted/aedg/seller-land-packets.land.yaml)).\n- **Permit contact of record** — she appears as `permit_contact` on numerous EPA\n  permit extractions (entity graph: permit_contact ×11).\n\nShe also appears (with Leis and Rex Huffman) in the Neff property **Conditional Use\nPermit** process in the PAAC board minutes (2024-10-24).\n\n## Why this matters\n\nTangeman and Scott Ziance are the two Vorys hands on the local deal paperwork: Ziance\non the CRA/NDA/SOS filings, Tangeman on the RDA and the land-option assignment chain.\nTogether they are the developer-side legal channel through which the land assembly and\nthe road/CRA instruments were executed.\n\n## Research status\n\nRoles are read from the cited extractions and are **common-control plumbing and leads\nto verify — not** statements about beneficial ownership or wrongdoing. To extend:\nconfirm the assignment instruments' recording details and her signature blocks."
+  },
+  {
+    "slug": "john-willamowski-jr",
+    "name": "John R. Willamowski, Jr.",
+    "entity_key": null,
+    "aliases": [
+      "John Willamowski Jr.",
+      "John R. Willamowski Jr.",
+      "Assistant Prosecutor Willamowski",
+      "John Williamowski Jr."
+    ],
+    "roles": [
+      "county counsel",
+      "records-mechanism originator"
+    ],
+    "affiliations": [
+      "Allen County Prosecuting Attorney's Office"
+    ],
+    "summary": "Assistant Prosecuting Attorney for Allen County; County counsel of record on the Roadwork Development Agreement and the originator of the County–Bistrozzi Mutual NDA.",
+    "expanded": true,
+    "tags": [
+      "county",
+      "prosecutor",
+      "counsel",
+      "nda",
+      "records"
+    ],
+    "sources": [
+      {
+        "source": "data/extracted/legal/prr-mandamus/mutual-nda-bistrozzi.nda.yaml",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": null,
+        "verified": true
+      },
+      {
+        "source": "data/extracted/aedg/roadwork-development-agreement.rda.yaml",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": null,
+        "verified": true
+      }
+    ],
+    "body": "## How he appears in the record\n\nJohn R. Willamowski, Jr. is an **Assistant Prosecuting Attorney for Allen County** —\ni.e. the County's own counsel — and he appears at two load-bearing points:\n\n- **Originator of the County–Bistrozzi Mutual NDA.** The NDA recitals state that\n  \"correspondence has been received from Assistant Prosecutor John Willamowski Jr.,\n  requesting the Board enter into a Mutual Non-Disclosure Agreement with Bistrozzi,\n  LLC.\" The County's own counsel originated the instrument whose §6 became the\n  contractual records-withholding engine (≥10 business days' notice to Bistrozzi\n  before answering any PRR; disclose only the legal minimum; seek confidential\n  treatment).\n- **County counsel of record on the Roadwork Development Agreement** (and a notice\n  copy recipient), per the RDA notice block.\n\n## Why this matters\n\nThe NDA he originated is one of three stacked records-withholding mechanisms in the\ndeal (NDA §6 / CRA §22 / RDA §9.13), layered on top of the front-end R.C. 4582.58\necon-dev shield. That the *County's own counsel* requested the Board bind itself to\nadvance-notice-to-the-developer before answering public-records requests is central\nto the mandamus narrative.\n\n## Research status\n\nRead from the cited extractions. The \"originator\" characterization is quoted from\nthe NDA's own recitals (document); his broader role in the County's records posture\nis a **lead to verify** against primary correspondence, not an accusation.\n\n**Identity — do not conflate with his father.** This is John R. Willamowski **Jr.**,\nthe Assistant County Prosecutor. His father, **John R. Willamowski Sr.**, is a\nseparate, still-active figure in the Ohio judiciary (the \"Jr.\" in the slug and name is\nload-bearing). Confirm which Willamowski is named on any instrument before relying on\nidentity in a filing."
+  },
+  {
+    "slug": "scott-ziance",
+    "name": "Scott J. Ziance",
+    "entity_key": "SCOTT ZIANCE",
+    "aliases": [
+      "Scott Ziance"
+    ],
+    "roles": [
+      "organizer",
+      "permit contact"
+    ],
+    "affiliations": [
+      "Vorys",
+      "Sater",
+      "Seymour and Pease LLP"
+    ],
+    "summary": "Organizer and contact of record on the Project BOSC entities and approvals.",
+    "expanded": true,
+    "tags": [
+      "counsel",
+      "vorys",
+      "bistrozzi"
+    ],
+    "sources": [
+      {
+        "source": "data/extracted/permits/sos-bistrozzi-addition-llc-2026-04-08.sos.yaml",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": null,
+        "verified": true
+      },
+      {
+        "source": "data/extracted/permits/3789048.epa.yaml",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": null,
+        "verified": true
+      },
+      {
+        "source": "data/extracted/permits/4081897.epa.yaml",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": null,
+        "verified": true
+      },
+      {
+        "source": "data/extracted/permits/4071709.epa.yaml",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": null,
+        "verified": true
+      },
+      {
+        "source": "data/extracted/permits/4081908.epa.yaml",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": null,
+        "verified": true
+      },
+      {
+        "source": "data/extracted/permits/4074527.epa.yaml",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": null,
+        "verified": true
+      },
+      {
+        "source": "data/extracted/legal/prr-mandamus/cra-agreement.cra.yaml",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": null,
+        "verified": true
+      },
+      {
+        "source": "data/extracted/legal/prr-mandamus/mutual-nda-bistrozzi.nda.yaml",
+        "source_kind": "document",
+        "page": null,
+        "confidence": "medium",
+        "note": null,
+        "verified": true
+      }
+    ],
+    "body": "## How he appears in the record\n\nScott J. Ziance recurs across the Project BOSC corpus in two roles:\n\n- **Organizer** of **Bistrozzi Addition LLC**. The Secretary of State filing names\n  the organizer as *Scott J. Ziance* and records that the filing was *submitted via\n  Vorys, Sater, Seymour and Pease LLP* (52 East Gay Street, Columbus), with C T\n  Corporation as statutory agent.\n- **Contact of record** on Ohio EPA / wetland-mitigation correspondence for the\n  Project BOSC site (applicant **Bistrozzi LLC**), addressed to *Mr. Scott Ziance*\n  at **52 East Gay Street, Columbus, OH 43215** — the Vorys office address.\n\nThe shared 52 East Gay Street address ties the permit contact and the Vorys filing\nchannel together in the record.\n\nHe also appears on the **deal instruments themselves**: as **company counsel for\nBistrozzi LLC** on the [CRA agreement](../extracted/legal/prr-mandamus/cra-agreement.cra.yaml)\n(`sjziance@vorys.com`), and as the **authorized signatory who executed the Mutual NDA\nfor Bistrozzi** opposite the County's Brian Winegardner\n([NDA](../extracted/legal/prr-mandamus/mutual-nda-bistrozzi.nda.yaml); Ziance signed\n2025-07-01). Vorys handles the local CRA/land/NDA paperwork; cf. Jill Tangeman on the\nRDA and the land-option assignments.\n\n## Research status\n\nSeeded from the entity graph (role: organizer ×1, permit_contact ×3) and verified\nagainst the cited extractions below. The statements above are limited to what the\nrecord shows; deeper biography (firm role, other engagements) is **not yet\nresearched** — extend this section as it is, with citations.\n\n> Roles read from public records are *common-control plumbing* and leads to verify\n> — **not** statements about beneficial ownership or wrongdoing."
+  }
+]

@@ -14,8 +14,8 @@ import {
   siteTier,
 } from "./readiness";
 
-// Pinned against the committed full-vs-partial fixture pair: `sample-bundle/lima` (the live
-// reference build, every feed) vs `sample-bundle/fort-wayne` (a real partial peer — the Project
+// Pinned against the committed full-vs-partial fixture pair: `sites/lima` (the live
+// reference build, every feed) vs `sites/fort-wayne` (a real partial peer — the Project
 // Zodiac campus + rsei/econ/network, but no timeline / people / exhibits). The readiness model is
 // what keeps a thin peer navigable without ever borrowing Lima's record.
 
@@ -194,7 +194,7 @@ async function loadReadiness(root: string): Promise<typeof import("./readiness")
 
 describe("coolingMethodUndisclosed (#1057)", () => {
   // Restore (not delete) the suite's bundle dir so the fixture-pinned tests above keep
-  // resolving sample-bundle/ regardless of hook ordering.
+  // resolving sites/ regardless of hook ordering.
   const originalBundleDir = process.env.WATERMARK_BUNDLE_DIR;
   afterEach(() => {
     if (originalBundleDir === undefined) delete process.env.WATERMARK_BUNDLE_DIR;

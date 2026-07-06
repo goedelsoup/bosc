@@ -1,0 +1,46 @@
+[
+  {
+    "site": "new-albany",
+    "hypothesis": "defense",
+    "signal": "moderate",
+    "tag": "verified",
+    "sub_thesis": null,
+    "group": "federal",
+    "fields": {
+      "nexus": "CHIPS semiconductor megasite",
+      "linkage": "Federal program"
+    },
+    "citations": [
+      {
+        "source": "docs/defense-nexus.md",
+        "source_kind": "reference",
+        "page": null,
+        "confidence": "medium",
+        "note": "The New Albany / Licking County semiconductor megasite is a documented CHIPS-program federal investment. New Albany is a tracking candidate (no SiteProfile yet, epic #485).",
+        "verified": false
+      }
+    ]
+  },
+  {
+    "site": "new-albany",
+    "hypothesis": "surveillance",
+    "signal": "moderate",
+    "tag": "inference",
+    "sub_thesis": null,
+    "group": "onrecord",
+    "fields": {
+      "operator": "Hyperscaler cluster (inferred)",
+      "capital": "JobsOhio · TIF (inference)"
+    },
+    "citations": [
+      {
+        "source": "docs/ECONOMICS.md",
+        "source_kind": "assumption",
+        "page": null,
+        "confidence": "medium",
+        "note": "The operator is inferred from the New Albany hyperscaler cluster; the JobsOhio / TIF incentive stack is inferred from the regional pattern — verify each against the public record before promoting the tag past inference. Tracking candidate (epic #485).",
+        "verified": false
+      }
+    ]
+  }
+]

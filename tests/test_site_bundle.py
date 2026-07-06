@@ -23,8 +23,9 @@ from watermark.sites import effective_corpus_scope, get_profile
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 COMMITTED_SCHEMAS = REPO_ROOT / "data" / "site" / "bundle" / "schemas"
-# The per-site offline fixture (#727): the trimmed Lima bundle the frontend build reads.
-FRONTEND_SAMPLE = REPO_ROOT / "web" / "sample-bundle" / "lima"
+# The per-site offline bundle (#727): the committed Lima bundle the frontend build reads
+# (`web/sites/<slug>/`, a full `watermark export` per registered site).
+FRONTEND_SAMPLE = REPO_ROOT / "web" / "sites" / "lima"
 
 
 @pytest.fixture(scope="module")
@@ -217,11 +218,13 @@ def test_geo_features_carry_layer_metadata(bundle: Path) -> None:
 
 
 def _assert_fixture_tracks_export(fixture_dir: Path, exported_manifest: dict[str, Any]) -> None:
-    """A committed ``sample-bundle/<slug>/`` fixture must not silently drift from its
-    ``watermark … export`` (issue #179). It's a deliberately *trimmed* bundle, so its feed set is a
-    subset — but the ``contract_version`` and ``site`` must match exactly, every feed it ships
-    must still exist in the real export (catches a rename/removal), and the trimmed manifest must
-    stay internally consistent. Refresh it (see the fixture's README.md) on drift.
+    """A committed ``sites/<slug>/`` bundle must not silently drift from its
+    ``watermark … export`` (issue #179). It's a full export (schemas/ and the embedding vectors
+    aside), so its feed set matches — but the check stays a *subset* assertion so a lean committed
+    bundle can never carry a feed the exporter no longer produces. The ``contract_version`` and
+    ``site`` must match exactly, every committed feed must still exist in the real export (catches
+    a rename/removal), and the committed manifest must stay internally consistent. Refresh it
+    (see ``web/sites/README.md``) on drift.
     """
     sample = json.loads((fixture_dir / "manifest.json").read_text(encoding="utf-8"))
 
@@ -251,10 +254,10 @@ def test_frontend_sample_bundle_tracks_the_export_contract(bundle: Path) -> None
 
 def test_fort_wayne_sample_bundle_tracks_the_export_contract(fort_wayne_bundle: Path) -> None:
     """The committed Fort Wayne fixture tracks **`watermark --site fort-wayne export` (#741) — the
-    first non-Lima sample bundle, so this also guards that a sibling fixture stays a real,
+    first non-Lima committed site bundle, so this also guards that a sibling fixture stays a real,
     per-site-scoped slice of its own export."""
     _assert_fixture_tracks_export(
-        REPO_ROOT / "web" / "sample-bundle" / "fort-wayne", _manifest(fort_wayne_bundle)
+        REPO_ROOT / "web" / "sites" / "fort-wayne", _manifest(fort_wayne_bundle)
     )
 
 
@@ -262,7 +265,7 @@ def test_urbana_sample_bundle_tracks_the_export_contract(urbana_bundle: Path) ->
     """The committed Urbana fixture tracks `watermark --site urbana export` (#797) — the network's
     third live site, promoted 2026-07-01."""
     _assert_fixture_tracks_export(
-        REPO_ROOT / "web" / "sample-bundle" / "urbana", _manifest(urbana_bundle)
+        REPO_ROOT / "web" / "sites" / "urbana", _manifest(urbana_bundle)
     )
 
 

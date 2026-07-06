@@ -1,0 +1,952 @@
+[
+  {
+    "src": "KYLE BRENNEMAN",
+    "rel": "trustee_of",
+    "dst": "KYLE BRENNEMAN LIVING",
+    "date": "",
+    "ref": "",
+    "source": "recorder/202508130008300.deed.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "SARAH BRENNEMAN",
+    "rel": "trustee_of",
+    "dst": "KYLE BRENNEMAN LIVING",
+    "date": "",
+    "ref": "",
+    "source": "recorder/202508130008300.deed.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "KYLE BRENNEMAN LIVING",
+    "rel": "conveyed_to",
+    "dst": "BISTROZZI",
+    "date": "2025-08-13",
+    "ref": "202508130008300",
+    "source": "recorder/202508130008300.deed.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "KEATON BRENNEMAN",
+    "rel": "trustee_of",
+    "dst": "KEATON BRENNEMAN LIVING",
+    "date": "",
+    "ref": "",
+    "source": "recorder/202508130008300.deed.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "KRISTEN BRENNEMAN",
+    "rel": "trustee_of",
+    "dst": "KEATON BRENNEMAN LIVING",
+    "date": "",
+    "ref": "",
+    "source": "recorder/202508130008300.deed.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "KEATON BRENNEMAN LIVING",
+    "rel": "conveyed_to",
+    "dst": "BISTROZZI",
+    "date": "2025-08-13",
+    "ref": "202508130008300",
+    "source": "recorder/202508130008300.deed.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "NEFF FARMS",
+    "rel": "conveyed_to",
+    "dst": "BISTROZZI",
+    "date": "2025-08-13",
+    "ref": "202508130008312",
+    "source": "recorder/202508130008312.deed.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "PIKE RUN FARMS",
+    "rel": "conveyed_to",
+    "dst": "BISTROZZI",
+    "date": "2025-08-13",
+    "ref": "202508130008316",
+    "source": "recorder/202508130008316.deed.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "PORT AUTHORITY OF ALLEN COUNTY",
+    "rel": "conveyed_to",
+    "dst": "AMAZON COM SERVICES",
+    "date": "2025-11-18",
+    "ref": "202511180011830",
+    "source": "recorder/202511180011830-amazon-deed.deed.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "JAMES NEIGHBORS",
+    "rel": "conveyed_to",
+    "dst": "BISTROZZI",
+    "date": "2026-03-04",
+    "ref": "202603040002064",
+    "source": "recorder/202603040002064.deed.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "SUZANNE NEIGHBORS",
+    "rel": "conveyed_to",
+    "dst": "BISTROZZI",
+    "date": "2026-03-04",
+    "ref": "202603040002064",
+    "source": "recorder/202603040002064.deed.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "TIMOTHY PIEPER",
+    "rel": "conveyed_to",
+    "dst": "BISTROZZI ADDITION",
+    "date": "2026-04-21",
+    "ref": "202604210003890",
+    "source": "recorder/202604210003890.deed.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "RAEANN PIEPER",
+    "rel": "conveyed_to",
+    "dst": "BISTROZZI ADDITION",
+    "date": "2026-04-21",
+    "ref": "202604210003890",
+    "source": "recorder/202604210003890.deed.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "CITY OF WILMINGTON",
+    "rel": "operates",
+    "dst": "npdes:1II00129",
+    "date": "",
+    "ref": "1II00129*HD",
+    "source": "oepa/1II00129.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:1II00129",
+    "rel": "discharges_to",
+    "dst": "LYTLE CREEK",
+    "date": "",
+    "ref": "1II00129*HD",
+    "source": "oepa/1II00129.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "WILMINGTON WATER PLANT",
+    "rel": "operates",
+    "dst": "npdes:1IW00240",
+    "date": "",
+    "ref": "1IW00240*ID",
+    "source": "oepa/1IW00240.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:1IW00240",
+    "rel": "discharges_to",
+    "dst": "UNNAMED TRIBUTARY OF LYTLE CREEK",
+    "date": "",
+    "ref": "1IW00240*ID",
+    "source": "oepa/1IW00240.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "KYLE ISLER",
+    "rel": "operates",
+    "dst": "npdes:1MP00060",
+    "date": "",
+    "ref": "1MP00060*AM",
+    "source": "oepa/1MP00060.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "CITY OF PIQUA",
+    "rel": "operates",
+    "dst": "npdes:1PD00008",
+    "date": "",
+    "ref": "1PD00008*WD",
+    "source": "oepa/1PD00008.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:1PD00008",
+    "rel": "discharges_to",
+    "dst": "GREAT MIAMI RIVER",
+    "date": "",
+    "ref": "1PD00008*WD",
+    "source": "oepa/1PD00008.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "CITY OF WILMINGTON",
+    "rel": "operates",
+    "dst": "npdes:1PD00013",
+    "date": "",
+    "ref": "1PD00013*QD",
+    "source": "oepa/1PD00013.fs.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:1PD00013",
+    "rel": "discharges_to",
+    "dst": "LYTLE CREEK",
+    "date": "",
+    "ref": "1PD00013*QD",
+    "source": "oepa/1PD00013.fs.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "CLINTON COUNTY BOARD OF DEVELOPMENTAL DISABILITIES",
+    "rel": "operates",
+    "dst": "npdes:1PT00125",
+    "date": "",
+    "ref": "1PT00125*BD",
+    "source": "oepa/1PT00125.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:1PT00125",
+    "rel": "discharges_to",
+    "dst": "UNNAMED TRIBUTARY OF WILSON CREEK",
+    "date": "",
+    "ref": "1PT00125*BD",
+    "source": "oepa/1PT00125.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "ALEXANDER RECK DBA HIDDEN VALLEY MHP",
+    "rel": "operates",
+    "dst": "npdes:1PV00037",
+    "date": "",
+    "ref": "1PV00037*ED",
+    "source": "oepa/1PV00037.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:1PV00037",
+    "rel": "discharges_to",
+    "dst": "TAWAWA CREEK",
+    "date": "",
+    "ref": "1PV00037*ED",
+    "source": "oepa/1PV00037.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "RLR INVESTMENTS",
+    "rel": "operates",
+    "dst": "npdes:1PV00089",
+    "date": "",
+    "ref": "1PV00089*DD",
+    "source": "oepa/1PV00089.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:1PV00089",
+    "rel": "discharges_to",
+    "dst": "UNNAMED TRIBUTARY OF LYTLE CREEK",
+    "date": "",
+    "ref": "1PV00089*DD",
+    "source": "oepa/1PV00089.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "MHC TT",
+    "rel": "operates",
+    "dst": "npdes:1PX00010",
+    "date": "",
+    "ref": "1PX00010*HD",
+    "source": "oepa/1PX00010.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:1PX00010",
+    "rel": "discharges_to",
+    "dst": "UNNAMED TRIBUTARY OF TODD FORK",
+    "date": "",
+    "ref": "1PX00010*HD",
+    "source": "oepa/1PX00010.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "CITY OF VAN WERT",
+    "rel": "operates",
+    "dst": "npdes:2PD00006",
+    "date": "",
+    "ref": "2PD00006*VD",
+    "source": "oepa/2PD00006.fs.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:2PD00006",
+    "rel": "discharges_to",
+    "dst": "TOWN CREEK",
+    "date": "",
+    "ref": "2PD00006*VD",
+    "source": "oepa/2PD00006.fs.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "VAN WERT WWTP",
+    "rel": "operates",
+    "dst": "npdes:2PD00006",
+    "date": "",
+    "ref": "2PD00006*VD",
+    "source": "oepa/2PD00006.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "ALLEN COUNTY BOARD OF COMMISSIONERS",
+    "rel": "operates",
+    "dst": "npdes:2PH00006",
+    "date": "",
+    "ref": "2PH00006*LD",
+    "source": "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:2PH00006",
+    "rel": "discharges_to",
+    "dst": "DUG RUN",
+    "date": "",
+    "ref": "2PH00006*LD",
+    "source": "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.npdes.yaml",
+    "relation_class": "environmental_beneficiary",
+    "relation_basis": "Ohio EPA fact sheet 2PH00006 (American II WWTP → Dug Run)"
+  },
+  {
+    "src": "ALLEN COUNTY BOARD OF COMMISSIONERS",
+    "rel": "operates",
+    "dst": "npdes:2PH00007",
+    "date": "",
+    "ref": "2PH00007*MD",
+    "source": "oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:2PH00007",
+    "rel": "discharges_to",
+    "dst": "PIKE RUN",
+    "date": "",
+    "ref": "2PH00007*MD",
+    "source": "oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.npdes.yaml",
+    "relation_class": "environmental_beneficiary",
+    "relation_basis": "Ohio EPA fact sheet 2PH00007 (American Bath WWTP → Pike Run)"
+  },
+  {
+    "src": "ALLEN COUNTY SANITARY ENGINEERING DEPARTMENT",
+    "rel": "operates",
+    "dst": "npdes:2PK00002",
+    "date": "",
+    "ref": "2PK00002*MD",
+    "source": "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:2PK00002",
+    "rel": "discharges_to",
+    "dst": "OTTAWA RIVER",
+    "date": "",
+    "ref": "2PK00002*MD",
+    "source": "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.npdes.yaml",
+    "relation_class": "environmental_beneficiary",
+    "relation_basis": "Ohio EPA fact sheet 2PK00002 (Shawnee II WWTP → Ottawa River)"
+  },
+  {
+    "src": "ALLEN COUNTY BOARD OF COMMISSIONERS",
+    "rel": "operates",
+    "dst": "npdes:2PK00002",
+    "date": "",
+    "ref": "2PK00002*LD",
+    "source": "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "BISTROZZI ADDITION",
+    "rel": "registered_agent",
+    "dst": "C T",
+    "date": "2026-04-08",
+    "ref": "202609704236",
+    "source": "permits/sos-bistrozzi-addition-llc-2026-04-08.sos.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "BISTROZZI ADDITION",
+    "rel": "organized_by",
+    "dst": "SCOTT ZIANCE",
+    "date": "2026-04-08",
+    "ref": "202609704236",
+    "source": "permits/sos-bistrozzi-addition-llc-2026-04-08.sos.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "MAGENTA CAPITAL OHIO LLC MAGENTA CAPITAL",
+    "rel": "registered_agent",
+    "dst": "CORPORATION SERVICE",
+    "date": "2025-10-17",
+    "ref": "202529003142",
+    "source": "permits/sos-magenta-capital-llc-2025-10-17.sos.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "MAGENTA CAPITAL OHIO LLC MAGENTA CAPITAL",
+    "rel": "organized_by",
+    "dst": "MICHAEL MONTFORT",
+    "date": "2025-10-17",
+    "ref": "202529003142",
+    "source": "permits/sos-magenta-capital-llc-2025-10-17.sos.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "TILTED GATE",
+    "rel": "registered_agent",
+    "dst": "CORPORATION SERVICE",
+    "date": "2025-09-29",
+    "ref": "202527204518",
+    "source": "permits/sos-tilted-gate-llc-2025-09-29.sos.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "TILTED GATE",
+    "rel": "organized_by",
+    "dst": "MICHAEL MONTFORT",
+    "date": "2025-09-29",
+    "ref": "202527204518",
+    "source": "permits/sos-tilted-gate-llc-2025-09-29.sos.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "BISTROZZI",
+    "rel": "represented_by",
+    "dst": "JILL TANGEMAN",
+    "date": "",
+    "ref": "",
+    "source": "permits/3702676.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "JILL TANGEMAN",
+    "rel": "affiliated_with",
+    "dst": "EMH&T",
+    "date": "",
+    "ref": "",
+    "source": "permits/3702676.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "JILL TANGEMAN",
+    "rel": "affiliated_with",
+    "dst": "VORYS",
+    "date": "",
+    "ref": "",
+    "source": "permits/3727059.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "BISTROZZI",
+    "rel": "represented_by",
+    "dst": "SCOTT ZIANCE",
+    "date": "",
+    "ref": "",
+    "source": "permits/3789048.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "SCOTT ZIANCE",
+    "rel": "affiliated_with",
+    "dst": "EMH&T",
+    "date": "",
+    "ref": "",
+    "source": "permits/3789048.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "BISTROZZI",
+    "rel": "represented_by",
+    "dst": "MICHAEL MONTFORT",
+    "date": "",
+    "ref": "",
+    "source": "permits/3859883.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "MICHAEL MONTFORT",
+    "rel": "affiliated_with",
+    "dst": "WILSON SONSINI GOODRICH ROSATI WSGR",
+    "date": "",
+    "ref": "",
+    "source": "permits/3859883.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "BISTROZZI",
+    "rel": "represented_by",
+    "dst": "MELISSA QUEEN DARBY",
+    "date": "",
+    "ref": "",
+    "source": "permits/3966517.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "MELISSA QUEEN DARBY",
+    "rel": "affiliated_with",
+    "dst": "EMH&T",
+    "date": "",
+    "ref": "",
+    "source": "permits/3966517.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "RANDY BARRERA",
+    "rel": "principal_of",
+    "dst": "TILTED GATE",
+    "date": "",
+    "ref": "",
+    "source": "permits/4071709.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "TILTED GATE",
+    "rel": "represented_by",
+    "dst": "HEATHER DARDINGER",
+    "date": "",
+    "ref": "",
+    "source": "permits/4071709.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "HEATHER DARDINGER",
+    "rel": "affiliated_with",
+    "dst": "EMH&T",
+    "date": "",
+    "ref": "",
+    "source": "permits/4071709.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "BISTROZZI",
+    "rel": "represented_by",
+    "dst": "ROBERT ZIZZO",
+    "date": "",
+    "ref": "",
+    "source": "permits/4074529.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "ROBERT ZIZZO",
+    "rel": "affiliated_with",
+    "dst": "EMH&T",
+    "date": "",
+    "ref": "",
+    "source": "permits/4074529.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "TILTED GATE",
+    "rel": "represented_by",
+    "dst": "KATIE SAMPLES",
+    "date": "",
+    "ref": "",
+    "source": "permits/4081903.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "KATIE SAMPLES",
+    "rel": "affiliated_with",
+    "dst": "EMH&T",
+    "date": "",
+    "ref": "",
+    "source": "permits/4081903.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "TILTED GATE",
+    "rel": "represented_by",
+    "dst": "SCOTT ZIANCE",
+    "date": "",
+    "ref": "",
+    "source": "permits/4081908.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "HEATHER DARDINGER",
+    "rel": "affiliated_with",
+    "dst": "VORYS",
+    "date": "",
+    "ref": "",
+    "source": "permits/4081908.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "SCOTT ZIANCE",
+    "rel": "affiliated_with",
+    "dst": "VORYS",
+    "date": "",
+    "ref": "",
+    "source": "permits/4081908.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "TIMOTHY CHADWICK",
+    "rel": "principal_of",
+    "dst": "TILTED GATE",
+    "date": "",
+    "ref": "",
+    "source": "permits/4081910.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "TURNER CONSTRUCTION",
+    "rel": "represented_by",
+    "dst": "JARED GRIGG PROJECT EHS MANAGER",
+    "date": "",
+    "ref": "",
+    "source": "permits/lma1a-npdes-cgp-coverage.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "CINDY LEIS",
+    "rel": "discussed_at",
+    "dst": "AMERICAN TOWNSHIP",
+    "date": "2024-11-25",
+    "ref": "2024-11-25",
+    "source": "american-township/meetings/meeting-summaries.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "JILL TANGEMAN",
+    "rel": "discussed_at",
+    "dst": "AMERICAN TOWNSHIP",
+    "date": "2024-11-25",
+    "ref": "2024-11-25",
+    "source": "american-township/meetings/meeting-summaries.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "NEFF FARMS",
+    "rel": "discussed_at",
+    "dst": "AMERICAN TOWNSHIP",
+    "date": "2024-11-25",
+    "ref": "2024-11-25",
+    "source": "american-township/meetings/meeting-summaries.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "LEIS",
+    "rel": "discussed_at",
+    "dst": "AMERICAN TOWNSHIP",
+    "date": "2024-11-25",
+    "ref": "2024-11-25",
+    "source": "american-township/meetings/meeting-summaries.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "GOOGLE",
+    "rel": "discussed_at",
+    "dst": "AMERICAN TOWNSHIP",
+    "date": "2026-03-30",
+    "ref": "2026-03-30",
+    "source": "american-township/meetings/meeting-summaries.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "TURNER CONSTRUCTION",
+    "rel": "discussed_at",
+    "dst": "AMERICAN TOWNSHIP",
+    "date": "2026-03-30",
+    "ref": "2026-03-30",
+    "source": "american-township/meetings/meeting-summaries.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "ALLEN ECONOMIC DEVELOPMENT GROUP",
+    "rel": "discussed_at",
+    "dst": "LACRPC",
+    "date": "2026-01-15",
+    "ref": "2026-01-15",
+    "source": "lacrpc/meetings/meeting-summaries.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "AMAZON",
+    "rel": "discussed_at",
+    "dst": "LACRPC",
+    "date": "2026-01-15",
+    "ref": "2026-01-15",
+    "source": "lacrpc/meetings/meeting-summaries.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "GOOGLE",
+    "rel": "discussed_at",
+    "dst": "LACRPC",
+    "date": "2026-04-23",
+    "ref": "2026-04-23",
+    "source": "lacrpc/meetings/meeting-summaries.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "GOOGLE",
+    "rel": "discussed_at",
+    "dst": "PERRY TOWNSHIP",
+    "date": "2023-12-05",
+    "ref": "2023-12-05",
+    "source": "perry-township/meetings/meeting-summaries.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "ALLEN ECONOMIC DEVELOPMENT GROUP",
+    "rel": "discussed_at",
+    "dst": "PERRY TOWNSHIP",
+    "date": "2024-04-02",
+    "ref": "2024-04-02",
+    "source": "perry-township/meetings/meeting-summaries.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "PORT AUTHORITY OF ALLEN COUNTY",
+    "rel": "discussed_at",
+    "dst": "PERRY TOWNSHIP",
+    "date": "2024-04-02",
+    "ref": "2024-04-02",
+    "source": "perry-township/meetings/meeting-summaries.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "CINDY LEIS",
+    "rel": "discussed_at",
+    "dst": "PERRY TOWNSHIP",
+    "date": "2024-04-02",
+    "ref": "2024-04-02",
+    "source": "perry-township/meetings/meeting-summaries.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "LEIS",
+    "rel": "discussed_at",
+    "dst": "PERRY TOWNSHIP",
+    "date": "2024-05-07",
+    "ref": "2024-05-07",
+    "source": "perry-township/meetings/meeting-summaries.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "HUME",
+    "rel": "discussed_at",
+    "dst": "PERRY TOWNSHIP",
+    "date": "2024-05-21",
+    "ref": "2024-05-21",
+    "source": "perry-township/meetings/meeting-summaries.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "SANDY FLEISHANS",
+    "rel": "discussed_at",
+    "dst": "PERRY TOWNSHIP",
+    "date": "2024-09-03",
+    "ref": "2024-09-03",
+    "source": "perry-township/meetings/meeting-summaries.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "BISTROZZI",
+    "rel": "discussed_at",
+    "dst": "PERRY TOWNSHIP",
+    "date": "2025-09-16",
+    "ref": "2025-09-16",
+    "source": "perry-township/meetings/meeting-summaries.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "GENERAL DYNAMICS LAND SYSTEMS",
+    "rel": "owned_by",
+    "dst": "GENERAL DYNAMICS",
+    "date": "",
+    "ref": "GLEIF 875500ULXB4CYQSJVA03 → 9C1X8XOOTYY2FNYTVH06",
+    "source": "data/reference/gleif/lei-records.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "GENERAL DYNAMICS LAND SYSTEMS",
+    "rel": "tenant_of",
+    "dst": "UNITED STATES",
+    "date": "",
+    "ref": "RSEI + Allen CAMA (operator inference)",
+    "source": "data/reference/gleif/lei-records.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "INEOS NITRILES USA",
+    "rel": "owned_by",
+    "dst": "INEOS USA",
+    "date": "",
+    "ref": "RSEI parent / GLEIF 549300TWZ86K81VO8O17",
+    "source": "data/reference/rsei/inventory.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "LIMA REFINING",
+    "rel": "owned_by",
+    "dst": "CENOVUS ENERGY",
+    "date": "",
+    "ref": "RSEI parent / GLEIF 254900LJGL2N2XEMD470",
+    "source": "data/reference/rsei/inventory.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "FORD MOTOR CO LIMA ENGINE PLANT",
+    "rel": "owned_by",
+    "dst": "FORD MOTOR",
+    "date": "",
+    "ref": "RSEI parent / GLEIF 20S05OYHG0MQM4VUIC57",
+    "source": "data/reference/rsei/inventory.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "EQUILON LIMA TERMINAL",
+    "rel": "owned_by",
+    "dst": "SHELL PLC",
+    "date": "",
+    "ref": "RSEI parent / GLEIF 21380068P1DRHMJ8KU70",
+    "source": "data/reference/rsei/inventory.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "MPLX TERMINALS LLC LIMA OH TERMINAL",
+    "rel": "owned_by",
+    "dst": "MARATHON PETROLEUM",
+    "date": "",
+    "ref": "RSEI parent / GLEIF 3BNYRYQHD39K4LCKQF12",
+    "source": "data/reference/rsei/inventory.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "PROCTER GAMBLE MANUFACTURING CO LIMA PLANT",
+    "rel": "owned_by",
+    "dst": "PROCTER GAMBLE",
+    "date": "",
+    "ref": "RSEI parent / GLEIF 2572IBTT8CCZW6AU4141",
+    "source": "data/reference/rsei/inventory.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "DANA DRIVESHAFT MANUFACTURING",
+    "rel": "owned_by",
+    "dst": "DANA INCORPORATED",
+    "date": "",
+    "ref": "RSEI parent / GLEIF KVWHW7YLZPFJM8QYNJ51",
+    "source": "data/reference/rsei/inventory.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "AIRFOIL TEXTRON",
+    "rel": "owned_by",
+    "dst": "TEXTRON",
+    "date": "",
+    "ref": "RSEI parent / GLEIF 3PPKBHUG1HD6BO7RNR87",
+    "source": "data/reference/rsei/inventory.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "data-center-campus",
+    "rel": "owner",
+    "dst": "BISTROZZI",
+    "date": "",
+    "ref": "",
+    "source": "data/entities/poi/data-center-campus.md",
+    "relation_class": null,
+    "relation_basis": null
+  }
+]

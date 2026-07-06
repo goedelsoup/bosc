@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { loadCatalog } from "./catalogBuild";
 import { buildRenderCatalog } from "./renderCatalog";
 
-// Runs against the committed sample bundle (WATERMARK_BUNDLE_DIR=sample-bundle) — the same fixture
+// Runs against the committed committed site bundle (WATERMARK_BUNDLE_DIR=sites) — the same fixture
 // the rest of the web suite uses. Confirms the hydrated render-catalog asset is a superset of the
 // thin resolver catalog and never drops or fabricates a handle.
 describe("buildRenderCatalog", () => {
