@@ -1584,7 +1584,6 @@ a.card:hover { border-color: var(--bosc-forest); background: var(--bosc-surface)
   min-width: 0;
   padding: var(--sp-1) 0;
   border: 1px solid var(--td-card-line);
-  border-radius: 6px;
   background: var(--bone-surface);
   font-family: var(--bosc-mono);
   font-size: var(--fs-micro);
@@ -1595,7 +1594,6 @@ a.card:hover { border-color: var(--bosc-forest); background: var(--bosc-surface)
 .month-chip.is-growing { background: var(--bone-band); color: var(--bosc-ink); }
 .month-chip.is-active {
   border-color: var(--forest);
-  box-shadow: inset 0 -2px 0 var(--forest);
   color: var(--bosc-ink);
   font-weight: 700;
 }

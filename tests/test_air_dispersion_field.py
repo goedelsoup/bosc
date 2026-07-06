@@ -37,7 +37,8 @@ _ZERO_GEO = DispersionGeoRef(
 
 def test_contract_version_bumped() -> None:
     """This feed advanced the contract to 1.19.0; the shared version has since moved on."""
-    assert CONTRACT_VERSION >= "1.19.0"
+    version = tuple(int(part) for part in CONTRACT_VERSION.split("."))
+    assert version >= (1, 19, 0)
 
 
 def test_sample_plotfile_round_trips_onto_the_grid() -> None:

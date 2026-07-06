@@ -140,7 +140,9 @@ export default function SeasonalField({ src }: { src: string }): JSX.Element {
       </div>
     );
   }
-  if (!field?.available || field.months.length === 0) {
+  // Require the full 12-month array the contract guarantees: `toGrid` returns null for any other
+  // length, and the switcher/probe below index `months` directly, so a partial array must lock.
+  if (!field?.available || field.months.length !== NX) {
     return (
       <div className="deck-surface deck-surface--empty">
         <p className="deck-loading">
