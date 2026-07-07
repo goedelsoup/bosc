@@ -35,6 +35,14 @@ export interface StoryRef {
   title: string;
   /** One-line description — the on-ramp dek / nav blurb (story-level, not per chapter). */
   dek: string;
+  /**
+   * Hidden from every *surface* (switcher, site hub, story catalog, atoms) while its content,
+   * `/stories/<codename>` routes, and this metadata are all retained (#1256). This is the
+   * "hidden, not removed" state — the story stays reachable by direct URL and its title/dek keep
+   * feeding the reader pages; it just isn't advertised anywhere. `surfacedStories` filters these
+   * out; `storyMetaFor` (title/dek lookup) deliberately still reads them.
+   */
+  hidden?: boolean;
 }
 
 export interface NetworkSite {
@@ -70,12 +78,19 @@ export interface NetworkSite {
 // TypeScript-only overlays — stories live here, not in the YAML identity registry (#1027).
 // The YAML drives slug/place/basin/status/selectable/codename/mono/map defaults; stories
 // are authored here because they reference story codemnames + prose that aren't site-identity.
+//
+// A story surfaces (in the switcher, the hub, the catalog/atoms, the record backlinks) only when
+// it's registered here AND not `hidden` — see `surfacedStories`. Lima's Project BOSC walk is kept
+// but marked `hidden` (#1256): its content, its `/stories/project-bosc` routes, the `WALK_*` guard,
+// and its title/dek all stay intact (the story is *hidden, not removed*, reachable by direct URL),
+// but it's advertised nowhere while Lima sits in its early build state.
 const STORIES: Partial<Record<string, readonly StoryRef[]>> = {
   lima: [
     {
       codename: DEFAULT_STORY_CODENAME,
       title: "Project BOSC",
       dek: "Project BOSC — read the record one document at a time, no prior knowledge.",
+      hidden: true,
     },
   ],
   "fort-wayne": [
@@ -357,6 +372,17 @@ const PLACEMENT: Record<string, { state: string; basin: string }> = {
 /** The registry entry for a slug (the canonical {@link NetworkSite}), or `undefined`. */
 export function siteForSlug(slug: string): NetworkSite | undefined {
   return SITES.find((s) => s.slug === slug);
+}
+
+/**
+ * The stories a site *surfaces* — its registered stories minus any `hidden` ones (#1256). Every
+ * surface (the hub, the story catalog/atoms, the record→chapter backlinks, the readiness `story`
+ * gate) resolves through this, so a hidden story (Lima's Project BOSC in its early build state)
+ * shows nowhere while its content, routes, and metadata stay intact. Metadata lookups
+ * (`storyMetaFor`) read the raw `site.stories` instead, so a hidden story keeps its title/dek.
+ */
+export function surfacedStories(slug: string): readonly StoryRef[] {
+  return siteForSlug(slug)?.stories?.filter((s) => !s.hidden) ?? [];
 }
 
 /**

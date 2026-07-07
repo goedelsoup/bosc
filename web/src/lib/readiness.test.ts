@@ -28,12 +28,15 @@ describe("isReferenceSite", () => {
 });
 
 describe("the reference build", () => {
-  it("has every section available regardless of counts — it hosts the network-global content", () => {
+  it("has every section available except its hidden story — it hosts the network-global content", () => {
+    // Lima's Project BOSC walk is hidden in the early build state (#1256): its overlay entry is
+    // marked `hidden`, so the `story` section locks like any site without a surfaced story — while
+    // every other section stays available (the reference build still hosts the network-global content).
     const readiness = siteReadiness("lima");
     for (const section of Object.keys(SECTION_META) as ReadinessSection[]) {
-      expect(readiness[section]).toBe("available");
+      expect(readiness[section]).toBe(section === "story" ? "locked" : "available");
     }
-    expect(lockedSections("lima")).toEqual([]);
+    expect(lockedSections("lima")).toEqual(["story"]);
   });
 });
 

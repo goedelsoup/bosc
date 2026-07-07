@@ -20,9 +20,9 @@
 import { activeSite } from "./bundle";
 import type { HypothesisItem } from "./feeds";
 import { sectionStatus } from "./readiness";
-import { DEFAULT_STORY_CODENAME, LIMA_SLUG, siteBase, storyBase } from "./routes";
-import { type NetworkSite, SITES } from "./sites";
-import { type Story, chapterHref, storyContentsHref, storyFor } from "./walk";
+import { siteBase, storyBase } from "./routes";
+import type { NetworkSite } from "./sites";
+import { type Story, activeStory, chapterHref, storyContentsHref } from "./walk";
 
 export type SectionId =
   | "home"
@@ -64,20 +64,13 @@ export interface Section {
   toc: TocEntry[];
 }
 
-/** The active site's default story (its first registered story), or `undefined` if it has none. */
-function activeStory(): Story | undefined {
-  const slug = activeSite();
-  const codename = SITES.find((s) => s.slug === slug)?.stories?.[0]?.codename ?? DEFAULT_STORY_CODENAME;
-  return storyFor(slug, codename);
-}
-
-/** The active site's URL root (pre-deploy-base) and its default story's root. */
+/** The active site's URL root (pre-deploy-base) and its surfaced story's root. When the site
+ *  surfaces no story (a thin peer, or Lima with its walk hidden — #1256), `storyRoot` falls back
+ *  to the site's OWN home, never Lima's story: a non-story site must not leak into Lima's walk. */
 function siteRoots(): { base: string; storyRoot: string; story: Story | undefined } {
   const base = siteBase(activeSite());
   const story = activeStory();
-  const storyRoot = story
-    ? storyBase(story.site, story.codename)
-    : storyBase(LIMA_SLUG, DEFAULT_STORY_CODENAME);
+  const storyRoot = story ? storyBase(story.site, story.codename) : base;
   return { base, storyRoot, story };
 }
 
@@ -367,7 +360,9 @@ export function siteTabs(): NavItem[] {
           href: storyRoot,
           count: `${chapters.length} chapters · ~18 min`,
           blurb: "One project, read document by document — it crosses every theme to the right.",
-          tocHref: story ? storyContentsHref(story) : `${storyRoot}/contents`,
+          // With no surfaced story the locked spine points at the site home (a valid target),
+          // never a `${base}/contents` that 404s (#1256): `storyRoot` is the site base in that case.
+          tocHref: story ? storyContentsHref(story) : storyRoot,
           locked: storyLocked,
           items: chapters.map((c) => ({
             num: String(c.step),
@@ -420,7 +415,7 @@ export function siteTabs(): NavItem[] {
         ],
       },
     },
-    { kind: "link", label: "The story", section: "story", href: storyRoot },
+    { kind: "link", label: "The story", section: "story", href: storyRoot, locked: storyLocked },
     { kind: "link", label: "The record", section: "site", href: `${base}/site/`, match: ["timeline"] },
   ];
 }
@@ -510,7 +505,7 @@ export interface FooterGroup {
 
 /** Structured footer nav groups — the three-column nav band. Raw paths; apply `withBase` in the template. */
 export function footerGroups(): FooterGroup[] {
-  const { base, storyRoot } = siteRoots();
+  const { base, storyRoot, story } = siteRoots();
   const plat = platformLinks();
   const docs = plat.find((p) => p.section === "reports")!;
   const wiki = plat.find((p) => p.section === "wiki")!;
@@ -522,7 +517,9 @@ export function footerGroups(): FooterGroup[] {
         { label: "Open leads", href: `${base}/leads` },
         { label: "The environment", href: `${base}/environment/` },
         { label: "The economy", href: `${base}/economy/` },
-        { label: "The story", href: storyRoot },
+        // Only a site that surfaces a story gets a story link — a site without one (or Lima with
+        // its walk hidden, #1256) shows none rather than leaking into Lima's story.
+        ...(story ? [{ label: "The story", href: storyRoot }] : []),
         { label: "The record", href: `${base}/site/` },
       ],
     },

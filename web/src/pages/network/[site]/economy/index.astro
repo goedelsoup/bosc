@@ -10,8 +10,15 @@ export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed } from "~/lib/bundle";
 import type { EconomicBaseline } from "~/lib/feeds";
-import { withBase, withSite, storyUrl } from "~/lib/site";
+import { withSite } from "~/lib/site";
+import { activeStory, chapterHref } from "~/lib/walk";
 
+// The cost-of-opacity door links THIS site's own "cost of opacity" chapter — resolved from the
+// current site's surfaced story (#1256), never the Lima-pinned `storyUrl`. It's shown only when
+// that story exists AND actually carries a `cost` chapter (Fort Wayne's Project Zodiac, e.g., has
+// no cost chapter), so a site without one — or with its story hidden — surfaces no story link.
+const story = activeStory();
+const costChapter = story?.chapters.find((c) => c.slug === "cost");
 const eb = hasFeed("economics-baseline") ? loadFeed<EconomicBaseline>("economics-baseline") : null;
 const area = eb?.area_name ?? "the corridor";
 const jobs = eb?.latest.sectors?.reduce((sum, s) => sum + (s.annual_avg_employment.value ?? 0), 0) ?? null;
@@ -46,17 +53,22 @@ const doors: Door[] = [
     desc: "Where the campus load actually goes — the end-use mix and the workload profile behind the megawatts, against the grid backdrop the site sits on.",
     note: "interactive",
   },
-  {
-    id: "cost",
-    kind: "Narrative",
-    // The story chapter is Lima's narrative; a non-Lima economy page still links it (no per-site
-    // story yet). Base-applied here so the door template can stay ambient (`d.href`).
-    href: withBase(storyUrl("/cost")),
-    count: "—",
-    title: "The cost of opacity",
-    desc: "The deal as the public can see it — incentives, abatement, and load-not-jobs — read against what stays sealed. A chapter of the story.",
-    note: "story",
-  },
+  // The cost-of-opacity door links this site's own `cost` chapter — present only when the current
+  // site's surfaced story actually carries one (#1256), so it drops on a hidden/absent story or a
+  // story without that chapter, never leaking into Lima's.
+  ...(story && costChapter
+    ? [
+        {
+          id: "cost",
+          kind: "Narrative",
+          href: chapterHref(story, costChapter.slug),
+          count: "—",
+          title: "The cost of opacity",
+          desc: "The deal as the public can see it — incentives, abatement, and load-not-jobs — read against what stays sealed. A chapter of the story.",
+          note: "story",
+        },
+      ]
+    : []),
   {
     id: "demand",
     kind: "Reference",

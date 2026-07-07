@@ -26,7 +26,7 @@ import { hasFeed, loadFeed, loadManifest } from "./bundle";
 import type { DomainState, Readiness, SiteTier } from "./bundle";
 import type { ScenarioResult } from "./feeds";
 import { LIMA_SLUG } from "./routes";
-import { siteForSlug } from "./sites";
+import { surfacedStories } from "./sites";
 
 export type { DomainState, SiteTier } from "./bundle";
 
@@ -183,9 +183,10 @@ function hasEnough(section: ReadinessSection, slug: string): boolean {
     case "exhibits":
       return domainPresent(slug, "record") && feedCount(slug, "exhibits") > 0;
     case "story":
-      // The guided walk needs a registered story (the `sites.ts` overlay) — a leads-only story
-      // domain (Urbana) has no walk to open.
-      return (siteForSlug(slug)?.stories?.length ?? 0) > 0;
+      // The guided walk needs a *surfaced* story (registered in the `sites.ts` overlay and not
+      // hidden) — a leads-only story domain (Urbana) has no walk to open, and Lima's hidden Project
+      // BOSC walk (#1256) locks here too, so its story tab/hub CTA drop in the early build state.
+      return surfacedStories(slug).length > 0;
     case "leads":
       // The leads board is feed-driven per site (#796); the reference build also hosts the
       // network-global curated board.

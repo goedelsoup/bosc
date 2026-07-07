@@ -5,23 +5,21 @@
  * always offers an exit. Dots link to the live chapters; the current step is
  * widened and outlined. SSR-only, no JS.
  *
- * Story-parameterized (#724/#732): pass the active `story` to render any site's walk; defaults
- * to the Lima `project-bosc` story so existing callers are unchanged.
+ * Story-parameterized (#724/#732): the caller passes the active `story` (the chapter shell
+ * resolves it from the route), so the bar renders whatever site's walk it's on — no Lima-pinned
+ * default that could leak Lima's story onto another site (#1256).
  */
-import { DEFAULT_STORY_CODENAME, LIMA_SLUG } from "../lib/routes";
-import { type Story, chapterHref, storyContentsHref, storyFor } from "../lib/walk";
+import { type Story, chapterHref, storyContentsHref } from "../lib/walk";
 
 interface Props {
   /** 1-based current step. */
   step: number;
-  /** The story being walked; defaults to Lima's project-bosc. */
-  story?: Story;
+  /** The story being walked. */
+  story: Story;
   /** Where "leave" goes (defaults to the story's table of contents). */
   leaveHref?: string;
 }
-const { step, story: storyProp, leaveHref } = Astro.props;
-// The Lima default story is always registered.
-const story = storyProp ?? storyFor(LIMA_SLUG, DEFAULT_STORY_CODENAME)!;
+const { step, story, leaveHref } = Astro.props;
 const chapters = story.chapters;
 const total = chapters.length;
 const leave = leaveHref ?? storyContentsHref(story);

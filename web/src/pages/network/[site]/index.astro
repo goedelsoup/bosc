@@ -23,7 +23,7 @@ import {
   siteState,
 } from "~/lib/sites";
 import type { FigureStatData } from "~/lib/viz";
-import { WALK_CHAPTERS, walkHref } from "~/lib/walk";
+import { activeStory, chapterHref } from "~/lib/walk";
 import { withBase, withSite, withStory } from "~/lib/site";
 
 // One `network/[site]/…` route per selectable site (#724/#734); Lima alone today.
@@ -42,7 +42,10 @@ const num = (n: number): string => n.toLocaleString("en-US");
 
 const docCollections = hasFeed("documents") ? loadFeed<DocumentCollectionItem[]>("documents") : [];
 const nDocuments = docCollections.reduce((a, c) => a + c.entries.length, 0);
-const nChapters = WALK_CHAPTERS.length;
+// The guided walk is surfaced only when THIS site surfaces a story (#1256). Lima's Project BOSC is
+// hidden in the early build state, so `story` is undefined and the story door + chapter grid drop.
+const story = activeStory();
+const nChapters = story?.chapters.length ?? 0;
 const nLeads = count("leads");
 
 // The facility clock (separate from the site-build clock) — the active site's campus lifecycle.
@@ -114,8 +117,9 @@ const stats: FigureStatData[] = [
       </div>
     </div>
 
-    {/* The entry fork — two co-equal doors: the researcher's library (quiet outline,
-        left) and the newcomer's story / guided walk (filled forest, right). */}
+    {/* The entry fork — the researcher's library (quiet outline). The newcomer's guided-walk door
+        joins it only when the site surfaces a story; with Lima's walk hidden (#1256) the record
+        door stands alone rather than opening a hidden story. */}
     <div class="home-doors">
       <a class="home-door home-door--archive" href={withSite("/site/")}>
         <div class="home-door-top">
@@ -129,42 +133,44 @@ const stats: FigureStatData[] = [
         </span>
         <span class="home-door-go">Enter the library →</span>
       </a>
-      <a class="home-door home-door--walk" href={withStory("")}>
-        <div class="home-door-top">
-          <span class="home-door-eyebrow">For the newcomer</span>
-          <span class="home-door-count">{nChapters} chapters · ~18 min</span>
-        </div>
-        <span class="home-door-title">Read the story</span>
-        <span class="home-door-desc">
-          A path that teaches you to read the record one document at a time — no jargon, no
-          prior knowledge.
-        </span>
-        <span class="home-door-go">▶ Start the story →</span>
-      </a>
+      {story && (
+        <a class="home-door home-door--walk" href={withStory("")}>
+          <div class="home-door-top">
+            <span class="home-door-eyebrow">For the newcomer</span>
+            <span class="home-door-count">{nChapters} chapters · ~18 min</span>
+          </div>
+          <span class="home-door-title">Read the story</span>
+          <span class="home-door-desc">
+            A path that teaches you to read the record one document at a time — no jargon, no
+            prior knowledge.
+          </span>
+          <span class="home-door-go">▶ Start the story →</span>
+        </a>
+      )}
     </div>
 
     {/* The story · six chapters (design "Site Home" Live) — the narrative spine, one project
-        read one document at a time, crossing every theme in the record. */}
-    <div class="home-story" id="story">
-      <div class="home-story-head">
-        <span class="home-story-kicker">The story · in {nChapters} chapters</span>
-        <span class="home-story-note">one project, read one document at a time</span>
-        <a class="home-story-toc" href={withStory("/contents")}>Table of contents →</a>
-      </div>
-      <div class="home-story-grid">
-        {
-          WALK_CHAPTERS.map((c) => (
-            <a class="home-chapter" href={walkHref(c.slug)}>
+        read one document at a time. Present only when the site surfaces a story (#1256). */}
+    {story && (
+      <div class="home-story" id="story">
+        <div class="home-story-head">
+          <span class="home-story-kicker">The story · in {nChapters} chapters</span>
+          <span class="home-story-note">one project, read one document at a time</span>
+          <a class="home-story-toc" href={withStory("/contents")}>Table of contents →</a>
+        </div>
+        <div class="home-story-grid">
+          {story.chapters.map((c) => (
+            <a class="home-chapter" href={chapterHref(story, c.slug)}>
               <span class="home-chapter-n">{c.step}</span>
               <span class="home-chapter-main">
                 <span class="home-chapter-title">{c.title}</span>
                 <span class="home-chapter-skill">{c.skill}</span>
               </span>
             </a>
-          ))
-        }
+          ))}
+        </div>
       </div>
-    </div>
+    )}
 
     <div class="home-stats" id="corpus">
       <div class="home-stats-label">The corpus at a glance</div>
