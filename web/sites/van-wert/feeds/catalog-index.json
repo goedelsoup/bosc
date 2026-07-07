@@ -1,6 +1,6 @@
 {
   "site": "van-wert",
-  "catalog_version": "1cd397f95797255b4c65c6ebca82d6797e79c0944ef2d2af08f522d1caaed4e6",
+  "catalog_version": "2a25f849f67a1edd65951a82e8368d70d3078f2a4a7fb394a7cd58b34d6f7a49",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -244,14 +244,6 @@
       "feed": "catalog"
     },
     {
-      "handle": "dataset:van-wert:hydrology-low-flow-7q10",
-      "kind": "dataset",
-      "site": "van-wert",
-      "local_id": "hydrology-low-flow-7q10",
-      "title": "Receiving-Stream Design Low Flows (7Q10) — Cited + Derived",
-      "feed": "catalog"
-    },
-    {
       "handle": "dataset:van-wert:hydrology-nasa-power-climatology",
       "kind": "dataset",
       "site": "van-wert",
@@ -273,22 +265,6 @@
       "site": "van-wert",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:van-wert:hydrology-swmm",
-      "kind": "dataset",
-      "site": "van-wert",
-      "local_id": "hydrology-swmm",
-      "title": "Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:van-wert:hydrology-wbd",
-      "kind": "dataset",
-      "site": "van-wert",
-      "local_id": "hydrology-wbd",
-      "title": "USGS Watershed Boundary Dataset — Campus HUC Boundaries (HU10/HU12)",
       "feed": "catalog"
     },
     {

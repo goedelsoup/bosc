@@ -1,6 +1,6 @@
 {
   "site": "defiance",
-  "catalog_version": "d2b5e7619a793cb7e42f47b705aad86c2b7b1b8ed9d88fb01df2a65567535e55",
+  "catalog_version": "b5fbb63f8cba10be4aa0838f2f885c92a584abc298325c9ccb4b6976274f6b68",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -236,14 +236,6 @@
       "feed": "catalog"
     },
     {
-      "handle": "dataset:defiance:hydrology-low-flow-7q10",
-      "kind": "dataset",
-      "site": "defiance",
-      "local_id": "hydrology-low-flow-7q10",
-      "title": "Receiving-Stream Design Low Flows (7Q10) — Cited + Derived",
-      "feed": "catalog"
-    },
-    {
       "handle": "dataset:defiance:hydrology-nasa-power-climatology",
       "kind": "dataset",
       "site": "defiance",
@@ -265,22 +257,6 @@
       "site": "defiance",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:defiance:hydrology-swmm",
-      "kind": "dataset",
-      "site": "defiance",
-      "local_id": "hydrology-swmm",
-      "title": "Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:defiance:hydrology-wbd",
-      "kind": "dataset",
-      "site": "defiance",
-      "local_id": "hydrology-wbd",
-      "title": "USGS Watershed Boundary Dataset — Campus HUC Boundaries (HU10/HU12)",
       "feed": "catalog"
     },
     {

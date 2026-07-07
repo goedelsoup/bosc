@@ -1,6 +1,6 @@
 {
   "site": "west-union",
-  "catalog_version": "d55f60ac73b2bf2f99565863e8d7639417248dac4441c389721d39b1ed7451a9",
+  "catalog_version": "548f4d5fcd223becd19eb490d590e0f9064606278aabc501a00017e7ebebf317",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -212,27 +212,11 @@
       "feed": "catalog"
     },
     {
-      "handle": "dataset:west-union:hydrology",
-      "kind": "dataset",
-      "site": "west-union",
-      "local_id": "hydrology",
-      "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
-      "feed": "catalog"
-    },
-    {
       "handle": "dataset:west-union:hydrology-atlas14-corridor-ddf",
       "kind": "dataset",
       "site": "west-union",
       "local_id": "hydrology-atlas14-corridor-ddf",
       "title": "NOAA Atlas-14 Corridor Design-Storm Depths (Depth-Duration-Frequency)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:west-union:hydrology-low-flow-7q10",
-      "kind": "dataset",
-      "site": "west-union",
-      "local_id": "hydrology-low-flow-7q10",
-      "title": "Receiving-Stream Design Low Flows (7Q10) — Cited + Derived",
       "feed": "catalog"
     },
     {
@@ -257,22 +241,6 @@
       "site": "west-union",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:west-union:hydrology-swmm",
-      "kind": "dataset",
-      "site": "west-union",
-      "local_id": "hydrology-swmm",
-      "title": "Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:west-union:hydrology-wbd",
-      "kind": "dataset",
-      "site": "west-union",
-      "local_id": "hydrology-wbd",
-      "title": "USGS Watershed Boundary Dataset — Campus HUC Boundaries (HU10/HU12)",
       "feed": "catalog"
     },
     {
@@ -401,14 +369,6 @@
       "site": "west-union",
       "local_id": "rsei-inventory",
       "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:west-union:subdivisions",
-      "kind": "dataset",
-      "site": "west-union",
-      "local_id": "subdivisions",
-      "title": "Allen County Political-Subdivision Meeting-Records Registry",
       "feed": "catalog"
     },
     {

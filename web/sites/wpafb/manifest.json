@@ -2,9 +2,9 @@
   "site": "wpafb",
   "bundle_version": "1.0.0",
   "contract_version": "1.22.0",
-  "generated_at": "2026-07-06T17:03:26+00:00",
+  "generated_at": "2026-07-07T18:15:52+00:00",
   "feed_count": 23,
-  "row_total": 72,
+  "row_total": 67,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -182,7 +182,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 49
+      "count": 44
     },
     {
       "name": "catalog-index",

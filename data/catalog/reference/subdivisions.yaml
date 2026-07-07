@@ -10,7 +10,9 @@ producer:
     + live-web discovery of publishing blocks
 license: Public records (local government open data)
 access_tier: public
-site_scope: basin-shared
+# Allen County OH meeting-holding bodies — a Maumee-basin civic registry, not a network-wide one;
+# a Scioto/Great-Miami point has its own subdivisions and does not inherit Allen County's (#1251).
+site_scope: basin:maumee
 storage:
 - relpath: reference/subdivisions/subdivisions.yaml
   media_type: application/x-yaml

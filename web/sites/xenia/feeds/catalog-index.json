@@ -1,6 +1,6 @@
 {
   "site": "xenia",
-  "catalog_version": "565b1e64c46399130506b733997de7aae1e1cc1561f7ef6e012da1e015edde13",
+  "catalog_version": "072405a1aaebc974388d6f53c0b702d8b286ddce35a70c8bade9ffc373bf4c44",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -228,27 +228,11 @@
       "feed": "catalog"
     },
     {
-      "handle": "dataset:xenia:hydrology",
-      "kind": "dataset",
-      "site": "xenia",
-      "local_id": "hydrology",
-      "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
-      "feed": "catalog"
-    },
-    {
       "handle": "dataset:xenia:hydrology-atlas14-corridor-ddf",
       "kind": "dataset",
       "site": "xenia",
       "local_id": "hydrology-atlas14-corridor-ddf",
       "title": "NOAA Atlas-14 Corridor Design-Storm Depths (Depth-Duration-Frequency)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:xenia:hydrology-low-flow-7q10",
-      "kind": "dataset",
-      "site": "xenia",
-      "local_id": "hydrology-low-flow-7q10",
-      "title": "Receiving-Stream Design Low Flows (7Q10) — Cited + Derived",
       "feed": "catalog"
     },
     {
@@ -273,22 +257,6 @@
       "site": "xenia",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:xenia:hydrology-swmm",
-      "kind": "dataset",
-      "site": "xenia",
-      "local_id": "hydrology-swmm",
-      "title": "Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:xenia:hydrology-wbd",
-      "kind": "dataset",
-      "site": "xenia",
-      "local_id": "hydrology-wbd",
-      "title": "USGS Watershed Boundary Dataset — Campus HUC Boundaries (HU10/HU12)",
       "feed": "catalog"
     },
     {
@@ -417,14 +385,6 @@
       "site": "xenia",
       "local_id": "rsei-inventory",
       "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:xenia:subdivisions",
-      "kind": "dataset",
-      "site": "xenia",
-      "local_id": "subdivisions",
-      "title": "Allen County Political-Subdivision Meeting-Records Registry",
       "feed": "catalog"
     },
     {

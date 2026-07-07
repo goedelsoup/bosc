@@ -2,9 +2,9 @@
   "site": "wilmington",
   "bundle_version": "1.0.0",
   "contract_version": "1.22.0",
-  "generated_at": "2026-07-06T17:06:04+00:00",
+  "generated_at": "2026-07-07T18:15:19+00:00",
   "feed_count": 23,
-  "row_total": 73,
+  "row_total": 68,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -182,7 +182,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 51
+      "count": 46
     },
     {
       "name": "catalog-index",

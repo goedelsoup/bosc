@@ -1,6 +1,6 @@
 {
   "site": "sandusky",
-  "catalog_version": "46c919f2c8fd033d17778bfdd9fc6f92c74214109ddca998be09f16dc62cb26c",
+  "catalog_version": "832d442ccfa1dd4438dd118eff9fedc963ec045a3dfb7dd356f2104f909e4909",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -212,27 +212,11 @@
       "feed": "catalog"
     },
     {
-      "handle": "dataset:sandusky:hydrology",
-      "kind": "dataset",
-      "site": "sandusky",
-      "local_id": "hydrology",
-      "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
-      "feed": "catalog"
-    },
-    {
       "handle": "dataset:sandusky:hydrology-atlas14-corridor-ddf",
       "kind": "dataset",
       "site": "sandusky",
       "local_id": "hydrology-atlas14-corridor-ddf",
       "title": "NOAA Atlas-14 Corridor Design-Storm Depths (Depth-Duration-Frequency)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:sandusky:hydrology-low-flow-7q10",
-      "kind": "dataset",
-      "site": "sandusky",
-      "local_id": "hydrology-low-flow-7q10",
-      "title": "Receiving-Stream Design Low Flows (7Q10) — Cited + Derived",
       "feed": "catalog"
     },
     {
@@ -257,22 +241,6 @@
       "site": "sandusky",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:sandusky:hydrology-swmm",
-      "kind": "dataset",
-      "site": "sandusky",
-      "local_id": "hydrology-swmm",
-      "title": "Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:sandusky:hydrology-wbd",
-      "kind": "dataset",
-      "site": "sandusky",
-      "local_id": "hydrology-wbd",
-      "title": "USGS Watershed Boundary Dataset — Campus HUC Boundaries (HU10/HU12)",
       "feed": "catalog"
     },
     {
@@ -401,14 +369,6 @@
       "site": "sandusky",
       "local_id": "rsei-inventory",
       "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:sandusky:subdivisions",
-      "kind": "dataset",
-      "site": "sandusky",
-      "local_id": "subdivisions",
-      "title": "Allen County Political-Subdivision Meeting-Records Registry",
       "feed": "catalog"
     },
     {

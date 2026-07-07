@@ -10,7 +10,8 @@ producer:
   external_url: https://hydro.nationalmap.gov/arcgis/rest/services/wbd/MapServer
 license: U.S. Government work (public domain)
 access_tier: public
-site_scope: basin-shared
+# HU polygons containing the Lima campus point — Lima's own un-slugged reference files, not network-shared (#1251).
+site_scope: lima-legacy
 storage:
 - relpath: reference/hydrology/wbd/0410000704-middle-ottawa-river.geojson
   media_type: application/geo+json

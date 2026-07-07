@@ -1,6 +1,6 @@
 {
   "site": "springfield",
-  "catalog_version": "640a144d8812db0cb6fac697193e2106c82ca3631bbbacec51abc400766d210f",
+  "catalog_version": "6ca7309750485c49d3b280f4dfabb09762c290e08b8dd84a8236841562f31e02",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -220,27 +220,11 @@
       "feed": "catalog"
     },
     {
-      "handle": "dataset:springfield:hydrology",
-      "kind": "dataset",
-      "site": "springfield",
-      "local_id": "hydrology",
-      "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
-      "feed": "catalog"
-    },
-    {
       "handle": "dataset:springfield:hydrology-atlas14-corridor-ddf",
       "kind": "dataset",
       "site": "springfield",
       "local_id": "hydrology-atlas14-corridor-ddf",
       "title": "NOAA Atlas-14 Corridor Design-Storm Depths (Depth-Duration-Frequency)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:springfield:hydrology-low-flow-7q10",
-      "kind": "dataset",
-      "site": "springfield",
-      "local_id": "hydrology-low-flow-7q10",
-      "title": "Receiving-Stream Design Low Flows (7Q10) — Cited + Derived",
       "feed": "catalog"
     },
     {
@@ -265,22 +249,6 @@
       "site": "springfield",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:springfield:hydrology-swmm",
-      "kind": "dataset",
-      "site": "springfield",
-      "local_id": "hydrology-swmm",
-      "title": "Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:springfield:hydrology-wbd",
-      "kind": "dataset",
-      "site": "springfield",
-      "local_id": "hydrology-wbd",
-      "title": "USGS Watershed Boundary Dataset — Campus HUC Boundaries (HU10/HU12)",
       "feed": "catalog"
     },
     {
@@ -409,14 +377,6 @@
       "site": "springfield",
       "local_id": "rsei-inventory",
       "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:springfield:subdivisions",
-      "kind": "dataset",
-      "site": "springfield",
-      "local_id": "subdivisions",
-      "title": "Allen County Political-Subdivision Meeting-Records Registry",
       "feed": "catalog"
     },
     {

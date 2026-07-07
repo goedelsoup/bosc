@@ -4,7 +4,7 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-07-06T00:36:39.646369+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-07-07T18:24:03.083942+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
@@ -77,29 +77,29 @@ Snapshot reconciled: **2026-07-06T00:36:39.646369+00:00**. Regenerate with `wate
 
 | site | relevant | present | missing |
 | --- | --- | --- | --- |
-| bryan | 47 | 40 | 7 |
-| columbus | 46 | 40 | 6 |
-| coshocton | 46 | 33 | 13 |
-| defiance | 47 | 40 | 7 |
-| findlay | 48 | 41 | 7 |
-| fort-wayne | 41 | 33 | 8 |
-| greenville | 47 | 40 | 7 |
-| hamilton-middletown | 48 | 42 | 6 |
+| bryan | 44 | 37 | 7 |
+| columbus | 41 | 35 | 6 |
+| coshocton | 41 | 28 | 13 |
+| defiance | 44 | 37 | 7 |
+| findlay | 45 | 38 | 7 |
+| fort-wayne | 38 | 30 | 8 |
+| greenville | 42 | 35 | 7 |
+| hamilton-middletown | 43 | 37 | 6 |
 | lima | 85 | 81 | 4 |
-| new-albany | 46 | 40 | 6 |
-| ottawa | 47 | 40 | 7 |
-| piketon | 46 | 33 | 13 |
-| sandusky | 46 | 33 | 13 |
-| sidney | 50 | 44 | 6 |
-| springfield | 47 | 41 | 6 |
-| toledo | 47 | 40 | 7 |
-| troy-piqua | 49 | 43 | 6 |
-| urbana | 48 | 41 | 7 |
-| van-wert | 49 | 43 | 6 |
-| west-union | 46 | 39 | 7 |
-| wilmington | 51 | 45 | 6 |
-| wpafb | 49 | 43 | 6 |
-| xenia | 48 | 42 | 6 |
+| new-albany | 41 | 35 | 6 |
+| ottawa | 44 | 37 | 7 |
+| piketon | 41 | 28 | 13 |
+| sandusky | 41 | 28 | 13 |
+| sidney | 45 | 39 | 6 |
+| springfield | 42 | 36 | 6 |
+| toledo | 44 | 37 | 7 |
+| troy-piqua | 44 | 38 | 6 |
+| urbana | 43 | 36 | 7 |
+| van-wert | 46 | 40 | 6 |
+| west-union | 41 | 34 | 7 |
+| wilmington | 46 | 40 | 6 |
+| wpafb | 44 | 38 | 6 |
+| xenia | 43 | 37 | 6 |
 
 ## Integrity gaps
 

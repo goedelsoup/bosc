@@ -9,7 +9,8 @@ producer:
   source: BOSC-generated EPA SWMM5 (.inp) model decks over the campus parcels + Atlas-14 design storm
 license: BOSC work product (derived model decks; EPA SWMM engine is public-domain)
 access_tier: public
-site_scope: basin-shared
+# SWMM decks over the Lima campus parcels — Lima's own un-slugged reference files, not network-shared (#1251).
+site_scope: lima-legacy
 storage:
 - relpath: reference/hydrology/swmm/tier1-detention.inp
   media_type: application/octet-stream
