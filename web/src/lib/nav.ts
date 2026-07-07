@@ -140,7 +140,7 @@ export function sections(): Section[] {
       label: "The corpus",
       tab: "Corpus",
       href: `${base}/site/`,
-      blurb: "Documents, records, exhibits, people & places, legal history, and the watershed data.",
+      blurb: "Documents, records, exhibits, people & places, legal history, and the environmental data.",
       toc: [
         { label: "Documents", anchor: "documents" },
         { label: "Records", anchor: "records" },
