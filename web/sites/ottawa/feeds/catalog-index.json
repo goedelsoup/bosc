@@ -1,6 +1,6 @@
 {
   "site": "ottawa",
-  "catalog_version": "6b55e145921bf50505bdf3c9060a98b620a2ee1c5d72017a92c88bf3f9f45e3e",
+  "catalog_version": "9942de9d4a0dd21919933b157e068d1be0649f492ee2208797fb5585dcd95deb",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -112,7 +112,7 @@
       "kind": "dataset",
       "site": "ottawa",
       "local_id": "economics-baseline",
-      "title": "Allen County Economic Baseline (BLS QCEW + US Census ACS)",
+      "title": "Putnam County, OH Economic Baseline (BLS QCEW + US Census ACS)",
       "feed": "catalog"
     },
     {
@@ -224,7 +224,7 @@
       "kind": "dataset",
       "site": "ottawa",
       "local_id": "hydrology",
-      "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
+      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
       "feed": "catalog"
     },
     {
@@ -408,15 +408,7 @@
       "kind": "dataset",
       "site": "ottawa",
       "local_id": "rsei-inventory",
-      "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:ottawa:subdivisions",
-      "kind": "dataset",
-      "site": "ottawa",
-      "local_id": "subdivisions",
-      "title": "Allen County Political-Subdivision Meeting-Records Registry",
+      "title": "Putnam County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
       "feed": "catalog"
     },
     {

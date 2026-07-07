@@ -2,9 +2,9 @@
   "site": "west-union",
   "bundle_version": "1.0.0",
   "contract_version": "1.22.0",
-  "generated_at": "2026-07-06T17:09:48+00:00",
+  "generated_at": "2026-07-07T15:27:16+00:00",
   "feed_count": 23,
-  "row_total": 65,
+  "row_total": 64,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -182,7 +182,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 46
+      "count": 45
     },
     {
       "name": "catalog-index",

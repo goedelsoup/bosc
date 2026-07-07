@@ -1,6 +1,6 @@
 {
   "site": "defiance",
-  "catalog_version": "d2b5e7619a793cb7e42f47b705aad86c2b7b1b8ed9d88fb01df2a65567535e55",
+  "catalog_version": "055f5a06b298ea25fd366594b2c705dcbb6e296703b9bada87340b28b26da847",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -112,7 +112,7 @@
       "kind": "dataset",
       "site": "defiance",
       "local_id": "economics-baseline",
-      "title": "Allen County Economic Baseline (BLS QCEW + US Census ACS)",
+      "title": "Defiance County, OH Economic Baseline (BLS QCEW + US Census ACS)",
       "feed": "catalog"
     },
     {
@@ -224,7 +224,7 @@
       "kind": "dataset",
       "site": "defiance",
       "local_id": "hydrology",
-      "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
+      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
       "feed": "catalog"
     },
     {
@@ -408,15 +408,7 @@
       "kind": "dataset",
       "site": "defiance",
       "local_id": "rsei-inventory",
-      "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:defiance:subdivisions",
-      "kind": "dataset",
-      "site": "defiance",
-      "local_id": "subdivisions",
-      "title": "Allen County Political-Subdivision Meeting-Records Registry",
+      "title": "Defiance County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
       "feed": "catalog"
     },
     {

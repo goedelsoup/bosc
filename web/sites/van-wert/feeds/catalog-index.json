@@ -1,6 +1,6 @@
 {
   "site": "van-wert",
-  "catalog_version": "1cd397f95797255b4c65c6ebca82d6797e79c0944ef2d2af08f522d1caaed4e6",
+  "catalog_version": "68ea264a3b32e5fbf42f1916e04ce99d32f1ecee690be9e58c402e13f8582b98",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -120,7 +120,7 @@
       "kind": "dataset",
       "site": "van-wert",
       "local_id": "economics-baseline",
-      "title": "Allen County Economic Baseline (BLS QCEW + US Census ACS)",
+      "title": "Van Wert County, OH Economic Baseline (BLS QCEW + US Census ACS)",
       "feed": "catalog"
     },
     {
@@ -232,7 +232,7 @@
       "kind": "dataset",
       "site": "van-wert",
       "local_id": "hydrology",
-      "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
+      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
       "feed": "catalog"
     },
     {
@@ -424,15 +424,7 @@
       "kind": "dataset",
       "site": "van-wert",
       "local_id": "rsei-inventory",
-      "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:van-wert:subdivisions",
-      "kind": "dataset",
-      "site": "van-wert",
-      "local_id": "subdivisions",
-      "title": "Allen County Political-Subdivision Meeting-Records Registry",
+      "title": "Van Wert County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
       "feed": "catalog"
     },
     {

@@ -1,6 +1,6 @@
 {
   "site": "columbus",
-  "catalog_version": "b59b39fefe958a65e68bcad66c70b8bce850247e5236e5b5b3bd37c330de7277",
+  "catalog_version": "b8a48ca5183eac3020af169a587b8e8e59537172ae2eaf795bb63565197080ac",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -104,7 +104,7 @@
       "kind": "dataset",
       "site": "columbus",
       "local_id": "economics-baseline",
-      "title": "Allen County Economic Baseline (BLS QCEW + US Census ACS)",
+      "title": "Franklin County, OH Economic Baseline (BLS QCEW + US Census ACS)",
       "feed": "catalog"
     },
     {
@@ -216,7 +216,7 @@
       "kind": "dataset",
       "site": "columbus",
       "local_id": "hydrology",
-      "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
+      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
       "feed": "catalog"
     },
     {
@@ -400,15 +400,7 @@
       "kind": "dataset",
       "site": "columbus",
       "local_id": "rsei-inventory",
-      "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:columbus:subdivisions",
-      "kind": "dataset",
-      "site": "columbus",
-      "local_id": "subdivisions",
-      "title": "Allen County Political-Subdivision Meeting-Records Registry",
+      "title": "Franklin County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
       "feed": "catalog"
     },
     {

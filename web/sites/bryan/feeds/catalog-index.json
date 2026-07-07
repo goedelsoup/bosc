@@ -1,6 +1,6 @@
 {
   "site": "bryan",
-  "catalog_version": "ce5484cbe8011257fbc2a52d7e638212a5c7f63ffb8df66b41a0de29fb8281e8",
+  "catalog_version": "34bbe067863c89d67c01f2737902b841bfe4e1aa2196bfe08edf579d235fbefa",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -112,7 +112,7 @@
       "kind": "dataset",
       "site": "bryan",
       "local_id": "economics-baseline",
-      "title": "Allen County Economic Baseline (BLS QCEW + US Census ACS)",
+      "title": "Williams County, OH Economic Baseline (BLS QCEW + US Census ACS)",
       "feed": "catalog"
     },
     {
@@ -224,7 +224,7 @@
       "kind": "dataset",
       "site": "bryan",
       "local_id": "hydrology",
-      "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
+      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
       "feed": "catalog"
     },
     {
@@ -408,15 +408,7 @@
       "kind": "dataset",
       "site": "bryan",
       "local_id": "rsei-inventory",
-      "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:bryan:subdivisions",
-      "kind": "dataset",
-      "site": "bryan",
-      "local_id": "subdivisions",
-      "title": "Allen County Political-Subdivision Meeting-Records Registry",
+      "title": "Williams County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
       "feed": "catalog"
     },
     {

@@ -126,7 +126,7 @@ Regenerate: `watermark rsei`
 | --- | --- | --- |
 | `reference/rsei/toxic-discharge-screen.yaml` | application/x-yaml | no |
 
-### `rsei-inventory` — Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)
+### `rsei-inventory` — Allen County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)
 
 Source: EPA RSEI Public Data Set v2.3.12 (EPA gaftp Public Release Data), version v2312 · License: U.S. Government work (public domain) · Access: public · Site scope: slug-scoped · Refresh: on-demand
 

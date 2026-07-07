@@ -1,6 +1,6 @@
 {
   "site": "fort-wayne",
-  "catalog_version": "3227f8b96973bafbe66d25bb8f2a29e432443a6e0d5d8a29a195dfe31a629887",
+  "catalog_version": "0044d9cc37670935f071ed5863a2cb4c9165f221086526aae4d324b635edeeb1",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -120,7 +120,7 @@
       "kind": "dataset",
       "site": "fort-wayne",
       "local_id": "economics-baseline",
-      "title": "Allen County Economic Baseline (BLS QCEW + US Census ACS)",
+      "title": "Allen County, IN Economic Baseline (BLS QCEW + US Census ACS)",
       "feed": "catalog"
     },
     {
@@ -232,7 +232,7 @@
       "kind": "dataset",
       "site": "fort-wayne",
       "local_id": "hydrology",
-      "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
+      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
       "feed": "catalog"
     },
     {
@@ -360,15 +360,7 @@
       "kind": "dataset",
       "site": "fort-wayne",
       "local_id": "rsei-inventory",
-      "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:fort-wayne:subdivisions",
-      "kind": "dataset",
-      "site": "fort-wayne",
-      "local_id": "subdivisions",
-      "title": "Allen County Political-Subdivision Meeting-Records Registry",
+      "title": "Allen County, IN RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
       "feed": "catalog"
     },
     {

@@ -2,9 +2,9 @@
   "site": "piketon",
   "bundle_version": "1.0.0",
   "contract_version": "1.22.0",
-  "generated_at": "2026-07-06T17:08:47+00:00",
+  "generated_at": "2026-07-07T15:22:40+00:00",
   "feed_count": 20,
-  "row_total": 62,
+  "row_total": 61,
   "readiness": {
     "tier": "stub",
     "domains": {
@@ -158,7 +158,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 46
+      "count": 45
     },
     {
       "name": "catalog-index",

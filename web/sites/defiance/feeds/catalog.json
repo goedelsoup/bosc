@@ -492,7 +492,7 @@
   },
   {
     "id": "economics-baseline",
-    "title": "Allen County Economic Baseline (BLS QCEW + US Census ACS)",
+    "title": "Defiance County, OH Economic Baseline (BLS QCEW + US Census ACS)",
     "scope": "reference",
     "collection": "economics",
     "status": "reviewed",
@@ -1161,7 +1161,7 @@
   },
   {
     "id": "hydrology",
-    "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
+    "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
     "scope": "reference",
     "collection": "hydrology",
     "status": "reviewed",
@@ -2453,7 +2453,7 @@
   },
   {
     "id": "rsei-inventory",
-    "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
+    "title": "Defiance County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
     "scope": "reference",
     "collection": "rsei",
     "status": "reviewed",
@@ -2472,8 +2472,7 @@
       "rsei",
       "tri",
       "toxics",
-      "epa",
-      "allen-county"
+      "epa"
     ],
     "storage": [
       {
@@ -2502,54 +2501,6 @@
       "page": null,
       "confidence": "medium",
       "note": "watermark rsei",
-      "verified": true
-    }
-  },
-  {
-    "id": "subdivisions",
-    "title": "Allen County Political-Subdivision Meeting-Records Registry",
-    "scope": "reference",
-    "collection": "subdivisions",
-    "status": "reviewed",
-    "producer_kind": "connector",
-    "command": "subdivisions discover",
-    "connector_ref": "watermark.civic.registry",
-    "source": "Allen County county-published rosters (Township Trustees & Fiscal Officers; Mayors; Govt-Structure) + live-web discovery of publishing blocks",
-    "external_url": null,
-    "license": "Public records (local government open data)",
-    "access_tier": "public",
-    "site_scope": "basin-shared",
-    "cadence": "on-demand",
-    "ttl_days": null,
-    "last_refreshed": "2026-06-08",
-    "tags": [
-      "subdivisions",
-      "civic",
-      "allen-county",
-      "meeting-records"
-    ],
-    "storage": [
-      {
-        "relpath": "reference/subdivisions/subdivisions.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      }
-    ],
-    "observed": {
-      "exists": true,
-      "sha256": "2b00e95f26045a264e04fb4ae27c04ee6acfe471e58987b5e37d5adb0a0d005b",
-      "size_bytes": 20416,
-      "lfs_materialized": true,
-      "file_count": 1,
-      "stale": false,
-      "asof": null
-    },
-    "citation": {
-      "source": "Allen County county-published rosters (Township Trustees & Fiscal Officers; Mayors; Govt-Structure) + live-web discovery of publishing blocks",
-      "source_kind": "connector",
-      "page": null,
-      "confidence": "medium",
-      "note": "watermark subdivisions discover",
       "verified": true
     }
   },

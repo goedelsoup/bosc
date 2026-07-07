@@ -12,7 +12,7 @@ from __future__ import annotations
 
 from watermark.catalog import CatalogEntry, ProducerKind, load_entries
 from watermark.catalog.reconcile import load_observed
-from watermark.catalog.sites import owner_matches
+from watermark.catalog.sites import owner_matches, site_title
 from watermark.config import Settings, get_settings
 from watermark.site.feeds import (
     CatalogItem,
@@ -82,7 +82,9 @@ def export_catalog(settings: Settings | None = None) -> list[CatalogItem]:
         items.append(
             CatalogItem(
                 id=entry.id,
-                title=entry.title,
+                # Slug-scoped titles are materialized for the active site (#1250) so a sibling
+                # bundle names its own county, not Lima's; fixed titles pass through unchanged.
+                title=site_title(entry, settings.site),
                 scope=entry.scope,
                 collection=_collection(entry),
                 status=entry.status,

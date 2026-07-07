@@ -1,6 +1,6 @@
 {
   "site": "urbana",
-  "catalog_version": "150e71ad780e97a18f33340e0871aa749af3635fc134bbedaf35d43e2863ff80",
+  "catalog_version": "89a2c45d9a9c056ebc97e74d6aeb3cb432f6e57c8fea8d93232adbdd00202c03",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -112,7 +112,7 @@
       "kind": "dataset",
       "site": "urbana",
       "local_id": "economics-baseline",
-      "title": "Allen County Economic Baseline (BLS QCEW + US Census ACS)",
+      "title": "Champaign County, OH Economic Baseline (BLS QCEW + US Census ACS)",
       "feed": "catalog"
     },
     {
@@ -224,7 +224,7 @@
       "kind": "dataset",
       "site": "urbana",
       "local_id": "hydrology",
-      "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
+      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
       "feed": "catalog"
     },
     {
@@ -408,15 +408,7 @@
       "kind": "dataset",
       "site": "urbana",
       "local_id": "rsei-inventory",
-      "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:urbana:subdivisions",
-      "kind": "dataset",
-      "site": "urbana",
-      "local_id": "subdivisions",
-      "title": "Allen County Political-Subdivision Meeting-Records Registry",
+      "title": "Champaign County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
       "feed": "catalog"
     },
     {

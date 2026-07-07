@@ -1,6 +1,6 @@
 {
   "site": "sidney",
-  "catalog_version": "583643dee6b01c0ab815be2df277a12c80a717a5f8f466032d91923c4d5bca50",
+  "catalog_version": "745a23d758f9b74cae1df35188d747891255a8a132b41b0f0d058e3d4d9ed120",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -120,7 +120,7 @@
       "kind": "dataset",
       "site": "sidney",
       "local_id": "economics-baseline",
-      "title": "Allen County Economic Baseline (BLS QCEW + US Census ACS)",
+      "title": "Shelby County, OH Economic Baseline (BLS QCEW + US Census ACS)",
       "feed": "catalog"
     },
     {
@@ -232,7 +232,7 @@
       "kind": "dataset",
       "site": "sidney",
       "local_id": "hydrology",
-      "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
+      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
       "feed": "catalog"
     },
     {
@@ -424,15 +424,7 @@
       "kind": "dataset",
       "site": "sidney",
       "local_id": "rsei-inventory",
-      "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:sidney:subdivisions",
-      "kind": "dataset",
-      "site": "sidney",
-      "local_id": "subdivisions",
-      "title": "Allen County Political-Subdivision Meeting-Records Registry",
+      "title": "Shelby County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
       "feed": "catalog"
     },
     {

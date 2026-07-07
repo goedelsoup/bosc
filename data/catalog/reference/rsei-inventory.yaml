@@ -1,5 +1,6 @@
 id: rsei-inventory
-title: Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)
+title: Allen County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)
+title_template: '{county_state} RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)'
 scope: reference
 status: reviewed
 producer:
@@ -27,7 +28,6 @@ tags:
 - tri
 - toxics
 - epa
-- allen-county
 notes: Per-facility RSEI Score/Hazard/pounds for Allen County, OH (FIPS 39003), reduced from EPA's RSEI
   Public Data Set v2.3.12 by joining five relational tables; slug-scoped (Lima keeps the legacy un-slugged
   path).

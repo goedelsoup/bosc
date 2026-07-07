@@ -1,6 +1,6 @@
 {
   "site": "coshocton",
-  "catalog_version": "e50ea35b5292b725d6ca9ae36fae6c2e86877162de3a8883e987a2e31a176b04",
+  "catalog_version": "4f157ad8ee37e3074ae22683cd47ef9570d90b4538aecbd565a5d781f2f379d4",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -104,7 +104,7 @@
       "kind": "dataset",
       "site": "coshocton",
       "local_id": "economics-baseline",
-      "title": "Allen County Economic Baseline (BLS QCEW + US Census ACS)",
+      "title": "Coshocton County, OH Economic Baseline (BLS QCEW + US Census ACS)",
       "feed": "catalog"
     },
     {
@@ -216,7 +216,7 @@
       "kind": "dataset",
       "site": "coshocton",
       "local_id": "hydrology",
-      "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
+      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
       "feed": "catalog"
     },
     {
@@ -400,15 +400,7 @@
       "kind": "dataset",
       "site": "coshocton",
       "local_id": "rsei-inventory",
-      "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:coshocton:subdivisions",
-      "kind": "dataset",
-      "site": "coshocton",
-      "local_id": "subdivisions",
-      "title": "Allen County Political-Subdivision Meeting-Records Registry",
+      "title": "Coshocton County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
       "feed": "catalog"
     },
     {

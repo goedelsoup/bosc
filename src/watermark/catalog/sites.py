@@ -61,6 +61,31 @@ def is_relevant(entry: CatalogEntry, slug: str) -> bool:
     return owner_matches(entry.site_scope, slug)
 
 
+def site_title(entry: CatalogEntry, slug: str) -> str:
+    """The catalog entry's title as materialized for ``slug`` (#1250).
+
+    A ``slug-scoped`` dataset holds the active site's *own* data, so a Lima literal baked into the
+    title ("Allen County Economic Baseline") would mislabel every sibling site's bundle. When the
+    entry carries a :attr:`~watermark.catalog.CatalogEntry.title_template`, it is resolved against
+    ``slug``'s :class:`~watermark.sites.SiteProfile` — ``{county_state}`` ("Allen County, OH"),
+    ``{county}`` ("Allen County"), ``{state}``, ``{place}``, ``{fips}`` — so the title names the
+    site's own county (and disambiguates Fort Wayne's *Allen County, IN* from Lima's *Allen County,
+    OH*). No template, or an unregistered slug, falls back to the fixed :attr:`title` verbatim.
+    """
+    if not entry.title_template or slug not in SITES:
+        return entry.title
+    profile = get_profile(slug)
+    county_state = profile.county_name  # e.g. "Allen County, OH"
+    county, _, state = county_state.partition(",")
+    return entry.title_template.format(
+        county_state=county_state,
+        county=county.strip(),
+        state=state.strip() or profile.eia_state,
+        place=profile.place,
+        fips=profile.rsei_fips,
+    )
+
+
 def _resolved_relpaths(entry: CatalogEntry, slug: str) -> list[str]:
     """The storage relpaths that belong to ``slug`` for this entry.
 

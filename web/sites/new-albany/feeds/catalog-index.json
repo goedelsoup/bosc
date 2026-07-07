@@ -1,6 +1,6 @@
 {
   "site": "new-albany",
-  "catalog_version": "b0a2a66208ff80e92708b75e1b943598f8c5d56b7608d1f70885a3f6d74a70c4",
+  "catalog_version": "4298418b5ae5591451256f37f979692fd7a815460bbc15605bbb15a74db13abb",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -104,7 +104,7 @@
       "kind": "dataset",
       "site": "new-albany",
       "local_id": "economics-baseline",
-      "title": "Allen County Economic Baseline (BLS QCEW + US Census ACS)",
+      "title": "Licking County, OH Economic Baseline (BLS QCEW + US Census ACS)",
       "feed": "catalog"
     },
     {
@@ -216,7 +216,7 @@
       "kind": "dataset",
       "site": "new-albany",
       "local_id": "hydrology",
-      "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
+      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
       "feed": "catalog"
     },
     {
@@ -400,15 +400,7 @@
       "kind": "dataset",
       "site": "new-albany",
       "local_id": "rsei-inventory",
-      "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:new-albany:subdivisions",
-      "kind": "dataset",
-      "site": "new-albany",
-      "local_id": "subdivisions",
-      "title": "Allen County Political-Subdivision Meeting-Records Registry",
+      "title": "Licking County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
       "feed": "catalog"
     },
     {
