@@ -33,9 +33,9 @@ GITHUB_REPO = "the-watermark-directory"
 # namespace is bound here as RATE_LIMIT. Create one and fill in the printed id:
 #   npx wrangler kv namespace create RATE_LIMIT
 # then uncomment:
-# [[kv_namespaces]]
-# binding = "RATE_LIMIT"
-# id = "<namespace-id>"
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "3149546b7a874aa99c3e94d31412815d"
 
 # --- Submissions: file attachments (#243) -----------------------------------------
 # R2 bucket for pre-uploaded submission attachments (/api/attach → /api/submit).
@@ -43,10 +43,10 @@ GITHUB_REPO = "the-watermark-directory"
 # SUBMISSION_ATTACHMENTS is separate from DOCS to keep evidence-chain isolation intact.
 #   npx wrangler r2 bucket create watermark-submission-attachments
 #   npx wrangler r2 bucket create watermark-submission-attachments-dev
-# [[r2_buckets]]
-# binding = "SUBMISSION_ATTACHMENTS"
-# bucket_name = "watermark-submission-attachments"
-# preview_bucket_name = "watermark-submission-attachments-dev"
+[[r2_buckets]]
+binding = "SUBMISSION_ATTACHMENTS"
+bucket_name = "watermark-submission-attachments"
+preview_bucket_name = "watermark-submission-attachments-dev"
 #
 # Optional size cap (default 10 MB):
 # ATTACH_MAX_BYTES = "10485760"

@@ -27,6 +27,7 @@ experimental = true   # required for the monorepo task paths (`//project:task`)
 config_roots = ["web"]   # subprojects with their own mise.toml
 
 [tools]
+aws = "latest"
 python = "3.11"
 uv = "latest"
 node = "24"        # pinned LTS for the Astro web/ build (CI uses the same major)
@@ -34,6 +35,7 @@ git-lfs = "latest"
 pulumi = "latest"  # deploy/ stack — `cd deploy && pulumi up` (see deploy/README.md)
 
 [env]
+_.file = ".env"
 # Keep uv's managed virtualenv in-project so mise and uv agree on the interpreter.
 UV_PROJECT_ENVIRONMENT = ".venv"
 

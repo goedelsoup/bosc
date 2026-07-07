@@ -157,6 +157,17 @@ const turnstile = new cloudflare.TurnstileWidget("submissions-turnstile", {
     mode: "managed",
 });
 
+// Docs
+const documentsBucket = new cloudflare.R2Bucket("documents", {
+    accountId,
+    name: "watermark-documents",
+});
+
+const documentsBucketDev = new cloudflare.R2Bucket("documents-dev", {
+    accountId,
+    name: "watermark-documents-dev",
+});
+
 // --- Submissions: file attachments (#243) ------------------------------------
 // R2 bucket for pre-uploaded submission attachments (/api/attach → /api/submit).
 // SUBMISSION_ATTACHMENTS is separate from DOCS to keep evidence-chain isolation intact.
@@ -704,8 +715,12 @@ new cloudflare.PagesProject("site-project", {
     productionBranch: "main",
     deploymentConfigs: {
         production: {
+            failOpen: true,
             envVars: pageEnvVars,
         },
+        preview: {
+            failOpen: true,
+        }
     },
 });
 
@@ -726,6 +741,12 @@ export const siteUrl = siteDomain ? `https://${siteDomain}` : `https://${pagesPr
 export const siteDomainStatus = pagesDomain ? pagesDomain.status : pulumi.output("not-configured");
 /** The Route53 record FQDN, when Pulumi manages the DNS side. */
 export const route53RecordFqdn = route53Record ? route53Record.fqdn : pulumi.output("not-managed");
+
+// --- Submissions: attachments (#243) ---
+/** R2 bucket name → `web/wrangler.toml` `bucket_name` (SUBMISSION_ATTACHMENTS). */
+export const documentsBucketName = documentsBucket.name;
+/** R2 dev bucket name → `web/wrangler.toml` `preview_bucket_name` (SUBMISSION_ATTACHMENTS). */
+export const documentsBucketDevName = documentsBucketDev.name;
 
 // --- Submissions: attachments (#243) ---
 /** R2 bucket name → `web/wrangler.toml` `bucket_name` (SUBMISSION_ATTACHMENTS). */
