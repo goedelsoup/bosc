@@ -36,9 +36,9 @@ const legend = present.map((layer) => {
 const mapSrc = withBase("/feeds/geo/corridor-map.geojson");
 ---
 
-<Base title="Watershed & corridor map" section="watershed">
+<Base title="Watershed & corridor map" section="environment">
   <article class="prose">
-    <BackLink href={withSite("/watershed/")} label="The Maumee watershed" />
+    <BackLink href={withSite("/environment/")} label="The environment" />
     <h1>Watershed &amp; corridor map</h1>
     <p class="section-lead">
       {boundaryLead} and the
@@ -46,7 +46,7 @@ const mapSrc = withBase("/feeds/geo/corridor-map.geojson");
       basemaps (street, Esri aerial, dated 2014/2024 Wayback aerials), and click a
       feature for its record. {features.length} features across {present.length} layers.
       For the dated before/during/after view, see the
-      <a href={withSite("/watershed/imagery")}>imagery slider</a>.
+      <a href={withSite("/environment/imagery")}>imagery slider</a>.
     </p>
 
     <div class="deck-surface">

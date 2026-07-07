@@ -5,7 +5,7 @@ export const getStaticPaths = selectableSitePaths;
  * The economy section hub (design "Chrome", the 5-tab site bar). The economic ground the
  * data-center deal sits on — doored to the content that already exists: the localized labor
  * baseline (BLS QCEW), the end-use & workloads read, the cost-of-opacity narrative, and the
- * economics prose companion. A hub like the watershed hub; doors point to real routes.
+ * economics prose companion. A hub like the environment hub; doors point to real routes.
  */
 import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed } from "~/lib/bundle";
@@ -31,7 +31,7 @@ const doors: Door[] = [
   {
     id: "baseline",
     kind: "Baseline data",
-    href: withSite("/watershed/economics-baseline"),
+    href: withSite("/environment/economics-baseline"),
     count: sectorCount ? String(sectorCount) : "—",
     title: "Localized labor baseline",
     desc: `What ${area}'s economy actually is — employment by NAICS sector with each sector's location quotient, and population. BLS QCEW + US Census, every figure connector-sourced.`,

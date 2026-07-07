@@ -235,8 +235,8 @@ export function buildSearchIndex(): SearchDoc[] {
     const eb = loadFeed<EconomicBaseline>("economics-baseline");
     docs.push({
       title: "Economics — localized baseline",
-      url: siteUrl("/watershed/economics-baseline"),
-      section: getSection("watershed").label,
+      url: siteUrl("/environment/economics-baseline"),
+      section: getSection("environment").label,
       text: blob("BLS QCEW Census employment population baseline", eb.area_name, eb.note),
       kind: "Dataset",
     });

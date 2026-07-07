@@ -292,7 +292,7 @@ export const OPC_TEARDOWN: TeardownRecord = {
     {
       kind: "map",
       label: "roundabout layer",
-      href: withSite("/watershed/map"),
+      href: withSite("/environment/map"),
     },
   ],
   recordRel: "aedg/roundabouts.summary.opc.yaml",
@@ -438,12 +438,12 @@ export const NPDES_TEARDOWN: TeardownRecord = {
     {
       kind: "map",
       label: "watershed + WWTP layers",
-      href: withSite("/watershed/map"),
+      href: withSite("/environment/map"),
     },
     {
       kind: "dashboard",
       label: "live hydrology",
-      href: withSite("/watershed/hydrology"),
+      href: withSite("/environment/hydrology"),
     },
   ],
   recordRel: "oepa/oepa-2PH00006-american-ii-fact-sheet.npdes.yaml",
