@@ -1,6 +1,6 @@
 {
   "site": "springfield",
-  "catalog_version": "640a144d8812db0cb6fac697193e2106c82ca3631bbbacec51abc400766d210f",
+  "catalog_version": "a1e0d3dd56ca51a0f630671ef8480392ed20e38ef2a169fdacc3a8c44763a546",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -112,7 +112,7 @@
       "kind": "dataset",
       "site": "springfield",
       "local_id": "economics-baseline",
-      "title": "Allen County Economic Baseline (BLS QCEW + US Census ACS)",
+      "title": "Clark County, OH Economic Baseline (BLS QCEW + US Census ACS)",
       "feed": "catalog"
     },
     {
@@ -224,7 +224,7 @@
       "kind": "dataset",
       "site": "springfield",
       "local_id": "hydrology",
-      "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
+      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
       "feed": "catalog"
     },
     {
@@ -408,15 +408,7 @@
       "kind": "dataset",
       "site": "springfield",
       "local_id": "rsei-inventory",
-      "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:springfield:subdivisions",
-      "kind": "dataset",
-      "site": "springfield",
-      "local_id": "subdivisions",
-      "title": "Allen County Political-Subdivision Meeting-Records Registry",
+      "title": "Clark County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
       "feed": "catalog"
     },
     {

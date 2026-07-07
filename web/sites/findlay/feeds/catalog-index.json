@@ -1,6 +1,6 @@
 {
   "site": "findlay",
-  "catalog_version": "56bac31013b98aa94776558f500d2167913b5d363cfa83f5f4b6280ccf2247bd",
+  "catalog_version": "ae6c33c263ca22a6f876174298736a004fdfbf995ef2b74274fa15022880f67b",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -112,7 +112,7 @@
       "kind": "dataset",
       "site": "findlay",
       "local_id": "economics-baseline",
-      "title": "Allen County Economic Baseline (BLS QCEW + US Census ACS)",
+      "title": "Hancock County, OH Economic Baseline (BLS QCEW + US Census ACS)",
       "feed": "catalog"
     },
     {
@@ -232,7 +232,7 @@
       "kind": "dataset",
       "site": "findlay",
       "local_id": "hydrology",
-      "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
+      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
       "feed": "catalog"
     },
     {
@@ -416,15 +416,7 @@
       "kind": "dataset",
       "site": "findlay",
       "local_id": "rsei-inventory",
-      "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:findlay:subdivisions",
-      "kind": "dataset",
-      "site": "findlay",
-      "local_id": "subdivisions",
-      "title": "Allen County Political-Subdivision Meeting-Records Registry",
+      "title": "Hancock County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
       "feed": "catalog"
     },
     {

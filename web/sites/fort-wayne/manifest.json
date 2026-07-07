@@ -2,9 +2,9 @@
   "site": "fort-wayne",
   "bundle_version": "1.0.0",
   "contract_version": "1.22.0",
-  "generated_at": "2026-07-06T16:59:11+00:00",
+  "generated_at": "2026-07-07T15:19:18+00:00",
   "feed_count": 25,
-  "row_total": 82,
+  "row_total": 81,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -182,7 +182,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 41
+      "count": 40
     },
     {
       "name": "geo/campus",

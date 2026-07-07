@@ -1,6 +1,6 @@
 {
   "site": "hamilton-middletown",
-  "catalog_version": "3f4774e27a7f1113ef32953ca77dd44d8d602e9c09af516599d134e5ad6ebc0b",
+  "catalog_version": "f5bb2ef000cad74392810674b7a8bb88809dddf201a0e13c2d047cab25e83851",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -120,7 +120,7 @@
       "kind": "dataset",
       "site": "hamilton-middletown",
       "local_id": "economics-baseline",
-      "title": "Allen County Economic Baseline (BLS QCEW + US Census ACS)",
+      "title": "Butler County, OH Economic Baseline (BLS QCEW + US Census ACS)",
       "feed": "catalog"
     },
     {
@@ -232,7 +232,7 @@
       "kind": "dataset",
       "site": "hamilton-middletown",
       "local_id": "hydrology",
-      "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
+      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
       "feed": "catalog"
     },
     {
@@ -416,15 +416,7 @@
       "kind": "dataset",
       "site": "hamilton-middletown",
       "local_id": "rsei-inventory",
-      "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:hamilton-middletown:subdivisions",
-      "kind": "dataset",
-      "site": "hamilton-middletown",
-      "local_id": "subdivisions",
-      "title": "Allen County Political-Subdivision Meeting-Records Registry",
+      "title": "Butler County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
       "feed": "catalog"
     },
     {

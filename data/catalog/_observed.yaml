@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-06T00:36:39.646369+00:00'
+reconciled_at: '2026-07-07T15:57:16.428329+00:00'
 entries:
   aedg:
     exists: true
@@ -989,7 +989,7 @@ entries:
     missing: []
     asof: null
     stale: false
-    site_scope: basin-shared
+    site_scope: lima-legacy
   urbana:
     exists: true
     sha256: 1030ce7ff7ff9a93c909a25d50050b207b6ddba00f13aa3a39e54c2193d47c80

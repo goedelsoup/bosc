@@ -1,6 +1,6 @@
 {
   "site": "troy-piqua",
-  "catalog_version": "1f3ef54a4a37f16f7954811e705217a1fd2d4e43dbd5034565f2a4692536de59",
+  "catalog_version": "78e4adacf8a132fe2cc11c5565457fb0316a32efb6274749cc57e06c0d0c0a84",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -120,7 +120,7 @@
       "kind": "dataset",
       "site": "troy-piqua",
       "local_id": "economics-baseline",
-      "title": "Allen County Economic Baseline (BLS QCEW + US Census ACS)",
+      "title": "Miami County, OH Economic Baseline (BLS QCEW + US Census ACS)",
       "feed": "catalog"
     },
     {
@@ -232,7 +232,7 @@
       "kind": "dataset",
       "site": "troy-piqua",
       "local_id": "hydrology",
-      "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
+      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
       "feed": "catalog"
     },
     {
@@ -424,15 +424,7 @@
       "kind": "dataset",
       "site": "troy-piqua",
       "local_id": "rsei-inventory",
-      "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:troy-piqua:subdivisions",
-      "kind": "dataset",
-      "site": "troy-piqua",
-      "local_id": "subdivisions",
-      "title": "Allen County Political-Subdivision Meeting-Records Registry",
+      "title": "Miami County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
       "feed": "catalog"
     },
     {

@@ -2,9 +2,9 @@
   "site": "urbana",
   "bundle_version": "1.0.0",
   "contract_version": "1.22.0",
-  "generated_at": "2026-07-06T17:01:50+00:00",
+  "generated_at": "2026-07-07T15:25:52+00:00",
   "feed_count": 24,
-  "row_total": 69,
+  "row_total": 68,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -190,7 +190,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 48
+      "count": 47
     },
     {
       "name": "catalog-index",

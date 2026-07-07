@@ -69,7 +69,7 @@ not one fetcher. After the 2026-06-08 sweep of all 24 bodies:
 
 ### `subdivisions` — Allen County Political-Subdivision Meeting-Records Registry
 
-Source: Allen County county-published rosters (Township Trustees & Fiscal Officers; Mayors; Govt-Structure) + live-web discovery of publishing blocks · License: Public records (local government open data) · Access: public · Site scope: basin-shared · Refresh: on-demand, last 2026-06-08
+Source: Allen County county-published rosters (Township Trustees & Fiscal Officers; Mayors; Govt-Structure) + live-web discovery of publishing blocks · License: Public records (local government open data) · Access: public · Site scope: lima-legacy · Refresh: on-demand, last 2026-06-08
 
 Regenerate: `watermark subdivisions discover`
 

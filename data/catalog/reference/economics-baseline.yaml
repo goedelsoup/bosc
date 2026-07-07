@@ -1,5 +1,6 @@
 id: economics-baseline
-title: Allen County Economic Baseline (BLS QCEW + US Census ACS)
+title: Allen County, OH Economic Baseline (BLS QCEW + US Census ACS)
+title_template: '{county_state} Economic Baseline (BLS QCEW + US Census ACS)'
 scope: reference
 status: reviewed
 producer:
