@@ -164,6 +164,57 @@ def test_readiness_counts_present_and_missing(tmp_path: Path) -> None:
     assert findlay.missing == ["eia-x"] and findlay.ready is False
 
 
+def test_basin_shared_is_not_a_cross_basin_wildcard() -> None:
+    """#1251: ``basin-shared`` means *the whole network* (a genuine national/statewide reference),
+    NOT "every site regardless of basin" for a basin-specific dataset. A Maumee-basin dataset must
+    carry ``basin:maumee`` (shared within its basin) and a Lima-campus dataset ``lima-legacy`` — so
+    a Scioto/Great-Miami point does not inherit either. Pinned against a mixed-basin site set."""
+    from watermark.catalog import CatalogEntry
+
+    def e(site_scope: str) -> CatalogEntry:
+        return CatalogEntry.model_validate(
+            {
+                "id": "d",
+                "title": "T",
+                "scope": "reference",
+                "site_scope": site_scope,
+                "producer": {"kind": "connector", "source": "x"},
+                "refresh": {"cadence": "static"},
+            }
+        )
+
+    maumee = ("lima", "findlay", "fort-wayne", "bryan")  # Fort Wayne is Maumee/Indiana
+    cross_basin = ("columbus", "piketon", "xenia", "hamilton-middletown", "coshocton", "sandusky")
+    # A Maumee dataset reaches every Maumee site (any state) and no cross-basin site.
+    assert all(is_relevant(e("basin:maumee"), s) for s in maumee)
+    assert not any(is_relevant(e("basin:maumee"), s) for s in cross_basin)
+    # A Lima-campus dataset reaches only the reference build, not even its Maumee siblings.
+    assert is_relevant(e("lima-legacy"), "lima")
+    assert not any(is_relevant(e("lima-legacy"), s) for s in ("findlay", *cross_basin))
+    # A genuine network reference stays shared with everyone.
+    assert all(is_relevant(e("basin-shared"), s) for s in (*maumee, *cross_basin))
+
+
+def test_named_maumee_datasets_do_not_leak_cross_basin() -> None:
+    """#1251 regression against the *committed* catalog: the mis-tagged datasets the sweep found
+    (and their campus siblings) must not appear in a Scioto/Great-Miami site's expected set."""
+    from watermark.catalog import load_entries
+
+    entries = {entry.id: entry for entry in load_entries()}
+    basin_scoped = ("hydrology",)  # basin:maumee — the Maumee TMDL working set, basin-wide
+    # Lima-only: campus artifacts + the Allen County registry (subdivisions is lima-legacy per #1250,
+    # since Allen County OH rosters describe no other Maumee site's subdivisions).
+    lima_only = ("hydrology-swmm", "hydrology-wbd", "hydrology-low-flow-7q10", "subdivisions")
+    for eid in (*basin_scoped, *lima_only):
+        entry = entries[eid]
+        assert is_relevant(entry, "lima"), f"{eid} must stay on the reference build"
+        for cross in ("columbus", "xenia", "coshocton"):
+            assert not is_relevant(entry, cross), f"{eid} leaked into cross-basin {cross}"
+    # basin-scoped datasets still reach Maumee siblings; Lima-only ones do not.
+    assert all(is_relevant(entries[eid], "findlay") for eid in basin_scoped)
+    assert not any(is_relevant(entries[eid], "findlay") for eid in lima_only)
+
+
 # --- real catalog --------------------------------------------------------------------------
 def test_real_catalog_readiness_runs() -> None:
     r = readiness("lima")

@@ -13,7 +13,8 @@ depends_on:
 - hydrology-wbd
 license: U.S. Government work (USGS-derived) + Ohio public record (cited fact-sheet values)
 access_tier: public
-site_scope: basin-shared
+# Lima receiving-stream (Ottawa R.) design low flows — Lima's own un-slugged reference files, not network-shared (#1251).
+site_scope: lima-legacy
 storage:
 - relpath: reference/hydrology/low-flow-7q10.derived.yaml
   media_type: application/x-yaml

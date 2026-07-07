@@ -1,6 +1,6 @@
 {
   "site": "wilmington",
-  "catalog_version": "449d1d2896936114ec3d58dc7df04b4920f2a1bdfe579fc8130a6e14a8599249",
+  "catalog_version": "45827cc5ba8023bfcf5f7308a11a1b26c6e70c9f5a2495d724883723b39107fd",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -228,27 +228,11 @@
       "feed": "catalog"
     },
     {
-      "handle": "dataset:wilmington:hydrology",
-      "kind": "dataset",
-      "site": "wilmington",
-      "local_id": "hydrology",
-      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
-      "feed": "catalog"
-    },
-    {
       "handle": "dataset:wilmington:hydrology-atlas14-corridor-ddf",
       "kind": "dataset",
       "site": "wilmington",
       "local_id": "hydrology-atlas14-corridor-ddf",
       "title": "NOAA Atlas-14 Corridor Design-Storm Depths (Depth-Duration-Frequency)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:wilmington:hydrology-low-flow-7q10",
-      "kind": "dataset",
-      "site": "wilmington",
-      "local_id": "hydrology-low-flow-7q10",
-      "title": "Receiving-Stream Design Low Flows (7Q10) — Cited + Derived",
       "feed": "catalog"
     },
     {
@@ -273,22 +257,6 @@
       "site": "wilmington",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:wilmington:hydrology-swmm",
-      "kind": "dataset",
-      "site": "wilmington",
-      "local_id": "hydrology-swmm",
-      "title": "Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:wilmington:hydrology-wbd",
-      "kind": "dataset",
-      "site": "wilmington",
-      "local_id": "hydrology-wbd",
-      "title": "USGS Watershed Boundary Dataset — Campus HUC Boundaries (HU10/HU12)",
       "feed": "catalog"
     },
     {

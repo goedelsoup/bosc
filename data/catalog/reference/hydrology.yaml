@@ -9,7 +9,9 @@ producer:
 license: Mixed (USGS public domain · Ohio public-record TMDL values · BOSC-derived); per-file provenance
   tagged
 access_tier: public
-site_scope: basin-shared
+# Maumee-basin working set (2023 Maumee Watershed Nutrient TMDL + Lima-Loop routing/stormwater);
+# owned by the Maumee basin, not the whole network — a Scioto/Great-Miami point does not share it (#1251).
+site_scope: basin:maumee
 storage:
 - relpath: reference/hydrology/bosc-stormwater-discharge.yaml
   media_type: application/x-yaml

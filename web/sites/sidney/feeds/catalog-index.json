@@ -1,6 +1,6 @@
 {
   "site": "sidney",
-  "catalog_version": "745a23d758f9b74cae1df35188d747891255a8a132b41b0f0d058e3d4d9ed120",
+  "catalog_version": "2c25d43fb0dcb1c3ffc47de78d9364b069c5c398d733ce37874ae35569ebdf53",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -228,27 +228,11 @@
       "feed": "catalog"
     },
     {
-      "handle": "dataset:sidney:hydrology",
-      "kind": "dataset",
-      "site": "sidney",
-      "local_id": "hydrology",
-      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
-      "feed": "catalog"
-    },
-    {
       "handle": "dataset:sidney:hydrology-atlas14-corridor-ddf",
       "kind": "dataset",
       "site": "sidney",
       "local_id": "hydrology-atlas14-corridor-ddf",
       "title": "NOAA Atlas-14 Corridor Design-Storm Depths (Depth-Duration-Frequency)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:sidney:hydrology-low-flow-7q10",
-      "kind": "dataset",
-      "site": "sidney",
-      "local_id": "hydrology-low-flow-7q10",
-      "title": "Receiving-Stream Design Low Flows (7Q10) — Cited + Derived",
       "feed": "catalog"
     },
     {
@@ -273,22 +257,6 @@
       "site": "sidney",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:sidney:hydrology-swmm",
-      "kind": "dataset",
-      "site": "sidney",
-      "local_id": "hydrology-swmm",
-      "title": "Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:sidney:hydrology-wbd",
-      "kind": "dataset",
-      "site": "sidney",
-      "local_id": "hydrology-wbd",
-      "title": "USGS Watershed Boundary Dataset — Campus HUC Boundaries (HU10/HU12)",
       "feed": "catalog"
     },
     {

@@ -1,6 +1,6 @@
 {
   "site": "west-union",
-  "catalog_version": "86f1e8df3154ce28073927401b15ff366eb344b8f3ac709bc4c0094a23719512",
+  "catalog_version": "548f4d5fcd223becd19eb490d590e0f9064606278aabc501a00017e7ebebf317",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -212,27 +212,11 @@
       "feed": "catalog"
     },
     {
-      "handle": "dataset:west-union:hydrology",
-      "kind": "dataset",
-      "site": "west-union",
-      "local_id": "hydrology",
-      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
-      "feed": "catalog"
-    },
-    {
       "handle": "dataset:west-union:hydrology-atlas14-corridor-ddf",
       "kind": "dataset",
       "site": "west-union",
       "local_id": "hydrology-atlas14-corridor-ddf",
       "title": "NOAA Atlas-14 Corridor Design-Storm Depths (Depth-Duration-Frequency)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:west-union:hydrology-low-flow-7q10",
-      "kind": "dataset",
-      "site": "west-union",
-      "local_id": "hydrology-low-flow-7q10",
-      "title": "Receiving-Stream Design Low Flows (7Q10) — Cited + Derived",
       "feed": "catalog"
     },
     {
@@ -257,22 +241,6 @@
       "site": "west-union",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:west-union:hydrology-swmm",
-      "kind": "dataset",
-      "site": "west-union",
-      "local_id": "hydrology-swmm",
-      "title": "Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:west-union:hydrology-wbd",
-      "kind": "dataset",
-      "site": "west-union",
-      "local_id": "hydrology-wbd",
-      "title": "USGS Watershed Boundary Dataset — Campus HUC Boundaries (HU10/HU12)",
       "feed": "catalog"
     },
     {

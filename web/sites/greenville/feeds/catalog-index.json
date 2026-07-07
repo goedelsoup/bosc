@@ -1,6 +1,6 @@
 {
   "site": "greenville",
-  "catalog_version": "7532af0229925f08e5a5479de2e49a10eb8f96b4f4544c665e7cb6fbb7196a99",
+  "catalog_version": "61a6fbf4fda560fa81aa2efce1ae6ef522cc50a8ae30de3d51d81c0b2744df9a",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -220,27 +220,11 @@
       "feed": "catalog"
     },
     {
-      "handle": "dataset:greenville:hydrology",
-      "kind": "dataset",
-      "site": "greenville",
-      "local_id": "hydrology",
-      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
-      "feed": "catalog"
-    },
-    {
       "handle": "dataset:greenville:hydrology-atlas14-corridor-ddf",
       "kind": "dataset",
       "site": "greenville",
       "local_id": "hydrology-atlas14-corridor-ddf",
       "title": "NOAA Atlas-14 Corridor Design-Storm Depths (Depth-Duration-Frequency)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:greenville:hydrology-low-flow-7q10",
-      "kind": "dataset",
-      "site": "greenville",
-      "local_id": "hydrology-low-flow-7q10",
-      "title": "Receiving-Stream Design Low Flows (7Q10) — Cited + Derived",
       "feed": "catalog"
     },
     {
@@ -265,22 +249,6 @@
       "site": "greenville",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:greenville:hydrology-swmm",
-      "kind": "dataset",
-      "site": "greenville",
-      "local_id": "hydrology-swmm",
-      "title": "Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:greenville:hydrology-wbd",
-      "kind": "dataset",
-      "site": "greenville",
-      "local_id": "hydrology-wbd",
-      "title": "USGS Watershed Boundary Dataset — Campus HUC Boundaries (HU10/HU12)",
       "feed": "catalog"
     },
     {

@@ -1,6 +1,6 @@
 {
   "site": "toledo",
-  "catalog_version": "5943ef49686a88e466bf7e1ee633a9d05957137fc8b17bd7bf41e6fb693c6a4d",
+  "catalog_version": "28e29032c5eaed4733fc58030cc9a6fb55814f116b46af5b95eb85df5b22df69",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -236,14 +236,6 @@
       "feed": "catalog"
     },
     {
-      "handle": "dataset:toledo:hydrology-low-flow-7q10",
-      "kind": "dataset",
-      "site": "toledo",
-      "local_id": "hydrology-low-flow-7q10",
-      "title": "Receiving-Stream Design Low Flows (7Q10) — Cited + Derived",
-      "feed": "catalog"
-    },
-    {
       "handle": "dataset:toledo:hydrology-nasa-power-climatology",
       "kind": "dataset",
       "site": "toledo",
@@ -265,22 +257,6 @@
       "site": "toledo",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:toledo:hydrology-swmm",
-      "kind": "dataset",
-      "site": "toledo",
-      "local_id": "hydrology-swmm",
-      "title": "Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:toledo:hydrology-wbd",
-      "kind": "dataset",
-      "site": "toledo",
-      "local_id": "hydrology-wbd",
-      "title": "USGS Watershed Boundary Dataset — Campus HUC Boundaries (HU10/HU12)",
       "feed": "catalog"
     },
     {

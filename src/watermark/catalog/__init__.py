@@ -63,9 +63,12 @@ AccessTier = Literal["public", "keyed", "throttled"]
 # state is expressible (not just "Lima vs everyone"):
 #   - ``lima-legacy``     — Lima's un-slugged reference-layout files (the reference build's own)
 #   - ``slug-scoped``     — a genuine ``{site}`` per-site template; every site has its own copy
-#   - ``basin-shared``    — a basin/national output shared across every site
+#   - ``basin-shared``    — a genuinely network-wide reference (national/statewide lookup) shared
+#                           across every site *regardless of basin*. NOT a cross-basin wildcard for
+#                           basin-specific data: a Maumee-only dataset is ``basin:maumee``, not this,
+#                           or it leaks into unrelated basins (#1251).
 #   - ``site:<slug>``     — owned by one specific site (e.g. Fort Wayne's IDEM permits)
-#   - ``basin:<name>``    — owned by one basin (e.g. the Great Miami ECHO inventory)
+#   - ``basin:<name>``    — owned by one basin, shared within it (e.g. the Maumee TMDL working set)
 #   - ``state:<XX>``      — owned by one state (e.g. the Ohio Revised Code)
 # A site's bundle/readiness includes a row iff its owner matches the site — see
 # ``watermark.catalog.sites.owner_matches``. The reference build still hosts the whole catalog.

@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-07T15:57:16.428329+00:00'
+reconciled_at: '2026-07-07T18:44:50.708996+00:00'
 entries:
   aedg:
     exists: true
@@ -449,7 +449,7 @@ entries:
     missing: []
     asof: null
     stale: false
-    site_scope: basin-shared
+    site_scope: basin:maumee
   hydrology-atlas14-corridor-ddf:
     exists: true
     sha256: 460fed22c3409fcaff5f52ea5e0ecafdaab2ff1563e6c54d0bd28383213f0eed
@@ -469,7 +469,7 @@ entries:
     missing: []
     asof: null
     stale: false
-    site_scope: basin-shared
+    site_scope: lima-legacy
   hydrology-nasa-power-climatology:
     exists: true
     sha256: d0ab1896a9171a503033254b86a1fcec3bcd9dbbd4b9ac5fe41b45879671bec9
@@ -509,7 +509,7 @@ entries:
     missing: []
     asof: null
     stale: false
-    site_scope: basin-shared
+    site_scope: lima-legacy
   hydrology-wbd:
     exists: true
     sha256: f2e3455fce0a343a5af4d763d3ee8d109f9361e0c2b2adbc44ba9c1417962920
@@ -519,7 +519,7 @@ entries:
     missing: []
     asof: null
     stale: false
-    site_scope: basin-shared
+    site_scope: lima-legacy
   idem:
     exists: true
     sha256: 0534aad73434736d7b58f6f6b77135d6883d99864fb6a34f14ebba1dddb0459e

@@ -50,7 +50,7 @@ value — the computed one only shows the cited value is reproducible from publi
 
 ### `hydrology` — Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)
 
-Source: Mixed-provenance hydrology working set — USGS NWIS, Ohio EPA TMDL documents, SSURGO/document-derived stormwater inputs, and BOSC-derived routing/water-supply artifacts (per-file provenance tagged) · License: Mixed (USGS public domain · Ohio public-record TMDL values · BOSC-derived); per-file provenance tagged · Access: public · Site scope: basin-shared · Refresh: on-demand
+Source: Mixed-provenance hydrology working set — USGS NWIS, Ohio EPA TMDL documents, SSURGO/document-derived stormwater inputs, and BOSC-derived routing/water-supply artifacts (per-file provenance tagged) · License: Mixed (USGS public domain · Ohio public-record TMDL values · BOSC-derived); per-file provenance tagged · Access: public · Site scope: basin:maumee · Refresh: on-demand
 
 | file | type | lfs |
 | --- | --- | --- |
@@ -84,7 +84,7 @@ Source: NOAA NWS HDSC Atlas-14 — precipitation-frequency point query (Partial-
 
 ### `hydrology-low-flow-7q10` — Receiving-Stream Design Low Flows (7Q10) — Cited + Derived
 
-Source: Cited 7Q10s read from Ohio EPA NPDES fact sheets (document) + mainstem 7Q10s derived from USGS NWIS daily discharge via log-Pearson III · License: U.S. Government work (USGS-derived) + Ohio public record (cited fact-sheet values) · Access: public · Site scope: basin-shared · Refresh: on-demand
+Source: Cited 7Q10s read from Ohio EPA NPDES fact sheets (document) + mainstem 7Q10s derived from USGS NWIS daily discharge via log-Pearson III · License: U.S. Government work (USGS-derived) + Ohio public record (cited fact-sheet values) · Access: public · Site scope: lima-legacy · Refresh: on-demand
 
 Regenerate: `watermark derive-low-flows`
 
@@ -126,7 +126,7 @@ Regenerate: `watermark reaches --write`
 
 ### `hydrology-swmm` — Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)
 
-Source: BOSC-generated EPA SWMM5 (.inp) model decks over the campus parcels + Atlas-14 design storm · License: BOSC work product (derived model decks; EPA SWMM engine is public-domain) · Access: public · Site scope: basin-shared · Refresh: on-demand
+Source: BOSC-generated EPA SWMM5 (.inp) model decks over the campus parcels + Atlas-14 design storm · License: BOSC work product (derived model decks; EPA SWMM engine is public-domain) · Access: public · Site scope: lima-legacy · Refresh: on-demand
 
 Regenerate: `watermark tier1 --write`
 
@@ -139,7 +139,7 @@ Regenerate: `watermark tier1 --write`
 
 ### `hydrology-wbd` — USGS Watershed Boundary Dataset — Campus HUC Boundaries (HU10/HU12)
 
-Source: USGS National Map Watershed Boundary Dataset (WBD) — ArcGIS REST MapServer HU sublayers · License: U.S. Government work (public domain) · Access: public · Site scope: basin-shared · Refresh: on-demand
+Source: USGS National Map Watershed Boundary Dataset (WBD) — ArcGIS REST MapServer HU sublayers · License: U.S. Government work (public domain) · Access: public · Site scope: lima-legacy · Refresh: on-demand
 
 Regenerate: `watermark wbd --write`
 

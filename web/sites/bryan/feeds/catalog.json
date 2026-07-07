@@ -1172,7 +1172,7 @@
     "external_url": null,
     "license": "Mixed (USGS public domain · Ohio public-record TMDL values · BOSC-derived); per-file provenance tagged",
     "access_tier": "public",
-    "site_scope": "basin-shared",
+    "site_scope": "basin:maumee",
     "cadence": "on-demand",
     "ttl_days": null,
     "last_refreshed": null,
@@ -1348,65 +1348,6 @@
     }
   },
   {
-    "id": "hydrology-low-flow-7q10",
-    "title": "Receiving-Stream Design Low Flows (7Q10) — Cited + Derived",
-    "scope": "reference",
-    "collection": "hydrology",
-    "status": "reviewed",
-    "producer_kind": "derived",
-    "command": "derive-low-flows",
-    "connector_ref": "watermark.hydrology.connectors.nwis",
-    "source": "Cited 7Q10s read from Ohio EPA NPDES fact sheets (document) + mainstem 7Q10s derived from USGS NWIS daily discharge via log-Pearson III",
-    "external_url": "https://waterservices.usgs.gov/",
-    "license": "U.S. Government work (USGS-derived) + Ohio public record (cited fact-sheet values)",
-    "access_tier": "public",
-    "site_scope": "basin-shared",
-    "cadence": "on-demand",
-    "ttl_days": null,
-    "last_refreshed": null,
-    "tags": [
-      "7q10",
-      "low-flow",
-      "assimilative-capacity",
-      "npdes",
-      "usgs-nwis"
-    ],
-    "storage": [
-      {
-        "relpath": "reference/hydrology/low-flow-7q10.derived.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      },
-      {
-        "relpath": "reference/hydrology/low-flow-7q10.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      },
-      {
-        "relpath": "reference/hydrology/mainstem-gages.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      }
-    ],
-    "observed": {
-      "exists": true,
-      "sha256": "65d188b38e8424e48c7f57f73f4987c0ab4b1561593e4e106d06f7145650ec05",
-      "size_bytes": 28105,
-      "lfs_materialized": true,
-      "file_count": 3,
-      "stale": false,
-      "asof": null
-    },
-    "citation": {
-      "source": "Cited 7Q10s read from Ohio EPA NPDES fact sheets (document) + mainstem 7Q10s derived from USGS NWIS daily discharge via log-Pearson III",
-      "source_kind": "derived",
-      "page": null,
-      "confidence": "medium",
-      "note": "watermark derive-low-flows",
-      "verified": false
-    }
-  },
-  {
     "id": "hydrology-nasa-power-climatology",
     "title": "NASA POWER Climate Normals — site climatology",
     "scope": "reference",
@@ -1562,124 +1503,6 @@
       "page": null,
       "confidence": "medium",
       "note": "watermark reaches --write",
-      "verified": true
-    }
-  },
-  {
-    "id": "hydrology-swmm",
-    "title": "Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)",
-    "scope": "reference",
-    "collection": "hydrology",
-    "status": "reviewed",
-    "producer_kind": "derived",
-    "command": "tier1 --write",
-    "connector_ref": "watermark.hydrology.tier1",
-    "source": "BOSC-generated EPA SWMM5 (.inp) model decks over the campus parcels + Atlas-14 design storm",
-    "external_url": null,
-    "license": "BOSC work product (derived model decks; EPA SWMM engine is public-domain)",
-    "access_tier": "public",
-    "site_scope": "basin-shared",
-    "cadence": "on-demand",
-    "ttl_days": null,
-    "last_refreshed": null,
-    "tags": [
-      "swmm",
-      "stormwater",
-      "detention",
-      "sanitary",
-      "tier1"
-    ],
-    "storage": [
-      {
-        "relpath": "reference/hydrology/swmm/tier1-detention.inp",
-        "media_type": "application/octet-stream",
-        "lfs": false
-      },
-      {
-        "relpath": "reference/hydrology/swmm/tier1-post.inp",
-        "media_type": "application/octet-stream",
-        "lfs": false
-      },
-      {
-        "relpath": "reference/hydrology/swmm/tier1-pre.inp",
-        "media_type": "application/octet-stream",
-        "lfs": false
-      },
-      {
-        "relpath": "reference/hydrology/swmm/tier1-sanitary.inp",
-        "media_type": "application/octet-stream",
-        "lfs": false
-      }
-    ],
-    "observed": {
-      "exists": true,
-      "sha256": "1a72f530ba3bdd1e3914744dd57fe834109c13b45967f99e3ef3f0c27b711617",
-      "size_bytes": 20719,
-      "lfs_materialized": true,
-      "file_count": 4,
-      "stale": false,
-      "asof": null
-    },
-    "citation": {
-      "source": "BOSC-generated EPA SWMM5 (.inp) model decks over the campus parcels + Atlas-14 design storm",
-      "source_kind": "derived",
-      "page": null,
-      "confidence": "medium",
-      "note": "watermark tier1 --write",
-      "verified": false
-    }
-  },
-  {
-    "id": "hydrology-wbd",
-    "title": "USGS Watershed Boundary Dataset — Campus HUC Boundaries (HU10/HU12)",
-    "scope": "reference",
-    "collection": "hydrology",
-    "status": "reviewed",
-    "producer_kind": "connector",
-    "command": "wbd --write",
-    "connector_ref": "watermark.hydrology.connectors.wbd",
-    "source": "USGS National Map Watershed Boundary Dataset (WBD) — ArcGIS REST MapServer HU sublayers",
-    "external_url": "https://hydro.nationalmap.gov/arcgis/rest/services/wbd/MapServer",
-    "license": "U.S. Government work (public domain)",
-    "access_tier": "public",
-    "site_scope": "basin-shared",
-    "cadence": "on-demand",
-    "ttl_days": null,
-    "last_refreshed": null,
-    "tags": [
-      "wbd",
-      "huc",
-      "watershed-boundary",
-      "usgs",
-      "geojson"
-    ],
-    "storage": [
-      {
-        "relpath": "reference/hydrology/wbd/0410000704-middle-ottawa-river.geojson",
-        "media_type": "application/geo+json",
-        "lfs": false
-      },
-      {
-        "relpath": "reference/hydrology/wbd/041000070404-pike-run.geojson",
-        "media_type": "application/geo+json",
-        "lfs": false
-      }
-    ],
-    "observed": {
-      "exists": true,
-      "sha256": "f2e3455fce0a343a5af4d763d3ee8d109f9361e0c2b2adbc44ba9c1417962920",
-      "size_bytes": 360314,
-      "lfs_materialized": true,
-      "file_count": 2,
-      "stale": false,
-      "asof": null
-    },
-    "citation": {
-      "source": "USGS National Map Watershed Boundary Dataset (WBD) — ArcGIS REST MapServer HU sublayers",
-      "source_kind": "connector",
-      "page": null,
-      "confidence": "medium",
-      "note": "watermark wbd --write",
       "verified": true
     }
   },

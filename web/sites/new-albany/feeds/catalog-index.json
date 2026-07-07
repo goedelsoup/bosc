@@ -1,6 +1,6 @@
 {
   "site": "new-albany",
-  "catalog_version": "4298418b5ae5591451256f37f979692fd7a815460bbc15605bbb15a74db13abb",
+  "catalog_version": "c97b0939d563010ab9b62368d5da80eb7cc91dc2e2a05e26c5023f537c4cac43",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -212,27 +212,11 @@
       "feed": "catalog"
     },
     {
-      "handle": "dataset:new-albany:hydrology",
-      "kind": "dataset",
-      "site": "new-albany",
-      "local_id": "hydrology",
-      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
-      "feed": "catalog"
-    },
-    {
       "handle": "dataset:new-albany:hydrology-atlas14-corridor-ddf",
       "kind": "dataset",
       "site": "new-albany",
       "local_id": "hydrology-atlas14-corridor-ddf",
       "title": "NOAA Atlas-14 Corridor Design-Storm Depths (Depth-Duration-Frequency)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:new-albany:hydrology-low-flow-7q10",
-      "kind": "dataset",
-      "site": "new-albany",
-      "local_id": "hydrology-low-flow-7q10",
-      "title": "Receiving-Stream Design Low Flows (7Q10) — Cited + Derived",
       "feed": "catalog"
     },
     {
@@ -257,22 +241,6 @@
       "site": "new-albany",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:new-albany:hydrology-swmm",
-      "kind": "dataset",
-      "site": "new-albany",
-      "local_id": "hydrology-swmm",
-      "title": "Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:new-albany:hydrology-wbd",
-      "kind": "dataset",
-      "site": "new-albany",
-      "local_id": "hydrology-wbd",
-      "title": "USGS Watershed Boundary Dataset — Campus HUC Boundaries (HU10/HU12)",
       "feed": "catalog"
     },
     {

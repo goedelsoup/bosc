@@ -1,6 +1,6 @@
 {
   "site": "ottawa",
-  "catalog_version": "9942de9d4a0dd21919933b157e068d1be0649f492ee2208797fb5585dcd95deb",
+  "catalog_version": "bc945be1c1723cd9ef7d933103c437781eb29a1e84716ee4d031a623b2283d19",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -236,14 +236,6 @@
       "feed": "catalog"
     },
     {
-      "handle": "dataset:ottawa:hydrology-low-flow-7q10",
-      "kind": "dataset",
-      "site": "ottawa",
-      "local_id": "hydrology-low-flow-7q10",
-      "title": "Receiving-Stream Design Low Flows (7Q10) — Cited + Derived",
-      "feed": "catalog"
-    },
-    {
       "handle": "dataset:ottawa:hydrology-nasa-power-climatology",
       "kind": "dataset",
       "site": "ottawa",
@@ -265,22 +257,6 @@
       "site": "ottawa",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:ottawa:hydrology-swmm",
-      "kind": "dataset",
-      "site": "ottawa",
-      "local_id": "hydrology-swmm",
-      "title": "Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:ottawa:hydrology-wbd",
-      "kind": "dataset",
-      "site": "ottawa",
-      "local_id": "hydrology-wbd",
-      "title": "USGS Watershed Boundary Dataset — Campus HUC Boundaries (HU10/HU12)",
       "feed": "catalog"
     },
     {

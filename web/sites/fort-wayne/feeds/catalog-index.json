@@ -1,6 +1,6 @@
 {
   "site": "fort-wayne",
-  "catalog_version": "0044d9cc37670935f071ed5863a2cb4c9165f221086526aae4d324b635edeeb1",
+  "catalog_version": "208673168fdac32928309004395ff83b78960050c4500436b55b44c2666a70f4",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -244,14 +244,6 @@
       "feed": "catalog"
     },
     {
-      "handle": "dataset:fort-wayne:hydrology-low-flow-7q10",
-      "kind": "dataset",
-      "site": "fort-wayne",
-      "local_id": "hydrology-low-flow-7q10",
-      "title": "Receiving-Stream Design Low Flows (7Q10) — Cited + Derived",
-      "feed": "catalog"
-    },
-    {
       "handle": "dataset:fort-wayne:hydrology-nasa-power-climatology",
       "kind": "dataset",
       "site": "fort-wayne",
@@ -273,22 +265,6 @@
       "site": "fort-wayne",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:fort-wayne:hydrology-swmm",
-      "kind": "dataset",
-      "site": "fort-wayne",
-      "local_id": "hydrology-swmm",
-      "title": "Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:fort-wayne:hydrology-wbd",
-      "kind": "dataset",
-      "site": "fort-wayne",
-      "local_id": "hydrology-wbd",
-      "title": "USGS Watershed Boundary Dataset — Campus HUC Boundaries (HU10/HU12)",
       "feed": "catalog"
     },
     {

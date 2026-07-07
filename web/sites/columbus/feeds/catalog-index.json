@@ -1,6 +1,6 @@
 {
   "site": "columbus",
-  "catalog_version": "b8a48ca5183eac3020af169a587b8e8e59537172ae2eaf795bb63565197080ac",
+  "catalog_version": "caa87ed457472b9eb566ef06242822ac0ea4697583d77b94c2b636da7b5343ce",
   "contract_version": "1.22.0",
   "atoms": [
     {
@@ -212,27 +212,11 @@
       "feed": "catalog"
     },
     {
-      "handle": "dataset:columbus:hydrology",
-      "kind": "dataset",
-      "site": "columbus",
-      "local_id": "hydrology",
-      "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
-      "feed": "catalog"
-    },
-    {
       "handle": "dataset:columbus:hydrology-atlas14-corridor-ddf",
       "kind": "dataset",
       "site": "columbus",
       "local_id": "hydrology-atlas14-corridor-ddf",
       "title": "NOAA Atlas-14 Corridor Design-Storm Depths (Depth-Duration-Frequency)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:columbus:hydrology-low-flow-7q10",
-      "kind": "dataset",
-      "site": "columbus",
-      "local_id": "hydrology-low-flow-7q10",
-      "title": "Receiving-Stream Design Low Flows (7Q10) — Cited + Derived",
       "feed": "catalog"
     },
     {
@@ -257,22 +241,6 @@
       "site": "columbus",
       "local_id": "hydrology-reaches",
       "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:columbus:hydrology-swmm",
-      "kind": "dataset",
-      "site": "columbus",
-      "local_id": "hydrology-swmm",
-      "title": "Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)",
-      "feed": "catalog"
-    },
-    {
-      "handle": "dataset:columbus:hydrology-wbd",
-      "kind": "dataset",
-      "site": "columbus",
-      "local_id": "hydrology-wbd",
-      "title": "USGS Watershed Boundary Dataset — Campus HUC Boundaries (HU10/HU12)",
       "feed": "catalog"
     },
     {
