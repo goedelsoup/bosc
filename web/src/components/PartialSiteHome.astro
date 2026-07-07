@@ -35,14 +35,14 @@ const story = site.stories?.[0];
 const fac = FACILITY_STATUS_META[facilityStatus(slug)];
 
 // Section → its landing route + the feed whose row count is worth showing (omitted where a count
-// would mislead — `economy`/`watershed` are object/geo reads, not a tally).
+// would mislead — `economy`/`environment` are object/geo reads, not a tally).
 const SECTION_ROUTE: Record<ReadinessSection, string> = {
   record: "/site/",
   timeline: "/timeline",
   people: "/site/people/",
   places: "/site/places/",
   exhibits: "/site/exhibits",
-  watershed: "/watershed/",
+  environment: "/environment/",
   economy: "/economy/",
   reports: "/reports/",
   story: "",
@@ -54,7 +54,7 @@ const SECTION_COUNT_FEED: Partial<Record<ReadinessSection, string>> = {
   people: "people",
   places: "places",
   exhibits: "exhibits",
-  watershed: "rsei",
+  environment: "rsei",
 };
 
 // "On the record so far" — the data sections this peer actually has (reports/leads are the
@@ -62,7 +62,7 @@ const SECTION_COUNT_FEED: Partial<Record<ReadinessSection, string>> = {
 const DATA_SECTIONS: ReadinessSection[] = [
   "record",
   "places",
-  "watershed",
+  "environment",
   "economy",
   "people",
   "timeline",

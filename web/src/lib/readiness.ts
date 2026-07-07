@@ -11,16 +11,16 @@
  * says every domain is `live`, not because it is special-cased.
  *
  * Sections gate in two bands:
- *   - **Primary sections** (`record` / `places` / `watershed` / `economy`) read their parent
+ *   - **Primary sections** (`record` / `places` / `environment` / `economy`) read their parent
  *     **domain** state from the manifest block — a domain with any evidence (`seeded` or `live`)
- *     opens them. This is what lets a Backdrop-tier peer (floor data only) render a real watershed +
+ *     opens them. This is what lets a Backdrop-tier peer (floor data only) render a real environment +
  *     economy page instead of a wall of locks.
  *   - **Leaf facets** (`timeline` / `people` / `exhibits` / `story` / `leads`) additionally require
  *     their own feed/registry signal, so an active domain never opens an *empty* facet page (a
  *     timeline with no events reads as a lock + needs-board ask, not a barren page).
  * Two sections are network-global rather than per-site: `reports` (the `docs/` long-form the
  * reference build hosts) stays reference-only (`isReferenceSite`, the surviving network-global-host
- * role, #1220); `watershed` also locks when the facility's cooling method is undisclosed (#1057).
+ * role, #1220); `environment` also locks when the facility's cooling method is undisclosed (#1057).
  */
 import { hasFeed, loadFeed, loadManifest } from "./bundle";
 import type { DomainState, Readiness, SiteTier } from "./bundle";
@@ -52,7 +52,7 @@ export type ReadinessSection =
   | "people"
   | "places"
   | "exhibits"
-  | "watershed"
+  | "environment"
   | "economy"
   | "reports"
   | "story"
@@ -81,9 +81,10 @@ export const SECTION_META: Record<ReadinessSection, { label: string; holds: stri
     label: "Exhibits",
     holds: "the curated source exhibits — the documents that carry the keystone figures",
   },
-  watershed: {
-    label: "Watershed",
-    holds: "the hydrology, imagery, and toxics-release picture for the receiving water",
+  environment: {
+    label: "The environment",
+    holds:
+      "the hydrology, imagery, air-dispersion, and toxics-release picture for the receiving water and air",
   },
   economy: {
     label: "Economy",
@@ -137,7 +138,7 @@ function feedCount(slug: string, name: string): number {
  * says `method_disclosed: false`) carries a bracketed range across candidate archetypes, not
  * an estimate — the facility exists but no record says how it rejects heat. Rendering its
  * single consumptive/7Q10-multiple headline as if confirmed would fabricate the site's most
- * load-bearing number, so the watershed section locks and the needs board asks for the
+ * load-bearing number, so the environment section locks and the needs board asks for the
  * disclosure instead. Content-based (reads feed rows), so it stands apart from the domain block.
  */
 export function coolingMethodUndisclosed(slug: string): boolean {
@@ -169,8 +170,8 @@ function hasEnough(section: ReadinessSection, slug: string): boolean {
       return domainPresent(slug, "places");
     case "economy":
       return domainPresent(slug, "backdrop");
-    case "watershed":
-      // The floor's watershed read (hydrology + toxics) opens with the backdrop domain — but an
+    case "environment":
+      // The floor's environment read (hydrology + toxics) opens with the backdrop domain — but an
       // undisclosed cooling method locks it outright (#1057): its scenario rows are bracketed
       // ranges, and no fabricated single-figure headline may stand in.
       return domainPresent(slug, "backdrop") && !coolingMethodUndisclosed(slug);

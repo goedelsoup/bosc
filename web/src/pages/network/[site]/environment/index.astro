@@ -34,7 +34,7 @@ const doors: Door[] = [
   {
     id: "hydrology",
     kind: "Analysis",
-    href: withSite("/watershed/hydrology"),
+    href: withSite("/environment/hydrology"),
     count: num(count("hydrology-scenarios")),
     title: "Hydrology",
     desc: "Water-balance / low-flow dilution screen — live flow vs the 7Q10 design low flow, and the headroom that remains.",
@@ -43,7 +43,7 @@ const doors: Door[] = [
   {
     id: "map",
     kind: "Interactive map",
-    href: withSite("/watershed/map"),
+    href: withSite("/environment/map"),
     count: num(geoMapLayers),
     title: "Watershed map",
     desc: "Typed GeoJSON layers on deck.gl + MapLibre — campus, corridor, floodway, WWTP, RSEI, watershed.",
@@ -52,7 +52,7 @@ const doors: Door[] = [
   {
     id: "imagery",
     kind: "Aerial imagery",
-    href: withSite("/watershed/imagery"),
+    href: withSite("/environment/imagery"),
     count: "—",
     title: "Imagery",
     desc: "Dated Esri Wayback aerials over the campus AOI — before / during / after the buildout.",
@@ -61,7 +61,7 @@ const doors: Door[] = [
   {
     id: "rsei",
     kind: "External data",
-    href: withSite("/watershed/rsei"),
+    href: withSite("/environment/rsei"),
     count: num(count("geo/rsei")),
     title: "RSEI / toxics",
     desc: "EPA RSEI toxic-release inventory on the same reaches the campus discharges to.",
@@ -72,7 +72,7 @@ if (hasFeed("air-dispersion-field")) {
   doors.push({
     id: "air",
     kind: "Interactive field",
-    href: withSite("/watershed/air"),
+    href: withSite("/environment/air"),
     count: "—",
     title: "Air dispersion",
     desc: "A Tier-1 AERMOD screening field of criteria-pollutant concentrations over the campus grid — modeled, [inference].",
@@ -83,7 +83,7 @@ if (hasFeed("water-seasonal-field")) {
   doors.push({
     id: "seasonal",
     kind: "Interactive field",
-    href: withSite("/watershed/seasonal"),
+    href: withSite("/environment/seasonal"),
     count: "—",
     title: "Seasonal withdrawal",
     desc: "A month-by-month climograph of net atmospheric withdrawal (ET0 − precip) with the cooling draw read against the cited seasonal low flow.",
@@ -94,7 +94,7 @@ if (hasFeed("reach-network")) {
   doors.push({
     id: "flow",
     kind: "Interactive flow",
-    href: withSite("/watershed/flow"),
+    href: withSite("/environment/flow"),
     count: "—",
     title: "Water flow",
     desc: "GPU particles advecting down the real reach-network river centerlines — density/speed encode the routed storm peak, deficit reaches oxblood. Modeled, [inference].",
@@ -105,7 +105,7 @@ if (hasFeed("economics-baseline")) {
   doors.push({
     id: "economics",
     kind: "Baseline data",
-    href: withSite("/watershed/economics-baseline"),
+    href: withSite("/environment/economics-baseline"),
     count: "—",
     title: "Economics baseline",
     desc: "Localized BLS QCEW / Census employment baseline for the corridor.",
@@ -114,12 +114,12 @@ if (hasFeed("economics-baseline")) {
 }
 ---
 
-<Base title="The Maumee watershed" section="watershed" rail={false}>
+<Base title="The environment" section="environment" rail={false}>
   <div class="hub">
     <div class="hub-head">
       <div>
-        <div class="hub-eyebrow">Section · the Maumee watershed</div>
-        <h1>The water it sits in</h1>
+        <div class="hub-eyebrow">Section · the environment</div>
+        <h1>The environment it sits in</h1>
         <p class="hub-lead">
           Stormwater and water-balance modeling of the {site?.place} municipal loop, the
           watershed map, dated imagery, and the RSEI toxic-release picture.

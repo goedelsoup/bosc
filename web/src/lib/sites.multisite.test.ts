@@ -45,10 +45,10 @@ describe("multi-site chrome parity (#746)", () => {
 
   it("routes each selectable site to its own chrome tier; promotion flips the tier", () => {
     // Fort Wayne is selectable — resolves to its own chrome tier.
-    expect(siteForPathIn(SITES, "/network/fort-wayne/watershed")?.slug).toBe("fort-wayne");
+    expect(siteForPathIn(SITES, "/network/fort-wayne/environment")?.slug).toBe("fort-wayne");
     // Defiance is NOT selectable in SITES — network chrome (null); promotion flips it.
-    expect(siteForPathIn(SITES, "/network/defiance/watershed")).toBeNull();
-    expect(siteForPathIn(WITH_DEFIANCE, "/network/defiance/watershed")?.slug).toBe("defiance");
+    expect(siteForPathIn(SITES, "/network/defiance/environment")).toBeNull();
+    expect(siteForPathIn(WITH_DEFIANCE, "/network/defiance/environment")?.slug).toBe("defiance");
     // Lima still routes to Lima, unaffected by any other site's presence.
     expect(siteForPathIn(WITH_DEFIANCE, "/network/american-sugar-creek-allen-co/timeline")?.slug).toBe(
       "lima",

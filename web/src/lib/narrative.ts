@@ -68,14 +68,14 @@ export const NARRATIVE: NarrativeDoc[] = [
     repo: "HYDROLOGY.md",
     slug: "hydrology",
     title: "Hydrology — Tier-0 findings",
-    section: "watershed",
+    section: "environment",
     blurb: "Tier-0 municipal water-flow screening — the prose companion to the water-balance dashboard.",
   },
   {
     repo: "ECONOMICS.md",
     slug: "economics",
     title: "Economics — demand & public benefits",
-    section: "watershed",
+    section: "environment",
     blurb:
       "The demand-side companion to Hydrology: regional cloud-consumer demand and the benefits extended to it.",
   },
@@ -151,7 +151,7 @@ export const LINK_MAP: Record<string, string> = {
   "records/index.md": "/site/records/",
   "records/opc.md": "/site/records/opc/",
   "candidates.md": "/wiki/",
-  "gis-map.md": "/watershed/map",
+  "gis-map.md": "/environment/map",
   "economics-baseline.md": "/docs/economics",
   // The legacy "notebooks" page is superseded by the native OPC scenario explorer (the
   // marimo POC was retired — see docs/marimo-integration-investigation.md). Base-relative.

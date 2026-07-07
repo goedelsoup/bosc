@@ -42,7 +42,7 @@ describe("a partial peer (Fort Wayne)", () => {
     // records / places / geo+rsei / econ+network are all present in the FW bundle.
     expect(isAvailable("fort-wayne", "record")).toBe(true);
     expect(isAvailable("fort-wayne", "places")).toBe(true);
-    expect(isAvailable("fort-wayne", "watershed")).toBe(true);
+    expect(isAvailable("fort-wayne", "environment")).toBe(true);
     expect(isAvailable("fort-wayne", "economy")).toBe(true);
   });
 
@@ -97,7 +97,7 @@ describe("domain activation (manifest readiness block)", () => {
     // Urbana carries a `leads` feed but no registered story — leads open, the guided walk stays shut.
     expect(sectionStatus("urbana", "leads")).toBe("available");
     expect(sectionStatus("urbana", "story")).toBe("locked");
-    // Its floor stands up (watershed/economy), but its record domain is absent → record locks.
+    // Its floor stands up (environment/economy), but its record domain is absent → record locks.
     expect(sectionStatus("urbana", "economy")).toBe("available");
     expect(sectionStatus("urbana", "record")).toBe("locked");
     expect(sectionStatus("urbana", "places")).toBe("locked");
@@ -115,7 +115,7 @@ describe("SECTION_META", () => {
 
 // --- the cooling-method honesty lock (#1057) --------------------------------------------
 // A peer whose facility is on the record but whose cooling method is NOT gets a bracketed
-// scenario (`cooling_model: "unknown"`) — the watershed section must lock rather than render
+// scenario (`cooling_model: "unknown"`) — the environment section must lock rather than render
 // the range as a single headline. Content-based, so it needs a synthetic bundle (the same
 // tmp-dir harness as dilution.test.ts / bundle.test.ts).
 const tmpDirs: string[] = [];
@@ -149,7 +149,7 @@ const LIVE = {
 } as const;
 
 /** A minimal per-site bundle: a `hydrology-scenarios` feed + a `readiness` block (backdrop live by
- *  default, so the watershed section opens unless a cooling lock or an explicit block says otherwise). */
+ *  default, so the environment section opens unless a cooling lock or an explicit block says otherwise). */
 function makePeerBundle(
   slug: string,
   scenarios: object[],
@@ -204,20 +204,20 @@ describe("coolingMethodUndisclosed (#1057)", () => {
   afterAll(() => {
     for (const d of tmpDirs) rmSync(d, { recursive: true, force: true });
   });
-  it("locks the watershed section when a scenario's cooling model is unknown", async () => {
+  it("locks the environment section when a scenario's cooling model is unknown", async () => {
     const root = makePeerBundle("peer", [scenarioRow("unknown", false)]);
     const r = await loadReadiness(root);
     expect(r.coolingMethodUndisclosed("peer")).toBe(true);
     // The scenario feed has rows, but the undisclosed method overrides the count check.
-    expect(r.sectionStatus("peer", "watershed")).toBe("locked");
-    expect(r.lockedSections("peer")).toContain("watershed");
+    expect(r.sectionStatus("peer", "environment")).toBe("locked");
+    expect(r.lockedSections("peer")).toContain("environment");
   });
 
-  it("keeps the watershed available for a disclosed cooling model", async () => {
+  it("keeps the environment available for a disclosed cooling model", async () => {
     const root = makePeerBundle("peer", [scenarioRow("evaporative_tower", true)]);
     const r = await loadReadiness(root);
     expect(r.coolingMethodUndisclosed("peer")).toBe(false);
-    expect(r.sectionStatus("peer", "watershed")).toBe("available");
+    expect(r.sectionStatus("peer", "environment")).toBe("available");
   });
 
   it("is false when the site has no scenario feed at all", async () => {
@@ -239,7 +239,7 @@ describe("a Backdrop-staged peer (floor data only)", () => {
     for (const d of tmpDirs) rmSync(d, { recursive: true, force: true });
   });
 
-  it("opens watershed + economy off the backdrop domain, locks the above-floor domains", async () => {
+  it("opens environment + economy off the backdrop domain, locks the above-floor domains", async () => {
     const backdropOnly = {
       tier: "backdrop",
       domains: { backdrop: "live", facility: "absent", places: "absent", record: "absent", story: "absent" },
@@ -248,7 +248,7 @@ describe("a Backdrop-staged peer (floor data only)", () => {
     const r = await loadReadiness(root);
     expect(r.siteTier("backdrop-peer")).toBe("backdrop");
     // The floor reads stand on their own — no fabricated corpus needed.
-    expect(r.sectionStatus("backdrop-peer", "watershed")).toBe("available");
+    expect(r.sectionStatus("backdrop-peer", "environment")).toBe("available");
     expect(r.sectionStatus("backdrop-peer", "economy")).toBe("available");
     // Above the floor: nothing on the record yet → locked, not scaffolded.
     for (const s of ["record", "places", "story", "leads", "reports"] as const) {
@@ -276,6 +276,6 @@ describe("a Backdrop-staged peer (floor data only)", () => {
     );
     const r = await loadReadiness(root);
     expect(r.siteTier("legacy")).toBe("stub");
-    expect(r.sectionStatus("legacy", "watershed")).toBe("locked");
+    expect(r.sectionStatus("legacy", "environment")).toBe("locked");
   });
 });

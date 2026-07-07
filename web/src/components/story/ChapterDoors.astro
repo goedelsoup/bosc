@@ -9,7 +9,7 @@
  * story. `site` defaults to Lima; the rendering shell (#732) passes the active slug.
  *
  *   <ChapterDoors site="lima" doors={[
- *     { label: "Live hydrology dashboard", blurb: "The screen, re-run against current USGS flow.", path: "/watershed/hydrology" },
+ *     { label: "Live hydrology dashboard", blurb: "The screen, re-run against current USGS flow.", path: "/environment/hydrology" },
  *   ]} />
  */
 import { LIMA_SLUG } from "~/lib/routes";
@@ -18,7 +18,7 @@ import { siteHref, withBase } from "~/lib/site";
 export interface ChapterDoor {
   label: string;
   blurb: string;
-  /** Site-relative path (e.g. "/watershed/hydrology"); resolved against the active site. */
+  /** Site-relative path (e.g. "/environment/hydrology"); resolved against the active site. */
   path?: string;
   /** Network-global root-absolute path (e.g. "/wiki/graph") — NOT site-prefixed, only deploy-based. */
   href?: string;

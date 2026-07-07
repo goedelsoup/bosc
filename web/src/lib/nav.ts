@@ -8,7 +8,7 @@
  *    by tier, plus the constant platform cluster on the right.
  *
  * A page declares its `section`; the header resolves which tab is active via
- * `navItemActive` (so the Watershed sub-area lights the Corpus tab, etc.).
+ * `navItemActive` (so the Environment sub-area lights the Corpus tab, etc.).
  *
  * **Per-site (#724/#740):** these are now functions, not constants — every site-rooted href is
  * built from the **active** site (`siteBase(activeSite())` / the active site's default story), so
@@ -32,7 +32,7 @@ export type SectionId =
   | "reports"
   | "about"
   | "site"
-  | "watershed"
+  | "environment"
   | "economy"
   | "wiki"
   | "ask"
@@ -152,10 +152,10 @@ export function sections(): Section[] {
       ],
     },
     {
-      id: "watershed",
-      label: "The Maumee watershed",
-      tab: "Watershed",
-      href: `${base}/watershed/`,
+      id: "environment",
+      label: "The environment",
+      tab: "Environment",
+      href: `${base}/environment/`,
       blurb: "Hydrology dashboards, the watershed map, imagery before/during/after, and RSEI toxics.",
       toc: [
         { label: "Hydrology", anchor: "hydrology" },
@@ -251,7 +251,7 @@ export function getSection(id: SectionId): Section {
 // One bar, two tiers. The `Watermark.` wordmark always links home to the network;
 // a chip (the breadcrumb / switcher) sits beside it. The LEFT tabs swap by tier:
 //  - network level (the directory + cross-cutting globals) → Directory · Research · About▾
-//  - inside a site → The site▾ · The story · The watershed · The economy · The record
+//  - inside a site → The site▾ · The story · The environment · The economy · The record
 // The PLATFORM cluster (Docs · Wiki · | · Submit · Ask · Search) sits right and never
 // changes — Submit is a right-side affordance present on BOTH tiers (design "Chrome"),
 // not a left network tab. The active tier is resolved from the route (`siteForPath` in
@@ -333,7 +333,7 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
 }
 
 /** Site-tier left tabs — shown inside a site. A lean 3-tab bar: The site · The story · The record.
- *  The watershed + economy live inside the "The site" mega-menu as "themes it crosses". */
+ *  The environment + economy live inside the "The site" mega-menu as "themes it crosses". */
 export function siteTabs(): NavItem[] {
   const { base, storyRoot, story } = siteRoots();
   const chapters = story?.chapters ?? [];
@@ -343,7 +343,7 @@ export function siteTabs(): NavItem[] {
   // domain live) without any reference-site special-case.
   const slug = activeSite();
   const storyLocked = sectionStatus(slug, "story") === "locked";
-  const watershedLocked = sectionStatus(slug, "watershed") === "locked";
+  const environmentLocked = sectionStatus(slug, "environment") === "locked";
   const economyLocked = sectionStatus(slug, "economy") === "locked";
   const reportsLocked = sectionStatus(slug, "reports") === "locked";
   return [
@@ -351,7 +351,7 @@ export function siteTabs(): NavItem[] {
       kind: "mega",
       label: "The site",
       section: "home",
-      match: ["leads", "story", "watershed", "economy"],
+      match: ["leads", "story", "environment", "economy"],
       mega: {
         tiles: [
           { label: "Overview", href: base, blurb: "The site at a glance — the front door", icon: "home" },
@@ -378,16 +378,20 @@ export function siteTabs(): NavItem[] {
         },
         themes: [
           {
-            title: "The watershed",
-            href: `${base}/watershed/`,
-            locked: watershedLocked,
+            title: "The environment",
+            href: `${base}/environment/`,
+            locked: environmentLocked,
             items: [
-              { label: "Hydrology", href: `${base}/watershed/#hydrology`, locked: watershedLocked },
-              { label: "Watershed map", href: `${base}/watershed/#map`, locked: watershedLocked },
-              { label: "Imagery", href: `${base}/watershed/#imagery`, locked: watershedLocked },
-              { label: "RSEI / toxics", href: `${base}/watershed/#rsei`, locked: watershedLocked },
-              { label: "Air dispersion", href: `${base}/watershed/#air`, locked: watershedLocked },
-              { label: "Seasonal withdrawal", href: `${base}/watershed/#seasonal`, locked: watershedLocked },
+              { label: "Hydrology", href: `${base}/environment/#hydrology`, locked: environmentLocked },
+              { label: "Watershed map", href: `${base}/environment/#map`, locked: environmentLocked },
+              { label: "Imagery", href: `${base}/environment/#imagery`, locked: environmentLocked },
+              { label: "RSEI / toxics", href: `${base}/environment/#rsei`, locked: environmentLocked },
+              { label: "Air dispersion", href: `${base}/environment/#air`, locked: environmentLocked },
+              {
+                label: "Seasonal withdrawal",
+                href: `${base}/environment/#seasonal`,
+                locked: environmentLocked,
+              },
             ],
           },
           {
@@ -473,7 +477,7 @@ export function navItemActive(item: NavItem, active: SectionId): boolean {
 }
 
 /** The flattened primary links a tab contributes to the footer row / mobile sheet. For the
- *  mega, that's the two tiles + each theme's landing (so watershed/economy stay reachable now
+ *  mega, that's the two tiles + each theme's landing (so environment/economy stay reachable now
  *  that they're not standalone tabs) — the deep theme `items` are desktop-mega-only. */
 export function navItemLinks(item: NavItem): { label: string; href: string }[] {
   if (item.kind === "link") return [{ label: item.label, href: item.href }];
@@ -516,7 +520,7 @@ export function footerGroups(): FooterGroup[] {
       links: [
         { label: "Overview", href: base },
         { label: "Open leads", href: `${base}/leads` },
-        { label: "The watershed", href: `${base}/watershed/` },
+        { label: "The environment", href: `${base}/environment/` },
         { label: "The economy", href: `${base}/economy/` },
         { label: "The story", href: storyRoot },
         { label: "The record", href: `${base}/site/` },

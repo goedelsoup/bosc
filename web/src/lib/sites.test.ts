@@ -203,7 +203,7 @@ describe("siteForPath — the switcher's current-site resolution (#316)", () => 
       "/network/american-sugar-creek-allen-co",
       "/network/american-sugar-creek-allen-co/",
       "/network/american-sugar-creek-allen-co/site/",
-      "/network/american-sugar-creek-allen-co/watershed/map",
+      "/network/american-sugar-creek-allen-co/environment/map",
       "/network/american-sugar-creek-allen-co/timeline",
     ]) {
       expect(siteForPath(p)?.slug).toBe("lima");
