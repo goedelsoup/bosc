@@ -19,7 +19,7 @@ import SiteNeeds from "./SiteNeeds.astro";
 import { loadManifest } from "../lib/bundle";
 import { type ReadinessSection, SECTION_META, isAvailable, lockedSections } from "../lib/readiness";
 import { withBase, withSite, withStory } from "../lib/site";
-import { FACILITY_STATUS_META, type NetworkSite, facilityStatus } from "../lib/sites";
+import { FACILITY_STATUS_META, type NetworkSite, facilityStatus, surfacedStories } from "../lib/sites";
 
 interface Props {
   slug: string;
@@ -31,7 +31,9 @@ const { slug, site, dateline } = Astro.props as Props;
 const manifest = loadManifest(slug);
 const count = (name: string): number => manifest.feeds.find((f) => f.name === name)?.count ?? 0;
 
-const story = site.stories?.[0];
+// The hero + story card key off the *surfaced* story — a hidden one (#1256) drops the CTA, same as
+// a peer with no story at all — so a partial peer never advertises a hidden walk.
+const story = surfacedStories(slug)[0];
 const fac = FACILITY_STATUS_META[facilityStatus(slug)];
 
 // Section → its landing route + the feed whose row count is worth showing (omitted where a count

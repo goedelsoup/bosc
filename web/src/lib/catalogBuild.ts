@@ -15,7 +15,7 @@ import { NARRATIVE } from "./narrative";
 import { REFERENCE } from "./reference";
 import { LIMA_SLUG } from "./routes";
 import { ALL_TEARDOWNS } from "./teardowns";
-import { STORIES } from "./walk";
+import { STORIES, siteSurfacesStory } from "./walk";
 
 /** The wire shape of the `catalog-index` object feed (`bosc.site.feeds.CatalogIndex`, snake_case). */
 interface CatalogIndexFeed {
@@ -48,9 +48,12 @@ const FIGURES: { localId: string; title: string }[] = [
 export function webOnlyAtoms(site: string): CatalogAtom[] {
   const atoms: CatalogAtom[] = [];
 
-  // chapter — the `stories` MDX collection; grabbable as `chapter:<site>:<codename>/<slug>`.
+  // chapter — the `stories` MDX collection; grabbable as `chapter:<site>:<codename>/<slug>`. Only a
+  // *surfaced* story contributes atoms (#1256): a hidden story (content retained, overlay entry
+  // removed — Lima's Project BOSC) is grabbable nowhere, so it drops out of the catalog + atoms.
   for (const story of STORIES) {
     if (story.site !== site) continue;
+    if (!siteSurfacesStory(story.site, story.codename)) continue;
     for (const ch of story.chapters) {
       atoms.push(atom("chapter", site, `${story.codename}/${ch.slug}`, ch.title, "stories"));
     }

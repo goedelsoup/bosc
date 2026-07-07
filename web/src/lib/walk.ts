@@ -18,8 +18,10 @@
  * load. `live` is the build flag the wayfinding/index gate their go-links on.
  */
 
+import { activeSite } from "./bundle";
 import { DEFAULT_STORY_CODENAME, LIMA_SLUG } from "./routes";
 import { storyHref } from "./site";
+import { surfacedStories } from "./sites";
 import { buildAllStories } from "./stories";
 
 export interface Chapter {
@@ -136,6 +138,34 @@ export function storyChapterByStep(story: Story, step: number): Chapter | undefi
 /** The record→chapter backlink for a `rel` within a story. */
 export function storyAnchorFor(story: Story, rel: string): WalkAnchor | undefined {
   return story.anchors[rel];
+}
+
+// ── Surfaced-story resolution (#1256) ────────────────────────────────────────
+// A story is *surfaced* only when it's registered in the `sites.ts` STORIES overlay AND not
+// `hidden` (see `surfacedStories`). Its MDX content, its `/stories/<codename>` routes, and the
+// WALK_* content-presence guard all stay put regardless — so hiding a story unsurfaces it
+// everywhere without touching the record. Every site-scoped surface (the hub, catalog/atoms, the
+// record→chapter backlinks) resolves through these, NOT through the Lima-pinned WALK_* conveniences,
+// so a hidden or absent story emits no links and no non-Lima site can leak into Lima's story.
+
+/** Whether a site *surfaces* a story codename — registered in the `sites.ts` overlay and not hidden. */
+export function siteSurfacesStory(site: string, codename: string): boolean {
+  return surfacedStories(site).some((r) => r.codename === codename);
+}
+
+/** The active site's surfaced story (its first *surfaced* — registered and non-hidden — story), or
+ *  `undefined` when the site surfaces none. The ambient, hidden-aware peer of `LIMA_STORY`. */
+export function activeStory(): Story | undefined {
+  const ref = surfacedStories(activeSite())[0];
+  return ref ? storyFor(activeSite(), ref.codename) : undefined;
+}
+
+/** The record→chapter backlink for a `rel` within the *active site's surfaced story*, or
+ *  `undefined` when the site surfaces no story — the current-site, hidden-aware peer of
+ *  `walkAnchorFor` (used by the timeline + record-block backlinks). */
+export function activeStoryAnchorFor(rel: string): WalkAnchor | undefined {
+  const story = activeStory();
+  return story ? storyAnchorFor(story, rel) : undefined;
 }
 
 // ── Lima-pinned conveniences ────────────────────────────────────────────────

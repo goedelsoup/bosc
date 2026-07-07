@@ -7,7 +7,7 @@
 import type { TagKind } from "./teardown";
 import { evidenceKind, slugify, type RecordItem } from "./feeds";
 import { formatScalar, groupLabel, isApproximate, isStructured, withApproxMark } from "./records";
-import { walkAnchorFor } from "./walk";
+import { activeStoryAnchorFor } from "./walk";
 import { withSite, withStory } from "./site";
 
 export interface BlockField {
@@ -97,7 +97,9 @@ export function recordToBlock(r: RecordItem): LibraryRecord {
       fields.push({ label: k, value: withApproxMark(formatScalar(v), approx), warn: approx });
     }
   }
-  const anchor = walkAnchorFor(r.rel);
+  // The record→chapter backlink resolves against the *active site's surfaced story* — none when
+  // the site surfaces no story (a thin peer, or Lima with its walk hidden, #1256), so no walk chip.
+  const anchor = activeStoryAnchorFor(r.rel);
   const c = r.citation;
   const groupName = groupLabel(r.group).replace(/ —.*$/, "");
   // The derivable connects: the record's group (its siblings) and, when it's a walk

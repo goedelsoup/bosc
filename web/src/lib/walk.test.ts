@@ -1,12 +1,16 @@
 import { describe, expect, it } from "vitest";
+import { runWithSite } from "./bundle";
 import { SITES } from "./sites";
 import {
   WALK_ANCHORS,
   WALK_CHAPTERS,
   WALK_INDEX_HREF,
   WALK_TOTAL,
+  activeStory,
+  activeStoryAnchorFor,
   chapterByStep,
   chapterHref,
+  siteSurfacesStory,
   storyAnchorFor,
   storyChapterByStep,
   storyContentsHref,
@@ -117,5 +121,33 @@ describe("Story model", () => {
     expect(fw?.title).toBe("Project Zodiac");
     expect(fw?.chapters.map((c) => c.slug)).toEqual(["who", "power", "water"]);
     expect(fw?.chapters.every((c) => c.live)).toBe(true);
+  });
+});
+
+describe("surfaced-story resolution (#1256 — hidden Lima walk, no cross-site leak)", () => {
+  it("Lima's project-bosc content still resolves (title/dek intact), but is no longer *surfaced*", () => {
+    // The MDX content, the WALK_* guard, AND the title/dek metadata survive (content retained) …
+    const story = storyFor("lima", "project-bosc");
+    expect(story?.title).toBe("Project BOSC");
+    expect(WALK_CHAPTERS.length).toBe(WALK_TOTAL);
+    // … but its overlay entry is marked `hidden`, so Lima surfaces the walk nowhere.
+    expect(siteSurfacesStory("lima", "project-bosc")).toBe(false);
+    // Fort Wayne keeps its registered (non-hidden) story surfaced.
+    expect(siteSurfacesStory("fort-wayne", "project-zodiac")).toBe(true);
+  });
+
+  it("activeStory resolves the current site's surfaced story — undefined for hidden Lima", () => {
+    // Lima (default active site): story hidden → no ambient story, so no surface links resolve.
+    expect(activeStory()).toBeUndefined();
+    expect(activeStoryAnchorFor("aedg/roundabouts.summary.opc.yaml")).toBeUndefined();
+    // Fort Wayne: its own surfaced story resolves — never Lima's.
+    runWithSite("fort-wayne", () => {
+      expect(activeStory()?.codename).toBe("project-zodiac");
+    });
+    // Urbana surfaces no story at all → still undefined (no leak into Lima's walk).
+    runWithSite("urbana", () => {
+      expect(activeStory()).toBeUndefined();
+      expect(activeStoryAnchorFor("aedg/roundabouts.summary.opc.yaml")).toBeUndefined();
+    });
   });
 });

@@ -14,13 +14,21 @@ import {
 } from "./sites";
 
 describe("sites registry — the Watermark network (#304)", () => {
-  it("has unique slugs; the active build (Lima) is selectable + live; all selectable sites are live", () => {
+  it("has unique slugs; the active build (Lima) is selectable; a selectable site is live or building", () => {
     const slugs = SITES.map((s) => s.slug);
     expect(new Set(slugs).size).toBe(slugs.length);
     const selectable = SITES.filter((s) => s.selectable);
     expect(selectable.some((s) => s.slug === ACTIVE_SITE_SLUG)).toBe(true);
-    for (const s of selectable) expect(s.status).toBe("live");
+    // Lima moved to an early build state (#1256): still selectable, now `building` (not `live`).
+    // A selectable site is either `live` or `building` — never `queued`/`tracking`.
+    for (const s of selectable) expect(["live", "building"]).toContain(s.status);
     expect(activeSite().slug).toBe(ACTIVE_SITE_SLUG);
+  });
+
+  it("keeps Lima selectable in its early build state (#1256): status `building`", () => {
+    const lima = SITES.find((s) => s.slug === ACTIVE_SITE_SLUG);
+    expect(lima?.selectable).toBe(true);
+    expect(lima?.status).toBe("building");
   });
 
   it("promotes Fort Wayne to selectable (live facility + story ready, #741)", () => {
@@ -109,15 +117,18 @@ describe("site build phases — the four-phase clock (#308 dictate B)", () => {
 });
 
 describe("promotion gate — the onboarding review invariant (#326)", () => {
-  // `bosc onboard` proposes; promotion to a live build is a manual, parity-gated edit here.
-  // These encode the gate: flipping `selectable` without `status: "live"` (or vice-versa)
-  // fails CI, so a site can't slip live without the deliberate two-field change.
-  it("every selectable site has status 'live'", () => {
-    for (const s of SITES) if (s.selectable) expect(s.status).toBe("live");
+  // `bosc onboard` proposes; promotion to a selectable build is a manual, parity-gated edit here.
+  // These encode the gate: a `selectable` site is one under active build — `live` (parity-complete)
+  // or `building` (an early build state, e.g. Lima post-#1256) — and only ever those. A `queued` or
+  // `tracking` site can't slip selectable without the deliberate promotion.
+  it("every selectable site is live or building", () => {
+    for (const s of SITES) if (s.selectable) expect(["live", "building"]).toContain(s.status);
   });
 
-  it("no building/queued site is selectable before explicit promotion", () => {
-    for (const s of SITES) if (s.status !== "live") expect(s.selectable).toBe(false);
+  it("no queued/tracking site is selectable before explicit promotion", () => {
+    for (const s of SITES) {
+      if (s.status !== "live" && s.status !== "building") expect(s.selectable).toBe(false);
+    }
   });
 });
 

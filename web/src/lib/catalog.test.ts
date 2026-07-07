@@ -139,15 +139,26 @@ describe("loadCatalog", () => {
 
     // The overlay contributed the web-only kinds the bundle can't see (real Lima content).
     const kinds = new Set([...catalog.byHandle.values()].map((a) => a.kind));
-    expect(kinds.has("chapter")).toBe(true); // stories collection
     expect(kinds.has("doc")).toBe(true); // narrative/legal/reference
     expect(kinds.has("teardown")).toBe(true); // ALL_TEARDOWNS with a recordRel
     expect(kinds.has("figure")).toBe(true); // curated viz registry
+    // Lima's Project BOSC walk is hidden (#1256): its overlay entry is marked `hidden`, so its
+    // chapters are grabbable nowhere — the catalog carries no `chapter` atom for Lima.
+    expect(kinds.has("chapter")).toBe(false);
+    expect(m.webOnlyAtoms("lima").some((a) => a.kind === "chapter")).toBe(false);
+  });
 
-    // Every overlaid chapter handle is well-formed and resolves live.
-    const chapter = [...catalog.byHandle.values()].find((a) => a.kind === "chapter");
-    expect(chapter).toBeDefined();
-    if (chapter) expect(resolveHandle(chapter.handle, catalog)).toEqual({ ok: true, atom: chapter });
+  it("surfaces chapters only for a site whose story is registered (Fort Wayne, not hidden Lima)", async () => {
+    const dir = makeBundle([]);
+    const m = await loadCatalogModule(dir);
+    // Fort Wayne keeps its Project Zodiac overlay entry, so its chapters stay grabbable; every
+    // chapter handle is well-formed and resolves live against the site's own merged catalog.
+    const fwChapters = m.webOnlyAtoms("fort-wayne").filter((a) => a.kind === "chapter");
+    expect(fwChapters.length).toBeGreaterThan(0);
+    const catalog = m.loadCatalog("fort-wayne");
+    for (const ch of fwChapters) {
+      expect(resolveHandle(ch.handle, catalog)).toEqual({ ok: true, atom: ch });
+    }
   });
 
   it("degrades to overlay-only when the bundle ships no catalog-index feed", async () => {
