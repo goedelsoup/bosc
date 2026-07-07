@@ -10,9 +10,11 @@ producer:
     + live-web discovery of publishing blocks
 license: Public records (local government open data)
 access_tier: public
-# Allen County OH meeting-holding bodies — a Maumee-basin civic registry, not a network-wide one;
-# a Scioto/Great-Miami point has its own subdivisions and does not inherit Allen County's (#1251).
-site_scope: basin:maumee
+# Lima/Allen-County-only registry (#1250/#1251): the 24 Allen County meeting-holding bodies. It is
+# not shared network data — a sibling site has its own subdivisions, not Allen County's — so it owns
+# only the reference build's bundle, never a non-Lima site's catalog. A future site supplies its
+# own slug-scoped registry.
+site_scope: lima-legacy
 storage:
 - relpath: reference/subdivisions/subdivisions.yaml
   media_type: application/x-yaml

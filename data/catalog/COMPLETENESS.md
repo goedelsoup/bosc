@@ -4,7 +4,7 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-07-07T18:24:03.083942+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-07-07T18:44:50.708996+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
@@ -77,25 +77,25 @@ Snapshot reconciled: **2026-07-07T18:24:03.083942+00:00**. Regenerate with `wate
 
 | site | relevant | present | missing |
 | --- | --- | --- | --- |
-| bryan | 44 | 37 | 7 |
+| bryan | 43 | 36 | 7 |
 | columbus | 41 | 35 | 6 |
 | coshocton | 41 | 28 | 13 |
-| defiance | 44 | 37 | 7 |
-| findlay | 45 | 38 | 7 |
-| fort-wayne | 38 | 30 | 8 |
+| defiance | 43 | 36 | 7 |
+| findlay | 44 | 37 | 7 |
+| fort-wayne | 37 | 29 | 8 |
 | greenville | 42 | 35 | 7 |
 | hamilton-middletown | 43 | 37 | 6 |
 | lima | 85 | 81 | 4 |
 | new-albany | 41 | 35 | 6 |
-| ottawa | 44 | 37 | 7 |
+| ottawa | 43 | 36 | 7 |
 | piketon | 41 | 28 | 13 |
 | sandusky | 41 | 28 | 13 |
 | sidney | 45 | 39 | 6 |
 | springfield | 42 | 36 | 6 |
-| toledo | 44 | 37 | 7 |
+| toledo | 43 | 36 | 7 |
 | troy-piqua | 44 | 38 | 6 |
 | urbana | 43 | 36 | 7 |
-| van-wert | 46 | 40 | 6 |
+| van-wert | 45 | 39 | 6 |
 | west-union | 41 | 34 | 7 |
 | wilmington | 46 | 40 | 6 |
 | wpafb | 44 | 38 | 6 |

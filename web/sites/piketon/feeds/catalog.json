@@ -434,7 +434,7 @@
   },
   {
     "id": "economics-baseline",
-    "title": "Allen County Economic Baseline (BLS QCEW + US Census ACS)",
+    "title": "Pike County, OH Economic Baseline (BLS QCEW + US Census ACS)",
     "scope": "reference",
     "collection": "economics",
     "status": "reviewed",
@@ -2084,7 +2084,7 @@
   },
   {
     "id": "rsei-inventory",
-    "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
+    "title": "Pike County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
     "scope": "reference",
     "collection": "rsei",
     "status": "reviewed",
@@ -2103,8 +2103,7 @@
       "rsei",
       "tri",
       "toxics",
-      "epa",
-      "allen-county"
+      "epa"
     ],
     "storage": [
       {

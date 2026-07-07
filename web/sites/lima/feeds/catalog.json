@@ -3931,7 +3931,7 @@
   },
   {
     "id": "economics-baseline",
-    "title": "Allen County Economic Baseline (BLS QCEW + US Census ACS)",
+    "title": "Allen County, OH Economic Baseline (BLS QCEW + US Census ACS)",
     "scope": "reference",
     "collection": "economics",
     "status": "reviewed",
@@ -4648,7 +4648,7 @@
   },
   {
     "id": "hydrology",
-    "title": "Lima-Loop Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
+    "title": "Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)",
     "scope": "reference",
     "collection": "hydrology",
     "status": "reviewed",
@@ -5998,7 +5998,7 @@
   },
   {
     "id": "rsei-inventory",
-    "title": "Allen County RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
+    "title": "Allen County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
     "scope": "reference",
     "collection": "rsei",
     "status": "reviewed",
@@ -6017,8 +6017,7 @@
       "rsei",
       "tri",
       "toxics",
-      "epa",
-      "allen-county"
+      "epa"
     ],
     "storage": [
       {
@@ -6063,7 +6062,7 @@
     "external_url": null,
     "license": "Public records (local government open data)",
     "access_tier": "public",
-    "site_scope": "basin:maumee",
+    "site_scope": "lima-legacy",
     "cadence": "on-demand",
     "ttl_days": null,
     "last_refreshed": "2026-06-08",

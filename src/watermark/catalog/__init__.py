@@ -160,6 +160,13 @@ class CatalogEntry(BaseModel):
 
     id: str  # stable kebab slug, unique across the catalog
     title: str
+    # A per-site title template for `slug-scoped` datasets whose data is the active site's own
+    # (#1250): a `str.format` string over the active `SiteProfile` — `{county_state}` ("Allen
+    # County, OH"), `{county}` ("Allen County"), `{state}`, `{place}`, `{fips}`. Resolved at
+    # bundle-export time by `watermark.catalog.sites.site_title` so a sibling site's catalog names
+    # its own county instead of Lima's; `title` stays the resolved reference-build (Lima) string
+    # for every non-per-site surface (README render, COMPLETENESS audit). `None` = a fixed title.
+    title_template: str | None = None
     scope: Scope
     status: EntryStatus = "needs-review"
     producer: Producer

@@ -201,16 +201,18 @@ def test_named_maumee_datasets_do_not_leak_cross_basin() -> None:
     from watermark.catalog import load_entries
 
     entries = {entry.id: entry for entry in load_entries()}
-    basin_scoped = ("hydrology", "subdivisions")  # basin:maumee
-    campus = ("hydrology-swmm", "hydrology-wbd", "hydrology-low-flow-7q10")  # lima-legacy
-    for eid in (*basin_scoped, *campus):
+    basin_scoped = ("hydrology",)  # basin:maumee — the Maumee TMDL working set, basin-wide
+    # Lima-only: campus artifacts + the Allen County registry (subdivisions is lima-legacy per #1250,
+    # since Allen County OH rosters describe no other Maumee site's subdivisions).
+    lima_only = ("hydrology-swmm", "hydrology-wbd", "hydrology-low-flow-7q10", "subdivisions")
+    for eid in (*basin_scoped, *lima_only):
         entry = entries[eid]
         assert is_relevant(entry, "lima"), f"{eid} must stay on the reference build"
         for cross in ("columbus", "xenia", "coshocton"):
             assert not is_relevant(entry, cross), f"{eid} leaked into cross-basin {cross}"
-    # basin-scoped datasets still reach Maumee siblings; campus ones do not.
+    # basin-scoped datasets still reach Maumee siblings; Lima-only ones do not.
     assert all(is_relevant(entries[eid], "findlay") for eid in basin_scoped)
-    assert not any(is_relevant(entries[eid], "findlay") for eid in campus)
+    assert not any(is_relevant(entries[eid], "findlay") for eid in lima_only)
 
 
 # --- real catalog --------------------------------------------------------------------------
