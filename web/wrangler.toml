@@ -18,6 +18,12 @@
 name = "the-watermark-directory"
 pages_build_output_dir = "dist"
 compatibility_date = "2024-11-01"
+# postgres.js (functions/api/_lib/pg.ts, the Stories/AUTH Lakebase driver) statically imports
+# node:events / node:buffer / node:stream, so the Functions bundle needs the Node built-in
+# aliases at publish time — even though Stories/AUTH ship dark. Requires compatibility_date
+# >= 2024-09-23 (satisfied above). Without this, `wrangler pages deploy` fails at publish with
+# 'No such module "node:events"'.
+compatibility_flags = ["nodejs_compat"]
 
 # Static config for the submissions Function. The Function also defaults these in code.
 # Kill switch (SUBMISSIONS_ENABLED) and secrets (TIPS_APP_ID, TIPS_APP_PRIVATE_KEY,
