@@ -11,6 +11,7 @@ rather than aborting the build.
 from __future__ import annotations
 
 import shutil
+from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -145,3 +146,18 @@ def export_exhibits(manifest_path: Path, documents_dir: Path) -> list[ExhibitIte
             )
         )
     return items
+
+
+def publishable_exhibit_sources(items: Iterable[ExhibitItem]) -> list[str]:
+    """Exhibit source rels eligible for the publish-allowlist auto-include (#1301).
+
+    A curated exhibit auto-publishes its ``source`` document — but **only when the exhibit
+    is the whole file**. A **page-sliced** exhibit (``pages`` set) publishes just its
+    derivative slice (``exhibits/<slug>.pdf``, carved precisely so "the full document is
+    never republished"); auto-including its full ``source`` rel would republish the entire
+    bundle via ``/api/doc``, defeating the slice — e.g. the AEDG ``PRR-01-bundle.ocr.pdf``,
+    whose pp. 91-295 are private-party deeds/closings. A sliced source that *should* be
+    served whole is added to ``published-documents.yaml`` explicitly, behind a recorded
+    publication review — never silently through the slice.
+    """
+    return [it.source for it in items if it.pages is None]

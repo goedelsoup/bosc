@@ -165,6 +165,26 @@ def test_publish_allowlist_is_default_deny_plus_exhibits(tmp_path: Path) -> None
     assert not al2.is_published("recorder/two.pdf")  # default-deny
 
 
+def test_publishable_exhibit_sources_excludes_sliced_bundles() -> None:
+    # A page-sliced exhibit publishes only its derivative slice — its full source bundle
+    # must NOT be auto-included in the allowlist (else /api/doc would republish the whole
+    # document the slice was carved out of). Whole-file exhibits still auto-include. #1301
+    from watermark.site.exhibits import publishable_exhibit_sources
+    from watermark.site.feeds import ExhibitItem
+
+    whole = ExhibitItem(slug="nda", title="NDA", source="legal/nda.pdf", available=True)
+    sliced = ExhibitItem(
+        slug="opc",
+        title="OPC",
+        source="aedg/PRR-01-bundle.ocr.pdf",
+        pages="317-327",
+        available=True,
+    )
+    sources = publishable_exhibit_sources([whole, sliced])
+    assert sources == ["legal/nda.pdf"]
+    assert "aedg/PRR-01-bundle.ocr.pdf" not in sources
+
+
 def test_build_doc_index_reads_published_from_entries(tmp_path: Path) -> None:
     docs = tmp_path / "documents"
     (docs / "aedg").mkdir(parents=True)

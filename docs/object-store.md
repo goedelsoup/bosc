@@ -9,7 +9,7 @@ open the actual deed, permit, or plan (epic #274). The store that holds those by
 This file is the runbook: how the store is provisioned, how the bytes get there, and how
 the dev loop works. The pieces:
 
-- **R2 bucket** — `bosc-documents` (prod) + `bosc-documents-dev` (preview/dev). Bound as
+- **R2 bucket** — `watermark-documents` (prod) + `watermark-documents-dev` (preview/dev). Bound as
   `DOCS` in [`web/wrangler.toml`](../web/wrangler.toml). *(B1 / #277.)*
 - **`watermark objectstore sync`** — uploads `data/documents/**` into a bucket, incrementally
   and LFS-aware. *(B3 / #279.)*
@@ -29,8 +29,8 @@ bytes — it never alters, renames, or copies one into a mutable tree.
 ### 1. Create the buckets
 
 ```sh
-npx wrangler r2 bucket create bosc-documents
-npx wrangler r2 bucket create bosc-documents-dev
+npx wrangler r2 bucket create watermark-documents
+npx wrangler r2 bucket create watermark-documents-dev
 ```
 
 The binding is already declared in `web/wrangler.toml`:
@@ -38,8 +38,8 @@ The binding is already declared in `web/wrangler.toml`:
 ```toml
 [[r2_buckets]]
 binding = "DOCS"
-bucket_name = "bosc-documents"
-preview_bucket_name = "bosc-documents-dev"
+bucket_name = "watermark-documents"
+preview_bucket_name = "watermark-documents-dev"
 ```
 
 ### 2. S3 API token (for the sync tool)
@@ -56,8 +56,8 @@ export WATERMARK_DOCUMENTS_OBJECT_STORE_ACCOUNT_ID="<account-id>"
 export WATERMARK_DOCUMENTS_OBJECT_STORE_ACCESS_KEY_ID="<access-key-id>"
 export WATERMARK_DOCUMENTS_OBJECT_STORE_SECRET_ACCESS_KEY="<secret>"
 # Optional overrides (defaults shown):
-# export WATERMARK_DOCUMENTS_OBJECT_STORE_BUCKET="bosc-documents"
-# export WATERMARK_DOCUMENTS_OBJECT_STORE_DEV_BUCKET="bosc-documents-dev"
+# export WATERMARK_DOCUMENTS_OBJECT_STORE_BUCKET="watermark-documents"
+# export WATERMARK_DOCUMENTS_OBJECT_STORE_DEV_BUCKET="watermark-documents-dev"
 # export WATERMARK_DOCUMENTS_OBJECT_STORE_ENDPOINT="https://<acct>.r2.cloudflarestorage.com"
 ```
 
@@ -72,8 +72,8 @@ in `wrangler.toml`, so it flips without a redeploy.
 
 ```sh
 watermark objectstore sync --dry-run                 # list what would upload (sizes), upload nothing
-watermark objectstore sync --target local            # → bosc-documents-dev (the dev/preview bucket)
-watermark objectstore sync --target remote            # → bosc-documents (prod)
+watermark objectstore sync --target local            # → watermark-documents-dev (the dev/preview bucket)
+watermark objectstore sync --target remote            # → watermark-documents (prod)
 watermark objectstore sync --target local --collection recorder   # scope to one collection
 ```
 
@@ -109,7 +109,7 @@ cd frontend && npm run seed:r2 -- --collection recorder   # or pass explicit dat
 ```
 
 **`watermark objectstore sync --target local` is a different thing:** it uploads to the **remote**
-`bosc-documents-dev` bucket that Cloudflare **preview deployments** bind — *not* the local stack.
+`watermark-documents-dev` bucket that Cloudflare **preview deployments** bind — *not* the local stack.
 Run it before a preview deploy, not for local dev. The doc-serving logic (gate, ranges,
 content-type) is also covered offline by `src/lib/docRoute.test.ts`. See
 [`web/README.md`](../web/README.md) → *Local dev & testing*.
