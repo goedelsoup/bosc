@@ -585,9 +585,11 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         site_scoped_path(settings.data_dir / "site" / "leads.yaml", settings.site, is_dir=False),
     )
     # The default-deny public allowlist (#280): exhibits + the committed allowlist rules.
+    # Only *whole-file* exhibits auto-include their source; a page-sliced exhibit publishes
+    # its derivative slice, not the full bundle behind it (#1301).
     allowlist = documents_mod.load_publish_allowlist(
         settings.data_dir / "site" / "published-documents.yaml",
-        exhibit_sources=(ex.source for ex in exhibit_items),
+        exhibit_sources=exhibits_mod.publishable_exhibit_sources(exhibit_items),
     )
 
     # Source-document catalog (#274/#275): real media_type + render_class + publish flag.

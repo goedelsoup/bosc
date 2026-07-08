@@ -9,4 +9,19 @@
 # Three rule kinds (all optional; combine freely):
 collections: []   # whole data/documents/<slug> trees, e.g.  - aedg
 globs: []         # fnmatch globs over the data/documents rel, e.g.  - 'permits/*/*.pdf'
-documents: []     # exact data/documents rels, e.g.  - recorder/bistrozzi-deeds/foo.pdf
+documents:        # exact data/documents rels, e.g.  - recorder/bistrozzi-deeds/foo.pdf
+  # The AEDG PRR-01 bundle — the full 328-page Port Authority public-records production.
+  # Only pp. 317-327 (the six Tetra Tech OPC estimates) are the curated exhibit slice; the
+  # rest is PAAC board minutes (pp. 1-90) and recorded real-estate instruments (pp. 91-295:
+  # deeds, options, closings, conveyance-fee statements for the Brenneman/Miller/Neff/
+  # Neighbors parcels). Published WHOLE, on the basis that it is a public-records production
+  # already disclosed by PAAC and the instruments are county-recorder public record. It does
+  # carry private parties' recorded signatures/addresses — accepted as disclosed public
+  # record per the operator decision on #1301, not the outcome of a passed PII sweep.
+  # review: { by: goedelsoup, date: 2026-07-08, result: publish, basis: disclosed-prr-production }
+  - aedg/PRR-01-bundle.ocr.pdf
+  # Ohio EPA Permit-to-Install P0138965 ("Bistrozzi LLC Data Center") — public agency record,
+  # no private PII. Was previously public only via the sliced air-permit exhibit's source
+  # auto-include (#1301 closed that path); kept public here as an explicit, reviewed entry.
+  # review: { by: goedelsoup, date: 2026-07-08, result: publish, basis: public-epa-permit }
+  - permits/bistrozzi-permits/4132514.pdf
