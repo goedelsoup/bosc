@@ -34,7 +34,7 @@ sites:
     mono: "LIM"
     status: "building"
     selectable: true
-    issue: null
+    issue: "1261"
     map_lat: 40.792
     map_lon: -84.122
     map_zoom: 14
@@ -48,7 +48,7 @@ sites:
     mono: "FTW"
     status: "live"
     selectable: true
-    issue: "235"
+    issue: "1262"
     map_lat: 41.0891
     map_lon: -85.1439
     map_zoom: 12
@@ -62,7 +62,7 @@ sites:
     mono: "URB"
     status: "live"
     selectable: true
-    issue: "441"
+    issue: "1263"
     map_lat: 40.1084
     map_lon: -83.7524
     map_zoom: 13
@@ -78,7 +78,7 @@ sites:
     mono: "DEF"
     status: "queued"
     selectable: false
-    issue: "238"
+    issue: "1264"
     map_lat: 41.2868
     map_lon: -84.3621
     map_zoom: 12
@@ -92,7 +92,7 @@ sites:
     mono: "FIN"
     status: "queued"
     selectable: false
-    issue: "237"
+    issue: "1265"
     map_lat: 41.0428
     map_lon: -83.6422
     map_zoom: 13
@@ -106,7 +106,7 @@ sites:
     mono: "TOL"
     status: "queued"
     selectable: false
-    issue: "236"
+    issue: "1266"
     map_lat: 41.6529
     map_lon: -83.5378
     map_zoom: 12
@@ -120,7 +120,7 @@ sites:
     mono: "VWT"
     status: "queued"
     selectable: false
-    issue: "363"
+    issue: "1267"
     map_lat: 40.8696
     map_lon: -84.5829
     map_zoom: 13
@@ -134,7 +134,7 @@ sites:
     mono: "BRY"
     status: "queued"
     selectable: false
-    issue: "380"
+    issue: "1268"
     map_lat: 41.4748
     map_lon: -84.5525
     map_zoom: 13
@@ -148,7 +148,7 @@ sites:
     mono: "OTW"
     status: "queued"
     selectable: false
-    issue: "381"
+    issue: "1269"
     map_lat: 41.0192
     map_lon: -84.0472
     map_zoom: 13
@@ -162,7 +162,7 @@ sites:
     mono: "SPR"
     status: "queued"
     selectable: false
-    issue: "452"
+    issue: "1270"
     map_lat: 39.9242
     map_lon: -83.8089
     map_zoom: 13
@@ -176,7 +176,7 @@ sites:
     mono: "XEN"
     status: "queued"
     selectable: false
-    issue: "444"
+    issue: "1271"
     map_lat: 39.6861
     map_lon: -83.9289
     map_zoom: 13
@@ -190,7 +190,7 @@ sites:
     mono: "WPA"
     status: "queued"
     selectable: false
-    issue: "442"
+    issue: "1272"
     map_lat: 39.8261
     map_lon: -84.0494
     map_zoom: 12
@@ -204,7 +204,7 @@ sites:
     mono: "HAM"
     status: "queued"
     selectable: false
-    issue: "443"
+    issue: "1273"
     map_lat: 39.455
     map_lon: -84.49
     map_zoom: 11
@@ -218,7 +218,7 @@ sites:
     mono: "TRP"
     status: "queued"
     selectable: false
-    issue: "475"
+    issue: "1274"
     map_lat: 40.092
     map_lon: -84.215
     map_zoom: 11
@@ -232,7 +232,7 @@ sites:
     mono: "SID"
     status: "queued"
     selectable: false
-    issue: "481"
+    issue: "1275"
     map_lat: 40.2842
     map_lon: -84.1558
     map_zoom: 12
@@ -246,7 +246,7 @@ sites:
     mono: "GRV"
     status: "queued"
     selectable: false
-    issue: "482"
+    issue: "1276"
     map_lat: 40.1023
     map_lon: -84.633
     map_zoom: 12
@@ -260,7 +260,7 @@ sites:
     mono: "WIL"
     status: "queued"
     selectable: false
-    issue: "492"
+    issue: "1277"
     map_lat: 39.4453
     map_lon: -83.8285
     map_zoom: 12
@@ -277,7 +277,7 @@ sites:
     mono: "WUN"
     status: "queued"
     selectable: false
-    issue: "1117"
+    issue: "1278"
     map_lat: 38.7945
     map_lon: -83.5452
     map_zoom: 13
@@ -293,7 +293,7 @@ sites:
     mono: "NAL"
     status: "tracking"
     selectable: false
-    issue: "485"
+    issue: "1279"
     map_lat: 40.09
     map_lon: -82.7763
     map_zoom: 12
@@ -307,7 +307,7 @@ sites:
     mono: "COL"
     status: "tracking"
     selectable: false
-    issue: "486"
+    issue: "1280"
     map_lat: 39.961
     map_lon: -83.004
     map_zoom: 13
@@ -321,7 +321,7 @@ sites:
     mono: "CSH"
     status: "tracking"
     selectable: false
-    issue: "495"
+    issue: "1281"
     map_lat: 40.272
     map_lon: -81.860
     map_zoom: 13
@@ -335,7 +335,7 @@ sites:
     mono: "PIK"
     status: "tracking"
     selectable: false
-    issue: "1063"
+    issue: "1282"
     map_lat: 39.068
     map_lon: -83.014
     map_zoom: 12
@@ -349,7 +349,7 @@ sites:
     mono: "SAN"
     status: "tracking"
     selectable: false
-    issue: "1064"
+    issue: "1283"
     map_lat: 41.4489
     map_lon: -82.7080
     map_zoom: 12
@@ -366,7 +366,7 @@ sites:
     mono: "NWK"
     status: "tracking"
     selectable: false
-    issue: "493"
+    issue: "1284"
     map_lat: null
     map_lon: null
     map_zoom: null
@@ -380,7 +380,7 @@ sites:
     mono: "ZAN"
     status: "tracking"
     selectable: false
-    issue: "494"
+    issue: "1285"
     map_lat: null
     map_lon: null
     map_zoom: null
@@ -396,7 +396,7 @@ sites:
     mono: "FRE"
     status: "tracking"
     selectable: false
-    issue: "496"
+    issue: "1286"
     map_lat: null
     map_lon: null
     map_zoom: null
@@ -410,7 +410,7 @@ sites:
     mono: "TIF"
     status: "tracking"
     selectable: false
-    issue: "497"
+    issue: "1287"
     map_lat: null
     map_lon: null
     map_zoom: null
@@ -424,7 +424,7 @@ sites:
     mono: "BUC"
     status: "tracking"
     selectable: false
-    issue: "498"
+    issue: "1288"
     map_lat: null
     map_lon: null
     map_zoom: null
@@ -440,7 +440,7 @@ sites:
     mono: "CLE"
     status: "tracking"
     selectable: false
-    issue: "499"
+    issue: "1289"
     map_lat: null
     map_lon: null
     map_zoom: null
@@ -454,7 +454,7 @@ sites:
     mono: "AKR"
     status: "tracking"
     selectable: false
-    issue: "500"
+    issue: "1290"
     map_lat: null
     map_lon: null
     map_zoom: null
@@ -470,7 +470,7 @@ sites:
     mono: "LRD"
     status: "tracking"
     selectable: false
-    issue: "501"
+    issue: "1291"
     map_lat: null
     map_lon: null
     map_zoom: null
@@ -484,7 +484,7 @@ sites:
     mono: "YNG"
     status: "tracking"
     selectable: false
-    issue: "502"
+    issue: "1292"
     map_lat: null
     map_lon: null
     map_zoom: null
@@ -500,7 +500,7 @@ sites:
     mono: "LAN"
     status: "tracking"
     selectable: false
-    issue: "503"
+    issue: "1293"
     map_lat: null
     map_lon: null
     map_zoom: null
@@ -514,7 +514,7 @@ sites:
     mono: "ATH"
     status: "tracking"
     selectable: false
-    issue: "504"
+    issue: "1294"
     map_lat: null
     map_lon: null
     map_zoom: null
@@ -528,7 +528,7 @@ sites:
     mono: "LOG"
     status: "tracking"
     selectable: false
-    issue: "505"
+    issue: "1295"
     map_lat: null
     map_lon: null
     map_zoom: null
