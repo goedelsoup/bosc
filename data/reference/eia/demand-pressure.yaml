@@ -7,6 +7,8 @@ facility_draw_mw:
     — total facility draw'
   confidence: medium
   asof: null
+  low: 302.5
+  high: 393.2
 load_factor:
   value: 0.9
   unit: fraction
@@ -14,6 +16,8 @@ load_factor:
   citation: data-center capacity utilization ~0.9 (near-flat 24x7 load); assumption
   confidence: low
   asof: null
+  low: null
+  high: null
 annual_consumption_gwh:
   value: 2742.8
   unit: GWh/yr
@@ -21,6 +25,8 @@ annual_consumption_gwh:
   citation: 347.9 MW x 8760 h x 0.9 load factor
   confidence: medium
   asof: null
+  low: null
+  high: null
 state_retail_sales_gwh:
   value: 161934.0
   unit: GWh/yr
@@ -28,6 +34,8 @@ state_retail_sales_gwh:
   citation: EIA ELEC.SALES.OH-ALL.A (2025); 161934 million kWh
   confidence: high
   asof: null
+  low: null
+  high: null
 demand_share_pct:
   value: 1.69
   unit: percent
@@ -35,6 +43,8 @@ demand_share_pct:
   citation: campus 2743 GWh / Ohio retail 161934 GWh
   confidence: medium
   asof: null
+  low: null
+  high: null
 avg_household_kwh_yr:
   value: 10500.0
   unit: kWh/yr
@@ -42,6 +52,8 @@ avg_household_kwh_yr:
   citation: US avg residential use ~10,500 kWh/household/yr (EIA FAQ); assumption
   confidence: low
   asof: null
+  low: null
+  high: null
 households_equivalent:
   value: 261219.0
   unit: households
@@ -49,6 +61,8 @@ households_equivalent:
   citation: campus 2742.8 GWh / 10500 kWh per household
   confidence: medium
   asof: null
+  low: null
+  high: null
 residential_price:
   value: 16.96
   unit: cents/kWh
@@ -56,15 +70,19 @@ residential_price:
   citation: EIA ELEC.PRICE.OH-RES.A (2025)
   confidence: high
   asof: null
+  low: null
+  high: null
 transmission_coefficient:
   value: 0.75
   unit: ratio
   source: assumption
-  citation: stylized demand-to-price transmission ~0.5-1.0 %price per %demand under
-    tight short-run supply; a SCREENING sensitivity, not an estimated elasticity or
-    forecast
+  citation: stylized demand-to-price transmission (%price per %demand) under tight
+    short-run supply — the low/high band is a SCREENING sensitivity, not an estimated
+    elasticity or forecast
   confidence: low
   asof: null
+  low: 0.5
+  high: 1.0
 price_pressure_pct_low:
   value: 0.85
   unit: percent
@@ -72,6 +90,8 @@ price_pressure_pct_low:
   citation: 1.69% demand x 0.5 transmission (STYLIZED lower bound)
   confidence: low
   asof: null
+  low: null
+  high: null
 price_pressure_pct_high:
   value: 1.69
   unit: percent
@@ -79,6 +99,8 @@ price_pressure_pct_high:
   citation: 1.69% demand x 1 transmission (STYLIZED upper bound)
   confidence: low
   asof: null
+  low: null
+  high: null
 method: 'facility draw (PUE-adjusted, #87) -> annual GWh -> share of EIA state retail
   sales + households-equivalent; price pressure = demand share x transmission coefficient
   (STYLIZED screening sensitivity, not a forecast)'

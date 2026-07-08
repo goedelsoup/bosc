@@ -87,6 +87,16 @@ def test_verbatim_constructors_take_no_range_kwargs() -> None:
         ProvenancedValue.from_document(1.0, "MW", citation="x", low=0.5)  # type: ignore[call-arg]
 
 
+def test_with_range_revalidates_the_bounds() -> None:
+    # model_copy(update=...) would bypass the range validator; with_range must not — an
+    # inverted band on a document central has to raise, not slip through.
+    central = ProvenancedValue.from_document(250.0, "MW", citation="air permit")
+    with pytest.raises(ValueError, match=r"range low .* exceeds value"):
+        central.with_range(low=300.0, high=350.0)
+    with pytest.raises(ValueError, match=r"range high .* is below value"):
+        central.with_range(low=100.0, high=200.0)
+
+
 def test_str_renders_the_band() -> None:
     v = ProvenancedValue.derived(226.0, "acre", citation="x", low=181.0, high=271.0)
     s = str(v)
