@@ -54,6 +54,12 @@
 /network/:site/watershed        /network/:site/environment                                     301
 /network/:site/watershed/*      /network/:site/environment/:splat                              301
 
+# The dev component showcases moved out of the per-site record tree to a network-global
+# `/showcase/*` root (#1333) — they're illustrative design previews, not per-site data.
+/network/:site/site/chart-showcase      /showcase/charts                                       301
+/network/:site/site/icon-showcase       /showcase/icons                                        301
+/network/:site/site/teardown-showcase   /showcase/teardown                                     301
+
 # Old network-hub URLs (pre-#402, when the hub was /network). The hub is now `/`; research is
 # /research/hypotheses. Exact rules only — /network/<slug> is real coming-soon content.
 /network                /                                                                      301

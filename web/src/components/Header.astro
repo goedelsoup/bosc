@@ -16,7 +16,14 @@ import {
 } from "../lib/nav";
 import { getHypotheses } from "../lib/bundle";
 import { withBase } from "../lib/site";
-import { currentSiteForPath, groupSites, SITE_STATUS_META, SITES, siteForPath } from "../lib/sites";
+import {
+  currentSiteForPath,
+  groupSites,
+  isNetworkGlobalUnderSite,
+  SITE_STATUS_META,
+  SITES,
+  siteForPath,
+} from "../lib/sites";
 
 interface Props {
   active: SectionId;
@@ -29,13 +36,19 @@ const base = import.meta.env.BASE_URL || "/";
 // route: inside a site (`here !== null`) → SITE tabs + the site chip; at the network
 // level (the directory + cross-cutting globals) → NETWORK tabs + the "All sites" chip.
 // The `Watermark.` wordmark always returns to the network home (the Directory).
-const here = siteForPath(Astro.url.pathname, base);
+//
+// One exception: a few surfaces are network-global (their nav home is a network tab) but keep
+// their routes physically under a site — Reports moved to Research ▾ (#1305) yet stay at
+// `/network/<id>/reports/*` (#1333). `isNetworkGlobalUnderSite` flags those so we null out the
+// site resolvers and the whole header renders network-tier, matching the tab you arrived from.
+const networkGlobalUnderSite = isNetworkGlobalUnderSite(Astro.url.pathname, base);
+const here = networkGlobalUnderSite ? null : siteForPath(Astro.url.pathname, base);
 // The switcher's *current* state — and now the tab tier — react to any `/network/<slug>` route,
 // including a coming-soon site (where `here`, the *built-site* resolver, is null). On a site page
 // the left tabs are site-tier: Lima (built, `here`) gets its real bundle-backed `siteTabs`; a
 // coming-soon peer gets a registry-only, mostly-locked bar (`comingSoonSiteTabs`) so the chrome
 // matches the chip instead of dropping to the network tabs (#793).
-const current = currentSiteForPath(Astro.url.pathname, base);
+const current = networkGlobalUnderSite ? null : currentSiteForPath(Astro.url.pathname, base);
 const tier: "network" | "site" = current ? "site" : "network";
 const hypItems = getHypotheses();
 const networkTabsList = networkTabs(hypItems);
