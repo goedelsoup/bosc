@@ -26,11 +26,17 @@ function loadScript(): Promise<void> {
   if (typeof document === "undefined") return Promise.resolve();
   if (window.turnstile) return Promise.resolve();
   if (!scriptPromise) {
-    scriptPromise = new Promise<void>((resolve) => {
+    scriptPromise = new Promise<void>((resolve, reject) => {
       const s = document.createElement("script");
       s.src = SCRIPT_SRC;
       s.async = true;
       s.onload = () => resolve();
+      // Reject (and clear the cache) on a failed/blocked load so the promise never hangs forever and
+      // a later mount can retry, rather than awaiting a resolve that will never come.
+      s.onerror = () => {
+        scriptPromise = null;
+        reject(new Error("failed to load Turnstile script"));
+      };
       document.head.appendChild(s);
     });
   }
@@ -50,14 +56,18 @@ export function useTurnstile(siteKey?: string): {
   useEffect(() => {
     if (!siteKey || !elRef.current) return;
     let cancelled = false;
-    loadScript().then(() => {
-      if (cancelled || !elRef.current || !window.turnstile) return;
-      widgetId.current = window.turnstile.render(elRef.current, {
-        sitekey: siteKey,
-        callback: (t) => setToken(t),
-        "expired-callback": () => setToken(""),
-      });
-    });
+    loadScript()
+      .then(() => {
+        if (cancelled || !elRef.current || !window.turnstile) return;
+        widgetId.current = window.turnstile.render(elRef.current, {
+          sitekey: siteKey,
+          callback: (t) => setToken(t),
+          "expired-callback": () => setToken(""),
+        });
+      })
+      // The widget just won't appear if the script is blocked — no unhandled rejection, and the
+      // form still submits (the server skips Turnstile unless its secret is set).
+      .catch(() => {});
     return () => {
       cancelled = true;
     };

@@ -26,7 +26,7 @@ from __future__ import annotations
 
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, computed_field
+from pydantic import BaseModel, ConfigDict, Field, HttpUrl, computed_field
 
 from watermark.provenance import Confidence as Confidence
 from watermark.provenance import SourceKind as SourceKind
@@ -498,7 +498,10 @@ class ContactLink(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     label: str  # short human label ("petition", "website", "Facebook")
-    url: str
+    # Validated http(s) URL: malformed or non-http(s) values (e.g. `javascript:`) are rejected at
+    # load time, so a curated link can never reach the frontend as an unsafe `href`. Serializes to a
+    # plain string in the bundle (`model_dump(mode="json")`), so the feed's wire shape is unchanged.
+    url: HttpUrl
 
 
 class ContactItem(BaseModel):
