@@ -424,6 +424,11 @@ export function siteTabs(): NavItem[] {
           locked: true,
         }
       : {
+          // "Themes it crosses" facets are standalone leaf routes (slugs), each its own page — not
+          // in-page anchors (#1323): every one is a real content page (the hydrology dashboard, the
+          // deck.gl map/air/seasonal/flow islands, the imagery viewer, the RSEI read), so a direct
+          // link is the right target. The economics baseline is economic ground, so it lives on the
+          // economy tab, not here.
           kind: "dropdown",
           label: "The environment",
           section: "environment",
@@ -457,11 +462,6 @@ export function siteTabs(): NavItem[] {
               blurb: "Month-by-month climograph",
             },
             { label: "Water flow", href: `${base}/environment/flow`, blurb: "Animated reach-network flow" },
-            {
-              label: "Economics baseline",
-              href: `${base}/environment/economics-baseline`,
-              blurb: "BLS QCEW · Census",
-            },
           ],
         },
     economyLocked
@@ -473,6 +473,10 @@ export function siteTabs(): NavItem[] {
           locked: true,
         }
       : {
+          // Like the environment facets (#1323), the economy "themes it crosses" are standalone leaf
+          // routes (slugs) — cross-links into the localized labor baseline, `/reports/*`, and
+          // `/docs/economics`. The labor baseline (BLS QCEW · Census) is the economics-baseline read:
+          // it lives here on the economy tab, not on environment, since it's economic ground.
           kind: "dropdown",
           label: "The economy",
           section: "economy",
@@ -486,7 +490,7 @@ export function siteTabs(): NavItem[] {
             {
               label: "Localized labor baseline",
               href: `${base}/environment/economics-baseline`,
-              blurb: "BLS QCEW + Census employment",
+              blurb: "BLS QCEW · Census employment",
             },
             {
               label: "End use & workloads",

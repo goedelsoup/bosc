@@ -237,7 +237,9 @@ export function buildSearchIndex(): SearchDoc[] {
     docs.push({
       title: "Economics — localized baseline",
       url: siteUrl("/environment/economics-baseline"),
-      section: getSection("environment").label,
+      // Economic ground, so it's filed under the economy section even though the route still
+      // lives under /environment/ (#1323).
+      section: getSection("economy").label,
       text: blob("BLS QCEW Census employment population baseline", eb.area_name, eb.note),
       kind: "Dataset",
     });
