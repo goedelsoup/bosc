@@ -288,6 +288,11 @@ export type NavItem =
  *  Submit is NOT here — it's a right-cluster affordance (see SUBMIT_LINK / the Header).
  *  Hypotheses come from the live feed so the dropdown labels stay in sync without hardcoding. */
 export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
+  // The two framing essays (research course + the bigger picture) are the author's investigation
+  // overview, re-homed out of the site-scoped `home` section into this network-global About area
+  // (#1308). Their routes stay per-site for now (`<base>/docs/<slug>`, option (a) as in #1305);
+  // the entry points at the active site's copy until the docs move global (#1304).
+  const docBase = siteBase(activeSite());
   const researchChildren: NavChild[] = [
     ...hypotheses.map((h) => ({ label: h.name, href: `/research/hypotheses?lens=${h.id}` })),
     ...(hypotheses.length > 0 ? [{ divider: true as const }] : []),
@@ -314,6 +319,17 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
       children: [
         { label: "About this site", href: "/about", blurb: "What Watermark is, and why" },
         { label: "Who runs this", href: "/about-me", blurb: "The team behind the record" },
+        { divider: true as const },
+        {
+          label: "Research course",
+          href: `${docBase}/docs/course`,
+          blurb: "What we're investigating — the open threads",
+        },
+        {
+          label: "The bigger picture",
+          href: `${docBase}/docs/bigger-picture`,
+          blurb: "Placed against the national data-center build-out",
+        },
         { divider: true as const },
         { label: "Data catalog", href: "/about/catalog", blurb: "Every dataset: source, license, freshness" },
         { divider: true as const },

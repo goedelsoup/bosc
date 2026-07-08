@@ -29,18 +29,23 @@ export const NARRATIVE: NarrativeDoc[] = [
   // `/methodology` hub (epic #1126), not a site-scoped narrative. The old route
   // `/network/[site]/docs/methodology` redirects there via a catch page
   // (pages/network/[site]/docs/methodology.astro).
+  // The two framing essays are the author's investigation overview, not per-site landing
+  // copy — re-homed out of the (site-scoped) `home` section into the network-global About
+  // area (#1308, part of the IA reorg #1309). `home` stays the Overview/landing section; only
+  // these docs move, so they group under "About" in the docs index/search and back-link to
+  // `/about` instead of the site root.
   {
     repo: "COURSE.md",
     slug: "course",
     title: "Research course",
-    section: "home",
+    section: "about",
     blurb: "What Watermark is investigating, and the open threads — a living draft.",
   },
   {
     repo: "bigger-picture.md",
     slug: "bigger-picture",
     title: "The bigger picture",
-    section: "home",
+    section: "about",
     blurb: "Project BOSC placed against the national data-center build-out.",
   },
   {
