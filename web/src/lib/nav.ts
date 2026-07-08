@@ -293,9 +293,19 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
   // (#1308). Their routes stay per-site for now (`<base>/docs/<slug>`, option (a) as in #1305);
   // the entry points at the active site's copy until the docs move global (#1304).
   const docBase = siteBase(activeSite());
+  // Reports are the long-form analysis over the corpus — an output of the research, so their nav
+  // home is this network-global Research dropdown, not the site tier (#1305). The routes stay
+  // per-site (`<base>/reports`, option (a)); the entry points at the active site's reports index.
+  const reportsHref = `${docBase}/reports`;
   const researchChildren: NavChild[] = [
     ...hypotheses.map((h) => ({ label: h.name, href: `/research/hypotheses?lens=${h.id}` })),
     ...(hypotheses.length > 0 ? [{ divider: true as const }] : []),
+    {
+      label: "Reports",
+      href: reportsHref,
+      blurb: "Long-form analysis over the corpus — the dossier, water, and economics reads",
+    },
+    { divider: true as const },
     // Basin views (design "Chrome": Research ▾ → Basin views) — Maumee is the one built today;
     // the other eight basins join here as their /basin pages land.
     { label: "The Maumee basin", href: "/basin", blurb: "Basin view — every site against the drainage" },
@@ -309,7 +319,7 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
       kind: "dropdown",
       label: "Research",
       section: "research",
-      match: ["connect"],
+      match: ["connect", "reports"],
       children: researchChildren,
     },
     {
@@ -318,6 +328,7 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
       section: "about",
       children: [
         { label: "About this site", href: "/about", blurb: "What Watermark is, and why" },
+        { label: "Mission", href: "/about/mission", blurb: "Why this project exists" },
         { label: "Who runs this", href: "/about-me", blurb: "The team behind the record" },
         { divider: true as const },
         {
@@ -334,6 +345,7 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
         { label: "Data catalog", href: "/about/catalog", blurb: "Every dataset: source, license, freshness" },
         { divider: true as const },
         { label: "Contributing", href: "/about/contributing" },
+        { label: "Privacy", href: "/privacy", blurb: "What we do and don't collect" },
       ],
     },
   ];
@@ -602,6 +614,8 @@ export function footerGroups(): FooterGroup[] {
         { label: CONNECT_LINK.label, href: CONNECT_LINK.href },
         { label: "Methodology", href: "/methodology" },
         { label: "About", href: "/about" },
+        { label: "Mission", href: "/about/mission" },
+        { label: "Privacy", href: "/privacy" },
       ],
     },
   ];

@@ -1,0 +1,209 @@
+---
+// /privacy — the privacy policy. A network-global route (site root, NOT site-prefixed):
+// the commitment is the platform's, not one watershed point's, so it lives beside
+// /about, /wiki, /ask (see the GLOBAL_ROUTE allowlist in lib/rehype-doc-links.ts).
+//
+// Content discipline (#1315): this is not boilerplate — every claim tracks a real
+// data surface in the code. Anonymous reading is static + trackerless; the paragraphs
+// below describe the *only* places user data is touched: the optional performance beacon
+// (functions/api/rum.ts), Ask (functions/api/ask.ts), Submit (functions/api/submit.ts),
+// and accounts (functions/api/account/* + auth/*, identity via Cognito, prefs in Lakebase
+// `user_prefs`). Account features ship dark behind AUTH_ENABLED, so they're framed as
+// conditional. Static + JS-off: no islands, no interactivity.
+import Base from "~/layouts/Base.astro";
+
+// Single source of truth for the stamp — bump when the policy's substance changes.
+const LAST_UPDATED = "8 July 2026";
+---
+
+<Base
+  title="Privacy"
+  section="about"
+  description="What Watermark does and doesn't collect: static, trackerless reading, and an honest account of the few surfaces that touch user data."
+>
+  <article class="prose privacy">
+    <p class="crumb"><a href="/about">← About</a></p>
+
+    <div class="eyebrow-bar">
+      <span class="eyebrow-rule" aria-hidden="true"></span>
+      <span class="eyebrow-label">Privacy policy</span>
+    </div>
+    <h1>Read without being watched<span class="period">.</span></h1>
+
+    <p class="lead">
+      Watermark is a static, public-record site. Reading it takes no account, sets no
+      cookies, and runs no analytics or advertising trackers — every page reads with
+      JavaScript off. This page states that plainly, and gives an honest account of the
+      few places where using the site does touch your data.
+    </p>
+
+    <p class="scope-note">
+      This describes the current build. Some surfaces below — accounts, email digests —
+      ship behind a switch and may not be live in this pre-launch site yet; when they are,
+      this is how they behave.
+    </p>
+
+    <h2 id="reading">Reading anonymously</h2>
+    <p>
+      The site is a set of static files served from <strong>Cloudflare Pages</strong>. Reading
+      any page — a record, a document, a report — requires no login and stores nothing on your
+      device for us. There are <strong>no advertising trackers, no analytics cookies, and no
+      third-party tags</strong>, and no page depends on JavaScript to be read.
+    </p>
+    <p>
+      Two small exceptions, both first-party and neither identifying you:
+    </p>
+    <ul>
+      <li>
+        <strong>Edge logs.</strong> Like any web host, Cloudflare processes your IP address and
+        request in transit to serve the page and block abuse. We use it transiently for
+        rate-limiting the interactive endpoints below; we don't build a profile from it.
+      </li>
+      <li>
+        <strong>Performance telemetry (optional).</strong> When enabled, the browser may send an
+        anonymous beacon of page-load timings (Core Web Vitals) and JavaScript errors to our
+        monitoring backend (Honeycomb) so we can keep the site fast and unbroken. It carries no
+        account, no name, and no reading history — just the technical shape of the page load.
+      </li>
+    </ul>
+    <p>
+      Interactive forms (Ask, Submit) use <strong>Cloudflare Turnstile</strong>, a
+      privacy-preserving alternative to CAPTCHA that verifies you're not a bot without the
+      cross-site tracking a conventional CAPTCHA does.
+    </p>
+
+    <h2 id="ask">When you ask the corpus</h2>
+    <p>
+      <a href="/ask">Ask the corpus</a> answers a question using only the extracted record. When
+      you submit a question, the text of that question is sent to <strong>Anthropic's API</strong>
+      to generate a cited answer from the retrieved sources, and your IP is used transiently to
+      rate-limit the endpoint. Your question isn't tied to an account and isn't kept as a profile
+      of you. Don't paste anything private into it — treat it like a public search box.
+    </p>
+
+    <h2 id="submit">When you submit a tip or correction</h2>
+    <p>
+      <a href="/submit">Submitting a tip, document, or correction</a> proposes an entry to a
+      <strong>public case file</strong>: what you type is used to open a labeled issue on our
+      public GitHub repository. Please don't put anything you wouldn't want on the public record
+      into the body of a submission.
+    </p>
+    <ul>
+      <li>
+        <strong>Optional contact.</strong> If you choose to leave a way to reach you, it's held in
+        a private channel keyed to your submission — <strong>never</strong> written to the public
+        issue — and is kept only briefly before it expires.
+      </li>
+      <li>
+        <strong>Attachments.</strong> Files you upload are stored to support the submission and
+        referenced from it.
+      </li>
+      <li>
+        Your IP is used transiently to rate-limit the endpoint and, with Turnstile, to keep out
+        spam. Sources are never named without consent.
+      </li>
+    </ul>
+
+    <h2 id="accounts">If you create an account</h2>
+    <p>
+      An account is entirely optional — nothing on the reading side requires one. If you do sign
+      up, identity is handled by <strong>AWS Cognito</strong>, which holds your email address, a
+      verified-email flag, and a stable user identifier. Sign-in uses a standard authorization-code
+      flow; your session's refresh token is kept in an <code>HttpOnly</code>, <code>Secure</code>
+      cookie that scripts on the page cannot read.
+    </p>
+    <p>
+      Your preferences live in our own database (Lakebase) under a <code>user_prefs</code> record
+      keyed to your account:
+    </p>
+    <ul>
+      <li>an optional display name;</li>
+      <li>notification preferences — which sites and categories you follow, and how often;</li>
+      <li>your digest opt-in state.</li>
+    </ul>
+    <p>
+      Your email is used only to send the digests and notifications you opt into. Every such email
+      carries a <strong>one-click unsubscribe</strong> that works from a signed link without
+      logging in, and you can change or clear these preferences any time from your
+      <a href="/account">account</a>.
+    </p>
+
+    <h2 id="never">What we never do</h2>
+    <p>
+      We do not sell, rent, or trade your data. We don't run advertising, we don't share your
+      information with ad networks or data brokers, and we don't track you across other sites.
+      The record is funded by <a href="/about/contributing">contributions</a>, not by your data.
+    </p>
+
+    <h2 id="rights">Access, correction &amp; deletion</h2>
+    <p>
+      You can reach the record team through the <a href="/submit">submission form</a> for any
+      privacy request — to see what's associated with your account, correct it, or have it deleted.
+      Deleting your account removes your stored preferences; an optional contact left with a
+      submission expires on its own. Corrections to the record itself run through the same
+      <a href="/submit">correction path</a>, published with a provenance note.
+    </p>
+
+    <p class="stamp">Last updated {LAST_UPDATED}</p>
+  </article>
+</Base>
+
+<style>
+  .privacy { max-width: 46rem; }
+  .privacy .crumb { font-size: 0.85rem; }
+
+  .eyebrow-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin: 0.6rem 0 1rem;
+  }
+  .eyebrow-rule {
+    display: inline-block;
+    width: 1.6rem;
+    height: 3px;
+    background: var(--forest);
+    flex-shrink: 0;
+  }
+  .eyebrow-label {
+    font-family: var(--bosc-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+  }
+  .privacy h1 .period { color: var(--forest); }
+
+  .privacy .lead {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--bosc-ink);
+    margin: 1.1rem 0 1.4rem;
+    max-width: 40ch;
+    text-wrap: pretty;
+  }
+
+  .privacy .scope-note {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--bosc-muted);
+    border-left: 3px solid var(--bosc-rule);
+    padding: 0.15rem 0 0.15rem 0.9rem;
+    margin: 0 0 2rem;
+  }
+
+  .privacy p,
+  .privacy li { line-height: 1.68; }
+  .privacy ul { padding-left: 1.1rem; }
+  .privacy li { margin: 0.4rem 0; }
+
+  .privacy .stamp {
+    font-family: var(--bosc-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--bosc-faint);
+    border-top: 1px solid var(--bosc-rule);
+    padding-top: 1rem;
+    margin-top: 2.75rem;
+  }
+</style>
