@@ -177,6 +177,28 @@ export function currentSiteForPath(pathname: string, base = ""): NetworkSite | n
   return matchSiteByPath(SITES, pathname, base, false);
 }
 
+/** Path patterns that live physically under a site (`/network/<id>/…`) but are network-global
+ *  surfaces (their nav home is a network tab), so the chrome must render network-tier, not the
+ *  site bar. Reports moved to the Research ▾ dropdown (#1305) but keep their per-site routes
+ *  (#1333). Matched against the remainder after the deploy base and the `/network/<id>` root are
+ *  stripped. */
+const NETWORK_GLOBAL_UNDER_SITE: RegExp[] = [/^\/reports(\/|$)/];
+
+/**
+ * True when `pathname` is a `/network/<id>/…` route that is nonetheless a **network-global**
+ * surface (see {@link NETWORK_GLOBAL_UNDER_SITE}). The header uses this to present such a page
+ * with network chrome even though its URL is under a site (#1333) — the tier is otherwise resolved
+ * purely by the `/network/<id>` prefix ({@link currentSiteForPath}).
+ */
+export function isNetworkGlobalUnderSite(pathname: string, base = ""): boolean {
+  let p = pathname;
+  if (base && base !== "/" && p.startsWith(base)) p = p.slice(base.length);
+  if (!p.startsWith("/")) p = `/${p}`;
+  const m = p.match(/^\/network\/[^/]+(\/.*)?$/);
+  if (!m) return false;
+  return NETWORK_GLOBAL_UNDER_SITE.some((re) => re.test(m[1] ?? "/"));
+}
+
 /** Shared core: the first site whose `href` is a prefix of `pathname`. `requireSelectable`
  *  restricts to built sites (the tab-tier resolver) vs any site (the switcher's current state). */
 function matchSiteByPath(

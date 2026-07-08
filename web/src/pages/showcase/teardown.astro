@@ -1,7 +1,4 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
-// Lima-only showcase: the teardown data (OPC_TEARDOWN, RDA_TEARDOWN) is Lima-specific.
-export const getStaticPaths = () => selectableSitePaths().filter((p) => p.props.slug === "lima");
 /**
  * Record Teardown — component preview (ported from the design handoff's
  * "Record Teardown — Showcase" board). Mounts the one component in all three

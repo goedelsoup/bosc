@@ -7,6 +7,7 @@ import {
   facilityStageIndex,
   facilityStatus,
   groupSites,
+  isNetworkGlobalUnderSite,
   SITE_STATUS_META,
   SITES,
   siteBadge,
@@ -256,5 +257,39 @@ describe("siteForPath — the switcher's current-site resolution (#316)", () => 
     expect(siteForPath("/app/network/american-sugar-creek-allen-co/site/", "/app")?.slug).toBe("lima");
     expect(siteForPath("/app/network/findlay", "/app")).toBeNull(); // coming-soon → neutral, even with a base
     expect(siteForPath("/network/american-sugar-creek-allen-co/site/", "/")?.slug).toBe("lima"); // base "/" is a no-op
+  });
+});
+
+describe("isNetworkGlobalUnderSite — reports render network-tier despite a per-site route (#1333)", () => {
+  it("is true for the reports index and its leaf pages under any site", () => {
+    for (const p of [
+      "/network/american-sugar-creek-allen-co/reports",
+      "/network/american-sugar-creek-allen-co/reports/",
+      "/network/american-sugar-creek-allen-co/reports/opc-scenario",
+      "/network/urbana/reports/the-economic-ledger",
+    ]) {
+      expect(isNetworkGlobalUnderSite(p)).toBe(true);
+    }
+  });
+
+  it("is false for genuine per-site surfaces and non-/network paths", () => {
+    for (const p of [
+      "/network/american-sugar-creek-allen-co",
+      "/network/american-sugar-creek-allen-co/site/records",
+      "/network/american-sugar-creek-allen-co/environment/map",
+      "/network/american-sugar-creek-allen-co/reportstore", // not a `/reports` boundary
+      "/",
+      "/research/hypotheses",
+      "/reports/opc-scenario", // root-legacy path, not under /network/<id>
+    ]) {
+      expect(isNetworkGlobalUnderSite(p)).toBe(false);
+    }
+  });
+
+  it("strips a non-root Astro base before matching", () => {
+    expect(isNetworkGlobalUnderSite("/app/network/american-sugar-creek-allen-co/reports/", "/app")).toBe(
+      true,
+    );
+    expect(isNetworkGlobalUnderSite("/app/network/american-sugar-creek-allen-co/site/", "/app")).toBe(false);
   });
 });
