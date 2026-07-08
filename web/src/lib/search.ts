@@ -79,7 +79,7 @@ export function buildSearchIndex(): SearchDoc[] {
     docs.push({
       title: d.title,
       url: siteUrl(`/site/reference/${d.slug}`),
-      section: "The corpus",
+      section: "The record",
       text: blob("reference data", d.blurb),
       kind: "Reference",
     });
@@ -90,13 +90,13 @@ export function buildSearchIndex(): SearchDoc[] {
     docs.push({
       title: d.title,
       url: siteUrl(`/site/legal/${d.slug}`),
-      section: "The corpus",
+      section: "The record",
       text: blob(d.group, d.blurb),
       kind: "Legal",
     });
   }
 
-  const SITE = "The corpus";
+  const SITE = "The record";
   const WIKI = "Wiki";
 
   if (hasFeed("records")) {

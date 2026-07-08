@@ -4,18 +4,20 @@ import { withBase } from "../lib/site";
 ---
 
 <Base
-  title="Who keeps the record"
+  title="My research"
   section="about"
-  description="Who's assembling Watermark, and why."
+  description="How I assemble the record — the method, its gaps, and who keeps it."
 >
   <article class="prose">
     <p>
       <a href={withBase("/about")}>← About the project</a>
     </p>
-    <h1>Who keeps the record</h1>
+    <h1>My research</h1>
     <p class="section-lead">
       Watermark is assembled by the record team, working entirely from
-      public records — documents the developer didn't write.
+      public records — documents the developer didn't write. This is that
+      research: the method it's held to, what it's still missing, and how to
+      correct it.
     </p>
 
     <p>
@@ -23,6 +25,31 @@ import { withBase } from "../lib/site";
       source, validated against a typed schema, tagged for confidence, and linked back so
       you never have to take our word for it. If something here is wrong, that's a record to
       correct, not a verdict to defend.
+    </p>
+
+    <div class="about-method">
+      <div class="about-method-label">The method</div>
+      <div class="about-method-flow">
+        <span class="about-chip">source</span><span class="about-arrow" aria-hidden="true">→</span>
+        <span class="about-chip">structured read</span><span class="about-arrow" aria-hidden="true">→</span>
+        <span class="about-chip">meaning</span><span class="about-arrow" aria-hidden="true">→</span>
+        <span class="about-chip">verify</span>
+      </div>
+    </div>
+
+    <p>
+      How the record is built and labeled — the evidence tags, the schema, and the
+      chain of custody — is written up in full in the
+      <a href={withBase("/methodology")}>methodology</a>.
+    </p>
+
+    <h2>What the record is still missing</h2>
+    <p>
+      The research is honest about its gaps. Every dataset behind this site — its
+      source, license, freshness, and what it doesn't yet cover — is tracked in the
+      <a href={withBase("/about/catalog")}>data catalog</a>, the standing successor to
+      the hand-maintained corpus-completeness audit. What's withheld or unresolved is
+      marked <code>[open]</code>, never dressed as fact.
     </p>
 
     <ul class="about-principles">
