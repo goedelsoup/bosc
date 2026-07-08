@@ -69,5 +69,11 @@ notes: >-
   from the NASA POWER normals, screened against the cited Ottawa low flows and the buildout scenario
   draw), reference-site gated and `reference`-provenanced; it reads the committed climate + low-flow
   reference datasets + the buildout scenario already declared, so it adds no new committed dependency.
+  The `contacts` feed (contract 1.24.0) is the curated per-site contacts directory — the human
+  contact points a reader can reach (petitioners, organizers, officials, groups, outlets) — read from
+  the committed `data/site/contacts.yaml` (slug-scoped like `leads`/`exhibits`, so a sibling carries
+  its own; absent → the feed is skipped and the section locks). It's curated site content, not a
+  catalog-tracked reference dataset, so it adds no new committed upstream; it's the spine the
+  interactive petition-connect + bulletin surfaces reference.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.
