@@ -564,6 +564,41 @@ const platformGlobals: { label: string; href: string; section: SectionId }[] = [
     }
   })();
 
+  // Chrome dropdowns (#1319): native <details> don't know about one another, so opening
+  // one leaves an already-open sibling open. Progressive enhancement over the no-JS baseline:
+  // close every other open dropdown when one opens, and close open ones on outside-click / Escape.
+  (function () {
+    var SEL = "details.site-switcher, details.nav-dd";
+    var dropdowns = Array.prototype.slice.call(document.querySelectorAll(SEL));
+    if (!dropdowns.length) return;
+
+    dropdowns.forEach(function (dd) {
+      dd.addEventListener("toggle", function () {
+        if (!dd.open) return;
+        dropdowns.forEach(function (other) {
+          if (other !== dd && other.open) other.open = false;
+        });
+      });
+    });
+
+    document.addEventListener("click", function (e) {
+      dropdowns.forEach(function (dd) {
+        if (dd.open && !dd.contains(e.target)) dd.open = false;
+      });
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape") return;
+      dropdowns.forEach(function (dd) {
+        if (dd.open) {
+          dd.open = false;
+          var summary = dd.querySelector("summary");
+          if (summary) summary.focus();
+        }
+      });
+    });
+  })();
+
   // V2 place filter — filters .switcher-row-v2 elements by place name.
   var filterInput = document.getElementById("sw-v2-filter");
   if (filterInput) {
