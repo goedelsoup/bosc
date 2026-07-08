@@ -44,8 +44,9 @@ _HOUSEHOLD_GAS_CITE = (
 # tight short-run supply. A SCREENING band, not an estimated elasticity.
 _KAPPA_LOW, _KAPPA_HIGH = 0.5, 1.0
 _KAPPA_CITE = (
-    "stylized demand-to-price transmission ~0.5-1.0 %price per %demand under tight "
-    "short-run supply; a SCREENING sensitivity, not an estimated elasticity or forecast"
+    "stylized demand-to-price transmission (%price per %demand) under tight short-run "
+    "supply — the low/high band is a SCREENING sensitivity, not an estimated elasticity "
+    "or forecast"
 )
 
 
@@ -113,6 +114,10 @@ def derive_demand_pressure(
             round(draw_mw, 1),
             "MW",
             citation=f"PowerBasis.facility_draw central (#87): {power.facility_draw.citation or ''}",
+            # Carry through the PUE band from PowerBasis.facility_draw (#760) rather than
+            # dropping the upstream uncertainty at the feed boundary.
+            low=power.facility_draw.low,
+            high=power.facility_draw.high,
         ),
         load_factor=ProvenancedValue.assume(_LOAD_FACTOR, "fraction", why=_LOAD_FACTOR_CITE),
         annual_consumption_gwh=ProvenancedValue.derived(
@@ -144,7 +149,13 @@ def derive_demand_pressure(
             citation=f"EIA {price.series_id} ({price.period})",
         ),
         transmission_coefficient=ProvenancedValue.assume(
-            round(kappa_central, 2), "ratio", why=_KAPPA_CITE
+            # The central is the band mean; carry the 0.5-1.0 spread as data (#760) instead
+            # of only in the citation prose.
+            round(kappa_central, 2),
+            "ratio",
+            why=_KAPPA_CITE,
+            low=_KAPPA_LOW,
+            high=_KAPPA_HIGH,
         ),
         price_pressure_pct_low=ProvenancedValue.derived(
             round(share_pct * _KAPPA_LOW, 2),

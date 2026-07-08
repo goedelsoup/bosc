@@ -7,8 +7,8 @@
     "citation": "PowerBasis.facility_draw central (#87): 275 MW IT x PUE 1.265 (band mean) — total facility draw",
     "confidence": "medium",
     "asof": null,
-    "low": null,
-    "high": null
+    "low": 302.5,
+    "high": 393.2
   },
   "load_factor": {
     "value": 0.9,
@@ -84,11 +84,11 @@
     "value": 0.75,
     "unit": "ratio",
     "source": "assumption",
-    "citation": "stylized demand-to-price transmission ~0.5-1.0 %price per %demand under tight short-run supply; a SCREENING sensitivity, not an estimated elasticity or forecast",
+    "citation": "stylized demand-to-price transmission (%price per %demand) under tight short-run supply — the low/high band is a SCREENING sensitivity, not an estimated elasticity or forecast",
     "confidence": "low",
     "asof": null,
-    "low": null,
-    "high": null
+    "low": 0.5,
+    "high": 1.0
   },
   "price_pressure_pct_low": {
     "value": 0.85,

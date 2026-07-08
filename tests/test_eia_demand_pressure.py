@@ -223,6 +223,24 @@ def test_demand_pressure_band_is_stylized_and_flagged(econ_settings: Settings) -
     assert dp.residential_price.verified
 
 
+def test_demand_pressure_carries_the_ranges_as_data(econ_settings: Settings) -> None:
+    """#760: the PUE band on PowerBasis.facility_draw propagates to facility_draw_mw, and
+    the transmission coefficient carries its 0.5-1.0 stylized band as low/high (not prose)."""
+    dp = derive_demand_pressure(settings=econ_settings)
+    power = derive_power_basis(settings=econ_settings)
+
+    # facility_draw_mw is banded, tracking the upstream PowerBasis.facility_draw bounds.
+    assert dp.facility_draw_mw.has_range
+    assert dp.facility_draw_mw.low == pytest.approx(power.facility_draw.low)
+    assert dp.facility_draw_mw.high == pytest.approx(power.facility_draw.high)
+
+    # The transmission coefficient's spread is data; its citation no longer embeds the range.
+    tc = dp.transmission_coefficient
+    assert tc.has_range and tc.low == 0.5 and tc.high == 1.0
+    assert tc.low < tc.value < tc.high
+    assert "0.5-1.0" not in (tc.citation or "")
+
+
 def test_committed_consumer_energy_loads() -> None:
     """The committed reference YAML round-trips into the model (what the scenario reads)."""
     costs = load_consumer_energy(Settings(data_dir=REPO_ROOT / "data"))

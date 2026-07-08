@@ -247,7 +247,9 @@ class ProvenancedValue(BaseModel):
         constructors stay range-free so a plain figure never sprouts a spurious band.
         """
         lo, hi = _resolve_bounds(self.value, low, high, plus_minus, rel_uncertainty)
-        return self.model_copy(update={"low": lo, "high": hi})
+        # Rebuild through validation — model_copy(update=...) would bypass _check_range and
+        # let an invalid low>value / high<value band reach the copy.
+        return self.model_validate({**self.model_dump(), "low": lo, "high": hi})
 
     @property
     def verified(self) -> bool:
