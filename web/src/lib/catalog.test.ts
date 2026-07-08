@@ -142,13 +142,13 @@ describe("loadCatalog", () => {
     expect(kinds.has("doc")).toBe(true); // narrative/legal/reference
     expect(kinds.has("teardown")).toBe(true); // ALL_TEARDOWNS with a recordRel
     expect(kinds.has("figure")).toBe(true); // curated viz registry
-    // Lima's Project BOSC walk is hidden (#1256): its overlay entry is marked `hidden`, so its
-    // chapters are grabbable nowhere — the catalog carries no `chapter` atom for Lima.
-    expect(kinds.has("chapter")).toBe(false);
-    expect(m.webOnlyAtoms("lima").some((a) => a.kind === "chapter")).toBe(false);
+    // Lima surfaces its Project BOSC walk (its overlay entry is not `hidden`), so its chapters are
+    // grabbable — the catalog carries `chapter` atoms for Lima.
+    expect(kinds.has("chapter")).toBe(true);
+    expect(m.webOnlyAtoms("lima").some((a) => a.kind === "chapter")).toBe(true);
   });
 
-  it("surfaces chapters only for a site whose story is registered (Fort Wayne, not hidden Lima)", async () => {
+  it("surfaces chapters for a site whose story is registered and surfaced", async () => {
     const dir = makeBundle([]);
     const m = await loadCatalogModule(dir);
     // Fort Wayne keeps its Project Zodiac overlay entry, so its chapters stay grabbable; every

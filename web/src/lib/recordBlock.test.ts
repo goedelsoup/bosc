@@ -75,18 +75,18 @@ describe("recordToBlock", () => {
     expect(b2.source.file).toBe("permits/4132514.epa.yaml"); // falls back to rel
   });
 
-  it("omits the walk backlink while the active site surfaces no story (#1256)", () => {
-    // The active site under vitest is Lima, whose Project BOSC walk is now hidden (#1256). The
-    // record→chapter backlink resolves against the *active site's surfaced story* — none here — so
-    // even a record that anchors a (now-hidden) chapter carries no `seenIn` and no `walk` connect
-    // chip. It leaves only the group (`records`) chip. The anchor-resolution mechanism itself is
-    // covered in walk.test (`storyAnchorFor` / `activeStoryAnchorFor`).
+  it("adds the walk backlink for a record the active site's surfaced story anchors (#1256)", () => {
+    // The active site under vitest is Lima, which surfaces its Project BOSC walk. The record→chapter
+    // backlink resolves against the *active site's surfaced story*, so a record that anchors a
+    // chapter carries a `seenIn` and a `walk` connect chip alongside the group (`records`) chip. A
+    // record that anchors no chapter carries only the group chip. The anchor-resolution mechanism
+    // itself is covered in walk.test (`storyAnchorFor` / `activeStoryAnchorFor`).
     const anchored = recordToBlock(baseRecord({ rel: "aedg/roundabouts.summary.opc.yaml", group: "aedg" }));
-    expect(anchored.seenIn).toBeUndefined();
-    expect(anchored.connect.map((c) => c.kind)).toEqual(["records"]);
+    expect(anchored.seenIn).toBeDefined();
+    expect(anchored.connect.map((c) => c.kind)).toEqual(["records", "walk"]);
 
-    const air = recordToBlock(baseRecord());
-    expect(air.seenIn).toBeUndefined();
-    expect(air.connect.some((c) => c.kind === "walk")).toBe(false);
+    const unanchored = recordToBlock(baseRecord({ rel: "permits/9999999.epa.yaml" }));
+    expect(unanchored.seenIn).toBeUndefined();
+    expect(unanchored.connect.some((c) => c.kind === "walk")).toBe(false);
   });
 });
