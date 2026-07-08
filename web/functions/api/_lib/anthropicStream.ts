@@ -75,7 +75,8 @@ export async function* streamMessage(
       body: JSON.stringify({
         model: req.model,
         max_tokens: req.maxTokens,
-        temperature: req.temperature ?? 0,
+        // Only include `temperature` when a caller set one — newer models reject it (see MessageRequest).
+        ...(req.temperature !== undefined ? { temperature: req.temperature } : {}),
         system: req.system,
         messages: req.messages,
         stream: true,
