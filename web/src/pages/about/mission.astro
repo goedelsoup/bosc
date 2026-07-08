@@ -1,0 +1,263 @@
+---
+// /about/mission — the mission statement: why Watermark / the BOSC network exists.
+// Network-global route (no withSite wrapper; /about-family is treated as global by
+// rehype-doc-links GLOBAL_ROUTE). Complements /about ("what this is") and /about-me
+// ("who runs this") with the standing "why". Prose-heavy; self-contained scoped styles
+// mirror the sibling about/*.astro pages (contributing, sustainability). #1314
+import Base from "~/layouts/Base.astro";
+import { withBase } from "~/lib/site";
+
+// The commitments the rest of the site is held to. Same principles asserted on /about
+// (provenance-first, static & durable, correctable, no trackers/accounts), framed here
+// as a standing mission rather than a description of the method.
+const COMMITMENTS = [
+  {
+    label: "Provenance-first",
+    body:
+      "Every figure carries its source and an evidence tag. Inference is labelled as inference, " +
+      "never dressed as fact; what's withheld is marked, not hidden. You never have to take our word " +
+      "over the record's.",
+  },
+  {
+    label: "Static & durable",
+    body:
+      "The record has to outlast the news cycle. Every page is static, reads with JavaScript off, and " +
+      "stays checkable against its cited source — built to still be here when the decision it documents " +
+      "still matters.",
+  },
+  {
+    label: "Correctable",
+    body:
+      "A public record earns trust by being fixable in the open. Every record links to a correction, " +
+      "and corrections are published with a provenance note rather than quietly applied.",
+  },
+  {
+    label: "No trackers, no accounts",
+    body:
+      "Reading the record costs nothing and asks nothing. No accounts, no trackers, no paywalls, no data " +
+      "sales — the incentive is to keep the record honest, not to monetize the reader.",
+  },
+];
+---
+
+<Base
+  title="Our mission — Watermark"
+  section="about"
+  description="Why Watermark exists: to keep the public record behind a public decision public — readable, citable, and checkable by anyone."
+>
+  <article class="mission-page">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="eyebrow-bar">
+        <span class="eyebrow-rule" aria-hidden="true"></span>
+        <span class="eyebrow-label">Our mission</span>
+      </div>
+      <h1 class="hero-title">Keep the public record public<span class="period">.</span></h1>
+      <p class="hero-body">
+        Watermark exists so that the public record behind a public decision stays public — readable,
+        citable, and checkable by anyone, for as long as the decision matters.
+      </p>
+    </section>
+
+    <hr class="section-rule" />
+
+    <!-- STATEMENT -->
+    <section class="content-section">
+      <div class="section-header">
+        <span class="section-label">Why we do this</span>
+        <span class="header-rule" aria-hidden="true"></span>
+      </div>
+      <p class="statement">
+        When a data-center campus, a permit, or a spending line reshapes a place, the documents that
+        authorize it already exist. They're just scattered across agencies, buried in degraded scans, and
+        effectively unreadable — public in name, private in practice.
+      </p>
+      <p class="statement">
+        Our mission is to turn that scattered record into one anyone can follow: read from the source,
+        said plainly, and linked back so the reader can check it. Not a verdict, not an argument to be
+        trusted — a record to be verified. We build it so the people a decision lands on can hold it to
+        account with the same documents that authorized it.
+      </p>
+    </section>
+
+    <!-- COMMITMENTS -->
+    <section class="content-section">
+      <div class="section-header">
+        <span class="section-label">What we commit to</span>
+        <span class="header-rule" aria-hidden="true"></span>
+      </div>
+      <p class="section-body">
+        The mission is only as good as the discipline behind it. These are the standing commitments the
+        rest of the site is held to — the same ones asserted across the record itself.
+      </p>
+      <ul class="commitments">
+        {COMMITMENTS.map((c) => (
+          <li class="commitment">
+            <div class="commitment-label">{c.label}</div>
+            <p class="commitment-body">{c.body}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <p class="mission-meta">
+      <a href={withBase("/about")}>What this is →</a>
+      <span class="meta-sep" aria-hidden="true">·</span>
+      <a href={withBase("/about-me")}>Who runs this →</a>
+      <span class="meta-sep" aria-hidden="true">·</span>
+      <a href={withBase("/methodology")}>The method →</a>
+    </p>
+
+  </article>
+</Base>
+
+<style>
+  .mission-page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 72px 40px 120px;
+    color: var(--ink);
+    font-family: var(--bosc-sans);
+  }
+
+  /* Hero */
+  .hero { margin-bottom: 64px; }
+  .eyebrow-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .eyebrow-rule {
+    display: inline-block;
+    width: 28px;
+    height: 3px;
+    background: var(--forest);
+    flex-shrink: 0;
+  }
+  .eyebrow-label {
+    font-family: var(--bosc-mono);
+    font-size: 11px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .hero-title {
+    margin: 0 0 18px;
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -1.6px;
+    line-height: 1.03;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .hero-title .period { color: var(--forest-bright); }
+  .hero-body {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--ink-prose);
+    max-width: 660px;
+    text-wrap: pretty;
+  }
+
+  .section-rule {
+    border: 0;
+    border-top: 1px solid var(--line-hair);
+    margin-bottom: 64px;
+  }
+
+  /* Sections */
+  .content-section { margin-bottom: 72px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .section-label {
+    font-family: var(--bosc-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink);
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .header-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--line-hair);
+  }
+  .statement {
+    margin: 0 0 20px;
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink-prose);
+    max-width: 660px;
+    text-wrap: pretty;
+  }
+  .statement:last-child { margin-bottom: 0; }
+  .section-body {
+    margin: 0 0 32px;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ink-prose);
+    max-width: 640px;
+    text-wrap: pretty;
+  }
+
+  /* Commitments */
+  .commitments {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--line-faint);
+  }
+  .commitment {
+    padding: 22px 0 22px 22px;
+    border-bottom: 1px solid var(--line-faint);
+    border-left: 3px solid var(--forest);
+  }
+  .commitment-label {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .commitment-body {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink-prose);
+    max-width: 640px;
+    text-wrap: pretty;
+  }
+
+  /* Meta footer */
+  .mission-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 0;
+    padding-top: 28px;
+    border-top: 1px solid var(--line-hair);
+    font-family: var(--bosc-mono);
+    font-size: 13px;
+  }
+  .mission-meta a {
+    color: var(--forest);
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+  }
+  .mission-meta a:hover { color: var(--forest-bright); }
+  .meta-sep { color: var(--ink-ghost); }
+
+  @media (max-width: 700px) {
+    .mission-page { padding: 48px 20px 80px; }
+    .hero-title { font-size: 36px; }
+  }
+</style>

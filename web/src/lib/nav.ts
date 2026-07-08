@@ -323,6 +323,7 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
       section: "about",
       children: [
         { label: "About this site", href: "/about", blurb: "What Watermark is, and why" },
+        { label: "Mission", href: "/about/mission", blurb: "Why this project exists" },
         { label: "Who runs this", href: "/about-me", blurb: "The team behind the record" },
         { divider: true as const },
         { label: "Data catalog", href: "/about/catalog", blurb: "Every dataset: source, license, freshness" },
@@ -597,6 +598,7 @@ export function footerGroups(): FooterGroup[] {
         { label: CONNECT_LINK.label, href: CONNECT_LINK.href },
         { label: "Methodology", href: "/methodology" },
         { label: "About", href: "/about" },
+        { label: "Mission", href: "/about/mission" },
         { label: "Privacy", href: "/privacy" },
       ],
     },
