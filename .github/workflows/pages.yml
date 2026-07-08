@@ -22,6 +22,9 @@
 #     CLOUDFLARE_ACCOUNT_ID.
 #   - Repo var PUBLIC_TURNSTILE_SITE_KEY (public; from `pulumi stack output
 #     turnstileSiteKey`) — flips the /submit form from disabled-placeholder to live.
+#   - Optional repo vars PUBLIC_STRIPE_LINK_{FOLLOWER,CONTRIBUTOR,SUSTAINER,ONETIME}
+#     (public Stripe Payment Link URLs, #969) — setting the three monthly-tier vars flips
+#     the Donate section of /about/contributing live; ONETIME gates the one-time strip.
 #   - Optional repo vars PAGES_SITE_URL / PAGES_BASE_PATH for the custom subdomain (the
 #     Pulumi-managed Route53 CNAME → the-watermark-directory.pages.dev); defaults target
 #     the-watermark-directory.pages.dev at the root (no base path).
@@ -57,6 +60,15 @@ jobs:
       # variable, from `pulumi stack output turnstileSiteKey`); until it's set the form
       # renders its disabled placeholder. Setting it flips the form live.
       PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.PUBLIC_TURNSTILE_SITE_KEY }}
+      # Stripe Payment Link URLs for the Donate section of /about/contributing (#969). Read
+      # at *build* time (import.meta.env in src/lib/donate.ts), so they must be present here.
+      # Public (a payment link is not a secret) — repo variables. Until the three monthly-tier
+      # links are set the Donate section stays hidden; setting them flips it live (the
+      # one-time strip gates separately on PUBLIC_STRIPE_LINK_ONETIME).
+      PUBLIC_STRIPE_LINK_FOLLOWER: ${{ vars.PUBLIC_STRIPE_LINK_FOLLOWER }}
+      PUBLIC_STRIPE_LINK_CONTRIBUTOR: ${{ vars.PUBLIC_STRIPE_LINK_CONTRIBUTOR }}
+      PUBLIC_STRIPE_LINK_SUSTAINER: ${{ vars.PUBLIC_STRIPE_LINK_SUSTAINER }}
+      PUBLIC_STRIPE_LINK_ONETIME: ${{ vars.PUBLIC_STRIPE_LINK_ONETIME }}
     steps:
       - uses: actions/checkout@v4
         with:

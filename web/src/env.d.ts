@@ -26,6 +26,18 @@ interface ImportMetaEnv {
    * /api/rum beacon no-ops when that flag is absent. See docs/rum.md.
    */
   readonly PUBLIC_RUM_ENABLED?: string;
+  /**
+   * Stripe Payment Link URLs for the Donate section of /about/contributing (#969). Public
+   * (a payment link is not a secret). Read at build time by `src/lib/donate.ts`; when the
+   * three monthly-tier links are unset the whole Donate section is hidden (ships dark, same
+   * pattern as Turnstile above). Set as repo vars in the Pages build env once the Stripe
+   * account is live — no code change flips the section on.
+   */
+  readonly PUBLIC_STRIPE_LINK_FOLLOWER?: string;
+  readonly PUBLIC_STRIPE_LINK_CONTRIBUTOR?: string;
+  readonly PUBLIC_STRIPE_LINK_SUSTAINER?: string;
+  /** One-time contribution Payment Link (custom or fixed amount); gates the one-time strip. */
+  readonly PUBLIC_STRIPE_LINK_ONETIME?: string;
 }
 
 interface ImportMeta {
