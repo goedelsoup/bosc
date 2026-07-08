@@ -572,30 +572,38 @@ const platformGlobals: { label: string; href: string; section: SectionId }[] = [
     var dropdowns = Array.prototype.slice.call(document.querySelectorAll(SEL));
     if (!dropdowns.length) return;
 
-    dropdowns.forEach(function (dd) {
-      dd.addEventListener("toggle", function () {
-        if (!dd.open) return;
-        dropdowns.forEach(function (other) {
-          if (other !== dd && other.open) other.open = false;
-        });
-      });
-    });
-
-    document.addEventListener("click", function (e) {
+    // Close every open dropdown for which shouldClose(dd) is true. When restoreFocus is
+    // set, focus returns to the closed dropdown's summary (keyboard Escape affordance).
+    function closeDropdowns(shouldClose, restoreFocus) {
       dropdowns.forEach(function (dd) {
-        if (dd.open && !dd.contains(e.target)) dd.open = false;
-      });
-    });
-
-    document.addEventListener("keydown", function (e) {
-      if (e.key !== "Escape") return;
-      dropdowns.forEach(function (dd) {
-        if (dd.open) {
-          dd.open = false;
+        if (!dd.open || !shouldClose(dd)) return;
+        dd.open = false;
+        if (restoreFocus) {
           var summary = dd.querySelector("summary");
           if (summary) summary.focus();
         }
       });
+    }
+
+    dropdowns.forEach(function (dd) {
+      // Opening one dropdown collapses the others.
+      dd.addEventListener("toggle", function () {
+        if (dd.open) closeDropdowns(function (other) { return other !== dd; });
+      });
+      // Tabbing focus out of an open dropdown collapses it too, so its state matches focus.
+      dd.addEventListener("focusout", function (e) {
+        if (dd.open && !dd.contains(e.relatedTarget)) dd.open = false;
+      });
+    });
+
+    // Outside-click collapses any dropdown the click landed outside of.
+    document.addEventListener("click", function (e) {
+      closeDropdowns(function (dd) { return !dd.contains(e.target); });
+    });
+
+    // Escape collapses all open dropdowns and restores focus to their summary.
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeDropdowns(function () { return true; }, true);
     });
   })();
 
