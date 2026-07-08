@@ -256,14 +256,15 @@ a { color: var(--bosc-link); }
 .nav-dd-item-blurb { font-size: var(--fs-caption); color: var(--bosc-faint); }
 .nav-dd-hr { border: 0; border-top: 1px solid var(--bosc-rule); margin: 0.3rem 0; }
 
-/* "The site" mega-menu (design "Chrome") — a wider panel: two intro tiles, the story spine, and
-   the themes it crosses. Matches the light bone dropdown aesthetic (not the comp's dark panel). */
+/* "The site" mega-menu (design "Chrome") — two intro tiles + the story spine. The environment and
+   economy themes it used to cross are first-class dropdown tabs now (#1307), so this is a single
+   spine column. Matches the light bone dropdown aesthetic (not the comp's dark panel). */
 .nav-mega { position: relative; }
 .nav-mega-menu {
   position: absolute;
   top: 100%; /* flush under the bar, same as the simple dropdown */
   left: 0;
-  width: 41rem;
+  width: 26rem;
   max-width: calc(100vw - 2rem);
   background: var(--bosc-bg);
   color: var(--bosc-ink);
@@ -277,8 +278,8 @@ a { color: var(--bosc-link); }
 .nav-mega-tile:hover { border-color: var(--bosc-forest); }
 .nav-mega-tile-label { font-size: var(--fs-sm); font-weight: 800; }
 .nav-mega-tile-blurb { font-size: var(--fs-caption); color: var(--bosc-faint); }
-.nav-mega-cols { display: grid; grid-template-columns: 1fr 1fr; }
-.nav-mega-spine { padding: var(--sp-3) var(--sp-4); border-right: 1px solid var(--bosc-rule); }
+.nav-mega-cols { display: block; }
+.nav-mega-spine { padding: var(--sp-3) var(--sp-4); }
 .nav-mega-spine-head { display: flex; align-items: baseline; gap: var(--sp-2); text-decoration: none; }
 .nav-mega-spine-title { font-size: var(--fs-micro); font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; color: var(--bosc-forest); }
 .nav-mega-spine-count { font-size: var(--fs-nano); color: var(--bosc-faint); font-family: var(--bosc-mono); }
@@ -290,22 +291,10 @@ a { color: var(--bosc-link); }
 .nav-mega-link-label { font-size: var(--fs-caption); font-weight: 600; line-height: 1.25; }
 .nav-mega-link-blurb { font-size: var(--fs-micro); color: var(--bosc-faint); }
 .nav-mega-toc { display: inline-block; margin-top: 0.45rem; padding: var(--sp-1) var(--sp-2); font-size: var(--fs-caption); font-weight: 700; color: var(--bosc-forest); text-decoration: none; }
-.nav-mega-themes { padding: var(--sp-3) var(--sp-4); }
-.nav-mega-themes-head { font-size: var(--fs-micro); font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; color: var(--bosc-faint); margin-bottom: 0.5rem; }
-.nav-mega-themes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-2) var(--sp-2); }
-.nav-mega-theme-title { display: block; font-size: var(--fs-caption); font-weight: 700; color: var(--bosc-ink-green); margin-bottom: 0.15rem; text-decoration: none; }
-.nav-mega-theme-title:hover { color: var(--bosc-forest); }
-.nav-mega-tlink { display: block; padding: var(--sp-1) 0; font-size: var(--fs-caption); color: var(--bosc-muted); text-decoration: none; }
-.nav-mega-tlink:hover { color: var(--bosc-forest); }
-/* #781 — a locked destination (not on a thinner peer's record yet): muted, with a lock glyph. The
-   link still resolves to a coherent lock page, so it stays a link — just visibly flagged. */
-.nav-mega-tlink.is-locked,
-.nav-mega-theme-title.is-locked,
+/* #781 — the story spine, locked on a thinner peer (story not surfaced yet): muted, lock glyph. */
 .nav-mega-spine-head.is-locked { color: var(--bosc-faint); display: flex; align-items: center; gap: 0.35rem; }
-.nav-mega-tlink.is-locked:hover,
-.nav-mega-theme-title.is-locked:hover { color: var(--bosc-muted); }
 .nav-mega-lock { color: var(--bosc-faint); flex: 0 0 auto; }
-@media (max-width: 720px) { .nav-mega-menu { width: 22rem; } .nav-mega-cols { grid-template-columns: 1fr; } .nav-mega-spine { border-right: 0; border-bottom: 1px solid var(--bosc-rule); } }
+@media (max-width: 720px) { .nav-mega-menu { width: 22rem; } }
 
 /* A non-clickable "drafting" report card (Reports landing). */
 .door--draft { cursor: default; opacity: 0.78; background: var(--td-open-bg); }

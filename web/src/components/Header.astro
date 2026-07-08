@@ -347,25 +347,6 @@ const platformGlobals: { label: string; href: string; section: SectionId }[] = [
                     ))}
                     <a class="nav-mega-toc" href={withBase(m.spine.tocHref)}>Open the table of contents →</a>
                   </div>
-                  <div class="nav-mega-themes">
-                    <div class="nav-mega-themes-head">Themes it crosses</div>
-                    <div class="nav-mega-themes-grid">
-                      {m.themes.map((th) => (
-                        <div class="nav-mega-theme">
-                          <a class:list={["nav-mega-theme-title", { "is-locked": th.locked }]} href={withBase(th.href)}>
-                            {th.title}
-                            {th.locked && <Icon name="locked" size={11} class="nav-mega-lock" />}
-                          </a>
-                          {th.items.map((it) => (
-                            <a class:list={["nav-mega-tlink", { "is-locked": it.locked }]} href={withBase(it.href)}>
-                              {it.label}
-                              {it.locked && <Icon name="locked" size={10} class="nav-mega-lock" />}
-                            </a>
-                          ))}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
                 </div>
               </div>
             </details>

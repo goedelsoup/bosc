@@ -263,10 +263,9 @@ export interface MegaLink {
   num?: string;
   locked?: boolean;
 }
-/** The "The site" mega-menu: two intro tiles, the story spine, and the themes it crosses.
- *  Each theme has a landing `href` (the section home) — its title links there, and it's what
- *  the footer + mobile sheet surface (the deep `items` are desktop-mega-only). A theme / the spine
- *  carries `locked` when its own section is locked for the active (peer) site (#781). */
+/** The "The site" mega-menu: two intro tiles and the story spine. The environment + economy
+ *  themes it crosses are now first-class site-tier dropdown tabs (#1307), not a column here.
+ *  The spine carries `locked` when the story is locked for the active (peer) site (#781). */
 export interface MegaMenu {
   tiles: { label: string; href: string; blurb: string; icon: "home" | "leads" }[];
   spine: {
@@ -278,7 +277,6 @@ export interface MegaMenu {
     items: MegaLink[];
     locked?: boolean;
   };
-  themes: { title: string; href: string; items: MegaLink[]; locked?: boolean }[];
 }
 
 export type NavItem =
@@ -325,26 +323,27 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
   ];
 }
 
-/** Site-tier left tabs — shown inside a site. A lean 3-tab bar: The site · The story · The record.
- *  The environment + economy live inside the "The site" mega-menu as "themes it crosses". */
+/** Site-tier left tabs — shown inside a site. A 5-tab bar (#1307): The site · The story ·
+ *  The environment · The economy · The record. Environment and Economy are first-class site-tier
+ *  dropdowns (promoted out of the "The site" mega, where they used to be "themes it crosses"). */
 export function siteTabs(): NavItem[] {
   const { base, storyRoot, story } = siteRoots();
   const chapters = story?.chapters ?? [];
   // Per-site readiness (#781/#1220): on a thinner peer some of these destinations aren't on the
-  // record yet. Mark them `locked` so the menu itself distinguishes available from coming —
-  // `sectionStatus` reads the bundle's domain-activation block, so Lima's menu is unchanged (every
-  // domain live) without any reference-site special-case.
+  // record yet. `sectionStatus` reads the bundle's domain-activation block, so Lima's menu is
+  // unchanged (every domain live) without any reference-site special-case. A locked theme collapses
+  // its dropdown to a non-navigable locked marker (the page isn't there yet), matching the locked
+  // `link` tabs a coming-soon peer already shows.
   const slug = activeSite();
   const storyLocked = sectionStatus(slug, "story") === "locked";
   const environmentLocked = sectionStatus(slug, "environment") === "locked";
   const economyLocked = sectionStatus(slug, "economy") === "locked";
-  const reportsLocked = sectionStatus(slug, "reports") === "locked";
   return [
     {
       kind: "mega",
       label: "The site",
       section: "home",
-      match: ["leads", "story", "environment", "economy"],
+      match: ["leads", "story"],
       mega: {
         tiles: [
           { label: "Overview", href: base, blurb: "The site at a glance — the front door", icon: "home" },
@@ -359,7 +358,7 @@ export function siteTabs(): NavItem[] {
           title: "The story",
           href: storyRoot,
           count: `${chapters.length} chapters · ~18 min`,
-          blurb: "One project, read document by document — it crosses every theme to the right.",
+          blurb: "One project, read document by document — it crosses the environment and the economy.",
           // With no surfaced story the locked spine points at the site home (a valid target),
           // never a `${base}/contents` that 404s (#1256): `storyRoot` is the site base in that case.
           tocHref: story ? storyContentsHref(story) : storyRoot,
@@ -371,51 +370,104 @@ export function siteTabs(): NavItem[] {
             blurb: c.skill,
           })),
         },
-        themes: [
-          {
-            title: "The environment",
-            href: `${base}/environment/`,
-            locked: environmentLocked,
-            items: [
-              { label: "Hydrology", href: `${base}/environment/#hydrology`, locked: environmentLocked },
-              { label: "Watershed map", href: `${base}/environment/#map`, locked: environmentLocked },
-              { label: "Imagery", href: `${base}/environment/#imagery`, locked: environmentLocked },
-              { label: "RSEI / toxics", href: `${base}/environment/#rsei`, locked: environmentLocked },
-              { label: "Air dispersion", href: `${base}/environment/#air`, locked: environmentLocked },
-              {
-                label: "Seasonal withdrawal",
-                href: `${base}/environment/#seasonal`,
-                locked: environmentLocked,
-              },
-            ],
-          },
-          {
-            title: "The economy",
-            href: `${base}/economy/`,
-            locked: economyLocked,
-            items: [
-              { label: "The economy", href: `${base}/economy/`, locked: economyLocked },
-              {
-                label: "The economic ledger",
-                href: `${base}/reports/the-economic-ledger`,
-                locked: reportsLocked,
-              },
-              {
-                label: "End use & workloads",
-                href: `${base}/reports/end-use-and-workloads`,
-                locked: reportsLocked,
-              },
-              {
-                label: "The load & the grid",
-                href: `${base}/reports/the-load-and-the-grid`,
-                locked: reportsLocked,
-              },
-            ],
-          },
-        ],
       },
     },
     { kind: "link", label: "The story", section: "story", href: storyRoot, locked: storyLocked },
+    environmentLocked
+      ? {
+          kind: "link",
+          label: "The environment",
+          section: "environment",
+          href: `${base}/environment/`,
+          locked: true,
+        }
+      : {
+          kind: "dropdown",
+          label: "The environment",
+          section: "environment",
+          children: [
+            {
+              label: "The environment",
+              href: `${base}/environment/`,
+              blurb: "Section overview — the doors below",
+            },
+            { divider: true },
+            {
+              label: "Hydrology",
+              href: `${base}/environment/hydrology`,
+              blurb: "Low-flow dilution vs the 7Q10",
+            },
+            { label: "Watershed map", href: `${base}/environment/map`, blurb: "Typed GeoJSON on deck.gl" },
+            {
+              label: "Imagery",
+              href: `${base}/environment/imagery`,
+              blurb: "Dated aerials — before / after",
+            },
+            {
+              label: "RSEI / toxics",
+              href: `${base}/environment/rsei`,
+              blurb: "EPA toxic-release inventory",
+            },
+            { label: "Air dispersion", href: `${base}/environment/air`, blurb: "AERMOD screening field" },
+            {
+              label: "Seasonal withdrawal",
+              href: `${base}/environment/seasonal`,
+              blurb: "Month-by-month climograph",
+            },
+            { label: "Water flow", href: `${base}/environment/flow`, blurb: "Animated reach-network flow" },
+            {
+              label: "Economics baseline",
+              href: `${base}/environment/economics-baseline`,
+              blurb: "BLS QCEW · Census",
+            },
+          ],
+        },
+    economyLocked
+      ? {
+          kind: "link",
+          label: "The economy",
+          section: "economy",
+          href: `${base}/economy/`,
+          locked: true,
+        }
+      : {
+          kind: "dropdown",
+          label: "The economy",
+          section: "economy",
+          children: [
+            {
+              label: "The economy",
+              href: `${base}/economy/`,
+              blurb: "Section overview — the ground the deal sits on",
+            },
+            { divider: true },
+            {
+              label: "Localized labor baseline",
+              href: `${base}/environment/economics-baseline`,
+              blurb: "BLS QCEW + Census employment",
+            },
+            {
+              label: "End use & workloads",
+              href: `${base}/reports/end-use-and-workloads`,
+              blurb: "Where the campus load goes",
+            },
+            {
+              label: "The load & the grid",
+              href: `${base}/reports/the-load-and-the-grid`,
+              blurb: "The grid backdrop",
+            },
+            {
+              label: "The economic ledger",
+              href: `${base}/reports/the-economic-ledger`,
+              blurb: "The public balance sheet",
+            },
+            {
+              label: "Demand & public benefits",
+              href: `${base}/docs/economics`,
+              blurb: "The prose companion",
+            },
+          ],
+        },
     { kind: "link", label: "The record", section: "site", href: `${base}/site/`, match: ["timeline"] },
   ];
 }
@@ -471,16 +523,12 @@ export function navItemActive(item: NavItem, active: SectionId): boolean {
   return item.match?.includes(active) ?? false;
 }
 
-/** The flattened primary links a tab contributes to the footer row / mobile sheet. For the
- *  mega, that's the two tiles + each theme's landing (so environment/economy stay reachable now
- *  that they're not standalone tabs) — the deep theme `items` are desktop-mega-only. */
+/** The flattened primary links a tab contributes to the footer row / mobile sheet. For the mega,
+ *  that's just the two tiles — environment/economy are their own dropdown tabs now (#1307), each
+ *  contributing its own children; the story spine's deep chapter links stay desktop-mega-only. */
 export function navItemLinks(item: NavItem): { label: string; href: string }[] {
   if (item.kind === "link") return [{ label: item.label, href: item.href }];
-  if (item.kind === "mega")
-    return [
-      ...item.mega.tiles.map((t) => ({ label: t.label, href: t.href })),
-      ...item.mega.themes.map((th) => ({ label: th.title, href: th.href })),
-    ];
+  if (item.kind === "mega") return item.mega.tiles.map((t) => ({ label: t.label, href: t.href }));
   return item.children
     .filter((c): c is { label: string; href: string; blurb?: string } => !("divider" in c))
     .map((c) => ({ label: c.label, href: c.href }));
