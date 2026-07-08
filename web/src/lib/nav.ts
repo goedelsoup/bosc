@@ -8,7 +8,7 @@
  *    by tier, plus the constant platform cluster on the right.
  *
  * A page declares its `section`; the header resolves which tab is active via
- * `navItemActive` (so the Environment sub-area lights the Corpus tab, etc.).
+ * `navItemActive` (so the Environment sub-area lights the The record tab, etc.).
  *
  * **Per-site (#724/#740):** these are now functions, not constants — every site-rooted href is
  * built from the **active** site (`siteBase(activeSite())` / the active site's default story), so
@@ -130,8 +130,8 @@ export function sections(): Section[] {
     },
     {
       id: "site",
-      label: "The corpus",
-      tab: "Corpus",
+      label: "The record",
+      tab: "Record",
       href: `${base}/site/`,
       blurb: "Documents, records, exhibits, people & places, legal history, and the environmental data.",
       toc: [
@@ -323,7 +323,7 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
       section: "about",
       children: [
         { label: "About this site", href: "/about", blurb: "What Watermark is, and why" },
-        { label: "Who runs this", href: "/about-me", blurb: "The team behind the record" },
+        { label: "My research", href: "/about-me", blurb: "The method, the record's gaps, and who keeps it" },
         { divider: true as const },
         { label: "Data catalog", href: "/about/catalog", blurb: "Every dataset: source, license, freshness" },
         { divider: true as const },

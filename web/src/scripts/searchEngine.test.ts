@@ -4,7 +4,7 @@ import { esc, rank, renderGroups, renderRow, snippet, type SearchDoc } from "./s
 const doc = (over: Partial<SearchDoc>): SearchDoc => ({
   title: "Untitled",
   url: "/x",
-  section: "The corpus",
+  section: "The record",
   text: "",
   kind: "Record",
   ...over,
@@ -12,9 +12,9 @@ const doc = (over: Partial<SearchDoc>): SearchDoc => ({
 
 describe("searchEngine.rank — the shared matcher (#308)", () => {
   const docs: SearchDoc[] = [
-    doc({ title: "Limited Warranty Deed", section: "The corpus", text: "instrument 202508" }),
+    doc({ title: "Limited Warranty Deed", section: "The record", text: "instrument 202508" }),
     doc({ title: "Bistrozzi LLC", section: "Wiki", kind: "Entity", text: "land assembly deed party" }),
-    doc({ title: "Timeline event", section: "The corpus", kind: "Timeline", text: "the deed was recorded" }),
+    doc({ title: "Timeline event", section: "The record", kind: "Timeline", text: "the deed was recorded" }),
   ];
 
   it("requires ALL terms to match across title+body", () => {
@@ -68,13 +68,13 @@ describe("searchEngine render grammar", () => {
 
   it("groups results by section, preserving first-seen order, with per-group counts", () => {
     const hits = [
-      doc({ title: "A", section: "The corpus" }),
+      doc({ title: "A", section: "The record" }),
       doc({ title: "B", section: "Wiki" }),
-      doc({ title: "C", section: "The corpus" }),
+      doc({ title: "C", section: "The record" }),
     ];
     const html = renderGroups(hits, [], "");
     const heads = [...html.matchAll(/search-group-head">([^<]*)</g)].map((m) => m[1].trim());
-    expect(heads).toEqual(["The corpus", "Wiki"]); // corpus first (first seen), one box each
-    expect(html).toContain('search-group-count">2<'); // two corpus rows merged into one group
+    expect(heads).toEqual(["The record", "Wiki"]); // record first (first seen), one box each
+    expect(html).toContain('search-group-count">2<'); // two record rows merged into one group
   });
 });
