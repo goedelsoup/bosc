@@ -101,17 +101,8 @@ if (hasFeed("reach-network")) {
     note: "animated flow",
   });
 }
-if (hasFeed("economics-baseline")) {
-  doors.push({
-    id: "economics",
-    kind: "Baseline data",
-    href: withSite("/environment/economics-baseline"),
-    count: "—",
-    title: "Economics baseline",
-    desc: "Localized BLS QCEW / Census employment baseline for the corridor.",
-    note: "BLS · Census",
-  });
-}
+// The economics baseline is economic ground, not environmental — its door lives on the economy
+// hub (#1323), so it's intentionally absent here even though the feed is present.
 ---
 
 <Base title="The environment" section="environment" rail={false}>
