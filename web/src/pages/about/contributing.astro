@@ -4,8 +4,15 @@
 // Code (open source contribution guide), Research (tip/document/correction submissions).
 // #966/#967
 import Base from "~/layouts/Base.astro";
+import { donateLinks, donateEnabled, hasRecurringTiers } from "~/lib/donate";
 
-const SHOW_DONATE = false; // flip when Stripe is wired (#969)
+// Donate ships dark: the section renders live once any Stripe Payment Link URL is set in
+// the Pages build env (PUBLIC_STRIPE_LINK_*, #969) — no code flip needed. Each tier gates
+// on its own link, so any subset can be enabled; the tier grid is hidden with no recurring
+// tiers (one-time-only setup).
+const donate = donateLinks();
+const SHOW_DONATE = donateEnabled(donate);
+const hasTiers = hasRecurringTiers(donate);
 
 const REPO_PATH = "watermark-directory/the-watermark-directory";
 const REPO_URL = "https://github.com/watermark-directory/the-watermark-directory";
@@ -32,7 +39,7 @@ const CONTRIBUTING_URL =
         keep it funded, keep it running, or bring what you know.
       </p>
       <div class="hero-ctas">
-        <a href="#donate" class="cta-primary">Donate →</a>
+        {SHOW_DONATE && <a href="#donate" class="cta-primary">Donate →</a>}
         <a href="#code" class="cta-secondary">View the repo →</a>
         <a href="#research" class="cta-link">Submit a lead →</a>
       </div>
@@ -54,38 +61,48 @@ const CONTRIBUTING_URL =
           no paywalls, no sponsored content, no data sales.
         </p>
 
-        <div class="tier-grid">
-          <div class="tier-card">
-            <div class="tier-label">Follower</div>
-            <div class="tier-price">$5<span class="tier-freq">/mo</span></div>
-            <p class="tier-desc">Keeps the lights on. Covers bandwidth and a share of the document-hosting costs.</p>
-            <a href="#" class="tier-cta tier-cta--outline">Start →</a>
-          </div>
+        {hasTiers && (
+          <div class="tier-grid">
+            {donate.follower && (
+              <div class="tier-card">
+                <div class="tier-label">Follower</div>
+                <div class="tier-price">$5<span class="tier-freq">/mo</span></div>
+                <p class="tier-desc">Keeps the lights on. Covers bandwidth and a share of the document-hosting costs.</p>
+                <a href={donate.follower} class="tier-cta tier-cta--outline" rel="noopener">Start →</a>
+              </div>
+            )}
 
-          <div class="tier-card tier-card--featured">
-            <div class="tier-badge">Most common</div>
-            <div class="tier-label tier-label--featured">Contributor</div>
-            <div class="tier-price">$20<span class="tier-freq">/mo</span></div>
-            <p class="tier-desc">Funds a document request. One FOIA filing, fully processed and published to the record.</p>
-            <a href="#" class="tier-cta tier-cta--filled">Start →</a>
-          </div>
+            {donate.contributor && (
+              <div class="tier-card tier-card--featured">
+                <div class="tier-badge">Most common</div>
+                <div class="tier-label tier-label--featured">Contributor</div>
+                <div class="tier-price">$20<span class="tier-freq">/mo</span></div>
+                <p class="tier-desc">Funds a document request. One FOIA filing, fully processed and published to the record.</p>
+                <a href={donate.contributor} class="tier-cta tier-cta--filled" rel="noopener">Start →</a>
+              </div>
+            )}
 
-          <div class="tier-card">
-            <div class="tier-label">Sustainer</div>
-            <div class="tier-price">$50<span class="tier-freq">/mo</span></div>
-            <p class="tier-desc">Covers a field day. Travel, time, and camera to get a site on the public record.</p>
-            <a href="#" class="tier-cta tier-cta--outline">Start →</a>
+            {donate.sustainer && (
+              <div class="tier-card">
+                <div class="tier-label">Sustainer</div>
+                <div class="tier-price">$50<span class="tier-freq">/mo</span></div>
+                <p class="tier-desc">Covers a field day. Travel, time, and camera to get a site on the public record.</p>
+                <a href={donate.sustainer} class="tier-cta tier-cta--outline" rel="noopener">Start →</a>
+              </div>
+            )}
           </div>
-        </div>
+        )}
 
-        <div class="one-time-strip">
-          <span class="one-time-label">One-time</span>
-          <span class="strip-divider" aria-hidden="true"></span>
-          <span class="one-time-body">
-            Prefer a single contribution? Any amount keeps the filing cabinet stocked.
-            <a href="#">Donate once →</a>
-          </span>
-        </div>
+        {donate.oneTime && (
+          <div class="one-time-strip">
+            <span class="one-time-label">One-time</span>
+            <span class="strip-divider" aria-hidden="true"></span>
+            <span class="one-time-body">
+              Prefer a single contribution? Any amount keeps the filing cabinet stocked.
+              <a href={donate.oneTime} rel="noopener">Donate once →</a>
+            </span>
+          </div>
+        )}
       </section>
     )}
 
