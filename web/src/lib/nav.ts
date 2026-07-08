@@ -288,9 +288,19 @@ export type NavItem =
  *  Submit is NOT here — it's a right-cluster affordance (see SUBMIT_LINK / the Header).
  *  Hypotheses come from the live feed so the dropdown labels stay in sync without hardcoding. */
 export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
+  // Reports are the long-form analysis over the corpus — an output of the research, so their nav
+  // home is this network-global Research dropdown, not the site tier (#1305). The routes stay
+  // per-site (`<base>/reports`, option (a)); the entry points at the active site's reports index.
+  const reportsHref = `${siteBase(activeSite())}/reports`;
   const researchChildren: NavChild[] = [
     ...hypotheses.map((h) => ({ label: h.name, href: `/research/hypotheses?lens=${h.id}` })),
     ...(hypotheses.length > 0 ? [{ divider: true as const }] : []),
+    {
+      label: "Reports",
+      href: reportsHref,
+      blurb: "Long-form analysis over the corpus — the dossier, water, and economics reads",
+    },
+    { divider: true as const },
     // Basin views (design "Chrome": Research ▾ → Basin views) — Maumee is the one built today;
     // the other eight basins join here as their /basin pages land.
     { label: "The Maumee basin", href: "/basin", blurb: "Basin view — every site against the drainage" },
@@ -304,7 +314,7 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
       kind: "dropdown",
       label: "Research",
       section: "research",
-      match: ["connect"],
+      match: ["connect", "reports"],
       children: researchChildren,
     },
     {
