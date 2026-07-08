@@ -4,8 +4,15 @@ export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed, loadManifest } from "~/lib/bundle";
 import type { DocumentCollectionItem, MeetingItem, TimelineEntry } from "~/lib/feeds";
-import { REFERENCE } from "~/lib/reference";
+import { isAvailable } from "~/lib/readiness";
+import { scopedReference } from "~/lib/reference";
 import { withSite } from "~/lib/site";
+
+const { slug } = Astro.props as { slug: string };
+// The reference door is a facet of The Record: scope its count to THIS site's datasets, and drop
+// it entirely when the site's `record` domain is inactive (#1260) — no hardcoded global count.
+const recordOpen = isAvailable(slug, "record");
+const refCount = recordOpen ? scopedReference(slug).length : 0;
 
 const manifest = loadManifest();
 const byName = new Map(manifest.feeds.map((f) => [f.name, f]));
@@ -82,15 +89,19 @@ const doors = [
     desc: "Meeting summaries, PRR & mandamus, and Select-Committee testimony.",
     note: "filings & analysis",
   },
-  {
-    id: "reference",
-    kind: "External data",
-    href: withSite("/site/reference/"),
-    count: num(REFERENCE.length),
-    title: "Reference datasets",
-    desc: "Authoritative external datasets, each documented with its provenance and gaps.",
-    note: "EPA · USGS · BLS …",
-  },
+  ...(recordOpen
+    ? [
+        {
+          id: "reference",
+          kind: "External data",
+          href: withSite("/site/reference/"),
+          count: num(refCount),
+          title: "Reference datasets",
+          desc: "Authoritative external datasets, each documented with its provenance and gaps.",
+          note: "EPA · USGS · BLS …",
+        },
+      ]
+    : []),
   {
     id: "environment",
     kind: "Hydrology, air & toxics",

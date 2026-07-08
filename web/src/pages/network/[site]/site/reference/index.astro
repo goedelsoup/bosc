@@ -3,15 +3,39 @@ import { selectableSitePaths } from "~/lib/sites";
 export const getStaticPaths = selectableSitePaths;
 import { getCollection } from "astro:content";
 import Base from "~/layouts/Base.astro";
-import { refBySlug, REFERENCE } from "~/lib/reference";
+import SectionLocked from "~/components/SectionLocked.astro";
+import { isAvailable } from "~/lib/readiness";
+import { refBySlug, scopedReference } from "~/lib/reference";
 import { withSite } from "~/lib/site";
 
-// Only list datasets whose README is actually present in this checkout.
+const { slug } = Astro.props as { slug: string };
+// Reference is a facet of The Record: a site whose `record` domain is inactive locks it (and is
+// invited to contribute) rather than borrow the reference build's datasets (#1260).
+const locked = !isAvailable(slug, "record");
+
+// Scoped to THIS site (catalog `site_scope`, resolved per-site in the bundle), and only datasets
+// whose README is actually present in this checkout.
 const present = new Set((await getCollection("reference")).map((e) => e.id));
-const datasets = REFERENCE.filter((d) => present.has(d.slug) && refBySlug.has(d.slug));
+const datasets = locked
+  ? []
+  : scopedReference(slug).filter((d) => present.has(d.slug) && refBySlug.has(d.slug));
 ---
 
 <Base title="Reference data" section="site" rail={false}>
+  {locked ? (
+    <div class="hub">
+      <div class="hub-head">
+        <div>
+          <div class="hub-eyebrow">The record · reference</div>
+          <h1>Reference data</h1>
+        </div>
+      </div>
+      <SectionLocked
+        section="record"
+        holds="the authoritative external datasets (EPA, USGS, BLS/Census, county & city GIS) that its record draws on"
+      />
+    </div>
+  ) : (
   <div class="hub">
     <div class="hub-head">
       <div>
@@ -43,4 +67,5 @@ const datasets = REFERENCE.filter((d) => present.has(d.slug) && refBySlug.has(d.
       }
     </div>
   </div>
+  )}
 </Base>
