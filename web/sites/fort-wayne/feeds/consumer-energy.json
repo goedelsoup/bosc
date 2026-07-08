@@ -15,7 +15,9 @@
         "source": "connector",
         "citation": "EIA API v2 seriesid ELEC.PRICE.IN-RES.A (2025)",
         "confidence": "high",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "points": []
     },
@@ -32,7 +34,9 @@
         "source": "connector",
         "citation": "EIA API v2 seriesid ELEC.SALES.IN-ALL.A (2025)",
         "confidence": "high",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "points": []
     },
@@ -49,7 +53,9 @@
         "source": "connector",
         "citation": "EIA API v2 seriesid NG.N3010IN3.A (2025)",
         "confidence": "high",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "points": []
     }

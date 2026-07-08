@@ -9,7 +9,9 @@
         "source": "assumption",
         "citation": "emergency-engine maintenance & readiness-testing allowance (40 CFR 60.4211(f) / NFPA 110); per engine",
         "confidence": "low",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "factors_basis": "permit",
       "load_regime": "idle"
@@ -20,7 +22,9 @@
       "source": "document",
       "citation": "OEPA Air PTI P0138965 (Facility 0302022054), committed data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): 114 hall gensets x 2.75 MW (~2,750 ekW) = ~313 MW backup; IT ~250-300 MW (N+1). Per-engine rating from the draft public notice (3987141/3987144); engine size CBI-redacted in the final permit under an Ohio EPA trade-secret grant (OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).",
       "confidence": "medium",
-      "asof": null
+      "asof": null,
+      "low": null,
+      "high": null
     },
     "fleet_size": 114,
     "fuel": "ultra-low sulfur diesel (ULSD) or renewable diesel (HVO / hydrotreated vegetable oil)",
@@ -33,7 +37,9 @@
           "source": "derived",
           "citation": "100 hr/yr x 12.15 lb/hr x 114 engines / 2000 (permit factors)",
           "confidence": "medium",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "cap_tpy": 235.62,
         "pct_of_cap": 29.4,
@@ -47,7 +53,9 @@
           "source": "derived",
           "citation": "100 hr/yr x 7.08 lb/hr x 114 engines / 2000 (permit factors)",
           "confidence": "medium",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "cap_tpy": 96.06,
         "pct_of_cap": 42.0,
@@ -61,7 +69,9 @@
           "source": "derived",
           "citation": "100 hr/yr x 1.2125 lb/hr x 114 engines / 2000 (permit factors)",
           "confidence": "medium",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "cap_tpy": null,
         "pct_of_cap": null,
@@ -75,7 +85,9 @@
           "source": "derived",
           "citation": "100 hr/yr x 1.2125 lb/hr x 114 engines / 2000 (permit factors)",
           "confidence": "medium",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "cap_tpy": null,
         "pct_of_cap": null,
@@ -96,7 +108,9 @@
         "source": "assumption",
         "citation": "event-anchored dispatch (central band): 18 hr/yr per engine, anchored to PJM 2026 hot-weather §202(c) emergency (Order 202-26-33) — window [verified], duty/recurrence [inference]; facility dispatch [open]",
         "confidence": "low",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "factors_basis": "permit",
       "load_regime": "load"
@@ -107,7 +121,9 @@
       "source": "document",
       "citation": "OEPA Air PTI P0138965 (Facility 0302022054), committed data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): 114 hall gensets x 2.75 MW (~2,750 ekW) = ~313 MW backup; IT ~250-300 MW (N+1). Per-engine rating from the draft public notice (3987141/3987144); engine size CBI-redacted in the final permit under an Ohio EPA trade-secret grant (OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).",
       "confidence": "medium",
-      "asof": null
+      "asof": null,
+      "low": null,
+      "high": null
     },
     "fleet_size": 114,
     "fuel": "ultra-low sulfur diesel (ULSD) or renewable diesel (HVO / hydrotreated vegetable oil)",
@@ -120,7 +136,9 @@
           "source": "derived",
           "citation": "18 hr/yr x 75.78 lb/hr x 114 engines / 2000 (permit factors)",
           "confidence": "medium",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "cap_tpy": 235.62,
         "pct_of_cap": 33.0,
@@ -134,7 +152,9 @@
           "source": "derived",
           "citation": "18 hr/yr x 17.62 lb/hr x 114 engines / 2000 (permit factors)",
           "confidence": "medium",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "cap_tpy": 96.06,
         "pct_of_cap": 18.8,
@@ -148,7 +168,9 @@
           "source": "derived",
           "citation": "18 hr/yr x 1.2125 lb/hr x 114 engines / 2000 (permit factors)",
           "confidence": "medium",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "cap_tpy": null,
         "pct_of_cap": null,
@@ -162,7 +184,9 @@
           "source": "derived",
           "citation": "18 hr/yr x 1.2125 lb/hr x 114 engines / 2000 (permit factors)",
           "confidence": "medium",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "cap_tpy": null,
         "pct_of_cap": null,
@@ -183,7 +207,9 @@
         "source": "assumption",
         "citation": "event-anchored dispatch (high band): 72 hr/yr per engine, anchored to PJM 2026 hot-weather §202(c) emergency (Order 202-26-33) — window [verified], duty/recurrence [inference]; facility dispatch [open]",
         "confidence": "low",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "factors_basis": "permit",
       "load_regime": "load"
@@ -194,7 +220,9 @@
       "source": "document",
       "citation": "OEPA Air PTI P0138965 (Facility 0302022054), committed data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): 114 hall gensets x 2.75 MW (~2,750 ekW) = ~313 MW backup; IT ~250-300 MW (N+1). Per-engine rating from the draft public notice (3987141/3987144); engine size CBI-redacted in the final permit under an Ohio EPA trade-secret grant (OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).",
       "confidence": "medium",
-      "asof": null
+      "asof": null,
+      "low": null,
+      "high": null
     },
     "fleet_size": 114,
     "fuel": "ultra-low sulfur diesel (ULSD) or renewable diesel (HVO / hydrotreated vegetable oil)",
@@ -207,7 +235,9 @@
           "source": "derived",
           "citation": "72 hr/yr x 75.78 lb/hr x 114 engines / 2000 (permit factors)",
           "confidence": "medium",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "cap_tpy": 235.62,
         "pct_of_cap": 132.0,
@@ -221,7 +251,9 @@
           "source": "derived",
           "citation": "72 hr/yr x 17.62 lb/hr x 114 engines / 2000 (permit factors)",
           "confidence": "medium",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "cap_tpy": 96.06,
         "pct_of_cap": 75.3,
@@ -235,7 +267,9 @@
           "source": "derived",
           "citation": "72 hr/yr x 1.2125 lb/hr x 114 engines / 2000 (permit factors)",
           "confidence": "medium",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "cap_tpy": null,
         "pct_of_cap": null,
@@ -249,7 +283,9 @@
           "source": "derived",
           "citation": "72 hr/yr x 1.2125 lb/hr x 114 engines / 2000 (permit factors)",
           "confidence": "medium",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "cap_tpy": null,
         "pct_of_cap": null,

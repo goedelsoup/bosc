@@ -12,7 +12,7 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, model_validator
 
 from watermark.provenance import SourceKind as SourceKind
 from watermark.provenance import source_is_verified
@@ -20,11 +20,55 @@ from watermark.provenance import source_is_verified
 NodeRole = Literal["abstraction", "demand", "wwtp", "receiving"]
 
 
+def _resolve_bounds(
+    value: float,
+    low: float | None,
+    high: float | None,
+    plus_minus: float | None,
+    rel_uncertainty: float | None,
+) -> tuple[float | None, float | None]:
+    """Reduce the three range spellings to a single absolute ``(low, high)`` pair.
+
+    A caller gives **at most one** of: explicit ``low``/``high`` absolute bounds, a
+    symmetric ``plus_minus`` spread, or a ``rel_uncertainty`` fraction (± that share of
+    ``value``). The stored form is always absolute bounds — the shape the uncertainty
+    engine (#271) consumes — so the convenience spellings are computed here, never kept.
+    """
+    forms = [
+        ("low/high", low is not None or high is not None),
+        ("plus_minus", plus_minus is not None),
+        ("rel_uncertainty", rel_uncertainty is not None),
+    ]
+    if sum(1 for _, present in forms if present) > 1:
+        given = ", ".join(name for name, present in forms if present)
+        raise ValueError(f"give at most one range spelling; got {given}")
+    if plus_minus is not None:
+        if plus_minus < 0:
+            raise ValueError(f"plus_minus must be non-negative, got {plus_minus}")
+        return value - plus_minus, value + plus_minus
+    if rel_uncertainty is not None:
+        if rel_uncertainty < 0:
+            raise ValueError(f"rel_uncertainty must be non-negative, got {rel_uncertainty}")
+        spread = abs(value) * rel_uncertainty
+        return value - spread, value + spread
+    return low, high
+
+
 class ProvenancedValue(BaseModel):
     """A single numeric quantity tagged with its provenance.
 
     Construct via the classmethods (:meth:`from_document`, :meth:`from_connector`,
     :meth:`assume`, :meth:`derived`) so the ``source`` tag is never forgotten.
+
+    A **measured or derived estimate** may also carry a quantitative uncertainty range
+    (#760): optional absolute ``low``/``high`` bounds around the central ``value``,
+    *orthogonal* to the qualitative ``confidence`` enum. The convention: a document- or
+    connector-verbatim figure is a single value (no band); an estimate whose honest
+    representation is "226 ± ~35 ac" carries ``low``/``high`` so downstream consumers
+    (the bundle, the frontend, the Monte-Carlo engine #271) see the spread as data, not
+    prose buried in the citation. The estimate constructors (:meth:`derived`,
+    :meth:`assume`, :meth:`from_reference`) take the range inline; :meth:`with_range`
+    attaches one to any value (e.g. a document-anchored central with a derived band).
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -35,6 +79,33 @@ class ProvenancedValue(BaseModel):
     citation: str | None = None  # rel_path, geojson feature id, NWIS site, or rationale
     confidence: Literal["high", "medium", "low"] = "medium"
     asof: str | None = None  # ISO datetime, for connector (live) values
+    # Quantitative uncertainty band (#760), distinct from the qualitative `confidence`.
+    # Absolute bounds, either/both optional; `low <= value <= high` where present.
+    low: float | None = None
+    high: float | None = None
+
+    @model_validator(mode="after")
+    def _check_range(self) -> ProvenancedValue:
+        if self.low is not None and self.low > self.value:
+            raise ValueError(f"range low {self.low} exceeds value {self.value}")
+        if self.high is not None and self.high < self.value:
+            raise ValueError(f"range high {self.high} is below value {self.value}")
+        return self
+
+    @property
+    def has_range(self) -> bool:
+        """True when a quantitative uncertainty band is attached (either bound present)."""
+        return self.low is not None or self.high is not None
+
+    @property
+    def low_or_value(self) -> float:
+        """The lower bound, or the central ``value`` when no low bound is set."""
+        return self.value if self.low is None else self.low
+
+    @property
+    def high_or_value(self) -> float:
+        """The upper bound, or the central ``value`` when no high bound is set."""
+        return self.value if self.high is None else self.high
 
     @classmethod
     def from_document(
@@ -78,15 +149,27 @@ class ProvenancedValue(BaseModel):
         citation: str,
         *,
         confidence: Literal["high", "medium", "low"] = "medium",
+        low: float | None = None,
+        high: float | None = None,
+        plus_minus: float | None = None,
+        rel_uncertainty: float | None = None,
     ) -> ProvenancedValue:
         """A value from committed authoritative external reference data.
 
         Distinct from a record about *this* facility (``document``) and from an
         asserted modeling input (``assumption``): a published spec / table vendored
-        under ``data/reference`` (e.g. an accelerator datasheet). Cite the file.
+        under ``data/reference`` (e.g. an accelerator datasheet). Cite the file. May
+        carry a range (see the class docstring) when the reference states a band.
         """
+        lo, hi = _resolve_bounds(value, low, high, plus_minus, rel_uncertainty)
         return cls(
-            value=value, unit=unit, source="reference", citation=citation, confidence=confidence
+            value=value,
+            unit=unit,
+            source="reference",
+            citation=citation,
+            confidence=confidence,
+            low=lo,
+            high=hi,
         )
 
     @classmethod
@@ -97,9 +180,26 @@ class ProvenancedValue(BaseModel):
         why: str,
         *,
         confidence: Literal["high", "medium", "low"] = "low",
+        low: float | None = None,
+        high: float | None = None,
+        plus_minus: float | None = None,
+        rel_uncertainty: float | None = None,
     ) -> ProvenancedValue:
-        """An asserted value not derivable from any record (state the rationale)."""
-        return cls(value=value, unit=unit, source="assumption", citation=why, confidence=confidence)
+        """An asserted value not derivable from any record (state the rationale).
+
+        Takes an optional range (see the class docstring) — a banded assumption (e.g. a
+        PUE assumed to lie in 1.2-1.43) is a single central value carrying its spread.
+        """
+        lo, hi = _resolve_bounds(value, low, high, plus_minus, rel_uncertainty)
+        return cls(
+            value=value,
+            unit=unit,
+            source="assumption",
+            citation=why,
+            confidence=confidence,
+            low=lo,
+            high=hi,
+        )
 
     @classmethod
     def derived(
@@ -109,11 +209,45 @@ class ProvenancedValue(BaseModel):
         citation: str,
         *,
         confidence: Literal["high", "medium", "low"] = "medium",
+        low: float | None = None,
+        high: float | None = None,
+        plus_minus: float | None = None,
+        rel_uncertainty: float | None = None,
     ) -> ProvenancedValue:
-        """A value computed from other provenanced inputs (cite the derivation)."""
+        """A value computed from other provenanced inputs (cite the derivation).
+
+        Takes an optional range (see the class docstring): a derived estimate whose
+        method carries uncertainty (e.g. a raster-segmented area ±20%) is the natural
+        home of the range shape.
+        """
+        lo, hi = _resolve_bounds(value, low, high, plus_minus, rel_uncertainty)
         return cls(
-            value=value, unit=unit, source="derived", citation=citation, confidence=confidence
+            value=value,
+            unit=unit,
+            source="derived",
+            citation=citation,
+            confidence=confidence,
+            low=lo,
+            high=hi,
         )
+
+    def with_range(
+        self,
+        *,
+        low: float | None = None,
+        high: float | None = None,
+        plus_minus: float | None = None,
+        rel_uncertainty: float | None = None,
+    ) -> ProvenancedValue:
+        """A copy of this value with a quantitative uncertainty band attached.
+
+        The escape hatch for a ``document``/``connector`` central that legitimately
+        carries a band (a measured figure with method/instrument uncertainty, e.g. a
+        document-anchored IT load with a derived N+1 bracket) — the verbatim
+        constructors stay range-free so a plain figure never sprouts a spurious band.
+        """
+        lo, hi = _resolve_bounds(self.value, low, high, plus_minus, rel_uncertainty)
+        return self.model_copy(update={"low": lo, "high": hi})
 
     @property
     def verified(self) -> bool:
@@ -132,7 +266,12 @@ class ProvenancedValue(BaseModel):
             "assumption": "assume",
             "derived": "calc",
         }[self.source]
-        return f"{self.value:,.2f} {self.unit} [{tag}]"
+        core = f"{self.value:,.2f}"
+        if self.has_range:
+            lo = "?" if self.low is None else f"{self.low:,.2f}"
+            hi = "?" if self.high is None else f"{self.high:,.2f}"
+            core += f" ({lo}-{hi})"
+        return f"{core} {self.unit} [{tag}]"
 
 
 class Node(BaseModel):

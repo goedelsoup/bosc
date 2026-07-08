@@ -6,7 +6,9 @@
     "source": "derived",
     "citation": "PowerBasis.facility_draw central (#87): 275 MW IT x PUE 1.265 (band mean) — total facility draw",
     "confidence": "medium",
-    "asof": null
+    "asof": null,
+    "low": null,
+    "high": null
   },
   "load_factor": {
     "value": 0.9,
@@ -14,7 +16,9 @@
     "source": "assumption",
     "citation": "data-center capacity utilization ~0.9 (near-flat 24x7 load); assumption",
     "confidence": "low",
-    "asof": null
+    "asof": null,
+    "low": null,
+    "high": null
   },
   "annual_consumption_gwh": {
     "value": 2742.8,
@@ -22,7 +26,9 @@
     "source": "derived",
     "citation": "347.9 MW x 8760 h x 0.9 load factor",
     "confidence": "medium",
-    "asof": null
+    "asof": null,
+    "low": null,
+    "high": null
   },
   "state_retail_sales_gwh": {
     "value": 161934.0,
@@ -30,7 +36,9 @@
     "source": "connector",
     "citation": "EIA ELEC.SALES.OH-ALL.A (2025); 161934 million kWh",
     "confidence": "high",
-    "asof": null
+    "asof": null,
+    "low": null,
+    "high": null
   },
   "demand_share_pct": {
     "value": 1.69,
@@ -38,7 +46,9 @@
     "source": "derived",
     "citation": "campus 2743 GWh / Ohio retail 161934 GWh",
     "confidence": "medium",
-    "asof": null
+    "asof": null,
+    "low": null,
+    "high": null
   },
   "avg_household_kwh_yr": {
     "value": 10500.0,
@@ -46,7 +56,9 @@
     "source": "assumption",
     "citation": "US avg residential use ~10,500 kWh/household/yr (EIA FAQ); assumption",
     "confidence": "low",
-    "asof": null
+    "asof": null,
+    "low": null,
+    "high": null
   },
   "households_equivalent": {
     "value": 261219.0,
@@ -54,7 +66,9 @@
     "source": "derived",
     "citation": "campus 2742.8 GWh / 10500 kWh per household",
     "confidence": "medium",
-    "asof": null
+    "asof": null,
+    "low": null,
+    "high": null
   },
   "residential_price": {
     "value": 16.96,
@@ -62,7 +76,9 @@
     "source": "connector",
     "citation": "EIA ELEC.PRICE.OH-RES.A (2025)",
     "confidence": "high",
-    "asof": null
+    "asof": null,
+    "low": null,
+    "high": null
   },
   "transmission_coefficient": {
     "value": 0.75,
@@ -70,7 +86,9 @@
     "source": "assumption",
     "citation": "stylized demand-to-price transmission ~0.5-1.0 %price per %demand under tight short-run supply; a SCREENING sensitivity, not an estimated elasticity or forecast",
     "confidence": "low",
-    "asof": null
+    "asof": null,
+    "low": null,
+    "high": null
   },
   "price_pressure_pct_low": {
     "value": 0.85,
@@ -78,7 +96,9 @@
     "source": "derived",
     "citation": "1.69% demand x 0.5 transmission (STYLIZED lower bound)",
     "confidence": "low",
-    "asof": null
+    "asof": null,
+    "low": null,
+    "high": null
   },
   "price_pressure_pct_high": {
     "value": 1.69,
@@ -86,7 +106,9 @@
     "source": "derived",
     "citation": "1.69% demand x 1 transmission (STYLIZED upper bound)",
     "confidence": "low",
-    "asof": null
+    "asof": null,
+    "low": null,
+    "high": null
   },
   "method": "facility draw (PUE-adjusted, #87) -> annual GWh -> share of EIA state retail sales + households-equivalent; price pressure = demand share x transmission coefficient (STYLIZED screening sensitivity, not a forecast)",
   "caveats": [

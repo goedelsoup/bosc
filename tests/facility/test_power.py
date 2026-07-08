@@ -15,8 +15,10 @@ def test_power_basis_traces_to_air_permit() -> None:
     # Backup power is the genset count x rating, derived (not asserted).
     assert b.backup_power.source == "derived"
     assert b.backup_power.value == pytest.approx(313.5, abs=0.1)  # 114 x 2.75
-    # The N+1 range brackets the central figure.
-    assert b.it_load_low.value < b.it_load.value < b.it_load_high.value
+    # The N+1 range brackets the central figure — now a first-class range on it_load (#760).
+    assert b.it_load.has_range
+    assert b.it_load.low is not None and b.it_load.high is not None
+    assert b.it_load.low < b.it_load.value < b.it_load.high
 
 
 def test_facility_power_matches_cooling_it_load() -> None:
@@ -101,21 +103,22 @@ def test_cooling_pue_overhead_and_facility_draw() -> None:
     """Issue #87: PUE is a banded assumption and facility_draw = IT load x PUE."""
     b = derive_power_basis()
 
-    # PUE is a banded assumption; the ceiling admits cooling-dominated designs (~1.43).
-    assert b.pue_low.source == "assumption" and b.pue_high.source == "assumption"
-    assert b.pue_low.value < b.pue_high.value
-    assert b.pue_high.value == pytest.approx(1.43, abs=0.01)
+    # PUE is a banded assumption (#760: low/high on a single value); the ceiling admits
+    # cooling-dominated designs (~1.43), and the central value is the band mean.
+    assert b.pue.source == "assumption" and b.pue.has_range
+    assert b.pue.low is not None and b.pue.high is not None
+    assert b.pue.low < b.pue.value < b.pue.high
+    assert b.pue.high == pytest.approx(1.43, abs=0.01)
+    assert b.pue.value == pytest.approx((b.pue.low + b.pue.high) / 2.0, abs=1e-3)
     # Cooling share at the high PUE is ~30% of facility power (the call's figure).
-    assert b.cooling_share_high.value == pytest.approx(
-        (b.pue_high.value - 1.0) / b.pue_high.value, abs=1e-3
-    )
+    assert b.cooling_share_high.value == pytest.approx((b.pue.high - 1.0) / b.pue.high, abs=1e-3)
     assert b.cooling_share_high.value == pytest.approx(0.30, abs=0.01)
 
-    # The IT <-> total-facility-draw relationship: draw = IT central x PUE, banded.
-    assert b.facility_draw.source == "derived"
-    assert b.facility_draw_low.value == pytest.approx(b.it_load.value * b.pue_low.value, abs=0.1)
-    assert b.facility_draw_high.value == pytest.approx(b.it_load.value * b.pue_high.value, abs=0.1)
-    assert b.facility_draw_low.value < b.facility_draw.value < b.facility_draw_high.value
+    # The IT <-> total-facility-draw relationship: draw = IT central x PUE, banded (#760).
+    assert b.facility_draw.source == "derived" and b.facility_draw.has_range
+    assert b.facility_draw.low == pytest.approx(b.it_load.value * b.pue.low, abs=0.1)
+    assert b.facility_draw.high == pytest.approx(b.it_load.value * b.pue.high, abs=0.1)
+    assert b.facility_draw.low < b.facility_draw.value < b.facility_draw.high
     # Facility draw exceeds IT load by exactly the cooling/mechanical overhead.
     assert b.facility_draw.value > b.it_load.value
     assert b.cooling_overhead_mw == pytest.approx(b.facility_draw.value - b.it_load.value, abs=0.1)
@@ -133,5 +136,5 @@ def test_facility_draw_vs_backup_n_plus_one_crosscheck() -> None:
 
     # That implied PUE sits at the efficient end of the band: the backup envelope
     # covers the low-PUE draw but is exceeded by the cooling-dominated draw.
-    assert b.facility_draw_low.value <= b.backup_power.value < b.facility_draw_high.value
+    assert b.facility_draw.low_or_value <= b.backup_power.value < b.facility_draw.high_or_value
     assert "#33" in b.cooling_overhead_note

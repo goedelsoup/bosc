@@ -11,7 +11,9 @@
       "source": "connector",
       "citation": "BLS QCEW 2024 annual averages, area 39003",
       "confidence": "high",
-      "asof": "2024"
+      "asof": "2024",
+      "low": null,
+      "high": null
     },
     "establishments": {
       "value": 2586.0,
@@ -19,7 +21,9 @@
       "source": "connector",
       "citation": "BLS QCEW 2024 annual averages, area 39003",
       "confidence": "high",
-      "asof": "2024"
+      "asof": "2024",
+      "low": null,
+      "high": null
     },
     "avg_annual_pay": {
       "value": 58790.0,
@@ -27,7 +31,9 @@
       "source": "connector",
       "citation": "BLS QCEW 2024 annual averages, area 39003",
       "confidence": "high",
-      "asof": "2024"
+      "asof": "2024",
+      "low": null,
+      "high": null
     },
     "avg_weekly_wage": {
       "value": 1131.0,
@@ -35,7 +41,9 @@
       "source": "connector",
       "citation": "BLS QCEW 2024 annual averages, area 39003",
       "confidence": "high",
-      "asof": "2024"
+      "asof": "2024",
+      "low": null,
+      "high": null
     },
     "sectors": [
       {
@@ -47,7 +55,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "establishments": {
           "value": 325.0,
@@ -55,7 +65,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_annual_pay": {
           "value": 60348.0,
@@ -63,7 +75,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_weekly_wage": {
           "value": 1161.0,
@@ -71,7 +85,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "location_quotient": {
           "value": 1.33,
@@ -79,7 +95,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -91,7 +109,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "establishments": {
           "value": 131.0,
@@ -99,7 +119,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_annual_pay": {
           "value": 92093.0,
@@ -107,7 +129,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_weekly_wage": {
           "value": 1771.0,
@@ -115,7 +139,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "location_quotient": {
           "value": 2.15,
@@ -123,7 +149,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -135,7 +163,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "establishments": {
           "value": 380.0,
@@ -143,7 +173,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_annual_pay": {
           "value": 34262.0,
@@ -151,7 +183,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_weekly_wage": {
           "value": 659.0,
@@ -159,7 +193,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "location_quotient": {
           "value": 1.06,
@@ -167,7 +203,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -179,7 +217,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "establishments": {
           "value": 240.0,
@@ -187,7 +227,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_annual_pay": {
           "value": 20846.0,
@@ -195,7 +237,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_weekly_wage": {
           "value": 401.0,
@@ -203,7 +247,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "location_quotient": {
           "value": 1.05,
@@ -211,7 +257,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -223,7 +271,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "establishments": {
           "value": 140.0,
@@ -231,7 +281,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_annual_pay": {
           "value": 52429.0,
@@ -239,7 +291,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_weekly_wage": {
           "value": 1008.0,
@@ -247,7 +301,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "location_quotient": {
           "value": 1.12,
@@ -255,7 +311,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -267,7 +325,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "establishments": {
           "value": 138.0,
@@ -275,7 +335,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_annual_pay": {
           "value": 66162.0,
@@ -283,7 +345,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_weekly_wage": {
           "value": 1272.0,
@@ -291,7 +355,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "location_quotient": {
           "value": 1.22,
@@ -299,7 +365,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -311,7 +379,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "establishments": {
           "value": 212.0,
@@ -319,7 +389,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_annual_pay": {
           "value": 70217.0,
@@ -327,7 +399,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_weekly_wage": {
           "value": 1350.0,
@@ -335,7 +409,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "location_quotient": {
           "value": 0.79,
@@ -343,7 +419,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -355,7 +433,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "establishments": {
           "value": 240.0,
@@ -363,7 +443,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_annual_pay": {
           "value": 36657.0,
@@ -371,7 +453,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_weekly_wage": {
           "value": 705.0,
@@ -379,7 +463,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "location_quotient": {
           "value": 1.08,
@@ -387,7 +473,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -399,7 +487,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "establishments": {
           "value": 189.0,
@@ -407,7 +497,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_annual_pay": {
           "value": 74796.0,
@@ -415,7 +507,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_weekly_wage": {
           "value": 1438.0,
@@ -423,7 +517,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "location_quotient": {
           "value": 0.46,
@@ -431,7 +527,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -443,7 +541,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "establishments": {
           "value": 85.0,
@@ -451,7 +551,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_annual_pay": {
           "value": 61361.0,
@@ -459,7 +561,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_weekly_wage": {
           "value": 1180.0,
@@ -467,7 +571,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "location_quotient": {
           "value": 0.55,
@@ -475,7 +581,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -487,7 +595,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "establishments": {
           "value": 26.0,
@@ -495,7 +605,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_annual_pay": {
           "value": 34855.0,
@@ -503,7 +615,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_weekly_wage": {
           "value": 670.0,
@@ -511,7 +625,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "location_quotient": {
           "value": 0.93,
@@ -519,7 +635,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -531,7 +649,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "establishments": {
           "value": 134.0,
@@ -539,7 +659,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_annual_pay": {
           "value": 70088.0,
@@ -547,7 +669,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_weekly_wage": {
           "value": 1348.0,
@@ -555,7 +679,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "location_quotient": {
           "value": 0.44,
@@ -563,7 +689,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -575,7 +703,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "establishments": {
           "value": 38.0,
@@ -583,7 +713,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_annual_pay": {
           "value": 20308.0,
@@ -591,7 +723,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_weekly_wage": {
           "value": 391.0,
@@ -599,7 +733,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "location_quotient": {
           "value": 0.65,
@@ -607,7 +743,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -619,7 +757,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "establishments": {
           "value": 20.0,
@@ -627,7 +767,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_annual_pay": {
           "value": 88987.0,
@@ -635,7 +777,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_weekly_wage": {
           "value": 1711.0,
@@ -643,7 +787,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "location_quotient": {
           "value": 0.38,
@@ -651,7 +797,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -663,7 +811,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "establishments": {
           "value": 86.0,
@@ -671,7 +821,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_annual_pay": {
           "value": 42132.0,
@@ -679,7 +831,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_weekly_wage": {
           "value": 810.0,
@@ -687,7 +841,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "location_quotient": {
           "value": 0.33,
@@ -695,7 +851,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -707,7 +865,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "establishments": {
           "value": 8.0,
@@ -715,7 +875,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_annual_pay": {
           "value": 110425.0,
@@ -723,7 +885,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_weekly_wage": {
           "value": 2124.0,
@@ -731,7 +895,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "location_quotient": {
           "value": 0.65,
@@ -739,7 +905,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -751,7 +919,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "establishments": {
           "value": 22.0,
@@ -759,7 +929,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_annual_pay": null,
         "avg_weekly_wage": null,
@@ -769,7 +941,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -781,7 +955,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "establishments": {
           "value": 3.0,
@@ -789,7 +965,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_annual_pay": null,
         "avg_weekly_wage": null,
@@ -799,7 +977,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -811,7 +991,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "establishments": {
           "value": 32.0,
@@ -819,7 +1001,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_annual_pay": null,
         "avg_weekly_wage": null,
@@ -829,7 +1013,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -841,7 +1027,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "establishments": {
           "value": 2.0,
@@ -849,7 +1037,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         },
         "avg_annual_pay": null,
         "avg_weekly_wage": null,
@@ -859,7 +1049,9 @@
           "source": "connector",
           "citation": "BLS QCEW 2024 annual averages, area 39003",
           "confidence": "high",
-          "asof": "2024"
+          "asof": "2024",
+          "low": null,
+          "high": null
         }
       }
     ],
@@ -874,7 +1066,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2014 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2014"
+        "asof": "2014",
+        "low": null,
+        "high": null
       },
       "establishments": {
         "value": 2487.0,
@@ -882,7 +1076,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2014 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2014"
+        "asof": "2014",
+        "low": null,
+        "high": null
       }
     },
     {
@@ -893,7 +1089,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2015 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2015"
+        "asof": "2015",
+        "low": null,
+        "high": null
       },
       "establishments": {
         "value": 2463.0,
@@ -901,7 +1099,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2015 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2015"
+        "asof": "2015",
+        "low": null,
+        "high": null
       }
     },
     {
@@ -912,7 +1112,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2016 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2016"
+        "asof": "2016",
+        "low": null,
+        "high": null
       },
       "establishments": {
         "value": 2465.0,
@@ -920,7 +1122,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2016 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2016"
+        "asof": "2016",
+        "low": null,
+        "high": null
       }
     },
     {
@@ -931,7 +1135,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2017 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2017"
+        "asof": "2017",
+        "low": null,
+        "high": null
       },
       "establishments": {
         "value": 2487.0,
@@ -939,7 +1145,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2017 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2017"
+        "asof": "2017",
+        "low": null,
+        "high": null
       }
     },
     {
@@ -950,7 +1158,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2018 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2018"
+        "asof": "2018",
+        "low": null,
+        "high": null
       },
       "establishments": {
         "value": 2489.0,
@@ -958,7 +1168,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2018 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2018"
+        "asof": "2018",
+        "low": null,
+        "high": null
       }
     },
     {
@@ -969,7 +1181,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2019 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2019"
+        "asof": "2019",
+        "low": null,
+        "high": null
       },
       "establishments": {
         "value": 2510.0,
@@ -977,7 +1191,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2019 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2019"
+        "asof": "2019",
+        "low": null,
+        "high": null
       }
     },
     {
@@ -988,7 +1204,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2020 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2020"
+        "asof": "2020",
+        "low": null,
+        "high": null
       },
       "establishments": {
         "value": 2525.0,
@@ -996,7 +1214,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2020 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2020"
+        "asof": "2020",
+        "low": null,
+        "high": null
       }
     },
     {
@@ -1007,7 +1227,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2021 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2021"
+        "asof": "2021",
+        "low": null,
+        "high": null
       },
       "establishments": {
         "value": 2529.0,
@@ -1015,7 +1237,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2021 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2021"
+        "asof": "2021",
+        "low": null,
+        "high": null
       }
     },
     {
@@ -1026,7 +1250,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2022 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2022"
+        "asof": "2022",
+        "low": null,
+        "high": null
       },
       "establishments": {
         "value": 2562.0,
@@ -1034,7 +1260,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2022 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2022"
+        "asof": "2022",
+        "low": null,
+        "high": null
       }
     },
     {
@@ -1045,7 +1273,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2023 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2023"
+        "asof": "2023",
+        "low": null,
+        "high": null
       },
       "establishments": {
         "value": 2564.0,
@@ -1053,7 +1283,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2023 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2023"
+        "asof": "2023",
+        "low": null,
+        "high": null
       }
     },
     {
@@ -1064,7 +1296,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2024 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2024"
+        "asof": "2024",
+        "low": null,
+        "high": null
       },
       "establishments": {
         "value": 2586.0,
@@ -1072,7 +1306,9 @@
         "source": "connector",
         "citation": "BLS QCEW 2024 annual averages, area 39003",
         "confidence": "high",
-        "asof": "2024"
+        "asof": "2024",
+        "low": null,
+        "high": null
       }
     }
   ],
@@ -1088,7 +1324,9 @@
           "source": "connector",
           "citation": "US Census ACS5 2010 B01003_001E (Allen County, Ohio)",
           "confidence": "high",
-          "asof": "2010"
+          "asof": "2010",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -1099,7 +1337,9 @@
           "source": "connector",
           "citation": "US Census ACS5 2015 B01003_001E (Allen County, Ohio)",
           "confidence": "high",
-          "asof": "2015"
+          "asof": "2015",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -1110,7 +1350,9 @@
           "source": "connector",
           "citation": "US Census ACS5 2020 B01003_001E (Allen County, Ohio)",
           "confidence": "high",
-          "asof": "2020"
+          "asof": "2020",
+          "low": null,
+          "high": null
         }
       },
       {
@@ -1121,7 +1363,9 @@
           "source": "connector",
           "citation": "US Census ACS5 2023 B01003_001E (Allen County, Ohio)",
           "confidence": "high",
-          "asof": "2023"
+          "asof": "2023",
+          "low": null,
+          "high": null
         }
       }
     ],
@@ -1133,7 +1377,9 @@
     "source": "connector",
     "citation": "US Census ACS5 2023 B19013_001E median household income (Allen County, Ohio)",
     "confidence": "high",
-    "asof": "2023"
+    "asof": "2023",
+    "low": null,
+    "high": null
   },
   "note": "Employment from BLS QCEW (keyless open data). Location quotient = county sector share / national share (export-orientation; the county-level proxy for an import/export ratio). Population from US Census ACS 5-year (B01003). Median household income from US Census ACS 5-year (B19013, 2023)."
 }

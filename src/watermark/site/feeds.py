@@ -121,7 +121,14 @@ from watermark.site.readiness import State, Tier  # the readiness vocabulary SSO
 #   boundary (net=0) is the threshold isopleth. The per-month low-flow `multiple` rides along for
 #   the SSR table/probe and is [inference] (it screens the modeled buildout draw). Reference-site
 #   gated; `available=False` with empty `months` when the climate/scenario inputs are absent.
-CONTRACT_VERSION = "1.22.0"
+# 1.23.0: adds an optional quantitative range to `ProvenancedValue` (#760) — `low`/`high`
+#   absolute bounds around the central `value`, distinct from the qualitative `confidence`.
+#   A measured/derived estimate whose honest representation is a band ("226 ± ~35 ac") now
+#   carries the spread as data rather than prose in the citation, so the bundle/frontend and
+#   the uncertainty engine (#271) consume it uniformly. Both bounds optional (a document-
+#   verbatim figure stays a single value); back-compatible — every feed embedding a
+#   `ProvenancedValue` gains the two nullable fields.
+CONTRACT_VERSION = "1.23.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

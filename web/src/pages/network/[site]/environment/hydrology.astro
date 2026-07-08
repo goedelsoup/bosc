@@ -8,6 +8,7 @@ import { hasFeed, loadFeed } from "~/lib/bundle";
 import type { CoolingModel, ProvenancedValue, ScenarioResult } from "~/lib/feeds";
 import type { FigureStatData } from "~/lib/viz";
 import { withSite } from "~/lib/site";
+import { fmtRanged } from "~/lib/format";
 
 const scenarios = hasFeed("hydrology-scenarios") ? loadFeed<ScenarioResult[]>("hydrology-scenarios") : [];
 
@@ -15,7 +16,9 @@ const numOf = (v: ProvenancedValue): string => (v.value == null ? "—" : v.valu
 // document/connector-sourced values are grounded; assumption/derived are inferred.
 const grounded = (v: ProvenancedValue): boolean =>
   v.source === "document" || v.source === "connector" || v.source === "reference";
-const fmt = (v: ProvenancedValue): string => `${numOf(v)}${v.unit ? ` ${v.unit}` : ""}`;
+// Renders the value with its uncertainty band when one is present (#760) — "226 ± ~45 ac"
+// / "226 (181–271 ac)" — falling back to the bare value otherwise.
+const fmt = (v: ProvenancedValue): string => fmtRanged(v);
 
 /** Map a provenanced metric onto the unified figure/stat treatment. */
 const toStat = (label: string, v: ProvenancedValue, neg?: boolean): FigureStatData => ({

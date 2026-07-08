@@ -154,8 +154,10 @@ class PowerBasis(BaseModel):
     """The disclosed-power basis for the campus, all provenance-tagged.
 
     ``it_load`` is the central document-anchored IT load (the N+1 backup ≈ IT
-    convention from the air permit); ``it_load_low``/``it_load_high`` bracket the
-    250-300 MW range the genset count supports. Mirrors the shape of
+    convention from the air permit), carrying a ``low``/``high`` range (#760) that
+    brackets the 250-300 MW the genset count supports. ``pue`` and ``facility_draw``
+    likewise carry their bands as a first-class range rather than as sibling
+    ``*_low``/``*_high`` fields. Mirrors the shape of
     :class:`watermark.hydrology.model.CoolingBasis` so the two subsystems read alike.
     """
 
@@ -164,17 +166,15 @@ class PowerBasis(BaseModel):
     genset_count: ProvenancedValue  # count (document)
     genset_rating: ProvenancedValue  # MW each (document)
     backup_power: ProvenancedValue  # MW total backup (derived)
-    it_load: ProvenancedValue  # MW central (document-anchored)
-    it_load_low: ProvenancedValue  # MW low end of the N+1 range
-    it_load_high: ProvenancedValue  # MW high end
+    it_load: ProvenancedValue  # MW central (document-anchored) + N+1 low/high band (#760)
     # Cooling / mechanical overhead (issue #87): PUE is a banded ASSUMPTION; the band
-    # drives the IT->total facility_draw translation (the first-class downstream output).
-    pue_low: ProvenancedValue  # PUE at the efficient end (assumption)
-    pue_high: ProvenancedValue  # PUE at the cooling-dominated end ~1.43 (assumption)
-    cooling_share_high: ProvenancedValue  # (PUE_high-1)/PUE_high ~0.30, the call's cooling share
-    facility_draw: ProvenancedValue  # MW total facility draw = IT central x PUE central (derived)
-    facility_draw_low: ProvenancedValue  # MW = IT central x PUE low (efficient)
-    facility_draw_high: ProvenancedValue  # MW = IT central x PUE high (cooling-dominated)
+    # (pue.low efficient .. pue.high cooling-dominated ~1.43) drives the IT->total
+    # facility_draw translation (the first-class downstream output). pue.value = band mean.
+    pue: ProvenancedValue  # PUE central (band mean) + low/high band (assumption)
+    cooling_share_high: ProvenancedValue  # (pue.high-1)/pue.high ~0.30, the call's cooling share
+    # MW total facility draw = IT central x PUE central; facility_draw.low/high bracket the
+    # efficient (x pue.low) .. cooling-dominated (x pue.high) ends (derived, #760).
+    facility_draw: ProvenancedValue
     implied_pue_from_backup: ProvenancedValue  # backup / IT — N+1 cross-check vs #33
     cooling_overhead_note: str = (
         "Cooling/mechanical overhead is a banded ASSUMPTION (PUE = total/IT), not a "
@@ -291,20 +291,15 @@ def derive_power_basis(*, settings: Settings | None = None) -> PowerBasis | None
             "MW",
             citation=f"{fac.genset_count} gensets x {fac.genset_mw:g} MW each (the site's air permit)",
         ),
-        it_load=ProvenancedValue.from_document(fac.it_load_mw, "MW", citation=cite),
-        it_load_low=ProvenancedValue.derived(
-            fac.it_load_low_mw,
-            "MW",
-            citation=f"low end of the N+1 IT estimate from ~{round(backup_mw, 1):g} MW backup",
+        it_load=ProvenancedValue.from_document(fac.it_load_mw, "MW", citation=cite).with_range(
+            low=fac.it_load_low_mw, high=fac.it_load_high_mw
         ),
-        it_load_high=ProvenancedValue.derived(
-            fac.it_load_high_mw,
-            "MW",
-            citation=f"high end of the N+1 IT estimate from ~{round(backup_mw, 1):g} MW backup",
-        ),
-        pue_low=ProvenancedValue.assume(pue_lo, "ratio", why=f"{_PUE_CITE} (efficient end)"),
-        pue_high=ProvenancedValue.assume(
-            pue_hi, "ratio", why=f"{_PUE_CITE} (cooling-dominated end)"
+        pue=ProvenancedValue.assume(
+            round(pue_central, 3),
+            "ratio",
+            why=f"{_PUE_CITE} (band mean of {pue_lo:g} efficient .. {pue_hi:g} cooling-dominated)",
+            low=pue_lo,
+            high=pue_hi,
         ),
         cooling_share_high=ProvenancedValue.derived(
             round(cooling_share_hi, 3),
@@ -315,16 +310,8 @@ def derive_power_basis(*, settings: Settings | None = None) -> PowerBasis | None
             round(draw_central, 1),
             "MW",
             citation=f"{fac.it_load_mw:g} MW IT x PUE {pue_central:g} (band mean) — total facility draw",
-        ),
-        facility_draw_low=ProvenancedValue.derived(
-            round(fac.it_load_mw * pue_lo, 1),
-            "MW",
-            citation=f"{fac.it_load_mw:g} MW IT x PUE {pue_lo:g} (efficient)",
-        ),
-        facility_draw_high=ProvenancedValue.derived(
-            round(fac.it_load_mw * pue_hi, 1),
-            "MW",
-            citation=f"{fac.it_load_mw:g} MW IT x PUE {pue_hi:g} (cooling-dominated, ~30% cooling)",
+            low=round(fac.it_load_mw * pue_lo, 1),
+            high=round(fac.it_load_mw * pue_hi, 1),
         ),
         implied_pue_from_backup=ProvenancedValue.derived(
             round(implied_pue, 2),
