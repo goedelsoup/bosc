@@ -564,6 +564,51 @@ const platformGlobals: { label: string; href: string; section: SectionId }[] = [
     }
   })();
 
+  // Chrome dropdowns (#1319): native <details> don't know about one another, so opening
+  // one leaves an already-open sibling open. Progressive enhancement over the no-JS baseline:
+  // close every other open dropdown when one opens, and close open ones on outside-click / Escape.
+  (function () {
+    var SEL = "details.site-switcher, details.nav-dd";
+    var dropdowns = Array.prototype.slice.call(document.querySelectorAll(SEL));
+    if (!dropdowns.length) return;
+
+    // Close every open dropdown for which shouldClose(dd) is true. When restoreFocus is
+    // set, focus returns to the closed dropdown's summary (keyboard Escape affordance).
+    function closeDropdowns(shouldClose, restoreFocus) {
+      dropdowns.forEach(function (dd) {
+        if (!dd.open || !shouldClose(dd)) return;
+        dd.open = false;
+        if (restoreFocus) {
+          var summary = dd.querySelector("summary");
+          if (summary) summary.focus();
+        }
+      });
+    }
+
+    dropdowns.forEach(function (dd) {
+      // Opening one dropdown collapses the others.
+      dd.addEventListener("toggle", function () {
+        if (dd.open) closeDropdowns(function (other) { return other !== dd; });
+      });
+      // Tabbing focus out of an open dropdown collapses it too, so its state matches focus.
+      // Guard on a truthy relatedTarget: a null one is an internal click on non-focusable
+      // content (a header/label/legend), which must not collapse the still-open menu.
+      dd.addEventListener("focusout", function (e) {
+        if (dd.open && e.relatedTarget && !dd.contains(e.relatedTarget)) dd.open = false;
+      });
+    });
+
+    // Outside-click collapses any dropdown the click landed outside of.
+    document.addEventListener("click", function (e) {
+      closeDropdowns(function (dd) { return !dd.contains(e.target); });
+    });
+
+    // Escape collapses all open dropdowns and restores focus to their summary.
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeDropdowns(function () { return true; }, true);
+    });
+  })();
+
   // V2 place filter — filters .switcher-row-v2 elements by place name.
   var filterInput = document.getElementById("sw-v2-filter");
   if (filterInput) {
