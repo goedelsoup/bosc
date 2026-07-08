@@ -7,7 +7,7 @@ import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed } from "~/lib/bundle";
 import type { MeetingItem } from "~/lib/feeds";
 import { LEGAL, LEGAL_GROUPS, legalBySlug } from "~/lib/legal";
-import { withSite } from "~/lib/site";
+import { withBase, withSite } from "~/lib/site";
 
 const meetings = hasFeed("meetings") ? loadFeed<MeetingItem[]>("meetings") : [];
 const sorted = [...meetings].sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
@@ -28,8 +28,8 @@ const groups = LEGAL_GROUPS.filter((g) => docs.some((d) => d.group === g));
       corridor-relevant meeting summaries.
     </p>
     <p>
-      Narrative analyses: <a href={withSite("/docs/legal/mandamus-analysis")}>mandamus analysis</a> ·
-      <a href={withSite("/docs/legal/proponent-analysis")}>proponent analysis</a>
+      Narrative analyses: <a href={withBase("/docs/legal/mandamus-analysis")}>mandamus analysis</a> ·
+      <a href={withBase("/docs/legal/proponent-analysis")}>proponent analysis</a>
     </p>
 
     <h2 id="documents">Documents</h2>

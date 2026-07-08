@@ -16,7 +16,7 @@ import RedactionReveal from "~/components/RedactionReveal.astro";
 import ReportShell from "~/layouts/ReportShell.astro";
 import { facilityDrawOutcome } from "~/lib/gridLoad";
 import type { TeardownRedaction } from "~/lib/teardown";
-import { withSite } from "~/lib/site";
+import { withBase } from "~/lib/site";
 
 const draw = facilityDrawOutcome();
 
@@ -45,7 +45,7 @@ const redaction: TeardownRedaction = {
         <strong>{Math.round(draw.low)}–{Math.round(draw.high)} MW</strong> (central
         ~{Math.round(draw.central)}), and that inference chain <em>is</em> the uncertainty.
         Drag it open below. Full essay:
-        <a href={withSite("/docs/the-load-and-the-grid")}>the load and the grid →</a>
+        <a href={withBase("/docs/the-load-and-the-grid")}>the load and the grid →</a>
       </p>
   </Fragment>
 

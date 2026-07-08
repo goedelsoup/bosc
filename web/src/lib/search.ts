@@ -63,11 +63,12 @@ export function buildSearchIndex(): SearchDoc[] {
     }
   }
 
-  // Migrated narrative prose (#69) — by title + blurb.
+  // Migrated narrative prose (#69) — by title + blurb. Network-global at the root (#1304), so a
+  // plain `/docs/<slug>` path (like the `/wiki/...` entries), not the Lima-scoped `siteUrl`.
   for (const d of NARRATIVE) {
     docs.push({
       title: d.title,
-      url: siteUrl(`/docs/${d.slug}`),
+      url: `/docs/${d.slug}`,
       section: getSection(d.section).label,
       text: d.blurb,
       kind: "Doc",

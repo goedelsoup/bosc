@@ -376,7 +376,7 @@ export const AIR_TEARDOWN: TeardownRecord = {
     {
       kind: "doc",
       label: "the bigger picture",
-      href: withSite("/docs/bigger-picture"),
+      href: withBase("/docs/bigger-picture"),
     },
   ],
   redaction: {
@@ -430,7 +430,7 @@ export const NPDES_TEARDOWN: TeardownRecord = {
     verify: "Open the fact sheet · permit 2PH00006",
     verifyHref: withSite("/site/records/"),
     method: "How the 7Q10 screen works",
-    methodHref: withSite("/docs/hydrology"),
+    methodHref: withBase("/docs/hydrology"),
   },
   connect: [
     { kind: "concept", label: "[[7q10]]", href: withBase("/wiki/concepts/") },
@@ -480,7 +480,7 @@ export const RDA_TEARDOWN: TeardownRecord = {
     verify: "Open RDA · §5.5, §9.13, §9.17",
     verifyHref: withSite("/site/legal/"),
     method: "Read the clause analysis",
-    methodHref: withSite("/docs/economics"),
+    methodHref: withBase("/docs/economics"),
   },
   connect: [
     { kind: "entity", label: "Bistrozzi LLC", href: withBase("/wiki/entities/") },
@@ -493,7 +493,7 @@ export const RDA_TEARDOWN: TeardownRecord = {
     {
       kind: "doc",
       label: "ECONOMICS.md",
-      href: withSite("/docs/economics"),
+      href: withBase("/docs/economics"),
     },
   ],
   legalSlug: "withholding-map",

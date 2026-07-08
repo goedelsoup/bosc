@@ -27,7 +27,7 @@ import {
   leadStats,
 } from "~/lib/leads";
 import { isReferenceSite, lockedSections } from "~/lib/readiness";
-import { withSite } from "~/lib/site";
+import { withBase, withSite } from "~/lib/site";
 import { activeSite, selectableSitePaths, siteForSlug, siteState } from "~/lib/sites";
 
 // One `network/[site]/…` route per selectable site (#724/#734); Lima alone today.
@@ -132,7 +132,7 @@ const ghIssue = (n: number): string =>
           <p class="leads-lead">
             Every gap we're chasing on this site, in the open. Each lead is <strong>unverified inference</strong>
             until a source corroborates it — and every one traces to the
-            <a href={withSite("/docs/dossier")}>corpus-completeness audit</a> or a working hypothesis.
+            <a href={withBase("/docs/dossier")}>corpus-completeness audit</a> or a working hypothesis.
             Pick one up, answer it, or bring the document that closes it.
           </p>
         </div>

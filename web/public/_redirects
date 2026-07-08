@@ -39,9 +39,14 @@
 /timeline               /network/american-sugar-creek-allen-co/timeline                        301
 /site/*                 /network/american-sugar-creek-allen-co/site/:splat                     301
 /watershed/*            /network/american-sugar-creek-allen-co/environment/:splat                301
-/docs/*                 /network/american-sugar-creek-allen-co/docs/:splat                     301
 /reports/*              /network/american-sugar-creek-allen-co/reports/:splat                  301
 /walk/*                 /network/american-sugar-creek-allen-co/stories/project-bosc/:splat     301
+
+# Docs moved to the network-global `/docs/` build (#1304): the long-form prose is one root build,
+# not per-site. The old `/docs/* → per-site` rewrite is gone (it now points nowhere and would shadow
+# the real files); keep old per-site docs URLs working by sending them to the global build instead.
+/network/:site/docs             /docs/                                                         301
+/network/:site/docs/*           /docs/:splat                                                   301
 
 # The per-site `<site>/watershed` section was renamed to `<site>/environment` (#1254 — it now
 # aggregates water + air + toxics, not just the watershed). Keep old/shared per-site links working:

@@ -17,7 +17,7 @@ import ToxicsDilutionScreen from "~/components/islands/ToxicsDilutionScreen.tsx"
 import BulletChart from "~/components/charts/BulletChart.astro";
 import ReportShell from "~/layouts/ReportShell.astro";
 import { buildDilution } from "~/lib/dilution";
-import { withSite } from "~/lib/site";
+import { withBase } from "~/lib/site";
 
 const d = buildDilution();
 const dc = d.discharge;
@@ -41,7 +41,7 @@ const effluentMultiple = Math.round(effluentCfs / dc.naturalCfs);
         on it. The screen below is <em>modeled</em>, not measured — it shows who and how
         much, never that the river's capacity is exceeded. That record is
         <code>[open]</code>. Full essay:
-        <a href={withSite("/docs/toxics-and-the-corridor")}>toxics and the corridor →</a>
+        <a href={withBase("/docs/toxics-and-the-corridor")}>toxics and the corridor →</a>
       </p>
   </Fragment>
 
