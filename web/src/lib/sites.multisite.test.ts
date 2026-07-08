@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import { comingSoonSiteTabs } from "./nav";
 import { siteBase } from "./routes";
 import {
-  ACTIVE_SITE_SLUG,
   type NetworkSite,
   SITES,
   comingSoonFrom,

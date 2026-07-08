@@ -53,7 +53,7 @@ export default function BulletinBoard({ site, turnstileSiteKey }: Props) {
       setLoaded(true);
     });
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: refresh closes over `site`, stable per mount.
+  // refresh closes over `site`, stable per mount; only re-run when `site` changes.
   useEffect(() => {
     refresh();
   }, [site]);
