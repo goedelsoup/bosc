@@ -83,11 +83,10 @@ export default function PetitionConnect({ site, contactId, contactName, turnstil
     });
     if (res.ok) {
       setStatus("done");
-      setTally((t) => ({
-        contact_id: contactId,
-        count: (t?.count ?? 0) + 1,
-        names: name.trim() ? [name.trim(), ...(t?.names ?? [])] : (t?.names ?? []),
-      }));
+      // Server-authoritative: re-read the tally rather than guessing it locally, so the count + names
+      // shown are ground truth (e.g. a blank display name isn't optimistically added to the roster).
+      const fresh = await getConnectTally(site, contactId);
+      if (fresh.ok) setTally(fresh.value);
     } else {
       setStatus("error");
       setError(res.error ?? "Something went wrong — try again.");

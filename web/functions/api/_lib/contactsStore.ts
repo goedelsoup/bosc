@@ -78,19 +78,30 @@ export async function insertPetitionConnect(
   ]);
 }
 
+/** How many opt-in display names the public tally surfaces (the count is exact; the roster is capped). */
+const TALLY_NAMES_LIMIT = 100;
+
 /**
- * The PUBLIC tally for a petitioner — the count of connects plus the opt-in display names, newest
- * first. Never selects `email` (private routing); a blank display name is dropped, not shown empty.
+ * The PUBLIC tally for a petitioner — the exact count of connects plus a bounded roster of the opt-in
+ * display names, newest first. The count is a `COUNT(*)` (so the public read never scans every row),
+ * and the names are a separate `LIMIT`ed query filtered to non-blank in SQL. Never selects `email`
+ * (private routing).
  */
 export async function publicConnectTally(db: PgLike, site: string, contactId: string): Promise<ConnectTally> {
-  const rows = await db.query<{ display_name: string }>(
-    `SELECT display_name FROM petition_connects WHERE site = $1 AND contact_id = $2 ORDER BY created_at DESC`,
+  const countRows = await db.query<{ n: number }>(
+    `SELECT COUNT(*)::int AS n FROM petition_connects WHERE site = $1 AND contact_id = $2`,
     [site, contactId],
+  );
+  const nameRows = await db.query<{ display_name: string }>(
+    `SELECT display_name FROM petition_connects
+     WHERE site = $1 AND contact_id = $2 AND TRIM(display_name) <> ''
+     ORDER BY created_at DESC LIMIT $3`,
+    [site, contactId, TALLY_NAMES_LIMIT],
   );
   return {
     contact_id: contactId,
-    count: rows.length,
-    names: rows.map((r) => r.display_name).filter((n) => n.trim().length > 0),
+    count: Number(countRows[0]?.n ?? 0),
+    names: nameRows.map((r) => r.display_name),
   };
 }
 
