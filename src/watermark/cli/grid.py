@@ -133,9 +133,9 @@ def compute(
     console.print(
         f"\n[bold]Total facility draw[/] — IT load x PUE "
         f"[dim](cooling/mechanical overhead is a banded assumption)[/]\n"
-        f"  [bold]{power.facility_draw_low.value:g}-{power.facility_draw_high.value:g} MW[/] "
+        f"  [bold]{power.facility_draw.low_or_value:g}-{power.facility_draw.high_or_value:g} MW[/] "
         f"(central [bold]{power.facility_draw.value:g} MW[/]) at PUE "
-        f"{power.pue_low.value:g}-{power.pue_high.value:g}; cooling up to "
+        f"{power.pue.low_or_value:g}-{power.pue.high_or_value:g}; cooling up to "
         f"[bold]{power.cooling_share_high.value * 100:.0f}%[/] of facility power\n"
         f"  [dim]N+1 cross-check: the {power.backup_power.value:g} MW genset backup implies "
         f"PUE ~{power.implied_pue_from_backup.value:g} if sized to IT + mechanical — covering "

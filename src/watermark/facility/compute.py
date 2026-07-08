@@ -297,8 +297,8 @@ def derive_compute_capacity(
 
     # --- Method 1: power / gensets (PRIMARY) ---------------------------------
     it_power = power.it_load.value
-    it_power_low = power.it_load_low.value
-    it_power_high = power.it_load_high.value
+    it_power_low = power.it_load.low_or_value
+    it_power_high = power.it_load.high_or_value
 
     # --- Method 2: cooling-water back-solve (cross-check, shares WUE) --------
     # NB: this inversion treats the disclosed consumptive water as data-hall cooling

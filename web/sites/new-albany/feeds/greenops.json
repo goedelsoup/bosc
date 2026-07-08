@@ -15,7 +15,9 @@
         "source": "derived",
         "citation": "AWS billed instance-hours x vCPU/instance + GitHub Actions minutes x runner cores",
         "confidence": "medium",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "sub": "hosting, search, CI/CD",
       "source_label": "AWS Cost Explorer + GitHub Actions billing"
@@ -29,7 +31,9 @@
         "source": "derived",
         "citation": "Anthropic total tokens (5,580,000) ÷ 4000 avg tokens/call (the Admin API exposes no per-message count)",
         "confidence": "low",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "sub": "extraction, ask, corroboration, drafting",
       "source_label": "Anthropic Admin usage (derived call count)"
@@ -43,7 +47,9 @@
         "source": "derived",
         "citation": "6366 vCPU-hrs x 7 W/vCPU x PUE 1.2",
         "confidence": "low",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "sub": "compute + cooling, all regions",
       "source_label": "power-draw specs x PUE"
@@ -57,7 +63,9 @@
         "source": "derived",
         "citation": "direct on-site cooling (site WUE) + upstream generation (source WUE)",
         "confidence": "low",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "sub": "direct cooling + generation upstream",
       "source_label": "WUE benchmarks"
@@ -74,7 +82,9 @@
           "source": "derived",
           "citation": "billed instance-hours x vCPU/instance (AWS CE) + Actions minutes x runner cores (GitHub) over the window",
           "confidence": "medium",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         }
       },
       {
@@ -85,7 +95,9 @@
           "source": "derived",
           "citation": "billed instance-hours x vCPU/instance (AWS CE) + Actions minutes x runner cores (GitHub) over the window",
           "confidence": "medium",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         }
       },
       {
@@ -96,7 +108,9 @@
           "source": "derived",
           "citation": "billed instance-hours x vCPU/instance (AWS CE) + Actions minutes x runner cores (GitHub) over the window",
           "confidence": "medium",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         }
       }
     ]
@@ -112,7 +126,9 @@
           "source": "assumption",
           "citation": "modeled share of calls by task — asserted until the per-task workspace keys (#1080) are named so the Anthropic by-workspace split can be labeled and metered by task",
           "confidence": "low",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         }
       },
       {
@@ -123,7 +139,9 @@
           "source": "assumption",
           "citation": "modeled share of calls by task — asserted until the per-task workspace keys (#1080) are named so the Anthropic by-workspace split can be labeled and metered by task",
           "confidence": "low",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         }
       },
       {
@@ -134,7 +152,9 @@
           "source": "assumption",
           "citation": "modeled share of calls by task — asserted until the per-task workspace keys (#1080) are named so the Anthropic by-workspace split can be labeled and metered by task",
           "confidence": "low",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         }
       },
       {
@@ -145,7 +165,9 @@
           "source": "assumption",
           "citation": "modeled share of calls by task — asserted until the per-task workspace keys (#1080) are named so the Anthropic by-workspace split can be labeled and metered by task",
           "confidence": "low",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         }
       }
     ]
@@ -161,7 +183,9 @@
           "source": "derived",
           "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
           "confidence": "low",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         }
       },
       {
@@ -172,7 +196,9 @@
           "source": "derived",
           "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
           "confidence": "low",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         }
       },
       {
@@ -183,7 +209,9 @@
           "source": "derived",
           "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
           "confidence": "low",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         }
       },
       {
@@ -194,7 +222,9 @@
           "source": "derived",
           "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
           "confidence": "low",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         }
       },
       {
@@ -205,7 +235,9 @@
           "source": "derived",
           "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
           "confidence": "low",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         }
       },
       {
@@ -216,7 +248,9 @@
           "source": "derived",
           "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
           "confidence": "low",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         }
       },
       {
@@ -227,7 +261,9 @@
           "source": "derived",
           "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
           "confidence": "low",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         }
       },
       {
@@ -238,7 +274,9 @@
           "source": "derived",
           "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
           "confidence": "low",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         }
       },
       {
@@ -249,7 +287,9 @@
           "source": "derived",
           "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
           "confidence": "low",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         }
       },
       {
@@ -260,7 +300,9 @@
           "source": "derived",
           "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
           "confidence": "low",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         }
       },
       {
@@ -271,7 +313,9 @@
           "source": "derived",
           "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
           "confidence": "low",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         }
       },
       {
@@ -282,7 +326,9 @@
           "source": "derived",
           "citation": "vCPU-hrs x 7 W/vCPU x PUE 1.2 (compute → electricity), distributed evenly across the window",
           "confidence": "low",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         }
       }
     ],
@@ -292,7 +338,9 @@
       "source": "derived",
       "citation": "electricity x eGRID SRVC renewables share 9.9% (SERC Virginia/Carolina)",
       "confidence": "low",
-      "asof": null
+      "asof": null,
+      "low": null,
+      "high": null
     },
     "renewable": {
       "value": 0.0053,
@@ -300,7 +348,9 @@
       "source": "derived",
       "citation": "electricity x eGRID SRVC renewables share 9.9% (SERC Virginia/Carolina)",
       "confidence": "low",
-      "asof": null
+      "asof": null,
+      "low": null,
+      "high": null
     }
   },
   "water": {
@@ -311,7 +361,9 @@
       "source": "derived",
       "citation": "electricity x 1.8 L/kWh site WUE (direct on-site cooling), L → gal",
       "confidence": "low",
-      "asof": null
+      "asof": null,
+      "low": null,
+      "high": null
     },
     "indirect": {
       "value": 26.8,
@@ -319,7 +371,9 @@
       "source": "derived",
       "citation": "electricity x 1.9 L/kWh source WUE (upstream generation), L → gal",
       "confidence": "low",
-      "asof": null
+      "asof": null,
+      "low": null,
+      "high": null
     },
     "budget_cap": {
       "value": 150.0,
@@ -327,7 +381,9 @@
       "source": "assumption",
       "citation": "stated internal annual water-draw budget (a target, not metered)",
       "confidence": "low",
-      "asof": null
+      "asof": null,
+      "low": null,
+      "high": null
     }
   },
   "methodology": [

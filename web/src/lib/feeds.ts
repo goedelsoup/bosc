@@ -168,6 +168,10 @@ export interface ProvenancedValue {
   citation?: string | null;
   confidence?: Confidence | null;
   asof?: string | null;
+  // Optional quantitative uncertainty band (#760), distinct from the qualitative
+  // `confidence`. Absolute bounds around `value`, either/both present.
+  low?: number | null;
+  high?: number | null;
 }
 
 /** A screening dilution band (`bosc.hydrology.model.Flag`): violation < tight < ok. */

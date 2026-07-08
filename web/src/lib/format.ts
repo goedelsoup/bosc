@@ -19,6 +19,45 @@ export function fmtMw(n: number): string {
   return `${Math.round(n)} MW`;
 }
 
+/** The subset of a `ProvenancedValue` the range formatter needs (#760). */
+export interface Ranged {
+  value: number | null;
+  low?: number | null;
+  high?: number | null;
+  unit?: string | null;
+}
+
+/** True when a quantitative uncertainty band is attached (either bound present). */
+export function hasRange(pv: Pick<Ranged, "low" | "high">): boolean {
+  return pv.low != null || pv.high != null;
+}
+
+/**
+ * Render a provenanced value with its uncertainty band (#760): the symmetric case reads
+ * `"226 ± ~45 ac"`, an asymmetric or one-sided band reads `"226 (181–271 ac)"`, and a
+ * value with no band falls back to `"226 ac"`. `decimals` controls rounding of every part.
+ * This is the presentation of the quantitative spread — the qualitative `confidence` badge
+ * is rendered separately, alongside it.
+ */
+export function fmtRanged(pv: Ranged, decimals = 0): string {
+  if (pv.value == null) return "—";
+  const unit = pv.unit ? ` ${pv.unit}` : "";
+  const v = round(pv.value, decimals);
+  if (!hasRange(pv)) return `${v}${unit}`;
+  const dLo = pv.low != null ? pv.value - pv.low : null;
+  const dHi = pv.high != null ? pv.high - pv.value : null;
+  // Symmetric two-sided band (bounds equidistant within 5% of the spread) → the ± form.
+  if (dLo != null && dHi != null) {
+    const spread = Math.max(dLo, dHi);
+    if (Math.abs(dLo - dHi) <= 0.05 * Math.max(spread, 1e-9)) {
+      return `${v} ± ~${round((dLo + dHi) / 2, decimals)}${unit}`;
+    }
+  }
+  const lo = round(pv.low ?? pv.value, decimals);
+  const hi = round(pv.high ?? pv.value, decimals);
+  return `${v} (${lo}–${hi}${unit})`;
+}
+
 const HTML_ESCAPES: Record<string, string> = {
   "&": "&amp;",
   "<": "&lt;",

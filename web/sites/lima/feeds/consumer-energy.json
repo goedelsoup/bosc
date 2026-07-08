@@ -15,7 +15,9 @@
         "source": "connector",
         "citation": "EIA API v2 seriesid ELEC.PRICE.OH-RES.A (2025)",
         "confidence": "high",
-        "asof": "2025"
+        "asof": "2025",
+        "low": null,
+        "high": null
       },
       "points": [
         {
@@ -133,7 +135,9 @@
         "source": "connector",
         "citation": "EIA API v2 seriesid ELEC.SALES.OH-ALL.A (2025)",
         "confidence": "high",
-        "asof": "2025"
+        "asof": "2025",
+        "low": null,
+        "high": null
       },
       "points": [
         {
@@ -251,7 +255,9 @@
         "source": "connector",
         "citation": "EIA API v2 seriesid NG.N3010OH3.A (2025)",
         "confidence": "high",
-        "asof": "2025"
+        "asof": "2025",
+        "low": null,
+        "high": null
       },
       "points": [
         {

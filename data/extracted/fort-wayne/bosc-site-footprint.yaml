@@ -39,13 +39,18 @@ impervious_acres:
   value: 226
   unit: acre
   source: document
+  # #760: the ~±20% method uncertainty is now first-class range data (low/high), no longer
+  # buried in the citation prose — so the bundle/frontend/uncertainty engine see the spread.
+  low: 181
+  high: 271
   citation: >-
     [inference] Measured from §401 WQC001454 Exhibit 7 (Alternative B, 1"=200'): building footprints
     (~46 ac, tan fill) + paved/developed surface (~180 ac gray fill: parking, internal drives,
     equipment yards) = ~226 ac impervious on the 858-ac permit area (~26%, vs Lima's 34%; lower
     because the FW parcel preserves extensive wetland/buffer area). Raster color-segmentation +
-    scale-bar calibration; method uncertainty ~±15-20%. SUPERSEDES the prior [open]; confirm against
-    the SWPPP / IDEM Rule 5 construction stormwater permit (the regulatory figure) when available.
+    scale-bar calibration; method uncertainty ~±15-20% (captured as the low/high band, ~181-271 ac).
+    SUPERSEDES the prior [open]; confirm against the SWPPP / IDEM Rule 5 construction stormwater
+    permit (the regulatory figure) when available.
   confidence: medium
 
 developed_acres:

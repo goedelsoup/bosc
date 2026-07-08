@@ -14,7 +14,9 @@
         "source": "assumption",
         "citation": "no disclosed genset stack geometry for site 'lima' — typical large (~2.75 MW) stationary CI diesel genset exhaust — a screening assumption used where the engine make/model/size is not in the record (e.g. redacted as CBI); supersede with manufacturer stack data when disclosed (#1180)",
         "confidence": "low",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "diameter_m": {
         "value": 0.6,
@@ -22,7 +24,9 @@
         "source": "assumption",
         "citation": "no disclosed genset stack geometry for site 'lima' — typical large (~2.75 MW) stationary CI diesel genset exhaust — a screening assumption used where the engine make/model/size is not in the record (e.g. redacted as CBI); supersede with manufacturer stack data when disclosed (#1180)",
         "confidence": "low",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "exit_velocity_ms": {
         "value": 40.0,
@@ -30,7 +34,9 @@
         "source": "assumption",
         "citation": "no disclosed genset stack geometry for site 'lima' — typical large (~2.75 MW) stationary CI diesel genset exhaust — a screening assumption used where the engine make/model/size is not in the record (e.g. redacted as CBI); supersede with manufacturer stack data when disclosed (#1180)",
         "confidence": "low",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "exit_temp_k": {
         "value": 720.0,
@@ -38,7 +44,9 @@
         "source": "assumption",
         "citation": "no disclosed genset stack geometry for site 'lima' — typical large (~2.75 MW) stationary CI diesel genset exhaust — a screening assumption used where the engine make/model/size is not in the record (e.g. redacted as CBI); supersede with manufacturer stack data when disclosed (#1180)",
         "confidence": "low",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       }
     },
     "stack_is_assumption": true,
@@ -64,7 +72,9 @@
         "source": "document",
         "citation": "DOE Order 202-26-33 2026-06-30T23:59 ET..2026-07-03T23:59 ET",
         "confidence": "high",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "backup_generation_authorized": true,
       "facility_dispatch_confirmed": false,
@@ -98,7 +108,9 @@
         "source": "assumption",
         "citation": "no disclosed genset stack geometry for site 'lima' — typical large (~2.75 MW) stationary CI diesel genset exhaust — a screening assumption used where the engine make/model/size is not in the record (e.g. redacted as CBI); supersede with manufacturer stack data when disclosed (#1180)",
         "confidence": "low",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "diameter_m": {
         "value": 0.6,
@@ -106,7 +118,9 @@
         "source": "assumption",
         "citation": "no disclosed genset stack geometry for site 'lima' — typical large (~2.75 MW) stationary CI diesel genset exhaust — a screening assumption used where the engine make/model/size is not in the record (e.g. redacted as CBI); supersede with manufacturer stack data when disclosed (#1180)",
         "confidence": "low",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "exit_velocity_ms": {
         "value": 40.0,
@@ -114,7 +128,9 @@
         "source": "assumption",
         "citation": "no disclosed genset stack geometry for site 'lima' — typical large (~2.75 MW) stationary CI diesel genset exhaust — a screening assumption used where the engine make/model/size is not in the record (e.g. redacted as CBI); supersede with manufacturer stack data when disclosed (#1180)",
         "confidence": "low",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "exit_temp_k": {
         "value": 720.0,
@@ -122,7 +138,9 @@
         "source": "assumption",
         "citation": "no disclosed genset stack geometry for site 'lima' — typical large (~2.75 MW) stationary CI diesel genset exhaust — a screening assumption used where the engine make/model/size is not in the record (e.g. redacted as CBI); supersede with manufacturer stack data when disclosed (#1180)",
         "confidence": "low",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       }
     },
     "stack_is_assumption": true,
@@ -148,7 +166,9 @@
         "source": "document",
         "citation": "DOE Order 202-26-33 2026-06-30T23:59 ET..2026-07-03T23:59 ET",
         "confidence": "high",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "backup_generation_authorized": true,
       "facility_dispatch_confirmed": false,

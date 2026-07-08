@@ -179,10 +179,7 @@ def test_power_basis_traces_to_the_active_facilitys_permit_not_lima(
     assert fw is not None and fw.it_load.value == pytest.approx(90.0)
     assert fw.backup_power.value == pytest.approx(102.0, abs=0.1)  # 34 x 3.0
     blob = (
-        " ".join(
-            str(getattr(fw, f).citation or "")
-            for f in ("backup_power", "it_load", "it_load_low", "it_load_high")
-        )
+        " ".join(str(getattr(fw, f).citation or "") for f in ("backup_power", "it_load"))
         + fw.cooling_overhead_note
         + fw.generation_note
         + fw.method

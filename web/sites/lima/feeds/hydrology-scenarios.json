@@ -10,7 +10,9 @@
         "source": "assumption",
         "citation": "baseline: no campus cooling load",
         "confidence": "low",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "consumptive_fraction": {
         "value": 0.0,
@@ -18,7 +20,9 @@
         "source": "assumption",
         "citation": "baseline",
         "confidence": "low",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "basis": null
     },
@@ -29,7 +33,9 @@
       "source": "derived",
       "citation": "0 MGD x 0 consumptive (scenario baseline)",
       "confidence": "medium",
-      "asof": null
+      "asof": null,
+      "low": null,
+      "high": null
     },
     "receiving_7q10": {
       "value": 0.2,
@@ -37,7 +43,9 @@
       "source": "document",
       "citation": "Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
       "confidence": "high",
-      "asof": null
+      "asof": null,
+      "low": null,
+      "high": null
     },
     "receiving_live": {
       "value": 36.3,
@@ -45,7 +53,9 @@
       "source": "connector",
       "citation": "NWIS 04187100 (Ottawa River at Lima OH)",
       "confidence": "high",
-      "asof": "2026-05-31T12:30:00.000-04:00"
+      "asof": "2026-05-31T12:30:00.000-04:00",
+      "low": null,
+      "high": null
     },
     "receiving_water_name": "Ottawa River",
     "balance": {
@@ -67,7 +77,9 @@
             "source": "document",
             "citation": "watch-shawnee-ii-wwtp (3.0 MGD design)",
             "confidence": "high",
-            "asof": null
+            "asof": null,
+            "low": null,
+            "high": null
           },
           "stormwater": null
         },
@@ -88,7 +100,9 @@
             "source": "document",
             "citation": "watch-american-bath-wwtp (1.5 MGD design)",
             "confidence": "high",
-            "asof": null
+            "asof": null,
+            "low": null,
+            "high": null
           },
           "stormwater": null
         },
@@ -109,7 +123,9 @@
             "source": "document",
             "citation": "watch-american-ii-wwtp (1.2 MGD design)",
             "confidence": "high",
-            "asof": null
+            "asof": null,
+            "low": null,
+            "high": null
           },
           "stormwater": null
         },
@@ -129,7 +145,9 @@
             "source": "derived",
             "citation": "0 MGD x 0 consumptive (scenario baseline)",
             "confidence": "medium",
-            "asof": null
+            "asof": null,
+            "low": null,
+            "high": null
           },
           "return_flow": {
             "value": 3.8680718791283315,
@@ -137,7 +155,9 @@
             "source": "document",
             "citation": "bosc-fm2 (2.5 MGD industrial discharge to Lima)",
             "confidence": "high",
-            "asof": null
+            "asof": null,
+            "low": null,
+            "high": null
           },
           "stormwater": null
         },
@@ -156,7 +176,9 @@
             "source": "connector",
             "citation": "NWIS 04187100 (Ottawa River at Lima OH)",
             "confidence": "high",
-            "asof": "2026-05-31T12:30:00.000-04:00"
+            "asof": "2026-05-31T12:30:00.000-04:00",
+            "low": null,
+            "high": null
           },
           "consumptive_use": null,
           "return_flow": null,
@@ -180,7 +202,9 @@
           "source": "document",
           "citation": "Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
           "confidence": "high",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "discharge": {
           "value": 4.6416862549539974,
@@ -188,7 +212,9 @@
           "source": "document",
           "citation": "watch-shawnee-ii-wwtp (3.0 MGD design)",
           "confidence": "high",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "upstream_returns": null,
         "dilution_ratio": 0.04308778944,
@@ -204,7 +230,9 @@
           "source": "document",
           "citation": "Ohio EPA NPDES fact sheet 2PH00007 (American Bath WWTP), Stream Flows table — USGS Gauge 04186500 adjusted for drainage area",
           "confidence": "high",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "discharge": {
           "value": 2.3208431274769987,
@@ -212,7 +240,9 @@
           "source": "document",
           "citation": "watch-american-bath-wwtp (1.5 MGD design)",
           "confidence": "high",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "upstream_returns": null,
         "dilution_ratio": 0.012926336832,
@@ -228,7 +258,9 @@
           "source": "document",
           "citation": "Ohio EPA NPDES fact sheet 2PH00006 (American II WWTP), Stream Flows table — USGS Station 04187500",
           "confidence": "high",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "discharge": {
           "value": 1.856674501981599,
@@ -236,7 +268,9 @@
           "source": "document",
           "citation": "watch-american-ii-wwtp (1.2 MGD design)",
           "confidence": "high",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "upstream_returns": null,
         "dilution_ratio": 0.42010594704000004,
@@ -256,7 +290,9 @@
         "source": "derived",
         "citation": "275 MW x 1.8 L/kWh / evap fraction",
         "confidence": "medium",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "consumptive_fraction": {
         "value": 0.8,
@@ -264,7 +300,9 @@
         "source": "derived",
         "citation": "(CoC-1)/CoC at CoC=5",
         "confidence": "medium",
-        "asof": null
+        "asof": null,
+        "low": null,
+        "high": null
       },
       "basis": {
         "cooling_model": "evaporative_tower",
@@ -274,7 +312,9 @@
           "source": "document",
           "citation": "OEPA Air PTI P0138965 (Facility 0302022054), committed data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): 114 hall gensets x 2.75 ekW = ~313 MW backup; IT ~250-300 MW (N+1). Per-engine ekW from the draft public notice (3987141/3987144); engine size CBI-redacted in the final permit under an Ohio EPA trade-secret grant (OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).",
           "confidence": "high",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "wue": {
           "value": 1.8,
@@ -282,7 +322,9 @@
           "source": "assumption",
           "citation": "evaporative-cooled hyperscale WUE ~1.8 L/kWh (Google fleet avg ~1.1; 36 cooling towers on the air permit)",
           "confidence": "low",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "cycles_of_concentration": {
           "value": 5.0,
@@ -290,7 +332,9 @@
           "source": "assumption",
           "citation": "cooling-tower cycles of concentration ~5 (typical 4-6)",
           "confidence": "low",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "consumptive_fraction": {
           "value": 0.8,
@@ -298,7 +342,9 @@
           "source": "derived",
           "citation": "(CoC-1)/CoC at CoC=5",
           "confidence": "medium",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "makeup_demand": {
           "value": 3.92,
@@ -306,7 +352,9 @@
           "source": "derived",
           "citation": "275 MW x 1.8 L/kWh / evap fraction",
           "confidence": "medium",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "consumptive_low": {
           "value": 3.14,
@@ -314,7 +362,9 @@
           "source": "derived",
           "citation": "275 MW x 1.8 L/kWh (power x WUE)",
           "confidence": "medium",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "consumptive_high": {
           "value": 10.0,
@@ -322,7 +372,9 @@
           "source": "derived",
           "citation": "2.5 MGD blowdown x (CoC-1); bosc-fm2 2.5 MGD industrial discharge (CMAR RFQ §A.6), taken as cooling blowdown upper bound",
           "confidence": "medium",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "makeup_high": null,
         "method": "power x WUE (central); blowdown x cycles (upper bound)",
@@ -338,7 +390,9 @@
       "source": "derived",
       "citation": "3.92 MGD x 0.8 consumptive (scenario buildout)",
       "confidence": "medium",
-      "asof": null
+      "asof": null,
+      "low": null,
+      "high": null
     },
     "receiving_7q10": {
       "value": 0.2,
@@ -346,7 +400,9 @@
       "source": "document",
       "citation": "Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
       "confidence": "high",
-      "asof": null
+      "asof": null,
+      "low": null,
+      "high": null
     },
     "receiving_live": {
       "value": 36.3,
@@ -354,7 +410,9 @@
       "source": "connector",
       "citation": "NWIS 04187100 (Ottawa River at Lima OH)",
       "confidence": "high",
-      "asof": "2026-05-31T12:30:00.000-04:00"
+      "asof": "2026-05-31T12:30:00.000-04:00",
+      "low": null,
+      "high": null
     },
     "receiving_water_name": "Ottawa River",
     "balance": {
@@ -376,7 +434,9 @@
             "source": "document",
             "citation": "watch-shawnee-ii-wwtp (3.0 MGD design)",
             "confidence": "high",
-            "asof": null
+            "asof": null,
+            "low": null,
+            "high": null
           },
           "stormwater": null
         },
@@ -397,7 +457,9 @@
             "source": "document",
             "citation": "watch-american-bath-wwtp (1.5 MGD design)",
             "confidence": "high",
-            "asof": null
+            "asof": null,
+            "low": null,
+            "high": null
           },
           "stormwater": null
         },
@@ -418,7 +480,9 @@
             "source": "document",
             "citation": "watch-american-ii-wwtp (1.2 MGD design)",
             "confidence": "high",
-            "asof": null
+            "asof": null,
+            "low": null,
+            "high": null
           },
           "stormwater": null
         },
@@ -438,7 +502,9 @@
             "source": "derived",
             "citation": "3.92 MGD x 0.8 consumptive (scenario buildout)",
             "confidence": "medium",
-            "asof": null
+            "asof": null,
+            "low": null,
+            "high": null
           },
           "return_flow": {
             "value": 3.8680718791283315,
@@ -446,7 +512,9 @@
             "source": "document",
             "citation": "bosc-fm2 (2.5 MGD industrial discharge to Lima)",
             "confidence": "high",
-            "asof": null
+            "asof": null,
+            "low": null,
+            "high": null
           },
           "stormwater": null
         },
@@ -465,7 +533,9 @@
             "source": "connector",
             "citation": "NWIS 04187100 (Ottawa River at Lima OH)",
             "confidence": "high",
-            "asof": "2026-05-31T12:30:00.000-04:00"
+            "asof": "2026-05-31T12:30:00.000-04:00",
+            "low": null,
+            "high": null
           },
           "consumptive_use": null,
           "return_flow": null,
@@ -489,7 +559,9 @@
           "source": "document",
           "citation": "Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
           "confidence": "high",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "discharge": {
           "value": 4.6416862549539974,
@@ -497,7 +569,9 @@
           "source": "document",
           "citation": "watch-shawnee-ii-wwtp (3.0 MGD design)",
           "confidence": "high",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "upstream_returns": null,
         "dilution_ratio": 0.04308778944,
@@ -513,7 +587,9 @@
           "source": "document",
           "citation": "Ohio EPA NPDES fact sheet 2PH00007 (American Bath WWTP), Stream Flows table — USGS Gauge 04186500 adjusted for drainage area",
           "confidence": "high",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "discharge": {
           "value": 2.3208431274769987,
@@ -521,7 +597,9 @@
           "source": "document",
           "citation": "watch-american-bath-wwtp (1.5 MGD design)",
           "confidence": "high",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "upstream_returns": null,
         "dilution_ratio": 0.012926336832,
@@ -537,7 +615,9 @@
           "source": "document",
           "citation": "Ohio EPA NPDES fact sheet 2PH00006 (American II WWTP), Stream Flows table — USGS Station 04187500",
           "confidence": "high",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "discharge": {
           "value": 1.856674501981599,
@@ -545,7 +625,9 @@
           "source": "document",
           "citation": "watch-american-ii-wwtp (1.2 MGD design)",
           "confidence": "high",
-          "asof": null
+          "asof": null,
+          "low": null,
+          "high": null
         },
         "upstream_returns": null,
         "dilution_ratio": 0.42010594704000004,
