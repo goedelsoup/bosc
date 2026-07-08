@@ -2,13 +2,23 @@
 import { withSitePaths } from "~/lib/sites";
 import { getCollection, render } from "astro:content";
 import Base from "~/layouts/Base.astro";
-import { refBySlug } from "~/lib/reference";
+import { isAvailable } from "~/lib/readiness";
+import { refBySlug, scopedReference } from "~/lib/reference";
 import { withSite } from "~/lib/site";
 
 export async function getStaticPaths() {
   // Only the curated reference set (lib/reference.ts) is published.
   const entries = await getCollection("reference", (e) => refBySlug.has(e.id));
-  return withSitePaths(entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } })));
+  // Per-site (#1260): emit a dataset route for a site only when it OWNS that dataset (catalog
+  // `site_scope`, resolved in the callback's `runWithSite` bundle scope) and its `record` domain
+  // is active — so a sibling site can't open Lima's zoning / parcels / WBD by URL.
+  return withSitePaths((slug) => {
+    if (!isAvailable(slug, "record")) return [];
+    const scoped = new Set(scopedReference(slug).map((d) => d.slug));
+    return entries
+      .filter((entry) => scoped.has(entry.id))
+      .map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+  });
 }
 
 const { entry } = Astro.props;
