@@ -288,10 +288,15 @@ export type NavItem =
  *  Submit is NOT here — it's a right-cluster affordance (see SUBMIT_LINK / the Header).
  *  Hypotheses come from the live feed so the dropdown labels stay in sync without hardcoding. */
 export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
+  // The two framing essays (research course + the bigger picture) are the author's investigation
+  // overview, re-homed out of the site-scoped `home` section into this network-global About area
+  // (#1308). Their routes stay per-site for now (`<base>/docs/<slug>`, option (a) as in #1305);
+  // the entry points at the active site's copy until the docs move global (#1304).
+  const docBase = siteBase(activeSite());
   // Reports are the long-form analysis over the corpus — an output of the research, so their nav
   // home is this network-global Research dropdown, not the site tier (#1305). The routes stay
   // per-site (`<base>/reports`, option (a)); the entry points at the active site's reports index.
-  const reportsHref = `${siteBase(activeSite())}/reports`;
+  const reportsHref = `${docBase}/reports`;
   const researchChildren: NavChild[] = [
     ...hypotheses.map((h) => ({ label: h.name, href: `/research/hypotheses?lens=${h.id}` })),
     ...(hypotheses.length > 0 ? [{ divider: true as const }] : []),
@@ -323,7 +328,19 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
       section: "about",
       children: [
         { label: "About this site", href: "/about", blurb: "What Watermark is, and why" },
+        { label: "Mission", href: "/about/mission", blurb: "Why this project exists" },
         { label: "My research", href: "/about-me", blurb: "The method, the record's gaps, and who keeps it" },
+        { divider: true as const },
+        {
+          label: "Research course",
+          href: `${docBase}/docs/course`,
+          blurb: "What we're investigating — the open threads",
+        },
+        {
+          label: "The bigger picture",
+          href: `${docBase}/docs/bigger-picture`,
+          blurb: "Placed against the national data-center build-out",
+        },
         { divider: true as const },
         { label: "Data catalog", href: "/about/catalog", blurb: "Every dataset: source, license, freshness" },
         { divider: true as const },
@@ -597,6 +614,7 @@ export function footerGroups(): FooterGroup[] {
         { label: CONNECT_LINK.label, href: CONNECT_LINK.href },
         { label: "Methodology", href: "/methodology" },
         { label: "About", href: "/about" },
+        { label: "Mission", href: "/about/mission" },
         { label: "Privacy", href: "/privacy" },
       ],
     },
