@@ -27,6 +27,7 @@ import { type Story, activeStory, chapterHref, storyContentsHref } from "./walk"
 export type SectionId =
   | "home"
   | "leads"
+  | "contacts"
   | "story"
   | "timeline"
   | "reports"
@@ -100,6 +101,17 @@ export function sections(): Section[] {
       tab: "Leads",
       href: `${base}/leads`,
       blurb: "Every gap we're chasing on this site — unverified inference until a source corroborates it.",
+      toc: [],
+    },
+    {
+      // Site-level contacts — the people and bodies to reach on this site (officials, organizers,
+      // community groups the record names). A tile in the "The site" mega-menu; the spine the
+      // petition-connect + bulletin surfaces build on.
+      id: "contacts",
+      label: "Contacts",
+      tab: "Contacts",
+      href: `${base}/contacts`,
+      blurb: "The people and bodies to reach on this site — each one drawn from the record that names it.",
       toc: [],
     },
     {
@@ -281,7 +293,7 @@ export interface MegaLink {
  *  themes it crosses are now first-class site-tier dropdown tabs (#1307), not a column here.
  *  The spine carries `locked` when the story is locked for the active (peer) site (#781). */
 export interface MegaMenu {
-  tiles: { label: string; href: string; blurb: string; icon: "home" | "leads" }[];
+  tiles: { label: string; href: string; blurb: string; icon: "home" | "leads" | "contacts" }[];
   spine: {
     title: string;
     href: string;
@@ -385,7 +397,7 @@ export function siteTabs(): NavItem[] {
       kind: "mega",
       label: "The site",
       section: "home",
-      match: ["leads", "story"],
+      match: ["leads", "contacts", "story"],
       mega: {
         tiles: [
           { label: "Overview", href: base, blurb: "The site at a glance — the front door", icon: "home" },
@@ -394,6 +406,12 @@ export function siteTabs(): NavItem[] {
             href: `${base}/leads`,
             blurb: "Every gap we're chasing, in the open",
             icon: "leads",
+          },
+          {
+            label: "Contacts",
+            href: `${base}/contacts`,
+            blurb: "The people and bodies to reach on this site",
+            icon: "contacts",
           },
         ],
         spine: {

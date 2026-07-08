@@ -21,6 +21,7 @@ export const FEED_BACKED_KINDS = [
   "exhibit",
   "concept",
   "lead",
+  "contact",
   "dataset",
 ] as const;
 export const WEB_ONLY_KINDS = ["teardown", "doc", "chapter", "figure"] as const;

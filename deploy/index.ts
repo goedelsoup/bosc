@@ -63,13 +63,14 @@ interface Features {
     rum: boolean;
     auth: boolean;
     stories: boolean;
+    contacts: boolean;
 }
 function validateFeatures(raw: unknown): Features {
     if (typeof raw !== "object" || raw === null) {
         throw new Error("features.yaml must be a YAML mapping");
     }
     const obj = raw as Record<string, unknown>;
-    const keys: (keyof Features)[] = ["preLaunch", "submissions", "ask", "docs", "mcp", "rum", "auth", "stories"];
+    const keys: (keyof Features)[] = ["preLaunch", "submissions", "ask", "docs", "mcp", "rum", "auth", "stories", "contacts"];
     for (const key of keys) {
         if (typeof obj[key] !== "boolean") {
             throw new Error(
@@ -451,8 +452,11 @@ function parseLakebaseOrigin(url: string): cloudflare.types.input.HyperdriveConf
     };
 }
 
+// One Hyperdrive config over the one Lakebase, shared by Stories, auth prefs, AND the interactive
+// site-contacts surfaces (#contacts). Provisioned when ANY of those seams is live, so contacts can
+// ship before/without stories on the same database.
 const storiesHyperdrive =
-    features.stories && storiesLakebaseUrl
+    (features.stories || features.contacts) && storiesLakebaseUrl
         ? new cloudflare.HyperdriveConfig("stories-hyperdrive", {
               accountId,
               name: "watermark-stories",
@@ -653,9 +657,9 @@ if (features.auth && !authEnabled) {
         "Run: pulumi config set bosc-deploy:authEnabled true",
     );
 }
-if (features.stories && !storiesLakebaseUrl) {
+if ((features.stories || features.contacts) && !storiesLakebaseUrl) {
     throw new Error(
-        "features.yaml: stories=true but bosc-deploy:storiesLakebaseUrl is not set in Pulumi config. " +
+        "features.yaml: stories/contacts=true but bosc-deploy:storiesLakebaseUrl is not set in Pulumi config. " +
         "Run: pulumi config set --secret bosc-deploy:storiesLakebaseUrl postgres://user:password@host:5432/database",
     );
 }
@@ -675,6 +679,10 @@ const pageEnvVars: Record<string, PageEnvVar> = {
     // stories gates the /api/stories Functions kill switch AND the Astro build-time UI gate
     STORIES_ENABLED:        { value: features.stories  ? "true" : "false", type: "plain_text" },
     PUBLIC_STORIES_ENABLED: { value: features.stories  ? "true" : "false", type: "plain_text" },
+    // contacts gates the interactive site-contacts Functions (petition-connect + bulletin + admin)
+    // kill switch AND the Astro build-time UI gate; it reuses the stories Lakebase/Hyperdrive.
+    CONTACTS_ENABLED:        { value: features.contacts ? "true" : "false", type: "plain_text" },
+    PUBLIC_CONTACTS_ENABLED: { value: features.contacts ? "true" : "false", type: "plain_text" },
     // Computed non-secret vars
     APP_BASE_URL: {
         value: siteDomain ? `https://${siteDomain}` : `https://${pagesProject}.pages.dev`,

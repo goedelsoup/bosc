@@ -1,7 +1,7 @@
 {
   "site": "lima",
-  "catalog_version": "c98311ea057a3c4682a4102de03368f7b8811ffb90a08797e58ae817b45ca6d8",
-  "contract_version": "1.23.0",
+  "catalog_version": "c7b3e3b36dcece34fcd6efd967ed48ce99b5e409ddfec848e6bd82b143f392f8",
+  "contract_version": "1.24.0",
   "atoms": [
     {
       "handle": "concept:lima:7q10",
@@ -66,6 +66,30 @@
       "local_id": "roadwork-development-agreement",
       "title": "Roadwork Development Agreement",
       "feed": "concepts"
+    },
+    {
+      "handle": "contact:lima:allen-county-commissioners",
+      "kind": "contact",
+      "site": "lima",
+      "local_id": "allen-county-commissioners",
+      "title": "Allen County Board of Commissioners",
+      "feed": "contacts"
+    },
+    {
+      "handle": "contact:lima:allen-swcd",
+      "kind": "contact",
+      "site": "lima",
+      "local_id": "allen-swcd",
+      "title": "Allen Soil & Water Conservation District",
+      "feed": "contacts"
+    },
+    {
+      "handle": "contact:lima:ohio-epa-dapc",
+      "kind": "contact",
+      "site": "lima",
+      "local_id": "ohio-epa-dapc",
+      "title": "Ohio EPA, Division of Air Pollution Control",
+      "feed": "contacts"
     },
     {
       "handle": "dataset:lima:aedg",

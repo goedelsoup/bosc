@@ -1,0 +1,382 @@
+---
+/**
+ * Site-level contacts — the directory of people and bodies to reach on this watershed point: the
+ * officials the record names, and (as they become documented) the organizers and community groups
+ * around the site. Sits in the "The site" mega-menu, beside Open leads.
+ *
+ * Feed-driven per site: reads the site's own `contacts` bundle feed (from its committed
+ * `data/site/contacts.yaml`), where every contact traces to a real committed `source` and carries
+ * only *public* routing. A site with no contacts feed shows the section lock (SectionLocked) — an
+ * open invitation to bring the source, never another site's contacts.
+ *
+ * The spine the petition-connect + bulletin surfaces (Phase 2) build on.
+ *
+ * No-JS: filtering is radio inputs + `:checked` sibling CSS (the same pattern as Open leads).
+ */
+import Base from "~/layouts/Base.astro";
+import Icon from "~/components/Icon.astro";
+import SectionLocked from "~/components/SectionLocked.astro";
+import BulletinBoard from "~/components/islands/contacts/BulletinBoard";
+import PetitionConnect from "~/components/islands/contacts/PetitionConnect";
+import { hasFeed, loadFeed } from "~/lib/bundle";
+import { CONTACT_FILTERS, type Contact, KIND_META, contactCount } from "~/lib/contacts";
+import { contactsUiEnabled, turnstileSiteKey } from "~/lib/contactsFlag";
+import { sectionStatus } from "~/lib/readiness";
+import { withSite } from "~/lib/site";
+import { activeSite, selectableSitePaths, siteForSlug, siteState } from "~/lib/sites";
+
+// One `network/[site]/…` route per selectable site (#724/#734); Lima alone today.
+export const getStaticPaths = selectableSitePaths;
+
+const { slug } = Astro.props as { slug: string };
+const site = siteForSlug(slug) ?? activeSite();
+const dateline = `${site.place}, ${siteState(slug)}`;
+
+const locked = sectionStatus(slug, "contacts") === "locked";
+const contacts = hasFeed("contacts") ? loadFeed<Contact[]>("contacts") : [];
+// Only the kinds actually present get a filter chip (an empty "Outlets" chip would read as a gap).
+const presentKinds = new Set(contacts.map((c) => c.kind));
+const filters = CONTACT_FILTERS.filter((f) => f.key === "all" || presentKinds.has(f.key));
+
+const submitHref = withSite("/submit");
+
+// Phase 2 (interactive) — the petition-connect + bulletin surfaces render only when the contacts
+// feature is enabled at build time (PUBLIC_CONTACTS_ENABLED); otherwise the page stays the read-only
+// directory. Petition-connect attaches to the community-side contacts (petitioner/organizer) — the
+// people a reader connects *with*, not the officials a petition is addressed *to*.
+const interactive = contactsUiEnabled();
+const tsKey = turnstileSiteKey();
+const isPetitionTarget = (kind: Contact["kind"]): boolean => kind === "petitioner" || kind === "organizer";
+---
+
+<Base
+  title={`Contacts — ${site.place}`}
+  section="contacts"
+  rail={false}
+  description={`The people and bodies to reach on the ${site.place} site — each one drawn from the record that names it.`}
+>
+  {locked ? (
+    <div class="contacts contacts--locked">
+      <header class="contacts-head">
+        <a class="contacts-back" href={withSite()}>← Back to the site</a>
+        <div class="contacts-kicker">Site contacts · {dateline}</div>
+        <h1>Contacts</h1>
+      </header>
+      <SectionLocked section="contacts" />
+    </div>
+  ) : (
+    <div class="contacts">
+      <header class="contacts-head">
+        <a class="contacts-back" href={withSite()}>← Back to the site</a>
+        <div class="contacts-head-row">
+          <div class="contacts-head-main">
+            <div class="contacts-kicker">Site contacts · {dateline}</div>
+            <h1>Contacts</h1>
+            <p class="contacts-lead">
+              The people and bodies to reach on this site — the officials the record names, and the
+              organizers and groups around it. Every contact is <strong>drawn from the record</strong>
+              that names it; nothing here is invented, and the routing shown is public.
+            </p>
+          </div>
+          <a class="contacts-submit" href={submitHref}>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Add a contact
+          </a>
+        </div>
+      </header>
+
+      {/* No-JS filter state — radios precede the toolbar + list so `:checked ~` reaches them. */}
+      {filters.map((f, i) => (
+        <input type="radio" name="contact-filter" id={`cf-${f.key}`} class="contacts-filter-radio" checked={i === 0} />
+      ))}
+
+      <div class="contacts-toolbar" role="tablist" aria-label="Filter contacts by kind">
+        {filters.map((f) => (
+          <label class:list={["contacts-filter", `cf-${f.key}`]} for={`cf-${f.key}`}>
+            {f.label}
+            <span class="contacts-filter-n">{contactCount(contacts, f.key)}</span>
+          </label>
+        ))}
+      </div>
+
+      <div class="contacts-count">
+        <span class="contacts-count-l">{contacts.length} {contacts.length === 1 ? "contact" : "contacts"} · public routing</span>
+        <span class="contacts-count-rule" aria-hidden="true"></span>
+      </div>
+
+      <div class="contact-list">
+        {contacts.map((c) => {
+          const k = KIND_META[c.kind];
+          return (
+            <article class:list={["contact", `contact--${k.mod}`, `contact-${c.kind}`]}>
+              <div class="contact-body">
+                <div class="contact-meta">
+                  <span class:list={["contact-kind", `is-${k.mod}`]}>{k.label}</span>
+                  {c.place && <span class="contact-place">{c.place}</span>}
+                </div>
+                <h2 class="contact-name">{c.name}</h2>
+                {(c.org || c.role) && (
+                  <div class="contact-role">
+                    {c.role}{c.role && c.org ? " · " : ""}{c.org}
+                  </div>
+                )}
+                <p class="contact-summary">{c.summary}</p>
+                {c.links.length > 0 && (
+                  <div class="contact-links">
+                    {c.links.map((l) => (
+                      <a class="contact-link" href={l.url} rel="noopener noreferrer">
+                        {l.label} →
+                      </a>
+                    ))}
+                  </div>
+                )}
+                <div class="contact-foot">
+                  <span class="contact-source" title="Where this contact is documented">
+                    <Icon name="repo" size={11} /> {c.source}
+                  </span>
+                  {c.issue && (
+                    <a class="contact-gh" href={`https://github.com/watermark-directory/the-watermark-directory/issues/${c.issue}`} rel="noopener noreferrer" title="Linked tracking issue">
+                      #{c.issue}
+                    </a>
+                  )}
+                </div>
+                {interactive && isPetitionTarget(c.kind) && (
+                  <PetitionConnect
+                    client:only="react"
+                    site={slug}
+                    contactId={c.id}
+                    contactName={c.name}
+                    turnstileSiteKey={tsKey}
+                  />
+                )}
+              </div>
+              <div class="contact-aside">
+                <span class="contact-id">{c.id}</span>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+
+      <p class="contacts-listfoot">
+        Know an organizer or group we should list? <a href={submitHref}>Send us the contact →</a>
+        We log it as a lead and confirm the source before it appears.
+      </p>
+
+      {interactive && <BulletinBoard client:only="react" site={slug} turnstileSiteKey={tsKey} />}
+    </div>
+  )}
+</Base>
+
+<style>
+  .contacts {
+    max-width: 62rem;
+    margin: 0 auto;
+    padding: 1.5rem 0 4rem;
+  }
+  .contacts-back {
+    display: inline-block;
+    font-family: var(--bosc-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
+    color: var(--bosc-muted);
+    text-decoration: none;
+    margin-bottom: 1.25rem;
+  }
+  .contacts-back:hover { color: var(--bosc-forest); }
+  .contacts-head-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+  .contacts-kicker {
+    font-family: var(--bosc-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--bosc-muted);
+    margin-bottom: 0.4rem;
+  }
+  .contacts h1 {
+    font-family: var(--bosc-sans);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.6rem;
+  }
+  .contacts-lead {
+    max-width: 42rem;
+    color: var(--bosc-ink);
+    line-height: 1.55;
+    margin: 0;
+  }
+  .contacts-lead strong { font-weight: 650; }
+  .contacts-submit {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--bosc-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    color: var(--bosc-forest);
+    border: 1px solid var(--bosc-rule);
+    padding: 0.45rem 0.7rem;
+    text-decoration: none;
+    background: var(--bosc-paper);
+  }
+  .contacts-submit:hover { border-color: var(--bosc-forest); }
+
+  /* No-JS filtering: radios drive `:checked ~` visibility on the list below. */
+  .contacts-filter-radio { position: absolute; opacity: 0; pointer-events: none; }
+  .contacts-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 1.6rem 0 0.4rem;
+    border-bottom: 1px solid var(--bosc-rule);
+    padding-bottom: 0.6rem;
+  }
+  .contacts-filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--bosc-mono);
+    font-size: 0.72rem;
+    color: var(--bosc-muted);
+    padding: 0.28rem 0.55rem;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+  .contacts-filter:hover { color: var(--bosc-ink); }
+  .contacts-filter-n {
+    font-size: 0.66rem;
+    color: var(--bosc-faint);
+  }
+  .contacts-count {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 1rem 0 0.9rem;
+  }
+  .contacts-count-l {
+    font-family: var(--bosc-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
+    color: var(--bosc-muted);
+    white-space: nowrap;
+  }
+  .contacts-count-rule { flex: 1; height: 1px; background: var(--bosc-rule); }
+
+  .contact-list { display: flex; flex-direction: column; }
+  .contact {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.15rem 0;
+    border-bottom: 1px solid var(--bosc-rule);
+  }
+  .contact-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 0.35rem;
+  }
+  .contact-kind {
+    font-family: var(--bosc-mono);
+    font-size: 0.64rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--bosc-muted);
+  }
+  /* Community-side contacts (petitioner/organizer) carry the one forest signal; the record's own
+     bodies stay neutral ink. */
+  .contact-kind.is-petitioner,
+  .contact-kind.is-organizer { color: var(--bosc-forest); }
+  .contact-place {
+    font-family: var(--bosc-mono);
+    font-size: 0.64rem;
+    color: var(--bosc-faint);
+  }
+  .contact-name {
+    font-family: var(--bosc-sans);
+    font-size: 1.05rem;
+    font-weight: 650;
+    margin: 0 0 0.15rem;
+  }
+  .contact-role {
+    font-size: 0.82rem;
+    color: var(--bosc-muted);
+    margin-bottom: 0.4rem;
+  }
+  .contact-summary {
+    max-width: 44rem;
+    color: var(--bosc-ink);
+    line-height: 1.5;
+    margin: 0 0 0.6rem;
+  }
+  .contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-bottom: 0.55rem;
+  }
+  .contact-link {
+    font-family: var(--bosc-mono);
+    font-size: 0.72rem;
+    color: var(--bosc-forest);
+    text-decoration: none;
+  }
+  .contact-link:hover { text-decoration: underline; }
+  .contact-foot {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    font-family: var(--bosc-mono);
+    font-size: 0.66rem;
+    color: var(--bosc-faint);
+  }
+  .contact-source { display: inline-flex; align-items: center; gap: 0.3rem; }
+  .contact-gh { color: var(--bosc-muted); text-decoration: none; }
+  .contact-gh:hover { color: var(--bosc-forest); }
+  .contact-aside { flex: none; text-align: right; }
+  .contact-id {
+    font-family: var(--bosc-mono);
+    font-size: 0.64rem;
+    color: var(--bosc-faint);
+  }
+  .contacts-listfoot {
+    margin-top: 1.4rem;
+    font-size: 0.85rem;
+    color: var(--bosc-muted);
+  }
+  .contacts-listfoot a { color: var(--bosc-forest); }
+
+  /* No-JS filter wiring — the checked radio (a sibling preceding the toolbar + list) both marks its
+     chip active and hides the non-matching cards. "All" is the default; each kind narrows the list.
+     Keys are the fixed ContactKind set, so the selectors can be enumerated. */
+  #cf-all:checked ~ .contacts-toolbar .cf-all,
+  #cf-petitioner:checked ~ .contacts-toolbar .cf-petitioner,
+  #cf-organizer:checked ~ .contacts-toolbar .cf-organizer,
+  #cf-official:checked ~ .contacts-toolbar .cf-official,
+  #cf-group:checked ~ .contacts-toolbar .cf-group,
+  #cf-outlet:checked ~ .contacts-toolbar .cf-outlet {
+    color: var(--bosc-ink);
+    border-color: var(--bosc-rule);
+    background: var(--bosc-surface);
+  }
+  #cf-petitioner:checked ~ .contact-list .contact:not(.contact-petitioner),
+  #cf-organizer:checked ~ .contact-list .contact:not(.contact-organizer),
+  #cf-official:checked ~ .contact-list .contact:not(.contact-official),
+  #cf-group:checked ~ .contact-list .contact:not(.contact-group),
+  #cf-outlet:checked ~ .contact-list .contact:not(.contact-outlet) {
+    display: none;
+  }
+
+  @media (max-width: 40rem) {
+    .contacts-head-row { flex-direction: column; gap: 1rem; }
+    .contact { flex-direction: column; gap: 0.5rem; }
+    .contact-aside { text-align: left; }
+  }
+</style>
