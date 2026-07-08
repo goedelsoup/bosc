@@ -80,6 +80,25 @@ const statusSwatch = (kind: "live" | "new") =>
         ))
       }
 
+      {/*
+        Progressive enhancement (#1302): honor `?lens=<id>` deep links. The no-JS
+        radio + :checked switch above still drives selection on its own — here we
+        only tick the matching radio on load, before the panes are parsed, so
+        /research/hypotheses?lens=defense opens on that lens. An unknown/absent
+        value leaves the default (water) checked. The `id`s already equal the
+        lens keys, so no mapping is needed.
+      */}
+      <script is:inline>
+        (() => {
+          const lens = new URLSearchParams(location.search).get("lens");
+          if (!lens) return;
+          const radio = document.getElementById("lens-" + lens);
+          if (radio instanceof HTMLInputElement && radio.name === "dir-lens") {
+            radio.checked = true;
+          }
+        })();
+      </script>
+
       <div class="dir-lens-cards">
         {
           lenses.map((l) => {
