@@ -591,8 +591,10 @@ const platformGlobals: { label: string; href: string; section: SectionId }[] = [
         if (dd.open) closeDropdowns(function (other) { return other !== dd; });
       });
       // Tabbing focus out of an open dropdown collapses it too, so its state matches focus.
+      // Guard on a truthy relatedTarget: a null one is an internal click on non-focusable
+      // content (a header/label/legend), which must not collapse the still-open menu.
       dd.addEventListener("focusout", function (e) {
-        if (dd.open && !dd.contains(e.relatedTarget)) dd.open = false;
+        if (dd.open && e.relatedTarget && !dd.contains(e.relatedTarget)) dd.open = false;
       });
     });
 
