@@ -31,8 +31,8 @@ export interface DocLinkOptions {
 const SKIP = /^(https?:|mailto:|tel:|#|\/|data:)/;
 const REPO_DIR = /^(data|docs|src|spikes|\.claude|\.github)\//;
 // Network-global routes live at the site root, shared across every watershed site, so they
-// are NOT prefixed with the Lima base (#307 follow-up: about/about-me/wiki/ask are global).
-const GLOBAL_ROUTE = /^\/(about|about-me|wiki|ask)(\/|#|$)/;
+// are NOT prefixed with the Lima base (#307 follow-up: about/about-me/wiki/ask/privacy are global).
+const GLOBAL_ROUTE = /^\/(about|about-me|wiki|ask|privacy)(\/|#|$)/;
 
 function splitHash(href: string): [string, string] {
   const i = href.indexOf("#");
