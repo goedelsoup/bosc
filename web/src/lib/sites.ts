@@ -80,17 +80,16 @@ export interface NetworkSite {
 // are authored here because they reference story codemnames + prose that aren't site-identity.
 //
 // A story surfaces (in the switcher, the hub, the catalog/atoms, the record backlinks) only when
-// it's registered here AND not `hidden` — see `surfacedStories`. Lima's Project BOSC walk is kept
-// but marked `hidden` (#1256): its content, its `/stories/project-bosc` routes, the `WALK_*` guard,
-// and its title/dek all stay intact (the story is *hidden, not removed*, reachable by direct URL),
-// but it's advertised nowhere while Lima sits in its early build state.
+// it's registered here AND not `hidden` — see `surfacedStories`. The `hidden` flag (#1256) keeps a
+// story's content, its `/stories/<codename>` routes, the `WALK_*` guard, and its title/dek intact
+// while advertising it nowhere (hidden, not removed — reachable by direct URL) — used for a site
+// still in its early build state.
 const STORIES: Partial<Record<string, readonly StoryRef[]>> = {
   lima: [
     {
       codename: DEFAULT_STORY_CODENAME,
       title: "Project BOSC",
       dek: "Project BOSC — read the record one document at a time, no prior knowledge.",
-      hidden: true,
     },
   ],
   "fort-wayne": [

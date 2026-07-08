@@ -124,27 +124,29 @@ describe("Story model", () => {
   });
 });
 
-describe("surfaced-story resolution (#1256 — hidden Lima walk, no cross-site leak)", () => {
-  it("Lima's project-bosc content still resolves (title/dek intact), but is no longer *surfaced*", () => {
-    // The MDX content, the WALK_* guard, AND the title/dek metadata survive (content retained) …
+describe("surfaced-story resolution (#1256 mechanism, no cross-site leak)", () => {
+  it("Lima's project-bosc content resolves and is surfaced", () => {
+    // The MDX content, the WALK_* guard, AND the title/dek metadata all resolve …
     const story = storyFor("lima", "project-bosc");
     expect(story?.title).toBe("Project BOSC");
     expect(WALK_CHAPTERS.length).toBe(WALK_TOTAL);
-    // … but its overlay entry is marked `hidden`, so Lima surfaces the walk nowhere.
-    expect(siteSurfacesStory("lima", "project-bosc")).toBe(false);
+    // … and its overlay entry is not `hidden`, so Lima surfaces the walk.
+    expect(siteSurfacesStory("lima", "project-bosc")).toBe(true);
     // Fort Wayne keeps its registered (non-hidden) story surfaced.
     expect(siteSurfacesStory("fort-wayne", "project-zodiac")).toBe(true);
   });
 
-  it("activeStory resolves the current site's surfaced story — undefined for hidden Lima", () => {
-    // Lima (default active site): story hidden → no ambient story, so no surface links resolve.
-    expect(activeStory()).toBeUndefined();
-    expect(activeStoryAnchorFor("aedg/roundabouts.summary.opc.yaml")).toBeUndefined();
+  it("activeStory resolves the current site's surfaced story", () => {
+    // Lima (default active site): surfaces project-bosc → ambient story + surface links resolve.
+    expect(activeStory()?.codename).toBe("project-bosc");
+    expect(activeStoryAnchorFor("aedg/roundabouts.summary.opc.yaml")).toEqual(
+      walkAnchorFor("aedg/roundabouts.summary.opc.yaml"),
+    );
     // Fort Wayne: its own surfaced story resolves — never Lima's.
     runWithSite("fort-wayne", () => {
       expect(activeStory()?.codename).toBe("project-zodiac");
     });
-    // Urbana surfaces no story at all → still undefined (no leak into Lima's walk).
+    // Urbana surfaces no story at all → undefined (no leak from another site's walk).
     runWithSite("urbana", () => {
       expect(activeStory()).toBeUndefined();
       expect(activeStoryAnchorFor("aedg/roundabouts.summary.opc.yaml")).toBeUndefined();
