@@ -55,6 +55,20 @@ Two endpoints live here:
   enumerates `user_prefs` and increments the `digest_pending` counter
   ([`../migrations/0005_notify_digest_pending.sql`](../migrations/0005_notify_digest_pending.sql)),
   which retired the old `AUTH_PREFS` KV namespace.
+- the **interactive site-contacts endpoints** (`api/petition/connect`, `api/bulletin`,
+  `api/admin/contacts`) — the layer on top of the curated `contacts` bundle feed (the directory itself
+  is committed evidence, not a table). `POST api/petition/connect` is the routed hand-off: a reader
+  leaves a **private** routing email (+ an optional public display name / note) to be connected with a
+  petitioner — we connect signers with petitioners, we do not warehouse signatures, so the public
+  surface (`GET api/petition/connect`) is only a count + opt-in names. `api/bulletin` is a public,
+  admin-moderated community board (`GET` lists un-removed posts without the private reply-to; `POST`
+  adds one). Both public writes are rate-limited + Turnstile-verified when `TURNSTILE_SECRET` is set.
+  `api/admin/contacts` (a global `admin` OR a `site-admin` whose `adminSites` includes the slug) is the
+  hand-off queue (with the private emails) + bulletin takedown/restore. Same driver-agnostic `PgLike`
+  slice (`_lib/contactsStore.ts`; guards + env in `_lib/contactsRoute.ts`), same pglite-in-tests
+  harness, on the **same** Lakebase/Hyperdrive as Stories. Schema in
+  [`../migrations/0006_contacts.sql`](../migrations/0006_contacts.sql). Ships dark behind
+  `CONTACTS_ENABLED` (+ the `PUBLIC_CONTACTS_ENABLED` build-time UI gate).
 
 ## Constraints
 

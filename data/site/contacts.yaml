@@ -1,0 +1,50 @@
+# Lima site-level contacts — the curated directory of human/institutional contact points a reader
+# can reach on this watershed point. The data peer of the frontend contacts section; the spine the
+# petition-connect + bulletin surfaces reference.
+#
+# Discipline (see CLAUDE.md):
+#   * Every contact names a real committed `source` — no fabricated people or bodies.
+#   * `links` carry only *public* routing (a public page / filing portal). Private hand-off
+#     addresses (where a petition-connect is delivered) never live here — they stay server-side.
+#   * Tracked individuals flagged "not published to the site" (data/entities/people/*.md) are
+#     investigation subjects, not contacts — do not list them here.
+#   * Seeded today with the public *bodies* the record documents (the officials a petition
+#     addresses). Organizer / petitioner entries are added as they become documented.
+contacts:
+  - id: allen-county-commissioners
+    kind: official
+    name: Allen County Board of Commissioners
+    org: Allen County, Ohio
+    role: County legislative body — party to the Project BOSC County instruments
+    summary: >-
+      The three-member elected board that approved the County's Project BOSC instruments,
+      including the Community Reinvestment Area agreement and the Roadwork Development Agreement.
+    place: Lima, Allen County, Ohio
+    source: >-
+      data/extracted/legal/prr-mandamus/cra-agreement.cra.yaml;
+      data/extracted/aedg/roadwork-development-agreement.rda.yaml
+    tags: [county, commissioners, cra, roadwork]
+
+  - id: ohio-epa-dapc
+    kind: official
+    name: Ohio EPA, Division of Air Pollution Control
+    org: Ohio Environmental Protection Agency
+    role: Permitting authority — issued the project's air permit-to-install
+    summary: >-
+      The state division that issued the air permit-to-install for the project (eDoc 4132514,
+      2026-05-28); the authority of record for air-permit comment and objection.
+    place: Ohio
+    source: data/extracted/permits/4132514.epa.yaml
+    tags: [air, permit, oepa, pti]
+
+  - id: allen-swcd
+    kind: official
+    name: Allen Soil & Water Conservation District
+    org: Allen County, Ohio
+    role: Local district in the stormwater / wetland record
+    summary: >-
+      The conservation district named across the site's stormwater, wetland-determination, and
+      farm-tile-drainage record, and a respondent on the BOSC public-records production.
+    place: Lima, Allen County, Ohio
+    source: data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-12-aswcd.response-index.yaml
+    tags: [stormwater, wetland, swcd]

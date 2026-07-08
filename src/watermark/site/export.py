@@ -70,6 +70,7 @@ from watermark.rsei import load_inventory as load_rsei_inventory
 from watermark.site import candidates as candidates_mod
 from watermark.site import catalog as catalog_mod
 from watermark.site import concepts as concepts_mod
+from watermark.site import contacts as contacts_mod
 from watermark.site import documents as documents_mod
 from watermark.site import economics as economics_mod
 from watermark.site import exhibits as exhibits_mod
@@ -92,6 +93,7 @@ from watermark.site.feeds import (
     CatalogItem,
     Citation,
     ConceptItem,
+    ContactItem,
     DispersionField,
     DispersionGeoRef,
     DispersionGrid,
@@ -584,6 +586,12 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
     lead_items = leads_mod.export_leads(
         site_scoped_path(settings.data_dir / "site" / "leads.yaml", settings.site, is_dir=False),
     )
+    # Site-level contacts — the curated per-site directory of human contact points. Like leads,
+    # Lima reads its flat `data/site/contacts.yaml`; a sibling reads its own `site/<slug>/contacts.yaml`
+    # (absent → an empty contacts feed, never Lima's; the section then locks and asks for the source).
+    contact_items = contacts_mod.export_contacts(
+        site_scoped_path(settings.data_dir / "site" / "contacts.yaml", settings.site, is_dir=False),
+    )
     # The default-deny public allowlist (#280): exhibits + the committed allowlist rules.
     # Only *whole-file* exhibits auto-include their source; a page-sliced exhibit publishes
     # its derivative slice, not the full bundle behind it (#1301).
@@ -687,6 +695,9 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         # `or None` skips the feed when a site has no curated leads, so `hasFeed("leads")` is false
         # and the frontend cleanly falls back to the readiness-derived needs board (not an empty list).
         ("leads", LeadItem, lambda: lead_items or None),
+        # `or None` skips the feed when a site has no curated contacts, so `hasFeed("contacts")` is
+        # false and the frontend cleanly locks the section (not an empty list).
+        ("contacts", ContactItem, lambda: contact_items or None),
         # Already-provenanced inventories — exported as their own Pydantic models (#60).
         ("rsei", None, lambda: None if rsei_inv is None else rsei_mod.export_rsei(rsei_inv)),
         ("lei", None, lambda: None if lei_inv is None else gleif_mod.export_gleif(lei_inv)),

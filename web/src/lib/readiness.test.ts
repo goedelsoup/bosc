@@ -68,7 +68,7 @@ describe("a partial peer (Fort Wayne)", () => {
 
   it("reports the full locked set", () => {
     expect(lockedSections("fort-wayne").sort()).toEqual(
-      ["exhibits", "leads", "people", "reports", "timeline"].sort(),
+      ["contacts", "exhibits", "leads", "people", "reports", "timeline"].sort(),
     );
   });
 });

@@ -1,10 +1,10 @@
 {
   "site": "lima",
   "bundle_version": "1.0.0",
-  "contract_version": "1.23.0",
-  "generated_at": "2026-07-08T13:34:52+00:00",
-  "feed_count": 41,
-  "row_total": 807,
+  "contract_version": "1.24.0",
+  "generated_at": "2026-07-08T21:05:59+00:00",
+  "feed_count": 42,
+  "row_total": 810,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -119,6 +119,14 @@
       "schema": "schemas/leads.schema.json",
       "kind": "collection",
       "count": 21
+    },
+    {
+      "name": "contacts",
+      "path": "feeds/contacts.json",
+      "media_type": "application/json",
+      "schema": "schemas/contacts.schema.json",
+      "kind": "collection",
+      "count": 3
     },
     {
       "name": "rsei",

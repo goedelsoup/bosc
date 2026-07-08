@@ -7,7 +7,7 @@ each atom names the live feed row it resolves against, never a copy, so a Story 
 without forking it (chain of custody).
 
 This module emits the **feed-backed** kinds (record, timeline, entity, person, place, meeting,
-exhibit, concept, lead, dataset) by normalising over feeds the bundle already ships. The web-only
+exhibit, concept, lead, contact, dataset) by normalising over feeds the bundle already ships. The web-only
 kinds (``teardown``/``doc``/``chapter``/``figure``) are overlaid by the Astro build at render time
 (`web/src/lib/catalog.ts`), since they are web artifacts the Python tier can't see. The two tiers
 union into one catalog the resolver consumes.
@@ -83,6 +83,7 @@ _SPECS: tuple[_KindSpec, ...] = (
     _KindSpec("exhibit", "exhibits", lambda r: _get(r, "slug") or None, lambda r: _get(r, "title")),
     _KindSpec("concept", "concepts", lambda r: _get(r, "slug") or None, lambda r: _get(r, "title")),
     _KindSpec("lead", "leads", lambda r: _get(r, "id") or None, lambda r: _get(r, "title")),
+    _KindSpec("contact", "contacts", lambda r: _get(r, "id") or None, lambda r: _get(r, "name")),
     _KindSpec("dataset", "catalog", lambda r: _get(r, "id") or None, lambda r: _get(r, "title")),
 )
 

@@ -128,7 +128,15 @@ from watermark.site.readiness import State, Tier  # the readiness vocabulary SSO
 #   the uncertainty engine (#271) consume it uniformly. Both bounds optional (a document-
 #   verbatim figure stays a single value); back-compatible — every feed embedding a
 #   `ProvenancedValue` gains the two nullable fields.
-CONTRACT_VERSION = "1.23.0"
+# 1.24.0: adds the `contacts` collection feed — the curated per-site directory of human contact
+#   points (petitioners, organizers, officials, community groups, outlets) a reader can reach.
+#   Slug-scoped committed YAML (`data/site/contacts.yaml`, sibling reads its own `<slug>/`),
+#   modeled like `leads` (#796): every contact names a real `source` (no fabricated people, per
+#   the data-discipline rules) and carries only *public* routing (`links`) — private hand-off
+#   addresses stay server-side. The spine the petition-connect + bulletin surfaces reference;
+#   absent → the feed is skipped and the section degrades. Back-compatible (additive feed +
+#   the `contact` catalog kind).
+CONTRACT_VERSION = "1.24.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -473,6 +481,50 @@ class LeadItem(BaseModel):
     note: str | None = None  # a short standing note, used sparingly + truthfully
 
 
+# --- contacts feed ------------------------------------------------------------
+# The kinds of human contact point a site carries. `petitioner` and `organizer` are the ones the
+# petition-connect + bulletin surfaces route to; `official`/`group`/`outlet` round out the directory.
+ContactKind = Literal["petitioner", "organizer", "official", "group", "outlet"]
+
+
+class ContactLink(BaseModel):
+    """One *public* way to reach or read about a contact — a petition page, website, or social.
+
+    Public routing only: private hand-off addresses (where a petition-connect is delivered) never
+    enter the bundle; they live server-side (Phase 2). A bare label + URL, no provenance of its own
+    (the parent :class:`ContactItem` carries the ``source``).
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    label: str  # short human label ("petition", "website", "Facebook")
+    url: str
+
+
+class ContactItem(BaseModel):
+    """One curated site-level contact point — a petitioner, organizer, official, group, or outlet.
+
+    The per-site directory a reader can act on: read from `data/site/contacts.yaml` (slug-scoped),
+    so a sibling site carries its own contacts, not Lima's (mirrors `leads`, #796). Every contact
+    names a real committed ``source`` — no fabricated people, per the data-discipline rules — and
+    exposes only *public* routing via ``links``; private hand-off addresses stay server-side.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: str  # stable local id (kebab slug), the catalog handle's local_id
+    kind: ContactKind
+    name: str
+    org: str | None = None  # affiliated organization, when distinct from the name
+    role: str | None = None  # title / relationship ("lead organizer", "county commissioner")
+    summary: str  # what they work on / the cause — one honest sentence
+    links: list[ContactLink] = Field(default_factory=list)
+    place: str | None = None  # where they're based, when documented
+    source: str  # the real citation — where this contact is documented
+    tags: list[str] = Field(default_factory=list)
+    issue: int | None = None  # a linked tracking issue, when one exists
+
+
 # --- concepts feed (issue #68) ------------------------------------------------
 class ConceptItem(BaseModel):
     """One glossary concept from the wiki concept store (``data/concepts/*.md``).
@@ -617,6 +669,7 @@ CatalogKind = Literal[
     "exhibit",
     "concept",
     "lead",
+    "contact",
     "dataset",
     "teardown",
     "doc",

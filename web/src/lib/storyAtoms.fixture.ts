@@ -159,6 +159,22 @@ const ATOMS: HydratedAtom[] = [
     },
   },
   {
+    id: "contact-commissioners",
+    kind: "contact",
+    handle: "contact:lima:allen-county-commissioners",
+    kindLabel: "Contact",
+    title: "Allen County Board of Commissioners",
+    evidence: "verified",
+    profile: {
+      kindLabel: "Contact · official body",
+      name: "Allen County Board of Commissioners",
+      variants: [],
+      descriptor:
+        "The county body that approved the Project BOSC instruments — a contact of record for the site.",
+      evidence: "verified",
+    },
+  },
+  {
     id: "ds-dilution",
     kind: "dataset",
     handle: "dataset:lima:dilution-runs",

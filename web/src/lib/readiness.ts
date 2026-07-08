@@ -56,7 +56,8 @@ export type ReadinessSection =
   | "economy"
   | "reports"
   | "story"
-  | "leads";
+  | "leads"
+  | "contacts";
 
 /** Display + lock copy for each section. `holds` answers "what lands here once we have sources"
  *  — shown on the lock so an empty section reads as *awaiting a source*, not broken or barren. */
@@ -101,6 +102,11 @@ export const SECTION_META: Record<ReadinessSection, { label: string; holds: stri
   leads: {
     label: "Open leads",
     holds: "the open questions and the source data we're seeking for this site",
+  },
+  contacts: {
+    label: "Contacts",
+    holds:
+      "the people and bodies to reach on this site — the officials, organizers, and groups the record names",
   },
 };
 
@@ -191,6 +197,10 @@ function hasEnough(section: ReadinessSection, slug: string): boolean {
       // The leads board is feed-driven per site (#796); the reference build also hosts the
       // network-global curated board.
       return feedCount(slug, "leads") > 0 || isReferenceSite(slug);
+    case "contacts":
+      // The contacts directory is purely feed-driven: a site opens it only once it ships its own
+      // committed `contacts` feed — never borrowing another site's contacts.
+      return feedCount(slug, "contacts") > 0;
     // --- network-global: the reference build hosts the long-form `docs/` narrative ---
     case "reports":
       return isReferenceSite(slug);

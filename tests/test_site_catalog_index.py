@@ -24,7 +24,7 @@ from watermark.site.export import export_bundle
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-_CV = "1.23.0"
+_CV = "1.24.0"
 
 
 def _index(rows_by_feed: dict[str, list[dict[str, Any]]], site: str = "lima"):
@@ -39,6 +39,9 @@ def test_handle_grammar_and_key_reuse() -> None:
             "entities": [{"key": "BISTROZZI LLC", "display": "Bistrozzi LLC"}],
             "people": [{"slug": "cynthia-leis", "name": "Cynthia Leis"}],
             "leads": [{"id": "ASWCD-03", "title": "Wetland determination"}],
+            "contacts": [
+                {"id": "allen-county-commissioners", "name": "Allen County Board of Commissioners"}
+            ],
             "catalog": [{"id": "echo-maumee", "title": "ECHO inventory"}],
         }
     )
@@ -48,6 +51,11 @@ def test_handle_grammar_and_key_reuse() -> None:
     assert by_handle["entity:lima:BISTROZZI LLC"].feed == "entities"
     assert by_handle["person:lima:cynthia-leis"].local_id == "cynthia-leis"
     assert by_handle["lead:lima:ASWCD-03"].kind == "lead"
+    # A contact atom's title is the contact name (not a `title` field).
+    assert (
+        by_handle["contact:lima:allen-county-commissioners"].title
+        == "Allen County Board of Commissioners"
+    )
     assert by_handle["dataset:lima:echo-maumee"].feed == "catalog"
     assert index.site == "lima" and index.contract_version == _CV
 
@@ -198,6 +206,7 @@ def test_catalog_index_feed_emitted_and_every_atom_resolves(bundle: Path) -> Non
         "exhibits": "slug",
         "concepts": "slug",
         "leads": "id",
+        "contacts": "id",
         "catalog": "id",
     }
     cache: dict[str, set[str]] = {}

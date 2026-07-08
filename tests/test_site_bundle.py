@@ -282,7 +282,7 @@ def test_backdrop_staged_site_exports_at_backdrop_tier(
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.23.0"
+    assert manifest["contract_version"] == "1.24.0"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "backdrop", f"{slug} should be a Backdrop site, got {readiness}"
     domains = readiness["domains"]
@@ -444,3 +444,31 @@ def test_export_leads_is_empty_for_an_absent_store(tmp_path: Path) -> None:
     from watermark.site.leads import export_leads
 
     assert export_leads(tmp_path / "nope.yaml") == []
+
+
+# --- contacts feed -------------------------------------------------------------------------
+def test_lima_bundle_carries_its_curated_contacts(bundle: Path) -> None:
+    """The reference build ships its committed contacts directory (`data/site/contacts.yaml`) as
+    the per-site `contacts` feed, with the data discipline intact (every contact names a source)."""
+    feeds = _feeds_by_name(bundle)
+    assert "contacts" in feeds, "Lima bundle should carry its curated contacts directory"
+    rows = _rows(bundle, feeds["contacts"])
+    ids = {r["id"] for r in rows}
+    assert {"allen-county-commissioners", "ohio-epa-dapc"} <= ids
+    valid_kinds = {"petitioner", "organizer", "official", "group", "outlet"}
+    assert all(r["kind"] in valid_kinds for r in rows)
+    assert all(r["source"] for r in rows), "every contact must name where it is documented"
+    # Public routing only — the bundle never carries a private hand-off address.
+    assert all("email" not in r for r in rows), "contacts feed must not expose private addresses"
+
+
+def test_sibling_bundle_has_no_contacts_feed(fort_wayne_bundle: Path) -> None:
+    """A site with no committed contacts store carries no `contacts` feed — so the section locks
+    and asks for the source, never Lima's contacts."""
+    assert "contacts" not in _feeds_by_name(fort_wayne_bundle)
+
+
+def test_export_contacts_is_empty_for_an_absent_store(tmp_path: Path) -> None:
+    from watermark.site.contacts import export_contacts
+
+    assert export_contacts(tmp_path / "nope.yaml") == []

@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "contacts feed",
+  "type": "array",
+  "items": {
+    "additionalProperties": false,
+    "description": "One curated site-level contact point — a petitioner, organizer, official, group, or outlet.\n\nThe per-site directory a reader can act on: read from `data/site/contacts.yaml` (slug-scoped),\nso a sibling site carries its own contacts, not Lima's (mirrors `leads`, #796). Every contact\nnames a real committed ``source`` — no fabricated people, per the data-discipline rules — and\nexposes only *public* routing via ``links``; private hand-off addresses stay server-side.",
+    "properties": {
+      "id": {
+        "title": "Id",
+        "type": "string"
+      },
+      "kind": {
+        "enum": [
+          "petitioner",
+          "organizer",
+          "official",
+          "group",
+          "outlet"
+        ],
+        "title": "Kind",
+        "type": "string"
+      },
+      "name": {
+        "title": "Name",
+        "type": "string"
+      },
+      "org": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Org"
+      },
+      "role": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Role"
+      },
+      "summary": {
+        "title": "Summary",
+        "type": "string"
+      },
+      "links": {
+        "items": {
+          "$ref": "#/$defs/ContactLink"
+        },
+        "title": "Links",
+        "type": "array"
+      },
+      "place": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Place"
+      },
+      "source": {
+        "title": "Source",
+        "type": "string"
+      },
+      "tags": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Tags",
+        "type": "array"
+      },
+      "issue": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Issue"
+      }
+    },
+    "required": [
+      "id",
+      "kind",
+      "name",
+      "summary",
+      "source"
+    ],
+    "title": "ContactItem",
+    "type": "object"
+  },
+  "$defs": {
+    "ContactLink": {
+      "additionalProperties": false,
+      "description": "One *public* way to reach or read about a contact — a petition page, website, or social.\n\nPublic routing only: private hand-off addresses (where a petition-connect is delivered) never\nenter the bundle; they live server-side (Phase 2). A bare label + URL, no provenance of its own\n(the parent :class:`ContactItem` carries the ``source``).",
+      "properties": {
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "url": {
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "label",
+        "url"
+      ],
+      "title": "ContactLink",
+      "type": "object"
+    }
+  }
+}
