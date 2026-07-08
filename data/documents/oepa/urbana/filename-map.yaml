@@ -141,3 +141,43 @@ documents:
     letter_date: "2026-01-05"
     content_verified: text-layer
     notes: NPDES Municipal Stormwater (MS4) Notice of Violation.
+
+  # The issued 2020-cycle permit + fact sheet. Not eDoc-sourced: these come from Ohio EPA's
+  # published permits document library (dam.assets.ohio.gov/.../Portals/35/permits/doc/), which
+  # serves the *currently-effective* issued instruments keyed by OEPA permit number. As-received
+  # filenames (1PD00011.pdf / 1PD00011.fs.pdf) are kept per chain-of-custody. As of 2026-07 the
+  # doc/ path still served the 2020 issuance — the 2025 renewal (app eDoc 3832476) had not issued,
+  # so the permit is in administrative continuance past its 2025-11-30 expiration.
+  - edoc_id: null
+    filename: 1PD00011.pdf
+    source_url: "https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/1PD00011.pdf"
+    canonical: oepa-1pd00011-urbana-wrf-npdes-permit-issued-2020.pdf
+    type: npdes-permit
+    permit: 1PD00011
+    facility: City of Urbana Water Reclamation Facility (OH0027880)
+    issue_date: "2020-10-26"
+    effective_date: "2020-12-01"
+    expiration_date: "2025-11-30"
+    content_verified: text-layer
+    notes: >
+      Issued NPDES permit (Director Laurie A. Stevenson), 2020 renewal cycle, 42 pp. Final effluent
+      limitations + monitoring for outfall 001 → Mad River. Design flow 4.5 MGD. The first *issued*
+      permit in corpus (prior Urbana records were renewal applications, inspections, and NOVs).
+
+  - edoc_id: null
+    filename: 1PD00011.fs.pdf
+    source_url: "https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/1PD00011.fs.pdf"
+    canonical: oepa-1pd00011-urbana-wrf-npdes-fact-sheet-2020.pdf
+    type: npdes-fact-sheet
+    permit: 1PD00011
+    facility: City of Urbana Water Reclamation Facility (OH0027880)
+    public_notice: "20-09-051"
+    public_notice_date: "2020-09-22"
+    content_verified: text-layer
+    notes: >
+      NPDES permit renewal Fact Sheet, 2020 cycle, 33 pp. Carries the regulatory Stream Flows /
+      wasteload-allocation basis for the Mad River outfall: annual 7Q10 = 35 cfs, 1Q10 = 33 cfs,
+      summer/winter 30Q10 = 40/45 cfs, harmonic mean = 95.2 cfs (all at USGS gage 03267000, per the
+      1997 flow document). The regulatory 7Q10 (35 cfs) replaces the earlier [derived] LP3 passby
+      (53.67 cfs) on SiteProfile 'urbana' (passby_primary_cfs). This is the fact sheet the earlier
+      README noted as "not yet in corpus".
