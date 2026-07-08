@@ -15,7 +15,7 @@ import DefenseNexusMap from "~/components/islands/DefenseNexusMap.tsx";
 import RedactionReveal from "~/components/RedactionReveal.astro";
 import { buildDefenseNexus } from "~/lib/defenseNexus";
 import type { TeardownRedaction } from "~/lib/teardown";
-import { withSite } from "~/lib/site";
+import { withBase } from "~/lib/site";
 
 const dn = buildDefenseNexus();
 const m = dn.metrics;
@@ -27,7 +27,7 @@ const closeIt: TeardownRedaction = {
   lock: "No FedRAMP / DoD authorization record for the Lima facility appears in the corpus, and the public-records request for any County ⇄ DoD / GDLS communication returned “no records.” The IL-6 capability belongs to Google everywhere it operates; the posture of this facility is undocumented.",
   cite: "response-index.yaml item 2 — “No records” · docs/defense-nexus.md",
   read: "One disclosable fact would close it: the Lima facility’s FedRAMP / DoD impact-level posture, or a dated County ⇄ DoD / GDLS communication. Neither is in the record. Proximity is not connection — the gap stays measured, and empty.",
-  href: withSite("/docs/defense-nexus"),
+  href: withBase("/docs/defense-nexus"),
 };
 ---
 

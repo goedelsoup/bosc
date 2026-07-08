@@ -1,12 +1,17 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
-export const getStaticPaths = selectableSitePaths;
+/**
+ * /docs/ — the network-global docs hub (#1304).
+ *
+ * The long-form prose collection (`lib/narrative.ts`) is network-global-host content — the
+ * investigation's method and analysis, not per-watershed-site data — so it builds once at the
+ * root, not per selectable site. Essays group by the thematic section each belongs to.
+ */
 import Base from "~/layouts/Base.astro";
 import { NARRATIVE } from "~/lib/narrative";
 import { getSection, sections, type SectionId } from "~/lib/nav";
-import { withSite } from "~/lib/site";
+import { withBase } from "~/lib/site";
 
-// Group the migrated narrative by the section each piece belongs to.
+// Group the narrative by the thematic section each piece belongs to.
 const groups = sections()
   .map((s) => ({
     section: s,
@@ -15,16 +20,17 @@ const groups = sections()
   .filter((g) => g.docs.length > 0);
 ---
 
-<Base title="Docs" section="reports" rail={false} description="The project's narrative prose — the dossier, hydrology, economics, and legal analysis.">
+<Base title="Docs" section="docs" rail={false} description="The project's narrative prose — the dossier, hydrology, economics, and legal analysis.">
   <div class="hub">
     <div class="hub-head">
       <div>
-        <div class="hub-eyebrow">Platform · docs</div>
+        <div class="hub-eyebrow">Network · docs</div>
         <h1>Docs</h1>
         <p class="hub-lead">
-          The project's long-form prose, migrated from <code>docs/</code> into the
-          site (issue #69). The same files still feed the legacy generator — this
-          reads them as-is, rewriting their cross-links into the new sections.
+          The investigation's long-form prose, migrated from <code>docs/</code> into the
+          site (issue #69). It's network-global — the method and analysis behind the record,
+          not per-site data — so it reads the same files as-is, rewriting their cross-links
+          into the new sections.
         </p>
       </div>
       <span class="hub-count">{NARRATIVE.length} essays · {groups.length} sections</span>
@@ -36,7 +42,7 @@ const groups = sections()
           <h2 class="hub-subhead" id={g.section.id}>{getSection(g.section.id).label}</h2>
           <div class="hub-grid">
             {g.docs.map((d) => (
-              <a class="hub-door" href={`${withSite("/docs/")}${d.slug}`}>
+              <a class="hub-door" href={withBase(`/docs/${d.slug}`)}>
                 <div class="hub-door-top">
                   <span class="hub-door-kind">{getSection(g.section.id).tab}</span>
                 </div>

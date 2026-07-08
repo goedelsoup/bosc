@@ -13,7 +13,7 @@ import type {
   EnergyBurden,
   ProvenancedValue,
 } from "~/lib/feeds";
-import { withSite } from "~/lib/site";
+import { withBase, withSite } from "~/lib/site";
 
 const eb = hasFeed("economics-baseline") ? loadFeed<EconomicBaseline>("economics-baseline") : null;
 // State-level EIA consumer energy costs (issue #1125) — guarded independently of the county
@@ -124,7 +124,7 @@ const energyCharts = [
             <strong> location quotient</strong> (county share ÷ national share), and population (US Census
             ACS). The employment and population figures are connector-sourced <code>[verified]</code>, with each
             sector's location quotient <strong>derived</strong> from them; the prose companion is
-            <a href={withSite("/docs/economics")}> Economics — demand &amp; public benefits</a>.
+            <a href={withBase("/docs/economics")}> Economics — demand &amp; public benefits</a>.
           </p>
 
           {pop.length > 0 && (

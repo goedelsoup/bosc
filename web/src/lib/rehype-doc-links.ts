@@ -32,7 +32,8 @@ const SKIP = /^(https?:|mailto:|tel:|#|\/|data:)/;
 const REPO_DIR = /^(data|docs|src|spikes|\.claude|\.github)\//;
 // Network-global routes live at the site root, shared across every watershed site, so they
 // are NOT prefixed with the Lima base (#307 follow-up: about/about-me/wiki/ask/privacy are global).
-const GLOBAL_ROUTE = /^\/(about|about-me|wiki|ask|privacy)(\/|#|$)/;
+// `docs` joined them at the network-global-host move (#1304): the long-form prose is one root build.
+const GLOBAL_ROUTE = /^\/(about|about-me|wiki|ask|privacy|docs)(\/|#|$)/;
 
 function splitHash(href: string): [string, string] {
   const i = href.indexOf("#");
@@ -68,8 +69,9 @@ export default function rehypeDocLinks(options: DocLinkOptions = {}) {
 
       let target: string | null = null;
       if (MIGRATED.has(resolved)) {
-        // 1. a migrated narrative doc → its /docs/<slug> route
-        target = `${base}/docs/${slugForRepoPath(resolved)}`;
+        // 1. a migrated narrative doc → its network-global /docs/<slug> route (#1304): the docs
+        //    build moved to a single root, so it is NOT prefixed with the Lima site base.
+        target = `/docs/${slugForRepoPath(resolved)}`;
       } else if (PUBLISHED_REFERENCE.has(resolved)) {
         // 2. a published reference README → its /site/reference/<slug> route
         target = `${base}/site/reference/${refSlugForRepoPath(resolved)}`;

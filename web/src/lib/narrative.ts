@@ -17,7 +17,7 @@ import type { SectionId } from "./nav";
 export interface NarrativeDoc {
   /** Path under `docs/` (the migrated file). */
   repo: string;
-  /** Route slug under `/network/american-sugar-creek-allen-co/docs/` (lowercased repo path, no extension). */
+  /** Route slug under the network-global `/docs/` (lowercased repo path, no extension). */
   slug: string;
   title: string;
   section: SectionId;

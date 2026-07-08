@@ -98,10 +98,12 @@ describe("rehype-doc-links — data-driven branches (representative real entries
     expect(siblingRewrite(target)).toBe(`/site/legal/${legalSlugForRepoPath(target)}`);
   });
 
-  it("honours the base prefix on the migrated-doc route", () => {
+  it("keeps the migrated-doc route network-global (no site base) even when a base is set (#1304)", () => {
+    // The docs build moved to a single root `/docs/`, so a migrated-doc link is NOT prefixed with
+    // the Lima site base — it resolves to the same global route regardless of the plugin's `base`.
     const target = [...MIGRATED][0];
     expect(siblingRewrite(target, { base: "/network/american-sugar-creek-allen-co" })).toBe(
-      `/network/american-sugar-creek-allen-co/docs/${slugForRepoPath(target)}`,
+      `/docs/${slugForRepoPath(target)}`,
     );
   });
 });

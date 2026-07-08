@@ -17,14 +17,15 @@ import BackLink from "../components/BackLink.astro";
 import SectionLocked from "../components/SectionLocked.astro";
 import { activeSite } from "../lib/bundle";
 import { sectionStatus } from "../lib/readiness";
-import { withSite } from "../lib/site";
+import { withBase, withSite } from "../lib/site";
 
 interface Props {
   title: string;
   description: string;
   eyebrow: string;
   h1: string;
-  /** When set, render the shared closing block linking to the full essay at this path. */
+  /** When set, render the shared closing block linking to the full essay — a network-global
+   *  `/docs/<slug>` path (#1304), deploy-based but NOT site-prefixed. */
   fullReportHref?: string;
 }
 const { title, description, eyebrow, h1, fullReportHref } = Astro.props;
@@ -59,7 +60,7 @@ const headDesc = reportsLocked ? LOCKED_DESC : description;
           source — <slot name="full-report" />.
         </p>
         <p>
-          <a class="btn btn--icon" href={withSite(fullReportHref)}>Read the full report →</a>
+          <a class="btn btn--icon" href={withBase(fullReportHref)}>Read the full report →</a>
         </p>
       </article>
     )}

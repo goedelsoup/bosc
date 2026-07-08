@@ -1,33 +1,32 @@
 ---
-import { withSitePaths, siteForSlug } from "~/lib/sites";
+/**
+ * /docs/<slug> — a network-global long-form doc (#1304).
+ *
+ * The narrative collection is network-global-host content, so this builds once at the root
+ * (not per selectable site). Cross-links inside the rendered markdown are rewritten by the
+ * base-aware rehype plugin (`lib/rehype-doc-links.ts`), which keeps migrated-doc routes global.
+ */
 import { getCollection, render } from "astro:content";
 import Base from "~/layouts/Base.astro";
 import { bySlug } from "~/lib/narrative";
-import { getSection } from "~/lib/nav";
-import { withBase, withSite } from "~/lib/site";
-import { activeSite } from "~/lib/bundle";
-import { siteBase } from "~/lib/routes";
+import { withBase } from "~/lib/site";
 
 export async function getStaticPaths() {
   // Only the curated narrative set (lib/narrative.ts) is published; the glob may
   // load other docs/ markdown, which we drop here.
   const entries = await getCollection("narrative", (e) => bySlug.has(e.id));
-  return withSitePaths(entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } })));
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
 
 const { entry } = Astro.props;
 const doc = bySlug.get(entry.id)!;
-const section = getSection(doc.section);
 const { Content, headings } = await render(entry);
 // The rail is this essay's own headings (Astro slugs each one as an `id`).
 const toc = headings.filter((h) => h.depth === 2).map((h) => ({ anchor: h.slug, label: h.text }));
 
-const siteSlug = activeSite();
-const networkSite = siteForSlug(siteSlug);
+const docsHref = withBase("/docs/");
 const breadcrumbs = [
-  { label: "Network", href: withBase("/network") },
-  { label: networkSite?.place ?? "Site", href: withBase(siteBase(siteSlug)) },
-  { label: "Research", href: withSite("/docs/") },
+  { label: "Docs", href: docsHref },
   { label: doc.title, href: Astro.url.pathname },
 ];
 
@@ -44,10 +43,10 @@ const articleLd = Astro.site
   : null;
 ---
 
-<Base title={doc.title} section={doc.section} description={doc.blurb} toc={toc} ogType="article" breadcrumbs={breadcrumbs}>
+<Base title={doc.title} section="docs" description={doc.blurb} toc={toc} ogType="article" breadcrumbs={breadcrumbs}>
   {articleLd && <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify(articleLd)} />}
   <article class="prose">
-    <p><a href={withBase(section.href)}>← {section.label}</a> · <a href={withSite("/docs/")}>All narrative</a></p>
+    <p><a href={docsHref}>← All docs</a></p>
     <Content />
   </article>
 </Base>

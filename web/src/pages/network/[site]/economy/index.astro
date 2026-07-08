@@ -10,7 +10,7 @@ export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed } from "~/lib/bundle";
 import type { EconomicBaseline } from "~/lib/feeds";
-import { withSite } from "~/lib/site";
+import { withBase, withSite } from "~/lib/site";
 import { activeStory, chapterHref } from "~/lib/walk";
 
 // The cost-of-opacity door links THIS site's own "cost of opacity" chapter — resolved from the
@@ -72,7 +72,7 @@ const doors: Door[] = [
   {
     id: "demand",
     kind: "Reference",
-    href: withSite("/docs/economics"),
+    href: withBase("/docs/economics"),
     count: "—",
     title: "Demand & public benefits",
     desc: "The prose companion: how the demand pressure and the public-benefit case are built from the record — the method behind the figures.",

@@ -30,6 +30,7 @@ export type SectionId =
   | "story"
   | "timeline"
   | "reports"
+  | "docs"
   | "about"
   | "site"
   | "environment"
@@ -172,6 +173,19 @@ export function sections(): Section[] {
       toc: [],
     },
     {
+      // The long-form prose collection (`lib/narrative.ts`) is network-global-host content — the
+      // investigation's method and analysis, not per-watershed-site data (#1304) — so it lives at a
+      // single root `/docs/` build, with its own section id (untangled from `reports`, which is the
+      // per-site long-form landing). Global href, like the other network-global sections below.
+      id: "docs",
+      label: "Docs",
+      tab: "Docs",
+      href: "/docs/",
+      blurb:
+        "The investigation's long-form prose — the dossier, the water and economics reads, the legal analyses, and the framing essays.",
+      toc: [],
+    },
+    {
       id: "about",
       label: "About",
       tab: "About",
@@ -290,8 +304,8 @@ export type NavItem =
 export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
   // The two framing essays (research course + the bigger picture) are the author's investigation
   // overview, re-homed out of the site-scoped `home` section into this network-global About area
-  // (#1308). Their routes stay per-site for now (`<base>/docs/<slug>`, option (a) as in #1305);
-  // the entry points at the active site's copy until the docs move global (#1304).
+  // (#1308). Their docs now live at the network-global `/docs/` build (#1304), so they link there
+  // directly — no site base.
   const docBase = siteBase(activeSite());
   // Reports are the long-form analysis over the corpus — an output of the research, so their nav
   // home is this network-global Research dropdown, not the site tier (#1305). The routes stay
@@ -333,12 +347,12 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
         { divider: true as const },
         {
           label: "Research course",
-          href: `${docBase}/docs/course`,
+          href: "/docs/course",
           blurb: "What we're investigating — the open threads",
         },
         {
           label: "The bigger picture",
-          href: `${docBase}/docs/bigger-picture`,
+          href: "/docs/bigger-picture",
           blurb: "Placed against the national data-center build-out",
         },
         { divider: true as const },
@@ -491,7 +505,7 @@ export function siteTabs(): NavItem[] {
             },
             {
               label: "Demand & public benefits",
-              href: `${base}/docs/economics`,
+              href: "/docs/economics",
               blurb: "The prose companion",
             },
           ],
@@ -521,9 +535,9 @@ export function comingSoonSiteTabs(site: NetworkSite): NavItem[] {
  *  Submit are rendered separately as affordances; these two are the plain links.
  *  Connect has moved to the Research dropdown (#1017). */
 export function platformLinks(): { label: string; section: SectionId; href: string }[] {
-  const { base } = siteRoots();
   return [
-    { label: "Docs", section: "reports", href: `${base}/docs/` },
+    // Docs are network-global-host (#1304): a single root `/docs/` build, not per-site.
+    { label: "Docs", section: "docs", href: "/docs/" },
     { label: "Wiki", section: "wiki", href: "/wiki/" },
   ];
 }
@@ -583,7 +597,7 @@ export interface FooterGroup {
 export function footerGroups(): FooterGroup[] {
   const { base, storyRoot, story } = siteRoots();
   const plat = platformLinks();
-  const docs = plat.find((p) => p.section === "reports")!;
+  const docs = plat.find((p) => p.section === "docs")!;
   const wiki = plat.find((p) => p.section === "wiki")!;
   return [
     {

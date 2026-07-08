@@ -16,7 +16,7 @@ import EconLedgerSimulator from "~/components/islands/EconLedgerSimulator.tsx";
 import ReportShell from "~/layouts/ReportShell.astro";
 import { COUNTY_JOBS_2023, ledgerLines, ledgerProfiles } from "~/lib/econLedger";
 import { fmtUsdM } from "~/lib/money";
-import { withSite } from "~/lib/site";
+import { withBase } from "~/lib/site";
 
 const lines = ledgerLines();
 const profiles = ledgerProfiles();
@@ -44,7 +44,7 @@ const net = lines.find((l) => l.key === "net");
         <strong>{net ? `${fmtUsdM(net.band.low)} – ${fmtUsdM(net.band.high)}` : "tens of millions"}</strong>
         for ~50 jobs — about <strong>0.1%</strong> of the county's
         {COUNTY_JOBS_2023.toLocaleString("en-US")} covered jobs.
-        Full essay: <a href={withSite("/docs/the-economic-ledger")}>the economic ledger →</a>
+        Full essay: <a href={withBase("/docs/the-economic-ledger")}>the economic ledger →</a>
       </p>
   </Fragment>
 
