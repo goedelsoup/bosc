@@ -328,6 +328,7 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
         { label: "Data catalog", href: "/about/catalog", blurb: "Every dataset: source, license, freshness" },
         { divider: true as const },
         { label: "Contributing", href: "/about/contributing" },
+        { label: "Privacy", href: "/privacy", blurb: "What we do and don't collect" },
       ],
     },
   ];
@@ -596,6 +597,7 @@ export function footerGroups(): FooterGroup[] {
         { label: CONNECT_LINK.label, href: CONNECT_LINK.href },
         { label: "Methodology", href: "/methodology" },
         { label: "About", href: "/about" },
+        { label: "Privacy", href: "/privacy" },
       ],
     },
   ];
