@@ -24,7 +24,11 @@ export interface MessageRequest {
   /** A single user turn is all /api/ask needs; the array keeps the door open. */
   messages: { role: "user" | "assistant"; content: string }[];
   maxTokens: number;
-  /** Defaults to 0 — grounded extraction wants determinism, not creativity. */
+  /**
+   * Sent only when explicitly set. Newer models (e.g. claude-opus-4-8) deprecate and
+   * reject `temperature` outright, so omitting it lets the model apply its own default;
+   * pass a value only for an older model that still honors it.
+   */
   temperature?: number;
   /** Override the Messages API endpoint (local dev mock). Defaults to api.anthropic.com. */
   apiUrl?: string;
@@ -67,7 +71,8 @@ export async function createMessage(req: MessageRequest): Promise<MessageResult>
       body: JSON.stringify({
         model: req.model,
         max_tokens: req.maxTokens,
-        temperature: req.temperature ?? 0,
+        // Only include `temperature` when a caller set one — newer models reject it (see MessageRequest).
+        ...(req.temperature !== undefined ? { temperature: req.temperature } : {}),
         system: req.system,
         messages: req.messages,
       }),
