@@ -158,6 +158,11 @@ def _fleet_size(settings: Settings) -> int:
         raise ValueError(
             f"site {settings.site!r} has no documented facility — no genset fleet to model"
         )
+    if fac.genset_count is None:
+        raise ValueError(
+            f"site {settings.site!r} has a documented facility but no disclosed gensets "
+            "(a site-plan-grounded facility) — no genset fleet to model"
+        )
     return fac.genset_count
 
 

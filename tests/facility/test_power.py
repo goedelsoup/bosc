@@ -45,6 +45,51 @@ def test_power_basis_is_none_without_a_facility() -> None:
     assert derive_power_basis(settings=Settings(site="findlay")) is None
 
 
+def test_site_plan_grounded_facility_has_no_genset_basis() -> None:
+    """A site-plan-grounded facility (Urbana, #1327): the IT load is a floor-area SCREENING
+    inference (``derived``), and there is NO fabricated genset fleet — backup / implied-PUE
+    stay ``None`` — but the facility_draw (→ demand-pressure) is still derived."""
+    from watermark.config import Settings
+
+    b = derive_power_basis(settings=Settings(site="urbana"))
+    assert b is not None
+    # IT load is a screening inference, not a permit disclosure.
+    assert b.it_load.source == "derived"
+    assert "SCREENING" in (b.it_load.citation or "")
+    assert b.it_load.has_range and b.it_load.low is not None and b.it_load.high is not None
+    # No disclosed gensets → no backup / N+1 cross-check (never fabricated).
+    assert b.genset_count is None
+    assert b.genset_rating is None
+    assert b.backup_power is None
+    assert b.implied_pue_from_backup is None
+    assert "no disclosed gensets" in b.method
+    # The demand-pressure basis (facility_draw = IT x PUE) is still derived.
+    assert b.facility_draw.source == "derived"
+    assert b.facility_draw.value > b.it_load.value  # PUE > 1
+
+
+def test_site_facility_requires_a_load_basis_citation() -> None:
+    """SiteFacility forbids an uncited IT load — either an air permit or a derivation cite."""
+    from watermark.sites._model import SiteFacility
+
+    with pytest.raises(ValueError, match="IT load needs a basis citation"):
+        SiteFacility(it_load_mw=70.0, it_load_low_mw=35.0, it_load_high_mw=115.0)
+
+
+def test_site_facility_gensets_are_paired() -> None:
+    """A genset count without a rating (or vice-versa) can't form a backup figure."""
+    from watermark.sites._model import SiteFacility
+
+    with pytest.raises(ValueError, match="genset_count and genset_mw must be set together"):
+        SiteFacility(
+            it_load_mw=70.0,
+            it_load_low_mw=35.0,
+            it_load_high_mw=115.0,
+            it_load_citation="screening",
+            genset_count=34,  # rating omitted
+        )
+
+
 def test_compute_capacity_refuses_a_facility_less_site() -> None:
     """The compute-capacity estimate needs a facility power basis — it refuses for a
     facility-less site instead of reusing Lima's air-permit disclosure."""

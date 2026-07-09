@@ -163,10 +163,13 @@ class PowerBasis(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    genset_count: ProvenancedValue  # count (document)
-    genset_rating: ProvenancedValue  # MW each (document)
-    backup_power: ProvenancedValue  # MW total backup (derived)
-    it_load: ProvenancedValue  # MW central (document-anchored) + N+1 low/high band (#760)
+    # Genset / backup basis — present only for an air-permit-grounded facility. A
+    # site-plan-grounded facility with no disclosed generation (Urbana) leaves these
+    # ``None``: there is no fabricated fleet, so no backup or N+1 cross-check.
+    genset_count: ProvenancedValue | None = None  # count (document)
+    genset_rating: ProvenancedValue | None = None  # MW each (document)
+    backup_power: ProvenancedValue | None = None  # MW total backup (derived)
+    it_load: ProvenancedValue  # MW central (document-anchored or screening) + low/high band (#760)
     # Cooling / mechanical overhead (issue #87): PUE is a banded ASSUMPTION; the band
     # (pue.low efficient .. pue.high cooling-dominated ~1.43) drives the IT->total
     # facility_draw translation (the first-class downstream output). pue.value = band mean.
@@ -175,7 +178,7 @@ class PowerBasis(BaseModel):
     # MW total facility draw = IT central x PUE central; facility_draw.low/high bracket the
     # efficient (x pue.low) .. cooling-dominated (x pue.high) ends (derived, #760).
     facility_draw: ProvenancedValue
-    implied_pue_from_backup: ProvenancedValue  # backup / IT — N+1 cross-check vs #33
+    implied_pue_from_backup: ProvenancedValue | None = None  # backup / IT — N+1 cross-check vs #33
     cooling_overhead_note: str = (
         "Cooling/mechanical overhead is a banded ASSUMPTION (PUE = total/IT), not a "
         "disclosure. The N+1 genset backup is sized to IT + mechanical, so it covers "
@@ -270,30 +273,60 @@ def derive_power_basis(*, settings: Settings | None = None) -> PowerBasis | None
     """
     settings = settings or get_settings()
     fac = active_profile(settings).facility
-    if fac is None:
+    if fac is None or fac.it_load_mw is None:
         return None
-    backup_mw = fac.genset_count * fac.genset_mw  # ~313 MW for Lima
-    cite = fac.air_permit_citation
     pue_lo, pue_hi = _load_pue_band(settings)
     pue_central = (pue_lo + pue_hi) / 2.0
     cooling_share_hi = (pue_hi - 1.0) / pue_hi  # cooling as a share of facility power
     draw_central = fac.it_load_mw * pue_central
-    implied_pue = backup_mw / fac.it_load_mw  # if backup == IT + mechanical (N+1)
 
-    return PowerBasis(
-        generation=_generation_configs(fac.it_load_mw),
-        genset_count=ProvenancedValue.from_document(
-            float(fac.genset_count), "count", citation=cite
-        ),
-        genset_rating=ProvenancedValue.from_document(fac.genset_mw, "MW", citation=cite),
-        backup_power=ProvenancedValue.derived(
+    # IT-load provenance: permit-grounded (``from_document``, Lima/Fort Wayne) vs a
+    # floor-area SCREENING inference (``derived``, Urbana). Exactly one citation grounds
+    # it (SiteFacility-validated); never present a screening bracket as a disclosure.
+    load_cite = fac.air_permit_citation or fac.it_load_citation or ""
+    if fac.air_permit_citation is not None:
+        it_load_pv = ProvenancedValue.from_document(fac.it_load_mw, "MW", citation=load_cite)
+    else:
+        it_load_pv = ProvenancedValue.derived(fac.it_load_mw, "MW", citation=load_cite)
+    it_load_pv = it_load_pv.with_range(low=fac.it_load_low_mw, high=fac.it_load_high_mw)
+
+    # Genset backup + N+1 cross-check only when the facility discloses gensets (an air
+    # permit). A site-plan-grounded facility leaves these ``None`` — no fabricated fleet.
+    genset_count_pv: ProvenancedValue | None = None
+    genset_rating_pv: ProvenancedValue | None = None
+    backup_pv: ProvenancedValue | None = None
+    implied_pue_pv: ProvenancedValue | None = None
+    method = "floor-area screening IT load x PUE band -> facility draw (no disclosed gensets)"
+    if fac.genset_count is not None and fac.genset_mw is not None:
+        backup_mw = fac.genset_count * fac.genset_mw  # ~313 MW for Lima
+        implied_pue = backup_mw / fac.it_load_mw  # if backup == IT + mechanical (N+1)
+        genset_count_pv = ProvenancedValue.from_document(
+            float(fac.genset_count), "count", citation=load_cite
+        )
+        genset_rating_pv = ProvenancedValue.from_document(fac.genset_mw, "MW", citation=load_cite)
+        backup_pv = ProvenancedValue.derived(
             round(backup_mw, 1),
             "MW",
             citation=f"{fac.genset_count} gensets x {fac.genset_mw:g} MW each (the site's air permit)",
-        ),
-        it_load=ProvenancedValue.from_document(fac.it_load_mw, "MW", citation=cite).with_range(
-            low=fac.it_load_low_mw, high=fac.it_load_high_mw
-        ),
+        )
+        implied_pue_pv = ProvenancedValue.derived(
+            round(implied_pue, 2),
+            "ratio",
+            citation=(
+                f"{round(backup_mw, 1):g} MW N+1 backup / {fac.it_load_mw:g} MW IT: the PUE "
+                "implied if the genset backup is sized to the full IT + mechanical load (#33)"
+            ),
+        )
+        method = "air-permit genset count x rating -> N+1 backup -> IT load"
+
+    return PowerBasis(
+        generation=_generation_configs(fac.it_load_mw),
+        genset_count=genset_count_pv,
+        genset_rating=genset_rating_pv,
+        backup_power=backup_pv,
+        it_load=it_load_pv,
+        method=method,
+        implied_pue_from_backup=implied_pue_pv,
         pue=ProvenancedValue.assume(
             round(pue_central, 3),
             "ratio",
@@ -312,13 +345,5 @@ def derive_power_basis(*, settings: Settings | None = None) -> PowerBasis | None
             citation=f"{fac.it_load_mw:g} MW IT x PUE {pue_central:g} (band mean) — total facility draw",
             low=round(fac.it_load_mw * pue_lo, 1),
             high=round(fac.it_load_mw * pue_hi, 1),
-        ),
-        implied_pue_from_backup=ProvenancedValue.derived(
-            round(implied_pue, 2),
-            "ratio",
-            citation=(
-                f"{round(backup_mw, 1):g} MW N+1 backup / {fac.it_load_mw:g} MW IT: the PUE "
-                "implied if the genset backup is sized to the full IT + mechanical load (#33)"
-            ),
         ),
     )

@@ -130,16 +130,24 @@ def compute(
 
     # Cooling / mechanical overhead (issue #87): the IT -> total facility-draw
     # translation as a banded, provenance-tagged output.
+    # N+1 genset cross-check only when the facility discloses gensets (an air permit);
+    # a site-plan-grounded facility (Urbana) has no backup fleet to cross-check against.
+    n_plus_1 = (
+        f"\n  [dim]N+1 cross-check: the {power.backup_power.value:g} MW genset backup implies "
+        f"PUE ~{power.implied_pue_from_backup.value:g} if sized to IT + mechanical — covering "
+        f"the draw only at the efficient PUE end (#33)[/]"
+        if power.backup_power is not None and power.implied_pue_from_backup is not None
+        else "\n  [dim]No disclosed gensets — the IT load is a floor-area screening bracket; "
+        "the interconnection/air-permit MW stays [open][/]"
+    )
     console.print(
         f"\n[bold]Total facility draw[/] — IT load x PUE "
         f"[dim](cooling/mechanical overhead is a banded assumption)[/]\n"
         f"  [bold]{power.facility_draw.low_or_value:g}-{power.facility_draw.high_or_value:g} MW[/] "
         f"(central [bold]{power.facility_draw.value:g} MW[/]) at PUE "
         f"{power.pue.low_or_value:g}-{power.pue.high_or_value:g}; cooling up to "
-        f"[bold]{power.cooling_share_high.value * 100:.0f}%[/] of facility power\n"
-        f"  [dim]N+1 cross-check: the {power.backup_power.value:g} MW genset backup implies "
-        f"PUE ~{power.implied_pue_from_backup.value:g} if sized to IT + mechanical — covering "
-        f"the draw only at the efficient PUE end (#33)[/]"
+        f"[bold]{power.cooling_share_high.value * 100:.0f}%[/] of facility power"
+        f"{n_plus_1}"
     )
 
     # On-site generation cycle (issue #90): the net-efficiency "power-loss coefficient"

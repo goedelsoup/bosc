@@ -1140,7 +1140,55 @@ _URBANA = SiteProfile(
     # — so the 2020 fact sheet (corpus: oepa/urbana/1PD00011.fs.pdf) is the effective instrument.
     passby_primary_cfs=35.0,
     passby_secondary_cfs=0.0,  # [open]
-    facility=None,  # [open] the WPAFB-corridor data-center dimension is the research target (#440)
+    # facility CONFIRMED (#1327) — the "Urbana Technology Hub" data-center campus, corner of
+    # SR-55 & US-68, disclosed at the Feb-2026 City of Urbana meeting + the Feb-2026 site-plan
+    # application (developer Thor Equities via Form8tion / Urbana Owner I LLC + Highland55
+    # Investments LLC). This RESOLVES the corpus's central [open] "is Highland55 a data center?"
+    # question. This is a SITE-PLAN-grounded facility, not an air-permit one: the disclosed
+    # non-power attributes (type / 460k sqft / ~$1B / closed-loop cooling / AES Ohio serving)
+    # are populated, but the MW load is NOT disclosed — it is a floor-area SCREENING bracket
+    # ([inference], see it_load_citation), never presented as a disclosure. The disclosed
+    # interconnection/air-permit MW stays [open] (a tracked #1263 sub-lead: PJM queue position,
+    # air permit). See data/extracted/urbana/datacenter-facility.md.
+    facility=SiteFacility(
+        it_load_mw=70.0,  # [inference] SCREENING central — NOT disclosed; see it_load_citation
+        it_load_low_mw=35.0,  # 460k sqft x 75 W/sqft whole-building IT density (low)
+        it_load_high_mw=115.0,  # 460k sqft x 250 W/sqft whole-building IT density (high)
+        it_load_citation=(
+            "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/"
+            "air-permit MW is [open] (#1263 sub-lead: PJM queue position / air permit). Derived "
+            "from the disclosed 460,000 sq ft gross floor area (Urbana Technology Hub site-plan "
+            "application, Feb 2026) x a whole-building IT power-density band of 75-250 W/sq ft "
+            "(stated screening assumption): 35 MW low, ~70 MW central, 115 MW high. The "
+            "single-story ~40 ft form factor + the disclosed CLOSED-LOOP DRY cooling ('water use "
+            "comparable to a standard office building') argue against the max-density liquid-AI "
+            "archetype, so the band is bounded well below GB200-class rack densities. Replace with "
+            "the disclosed load when a PJM interconnection application or an air permit surfaces it."
+        ),
+        # No disclosed gensets or air permit (site-plan-grounded) → genset/backup basis and the
+        # air-dispatch fleet model are absent; genset_count/genset_mw/air_permit_citation stay None.
+        facility_type="data-center campus (Urbana Technology Hub)",  # [reference]
+        gross_floor_area_sqft=460_000,  # [reference] disclosed site plan — 460k sqft, single-story, ~40 ft
+        disclosed_investment_usd=1_000_000_000,  # [reference] ~$1B disclosed investment
+        disclosure_citation=(
+            "[reference] Disclosed at the Feb-2026 City of Urbana meeting + the Feb-2026 site-plan "
+            "application; Urbana Daily Citizen 'Data center plans revealed at city meeting' "
+            "(2026-02-18); DataCenterDynamics 'Thor Equities ... 460,000 sq ft data center campus "
+            "near Urbana'. End-use [reference] (public disclosure), not yet [verified] — the naming "
+            "site-plan/permit instrument was not reachable to ingest from this build env (#1263)."
+        ),
+        # Cooling archetype (#1054): CLOSED_LOOP_DRY — the key water-thesis finding. The developer
+        # disclosed closed-loop cooling with 'water use comparable to a standard office building',
+        # which undercuts the Mad River water-abstraction thesis. [reference], not a document extraction.
+        cooling_model=CoolingModelType.CLOSED_LOOP_DRY,
+        cooling_model_source="reference",
+        cooling_model_citation=(
+            "[reference] Closed-loop cooling disclosed at the Feb-2026 City of Urbana meeting — "
+            "developer stated water use 'comparable to a standard office building' (Urbana Daily "
+            "Citizen 2026-02-18). Undercuts the buried-valley water-abstraction thesis. Not a "
+            "document extraction; refine to [verified] on an ingested mechanical/plumbing permit."
+        ),
+    ),
     serving_utility_citation="EIA-861 2024 Service_Territory: Dayton Power & Light Co (AES Ohio, #4922) is the IOU serving Champaign County, OH — the Urbana LSE (no municipal electric). [verified]",
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(

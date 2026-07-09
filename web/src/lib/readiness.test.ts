@@ -93,7 +93,7 @@ describe("domain activation (manifest readiness block)", () => {
     expect(urbana.backdrop).toBe("live"); // the floor is real
     expect(urbana.record).toBe("live"); // Highland55/OEPA document corpus, scoped in (#1328)
     expect(urbana.places).toBe("live"); // committed parcel footprint (parcel-assemblage.geojson)
-    expect(urbana.facility).toBe("absent"); // no disclosed SiteFacility yet
+    expect(urbana.facility).toBe("live"); // Urbana Technology Hub SiteFacility + demand-pressure (#1327)
   });
 
   it("opens Urbana's own leads board (feed-driven, #796) without borrowing Lima's", () => {

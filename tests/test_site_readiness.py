@@ -48,11 +48,16 @@ def test_facility_states() -> None:
     assert domain_states(fw, _counts(**{"economics-demand-pressure": 1}))["facility"] == "live"
     # Facility disclosed but no demand-pressure feed → seeded.
     assert domain_states(fw, _counts())["facility"] == "seeded"
-    # No facility disclosed → absent (grid backdrop only).
+    # Urbana's site-plan-grounded facility (#1327): disclosed + its demand-pressure feed → live.
     urbana = SITES["urbana"]
-    assert urbana.facility is None
+    assert urbana.facility is not None
+    assert domain_states(urbana, _counts(**{"economics-demand-pressure": 1}))["facility"] == "live"
+    # No facility disclosed → absent (grid backdrop only).
+    springfield = SITES["springfield"]
+    assert springfield.facility is None
     assert (
-        domain_states(urbana, _counts(**{"economics-demand-pressure": 1}))["facility"] == "absent"
+        domain_states(springfield, _counts(**{"economics-demand-pressure": 1}))["facility"]
+        == "absent"
     )
 
 
@@ -140,15 +145,18 @@ def test_tier_case_via_record_only() -> None:
 
 
 def test_tier_case_urbana() -> None:
-    # Urbana's real shape after the Highland55 land-assembly sourcing (#1328): the floor, plus a
-    # committed parcel footprint (places live, geo/campus) and its scoped Highland55 / OEPA
-    # document corpus (record live). No disclosed facility yet → facility absent; story seeded on
-    # leads. One-plus above-floor domain live over the floor ⇒ `case` (as the epic named it).
+    # Urbana's real shape (#1327 / #1328): the floor, plus a committed parcel footprint (places
+    # live, geo/campus), its scoped Highland55 / OEPA document corpus (record live), and the
+    # disclosed Urbana Technology Hub facility + its demand-pressure feed (facility live). Story
+    # seeded on leads. Multiple above-floor domains live over the floor ⇒ `case`.
     urbana = SITES["urbana"]
-    states = domain_states(urbana, _counts(**{"geo/campus": 5}, documents=2, leads=1))
+    states = domain_states(
+        urbana,
+        _counts(**{"geo/campus": 5, "economics-demand-pressure": 1}, documents=2, leads=1),
+    )
     assert states["record"] == "live"
     assert states["places"] == "live"
-    assert states["facility"] == "absent"
+    assert states["facility"] == "live"
     assert states["story"] == "seeded"
     assert site_tier(states) == "case"
 
