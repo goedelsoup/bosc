@@ -395,7 +395,9 @@ def test_default_scoped_sibling_bundle_carries_no_lima_corpus(springfield_bundle
     and has no committed corpus — before #780 its ``None`` scope meant the whole tree, silently
     inheriting Lima's 174 timeline events and 72 entities. Adding a new site to this guard is one
     line. (Urbana, the prior stand-in, gained an explicit scope + real corpus in #1328.)"""
-    assert get_profile("springfield").corpus_relpaths is None, "Springfield relies on the default scope"
+    assert get_profile("springfield").corpus_relpaths is None, (
+        "Springfield relies on the default scope"
+    )
     _assert_corpus_feeds_lima_free("springfield", springfield_bundle)
 
 

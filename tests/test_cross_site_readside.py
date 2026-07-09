@@ -54,11 +54,17 @@ def test_effective_corpus_scope_defaults_to_own_slug_not_lima() -> None:
     from watermark.sites import SITES, effective_corpus_scope
 
     assert effective_corpus_scope(SITES["lima"]) is None  # reference build = whole-tree catch-all
-    assert effective_corpus_scope(SITES["springfield"]) == ("springfield",)  # unset → own slug, not Lima
+    assert effective_corpus_scope(SITES["springfield"]) == (
+        "springfield",
+    )  # unset → own slug, not Lima
     assert effective_corpus_scope(SITES["new-albany"]) == ("new-albany",)
     assert effective_corpus_scope(SITES["fort-wayne"]) == ("fort-wayne", "idem/fort-wayne")
     # An explicit non-slug scope wins — Urbana's Highland55 land-assembly corpus (#1328).
-    assert effective_corpus_scope(SITES["urbana"]) == ("urbana", "permits/highland55", "oepa/urbana")
+    assert effective_corpus_scope(SITES["urbana"]) == (
+        "urbana",
+        "permits/highland55",
+        "oepa/urbana",
+    )
 
 
 def test_unscoped_sibling_loads_its_own_corpus_not_lima() -> None:
