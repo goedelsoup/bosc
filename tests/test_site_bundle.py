@@ -319,9 +319,9 @@ def fort_wayne_bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
 @pytest.fixture(scope="module")
 def urbana_bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
     """An Urbana bundle (#782's validation candidate) — a sibling with an **explicit**
-    ``corpus_relpaths`` (``permits/highland55`` + ``oepa/urbana``, its Highland55 land-assembly
-    record, #1328), so it exercises a scoped-but-non-slug corpus. Hermetic: no network, same
-    committed data."""
+    ``corpus_relpaths`` (``("urbana", "permits/highland55", "oepa/urbana")`` — its own slug plus the
+    Highland55 land-assembly permit + OEPA prefixes, #1328), so it exercises a slug-plus-jurisdiction
+    scope. Hermetic: no network, same committed data."""
     out = tmp_path_factory.mktemp("urbanabundle") / "b"
     settings = Settings(data_dir=REPO_ROOT / "data", site="urbana")
     export_bundle(settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00")
