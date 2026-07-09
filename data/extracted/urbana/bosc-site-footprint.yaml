@@ -1,0 +1,91 @@
+# Urbana Technology Hub (Thor Equities) data-center land assembly — footprint record for the
+# Urbana, OH (Mad River) watershed point. LIKE Fort Wayne's (and UNLIKE Lima's document-transcribed
+# stormwater-permit footprint), the boundary here is the RECORDED OWNERSHIP ASSEMBLAGE — the four
+# Champaign County parcels now held by the three Thor single-purpose entities, committed as
+# data/reference/urbana/parcel-assemblage.geojson. parcel_acres is the GIS-measured planar area;
+# building/impervious/developed stay [open] pending a full site-plan / stormwater-permit extraction.
+# Source tags: reference = committed GIS reference dataset; connector = a live public-data read;
+# document = transcribed from a corpus instrument; assumption = a stated modeling input.
+site: >-
+  SR-55 & S US-68 (corner), Urbana Township, Champaign County, OH 43078 — the Highland55 /
+  "Urbana Technology Hub" development, ~1.5 mi south of the City of Urbana. #1326 / lead #1263.
+operator: >-
+  Thor Equities (developer). Owner-of-record across the assemblage is three single-purpose
+  entities: Urbana Owner I LLC + Urbana Owner II LLC (both mailing c/o Thor Equities, 25 W 39th
+  St, New York NY) and Highland55 Investments LLC (Highland Realty Development, Columbus OH).
+boundary_basis: >-
+  Recorded ownership assemblage — the four parcels currently deeded to the three Thor SPEs,
+  committed as data/reference/urbana/parcel-assemblage.geojson (CCEO auditor CAMA layer, catalogued
+  parcel-assemblage). NOT a surveyed earth-disturbance boundary; the assembled 401 WQC / Rule-5
+  construction stormwater footprint is not yet in the corpus. Seller-residual parcels still held by
+  Brand Investments LTD (~22.5 ac) and Organ Farms LLC are excluded — not part of the transfer.
+  See watermark.sites _URBANA and the Highland55 permit findings (data/extracted/urbana/highland55-findings.md).
+
+parcel_acres:
+  value: 232.07
+  unit: acre
+  source: reference
+  citation: >-
+    parcel-assemblage.geojson — UTM-17N (EPSG:32617) planar area of the four recorded Thor-SPE
+    parcels (watermark.hydrology.geo.parcels_total_acres). CORROBORATED by the county CAMA acreage
+    sum (PPAcres): 47.637 (Urbana Owner I) + 7.09 + 90 (Urbana Owner II) + 85.619 (Highland55) =
+    230.346 ac — within ~0.7% of the GIS planar measure. Matches the ~230-ac figure in the public
+    record (DCD / Urbana Daily Citizen, 2026). [verified]
+  confidence: high
+
+building_footprint_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] No full campus site plan is in the corpus. Public reporting (DCD, 2026) describes a
+    ~460,000 sq ft data-center campus (~10.6 ac of building footprint if built as reported) and the
+    Highland55 §401 WQC (eDoc 3938244) confirms a build-to-suit development with a dedicated
+    electrical substation — a strong high-load / data-center signal — but neither is a surveyed
+    building footprint. Needs the assembled site-plan / Rule-5 SWPPP extraction.
+  confidence: null
+
+impervious_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] No impervious tabulation on record for the full assemblage. Requires the construction
+    stormwater (Ohio EPA NPDES OHC000005 / Rule-5) permit or the campus site plan.
+  confidence: null
+
+developed_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] Total disturbed/developed area is unknown pending the SWPPP / construction stormwater
+    permit; it will be >= impervious_acres once that lands.
+  confidence: null
+
+dominant_hsg:
+  value: C
+  source: connector
+  citation: >-
+    [verified] USDA NRCS SSURGO via Soil Data Access (SDA), 30-point grid sample over
+    parcel-assemblage.geojson (watermark.hydrology.connectors.ssurgo.dominant_hsg, grid_n=8,
+    2026-07-08): C 14 pts (47%) + C/D 10 pts (33%) + B 6 pts (20%) — drained-basis hydrologic soil
+    group C (undrained the C/D units run to group D). This CORRECTS the prior profile [inference]
+    of HSG "B": the deep Mad River buried-valley aquifer (glacial outwash sand & gravel, an
+    EPA sole-source aquifer) is well-drained, but the SURFACE soils that govern the runoff CN across
+    this specific assemblage are dominantly the C/C-D till/lacustrine units (consistent with the
+    Vance Brands §401 approved-JD soil list: BsA hydric, CnB, CrA, FnA — mostly C/D). Runoff-relevant
+    HSG is C, not B.
+  confidence: high
+
+receiving_water: >-
+  [inference] Mad River watershed (HUC-8 05080001, Great Miami basin) — the assemblage sits on the
+  west side of S US-68 in the Mad River valley. The Vance Brands §401 approved JD (eDoc 3938271)
+  found NO jurisdictional streams or wetlands on that parcel (one non-jurisdictional erosional
+  feature, 1,206 LF); the Commerce Park prelim JD found two Category-1 non-jurisdictional wetlands.
+  The specific stormwater receptor for the built campus is [open] pending the construction
+  stormwater permit. DISTINCT from the City of Urbana WPCF sanitary receptor (NPDES OH0027880 →
+  Mad River outfall 001).
+
+notes:
+  - 'Assembly = 4 parcels / 3 Thor SPEs / 230.346 ac CAMA (232.07 ac planar): Urbana Owner I LLC K48-25-11-01-30-001-00 (Vance Brands, 47.637 ac, sold $2,143,665 Aug 2025); Urbana Owner II LLC K48-25-11-01-30-005-00 + -006-00 (7.09 + 90 ac, $3,398,150, Jun 2026, ex-Organ Farms); Highland55 Investments LLC K48-25-11-01-32-005-00 (85.619 ac, $3,210,712, Nov 2025, situs ST RTE 55). All [verified] from the CCEO CAMA layer.'
+  - 'Highland55 Investments LLC K48-25-11-01-32-005-00 is a multipart parcel returned as two polygon features in the geojson — the 85.619 ac is not double-counted (parcel_acres uses planar polygon area; the CAMA sum counts the parcel once).'
+  - 'Deed book/page references are [open] — deferred to the county recorder deed pull (#1328). Parcel id + the CAMA transfer date/amount stand as the conveyance evidence for now.'
+  - 'This record commits the boundary + measured acreage + the SSURGO-validated HSG so the onboard SSURGO/HSG step no longer skips (it had been skipped for want of a committed footprint).'

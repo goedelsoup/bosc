@@ -152,6 +152,71 @@ def test_backfill_skips_a_reviewed_entry_by_storage_overlap(tmp_path: Path) -> N
     assert not (cat / "echo-maumee-wwtp.yaml").exists()
 
 
+def test_backfill_matches_slug_template_to_a_site_pinned_entry(tmp_path: Path) -> None:
+    """A lone per-site file matches a reviewed entry that pins it literally (#778/#1326).
+
+    When a second site promotes a shared stem to a real ``≥2`` fileset (here a second
+    ``parcel-assemblage``), the singleton ``{site}`` bundle splits and a sibling lone per-site
+    file (Wilmington's ``watch-items``) surfaces as its own slug-scoped dataset. Its ``{site}``
+    template must still match the reviewer's ``site:<slug>`` entry that pins the literal path —
+    otherwise backfill re-proposes a duplicate generic stub and the in-sync gate turns red.
+    """
+    settings = _settings(tmp_path)
+    _write(settings, "reference/fort-wayne/parcel-assemblage.geojson")
+    _write(settings, "reference/urbana/parcel-assemblage.geojson")
+    _write(settings, "reference/wilmington/watch-items.geojson")
+    cat = settings.catalog_dir / "reference"
+    cat.mkdir(parents=True)
+    (cat / "parcel-assemblage.yaml").write_text(
+        textwrap.dedent(
+            """\
+            id: parcel-assemblage
+            title: Per-Site Parcel Assemblage
+            scope: reference
+            status: reviewed
+            producer:
+              kind: connector
+              source: County parcel GIS
+            site_scope: slug-scoped
+            storage:
+            - relpath: reference/{site}/parcel-assemblage.geojson
+              media_type: application/geo+json
+            refresh:
+              cadence: on-demand
+            """
+        ),
+        encoding="utf-8",
+    )
+    (cat / "wilmington-watch-items.yaml").write_text(
+        textwrap.dedent(
+            """\
+            id: wilmington-watch-items
+            title: Wilmington watch-items
+            scope: reference
+            status: reviewed
+            producer:
+              kind: manual
+              source: Ohio EPA fact sheet
+            site_scope: site:wilmington
+            storage:
+            - relpath: reference/wilmington/watch-items.geojson
+              media_type: application/geo+json
+            refresh:
+              cadence: static
+            """
+        ),
+        encoding="utf-8",
+    )
+    actions = backfill(scopes=("reference",), apply=True, settings=settings)
+    by_id = {a.id: a for a in actions}
+    # the split-out watch-items dataset matches the site-pinned entry — no fresh generic stub
+    assert by_id["watch-items"].action == "skip-reviewed"
+    assert "wilmington-watch-items" in by_id["watch-items"].detail
+    assert not (cat / "watch-items.yaml").exists()
+    # and nothing anywhere is (re)created/refreshed
+    assert not [a for a in actions if a.action in ("create", "refresh")]
+
+
 def test_backfill_refreshes_needs_review_preserving_prose(tmp_path: Path) -> None:
     settings = _settings(tmp_path)
     _write(settings, "reference/echo/maumee-wwtp.potw.yaml")

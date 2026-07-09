@@ -27,6 +27,7 @@ duplicated). ``reviewed`` entries are left untouched; ``needs-review`` entries h
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 from typing import Literal
 
@@ -432,12 +433,27 @@ def _dump_entry(entry: CatalogEntry) -> str:
 def _match(
     ds: DiscoveredDataset, by_id: dict[str, CatalogEntry], by_relpath: dict[str, CatalogEntry]
 ) -> CatalogEntry | None:
-    """Match a discovered dataset to an existing entry by id, else by storage overlap."""
+    """Match a discovered dataset to an existing entry by id, else by storage overlap.
+
+    A discovered slug-scoped dataset carries a ``{site}`` template in its relpaths; an existing
+    entry may instead pin a single site *literally* (a reviewer-owned ``site:<slug>`` scope, #778).
+    So after the exact checks, match the template against those literal paths — otherwise a lone
+    per-site file (e.g. Wilmington's ``watch-items.geojson``) is re-proposed as a fresh generic
+    entry the moment a sibling site's file promotes the shared stem to a real ``≥2`` fileset (which
+    is exactly what a second ``parcel-assemblage`` site does to the ``{site}`` singleton bundle).
+    """
     if ds.id in by_id:
         return by_id[ds.id]
     for rel in ds._relpaths():
         if rel in by_relpath:
             return by_relpath[rel]
+    for rel in ds._relpaths():
+        if "{site}" not in rel:
+            continue
+        pattern = re.compile("^" + re.escape(rel).replace(r"\{site\}", "[^/]+") + "$")
+        for committed_rel, entry in by_relpath.items():
+            if pattern.match(committed_rel):
+                return entry
     return None
 
 

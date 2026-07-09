@@ -1,0 +1,511 @@
+{
+  "type": "FeatureCollection",
+  "bosc:provenance": {
+    "subject": "Urbana Technology Hub land assembly (Thor Equities) \u2014 the four Champaign County parcels now held by the three developer single-purpose entities (Urbana Owner I LLC, Urbana Owner II LLC, Highland55 Investments LLC), ~230 ac at SR-55 & S US-68 south of Urbana, Urbana Township, Champaign County OH (FIPS 39021). #1326 / lead #1263.",
+    "source": "Champaign County Engineer ArcGIS Online org (CCEO, HBIN2hfRscrws7eM) \u2014 parcel_joined FeatureServer layer 0 (auditor CAMA + geometry)",
+    "source_url": "https://services5.arcgis.com/HBIN2hfRscrws7eM/arcgis/rest/services/parcel_joined/FeatureServer/0",
+    "crs": "EPSG:4326 (WGS84)",
+    "count": 5,
+    "distinct_parcels": 4,
+    "parcel_ids": [
+      "K48-25-11-01-30-001-00",
+      "K48-25-11-01-30-005-00",
+      "K48-25-11-01-30-006-00",
+      "K48-25-11-01-32-005-00"
+    ],
+    "total_cama_acres": 230.346,
+    "caveats": [
+      "[verified] Owner-of-record, acreage, class, sale date/amount are verbatim from the CCEO auditor CAMA (parcel_joined layer 0); null means the service had no value.",
+      "Assembly membership = current owner is one of the three Thor SPEs (Urbana Owner I/II LLC, mailing c/o Thor Equities 25 W 39th St New York; Highland55 Investments LLC, Columbus OH). Seller-residual parcels still owned by Brand Investments LTD (K48-25-11-01-32-021-00, ~22.5 ac) and Organ Farms LLC are excluded \u2014 not transferred.",
+      "acres is the parcel-level CAMA figure; K48-25-11-01-32-005-00 (Highland55) is a multipart parcel returned as two polygon features, so its 85.619 ac repeats \u2014 sum distinct_parcels (4 = 230.346 ac), not features.",
+      "deed_reference is null pending the county recorder deed pull (#1328); parcel id + the CAMA transfer date/amount stand as the [verified] conveyance evidence for now.",
+      "Verified Champaign County OHIO (FIPS 39021), NOT the same-named Champaign Co Illinois.",
+      "Regenerable: WATERMARK_SITE=urbana <watermark connector> over the four parcel ids above (see data/reference/urbana/README.md)."
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.7603112668798,
+              40.0901957951222
+            ],
+            [
+              -83.7591315730603,
+              40.0906244580279
+            ],
+            [
+              -83.7584991745475,
+              40.089579564287
+            ],
+            [
+              -83.7581969826403,
+              40.0891175015137
+            ],
+            [
+              -83.757685830327,
+              40.0883479367571
+            ],
+            [
+              -83.7580763885438,
+              40.0877013820546
+            ],
+            [
+              -83.7586431947687,
+              40.0867675517275
+            ],
+            [
+              -83.7600373936499,
+              40.0868764428577
+            ],
+            [
+              -83.7623034365289,
+              40.0870584669524
+            ],
+            [
+              -83.7623058066924,
+              40.0870586747788
+            ],
+            [
+              -83.7629352092903,
+              40.0871139455955
+            ],
+            [
+              -83.764266262077,
+              40.0872189130309
+            ],
+            [
+              -83.7642676137863,
+              40.0872190227882
+            ],
+            [
+              -83.7638320184052,
+              40.0902541900368
+            ],
+            [
+              -83.7611018219439,
+              40.0912634696253
+            ],
+            [
+              -83.7604032991915,
+              40.0901623532297
+            ],
+            [
+              -83.7603112668798,
+              40.0901957951222
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "K48-25-11-01-30-001-00",
+        "owner": "URBANA OWNER I LLC",
+        "owner_mailing_address": "25 W 39TH ST NEW YORK NY 10018-3805",
+        "situs_address": "S US HWY 68",
+        "acres": 47.637,
+        "land_use_code": 110,
+        "market_total_value": 560460,
+        "last_sale_date": "2025-08-22",
+        "last_sale_amount": 2143665,
+        "has_cauv": true,
+        "deed_reference": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.7605092512399,
+              40.0835044779763
+            ],
+            [
+              -83.7609286353158,
+              40.0828512881884
+            ],
+            [
+              -83.7610090230042,
+              40.0828614205149
+            ],
+            [
+              -83.7633660871853,
+              40.0830591479709
+            ],
+            [
+              -83.7632662199522,
+              40.0839985567404
+            ],
+            [
+              -83.7629356799355,
+              40.0871095253833
+            ],
+            [
+              -83.7629356138388,
+              40.0871101457644
+            ],
+            [
+              -83.7629352663767,
+              40.0871134099755
+            ],
+            [
+              -83.7629352092903,
+              40.0871139455955
+            ],
+            [
+              -83.7623058066924,
+              40.0870586747788
+            ],
+            [
+              -83.7627634246382,
+              40.0836981087001
+            ],
+            [
+              -83.7606072202847,
+              40.0835133970706
+            ],
+            [
+              -83.7606067845744,
+              40.083513359411
+            ],
+            [
+              -83.7605089319677,
+              40.0835049758763
+            ],
+            [
+              -83.7605092512399,
+              40.0835044779763
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "K48-25-11-01-30-005-00",
+        "owner": "URBANA OWNER II LLC",
+        "owner_mailing_address": "C/O THOR EQUITIES 25 W 39TH ST NEW YORK NY 10018-3805",
+        "situs_address": "S US HWY 68 URBANA OH 43078",
+        "acres": 7.09,
+        "land_use_code": 110,
+        "market_total_value": 82910,
+        "last_sale_date": "2026-06-12",
+        "last_sale_amount": 3398150,
+        "has_cauv": true,
+        "deed_reference": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.7632662199522,
+              40.0839985567404
+            ],
+            [
+              -83.7633660871853,
+              40.0830591479709
+            ],
+            [
+              -83.7726538949136,
+              40.0838577722369
+            ],
+            [
+              -83.7724016415928,
+              40.0862077770934
+            ],
+            [
+              -83.7722176498192,
+              40.0878589838724
+            ],
+            [
+              -83.7692609066625,
+              40.0876258717742
+            ],
+            [
+              -83.7692256258933,
+              40.0876230894927
+            ],
+            [
+              -83.7692249083772,
+              40.087623033291
+            ],
+            [
+              -83.7688517648104,
+              40.0875936082077
+            ],
+            [
+              -83.768051863758,
+              40.0875282588536
+            ],
+            [
+              -83.7642676137863,
+              40.0872190227882
+            ],
+            [
+              -83.764266262077,
+              40.0872189130309
+            ],
+            [
+              -83.7629352092903,
+              40.0871139455955
+            ],
+            [
+              -83.7629352663767,
+              40.0871134099755
+            ],
+            [
+              -83.7629356138388,
+              40.0871101457644
+            ],
+            [
+              -83.7629356799355,
+              40.0871095253833
+            ],
+            [
+              -83.7632662199522,
+              40.0839985567404
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "K48-25-11-01-30-006-00",
+        "owner": "URBANA OWNER II LLC",
+        "owner_mailing_address": "C/O THOR EQUITIES 25 W 39TH ST NEW YORK NY 10018-3805",
+        "situs_address": "S US HWY 68 URBANA OH 43078",
+        "acres": 90.0,
+        "land_use_code": 110,
+        "market_total_value": 1060880,
+        "last_sale_date": "2026-06-12",
+        "last_sale_amount": 3398150,
+        "has_cauv": true,
+        "deed_reference": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.7724016415928,
+              40.0862077770934
+            ],
+            [
+              -83.7726538949136,
+              40.0838577722369
+            ],
+            [
+              -83.7820028975439,
+              40.0846507182246
+            ],
+            [
+              -83.7821166737715,
+              40.0846603630426
+            ],
+            [
+              -83.7820548185834,
+              40.0847793971056
+            ],
+            [
+              -83.7818148307655,
+              40.0847590512272
+            ],
+            [
+              -83.7811331384683,
+              40.0847012566634
+            ],
+            [
+              -83.7810625624168,
+              40.0851923774309
+            ],
+            [
+              -83.781800314952,
+              40.0852549328699
+            ],
+            [
+              -83.7815676965315,
+              40.0856711055208
+            ],
+            [
+              -83.7813272451269,
+              40.0860846438182
+            ],
+            [
+              -83.7810790129591,
+              40.086495460679
+            ],
+            [
+              -83.7808230522859,
+              40.0869034708201
+            ],
+            [
+              -83.7805594153367,
+              40.0873085871561
+            ],
+            [
+              -83.7802881567398,
+              40.087710725277
+            ],
+            [
+              -83.7800093358179,
+              40.0881098007204
+            ],
+            [
+              -83.7797230095699,
+              40.0885057299494
+            ],
+            [
+              -83.7794292385003,
+              40.088898428487
+            ],
+            [
+              -83.7738645845438,
+              40.0884888949991
+            ],
+            [
+              -83.7739414491282,
+              40.08787414743
+            ],
+            [
+              -83.7735831132341,
+              40.0878478895829
+            ],
+            [
+              -83.7722176498192,
+              40.0878589838724
+            ],
+            [
+              -83.7724016415928,
+              40.0862077770934
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "K48-25-11-01-32-005-00",
+        "owner": "HIGHLAND55 INVESTMENTS LLC",
+        "owner_mailing_address": "3040 RIVERSIDE DR STE 122 COLUMBUS OH 43221-2550",
+        "situs_address": "ST RTE 55 URBANA OH 43078",
+        "acres": 85.619,
+        "land_use_code": 100,
+        "market_total_value": 983380,
+        "last_sale_date": "2025-11-18",
+        "last_sale_amount": 3210712,
+        "has_cauv": false,
+        "deed_reference": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.781800314952,
+              40.0852549328699
+            ],
+            [
+              -83.7815919338527,
+              40.0856298230595
+            ],
+            [
+              -83.7813770622203,
+              40.086002546243
+            ],
+            [
+              -83.7811557374116,
+              40.0863730344258
+            ],
+            [
+              -83.7809280003866,
+              40.0867412240772
+            ],
+            [
+              -83.7806938896971,
+              40.0871070480892
+            ],
+            [
+              -83.7804534486373,
+              40.0874704420035
+            ],
+            [
+              -83.7802067181432,
+              40.0878313404863
+            ],
+            [
+              -83.7799537427209,
+              40.0881896808664
+            ],
+            [
+              -83.7796945680023,
+              40.0885453977574
+            ],
+            [
+              -83.7794292385003,
+              40.088898428487
+            ],
+            [
+              -83.7797230095699,
+              40.0885057299494
+            ],
+            [
+              -83.7800093358179,
+              40.0881098007204
+            ],
+            [
+              -83.7802881567398,
+              40.087710725277
+            ],
+            [
+              -83.7805594153367,
+              40.0873085871561
+            ],
+            [
+              -83.7808230522859,
+              40.0869034708201
+            ],
+            [
+              -83.7810790129591,
+              40.086495460679
+            ],
+            [
+              -83.7813272451269,
+              40.0860846438182
+            ],
+            [
+              -83.7815676965315,
+              40.0856711055208
+            ],
+            [
+              -83.781800314952,
+              40.0852549328699
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "K48-25-11-01-32-005-00",
+        "owner": "HIGHLAND55 INVESTMENTS LLC",
+        "owner_mailing_address": "3040 RIVERSIDE DR STE 122 COLUMBUS OH 43221-2550",
+        "situs_address": "ST RTE 55 URBANA OH 43078",
+        "acres": 85.619,
+        "land_use_code": 100,
+        "market_total_value": 983380,
+        "last_sale_date": "2025-11-18",
+        "last_sale_amount": 3210712,
+        "has_cauv": false,
+        "deed_reference": null
+      }
+    }
+  ]
+}

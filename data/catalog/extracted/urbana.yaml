@@ -15,6 +15,9 @@ storage:
 - relpath: extracted/urbana/highland55-findings.md
   media_type: text/markdown
   lfs: false
+- relpath: extracted/urbana/bosc-site-footprint.yaml
+  media_type: application/yaml
+  lfs: false
 refresh:
   cadence: static
 provenance: document
@@ -30,4 +33,6 @@ notes: >
   Onboarding record and investigative findings for the Urbana watershed point (Mad River corridor,
   Champaign County OH). highland55-findings.md documents the Thor Equities / Vance Brands project
   at 47.6+ acres west of US-68 — a build-to-suit commercial development including an electrical
-  substation; data-center end-use [open] pending further evidence.
+  substation; data-center end-use [open] pending further evidence. bosc-site-footprint.yaml commits
+  the ~230-ac recorded ownership assemblage (the four Thor-SPE parcels; geometry in
+  reference/urbana/parcel-assemblage.geojson) with the SSURGO-validated dominant HSG C (#1326).
