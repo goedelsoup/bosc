@@ -6,12 +6,20 @@
 # own Git build is NOT used, because the content bundle is produced by `watermark export`
 # (Python) before `npm run build`, which that build can't run.
 #
-# Env vars (feature toggles, secrets, Cognito IDs) are managed by Pulumi (deploy/index.ts)
-# and applied to the Pages project via `pulumi up` — NOT set manually in the dashboard.
-# Feature toggles live in deploy/features.yaml. See deploy/Pulumi.prod.yaml for the full
-# config set commands.
+# Env vars: this Wrangler file is the SOURCE OF TRUTH. Cloudflare Pages makes wrangler.toml
+# authoritative on `wrangler pages deploy` — the `[vars]` here REPLACE (do not merge with)
+# anything set on the project via the dashboard or Pulumi, and any var NOT listed here is
+# STRIPPED from the deployment. So the plaintext feature toggles must live here to take
+# effect; a value set only by `pulumi up` never reaches the deployed Functions. The flags
+# below mirror deploy/features.yaml — keep the two in sync (Pulumi still owns provisioning).
+# https://developers.cloudflare.com/pages/functions/wrangler-configuration/#source-of-truth
 #
-# KV bindings and R2 bindings are still set here: they are wrangler-level bindings whose
+# SECRETS (TIPS_APP_PRIVATE_KEY, TURNSTILE_SECRET_KEY, ANTHROPIC_API_KEY, HONEYCOMB_API_KEY,
+# the Cognito client secret, …) and DYNAMIC resource outputs (COGNITO_* IDs/domains,
+# PUBLIC_TURNSTILE_SITE_KEY) can't be committed here — set them with `wrangler pages secret
+# put <NAME>` / as Pages env vars out-of-band; Pages secrets persist across deploys.
+#
+# KV bindings and R2 bindings are also set here: they are wrangler-level bindings whose
 # namespace IDs come from `pulumi stack output` (wire them in after each first `pulumi up`).
 # See the comments below for each binding.
 
@@ -26,11 +34,26 @@ compatibility_date = "2024-11-01"
 compatibility_flags = ["nodejs_compat"]
 
 # Static config for the submissions Function. The Function also defaults these in code.
-# Kill switch (SUBMISSIONS_ENABLED) and secrets (TIPS_APP_ID, TIPS_APP_PRIVATE_KEY,
-# TURNSTILE_SECRET_KEY, ANTHROPIC_API_KEY) are written by `pulumi up` — not here.
 [vars]
 GITHUB_OWNER = "watermark-directory"
 GITHUB_REPO = "the-watermark-directory"
+
+# Feature toggles — MIRROR deploy/features.yaml (source of truth for the deployment; see the
+# header note on wrangler.toml precedence). Each *_ENABLED gates a Pages Function server-side;
+# each PUBLIC_* peer is read by the Astro build for build-time UI injection. Secrets/dynamic
+# Cognito values that some of these features also need are set out-of-band (see header).
+PRE_LAUNCH_ENABLED = "false"
+SUBMISSIONS_ENABLED = "true"
+ASK_ENABLED = "false"
+DOCS_ENABLED = "true"
+MCP_ENABLED = "true"
+RUM_ENABLED = "true"
+PUBLIC_RUM_ENABLED = "true"
+AUTH_ENABLED = "true"
+STORIES_ENABLED = "false"
+PUBLIC_STORIES_ENABLED = "false"
+CONTACTS_ENABLED = "false"
+PUBLIC_CONTACTS_ENABLED = "false"
 # Optional rate-limit knobs (defaults in code: 5 / 3600s). Uncomment to override.
 # RATE_LIMIT_MAX = "5"
 # RATE_LIMIT_WINDOW_SEC = "3600"
