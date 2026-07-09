@@ -75,7 +75,7 @@ conveyances:
     grantor_corroboration: inference  # completes the 133-ac Brand disposition (47.637 + 85.619)
     parcels: ["K48-25-11-01-32-005-00"]   # multipart parcel (two polygon features in the geojson)
     acres: 85.619                  # [verified] PPAcres (counted once; parcel is multipart)
-    consideration_usd: 3210712.50  # [verified] PPAmount (note: geojson rounded to 3210712)
+    consideration_usd: 3210712.50  # [verified] PPAmount (matches geojson last_sale_amount 3210712.5)
     conveyance_date: "2025-11-18"  # [verified] PPSaleDate
     deed_reference: "OR603/1927"   # [verified] auditor BOOK_NO/PAGE_NO
     recorder_instrument_no: null   # [open]

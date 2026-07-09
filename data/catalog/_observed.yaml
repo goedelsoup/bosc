@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-09T17:00:04.358882+00:00'
+reconciled_at: '2026-07-09T17:17:58.002199+00:00'
 entries:
   aedg:
     exists: true
@@ -992,8 +992,8 @@ entries:
     site_scope: lima-legacy
   urbana:
     exists: true
-    sha256: d47273cca1dd911b1895423a1b0241701871743e19c1e02f749c9ad294940498
-    size_bytes: 38295
+    sha256: e94e661b020fa428262babd3dfdb1135387223a5ebb9337519a62502a7706649
+    size_bytes: 38305
     lfs_materialized: true
     file_count: 4
     missing: []
