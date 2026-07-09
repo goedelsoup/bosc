@@ -59,7 +59,9 @@ def _load_ap42(settings: Settings) -> dict[str, Any]:
 def _engine_mw_from_profile(settings: Settings) -> ProvenancedValue | None:
     """The site's per-engine rated output, from its disclosed facility (or ``None``)."""
     fac = active_profile(settings).facility
-    if fac is None:
+    if fac is None or fac.genset_mw is None or fac.air_permit_citation is None:
+        # No facility, or a site-plan-grounded facility with no disclosed gensets / air permit —
+        # no permit-grounded engine rating to base AP-42/permit factors on.
         return None
     return ProvenancedValue.from_document(
         fac.genset_mw, "MW", citation=fac.air_permit_citation, confidence="medium"

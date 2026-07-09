@@ -229,7 +229,13 @@ def _resolve_it_load(facility: SiteFacility | None, params: CoolingParams) -> tu
         it = facility.it_load_mw
     else:
         it = _IT_LOAD_MW
-    cite = facility.air_permit_citation if facility else _AIR_PERMIT_CITE
+    # A site-plan-grounded facility (Urbana) has no air permit; its IT load is a
+    # floor-area screening bracket cited via ``it_load_citation``. Fall back to the
+    # module cite only when there is no facility at all.
+    if facility is not None:
+        cite = facility.air_permit_citation or facility.it_load_citation or _AIR_PERMIT_CITE
+    else:
+        cite = _AIR_PERMIT_CITE
     return it, cite
 
 

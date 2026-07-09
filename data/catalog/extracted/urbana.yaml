@@ -21,6 +21,9 @@ storage:
 - relpath: extracted/urbana/land-assembly.yaml
   media_type: application/yaml
   lfs: false
+- relpath: extracted/urbana/datacenter-facility.md
+  media_type: text/markdown
+  lfs: false
 refresh:
   cadence: static
 provenance: document
@@ -39,7 +42,9 @@ notes: >
   Champaign County OH). highland55-findings.md documents the Thor Equities data-center project west
   of US-68 / SR-55 — a build-to-suit development with a dedicated electrical substation; the
   data-center end-use is resolved (#1328) to the "Urbana Technology Hub" ([reference], public
-  disclosure + Thor v. Urbana litigation, #1263). land-assembly.yaml is the conveyance register —
+  disclosure + Thor v. Urbana litigation, #1263). datacenter-facility.md is the facility record
+  (#1327) — the disclosed 460k-sqft, ~$1B, closed-loop-cooled campus (AES Ohio serving); the MW
+  load stays [open] (a floor-area screening bracket only, never a disclosure). land-assembly.yaml is the conveyance register —
   four parcels / three Thor SPEs (Urbana Owner I/II LLC, Highland55 Investments LLC), grantor /
   grantee / consideration / date / deed Official-Record book-page, sourced [verified] to the
   Champaign County auditor CAMA. bosc-site-footprint.yaml commits the ~230-ac recorded ownership

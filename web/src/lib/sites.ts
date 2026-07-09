@@ -307,6 +307,7 @@ export type FacilityStatus = "investigation" | "confirmed" | "construction" | "l
 const FACILITY_STATUS: Record<string, FacilityStatus> = {
   lima: "construction", // Shawnee Energy Campus — air-permit-grounded, ~313 MW (the disclosed build)
   "fort-wayne": "live", // GCP — a disclosed facility, not yet a construction record
+  urbana: "confirmed", // Urbana Technology Hub (Thor) — disclosed Feb 2026; MW load still [open] (#1327)
 };
 
 /** A site's facility lifecycle stage; "investigation" when no facility is disclosed. */

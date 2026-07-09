@@ -81,22 +81,58 @@ class CoolingModelType(StrEnum):
 
 
 class SiteFacility(BaseModel):
-    """A site's disclosed data-center facility power basis (air-permit-grounded).
+    """A site's disclosed data-center facility power basis.
 
-    Present only for a site with an identified, documented facility (Lima, from Ohio EPA
-    Air PTI P0138965). A site with no such facility leaves ``SiteProfile.facility = None`` —
-    the grid stack then emits the per-site grid backdrop (utility / BA / state denominators)
-    **without** fabricating a campus load share. Drives :func:`watermark.facility.power.derive_power_basis`.
+    Present only for a site with an identified, documented facility. Two grounding modes:
+
+    * **Air-permit-grounded** (Lima, from Ohio EPA Air PTI P0138965; Fort Wayne, IDEM Title V):
+      gensets + IT load disclosed/derived from the permit — the full power + air-dispatch basis.
+    * **Site-plan-grounded** (Urbana Technology Hub, from the disclosed data-center site plan):
+      the facility is on the public record (type / floor area / investment / cooling) but the
+      MW load is **not** disclosed. Gensets and the air permit are ``None``; the IT load is a
+      floor-area SCREENING bracket carried as ``[inference]`` (``it_load_citation``), never a
+      disclosure — the interconnection/air-permit MW stays ``[open]``.
+
+    A site with no identified facility leaves ``SiteProfile.facility = None`` — the grid stack
+    then emits the per-site grid backdrop (utility / BA / state denominators) **without**
+    fabricating a campus load share. Drives :func:`watermark.facility.power.derive_power_basis`.
     """
 
     model_config = ConfigDict(extra="forbid", frozen=True)
 
-    genset_count: int  # emergency gensets disclosed in the air permit
-    genset_mw: float  # ekW each
-    it_load_mw: float  # central IT load (N+1 backup ~= IT)
-    it_load_low_mw: float  # low end of the N+1 range
+    # --- IT-load power basis --------------------------------------------------
+    # The central IT load and its low/high range. For an air-permit-grounded site
+    # (Lima, Fort Wayne) it is disclosed/derived from the permit; for a site-plan-
+    # grounded facility whose load is NOT disclosed (Urbana Technology Hub), it is a
+    # floor-area SCREENING bracket — [inference], never presented as a disclosure, its
+    # basis in ``it_load_citation``. The disclosed interconnection/air-permit MW stays
+    # ``[open]`` until an instrument discloses it.
+    it_load_mw: float  # central IT load (N+1 backup ~= IT, or floor-area screening central)
+    it_load_low_mw: float  # low end of the range
     it_load_high_mw: float  # high end
-    air_permit_citation: str  # the disclosing permit + committed extraction
+    # The disclosing air permit + committed extraction, when the load is permit-grounded;
+    # also the citation the genset/backup figures carry. ``None`` for a site whose load is
+    # not permit-disclosed — then ``it_load_citation`` carries the derivation basis instead.
+    air_permit_citation: str | None = None
+    # The load-basis citation when it is NOT an air permit (e.g. a floor-area screening
+    # inference). Exactly one of ``air_permit_citation`` / ``it_load_citation`` grounds the
+    # IT load (enforced below).
+    it_load_citation: str | None = None
+    # Emergency gensets disclosed in the air permit. ``None`` for a facility with no
+    # disclosed on-site generation (a site-plan-grounded facility): the power basis then
+    # carries no backup / implied-PUE cross-check and the air-dispatch fleet model
+    # (:mod:`watermark.air.scenario`) refuses cleanly rather than modeling a fabricated fleet.
+    genset_count: int | None = None  # emergency gensets disclosed in the air permit
+    genset_mw: float | None = None  # MW each (ekW)
+    # --- Site-plan disclosure (non-power facility attributes) -----------------
+    # Populated for a facility disclosed by a site-plan / public record rather than an air
+    # permit (Urbana Technology Hub): the facility type, gross floor area, and disclosed
+    # capital investment — each [reference]/[verified] from the disclosing record, carried
+    # so the profile records what IS on the record without inflating it into a power figure.
+    facility_type: str | None = None
+    gross_floor_area_sqft: int | None = None
+    disclosed_investment_usd: float | None = None
+    disclosure_citation: str | None = None
     # Disclosed cooling/industrial blowdown discharge — the independent cross-check for the
     # cooling back-solve (:func:`watermark.hydrology.cooling.derive_cooling_basis`, method 2). Per-site
     # (#607): a site that doesn't disclose one leaves these None and the back-solve uses the
@@ -147,6 +183,18 @@ class SiteFacility(BaseModel):
 
     @model_validator(mode="after")
     def _override_citations_paired(self) -> SiteFacility:
+        # The IT load must be grounded by exactly one basis: an air permit (Lima/Fort Wayne)
+        # or a non-permit derivation cite (Urbana's floor-area screening). Neither ⇒ an
+        # uncited load figure; that must not happen.
+        if self.air_permit_citation is None and self.it_load_citation is None:
+            raise ValueError(
+                "the IT load needs a basis citation — set air_permit_citation (permit-grounded) "
+                "or it_load_citation (a non-permit derivation basis)"
+            )
+        # Gensets are paired: a count without a rating (or vice-versa) can't form a backup
+        # figure. A site-plan-grounded facility with no disclosed generation leaves both None.
+        if (self.genset_count is None) != (self.genset_mw is None):
+            raise ValueError("genset_count and genset_mw must be set together (or both left None)")
         if (self.wue_l_per_kwh is None) != (self.wue_citation is None):
             raise ValueError("wue_l_per_kwh and wue_citation must be set together")
         if (self.cycles_of_concentration is None) != (self.cycles_citation is None):
