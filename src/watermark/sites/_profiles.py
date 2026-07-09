@@ -1081,20 +1081,24 @@ _URBANA = SiteProfile(
     design_lat=40.1084,  # [verified] city centroid = NOAA Atlas-14 point
     design_lon=-83.7524,
     corridor_name="Mad River buried-valley corridor",  # [inference] the Mad River valley reach at Urbana
-    dominant_hsg="B",  # [inference] Mad River buried-valley outwash sand & gravel (well-drained valley fill)
+    dominant_hsg="C",  # [verified] SSURGO area-weighted survey over the committed site assemblage (was [inference] B)
     hsg_citation=(
-        "Champaign County / Mad River valley at Urbana sits on the Mad River buried-valley aquifer "
-        "— glacial outwash sand & gravel, a US-EPA designated sole-source aquifer feeding the "
-        "Springfield/Dayton/Wright-Patterson AFB corridor downstream — so the valley fill is "
-        "well-drained HSG B, the INVERSE of the Maumee lake-plain Black Swamp clays (HSG D); "
-        "[inference] pending an SSURGO area-weighted confirmation (onboard SSURGO needs a footprint)"
+        "[verified] USDA NRCS SSURGO via Soil Data Access, 30-point grid sample over the committed "
+        "Urbana Technology Hub assemblage (reference/urbana/parcel-assemblage.geojson; "
+        "watermark.hydrology.connectors.ssurgo.dominant_hsg, grid_n=8, 2026-07-08): C 47% + C/D 33% "
+        "+ B 20% -> drained-basis HSG C. This CORRECTS the prior [inference] of HSG B: the deep Mad "
+        "River buried-valley aquifer (glacial outwash sand & gravel, a US-EPA sole-source aquifer "
+        "feeding the Springfield/Dayton/Wright-Patterson AFB corridor) is well-drained, but the "
+        "SURFACE till/lacustrine soils governing the runoff CN across this specific site are "
+        "dominantly the C/C-D units (consistent with the Vance Brands 401 approved-JD soil list). "
+        "See data/extracted/urbana/bosc-site-footprint.yaml (dominant_hsg)."
     ),
     pre_cover="TODO",  # [open] development land-cover scenario — pending an identified site
     post_cover="TODO",
     developed_pervious_cover="TODO",
     noaa_fallback_24h_depth_in={},  # [open] pending the NOAA Atlas-14 pull (onboard corridor-DDF step)
-    parcels_relpath="reference/urbana/parcel-assemblage.geojson",  # [open] commit the site's own geometry
-    footprint_relpath="extracted/urbana/bosc-site-footprint.yaml",  # [open] pending an identified site
+    parcels_relpath="reference/urbana/parcel-assemblage.geojson",  # [verified] 4 parcels / 3 Thor SPEs / ~230 ac (#1326)
+    footprint_relpath="extracted/urbana/bosc-site-footprint.yaml",  # [verified] recorded ownership assemblage (#1326)
     climatology_relpath="reference/hydrology/urbana/nasa-power-climatology.yaml",
     corridor_ddf_relpath="reference/hydrology/urbana/atlas14-corridor-ddf.yaml",
     baseline_relpath="reference/economics/urbana/baseline.yaml",

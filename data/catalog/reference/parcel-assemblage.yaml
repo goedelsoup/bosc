@@ -27,11 +27,14 @@ tags:
 - footprint
 notes: >-
   The per-site data-center parcel assemblage geometry (WGS84 GeoJSON, friendly schema-decoded
-  properties + a bosc-provenance foreign member). Currently instantiated only for Fort Wayne: the
+  properties + a bosc-provenance foreign member). Instantiated for two sites so far. Fort Wayne: the
   11 parcels owned by Hatchworks LLC (the Google land-assembly shell behind Project Zodiac; mailing
   Mountain View CA / Wilmington DE) — anchor 6015 Adams Center Rd (transferred 2024-01-10) plus the
-  Tillman Rd cluster (Jan-2024 + a second wave 2025-10-31), ~856 ac planar (UTM 16N). This is the
-  recorded OWNERSHIP assemblage, NOT a surveyed developed footprint (that stays pending the
-  deed/rezoning/stormwater-permit extraction, #360/#362). Distinct from the Periplus frozen import
+  Tillman Rd cluster (Jan-2024 + a second wave 2025-10-31), ~856 ac planar (UTM 16N). Urbana (#1326):
+  the 4 parcels held by the three Thor Equities SPEs (Urbana Owner I/II LLC, Highland55 Investments
+  LLC) — the Urbana Technology Hub, ~230 ac at SR-55 & S US-68, from the Champaign County CCEO
+  parcel_joined CAMA layer via the champaign_cceo connector. Each is the recorded OWNERSHIP assemblage,
+  NOT a surveyed developed footprint (that stays pending the deed/rezoning/stormwater-permit extraction,
+  #360/#362 for FW, #1328 for the Urbana deed pull). Distinct from the Periplus frozen import
   (reference/periplus/bosc-parcels.geojson, catalogued under the periplus entry), which covers the
   Lima corridor parcels only.
