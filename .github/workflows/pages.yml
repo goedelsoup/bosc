@@ -73,9 +73,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-        # No LFS: the site builds from the JSON bundle emitted by the watermarkBundle
-        # Vite plugin (`uv run watermark --site <slug> export`) and never serves source
-        # bytes, so the ~5.4 GB corpus isn't pulled.
+        # No LFS (intentional — don't add `lfs: true`): the site builds from the JSON
+        # bundle emitted by the watermarkBundle Vite plugin (`uv run watermark --site
+        # <slug> export`) and never serves source bytes, so the ~5.4 GB corpus isn't
+        # pulled. Document `available`/`size_bytes` are read from the Git-LFS *pointer*
+        # text (bytes are served from R2, not the build tree) — see
+        # watermark.site.documents._document_stat (#1347). Pulling LFS here would cost
+        # ~1.5 GB of bandwidth per deploy for no benefit.
 
       # 1. Python toolchain: the watermarkBundle Vite plugin shells out to
       #    `uv run watermark --site <slug> export` inside `npm run build`.
