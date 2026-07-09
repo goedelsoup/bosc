@@ -1,0 +1,54 @@
+doc_id: 2DP00130-5bd6ebf6
+source_path: /Users/cparent/Code/watermark-directory/main/data/documents/oepa/2DP00130.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: "Ohio EPA Permit No. 2DP00130*AP \nPublic Notice No. 222503 \n\
+  Indirect Discharge Permit Program \n \nP U B L I C   N O T I C E \n \nIndirect Discharge\
+  \ Permit to a Publicly Owned Treatment Works (POTW) \nthat does not have a State\
+  \ Approved Pretreatment Program \n \n \nOhio Environmental Protection Agency \n\
+  Permits Processing Section \n50 West Town Street, Suite 700 \nP. O. Box 1049 \n\
+  Columbus, Ohio 43216-1049 \n(614) 644-2001 \n \n \nPublic Notice No.:  222503 \n\
+  Date of Public Notice:  July 1, 2026 \n \nName and Address of Applicant: BISTROZZI\
+  \ LLC, 4110 N COLE ST, Lima, OH, 45801 \n  \n \nName and Address of Facility W"
+permit:
+  confidence: high
+  warnings:
+  - Facility name listed as 'Bosc' on the discharge address line — may be truncated
+    or an OCR artifact; applicant/permittee is BISTROZZI LLC
+  - Comment period end (2026-07-31) inferred as 30 days after public notice date;
+    not explicitly stated
+  - Stream network not applicable — this is an indirect discharge to a POTW, not a
+    surface water body
+  - Outfall identifier '2DP00130001' derived from permit text referencing outfall
+    number 001 under permit 2DP00130
+  facility_name: Bosc
+  permit_no: 2DP00130*AP
+  permit_action: new
+  applicant: BISTROZZI LLC, 4110 N COLE ST, Lima, OH, 45801
+  application_no: OHP000437
+  public_notice_no: '222503'
+  public_notice_date: '2026-07-01'
+  comment_period_end: '2026-07-31'
+  facility_address: 4110 N COLE ST, Lima, OH, 45801, Allen County
+  discharge_address: American Bath Wastewater Treatment Plant, 3226 N. Cole Street,
+    Lima, Ohio 45801, Allen County
+  receiving_water: American – Bath Wastewater Treatment Plant (POTW)
+  stream_network: null
+  outfalls:
+  - 2DP00130001
+  note: This is an Indirect Discharge Permit to a POTW (not a direct NPDES surface
+    water discharge). The facility is described as a Data Center discharging domestic
+    waste and non-contact cooling water. Comment period end is calculated as 30 days
+    after the July 1, 2026 public notice date. Permit expiration date is December
+    31, 2028. The facility name on the discharge address line reads "Bosc" which may
+    be a truncation or OCR artifact of the facility name; the applicant/permittee
+    is BISTROZZI LLC.
