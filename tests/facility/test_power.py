@@ -68,12 +68,37 @@ def test_site_plan_grounded_facility_has_no_genset_basis() -> None:
     assert b.facility_draw.value > b.it_load.value  # PUE > 1
 
 
-def test_site_facility_requires_a_load_basis_citation() -> None:
-    """SiteFacility forbids an uncited IT load — either an air permit or a derivation cite."""
+def test_site_facility_requires_exactly_one_load_basis_citation() -> None:
+    """SiteFacility forbids an uncited IT load AND an ambiguous double-cited one — the load
+    is grounded by exactly one basis (air permit XOR non-permit derivation)."""
     from watermark.sites._model import SiteFacility
 
-    with pytest.raises(ValueError, match="IT load needs a basis citation"):
+    # Neither citation → uncited load.
+    with pytest.raises(ValueError, match="exactly one basis citation"):
         SiteFacility(it_load_mw=70.0, it_load_low_mw=35.0, it_load_high_mw=115.0)
+    # Both citations → ambiguous ground (derive_power_basis would silently drop it_load_citation).
+    with pytest.raises(ValueError, match="exactly one basis citation"):
+        SiteFacility(
+            it_load_mw=70.0,
+            it_load_low_mw=35.0,
+            it_load_high_mw=115.0,
+            air_permit_citation="permit",
+            it_load_citation="screening",
+        )
+
+
+def test_site_facility_disclosure_fields_require_a_citation() -> None:
+    """A site-plan disclosure value (floor area / investment / type) can't pass uncited."""
+    from watermark.sites._model import SiteFacility
+
+    with pytest.raises(ValueError, match="disclosure_citation must be set together"):
+        SiteFacility(
+            it_load_mw=70.0,
+            it_load_low_mw=35.0,
+            it_load_high_mw=115.0,
+            it_load_citation="screening",
+            gross_floor_area_sqft=460_000,  # disclosed value, no citation
+        )
 
 
 def test_site_facility_gensets_are_paired() -> None:
