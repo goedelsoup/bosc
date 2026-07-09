@@ -318,11 +318,23 @@ def fort_wayne_bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
 
 @pytest.fixture(scope="module")
 def urbana_bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
-    """An Urbana bundle (#782's validation candidate) — a sibling with **no committed corpus**
-    and ``corpus_relpaths`` left unset, so it exercises the #780 *default* scope, not Fort
-    Wayne's explicit one. Hermetic: no network, same committed data."""
+    """An Urbana bundle (#782's validation candidate) — a sibling with an **explicit**
+    ``corpus_relpaths`` (``permits/highland55`` + ``oepa/urbana``, its Highland55 land-assembly
+    record, #1328), so it exercises a scoped-but-non-slug corpus. Hermetic: no network, same
+    committed data."""
     out = tmp_path_factory.mktemp("urbanabundle") / "b"
     settings = Settings(data_dir=REPO_ROOT / "data", site="urbana")
+    export_bundle(settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00")
+    return out
+
+
+@pytest.fixture(scope="module")
+def springfield_bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
+    """A Springfield bundle — a Mad River sibling that leaves ``corpus_relpaths`` unset (so it
+    defaults to ``('springfield',)``) and has **no committed corpus**, exercising the #780
+    *default* scope. Hermetic: no network, same committed data."""
+    out = tmp_path_factory.mktemp("springfieldbundle") / "b"
+    settings = Settings(data_dir=REPO_ROOT / "data", site="springfield")
     export_bundle(settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00")
     return out
 
@@ -377,13 +389,14 @@ def test_explicit_scoped_sibling_bundle_carries_no_lima_corpus(fort_wayne_bundle
     _assert_corpus_feeds_lima_free("fort-wayne", fort_wayne_bundle)
 
 
-def test_default_scoped_sibling_bundle_carries_no_lima_corpus(urbana_bundle: Path) -> None:
+def test_default_scoped_sibling_bundle_carries_no_lima_corpus(springfield_bundle: Path) -> None:
     """The new-site smoke test (#780): a freshly-registered site on the **default** scope is also
-    Lima-free. Urbana leaves ``corpus_relpaths`` unset (so it defaults to ``('urbana',)``) and has
-    no committed corpus — before #780 its ``None`` scope meant the whole tree, silently inheriting
-    Lima's 174 timeline events and 72 entities. Adding a new site to this guard is one line."""
-    assert get_profile("urbana").corpus_relpaths is None, "Urbana relies on the default scope"
-    _assert_corpus_feeds_lima_free("urbana", urbana_bundle)
+    Lima-free. Springfield leaves ``corpus_relpaths`` unset (so it defaults to ``('springfield',)``)
+    and has no committed corpus — before #780 its ``None`` scope meant the whole tree, silently
+    inheriting Lima's 174 timeline events and 72 entities. Adding a new site to this guard is one
+    line. (Urbana, the prior stand-in, gained an explicit scope + real corpus in #1328.)"""
+    assert get_profile("springfield").corpus_relpaths is None, "Springfield relies on the default scope"
+    _assert_corpus_feeds_lima_free("springfield", springfield_bundle)
 
 
 def test_sibling_bundle_narrows_cross_site_feeds(bundle: Path, fort_wayne_bundle: Path) -> None:

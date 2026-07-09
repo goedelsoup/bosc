@@ -255,7 +255,9 @@
       "thor-equities",
       "vance-brands",
       "great-miami",
-      "mad-river"
+      "mad-river",
+      "land-assembly",
+      "recorder-deeds"
     ],
     "storage": [
       {
@@ -267,14 +269,24 @@
         "relpath": "extracted/urbana/highland55-findings.md",
         "media_type": "text/markdown",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/urbana/bosc-site-footprint.yaml",
+        "media_type": "application/yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/urbana/land-assembly.yaml",
+        "media_type": "application/yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "1030ce7ff7ff9a93c909a25d50050b207b6ddba00f13aa3a39e54c2193d47c80",
-      "size_bytes": 14841,
+      "sha256": "a5f04a6f83a4304af81680b277ce65badb737464e73100b87e88aa9fac73b498",
+      "size_bytes": 20902,
       "lfs_materialized": true,
-      "file_count": 2,
+      "file_count": 3,
       "stale": false,
       "asof": null
     },
@@ -2018,10 +2030,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "bb267c62bf54da26a0ac944fc31d5da4ec02ad4edec0efe09ef1b3a9c97b775f",
-      "size_bytes": 136410,
+      "sha256": "d109ce706c1b91451c1a9a5cdef13c78cc2da0420839032aff5d49be28b02742",
+      "size_bytes": 150258,
       "lfs_materialized": true,
-      "file_count": 1,
+      "file_count": 2,
       "stale": false,
       "asof": null
     },

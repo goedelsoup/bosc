@@ -79,8 +79,9 @@ describe("domain activation (manifest readiness block)", () => {
     // The Python tier (bosc.site.readiness.site_tier) written at export — the frontend is a reader.
     expect(siteTier("lima")).toBe("reference");
     expect(siteTier("fort-wayne")).toBe("case");
-    // Urbana is a floor + leads-board site (no structured corpus, no parcels) → Backdrop tier.
-    expect(siteTier("urbana")).toBe("backdrop");
+    // Urbana is a Case site after the Highland55 land-assembly sourcing (#1328): the floor plus a
+    // committed parcel footprint (places) and its scoped permit/OEPA document corpus (record).
+    expect(siteTier("urbana")).toBe("case");
   });
 
   it("exposes the five domain states from the manifest", () => {
@@ -90,19 +91,19 @@ describe("domain activation (manifest readiness block)", () => {
     }
     const urbana = siteDomainStates("urbana");
     expect(urbana.backdrop).toBe("live"); // the floor is real
-    expect(urbana.record).toBe("absent"); // markdown findings only, no structured corpus
-    expect(urbana.places).toBe("absent"); // no committed parcels — the section locks
-    expect(urbana.facility).toBe("absent");
+    expect(urbana.record).toBe("live"); // Highland55/OEPA document corpus, scoped in (#1328)
+    expect(urbana.places).toBe("live"); // committed parcel footprint (parcel-assemblage.geojson)
+    expect(urbana.facility).toBe("absent"); // no disclosed SiteFacility yet
   });
 
   it("opens Urbana's own leads board (feed-driven, #796) without borrowing Lima's", () => {
     // Urbana carries a `leads` feed but no registered story — leads open, the guided walk stays shut.
     expect(sectionStatus("urbana", "leads")).toBe("available");
     expect(sectionStatus("urbana", "story")).toBe("locked");
-    // Its floor stands up (environment/economy), but its record domain is absent → record locks.
+    // Floor + its now-live record/places domains open (#1328): the Highland55 land-assembly record.
     expect(sectionStatus("urbana", "economy")).toBe("available");
-    expect(sectionStatus("urbana", "record")).toBe("locked");
-    expect(sectionStatus("urbana", "places")).toBe("locked");
+    expect(sectionStatus("urbana", "record")).toBe("available");
+    expect(sectionStatus("urbana", "places")).toBe("available");
   });
 });
 

@@ -1097,6 +1097,12 @@ _URBANA = SiteProfile(
     post_cover="TODO",
     developed_pervious_cover="TODO",
     noaa_fallback_24h_depth_in={},  # [open] pending the NOAA Atlas-14 pull (onboard corridor-DDF step)
+    # corpus scope (#762): Urbana's committed corpus doesn't live under a `urbana/` collection —
+    # it's the Highland55 land-assembly permit bundle (permits/highland55, the Thor §401 WQC /
+    # Corps JD instruments, PR #803) and the City-of-Urbana OEPA/NPDES record (oepa/urbana). Scope
+    # to those two prefixes plus the slug so the bundle's documents/timeline feeds carry Urbana's
+    # actual record (flips the `record` readiness domain live) — never Lima's Allen-County tree.
+    corpus_relpaths=("urbana", "permits/highland55", "oepa/urbana"),
     parcels_relpath="reference/urbana/parcel-assemblage.geojson",  # [verified] 4 parcels / 3 Thor SPEs / ~230 ac (#1326)
     footprint_relpath="extracted/urbana/bosc-site-footprint.yaml",  # [verified] recorded ownership assemblage (#1326)
     climatology_relpath="reference/hydrology/urbana/nasa-power-climatology.yaml",

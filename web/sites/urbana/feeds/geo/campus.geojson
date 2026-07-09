@@ -1,26 +1,10 @@
 {
   "type": "FeatureCollection",
-  "bosc:provenance": {
-    "subject": "Urbana Technology Hub land assembly (Thor Equities) — the four Champaign County parcels now held by the three developer single-purpose entities (Urbana Owner I LLC, Urbana Owner II LLC, Highland55 Investments LLC), ~230 ac at SR-55 & S US-68 south of Urbana, Urbana Township, Champaign County OH (FIPS 39021). #1326 / lead #1263.",
-    "source": "Champaign County Engineer ArcGIS Online org (CCEO, HBIN2hfRscrws7eM) — parcel_joined FeatureServer layer 0 (auditor CAMA + geometry)",
-    "source_url": "https://services5.arcgis.com/HBIN2hfRscrws7eM/arcgis/rest/services/parcel_joined/FeatureServer/0",
-    "crs": "EPSG:4326 (WGS84)",
-    "count": 5,
-    "distinct_parcels": 4,
-    "parcel_ids": [
-      "K48-25-11-01-30-001-00",
-      "K48-25-11-01-30-005-00",
-      "K48-25-11-01-30-006-00",
-      "K48-25-11-01-32-005-00"
-    ],
-    "total_cama_acres": 230.346,
-    "caveats": [
-      "[verified] Owner-of-record, acreage, class, sale date/amount are verbatim from the CCEO auditor CAMA (parcel_joined layer 0); null means the service had no value.",
-      "Assembly membership = current owner is one of the three Thor SPEs (Urbana Owner I/II LLC, mailing c/o Thor Equities 25 W 39th St New York; Highland55 Investments LLC, Columbus OH). Seller-residual parcels still owned by Brand Investments LTD (K48-25-11-01-32-021-00, ~22.5 ac) and Organ Farms LLC are excluded — not transferred.",
-      "acres is the parcel-level CAMA figure; K48-25-11-01-32-005-00 (Highland55) is a multipart parcel returned as two polygon features, so its 85.619 ac repeats — sum distinct_parcels (4 = 230.346 ac), not features.",
-      "deed_reference is the auditor CAMA Official-Record BOOK_NO/PAGE_NO (e.g. OR601/4948 = vol 601 p 4948) — [verified] as the deed locator (#1328); the recorder's sequential instrument number remains [open]. Urbana Owner I = OR601/4948; Urbana Owner II (both parcels, one deed) = OR606/3352; Highland55 = OR603/1927. See data/extracted/urbana/land-assembly.yaml.",
-      "Verified Champaign County OHIO (FIPS 39021), NOT the same-named Champaign Co Illinois.",
-      "Regenerable: WATERMARK_SITE=urbana <watermark connector> over the four parcel ids above (see data/reference/urbana/README.md)."
+  "feed": "campus",
+  "meta": {
+    "crs": "WGS84 (EPSG:4326)",
+    "layers": [
+      "campus"
     ]
   },
   "features": [
@@ -102,6 +86,11 @@
         ]
       },
       "properties": {
+        "layer": "campus",
+        "label": "S US HWY 68",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "URBANA OWNER I LLC",
         "parcel_id": "K48-25-11-01-30-001-00",
         "owner": "URBANA OWNER I LLC",
         "owner_mailing_address": "25 W 39TH ST NEW YORK NY 10018-3805",
@@ -185,6 +174,11 @@
         ]
       },
       "properties": {
+        "layer": "campus",
+        "label": "S US HWY 68 URBANA OH 43078",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "URBANA OWNER II LLC",
         "parcel_id": "K48-25-11-01-30-005-00",
         "owner": "URBANA OWNER II LLC",
         "owner_mailing_address": "C/O THOR EQUITIES 25 W 39TH ST NEW YORK NY 10018-3805",
@@ -276,6 +270,11 @@
         ]
       },
       "properties": {
+        "layer": "campus",
+        "label": "S US HWY 68 URBANA OH 43078",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "URBANA OWNER II LLC",
         "parcel_id": "K48-25-11-01-30-006-00",
         "owner": "URBANA OWNER II LLC",
         "owner_mailing_address": "C/O THOR EQUITIES 25 W 39TH ST NEW YORK NY 10018-3805",
@@ -391,6 +390,11 @@
         ]
       },
       "properties": {
+        "layer": "campus",
+        "label": "ST RTE 55 URBANA OH 43078",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "HIGHLAND55 INVESTMENTS LLC",
         "parcel_id": "K48-25-11-01-32-005-00",
         "owner": "HIGHLAND55 INVESTMENTS LLC",
         "owner_mailing_address": "3040 RIVERSIDE DR STE 122 COLUMBUS OH 43221-2550",
@@ -494,6 +498,11 @@
         ]
       },
       "properties": {
+        "layer": "campus",
+        "label": "ST RTE 55 URBANA OH 43078",
+        "color": "#3f51b5",
+        "role": "area",
+        "grantee": "HIGHLAND55 INVESTMENTS LLC",
         "parcel_id": "K48-25-11-01-32-005-00",
         "owner": "HIGHLAND55 INVESTMENTS LLC",
         "owner_mailing_address": "3040 RIVERSIDE DR STE 122 COLUMBUS OH 43221-2550",

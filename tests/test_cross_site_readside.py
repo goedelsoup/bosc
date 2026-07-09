@@ -54,15 +54,19 @@ def test_effective_corpus_scope_defaults_to_own_slug_not_lima() -> None:
     from watermark.sites import SITES, effective_corpus_scope
 
     assert effective_corpus_scope(SITES["lima"]) is None  # reference build = whole-tree catch-all
-    assert effective_corpus_scope(SITES["urbana"]) == ("urbana",)  # unset → own slug, not Lima
+    assert effective_corpus_scope(SITES["springfield"]) == ("springfield",)  # unset → own slug, not Lima
     assert effective_corpus_scope(SITES["new-albany"]) == ("new-albany",)
     assert effective_corpus_scope(SITES["fort-wayne"]) == ("fort-wayne", "idem/fort-wayne")
+    # An explicit non-slug scope wins — Urbana's Highland55 land-assembly corpus (#1328).
+    assert effective_corpus_scope(SITES["urbana"]) == ("urbana", "permits/highland55", "oepa/urbana")
 
 
 def test_unscoped_sibling_loads_its_own_corpus_not_lima() -> None:
-    """The read side honors the #780 default: an unpopulated sibling (Urbana — the #782
-    validation candidate, no committed corpus) loads an empty corpus, not Lima's deeds/permits.
-    Before the fix its ``None`` scope meant the whole tree, silently inheriting Allen County."""
+    """The read side honors the #780 scope: Urbana's corpus is bounded to its own extracted tree +
+    its Highland55 land-assembly document prefixes (#1328), NOT Lima's whole tree. Urbana has no
+    *extracted* deeds/permits/OPC-summaries (its Highland55 corpus is raw source documents), so the
+    scoped read stays free of Lima's Allen-County extractions.
+    Before #780 its ``None`` scope meant the whole tree, silently inheriting Allen County."""
     from watermark.pipeline.corpus import load_corpus
 
     urbana = load_corpus(Settings(site="urbana", data_dir=REPO_ROOT / "data"))
