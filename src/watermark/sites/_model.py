@@ -183,18 +183,31 @@ class SiteFacility(BaseModel):
 
     @model_validator(mode="after")
     def _override_citations_paired(self) -> SiteFacility:
-        # The IT load must be grounded by exactly one basis: an air permit (Lima/Fort Wayne)
+        # The IT load must be grounded by EXACTLY ONE basis: an air permit (Lima/Fort Wayne)
         # or a non-permit derivation cite (Urbana's floor-area screening). Neither ⇒ an
-        # uncited load figure; that must not happen.
-        if self.air_permit_citation is None and self.it_load_citation is None:
+        # uncited load figure; both ⇒ an ambiguous ground (``derive_power_basis`` would
+        # silently drop ``it_load_citation`` and treat the load as permit-grounded).
+        if (self.air_permit_citation is None) == (self.it_load_citation is None):
             raise ValueError(
-                "the IT load needs a basis citation — set air_permit_citation (permit-grounded) "
-                "or it_load_citation (a non-permit derivation basis)"
+                "the IT load needs exactly one basis citation — set air_permit_citation "
+                "(permit-grounded) or it_load_citation (a non-permit derivation basis), not both/neither"
             )
         # Gensets are paired: a count without a rating (or vice-versa) can't form a backup
         # figure. A site-plan-grounded facility with no disclosed generation leaves both None.
         if (self.genset_count is None) != (self.genset_mw is None):
             raise ValueError("genset_count and genset_mw must be set together (or both left None)")
+        # Site-plan disclosure attributes (type / floor area / investment) carry
+        # [reference]/[verified] claims — they travel with disclosure_citation (both or
+        # neither), so a disclosed value can never pass uncited.
+        has_disclosure = any(
+            v is not None
+            for v in (self.facility_type, self.gross_floor_area_sqft, self.disclosed_investment_usd)
+        )
+        if has_disclosure != (self.disclosure_citation is not None):
+            raise ValueError(
+                "site-plan disclosure fields (facility_type / gross_floor_area_sqft / "
+                "disclosed_investment_usd) and disclosure_citation must be set together"
+            )
         if (self.wue_l_per_kwh is None) != (self.wue_citation is None):
             raise ValueError("wue_l_per_kwh and wue_citation must be set together")
         if (self.cycles_of_concentration is None) != (self.cycles_citation is None):
