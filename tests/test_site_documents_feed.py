@@ -12,6 +12,8 @@ from pathlib import Path
 
 from watermark.site.documents import (
     PublishAllowlist,
+    _document_stat,
+    _lfs_pointer_size,
     build_doc_index,
     build_documents,
     export_documents,
@@ -76,18 +78,34 @@ def test_office_override_table(tmp_path: Path) -> None:
     assert got["plans/drawing.odg"][0] == "application/vnd.oasis.opendocument.graphics"
 
 
-def test_lfs_pointer_trusts_the_extension_not_the_pointer_text(tmp_path: Path) -> None:
+def test_lfs_pointer_is_available_with_size_from_the_pointer(tmp_path: Path) -> None:
     docs = tmp_path / "documents"
     (docs / "aedg").mkdir(parents=True)
-    # An unpulled Git-LFS pointer: its *bytes* are pointer text, so sniffing would
-    # mis-class it. The real extension must govern, and `available` is False.
-    pointer = "version https://git-lfs.github.com/spec/v1\noid sha256:abc\nsize 9\n"
+    # An unpulled Git-LFS pointer stands in for bytes that live in LFS/R2 and are served
+    # from the object store, not the build tree (#1347) — so the doc is *available*, with
+    # the true size read from the pointer text. Sniffing the pointer text would mis-class
+    # it, so the real extension governs the render class instead.
+    pointer = "version https://git-lfs.github.com/spec/v1\noid sha256:abc\nsize 143327\n"
     (docs / "aedg" / "PRR.pdf").write_text(pointer, encoding="utf-8")
 
-    got = _entries(docs)
-    media_type, render_class, available = got["aedg/PRR.pdf"]
-    assert (media_type, render_class) == ("application/pdf", "pdf")
-    assert available is False
+    entry = next(
+        e for c in build_documents(docs).collections for e in c.entries if e.rel == "aedg/PRR.pdf"
+    )
+    assert (entry.media_type, entry.render_class) == ("application/pdf", "pdf")
+    assert entry.available is True
+    assert entry.size_bytes == 143327  # from the pointer, not the ~130-byte pointer file
+
+
+def test_lfs_pointer_size_parses_and_rejects_non_pointers() -> None:
+    assert _lfs_pointer_size(b"version https://git-lfs.github.com/spec/v1\nsize 42\n") == 42
+    assert _lfs_pointer_size(b"%PDF-1.7\n...real bytes...") is None
+    # Malformed size line -> not a usable pointer size.
+    assert _lfs_pointer_size(b"version https://git-lfs.github.com/spec/v1\nsize nope\n") is None
+
+
+def test_document_stat_missing_file_is_absent(tmp_path: Path) -> None:
+    size, available, is_pointer = _document_stat(tmp_path / "nope.pdf")
+    assert (size, available, is_pointer) == (0, False, False)
 
 
 def test_normalize_source_rel_shapes() -> None:

@@ -23,7 +23,8 @@ export type DocAccess = "published" | "dev-only" | "absent";
 /**
  * Classify access: `published` (public + viewable everywhere), `dev-only` (bytes exist
  * but aren't on the public allowlist — viewable in dev/preview, gated in prod), or
- * `absent` (an unresolved Git-LFS pointer; no bytes to serve).
+ * `absent` (no servable bytes — an unreadable/missing source file; an LFS pointer still
+ * counts as available since its bytes are served from the object store, #1347).
  */
 export function docAccess(entry: Pick<DocumentEntry, "available" | "published">): DocAccess {
   if (!entry.available) return "absent";
