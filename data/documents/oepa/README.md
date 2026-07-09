@@ -23,6 +23,29 @@ Filenames carry the permit number, facility slug, document type, and (where stat
 a date. Each PDF keeps its as-received name; provenance is recorded in the matching
 extraction's `meta` block.
 
+### Indirect discharge permits (pretreatment)
+
+#### `2DP00130.pdf`
+
+**Ohio EPA Indirect Discharge Permit** — Permit No. 2DP00130\*AP (Public Notice No.
+222503, July 1, 2026; Application No. OHP000437). A pretreatment permit to a POTW
+that does **not** have a State Approved Pretreatment Program — the discharge goes to
+the sewer, not to a surface water. Single combined PDF: public notice + draft permit
+(24 pp.). Draft; issue/effective dates TBD, expiration December 31, 2028.
+
+- **Applicant:** BISTROZZI LLC, 4110 N Cole St, Lima, OH 45801, Allen County.
+- **Facility:** named **"Bosc"** on the discharge line — same address; a **data center**.
+- **Discharge:** domestic waste + **non-contact cooling water**, through a private
+  sanitary main to a temporary lift station, into the **American – Bath WWTP** (POTW,
+  3226 N. Cole St, Lima).
+- **Key parameters:** water temperature, pH, flow rate.
+
+**Lima relevance:** unlike the closed-loop cooling seen elsewhere, this filing puts a
+Lima data center's **cooling-water discharge on the sanitary side** to the American–Bath
+POTW — a direct hook into the Lima water thesis and the Bistrozzi entity thread
+([`permits/bistrozzi-permits/`](../permits/bistrozzi-permits/)). The as-filed facility
+name "Bosc" is preserved as received.
+
 ### Statewide general permits
 
 #### `OHD000001_Draft.pdf` / `OHD000001_Draft_PN.pdf` / `OHD000001_Draft.fs.pdf`

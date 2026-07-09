@@ -1,11 +1,12 @@
 id: oepa
-title: Ohio EPA NPDES Permit Extractions (American II / American-Bath / Shawnee II)
+title: Ohio EPA permit extractions (Lima — receiving-WWTP NPDES + Bistrozzi indirect discharge)
 scope: extracted
 status: reviewed
 producer:
   kind: extracted
-  source: Ohio EPA — issued NPDES permits, fact sheets, and draft public notices for permits 2PH00006,
-    2PH00007, 2PK00002
+  source: Ohio EPA — issued NPDES permits, fact sheets, and draft public notices for the receiving-WWTP
+    permits 2PH00006, 2PH00007, 2PK00002, plus the Bistrozzi "Bosc" data-center indirect-discharge
+    permit 2DP00130 (public notice + draft permit)
 license: Public record (Ohio R.C. 149.43)
 access_tier: public
 site_scope: lima-legacy
@@ -37,6 +38,9 @@ storage:
 - relpath: extracted/oepa/oepa-2PK00002-shawnee-ii-permit.npdes.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/oepa/2DP00130.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
 refresh:
   cadence: static
 provenance: document
@@ -46,5 +50,9 @@ tags:
 - permits
 - wastewater
 - receiving-wwtp
+- indirect-discharge
+- data-center
 notes: One file per source PDF — issued permit, fact sheet, and draft public notice across the three receiving
-  WWTP permits; figures read from the document image/text, never inferred.
+  WWTP permits; figures read from the document image/text, never inferred. `2DP00130` is a distinct type —
+  an indirect-discharge (pretreatment) permit for the Bistrozzi "Bosc" data center discharging non-contact
+  cooling water to the American-Bath POTW (single PDF combining public notice + draft permit).
