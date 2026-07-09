@@ -18,6 +18,9 @@ storage:
 - relpath: extracted/urbana/bosc-site-footprint.yaml
   media_type: application/yaml
   lfs: false
+- relpath: extracted/urbana/land-assembly.yaml
+  media_type: application/yaml
+  lfs: false
 refresh:
   cadence: static
 provenance: document
@@ -29,10 +32,16 @@ tags:
 - vance-brands
 - great-miami
 - mad-river
+- land-assembly
+- recorder-deeds
 notes: >
   Onboarding record and investigative findings for the Urbana watershed point (Mad River corridor,
-  Champaign County OH). highland55-findings.md documents the Thor Equities / Vance Brands project
-  at 47.6+ acres west of US-68 — a build-to-suit commercial development including an electrical
-  substation; data-center end-use [open] pending further evidence. bosc-site-footprint.yaml commits
-  the ~230-ac recorded ownership assemblage (the four Thor-SPE parcels; geometry in
-  reference/urbana/parcel-assemblage.geojson) with the SSURGO-validated dominant HSG C (#1326).
+  Champaign County OH). highland55-findings.md documents the Thor Equities data-center project west
+  of US-68 / SR-55 — a build-to-suit development with a dedicated electrical substation; the
+  data-center end-use is resolved (#1328) to the "Urbana Technology Hub" ([reference], public
+  disclosure + Thor v. Urbana litigation, #1263). land-assembly.yaml is the conveyance register —
+  four parcels / three Thor SPEs (Urbana Owner I/II LLC, Highland55 Investments LLC), grantor /
+  grantee / consideration / date / deed Official-Record book-page, sourced [verified] to the
+  Champaign County auditor CAMA. bosc-site-footprint.yaml commits the ~230-ac recorded ownership
+  assemblage (geometry in reference/urbana/parcel-assemblage.geojson) with the SSURGO-validated
+  dominant HSG C (#1326).

@@ -1,6 +1,6 @@
 {
   "site": "urbana",
-  "catalog_version": "e2b59f230d51d6f4a554388ee66cbc4f9ff0945721b32ff4cda639b7b4fbb98c",
+  "catalog_version": "5b84a0f21f7d9b6cf1f197d2011d33562be0c9d3cb5d3a0d53c84edf534cf19c",
   "contract_version": "1.24.0",
   "atoms": [
     {
@@ -410,14 +410,6 @@
       "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
       "title": "General Dynamics Land Systems Inc.",
       "feed": "entities"
-    },
-    {
-      "handle": "lead:urbana:GH-447",
-      "kind": "lead",
-      "site": "urbana",
-      "local_id": "GH-447",
-      "title": "Source Highland55 Urbana connection via primary instruments (recorder, ODOD, CRA/PILOT)",
-      "feed": "leads"
     },
     {
       "handle": "lead:urbana:GH-448",

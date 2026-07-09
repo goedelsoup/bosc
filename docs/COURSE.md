@@ -113,10 +113,13 @@ where the public record already places them, as `[open]` context.
 - **Rail.** The **CSX Toledo Subdivision** ROW and any spur, with **49 U.S.C.
   §10501** federal preemption — existence of the ROW is documented; project use
   `[open]`.
-- **Parallel consumers (other counties).** **Thor Equities / Thor Van Wert /
-  Highland55** (Urbana, Van Wert); **CyrusOne**; **Platon Investments / Dynamo
-  Ventures** (TX, shared-organizer overlap with Montfort) — corridor `[open]`; no
-  in-corpus document yet (Platon/Dynamo rest on a third-party aggregator profile).
+- **Parallel consumers (other counties).** **Thor Equities / Highland55 (Urbana)** is
+  now sourced — the ~230-ac Champaign County land assembly (four parcels / three Thor SPEs)
+  is `[verified]` to the county auditor's deed record and the data-center end-use is `[reference]`
+  (Urbana Technology Hub; #1328 / lead #447 closed): see
+  `data/extracted/urbana/land-assembly.yaml`. Still `[open]` corridor leads with no in-corpus
+  document yet: **Thor Van Wert**; **CyrusOne**; **Platon Investments / Dynamo Ventures** (TX,
+  shared-organizer overlap with Montfort; rests on a third-party aggregator profile).
 - **Roshel / International Motors (Springfield APA, 2026-03-30).** Logged strictly
   as **corridor context, not a connection** — the evidence does not link it to
   BOSC, and it must **not** enter the entity graph.

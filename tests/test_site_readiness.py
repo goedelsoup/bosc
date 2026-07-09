@@ -139,12 +139,26 @@ def test_tier_case_via_record_only() -> None:
     assert site_tier(states) == "case"
 
 
-def test_tier_backdrop_urbana() -> None:
-    # Urbana's real shape (#1220): floor + a leads board, but no structured corpus and no
-    # committed parcels — record/places absent, story seeded (leads only) does NOT elevate to
-    # case, so the honest tier is `backdrop` (same as Springfield, also leads-only).
+def test_tier_case_urbana() -> None:
+    # Urbana's real shape after the Highland55 land-assembly sourcing (#1328): the floor, plus a
+    # committed parcel footprint (places live, geo/campus) and its scoped Highland55 / OEPA
+    # document corpus (record live). No disclosed facility yet → facility absent; story seeded on
+    # leads. One-plus above-floor domain live over the floor ⇒ `case` (as the epic named it).
     urbana = SITES["urbana"]
-    states = domain_states(urbana, _counts(leads=2))
+    states = domain_states(urbana, _counts(**{"geo/campus": 5}, documents=2, leads=1))
+    assert states["record"] == "live"
+    assert states["places"] == "live"
+    assert states["facility"] == "absent"
+    assert states["story"] == "seeded"
+    assert site_tier(states) == "case"
+
+
+def test_tier_backdrop_leads_only() -> None:
+    # Springfield's honest shape: floor + a leads board only — no structured corpus, no committed
+    # parcels. record/places/facility absent, story seeded (leads) does NOT elevate to case, so the
+    # tier is `backdrop`. (Urbana was this shape pre-#1328, before its corpus was scoped in.)
+    springfield = SITES["springfield"]
+    states = domain_states(springfield, _counts(leads=2))
     assert states["record"] == "absent"
     assert states["places"] == "absent"
     assert states["facility"] == "absent"
@@ -171,7 +185,7 @@ def test_tier_stub() -> None:
 
 # --- compute_readiness block + invariants ---------------------------------------------------
 def test_compute_readiness_block_shape() -> None:
-    block = compute_readiness(SITES["urbana"], _counts(leads=2))
+    block = compute_readiness(SITES["springfield"], _counts(leads=2))
     assert set(block) == {"domains", "tier"}
     assert set(block["domains"]) == set(DOMAINS)  # type: ignore[arg-type]
     assert block["tier"] == "backdrop"

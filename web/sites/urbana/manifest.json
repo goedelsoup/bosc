@@ -2,16 +2,16 @@
   "site": "urbana",
   "bundle_version": "1.0.0",
   "contract_version": "1.24.0",
-  "generated_at": "2026-07-08T21:16:58+00:00",
-  "feed_count": 24,
-  "row_total": 64,
+  "generated_at": "2026-07-09T16:49:06+00:00",
+  "feed_count": 25,
+  "row_total": 70,
   "readiness": {
-    "tier": "backdrop",
+    "tier": "case",
     "domains": {
       "backdrop": "live",
       "facility": "absent",
-      "places": "absent",
-      "record": "absent",
+      "places": "live",
+      "record": "live",
       "story": "seeded"
     }
   },
@@ -94,7 +94,7 @@
       "media_type": "application/json",
       "schema": "schemas/documents.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 2
     },
     {
       "name": "exhibits",
@@ -110,7 +110,7 @@
       "media_type": "application/json",
       "schema": "schemas/leads.schema.json",
       "kind": "collection",
-      "count": 2
+      "count": 1
     },
     {
       "name": "rsei",
@@ -191,6 +191,14 @@
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
       "count": 43
+    },
+    {
+      "name": "geo/campus",
+      "path": "feeds/geo/campus.geojson",
+      "media_type": "application/geo+json",
+      "schema": "schemas/geo.schema.json",
+      "kind": "geojson",
+      "count": 5
     },
     {
       "name": "catalog-index",

@@ -15,8 +15,12 @@ Per-site onboarding tree for the Urbana watershed point (basin: great-miami), sc
   from the CCEO auditor CAMA layer (`parcel_joined` FeatureServer 0) via the `champaign_cceo`
   connector. 5 features / **4 distinct parcels** (Highland55 `K48-25-11-01-32-005-00` is multipart);
   230.346 ac CAMA / 232.07 ac planar. Seller-residual parcels still held by Brand Investments LTD
-  (`…32-021-00`, ~22.5 ac) and Organ Farms LLC are **excluded** — not transferred. Deed book/page
-  references are `[open]`, deferred to the recorder pull (#1328).
+  (`…32-021-00`, ~22.5 ac) and Organ Farms LLC are **excluded** — not transferred. Deed
+  Official-Record book/page references are `[verified]` (#1328): Urbana Owner I `OR601/4948`,
+  Urbana Owner II (both parcels, one deed) `OR606/3352`, Highland55 `OR603/1927`. The conveyance
+  register (grantor/grantee/consideration/date/deed) is
+  [`data/extracted/urbana/land-assembly.yaml`](../../extracted/urbana/land-assembly.yaml); the
+  recorder instrument numbers + Ohio SoS registered agents remain `[open]`.
 
 ## Known gaps & caveats
 

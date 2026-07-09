@@ -1,16 +1,5 @@
 [
   {
-    "id": "GH-447",
-    "kind": "signal",
-    "status": "review",
-    "tag": "inference",
-    "title": "Source Highland55 Urbana connection via primary instruments (recorder, ODOD, CRA/PILOT)",
-    "detail": "## Context\n**Highland55** is the only Urbana-specific data-center signal in the corpus, but it exists solely as a one-line entry in `docs/COURSE.md` (line 117) tagged **`[open]`**: *\"Thor Equities / Thor Van Wert / Highland55 (Urbana, Van Wert); CyrusOne; Platon Investments / Dynamo Ventures … corridor `[open]`; no in-corpus document yet.\"* A repo-wide search confirms Highland55 appears in exactly three corpus locations — `COURSE.md`, and the prior Van Wert research run's `findings.md` and `manifest.yaml` — never in a primary instrument or extraction. The site profile's `facility` field is `None` `[open]` (sites.py line 1674) and `facilityStatus(\"urbana\") = \"investigation\"`.\n\nThe `self-research` step that would have generated data-center seed proposals **errored** (`1 validation error for ProposalDrafts`), so the inferential entity layer is also empty.\n\n## Acceptance Criteria\n- [ ] At least one primary instrument is ingested and extractable via `list_documents` for `urbana` or `champaign` — acceptable forms: Champaign County Recorder deed, ODOD/JobsOhio announcement, CRA/PILOT agreement, NPDES application, or zoning instrument tied to Highland55 or a Thor Equities entity.\n- [ ] **Or**, if no instrument is found after a documented search effort, Highland55 is formally retired from the Urbana register in `COURSE.md` and `sites.py` with a `[not found – retired YYYY-MM-DD]` tag.\n- [ ] The Highland55 register is kept **separate** from the Allen-County/Lima Bistrozzi land-assembly graph (no cross-reference unless a filed instrument bridges them).\n\n---\n_Proposed by `bosc onboard urbana --research` (Phase 5; onboard-urbana-urbana-data-center-activity-recei-2026-06-21). Sub-issue of #441 / epic #440._",
-    "source": "watermark-directory/the-watermark-directory#447",
-    "issue": 447,
-    "note": "2026-06-28: Instruments read (10 docs, PR #803). Thor Equities (Urbana Owner I LLC) confirmed as developer; 47.6+ ac west of US-68; project includes electrical substation + build-to-suit for 'Vance Brands' (end use [open]). See data/extracted/urbana/highland55-findings.md."
-  },
-  {
     "id": "GH-448",
     "kind": "question",
     "status": "review",
