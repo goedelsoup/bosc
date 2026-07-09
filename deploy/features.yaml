@@ -19,12 +19,12 @@
 # so flipping it true also needs the bosc-deploy:storiesLakebaseUrl secret; the Hyperdrive config is
 # provisioned when EITHER stories OR contacts is on (the guard in index.ts enforces this).
 
-preLaunch: true     # serve pre-launch.astro at / and redirect all other routes to /
-submissions: false
+preLaunch: false    # serve pre-launch.astro at / and redirect all other routes to /
+submissions: true
 ask: false
-docs: false
-mcp: false
-rum: false
-auth: false
+docs: true
+mcp: true
+rum: true
+auth: true
 stories: false
 contacts: false
