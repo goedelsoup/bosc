@@ -1,0 +1,33 @@
+id: wwtp-oh0027049-troy-piqua
+title: Piqua WWTP (NPDES OH0027049) Effluent Record — DMR
+scope: extracted
+status: reviewed
+producer:
+  kind: connector
+  command: dmr OH0027049 --start 2023-01-01 --end 2023-12-31 --design-flow 8.7
+  connector_ref: watermark.hydrology.connectors.echo_dmr
+  source: EPA ECHO eff_rest_services DMR for NPDES OH0027049 (Piqua WWTP), Miami County OH
+  external_url: https://echo.epa.gov/tools/web-services
+license: U.S. Government work (public domain)
+access_tier: public
+site_scope: site:troy-piqua
+storage:
+- relpath: extracted/troy-piqua/wwtp-oh0027049.dmr.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: connector
+tags:
+- wwtp
+- npdes
+- dmr
+- echo
+- receiving-water
+- troy-piqua
+notes: 'Verbatim ECHO effluent-chart data for Piqua WWTP (OH0027049 / OEPA 1PD00008), outfall
+  001 → Great Miami River. Design 8.7 MGD (13.46 cfs), peak hydraulic 22.5 MGD; actual mean
+  3.224 MGD (2023, 37.1% utilization); max 5.822 MGD; CSO/bypass outfalls: 0; no ECHO-flagged
+  exceedances. Regenerable via `watermark dmr OH0027049 --design-flow 8.7 --out
+  data/extracted/troy-piqua/wwtp-oh0027049.dmr.yaml`. Cited receiving-reach 7Q10 (24.0 cfs, GMR
+  above Sidney, USGS 03261500) is in the fact sheet extracted/oepa/1PD00008.fs.npdes.yaml (#828).'
