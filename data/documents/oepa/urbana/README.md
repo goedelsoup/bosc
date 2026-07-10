@@ -34,10 +34,20 @@ gage 03267000, 1997 flow document) — the value OEPA uses for the wasteload all
 supersedes the earlier `[derived]` LP3 passby (53.67 cfs) on `SiteProfile('urbana')`.
 
 The **2025-cycle renewal** (application eDoc `3832476`, filed 2025-05-29) had **not issued**
-as of 2026-07: the permit expired 2025-11-30 and is in administrative continuance, so the
-2020 fact sheet remains the effective regulatory instrument. When the 2025 renewal issues,
-its fact sheet (which may revise the 7Q10) should be ingested and the passby re-verified.
+as of the 2026-07-10 re-check: the OEPA permits doc library still serves the 2020 issuance
+(both `1PD00011.pdf` and `1PD00011.fs.pdf` fetched live are **byte-identical**, SHA-256
+`8e146b28…` / `8bf9f3d6…`, to the committed copies), and EPA ECHO (ICIS-NPDES extract
+2026-07-03) reports the permit status as **Expired**. The permit expired 2025-11-30 and is in
+administrative continuance, so the 2020 fact sheet remains the effective regulatory instrument
+and the annual **7Q10 = 35 cfs** remains the effective passby on `SiteProfile('urbana')`
+(`passby_primary_cfs`). When the 2025 renewal issues, its fact sheet (which may revise the
+7Q10) should be ingested and the passby re-verified.
 
-Enforcement follow-up (as of 2026-07): no resolution instrument for the 2025-10 pretreatment
-**NOV (SNC)** (`3858492.pdf`) or the 2026-01 **MS4 NOV** (`3959035.pdf`) has surfaced in the
-Ohio EPA eDoc portal — both remain open on the record.
+Enforcement follow-up (re-checked 2026-07-10): no resolution instrument for the 2025-10
+pretreatment **NOV (SNC)** (`3858492.pdf`) or the 2026-01 **MS4 NOV** (`3959035.pdf`) has
+surfaced. EPA ECHO for OH0027880 (ICIS-NPDES extract 2026-07-03) corroborates this: no formal
+enforcement action on the record (`FormalActions` / `ICISFormalActions` / `CaseFormalActions`
+empty; `FormalEnfActCount = 0`; `TotalPenalties = $0`) — the pretreatment NOV appears only as
+an informal *Letter of Violation / Warning Letter* (enforcement id `OH-I00107801`, dated
+2025-10-07) with nothing closing it. Both NOVs **remain `[open]` on the record**; no resolution
+is inferred. This is a standing, externally-gated watch — see issue #1355.
