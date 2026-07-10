@@ -95,16 +95,16 @@ def _sniff_media(head: bytes) -> tuple[str, RenderClass] | None:
 
 
 def _media_type_and_render_class(
-    path: Path, suffix: str, *, available: bool
+    path: Path, suffix: str, *, sniffable: bool
 ) -> tuple[str, RenderClass]:
     """Resolve ``(media_type, render_class)`` for a source file (epic #274 / #275).
 
     Sniffs the leading bytes and trusts a confident sniff over the extension; falls back
-    to the extension table otherwise. A Git-LFS pointer has no real bytes (its content is
-    pointer text), so for an unavailable file we trust the extension instead of sniffing.
+    to the extension table otherwise. A Git-LFS pointer has no real local bytes (its content
+    is pointer text), so when the file isn't sniffable we trust the extension instead.
     """
     by_ext = _EXT_MEDIA.get(suffix, _FALLBACK_MEDIA)
-    if not available:
+    if not sniffable:
         return by_ext
     try:
         with path.open("rb") as fh:
@@ -144,7 +144,7 @@ class DocumentEntry:
     media_type: str  # MIME, from the real file (extension + content sniff)
     render_class: RenderClass  # what the viewer dispatches on (#274/#275)
     published: bool  # cleared for public serving by the allowlist (#280); default-deny
-    available: bool  # the bytes are present locally (not an unpulled Git-LFS pointer)
+    available: bool  # the bytes are servable (real file or LFS pointer → R2), not missing
     download_url: str | None  # exhibit link or external mirror URL, when present
 
 
@@ -179,14 +179,43 @@ class DocumentsResult:
         return sum(c.n_downloadable for c in self.collections)
 
 
-def _is_lfs_pointer(path: Path) -> bool:
-    """True if ``path`` is an unresolved Git-LFS pointer rather than the real bytes."""
+_LFS_POINTER_MAGIC = b"version https://git-lfs.github.com/spec/v1"
+
+
+def _lfs_pointer_size(head: bytes) -> int | None:
+    """The real byte size recorded in a Git-LFS pointer, or ``None`` if not a pointer.
+
+    A pointer is short YAML-ish text (``version`` / ``oid`` / ``size`` lines); the ``size``
+    line carries the true size of the bytes that live in LFS/R2 storage, so we can report
+    it without pulling the object.
+    """
+    if not head.startswith(_LFS_POINTER_MAGIC):
+        return None
+    for line in head.split(b"\n"):
+        if line.startswith(b"size "):
+            try:
+                return int(line[len(b"size ") :].strip())
+            except ValueError:
+                return None
+    return None
+
+
+def _document_stat(path: Path) -> tuple[int, bool, bool]:
+    """Resolve ``(size_bytes, available, is_pointer)`` for a source file (#1347).
+
+    An unpulled Git-LFS pointer is **not** absent: its bytes live in LFS/R2 and are served
+    from the object store (``/api/doc``), not the build tree — so it counts as available,
+    with the true size read from the pointer text. Only an unreadable/missing file is absent.
+    """
     try:
         with path.open("rb") as fh:
-            head = fh.read(64)
+            head = fh.read(256)
+        ptr_size = _lfs_pointer_size(head)
+        if ptr_size is not None:
+            return ptr_size, True, True
+        return path.stat().st_size, True, False
     except OSError:
-        return True
-    return head.startswith(b"version https://git-lfs.github.com/spec/v1")
+        return 0, False, False
 
 
 def _collection_title(slug: str) -> str:
@@ -270,13 +299,11 @@ def build_documents(
                 description=_collection_description(documents_dir / slug),
             )
             collections[slug] = coll
-        try:
-            size = path.stat().st_size
-        except OSError:
-            size = 0
-        available = not _is_lfs_pointer(path)
+        size, available, is_pointer = _document_stat(path)
         suffix = path.suffix.lower().lstrip(".")
-        media_type, render_class = _media_type_and_render_class(path, suffix, available=available)
+        media_type, render_class = _media_type_and_render_class(
+            path, suffix, sniffable=not is_pointer
+        )
         coll.entries.append(
             DocumentEntry(
                 rel=rel,

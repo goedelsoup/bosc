@@ -13,7 +13,7 @@ interface Props {
 }
 const { entry, compact = false } = Astro.props;
 const url = docApiUrl(entry.rel);
-const tier = viewerTier(entry); // unavailable (LFS pointer) → "other" (download-only)
+const tier = viewerTier(entry); // unavailable (no servable bytes) → "other" (download-only)
 
 // A byte cap keeps a runaway text file from hanging the page; the raw link is always there.
 const TEXT_BYTE_CAP = 512 * 1024;
@@ -84,7 +84,7 @@ const devServerNote = import.meta.env.DEV;
       <p class="docview-note">
         {entry.available
           ? "No inline preview for this file type — open it in your own app."
-          : "Bytes not pulled locally (Git-LFS pointer) — available on request."}
+          : "Source bytes unavailable — available on request."}
       </p>
     )
   }

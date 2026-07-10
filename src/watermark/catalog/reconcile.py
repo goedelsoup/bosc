@@ -34,8 +34,10 @@ OBSERVED_RELNAME = "_observed.yaml"
 def _is_lfs_pointer(path: Path) -> bool:
     """True if ``path`` is an unresolved Git-LFS pointer rather than the real bytes.
 
-    Mirrors ``watermark.site.documents._is_lfs_pointer`` — replicated (it's a 6-line constant) to
-    keep this core data path off the heavy ``watermark.site`` presentation package.
+    A local-materialization check (does the working tree hold real bytes?) — distinct from
+    ``watermark.site.documents``' servability notion, where a pointer still counts as available
+    because its bytes are served from R2. Kept self-contained (it's a 6-line constant) to keep
+    this core data path off the heavy ``watermark.site`` presentation package.
     """
     try:
         with path.open("rb") as fh:
