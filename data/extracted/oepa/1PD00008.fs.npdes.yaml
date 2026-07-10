@@ -1,0 +1,41 @@
+doc_id: 1PD00008.fs-03e9566d
+source_path: data/documents/oepa/troy-piqua/1PD00008.fs.pdf
+kind: npdes
+pages_read:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+image_pages_read:
+- 0
+dpi: 150
+source_text_excerpt: " \nFact Sheet for NPDES Permit Renewal, Piqua WWTP, 2022 \n\
+  Page 1 of 37 \n \nNational Pollutant Discharge Elimination System (NPDES) Permit\
+  \ Program \n \nFACT SHEET \n \nRegarding an NPDES Permit to Discharge to Waters\
+  \ of the State of Ohio \nfor Piqua Wastewater Treatment Plant (WWTP) \n \nPublic\
+  \ Notice No.:           22-006-011 Ohio EPA Permit No.: 1PD00008*WD \nPublic Notice\
+  \ Date:         June 21, 2022 Application No.: OH0027049 \nComment Period Ends:\
+  \   July 28, 2022 \n \n \n Name and Address of Facility Where \nName and Address\
+  \ of Applicant: Discharge Occurs:                  \nCity of Piqua Piqua Wastewater "
+permit:
+  confidence: high
+  warnings: []
+  facility_name: Piqua Wastewater Treatment Plant (WWTP)
+  permit_no: 1PD00008*WD
+  permit_action: renewal
+  applicant: City of Piqua, 201 West Water Street, Piqua, OH 45356
+  application_no: OH0027049
+  public_notice_no: 22-006-011
+  public_notice_date: '2022-06-21'
+  comment_period_end: '2022-07-28'
+  facility_address: 121 Bridge Street, Piqua, OH 45356, Miami County
+  discharge_address: 121 Bridge Street, Piqua, OH 45356, Miami County
+  receiving_water: Great Miami River
+  stream_network: Great Miami River to Ohio River
+  outfalls:
+  - '001'
+  note: Facility address and discharge address are the same (121 Bridge Street). Outfall
+    001 identified from tables (e.g., Table 2, Table 9, Table 16). Upstream monitoring
+    station 801 and downstream monitoring station 901 are instream stations, not outfalls.
