@@ -4,7 +4,7 @@ kind: concept
 aliases: [consumptive water use, evaporative cooling loss]
 tags: [hydrology, data-center, water-balance]
 summary: Cooling water that is withdrawn and lost (mostly to evaporation) rather than returned to the source, reducing downstream flow.
-related: [assimilative-capacity, 7q10, hyperscale-data-center]
+related: [assimilative-capacity, 7q10, hyperscale-data-center, heat-reuse]
 ---
 
 **Consumptive cooling** is the share of a facility's cooling-water withdrawal that
@@ -18,3 +18,7 @@ is the quantity that matters to the river: it is subtracted from live flow in th
 treats the cooling demand and its consumptive fraction as scenario inputs
 (labelled assumptions), while the receiving-water flows are read from live gauges
 and the permit record.
+
+Whether the rejected heat is dumped or recovered is a separate design axis —
+see [[heat reuse]] — that can shift the consumptive fraction where recovery
+displaces evaporative rejection.

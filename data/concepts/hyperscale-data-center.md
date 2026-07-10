@@ -4,7 +4,7 @@ kind: term
 aliases: [hyperscale, data center campus]
 tags: [data-center, zoning, land-use]
 summary: A very large, cloud-scale data center campus; the local zoning code defines the term and gates it as a conditional use.
-related: [consumptive-cooling, common-control-plumbing]
+related: [consumptive-cooling, common-control-plumbing, heat-reuse]
 ---
 
 A **hyperscale data center** is a data center built and operated at cloud scale —

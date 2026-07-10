@@ -194,7 +194,11 @@ priors:
       evaporative ~1.8-1.9 L/kWh; efficient closed-loop / chip cooling ~0.2-0.3. BOSC shows
       36 evaporative towers (air permit) but the design is not disclosed — so the water draw
       swings by an order of magnitude on a design fact the record withholds. Blowdown
-      discharge ~20-40% of cooling-system water.
+      discharge ~20-40% of cooling-system water. Named-vendor closed-loop + chip cooling
+      (e.g. Danfoss Turbocor oil-free magnetic-bearing compressors in Google data centers)
+      is now a DEPLOYED hyperscale option, not just a spec sheet — but that is one
+      promotional source, so the low pole (~0.2-0.3) and the band are unchanged. See the
+      companion heat_reuse prior for the dump-vs-recover axis the same partnership introduces.
     sources:
       - name: Relator data appendix §3 (pooled — Green Grid, EESI, Vertiv, Meta/Microsoft)
         year: 2026
@@ -204,6 +208,41 @@ priors:
         year: 2024
         url: https://eta.lbl.gov/publications/2024-lbnl-data-center-energy-usage-report
         contributes: water-vs-energy cooling tradeoff; county-level water intensity
+      - name: Danfoss + Google — strategic partnership on AI and energy efficiency
+        year: 2024
+        url: https://www.danfoss.com/en-us/about-danfoss/news/cf/danfoss-and-google-enter-into-a-strategic-partnership-on-ai-and-energy-efficiency/
+        contributes: >-
+          [reference] deployed-hyperscale datapoint on the closed-loop / low-water pole —
+          Danfoss Turbocor oil-free magnetic-bearing compressors + chip cooling in Google
+          DCs; single promotional vendor source, silent on water withdrawal, so it corroborates
+          the pole without shifting the band. NOT this campus.
+
+  - key: heat_reuse
+    label: Waste-heat reuse (dump vs. recover thermal energy)
+    unit: design_axis
+    register: reference
+    lima_status: open
+    note: >-
+      A third cooling-design axis the priors didn't represent: whether rejected thermal
+      energy is DUMPED (evaporative towers / dry coolers) or RECOVERED and redirected to
+      on-site heating or a neighboring/district-heat loop. Heat-reuse modules capture excess
+      data-center heat for reuse; where recovery displaces evaporative rejection it also bears
+      on the water story (couples to the wue_l_per_kwh [open]) and on the energy/carbon-free
+      framing. Named as a deployed hyperscale option by a single vendor release
+      (Danfoss/Google, Jan 2024) — [reference], NOT this campus, and design-generic. No band
+      is asserted on one promotional source; pair with an independent heat-reuse source (EU
+      district-heat DC pilots, ASHRAE, LBNL) before it drives one. lima_status open — Lima's
+      cooling design, and any heat reuse, is undisclosed; this bounds the design space, it
+      does not resolve the [open] cooling question at any watershed point.
+    sources:
+      - name: Danfoss + Google — strategic partnership on AI and energy efficiency
+        year: 2024
+        url: https://www.danfoss.com/en-us/about-danfoss/news/cf/danfoss-and-google-enter-into-a-strategic-partnership-on-ai-and-energy-efficiency/
+        contributes: >-
+          heat-reuse modules capture excess DC thermal energy and redirect it to on-site
+          heating / neighboring buildings / district heat; positioned in support of Google's
+          2030 24/7 carbon-free-energy goal; silent on water withdrawal — [reference], not
+          this campus
 
   - key: national_dc_load_share
     label: U.S. data-center share of electricity (context)
