@@ -1143,8 +1143,11 @@ _URBANA = SiteProfile(
     # source "USGS gage 03267000, 1997 flow document". This is the design low flow OEPA uses
     # for the Mad River wasteload allocation; it supersedes the earlier [derived] LP3 value
     # (53.67 cfs, 1980-2024). The 2025-cycle renewal (app eDoc 3832476, filed 2025-05-29) had
-    # not issued as of 2026-07 — permit in administrative continuance past its 2025-11-30 expiry
-    # — so the 2020 fact sheet (corpus: oepa/urbana/1PD00011.fs.pdf) is the effective instrument.
+    # not issued as of the 2026-07-10 re-check (#1355) — OEPA doc library still serves the 2020
+    # issuance byte-identical, ECHO reports the permit "Expired" — permit in administrative
+    # continuance past its 2025-11-30 expiry, so the 2020 fact sheet (corpus:
+    # oepa/urbana/1PD00011.fs.pdf) is the effective instrument. Re-verify this passby if/when the
+    # renewal issues and its fact sheet revises the 7Q10.
     passby_primary_cfs=35.0,
     passby_secondary_cfs=0.0,  # [open]
     # facility CONFIRMED (#1327) — the "Urbana Technology Hub" data-center campus, corner of
@@ -1645,13 +1648,29 @@ _TROY_PIQUA = SiteProfile(
         0.0,
         0.0,
     ),  # [open] pending the identified corridor (the Troy/Piqua manufacturing reach)
-    plant_receiving={},  # [open] pending the Troy/Piqua WWTP NPDES fact sheet(s)
+    plant_receiving={
+        "piqua-wwtp": (
+            "Great Miami River",
+            # OEPA NPDES 1PD00008 / App. OH0027049 (Piqua WWTP), fact sheet Public Notice
+            # 22-006-011 (2022-06-21) — extracted/oepa/1PD00008.fs.npdes.yaml + …/1PD00008.npdes.yaml.
+            # Outfall 001 → Great Miami River (→ Ohio River; HUC-8 05080002); average design flow
+            # 8.7 MGD (13.46 cfs), peak hydraulic 22.5 MGD. WLA basis (fact-sheet Table 13):
+            # GMR above Sidney 7Q10 = 24.0 cfs annual (USGS #03261500, 1927-2021). Reported 2023
+            # actual mean 3.224 MGD (37.1% of design, 0 CSO/exceedances) —
+            # data/extracted/troy-piqua/wwtp-oh0027049.dmr.yaml [verified — OEPA fact sheet + ECHO DMR].
+            "OEPA NPDES 1PD00008 (OH0027049, Piqua WWTP) → Great Miami River; design 8.7 MGD, "
+            "actual ~3.224 MGD (2023 DMR); fact-sheet 7Q10 24.0 cfs (GMR above Sidney, USGS 03261500) "
+            "— data/extracted/oepa/1PD00008.fs.npdes.yaml [verified]",
+        ),
+    },
     abstraction_gage="03262700",  # [verified] Great Miami River at Troy OH
     supply_gage_primary="03262700",  # [verified] Great Miami River at Troy
     supply_gage_secondary="03262500",  # [verified] Great Miami River at Piqua (the upstream reach)
     # [derived] LP3 7Q10 at USGS 03262700 (Great Miami River at Troy OH, 44 yr 1980-2024) —
     # conservative abstraction screen floor and the receiving-reach denominator for the Troy/Piqua
-    # WWTP assimilative screen; regulatory passby minimum pending the OEPA NPDES fact sheet (#828).
+    # WWTP assimilative screen. The Piqua WWTP fact sheet (1PD00008, #828) is now in-corpus; its
+    # WLA cites a GMR-above-Sidney 7Q10 of 24.0 cfs at USGS 03261500 (upstream of the Piqua outfall),
+    # the conservative regulatory receptor — the Troy-gage LP3 value below stays the local passby floor.
     passby_primary_cfs=44.75,
     passby_secondary_cfs=0.0,  # [open] Great Miami at Piqua (03262500) daily record starts 2012 (<20 yr) — no derived 7Q10; passby pending
     facility=None,  # [open] the I-75-corridor data-center dimension is the research target (#475)
