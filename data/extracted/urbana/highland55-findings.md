@@ -1,8 +1,8 @@
 # Highland55 — investigative findings
 
 **Corpus**: `data/documents/permits/highland55/` (10 instruments, PR #803)
-**Issue**: #447 (**resolved 2026-07-09**, #1328) · sub-issue of #1263
-**As of**: 2026-07-09
+**Issue**: #447 (**resolved 2026-07-09**, #1328) · facility populated #1327 · thesis corrected #1330 · sub-issue of #1263
+**As of**: 2026-07-10
 
 > **Resolution (#1328).** The `[open]` data-center end-use is resolved and lead #447 is
 > closed. The land assembly is sourced to the Champaign County auditor CAMA record — four
@@ -129,3 +129,28 @@ instrument is still wanted — any of:
 - An ODOD/JobsOhio or CRA/PILOT record identifying the tenant
 
 These are tracked in the sibling #1263 catch-up issues, not lead #447 (now closed).
+
+## Water-abstraction thesis — corrected (#1330)
+
+The corpus originally framed Urbana's data-center risk as **consumptive cooling draw vs. Mad
+River baseflow + the buried-valley sole-source aquifer** — the reason the profile carries the
+`abstraction_gage`/`supply_gage`/`passby` fields (ONBOARDING.md self-research §). The **Feb-2026
+disclosure supersedes that framing for this facility**: the Urbana Technology Hub is designed with
+**closed-loop cooling**, water use "comparable to a standard office building" (`[reference]`, Urbana
+Daily Citizen 2026-02-18; carried on `_URBANA.facility.cooling_model = CLOSED_LOOP_DRY`).
+
+If that design holds, the abstraction-dominance screen **does not bind this facility** — the live
+constraint shifts to:
+
+- **Grid / power** — the end user funds all transmission upgrades; serving utility **AES Ohio
+  (Dayton Power & Light)**, PJM **DAY** zone. The campus MW load, PJM interconnection queue
+  position, and any genset air permit stay `[open]` (#1263 sub-leads).
+- **Land use** — the ~230-ac assembly (four parcels, three Thor single-purpose entities) west of
+  US-68 / SR-55, and the CRA/PILOT + development-agreement incentives.
+
+The `abstraction_gage`/`supply_gage`/`passby` fields are **retained as a reach-level source-water
+screen** — still valid for the Mad River sole-source aquifer generally, and for any future
+high-water abstractor — but they are **not** the binding constraint for this closed-loop facility.
+Per BOSC method, the closed-loop disclosure stands as reported: **no water figure was invented to
+preserve the old thesis** (omission/correction over invention). Full facility record + cooling
+citation: [`datacenter-facility.md`](datacenter-facility.md) §5.
