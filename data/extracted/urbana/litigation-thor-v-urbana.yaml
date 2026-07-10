@@ -267,6 +267,7 @@ companion_case:
   posture: "Administrative appeal (R.C. Ch. 2506) of the BZA's affirmance of the 'incomplete' site-plan determination"
   status: open
   case_no: null                              # [open] — not in corpus
+  follow_up: "watermark-directory/the-watermark-directory#1360"
   known_from_complaint: >
     Doc #1 ¶¶71–72: Thor appealed the application denial to BOTH the Champaign County Court of
     Common Pleas AND the BZA (¶71), because the City's actions made it unclear who had denied the
@@ -275,7 +276,7 @@ companion_case:
 
 # ---------------------------------------------------------------------------------------------
 open_targets:
-  - "Exhibits 1–9 to Doc #1 (the four Apr-2025 ordinances, Res. 2727-26, the counsel letter, the BZA response, the motion for continuance, Ord. 4635-26) — separate ECF attachments; ingest to take the ordinance record [reference] → [verified]."
-  - "The Champaign County Common Pleas administrative appeal (case number + complaint) — the companion case."
+  - "Exhibits 1–9 to Doc #1 (the four Apr-2025 ordinances, Res. 2727-26, the counsel letter, the BZA response, the motion for continuance, Ord. 4635-26) — separate ECF attachments; ingest to take the ordinance record [reference] → [verified]. Follow-up: #1359."
+  - "The Champaign County Common Pleas administrative appeal (case number + complaint) — the companion case. Follow-up: #1360."
   - "Later docket entries in 3:26-cv-00196 (answer, any TRO/PI motion + ruling) — the case is live as of 2026-07-10."
   - "The City of Urbana minutes/ordinance source for Res. 2727-26 and Ord. 4635-26 — the defendant-side record."

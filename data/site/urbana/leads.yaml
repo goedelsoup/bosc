@@ -10,8 +10,9 @@ leads:
     (Western Division) on 2026-06-19, docket 3:26-cv-00196-MJN-CHG. The complaint is ingested
     (data/documents/legal/thor-v-urbana/1.pdf) and read in
     data/extracted/urbana/litigation-thor-v-urbana.{yaml,md}. Eight counts: procedural + substantive
-    due process (§1983), five declaratory-judgment counts voiding the March-2026 emergency moratorium
-    (Res. 2727-26), and a count that the "incomplete" site-plan denial violated Zoning Ch. 1110. Thor
+    due process (§1983), four declaratory-judgment counts invalidating the March-2026 emergency
+    moratorium (Res. 2727-26) (Counts III–VI), the vested-rights count (VII), and the
+    site-plan-denial count (VIII — the "incomplete" denial violated Zoning Ch. 1110). Thor
     claims a vested right to the data-center use that froze when it filed its 2026-02-13 site plan
     (Golf Vill. N. LLC v. City of Powell, 6th Cir.). Relief includes a Rule 65 injunction directing
     approval. This is the live legal spine of the Urbana story. OPEN — the outcome is pending; the
@@ -31,7 +32,7 @@ leads:
     corpus. OPEN — the Common Pleas filing and its case number are not yet ingested; retrieve from
     the Champaign County Clerk of Courts and add to litigation-thor-v-urbana.yaml `companion_case`.
   source: 'Complaint ¶¶71–72 (3:26-cv-00196) · data/extracted/urbana/litigation-thor-v-urbana.yaml companion_case'
-  issue: 1329
+  issue: 1360
 - id: GH-448
   kind: question
   status: review
