@@ -2921,6 +2921,48 @@
     "source_doc_published": false
   },
   {
+    "rel": "oepa/2DP00130.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Bosc",
+    "confidence": "high",
+    "warnings": [
+      "Facility name listed as 'Bosc' on the discharge address line — may be truncated or an OCR artifact; applicant/permittee is BISTROZZI LLC",
+      "Comment period end (2026-07-31) inferred as 30 days after public notice date; not explicitly stated",
+      "Stream network not applicable — this is an indirect discharge to a POTW, not a surface water body",
+      "Outfall identifier '2DP00130001' derived from permit text referencing outfall number 001 under permit 2DP00130"
+    ],
+    "fields": {
+      "facility_name": "Bosc",
+      "permit_no": "2DP00130*AP",
+      "permit_action": "new",
+      "applicant": "BISTROZZI LLC, 4110 N COLE ST, Lima, OH, 45801",
+      "application_no": "OHP000437",
+      "public_notice_no": "222503",
+      "public_notice_date": "2026-07-01",
+      "comment_period_end": "2026-07-31",
+      "facility_address": "4110 N COLE ST, Lima, OH, 45801, Allen County",
+      "discharge_address": "American Bath Wastewater Treatment Plant, 3226 N. Cole Street, Lima, Ohio 45801, Allen County",
+      "receiving_water": "American – Bath Wastewater Treatment Plant (POTW)",
+      "stream_network": null,
+      "outfalls": [
+        "2DP00130001"
+      ],
+      "note": "This is an Indirect Discharge Permit to a POTW (not a direct NPDES surface water discharge). The facility is described as a Data Center discharging domestic waste and non-contact cooling water. Comment period end is calculated as 30 days after the July 1, 2026 public notice date. Permit expiration date is December 31, 2028. The facility name on the discharge address line reads \"Bosc\" which may be a truncation or OCR artifact of the facility name; the applicant/permittee is BISTROZZI LLC."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/2DP00130.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/2DP00130.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
     "rel": "oepa/2PD00006.fs.npdes.yaml",
     "group": "permits-npdes",
     "title": "Van Wert Wastewater Treatment Plant (WWTP)",
