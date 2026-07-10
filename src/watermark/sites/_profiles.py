@@ -1128,6 +1128,13 @@ _URBANA = SiteProfile(
             "design flow 4.5 MGD [verified — permit renewal app eDoc 3832476]",
         ),
     },
+    # Source-water / abstraction screen (#441 self-research). RE-SCOPED (#1330): these fields are a
+    # REACH-LEVEL screen — valid for the Mad River sole-source buried-valley aquifer generally, and
+    # for any future high-water abstractor — but they are NOT the binding constraint for the disclosed
+    # Urbana Technology Hub facility, which uses CLOSED-LOOP cooling (water "comparable to a standard
+    # office building", see facility.cooling_model below). For THAT facility the binding constraint is
+    # grid/power (end-user-funded transmission upgrades, AES Ohio / PJM DAY) + land use, not consumptive
+    # cooling draw. Retained, not deleted — the abstraction thesis still holds for the aquifer at large.
     abstraction_gage="03267000",  # [verified] Mad River near Urbana OH
     supply_gage_primary="03267000",  # [verified] Mad River near Urbana
     supply_gage_secondary="03267900",  # [verified] Mad River at Eagle City (downstream)
