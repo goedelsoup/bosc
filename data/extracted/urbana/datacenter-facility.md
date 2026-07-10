@@ -37,8 +37,12 @@ Champaign Recorder / Ohio SoS). So the *end-use* is `[reference]` (public disclo
 - **H2 2025 – 2026** — the ~230-ac land assembly recorded to the Champaign County auditor (four
   parcels, three Thor single-purpose entities) — the register + LLC graph are in
   [`land-assembly.yaml`](land-assembly.yaml) / [`highland55-findings.md`](highland55-findings.md).
-- Litigation **Thor v. Urbana** (federal S.D. Ohio + Common Pleas) is tracked under the parent
-  epic #1263.
+- Litigation **Thor v. Urbana** — the federal case (S.D. Ohio **3:26-cv-00196-MJN-CHG**, filed
+  2026-06-19) is now **in corpus** as a filed primary instrument
+  ([`litigation-thor-v-urbana.md`](litigation-thor-v-urbana.md), #1329). It independently
+  corroborates the data-center end-use: the City amended M-1 to permit data centers on this land
+  (Ord. 4621-25) specifically for the Project, then moved to reverse it. The companion Champaign
+  County Common Pleas administrative appeal remains `[open]`.
 
 ## 3. Land assembly `[verified]` (deed record) — see §land-assembly
 

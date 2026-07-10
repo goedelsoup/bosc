@@ -1,7 +1,7 @@
 # Highland55 — investigative findings
 
 **Corpus**: `data/documents/permits/highland55/` (10 instruments, PR #803)
-**Issue**: #447 (**resolved 2026-07-09**, #1328) · facility populated #1327 · thesis corrected #1330 · sub-issue of #1263
+**Issue**: #447 (**resolved 2026-07-09**, #1328) · facility populated #1327 · thesis corrected #1330 · federal case ingested #1329 · sub-issue of #1263
 **As of**: 2026-07-10
 
 > **Resolution (#1328).** The `[open]` data-center end-use is resolved and lead #447 is
@@ -10,8 +10,9 @@
 > [`land-assembly.yaml`](land-assembly.yaml); the geometry is `parcel-assemblage.geojson`
 > (#1326). The end-use is now **data center campus ("Urbana Technology Hub")**, tagged
 > `[reference]` on the public disclosure (Urbana Daily Citizen, 2026-02-18 "Data center plans
-> revealed at city meeting"; 2026-06-14) + the Thor v. Urbana litigation tracked under #1263 —
-> no longer `[open]`. A facility-naming primary instrument (air/building permit, interconnection)
+> revealed at city meeting"; 2026-06-14) + the Thor v. Urbana litigation — the federal complaint
+> (S.D. Ohio 3:26-cv-00196-MJN-CHG) is now in corpus (#1329,
+> [`litigation-thor-v-urbana.md`](litigation-thor-v-urbana.md)) — no longer `[open]`. A facility-naming primary instrument (air/building permit, interconnection)
 > would take the end-use itself to `[verified]`; the land assembly, developer, and considerations
 > already are. See the **Land assembly** section below.
 
