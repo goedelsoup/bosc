@@ -152,6 +152,49 @@ def test_wet_antecedent_bound_brackets_the_as_permitted_peak(hydro_settings: Set
     assert "AMC-III" in calib.detail
 
 
+def test_receiving_peak_is_routed_to_the_confluence(hydro_settings: Settings) -> None:
+    # #1298: the campus outfall hydrograph is routed down the cited Dug Run reach chain to the
+    # Ottawa confluence, so the receiving-water peak reflects reach travel — attenuated and
+    # lagged — not the at-outfall peak.
+    screen = screen_campus_discharge(settings=hydro_settings, live=True)
+    rd = screen.routed_discharge
+    assert rd is not None, "the committed reaches.yaml chain should route the outfall hydrograph"
+    assert rd.return_period_yr == screen.design_return_period_yr
+    assert rd.receiving_water == "Dug Run"
+    # The at-outfall peak is the design-storm as-permitted post peak (no reach travel yet).
+    dp = screen.design_peak
+    assert dp is not None
+    assert rd.at_outfall_peak_cfs == pytest.approx(dp.post_peak_cfs, rel=0.01)
+    # Routing attenuates and (weakly) lags the peak: the confluence sees less than the outfall.
+    assert 0.0 < rd.routed_peak_cfs < rd.at_outfall_peak_cfs
+    assert rd.attenuation_pct > 0.0
+    assert rd.lag_hr >= 0.0
+    # The routed reach is the committed Dug Run chain (head + confluence), tagged an assumption.
+    assert rd.reach_length_ft.source == "assumption"
+    assert rd.reach_length_ft.value == pytest.approx(27000.0)
+    assert "dug-run-head" in rd.reach_path and "dug-run-confluence" in rd.reach_path
+    # The routed finding surfaces the attenuation/lag as an upper bound on reach travel.
+    routed_finding = next(
+        f for f in discharge_findings(screen) if f.check == "routed-receiving-peak"
+    )
+    assert "attenuated" in routed_finding.detail and "confluence" in routed_finding.detail
+
+
+def test_routing_does_not_soften_the_at_outfall_erosion_signal(hydro_settings: Settings) -> None:
+    # The at-outfall peak-to-7Q10 ratio (the erosion headline) is unchanged by routing — the
+    # routed confluence peak is supplementary, not a replacement that softens the signal.
+    screen = screen_campus_discharge(settings=hydro_settings, live=True)
+    dp = screen.design_peak
+    assert dp is not None and screen.peak_to_7q10_ratio is not None
+    # peak_to_7q10_ratio is still computed on the at-outfall post peak, not the routed peak.
+    assert screen.receiving_7q10 is not None
+    assert screen.peak_to_7q10_ratio == pytest.approx(
+        round(dp.post_peak_cfs / screen.receiving_7q10.value)
+    )
+    # The caveat discloses the reach-travel upper bound and that intermediate reaches see more.
+    assert any("upper bound" in c and "intermediate" in c for c in screen.caveats)
+
+
 def test_committed_discharge_screen_loads_and_matches(hydro_settings: Settings) -> None:
     committed = load_discharge_screen(hydro_settings)
     assert committed is not None, (
@@ -169,3 +212,12 @@ def test_committed_discharge_screen_loads_and_matches(hydro_settings: Settings) 
     # The committed wet-antecedent (AMC-III) bound also round-trips and matches.
     assert c25.post_peak_wet_cfs is not None and f25.post_peak_wet_cfs is not None
     assert c25.post_peak_wet_cfs == pytest.approx(f25.post_peak_wet_cfs, rel=0.01)
+    # The committed routed receiving-water peak (#1298) round-trips and matches a fresh recompute.
+    assert committed.routed_discharge is not None and fresh.routed_discharge is not None
+    assert committed.routed_discharge.receiving_water == "Dug Run"
+    assert committed.routed_discharge.routed_peak_cfs == pytest.approx(
+        fresh.routed_discharge.routed_peak_cfs, rel=0.01
+    )
+    assert committed.routed_discharge.attenuation_pct == pytest.approx(
+        fresh.routed_discharge.attenuation_pct, abs=0.5
+    )

@@ -158,6 +158,37 @@ class DischargePeak(BaseModel):
     post_peak_wet_cfs: float | None = None
 
 
+class RoutedDischarge(BaseModel):
+    """Muskingum-Cunge routing of the campus outfall hydrograph to its mainstem confluence.
+
+    The discharge screen's other peaks are *at-outfall* — the peak as it leaves the 60-inch
+    trunk, with no reach travel. This routes that as-permitted post-development outfall
+    hydrograph down the committed ``reaches.yaml`` receiving-tributary channel to its Ottawa
+    confluence, so the receiving-water peak is **attenuated and lagged**, not the at-outfall
+    peak (#1298). Tier-0 screening on stated reach assumptions — not a calibrated HEC-RAS
+    model. The outfall's exact entry point on the tributary is not in the record, so the
+    routed channel length is an **upper bound** on outfall->confluence travel; hence the
+    attenuation / lag are upper bounds and the confluence peak a lower bound (the reaches
+    *between* the outfall and the confluence see intermediate, larger peaks — the at-outfall
+    peak-to-7Q10 erosion signal is the unattenuated headline this does not soften).
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    tier: Literal["tier0"] = "tier0"
+    return_period_yr: int
+    receiving_water: str
+    reach_path: str  # the routed node chain, e.g. "dug-run-head (21,000 ft @ 0.002) -> ..."
+    reach_length_ft: ProvenancedValue  # total routed channel length (assumption; reaches.yaml)
+    at_outfall_peak_cfs: float
+    at_outfall_time_to_peak_hr: float
+    routed_peak_cfs: float  # at the mainstem confluence
+    routed_time_to_peak_hr: float
+    attenuation_pct: float  # (at_outfall - routed) / at_outfall
+    lag_hr: float  # routed_ttp - at_outfall_ttp
+    method: str = ""
+
+
 class CampusDischargeScreen(BaseModel):
     """ASWCD-calibrated screening of the campus storm discharge to its receiving water.
 
@@ -196,6 +227,10 @@ class CampusDischargeScreen(BaseModel):
     peak_to_7q10_ratio: float | None = None  # design-RP post peak / 7Q10
     detention_design_shown: bool = False
     basin_chronology_note: str = ""
+    # Routed receiving-water peak/lag for the design storm (#1298): the at-outfall peak
+    # carried down the receiving tributary to its Ottawa confluence. Optional so pre-#1298
+    # committed artifacts still load; None when no committed reach chain resolves.
+    routed_discharge: RoutedDischarge | None = None
     method: str = ""
     caveats: list[str] = []
 

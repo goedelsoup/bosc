@@ -18,10 +18,11 @@ from __future__ import annotations
 import math
 from pathlib import Path
 
+import numpy as np
 import yaml
 
 from watermark.config import Settings, get_settings
-from watermark.hydrology import geo
+from watermark.hydrology import geo, network
 from watermark.hydrology.connectors._cache import HydroOfflineError
 from watermark.hydrology.connectors.noaa_atlas14 import design_storm
 from watermark.hydrology.connectors.ssurgo import SsurgoError, dominant_hsg
@@ -31,12 +32,18 @@ from watermark.hydrology.model import (
     DesignStorm,
     DischargePeak,
     HydroFinding,
+    Hydrograph,
+    NetworkNode,
     OutfallCapacity,
     ProvenancedValue,
+    Reach,
+    ReachTable,
+    RoutedDischarge,
     SiteFootprint,
     StormRunoff,
 )
 from watermark.hydrology.solver.curve_number import cn_for, composite_cn
+from watermark.hydrology.solver.routing import route
 from watermark.hydrology.solver.runoff import simulate_runoff
 from watermark.logging import get_logger
 from watermark.sites import active_profile
@@ -281,6 +288,141 @@ def _discharge_path(settings: Settings) -> Path:
     return settings.data_dir / "reference" / "hydrology" / "bosc-stormwater-discharge.yaml"
 
 
+# Extra zero-padded tail (hr) so a routed reach's lag never clips the peak off the horizon
+# (mirrors watermark.hydrology.hydrograph_routing).
+_ROUTING_HEADROOM_HR = 24.0
+_ROUTING_DT_HR = 0.1
+
+
+def _reach_route_kwargs(reach: Reach) -> dict[str, float]:
+    """The optional trapezoid overrides on a reach; the rest fall back to ``route``'s defaults."""
+    kw: dict[str, float] = {}
+    if reach.bottom_width_ft is not None:
+        kw["bottom_width_ft"] = reach.bottom_width_ft.value
+    if reach.side_slope_z is not None:
+        kw["side_slope_z"] = reach.side_slope_z.value
+    if reach.manning_n is not None:
+        kw["manning_n"] = reach.manning_n.value
+    return kw
+
+
+def _tributary_reach_chain(
+    nodes: list[NetworkNode], table: ReachTable, receiving_water: str
+) -> list[tuple[NetworkNode, Reach]]:
+    """The committed reach chain carrying ``receiving_water`` down to its mainstem confluence.
+
+    Walks the cited topology from the tributary's headwater, following ``downstream`` and
+    collecting each node that has a reach in ``table``, stopping once it routes through the
+    confluence node (the tributary -> mainstem junction). Site-generic: it resolves the chain
+    by the footprint's named receiving water, never a hardcoded Lima node id. Empty when the
+    receiving water has no committed headwater/reach chain.
+    """
+    by_id = {n.id: n for n in nodes}
+    start = next(
+        (
+            n
+            for n in nodes
+            if n.kind == "headwater"
+            and n.receiving_water == receiving_water
+            and n.id in table.reaches
+        ),
+        None,
+    )
+    chain: list[tuple[NetworkNode, Reach]] = []
+    node: NetworkNode | None = start
+    seen: set[str] = set()
+    while node is not None and node.id not in seen:
+        seen.add(node.id)
+        reach = table.reaches.get(node.id)
+        if reach is not None:
+            chain.append((node, reach))
+        if node.kind == "confluence":
+            break  # routed the tributary into the mainstem; stop
+        node = by_id.get(node.downstream) if node.downstream else None
+    return chain
+
+
+def _route_campus_outfall(
+    post: Hydrograph,
+    receiving_water: str,
+    design_return_period_yr: int,
+    *,
+    settings: Settings,
+) -> RoutedDischarge | None:
+    """Route the as-permitted post-development outfall hydrograph down to the confluence (#1298).
+
+    Carries ``post`` (the at-outfall design-storm hydrograph) through the committed
+    ``reaches.yaml`` receiving-tributary channel using the constant-parameter Muskingum-Cunge
+    primitive, so the receiving-water peak is attenuated and lagged rather than the at-outfall
+    peak. Returns ``None`` when the committed topology/reach chain is absent (the screen still
+    reports at-outfall peaks). Tier-0 screening on stated reach assumptions.
+    """
+    from watermark.hydrology import hydrograph_routing  # lazy: hydrograph_routing imports us
+
+    nodes = network.load_topology(settings=settings)
+    table = hydrograph_routing.load_reaches(settings=settings)
+    if not nodes or table is None:
+        return None
+    chain = _tributary_reach_chain(nodes, table, receiving_water)
+    if not chain:
+        return None
+
+    inflow = np.asarray(post.flows_cfs, dtype=np.float64)
+    if inflow.size == 0 or float(inflow.max()) <= 0.0:
+        return None
+    headroom = round(_ROUTING_HEADROOM_HR / _ROUTING_DT_HR)
+    padded = np.concatenate([inflow, np.zeros(headroom, dtype=np.float64)])
+    times = np.arange(1, padded.size + 1, dtype=np.float64) * _ROUTING_DT_HR
+
+    outflow = padded
+    total_len = 0.0
+    segments: list[str] = []
+    for node, reach in chain:
+        outflow = route(
+            outflow,
+            length_ft=reach.length_ft.value,
+            slope=reach.slope.value,
+            dt_hr=_ROUTING_DT_HR,
+            **_reach_route_kwargs(reach),
+        )
+        total_len += reach.length_ft.value
+        segments.append(f"{node.id} ({reach.length_ft.value:,.0f} ft @ {reach.slope.value:g})")
+
+    at_peak = post.peak_cfs
+    at_ttp = post.time_to_peak_hr
+    r_idx = int(np.argmax(outflow))
+    routed_peak = float(outflow[r_idx])
+    routed_ttp = float(times[r_idx])
+    atten = round(100.0 * (at_peak - routed_peak) / at_peak, 2) if at_peak else 0.0
+
+    return RoutedDischarge(
+        return_period_yr=design_return_period_yr,
+        receiving_water=receiving_water,
+        reach_path=" -> ".join(segments),
+        reach_length_ft=ProvenancedValue.assume(
+            round(total_len, 0),
+            "ft",
+            why=(
+                f"total committed {receiving_water} channel length to the Ottawa confluence "
+                f"(reaches.yaml: {' + '.join(segments)}); an UPPER bound on outfall->confluence "
+                f"travel — the outfall's entry point on {receiving_water} is not in the record"
+            ),
+        ),
+        at_outfall_peak_cfs=round(at_peak, 3),
+        at_outfall_time_to_peak_hr=round(at_ttp, 3),
+        routed_peak_cfs=round(routed_peak, 3),
+        routed_time_to_peak_hr=round(routed_ttp, 3),
+        attenuation_pct=atten,
+        lag_hr=round(routed_ttp - at_ttp, 3),
+        method=(
+            "Constant-parameter Muskingum-Cunge (watermark.hydrology.solver.routing) of the "
+            "as-permitted post-development outfall hydrograph down the committed reaches.yaml "
+            f"{receiving_water} channel to the Ottawa confluence; reach length/slope/geometry are "
+            "stated Tier-0 assumptions (reaches.yaml), not a calibrated HEC-RAS model."
+        ),
+    )
+
+
 def screen_campus_discharge(
     *,
     settings: Settings | None = None,
@@ -318,6 +460,7 @@ def screen_campus_discharge(
     full_tc = _scenario_tc_hr(1.0, settings=settings)
 
     peaks: list[DischargePeak] = []
+    design_post: Hydrograph | None = None
     for rp in sorted({*return_periods, design_return_period_yr}):
         depth = _resolve_storm(rp, settings=settings, live=live).depth.value
         pre = simulate_runoff(
@@ -326,6 +469,8 @@ def screen_campus_discharge(
         post = simulate_runoff(
             area_acres=acres, curve_number=post_cn, tc_hr=post_tc, storm_depth_in=depth
         )
+        if rp == design_return_period_yr:
+            design_post = post  # the at-outfall hydrograph routed to the confluence below
         # Conservative wet-antecedent bound: the same as-permitted composite CN (and its
         # shorter post Tc) under AMC-III (ground already saturated by prior rain), which
         # raises the peak the 60-inch outfall and Dug Run's low flow have to absorb.
@@ -375,6 +520,17 @@ def screen_campus_discharge(
         "sediment' inspection note — distinct from continuous-effluent dilution."
     )
 
+    # Route the at-outfall design-storm hydrograph down the receiving tributary to its Ottawa
+    # confluence (#1298): the receiving-water peak reflects reach travel — attenuated + lagged —
+    # not the at-outfall peak. Supplements (never softens) the at-outfall peak-to-7Q10 signal.
+    routed = (
+        _route_campus_outfall(
+            design_post, footprint.receiving_water, design_return_period_yr, settings=settings
+        )
+        if design_post is not None
+        else None
+    )
+
     return CampusDischargeScreen(
         site=footprint.site,
         footprint_area=ProvenancedValue.from_document(
@@ -399,6 +555,7 @@ def screen_campus_discharge(
         receiving_note=note,
         peak_to_7q10_ratio=ratio,
         detention_design_shown=footprint.detention_design_shown,
+        routed_discharge=routed,
         basin_chronology_note=(
             "The 95% SPS grading sheet shows NO detention/retention storage "
             "(lma1a.storm-inventory.yaml); the ESC inspections show basins under construction "
@@ -414,10 +571,14 @@ def screen_campus_discharge(
             "peaks are AMC-II (average antecedent moisture) with a wet-antecedent (AMC-III) "
             "conservative bound on the as-permitted post peak; outfall capacity = Manning "
             "full-flow (n=0.013) across an assumed slope band; receiving 7Q10 cited from the "
-            "OEPA NPDES fact sheet (2PH00006)."
+            "OEPA NPDES fact sheet (2PH00006). The receiving-water peak is additionally routed "
+            "down the cited reach chain to the Ottawa confluence (Tier-0 Muskingum-Cunge; see "
+            "routed_discharge) so it reflects reach travel, not only the at-outfall peak."
         ),
         caveats=[
-            "Screening-grade — not a routed hydraulic model or a permit determination.",
+            "Screening-grade — the receiving-water peak is a Tier-0 Muskingum-Cunge reach route "
+            "on stated reach assumptions (reaches.yaml), not a calibrated HEC-RAS model or a "
+            "permit determination; the pre/post/full peaks are at-outfall SCS-CN screening.",
             "Headline peaks are AMC-II; post_peak_wet_cfs is the AMC-III (wet-antecedent) "
             "upper bound — the storm falling on ground already saturated by prior rain.",
             "The outfall pipe slope is not in the record; capacity is bracketed across 0.3-1.0%.",
@@ -425,6 +586,11 @@ def screen_campus_discharge(
             "single 60-inch trunk is not stated, so the capacity comparison is a bracket.",
             "The composite post CN treats the developed-pervious remainder as graded open space "
             "and the undeveloped remainder as keeping prior cropland cover.",
+            "The outfall's entry point on the receiving tributary is not in the record, so the "
+            "routed channel length is an upper bound on travel — the routed attenuation/lag are "
+            "upper bounds and the confluence peak a lower bound; reaches between the outfall and "
+            "the confluence see intermediate, larger peaks (the at-outfall peak-to-7Q10 ratio, "
+            "unattenuated, is the headline erosion signal this routing does not soften).",
         ],
     )
 
@@ -458,6 +624,23 @@ def discharge_findings(screen: CampusDischargeScreen) -> list[HydroFinding]:
                     f"{rp}-yr post-dev peak {dp.post_peak_cfs:,.0f} cfs is "
                     f"~{screen.peak_to_7q10_ratio:,.0f}x {screen.receiving_water}'s cited 7Q10 "
                     f"{screen.receiving_7q10.value:g} cfs — channel-stability / erosion signal"
+                ),
+            )
+        )
+    rd = screen.routed_discharge
+    if rd is not None:
+        findings.append(
+            HydroFinding(
+                subject=f"{rd.receiving_water} receiving-water peak (routed)",
+                check="routed-receiving-peak",
+                ok=rd.attenuation_pct >= 0.0,
+                detail=(
+                    f"{rd.return_period_yr}-yr outfall hydrograph routed {rd.reach_length_ft.value:,.0f} "
+                    f"ft down {rd.receiving_water} to the Ottawa confluence: peak "
+                    f"{rd.at_outfall_peak_cfs:,.0f} cfs at the 60-in outfall -> {rd.routed_peak_cfs:,.0f} "
+                    f"cfs at the confluence ({rd.attenuation_pct:g}% attenuated, lagged {rd.lag_hr:g} hr) "
+                    "— Tier-0 Muskingum-Cunge, an upper bound on reach travel (reaches above the "
+                    "confluence see intermediate, larger peaks)"
                 ),
             )
         )
