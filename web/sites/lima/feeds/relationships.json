@@ -300,6 +300,26 @@
     "relation_basis": null
   },
   {
+    "src": "BISTROZZI",
+    "rel": "operates",
+    "dst": "npdes:2DP00130",
+    "date": "",
+    "ref": "2DP00130*AP",
+    "source": "oepa/2DP00130.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:2DP00130",
+    "rel": "discharges_to",
+    "dst": "AMERICAN BATH WASTEWATER TREATMENT PLANT POTW",
+    "date": "",
+    "ref": "2DP00130*AP",
+    "source": "oepa/2DP00130.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "CITY OF VAN WERT",
     "rel": "operates",
     "dst": "npdes:2PD00006",

@@ -36,6 +36,7 @@
     "relation_basis": "Developer/land-assembler of the campus; grantee on the corridor deeds, applicant on the EPA/air permits (DOSSIER §2-§4)",
     "variants": [
       "BISTROZZI LLC",
+      "BISTROZZI LLC, 4110 N COLE ST, Lima, OH, 45801",
       "BISTROZZI LLC, a Delaware limited liability company",
       "Bistrozzi",
       "Bistrozzi LLC",
@@ -48,7 +49,8 @@
       "epa_applicant": 22,
       "grantee": 4,
       "firm": 4,
-      "meeting_participant": 3
+      "meeting_participant": 3,
+      "applicant": 1
     },
     "parcels": [
       "36-0100-03-002.000",
@@ -80,6 +82,7 @@
       "W BLUELICK RD"
     ],
     "sources": [
+      "oepa/2DP00130.npdes.yaml",
       "permits/3702676.epa.yaml",
       "permits/3727059.epa.yaml",
       "permits/3727544.epa.yaml",
@@ -606,6 +609,29 @@
     "addresses": [],
     "sources": [
       "data/reference/rsei/inventory.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "AMERICAN BATH WASTEWATER TREATMENT PLANT POTW",
+    "display": "American – Bath Wastewater Treatment Plant (POTW)",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "American – Bath Wastewater Treatment Plant (POTW)"
+    ],
+    "signals": [],
+    "roles": {
+      "receiving_water": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/2DP00130.npdes.yaml"
     ],
     "lei": null,
     "uei": null,
@@ -2271,6 +2297,29 @@
     "federal_obligations": null
   },
   {
+    "key": "npdes:2DP00130",
+    "display": "Bosc",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Bosc"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/2DP00130.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
     "key": "data-center-campus",
     "display": "Data-center campus",
     "kind": "place",
@@ -2547,7 +2596,7 @@
   },
   {
     "key": "UNNAMED TRIBUTARY OF LYTLE CREEK",
-    "display": "unnamed tributary of Lytle Creek",
+    "display": "Unnamed Tributary of Lytle Creek",
     "kind": "water",
     "classification": "receiving_water",
     "relation_class": null,

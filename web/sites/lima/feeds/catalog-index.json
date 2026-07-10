@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "c7b3e3b36dcece34fcd6efd967ed48ce99b5e409ddfec848e6bd82b143f392f8",
+  "catalog_version": "400ac76e10cb682577b341f06cf95bf37995627843b2926c74366db9c5b15108",
   "contract_version": "1.24.0",
   "atoms": [
     {
@@ -720,7 +720,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "oepa",
-      "title": "Ohio EPA NPDES Permit Extractions (American II / American-Bath / Shawnee II)",
+      "title": "Ohio EPA permit extractions (Lima — receiving-WWTP NPDES + Bistrozzi indirect discharge)",
       "feed": "catalog"
     },
     {
@@ -993,6 +993,14 @@
       "site": "lima",
       "local_id": "AMAZON COM SERVICES",
       "title": "Amazon.com Services LLC",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:AMERICAN BATH WASTEWATER TREATMENT PLANT POTW",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "AMERICAN BATH WASTEWATER TREATMENT PLANT POTW",
+      "title": "American – Bath Wastewater Treatment Plant (POTW)",
       "feed": "entities"
     },
     {
@@ -1576,7 +1584,7 @@
       "kind": "entity",
       "site": "lima",
       "local_id": "UNNAMED TRIBUTARY OF LYTLE CREEK",
-      "title": "unnamed tributary of Lytle Creek",
+      "title": "Unnamed Tributary of Lytle Creek",
       "feed": "entities"
     },
     {
@@ -1705,6 +1713,14 @@
       "site": "lima",
       "local_id": "npdes:1PX00010",
       "title": "Wilmington RV Resort",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:npdes:2DP00130",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "npdes:2DP00130",
+      "title": "Bosc",
       "feed": "entities"
     },
     {
@@ -2484,6 +2500,14 @@
       "feed": "records"
     },
     {
+      "handle": "record:lima:oepa/2DP00130.npdes.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/2DP00130.npdes.yaml",
+      "title": "Bosc",
+      "feed": "records"
+    },
+    {
       "handle": "record:lima:oepa/2PD00006.fs.npdes.yaml",
       "kind": "record",
       "site": "lima",
@@ -3025,6 +3049,14 @@
       "site": "lima",
       "local_id": "202604210003890",
       "title": "Limited Warranty Deed 202604210003890: Timothy R. Pieper, RaeAnn Pieper → Bistrozzi Addition LLC",
+      "feed": "timeline"
+    },
+    {
+      "handle": "timeline:lima:2DP00130*AP",
+      "kind": "timeline",
+      "site": "lima",
+      "local_id": "2DP00130*AP",
+      "title": "NPDES 2DP00130*AP (Bosc) — public notice",
       "feed": "timeline"
     },
     {

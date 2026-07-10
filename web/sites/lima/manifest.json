@@ -2,9 +2,9 @@
   "site": "lima",
   "bundle_version": "1.0.0",
   "contract_version": "1.24.0",
-  "generated_at": "2026-07-08T21:05:59+00:00",
+  "generated_at": "2026-07-10T14:26:34+00:00",
   "feed_count": 42,
-  "row_total": 810,
+  "row_total": 817,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -22,7 +22,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 71
+      "count": 72
     },
     {
       "name": "timeline",
@@ -30,7 +30,7 @@
       "media_type": "application/json",
       "schema": "schemas/timeline.schema.json",
       "kind": "collection",
-      "count": 182
+      "count": 184
     },
     {
       "name": "entities",
@@ -38,7 +38,7 @@
       "media_type": "application/json",
       "schema": "schemas/entities.schema.json",
       "kind": "collection",
-      "count": 100
+      "count": 102
     },
     {
       "name": "relationships",
@@ -46,7 +46,7 @@
       "media_type": "application/json",
       "schema": "schemas/relationships.schema.json",
       "kind": "collection",
-      "count": 95
+      "count": 97
     },
     {
       "name": "people",

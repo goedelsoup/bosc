@@ -3663,5 +3663,47 @@
       "note": null,
       "verified": true
     }
+  },
+  {
+    "date": "2026-07-01",
+    "category": "npdes_public_notice",
+    "title": "NPDES 2DP00130*AP (Bosc) — public notice",
+    "ref": "2DP00130*AP",
+    "parties": [
+      "BISTROZZI LLC, 4110 N COLE ST, Lima, OH, 45801",
+      "Bosc"
+    ],
+    "detail": "action new; receiving American – Bath Wastewater Treatment Plant (POTW)",
+    "source": "oepa/2DP00130.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/2DP00130.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2026-07-31",
+    "category": "npdes_comment_deadline",
+    "title": "NPDES 2DP00130*AP (Bosc) — comment period ends",
+    "ref": "2DP00130*AP",
+    "parties": [
+      "BISTROZZI LLC, 4110 N COLE ST, Lima, OH, 45801",
+      "Bosc"
+    ],
+    "detail": "",
+    "source": "oepa/2DP00130.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/2DP00130.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
   }
 ]
