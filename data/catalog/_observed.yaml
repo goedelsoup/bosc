@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-10T14:08:51.565546+00:00'
+reconciled_at: '2026-07-10T15:34:37.026802+00:00'
 entries:
   aedg:
     exists: true
@@ -242,8 +242,8 @@ entries:
     site_scope: site:fort-wayne
   datacenter-industry:
     exists: true
-    sha256: bca65a269956e827264e06865a041501b30971cee68d4833f924d7e1615211c3
-    size_bytes: 12047
+    sha256: 863defd49f0caae14a18840e4de9c32a6846e4ca1f8a423e350ac92ff3100cc8
+    size_bytes: 14800
     lfs_materialized: true
     file_count: 1
     missing: []
