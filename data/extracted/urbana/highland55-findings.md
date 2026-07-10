@@ -1,7 +1,7 @@
 # Highland55 — investigative findings
 
 **Corpus**: `data/documents/permits/highland55/` (10 instruments, PR #803)
-**Issue**: #447 (**resolved 2026-07-09**, #1328) · facility populated #1327 · thesis corrected #1330 · federal case ingested #1329 · sub-issue of #1263
+**Issue**: #447 (**resolved 2026-07-09**, #1328) · facility populated #1327 · thesis corrected #1330 · federal case ingested #1329 · power/air instrument searched negative #1353 · sub-issue of #1263
 **As of**: 2026-07-10
 
 > **Resolution (#1328).** The `[open]` data-center end-use is resolved and lead #447 is
@@ -130,6 +130,22 @@ instrument is still wanted — any of:
 - An ODOD/JobsOhio or CRA/PILOT record identifying the tenant
 
 These are tracked in the sibling #1263 catch-up issues, not lead #447 (now closed).
+
+**Facility-naming instrument search — negative (#1353, 2026-07-10).** The two primary power/
+emissions instruments were searched and **neither surfaced**, so the end-use **stays `[reference]`**
+and the campus MW stays `[open]` (full record:
+[`facility-power-instrument-search.md`](facility-power-instrument-search.md)):
+
+- **PJM interconnection / AES Ohio (DAY) TEAC** — no Champaign-County / Urbana large-load or
+  generation request. AES Ohio's disclosed Dayton large-load customers are Piqua / Adams County /
+  Marysville / Tipp City / Jeffersonville / Wilmington; the only Champaign PJM-queue item is the
+  withdrawn Woodstock Solar (AE2-342, 40 MW). `[verified]`
+- **OEPA air (ECHO ICIS-AIR)** — no campus air permit at the SR-55/US-68 site (7 pre-existing
+  Urbana-area sources only); expected for a greenfield whose construction opens 2026-06-01.
+  `[verified]`
+- **⚠️ Do not conflate:** the 100 MW→1.3 GW AES Ohio ramp is **Adams County (Stuart)** and the
+  ~500 MW figure is Thor's **Van Wert** campus — neither is Urbana. No MW was disclosed for Urbana;
+  the `[inference]` bracket is retained, no figure fabricated.
 
 ## Water-abstraction thesis — corrected (#1330)
 
