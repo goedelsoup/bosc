@@ -195,6 +195,42 @@ def test_routing_does_not_soften_the_at_outfall_erosion_signal(hydro_settings: S
     assert any("upper bound" in c and "intermediate" in c for c in screen.caveats)
 
 
+def test_tributary_reach_chain_requires_a_confluence(hydro_settings: Settings) -> None:
+    # #1298 guard: a walk that never reaches a mainstem confluence (a broken downstream edge
+    # or a cycle) leaves a PARTIAL chain that must not be routed and mislabeled as reaching the
+    # Ottawa confluence — the helper returns nothing so _route_campus_outfall skips it.
+    from watermark.hydrology.model import NetworkNode, ProvenancedValue, Reach, ReachTable
+    from watermark.hydrology.stormwater import _tributary_reach_chain
+
+    reach = Reach(
+        length_ft=ProvenancedValue.assume(1000.0, "ft", why="test"),
+        slope=ProvenancedValue.assume(0.002, "ft/ft", why="test"),
+    )
+    table = ReachTable(reaches={"trib-head": reach})
+    head = NetworkNode(
+        id="trib-head",
+        name="Trib head",
+        kind="headwater",
+        receiving_water="Trib",
+        downstream="trib-mid",
+    )
+    # 'trib-mid' is a dangling downstream id (not a node) -> the walk ends before any
+    # confluence -> no routable chain.
+    assert _tributary_reach_chain([head], table, "Trib") == []
+
+    # With a confluence terminating the walk, the chain resolves (even though the confluence
+    # node itself carries no reach entry here).
+    confluence = NetworkNode(
+        id="trib-mid",
+        name="Trib -> Ottawa",
+        kind="confluence",
+        receiving_water="Ottawa River",
+        downstream="outlet",
+    )
+    resolved = _tributary_reach_chain([head, confluence], table, "Trib")
+    assert [n.id for n, _ in resolved] == ["trib-head"]
+
+
 def test_committed_discharge_screen_loads_and_matches(hydro_settings: Settings) -> None:
     committed = load_discharge_screen(hydro_settings)
     assert committed is not None, (

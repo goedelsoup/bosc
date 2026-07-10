@@ -105,7 +105,7 @@ const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.valu
               evidenceNote: lowV.citation ?? lowV.source ?? undefined,
             },
           ]}
-          note={`The modeled ${worst.scenario.name} cooling draw (${fmt(drawV)}) is about ${drawRatio}× the ${riverName}'s 7Q10 design low flow (${fmt(lowV)}) — the drought flow Ohio writes discharge permits at. This is a basin-scale worst-case bound, not a river withdrawal: Lima draws treated water from five off-stream reservoirs (~15 BG) filled from the Auglaize and Ottawa at high flow, so the operating constraint is reservoir drawdown, not instantaneous river depletion.${liveV ? ` Live flow today (${fmt(liveV)}) is far higher, but the screen is written for the dry floor.` : ""}`}
+          note={`The modeled ${worst.scenario.name} cooling draw (${fmt(drawV)}) is about ${drawRatio}× the ${riverName}'s 7Q10 design low flow (${fmt(lowV)}) — the drought flow Ohio writes discharge permits at. This is a basin-scale worst-case bound, not a river withdrawal: Lima draws treated water from five off-stream reservoirs (~15 BG) filled from the Auglaize and Ottawa at high flow, so the operating constraint is reservoir drawdown, not instantaneous river depletion.${liveV?.value != null ? ` Live flow today (${fmt(liveV)}) is far higher, but the screen is written for the dry floor.` : ""}`}
         />
       )
     }

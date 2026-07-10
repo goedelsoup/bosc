@@ -331,15 +331,20 @@ def _tributary_reach_chain(
     chain: list[tuple[NetworkNode, Reach]] = []
     node: NetworkNode | None = start
     seen: set[str] = set()
+    reached_confluence = False
     while node is not None and node.id not in seen:
         seen.add(node.id)
         reach = table.reaches.get(node.id)
         if reach is not None:
             chain.append((node, reach))
         if node.kind == "confluence":
+            reached_confluence = True
             break  # routed the tributary into the mainstem; stop
         node = by_id.get(node.downstream) if node.downstream else None
-    return chain
+    # Only a walk that actually reaches the mainstem confluence is routable: a broken
+    # downstream edge or a cycle leaves a PARTIAL chain that must not be routed and
+    # mislabeled as reaching the Ottawa confluence — return nothing so the caller skips it.
+    return chain if reached_confluence else []
 
 
 def _route_campus_outfall(
