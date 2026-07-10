@@ -1,7 +1,7 @@
 ---
 title: Heat reuse
 kind: concept
-aliases: [waste-heat reuse, heat recovery, closed-loop chip cooling]
+aliases: [waste-heat reuse, heat recovery]
 tags: [data-center, cooling, energy, water-balance]
 summary: Capturing a data center's rejected thermal energy and redirecting it to on-site or district heating instead of dumping it — a cooling-design axis distinct from how much water the cooling draw consumes.
 related: [consumptive-cooling, hyperscale-data-center]
