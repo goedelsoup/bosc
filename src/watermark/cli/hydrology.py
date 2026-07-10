@@ -389,14 +389,23 @@ def storm_discharge(
         cap.add_row(f"{c.slope_pct:g}%", f"{c.capacity_cfs:,.0f}")
     console.print(cap)
     console.print(f"[dim]{screen.receiving_note}[/]")
+    rd = screen.routed_discharge
+    if rd is not None:
+        console.print(
+            f"[dim]routed[/] {rd.return_period_yr}-yr outfall peak {rd.at_outfall_peak_cfs:,.0f} cfs "
+            f"-> [bold]{rd.routed_peak_cfs:,.0f} cfs[/] at the {rd.receiving_water} confluence "
+            f"({rd.attenuation_pct:g}% attenuated, +{rd.lag_hr:g} hr) "
+            f"[dim]over {rd.reach_length_ft.value:,.0f} ft ({rd.reach_path})[/]"
+        )
     for f in findings:
         console.print(f"[{'green' if f.ok else 'red'}]{f}[/]")
     if write:
         path = stormwater.write_discharge_screen(screen, settings=settings)
         console.print(f"[green]wrote[/] {path}")
     console.print(
-        "\n[dim]Tier-0 SCS screening; post cover calibrated to the ASWCD footprint. "
-        "Not a routed hydraulic model or a permit determination.[/]"
+        "\n[dim]Tier-0 SCS screening; post cover calibrated to the ASWCD footprint. The "
+        "receiving-water peak is routed (Tier-0 Muskingum-Cunge on stated reach assumptions); "
+        "not a calibrated hydraulic model or a permit determination.[/]"
     )
 
 

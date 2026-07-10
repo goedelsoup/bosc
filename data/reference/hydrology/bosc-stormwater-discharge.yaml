@@ -88,15 +88,43 @@ basin_chronology_note: The 95% SPS grading sheet shows NO detention/retention st
   by 2026-06-05 (topsoil on main-basin slopes; a temporary SW basin started) — field
   storage appearing after the 95% design. Undetained, the post-development peak discharges
   straight to the 60-inch outfall.
+routed_discharge:
+  tier: tier0
+  return_period_yr: 25
+  receiving_water: Dug Run
+  reach_path: dug-run-head (21,000 ft @ 0.002) -> dug-run-confluence (6,000 ft @ 0.0015)
+  reach_length_ft:
+    value: 27000.0
+    unit: ft
+    source: assumption
+    citation: 'total committed Dug Run channel length to the Ottawa confluence (reaches.yaml:
+      dug-run-head (21,000 ft @ 0.002) + dug-run-confluence (6,000 ft @ 0.0015));
+      an UPPER bound on outfall->confluence travel — the outfall''s entry point on
+      Dug Run is not in the record'
+    confidence: low
+  at_outfall_peak_cfs: 350.101
+  at_outfall_time_to_peak_hr: 12.3
+  routed_peak_cfs: 289.187
+  routed_time_to_peak_hr: 13.2
+  attenuation_pct: 17.4
+  lag_hr: 0.9
+  method: Constant-parameter Muskingum-Cunge (watermark.hydrology.solver.routing)
+    of the as-permitted post-development outfall hydrograph down the committed reaches.yaml
+    Dug Run channel to the Ottawa confluence; reach length/slope/geometry are stated
+    Tier-0 assumptions (reaches.yaml), not a calibrated HEC-RAS model.
 method: Tier-0 SCS-CN screening over the measured parcel footprint; post CN = area-weighted
   composite from the ASWCD-declared impervious/developed split; time of concentration
   shortens with imperviousness (pre 1 hr -> as-permitted 0.779882 hr -> full-buildout
   0.35 hr); peaks are AMC-II (average antecedent moisture) with a wet-antecedent (AMC-III)
   conservative bound on the as-permitted post peak; outfall capacity = Manning full-flow
   (n=0.013) across an assumed slope band; receiving 7Q10 cited from the OEPA NPDES
-  fact sheet (2PH00006).
+  fact sheet (2PH00006). The receiving-water peak is additionally routed down the
+  cited reach chain to the Ottawa confluence (Tier-0 Muskingum-Cunge; see routed_discharge)
+  so it reflects reach travel, not only the at-outfall peak.
 caveats:
-- Screening-grade — not a routed hydraulic model or a permit determination.
+- Screening-grade — the receiving-water peak is a Tier-0 Muskingum-Cunge reach route
+  on stated reach assumptions (reaches.yaml), not a calibrated HEC-RAS model or a
+  permit determination; the pre/post/full peaks are at-outfall SCS-CN screening.
 - Headline peaks are AMC-II; post_peak_wet_cfs is the AMC-III (wet-antecedent) upper
   bound — the storm falling on ground already saturated by prior rain.
 - The outfall pipe slope is not in the record; capacity is bracketed across 0.3-1.0%.
@@ -104,3 +132,8 @@ caveats:
   single 60-inch trunk is not stated, so the capacity comparison is a bracket.
 - The composite post CN treats the developed-pervious remainder as graded open space
   and the undeveloped remainder as keeping prior cropland cover.
+- The outfall's entry point on the receiving tributary is not in the record, so the
+  routed channel length is an upper bound on travel — the routed attenuation/lag are
+  upper bounds and the confluence peak a lower bound; reaches between the outfall
+  and the confluence see intermediate, larger peaks (the at-outfall peak-to-7Q10 ratio,
+  unattenuated, is the headline erosion signal this routing does not soften).

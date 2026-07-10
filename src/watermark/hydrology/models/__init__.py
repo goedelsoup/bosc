@@ -161,6 +161,9 @@ from watermark.hydrology.models._stormwater import (
     RoundaboutStormPeak as RoundaboutStormPeak,
 )
 from watermark.hydrology.models._stormwater import (
+    RoutedDischarge as RoutedDischarge,
+)
+from watermark.hydrology.models._stormwater import (
     SiteFootprint as SiteFootprint,
 )
 from watermark.hydrology.models._stormwater import (
@@ -228,6 +231,7 @@ __all__ = [
     "RiverFlowStat",
     "RoundaboutFlow",
     "RoundaboutStormPeak",
+    "RoutedDischarge",
     "RoutedHydrographNetwork",
     "RoutedNetwork",
     "RoutedNetworkDiff",
