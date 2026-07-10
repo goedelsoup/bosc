@@ -46,6 +46,13 @@ POTW — a direct hook into the Lima water thesis and the Bistrozzi entity threa
 ([`permits/bistrozzi-permits/`](../permits/bistrozzi-permits/)). The as-filed facility
 name "Bosc" is preserved as received.
 
+The receiving POTW is the **same American–Bath WWTP** carried above as `2PH00007` — that
+permit governs the plant's own surface discharge (to Pike Run). So the corpus now records
+the full chain: the "Bosc" data center discharges **into** the American–Bath POTW
+(`2DP00130`), which in turn discharges **out** under `2PH00007`. The entity graph builds
+this automatically from the extraction (`Bistrozzi → operates → Bosc → discharges_to →
+American – Bath`, edge ref `2DP00130*AP`).
+
 ### Statewide general permits
 
 #### `OHD000001_Draft.pdf` / `OHD000001_Draft_PN.pdf` / `OHD000001_Draft.fs.pdf`

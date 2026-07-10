@@ -1,4 +1,18 @@
 leads:
+- id: OEPA-2DP00130
+  kind: signal
+  status: unanswered
+  tag: open
+  title: Public-comment window on the Bistrozzi "Bosc" indirect-discharge permit closes ~2026-07-31
+  detail: Ohio EPA has a draft Indirect Discharge Permit (2DP00130*AP, Public Notice 222503, dated
+    2026-07-01) out for public comment — BISTROZZI LLC's "Bosc" data center at 4110 N Cole St, Lima,
+    proposing to route domestic waste + non-contact cooling water through a private sanitary main and
+    a temporary lift station to the American–Bath WWTP (a POTW that lacks a State-approved pretreatment
+    program). Monitored parameters are water temperature, pH, and flow rate; the draft expires 2028-12-31.
+    The 30-day comment window (standard Ohio EPA practice) puts the deadline at ~2026-07-31 — the exact
+    end date is inferred from the July 1 notice, not printed on the permit.
+  source: Ohio EPA Public Notice 222503 · data/extracted/oepa/2DP00130.npdes.yaml
+  note: time-sensitive — the comment window closes on or about 2026-07-31 (issue #1345)
 - id: PRR-04
   kind: redaction
   status: withheld
