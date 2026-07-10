@@ -41,6 +41,19 @@ sources:
   public_reporting:
     - "Urbana Daily Citizen, \"Thor pushing forward with data center\" (2026-06-14) — https://www.urbanacitizen.com/2026/06/14/thor-pushing-forward-with-data-center/"
     - "Urbana Daily Citizen, \"Data center plans revealed at city meeting\" (2026-02-18) — https://www.urbanacitizen.com/2026/02/18/data-center-plans-revealed-at-city-meeting/"
+  litigation:
+    # Filed federal instrument (#1329) that CORROBORATES this assembly from a primary court
+    # source: it adds the fifth SPE and lists a caption address for all four SPEs (the auditor
+    # vs caption reconciliation for Urbana Owner I/II stays [inference]/[open], see entities).
+    # Full structured read: litigation-thor-v-urbana.yaml.
+    instrument: "Complaint, Thor Equities et al. v. City of Urbana, No. 3:26-cv-00196-MJN-CHG (S.D. Ohio, filed 2026-06-19)"
+    file: "data/documents/legal/thor-v-urbana/1.pdf"
+    establishes: >
+      ¶¶8–13 — the four owned parcels and their owning SPEs match this register exactly; the
+      OWNED-parcel holding is ~230.346 ac (¶13; = 47.637 + 85.619 + 97.09, the three conveyances
+      below). A fifth entity (Urbana Owner LLC) is the contract purchaser of two FURTHER parcels
+      (-36-001-00 + a portion of -37-001-00, additional to the 230.346 ac; their acreage is [open],
+      see `contract_pending`). [verified] as pleaded.
 
 # ---------------------------------------------------------------------------------------------
 # CONVEYANCES — one entry per recorded deed (grantor → grantee), the [verified] transfer chain.
@@ -121,6 +134,24 @@ excluded_residual:
     note: "[open] Any Organ Farms retained acreage not individually resolved; only the 97.09-ac transferred block (OR606/3352) is in the assembly."
 
 # ---------------------------------------------------------------------------------------------
+# CONTRACT-PENDING — parcels Thor is UNDER CONTRACT to purchase but has not yet taken title to.
+# From the federal complaint (¶13); no deed of record yet, so kept out of `conveyances`.
+# ---------------------------------------------------------------------------------------------
+contract_pending:
+  - purchaser: "Urbana Owner LLC"          # [verified] ¶9 — the fifth Thor SPE, contract purchaser
+    purchaser_tag: verified                # as pleaded in a filed federal instrument (Doc #1)
+    parcels: ["K48-25-11-01-36-001-00", "portion of K48-25-11-01-37-001-00"]
+    status: "under contract to purchase (not yet conveyed)"   # ¶¶9, 13
+    deed_reference: null                   # [open] — no deed of record; watch the auditor for the takedown
+    acres: null                            # [open] — ¶13 does not state the contract parcels' acreage
+    note: >-
+      ADDITIONAL to the ~230.346-ac owned holding (¶13 gives 230.346 ac for the four owned parcels
+      only; these two contract parcels are separate and their acreage is [open]). Not in the auditor
+      conveyance chain above because title has not transferred; when it does, add a `conveyances`
+      entry. Caption mailing 3040 Riverside Dr Ste 122, Columbus (Doc #1) — same caption address as
+      the other three SPEs.
+
+# ---------------------------------------------------------------------------------------------
 # LLC GRAPH — the developer structure and the sellers. Registered-agent lines are [open]
 # (Ohio SoS not reachable from this environment; see `limitations`).
 # ---------------------------------------------------------------------------------------------
@@ -137,18 +168,36 @@ entities:
     tag: reference                 # named in public reporting as the Thor operating unit; [open] in corpus
     ohio_sos_agent: null           # [open]
     notes: "Reported Thor operating unit; no in-corpus filing yet. Ohio SoS registration [open]."
+  - name: "Urbana Owner LLC"
+    role: contract_purchaser_spe   # [verified] ¶9 (Doc #1) — the fifth Thor SPE; not yet a grantee
+    tag: verified
+    mailing_complaint_caption: "3040 Riverside Dr Ste 122, Columbus OH 43221"   # [verified] Doc #1 caption (no auditor row — not yet an owner of record)
+    ohio_sos_agent: null           # [open]
+    holds_pending: ["K48-25-11-01-36-001-00", "portion of K48-25-11-01-37-001-00"]  # under contract
+    notes: "Contract purchaser (not yet grantee) — see `contract_pending`. Added from the federal complaint."
   - name: "Urbana Owner I LLC"
     role: grantee_spe
     tag: verified                  # owner-of-record, auditor CAMA (parcel -30-001-00)
-    mailing: "25 W 39th St, New York NY 10018 (c/o Thor Equities)"   # [verified] PPOwnerAddress
+    mailing_auditor: "25 W 39th St, New York NY 10018 (c/o Thor Equities)"  # [verified] PPOwnerAddress
+    mailing_complaint_caption: "3040 Riverside Dr Ste 122, Columbus OH 43221"  # [verified] Doc #1 ¶10 caption
     ohio_sos_agent: null           # [open] — SoS registered agent not pulled
     holds: ["vance-brands"]
+    notes: >-
+      Two [verified] records give DIFFERENT mailings: the auditor PPOwnerAddress is 25 W 39th St,
+      New York (c/o Thor Equities); the federal complaint caption (Doc #1 ¶10) lists the entity at
+      3040 Riverside Dr Ste 122, Columbus. Which is the entity's operative address, and whether the
+      NY line is a Thor-parent c/o, is [inference]/[open] pending the Ohio SoS registered-agent pull.
   - name: "Urbana Owner II LLC"
     role: grantee_spe
     tag: verified                  # owner-of-record, auditor CAMA (parcels -30-005-00, -30-006-00)
-    mailing: "c/o Thor Equities, 25 W 39th St, New York NY 10018"    # [verified] PPOwnerAddress
+    mailing_auditor: "c/o Thor Equities, 25 W 39th St, New York NY 10018"   # [verified] PPOwnerAddress
+    mailing_complaint_caption: "3040 Riverside Dr Ste 122, Columbus OH 43221"  # [verified] Doc #1 ¶11 caption
     ohio_sos_agent: null           # [open]
     holds: ["organ-farms"]
+    notes: >-
+      Same split as Urbana Owner I: the auditor records 25 W 39th St, New York (c/o Thor) while the
+      complaint caption lists 3040 Riverside Dr, Columbus. Reconciling the two is [inference]/[open]
+      — Urbana Owner II's operative address is not resolved at its recorded (auditor) address.
   - name: "Highland55 Investments LLC"
     role: grantee_spe
     tag: verified                  # owner-of-record, auditor CAMA (parcel -32-005-00)
@@ -156,10 +205,15 @@ entities:
     ohio_sos_agent: null           # [open]
     holds: ["highland55"]
     notes: >-
-      Columbus mailing = the Highland Realty Development address on the §401 WQC prelim-JD cover
-      (eDoc 3938251); the WQC lists "Highland Realty Development LLC / Urbana Owner I LLC, 720 E
-      Broad St Suite 200, Columbus". The auditor mailing (3040 Riverside Dr) differs from that WQC
-      address — reconciling the two is [open], deferred to the SoS pull.
+      Highland55's auditor mailing (3040 Riverside Dr Ste 122, Columbus) matches the complaint
+      caption (Doc #1 ¶12) — the one SPE where the two [verified] records agree. A THIRD address is
+      also on record: the §401 WQC prelim-JD cover (eDoc 3938251) lists "Highland Realty Development
+      LLC / Urbana Owner I LLC, 720 E Broad St Suite 200, Columbus". All three (720 E Broad, 3040
+      Riverside, and the 25 W 39th St NY c/o-Thor line on the Urbana Owner I/II auditor rows) are
+      retained; which is each entity's operative address, and how the WQC 720 E Broad line relates,
+      is [inference]/[open] pending the Ohio SoS registered-agent pull. The complaint caption lists
+      all four SPEs at 3040 Riverside, but the auditor records Urbana Owner I/II at 25 W 39th St —
+      so "all four share 3040 Riverside" holds only for the caption, not the auditor record.
   - name: "Brand Investments LTD"
     role: seller
     tag: verified                  # PPOwner on the retained residual parcel; grantor of vance-brands + highland55 [reference]

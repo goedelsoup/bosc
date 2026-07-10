@@ -24,6 +24,12 @@ storage:
 - relpath: extracted/urbana/datacenter-facility.md
   media_type: text/markdown
   lfs: false
+- relpath: extracted/urbana/litigation-thor-v-urbana.yaml
+  media_type: application/yaml
+  lfs: false
+- relpath: extracted/urbana/litigation-thor-v-urbana.md
+  media_type: text/markdown
+  lfs: false
 refresh:
   cadence: static
 provenance: document
@@ -37,6 +43,7 @@ tags:
 - mad-river
 - land-assembly
 - recorder-deeds
+- litigation
 notes: >
   Onboarding record and investigative findings for the Urbana watershed point (Mad River corridor,
   Champaign County OH). highland55-findings.md documents the Thor Equities data-center project west
@@ -49,4 +56,7 @@ notes: >
   grantee / consideration / date / deed Official-Record book-page, sourced [verified] to the
   Champaign County auditor CAMA. bosc-site-footprint.yaml commits the ~230-ac recorded ownership
   assemblage (geometry in reference/urbana/parcel-assemblage.geojson) with the SSURGO-validated
-  dominant HSG C (#1326).
+  dominant HSG C (#1326). litigation-thor-v-urbana.{yaml,md} is the structured read of the federal
+  complaint (S.D. Ohio 3:26-cv-00196-MJN-CHG, filed 2026-06-19; source in
+  documents/legal/thor-v-urbana/) — docket, parties, the eight counts, the recited ordinance /
+  moratorium record, and the zoning + litigation timeline (#1329).

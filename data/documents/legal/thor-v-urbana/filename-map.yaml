@@ -1,0 +1,39 @@
+meta:
+  subject: >
+    Canonical filename map for legal/thor-v-urbana/ — the Thor Equities et al. v. City of
+    Urbana federal litigation over the Urbana Technology Hub data-center zoning reversal.
+  note: >
+    Per chain-of-custody rules (CLAUDE.md → Data discipline), source files keep their
+    as-received names. ECF/PACER serves each filing under its bare docket-document number
+    ("1.pdf" = Document No. 1 on the docket), exactly as an OEPA eDoc ID names its PDF; the
+    number is retained as-received and the canonical name is recorded here. content_verified
+    is from the document's own text layer (blue ECF header + body), NOT the filename.
+
+documents:
+  - docket_doc_no: "1"
+    filename: 1.pdf
+    canonical: sdohio-3-26-cv-00196-doc001-complaint-thor-v-urbana-2026-06-19.pdf
+    type: federal-complaint
+    court: "U.S. District Court, Southern District of Ohio, Western Division"
+    case_no: "3:26-cv-00196-MJN-CHG"
+    filed: "2026-06-19"
+    pages: 37
+    sha256: "95efdb0457b36e2da0dcf497ad34fe4e85863b83f4f01bc60422eb58343fbd3c"
+    content_verified: text-layer      # native ECF PDF; text layer present (verified 2026-07-10)
+    plaintiffs:
+      - "Thor Equities, LLC"
+      - "Urbana Owner LLC"
+      - "Urbana Owner I LLC"
+      - "Urbana Owner II LLC"
+      - "Highland55 Investments LLC"
+    defendants:
+      - "City of Urbana, Ohio"
+      - "Urbana, Ohio City Council"
+      - "Urbana, Ohio Building and Zoning Appeals Board (BZA)"
+    counsel: "Vorys, Sater, Seymour and Pease LLP (Joseph R. Miller, lead)"
+    notes: >
+      Doc #1 = the Complaint body only (37 pp, ending in the jury demand). The nine
+      referenced exhibits (Ordinances 4619-25 / 4625-25 / 4620-25 / 4621-25, Resolution
+      2727-26, the Apr-10 counsel letter, the BZA response, the motion for continuance, and
+      Ordinance 4635-26) are filed as SEPARATE ECF attachments and are NOT part of this PDF —
+      they remain [open] ingest targets (see the extracted litigation record).

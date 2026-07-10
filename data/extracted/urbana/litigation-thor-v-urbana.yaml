@@ -1,0 +1,290 @@
+# Thor Equities et al. v. City of Urbana — structured litigation record
+#
+# The federal case that is the live legal spine of the Urbana Technology Hub data-center
+# dispute (site: urbana). Ingested from the filed Complaint (Doc #1):
+#   data/documents/legal/thor-v-urbana/1.pdf  (S.D. Ohio 3:26-cv-00196-MJN-CHG, 2026-06-19)
+# #1329 · sub-issue of #1263 · strengthens `record` + `story`.
+#
+# TAG VOCABULARY (per CLAUDE.md / evidentiary-discipline). The complaint is a FILED PRIMARY
+# COURT INSTRUMENT — but a party's pleading, so provenance is split:
+#   [verified]  — what the instrument IS: the docket number, court, filing date, the parties,
+#                 the counts pleaded, the relief sought, the exhibits it lists. These are facts
+#                 about the filing itself, read directly from Doc #1.
+#   [reference] — what Thor ALLEGES (a party's contested averments): wrongdoing, "pretext,"
+#                 the dollar figures, the characterizations — attributed, not adjudicated. Also
+#                 the ordinance/resolution record the complaint RECITES (the underlying
+#                 instruments are [open]; the recital is corroborated where the corpus already
+#                 holds an independent record — see `corroboration`).
+#   [inference] — a corroboration combining Doc #1 with existing corpus (e.g. the Nov-2025 CRA
+#                 aligns with the Nov-2025 Highland55 deed in land-assembly.yaml).
+#   [open]      — not yet in corpus (the nine exhibits; the Common Pleas appeal case number).
+
+as_of: "2026-07-10"
+site: urbana
+strengthens: [record, story]
+issue: "watermark-directory/the-watermark-directory#1329"
+epic: "watermark-directory/the-watermark-directory#1263"
+
+source:
+  instrument: federal-complaint
+  file: "data/documents/legal/thor-v-urbana/1.pdf"
+  sha256: "95efdb0457b36e2da0dcf497ad34fe4e85863b83f4f01bc60422eb58343fbd3c"
+  content_verified: text-layer
+
+# ---------------------------------------------------------------------------------------------
+# THE CASE (what the instrument IS) — [verified] from Doc #1.
+# ---------------------------------------------------------------------------------------------
+case:
+  caption: "Thor Equities, LLC et al. v. City of Urbana, Ohio et al."
+  court: "U.S. District Court, Southern District of Ohio, Western Division"
+  case_no: "3:26-cv-00196-MJN-CHG"        # [verified] — ECF header, Doc #1
+  filed: "2026-06-19"                       # [verified] — ECF header "Filed: 06/19/26"
+  jury_demand: true                         # [verified] — endorsed on the caption + demand p.37
+  ohio_ag_served: true                      # [verified] ¶17 — served on the Ohio AG per R.C. 2721.12(A)
+  jurisdiction:
+    - "28 U.S.C. § 1331 (federal question)"       # ¶19
+    - "28 U.S.C. § 1343(a)(3) (civil rights)"     # ¶19
+    - "28 U.S.C. § 1367 (supplemental)"           # ¶19
+    - "28 U.S.C. § 1332(a)(1) (diversity)"        # ¶20 — amount in controversy > $75,000
+    - "28 U.S.C. § 2201 (declaratory judgment)"   # ¶19
+  venue: "28 U.S.C. § 1391(b)(2)"                  # ¶21
+
+plaintiffs:                                  # [verified] ¶¶8–12 (caption + parties)
+  - name: "Thor Equities, LLC"
+    citizenship: "New York (Delaware LLC; two NY-citizen members)"
+    address: "25 West 39th Street, New York, NY 10018"
+    role: "site-plan applicant"
+  - name: "Urbana Owner LLC"
+    citizenship: "New York (Delaware LLC; member → Delaware LLC → Delaware trust, NY trustees)"
+    address: "3040 Riverside Drive, Ste 122, Columbus, OH 43221"
+    role: "contract purchaser"
+    parcels_under_contract: ["K48-25-11-01-36-001-00", "portion of K48-25-11-01-37-001-00"]
+  - name: "Urbana Owner I LLC"
+    citizenship: "New York"
+    address: "3040 Riverside Drive, Ste 122, Columbus, OH 43221"
+    role: "owner"
+    parcels_owned: ["K48-25-11-01-30-001-00"]
+  - name: "Urbana Owner II LLC"
+    citizenship: "New York"
+    address: "3040 Riverside Drive, Ste 122, Columbus, OH 43221"
+    role: "owner"
+    parcels_owned: ["K48-25-11-01-30-005-00", "K48-25-11-01-30-006-00"]
+  - name: "Highland55 Investments LLC"
+    citizenship: "New York"
+    address: "3040 Riverside Drive, Ste 122, Columbus, OH 43221"
+    role: "owner"
+    parcels_owned: ["K48-25-11-01-32-005-00"]
+
+property:
+  # Qualifiers preserved verbatim from the pleading: "~" = "approximately" (¶13). Stored as a
+  # string so the qualifier survives for downstream consumers (do not read as an exact float).
+  owned_acres: "~230.346"                     # [verified] ¶13 "approximately 230.346 acres" — the FOUR OWNED parcels ONLY
+  under_contract_acres: null                 # [open] — ¶13 states no acreage for the two contract parcels; they are ADDITIONAL to owned_acres
+  location: "Champaign County, Ohio — west of S. U.S. Highway 68, Urbana Township / annexed into the City of Urbana"
+  owned_parcels:                             # [verified] ¶13
+    - "K48-25-11-01-30-001-00"
+    - "K48-25-11-01-32-005-00"
+    - "K48-25-11-01-30-006-00"
+    - "K48-25-11-01-30-005-00"
+  under_contract:                            # [verified] ¶13
+    - "K48-25-11-01-36-001-00"
+    - "portion of K48-25-11-01-37-001-00"
+  reconciliation: >
+    The four OWNED parcels + owners exactly match land-assembly.yaml (auditor CAMA, #1328),
+    now corroborated by a filed federal instrument. Doc #1 ADDS a fifth entity — Urbana Owner
+    LLC, the [verified] contract purchaser of the two -36/-37 parcels not previously in the
+    assembly (still under contract, not yet conveyed; their acreage is [open] and is ADDITIONAL
+    to the ~230.346-ac owned holding). On mailing addresses: the complaint CAPTION lists all four
+    SPEs at 3040 Riverside Drive Ste 122, Columbus, and Thor Equities LLC at 25 W 39th St, New
+    York. The auditor CAMA agrees for Highland55 (3040 Riverside) but records Urbana Owner I and
+    Urbana Owner II at 25 W 39th St, New York (c/o Thor) — so the caption vs auditor address for
+    those two is NOT resolved; it stays [inference]/[open] pending the Ohio SoS agent pull.
+
+defendants:                                  # [verified] ¶¶14–16 (caption + parties)
+  - name: "City of Urbana, Ohio"
+    kind: "chartered municipal corporation, Champaign County"
+    address: "205 S. Main Street, Urbana, OH 43078"
+  - name: "Urbana, Ohio City Council"
+    kind: "legislative body — eight elected officials"
+  - name: "Urbana, Ohio Building and Zoning Appeals Board (BZA)"
+    kind: "administrative body — five members; hears appeals of the Zoning Inspector"
+
+counsel:                                     # [verified] — signature block, p.36
+  firm: "Vorys, Sater, Seymour and Pease LLP"
+  address: "52 East Gay Street, P.O. Box 1008, Columbus, OH 43216-1008"
+  attorneys:
+    - "Joseph R. Miller (0068463) — Trial Attorney"
+    - "Christopher L. Ingram (0086325)"
+    - "Elizabeth S. Alexander (0096401)"
+    - "Garrett M. Anderson (0100121)"
+    - "Brodi S. Voight (0105912)"
+  for: "Plaintiffs (Thor Equities and the four SPEs)"
+
+# ---------------------------------------------------------------------------------------------
+# CLAIMS — the eight counts, [verified] as pleaded (Doc #1 §V). The theory of each is Thor's.
+# ---------------------------------------------------------------------------------------------
+counts:
+  - n: 1
+    title: "Procedural Due Process"
+    basis: "42 U.S.C. § 1983 + Ohio Const. Art. I §§ 1, 16"
+    paras: "94–103"
+    gist: "Deprivation of a vested property/liberty interest in the data-center use without lawful process (notice, fair BZA hearing, consideration of evidence)."
+  - n: 2
+    title: "Substantive Due Process"
+    basis: "42 U.S.C. § 1983 + Ohio Const. Art. I §§ 1, 16"
+    paras: "104–112"
+    gist: "The moratorium, application denial, and appeal handling were arbitrary, capricious, and lacking any substantial relation to legitimate land-use regulation."
+  - n: 3
+    title: "Declaratory Judgment — Moratorium void (Charter § 2.12)"
+    basis: "28 U.S.C. §§ 2201–2202"
+    paras: "113–117"
+    gist: "Charter § 2.12 bars enacting/amending/repealing any zoning or building resolution as an emergency; the moratorium is a de facto zoning amendment."
+  - n: 4
+    title: "Declaratory Judgment — Moratorium void (Charter § 2.11)"
+    basis: "28 U.S.C. §§ 2201–2202"
+    paras: "118–123"
+    gist: "Res. 2727-26 is not necessary for public peace/health/welfare/safety and does not set forth the specific facts necessitating the emergency."
+  - n: 5
+    title: "Declaratory Judgment — Moratorium void (Ohio Const. Art. XVIII §3 + R.C. 731.30)"
+    basis: "28 U.S.C. §§ 2201–2202"
+    paras: "124–130"
+    gist: "The emergency exceeds the City's home-rule authority and R.C. 731.30's emergency-ordinance requirements."
+  - n: 6
+    title: "Declaratory Judgment — Moratorium void (Charter §§ 2.10, 2.16 + Zoning Code Ch. 1113)"
+    basis: "28 U.S.C. §§ 2201–2202"
+    paras: "131–140"
+    gist: "No newspaper publication 7 days before enactment, no Planning-Commission referral, no 10-day notice, and passed on one reading (three required for permanent legislation)."
+  - n: 7
+    title: "Declaratory Judgment — Moratorium an unlawful impairment of vested rights"
+    basis: "28 U.S.C. §§ 2201–2202"
+    paras: "141–151"
+    gist: "Filing the Feb-13-2026 site-plan application froze the zoning rules (Golf Vill. N. LLC v. City of Powell; Gibson v. Oberlin); the later moratorium cannot retroactively defeat the vested use."
+  - n: 8
+    title: "Declaratory Judgment — Site-plan denial violated Zoning Code Ch. 1110"
+    basis: "28 U.S.C. §§ 2201–2202"
+    paras: "152–160"
+    gist: "The City denied the application as 'incomplete' by importing Chapter 1161 (major-subdivision) requirements and a traffic study that Chapter 1110 site-plan review does not require — ultra vires."
+
+key_authority_cited:                         # [verified] as cited by Thor — the vested-rights spine
+  - "Golf Vill. N. LLC v. City of Powell, 826 F. App'x 426, 433 (6th Cir. 2020) — filing an application 'freezes' the applicable zoning rules"
+  - "Gibson v. Oberlin, 171 Ohio St. 1, 5 (1960) — vesting on application for a zoning certificate"
+  - "Snyder v. City of Bowling Green, 1996 Ohio App. LEXIS 5580 (6th Dist.) — insufficient emergency basis"
+
+relief_sought:                               # [verified] — Prayer, pp.35–36 (A)–(M)
+  - "Compensatory damages (jury)"
+  - "Declarations that the Moratorium (Res. 2727-26) is void ab initio on five independent grounds (Charter §§ 2.10/2.11/2.12/2.16, Zoning Ch. 1113, Ohio Const. Art. XVIII §3, R.C. 731.30)"
+  - "Declaration that the site-plan denial violated Zoning Ch. 1110 and that the Application was complete"
+  - "Declaration of a vested right to the data-center use under the rules in effect at filing"
+  - "Preliminary + permanent injunction (Fed. R. Civ. P. 65) barring enforcement of the Moratorium and the amended Zoning Code against the Property, and directing approval of the Application"
+  - "Pre-/post-judgment interest; attorney's fees under 42 U.S.C. § 1988; costs"
+
+# ---------------------------------------------------------------------------------------------
+# WHAT THOR ALLEGES — a party's contested averments. [reference] (attributed), NOT adjudicated.
+# ---------------------------------------------------------------------------------------------
+alleged_investment:                          # [reference] ¶¶51–53 — Thor's figures, not verified by a third party
+  # Qualified pleading figures stored as strings so the qualifier survives: ">" = "more than" /
+  # "over", carried verbatim. These are FLOORS, not exact amounts. tui/due_diligence/design are
+  # stated as exact numbers in the complaint and stay numeric.
+  total_usd: ">19600000"                     # ¶51 "more than $19.6 million"
+  land_usd: ">12500000"                      # ¶52 "over $12.5 million in land purchases"
+  tui_usd: 1274198                            # ¶52 (exact)
+  due_diligence_usd: 714135                   # ¶52 (exact)
+  design_usd: 5180000                         # ¶52 (exact)
+  lost_profit_claimed_usd: ">118000000"       # ¶53 "exceeds $118 million" (a floor)
+  note: "Pleaded reliance/damages figures; a party's averment. [reference]. '>' prefixes mark floor values (see comments)."
+
+alleged_facts:                               # [reference] — Thor's characterization of the dispute
+  - "The City encouraged Thor's investment from Dec-2024 and gave repeated assurances (¶¶41–47)."
+  - "The Feb-20-2026 'incomplete' denial was pretextual — the cited Ch. 1161 items don't govern site-plan review (¶¶56–59)."
+  - "The moratorium was a pretext to stop an already-authorized use; council members admitted no information would change their minds (¶¶65–66)."
+  - "The BZA hearing was procedurally defective: no lawful notice, denied continuance, only 4 of 5 members present (four votes needed to sustain an appeal), evidence disregarded (¶¶76–85)."
+
+# ---------------------------------------------------------------------------------------------
+# THE R.C. 149.43 RECORDS THREAD — woven through the facts (¶¶67–75). Distinct from the
+# network-global Allen-County records-mandamus (docs/legal/mandamus-analysis.md): here a private
+# developer (Thor) is the requester and the CITY OF URBANA the stonewalling agency. [reference]
+# (Thor's averment) — captured because it is a documented Ohio Public Records Act pattern.
+# ---------------------------------------------------------------------------------------------
+public_records_thread:
+  - date: "2026-03-10"
+    event: "Thor R.C. 149.43(B) request for a copy of the Moratorium; follow-up email 2026-03-12; no response. (¶68)"
+  - date: "2026-03-13"
+    event: "In-person request at the municipal building denied; access to the Law Director denied — though a Council member had already posted portions of the Moratorium to Facebook. (¶69)"
+  - date: "2026-03-17"
+    event: "Thor's written demand that the non-response violated R.C. 149.43; City produced the Moratorium the next day (2026-03-18). (¶70)"
+  - date: "2026-04-03"
+    event: "Second R.C. 149.43(B) request (records re the Ordinances, Moratorium, Property). (¶73)"
+  - date: "2026-04-15"
+    event: "Thor again demands compliance; City counsel responds 2026-05-19 that Thor's deadlines are inapplicable; as of filing no responsive document produced to the Apr-3 request. (¶¶74–75)"
+
+# ---------------------------------------------------------------------------------------------
+# THE RECITED ORDINANCE / RESOLUTION RECORD — the exhibits Doc #1 lists but does NOT attach in
+# this PDF. [reference] as recited by the complaint; the instruments themselves are [open].
+# ---------------------------------------------------------------------------------------------
+ordinance_record:
+  - id: "Ordinance 4619-25"
+    exhibit: 1
+    adopted: "2025-04-22"                     # ¶36
+    action: "Annexation of nine parcels (~219.986 ac) into the City of Urbana"
+    tag: reference
+  - id: "Ordinance 4625-25"
+    exhibit: 2
+    adopted: "2025-04-22"                     # ¶38
+    action: "Official Zoning Map update — designates annexed areas (incl. parcels of the Property) M-1 Manufacturing District"
+    tag: reference
+  - id: "Ordinance 4620-25"
+    exhibit: 3
+    adopted: "2025-04-22"                     # ¶39
+    action: "Amends Zoning Code Ch. 1102 — adds definitions for computing-infrastructure providers, incl. data centers"
+    tag: reference
+  - id: "Ordinance 4621-25"
+    exhibit: 4
+    adopted: "2025-04-22"                     # ¶39
+    action: "Amends Zoning Code Ch. 1126 — adds 'Computing Infrastructure Providers, Data Processing, Web Hosting, and Related Services' as PRINCIPALLY PERMITTED uses in M-1"
+    tag: reference
+    significance: "This is the by-right entitlement Thor claims vested — data centers permitted in M-1 on the Property."
+  - id: "Ordinance 4631-25"
+    exhibit: null
+    adopted: "2025-11-04"                     # ¶46
+    action: "Approves CRA #2 (Community Reinvestment Area) tax-incentive district supporting the Project"
+    tag: reference
+    corroboration: "Aligns with the Nov-18-2025 Highland55 deed (OR603/1927) in land-assembly.yaml. [inference]"
+  - id: "Resolution 2727-26 (the Moratorium)"
+    exhibit: 5
+    adopted: "2026-03-03"                     # ¶61
+    action: "12-month emergency moratorium on data-center permits/approvals within the City; took immediate effect"
+    tag: reference
+    note: "First placed on the 2026-02-17 agenda, then removed without a vote (¶60); enacted 2026-03-03. The instrument at the center of Counts III–VII."
+  - id: "Resolution 2731-26"
+    exhibit: null
+    adopted: "2026-05-05"                     # ¶87
+    action: "Referred to the Planning Commission — initiates permanent removal of data-center use from M-1"
+    tag: reference
+  - id: "Ordinance 4635-26"
+    exhibit: 9
+    adopted: null                             # first reading 2026-06-02; not yet enacted at filing (¶89)
+    action: "Would amend M-1 to permanently REMOVE data centers as a permitted use (Planning Commission recommended approval 2026-05-18)"
+    tag: reference
+    note: "Pending — first reading only. The 'permanent' reversal that (with the moratorium) Thor says eviscerates its vested right."
+
+# ---------------------------------------------------------------------------------------------
+# COMPANION CASE — the second of the two cases named in #1329. [open]: not yet ingested.
+# ---------------------------------------------------------------------------------------------
+companion_case:
+  court: "Champaign County Court of Common Pleas"
+  posture: "Administrative appeal (R.C. Ch. 2506) of the BZA's affirmance of the 'incomplete' site-plan determination"
+  status: open
+  case_no: null                              # [open] — not in corpus
+  follow_up: "watermark-directory/the-watermark-directory#1360"
+  known_from_complaint: >
+    Doc #1 ¶¶71–72: Thor appealed the application denial to BOTH the Champaign County Court of
+    Common Pleas AND the BZA (¶71), because the City's actions made it unclear who had denied the
+    application; Thor hand-delivered the BZA appeal on 2026-03-20 (¶72). The Common Pleas filing
+    itself, and its case number, are [open] ingest targets.
+
+# ---------------------------------------------------------------------------------------------
+open_targets:
+  - "Exhibits 1–9 to Doc #1 (the four Apr-2025 ordinances, Res. 2727-26, the counsel letter, the BZA response, the motion for continuance, Ord. 4635-26) — separate ECF attachments; ingest to take the ordinance record [reference] → [verified]. Follow-up: #1359."
+  - "The Champaign County Common Pleas administrative appeal (case number + complaint) — the companion case. Follow-up: #1360."
+  - "Later docket entries in 3:26-cv-00196 (answer, any TRO/PI motion + ruling) — the case is live as of 2026-07-10."
+  - "The City of Urbana minutes/ordinance source for Res. 2727-26 and Ord. 4635-26 — the defendant-side record."
