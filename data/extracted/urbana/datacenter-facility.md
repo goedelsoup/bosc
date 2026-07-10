@@ -41,10 +41,11 @@ Champaign Recorder / Ohio SoS). So the *end-use* is `[reference]` (public disclo
   2026-06-19) is now **in corpus** as a filed primary instrument
   ([`litigation-thor-v-urbana.md`](litigation-thor-v-urbana.md), #1329). Thor **alleges** the
   Project is a data center; as a party's pleading this is `[reference]` (attributed), not
-  independent verification of the end-use. What the complaint independently establishes is the
-  *ordinance record* it recites — the City amended M-1 to permit data centers on this land
-  (Ord. 4621-25) specifically for the Project, then moved to reverse it — which corroborates that
-  the entitlement *dispute* is over a data center. The companion Champaign County Common Pleas
+  independent verification of the end-use. The complaint also **recites** an ordinance record
+  (`[reference]`) — the City amended M-1 to permit data centers on this land (Ord. 4621-25)
+  specifically for the Project, then moved to reverse it — which frames the entitlement *dispute*
+  as over a data center. The underlying ordinances are not attached to Doc #1 (Exhibits 1–9 are
+  separate ECF filings) and stay `[open]` (#1359). The companion Champaign County Common Pleas
   administrative appeal remains `[open]`.
 
 ## 3. Land assembly `[verified]` (deed record) — see §land-assembly

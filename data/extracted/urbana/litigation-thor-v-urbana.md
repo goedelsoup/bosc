@@ -36,12 +36,13 @@ assembly from a second source, adds a fifth entity, and — as a party's pleadin
   (c/o Thor). Reconciling the caption vs auditor address for those two stays `[inference]/[open]`
   pending the Ohio SoS registered-agent pull.
 - **The end-use.** Thor **alleges** the Project is a **data center** — as a party's pleading this
-  is `[reference]`, not independent verification. What the complaint independently establishes is
-  the *ordinance record* it recites: the City amended M-1 to permit "Computing Infrastructure
-  Providers, Data Processing, Web Hosting, and Related Services" (Ord. 4621-25) specifically for
-  this land, and later moved to remove that use — corroborating that the entitlement *dispute* is
-  over a data center. It does **not** disclose the facility's MW load, cooling, tenant, or
-  operator, which remain
+  is `[reference]`, not independent verification. The complaint also **recites** an ordinance record
+  (`[reference]`): the City amended M-1 to permit "Computing Infrastructure Providers, Data
+  Processing, Web Hosting, and Related Services" (Ord. 4621-25) specifically for this land, then
+  moved to remove that use — which frames the entitlement *dispute* as over a data center. The
+  underlying ordinances are **not attached** to Doc #1 (Exhibits 1–9 are separate ECF filings) and
+  stay `[open]`; ingesting them is what takes this record `[reference]` → `[verified]` (#1359). It
+  does **not** disclose the facility's MW load, cooling, tenant, or operator, which remain
   `[open]` (see [`datacenter-facility.md`](datacenter-facility.md) §4/§7).
 
 ## Zoning + litigation timeline
