@@ -76,7 +76,10 @@ plaintiffs:                                  # [verified] ¶¶8–12 (caption + 
     parcels_owned: ["K48-25-11-01-32-005-00"]
 
 property:
-  total_acres: 230.346                       # [verified] ¶13 — "approximately 230.346 acres"
+  # Qualifiers preserved verbatim from the pleading: "~" = "approximately" (¶13). Stored as a
+  # string so the qualifier survives for downstream consumers (do not read as an exact float).
+  owned_acres: "~230.346"                     # [verified] ¶13 "approximately 230.346 acres" — the FOUR OWNED parcels ONLY
+  under_contract_acres: null                 # [open] — ¶13 states no acreage for the two contract parcels; they are ADDITIONAL to owned_acres
   location: "Champaign County, Ohio — west of S. U.S. Highway 68, Urbana Township / annexed into the City of Urbana"
   owned_parcels:                             # [verified] ¶13
     - "K48-25-11-01-30-001-00"
@@ -90,10 +93,12 @@ property:
     The four OWNED parcels + owners exactly match land-assembly.yaml (auditor CAMA, #1328),
     now corroborated by a filed federal instrument. Doc #1 ADDS a fifth entity — Urbana Owner
     LLC, the [verified] contract purchaser of the two -36/-37 parcels not previously in the
-    assembly (they are still under contract, not yet conveyed). The complaint also RESOLVES the
-    land-assembly [open] mailing question: the Urbana Owner / Highland55 SPEs share
-    3040 Riverside Drive Ste 122, Columbus (the Highland Realty Development address), while
-    Thor Equities LLC itself is 25 W 39th St, New York.
+    assembly (still under contract, not yet conveyed; their acreage is [open] and is ADDITIONAL
+    to the ~230.346-ac owned holding). On mailing addresses: the complaint CAPTION lists all four
+    SPEs at 3040 Riverside Drive Ste 122, Columbus, and Thor Equities LLC at 25 W 39th St, New
+    York. The auditor CAMA agrees for Highland55 (3040 Riverside) but records Urbana Owner I and
+    Urbana Owner II at 25 W 39th St, New York (c/o Thor) — so the caption vs auditor address for
+    those two is NOT resolved; it stays [inference]/[open] pending the Ohio SoS agent pull.
 
 defendants:                                  # [verified] ¶¶14–16 (caption + parties)
   - name: "City of Urbana, Ohio"
@@ -177,13 +182,16 @@ relief_sought:                               # [verified] — Prayer, pp.35–36
 # WHAT THOR ALLEGES — a party's contested averments. [reference] (attributed), NOT adjudicated.
 # ---------------------------------------------------------------------------------------------
 alleged_investment:                          # [reference] ¶¶51–53 — Thor's figures, not verified by a third party
-  total_usd: 19600000                        # "> $19.6 million"  ¶51
-  land_usd: 12500000                         # "> $12.5 million"  ¶52
-  tui_usd: 1274198                            # ¶52
-  due_diligence_usd: 714135                   # ¶52
-  design_usd: 5180000                         # ¶52
-  lost_profit_claimed_usd: 118000000          # "exceeds $118 million"  ¶53
-  note: "Pleaded reliance/damages figures; a party's averment. [reference]"
+  # Qualified pleading figures stored as strings so the qualifier survives: ">" = "more than" /
+  # "over", carried verbatim. These are FLOORS, not exact amounts. tui/due_diligence/design are
+  # stated as exact numbers in the complaint and stay numeric.
+  total_usd: ">19600000"                     # ¶51 "more than $19.6 million"
+  land_usd: ">12500000"                      # ¶52 "over $12.5 million in land purchases"
+  tui_usd: 1274198                            # ¶52 (exact)
+  due_diligence_usd: 714135                   # ¶52 (exact)
+  design_usd: 5180000                         # ¶52 (exact)
+  lost_profit_claimed_usd: ">118000000"       # ¶53 "exceeds $118 million" (a floor)
+  note: "Pleaded reliance/damages figures; a party's averment. [reference]. '>' prefixes mark floor values (see comments)."
 
 alleged_facts:                               # [reference] — Thor's characterization of the dispute
   - "The City encouraged Thor's investment from Dec-2024 and gave repeated assurances (¶¶41–47)."

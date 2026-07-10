@@ -17,24 +17,31 @@
 
 This is the litigation the corpus had tracked only by reference (highland55-findings.md,
 datacenter-facility.md, land-assembly.yaml all pointed at "Thor v. Urbana … tracked under
-#1263"). The **federal case is now in corpus** as a primary instrument, and it independently
-corroborates the land assembly and the **data-center end-use**:
+#1263"). The **federal case is now in corpus** as a primary instrument. It corroborates the land
+assembly from a second source, adds a fifth entity, and — as a party's pleading — **alleges** the
+**data-center end-use**:
 
 - **Land assembly `[verified]` corroboration.** The four owned parcels and their owning SPEs in
   Doc #1 ¶¶10–13 match the Champaign County auditor CAMA record in
   [`land-assembly.yaml`](land-assembly.yaml) exactly — now confirmed by a filed federal
-  instrument, not only the auditor layer + press. Doc #1 adds a **fifth entity, Urbana Owner
-  LLC**, the contract purchaser of two further parcels (K48-25-11-01-36-001-00 and a portion of
-  -37-001-00) not yet conveyed, bringing Thor's total to **~230.346 acres**.
-- **The `[open]` mailing question is resolved.** land-assembly.yaml flagged the mismatch between
-  the auditor mailing (3040 Riverside Dr) and the §401 WQC address (720 E Broad St). Doc #1 puts
-  all four Urbana Owner / Highland55 SPEs at **3040 Riverside Drive, Ste 122, Columbus** and Thor
-  Equities LLC at **25 W 39th St, New York** — the SPE takedown vehicles vs. the parent.
-- **The end-use.** The dispute is, on the face of a federal filing, about a **data center**: the
-  City amended M-1 to permit "Computing Infrastructure Providers, Data Processing, Web Hosting,
-  and Related Services" (Ord. 4621-25) specifically for this land, and later moved to remove that
-  use. This is a litigation-record corroboration of the end-use that stood on press disclosure —
-  it does **not** disclose the facility's MW load, cooling, tenant, or operator, which remain
+  instrument, not only the auditor layer + press. The **owned** holding is **~230.346 acres** (¶13,
+  the four owned parcels). Doc #1 adds a **fifth entity, Urbana Owner LLC**, the contract purchaser
+  of two *further* parcels (K48-25-11-01-36-001-00 and a portion of -37-001-00), **additional** to
+  that 230.346 ac and not yet conveyed — their acreage is not stated in the complaint (`[open]`).
+- **The mailing question — partly clarified, not fully resolved.** land-assembly.yaml flagged the
+  mismatch between the auditor mailing (3040 Riverside Dr) and the §401 WQC address (720 E Broad
+  St). Doc #1's **caption** lists all four Urbana Owner / Highland55 SPEs at **3040 Riverside
+  Drive, Ste 122, Columbus** and Thor Equities LLC at **25 W 39th St, New York**. But the auditor
+  CAMA agrees only for Highland55: it records **Urbana Owner I and II at 25 W 39th St, New York**
+  (c/o Thor). Reconciling the caption vs auditor address for those two stays `[inference]/[open]`
+  pending the Ohio SoS registered-agent pull.
+- **The end-use.** Thor **alleges** the Project is a **data center** — as a party's pleading this
+  is `[reference]`, not independent verification. What the complaint independently establishes is
+  the *ordinance record* it recites: the City amended M-1 to permit "Computing Infrastructure
+  Providers, Data Processing, Web Hosting, and Related Services" (Ord. 4621-25) specifically for
+  this land, and later moved to remove that use — corroborating that the entitlement *dispute* is
+  over a data center. It does **not** disclose the facility's MW load, cooling, tenant, or
+  operator, which remain
   `[open]` (see [`datacenter-facility.md`](datacenter-facility.md) §4/§7).
 
 ## Zoning + litigation timeline
