@@ -66,6 +66,23 @@ grantors are `[reference]` corroborated `[inference]` by the acreage/price math.
   fabricate a figure), the profile carries **no disclosed genset fleet** and **no air permit** —
   the air-dispatch model refuses cleanly for this site.
 
+> **Negative-search result (#1353, 2026-07-10).** Both facility-naming power/emissions instruments
+> were searched; **neither surfaced a load or a genset fleet for this campus**, so the MW stays
+> `[open]` and the screening bracket is **retained** (full record:
+> [`facility-power-instrument-search.md`](facility-power-instrument-search.md)):
+>
+> - **PJM.** AES Ohio's disclosed "Dayton" TEAC large-load *customer requests* name **Piqua,
+>   Adams County, Marysville, Tipp City, Jeffersonville, Wilmington** — **none Champaign County /
+>   Urbana**; the only Champaign-County PJM-queue item is **Woodstock Solar (AE2-342)**, a
+>   withdrawn 40 MW solar generator, unrelated. `[verified]`
+> - **OEPA air.** US-EPA ECHO **ICIS-AIR** shows **no campus air permit** at the SR-55/US-68 site —
+>   the 7 air sources near Urbana are all pre-existing industry (City landfill, Hall printing,
+>   Heritage/Westville grain, JMC/Ultra-Met metal, Bundy). Expected for a greenfield whose
+>   construction opens 2026-06-01. `[verified]`
+> - **⚠️ Conflation guard.** The **100 MW→1.3 GW** AES Ohio ramp is the **Adams County** (Stuart
+>   substation) request, and the **~500 MW** figure is Thor's **Van Wert County** campus — **neither
+>   is Urbana.** Urbana's own disclosure states no MW; baxtel lists no capacity for it.
+
 ### The IT-load screening bracket `[inference]` — read this before quoting a MW figure
 
 Because the domain must activate to `live` (#1327) but the load is undisclosed, `SiteProfile.facility`
@@ -102,11 +119,19 @@ readiness domain from `absent` → **`live`** (the `economics-demand-pressure` f
 
 ## 7. Open leads / extraction targets
 
-- `[open]` **The MW load** and the **PJM interconnection queue position** — the screening bracket in
-  §4 must be replaced by the disclosed figure.
-- `[open]` **The Feb-2026 site-plan application** (and any building/zoning/air permit) — the primary
+The end-use stays **`[reference]`** — the #1353 search for a facility-naming *primary* instrument
+(PJM interconnection / OEPA air permit) came back **negative** (§4), so nothing surfaced to take it
+to `[verified]`. It flips the moment any lead below resolves.
+
+- `[open]` **The MW load** and the **PJM interconnection queue position** — searched negative
+  2026-07-10 (§4); the screening bracket is retained until a later AES Ohio TEAC / PJM large-load
+  filing names an Urbana-area substation, then replaces it.
+- `[open]` **An OEPA air PTIO** (emergency engines) — searched negative on ECHO ICIS-AIR
+  2026-07-10 (§4); re-check when the greenfield reaches construction. Populates
+  `genset_count`/`genset_mw`/`air_permit_citation` and activates the air-dispatch model.
+- `[open]` **The Feb-2026 site-plan application** (and any building/zoning permit) — the primary
   instrument that *names* the facility type; ingest to `data/documents/**/urbana/` when reachable to
   take the end-use `[reference]` → `[verified]`.
 - `[open]` **Named tenant/operator** — "Vance Brands" appears in the Corps JD filings but is not
-  resolved to a data-center operator in available business records.
+  resolved to a data-center operator; neither the PJM nor the air search named an operator (#1353).
 - `[open]` The **CRA/PILOT agreement** and the **development agreement** — incentive instruments.

@@ -1173,10 +1173,20 @@ _URBANA = SiteProfile(
             "single-story ~40 ft form factor + the disclosed CLOSED-LOOP DRY cooling ('water use "
             "comparable to a standard office building') argue against the max-density liquid-AI "
             "archetype, so the band is bounded well below GB200-class rack densities. Replace with "
-            "the disclosed load when a PJM interconnection application or an air permit surfaces it."
+            "the disclosed load when a PJM interconnection application or an air permit surfaces it. "
+            "RETAINED after a documented NEGATIVE search (#1353, 2026-07-10): the AES Ohio (Dayton) "
+            "PJM TEAC large-load customer requests name Piqua/Adams/Marysville/Tipp City/"
+            "Jeffersonville/Wilmington — NOT Champaign County/Urbana; the only Champaign PJM-queue "
+            "item is Woodstock Solar AE2-342 (40 MW, withdrawn); and US-EPA ECHO ICIS-AIR shows no "
+            "campus air permit at the SR-55/US-68 site (7 pre-existing Urbana sources only). No MW "
+            "was disclosed at the Feb-2026 city meeting; no figure fabricated. NB: the 100 MW->1.3 GW "
+            "AES Ohio figure is ADAMS COUNTY (Stuart substation) and the ~500 MW figure is Thor's "
+            "VAN WERT campus — neither is Urbana. Full record: "
+            "data/extracted/urbana/facility-power-instrument-search.md."
         ),
         # No disclosed gensets or air permit (site-plan-grounded) → genset/backup basis and the
         # air-dispatch fleet model are absent; genset_count/genset_mw/air_permit_citation stay None.
+        # Confirmed still None by the #1353 negative air-permit search (ECHO ICIS-AIR, 2026-07-10).
         facility_type="data-center campus (Urbana Technology Hub)",  # [reference]
         gross_floor_area_sqft=460_000,  # [reference] disclosed site plan — 460k sqft, single-story, ~40 ft
         disclosed_investment_usd=1_000_000_000,  # [reference] ~$1B disclosed investment
