@@ -13,6 +13,9 @@ storage:
 - relpath: extracted/oepa/1PD00008.npdes.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/oepa/1PD00008.fs.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
 refresh:
   cadence: static
 provenance: document
@@ -24,5 +27,9 @@ tags:
 - troy-piqua
 notes: Piqua WWTP permit 1PD00008*WD, renewal effective 2022-09-01 through 2027-08-31,
   receiving Great Miami River. Outfalls 1PD00008001 (primary treated effluent),
-  1PD00008300 (SSO monitoring), and 1PD00008581 (sludge monitoring). Add additional
-  troy-piqua OEPA extractions (fact sheets, draft PNs) to storage as they are produced.
+  1PD00008300 (SSO monitoring), and 1PD00008581 (sludge monitoring). Fact sheet
+  1PD00008.fs (Public Notice 22-006-011, 2022-06-21, App. OH0027049) states average
+  design flow 8.7 MGD (13.46 cfs), peak hydraulic 22.5 MGD, and the WLA-basis 7Q10 of
+  24.0 cfs (GMR above Sidney, USGS 03261500). ECHO DMR is cataloged separately as
+  wwtp-oh0027049-troy-piqua. Add additional troy-piqua OEPA extractions (draft PNs) to
+  storage as they are produced.
