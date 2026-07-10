@@ -77,10 +77,24 @@ limits on every discharge.
 That is what the campus discharges *into*. It also takes water *out* of the basin:
 a data center cools by evaporation, and the water it gives back is not the water it takes. But
 read the next comparison carefully — it is a **worst-case bound**, not the operating
-reality. Lima doesn't pump from the river at low flow; it draws from five off-stream reservoirs
-filled at high flow. So setting the campus's net loss against the Ottawa's low flow measures the
+reality. Lima doesn't pump from the river at low flow; its supply is five off-stream reservoirs
+holding **~14.4 billion gallons** — roughly **70% of it fed from the Auglaize** (Bresler and
+Williams), the balance from the Ottawa — filled by pumping *at high flow* and drawn down through
+the dry months. So setting the campus's net loss against the Ottawa's low flow measures the
 *scale* of the basin stress, not a withdrawal from the river — the honest tag is
-`[inference]`, not `[verified]`.
+`[inference]`, not `[verified]`. The reservoir sourcing is `[reference]`, from the City's
+utility record.
+
+Read the operating constraint the right way and it moves from the river to the reservoirs. The
+campus draws **treated municipal water**, so its makeup demand — modeled at about **3.9 MGD, a
+fifth of Lima's ~19 MGD production** — draws down that shared storage, while its returns leave
+downstream through the public WWTPs, not back into the reservoirs. Run the zero-refill drought
+buffer and the campus shortens it from roughly **961 to 762 days** (−199). *That* reservoir
+drawdown — not the instantaneous river depletion the screen below bounds — is the binding
+low-flow constraint, and the pump stations have to recapture the added draw (~1.4 billion
+gallons a year) from the Auglaize and Ottawa when the rivers run high. It regenerates from the
+live refill gauges via `watermark supply`. `[inference]`, a modeled draw on `[reference]`
+storage.
 
 There is a second reason the draw is modeled rather than read. The one number that would
 settle it — the cooling system's design flowrate — was claimed by the developer as a trade
