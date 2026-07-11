@@ -354,6 +354,26 @@ sites:
     map_lon: -82.7080
     map_zoom: 12
 
+  # Muskingum basin — Rocky Fork Mohican headwaters (Coshocton #1281 tracks the Tuscarawas +
+  # Walhonding confluence further downstream; Mansfield is the first Mohican-branch node)
+
+  - slug: mansfield
+    place: "Mansfield"
+    basin_label: "Rocky Fork Mohican · Muskingum"
+    # [verified — Ohio EPA 2PE00001 fact sheet] the receiving water is Rocky Fork of Mohican River;
+    # kept null per the registry field guide above (tracking-only) — #1429 wires the confirmed
+    # NPDES receiving water once the record/water domain is active
+    receiving_water: null
+    state: "OH"
+    codename: null
+    mono: "MFD"
+    status: "tracking"
+    selectable: false
+    issue: "1425"
+    map_lat: 40.7585
+    map_lon: -82.5155
+    map_zoom: 13
+
   # ── Tracking only (GitHub issue, no Python profile yet) ─────────────────────────────────
   # Scioto basin (the data-center epicenter)
 

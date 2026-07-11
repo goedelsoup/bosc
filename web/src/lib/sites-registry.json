@@ -323,6 +323,20 @@
       "map_zoom": 12
     },
     {
+      "slug": "mansfield",
+      "place": "Mansfield",
+      "basin": "Rocky Fork Mohican \u00b7 Muskingum",
+      "state": "OH",
+      "codename": null,
+      "mono": "MFD",
+      "status": "tracking",
+      "selectable": false,
+      "issue": "1425",
+      "map_lat": 40.7585,
+      "map_lon": -82.5155,
+      "map_zoom": 13
+    },
+    {
       "slug": "newark",
       "place": "Newark",
       "basin": "Licking River",
