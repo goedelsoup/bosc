@@ -41,12 +41,13 @@ Confirm every entry is physically in **Clinton County, OH** (FIPS 39027). Traps 
   (former Cosler Farm), minimum **100 permanent jobs**, ~$8M annual payroll (Clinton County
   Port Authority data-center FAQ).
 - `[reported]` Situs **1488 S US-68**, southwest Wilmington; operating entity **Amazon Data
-  Services Inc.** (the name under which it intervened in the Sharp litigation, §1.3). SOS
+  Services Inc.** (the name under which it intervened in the Sharp litigation, §1.2). SOS
   foreign-qualification pull `[open]`.
 - `[verified]` The land sale was a **private transaction** between a private landowner and
   AWS — not guided by the Port Authority, the City, or any public entity (FAQ). Consistent
-  with the sweep's negative: **no JobsOhio instrument found** as of 2026-07-11. Recorder deed
-  pull (grantee, price) `[open]`.
+  with that, **no JobsOhio instrument found** in the 2026-07-11 web sweep `[open — negative
+  search only, no auditable JobsOhio-record check yet]`. Recorder deed pull (grantee, price)
+  `[open]`.
 - `[verified]` **Annexation** of the project site approved by Wilmington City Council
   **2025-08-07** (FAQ).
 - `[verified]` AWS selected the site **for proximity to the City's wastewater treatment
@@ -99,10 +100,12 @@ Confirm every entry is physically in **Clinton County, OH** (FIPS 39027). Traps 
 - **Projected cooling-water consumption:** ~6M gal/yr, direct evaporative cooling.
   `[reported]` The ~16,400 GPD average is arithmetic from that annual figure (6M gal ÷ 365 d).
   `[inference]` Peak-day draw is a distinct, undisclosed number. `[open]`
-- **Water source:** City of Wilmington municipal system. The City's **raw supply is Caesar
-  Creek Lake** (1994 USACE storage contract; an AG dispute over charges is on the record)
-  plus the Burtonville reservoirs (Cowan Creek) — **not Todd Fork**. `[reported]` (#1472
-  re-verifies against the USACE contract; this explains profile gage `03242350`.)
+- **Water source:** City of Wilmington municipal system. The City's principal raw supply
+  **since 1994 is Caesar Creek Lake** (USACE-built), with the two city-owned **Burtonville
+  reservoirs** (450M gal total, pumped from Cowan Creek) as backup — **not Todd Fork**.
+  `[verified — City water-treatment page]` The USACE/ODNR storage-contract terms are the
+  instrument still to pull, and an AG dispute over the Corps' charges is on the record
+  `[reported — wnewsj]`; #1472 tracks the pull (this explains profile gage `03242350`).
 - **Wastewater:** to the City WWTP — **OH0028134 / 1PD00013\*QD**, outfall 001 to Lytle
   Creek at RM 6.83 (Lytle Creek → Todd Fork → Little Miami); design flow 3.0 MGD, **PTI
   #1543170 expansion to 4.5 MGD**, new limits effective 2026-03-01. `[verified — Ohio EPA
@@ -121,8 +124,9 @@ Confirm every entry is physically in **Clinton County, OH** (FIPS 39027). Traps 
   Lytle Creek / Todd Fork reach. Do not mix them (#1472).
 - **Abstraction vs. 7Q10:** not computable — numerator (reserved MGD) and denominator
   (at-site 7Q10) are both open. Fill from the water contract + StreamStats pulls only. `[open]`
-- **Overlay:** the Little Miami is a **National & State Scenic River** (anti-degradation
-  overlay on any new/expanded discharge). `[reference]`
+- **Overlay:** the Little Miami is a **National & State Scenic River** (state-designated
+  1969/1971, Ohio's first; national 1980) — an anti-degradation overlay on any new/expanded
+  discharge. `[verified — ODNR / rivers.gov]`
 
 ### 1.5 — Regulatory record (status as of 2026-07-11)
 
@@ -190,7 +194,8 @@ worth tracking but is a separate thread.
 ## Instruments to pull (priority order — tracked in #1471)
 
 1. **The Sharp ruling + key docket entries** (PACER / govinfo, 1:26-cv-00448) — exact
-   holdings and the three voided ordinance numbers; ingest under corpus chain-of-custody.
+   holdings and the numbers of the three ordinances to redo; ingest under corpus
+   chain-of-custody.
 2. **The ordinance stack** (municipal clerk / Municode): O-25-73, the TIF, the paused CRA,
    the PILOT, the School Compensation Agreement, the 2025-08-07 annexation, O-26-04–07,
    O-26-33 (+ its 2026-07-16 outcome).
@@ -228,9 +233,17 @@ worth tracking but is a separate thread.
 - AES Ohio Fayette–Clinton 345kV (OPSB 25-0871-EL-BLN):
   <https://www.aes-ohio.com/fayette-clinton-345kV-transmission-line-project>
   · <https://wilmingtonohio.gov/aes-notification-fayette-to-clinton-345-kv-transmission-line-project/>
-- Caesar Creek Lake raw-water supply + USACE-charges dispute:
-  <https://wilmingtonohio.gov/about-water-treatment/>
-  · <https://www.wnewsj.com/news/132853/wilmington-has-new-ally-in-battle-over-water-bills-ohio-ag-sues-army-corps-over-unbelievable-charges-to-city>
+- Caesar Creek Lake principal supply "since 1994" + Burtonville backup reservoirs (Cowan
+  Creek): <https://wilmingtonohio.gov/about-water-treatment/>
+- USACE/ODNR water contracts + the AG charges dispute:
+  <https://www.wnewsj.com/news/132853/wilmington-has-new-ally-in-battle-over-water-bills-ohio-ag-sues-army-corps-over-unbelievable-charges-to-city>
+- Little Miami Scenic River designations (state 1969/1971, national 1980):
+  <https://ohiodnr.gov/go-and-do/plan-a-visit/find-a-property/little-miami-scenic-river>
+  · <https://rivers.gov/river/little-miami>
+- SWOAQA jurisdiction (Butler, Clermont, Clinton, Hamilton, Warren counties):
+  <https://www.southwestohioair.org/>
+- The "1.5 GW" press analysis of PJM filings (Wilmington ranked by load):
+  <https://www.daytondailynews.com/news/proposed-data-center-could-be-one-of-ohios-biggest-power-guzzlers/PIHRA4ZAGJC75OTEGK5EPR3VIY/>
 - OHD000001 (draft + fact sheet + public notice):
   <https://epa.ohio.gov/divisions-and-offices/surface-water/permitting/wastewater-discharges-from-data-centers--general-permit>
   · <https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/Data_Centers/OHD000001_Draft.pdf>
@@ -238,5 +251,6 @@ worth tracking but is a separate thread.
   · <https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/Data_Centers/OHD000001_Draft_PN.pdf>
 - In-corpus: `data/extracted/wilmington/low-flow-screen.md` (Todd Fork DAR screen, #516) ·
   `data/reference/rsei/wilmington/inventory.yaml` · `data/reference/economics/wilmington/baseline.yaml` ·
-  `data/reference/eia/wilmington/grid-profile.yaml` · `data/catalog/extracted/oepa-wilmington.yaml`
-  (7 NPDES permits + fact sheet already extracted)
+  `data/reference/eia/wilmington/grid-profile.yaml` · `data/documents/oepa/wilmington/`
+  (the 7 extracted NPDES permits + the WWTP fact sheet `1PD00013.fs.pdf`; indexed by
+  `data/catalog/extracted/oepa-wilmington.yaml`)
