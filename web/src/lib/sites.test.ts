@@ -72,6 +72,7 @@ describe("sites registry — the Watermark network (#304)", () => {
       "coshocton",
       "piketon",
       "sandusky",
+      "mansfield",
       "newark",
       "zanesville",
       "fremont",
@@ -111,8 +112,8 @@ describe("site build phases — the four-phase clock (#308 dictate B)", () => {
       expect(s.codename).toBeNull();
     }
   });
-  it("the full network the selector depicts — 35 sites across 10 basins", () => {
-    expect(SITES.length).toBe(35);
+  it("the full network the selector depicts — 36 sites across 10 basins", () => {
+    expect(SITES.length).toBe(36);
     expect(groupSites("basin").length).toBe(10);
   });
 });
