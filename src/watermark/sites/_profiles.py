@@ -2580,6 +2580,74 @@ _WEST_UNION = SiteProfile(
 )
 
 
+# Registration only (#1426) — Mansfield / Richland County, the network's first Rocky Fork
+# Mohican headwaters node (Black Fork → Mohican → Walhonding → Muskingum → Ohio; shares
+# Coshocton's `muskingum` basin further downstream). This is identity + the verifiable knobs
+# named by #1426 (lat/lon, county FIPS, NWIS gages, EIA-861 utility number) only — every other
+# field is an unfilled scaffold TODO. No domain becomes active here; the site earns tiers from
+# evidence (#1427 onboard, #1428 facility, #1429/#1430 record, #1431 places).
+_MANSFIELD = SiteProfile(
+    slug="mansfield",
+    basin="muskingum",  # [verified] Rocky Fork → Mohican → Walhonding → Muskingum River → Ohio River;
+    # shares Coshocton's basin slug (subregion 0504)
+    nwis_sites=[
+        "03131000",  # [verified] Rocky Fork near Mansfield OH — the WWTP's (2PE00001*ND) receiving
+        # water; DA 39.0 mi²
+        "03130500",  # [verified] Touby Run at Mansfield OH — the downtown-Mansfield creek; DA 5.44 mi²
+        "03132500",  # [verified] Clear Fork at Newville OH — downstream of Clear Fork Reservoir
+        # (the city's water supply); DA 174 mi²
+    ],
+    nasa_power_lat=40.7585,  # [verified] downtown Mansfield square centroid (data/sites.yaml map_lat)
+    nasa_power_lon=-82.5155,
+    rsei_fips="39139",  # [verified] Richland County, OH
+    econ_fips="39139",
+    eia861_utility_number=13998,  # [verified] Ohio Edison Co — EIA-861 2024 Service_Territory file
+    # confirms Ohio Edison serves Richland County (Ohio Power Co/AEP #14006 also serves rural
+    # Richland Co territory; City of Shelby is a separate Richland-County municipal utility, #17043
+    # — NOT Ohio Edison — the footgun already flagged on the Sidney profile)
+    eia_state="OH",
+    parcels_url="TODO",
+    zoning_url="TODO",
+    floodzone_url="TODO",
+    gnis_default_state="OH",
+    hydro_utm_epsg=0,  # TODO
+    lsc_default_ga="136",
+    gis_parcel=None,
+    gis_zoning=None,
+    gis_flood=None,
+    design_lat=0.0,  # TODO
+    design_lon=0.0,  # TODO
+    corridor_name="TODO",
+    dominant_hsg="TODO",
+    hsg_citation="TODO",
+    pre_cover="TODO",
+    post_cover="TODO",
+    developed_pervious_cover="TODO",
+    noaa_fallback_24h_depth_in={},  # TODO
+    parcels_relpath="reference/mansfield/bosc-parcels.geojson",  # TODO: commit the site's own geometry
+    footprint_relpath="extracted/mansfield/bosc-site-footprint.yaml",  # TODO: pending an identified site
+    climatology_relpath="reference/hydrology/mansfield/nasa-power-climatology.yaml",
+    corridor_ddf_relpath="reference/hydrology/mansfield/atlas14-corridor-ddf.yaml",
+    baseline_relpath="reference/economics/mansfield/baseline.yaml",
+    rsei_relpath="reference/rsei/mansfield/inventory.yaml",
+    consumer_energy_relpath="reference/eia/mansfield/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/mansfield/demand-pressure.yaml",
+    grid_relpath="reference/eia/mansfield/grid-profile.yaml",
+    toxic_corridor_bbox=(0.0, 0.0, 0.0, 0.0),  # TODO
+    plant_receiving={},  # TODO
+    abstraction_gage="TODO",
+    supply_gage_primary="TODO",
+    supply_gage_secondary="TODO",
+    passby_primary_cfs=0.0,  # TODO
+    passby_secondary_cfs=0.0,  # TODO
+    facility=None,  # [open] pending the facility instrument hunt (#1428)
+    serving_utility_citation="TODO",
+    lmp_usd_mwh=0.0,  # TODO
+    lmp_citation="TODO",
+    county_name="TODO",
+)
+
+
 SITES: dict[str, SiteProfile] = {
     _LIMA.slug: _LIMA,
     _FINDLAY.slug: _FINDLAY,
@@ -2604,6 +2672,7 @@ SITES: dict[str, SiteProfile] = {
     _PIKETON.slug: _PIKETON,
     _SANDUSKY.slug: _SANDUSKY,
     _WEST_UNION.slug: _WEST_UNION,
+    _MANSFIELD.slug: _MANSFIELD,
 }
 
 # The per-site output relpaths `watermark onboard` writes. Each must be unique to its site so
