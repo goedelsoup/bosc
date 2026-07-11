@@ -7,7 +7,15 @@
 #
 # A rel is added here ONLY after the C2 redaction/PII pre-publication pass (#281).
 # Three rule kinds (all optional; combine freely):
-collections: []   # whole data/documents/<slug> trees, e.g.  - aedg
+collections:      # whole data/documents/<slug> trees, e.g.  - aedg
+  # The whole Ohio EPA collection — 40 PDFs (permits, draft permits, fact sheets, public
+  # notices) across the Lima top level plus five sites (troy-piqua, sidney, van-wert,
+  # wilmington, urbana). These are Ohio EPA public agency records with no private PII — the
+  # same basis on which the Bistrozzi PTI (permits/bistrozzi-permits/4132514.pdf) is
+  # published. A whole-collection rule is intended: OEPA pulls for future sites are agency
+  # records and auto-publish by the same standing basis (#1370).
+  # review: { by: goedelsoup, date: 2026-07-10, result: publish, basis: public-epa-agency-records }
+  - oepa
 globs: []         # fnmatch globs over the data/documents rel, e.g.  - 'permits/*/*.pdf'
 documents:        # exact data/documents rels, e.g.  - recorder/bistrozzi-deeds/foo.pdf
   # The AEDG PRR-01 bundle — the full 328-page Port Authority public-records production.
