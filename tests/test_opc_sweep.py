@@ -122,6 +122,36 @@ def test_sweep_skips_a_failing_page_without_aborting(monkeypatch: pytest.MonkeyP
     assert not sweep.complete
 
 
+def test_sweep_survives_an_exception_with_an_empty_message(monkeypatch: pytest.MonkeyPatch) -> None:
+    # A raise with no message (`str(exc) == ""`) yields no lines — the skip-logging must fall back
+    # to the repr, not index an empty list and abort the very sweep it exists to protect.
+    class _FakePdf:
+        def __init__(self, *a: object, **k: object) -> None:
+            pass
+
+        def close(self) -> None:
+            pass
+
+    def _fake_extract(doc: object, i: int, **kw: object) -> PageExtraction:
+        if i == 319:
+            raise ValueError  # no message → str(exc) == ""
+        return PageExtraction(
+            doc_id="d",
+            source_path="p",
+            page_index=i,
+            pdf_page=i + 1,
+            dpi=300,
+            estimate=_est("RB", i, i),
+        )
+
+    monkeypatch.setattr(extract_stage, "PdfDocument", _FakePdf)
+    monkeypatch.setattr(extract_stage, "extract_opc_page", _fake_extract)
+
+    sweep = extract_stage.sweep_opc_pages(_doc(), [318, 319, 320])
+    assert [pe.page_index for pe in sweep.extractions] == [318, 320]
+    assert sweep.failed == [319]
+
+
 def test_reconcile_flags_a_truncated_sweep_rather_than_passing_green() -> None:
     # A page silently dropping out of the sweep understates the program total by a whole estimate,
     # but the headline is derived from the survivors so the program-total check stays self-
