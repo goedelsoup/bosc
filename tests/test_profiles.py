@@ -28,6 +28,15 @@ def test_detect_returns_none_when_no_match() -> None:
     assert profiles.detect("a generic cost estimate with no telltale keywords") is None
 
 
+def test_detect_ignores_the_generic_document_title() -> None:
+    # "Opinion of Probable Cost" heads essentially every OPC sheet regardless of contractor, so it
+    # must NOT resolve to Tetra Tech (and hand a non-Tetra-Tech page the 25%-inference note) — only
+    # the discriminating firm name does (#1364). A title-only page falls through to GENERIC_OPC.
+    title_only = "OPINION OF PROBABLE PROJECT COST\nConceptual OPC\nRoundabout at Cole/Diller"
+    assert profiles.detect(title_only) is None
+    assert profiles.resolve("auto", title_only) is profiles.GENERIC_OPC
+
+
 def test_resolve_prefers_explicit_then_detect_then_generic() -> None:
     assert profiles.resolve("tetratech", "") is profiles.TETRATECH  # explicit wins
     assert profiles.resolve("auto", "tetra tech opinion of probable") is profiles.TETRATECH

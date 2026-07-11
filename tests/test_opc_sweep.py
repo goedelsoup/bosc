@@ -84,9 +84,11 @@ def test_sweep_reuses_one_pdf_and_loops_pages(monkeypatch: pytest.MonkeyPatch) -
     monkeypatch.setattr(extract_stage, "PdfDocument", _FakePdf)
     monkeypatch.setattr(extract_stage, "extract_opc_page", _fake_extract)
 
-    pes = extract_stage.sweep_opc_pages(_doc(), [318, 319, 320])
+    sweep = extract_stage.sweep_opc_pages(_doc(), [318, 319, 320])
     assert seen == [318, 319, 320]
-    assert [pe.pdf_page for pe in pes] == [319, 320, 321]
+    assert [pe.pdf_page for pe in sweep.extractions] == [319, 320, 321]
+    assert sweep.failed == [] and sweep.complete
+    assert sweep.requested == [318, 319, 320]
     assert closed["n"] == 1  # the reused PDF is opened once and closed once
 
 
@@ -113,5 +115,27 @@ def test_sweep_skips_a_failing_page_without_aborting(monkeypatch: pytest.MonkeyP
     monkeypatch.setattr(extract_stage, "PdfDocument", _FakePdf)
     monkeypatch.setattr(extract_stage, "extract_opc_page", _fake_extract)
 
-    pes = extract_stage.sweep_opc_pages(_doc(), [318, 319, 320])
-    assert [pe.page_index for pe in pes] == [318, 320]  # the bad page is logged + skipped
+    sweep = extract_stage.sweep_opc_pages(_doc(), [318, 319, 320])
+    assert [pe.page_index for pe in sweep.extractions] == [318, 320]  # bad page logged + skipped
+    # ...but the drop is SURFACED, not swallowed — the failed index rides on the result (#1364).
+    assert sweep.failed == [319]
+    assert not sweep.complete
+
+
+def test_reconcile_flags_a_truncated_sweep_rather_than_passing_green() -> None:
+    # A page silently dropping out of the sweep understates the program total by a whole estimate,
+    # but the headline is derived from the survivors so the program-total check stays self-
+    # consistent. The coverage cross-check (expected_count) turns that into a failing finding (#1364).
+    ests = [_est("RB1", 100_000, 200_000), _est("RB2", 50_000, 150_000)]
+    complete = extract_stage.assemble_opc_summary(ests, expected_count=2)
+    assert [f for f in analyze.reconcile(complete) if not f.ok] == []
+
+    truncated = extract_stage.assemble_opc_summary(ests[:1], expected_count=2)
+    fails = [f for f in analyze.reconcile(truncated) if not f.ok]
+    assert [f.check for f in fails] == ["coverage"]
+    assert "1 of 2" in fails[0].detail
+
+    # With no declared expectation the check is skipped (hand-authored summaries stay valid).
+    assert [
+        f for f in analyze.reconcile(extract_stage.assemble_opc_summary(ests[:1])) if not f.ok
+    ] == []

@@ -172,6 +172,11 @@ class OPCMeta(ApproxModel):
     pdf_pages: str | None = None
     contingency_and_inflation_pct: int | None = None
     summary_construction_total: OptApproxInt = None
+    # How many sub-estimates the assembly was ASKED to cover (the swept page count). When set and
+    # it exceeds the number actually assembled, a page silently dropped out — `analyze.reconcile`
+    # turns that into a failing coverage finding so a truncated summary can't reconcile green off a
+    # headline total derived from only the survivors (#1364). Absent on hand-authored summaries.
+    expected_sub_estimates: int | None = None
 
 
 class SectionSubtotals(ApproxModel):

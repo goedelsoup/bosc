@@ -112,6 +112,23 @@ def reconcile(summary: OPCSummary) -> list[Finding]:
             )
         )
 
+    # Coverage: the program-total check is self-consistent (the headline is derived from the
+    # survivors), so it stays green even if a sub-estimate silently dropped out of the sweep. Cross-
+    # check the assembled count against how many were expected so a truncated summary fails loudly
+    # rather than under-reporting the program by a whole estimate (#1364).
+    expected = summary.meta.expected_sub_estimates
+    if expected is not None:
+        assembled = len(summary.sub_estimates)
+        findings.append(
+            Finding(
+                subject="PROGRAM",
+                check="coverage",
+                ok=assembled >= expected,
+                detail=f"assembled {assembled} of {expected} expected sub-estimates"
+                + (f" ({expected - assembled} dropped)" if assembled < expected else ""),
+            )
+        )
+
     failures = [f for f in findings if not f.ok]
     log.info("analyze.reconciled", checks=len(findings), failures=len(failures))
     return findings

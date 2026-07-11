@@ -79,9 +79,19 @@ def test_record_threshold() -> None:
     assert domain_states(prof, _counts())["record"] == "absent"
     # Below the live threshold → seeded.
     assert domain_states(prof, _counts(records=RECORD_LIVE_THRESHOLD - 1))["record"] == "seeded"
-    # At/above threshold across records/documents → live.
+    # At/above threshold on extracted records → live.
     assert domain_states(prof, _counts(records=RECORD_LIVE_THRESHOLD))["record"] == "live"
-    assert domain_states(prof, _counts(records=1, documents=1))["record"] == "live"
+
+
+def test_record_live_requires_extracted_records_not_catalogued_scans() -> None:
+    # `documents` counts source-scan COLLECTION dirs (one row each), not extracted content, so a
+    # site with raw scans in ≥2 collections but zero extractions must NOT read as a live record —
+    # catalogued-but-unworked scans seed the domain; they never lift it (#1364).
+    prof = SITES["urbana"]
+    assert domain_states(prof, _counts(documents=2))["record"] == "seeded"
+    assert domain_states(prof, _counts(documents=9))["record"] == "seeded"
+    # One extracted record plus its catalogued source is still below the two-item live bar → seeded.
+    assert domain_states(prof, _counts(records=1, documents=1))["record"] == "seeded"
 
 
 def test_record_excludes_network_global_boilerplate() -> None:
@@ -152,7 +162,9 @@ def test_tier_case_urbana() -> None:
     urbana = SITES["urbana"]
     states = domain_states(
         urbana,
-        _counts(**{"geo/campus": 5, "economics-demand-pressure": 1}, documents=2, leads=1),
+        _counts(
+            **{"geo/campus": 5, "economics-demand-pressure": 1}, records=3, documents=2, leads=1
+        ),
     )
     assert states["record"] == "live"
     assert states["places"] == "live"

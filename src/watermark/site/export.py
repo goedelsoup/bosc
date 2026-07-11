@@ -699,20 +699,31 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         # false and the frontend cleanly locks the section (not an empty list).
         ("contacts", ContactItem, lambda: contact_items or None),
         # Already-provenanced inventories — exported as their own Pydantic models (#60).
-        ("rsei", None, lambda: None if rsei_inv is None else rsei_mod.export_rsei(rsei_inv)),
+        # An object feed serializes with `count == 1` when present, so the readiness floor
+        # (`watermark.site.readiness`) reads its presence as content — a present-but-empty
+        # inventory must therefore be dropped (return None), not shipped as an empty shell that
+        # floats `backdrop` to `live` on zero facilities/sectors/prices (#1364).
+        (
+            "rsei",
+            None,
+            lambda: rsei_mod.export_rsei(rsei_inv) if rsei_inv and rsei_inv.facilities else None,
+        ),
         ("lei", None, lambda: None if lei_inv is None else gleif_mod.export_gleif(lei_inv)),
         (
             "economics-baseline",
             None,
-            lambda: None if econ is None else economics_mod.export_economics(econ),
+            lambda: economics_mod.export_economics(econ) if econ and econ.latest.sectors else None,
         ),
         # Consumer energy costs (EIA) with the full annual price/sales series for charting
-        # (issue #1111); absent when the site has no committed consumer-energy dataset.
+        # (issue #1111); absent when the site has no committed consumer-energy dataset — or when
+        # it loaded with no price series at all (present-but-empty, #1364).
         (
             "consumer-energy",
             None,
             lambda: (
-                None if econ_energy is None else economics_mod.export_consumer_energy(econ_energy)
+                economics_mod.export_consumer_energy(econ_energy)
+                if econ_energy and econ_energy.prices
+                else None
             ),
         ),
         # The facility demand→consumer-price-pressure sensitivity (#1105): households-equivalent,

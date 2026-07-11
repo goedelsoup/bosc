@@ -121,7 +121,12 @@ def all_profiles() -> list[Profile]:
 
 
 def detect(text: str) -> Profile | None:
-    """Best-matching profile for a page's OCR text, or None if nothing scores."""
+    """Best-matching profile for a page's OCR text, or None if nothing scores.
+
+    Only profiles registering *discriminating* ``detect_keywords`` (a contractor/agency name,
+    never the generic document title) participate, so a page with no telltale signal returns
+    None and :func:`resolve` falls through to the assumption-free ``GENERIC_OPC`` (#1364).
+    """
     scored = [(p.detect_score(text), p) for p in _REGISTRY.values() if p.detect_keywords]
     scored = [(s, p) for s, p in scored if s > 0]
     if not scored:
@@ -184,11 +189,15 @@ TETRATECH = register(
             "+ the 25% line (~1.25x the subtotal); if the 25% line is illegible, infer it as "
             "25% of the construction subtotal and warn."
         ),
+        # Detection keys must DISCRIMINATE — a contractor/agency name, not the format's generic
+        # title. "opinion of probable [cost]" and "conceptual opc" head essentially every OPC
+        # sheet regardless of who drew it, so matching them mislabels a non-Tetra-Tech page as
+        # Tetra Tech and hands its extractor the 25%-inference layout note — a fabrication-adjacent
+        # default on a sheet that may use no 25% markup (#1364). Only the firm name qualifies; an
+        # unmatched page falls through to GENERIC_OPC (whose prompt makes no markup assumption).
         detect_keywords=(
             "tetra tech",
             "tetratech",
-            "opinion of probable",
-            "conceptual opc",
         ),
     )
 )

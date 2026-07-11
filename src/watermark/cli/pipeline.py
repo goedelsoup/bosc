@@ -483,15 +483,24 @@ def extract_sweep(
     indices = list(range(lo, hi + 1))
 
     console.print(f"[dim]Sweeping {len(indices)} pages ({lo}-{hi}) of {doc_id} (live vision)...[/]")
-    extractions = extract_stage.sweep_opc_pages(
+    sweep = extract_stage.sweep_opc_pages(
         doc, indices, profile=profile, detail=detail, dpi=dpi or DEFAULT_DPI
     )
+    extractions = sweep.extractions
     if not extractions:
         console.print(
             "[yellow]No pages extracted.[/] The sweep runs live Claude-vision extraction — "
             "it needs WATERMARK_ANTHROPIC_API_KEY / ANTHROPIC_API_KEY."
         )
         raise typer.Exit(code=1)
+    if sweep.failed:
+        # A truncated sweep must not pass for a complete one: name the dropped pages and let the
+        # coverage cross-check (via expected_count) turn reconcile red below (#1364).
+        console.print(
+            f"[red]{len(sweep.failed)} of {len(indices)} pages failed extraction[/] and were "
+            f"dropped: {sweep.failed}. The assembled summary is INCOMPLETE — its program total is "
+            "understated by the missing estimate(s)."
+        )
 
     for pe in extractions:
         est = pe.estimate
@@ -502,7 +511,9 @@ def extract_sweep(
             f"[{mark}]reconciles={not bad}[/]"
         )
     summary = extract_stage.assemble_opc_summary(
-        [pe.estimate for pe in extractions], pdf_pages=[pe.pdf_page for pe in extractions]
+        [pe.estimate for pe in extractions],
+        pdf_pages=[pe.pdf_page for pe in extractions],
+        expected_count=len(indices),
     )
     findings = analyze.reconcile(summary)
     fails = [f for f in findings if not f.ok]
@@ -521,6 +532,10 @@ def extract_sweep(
         console.print(f"[green]Wrote[/] {out}")
     else:
         console.print("[dim]Pass --out PATH to write the assembled summary YAML.[/]")
+    # Exit non-zero when the sweep dropped pages or reconcile failed, so an incomplete run is a
+    # visible failure — not a green summary silently missing an estimate (#1364).
+    if sweep.failed or fails:
+        raise typer.Exit(code=1)
 
 
 @app.command(name="reconcile-repair")
