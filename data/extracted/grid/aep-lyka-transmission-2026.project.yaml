@@ -1,0 +1,175 @@
+# Structured project record — AEP Ohio "Lyka Transmission Project," Sugar Creek Township.
+#
+# Provenance vocabulary (see docs/investigative-method/ENRICHMENT.md):
+#   [verified]  = stated in a captured primary record (cite file + page)
+#   [reference] = secondary / self-published source, not a controlling record
+#   [inference] = reasoned from verified facts, labelled as such
+#   [open]      = not established by any captured source — do NOT assert
+#
+# Source bytes: data/documents/grid/aep-lyka-2026/ (see that dir's filename-map.yaml).
+meta:
+  subject: AEP Ohio Lyka Transmission Project — 345kV substation + ~4mi transmission line, Sugar Creek Township, Allen County
+  kind: grid-siting-project
+  captured_for: issue #1476 (grid-infrastructure thread; strengthens facility + record domains)
+  extracted_at: '2026-07-11'
+  method: manual read of AEP's own captured fact sheet/map text+graphic layers, cross-checked against opsb.ohio.gov and AEP's regulatory-filings index (no case found); figures quoted from AEP's own materials, customer attribution sourced to secondary press and labelled accordingly
+  sources:
+    primary:
+      - file: data/documents/grid/aep-lyka-2026/Lyka_ProjectFactsheet_V2.pdf
+      - file: data/documents/grid/aep-lyka-2026/Lyka_MapPoster2.pdf
+    secondary:
+      - url: https://www.limaohio.com/top-stories/2026/04/21/aep-ohio-plans-substation-on-google-property-4-miles-of-power-lines/   # LimaOhio.com, 2026-04-21 (Yahoo mirror: https://www.yahoo.com/news/articles/aep-ohio-plans-substation-google-233400838.html)
+      - url: https://www.limaohio.com/top-stories/2026/05/06/aep-seeks-comment-on-new-substation/   # LimaOhio.com, 2026-05-07 (Yahoo mirror: https://www.yahoo.com/news/articles/aep-seeks-substation-143700707.html)
+      - url: https://www.hometownstations.com/news/allen_county/aep-hosts-open-house-on-proposed-lyka-transmission-project-in-allen-county/article_98493891-7226-4d03-afca-c071a93c2d9d.html   # hometownstations.com, 2026-05-06
+      - url: https://www.blufftonicon.com/news/2026/04/21/aep-ohio-open-house-planned-power-grid-upgrades-allen-county   # Bluffton Icon, 2026-04-21
+      - url: https://www.ohiohistory.org/wp-content/uploads/2026/03/SubmissionsReceivedApril2026.pdf   # OHPO project-submissions log (2026ALL68059)
+
+project:
+  name: Lyka Transmission Project
+  tag: '[verified]'
+  applicant: AEP Ohio (AEP Ohio Transmission Company, Inc.)
+  scope:
+    substation:
+      name: Lyka Substation
+      location: On a customer-owned parcel between N West St and N Cole St, Sugar Creek Township, Allen County
+      source: Lyka_ProjectFactsheet_V2.pdf p.1 ("What")
+    line:
+      length_miles: 4  # approximate, "about 4 miles" per AEP's own materials
+      voltage_kv: 345
+      connects_to: An existing transmission line located north of West Hook-Waltz and Tudor roads, Sugar Creek Township
+      structures: Steel monopole; typical height 140-170 ft; typical ROW width ~150 ft
+      final_route: null   # [open] — 45 numbered study segments shown on Lyka_MapPoster2.pdf; AEP's own caption: route is selected only after public input + feasibility review
+      source: Lyka_ProjectFactsheet_V2.pdf p.1-2, Lyka_MapPoster2.pdf
+  purpose:
+    tag: '[verified]'
+    statement: >-
+      "Supports economic development," "meets the growing energy demand in the
+      area," and "provides service for a commercial customer's facility."
+    source: Lyka_ProjectFactsheet_V2.pdf p.1 ("Why")
+  named_customer:
+    tag: '[open]'
+    statement: >-
+      Neither AEP's project page nor its fact sheet names a customer. AEP staff
+      (Brian Recker, Project Outreach Specialist) told local press "We're not
+      able to disclose specifically any customers" (LimaOhio.com, 2026-05-06/07).
+    source: Lyka_ProjectFactsheet_V2.pdf p.1; LimaOhio.com 2026-05-06/07 quote (secondary)
+
+schedule:
+  tag: '[verified]'
+  source: Lyka_ProjectFactsheet_V2.pdf p.1 ("Project Schedule" table)
+  project_announcement_and_virtual_open_house: Spring 2026
+  project_open_house:
+    planned: Spring 2026
+    actual_date: '2026-05-06'   # Wed 5:30-7:30pm, Veterans Memorial Civic Center, 7 Town Square, Lima
+    note: >-
+      Reconciles the only apparent date conflict in press coverage: the Bluffton
+      Icon (2026-04-21) and an earlier LimaOhio.com piece (2026-04-21, "AEP Ohio
+      plans substation on Google property...") were published ~2 weeks BEFORE the
+      event, announcing the then-upcoming 2026-05-06 open house — they are not a
+      second, earlier open house. LimaOhio.com's follow-up (2026-05-06, published
+      2026-05-07, "AEP seeks comment on new substation") confirms the open house
+      was held Wednesday evening, i.e. 2026-05-06, matching AEP's own fact sheet.
+      No genuine 04-21-vs-05-06 discrepancy — one is the announcement date, the
+      other the event date.
+  right_of_way_communications: Spring 2026 - Fall 2028
+  regulatory_filing_with_opsb:
+    planned: Early 2027
+    filed: null   # [open] — see opsb_case_status below
+  anticipated_opsb_decision: Spring 2027
+  construction: Fall 2027 - Summer 2028
+  facilities_placed_in_service: Summer 2028
+  restoration_activities: Summer 2028 - Fall 2028
+  caveat: '*Timeline subject to change — printed on AEP''s own fact sheet.'
+
+opsb_case_status:
+  tag: '[verified]'
+  statement: >-
+    As of this capture (2026-07-11), no Ohio Power Siting Board case number has
+    been filed or assigned for the Lyka Transmission Project. AEP's own schedule
+    places the regulatory filing at "Early 2027" and an anticipated decision at
+    "Spring 2027" — both still in the future relative to this capture. Direct
+    searches of opsb.ohio.gov's case listings and AEP's own Ohio regulatory-filings
+    index (https://www.aeptransmission.com/ohio/filings.php) turned up no matching
+    case as of 2026-07-11.
+  source: Lyka_ProjectFactsheet_V2.pdf p.1 (schedule table); opsb.ohio.gov + aeptransmission.com/ohio/filings.php (absence, searched 2026-07-11)
+  distinct_from:
+    tag: '[verified]'
+    statement: >-
+      A separate, unrelated Ohio History Connection (State Historic Preservation
+      Office) project-review submission — OHPO project ID 2026ALL68059, titled
+      "Lyka Station STATCOM Project," received 2026-04-08, projected response
+      2026-05-07 — should NOT be conflated with the OPSB siting case. It is a
+      state historic-preservation consultation (a different statutory review
+      track, likely covering a related but narrower scope — a STATCOM/reactive-
+      power installation at the Lyka site), not the Ohio Power Siting Board
+      certificate proceeding for the substation + transmission line itself.
+    source: https://www.ohiohistory.org/wp-content/uploads/2026/03/SubmissionsReceivedApril2026.pdf
+
+google_bistrozzi_attribution:
+  tag: '[inference]'
+  statement: >-
+    AEP's own materials never name a customer. Secondary local press, however,
+    directly and repeatedly ties the project to the Google/Bistrozzi "Bosc"
+    campus: LimaOhio.com's 2026-04-21 headline and lede state "AEP Ohio plans
+    substation on Google property" and "The plan calls for building the Lyka
+    Substation on Google's under-construction property between North West and
+    North Cole streets in Sugar Creek Township" — the same block AEP's fact
+    sheet describes, and the same address the corpus already documents as the
+    Bistrozzi LLC "Bosc" campus (4110 N Cole St; data/extracted/permits/4132514.epa.yaml).
+    Companion coverage (hometownstations.com, Yahoo/LimaOhio 2026-05-06/07)
+    similarly places the substation "close to the Google data center under
+    construction" while noting AEP declined to confirm the customer "for
+    privacy reasons." No OPSB filing, AEP project page, or AEP fact sheet
+    corroborates this directly — it rests entirely on secondary reporting, so
+    it stays [inference], not [verified], per the standing evidentiary
+    discipline for the Google/Bistrozzi identity (docs/investigative-method/ENRICHMENT.md;
+    data/entities/profiles/relation-classes.yaml's existing `GOOGLE: possible_end_user`
+    annotation, which the same discipline keeps off-graph absent a naming instrument).
+  would_upgrade_to_verified_with:
+    - An OPSB application or certificate naming the customer/load
+    - An AEP Ohio filing, tariff record, or public statement naming Google/Bistrozzi
+  source: >-
+    https://www.limaohio.com/top-stories/2026/04/21/aep-ohio-plans-substation-on-google-property-4-miles-of-power-lines/
+    (quoted directly above); Lyka_ProjectFactsheet_V2.pdf p.1 (customer not named, contrast)
+
+# --- What this closes / extends from the existing corpus ---
+corridor_linkage:
+  closes_the_air_permit_grid_punt:
+    tag: '[verified]'
+    statement: >-
+      OEPA Air PTI P0138965's Response to Comments explicitly referred grid/power
+      questions to PUCO/the utility, out of the air permit's scope ("Power Grid
+      (referred to PUCO / utility)"). This is the first primary-utility-project
+      instrument in the corpus that begins to answer that referral — AEP Ohio is
+      building dedicated 345kV interconnection infrastructure in the same
+      township, on schedule to be in-service Summer 2028.
+    source: data/extracted/permits/4132514.epa.yaml (Response to Comments, "Power Grid" topic); Lyka_ProjectFactsheet_V2.pdf
+  serving_utility_corroboration:
+    tag: '[inference]'
+    statement: >-
+      A new, dedicated 345kV substation and transmission line sited in the same
+      township as the Bosc campus corroborates (does not newly establish) the
+      existing AEP Ohio serving-utility finding (src/watermark/sites/_profiles.py
+      `serving_utility_citation`, grounded in relator testimony + commissioners'
+      minutes) — but does not by itself confirm the Bosc campus is the specific
+      Lyka customer (see google_bistrozzi_attribution above).
+    source: Lyka_ProjectFactsheet_V2.pdf; src/watermark/sites/_profiles.py (Lima profile)
+  no_new_facility_field:
+    tag: '[open]'
+    statement: >-
+      `SiteFacility`/`SiteProfile` (src/watermark/sites/_model.py) has no
+      substation/transmission/interconnection-queue knob — modeling this project
+      as a schema field was considered and deferred (per issue #1476's "consider")
+      pending a named customer/interconnection agreement; it would otherwise
+      require either fabricating a Bosc-specific MW/queue figure this project
+      does not disclose, or adding a field this repo's one other analogous case
+      (Urbana #1327, site-plan-grounded) also chose to carry as extraction prose
+      rather than a new Pydantic field.
+
+acceptance:  # per issue #1476
+  opsb_docket_pulled: false   # [open] — no case filed yet; captured AEP's own schedule + absence-of-filing evidence instead
+  primary_document_committed: true   # 2 AEP PDFs under data/documents/grid/aep-lyka-2026/
+  open_house_date_reconciled: true   # see schedule.project_open_house.note
+  entity_graph_wired: false   # deliberately not wired — AEP Ohio is not yet a graph node from a real deed/permit/filing/action extraction, and the customer link stays [inference]; see google_bistrozzi_attribution
+  lead_registered: true   # data/site/leads.yaml id AEP-LYKA-OPSB
+  no_fabricated_customer_or_mw: true   # named_customer stays [open]; no MW/interconnection figure invented

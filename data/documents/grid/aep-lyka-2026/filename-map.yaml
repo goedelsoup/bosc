@@ -1,0 +1,71 @@
+# Capture / alias manifest — AEP Ohio "Lyka Transmission Project" public materials.
+#
+# Web-captured primary evidence (AEP Ohio / AEP Transmission, aeptransmission.com).
+# Raw bytes are never edited. Files are served from a `docs/` path with no
+# server-provided date; the stored name is AEP's own filename as served. The
+# `content_verified` date is read from each file's OWN text/graphic layer (the
+# print date stamped on the page), never from the URL or fetch time.
+#
+# evidence: native_text = PDF text layer (pypdf/Read) confirms the document
+#           identity and date quoted below.
+meta:
+  subject: AEP Ohio Lyka Transmission Project — 345kV substation + ~4mi transmission
+    line, Sugar Creek Township, Allen County (issue #1476)
+  collection: grid/
+  captured_by: issue #1476 (grid-infrastructure thread for the Bosc facility power story)
+  generated_at: '2026-07-11'
+  source: AEP Ohio project page — https://www.aeptransmission.com/ohio/Lyka/
+  policy: non-destructive — as-served bytes, AEP's own served filename.
+
+documents:
+  - filename: Lyka_ProjectFactsheet_V2.pdf
+    canonical: Lyka_ProjectFactsheet_V2.pdf
+    title: Lyka Transmission Project — project fact sheet (What/Why/Where + schedule + typical structures)
+    issuer: AEP Ohio (an AEP company)
+    source_url: https://www.aeptransmission.com/ohio/Lyka/docs/Lyka_ProjectFactsheet_V2.pdf
+    landing_page: https://www.aeptransmission.com/ohio/Lyka/
+    sha256: 6596bbe0101dce7e1e85553d1f090e708c71aa99c3bdc9603ca9021621938254
+    bytes: 2759937
+    content_type: application/pdf
+    pages: 2
+    fetched_at: '2026-07-11T21:19:45Z'
+    content_verified: '2026-04-08'   # print date, bottom-right of p.2 ("4/8/2026")
+    evidence: native_text
+    status: downloaded
+    note: >-
+      Two-page fact sheet: p.1 states project scope (Lyka Substation on
+      customer-owned property between N West St / N Cole St; ~4mi 345kV line to
+      an existing line "north of West Hook-Waltz and Tudor roads"), purpose
+      ("supports economic development," "meets growing energy demand," "provides
+      service for a commercial customer's facility" — no customer named), and a
+      dated Project Schedule table (regulatory filing "Early 2027," anticipated
+      OPSB decision "Spring 2027," construction "Fall 2027 - Summer 2028,"
+      in-service "Summer 2028"). p.2 repeats the study-area map (see
+      Lyka_MapPoster2.pdf), typical-structure specs (steel monopole, 140-170 ft,
+      ~150 ft ROW), and outreach contact (Windy Campbell, Jacobs, on AEP's
+      behalf).
+  - filename: Lyka_MapPoster2.pdf
+    canonical: Lyka_MapPoster2.pdf
+    title: Lyka Transmission Project — study-area map poster (numbered line study segments 1-45)
+    issuer: AEP Ohio (an AEP company)
+    source_url: https://www.aeptransmission.com/ohio/Lyka/docs/Lyka_MapPoster2.pdf
+    landing_page: https://www.aeptransmission.com/ohio/Lyka/
+    sha256: bc4de8082ebdcbed674045cce2b10f73de98fc95e6e783c644b1b6372e7e715f
+    bytes: 140707
+    content_type: application/pdf
+    pages: 1
+    fetched_at: '2026-07-11T21:19:45Z'
+    content_verified: null   # [open] no date in this file's own text/graphic layer
+    evidence: native_text
+    status: downloaded
+    note: >-
+      Larger single-page version of the fact sheet's p.2 map: the Lyka
+      Substation marker plus 45 numbered "study segment" line alternatives
+      fanning north from the substation site through Sugar Creek Township —
+      AEP's own caption is explicit that "NOT ALL STUDY SEGMENTS ARE
+      CONSTRUCTED... THE COMPANY SELECTS THE PROPOSED LINE ROUTE BASED ON
+      PUBLIC INPUT AND FEASIBILITY," i.e. no final route is fixed by this
+      document. Undated in its own text layer; treated as the same 2026-04-08
+      capture as its companion fact sheet by [inference] (identical map content,
+      fetched in the same session, same source folder) — not asserted as
+      [verified].

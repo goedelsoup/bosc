@@ -194,7 +194,11 @@ _LIMA = SiteProfile(
         "relator data appendix (data/extracted/legal/select-committee-2026/relator-testimony/"
         "bosc-data-appendix-2026-06-01.md): the 25 MW threshold 'matches the AEP Ohio tariff'; "
         "corroborated by Allen County commissioners' minutes (local AEP 3-phase service, "
-        "Res #974-25). Formal confirmation: EIA-861 service territory / PUCO map."
+        "Res #974-25). Formal confirmation: EIA-861 service territory / PUCO map. Further "
+        "corroborated (not newly established) by AEP Ohio's own 'Lyka Transmission Project' "
+        "(345kV substation + line, same township; data/extracted/grid/"
+        "aep-lyka-transmission-2026.project.yaml) — that project names no customer, so it "
+        "does not by itself confirm the Bosc campus as the specific Lyka load (#1476)."
     ),
     # grid
     lmp_usd_mwh=45.81,  # connector-sourced AEP-zone 2025 day-ahead annual mean (#121)
