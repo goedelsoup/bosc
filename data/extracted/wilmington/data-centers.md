@@ -9,7 +9,8 @@ Discover-and-pin register for the Wilmington watershed point (Lytle Creek → To
 flat-no-activity finding reflected only an empty corpus (#519 first pass): publicly disclosed
 since Nov 2025 are a ~471-acre / **$4B Amazon Data Services Inc.** campus on the former
 **Cosler Farm** (§1) and a second ~545-acre **Ardent/TAC** rezoning corridor (§2) — together
-~1,000+ acres of one US-68 S / SR-730 corridor. Neither is on Air Park land; the
+~1,000+ acres of one US-68 S / SR-730 corridor `[inference — the §1 ~471-ac and §2 545.893-ac
+figures summed]`. Neither is on Air Park land; the
 **Wilmington Air Park (ILN)** remains the *cargo* comparator #519 framed (§3). The web
 research sweep ran **2026-07-11** (#1277 grooming refresh); committing this register and
 pulling its instruments is tracked as **#1471**, which closes #519. **Nothing here is
@@ -95,8 +96,9 @@ Confirm every entry is physically in **Clinton County, OH** (FIPS 39027). Traps 
 
 - **Max withdrawal:** undisclosed — AWS water reservation (MGD) is the operative figure.
   `[open]` (#1472)
-- **Projected cooling-water consumption:** ~6M gal/yr (~16,400 GPD average), direct
-  evaporative cooling. `[reported]` Peak-day draw is a distinct, undisclosed number. `[open]`
+- **Projected cooling-water consumption:** ~6M gal/yr, direct evaporative cooling.
+  `[reported]` The ~16,400 GPD average is arithmetic from that annual figure (6M gal ÷ 365 d).
+  `[inference]` Peak-day draw is a distinct, undisclosed number. `[open]`
 - **Water source:** City of Wilmington municipal system. The City's **raw supply is Caesar
   Creek Lake** (1994 USACE storage contract; an AG dispute over charges is on the record)
   plus the Burtonville reservoirs (Cowan Creek) — **not Todd Fork**. `[reported]` (#1472
@@ -156,7 +158,8 @@ The **Wilmington Air Park (ILN)** — ex-DHL super-hub, now **Amazon Air / ATSG*
 ATI) cargo — is the "place shaped by one tenant" comparator #519 originally framed, and it
 stays exactly that: a **cargo-aviation** Amazon footprint to set against the new **compute**
 one. **Neither campus in §1–§2 is on Air Park land.** No compute facility at the Air Park
-itself is on record `[verified — 2026-07-11 sweep negative]`; its large-load draw remains
+itself is on record `[open — the 2026-07-11 web sweep found none; an auditable check (Port
+Authority tenant roster / permit index) is still to-run]`; its large-load draw remains
 worth tracking but is a separate thread.
 
 ## 4 — Grid / power context (→ #1469)
@@ -215,10 +218,24 @@ worth tracking but is a separate thread.
 - TIF/CRA: <https://www.wnewsj.com/2025/12/19/council-approves-tif-for-data-center-pauses-cra/>
 - Infrastructure detail: <https://www.wnewsj.com/2025/12/03/officials-detail-4b-aws-data-center-proposal-infrastructure-plans/>
 - O-26-33 postponement: <https://www.wnewsj.com/2026/07/03/council-delays-final-vote-on-data-center-zoning-ordinance/>
+- Ardent/TAC rezoning (O-26-04–07, 5–2):
+  <https://www.wnewsj.com/2026/02/20/council-approves-rezonings-in-a-split-vote-amid-data-center-debate/>
+  · <https://www.whio.com/news/local/another-500-acres-land-zoned-second-data-center-wilmington/KXXP722G6ZD4LMQV2Z6U4UJUQE/>
+- Referendum (1,529 signatures / 25 days, Nov 2026):
+  <https://www.wcpo.com/news/local-news/wilmington-residents-take-aim-at-industrial-zoning-for-data-centers-with-ballot-referendum>
+- Statewide 25 MW-cap amendment (the ~413k-by-2026-07-01 requirement):
+  <https://ohiocapitaljournal.com/2026/04/30/ohio-data-center-ban-proposal-advocates-are-trying-to-get-413000-signatures-by-july-1/>
+- AES Ohio Fayette–Clinton 345kV (OPSB 25-0871-EL-BLN):
+  <https://www.aes-ohio.com/fayette-clinton-345kV-transmission-line-project>
+  · <https://wilmingtonohio.gov/aes-notification-fayette-to-clinton-345-kv-transmission-line-project/>
+- Caesar Creek Lake raw-water supply + USACE-charges dispute:
+  <https://wilmingtonohio.gov/about-water-treatment/>
+  · <https://www.wnewsj.com/news/132853/wilmington-has-new-ally-in-battle-over-water-bills-ohio-ag-sues-army-corps-over-unbelievable-charges-to-city>
 - OHD000001 (draft + fact sheet + public notice):
   <https://epa.ohio.gov/divisions-and-offices/surface-water/permitting/wastewater-discharges-from-data-centers--general-permit>
   · <https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/Data_Centers/OHD000001_Draft.pdf>
   · <https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/Data_Centers/OHD000001_Draft.fs.pdf>
+  · <https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/Data_Centers/OHD000001_Draft_PN.pdf>
 - In-corpus: `data/extracted/wilmington/low-flow-screen.md` (Todd Fork DAR screen, #516) ·
   `data/reference/rsei/wilmington/inventory.yaml` · `data/reference/economics/wilmington/baseline.yaml` ·
   `data/reference/eia/wilmington/grid-profile.yaml` · `data/catalog/extracted/oepa-wilmington.yaml`
