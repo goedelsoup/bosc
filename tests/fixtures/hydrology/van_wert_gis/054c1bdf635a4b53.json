@@ -1,0 +1,140 @@
+{
+  "params": {
+    "f": "json",
+    "returnGeometry": "false",
+    "where": "PIN='170347180100'",
+    "outFields": "PIN,PPOwner,PPAddress,PPClassNumber,PPAcres,PPLandValue,PPImprValue,PPTotalValue,PPSaleDate,PPAmount",
+    "resultOffset": 0,
+    "resultRecordCount": 2000
+  },
+  "fetched_at": "2026-07-11T12:14:50.897391+00:00",
+  "payload": {
+    "objectIdFieldName": "OBJECTID",
+    "uniqueIdField": {
+      "name": "OBJECTID",
+      "isSystemMaintained": true
+    },
+    "globalIdFieldName": "",
+    "geometryType": "esriGeometryPolygon",
+    "spatialReference": {
+      "wkid": 102723,
+      "latestWkid": 3735
+    },
+    "fields": [
+      {
+        "name": "PIN",
+        "type": "esriFieldTypeString",
+        "alias": "PIN",
+        "sqlType": "sqlTypeOther",
+        "length": 13,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "PPOwner",
+        "type": "esriFieldTypeString",
+        "alias": "PPOwner",
+        "sqlType": "sqlTypeOther",
+        "length": 74,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "PPAddress",
+        "type": "esriFieldTypeString",
+        "alias": "PPAddress",
+        "sqlType": "sqlTypeOther",
+        "length": 30,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "PPClassNumber",
+        "type": "esriFieldTypeInteger",
+        "alias": "PPClassNumber",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "PPAcres",
+        "type": "esriFieldTypeDouble",
+        "alias": "PPAcres",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "PPLandValue",
+        "type": "esriFieldTypeInteger",
+        "alias": "PPLandValue",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "PPImprValue",
+        "type": "esriFieldTypeInteger",
+        "alias": "PPImprValue",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "PPTotalValue",
+        "type": "esriFieldTypeInteger",
+        "alias": "PPTotalValue",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "PPSaleDate",
+        "type": "esriFieldTypeDate",
+        "alias": "PPSaleDate",
+        "sqlType": "sqlTypeOther",
+        "length": 8,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "PPAmount",
+        "type": "esriFieldTypeInteger",
+        "alias": "PPAmount",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      }
+    ],
+    "features": [
+      {
+        "attributes": {
+          "PIN": "170347180100",
+          "PPOwner": "VAN WERT EAST OWNER LLC",
+          "PPAddress": "STRIPE RD",
+          "PPClassNumber": 110,
+          "PPAcres": 221.15,
+          "PPLandValue": 2268170,
+          "PPImprValue": 0,
+          "PPTotalValue": 2268170,
+          "PPSaleDate": 1755820800000,
+          "PPAmount": 10394000
+        }
+      },
+      {
+        "attributes": {
+          "PIN": "170347180100",
+          "PPOwner": "VAN WERT EAST OWNER LLC",
+          "PPAddress": "STRIPE RD",
+          "PPClassNumber": 110,
+          "PPAcres": 221.15,
+          "PPLandValue": 2268170,
+          "PPImprValue": 0,
+          "PPTotalValue": 2268170,
+          "PPSaleDate": 1755820800000,
+          "PPAmount": 10394000
+        }
+      }
+    ]
+  }
+}

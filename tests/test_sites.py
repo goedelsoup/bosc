@@ -27,6 +27,7 @@ from watermark.sites import (
     PER_SITE_OUTPUT_FIELDS,
     PUTNAM_PARCEL_SCHEMA,
     SITES,
+    VAN_WERT_PARCEL_SCHEMA,
     SiteProfile,
     active_profile,
     get_profile,
@@ -435,9 +436,9 @@ def test_gis_connectors_refuse_a_schemaless_site() -> None:
 
     from watermark.hydrology.connectors import allen_gis
 
-    assert SITES["van-wert"].gis_parcel is None  # an Ohio site with no parcel schema wired yet
+    assert SITES["springfield"].gis_parcel is None  # an Ohio site with no parcel schema wired yet
     with pytest.raises(allen_gis.AllenGisError, match="no parcel GIS schema"):
-        allen_gis.fetch_parcel("12-34", settings=Settings(site="van-wert"))
+        allen_gis.fetch_parcel("12-34", settings=Settings(site="springfield"))
 
 
 def test_toxic_corridors_defined_for_defiance_and_bryan() -> None:
@@ -500,6 +501,40 @@ def test_putnam_parcel_schema_is_full_cama() -> None:
         }
     )
     assert (FIXTURES / p.connector / f"{key}.json").is_file(), f"putnam param drift: {key}"
+
+
+def test_van_wert_parcel_schema_is_agol_cama() -> None:
+    """Van Wert's parcel gap (#421) is closed by the county's ArcGIS Online migration: the
+    bhamaps PAT MapServer died with its expired cert (the ArcGIS Server was removed from the
+    host), and the AGOL parcel_joinedVWOH layer is the owner-bearing auditor-CAMA join —
+    Champaign's CCEO vendor pattern, with Van-Wert-specific semantics (PPClassNumber is the
+    numeric use code, no owner mailing-address field, dashless stored PIN). Golden +
+    param-stability: the schema reproduces the live field-map, and a fetch_parcel request built
+    from it hashes to the committed fixture (the new connector's zero-drift guard)."""
+    p = SITES["van-wert"].gis_parcel
+    assert p is not None and p is VAN_WERT_PARCEL_SCHEMA
+    assert p.connector == "van_wert_gis" and p.reference_dir == "van-wert-gis"
+    assert p.id_field == "PIN" and p.id_normalize == "dashless"  # dashed auditor form -> PIN
+    assert p.owner_field == "PPOwner" and p.defense is None  # owner present; no enclave scan
+    assert p.land_use_field == "PPClassNumber" and p.land_use_decode == "int"
+    assert p.date_decode == "epoch_millis"  # esriFieldTypeDate PPSaleDate
+    assert p.owner_addr_fields == ()  # no owner mailing-address field on this layer
+    assert p.cauv_field == "" and p.valid_sale_field == ""  # PPOnCauv/PPSalesType unmapped
+    assert p.query_scope == ""  # single-jurisdiction layer
+    assert "services8.arcgis.com/G5sGKRBVtJMunpVA" in p.meta.source_url
+    assert "ags.bhamaps.com" not in SITES["van-wert"].parcels_url  # the dead host, never re-wired
+
+    base = {"f": "json", "returnGeometry": "false"}
+    key = cache_key(
+        {
+            **base,
+            "where": f"{p.id_field}='170347180100'",
+            "outFields": ",".join(p.out_fields),
+            "resultOffset": 0,
+            "resultRecordCount": p.page_size,
+        }
+    )
+    assert (FIXTURES / p.connector / f"{key}.json").is_file(), f"van wert param drift: {key}"
 
 
 def test_bryan_parcel_schema_is_ogrip_statewide_williams() -> None:
