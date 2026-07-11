@@ -36,6 +36,8 @@ from __future__ import annotations
 import csv
 import gzip
 import io
+import os
+import tempfile
 import zipfile
 from collections import defaultdict
 from pathlib import Path
@@ -195,26 +197,29 @@ def _code(x: str | None) -> str | None:
 def _download(settings: Settings, url: str, path: Path) -> None:
     """Stream ``url`` to ``path`` (used for both the v2312 zip and legacy gz tables).
 
-    Atomic: bytes stream to a ``.part`` sibling and are ``replace``d into place only
-    once the transfer completes, so an interrupted 447 MB pull never leaves a
-    truncated file at the cache key for the next run to treat as valid.
+    Atomic: bytes stream to a **unique** sibling temp file and are ``replace``d into
+    place only once the transfer completes, so an interrupted 447 MB pull never leaves
+    a truncated file at the cache key for the next run to treat as valid. The temp name
+    is per-invocation (``tempfile.mkstemp``, not a shared ``.part``) so two concurrent
+    downloads of the same key can't corrupt each other's in-flight file.
     """
     import httpx
 
     path.parent.mkdir(parents=True, exist_ok=True)
     log.info("rsei.download", url=url, dest=str(path))
-    tmp = path.with_name(path.name + ".part")
+    fd, tmp_name = tempfile.mkstemp(dir=path.parent, prefix=f"{path.name}.", suffix=".part")
+    tmp = Path(tmp_name)
     try:
         with (
+            os.fdopen(fd, "wb") as out,
             httpx.stream(
                 "GET", url, timeout=settings.rsei_request_timeout_s, follow_redirects=True
             ) as resp,
-            tmp.open("wb") as out,
         ):
             resp.raise_for_status()
             for chunk in resp.iter_bytes():
                 out.write(chunk)
-        tmp.replace(path)  # atomic: only a fully-fetched file lands at the cache key
+        os.replace(tmp, path)  # atomic: only a fully-fetched file lands at the cache key
     finally:
         tmp.unlink(missing_ok=True)
 

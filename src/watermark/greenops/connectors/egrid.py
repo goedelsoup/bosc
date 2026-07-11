@@ -27,6 +27,8 @@ upstream. Nothing here is ``connector``-``verified``.
 from __future__ import annotations
 
 import io
+import os
+import tempfile
 from pathlib import Path
 from typing import Any, cast
 
@@ -106,9 +108,16 @@ def _download_workbook(settings: Settings) -> bytes:
     resp.raise_for_status()  # an EPA error page must not be cached as if it were the workbook
     data = resp.content
     cache.parent.mkdir(parents=True, exist_ok=True)
-    tmp = cache.with_name(cache.name + ".part")
-    tmp.write_bytes(data)
-    tmp.replace(cache)  # atomic: an interrupted write never leaves a truncated .xlsx at the key
+    # Unique sibling temp file (not a shared ``.part``) so concurrent downloads of the
+    # same key don't clobber each other; atomically replaced into place, cleaned up on error.
+    fd, tmp_name = tempfile.mkstemp(dir=cache.parent, prefix=f"{cache.name}.", suffix=".part")
+    tmp = Path(tmp_name)
+    try:
+        with os.fdopen(fd, "wb") as out:
+            out.write(data)
+        os.replace(tmp, cache)
+    finally:
+        tmp.unlink(missing_ok=True)
     return data
 
 
