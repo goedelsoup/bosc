@@ -237,6 +237,34 @@ def test_lucas_areis_parcel_owner_bearing(hydro_settings: Settings) -> None:
     assert p.last_sale_date is None  # no sale field on the land-use-classification layer
 
 
+def test_van_wert_parcel_agol_cama(hydro_settings: Settings) -> None:
+    """Van Wert's parcels come from the county's ArcGIS Online auditor-CAMA join (#421) — the
+    bhamaps PAT MapServer died with its expired cert and the county migrated to AGOL
+    (parcel_joinedVWOH), Champaign's CCEO vendor pattern with different field semantics: the
+    numeric Ohio use code is PPClassNumber (PPClassCode is the coarse class letter), there is no
+    owner mailing-address field, and the dashed auditor form normalizes onto the dashless stored
+    PIN. The fixture parcel is the QTS Mega Site anchor (VAN WERT EAST OWNER LLC, the 221-acre
+    Marsh-tract split). Replaying the committed fixture is the zero-drift guard; the GIS returns
+    the PIN as two split rows, so fetch_parcel's first-match also exercises the repeat behavior."""
+    fs = hydro_settings.model_copy(update={"site": "van-wert"})
+    p = allen_gis.fetch_parcel("17-034718.0100", settings=fs)  # dashed auditor form -> dashless PIN
+    assert p is not None
+    assert p.parcel_no == "170347180100"
+    assert p.owner == "VAN WERT EAST OWNER LLC"  # the Mega Site anchor owner of record
+    assert p.situs_address == "STRIPE RD"  # PPAddress: situs street only (no city token)
+    assert p.owner_address is None  # NO owner mailing-address field on this layer
+    assert p.land_use_code == 110  # PPClassNumber (agricultural); PPClassCode is the letter 'A'
+    assert p.acres == pytest.approx(221.15)
+    assert p.market_land_value == 2268170  # auditor's appraised values, verbatim
+    assert p.market_improvement_value == 0
+    assert p.market_total_value == 2268170
+    assert p.last_sale_date == "2025-08-22"  # PPSaleDate epoch-millis -> ISO (the $10.394M sale)
+    assert p.last_sale_amount == 10394000
+    assert p.cauv_value is None  # PPOnCauv is a string flag, not a value — unmapped
+    assert p.valid_sale is None  # PPSalesType is a conveyance-type code (WD) — unmapped
+    assert p.tax_district is None  # encoded in the PIN's leading digits; no separate field
+
+
 def test_owner_search_refuses_on_owner_redacted_layer(hydro_settings: Settings) -> None:
     """A parcel layer with no owner field refuses owner search cleanly (never a malformed query)."""
     fs = hydro_settings.model_copy(update={"site": "findlay"})

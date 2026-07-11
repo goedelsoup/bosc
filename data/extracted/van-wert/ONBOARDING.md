@@ -8,7 +8,7 @@ Living record for the Van Wert watershed point (basin: maumee), scaffolded by `w
 - [x] **Economics** — county baseline, RSEI toxics, consumer energy, grid profile
 - [x] **OEPA permit ingest** — NPDES permit `2PD00006` (OH0027910) + fact sheet `2PD00006.fs` fetched and extracted (`data/documents/oepa/van-wert/`, `data/extracted/oepa/2PD00006*.npdes.yaml`). Town Creek 7Q10 = 0.16 cfs (annual; summer/winter = 0 — intermittent). Design flow confirmed 4.0 MGD. See `data/reference/hydrology/low-flow-7q10.yaml`. Resolves #837.
 - [~] **Data-center activity** — QTS/Thor confirmed same project (Phase 6 research, 2026-07-02); Van Wert-jurisdiction instruments exist but **not yet ingested** — see Phase 6 below. Closes #378/#840; #377 tracks ingest.
-- [~] **Per-jurisdiction GIS** — flood = shared national NFHL (wired). Parcels/zoning `[open]` — see GIS discovery below; no clean queryable district catalog like Findlay's, so nothing committed yet
+- [x] **Per-jurisdiction GIS** — parcels **wired** (`VAN_WERT_PARCEL_SCHEMA`, #421 — the county's ArcGIS Online auditor-CAMA join `parcel_joinedVWOH`; the bhamaps PAT MapServer died with its expired cert and was retired, never re-wired) and flood = shared national NFHL (wired). Zoning stays `[open]` (no REST anywhere — townships map-only, city zoning static PDFs + amlegal). See GIS discovery below.
 
 ## Last onboard run
 
@@ -25,21 +25,37 @@ Living record for the Van Wert watershed point (basin: maumee), scaffolded by `w
 | consumer-energy | ok | reference/eia/van-wert/consumer-energy.yaml |
 | grid-profile | ok | reference/eia/van-wert/grid-profile.yaml |
 
-## GIS discovery (2026-06-19; schema-driven GIS, #237)
+## GIS discovery (2026-06-19; schema-driven GIS, #237 — updated 2026-07-11, parcels wired, #421)
 
-Endpoints probed against the schema-driven GIS connector. Like Fort Wayne (and unlike
-Findlay's clean City zoning FeatureServer), Van Wert has **no cleanly-consumable queryable
-district catalog**, so nothing is committed yet; flood is the shared national NFHL.
+Endpoints probed against the schema-driven GIS connector. The 2026-06-19 pass found the county's
+parcels on a Bruce Harris & Assoc. PAT MapServer (`ags.bhamaps.com`, folder `VanWertOH`) blocked
+behind an **expired TLS certificate** (the shared-host case with Defiance, #394 — we don't weaken
+TLS for an external host). The 2026-07-10 re-probe (#421) found that host **dead, not just
+cert-expired** — the wildcard cert lapsed 2026-05-19, the ArcGIS Server was removed (bare
+`Microsoft-HTTPAPI/2.0` 404s), and the county's PAT viewer item was retired. **The county migrated
+to ArcGIS Online** (`vanwertcountygis.maps.arcgis.com`, org `G5sGKRBVtJMunpVA`), whose
+`parcel_joinedVWOH` FeatureServer layer 0 is the owner-bearing auditor-CAMA join — now **wired**
+as `VAN_WERT_PARCEL_SCHEMA` (#421), field-map confirmed from the live `?f=json` + samples
+(2026-07-11; data vintage 2026-05-01). The field semantics resolved during wiring are recorded in
+the schema comment (`PPClassNumber` is the numeric Ohio use code — `PPClassCode` is the coarse
+class letter; no owner mailing-address field; `PPOnCauv` is a string flag; the dashed auditor form
+`17-034718.0100` normalizes onto the dashless stored `PIN`). The same AGOL org also serves
+`RawParcels`, `FloodPlain`, `TaxDistrict`, `SchoolDistrict`, `Sections`, `ROW_Lines` + 2021
+aerials (reference leads). The Engineer's-office shapefile fallback (`Current_Parcels.tar.gz`,
+2024-12-27) is now strictly inferior. Probe bonus: the roll already shows the Mega Site anchor —
+PIN `170347180100`, VAN WERT EAST OWNER LLC, 221.15 ac, sold 2025-08-22 for $10,394,000 (split
+from Marsh tract `170347180000`) — the committed fixture parcel; feeds #1403/#1404.
 
 | layer | finding | status |
 |---|---|---|
 | floodzone | FEMA NFHL (national, layer 28) — wired in the profile (`gis_flood`) | wired |
-| parcels (county) | Van Wert County PAT MapServer (`ags.bhamaps.com/.../VanWertOH/VanWertOH_PAT_Search/MapServer`, Bruce Harris & Assoc) exists but its **TLS certificate is expired** — `cached_get`/httpx can't consume it without disabling verification; parcels are otherwise distributed as Engineer's-office shapefiles + a Beacon-style auditor parcel app | `[open]` |
-| zoning | no separate City of Van Wert zoning REST catalog found (small city; zoning appears map-only) | `[open]` |
+| parcels (county) | `services8.arcgis.com/G5sGKRBVtJMunpVA/.../parcel_joinedVWOH/FeatureServer/0` (AGOL, valid Esri TLS, 19,956 polygons) — `PIN`, `PPOwner`, `PPAddress` (situs street), `PPClassNumber` (use code), `PPAcres`, `PPLandValue`/`PPImprValue`/`PPTotalValue`, `PPSaleDate`/`PPAmount` — owner **and** values on one layer. Replaces the retired `ags.bhamaps.com` PAT MapServer (host dead; ArcGIS Server removed) | **wired** (`gis_parcel`, #421) |
+| zoning | no Van Wert zoning REST anywhere (townships map-only; city zoning = static PDFs + amlegal) — unchanged negative on the 2026-07-10 re-probe | `[open]` |
 
-Follow-up (a research/issue lead): re-probe the county PAT MapServer once its TLS cert is
-renewed (then register a `GisParcelSchema` from the live field list), or fall back to the
-Engineer's-office parcel shapefile; locate a Van Wert zoning layer (or accept map-only here).
+Follow-up: commit the reviewed Van Wert parcel reference *data* (a `watermark parcels --site van-wert`
+pull is a separate reviewed step, per the Findlay/Ottawa precedent); accept zoning as map-only here.
+Defiance (#394) is the shared-vendor sibling — equally unblocked on its own AGOL org
+(`services1.arcgis.com/nOy1DpPkzXSFJsGp/.../parcel_joined/FeatureServer/0`), tracked there.
 
 ## Self-research (Phase 5; #247) — 2026-06-21
 
@@ -86,9 +102,9 @@ Lima and Findlay, so the cross-state connector axis is not re-exercised.
 NPDES permit + Town Creek 7Q10), #376 (re-screen once the 7Q10 lands), #377 (obtain a primary QTS
 instrument), #378 (resolve QTS-vs-Thor), #379 (disambiguate OH0135569 vs OH0027910 — **resolved**, see
 NPDES permit disambiguation section below: OH0135569 is the City of Van Wert water treatment
-plant, not an MS4). The GIS lift
-(the Van Wert County PAT MapServer on `ags.bhamaps.com` with an expired TLS cert) is the shared-host
-case tracked under GIS discovery above — re-probe once the cert is renewed; **don't weaken TLS** for it.
+plant, not an MS4). The GIS lift is **resolved** (#421): the `ags.bhamaps.com` host died (we never
+weakened TLS for it) and the county migrated to ArcGIS Online — parcels are now wired; see GIS
+discovery above.
 
 ## NPDES permit disambiguation — OH0135569 vs OH0027910 (#379) — 2026-07-02
 
@@ -194,6 +210,6 @@ Verification: Ohio EPA air permit application (submitted per QTS FAQ; no permit 
 - [ ] Every written reference value is reviewed against a cited source (no fabricated values).
 - [ ] SSURGO dominant HSG matches the profile, or the SiteProfile is updated with a citation.
 - [x] basin-screen coverage is sane for this site's receiving waters. OH0027910 screened against Town Creek 7Q10 (0.16 cfs annual, source=document); dilution ratio 0.03:1 — 39× effluent dominance, `[verified]`. See self-research summary above.
-- [ ] A per-jurisdiction County/City GIS connector exists (the known lift — see docs/onboarding.md).
+- [x] A per-jurisdiction County/City GIS connector exists (the known lift — see docs/onboarding.md). Parcels wired via `VAN_WERT_PARCEL_SCHEMA` (#421 — the county's AGOL `parcel_joinedVWOH`, replacing the dead bhamaps host); zoning stays `[open]` (no REST anywhere; map-only/PDF).
 - [x] Self-research first pass reviewed (run with --research; triage data/research/<slug>-<date>/) — see self-research summary above; 5 proposals filed as sub-issues of #363 (#375–379).
 - [ ] PROMOTION IS A SEPARATE MANUAL EDIT: flip status->live + selectable->true for 'van-wert' in web/src/lib/sites.ts, parity-gated. onboard never auto-promotes; only one live build (/bosc) exists today.

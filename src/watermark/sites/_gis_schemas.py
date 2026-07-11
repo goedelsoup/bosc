@@ -533,6 +533,86 @@ CHAMPAIGN_PARCEL_SCHEMA = GisParcelSchema(
 )
 
 
+# Van Wert County, OH parcels (#421). The county's Bruce Harris & Assoc. PAT MapServer
+# (`ags.bhamaps.com`) is DEAD, not just cert-expired: the wildcard cert lapsed 2026-05-19 and the
+# ArcGIS Server was then removed from the host (bare Microsoft-HTTPAPI 404s) — the county migrated
+# to ArcGIS Online (`vanwertcountygis.maps.arcgis.com`, org G5sGKRBVtJMunpVA), the same vendor
+# pattern as Champaign's CCEO `parcel_joined`. The owner-bearing auditor CAMA join is the
+# `parcel_joinedVWOH` FeatureServer layer 0. Semantics differ from Champaign's twin in four ways:
+# the numeric Ohio CAMA use code is **PPClassNumber** (110 ag / 510 res; `PPClassCode` here is the
+# coarse class LETTER, A/R/...); there is NO owner mailing-address field (owner_address stays
+# None); `PPOnCauv` is a 'True'/'False' string FLAG, not a CAUV dollar value (unmapped — coercing
+# it would decode every row to None and read as "no CAUV"); and the stored PIN is the dashless
+# 12-digit id (the dashed auditor form `17-034718.0100` is the separate `Parcel` field, so
+# id_normalize="dashless" maps a deed-style citation onto the PIN). PPSalesType is a conveyance-
+# type code (WD/SV), not a validity flag — left unmapped like Putnam's PURCOD. Field names +
+# samples confirmed from the live layer-0 ``?f=json`` + queries (2026-07-11); data vintage
+# 2026-05-01 (dataLastEditDate); WKID 3735 (NAD83 Ohio South ftUS) — the right-state guard.
+VAN_WERT_PARCEL_SCHEMA = GisParcelSchema(
+    connector="van_wert_gis",
+    reference_dir="van-wert-gis",
+    page_size=2000,
+    out_fields=(
+        "PIN",
+        "PPOwner",
+        "PPAddress",
+        "PPClassNumber",
+        "PPAcres",
+        "PPLandValue",
+        "PPImprValue",
+        "PPTotalValue",
+        "PPSaleDate",
+        "PPAmount",
+    ),
+    id_field="PIN",  # dashless 12-digit id (the dashed auditor form is the `Parcel` field)
+    owner_field="PPOwner",
+    owner_2_field="",  # no separate second-owner field (PPOwner carries the full string)
+    deeded_owner_field="",
+    situs_fields=("PPAddress",),  # house number + situs STREET only — no city token (see caveats)
+    owner_addr_fields=(),  # NO owner mailing-address field on this layer (unlike Champaign's twin)
+    land_use_field="PPClassNumber",  # the numeric Ohio use code (PPClassCode = the class letter)
+    acres_field="PPAcres",
+    market_land_field="PPLandValue",
+    market_improvement_field="PPImprValue",
+    market_total_field="PPTotalValue",
+    cauv_field="",  # PPOnCauv is a 'True'/'False' string flag, not a value — unmapped (caveat)
+    tax_district_field="",  # encoded in the PIN's leading district digits; no separate field
+    school_field="",
+    neighborhood_field="",
+    sale_date_field="PPSaleDate",  # epoch-millis (esriFieldTypeDate)
+    sale_amount_field="PPAmount",
+    valid_sale_field="",  # PPSalesType is a conveyance-type code (WD/SV), not a validity flag
+    id_normalize="dashless",  # "17-034718.0100" (deed/auditor form) -> the stored "170347180100"
+    date_decode="epoch_millis",
+    land_use_decode="int",  # bare numeric PPClassNumber
+    deed_id_regex=r"\b\d{2}-\d{6}\.\d{4}\b",  # the auditor's dashed form; dashless of it = the PIN
+    meta=GisMeta(
+        subject="Van Wert County, Ohio parcels (auditor CAMA join)",
+        source="Van Wert County GIS ArcGIS Online org (vanwertcountygis, G5sGKRBVtJMunpVA) — "
+        "parcel_joinedVWOH FeatureServer layer 0 (auditor CAMA + geometry)",
+        source_url=(
+            "https://services8.arcgis.com/G5sGKRBVtJMunpVA/arcgis/rest/services/"
+            "parcel_joinedVWOH/FeatureServer/0"
+        ),
+        caveats=(
+            "Values are verbatim from the county CAMA join; null means the service had no value.",
+            "PPAddress is the situs street (house number + street, no city token); there is NO "
+            "owner mailing-address field on this layer, so owner_mailing_address is always null.",
+            "Land use is the numeric Ohio use code in PPClassNumber; PPClassCode is the coarse "
+            "class letter (A/R/...), not the code.",
+            "PPOnCauv (a 'True'/'False' string flag) and PPSalesType (a conveyance-type code, "
+            "e.g. WD/SV) are not mapped — cauv_value and valid_sale are always null here.",
+            "last_sale_date is decoded from the Esri epoch-millis PPSaleDate; verify against "
+            "the deed.",
+            "The GIS repeats split rows (one PIN can return multiple identical-attribute "
+            "polygons); readers dedupe by parcel id.",
+            "Field names + samples confirmed from the live layer-0 metadata + queries "
+            "(2026-07-11); replaces the retired ags.bhamaps.com PAT MapServer (#421).",
+        ),
+    ),
+)
+
+
 # City of Toledo / Lucas County zoning (#384): the AREIS Parcel_Zoning layer — a PARCEL-level zoning
 # catalog (PARID + ZONING), so unlike Findlay's polygon-only layer it supports the per-parcel join.
 LUCAS_ZONING_SCHEMA = GisZoningSchema(

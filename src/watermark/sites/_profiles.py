@@ -22,6 +22,7 @@ from watermark.sites._gis_schemas import (
     NATIONAL_NFHL_FLOOD_SCHEMA,
     OHIO_STATEWIDE_PARCEL_SCHEMA,
     PUTNAM_PARCEL_SCHEMA,
+    VAN_WERT_PARCEL_SCHEMA,
 )
 from watermark.sites._model import CoolingModelType, SiteFacility, SiteProfile
 
@@ -516,15 +517,20 @@ _VAN_WERT = SiteProfile(
     rsei_fips="39161",  # [verified] Van Wert County, OH
     econ_fips="39161",
     eia861_utility_number=14006,  # [verified] Ohio Power Co (AEP Ohio); the Van Wert County AEP aggregation
-    # GIS — schema-driven (#237): flood = the shared national NFHL; parcels/zoning discovered in
-    # a follow-up live metadata read (Van Wert County GIS + City of Van Wert GIS).
-    parcels_url="TODO",  # [open] pending the Van Wert County, OH GIS REST endpoint discovery
-    zoning_url="TODO",  # [open] pending the City of Van Wert GIS REST endpoint discovery
+    # GIS — schema-driven (#237/#421): parcels = the county's AGOL auditor-CAMA join (the bhamaps
+    # PAT MapServer died with its expired cert — ArcGIS Server removed from the host — and the
+    # county migrated to ArcGIS Online); flood = the shared national NFHL; zoning stays a
+    # confirmed negative (townships are map-only; city zoning is static PDFs + amlegal).
+    parcels_url=(  # [verified] Van Wert County GIS AGOL — parcel_joinedVWOH layer 0 (auditor CAMA)
+        "https://services8.arcgis.com/G5sGKRBVtJMunpVA/arcgis/rest/services/"
+        "parcel_joinedVWOH/FeatureServer/0"
+    ),
+    zoning_url="TODO",  # [open] no Van Wert zoning REST anywhere (map-only/PDF) — unchanged negative
     floodzone_url=(  # [verified] FEMA NFHL S_FLD_HAZ_AR (national layer 28)
         "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28"
     ),
-    gis_parcel=None,  # [open] pending Van Wert County, OH parcel-layer discovery
-    gis_zoning=None,  # [open] pending City of Van Wert zoning-layer discovery
+    gis_parcel=VAN_WERT_PARCEL_SCHEMA,  # [verified] AGOL parcel_joinedVWOH — owner + CAMA (#421)
+    gis_zoning=None,  # [open] no City of Van Wert zoning REST found (map-only/PDF)
     gis_flood=NATIONAL_NFHL_FLOOD_SCHEMA.model_copy(update={"reference_dir": "van-wert-gis"}),
     hydro_utm_epsg=32616,  # [verified] UTM 16N (Van Wert ~84.58 degW; zone 16 spans 90-84 degW)
     # stormwater (the Atlas-14 corridor point = city centroid; cover scenario pending a site)
