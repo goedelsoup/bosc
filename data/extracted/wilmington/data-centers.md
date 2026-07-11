@@ -105,7 +105,11 @@ Confirm every entry is physically in **Clinton County, OH** (FIPS 39027). Traps 
   reservoirs** (450M gal total, pumped from Cowan Creek) as backup — **not Todd Fork**.
   `[verified — City water-treatment page]` The USACE/ODNR storage-contract terms are the
   instrument still to pull, and an AG dispute over the Corps' charges is on the record
-  `[reported — wnewsj]`; #1472 tracks the pull (this explains profile gage `03242350`).
+  `[reported — wnewsj]`; #1472 tracks the pull. `[inference]` Profile gage `03242350`
+  ("Caesar Creek near Wellman OH") sits on this same reservoir-fed reach; its
+  `nwis_sites` pin is documented in `_profiles.py` as a low-flow-bracket choice, not a
+  cited withdrawal-site instrument — treat the link to this water-source thread as
+  plausible, not confirmed.
 - **Wastewater:** to the City WWTP — **OH0028134 / 1PD00013\*QD**, outfall 001 to Lytle
   Creek at RM 6.83 (Lytle Creek → Todd Fork → Little Miami); design flow 3.0 MGD, **PTI
   #1543170 expansion to 4.5 MGD**, new limits effective 2026-03-01. `[verified — Ohio EPA
@@ -125,8 +129,10 @@ Confirm every entry is physically in **Clinton County, OH** (FIPS 39027). Traps 
 - **Abstraction vs. 7Q10:** not computable — numerator (reserved MGD) and denominator
   (at-site 7Q10) are both open. Fill from the water contract + StreamStats pulls only. `[open]`
 - **Overlay:** the Little Miami is a **National & State Scenic River** (state-designated
-  1969/1971, Ohio's first; national 1980) — an anti-degradation overlay on any new/expanded
-  discharge. `[verified — ODNR / rivers.gov]`
+  1969/1971, Ohio's first; national 1980). `[verified — ODNR / rivers.gov]` `[inference]`
+  Scenic-river status is often paired with heightened antidegradation review, but no Ohio
+  EPA antidegradation rule or permit citation for this reach has been pulled — treat any
+  discharge-review implication as open until one is.
 
 ### 1.5 — Regulatory record (status as of 2026-07-11)
 
