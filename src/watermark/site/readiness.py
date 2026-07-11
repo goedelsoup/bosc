@@ -49,6 +49,12 @@ DOMAINS: tuple[Domain, ...] = get_args(Domain)
 # NASA-POWER climatology / Atlas-14 / WBD / SSURGO feed hydrology but emit no distinct floor
 # feed of their own (``hydrology-scenarios`` is facility-gated), so RSEI stands as the third
 # FIPS-keyed floor signal alongside the two economic ones.
+#
+# These are object feeds, which serialize with ``count == 1`` when present — so ``_count(...) > 0``
+# tests *presence*, and presence must mean *content*. The exporter drops a genuinely-empty
+# inventory (``watermark.site.export``: an RSEI feed with zero facilities, an economic baseline
+# with no sectors) so it is absent, not a ``count == 1`` shell that floats backdrop to ``live`` on
+# an empty inventory (#1364).
 BACKDROP_FLOOR_FEEDS: tuple[str, ...] = ("economics-baseline", "consumer-energy", "rsei")
 
 # The facility demand→price-pressure feed, present only where a facility is disclosed (#1220:
@@ -69,9 +75,17 @@ PLACES_RECORD_FEED = "places"
 # so it does not discriminate a real corpus), ``concepts`` and ``defense-contractors`` (both
 # network-global boilerplate present on every bundle). A site with RSEI-derived facility entities
 # but no document corpus is correctly a Backdrop site, not a record case.
-RECORD_FEEDS: tuple[str, ...] = ("records", "documents")
-# Live at/above this; seeded below it; absent at zero. A minimal real record — one extracted
-# item plus its source document — clears the bar; a lone stray row is seeded.
+#
+# Only ``records`` (validated ``RecordItem``s — actual extracted content) can float the domain to
+# ``live``. ``documents`` counts raw source scans by first-level COLLECTION dir (one row per
+# collection, not per file — ``watermark.site.documents``), so it measures containers, not content:
+# a thin site with un-extracted scans in ≥2 collection dirs would otherwise sum to ``live`` with
+# zero extractions (#1364). Catalogued-but-unworked scans SEED the record domain; they never lift
+# it — "let it lock and ask for the source" rather than read present-but-empty as complete.
+RECORD_LIVE_FEED = "records"
+RECORD_SEED_FEEDS: tuple[str, ...] = ("records", "documents")
+# ``records`` at/above this is ``live``; any record signal below it is ``seeded``; nothing is
+# ``absent``. Two extracted items is the "real worked corpus" bar (a lone stray extraction seeds).
 RECORD_LIVE_THRESHOLD = 2
 
 # The leads feed — the open-questions / source-solicitation board for the site.
@@ -117,10 +131,12 @@ def _places_state(feed_counts: Mapping[str, int]) -> State:
 
 
 def _record_state(feed_counts: Mapping[str, int]) -> State:
-    n = sum(_count(feed_counts, f) for f in RECORD_FEEDS)
-    if n >= RECORD_LIVE_THRESHOLD:
+    # Live is gated on extracted content (``records``) alone; catalogued source scans
+    # (``documents``, counted by collection dir) only ever seed the domain (#1364).
+    if _count(feed_counts, RECORD_LIVE_FEED) >= RECORD_LIVE_THRESHOLD:
         return "live"
-    return "seeded" if n > 0 else "absent"
+    seeded = any(_count(feed_counts, f) > 0 for f in RECORD_SEED_FEEDS)
+    return "seeded" if seeded else "absent"
 
 
 def _story_state(profile: SiteProfile, feed_counts: Mapping[str, int]) -> State:

@@ -218,6 +218,26 @@ def save_extraction(extraction: PageExtraction, *, settings: Settings | None = N
 # ---------------------------------------------------------------------------
 
 
+@dataclass
+class SweepResult:
+    """The outcome of an OPC page sweep: what extracted, and — crucially — what didn't.
+
+    A page that raises is logged and skipped so one bad sheet never aborts a live sweep, but the
+    failure is **surfaced** here rather than swallowed (#1364): ``failed`` lists every requested
+    index that raised and ``requested`` is the full input range, so a caller can tell a *complete*
+    sweep from a *truncated* one instead of mistaking the survivors for the whole set. ``complete``
+    is the headline gate the CLI / assembly cross-check.
+    """
+
+    extractions: list[PageExtraction]
+    failed: list[int]
+    requested: list[int]
+
+    @property
+    def complete(self) -> bool:
+        return not self.failed
+
+
 def sweep_opc_pages(
     doc: SourceDocument,
     page_indices: Iterable[int],
@@ -227,17 +247,19 @@ def sweep_opc_pages(
     extractor: StructuredExtractor | None = None,
     dpi: int = DEFAULT_DPI,
     settings: Settings | None = None,
-) -> list[PageExtraction]:
+) -> SweepResult:
     """Extract a range of OPC pages, reusing one open PDF + extractor across them.
 
     The live page-sweep behind the regenerable summary (PDF pages 317-327 of the PRR
-    bundle). One bad page is logged and skipped (not fatal). ``extractor`` is injectable
-    so the sweep can be driven without the Claude API in tests.
+    bundle). One bad page is logged and skipped (not fatal) but its index is carried on the
+    returned :class:`SweepResult`, so a truncated sweep can't pass for a complete one (#1364).
+    ``extractor`` is injectable so the sweep can be driven without the Claude API in tests.
     """
     settings = settings or get_settings()
     indices = list(page_indices)
     pdf = PdfDocument(doc.path, dpi=dpi)
     out: list[PageExtraction] = []
+    failed: list[int] = []
     try:
         for i in indices:
             try:
@@ -254,11 +276,12 @@ def sweep_opc_pages(
                     )
                 )
             except Exception as exc:  # one bad page must not abort the whole sweep
+                failed.append(i)
                 log.warning("extract.sweep.page_failed", page=i, error=str(exc).splitlines()[0])
     finally:
         pdf.close()
-    log.info("extract.sweep", pages=len(indices), extracted=len(out))
-    return out
+    log.info("extract.sweep", pages=len(indices), extracted=len(out), failed=len(failed))
+    return SweepResult(extractions=out, failed=failed, requested=indices)
 
 
 def assemble_opc_summary(
@@ -266,6 +289,7 @@ def assemble_opc_summary(
     *,
     pdf_pages: list[int] | None = None,
     section_schema: list[str] | None = None,
+    expected_count: int | None = None,
 ) -> OPCSummary:
     """Assemble per-page generic :class:`Estimate`s into the legacy OPCSummary shape.
 
@@ -274,6 +298,11 @@ def assemble_opc_summary(
     to the sum of the sub-estimate totals (the program headline ``analyze.reconcile``
     cross-checks against ``grand_total()``). Estimates missing a construction subtotal or
     total are skipped with a warning rather than fabricated. Pure — no I/O, no API.
+
+    ``expected_count`` (the number of pages the sweep was asked to cover) is recorded on
+    ``meta.expected_sub_estimates`` so ``analyze.reconcile`` fails loudly when a page dropped out
+    — the headline total is derived from the survivors, so without this cross-check a truncated
+    summary reconciles green (#1364).
     """
     subs: list[SubEstimate] = []
     for idx, est in enumerate(estimates):
@@ -296,7 +325,10 @@ def assemble_opc_summary(
         )
     grand_total = sum(int(se.total) for se in subs)
     return OPCSummary(
-        meta=OPCMeta(summary_construction_total=grand_total),
+        meta=OPCMeta(
+            summary_construction_total=grand_total,
+            expected_sub_estimates=expected_count,
+        ),
         section_schema=section_schema or [],
         sub_estimates=subs,
     )
