@@ -277,7 +277,12 @@ def sweep_opc_pages(
                 )
             except Exception as exc:  # one bad page must not abort the whole sweep
                 failed.append(i)
-                log.warning("extract.sweep.page_failed", page=i, error=str(exc).splitlines()[0])
+                # An exception with an empty message (e.g. `ValueError()`) yields no lines — fall
+                # back to its repr so logging the skip can't itself raise and abort the sweep.
+                lines = str(exc).splitlines()
+                log.warning(
+                    "extract.sweep.page_failed", page=i, error=lines[0] if lines else repr(exc)
+                )
     finally:
         pdf.close()
     log.info("extract.sweep", pages=len(indices), extracted=len(out), failed=len(failed))
