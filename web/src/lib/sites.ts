@@ -378,6 +378,7 @@ const PLACEMENT: Record<string, { state: string; basin: string }> = {
   newark: { state: "Ohio", basin: "Muskingum" },
   zanesville: { state: "Ohio", basin: "Muskingum" },
   coshocton: { state: "Ohio", basin: "Muskingum" },
+  mansfield: { state: "Ohio", basin: "Muskingum" },
   sandusky: { state: "Ohio", basin: "Sandusky" },
   fremont: { state: "Ohio", basin: "Sandusky" },
   tiffin: { state: "Ohio", basin: "Sandusky" },
