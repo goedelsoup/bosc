@@ -26,6 +26,23 @@ def test_cache_key_is_order_independent() -> None:
     assert cache_key({"a": 1, "b": 2}) == cache_key({"b": 2, "a": 1})
 
 
+def test_iv_service_uses_short_ttl(
+    hydro_settings: Settings, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The "right now" IV service must not inherit the week-long slow-moving default (#1365)."""
+    assert hydro_settings.nwis_iv_cache_ttl_hours < hydro_settings.hydro_cache_ttl_hours
+
+    seen: dict[str, object] = {}
+
+    def spy(connector: str, params: object, fetch: object, **kw: object) -> object:
+        seen["ttl_hours"] = kw.get("ttl_hours")
+        return {"value": {"timeSeries": []}}
+
+    monkeypatch.setattr(nwis, "cached_get", spy)
+    nwis.fetch_streamflow(sites=["04187100"], settings=hydro_settings)
+    assert seen["ttl_hours"] == hydro_settings.nwis_iv_cache_ttl_hours
+
+
 def test_observed_min_is_derived_not_document(hydro_settings: Settings) -> None:
     # The 7-day-min cross-check, when present, must never masquerade as a 7Q10.
     # (No P7D fixture committed -> offline miss; the point is the source tag, which

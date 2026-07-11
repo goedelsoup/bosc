@@ -86,21 +86,23 @@ def cached_get(
     path = _cache_path(cache_dir, connector, key)
 
     cached = _read(path)
-    if cached is not None:
-        fresh = _is_fresh(cached.get("fetched_at", ""), ttl_hours)
-        if offline or fresh:
-            if offline and not fresh:
-                log.info("connector.cache.stale_offline", connector=connector, key=key)
-            return cached["payload"]
+    if cached is not None and _is_fresh(cached.get("fetched_at", ""), ttl_hours):
+        return cached["payload"]
 
     if offline:
-        # Fall back to a committed fixture before giving up (keeps tests/CI hermetic).
+        # Resolution order (per the subsystem CLAUDE.md): fresh cache → committed
+        # fixture → error. A stale or hand-mutated ``data/cache/`` entry must NOT
+        # shadow the reviewed committed fixture — otherwise a dev's day-old local
+        # cache silently diverges from clean CI. So a non-fresh cache falls through
+        # here just like an absent one.
         if fixtures_dir is not None:
             fixture = _read(fixtures_dir / connector / f"{key}.json")
             if fixture is not None:
                 return fixture["payload"]
+        if cached is not None:
+            log.info("connector.cache.stale_offline", connector=connector, key=key)
         raise offline_error(
-            f"offline: no cache/fixture for {connector} key={key} "
+            f"offline: no fresh cache/fixture for {connector} key={key} "
             f"(params={params}); record one at {path}"
         )
 

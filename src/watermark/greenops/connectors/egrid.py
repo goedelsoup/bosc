@@ -106,7 +106,9 @@ def _download_workbook(settings: Settings) -> bytes:
     resp.raise_for_status()  # an EPA error page must not be cached as if it were the workbook
     data = resp.content
     cache.parent.mkdir(parents=True, exist_ok=True)
-    cache.write_bytes(data)
+    tmp = cache.with_name(cache.name + ".part")
+    tmp.write_bytes(data)
+    tmp.replace(cache)  # atomic: an interrupted write never leaves a truncated .xlsx at the key
     return data
 
 

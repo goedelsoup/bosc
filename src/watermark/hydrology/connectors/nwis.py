@@ -73,8 +73,19 @@ class DailyDischargeSeries(BaseModel):
         return list(zip(self.dates, self.values_cfs, strict=True))
 
 
-def _nwis_request(settings: Settings, service: str, query: dict[str, Any]) -> dict[str, Any]:
-    """Perform (or replay from cache) one NWIS request against ``service`` (``iv``/``dv``)."""
+def _nwis_request(
+    settings: Settings,
+    service: str,
+    query: dict[str, Any],
+    *,
+    ttl_hours: int | None = None,
+) -> dict[str, Any]:
+    """Perform (or replay from cache) one NWIS request against ``service`` (``iv``/``dv``).
+
+    ``ttl_hours`` overrides the subsystem default so the "right now" IV service can
+    carry a short freshness window (see :attr:`Settings.nwis_iv_cache_ttl_hours`); the
+    ``dv`` historical service inherits the slow-moving hydro default.
+    """
 
     def fetch() -> Any:
         url = f"{settings.nwis_base_url}/{service}/"
@@ -85,13 +96,24 @@ def _nwis_request(settings: Settings, service: str, query: dict[str, Any]) -> di
     # Namespace the cache key by service so iv and dv requests never collide.
     return cast(
         "dict[str, Any]",
-        cached_get("nwis", {"_service": service, **query}, fetch, settings=settings),
+        cached_get(
+            "nwis", {"_service": service, **query}, fetch, settings=settings, ttl_hours=ttl_hours
+        ),
     )
 
 
 def _iv_request(settings: Settings, params: dict[str, Any]) -> dict[str, Any]:
-    """Perform (or replay from cache) one NWIS IV request, return parsed JSON."""
-    return _nwis_request(settings, "iv", {"format": "json", "siteStatus": "active", **params})
+    """Perform (or replay from cache) one NWIS IV request, return parsed JSON.
+
+    The IV service is "right now" data, so it caches under a short TTL
+    (``nwis_iv_cache_ttl_hours``) rather than the week-long hydro default.
+    """
+    return _nwis_request(
+        settings,
+        "iv",
+        {"format": "json", "siteStatus": "active", **params},
+        ttl_hours=settings.nwis_iv_cache_ttl_hours,
+    )
 
 
 def _series(ts: dict[str, Any]) -> list[tuple[str, float]]:
