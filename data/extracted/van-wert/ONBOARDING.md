@@ -44,7 +44,11 @@ class letter; no owner mailing-address field; `PPOnCauv` is a string flag; the d
 aerials (reference leads). The Engineer's-office shapefile fallback (`Current_Parcels.tar.gz`,
 2024-12-27) is now strictly inferior. Probe bonus: the roll already shows the Mega Site anchor —
 PIN `170347180100`, VAN WERT EAST OWNER LLC, 221.15 ac, sold 2025-08-22 for $10,394,000 (split
-from Marsh tract `170347180000`) — the committed fixture parcel; feeds #1403/#1404.
+from Marsh tract `170347180000`) — all verbatim from the layer's `PPSaleDate`/`PPAmount` roll
+fields, recorded in the committed fixture
+(`tests/fixtures/hydrology/van_wert_gis/054c1bdf635a4b53.json` — the exact query + response the
+connector replays); the deed itself is the Recorder trail in Phase 6 below
+(countyfusion14.govos.com, grantor "Marsh Foundation"). Feeds #1403/#1404.
 
 | layer | finding | status |
 |---|---|---|
