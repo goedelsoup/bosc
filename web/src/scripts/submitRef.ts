@@ -14,7 +14,10 @@ const refKind = params.get("ref_kind");
 const refId = params.get("ref_id");
 const refLabel = params.get("ref_label");
 
-if (refKind) {
+// Reveal only when a specific record is actually identified — `ref_kind` alone
+// (no `ref_id`) is a degraded deep-link, so fall through to the general form
+// rather than naming a "this record" that the URL never defined.
+if (refKind && refId) {
   const banner = document.getElementById("submit-ref");
   if (banner) {
     const labelEl = document.getElementById("submit-ref-label");
