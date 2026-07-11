@@ -8,7 +8,7 @@
 
 ## Headline
 
-**The archive itself is in good shape; what's "missing" is mostly what the county hasn't produced.** Provenance is clean (94 distinct source PDFs cited across the extractions, 0 genuinely absent). The PRR production binaries are all present. The substantive holes are the records the county **deferred or withheld** — above all the entire **county-wastewater engineering universe (PRR items 5–15)** and the **item-4 cost-benefit analysis** — plus a modest set of corpus-hygiene issues in the minutes series (publication lag + ~12 malformed/misfiled filenames), none of which indicate lost evidence. A separate, newer thread (§2) tracks **watershed/conservation grant docs** worth digging up — the primary instruments behind a $650k Lost Creek (Maumee-headwater) ag-runoff grant whose SWCD summary is now in the corpus. A third thread (**§4**) tracked the **OEPA air permit P0138965** — the secondhand-cited keystone behind the disclosed **313 MW** power figure, and the expected source of the **three-hall building footprint** — which has now been **ingested (2026-06-15)**: the 2026-05-28 **final** PTI (eDoc `4132514`) confirms the genset count and three-hall emission-unit grouping on a primary footing, though the per-engine ekW behind 313 MW remains trade-secret-redacted (see §4).
+**The archive itself is in good shape; what's "missing" is mostly what the county hasn't produced.** Provenance is clean (94 distinct source PDFs cited across the extractions, 0 genuinely absent). The PRR production binaries are all present. The substantive holes are the records the county **deferred or withheld** — above all the entire **county-wastewater engineering universe (PRR items 5–15)** and the **item-4 cost-benefit analysis** — plus a modest set of corpus-hygiene issues in the minutes series (publication lag + ~12 malformed/misfiled filenames), none of which indicate lost evidence. A separate, newer thread (§2) tracks **watershed/conservation grant docs** worth digging up — the primary instruments behind a $650k Lost Creek (Maumee-headwater) ag-runoff grant whose SWCD summary is now in the corpus. A third thread (**§4**) tracked the **OEPA air permit P0138965** — the secondhand-cited keystone behind the disclosed **313 MW** power figure, and the expected source of the **three-hall building footprint** — which has now been **ingested (2026-06-15)**: the 2026-05-28 **final** PTI (eDoc `4132514`) confirms the genset count and three-hall emission-unit grouping on a primary footing, though the per-engine ekW behind 313 MW remains trade-secret-redacted (see §4). A fourth thread (**§5**) tracks the grid/interconnection side the air permit itself punted to PUCO/the utility — AEP Ohio's **Lyka Transmission Project** (345kV substation + line) — **ingested 2026-07-11**: AEP's own schedule confirms no OPSB case is filed yet (planned Early 2027), and the Google/Bistrozzi customer attribution stays `[inference]` pending that filing (see §5).
 
 > **Publishing vs. holding.** What the corpus *contains* (this audit) is separate from
 > what the **public** site *serves*. Every source document is default-deny on the public
@@ -169,6 +169,30 @@ Every `*.pdf` cited across `extracted/**` resolves to a real file under `data/do
 
 ---
 
+## 5. Grid / transmission — AEP Ohio "Lyka" 345kV substation + line — **INGESTED 2026-07-11**
+
+*Added 2026-07-11 (issue #1476, surfaced by the exploratory web-research refresh).* Until now the corpus's power story ran only through the OEPA air-permit generator count (§4) — the permit's own Response to Comments explicitly punted grid/interconnection questions to PUCO/the utility ("Power Grid (referred to PUCO / utility)"). AEP Ohio's **Lyka Transmission Project** — a new **345kV substation** on a customer-owned parcel between N West St and N Cole St, plus **~4 miles of new 345kV transmission line**, both in Sugar Creek Township — is the first primary-utility-project instrument that begins to answer that referral.
+
+**Now ingested.** AEP's own project fact sheet and study-area map (captured 2026-07-11, dated 2026-04-08) are committed at [`../../documents/grid/aep-lyka-2026/`](../../documents/grid/aep-lyka-2026/) → [`../grid/aep-lyka-transmission-2026.project.yaml`](../grid/aep-lyka-transmission-2026.project.yaml).
+
+**What it puts on a primary footing:**
+
+- **Project scope + schedule.** Substation site, ~4mi 345kV line, steel monopole structures (140-170 ft, ~150 ft ROW), and a dated schedule: OPSB regulatory filing "Early 2027," anticipated OPSB decision "Spring 2027," construction Fall 2027 - Summer 2028, in-service Summer 2028.
+- **No OPSB case filed yet.** Direct search of `opsb.ohio.gov` and AEP's own regulatory-filings index turned up no case number as of 2026-07-11 — consistent with AEP's own "Early 2027" filing target. A distinct Ohio History Connection/SHPO submission (OHPO project ID `2026ALL68059`, "Lyka Station STATCOM Project," received 2026-04-08) is a separate historic-preservation review track, not the OPSB siting case.
+- **Open-house date reconciled.** No real conflict: the 04-21-dated LimaOhio.com/Bluffton Icon coverage *announced* the 05-06 open house two weeks out; a follow-up LimaOhio.com piece (published 05-07) confirms the event itself was held Wednesday 2026-05-06 — matching AEP's own fact sheet.
+
+**What it does NOT resolve (carry forward):**
+
+| Still owed | Why | Where to get it |
+|---|---|---|
+| **Named customer/load** | Neither AEP's project page nor its fact sheet names a customer ("a commercial customer's facility"); AEP outreach staff told press they can't disclose customers. | An OPSB application (planned Early 2027) will require the load/customer to be identified. |
+| **Final transmission-line route** | AEP's own map shows 45 numbered candidate "study segments"; the company selects one route only after public input + feasibility review — none is fixed yet. | The OPSB application/certificate, once filed. |
+| **Google/Bistrozzi attribution** | Local press (LimaOhio.com, 2026-04-21: "AEP Ohio plans substation on Google property... on Google's under-construction property") ties the substation to the Bosc campus, but this is secondary reporting only — no primary AEP/OPSB document corroborates it. Stays `[inference]`. | The OPSB filing (once it names the load), or a direct AEP/Google statement. |
+
+**Net:** the project's scope, schedule, and the *absence* of an OPSB filing are **primary-source** (AEP's own fact sheet); the customer identity and final route are **not yet established** and are tracked `[open]`/`[inference]` accordingly. A standing lead (`data/site/leads.yaml` id `AEP-LYKA-OPSB`) tracks the filing for when it lands.
+
+---
+
 ## Genuine-absence shortlist — **VERIFIED 2026-06-12** (#46)
 
 All 8 low-confidence dates were checked against [commissioners.allencountyohio.com](https://commissioners.allencountyohio.com)
@@ -210,4 +234,5 @@ pre-cutover 2026-04-17 snapshot.
 - [`bosc-prr-production-2026-06-05.analysis.md`](prr-mandamus/bosc-prr-production-2026-06-05.analysis.md) · [`../../../docs/legal/mandamus-analysis.md`](../../../docs/legal/mandamus-analysis.md)
 - [`allen-county-web-vendor-audit.md`](web-vendor-audit/allen-county-web-vendor-audit.md) · [`allen-county-level-sites.md`](web-vendor-audit/allen-county-level-sites.md) — item-16 custody
 - [`../oepa/`](../oepa/) (Shawnee II permit `2PK00002`) · [`../../reference/echo/`](../../reference/echo/) (Maumee discharger inventory) — Category-B wastewater ties
+- [`../grid/aep-lyka-transmission-2026.project.yaml`](../grid/aep-lyka-transmission-2026.project.yaml) · [`../../documents/grid/aep-lyka-2026/`](../../documents/grid/aep-lyka-2026/) — §5 grid/transmission source
 - [`../../../docs/COMPUTE.md`](../../../docs/COMPUTE.md) · [`../../reference/compute/README.md`](../../reference/compute/README.md) — the compute / AI-capacity derivation whose keystone (air permit P0138965) §4 tracks

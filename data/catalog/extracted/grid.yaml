@@ -1,16 +1,20 @@
 id: grid
-title: Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)
+title: Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)
 scope: extracted
 status: reviewed
 producer:
   kind: extracted
   source: U.S. Department of Energy (CESER) FPA §202(c) emergency orders 202-26-33 / 202-26-32
-    and PJM Interconnection's underlying application — captured under data/documents/grid/pjm-202c-2026/
-license: Public record (federal agency order / regulatory filing)
+    and PJM Interconnection's underlying application — captured under data/documents/grid/pjm-202c-2026/;
+    AEP Ohio's Lyka Transmission Project fact sheet + map — captured under data/documents/grid/aep-lyka-2026/
+license: Public record (federal agency order / regulatory filing); AEP Ohio public project materials
 access_tier: public
 site_scope: basin-shared
 storage:
 - relpath: extracted/grid/pjm-202c-emergency-2026.event.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/grid/aep-lyka-transmission-2026.project.yaml
   media_type: application/x-yaml
   lfs: false
 refresh:
@@ -23,8 +27,15 @@ tags:
 - pjm
 - section-202c
 - dispatch
+- opsb
+- transmission
+- siting
 notes: >-
   Structured read of the June–July 2026 PJM hot-weather §202(c) emergency — the federal
   authorization for reliability-triggered dispatch of data-center backup generation (Epic
   #1172 calibration anchor, #1174). Grid event tagged [verified]; the Bistrozzi P0138965
   facility's own genset runtime is tracked [open] (pre-operational) — no runtime fabricated.
+  Also carries AEP Ohio's "Lyka Transmission Project" (345kV substation + ~4mi line, Sugar
+  Creek Township; issue #1476) — project scope/schedule [verified] from AEP's own fact
+  sheet; no OPSB case filed yet (planned Early 2027); Google/Bistrozzi customer attribution
+  tracked [inference] only (AEP names no customer).
