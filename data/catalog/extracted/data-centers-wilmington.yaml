@@ -4,10 +4,11 @@ scope: extracted
 status: reviewed
 producer:
   kind: manual
-  source: Onboarding self-research pass (data/research/onboard-wilmington-*/findings.md); Clinton
-    County RSEI inventory + BLS QCEW baseline (in-corpus). The sited-facility + load-driver web pass
-    (JobsOhio, AES Ohio DAY-zone interconnect, OEPA air/NPDES, recorder/SOS, Port Authority) is
-    still to-run.
+  source: >
+    Web research sweep 2026-07-11 (#1277 grooming refresh / #1471; supersedes the
+    2026-07-03 scaffold, closes #519). Clinton County Port Authority data-center FAQ; govinfo
+    docket 1:26-cv-00448; Ohio EPA OHD000001 draft-permit pages; WCPO/WDTN/wnewsj/WYSO
+    reporting; in-corpus RSEI inventory + BLS QCEW baseline + NPDES fact sheet 1PD00013.fs.
 license: public record / public domain
 access_tier: public
 site_scope: site:wilmington
@@ -22,20 +23,28 @@ tags:
 - data-center
 - wilmington
 - clinton-county
+- amazon
+- aws
+- cosler-farm
+- ardent-tac
+- sharp-litigation
 - wilmington-air-park
-- amazon-air
-- atsg
 - load-driver
 - little-miami
 - sweep
 notes: >
-  Wilmington sweep scaffold + load-driver verification record (2026-07-03, #519 / #891). [verified]
-  zero Wilmington/Clinton-County data-center primary records in the corpus; no NAICS 518210 facility
-  in the RSEI inventory (entirely metal-fab / auto-parts / foundry); the dominant signal is
-  Transportation & Warehousing (48-49) LQ 5.75 — the Wilmington Air Park (ILN) cargo hub (ex-DHL →
-  Amazon Air / ATSG), a cargo + Amazon comparator, NOT a data center. The #891 premise (confirm a
-  real large-load driver before deep profile work) resolves to: none recorded; six external
-  instruments to-run (JobsOhio, AES Ohio/PJM DAY-zone large-load queue, OEPA air PTI, OEPA/ECHO
-  NPDES OHD000001, recorder/SOS assembly, Clinton County Port Authority). Site stays registry/
-  inventory (non-selectable) until a driver or a flat no-activity finding is confirmed. NOT bridged
-  to the Lima/Allen Bistrozzi land-assembly graph.
+  Superseding register (2026-07-11, #1471; closes #519) — inverts the 2026-07-03
+  flat-no-activity prior, which reflected only an empty corpus. On the public record since
+  Nov 2025: [verified] Amazon Data Services Inc. ~471-ac / $4B campus on the former Cosler
+  Farm (1488 S US-68; annexed 2025-08-07; 30-yr PILOT at 30%; $25M+ AWS-funded water/sewer/
+  road infrastructure; private land sale, no JobsOhio instrument) and [reported] a second
+  ~545.893-ac Ardent/TAC rezoning corridor (O-26-04-07, Feb 2026; Nov 2026 referendum
+  qualified; O-26-33 final vote 2026-07-16). Sharp v. City of Wilmington (S.D. Ohio
+  1:26-cv-00448, Amazon as defendant-intervenor) ordered three enabling ordinances redone
+  ~2026-07-09/10 for defective 30-day mailed notice — ruling itself unpulled [open]. Neither
+  campus is on Air Park land; the Air Park (ILN, Amazon Air/ATSG) stays the cargo comparator.
+  Water source is Caesar Creek Lake (not Todd Fork); AWS reserved MGD undisclosed; Todd Fork
+  7Q10 still a DAR method awaiting inputs — abstraction screen not computable [open].
+  OHD000001 still draft (comments closed 2026-01-16). Instrument pulls (Sharp ruling,
+  ordinance stack, site plans, OPSB 25-0871-EL-BLN, ECHO/SWOAQA/SOS/recorder) tracked in
+  #1471. NOT bridged to the Lima/Allen Bistrozzi land-assembly graph.
