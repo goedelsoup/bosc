@@ -126,7 +126,12 @@ class Settings(BaseSettings):
     # When true, connectors never touch the network: they serve cached/fixture
     # responses only (so tests and CI stay hermetic). A cache miss raises.
     hydro_offline: bool = False
-    hydro_cache_ttl_hours: int = DEFAULT_CACHE_TTL_HOURS  # streamflow is slow-moving here
+    hydro_cache_ttl_hours: int = DEFAULT_CACHE_TTL_HOURS  # slow-moving records (daily values, etc.)
+    # The NWIS *Instantaneous Values* service is intrinsically "right now" (latest
+    # reading / relative P<n>D window), so it must NOT inherit the week-long default
+    # or it serves week-stale flow after the first pull. Short TTL; the key stays
+    # time-invariant (committed fixtures still resolve offline regardless of TTL).
+    nwis_iv_cache_ttl_hours: int = 1
     hydro_request_timeout_s: float = 30.0
     # Per-site (from the active SiteProfile): UTM zone for area calcs (Lima = 17N / 32617).
     hydro_utm_epsg: int = 0

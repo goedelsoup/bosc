@@ -193,20 +193,30 @@ def _code(x: str | None) -> str | None:
 
 
 def _download(settings: Settings, url: str, path: Path) -> None:
-    """Stream ``url`` to ``path`` (used for both the v2312 zip and legacy gz tables)."""
+    """Stream ``url`` to ``path`` (used for both the v2312 zip and legacy gz tables).
+
+    Atomic: bytes stream to a ``.part`` sibling and are ``replace``d into place only
+    once the transfer completes, so an interrupted 447 MB pull never leaves a
+    truncated file at the cache key for the next run to treat as valid.
+    """
     import httpx
 
     path.parent.mkdir(parents=True, exist_ok=True)
     log.info("rsei.download", url=url, dest=str(path))
-    with (
-        httpx.stream(
-            "GET", url, timeout=settings.rsei_request_timeout_s, follow_redirects=True
-        ) as resp,
-        path.open("wb") as out,
-    ):
-        resp.raise_for_status()
-        for chunk in resp.iter_bytes():
-            out.write(chunk)
+    tmp = path.with_name(path.name + ".part")
+    try:
+        with (
+            httpx.stream(
+                "GET", url, timeout=settings.rsei_request_timeout_s, follow_redirects=True
+            ) as resp,
+            tmp.open("wb") as out,
+        ):
+            resp.raise_for_status()
+            for chunk in resp.iter_bytes():
+                out.write(chunk)
+        tmp.replace(path)  # atomic: only a fully-fetched file lands at the cache key
+    finally:
+        tmp.unlink(missing_ok=True)
 
 
 def table_path(settings: Settings, name: str) -> Path:
