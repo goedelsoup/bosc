@@ -1,6 +1,6 @@
 {
   "site": "troy-piqua",
-  "catalog_version": "5b8c4d016c03db8c74972e5f8cf34caf73e51129e3664e3e8ccf0751bed76333",
+  "catalog_version": "aa50e6862dd26c4c41693eac4d93d6460f11db0cda3bb5225c44a672bb4a1971",
   "contract_version": "1.24.0",
   "atoms": [
     {
@@ -33,6 +33,14 @@
       "site": "troy-piqua",
       "local_id": "consumptive-cooling",
       "title": "Consumptive cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:troy-piqua:heat-reuse",
+      "kind": "concept",
+      "site": "troy-piqua",
+      "local_id": "heat-reuse",
+      "title": "Heat reuse",
       "feed": "concepts"
     },
     {
@@ -224,7 +232,7 @@
       "kind": "dataset",
       "site": "troy-piqua",
       "local_id": "grid",
-      "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
       "feed": "catalog"
     },
     {
@@ -404,6 +412,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:troy-piqua:wwtp-oh0027049-troy-piqua",
+      "kind": "dataset",
+      "site": "troy-piqua",
+      "local_id": "wwtp-oh0027049-troy-piqua",
+      "title": "Piqua WWTP (NPDES OH0027049) Effluent Record — DMR",
+      "feed": "catalog"
+    },
+    {
       "handle": "entity:troy-piqua:GENERAL DYNAMICS",
       "kind": "entity",
       "site": "troy-piqua",
@@ -418,6 +434,14 @@
       "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
       "title": "General Dynamics Land Systems Inc.",
       "feed": "entities"
+    },
+    {
+      "handle": "record:troy-piqua:troy-piqua/wwtp-oh0027049.dmr.yaml",
+      "kind": "record",
+      "site": "troy-piqua",
+      "local_id": "troy-piqua/wwtp-oh0027049.dmr.yaml",
+      "title": "PIQUA WWTP",
+      "feed": "records"
     }
   ]
 }
