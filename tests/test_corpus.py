@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
 import yaml
 
 from watermark.config import Settings
@@ -19,6 +20,8 @@ from watermark.models import (
     SubEstimate,
 )
 from watermark.pipeline.corpus import _classify, load_corpus
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 def _write(path: Path, text: str) -> None:
@@ -112,10 +115,32 @@ exceedances: []
 """
 
 
+_MINIMAL_DMR_PAYLOAD = {
+    "meta": {
+        "subject": "PIQUA WWTP (NPDES OH0027049) — reported effluent record (EPA ECHO DMR)",
+        "source": "EPA ECHO eff_rest_services.get_effluent_chart",
+        "regenerate": "watermark dmr OH0027049 --start 2023-01-01 --end 2023-12-31",
+        "discipline": "Reported DMR values are verbatim from the permittee's submissions.",
+    },
+    "permit": {"npdes_id": "OH0027049", "window": "2023-01-01..2023-12-31"},
+    "discharge_summary": {"n_flow_months": 12, "cso_outfalls": 0, "reported_exceedances": 0},
+    "flow_monthly": [],
+    "exceedances": [],
+}
+
+
 def test_classify_distinguishes_npdes_doc_from_dmr_pull() -> None:
     """A real NpdesExtraction and an ECHO DMR pull both key `permit:` (#1492)."""
     assert _classify({"permit": {"permit_no": "2PH00006"}}) == "npdes"
-    assert _classify({"permit": {"npdes_id": "OH0027049"}, "discharge_summary": {}}) == "npdes_dmr"
+    assert _classify(_MINIMAL_DMR_PAYLOAD) == "npdes_dmr"
+    # A document-shaped payload that merely happens to carry a `discharge_summary` key
+    # (no `meta:`, no `permit.npdes_id`/`window`) must not be misrouted to npdes_dmr —
+    # it would then fail DmrExtraction validation and land right back in the
+    # silently-dropped bug this discriminator exists to fix.
+    assert (
+        _classify({"permit": {"permit_no": "2PH00006"}, "discharge_summary": "not a mapping"})
+        == "npdes"
+    )
 
 
 def test_load_corpus_loads_dmr_pull_as_its_own_kind(tmp_path: Path) -> None:
@@ -131,6 +156,24 @@ def test_load_corpus_loads_dmr_pull_as_its_own_kind(tmp_path: Path) -> None:
     assert dmr.permit.npdes_id == "OH0027049"
     assert dmr.discharge_summary.n_flow_months == 12
     assert len(dmr.flow_monthly) == 1
+
+
+@pytest.mark.parametrize(
+    "site,rel,npdes_id",
+    [
+        ("troy-piqua", "troy-piqua/wwtp-oh0027049.dmr.yaml", "OH0027049"),
+        ("fort-wayne", "fort-wayne/wwtp-in0032191.dmr.yaml", "IN0032191"),
+        ("sidney", "sidney/wwtp-oh0027421.dmr.yaml", "OH0027421"),
+    ],
+)
+def test_load_corpus_loads_every_committed_dmr_pull(site: str, rel: str, npdes_id: str) -> None:
+    """Every committed ECHO DMR pull validates and loads into dmr_records, not permits (#1492)."""
+    settings = Settings(data_dir=REPO_ROOT / "data", site=site)
+    corpus = load_corpus(settings)
+    dmr_by_rel = dict(corpus.dmr_records)
+    assert rel in dmr_by_rel
+    assert rel not in dict(corpus.permits)
+    assert dmr_by_rel[rel].permit.npdes_id == npdes_id
 
 
 def test_load_corpus_empty(tmp_path: Path) -> None:
