@@ -28,15 +28,8 @@ The Lima system is one closed loop on two rivers:
 At design low flow the receiving streams carry less than the effluent they
 receive — the discharges are effectively undiluted.
 
-**A second campus pathway — stormwater to Pike Run.** Distinct from the FM-2 *process*
-discharge above (routed to Lima's WWTP), the campus's **stormwater** leaves the site via a
-constructed **BOSC Storm Outfall** channel that discharges to **Pike Run** — the loop's most
-flow-starved tributary (7Q10 **0.03 cfs**, already shown undiluted by the American Bath WWTP).
-Per the roundabout/outfall **SWP3** (Ohio EPA eDoc 4091286; operator George J. Igel & Co.,
-engineer WSP USA; prepared 2026-04-16) `[verified: document]`, the site drains east-to-west by
-subsurface tile and the outfall channel terminates at Pike Run. That SWP3 documents *construction*
-disturbance (5.71 ac), not a continuous low-flow discharge, so the pathway is recorded as a
-receiving-water fact, not added to the routed mass balance below.
+
+**A second campus pathway — stormwater to Pike Run.** Distinct from the FM-2 *process* discharge above (routed to Lima's WWTP), the campus's **stormwater** leaves the site via a constructed **BOSC Storm Outfall** channel that discharges to **Pike Run** — the loop's most flow-starved tributary (7Q10 **0.03 cfs**, already shown undiluted by the American Bath WWTP). Per the roundabout/outfall **SWP3** (Ohio EPA eDoc 4091286; operator George J. Igel & Company, Inc., engineer WSP USA Inc.; prepared 2026-04-16) `[verified: document]`, the site drains east-to-west by subsurface tile and the outfall channel terminates at Pike Run. That SWP3 documents *construction* disturbance (5.71 ac), not a continuous low-flow discharge, so the pathway is recorded as a receiving-water fact, not added to the routed mass balance below.
 
 
 **The cited 7Q10 is independently reproducible.** The denominator above is a single number read off a fact sheet. Computing it ourselves from the raw record — the USGS daily-mean discharge at the **same gage the fact sheet names** (NWIS 04187100, Ottawa River at Lima OH, 1988-09-30..2024-12-31, 24 complete climatic years) — lands on it. Annual n-day minima by climatic year, fit with log-Pearson III and bracketed by the non-parametric Weibull plotting position `[inference: derived]`:
@@ -53,7 +46,7 @@ The computed **7Q10 is 0.2387 cfs** against the cited **0.2 cfs** — agreement 
 
 ### The whole loop at design low flow: a routed mass balance
 
-The screen above reads each plant against its *own* tributary in isolation. Routing the cited headwater 7Q10s, the document-cited WWTP/campus discharges, and the cooling draw through the cited confluence graph (`data/reference/hydrology/network.yaml`) shows the system picture the per-stream rows miss. At design low flow the loop's streams carry, in total, only **1.01 cfs** of *natural* low flow (Ottawa 0.2 + Dug Run 0.78 + Pike Run 0.03 `[verified: document]`). The three county WWTP discharges alone add **8.82 cfs** of treated effluent — **8.7x** the streams' entire natural low flow, with no data center in the picture. The river at design low flow is effluent, not stream. The campus then adds its own documented **3.87 cfs** FM-2 industrial discharge (routed via Lima's sewer + WWTP), taking the Ottawa leaving Lima to **93% treated effluent** — a *conservative* floor, since Lima WWTP's own larger municipal discharge has no cited design flow in the corpus and is not counted.
+The screen above reads each plant against its *own* tributary in isolation. Routing the cited headwater 7Q10s, the document-cited WWTP/campus discharges, and the cooling draw through the cited confluence graph (`data/reference/hydrology/network.yaml`) shows the system picture the per-stream rows miss. At design low flow the loop's streams carry, in total, only **1.01 cfs** of *natural* low flow (Ottawa 0.2 `[verified: document]` + Dug Run 0.78 `[verified: document]` + Pike Run 0.03 `[verified: document]`). The three county WWTP discharges alone add **8.82 cfs** of treated effluent — **8.7x** the streams' entire natural low flow, with no data center in the picture. The river at design low flow is effluent, not stream. The campus then adds its own documented **3.87 cfs** FM-2 industrial discharge (routed via Lima's sewer + WWTP), taking the Ottawa leaving Lima to **93% treated effluent** — a *conservative* floor, since Lima WWTP's own larger municipal discharge has no cited design flow in the corpus and is not counted.
 
 
 | reach | natural (cfs) | effluent (cfs) | routed (cfs) | deficit (cfs) |
@@ -65,24 +58,64 @@ The screen above reads each plant against its *own* tributary in isolation. Rout
 | American Bath WWTP outfall | 0.00 | 2.32 | 2.32 | — |
 | Shawnee II WWTP outfall | 0.00 | 4.64 | 4.64 | — |
 | BOSC FM-2 industrial discharge (via Lima sewer + Lima WWTP) | 0.00 | 3.87 | 3.87 | — |
-| Lima WTP intake + data-center cooling draw | 0.00 | 0.00 | 0.00 | 4.65 |
+| Lima supply abstraction reach (cooling draw — unbuffered bound) | 0.00 | 0.00 | 0.00 | 4.65 |
 | Dug Run -> Ottawa River | 0.78 | 1.86 | 2.64 | — |
 | Pike Run -> Ottawa River | 0.03 | 2.32 | 2.35 | — |
 | Ottawa River at Lima (assimilative reach / USGS 04187100) | 0.81 | 12.69 | 13.50 | — |
-| Ottawa River -> Auglaize -> Maumee | 0.81 | 12.69 | 13.50 | — |
+| Ottawa River -> Auglaize confluence -> Maumee | 2.72 | 12.69 | 15.41 | — |
 
-Under buildout the cooling consumptive draw of **4.85 cfs** is **4.8x** the loop's entire natural low flow. It consumes the Ottawa mainstem's entire design low flow — it runs **dry** at the intake, leaving a **3.84 cfs** shortfall the river cannot supply. The routed balance conserves mass (base + gains - applied loss reconciles to the 13.50 cfs outlet) `[inference: derived]`. The order-invariant system totals are the robust result; the per-reach values depend on the cited-but-approximate confluence order and are screening-grade.
+**Unbuffered bound.** *If* the cooling load of **4.85 cfs** were pumped straight from the Ottawa at 7Q10 (**4.8x** the loop's entire natural low flow) it consumes the Ottawa mainstem's entire design low flow — it runs **dry** at the intake, leaving a **3.84 cfs** shortfall the river cannot supply. But that is **not** how Lima's supply works — the city draws treated water from ~15 billion gallons of off-stream reservoir storage (see the next section), so this is a worst-case bound, not the operating reality. The routed balance still conserves mass (base + gains - applied loss reconciles to the 15.41 cfs outlet) `[inference: derived]`. The order-invariant system totals are the robust result; the per-reach values depend on the cited-but-approximate confluence order and are screening-grade.
 
 
-**Industrial toxic dischargers on the same reaches.** The municipal screen above covers the three WWTPs; the *industrial* side is larger. Of the 12 EPA-RSEI facilities that release toxics to water in the county, **3** sit on a near-undiluted reach. Placing each on its receiving stream (ECHO-cited where available, else inferred from the Ottawa River industrial corridor) and reading it against the same cited 7Q10:
+**Downstream: the Auglaize confluence.** The outlet is the Ottawa's actual receiving water, not a bare label. The Auglaize's own 1.91 cfs 7Q10 `[inference: derived]` (LP3 7Q10 from USGS 04186500 (Auglaize River near Fort Jennings OH), 44 climatic years 1980-2024 (gage value; screening proxy for the discharge reach)) joins here, diluting the **13.50 cfs** routed Ottawa flow (mostly treated effluent) arriving from Lima. ❌ At **0.14:1** dilution the confluence screens **violation** by the same band as the per-plant checks above — the Auglaize's own flow is dwarfed by what the loop sends it. The final flow leaving toward the Maumee is **15.41 cfs**, **82%** treated effluent — down from **93%** at the Lima gage, so the Auglaize genuinely dilutes the loop's discharge without resolving the underlying effluent-dominance. The Fort Jennings gage sits a few miles below the real confluence with more drainage area, so this is an *optimistic* proxy — it can only overstate the Auglaize's flow at the actual joining point.
+
+
+### The supply side: off-stream storage, not a 7Q10 intake
+
+The screen above reads the campus draw as if it depleted the Ottawa at design low flow. It does not — and the real mechanism is a *stronger* finding. Lima's raw water is held in **5 upground (off-stream) reservoirs totalling ~14.4 billion gallons** (Auglaize River 10.1 BG, Ottawa River 4.3 BG), filled by pumping from **both** the Auglaize (west) and the Ottawa (east) through four pump stations **at high flow** `[verified: document]`. So Lima never withdraws at the 7Q10 — it lives off stored water, and the binding low-flow constraint is reservoir **drawdown**, not intake depletion.
+
+
+| reservoir | built | capacity | source river |
+|---|--:|--:|---|
+| Lost Creek Reservoir | 1918 | 893 MG | Ottawa River |
+| Metzger Reservoir | 1946 | 1,200 MG | Ottawa River |
+| Ferguson Reservoir | 1958 | 2,200 MG | Ottawa River |
+| Bresler Reservoir | 1970 | 4,920 MG | Auglaize River |
+| Williams Reservoir | 2012 | 5,200 MG | Auglaize River |
+
+The data center draws **treated** municipal water like any large customer, so its **3.92 MGD** makeup is an added draw on this shared storage — **20.7%** of the **18.92 MGD** the plant would then produce (against ~15 MGD today, 30 MGD rated) `[inference: derived]`. At that draw the zero-refill **drought reserve falls from 960.9 to 761.8 days (-199.1)**. Its evaporative **3.136 MGD** consumptive is a permanent loss to the basin — the returns (FM-2/FM-1) go *downstream* to the Ottawa via the WWTPs, never back to the reservoirs, so the full makeup draws storage down. This is a far harder number to rebut than the 7Q10 multiple: the campus alone is a fifth of the city's water production, drawn from a finite reserve that must be refilled by high-flow pumping from two rivers whose yield is lowest in exactly the season the draw is highest. Quantifying that refill against the Auglaize (USGS 04185750) and Ottawa (04187100) flow records is the next increment.
+
+
+### Can the rivers refill the reservoirs — even in drought?
+
+Off-stream storage only helps if high-flow pumping keeps it filled. Two questions, two answers from the gauged record (Auglaize at Fort Jennings + Ottawa at Lima, 1988-09-30—2024-12-31). **In a normal year, refill is amply adequate**: the two rivers' combined mean flow (**451.3 cfs**) is ~**15.4x** the city+campus demand `[verified: connector]`. **The binding case is drought**: the Ottawa reaches 0 cfs and the Auglaize sits below the city+campus draw ~25.8% of the time, so the system draws down storage.
+
+
+The **sequent-peak storage requirement** — the active storage the worst gauged drawdown calls on at a constant demand — measures the drought margin and the campus's bite:
+
+
+| demand scenario | storage the worst drought needs | of the 14.4 BG | worst drawdown |
+|---|--:|--:|---|
+| baseline city (15 MGD) | 3,508 MG | 24.3% | ~251 d from 1999-07-05 |
+| +campus (central) (18.92 MGD) | 4,630 MG | 32.1% | ~310 d from 1999-07-05 |
+| +campus (high bound) (27.5 MGD) | 7,696 MG | 53.4% | ~337 d from 1999-06-22 |
+
+The worst gauged drought (the 1999 event, a ~310-day drawdown) is survived with large margin — but the campus raises the storage it calls on from **24.3% to 32.1%** of capacity (**+1,122 MG**, and ~59 more days of drawdown). At the high cooling bound (27.5 MGD) it rises to **53.4%**. `[inference: derived]` So refill is adequate and the system survives the historical record — but the campus measurably erodes the buffer, and **a drought longer or deeper than 1988—2024 is the residual exposure** this screen cannot bound.
+
+
+The estimate remains *optimistic* (the Auglaize gage is downstream of the intakes; no pump-rate cap), so the real margin is still somewhat tighter than shown. A first-order reservoir-evaporation sink is folded in — FAO-56 ET0 over the 1603-acre reservoir surface, ~**5.095 MGD** mean (peaking at 8.8479 MGD in JUL) `[derived]`, which tightens the drought bound above.
+
+
+**Industrial toxic dischargers on the same reaches.** The municipal screen above covers the three WWTPs; the *industrial* side is larger. Of the 13 EPA-RSEI facilities that release toxics to water in the county, **3** sit on a near-undiluted reach. Placing each on its receiving stream (ECHO-cited where available, else inferred from the Ottawa River industrial corridor) and reading it against the same cited 7Q10:
 
 
 | facility | RSEI Score | to water (lb) | receiving | 7Q10 | screen mg/L |
 |---|--:|--:|---|--:|--:|
-| ❌ INEOS USA LLC | 23,483,255 | 706,520 | Ottawa River * | 0.2 cfs | ~66.492 |
-| ❌ LIMA REFINING CO | 1,899,615 | 1,749,576 | OTTAWA RIVER `[verified: ECHO]` | 0.2 cfs | ~164.656 |
-| ❌ PCS NITROGEN OHIO LP | 532,740 | 2,375,516 | Ottawa River * | 0.2 cfs | ~274.375 |
-| ⚠️ EQUILON ENTERPRISES LLC LIMA SOUTH TERMINAL | 5,942 | 329 | Ottawa River * | 0.2 cfs | ~0.139 |
+| ❌ INEOS NITRILES USA LLC | 39,726,351 | 706,520 | Ottawa River * | 0.2 cfs | ~51.301 |
+| ❌ LIMA REFINING CO | 3,300,621 | 1,801,064 | OTTAWA RIVER `[verified: ECHO]` | 0.2 cfs | ~130.776 |
+| ❌ PCS NITROGEN OHIO L.P. | 1,996,618 | 3,108,267 | Ottawa River * | 0.2 cfs | ~263.307 |
+| ⚠️ U S ARMY JOINT SYSTEMS MANUFACTURING CENTER | 1,248,109 | 160 | Ottawa River * | 0.2 cfs | ~0.016 |
+| ⚠️ EQUILON ENTERPRISES LLC LIMA SOUTH TERMINAL | 7,964 | 329 | Ottawa River * | 0.2 cfs | ~0.139 |
 
 `*` = receiving water inferred from the corridor coordinate cluster, **not** independently cited. The screen mg/L is a coarse `[inference: derived]` value (annual reported water pounds, fully mixed at the 7Q10) — an order-of-magnitude screen, not a measured concentration.
 
@@ -131,22 +164,22 @@ Lake Erie nutrient budget.
 
 ## 3. Stormwater: paving the corridor
 
-**Climate baseline (NASA POWER).** The Lima point averages **~997 mm/yr** of precipitation (corrected), peaking in May, at a mean annual temperature of **10.7 °C** `[reference: NASA POWER climatology]`. The satellite climate *normal* sets the long-run water budget; the design storm below is the NOAA Atlas-14 *extreme* the corridor must detain — the two are complementary.
+**Climate baseline (NASA POWER).** The Lima point averages **~996 mm/yr** of precipitation (corrected), peaking in May, at a mean annual temperature of **10.7 °C** `[reference: NASA POWER climatology]`. The satellite climate *normal* sets the long-run water budget; the design storm below is the NOAA Atlas-14 *extreme* the corridor must detain — the two are complementary.
 
 
-**Reference ET (FAO-56 Penman-Monteith).** Atmospheric water *demand* runs **~1,085 mm/yr** of reference ET0, computed from the same POWER normals (temperature, humidity, wind, solar) `[derived: FAO-56 Penman-Monteith]`. Net of precipitation that is **-88 mm/yr** — and ET0 *exceeds* rainfall across the **May-Oct** growing season, so summer soil moisture, pond evaporation, and any consumptive cooling draw compete for water in the months the Ottawa is already near its low-flow floor (§4).
+**Reference ET (FAO-56 Penman-Monteith).** Atmospheric water *demand* runs **~1,085 mm/yr** of reference ET0, computed from the same POWER normals (temperature, humidity, wind, solar) `[derived: FAO-56 Penman-Monteith]`. Net of precipitation that is **-89 mm/yr** — and ET0 *exceeds* rainfall across the **May-Oct** growing season, so summer soil moisture, pond evaporation, and any consumptive cooling draw compete for water in the months the Ottawa is already near its low-flow floor (§4).
 
 A 25-yr 24-hr design storm (4.25 in `[inference: assumption]`) over the 340-ac footprint `[verified]`:
 
 
 | case | curve number | peak (cfs) | volume (ac-ft) |
 |---|---|---|---|
-| pre-development (cropland) | 85 | 373 | 75 |
-| post-development (impervious) | 94 | 482 | 100 |
+| pre-development (cropland) | 85 | 373 | 77 |
+| post-development (impervious) | 87 | 431 | 81 |
 
-- 25-yr 24-hr storm (4.25 in): peak 373 -> 482 cfs (+109, CN 85 -> 94)
+- 25-yr 24-hr storm (4.25 in): peak 373 -> 431 cfs (+58, CN 85 -> 87, Tc 1 -> 0.78 hr)
 
-- runoff volume 75 -> 100 ac-ft (+25 ac-ft to detain for pre-development control)
+- runoff volume 77 -> 81 ac-ft (+4 ac-ft to detain for pre-development control)
 
 
 **The footprint sits just outside the FEMA floodplain — but only just.**
@@ -165,7 +198,7 @@ The roundabout program budgets **$1,068,530** of drainage across 6 OPC sub-estim
 
 | sub-estimate | drainage $ | breakdown | sized $ | lump-sum $ |
 |---|--:|---|--:|--:|
-| Cole Street / Diller Road Roundabout | 120,440 | itemized | 20,440 | 100,000 |
+| Cole Street / Diller Road Roundabout | 120,440 | itemized | ~20,440 | 100,000 |
 | Cole Street / Bluelick Road Roundabout | 146,440 | *subtotal only* | — | — |
 | Primary Access Entrance to Project Site (Roundabout) | 208,200 | *subtotal only* | — | — |
 | Cole Street / West Street (SR 115) Roundabout | 156,010 | *subtotal only* | — | — |
@@ -188,7 +221,7 @@ This is a design-basis / scope-completeness reading, not a sizing of the roundab
 
 
 
-## 4. Scenario: data-center cooling vs the Ottawa's low flow
+## 4. Scenario: data-center cooling vs the Ottawa River's low flow
 
 The cooling demand is **sourced**, derived from disclosed campus data by two methods:
 
@@ -204,7 +237,7 @@ They bracket the consumptive demand at **3.14-10 MGD** (FM-2 is not purely cooli
 | baseline | 0 MGD | 0 | 0.00 cfs `[inference: derived]` |
 | buildout | 3.92 MGD | 0.8 | 4.85 cfs `[inference: derived]` |
 
-Buildout adds **4.85 cfs** of net consumptive draw — **24.3x** the Ottawa River's cited 7Q10 (0.2 cfs). At design low flow the Ottawa nearly dries (1Q10 = 0 cfs); a data center's cooling draw competes for water the river
+Buildout adds **4.85 cfs** of net consumptive draw — **24.3x** the Ottawa River's cited 7Q10 (0.2 cfs). At design low flow the Ottawa River nearly dries (1Q10 = 0 cfs); a data center's cooling draw competes for water the river
 does not have — even the low estimate is tens of times the 7Q10.
 
 
