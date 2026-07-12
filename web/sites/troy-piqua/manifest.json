@@ -2,16 +2,16 @@
   "site": "troy-piqua",
   "bundle_version": "1.0.0",
   "contract_version": "1.24.0",
-  "generated_at": "2026-07-08T21:16:28+00:00",
+  "generated_at": "2026-07-12T12:07:02+00:00",
   "feed_count": 23,
-  "row_total": 63,
+  "row_total": 66,
   "readiness": {
     "tier": "backdrop",
     "domains": {
       "backdrop": "live",
       "facility": "absent",
       "places": "absent",
-      "record": "absent",
+      "record": "seeded",
       "story": "absent"
     }
   },
@@ -22,7 +22,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 1
     },
     {
       "name": "timeline",
@@ -62,7 +62,7 @@
       "media_type": "application/json",
       "schema": "schemas/concepts.schema.json",
       "kind": "collection",
-      "count": 6
+      "count": 7
     },
     {
       "name": "places",
@@ -182,7 +182,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 44
+      "count": 45
     },
     {
       "name": "catalog-index",
