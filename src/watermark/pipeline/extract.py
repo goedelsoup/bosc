@@ -41,6 +41,8 @@ from watermark.models import (
     EpaExtraction,
     EpaPermitAction,
     Estimate,
+    NoticeExtraction,
+    NoticeOfCommencement,
     NpdesExtraction,
     NpdesPermit,
     OPCMeta,
@@ -353,6 +355,7 @@ _SOS_DPI = 200
 _EPA_DPI = 150
 _WETLAND_DPI = 200
 _ENGINEERING_DPI = 200
+_NOTICE_DPI = 200
 
 DEED_INSTRUCTIONS = """\
 You are reading a recorded land instrument (a deed, easement, or similar) from a
@@ -952,6 +955,81 @@ def extract_sanitary(doc: SourceDocument, **kwargs: object) -> EngineeringExtrac
     return extract_engineering(doc, kind="sanitary", **kwargs)  # type: ignore[arg-type]
 
 
+NOTICE_INSTRUCTIONS = """\
+You are reading an Ohio R.C. 1311.04 "Notice of Commencement" — a mechanic's-lien
+priority filing recorded by a property owner/lessee, NOT a deed. The page images
+are authoritative; the OCR text layer may be garbled. Read only the substantive
+form and its notary block (an attached Exhibit re-recording prior deeds, if any,
+is out of scope for this read). Record into the tool:
+  * instrument_no; recording_date (ISO if legible) — from the recorder's stamp.
+  * project_name; site_address; legal_description: item 1's project name/location
+    and a short description summary (do NOT transcribe a full metes-and-bounds).
+  * building_footprint_sf: the building footprint square footage if item 1 states
+    one; leave null if not stated.
+  * parcel_ids: every APN/parcel number listed in item 1, exactly as printed.
+  * improvement_description: item 2, verbatim or a close paraphrase.
+  * owner_lessee: item 3 — name, address, and capacity of the owner, part owner,
+    or lessee contracting for the improvement.
+  * fee_owner: item 4, only if stated as different from owner_lessee (else null).
+  * designee: item 5, only if stated as different from owner_lessee (else null).
+  * original_contractors: item 6 — one entry per contractor, each as
+    "Name, address, phone" exactly as printed.
+  * contract_execution_date: item 7, ISO yyyy-mm-dd.
+  * lending_institutions: item 8; empty list if "NONE"/not applicable.
+  * surety: item 9, verbatim (e.g. "None Required").
+  * notarized_date: the date sworn/subscribed before the notary (not the notary's
+    commission expiration date).
+  * preparer: the "This Instrument Prepared By" name; county.
+Rules: figures and names come from the IMAGE; if a field is illegible give your
+best read AND add a warning naming it; never invent a party, parcel, or figure;
+leave a field null/empty rather than guessing; set confidence.
+"""
+
+_NOTICE_SPEC = DocSpec(
+    kind="notice",
+    model=NoticeOfCommencement,
+    extraction_cls=NoticeExtraction,
+    field="notice",
+    instructions=NOTICE_INSTRUCTIONS,
+    dpi=_NOTICE_DPI,
+    text_pages=2,
+    image_pages=2,
+    summary=lambda n: {
+        "project": n.project_name,
+        "footprint_sf": n.building_footprint_sf,
+        "contractors": len(n.original_contractors),
+        "parcels": len(n.parcel_ids),
+    },
+)
+
+
+def extract_notice(
+    doc: SourceDocument,
+    *,
+    extractor: StructuredExtractor | None = None,
+    pdf: PdfDocument | None = None,
+    dpi: int = _NOTICE_DPI,
+    settings: Settings | None = None,
+    text_pages: int = 2,
+) -> NoticeExtraction:
+    """Extract an Ohio R.C. 1311.04 Notice of Commencement (vision-primary, its
+    first pages only — the substantive form + notary block; a re-recorded
+    Exhibit attaching prior deeds, if present, is not re-extracted here)."""
+    return cast(
+        "NoticeExtraction",
+        _extract_doc(
+            _NOTICE_SPEC,
+            doc,
+            extractor=extractor,
+            pdf=pdf,
+            dpi=dpi,
+            settings=settings,
+            text_pages=text_pages,
+            image_pages=text_pages,
+        ),
+    )
+
+
 # Document-level kind dispatch (parallel to the page-level EXTRACTORS above).
 DocumentExtractor = Callable[..., DocExtraction]
 DOC_EXTRACTORS: dict[str, DocumentExtractor] = {
@@ -963,6 +1041,7 @@ DOC_EXTRACTORS: dict[str, DocumentExtractor] = {
     "plan": extract_plan,
     "engineering": extract_engineering,
     "sanitary": extract_sanitary,
+    "notice": extract_notice,
 }
 
 

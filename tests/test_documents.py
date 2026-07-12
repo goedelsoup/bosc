@@ -20,6 +20,8 @@ from watermark.models import (
     DeedExtraction,
     EpaExtraction,
     EpaPermitAction,
+    NoticeExtraction,
+    NoticeOfCommencement,
     NpdesExtraction,
     NpdesPermit,
     SosExtraction,
@@ -28,6 +30,7 @@ from watermark.pipeline.extract import (
     extract_deed,
     extract_document,
     extract_epa,
+    extract_notice,
     extract_npdes,
     extract_sos,
     save_doc_extraction,
@@ -206,6 +209,27 @@ def test_extract_epa_attaches_provenance() -> None:
     assert extraction.kind == "epa"
     assert extraction.action.permit_no == "DSWPTI-260294"
     assert extraction.pages_read == list(range(3))  # text_pages=3 dominates the 1 image page
+
+
+def test_extract_notice_attaches_provenance() -> None:
+    notice = NoticeOfCommencement(
+        project_name="Project BOSC",
+        building_footprint_sf=283497,
+        parcel_ids=["36-1200-03-001.000"],
+        original_contractors=["Turner Construction Company"],
+        contract_execution_date="2025-05-15",
+        instrument_no="202606250006699",
+    )
+    extraction = extract_notice(_doc(), extractor=_FakeExtractor(notice), pdf=_FakePdf(pages=21))  # type: ignore[arg-type]
+    assert isinstance(extraction, NoticeExtraction)
+    assert extraction.kind == "notice"
+    assert extraction.notice.building_footprint_sf == 283497
+    assert extraction.notice.contract_execution_date == "2025-05-15"
+    # notice is vision-primary but reads only its own substantive pages, not an
+    # attached exhibit re-recording prior deeds (#1491) — text_pages=2 dominates
+    # the 21-page source.
+    assert extraction.pages_read == [0, 1]
+    assert extraction.image_pages_read == [0, 1]
 
 
 def test_extract_document_dispatch_and_unknown() -> None:

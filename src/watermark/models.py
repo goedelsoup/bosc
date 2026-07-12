@@ -519,6 +519,42 @@ class WetlandDetermination(_Extracted):
     note: str | None = None
 
 
+class NoticeOfCommencement(_Extracted):
+    """An Ohio R.C. 1311.04 Notice of Commencement (mechanic's-lien-priority filing).
+
+    Filed by the property owner/lessee (not the contractor) to start the
+    notice-of-furnishing clock ahead of construction. Distinct from a
+    :class:`Deed`: it names a project/footprint, an original contractor, and a
+    contract-execution date rather than a conveyance.
+    """
+
+    project_name: str | None = None
+    site_address: str | None = None
+    legal_description: str | None = (
+        None  # item 1's short summary; full metes-and-bounds is a separate Exhibit
+    )
+    building_footprint_sf: Number = None  # stated building footprint, sq ft
+    parcel_ids: StrList = Field(default_factory=list)  # item 1's APN/parcel list
+    improvement_description: str | None = None  # item 2
+    owner_lessee: str | None = (
+        None  # item 3: name/address/capacity of the party contracting for the improvement
+    )
+    fee_owner: str | None = None  # item 4, only if stated as different from owner_lessee
+    designee: str | None = None  # item 5, only if stated as different from owner_lessee
+    original_contractors: StrList = Field(
+        default_factory=list
+    )  # item 6, one entry per contractor as printed
+    contract_execution_date: str | None = None  # item 7, ISO yyyy-mm-dd
+    lending_institutions: StrList = Field(default_factory=list)  # item 8
+    surety: str | None = None  # item 9
+    instrument_no: str | None = None
+    recording_date: str | None = None  # ISO date if legible
+    notarized_date: str | None = None  # date sworn/subscribed before the notary
+    preparer: str | None = None
+    county: str | None = None
+    note: str | None = None
+
+
 class DesignFirm(BaseModel):
     """A firm on a plan's titleblock, with its discipline."""
 
@@ -760,6 +796,10 @@ class EpaExtraction(DocExtraction):
 
 class WetlandExtraction(DocExtraction):
     determination: WetlandDetermination
+
+
+class NoticeExtraction(DocExtraction):
+    notice: NoticeOfCommencement
 
 
 class PlanExtraction(DocExtraction):

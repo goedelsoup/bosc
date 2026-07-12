@@ -147,12 +147,25 @@ this method — the **air permit (PTI P0138965)** groups its emission units in *
 generator/cooling-tower blocks**, corroborating roughly **three halls** — is now
 **committed** ([`permits/4132514.epa.yaml`](../data/extracted/permits/4132514.epa.yaml),
 final PTI; completeness audit §4). But the issued permit gives the emission-unit
-*grouping*, **not a building footprint or floor schedule**, so Method 3 still stays
-the land-area envelope. Method 3 bounds the
-*physical envelope* the
-land could hold, and it sits an order of magnitude above the power method precisely
-because **power, not floor space, is the binding constraint**. Every input is an
-assumption; this is the loosest bracket and is presented as such.
+*grouping*, **not a building footprint or floor schedule**.
+
+**A building footprint is now documented, from a different instrument.** The Allen
+County Recorder **Notice of Commencement** (R.C. 1311.04, Instr. **202606250006699**,
+recorded 2026-06-25) states the building footprint plainly in item 1: **283,497 sf**
+`[verified: document]`
+([`recorder/202606250006699.notice.yaml`](../data/extracted/recorder/202606250006699.notice.yaml)).
+This is the first primary-source floorspace figure for the campus — it does not
+change the calculation above (which still derives floor area from land × an
+assumed coverage fraction, not from this disclosed number) or resolve Method 3's
+other caveats, but the method's own footprint envelope can now be sanity-checked
+against a documented figure rather than an assumption alone: at the low end of the
+coverage-fraction band (0.15) the ~340-ac campus implies **~2.2M sf** of building
+footprint — the disclosed 283,497 sf is one building (the improvement this Notice
+covers), well within that envelope, not the whole campus footprint. Method 3 bounds
+the *physical envelope* the land could hold, and it sits an order of magnitude
+above the power method precisely because **power, not floor space, is the binding
+constraint**. Every input is an assumption; this is the loosest bracket and is
+presented as such.
 
 ## The derived bracket
 

@@ -1,0 +1,74 @@
+doc_id: 202606250006699-34a86679
+source_path: data/documents/recorder/bistrozzi-notices/202606250006699.pdf
+kind: notice
+pages_read:
+- 0
+- 1
+image_pages_read:
+- 0
+- 1
+dpi: 200
+source_text_excerpt: ''
+notice:
+  confidence: high
+  warnings:
+  - Notarized/sworn 2026-01-23 but not recorded until 2026-06-25 — a ~5-month gap
+    between execution and recording.
+  - Item 1's APN list includes 36-1200-02-001.000, which is NOT conveyed by any
+    of the three deeds re-recorded in the attached exhibit (202508130008300,
+    202508130008316, 202508130008312) and does not otherwise appear in the
+    committed corpus as a Bistrozzi conveyance — it surfaces only as the Auditor's
+    parent parcel that 36-1200-02-001.001 (the 25-ac portion actually conveyed by
+    202508130008312 Exhibit C) was split from, and as part of the original 2023
+    Neff PAAC option (data/extracted/aedg/seller-land-packets.land.yaml). Flagged
+    as a possible outstanding deed / corpus gap, not resolved here.
+  - Pages 3-21 (the form's own "Exhibit A" cover, though it actually bundles three
+    separately-recorded deeds) are a re-recording of three ALREADY-COMMITTED
+    Bistrozzi deeds — 202508130008300 (pp.3-12, 7 parcels), 202508130008316
+    (pp.13-16, 1 parcel), and 202508130008312 (pp.17-21, 2 parcels) — confirmed by
+    instrument-number/page-stamp cross-check against data/extracted/recorder/*.deed.yaml.
+    Not independently re-extracted here to avoid double-counting the conveyances;
+    only this notice's own first 2 pages were read.
+  project_name: Project BOSC
+  site_address: W. Bluelick Road, Lima, OH 45801 (near the corner of North Cole
+    Street and W. Bluelick Road)
+  legal_description: Data center site near the corner of North Cole Street and W.
+    Bluelick Road, Lima, Allen County, Ohio; full legal description carried in the
+    attached exhibit (a re-recording of already-committed deeds 202508130008300,
+    202508130008316, and 202508130008312).
+  building_footprint_sf: 283497
+  parcel_ids:
+  - 36-1200-03-001.000
+  - 36-1200-03-001.001
+  - 36-1200-03-001.002
+  - 36-1200-03-001.003
+  - 36-1200-03-001.004
+  - 36-1200-03-001.005
+  - 36-1200-03-001.006
+  - 36-1200-03-002.000
+  - 36-1200-02-001.000
+  - 36-1200-02-001.001
+  - 36-0100-03-002.000
+  improvement_description: Groundwork to build out the facilities including water/septic/electric/and
+    fiber infrastructure. Plus road installation.
+  owner_lessee: 'Bistrozzi LLC, 2801 Centerville Road, Wilmington, DE 19808'
+  fee_owner: null
+  designee: null
+  original_contractors:
+  - 'Turner Construction Company, 66 Hudson Boulevard East, New York, NY 10001,
+    (212) 229-6000'
+  contract_execution_date: '2025-05-15'
+  lending_institutions: []
+  surety: None Required
+  instrument_no: '202606250006699'
+  recording_date: '2026-06-25'
+  notarized_date: '2026-01-23'
+  preparer: Timothy Chadwick
+  county: Allen
+  note: 'Recorded 6/25/2026 1:07 PM, fee $211.00, by Mona S. Losh, Allen County Recorder
+    (T20260005454, V:2026 P:06699); marked "Non-compliant Form / Additional Fee
+    Collected." Notary: Tiffany A. Shriver (comm. expires 2030-12-19). Item 4 (fee
+    owner) and item 5 (designee) both state "Same as above" (i.e. Bistrozzi LLC).
+    Page 1 cites "Ohio G.S. 13-1104" and page 2 cites "section 1311.06 of the Revised
+    Code" — the G.S. cite is almost certainly a boilerplate-form typo for Ohio R.C.
+    1311.04 (Notice of Commencement), the statute this form implements.'

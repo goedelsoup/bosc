@@ -17,6 +17,7 @@ County stormwater permit (SW1225), and the Allen SWCD ESC inspection series.
 
 | Date | Kind | Event | Source |
 |---|---|---|---|
+| 2025-05-15 | contract | Bistrozzi LLC first executes a contract with original contractor Turner Construction Company | `recorder/202606250006699.notice` |
 | 2025-07-02 | wetland-401 | Level-1 isolated-wetland application received (DSW401251760W) | `permits/3788677` |
 | **2025-08-12** | wetland-401 | **Ohio EPA grants** the Level-1 permit (Cat-1, 0.33 ac); fill by 2027-08-12 | `permits/3788677` |
 | 2025-08-18 | wetland-401 | Mitigation Purchase Agreement complete | `permits/3796349` |
@@ -96,6 +97,7 @@ the same corridor's CGP coverage is documented for the outfall.
 
 ## Cross-refs
 
+- [`../../recorder/202606250006699.notice.yaml`](../../recorder/202606250006699.notice.yaml) — Notice of Commencement; item 7's 2025-05-15 contract-execution date, the earliest documented contractual commitment on the record
 - [`bosc-prr-production-2026-06-12-aswcd.response-index.yaml`](bosc-prr-production-2026-06-12-aswcd.response-index.yaml) · [`.analysis.md`](bosc-prr-production-2026-06-12-aswcd.analysis.md) — the ASWCD production (ESC + SW1225)
 - [`../../permits/3788677.epa.yaml`](../../permits/3788677.epa.yaml) · [`/3796349`](../../permits/3796349.epa.yaml) · [`/3949585`](../../permits/3949585.epa.yaml) — the three 401 records
 - [`../../plans/bosc-site-footprint.yaml`](../../plans/bosc-site-footprint.yaml) — the 195/115-ac disturbance footprint (#149)

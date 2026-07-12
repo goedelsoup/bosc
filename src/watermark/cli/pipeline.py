@@ -302,7 +302,10 @@ def extract(
     kind: str = typer.Option(
         "opc",
         "--kind",
-        help="Document kind: opc | deed | npdes | sos | epa | wetland | plan | engineering | sanitary.",
+        help=(
+            "Document kind: opc | deed | npdes | sos | epa | wetland | plan | engineering | "
+            "sanitary | notice."
+        ),
     ),
     profile: str = typer.Option(
         "auto", "--profile", help="OPC format profile id, or 'auto' to detect from the page."
@@ -318,6 +321,7 @@ def extract(
         DeedExtraction,
         EngineeringExtraction,
         EpaExtraction,
+        NoticeExtraction,
         NpdesExtraction,
         PlanExtraction,
         SosExtraction,
@@ -405,6 +409,15 @@ def extract(
                 f"  sheets: {len(r.sheets)}  prepared by: {firms}"
             )
             warns = r.warnings
+        elif isinstance(doc_extraction, NoticeExtraction):
+            n = doc_extraction.notice
+            console.print(
+                f"[bold]Notice of Commencement[/] {n.project_name or '?'} — "
+                f"instr={n.instrument_no or '?'} footprint={n.building_footprint_sf or '?'}sf "
+                f"contractors={n.original_contractors} contract_date={n.contract_execution_date or '?'} "
+                f"parcels={len(n.parcel_ids)} [dim](confidence {n.confidence})[/]"
+            )
+            warns = n.warnings
         else:  # pragma: no cover - defensive
             warns = []
         for warning in warns:

@@ -42,6 +42,7 @@ meta:
     2025-11-10, ~4 weeks BEFORE the earliest documented disturbance (2025-12-08); the "TBD" was a
     recording gap on the SWCD forms, not an absence of coverage.
   prepared_from:
+    - data/extracted/recorder/202606250006699.notice.yaml                      # Notice of Commencement — contract-execution date (item 7)
     - data/extracted/permits/3788677.epa.yaml                                   # 401 Level-1 grant
     - data/extracted/permits/3796349.epa.yaml                                   # 401 mitigation agreement
     - data/extracted/permits/3949585.epa.yaml                                   # 401 Level-2 (incomplete)
@@ -50,10 +51,18 @@ meta:
     - data/extracted/permits/lma1a-npdes-cgp-coverage.epa.yaml                   # the campus coverage record 2GC08468*AG (eff. 2025-11-10) — resolves #143/#154
 
 # ----------------------------------------------------------------------------------------------
-# The ordered record. kind: wetland-401 | stormwater-permit | disturbance | npdes-cgp | governance
+# The ordered record. kind: contract | wetland-401 | stormwater-permit | disturbance | npdes-cgp | governance
 # Dollar/permit/inspection dates are clearly printed on the produced records (high confidence).
 # ----------------------------------------------------------------------------------------------
 events:
+  - date: '2025-05-15'
+    kind: contract
+    event: Bistrozzi LLC first executes a contract with original contractor Turner Construction Company
+    ref: '202606250006699'
+    source: data/extracted/recorder/202606250006699.notice.yaml
+    detail: 'Allen County Recorder Notice of Commencement (R.C. 1311.04), Instr. 202606250006699, item 7: "Date the owner, part owner, or lessee first executed a contract with an original contractor for the improvement: 05/15/2025." Original contractor: Turner Construction Company, 66 Hudson Boulevard East, New York, NY 10001. Notarized 2026-01-23; recorded 2026-06-25 (a ~5-month notarization-to-recording gap).'
+    note: 'The earliest documented contractual commitment on the record — ~6 months before the NOI''s declared 2025-11-03 project start and ~7 months before the first documented disturbance (2025-12-08). A contract-execution date is not itself earth disturbance or a permit trigger; it does not change the NPDES CGP timing conclusion above, which turns on disturbance vs. coverage dates, not contract-execution date.'
+
   - date: '2025-07-02'
     kind: wetland-401
     event: Ohio EPA receives the Level-1 isolated-wetland fill application (PAN) for Project Bosc
@@ -252,6 +261,7 @@ gap_and_followups:
   - 'RESOLVED 2026-06-16 — The BOSC Storm Outfall / Beery-Cole roundabout SWP3 (eDoc 4091286) Appendix A was acquired as companion eDoc 4091289: NOI approved, Ohio EPA Facility Permit Number 2GC08747*AG, effective 2026-04-22 under OHC000006 (Director John Logue). The outfall''s coverage is now end-to-end on the record; this was the parallel thread to the still-open campus #143.'
 
 cross_refs:
+  - data/extracted/recorder/202606250006699.notice.yaml                                          # Notice of Commencement — 2025-05-15 contract-execution date (item 7)
   - data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-12-aswcd.response-index.yaml   # the ASWCD production (ESC + SW1225)
   - data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-12-aswcd.analysis.md           # the production analysis
   - data/extracted/legal/corpus-completeness-audit.md                                            # standing completeness audit
