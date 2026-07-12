@@ -99,7 +99,7 @@ upper_auglaize_tmdl:
     rows:
       - {facility: 'Spencerville WWTP', npdes: '2PC00000', tp_wla: 621.7, unit: kg/year}
       - {facility: 'Uniopolis WWTP', npdes: '2PA00054', tp_wla: 55.3, unit: kg/year}
-  source_url: "epa.ohio.gov/static/Portals/35/tmdl/UpperAuglaizeFinalTMDL.pdf"
+  source_url: "https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/tmdl/UpperAuglaizeFinalTMDL.pdf"
   citation: >-
     Ohio EPA, Maumee Watershed Nutrient TMDL (final, 2023), Appendix 5 "Near-Field TMDL Reports in
     the Maumee Watershed", pp. A5-1..A5-3 (narrative) and Table A5.1 (facility WLAs) --
