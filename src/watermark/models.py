@@ -697,25 +697,34 @@ class DmrDischargeSummary(BaseModel):
 
 
 class DmrFlowSample(BaseModel):
-    """One reported monthly flow value for the primary (continuous-discharge) outfall."""
+    """One reported monthly flow value for the primary (continuous-discharge) outfall.
+
+    Every field is a key ``dmr_document()`` always emits, so each is required (an
+    empty dict must not silently validate as a row) — but a value can genuinely be
+    ``None`` (e.g. an unparseable ECHO period, a no-discharge month), so the *type*
+    stays optional. Mirrors the connector's own ``DmrRow`` (#1492 review).
+    """
 
     model_config = ConfigDict(extra="allow")
 
-    period_end: str | None = None
-    value_mgd: float | None = None
-    stat_base: str | None = None
+    period_end: str | None
+    value_mgd: float | None
+    stat_base: str | None
 
 
 class DmrExceedance(BaseModel):
-    """One ECHO-flagged effluent exceedance row."""
+    """One ECHO-flagged effluent exceedance row.
+
+    See :class:`DmrFlowSample` — required keys, optional values.
+    """
 
     model_config = ConfigDict(extra="allow")
 
-    period_end: str | None = None
-    value: float | None = None
-    unit: str | None = None
-    limit: float | None = None
-    exceedance_pct: float | None = None
+    period_end: str | None
+    value: float | None
+    unit: str | None
+    limit: float | None
+    exceedance_pct: float | None
 
 
 class DmrExtraction(BaseModel):
@@ -734,8 +743,11 @@ class DmrExtraction(BaseModel):
     meta: DmrMeta
     permit: DmrPermit
     discharge_summary: DmrDischargeSummary
-    flow_monthly: list[DmrFlowSample] = Field(default_factory=list)
-    exceedances: list[DmrExceedance] = Field(default_factory=list)
+    # Required, not defaulted: `dmr_document()` always writes both keys (an empty list
+    # for a window with no rows/exceedances) — a missing key means a truncated or hand-
+    # edited artifact, which should fail validation rather than silently read as empty.
+    flow_monthly: list[DmrFlowSample]
+    exceedances: list[DmrExceedance]
 
 
 class SosExtraction(DocExtraction):

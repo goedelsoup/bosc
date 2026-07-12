@@ -102,9 +102,22 @@ def _classify(data: Any) -> str | None:
     if "permit" in data:
         # Both a document extraction (NpdesExtraction, read from a scanned PDF) and an
         # ECHO DMR effluent-record pull (`watermark dmr`, a derived API summary) key a
-        # top-level `permit:` block — but only the DMR pull also carries
-        # `discharge_summary:`, and the two shapes are otherwise disjoint (#1492).
-        return "npdes_dmr" if "discharge_summary" in data else "npdes"
+        # top-level `permit:` block. Require the full DMR shape (a top-level `meta:`, a
+        # `permit:` mapping carrying `npdes_id`/`window`, and a `discharge_summary:`
+        # mapping) before routing to the DMR kind — a looser check (e.g. bare
+        # `"discharge_summary" in data`) could misroute a document extraction that
+        # happens to carry an extra `discharge_summary` key, which would then fail
+        # DmrExtraction validation and land right back in the silently-dropped bug this
+        # discriminator exists to fix (#1492).
+        permit_block = data.get("permit")
+        is_dmr_pull = (
+            "meta" in data
+            and isinstance(permit_block, dict)
+            and "npdes_id" in permit_block
+            and "window" in permit_block
+            and isinstance(data.get("discharge_summary"), dict)
+        )
+        return "npdes_dmr" if is_dmr_pull else "npdes"
     if "filing" in data:
         return "sos"
     if "action" in data:
