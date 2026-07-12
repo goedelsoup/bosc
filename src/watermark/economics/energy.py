@@ -133,7 +133,10 @@ def derive_demand_pressure(
         demand_share_pct=ProvenancedValue.derived(
             round(share_pct, 2),
             "percent",
-            citation=f"campus {consumption_gwh:.0f} GWh / {costs.area_name} retail {sales_gwh:.0f} GWh",
+            # Cite the same shown (1-decimal-rounded) consumption figure as
+            # ``annual_consumption_gwh``/``households_equivalent`` — not the raw unrounded
+            # value — so the three citations agree on one reproducible number.
+            citation=f"campus {consumption_shown:g} GWh / {costs.area_name} retail {sales_gwh:.0f} GWh",
         ),
         avg_household_kwh_yr=ProvenancedValue.assume(
             _AVG_HOUSEHOLD_KWH_YR, "kWh/yr", why=_HOUSEHOLD_CITE
