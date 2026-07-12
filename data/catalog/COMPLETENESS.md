@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-07-12T21:44:21.023219+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-07-12T23:18:59.260471+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
-- **107** catalogued datasets — **106** reviewed.
-- **107** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **109** catalogued datasets — **108** reviewed.
+- **109** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -37,6 +37,7 @@ Snapshot reconciled: **2026-07-12T21:44:21.023219+00:00**. Regenerate with `wate
 | extracted | regulatory | 1 | 1 | 0 | 0 |
 | extracted | shawnee-township | 1 | 1 | 0 | 0 |
 | extracted | sidney | 2 | 2 | 0 | 0 |
+| extracted | toledo | 1 | 1 | 0 | 0 |
 | extracted | troy-piqua | 2 | 2 | 0 | 0 |
 | extracted | urbana | 1 | 1 | 0 | 0 |
 | extracted | van-wert | 1 | 1 | 0 | 0 |
@@ -57,7 +58,7 @@ Snapshot reconciled: **2026-07-12T21:44:21.023219+00:00**. Regenerate with `wate
 | reference | findlay-gis | 1 | 1 | 0 | 0 |
 | reference | gleif | 1 | 1 | 0 | 0 |
 | reference | greenops | 5 | 5 | 0 | 0 |
-| reference | hydrology | 8 | 8 | 0 | 0 |
+| reference | hydrology | 9 | 9 | 0 | 0 |
 | reference | lima-gis | 1 | 1 | 0 | 0 |
 | reference | lsc | 1 | 1 | 0 | 0 |
 | reference | network | 1 | 1 | 0 | 0 |
@@ -93,7 +94,7 @@ Snapshot reconciled: **2026-07-12T21:44:21.023219+00:00**. Regenerate with `wate
 | sandusky | 41 | 28 | 13 |
 | sidney | 45 | 39 | 6 |
 | springfield | 42 | 36 | 6 |
-| toledo | 43 | 36 | 7 |
+| toledo | 45 | 38 | 7 |
 | troy-piqua | 45 | 40 | 5 |
 | urbana | 43 | 38 | 5 |
 | van-wert | 45 | 39 | 6 |

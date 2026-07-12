@@ -6,6 +6,13 @@ Per-site onboarding tree for the Toledo watershed point (basin: maumee), scaffol
 
 `watermark onboard toledo` over the Toledo `SiteProfile` (reach connectors: NWIS / NOAA Atlas-14 / SSURGO / NASA-POWER).
 
+## Event reads
+
+- `napoleon-spill/waterville-monitor-read.md` — the Maumee-at-Waterville (USGS 04193500)
+  continuous-monitor read against the Napoleon / Huston Creek fertilizer spill (#1498, parent
+  #1497). Machine-readable peer: `reference/hydrology/toledo/waterville-spill-monitor-read.yaml`
+  (`watermark waterville-monitor`).
+
 ## Known gaps & caveats
 
 - Onboarding seed — **review every value against a cited source before promotion** (`web/src/lib/sites.ts` `status`/`selectable`, parity-gated).

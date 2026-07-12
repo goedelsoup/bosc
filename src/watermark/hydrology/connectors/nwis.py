@@ -10,12 +10,17 @@ two ways:
   ``derived`` cross-check on the low-flow condition. **This is not the regulatory
   7Q10** (a fitted 7-day/10-year statistic); the cited 7Q10 lives in
   :mod:`watermark.hydrology.lowflow`. This value only sanity-checks it.
+* :func:`fetch_instantaneous_series` — the *full* sub-daily record per parameter over
+  a date window (discharge plus the water-quality sondes), for reading a continuous
+  monitor against an event timeline (e.g. the Maumee-at-Waterville gage through the
+  Napoleon / Huston Creek spill, #1498).
 
 Synchronous (``httpx.Client``) to match BOSC's otherwise-sync pipeline layer.
 """
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from typing import Any, cast
 
 import httpx
@@ -27,6 +32,9 @@ from watermark.hydrology.model import ProvenancedValue
 
 DISCHARGE_CFS = "00060"
 GAGE_HEIGHT_FT = "00065"
+DISSOLVED_OXYGEN_MG_L = "00300"
+TURBIDITY_FNU = "63680"
+PHYCOCYANIN_UG_L = "32319"  # fPC — cyanobacterial pigment fluorescence (NOT 32316 = chlorophyll-a)
 DAILY_MEAN = "00003"  # NWIS statistic code: daily mean (the Daily Values service)
 
 
@@ -43,6 +51,35 @@ class NwisReading(BaseModel):
     datetime: str | None
     lat: float | None = None
     lon: float | None = None
+
+
+class InstantaneousSeries(BaseModel):
+    """One gage's full sub-daily record for one parameter over a date window (IV service).
+
+    Parallel ``timestamps`` / ``values`` lists, ascending; timestamps are ISO datetimes
+    with the gage's UTC offset, carried verbatim from NWIS. Unlike
+    :class:`NwisReading` (the latest point only), this is the dense event record a
+    monitor read needs — every 15-minute sonde reading through a spill window.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    site_no: str
+    name: str
+    parameter_cd: str
+    variable_name: str  # NWIS variableName, e.g. "Turbidity, water, unfiltered, ... FNU"
+    unit: str
+    lat: float | None = None
+    lon: float | None = None
+    timestamps: list[str]
+    values: list[float]
+
+    def __len__(self) -> int:
+        return len(self.timestamps)
+
+    def points(self) -> list[tuple[str, float]]:
+        """The (timestamp, value) pairs, no-data already dropped at parse time."""
+        return list(zip(self.timestamps, self.values, strict=True))
 
 
 class DailyDischargeSeries(BaseModel):
@@ -218,6 +255,54 @@ def observed_min_discharge(
         citation=f"NWIS {site_no} min instantaneous discharge over P{days}D (not 7Q10)",
         confidence="low",
     )
+
+
+def fetch_instantaneous_series(
+    site_no: str,
+    *,
+    parameter_cds: Sequence[str],
+    start_date: str,
+    end_date: str,
+    settings: Settings | None = None,
+) -> list[InstantaneousSeries]:
+    """The full sub-daily record per parameter for one gage over a date window.
+
+    One :class:`InstantaneousSeries` per NWIS timeSeries block; parameters the gage
+    doesn't carry are simply absent from the result (never fabricated). No-data
+    points are dropped at parse time (:func:`_series`). Same short-TTL IV caching
+    as :func:`fetch_streamflow` — a window ending "today" keeps growing, so a stale
+    replay would silently truncate the event record.
+    """
+    settings = settings or get_settings()
+    payload = _iv_request(
+        settings,
+        {
+            "sites": site_no,
+            "parameterCd": ",".join(parameter_cds),
+            "startDT": start_date,
+            "endDT": end_date,
+        },
+    )
+    out: list[InstantaneousSeries] = []
+    for ts in payload.get("value", {}).get("timeSeries", []):
+        resolved_site, name, lat, lon, parameter_cd, unit = _site_info(ts)
+        series = sorted(_series(ts))  # ascending by ISO dateTime
+        if not series:
+            continue
+        out.append(
+            InstantaneousSeries(
+                site_no=resolved_site or site_no,
+                name=name,
+                parameter_cd=parameter_cd,
+                variable_name=ts.get("variable", {}).get("variableName", ""),
+                unit=unit,
+                lat=lat,
+                lon=lon,
+                timestamps=[t for t, _ in series],
+                values=[v for _, v in series],
+            )
+        )
+    return out
 
 
 def fetch_daily_discharge(
