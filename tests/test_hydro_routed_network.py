@@ -151,8 +151,9 @@ def test_route_baseline_system_totals(hydro_settings: Settings) -> None:
     # Σ the LOOP's own tributary 7Q10s = Ottawa 0.2 + Dug Run 0.78 + Pike Run 0.03.
     assert net.loop_natural_total(rn) == pytest.approx(1.01, abs=0.001)
     # The system-wide total (#1488) also carries the outlet's Auglaize-confluence gain — a
-    # downstream receiving water's derived 7Q10, not one of the loop's own tributaries.
-    assert rn.natural_total_cfs == pytest.approx(2.92, abs=0.001)
+    # downstream receiving water's derived 7Q10 (a drainage-area-ratio transfer, not the raw
+    # downstream gage value), not one of the loop's own tributaries.
+    assert rn.natural_total_cfs == pytest.approx(2.18, abs=0.001)
     # Effluent dwarfs the LOOP's own natural flow; the loop is mostly treated effluent at low flow.
     assert rn.effluent_total_cfs > 10 * net.loop_natural_total(rn)
     assert rn.outlet_effluent_fraction is not None and rn.outlet_effluent_fraction > 0.5
@@ -166,8 +167,33 @@ def test_route_baseline_system_totals(hydro_settings: Settings) -> None:
     assert sum(all_bases) == pytest.approx(rn.natural_total_cfs, abs=0.001)
     outlet = rn.reach("outlet")
     assert outlet is not None and outlet.base is not None
-    assert outlet.base.value == pytest.approx(1.91, abs=0.001)  # Auglaize derived 7Q10
+    # Auglaize-at-confluence 7Q10: a drainage-area-ratio transfer (1.91 cfs raw Fort Jennings
+    # gage x 0.614 DA ratio), not the raw gage value — see low-flow-7q10.derived.yaml.
+    assert outlet.base.value == pytest.approx(1.17, abs=0.001)
     assert outlet.base.source == "derived"
+
+
+def test_outlet_uses_confluence_transfer_not_raw_downstream_gage(
+    hydro_settings: Settings,
+) -> None:
+    """#1488 review: the raw Fort Jennings gage (04186500) sits BELOW the real confluence and
+    already reflects the Ottawa's own historical contribution, so injecting it directly would
+    double-count the Ottawa (already separately routed through the loop). The outlet must use
+    the drainage-area-ratio TRANSFER entry, not the basin-wide "auglaize river" screening
+    proxy — and the transfer must be strictly smaller than the raw gage value it's netted from."""
+    from watermark.hydrology import basin
+
+    balance = build_water_balance(settings=hydro_settings, live=False)
+    rn = net.route_network(balance, consumptive_cfs=0.0, settings=hydro_settings)
+    outlet = rn.reach("outlet")
+    assert outlet is not None and outlet.base is not None
+
+    lookup = basin.build_low_flow_lookup(settings=hydro_settings)
+    raw_gage = lookup[basin._norm("auglaize river")]
+    assert outlet.base.value < raw_gage.value  # netted-out estimate, not the raw gage
+    assert outlet.base.value == pytest.approx(1.17, abs=0.001)
+    # The basin-wide "auglaize river" proxy (used by other sites' own screens) stays untouched.
+    assert raw_gage.value == pytest.approx(1.91, abs=0.001)
 
 
 def test_outlet_credits_auglaize_dilution_over_the_gage(hydro_settings: Settings) -> None:
@@ -226,8 +252,9 @@ def test_findings_flag_effluent_dominance_and_conservation(hydro_settings: Setti
     by_check = {f.check: f for f in findings}
     assert by_check["effluent-dominance"].ok is False  # effluent dominates -> adverse
     assert by_check["mass-balance-closes"].ok is True
-    # #1488: the outlet's own receiving-water dilution — the Auglaize's 1.91 cfs against the
-    # ~13.7 cfs (mostly effluent) arriving from Lima is itself a violation-band dilution.
+    # #1488: the outlet's own receiving-water dilution — the Auglaize-at-confluence transfer
+    # (1.17 cfs) against the ~13.7 cfs (mostly effluent) arriving from Lima is itself a
+    # violation-band dilution.
     outlet_check = by_check["outlet-receiving-water-dilution"]
     assert outlet_check.ok is False
     assert "violation" in outlet_check.detail
@@ -238,7 +265,7 @@ def test_pipeline_run_network(hydro_settings: Settings) -> None:
 
     baseline, buildout, delta = hydro_stage.run_network(settings=hydro_settings, live=False)
     # System-wide (#1488: includes the outlet's Auglaize gain); the loop's own total is 1.01.
-    assert baseline.natural_total_cfs == pytest.approx(2.92, abs=0.001)
+    assert baseline.natural_total_cfs == pytest.approx(2.18, abs=0.001)
     assert net.loop_natural_total(baseline) == pytest.approx(1.01, abs=0.001)
     assert buildout.consumptive_cfs > net.loop_natural_total(
         baseline

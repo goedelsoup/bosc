@@ -320,9 +320,11 @@ def _render_routed_network(emit: Callable[[str], None], settings: Settings) -> N
         )
 
     # The outlet's own receiving water (#1488): the outlet was previously a bare label that
-    # just repeated the gage's totals. Routed here, the Auglaize's own derived 7Q10 joins as
-    # a base flow, so the outlet row above already carries it — this paragraph explains what
-    # changed and screens the arriving (Ottawa) flow against it with the same dilution band.
+    # just repeated the gage's totals. Routed here, a drainage-area-ratio TRANSFER of the
+    # Auglaize's own flow (not the raw downstream gage — see low-flow-7q10.derived.yaml for
+    # the method) joins as a base flow, so the outlet row above already carries it — this
+    # paragraph explains what changed and screens the arriving (Ottawa) flow against it with
+    # the same dilution band.
     outlet = buildout.reach("outlet")
     if outlet is not None and outlet.base is not None and outlet.inflow_cfs > 0:
         ratio = outlet.base.value / outlet.inflow_cfs
@@ -331,7 +333,10 @@ def _render_routed_network(emit: Callable[[str], None], settings: Settings) -> N
         emit(
             "\n**Downstream: the Auglaize confluence.** The outlet is the Ottawa's actual "
             f"receiving water, not a bare label. The Auglaize's own {outlet.base.value:g} cfs "
-            f"7Q10 `{_tag(outlet.base.source)}` ({outlet.base.citation}) joins here, diluting "
+            f"7Q10 `{_tag(outlet.base.source)}` — a drainage-area-ratio *transfer*, not the raw "
+            "USGS 04186500 (Fort Jennings) gage value, which sits below the confluence and "
+            "already carries the Ottawa's own historical contribution (full method in "
+            "`low-flow-7q10.derived.yaml`) — joins here, diluting "
             f"the **{outlet.inflow_cfs:.2f} cfs** routed Ottawa flow (mostly treated effluent) "
             f"arriving from Lima. {mark} At **{ratio:.2f}:1** dilution the confluence screens "
             f"**{flag}** by the same band as the per-plant checks above — the Auglaize's own "
@@ -339,9 +344,10 @@ def _render_routed_network(emit: Callable[[str], None], settings: Settings) -> N
             f"Maumee is **{outlet.routed_cfs:.2f} cfs**, **{outlet.effluent_fraction:.0%}** "
             f"treated effluent — down from **{gage_fraction:.0%}** at the Lima gage, so the "
             "Auglaize genuinely dilutes the loop's discharge without resolving the underlying "
-            "effluent-dominance. The Fort Jennings gage sits a few miles below the real "
-            "confluence with more drainage area, so this is an *optimistic* proxy — it can only "
-            "overstate the Auglaize's flow at the actual joining point.\n"
+            "effluent-dominance. Even this transfer is a coarse screening estimate — it nets "
+            "out the Ottawa's own drainage area at Lima, not at its actual mouth a few miles "
+            "further downstream — so it likely still slightly *over*-states the Auglaize's "
+            "own contribution.\n"
         )
 
 
