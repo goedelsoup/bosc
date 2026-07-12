@@ -653,6 +653,91 @@ class NpdesExtraction(DocExtraction):
     permit: NpdesPermit
 
 
+class DmrMeta(BaseModel):
+    """Provenance block on an ECHO DMR effluent-record pull (``watermark dmr``)."""
+
+    model_config = ConfigDict(extra="allow")
+
+    subject: str
+    source: str
+    regenerate: str
+    discipline: str
+
+
+class DmrPermit(BaseModel):
+    """The permit identity + reporting window on a DMR pull."""
+
+    model_config = ConfigDict(extra="allow")
+
+    npdes_id: str
+    name: str | None = None
+    permit_type: str | None = None
+    permit_status: str | None = None
+    major_minor: str | None = None
+    snc_status: str | None = None
+    window: str  # "YYYY-MM-DD..YYYY-MM-DD"
+
+
+class DmrDischargeSummary(BaseModel):
+    """The computed receiving-water read: actual flow vs. design, exceedance count."""
+
+    model_config = ConfigDict(extra="allow")
+
+    design_flow_mgd: float | None = None
+    design_flow_cfs: float | None = None
+    primary_outfall: str | None = None
+    n_flow_months: int
+    actual_flow_mean_mgd: float | None = None
+    actual_flow_mean_cfs: float | None = None
+    actual_flow_min_mgd: float | None = None
+    actual_flow_max_mgd: float | None = None
+    flow_pct_of_design: float | None = None
+    cso_outfalls: int
+    reported_exceedances: int
+
+
+class DmrFlowSample(BaseModel):
+    """One reported monthly flow value for the primary (continuous-discharge) outfall."""
+
+    model_config = ConfigDict(extra="allow")
+
+    period_end: str | None = None
+    value_mgd: float | None = None
+    stat_base: str | None = None
+
+
+class DmrExceedance(BaseModel):
+    """One ECHO-flagged effluent exceedance row."""
+
+    model_config = ConfigDict(extra="allow")
+
+    period_end: str | None = None
+    value: float | None = None
+    unit: str | None = None
+    limit: float | None = None
+    exceedance_pct: float | None = None
+
+
+class DmrExtraction(BaseModel):
+    """An ECHO DMR effluent-record pull (``watermark dmr <NPDES_ID> --out ...``).
+
+    A derived API summary, not a document extraction read from a scanned PDF — it
+    carries none of :class:`DocExtraction`'s scan provenance (``doc_id``,
+    ``source_path``, ``kind``, ``dpi``, ...). Both this and :class:`NpdesExtraction`
+    key off a top-level ``permit:`` block, but the shapes are otherwise disjoint;
+    ``pipeline.corpus._classify`` tells them apart by the presence of
+    ``discharge_summary`` (#1492).
+    """
+
+    model_config = ConfigDict(extra="allow")
+
+    meta: DmrMeta
+    permit: DmrPermit
+    discharge_summary: DmrDischargeSummary
+    flow_monthly: list[DmrFlowSample] = Field(default_factory=list)
+    exceedances: list[DmrExceedance] = Field(default_factory=list)
+
+
 class SosExtraction(DocExtraction):
     filing: BusinessFiling
 

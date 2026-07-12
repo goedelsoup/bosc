@@ -21,6 +21,7 @@ from watermark.config import Settings, get_settings
 from watermark.logging import get_logger
 from watermark.models import (
     DeedExtraction,
+    DmrExtraction,
     EpaExtraction,
     Estimate,
     EstimateSection,
@@ -63,6 +64,7 @@ class Corpus:
 
     deeds: list[tuple[str, DeedExtraction]] = field(default_factory=list)
     permits: list[tuple[str, NpdesExtraction]] = field(default_factory=list)
+    dmr_records: list[tuple[str, DmrExtraction]] = field(default_factory=list)
     filings: list[tuple[str, SosExtraction]] = field(default_factory=list)
     actions: list[tuple[str, EpaExtraction]] = field(default_factory=list)
     wetlands: list[tuple[str, WetlandExtraction]] = field(default_factory=list)
@@ -74,6 +76,7 @@ class Corpus:
         return (
             len(self.deeds)
             + len(self.permits)
+            + len(self.dmr_records)
             + len(self.filings)
             + len(self.actions)
             + len(self.wetlands)
@@ -89,15 +92,19 @@ class Corpus:
 def _classify(data: Any) -> str | None:
     """Identify an extraction by its top-level keys (shape, not filename).
 
-    Returns one of ``deed`` / ``npdes`` / ``opc_page`` / ``opc_summary``, or
-    ``None`` for anything that isn't a recognized extraction.
+    Returns one of ``deed`` / ``npdes`` / ``npdes_dmr`` / ``opc_page`` / ``opc_summary``,
+    or ``None`` for anything that isn't a recognized extraction.
     """
     if not isinstance(data, dict):
         return None
     if "deed" in data:
         return "deed"
     if "permit" in data:
-        return "npdes"
+        # Both a document extraction (NpdesExtraction, read from a scanned PDF) and an
+        # ECHO DMR effluent-record pull (`watermark dmr`, a derived API summary) key a
+        # top-level `permit:` block — but only the DMR pull also carries
+        # `discharge_summary:`, and the two shapes are otherwise disjoint (#1492).
+        return "npdes_dmr" if "discharge_summary" in data else "npdes"
     if "filing" in data:
         return "sos"
     if "action" in data:
@@ -212,6 +219,8 @@ def load_corpus(settings: Settings | None = None) -> Corpus:
                 corpus.deeds.append((rel, DeedExtraction.model_validate(data)))
             elif kind == "npdes":
                 corpus.permits.append((rel, NpdesExtraction.model_validate(data)))
+            elif kind == "npdes_dmr":
+                corpus.dmr_records.append((rel, DmrExtraction.model_validate(data)))
             elif kind == "sos":
                 corpus.filings.append((rel, SosExtraction.model_validate(data)))
             elif kind == "epa":
@@ -235,6 +244,7 @@ def load_corpus(settings: Settings | None = None) -> Corpus:
         "corpus.loaded",
         deeds=len(corpus.deeds),
         permits=len(corpus.permits),
+        dmr_records=len(corpus.dmr_records),
         filings=len(corpus.filings),
         actions=len(corpus.actions),
         wetlands=len(corpus.wetlands),
