@@ -148,17 +148,51 @@ def test_route_baseline_system_totals(hydro_settings: Settings) -> None:
     rn = net.route_network(
         balance, consumptive_cfs=0.0, scenario_name="baseline", settings=hydro_settings
     )
-    # Σ natural low flow = Ottawa 0.2 + Dug Run 0.78 + Pike Run 0.03.
-    assert rn.natural_total_cfs == pytest.approx(1.01, abs=0.001)
-    # Effluent dwarfs natural; the loop is mostly treated effluent at low flow.
-    assert rn.effluent_total_cfs > 10 * rn.natural_total_cfs
-    assert rn.outlet_effluent_fraction is not None and rn.outlet_effluent_fraction > 0.9
+    # Σ the LOOP's own tributary 7Q10s = Ottawa 0.2 + Dug Run 0.78 + Pike Run 0.03.
+    assert net.loop_natural_total(rn) == pytest.approx(1.01, abs=0.001)
+    # The system-wide total (#1488) also carries the outlet's Auglaize-confluence gain — a
+    # downstream receiving water's derived 7Q10, not one of the loop's own tributaries.
+    assert rn.natural_total_cfs == pytest.approx(2.92, abs=0.001)
+    # Effluent dwarfs the LOOP's own natural flow; the loop is mostly treated effluent at low flow.
+    assert rn.effluent_total_cfs > 10 * net.loop_natural_total(rn)
+    assert rn.outlet_effluent_fraction is not None and rn.outlet_effluent_fraction > 0.5
     assert rn.closes
-    assert not rn.warnings  # every flow term resolved from a grounded source
+    assert not rn.warnings  # every flow term resolved from a grounded source (cited or derived)
     # #611: the report's per-headwater breakdown is derived from these injected base flows, so
-    # the typed-out terms can't silently diverge from the displayed natural_total_cfs.
-    headwater_bases = [r.base.value for r in rn.reaches if r.base is not None]
-    assert sum(headwater_bases) == pytest.approx(rn.natural_total_cfs, abs=0.001)
+    # the typed-out terms can't silently diverge from the displayed natural_total_cfs. Every
+    # reach carrying a base (the loop's 3 headwaters + the outlet's Auglaize gain) sums to the
+    # system-wide total; only the headwater-kind ones sum to loop_natural_total.
+    all_bases = [r.base.value for r in rn.reaches if r.base is not None]
+    assert sum(all_bases) == pytest.approx(rn.natural_total_cfs, abs=0.001)
+    outlet = rn.reach("outlet")
+    assert outlet is not None and outlet.base is not None
+    assert outlet.base.value == pytest.approx(1.91, abs=0.001)  # Auglaize derived 7Q10
+    assert outlet.base.source == "derived"
+
+
+def test_outlet_credits_auglaize_dilution_over_the_gage(hydro_settings: Settings) -> None:
+    """#1488: the outlet used to just repeat the gage's totals (no Auglaize credit), overstating
+    the effluent fraction leaving the modeled network. Routed correctly, the Auglaize's own flow
+    dilutes it — the outlet's effluent share must be measurably lower than the gage's own."""
+    balance = build_water_balance(settings=hydro_settings, live=False)
+    rn = net.route_network(balance, consumptive_cfs=0.0, settings=hydro_settings)
+    gage = rn.reach(rn.assimilative_reach)
+    outlet = rn.reach("outlet")
+    assert gage is not None and gage.effluent_fraction is not None
+    assert outlet is not None and outlet.effluent_fraction is not None
+    assert outlet.effluent_fraction < gage.effluent_fraction
+    assert rn.outlet_effluent_fraction == pytest.approx(outlet.effluent_fraction, abs=1e-3)
+
+
+def test_merged_low_flow_lookup_prefers_cited_over_derived(hydro_settings: Settings) -> None:
+    """The Ottawa's own cited (document) 7Q10 must win over any derived proxy on a name
+    collision — same precedence watermark.hydrology.basin's own screen uses."""
+    balance = build_water_balance(settings=hydro_settings, live=False)
+    rn = net.route_network(balance, consumptive_cfs=0.0, settings=hydro_settings)
+    ottawa_head = rn.reach("ottawa-head")
+    assert ottawa_head is not None and ottawa_head.base is not None
+    assert ottawa_head.base.source == "document"  # cited fact-sheet 7Q10, not the derived proxy
+    assert ottawa_head.base.value == pytest.approx(0.2, abs=0.001)
 
 
 def test_buildout_draw_runs_the_mainstem_dry(hydro_settings: Settings) -> None:
@@ -192,14 +226,23 @@ def test_findings_flag_effluent_dominance_and_conservation(hydro_settings: Setti
     by_check = {f.check: f for f in findings}
     assert by_check["effluent-dominance"].ok is False  # effluent dominates -> adverse
     assert by_check["mass-balance-closes"].ok is True
+    # #1488: the outlet's own receiving-water dilution — the Auglaize's 1.91 cfs against the
+    # ~13.7 cfs (mostly effluent) arriving from Lima is itself a violation-band dilution.
+    outlet_check = by_check["outlet-receiving-water-dilution"]
+    assert outlet_check.ok is False
+    assert "violation" in outlet_check.detail
 
 
 def test_pipeline_run_network(hydro_settings: Settings) -> None:
     from watermark.pipeline import hydrology as hydro_stage
 
     baseline, buildout, delta = hydro_stage.run_network(settings=hydro_settings, live=False)
-    assert baseline.natural_total_cfs == pytest.approx(1.01, abs=0.001)
-    assert buildout.consumptive_cfs > baseline.natural_total_cfs  # draw exceeds natural low flow
+    # System-wide (#1488: includes the outlet's Auglaize gain); the loop's own total is 1.01.
+    assert baseline.natural_total_cfs == pytest.approx(2.92, abs=0.001)
+    assert net.loop_natural_total(baseline) == pytest.approx(1.01, abs=0.001)
+    assert buildout.consumptive_cfs > net.loop_natural_total(
+        baseline
+    )  # draw > the loop's own low flow
     assert delta.mainstem_runs_dry is True
     assert baseline.closes and buildout.closes
 

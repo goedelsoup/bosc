@@ -5,7 +5,10 @@
 # the solver (watermark.hydrology.network) from an already-grounded source, so the graph
 # never fabricates a number.
 #
-#   low_flow:        inject the cited 7Q10 for that receiving water (low-flow-7q10.yaml)
+#   low_flow:        inject the receiving water's 7Q10 as a gain — cited (low-flow-7q10.yaml)
+#                    where Ohio EPA has fact-sheeted it, else the DERIVED basin-screen proxy
+#                    (low-flow-7q10.derived.yaml, watermark.hydrology.basin) — cited overrides
+#                    derived on a name collision, never the reverse.
 #   balance_return:  add that WaterBalance node's document-cited discharge as a gain
 #   consumptive:     remove the scenario's cooling consumptive draw as a loss
 #
@@ -32,6 +35,23 @@
 # added as a routed node — it is recorded as topology context only: the campus's
 # stormwater receiving water is Pike Run (7Q10 0.03 cfs), the loop's most flow-starved
 # tributary.
+#
+# The outlet (#1488) — the Auglaize confluence, not a bare label. The Ottawa's receiving
+# water below Lima is the Auglaize River (network.yaml historically asserted this in prose
+# only: `outlet.downstream: null` with no flow term, so the routed table just repeated the
+# Lima-gage totals). The outlet node now carries its OWN low_flow: the Auglaize's DERIVED
+# 7Q10 (USGS 04186500 near Fort Jennings — the nearest long-record gage, low-flow-7q10.derived.yaml)
+# is injected here as the receiving water's own base flow, so `natural_total_cfs`/`outlet_cfs`
+# correctly credit its dilution instead of silently omitting it. The Fort Jennings gage sits a
+# few miles BELOW the real Ottawa/Auglaize confluence (more drainage area than the confluence
+# itself), so this is an OPTIMISTIC proxy — it can only overstate, never understate, the
+# Auglaize's flow exactly at the joining point. `watermark.hydrology.network.network_findings`
+# screens the arriving (Ottawa) flow against this base with the same `dilution_flag` band used
+# for the per-plant checks. Only the SUPPLY side (water-supply.yaml / refill.py) treats the
+# Auglaize as a first-class input today (two of Lima's five reservoirs are Auglaize-fed); this
+# is the mirror on the discharge side — the two models are not in tension, they cover different
+# halves of the loop (refill.py: what fills the reservoirs; here: what the effluent-laden Ottawa
+# drains into).
 #
 # IMPORTANT — the cooling draw here is an UNBUFFERED WORST-CASE BOUND, not the operating
 # reality. Lima does NOT withdraw at the 7Q10: its supply is five upground (off-stream)
@@ -155,8 +175,17 @@ nodes:
     citation: "USGS gage 04187100, Ottawa River at Lima — the assimilative reach"
 
   - id: outlet
-    name: Ottawa River -> Auglaize -> Maumee
+    name: Ottawa River -> Auglaize confluence -> Maumee
     kind: outlet
+    receiving_water: Auglaize River
+    low_flow: Auglaize River
     downstream: null
     status: confirmed
-    citation: "Ottawa flows to the Auglaize and on to the Maumee (maumee-tmdl reference)"
+    citation: >-
+      Ottawa flows to the Auglaize and on to the Maumee (maumee-tmdl reference; USGS NHD).
+      DERIVED Auglaize River 7Q10 1.91 cfs injected here as the receiving water's own base
+      flow [inference: derived] (LP3, USGS 04186500 near Fort Jennings OH, 44 climatic years
+      1980-2024, low-flow-7q10.derived.yaml) — an optimistic proxy (gaged a few miles below
+      the real confluence, so it already carries extra drainage and can only overstate the
+      Auglaize's flow at the joining point). Not a cited Ohio EPA fact-sheet 7Q10 like the
+      loop's own three streams above.

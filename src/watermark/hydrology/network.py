@@ -29,7 +29,8 @@ from pathlib import Path
 import yaml
 
 from watermark.config import Settings, get_settings
-from watermark.hydrology import lowflow
+from watermark.hydrology import basin
+from watermark.hydrology.assimilative import dilution_flag
 from watermark.hydrology.model import (
     HydroFinding,
     NetworkNode,
@@ -205,14 +206,18 @@ def route_network(
         warnings.extend(overlay_warnings)
     enabled_ids = [t.id for t in chosen]
 
-    norm_low = {k.strip().lower(): v for k, v in lowflow.load_low_flows(settings=settings).items()}
+    # Cited (Ohio EPA fact-sheet) 7Q10s override the derived basin-screen proxies on a name
+    # collision, never the reverse — same precedence as watermark.hydrology.basin's own screen.
+    norm_low = {
+        k.strip().lower(): v for k, v in basin.build_low_flow_lookup(settings=settings).items()
+    }
     bases: dict[str, ProvenancedValue] = {}
     gains: dict[str, ProvenancedValue] = {}
     for n in nodes:
         if n.low_flow is not None:
             pv = norm_low.get(n.low_flow.strip().lower())
             if pv is None:
-                warnings.append(f"{n.id}: no cited 7Q10 for {n.low_flow!r}; base flow 0.")
+                warnings.append(f"{n.id}: no cited/derived 7Q10 for {n.low_flow!r}; base flow 0.")
             else:
                 bases[n.id] = pv
         if n.balance_return is not None:
@@ -367,10 +372,34 @@ def _mainstem_runs_dry(rn: RoutedNetwork) -> bool:
     )
 
 
+def loop_natural_total(rn: RoutedNetwork) -> float:
+    """Σ cited 7Q10 of the Lima loop's OWN tributary headwaters (Ottawa/Dug Run/Pike Run).
+
+    Distinct from :attr:`RoutedNetwork.natural_total_cfs`, which (by design — the solver
+    is topology-agnostic) sums the base flow at *every* node, including a downstream
+    receiving water like the outlet's Auglaize confluence gain (#1488). That system-wide
+    total is the right denominator for the outlet's own dilution/effluent-fraction; this
+    loop-only total is the right one for "how tiny are the loop's own streams" — the
+    headline the per-stream screen and the buildout consumptive-draw comparison rest on,
+    which the Auglaize (20+ miles downstream, untouched by the intake) has no bearing on.
+    Scoped by node ``kind == "headwater"`` — every tributary source in the cited topology
+    is a headwater node; a receiving-water gain injected elsewhere (the outlet) is not.
+    """
+    return round(
+        sum(r.base.value for r in rn.reaches if r.base is not None and r.kind == "headwater"), 4
+    )
+
+
 def diff_networks(baseline: RoutedNetwork, buildout: RoutedNetwork) -> RoutedNetworkDiff:
-    """Baseline vs buildout: the new draw against the loop's natural low flow."""
+    """Baseline vs buildout: the new draw against the loop's OWN natural low flow.
+
+    Uses :func:`loop_natural_total`, not the system-wide ``natural_total_cfs`` — the
+    consumptive draw only depletes the Ottawa intake upstream of the gage, so the honest
+    comparison is against the loop's own tiny tributaries, not a downstream receiving
+    water (the Auglaize) the draw never touches.
+    """
     increase = buildout.consumptive_cfs - baseline.consumptive_cfs
-    natural = buildout.natural_total_cfs
+    natural = loop_natural_total(buildout)
     return RoutedNetworkDiff(
         baseline=baseline.scenario,
         scenario=buildout.scenario,
@@ -422,11 +451,32 @@ def network_findings(rn: RoutedNetwork) -> list[HydroFinding]:
                 ok=not _mainstem_runs_dry(rn),
                 detail=(
                     f"UNBUFFERED worst case — if the {rn.consumptive_cfs:g} cfs cooling load were "
-                    f"pumped straight from the Ottawa at 7Q10 (Σ natural {rn.natural_total_cfs:g} "
+                    f"pumped straight from the Ottawa at 7Q10 (Σ natural {loop_natural_total(rn):g} "
                     "cfs) the mainstem would run dry"
                     + (".  " if _mainstem_runs_dry(rn) else " not quite.  ")
                     + "But Lima draws treated water from ~15 BG of off-stream reservoir storage, "
                     "so the real constraint is reservoir drawdown (`watermark supply`), not this bound."
+                ),
+            )
+        )
+
+    # The outlet's own receiving-water dilution (#1488): screen the flow ARRIVING from
+    # upstream (the effluent-laden Ottawa) against whatever base flow the outlet itself
+    # injects (the Auglaize's 7Q10) — same band as the per-plant checks
+    # (watermark.hydrology.assimilative), generalized to the routed system's terminal reach.
+    outlet = next((r for r in rn.reaches if r.kind == "outlet"), None)
+    if outlet is not None and outlet.base is not None and outlet.inflow_cfs > 0.0:
+        ratio = outlet.base.value / outlet.inflow_cfs
+        flag = dilution_flag(ratio)
+        findings.append(
+            HydroFinding(
+                subject=f"{outlet.name} (receiving-water dilution)",
+                check="outlet-receiving-water-dilution",
+                ok=flag != "violation",
+                detail=(
+                    f"{outlet.base.value:g} cfs receiving-water low flow [{outlet.base.source}] "
+                    f"vs {outlet.inflow_cfs:g} cfs arriving from upstream -> {ratio:.2f}:1 "
+                    f"dilution ({flag}); {outlet.base.citation or 'no citation'}"
                 ),
             )
         )

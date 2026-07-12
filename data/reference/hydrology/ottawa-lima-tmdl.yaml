@@ -68,6 +68,43 @@ ottawa_lima_tmdl:
       BOSC-1A flow -- are NOT in the 2014 Ottawa (Lima) TMDL; they discharge to Pike Run / Dug Run
       and received their FIRST TP WLA only in the 2023 Maumee TMDL.
 
+# ---- The Upper Auglaize River Watershed TMDL -- the Auglaize mainstem the Ottawa joins (#1488) ----
+upper_auglaize_tmdl:
+  approved: '2004-09-23'
+  scope: >-
+    "The project area includes the Auglaize River mainstem upstream the confluence with the
+    Little Auglaize River and its tributaries, except the Ottawa and Blanchard rivers" (Appendix
+    5, p. A5-1, verbatim). 8 phosphorus TMDLs calculated; 2 facilities covered under NPDES
+    permits included in the wasteload allocation.
+  confluence_extent: >-
+    Does NOT reach onto Lima's own dischargers -- the project area explicitly EXCLUDES the
+    Ottawa River (which gets its own separate, later near-field TMDL: Ottawa River (Lima Area),
+    approved 2014-04-15, see ottawa_lima_tmdl above). This is the ADJACENT near-field TMDL
+    governing the Auglaize mainstem itself -- the reach the Ottawa/Lima loop's routed flow joins
+    (network.yaml's outlet node, #1488) -- not a third regulatory layer stacked on the same
+    Lima-area permits. Lima's own discharge chain stays two TMDLs deep (Ottawa 2014 + Maumee
+    2023 far-field), as ottawa_lima_tmdl.significance already states; this TMDL is receiving-
+    water-side context for the routed Auglaize-confluence dilution screen, not an additional cap
+    on the same dischargers. [the project-area exclusion of the Ottawa is document-verbatim; the
+    "does not reach Lima's dischargers" / "adjacent, not stacked" framing is inference from that
+    exclusion.]
+  impairment_finding: >-
+    "Nutrient concentrations (phosphorus and nitrogen parameters) in the Upper Auglaize River
+    watershed are excessive in comparison with statewide data from unimpaired streams. Other
+    indicators of nutrient enrichment problems that have been documented in impaired stream
+    segments include depressed dissolved oxygen levels and wide diel swings, excessive algae,
+    and trophic species shifts."
+  facilities:   # Appendix 5 Table A5.1, "Upper Auglaize" project-area rows only (TP WLA as stated)
+    units: "as published -- kg/year (neither Upper Auglaize row is stated as kg/day)"
+    rows:
+      - {facility: 'Spencerville WWTP', npdes: '2PC00000', tp_wla: 621.7, unit: kg/year}
+      - {facility: 'Uniopolis WWTP', npdes: '2PA00054', tp_wla: 55.3, unit: kg/year}
+  source_url: "epa.ohio.gov/static/Portals/35/tmdl/UpperAuglaizeFinalTMDL.pdf"
+  citation: >-
+    Ohio EPA, Maumee Watershed Nutrient TMDL (final, 2023), Appendix 5 "Near-Field TMDL Reports in
+    the Maumee Watershed", pp. A5-1..A5-3 (narrative) and Table A5.1 (facility WLAs) --
+    data/documents/maumee-tmdl/Appendix-5-Nearfield-TMDLs-Final.pdf.
+
 # ---- Appendix 6: WWTP phosphorus-removal cost evaluation (qualitative; charts not text-extractable) ----
 cost_evaluation:
   citation: >-
@@ -98,5 +135,7 @@ cross_refs:
   - data/reference/hydrology/maumee-tmdl-budget.yaml       # the far-field watershed budget this sits under
   - data/reference/hydrology/maumee-tmdl-wla.yaml          # the 2023 per-facility WLAs
   - data/reference/hydrology/low-flow-7q10.yaml            # the chronic-low-flow dilution failure the Ottawa TMDL names
+  - data/reference/hydrology/low-flow-7q10.derived.yaml    # the Auglaize's derived 7Q10 (upper_auglaize_tmdl's receiving reach)
+  - data/reference/hydrology/network.yaml                  # routes the Ottawa into the Auglaize confluence (outlet node, #1488)
   - data/reference/rsei/toxic-discharge-screen.yaml        # PCS Nitrogen / Lima Refinery / Chemtrade as Ottawa dischargers
   - data/documents/maumee-tmdl/

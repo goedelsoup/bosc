@@ -29,6 +29,14 @@ meta:
 
 # Orients every reach so particles advect downstream (the vertex nearest this point is last).
 # A real Ottawa-River point ~21 km below the gage toward the Auglaize confluence (NLDI DM).
+#
+# FOLLOW-UP (#1488, tracked under the FlowLayer epic #1235 — not started): the outlet node
+# (network.yaml) is now a routed reach — the Auglaize's own derived 7Q10 joins there as a base
+# flow (watermark.hydrology.network) — but this anchor still only ORIENTS flow direction toward
+# the confluence; it is not rendered and the navigated centerline does not extend past it into
+# the actual Auglaize. Once #1235 picks up this reach, extend the mainstem past outlet_anchor to
+# the real NLDI confluence point so the map geometry and the numeric model agree on where Lima's
+# assessment actually stops.
 outlet_anchor: [-84.20787, 40.91735]
 
 # The Ottawa River mainstem — one navigated line head -> outlet, split at the real gage point:

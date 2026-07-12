@@ -124,6 +124,53 @@ def _render_toxic_screen(emit: Callable[[str], None], settings: Settings) -> Non
         )
 
 
+def _render_stormwater_pathway_note(emit: Callable[[str], None], settings: Settings) -> None:
+    """The campus's SECOND discharge pathway — stormwater to Pike Run via the BOSC Storm
+    Outfall — distinct from the FM-2 *process* discharge routed through Lima's WWTP above.
+
+    Sourced from the committed SWP3 extraction (eDoc 4091286), not re-derived: no cited
+    storm low-flow magnitude exists for this pathway, so it stays a receiving-water fact
+    (network.yaml records it as topology context), not a routed mass-balance node.
+    """
+    import yaml
+
+    from watermark.hydrology.lowflow import low_flow_for
+
+    path = settings.data_dir / "extracted" / "plans" / "4091286.engineering.yaml"
+    if not path.is_file():
+        return
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    rec = data.get("record") or {}
+    params = {p.get("parameter"): p for p in rec.get("design_parameters") or []}
+    disturbed = (params.get("total area disturbed") or {}).get("value")
+    firms = rec.get("prepared_by") or []
+    operator = next(
+        (f.get("name") for f in firms if "operator" in (f.get("discipline") or "").lower()), None
+    )
+    engineer = next(
+        (f.get("name") for f in firms if "engineer" in (f.get("discipline") or "").lower()), None
+    )
+    prepared = rec.get("record_date")
+    if disturbed is None or not operator or not engineer or not prepared:
+        return
+
+    pike = low_flow_for("Pike Run", settings=settings)
+    pike_q7 = f"{pike.value:g} cfs" if pike is not None else "no cited 7Q10"
+    emit(
+        "\n**A second campus pathway — stormwater to Pike Run.** Distinct from the FM-2 "
+        "*process* discharge above (routed to Lima's WWTP), the campus's **stormwater** "
+        "leaves the site via a constructed **BOSC Storm Outfall** channel that discharges "
+        f"to **Pike Run** — the loop's most flow-starved tributary (7Q10 **{pike_q7}**, "
+        "already shown undiluted by the American Bath WWTP). "
+        f"Per the roundabout/outfall **SWP3** (Ohio EPA eDoc 4091286; operator {operator}, "
+        f"engineer {engineer}; prepared {prepared}) `[verified: document]`, the site drains "
+        "east-to-west by subsurface tile and the outfall channel terminates at Pike Run. "
+        f"That SWP3 documents *construction* disturbance ({disturbed} ac), not a continuous "
+        "low-flow discharge, so the pathway is recorded as a receiving-water fact, not added "
+        "to the routed mass balance below.\n"
+    )
+
+
 def _render_lowflow_corroboration(emit: Callable[[str], None], settings: Settings) -> None:
     """Independently computed 1Q10/7Q10/30Q10 vs the cited regulatory low flows."""
     from watermark.hydrology.lowflow_frequency import load_low_flow_frequency
@@ -174,6 +221,8 @@ def _render_lowflow_corroboration(emit: Callable[[str], None], settings: Setting
 
 def _render_routed_network(emit: Callable[[str], None], settings: Settings) -> None:
     """The per-stream screen generalized to a routed system mass balance."""
+    from watermark.hydrology.assimilative import dilution_flag
+    from watermark.hydrology.network import loop_natural_total
     from watermark.pipeline import hydrology as hydro_stage
 
     baseline, buildout, delta = hydro_stage.run_network(settings=settings, live=False)
@@ -187,12 +236,16 @@ def _render_routed_network(emit: Callable[[str], None], settings: Settings) -> N
     campus_cfs = campus.gain.value if campus is not None and campus.gain is not None else 0.0
     municipal_cfs = baseline.effluent_total_cfs - campus_cfs
 
+    # "The loop's streams" means the Lima loop's OWN tributaries (Ottawa/Dug Run/Pike Run) —
+    # NOT the system-wide natural_total_cfs, which (#1488) also carries the outlet's Auglaize
+    # confluence gain, a downstream receiving water the cooling draw never touches.
+    loop_natural = loop_natural_total(baseline)
+
     # The section's own thesis is that the streams nearly dry at design low flow, so the routed
     # natural total can reach 0 — guard the ratio (#614) rather than divide by it.
-    if baseline.natural_total_cfs > 0:
+    if loop_natural > 0:
         municipal_multiple = (
-            f"**{municipal_cfs / baseline.natural_total_cfs:.1f}x** the streams' entire natural "
-            "low flow"
+            f"**{municipal_cfs / loop_natural:.1f}x** the streams' entire natural low flow"
         )
     else:
         municipal_multiple = (
@@ -201,10 +254,23 @@ def _render_routed_network(emit: Callable[[str], None], settings: Settings) -> N
         )
 
     # Per-headwater 7Q10 breakdown, derived from the routed model's injected base flows (#611):
-    # the literals must equal the displayed natural_total_cfs, not a separately-typed list that
-    # silently diverges if the topology changes.
+    # the literals must equal the displayed loop_natural, not a separately-typed list that
+    # silently diverges if the topology changes. Scoped to kind=="headwater" so the outlet's
+    # own (downstream, derived) Auglaize gain doesn't leak into "the loop's own streams".
     natural_breakdown = " + ".join(
-        f"{_short_reach(r.name)} {r.base.value:g}" for r in baseline.reaches if r.base is not None
+        f"{_short_reach(r.name)} {r.base.value:g} `{_tag(r.base.source)}`"
+        for r in baseline.reaches
+        if r.base is not None and r.kind == "headwater"
+    )
+    # "Leaving Lima" is the gage (the assimilative reach), unaffected by anything the Auglaize
+    # adds further downstream — fall back to the outlet fraction if the gage is somehow absent.
+    gage_reach = (
+        baseline.reach(baseline.assimilative_reach) if baseline.assimilative_reach else None
+    )
+    gage_fraction = (
+        gage_reach.effluent_fraction
+        if gage_reach is not None and gage_reach.effluent_fraction is not None
+        else baseline.outlet_effluent_fraction
     )
     emit(
         "\n### The whole loop at design low flow: a routed mass balance\n\n"
@@ -213,14 +279,14 @@ def _render_routed_network(emit: Callable[[str], None], settings: Settings) -> N
         "the cooling draw through the cited confluence graph "
         "(`data/reference/hydrology/network.yaml`) shows the system picture the per-stream "
         "rows miss. At design low flow the loop's streams carry, in total, only "
-        f"**{baseline.natural_total_cfs:g} cfs** of *natural* low flow "
-        f"({natural_breakdown} `[verified: document]`). The three county "
+        f"**{loop_natural:g} cfs** of *natural* low flow "
+        f"({natural_breakdown}). The three county "
         f"WWTP discharges alone add **{municipal_cfs:.2f} cfs** of treated effluent — "
         f"{municipal_multiple}, with no data center in the picture. The river at design low flow "
         "is effluent, not "
         "stream. The campus then adds its own documented "
         f"**{campus_cfs:.2f} cfs** FM-2 industrial discharge (routed via Lima's sewer + WWTP), "
-        f"taking the Ottawa leaving Lima to **{baseline.outlet_effluent_fraction:.0%} treated "
+        f"taking the Ottawa leaving Lima to **{gage_fraction:.0%} treated "
         "effluent** — a *conservative* floor, since Lima WWTP's own larger municipal discharge "
         "has no cited design flow in the corpus and is not counted.\n"
     )
@@ -235,7 +301,7 @@ def _render_routed_network(emit: Callable[[str], None], settings: Settings) -> N
     if delta.multiple_of_natural is not None:
         dry = (
             "consumes the Ottawa mainstem's entire design low flow — it runs **dry** at the "
-            f"intake, leaving a **{buildout.consumptive_cfs - baseline.natural_total_cfs:.2f} cfs** "
+            f"intake, leaving a **{buildout.consumptive_cfs - loop_natural:.2f} cfs** "
             "shortfall the river cannot supply"
             if delta.mainstem_runs_dry
             else "draws on a mainstem that still holds positive flow"
@@ -251,6 +317,31 @@ def _render_routed_network(emit: Callable[[str], None], settings: Settings) -> N
             "`[inference: derived]`. The order-invariant system totals are the robust result; the "
             "per-reach values depend on the cited-but-approximate confluence order and are "
             "screening-grade.\n"
+        )
+
+    # The outlet's own receiving water (#1488): the outlet was previously a bare label that
+    # just repeated the gage's totals. Routed here, the Auglaize's own derived 7Q10 joins as
+    # a base flow, so the outlet row above already carries it — this paragraph explains what
+    # changed and screens the arriving (Ottawa) flow against it with the same dilution band.
+    outlet = buildout.reach("outlet")
+    if outlet is not None and outlet.base is not None and outlet.inflow_cfs > 0:
+        ratio = outlet.base.value / outlet.inflow_cfs
+        flag = dilution_flag(ratio)
+        mark = _flag_mark(flag)
+        emit(
+            "\n**Downstream: the Auglaize confluence.** The outlet is the Ottawa's actual "
+            f"receiving water, not a bare label. The Auglaize's own {outlet.base.value:g} cfs "
+            f"7Q10 `{_tag(outlet.base.source)}` ({outlet.base.citation}) joins here, diluting "
+            f"the **{outlet.inflow_cfs:.2f} cfs** routed Ottawa flow (mostly treated effluent) "
+            f"arriving from Lima. {mark} At **{ratio:.2f}:1** dilution the confluence screens "
+            f"**{flag}** by the same band as the per-plant checks above — the Auglaize's own "
+            "flow is dwarfed by what the loop sends it. The final flow leaving toward the "
+            f"Maumee is **{outlet.routed_cfs:.2f} cfs**, **{outlet.effluent_fraction:.0%}** "
+            f"treated effluent — down from **{gage_fraction:.0%}** at the Lima gage, so the "
+            "Auglaize genuinely dilutes the loop's discharge without resolving the underlying "
+            "effluent-dominance. The Fort Jennings gage sits a few miles below the real "
+            "confluence with more drainage area, so this is an *optimistic* proxy — it can only "
+            "overstate the Auglaize's flow at the actual joining point.\n"
         )
 
 
@@ -765,6 +856,7 @@ def render_report(*, settings: Settings | None = None, live: bool = False) -> st
         "receive — the discharges are effectively undiluted.\n"
     )
 
+    _render_stormwater_pathway_note(w, settings)
     _render_lowflow_corroboration(w, settings)
     _render_routed_network(w, settings)
     _render_water_supply(w, settings)
