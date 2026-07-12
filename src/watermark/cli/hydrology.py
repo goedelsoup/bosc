@@ -1036,6 +1036,61 @@ def refill_cmd(
         console.print(f"  ~ {c}", markup=False)
 
 
+@app.command(name="waterville-monitor")
+def waterville_monitor(
+    write: bool = typer.Option(
+        False, "--write", help="Regenerate the committed read from the live/fixture USGS record."
+    ),
+) -> None:
+    """Read the Maumee-at-Waterville monitor (04193500) against the Napoleon spill (#1498).
+
+    Turbidity / DO / discharge / conductance / fPC across the event window, with a
+    travel-time argument that decides whether the storm-timed spikes are the release plume
+    or ordinary first-flush. `--write` re-pulls the IV record and rewrites the artifact.
+    """
+    from watermark.hydrology import waterville_monitor as wm
+    from watermark.hydrology.waterville_monitor import monitor_findings
+
+    settings = get_settings()
+    if write:
+        read = wm.compute_monitor_read(settings=settings)
+        wrote(wm.write_monitor_read(read, settings=settings))
+    else:
+        loaded = wm.load_monitor_read(settings=settings)
+        if loaded is None:
+            console.print(
+                "[yellow]No monitor read[/] "
+                "(data/reference/hydrology/toledo/waterville-spill-monitor-read.yaml). "
+                "Run [bold]watermark waterville-monitor --write[/] to generate it."
+            )
+            raise typer.Exit(1)
+        read = loaded
+
+    console.print(
+        f"[bold]{read.site_name}[/] ({read.site_no}) — continuous monitor "
+        f"[dim]{read.window_start}..{read.window_end}[/] vs the Napoleon / Huston Creek spill"
+    )
+    console.print(
+        f"  discharge trough [bold]{read.discharge_min.value:g} cfs[/] "
+        f"({read.low_flow_dilution_ratio:g}x the derived 7Q10 {read.seven_q10_cfs.value:g} cfs) → "
+        f"storm peak {read.discharge_storm_peak.value:g} cfs"
+    )
+    st = Table("turbidity spike", "value")
+    for s in read.turbidity_spikes:
+        st.add_row(s.timestamp[:16], f"{s.value:g} {s.unit}")
+    console.print(st)
+    console.print(
+        f"  reach [bold]{read.reach_river_km.value:g} km[/]; plume travel "
+        f"[bold]{read.plume_travel.low:g}-{read.plume_travel.high:g} h[/] "
+        f"(release {read.release_start[:10]})",
+        markup=True,
+    )
+    for f in monitor_findings(read):
+        console.print(f"  {'·' if f.ok else '!'} {f.detail}", markup=False)
+    for c in read.caveats:
+        console.print(f"  ~ {c}", markup=False)
+
+
 @app.command(name="reaches")
 def reaches(
     offline: bool = typer.Option(

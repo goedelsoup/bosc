@@ -1,0 +1,114 @@
+meta:
+  subject: 'Maumee-at-Waterville (USGS 04193500) continuous monitor read vs the Napoleon / Huston Creek
+    fertilizer spill (#1498, parent #1497)'
+  discipline: Observational extrema are [verified] connector reads; the reach travel time and the plume-vs-first-flush
+    attribution are [inference]. Optical/ionic surrogates are NOT a nitrogen measurement. Regenerate with
+    `watermark waterville-monitor --write`.
+  window: 2026-07-01..2026-07-12
+  raw_record_fixture: tests/fixtures/hydrology/nwis/ (IV service retains only ~120 days)
+site:
+  site_no: 04193500
+  name: Maumee River at Waterville OH
+discharge:
+  low_flow_trough:
+    value: 424.0
+    unit: ft3/s
+    source: connector
+    citation: NWIS 04193500 low-flow trough
+    asof: '2026-07-05T23:45:00.000-04:00'
+  storm_peak:
+    value: 3970.0
+    unit: ft3/s
+    source: connector
+    citation: NWIS 04193500 storm peak
+    asof: '2026-07-08T02:45:00.000-04:00'
+  derived_7q10:
+    value: 114.15
+    unit: cfs
+    source: derived
+    citation: LP3 7Q10 from USGS 04193500 (Maumee River at Waterville OH), 44 climatic years 1980-2024
+      (gage value; screening proxy for the discharge reach)
+  low_flow_dilution_ratio: 3.71
+turbidity:
+  baseline:
+    value: 29.9
+    unit: FNU
+    source: connector
+    citation: NWIS 04193500 63680 median
+    asof: '2026-07-12'
+  spikes:
+  - timestamp: '2026-07-10T12:00:00.000-04:00'
+    value: 324.0
+    unit: FNU
+  - timestamp: '2026-07-10T17:30:00.000-04:00'
+    value: 363.0
+    unit: FNU
+dissolved_oxygen:
+  sag:
+    value: 4.3
+    unit: mg/l
+    source: connector
+    citation: NWIS 04193500 DO sag (low-flow/thermal)
+    asof: '2026-07-05T01:00:00.000-04:00'
+  water_temp_max:
+    value: 35.5
+    unit: deg C
+    source: connector
+    citation: NWIS 04193500 water-temp max
+    asof: '2026-07-04T16:15:00.000-04:00'
+specific_conductance:
+  storm_min:
+    value: 288.0
+    unit: uS/cm @25C
+    source: connector
+    citation: NWIS 04193500 storm-dilution min
+    asof: '2026-07-10T14:00:00.000-04:00'
+  low_flow_max:
+    value: 645.0
+    unit: uS/cm @25C
+    source: connector
+    citation: NWIS 04193500 low-flow max
+    asof: '2026-07-06T20:00:00.000-04:00'
+phycocyanin:
+  month_max:
+    value: 4.24
+    unit: ug/l
+    source: connector
+    citation: NWIS 04193500 fPC (32319) month max
+    asof: '2026-07-01T19:30:00.000-04:00'
+  at_turbidity_spike:
+    value: 3.36
+    unit: ug/l
+    source: connector
+    citation: NWIS 04193500 fPC (32319) at the turbidity spike
+    asof: '2026-07-10T12:00:00.000-04:00'
+attribution:
+  reach_river_km:
+    value: 41.9
+    unit: km
+    source: derived
+    citation: NLDI upstream-main navigation 04193500->04192550 (Maumee mainstem, sinuosity 1.16); Huston
+      Creek mouth within ~1-2 km of the Napoleon gage
+  plume_travel_hours:
+    value: 26.5
+    unit: hr
+    source: derived
+    citation: Manning normal-depth mean velocity at ~2,500-3,700 cfs over a lower-Maumee geometry range
+      (W 350-550 ft, S 1e-4..3e-4, n 0.030-0.040); advective, not flood-wave celerity
+    low: 21.2
+    high: 31.8
+  release_start: 2026-07-11T00:00-04:00
+  spikes_precede_release: true
+  verdict: '[inference] The turbidity spikes (324 FNU @ 2026-07-10T12:00, 363 FNU @ 2026-07-10T17:30)
+    pre-date the overnight dam failure (2026-07-11); at the ~21-32 h reach travel time the release plume
+    cannot reach Waterville until late Jul 11-Jul 12, so the spikes are storm first-flush / resuspension,
+    NOT the release plume.'
+caveats:
+- Turbidity, fPC and specific conductance are optical/ionic SURROGATES; 04193500 has no ammonia or nitrate
+  probe, so the reach's nitrogen signal must come from grab samples.
+- '#1498''s brief cited pcode 32316 as fPC in error: 32316 is chlorophyll-a; phycocyanin is 32319/32321.
+  fPC was sub-bloom all month and its Jul-10 value is below its Jul-1/2 diel peaks.'
+- Reach geometry (width/slope/n) behind the velocity bracket is an assumption; the travel time is a range,
+  and the attribution rests on the spike-vs-release ORDERING, not its width.
+- The window ends Jul 12; the dam-failure plume's expected arrival lands at the very edge of the record,
+  so an in-window absence of an ionic bump is 'not captured', not 'did not occur'.

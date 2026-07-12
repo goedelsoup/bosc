@@ -1,0 +1,37 @@
+id: hydrology-toledo-waterville-spill-monitor-read
+title: Maumee-at-Waterville (04193500) Continuous-Monitor Read — Napoleon Spill
+scope: reference
+status: reviewed
+producer:
+  kind: derived
+  command: waterville-monitor --write
+  connector_ref: watermark.hydrology.connectors.nwis
+  source: USGS NWIS instantaneous-value record at 04193500 (Maumee River at Waterville OH) read
+    against the Napoleon / Huston Creek fertilizer-spill timeline; travel time via NLDI + Manning
+  external_url: https://waterservices.usgs.gov/nwis/iv/
+depends_on:
+- hydrology-low-flow-7q10
+license: U.S. Government work (USGS-derived)
+access_tier: public
+site_scope: site:toledo
+storage:
+- relpath: reference/hydrology/toledo/waterville-spill-monitor-read.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: derived
+schema_ref: watermark.hydrology.models.ContinuousMonitorRead
+tags:
+- toledo
+- maumee
+- usgs-nwis
+- turbidity
+- attribution
+- napoleon-spill
+notes: 'Reads the 04193500 continuous monitor (turbidity/DO/discharge/specific-conductance/fPC)
+  across the Jul 2026 event window (#1498, parent #1497). The observational extrema are [verified]
+  connector reads; the Huston-mouth->Waterville travel time (~21-32 h over 41.9 river-km) and the
+  plume-vs-first-flush verdict are [inference]. The raw sub-daily record is frozen as a committed
+  NWIS IV fixture because the IV service retains only ~120 days. Optical/ionic surrogates are NOT a
+  nitrogen measurement — the reach nitrogen signal comes from the OEPA/Napoleon grab samples.'

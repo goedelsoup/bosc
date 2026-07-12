@@ -137,6 +137,16 @@ Regenerate: `watermark tier1 --write`
 | `reference/hydrology/swmm/tier1-pre.inp` | application/octet-stream | no |
 | `reference/hydrology/swmm/tier1-sanitary.inp` | application/octet-stream | no |
 
+### `hydrology-toledo-waterville-spill-monitor-read` — Maumee-at-Waterville (04193500) Continuous-Monitor Read — Napoleon Spill
+
+Source: USGS NWIS instantaneous-value record at 04193500 (Maumee River at Waterville OH) read against the Napoleon / Huston Creek fertilizer-spill timeline; travel time via NLDI + Manning · License: U.S. Government work (USGS-derived) · Access: public · Site scope: site:toledo · Refresh: on-demand
+
+Regenerate: `watermark waterville-monitor --write`
+
+| file | type | lfs |
+| --- | --- | --- |
+| `reference/hydrology/toledo/waterville-spill-monitor-read.yaml` | application/x-yaml | no |
+
 ### `hydrology-wbd` — USGS Watershed Boundary Dataset — Campus HUC Boundaries (HU10/HU12)
 
 Source: USGS National Map Watershed Boundary Dataset (WBD) — ArcGIS REST MapServer HU sublayers · License: U.S. Government work (public domain) · Access: public · Site scope: lima-legacy · Refresh: on-demand

@@ -1,0 +1,32 @@
+id: toledo-napoleon-spill-waterville-monitor-read
+title: Maumee-at-Waterville (04193500) Monitor Read — Napoleon Spill (narrative)
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: USGS NWIS 04193500 instantaneous-value record; travel time via USGS NLDI + Manning
+    normal-depth; dam-failure timeline from the Napoleon / Huston Creek water-watch (#1497)
+license: U.S. Government work (USGS-derived) + public record
+access_tier: public
+site_scope: site:toledo
+storage:
+- relpath: extracted/toledo/napoleon-spill/waterville-monitor-read.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: derived
+tags:
+- toledo
+- maumee
+- napoleon-spill
+- usgs-nwis
+- turbidity
+- attribution
+- water-watch
+notes: 'Prose read of the 04193500 continuous monitor against the Napoleon / Huston Creek
+  fertilizer-spill timeline (#1498). Verdict [inference]: the Jul 10 turbidity spikes (324/363 FNU)
+  PRE-DATE the overnight Jul 10->11 dam failure and the ~21-32 h Huston-mouth->Waterville travel
+  time, so they are storm first-flush, not the release plume; specific conductance shows storm
+  dilution, not an ionic bump. Optical/ionic surrogates are not a nitrogen measurement. The
+  machine-readable peer is reference/hydrology/toledo/waterville-spill-monitor-read.yaml.'

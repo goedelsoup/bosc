@@ -79,6 +79,12 @@ from watermark.hydrology.models._lowflow import (
 from watermark.hydrology.models._lowflow import (
     LowFlowStatistic as LowFlowStatistic,
 )
+from watermark.hydrology.models._monitor import (
+    ContinuousMonitorRead as ContinuousMonitorRead,
+)
+from watermark.hydrology.models._monitor import (
+    MonitorSpike as MonitorSpike,
+)
 from watermark.hydrology.models._routed import (
     Catchment as Catchment,
 )
@@ -201,6 +207,7 @@ __all__ = [
     "AssimilativeCheck",
     "CampusDischargeScreen",
     "Catchment",
+    "ContinuousMonitorRead",
     "CoolingBasis",
     "DesignStorm",
     "DetentionDesign",
@@ -212,6 +219,7 @@ __all__ = [
     "LowFlowFrequency",
     "LowFlowStatistic",
     "MaumeeTmdl",
+    "MonitorSpike",
     "MonthlyWithdrawal",
     "NetworkNode",
     "NetworkNodeKind",
