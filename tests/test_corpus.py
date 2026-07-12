@@ -18,7 +18,7 @@ from watermark.models import (
     SosExtraction,
     SubEstimate,
 )
-from watermark.pipeline.corpus import load_corpus
+from watermark.pipeline.corpus import _classify, load_corpus
 
 
 def _write(path: Path, text: str) -> None:
@@ -76,6 +76,61 @@ def test_load_corpus_classifies_by_shape(tmp_path: Path) -> None:
     rel, loaded_deed = corpus.deeds[0]
     assert rel == "recorder/a.deed.yaml"
     assert loaded_deed.deed.instrument_no == "I1"
+
+
+_DMR_YAML = """\
+meta:
+  subject: PIQUA WWTP (NPDES OH0027049) — reported effluent record (EPA ECHO DMR)
+  source: EPA ECHO eff_rest_services.get_effluent_chart
+  regenerate: watermark dmr OH0027049 --start 2023-01-01 --end 2023-12-31 --design-flow 8.7
+  discipline: Reported DMR values are verbatim from the permittee's submissions via ECHO.
+permit:
+  npdes_id: OH0027049
+  name: PIQUA WWTP
+  permit_type: NPDES Individual Permit
+  permit_status: Effective
+  major_minor: M
+  snc_status: null
+  window: 2023-01-01..2023-12-31
+discharge_summary:
+  design_flow_mgd: 8.7
+  design_flow_cfs: 13.46
+  primary_outfall: '001'
+  n_flow_months: 12
+  actual_flow_mean_mgd: 3.224
+  actual_flow_mean_cfs: 4.99
+  actual_flow_min_mgd: 2.146
+  actual_flow_max_mgd: 5.822
+  flow_pct_of_design: 37.1
+  cso_outfalls: 0
+  reported_exceedances: 0
+flow_monthly:
+- period_end: '2023-01-31'
+  value_mgd: 3.46
+  stat_base: MO AVG
+exceedances: []
+"""
+
+
+def test_classify_distinguishes_npdes_doc_from_dmr_pull() -> None:
+    """A real NpdesExtraction and an ECHO DMR pull both key `permit:` (#1492)."""
+    assert _classify({"permit": {"permit_no": "2PH00006"}}) == "npdes"
+    assert _classify({"permit": {"npdes_id": "OH0027049"}, "discharge_summary": {}}) == "npdes_dmr"
+
+
+def test_load_corpus_loads_dmr_pull_as_its_own_kind(tmp_path: Path) -> None:
+    """An ECHO DMR effluent-record pull validates and loads, distinct from corpus.permits."""
+    settings = Settings(data_dir=tmp_path)
+    _write(settings.extracted_dir / "troy-piqua" / "wwtp-oh0027049.dmr.yaml", _DMR_YAML)
+
+    corpus = load_corpus(settings)
+    assert len(corpus.dmr_records) == 1
+    assert len(corpus.permits) == 0
+    rel, dmr = corpus.dmr_records[0]
+    assert rel == "troy-piqua/wwtp-oh0027049.dmr.yaml"
+    assert dmr.permit.npdes_id == "OH0027049"
+    assert dmr.discharge_summary.n_flow_months == 12
+    assert len(dmr.flow_monthly) == 1
 
 
 def test_load_corpus_empty(tmp_path: Path) -> None:
