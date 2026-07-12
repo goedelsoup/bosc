@@ -1,7 +1,7 @@
 # Troy–Piqua / Miami County, OH — Data-Center Activity Register
 
 Discover-and-pin register for the Troy–Piqua watershed point — the upper **Great Miami River**
-corridor. Status **as of 2026-07-02**. Tags are BOSC evidentiary discipline: `[verified]` =
+corridor. Status **as of 2026-07-02; updated 2026-07-11 (#1482)**. Tags are BOSC evidentiary discipline: `[verified]` =
 on-record in a government/primary source (often two+), `[reported]` = credible secondary /
 investigative journalism, not officially confirmed, `[reference]`, `[inference]`, `[open]`.
 **Nothing here is in the BOSC corpus yet** — this records the *verified public record* and the
@@ -21,9 +21,22 @@ The developer of record is a shell (J5 LLC / Shaytura LLC); the reported hypersc
 - **Reported backer:** Meta Platforms (Facebook). `[reported]` — attribution originates with
   Hunterbrook's investigation, which traced J5 LLC's corporate filing to Meta's Menlo Park HQ
   address (1601 Willow Road). Meta has not publicly confirmed; the City cites an NDA and has not
-  named the owner; DCD names only J5/Shaytura. **Do not assert Meta as verified.** (Open: the
-  traced filing was reported as Nevada in one summary, Delaware in another — pull the primary
-  filing.)
+  named the owner; DCD names only J5/Shaytura. **Do not assert Meta as verified.**
+  - **Corporate-filing refresh (2026-07-11):** the prior Nevada-vs-Delaware ambiguity resolves as
+    **Delaware-formed, Nevada-foreign-qualified** (not a contradiction — the two prior summaries
+    were each describing a different filing layer). `[reported]` Manager named as **David Kling**
+    (Meta's then-VP/Deputy General Counsel per a 2021 SEC filing). `[reported]` Signatory
+    **Pamela Gregorski**, a Corporation Service Company (registered-agent vendor) manager who
+    signs 78 OpenCorporates entities including 4 already-confirmed Meta data-center fronts
+    elsewhere (Orla LLC/IN, Laidley LLC & Pelican Leap LLC/LA, Wurldwide LLC/TX) — this is
+    **pattern evidence, not a Piqua-specific confirmation**. `[inference]` **Disambiguation guard:
+    never merge the J5 LLC / Shaytura LLC entity record with a Meta entity in the graph** — the
+    Meta attribution stays `[reported]` end-to-end, regardless of how strong this pattern reads.
+  - **Prior-ownership lead (uncorroborated):** a single non-primary source (thislocallife.com)
+    reports the land was first held by a "Piqua Land Company" tied to New Albany Company (NACO)
+    before transfer to J5 LLC. `[reference]`, uncorroborated — a lead only, not independently
+    confirmed; pending a primary deed-record check (Miami County Auditor/Recorder) — see
+    Instruments to pull.
 - **Project codename:** "Project Klondike" — `[reported]`, appears firmly in opposition coverage
   but not on the City page, DCD, or cleanview; origin (filing vs. community-coined) is `[open]`.
 - **Location:** north of Farrington Road, east of Washington Road, in the Piqua I-75 Business &
@@ -106,9 +119,18 @@ The developer of record is a shell (J5 LLC / Shaytura LLC); the reported hypersc
   is `[reported]`; the ~174-ac gap vs. this parcel sum is `[open]`.)
 - **Operations target:** ~December 2029 per a candidate-site tracker. `[reported]` — not on the
   City page (which states no target).
-- **Ohio EPA air PTI (backup generators):** `[open]` — no site-specific filing found. Instrument to
-  pull: OEPA DAPC / eDoc, Miami County, entity "J5 LLC" / "Shaytura LLC."
+- **Ohio EPA air PTI (backup generators):** `[open]`, confirmed-negative as of 2026-07-11 — a
+  direct search of OEPA eSuite/DAPC for "J5 LLC" / "Shaytura LLC" / the Farrington Road address
+  found no filing. Re-check on the next sweep; a filing could still land ahead of construction.
 - **NPDES stormwater construction permit:** `[open]` — no site-specific coverage found.
+- **Construction/permanent power vote (2026-07-07):** the Piqua Commission approved a
+  construction-power agreement (city to supply up to 10 MW temporary power during construction,
+  ~$5.13M infrastructure cost paid by J5 via escrow) and gave first reading to a 40-year AES Ohio
+  franchise ordinance for permanent service — approved **3–1**, with **Commissioner Paul Simmons
+  dissenting** (the first recorded Commission dissent on this project; the original November 2025
+  approval was 4-0). `[verified]` Source: Dayton Daily News, "Piqua takes step toward powering
+  planned data center," 2026-07-09. Confirms the power-utility split already on record above:
+  Piqua Power System (AMP muni) for construction, AES Ohio for the 40-yr permanent term.
 
 ### Opposition / litigation
 
@@ -129,20 +151,47 @@ The developer of record is a shell (J5 LLC / Shaytura LLC); the reported hypersc
 Troy (the county seat's sister city, downstream on the Great Miami) has no confirmed data-center
 campus pinned as of 2026-07-02. `[open]` — re-sweep on the next pass.
 
+## 3 — What `SiteProfile.facility` now carries (#1482)
+
+`_TROY_PIQUA.facility` is a **site-plan-grounded** `SiteFacility` (contrast Lima / Fort Wayne,
+which are air-permit-grounded — same distinction the Urbana Technology Hub precedent, #1327,
+established): it records the disclosed non-power attributes (`facility_type`,
+`gross_floor_area_sqft=700000`, `disclosed_investment_usd`, `disclosure_citation`) and an
+`[inference]` IT-load screening bracket (`it_load_citation`), with **`genset_count` / `genset_mw`
+/ `air_permit_citation` left `None`** (no disclosed generation, confirmed-negative air-PTI
+search). The bracket is **52.5 MW low / ~113.75 MW central / 175 MW high**, from the disclosed
+700,000 sq ft gross floor area × the same 75–250 W/sq ft whole-building screening density band
+Urbana uses — **not** bounded by a disclosed cooling design the way Urbana's is, because this
+site's `cooling_model` stays `unknown` (the closed-loop-FAQ-vs-2.0-MGD-agreement conflict is
+#1486's to resolve, not this one's). The ~180 MW candidate-tracker figure (§1, "Power draw") sits
+just above (~3%) the top of this bracket — a `[reported]` cross-check only, never a disclosure.
+This flips the `facility` readiness domain `absent` → `seeded`/`live` (once the
+`economics-demand-pressure` feed is generated) and is recomputed at every `watermark export`.
+
 ## Instruments to pull (priority order)
 
 1. **J5 LLC / Shaytura LLC corporate filing** — resolve the state of formation (Nevada vs.
    Delaware) and confirm the Menlo Park address (the Meta attribution's load-bearing document).
-2. **Miami County Auditor / GIS** — parcel IDs for the three annexed parcels (Statler Farms +
+   **Update (2026-07-11):** the state-of-formation question resolves as Delaware-formed / Nevada-
+   foreign-qualified (not a contradiction); a manager (David Kling) and registered-agent signatory
+   (Pamela Gregorski, CSC) are named `[reported]`/`[inference]` (see §1, "Corporate-filing
+   refresh"). The primary filing document itself is still not ingested into the corpus — that
+   instrument, and independent (non-Hunterbrook) confirmation of the Meta linkage, stay the pull
+   target.
+2. **Piqua Land Company / New Albany Company (NACO) prior-ownership lead** — confirm or refute via
+   the Miami County Auditor/Recorder deed chain (currently a single non-primary, uncorroborated
+   source; see §1).
+3. **Miami County Auditor / GIS** — parcel IDs for the three annexed parcels (Statler Farms +
    329.824-ac + 33-ac); acreage, owner of record, transfer dates. **Also resolve the ~174-ac gap**
    between the documented parcel sum (~1,026 ac) and the City page's ~1,200-ac figure — look for a
    fourth annexed parcel or the source of the larger number.
-3. **City of Piqua** — the executed Water & Wastewater Agreement (Jan 23, 2026) to reconcile the
-   2.0 MGD reservation vs. the closed-loop/domestic-only public messaging.
-4. **OEPA air PTI** — backup generator PTI(s) for the site (SWDO, Miami County, entity "J5 LLC").
-5. **Ohio EPA / EPA ECHO** — the Piqua WWTP NPDES 1PD00008 fact sheet (committed reference) and any
+4. **City of Piqua** — the executed Water & Wastewater Agreement (Jan 23, 2026) to reconcile the
+   2.0 MGD reservation vs. the closed-loop/domestic-only public messaging (#1486).
+5. **OEPA air PTI** — re-check periodically for a backup generator PTI filing (SWDO, Miami County,
+   entity "J5 LLC"); confirmed-negative as of 2026-07-11.
+6. **Ohio EPA / EPA ECHO** — the Piqua WWTP NPDES 1PD00008 fact sheet (committed reference) and any
    data-center stormwater coverage under OHD000001.
-6. **OTCA** — confirm whether any data-center sales-tax exemption was granted.
+7. **OTCA** — confirm whether any data-center sales-tax exemption was granted.
 
 ## Sources
 
@@ -159,3 +208,10 @@ campus pinned as of 2026-07-02. `[open]` — re-sweep on the next pass.
 - Ryan Grissinger tracker (180 MW, ~Dec 2029): [OH-DC-0028](https://ryangrissinger.com/issues/data-centers/OH-DC-0028)
 - Hunterbrook (Meta attribution, investigative): [hntrbrk.com/meta-data-centers](https://hntrbrk.com/meta-data-centers/)
 - Stop Ohio Data Centers (advocacy, leads only): [stopohiodatacenters.org](https://stopohiodatacenters.org/)
+- Dayton Daily News (2026-07-07 construction-power/franchise vote): "Piqua takes step toward
+  powering planned data center" (2026-07-09)
+- OpenCorporates (J5 LLC / Shaytura LLC entity filings; Pamela Gregorski registered-agent
+  cross-reference) and Meta's 2021 SEC filing (David Kling, VP/Deputy General Counsel) —
+  corporate-filing refresh, 2026-07-11
+- thislocallife.com (Piqua Land Company / New Albany Company prior-ownership lead) — a single
+  non-primary source, uncorroborated
