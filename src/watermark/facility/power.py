@@ -342,7 +342,13 @@ def derive_power_basis(*, settings: Settings | None = None) -> PowerBasis | None
         facility_draw=ProvenancedValue.derived(
             round(draw_central, 1),
             "MW",
-            citation=f"{fac.it_load_mw:g} MW IT x PUE {pue_central:g} (band mean) — total facility draw",
+            # Document the same (pue_lo, pue_hi) band that grounds this value's own low/high,
+            # not just the central PUE — matching how the sibling ``pue`` field's citation
+            # already documents its band.
+            citation=(
+                f"{fac.it_load_mw:g} MW IT x PUE {pue_central:g} (band mean of {pue_lo:g} "
+                f"efficient .. {pue_hi:g} cooling-dominated) — total facility draw"
+            ),
             low=round(fac.it_load_mw * pue_lo, 1),
             high=round(fac.it_load_mw * pue_hi, 1),
         ),

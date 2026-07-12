@@ -4,7 +4,7 @@ facility_draw_mw:
   unit: MW
   source: derived
   citation: 'PowerBasis.facility_draw central (#87): 113.75 MW IT x PUE 1.265 (band
-    mean) — total facility draw'
+    mean of 1.1 efficient .. 1.43 cooling-dominated) — total facility draw'
   confidence: medium
   asof: null
   low: 125.1
@@ -40,7 +40,7 @@ demand_share_pct:
   value: 0.7
   unit: percent
   source: derived
-  citation: campus 1135 GWh / Ohio retail 161934 GWh
+  citation: campus 1134.5 GWh / Ohio retail 161934 GWh
   confidence: medium
   asof: null
   low: null
