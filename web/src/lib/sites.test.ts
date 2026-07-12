@@ -204,6 +204,8 @@ describe("facility-status rail — the 4-stage facility clock (#401)", () => {
     expect(facilityStageIndex(facilityStatus("fort-wayne"))).toBe(3); // live
     expect(facilityStatus("urbana")).toBe("confirmed"); // Urbana Technology Hub disclosed (#1327)
     expect(facilityStageIndex(facilityStatus("urbana"))).toBe(1);
+    expect(facilityStatus("troy-piqua")).toBe("confirmed"); // Project Klondike disclosed (#1482)
+    expect(facilityStageIndex(facilityStatus("troy-piqua"))).toBe(1);
   });
 
   it("defaults an undisclosed facility to step 0 (investigation)", () => {

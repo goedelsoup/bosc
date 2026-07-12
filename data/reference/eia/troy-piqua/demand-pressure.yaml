@@ -1,0 +1,114 @@
+area: OH
+facility_draw_mw:
+  value: 143.9
+  unit: MW
+  source: derived
+  citation: 'PowerBasis.facility_draw central (#87): 113.75 MW IT x PUE 1.265 (band
+    mean) — total facility draw'
+  confidence: medium
+  asof: null
+  low: 125.1
+  high: 162.7
+load_factor:
+  value: 0.9
+  unit: fraction
+  source: assumption
+  citation: data-center capacity utilization ~0.9 (near-flat 24x7 load); assumption
+  confidence: low
+  asof: null
+  low: null
+  high: null
+annual_consumption_gwh:
+  value: 1134.5
+  unit: GWh/yr
+  source: derived
+  citation: 143.9 MW x 8760 h x 0.9 load factor
+  confidence: medium
+  asof: null
+  low: null
+  high: null
+state_retail_sales_gwh:
+  value: 161934.0
+  unit: GWh/yr
+  source: connector
+  citation: EIA ELEC.SALES.OH-ALL.A (2025); 161934 million kWh
+  confidence: high
+  asof: null
+  low: null
+  high: null
+demand_share_pct:
+  value: 0.7
+  unit: percent
+  source: derived
+  citation: campus 1135 GWh / Ohio retail 161934 GWh
+  confidence: medium
+  asof: null
+  low: null
+  high: null
+avg_household_kwh_yr:
+  value: 10500.0
+  unit: kWh/yr
+  source: assumption
+  citation: US avg residential use ~10,500 kWh/household/yr (EIA FAQ); assumption
+  confidence: low
+  asof: null
+  low: null
+  high: null
+households_equivalent:
+  value: 108048.0
+  unit: households
+  source: derived
+  citation: campus 1134.5 GWh / 10500 kWh per household
+  confidence: medium
+  asof: null
+  low: null
+  high: null
+residential_price:
+  value: 16.96
+  unit: cents/kWh
+  source: connector
+  citation: EIA ELEC.PRICE.OH-RES.A (2025)
+  confidence: high
+  asof: null
+  low: null
+  high: null
+transmission_coefficient:
+  value: 0.75
+  unit: ratio
+  source: assumption
+  citation: stylized demand-to-price transmission (%price per %demand) under tight
+    short-run supply — the low/high band is a SCREENING sensitivity, not an estimated
+    elasticity or forecast
+  confidence: low
+  asof: null
+  low: 0.5
+  high: 1.0
+price_pressure_pct_low:
+  value: 0.35
+  unit: percent
+  source: derived
+  citation: 0.70% demand x 0.5 transmission (STYLIZED lower bound)
+  confidence: low
+  asof: null
+  low: null
+  high: null
+price_pressure_pct_high:
+  value: 0.7
+  unit: percent
+  source: derived
+  citation: 0.70% demand x 1 transmission (STYLIZED upper bound)
+  confidence: low
+  asof: null
+  low: null
+  high: null
+method: 'facility draw (PUE-adjusted, #87) -> annual GWh -> share of EIA state retail
+  sales + households-equivalent; price pressure = demand share x transmission coefficient
+  (STYLIZED screening sensitivity, not a forecast)'
+caveats:
+- The demand share and households-equivalent are the robust, EIA-cited headline; the
+  price-pressure band is a STYLIZED screening sensitivity, not a forecast of retail
+  bills.
+- The campus buys at wholesale/industrial rates, not the residential price shown —
+  residential price is the consumer-impact reference, not the campus bill.
+- 'Facility draw is itself an assumption-laden estimate (air-permit IT load x PUE
+  band, #87); the load factor and transmission coefficient are assumptions.'

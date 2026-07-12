@@ -1693,7 +1693,68 @@ _TROY_PIQUA = SiteProfile(
     # the conservative regulatory receptor — the Troy-gage LP3 value below stays the local passby floor.
     passby_primary_cfs=44.75,
     passby_secondary_cfs=0.0,  # [open] Great Miami at Piqua (03262500) daily record starts 2012 (<20 yr) — no derived 7Q10; passby pending
-    facility=None,  # [open] the I-75-corridor data-center dimension is the research target (#475)
+    # facility CONFIRMED (#1482) — "Project Klondike" (J5 LLC dba Shaytura LLC), Piqua I-75
+    # Business & Industrial Park, disclosed on the City of Piqua's project page + approved by
+    # the Piqua City Commission 4-0 on 2025-11-03. This is a SITE-PLAN-grounded facility, not an
+    # air-permit one (contrast Lima / Fort Wayne): the disclosed non-power attributes (type /
+    # 700k sqft / ~$1B) are populated, but the MW load is NOT disclosed — it is a floor-area
+    # SCREENING bracket ([inference], see it_load_citation), never presented as a disclosure.
+    # cooling_model stays UNKNOWN (deliberately not picked) — the City's closed-loop FAQ and the
+    # 2.0 MGD water-agreement reservation conflict, and resolving that tension is #1486's job,
+    # not this one. See data/extracted/troy-piqua/data-centers.md.
+    facility=SiteFacility(
+        it_load_mw=113.75,  # [inference] SCREENING central — NOT disclosed; see it_load_citation
+        it_load_low_mw=52.5,  # 700k sqft x 75 W/sqft whole-building IT density (low)
+        it_load_high_mw=175.0,  # 700k sqft x 250 W/sqft whole-building IT density (high)
+        it_load_citation=(
+            "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/"
+            "air-permit MW stays [open] (a direct OEPA eSuite/DAPC search for 'J5 LLC' / "
+            "'Shaytura LLC' / the Farrington Road address found no PTI filing, confirmed-negative "
+            "as of 2026-07-11). Derived from the disclosed 700,000 sq ft gross floor area (two "
+            "~350,000 sq ft buildings; City of Piqua project page piquaoh.gov/1673, approved by "
+            "the Piqua City Commission 4-0 on 2025-11-03) x the same whole-building IT "
+            "power-density screening band used elsewhere in the network (75-250 W/sq ft, the "
+            "Urbana Technology Hub precedent, #1327): 52.5 MW low, ~113.75 MW central, 175 MW "
+            "high. Unlike Urbana, this band is NOT bounded by a disclosed cooling design — the "
+            "facility's cooling_model stays UNKNOWN pending #1486 (the unreconciled closed-loop-"
+            "FAQ-vs-2.0-MGD-water-agreement conflict). A candidate-site tracker (ryangrissinger.com, "
+            "OH-DC-0028) reports ~180 MW peak IT for the initial two buildings — [reported], not "
+            "officially disclosed (the City page and Data Center Dynamics state capacity figures "
+            "'weren't shared') — sitting just above (~3%) the top of this screening bracket, "
+            "consistent within rounding for a screening estimate, not a reconciliation. Replace "
+            "with the disclosed load when the 40-yr AES Ohio franchise ordinance's load schedule, "
+            "an air permit, or a PJM interconnection filing surfaces it."
+        ),
+        # No disclosed gensets or air permit (site-plan-grounded) → genset/backup basis and the
+        # air-dispatch fleet model are absent; genset_count/genset_mw/air_permit_citation stay None.
+        facility_type='data-center campus ("Project Klondike"; developer of record J5 LLC dba Shaytura LLC)',  # [verified]
+        gross_floor_area_sqft=700_000,  # [verified] two ~350,000 sq ft buildings
+        disclosed_investment_usd=1_000_000_000,  # [verified] "$1 billion plus" fixed-asset investment
+        disclosure_citation=(
+            "[verified] Disclosed on the City of Piqua's official project page "
+            "(piquaoh.gov/1673/Data-Center-Project); approved by the Piqua City Commission 4-0 on "
+            "2025-11-03 (emergency resolution, three readings waived); Data Center Dynamics 'Data "
+            "center project coming to Piqua, Ohio'; Miami Valley Today commission coverage. Two "
+            "~350,000 sq ft buildings (~700,000 sq ft total), '$1 billion plus' fixed-asset "
+            "investment plus ~$76M developer-funded utility infrastructure, in the Piqua I-75 "
+            "Business & Industrial Park (~1,026 ac assembled across three annexed parcels "
+            "2020-2025). See data/extracted/troy-piqua/data-centers.md."
+        ),
+        # Cooling archetype (#1054): deliberately left UNKNOWN — a real, unresolved conflict
+        # between two public disclosures (not a case of "cooling method not disclosed"). #1486
+        # (the standing water & regulatory watch) owns reconciling it; never pick a side here.
+        cooling_model=CoolingModelType.UNKNOWN,
+        cooling_model_source="reference",
+        cooling_model_citation=(
+            "[reference] UNRESOLVED, deliberately not picked: the City's public FAQ describes "
+            "closed-loop cooling with only an 'initial fill-up' + occasional top-offs "
+            "(domestic-only ongoing use), but the negotiated Water & Wastewater Agreement "
+            "(effective 2026-01-23) reserves up to 500,000 GPD (Tier I) scaling to 2.0 MGD "
+            "(Tier II / full operation) — these two public disclosures conflict. Tracked at #1486 "
+            "(the standing water & regulatory watch); see "
+            "data/extracted/troy-piqua/data-centers.md, 'Water / hydrology hook'."
+        ),
+    ),
     serving_utility_citation="EIA-861 2024 Service_Territory: Miami County, OH is split — Dayton Power & Light (AES Ohio, #4922) serves Troy + most of the county; the City of Piqua municipal (#15095) serves Piqua. Pinned to DP&L #4922 (county-dominant IOU); the Piqua-muni share is [inference]. [verified]",
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(

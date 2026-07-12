@@ -292,14 +292,15 @@ def test_backdrop_staged_site_exports_at_backdrop_tier(
         assert domains[above_floor] == "absent", f"{slug} {above_floor} must not scaffold"
 
 
-def test_troy_piqua_exports_at_backdrop_tier(tmp_path_factory: pytest.TempPathFactory) -> None:
-    """Troy/Piqua's floor (economics-baseline, consumer-energy, rsei) is committed (#1481),
-    so it joins the Backdrop cohort above — but its ``record`` domain is ``seeded``, not
-    ``absent``: one in-scope DMR extraction sits below ``RECORD_LIVE_THRESHOLD``, and two more
-    real extractions are orphaned by a corpus-scope gap tracked separately (#1484). Its own
-    test rather than the shared parametrize group above, since that group asserts ``record``
-    stays fully unscaffolded."""
-    out = tmp_path_factory.mktemp("backdrop-troy-piqua") / "b"
+def test_troy_piqua_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) -> None:
+    """Troy/Piqua's floor (economics-baseline, consumer-energy, rsei) is committed (#1481), and
+    the disclosed "Project Klondike" ``SiteFacility`` + its demand-pressure feed (#1482) lift
+    ``facility`` to ``live`` — one above-floor domain live over the floor is enough for ``case``.
+    ``record`` stays ``seeded``, not ``absent``: one in-scope DMR extraction sits below
+    ``RECORD_LIVE_THRESHOLD``, and two more real extractions are orphaned by a corpus-scope gap
+    tracked separately (#1484). Its own test rather than the shared parametrize group above,
+    since that group asserts ``record``/``facility`` stay fully unscaffolded."""
+    out = tmp_path_factory.mktemp("case-troy-piqua") / "b"
     settings = Settings(data_dir=REPO_ROOT / "data", site="troy-piqua")
     export_bundle(
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
@@ -307,10 +308,10 @@ def test_troy_piqua_exports_at_backdrop_tier(tmp_path_factory: pytest.TempPathFa
     manifest = _manifest(out)
     assert manifest["contract_version"] == "1.24.0"
     readiness = manifest["readiness"]
-    assert readiness["tier"] == "backdrop", f"troy-piqua should be a Backdrop site, got {readiness}"
+    assert readiness["tier"] == "case", f"troy-piqua should be a Case site, got {readiness}"
     domains = readiness["domains"]
     assert domains["backdrop"] == "live"
-    assert domains["facility"] == "absent"
+    assert domains["facility"] == "live"
     assert domains["places"] == "absent"
     assert domains["record"] == "seeded"
     assert domains["story"] == "absent"
