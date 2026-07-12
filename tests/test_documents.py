@@ -220,9 +220,14 @@ def test_extract_notice_attaches_provenance() -> None:
         contract_execution_date="2025-05-15",
         instrument_no="202606250006699",
     )
-    extraction = extract_notice(_doc(), extractor=_FakeExtractor(notice), pdf=_FakePdf(pages=21))  # type: ignore[arg-type]
+    doc = _doc()
+    extractor = _FakeExtractor(notice)
+    extraction = extract_notice(doc, extractor=extractor, pdf=_FakePdf(pages=21))  # type: ignore[arg-type]
     assert isinstance(extraction, NoticeExtraction)
     assert extraction.kind == "notice"
+    assert extraction.doc_id == doc.doc_id
+    assert extraction.source_path == str(doc.path)
+    assert extraction.dpi == 200  # _NOTICE_DPI; doc is a PDF, not a raster source
     assert extraction.notice.building_footprint_sf == 283497
     assert extraction.notice.contract_execution_date == "2025-05-15"
     # notice is vision-primary but reads only its own substantive pages, not an
@@ -230,6 +235,11 @@ def test_extract_notice_attaches_provenance() -> None:
     # the 21-page source.
     assert extraction.pages_read == [0, 1]
     assert extraction.image_pages_read == [0, 1]
+    # The extractor received exactly the first 2 pages' text/images (#613: an
+    # honest image_pages_read means the model only ever saw what's recorded there).
+    assert len(extractor.calls) == 1
+    assert extractor.calls[0]["images"] == [b"\x89PNG-fake", b"\x89PNG-fake"]
+    assert extractor.calls[0]["context"] == "text 0\n\ntext 1"
 
 
 def test_extract_document_dispatch_and_unknown() -> None:
