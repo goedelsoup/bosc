@@ -28,13 +28,19 @@ storage:
 - relpath: extracted/recorder/202604210003890.deed.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/recorder/202606250006699.notice.yaml
+  media_type: application/x-yaml
+  lfs: false
 refresh:
   cadence: static
 provenance: document
 tags:
 - recorder
 - deeds
+- notices
 - land-assembly
 - parcels
-notes: One file per deed — grantor/grantee, parcels, consideration, and dates read from the instrument
-  image/text and never inferred; the …-amazon-deed file is the port-authority conveyance.
+notes: One file per deed/notice — grantor/grantee, parcels, consideration, and dates read from
+  the instrument image/text and never inferred; the …-amazon-deed file is the port-authority
+  conveyance. 202606250006699.notice.yaml is a Notice of Commencement (R.C. 1311.04), not a
+  conveyance.

@@ -29,10 +29,14 @@ Three estimators of the campus IT load, then a shared accelerator chain:
   coverage fraction -> building floor area x a data-hall white-space fraction ->
   rack count at an AI rack density (40-140 kW/rack) -> IT power. LAND IS NOT FLOOR
   AREA, and no building footprint is documented in the 95% SPS plans (sheet
-  1A-C-3104 is grading & storm only). This method shows the physical UPPER ENVELOPE
-  the land could hold; it lands far above the power method precisely because POWER,
-  not floor space, is the binding constraint — which corroborates that the
-  power-based figure is the operative one. Every input is an assumption.
+  1A-C-3104 is grading & storm only) — a primary-source footprint figure IS now on
+  record from a different instrument (283,497 sf, the notarized Notice of
+  Commencement, `recorder/202606250006699.notice.yaml`, item 1), but this
+  calculation still derives floor area from land x an assumed coverage fraction
+  rather than consuming that figure directly. This method shows the physical UPPER
+  ENVELOPE the land could hold; it lands far above the power method precisely
+  because POWER, not floor space, is the binding constraint — which corroborates
+  that the power-based figure is the operative one. Every input is an assumption.
 
 The methods are reported as a bracket. The conclusion is robust to their
 disagreement: even the conservative power method puts the facility at a
