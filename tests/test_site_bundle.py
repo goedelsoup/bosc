@@ -319,6 +319,19 @@ def test_troy_piqua_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactor
     assert domains["record"] == "live"
     assert domains["story"] == "absent"
 
+    # ``record`` is live because the site owns exactly its three real, in-scope extractions
+    # (#1484) — the NPDES permit, its fact sheet, and the DMR — not scaffolding: assert the
+    # records feed holds precisely those three artifacts by their extracted-tree source paths.
+    records = _rows(out, _feeds_by_name(out)["records"])
+    assert {r["rel"] for r in records} == {
+        "oepa/troy-piqua/1PD00008.npdes.yaml",
+        "oepa/troy-piqua/1PD00008.fs.npdes.yaml",
+        "troy-piqua/wwtp-oh0027049.dmr.yaml",
+    }, (
+        f"records feed should hold exactly the three in-scope extractions, got {sorted(r['rel'] for r in records)}"
+    )
+    assert len(records) == 3
+
 
 @pytest.mark.parametrize("slug", ["coshocton", "piketon", "sandusky"])
 def test_stub_site_exports_at_stub_tier(

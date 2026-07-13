@@ -21,7 +21,7 @@
       "outfalls": [
         "001"
       ],
-      "note": "Facility address and discharge address are the same (121 Bridge Street). Outfall 001 identified from tables (e.g., Table 2, Table 9, Table 16). Upstream monitoring station 801 and downstream monitoring station 901 are instream stations, not outfalls."
+      "note": "Facility address and discharge address are the same (121 Bridge Street). Outfall 001 identified from the fact-sheet table of contents (pdf page index 2 / printed p.3, within pages_read), which titles Table 2 (Effluent Violations for Outfall 001), Table 9 (Projected Effluent Quality (PEQ) for Outfall 001), and Table 16 (Final Effluent Limits for Outfall 001). Upstream monitoring station 801 and downstream monitoring station 901 are instream stations, not outfalls."
     },
     "approximate_paths": [],
     "citation": {
@@ -58,7 +58,7 @@
       "facility_address": "121 Bridge Street, Piqua, Ohio, Miami County",
       "discharge_address": null,
       "receiving_water": "Great Miami River",
-      "stream_network": "Great Miami River → Ohio River (Great Miami basin, Miami County, OH; HUC-8 05080002)",
+      "stream_network": "Great Miami River",
       "outfalls": [
         "1PD00008001",
         "1PD00008300",
