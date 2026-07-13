@@ -144,19 +144,53 @@ def iter_reference_chunks(reference_dir: Path) -> Iterator[Chunk]:
                 )
 
 
+def _corpus_scope(site: str) -> tuple[str, ...] | None:
+    """The extracted-tree prefixes that belong to *site* — the same scope the export /
+    timeline / entities path reads (#1504).
+
+    Resolved from the site's registered :class:`~watermark.sites.SiteProfile` via
+    :func:`~watermark.sites.effective_corpus_scope`, so ``retrieve_corpus(site=…)`` and the
+    site bundle agree on the corpus. Lima (the reference build) is the whole-tree catch-all
+    (``None``); a registered peer reads only the prefixes its profile names (its own
+    ``<slug>/`` plus any jurisdiction prefix like ``idem/fort-wayne``). An unregistered slug
+    falls back to that same default (``(slug,)``, or whole-tree for the corpus home) so the
+    iterator never raises on an ad-hoc ``watermark index --site`` value.
+    """
+    from watermark.sites import SITES, effective_corpus_scope
+
+    profile = SITES.get(site)
+    if profile is not None:
+        return effective_corpus_scope(profile)
+    return None if site == _CORPUS_HOME else (site,)
+
+
 def iter_extracted_chunks(extracted_dir: Path, *, site: str) -> Iterator[Chunk]:
     """Yield chunks from the *site*'s extracted YAML artifacts under *extracted_dir*.
 
-    Lima's artifacts live at the root; every other site lives under its slug subdir.
+    Membership is decided by the site's corpus scope (:func:`_corpus_scope`) through the same
+    ``relpath_in_scope`` predicate the export/timeline/entities path uses (#1504) — so a site
+    whose records live under a collection prefix (Fort Wayne's ``idem/fort-wayne``, Urbana's
+    ``oepa/urbana``) is reachable by ``retrieve_corpus(site=…)``, not just its bare ``<slug>/``
+    subdir. Lima (scope ``None``) indexes the whole tree.
+
+    A file that lives under both Lima's whole tree and a peer's scope is indexed once per site
+    (same ``chunk_id``, different ``site`` column) — the pre-existing behavior for every peer's
+    ``<slug>/`` subtree, kept consistent here. Narrowing Lima's pass to exclude registered peer
+    prefixes is the separate Lima-bundle concern (#1505).
     """
-    root = extracted_dir if site == _CORPUS_HOME else extracted_dir / site
-    if not root.exists():
+    from watermark.pipeline.corpus import relpath_in_scope
+
+    if not extracted_dir.exists():
         return
 
-    for path in sorted(root.rglob("*.yaml")):
-        rel_to_root = path.relative_to(root)
-        collection = rel_to_root.parts[0] if len(rel_to_root.parts) > 1 else ""
-        source_rel = str(path.relative_to(extracted_dir))
+    scope = _corpus_scope(site)
+
+    for path in sorted(extracted_dir.rglob("*.yaml")):
+        rel = path.relative_to(extracted_dir)
+        source_rel = str(rel)
+        if not relpath_in_scope(source_rel, scope):
+            continue
+        collection = rel.parts[0] if len(rel.parts) > 1 else ""
 
         try:
             text = path.read_text(encoding="utf-8")

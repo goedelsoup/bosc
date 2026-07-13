@@ -291,6 +291,43 @@ def test_iter_extracted_chunks_non_lima_missing(tmp_path: Path) -> None:
     assert chunks == []
 
 
+def test_iter_extracted_chunks_honors_corpus_scope(tmp_path: Path) -> None:
+    """#1504: a peer whose records live under a collection prefix (Fort Wayne's
+    ``idem/fort-wayne``) is indexed too, not just its bare ``<slug>/`` subdir — and it never
+    picks up another site's slug subtree or Lima's un-slugged collections.
+    """
+    # Fort Wayne's registered scope is ("fort-wayne", "idem/fort-wayne").
+    (tmp_path / "fort-wayne").mkdir()
+    (tmp_path / "fort-wayne" / "wwtp.yaml").write_text("permit: DMR\n", encoding="utf-8")
+    (tmp_path / "idem" / "fort-wayne").mkdir(parents=True)
+    (tmp_path / "idem" / "fort-wayne" / "wqc.yaml").write_text("permit: WQC\n", encoding="utf-8")
+    # Out-of-scope neighbours: another peer's subtree and a Lima-only collection.
+    (tmp_path / "troy-piqua").mkdir()
+    (tmp_path / "troy-piqua" / "dmr.yaml").write_text("permit: other\n", encoding="utf-8")
+    (tmp_path / "recorder").mkdir()
+    (tmp_path / "recorder" / "deed.yaml").write_text("deed: {}\n", encoding="utf-8")
+
+    chunks = list(iter_extracted_chunks(tmp_path, site="fort-wayne"))
+    sources = {c.source_path for c in chunks}
+    assert sources == {"fort-wayne/wwtp.yaml", "idem/fort-wayne/wqc.yaml"}
+    assert all(c.site == "fort-wayne" for c in chunks)
+
+
+def test_iter_extracted_chunks_lima_indexes_whole_tree(tmp_path: Path) -> None:
+    """Lima (the reference build, scope ``None``) still indexes every subtree, including the
+    collection-prefixed peer records — the pre-existing whole-tree behavior (#1505).
+    """
+    (tmp_path / "recorder").mkdir()
+    (tmp_path / "recorder" / "deed.yaml").write_text("deed: {}\n", encoding="utf-8")
+    (tmp_path / "idem" / "fort-wayne").mkdir(parents=True)
+    (tmp_path / "idem" / "fort-wayne" / "wqc.yaml").write_text("permit: WQC\n", encoding="utf-8")
+
+    chunks = list(iter_extracted_chunks(tmp_path, site="lima"))
+    sources = {c.source_path for c in chunks}
+    assert sources == {"recorder/deed.yaml", "idem/fort-wayne/wqc.yaml"}
+    assert all(c.site == "lima" for c in chunks)
+
+
 # ---------------------------------------------------------------------------
 # #808 — Settings wiring
 # ---------------------------------------------------------------------------

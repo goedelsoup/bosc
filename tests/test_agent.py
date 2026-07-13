@@ -104,6 +104,45 @@ async def test_extraction_tools_scope_to_the_active_sites_subtree(
     assert "x: 1" in got
 
 
+async def test_extraction_tools_reach_collection_prefixed_records(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # #1504: a peer whose corpus_relpaths name a collection prefix (Fort Wayne's
+    # `idem/fort-wayne`) can list/read those records too — not just its bare `<slug>/` subdir —
+    # and still never picks up another site's subtree or Lima's un-slugged collections.
+    settings = Settings(
+        site="fort-wayne", data_dir=tmp_path
+    )  # scope ("fort-wayne", "idem/fort-wayne")
+    (settings.extracted_dir / "fort-wayne").mkdir(parents=True)
+    (settings.extracted_dir / "fort-wayne" / "wwtp.yaml").write_text("a: 1\n", encoding="utf-8")
+    (settings.extracted_dir / "idem" / "fort-wayne").mkdir(parents=True)
+    (settings.extracted_dir / "idem" / "fort-wayne" / "wqc.yaml").write_text(
+        "permit: WQC\n", encoding="utf-8"
+    )
+    # Out-of-scope neighbours.
+    (settings.extracted_dir / "recorder").mkdir(parents=True)
+    (settings.extracted_dir / "recorder" / "lima-deed.yaml").write_text("y: 2\n", encoding="utf-8")
+    monkeypatch.setattr(tools, "get_settings", lambda: settings)
+
+    listing = (await tools.list_extractions.handler({}))["content"][0]["text"]
+    assert "fort-wayne/wwtp.yaml" in listing
+    assert "idem/fort-wayne/wqc.yaml" in listing  # the #1504 record, previously invisible
+    assert "lima-deed.yaml" not in listing
+    # read by the full data/extracted-relative key as printed…
+    by_rel = (await tools.read_extraction.handler({"filename": "idem/fort-wayne/wqc.yaml"}))[
+        "content"
+    ][0]["text"]
+    assert "permit: WQC" in by_rel
+    # …and by bare basename.
+    by_name = (await tools.read_extraction.handler({"filename": "wqc.yaml"}))["content"][0]["text"]
+    assert "permit: WQC" in by_name
+    # an out-of-scope file stays unreachable.
+    miss = (await tools.read_extraction.handler({"filename": "lima-deed.yaml"}))["content"][0][
+        "text"
+    ]
+    assert miss.startswith("Not found")
+
+
 async def test_reconcile_estimate_rejects_non_generated(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:

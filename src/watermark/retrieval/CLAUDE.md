@@ -10,8 +10,11 @@ cosine-similarity retrieval to the research agent. Defers to the root
 - **Ingestion is three corpus sources, each with stable provenance (`ingestion.py`).**
   `iter_document_chunks` (`data/documents/**`, one chunk per PDF page via the text layer),
   `iter_reference_chunks` (`data/reference/**`, README/CSV/YAML/JSON — CSV rows kept whole),
-  `iter_extracted_chunks` (`data/extracted/**` YAML, **site-scoped** — Lima indexes the whole
-  tree, a peer only its `<site>/` subtree). Chunk ids are hierarchical (`<kind>::<relpath>::<i>`)
+  `iter_extracted_chunks` (`data/extracted/**` YAML, **site-scoped by the site's
+  `effective_corpus_scope`** via the same `relpath_in_scope` predicate the export path uses, so
+  a peer whose records live under a collection prefix — `idem/fort-wayne`, `oepa/urbana` — is
+  reachable, not just its bare `<site>/` subdir (#1504); Lima indexes the whole tree). Chunk ids
+  are hierarchical (`<kind>::<relpath>::<i>`)
   so re-indexing is deterministic/dedupable; each chunk carries `site`, `collection`, `doc_kind`,
   `source_path`, `page`, and a `provenance` dict. Long text splits on paragraphs at a max width.
 - **Embeddings are offline-first and pluggable (`embeddings.py`).** The default provider is
