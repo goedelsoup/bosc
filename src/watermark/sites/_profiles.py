@@ -1752,7 +1752,7 @@ _TROY_PIQUA = SiteProfile(
         "piqua-wwtp": (
             "Great Miami River",
             # OEPA NPDES 1PD00008 / App. OH0027049 (Piqua WWTP), fact sheet Public Notice
-            # 22-006-011 (2022-06-21) — extracted/oepa/1PD00008.fs.npdes.yaml + …/1PD00008.npdes.yaml.
+            # 22-006-011 (2022-06-21) — extracted/oepa/troy-piqua/1PD00008.fs.npdes.yaml + …/1PD00008.npdes.yaml.
             # Outfall 001 → Great Miami River (→ Ohio River; HUC-8 05080002); average design flow
             # 8.7 MGD (13.46 cfs), peak hydraulic 22.5 MGD. WLA basis (fact-sheet Table 13):
             # GMR above Sidney 7Q10 = 24.0 cfs annual (USGS #03261500, 1927-2021). Reported 2023
@@ -1760,7 +1760,7 @@ _TROY_PIQUA = SiteProfile(
             # data/extracted/troy-piqua/wwtp-oh0027049.dmr.yaml [verified — OEPA fact sheet + ECHO DMR].
             "OEPA NPDES 1PD00008 (OH0027049, Piqua WWTP) → Great Miami River; design 8.7 MGD, "
             "actual ~3.224 MGD (2023 DMR); fact-sheet 7Q10 24.0 cfs (GMR above Sidney, USGS 03261500) "
-            "— data/extracted/oepa/1PD00008.fs.npdes.yaml [verified]",
+            "— data/extracted/oepa/troy-piqua/1PD00008.fs.npdes.yaml [verified]",
         ),
     },
     abstraction_gage="03262700",  # [verified] Great Miami River at Troy OH
@@ -1845,6 +1845,12 @@ _TROY_PIQUA = SiteProfile(
     lmp_pnode_id=34508503,  # [verified] PJM DAY zone (AES Ohio / Dayton Power & Light)
     lmp_pnode_name="DAY",
     county_name="Miami County, OH",  # [verified]
+    # Corpus scope (#1484): the OEPA document extractions mirror the source tree under
+    # oepa/troy-piqua/ (like the docs at data/documents/oepa/troy-piqua/), so the effective
+    # scope must name that collection prefix alongside the site's own slug — else the Piqua
+    # WWTP permit + fact sheet orphan out of this site's record/timeline/entities and leak into
+    # Lima's whole-tree corpus. Same shape as fort-wayne (idem/fort-wayne) and urbana (oepa/urbana).
+    corpus_relpaths=("troy-piqua", "oepa/troy-piqua"),
 )
 
 

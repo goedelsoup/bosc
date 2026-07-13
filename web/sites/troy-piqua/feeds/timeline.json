@@ -1,1 +1,44 @@
-[]
+[
+  {
+    "date": "2022-06-21",
+    "category": "npdes_public_notice",
+    "title": "NPDES 1PD00008*WD (Piqua Wastewater Treatment Plant (WWTP)) — public notice",
+    "ref": "1PD00008*WD",
+    "parties": [
+      "City of Piqua, 201 West Water Street, Piqua, OH 45356",
+      "Piqua Wastewater Treatment Plant (WWTP)"
+    ],
+    "detail": "action renewal; receiving Great Miami River",
+    "source": "oepa/troy-piqua/1PD00008.fs.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/troy-piqua/1PD00008.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "2022-07-28",
+    "category": "npdes_comment_deadline",
+    "title": "NPDES 1PD00008*WD (Piqua Wastewater Treatment Plant (WWTP)) — comment period ends",
+    "ref": "1PD00008*WD",
+    "parties": [
+      "City of Piqua, 201 West Water Street, Piqua, OH 45356",
+      "Piqua Wastewater Treatment Plant (WWTP)"
+    ],
+    "detail": "",
+    "source": "oepa/troy-piqua/1PD00008.fs.npdes.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "oepa/troy-piqua/1PD00008.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  }
+]

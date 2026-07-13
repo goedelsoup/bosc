@@ -1,5 +1,85 @@
 [
   {
+    "rel": "oepa/troy-piqua/1PD00008.fs.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "Piqua Wastewater Treatment Plant (WWTP)",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "facility_name": "Piqua Wastewater Treatment Plant (WWTP)",
+      "permit_no": "1PD00008*WD",
+      "permit_action": "renewal",
+      "applicant": "City of Piqua, 201 West Water Street, Piqua, OH 45356",
+      "application_no": "OH0027049",
+      "public_notice_no": "22-006-011",
+      "public_notice_date": "2022-06-21",
+      "comment_period_end": "2022-07-28",
+      "facility_address": "121 Bridge Street, Piqua, OH 45356, Miami County",
+      "discharge_address": "121 Bridge Street, Piqua, OH 45356, Miami County",
+      "receiving_water": "Great Miami River",
+      "stream_network": "Great Miami River to Ohio River",
+      "outfalls": [
+        "001"
+      ],
+      "note": "Facility address and discharge address are the same (121 Bridge Street). Outfall 001 identified from the fact-sheet table of contents (pdf page index 2 / printed p.3, within pages_read), which titles Table 2 (Effluent Violations for Outfall 001), Table 9 (Projected Effluent Quality (PEQ) for Outfall 001), and Table 16 (Final Effluent Limits for Outfall 001). Upstream monitoring station 801 and downstream monitoring station 901 are instream stations, not outfalls."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/troy-piqua/1PD00008.fs.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/troy-piqua/1PD00008.fs.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/troy-piqua/1PD00008.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "City of Piqua wastewater treatment works",
+    "confidence": "high",
+    "warnings": [
+      "No public notice number or comment period end date present in the document",
+      "Permit action not explicitly stated; 'renewal' inferred from context",
+      "Stream network downstream of Great Miami River not stated in document"
+    ],
+    "fields": {
+      "facility_name": "City of Piqua wastewater treatment works",
+      "permit_no": "1PD00008*WD",
+      "permit_action": "renewal",
+      "applicant": "City of Piqua",
+      "application_no": "OH0027049",
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "121 Bridge Street, Piqua, Ohio, Miami County",
+      "discharge_address": null,
+      "receiving_water": "Great Miami River",
+      "stream_network": "Great Miami River",
+      "outfalls": [
+        "1PD00008001",
+        "1PD00008300",
+        "1PD00008581"
+      ],
+      "note": "Action Date: August 9, 2022. Effective Date: September 1, 2022. Expiration Date: August 31, 2027. No public notice number or comment period end date found in the document. Outfall 1PD00008300 is SSO monitoring; 1PD00008581 is sludge monitoring. Permit action inferred as renewal based on context (existing facility, expiration/effective dates); no explicit label present. Basin attribution: Great Miami basin, Miami County — not a Little Miami / Wilmington discharger."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/troy-piqua/1PD00008.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/troy-piqua/1PD00008.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
     "rel": "troy-piqua/wwtp-oh0027049.dmr.yaml",
     "group": "permits-npdes",
     "title": "PIQUA WWTP",
