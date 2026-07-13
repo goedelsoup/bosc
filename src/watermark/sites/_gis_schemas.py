@@ -751,3 +751,88 @@ FORT_WAYNE_ZONING_SCHEMA = GisZoningSchema(
         ),
     ),
 )
+
+
+# Richland County, OH parcels (Mansfield watershed point; #1431). The county GIS is an on-prem
+# ArcGIS Server 10.3 (maps.richlandcountyoh.us) whose Parcel_CAMA MapServer layer 0 ('Parcel')
+# joins the auditor CAMA to parcel geometry: parcel id, owner(s), situs + owner mailing address,
+# Ohio DTE land-use code, legal acreage, appraised values, tax/school district, and an epoch-millis
+# sale date. Two Richland quirks vs. the Champaign/Van Wert ArcGIS-Online twins: (1) the server is
+# 10.3, so ``f=geojson`` is NOT supported (only Esri ``f=json`` — the geojson pull for the committed
+# parcel-assemblage is done by an esri-rings->GeoJSON recipe, see data/reference/mansfield/README.md;
+# owner/attribute queries via ``f=json`` work unchanged); and (2) the auditor ZONING and USEDSCRP
+# columns are UNPOPULATED on this layer, so zoning is never read from CAMA here (the I-1->I-2 status
+# on the Airport West lots is the Ordinance 25-086 instrument, not an auditor attribute). No
+# federal-enclave defense scan is wired -> defense=None. Field names + samples confirmed from the
+# live layer-0 ``?f=json`` + queries (2026-07-12); WKID 3734 (NAD83 Ohio North ftUS) — the
+# right-state guard for Richland County OHIO (FIPS 39139), not the same-named Richland Co WI/SC/IL.
+RICHLAND_PARCEL_SCHEMA = GisParcelSchema(
+    connector="richland_gis",
+    reference_dir="mansfield-gis",
+    page_size=1000,  # the layer's maxRecordCount
+    out_fields=(
+        "PARCELID",
+        "OWNER1",
+        "OWNER2",
+        "PARCEL_ADDRESS",
+        "OWNER_ADDRESS_1",
+        "OWNER_ADDRESS_2",
+        "OWNER_CSZ",
+        "LAND_USE_CODE",
+        "LEGAL_ACRES",
+        "APPRAISED_LAND_VALUE",
+        "APPRAISED_BLDG_VALUE",
+        "TOTAL_APPRAISED_VALUE",
+        "TAX_DISTRICT",
+        "SCHOOL_DISTRICT",
+        "NEIGHBORHOOD",
+        "SALES_DATE",
+        "SALES_PRICE",
+        "SALES_VALIDITY_CODE",
+    ),
+    id_field="PARCELID",  # dashed 3-2-3-2-3 form, e.g. "028-90-150-49-000"
+    owner_field="OWNER1",
+    owner_2_field="OWNER2",
+    deeded_owner_field="",  # no separate deeded-owner column
+    situs_fields=("PARCEL_ADDRESS",),
+    owner_addr_fields=("OWNER_ADDRESS_1", "OWNER_ADDRESS_2", "OWNER_CSZ"),
+    land_use_field="LAND_USE_CODE",  # bare 3-digit Ohio DTE use code (e.g. 640 industrial)
+    acres_field="LEGAL_ACRES",  # the recorded legal acreage (CALCULATED_ACRES is planar)
+    market_land_field="APPRAISED_LAND_VALUE",
+    market_improvement_field="APPRAISED_BLDG_VALUE",
+    market_total_field="TOTAL_APPRAISED_VALUE",
+    cauv_field="",  # no CAUV value column exposed on this layer -> cauv_value always null
+    tax_district_field="TAX_DISTRICT",
+    school_field="SCHOOL_DISTRICT",
+    neighborhood_field="NEIGHBORHOOD",
+    sale_date_field="SALES_DATE",  # Esri esriFieldTypeDate (epoch millis, UTC)
+    sale_amount_field="SALES_PRICE",
+    valid_sale_field="SALES_VALIDITY_CODE",
+    id_normalize="verbatim",  # the dashed id is stored verbatim in PARCELID
+    date_decode="epoch_millis",
+    land_use_decode="int",  # bare numeric DTE code
+    deed_id_regex=r"\b\d{3}-\d{2}-\d{3}-\d{2}-\d{3}\b",
+    meta=GisMeta(
+        subject="Richland County, Ohio parcels (Parcel_CAMA — auditor CAMA + geometry)",
+        source="Richland County GIS (County Engineer Tax Map Office / Auditor CAMA) — "
+        "Parcel_CAMA MapServer, layer 0 ('Parcel')",
+        source_url=(
+            "https://maps.richlandcountyoh.us/richlandgis/rest/services/Parcel_CAMA/MapServer/0"
+        ),
+        caveats=(
+            "Values are verbatim from the county CAMA; null means the service had no value.",
+            "ArcGIS Server 10.3: f=geojson is NOT supported (Esri f=json only). Attribute/owner "
+            "queries work; the committed parcel geojson uses an esri-rings->GeoJSON recipe "
+            "(data/reference/mansfield/README.md), not the f=geojson connector path.",
+            "The auditor ZONING and USEDSCRP columns are UNPOPULATED on this layer — zoning is "
+            "never read from CAMA here; the Airport West I-1->I-2 status is Ordinance 25-086.",
+            "acres is the recorded LEGAL_ACRES; CALCULATED_ACRES (planar) can differ by a few "
+            "percent and is not the mapped value.",
+            "Multipart parcels are returned as repeated single-ring features (one row per part); "
+            "readers assemble them into one MultiPolygon and dedupe attributes by parcel id.",
+            "Right-state guard: Richland County OHIO (FIPS 39139), owner city Mansfield OH 449xx, "
+            "WKID 3734 (NAD83 Ohio North ftUS). Not the same-named Richland Co WI/SC/IL.",
+            "Field names + samples confirmed from the live layer-0 metadata + queries (2026-07-12).",
+        ),
+    ),
+)

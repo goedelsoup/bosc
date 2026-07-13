@@ -22,6 +22,7 @@ from watermark.sites._gis_schemas import (
     NATIONAL_NFHL_FLOOD_SCHEMA,
     OHIO_STATEWIDE_PARCEL_SCHEMA,
     PUTNAM_PARCEL_SCHEMA,
+    RICHLAND_PARCEL_SCHEMA,
     VAN_WERT_PARCEL_SCHEMA,
 )
 from watermark.sites._model import CoolingModelType, SiteFacility, SiteProfile
@@ -2677,13 +2678,15 @@ _MANSFIELD = SiteProfile(
     # Richland Co territory; City of Shelby is a separate Richland-County municipal utility, #17043
     # — NOT Ohio Edison — the footgun already flagged on the Sidney profile)
     eia_state="OH",
-    parcels_url="TODO",
-    zoning_url="TODO",
+    parcels_url=(  # [verified] Richland County GIS — Parcel_CAMA MapServer layer 0 (auditor CAMA + geometry, #1431)
+        "https://maps.richlandcountyoh.us/richlandgis/rest/services/Parcel_CAMA/MapServer/0"
+    ),
+    zoning_url="TODO",  # [open] no public per-parcel Richland Co / City of Mansfield zoning REST found
     floodzone_url="TODO",
     gnis_default_state="OH",
     hydro_utm_epsg=0,  # TODO
     lsc_default_ga="136",
-    gis_parcel=None,
+    gis_parcel=RICHLAND_PARCEL_SCHEMA,  # [verified] Parcel_CAMA layer 0 — owner + CAMA values (#1431)
     gis_zoning=None,
     gis_flood=None,
     design_lat=0.0,  # TODO
@@ -2695,7 +2698,7 @@ _MANSFIELD = SiteProfile(
     post_cover="TODO",
     developed_pervious_cover="TODO",
     noaa_fallback_24h_depth_in={},  # TODO
-    parcels_relpath="reference/mansfield/parcel-assemblage.geojson",  # TODO: commit the site's own geometry
+    parcels_relpath="reference/mansfield/parcel-assemblage.geojson",  # [verified] Ord. 25-086 Airport West I-1->I-2 rezone footprint, 10/16 lots ~309 ac (#1431)
     footprint_relpath="extracted/mansfield/bosc-site-footprint.yaml",  # TODO: pending an identified site
     climatology_relpath="reference/hydrology/mansfield/nasa-power-climatology.yaml",
     corridor_ddf_relpath="reference/hydrology/mansfield/atlas14-corridor-ddf.yaml",

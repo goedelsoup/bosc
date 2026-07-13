@@ -1,0 +1,1145 @@
+{
+  "type": "FeatureCollection",
+  "bosc:provenance": {
+    "subject": "City of Mansfield rezone Ordinance 25-086 (Bill 25-087; City Planning Commission Petition #561), passed as an emergency 2025-06-03: 16 lots at and around Airport West Parkway & Cairns Road rezoned from I-1 (Limited Impact Industrial District) to I-2 (General Impact Industrial District), amending the City Zoning Districts Map (Ord. #04-208). Mansfield, Richland County OH (FIPS 39139). This is the site's first committed footprint geometry (places domain, #1431).",
+    "source": "Richland County GIS (County Engineer Tax Map Office / Auditor CAMA) \u2014 Parcel_CAMA MapServer, layer 0 (Parcel): auditor CAMA joined to parcel geometry",
+    "source_url": "https://maps.richlandcountyoh.us/richlandgis/rest/services/Parcel_CAMA/MapServer/0",
+    "crs": "EPSG:4326 (WGS84)",
+    "instrument": "City of Mansfield Ordinance 25-086 (Bill 25-087), Petition #561, passed 2025-06-03; https://ci.mansfield.oh.us/wp-content/uploads/2025/06/Passed-Legislation-06-03-25.pdf",
+    "rezone": "I-1 (Limited Impact Industrial District) -> I-2 (General Impact Industrial District)",
+    "schedule_parcel_ids": [
+      "028-90-150-49-000",
+      "028-90-150-50-000",
+      "028-90-150-51-000",
+      "028-90-500-93-004",
+      "028-90-500-93-006",
+      "028-90-150-51-001",
+      "028-90-500-93-003",
+      "028-90-500-93-002",
+      "028-90-500-93-007",
+      "028-90-500-93-000",
+      "028-90-500-67-000",
+      "028-90-500-48-000",
+      "028-90-500-94-000",
+      "028-90-500-95-000",
+      "028-90-500-92-000",
+      "028-90-500-91-000"
+    ],
+    "committed_parcel_ids": [
+      "028-90-150-49-000",
+      "028-90-150-50-000",
+      "028-90-150-51-000",
+      "028-90-500-93-000",
+      "028-90-500-67-000",
+      "028-90-500-48-000",
+      "028-90-500-94-000",
+      "028-90-500-95-000",
+      "028-90-500-92-000",
+      "028-90-500-91-000"
+    ],
+    "retired_parcel_ids": [
+      "028-90-500-93-004",
+      "028-90-500-93-006",
+      "028-90-150-51-001",
+      "028-90-500-93-003",
+      "028-90-500-93-002",
+      "028-90-500-93-007"
+    ],
+    "committed_count": 10,
+    "committed_total_legal_acres": 309.11,
+    "reported_total_acres": 321,
+    "caveats": [
+      "[verified] Owner-of-record, situs, acreage, class, appraised value and sale date/price are verbatim from the Richland County Auditor CAMA (Parcel_CAMA layer 0); null means the service had no value. `acres` is the recorded LEGAL_ACRES; `calculated_acres` (planar) is carried only when it differs.",
+      "The ordinance lists 16 lots 'as recorded in the Richland County Auditor's Office'. The CURRENT auditor parcel fabric resolves 10 of the 16; the other 6 (028-90-500-93-002/003/004/006/007 and 028-90-150-51-001) no longer exist as separate parcels \u2014 they were consolidated/renumbered into current parcels (notably 028-90-500-93-000, City of Mansfield, 129.53 ac) since the 2025-06-03 rezone. Retired IDs are preserved here (retired_parcel_ids); their geometry is NOT fabricated.",
+      "The 10 committed lots sum to ~309.1 recorded legal acres, reconciling with the ~321 ac reported for the 16-lot schedule; the ~12 ac residual is the retired lots' area absorbed into current parcels plus legal-vs-planar acreage differences.",
+      "The auditor ZONING and USEDSCRP columns are UNPOPULATED in this layer \u2014 the I-1->I-2 status is from Ordinance 25-086, not the auditor zoning field. `zoning_change`/`ordinance` on each feature record the instrument, not an auditor attribute.",
+      "Adena Development Corp (the city-affiliated CIC named in press coverage) is not a current owner-of-record on the 10 resolved lots \u2014 the City of Mansfield owns 7, and 37 East Fourth Street LTD (an Ohio LLC) owns 3 (028-90-150-49/50/51). Adena's holdings, if any, are among the retired/renumbered lots or were conveyed to the City. [reference] for the Adena attribution.",
+      "Multipart parcels (028-90-500-48-000 = 4 parts; 028-90-500-93-000 = 2 parts) are returned by the service as repeated single-ring features and are assembled here into one MultiPolygon per parcel; sum committed_count (10), not raw service features (14).",
+      "Right-state guard: Richland County OHIO (FIPS 39139), owner city Mansfield OH 449xx, WKID 3734 (NAD83 Ohio North ftUS) reprojected to 4326. Not the same-named Richland County WI/SC/IL.",
+      "Regenerable: query Parcel_CAMA/MapServer/0 with where=PARCELID IN (schedule ids), outSR=4326, f=json (this ArcGIS 10.3 server does not support f=geojson), then convert esri rings -> GeoJSON (see data/reference/mansfield/README.md)."
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -82.5425831,
+              40.8133751
+            ],
+            [
+              -82.542466,
+              40.8140574
+            ],
+            [
+              -82.5442639,
+              40.8140416
+            ],
+            [
+              -82.5438386,
+              40.8133556
+            ],
+            [
+              -82.5425831,
+              40.8133751
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "028-90-150-49-000",
+        "owner": "37 EAST FOURTH STREET LTD AN OHIO",
+        "owner_2": "LIMITED LIABILITY COMPANY",
+        "owner_mailing_address": "797 CYPRESS DR MANSFIELD OH 44903",
+        "situs_address": "BOWMAN ST",
+        "acres": 3,
+        "land_use_code": 500,
+        "class": "R",
+        "appraised_total_value": 6270,
+        "last_sale_date": "2012-11-19",
+        "last_sale_amount": 125000,
+        "legal_description": "NW A 3.000 LT 3 PT",
+        "zoning_change": "I-1 to I-2",
+        "ordinance": "25-086"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -82.5425831,
+              40.8133751
+            ],
+            [
+              -82.5421342,
+              40.8140603
+            ],
+            [
+              -82.542466,
+              40.8140574
+            ],
+            [
+              -82.5425831,
+              40.8133751
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "028-90-150-50-000",
+        "owner": "37 EAST FOURTH STREET LTD AN OHIO",
+        "owner_2": "LIMITED LIABILITY COMPANY",
+        "owner_mailing_address": "797 CYPRESS ST MANSFIELD OH 44903",
+        "situs_address": "CRALL RD",
+        "acres": 0.32,
+        "land_use_code": 500,
+        "class": "R",
+        "appraised_total_value": 730,
+        "last_sale_date": "2012-11-19",
+        "last_sale_amount": 125000,
+        "legal_description": "NW A 0.320 LT 3 PT",
+        "zoning_change": "I-1 to I-2",
+        "ordinance": "25-086"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -82.5419024,
+              40.81032
+            ],
+            [
+              -82.5416658,
+              40.8099699
+            ],
+            [
+              -82.5413776,
+              40.809549
+            ],
+            [
+              -82.5409696,
+              40.8089484
+            ],
+            [
+              -82.5396851,
+              40.8089752
+            ],
+            [
+              -82.5396181,
+              40.8140823
+            ],
+            [
+              -82.5420985,
+              40.8140606
+            ],
+            [
+              -82.5421342,
+              40.8140603
+            ],
+            [
+              -82.5425831,
+              40.8133751
+            ],
+            [
+              -82.5421349,
+              40.8126521
+            ],
+            [
+              -82.5420749,
+              40.8125553
+            ],
+            [
+              -82.5417044,
+              40.8119576
+            ],
+            [
+              -82.5414232,
+              40.8111255
+            ],
+            [
+              -82.5415032,
+              40.8110958
+            ],
+            [
+              -82.5412262,
+              40.8106793
+            ],
+            [
+              -82.5419604,
+              40.8104069
+            ],
+            [
+              -82.5419024,
+              40.81032
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "028-90-150-51-000",
+        "owner": "37 EAST FOURTH STREET LTD AN OHIO",
+        "owner_2": "LIMITED LIABILITY COMPANY",
+        "owner_mailing_address": "797 CYPRESS DR MANSFIELD OH 44903",
+        "situs_address": "BOWMAN ST",
+        "acres": 25.8,
+        "land_use_code": 199,
+        "class": "A",
+        "appraised_total_value": 56940,
+        "last_sale_date": "2012-11-19",
+        "last_sale_amount": 125000,
+        "legal_description": "NE & NW A 25.800 LT 3 PT",
+        "zoning_change": "I-1 to I-2",
+        "ordinance": "25-086"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -82.5328705,
+                40.8116235
+              ],
+              [
+                -82.5329081,
+                40.8141408
+              ],
+              [
+                -82.5376155,
+                40.8140998
+              ],
+              [
+                -82.5376374,
+                40.8141003
+              ],
+              [
+                -82.5376591,
+                40.8140971
+              ],
+              [
+                -82.53768,
+                40.8140904
+              ],
+              [
+                -82.5376994,
+                40.8140802
+              ],
+              [
+                -82.5377169,
+                40.8140669
+              ],
+              [
+                -82.5377319,
+                40.8140509
+              ],
+              [
+                -82.537744,
+                40.8140327
+              ],
+              [
+                -82.5377529,
+                40.8140126
+              ],
+              [
+                -82.5377584,
+                40.8139914
+              ],
+              [
+                -82.5377595,
+                40.8139186
+              ],
+              [
+                -82.5378081,
+                40.8108379
+              ],
+              [
+                -82.5378513,
+                40.8080933
+              ],
+              [
+                -82.5378491,
+                40.8080084
+              ],
+              [
+                -82.5378409,
+                40.807924
+              ],
+              [
+                -82.5378267,
+                40.8078403
+              ],
+              [
+                -82.5378066,
+                40.8077578
+              ],
+              [
+                -82.5377808,
+                40.807677
+              ],
+              [
+                -82.5377493,
+                40.8075982
+              ],
+              [
+                -82.5377124,
+                40.8075218
+              ],
+              [
+                -82.5376701,
+                40.8074482
+              ],
+              [
+                -82.5373075,
+                40.8068515
+              ],
+              [
+                -82.5372639,
+                40.8067759
+              ],
+              [
+                -82.5372253,
+                40.8066975
+              ],
+              [
+                -82.5371919,
+                40.8066168
+              ],
+              [
+                -82.5371638,
+                40.8065341
+              ],
+              [
+                -82.5371411,
+                40.8064498
+              ],
+              [
+                -82.537124,
+                40.8063641
+              ],
+              [
+                -82.5371125,
+                40.8062775
+              ],
+              [
+                -82.5371067,
+                40.8061904
+              ],
+              [
+                -82.5371046,
+                40.8061152
+              ],
+              [
+                -82.5370987,
+                40.8060937
+              ],
+              [
+                -82.5370893,
+                40.8060735
+              ],
+              [
+                -82.5370767,
+                40.8060551
+              ],
+              [
+                -82.5370611,
+                40.8060391
+              ],
+              [
+                -82.5370431,
+                40.806026
+              ],
+              [
+                -82.5370231,
+                40.806016
+              ],
+              [
+                -82.5370018,
+                40.8060096
+              ],
+              [
+                -82.5369797,
+                40.8060068
+              ],
+              [
+                -82.5369574,
+                40.8060078
+              ],
+              [
+                -82.5369571,
+                40.8060078
+              ],
+              [
+                -82.5327875,
+                40.8060674
+              ],
+              [
+                -82.5328705,
+                40.8116235
+              ]
+            ]
+          ],
+          [
+            [
+              [
+                -82.5374612,
+                40.8060005
+              ],
+              [
+                -82.5374391,
+                40.8060001
+              ],
+              [
+                -82.5374171,
+                40.8060035
+              ],
+              [
+                -82.5373961,
+                40.8060106
+              ],
+              [
+                -82.5373767,
+                40.8060212
+              ],
+              [
+                -82.5373593,
+                40.806035
+              ],
+              [
+                -82.5373445,
+                40.8060515
+              ],
+              [
+                -82.5373328,
+                40.8060704
+              ],
+              [
+                -82.5373245,
+                40.8060909
+              ],
+              [
+                -82.5373198,
+                40.8061126
+              ],
+              [
+                -82.5373219,
+                40.8061869
+              ],
+              [
+                -82.5373283,
+                40.8062766
+              ],
+              [
+                -82.5373414,
+                40.8063656
+              ],
+              [
+                -82.5373611,
+                40.8064533
+              ],
+              [
+                -82.5373872,
+                40.8065393
+              ],
+              [
+                -82.5374197,
+                40.8066232
+              ],
+              [
+                -82.5374583,
+                40.8067044
+              ],
+              [
+                -82.5375028,
+                40.8067825
+              ],
+              [
+                -82.5378654,
+                40.8073792
+              ],
+              [
+                -82.5379123,
+                40.8074608
+              ],
+              [
+                -82.5379534,
+                40.8075456
+              ],
+              [
+                -82.5379883,
+                40.8076331
+              ],
+              [
+                -82.538017,
+                40.8077229
+              ],
+              [
+                -82.5380392,
+                40.8078144
+              ],
+              [
+                -82.538055,
+                40.8079073
+              ],
+              [
+                -82.5380641,
+                40.8080011
+              ],
+              [
+                -82.5380666,
+                40.8080952
+              ],
+              [
+                -82.538024,
+                40.8108399
+              ],
+              [
+                -82.5379765,
+                40.8139035
+              ],
+              [
+                -82.5379753,
+                40.8139843
+              ],
+              [
+                -82.5379804,
+                40.8140063
+              ],
+              [
+                -82.5379892,
+                40.8140271
+              ],
+              [
+                -82.5380015,
+                40.8140461
+              ],
+              [
+                -82.5380169,
+                40.8140626
+              ],
+              [
+                -82.5380349,
+                40.8140763
+              ],
+              [
+                -82.5380549,
+                40.8140867
+              ],
+              [
+                -82.5380765,
+                40.8140934
+              ],
+              [
+                -82.5380989,
+                40.8140964
+              ],
+              [
+                -82.5381214,
+                40.8140954
+              ],
+              [
+                -82.5396181,
+                40.8140823
+              ],
+              [
+                -82.5396851,
+                40.8089752
+              ],
+              [
+                -82.5409696,
+                40.8089484
+              ],
+              [
+                -82.5391576,
+                40.8062812
+              ],
+              [
+                -82.5390224,
+                40.8061798
+              ],
+              [
+                -82.5389328,
+                40.8060411
+              ],
+              [
+                -82.5386834,
+                40.80604
+              ],
+              [
+                -82.5385022,
+                40.8059856
+              ],
+              [
+                -82.5374616,
+                40.8060005
+              ],
+              [
+                -82.5374612,
+                40.8060005
+              ]
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "028-90-500-93-000",
+        "owner": "THE CITY OF MANSFIELD OHIO",
+        "owner_mailing_address": "MANSFIELD OHIO MANSFIELD OH 44902",
+        "situs_address": "BOWMAN ST",
+        "acres": 129.53,
+        "calculated_acres": 125.323,
+        "land_use_code": 640,
+        "class": "E",
+        "appraised_total_value": 300780,
+        "legal_description": "NE A125.323 AC LT 1 2",
+        "zoning_change": "I-1 to I-2",
+        "ordinance": "25-086"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -82.5301298,
+              40.8126877
+            ],
+            [
+              -82.5315423,
+              40.8126811
+            ],
+            [
+              -82.5315266,
+              40.8116298
+            ],
+            [
+              -82.5328705,
+              40.8116235
+            ],
+            [
+              -82.5327875,
+              40.8060674
+            ],
+            [
+              -82.5301873,
+              40.8061259
+            ],
+            [
+              -82.5301298,
+              40.8126877
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "028-90-500-67-000",
+        "owner": "THE CITY OF MANSFIELD OHIO",
+        "owner_mailing_address": "MANSFIELD OHIO",
+        "situs_address": "CAIRNS RD",
+        "acres": 37.31,
+        "land_use_code": 640,
+        "class": "E",
+        "appraised_total_value": 171630,
+        "legal_description": "NW A37.31 LT 3 PT",
+        "zoning_change": "I-1 to I-2",
+        "ordinance": "25-086"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                -82.5301288,
+                40.8127983
+              ],
+              [
+                -82.5301169,
+                40.8141595
+              ],
+              [
+                -82.5324771,
+                40.8141437
+              ],
+              [
+                -82.5329081,
+                40.8141408
+              ],
+              [
+                -82.5328705,
+                40.8116235
+              ],
+              [
+                -82.5315266,
+                40.8116298
+              ],
+              [
+                -82.5315423,
+                40.8126811
+              ],
+              [
+                -82.5301298,
+                40.8126877
+              ],
+              [
+                -82.5301288,
+                40.8127983
+              ]
+            ]
+          ],
+          [
+            [
+              [
+                -82.5262802,
+                40.8062158
+              ],
+              [
+                -82.5263328,
+                40.8079858
+              ],
+              [
+                -82.5248307,
+                40.80802
+              ],
+              [
+                -82.5248507,
+                40.8086937
+              ],
+              [
+                -82.5255848,
+                40.808173
+              ],
+              [
+                -82.5260997,
+                40.8085935
+              ],
+              [
+                -82.5272699,
+                40.8079081
+              ],
+              [
+                -82.5271143,
+                40.8061967
+              ],
+              [
+                -82.5269626,
+                40.8062002
+              ],
+              [
+                -82.5262802,
+                40.8062158
+              ]
+            ]
+          ],
+          [
+            [
+              [
+                -82.5271143,
+                40.8061967
+              ],
+              [
+                -82.5272699,
+                40.8079081
+              ],
+              [
+                -82.5260997,
+                40.8085935
+              ],
+              [
+                -82.5262523,
+                40.8087181
+              ],
+              [
+                -82.5263846,
+                40.8086246
+              ],
+              [
+                -82.5294112,
+                40.8110964
+              ],
+              [
+                -82.529279,
+                40.8111899
+              ],
+              [
+                -82.526983,
+                40.812813
+              ],
+              [
+                -82.5301288,
+                40.8127983
+              ],
+              [
+                -82.5301298,
+                40.8126877
+              ],
+              [
+                -82.5301873,
+                40.8061259
+              ],
+              [
+                -82.5289079,
+                40.8061547
+              ],
+              [
+                -82.5271143,
+                40.8061967
+              ]
+            ]
+          ],
+          [
+            [
+              [
+                -82.5248507,
+                40.8086937
+              ],
+              [
+                -82.5248679,
+                40.8092693
+              ],
+              [
+                -82.5262523,
+                40.8087181
+              ],
+              [
+                -82.5260997,
+                40.8085935
+              ],
+              [
+                -82.5255848,
+                40.808173
+              ],
+              [
+                -82.5248507,
+                40.8086937
+              ]
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "028-90-500-48-000",
+        "owner": "THE CITY OF MANSFIELD OHIO",
+        "owner_mailing_address": "MANSFIELD OHIO",
+        "situs_address": "CAIRNS RD",
+        "acres": 58.8,
+        "land_use_code": 640,
+        "class": "E",
+        "appraised_total_value": 270480,
+        "legal_description": "NW A58.8 LT 3 PT",
+        "zoning_change": "I-1 to I-2",
+        "ordinance": "25-086"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -82.532758,
+              40.8040912
+            ],
+            [
+              -82.5327586,
+              40.8041315
+            ],
+            [
+              -82.5327586,
+              40.804132
+            ],
+            [
+              -82.5327761,
+              40.8053024
+            ],
+            [
+              -82.5327822,
+              40.805714
+            ],
+            [
+              -82.5327846,
+              40.8058753
+            ],
+            [
+              -82.5351684,
+              40.8058412
+            ],
+            [
+              -82.5351417,
+              40.8040571
+            ],
+            [
+              -82.532758,
+              40.8040912
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "028-90-500-94-000",
+        "owner": "THE CITY OF MANSFIELD OHIO",
+        "owner_mailing_address": "MANSFIELD OHIO",
+        "situs_address": "CAIRNS rd",
+        "acres": 10,
+        "calculated_acres": 9.394,
+        "land_use_code": 640,
+        "class": "E",
+        "appraised_total_value": 47770,
+        "legal_description": "SE 9.394 AC LT 13",
+        "zoning_change": "I-1 to I-2",
+        "ordinance": "25-086"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -82.5350424,
+              40.802249
+            ],
+            [
+              -82.5350607,
+              40.8034786
+            ],
+            [
+              -82.5330151,
+              40.8033623
+            ],
+            [
+              -82.5328463,
+              40.8022655
+            ],
+            [
+              -82.5327307,
+              40.8022664
+            ],
+            [
+              -82.532758,
+              40.8040912
+            ],
+            [
+              -82.5351417,
+              40.8040571
+            ],
+            [
+              -82.5351215,
+              40.8027098
+            ],
+            [
+              -82.5351146,
+              40.8022484
+            ],
+            [
+              -82.5350424,
+              40.802249
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "028-90-500-95-000",
+        "owner": "THE CITY OF MANSFIELD OHIO",
+        "owner_mailing_address": "MANSFIELD OHIO",
+        "situs_address": "CAIRNS RD",
+        "acres": 4.35,
+        "land_use_code": 640,
+        "class": "E",
+        "appraised_total_value": 20010,
+        "legal_description": "SE A4.35 LT 14 PT",
+        "zoning_change": "I-1 to I-2",
+        "ordinance": "25-086"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -82.5276626,
+              40.802413
+            ],
+            [
+              -82.5253598,
+              40.8024796
+            ],
+            [
+              -82.5254137,
+              40.8042931
+            ],
+            [
+              -82.5269301,
+              40.8042597
+            ],
+            [
+              -82.527628,
+              40.8042444
+            ],
+            [
+              -82.5282576,
+              40.8042306
+            ],
+            [
+              -82.5287914,
+              40.8042188
+            ],
+            [
+              -82.5299547,
+              40.8041932
+            ],
+            [
+              -82.5311181,
+              40.8041676
+            ],
+            [
+              -82.5314814,
+              40.8041596
+            ],
+            [
+              -82.5327586,
+              40.8041315
+            ],
+            [
+              -82.532758,
+              40.8040912
+            ],
+            [
+              -82.5327307,
+              40.8022664
+            ],
+            [
+              -82.5276626,
+              40.802413
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "028-90-500-92-000",
+        "owner": "THE CITY OF MANSFIELD OHIO",
+        "owner_mailing_address": "MANSFIELD OHIO",
+        "situs_address": "CAIRNS RD",
+        "acres": 30,
+        "land_use_code": 640,
+        "class": "E",
+        "appraised_total_value": 138000,
+        "legal_description": "SW A30 LT 5 PT",
+        "zoning_change": "I-1 to I-2",
+        "ordinance": "25-086"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -82.525342,
+              40.8018789
+            ],
+            [
+              -82.5253598,
+              40.8024796
+            ],
+            [
+              -82.5276626,
+              40.802413
+            ],
+            [
+              -82.5327307,
+              40.8022664
+            ],
+            [
+              -82.5327228,
+              40.8017335
+            ],
+            [
+              -82.5327219,
+              40.8016752
+            ],
+            [
+              -82.525342,
+              40.8018789
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "parcel_id": "028-90-500-91-000",
+        "owner": "CITY OF MANSFIELD OHIO",
+        "owner_mailing_address": "N/A",
+        "situs_address": "CAIRNS RD",
+        "acres": 10,
+        "land_use_code": 640,
+        "class": "E",
+        "appraised_total_value": 46000,
+        "legal_description": "SW A10 LT 6 PT",
+        "zoning_change": "I-1 to I-2",
+        "ordinance": "25-086"
+      }
+    }
+  ]
+}

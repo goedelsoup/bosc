@@ -63,6 +63,9 @@ from watermark.sites._gis_schemas import (
     PUTNAM_PARCEL_SCHEMA as PUTNAM_PARCEL_SCHEMA,
 )
 from watermark.sites._gis_schemas import (
+    RICHLAND_PARCEL_SCHEMA as RICHLAND_PARCEL_SCHEMA,
+)
+from watermark.sites._gis_schemas import (
     VAN_WERT_PARCEL_SCHEMA as VAN_WERT_PARCEL_SCHEMA,
 )
 from watermark.sites._model import (
