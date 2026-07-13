@@ -2,14 +2,14 @@
   "site": "van-wert",
   "bundle_version": "1.0.0",
   "contract_version": "1.24.0",
-  "generated_at": "2026-07-08T21:17:29+00:00",
-  "feed_count": 23,
-  "row_total": 64,
+  "generated_at": "2026-07-13T05:03:38+00:00",
+  "feed_count": 24,
+  "row_total": 66,
   "readiness": {
-    "tier": "backdrop",
+    "tier": "case",
     "domains": {
       "backdrop": "live",
-      "facility": "absent",
+      "facility": "live",
       "places": "absent",
       "record": "absent",
       "story": "absent"
@@ -62,7 +62,7 @@
       "media_type": "application/json",
       "schema": "schemas/concepts.schema.json",
       "kind": "collection",
-      "count": 6
+      "count": 7
     },
     {
       "name": "places",
@@ -125,6 +125,14 @@
       "path": "feeds/consumer-energy.json",
       "media_type": "application/json",
       "schema": "schemas/consumer-energy.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "economics-demand-pressure",
+      "path": "feeds/economics-demand-pressure.json",
+      "media_type": "application/json",
+      "schema": "schemas/economics-demand-pressure.schema.json",
       "kind": "object",
       "count": 1
     },
