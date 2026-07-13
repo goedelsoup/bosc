@@ -1,0 +1,176 @@
+leads:
+# Project Klondike — the developer/entity chain (#1482 facility, #1483 places) -----------------
+- id: KLONDIKE-J5
+  kind: claim
+  status: unanswered
+  tag: open
+  title: Independently confirm (or refute) the Meta backer behind J5 LLC / Shaytura LLC
+  detail: >
+    The developer of record for the Piqua I-75 Business Park campus is a shell — J5 LLC, doing
+    business as Shaytura LLC — stated on the City of Piqua's official project page. `[verified]`.
+    The reported hyperscaler backer, Meta, originates with Hunterbrook's investigation (which traced
+    J5's corporate filing to Meta's Menlo Park HQ address) and is `[reported]`, never `[verified]`:
+    the City cites an NDA and has not named the owner. The 2026-07-11 corporate-filing refresh
+    resolved the Nevada-vs-Delaware ambiguity (Delaware-formed / Nevada-foreign-qualified) and named
+    a manager (David Kling) and a Corporation Service Company signatory (Pamela Gregorski) who also
+    signs four confirmed Meta data-center fronts elsewhere — pattern evidence, `[inference]`, not a
+    Piqua-specific confirmation. The pull target is the primary filing itself plus one independent,
+    non-Hunterbrook instrument tying J5/Shaytura to Meta. Disambiguation guard: never merge the
+    J5/Shaytura entity record with a Meta entity in the graph.
+  source: data/extracted/troy-piqua/data-centers.md §1 · OpenCorporates (J5 LLC / Shaytura LLC); Hunterbrook, hntrbrk.com/meta-data-centers
+  issue: 1482
+- id: KLONDIKE-J3
+  kind: question
+  status: review
+  tag: inference
+  title: Is adjacent J3 Development LLC (parcel N44-101772, 93.1 ac) a related SPE to J5 LLC?
+  detail: >
+    The Miami County auditor pull (#1483, 2026-07-13) resolved the campus to three J5 LLC parcels =
+    607.842 ac. A fourth parcel, N44-101772 (93.105 ac, 2332 W Farrington Rd), is owned by J3
+    Development LLC — physically adjacent and sharing the same M40-WA022 auditor split lineage as the
+    J5 parcels, but with a different (Cincinnati, not J5's Columbus) mailing address. Common control
+    is `[inference]` only — a lead, deliberately NOT committed to the assemblage geometry. Worth
+    confirming via OpenCorporates / a shared registered agent before any edge is drawn in the graph.
+  source: data/reference/troy-piqua/parcel-assemblage.geojson · Miami County Auditor CAMA (parcel_joined layer 0), 2026-07-13
+  issue: 1483
+  note: nested-scope resolved 2026-07-13 — the ~1,026-ac / ~1,200-ac gap was campus ⊂ annexation record ⊂ business park, not a missing parcel
+- id: KLONDIKE-DEED
+  kind: question
+  status: unanswered
+  tag: open
+  title: Pull the Miami County Recorder deed instrument numbers for the J5 LLC conveyances
+  detail: >
+    The auditor CAMA layer gives sale date and amount (two of the three J5 parcels carry a 2025-12-24
+    conveyance for $62,234,725) but not the recorder OR book/page or instrument number. Pull the
+    Miami County Recorder instruments to pin the chain of custody on the land transfer, and to test
+    the single-non-primary-source (thislocallife.com) "Piqua Land Company / New Albany Company (NACO)"
+    prior-ownership lead — currently `[reference]`, uncorroborated.
+  source: Miami County Recorder · data/extracted/troy-piqua/data-centers.md "Instruments to pull" §2–3
+  issue: 1483
+# Water & regulatory watch (#1486) -----------------------------------------------------------
+- id: WATER-AGREEMENT
+  kind: question
+  status: unanswered
+  tag: open
+  title: Pull the executed Water & Wastewater Agreement — reconcile the 2.0 MGD reserve vs. the closed-loop FAQ
+  detail: >
+    The negotiated Water & Wastewater Agreement (effective 2026-01-23) reserves up to 500,000 GPD
+    (Tier I) scaling to 2.0 MGD (Tier II / full operation) — ~30% of Piqua's ~6.75 MGD permitted
+    intake — plus ~1.0 MGD reserved wastewater. `[verified]` (MVT; civiccapacity.com). But the City's
+    public FAQ describes a closed-loop cooling system with only an "initial fill-up," occasional
+    top-offs, and domestic-only ongoing use. `[verified]`. These two framings conflict and neither has
+    been reconciled against the actual agreement text — pin to the instrument itself, not either
+    summary, and record which framing governs the consumptive-use screen.
+  source: civiccapacity.com/p/water-world-what-was-negotiated · data/extracted/troy-piqua/data-centers.md "Water / hydrology hook"
+  issue: 1486
+- id: OHD000001
+  kind: signal
+  status: unanswered
+  tag: open
+  title: Track Ohio EPA's statewide data-center NPDES general permit (OHD000001) to finalization
+  detail: >
+    OHD000001 is the likely vehicle for any data-center process/stormwater discharge coverage. The
+    comment period closed 2026-01-16 (hearing 2025-12-17); as of the 2026-07-11 refresh the Director's
+    final action was still pending — not finalized, and no Piqua/J5-specific coverage found under it.
+    `[reported]`/`[open]`. Once issued, confirm whether it covers this facility.
+  source: Ohio EPA — wastewater-discharges-from-data-centers general permit (OHD000001)
+  issue: 1486
+  note: next check — re-poll the OHD000001 page for the Director's final action and any Piqua/J5 authorization
+- id: WWTP-WLA
+  kind: question
+  status: review
+  tag: inference
+  title: Does the reserved 1.0 MGD wastewater draw fit under 1PD00008 headroom, or is a permit mod implied?
+  detail: >
+    Piqua WWTP (Ohio EPA 1PD00008*WD / NPDES OH0027049; renewal eff. 2022-09-01–2027-08-31) is design
+    8.7 MGD with an actual mean flow of ~3.224 MGD (37.1% of design, 2023 DMR). `[verified]`. The
+    reserved ~1.0 MGD data-center wastewater is ~11.5% of design and sits within the ~63% unused
+    headroom on paper — but whether it can absorb into existing headroom or requires a permit
+    modification has not been checked against the fact sheet's WLA basis (the low-flow denominator).
+    `[inference]`, unresolved: the committed fact-sheet extraction currently captures only the header
+    pages, so the WLA table itself is a pull target.
+  source: data/extracted/oepa/troy-piqua/1PD00008.fs.npdes.yaml · data/extracted/troy-piqua/wwtp-oh0027049.dmr.yaml (2023 DMR)
+  issue: 1486
+- id: CONSTRUCTION-SWPPP
+  kind: question
+  status: unanswered
+  tag: open
+  title: Construction-stormwater NOI for the ~608-ac campus — not yet found
+  detail: >
+    For the ~607.8-ac developer-owned campus (phase one of the larger ~1,026-ac annexation record), no
+    construction general-permit NOI / site-specific stormwater coverage has been found. `[open]`. A
+    filing would be expected ahead of earthwork; stays tracked here until found or a dated negative is
+    recorded.
+  source: Ohio EPA eSuite / construction general permit · data/extracted/troy-piqua/data-centers.md "Regulatory record"
+  issue: 1486
+- id: AIR-PTI
+  kind: question
+  status: low
+  tag: open
+  title: OEPA air permit-to-install for backup generators — confirmed-negative, re-check
+  detail: >
+    A direct search of Ohio EPA eSuite/DAPC (SWDO, Miami County) under "J5 LLC" / "Shaytura LLC" and
+    the Farrington Road address found no air PTI filing for backup generators. Confirmed-negative as of
+    2026-07-11 — a clean dated no, not a gap. `[open]` on any future filing: a PTI could still land
+    ahead of construction, so re-check on each sweep.
+  source: Ohio EPA eSuite/DAPC (SWDO, Miami County; "J5 LLC" / "Shaytura LLC" / Farrington Rd) — confirmed-negative 2026-07-11
+  issue: 1486
+  note: next check — re-run the eSuite/DAPC search on the next sweep
+# Governance & opposition watch (#1487) ------------------------------------------------------
+- id: SAVE-PIQUA-SUIT
+  kind: signal
+  status: unanswered
+  tag: open
+  title: Save Piqua has retained counsel but filed no suit as of 2026-07-11
+  detail: >
+    The organized opposition group "Save Piqua" (leader Cree St. Meyer) retained counsel and is
+    fundraising (~$300,000 GoFundMe) toward an injunction. `[reported]` (WHIO, 2026-06-02). No lawsuit
+    has been filed as of 2026-07-11 — an indirect check of the Miami County Case Search portal found no
+    docket. `[open]` on any actual filing. If a suit lands, ingest the complaint and open a litigation
+    register the way Urbana's Thor v. Urbana thread was captured.
+  source: WHIO, "Community group planning to take legal action over Piqua data center plans" (2026-06-02); Miami County Case Search (no docket, checked 2026-07-11)
+  issue: 1487
+  note: next check — re-query Miami County Case Search for a Save Piqua filing
+- id: BALLOT-2027
+  kind: signal
+  status: low
+  tag: open
+  title: The statewide data-center-ban ballot amendment did not qualify for 2026 — watch the 2027 cycle
+  detail: >
+    The "Ohio Prohibition of Data Center Construction Amendment 2026" did NOT qualify for the 2026
+    ballot: Conserve Ohio had only ~73,031 of the required 413,488 signatures (44 of 88 counties, ~17%)
+    by the 2026-07-01 deadline. Organizers publicly shifted to a 2027 attempt (signatures do not
+    expire). `[reported]` — Ohio Capital Journal, 2026-06-19. Resolved-negative for 2026; the live
+    thread is the 2027 signature cycle.
+  source: Ohio Capital Journal, "Ohio proposed constitutional amendment to ban data centers will not be on this year's ballot" (2026-06-19)
+  issue: 1487
+  note: next check — the 2027 statewide ballot-initiative signature cycle
+- id: TROY-UDC
+  kind: question
+  status: unanswered
+  tag: open
+  title: Troy's (the city) new UDC data-center provisions — a distinct thread, not a disclosed Troy project
+  detail: >
+    The City of Troy (the county seat, Piqua's downstream sister city) is separately writing
+    data-center siting rules into a new Unified Development Code — a 10-acre minimum lot and a
+    1,000-ft setback from hospitals/schools/parks; a 2026-01-27 public meeting drew 100+ opposed
+    residents. `[reported]` (Troy Times Tribune, 2026-01-27). This is regulatory pre-positioning, NOT a
+    disclosed Troy data-center project — do not conflate with Project Klondike (Piqua). `[open]` on
+    whether any actual project sits behind it, and on the UDC adoption vote.
+  source: Troy Times Tribune (2026-01-27, UDC public meeting)
+  issue: 1487
+  note: next check — Troy City Council UDC adoption vote; watch for any actual Troy project behind the provisions
+- id: OTCA-PAUSE
+  kind: signal
+  status: unanswered
+  tag: open
+  title: DeWine paused new OTCA data-center sales-tax exemptions — HB 975 vs SB 374 unresolved
+  detail: >
+    Governor DeWine directed a pause on new OTCA (Ohio data-center sales-tax exemption, ORC 122.175)
+    approvals effective 2026-05-27, pending the legislature's Joint Data Center Committee review.
+    Competing bills are unresolved: HB 975 (end the exemption 2026-10-01) vs. SB 374 (end 2027-10-01).
+    `[reported]`. No record of a J5/Piqua OTCA application — granted or pending — has been found.
+    `[open]`. Do not assume an exemption exists for this project.
+  source: governor.ohio.gov (2026-05-27, OTCA pause); The Register (2026-06-01)
+  issue: 1487
+  note: next check — the OTCA pause resolution (HB 975 vs SB 374) and any J5/Piqua application
