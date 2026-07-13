@@ -1,5 +1,25 @@
 [
   {
+    "src": "CITY OF PIQUA",
+    "rel": "operates",
+    "dst": "npdes:1PD00008",
+    "date": "",
+    "ref": "1PD00008*WD",
+    "source": "oepa/troy-piqua/1PD00008.fs.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:1PD00008",
+    "rel": "discharges_to",
+    "dst": "GREAT MIAMI RIVER",
+    "date": "",
+    "ref": "1PD00008*WD",
+    "source": "oepa/troy-piqua/1PD00008.fs.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "GENERAL DYNAMICS LAND SYSTEMS",
     "rel": "owned_by",
     "dst": "GENERAL DYNAMICS",

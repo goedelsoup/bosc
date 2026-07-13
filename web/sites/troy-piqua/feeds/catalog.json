@@ -112,10 +112,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "d297f7df43ffc1ad40d8a5d3759001f7cb0bfec5535e2e422f51fcfc0323201a",
-      "size_bytes": 109471,
+      "sha256": "bbe4dcf6063e9564e34c1219e41916f2f03fcf2736e09024e199a54d60079e78",
+      "size_bytes": 118655,
       "lfs_materialized": true,
-      "file_count": 10,
+      "file_count": 11,
       "stale": false,
       "asof": null
     },
@@ -317,12 +317,12 @@
     ],
     "storage": [
       {
-        "relpath": "extracted/oepa/1PD00008.npdes.yaml",
+        "relpath": "extracted/oepa/troy-piqua/1PD00008.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
       {
-        "relpath": "extracted/oepa/1PD00008.fs.npdes.yaml",
+        "relpath": "extracted/oepa/troy-piqua/1PD00008.fs.npdes.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       }
@@ -694,10 +694,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "2f0e4273b89a3bccd236fcd4a4dfe4cba34f58059c06f31bfeb3679ecc6ca9d5",
-      "size_bytes": 293474,
+      "sha256": "05b7797e2d6636db6a6ad1b84db8733f52f0721acbe8f88f18fb3febe9d9268e",
+      "size_bytes": 323813,
       "lfs_materialized": true,
-      "file_count": 20,
+      "file_count": 21,
       "stale": false,
       "asof": null
     },
@@ -797,10 +797,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "569c89ba24e2f7ef1ef076be9ad8e0b191341bd1f840e9a8724fa0fd315e8311",
-      "size_bytes": 36928,
+      "sha256": "94aaae512ae627ef15e42fdb5c25432b4b72551c6935f49cac1bcde79e8f19b1",
+      "size_bytes": 42311,
       "lfs_materialized": true,
-      "file_count": 20,
+      "file_count": 21,
       "stale": false,
       "asof": null
     },
@@ -851,10 +851,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "8829e45bf0b2f7c6d02eb3235ba8dae775040a761e1fea83eeb7eb48a6dd2a4b",
-      "size_bytes": 9098,
+      "sha256": "a588478a8c25caedcb1c0630bb2dca241d092b5ab2eb0849840f18050a4c957b",
+      "size_bytes": 12223,
       "lfs_materialized": true,
-      "file_count": 3,
+      "file_count": 4,
       "stale": false,
       "asof": null
     },
@@ -907,10 +907,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "5d864562a76a16cdff7dd5d84457143180f7dc7b6d7c56fd7725476136f3e509",
-      "size_bytes": 64631,
+      "sha256": "8f59f467b5ae2432e41446ca6a438d5526a74e474e56090ada717f0b5293d5a6",
+      "size_bytes": 70535,
       "lfs_materialized": true,
-      "file_count": 20,
+      "file_count": 21,
       "stale": false,
       "asof": null
     },
@@ -1361,10 +1361,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "460fed22c3409fcaff5f52ea5e0ecafdaab2ff1563e6c54d0bd28383213f0eed",
-      "size_bytes": 17282,
+      "sha256": "326c60d7a856c0e9065b4180319add5652889735f158c4658641d392c994c080",
+      "size_bytes": 18140,
       "lfs_materialized": true,
-      "file_count": 20,
+      "file_count": 21,
       "stale": false,
       "asof": null
     },
@@ -1415,10 +1415,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "d0ab1896a9171a503033254b86a1fcec3bcd9dbbd4b9ac5fe41b45879671bec9",
-      "size_bytes": 52915,
+      "sha256": "11644ba13b3298017d9d3578431ca33361216f87aea4cafe59ceb4d905da13a0",
+      "size_bytes": 55581,
       "lfs_materialized": true,
-      "file_count": 20,
+      "file_count": 21,
       "stale": false,
       "asof": null
     },
@@ -2126,10 +2126,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "16685c264705c3cc079bb6d6a22814d22e030ed1e68f874def0cb92314df5a8e",
-      "size_bytes": 150486,
+      "sha256": "18fe8f50220e382cef0a1fa54931eb027f5c735c6be379a499d962d1f3acf57e",
+      "size_bytes": 180255,
       "lfs_materialized": true,
-      "file_count": 2,
+      "file_count": 3,
       "stale": false,
       "asof": null
     },
@@ -2341,10 +2341,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "24311c69c89cfd8c6af39aff55c696965b9f87e89e060764e6cdea3c956df24d",
-      "size_bytes": 2429920,
+      "sha256": "039f0e94db9869e43fbd3f186736177afe0d4452bff8fa6504c7c1af234fe80a",
+      "size_bytes": 2594242,
       "lfs_materialized": true,
-      "file_count": 20,
+      "file_count": 21,
       "stale": false,
       "asof": null
     },

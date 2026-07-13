@@ -296,10 +296,13 @@ def test_troy_piqua_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactor
     """Troy/Piqua's floor (economics-baseline, consumer-energy, rsei) is committed (#1481), and
     the disclosed "Project Klondike" ``SiteFacility`` + its demand-pressure feed (#1482) lift
     ``facility`` to ``live`` — one above-floor domain live over the floor is enough for ``case``.
-    ``record`` stays ``seeded``, not ``absent``: one in-scope DMR extraction sits below
-    ``RECORD_LIVE_THRESHOLD``, and two more real extractions are orphaned by a corpus-scope gap
-    tracked separately (#1484). Its own test rather than the shared parametrize group above,
-    since that group asserts ``record``/``facility`` stay fully unscaffolded."""
+    ``record`` is ``live``: the Piqua WWTP NPDES permit + fact sheet (1PD00008) and the DMR are
+    all in-scope now that #1484 relocated the two OEPA extractions under ``oepa/troy-piqua/`` and
+    set ``corpus_relpaths=("troy-piqua", "oepa/troy-piqua")`` — three extractions clearing
+    ``RECORD_LIVE_THRESHOLD`` (previously the two permit extractions orphaned in the flat
+    ``oepa/`` tree, leaving only the sub-threshold DMR). Its own test rather than the shared
+    parametrize group above, since that group asserts ``record``/``facility`` stay fully
+    unscaffolded."""
     out = tmp_path_factory.mktemp("case-troy-piqua") / "b"
     settings = Settings(data_dir=REPO_ROOT / "data", site="troy-piqua")
     export_bundle(
@@ -313,7 +316,7 @@ def test_troy_piqua_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactor
     assert domains["backdrop"] == "live"
     assert domains["facility"] == "live"
     assert domains["places"] == "absent"
-    assert domains["record"] == "seeded"
+    assert domains["record"] == "live"
     assert domains["story"] == "absent"
 
 

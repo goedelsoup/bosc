@@ -10,10 +10,10 @@ license: Public record (Ohio R.C. 149.43)
 access_tier: public
 site_scope: site:troy-piqua
 storage:
-- relpath: extracted/oepa/1PD00008.npdes.yaml
+- relpath: extracted/oepa/troy-piqua/1PD00008.npdes.yaml
   media_type: application/x-yaml
   lfs: false
-- relpath: extracted/oepa/1PD00008.fs.npdes.yaml
+- relpath: extracted/oepa/troy-piqua/1PD00008.fs.npdes.yaml
   media_type: application/x-yaml
   lfs: false
 refresh:
