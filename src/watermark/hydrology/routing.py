@@ -15,12 +15,14 @@ flows are modeled (see the YAML header):
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Literal
 
 import yaml
 from pydantic import BaseModel, ConfigDict
 
 from watermark.config import Settings, get_settings
+from watermark.sites import is_reference_site
 
 RouteStatus = Literal["confirmed", "theorized"]
 Confidence = Literal["high", "medium", "low"]
@@ -84,10 +86,25 @@ class RoutingTable(BaseModel):
         return out
 
 
+def _routing_path(settings: Settings) -> Path:
+    """The active site's discharge-routing table.
+
+    The reference build (Lima) reads the flat ``reference/hydrology/routing.yaml`` (its
+    forcemain / WWTP→stream graph); a sibling site reads its own
+    ``reference/hydrology/<slug>/routing.yaml`` and never inherits Lima's BOSC forcemain
+    routes (#829). Absent ⇒ :func:`load_routing` returns ``None`` and the balance falls
+    back to the profile ``plant_receiving`` for receiving-water resolution.
+    """
+    base = settings.data_dir / "reference" / "hydrology"
+    if is_reference_site(settings.site):
+        return base / "routing.yaml"
+    return base / settings.site / "routing.yaml"
+
+
 def load_routing(*, settings: Settings | None = None) -> RoutingTable | None:
-    """Load the committed routing table, or ``None`` if the file is absent."""
+    """Load the active site's committed routing table, or ``None`` if the file is absent."""
     settings = settings or get_settings()
-    path = settings.data_dir / "reference" / "hydrology" / "routing.yaml"
+    path = _routing_path(settings)
     if not path.is_file():
         return None
     data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}

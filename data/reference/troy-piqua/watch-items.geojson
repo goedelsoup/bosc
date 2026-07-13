@@ -1,0 +1,23 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "piqua-wwtp",
+        "title": "Piqua WWTP",
+        "type": "infrastructure",
+        "priority": "high",
+        "status": "active",
+        "summary": "City of Piqua WWTP (NPDES 1PD00008 / OH0027049), outfall 001 to the Great Miami River (→ Ohio River; HUC-8 05080001, Upper Great Miami). Average design flow 8.7 MGD [Ohio EPA NPDES fact sheet 1PD00008, PN 22-006-011, 2022-06-21]. WLA design low flow: GMR-above-Sidney 7Q10 24.0 cfs (USGS 03261500)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.23466,
+          40.13128
+        ]
+      }
+    }
+  ]
+}

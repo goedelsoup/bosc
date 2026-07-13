@@ -55,6 +55,20 @@ streams:
       mixing_pct_avg: 25
       note: "Ottawa mainstem at Lima nearly dries at design low flow (1Q10 = 0 cfs) — heavily abstracted upstream for Lima's water supply"
 
+  upper great miami river:
+    seven_q10_cfs: 24.0
+    source: document
+    citation: "Ohio EPA NPDES fact sheet 1PD00008 (Piqua WWTP, PN 22-006-011, 2022-06-21), Stream Flows table (printed p.28) — GMR above Sidney, USGS gage #03261500, 1927-2021 data. Conservative: the design low flow is characterized above Sidney, upstream of the Piqua (outfall 001) reach, so it understates the dilution actually available at Piqua and tightens the screen."
+    confidence: high
+    context:
+      one_q10_cfs: 19.4
+      thirty_q10_summer_cfs: 29.0
+      harmonic_mean_cfs: 119.2
+      mixing_pct_avg: 25
+      design_flow_cfs: 13.46
+      acute_dilution_ratio: 2.9
+      note: "keyed 'upper great miami river' (not the bare 'great miami river') on purpose: the bare name is the basin-screen's derived Hamilton mainstem proxy (407.67 cfs, low-flow-7q10.derived.yaml) and must not be overridden by this Sidney/Piqua-reach value. The Piqua WWTP design flow 8.7 MGD (13.46 cfs) leaves ~1.8:1 chronic dilution against this 7Q10; the fact sheet's own acute (1Q10) downstream dilution ratio is 2.9:1 (39.96 cfs downstream 1Q10 / 13.46 cfs). #829"
+
   town creek:
     seven_q10_cfs: 0.16
     source: document

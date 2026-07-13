@@ -43,11 +43,25 @@ def _features(path: Path) -> list[dict[str, Any]]:
     return data.get("features", []) if isinstance(data, dict) else []
 
 
+def _site_watch_items_path(settings: Settings) -> Path:
+    return settings.data_dir / "reference" / settings.site / "watch-items.geojson"
+
+
+def has_site_watch_items(settings: Settings) -> bool:
+    """True iff the active site has committed its own WWTP graph (``watch-items.geojson``).
+
+    The balance falls back to Lima's periplus graph when a site has none
+    (:func:`_default_watch_items`); the agent tool consults this to refuse rather than
+    silently serve Lima's WWTPs for a site that hasn't committed its own (#829).
+    """
+    return _site_watch_items_path(settings).is_file()
+
+
 def _default_watch_items(settings: Settings) -> Path:
     # Per-site override: data/reference/<slug>/watch-items.geojson takes precedence so
     # non-Lima sites can carry their own WWTP/infrastructure geometry without touching
     # the frozen Lima periplus import.
-    site_path = settings.data_dir / "reference" / settings.site / "watch-items.geojson"
+    site_path = _site_watch_items_path(settings)
     if site_path.exists():
         return site_path
     return settings.data_dir / "reference" / "periplus" / "watch-items.geojson"
@@ -135,14 +149,21 @@ def _wwtp_nodes(
     return nodes
 
 
-def _campus_node(path: Path, warnings: list[str], *, settings: Settings) -> WaterBalanceNode:
-    """The BOSC data-center campus: documented FM-2 discharge + a derived cooling loss."""
-    fm2_mgd: float | None = None
-    for feat in _features(path):
-        props = feat.get("properties") or {}
-        if props.get("id") == "bosc-fm2":
-            fm2_mgd, _ = _design_mgd(str(props.get("summary", "")))
-            break
+def _campus_node(path: Path, warnings: list[str], *, settings: Settings) -> WaterBalanceNode | None:
+    """The BOSC data-center campus: documented FM-2 discharge + a derived cooling loss.
+
+    Gated on a committed campus-discharge feature (``bosc-fm2``) in the site's
+    watch-items: a site that has not committed a data-center forcemain discharge carries
+    no campus forcing node (``None``) rather than fabricating one from the facility alone
+    (#829) — the balance stays the municipal WWTP loop + assimilative screen.
+    """
+    fm2_feat = next(
+        (f for f in _features(path) if (f.get("properties") or {}).get("id") == "bosc-fm2"),
+        None,
+    )
+    if fm2_feat is None:
+        return None
+    fm2_mgd, _ = _design_mgd(str((fm2_feat.get("properties") or {}).get("summary", "")))
 
     return_flow = None
     if fm2_mgd is not None:
@@ -257,7 +278,9 @@ def build_water_balance(
     routing = load_routing(settings=settings)
     nodes = _wwtp_nodes(path, warnings, routing, settings=settings)
     _surface_bosc_routing(routing, warnings)
-    nodes.append(_campus_node(path, warnings, settings=settings))
+    campus = _campus_node(path, warnings, settings=settings)
+    if campus is not None:
+        nodes.append(campus)
     if live:
         abstraction = _abstraction_node(settings, warnings)
         if abstraction is not None:

@@ -1,0 +1,30 @@
+id: troy-piqua-watch-items
+title: Troy·Piqua site watch-items (WWTP infrastructure geometry)
+scope: reference
+status: reviewed
+producer:
+  kind: manual
+  source: Derived from Ohio EPA NPDES fact sheet 1PD00008.fs (City of Piqua WWTP) and
+    ECHO POTW inventory; coordinates from EPA FRS (ECHO lat/lon 40.13128, -84.23466)
+license: Public record (Ohio R.C. 149.43 / U.S. Government work)
+access_tier: public
+site_scope: site:troy-piqua
+storage:
+- relpath: reference/troy-piqua/watch-items.geojson
+  media_type: application/geo+json
+  lfs: false
+refresh:
+  cadence: static
+provenance: reference
+tags:
+- troy-piqua
+- gis
+- geojson
+- wwtp
+- infrastructure
+notes: Per-site watch-items GeoJSON for Troy·Piqua; consumed by balance._default_watch_items()
+  as the site-specific override (takes precedence over the Lima periplus import). Current
+  content is one feature — the Piqua WWTP (id=piqua-wwtp, 8.7 MGD design flow, outfall 001
+  → Great Miami River, NPDES 1PD00008 / OH0027049). ECHO coordinates [verified via FRS
+  Registry ID 110000578919]; unblocks hydrology_balance for troy-piqua (#829), screened
+  against the cited GMR-above-Sidney 7Q10 (24.0 cfs, low-flow-7q10.yaml).
