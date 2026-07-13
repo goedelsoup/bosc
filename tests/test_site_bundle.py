@@ -317,6 +317,32 @@ def test_troy_piqua_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactor
     assert domains["story"] == "absent"
 
 
+def test_sidney_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) -> None:
+    """Sidney's floor (economics-baseline, consumer-energy, rsei) is committed, and the disclosed
+    AWS "Project Galaxy" ``SiteFacility`` + its demand-pressure feed (#1378) lift ``facility`` to
+    ``live`` — one above-floor domain live over the floor is enough for ``case``. The MW load is
+    NOT disclosed (AWS discloses no floor area or interconnection figure): the IT load is an
+    investment-scaled ``[inference]`` screening bracket, never a disclosure. ``record`` stays
+    ``seeded`` (one in-scope DMR extraction, below ``RECORD_LIVE_THRESHOLD``). Its own test rather
+    than the shared parametrize group above, since that group asserts ``record``/``facility`` stay
+    fully unscaffolded."""
+    out = tmp_path_factory.mktemp("case-sidney") / "b"
+    settings = Settings(data_dir=REPO_ROOT / "data", site="sidney")
+    export_bundle(
+        settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
+    )
+    manifest = _manifest(out)
+    assert manifest["contract_version"] == "1.24.0"
+    readiness = manifest["readiness"]
+    assert readiness["tier"] == "case", f"sidney should be a Case site, got {readiness}"
+    domains = readiness["domains"]
+    assert domains["backdrop"] == "live"
+    assert domains["facility"] == "live"
+    assert domains["places"] == "absent"
+    assert domains["record"] == "seeded"
+    assert domains["story"] == "absent"
+
+
 @pytest.mark.parametrize("slug", ["coshocton", "piketon", "sandusky"])
 def test_stub_site_exports_at_stub_tier(
     slug: str, tmp_path_factory: pytest.TempPathFactory

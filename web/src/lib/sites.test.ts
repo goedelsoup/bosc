@@ -210,6 +210,8 @@ describe("facility-status rail — the 4-stage facility clock (#401)", () => {
     expect(facilityStageIndex(facilityStatus("urbana"))).toBe(1);
     expect(facilityStatus("troy-piqua")).toBe("confirmed"); // Project Klondike disclosed (#1482)
     expect(facilityStageIndex(facilityStatus("troy-piqua"))).toBe(1);
+    expect(facilityStatus("sidney")).toBe("construction"); // AWS "Project Galaxy" under construction (#1378)
+    expect(facilityStageIndex(facilityStatus("sidney"))).toBe(2);
   });
 
   it("defaults an undisclosed facility to step 0 (investigation)", () => {

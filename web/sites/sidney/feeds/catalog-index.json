@@ -1,6 +1,6 @@
 {
   "site": "sidney",
-  "catalog_version": "2c25d43fb0dcb1c3ffc47de78d9364b069c5c398d733ce37874ae35569ebdf53",
+  "catalog_version": "563d75b03a02cce97dce94a5fd143046c5e399994c2c302e9e3af33c53546471",
   "contract_version": "1.24.0",
   "atoms": [
     {
@@ -33,6 +33,14 @@
       "site": "sidney",
       "local_id": "consumptive-cooling",
       "title": "Consumptive cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:sidney:heat-reuse",
+      "kind": "concept",
+      "site": "sidney",
+      "local_id": "heat-reuse",
+      "title": "Heat reuse",
       "feed": "concepts"
     },
     {
@@ -224,7 +232,7 @@
       "kind": "dataset",
       "site": "sidney",
       "local_id": "grid",
-      "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
       "feed": "catalog"
     },
     {

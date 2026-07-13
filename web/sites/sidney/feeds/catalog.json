@@ -112,10 +112,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "bea8a65e7e958316aa89e243a05f40f619fa4348bf5af78c46c903cc3fee453f",
-      "size_bytes": 93939,
+      "sha256": "00e72c97be6a62a4f5d9bfa275b7e8ccf185748586b0c8c6d1d8e0ac29cacfcb",
+      "size_bytes": 119255,
       "lfs_materialized": true,
-      "file_count": 10,
+      "file_count": 11,
       "stale": false,
       "asof": null
     },
@@ -182,16 +182,16 @@
   },
   {
     "id": "grid",
-    "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+    "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
     "scope": "extracted",
     "collection": "grid",
     "status": "reviewed",
     "producer_kind": "extracted",
     "command": null,
     "connector_ref": null,
-    "source": "U.S. Department of Energy (CESER) FPA §202(c) emergency orders 202-26-33 / 202-26-32 and PJM Interconnection's underlying application — captured under data/documents/grid/pjm-202c-2026/",
+    "source": "U.S. Department of Energy (CESER) FPA §202(c) emergency orders 202-26-33 / 202-26-32 and PJM Interconnection's underlying application — captured under data/documents/grid/pjm-202c-2026/; AEP Ohio's Lyka Transmission Project fact sheet + map — captured under data/documents/grid/aep-lyka-2026/",
     "external_url": null,
-    "license": "Public record (federal agency order / regulatory filing)",
+    "license": "Public record (federal agency order / regulatory filing); AEP Ohio public project materials",
     "access_tier": "public",
     "site_scope": "basin-shared",
     "cadence": "on-demand",
@@ -203,26 +203,34 @@
       "backup-generation",
       "pjm",
       "section-202c",
-      "dispatch"
+      "dispatch",
+      "opsb",
+      "transmission",
+      "siting"
     ],
     "storage": [
       {
         "relpath": "extracted/grid/pjm-202c-emergency-2026.event.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
+      },
+      {
+        "relpath": "extracted/grid/aep-lyka-transmission-2026.project.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
       }
     ],
     "observed": {
       "exists": true,
-      "sha256": "f64866be10f28378d58f883b6c061e8d321b9db51d7fc3ba56a74f482117b4de",
-      "size_bytes": 6992,
+      "sha256": "c4a18667231164be035c927365116d5ce692787aac05222c9c31b4ccfed1c44c",
+      "size_bytes": 19814,
       "lfs_materialized": true,
-      "file_count": 1,
+      "file_count": 2,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "U.S. Department of Energy (CESER) FPA §202(c) emergency orders 202-26-33 / 202-26-32 and PJM Interconnection's underlying application — captured under data/documents/grid/pjm-202c-2026/",
+      "source": "U.S. Department of Energy (CESER) FPA §202(c) emergency orders 202-26-33 / 202-26-32 and PJM Interconnection's underlying application — captured under data/documents/grid/pjm-202c-2026/; AEP Ohio's Lyka Transmission Project fact sheet + map — captured under data/documents/grid/aep-lyka-2026/",
       "source_kind": "document",
       "page": null,
       "confidence": "medium",
@@ -567,8 +575,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "bca65a269956e827264e06865a041501b30971cee68d4833f924d7e1615211c3",
-      "size_bytes": 12047,
+      "sha256": "863defd49f0caae14a18840e4de9c32a6846e4ca1f8a423e350ac92ff3100cc8",
+      "size_bytes": 14800,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -681,10 +689,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "2f0e4273b89a3bccd236fcd4a4dfe4cba34f58059c06f31bfeb3679ecc6ca9d5",
-      "size_bytes": 293474,
+      "sha256": "05b7797e2d6636db6a6ad1b84db8733f52f0721acbe8f88f18fb3febe9d9268e",
+      "size_bytes": 323813,
       "lfs_materialized": true,
-      "file_count": 20,
+      "file_count": 21,
       "stale": false,
       "asof": null
     },
@@ -784,10 +792,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "97dd706636cf820b619b249d40f010a9b5de6781c4f3bbdf0440627c3bef8114",
-      "size_bytes": 32777,
+      "sha256": "94aaae512ae627ef15e42fdb5c25432b4b72551c6935f49cac1bcde79e8f19b1",
+      "size_bytes": 42311,
       "lfs_materialized": true,
-      "file_count": 20,
+      "file_count": 21,
       "stale": false,
       "asof": null
     },
@@ -838,10 +846,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "eb9bdfb00e774d047f5f4e4ef684913b2fd8dce4707ac189d7b8006721fac5dd",
-      "size_bytes": 3035,
+      "sha256": "d4e2bdb5889c4cbbefca33a260e5ebd009f446911dd0fc4e3e9becc4fbabf00d",
+      "size_bytes": 15303,
       "lfs_materialized": true,
-      "file_count": 1,
+      "file_count": 5,
       "stale": false,
       "asof": null
     },
@@ -894,10 +902,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "5d864562a76a16cdff7dd5d84457143180f7dc7b6d7c56fd7725476136f3e509",
-      "size_bytes": 64631,
+      "sha256": "41e62b2cd17ee2b717d2680bb28ff057257b85b98dc5ac4eb197facdef172873",
+      "size_bytes": 72744,
       "lfs_materialized": true,
-      "file_count": 20,
+      "file_count": 21,
       "stale": false,
       "asof": null
     },
@@ -1348,10 +1356,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "460fed22c3409fcaff5f52ea5e0ecafdaab2ff1563e6c54d0bd28383213f0eed",
-      "size_bytes": 17282,
+      "sha256": "326c60d7a856c0e9065b4180319add5652889735f158c4658641d392c994c080",
+      "size_bytes": 18140,
       "lfs_materialized": true,
-      "file_count": 20,
+      "file_count": 21,
       "stale": false,
       "asof": null
     },
@@ -1402,10 +1410,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "d0ab1896a9171a503033254b86a1fcec3bcd9dbbd4b9ac5fe41b45879671bec9",
-      "size_bytes": 52915,
+      "sha256": "11644ba13b3298017d9d3578431ca33361216f87aea4cafe59ceb4d905da13a0",
+      "size_bytes": 55581,
       "lfs_materialized": true,
-      "file_count": 20,
+      "file_count": 21,
       "stale": false,
       "asof": null
     },
@@ -1507,8 +1515,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "88e5aba52a4b605ca188b386fabf8ca67a99732d7825f445926def682ddc355b",
-      "size_bytes": 89999,
+      "sha256": "bf00d7b2bfd8b58cb58545fe603d7e56eb40123c77d38bc7a1ec5470e19c83ee",
+      "size_bytes": 90607,
       "lfs_materialized": true,
       "file_count": 2,
       "stale": false,
@@ -2113,10 +2121,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "bb267c62bf54da26a0ac944fc31d5da4ec02ad4edec0efe09ef1b3a9c97b775f",
-      "size_bytes": 136410,
+      "sha256": "18fe8f50220e382cef0a1fa54931eb027f5c735c6be379a499d962d1f3acf57e",
+      "size_bytes": 180255,
       "lfs_materialized": true,
-      "file_count": 1,
+      "file_count": 3,
       "stale": false,
       "asof": null
     },
@@ -2328,10 +2336,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "24311c69c89cfd8c6af39aff55c696965b9f87e89e060764e6cdea3c956df24d",
-      "size_bytes": 2429920,
+      "sha256": "039f0e94db9869e43fbd3f186736177afe0d4452bff8fa6504c7c1af234fe80a",
+      "size_bytes": 2594242,
       "lfs_materialized": true,
-      "file_count": 20,
+      "file_count": 21,
       "stale": false,
       "asof": null
     },
