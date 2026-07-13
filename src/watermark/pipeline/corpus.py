@@ -34,24 +34,30 @@ from watermark.models import (
     SosExtraction,
     WetlandExtraction,
 )
-from watermark.sites import active_profile, effective_corpus_scope
+from watermark.sites import (
+    CorpusScope,
+    CorpusScopeArg,
+    active_profile,
+    effective_corpus_scope,
+)
 
 log = get_logger(__name__)
 
 
-def relpath_in_scope(rel: str, prefixes: tuple[str, ...] | None) -> bool:
-    """Whether an extracted artifact's ``rel`` (relative to ``data/extracted``) is in a site's
-    corpus scope (#762).
+def relpath_in_scope(rel: str, scope: CorpusScopeArg) -> bool:
+    """Whether an extracted artifact's ``rel`` (relative to ``data/extracted``) is in ``scope``
+    (#762/#780/#1505) — the shared predicate every read surface funnels through.
 
-    ``prefixes is None`` means the whole tree is in scope — Lima, the reference build that owns
-    the un-slugged Allen-County-OH collections. Otherwise a prefix matches as a path *segment*:
-    ``"fort-wayne"`` matches ``fort-wayne/…`` and ``"idem/fort-wayne"`` matches
-    ``idem/fort-wayne/…`` (but ``"fort-wayne"`` never matches ``fort-wayne-foo/…``).
+    ``scope`` is normally the :class:`~watermark.sites.CorpusScope` from
+    :func:`~watermark.sites.effective_corpus_scope`; Lima's carries the peer-exclusion that keeps a
+    sibling's slug-scoped records (``idem/fort-wayne/…``, ``oepa/troy-piqua/…``) out of the
+    reference record. A legacy raw inclusion tuple — or ``None`` meaning the whole tree with no
+    exclusion — is also accepted for tests and ad-hoc callers. Prefixes match as path *segments*:
+    ``"fort-wayne"`` matches ``fort-wayne/…`` (but never ``fort-wayne-foo/…``).
     """
-    if prefixes is None:
-        return True
-    norm = rel.replace("\\", "/")
-    return any(norm == p or norm.startswith(f"{p}/") for p in prefixes)
+    if isinstance(scope, CorpusScope):
+        return scope.contains(rel)
+    return CorpusScope(include=scope).contains(rel)
 
 
 @dataclass(frozen=True)

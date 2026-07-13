@@ -35,8 +35,12 @@ values instead of baking in Lima's. Defers to the root [`CLAUDE.md`](../../../CL
   (`output_path_collisions(slug)` is the CI guard — outputs must be unique across sites, but
   corpus geometry inputs like `parcels_relpath` are per-site *authored* inputs, a different rule).
 - **`is_reference_site(slug)` (Lima) gates the reference-only surface** — the whole-corpus
-  reads, the cross-site hypothesis matrix, Lima's flat committed layout. Non-Lima sites default
-  to `corpus_relpaths = (slug,)` via `effective_corpus_scope` (the #762/#780 safe default): a
+  reads, the cross-site hypothesis matrix, Lima's flat committed layout. `effective_corpus_scope`
+  returns a `CorpusScope` (`_scope.py`, `include`/`exclude`): Lima's is `include=None` (whole tree)
+  **minus** every registered peer's own prefixes (`_peer_scope_prefixes`), so the reference build
+  no longer swallows a sibling's slug-scoped records — a Piqua NPDES permit under `oepa/troy-piqua/`
+  or a Fort Wayne §401 under `idem/fort-wayne/` stops rendering in Lima's Allen-County record
+  (#1505). Non-Lima sites default to `corpus_relpaths = (slug,)` (the #762/#780 safe default): a
   fresh site reads **only its own** extracted subtree and never silently inherits Lima's record.
 - **GIS field maps are data, not code (`_gis_schemas.py`).** The schema *models*
   (`GisParcelSchema`/`GisZoningSchema`/`GisFloodSchema`) live in `watermark.connectors.gis_schema`

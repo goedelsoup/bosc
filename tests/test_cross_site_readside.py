@@ -46,21 +46,31 @@ def lima_settings() -> Settings:
 
 
 def test_effective_corpus_scope_defaults_to_own_slug_not_lima() -> None:
-    """#780 — the safe default. ``corpus_relpaths = None`` means "whole tree" ONLY for the
+    """#780/#1505 — the safe default. ``corpus_relpaths = None`` means "whole tree" ONLY for the
     reference build (Lima); every other site defaults to its own ``<slug>/`` collection, so a
     freshly-registered site (scope left unset) can't silently inherit Lima's Allen-County record.
-    An explicit scope (Fort Wayne's IDEM-included tuple) always wins.
+    An explicit scope (Fort Wayne's IDEM-included tuple) always wins. And Lima's whole tree now
+    *subtracts* every peer's scope (#1505), so it stops swallowing their slug-scoped records.
     """
     from watermark.sites import SITES, effective_corpus_scope
 
-    assert effective_corpus_scope(SITES["lima"]) is None  # reference build = whole-tree catch-all
-    assert effective_corpus_scope(SITES["springfield"]) == (
-        "springfield",
-    )  # unset → own slug, not Lima
-    assert effective_corpus_scope(SITES["new-albany"]) == ("new-albany",)
-    assert effective_corpus_scope(SITES["fort-wayne"]) == ("fort-wayne", "idem/fort-wayne")
+    lima = effective_corpus_scope(SITES["lima"])
+    assert lima.include is None  # reference build = whole-tree catch-all
+    # #1505: whole tree MINUS every registered peer's own prefixes — a Piqua NPDES permit under
+    # oepa/troy-piqua/ or a Fort Wayne §401 under idem/fort-wayne/ is no longer in Lima's scope.
+    assert {"idem/fort-wayne", "oepa/troy-piqua", "springfield"} <= set(lima.exclude)
+    assert not lima.contains("idem/fort-wayne/wqc.yaml")
+    assert not lima.contains("oepa/troy-piqua/1PD00008.npdes.yaml")
+    assert lima.contains("recorder/deed.yaml")  # Lima's own collections stay in scope
+    assert lima.contains("oepa/1PD00013.npdes.yaml")  # its un-slugged Allen-County permit survives
+
+    assert effective_corpus_scope(SITES["springfield"]).include == ("springfield",)  # unset → own
+    assert effective_corpus_scope(SITES["new-albany"]).include == ("new-albany",)
+    fort_wayne = effective_corpus_scope(SITES["fort-wayne"])
+    assert fort_wayne.include == ("fort-wayne", "idem/fort-wayne")
+    assert fort_wayne.exclude == ()  # a peer includes its own prefixes and excludes nothing
     # An explicit non-slug scope wins — Urbana's Highland55 land-assembly corpus (#1328).
-    assert effective_corpus_scope(SITES["urbana"]) == (
+    assert effective_corpus_scope(SITES["urbana"]).include == (
         "urbana",
         "permits/highland55",
         "oepa/urbana",

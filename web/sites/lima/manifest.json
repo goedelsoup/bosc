@@ -2,9 +2,9 @@
   "site": "lima",
   "bundle_version": "1.0.0",
   "contract_version": "1.24.0",
-  "generated_at": "2026-07-10T14:26:34+00:00",
+  "generated_at": "2026-07-13T14:31:54+00:00",
   "feed_count": 42,
-  "row_total": 817,
+  "row_total": 813,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -22,7 +22,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 72
+      "count": 67
     },
     {
       "name": "timeline",
@@ -38,7 +38,7 @@
       "media_type": "application/json",
       "schema": "schemas/entities.schema.json",
       "kind": "collection",
-      "count": 102
+      "count": 99
     },
     {
       "name": "relationships",
@@ -46,7 +46,7 @@
       "media_type": "application/json",
       "schema": "schemas/relationships.schema.json",
       "kind": "collection",
-      "count": 97
+      "count": 95
     },
     {
       "name": "people",
@@ -62,7 +62,7 @@
       "media_type": "application/json",
       "schema": "schemas/concepts.schema.json",
       "kind": "collection",
-      "count": 8
+      "count": 9
     },
     {
       "name": "places",
@@ -102,7 +102,7 @@
       "media_type": "application/json",
       "schema": "schemas/documents.schema.json",
       "kind": "collection",
-      "count": 21
+      "count": 20
     },
     {
       "name": "exhibits",
@@ -118,7 +118,7 @@
       "media_type": "application/json",
       "schema": "schemas/leads.schema.json",
       "kind": "collection",
-      "count": 21
+      "count": 23
     },
     {
       "name": "contacts",
@@ -270,7 +270,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 106
+      "count": 110
     },
     {
       "name": "geo/campus",

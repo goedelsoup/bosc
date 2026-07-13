@@ -13,7 +13,9 @@ cosine-similarity retrieval to the research agent. Defers to the root
   `iter_extracted_chunks` (`data/extracted/**` YAML, **site-scoped by the site's
   `effective_corpus_scope`** via the same `relpath_in_scope` predicate the export path uses, so
   a peer whose records live under a collection prefix — `idem/fort-wayne`, `oepa/urbana` — is
-  reachable, not just its bare `<site>/` subdir (#1504); Lima indexes the whole tree). Chunk ids
+  reachable, not just its bare `<site>/` subdir (#1504); Lima indexes the whole tree **minus every
+  registered peer's subtree** (#1505), so a peer's slug-scoped record is indexed once, under that
+  peer, not double-indexed under Lima). Chunk ids
   are hierarchical (`<kind>::<relpath>::<i>`)
   so re-indexing is deterministic/dedupable; each chunk carries `site`, `collection`, `doc_kind`,
   `source_path`, `page`, and a `provenance` dict. Long text splits on paragraphs at a max width.

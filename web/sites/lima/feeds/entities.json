@@ -826,29 +826,6 @@
     "federal_obligations": null
   },
   {
-    "key": "npdes:1PD00008",
-    "display": "City of Piqua wastewater treatment works",
-    "kind": "facility",
-    "classification": "facility",
-    "relation_class": null,
-    "relation_basis": null,
-    "variants": [
-      "City of Piqua wastewater treatment works"
-    ],
-    "signals": [],
-    "roles": {
-      "facility": 1
-    },
-    "parcels": [],
-    "addresses": [],
-    "sources": [
-      "oepa/1PD00008.npdes.yaml"
-    ],
-    "lei": null,
-    "uei": null,
-    "federal_obligations": null
-  },
-  {
     "key": "npdes:1PD00013",
     "display": "City of Wilmington WWTP",
     "kind": "facility",
@@ -1078,29 +1055,6 @@
     "addresses": [],
     "sources": [
       "american-township/meetings/meeting-summaries.yaml"
-    ],
-    "lei": null,
-    "uei": null,
-    "federal_obligations": null
-  },
-  {
-    "key": "CITY OF PIQUA",
-    "display": "City of Piqua",
-    "kind": "government",
-    "classification": "government_local",
-    "relation_class": null,
-    "relation_basis": null,
-    "variants": [
-      "City of Piqua"
-    ],
-    "signals": [],
-    "roles": {
-      "applicant": 1
-    },
-    "parcels": [],
-    "addresses": [],
-    "sources": [
-      "oepa/1PD00008.npdes.yaml"
     ],
     "lei": null,
     "uei": null,
@@ -2444,29 +2398,6 @@
       "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.npdes.yaml",
       "oepa/oepa-2PH00006-american-ii-fact-sheet.npdes.yaml",
       "oepa/oepa-2PH00006-american-ii-permit.npdes.yaml"
-    ],
-    "lei": null,
-    "uei": null,
-    "federal_obligations": null
-  },
-  {
-    "key": "GREAT MIAMI RIVER",
-    "display": "Great Miami River",
-    "kind": "water",
-    "classification": "receiving_water",
-    "relation_class": null,
-    "relation_basis": null,
-    "variants": [
-      "Great Miami River"
-    ],
-    "signals": [],
-    "roles": {
-      "receiving_water": 1
-    },
-    "parcels": [],
-    "addresses": [],
-    "sources": [
-      "oepa/1PD00008.npdes.yaml"
     ],
     "lei": null,
     "uei": null,

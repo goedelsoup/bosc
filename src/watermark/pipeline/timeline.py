@@ -22,7 +22,7 @@ import yaml
 from watermark.config import Settings, get_settings
 from watermark.logging import get_logger
 from watermark.pipeline.corpus import Corpus, load_corpus, relpath_in_scope
-from watermark.sites import active_profile, effective_corpus_scope
+from watermark.sites import CorpusScope, active_profile, effective_corpus_scope
 
 log = get_logger(__name__)
 
@@ -221,7 +221,7 @@ def _load_yaml(path: Path) -> dict[str, Any]:
 
 
 def _commissioners_events(
-    settings: Settings, scope: tuple[str, ...] | None = None
+    settings: Settings, scope: CorpusScope | None = None
 ) -> list[TimelineEvent]:
     """Dated events from the committed commissioners extractions.
 
@@ -295,7 +295,7 @@ def _commissioners_events(
     return events
 
 
-def _zoning_events(settings: Settings, scope: tuple[str, ...] | None = None) -> list[TimelineEvent]:
+def _zoning_events(settings: Settings, scope: CorpusScope | None = None) -> list[TimelineEvent]:
     """The American Township zoning-resolution adoption dates (data-center M-2 basis).
 
     Lima-specific (``lacrpc/``) and gated on the active site's scope (#762): a sibling
@@ -342,7 +342,7 @@ def _summary_detail(meeting: dict[str, Any]) -> str:
 
 
 def _subdivision_meeting_events(
-    settings: Settings, scope: tuple[str, ...] | None = None
+    settings: Settings, scope: CorpusScope | None = None
 ) -> list[TimelineEvent]:
     """Subdivision meetings that name the corridor project in their minutes/agendas.
 
@@ -399,7 +399,7 @@ def build_timeline(
     corpus: Corpus | None = None,
     *,
     include_curated: bool = True,
-    scope: tuple[str, ...] | None = None,
+    scope: CorpusScope | None = None,
 ) -> list[TimelineEvent]:
     """Assemble a single sorted chronology across the whole corpus.
 

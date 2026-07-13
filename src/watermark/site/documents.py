@@ -31,6 +31,7 @@ from watermark.logging import get_logger
 from watermark.pipeline.corpus import relpath_in_scope
 from watermark.site import exhibits as exhibits_mod
 from watermark.site.feeds import DocumentCollectionItem, DocumentItem, RenderClass
+from watermark.sites import CorpusScopeArg
 
 log = get_logger(__name__)
 
@@ -339,7 +340,7 @@ def export_documents(
     exhibits: list[exhibits_mod.Exhibit] | None = None,
     mirror_base_url: str = "",
     allowlist: PublishAllowlist | None = None,
-    scope: tuple[str, ...] | None = None,
+    scope: CorpusScopeArg = None,
 ) -> list[DocumentCollectionItem]:
     """Export the source-document catalog as :class:`DocumentCollectionItem` items.
 

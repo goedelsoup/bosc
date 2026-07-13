@@ -1,5 +1,16 @@
 [
   {
+    "id": "OEPA-2DP00130",
+    "kind": "signal",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Public-comment window on the Bistrozzi \"Bosc\" indirect-discharge permit closes ~2026-07-31",
+    "detail": "Ohio EPA has a draft Indirect Discharge Permit (2DP00130*AP, Public Notice 222503, dated 2026-07-01) out for public comment — BISTROZZI LLC's \"Bosc\" data center at 4110 N Cole St, Lima, proposing to route domestic waste + non-contact cooling water through a private sanitary main and a temporary lift station to the American–Bath WWTP (a POTW that lacks a State-approved pretreatment program). Monitored parameters are water temperature, pH, and flow rate; the draft expires 2028-12-31. The 30-day comment window (standard Ohio EPA practice) puts the deadline at ~2026-07-31 — the exact end date is inferred from the July 1 notice, not printed on the permit.",
+    "source": "Ohio EPA Public Notice 222503 · data/extracted/oepa/2DP00130.npdes.yaml",
+    "issue": null,
+    "note": "time-sensitive — the comment window closes on or about 2026-07-31 (issue"
+  },
+  {
     "id": "PRR-04",
     "kind": "redaction",
     "status": "withheld",
@@ -229,5 +240,16 @@
     "source": "watermark-directory/the-watermark-directory#752",
     "issue": 752,
     "note": null
+  },
+  {
+    "id": "AEP-LYKA-OPSB",
+    "kind": "signal",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "AEP Ohio's Lyka 345kV substation/line has no OPSB case yet — filing expected early 2027, final route undetermined",
+    "detail": "AEP Ohio's own project fact sheet (captured 2026-07-11, dated 2026-04-08) schedules the Ohio Power Siting Board (OPSB) regulatory filing for \"Early 2027\" and an anticipated OPSB decision for \"Spring 2027\" — as of this writing no OPSB case number has been assigned or filed (confirmed by direct search of opsb.ohio.gov and AEP's own regulatory-filings index). The Lyka Substation site (a customer-owned parcel between N West St and N Cole St, Sugar Creek Township) is fixed, but the ~4-mile 345kV line route is not — AEP's own map shows 45 numbered \"study segments\" still under consideration, and the company selects a final route only after public input and field surveys, which run through fall 2026. A separate, unrelated Ohio History Connection/SHPO review track (OHPO project ID 2026ALL68059, \"Lyka Station STATCOM Project,\" received 2026-04-08) should not be conflated with the OPSB siting case itself. Secondary reporting (LimaOhio.com, 2026-04-21) states the substation is sited \"on Google's under-construction property\" — AEP's own materials never name a customer (\"a commercial customer's facility\"); the Google/Bistrozzi attribution stays [inference] until an OPSB filing names the load.",
+    "source": "AEP Ohio Lyka Transmission Project fact sheet (captured 2026-07-11) · data/extracted/grid/aep-lyka-transmission-2026.project.yaml",
+    "issue": null,
+    "note": "time-sensitive — monitor opsb.ohio.gov for the case filing, expected Early 2027; the line route is not final until then (issue"
   }
 ]

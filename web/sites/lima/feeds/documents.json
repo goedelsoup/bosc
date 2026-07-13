@@ -11554,6 +11554,28 @@
     "description": "**Collection:** `grid/` · immutable source evidence",
     "entries": [
       {
+        "rel": "grid/aep-lyka-2026/Lyka_MapPoster2.pdf",
+        "name": "Lyka_MapPoster2.pdf",
+        "size_bytes": 140707,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null
+      },
+      {
+        "rel": "grid/aep-lyka-2026/Lyka_ProjectFactsheet_V2.pdf",
+        "name": "Lyka_ProjectFactsheet_V2.pdf",
+        "size_bytes": 2759937,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null
+      },
+      {
         "rel": "grid/pjm-202c-2026/doe-order-202-26-32.pdf",
         "name": "doe-order-202-26-32.pdf",
         "size_bytes": 357058,
@@ -11597,112 +11619,6 @@
         "rel": "history/allen-oh/historyallencou00leesgoog_text.pdf",
         "name": "historyallencou00leesgoog_text.pdf",
         "size_bytes": 64926377,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      }
-    ]
-  },
-  {
-    "slug": "idem",
-    "title": "Idem",
-    "description": "",
-    "entries": [
-      {
-        "rel": "idem/fort-wayne/043026-IDEM-Hearing-ORIGINAL.pdf",
-        "name": "043026-IDEM-Hearing-ORIGINAL.pdf",
-        "size_bytes": 256046,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "idem/fort-wayne/47378PN-JS.pdf",
-        "name": "47378PN-JS.pdf",
-        "size_bytes": 231211,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "idem/fort-wayne/47378f.pdf",
-        "name": "47378f.pdf",
-        "size_bytes": 4534916,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "idem/fort-wayne/48739d.pdf",
-        "name": "48739d.pdf",
-        "size_bytes": 2083664,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "idem/fort-wayne/Response-to-Public-Comments-WQC001454-Project-Zodiac-Phase-3-Google-Data-Center.pdf",
-        "name": "Response-to-Public-Comments-WQC001454-Project-Zodiac-Phase-3-Google-Data-Center.pdf",
-        "size_bytes": 428610,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "idem/fort-wayne/WQC001454-Section-401-WQC-Approval.pdf",
-        "name": "WQC001454-Section-401-WQC-Approval.pdf",
-        "size_bytes": 311730,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "idem/fort-wayne/caats-confidentiality.pdf",
-        "name": "caats-confidentiality.pdf",
-        "size_bytes": 146602,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "idem/fort-wayne/notice_20260403_401_wqc001454.pdf",
-        "name": "notice_20260403_401_wqc001454.pdf",
-        "size_bytes": 6735469,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "idem/fort-wayne/public-comments-compiled.pdf",
-        "name": "public-comments-compiled.pdf",
-        "size_bytes": 12710817,
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
@@ -12872,6 +12788,17 @@
         "rel": "legal/select-committee-2026/witnesses/qts-2026-06-03.pdf",
         "name": "qts-2026-06-03.pdf",
         "size_bytes": 421679,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null
+      },
+      {
+        "rel": "legal/thor-v-urbana/1.pdf",
+        "name": "1.pdf",
+        "size_bytes": 139029,
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
@@ -14758,7 +14685,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -14769,7 +14696,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -14780,7 +14707,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -14791,7 +14718,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -14802,7 +14729,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -14813,7 +14740,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -14824,7 +14751,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -14835,7 +14762,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -14846,7 +14773,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -14857,7 +14784,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -14868,7 +14795,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -14879,7 +14806,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -14890,7 +14817,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -14901,172 +14828,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "oepa/troy-piqua/1PD00008.pdf",
-        "name": "1PD00008.pdf",
-        "size_bytes": 1971324,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "oepa/urbana/1PD00011.fs.pdf",
-        "name": "1PD00011.fs.pdf",
-        "size_bytes": 423790,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "oepa/urbana/1PD00011.pdf",
-        "name": "1PD00011.pdf",
-        "size_bytes": 183538,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "oepa/urbana/2663158.pdf",
-        "name": "2663158.pdf",
-        "size_bytes": 141137954,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "oepa/urbana/2784672.pdf",
-        "name": "2784672.pdf",
-        "size_bytes": 2396934,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "oepa/urbana/3492222.pdf",
-        "name": "3492222.pdf",
-        "size_bytes": 37800334,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "oepa/urbana/3613310.pdf",
-        "name": "3613310.pdf",
-        "size_bytes": 41921,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "oepa/urbana/3816773.pdf",
-        "name": "3816773.pdf",
-        "size_bytes": 2411187,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "oepa/urbana/3832476.pdf",
-        "name": "3832476.pdf",
-        "size_bytes": 628290,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "oepa/urbana/3832477.pdf",
-        "name": "3832477.pdf",
-        "size_bytes": 66719,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "oepa/urbana/3832478.pdf",
-        "name": "3832478.pdf",
-        "size_bytes": 76353,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "oepa/urbana/3832479.pdf",
-        "name": "3832479.pdf",
-        "size_bytes": 859386,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "oepa/urbana/3858475.pdf",
-        "name": "3858475.pdf",
-        "size_bytes": 941248,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "oepa/urbana/3858492.pdf",
-        "name": "3858492.pdf",
-        "size_bytes": 205742,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "oepa/urbana/3959035.pdf",
-        "name": "3959035.pdf",
-        "size_bytes": 2048587,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -15077,7 +14839,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -15088,7 +14850,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -15099,7 +14861,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -15110,7 +14872,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -15121,7 +14883,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -15132,7 +14894,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -15143,7 +14905,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -15154,7 +14916,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -15165,7 +14927,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       },
@@ -15176,7 +14938,7 @@
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
-        "published": false,
+        "published": true,
         "available": true,
         "download_url": null
       }
@@ -15675,116 +15437,6 @@
         "rel": "permits/dazzler-permits/4081910.pdf",
         "name": "4081910.pdf",
         "size_bytes": 2279344,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "permits/highland55/3938244.pdf",
-        "name": "3938244.pdf",
-        "size_bytes": 231959,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "permits/highland55/3938247.pdf",
-        "name": "3938247.pdf",
-        "size_bytes": 27446132,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "permits/highland55/3938251.pdf",
-        "name": "3938251.pdf",
-        "size_bytes": 20615229,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "permits/highland55/3938260.pdf",
-        "name": "3938260.pdf",
-        "size_bytes": 28022674,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "permits/highland55/3938271.pdf",
-        "name": "3938271.pdf",
-        "size_bytes": 11667958,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "permits/highland55/3962086.pdf",
-        "name": "3962086.pdf",
-        "size_bytes": 231991,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "permits/highland55/3962088.pdf",
-        "name": "3962088.pdf",
-        "size_bytes": 27446132,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "permits/highland55/3962092.pdf",
-        "name": "3962092.pdf",
-        "size_bytes": 20615229,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "permits/highland55/3962108.pdf",
-        "name": "3962108.pdf",
-        "size_bytes": 4470079,
-        "suffix": "pdf",
-        "media_type": "application/pdf",
-        "render_class": "pdf",
-        "published": false,
-        "available": true,
-        "download_url": null
-      },
-      {
-        "rel": "permits/highland55/3962110.pdf",
-        "name": "3962110.pdf",
-        "size_bytes": 11667958,
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
@@ -18336,6 +17988,17 @@
         "rel": "recorder/bistrozzi-deeds/202604210003890.pdf",
         "name": "202604210003890.pdf",
         "size_bytes": 1238275,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null
+      },
+      {
+        "rel": "recorder/bistrozzi-notices/202606250006699.pdf",
+        "name": "202606250006699.pdf",
+        "size_bytes": 6437675,
         "suffix": "pdf",
         "media_type": "application/pdf",
         "render_class": "pdf",
