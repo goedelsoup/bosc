@@ -75,9 +75,31 @@
     "related": [
       "assimilative-capacity",
       "7q10",
+      "hyperscale-data-center",
+      "heat-reuse"
+    ],
+    "body": "**Consumptive cooling** is the share of a facility's cooling-water withdrawal that\ndoes not return to the watercourse — primarily evaporative loss from cooling\ntowers. Unlike a once-through return, a consumptive draw permanently removes flow\nfrom the system downstream of the intake.\n\nFor a [[hyperscale data center]], the consumptive fraction of the cooling demand\nis the quantity that matters to the river: it is subtracted from live flow in the\n[[assimilative capacity]] screen against the [[7Q10]]. The water-balance model\ntreats the cooling demand and its consumptive fraction as scenario inputs\n(labelled assumptions), while the receiving-water flows are read from live gauges\nand the permit record.\n\nWhether the rejected heat is dumped or recovered is a separate design axis —\nsee [[heat reuse]] — that can shift the consumptive fraction where recovery\ndisplaces evaporative rejection."
+  },
+  {
+    "slug": "heat-reuse",
+    "title": "Heat reuse",
+    "kind": "concept",
+    "aliases": [
+      "waste-heat reuse",
+      "heat recovery"
+    ],
+    "tags": [
+      "data-center",
+      "cooling",
+      "energy",
+      "water-balance"
+    ],
+    "summary": "Capturing a data center's rejected thermal energy and redirecting it to on-site or district heating instead of dumping it — a cooling-design axis distinct from how much water the cooling draw consumes.",
+    "related": [
+      "consumptive-cooling",
       "hyperscale-data-center"
     ],
-    "body": "**Consumptive cooling** is the share of a facility's cooling-water withdrawal that\ndoes not return to the watercourse — primarily evaporative loss from cooling\ntowers. Unlike a once-through return, a consumptive draw permanently removes flow\nfrom the system downstream of the intake.\n\nFor a [[hyperscale data center]], the consumptive fraction of the cooling demand\nis the quantity that matters to the river: it is subtracted from live flow in the\n[[assimilative capacity]] screen against the [[7Q10]]. The water-balance model\ntreats the cooling demand and its consumptive fraction as scenario inputs\n(labelled assumptions), while the receiving-water flows are read from live gauges\nand the permit record."
+    "body": "**Heat reuse** is the design choice to *recover* a data center's rejected thermal\nenergy — piping it to on-site heating or a neighboring building / district-heat\nloop — rather than *dumping* it through evaporative towers or dry coolers. It is a\nthird axis on the cooling-design space, orthogonal to the withdraw-vs-consume\nquestion that [[consumptive cooling]] describes: a campus can dump or recover heat\nat either end of the water-use band.\n\nThe axis matters here for two reasons. First, where recovery displaces evaporative\nrejection it couples to the water story — less heat sent to a cooling tower is less\nwater evaporated. Second, closed-loop **chip cooling** (direct-to-chip liquid loops,\noil-free magnetic-bearing compressors) sits on the efficient, low-water pole and is\nnow a deployed hyperscale option, not just a spec sheet.\n\nFor a [[hyperscale data center]] the reuse choice is a disclosed-design fact, not\nsomething the footprint reveals. It is treated here as an **industry reference**\ndesign lever — bounding the space of what a campus *could* do — and never as a claim\nabout any watershed point's cooling design, which stays `[open]` until the operator\ndiscloses it. The named-vendor examples (Danfoss heat-reuse modules and Turbocor\ncompressors in Google data centers) are a single promotional source: they establish\nthat the technology is real and deployed, not that any particular campus uses it."
   },
   {
     "slug": "hyperscale-data-center",
@@ -95,7 +117,8 @@
     "summary": "A very large, cloud-scale data center campus; the local zoning code defines the term and gates it as a conditional use.",
     "related": [
       "consumptive-cooling",
-      "common-control-plumbing"
+      "common-control-plumbing",
+      "heat-reuse"
     ],
     "body": "A **hyperscale data center** is a data center built and operated at cloud scale —\ntypically multiple large halls on a single campus, with substantial electrical\nand cooling infrastructure. The term is not just colloquial here: the American\nTownship zoning resolution defines *Data Center / Hyperscale Data Center* and\ntreats it as a conditional use in its industrial district.\n\nThe land-use footprint is what ties the term to the rest of this record — the\nparcels assembled for the campus, the conditional-use application, and the\n[[consumptive cooling]] draw the cooling infrastructure implies. Who controls the\nassembling entities is a separate question, read through\n[[common-control plumbing]] rather than asserted."
   },

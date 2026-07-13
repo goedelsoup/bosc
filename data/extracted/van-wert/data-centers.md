@@ -7,6 +7,13 @@ discipline: `[verified]` = cited public source (two+ independent or a primary in
 BOSC corpus yet** — this records the *verified public record* and the specific primary instruments
 to *pull*. Every figure is cited; none is fabricated.
 
+> **Profile pin (2026-07-13, #1402):** the campus below is now registered as a SITE-PLAN-grounded
+> `SiteFacility` on the Van Wert `SiteProfile` (the #1327 Urbana precedent) — the 500 MW is carried
+> as a `[reference]` bracket (never a disclosure; QTS declines to state capacity), with closed-loop-dry
+> cooling and the ~$10B investment. This activates the **facility** readiness domain (the
+> `economics-demand-pressure` feed; `tier` backdrop → case). The pin cites this public record; the
+> grounding *instruments* (ordinances, hearing record, deeds, OPSB LON) remain the ingest job of #1401.
+
 ## Disambiguation guardrail
 
 The confirmed project is the **Van Wert Mega Site**, City of Van Wert / Van Wert County, OH —

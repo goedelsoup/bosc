@@ -506,9 +506,11 @@ _FORT_WAYNE = SiteProfile(
 # plant discharging to a *small tributary* (Town Creek → Little Auglaize → Auglaize → Maumee),
 # so the dilution denominator is tiny — the effluent-dominance end of the basin spectrum. A
 # *coming-soon* point; an Ohio site (AEP Ohio / PJM AEP zone, the Ohio LSC connector applies),
-# so the cross-state connector axis is not re-exercised. Geography is sourced + cited below; the
-# data-center dimension and facility-specific model inputs stay `[open]` until a site is
-# identified (Van Wert-area discovery is `--research` + corpus follow-up).
+# so the cross-state connector axis is not re-exercised. Geography is sourced + cited below. The
+# data-center dimension is no longer undisclosed: the QTS Van Wert Mega Site went public 2026-05-29
+# ($10B, 902 ac of the ~962 ac annexed 2026-05-11), so a SITE-PLAN-grounded `SiteFacility` is now
+# pinned below (#1402, the #1327 Urbana precedent) — the campus MW is a [reference] bracket, never
+# a fabricated disclosure. See data/extracted/van-wert/data-centers.md.
 _VAN_WERT = SiteProfile(
     slug="van-wert",
     basin="maumee",  # [verified] Town Creek → Little Auglaize → Auglaize → Maumee; HUC-8 04100007
@@ -585,8 +587,85 @@ _VAN_WERT = SiteProfile(
     supply_gage_secondary="TODO",
     passby_primary_cfs=0.0,  # [open] in-stream passby minimums — pending the model
     passby_secondary_cfs=0.0,
-    # grid / facility (no identified data-center facility → grid backdrop only, no campus share)
-    facility=None,  # [open] the data-center dimension onboarding doesn't capture (no disclosed facility)
+    # grid / facility — the disclosed QTS Van Wert Mega Site (#1402). SITE-PLAN-grounded (#1327 Urbana
+    # precedent), NOT air-permit-grounded (contrast Lima / Fort Wayne): operator/type/investment are
+    # disclosed [verified], but the campus MW is NOT officially disclosed — QTS's own FAQ declines to
+    # state capacity. The only MW figure is Thor/Form8tion's "up to 500 MW" [reference], carried as a
+    # bracket (never a point disclosure). Unlike Urbana/Troy-Piqua/Bowling Green, no gross floor area
+    # is disclosed, so the it_load bracket is built off the 500 MW ceiling (not a floor-area screen):
+    # 500 MW central/high (the announced "up to" ceiling — conservative-high downstream, like the
+    # Bowling Green disclosed-peak pin #1435), and a low that reads the same 500 MW as the ALL-IN
+    # campus draw and divides out the PUE ceiling (500 / 1.43 ~= 350 MW implied IT). No on-site
+    # gensets or air permit are disclosed (emergency backup only, no PTI found), so genset_count/
+    # genset_mw/air_permit_citation stay None and the it_load is grounded by it_load_citation.
+    # See data/extracted/van-wert/data-centers.md.
+    facility=SiteFacility(
+        it_load_mw=500.0,  # [reference] the announced "up to 500 MW" ceiling — carried central, not disclosed
+        it_load_low_mw=350.0,  # if "up to 500 MW" names the ALL-IN campus draw: 500 / 1.43 PUE ceiling ~= 350 MW IT
+        it_load_high_mw=500.0,  # the announced "up to 500 MW" ceiling
+        it_load_citation=(
+            "[reference] 'up to 500 MW' — Thor Equities / Form8tion's 2025-08-19 land-acquisition "
+            "release (GlobeNewswire; citybiz; Data Center Dynamics) and local press; NOT an "
+            "air-permit or PJM-interconnection disclosure of the campus's own load. QTS's own site "
+            "DECLINES to state capacity ('we don't disclose specific power capacity', "
+            "q.com/data-centers/van-wert), so this stays a [reference] bracket, never a point "
+            "disclosure — the official/interconnection MW is [open]. Carried central at the announced "
+            "500 MW ceiling per #1402 (like the Bowling Green disclosed-peak precedent, #1435): 500 is "
+            "an 'up to'/campus-draw ceiling, so treating it as the IT load makes downstream figures "
+            "(facility_draw = IT x PUE, then x load factor) run conservative-high. The low bound reads "
+            "the same 'up to 500 MW' as the ALL-IN campus/grid-interconnection draw and divides out "
+            "the cooling-dominated PUE ceiling (1.43, data/reference/compute/rack-density.yaml): "
+            "500 / 1.43 ~= 350 MW implied IT load — the bracket (350-500 MW) thus spans the "
+            "campus-total-vs-IT-only interpretive ambiguity. No floor-area screen is possible (gross "
+            "floor area is not disclosed, unlike Urbana #1327 / Troy-Piqua #1482 / Bowling Green "
+            "#1435). Replace with the disclosed load when an OEPA air PTI, a PJM interconnection "
+            "filing, or the AEP Ohio load contract (PUCO tariff 24-508-EL-ATA) surfaces it; the "
+            "AEP Ohio Transco Van Wert-Haviland 138 kV LON (OPSB 25-0697-EL-BLN, $45M, in-service "
+            "Dec 2026) is a [reference] transmission signal whose stated need is generic (#1401)."
+        ),
+        # No disclosed gensets or air permit (site-plan-grounded) → the N+1 backup cross-check and the
+        # air-dispatch fleet model are absent; QTS states the generators are emergency backup only
+        # (tested monthly) and no facility-specific PTI was found (#1408).
+        facility_type=(
+            'hyperscale data-center campus ("Van Wert Mega Site"; end user/operator QTS Data Centers '
+            "(QTS Realty Trust, LLC — Blackstone); developer of record Thor Equities Group via "
+            "Form8tion; land-holding entity QTS Van Wert LLC)"
+        ),  # [verified] operator/developer; [reference] land-holding LLC (pending deed/SOS pulls, #1404)
+        # gross_floor_area_sqft NOT disclosed → left None (up to 7 buildings; no floor area on record).
+        disclosed_investment_usd=10_000_000_000,  # [verified] ~$10B total capital investment (QTS; all outlets)
+        disclosure_citation=(
+            "[verified] QTS Data Centers publicly named as the Van Wert Mega Site end user/owner on "
+            "2026-05-29 (q.com/data-centers/van-wert; Data Center Dynamics; VW Independent 2026-05-29; "
+            "corroborated by Toledo Blade, WANE): a ~$10B campus on 902 ac of the ~962 ac annexed by "
+            "the City on 2026-05-11 (emergency ordinances, 6-0 — annexed + zoned I-2 General "
+            "Industrial with conditional data-center use), up to 7 buildings, ~200 permanent "
+            "full-time jobs (>1,500 construction), groundbreaking Q4 2026, first building operational "
+            "Q1 2029, buildout ~2032. Land assembled by Thor Equities / Form8tion from the Marsh "
+            "Foundation (~221-ac initial buy Aug 2025, anchor parcel 170347180100). Gross floor area "
+            "is NOT disclosed (left None). End-use [verified] (public disclosure by the named "
+            "operator); ingesting the naming annexation/site-plan instrument set is #1401's job. See "
+            "data/extracted/van-wert/data-centers.md."
+        ),
+        # Cooling archetype (#1054): CLOSED_LOOP_DRY recorded as the operator's [reference] claim —
+        # the same closed-loop pattern that undercut the Urbana water thesis (#1327), not a document
+        # extraction. The initial-fill volume + still-negotiated water/sewer carry an [open]
+        # discrepancy tracked at the water-service / leads sub-issues, not decided here.
+        cooling_model=CoolingModelType.CLOSED_LOOP_DRY,
+        cooling_model_source="reference",
+        cooling_model_citation=(
+            "[reference] operator/developer claim (NOT instrument-confirmed): closed-loop cooling "
+            "(Danfoss-patented equipment); QTS states the campus 'does not consume water for cooling "
+            "once operational', characterizing ongoing use as 'about what 4 households use per month' "
+            "(q.com/data-centers/van-wert; vanwert.org/water-treatment). Same closed-loop pattern that "
+            "undercut the Urbana water thesis (#1327). Carries an [open] discrepancy on the initial "
+            "closed-loop fill (~660,000 gal from the City of Van Wert — local press frames it "
+            "'annually' while the 2026-06-11 event framed it as a one-time fill); reconciling the fill "
+            "volume + the still-negotiated water/sewer service agreement is the water-service "
+            "instrument (#1407) / water-contradiction lead (#1409), not this pin. Replace with a "
+            "documented cooling design when an NPDES/mechanical instrument lands (the OHD000001 draft "
+            "data-center general permit is not yet linked to the facility by name, #1408)."
+        ),
+    ),
     serving_utility_citation=(  # [reference] not corpus
         "EIA-861 service-territory file (Ohio Power Co #14006) + PUCO certified-territory; AEP Ohio "
         "serving the City of Van Wert corroborated by the Van Wert County AEP Ohio electric-aggregation program"
