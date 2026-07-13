@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-13T01:52:10.370347+00:00'
+reconciled_at: '2026-07-13T04:36:29.513407+00:00'
 entries:
   aedg:
     exists: true
@@ -282,8 +282,8 @@ entries:
     site_scope: basin:maumee
   economics-baseline:
     exists: true
-    sha256: eed8bd22bbb60b337cde95184b3816e86dc9d1e7ece674fbffb56b5bf5d6ecc4
-    size_bytes: 323805
+    sha256: 05b7797e2d6636db6a6ad1b84db8733f52f0721acbe8f88f18fb3febe9d9268e
+    size_bytes: 323813
     lfs_materialized: true
     file_count: 21
     missing: []
@@ -322,8 +322,8 @@ entries:
     site_scope: slug-scoped
   eia-grid-profile:
     exists: true
-    sha256: cc586e4a08a2553261ab9d8ad269b85b7290642c2682818d1b618b264f537316
-    size_bytes: 70216
+    sha256: 8f59f467b5ae2432e41446ca6a438d5526a74e474e56090ada717f0b5293d5a6
+    size_bytes: 70535
     lfs_materialized: true
     file_count: 21
     missing: []
@@ -730,6 +730,16 @@ entries:
     asof: null
     stale: false
     site_scope: state:OH
+  mansfield:
+    exists: true
+    sha256: fad6a929f1536771934c7735fd9886d48e6848c5c77a2fbb046089bf0b6e5be8
+    size_bytes: 7398
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:mansfield
   meetings:
     exists: true
     sha256: 120e7875d271cb9ee515ae71e986aa3dad1317f69af21c26dea9c0494007980c
@@ -882,10 +892,10 @@ entries:
     site_scope: state:OH
   parcel-assemblage:
     exists: true
-    sha256: 16685c264705c3cc079bb6d6a22814d22e030ed1e68f874def0cb92314df5a8e
-    size_bytes: 150486
+    sha256: 18fe8f50220e382cef0a1fa54931eb027f5c735c6be379a499d962d1f3acf57e
+    size_bytes: 180255
     lfs_materialized: true
-    file_count: 2
+    file_count: 3
     missing: []
     asof: null
     stale: false

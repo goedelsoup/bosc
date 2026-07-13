@@ -23,7 +23,7 @@ Living record for the Bowling Green · Middleton Twp watershed point (basin: por
 | rsei | ok | reference/rsei/bowling-green/inventory.yaml |
 | consumer-energy | ok | reference/eia/bowling-green/consumer-energy.yaml |
 | demand-pressure | ok | reference/eia/bowling-green/demand-pressure.yaml |
-| grid-profile | error | EIA-861 2024: no Short-Form ('861S') row for utility #0 in OH |
+| grid-profile | ok | reference/eia/bowling-green/grid-profile.yaml (utility #2054, regenerated after the profile's EIA-861 number was resolved) |
 
 ## Review gate (blocking)
 

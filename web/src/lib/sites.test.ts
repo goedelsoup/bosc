@@ -164,6 +164,8 @@ describe("grouped selector — State / Basin lenses (#307/#308)", () => {
       "Mahoning",
     ]);
     expect(groups.find((g) => g.label === "Maumee")?.tag).toBe("MAU");
+    // the Portage basin (the Maumee-Portage divide node) carries Bowling Green
+    expect(groups.find((g) => g.label === "Portage")?.sites.map((s) => s.slug)).toContain("bowling-green");
     // the lower/upper Great Miami siblings collapse into one basin group
     expect(groups.find((g) => g.label === "Great Miami")?.sites.map((s) => s.slug)).toContain("wpafb");
     expect(groups.find((g) => g.label === "Great Miami")?.sites.map((s) => s.slug)).toContain("troy-piqua");

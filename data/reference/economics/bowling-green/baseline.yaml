@@ -935,7 +935,7 @@ latest:
       low: null
       high: null
   - naics: '99'
-    sector_name: '99'
+    sector_name: Unclassified
     annual_avg_employment:
       value: 4.0
       unit: jobs
