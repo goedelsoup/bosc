@@ -1,0 +1,94 @@
+# "Project Klondike" (J5 LLC dba Shaytura LLC) data-center campus — footprint record for the
+# Troy · Piqua, OH (upper Great Miami) watershed point. LIKE Urbana's / Fort Wayne's (and UNLIKE
+# Lima's document-transcribed stormwater-permit footprint), the boundary here is the RECORDED
+# OWNERSHIP ASSEMBLAGE — the three Miami County parcels now deeded to J5 LLC (the disclosed
+# developer of record), committed as data/reference/troy-piqua/parcel-assemblage.geojson.
+# parcel_acres is the GIS-measured planar area; building/impervious/developed stay [open] pending a
+# full site-plan / stormwater-permit extraction.
+# Source tags: reference = committed GIS reference dataset; connector = a live public-data read;
+# document = transcribed from a corpus instrument; assumption = a stated modeling input.
+site: >-
+  North of Farrington Road, east of Washington Road, in the Piqua I-75 Business & Industrial Park,
+  Piqua, Miami County, OH 45356 — the "Project Klondike" data-center campus. #1482 (facility) / #1483
+  (places), sub-issues of #1274.
+operator: >-
+  J5 LLC (dba Shaytura LLC) — the developer of record and owner of record across all three parcels
+  (auditor mailing 52 E Gay St, Columbus OH 43215). The reported hyperscaler backer (Meta, via
+  Hunterbrook's Menlo-Park-address trace) stays [reported]; never merge the J5/Shaytura entity with
+  a Meta entity. See data/extracted/troy-piqua/data-centers.md.
+boundary_basis: >-
+  Recorded ownership assemblage — the three parcels currently deeded to J5 LLC (N44-101834,
+  N44-101770, N44-101846), committed as data/reference/troy-piqua/parcel-assemblage.geojson (Miami
+  County auditor CAMA parcel_joined layer). NOT a surveyed earth-disturbance boundary; the assembled
+  Ohio EPA construction stormwater (NPDES OHC000005 / Rule-5) footprint and the campus site plan are
+  not yet in the corpus. This is the ~607.8-ac developer-owned campus — a NESTED SCOPE within the
+  larger ~1,026-ac cumulative annexation record and the ~1,200-ac whole I-75 business park; an
+  adjacent 93.1-ac parcel (N44-101772, J3 Development LLC) shares the same M40-WA022 split lineage
+  but a different mailing, so it is an [inference] lead, excluded here (see the geojson provenance
+  + data/reference/troy-piqua/README.md).
+
+parcel_acres:
+  value: 607.81
+  unit: acre
+  source: reference
+  citation: >-
+    parcel-assemblage.geojson — UTM-16N (EPSG:32616) planar area of the three recorded J5 LLC
+    parcels (watermark.hydrology.geo.parcels_total_acres). CORROBORATED by the county CAMA acreage
+    sum (PPAcres): 359.475 (N44-101834) + 245.367 (N44-101770) + 3.0 (N44-101846) = 607.842 ac —
+    within ~0.005% of the GIS planar measure. Matches the ~607-ac "phase-one site" figure in the
+    public record (Data Center Dynamics / opposition coverage). [verified]
+  confidence: high
+
+building_footprint_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] No campus site plan is in the corpus. Public disclosure describes two ~350,000 sq ft
+    buildings (~700,000 sq ft total, ~16.1 ac of building footprint if built as disclosed; City of
+    Piqua project page piquaoh.gov/1673), but that is a stated program, not a surveyed building
+    footprint. Needs the assembled site-plan / Rule-5 SWPPP extraction.
+  confidence: null
+
+impervious_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] No impervious tabulation on record for the assemblage. Requires the Ohio EPA construction
+    stormwater (NPDES OHC000005 / Rule-5) permit or the campus site plan.
+  confidence: null
+
+developed_acres:
+  value: null
+  source: assumption
+  citation: >-
+    [open] Total disturbed/developed area is unknown pending the SWPPP / construction stormwater
+    permit; it will be >= impervious_acres once that lands.
+  confidence: null
+
+dominant_hsg:
+  value: C
+  source: connector
+  citation: >-
+    [verified] USDA NRCS SSURGO via Soil Data Access (SDA), 8x8 grid sample (48 interior points)
+    over parcel-assemblage.geojson (watermark.hydrology.connectors.ssurgo.dominant_hsg, grid_n=8,
+    2026-07-13): C/D 47 pts (97.9%) + C 1 pt (2.1%) — drained-basis hydrologic soil group C
+    (undrained the C/D units run to group D). This CORRECTS the prior profile [inference] of HSG
+    "B": the deep Great Miami buried-valley aquifer (glacial outwash sand & gravel, an EPA
+    sole-source aquifer) is well-drained, but the SURFACE soils that govern the runoff CN across
+    this specific Farrington-Rd footprint are dominantly the C/D till/lacustrine units — the same
+    surface-vs-aquifer correction found at Urbana (B->C). The parcels are actively-farmed CAUV
+    cropland (class 101), consistent with tile-drained C/D. Runoff-relevant HSG is C, not B.
+  confidence: high
+
+receiving_water: >-
+  [inference] Great Miami River watershed (HUC-8 05080001, upper Great Miami), the same basin the
+  Piqua WWTP (NPDES 1PD00008 / OH0027049) discharges to at outfall 001. The campus sits north of
+  Farrington Rd, west of I-75; the specific stormwater receptor (a Great Miami tributary vs. the
+  mainstem) is [open] pending the construction stormwater permit. DISTINCT from the Piqua WWTP
+  SANITARY receptor; this is the CONSTRUCTION/site-runoff pathway.
+
+notes:
+  - 'Assembly = 3 parcels / 1 owner (J5 LLC) / 607.842 ac CAMA (607.81 ac planar): N44-101834 (359.475 ac, 2675 W Farrington Rd), N44-101770 (245.367 ac, 2305 Farrington Rd W), N44-101846 (3.0 ac, N Washington Rd). Two of the three carry the 2025-12-24 conveyance for $62,234,725; N44-101770 has no sale posted on the layer. All [verified] from the Miami County auditor CAMA (parcel_joined layer 0).'
+  - 'ACREAGE RECONCILIATION (resolves #1483 acceptance criterion 3 — the ~1,026 vs ~1,200 ac question): the auditor pull shows NESTED SCOPES, not a missing fourth parcel. Developer-owned campus = 607.842 ac [verified]; + adjacent J3 Development LLC (N44-101772) = 700.947 ac (J3 [inference], same M40-WA022 split lineage, different Cincinnati mailing — a lead, not committed); full M40-WA022 split-parent series = 963.794 ac across 7 parcels (262.847 ac stays farm-owned in Washington Twp); the City page`s ~1,026 ac = cumulative annexation record (2022-2025), ~1,200 ac = whole I-75 Exit 78 Business & Industrial Park. The campus (owner of record) is ~608 ac.'
+  - 'This record commits the boundary + measured acreage + the SSURGO-validated HSG so the onboard SSURGO/HSG gate item no longer skips (it had been skipped for want of a committed footprint) and toxic_corridor_bbox is set from the footprint bbox.'
+  - 'Building/impervious/developed stay [open]: the disclosed 2-building / ~700k sq ft program is a stated intent, not a surveyed footprint; the Rule-5 construction stormwater permit / site plan are not yet in the corpus.'

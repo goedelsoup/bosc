@@ -836,3 +836,91 @@ RICHLAND_PARCEL_SCHEMA = GisParcelSchema(
         ),
     ),
 )
+
+
+# Miami County, OH parcels (Troy/Piqua watershed point; #1483). The county publishes an ArcGIS
+# Online `parcel_joined` FeatureServer (org MiamiCountyOhio, wCWf4EGMg4PzHwzA) — the SAME vendor
+# pattern and service name as Champaign's CCEO twin, but a DIFFERENT field vocabulary: the numeric
+# Ohio CAMA use code is `PPClassNumber` (an Integer, e.g. 101 ag; `PPClassCode` here is the coarse
+# class LETTER "A"/"R", like Van Wert's), the owner mailing address is split across four tax-payer
+# columns (`TaxPAddr`/`TaxPCity`/`TaxPState`/`TaxPZip`), and `PPHasCAUV` is a 0/1 Integer FLAG (not a
+# dollar value) so it is left unmapped like Van Wert's `PPOnCauv`. `PPNote` carries the auditor
+# split/merge lineage ("SMDA#: M40-WA022 -005-00") — the parent-parcel trail that tied the Project
+# Klondike (J5 LLC) assemblage together. The dashless id is the separate `Parcel2` field; the dashed,
+# district-letter-prefixed `PARCEL` ("N44-101834") is the canonical/auditor form, stored verbatim.
+# Field names + samples confirmed from the live layer-0 `?f=json` metadata + queries (2026-07-13);
+# WKID 3735 (NAD83 Ohio South ftUS) — the right-state guard.
+MIAMI_PARCEL_SCHEMA = GisParcelSchema(
+    connector="miami_gis",
+    reference_dir="troy-piqua-gis",
+    page_size=2000,  # the layer's maxRecordCount
+    out_fields=(
+        "PARCEL",
+        "PPOwner",
+        "PPAddress",
+        "PPClassNumber",
+        "PPAcres",
+        "TaxPAddr",
+        "TaxPCity",
+        "TaxPState",
+        "TaxPZip",
+        "TaxDist",
+        "School",
+        "Neighborhood",
+        "PPLandValue",
+        "PPImprValue",
+        "PPTotalValue",
+        "PPSaleDate",
+        "PPAmount",
+    ),
+    id_field="PARCEL",  # dashed, district-letter-prefixed, e.g. "N44-101834" (Parcel2 = dashless)
+    owner_field="PPOwner",
+    owner_2_field="",  # no separate second-owner field (PPOwner carries the full string)
+    deeded_owner_field="",
+    situs_fields=("PPAddress",),  # the situs STREET only — no city token (see caveats)
+    owner_addr_fields=("TaxPAddr", "TaxPCity", "TaxPState", "TaxPZip"),  # tax-payer mailing, split
+    land_use_field="PPClassNumber",  # the numeric Ohio CAMA use code (PPClassCode = the class letter)
+    acres_field="PPAcres",
+    market_land_field="PPLandValue",
+    market_improvement_field="PPImprValue",
+    market_total_field="PPTotalValue",
+    cauv_field="",  # PPHasCAUV is a 0/1 Integer flag, not a value — unmapped (caveat), like Van Wert
+    tax_district_field="TaxDist",
+    school_field="School",
+    neighborhood_field="Neighborhood",
+    sale_date_field="PPSaleDate",  # Esri esriFieldTypeDate (epoch millis)
+    sale_amount_field="PPAmount",
+    valid_sale_field="",
+    id_normalize="verbatim",  # the dashed, prefixed id is stored verbatim (like Champaign's twin)
+    date_decode="epoch_millis",
+    land_use_decode="int",  # bare numeric PPClassNumber
+    deed_id_regex=r"\b[A-Z]\d{2}-\d{6}\b",  # the auditor PARCEL form (N44-101834); deed-cited form [inference]
+    meta=GisMeta(
+        subject="Miami County, Ohio parcels (parcel_joined — auditor CAMA + geometry)",
+        source="Miami County, Ohio ArcGIS Online org (MiamiCountyOhio, wCWf4EGMg4PzHwzA) — "
+        "parcel_joined FeatureServer layer 0 (auditor CAMA + geometry)",
+        source_url=(
+            "https://services3.arcgis.com/wCWf4EGMg4PzHwzA/arcgis/rest/services/"
+            "parcel_joined/FeatureServer/0"
+        ),
+        caveats=(
+            "Values are verbatim from the county CAMA join; null means the service had no value.",
+            "PPAddress is the situs STREET only (no city token); the municipality is in the "
+            "separate City/Twp columns, not appended here.",
+            "Owner mailing address is assembled from the four tax-payer columns "
+            "(TaxPAddr/TaxPCity/TaxPState/TaxPZip).",
+            "Land use is the numeric Ohio use code in PPClassNumber; PPClassCode is the coarse "
+            "class letter (A/R/...), not the code.",
+            "PPHasCAUV (a 0/1 Integer flag) is not mapped — cauv_value is always null here; the "
+            "committed assemblage geojson carries the boolean has_cauv separately.",
+            "PPNote carries the auditor split/merge lineage (SMDA#), the parent-parcel trail.",
+            "last_sale_date is decoded from the Esri epoch-millis PPSaleDate; verify against "
+            "the deed. The GIS can repeat split rows (one PARCEL, multiple polygons); readers "
+            "dedupe/assemble by parcel id.",
+            "Right-state guard: Miami County OHIO (FIPS 39109), owner cities Piqua/Troy OH "
+            "45356/45373, WKID 3735 (NAD83 Ohio South ftUS). Not the same-named Miami-Dade FL / "
+            "Miami County IN / KS / OH-Hamilton 'Miami' townships.",
+            "Field names + samples confirmed from the live layer-0 metadata + queries (2026-07-13).",
+        ),
+    ),
+)

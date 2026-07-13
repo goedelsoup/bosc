@@ -54,6 +54,9 @@ from watermark.sites._gis_schemas import (
     LUCAS_ZONING_SCHEMA as LUCAS_ZONING_SCHEMA,
 )
 from watermark.sites._gis_schemas import (
+    MIAMI_PARCEL_SCHEMA as MIAMI_PARCEL_SCHEMA,
+)
+from watermark.sites._gis_schemas import (
     NATIONAL_NFHL_FLOOD_SCHEMA as NATIONAL_NFHL_FLOOD_SCHEMA,
 )
 from watermark.sites._gis_schemas import (

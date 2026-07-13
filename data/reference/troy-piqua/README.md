@@ -13,11 +13,29 @@ Per-site onboarding tree for the Troy · Piqua watershed point (basin: great-mia
 - **Piqua WWTP** (`id=piqua-wwtp`) — outfall 001 → Great Miami River, average design flow **8.7 MGD** (13.46 cfs). NPDES **1PD00008 / OH0027049**; coordinates `[verified via EPA FRS 110000578919]` (ECHO 40.13128, -84.23466). Source: Ohio EPA NPDES fact sheet `1PD00008.fs` (PN 22-006-011, 2022-06-21).
 - This unblocks `hydrology_balance` for troy-piqua (#829): the Piqua design discharge is screened against the cited **GMR-above-Sidney 7Q10 = 24.0 cfs** (USGS 03261500, `reference/hydrology/low-flow-7q10.yaml` key `upper great miami river`).
 
+## Committed datasets
+
+- **`parcel-assemblage.geojson`** — the **"Project Klondike"** data-center campus land assemblage
+  (#1483): the **three Miami County parcels deeded to J5 LLC** (dba Shaytura LLC, the disclosed
+  developer of record), north of Farrington Rd / east of Washington Rd in the Piqua I-75 Business &
+  Industrial Park. **607.842 ac** across `N44-101834` (359.475 ac), `N44-101770` (245.367 ac), and
+  `N44-101846` (3.0 ac); geometry + owner/acreage/class/value/sale are `[verified]` from the Miami
+  County auditor CAMA `parcel_joined` layer (via the `miami_gis` connector / `MIAMI_PARCEL_SCHEMA`).
+  Two parcels carry a 2025-12-24 conveyance for $62,234,725; J5's auditor mailing is 52 E Gay St,
+  Columbus OH. **Acreage reconciliation** (resolves the ~1,026-ac vs ~1,200-ac question as a
+  *nested-scope* story, not a missing fourth parcel): campus 607.8 ac ⊂ the ~1,026-ac cumulative
+  annexation record ⊂ the ~1,200-ac whole business park — full detail in the geojson `bosc:provenance`
+  and [`data/extracted/troy-piqua/bosc-site-footprint.yaml`](../../extracted/troy-piqua/bosc-site-footprint.yaml).
+  The adjacent **J3 Development LLC** parcel (`N44-101772`, 93.1 ac) shares the same `M40-WA022` split
+  lineage but a different mailing — an `[inference]` lead, **excluded** from the committed assemblage.
+
 ## Known gaps & caveats
 
 - Onboarding seed — **review every value against a cited source before promotion** (`web/src/lib/sites.ts` `status`/`selectable`, parity-gated).
-- County/City parcel & zoning GIS is jurisdiction-specific and is **not** populated by the portable reach connectors — it needs a per-jurisdiction connector (see `docs/onboarding.md`).
+- **Parcel** GIS is now wired (`MIAMI_PARCEL_SCHEMA` — county AGOL `parcel_joined`); City of Troy / Piqua **zoning** GIS is still `[open]` and is **not** populated by the portable reach connectors (it needs a per-jurisdiction connector — see `docs/onboarding.md`).
+- The recorder **deed instrument numbers** (OR book/page) for the J5 conveyances remain `[open]` — the auditor CAMA gives sale date/amount but not the instrument locator.
 
 ## Regenerate
 
-`watermark onboard troy-piqua`  (or the per-connector commands: `derive-low-flows`, `nasa-power --write`, etc.)
+- Reach connectors: `watermark onboard troy-piqua`  (or the per-connector commands: `derive-low-flows`, `nasa-power --write`, etc.)
+- `parcel-assemblage.geojson`: `WATERMARK_SITE=troy-piqua watermark parcels --owner "J5 LLC" --geojson data/reference/troy-piqua/parcel-assemblage.geojson` pulls the geometry + base props (parcel_id / owner / situs / mailing / transfer_date) via the `miami_gis` connector; the full CAMA attributes (acres, land use, market value, sale, has_cauv, split_lineage) + the detailed `bosc:provenance` are added per the assemblage recipe (2026-07-13 auditor vintage — see the `count`/`parcel_ids`/`total_cama_acres` provenance keys).

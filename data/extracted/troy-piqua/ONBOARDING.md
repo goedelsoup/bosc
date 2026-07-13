@@ -6,10 +6,10 @@ Troy · Piqua is the **upper Great Miami mainstem** node (Miami County) — the 
 
 ## Dimension coverage
 
-- [~] **Hydrology** — corridor-DDF + climatology connectors ran (Troy-centroid, cited; Atlas-14 24h 2-yr 2.67 in → 100-yr 5.71 in; annual precip 2.83 mm/day). The receiving-water screen is unbuilt: no Great Miami / Stillwater 7Q10 (the derived table is Maumee mainstems only — none of the three gages 03262700 [Troy] / 03262500 [Piqua] / 03265000 [Stillwater] has a low flow) and no WWTP ingested (`plant_receiving={}`). SSURGO skipped → HSG B stays `[inference]` (the buried-valley "inverse of Black Swamp" claim, footprint-dependent).
+- [~] **Hydrology** — corridor-DDF + climatology connectors ran (Troy-centroid, cited; Atlas-14 24h 2-yr 2.67 in → 100-yr 5.71 in; annual precip 2.83 mm/day). The receiving-water screen is unbuilt: no Great Miami / Stillwater 7Q10 (the derived table is Maumee mainstems only — none of the three gages 03262700 [Troy] / 03262500 [Piqua] / 03265000 [Stillwater] has a low flow) and no WWTP ingested (`plant_receiving={}`). **SSURGO now run (#1483):** over the committed campus footprint the drained-basis dominant HSG is **C** (C/D 97.9%) — this **corrects** the prior `[inference]` "B"; the profile `dominant_hsg` is updated with the SSURGO citation.
 - [x] **Economics** — Miami County baseline + consumer-energy ran (high-confidence: BLS QCEW 2023 / Census ACS5). The signature is **mid-size manufacturing** (the Hobart / auto-parts base), the upstream-mainstem complement to Butler's heavy steel. RSEI toxics ran (Miami Co, 40 facilities / 33 scored; top by modeled Score: Hobart Brothers filler-metals — the manufacturing base named above). grid-profile ran on the now-pinned serving utility **Dayton Power & Light** (AES Ohio, EIA-861 #4922; PJM/PUCO; verified from the EIA-861 2024 Service_Territory) — the county-dominant IOU (Troy); the City of Piqua municipal (#15095) is the Piqua-side split [inference].
 - [~] **Data-center activity** — self-research first pass run (#247). `[verified]` **zero** Troy/Piqua/Miami-County records in the corpus (0 matches across 1,485 document lines; entity graph entirely Lima). `facility=None`; *the BOSC corpus contains no Troy/Piqua data-center records as of 2026-06-22* — a no-data finding (not evidence none is proposed). The `[open]` sweep target is the **Piqua / Troy / Tipp City I-75** corridor. **Method note:** the Lima/Allen Bistrozzi land-assembly graph is **not** bridged in.
-- [ ] **Per-jurisdiction GIS** — Miami County parcels / City of Troy + Piqua zoning connector (the known lift). **Heed the same-name trap:** there are multiple "Miami County"s nationally (and Miami-Dade FL) — verify the situs is **Miami County OH** from a live `?f=json` sample before wiring any discovered service (or fall back to OGRIP statewide scoped `County='Miami'`). Flood = national NFHL (wired).
+- [~] **Per-jurisdiction GIS** — **Miami County parcels WIRED (#1483):** `MIAMI_PARCEL_SCHEMA` over the county AGOL `parcel_joined` FeatureServer (org `wCWf4EGMg4PzHwzA`), `parcels_url` + `gis_parcel` set; same-name trap cleared (situs Piqua OH 45356, FIPS 39109, WKID 3735). Flood = national NFHL (wired). **Still `[open]`:** City of Troy / Piqua **zoning** connector.
 
 ## Last onboard run (2026-06-22, `--research`)
 
@@ -50,7 +50,7 @@ Its distinctive angle is the **municipal-power split** (Piqua/AMP vs AES Ohio).
   that bit Bryan). Pin the EIA-861 number(s) + PJM zone before any grid figure.
 - **Toxics — measured.** Mid-size manufacturing, not Butler's active heavy-steel discharger
   — the RSEI inventory is now pulled (`fips=39109`, 40 facilities / 33 scored; top by modeled Score:
-  Hobart Brothers filler-metals); only `toxic_corridor_bbox` stays empty (`[open]`).
+  Hobart Brothers filler-metals); `toxic_corridor_bbox` now **set (#1483)** — anchored on the committed campus footprint, extended to the Piqua Great-Miami manufacturing reach (Miami RSEI water_pounds are all 0, so it frames the corridor, not an active water screen).
 - **Geography caution.** The gage→reach mapping is profile-asserted `[verified]` (confirmed against the
   live USGS Miami-County site list at onboarding); SSURGO HSG stays `[inference]` pending a footprint.
 
@@ -65,8 +65,8 @@ data-center activity sweep.
 ## Review gate (blocking)
 
 - [ ] Every written reference value is reviewed against a cited source (no fabricated values).
-- [ ] SSURGO dominant HSG matches the profile, or the SiteProfile is updated with a citation. (HSG B is `[inference]`; footprint needed.)
+- [x] SSURGO dominant HSG matches the profile, or the SiteProfile is updated with a citation. (**Done #1483:** footprint committed; SSURGO drained-basis HSG **C** (C/D 97.9%) — profile updated B→C with the SSURGO citation.)
 - [ ] basin-screen coverage is sane for this site's receiving waters. (**Currently the Maumee inventory — a Great Miami / Stillwater 7Q10 + an upper-Great-Miami ECHO inventory are required.**)
-- [ ] A per-jurisdiction County/City GIS connector exists (the known lift — see docs/onboarding.md; verify Miami County **OH**, not another Miami County).
+- [~] A per-jurisdiction County/City GIS connector exists (the known lift — see docs/onboarding.md; verify Miami County **OH**, not another Miami County). (**Parcels done #1483** — `MIAMI_PARCEL_SCHEMA` / county AGOL `parcel_joined`; **zoning** connector still `[open]`.)
 - [x] Self-research first pass reviewed (Phase 5, 2026-06-22; upper-mainstem manufacturing node, muni-power split the distinctive angle; 4 proposals filed as sub-issues of #475, SSURGO-HSG kept as a gate item).
 - [ ] PROMOTION IS A SEPARATE MANUAL EDIT: flip status->live + selectable->true for 'troy-piqua' in web/src/lib/sites.ts, parity-gated. onboard never auto-promotes; only one live build (/bosc) exists today.

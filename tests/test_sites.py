@@ -24,6 +24,7 @@ from watermark.sites import (
     LIMA_ZONING_SCHEMA,
     LUCAS_AREIS_PARCEL_SCHEMA,
     LUCAS_ZONING_SCHEMA,
+    MIAMI_PARCEL_SCHEMA,
     PER_SITE_OUTPUT_FIELDS,
     PUTNAM_PARCEL_SCHEMA,
     SITES,
@@ -535,6 +536,27 @@ def test_van_wert_parcel_schema_is_agol_cama() -> None:
         }
     )
     assert (FIXTURES / p.connector / f"{key}.json").is_file(), f"van wert param drift: {key}"
+
+
+def test_miami_parcel_schema_is_agol_cama() -> None:
+    """Troy·Piqua's parcel gap (#1483) is closed by Miami County's ArcGIS Online parcel_joined
+    layer — Champaign's CCEO vendor pattern (same service name), with Miami-specific semantics:
+    the numeric use code is PPClassNumber (PPClassCode is the class LETTER, like Van Wert),
+    owner mailing is assembled from the four tax-payer columns, and PPHasCAUV is a 0/1 flag left
+    unmapped. Golden field-map lock (no fixture-replay: the campus feed reads the committed
+    parcel-assemblage.geojson, so no test drives the live miami_gis connector offline)."""
+    p = SITES["troy-piqua"].gis_parcel
+    assert p is not None and p is MIAMI_PARCEL_SCHEMA
+    assert p.connector == "miami_gis" and p.reference_dir == "troy-piqua-gis"
+    assert p.id_field == "PARCEL" and p.id_normalize == "verbatim"  # dashed prefixed auditor form
+    assert p.owner_field == "PPOwner" and p.defense is None  # owner present; no enclave scan
+    assert p.land_use_field == "PPClassNumber" and p.land_use_decode == "int"
+    assert p.date_decode == "epoch_millis"  # esriFieldTypeDate PPSaleDate
+    assert p.owner_addr_fields == ("TaxPAddr", "TaxPCity", "TaxPState", "TaxPZip")  # 4-part mailing
+    assert p.cauv_field == "" and p.valid_sale_field == ""  # PPHasCAUV 0/1 flag unmapped
+    assert p.query_scope == ""  # single-jurisdiction layer (no statewide County= scope)
+    assert "services3.arcgis.com/wCWf4EGMg4PzHwzA" in p.meta.source_url
+    assert "wCWf4EGMg4PzHwzA" in SITES["troy-piqua"].parcels_url  # profile endpoint matches schema
 
 
 def test_bryan_parcel_schema_is_ogrip_statewide_williams() -> None:
