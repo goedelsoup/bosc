@@ -1,6 +1,6 @@
 {
   "site": "van-wert",
-  "catalog_version": "4ac6a7643705a51ce9b26703d780bde7a32ae3bc05ac76d7db76302e658d3698",
+  "catalog_version": "120ead6549f186b7b942e55f0ee9970e5204dbd1bed94f858f939d44d22d3dee",
   "contract_version": "1.24.0",
   "atoms": [
     {
@@ -33,6 +33,14 @@
       "site": "van-wert",
       "local_id": "consumptive-cooling",
       "title": "Consumptive cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:van-wert:heat-reuse",
+      "kind": "concept",
+      "site": "van-wert",
+      "local_id": "heat-reuse",
+      "title": "Heat reuse",
       "feed": "concepts"
     },
     {
@@ -224,7 +232,7 @@
       "kind": "dataset",
       "site": "van-wert",
       "local_id": "grid",
-      "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
       "feed": "catalog"
     },
     {
