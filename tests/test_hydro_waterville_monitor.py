@@ -176,3 +176,13 @@ def test_the_travel_time_may_not_masquerade_as_a_gauge_reading(hydro_settings: S
     payload["reach_river_km"]["source"] = "connector"  # an inference dressed up as a reading
     with pytest.raises(ValidationError, match="reach_river_km"):
         ContinuousMonitorRead.model_validate(payload)
+
+
+def test_the_seven_q10_denominator_must_stay_derived(hydro_settings: Settings) -> None:
+    # the screening denominator is an LP3-derived value, not a live gauge reading
+    read = wm.compute_monitor_read(settings=hydro_settings)
+    assert read.seven_q10_cfs.source == "derived"
+    payload = read.model_dump()
+    payload["seven_q10_cfs"]["source"] = "connector"
+    with pytest.raises(ValidationError, match="seven_q10_cfs"):
+        ContinuousMonitorRead.model_validate(payload)
