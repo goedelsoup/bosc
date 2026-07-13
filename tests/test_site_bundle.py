@@ -357,7 +357,7 @@ def test_troy_piqua_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactor
     domains = readiness["domains"]
     assert domains["backdrop"] == "live"
     assert domains["facility"] == "live"
-    assert domains["places"] == "absent"
+    assert domains["places"] == "live"  # committed J5 "Project Klondike" campus assemblage (#1483)
     assert domains["record"] == "live"
     assert domains["story"] == "absent"
 

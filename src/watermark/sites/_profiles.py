@@ -19,6 +19,7 @@ from watermark.sites._gis_schemas import (
     LIMA_ZONING_SCHEMA,
     LUCAS_AREIS_PARCEL_SCHEMA,
     LUCAS_ZONING_SCHEMA,
+    MIAMI_PARCEL_SCHEMA,
     NATIONAL_NFHL_FLOOD_SCHEMA,
     OHIO_STATEWIDE_PARCEL_SCHEMA,
     PUTNAM_PARCEL_SCHEMA,
@@ -1709,25 +1710,32 @@ _TROY_PIQUA = SiteProfile(
     rsei_fips="39109",  # [verified] Miami County, OH
     econ_fips="39109",
     eia861_utility_number=4922,  # Dayton Power & Light (AES Ohio, county-dominant IOU) — EIA-861 2024 Service_Territory, Miami Co [verified]; City of Piqua muni #15095 is the Piqua split
-    parcels_url="TODO",  # [open] pending the Miami County, OH GIS REST endpoint discovery
+    parcels_url=(  # [verified] Miami County AGOL parcel_joined layer 0 (auditor CAMA + geometry, #1483)
+        "https://services3.arcgis.com/wCWf4EGMg4PzHwzA/arcgis/rest/services/"
+        "parcel_joined/FeatureServer/0"
+    ),
     zoning_url="TODO",  # [open] pending the City of Troy / Piqua GIS REST endpoint discovery
     floodzone_url=(  # [verified] FEMA NFHL S_FLD_HAZ_AR (national layer 28)
         "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28"
     ),
     hydro_utm_epsg=32616,  # [verified] UTM 16N (Troy ~84.20 degW; zone 16 spans 90-84 degW) — NOT zone 17
-    gis_parcel=None,  # [open] pending Miami County, OH parcel-layer discovery
+    gis_parcel=MIAMI_PARCEL_SCHEMA,  # [verified] Miami County AGOL parcel_joined — owner + CAMA (#1483)
     gis_zoning=None,  # [open] pending City of Troy / Piqua zoning-layer discovery
     gis_flood=NATIONAL_NFHL_FLOOD_SCHEMA.model_copy(update={"reference_dir": "troy-piqua-gis"}),
     design_lat=40.0392,  # [verified] Troy centroid = NOAA Atlas-14 point
     design_lon=-84.2033,
     corridor_name="Upper Great Miami industrial corridor",  # [inference] the Troy-Piqua mainstem reach
-    dominant_hsg="B",  # [inference] upper Great Miami buried-valley outwash (well-drained valley fill)
+    dominant_hsg="C",  # [verified] SSURGO drained-basis C over the committed footprint (#1483) — see hsg_citation
     hsg_citation=(
-        "The upper Great Miami valley (Troy/Piqua, Miami County) sits on the Great Miami Buried "
-        "Valley Aquifer - glacial outwash sand & gravel, a US-EPA designated sole-source aquifer "
-        "the Troy/Piqua well fields draw on - so the valley fill is well-drained HSG A/B, the "
-        "INVERSE of the Maumee lake-plain Black Swamp clays (HSG D); [inference] pending an SSURGO "
-        "area-weighted confirmation (onboard SSURGO needs a footprint)"
+        "[verified] USDA NRCS SSURGO via Soil Data Access, 8x8 grid (48 interior points) over the "
+        "committed campus footprint (data/reference/troy-piqua/parcel-assemblage.geojson), 2026-07-13: "
+        "C/D 47 pts (97.9%) + C 1 pt (2.1%) -> drained-basis hydrologic soil group C (undrained the "
+        "C/D units run to D). This CORRECTS the prior [inference] of HSG 'B': the deep Great Miami "
+        "Buried Valley Aquifer (glacial outwash sand & gravel, a US-EPA sole-source aquifer the "
+        "Troy/Piqua well fields draw on) is well-drained, but the SURFACE till/lacustrine soils that "
+        "govern the runoff CN across this Farrington-Rd footprint are the C/D units - the same "
+        "surface-vs-aquifer correction found at Urbana (B->C). Runoff-relevant HSG is C. Full survey "
+        "in data/extracted/troy-piqua/bosc-site-footprint.yaml (dominant_hsg)."
     ),
     pre_cover="TODO",  # [open] development land-cover scenario — pending an identified site
     post_cover="TODO",
@@ -1742,12 +1750,15 @@ _TROY_PIQUA = SiteProfile(
     consumer_energy_relpath="reference/eia/troy-piqua/consumer-energy.yaml",
     demand_pressure_relpath="reference/eia/troy-piqua/demand-pressure.yaml",
     grid_relpath="reference/eia/troy-piqua/grid-profile.yaml",
-    toxic_corridor_bbox=(
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-    ),  # [open] pending the identified corridor (the Troy/Piqua manufacturing reach)
+    # [verified footprint-anchored / inference extent] (lat_min, lat_max, lon_min, lon_max) — set
+    # once the committed campus footprint landed (#1483, deferred from #1481). Anchored on the J5
+    # "Project Klondike" campus (data/reference/troy-piqua/parcel-assemblage.geojson, lat
+    # 40.104-40.124 / lon -84.259 to -84.242) and extended NE to span the Piqua Great-Miami
+    # manufacturing reach — the RSEI water-relevant cluster (Hobart Brothers filler-metals 40.161/
+    # -84.232, Copperweld 40.166/-84.222, French Oil 40.150/-84.255, Hartzell 40.141/-84.269) and
+    # the Piqua WWTP receptor. Miami County's RSEI water_pounds are all 0, so the box frames the
+    # corridor for the map, not an active water-discharge screen.
+    toxic_corridor_bbox=(40.104, 40.168, -84.272, -84.221),
     plant_receiving={
         "piqua-wwtp": (
             # Receiving water named "Upper Great Miami River" (not bare "Great Miami River")
@@ -1823,8 +1834,13 @@ _TROY_PIQUA = SiteProfile(
             "center project coming to Piqua, Ohio'; Miami Valley Today commission coverage. Two "
             "~350,000 sq ft buildings (~700,000 sq ft total), '$1 billion plus' fixed-asset "
             "investment plus ~$76M developer-funded utility infrastructure, in the Piqua I-75 "
-            "Business & Industrial Park (~1,026 ac assembled across three annexed parcels "
-            "2020-2025). See data/extracted/troy-piqua/data-centers.md."
+            "Business & Industrial Park. The Miami County auditor pull (#1483) shows the "
+            "developer-owned campus is ~607.8 ac (three parcels deeded to J5 LLC, purchased "
+            "2025-12-24 for $62.23M; data/reference/troy-piqua/parcel-assemblage.geojson) — a "
+            "NESTED SCOPE within the ~1,026-ac cumulative annexation record (2022-2025) and the "
+            "~1,200-ac whole business park, not a fourth-parcel gap (reconciliation in "
+            "data/extracted/troy-piqua/bosc-site-footprint.yaml). See "
+            "data/extracted/troy-piqua/data-centers.md."
         ),
         # Cooling archetype (#1054): deliberately left UNKNOWN — a real, unresolved conflict
         # between two public disclosures (not a case of "cooling method not disclosed"). #1486

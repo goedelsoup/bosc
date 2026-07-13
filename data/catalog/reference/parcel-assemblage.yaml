@@ -18,7 +18,7 @@ storage:
   lfs: false
 refresh:
   cadence: on-demand
-  last_refreshed: '2026-06-27'
+  last_refreshed: '2026-07-13'
 provenance: connector
 tags:
 - parcels
@@ -42,6 +42,11 @@ notes: >-
   deed/rezoning/stormwater-permit extraction, #360/#362 for FW, #1328 for the Urbana deed pull).
   The Richland GIS is ArcGIS 10.3 (no f=geojson), so Mansfield's file is pulled by an
   esri-rings->GeoJSON recipe (reference/mansfield/README.md), not the f=geojson connector path.
+  Troy·Piqua (#1483): the 3 parcels deeded to J5 LLC (dba Shaytura LLC) — the "Project Klondike"
+  data-center campus, ~607.8 ac north of Farrington Rd in the Piqua I-75 Business Park, from the
+  Miami County auditor parcel_joined CAMA layer via the miami_gis field-map. The recorded OWNERSHIP
+  campus (a nested scope within the larger ~1,026-ac annexation record / ~1,200-ac business park);
+  the adjacent J3 Development LLC parcel is an [inference] lead, excluded.
   Distinct from the Periplus frozen import
   (reference/periplus/bosc-parcels.geojson, catalogued under the periplus entry), which covers the
   Lima corridor parcels only.

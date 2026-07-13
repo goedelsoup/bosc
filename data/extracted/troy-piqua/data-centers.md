@@ -41,12 +41,26 @@ The developer of record is a shell (J5 LLC / Shaytura LLC); the reported hypersc
   but not on the City page, DCD, or cleanview; origin (filing vs. community-coined) is `[open]`.
 - **Location:** north of Farrington Road, east of Washington Road, in the Piqua I-75 Business &
   Industrial Park (near I-75 exit 78), City of Piqua. `[verified]` Source: piquaoh.gov; DCD.
-- **Acreage:** ~607 acres = phase-one site; the documented assembled footprint is **~1,026 acres**
-  across three annexed parcels 2020–2025 (Statler Farms 663.64 ac + a 329.824-ac parcel + a 33-ac
-  parcel = 1,026.46 ac). `[verified]` Source: piquaoh.gov (parcel acreages). The City page's
-  **~1,200-ac** contiguous framing is `[reported]` — it exceeds the documented parcel sum by ~174 ac,
-  so a fourth parcel / larger source is `[open]` (see Instruments to pull #2). (So "607" is phase
-  one, not the total.)
+- **Acreage — RESOLVED by the Miami County auditor pull (#1483, 2026-07-13).** The acreage gap was
+  a **nested-scope** question, not a missing fourth parcel:
+  - **Developer-owned campus = 607.842 ac** `[verified]` — the three parcels now deeded to **J5 LLC**
+    (owner of record): `N44-101834` (359.475 ac, 2675 W Farrington Rd), `N44-101770` (245.367 ac,
+    2305 Farrington Rd W), `N44-101846` (3.0 ac, N Washington Rd). Two of the three carry a
+    **2025-12-24 conveyance for $62,234,725**; J5's auditor mailing is **52 E Gay St, Columbus OH**.
+    This equals the "~607-ac phase-one" figure — it is the actual campus, committed as
+    `data/reference/troy-piqua/parcel-assemblage.geojson`. Source: Miami County auditor CAMA
+    (`parcel_joined` layer 0).
+  - **+ adjacent J3 Development LLC** (`N44-101772`, 93.105 ac, 2332 W Farrington Rd) → 700.947 ac.
+    Same `M40-WA022` auditor split lineage as the J5 parcels and physically adjacent, but a **different
+    mailing** (Cincinnati, not J5's Columbus), so common control is `[inference]` — a **lead**, not
+    committed to the assemblage. Worth confirming via OpenCorporates / a common registered agent.
+  - **Full `M40-WA022` split-parent series = 963.794 ac** across 7 parcels `[verified lineage]` —
+    262.847 ac stays farm-owned in Washington Twp (Hines, Holfinger ×2), never sold to the developer.
+  - The City page's **~1,026-ac** figure = the cumulative **annexation record** (three tracts annexed
+    2022–2025) and the **~1,200-ac** figure = the whole **I-75 Exit 78 Business & Industrial Park** —
+    both LARGER scopes than the developer-owned campus. The campus (owner of record) is ~608 ac.
+    `[verified]`/`[inference]` per the levels above; full reconciliation in
+    `data/extracted/troy-piqua/bosc-site-footprint.yaml`.
 - **Building program:** two buildings ~350,000 ft² each (~700,000 ft² total). `[verified]`
 - **Investment:** "$1 billion plus" fixed-asset investment, plus ~$76M developer-funded utility
   infrastructure (water, wastewater, power, roads); projected >$180M community revenue over 30
@@ -112,11 +126,13 @@ The developer of record is a shell (J5 LLC / Shaytura LLC); the reported hypersc
   emergency resolution waiving three readings). `[verified]` Supporting school-compensation / TIF
   agreements passed by Piqua City Schools & Upper Valley Career Center boards October 2025; all
   agreements executed January 23, 2026; a further resolution April 9, 2026. `[verified]`
-- **Zoning/annexation:** three parcels totaling **~1,026 acres** annexed and zoned heavy-industrial
-  2022–2025 (Statler Farms annex Jun 8, 2022 / zone Sep 20, 2022; 329.824-ac parcel annex Sep 19,
-  2024 / zone Jan 28, 2025; 33-ac parcel annex Mar 13, 2025 / zone May 20, 2025). `[verified]`
-  Source: piquaoh.gov (project page; annexation/zoning timeline). (The City page's ~1,200-ac figure
-  is `[reported]`; the ~174-ac gap vs. this parcel sum is `[open]`.)
+- **Zoning/annexation:** the **cumulative annexation record** totals **~1,026 acres** annexed and
+  zoned heavy-industrial 2022–2025 (Statler Farms annex Jun 8, 2022 / zone Sep 20, 2022; 329.824-ac
+  parcel annex Sep 19, 2024 / zone Jan 28, 2025; 33-ac parcel annex Mar 13, 2025 / zone May 20,
+  2025). `[verified]` Source: piquaoh.gov (project page; annexation/zoning timeline). This is a
+  **larger scope than the developer-owned campus** (~607.8 ac, above) — the annexed land was
+  re-platted and only part sold to J5 LLC; the ~1,200-ac City figure is the whole business park.
+  The ~174-ac "gap" was a scope artifact, now resolved (see Acreage, above).
 - **Operations target:** ~December 2029 per a candidate-site tracker. `[reported]` — not on the
   City page (which states no target).
 - **Ohio EPA air PTI (backup generators):** `[open]`, confirmed-negative as of 2026-07-11 — a
@@ -181,10 +197,14 @@ This flips the `facility` readiness domain `absent` → `seeded`/`live` (once th
 2. **Piqua Land Company / New Albany Company (NACO) prior-ownership lead** — confirm or refute via
    the Miami County Auditor/Recorder deed chain (currently a single non-primary, uncorroborated
    source; see §1).
-3. **Miami County Auditor / GIS** — parcel IDs for the three annexed parcels (Statler Farms +
-   329.824-ac + 33-ac); acreage, owner of record, transfer dates. **Also resolve the ~174-ac gap**
-   between the documented parcel sum (~1,026 ac) and the City page's ~1,200-ac figure — look for a
-   fourth annexed parcel or the source of the larger number.
+3. **Miami County Auditor / GIS — DONE (#1483, 2026-07-13).** Pulled the `parcel_joined` layer 0:
+   the campus is the **3 J5 LLC parcels = 607.842 ac** (`N44-101834`/`N44-101770`/`N44-101846`),
+   committed as `data/reference/troy-piqua/parcel-assemblage.geojson` with owner/acreage/transfer/
+   split-lineage. The ~174-ac "gap" was a **nested-scope artifact** (campus ⊂ annexation record ⊂
+   business park), not a fourth parcel (see Acreage). **Remaining `[open]`:** (a) confirm/refute the
+   adjacent **J3 Development LLC** parcel (`N44-101772`, 93.1 ac) as a related SPE — same `M40-WA022`
+   split lineage, different Cincinnati mailing; (b) pull the recorder **deed instrument numbers** for
+   the J5 conveyances (the auditor shows sale date/amount but not the OR book/page or instrument #).
 4. **City of Piqua** — the executed Water & Wastewater Agreement (Jan 23, 2026) to reconcile the
    2.0 MGD reservation vs. the closed-loop/domestic-only public messaging (#1486).
 5. **OEPA air PTI** — re-check periodically for a backup generator PTI filing (SWDO, Miami County,
