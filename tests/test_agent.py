@@ -86,23 +86,26 @@ async def test_reference_tools_do_not_serve_lima_data_off_home(
 
 
 async def test_hydrology_balance_populated_for_site_with_watch_items(
+    hydro_settings: Settings,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     # #829: troy-piqua committed its own watch-items.geojson (Piqua WWTP) + a cited
     # receiving-water 7Q10, so hydrology_balance runs per-site instead of returning the
     # reference-only stub — and it must carry NONE of Lima's WWTP graph or forcemain caveats.
-    monkeypatch.setattr(
-        tools,
-        "get_settings",
-        lambda: Settings(site="troy-piqua", data_dir=REPO_ROOT / "data", hydro_offline=True),
-    )
+    # Reuse the hermetic hydro_settings fixture (offline + committed hydro_fixtures_dir),
+    # overriding only the site (tests/CLAUDE.md).
+    settings = hydro_settings.model_copy(update={"site": "troy-piqua"})
+    monkeypatch.setattr(tools, "get_settings", lambda: settings)
     text = (await tools.hydrology_balance.handler({}))["content"][0]["text"]
 
     # Not the reference-only stub; the real Piqua balance + assimilative screen is present.
     assert "No committed hydrology_balance" not in text
     assert "Piqua WWTP" in text and "Upper Great Miami River" in text
-    # The cited GMR-above-Sidney 7Q10 (24.0 cfs) screens the 13.46 cfs design discharge.
-    assert "24.00 cfs" in text and "dilution" in text
+    # The cited GMR-above-Sidney 7Q10 (24.0 cfs) screens the 13.46 cfs design discharge to a
+    # 1.78:1 dilution (24.00 / 13.46) — assert the full computed line so a miscomputed ratio fails.
+    assert (
+        "Upper Great Miami River 7Q10 24.00 cfs vs discharge 13.46 cfs -> 1.78:1 dilution" in text
+    )
     # No Lima bleed: no Ottawa/Shawnee/American WWTPs, no BOSC campus node or FM routing caveat.
     for leak in ("Shawnee II", "American", "Ottawa River", "BOSC data-center campus", "FM-3"):
         assert leak not in text

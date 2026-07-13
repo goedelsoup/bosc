@@ -26,7 +26,7 @@ from watermark.hydrology.model import Node, ProvenancedValue, WaterBalance, Wate
 from watermark.hydrology.routing import RoutingTable, load_routing
 from watermark.hydrology.units import mgd_to_cfs
 from watermark.logging import get_logger
-from watermark.sites import active_profile
+from watermark.sites import active_profile, is_reference_site
 
 log = get_logger(__name__)
 
@@ -162,6 +162,11 @@ def _campus_node(path: Path, warnings: list[str], *, settings: Settings) -> Wate
         None,
     )
     if fm2_feat is None:
+        # The corpus home (Lima) is expected to model the BOSC campus discharge, so a
+        # missing FM-2 feature is a data-integrity warning, not a silent drop; a peer that
+        # models no BOSC campus simply carries no campus forcing node (#829).
+        if is_reference_site(settings.site):
+            warnings.append("BOSC campus: FM-2 discharge not found in watch-items.")
         return None
     fm2_mgd, _ = _design_mgd(str((fm2_feat.get("properties") or {}).get("summary", "")))
 
