@@ -1,0 +1,312 @@
+{
+  "params": {
+    "f": "json",
+    "returnGeometry": "false",
+    "where": "1=1",
+    "outFields": "CPZoneDist",
+    "groupByFieldsForStatistics": "CPZoneDist",
+    "outStatistics": "[{\"statisticType\": \"count\", \"onStatisticField\": \"OBJECTID_1\", \"outStatisticFieldName\": \"n\"}]"
+  },
+  "fetched_at": "2026-07-13T17:39:43.729348+00:00",
+  "payload": {
+    "objectIdFieldName": "OBJECTID_1",
+    "uniqueIdField": {
+      "name": "OBJECTID_1",
+      "isSystemMaintained": true
+    },
+    "globalIdFieldName": "GlobalID",
+    "geometryType": "esriGeometryPolygon",
+    "spatialReference": {
+      "wkid": 102100,
+      "latestWkid": 3857
+    },
+    "fields": [
+      {
+        "name": "n",
+        "type": "esriFieldTypeInteger",
+        "alias": "n",
+        "sqlType": "sqlTypeInteger",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "CPZoneDist",
+        "type": "esriFieldTypeString",
+        "alias": "Zoning District",
+        "sqlType": "sqlTypeOther",
+        "length": 255,
+        "domain": {
+          "type": "codedValue",
+          "name": "CPZoningDist",
+          "mergePolicy": "esriMPTDefaultValue",
+          "splitPolicy": "esriSPTDefaultValue",
+          "codedValues": [
+            {
+              "name": "AG - Agriculture",
+              "code": "AG"
+            },
+            {
+              "name": "CN - Conservation",
+              "code": "CN"
+            },
+            {
+              "name": "CO - Corridor Office",
+              "code": "CO"
+            },
+            {
+              "name": "CV - Civic",
+              "code": "CV"
+            },
+            {
+              "name": "CX - Corridor Mixed Use",
+              "code": "CX"
+            },
+            {
+              "name": "D-GX - Downtown General Mixed Use",
+              "code": "D-GX"
+            },
+            {
+              "name": "D-RF - Downtown Riverfront Mixed Use",
+              "code": "D-RF"
+            },
+            {
+              "name": "D-SX - Downtown Shopfront Mixed Use",
+              "code": "D-SX"
+            },
+            {
+              "name": "IH - Industrial Heavy",
+              "code": "IH"
+            },
+            {
+              "name": "IL - Industrial Light",
+              "code": "IL"
+            },
+            {
+              "name": "NX - Neighborhood Mixed Use",
+              "code": "NX"
+            },
+            {
+              "name": "PK - Parks",
+              "code": "PK"
+            },
+            {
+              "name": "RE-10 - Residential Estate - 10,000 SF",
+              "code": "RE-10"
+            },
+            {
+              "name": "RE-20 - Residential Estate - 20,000 SF",
+              "code": "RE-20"
+            },
+            {
+              "name": "RE-6 - Residential Estate - 6,000 SF",
+              "code": "RE-6"
+            },
+            {
+              "name": "RX - Regional Mixed Use",
+              "code": "RX"
+            },
+            {
+              "name": "S-RA - Suburban Residential Attached",
+              "code": "S-RA"
+            },
+            {
+              "name": "S-RM - Suburban Residential Multi-Unit",
+              "code": "S-RM"
+            },
+            {
+              "name": "T-FX - Traditional Flex Mixed Use",
+              "code": "T-FX"
+            },
+            {
+              "name": "T-GX - Traditional General Mixed Use",
+              "code": "T-GX"
+            },
+            {
+              "name": "T-NX - Traditional Neighborhood Mixed Use",
+              "code": "T-NX"
+            },
+            {
+              "name": "T-RH - Traditional Residential High Density",
+              "code": "T-RH"
+            },
+            {
+              "name": "T-RL - Traditional Residential Low Density",
+              "code": "T-RL"
+            },
+            {
+              "name": "T-RM - Traditional Residential Medium Density",
+              "code": "T-RM"
+            },
+            {
+              "name": "T-RM-E - Traditional Residential Estate",
+              "code": "T-RM-E"
+            },
+            {
+              "name": "T-SX - Traditional Shopfront Mixed Use",
+              "code": "T-SX"
+            }
+          ]
+        },
+        "defaultValue": null
+      }
+    ],
+    "features": [
+      {
+        "attributes": {
+          "n": 29,
+          "CPZoneDist": "AG"
+        }
+      },
+      {
+        "attributes": {
+          "n": 177,
+          "CPZoneDist": "CN"
+        }
+      },
+      {
+        "attributes": {
+          "n": 4,
+          "CPZoneDist": "CO"
+        }
+      },
+      {
+        "attributes": {
+          "n": 47,
+          "CPZoneDist": "CV"
+        }
+      },
+      {
+        "attributes": {
+          "n": 152,
+          "CPZoneDist": "CX"
+        }
+      },
+      {
+        "attributes": {
+          "n": 161,
+          "CPZoneDist": "D-GX"
+        }
+      },
+      {
+        "attributes": {
+          "n": 12,
+          "CPZoneDist": "D-RF"
+        }
+      },
+      {
+        "attributes": {
+          "n": 87,
+          "CPZoneDist": "D-SX"
+        }
+      },
+      {
+        "attributes": {
+          "n": 264,
+          "CPZoneDist": "IH"
+        }
+      },
+      {
+        "attributes": {
+          "n": 44,
+          "CPZoneDist": "IL"
+        }
+      },
+      {
+        "attributes": {
+          "n": 85,
+          "CPZoneDist": "NX"
+        }
+      },
+      {
+        "attributes": {
+          "n": 45,
+          "CPZoneDist": "PK"
+        }
+      },
+      {
+        "attributes": {
+          "n": 642,
+          "CPZoneDist": "RE-10"
+        }
+      },
+      {
+        "attributes": {
+          "n": 165,
+          "CPZoneDist": "RE-20"
+        }
+      },
+      {
+        "attributes": {
+          "n": 1933,
+          "CPZoneDist": "RE-6"
+        }
+      },
+      {
+        "attributes": {
+          "n": 7,
+          "CPZoneDist": "RX"
+        }
+      },
+      {
+        "attributes": {
+          "n": 311,
+          "CPZoneDist": "S-RA"
+        }
+      },
+      {
+        "attributes": {
+          "n": 115,
+          "CPZoneDist": "S-RM"
+        }
+      },
+      {
+        "attributes": {
+          "n": 132,
+          "CPZoneDist": "T-FX"
+        }
+      },
+      {
+        "attributes": {
+          "n": 181,
+          "CPZoneDist": "T-GX"
+        }
+      },
+      {
+        "attributes": {
+          "n": 199,
+          "CPZoneDist": "T-NX"
+        }
+      },
+      {
+        "attributes": {
+          "n": 20,
+          "CPZoneDist": "T-RH"
+        }
+      },
+      {
+        "attributes": {
+          "n": 4225,
+          "CPZoneDist": "T-RL"
+        }
+      },
+      {
+        "attributes": {
+          "n": 461,
+          "CPZoneDist": "T-RM"
+        }
+      },
+      {
+        "attributes": {
+          "n": 252,
+          "CPZoneDist": "T-RM-E"
+        }
+      },
+      {
+        "attributes": {
+          "n": 8,
+          "CPZoneDist": "T-SX"
+        }
+      }
+    ]
+  }
+}

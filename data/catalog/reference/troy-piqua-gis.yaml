@@ -1,0 +1,31 @@
+id: troy-piqua-gis
+title: City of Piqua, Ohio Zoning Districts
+scope: reference
+status: reviewed
+producer:
+  kind: connector
+  command: zoning --districts
+  connector_ref: watermark.hydrology.connectors.lima_gis
+  source: City of Piqua GIS — hosted ArcGIS FeatureServer 'Zoning_Districts_public_view'
+  external_url: https://services8.arcgis.com/kZPPWTIJ6kOFJTWc/arcgis/rest/services/Zoning_Districts_public_view/FeatureServer/17
+license: Public records (local government open data)
+access_tier: public
+site_scope: site:troy-piqua
+storage:
+- relpath: reference/troy-piqua-gis/zoning-districts.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+  last_refreshed: '2026-07-13'
+provenance: connector
+tags:
+- zoning
+- troy-piqua
+- piqua
+- miami-county
+- gis
+notes: The 26 districts of the City of Piqua's form-based code (Miami County, OH), pulled 2026-07-13
+  verbatim via the per-site gis_zoning field-map. Carries the auditor PARCEL id, so per-parcel joins
+  work — the Project Klondike campus parcel N44-101770 returns IH (Industrial Heavy). City limits only
+  (#830).
