@@ -21,6 +21,7 @@ Synchronous (``httpx.Client``) to match BOSC's otherwise-sync pipeline layer.
 from __future__ import annotations
 
 from collections.abc import Sequence
+from datetime import datetime
 from typing import Any, cast
 
 import httpx
@@ -169,6 +170,17 @@ def _series(ts: dict[str, Any]) -> list[tuple[str, float]]:
     return out
 
 
+def _ts_key(point: tuple[str, float]) -> datetime:
+    """Chronological sort key for a ``(dateTime, value)`` pair.
+
+    Parses the NWIS ISO timestamp so a series that spans a daylight-saving offset change
+    orders by the real instant — a raw-string sort mis-orders across a fall-back, when the
+    UTC offset shifts mid-record. Within one ``timeSeries`` the timestamps are homogeneous
+    (all tz-aware for IV, all naive for DV), so the parsed keys are mutually comparable.
+    """
+    return datetime.fromisoformat(point[0])
+
+
 def _site_info(ts: dict[str, Any]) -> tuple[str, str, float | None, float | None, str, str]:
     info = ts.get("sourceInfo", {})
     name = info.get("siteName", "")
@@ -286,7 +298,7 @@ def fetch_instantaneous_series(
     out: list[InstantaneousSeries] = []
     for ts in payload.get("value", {}).get("timeSeries", []):
         resolved_site, name, lat, lon, parameter_cd, unit = _site_info(ts)
-        series = sorted(_series(ts))  # ascending by ISO dateTime
+        series = sorted(_series(ts), key=_ts_key)  # ascending by parsed instant
         if not series:
             continue
         out.append(
@@ -334,7 +346,7 @@ def fetch_daily_discharge(
         resolved_site, name, lat, lon, parameter_cd, unit = _site_info(ts)
         if parameter_cd != DISCHARGE_CFS:
             continue
-        series = sorted(_series(ts))  # ascending by ISO dateTime
+        series = sorted(_series(ts), key=_ts_key)  # ascending by parsed instant
         return DailyDischargeSeries(
             site_no=resolved_site or site_no,
             name=name,

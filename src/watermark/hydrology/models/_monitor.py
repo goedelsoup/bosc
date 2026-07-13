@@ -10,9 +10,24 @@ did, so every attributed number stays ``[inference]`` until the travel time line
 
 from __future__ import annotations
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, model_validator
 
 from watermark.hydrology.models._core import ProvenancedValue
+
+# Field-level provenance contract: the observational fields are gauge readings
+# ([verified] connector), the interpretive fields are computed ([inference] derived).
+_OBSERVED_FIELDS = (
+    "discharge_min",
+    "discharge_storm_peak",
+    "turbidity_baseline",
+    "do_min",
+    "water_temp_max",
+    "conductance_storm_min",
+    "conductance_low_flow_max",
+    "phycocyanin_month_max",
+    "phycocyanin_at_turbidity_spike",
+)
+_DERIVED_FIELDS = ("reach_river_km", "plume_travel")
 
 
 class MonitorSpike(BaseModel):
@@ -71,3 +86,24 @@ class ContinuousMonitorRead(BaseModel):
     spikes_precede_release: bool  # do the observed spikes pre-date the release?
     attribution: str  # the one-line [inference] verdict
     caveats: list[str]
+
+    @model_validator(mode="after")
+    def _check_field_provenance(self) -> ContinuousMonitorRead:
+        """A gauge reading may not masquerade as an inference, nor an inference as a reading.
+
+        Rejects a mislabeled build/round-trip: observational fields must be ``connector``
+        ([verified]) and the travel-time argument must be ``derived`` ([inference]).
+        """
+        for name in _OBSERVED_FIELDS:
+            source = getattr(self, name).source
+            if source != "connector":
+                raise ValueError(
+                    f"{name} is an observed gauge reading; expected source 'connector', got {source!r}"
+                )
+        for name in _DERIVED_FIELDS:
+            source = getattr(self, name).source
+            if source != "derived":
+                raise ValueError(
+                    f"{name} is an interpretive value; expected source 'derived', got {source!r}"
+                )
+        return self
