@@ -9,11 +9,12 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
+from pydantic import ValidationError
 
 from watermark.config import Settings
 from watermark.hydrology import waterville_monitor as wm
 from watermark.hydrology.connectors import nwis
-from watermark.hydrology.models import ProvenancedValue
+from watermark.hydrology.models import ContinuousMonitorRead, ProvenancedValue
 
 # ------------------------------------------------------- the IV connector
 
@@ -151,3 +152,27 @@ def test_compute_and_roundtrip_the_committed_artifact(
 
 def test_load_monitor_read_absent_returns_none(tmp_path: Path) -> None:
     assert wm.load_monitor_read(settings=Settings(data_dir=tmp_path)) is None
+
+
+# ------------------------------------------------------- field-level provenance
+
+
+def test_computed_read_satisfies_the_field_provenance_contract(hydro_settings: Settings) -> None:
+    # the real build must pass the validator: observed=connector, interpretive=derived
+    read = wm.compute_monitor_read(settings=hydro_settings)
+    assert read.discharge_min.source == "connector"
+    assert read.reach_river_km.source == "derived"
+
+
+def test_an_observed_field_may_not_masquerade_as_an_inference(hydro_settings: Settings) -> None:
+    payload = wm.compute_monitor_read(settings=hydro_settings).model_dump()
+    payload["discharge_min"]["source"] = "derived"  # a reading dressed up as an inference
+    with pytest.raises(ValidationError, match="discharge_min"):
+        ContinuousMonitorRead.model_validate(payload)
+
+
+def test_the_travel_time_may_not_masquerade_as_a_gauge_reading(hydro_settings: Settings) -> None:
+    payload = wm.compute_monitor_read(settings=hydro_settings).model_dump()
+    payload["reach_river_km"]["source"] = "connector"  # an inference dressed up as a reading
+    with pytest.raises(ValidationError, match="reach_river_km"):
+        ContinuousMonitorRead.model_validate(payload)
