@@ -1,0 +1,433 @@
+{
+  "$defs": {
+    "NodeActivity": {
+      "additionalProperties": false,
+      "description": "The node's disclosed data-center activity (from the SiteProfile facility).",
+      "properties": {
+        "has_disclosed_facility": {
+          "default": false,
+          "title": "Has Disclosed Facility",
+          "type": "boolean"
+        },
+        "it_load_mw": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "It Load Mw"
+        },
+        "summary": {
+          "default": "no disclosed data-center facility",
+          "title": "Summary",
+          "type": "string"
+        }
+      },
+      "title": "NodeActivity",
+      "type": "object"
+    },
+    "NodeEconomy": {
+      "additionalProperties": false,
+      "description": "The node's county economic base (from its committed QCEW/Census baseline).",
+      "properties": {
+        "year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Year"
+        },
+        "total_employment": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Total Employment"
+        },
+        "employment_change_pct": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Employment Change Pct"
+        },
+        "population": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Population"
+        },
+        "manufacturing_lq": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Manufacturing Lq"
+        },
+        "information_lq": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Information Lq"
+        }
+      },
+      "title": "NodeEconomy",
+      "type": "object"
+    },
+    "NodeGrid": {
+      "additionalProperties": false,
+      "description": "The node's serving-utility / grid backdrop (from its committed grid profile).",
+      "properties": {
+        "utility": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Utility"
+        },
+        "ownership": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ownership"
+        },
+        "holding_company": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Holding Company"
+        },
+        "balancing_authority": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Balancing Authority"
+        },
+        "retail_regulator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retail Regulator"
+        },
+        "avg_price_cents_kwh": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Avg Price Cents Kwh"
+        }
+      },
+      "title": "NodeGrid",
+      "type": "object"
+    },
+    "NodeScreen": {
+      "additionalProperties": false,
+      "description": "The node's low-flow dilution screen — its representative discharger, screened or not.",
+      "properties": {
+        "npdes": {
+          "title": "Npdes",
+          "type": "string"
+        },
+        "discharger": {
+          "title": "Discharger",
+          "type": "string"
+        },
+        "receiving_water": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Receiving Water"
+        },
+        "design_flow_mgd": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Design Flow Mgd"
+        },
+        "dilution_ratio": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dilution Ratio"
+        },
+        "flag": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Flag"
+        },
+        "status": {
+          "title": "Status",
+          "type": "string"
+        },
+        "detail": {
+          "default": "",
+          "title": "Detail",
+          "type": "string"
+        }
+      },
+      "required": [
+        "npdes",
+        "discharger",
+        "status"
+      ],
+      "title": "NodeScreen",
+      "type": "object"
+    },
+    "NodeToxics": {
+      "additionalProperties": false,
+      "description": "The node's county toxics legacy (from its committed RSEI inventory).",
+      "properties": {
+        "facility_count": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Facility Count"
+        },
+        "top_emitter": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Top Emitter"
+        },
+        "vintage_last_year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vintage Last Year"
+        }
+      },
+      "title": "NodeToxics",
+      "type": "object"
+    },
+    "WatershedNode": {
+      "additionalProperties": false,
+      "description": "One watershed point as a node in the connected basin — position + multi-attribute card.",
+      "properties": {
+        "slug": {
+          "title": "Slug",
+          "type": "string"
+        },
+        "place": {
+          "title": "Place",
+          "type": "string"
+        },
+        "county": {
+          "title": "County",
+          "type": "string"
+        },
+        "huc8": {
+          "title": "Huc8",
+          "type": "string"
+        },
+        "receiving_water": {
+          "title": "Receiving Water",
+          "type": "string"
+        },
+        "drainage_path": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Drainage Path",
+          "type": "array"
+        },
+        "subtree": {
+          "title": "Subtree",
+          "type": "string"
+        },
+        "downstream": {
+          "title": "Downstream",
+          "type": "string"
+        },
+        "regime": {
+          "title": "Regime",
+          "type": "string"
+        },
+        "screen": {
+          "$ref": "#/$defs/NodeScreen"
+        },
+        "grid": {
+          "$ref": "#/$defs/NodeGrid"
+        },
+        "economy": {
+          "$ref": "#/$defs/NodeEconomy"
+        },
+        "toxics": {
+          "$ref": "#/$defs/NodeToxics"
+        },
+        "activity": {
+          "$ref": "#/$defs/NodeActivity"
+        }
+      },
+      "required": [
+        "slug",
+        "place",
+        "county",
+        "huc8",
+        "receiving_water",
+        "drainage_path",
+        "subtree",
+        "downstream",
+        "regime",
+        "screen",
+        "grid",
+        "economy",
+        "toxics",
+        "activity"
+      ],
+      "title": "WatershedNode",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "The assembled cross-site synthesis: the shared basin + every node, ordered upstream→down.",
+  "properties": {
+    "sink": {
+      "title": "Sink",
+      "type": "string"
+    },
+    "shared_constraint": {
+      "title": "Shared Constraint",
+      "type": "string"
+    },
+    "generated_at": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Generated At"
+    },
+    "nodes": {
+      "items": {
+        "$ref": "#/$defs/WatershedNode"
+      },
+      "title": "Nodes",
+      "type": "array"
+    }
+  },
+  "required": [
+    "sink",
+    "shared_constraint",
+    "nodes"
+  ],
+  "title": "BasinNetwork",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

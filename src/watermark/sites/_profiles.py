@@ -2722,6 +2722,191 @@ _MANSFIELD = SiteProfile(
 )
 
 
+# The Portage/Maumee-divide node (#1433, discovery sweep 2026-07-10) — Bowling Green / Middleton
+# Twp, Wood County. Unusual in the network: it sits on the Great Black Swamp lakebed **straddling
+# the Maumee-Portage divide**, so it DRINKS the Maumee (Waterville intake 04193500 → 170 MG
+# up-ground reservoir) and DISCHARGES to the Portage (WPC 2PD00009/OH0024139 → Poe Ditch →
+# North Branch Portage). `basin="portage"` holds for the receiving-water/POTW screen (no committed
+# Portage POTW inventory exists yet → the basin screen degrades to empty, which is correct, not a
+# gap — #1434); the intake side is carried by `abstraction_gage` on the Maumee. The **facility**
+# domain is ACTIVE (#1435): Meta's "Bowling Green Data Center" ("Project Accordion") is
+# site-plan-grounded (#1327 Urbana precedent) — operator disclosed, campus under construction, and
+# a sibling OPSB instrument (25-0973-EL-BGN, the Apollo BTM plant) names Liames, LLC as customer of
+# record. See data/extracted/bowling-green/data-centers.md. Backdrop floor + facility only; places/
+# record/story stay locked pending their sub-issues (#1436/#1438/#1439/#1441).
+_BOWLING_GREEN = SiteProfile(
+    slug="bowling-green",
+    basin="portage",  # [verified] discharges to North Branch Portage → Portage River → Lake Erie;
+    # HUC-8 04100010 (the receiving/POTW-screen basin). The city DRINKS the Maumee (HUC 04100009,
+    # Waterville intake) — that intake side is the `abstraction_gage` below, not the `basin`.
+    # config knobs
+    nwis_sites=[
+        "04193500",  # [verified] Maumee River at Waterville OH — the intake/HAB-load reach (the WTP
+        # intake sits just upstream of the gage); shared with Toledo as the basin 7Q10 reference
+        "04195061",  # [verified] North Branch Portage River at Scotch Ridge OH — the effluent branch (active)
+        "04195500",  # [verified] Portage River at Woodville OH — the Portage mainstem
+    ],
+    nasa_power_lat=41.3748,  # [verified] City of Bowling Green centroid (the Meta campus is ~6 mi N
+    nasa_power_lon=-83.6513,  # in Middleton Twp; the county-level floor connectors key on the city)
+    rsei_fips="39173",  # [verified] Wood County, OH
+    econ_fips="39173",
+    eia861_utility_number=2054,  # [verified] City of Bowling Green - (OH), Municipal (AMP member) —
+    # EIA-861 2024 Utility_Data / Sales_Ult_Cust (f8612024.zip, released 2025-10-06), BA=PJM.
+    # NB the Bowling Green, KY muni is #2056 (SERC/TVA) — the KY disambiguation trap, avoided here.
+    eia_state="OH",
+    # GIS — schema-driven (#237): flood = the shared national NFHL; parcels/zoning REST endpoints
+    # are DISCOVERED (both live, owner/district-bearing) but the per-jurisdiction field-map schemas
+    # (gis_parcel/gis_zoning) are the places-domain lift (#1436) — left None here so the connector
+    # refuses cleanly rather than half-wiring a facility-scoped PR. Endpoints for #1436 to wire:
+    #   parcels: https://wcohiogis.woodcountyohio.gov/server/rest/services/Services_for_Web_Apps/Vision_Parcels/MapServer/0
+    #            (Wood County Vision/CAMA — Owner_Name + Deeded_Owner + Sale_Date/Transfer_Price; parcel id in Name; 73,839 features)
+    #   zoning:  https://gis.bgohio.org/arcgis/rest/services/PublicData/UtilitiesWithZoning/MapServer/2
+    #            (City of Bowling Green "Current Zoning" — district in F2023_Desc; 14 districts)
+    parcels_url="TODO",  # [open] endpoint discovered (see above); field-map schema pending #1436
+    zoning_url="TODO",  # [open] endpoint discovered (see above); field-map schema pending #1436
+    floodzone_url=(  # [verified] FEMA NFHL S_FLD_HAZ_AR (national layer 28)
+        "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28"
+    ),
+    gis_parcel=None,  # [open] pending Wood County, OH parcel-layer discovery (#1436)
+    gis_zoning=None,  # [open] pending City of Bowling Green zoning-layer discovery (#1436)
+    gis_flood=NATIONAL_NFHL_FLOOD_SCHEMA.model_copy(update={"reference_dir": "bowling-green-gis"}),
+    hydro_utm_epsg=32617,  # [verified] UTM 17N (Bowling Green ~83.65 degW; zone 17 spans 84-78 degW)
+    # stormwater (the Atlas-14 corridor point = city centroid; cover scenario pending a site)
+    design_lat=41.3748,  # [verified] city centroid = NOAA Atlas-14 point
+    design_lon=-83.6513,
+    corridor_name="North Branch Portage corridor",  # [inference] the effluent receiving-water reach
+    dominant_hsg="D",  # [inference] Wood County Great Black Swamp lakebed clays (Hoytville/Nappanee/Latty) → HSG D
+    hsg_citation=(
+        "Wood County, OH dominant hydrologic soil group D — very-poorly-drained Great Black Swamp "
+        "lakebed clays (Hoytville/Nappanee/Latty; NRCS Soil Survey of Wood County); [inference] "
+        "pending an SSURGO area-weighted confirmation (onboard SSURGO step needs a footprint)"
+    ),
+    pre_cover="TODO",  # [open] development land-cover scenario — pending an identified stormwater site (#1436)
+    post_cover="TODO",
+    developed_pervious_cover="TODO",
+    noaa_fallback_24h_depth_in={  # [reference] NOAA Atlas-14 Vol 2 (Ohio River Basin) PDS at 41.3748/-83.6513
+        1: 1.99,
+        2: 2.40,
+        5: 2.98,
+        10: 3.46,
+        25: 4.14,
+        50: 4.69,
+        100: 5.28,
+        200: 5.90,
+        500: 6.76,
+        1000: 7.47,
+    },
+    parcels_relpath="reference/bowling-green/parcel-assemblage.geojson",  # [open] commit the campus geometry (#1436)
+    footprint_relpath="extracted/bowling-green/bosc-site-footprint.yaml",  # [open] pending the site footprint (#1436)
+    # per-site onboard reach outputs (slug-scoped — never clobber Lima/the other sites)
+    climatology_relpath="reference/hydrology/bowling-green/nasa-power-climatology.yaml",
+    corridor_ddf_relpath="reference/hydrology/bowling-green/atlas14-corridor-ddf.yaml",
+    baseline_relpath="reference/economics/bowling-green/baseline.yaml",
+    rsei_relpath="reference/rsei/bowling-green/inventory.yaml",
+    consumer_energy_relpath="reference/eia/bowling-green/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/bowling-green/demand-pressure.yaml",
+    grid_relpath="reference/eia/bowling-green/grid-profile.yaml",
+    # toxics (no identified industrial corridor yet)
+    toxic_corridor_bbox=(0.0, 0.0, 0.0, 0.0),  # [open] pending an identified corridor
+    # balance (Portage-basin per-WWTP receiving waters pending the water/permit chain #1439)
+    plant_receiving={},  # [open] BG WPC 2PD00009/OH0024139 → Poe Ditch → North Branch Portage; 7Q10 pending (#1439)
+    abstraction_gage="04193500",  # [inference] the Maumee-at-Waterville intake reach (the city drinks the Maumee)
+    # refill (the water-balance supply model is not yet designed for Bowling Green)
+    supply_gage_primary="TODO",  # [open] refill supply gage — pending the site's water-balance model
+    supply_gage_secondary="TODO",
+    passby_primary_cfs=0.0,  # [open] in-stream passby minimums — pending the model
+    passby_secondary_cfs=0.0,
+    # grid / facility — the disclosed Meta campus (#1435). SITE-PLAN-grounded (#1327 Urbana precedent):
+    # operator/type/floor-area/investment are disclosed [verified]; the IT load is carried as the
+    # disclosed ~180 MW peak [reference] (a design ceiling, NOT an air-permit disclosure of the DC's
+    # own load — that stays [open]); the campus is designed self-powered BEHIND THE METER by the
+    # Apollo plant (350 MW gas + ~120 MW BESS, OPSB 25-0973-EL-BGN — the power sub-issue #1437), so
+    # the ~2x 350-vs-180 MW oversizing is a Phase-2 signal. No on-site emergency gensets are disclosed
+    # for the DC itself (the Apollo gensets are a SEPARATE OPSB-permitted power facility), so
+    # genset_count/genset_mw/air_permit_citation stay None. Because the load is served behind the
+    # meter ([reference] the Ohio HB 15 self-generation pathway), the economics-demand-pressure feed
+    # is a GRID-SERVED COUNTERFACTUAL — the actual grid draw is ~0; the grid-posture modeling is the
+    # grid sub-issue (#1440). See data/extracted/bowling-green/data-centers.md.
+    facility=SiteFacility(
+        it_load_mw=180.0,  # [reference] the disclosed "up to ~180 MW at peak" — a design ceiling, not an air-permit disclosure
+        it_load_low_mw=53.6,  # 715,000 sq ft x 75 W/sq ft whole-building IT density (screening floor — avg draw is below peak)
+        it_load_high_mw=180.0,  # the disclosed ~180 MW peak (the 715k sq ft x 250 W/sq ft screen reproduces 178.75 MW, corroborating it)
+        it_load_citation=(
+            "[reference] the disclosed 'up to ~180 MW at peak' for the initial phase — reported via "
+            "the Apollo OPSB filings (25-0973-EL-BGN) in press (BG Independent, Data Center "
+            "Dynamics), NOT an air-permit or PJM-interconnection disclosure of the data center's own "
+            "load, so the official/interconnection MW stays [open]. Carried as the it_load central "
+            "per #1435; it is a design CEILING (peak), so downstream figures (peak x PUE x load "
+            "factor) run conservative-high. The low bound is a floor-area SCREENING floor — the "
+            "disclosed 715,000 sq ft initial building x 75 W/sq ft whole-building IT density (53.6 "
+            "MW); the same screen at 250 W/sq ft yields 178.75 MW, independently bracketing the "
+            "disclosed ~180 MW peak at its top (corroboration, not a second source). The campus is "
+            "designed SELF-POWERED behind the meter by the Apollo plant (350 MW gas + ~120 MW BESS, "
+            "Will-Power OH LLC, OPSB 25-0973-EL-BGN, approved 2026-02-03 — #1437); the ~2x 350-vs-180 "
+            "MW oversizing signals Phase 2 (Meta's 2026-01-07 trustees letter). Replace with the "
+            "disclosed load when an air permit or interconnection filing names it."
+        ),
+        # No disclosed gensets or air permit for the DC itself (site-plan-grounded) → the N+1 backup
+        # cross-check and the air-dispatch fleet model are absent; the Apollo gensets belong to a
+        # separate OPSB-permitted power facility (#1437), not the DC's own emergency fleet.
+        facility_type=(
+            'hyperscale data center campus ("Bowling Green Data Center"; operator Meta Platforms; '
+            'land/nominee entity Liames, LLC; codename "Project Accordion")'
+        ),  # [verified] operator; [reference] codename
+        gross_floor_area_sqft=715_000,  # [verified] Meta — 715,000 sq ft initial phase (+ ~1,700 parking spaces)
+        disclosed_investment_usd=800_000_000,  # [verified] Meta ">$800M" (earlier Liames pro-forma ~$750M is [reference])
+        disclosure_citation=(
+            "[verified] Meta, 'Hello, Bowling Green' (2025-04-09) — the 'Bowling Green Data Center', "
+            "Meta's 24th US / 28th global, 2nd in Ohio: 715,000 sq ft initial phase + ~1,700 parking "
+            "spaces, >$800M, ~100 permanent jobs (avg ~mid-$80k) / >1,000 peak construction; "
+            "corroborated by Middleton Township ('Meta introduced as company behind township data "
+            "center'). Site: Middleton Twp, SR-582 between SR-25 and I-75, adjacent the FirstEnergy "
+            "Mercer Rd substation; ~280-ac initial site inside a ~750-ac Liames, LLC assembly "
+            "([reference] acreage; deeds from 2023-09-05). Liames is the customer of record on OPSB "
+            "25-0973-EL-BGN. Phase 2 signaled in Meta's 2026-01-07 trustees letter. See "
+            "data/extracted/bowling-green/data-centers.md."
+        ),
+        # No disclosed cooling/industrial blowdown → None (the cooling back-solve uses the power-
+        # derived consumptive as the high bound, no Lima FM-2 leak). The company claims "no
+        # operational water".
+        # Cooling archetype (#1054): the COMPANY'S CLAIM, recorded as [reference] pending an
+        # instrument. Meta describes closed-loop, liquid-cooled with dry coolers ("no operational
+        # water"; domestic/cleaning/fire only) → closed_loop_dry. This is in tension with the NWWSD
+        # BG-water wholesale (1.5 MGD contract ceiling; conflicting ~50k vs ~600k GPD) — reconciling
+        # that is the water sub-issue's job (#1439), not this pin's. Not asserted as verified.
+        cooling_model=CoolingModelType.CLOSED_LOOP_DRY,
+        cooling_model_source="reference",
+        cooling_model_citation=(
+            "[reference] company claim (NOT instrument-confirmed): Meta describes closed-loop, "
+            "liquid-cooled with dry coolers — 'no operational water', with domestic/cleaning/fire "
+            "use only. In tension with the NWWSD wholesaling BG water to Meta (contract ceiling 1.5 "
+            "MGD, Aug 2024; conflicting ~50k vs ~600k GPD figures; a Meta-funded 2 MG tank + 16-in "
+            "main) — that reconciliation is tracked at the water sub-issue #1439, not decided here. "
+            "Replace with a documented cooling design when an NPDES/water instrument lands."
+        ),
+    ),
+    serving_utility_citation=(  # [reference] not corpus
+        "The City of Bowling Green operates a municipal electric utility (an American Municipal "
+        "Power member) serving the city proper; the Meta campus in Middleton Twp interconnects to "
+        "Toledo Edison (FirstEnergy / PJM ATSI) but is designed self-powered BEHIND THE METER by the "
+        "Apollo plant (OPSB 25-0973-EL-BGN) — so the campus's grid draw is not the muni's. EIA-861 "
+        "Service_Territory + PUCO certified-territory pending the utility-number resolution (#1434)."
+    ),
+    # grid (Bowling Green is inside the Toledo Edison / PJM ATSI footprint — the FirstEnergy zone,
+    # same as Toledo/Defiance — NOT the AEP zone of the other OH sites)
+    lmp_usd_mwh=45.84,  # connector-sourced ATSI-zone 2025 day-ahead annual mean (same zone as Toledo)
+    lmp_citation=(
+        "PJM Data Miner 2 da_hrl_lmps, ATSI zone (FirstEnergy / Toledo Edison, pnode 116013753), "
+        "2025 day-ahead annual mean $45.84/MWh (8760 h); connector-sourced 2026-06-21 (watermark lmp) "
+        "— Bowling Green is inside the Toledo Edison/ATSI footprint, not the AEP zone"
+    ),
+    lmp_pnode_id=116013753,
+    lmp_pnode_name="ATSI",
+    # rsei
+    county_name="Wood County, OH",  # [verified]
+)
+
+
 SITES: dict[str, SiteProfile] = {
     _LIMA.slug: _LIMA,
     _FINDLAY.slug: _FINDLAY,
@@ -2747,6 +2932,7 @@ SITES: dict[str, SiteProfile] = {
     _SANDUSKY.slug: _SANDUSKY,
     _WEST_UNION.slug: _WEST_UNION,
     _MANSFIELD.slug: _MANSFIELD,
+    _BOWLING_GREEN.slug: _BOWLING_GREEN,
 }
 
 # The per-site output relpaths `watermark onboard` writes. Each must be unique to its site so

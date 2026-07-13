@@ -1,0 +1,343 @@
+{
+  "$defs": {
+    "RseiChemicalScore": {
+      "description": "A chemical's contribution to a facility (cumulative across years).",
+      "properties": {
+        "chemical": {
+          "title": "Chemical",
+          "type": "string"
+        },
+        "cas": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cas"
+        },
+        "toxicity_category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Toxicity Category"
+        },
+        "score": {
+          "title": "Score",
+          "type": "number"
+        },
+        "pounds": {
+          "title": "Pounds",
+          "type": "number"
+        }
+      },
+      "required": [
+        "chemical",
+        "score",
+        "pounds"
+      ],
+      "title": "RseiChemicalScore",
+      "type": "object"
+    },
+    "RseiFacility": {
+      "description": "One TRI/RSEI facility in the target county, with modeled results rolled up.",
+      "properties": {
+        "facility_id": {
+          "title": "Facility Id",
+          "type": "string"
+        },
+        "facility_number": {
+          "title": "Facility Number",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "parent_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parent Name"
+        },
+        "federal_facility": {
+          "default": false,
+          "title": "Federal Facility",
+          "type": "boolean"
+        },
+        "latitude": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Latitude"
+        },
+        "longitude": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Longitude"
+        },
+        "street": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Street"
+        },
+        "city": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "City"
+        },
+        "state": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "State"
+        },
+        "fips": {
+          "title": "Fips",
+          "type": "string"
+        },
+        "npdes_permit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Npdes Permit"
+        },
+        "naics": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Naics"
+        },
+        "sic": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sic"
+        },
+        "water_releases": {
+          "default": false,
+          "title": "Water Releases",
+          "type": "boolean"
+        },
+        "score": {
+          "default": 0.0,
+          "title": "Score",
+          "type": "number"
+        },
+        "cancer_score": {
+          "default": 0.0,
+          "title": "Cancer Score",
+          "type": "number"
+        },
+        "noncancer_score": {
+          "default": 0.0,
+          "title": "Noncancer Score",
+          "type": "number"
+        },
+        "hazard": {
+          "default": 0.0,
+          "title": "Hazard",
+          "type": "number"
+        },
+        "pounds": {
+          "default": 0.0,
+          "title": "Pounds",
+          "type": "number"
+        },
+        "pounds_by_media": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "default": {},
+          "title": "Pounds By Media",
+          "type": "object"
+        },
+        "first_year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "First Year"
+        },
+        "last_year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Last Year"
+        },
+        "years": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/RseiYearScore"
+          },
+          "title": "Years",
+          "type": "array"
+        },
+        "top_chemicals": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/RseiChemicalScore"
+          },
+          "title": "Top Chemicals",
+          "type": "array"
+        }
+      },
+      "required": [
+        "facility_id",
+        "facility_number",
+        "name",
+        "fips"
+      ],
+      "title": "RseiFacility",
+      "type": "object"
+    },
+    "RseiYearScore": {
+      "description": "One reporting year of a facility's RSEI totals.",
+      "properties": {
+        "year": {
+          "title": "Year",
+          "type": "integer"
+        },
+        "score": {
+          "title": "Score",
+          "type": "number"
+        },
+        "cancer_score": {
+          "title": "Cancer Score",
+          "type": "number"
+        },
+        "noncancer_score": {
+          "title": "Noncancer Score",
+          "type": "number"
+        },
+        "hazard": {
+          "title": "Hazard",
+          "type": "number"
+        },
+        "pounds": {
+          "title": "Pounds",
+          "type": "number"
+        }
+      },
+      "required": [
+        "year",
+        "score",
+        "cancer_score",
+        "noncancer_score",
+        "hazard",
+        "pounds"
+      ],
+      "title": "RseiYearScore",
+      "type": "object"
+    }
+  },
+  "description": "The committed per-county RSEI artifact: provenance meta + ranked facilities.",
+  "properties": {
+    "meta": {
+      "additionalProperties": true,
+      "title": "Meta",
+      "type": "object"
+    },
+    "county_fips": {
+      "title": "County Fips",
+      "type": "string"
+    },
+    "county_name": {
+      "title": "County Name",
+      "type": "string"
+    },
+    "facilities": {
+      "items": {
+        "$ref": "#/$defs/RseiFacility"
+      },
+      "title": "Facilities",
+      "type": "array"
+    }
+  },
+  "required": [
+    "meta",
+    "county_fips",
+    "county_name",
+    "facilities"
+  ],
+  "title": "RseiInventory",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

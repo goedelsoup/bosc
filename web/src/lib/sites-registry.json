@@ -85,6 +85,20 @@
       "map_zoom": 12
     },
     {
+      "slug": "bowling-green",
+      "place": "Bowling Green \u00b7 Middleton Twp",
+      "basin": "Portage \u00b7 Maumee divide",
+      "state": "OH",
+      "codename": null,
+      "mono": "BGN",
+      "status": "queued",
+      "selectable": false,
+      "issue": "1433",
+      "map_lat": 41.402,
+      "map_lon": -83.64,
+      "map_zoom": 11
+    },
+    {
       "slug": "van-wert",
       "place": "Van Wert",
       "basin": "Town Creek \u00b7 Little Auglaize",

@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "hypotheses feed",
+  "type": "array",
+  "items": {
+    "additionalProperties": false,
+    "description": "One reading of the boom — the content of a directory lens (frozen reference value).\n\nPresentation (accent palette, grid fractions, column labels) is the frontend's; this\nholds the substance: the claim, the thesis, the taxonomy a cell is scored against, and\n:attr:`predicted_evidence` — what would confirm or strengthen it, which scaffolds the\n``hypothesis-assessment`` research recipe's prompt.",
+    "properties": {
+      "id": {
+        "title": "Id",
+        "type": "string"
+      },
+      "number": {
+        "title": "Number",
+        "type": "string"
+      },
+      "name": {
+        "title": "Name",
+        "type": "string"
+      },
+      "claim": {
+        "title": "Claim",
+        "type": "string"
+      },
+      "thesis": {
+        "title": "Thesis",
+        "type": "string"
+      },
+      "status": {
+        "enum": [
+          "reference",
+          "emerging"
+        ],
+        "title": "Status",
+        "type": "string"
+      },
+      "signals": {
+        "default": [
+          "anchor",
+          "strong",
+          "moderate",
+          "watch"
+        ],
+        "items": {
+          "enum": [
+            "anchor",
+            "strong",
+            "moderate",
+            "watch"
+          ],
+          "type": "string"
+        },
+        "title": "Signals",
+        "type": "array"
+      },
+      "groups": {
+        "default": [],
+        "items": {
+          "type": "string"
+        },
+        "title": "Groups",
+        "type": "array"
+      },
+      "fields": {
+        "default": [],
+        "items": {
+          "type": "string"
+        },
+        "title": "Fields",
+        "type": "array"
+      },
+      "related_docs": {
+        "default": [],
+        "items": {
+          "type": "string"
+        },
+        "title": "Related Docs",
+        "type": "array"
+      },
+      "predicted_evidence": {
+        "default": [],
+        "items": {
+          "type": "string"
+        },
+        "title": "Predicted Evidence",
+        "type": "array"
+      }
+    },
+    "required": [
+      "id",
+      "number",
+      "name",
+      "claim",
+      "thesis",
+      "status"
+    ],
+    "title": "Hypothesis",
+    "type": "object"
+  }
+}

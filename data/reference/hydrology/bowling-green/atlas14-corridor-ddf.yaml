@@ -1,0 +1,47 @@
+meta:
+  subject: NOAA Atlas-14 design-storm depths — North Branch Portage corridor
+  source: NOAA Atlas-14 PDS, English depths (HDSC point query)
+  point:
+    latitude: 41.3748
+    longitude: -83.6513
+  units: inches (point precipitation depth)
+ddf:
+  latitude: 41.3748
+  longitude: -83.6513
+  durations:
+  - 60-min
+  - 6-hr
+  - 12-hr
+  - 24-hr
+  return_periods:
+  - 2
+  - 10
+  - 25
+  - 50
+  - 100
+  depths_in:
+    60-min:
+      '2': 1.23
+      '10': 1.79
+      '25': 2.12
+      '50': 2.39
+      '100': 2.66
+    6-hr:
+      '2': 1.71
+      '10': 2.52
+      '25': 3.05
+      '50': 3.5
+      '100': 3.98
+    12-hr:
+      '2': 1.99
+      '10': 2.91
+      '25': 3.51
+      '50': 4.02
+      '100': 4.58
+    24-hr:
+      '2': 2.4
+      '10': 3.46
+      '25': 4.14
+      '50': 4.69
+      '100': 5.28
+  source: NOAA Atlas-14 PDS, English depths (HDSC point query)

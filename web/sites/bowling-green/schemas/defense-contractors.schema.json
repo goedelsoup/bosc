@@ -1,0 +1,85 @@
+{
+  "$defs": {
+    "DefenseContractorItem": {
+      "additionalProperties": false,
+      "description": "A seed prime defense contractor + the corpus entities its patterns matched.",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        },
+        "patterns": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Patterns",
+          "type": "array"
+        },
+        "matched_entities": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Matched Entities",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "DefenseContractorItem",
+      "type": "object"
+    },
+    "ScanParcel": {
+      "additionalProperties": true,
+      "description": "A parcel row from the defense-land GIS scan (extra GIS columns allowed).",
+      "properties": {},
+      "title": "ScanParcel",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "The defense-contractors feed: the seed list + the parcel-scan findings.",
+  "properties": {
+    "contractors": {
+      "items": {
+        "$ref": "#/$defs/DefenseContractorItem"
+      },
+      "title": "Contractors",
+      "type": "array"
+    },
+    "prime_owned": {
+      "items": {
+        "$ref": "#/$defs/ScanParcel"
+      },
+      "title": "Prime Owned",
+      "type": "array"
+    },
+    "army_controlled": {
+      "items": {
+        "$ref": "#/$defs/ScanParcel"
+      },
+      "title": "Army Controlled",
+      "type": "array"
+    },
+    "notes": {
+      "additionalProperties": true,
+      "title": "Notes",
+      "type": "object"
+    }
+  },
+  "title": "DefenseFeed",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

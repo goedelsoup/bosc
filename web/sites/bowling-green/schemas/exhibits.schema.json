@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "exhibits feed",
+  "type": "array",
+  "items": {
+    "additionalProperties": false,
+    "description": "A curated, published exhibit — a source PDF or a page-range slice of a bundle.",
+    "properties": {
+      "slug": {
+        "title": "Slug",
+        "type": "string"
+      },
+      "title": {
+        "title": "Title",
+        "type": "string"
+      },
+      "caption": {
+        "default": "",
+        "title": "Caption",
+        "type": "string"
+      },
+      "source": {
+        "title": "Source",
+        "type": "string"
+      },
+      "pages": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Pages"
+      },
+      "available": {
+        "title": "Available",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "slug",
+      "title",
+      "source",
+      "available"
+    ],
+    "title": "ExhibitItem",
+    "type": "object"
+  }
+}

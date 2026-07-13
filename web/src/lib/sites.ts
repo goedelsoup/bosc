@@ -355,6 +355,9 @@ const PLACEMENT: Record<string, { state: string; basin: string }> = {
   defiance: { state: "Ohio", basin: "Maumee" },
   findlay: { state: "Ohio", basin: "Maumee" },
   toledo: { state: "Ohio", basin: "Maumee" },
+  // Bowling Green sits on the Maumee-Portage divide: it drinks the Maumee but discharges to the
+  // Portage (a distinct Lake Erie basin), so it groups under its OWN basin, not the Maumee's.
+  "bowling-green": { state: "Ohio", basin: "Portage" },
   "van-wert": { state: "Ohio", basin: "Maumee" },
   bryan: { state: "Ohio", basin: "Maumee" },
   ottawa: { state: "Ohio", basin: "Maumee" },
@@ -431,6 +434,7 @@ export function mapView(slug: string): { lat: number; lon: number; zoom: number 
 const STATE_ABBR: Record<string, string> = { Ohio: "OH", Indiana: "IN" };
 const BASIN_ABBR: Record<string, string> = {
   Maumee: "MAU",
+  Portage: "POR",
   "Great Miami": "GMI",
   "Little Miami": "LMI",
   Scioto: "SCI",
@@ -442,10 +446,11 @@ const BASIN_ABBR: Record<string, string> = {
   "Ohio Brush Creek": "OBC",
 };
 
-// Region super-groups (design "Site Selector") — the basin lens nests its ten basins under
+// Region super-groups (design "Site Selector") — the basin lens nests its eleven basins under
 // four regions so the panel reads geographically. Keyed by the display basin name.
 const BASIN_REGION: Record<string, string> = {
   Maumee: "maumee",
+  Portage: "maumee", // NW-Ohio Lake Erie basin adjacent to the Maumee (Bowling Green borders Toledo)
   "Great Miami": "miamis",
   "Little Miami": "miamis",
   Scioto: "southeast",
@@ -472,6 +477,7 @@ const REGION_ABBR: Record<string, string> = {
 // Basin order within a region (the panel's row order); the basin lens walks REGION_ORDER then this.
 const BASIN_ORDER = [
   "Maumee",
+  "Portage",
   "Great Miami",
   "Little Miami",
   "Scioto",

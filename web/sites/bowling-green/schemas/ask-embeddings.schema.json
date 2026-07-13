@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ask-embeddings feed",
+  "type": "array",
+  "items": {
+    "additionalProperties": false,
+    "description": "One precomputed all-MiniLM-L6-v2 embedding for an ask-index unit (#329).\n\nStored in the bundle as ``ask-embeddings.json`` and served as a static asset\nso the /api/ask Worker can embed the query at runtime and compute cosine\nsimilarity without an additional Python/Node dependency.",
+    "properties": {
+      "id": {
+        "title": "Id",
+        "type": "string"
+      },
+      "embedding": {
+        "items": {
+          "type": "number"
+        },
+        "title": "Embedding",
+        "type": "array"
+      }
+    },
+    "required": [
+      "id",
+      "embedding"
+    ],
+    "title": "AskEmbeddingEntry",
+    "type": "object"
+  }
+}
