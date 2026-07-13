@@ -1750,13 +1750,19 @@ _TROY_PIQUA = SiteProfile(
     ),  # [open] pending the identified corridor (the Troy/Piqua manufacturing reach)
     plant_receiving={
         "piqua-wwtp": (
-            "Great Miami River",
+            # Receiving water named "Upper Great Miami River" (not bare "Great Miami River")
+            # so the assimilative screen (watermark.hydrology.assimilative) resolves the
+            # reach-specific cited 7Q10 in low-flow-7q10.yaml ("upper great miami river",
+            # 24.0 cfs) instead of the bare "great miami river" key, which is the basin-screen's
+            # derived Hamilton mainstem proxy (407.67 cfs) and must not stand in for this reach.
+            # HUC-8 05080001 = Upper Great Miami (ECHO FRS 110000578919). (#829)
+            "Upper Great Miami River",
             # OEPA NPDES 1PD00008 / App. OH0027049 (Piqua WWTP), fact sheet Public Notice
             # 22-006-011 (2022-06-21) — extracted/oepa/troy-piqua/1PD00008.fs.npdes.yaml + …/1PD00008.npdes.yaml.
-            # Outfall 001 → Great Miami River (→ Ohio River; HUC-8 05080002); average design flow
-            # 8.7 MGD (13.46 cfs), peak hydraulic 22.5 MGD. WLA basis (fact-sheet Table 13):
-            # GMR above Sidney 7Q10 = 24.0 cfs annual (USGS #03261500, 1927-2021). Reported 2023
-            # actual mean 3.224 MGD (37.1% of design, 0 CSO/exceedances) —
+            # Outfall 001 → Great Miami River (→ Ohio River; HUC-8 05080001); average design flow
+            # 8.7 MGD (13.46 cfs), peak hydraulic 22.5 MGD. WLA basis (fact-sheet Stream Flows,
+            # printed p.28): GMR above Sidney 7Q10 = 24.0 cfs annual (USGS #03261500, 1927-2021).
+            # Reported 2023 actual mean 3.224 MGD (37.1% of design, 0 CSO/exceedances) —
             # data/extracted/troy-piqua/wwtp-oh0027049.dmr.yaml [verified — OEPA fact sheet + ECHO DMR].
             "OEPA NPDES 1PD00008 (OH0027049, Piqua WWTP) → Great Miami River; design 8.7 MGD, "
             "actual ~3.224 MGD (2023 DMR); fact-sheet 7Q10 24.0 cfs (GMR above Sidney, USGS 03261500) "

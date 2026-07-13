@@ -40,13 +40,14 @@ async def test_reference_tools_do_not_serve_lima_data_off_home(
     # timeline/entities now serve the active site's own corpus (per-site scoped via
     # load_corpus()) rather than returning a _reference_only notice — they will return
     # empty results for a site with no committed corpus (e.g. Findlay), NOT Lima's
-    # cross-site record. hydrology_balance is still Lima-specific (reads Lima's
-    # watch-items.geojson) so it keeps the _reference_only guard.
+    # cross-site record. hydrology_balance runs per-site only for sites that committed
+    # their own watch-items.geojson (#829); Findlay has none, so it keeps the notice
+    # rather than silently falling back to Lima's periplus WWTP graph.
     monkeypatch.setattr(
         tools, "get_settings", lambda: Settings(site="findlay", data_dir=REPO_ROOT / "data")
     )
 
-    # hydrology_balance still returns a scoped notice for non-Lima sites.
+    # hydrology_balance still returns a scoped notice for a site with no committed WWTP graph.
     hydro_text = (await tools.hydrology_balance.handler({}))["content"][0]["text"]
     assert hydro_text.startswith("[scope]") and "findlay" in hydro_text and "#424" in hydro_text
 
@@ -82,6 +83,29 @@ async def test_reference_tools_do_not_serve_lima_data_off_home(
     )
     home = (await tools.program_overview.handler({}))["content"][0]["text"]
     assert not home.startswith("[scope]") and "Program construction total" in home
+
+
+async def test_hydrology_balance_populated_for_site_with_watch_items(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # #829: troy-piqua committed its own watch-items.geojson (Piqua WWTP) + a cited
+    # receiving-water 7Q10, so hydrology_balance runs per-site instead of returning the
+    # reference-only stub — and it must carry NONE of Lima's WWTP graph or forcemain caveats.
+    monkeypatch.setattr(
+        tools,
+        "get_settings",
+        lambda: Settings(site="troy-piqua", data_dir=REPO_ROOT / "data", hydro_offline=True),
+    )
+    text = (await tools.hydrology_balance.handler({}))["content"][0]["text"]
+
+    # Not the reference-only stub; the real Piqua balance + assimilative screen is present.
+    assert "No committed hydrology_balance" not in text
+    assert "Piqua WWTP" in text and "Upper Great Miami River" in text
+    # The cited GMR-above-Sidney 7Q10 (24.0 cfs) screens the 13.46 cfs design discharge.
+    assert "24.00 cfs" in text and "dilution" in text
+    # No Lima bleed: no Ottawa/Shawnee/American WWTPs, no BOSC campus node or FM routing caveat.
+    for leak in ("Shawnee II", "American", "Ottawa River", "BOSC data-center campus", "FM-3"):
+        assert leak not in text
 
 
 async def test_extraction_tools_scope_to_the_active_sites_subtree(

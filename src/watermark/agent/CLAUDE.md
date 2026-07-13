@@ -30,9 +30,13 @@ Wraps the Claude Agent SDK and the Anthropic Messages API. Defers to the root
     message rather than a `_reference_only` notice. `storm_plan_inventory` (#901) resolves via
     `active_profile(settings).storm_inventory_relpath` — `None` for sites without a committed plan;
     `sanitary_basis` (#901) resolves `data/reference/hydrology/<site>/sanitary-basis.yaml` — `None`
-    for sites without a committed basis. The remaining Lima-specific hydrology tools
-    (`hydrology_balance`, `stormwater_runoff`, `hydrology_scenario`, `tier1_swmm`) still return a
-    `_reference_only(...)` notice off-home — tracked in #900.
+    for sites without a committed basis. `hydrology_balance` (#829) runs per-site for any site
+    that has committed its own WWTP graph (`data/reference/<slug>/watch-items.geojson`) — else
+    the `_reference_only(...)` notice (which would otherwise silently serve Lima's periplus
+    graph); it site-scopes routing (`load_routing` reads `reference/hydrology/<slug>/routing.yaml`)
+    and only carries a data-center campus node where a `bosc-fm2` discharge is committed. The
+    remaining Lima-specific hydrology tools (`stormwater_runoff`, `hydrology_scenario`,
+    `tier1_swmm`) still return a `_reference_only(...)` notice off-home — tracked in #900.
 - Models come from `get_settings()` (`WATERMARK_MODEL` for research, `WATERMARK_EXTRACT_MODEL`
   for bulk extraction) — never hardcode a model id here.
 - Figures come from the rendered **image**, not the OCR text layer; the extractor

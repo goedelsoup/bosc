@@ -53,9 +53,10 @@ def _text(payload: str) -> dict[str, Any]:
 # site's own committed corpus: the whole data/extracted/ tree for the corpus home (Lima), else the
 # site's own subtree (data/extracted/<slug>/) — so a per-site run reads its own record, never
 # another site's. `entities` and `timeline` resolve per active site via load_corpus(settings).
-# `list_documents` filters data/documents/ by site slug (#899). The hydrology suite
-# (hydrology_balance, stormwater_runoff, hydrology_scenario, tier1_swmm, storm_plan_inventory,
-# sanitary_basis) remains Lima-specific and returns `_reference_only(...)` off-home (#900/#901).
+# `list_documents` filters data/documents/ by site slug (#899). `hydrology_balance` runs
+# per-site for any site with a committed watch-items.geojson (else the reference-only notice,
+# #829). The rest of the hydrology suite (stormwater_runoff, hydrology_scenario, tier1_swmm,
+# storm_plan_inventory, sanitary_basis) remains Lima-specific off-home (#900/#901).
 _CORPUS_HOME = "lima"
 
 
@@ -400,11 +401,20 @@ async def entities(_args: dict[str, Any]) -> dict[str, Any]:
 )
 @traced_tool
 async def hydrology_balance(_args: dict[str, Any]) -> dict[str, Any]:
-    if (note := _reference_only("hydrology_balance")) is not None:
-        return note
+    from watermark.hydrology.balance import has_site_watch_items
     from watermark.pipeline import hydrology as hydro_stage
 
-    balance, _checks, findings = hydro_stage.run_baseline()
+    settings = get_settings()
+    # Per-site (#829): the balance runs for the corpus home (Lima) and for any site that
+    # has committed its own WWTP graph (data/reference/<slug>/watch-items.geojson). Off the
+    # corpus home with no such graph it would silently fall back to Lima's periplus
+    # watch-items, so keep the honest reference-only notice instead.
+    if not _is_corpus_home(settings) and not has_site_watch_items(settings):
+        note = _reference_only("hydrology_balance")
+        if note is not None:
+            return note
+
+    balance, _checks, findings = hydro_stage.run_baseline(settings=settings)
     lines = ["WATER BALANCE (cfs; source in brackets):"]
     for n in balance.nodes:
         v = n.return_flow or n.inflow
