@@ -17,14 +17,17 @@ values are pulled from cited public sources; regenerate, don't hand-edit.
 
   **10 of the 16 ordinance lots resolve in the current auditor parcel fabric** (~**309.1**
   recorded legal acres, reconciling with the ~321 ac reported for the full 16-lot schedule). The
-  other **6** (`028-90-500-93-002/003/004/006/007` and `028-90-150-51-001`) no longer exist as
-  separate parcels — they were **consolidated/renumbered** into current parcels (chiefly
-  `028-90-500-93-000`, City of Mansfield, 129.53 ac) since the 2025-06-03 rezone. The retired IDs
-  are preserved in the file's `bosc:provenance` (`retired_parcel_ids`); their geometry is **not
+  other **6** (`028-90-500-93-002/003/004/006/007` and `028-90-150-51-001`) no longer resolve as
+  separate parcels — they were **consolidated or renumbered** at some point after the ordinance was
+  drawn. The **specific successor parcel(s) are `[inference]`** — not confirmed against an auditor
+  parcel-history / split-merge or deed record; the large adjacent City lot `028-90-500-93-000`
+  (129.53 ac) is the most likely absorber but is **not verified** as such. The retired IDs are
+  preserved in the file's `bosc:provenance` (`retired_parcel_ids`); their geometry is **not
   fabricated**. The City of Mansfield owns 7 of the 10 resolved lots; 37 East Fourth Street LTD
   (an Ohio LLC) owns 3. **Adena Development Corp** — the city-affiliated CIC named in press
-  coverage — is not a current owner-of-record on the resolved 10 (it either holds the
-  retired/renumbered lots or conveyed to the City); the Adena attribution is `[reference]`.
+  coverage — is not a current owner-of-record on the resolved 10; its historical interest and the
+  disposition of any holdings are **unknown here** (no deed / parcel-history record was pulled), so
+  the Adena attribution stays `[reference]` (press), not confirmed against the recorder.
 
 ## Known gaps & caveats
 

@@ -49,13 +49,13 @@
     "committed_total_legal_acres": 309.11,
     "reported_total_acres": 321,
     "caveats": [
-      "[verified] Owner-of-record, situs, acreage, class, appraised value and sale date/price are verbatim from the Richland County Auditor CAMA (Parcel_CAMA layer 0); null means the service had no value. `acres` is the recorded LEGAL_ACRES; `calculated_acres` (planar) is carried only when it differs.",
-      "The ordinance lists 16 lots 'as recorded in the Richland County Auditor's Office'. The CURRENT auditor parcel fabric resolves 10 of the 16; the other 6 (028-90-500-93-002/003/004/006/007 and 028-90-150-51-001) no longer exist as separate parcels \u2014 they were consolidated/renumbered into current parcels (notably 028-90-500-93-000, City of Mansfield, 129.53 ac) since the 2025-06-03 rezone. Retired IDs are preserved here (retired_parcel_ids); their geometry is NOT fabricated.",
-      "The 10 committed lots sum to ~309.1 recorded legal acres, reconciling with the ~321 ac reported for the 16-lot schedule; the ~12 ac residual is the retired lots' area absorbed into current parcels plus legal-vs-planar acreage differences.",
+      "[verified] Owner-of-record, situs, acreage, class, appraised value and sale date/price are verbatim from the Richland County Auditor CAMA (Parcel_CAMA layer 0). A property is null when the service had no value; auditor sentinel strings (e.g. 'N/A') are normalized to null. `acres` is the recorded LEGAL_ACRES; `calculated_acres` (planar) is carried only when it differs.",
+      "The ordinance lists 16 lots 'as recorded in the Richland County Auditor's Office'. The CURRENT auditor parcel fabric resolves 10 of the 16; the other 6 (028-90-500-93-002/003/004/006/007 and 028-90-150-51-001) no longer resolve as separate parcels \u2014 they were consolidated or renumbered at some point after the ordinance was drawn. The specific successor parcel(s) are [inference] (not confirmed against an auditor parcel-history/split-merge or deed record); the large adjacent City lot 028-90-500-93-000 (129.53 ac) is the most likely absorber but is not verified as such. Retired IDs are preserved here (retired_parcel_ids); their geometry is NOT fabricated.",
+      "The 10 committed lots sum to ~309.1 recorded legal acres, reconciling with the ~321 ac reported for the 16-lot schedule; the ~12 ac residual reflects the 6 retired lots plus legal-vs-planar acreage differences.",
       "The auditor ZONING and USEDSCRP columns are UNPOPULATED in this layer \u2014 the I-1->I-2 status is from Ordinance 25-086, not the auditor zoning field. `zoning_change`/`ordinance` on each feature record the instrument, not an auditor attribute.",
-      "Adena Development Corp (the city-affiliated CIC named in press coverage) is not a current owner-of-record on the 10 resolved lots \u2014 the City of Mansfield owns 7, and 37 East Fourth Street LTD (an Ohio LLC) owns 3 (028-90-150-49/50/51). Adena's holdings, if any, are among the retired/renumbered lots or were conveyed to the City. [reference] for the Adena attribution.",
+      "Adena Development Corp (the city-affiliated CIC named in press coverage) is not a current owner-of-record on the 10 resolved lots \u2014 the City of Mansfield owns 7, and 37 East Fourth Street LTD (an Ohio LLC) owns 3 (028-90-150-49/50/51). Adena's historical interest and the disposition of any holdings are unknown here (no deed / auditor parcel-history record was pulled); the Adena attribution is [reference] (press), not confirmed against the recorder.",
       "Multipart parcels (028-90-500-48-000 = 4 parts; 028-90-500-93-000 = 2 parts) are returned by the service as repeated single-ring features and are assembled here into one MultiPolygon per parcel; sum committed_count (10), not raw service features (14).",
-      "Right-state guard: Richland County OHIO (FIPS 39139), owner city Mansfield OH 449xx, WKID 3734 (NAD83 Ohio North ftUS) reprojected to 4326. Not the same-named Richland County WI/SC/IL.",
+      "Right-state guard: Richland County OHIO (FIPS 39139), owner city Mansfield OH 449xx, WKID 3734 (NAD83 Ohio North ftUS) reprojected to 4326. Not the same-named Richland Co WI/SC/IL.",
       "Regenerable: query Parcel_CAMA/MapServer/0 with where=PARCELID IN (schedule ids), outSR=4326, f=json (this ArcGIS 10.3 server does not support f=geojson), then convert esri rings -> GeoJSON (see data/reference/mansfield/README.md)."
     ]
   },
@@ -92,7 +92,6 @@
       "properties": {
         "parcel_id": "028-90-150-49-000",
         "owner": "37 EAST FOURTH STREET LTD AN OHIO",
-        "owner_2": "LIMITED LIABILITY COMPANY",
         "owner_mailing_address": "797 CYPRESS DR MANSFIELD OH 44903",
         "situs_address": "BOWMAN ST",
         "acres": 3,
@@ -103,7 +102,8 @@
         "last_sale_amount": 125000,
         "legal_description": "NW A 3.000 LT 3 PT",
         "zoning_change": "I-1 to I-2",
-        "ordinance": "25-086"
+        "ordinance": "25-086",
+        "owner_2": "LIMITED LIABILITY COMPANY"
       }
     },
     {
@@ -134,7 +134,6 @@
       "properties": {
         "parcel_id": "028-90-150-50-000",
         "owner": "37 EAST FOURTH STREET LTD AN OHIO",
-        "owner_2": "LIMITED LIABILITY COMPANY",
         "owner_mailing_address": "797 CYPRESS ST MANSFIELD OH 44903",
         "situs_address": "CRALL RD",
         "acres": 0.32,
@@ -145,7 +144,8 @@
         "last_sale_amount": 125000,
         "legal_description": "NW A 0.320 LT 3 PT",
         "zoning_change": "I-1 to I-2",
-        "ordinance": "25-086"
+        "ordinance": "25-086",
+        "owner_2": "LIMITED LIABILITY COMPANY"
       }
     },
     {
@@ -228,7 +228,6 @@
       "properties": {
         "parcel_id": "028-90-150-51-000",
         "owner": "37 EAST FOURTH STREET LTD AN OHIO",
-        "owner_2": "LIMITED LIABILITY COMPANY",
         "owner_mailing_address": "797 CYPRESS DR MANSFIELD OH 44903",
         "situs_address": "BOWMAN ST",
         "acres": 25.8,
@@ -239,7 +238,8 @@
         "last_sale_amount": 125000,
         "legal_description": "NE & NW A 25.800 LT 3 PT",
         "zoning_change": "I-1 to I-2",
-        "ordinance": "25-086"
+        "ordinance": "25-086",
+        "owner_2": "LIMITED LIABILITY COMPANY"
       }
     },
     {
@@ -639,13 +639,15 @@
         "owner_mailing_address": "MANSFIELD OHIO MANSFIELD OH 44902",
         "situs_address": "BOWMAN ST",
         "acres": 129.53,
-        "calculated_acres": 125.323,
         "land_use_code": 640,
         "class": "E",
         "appraised_total_value": 300780,
+        "last_sale_date": null,
+        "last_sale_amount": null,
         "legal_description": "NE A125.323 AC LT 1 2",
         "zoning_change": "I-1 to I-2",
-        "ordinance": "25-086"
+        "ordinance": "25-086",
+        "calculated_acres": 125.323
       }
     },
     {
@@ -694,6 +696,8 @@
         "land_use_code": 640,
         "class": "E",
         "appraised_total_value": 171630,
+        "last_sale_date": null,
+        "last_sale_amount": null,
         "legal_description": "NW A37.31 LT 3 PT",
         "zoning_change": "I-1 to I-2",
         "ordinance": "25-086"
@@ -883,6 +887,8 @@
         "land_use_code": 640,
         "class": "E",
         "appraised_total_value": 270480,
+        "last_sale_date": null,
+        "last_sale_amount": null,
         "legal_description": "NW A58.8 LT 3 PT",
         "zoning_change": "I-1 to I-2",
         "ordinance": "25-086"
@@ -939,13 +945,15 @@
         "owner_mailing_address": "MANSFIELD OHIO",
         "situs_address": "CAIRNS rd",
         "acres": 10,
-        "calculated_acres": 9.394,
         "land_use_code": 640,
         "class": "E",
         "appraised_total_value": 47770,
+        "last_sale_date": null,
+        "last_sale_amount": null,
         "legal_description": "SE 9.394 AC LT 13",
         "zoning_change": "I-1 to I-2",
-        "ordinance": "25-086"
+        "ordinance": "25-086",
+        "calculated_acres": 9.394
       }
     },
     {
@@ -1006,6 +1014,8 @@
         "land_use_code": 640,
         "class": "E",
         "appraised_total_value": 20010,
+        "last_sale_date": null,
+        "last_sale_amount": null,
         "legal_description": "SE A4.35 LT 14 PT",
         "zoning_change": "I-1 to I-2",
         "ordinance": "25-086"
@@ -1085,6 +1095,8 @@
         "land_use_code": 640,
         "class": "E",
         "appraised_total_value": 138000,
+        "last_sale_date": null,
+        "last_sale_amount": null,
         "legal_description": "SW A30 LT 5 PT",
         "zoning_change": "I-1 to I-2",
         "ordinance": "25-086"
@@ -1130,12 +1142,14 @@
       "properties": {
         "parcel_id": "028-90-500-91-000",
         "owner": "CITY OF MANSFIELD OHIO",
-        "owner_mailing_address": "N/A",
+        "owner_mailing_address": null,
         "situs_address": "CAIRNS RD",
         "acres": 10,
         "land_use_code": 640,
         "class": "E",
         "appraised_total_value": 46000,
+        "last_sale_date": null,
+        "last_sale_amount": null,
         "legal_description": "SW A10 LT 6 PT",
         "zoning_change": "I-1 to I-2",
         "ordinance": "25-086"
