@@ -309,6 +309,7 @@ const FACILITY_STATUS: Record<string, FacilityStatus> = {
   "fort-wayne": "live", // GCP — a disclosed facility, not yet a construction record
   urbana: "confirmed", // Urbana Technology Hub (Thor) — disclosed Feb 2026; MW load still [open] (#1327)
   "troy-piqua": "confirmed", // Project Klondike (J5 LLC/Shaytura) — approved 4-0 Nov 2025; MW load still [open] (#1482)
+  sidney: "construction", // AWS "Project Galaxy" — grading permit 2026-05-14, groundbreaking ~Jan 2026; MW load still [open] (#1378)
 };
 
 /** A site's facility lifecycle stage; "investigation" when no facility is disclosed. */

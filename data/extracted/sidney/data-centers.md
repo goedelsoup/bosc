@@ -34,7 +34,13 @@ council resolution references are primary-source verified. `[verified]`
   Source: sidneyoh.com/526; DCD Oct 2025.
 - **Power utility:** AES Ohio (Dayton Power & Light / DP&L). `[verified]`
   Source: sidneyoh.com/526.
-- **Power draw (MW):** `[open]` — not disclosed in public records reviewed.
+- **Power draw (MW):** `[open]` — not disclosed in public records reviewed. The `_SIDNEY`
+  `SiteFacility` (#1378, 2026-07-13) carries an **investment-scaled `[inference]` screening
+  bracket** for the IT load (~150 / 250 / 350 MW low/central/high = the disclosed $3B campus ÷ a
+  ~$8.5–20M per MW-IT hyperscale construction-cost band) so the profile's power stack has an
+  input — it is **not** a disclosure and does **not** close this `[open]`; the disclosed
+  interconnection/air-permit MW remains the target to pull. No floor area is disclosed, so the
+  network's usual floor-area screen (Urbana #1327 / Troy-Piqua / Bowling Green) does not apply.
 
 ### Financial / tax instruments
 

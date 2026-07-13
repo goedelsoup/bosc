@@ -25,5 +25,9 @@ something the footprint reveals. It is treated here as an **industry reference**
 design lever — bounding the space of what a campus *could* do — and never as a claim
 about any watershed point's cooling design, which stays `[open]` until the operator
 discloses it. The named-vendor examples (Danfoss heat-reuse modules and Turbocor
-compressors in Google data centers) are a single promotional source: they establish
-that the technology is real and deployed, not that any particular campus uses it.
+compressors in Google data centers) rest on a single promotional source — the
+Danfoss–Google strategic-partnership announcement (Jan 2024), catalogued as
+`[reference]` in the `heat_reuse` prior of
+`data/reference/datacenter-industry/priors.yaml` (which carries the release URL):
+it establishes that the technology is real and deployed, not that any particular
+campus uses it.
