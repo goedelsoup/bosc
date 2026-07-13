@@ -27,7 +27,7 @@ _OBSERVED_FIELDS = (
     "phycocyanin_month_max",
     "phycocyanin_at_turbidity_spike",
 )
-_DERIVED_FIELDS = ("reach_river_km", "plume_travel")
+_DERIVED_FIELDS = ("seven_q10_cfs", "reach_river_km", "plume_travel")
 
 
 class MonitorSpike(BaseModel):
@@ -92,7 +92,8 @@ class ContinuousMonitorRead(BaseModel):
         """A gauge reading may not masquerade as an inference, nor an inference as a reading.
 
         Rejects a mislabeled build/round-trip: observational fields must be ``connector``
-        ([verified]) and the travel-time argument must be ``derived`` ([inference]).
+        ([verified]); the derived fields (the 7Q10 denominator and the travel-time
+        argument) must be ``derived`` ([inference]).
         """
         for name in _OBSERVED_FIELDS:
             source = getattr(self, name).source
@@ -104,6 +105,6 @@ class ContinuousMonitorRead(BaseModel):
             source = getattr(self, name).source
             if source != "derived":
                 raise ValueError(
-                    f"{name} is an interpretive value; expected source 'derived', got {source!r}"
+                    f"{name} is a derived value; expected source 'derived', got {source!r}"
                 )
         return self
