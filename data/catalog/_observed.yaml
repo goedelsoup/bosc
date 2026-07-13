@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-13T16:27:25.856493+00:00'
+reconciled_at: '2026-07-13T17:45:41.008472+00:00'
 entries:
   aedg:
     exists: true
@@ -322,8 +322,8 @@ entries:
     site_scope: slug-scoped
   eia-grid-profile:
     exists: true
-    sha256: 41e62b2cd17ee2b717d2680bb28ff057257b85b98dc5ac4eb197facdef172873
-    size_bytes: 72744
+    sha256: 8645241097969e0676f639e1463a96137c12364d4b536e9e7adf713f9959d3b0
+    size_bytes: 76060
     lfs_materialized: true
     file_count: 21
     missing: []
@@ -1020,6 +1020,16 @@ entries:
     asof: null
     stale: false
     site_scope: site:toledo
+  troy-piqua-gis:
+    exists: true
+    sha256: a36ec9fe9e212592713d000b1b72426d235359e195995c4cea0c5c9c0b2fed24
+    size_bytes: 2105
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:troy-piqua
   troy-piqua-watch-items:
     exists: true
     sha256: 09cc4f193c36c1be97979b4e91cea278fe4337047ccb92499c2594f8961d9cdf

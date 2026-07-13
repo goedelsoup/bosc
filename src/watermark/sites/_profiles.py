@@ -22,6 +22,7 @@ from watermark.sites._gis_schemas import (
     MIAMI_PARCEL_SCHEMA,
     NATIONAL_NFHL_FLOOD_SCHEMA,
     OHIO_STATEWIDE_PARCEL_SCHEMA,
+    PIQUA_ZONING_SCHEMA,
     PUTNAM_PARCEL_SCHEMA,
     RICHLAND_PARCEL_SCHEMA,
     VAN_WERT_PARCEL_SCHEMA,
@@ -1694,7 +1695,8 @@ _HAMILTON_MIDDLETOWN = SiteProfile(
 # the lower-mainstem Hamilton/Middletown node. Same buried-valley sole-source aquifer, but a mid-size
 # **manufacturing** county (Hobart commercial food equipment HQ in Troy, auto parts) rather than
 # Butler's heavy steel, and a second muni-power story: **Piqua runs its own municipal electric
-# utility** (AMP member, Great Miami hydro), Troy/Miami County otherwise likely AES Ohio. The site
+# utility** (AMP member, Great Miami hydro), Troy/Miami County otherwise AES Ohio (DP&L #4922,
+# confirmed #830 — and the Klondike campus's disclosed long-term utility via a 40-yr franchise). The site
 # also carries a distinct second supply water — the **Stillwater River** (gage 03265000). Both cities
 # sit west of the 84 degW meridian, so this is a **UTM 16N** site (like WPAFB / Hamilton-Middletown).
 _TROY_PIQUA = SiteProfile(
@@ -1709,18 +1711,21 @@ _TROY_PIQUA = SiteProfile(
     nasa_power_lon=-84.2033,
     rsei_fips="39109",  # [verified] Miami County, OH
     econ_fips="39109",
-    eia861_utility_number=4922,  # Dayton Power & Light (AES Ohio, county-dominant IOU) — EIA-861 2024 Service_Territory, Miami Co [verified]; City of Piqua muni #15095 is the Piqua split
+    eia861_utility_number=4922,  # Dayton Power & Light (AES Ohio) — county-dominant IOU AND the Klondike campus's long-term serving utility (40-yr franchise ordinance, #830) [verified]; Piqua muni #15095 (full-form, not 861S) serves the city + construction power — see serving_utility_citation
     parcels_url=(  # [verified] Miami County AGOL parcel_joined layer 0 (auditor CAMA + geometry, #1483)
         "https://services3.arcgis.com/wCWf4EGMg4PzHwzA/arcgis/rest/services/"
         "parcel_joined/FeatureServer/0"
     ),
-    zoning_url="TODO",  # [open] pending the City of Troy / Piqua GIS REST endpoint discovery
+    zoning_url=(  # [verified] City of Piqua zoning FeatureServer/17 'Code Piqua' (#830); carries the auditor PARCEL id
+        "https://services8.arcgis.com/kZPPWTIJ6kOFJTWc/arcgis/rest/services/"
+        "Zoning_Districts_public_view/FeatureServer/17"
+    ),
     floodzone_url=(  # [verified] FEMA NFHL S_FLD_HAZ_AR (national layer 28)
         "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28"
     ),
     hydro_utm_epsg=32616,  # [verified] UTM 16N (Troy ~84.20 degW; zone 16 spans 90-84 degW) — NOT zone 17
     gis_parcel=MIAMI_PARCEL_SCHEMA,  # [verified] Miami County AGOL parcel_joined — owner + CAMA (#1483)
-    gis_zoning=None,  # [open] pending City of Troy / Piqua zoning-layer discovery
+    gis_zoning=PIQUA_ZONING_SCHEMA,  # [verified] City of Piqua 'Code Piqua' — form-based code, parcel-join (#830)
     gis_flood=NATIONAL_NFHL_FLOOD_SCHEMA.model_copy(update={"reference_dir": "troy-piqua-gis"}),
     design_lat=40.0392,  # [verified] Troy centroid = NOAA Atlas-14 point
     design_lon=-84.2033,
@@ -1857,7 +1862,23 @@ _TROY_PIQUA = SiteProfile(
             "data/extracted/troy-piqua/data-centers.md, 'Water / hydrology hook'."
         ),
     ),
-    serving_utility_citation="EIA-861 2024 Service_Territory: Miami County, OH is split — Dayton Power & Light (AES Ohio, #4922) serves Troy + most of the county; the City of Piqua municipal (#15095) serves Piqua. Pinned to DP&L #4922 (county-dominant IOU); the Piqua-muni share is [inference]. [verified]",
+    serving_utility_citation=(  # confirmed for #830 (primary EIA-861 2024 file + the franchise ordinance)
+        "EIA-861 2024: Miami County, OH is served by two utilities, both confirmed against the "
+        "2024 bulk file's Sales_Ult_Cust + Service_Territory sheets — Dayton Power & Light Co "
+        "(AES Ohio, #4922, Investor Owned; a full-form filer whose territory spans 24 OH counties "
+        "incl. Miami) is the county-dominant IOU (Troy + most of the county), and the City of "
+        "Piqua - (OH) (#15095, Municipal, an AMP member) serves the City of Piqua. Pinned to "
+        "DP&L #4922: it is both the county-dominant IOU AND the Project Klondike campus's disclosed "
+        "LONG-TERM serving utility — the Piqua Commission gave first reading (3-1, 2026-07-07) to a "
+        "40-year AES Ohio franchise ordinance for permanent service, with the Piqua muni supplying "
+        "only temporary construction power (up to 10 MW) [verified: Dayton Daily News 2026-07-09; "
+        "piquaoh.gov/228]. The #830 'municipal EIA-861S short-form' watch resolves NEGATIVE: Piqua "
+        "#15095 files the FULL EIA-861 form (present in Sales_Ult_Cust — 10,943 customers, 281,641 "
+        "MWh 2024; ABSENT from Short_Form_2024), so neither the backdrop nor the campus load basis "
+        "rides the short-form path. The county geographic muni/IOU boundary split is [inference]; "
+        "the #4922 pin, both utility identities/forms, and the campus long-term utility are "
+        "[verified]. See data/extracted/troy-piqua/data-centers.md."
+    ),
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(
         "PJM Data Miner 2 da_hrl_lmps, DAY zone (pnode 34508503), 2025 day-ahead annual mean "

@@ -1,0 +1,73 @@
+meta:
+  subject: City of Piqua, Ohio zoning districts (form-based code catalog)
+  source: City of Piqua GIS — ArcGIS Online hosted FeatureServer 'Zoning_Districts_public_view'
+    (org kZPPWTIJ6kOFJTWc), layer 17 'Code Piqua'
+  source_url: https://services8.arcgis.com/kZPPWTIJ6kOFJTWc/arcgis/rest/services/Zoning_Districts_public_view/FeatureServer/17
+  district_count: 26
+  polygon_total: 9758
+  caveats:
+  - Values are verbatim from the City of Piqua hosted zoning FeatureServer.
+  - Coverage is Piqua CITY LIMITS ONLY; unincorporated Miami County townships (and
+    the City of Troy) carry their own separate zoning layers, not this one.
+  - polygon_count counts zoning polygons, not distinct parcels (a parcel may carry
+    more than one polygon).
+  - 'Currency: rows last edited 2025-02; the J5 campus parcels N44-101834/-101846
+    (re-platted/conveyed Dec 2025) are not yet in this snapshot — N44-101770 is, as
+    IH.'
+  - 'Right-state guard: City of Piqua, MIAMI County OHIO (auditor PARCEL ''N44-…'');
+    not the same-named Piqua elsewhere. Prefer the public view over its internal twin
+    (''informational purposes only'' disclaimer).'
+  - Field names confirmed from the live layer-17 metadata + queries (2026-07-13).
+districts:
+- code: T-RL
+  polygon_count: 4225
+- code: RE-6
+  polygon_count: 1933
+- code: RE-10
+  polygon_count: 642
+- code: T-RM
+  polygon_count: 461
+- code: S-RA
+  polygon_count: 311
+- code: IH
+  polygon_count: 264
+- code: T-RM-E
+  polygon_count: 252
+- code: T-NX
+  polygon_count: 199
+- code: T-GX
+  polygon_count: 181
+- code: CN
+  polygon_count: 177
+- code: RE-20
+  polygon_count: 165
+- code: D-GX
+  polygon_count: 161
+- code: CX
+  polygon_count: 152
+- code: T-FX
+  polygon_count: 132
+- code: S-RM
+  polygon_count: 115
+- code: D-SX
+  polygon_count: 87
+- code: NX
+  polygon_count: 85
+- code: CV
+  polygon_count: 47
+- code: PK
+  polygon_count: 45
+- code: IL
+  polygon_count: 44
+- code: AG
+  polygon_count: 29
+- code: T-RH
+  polygon_count: 20
+- code: D-RF
+  polygon_count: 12
+- code: T-SX
+  polygon_count: 8
+- code: RX
+  polygon_count: 7
+- code: CO
+  polygon_count: 4

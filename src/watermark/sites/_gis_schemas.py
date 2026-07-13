@@ -924,3 +924,66 @@ MIAMI_PARCEL_SCHEMA = GisParcelSchema(
         ),
     ),
 )
+
+
+# City of Piqua, OH zoning (Troy/Piqua watershed point; #830). The City publishes its form-based
+# code on its own ArcGIS Online org ("City of Piqua", kZPPWTIJ6kOFJTWc) — a single polygon layer,
+# `Zoning_Districts_public_view/FeatureServer/17` ("Code Piqua"). Unlike Findlay's polygon-only
+# layer, this one carries the auditor `PARCEL` id (dashed "N44-…" — the SAME canonical form as the
+# Miami County parcel layer above), so per-parcel zoning joins work: the Project Klondike campus
+# parcel `N44-101770` returns `IH` (Industrial Heavy), and the adjacent `N44-101808` returns `IL`
+# (Industrial Light) — the situs check that confirms the campus footprint sits in the City of
+# Piqua's heavy/light-industrial districts (matching the "annexed and zoned heavy-industrial"
+# record in data/extracted/troy-piqua/data-centers.md). The district label is `CPZoneDist` (a
+# coded-value domain: 26 districts; IH/IL are the two industrial ones). Coverage is CITY LIMITS
+# ONLY — unincorporated Miami County townships are a separate county layer, and the two other
+# J5 campus parcels (N44-101834/-101846) post-date this layer's 2025-02 snapshot, a currency gap.
+# Field names + the parcel-join sample confirmed from the live layer-17 `?f=pjson` + queries
+# (2026-07-13); it is the public view (its internal twin carries an "informational only" disclaimer).
+PIQUA_ZONING_SCHEMA = GisZoningSchema(
+    connector="piqua_gis",
+    reference_dir="troy-piqua-gis",  # shared with the Miami parcel + NFHL flood schemas
+    page_size=2000,
+    object_id_field="OBJECTID_1",
+    parcel_field="PARCEL",  # dashed auditor id "N44-101770" (Parcel2 = dashless) — joins to Miami CAMA
+    zoning_field="CPZoneDist",  # the form-based district code (coded-value domain; IH/IL = industrial)
+    http_method="POST",
+    id_normalize="verbatim",  # the dashed, prefixed id is stored verbatim (like the parcel layer)
+    meta=GisMeta(
+        subject="City of Piqua, Ohio zoning districts (form-based code catalog)",
+        source="City of Piqua GIS — ArcGIS Online hosted FeatureServer 'Zoning_Districts_public_view' "
+        "(org kZPPWTIJ6kOFJTWc), layer 17 'Code Piqua'",
+        source_url=(
+            "https://services8.arcgis.com/kZPPWTIJ6kOFJTWc/arcgis/rest/services/"
+            "Zoning_Districts_public_view/FeatureServer/17"
+        ),
+        caveats=(
+            "Values are verbatim from the City of Piqua hosted zoning FeatureServer.",
+            "Coverage is Piqua CITY LIMITS ONLY; unincorporated Miami County townships (and the "
+            "City of Troy) carry their own separate zoning layers, not this one.",
+            "polygon_count counts zoning polygons, not distinct parcels (a parcel may carry more "
+            "than one polygon).",
+            "Currency: rows last edited 2025-02; the J5 campus parcels N44-101834/-101846 "
+            "(re-platted/conveyed Dec 2025) are not yet in this snapshot — N44-101770 is, as IH.",
+            "Right-state guard: City of Piqua, MIAMI County OHIO (auditor PARCEL 'N44-…'); not "
+            "the same-named Piqua elsewhere. Prefer the public view over its internal twin "
+            "('informational purposes only' disclaimer).",
+            "Field names confirmed from the live layer-17 metadata + queries (2026-07-13).",
+        ),
+    ),
+    cited_meta=GisCitedZoningMeta(
+        subject="City of Piqua zoning for cited corpus parcels (jurisdiction scan)",
+        source="City of Piqua GIS — Zoning_Districts_public_view layer 17, joined by PARCEL to "
+        "corpus-cited parcel ids",
+        finding_lead="fall within the City of Piqua zoning jurisdiction",
+        in_city_finding=".",
+        out_of_city_finding=" — the parcel sits in unincorporated Miami County (or the City of "
+        "Troy), whose zoning is a separate layer, so it is NOT in the City of Piqua code catalog.",
+        caveats=(
+            "Coverage is Piqua CITY LIMITS ONLY; in_city=false is a verified outside-city result "
+            "(unincorporated township / City of Troy), not a missing lookup.",
+            "Parcel ids are scanned from data/extracted and matched verbatim to the dashed "
+            "PARCEL the GIS join uses (no dash-stripping — the layer stores 'N44-101770').",
+        ),
+    ),
+)
