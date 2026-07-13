@@ -27,6 +27,7 @@ from watermark.civic.models import Subdivision
 from watermark.config import Settings, get_settings
 from watermark.logging import get_logger
 from watermark.pipeline.corpus import relpath_in_scope
+from watermark.sites import CorpusScopeArg
 
 log = get_logger(__name__)
 
@@ -147,7 +148,7 @@ def summarize_corridor_meetings(
 def load_committed_summaries(
     settings: Settings | None = None,
     *,
-    scope: tuple[str, ...] | None = None,
+    scope: CorpusScopeArg = None,
 ) -> list[tuple[str, dict[str, Any]]]:
     """Read every committed ``<slug>/meetings/meeting-summaries.yaml``.
 

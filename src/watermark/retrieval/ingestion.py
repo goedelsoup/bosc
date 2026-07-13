@@ -10,9 +10,12 @@ from __future__ import annotations
 
 from collections.abc import Iterator
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from watermark.retrieval.store import Chunk
+
+if TYPE_CHECKING:
+    from watermark.sites import CorpusScope
 
 _MAX_CHUNK_CHARS = 4_000
 _CORPUS_HOME = "lima"
@@ -144,24 +147,24 @@ def iter_reference_chunks(reference_dir: Path) -> Iterator[Chunk]:
                 )
 
 
-def _corpus_scope(site: str) -> tuple[str, ...] | None:
-    """The extracted-tree prefixes that belong to *site* — the same scope the export /
+def _corpus_scope(site: str) -> CorpusScope:
+    """The extracted-tree region that belongs to *site* — the same scope the export /
     timeline / entities path reads (#1504).
 
     Resolved from the site's registered :class:`~watermark.sites.SiteProfile` via
     :func:`~watermark.sites.effective_corpus_scope`, so ``retrieve_corpus(site=…)`` and the
-    site bundle agree on the corpus. Lima (the reference build) is the whole-tree catch-all
-    (``None``); a registered peer reads only the prefixes its profile names (its own
+    site bundle agree on the corpus. Lima (the reference build) reads the whole tree minus every
+    peer's subtree (#1505); a registered peer reads only the prefixes its profile names (its own
     ``<slug>/`` plus any jurisdiction prefix like ``idem/fort-wayne``). An unregistered slug
     falls back to that same default (``(slug,)``, or whole-tree for the corpus home) so the
     iterator never raises on an ad-hoc ``watermark index --site`` value.
     """
-    from watermark.sites import SITES, effective_corpus_scope
+    from watermark.sites import SITES, CorpusScope, effective_corpus_scope
 
     profile = SITES.get(site)
     if profile is not None:
         return effective_corpus_scope(profile)
-    return None if site == _CORPUS_HOME else (site,)
+    return CorpusScope(include=None) if site == _CORPUS_HOME else CorpusScope(include=(site,))
 
 
 def iter_extracted_chunks(extracted_dir: Path, *, site: str) -> Iterator[Chunk]:

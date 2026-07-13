@@ -11,7 +11,7 @@ import asyncio
 import ipaddress
 import urllib.parse as _urlparse
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import httpx
 import yaml
@@ -38,6 +38,9 @@ from watermark.github import (
 from watermark.models import Estimate, OPCSummary
 from watermark.pipeline import analyze, ingest
 
+if TYPE_CHECKING:
+    from watermark.sites import CorpusScope
+
 SERVER_NAME = "watermark"
 
 
@@ -60,12 +63,13 @@ def _is_corpus_home(settings: Any) -> bool:
     return bool(settings.site == _CORPUS_HOME)
 
 
-def _site_extracted_scope(settings: Any) -> tuple[str, ...] | None:
-    """The active site's corpus scope (#1504): the extracted-tree prefixes it owns — the *same*
+def _site_extracted_scope(settings: Any) -> CorpusScope:
+    """The active site's corpus scope (#1504): the extracted-tree region it owns — the *same*
     scope `load_corpus` / retrieval read (via `effective_corpus_scope`).
 
-    Lima (the corpus home) is the whole-tree catch-all (``None``); a peer reads only the prefixes
-    its profile names (its own ``<slug>/`` plus any jurisdiction prefix like ``idem/fort-wayne``).
+    Lima (the corpus home) is the whole tree minus every peer's subtree (#1505); a peer reads only
+    the prefixes its profile names (its own ``<slug>/`` plus any jurisdiction prefix like
+    ``idem/fort-wayne``).
     """
     from watermark.sites import active_profile, effective_corpus_scope
 
@@ -97,8 +101,8 @@ def _site_scope_note(settings: Any) -> str:
     """A scope banner naming whose corpus a payload is (empty for the corpus home → zero drift)."""
     if _is_corpus_home(settings):
         return ""
-    scope = _site_extracted_scope(settings) or (str(settings.site),)
-    where = ", ".join(f"data/extracted/{p}/" for p in scope)
+    prefixes = _site_extracted_scope(settings).include or (str(settings.site),)
+    where = ", ".join(f"data/extracted/{p}/" for p in prefixes)
     return f"[scope] Reading site {settings.site!r}'s own committed corpus ({where}).\n\n"
 
 
@@ -201,8 +205,8 @@ async def list_extractions(_args: dict[str, Any]) -> dict[str, Any]:
         if _is_corpus_home(settings):
             loc = "data/extracted"
         else:
-            scope = _site_extracted_scope(settings) or (str(settings.site),)
-            loc = ", ".join(f"data/extracted/{p}" for p in scope)
+            prefixes = _site_extracted_scope(settings).include or (str(settings.site),)
+            loc = ", ".join(f"data/extracted/{p}" for p in prefixes)
         return _text(f"No extractions found under {loc}.")
     # Show the path relative to data/extracted so the agent sees full provenance
     # (recorder/…, idem/fort-wayne/…) — the same key read_extraction accepts.

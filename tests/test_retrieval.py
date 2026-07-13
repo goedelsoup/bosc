@@ -313,18 +313,26 @@ def test_iter_extracted_chunks_honors_corpus_scope(tmp_path: Path) -> None:
     assert all(c.site == "fort-wayne" for c in chunks)
 
 
-def test_iter_extracted_chunks_lima_indexes_whole_tree(tmp_path: Path) -> None:
-    """Lima (the reference build, scope ``None``) still indexes every subtree, including the
-    collection-prefixed peer records — the pre-existing whole-tree behavior (#1505).
+def test_iter_extracted_chunks_lima_excludes_peer_subtrees(tmp_path: Path) -> None:
+    """Lima (the reference build) indexes its own whole tree but now *subtracts* every registered
+    peer's subtree (#1505): its un-slugged Allen-County collections are indexed, a peer's
+    collection-prefixed record (``idem/fort-wayne/…``) or slug subtree (``troy-piqua/…``) is not —
+    so a Piqua permit stops being double-indexed under Lima and rendering in Lima's record.
     """
     (tmp_path / "recorder").mkdir()
     (tmp_path / "recorder" / "deed.yaml").write_text("deed: {}\n", encoding="utf-8")
-    (tmp_path / "idem" / "fort-wayne").mkdir(parents=True)
+    (tmp_path / "oepa").mkdir()  # a Lima un-slugged collection — kept
+    (tmp_path / "oepa" / "1PD00013.npdes.yaml").write_text("permit: lima\n", encoding="utf-8")
+    (tmp_path / "idem" / "fort-wayne").mkdir(parents=True)  # a peer's jurisdiction prefix — dropped
     (tmp_path / "idem" / "fort-wayne" / "wqc.yaml").write_text("permit: WQC\n", encoding="utf-8")
+    (tmp_path / "oepa" / "troy-piqua").mkdir()  # a peer under a Lima collection prefix — dropped
+    (tmp_path / "oepa" / "troy-piqua" / "1PD00008.npdes.yaml").write_text(
+        "permit: piqua\n", encoding="utf-8"
+    )
 
     chunks = list(iter_extracted_chunks(tmp_path, site="lima"))
     sources = {c.source_path for c in chunks}
-    assert sources == {"recorder/deed.yaml", "idem/fort-wayne/wqc.yaml"}
+    assert sources == {"recorder/deed.yaml", "oepa/1PD00013.npdes.yaml"}
     assert all(c.site == "lima" for c in chunks)
 
 

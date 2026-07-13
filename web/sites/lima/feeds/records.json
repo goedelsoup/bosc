@@ -2397,101 +2397,6 @@
     "source_doc_published": false
   },
   {
-    "rel": "idem/fort-wayne/47378f.idem.yaml",
-    "group": "permits-idem",
-    "title": "Hatchworks LLC (Project Zodiac) — IDEM Title V air permit, power basis",
-    "confidence": null,
-    "warnings": [],
-    "fields": {
-      "subject": "Hatchworks LLC (Project Zodiac) — IDEM Title V air permit, power basis",
-      "kind": "idem",
-      "source_document": "data/documents/idem/fort-wayne/47378f.pdf",
-      "permit_number": "003-47378-00530",
-      "permit_level": "Title V New Source Construction (Minor PSD/EO)",
-      "issued": "2024-09-06",
-      "issuing_agency": "Indiana DEM, Office of Air Quality",
-      "facility_ai_id": "133680",
-      "oaq_stationary_source_id": "1800300530",
-      "extracted_at": "2026-06-27",
-      "method": "hand extraction from the PDF text layer (pypdf); figures verbatim unless tagged [inference]"
-    },
-    "approximate_paths": [],
-    "citation": {
-      "source": "idem/fort-wayne/47378f.idem.yaml",
-      "source_kind": "document",
-      "page": null,
-      "confidence": "medium",
-      "note": null,
-      "verified": true
-    },
-    "source_doc_rel": null,
-    "source_doc_render_class": null,
-    "source_doc_published": false
-  },
-  {
-    "rel": "idem/fort-wayne/wqc001454.idem.yaml",
-    "group": "permits-idem",
-    "title": "Project Zodiac Phase 3 — IDEM §401 Water Quality Certification WQC001454",
-    "confidence": null,
-    "warnings": [],
-    "fields": {
-      "subject": "Project Zodiac Phase 3 — IDEM §401 Water Quality Certification WQC001454",
-      "kind": "idem",
-      "permit_number": "WQC001454",
-      "corps_id": "LRE-2023-00646-102",
-      "issuing_agency": "Indiana DEM, Office of Water Quality (Waterways Section)",
-      "source_documents": [
-        "data/documents/idem/fort-wayne/notice_20260403_401_wqc001454.pdf",
-        "data/documents/idem/fort-wayne/043026-IDEM-Hearing-ORIGINAL.pdf",
-        "data/documents/idem/fort-wayne/public-comments-compiled.pdf",
-        "data/documents/idem/fort-wayne/Response-to-Public-Comments-WQC001454-Project-Zodiac-Phase-3-Google-Data-Center.pdf",
-        "data/documents/idem/fort-wayne/WQC001454-Section-401-WQC-Approval.pdf"
-      ],
-      "extracted_at": "2026-06-27",
-      "method": "hand extraction from the PDF text layer (pypdf); figures verbatim unless tagged [inference]"
-    },
-    "approximate_paths": [],
-    "citation": {
-      "source": "idem/fort-wayne/wqc001454.idem.yaml",
-      "source_kind": "document",
-      "page": null,
-      "confidence": "medium",
-      "note": null,
-      "verified": true
-    },
-    "source_doc_rel": null,
-    "source_doc_render_class": null,
-    "source_doc_published": false
-  },
-  {
-    "rel": "fort-wayne/wwtp-in0032191.dmr.yaml",
-    "group": "permits-npdes",
-    "title": "FORT WAYNE WWTP",
-    "confidence": null,
-    "warnings": [],
-    "fields": {
-      "npdes_id": "IN0032191",
-      "name": "FORT WAYNE WWTP",
-      "permit_type": "NPDES Individual Permit",
-      "permit_status": "Admin Continued",
-      "major_minor": "M",
-      "snc_status": "Effluent - Monthly Average Limit",
-      "window": "2023-01-01..2023-12-31"
-    },
-    "approximate_paths": [],
-    "citation": {
-      "source": "fort-wayne/wwtp-in0032191.dmr.yaml",
-      "source_kind": "document",
-      "page": null,
-      "confidence": "medium",
-      "note": null,
-      "verified": true
-    },
-    "source_doc_rel": null,
-    "source_doc_render_class": null,
-    "source_doc_published": false
-  },
-  {
     "rel": "oepa/1II00129.npdes.yaml",
     "group": "permits-npdes",
     "title": "Wilmington Sanitary Landfill",
@@ -2532,7 +2437,7 @@
     },
     "source_doc_rel": "oepa/wilmington/1II00129.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/1IW00240.npdes.yaml",
@@ -2575,7 +2480,7 @@
     },
     "source_doc_rel": "oepa/wilmington/1IW00240.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/1MP00060.npdes.yaml",
@@ -2619,50 +2524,7 @@
     },
     "source_doc_rel": "oepa/wilmington/1MP00060.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
-  },
-  {
-    "rel": "oepa/1PD00008.npdes.yaml",
-    "group": "permits-npdes",
-    "title": "City of Piqua wastewater treatment works",
-    "confidence": "high",
-    "warnings": [
-      "No public notice number or comment period end date present in the document",
-      "Permit action not explicitly stated; 'renewal' inferred from context",
-      "Stream network downstream of Great Miami River not stated in document"
-    ],
-    "fields": {
-      "facility_name": "City of Piqua wastewater treatment works",
-      "permit_no": "1PD00008*WD",
-      "permit_action": "renewal",
-      "applicant": "City of Piqua",
-      "application_no": "OH0027049",
-      "public_notice_no": null,
-      "public_notice_date": null,
-      "comment_period_end": null,
-      "facility_address": "121 Bridge Street, Piqua, Ohio, Miami County",
-      "discharge_address": null,
-      "receiving_water": "Great Miami River",
-      "stream_network": "Great Miami River → Ohio River (Great Miami basin, Miami County, OH; HUC-8 05080002)",
-      "outfalls": [
-        "1PD00008001",
-        "1PD00008300",
-        "1PD00008581"
-      ],
-      "note": "Action Date: August 9, 2022. Effective Date: September 1, 2022. Expiration Date: August 31, 2027. No public notice number or comment period end date found in the document. Outfall 1PD00008300 is SSO monitoring; 1PD00008581 is sludge monitoring. Permit action inferred as renewal based on context (existing facility, expiration/effective dates); no explicit label present. Basin attribution: Great Miami basin, Miami County — not a Little Miami / Wilmington discharger."
-    },
-    "approximate_paths": [],
-    "citation": {
-      "source": "oepa/1PD00008.npdes.yaml",
-      "source_kind": "document",
-      "page": null,
-      "confidence": "high",
-      "note": "pages [0, 1, 2, 3, 4, 5]",
-      "verified": true
-    },
-    "source_doc_rel": "oepa/troy-piqua/1PD00008.pdf",
-    "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/1PD00013.fs.npdes.yaml",
@@ -2701,7 +2563,7 @@
     },
     "source_doc_rel": "oepa/wilmington/1PD00013.fs.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/1PD00013.npdes.yaml",
@@ -2743,7 +2605,7 @@
     },
     "source_doc_rel": "oepa/wilmington/1PD00013.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/1PT00125.npdes.yaml",
@@ -2789,7 +2651,7 @@
     },
     "source_doc_rel": "oepa/wilmington/1PT00125.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/1PV00037.npdes.yaml",
@@ -2833,7 +2695,7 @@
     },
     "source_doc_rel": "oepa/sidney/1PV00037.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/1PV00089.npdes.yaml",
@@ -2876,7 +2738,7 @@
     },
     "source_doc_rel": "oepa/wilmington/1PV00089.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/1PX00010.npdes.yaml",
@@ -2918,7 +2780,7 @@
     },
     "source_doc_rel": "oepa/wilmington/1PX00010.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/2DP00130.npdes.yaml",
@@ -2960,7 +2822,7 @@
     },
     "source_doc_rel": "oepa/2DP00130.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/2PD00006.fs.npdes.yaml",
@@ -2997,7 +2859,7 @@
     },
     "source_doc_rel": "oepa/van-wert/2PD00006.fs.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/2PD00006.npdes.yaml",
@@ -3039,7 +2901,7 @@
     },
     "source_doc_rel": "oepa/van-wert/2PD00006.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.npdes.yaml",
@@ -3080,7 +2942,7 @@
     },
     "source_doc_rel": "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/oepa-2PH00006-american-ii-fact-sheet.npdes.yaml",
@@ -3117,7 +2979,7 @@
     },
     "source_doc_rel": "oepa/oepa-2PH00006-american-ii-fact-sheet.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/oepa-2PH00006-american-ii-permit.npdes.yaml",
@@ -3159,7 +3021,7 @@
     },
     "source_doc_rel": "oepa/oepa-2PH00006-american-ii-permit.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.npdes.yaml",
@@ -3201,7 +3063,7 @@
     },
     "source_doc_rel": "oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/oepa-2PH00007-american-bath-fact-sheet.npdes.yaml",
@@ -3238,7 +3100,7 @@
     },
     "source_doc_rel": "oepa/oepa-2PH00007-american-bath-fact-sheet.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/oepa-2PH00007-american-bath-permit.npdes.yaml",
@@ -3281,7 +3143,7 @@
     },
     "source_doc_rel": "oepa/oepa-2PH00007-american-bath-permit.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.npdes.yaml",
@@ -3322,7 +3184,7 @@
     },
     "source_doc_rel": "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.npdes.yaml",
@@ -3359,7 +3221,7 @@
     },
     "source_doc_rel": "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "oepa/oepa-2PK00002-shawnee-ii-permit.npdes.yaml",
@@ -3401,7 +3263,7 @@
     },
     "source_doc_rel": "oepa/oepa-2PK00002-shawnee-ii-permit.pdf",
     "source_doc_render_class": "pdf",
-    "source_doc_published": false
+    "source_doc_published": true
   },
   {
     "rel": "regulatory/ohc000006-construction-stormwater-gp.yaml",
@@ -3422,34 +3284,6 @@
     "approximate_paths": [],
     "citation": {
       "source": "regulatory/ohc000006-construction-stormwater-gp.yaml",
-      "source_kind": "document",
-      "page": null,
-      "confidence": "medium",
-      "note": null,
-      "verified": true
-    },
-    "source_doc_rel": null,
-    "source_doc_render_class": null,
-    "source_doc_published": false
-  },
-  {
-    "rel": "sidney/wwtp-oh0027421.dmr.yaml",
-    "group": "permits-npdes",
-    "title": "SIDNEY WWTP",
-    "confidence": null,
-    "warnings": [],
-    "fields": {
-      "npdes_id": "OH0027421",
-      "name": "SIDNEY WWTP",
-      "permit_type": "NPDES Individual Permit",
-      "permit_status": "Effective",
-      "major_minor": "M",
-      "snc_status": null,
-      "window": "2023-01-01..2023-12-31"
-    },
-    "approximate_paths": [],
-    "citation": {
-      "source": "sidney/wwtp-oh0027421.dmr.yaml",
       "source_kind": "document",
       "page": null,
       "confidence": "medium",

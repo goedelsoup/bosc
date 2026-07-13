@@ -15,8 +15,9 @@ Wraps the Claude Agent SDK and the Anthropic Messages API. Defers to the root
   `{"content": [{"type": "text", "text": ...}]}`.
   - **Read-side resolves per active site (#424/#1504).** The extraction-reading tools
     (`list_extractions`, `read_extraction`, `program_overview`, `reconcile_*`) resolve the
-    **active site's own** corpus via `_site_extracted_files` — the whole `data/extracted/` tree for
-    the corpus home (`_CORPUS_HOME` = Lima), else the files in the site's `effective_corpus_scope`
+    **active site's own** corpus via `_site_extracted_files` — the whole `data/extracted/` tree
+    **minus every registered peer's subtree** (#1505) for the corpus home (`_CORPUS_HOME` = Lima),
+    else the files in the site's `effective_corpus_scope`
     (the *same* `relpath_in_scope` predicate the export/retrieval paths use, so collection-prefixed
     records like `idem/fort-wayne/` and `oepa/urbana/` are seen, not just the bare `<slug>/` subdir).
     So a per-site run reads its own record, never another site's, and `_scoped(...)` labels whose

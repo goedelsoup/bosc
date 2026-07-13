@@ -145,7 +145,9 @@ def test_classify_distinguishes_npdes_doc_from_dmr_pull() -> None:
 
 def test_load_corpus_loads_dmr_pull_as_its_own_kind(tmp_path: Path) -> None:
     """An ECHO DMR effluent-record pull validates and loads, distinct from corpus.permits."""
-    settings = Settings(data_dir=tmp_path)
+    # The pull lives under the ``troy-piqua/`` subtree, so read it as that site — Lima's scope now
+    # subtracts every peer's subtree (#1505), so the default (lima) would correctly exclude it.
+    settings = Settings(data_dir=tmp_path, site="troy-piqua")
     _write(settings.extracted_dir / "troy-piqua" / "wwtp-oh0027049.dmr.yaml", _DMR_YAML)
 
     corpus = load_corpus(settings)

@@ -169,6 +169,48 @@ def test_cross_feed_references_resolve(bundle: Path) -> None:
                 assert sib in slugs, f"concept {c['slug']} relates to unknown concept {sib}"
 
 
+def _assert_lima_bundle_peer_free(bundle_dir: Path) -> None:
+    """#1505 — the reference build must not swallow a peer's slug-scoped records. A Lima bundle's
+    corpus-derived feeds (records, documents, timeline) may cite only paths inside Lima's own
+    effective corpus scope (the whole tree minus every registered peer's subtree), so a Fort Wayne
+    §401 under ``idem/fort-wayne/`` or a Piqua NPDES permit under ``oepa/troy-piqua/`` never renders
+    inside Lima's Allen-County record. The scope prefixes match both trees (``data/documents`` and
+    ``data/extracted``) since a peer's layout mirrors across them.
+    """
+    scope = effective_corpus_scope(get_profile("lima"))
+    by_name = _feeds_by_name(bundle_dir)
+    offenders: list[str] = []
+    for record in _rows(bundle_dir, by_name["records"]):
+        if not scope.contains(record["rel"]):
+            offenders.append(f"records: {record['rel']}")
+    for coll in _rows(bundle_dir, by_name["documents"]):
+        for entry in coll["entries"]:
+            if not scope.contains(entry["rel"]):
+                offenders.append(f"documents: {entry['rel']}")
+    for event in _rows(bundle_dir, by_name["timeline"]):
+        src = event.get("source")
+        if src and not scope.contains(src):
+            offenders.append(f"timeline: {src}")
+    assert not offenders, (
+        "Lima bundle swallows peer records (#1505) — these feeds cite a registered peer's "
+        "subtree:\n" + "\n".join(sorted(offenders))
+    )
+
+
+def test_fresh_lima_export_excludes_peer_records(bundle: Path) -> None:
+    """The export path honors Lima's peer-exclusion (#1505): a freshly exported Lima bundle carries
+    none of a sibling's slug-scoped records."""
+    _assert_lima_bundle_peer_free(bundle)
+
+
+def test_committed_lima_bundle_excludes_peer_records() -> None:
+    """The *committed* ``web/sites/lima/`` bundle the frontend ships must also be peer-free (#1505).
+    No content test gated the committed feeds before — only schemas — so the bundle drifted silently
+    and re-accreted fort-wayne / troy-piqua / urbana / sidney rows (#1505). This is that guard: it
+    fails until the committed bundle is re-exported against the current corpus + scope."""
+    _assert_lima_bundle_peer_free(FRONTEND_SAMPLE)
+
+
 def test_feed_slugs_are_unique(bundle: Path) -> None:
     """Slug-keyed feeds (the per-item page ids) must have no duplicates."""
     by_name = _feeds_by_name(bundle)
@@ -422,7 +464,10 @@ def _assert_corpus_feeds_lima_free(slug: str, bundle_dir: Path) -> None:
     ``catalog`` rows are the #778 taxonomy gap and out of scope for this corpus guard.
     """
     scope = effective_corpus_scope(get_profile(slug))
-    assert scope is not None, f"{slug} is not the reference build, so its scope must be bounded"
+    assert scope.include is not None, (
+        f"{slug} is not the reference build, so its scope must be bounded (a peer includes its own "
+        "prefixes, never the whole tree)"
+    )
 
     feeds = _feeds_by_name(bundle_dir)
     # Every timeline event must cite a source inside the site's own corpus scope.

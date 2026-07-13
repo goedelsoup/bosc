@@ -19,6 +19,7 @@ import yaml
 from watermark.logging import get_logger
 from watermark.pipeline.corpus import relpath_in_scope
 from watermark.site.feeds import Citation, Confidence, RecordGroup, RecordItem, RenderClass
+from watermark.sites import CorpusScopeArg
 
 log = get_logger(__name__)
 
@@ -104,7 +105,7 @@ def _record_title(rec: _Record) -> str:
     return Path(rec.rel).stem
 
 
-def load_records(extracted_dir: Path, *, scope: tuple[str, ...] | None = None) -> list[_Record]:
+def load_records(extracted_dir: Path, *, scope: CorpusScopeArg = None) -> list[_Record]:
     """Load and classify every recognized record YAML under ``extracted_dir``.
 
     ``scope`` is the active site's corpus prefixes (#762): when set, only artifacts whose
@@ -174,7 +175,7 @@ def export_records(
     extracted_dir: Path,
     *,
     doc_index: dict[str, tuple[RenderClass, bool]] | None = None,
-    scope: tuple[str, ...] | None = None,
+    scope: CorpusScopeArg = None,
 ) -> list[RecordItem]:
     """Export every committed extraction as a :class:`RecordItem` feed.
 

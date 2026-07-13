@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "400ac76e10cb682577b341f06cf95bf37995627843b2926c74366db9c5b15108",
+  "catalog_version": "8e847c2b15f39649aab18553976686ce579cc24f0d80d079e225f84f6b424650",
   "contract_version": "1.24.0",
   "atoms": [
     {
@@ -41,6 +41,14 @@
       "site": "lima",
       "local_id": "grant-refund-clause",
       "title": "Grant-refund clause",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:lima:heat-reuse",
+      "kind": "concept",
+      "site": "lima",
+      "local_id": "heat-reuse",
+      "title": "Heat reuse",
       "feed": "concepts"
     },
     {
@@ -432,7 +440,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "grid",
-      "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
       "feed": "catalog"
     },
     {
@@ -497,6 +505,14 @@
       "site": "lima",
       "local_id": "hydrology-swmm",
       "title": "Tier-1 EPA SWMM5 Input Decks (Pre / Post / Detention / Sanitary)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:hydrology-toledo-waterville-spill-monitor-read",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "hydrology-toledo-waterville-spill-monitor-read",
+      "title": "Maumee-at-Waterville (04193500) Continuous-Monitor Read — Napoleon Spill",
       "feed": "catalog"
     },
     {
@@ -665,6 +681,14 @@
       "site": "lima",
       "local_id": "lsc-status-report",
       "title": "Ohio LSC Status Report of Legislation",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:mansfield",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "mansfield",
+      "title": "Mansfield (Richland County, OH) — the airport nexus (places domain)",
       "feed": "catalog"
     },
     {
@@ -884,6 +908,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:toledo-napoleon-spill-waterville-monitor-read",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "toledo-napoleon-spill-waterville-monitor-read",
+      "title": "Maumee-at-Waterville (04193500) Monitor Read — Napoleon Spill (narrative)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:urbana",
       "kind": "dataset",
       "site": "lima",
@@ -929,6 +961,14 @@
       "site": "lima",
       "local_id": "wpafb",
       "title": "WPAFB (Greene + Montgomery Co., OH) Investigative Findings & Onboarding Record",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:wwtp-oh0027049-troy-piqua",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "wwtp-oh0027049-troy-piqua",
+      "title": "Piqua WWTP (NPDES OH0027049) Effluent Record — DMR",
       "feed": "catalog"
     },
     {
@@ -1052,14 +1092,6 @@
       "feed": "entities"
     },
     {
-      "handle": "entity:lima:CITY OF PIQUA",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "CITY OF PIQUA",
-      "title": "City of Piqua",
-      "feed": "entities"
-    },
-    {
       "handle": "entity:lima:CITY OF VAN WERT",
       "kind": "entity",
       "site": "lima",
@@ -1177,14 +1209,6 @@
       "site": "lima",
       "local_id": "GOOGLE",
       "title": "Google",
-      "feed": "entities"
-    },
-    {
-      "handle": "entity:lima:GREAT MIAMI RIVER",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "GREAT MIAMI RIVER",
-      "title": "Great Miami River",
       "feed": "entities"
     },
     {
@@ -1668,14 +1692,6 @@
       "feed": "entities"
     },
     {
-      "handle": "entity:lima:npdes:1PD00008",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "npdes:1PD00008",
-      "title": "City of Piqua wastewater treatment works",
-      "feed": "entities"
-    },
-    {
       "handle": "entity:lima:npdes:1PD00013",
       "kind": "entity",
       "site": "lima",
@@ -1812,6 +1828,14 @@
       "feed": "exhibits"
     },
     {
+      "handle": "lead:lima:AEP-LYKA-OPSB",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "AEP-LYKA-OPSB",
+      "title": "AEP Ohio's Lyka 345kV substation/line has no OPSB case yet — filing expected early 2027, final route undetermined",
+      "feed": "leads"
+    },
+    {
       "handle": "lead:lima:ASWCD-03",
       "kind": "lead",
       "site": "lima",
@@ -1929,6 +1953,14 @@
       "site": "lima",
       "local_id": "H2-AUTH",
       "title": "The campus's federal authorization posture is undisclosed",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:OEPA-2DP00130",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "OEPA-2DP00130",
+      "title": "Public-comment window on the Bistrozzi \"Bosc\" indirect-discharge permit closes ~2026-07-31",
       "feed": "leads"
     },
     {
@@ -2396,30 +2428,6 @@
       "feed": "records"
     },
     {
-      "handle": "record:lima:fort-wayne/wwtp-in0032191.dmr.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "fort-wayne/wwtp-in0032191.dmr.yaml",
-      "title": "FORT WAYNE WWTP",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:idem/fort-wayne/47378f.idem.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "idem/fort-wayne/47378f.idem.yaml",
-      "title": "Hatchworks LLC (Project Zodiac) — IDEM Title V air permit, power basis",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:idem/fort-wayne/wqc001454.idem.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "idem/fort-wayne/wqc001454.idem.yaml",
-      "title": "Project Zodiac Phase 3 — IDEM §401 Water Quality Certification WQC001454",
-      "feed": "records"
-    },
-    {
       "handle": "record:lima:oepa/1II00129.npdes.yaml",
       "kind": "record",
       "site": "lima",
@@ -2441,14 +2449,6 @@
       "site": "lima",
       "local_id": "oepa/1MP00060.npdes.yaml",
       "title": "Wilmington Nursery",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:oepa/1PD00008.npdes.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "oepa/1PD00008.npdes.yaml",
-      "title": "City of Piqua wastewater treatment works",
       "feed": "records"
     },
     {
@@ -2945,14 +2945,6 @@
       "site": "lima",
       "local_id": "regulatory/ohc000006-construction-stormwater-gp.yaml",
       "title": "ohc000006-construction-stormwater-gp",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:sidney/wwtp-oh0027421.dmr.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "sidney/wwtp-oh0027421.dmr.yaml",
-      "title": "SIDNEY WWTP",
       "feed": "records"
     },
     {
