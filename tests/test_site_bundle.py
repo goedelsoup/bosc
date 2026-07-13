@@ -359,7 +359,10 @@ def test_troy_piqua_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactor
     assert domains["facility"] == "live"
     assert domains["places"] == "live"  # committed J5 "Project Klondike" campus assemblage (#1483)
     assert domains["record"] == "live"
-    assert domains["story"] == "absent"
+    # ``story`` is ``seeded``: the site's curated leads board (data/site/troy-piqua/leads.yaml, #1485)
+    # ships as the ``leads`` feed, but troy-piqua is not yet in ``STORY_SLUGS`` — a registered story
+    # is a separate, later editorial call. Leads-only ⇒ seeded (the Findlay/Defiance precedent).
+    assert domains["story"] == "seeded"
 
     # ``record`` is live because the site owns exactly its three real, in-scope extractions
     # (#1484) — the NPDES permit, its fact sheet, and the DMR — not scaffolding: assert the
