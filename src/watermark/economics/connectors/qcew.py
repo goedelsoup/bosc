@@ -46,6 +46,7 @@ _SECTOR_NAMES: dict[str, str] = {
     "72": "Accommodation & Food Services",
     "81": "Other Services (except Public Administration)",
     "92": "Public Administration",
+    "99": "Unclassified",
 }
 
 

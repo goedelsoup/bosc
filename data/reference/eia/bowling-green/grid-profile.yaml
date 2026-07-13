@@ -1,0 +1,181 @@
+serving_utility:
+  utility:
+    value: City of Bowling Green - (OH)
+    source: reference
+    citation: 'The City of Bowling Green operates a municipal electric utility (an
+      American Municipal Power member) serving the city proper — EIA-861 2024 Service_Territory
+      confirms it as utility #2054 (resolved, #1434). The Meta campus in Middleton
+      Twp interconnects to Toledo Edison (FirstEnergy / PJM ATSI), NOT the muni, and
+      is designed self-powered BEHIND THE METER by the Apollo plant (OPSB 25-0973-EL-BGN)
+      — so its real grid draw is ~0. The per-utility load share below is therefore
+      a MAGNITUDE comparison against the muni''s retail (the campus dwarfs it at ~3.5x
+      — the point being that the muni could never serve it), NOT the campus''s actual
+      interconnecting utility; a per-facility serving-utility denominator is a grid-model
+      follow-up (#1440).'
+    confidence: high
+  holding_company:
+    value: City of Bowling Green - (OH)
+    source: reference
+    citation: City of Bowling Green - (OH) parent/holding company — identified from
+      the EIA-861 record
+    confidence: high
+  balancing_authority:
+    value: PJM Interconnection
+    source: reference
+    citation: City of Bowling Green - (OH)'s transmission zone is within the PJM RTO
+      footprint
+    confidence: high
+  rto:
+    value: PJM Interconnection (RTO/ISO)
+    source: reference
+    citation: PJM is the FERC-jurisdictional wholesale-market RTO for City of Bowling
+      Green - (OH)
+    confidence: high
+  retail_regulator:
+    value: municipal (home rule, OH)
+    source: reference
+    citation: OH municipal electric systems set their own retail rates under home
+      rule (not state-PUC rate-regulated)
+    confidence: high
+  note: Serving utility is identified from the EIA-861 service-territory file; RTO=PJM
+    is authoritative. The retail service area is the utility's own (home rule, OH),
+    not a PUC-certified IOU territory; it is confirmed against the EIA-861 service-territory
+    file (#94).
+utility_profile:
+  utility: City of Bowling Green - (OH)
+  ownership: Municipal
+  eia_source: EIA-861 2024 per-utility retail (connector; bundled+delivery total)
+  retail_sales_gwh:
+    value: 518.2
+    unit: GWh/yr
+    source: connector
+    citation: EIA-861 2024 Sales to Ultimate Customers, City of Bowling Green - (OH)
+      (#2054), OH; bundled + delivery total sales
+    confidence: high
+    asof: null
+    low: null
+    high: null
+  customers:
+    value: 14850.0
+    unit: customers
+    source: connector
+    citation: EIA-861 2024 Sales to Ultimate Customers, City of Bowling Green - (OH)
+      (#2054), OH; bundled + delivery total customers
+    confidence: high
+    asof: null
+    low: null
+    high: null
+  avg_price_cents_kwh:
+    value: 12.02
+    unit: cents/kWh
+    source: connector
+    citation: EIA-861 2024 Sales to Ultimate Customers, City of Bowling Green - (OH)
+      (#2054), OH; bundled (full-service) revenue/sales — delivery-only rows exclude
+      generation, so a blended price understates the all-in cost
+    confidence: high
+    asof: null
+    low: null
+    high: null
+ba_profile:
+  ba: PJM Interconnection
+  eia_source: EIA-930 daily demand sum, annual (connector)
+  annual_load_gwh:
+    value: 815056.2
+    unit: GWh/yr
+    source: connector
+    citation: EIA-930 daily demand sum, PJM 2024 (366 days, Eastern tz)
+    confidence: high
+    asof: null
+    low: null
+    high: null
+load_share:
+  campus_load_mw:
+    value: 227.7
+    unit: MW
+    source: derived
+    citation: 'PowerBasis.facility_draw central (#87): 180 MW IT x PUE 1.265 (band
+      mean of 1.1 efficient .. 1.43 cooling-dominated) — total facility draw'
+    confidence: medium
+    asof: null
+    low: null
+    high: null
+  load_factor:
+    value: 0.9
+    unit: fraction
+    source: assumption
+    citation: 'data-center capacity utilization ~0.9 (near-flat 24x7); assumption
+      (cf. #91)'
+    confidence: low
+    asof: null
+    low: null
+    high: null
+  annual_consumption_gwh:
+    value: 1795.2
+    unit: GWh/yr
+    source: derived
+    citation: 227.7 MW x 8760 h x 0.9 load factor
+    confidence: medium
+    asof: null
+    low: null
+    high: null
+  utility_retail_gwh:
+    value: 518.2
+    unit: GWh/yr
+    source: connector
+    citation: EIA-861 2024 Sales to Ultimate Customers, City of Bowling Green - (OH)
+      (#2054), OH; bundled + delivery total sales
+    confidence: high
+    asof: null
+    low: null
+    high: null
+  ba_load_gwh:
+    value: 815056.2
+    unit: GWh/yr
+    source: connector
+    citation: EIA-930 daily demand sum, PJM 2024 (366 days, Eastern tz)
+    confidence: high
+    asof: null
+    low: null
+    high: null
+  state_retail_gwh:
+    value: 161934.0
+    unit: GWh/yr
+    source: connector
+    citation: 'EIA ELEC.SALES.OH-ALL.A (2025); shared with #91'
+    confidence: high
+    asof: null
+    low: null
+    high: null
+  share_of_utility_pct:
+    value: 346.43
+    unit: percent
+    source: derived
+    citation: campus 1795 GWh / City of Bowling Green - (OH) 518 GWh (EIA-861 2024
+      per-utility)
+    confidence: medium
+    asof: null
+    low: null
+    high: null
+  share_of_ba_pct:
+    value: 0.22
+    unit: percent
+    source: derived
+    citation: campus 1795 GWh / PJM 815,056 GWh (EIA-930 annual demand)
+    confidence: medium
+    asof: null
+    low: null
+    high: null
+  share_of_state_pct:
+    value: 1.11
+    unit: percent
+    source: derived
+    citation: campus 1795 GWh / Ohio 161934 GWh
+    confidence: medium
+    asof: null
+    low: null
+    high: null
+note: 'Grid foundation layer (#94). The state, City of Bowling Green - (OH), and PJM
+  denominators are now all connector-sourced — Ohio retail from EIA (shared with #91),
+  per-utility retail from the EIA-861 file, and PJM annual demand from EIA-930. The
+  campus is a single load equal to a material fraction of its serving utility''s entire
+  retail sales.'

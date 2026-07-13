@@ -36,4 +36,5 @@ notes: Connector-regenerated county employment-by-NAICS with location quotients 
   series and ACS median household income — B19013, the energy-burden denominator (#1110); population
   and income need WATERMARK_CENSUS_API_KEY, QCEW is keyless; site-scoped under reference/economics/{site}/.
   Connector values carry asof (the QCEW annual-average year / ACS data year) for machine-checkable
-  staleness (#1107).
+  staleness (#1107). NAICS sector codes are decoded to the official 2-digit titles via the
+  connector's _SECTOR_NAMES map, including the QCEW "99" residual → "Unclassified".

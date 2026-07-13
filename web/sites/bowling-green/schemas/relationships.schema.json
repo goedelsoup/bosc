@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "relationships feed",
+  "type": "array",
+  "items": {
+    "additionalProperties": false,
+    "description": "A directed edge between two entity keys, traceable to one document.",
+    "properties": {
+      "src": {
+        "title": "Src",
+        "type": "string"
+      },
+      "rel": {
+        "title": "Rel",
+        "type": "string"
+      },
+      "dst": {
+        "title": "Dst",
+        "type": "string"
+      },
+      "date": {
+        "default": "",
+        "title": "Date",
+        "type": "string"
+      },
+      "ref": {
+        "default": "",
+        "title": "Ref",
+        "type": "string"
+      },
+      "source": {
+        "default": "",
+        "title": "Source",
+        "type": "string"
+      },
+      "relation_class": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Relation Class"
+      },
+      "relation_basis": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Relation Basis"
+      }
+    },
+    "required": [
+      "src",
+      "rel",
+      "dst"
+    ],
+    "title": "RelationshipEdge",
+    "type": "object"
+  }
+}

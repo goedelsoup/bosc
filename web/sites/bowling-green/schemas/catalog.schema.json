@@ -1,0 +1,327 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "catalog feed",
+  "type": "array",
+  "items": {
+    "additionalProperties": false,
+    "description": "One dataset in the published data catalog — the bundle projection of a ``CatalogEntry``.\n\nThe presentation peer of :class:`watermark.catalog.CatalogEntry`: the declared facts (producer,\nlicense, access tier, refresh, the per-site ``site_scope`` axis, storage) joined to the\nobserved snapshot (:class:`CatalogObserved`). ``citation`` carries the producer as the\nbundle's shared provenance shape so the catalog speaks the same language as every other feed.",
+    "properties": {
+      "id": {
+        "title": "Id",
+        "type": "string"
+      },
+      "title": {
+        "title": "Title",
+        "type": "string"
+      },
+      "scope": {
+        "title": "Scope",
+        "type": "string"
+      },
+      "collection": {
+        "title": "Collection",
+        "type": "string"
+      },
+      "status": {
+        "title": "Status",
+        "type": "string"
+      },
+      "producer_kind": {
+        "title": "Producer Kind",
+        "type": "string"
+      },
+      "command": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Command"
+      },
+      "connector_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Connector Ref"
+      },
+      "source": {
+        "title": "Source",
+        "type": "string"
+      },
+      "external_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "External Url"
+      },
+      "license": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "License"
+      },
+      "access_tier": {
+        "title": "Access Tier",
+        "type": "string"
+      },
+      "site_scope": {
+        "title": "Site Scope",
+        "type": "string"
+      },
+      "cadence": {
+        "title": "Cadence",
+        "type": "string"
+      },
+      "ttl_days": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Ttl Days"
+      },
+      "last_refreshed": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Last Refreshed"
+      },
+      "tags": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Tags",
+        "type": "array"
+      },
+      "storage": {
+        "items": {
+          "$ref": "#/$defs/CatalogStorageFile"
+        },
+        "title": "Storage",
+        "type": "array"
+      },
+      "observed": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/CatalogObserved"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "citation": {
+        "$ref": "#/$defs/Citation"
+      }
+    },
+    "required": [
+      "id",
+      "title",
+      "scope",
+      "collection",
+      "status",
+      "producer_kind",
+      "source",
+      "access_tier",
+      "site_scope",
+      "cadence",
+      "citation"
+    ],
+    "title": "CatalogItem",
+    "type": "object"
+  },
+  "$defs": {
+    "CatalogObserved": {
+      "additionalProperties": false,
+      "description": "The reconcile snapshot's observed half for a dataset (``data/catalog/_observed.yaml``).",
+      "properties": {
+        "exists": {
+          "title": "Exists",
+          "type": "boolean"
+        },
+        "sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sha256"
+        },
+        "size_bytes": {
+          "default": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        },
+        "lfs_materialized": {
+          "default": true,
+          "title": "Lfs Materialized",
+          "type": "boolean"
+        },
+        "file_count": {
+          "default": 0,
+          "title": "File Count",
+          "type": "integer"
+        },
+        "stale": {
+          "default": false,
+          "title": "Stale",
+          "type": "boolean"
+        },
+        "asof": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Asof"
+        }
+      },
+      "required": [
+        "exists"
+      ],
+      "title": "CatalogObserved",
+      "type": "object"
+    },
+    "CatalogStorageFile": {
+      "additionalProperties": false,
+      "description": "One committed file belonging to a catalogued dataset (a published storage row).",
+      "properties": {
+        "relpath": {
+          "title": "Relpath",
+          "type": "string"
+        },
+        "media_type": {
+          "title": "Media Type",
+          "type": "string"
+        },
+        "lfs": {
+          "default": false,
+          "title": "Lfs",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "relpath",
+        "media_type"
+      ],
+      "title": "CatalogStorageFile",
+      "type": "object"
+    },
+    "Citation": {
+      "additionalProperties": false,
+      "description": "Structured provenance for a feed item or a single figure.\n\nMirrors :class:`watermark.hydrology.model.ProvenancedValue`'s evidence discipline so the\nwhole bundle speaks one provenance language: ``source_kind`` says where the value\ncame from, ``source`` is the citable artifact (a repo-relative ``data/`` path, an\nexternal dataset label, a permit/instrument number), ``page`` locates it within a\nmulti-page source, and ``verified`` is derived so a consumer never re-computes it.",
+      "properties": {
+        "source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source"
+        },
+        "source_kind": {
+          "default": "document",
+          "enum": [
+            "document",
+            "connector",
+            "reference",
+            "assumption",
+            "derived"
+          ],
+          "title": "Source Kind",
+          "type": "string"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page"
+        },
+        "confidence": {
+          "default": "medium",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        },
+        "verified": {
+          "description": "True when grounded in a record or a live gauge (``[verified]`` in prose).",
+          "readOnly": true,
+          "title": "Verified",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "verified"
+      ],
+      "title": "Citation",
+      "type": "object"
+    }
+  }
+}

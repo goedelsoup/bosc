@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "entities feed",
+  "type": "array",
+  "items": {
+    "additionalProperties": false,
+    "description": "A resolved party in the entity graph, keyed by its canonical name.",
+    "properties": {
+      "key": {
+        "title": "Key",
+        "type": "string"
+      },
+      "display": {
+        "title": "Display",
+        "type": "string"
+      },
+      "kind": {
+        "title": "Kind",
+        "type": "string"
+      },
+      "classification": {
+        "title": "Classification",
+        "type": "string"
+      },
+      "relation_class": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Relation Class"
+      },
+      "relation_basis": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Relation Basis"
+      },
+      "variants": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Variants",
+        "type": "array"
+      },
+      "signals": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Signals",
+        "type": "array"
+      },
+      "roles": {
+        "additionalProperties": {
+          "type": "integer"
+        },
+        "title": "Roles",
+        "type": "object"
+      },
+      "parcels": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Parcels",
+        "type": "array"
+      },
+      "addresses": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Addresses",
+        "type": "array"
+      },
+      "sources": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Sources",
+        "type": "array"
+      },
+      "lei": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lei"
+      },
+      "uei": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Uei"
+      },
+      "federal_obligations": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Federal Obligations"
+      }
+    },
+    "required": [
+      "key",
+      "display",
+      "kind",
+      "classification"
+    ],
+    "title": "EntityNode",
+    "type": "object"
+  }
+}

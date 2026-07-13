@@ -1,0 +1,548 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "hydrology-scenarios feed",
+  "type": "array",
+  "items": {
+    "additionalProperties": false,
+    "description": "A scenario evaluated against the water balance + cited low flows.",
+    "properties": {
+      "scenario": {
+        "$ref": "#/$defs/Scenario"
+      },
+      "cooling_model": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/CoolingModelType"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "consumptive_loss": {
+        "$ref": "#/$defs/ProvenancedValue"
+      },
+      "receiving_7q10": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/ProvenancedValue"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "receiving_live": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/ProvenancedValue"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "receiving_water_name": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Receiving Water Name"
+      },
+      "balance": {
+        "$ref": "#/$defs/WaterBalance"
+      },
+      "assimilative": {
+        "items": {
+          "$ref": "#/$defs/AssimilativeCheck"
+        },
+        "title": "Assimilative",
+        "type": "array"
+      }
+    },
+    "required": [
+      "scenario",
+      "consumptive_loss",
+      "balance",
+      "assimilative"
+    ],
+    "title": "ScenarioResult",
+    "type": "object"
+  },
+  "$defs": {
+    "AssimilativeCheck": {
+      "additionalProperties": false,
+      "description": "Low-flow dilution of one discharge into its receiving water.\n\nThe dilution ratio is ``design_low_flow / discharge`` — parts of receiving-water low\nflow per part of effluent. ``upstream_returns`` is a **reserved** field for crediting\nan upstream WWTP's effluent return to the low-flow denominator; it is not yet computed,\nis always ``None`` today, and the ratio does **not** credit it. A screening heuristic\nflags the result; it is **not** a permit determination.",
+      "properties": {
+        "receiving_water": {
+          "title": "Receiving Water",
+          "type": "string"
+        },
+        "discharger": {
+          "title": "Discharger",
+          "type": "string"
+        },
+        "design_low_flow": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "discharge": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "upstream_returns": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "dilution_ratio": {
+          "title": "Dilution Ratio",
+          "type": "number"
+        },
+        "flag": {
+          "enum": [
+            "ok",
+            "tight",
+            "violation"
+          ],
+          "title": "Flag",
+          "type": "string"
+        },
+        "detail": {
+          "title": "Detail",
+          "type": "string"
+        }
+      },
+      "required": [
+        "receiving_water",
+        "discharger",
+        "design_low_flow",
+        "discharge",
+        "dilution_ratio",
+        "flag",
+        "detail"
+      ],
+      "title": "AssimilativeCheck",
+      "type": "object"
+    },
+    "CoolingBasis": {
+      "additionalProperties": false,
+      "description": "A sourced cooling-water design basis for one cooling archetype.\n\nDerived by the archetype's spec in :data:`watermark.hydrology.cooling_models.COOLING_MODELS`\n(#1053): ``cooling_model`` records *which world* produced these numbers. Fields\nirrelevant to a given archetype (e.g. ``cycles_of_concentration`` for\n``closed_loop_dry``) are ``None`` — never faked. For the ``unknown`` archetype the\nlow/high pair is a **bracket across candidate archetypes** (``is_bracketed=True``,\n``method_disclosed=False``), not an estimate.",
+      "properties": {
+        "cooling_model": {
+          "$ref": "#/$defs/CoolingModelType",
+          "default": "evaporative_tower"
+        },
+        "it_load": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "wue": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "cycles_of_concentration": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "consumptive_fraction": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "makeup_demand": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "consumptive_low": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "consumptive_high": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "makeup_high": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "method": {
+          "default": "power x WUE (central); blowdown x cycles (upper bound)",
+          "title": "Method",
+          "type": "string"
+        },
+        "method_disclosed": {
+          "default": true,
+          "title": "Method Disclosed",
+          "type": "boolean"
+        },
+        "is_bracketed": {
+          "default": false,
+          "title": "Is Bracketed",
+          "type": "boolean"
+        },
+        "seasonal_months": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Seasonal Months"
+        }
+      },
+      "required": [
+        "it_load",
+        "consumptive_fraction",
+        "makeup_demand",
+        "consumptive_low",
+        "consumptive_high"
+      ],
+      "title": "CoolingBasis",
+      "type": "object"
+    },
+    "CoolingModelType": {
+      "description": "The cooling-water archetype of a data-center facility, keyed on physical mechanism.\n\nEach member selects one spec in :data:`watermark.hydrology.cooling_models.COOLING_MODELS` —\nits own consumptive/withdrawal math and parameter set. The enum lives here (not in\n``watermark.hydrology``) because the archetype is a **per-site facility attribute**\n(:class:`SiteFacility.cooling_model`) and ``watermark.config`` imports this package,\nso hydrology modules cannot be imported from here.\n\nNaming ([reference]): the enum is keyed on mechanism because the data-center industry's\n\"open loop / closed loop\" labels are ambiguous — EPA WaterSense at Work (§6, Cooling\nTowers) calls a recirculating wet tower an *open recirculating* system, which trade\nusage shortens to \"open loop\", while \"closed loop\" is used both for sealed dry/air-\ncooled circuits and (confusingly) for tower condenser-water loops. The open/closed\nlabels are display-only **aliases**, documented per spec in\n:mod:`watermark.hydrology.cooling_models`; the engine never dispatches on them.\n\n``unknown`` means \"facility disclosed, cooling method not on record\" — never \"no\ncooling\". It yields a bracketed range, not a single figure. ``off`` is the explicit\nno-cooling-water-load case; ``SiteProfile.facility is None`` also resolves to it.",
+      "enum": [
+        "off",
+        "evaporative_tower",
+        "once_through",
+        "closed_loop_dry",
+        "hybrid_adiabatic",
+        "unknown"
+      ],
+      "title": "CoolingModelType",
+      "type": "string"
+    },
+    "Node": {
+      "additionalProperties": false,
+      "description": "A point in the municipal water loop (a plant, a demand center, a stream).",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "abstraction",
+            "demand",
+            "wwtp",
+            "receiving"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "receiving_water": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Receiving Water"
+        },
+        "lat": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lat"
+        },
+        "lon": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lon"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "role"
+      ],
+      "title": "Node",
+      "type": "object"
+    },
+    "ProvenancedValue": {
+      "additionalProperties": false,
+      "description": "A single numeric quantity tagged with its provenance.\n\nConstruct via the classmethods (:meth:`from_document`, :meth:`from_connector`,\n:meth:`assume`, :meth:`derived`) so the ``source`` tag is never forgotten.\n\nA **measured or derived estimate** may also carry a quantitative uncertainty range\n(#760): optional absolute ``low``/``high`` bounds around the central ``value``,\n*orthogonal* to the qualitative ``confidence`` enum. The convention: a document- or\nconnector-verbatim figure is a single value (no band); an estimate whose honest\nrepresentation is \"226 ± ~35 ac\" carries ``low``/``high`` so downstream consumers\n(the bundle, the frontend, the Monte-Carlo engine #271) see the spread as data, not\nprose buried in the citation. The estimate constructors (:meth:`derived`,\n:meth:`assume`, :meth:`from_reference`) take the range inline; :meth:`with_range`\nattaches one to any value (e.g. a document-anchored central with a derived band).",
+      "properties": {
+        "value": {
+          "title": "Value",
+          "type": "number"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "document",
+            "connector",
+            "reference",
+            "assumption",
+            "derived"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "citation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Citation"
+        },
+        "confidence": {
+          "default": "medium",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "asof": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Asof"
+        },
+        "low": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Low"
+        },
+        "high": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "High"
+        }
+      },
+      "required": [
+        "value",
+        "unit",
+        "source"
+      ],
+      "title": "ProvenancedValue",
+      "type": "object"
+    },
+    "Scenario": {
+      "additionalProperties": false,
+      "description": "A what-if over the municipal loop, parameterized by the cooling knob.\n\nThe data-center campus draws cooling water from the same Ottawa/Auglaize supply\nthe WWTPs discharge to; the evaporated (consumptive) fraction is a net loss to\nthe basin. The knobs default to the sourced :class:`CoolingBasis` but remain\noverridable — this is a sensitivity, not a forecast.",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "cooling_model": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CoolingModelType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "cooling_demand": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "consumptive_fraction": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "basis": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CoolingBasis"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "name",
+        "cooling_demand",
+        "consumptive_fraction"
+      ],
+      "title": "Scenario",
+      "type": "object"
+    },
+    "WaterBalance": {
+      "additionalProperties": false,
+      "description": "The assembled source -> use -> WWTP -> receiving loop.",
+      "properties": {
+        "nodes": {
+          "items": {
+            "$ref": "#/$defs/WaterBalanceNode"
+          },
+          "title": "Nodes",
+          "type": "array"
+        },
+        "tier": {
+          "const": "tier0",
+          "default": "tier0",
+          "title": "Tier",
+          "type": "string"
+        },
+        "warnings": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        }
+      },
+      "required": [
+        "nodes"
+      ],
+      "title": "WaterBalance",
+      "type": "object"
+    },
+    "WaterBalanceNode": {
+      "additionalProperties": false,
+      "description": "One node's flow terms. Conservation: inflow + stormwater = return + consumptive.\n\nTerms are optional — a node carries only what's known/relevant (an abstraction\nnode has ``inflow``; a demand node has ``consumptive_use`` + ``return_flow``).\nAll flows are in **cfs**. ``stormwater`` is the Increment-2 seam: a cited zero\ntoday, filled by the SCS-CN solver later.",
+      "properties": {
+        "node": {
+          "$ref": "#/$defs/Node"
+        },
+        "inflow": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "consumptive_use": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "return_flow": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "stormwater": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "node"
+      ],
+      "title": "WaterBalanceNode",
+      "type": "object"
+    }
+  }
+}

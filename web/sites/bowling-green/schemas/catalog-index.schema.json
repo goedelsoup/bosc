@@ -1,0 +1,92 @@
+{
+  "$defs": {
+    "CatalogAtom": {
+      "additionalProperties": false,
+      "description": "One addressable, \"grabbable\" atom in the hydrated catalog (#1093).\n\nA *pointer*, not a copy: ``feed`` + ``local_id`` name the live bundle row this handle\nresolves against at render time, so a user Story can cite a record without ever forking it\n(chain of custody). ``handle`` is the canonical address ``<kind>:<site>:<local_id>``, where\n``local_id`` reuses the source feed's **existing** stable key (``rel``/``key``/``slug``/\n``id``/``ref``) — no new ids are minted.",
+      "properties": {
+        "handle": {
+          "title": "Handle",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "record",
+            "timeline",
+            "entity",
+            "person",
+            "place",
+            "meeting",
+            "exhibit",
+            "concept",
+            "lead",
+            "contact",
+            "dataset",
+            "teardown",
+            "doc",
+            "chapter",
+            "figure"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "site": {
+          "title": "Site",
+          "type": "string"
+        },
+        "local_id": {
+          "title": "Local Id",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "feed": {
+          "title": "Feed",
+          "type": "string"
+        }
+      },
+      "required": [
+        "handle",
+        "kind",
+        "site",
+        "local_id",
+        "title",
+        "feed"
+      ],
+      "title": "CatalogAtom",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "The hydrated catalog — the addressable atom index the Story write/read paths consume (#1093).\n\nEmitted as an object feed carrying two version stamps: ``catalog_version`` (a content hash over\nthe atom set, so #1099 can detect when a user Story's handles may have drifted) and the source\n``contract_version``. The Python tier emits the feed-backed kinds here; the Astro build overlays\nthe web-only kinds (``teardown``/``doc``/``chapter``/``figure``) at render time, so the resolver\nsees one merged catalog.",
+  "properties": {
+    "site": {
+      "title": "Site",
+      "type": "string"
+    },
+    "catalog_version": {
+      "title": "Catalog Version",
+      "type": "string"
+    },
+    "contract_version": {
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "atoms": {
+      "items": {
+        "$ref": "#/$defs/CatalogAtom"
+      },
+      "title": "Atoms",
+      "type": "array"
+    }
+  },
+  "required": [
+    "site",
+    "catalog_version",
+    "contract_version"
+  ],
+  "title": "CatalogIndex",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

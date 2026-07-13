@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "documents feed",
+  "type": "array",
+  "items": {
+    "additionalProperties": false,
+    "description": "A first-level collection under data/documents and its catalogued entries.",
+    "properties": {
+      "slug": {
+        "title": "Slug",
+        "type": "string"
+      },
+      "title": {
+        "title": "Title",
+        "type": "string"
+      },
+      "description": {
+        "default": "",
+        "title": "Description",
+        "type": "string"
+      },
+      "entries": {
+        "items": {
+          "$ref": "#/$defs/DocumentItem"
+        },
+        "title": "Entries",
+        "type": "array"
+      }
+    },
+    "required": [
+      "slug",
+      "title"
+    ],
+    "title": "DocumentCollectionItem",
+    "type": "object"
+  },
+  "$defs": {
+    "DocumentItem": {
+      "additionalProperties": false,
+      "description": "One source document in the catalog, addressed by its corpus path.",
+      "properties": {
+        "rel": {
+          "title": "Rel",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "size_bytes": {
+          "title": "Size Bytes",
+          "type": "integer"
+        },
+        "suffix": {
+          "title": "Suffix",
+          "type": "string"
+        },
+        "media_type": {
+          "title": "Media Type",
+          "type": "string"
+        },
+        "render_class": {
+          "enum": [
+            "image",
+            "text",
+            "html",
+            "pdf",
+            "office",
+            "other"
+          ],
+          "title": "Render Class",
+          "type": "string"
+        },
+        "published": {
+          "title": "Published",
+          "type": "boolean"
+        },
+        "available": {
+          "title": "Available",
+          "type": "boolean"
+        },
+        "download_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Download Url"
+        }
+      },
+      "required": [
+        "rel",
+        "name",
+        "size_bytes",
+        "suffix",
+        "media_type",
+        "render_class",
+        "published",
+        "available"
+      ],
+      "title": "DocumentItem",
+      "type": "object"
+    }
+  }
+}

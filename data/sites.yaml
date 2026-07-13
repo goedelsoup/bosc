@@ -111,6 +111,22 @@ sites:
     map_lon: -83.5378
     map_zoom: 12
 
+  # Portage/Maumee-divide node (#1433) — drinks the Maumee (Waterville intake), discharges to the
+  # Portage (WPC → Poe Ditch → North Branch Portage). BGMU muni island inside Toledo Edison/ATSI.
+  - slug: bowling-green
+    place: "Bowling Green · Middleton Twp"
+    basin_label: "Portage · Maumee divide"
+    receiving_water: "North Branch Portage River"
+    state: "OH"
+    codename: null
+    mono: "BGN"
+    status: "queued"
+    selectable: false
+    issue: "1433"
+    map_lat: 41.4020
+    map_lon: -83.6400
+    map_zoom: 11
+
   - slug: van-wert
     place: "Van Wert"
     basin_label: "Town Creek · Little Auglaize"

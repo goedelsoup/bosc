@@ -55,6 +55,7 @@ describe("sites registry — the Watermark network (#304)", () => {
       "defiance",
       "findlay",
       "toledo",
+      "bowling-green",
       "van-wert",
       "bryan",
       "ottawa",
@@ -112,9 +113,9 @@ describe("site build phases — the four-phase clock (#308 dictate B)", () => {
       expect(s.codename).toBeNull();
     }
   });
-  it("the full network the selector depicts — 36 sites across 10 basins", () => {
-    expect(SITES.length).toBe(36);
-    expect(groupSites("basin").length).toBe(10);
+  it("the full network the selector depicts — 37 sites across 11 basins", () => {
+    expect(SITES.length).toBe(37);
+    expect(groupSites("basin").length).toBe(11);
   });
 });
 
@@ -146,11 +147,12 @@ describe("grouped selector — State / Basin lenses (#307/#308)", () => {
     expect(groups.find((g) => g.label === "Indiana")?.sites.map((s) => s.slug)).toEqual(["fort-wayne"]);
     expect(groups.find((g) => g.label === "Ohio")?.tag).toBe("OH");
   });
-  it("by basin: the ten basins nested under four regions (design 'Site Selector')", () => {
+  it("by basin: the eleven basins nested under four regions (design 'Site Selector')", () => {
     const groups = groupSites("basin");
     // Region order (maumee → the two miamis → southeastern → northeast), basins within each.
     expect(groups.map((g) => g.label)).toEqual([
       "Maumee",
+      "Portage",
       "Great Miami",
       "Little Miami",
       "Scioto",
@@ -162,6 +164,8 @@ describe("grouped selector — State / Basin lenses (#307/#308)", () => {
       "Mahoning",
     ]);
     expect(groups.find((g) => g.label === "Maumee")?.tag).toBe("MAU");
+    // the Portage basin (the Maumee-Portage divide node) carries Bowling Green
+    expect(groups.find((g) => g.label === "Portage")?.sites.map((s) => s.slug)).toContain("bowling-green");
     // the lower/upper Great Miami siblings collapse into one basin group
     expect(groups.find((g) => g.label === "Great Miami")?.sites.map((s) => s.slug)).toContain("wpafb");
     expect(groups.find((g) => g.label === "Great Miami")?.sites.map((s) => s.slug)).toContain("troy-piqua");

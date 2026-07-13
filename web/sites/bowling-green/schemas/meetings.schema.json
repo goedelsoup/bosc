@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "meetings feed",
+  "type": "array",
+  "items": {
+    "additionalProperties": false,
+    "description": "One corridor-relevant subdivision meeting summary (grounded, no inference).",
+    "properties": {
+      "slug": {
+        "title": "Slug",
+        "type": "string"
+      },
+      "date": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Date"
+      },
+      "kind": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Kind"
+      },
+      "summary": {
+        "default": "",
+        "title": "Summary",
+        "type": "string"
+      },
+      "corridor_relevance": {
+        "default": "",
+        "title": "Corridor Relevance",
+        "type": "string"
+      },
+      "decisions": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Decisions",
+        "type": "array"
+      },
+      "parties": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Parties",
+        "type": "array"
+      },
+      "parcels": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Parcels",
+        "type": "array"
+      },
+      "dollar_figures": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Dollar Figures",
+        "type": "array"
+      },
+      "hits": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Hits",
+        "type": "array"
+      },
+      "citation": {
+        "$ref": "#/$defs/Citation"
+      }
+    },
+    "required": [
+      "slug",
+      "citation"
+    ],
+    "title": "MeetingItem",
+    "type": "object"
+  },
+  "$defs": {
+    "Citation": {
+      "additionalProperties": false,
+      "description": "Structured provenance for a feed item or a single figure.\n\nMirrors :class:`watermark.hydrology.model.ProvenancedValue`'s evidence discipline so the\nwhole bundle speaks one provenance language: ``source_kind`` says where the value\ncame from, ``source`` is the citable artifact (a repo-relative ``data/`` path, an\nexternal dataset label, a permit/instrument number), ``page`` locates it within a\nmulti-page source, and ``verified`` is derived so a consumer never re-computes it.",
+      "properties": {
+        "source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source"
+        },
+        "source_kind": {
+          "default": "document",
+          "enum": [
+            "document",
+            "connector",
+            "reference",
+            "assumption",
+            "derived"
+          ],
+          "title": "Source Kind",
+          "type": "string"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page"
+        },
+        "confidence": {
+          "default": "medium",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        },
+        "verified": {
+          "description": "True when grounded in a record or a live gauge (``[verified]`` in prose).",
+          "readOnly": true,
+          "title": "Verified",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "verified"
+      ],
+      "title": "Citation",
+      "type": "object"
+    }
+  }
+}
