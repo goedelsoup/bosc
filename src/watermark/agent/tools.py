@@ -60,21 +60,46 @@ def _is_corpus_home(settings: Any) -> bool:
     return bool(settings.site == _CORPUS_HOME)
 
 
-def _site_extracted_root(settings: Any) -> Path:
-    """The active site's extracted-corpus root: the whole tree for the corpus home, else the
-    site's own subtree (data/extracted/<slug>/)."""
-    root: Path = settings.extracted_dir
-    return root if _is_corpus_home(settings) else root / str(settings.site)
+def _site_extracted_scope(settings: Any) -> tuple[str, ...] | None:
+    """The active site's corpus scope (#1504): the extracted-tree prefixes it owns — the *same*
+    scope `load_corpus` / retrieval read (via `effective_corpus_scope`).
+
+    Lima (the corpus home) is the whole-tree catch-all (``None``); a peer reads only the prefixes
+    its profile names (its own ``<slug>/`` plus any jurisdiction prefix like ``idem/fort-wayne``).
+    """
+    from watermark.sites import active_profile, effective_corpus_scope
+
+    return effective_corpus_scope(active_profile(settings))
+
+
+def _site_extracted_files(settings: Any, pattern: str = "*.yaml") -> list[Path]:
+    """Every extracted file matching *pattern* in the active site's corpus scope, sorted (#1504).
+
+    Membership uses the same `relpath_in_scope` predicate as the export path, so the read tools
+    (`list_extractions` / `read_extraction` / `reconcile_*` / `program_overview`) see exactly the
+    corpus the bundle and retrieval do — including collection-prefixed records (`idem/fort-wayne`,
+    `oepa/urbana`), not just the bare ``<slug>/`` subdir.
+    """
+    from watermark.pipeline.corpus import relpath_in_scope
+
+    extracted: Path = settings.extracted_dir
+    if not extracted.exists():
+        return []
+    scope = _site_extracted_scope(settings)
+    return [
+        p
+        for p in sorted(extracted.rglob(pattern))
+        if p.is_file() and relpath_in_scope(p.relative_to(extracted).as_posix(), scope)
+    ]
 
 
 def _site_scope_note(settings: Any) -> str:
     """A scope banner naming whose corpus a payload is (empty for the corpus home → zero drift)."""
     if _is_corpus_home(settings):
         return ""
-    return (
-        f"[scope] Reading site {settings.site!r}'s own committed corpus "
-        f"(data/extracted/{settings.site}/).\n\n"
-    )
+    scope = _site_extracted_scope(settings) or (str(settings.site),)
+    where = ", ".join(f"data/extracted/{p}/" for p in scope)
+    return f"[scope] Reading site {settings.site!r}'s own committed corpus ({where}).\n\n"
 
 
 def _scoped(payload: str) -> dict[str, Any]:
@@ -119,25 +144,30 @@ def _load_all_permits(
 
 
 def _resolve(filename: str | None, pattern: str = "*.yaml") -> Path | None:
-    """Resolve an extraction within the ACTIVE SITE's extracted corpus (#424).
+    """Resolve an extraction within the ACTIVE SITE's corpus scope (#424/#1504).
 
-    The search root is the whole ``data/extracted`` tree for the corpus home (Lima), else the
-    active site's own subtree. A ``filename`` may be a path relative to that root
-    (``recorder/foo.yaml``) or a bare basename matched anywhere under it; with no filename, the
-    first ``pattern`` match (recursive) is returned.
+    Candidates are the extracted files in the active site's `effective_corpus_scope` (the whole
+    tree for the corpus home, else the site's scoped prefixes). A ``filename`` may be a path
+    relative to ``data/extracted`` (``idem/fort-wayne/foo.yaml``, as `list_extractions` prints it)
+    or a bare basename matched anywhere in scope; with no filename, the first ``pattern`` match is
+    returned.
     """
-    base = _site_extracted_root(get_settings())
-    if not base.exists():
+    settings = get_settings()
+    files = _site_extracted_files(settings, pattern)
+    if not files:
         return None
     if filename:
-        direct = base / filename
-        if direct.is_file():
-            return direct
+        extracted: Path = settings.extracted_dir
+        rel_want = filename.replace("\\", "/")
+        for f in files:
+            if f.relative_to(extracted).as_posix() == rel_want:
+                return f
         name = Path(filename).name
-        matches = sorted(p for p in base.rglob(name) if p.is_file())
-        return matches[0] if matches else None
-    matches = sorted(base.rglob(pattern))
-    return matches[0] if matches else None
+        for f in files:
+            if f.name == name:
+                return f
+        return None
+    return files[0]
 
 
 @tool("list_documents", "List ingested source documents and their collections.", {})
@@ -166,13 +196,18 @@ async def list_documents(_args: dict[str, Any]) -> dict[str, Any]:
 @traced_tool
 async def list_extractions(_args: dict[str, Any]) -> dict[str, Any]:
     settings = get_settings()
-    base = _site_extracted_root(settings)
-    files = sorted(base.rglob("*.yaml")) if base.exists() else []
+    files = _site_extracted_files(settings)
     if not files:
-        loc = "data/extracted" if _is_corpus_home(settings) else f"data/extracted/{settings.site}"
+        if _is_corpus_home(settings):
+            loc = "data/extracted"
+        else:
+            scope = _site_extracted_scope(settings) or (str(settings.site),)
+            loc = ", ".join(f"data/extracted/{p}" for p in scope)
         return _text(f"No extractions found under {loc}.")
-    # Show the path relative to the site root so the agent sees provenance (recorder/...).
-    return _scoped("\n".join(f"- {f.relative_to(base)}" for f in files))
+    # Show the path relative to data/extracted so the agent sees full provenance
+    # (recorder/…, idem/fort-wayne/…) — the same key read_extraction accepts.
+    extracted = settings.extracted_dir
+    return _scoped("\n".join(f"- {f.relative_to(extracted).as_posix()}" for f in files))
 
 
 @tool(
