@@ -977,11 +977,17 @@ PIQUA_ZONING_SCHEMA = GisZoningSchema(
         "corpus-cited parcel ids",
         finding_lead="fall within the City of Piqua zoning jurisdiction",
         in_city_finding=".",
-        out_of_city_finding=" — the parcel sits in unincorporated Miami County (or the City of "
-        "Troy), whose zoning is a separate layer, so it is NOT in the City of Piqua code catalog.",
+        out_of_city_finding=" — a no-match here does NOT by itself confirm they are outside the "
+        "city: each unmatched parcel is EITHER in unincorporated Miami County / the City of Troy "
+        "(a separate zoning layer) OR in-city but post-dating this layer's 2025-02 snapshot (e.g. "
+        "the J5 campus parcels N44-101834 / N44-101846, annexed/re-platted after the snapshot) — "
+        "which of the two is UNKNOWN without separate jurisdiction evidence.",
         caveats=(
-            "Coverage is Piqua CITY LIMITS ONLY; in_city=false is a verified outside-city result "
-            "(unincorporated township / City of Troy), not a missing lookup.",
+            "Coverage is Piqua CITY LIMITS ONLY, and the layer is a 2025-02 snapshot — so a "
+            "no-match is NOT necessarily an outside-city result: a parcel annexed/re-platted after "
+            "the snapshot (e.g. J5 campus N44-101834 / N44-101846) is absent yet in-city. Treat a "
+            "no-match as UNKNOWN pending separate jurisdiction evidence; only a parcel independently "
+            "placed in an unincorporated township / the City of Troy is a verified outside-city result.",
             "Parcel ids are scanned from data/extracted and matched verbatim to the dashed "
             "PARCEL the GIS join uses (no dash-stripping — the layer stores 'N44-101770').",
         ),

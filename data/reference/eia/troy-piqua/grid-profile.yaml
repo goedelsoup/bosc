@@ -8,16 +8,18 @@ serving_utility:
       spans 24 OH counties incl. Miami) is the county-dominant IOU (Troy + most of
       the county), and the City of Piqua - (OH) (#15095, Municipal, an AMP member)
       serves the City of Piqua. Pinned to DP&L #4922: it is both the county-dominant
-      IOU AND the Project Klondike campus''s disclosed LONG-TERM serving utility —
-      the Piqua Commission gave first reading (3-1, 2026-07-07) to a 40-year AES Ohio
-      franchise ordinance for permanent service, with the Piqua muni supplying only
-      temporary construction power (up to 10 MW) [verified: Dayton Daily News 2026-07-09;
-      piquaoh.gov/228]. The #830 ''municipal EIA-861S short-form'' watch resolves
-      NEGATIVE: Piqua #15095 files the FULL EIA-861 form (present in Sales_Ult_Cust
-      — 10,943 customers, 281,641 MWh 2024; ABSENT from Short_Form_2024), so neither
-      the backdrop nor the campus load basis rides the short-form path. The county
-      geographic muni/IOU boundary split is [inference]; the #4922 pin, both utility
-      identities/forms, and the campus long-term utility are [verified]. See data/extracted/troy-piqua/data-centers.md.'
+      IOU AND the campus''s disclosed intended LONG-TERM serving utility — the Piqua
+      Commission gave FIRST READING only (3-1, 2026-07-07) to a 40-year AES Ohio franchise
+      ordinance for permanent service; the ordinance is PENDING adoption (not yet
+      enacted), and the Piqua muni supplies only temporary construction power (up
+      to 10 MW) [verified: Dayton Daily News 2026-07-09; piquaoh.gov/228]. The #830
+      ''municipal EIA-861S short-form'' watch resolves NEGATIVE: Piqua #15095 files
+      the FULL EIA-861 form (present in Sales_Ult_Cust — 10,943 customers, 281,641
+      MWh 2024; ABSENT from Short_Form_2024), so neither the backdrop nor the campus
+      load basis rides the short-form path. The county geographic muni/IOU boundary
+      split is [inference]; the #4922 pin and both utility identities/forms are [verified];
+      the campus''s long-term AES Ohio arrangement is disclosed but its franchise
+      ordinance is pending adoption (first reading only). See data/extracted/troy-piqua/data-centers.md.'
     confidence: high
   holding_company:
     value: The AES Corporation (AES Ohio)
