@@ -1,0 +1,44 @@
+id: mansfield
+title: Mansfield (Richland County, OH) — the airport nexus (places domain)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: City of Mansfield legislation (Ord. 25-086) + Richland County Auditor CAMA; MDL 2873
+    (D.S.C.) docket; OSD PFAS PA/SI status report
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:mansfield
+storage:
+- relpath: extracted/mansfield/airport-nexus.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- mansfield
+- richland-county
+- airport-west
+- 179th-cyberspace-wing
+- mansfield-lahm
+- rezone
+- places
+- pfas
+- afff-mdl
+- muskingum
+notes: >
+  The airport-nexus record for the Mansfield watershed point (#1431, places domain). airport-nexus.md
+  grounds the site's first committed footprint geometry: City of Mansfield Ordinance 25-086 (Bill
+  25-087, Planning Commission Petition #561, passed 2025-06-03) rezoned 16 lots at/around Airport West
+  Parkway & Cairns Road from I-1 to I-2. The committed parcel geometry lives in
+  reference/mansfield/parcel-assemblage.geojson — 10 of the 16 ordinance lots resolve in the current
+  Richland County Auditor CAMA (~309 ac); the other 6 were consolidated/renumbered since the rezone
+  (retired IDs preserved, geometry not fabricated). The file also holds the airport-nexus instrument
+  ledger with the evidentiary-discipline framing (adjacency is not a documented connection; the
+  funding instruments are): the $8.4M NGB-reimbursed MCCA substation for the 179th Cyberspace Wing
+  and the ~$15M water loop are [reference] leads for the record domain (#1429/#1430); the PFAS thread
+  moves from press to filings — City of Mansfield v. 3M Company, 2:23-cv-01192 (D.S.C.), a member case
+  of MDL 2873 [verified as filed] — and the DoD-side OSD PFAS PA/SI status (Ohio ANG Mansfield,
+  "PA/SI Underway", PA start 2023-09) is [verified]. Any "capacity assembled for private data centers"
+  reading stays an [inference] question, never a finding.

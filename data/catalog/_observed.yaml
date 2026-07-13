@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-13T00:07:08.583160+00:00'
+reconciled_at: '2026-07-13T01:33:08.406664+00:00'
 entries:
   aedg:
     exists: true
@@ -730,6 +730,16 @@ entries:
     asof: null
     stale: false
     site_scope: state:OH
+  mansfield:
+    exists: true
+    sha256: 579e153f1c91f4bc187969da5da1af1826915b0357e955253deab2959c7bc5ee
+    size_bytes: 6765
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:mansfield
   meetings:
     exists: true
     sha256: 120e7875d271cb9ee515ae71e986aa3dad1317f69af21c26dea9c0494007980c
@@ -882,10 +892,10 @@ entries:
     site_scope: state:OH
   parcel-assemblage:
     exists: true
-    sha256: 16685c264705c3cc079bb6d6a22814d22e030ed1e68f874def0cb92314df5a8e
-    size_bytes: 150486
+    sha256: 2d9bce28d8b34f56299b6a9050c8ca18a3cf387aad0535b6999444680bb8b7bc
+    size_bytes: 179483
     lfs_materialized: true
-    file_count: 2
+    file_count: 3
     missing: []
     asof: null
     stale: false
