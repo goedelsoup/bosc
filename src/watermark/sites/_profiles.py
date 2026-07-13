@@ -1696,7 +1696,8 @@ _HAMILTON_MIDDLETOWN = SiteProfile(
 # **manufacturing** county (Hobart commercial food equipment HQ in Troy, auto parts) rather than
 # Butler's heavy steel, and a second muni-power story: **Piqua runs its own municipal electric
 # utility** (AMP member, Great Miami hydro), Troy/Miami County otherwise AES Ohio (DP&L #4922,
-# confirmed #830 — and the Klondike campus's disclosed long-term utility via a 40-yr franchise). The site
+# confirmed #830 — and the Klondike campus's disclosed intended long-term utility via a proposed
+# 40-yr franchise, first reading only / pending adoption). The site
 # also carries a distinct second supply water — the **Stillwater River** (gage 03265000). Both cities
 # sit west of the 84 degW meridian, so this is a **UTM 16N** site (like WPAFB / Hamilton-Middletown).
 _TROY_PIQUA = SiteProfile(
@@ -1711,7 +1712,7 @@ _TROY_PIQUA = SiteProfile(
     nasa_power_lon=-84.2033,
     rsei_fips="39109",  # [verified] Miami County, OH
     econ_fips="39109",
-    eia861_utility_number=4922,  # Dayton Power & Light (AES Ohio) — county-dominant IOU AND the Klondike campus's long-term serving utility (40-yr franchise ordinance, #830) [verified]; Piqua muni #15095 (full-form, not 861S) serves the city + construction power — see serving_utility_citation
+    eia861_utility_number=4922,  # Dayton Power & Light (AES Ohio) — county-dominant IOU AND the Klondike campus's disclosed intended long-term utility (40-yr franchise ordinance PENDING adoption, first reading only, #830) [verified]; Piqua muni #15095 (full-form, not 861S) serves the city + construction power — see serving_utility_citation
     parcels_url=(  # [verified] Miami County AGOL parcel_joined layer 0 (auditor CAMA + geometry, #1483)
         "https://services3.arcgis.com/wCWf4EGMg4PzHwzA/arcgis/rest/services/"
         "parcel_joined/FeatureServer/0"
@@ -1868,16 +1869,18 @@ _TROY_PIQUA = SiteProfile(
         "(AES Ohio, #4922, Investor Owned; a full-form filer whose territory spans 24 OH counties "
         "incl. Miami) is the county-dominant IOU (Troy + most of the county), and the City of "
         "Piqua - (OH) (#15095, Municipal, an AMP member) serves the City of Piqua. Pinned to "
-        "DP&L #4922: it is both the county-dominant IOU AND the Project Klondike campus's disclosed "
-        "LONG-TERM serving utility — the Piqua Commission gave first reading (3-1, 2026-07-07) to a "
-        "40-year AES Ohio franchise ordinance for permanent service, with the Piqua muni supplying "
-        "only temporary construction power (up to 10 MW) [verified: Dayton Daily News 2026-07-09; "
-        "piquaoh.gov/228]. The #830 'municipal EIA-861S short-form' watch resolves NEGATIVE: Piqua "
-        "#15095 files the FULL EIA-861 form (present in Sales_Ult_Cust — 10,943 customers, 281,641 "
-        "MWh 2024; ABSENT from Short_Form_2024), so neither the backdrop nor the campus load basis "
-        "rides the short-form path. The county geographic muni/IOU boundary split is [inference]; "
-        "the #4922 pin, both utility identities/forms, and the campus long-term utility are "
-        "[verified]. See data/extracted/troy-piqua/data-centers.md."
+        "DP&L #4922: it is both the county-dominant IOU AND the campus's disclosed intended "
+        "LONG-TERM serving utility — the Piqua Commission gave FIRST READING only (3-1, 2026-07-07) "
+        "to a 40-year AES Ohio franchise ordinance for permanent service; the ordinance is PENDING "
+        "adoption (not yet enacted), and the Piqua muni supplies only temporary construction power "
+        "(up to 10 MW) [verified: Dayton Daily News 2026-07-09; piquaoh.gov/228]. The #830 "
+        "'municipal EIA-861S short-form' watch resolves NEGATIVE: Piqua #15095 files the FULL "
+        "EIA-861 form (present in Sales_Ult_Cust — 10,943 customers, 281,641 MWh 2024; ABSENT from "
+        "Short_Form_2024), so neither the backdrop nor the campus load basis rides the short-form "
+        "path. The county geographic muni/IOU boundary split is [inference]; the #4922 pin and both "
+        "utility identities/forms are [verified]; the campus's long-term AES Ohio arrangement is "
+        "disclosed but its franchise ordinance is pending adoption (first reading only). See "
+        "data/extracted/troy-piqua/data-centers.md."
     ),
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(
