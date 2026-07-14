@@ -1,0 +1,117 @@
+doc_id: fema-fma-findlay-2026-04-22
+source_path: https://www.fema.gov/press-release/20260422/fema-approves-24-million-flood-mitigation-project-findlay
+kind: fema
+pages_read: []
+image_pages_read: []
+dpi: 0
+method: >-
+  manual transcription of the FEMA press release (2026-04-22) and its funds-obligation follow-through.
+  The FEMA.gov release, the City of Findlay newsroom pages (News/1818 obligation notice; News/2009/1375
+  LOMR notice), and wfin.com all returned HTTP 403 to direct fetch. Figures below were recovered from
+  independently-fetched mirrors that quote the same release — 13abc.com, spectrumlocalnews.com, and the
+  full text of Rep. Bob Latta's (OH-5) press release (via wktn.com) — and cross-checked against the
+  project site hancockcountyflooding.com. Figures read from the reporting, not from any filename.
+source_text_excerpt: >-
+  FEMA Approves $24 Million for Flood Mitigation Project in Findlay. "FEMA will pay 51 percent of the
+  $46.8 million eligible project cost, while the Ohio Department of Natural Resources will provide the
+  remaining 49 percent of the funds, $22.8 million" (13abc, verbatim). The project will "restore 935
+  acres of the riverbank to native wetland, increasing the floodplain's capacity" and has "removed
+  1,290 parcels of land and 1,500 acres from the regulatory floodway." Award distributed through
+  "FEMA's Flood Mitigation Assistance program."
+action:
+  confidence: high
+  warnings:
+  - >-
+    TAXONOMY NOTE (not a data caveat): filed in the ``permits-epa`` record group, whose contract label
+    is "Permits — Ohio EPA / USACE", because the bundle's RecordGroup taxonomy has no
+    federal-grant / disaster-mitigation category. The ISSUING AGENCY is FEMA (U.S. Department of
+    Homeland Security), Flood Mitigation Assistance program — NOT Ohio EPA and NOT USACE. A dedicated
+    ``grants`` / federal-award record group is proposed as a network-level follow-up
+    (data/site/findlay/leads.yaml · TAXONOMY-GRANTS). The record content states the true agency; only
+    the coarse group heading is imperfect.
+  - >-
+    The FEMA.gov primary release (and the City of Findlay obligation notice, News/1818) returned HTTP
+    403; all dollar/parcel/acre figures are corroborated across 13abc.com, spectrumlocalnews.com and
+    Rep. Latta's release (wktn.com), not read byte-verbatim from FEMA.gov. High confidence, multiply
+    sourced; re-capture the FEMA release + city notice from a non-datacenter IP to lock the primary text.
+  - >-
+    FLOODWAY vs FLOODPLAIN — do not conflate. This FEMA release counts "1,290 parcels and 1,500 acres
+    removed from the regulatory FLOODWAY" (13abc / spectrum). The Eagle Creek basin project page counts
+    "approximately 1,830 parcels and 1,400 acres from the regulatory FLOODPLAIN" (hancockcountyflooding.com).
+    Different regulatory zones AND different numbers; both preserved below. The Phase-I LOMR's SFHA
+    accounting (375 removed / 985 reduced) is a third, separate metric.
+  - >-
+    Do NOT merge the November-2024 CONDITIONAL-approval reporting (hometownstations/WLIO, "November 15,
+    2024," funds "within 6 to 9 months") into this record. This is the 2026-04-22 FINAL obligation that
+    unlocked summer-2026 bidding — a distinct event.
+  agency: Federal Emergency Management Agency (FEMA), U.S. Department of Homeland Security, Region V
+  program: Flood Mitigation Assistance (FMA)
+  permit_no: EMC-2023-FM-003-0004   # Ohio EMA grant ID (per the Ohio EMA Draft Environmental Assessment); not the FEMA release itself
+  action: grant approved / funds obligated
+  action_date: '2026-04-22'
+  applicant: >-
+    City of Findlay (subapplicant), in partnership with the Hancock County Commissioners and the
+    Maumee Watershed Conservancy District (MWCD)
+  project_name: >-
+    Hancock County Flood-Risk Reduction Program — Eagle Creek Dry Storage Basin + Blanchard River benching
+  site_address: Blanchard River watershed, Findlay / Hancock County, Ohio
+  affected_resource: >-
+    Blanchard River regulatory floodway and floodplain; downtown Findlay businesses, agriculture, and
+    residential neighborhoods (the 2007 flood event drove the program).
+  note: >-
+    [verified] FEMA's Flood Mitigation Assistance (FMA) obligation of $24,000,000 to the City of
+    Findlay, announced 2026-04-22 — 51% of the $46.8M eligible project cost, with the Ohio Department
+    of Natural Resources providing the remaining 49% ($22.8M). The FMA grant is anticipated to provide
+    $19M for the Eagle Creek Flood Basin and $5M for benching (city obligation notice, News/1818). The
+    funds-obligation notification cleared the milestone that let the community bid the two cornerstone
+    contracts (Downtown Phase 2 Benching + Eagle Creek Dry Storage Basin), opened 2026-06-30. This is
+    the headline instrument of the flood-mitigation chain (issue #1465).
+
+# --- verbatim figure block (extra fields; models allow extra="allow") ------------------------
+grant_amount_usd: 24000000
+federal_share_pct: 51            # "$24M / $46.8M = 51.3%"; the city release phrases it "about half"
+eligible_project_cost_usd: 46800000
+nonfederal_match:
+  agency: Ohio Department of Natural Resources (ODNR)
+  amount_usd: 22800000
+  share_pct: 49
+fma_split:
+  eagle_creek_basin_usd: 19000000
+  benching_usd: 5000000          # incl. Cory St–CSX tracks and around the Norfolk Southern railroad bridge
+riverbank_restored_acres: 935    # "restore 935 acres of the riverbank to native wetland"
+floodway_removed:                # THIS release's metric (regulatory FLOODWAY)
+  parcels: 1290
+  acres: 1500
+floodplain_removed_basin_page:   # the Eagle Creek basin project page's metric (regulatory FLOODPLAIN) — DIFFERENT zone/number
+  parcels: 1830
+  acres: 1400
+  source: https://hancockcountyflooding.com/eagle-creek-dry-storage
+program_name_variants:
+- Flood Mitigation Assistance program (FMA)                       # FEMA / news outlets
+- FEMA Flood Hazard Mitigation Assistance grant                    # City of Findlay release (News/1818) wording
+official_quote:
+  who: Rep. Bob Latta (OH-5)
+  text: >-
+    "This is great news for the city of Findlay, and I am pleased these funds are being directed to
+    the community. My team and I worked closely with the Department of Homeland Security to help ensure
+    this funding for the city will get to them as soon as possible. This investment will make a
+    meaningful difference for our community to minimize future floods in Findlay."
+  source: https://wktn.com/news/latta-applauds-fema-approval-of-24m-for-findlay-flood-mitigation/
+corroborating_sources:
+- https://www.13abc.com/2026/04/23/fema-awards-findlay-24m-flood-mitigation-project/
+- https://spectrumlocalnews.com/product-pages/nyc/news/2026/04/23/findlay-receives--24m-for-flood-mitigation-project
+- https://wktn.com/news/latta-applauds-fema-approval-of-24m-for-findlay-flood-mitigation/
+- https://www.findlayohio.gov/Home/Components/News/News/1818/   # City of Findlay funds-obligation notice (403 on direct fetch)
+
+relevance:
+  tags: [verified, fema, fma, flood-mitigation-assistance, findlay, hancock-county, eagle-creek, blanchard-river, funding-spine]
+  note: >-
+    The [verified] funding spine of the flood-mitigation instrument chain (issue #1465). Paired with
+    the clean-fit USACE Review Plan record; together they seed Findlay's record domain. The 2026-06-30
+    bids and the pending 2026-07-14 MWCD Board award are narrated (and flagged as an open watch item)
+    in data/extracted/findlay/flood-mitigation.md — NOT asserted as an award here, because the board
+    vote had not been reported as of ingest.
+  cross_refs:
+  - data/extracted/findlay/flood/usace-blanchard-review-plan-2024.epa.yaml
+  - data/extracted/findlay/flood-mitigation.md
+  - data/reference/network/findlay-ottawa-comparison.yaml

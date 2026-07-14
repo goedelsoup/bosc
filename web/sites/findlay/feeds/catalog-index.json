@@ -1,6 +1,6 @@
 {
   "site": "findlay",
-  "catalog_version": "2bef70a7d9b0c1cd1e5fd9e24781ebe6bb3d7ef2ab42f2c854f21cba695f6670",
+  "catalog_version": "f229423e07908c198fd12e0ff7aeab64b5e9824b7eeb3614881a0fab5b2db9b2",
   "contract_version": "1.24.0",
   "atoms": [
     {
@@ -33,6 +33,14 @@
       "site": "findlay",
       "local_id": "consumptive-cooling",
       "title": "Consumptive cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:findlay:heat-reuse",
+      "kind": "concept",
+      "site": "findlay",
+      "local_id": "heat-reuse",
+      "title": "Heat reuse",
       "feed": "concepts"
     },
     {
@@ -164,6 +172,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:findlay:findlay-flood",
+      "kind": "dataset",
+      "site": "findlay",
+      "local_id": "findlay-flood",
+      "title": "Findlay — Flood-Mitigation Instrument Chain (Extractions)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:findlay:findlay-gis",
       "kind": "dataset",
       "site": "findlay",
@@ -224,7 +240,7 @@
       "kind": "dataset",
       "site": "findlay",
       "local_id": "grid",
-      "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
       "feed": "catalog"
     },
     {
@@ -404,6 +420,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "entity:findlay:CITY OF FINDLAY SUBAPPLICANT",
+      "kind": "entity",
+      "site": "findlay",
+      "local_id": "CITY OF FINDLAY SUBAPPLICANT",
+      "title": "City of Findlay (subapplicant), in partnership with the Hancock County Commissioners and the Maumee Watershed Conservancy District (MWCD)",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:findlay:GENERAL DYNAMICS",
       "kind": "entity",
       "site": "findlay",
@@ -418,6 +442,94 @@
       "local_id": "GENERAL DYNAMICS LAND SYSTEMS",
       "title": "General Dynamics Land Systems Inc.",
       "feed": "entities"
+    },
+    {
+      "handle": "lead:findlay:ASSESSMENT-OM-METHOD",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "ASSESSMENT-OM-METHOD",
+      "title": "Resolve whether MWCD levies a Blanchard-subdistrict assessment for basin O&M (method not finalized)",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:AWARD-2026-07-14",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "AWARD-2026-07-14",
+      "title": "MWCD board award votes + Norfolk Southern bid opening fall on 2026-07-14 — capture the outcomes",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:CONSERVANCY-COURT-2021",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "CONSERVANCY-COURT-2021",
+      "title": "Pull the July-2021 conservancy-court plan amendment adding Eagle Creek to the District plan",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:EMINENT-DOMAIN-DOCKETS",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "EMINENT-DOMAIN-DOCKETS",
+      "title": "Locate the Eagle Creek appropriation dockets — landowner names, court, case number, status",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:PHASE1-CONTRACTOR",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "PHASE1-CONTRACTOR",
+      "title": "Identify the Phase 1 benching contractor and contract price",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:RIVERSIDE-DAM-SEDIMENT",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "RIVERSIDE-DAM-SEDIMENT",
+      "title": "Find the sediment-characterization study at Riverside Park dam (only a dredging project is documented)",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:TAXONOMY-GRANTS",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "TAXONOMY-GRANTS",
+      "title": "The record-group taxonomy has no federal-grant / disaster-mitigation bucket (network-level follow-up)",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:findlay:USACE-2024-REVIEW",
+      "kind": "lead",
+      "site": "findlay",
+      "local_id": "USACE-2024-REVIEW",
+      "title": "Resolve whether the 2024-01-11 USACE Blanchard feasibility Review Plan is a renewed effort or archival",
+      "feed": "leads"
+    },
+    {
+      "handle": "record:findlay:findlay/flood/fema-fma-obligation-2026.epa.yaml",
+      "kind": "record",
+      "site": "findlay",
+      "local_id": "findlay/flood/fema-fma-obligation-2026.epa.yaml",
+      "title": "Hancock County Flood-Risk Reduction Program — Eagle Creek Dry Storage Basin + Blanchard River benching",
+      "feed": "records"
+    },
+    {
+      "handle": "record:findlay:findlay/flood/usace-blanchard-review-plan-2024.epa.yaml",
+      "kind": "record",
+      "site": "findlay",
+      "local_id": "findlay/flood/usace-blanchard-review-plan-2024.epa.yaml",
+      "title": "Blanchard River Watershed, Ohio — Feasibility Report",
+      "feed": "records"
+    },
+    {
+      "handle": "timeline:findlay:EMC-2023-FM-003-0004",
+      "kind": "timeline",
+      "site": "findlay",
+      "local_id": "EMC-2023-FM-003-0004",
+      "title": "Flood Mitigation Assistance (FMA) EMC-2023-FM-003-0004 — grant approved / funds obligated (Hancock County Flood-Risk Reduction Program — Eagle Creek Dry Storage Basin + Blanchard River benching)",
+      "feed": "timeline"
     }
   ]
 }

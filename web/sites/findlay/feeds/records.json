@@ -1,1 +1,73 @@
-[]
+[
+  {
+    "rel": "findlay/flood/fema-fma-obligation-2026.epa.yaml",
+    "group": "permits-epa",
+    "title": "Hancock County Flood-Risk Reduction Program — Eagle Creek Dry Storage Basin + Blanchard River benching",
+    "confidence": "high",
+    "warnings": [
+      "TAXONOMY NOTE (not a data caveat): filed in the ``permits-epa`` record group, whose contract label is \"Permits — Ohio EPA / USACE\", because the bundle's RecordGroup taxonomy has no federal-grant / disaster-mitigation category. The ISSUING AGENCY is FEMA (U.S. Department of Homeland Security), Flood Mitigation Assistance program — NOT Ohio EPA and NOT USACE. A dedicated ``grants`` / federal-award record group is proposed as a network-level follow-up (data/site/findlay/leads.yaml · TAXONOMY-GRANTS). The record content states the true agency; only the coarse group heading is imperfect.",
+      "The FEMA.gov primary release (and the City of Findlay obligation notice, News/1818) returned HTTP 403; all dollar/parcel/acre figures are corroborated across 13abc.com, spectrumlocalnews.com and Rep. Latta's release (wktn.com), not read byte-verbatim from FEMA.gov. High confidence, multiply sourced; re-capture the FEMA release + city notice from a non-datacenter IP to lock the primary text.",
+      "FLOODWAY vs FLOODPLAIN — do not conflate. This FEMA release counts \"1,290 parcels and 1,500 acres removed from the regulatory FLOODWAY\" (13abc / spectrum). The Eagle Creek basin project page counts \"approximately 1,830 parcels and 1,400 acres from the regulatory FLOODPLAIN\" (hancockcountyflooding.com). Different regulatory zones AND different numbers; both preserved below. The Phase-I LOMR's SFHA accounting (375 removed / 985 reduced) is a third, separate metric.",
+      "Do NOT merge the November-2024 CONDITIONAL-approval reporting (hometownstations/WLIO, \"November 15, 2024,\" funds \"within 6 to 9 months\") into this record. This is the 2026-04-22 FINAL obligation that unlocked summer-2026 bidding — a distinct event."
+    ],
+    "fields": {
+      "agency": "Federal Emergency Management Agency (FEMA), U.S. Department of Homeland Security, Region V",
+      "program": "Flood Mitigation Assistance (FMA)",
+      "permit_no": "EMC-2023-FM-003-0004",
+      "action": "grant approved / funds obligated",
+      "action_date": "2026-04-22",
+      "applicant": "City of Findlay (subapplicant), in partnership with the Hancock County Commissioners and the Maumee Watershed Conservancy District (MWCD)",
+      "project_name": "Hancock County Flood-Risk Reduction Program — Eagle Creek Dry Storage Basin + Blanchard River benching",
+      "site_address": "Blanchard River watershed, Findlay / Hancock County, Ohio",
+      "affected_resource": "Blanchard River regulatory floodway and floodplain; downtown Findlay businesses, agriculture, and residential neighborhoods (the 2007 flood event drove the program).",
+      "note": "[verified] FEMA's Flood Mitigation Assistance (FMA) obligation of $24,000,000 to the City of Findlay, announced 2026-04-22 — 51% of the $46.8M eligible project cost, with the Ohio Department of Natural Resources providing the remaining 49% ($22.8M). The FMA grant is anticipated to provide $19M for the Eagle Creek Flood Basin and $5M for benching (city obligation notice, News/1818). The funds-obligation notification cleared the milestone that let the community bid the two cornerstone contracts (Downtown Phase 2 Benching + Eagle Creek Dry Storage Basin), opened 2026-06-30. This is the headline instrument of the flood-mitigation chain (issue #1465)."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "findlay/flood/fema-fma-obligation-2026.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": null,
+    "source_doc_render_class": null,
+    "source_doc_published": false
+  },
+  {
+    "rel": "findlay/flood/usace-blanchard-review-plan-2024.epa.yaml",
+    "group": "permits-epa",
+    "title": "Blanchard River Watershed, Ohio — Feasibility Report",
+    "confidence": "medium",
+    "warnings": [
+      "The LRD source page 403'd on direct WebFetch and on curl (Akamai \"Access Denied\"); the body was obtained via a reader proxy (r.jina.ai). Treat the verbatim string and the 2024-01-11 date as reader-proxy-recovered, not a clean primary read — the article should be re-captured from a non-datacenter IP to lock byte-verbatim text.",
+      "Whether the 2024-01-11 Review Plan signals a RENEWED/active federal feasibility effort or is an archival closeout is an [inference] from the document type (a Review Plan is USACE QA/peer-review scoping, normally produced at the START of a feasibility study) and its title (\"Feasibility Study of flood risk management and ecosystem restorations plans\"). The page states no \"active / renewed / archival\" status in words.",
+      "The 2015 USACE recommended plan (\"Western Diversion of Eagle Creek\") is characterized as having a NEGATIVE benefit-cost ratio in the program FAQ, but no NUMERIC 2015 BCR is public in any source reached. Do NOT confuse that failed federal BCR with the LOCAL program's own 2.94 BCR (the 2018 Jack Faucett Associates / Stantec analysis) — two different studies."
+    ],
+    "fields": {
+      "agency": "U.S. Army Corps of Engineers, Great Lakes and Ohio River Division (LRD)",
+      "program": "Feasibility Study — flood risk management and ecosystem restoration (Review Plan)",
+      "permit_no": null,
+      "action": "Review Plan published",
+      "action_date": "2024-01-11",
+      "applicant": null,
+      "project_name": "Blanchard River Watershed, Ohio — Feasibility Report",
+      "site_address": "Blanchard River watershed, Hancock County, Ohio",
+      "affected_resource": "Blanchard River watershed flood risk management and ecosystem restoration (the federal study track that runs alongside the locally-funded Hancock County Flood-Risk Reduction Program).",
+      "note": "[reference] The USACE LRD Review Plan (published 2024-01-11) scoping agency + peer review for a Feasibility Study of flood risk management and ecosystem restoration plans for the Blanchard River Watershed. This is the open federal thread behind the flood-mitigation instrument chain: the Corps' prior \"Western Diversion of Eagle Creek\" recommended plan (presented 2015) \"was deemed unlikely to meet Federal funding requirements because of its negative cost benefit ratio and low community support\" (program FAQ, verbatim). The 2024 posting's status — renewed feasibility effort vs archival — is [open]; it is flagged as a lead. The locally-funded program (MWCD / Stantec, FEMA FMA + ODNR + Ohio Capital Budget) proceeded independently of the federal study."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "findlay/flood/usace-blanchard-review-plan-2024.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": null,
+    "source_doc_render_class": null,
+    "source_doc_published": false
+  }
+]

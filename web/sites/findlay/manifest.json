@@ -2,17 +2,17 @@
   "site": "findlay",
   "bundle_version": "1.0.0",
   "contract_version": "1.24.0",
-  "generated_at": "2026-07-08T21:10:47+00:00",
-  "feed_count": 23,
-  "row_total": 63,
+  "generated_at": "2026-07-14T20:22:06+00:00",
+  "feed_count": 24,
+  "row_total": 78,
   "readiness": {
-    "tier": "backdrop",
+    "tier": "case",
     "domains": {
       "backdrop": "live",
       "facility": "absent",
       "places": "absent",
-      "record": "absent",
-      "story": "absent"
+      "record": "live",
+      "story": "seeded"
     }
   },
   "feeds": [
@@ -22,7 +22,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 2
     },
     {
       "name": "timeline",
@@ -30,7 +30,7 @@
       "media_type": "application/json",
       "schema": "schemas/timeline.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 2
     },
     {
       "name": "entities",
@@ -38,7 +38,7 @@
       "media_type": "application/json",
       "schema": "schemas/entities.schema.json",
       "kind": "collection",
-      "count": 2
+      "count": 3
     },
     {
       "name": "relationships",
@@ -62,7 +62,7 @@
       "media_type": "application/json",
       "schema": "schemas/concepts.schema.json",
       "kind": "collection",
-      "count": 6
+      "count": 7
     },
     {
       "name": "places",
@@ -103,6 +103,14 @@
       "schema": "schemas/exhibits.schema.json",
       "kind": "collection",
       "count": 0
+    },
+    {
+      "name": "leads",
+      "path": "feeds/leads.json",
+      "media_type": "application/json",
+      "schema": "schemas/leads.schema.json",
+      "kind": "collection",
+      "count": 8
     },
     {
       "name": "rsei",
@@ -182,7 +190,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 44
+      "count": 45
     },
     {
       "name": "catalog-index",

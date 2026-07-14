@@ -44,5 +44,28 @@
     "lei": "875500ULXB4CYQSJVA03",
     "uei": "HAWKSQF848W7",
     "federal_obligations": 33579510703.85
+  },
+  {
+    "key": "CITY OF FINDLAY SUBAPPLICANT",
+    "display": "City of Findlay (subapplicant), in partnership with the Hancock County Commissioners and the Maumee Watershed Conservancy District (MWCD)",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Findlay (subapplicant), in partnership with the Hancock County Commissioners and the Maumee Watershed Conservancy District (MWCD)"
+    ],
+    "signals": [],
+    "roles": {
+      "epa_applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "findlay/flood/fema-fma-obligation-2026.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
   }
 ]
