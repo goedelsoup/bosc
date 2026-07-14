@@ -2297,7 +2297,84 @@ _WILMINGTON = SiteProfile(
     supply_gage_secondary="03240000",  # [verified] Little Miami River near Oldtown (upstream reach; brackets Todd Fork)
     passby_primary_cfs=0.0,  # [open] pending the in-stream passby minimum (scenic-river protection likely raises it)
     passby_secondary_cfs=0.0,  # [open]
-    facility=None,  # [open] the Air Park large-load / data-center dimension is the research target (#492)
+    # grid / facility — the disclosed AWS "Cosler Farm" campus (#1468). Site-plan-grounded (the
+    # Urbana #1327 seam): a floor-area/investment [inference] IT-load bracket, NOT a fabricated MW.
+    # The disclosed interconnection/air-permit MW stays [open] (#1469). Ardent/TAC (§2 of the
+    # register) stays a register entry — no instruments yet — not a second SiteFacility.
+    facility=SiteFacility(
+        it_load_mw=300.0,  # [inference] SCREENING central — NOT disclosed; see it_load_citation
+        it_load_low_mw=150.0,  # floor-area low (1.92M sqft x 75 W/sqft ~= 144, rounded)
+        it_load_high_mw=480.0,  # floor-area high (1.92M sqft x 250 W/sqft = 480)
+        it_load_citation=(
+            "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/"
+            "air-permit MW stays [open] (#1469: OPSB 25-0871-EL-BLN 345kV build-out + the PJM-queue "
+            "lead). No MW figure is primary-sourced for the campus. Primary basis = the network "
+            "floor-area screen (cf. Urbana #1327 / Troy-Piqua): the disclosed 9-building site plan's "
+            "1,920,299 sq ft gross floor area (Nov/Dec 2025) x a whole-building IT power-density band "
+            "of 75-250 W/sq ft (stated screening assumption) -> 144 MW low, ~288 MW central, 480 MW "
+            "high. Corroborated (not a second source) by the investment screen (cf. Sidney): the "
+            "[reported] $4B campus / a hyperscale ~$8.5-20M-per-MW-IT construction-cost band -> ~200 "
+            "MW ($20M/MW) .. ~470 MW ($8.5M/MW) — the two independent screens agree at an "
+            "order-of-magnitude ~150-480 MW, so the bracket is set there (central 300 MW). Signals "
+            "that point HIGHER but are NOT adopted into the bracket: (a) the 9->12-building revision "
+            "tabled 2026-03-27 is unreconciled [open] and would scale the floor area up; (b) the "
+            "[reported] 252 Tier-4 diesel gensets, at a typical hyperscale per-unit rating (undisclosed), "
+            "imply a larger N+1 backup envelope; (c) the widely repeated '1.5 GW' is [reference] press "
+            "analysis of PJM interconnection filings (interconnection capacity != near-term IT load) — "
+            "a lead tracked on #1469, not a document in hand. Replace with the disclosed load the "
+            "moment a PJM interconnection / OPSB / SWOAQA air-permit instrument names the campus MW. "
+            "Full record: data/extracted/wilmington/data-centers.md. Discipline: this Clinton-County "
+            "thread is SELF-CONTAINED — do NOT bridge the Lima/Allen Bistrozzi land-assembly graph."
+        ),
+        # 252 Tier-4 gensets are disclosed by COUNT only (no per-unit rating on the record), so no
+        # backup figure can be formed without inventing the rating: genset_count/genset_mw stay None
+        # (site-plan-grounded, like Urbana/Sidney). The count lives in the register + the citation
+        # above, not the power basis; the air-dispatch fleet model refuses cleanly.
+        facility_type=(
+            'hyperscale data-center campus ("Cosler Farm"; developer/operator Amazon Data Services, '
+            "Inc., the intervenor in Sharp v. City of Wilmington) — proposed"
+        ),  # [verified] entity + [reported] type
+        gross_floor_area_sqft=1_920_299,  # [reported] 9-building site plan (Nov/Dec 2025); 9->12 revision unreconciled [open]
+        disclosed_investment_usd=4_000_000_000,  # [reported — wnewsj 2025-12-03; WCPO] $4B proposal
+        disclosure_citation=(
+            "Disclosed Nov 2025 via the joint Clinton County Port Authority / City of Wilmington "
+            "Data Center FAQs [verified — chooseclintoncountyoh.org/news/data-center-faqs, "
+            "wilmingtonohio.gov/data-center-faqs]: a ~471-acre campus on the former Cosler Farm at "
+            "1488 S US Route 68 (SW Wilmington), acquired by AWS in a PRIVATE transaction (not "
+            "brokered by the Port Authority / City / JobsOhio); minimum 100 permanent jobs / ~$8M "
+            "annual payroll. The $4B investment and the 9-building / 1,920,299 sq ft site plan are "
+            "[reported — wnewsj 2025-12-03 'officials detail $4B AWS data center proposal'; WCPO]; a "
+            "revised 12-building plan tabled 2026-03-27 is UNRECONCILED against the 9-building figure "
+            "[open — resolve from the site-plan PDFs, #1470]. Legal posture (carried honestly): a "
+            "federal court ordered the City to REDO three ordinances underpinning the campus — the "
+            "data-center zoning-text amendment, the generator-noise exemption, and the Cosler Farm "
+            "map rezoning — for defective public notice (Sharp v. City of Wilmington, S.D. Ohio "
+            "1:26-cv-00448, ruling ~2026-07-09/10 [reported — WCPO/WDTN/wnewsj converging]); the "
+            "conditional-use ordinance O-26-33 has its final vote 2026-07-16. A proposed campus whose "
+            "zoning basis is in remand is still a disclosed facility with pullable instruments, not a "
+            "reason to zero the domain out. Ardent/TAC (a second ~545-ac rezoning corridor, O-26-04-07, "
+            "5-2 on 2026-02-19/20) stays a register entry — investment/MW/instruments all undisclosed "
+            "— not a second SiteFacility. See data/extracted/wilmington/data-centers.md."
+        ),
+        # Cooling archetype (#1054): HYBRID_ADIABATIC — the FAQs disclose DIRECT EVAPORATIVE cooling
+        # operated only ~11 days/yr (dry/free-cooling the rest of the year), the defining seasonal-
+        # evaporative-assist signature. The deep water back-solve / WUE reconciliation is the water
+        # plan's job (#1472); the reserved withdrawal MGD is [open]. Recorded metadata here — the
+        # cooling model does not run in export for a non-reference site.
+        cooling_model=CoolingModelType.HYBRID_ADIABATIC,
+        cooling_model_source="reference",
+        cooling_model_citation=(
+            "[reference] DIRECT EVAPORATIVE cooling disclosed in the joint Port Authority / City "
+            "Data Center FAQs, with a projected ~6M gal/yr cooling-water CONSUMPTION and water-cooled "
+            "operation only ~11 days/yr (dry/free-cooling otherwise) — mapped to the HYBRID_ADIABATIC "
+            "archetype (dry with seasonal evaporative assist). The disclosed ~6M gal/yr at the "
+            "screening IT load implies a very low water-use effectiveness (near-dry operation), which "
+            "UNDERCUTS a large-abstraction premise — the water-thesis finding. Not a document "
+            "extraction; the reserved withdrawal MGD, the Caesar Creek Lake source contract, and the "
+            "WUE/back-solve reconciliation are the water plan (#1472). Wastewater returns to the City "
+            "WWTP -> NPDES OH0028134 -> Lytle Creek -> Todd Fork -> Little Miami."
+        ),
+    ),
     serving_utility_citation="EIA-861 2024 Service_Territory: Dayton Power & Light Co (AES Ohio, #4922) is the IOU serving Clinton County, OH — the Wilmington / Air Park LSE (Duke #3542 + South Central Power co-op also in-county). [verified]",
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(
