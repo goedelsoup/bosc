@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import subprocess
+from collections.abc import Callable
 from pathlib import Path
 
 import pytest
@@ -138,7 +139,9 @@ def test_missing_gh_renders_clean_message_not_traceback(
     assert result.exception is None or isinstance(result.exception, SystemExit)
 
 
-def _fake_gh_factory(create_outcomes: list[str | Exception]):
+def _fake_gh_factory(
+    create_outcomes: list[str | Exception],
+) -> Callable[..., subprocess.CompletedProcess[str]]:
     """A ``subprocess.run`` stub that dispatches on the gh subcommand.
 
     ``issue list`` → no open issues; ``label list`` → ``site:lima`` already exists;
@@ -192,3 +195,80 @@ def test_mid_batch_failure_records_partial_success(
     assert len(record["failed"]) == 1
     assert record["failed"][0]["title"] == "Onboard proposal 1"
     assert "rate limited" in record["failed"][0]["error"]
+
+
+def test_label_ensure_failure_does_not_abort_batch(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A label list/create race must not strand the issue batch (parity with the create loop)."""
+    from watermark.cli.research import _publish_and_create_issues
+
+    out_dir = tmp_path / "run"
+    write_run(_manifest(2), out_dir, settings=Settings(data_dir=tmp_path / "data"))
+
+    creates = iter(["https://x/y/issues/1", "https://x/y/issues/2"])
+
+    def _run(cmd: list[str], **_kwargs: object) -> subprocess.CompletedProcess[str]:
+        sub = cmd[1:3]
+        if sub == ["issue", "list"]:
+            return subprocess.CompletedProcess(cmd, 0, stdout="[]", stderr="")
+        if sub == ["label", "list"]:  # label absent → the command will try to create it
+            return subprocess.CompletedProcess(cmd, 0, stdout="[]", stderr="")
+        if sub == ["label", "create"]:  # …and creation loses a race
+            raise subprocess.CalledProcessError(1, cmd, output="", stderr="label already exists")
+        if sub == ["issue", "create"]:
+            return subprocess.CompletedProcess(cmd, 0, stdout=next(creates) + "\n", stderr="")
+        raise AssertionError(f"unexpected gh call: {cmd!r}")
+
+    monkeypatch.setattr("watermark.cli.research.subprocess.run", _run)
+
+    # No typer.Exit — the batch completes and both issues open despite the label failure.
+    _publish_and_create_issues(out_dir, site="lima")
+
+    record = json.loads((out_dir / "publish-result.json").read_text(encoding="utf-8"))
+    assert len(record["opened"]) == 2
+    assert record["failed"] == []
+
+
+def test_create_issues_rejected_for_non_site_onboard_recipe(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """`--create-issues` only applies to site-onboard — otherwise fail loudly, don't ignore it."""
+
+    def _boom(*_args: object, **_kwargs: object) -> object:
+        raise AssertionError("run_research must not be reached — validation should stop first")
+
+    monkeypatch.setattr("watermark.research.run_research", _boom)
+
+    result = runner.invoke(
+        app,
+        ["research", "run", "--recipe", "issue-proposal", "--topic", "x", "--create-issues"],
+    )
+
+    assert result.exit_code == 2  # click usage error
+    assert "--create-issues" in result.output
+    assert "site-onboard" in result.output
+
+
+def test_gh_json_raises_gherror_on_unparseable_output(monkeypatch: pytest.MonkeyPatch) -> None:
+    from watermark.cli.research import _gh_json, _GhError
+
+    def _run(cmd: list[str], **_kwargs: object) -> subprocess.CompletedProcess[str]:
+        return subprocess.CompletedProcess(cmd, 0, stdout="not json at all", stderr="")
+
+    monkeypatch.setattr("watermark.cli.research.subprocess.run", _run)
+
+    with pytest.raises(_GhError, match="unparseable JSON"):
+        _gh_json(["issue", "list"])
+
+
+def test_gh_timeout_becomes_gherror(monkeypatch: pytest.MonkeyPatch) -> None:
+    from watermark.cli.research import _gh, _GhError
+
+    def _run(cmd: list[str], **_kwargs: object) -> subprocess.CompletedProcess[str]:
+        raise subprocess.TimeoutExpired(cmd, 60.0)
+
+    monkeypatch.setattr("watermark.cli.research.subprocess.run", _run)
+
+    with pytest.raises(_GhError, match="timed out"):
+        _gh(["issue", "list"])
