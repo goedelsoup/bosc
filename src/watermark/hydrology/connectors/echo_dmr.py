@@ -64,6 +64,23 @@ class EchoDmrError(RuntimeError):
     """ECHO returned an Error object or an unparseable effluent chart."""
 
 
+def _pct_to_float(value: Any) -> float | None:
+    """Parse ECHO's ``ExceedencePct`` to a float percentage.
+
+    ECHO's effluent-chart service returns the exceedance percentage as a *string with a
+    trailing percent sign* (e.g. ``"13%"``, ``"2%"``) — not a bare number. A plain
+    :func:`to_float` chokes on the ``%`` and returns ``None``, which silently drops every
+    ECHO-flagged numeric exceedance (the bug this fixes). Strip a single trailing ``%``
+    and coerce; a value ECHO did not report stays ``None``.
+    """
+    if value is None:
+        return None
+    text = str(value).strip()
+    if text.endswith("%"):
+        text = text[:-1].strip()
+    return to_float(text)
+
+
 def _iso_period(token: str | None) -> str | None:
     """Convert ECHO's ``DD-MON-YY`` monitoring-period end to an ISO ``YYYY-MM-DD``.
 
@@ -86,12 +103,30 @@ def _iso_period(token: str | None) -> str | None:
 # ----------------------------------------------------------------------- models
 
 
+class DmrViolation(BaseModel):
+    """One ECHO-reported NPDES violation attached to a DMR row.
+
+    Passed through verbatim from ECHO's ``NPDESViolations`` array — ECHO's *own*
+    determination, never derived here by comparing a value to a limit. The severity
+    code distinguishes a minor numeric exceedance (``2`` = Non-Reportable Noncompliance)
+    from a reportable/significant one, which matters for reading a facility's SNC flag.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    code: str | None  # ViolationCode, e.g. "E90"
+    desc: str | None  # ViolationDesc, e.g. "DMR, Limited - Numeric Violation"
+    severity: str | None  # ViolationSeverity, e.g. "2"
+    severity_desc: str | None  # ViolationSeverityDesc, e.g. "Non-Reportable Noncompliance ..."
+
+
 class DmrRow(BaseModel):
     """One reported Discharge Monitoring Report value for a parameter + monitoring period.
 
     Values are passed through verbatim. ``value`` is ``None`` when ECHO carries a
     no-data-indicator (``nodi``) instead of a number (e.g. a period with no discharge).
-    ``exceedance_pct`` is populated only when ECHO itself reports an exceedance.
+    ``exceedance_pct`` is populated only when ECHO itself reports an exceedance, and
+    ``violations`` mirrors ECHO's ``NPDESViolations`` for the row (empty when none).
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -105,6 +140,7 @@ class DmrRow(BaseModel):
     limit_type: str | None  # ECHO LimitValueTypeDesc (Quantity1, Concentration1, ...)
     exceedance_pct: float | None
     nodi: str | None  # no-data-indicator code (non-null => no value reported)
+    violations: list[DmrViolation]  # ECHO-reported NPDESViolations (empty when none)
 
 
 class DmrParameter(BaseModel):
@@ -140,13 +176,39 @@ class EffluentChart(BaseModel):
         return [p for p in self.parameters if p.parameter_code == parameter_code]
 
 
+class DmrExceedance(BaseModel):
+    """One ECHO-flagged effluent exceedance, with its parameter + outfall context.
+
+    Built by :func:`summarize_discharge` from a :class:`DmrRow` ECHO flagged (a positive
+    ``exceedance_pct`` or an attached ``NPDESViolations`` entry), enriched with the
+    parameter/outfall the row belongs to so the summary says *which* pollutant exceeded
+    *where* — a bare :class:`DmrRow` loses that link once flattened across parameters.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    outfall: str
+    parameter_code: str
+    parameter_desc: str | None
+    monitoring_location: str | None
+    period_end: str | None
+    value: float | None
+    unit: str | None
+    stat_base: str | None
+    limit: float | None
+    limit_type: str | None
+    exceedance_pct: float | None
+    violations: list[DmrViolation]
+
+
 class DischargeSummary(BaseModel):
     """The computed receiving-water read on a permit's effluent record.
 
     ``actual_flow_*`` reduce the primary outfall's reported monthly flow (parameter
-    50050). ``exceedances`` are only the DMR rows ECHO flagged (``ExceedencePct`` or an
-    attached violation) — an empty list means the reported record shows no exceedance in
-    the window, which is itself a finding, never silently treated as "unknown".
+    50050). ``exceedances`` are only the DMR rows ECHO flagged (a positive
+    ``ExceedencePct`` or an attached ``NPDESViolations`` entry) — an empty list means the
+    reported record shows no exceedance in the window, which is itself a finding, never
+    silently treated as "unknown".
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -163,7 +225,7 @@ class DischargeSummary(BaseModel):
     flow_pct_of_design: float | None  # mean actual / design, %
     cso_outfalls: int  # count of features carrying an overflow-volume parameter
     snc_status: str | None
-    exceedances: list[DmrRow]
+    exceedances: list[DmrExceedance]
 
 
 # --------------------------------------------------------------------- fetch + parse
@@ -194,6 +256,23 @@ def _get(settings: Settings, service: str, params: dict[str, Any]) -> dict[str, 
     return cast("dict[str, Any]", results)
 
 
+def _parse_violations(raw: Any) -> list[DmrViolation]:
+    """Parse ECHO's ``NPDESViolations`` array (may be absent/empty) verbatim."""
+    violations: list[DmrViolation] = []
+    for v in raw or []:
+        if not isinstance(v, dict):
+            continue
+        violations.append(
+            DmrViolation(
+                code=to_str(v.get("ViolationCode")),
+                desc=to_str(v.get("ViolationDesc")),
+                severity=to_str(v.get("ViolationSeverity")),
+                severity_desc=to_str(v.get("ViolationSeverityDesc")),
+            )
+        )
+    return violations
+
+
 def _parse_rows(dmrs: list[dict[str, Any]]) -> list[DmrRow]:
     rows: list[DmrRow] = []
     for dm in dmrs:
@@ -208,8 +287,9 @@ def _parse_rows(dmrs: list[dict[str, Any]]) -> list[DmrRow]:
                 ),
                 limit=to_float(dm.get("LimitValueNmbr")),
                 limit_type=to_str(dm.get("LimitValueTypeDesc")),
-                exceedance_pct=to_float(dm.get("ExceedencePct")),
+                exceedance_pct=_pct_to_float(dm.get("ExceedencePct")),
                 nodi=to_str(dm.get("NODICode")),
+                violations=_parse_violations(dm.get("NPDESViolations")),
             )
         )
     return rows
@@ -311,12 +391,28 @@ def summarize_discharge(
     # CSO/bypass outfalls: features carrying the overflow-volume parameter.
     cso = len({p.outfall for p in chart.series(OVERFLOW_PARAM)})
 
-    # Exceedances: only rows ECHO itself flagged (a positive exceedance % or a violation).
+    # Exceedances: only rows ECHO itself flagged — a positive ExceedencePct *or* an
+    # attached NPDESViolations entry. Both are ECHO's own determination; nothing here is
+    # computed by comparing a value to its limit. Enriched with the parameter/outfall so
+    # the summary records which pollutant exceeded where.
     exceedances = [
-        r
+        DmrExceedance(
+            outfall=p.outfall,
+            parameter_code=p.parameter_code,
+            parameter_desc=p.parameter_desc,
+            monitoring_location=p.monitoring_location,
+            period_end=r.period_end,
+            value=r.value,
+            unit=r.unit,
+            stat_base=r.stat_base,
+            limit=r.limit,
+            limit_type=r.limit_type,
+            exceedance_pct=r.exceedance_pct,
+            violations=r.violations,
+        )
         for p in chart.parameters
         for r in p.rows
-        if r.exceedance_pct is not None and r.exceedance_pct > 0.0
+        if (r.exceedance_pct is not None and r.exceedance_pct > 0.0) or r.violations
     ]
 
     return DischargeSummary(
@@ -402,10 +498,24 @@ def dmr_document(chart: EffluentChart, summary: DischargeSummary) -> dict[str, A
         "exceedances": [
             {
                 "period_end": r.period_end,
+                "outfall": r.outfall,
+                "parameter_code": r.parameter_code,
+                "parameter": r.parameter_desc,
+                "stat_base": r.stat_base,
                 "value": r.value,
                 "unit": r.unit,
                 "limit": r.limit,
+                "limit_type": r.limit_type,
                 "exceedance_pct": r.exceedance_pct,
+                "violations": [
+                    {
+                        "code": v.code,
+                        "desc": v.desc,
+                        "severity": v.severity,
+                        "severity_desc": v.severity_desc,
+                    }
+                    for v in r.violations
+                ],
             }
             for r in summary.exceedances
         ],

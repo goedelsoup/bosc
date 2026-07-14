@@ -134,7 +134,13 @@ def dmr(
     table.add_row("reported exceedances", str(len(summary.exceedances)))
     console.print(table)
     for r in summary.exceedances:
-        console.print(f"[red]exceedance[/] {r.period_end}: {r.value} {r.unit} (limit {r.limit})")
+        code = f" [{r.violations[0].code}]" if r.violations else ""
+        console.print(
+            f"[red]exceedance[/] {r.period_end} {r.parameter_desc or r.parameter_code} "
+            f"({r.stat_base or '?'}): {r.value} {r.unit} vs limit {r.limit}"
+            + (f" (+{r.exceedance_pct:g}%)" if r.exceedance_pct is not None else "")
+            + code
+        )
     if not summary.exceedances:
         console.print("[dim]No ECHO-flagged effluent exceedance in the window.[/]")
 

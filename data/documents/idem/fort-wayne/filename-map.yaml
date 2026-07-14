@@ -141,6 +141,35 @@ aliases:
       The issued §401 WQC certificate — IDEM certified the Phase 3 stream/wetland impacts comply
       with Indiana water quality standards (327 IAC 2), issued 2026-06-05 over public opposition.
 
+  # --- NPDES major renewal + Streamlined Mercury Variance (the receiving-water record, #1453).
+  # IDEM Office of Water Quality. The DRAFT renewal package for the City of Fort Wayne
+  # P.L. Brunner Water Pollution Control Plant (NPDES IN0032191) — the basin's largest POTW.
+  # Distinct from the WQC001454 §401 record above (that is the Google/Hatchworks campus
+  # stormwater cert; this is the municipal WWTP's own discharge permit). Public-noticed
+  # 2026-05-29; comments closed 2026-06-29. This single as-received file is the full draft
+  # package: the public notice + cover letter to Mayor Tucker + the draft permit (Attachment A)
+  # + the Fact Sheet / statement of basis. The final permit + responsiveness summary are not
+  # yet issued (imminent pulls). Kept under its as-received in.gov filename (chain of custody).
+  - file: notice_20260629_npdes_in0032191.pdf
+    canonical: idem-in0032191-npdes-major-renewal-smv-draft-2026-05-29.pdf
+    date: 2026-05-29   # "DATE OF NOTICE: May 29, 2026" (page 1 text layer); the as-received filename encodes the 2026-06-29 comment-close date
+    evidence: native_text
+    permit_number: IN0032191
+    public_notice_number: 20260529-IN0032191-D+SMV
+    permit_level: NPDES Major Renewal + Streamlined Mercury Variance (SMV) renewal — DRAFT public-notice package (notice + cover letter + draft permit + Fact Sheet)
+    stage: draft
+    pages: 87
+    note: >-
+      Draft NPDES renewal for the City of Fort Wayne P.L. Brunner Water Pollution Control
+      Plant (2601 Dwenger Avenue), average design flow 74 MGD / peak 100 MGD, discharging to
+      the Maumee River via Outfalls 001/002. The Fact Sheet states the cited receiving-water
+      Q7,10 = 40 cfs (26 MGD) at the outfall → 0.35:1 dilution (Bullerman Ditch-Maumee River
+      watershed, HUC-12 041000050102, AU_ID INA0512-02). New WQBELs for cadmium/cyanide/lead
+      on 60-month compliance schedules (RPE from the 2025-12-23 WLA); mercury SMV renewed with
+      a 1.8 ng/l interim limit; TP 1.0 mg/l; TN monitor-only. Compliance status cites Federal
+      Consent Decree 2:07-cv-00445 + IDEM Agreed Order 2008-178333-W (CSO LTCP fully implemented
+      2025; Final Post-Construction Monitoring Report still owed). Grounds wwtp-receiving-water.md.
+
 # NOT INGESTED (recorded so the omission is deliberate, not a gap):
 #   23665f.pdf — a stray file in the source drop: it is "Keller Crescent Company /
 #   097-23665-00270" (City of Indianapolis Office of Environmental Services), an
