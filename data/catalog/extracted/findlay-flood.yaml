@@ -1,0 +1,53 @@
+id: findlay-flood
+title: Findlay — Flood-Mitigation Instrument Chain (Extractions)
+scope: extracted
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    FEMA Flood Mitigation Assistance release (2026-04-22, corroborated via 13abc / Spectrum
+    News / Rep. Latta's release); USACE LRD Blanchard River Watershed feasibility Review Plan
+    (article #3643262, published 2024-01-11); the Hancock County Flood-Risk Reduction Program
+    pages (hancockcountyflooding.com about-us / faq / eagle-creek-dry-storage / norfolk-southern);
+    the 2018 Stantec/Jack Faucett benefit-cost analysis; City of Findlay LOMR + funds-obligation
+    notices; WFIN bid reporting (2026-06-30). Web-sourced / manual transcription — several primary
+    pages 403'd and are search-rendered (see per-file warnings).
+license: public record / public domain
+access_tier: public
+site_scope: site:findlay
+storage:
+- relpath: extracted/findlay/flood/fema-fma-obligation-2026.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/findlay/flood/usace-blanchard-review-plan-2024.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/findlay/flood/eagle-creek-basin-footprint.handoff.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/findlay/flood-mitigation.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: document
+tags:
+- flood-mitigation
+- fema
+- fma
+- eagle-creek
+- blanchard-river
+- mwcd
+- usace
+- findlay
+- hancock-county
+notes: >-
+  Issue #1465 (under epic #1265). Two structured record rows (permits-epa group): the FEMA FMA
+  $24M obligation [verified] and the USACE feasibility Review Plan [reference] — together they lift
+  Findlay's record domain to live (backdrop → case tier). flood-mitigation.md carries the full
+  instrument chain (FEMA/ODNR/FRA/LOMR/bids, the assessment-question resolution, the July-2021
+  conservancy-court amendment, and the eminent-domain status), and the handoff descriptor hands the
+  Eagle Creek basin + benching footprints to the places sub-issue (#1462) WITHOUT a fabricated
+  polygon. Open threads (Phase-1 contractor, Riverside Dam sediment characterization, the USACE 2024
+  posting status, the O&M assessment method, the eminent-domain dockets, the 2026-07-14 MWCD award
+  outcome, and the record-group taxonomy gap) are cross-filed in data/site/findlay/leads.yaml.

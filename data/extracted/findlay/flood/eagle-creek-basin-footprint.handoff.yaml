@@ -1,0 +1,81 @@
+# Places handoff (#1462) — the flood-mitigation footprints for Findlay.
+#
+# This is a DESCRIPTOR, not committed geometry. Issue #1465 was asked to hand the Eagle Creek
+# basin + benching footprints to the places sub-issue "as committed geometry" — but the public
+# record gives only VERBAL bounds and an acreage, not a surveyed polygon or a parcel list. Per the
+# repo spine ("never fake a value to make a partial site look complete"), no polygon is fabricated
+# here: the sourced spatial facts are recorded so #1462 can commit real geometry (e.g. from the ODNR
+# Dam Safety permit's parcels, or the Hancock parcels within the stated bounds), and the polygon
+# itself stays [open].
+#
+# NOTE: this file deliberately carries NO top-level `deed`/`action`/`permit`/`filing`/`plan`/`meta`
+# key, so it is inert to the record + corpus classifiers — it does not become a record row and does
+# not lift the places domain (which correctly gates on committed `geo/campus` geometry, still absent).
+# It is NOT the data-center campus footprint: that is the profile's `footprint_relpath`
+# (extracted/findlay/bosc-site-footprint.yaml), owned by the facility places thread — do not merge.
+
+handoff:
+  to_issue: 1462          # readiness(findlay) places — committed geometry + SSURGO HSG
+  from_issue: 1465        # the flood-mitigation instrument chain
+  status: descriptor-only
+  polygon: open           # [open] no surveyed polygon / parcel list in the public record yet
+
+eagle_creek_dry_storage_basin:
+  impoundment_acres:
+    value: 765
+    approx: true          # "approximately 765 acres" within the dam alignment
+    tag: verified
+  bounds:                 # verbal bounds as published — NOT a polygon
+    west: Township Road 76
+    east: US-68
+    township: Eagle Township, Hancock County, OH
+    relative_location: approximately 4 miles south of downtown Findlay
+    tag: verified
+  status:
+    final_design: complete
+    property_acquisition: complete            # easements/permits in progress
+    odnr_dam_safety_permit: obtained          # ODNR Division of Water Resources, Dam Safety Program; permit no. [open]
+    tag: verified
+  modeled_effect:
+    peak_flow_reduction_cfs: 2550             # ~16% on the Blanchard during the 1% ACE event
+    bfe_lowering_ft_at_confluence: 2.2        # near the Blanchard / Eagle Creek confluence, downtown
+    floodplain_removed_parcels: 1830          # regulatory FLOODPLAIN (distinct from FEMA's floodway metric)
+    floodplain_removed_acres: 1400
+    tag: verified
+  source: https://hancockcountyflooding.com/eagle-creek-dry-storage   # read direct
+  gis_seed_hint: >-
+    Candidate committed-geometry paths for #1462: the ODNR Dam Safety construction-permit parcel set;
+    or the Hancock parcels (OGRIP statewide layer scoped County='Hancock', already wired) that fall
+    within TR-76/US-68 in Eagle Township. profile abstraction/super gage 04188496 (Eagle Creek above
+    Findlay) sits on this tributary.
+
+phase1_benching_reach:
+  reach: Blanchard River between Howard Run and the Norfolk Southern railroad bridge
+  work:
+  - floodplain benching near Swale Park
+  - removal of four low-head dams downstream of Lye Creek
+  - instream riffle construction at the low-head-dam sites
+  completed: '2024'
+  lomr_effect:                                # the SFHA accounting, distinct from the basin's floodplain metric
+    sfha_parcels_removed: 375                 # ~15 acres completely removed from the SFHA
+    sfha_parcels_reduced: 985                 # ~67 acres remaining in the SFHA at a reduced 100-yr WSE
+    submitted_to_fema: '2025-09-18'
+    tag: verified
+  source: https://hancockcountyflooding.com/about-us   # read direct; LOMR figures via findlayohio.gov News/2009/1375 (403; search-rendered)
+  polygon: open                               # [open] the benched-reach footprint is not committed geometry
+
+phase2_downtown_benching:
+  scope: Additional Hydraulic Improvements + soil remediation (Cory St to the CSX tracks / around the NS bridge)
+  soil_remediation:
+    contractors: [CEC (Civil & Environmental Consultants Inc.), Buckeye Elm Contracting]
+    contaminants: [lead, arsenic, mercury, cadmium, PAHs]
+    removed_tons: {impacted_soil: 7325, glass_fill: 1070, asphalt: 432}   # disposed at the Hancock County Landfill
+    completed: December 2025 – February 2026
+    tag: verified
+  source: wfin.com soil-remediation completion story (403; search-rendered)
+  polygon: open
+
+cross_refs:
+- data/extracted/findlay/flood-mitigation.md
+- data/extracted/findlay/flood/eagle-creek-basin was described from hancockcountyflooding.com/eagle-creek-dry-storage
+- data/reference/findlay/parcel-assemblage.geojson   # [open] the site's own committed geometry, pending

@@ -38,11 +38,12 @@ async def test_reference_tools_do_not_serve_lima_data_off_home(
 ) -> None:
     # #424: a per-site run must NOT be silently handed Lima's reference record.
     # timeline/entities now serve the active site's own corpus (per-site scoped via
-    # load_corpus()) rather than returning a _reference_only notice — they will return
-    # empty results for a site with no committed corpus (e.g. Findlay), NOT Lima's
-    # cross-site record. hydrology_balance runs per-site only for sites that committed
-    # their own watch-items.geojson (#829); Findlay has none, so it keeps the notice
-    # rather than silently falling back to Lima's periplus WWTP graph.
+    # load_corpus()) rather than returning a _reference_only notice. Findlay committed its
+    # own flood-mitigation record set (#1465: the FEMA FMA obligation + the USACE feasibility
+    # Review Plan), so these tools return FINDLAY's own events/entities, NOT Lima's cross-site
+    # record. hydrology_balance runs per-site only for sites that committed their own
+    # watch-items.geojson (#829); Findlay has none, so it keeps the notice rather than
+    # silently falling back to Lima's periplus WWTP graph.
     monkeypatch.setattr(
         tools, "get_settings", lambda: Settings(site="findlay", data_dir=REPO_ROOT / "data")
     )
@@ -51,29 +52,30 @@ async def test_reference_tools_do_not_serve_lima_data_off_home(
     hydro_text = (await tools.hydrology_balance.handler({}))["content"][0]["text"]
     assert hydro_text.startswith("[scope]") and "findlay" in hydro_text and "#424" in hydro_text
 
-    # entities and timeline now serve findlay's own corpus — empty, so no Lima entities
-    # or events leak through. They must not reference Lima-specific records.
+    # entities and timeline now serve findlay's OWN flood corpus (#1465), not Lima's — so
+    # Lima-specific records must not leak through.
     entities_text = (await tools.entities.handler({}))["content"][0]["text"]
     assert "No entities found" in entities_text or "ENTITIES:" in entities_text
     # The Lima reference graph has Amazon / Google / permit holders — must not appear.
     assert "Amazon" not in entities_text and "Google" not in entities_text
 
+    # Findlay's timeline is scoped to its own committed corpus and carries its own flood
+    # events (the FEMA/USACE agency actions, tagged [epa_permit_action]), not Lima's.
     timeline_text = (await tools.timeline.handler({}))["content"][0]["text"]
-    assert (
-        "No dated events" in timeline_text
-        or "[deed]" in timeline_text
-        or "[npdes]" in timeline_text
-    )
+    assert timeline_text.startswith("[scope]") and "findlay" in timeline_text
+    assert "[epa_permit_action]" in timeline_text
     # Lima commissioners minutes must not bleed into a Findlay run.
     assert "commissioners" not in timeline_text.lower()
 
     # list_documents now filters data/documents/ by site slug rather than returning a
-    # _reference_only notice — Findlay has no committed docs so the result is an empty message.
+    # _reference_only notice — Findlay's evidence lives under data/extracted (not
+    # data/documents), so the result is still an empty message.
     docs_text = (await tools.list_documents.handler({}))["content"][0]["text"]
     assert "No source documents found for site 'findlay'" in docs_text
     assert "[scope]" not in docs_text  # no reference-only notice, just an honest empty message
 
-    # program_overview resolves within findlay's own (empty) corpus — no Lima OPC leak.
+    # program_overview resolves within findlay's own corpus (which has no OPC estimate) —
+    # no Lima OPC leak.
     po = (await tools.program_overview.handler({}))["content"][0]["text"]
     assert "Program construction total" not in po
 

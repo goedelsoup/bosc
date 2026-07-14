@@ -1,0 +1,81 @@
+doc_id: usace-lrd-blanchard-review-plan-2024
+source_path: https://www.lrd.usace.army.mil/Mission/Public-Review-Approved-Plans/Article/3643262/blanchard-river-watershed-ohio-feasibility-report/
+kind: usace
+pages_read: []
+image_pages_read: []
+dpi: 0
+method: >-
+  manual transcription of the USACE Great Lakes and Ohio River Division (LRD) "Public Review /
+  Approved Plans" article (article #3643262). The LRD page returned HTTP 403 to a direct fetch and
+  to curl (Akamai "Access Denied"); the body was recovered through a reader proxy and cross-checked
+  against the program FAQ (hancockcountyflooding.com/faq) for the 2015 Corps recommendation it
+  supersedes. Figures/dates read from the article text, not the filename.
+source_text_excerpt: >-
+  Blanchard River Watershed, Ohio Feasibility Report. Published Jan. 11, 2024. "This Review Plan
+  defines the scope and level of agency and peer review for the Feasibility Study of flood risk
+  management and ecosystem restorations plans for the Blanchard River Watershed, Ohio." The article
+  is a brief announcement linking to a related document on DVIDSHUB.
+action:
+  confidence: medium
+  warnings:
+  - >-
+    The LRD source page 403'd on direct WebFetch and on curl (Akamai "Access Denied"); the body was
+    obtained via a reader proxy (r.jina.ai). Treat the verbatim string and the 2024-01-11 date as
+    reader-proxy-recovered, not a clean primary read — the article should be re-captured from a
+    non-datacenter IP to lock byte-verbatim text.
+  - >-
+    Whether the 2024-01-11 Review Plan signals a RENEWED/active federal feasibility effort or is an
+    archival closeout is an [inference] from the document type (a Review Plan is USACE QA/peer-review
+    scoping, normally produced at the START of a feasibility study) and its title ("Feasibility Study
+    of flood risk management and ecosystem restorations plans"). The page states no "active / renewed
+    / archival" status in words.
+  - >-
+    The 2015 USACE recommended plan ("Western Diversion of Eagle Creek") is characterized as having a
+    NEGATIVE benefit-cost ratio in the program FAQ, but no NUMERIC 2015 BCR is public in any source
+    reached. Do NOT confuse that failed federal BCR with the LOCAL program's own 2.94 BCR (the 2018
+    Jack Faucett Associates / Stantec analysis) — two different studies.
+  agency: U.S. Army Corps of Engineers, Great Lakes and Ohio River Division (LRD)
+  program: Feasibility Study — flood risk management and ecosystem restoration (Review Plan)
+  permit_no: null
+  action: Review Plan published
+  action_date: '2024-01-11'
+  applicant: null
+  project_name: Blanchard River Watershed, Ohio — Feasibility Report
+  site_address: Blanchard River watershed, Hancock County, Ohio
+  affected_resource: >-
+    Blanchard River watershed flood risk management and ecosystem restoration (the federal study
+    track that runs alongside the locally-funded Hancock County Flood-Risk Reduction Program).
+  note: >-
+    [reference] The USACE LRD Review Plan (published 2024-01-11) scoping agency + peer review for a
+    Feasibility Study of flood risk management and ecosystem restoration plans for the Blanchard River
+    Watershed. This is the open federal thread behind the flood-mitigation instrument chain: the
+    Corps' prior "Western Diversion of Eagle Creek" recommended plan (presented 2015) "was deemed
+    unlikely to meet Federal funding requirements because of its negative cost benefit ratio and low
+    community support" (program FAQ, verbatim). The 2024 posting's status — renewed feasibility effort
+    vs archival — is [open]; it is flagged as a lead. The locally-funded program (MWCD / Stantec, FEMA
+    FMA + ODNR + Ohio Capital Budget) proceeded independently of the federal study.
+
+# --- verbatim context block (extra fields; models allow extra="allow") ----------------------
+dvids_link: referenced from the article (DVIDSHUB) — not separately captured
+supersedes_2015_recommendation:
+  plan: Western Diversion of Eagle Creek
+  presented: '2015'
+  outcome: >-
+    "deemed unlikely to meet Federal funding requirements because of its negative cost benefit ratio
+    and low community support" (hancockcountyflooding.com/faq, verbatim)
+  numeric_bcr: null   # [open] the 2015 USACE Western Diversion BCR is characterized "negative" but never quantified in any public source reached
+corroborating_sources:
+- https://hancockcountyflooding.com/faq   # the 2015 Western Diversion recommendation + BCR characterization
+- https://hancockcountyflooding.com/about-us
+
+relevance:
+  tags: [reference, open, usace, lrd, blanchard-river, feasibility-study, flood-risk-management, ecosystem-restoration, findlay]
+  note: >-
+    The federal feasibility thread of the flood-mitigation instrument chain (issue #1465). Filed in
+    the ``permits-epa`` record group, whose contract label is "Permits — Ohio EPA / USACE" — the
+    agency here IS USACE, so this record is a clean fit for that bucket. Its companion FEMA FMA
+    obligation is not (see fema-fma-obligation-2026.epa.yaml). The 2024-01-11 posting's live-vs-
+    archival status is cross-filed as an open lead (data/site/findlay/leads.yaml · USACE-2024-REVIEW).
+  cross_refs:
+  - data/extracted/findlay/flood/fema-fma-obligation-2026.epa.yaml
+  - data/extracted/findlay/flood-mitigation.md
