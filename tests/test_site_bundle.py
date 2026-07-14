@@ -367,7 +367,9 @@ def test_wpafb_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) ->
     assert {r["rel"] for r in records} == {
         "wpafb/ssa-53fr15876.epa.yaml",
         "wpafb/cercla-ffa-1991.epa.yaml",
-    }, f"records feed should hold exactly the two in-scope agency records, got {sorted(r['rel'] for r in records)}"
+    }, (
+        f"records feed should hold exactly the two in-scope agency records, got {sorted(r['rel'] for r in records)}"
+    )
     assert len(records) == 2
 
 
