@@ -50,6 +50,19 @@ school_compensation:
   school_district: Elida Local School District
   jvsd: Apollo Career Center (JVSD)
   school_board_authorization: {resolution: '5-25-2', date: '2025-05-20'}
+  school_board_authorization_date_note: >-
+    RESOLVED 2026-07-13 (issue #1477): the Elida BOE PILOT authorization is a SINGLE event on
+    2025-05-20 (resolution 5-25-2). Three independent sources agree: (1) this CRA (county-produced);
+    (2) the PAAC board minutes — "School District PILOT $250,000/yr proposed (Elida board 2025-05-20)"
+    (paac-board-minutes.minutes.yaml, 2025-03-27 p.39); and (3) contemporaneous news — The Lima News
+    "Talks continue for proposed American Township data center" (2025-05-27) reports "On May 20, the
+    Elida Board of Education approved a resolution to accept a Payment in Lieu of Taxes (PILOT) from
+    Bistrozzi, LLC." A search for a distinct 2026 Elida vote found NONE; an unverified research claim
+    of a "2026-05-20" PILOT approval is a same-date-different-year artifact (the March 2026 coverage is
+    the Google *reveal*, not a new authorization). Do NOT add a duplicate 2026 PILOT event. Note the
+    resolution number "5-25-2" is the district's own 2025-05-20 numbering (year-month-sequence), not a
+    2026 date. [verified as to 2025-05-20; the "no 2026 event" is a negative finding — no primary Elida
+    BoardDocs record was pulled, but three sources converge and none records a second vote.]
   amounts_public: false   # the School District Compensation Agreement $ are NOT in this document
   statutory_floor: >-
     R.C. 3735.671(A)(2) — the County estimated the compensation equals/exceeds 25% of the
