@@ -52,13 +52,17 @@ def test_facility_states() -> None:
     urbana = SITES["urbana"]
     assert urbana.facility is not None
     assert domain_states(urbana, _counts(**{"economics-demand-pressure": 1}))["facility"] == "live"
-    # No facility disclosed → absent (grid backdrop only).
+    # Springfield's FAQ-grounded facility (#1412, 5C/Vultr "CMH01"): disclosed + its feed → live.
     springfield = SITES["springfield"]
-    assert springfield.facility is None
+    assert springfield.facility is not None
     assert (
         domain_states(springfield, _counts(**{"economics-demand-pressure": 1}))["facility"]
-        == "absent"
+        == "live"
     )
+    # No facility disclosed → absent (grid backdrop only, no fabricated campus load share).
+    xenia = SITES["xenia"]
+    assert xenia.facility is None
+    assert domain_states(xenia, _counts(**{"economics-demand-pressure": 1}))["facility"] == "absent"
 
 
 # --- places ---------------------------------------------------------------------------------
@@ -174,11 +178,13 @@ def test_tier_case_urbana() -> None:
 
 
 def test_tier_backdrop_leads_only() -> None:
-    # Springfield's honest shape: floor + a leads board only — no structured corpus, no committed
+    # The floor-plus-a-leads-board-only shape: no facility, no structured corpus, no committed
     # parcels. record/places/facility absent, story seeded (leads) does NOT elevate to case, so the
-    # tier is `backdrop`. (Urbana was this shape pre-#1328, before its corpus was scoped in.)
-    springfield = SITES["springfield"]
-    states = domain_states(springfield, _counts(leads=2))
+    # tier is `backdrop`. (Springfield was this shape pre-#1412, before its 5C/Vultr facility was
+    # pinned; Xenia carries it now — facility-less, corpus-less.)
+    xenia = SITES["xenia"]
+    assert xenia.facility is None
+    states = domain_states(xenia, _counts(leads=2))
     assert states["record"] == "absent"
     assert states["places"] == "absent"
     assert states["facility"] == "absent"
@@ -205,7 +211,7 @@ def test_tier_stub() -> None:
 
 # --- compute_readiness block + invariants ---------------------------------------------------
 def test_compute_readiness_block_shape() -> None:
-    block = compute_readiness(SITES["springfield"], _counts(leads=2))
+    block = compute_readiness(SITES["xenia"], _counts(leads=2))
     assert set(block) == {"domains", "tier"}
     assert set(block["domains"]) == set(DOMAINS)  # type: ignore[arg-type]
     assert block["tier"] == "backdrop"
