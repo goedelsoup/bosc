@@ -263,6 +263,59 @@ def test_summarize_flags_echo_reported_exceedance_with_parameter_context() -> No
     assert doc["exceedances"][0]["violations"][0]["code"] == "E90"
 
 
+def test_reporting_violation_is_not_an_exceedance() -> None:
+    # ECHO's NPDESViolations carries effluent violations (code E…) *and* DMR reporting /
+    # non-receipt lapses (code D…, e.g. D80 "Monitor Only - Overdue"). Only an effluent
+    # over-limit is a receiving-water exceedance; a paperwork lapse must never inflate the list.
+    assert echo_dmr._is_effluent_violation(
+        echo_dmr.DmrViolation(code="E90", desc=None, severity=None, severity_desc=None)
+    )
+    assert not echo_dmr._is_effluent_violation(
+        echo_dmr.DmrViolation(code="D80", desc=None, severity=None, severity_desc=None)
+    )
+    param = echo_dmr.DmrParameter(
+        outfall="581",
+        outfall_type=None,
+        parameter_code="51129",
+        parameter_desc="Biosolids weight",
+        monitoring_location=None,
+        rows=[
+            echo_dmr.DmrRow(
+                period_end="2023-03-31",
+                value=None,
+                unit=None,
+                qualifier=None,
+                stat_base="MO AVG",
+                limit=None,
+                limit_type=None,
+                exceedance_pct=None,  # a reporting lapse carries no over-limit percentage
+                nodi=None,
+                violations=[
+                    echo_dmr.DmrViolation(
+                        code="D80",
+                        desc="DMR, Monitor Only - Overdue",
+                        severity="1",
+                        severity_desc="DMR Non-Receipt Reporting Violation",
+                    )
+                ],
+            )
+        ],
+    )
+    chart = echo_dmr.EffluentChart(
+        npdes_id="OH0027421",
+        name="Sidney WWTP",
+        permit_type=None,
+        permit_status=None,
+        major_minor=None,
+        snc_status=None,
+        start_date="2023-01-01",
+        end_date="2023-12-31",
+        parameters=[param],
+    )
+    summary = echo_dmr.summarize_discharge(chart)
+    assert summary.exceedances == []  # the D80 overdue report is not an effluent exceedance
+
+
 def test_offline_cache_miss_raises(hydro_settings: Settings) -> None:
     # A permit with no committed fixture -> offline miss must be loud, not silent.
     with pytest.raises(HydroOfflineError):

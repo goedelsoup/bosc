@@ -273,6 +273,18 @@ def _parse_violations(raw: Any) -> list[DmrViolation]:
     return violations
 
 
+def _is_effluent_violation(v: DmrViolation) -> bool:
+    """True if ECHO classifies this as an effluent-limit violation (not a reporting lapse).
+
+    ECHO/ICIS-NPDES ``ViolationCode`` prefixes: **E** = effluent violation (``E90`` = a DMR
+    value exceeding a numeric limit); **D** = DMR reporting / non-receipt (``D80`` "Monitor
+    Only - Overdue", ``D90`` overdue); **C** = compliance-schedule. Only an effluent violation
+    is a receiving-water *exceedance* — a "Monitor Only - Overdue" is a paperwork lapse, not an
+    over-limit discharge, and must not inflate the exceedance list.
+    """
+    return v.code is not None and v.code.upper().startswith("E")
+
+
 def _parse_rows(dmrs: list[dict[str, Any]]) -> list[DmrRow]:
     rows: list[DmrRow] = []
     for dm in dmrs:
@@ -391,10 +403,12 @@ def summarize_discharge(
     # CSO/bypass outfalls: features carrying the overflow-volume parameter.
     cso = len({p.outfall for p in chart.series(OVERFLOW_PARAM)})
 
-    # Exceedances: only rows ECHO itself flagged — a positive ExceedencePct *or* an
-    # attached NPDESViolations entry. Both are ECHO's own determination; nothing here is
-    # computed by comparing a value to its limit. Enriched with the parameter/outfall so
-    # the summary records which pollutant exceeded where.
+    # Exceedances: only rows ECHO itself flagged as an *effluent* over-limit — a positive
+    # ExceedencePct, or an attached NPDESViolations entry ECHO classifies as an effluent
+    # violation (code E…). Both are ECHO's own determination; nothing here is computed by
+    # comparing a value to its limit, and reporting/non-receipt violations (D-codes) are
+    # excluded so a "Monitor Only - Overdue" never masquerades as a discharge exceedance.
+    # Enriched with the parameter/outfall so the summary records which pollutant exceeded where.
     exceedances = [
         DmrExceedance(
             outfall=p.outfall,
@@ -412,7 +426,8 @@ def summarize_discharge(
         )
         for p in chart.parameters
         for r in p.rows
-        if (r.exceedance_pct is not None and r.exceedance_pct > 0.0) or r.violations
+        if (r.exceedance_pct is not None and r.exceedance_pct > 0.0)
+        or any(_is_effluent_violation(v) for v in r.violations)
     ]
 
     return DischargeSummary(
