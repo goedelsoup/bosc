@@ -1,0 +1,47 @@
+meta:
+  subject: NOAA Atlas-14 design-storm depths — Rocky Fork Mohican corridor
+  source: NOAA Atlas-14 PDS, English depths (HDSC point query)
+  point:
+    latitude: 40.7585
+    longitude: -82.5155
+  units: inches (point precipitation depth)
+ddf:
+  latitude: 40.7585
+  longitude: -82.5155
+  durations:
+  - 60-min
+  - 6-hr
+  - 12-hr
+  - 24-hr
+  return_periods:
+  - 2
+  - 10
+  - 25
+  - 50
+  - 100
+  depths_in:
+    60-min:
+      '2': 1.32
+      '10': 1.93
+      '25': 2.28
+      '50': 2.55
+      '100': 2.82
+    6-hr:
+      '2': 1.91
+      '10': 2.82
+      '25': 3.41
+      '50': 3.89
+      '100': 4.41
+    12-hr:
+      '2': 2.26
+      '10': 3.3
+      '25': 3.98
+      '50': 4.56
+      '100': 5.17
+    24-hr:
+      '2': 2.62
+      '10': 3.76
+      '25': 4.5
+      '50': 5.12
+      '100': 5.78
+  source: NOAA Atlas-14 PDS, English depths (HDSC point query)
