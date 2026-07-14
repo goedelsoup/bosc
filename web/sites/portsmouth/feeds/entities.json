@@ -1,0 +1,282 @@
+[
+  {
+    "key": "GENERAL DYNAMICS",
+    "display": "GENERAL DYNAMICS CORPORATION",
+    "kind": "corporate",
+    "classification": "corporate_defense",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "GENERAL DYNAMICS CORPORATION"
+    ],
+    "signals": [],
+    "roles": {},
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/gleif/lei-records.yaml",
+      "data/reference/usaspending/awards.yaml"
+    ],
+    "lei": "9C1X8XOOTYY2FNYTVH06",
+    "uei": "VF58HFRNGEL8",
+    "federal_obligations": 299067439090.79
+  },
+  {
+    "key": "GENERAL DYNAMICS LAND SYSTEMS",
+    "display": "General Dynamics Land Systems Inc.",
+    "kind": "corporate",
+    "classification": "corporate_defense",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "General Dynamics Land Systems Inc."
+    ],
+    "signals": [],
+    "roles": {
+      "jsmc_operator": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "data/reference/gleif/lei-records.yaml",
+      "data/reference/usaspending/awards.yaml"
+    ],
+    "lei": "875500ULXB4CYQSJVA03",
+    "uei": "HAWKSQF848W7",
+    "federal_obligations": 33579510703.85
+  },
+  {
+    "key": "TILTED GATE",
+    "display": "Tilted Gate LLC",
+    "kind": "corporate",
+    "classification": "corporate_domestic",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Tilted Gate LLC",
+      "Tilted Gate, LLC"
+    ],
+    "signals": [],
+    "roles": {
+      "epa_applicant": 10
+    },
+    "parcels": [],
+    "addresses": [
+      "2801 Centerville Rd., 1st FL. (PMP 160), Wilmington, DE 19808",
+      "2801 Centerville Rd., 1st Floor (PMB160), Wilmington, DE 19808",
+      "2801 Centerville Road, 1st Floor (PMB 160), Wilmington, Delaware 19808",
+      "2801 Centerville Road, Wilmington, DE 19808"
+    ],
+    "sources": [
+      "permits/dazzler-permits/4071697.epa.yaml",
+      "permits/dazzler-permits/4071709.epa.yaml",
+      "permits/dazzler-permits/4071710.epa.yaml",
+      "permits/dazzler-permits/4081890.epa.yaml",
+      "permits/dazzler-permits/4081896.epa.yaml",
+      "permits/dazzler-permits/4081897.epa.yaml",
+      "permits/dazzler-permits/4081903.epa.yaml",
+      "permits/dazzler-permits/4081908.epa.yaml",
+      "permits/dazzler-permits/4081909.epa.yaml",
+      "permits/dazzler-permits/4081910.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "EMH&T",
+    "display": "EMH&T",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "EMH&T"
+    ],
+    "signals": [],
+    "roles": {
+      "firm": 8
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/dazzler-permits/4071697.epa.yaml",
+      "permits/dazzler-permits/4071709.epa.yaml",
+      "permits/dazzler-permits/4071710.epa.yaml",
+      "permits/dazzler-permits/4081890.epa.yaml",
+      "permits/dazzler-permits/4081897.epa.yaml",
+      "permits/dazzler-permits/4081903.epa.yaml",
+      "permits/dazzler-permits/4081908.epa.yaml",
+      "permits/dazzler-permits/4081909.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "EMH&T ENGINEERS",
+    "display": "EMH&T (Engineers, Surveyors, Planners, Scientists)",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "EMH&T (Engineers, Surveyors, Planners, Scientists)"
+    ],
+    "signals": [],
+    "roles": {
+      "firm": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/dazzler-permits/4081896.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "HEATHER DARDINGER",
+    "display": "Heather Dardinger",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Heather Dardinger"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 4
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/dazzler-permits/4071709.epa.yaml",
+      "permits/dazzler-permits/4081890.epa.yaml",
+      "permits/dazzler-permits/4081897.epa.yaml",
+      "permits/dazzler-permits/4081908.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "KATIE SAMPLES",
+    "display": "Katie Samples",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Katie Samples"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/dazzler-permits/4081903.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "RANDY BARRERA",
+    "display": "Randy Barrera",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Randy Barrera"
+    ],
+    "signals": [],
+    "roles": {
+      "principal": 3
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/dazzler-permits/4071709.epa.yaml",
+      "permits/dazzler-permits/4081903.epa.yaml",
+      "permits/dazzler-permits/4081908.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "SCOTT ZIANCE",
+    "display": "Scott J. Ziance",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Scott J. Ziance"
+    ],
+    "signals": [],
+    "roles": {
+      "permit_contact": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/dazzler-permits/4081908.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "TIMOTHY CHADWICK",
+    "display": "Timothy Chadwick",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Timothy Chadwick"
+    ],
+    "signals": [],
+    "roles": {
+      "principal": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/dazzler-permits/4081910.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "VORYS",
+    "display": "Vorys, Sater, Seymour, and Pease",
+    "kind": "individual",
+    "classification": "individual",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Vorys, Sater, Seymour, and Pease"
+    ],
+    "signals": [],
+    "roles": {
+      "firm": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "permits/dazzler-permits/4081908.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  }
+]

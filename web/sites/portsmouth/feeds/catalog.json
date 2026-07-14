@@ -1,0 +1,2290 @@
+[
+  {
+    "id": "bundle-records",
+    "title": "The published content bundle — typed feeds + manifest (watermark export)",
+    "scope": "bundle",
+    "collection": "bundle",
+    "status": "reviewed",
+    "producer_kind": "derived",
+    "command": "export",
+    "connector_ref": "watermark.site.export",
+    "source": "watermark export — assembled from the committed corpus + reference datasets",
+    "external_url": null,
+    "license": "Site content — CC BY 4.0 over public-record sources (see web/README.md)",
+    "access_tier": "public",
+    "site_scope": "slug-scoped",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "bundle",
+      "export",
+      "frontend"
+    ],
+    "storage": [],
+    "observed": {
+      "exists": true,
+      "sha256": null,
+      "size_bytes": 0,
+      "lfs_materialized": true,
+      "file_count": 0,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "watermark export — assembled from the committed corpus + reference datasets",
+      "source_kind": "derived",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark export",
+      "verified": false
+    }
+  },
+  {
+    "id": "onboard-bundle",
+    "title": "Full site onboarding — every reach/economics connector, in dependency order",
+    "scope": "derived",
+    "collection": "derived",
+    "status": "reviewed",
+    "producer_kind": "derived",
+    "command": null,
+    "connector_ref": null,
+    "source": "virtual aggregate — resolved by `watermark catalog run onboard-bundle --site <slug>`",
+    "external_url": null,
+    "license": null,
+    "access_tier": "public",
+    "site_scope": "slug-scoped",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "onboarding",
+      "aggregate"
+    ],
+    "storage": [],
+    "observed": {
+      "exists": true,
+      "sha256": null,
+      "size_bytes": 0,
+      "lfs_materialized": true,
+      "file_count": 0,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "virtual aggregate — resolved by `watermark catalog run onboard-bundle --site <slug>`",
+      "source_kind": "derived",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "data-centers",
+    "title": "Per-Site Data-Center Activity Register",
+    "scope": "extracted",
+    "collection": "extracted",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "BOSC site-onboarding discovery — verified public-record register of per-site data-center activity (Columbus/New Albany/Springfield)",
+    "external_url": null,
+    "license": "Curated from cited public sources",
+    "access_tier": "public",
+    "site_scope": "slug-scoped",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-06-22",
+    "tags": [
+      "data-centers",
+      "discovery",
+      "onboarding",
+      "per-site"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/{site}/data-centers.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "65b7970fe59cd062eee0f860222c58a352ff4e057d069bcde730b68b76819906",
+      "size_bytes": 128115,
+      "lfs_materialized": true,
+      "file_count": 11,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "BOSC site-onboarding discovery — verified public-record register of per-site data-center activity (Columbus/New Albany/Springfield)",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "grid",
+    "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
+    "scope": "extracted",
+    "collection": "grid",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "U.S. Department of Energy (CESER) FPA §202(c) emergency orders 202-26-33 / 202-26-32 and PJM Interconnection's underlying application — captured under data/documents/grid/pjm-202c-2026/; AEP Ohio's Lyka Transmission Project fact sheet + map — captured under data/documents/grid/aep-lyka-2026/",
+    "external_url": null,
+    "license": "Public record (federal agency order / regulatory filing); AEP Ohio public project materials",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "grid",
+      "reliability-event",
+      "backup-generation",
+      "pjm",
+      "section-202c",
+      "dispatch",
+      "opsb",
+      "transmission",
+      "siting"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/grid/pjm-202c-emergency-2026.event.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/grid/aep-lyka-transmission-2026.project.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "c4a18667231164be035c927365116d5ce692787aac05222c9c31b4ccfed1c44c",
+      "size_bytes": 19814,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "U.S. Department of Energy (CESER) FPA §202(c) emergency orders 202-26-33 / 202-26-32 and PJM Interconnection's underlying application — captured under data/documents/grid/pjm-202c-2026/; AEP Ohio's Lyka Transmission Project fact sheet + map — captured under data/documents/grid/aep-lyka-2026/",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "meetings",
+    "title": "Per-Site Civic Meeting Records (Slug-Scoped)",
+    "scope": "extracted",
+    "collection": "meetings",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "subdivisions download",
+    "connector_ref": "watermark.civic",
+    "source": "Per-site governing bodies (e.g. City of Lima council) — published meeting documents, scraped per watershed-point site",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "slug-scoped",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-06-08",
+    "tags": [
+      "civic",
+      "meetings",
+      "per-site",
+      "slug-scoped"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/{site}/meetings/download-manifest.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/{site}/meetings/meeting-index.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "120e7875d271cb9ee515ae71e986aa3dad1317f69af21c26dea9c0494007980c",
+      "size_bytes": 46166,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Per-site governing bodies (e.g. City of Lima council) — published meeting documents, scraped per watershed-point site",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark subdivisions download",
+      "verified": true
+    }
+  },
+  {
+    "id": "permits-dazzler-portsmouth",
+    "title": "Project Dazzler Permit Extractions (Scioto County §401 / wetland mitigation)",
+    "scope": "extracted",
+    "collection": "permits",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA (DSW §401 / PTI) and USACE (waters-of-the-US / wetland determinations) for \"Project Dazzler\" — the hyperscale campus in Green Township, Scioto County, OH (EMH&T job 20250390), filed by the Dazzler-entity LLC",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:portsmouth",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "permits",
+      "section-401",
+      "wetland",
+      "dazzler",
+      "portsmouth"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/permits/dazzler-permits/4071697.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/permits/dazzler-permits/4071709.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/permits/dazzler-permits/4071710.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/permits/dazzler-permits/4081890.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/permits/dazzler-permits/4081896.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/permits/dazzler-permits/4081897.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/permits/dazzler-permits/4081903.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/permits/dazzler-permits/4081908.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/permits/dazzler-permits/4081909.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/permits/dazzler-permits/4081910.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "13816892125af4636252f61b9270d66d7c61788da40c488a6960106ed43734af",
+      "size_bytes": 25250,
+      "lfs_materialized": true,
+      "file_count": 10,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio EPA (DSW §401 / PTI) and USACE (waters-of-the-US / wetland determinations) for \"Project Dazzler\" — the hyperscale campus in Green Township, Scioto County, OH (EMH&T job 20250390), filed by the Dazzler-entity LLC",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "air-emission-factors",
+    "title": "Genset Emission Factors (EPA AP-42 §3.4)",
+    "scope": "reference",
+    "collection": "air",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "EPA AP-42, 5th ed., Vol. I, Ch. 3.4 (Large Stationary Diesel Engines, 10/96) — verbatim transcription of Table 3.4-1 (gaseous) and Table 3.4-2 (particle sizing) from the cited EPA PDF",
+    "external_url": null,
+    "license": "U.S. public domain (EPA publication)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "air",
+      "emission-factors",
+      "ap42",
+      "diesel-genset",
+      "reference"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/air/emission-factors/ap42-3.4.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "942c0aebcb1442054eba4b822bd02f47134c33cc71cc6d763f915fb02f2e175a",
+      "size_bytes": 3463,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "EPA AP-42, 5th ed., Vol. I, Ch. 3.4 (Large Stationary Diesel Engines, 10/96) — verbatim transcription of Table 3.4-1 (gaseous) and Table 3.4-2 (particle sizing) from the cited EPA PDF",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "air-naaqs",
+    "title": "National Ambient Air Quality Standards (NAAQS)",
+    "scope": "reference",
+    "collection": "air",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "40 CFR Part 50 / EPA NAAQS Table — verbatim transcription of the primary criteria-pollutant standards (µg/m³) from the cited EPA source",
+    "external_url": null,
+    "license": "U.S. public domain (EPA / CFR publication)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "air",
+      "naaqs",
+      "criteria-pollutants",
+      "dispersion",
+      "reference"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/air/naaqs/naaqs.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "2aad08503a34a32a25836da094f97d60298bdc569e22af1eaf751f583fb32aec",
+      "size_bytes": 3301,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "40 CFR Part 50 / EPA NAAQS Table — verbatim transcription of the primary criteria-pollutant standards (µg/m³) from the cited EPA source",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "compute",
+    "title": "AI Accelerator & Rack-Density Compute Reference",
+    "scope": "reference",
+    "collection": "compute",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Vendor datasheets (NVIDIA H100/H200/B200/GB200; Google TPU v5e/v5p/v6e) + in-corpus relator data appendix",
+    "external_url": null,
+    "license": "Third-party vendor datasheets + in-corpus appendix (reference use)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-06-11",
+    "tags": [
+      "compute",
+      "accelerators",
+      "rack-density",
+      "datacenter",
+      "reference"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/compute/accelerators.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/compute/rack-density.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "4a7382e852780bb47c66520f601ceaece298b9c4803d5fe4c5a7d3c7116b2849",
+      "size_bytes": 12120,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Vendor datasheets (NVIDIA H100/H200/B200/GB200; Google TPU v5e/v5p/v6e) + in-corpus relator data appendix",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "datacenter-industry",
+    "title": "Data-Center Industry Reference Priors (Uncertainty Bands)",
+    "scope": "reference",
+    "collection": "datacenter-industry",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Pooled meta-analysis of published industry reports (Epoch AI, US Chamber CTEC, McKinsey, Good Jobs First, Brookings, Virginia JLARC, DOE/LBNL, Green Grid/Vertiv)",
+    "external_url": null,
+    "license": "Pooled third-party published reports (per-prior sources cited)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-06-17",
+    "tags": [
+      "datacenter",
+      "priors",
+      "uncertainty",
+      "meta-analysis",
+      "reference"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/datacenter-industry/priors.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "863defd49f0caae14a18840e4de9c32a6846e4ca1f8a423e350ac92ff3100cc8",
+      "size_bytes": 14800,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Pooled meta-analysis of published industry reports (Epoch AI, US Chamber CTEC, McKinsey, Good Jobs First, Brookings, Virginia JLARC, DOE/LBNL, Green Grid/Vertiv)",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "economics-baseline",
+    "title": "Scioto County, OH Economic Baseline (BLS QCEW + US Census ACS)",
+    "scope": "reference",
+    "collection": "economics",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "economics",
+    "connector_ref": "watermark.economics.connectors.qcew",
+    "source": "BLS QCEW annual averages (keyless) + US Census ACS 5-year (B01003_001E population, B19013_001E median household income)",
+    "external_url": "https://www.bls.gov/cew/",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "keyed",
+    "site_scope": "slug-scoped",
+    "cadence": "annual",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "economics",
+      "qcew",
+      "census",
+      "employment",
+      "wages",
+      "income",
+      "baseline"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/economics/baseline.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/economics/{site}/baseline.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "269fb3f3738ddd0169fcd3418935828d626ca26f0bc1eff001124cf9c766873e",
+      "size_bytes": 353396,
+      "lfs_materialized": true,
+      "file_count": 22,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "BLS QCEW annual averages (keyless) + US Census ACS 5-year (B01003_001E population, B19013_001E median household income)",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark economics",
+      "verified": true
+    }
+  },
+  {
+    "id": "eia",
+    "title": "PJM Balancing-Authority Interchange Aggregates (EIA-930)",
+    "scope": "reference",
+    "collection": "eia",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "interchange",
+    "connector_ref": "watermark.economics.connectors.eia",
+    "source": "U.S. EIA — Form EIA-930 Hourly Electric Grid Monitor (PJM region demand/net-gen/interchange)",
+    "external_url": "https://www.eia.gov/electricity/gridmonitor/",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "keyed",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "eia",
+      "eia-930",
+      "pjm",
+      "interchange",
+      "grid"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/eia/ba-interchange.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "e1a519a7faed4746aadc62cb77a531398940ace7c6360d724f06f2d2888b745b",
+      "size_bytes": 1539,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "U.S. EIA — Form EIA-930 Hourly Electric Grid Monitor (PJM region demand/net-gen/interchange)",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark interchange",
+      "verified": true
+    }
+  },
+  {
+    "id": "eia-consumer-energy",
+    "title": "Ohio Consumer Energy-Cost Baseline (EIA API v2)",
+    "scope": "reference",
+    "collection": "eia",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "eia",
+    "connector_ref": "watermark.economics.energy",
+    "source": "U.S. EIA — API v2 seriesid route (OH residential electricity/gas price, total retail sales)",
+    "external_url": "https://www.eia.gov/opendata/",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "keyed",
+    "site_scope": "slug-scoped",
+    "cadence": "annual",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "eia",
+      "electricity",
+      "energy-prices",
+      "consumer",
+      "ohio"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/eia/consumer-energy.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/eia/{site}/consumer-energy.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "534d3399b66f259df22e66254167a81b2c1caa35bf8998a8752d3447a4661552",
+      "size_bytes": 47694,
+      "lfs_materialized": true,
+      "file_count": 22,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "U.S. EIA — API v2 seriesid route (OH residential electricity/gas price, total retail sales)",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark eia",
+      "verified": true
+    }
+  },
+  {
+    "id": "eia-demand-pressure",
+    "title": "Facility Demand → Consumer Price-Pressure Sensitivity (EIA + facility load)",
+    "scope": "reference",
+    "collection": "eia",
+    "status": "reviewed",
+    "producer_kind": "derived",
+    "command": "eia",
+    "connector_ref": "watermark.economics.energy",
+    "source": "Derived — facility draw (air permit, #87) sized against EIA state retail sales + residential price (#91)",
+    "external_url": "https://www.eia.gov/opendata/",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "keyed",
+    "site_scope": "slug-scoped",
+    "cadence": "annual",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "eia",
+      "electricity",
+      "energy-prices",
+      "data-center",
+      "demand"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/eia/demand-pressure.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/eia/{site}/demand-pressure.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "d8f37b2b0d69fcd76554248d7b408b897cf4e110bff02f14ca5f2246ed3d2332",
+      "size_bytes": 24535,
+      "lfs_materialized": true,
+      "file_count": 8,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Derived — facility draw (air permit, #87) sized against EIA state retail sales + residential price (#91)",
+      "source_kind": "derived",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark eia",
+      "verified": false
+    }
+  },
+  {
+    "id": "eia-grid-profile",
+    "title": "Per-Site Campus Grid Profile — Serving Utility, BA & Load Share (EIA-861/930)",
+    "scope": "reference",
+    "collection": "eia",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "grid",
+    "connector_ref": "watermark.grid.utility",
+    "source": "U.S. EIA — Form EIA-861 (AEP Ohio retail sales) + Form EIA-930 (PJM hourly demand)",
+    "external_url": "https://www.eia.gov/electricity/data/eia861/",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "keyed",
+    "site_scope": "slug-scoped",
+    "cadence": "annual",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "eia",
+      "grid",
+      "electricity",
+      "pjm",
+      "aep-ohio",
+      "indiana-michigan-power",
+      "aes-ohio"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/eia/grid-profile.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/eia/{site}/grid-profile.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "5a564010f3a8c0087de444e1907f0801deabe9535e686fc79916c3b8c2b5efb7",
+      "size_bytes": 79382,
+      "lfs_materialized": true,
+      "file_count": 22,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "U.S. EIA — Form EIA-861 (AEP Ohio retail sales) + Form EIA-930 (PJM hourly demand)",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark grid",
+      "verified": true
+    }
+  },
+  {
+    "id": "federal",
+    "title": "Federal Energy-Policy & National-Output Backdrop (IRA + EIA + LBNL/DOE)",
+    "scope": "reference",
+    "collection": "federal",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "federal",
+    "connector_ref": "watermark.economics.connectors.eia",
+    "source": "EIA national series (net generation, retail price) + LBNL/DOE 2024 Data Center Energy Usage Report + Inflation Reduction Act (Pub. L. 117-169)",
+    "external_url": "https://www.eia.gov/opendata/",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "keyed",
+    "site_scope": "basin-shared",
+    "cadence": "annual",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "federal",
+      "energy",
+      "eia",
+      "ira",
+      "policy"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/federal/federal-energy.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "2f3001719a94893ce39eaaa60704e4e5c012c15e2a6ee2513daad62c03d8538a",
+      "size_bytes": 9523,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "EIA national series (net generation, retail price) + LBNL/DOE 2024 Data Center Energy Usage Report + Inflation Reduction Act (Pub. L. 117-169)",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark federal",
+      "verified": true
+    }
+  },
+  {
+    "id": "ferc",
+    "title": "FERC↔PUCO Regulatory Seam (Federal Power Act + FERC eLibrary)",
+    "scope": "reference",
+    "collection": "ferc",
+    "status": "reviewed",
+    "producer_kind": "derived",
+    "command": "ferc",
+    "connector_ref": null,
+    "source": "Federal Power Act §§205/206/201(b) + FERC eLibrary dockets (ER24-2172, AD24-11-000) + FERC Form 1 (Ohio Power Co.)",
+    "external_url": "https://elibrary.ferc.gov/",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "ferc",
+      "puco",
+      "jurisdiction",
+      "regulatory",
+      "dockets"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/ferc/ferc-seam.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "14e9aaee251502fec65e0423b389351640cdca76c93a772d7292b6f5274abae4",
+      "size_bytes": 5097,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Federal Power Act §§205/206/201(b) + FERC eLibrary dockets (ER24-2172, AD24-11-000) + FERC Form 1 (Ohio Power Co.)",
+      "source_kind": "derived",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark ferc",
+      "verified": false
+    }
+  },
+  {
+    "id": "gleif",
+    "title": "Corridor Entity LEIs (GLEIF)",
+    "scope": "reference",
+    "collection": "gleif",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "gleif",
+    "connector_ref": "watermark.gleif",
+    "source": "GLEIF — REST API api.gleif.org (Golden Copy)",
+    "external_url": "https://www.gleif.org/en/lei-data/gleif-golden-copy",
+    "license": "CC0 1.0",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "lei",
+      "gleif",
+      "entities",
+      "ownership",
+      "corridor"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/gleif/lei-records.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "f2ce4ea8de0d36a7c1d51601fac8bdd77c4bdb81e205dedd4177d18753d22bfd",
+      "size_bytes": 4327,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "GLEIF — REST API api.gleif.org (Golden Copy)",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark gleif",
+      "verified": true
+    }
+  },
+  {
+    "id": "greenops",
+    "title": "GreenOps — Anthropic Admin usage & cost",
+    "scope": "reference",
+    "collection": "greenops",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "greenops anthropic",
+    "connector_ref": "watermark.greenops.connectors.anthropic",
+    "source": "Anthropic Admin API — usage_report/messages + cost_report (org usage & cost, by model/workspace)",
+    "external_url": "https://platform.claude.com/docs/en/api/usage-cost-api",
+    "license": null,
+    "access_tier": "keyed",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "greenops",
+      "anthropic",
+      "usage",
+      "cost"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/greenops/anthropic-usage.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "d18e2c3ee9c4ecbfa89d60870336f473e9d0d30cb286e66e1c6cc9c459cc6bb0",
+      "size_bytes": 2445,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Anthropic Admin API — usage_report/messages + cost_report (org usage & cost, by model/workspace)",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark greenops anthropic",
+      "verified": true
+    }
+  },
+  {
+    "id": "greenops-aws",
+    "title": "GreenOps — AWS costs & estimated carbon",
+    "scope": "reference",
+    "collection": "greenops",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "greenops aws",
+    "connector_ref": "watermark.greenops.connectors.aws",
+    "source": "AWS Cost Explorer (ce:GetCostAndUsage) + AWS Sustainability API (GetEstimatedCarbonEmissions, the Customer Carbon Footprint Tool's successor)",
+    "external_url": "https://docs.aws.amazon.com/sustainability/latest/APIReference/Welcome.html",
+    "license": null,
+    "access_tier": "keyed",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "greenops",
+      "aws",
+      "cost",
+      "carbon"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/greenops/aws-costs.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/greenops/aws-carbon.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "ba1fab19e873492150f571a993c1d2a6758116b1c5366ba8c8e96718ae1f17c0",
+      "size_bytes": 8468,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "AWS Cost Explorer (ce:GetCostAndUsage) + AWS Sustainability API (GetEstimatedCarbonEmissions, the Customer Carbon Footprint Tool's successor)",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark greenops aws",
+      "verified": true
+    }
+  },
+  {
+    "id": "greenops-factors",
+    "title": "GreenOps — eGRID carbon-intensity & WUE water factors",
+    "scope": "reference",
+    "collection": "greenops",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "greenops egrid",
+    "connector_ref": "watermark.greenops.connectors.egrid",
+    "source": "EPA eGRID (Emissions & Generation Resource Integrated Database) subregion file + hand-curated WUE benchmarks (EPRI / Uptime Institute / NREL)",
+    "external_url": "https://www.epa.gov/egrid/download-data",
+    "license": null,
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "greenops",
+      "egrid",
+      "carbon",
+      "water",
+      "wue"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/greenops/factors/egrid-2023.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/greenops/factors/wue-benchmarks.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "1140d87f292f822ec9588ecd4b44a6cc7e6fa944dbc3edf48c33b22dd557a83d",
+      "size_bytes": 28705,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "EPA eGRID (Emissions & Generation Resource Integrated Database) subregion file + hand-curated WUE benchmarks (EPRI / Uptime Institute / NREL)",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark greenops egrid",
+      "verified": true
+    }
+  },
+  {
+    "id": "greenops-footprint",
+    "title": "GreenOps — derived compute footprint (usage → electricity → water)",
+    "scope": "reference",
+    "collection": "greenops",
+    "status": "reviewed",
+    "producer_kind": "derived",
+    "command": "greenops footprint --write",
+    "connector_ref": "watermark.greenops.footprint",
+    "source": "derived from the GreenOps connector exports (AWS / GitHub / Anthropic) + the eGRID/WUE factor tables — the modeled usage → electricity → CO2e → water assembly",
+    "external_url": null,
+    "license": null,
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "greenops",
+      "footprint",
+      "electricity",
+      "carbon",
+      "water"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/greenops/footprint.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "273d32241340ec91c85c2e4b59ae68c01571e904f07f6db228fd8ff0bf6e9418",
+      "size_bytes": 9565,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "derived from the GreenOps connector exports (AWS / GitHub / Anthropic) + the eGRID/WUE factor tables — the modeled usage → electricity → CO2e → water assembly",
+      "source_kind": "derived",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark greenops footprint --write",
+      "verified": false
+    }
+  },
+  {
+    "id": "greenops-github",
+    "title": "GreenOps — GitHub Actions minutes & storage",
+    "scope": "reference",
+    "collection": "greenops",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "greenops github",
+    "connector_ref": "watermark.greenops.connectors.github",
+    "source": "GitHub enhanced billing platform — /organizations/{org}/settings/billing/usage (Actions minutes by runner + Git LFS/Packages/shared storage, net cost)",
+    "external_url": "https://docs.github.com/en/rest/billing/enhanced-billing",
+    "license": null,
+    "access_tier": "keyed",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "greenops",
+      "github",
+      "actions",
+      "usage",
+      "storage"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/greenops/github-usage.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "9428e8ced535c9c282fbf67f61851d0343fe47aa96fa2f2867ec7c13dc4e8eca",
+      "size_bytes": 5126,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "GitHub enhanced billing platform — /organizations/{org}/settings/billing/usage (Actions minutes by runner + Git LFS/Packages/shared storage, net cost)",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark greenops github",
+      "verified": true
+    }
+  },
+  {
+    "id": "hydrology-atlas14-corridor-ddf",
+    "title": "NOAA Atlas-14 Corridor Design-Storm Depths (Depth-Duration-Frequency)",
+    "scope": "reference",
+    "collection": "hydrology",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": null,
+    "connector_ref": "watermark.hydrology.connectors.noaa_atlas14",
+    "source": "NOAA NWS HDSC Atlas-14 — precipitation-frequency point query (Partial-Duration Series, English depths)",
+    "external_url": "https://hdsc.nws.noaa.gov/pfds/",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "public",
+    "site_scope": "slug-scoped",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "atlas14",
+      "design-storm",
+      "precipitation-frequency",
+      "ddf",
+      "noaa"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/hydrology/atlas14-corridor-ddf.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/hydrology/{site}/atlas14-corridor-ddf.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "a3826bfb94c19d2b1e545e079befaa6ed6cd8c33611d7c7a6b3775285bc413b6",
+      "size_bytes": 18996,
+      "lfs_materialized": true,
+      "file_count": 22,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "NOAA NWS HDSC Atlas-14 — precipitation-frequency point query (Partial-Duration Series, English depths)",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "hydrology-nasa-power-climatology",
+    "title": "NASA POWER Climate Normals — site climatology",
+    "scope": "reference",
+    "collection": "hydrology",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "nasa-power --write",
+    "connector_ref": "watermark.hydrology.connectors.nasa_power",
+    "source": "NASA POWER (Prediction Of Worldwide Energy Resources) — climatology point REST API (satellite-derived monthly/annual normals)",
+    "external_url": "https://power.larc.nasa.gov/",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "public",
+    "site_scope": "slug-scoped",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "nasa-power",
+      "climatology",
+      "climate-normals",
+      "precipitation",
+      "water-balance"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/hydrology/nasa-power-climatology.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/hydrology/{site}/nasa-power-climatology.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "259bd2e8e5fe316735747d701d425671babcb51af262c154e000a81474518e51",
+      "size_bytes": 58228,
+      "lfs_materialized": true,
+      "file_count": 22,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "NASA POWER (Prediction Of Worldwide Energy Resources) — climatology point REST API (satellite-derived monthly/annual normals)",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark nasa-power --write",
+      "verified": true
+    }
+  },
+  {
+    "id": "hydrology-ohio-principal-streams",
+    "title": "Ohio Principal Streams & Drainage Areas (ODNR, Sherman 1925 / 1999 reprint)",
+    "scope": "reference",
+    "collection": "hydrology",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio DNR, Division of Water — 'Principal Streams and Their Drainage Areas' (C.E. Sherman map, July 1925; reprinted 1999)",
+    "external_url": null,
+    "license": "Ohio state-government work (public domain)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "ohio",
+      "drainage-basins",
+      "odnr",
+      "orientation",
+      "basin-axis"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/hydrology/ohio-principal-streams/principal-streams-and-drainage-areas.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "6cdbc7b5096a17dfd9d003c9e8f0baa77aabb5baafe048a9fb8713eeafb91a8e",
+      "size_bytes": 7337655,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio DNR, Division of Water — 'Principal Streams and Their Drainage Areas' (C.E. Sherman map, July 1925; reprinted 1999)",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "hydrology-reaches",
+    "title": "Reach-network river centerlines — NHDPlus geometry (USGS NLDI)",
+    "scope": "reference",
+    "collection": "hydrology",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "reaches --write",
+    "connector_ref": "watermark.hydrology.connectors.nldi",
+    "source": "USGS NLDI navigation over the NHDPlus flowline network (mainstem from gage 04187100 + tributary WWTP snaps)",
+    "external_url": "https://api.water.usgs.gov/nldi",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "public",
+    "site_scope": "slug-scoped",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "nldi",
+      "nhdplus",
+      "reach",
+      "flowline",
+      "centerline",
+      "usgs",
+      "geojson"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/hydrology/reach-nav.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/hydrology/reaches/lima.geojson",
+        "media_type": "application/geo+json",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "bf00d7b2bfd8b58cb58545fe603d7e56eb40123c77d38bc7a1ec5470e19c83ee",
+      "size_bytes": 90607,
+      "lfs_materialized": true,
+      "file_count": 2,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "USGS NLDI navigation over the NHDPlus flowline network (mainstem from gage 04187100 + tributary WWTP snaps)",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark reaches --write",
+      "verified": true
+    }
+  },
+  {
+    "id": "lsc-status-report",
+    "title": "Ohio LSC Status Report of Legislation",
+    "scope": "reference",
+    "collection": "lsc",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "lsc",
+    "connector_ref": "watermark.hydrology.connectors.lsc",
+    "source": "Ohio Legislative Service Commission — Status Report of Legislation (statusreport.lsc.ohio.gov)",
+    "external_url": "https://statusreport.lsc.ohio.gov/",
+    "license": "Ohio public record",
+    "access_tier": "public",
+    "site_scope": "state:OH",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "lsc",
+      "legislation",
+      "ohio",
+      "statute",
+      "bills"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/lsc/status-report.134.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/lsc/status-report.135.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/lsc/status-report.136.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "6215d2664d23cf0a919a6b63360b567e06dcb43146a2788241b057ba1edace63",
+      "size_bytes": 3203438,
+      "lfs_materialized": true,
+      "file_count": 3,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio Legislative Service Commission — Status Report of Legislation (statusreport.lsc.ohio.gov)",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark lsc",
+      "verified": true
+    }
+  },
+  {
+    "id": "network",
+    "title": "BOSC Watershed-Point Network Synthesis (Maumee Basin)",
+    "scope": "reference",
+    "collection": "network",
+    "status": "reviewed",
+    "producer_kind": "derived",
+    "command": "network",
+    "connector_ref": "watermark.network",
+    "source": "Registered watermark.sites SiteProfiles + per-node committed artifacts (economics, grid, RSEI, low-flow screen) joined over a curated cited basin topology",
+    "external_url": null,
+    "license": "BOSC-derived synthesis (per-attribute provenance inherited from each source artifact)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "network",
+      "basin",
+      "maumee",
+      "cross-site",
+      "synthesis"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/network/basin-network.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/network/topology.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/network/findlay-ottawa-comparison.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "423c47dd57628058e35cebee82a220546d0c9c9f4268278e3f2d064685c3868e",
+      "size_bytes": 21527,
+      "lfs_materialized": true,
+      "file_count": 3,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Registered watermark.sites SiteProfiles + per-node committed artifacts (economics, grid, RSEI, low-flow screen) joined over a curated cited basin topology",
+      "source_kind": "derived",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark network",
+      "verified": false
+    }
+  },
+  {
+    "id": "odd-grants-loans",
+    "title": "Ohio Department of Development — Grants and Loans disbursements (statewide)",
+    "scope": "reference",
+    "collection": "odd",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio Department of Development public transparency portal — direct export",
+    "external_url": "https://development.ohio.gov",
+    "license": "Public records (Ohio state government open data)",
+    "access_tier": "public",
+    "site_scope": "state:OH",
+    "cadence": "annual",
+    "ttl_days": null,
+    "last_refreshed": "2026-06-28",
+    "tags": [
+      "odd",
+      "grants",
+      "loans",
+      "csbg",
+      "heap",
+      "community-development",
+      "economic-development",
+      "ohio"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/odd/grants_and_loans.csv",
+        "media_type": "text/csv",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "c5ed114a5bee122f531cb6641834911f2a2a7c7b67ee1a4072e9ac879a1dd22c",
+      "size_bytes": 19324962,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio Department of Development public transparency portal — direct export",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "odd-tax-incentives",
+    "title": "Ohio Department of Development — Tax Incentives (JCTC/JRTC/Historic/Datacenter)",
+    "scope": "reference",
+    "collection": "odd",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio Department of Development public transparency portal — direct export",
+    "external_url": "https://development.ohio.gov",
+    "license": "Public records (Ohio state government open data)",
+    "access_tier": "public",
+    "site_scope": "state:OH",
+    "cadence": "annual",
+    "ttl_days": null,
+    "last_refreshed": "2026-06-28",
+    "tags": [
+      "odd",
+      "tax-incentives",
+      "jctc",
+      "jrtc",
+      "datacenter",
+      "economic-development",
+      "ohio"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/odd/tax_incentives.csv",
+        "media_type": "text/csv",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "f912bd0e9cdde31cf50e34290d004c60783c161711b41c26df421ef5b2908a57",
+      "size_bytes": 296201,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio Department of Development public transparency portal — direct export",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "odd-tca-minutes",
+    "title": "Ohio Tax Credit Authority — meeting minutes (Jan 2025 – Mar 2026)",
+    "scope": "reference",
+    "collection": "odd",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio Tax Credit Authority public meeting minutes",
+    "external_url": "https://development.ohio.gov",
+    "license": "Public records (Ohio state government)",
+    "access_tier": "public",
+    "site_scope": "state:OH",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-06-29",
+    "tags": [
+      "odd",
+      "tca",
+      "jctc",
+      "jrtc",
+      "tax-incentives",
+      "data-centers",
+      "ohio",
+      "meeting-minutes"
+    ],
+    "storage": [
+      {
+        "relpath": "documents/odd/tca/Meeting_Minutes_1.27.25.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      },
+      {
+        "relpath": "documents/odd/tca/Meeting_Minutes_6.2.2025.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      },
+      {
+        "relpath": "documents/odd/tca/Meeting_Minutes_TCA_1.28.2026_gyzb8y.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      },
+      {
+        "relpath": "documents/odd/tca/Meeting_Minutes_TCA_3.30.2026.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "648ed41712af089ef2eab13fad98ee7ac109eccc7b39887a2249de2948d85b42",
+      "size_bytes": 790174,
+      "lfs_materialized": true,
+      "file_count": 4,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio Tax Credit Authority public meeting minutes",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "odot-driveohio-cv-av",
+    "title": "Ohio CV/AV System Core Service Requirements (DriveOhio / AECOM)",
+    "scope": "reference",
+    "collection": "odot",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "DriveOhio (Ohio DOT) — prepared by AECOM; deliverable item 15",
+    "external_url": "https://driveohio.com",
+    "license": "Public records (Ohio state government)",
+    "access_tier": "public",
+    "site_scope": "state:OH",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-06-29",
+    "tags": [
+      "odot",
+      "driveohio",
+      "cv-av",
+      "infrastructure",
+      "data-centers",
+      "ohio"
+    ],
+    "storage": [
+      {
+        "relpath": "documents/odot/15-Core Service Requirements.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "d7088c0406bca54be57d6a3f4e9dbc867936645d78f4a7c928977d08a8d5059e",
+      "size_bytes": 519135,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "DriveOhio (Ohio DOT) — prepared by AECOM; deliverable item 15",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "oepa-ohd000001-gp",
+    "title": "Ohio EPA Draft General NPDES Permit for Data Center Facilities (OHD000001)",
+    "scope": "reference",
+    "collection": "oepa",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA Division of Surface Water — public notice and permit package",
+    "external_url": "https://epa.ohio.gov",
+    "license": "Public records (Ohio state government)",
+    "access_tier": "public",
+    "site_scope": "state:OH",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-06-29",
+    "tags": [
+      "oepa",
+      "npdes",
+      "general-permit",
+      "data-centers",
+      "ohio",
+      "ohd000001",
+      "cooling-water",
+      "antidegradation"
+    ],
+    "storage": [
+      {
+        "relpath": "documents/oepa/OHD000001_Draft.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      },
+      {
+        "relpath": "documents/oepa/OHD000001_Draft_PN.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      },
+      {
+        "relpath": "documents/oepa/OHD000001_Draft.fs.pdf",
+        "media_type": "application/pdf",
+        "lfs": true
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "ad8b415ac2a8965109916fb65963983d3941d5a6fd8b3537f633d82ed82cbd44",
+      "size_bytes": 677894,
+      "lfs_materialized": true,
+      "file_count": 3,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio EPA Division of Surface Water — public notice and permit package",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "orc",
+    "title": "Ohio Revised Code — Corpus Citation Index",
+    "scope": "reference",
+    "collection": "orc",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "orc",
+    "connector_ref": "watermark.hydrology.connectors.orc",
+    "source": "Ohio LSC code portal — codes.ohio.gov",
+    "external_url": "https://codes.ohio.gov/ohio-revised-code",
+    "license": "Ohio public record",
+    "access_tier": "public",
+    "site_scope": "state:OH",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "orc",
+      "citations",
+      "ohio",
+      "statute",
+      "index"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/orc/citations.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "674d78b7d8fc5f420683f007f0191a672226eeb93b52c903bfc01737613853af",
+      "size_bytes": 3665,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio LSC code portal — codes.ohio.gov",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark orc",
+      "verified": true
+    }
+  },
+  {
+    "id": "orc-orc",
+    "title": "Ohio Revised Code — Full Text (Cited Sections + Titles)",
+    "scope": "reference",
+    "collection": "orc",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "orc",
+    "connector_ref": "watermark.hydrology.connectors.orc",
+    "source": "Ohio LSC code portal — codes.ohio.gov",
+    "external_url": "https://codes.ohio.gov/ohio-revised-code",
+    "license": "Ohio public record",
+    "access_tier": "public",
+    "site_scope": "state:OH",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "orc",
+      "statute",
+      "ohio",
+      "full-text",
+      "legal"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/orc/orc.cited.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/orc/orc.title-1.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/orc/orc.title-13.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/orc/orc.title-15.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/orc/orc.title-17.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/orc/orc.title-23.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/orc/orc.title-3.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/orc/orc.title-35.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/orc/orc.title-37.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/orc/orc.title-45.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/orc/orc.title-53.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/orc/orc.title-57.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/orc/orc.title-general-provisions.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "f7b17468a1b512bf9afc5c5c8103e0ed6d9bd12e973674360af4c9814ec30673",
+      "size_bytes": 36392569,
+      "lfs_materialized": true,
+      "file_count": 13,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio LSC code portal — codes.ohio.gov",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark orc",
+      "verified": true
+    }
+  },
+  {
+    "id": "parcel-assemblage",
+    "title": "Per-Site Parcel Assemblage Geometry",
+    "scope": "reference",
+    "collection": "reference",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "parcels --owner <assembler> --geojson data/reference/<site>/parcel-assemblage.geojson",
+    "connector_ref": "watermark.hydrology.connectors.allen_gis",
+    "source": "Per-site county parcel GIS via the gis_parcel field-map, pulled as f=geojson reprojected to WGS84 (Fort Wayne = Allen County, IN iMap, parcel layer 10)",
+    "external_url": "https://gis1.acimap.us/imapweb/rest/services/QueryLayers/QueryLayers/MapServer/10",
+    "license": "Public records (local government open data)",
+    "access_tier": "public",
+    "site_scope": "slug-scoped",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-07-13",
+    "tags": [
+      "parcels",
+      "gis",
+      "land-assembly",
+      "footprint"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/{site}/parcel-assemblage.geojson",
+        "media_type": "application/geo+json",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "279a8ad713688631ef11dd25e82da5e0ee25476239750bb108b2eb2dfe4b47e8",
+      "size_bytes": 346783,
+      "lfs_materialized": true,
+      "file_count": 4,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Per-site county parcel GIS via the gis_parcel field-map, pulled as f=geojson reprojected to WGS84 (Fort Wayne = Allen County, IN iMap, parcel layer 10)",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark parcels --owner <assembler> --geojson data/reference/<site>/parcel-assemblage.geojson",
+      "verified": true
+    }
+  },
+  {
+    "id": "periplus",
+    "title": "Periplus Corridor GIS (Frozen Fork-Point Import)",
+    "scope": "reference",
+    "collection": "periplus",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Periplus GIS project (the ../gis repository), copied unmodified at the BOSC fork-point commit",
+    "external_url": null,
+    "license": "Imported from the Periplus GIS project (fork-point copy)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "periplus",
+      "gis",
+      "corridor",
+      "geojson",
+      "imported"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/periplus/bosc-parcels.geojson",
+        "media_type": "application/geo+json",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/periplus/corridor-centerline.geojson",
+        "media_type": "application/geo+json",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/periplus/corridor.geojson",
+        "media_type": "application/geo+json",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/periplus/watch-items.geojson",
+        "media_type": "application/geo+json",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "922e09eb27262d28f11a0ca038c23263e0628d48c3b061dd8164bc57831adfff",
+      "size_bytes": 61227,
+      "lfs_materialized": true,
+      "file_count": 4,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Periplus GIS project (the ../gis repository), copied unmodified at the BOSC fork-point commit",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
+    "id": "pjm",
+    "title": "PJM Wholesale-Market Reference (LMP / RPM Capacity / Large-Load Queue)",
+    "scope": "reference",
+    "collection": "pjm",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "pjm",
+    "connector_ref": "watermark.grid.lmp",
+    "source": "PJM Data Miner 2 (da_hrl_lmps, AEP zone) for LMP; PJM RPM Base Residual Auction + interconnection-queue reporting (transcribed) for capacity/queue",
+    "external_url": "https://dataminer2.pjm.com/",
+    "license": "PJM market data (PJM Terms of Use)",
+    "access_tier": "keyed",
+    "site_scope": "basin-shared",
+    "cadence": "annual",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "pjm",
+      "lmp",
+      "capacity",
+      "rpm",
+      "grid"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/pjm/pjm-market.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "eda546118c035662bd711554ca9f244432d8eaf854f3c7dd2735a48843481707",
+      "size_bytes": 1865,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "PJM Data Miner 2 (da_hrl_lmps, AEP zone) for LMP; PJM RPM Base Residual Auction + interconnection-queue reporting (transcribed) for capacity/queue",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark pjm",
+      "verified": true
+    }
+  },
+  {
+    "id": "rsei",
+    "title": "RSEI Toxic-Discharge Water Screen",
+    "scope": "reference",
+    "collection": "rsei",
+    "status": "reviewed",
+    "producer_kind": "derived",
+    "command": "rsei",
+    "connector_ref": "watermark.rsei",
+    "source": "EPA RSEI (water-media releases) × EPA ECHO (receiving water) × Ohio EPA cited 7Q10 — a multi-source derivation",
+    "external_url": "https://www.epa.gov/rsei/ways-get-rsei-results",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "rsei",
+      "toxics",
+      "water",
+      "screening",
+      "derived"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/rsei/toxic-discharge-screen.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "55b000e4196114be8a9fef6c11ef5815a3e56364b5b9418a2a1658ae7c94943f",
+      "size_bytes": 14049,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "EPA RSEI (water-media releases) × EPA ECHO (receiving water) × Ohio EPA cited 7Q10 — a multi-source derivation",
+      "source_kind": "derived",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark rsei",
+      "verified": false
+    }
+  },
+  {
+    "id": "rsei-inventory",
+    "title": "Scioto County, OH RSEI Toxic-Release Inventory (EPA RSEI Public Data Set v2.3.12)",
+    "scope": "reference",
+    "collection": "rsei",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "rsei",
+    "connector_ref": "watermark.rsei",
+    "source": "EPA RSEI Public Data Set v2.3.12 (EPA gaftp Public Release Data), version v2312",
+    "external_url": "https://www.epa.gov/rsei/ways-get-rsei-results",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "public",
+    "site_scope": "slug-scoped",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "rsei",
+      "tri",
+      "toxics",
+      "epa"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/rsei/inventory.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "reference/rsei/{site}/inventory.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "e78ebd57927a63bb3f9a51427ab5f50fee826f7735b354a06af72e6f6f1e6389",
+      "size_bytes": 2721640,
+      "lfs_materialized": true,
+      "file_count": 22,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "EPA RSEI Public Data Set v2.3.12 (EPA gaftp Public Release Data), version v2312",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark rsei",
+      "verified": true
+    }
+  },
+  {
+    "id": "usaspending",
+    "title": "Federal-Award Footprint (USASpending.gov)",
+    "scope": "reference",
+    "collection": "usaspending",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "usaspending",
+    "connector_ref": "watermark.usaspending",
+    "source": "USASpending.gov API (api.usaspending.gov), U.S. Treasury",
+    "external_url": "https://api.usaspending.gov/",
+    "license": "U.S. Government work (public domain)",
+    "access_tier": "public",
+    "site_scope": "basin-shared",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "usaspending",
+      "federal",
+      "awards",
+      "entities",
+      "corridor"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/usaspending/awards.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "de5f7d7fec8ff97ab3b5f5202de00386fcf2026f78723def180d31d73597f270",
+      "size_bytes": 3659,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "USASpending.gov API (api.usaspending.gov), U.S. Treasury",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark usaspending",
+      "verified": true
+    }
+  }
+]

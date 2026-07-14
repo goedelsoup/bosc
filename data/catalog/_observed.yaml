@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-14T10:56:12.989929+00:00'
+reconciled_at: '2026-07-14T15:07:02.787251+00:00'
 entries:
   aedg:
     exists: true
@@ -922,14 +922,24 @@ entries:
     site_scope: basin-shared
   permits:
     exists: true
-    sha256: be2d8d6b3478dbde66b6a11584f521ceac206646d220bb1e13dc41f67b433f67
-    size_bytes: 116850
+    sha256: 94cd9d867364deed7fbf171901e7daa5f5a86a6eaea60bf85c612e000bf1de76
+    size_bytes: 91600
     lfs_materialized: true
-    file_count: 39
+    file_count: 29
     missing: []
     asof: null
     stale: false
     site_scope: lima-legacy
+  permits-dazzler-portsmouth:
+    exists: true
+    sha256: 13816892125af4636252f61b9270d66d7c61788da40c488a6960106ed43734af
+    size_bytes: 25250
+    lfs_materialized: true
+    file_count: 10
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:portsmouth
   perry-township-meetings:
     exists: true
     sha256: c3ee47a2a2b3a618b4523c05bc84a498b3e7949a82690a7df4bc407a1b048818

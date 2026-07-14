@@ -317,8 +317,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "4e0c677c5fc6d5394b6015938721ebc14398eccd8087c3b8040fd7a608d16cdd",
-      "size_bytes": 58860,
+      "sha256": "7f0236de1194fe90896b00aa656b9357bd1bb28dfb50cee272a5716cac256002",
+      "size_bytes": 60460,
       "lfs_materialized": true,
       "file_count": 5,
       "stale": false,
@@ -497,8 +497,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "ee5d66a2602e2ce77276ba56660da1c8d9e42374ea9eb71ccdc3d9e31f61f4f9",
-      "size_bytes": 119836,
+      "sha256": "65b7970fe59cd062eee0f860222c58a352ff4e057d069bcde730b68b76819906",
+      "size_bytes": 128115,
       "lfs_materialized": true,
       "file_count": 11,
       "stale": false,
@@ -652,8 +652,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "b520e31abcaa867271024f4dc41ac36e31138b4da7966e812192108e4c3dbbe3",
-      "size_bytes": 17349,
+      "sha256": "0bcaf9afb9165f228eec58c7a56e7ed6b676a7a77a5a75c234f09954fd7f0ad1",
+      "size_bytes": 25628,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -931,10 +931,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "216f54782098d008fe99fd0d799f6f3c764ccfc1a0b39c45ada7cd3e34a49ee4",
-      "size_bytes": 36314,
+      "sha256": "7e6432bb31dfe5a548d9805b7f04a3246fd084896e0a71b45c7e3bce8b9720e3",
+      "size_bytes": 52701,
       "lfs_materialized": true,
-      "file_count": 6,
+      "file_count": 7,
       "stale": false,
       "asof": null
     },
@@ -1325,8 +1325,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "fb6dfb61b0384bc51ce816c8d169e516ba8d833b808fb120f2745453d8b5f30e",
-      "size_bytes": 31572,
+      "sha256": "014e8c99525758d1800537f7b60989e89f9b807966079b9890240af97b6825f6",
+      "size_bytes": 33473,
       "lfs_materialized": true,
       "file_count": 5,
       "stale": false,
@@ -2018,6 +2018,58 @@
     }
   },
   {
+    "id": "limaohio",
+    "title": "The Lima News (LimaOhio.com) — Project BOSC News Coverage",
+    "scope": "extracted",
+    "collection": "limaohio",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "The Lima News (LimaOhio.com), an AIM Media Midwest paper — Q2–Q3 2026 construction & community-reaction coverage of the Google / Project BOSC data center, captured via the Yahoo News syndication mirror (limaohio.com is bot/CAPTCHA-gated; no Wayback snapshot). See data/documents/limaohio/SOURCES.md for chain of custody.",
+    "external_url": null,
+    "license": "news article — secondary source, quoted for reference ([reference], never [verified])",
+    "access_tier": "public",
+    "site_scope": "lima-legacy",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "lima",
+      "bosc",
+      "google",
+      "news",
+      "construction-phase",
+      "lime-dust",
+      "roundabout",
+      "fiber"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/limaohio/lima-news-construction-wave.news.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "46d11cbadaedff8be7cde4c8e19410ccbd0a104e09891cd3ff26ab07638ae98f",
+      "size_bytes": 17922,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "The Lima News (LimaOhio.com), an AIM Media Midwest paper — Q2–Q3 2026 construction & community-reaction coverage of the Google / Project BOSC data center, captured via the Yahoo News syndication mirror (limaohio.com is bot/CAPTCHA-gated; no Wayback snapshot). See data/documents/limaohio/SOURCES.md for chain of custody.",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
+    }
+  },
+  {
     "id": "mansfield",
     "title": "Mansfield (Richland County, OH) — the airport nexus (places domain)",
     "scope": "extracted",
@@ -2587,21 +2639,6 @@
         "lfs": false
       },
       {
-        "relpath": "extracted/permits/4071697.epa.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      },
-      {
-        "relpath": "extracted/permits/4071709.epa.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      },
-      {
-        "relpath": "extracted/permits/4071710.epa.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      },
-      {
         "relpath": "extracted/permits/4074527.epa.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
@@ -2613,41 +2650,6 @@
       },
       {
         "relpath": "extracted/permits/4074551.epa.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      },
-      {
-        "relpath": "extracted/permits/4081890.epa.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      },
-      {
-        "relpath": "extracted/permits/4081896.epa.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      },
-      {
-        "relpath": "extracted/permits/4081897.epa.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      },
-      {
-        "relpath": "extracted/permits/4081903.epa.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      },
-      {
-        "relpath": "extracted/permits/4081908.epa.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      },
-      {
-        "relpath": "extracted/permits/4081909.epa.yaml",
-        "media_type": "application/x-yaml",
-        "lfs": false
-      },
-      {
-        "relpath": "extracted/permits/4081910.epa.yaml",
         "media_type": "application/x-yaml",
         "lfs": false
       },
@@ -2684,15 +2686,110 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "be2d8d6b3478dbde66b6a11584f521ceac206646d220bb1e13dc41f67b433f67",
-      "size_bytes": 116850,
+      "sha256": "94cd9d867364deed7fbf171901e7daa5f5a86a6eaea60bf85c612e000bf1de76",
+      "size_bytes": 91600,
       "lfs_materialized": true,
-      "file_count": 39,
+      "file_count": 29,
       "stale": false,
       "asof": null
     },
     "citation": {
       "source": "Ohio EPA (DSW §401/PTI + DAPC air permits), USACE (wetland determinations), and Ohio Secretary of State (business filings)",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "id": "permits-dazzler-portsmouth",
+    "title": "Project Dazzler Permit Extractions (Scioto County §401 / wetland mitigation)",
+    "scope": "extracted",
+    "collection": "permits",
+    "status": "reviewed",
+    "producer_kind": "extracted",
+    "command": null,
+    "connector_ref": null,
+    "source": "Ohio EPA (DSW §401 / PTI) and USACE (waters-of-the-US / wetland determinations) for \"Project Dazzler\" — the hyperscale campus in Green Township, Scioto County, OH (EMH&T job 20250390), filed by the Dazzler-entity LLC",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43)",
+    "access_tier": "public",
+    "site_scope": "site:portsmouth",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "oepa",
+      "permits",
+      "section-401",
+      "wetland",
+      "dazzler",
+      "portsmouth"
+    ],
+    "storage": [
+      {
+        "relpath": "extracted/permits/dazzler-permits/4071697.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/permits/dazzler-permits/4071709.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/permits/dazzler-permits/4071710.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/permits/dazzler-permits/4081890.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/permits/dazzler-permits/4081896.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/permits/dazzler-permits/4081897.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/permits/dazzler-permits/4081903.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/permits/dazzler-permits/4081908.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/permits/dazzler-permits/4081909.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/permits/dazzler-permits/4081910.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "13816892125af4636252f61b9270d66d7c61788da40c488a6960106ed43734af",
+      "size_bytes": 25250,
+      "lfs_materialized": true,
+      "file_count": 10,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Ohio EPA (DSW §401 / PTI) and USACE (waters-of-the-US / wetland determinations) for \"Project Dazzler\" — the hyperscale campus in Green Township, Scioto County, OH (EMH&T job 20250390), filed by the Dazzler-entity LLC",
       "source_kind": "document",
       "page": null,
       "confidence": "medium",
@@ -3276,14 +3373,14 @@
   },
   {
     "id": "wpafb",
-    "title": "WPAFB (Greene + Montgomery Co., OH) Investigative Findings & Onboarding Record",
+    "title": "WPAFB (Greene + Montgomery Co., OH) Groundwater Primary Records & Onboarding Findings",
     "scope": "extracted",
     "collection": "wpafb",
     "status": "reviewed",
     "producer_kind": "manual",
     "command": null,
     "connector_ref": null,
-    "source": "Onboarding self-research pass (data/research/onboard-wpafb-*/findings.md); SiteProfile hsg_citation. The primary sources named in the groundwater screen (US-EPA Sole Source Aquifer record, AF IRP/CERCLA, DoD PFAS, ATSDR, OEPA) are to-pull — not yet in the corpus.",
+    "source": "Onboarding self-research pass (data/research/onboard-wpafb-*/findings.md) + the #1397 primary- record ingest: the US-EPA Sole Source Aquifer designation (53 FR 15876) and the WPAFB CERCLA §120 Federal Facility Agreement, transcribed/read from source PDFs now committed under data/documents/wpafb/** (see data/documents/wpafb/SOURCES.yaml), plus the City of Dayton 2025 CCR PFAS table and USGS/ATSDR corroboration. Read from clean text layers / OCR, not filenames.",
     "external_url": null,
     "license": "public record / public domain",
     "access_tier": "public",
@@ -3299,9 +3396,31 @@
       "tce-plume",
       "pfas",
       "great-miami",
-      "mad-river"
+      "mad-river",
+      "cercla",
+      "ssa"
     ],
     "storage": [
+      {
+        "relpath": "extracted/wpafb/ssa-53fr15876.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/wpafb/cercla-ffa-1991.epa.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/wpafb/dayton-ccr-2025-pfas.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      },
+      {
+        "relpath": "extracted/wpafb/groundwater-corroboration.md",
+        "media_type": "text/markdown",
+        "lfs": false
+      },
       {
         "relpath": "extracted/wpafb/groundwater-screen.md",
         "media_type": "text/markdown",
@@ -3310,15 +3429,15 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "8f4afee176b3a935d539ee32910c4e71720a850ac5e84749e8cb2f886da8362c",
-      "size_bytes": 7431,
+      "sha256": "20083b6476535c0546744c0e5a580f9bad6f329a446526c765ef54600c728006",
+      "size_bytes": 25968,
       "lfs_materialized": true,
-      "file_count": 1,
+      "file_count": 5,
       "stale": false,
       "asof": null
     },
     "citation": {
-      "source": "Onboarding self-research pass (data/research/onboard-wpafb-*/findings.md); SiteProfile hsg_citation. The primary sources named in the groundwater screen (US-EPA Sole Source Aquifer record, AF IRP/CERCLA, DoD PFAS, ATSDR, OEPA) are to-pull — not yet in the corpus.",
+      "source": "Onboarding self-research pass (data/research/onboard-wpafb-*/findings.md) + the #1397 primary- record ingest: the US-EPA Sole Source Aquifer designation (53 FR 15876) and the WPAFB CERCLA §120 Federal Facility Agreement, transcribed/read from source PDFs now committed under data/documents/wpafb/** (see data/documents/wpafb/SOURCES.yaml), plus the City of Dayton 2025 CCR PFAS table and USGS/ATSDR corroboration. Read from clean text layers / OCR, not filenames.",
       "source_kind": "reference",
       "page": null,
       "confidence": "medium",
@@ -3360,8 +3479,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "9db47af5d6b7f6bfe2f40380e412ccbc434a17d91f2f5ff064da06e22b398919",
-      "size_bytes": 2632,
+      "sha256": "1fb88d239051e2d3c8ecb46eaf5c3b2539c654fb1e9edd20a7f1e8d6a7f2a081",
+      "size_bytes": 4134,
       "lfs_materialized": true,
       "file_count": 1,
       "stale": false,
@@ -4186,10 +4305,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "05b7797e2d6636db6a6ad1b84db8733f52f0721acbe8f88f18fb3febe9d9268e",
-      "size_bytes": 323813,
+      "sha256": "269fb3f3738ddd0169fcd3418935828d626ca26f0bc1eff001124cf9c766873e",
+      "size_bytes": 353396,
       "lfs_materialized": true,
-      "file_count": 21,
+      "file_count": 22,
       "stale": false,
       "asof": null
     },
@@ -4289,10 +4408,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "94aaae512ae627ef15e42fdb5c25432b4b72551c6935f49cac1bcde79e8f19b1",
-      "size_bytes": 42311,
+      "sha256": "534d3399b66f259df22e66254167a81b2c1caa35bf8998a8752d3447a4661552",
+      "size_bytes": 47694,
       "lfs_materialized": true,
-      "file_count": 21,
+      "file_count": 22,
       "stale": false,
       "asof": null
     },
@@ -4343,10 +4462,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "4428073cb6523af17d22009088f100d5b3eed996637135e29edeb6254e4f0395",
-      "size_bytes": 18383,
+      "sha256": "d8f37b2b0d69fcd76554248d7b408b897cf4e110bff02f14ca5f2246ed3d2332",
+      "size_bytes": 24535,
       "lfs_materialized": true,
-      "file_count": 6,
+      "file_count": 8,
       "stale": false,
       "asof": null
     },
@@ -4399,10 +4518,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "41e62b2cd17ee2b717d2680bb28ff057257b85b98dc5ac4eb197facdef172873",
-      "size_bytes": 72744,
+      "sha256": "5a564010f3a8c0087de444e1907f0801deabe9535e686fc79916c3b8c2b5efb7",
+      "size_bytes": 79382,
       "lfs_materialized": true,
-      "file_count": 21,
+      "file_count": 22,
       "stale": false,
       "asof": null
     },
@@ -5035,10 +5154,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "326c60d7a856c0e9065b4180319add5652889735f158c4658641d392c994c080",
-      "size_bytes": 18140,
+      "sha256": "a3826bfb94c19d2b1e545e079befaa6ed6cd8c33611d7c7a6b3775285bc413b6",
+      "size_bytes": 18996,
       "lfs_materialized": true,
-      "file_count": 21,
+      "file_count": 22,
       "stale": false,
       "asof": null
     },
@@ -5094,8 +5213,8 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "9893da4a6035ec4aebae36d16ff7e71a6bc923bb3a3c40fa10bc1f720dede9d5",
-      "size_bytes": 29547,
+      "sha256": "7f3b905a0e30da675b42238607311754146dbc6654a5cfe37011bebc2c238bb3",
+      "size_bytes": 30681,
       "lfs_materialized": true,
       "file_count": 3,
       "stale": false,
@@ -5148,10 +5267,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "11644ba13b3298017d9d3578431ca33361216f87aea4cafe59ceb4d905da13a0",
-      "size_bytes": 55581,
+      "sha256": "259bd2e8e5fe316735747d701d425671babcb51af262c154e000a81474518e51",
+      "size_bytes": 58228,
       "lfs_materialized": true,
-      "file_count": 21,
+      "file_count": 22,
       "stale": false,
       "asof": null
     },
@@ -6069,7 +6188,7 @@
     "site_scope": "slug-scoped",
     "cadence": "on-demand",
     "ttl_days": null,
-    "last_refreshed": "2026-06-27",
+    "last_refreshed": "2026-07-13",
     "tags": [
       "parcels",
       "gis",
@@ -6085,10 +6204,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "18fe8f50220e382cef0a1fa54931eb027f5c735c6be379a499d962d1f3acf57e",
-      "size_bytes": 180255,
+      "sha256": "279a8ad713688631ef11dd25e82da5e0ee25476239750bb108b2eb2dfe4b47e8",
+      "size_bytes": 346783,
       "lfs_materialized": true,
-      "file_count": 3,
+      "file_count": 4,
       "stale": false,
       "asof": null
     },
@@ -6300,10 +6419,10 @@
     ],
     "observed": {
       "exists": true,
-      "sha256": "039f0e94db9869e43fbd3f186736177afe0d4452bff8fa6504c7c1af234fe80a",
-      "size_bytes": 2594242,
+      "sha256": "e78ebd57927a63bb3f9a51427ab5f50fee826f7735b354a06af72e6f6f1e6389",
+      "size_bytes": 2721640,
       "lfs_materialized": true,
-      "file_count": 21,
+      "file_count": 22,
       "stale": false,
       "asof": null
     },
@@ -6362,6 +6481,104 @@
       "confidence": "medium",
       "note": "watermark subdivisions discover",
       "verified": true
+    }
+  },
+  {
+    "id": "troy-piqua-gis",
+    "title": "City of Piqua, Ohio Zoning Districts",
+    "scope": "reference",
+    "collection": "troy-piqua-gis",
+    "status": "reviewed",
+    "producer_kind": "connector",
+    "command": "zoning --districts",
+    "connector_ref": "watermark.hydrology.connectors.lima_gis",
+    "source": "City of Piqua GIS — hosted ArcGIS FeatureServer 'Zoning_Districts_public_view'",
+    "external_url": "https://services8.arcgis.com/kZPPWTIJ6kOFJTWc/arcgis/rest/services/Zoning_Districts_public_view/FeatureServer/17",
+    "license": "Public records (local government open data)",
+    "access_tier": "public",
+    "site_scope": "site:troy-piqua",
+    "cadence": "on-demand",
+    "ttl_days": null,
+    "last_refreshed": "2026-07-13",
+    "tags": [
+      "zoning",
+      "troy-piqua",
+      "piqua",
+      "miami-county",
+      "gis"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/troy-piqua-gis/zoning-districts.yaml",
+        "media_type": "application/x-yaml",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "a36ec9fe9e212592713d000b1b72426d235359e195995c4cea0c5c9c0b2fed24",
+      "size_bytes": 2105,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "City of Piqua GIS — hosted ArcGIS FeatureServer 'Zoning_Districts_public_view'",
+      "source_kind": "connector",
+      "page": null,
+      "confidence": "medium",
+      "note": "watermark zoning --districts",
+      "verified": true
+    }
+  },
+  {
+    "id": "troy-piqua-watch-items",
+    "title": "Troy·Piqua site watch-items (WWTP infrastructure geometry)",
+    "scope": "reference",
+    "collection": "troy-piqua",
+    "status": "reviewed",
+    "producer_kind": "manual",
+    "command": null,
+    "connector_ref": null,
+    "source": "Derived from Ohio EPA NPDES fact sheet 1PD00008.fs (City of Piqua WWTP) and ECHO POTW inventory; coordinates from EPA FRS (ECHO lat/lon 40.13128, -84.23466)",
+    "external_url": null,
+    "license": "Public record (Ohio R.C. 149.43 / U.S. Government work)",
+    "access_tier": "public",
+    "site_scope": "site:troy-piqua",
+    "cadence": "static",
+    "ttl_days": null,
+    "last_refreshed": null,
+    "tags": [
+      "troy-piqua",
+      "gis",
+      "geojson",
+      "wwtp",
+      "infrastructure"
+    ],
+    "storage": [
+      {
+        "relpath": "reference/troy-piqua/watch-items.geojson",
+        "media_type": "application/geo+json",
+        "lfs": false
+      }
+    ],
+    "observed": {
+      "exists": true,
+      "sha256": "09cc4f193c36c1be97979b4e91cea278fe4337047ccb92499c2594f8961d9cdf",
+      "size_bytes": 722,
+      "lfs_materialized": true,
+      "file_count": 1,
+      "stale": false,
+      "asof": null
+    },
+    "citation": {
+      "source": "Derived from Ohio EPA NPDES fact sheet 1PD00008.fs (City of Piqua WWTP) and ECHO POTW inventory; coordinates from EPA FRS (ECHO lat/lon 40.13128, -84.23466)",
+      "source_kind": "reference",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": false
     }
   },
   {

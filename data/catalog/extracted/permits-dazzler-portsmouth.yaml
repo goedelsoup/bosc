@@ -1,0 +1,62 @@
+id: permits-dazzler-portsmouth
+title: Project Dazzler Permit Extractions (Scioto County §401 / wetland mitigation)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Ohio EPA (DSW §401 / PTI) and USACE (waters-of-the-US / wetland determinations)
+    for "Project Dazzler" — the hyperscale campus in Green Township, Scioto County, OH
+    (EMH&T job 20250390), filed by the Dazzler-entity LLC
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: site:portsmouth
+storage:
+- relpath: extracted/permits/dazzler-permits/4071697.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/permits/dazzler-permits/4071709.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/permits/dazzler-permits/4071710.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/permits/dazzler-permits/4081890.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/permits/dazzler-permits/4081896.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/permits/dazzler-permits/4081897.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/permits/dazzler-permits/4081903.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/permits/dazzler-permits/4081908.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/permits/dazzler-permits/4081909.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/permits/dazzler-permits/4081910.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- oepa
+- permits
+- section-401
+- wetland
+- dazzler
+- portsmouth
+notes: >-
+  Ten Ohio EPA §401 / USACE wetland-mitigation extractions for Project Dazzler, sited west
+  of U.S. Route 52 near Franklin Furnace / Jr. Furnace, Green Township, Scioto County
+  (~38.6067, -82.8392; ~792-914 ac). Relocated from the flat data/extracted/permits/ tree
+  into data/extracted/permits/dazzler-permits/ (mirroring the source documents/ tree) and
+  split out of the lima-legacy permits collection so the Scioto records stop rendering in
+  Lima's Allen-County record — the same peer-exclusion fix as troy-piqua (1484) / Lima
+  (1505). Homed to the portsmouth site (corpus_relpaths includes permits/dazzler-permits).
+  The disclosed Project Dazzler operator/SiteFacility hunt is a follow-on.
