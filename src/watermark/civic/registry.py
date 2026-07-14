@@ -9,19 +9,22 @@ import yaml
 
 from watermark.civic.models import Registry
 from watermark.config import Settings, get_settings
+from watermark.sites import is_reference_site
 
 
 def registry_path(settings: Settings | None = None) -> Path:
     """Path to the active site's committed registry YAML.
 
     Per-site under ``data/reference/subdivisions/<site>/subdivisions.yaml``, except
-    ``lima`` which keeps the legacy flat ``subdivisions/subdivisions.yaml`` so the
-    committed litigation corpus is never relocated — the onboarding convention that
-    Lima keeps its flat legacy paths while every peer slug-scopes its outputs.
+    the reference build (Lima), which keeps the legacy flat
+    ``subdivisions/subdivisions.yaml`` so the committed litigation corpus is never
+    relocated. Which site owns the flat committed layout is not hardcoded here — it
+    comes from ``watermark.sites.is_reference_site`` (the same predicate that gates
+    Lima's other flat legacy paths); every peer slug-scopes its outputs.
     """
     settings = settings or get_settings()
     base = settings.reference_dir / "subdivisions"
-    if settings.site == "lima":
+    if is_reference_site(settings.site):
         return base / "subdivisions.yaml"
     return base / settings.site / "subdivisions.yaml"
 
