@@ -35,10 +35,15 @@ export async function getStaticPaths() {
 
 const { entryId } = Astro.props as { entryId: string };
 const [slug, codename] = String(entryId).split("/");
-// A `comingSoon` story (#1526) holds its content: serve the interstitial, not the on-ramp. Its
-// title/dek come from the retained registry entry; the `_home` MDX stays but is never rendered, so
-// no on-ramp prose is reachable by direct URL (#1529).
-const held = storyComingSoon(slug, codename) ? storyFor(slug, codename) : undefined;
+// A `comingSoon` story (#1526) holds its content: serve the interstitial, not the on-ramp. The gate
+// is the boolean ALONE — decoupled from the metadata lookup, so a missing `storyFor` (a `comingSoon`
+// registry entry with no chapters in the collection) can never fall through to rendering the on-ramp.
+// Title/dek come from the retained registry entry, with a safe fallback. The `_home` MDX stays but is
+// never rendered, so no on-ramp prose is reachable by direct URL (#1529).
+const held = storyComingSoon(slug, codename);
+const heldStory = held ? storyFor(slug, codename) : undefined;
+const heldTitle = heldStory?.title ?? codename;
+const heldDek = heldStory?.dek ?? "";
 
 const entry = await getEntry("stories", entryId);
 if (!entry || !("kind" in entry.data) || entry.data.kind !== "home") {
@@ -50,8 +55,8 @@ const Content = held ? undefined : (await render(entry)).Content;
 
 {
   held ? (
-    <Base title={`${held.title} — coming soon`} section="story" description={held.dek}>
-      <StoryComingSoon title={held.title} dek={held.dek} slug={slug} />
+    <Base title={`${heldTitle} — coming soon`} section="story" description={heldDek}>
+      <StoryComingSoon title={heldTitle} dek={heldDek} slug={slug} />
     </Base>
   ) : (
     <Base title={fm.pageTitle ?? fm.h1} section="story" description={fm.description}>
