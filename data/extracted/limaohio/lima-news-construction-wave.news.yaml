@@ -1,0 +1,251 @@
+kind: lima_news_wave
+subject: >-
+  The Lima News (LimaOhio.com) Q2–Q3 2026 construction & community-reaction wave —
+  the first post-permit CONSTRUCTION-PHASE coverage of the Google / Project BOSC data
+  center: Ohio EPA lime-dust monitoring, the North Cole Street roundabout open house and
+  resident concerns, the Chamber proponent pitch, the commissioners' fiber/roadwork
+  approvals, and the building-trades labor case.
+
+provenance:
+  source_path: data/documents/limaohio/
+  publisher: The Lima News (LimaOhio.com), an AIM Media Midwest paper
+  layer: web_capture   # secondary news; article text read from the captured syndication bytes
+  capture_date: '2026-07-13'   # date the pages were fetched into the corpus
+  content_verified: '2026-07-13'   # publication dates are each article's own datePublished (below)
+  evidence: >-
+    Secondary news reporting. The three 2026-04/05 articles are committed as verbatim Yahoo
+    News syndication-mirror bytes (`*.yahoo-mirror.html`); Yahoo hosts the article under
+    provider "The Lima News, Ohio" with the canonical limaohio.com URL, byline, and ISO
+    datePublished preserved in the page JSON-LD, so figures/quotes are transcribed verbatim
+    from the captured article body.
+  retrieval_caveat: >-
+    limaohio.com is CAPTCHA/bot-gated and returned HTTP 403 to every automated fetch, and no
+    Wayback snapshot exists for any URL (checked 2026-07-13). The canonical publisher bytes are
+    not retrievable here; the Yahoo syndication mirror is the faithful capture path. The
+    2026-07-09 commissioners item and the 2026-06-22 Wendel op-ed were not syndicated to
+    Yahoo/AOL/MSN — their substance is confirmed at the search-snippet level and extracted as
+    [reference]; a full raw byte capture is OWED (see data/documents/limaohio/SOURCES.md).
+  tags: [reference, news, lima, bosc, google, construction-phase, story, record]
+
+headline_findings:
+  first_construction_impact_signals:
+    finding: >-
+      This wave is the FIRST coverage on record of the campus's CONSTRUCTION-PHASE impacts,
+      distinct from the permitting-stage record the corpus has carried to date. Two items are
+      construction-impact signals: (1) Ohio EPA on-site monitoring of lime kiln dust leaving the
+      site (2026-05-11), and (2) resident concerns about roundabout/construction traffic at a
+      Port Authority open house (2026-05-15). Both post-date the draft air permit and precede
+      the data center's own operation.
+    significance: >-
+      The record moves from "will this be permitted / who is behind it" to "what is the build
+      doing to the ground and the neighbors now." Logged as the first post-permit
+      construction-impact leads (data/site/leads.yaml: LIMA-LIMEDUST, LIMA-CONSTR-TRAFFIC).
+    confidence: high
+
+  lime_dust_monitoring:
+    finding: >-
+      Per an email from Ohio EPA Public Information Officer Anthony Chenault (reported 2026-05-11),
+      EPA inspectors visited the North Cole Street site because "lime kiln dust and alkaline powder
+      used in drying and stabilizing wet soil" was "being carried off-site by the wind." Verbatim:
+      "Ohio EPA asked the company to reduce and contain the spread of dust. The construction company
+      has since informed Ohio EPA of its plan to control the dust, which includes additional water
+      trucks and monitoring wind conditions during lime kiln application." A Safety Data Sheet
+      (United States Lime & Minerals, Inc.) is cited that the dust "can cause irritation in the eyes,
+      skin, respiratory system and gastrointestinal tract." Chenault: "Agency staff were on site
+      last week to observe the dust suppression measures and will visit the site frequently over the
+      next few weeks… While dust from construction activities may be seen at times, lime kiln dust
+      should not be leaving the property or impacting residents." The same article notes Ohio EPA
+      was "finalizing its review of public comments submitted for the draft air permit" (standard
+      review).
+    significance: >-
+      A documented, agency-sourced construction-phase AIR issue — fugitive alkaline dust migrating
+      off the property during soil stabilization — separate from the permitted 313 MW backup-genset
+      air envelope (see oepa PTI thread). It is the first on-record instance of a regulator taking a
+      corrective posture on the active build, not the permit.
+    confidence: high
+
+  roundabout_open_house_and_resident_concerns:
+    finding: >-
+      At a Port Authority of Allen County open house on 2026-05-14 (reported 2026-05-15) at the
+      Allen County Sanitary Engineering building, residents pressed the Google-funded North Cole
+      Street Improvement Project (roundabouts at N. Cole & SR-115, Beery Rd, and Bluelick Rd).
+      Schedule: SR-115 roundabout construction begins 2026-06-01, Bluelick Rd in August, Beery Rd
+      TBD. Port Authority communications officer Theresa Pollick: "If we make these improvements, it
+      is going to help people get around." County Engineer Brion Rhodes planned road repairs for the
+      toll of construction vehicles (esp. Bluelick Rd; possible Cole St repaving). Residents said the
+      roundabouts benefit Google more than the community: Lynne Focht (Sugar Creek Township, co-owner
+      of property ceding a permanent easement near the SR-115 intersection) said she "will never own
+      that land again"; David Streeter (Sugar Creek Township): "None of it has to do with long-term
+      health to the individuals, to the residents." PAAC executive director Cindy Leis said real
+      estate agents had contacted all owners affected by the ROW easements; design engineer Andrew
+      Schetter said the Beery Rd approach "was going for least impact." The residents' unifying
+      concern was transparency and wanting a Google contact person.
+    significance: >-
+      Corroborates and freshens the PAAC transparency/well-concerns record (paac-board-minutes:
+      transparency_record) into the construction phase, and names the roundabout construction start
+      (2026-06-01) and the easement-taking that residents object to. Sugar Creek Township residents
+      Focht/Streeter join the corridor-resident thread (cf. Heather Davis, David Streeter,
+      Mike Lugibihl in the PAAC minutes).
+    confidence: high
+
+  design_developments_corroborate_cmar_and_completion:
+    finding: >-
+      The 2026-05-15 article's "design developments" section adds primary-adjacent detail on the
+      Peterson Construction CMAR: the County agreed to contract Peterson for construction-manager-
+      at-risk pre-construction design services (matching Res #378-26, 2026-05-14). Allen County
+      Sanitary Engineer Brad Niemeyer said the Engineer's Office had hired a Peterson engineer
+      "six months ago," who had taken the data-center design to "30 to 40% completion"; Peterson
+      will secure "early procurements for items with long wait times, such as the generator and
+      electronic components," and give a guaranteed maximum price at 60–70% design (the County may
+      then accept it or look elsewhere). The pump station and forcemain are "the next elements,"
+      with work in the fall if Peterson is hired. Niemeyer put the "projected completion of the data
+      center… around January to March of 2028."
+    significance: >-
+      Independent secondary corroboration of the CMAR award (bosc-resolution-ledger #378-26), the
+      long-lead generator procurement (ties the 313 MW genset fleet to the build schedule), and the
+      pump-station/forcemain sequence (#469-25 → #137-26/#138-26 → #378-26). The ~Jan–Mar 2028
+      completion window is a new datable milestone; the "30–40% / 60–70% design" figures are the
+      reporter's paraphrase of Niemeyer, not a document — treat as [reference].
+    confidence: medium
+
+  chamber_proponent_case:
+    finding: >-
+      At the Lima/Allen County Chamber "Wake, Rattle and Roll" networking event on 2026-04-24
+      (Veterans Memorial Civic Center), Regional Growth Partnership EVP Gary Thompson made the
+      proponent case without naming the Google project: "They're big investments. They use lots of
+      power… this is why northwest Ohio is best suited, because of our ability to harness power and
+      energy and our ability to access water." He claimed lifetime jobs value "to the tune of more
+      than $201 million" plus "thousands of support jobs… indirect jobs" (a Cenovus/Oregon refinery
+      analogy — 600 workers but 1,000 people and 400 contractors on site daily), and urged the
+      audience to scrutinize anti-data-center claims (an MIT-article/crypto-mine hyperlink example).
+      The article notes Google + AEDG had launched a project website (bit.ly/3OBqdaE →
+      allencountydatacenter.com).
+    significance: >-
+      A proponent-framing piece to weigh, not accept (cf. docs/legal/proponent-analysis.md and the
+      AEDG FAQ in aedg-data-center-release). The "access to water" selling point sits directly
+      against the corpus's undiluted-at-7Q10 hydrology screen; the "$201M lifetime" and "thousands
+      of indirect jobs" figures are RGP's, unsourced here, and larger than the CRA's ~50 permanent
+      jobs (cra-agreement).
+    confidence: high
+
+  commissioners_fiber_and_roadwork:
+    finding: >-
+      Reported 2026-07-09 [reference — Yahoo un-syndicated; snippet-confirmed, raw capture owed]:
+      Allen County Operations Engineer Mark Droll briefed the commissioners on upcoming construction
+      and road closures — buried fiber-optic lines "to facilitate communication between data
+      centers," a Fort Amanda Rd / Buckeye Rd roundabout rebuild in summer/fall 2027, and a South
+      Thayer Rd repave/expansion between SR-309 and Reservoir Rd. The commissioners voted to approve
+      a Road Use Maintenance Agreement (RUMA) among the commissioners, the county engineer, and
+      Brightspeed of Ohio for aerial and buried fiber-optic cable to improve high-speed internet
+      access; the agreement lets Brightspeed use county-road right-of-way, "foregoing any need to
+      purchase easements from property owners."
+    significance: >-
+      Extends the commissioners' Project-BOSC infrastructure spine into the connectivity layer: the
+      buried-fiber-for-data-centers item is the first record of the campus's telecom build, and the
+      Brightspeed RUMA is a new instrument (see bosc-resolution-ledger narrative_events 2026-07-09).
+      The Fort Amanda/Buckeye roundabout and South Thayer items read as the routine county roadwork
+      program, not the BOSC corridor — do not conflate with the N. Cole roundabouts.
+    confidence: medium
+
+  building_trades_labor_case:
+    finding: >-
+      Reported 2026-06-22 [reference — Yahoo un-syndicated; snippet-confirmed, raw capture owed]:
+      an op-ed by Brad Wendel, president of the Lima Building and Construction Trades Council,
+      framing the Google/American Township data center ($500M, "the largest private-sector
+      investment in Allen County history") as long-horizon union work — "hundreds of members"
+      employed for "nearly 10 years" — and a draw for young people into the trades.
+    significance: >-
+      The building-trades proponent voice, corroborating the AEDG "hundreds of construction jobs"
+      framing (aedg-data-center-release: capital_and_benefits) and the ~10-year, multi-phase build
+      the corpus otherwise documents through the permit/CMAR record. Opinion, lowest priority.
+    confidence: medium
+
+named_actors:
+  - name: Anthony Chenault
+    role: Public Information Officer, Ohio EPA
+    note: Source (by email) for the lime-dust monitoring and the draft-air-permit comment-review status.
+  - name: Theresa Pollick
+    role: Communications officer, Port Authority of Allen County
+  - name: Brion Rhodes
+    role: Allen County Engineer
+    note: Also in the PAAC minutes (2025-07-29 guest); planning construction-damage road repairs.
+  - name: Lynne Focht
+    role: Sugar Creek Township resident / property co-owner ceding a permanent easement near SR-115
+  - name: David Streeter
+    role: Sugar Creek Township resident
+    note: Also a corridor objector in the 2026-03-06 PAAC special meeting (paac-board-minutes).
+  - name: Andrew Schetter
+    role: Design engineer (Beery Rd roundabout)
+  - name: Brad Niemeyer
+    role: Allen County Sanitary Engineer
+    note: Source for the CMAR / long-lead procurement / ~Jan–Mar 2028 completion detail.
+  - name: Gary Thompson
+    role: Executive Vice President, Regional Growth Partnership (RGP)
+  - name: Mark Droll
+    role: Allen County Operations Engineer
+  - name: Brad Wendel
+    role: President, Lima Building and Construction Trades Council
+
+posts:
+  - slug: data-centers-promoted-at-chamber-event
+    title: Data centers promoted at Chamber event
+    published: '2026-04-24'
+    byline: Craig Kelly
+    canonical_url: https://www.limaohio.com/top-stories/2026/04/24/data-centers-promoted-at-chamber-event/
+    captured_from: https://www.yahoo.com/news/articles/data-centers-promoted-chamber-event-233300105.html
+    source_file: data/documents/limaohio/2026-04-24-data-centers-promoted-at-chamber-event.yahoo-mirror.html
+    capture: yahoo-mirror
+    role: RGP proponent pitch (Gary Thompson) — power/water siting case, $201M lifetime jobs claim
+  - slug: ohio-epa-monitoring-lime-dust-at-data-center-construction-site
+    title: Ohio EPA monitoring lime dust at data center construction site
+    published: '2026-05-11'
+    byline: Craig Kelly
+    canonical_url: https://www.limaohio.com/top-stories/2026/05/11/ohio-epa-monitoring-lime-dust-at-data-center-construction-site/
+    captured_from: https://www.yahoo.com/news/articles/ohio-epa-monitoring-lime-dust-233200504.html
+    source_file: data/documents/limaohio/2026-05-11-ohio-epa-monitoring-lime-dust-at-data-center-construction-site.yahoo-mirror.html
+    capture: yahoo-mirror
+    role: first construction-phase environmental signal — Ohio EPA lime-dust monitoring (Chenault)
+  - slug: temporary-google-construction-traffic-among-resident-concerns
+    title: Temporary Google construction traffic among resident concerns
+    published: '2026-05-15'
+    byline: Peter Bonasso
+    canonical_url: https://www.limaohio.com/top-stories/2026/05/15/temporary-google-construction-traffic-among-resident-concerns/
+    captured_from: https://www.yahoo.com/news/articles/temporary-google-construction-traffic-among-143100491.html
+    source_file: data/documents/limaohio/2026-05-15-temporary-google-construction-traffic-among-resident-concerns.yahoo-mirror.html
+    capture: yahoo-mirror
+    role: PAAC open house — roundabout schedule, easement/traffic concerns, Peterson CMAR + 2028 completion
+  - slug: brad-wendel-allen-countys-biggest-investment-is-putting-our-members-to-work
+    title: "Brad Wendel: Allen County's biggest investment is putting our members to work"
+    published: '2026-06-22'
+    byline: Brad Wendel (op-ed)
+    canonical_url: https://www.limaohio.com/top-stories/2026/06/22/brad-wendel-allen-countys-biggest-investment-is-putting-our-members-to-work/
+    capture: owed   # not syndicated to Yahoo/AOL/MSN; snippet-confirmed; raw byte capture owed
+    role: building-trades labor proponent op-ed — "hundreds of members," "nearly 10 years"
+  - slug: allen-commissioners-approve-construction-projects
+    title: Allen commissioners approve construction projects
+    published: '2026-07-09'
+    byline: (staff)
+    canonical_url: https://www.limaohio.com/news/2026/07/09/allen-commissioners-approve-construction-projects/
+    capture: owed   # not syndicated to Yahoo/AOL/MSN; snippet-confirmed; raw byte capture owed
+    role: buried fiber-for-data-centers + Brightspeed RUMA + county roadwork (Droll)
+
+cross_references:
+  - data/documents/limaohio/SOURCES.md                                    # chain-of-custody manifest
+  - data/extracted/aedg/aedg-data-center-release.release.yaml             # the prior AEDG capture set (through 2026-04-27)
+  - data/extracted/aedg/paac-board-minutes.minutes.yaml                   # PAAC transparency + well-concerns record this extends
+  - data/extracted/commissioners/bosc-resolution-ledger.yaml             # #378-26 CMAR; 2026-07-09 Brightspeed RUMA event
+  - data/extracted/legal/prr-mandamus/cra-agreement.cra.yaml             # ~50 permanent jobs; Elida PILOT date thread
+  - data/site/leads.yaml                                                  # LIMA-LIMEDUST, LIMA-CONSTR-TRAFFIC construction-impact signals
+  - docs/legal/proponent-analysis.md                                      # weigh the Chamber/Wendel proponent claims against the record
+
+relevance:
+  tags: [reference, news, lima, bosc, google, construction-phase, air, roundabout, transparency, fiber, labor, story, record]
+  note: >-
+    The Q2–Q3 2026 Lima News wave — the corpus's first construction-phase coverage of the Google /
+    Project BOSC campus. Ohio EPA lime-dust monitoring (2026-05-11) and the North Cole roundabout
+    open house (2026-05-15) are the first post-permit construction-impact signals; the 2026-05-15
+    piece independently corroborates the Peterson CMAR (#378-26) and dates completion to ~Jan–Mar
+    2028; the Chamber (2026-04-24) and Wendel (2026-06-22) items are proponent framing to weigh;
+    the 2026-07-09 commissioners item adds the buried-fiber telecom layer and the Brightspeed RUMA.
+    All [reference]. Captured via the Yahoo syndication mirror because limaohio.com is bot-gated
+    (403) with no Wayback snapshot; two un-syndicated items have raw captures still owed.
