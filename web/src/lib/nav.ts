@@ -290,11 +290,13 @@ export interface MegaLink {
   num?: string;
   locked?: boolean;
 }
-/** The "The site" mega-menu: two intro tiles and the story spine. The environment + economy
- *  themes it crosses are now first-class site-tier dropdown tabs (#1307), not a column here.
- *  The spine carries `locked` when the story is locked for the active (peer) site (#781). */
+/** The "The site" mega-menu: the destination tiles (Overview · Open leads · Contacts · Reports —
+ *  Reports re-homed here from the network Research ▾ dropdown, reverting #1305) and the story spine.
+ *  The environment + economy themes it crosses are now first-class site-tier dropdown tabs (#1307),
+ *  not a column here. The spine carries `locked` when the story is locked for the active (peer)
+ *  site (#781). */
 export interface MegaMenu {
-  tiles: { label: string; href: string; blurb: string; icon: "home" | "leads" | "contacts" }[];
+  tiles: { label: string; href: string; blurb: string; icon: "home" | "leads" | "contacts" | "reports" }[];
   spine: {
     title: string;
     href: string;
@@ -315,24 +317,9 @@ export type NavItem =
  *  Submit is NOT here — it's a right-cluster affordance (see SUBMIT_LINK / the Header).
  *  Hypotheses come from the live feed so the dropdown labels stay in sync without hardcoding. */
 export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
-  // The two framing essays (research course + the bigger picture) are the author's investigation
-  // overview, re-homed out of the site-scoped `home` section into this network-global About area
-  // (#1308). Their docs now live at the network-global `/docs/` build (#1304), so they link there
-  // directly — no site base.
-  const docBase = siteBase(activeSite());
-  // Reports are the long-form analysis over the corpus — an output of the research, so their nav
-  // home is this network-global Research dropdown, not the site tier (#1305). The routes stay
-  // per-site (`<base>/reports`, option (a)); the entry points at the active site's reports index.
-  const reportsHref = `${docBase}/reports`;
   const researchChildren: NavChild[] = [
     ...hypotheses.map((h) => ({ label: h.name, href: `/research/hypotheses?lens=${h.id}` })),
     ...(hypotheses.length > 0 ? [{ divider: true as const }] : []),
-    {
-      label: "Reports",
-      href: reportsHref,
-      blurb: "Long-form analysis over the corpus — the dossier, water, and economics reads",
-    },
-    { divider: true as const },
     // Basin views (design "Chrome": Research ▾ → Basin views) — Maumee is the one built today;
     // the other eight basins join here as their /basin pages land.
     { label: "The Maumee basin", href: "/basin", blurb: "Basin view — every site against the drainage" },
@@ -346,7 +333,7 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
       kind: "dropdown",
       label: "Research",
       section: "research",
-      match: ["connect", "reports"],
+      match: ["connect"],
       children: researchChildren,
     },
     {
@@ -358,6 +345,9 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
         { label: "Mission", href: "/about/mission", blurb: "Why this project exists" },
         { label: "My research", href: "/about-me", blurb: "The method, the record's gaps, and who keeps it" },
         { divider: true as const },
+        // The two framing essays (research course + the bigger picture) are the author's
+        // investigation overview, re-homed out of the site-scoped `home` section into this
+        // network-global About area (#1308); their docs live at the `/docs/` build (#1304).
         {
           label: "Research course",
           href: "/docs/course",
@@ -380,7 +370,9 @@ export function networkTabs(hypotheses: HypothesisItem[] = []): NavItem[] {
 
 /** Site-tier left tabs — shown inside a site. A 5-tab bar (#1307): The site · The story ·
  *  The environment · The economy · The record. Environment and Economy are first-class site-tier
- *  dropdowns (promoted out of the "The site" mega, where they used to be "themes it crosses"). */
+ *  dropdowns (promoted out of the "The site" mega, where they used to be "themes it crosses").
+ *  Reports — the long-form analysis over the record — moved back from the network Research ▾
+ *  dropdown (reverting #1305) into the "The site" mega-menu as a fourth destination tile. */
 export function siteTabs(): NavItem[] {
   const { base, storyRoot, story } = siteRoots();
   const chapters = story?.chapters ?? [];
@@ -397,8 +389,9 @@ export function siteTabs(): NavItem[] {
     {
       kind: "mega",
       label: "The site",
+      // Reports re-homed into this mega (reverting #1305), so the tab also lights on a report route.
       section: "home",
-      match: ["leads", "contacts", "story"],
+      match: ["leads", "contacts", "story", "reports"],
       mega: {
         tiles: [
           { label: "Overview", href: base, blurb: "The site at a glance — the front door", icon: "home" },
@@ -413,6 +406,16 @@ export function siteTabs(): NavItem[] {
             href: `${base}/contacts`,
             blurb: "The people and bodies to reach on this site",
             icon: "contacts",
+          },
+          {
+            // Reports — the long-form analysis over the record — is the site-tier capstone, re-homed
+            // here from the network Research ▾ dropdown (reverting #1305). Like the leads/contacts
+            // tiles it always links; a peer whose corpus can't support the read shows the lock on the
+            // reports index itself (the readiness `reports` gate), not a nav marker.
+            label: "Reports",
+            href: `${base}/reports`,
+            blurb: "Long-form analysis over the record",
+            icon: "reports",
           },
         ],
         spine: {
