@@ -3,10 +3,15 @@
 Civic-records subsystem: Allen County political-subdivision meeting minutes/agendas.
 Defers to the root [`CLAUDE.md`](../../../CLAUDE.md).
 
-- **Registry is the spine.** The committed, hand-reviewed
+- **Registry is the spine, and it resolves per active site.** The committed,
+  hand-reviewed
   [`data/reference/subdivisions/subdivisions.yaml`](../../../data/reference/subdivisions/)
   enumerates every meeting-holding body. `registry.py` loads it into `Subdivision`
-  models. Add a body there, not in code.
+  models. Add a body there, not in code. `registry_path(settings)` is **site-scoped**:
+  `lima` keeps this legacy flat file (litigation corpus never relocated); every peer
+  slug-scopes under `subdivisions/<slug>/subdivisions.yaml`. Each registry declares its
+  owner in `meta.site`, and `load_registry` refuses a registry whose `meta.site`
+  disagrees with `settings.site` — no silent cross-site read (epic #1520, phase 1 #1521).
 - **Grounded vs. discovered — never blur them.** `name`/`type`/`governing_body`/
   `meeting_schedule`/`office` are verbatim from a committed county roster
   (`grounded_from`); `publishing.*` is a live-web finding with its own

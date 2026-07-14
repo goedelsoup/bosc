@@ -71,7 +71,7 @@ def subdivisions_discover(
     from watermark.civic import load_registry
     from watermark.civic.discovery import discover
 
-    settings = offline_settings("hydro", offline)
+    settings = offline_settings("civic", offline)
     reg = load_registry(settings)
 
     if all_known:
@@ -127,7 +127,7 @@ def subdivisions_fetch(
     from watermark.civic import load_registry
     from watermark.civic.fetchers import FetcherNotImplementedError, fetch_meetings
 
-    settings = offline_settings("hydro", offline)
+    settings = offline_settings("civic", offline)
     reg = load_registry(settings)
     body = reg.get(slug)
     if body is None:

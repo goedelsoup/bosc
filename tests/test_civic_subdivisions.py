@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
 from watermark.civic import load_registry
@@ -11,6 +13,7 @@ from watermark.civic.discovery import (
     find_records_links,
 )
 from watermark.civic.models import Platform
+from watermark.civic.registry import registry_path
 from watermark.config import Settings
 from watermark.connectors import OfflineError
 
@@ -45,6 +48,68 @@ def test_registry_request_only_body_has_no_url(civic_settings: Settings) -> None
     assert jackson.publishing.records_url is None
     # "Looked, found nothing online" is still a recorded finding, not a blank.
     assert jackson.publishing.discovered is not None
+
+
+def _write_registry(path: Path, *, site: object) -> None:
+    """Write a minimal valid registry declaring ``meta.site`` (omit if ``site`` is None)."""
+    site_line = f"  site: {site}\n" if site is not None else ""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        "meta:\n"
+        f"{site_line}"
+        "  subject: test registry\n"
+        "subdivisions:\n"
+        "  - slug: test-body\n"
+        "    name: Test Body\n"
+        "    type: city\n",
+        encoding="utf-8",
+    )
+
+
+def test_registry_path_lima_keeps_flat_legacy_file(tmp_path: Path) -> None:
+    # Lima falls back to the flat file — the litigation corpus is never relocated.
+    settings = Settings(data_dir=tmp_path, site="lima")
+    assert registry_path(settings) == tmp_path / "reference" / "subdivisions" / "subdivisions.yaml"
+
+
+def test_registry_path_peer_is_slug_scoped(tmp_path: Path) -> None:
+    # Every non-Lima site nests its registry under its own slug.
+    settings = Settings(data_dir=tmp_path, site="findlay")
+    assert (
+        registry_path(settings)
+        == tmp_path / "reference" / "subdivisions" / "findlay" / "subdivisions.yaml"
+    )
+
+
+def test_load_registry_lima_declares_its_site(civic_settings: Settings) -> None:
+    # The committed Lima registry now carries meta.site: lima and still loads.
+    reg = load_registry(civic_settings)
+    assert reg.meta.get("site") == "lima"
+
+
+def test_load_registry_peer_reads_peer_not_lima(tmp_path: Path) -> None:
+    # A stub peer registry is read for --site <peer>, never Lima's.
+    settings = Settings(data_dir=tmp_path, site="findlay")
+    _write_registry(registry_path(settings), site="findlay")
+    reg = load_registry(settings)
+    assert reg.meta.get("site") == "findlay"
+    assert [s.slug for s in reg.subdivisions] == ["test-body"]
+
+
+def test_load_registry_rejects_cross_site_meta(tmp_path: Path) -> None:
+    # A registry whose meta.site disagrees with the active site is a hard error.
+    settings = Settings(data_dir=tmp_path, site="findlay")
+    _write_registry(registry_path(settings), site="lima")  # wrong owner
+    with pytest.raises(ValueError, match=r"meta\.site"):
+        load_registry(settings)
+
+
+def test_load_registry_requires_meta_site(tmp_path: Path) -> None:
+    # A registry that omits meta.site entirely is rejected, not silently accepted.
+    settings = Settings(data_dir=tmp_path, site="findlay")
+    _write_registry(registry_path(settings), site=None)
+    with pytest.raises(ValueError, match=r"meta\.site"):
+        load_registry(settings)
 
 
 def test_classify_platform_specific_beats_generic() -> None:
