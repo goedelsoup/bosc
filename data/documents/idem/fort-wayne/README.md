@@ -1,9 +1,14 @@
-# IDEM — Fort Wayne (Hatchworks LLC / Project Zodiac) air permits
+# IDEM — Fort Wayne source documents
 
-Indiana Department of Environmental Management (IDEM), **Office of Air Quality** source
-documents for the **Hatchworks LLC** data-center campus — Google's "Project Zodiac",
-7510 Zodiac Way, Fort Wayne, IN 46816 (Allen County). The first non-Ohio jurisdiction in
-the corpus; `idem/` is the Indiana peer of `oepa/`, scoped per site (`idem/<site>/`).
+Indiana Department of Environmental Management (IDEM) source documents for the Fort Wayne
+(Allen County) watershed point. The first non-Ohio jurisdiction in the corpus; `idem/` is
+the Indiana peer of `oepa/`, scoped per site (`idem/<site>/`). Two subjects live here:
+
+1. **Hatchworks LLC / Project Zodiac** — Google's data-center campus air permits (Office of
+   Air Quality) and the Phase 3 §401 Water Quality Certification (Office of Water Quality),
+   7510 Zodiac Way, Fort Wayne, IN 46816.
+2. **City of Fort Wayne P.L. Brunner Water Pollution Control Plant** — the municipal WWTP's
+   NPDES discharge permit (IN0032191), the receiving-water record (#1453).
 
 This is **raw, immutable, LFS-tracked source evidence** (chain of custody). Files keep
 their AS-RECEIVED IDEM portal names (permit/document number + a stage suffix — `f` final,
@@ -54,6 +59,27 @@ with mitigation via the Maumee Service Area + Openings stream/wetland banks. The
 
 The campus stormwater receiving water is **Adams Ditch** (an unnamed tributary of Doctor Ditch;
 **Maumee watershed, HUC 04100005**) — distinct from the Fort Wayne WWTP's Maumee-mainstem receptor.
+
+### NPDES IN0032191 major renewal + Streamlined Mercury Variance (the WWTP receiving-water record)
+
+IDEM Office of Water Quality. The **draft NPDES renewal** for the **City of Fort Wayne P.L.
+Brunner Water Pollution Control Plant** (NPDES **IN0032191**, 2601 Dwenger Avenue) — the basin's
+largest POTW, discharging to the **Maumee River** via Outfalls 001/002 (average design flow **74
+MGD**, peak **100 MGD**). This is the municipal WWTP's own discharge permit, distinct from the
+Google/Hatchworks campus §401 record above. Public-noticed **2026-05-29** (comments closed
+2026-06-29); the **final permit + responsiveness summary are not yet issued** (imminent pulls).
+
+| File | Stage | Date | Pages |
+|---|---|---|---|
+| `notice_20260629_npdes_in0032191.pdf` | **DRAFT** package — public notice + cover letter + draft permit + Fact Sheet | 2026-05-29 | 87 |
+
+The single as-received file is the full draft package. Its Fact Sheet is the permit-grounded source
+for [`../../../extracted/fort-wayne/wwtp-receiving-water.md`](../../../extracted/fort-wayne/wwtp-receiving-water.md):
+the **cited Q7,10 = 40 cfs (26 MGD)** at the outfall → **0.35:1 dilution** (Bullerman Ditch-Maumee
+River watershed, HUC-12 041000050102, AU_ID INA0512-02); new cadmium/cyanide/lead WQBELs on 60-month
+compliance schedules; the mercury SMV renewal (interim 1.8 ng/l); TP 1.0 mg/l; TN monitor-only; and
+the Federal Consent Decree **2:07-cv-00445** / Agreed Order 2008-178333-W CSO endgame (LTCP fully
+implemented 2025; Final Post-Construction Monitoring Report still owed).
 
 ## Known gaps & caveats
 

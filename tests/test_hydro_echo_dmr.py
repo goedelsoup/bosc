@@ -101,6 +101,7 @@ def test_summarize_ignores_daily_max_rows() -> None:
             limit_type=None,
             exceedance_pct=None,
             nodi=None,
+            violations=[],
         )
         for m in range(1, 13)  # values 1..12
     ]
@@ -115,6 +116,7 @@ def test_summarize_ignores_daily_max_rows() -> None:
             limit_type=None,
             exceedance_pct=None,
             nodi=None,
+            violations=[],
         )
         for m in range(1, 13)  # values 3..36 — would skew mean if included
     ]
@@ -143,6 +145,122 @@ def test_summarize_ignores_daily_max_rows() -> None:
     assert summary.actual_flow_mean_mgd == pytest.approx(6.5)  # mean(1..12), not mean(1..12, 3..36)
     assert summary.actual_flow_min_mgd == pytest.approx(1.0)  # MO AVG min, not 3.0 (DAILY MX min)
     assert summary.actual_flow_max_mgd == pytest.approx(12.0)  # MO AVG max, not 36.0
+
+
+def test_pct_to_float_handles_echo_percent_string() -> None:
+    # ECHO returns ExceedencePct as a *string with a trailing percent sign* ("13%"),
+    # not a bare number. A plain float() choked on the "%" and dropped the exceedance;
+    # this parser strips it. A value ECHO didn't report stays None (never fabricated).
+    assert echo_dmr._pct_to_float("13%") == pytest.approx(13.0)
+    assert echo_dmr._pct_to_float("2%") == pytest.approx(2.0)
+    assert echo_dmr._pct_to_float("0.5 %") == pytest.approx(0.5)
+    assert echo_dmr._pct_to_float(7) == pytest.approx(7.0)  # tolerate a bare number too
+    assert echo_dmr._pct_to_float(None) is None
+    assert echo_dmr._pct_to_float("") is None
+    assert echo_dmr._pct_to_float("garbage") is None
+
+
+def test_parse_rows_reads_percent_string_and_violations() -> None:
+    # A raw ECHO DMR row: ExceedencePct as "13%" + an NPDESViolations entry. Both are
+    # ECHO's own reporting; the parser passes them through verbatim (never computed here).
+    rows = echo_dmr._parse_rows(
+        [
+            {
+                "MonitoringPeriodEndDate": "31-JAN-24",
+                "DMRValueNmbr": "17",
+                "DMRUnitDesc": "mg/L",
+                "LimitValueNmbr": "15",
+                "LimitValueTypeDesc": "Concentration3",
+                "StatisticalBaseShortDesc": "MX WK AV",
+                "ExceedencePct": "13%",
+                "NPDESViolations": [
+                    {
+                        "ViolationCode": "E90",
+                        "ViolationDesc": "DMR, Limited - Numeric Violation",
+                        "ViolationSeverity": "2",
+                        "ViolationSeverityDesc": "Non-Reportable Noncompliance Effluent Violation",
+                    }
+                ],
+            }
+        ]
+    )
+    assert len(rows) == 1
+    row = rows[0]
+    assert row.exceedance_pct == pytest.approx(13.0)
+    assert len(row.violations) == 1
+    assert row.violations[0].code == "E90"
+    assert row.violations[0].severity == "2"
+
+
+def test_summarize_flags_echo_reported_exceedance_with_parameter_context() -> None:
+    # A TSS parameter with one ECHO-flagged row (exceedance_pct + violation) and one
+    # clean row. Only the flagged row surfaces, carrying which pollutant exceeded where.
+    tss = echo_dmr.DmrParameter(
+        outfall="001",
+        outfall_type="External Outfall",
+        parameter_code="00530",
+        parameter_desc="Solids, total suspended",
+        monitoring_location="Effluent Gross",
+        rows=[
+            echo_dmr.DmrRow(
+                period_end="2024-01-31",
+                value=17.0,
+                unit="mg/L",
+                qualifier="=",
+                stat_base="MX WK AV",
+                limit=15.0,
+                limit_type="Concentration3",
+                exceedance_pct=13.0,
+                nodi=None,
+                violations=[
+                    echo_dmr.DmrViolation(
+                        code="E90",
+                        desc="DMR, Limited - Numeric Violation",
+                        severity="2",
+                        severity_desc="Non-Reportable Noncompliance Effluent Violation",
+                    )
+                ],
+            ),
+            echo_dmr.DmrRow(
+                period_end="2024-02-29",
+                value=8.0,
+                unit="mg/L",
+                qualifier="=",
+                stat_base="MO AVG",
+                limit=10.0,
+                limit_type="Concentration2",
+                exceedance_pct=None,
+                nodi=None,
+                violations=[],
+            ),
+        ],
+    )
+    chart = echo_dmr.EffluentChart(
+        npdes_id="IN0032191",
+        name="FORT WAYNE WWTP",
+        permit_type=None,
+        permit_status=None,
+        major_minor="M",
+        snc_status="Effluent - Monthly Average Limit",
+        start_date="2023-01-01",
+        end_date="2026-06-30",
+        parameters=[tss],
+    )
+    summary = echo_dmr.summarize_discharge(chart, design_flow_mgd=74.0)
+    assert len(summary.exceedances) == 1
+    exc = summary.exceedances[0]
+    assert exc.parameter_desc == "Solids, total suspended"
+    assert exc.outfall == "001"
+    assert exc.stat_base == "MX WK AV"
+    assert exc.value == pytest.approx(17.0)
+    assert exc.limit == pytest.approx(15.0)
+    assert exc.exceedance_pct == pytest.approx(13.0)
+    assert exc.violations[0].code == "E90"
+    # The document emitter carries the parameter + violation classification.
+    doc = echo_dmr.dmr_document(chart, summary)
+    assert doc["discharge_summary"]["reported_exceedances"] == 1
+    assert doc["exceedances"][0]["parameter"] == "Solids, total suspended"
+    assert doc["exceedances"][0]["violations"][0]["code"] == "E90"
 
 
 def test_offline_cache_miss_raises(hydro_settings: Settings) -> None:

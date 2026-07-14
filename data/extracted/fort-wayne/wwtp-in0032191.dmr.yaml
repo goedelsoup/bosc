@@ -1,7 +1,7 @@
 meta:
   subject: FORT WAYNE WWTP (NPDES IN0032191) — reported effluent record (EPA ECHO DMR)
   source: EPA ECHO eff_rest_services.get_effluent_chart
-  regenerate: watermark dmr IN0032191 --start 2023-01-01 --end 2023-12-31 --design-flow 74.0
+  regenerate: watermark dmr IN0032191 --start 2023-01-01 --end 2026-06-30 --design-flow 74.0
   discipline: Reported DMR values are verbatim from the permittee's submissions via ECHO; a no-discharge/no-data
     period is null (never zero-filled), and an exceedance is listed only where ECHO reports one. Design
     flow is the permitted maximum, not a metered value.
@@ -12,19 +12,19 @@ permit:
   permit_status: Admin Continued
   major_minor: M
   snc_status: Effluent - Monthly Average Limit
-  window: 2023-01-01..2023-12-31
+  window: 2023-01-01..2026-06-30
 discharge_summary:
   design_flow_mgd: 74.0
-  design_flow_cfs: 114.48
+  design_flow_cfs: 114.49
   primary_outfall: '001'
-  n_flow_months: 12
-  actual_flow_mean_mgd: 43.869
-  actual_flow_mean_cfs: 67.87
-  actual_flow_min_mgd: 30.304
-  actual_flow_max_mgd: 79.287
-  flow_pct_of_design: 59.3
+  n_flow_months: 41
+  actual_flow_mean_mgd: 44.26
+  actual_flow_mean_cfs: 68.48
+  actual_flow_min_mgd: 28.23
+  actual_flow_max_mgd: 87.88
+  flow_pct_of_design: 59.8
   cso_outfalls: 39
-  reported_exceedances: 0
+  reported_exceedances: 2
 flow_monthly:
 - period_end: '2023-01-31'
   value_mgd: 56.016
@@ -62,4 +62,121 @@ flow_monthly:
 - period_end: '2023-12-31'
   value_mgd: 35.572
   stat_base: MO AVG
-exceedances: []
+- period_end: '2024-01-31'
+  value_mgd: 56.155
+  stat_base: MO AVG
+- period_end: '2024-02-29'
+  value_mgd: 43.842
+  stat_base: MO AVG
+- period_end: '2024-03-31'
+  value_mgd: 47.845
+  stat_base: MO AVG
+- period_end: '2024-04-30'
+  value_mgd: 87.88
+  stat_base: MO AVG
+- period_end: '2024-05-31'
+  value_mgd: 50.968
+  stat_base: MO AVG
+- period_end: '2024-06-30'
+  value_mgd: 39.846
+  stat_base: MO AVG
+- period_end: '2024-07-31'
+  value_mgd: 38.784
+  stat_base: MO AVG
+- period_end: '2024-08-31'
+  value_mgd: 35.355
+  stat_base: MO AVG
+- period_end: '2024-09-30'
+  value_mgd: 31.777
+  stat_base: MO AVG
+- period_end: '2024-10-31'
+  value_mgd: 28.669
+  stat_base: MO AVG
+- period_end: '2024-11-30'
+  value_mgd: 33.63
+  stat_base: MO AVG
+- period_end: '2024-12-31'
+  value_mgd: 39.174
+  stat_base: MO AVG
+- period_end: '2025-01-31'
+  value_mgd: 39.973
+  stat_base: MO AVG
+- period_end: '2025-02-28'
+  value_mgd: 38.607
+  stat_base: MO AVG
+- period_end: '2025-03-31'
+  value_mgd: 46.512
+  stat_base: MO AVG
+- period_end: '2025-04-30'
+  value_mgd: 69.548
+  stat_base: MO AVG
+- period_end: '2025-05-31'
+  value_mgd: 44.912
+  stat_base: MO AVG
+- period_end: '2025-06-30'
+  value_mgd: 59.368
+  stat_base: MO AVG
+- period_end: '2025-07-31'
+  value_mgd: 39.732
+  stat_base: MO AVG
+- period_end: '2025-08-31'
+  value_mgd: 34.532
+  stat_base: MO AVG
+- period_end: '2025-09-30'
+  value_mgd: 29.901
+  stat_base: MO AVG
+- period_end: '2025-10-31'
+  value_mgd: 28.23
+  stat_base: MO AVG
+- period_end: '2025-11-30'
+  value_mgd: 30.51
+  stat_base: MO AVG
+- period_end: '2025-12-31'
+  value_mgd: 36.326
+  stat_base: MO AVG
+- period_end: '2026-01-31'
+  value_mgd: 34.385
+  stat_base: MO AVG
+- period_end: '2026-02-28'
+  value_mgd: 38.777
+  stat_base: MO AVG
+- period_end: '2026-03-31'
+  value_mgd: 53.952
+  stat_base: MO AVG
+- period_end: '2026-04-30'
+  value_mgd: 77.087
+  stat_base: MO AVG
+- period_end: '2026-05-31'
+  value_mgd: 51.965
+  stat_base: MO AVG
+exceedances:
+- period_end: '2024-01-31'
+  outfall: '001'
+  parameter_code: '00530'
+  parameter: Solids, total suspended
+  stat_base: MX WK AV
+  value: 17.0
+  unit: mg/L
+  limit: 15.0
+  limit_type: Concentration3
+  exceedance_pct: 13.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2026-02-28'
+  outfall: '001'
+  parameter_code: '00530'
+  parameter: Solids, total suspended
+  stat_base: MO AVG
+  value: 10.2
+  unit: mg/L
+  limit: 10.0
+  limit_type: Concentration2
+  exceedance_pct: 2.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
