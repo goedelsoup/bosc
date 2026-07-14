@@ -1,0 +1,104 @@
+doc_id: cercla-ffa-1991-wpafb
+source_path: data/documents/wpafb/cercla/wright-pattersonafb.pdf
+kind: epa
+pages_read:
+- 0
+- 8
+- 9
+- 10
+- 71
+image_pages_read: []
+dpi: 0
+method: >-
+  manual review of the pdftotext text layer of the 81-page scanned Federal Facility Agreement
+  (EPA-hosted, wright-pattersonafb.pdf). The scan's OCR is lightly garbled; every figure below
+  was read against the surrounding context and cross-checked to the Findings of Fact (Section 5),
+  not to the filename.
+source_text_excerpt: >-
+  FEDERAL FACILITY AGREEMENT UNDER CERCLA SECTION 120 — UNITED STATES ENVIRONMENTAL PROTECTION
+  AGENCY REGION V AND THE UNITED STATES DEPARTMENT OF THE AIR FORCE ... In the Matter of: The
+  U.S. Department of the Air Force, Wright-Patterson Air Force Base, Ohio. ... (a) WPAFB is
+  located in the Miami River Valley Basin northeast of the City of Dayton, Ohio and covers
+  approximately 8,200 acres divided between "Areas A and C" and "Area B" ... (b) WPAFB overlies
+  a portion of the Miami Buried Valley Aquifer which is the source of potable water for WPAFB
+  and the Cities of Dayton and Fairborn ... (e) ... at least 58 waste disposal sites ... (g)
+  Three WPAFB well fields, which contain seventeen (17) drinking water-supply wells ... (h) The
+  17 WPAFB drinking water supply wells contain ... volatile organic compounds (VOCs):
+  tetrachloroethylene; trichloroethylene; carbon tetrachloride; 1,1,1-trichloroethane;
+  chloroform; 1,2-dichloroethylene and toluene ... This Agreement is based upon the placement of
+  the Wright Patterson Air Force Base (WPAFB), Greene and Montgomery County, on the National
+  Priorities List (NPL) by the Environmental Protection Agency on October 4, 1989, 54 Federal
+  Register 191 at page 41021.
+action:
+  confidence: high
+  warnings:
+  - >-
+    Source is an OCR'd scan of the 1991 FFA; the OCR is garbled in places ("PwwLcuu" = Program,
+    "cxarvleted" = completed). Dates, statutory citations, and the Findings of Fact were read
+    against context; verbatim quotes above are normalized only where OCR mangled obvious words.
+  - >-
+    The administrative docket number is blank on the executed cover sheet in this copy. The
+    document's own metadata keyword is "3/31/91" (the execution/signature date); the FFA becomes
+    formally EFFECTIVE only when U.S. EPA issues its post-public-comment notice (Section 40), a
+    date not stated in this copy — recorded here as execution_date, not effective_date.
+  agency: U.S. Environmental Protection Agency, Region V (and U.S. Department of the Air Force)
+  program: CERCLA Section 120 Federal Facility Agreement (Superfund; DoD Installation Restoration Program)
+  permit_no: null   # blank administrative docket number on this executed copy
+  action: executed
+  action_date: '1991-03-31'   # document metadata keyword "3/31/91" (execution); effective on later EPA notice
+  applicant: United States Department of the Air Force (Wright-Patterson AFB)
+  project_name: Wright-Patterson AFB Federal Facility Agreement (CERCLA §120)
+  site_address: >-
+    Wright-Patterson AFB, Miami River Valley Basin northeast of Dayton, Greene and Montgomery
+    Counties, Ohio — approx. 8,200 acres ("Areas A and C" and "Area B")
+  affected_resource: >-
+    Miami Buried Valley Aquifer (the sole-source drinking-water aquifer; 17 WPAFB supply wells +
+    Dayton/Fairborn municipal well fields) contaminated by VOCs (TCE, PCE, carbon tetrachloride,
+    1,1,1-TCA, chloroform, 1,2-DCE, toluene) from ≥58 base waste-disposal sites.
+  note: >-
+    The CERCLA Section 120 Federal Facility Agreement between U.S. EPA Region V and the U.S. Air
+    Force governing Superfund cleanup at WPAFB. Executed 1991 (metadata 3/31/91), following the
+    base's NPL listing on 1989-10-04 (54 Fed. Reg. 41021). Findings of Fact tie the contamination
+    directly to the Miami Buried Valley Aquifer — the SAME sole-source aquifer designated at 53
+    FR 15876 (see ssa-53fr15876.epa.yaml). This is the [verified] primary instrument behind the
+    WPAFB profile's TCE/PFAS-plume receiving-water dimension.
+
+# --- verbatim finding block (extra fields; models allow extra="allow") ----------------------
+npl_listing_date: '1989-10-04'
+npl_citation: 54 Fed. Reg. 41021 (Oct. 4, 1989)
+statutory_authority: >-
+  CERCLA/SARA Section 120(e)(1) & (e)(2), 42 U.S.C. 9620(e); RCRA Sections 6001, 3008(h),
+  3004(u) & (v); SARA Section 211, 10 U.S.C. 2701 et seq.
+aquifer: Miami Buried Valley Aquifer (upper + lower sand-and-gravel water-bearing zones)
+base_area_acres: ~8200
+base_areas:
+- Areas A and C
+- Area B
+waste_disposal_sites: ~58   # "at least 58 waste disposal sites" — landfills, burial sites, spills, fire-training areas, coal piles
+supply_wells: 17            # "seventeen (17) drinking water-supply wells" across three WPAFB well fields
+well_fields: 3
+air_stripping_units: 5      # WPAFB operates five air stripping units to remove VOCs
+contaminants_vocs:
+- tetrachloroethylene (PCE)
+- trichloroethylene (TCE)
+- carbon tetrachloride
+- 1,1,1-trichloroethane
+- chloroform
+- 1,2-dichloroethylene
+- toluene
+irp_program: DoD Installation Restoration Program (established 1978); Phase I records search + Phase II Stage I confirmation completed
+disposal_period: 1920s to at least 1973
+epa_superfund_site_id: '0504939'   # per the issue's 2026-07-10 refresh (cumulis.epa.gov SiteProfile); not stated in the FFA text
+usgs_topo_basis: Dayton North (1965, photorev. 1981); Fairborn (1965, photorev. 1988); Yellow Springs (1968, photorev. 1975)
+
+relevance:
+  tags: [verified, cercla, superfund, ffa, ffa-section-120, tce, pfas, buried-valley-aquifer, wpafb, npl]
+  note: >-
+    The [verified] federal instrument behind the WPAFB SiteProfile's TCE/PFAS-plume dimension
+    (previously [inference]/[reference]). The FFA's Findings of Fact place the plume on the same
+    Miami Buried Valley Aquifer that 53 FR 15876 designated a sole source — the two records
+    together verify the WPAFB groundwater thesis end to end. Compliance history + the 2024-12-16
+    EPA environmental-indicator revocation go to the standing-watch issue, not this ingest record.
+  cross_refs:
+  - data/extracted/wpafb/ssa-53fr15876.epa.yaml     # the sole-source designation on this aquifer
+  - data/extracted/wpafb/groundwater-screen.md      # the screen this record verifies

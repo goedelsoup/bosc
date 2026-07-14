@@ -1555,8 +1555,11 @@ _XENIA = SiteProfile(
 # Mobility Guardian 2025) + the `cloud-consumer-candidates.yaml` WPAFB-adjacent corridor entry. The
 # distinctive data-center variant here is **regulated/air-gapped DoD cloud**, not hyperscale. Two
 # overlays make it load-bearing: WPAFB runs its own production well-field on the **Great Miami /
-# Mad River Buried Valley Aquifer** (US-EPA sole-source) and is the source of a documented **TCE /
-# PFAS groundwater plume** on that same drinking-water aquifer. The buried-valley supply (not surface
+# Mad River Buried Valley Aquifer** (US-EPA sole-source, 53 Fed. Reg. 15876 (May 4, 1988), FRL-3369-5
+# [verified]) and is the source of a documented **TCE / PFAS groundwater plume** on that same
+# drinking-water aquifer (CERCLA §120 FFA; NPL listing 1989-10-04, 54 FR 41021 [verified]). Both were
+# to-verify at onboarding; the primary records are now in the corpus (#1397 — data/extracted/wpafb/
+# ssa-53fr15876.epa.yaml + cercla-ffa-1991.epa.yaml). The buried-valley supply (not surface
 # 7Q10 dilution) is the water story. GEOGRAPHY NOTES: the base STRADDLES Greene + Montgomery counties
 # — the economic/toxics unit chosen here is **Montgomery County (Dayton metro, FIPS 39113)** (the
 # well-field + defense-metro + plume context), distinct from the Greene-County (Xenia #444) economics
@@ -1590,10 +1593,12 @@ _WPAFB = SiteProfile(
     dominant_hsg="B",  # [inference] Great Miami / Mad River buried-valley outwash (well-drained valley fill)
     hsg_citation=(
         "Dayton / WPAFB sits on the Great Miami / Mad River Buried Valley Aquifer - glacial outwash "
-        "sand & gravel, a US-EPA designated sole-source aquifer (the Dayton municipal + WPAFB "
-        "production well fields draw on it) - so the valley fill is well-drained HSG A/B, the INVERSE "
-        "of the Maumee lake-plain Black Swamp clays (HSG D); [inference] pending an SSURGO "
-        "area-weighted confirmation (onboard SSURGO needs a footprint)"
+        "sand & gravel, a US-EPA designated sole-source aquifer [verified: 53 Fed. Reg. 15876 "
+        "(May 4, 1988), FRL-3369-5, SDWA 1424(e); the Dayton municipal + WPAFB production well fields "
+        "draw on it - data/extracted/wpafb/ssa-53fr15876.epa.yaml] - so the valley fill is "
+        "well-drained HSG A/B, the INVERSE of the Maumee lake-plain Black Swamp clays (HSG D); the "
+        "HSG A/B letter itself stays [inference] pending an SSURGO area-weighted confirmation "
+        "(onboard SSURGO needs a footprint)"
     ),
     pre_cover="TODO",  # [open] development land-cover scenario — pending an identified site
     post_cover="TODO",

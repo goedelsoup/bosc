@@ -314,7 +314,7 @@ def test_urbana_sample_bundle_tracks_the_export_contract(urbana_bundle: Path) ->
 # their committed floor data alone (no fabricated corpus), and the true stubs stay `stub`. We
 # assert the derived readiness end-to-end through the real export rather than committing ~370
 # unrendered fixture files for these non-selectable sites (their bundles regenerate on promotion).
-@pytest.mark.parametrize("slug", ["findlay", "toledo", "west-union", "wpafb"])
+@pytest.mark.parametrize("slug", ["findlay", "toledo", "west-union"])
 def test_backdrop_staged_site_exports_at_backdrop_tier(
     slug: str, tmp_path_factory: pytest.TempPathFactory
 ) -> None:
@@ -332,6 +332,43 @@ def test_backdrop_staged_site_exports_at_backdrop_tier(
     assert domains["backdrop"] == "live"
     for above_floor in ("facility", "places", "record"):
         assert domains[above_floor] == "absent", f"{slug} {above_floor} must not scaffold"
+
+
+def test_wpafb_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) -> None:
+    """WPAFB's floor (economics-baseline, consumer-energy, rsei) is committed, and the #1397
+    primary-record ingest lifts ``record`` to ``live``: the US-EPA Sole Source Aquifer
+    designation (53 FR 15876) and the CERCLA §120 Federal Facility Agreement are two in-scope
+    ``permits-epa`` extractions clearing ``RECORD_LIVE_THRESHOLD`` — one above-floor domain live
+    over the floor is enough for ``case``. ``facility``/``places``/``story`` stay ``absent`` (no
+    disclosed SiteFacility, no committed campus geometry, not in ``STORY_SLUGS``), so this needs
+    its own test rather than the backdrop parametrize group (which asserts ``record`` stays
+    unscaffolded)."""
+    out = tmp_path_factory.mktemp("case-wpafb") / "b"
+    settings = Settings(data_dir=REPO_ROOT / "data", site="wpafb")
+    export_bundle(
+        settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
+    )
+    manifest = _manifest(out)
+    assert manifest["contract_version"] == "1.24.0"
+    readiness = manifest["readiness"]
+    assert readiness["tier"] == "case", f"wpafb should be a Case site, got {readiness}"
+    domains = readiness["domains"]
+    assert domains["backdrop"] == "live"
+    assert domains["record"] == "live"
+    # Nothing else above the floor is scaffolded: no disclosed facility, no committed campus
+    # geometry, no registered story.
+    for absent_domain in ("facility", "places", "story"):
+        assert domains[absent_domain] == "absent", f"wpafb {absent_domain} must not scaffold"
+
+    # ``record`` is live because the site owns exactly its two real, in-scope agency records —
+    # the SSA designation and the CERCLA FFA — not scaffolding: assert the records feed holds
+    # precisely those two artifacts by their extracted-tree source paths (#1397).
+    records = _rows(out, _feeds_by_name(out)["records"])
+    assert {r["rel"] for r in records} == {
+        "wpafb/ssa-53fr15876.epa.yaml",
+        "wpafb/cercla-ffa-1991.epa.yaml",
+    }, f"records feed should hold exactly the two in-scope agency records, got {sorted(r['rel'] for r in records)}"
+    assert len(records) == 2
 
 
 def test_troy_piqua_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) -> None:
