@@ -4,7 +4,7 @@ import asyncio
 import json
 import subprocess
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import typer
 from rich.table import Table
@@ -14,6 +14,56 @@ from watermark.cli._base import (
     get_settings,
     research_app,
 )
+
+if TYPE_CHECKING:
+    from watermark.research import PublishPlan
+
+
+class _GhError(RuntimeError):
+    """A ``gh`` invocation failed (missing binary or non-zero exit).
+
+    Carries a rendered, human-readable message so the CLI shows a clean line
+    instead of a raw ``FileNotFoundError``/``CalledProcessError`` traceback.
+    """
+
+
+def _gh(args: list[str]) -> subprocess.CompletedProcess[str]:
+    """Run ``gh <args>`` capturing output; raise :class:`_GhError` on any failure.
+
+    Normalizes the two ways ``gh`` can blow up — not installed (``FileNotFoundError``)
+    and non-zero exit (``CalledProcessError``) — into one rendered message. The error
+    names only the subcommand (``args[:2]``), never the full body payload.
+    """
+    try:
+        return subprocess.run(["gh", *args], capture_output=True, text=True, check=True)
+    except FileNotFoundError as exc:
+        raise _GhError(
+            "GitHub CLI (`gh`) not found — install it (https://cli.github.com) to publish issues."
+        ) from exc
+    except subprocess.CalledProcessError as exc:
+        detail = (exc.stderr or exc.stdout or "").strip() or f"exit {exc.returncode}"
+        raise _GhError(f"`gh {' '.join(args[:2])}` failed: {detail}") from exc
+
+
+def _write_publish_plan(
+    out_dir: Path,
+    *,
+    existing: list[dict[str, Any]],
+    plan_out: Path | None = None,
+) -> PublishPlan:
+    """Load the run manifest, build the publish plan (deduping against ``existing``),
+    write it to JSON, and print the summary. No GitHub mutations — safe to run offline."""
+    from watermark.research import build_plan, load_manifest
+
+    manifest = load_manifest(out_dir)
+    plan = build_plan(manifest, existing=existing, run_ref=out_dir.as_posix())
+    out_path = plan_out or out_dir / "publish-plan.json"
+    out_path.write_text(json.dumps(plan.model_dump(), indent=2) + "\n", encoding="utf-8")
+    console.print(
+        f"[bold]Publish plan →[/] {out_path}  "
+        f"({len(plan.issues)} to open, {len(plan.duplicates)} skipped)"
+    )
+    return plan
 
 
 def _publish_and_create_issues(
@@ -26,33 +76,37 @@ def _publish_and_create_issues(
     """Fetch open issues, build a publish plan, write it, and open net-new issues on GitHub.
 
     If ``existing`` is None, open issues are fetched automatically via ``gh``.
-    ``plan_out`` defaults to ``<out_dir>/publish-plan.json``.
+    ``plan_out`` defaults to ``<out_dir>/publish-plan.json``. Every ``gh`` call is routed
+    through :func:`_gh`: a missing binary or a mid-loop failure renders a clean line and
+    (for per-issue failures) is recorded to ``publish-result.json`` rather than aborting
+    with a traceback after some issues were already opened.
     """
-    from watermark.research import build_plan, load_manifest
+    try:
+        _do_publish_and_create_issues(out_dir, site, existing=existing, plan_out=plan_out)
+    except _GhError as exc:
+        console.print(f"[red]{exc}[/]")
+        raise typer.Exit(1) from exc
 
-    manifest = load_manifest(out_dir)
+
+def _do_publish_and_create_issues(
+    out_dir: Path,
+    site: str,
+    *,
+    existing: list[dict[str, Any]] | None,
+    plan_out: Path | None,
+) -> None:
     issues: list[dict[str, Any]]
     if existing is not None:
         issues = existing
     else:
         console.print("[dim]Fetching open issues for dedupe…[/]")
-        gh_result = subprocess.run(
-            ["gh", "issue", "list", "--json", "number,title,body", "--limit", "500"],
-            capture_output=True,
-            text=True,
-            check=True,
+        loaded = json.loads(
+            _gh(["issue", "list", "--json", "number,title,body", "--limit", "500"]).stdout
         )
-        loaded = json.loads(gh_result.stdout)
         issues = loaded if isinstance(loaded, list) else []
         console.print(f"[dim]  {len(issues)} open issues fetched.[/]")
 
-    plan = build_plan(manifest, existing=issues, run_ref=out_dir.as_posix())
-    out_path = plan_out or out_dir / "publish-plan.json"
-    out_path.write_text(json.dumps(plan.model_dump(), indent=2) + "\n", encoding="utf-8")
-    console.print(
-        f"[bold]Publish plan →[/] {out_path}  "
-        f"({len(plan.issues)} to open, {len(plan.duplicates)} skipped)"
-    )
+    plan = _write_publish_plan(out_dir, existing=issues, plan_out=plan_out)
 
     if not plan.issues:
         console.print("[yellow]No issues to open (all deduped or none proposed).[/]")
@@ -60,39 +114,39 @@ def _publish_and_create_issues(
 
     # Ensure the site label exists before trying to apply it.
     site_label = f"site:{site}"
-    label_result = subprocess.run(
-        ["gh", "label", "list", "--json", "name", "--limit", "1000"],
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    existing_label_names = {lbl["name"] for lbl in json.loads(label_result.stdout)}
+    existing_label_names = {
+        lbl["name"]
+        for lbl in json.loads(_gh(["label", "list", "--json", "name", "--limit", "1000"]).stdout)
+    }
     if site_label not in existing_label_names:
-        subprocess.run(
-            [
-                "gh",
-                "label",
-                "create",
-                site_label,
-                "--color",
-                "c5def5",
-                "--description",
-                f"Site: {site}",
-            ],
-            capture_output=True,
-            text=True,
-            check=True,
-        )
+        _gh(["label", "create", site_label, "--color", "c5def5", "--description", f"Site: {site}"])
         console.print(f"[dim]Created label [bold]{site_label}[/].[/]")
 
     console.print()
+    opened: list[str] = []
+    failed: list[dict[str, str]] = []
     for iss in plan.issues:
-        cmd = ["gh", "issue", "create", "--title", iss.title, "--body", iss.body]
+        cmd = ["issue", "create", "--title", iss.title, "--body", iss.body]
         for label in [*iss.labels, f"site:{site}"]:
             cmd += ["--label", label]
-        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-        url = result.stdout.strip()
+        try:
+            url = _gh(cmd).stdout.strip()
+        except _GhError as exc:
+            # Don't abort the batch — record and keep going so a rate limit / transient
+            # 500 on one issue doesn't strand the rest with no record of what was created.
+            failed.append({"title": iss.title, "error": str(exc)})
+            console.print(f"  [red]failed[/] {iss.title} — {exc}")
+            continue
+        opened.append(url)
         console.print(f"  [green]opened[/] {url}")
+
+    result_path = out_dir / "publish-result.json"
+    result_path.write_text(
+        json.dumps({"opened": opened, "failed": failed}, indent=2) + "\n", encoding="utf-8"
+    )
+    console.print(f"\n[bold]{len(opened)} opened[/], {len(failed)} failed — record → {result_path}")
+    if failed:
+        raise typer.Exit(1)
 
 
 @research_app.command("run")
@@ -112,12 +166,20 @@ def research_run_cmd(
         -1, "--max-proposals", help="Issue proposals to distill (-1 = settings default)."
     ),
     no_tools: bool = typer.Option(False, "--no-tools", help="Disable the BOSC data tools."),
+    create_issues: bool = typer.Option(
+        False,
+        "--create-issues",
+        "--publish",
+        help="For --recipe site-onboard: open the proposed issues on GitHub via gh "
+        "(default off — otherwise just writes the publish plan for review).",
+    ),
 ) -> None:
     """Investigate over the corpus (read-only) and write findings + the recipe's output under
     data/research/. The default recipe distills issue proposals; --recipe hypothesis-assessment
     --hypothesis <id> assesses the active --site against a boom-origin hypothesis (candidate
-    cells, for review). The site-onboard recipe automatically publishes proposals as GitHub
-    issues after the run. Never mutates source bytes."""
+    cells, for review). The site-onboard recipe writes a publish plan for its proposals; add
+    --create-issues to also open them on GitHub (an irreversible external action, off by
+    default). Never mutates source bytes."""
     from datetime import UTC, datetime
 
     from watermark.hypotheses import HYPOTHESES
@@ -209,7 +271,15 @@ def research_run_cmd(
 
     if recipe == "site-onboard" and manifest.proposals:
         console.print()
-        _publish_and_create_issues(out_dir, site=settings.site)
+        if create_issues:
+            _publish_and_create_issues(out_dir, site=settings.site)
+        else:
+            _write_publish_plan(out_dir, existing=[])
+            console.print(
+                "[dim]Preview only — no issues opened. Re-run with [bold]--create-issues[/] "
+                f"(or [bold]watermark research publish --run {out_dir} --create-issues[/]) "
+                "to open them.[/]"
+            )
 
 
 @research_app.command("publish")
@@ -247,17 +317,8 @@ def research_publish_cmd(
             plan_out=Path(out) if out else None,
         )
     else:
-        from watermark.research import build_plan, load_manifest
-
-        manifest = load_manifest(run_dir)
         issues: list[dict[str, Any]] = []
         if existing:
             loaded = json.loads(Path(existing).read_text(encoding="utf-8"))
             issues = loaded if isinstance(loaded, list) else []
-        plan = build_plan(manifest, existing=issues, run_ref=run_dir.as_posix())
-        out_path = Path(out) if out else run_dir / "publish-plan.json"
-        out_path.write_text(json.dumps(plan.model_dump(), indent=2) + "\n", encoding="utf-8")
-        console.print(
-            f"[bold]Publish plan →[/] {out_path}  "
-            f"({len(plan.issues)} to open, {len(plan.duplicates)} skipped)"
-        )
+        _write_publish_plan(run_dir, existing=issues, plan_out=Path(out) if out else None)
