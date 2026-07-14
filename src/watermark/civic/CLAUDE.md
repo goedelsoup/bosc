@@ -3,15 +3,19 @@
 Civic-records subsystem: Allen County political-subdivision meeting minutes/agendas.
 Defers to the root [`CLAUDE.md`](../../../CLAUDE.md).
 
-- **Registry is the spine, and it resolves per active site.** The committed,
-  hand-reviewed
+- **Registry is the spine, and it resolves per active site.** `registry.py`'s
+  `registry_path(settings)` selects the authoritative
+  `data/reference/subdivisions/<site>/subdivisions.yaml` for the active site —
+  **including peer sites**, which slug-scope under their own `<slug>/` directory. The
+  linked flat
   [`data/reference/subdivisions/subdivisions.yaml`](../../../data/reference/subdivisions/)
-  enumerates every meeting-holding body. `registry.py` loads it into `Subdivision`
-  models. Add a body there, not in code. `registry_path(settings)` is **site-scoped**:
-  `lima` keeps this legacy flat file (litigation corpus never relocated); every peer
-  slug-scopes under `subdivisions/<slug>/subdivisions.yaml`. Each registry declares its
-  owner in `meta.site`, and `load_registry` refuses a registry whose `meta.site`
-  disagrees with `settings.site` — no silent cross-site read (epic #1520, phase 1 #1521).
+  is **Lima's legacy registry**: the reference build keeps its flat committed layout so
+  the litigation corpus is never relocated (which site owns that layout is decided by
+  `watermark.sites.is_reference_site`, not a hardcoded slug). Each registry enumerates
+  its own site's meeting-holding bodies and declares its owner in `meta.site`;
+  `load_registry` parses it into `Subdivision` models and refuses a registry whose
+  `meta.site` disagrees with `settings.site` — no silent cross-site read. Add a body to
+  the site's registry, not in code (epic #1520, phase 1 #1521).
 - **Grounded vs. discovered — never blur them.** `name`/`type`/`governing_body`/
   `meeting_schedule`/`office` are verbatim from a committed county roster
   (`grounded_from`); `publishing.*` is a live-web finding with its own
