@@ -30,7 +30,7 @@ const readHref = withSite("/stories/read");
       enabled ? (
         <StoryEditor client:only="react" siteSlug={slug} atomsUrl={atomsUrl} readHref={readHref} />
       ) : (
-        <StoriesDisabled message="The story editor isn't enabled in this build yet.">
+        <StoriesDisabled message="The story editor is coming soon.">
           Preview it: <a href="?preview=1">open the editor with a sample story</a>
         </StoriesDisabled>
       )

@@ -44,7 +44,7 @@ const atomsUrl = withSite("/stories-atoms.json");
       enabled ? (
         <StoryReader client:only="react" atomsUrl={atomsUrl} />
       ) : (
-        <StoriesDisabled message="Reader-authored stories aren't enabled in this build yet.">
+        <StoriesDisabled message="Reader-authored stories are coming soon.">
           Preview the renderer: <a href="?preview=reader">a reader story</a> ·{" "}
           <a href="?preview=editorial">an editorial story</a>
         </StoriesDisabled>

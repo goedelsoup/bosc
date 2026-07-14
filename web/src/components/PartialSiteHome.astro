@@ -16,10 +16,17 @@
  * Available vs locked is always explicit; nothing here is borrowed from another site.
  */
 import SiteNeeds from "./SiteNeeds.astro";
+import StoryTeaser from "./story/StoryTeaser.astro";
 import { loadManifest } from "../lib/bundle";
 import { type ReadinessSection, SECTION_META, isAvailable, lockedSections } from "../lib/readiness";
 import { withBase, withSite, withStory } from "../lib/site";
-import { FACILITY_STATUS_META, type NetworkSite, facilityStatus, surfacedStories } from "../lib/sites";
+import {
+  FACILITY_STATUS_META,
+  type NetworkSite,
+  comingSoonStories,
+  facilityStatus,
+  surfacedStories,
+} from "../lib/sites";
 
 interface Props {
   slug: string;
@@ -31,9 +38,13 @@ const { slug, site, dateline } = Astro.props as Props;
 const manifest = loadManifest(slug);
 const count = (name: string): number => manifest.feeds.find((f) => f.name === name)?.count ?? 0;
 
-// The hero + story card key off the *surfaced* story — a hidden one (#1256) drops the CTA, same as
-// a peer with no story at all — so a partial peer never advertises a hidden walk.
+// The hero + story card key off the *surfaced* (readable) story — a not-readable one drops the
+// readable CTA. A `comingSoon` walk (#1526) is still *advertised*: its title/dek ground the hero and
+// a visible teaser stands in for the readable card. `hidden` (#1256) stays fully silent.
 const story = surfacedStories(slug)[0];
+const comingSoonStory = comingSoonStories(slug)[0];
+// The hero grounds in whichever story the site registers (readable or held) — never invented prose.
+const heroStory = story ?? comingSoonStory;
 const fac = FACILITY_STATUS_META[facilityStatus(slug)];
 
 // Section → its landing route + the feed whose row count is worth showing (omitted where a count
@@ -86,17 +97,18 @@ const onRecord = DATA_SECTIONS.filter((s) => isAvailable(slug, s)).map((s) => {
 });
 
 // "Help us source it" — the locked sections are the gaps; the board itself is `<SiteNeeds>`, so
-// here we only need the count for the hero pill + the section guard.
-const needsCount = lockedSections(slug).length;
+// here we only need the count for the hero pill + the section guard. A held (`comingSoon`) story is
+// advertised, not a gap (#1526), so it's excluded from the count exactly as `SiteNeeds` excludes it.
+const needsCount = lockedSections(slug).filter((s) => !(s === "story" && comingSoonStory)).length;
 ---
 
 <div class="psite">
   <header class="psite-hero">
     <div class="psite-kicker">Public record · {dateline}</div>
-    <h1>{story ? story.title : site.place}</h1>
+    <h1>{heroStory ? heroStory.title : site.place}</h1>
     <p class="psite-lead">
-      {story
-        ? story.dek
+      {heroStory
+        ? heroStory.dek
         : `The ${site.place} record, assembled in the open from public documents — every figure checkable, every gap labeled.`}
     </p>
     <div class="psite-hero-meta">
@@ -140,6 +152,25 @@ const needsCount = lockedSections(slug).length;
       }
     </div>
   </section>
+
+  {/* The story, held — a visible "coming soon" teaser in place of the readable card (#1526). It's
+      advertised (title + dek + badge), not silently dropped, and links to the interstitial. */}
+  {
+    comingSoonStory ? (
+      <section class="psite-block" aria-label="The story">
+        <div class="psite-block-head">
+          <span class="psite-block-kicker">The story</span>
+          <span class="psite-block-note">a guided walk over this record — coming soon</span>
+        </div>
+        <StoryTeaser
+          title={comingSoonStory.title}
+          dek={comingSoonStory.dek}
+          href={withStory("")}
+          variant="compact"
+        />
+      </section>
+    ) : null
+  }
 
   {/* What we DON'T — the gaps, framed as an open invitation to contribute. */}
   {

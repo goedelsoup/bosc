@@ -1,0 +1,68 @@
+---
+/**
+ * Story · StoryComingSoon — the coming-soon interstitial served at the story routes (#1526/#1529)
+ * for a `comingSoon` story. The routes keep emitting their URLs (so links resolve, not 404) but
+ * render THIS — the story's title + dek + a coming-soon affordance — instead of the narrative, so
+ * no chapter prose, table of contents, or doc-by-doc walk is reachable by direct URL while the
+ * content is held.
+ *
+ * It reuses the `.walk-onramp` story-shell grammar (kicker + h1 + lead) so the held state reads as
+ * part of the story surface, and echoes the teaser copy (#1528) for one voice. Swiss-03: bone paper,
+ * the one forest signal on the escape-hatch CTA, square corners, mono eyebrow/badge.
+ */
+import { siteHref } from "~/lib/site";
+import { withBase } from "~/lib/site";
+
+interface Props {
+  /** Story display title, e.g. "Project BOSC". */
+  title: string;
+  /** The story's one-line dek. */
+  dek: string;
+  /** Registry slug of the owning site — for the "browse the record" escape hatch. */
+  slug: string;
+}
+const { title, dek, slug } = Astro.props as Props;
+const recordHref = siteHref(slug, "/site/");
+---
+
+<div class="walk-onramp story-soon">
+  <div class="walk-kicker">
+    The story <span class="story-soon-badge">Coming soon</span>
+  </div>
+  <h1>{title}</h1>
+  <p class="walk-onramp-lead">{dek}</p>
+  <p class="story-soon-note">
+    This guided walk is being finished in the open — the record it teaches is still being
+    assembled. It's <strong>coming soon</strong>; nothing in the walk is readable yet. In the
+    meantime, the underlying record is public and fully browsable.
+  </p>
+  <div class="walk-cta">
+    <a class="btn" href={recordHref}>Browse the record →</a>
+    <a class="walk-cta-secondary" href={withBase("/ask")}>or ask the record a question</a>
+  </div>
+</div>
+
+<style>
+  /* Square badge, mono, muted — the held state reads as "open/coming", not the forest signal. */
+  .story-soon-badge {
+    font-family: var(--bosc-mono);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+    background: var(--td-open-bg, #e8e4d8);
+    border: 1px solid var(--bosc-rule);
+    border-radius: 0;
+    padding: 3px 8px;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+  }
+  .story-soon-note {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--bosc-ink);
+    max-width: 44rem;
+    margin: 1.2rem 0 0;
+  }
+</style>

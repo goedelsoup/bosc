@@ -8,10 +8,11 @@
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import StoryChapters from "~/components/story/StoryChapters.astro";
+import StoryComingSoon from "~/components/story/StoryComingSoon.astro";
 import Base from "~/layouts/Base.astro";
 import { siteBase } from "~/lib/routes";
 import { siteHref } from "~/lib/site";
-import { SITES } from "~/lib/sites";
+import { SITES, storyComingSoon } from "~/lib/sites";
 import { type Story, chapterHref, storyFor, storyHomeHref } from "~/lib/walk";
 
 export async function getStaticPaths() {
@@ -35,34 +36,45 @@ export async function getStaticPaths() {
 const { slug, codename } = Astro.props as { slug: string; codename: string };
 const story = storyFor(slug, codename) as Story;
 const firstSlug = story.chapters[0]?.slug ?? "";
+// A `comingSoon` story (#1526) holds its content: the table of contents serves the interstitial
+// (no chapter list, no chapter links), not the readable index (#1529).
+const held = storyComingSoon(slug, codename);
 ---
 
-<Base
-  title="The story"
-  section="story"
-  description="The narrative spine over the BOSC record: six chapters that tell the story and teach you to read the documents."
->
-  <div class="walk-onramp">
-    <p><a href={storyHomeHref(story)}>← Start here</a></p>
-    <div class="walk-kicker">Watermark · story</div>
-    <h1>The story, chapter by chapter</h1>
-    <p class="walk-onramp-lead">
-      Six chapters, ordered cause → consequence. Each advances the story and
-      teaches one record-reading skill, anchored to a real document you can open
-      and check. Follow it straight through, or drop into any chapter and peel off
-      into the library when something catches your eye.
-    </p>
+{
+  held ? (
+    <Base title={`${story.title} — coming soon`} section="story" description={story.dek}>
+      <StoryComingSoon title={story.title} dek={story.dek} slug={slug} />
+    </Base>
+  ) : (
+    <Base
+      title="The story"
+      section="story"
+      description="The narrative spine over the BOSC record: six chapters that tell the story and teach you to read the documents."
+    >
+      <div class="walk-onramp">
+        <p><a href={storyHomeHref(story)}>← Start here</a></p>
+        <div class="walk-kicker">Watermark · story</div>
+        <h1>The story, chapter by chapter</h1>
+        <p class="walk-onramp-lead">
+          Six chapters, ordered cause → consequence. Each advances the story and
+          teaches one record-reading skill, anchored to a real document you can open
+          and check. Follow it straight through, or drop into any chapter and peel off
+          into the library when something catches your eye.
+        </p>
 
-    <StoryChapters story={story} variant="full" />
+        <StoryChapters story={story} variant="full" />
 
-    <p class="stub-note">
-      All six chapters are live, end to end — each teaches one record-reading
-      skill through the Record Teardown pattern, in cause → consequence order.
-    </p>
+        <p class="stub-note">
+          All six chapters are live, end to end — each teaches one record-reading
+          skill through the Record Teardown pattern, in cause → consequence order.
+        </p>
 
-    <div class="walk-cta">
-      <a class="btn" href={chapterHref(story, firstSlug)}>Start the story →</a>
-      <a class="walk-cta-secondary" href={siteHref(slug, "/site/")}>or browse the archive</a>
-    </div>
-  </div>
-</Base>
+        <div class="walk-cta">
+          <a class="btn" href={chapterHref(story, firstSlug)}>Start the story →</a>
+          <a class="walk-cta-secondary" href={siteHref(slug, "/site/")}>or browse the archive</a>
+        </div>
+      </div>
+    </Base>
+  )
+}

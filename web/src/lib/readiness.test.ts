@@ -28,14 +28,17 @@ describe("isReferenceSite", () => {
 });
 
 describe("the reference build", () => {
-  it("has every section available — it surfaces its story and hosts the network-global content", () => {
-    // Lima surfaces its Project BOSC walk (its overlay entry is not `hidden`), so the `story` section
-    // is available like every other section — the reference build hosts all the network-global content.
+  it("has every section available except its held (coming-soon) story", () => {
+    // Lima hosts all the network-global content, so every section opens — except `story`: its Project
+    // BOSC walk is `comingSoon` (#1526), so the story facet locks (no *readable* walk) and renders a
+    // teaser + "— coming soon" marker instead of a readable door. Everything else stays available.
     const readiness = siteReadiness("lima");
     for (const section of Object.keys(SECTION_META) as ReadinessSection[]) {
+      if (section === "story") continue;
       expect(readiness[section]).toBe("available");
     }
-    expect(lockedSections("lima")).toEqual([]);
+    expect(readiness.story).toBe("locked");
+    expect(lockedSections("lima")).toEqual(["story"]);
   });
 });
 
@@ -55,9 +58,10 @@ describe("a partial peer (Fort Wayne)", () => {
     expect(sectionStatus("fort-wayne", "exhibits")).toBe("locked");
   });
 
-  it("opens the story when one is registered, even on a thin peer", () => {
-    // FW carries the Project Zodiac StoryRef in the registry — the on-ramp works day one.
-    expect(sectionStatus("fort-wayne", "story")).toBe("available");
+  it("holds its story as coming-soon (locked facet) even though one is registered", () => {
+    // FW carries the Project Zodiac StoryRef, but it's `comingSoon` (#1526) — so the story facet
+    // locks: a visible teaser + interstitial stands in for the readable walk, not an open on-ramp.
+    expect(sectionStatus("fort-wayne", "story")).toBe("locked");
   });
 
   it("locks the network-global sections (reports/leads) for any peer", () => {
@@ -67,8 +71,9 @@ describe("a partial peer (Fort Wayne)", () => {
   });
 
   it("reports the full locked set", () => {
+    // `story` is locked too now — its walk is held coming-soon (#1526), not open.
     expect(lockedSections("fort-wayne").sort()).toEqual(
-      ["contacts", "exhibits", "leads", "people", "reports", "timeline"].sort(),
+      ["contacts", "exhibits", "leads", "people", "reports", "story", "timeline"].sort(),
     );
   });
 });

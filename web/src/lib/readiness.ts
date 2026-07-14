@@ -189,9 +189,10 @@ function hasEnough(section: ReadinessSection, slug: string): boolean {
     case "exhibits":
       return domainPresent(slug, "record") && feedCount(slug, "exhibits") > 0;
     case "story":
-      // The guided walk needs a *surfaced* story (registered in the `sites.ts` overlay and not
-      // hidden) — a leads-only story domain (Urbana) has no walk to open, and Lima's hidden Project
-      // BOSC walk (#1256) locks here too, so its story tab/hub CTA drop in the early build state.
+      // The guided walk needs a *surfaced* (readable) story — registered in the `sites.ts` overlay
+      // and neither `hidden` (#1256) nor `comingSoon` (#1526). A leads-only story domain (Urbana)
+      // has no walk to open; the editorial walks are `comingSoon`, so this facet locks and their
+      // story tab/hub CTA render as a "— coming soon" marker + teaser instead of a readable door.
       return surfacedStories(slug).length > 0;
     case "leads":
       // The leads board is feed-driven per site (#796); the reference build also hosts the

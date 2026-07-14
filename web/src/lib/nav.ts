@@ -67,8 +67,9 @@ export interface Section {
 }
 
 /** The active site's URL root (pre-deploy-base) and its surfaced story's root. When the site
- *  surfaces no story (a thin peer, or Lima with its walk hidden — #1256), `storyRoot` falls back
- *  to the site's OWN home, never Lima's story: a non-story site must not leak into Lima's walk. */
+ *  surfaces no *readable* story (a thin peer, or a site whose walk is `hidden`/#1256 or
+ *  `comingSoon`/#1526), `storyRoot` falls back to the site's OWN home, never Lima's story: a
+ *  non-story site must not leak into Lima's walk. */
 function siteRoots(): { base: string; storyRoot: string; story: Story | undefined } {
   const base = siteBase(activeSite());
   const story = activeStory();
@@ -629,8 +630,9 @@ export function footerGroups(): FooterGroup[] {
         { label: "Open leads", href: `${base}/leads` },
         { label: "The environment", href: `${base}/environment/` },
         { label: "The economy", href: `${base}/economy/` },
-        // Only a site that surfaces a story gets a story link — a site without one (or Lima with
-        // its walk hidden, #1256) shows none rather than leaking into Lima's story.
+        // Only a site that surfaces a *readable* story gets a story link — a site without one (or
+        // whose walk is hidden/#1256 or coming-soon/#1526) shows none rather than leaking into
+        // Lima's story.
         ...(story ? [{ label: "The story", href: storyRoot }] : []),
         { label: "The record", href: `${base}/site/` },
       ],

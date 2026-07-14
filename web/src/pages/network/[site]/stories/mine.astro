@@ -27,7 +27,7 @@ const readHref = withSite("/stories/read");
       enabled ? (
         <MyStories client:only="react" newHref={composeHref} composeHref={composeHref} readHref={readHref} />
       ) : (
-        <StoriesDisabled message="Reader-authored stories aren't enabled in this build yet.">
+        <StoriesDisabled message="Reader-authored stories are coming soon.">
           <a href="?preview=1">Preview the account view</a>
         </StoriesDisabled>
       )

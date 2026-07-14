@@ -10,12 +10,14 @@
 import Base from "~/layouts/Base.astro";
 import FigureStat from "~/components/FigureStat.astro";
 import PartialSiteHome from "~/components/PartialSiteHome.astro";
+import StoryTeaser from "~/components/story/StoryTeaser.astro";
 import { isReferenceSite } from "~/lib/readiness";
 import { hasFeed, loadFeed, loadManifest } from "~/lib/bundle";
 import type { DocumentCollectionItem } from "~/lib/feeds";
 import { NARRATIVE } from "~/lib/narrative";
 import {
   activeSite,
+  comingSoonStories,
   FACILITY_STATUS_META,
   facilityStatus,
   selectableSitePaths,
@@ -42,10 +44,12 @@ const num = (n: number): string => n.toLocaleString("en-US");
 
 const docCollections = hasFeed("documents") ? loadFeed<DocumentCollectionItem[]>("documents") : [];
 const nDocuments = docCollections.reduce((a, c) => a + c.entries.length, 0);
-// The guided walk is surfaced only when THIS site surfaces a story (#1256). Lima's Project BOSC is
-// hidden in the early build state, so `story` is undefined and the story door + chapter grid drop.
+// The readable guided walk surfaces only when THIS site surfaces a story. Lima's Project BOSC is
+// `comingSoon` (#1526), so `story` is undefined — the readable door + chapter grid drop, and the
+// coming-soon story (title/dek retained) drives a visible teaser in their place instead.
 const story = activeStory();
 const nChapters = story?.chapters.length ?? 0;
+const comingSoonStory = comingSoonStories(slug)[0];
 const nLeads = count("leads");
 
 // The facility clock (separate from the site-build clock) — the active site's campus lifecycle.
@@ -118,8 +122,8 @@ const stats: FigureStatData[] = [
     </div>
 
     {/* The entry fork — the researcher's library (quiet outline). The newcomer's guided-walk door
-        joins it only when the site surfaces a story; with Lima's walk hidden (#1256) the record
-        door stands alone rather than opening a hidden story. */}
+        joins it only when the site surfaces a readable story; with Lima's walk held as coming-soon
+        (#1526) a visible teaser stands in its place, advertising the walk without opening it. */}
     <div class="home-doors">
       <a class="home-door home-door--archive" href={withSite("/site/")}>
         <div class="home-door-top">
@@ -133,7 +137,7 @@ const stats: FigureStatData[] = [
         </span>
         <span class="home-door-go">Enter the library →</span>
       </a>
-      {story && (
+      {story ? (
         <a class="home-door home-door--walk" href={withStory("")}>
           <div class="home-door-top">
             <span class="home-door-eyebrow">For the newcomer</span>
@@ -146,7 +150,11 @@ const stats: FigureStatData[] = [
           </span>
           <span class="home-door-go">▶ Start the story →</span>
         </a>
-      )}
+      ) : comingSoonStory ? (
+        <div id="story">
+          <StoryTeaser title={comingSoonStory.title} dek={comingSoonStory.dek} href={withStory("")} variant="full" />
+        </div>
+      ) : null}
     </div>
 
     {/* The story · six chapters (design "Site Home" Live) — the narrative spine, one project

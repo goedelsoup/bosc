@@ -75,15 +75,16 @@ describe("recordToBlock", () => {
     expect(b2.source.file).toBe("permits/4132514.epa.yaml"); // falls back to rel
   });
 
-  it("adds the walk backlink for a record the active site's surfaced story anchors (#1256)", () => {
-    // The active site under vitest is Lima, which surfaces its Project BOSC walk. The record→chapter
-    // backlink resolves against the *active site's surfaced story*, so a record that anchors a
-    // chapter carries a `seenIn` and a `walk` connect chip alongside the group (`records`) chip. A
-    // record that anchors no chapter carries only the group chip. The anchor-resolution mechanism
-    // itself is covered in walk.test (`storyAnchorFor` / `activeStoryAnchorFor`).
+  it("drops the record→chapter walk backlink while the story is held coming-soon (#1526)", () => {
+    // The active site under vitest is Lima; its Project BOSC walk is `comingSoon`, so it surfaces no
+    // *readable* story and `activeStoryAnchorFor` resolves nothing. A record that would anchor a
+    // chapter therefore carries NO `seenIn` and NO `walk` connect chip — a held story contributes no
+    // readable backlinks, exactly like an unanchored record. (The anchor-resolution mechanism itself
+    // is covered in walk.test via `storyAnchorFor` / `activeStoryAnchorFor`.)
     const anchored = recordToBlock(baseRecord({ rel: "aedg/roundabouts.summary.opc.yaml", group: "aedg" }));
-    expect(anchored.seenIn).toBeDefined();
-    expect(anchored.connect.map((c) => c.kind)).toEqual(["records", "walk"]);
+    expect(anchored.seenIn).toBeUndefined();
+    expect(anchored.connect.map((c) => c.kind)).toEqual(["records"]);
+    expect(anchored.connect.some((c) => c.kind === "walk")).toBe(false);
 
     const unanchored = recordToBlock(baseRecord({ rel: "permits/9999999.epa.yaml" }));
     expect(unanchored.seenIn).toBeUndefined();
