@@ -18,9 +18,11 @@
  *   - **Leaf facets** (`timeline` / `people` / `exhibits` / `story` / `leads`) additionally require
  *     their own feed/registry signal, so an active domain never opens an *empty* facet page (a
  *     timeline with no events reads as a lock + needs-board ask, not a barren page).
- * Two sections are network-global rather than per-site: `reports` (the `docs/` long-form the
- * reference build hosts) stays reference-only (`isReferenceSite`, the surviving network-global-host
- * role, #1220); `environment` also locks when the facility's cooling method is undisclosed (#1057).
+ * `reports` is a site-tier section (its nav home is the "The site" mega-menu, #1305 reverted), but
+ * the analysis it hosts exists only on the reference build for now, so it stays reference-only
+ * (`isReferenceSite`, the surviving network-global-host role, #1220) — a peer's Reports index shows
+ * the lock until its corpus supports the read; `environment` also locks when the facility's cooling
+ * method is undisclosed (#1057).
  */
 import { hasFeed, loadFeed, loadManifest } from "./bundle";
 import type { DomainState, Readiness, SiteTier } from "./bundle";
