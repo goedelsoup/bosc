@@ -322,3 +322,37 @@ def test_offline_cache_miss_raises(hydro_settings: Settings) -> None:
         echo_dmr.fetch_effluent_chart(
             "XX9999999", start_date="2023-01-01", end_date="2023-12-31", settings=hydro_settings
         )
+
+
+def test_lima_wwtp_reports_effluent_exceedances(hydro_settings: Settings) -> None:
+    """The City of Lima WWTP (OH0026069, #1536) — flow vs the 18.5 MGD design, and a
+    real ECHO-flagged exceedance (mercury), the non-empty case the Fort Wayne fixture
+    (an empty exceedance list) doesn't cover. Fixture is a curated 2023 subset of the
+    live pull (outfall 001 flow + mercury + the five CSO markers); values are verbatim.
+    """
+    chart = echo_dmr.fetch_effluent_chart(
+        "OH0026069", start_date="2023-01-01", end_date="2023-12-31", settings=hydro_settings
+    )
+    assert chart.name == "LIMA WWTP"
+    assert chart.permit_status == "Effective"
+    assert chart.major_minor == "M"  # a major discharger
+
+    summary = echo_dmr.summarize_discharge(chart, design_flow_mgd=18.5)
+    assert summary.primary_outfall == "001"
+    assert summary.n_flow_months == 12
+    # Reported actuals run well under the permitted design flow.
+    assert summary.actual_flow_mean_mgd == pytest.approx(13.106, abs=0.01)
+    assert summary.actual_flow_max_mgd == pytest.approx(19.671)
+    assert summary.flow_pct_of_design == pytest.approx(70.8, abs=0.1)
+    assert summary.cso_outfalls == 5
+
+    # The non-empty exceedance path: ECHO's own E90 flag on the mercury monthly average,
+    # parsed verbatim (value/limit/percent), never computed by comparing value to limit.
+    assert len(summary.exceedances) == 1
+    hg = summary.exceedances[0]
+    assert hg.period_end == "2023-08-31"
+    assert hg.parameter_desc is not None and "Mercury" in hg.parameter_desc
+    assert hg.value == pytest.approx(6.67)
+    assert hg.limit == pytest.approx(3.5)
+    assert hg.exceedance_pct == pytest.approx(91.0)
+    assert [v.code for v in hg.violations] == ["E90"]

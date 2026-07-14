@@ -5,7 +5,8 @@ status: reviewed
 producer:
   kind: extracted
   source: Ohio EPA — issued NPDES permits, fact sheets, and draft public notices for the receiving-WWTP
-    permits 2PH00006, 2PH00007, 2PK00002, plus the Bistrozzi "Bosc" data-center indirect-discharge
+    permits 2PH00006, 2PH00007, 2PK00002, the City of Lima WWTP renewal permit 2PE00000 (application
+    OH0026069 — the municipal receiving plant), plus the Bistrozzi "Bosc" data-center indirect-discharge
     permit 2DP00130 (public notice + draft permit)
 license: Public record (Ohio R.C. 149.43)
 access_tier: public
@@ -41,6 +42,9 @@ storage:
 - relpath: extracted/oepa/2DP00130.npdes.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/oepa/2PE00000.npdes.yaml
+  media_type: application/x-yaml
+  lfs: false
 refresh:
   cadence: static
 provenance: document
@@ -53,6 +57,9 @@ tags:
 - indirect-discharge
 - data-center
 notes: One file per source PDF — issued permit, fact sheet, and draft public notice across the three receiving
-  WWTP permits; figures read from the document image/text, never inferred. `2DP00130` is a distinct type —
-  an indirect-discharge (pretreatment) permit for the Bistrozzi "Bosc" data center discharging non-contact
-  cooling water to the American-Bath POTW (single PDF combining public notice + draft permit).
+  WWTP permits; figures read from the document image/text, never inferred. `2PE00000` is the City of Lima
+  WWTP renewal permit (a text-layer read of a digital PDF) — the municipal receiving plant, outfall
+  2PE00000001 to the Ottawa River at RM 37.6, 18.5 MGD average design flow; its reported effluent record is
+  the sibling connector entry `wwtp-oh0026069-lima`. `2DP00130` is a distinct type — an indirect-discharge
+  (pretreatment) permit for the Bistrozzi "Bosc" data center discharging non-contact cooling water to the
+  American-Bath POTW (single PDF combining public notice + draft permit).

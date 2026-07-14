@@ -19,8 +19,12 @@ meta:
     can be missed.
   - Four subbasins cross into IN/MI — cross-check Ohio EPA / IDEM / EGLE for completeness.
   - design_flow_mgd is null where ECHO returned no value; it is never estimated.
-  - ottawa_discharge keys on the sparse receiving_water field and undercounts (e.g.
-    Lima WWTP).
+  - ottawa_discharge keys on the sparse receiving_water field and undercounts.
+  - "receiving_water was null for OH0026069 (Lima WWTP) in ECHO; corrected to Ottawa
+    River (River Mile 37.6, outfall 2PE00000001) per Ohio EPA NPDES permit 2PE00000*OD
+    cover page (data/documents/oepa/2PE00000.pdf; data/extracted/oepa/2PE00000.npdes.yaml)
+    — the un-requested municipal custodian record, issue #1536. ottawa_discharge set true
+    accordingly."
   - "receiving_water is null for OH0027910 (Van Wert WWTP) in ECHO; corrected to
     Town Creek per NPDES fact sheet 2PD00006 (data/documents/oepa/van-wert/2PD00006.fs.pdf),
     Table 12 — outfall 2PD00006001 at River Mile 13.87."
@@ -1755,7 +1759,7 @@ facilities:
   permit_type: NPDES Individual Permit
   design_flow_mgd: 18.5
   design_flow_missing: false
-  receiving_water: null
+  receiving_water: Ottawa River
   huc8: '04100007'
   huc8_name: Auglaize
   huc12: '041000070404'
@@ -1766,7 +1770,7 @@ facilities:
   informal_enf_count: 0
   formal_enf_count: 1
   in_lima_subbasin: true
-  ottawa_discharge: false
+  ottawa_discharge: true
   queried_huc8: '04100007'
 - frs_registry_id: '110006263809'
   name: MIDDLE POINT WWTP

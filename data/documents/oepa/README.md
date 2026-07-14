@@ -23,6 +23,22 @@ Filenames carry the permit number, facility slug, document type, and (where stat
 a date. Each PDF keeps its as-received name; provenance is recorded in the matching
 extraction's `meta` block.
 
+#### `2PE00000.pdf` — City of Lima WWTP (the un-requested municipal custodian)
+
+**Ohio EPA NPDES Permit Renewal** — permit `2PE00000*OD` (application `OH0026069`),
+the **City of Lima WWTP**, 1200 Fort Amanda Road, Lima, Allen County. Final outfall
+`2PE00000001` discharges to the **Ottawa River at River Mile 37.6**; average design
+flow **18.5 MGD**, peak wet-weather **70 MGD**. Effective 2023-07-01, expires
+2028-06-30. Single PDF: issued permit (79 pp.) + Fact Sheet for NPDES Permit Renewal
+(pp. 77-118); 119 pp. total. As-received DAM name kept (bare permit number, as with
+`2DP00130.pdf`); provenance + content-verification in [`filename-map.yaml`](filename-map.yaml).
+
+This is the **municipal receiving plant** whose own permit and design flow the corpus
+previously lacked (greps returned American-Bath `2PH00007` / Shawnee II `2PK00002`,
+never Lima's plant). Obtained from the Ohio EPA DAM as a **public record — no records
+request** (issue #1536). The reported effluent record (DMRs) is a sibling artifact:
+[`data/extracted/oepa/lima-wwtp-OH0026069.dmr.yaml`](../../extracted/oepa/lima-wwtp-OH0026069.dmr.yaml).
+
 ### Indirect discharge permits (pretreatment)
 
 #### `2DP00130.pdf`

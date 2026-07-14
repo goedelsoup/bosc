@@ -42,6 +42,11 @@ wwtp_receiving:
     status: confirmed
     confidence: high
     citation: "Ohio EPA fact sheet 2PK00002 (Shawnee II WWTP)"
+  watch-lima-wwtp:
+    receiving_water: Ottawa River
+    status: confirmed
+    confidence: high
+    citation: "Ohio EPA NPDES permit 2PE00000 (City of Lima WWTP) cover page — outfall 2PE00000001 to the Ottawa River at River Mile 37.6 (data/extracted/oepa/2PE00000.npdes.yaml; #1536)"
 
 # BOSC campus -> receiver, by forcemain. Confirmed routes are document/plan-cited;
 # the theorized route is a lead only.

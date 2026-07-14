@@ -17,6 +17,7 @@ The Lima system is one closed loop on two rivers:
 | Shawnee II WWTP | wwtp | 4.64 cfs `[verified: document]` | Ottawa River |
 | American Bath WWTP | wwtp | 2.32 cfs `[verified: document]` | Pike Run |
 | American II WWTP | wwtp | 1.86 cfs `[verified: document]` | Dug Run |
+| Lima WWTP | wwtp | 28.62 cfs `[verified: document]` | Ottawa River |
 | BOSC data-center campus | demand | 3.87 cfs `[verified: document]` | — |
 
 **Low-flow assimilative screen** (discharge vs the receiving stream's cited 7Q10):
@@ -24,6 +25,7 @@ The Lima system is one closed loop on two rivers:
 - ❌ **Shawnee II WWTP → Ottawa River**: 7Q10 0.2 cfs vs discharge 4.64 cfs → 0.04:1 dilution (violation). `[verified]` Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
 - ❌ **American Bath WWTP → Pike Run**: 7Q10 0.03 cfs vs discharge 2.32 cfs → 0.01:1 dilution (violation). `[verified]` Ohio EPA NPDES fact sheet 2PH00007 (American Bath WWTP), Stream Flows table — USGS Gauge 04186500 adjusted for drainage area
 - ❌ **American II WWTP → Dug Run**: 7Q10 0.78 cfs vs discharge 1.86 cfs → 0.42:1 dilution (violation). `[verified]` Ohio EPA NPDES fact sheet 2PH00006 (American II WWTP), Stream Flows table — USGS Station 04187500
+- ❌ **Lima WWTP → Ottawa River**: 7Q10 0.2 cfs vs discharge 28.62 cfs → 0.01:1 dilution (violation). `[verified]` Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
 
 At design low flow the receiving streams carry less than the effluent they
 receive — the discharges are effectively undiluted.
@@ -46,7 +48,7 @@ The computed **7Q10 is 0.2387 cfs** against the cited **0.2 cfs** — agreement 
 
 ### The whole loop at design low flow: a routed mass balance
 
-The screen above reads each plant against its *own* tributary in isolation. Routing the cited headwater 7Q10s, the document-cited WWTP/campus discharges, and the cooling draw through the cited confluence graph (`data/reference/hydrology/network.yaml`) shows the system picture the per-stream rows miss. At design low flow the loop's streams carry, in total, only **1.01 cfs** of *natural* low flow (Ottawa 0.2 `[verified: document]` + Dug Run 0.78 `[verified: document]` + Pike Run 0.03 `[verified: document]`). The three county WWTP discharges alone add **8.82 cfs** of treated effluent — **8.7x** the streams' entire natural low flow, with no data center in the picture. The river at design low flow is effluent, not stream. The campus then adds its own documented **3.87 cfs** FM-2 industrial discharge (routed via Lima's sewer + WWTP), taking the Ottawa leaving Lima to **93% treated effluent** — a *conservative* floor, since Lima WWTP's own larger municipal discharge has no cited design flow in the corpus and is not counted.
+The screen above reads each plant against its *own* tributary in isolation. Routing the cited headwater 7Q10s, the document-cited WWTP/campus discharges, and the cooling draw through the cited confluence graph (`data/reference/hydrology/network.yaml`) shows the system picture the per-stream rows miss. At design low flow the loop's streams carry, in total, only **1.01 cfs** of *natural* low flow (Ottawa 0.2 `[verified: document]` + Dug Run 0.78 `[verified: document]` + Pike Run 0.03 `[verified: document]`). The three small county WWTP discharges alone add **8.82 cfs** of treated effluent — **8.7x** the streams' entire natural low flow, with no data center in the picture. The river at design low flow is effluent, not stream. The City of Lima WWTP — the major municipal plant — then adds its own **28.62 cfs** design discharge (18.5 MGD, OEPA NPDES 2PE00000 / OH0026069, outfall to the Ottawa at RM 37.6), and the campus adds its documented **3.87 cfs** FM-2 industrial discharge (piped to that same plant via Lima's 78" sewer), together taking the Ottawa leaving Lima to **98% treated effluent** — now counting the municipal plant's own design flow that the corpus previously lacked (#1536; the FM-2 is the campus's increment on top of the plant's permitted baseline, not a double count).
 
 
 | reach | natural (cfs) | effluent (cfs) | routed (cfs) | deficit (cfs) |
@@ -57,17 +59,18 @@ The screen above reads each plant against its *own* tributary in isolation. Rout
 | Pike Run (headwater) | 0.03 | 0.00 | 0.03 | — |
 | American Bath WWTP outfall | 0.00 | 2.32 | 2.32 | — |
 | Shawnee II WWTP outfall | 0.00 | 4.64 | 4.64 | — |
+| City of Lima WWTP outfall (municipal effluent) | 0.00 | 28.62 | 28.62 | — |
 | BOSC FM-2 industrial discharge (via Lima sewer + Lima WWTP) | 0.00 | 3.87 | 3.87 | — |
 | Lima supply abstraction reach (cooling draw — unbuffered bound) | 0.00 | 0.00 | 0.00 | 4.65 |
 | Dug Run -> Ottawa River | 0.78 | 1.86 | 2.64 | — |
 | Pike Run -> Ottawa River | 0.03 | 2.32 | 2.35 | — |
-| Ottawa River at Lima (assimilative reach / USGS 04187100) | 0.81 | 12.69 | 13.50 | — |
-| Ottawa River -> Auglaize confluence -> Maumee | 1.98 | 12.69 | 14.67 | — |
+| Ottawa River at Lima (assimilative reach / USGS 04187100) | 0.81 | 41.31 | 42.12 | — |
+| Ottawa River -> Auglaize confluence -> Maumee | 1.98 | 41.31 | 43.29 | — |
 
-**Unbuffered bound.** *If* the cooling load of **4.85 cfs** were pumped straight from the Ottawa at 7Q10 (**4.8x** the loop's entire natural low flow) it consumes the Ottawa mainstem's entire design low flow — it runs **dry** at the intake, leaving a **3.84 cfs** shortfall the river cannot supply. But that is **not** how Lima's supply works — the city draws treated water from ~15 billion gallons of off-stream reservoir storage (see the next section), so this is a worst-case bound, not the operating reality. The routed balance still conserves mass (base + gains - applied loss reconciles to the 14.67 cfs outlet) `[inference: derived]`. The order-invariant system totals are the robust result; the per-reach values depend on the cited-but-approximate confluence order and are screening-grade.
+**Unbuffered bound.** *If* the cooling load of **4.85 cfs** were pumped straight from the Ottawa at 7Q10 (**4.8x** the loop's entire natural low flow) it consumes the Ottawa mainstem's entire design low flow — it runs **dry** at the intake, leaving a **3.84 cfs** shortfall the river cannot supply. But that is **not** how Lima's supply works — the city draws treated water from ~15 billion gallons of off-stream reservoir storage (see the next section), so this is a worst-case bound, not the operating reality. The routed balance still conserves mass (base + gains - applied loss reconciles to the 43.29 cfs outlet) `[inference: derived]`. The order-invariant system totals are the robust result; the per-reach values depend on the cited-but-approximate confluence order and are screening-grade.
 
 
-**Downstream: the Auglaize confluence.** The outlet is the Ottawa's actual receiving water, not a bare label. The Auglaize's own 1.17 cfs 7Q10 `[inference: derived]` — a drainage-area-ratio *transfer*, not the raw USGS 04186500 (Fort Jennings) gage value, which sits below the confluence and already carries the Ottawa's own historical contribution (full method in `low-flow-7q10.derived.yaml`) — joins here, diluting the **13.50 cfs** routed Ottawa flow (mostly treated effluent) arriving from Lima. ❌ At **0.09:1** dilution the confluence screens **violation** by the same band as the per-plant checks above — the Auglaize's own flow is dwarfed by what the loop sends it. The final flow leaving toward the Maumee is **14.67 cfs**, **87%** treated effluent — down from **93%** at the Lima gage, so the Auglaize genuinely dilutes the loop's discharge without resolving the underlying effluent-dominance. Even this transfer is a coarse screening estimate — it nets out the Ottawa's own drainage area at Lima, not at its actual mouth a few miles further downstream — so it likely still slightly *over*-states the Auglaize's own contribution.
+**Downstream: the Auglaize confluence.** The outlet is the Ottawa's actual receiving water, not a bare label. The Auglaize's own 1.17 cfs 7Q10 `[inference: derived]` — a drainage-area-ratio *transfer*, not the raw USGS 04186500 (Fort Jennings) gage value, which sits below the confluence and already carries the Ottawa's own historical contribution (full method in `low-flow-7q10.derived.yaml`) — joins here, diluting the **42.12 cfs** routed Ottawa flow (mostly treated effluent) arriving from Lima. ❌ At **0.03:1** dilution the confluence screens **violation** by the same band as the per-plant checks above — the Auglaize's own flow is dwarfed by what the loop sends it. The final flow leaving toward the Maumee is **43.29 cfs**, **95%** treated effluent — down from **98%** at the Lima gage, so the Auglaize genuinely dilutes the loop's discharge without resolving the underlying effluent-dominance. Even this transfer is a coarse screening estimate — it nets out the Ottawa's own drainage area at Lima, not at its actual mouth a few miles further downstream — so it likely still slightly *over*-states the Auglaize's own contribution.
 
 
 ### The supply side: off-stream storage, not a 7Q10 intake

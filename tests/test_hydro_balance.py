@@ -32,8 +32,10 @@ def test_low_flow_lookup_normalizes_river_mile(hydro_settings: Settings) -> None
 def test_baseline_flags_tributary_violations(hydro_settings: Settings) -> None:
     balance, checks, findings = run_baseline(settings=hydro_settings, live=True)
 
-    # Three county WWTPs with document design flows; the abstraction reach is live.
-    assert len(balance.by_role("wwtp")) == 3
+    # Four WWTPs with document design flows: the three small county plants plus the
+    # City of Lima WWTP (18.5 MGD, OEPA 2PE00000 / OH0026069 — the major municipal
+    # receiving plant, counted since #1536); the abstraction reach is live.
+    assert len(balance.by_role("wwtp")) == 4
     abstraction = balance.node("lima-wtp")
     assert abstraction is not None and abstraction.inflow is not None
     assert abstraction.inflow.source == "connector"  # grounded by the NWIS fixture
