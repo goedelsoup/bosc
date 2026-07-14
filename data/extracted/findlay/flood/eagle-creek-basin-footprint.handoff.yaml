@@ -37,10 +37,10 @@ eagle_creek_dry_storage_basin:
     odnr_dam_safety_permit: obtained          # ODNR Division of Water Resources, Dam Safety Program; permit no. [open]
     tag: verified
   modeled_effect:
-    peak_flow_reduction_cfs: 2550             # ~16% on the Blanchard during the 1% ACE event
-    bfe_lowering_ft_at_confluence: 2.2        # near the Blanchard / Eagle Creek confluence, downtown
-    floodplain_removed_parcels: 1830          # regulatory FLOODPLAIN (distinct from FEMA's floodway metric)
-    floodplain_removed_acres: 1400
+    peak_flow_reduction_cfs: ~2550            # "about 2,550 CFS" — ~16% on the Blanchard during the 1% ACE event
+    bfe_lowering_ft_at_confluence: ~2.2       # "about 2.2 feet" — near the Blanchard / Eagle Creek confluence, downtown
+    floodplain_removed_parcels: ~1830         # "approximately 1,830 parcels" — regulatory FLOODPLAIN (distinct from FEMA's floodway metric)
+    floodplain_removed_acres: ~1400           # "approximately ... 1,400 acres" (same source clause as parcels)
     tag: verified
   source: https://hancockcountyflooding.com/eagle-creek-dry-storage   # read direct
   gis_seed_hint: >-
