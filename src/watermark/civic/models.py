@@ -57,7 +57,7 @@ class Publishing(BaseModel):
 
 
 class Subdivision(BaseModel):
-    """One Allen County meeting-holding body.
+    """One meeting-holding body (political subdivision) of the active site.
 
     Grounded fields (``name``..``office``) are verbatim from a committed county
     roster named by ``grounded_from``; ``publishing`` is filled by discovery.
@@ -77,7 +77,11 @@ class Subdivision(BaseModel):
 
 
 class Registry(BaseModel):
-    """The whole subdivisions registry: ``meta`` provenance + the bodies."""
+    """The whole subdivisions registry: ``meta`` provenance + the bodies.
+
+    ``meta.site`` names the owning site slug; ``load_registry`` validates it against
+    the active ``settings.site`` so a peer registry is never read under the wrong site.
+    """
 
     model_config = ConfigDict(extra="forbid")
 

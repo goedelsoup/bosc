@@ -10,6 +10,16 @@ documents into `data/documents/<slug>/` for the existing OCR/index → timeline 
 Regenerate the discovered fields with `watermark subdivisions discover`; list the
 registry with `watermark subdivisions list`.
 
+## Per-site resolution
+
+The registry resolves **per active site** (`watermark --site <slug>`). This flat
+`subdivisions/subdivisions.yaml` is **Lima's** registry — Lima keeps the legacy flat
+path so the committed litigation corpus is never relocated. Every peer site slug-scopes
+its own registry under `subdivisions/<slug>/subdivisions.yaml`. Each registry declares
+its owner in `meta.site`; `load_registry` refuses to read a registry whose `meta.site`
+disagrees with the active site, so a peer's bodies can never leak into a Lima run (or
+vice versa).
+
 ## What is grounded vs. discovered
 
 Two kinds of fact live here, held to different standards:
