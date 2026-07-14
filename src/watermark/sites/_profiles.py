@@ -2854,12 +2854,15 @@ _WEST_UNION = SiteProfile(
 )
 
 
-# Registration only (#1426) — Mansfield / Richland County, the network's first Rocky Fork
-# Mohican headwaters node (Black Fork → Mohican → Walhonding → Muskingum → Ohio; shares
-# Coshocton's `muskingum` basin further downstream). This is identity + the verifiable knobs
-# named by #1426 (lat/lon, county FIPS, NWIS gages, EIA-861 utility number) only — every other
-# field is an unfilled scaffold TODO. No domain becomes active here; the site earns tiers from
-# evidence (#1427 onboard, #1428 facility, #1429/#1430 record, #1431 places).
+# Mansfield / Richland County — the network's first Rocky Fork Mohican headwaters node (Black
+# Fork → Mohican → Walhonding → Muskingum → Ohio; shares Coshocton's `muskingum` basin further
+# downstream). Registered #1426 (identity + lat/lon, county FIPS, NWIS gages, EIA-861 utility
+# number). The **backdrop floor** (#1427) adds the onboard-derived knobs: the design point +
+# corridor name + SSURGO dominant HSG (the corridor-DDF/floor inputs), the serving-utility
+# citation, and county_name — so the floor connectors (economics/consumer-energy/RSEI + Atlas-14
+# + grid) write clean, TODO-free reference datasets. The hydrology design/facility fields still
+# below stay TODO — the site earns those tiers from evidence (#1428 facility, #1429/#1430 record,
+# #1431 places already live).
 _MANSFIELD = SiteProfile(
     slug="mansfield",
     basin="muskingum",  # [verified] Rocky Fork → Mohican → Walhonding → Muskingum River → Ohio River;
@@ -2891,11 +2894,14 @@ _MANSFIELD = SiteProfile(
     gis_parcel=RICHLAND_PARCEL_SCHEMA,  # [verified] Parcel_CAMA layer 0 — owner + CAMA values (#1431)
     gis_zoning=None,
     gis_flood=None,
-    design_lat=0.0,  # TODO
-    design_lon=0.0,  # TODO
-    corridor_name="TODO",
-    dominant_hsg="TODO",
-    hsg_citation="TODO",
+    design_lat=40.7585,  # [verified] downtown Mansfield square centroid = NOAA Atlas-14 point
+    design_lon=-82.5155,
+    corridor_name="Rocky Fork Mohican corridor",  # [inference] the receiving-water reach at Mansfield
+    # (Touby Run → Rocky Fork of Mohican River); the Black Fork is a separate Shelby stream, not the city's
+    dominant_hsg="D",  # [verified] USDA SSURGO (SDA) dominant hydrologic soil group over the
+    # parcel-assemblage geometry — 13/13 sampled points HSG D (high runoff potential), onboard #1427
+    hsg_citation="USDA SSURGO (Soil Data Access) dominant hydrologic soil group sampled over the "
+    "parcel-assemblage geometry (Airport West rezone footprint) — 13/13 points HSG D. [verified]",
     pre_cover="TODO",
     post_cover="TODO",
     developed_pervious_cover="TODO",
@@ -2917,10 +2923,13 @@ _MANSFIELD = SiteProfile(
     passby_primary_cfs=0.0,  # TODO
     passby_secondary_cfs=0.0,  # TODO
     facility=None,  # [open] pending the facility instrument hunt (#1428)
-    serving_utility_citation="TODO",
+    serving_utility_citation="EIA-861 2024 Service_Territory: Ohio Edison Co (#13998, FirstEnergy — "
+    "PJM ATSI zone) is the IOU serving Richland County, OH / Mansfield; Ohio Power Co/AEP (#14006) "
+    "also serves rural Richland-Co territory. 'City of Shelby' (#17043) is a separate Richland-County "
+    "municipal utility — NOT Ohio Edison. [verified]",
     lmp_usd_mwh=0.0,  # TODO
     lmp_citation="TODO",
-    county_name="TODO",
+    county_name="Richland County",  # [verified] FIPS 39139
 )
 
 
