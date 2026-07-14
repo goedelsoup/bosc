@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-14T10:21:58.976139+00:00'
+reconciled_at: '2026-07-14T10:56:12.989929+00:00'
 entries:
   aedg:
     exists: true
@@ -1102,10 +1102,10 @@ entries:
     site_scope: site:wilmington
   wpafb:
     exists: true
-    sha256: 8f4afee176b3a935d539ee32910c4e71720a850ac5e84749e8cb2f886da8362c
-    size_bytes: 7431
+    sha256: 20083b6476535c0546744c0e5a580f9bad6f329a446526c765ef54600c728006
+    size_bytes: 25968
     lfs_materialized: true
-    file_count: 1
+    file_count: 5
     missing: []
     asof: null
     stale: false

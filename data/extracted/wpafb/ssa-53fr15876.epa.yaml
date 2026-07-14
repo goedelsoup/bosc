@@ -65,7 +65,7 @@ fr_doc_no: 88-9103 (Filed 5-3-88; 8:45 am)
 billing_code: 6560-50-M
 statutory_authority: Safe Drinking Water Act Section 1424(e), 42 U.S.C. 300f, 300h-3(e) (Pub. L. 93-523)
 aquifer_name: Buried Valley Aquifer System (BVAS)
-population_served: 920600   # "approximately 920,600 residents" (verbatim)
+population_served: ~920600   # "approximately 920,600 residents" (verbatim)
 counties_served:
 - Preble
 - Dark      # as transcribed; the Ohio county is "Darke"
