@@ -184,8 +184,8 @@ def test_dry_run_writes_nothing(tmp_path, monkeypatch) -> None:  # type: ignore[
     ("argv", "expected"),
     [(["onboard", "fw", "--offline"], True), (["onboard", "fw", "--dry-run"], False)],
 )
-def test_onboard_offline_flag_fans_out_to_every_connector(  # type: ignore[no-untyped-def]
-    argv, expected, monkeypatch
+def test_onboard_offline_flag_fans_out_to_every_connector(
+    argv: list[str], expected: bool, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     """`onboard <slug> --offline` must silence econ + rsei too, not just hydrology (#1367).
 
@@ -203,7 +203,9 @@ def test_onboard_offline_flag_fans_out_to_every_connector(  # type: ignore[no-un
     _fw(monkeypatch)
     captured: dict[str, Settings] = {}
 
-    def _capture(*, settings: Settings, dry_run: bool = False, research: bool = False):  # type: ignore[no-untyped-def]
+    def _capture(
+        *, settings: Settings, dry_run: bool = False, research: bool = False
+    ) -> OnboardReport:
         captured["settings"] = settings
         return OnboardReport(
             slug="fw",

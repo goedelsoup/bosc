@@ -27,22 +27,43 @@ class _GhError(RuntimeError):
     """
 
 
+_GH_TIMEOUT_S = 60.0  # finite ceiling so a hung gh call can't wedge the CLI indefinitely
+
+
 def _gh(args: list[str]) -> subprocess.CompletedProcess[str]:
     """Run ``gh <args>`` capturing output; raise :class:`_GhError` on any failure.
 
-    Normalizes the two ways ``gh`` can blow up — not installed (``FileNotFoundError``)
-    and non-zero exit (``CalledProcessError``) — into one rendered message. The error
-    names only the subcommand (``args[:2]``), never the full body payload.
+    Normalizes the ways ``gh`` can blow up — not installed (``FileNotFoundError``), a hung
+    call (``TimeoutExpired``), and a non-zero exit (``CalledProcessError``) — into one
+    rendered message. The error names only the subcommand (``args[:2]``), never the full
+    body payload.
     """
     try:
-        return subprocess.run(["gh", *args], capture_output=True, text=True, check=True)
+        return subprocess.run(
+            ["gh", *args], capture_output=True, text=True, check=True, timeout=_GH_TIMEOUT_S
+        )
     except FileNotFoundError as exc:
         raise _GhError(
             "GitHub CLI (`gh`) not found — install it (https://cli.github.com) to publish issues."
         ) from exc
+    except subprocess.TimeoutExpired as exc:
+        raise _GhError(f"`gh {' '.join(args[:2])}` timed out after {_GH_TIMEOUT_S:g}s.") from exc
     except subprocess.CalledProcessError as exc:
         detail = (exc.stderr or exc.stdout or "").strip() or f"exit {exc.returncode}"
         raise _GhError(f"`gh {' '.join(args[:2])}` failed: {detail}") from exc
+
+
+def _gh_json(args: list[str]) -> Any:
+    """Run ``gh <args>`` and parse its stdout as JSON; :class:`_GhError` on a bad payload.
+
+    Keeps a malformed/empty ``gh`` response from surfacing as a raw ``JSONDecodeError``
+    traceback at the call sites that read issue/label data.
+    """
+    stdout = _gh(args).stdout
+    try:
+        return json.loads(stdout)
+    except json.JSONDecodeError as exc:
+        raise _GhError(f"`gh {' '.join(args[:2])}` returned unparseable JSON: {exc}") from exc
 
 
 def _write_publish_plan(
@@ -100,9 +121,7 @@ def _do_publish_and_create_issues(
         issues = existing
     else:
         console.print("[dim]Fetching open issues for dedupe…[/]")
-        loaded = json.loads(
-            _gh(["issue", "list", "--json", "number,title,body", "--limit", "500"]).stdout
-        )
+        loaded = _gh_json(["issue", "list", "--json", "number,title,body", "--limit", "500"])
         issues = loaded if isinstance(loaded, list) else []
         console.print(f"[dim]  {len(issues)} open issues fetched.[/]")
 
@@ -112,15 +131,29 @@ def _do_publish_and_create_issues(
         console.print("[yellow]No issues to open (all deduped or none proposed).[/]")
         return
 
-    # Ensure the site label exists before trying to apply it.
+    # Ensure the site label exists before applying it. A listing race or an already-exists
+    # collision here must not abort the batch — the label is very likely already present, and
+    # a genuinely missing one just surfaces per-issue below (same handling as the create loop).
     site_label = f"site:{site}"
-    existing_label_names = {
-        lbl["name"]
-        for lbl in json.loads(_gh(["label", "list", "--json", "name", "--limit", "1000"]).stdout)
-    }
-    if site_label not in existing_label_names:
-        _gh(["label", "create", site_label, "--color", "c5def5", "--description", f"Site: {site}"])
-        console.print(f"[dim]Created label [bold]{site_label}[/].[/]")
+    try:
+        existing_label_names = {
+            lbl["name"] for lbl in _gh_json(["label", "list", "--json", "name", "--limit", "1000"])
+        }
+        if site_label not in existing_label_names:
+            _gh(
+                [
+                    "label",
+                    "create",
+                    site_label,
+                    "--color",
+                    "c5def5",
+                    "--description",
+                    f"Site: {site}",
+                ]
+            )
+            console.print(f"[dim]Created label [bold]{site_label}[/].[/]")
+    except _GhError as exc:
+        console.print(f"[yellow]Could not ensure label {site_label} — continuing: {exc}[/]")
 
     console.print()
     opened: list[str] = []
@@ -189,6 +222,12 @@ def research_run_cmd(
     if recipe not in RECIPES:
         raise typer.BadParameter(
             f"unknown recipe {recipe!r}; known: {sorted(RECIPES)}", param_hint="--recipe"
+        )
+    if create_issues and recipe != "site-onboard":
+        # Only site-onboard publishes; fail loudly rather than silently ignore the flag.
+        raise typer.BadParameter(
+            f"--create-issues only applies to --recipe site-onboard (got {recipe!r})",
+            param_hint="--create-issues",
         )
     context: dict[str, str] = {}
     if recipe == "hypothesis-assessment":
