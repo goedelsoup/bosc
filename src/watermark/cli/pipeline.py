@@ -77,7 +77,17 @@ def onboard_cmd(
             raise typer.Exit(1)
         return
 
-    settings = Settings(site=slug, hydro_offline=offline)
+    # --offline must silence *every* connector onboarding touches, not just hydrology:
+    # the reach steps span hydrology (hydro_offline — also covers SSURGO/NASA-POWER, which
+    # share the hydro connector cache), economics/EIA/grid (econ_offline), and RSEI
+    # (rsei_offline). Fanning one flag out to all three keeps "cached/committed fixtures only"
+    # honest — an offline miss then reports a dry-run instead of a live network call (#1367).
+    settings = Settings(
+        site=slug,
+        hydro_offline=offline,
+        econ_offline=offline,
+        rsei_offline=offline,
+    )
     try:
         report = onboard_site(settings=settings, dry_run=dry_run, research=research)
     except ValueError as exc:  # e.g. per-site output paths collide with another site

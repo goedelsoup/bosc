@@ -178,3 +178,50 @@ def test_dry_run_writes_nothing(tmp_path, monkeypatch) -> None:  # type: ignore[
     assert by_name["econ-baseline"].output_path == "reference/economics/fw/baseline.yaml"
     assert by_name["rsei"].output_path == "reference/rsei/fw/inventory.yaml"
     assert by_name["grid-profile"].output_path == "reference/eia/fw/grid-profile.yaml"
+
+
+@pytest.mark.parametrize(
+    ("argv", "expected"),
+    [(["onboard", "fw", "--offline"], True), (["onboard", "fw", "--dry-run"], False)],
+)
+def test_onboard_offline_flag_fans_out_to_every_connector(  # type: ignore[no-untyped-def]
+    argv, expected, monkeypatch
+) -> None:
+    """`onboard <slug> --offline` must silence econ + rsei too, not just hydrology (#1367).
+
+    Otherwise the non-hydro reach steps make live Census/BLS/EPA/EIA calls the operator
+    explicitly opted out of. Captures the Settings the command hands to onboard_site.
+    """
+    from typer.testing import CliRunner
+
+    import watermark.catalog.sites as catalog_sites
+    import watermark.onboard as onboard_mod
+    from watermark.catalog.sites import SiteReadiness
+    from watermark.cli import app
+    from watermark.onboard import OnboardReport
+
+    _fw(monkeypatch)
+    captured: dict[str, Settings] = {}
+
+    def _capture(*, settings: Settings, dry_run: bool = False, research: bool = False):  # type: ignore[no-untyped-def]
+        captured["settings"] = settings
+        return OnboardReport(
+            slug="fw",
+            place="Fort Wayne",
+            basin="maumee",
+            scaffolded_dirs=[],
+            steps=[],
+            review_checklist=["review"],
+        )
+
+    monkeypatch.setattr(onboard_mod, "onboard_site", _capture)
+    monkeypatch.setattr(
+        catalog_sites, "readiness", lambda slug, **_kw: SiteReadiness(slug=slug, total=0, present=0)
+    )
+
+    result = CliRunner().invoke(app, argv)
+
+    assert result.exit_code == 0, result.output
+    s = captured["settings"]
+    # All three connector families onboarding touches move together with the one flag.
+    assert (s.hydro_offline, s.econ_offline, s.rsei_offline) == (expected, expected, expected)
