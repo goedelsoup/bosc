@@ -96,6 +96,21 @@
     {
       "type": "Feature",
       "properties": {
+        "id": "watch-lima-wwtp",
+        "title": "Lima WWTP",
+        "type": "infrastructure",
+        "priority": "high",
+        "status": "fm2_receiver",
+        "summary": "City of Lima WWTP — the municipal receiving plant. 18.5 MGD average design flow. NPDES OH0026069 / Ohio EPA 2PE00000; outfall 2PE00000001 -> Ottawa River (RM 37.6). The FM-2 campus discharge is routed here via the City's 78\" sewer; peak wet-weather capacity 70 million gallons/day. State-Approved Pretreatment Program (1992)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-84.12747, 40.72298]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "id": "watch-amazon-woh4",
         "title": "Amazon WOH4 (logistics)",
         "type": "logistics",

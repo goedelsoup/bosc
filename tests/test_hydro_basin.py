@@ -37,9 +37,12 @@ def test_basin_screen_coverage(data_settings: Settings) -> None:
     screen = basin.check_basin_assimilative(settings=data_settings)
     c = screen.coverage
     assert c.total == 129
-    assert c.screened == len(screen.checks) == 8
+    # 9 since #1536: the Lima WWTP (OH0026069) now carries a document-cited receiving
+    # water (Ottawa River, from permit 2PE00000), so it moves out of no_receiving_water
+    # and screens (28.62 cfs into the Ottawa's 0.2 cfs 7Q10 — a fresh violation).
+    assert c.screened == len(screen.checks) == 9
     # Honest coverage: most of the basin is unscreenable, surfaced explicitly.
-    assert c.no_receiving_water == 76
+    assert c.no_receiving_water == 75
     assert c.screened + c.no_receiving_water + c.no_7q10 + c.no_design_flow == c.total
     # The cited Lima-loop violation (American Bath -> Pike Run) is still caught.
     cited = [ch for ch in screen.checks if ch.design_low_flow.source == "document"]

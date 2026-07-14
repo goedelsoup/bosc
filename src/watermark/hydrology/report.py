@@ -229,12 +229,20 @@ def _render_routed_network(emit: Callable[[str], None], settings: Settings) -> N
     if not baseline.reaches or baseline.outlet_effluent_fraction is None:
         return
 
-    # The campus FM-2 discharge is the data center's own; the three county WWTPs are
-    # the data-center-independent municipal effluent — report that separately so the
-    # "river is mostly effluent" claim does not lean on the campus's own flow.
+    # Break the routed effluent into three named parts so no claim leans on the wrong flow:
+    #   - campus FM-2 (bosc-fm2-return): the data center's OWN industrial discharge;
+    #   - the City of Lima WWTP (lima-wwtp): the major municipal plant's own design flow
+    #     (18.5 MGD, OEPA 2PE00000 / OH0026069) — counted since #1536, absent on peers;
+    #   - the three small county WWTPs (Dug Run / Pike Run / Ottawa tributaries): the
+    #     data-center-independent municipal effluent, reported separately so "the river is
+    #     mostly effluent" does not lean on either the campus's or the big plant's flow.
     campus = baseline.reach("bosc-fm2-return")
     campus_cfs = campus.gain.value if campus is not None and campus.gain is not None else 0.0
-    municipal_cfs = baseline.effluent_total_cfs - campus_cfs
+    lima_muni = baseline.reach("lima-wwtp")
+    lima_muni_cfs = (
+        lima_muni.gain.value if lima_muni is not None and lima_muni.gain is not None else 0.0
+    )
+    county_cfs = baseline.effluent_total_cfs - campus_cfs - lima_muni_cfs
 
     # "The loop's streams" means the Lima loop's OWN tributaries (Ottawa/Dug Run/Pike Run) —
     # NOT the system-wide natural_total_cfs, which (#1488) also carries the outlet's Auglaize
@@ -245,7 +253,7 @@ def _render_routed_network(emit: Callable[[str], None], settings: Settings) -> N
     # natural total can reach 0 — guard the ratio (#614) rather than divide by it.
     if loop_natural > 0:
         municipal_multiple = (
-            f"**{municipal_cfs / loop_natural:.1f}x** the streams' entire natural low flow"
+            f"**{county_cfs / loop_natural:.1f}x** the streams' entire natural low flow"
         )
     else:
         municipal_multiple = (
@@ -280,15 +288,27 @@ def _render_routed_network(emit: Callable[[str], None], settings: Settings) -> N
         "(`data/reference/hydrology/network.yaml`) shows the system picture the per-stream "
         "rows miss. At design low flow the loop's streams carry, in total, only "
         f"**{loop_natural:g} cfs** of *natural* low flow "
-        f"({natural_breakdown}). The three county "
-        f"WWTP discharges alone add **{municipal_cfs:.2f} cfs** of treated effluent — "
+        f"({natural_breakdown}). The three small county "
+        f"WWTP discharges alone add **{county_cfs:.2f} cfs** of treated effluent — "
         f"{municipal_multiple}, with no data center in the picture. The river at design low flow "
         "is effluent, not "
-        "stream. The campus then adds its own documented "
-        f"**{campus_cfs:.2f} cfs** FM-2 industrial discharge (routed via Lima's sewer + WWTP), "
-        f"taking the Ottawa leaving Lima to **{gage_fraction:.0%} treated "
-        "effluent** — a *conservative* floor, since Lima WWTP's own larger municipal discharge "
-        "has no cited design flow in the corpus and is not counted.\n"
+        "stream. "
+        + (
+            "The City of Lima WWTP — the major municipal plant — then adds its own "
+            f"**{lima_muni_cfs:.2f} cfs** design discharge (18.5 MGD, OEPA NPDES 2PE00000 / "
+            "OH0026069, outfall to the Ottawa at RM 37.6), and the campus adds its documented "
+            f"**{campus_cfs:.2f} cfs** FM-2 industrial discharge (piped to that same plant via "
+            "Lima's 78\" sewer), together taking the Ottawa leaving Lima to "
+            f"**{gage_fraction:.0%} treated effluent** — now counting the municipal plant's own "
+            "design flow that the corpus previously lacked (#1536; the FM-2 is the campus's "
+            "increment on top of the plant's permitted baseline, not a double count).\n"
+            if lima_muni_cfs > 0
+            else "The campus then adds its own documented "
+            f"**{campus_cfs:.2f} cfs** FM-2 industrial discharge (routed via Lima's sewer + "
+            f"WWTP), taking the Ottawa leaving Lima to **{gage_fraction:.0%} treated effluent** "
+            "— a *conservative* floor, since the receiving plant's own municipal design flow is "
+            "not counted here.\n"
+        )
     )
     emit("\n| reach | natural (cfs) | effluent (cfs) | routed (cfs) | deficit (cfs) |")
     emit("|---|--:|--:|--:|--:|")
