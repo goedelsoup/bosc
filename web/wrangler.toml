@@ -44,7 +44,7 @@ GITHUB_REPO = "the-watermark-directory"
 # Cognito values that some of these features also need are set out-of-band (see header).
 PRE_LAUNCH_ENABLED = "false"
 SUBMISSIONS_ENABLED = "true"
-ASK_ENABLED = "false"
+ASK_ENABLED = "true"
 DOCS_ENABLED = "true"
 MCP_ENABLED = "true"
 RUM_ENABLED = "true"

@@ -21,7 +21,7 @@
 
 preLaunch: false    # serve pre-launch.astro at / and redirect all other routes to /
 submissions: true
-ask: false
+ask: true
 docs: true
 mcp: true
 rum: true

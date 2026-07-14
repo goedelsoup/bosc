@@ -61,4 +61,6 @@ config:
   watermark-deploy:authEnabled: "true"
   watermark-deploy:cognitoDomainPrefix: watermark-auth
   watermark-deploy:cognitoRegion: us-east-2
+  watermark-deploy:honeycombApiKey:
+    secure: v1:NdtXoBy3Yxolp+L/:1/q5B/wjByRf/yWTRGDAr5NUZH6jtr6SjQ/WkYny0bhD4jVAAuavYp9PxdvF47HsPRkOEL+mc7Bpg/gk3Bh1+AS16lAgb1Y67AoMKfBqQb8=
 encryptionsalt: v1:Lc9rloxR3fk=:v1:tvlRT/9ztIAo7SHi:SHEL6qS7+zdFlrYSLXdGTqzTSKpS6w==
