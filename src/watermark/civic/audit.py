@@ -23,6 +23,7 @@ from typing import Any
 import yaml
 from pydantic import BaseModel, ConfigDict
 
+from watermark.civic.layout import meetings_dir
 from watermark.civic.models import Subdivision
 from watermark.config import Settings, get_settings
 from watermark.logging import get_logger
@@ -137,7 +138,7 @@ def audit_body(
     """Audit one body's meeting index against its cadence; ``None`` if not ingested."""
     settings = settings or get_settings()
     index_path = index_path or (
-        settings.extracted_dir / subdivision.slug / "meetings" / "meeting-index.yaml"
+        meetings_dir(settings.extracted_dir, subdivision.slug, settings) / "meeting-index.yaml"
     )
     if not index_path.exists():
         return None
