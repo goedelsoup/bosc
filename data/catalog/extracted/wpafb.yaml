@@ -1,16 +1,31 @@
 id: wpafb
-title: WPAFB (Greene + Montgomery Co., OH) Investigative Findings & Onboarding Record
+title: WPAFB (Greene + Montgomery Co., OH) Groundwater Primary Records & Onboarding Findings
 scope: extracted
 status: reviewed
 producer:
   kind: manual
-  source: Onboarding self-research pass (data/research/onboard-wpafb-*/findings.md); SiteProfile
-    hsg_citation. The primary sources named in the groundwater screen (US-EPA Sole Source Aquifer
-    record, AF IRP/CERCLA, DoD PFAS, ATSDR, OEPA) are to-pull — not yet in the corpus.
+  source: >-
+    Onboarding self-research pass (data/research/onboard-wpafb-*/findings.md) + the #1397 primary-
+    record ingest: the US-EPA Sole Source Aquifer designation (53 FR 15876) and the WPAFB CERCLA §120
+    Federal Facility Agreement, transcribed/read from source PDFs now committed under
+    data/documents/wpafb/** (see data/documents/wpafb/SOURCES.yaml), plus the City of Dayton 2025 CCR
+    PFAS table and USGS/ATSDR corroboration. Read from clean text layers / OCR, not filenames.
 license: public record / public domain
 access_tier: public
 site_scope: site:wpafb
 storage:
+- relpath: extracted/wpafb/ssa-53fr15876.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/wpafb/cercla-ffa-1991.epa.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/wpafb/dayton-ccr-2025-pfas.md
+  media_type: text/markdown
+  lfs: false
+- relpath: extracted/wpafb/groundwater-corroboration.md
+  media_type: text/markdown
+  lfs: false
 - relpath: extracted/wpafb/groundwater-screen.md
   media_type: text/markdown
   lfs: false
@@ -26,12 +41,19 @@ tags:
 - pfas
 - great-miami
 - mad-river
+- cercla
+- ssa
 notes: >
-  WPAFB groundwater screen scaffold (2026-07-02, #463) — the defining WPAFB receiving-water
-  dimension. WPAFB's water risk is groundwater, not surface 7Q10: the Great Miami / Mad River
-  Buried Valley sole-source aquifer (Dayton + WPAFB well fields) + a documented TCE/PFAS plume on
-  the same drinking-water aquifer. Both claims are currently [inference]/[reference] with NO primary
-  cited source — this doc pins each to the primary instrument that must verify it (EPA SSA
-  designation; AF IRP/CERCLA administrative record; DoD PFAS/AFFF; ATSDR; OEPA) and defines the
-  buried-valley + plume overlay as a new analysis dimension the surface Tier-0 tools do not cover.
-  Both claims stay to-verify, not findings, until cited.
+  WPAFB groundwater primary-record dataset. The defining WPAFB receiving-water dimension is
+  groundwater, not surface 7Q10: the Great Miami / Mad River Buried Valley sole-source aquifer
+  (Dayton + WPAFB well fields) + a documented TCE/PFAS plume on the same drinking-water aquifer.
+  Originally scaffolded as a to-verify screen (2026-07-02, #463); the #1397 ingest RESOLVED the two
+  load-bearing claims with primary agency records — ssa-53fr15876.epa.yaml [verified: 53 FR 15876,
+  FRL-3369-5, SDWA 1424(e), signed 1988-04-14] designates the sole-source aquifer, and
+  cercla-ffa-1991.epa.yaml [verified: CERCLA §120 FFA; NPL 1989-10-04, 54 FR 41021] places the
+  VOC/PFAS plume on that same aquifer. These two classified permits-epa records flip the site's
+  record domain to LIVE at export. Supporting: the Dayton 2025 CCR finished-water PFAS table (Ottawa
+  plant PFOS/PFHxS exceed the 2024 MCLs) + USGS SIR 2023-5017 / 2021-5115 and the ATSDR dated-negative
+  (groundwater-corroboration.md). Deferred to the #464/#463 verification/watch tasks: the OEPA NPDES
+  fact sheets, WPAFB's own NPDES permits, the 2025 PFAS NPDWR notification, and the 2024-12-16 EI
+  revocation letter.

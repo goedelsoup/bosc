@@ -1,0 +1,60 @@
+# Chain-of-custody / provenance manifest for the WPAFB primary-record corpus (#1397).
+#
+# The source binaries under data/documents/wpafb/** are LFS-tracked and immutable: they keep
+# their AS-RECEIVED filenames (never renamed), and this manifest records each file's upstream
+# URL, retrieval date, sha256, and a CONTENT-VERIFIED date read from the document's own text
+# layer (NOT the filename or outside knowledge), per the data-discipline in CLAUDE.md. This is
+# an alias/provenance layer only — non-destructive.
+meta:
+  subject: WPAFB primary groundwater/CERCLA/PFAS record ingest
+  issue: '#1397'
+  retrieved: '2026-07-14'
+  method: >-
+    Fetched over the public web; each PDF's bytes committed verbatim. Content-verified dates
+    read from the PDF text layer (pdftotext / pypdf), not from filenames.
+
+sources:
+  - file: ssa/SSA_greatmiaminorth_FR.pdf
+    as_received_name: SSA_greatmiaminorth_FR.pdf
+    url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/28/documents/swap/SSA_greatmiaminorth_FR.pdf
+    sha256: ed935b037a721d5de753db5051a3b0ddaddf46e4c4864217bd6d0ff5405d5c3b
+    bytes: 38318
+    content_verified_date: '1988-05-04'   # 53 Fed. Reg. 15876; FR Doc. 88-9103 filed 5-3-88; signed 1988-04-14
+    evidence: native_text
+    title: >-
+      Buried Valley Aquifer System, Ohio, Sole Source Aquifer Petition; Final Determination
+      [FRL-3369-5] — U.S. EPA Region 5 full-text transcription (transcribed 2006-06-09)
+    extraction: data/extracted/wpafb/ssa-53fr15876.epa.yaml
+    tags: [verified, ssa, sdwa-1424e]
+
+  - file: cercla/wright-pattersonafb.pdf
+    as_received_name: wright-pattersonafb.pdf
+    url: https://www.epa.gov/system/files/documents/2024-06/wright-pattersonafb.pdf
+    sha256: 67899e9e1f782e55f547207c1fccc292070b127ca2fbfb6158f6aef0cd37162a
+    bytes: 2385648
+    content_verified_date: '1991-03-31'   # FFA execution (PDF metadata keyword "3/31/91"); NPL listing 1989-10-04
+    evidence: ocr   # scanned document with an OCR text layer
+    title: >-
+      Federal Facility Agreement under CERCLA Section 120 — U.S. EPA Region V and the U.S.
+      Department of the Air Force (Wright-Patterson AFB), 81 pp.
+    extraction: data/extracted/wpafb/cercla-ffa-1991.epa.yaml
+    tags: [verified, cercla, ffa, superfund]
+
+  - file: ccr/2025-Water-Quality-Report.pdf
+    as_received_name: 2025-Water-Quality-Report.pdf
+    url: https://www.daytonohio.gov/DocumentCenter/View/17424/2025-Water-Quality-Report
+    sha256: 3d82a6b53b03d422b74a308c07c0f095c0ce63c78683eb53a0bea63f987c0ffd
+    bytes: 1276985
+    content_verified_date: '2025'         # "2025 Report" / "2025 Water Quality Report"
+    evidence: native_text
+    title: City of Dayton 2025 Water Quality Report (Consumer Confidence Report)
+    extraction: data/extracted/wpafb/dayton-ccr-2025-pfas.md
+    tags: [verified, pfas, ccr, finished-water]
+
+# Robots-blocked / verification-task sources located 2026-07-10 but NOT ingested here (deferred):
+#   - WPAFB PFAS NPDWR notification (2025-01-24), wpafb.af.mil Portals/60 — HTTP 403 (robots);
+#     pull manually. PWS OH2903412 (Area A) / OH2903312 (Area B).
+#   - OEPA NPDES fact sheets OH0024881 (Dayton WRF, 72 MGD) + OH0049646 (Tri-Cities North, 11.2
+#     MGD): receiving-water + passby resolution is the #464/#463 verification/screen task.
+#   - WPAFB's own NPDES OH0010243 + OH0105422: confirmed "Effective" in EPA ECHO
+#     (cwa_rest_services, FRS 110001987958); fact-sheet PDFs are the standing-watch pull.

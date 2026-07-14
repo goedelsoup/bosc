@@ -1,0 +1,98 @@
+doc_id: ssa-53fr15876-FRL-3369-5
+source_path: data/documents/wpafb/ssa/SSA_greatmiaminorth_FR.pdf
+kind: epa
+pages_read:
+- 0
+- 1
+- 2
+image_pages_read: []
+dpi: 0
+method: >-
+  manual transcription of the clean PDF text layer (U.S. EPA Region 5 Office of Ground Water
+  & Drinking Water full-text transcription of the Federal Register citation, dated 2006-06-09;
+  not a scan). Figures read from the text layer, not the filename.
+source_text_excerpt: >-
+  [FRL-3369-5] Buried Valley Aquifer System, Ohio, Sole Source Aquifer Petition; Final
+  Determination. AGENCY: U.S. Environmental Protection Agency. ACTION: Notice of final
+  determination. SUMMARY: Notice is hereby given that, pursuant to section 1424(e) of the
+  Safe Drinking Water Act, the U.S. Environmental Protection Agency (EPA) Region V
+  Administrator has determined that the Buried Valley Aquifer System of the Great
+  Miami/Little Miami River Basins of Southwestern Ohio ... is the sole or principal source
+  of drinking water in the petitioned area ... The BVAS currently serves as the "sole
+  source" of drinking water for approximately 920,600 residents of Preble, Dark, Champaign,
+  Miami, Montgomery, Logan, Clark, Greene and Shelby Counties. ... Dated: April 14, 1988.
+  Valdas V. Adamkus. Regional Administrator. [FR Doc. 88-9103 Filed 5-3-88; 8:45 am]
+action:
+  confidence: high
+  warnings:
+  - >-
+    The primary source is a 2006 U.S. EPA Region 5 full-text TRANSCRIPTION of the Federal
+    Register notice ("Not Original Document"), not the original Federal Register page image.
+    All figures below are transcribed verbatim from that transcription.
+  - >-
+    The petition designated the ENTIRE Buried Valley Aquifer System (BVAS) across nine
+    counties; "Great Miami North" in the source filename is the Ohio-EPA source-water map
+    segment label, not a separate designation. WPAFB (Greene + Montgomery) sits within the
+    designated area.
+  agency: U.S. Environmental Protection Agency, Region V
+  program: Sole Source Aquifer designation under SDWA Section 1424(e)
+  permit_no: FRL-3369-5
+  action: final determination
+  action_date: '1988-04-14'
+  effective_date: '1988-04-14'   # effective as of the date signed by the Regional Administrator
+  applicant: Miami Valley Regional Planning Commission (Dayton, Ohio)  # the petitioner
+  project_name: Buried Valley Aquifer System (BVAS), Sole Source Aquifer Petition
+  site_address: >-
+    Great Miami / Little Miami River Basins, Southwestern Ohio (Preble, Dark, Champaign,
+    Miami, Montgomery, Logan, Clark, Greene and Shelby Counties)
+  affected_resource: >-
+    Buried Valley Aquifer System — the sole or principal drinking-water source for the
+    petitioned area; all Federal financially assisted projects in the aquifer area and its
+    principal recharge zone become subject to EPA project review under SDWA 1424(e).
+  note: >-
+    U.S. EPA Region V final determination designating the Buried Valley Aquifer System (BVAS)
+    of the Great Miami/Little Miami River Basins of southwestern Ohio a SOLE SOURCE AQUIFER
+    under SDWA Section 1424(e) (42 U.S.C. 300f, 300h-3(e)), signed by Regional Administrator
+    Valdas V. Adamkus on 1988-04-14, published at 53 Fed. Reg. 15876 (May 4, 1988), FR Doc.
+    88-9103. Petition submitted by the Miami Valley Regional Planning Commission (complete
+    petition received 1987-11-25); public comment 1987-12-22 through 1988-02-22 drew a single
+    comment, in support. This is the [verified] primary instrument behind the WPAFB profile's
+    sole-source-aquifer claim: the base's drinking-water and plume story rests on this aquifer.
+
+# --- verbatim citation block (extra fields; models allow extra="allow") ---------------------
+fr_citation: 53 Fed. Reg. 15876 (May 4, 1988)
+fr_doc_no: 88-9103 (Filed 5-3-88; 8:45 am)
+billing_code: 6560-50-M
+statutory_authority: Safe Drinking Water Act Section 1424(e), 42 U.S.C. 300f, 300h-3(e) (Pub. L. 93-523)
+aquifer_name: Buried Valley Aquifer System (BVAS)
+population_served: 920600   # "approximately 920,600 residents" (verbatim)
+counties_served:
+- Preble
+- Dark      # as transcribed; the Ohio county is "Darke"
+- Champaign
+- Miami
+- Montgomery
+- Logan
+- Clark
+- Greene
+- Shelby
+petition_received_complete: '1987-11-25'
+public_comment_period: 1987-12-22 .. 1988-02-22
+delegation_effective: '1987-03-09'   # SSA designation authority delegated to Regional Administrators
+signatory: Valdas V. Adamkus, Regional Administrator (U.S. EPA Region V)
+epa_contact: Wm. Turpin Ballard, Office of Ground Water, U.S. EPA Region V (312-353-1435)
+corroborating_source: >-
+  https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/28/documents/swap/ssa_metadata.pdf
+  (Ohio EPA source-water-assessment SSA metadata — "Great Miami North" segment)
+
+relevance:
+  tags: [verified, ssa, sole-source-aquifer, sdwa-1424e, buried-valley-aquifer, great-miami, wpafb, dayton]
+  note: >-
+    The [verified] federal instrument behind the WPAFB SiteProfile's sole-source-aquifer claim
+    (previously [inference]). Confirms the Buried Valley Aquifer System is the designated sole
+    source of drinking water for the Dayton/WPAFB metro (920,600 residents, nine counties),
+    which is why the WPAFB water story is groundwater — not a surface 7Q10 — and why the TCE/PFAS
+    plume on this same aquifer is the receiving-water dimension (see cercla-ffa-1991.epa.yaml).
+  cross_refs:
+  - data/extracted/wpafb/cercla-ffa-1991.epa.yaml   # the CERCLA plume on this same aquifer
+  - data/extracted/wpafb/groundwater-screen.md      # the screen this record verifies
