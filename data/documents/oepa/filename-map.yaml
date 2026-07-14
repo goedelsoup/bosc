@@ -1,0 +1,21 @@
+meta:
+  subject: OEPA/DAM permit download manifest
+  generated_at: '2026-07-14'
+  policy: non-destructive — originals keep as-received names
+documents:
+- filename: 2PE00000.pdf
+  permit_id: 2PE00000
+  source_url: https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/doc/2PE00000.pdf
+  sha256: b140e19c5e26d40af055656d02832451621d2cabef1ef6d67fe9c5bd34183c88
+  bytes: 1618036
+  content_type: application/pdf
+  fetched_at: '2026-07-14T17:59:59.976939+00:00'
+  status: downloaded
+  content_verified: '2026-07-14'
+  note: 'As-received DAM name kept (bare permit number, as with 2DP00130.pdf).
+    Content-verified from the text layer 2026-07-14: Ohio EPA NPDES Permit Renewal
+    2PE00000*OD (application OH0026069), City of Lima WWTP, 1200 Fort Amanda Road,
+    Lima, Allen County; outfall 2PE00000001 to the Ottawa River at River Mile 37.6;
+    effective 2023-07-01, expires 2028-06-30. Structured read:
+    data/extracted/oepa/2PE00000.npdes.yaml. The un-requested municipal custodian
+    record (issue #1536).'

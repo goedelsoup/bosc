@@ -1,0 +1,770 @@
+meta:
+  subject: LIMA WWTP (NPDES OH0026069) — reported effluent record (EPA ECHO DMR)
+  source: EPA ECHO eff_rest_services.get_effluent_chart
+  regenerate: watermark dmr OH0026069 --start 2023-01-01 --end 2026-06-30 --design-flow 18.5
+  discipline: Reported DMR values are verbatim from the permittee's submissions via ECHO; a no-discharge/no-data
+    period is null (never zero-filled), and an exceedance is listed only where ECHO reports one. Design
+    flow is the permitted maximum, not a metered value.
+permit:
+  npdes_id: OH0026069
+  name: LIMA WWTP
+  permit_type: NPDES Individual Permit
+  permit_status: Effective
+  major_minor: M
+  snc_status: null
+  window: 2023-01-01..2026-06-30
+discharge_summary:
+  design_flow_mgd: 18.5
+  design_flow_cfs: 28.62
+  primary_outfall: '001'
+  n_flow_months: 41
+  actual_flow_mean_mgd: 13.068
+  actual_flow_mean_cfs: 20.22
+  actual_flow_min_mgd: 0.0
+  actual_flow_max_mgd: 19.671
+  flow_pct_of_design: 70.6
+  cso_outfalls: 5
+  reported_exceedances: 33
+flow_monthly:
+- period_end: '2023-08-31'
+  value_mgd: 9.3797
+  stat_base: MO AVG
+- period_end: '2023-08-31'
+  value_mgd: 26.088
+  stat_base: DAILY MX
+- period_end: '2023-09-30'
+  value_mgd: 7.5455
+  stat_base: MO AVG
+- period_end: '2023-09-30'
+  value_mgd: 10.744
+  stat_base: DAILY MX
+- period_end: '2023-10-31'
+  value_mgd: 13.886
+  stat_base: MO AVG
+- period_end: '2023-10-31'
+  value_mgd: 27.437
+  stat_base: DAILY MX
+- period_end: '2023-11-30'
+  value_mgd: 10.834
+  stat_base: MO AVG
+- period_end: '2023-11-30'
+  value_mgd: 24.763
+  stat_base: DAILY MX
+- period_end: '2023-12-31'
+  value_mgd: 11.008
+  stat_base: MO AVG
+- period_end: '2023-12-31'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2024-01-31'
+  value_mgd: 15.611
+  stat_base: MO AVG
+- period_end: '2024-01-31'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2024-02-29'
+  value_mgd: 11.781
+  stat_base: MO AVG
+- period_end: '2024-02-29'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2024-03-31'
+  value_mgd: 14.766
+  stat_base: MO AVG
+- period_end: '2024-03-31'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2024-04-30'
+  value_mgd: 16.36
+  stat_base: MO AVG
+- period_end: '2024-04-30'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2024-05-31'
+  value_mgd: 14.174
+  stat_base: MO AVG
+- period_end: '2024-05-31'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2024-06-30'
+  value_mgd: 15.945
+  stat_base: MO AVG
+- period_end: '2024-06-30'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2024-07-31'
+  value_mgd: 11.59
+  stat_base: MO AVG
+- period_end: '2024-07-31'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2024-08-31'
+  value_mgd: 11.67
+  stat_base: MO AVG
+- period_end: '2024-08-31'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2024-09-30'
+  value_mgd: 12.29
+  stat_base: MO AVG
+- period_end: '2024-09-30'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2024-10-31'
+  value_mgd: 10.94
+  stat_base: MO AVG
+- period_end: '2024-10-31'
+  value_mgd: 14.11
+  stat_base: DAILY MX
+- period_end: '2024-11-30'
+  value_mgd: 13.44
+  stat_base: MO AVG
+- period_end: '2024-11-30'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2024-12-31'
+  value_mgd: 17.44
+  stat_base: MO AVG
+- period_end: '2024-12-31'
+  value_mgd: 46.53
+  stat_base: DAILY MX
+- period_end: '2025-01-31'
+  value_mgd: 13.059
+  stat_base: MO AVG
+- period_end: '2025-01-31'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2025-02-28'
+  value_mgd: 15.131
+  stat_base: MO AVG
+- period_end: '2025-02-28'
+  value_mgd: 18.655
+  stat_base: DAILY MX
+- period_end: '2025-03-31'
+  value_mgd: 14.7
+  stat_base: MO AVG
+- period_end: '2025-03-31'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2025-04-30'
+  value_mgd: 15.404
+  stat_base: MO AVG
+- period_end: '2025-04-30'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2025-05-31'
+  value_mgd: 14.77
+  stat_base: MO AVG
+- period_end: '2025-05-31'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2025-06-30'
+  value_mgd: 3.08
+  stat_base: MO AVG
+- period_end: '2025-06-30'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2025-07-31'
+  value_mgd: 13.798
+  stat_base: MO AVG
+- period_end: '2025-07-31'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2025-08-31'
+  value_mgd: 12.32
+  stat_base: MO AVG
+- period_end: '2025-08-31'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2025-09-30'
+  value_mgd: 11.435
+  stat_base: MO AVG
+- period_end: '2025-09-30'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2025-10-31'
+  value_mgd: 11.384
+  stat_base: MO AVG
+- period_end: '2025-10-31'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2025-11-30'
+  value_mgd: 12.79
+  stat_base: MO AVG
+- period_end: '2025-11-30'
+  value_mgd: 19.345
+  stat_base: DAILY MX
+- period_end: '2025-12-31'
+  value_mgd: 12.017
+  stat_base: MO AVG
+- period_end: '2025-12-31'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2026-01-31'
+  value_mgd: 0.0
+  stat_base: MO AVG
+- period_end: '2026-01-31'
+  value_mgd: 0.0
+  stat_base: DAILY MX
+- period_end: '2026-02-28'
+  value_mgd: 12.396
+  stat_base: MO AVG
+- period_end: '2026-02-28'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2026-03-31'
+  value_mgd: 16.385
+  stat_base: MO AVG
+- period_end: '2026-03-31'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2026-04-30'
+  value_mgd: 17.201
+  stat_base: MO AVG
+- period_end: '2026-04-30'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2026-05-31'
+  value_mgd: 16.625
+  stat_base: MO AVG
+- period_end: '2026-05-31'
+  value_mgd: 18.5
+  stat_base: DAILY MX
+- period_end: '2023-01-31'
+  value_mgd: 19.671
+  stat_base: MO AVG
+- period_end: '2023-01-31'
+  value_mgd: 35.189
+  stat_base: DAILY MX
+- period_end: '2023-02-28'
+  value_mgd: 15.89
+  stat_base: MO AVG
+- period_end: '2023-02-28'
+  value_mgd: 30.026
+  stat_base: DAILY MX
+- period_end: '2023-03-31'
+  value_mgd: 19.407
+  stat_base: MO AVG
+- period_end: '2023-03-31'
+  value_mgd: 29.846
+  stat_base: DAILY MX
+- period_end: '2023-04-30'
+  value_mgd: 15.55
+  stat_base: MO AVG
+- period_end: '2023-04-30'
+  value_mgd: 23.789
+  stat_base: DAILY MX
+- period_end: '2023-05-31'
+  value_mgd: 13.512
+  stat_base: MO AVG
+- period_end: '2023-05-31'
+  value_mgd: 31.54
+  stat_base: DAILY MX
+- period_end: '2023-06-30'
+  value_mgd: 9.1935
+  stat_base: MO AVG
+- period_end: '2023-06-30'
+  value_mgd: 25.153
+  stat_base: DAILY MX
+- period_end: '2023-07-31'
+  value_mgd: 11.39366
+  stat_base: MO AVG
+- period_end: '2023-07-31'
+  value_mgd: 27.525
+  stat_base: DAILY MX
+exceedances:
+- period_end: '2024-02-29'
+  outfall: '001'
+  parameter_code: '00300'
+  parameter: Oxygen, dissolved [DO]
+  stat_base: DAILY MN
+  value: 3.8
+  unit: null
+  limit: 5.0
+  limit_type: Concentration1
+  exceedance_pct: 24.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2026-03-31'
+  outfall: '001'
+  parameter_code: '00530'
+  parameter: Solids, total suspended
+  stat_base: WKLY MAX
+  value: 23.5
+  unit: null
+  limit: 20.0
+  limit_type: Concentration3
+  exceedance_pct: 18.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2023-10-31'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: WKLY MAX
+  value: 4.252
+  unit: null
+  limit: 2.4
+  limit_type: Concentration3
+  exceedance_pct: 77.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2023-10-31'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: WKLY MAX
+  value: 190.6
+  unit: null
+  limit: 168.0
+  limit_type: Quantity2
+  exceedance_pct: 13.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2024-02-29'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: MO AVG
+  value: 3.566
+  unit: null
+  limit: 1.7
+  limit_type: Concentration2
+  exceedance_pct: 110.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2024-02-29'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: WKLY MAX
+  value: 4.029
+  unit: null
+  limit: 2.6
+  limit_type: Concentration3
+  exceedance_pct: 55.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2024-02-29'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: MO AVG
+  value: 146.0
+  unit: null
+  limit: 119.0
+  limit_type: Quantity1
+  exceedance_pct: 23.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2024-03-31'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: MO AVG
+  value: 2.155
+  unit: null
+  limit: 1.7
+  limit_type: Concentration2
+  exceedance_pct: 27.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2024-03-31'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: WKLY MAX
+  value: 3.068
+  unit: null
+  limit: 2.6
+  limit_type: Concentration3
+  exceedance_pct: 18.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2024-03-31'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: MO AVG
+  value: 123.9
+  unit: null
+  limit: 119.0
+  limit_type: Quantity1
+  exceedance_pct: 4.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2024-03-31'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: WKLY MAX
+  value: 212.6
+  unit: null
+  limit: 182.0
+  limit_type: Quantity2
+  exceedance_pct: 17.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2025-01-31'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: MO AVG
+  value: 3.8298
+  unit: null
+  limit: 1.7
+  limit_type: Concentration2
+  exceedance_pct: 125.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2025-01-31'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: WKLY MAX
+  value: 8.0914
+  unit: null
+  limit: 2.6
+  limit_type: Concentration3
+  exceedance_pct: 211.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2025-01-31'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: MO AVG
+  value: 179.42
+  unit: null
+  limit: 119.0
+  limit_type: Quantity1
+  exceedance_pct: 51.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2025-01-31'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: WKLY MAX
+  value: 379.9
+  unit: null
+  limit: 182.0
+  limit_type: Quantity2
+  exceedance_pct: 109.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2025-02-28'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: MO AVG
+  value: 1.841
+  unit: null
+  limit: 1.7
+  limit_type: Concentration2
+  exceedance_pct: 8.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2025-02-28'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: WKLY MAX
+  value: 2.88
+  unit: null
+  limit: 2.6
+  limit_type: Concentration3
+  exceedance_pct: 11.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2026-01-31'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: MO AVG
+  value: 2.2413
+  unit: null
+  limit: 1.7
+  limit_type: Concentration2
+  exceedance_pct: 32.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2026-01-31'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: WKLY MAX
+  value: 7.117
+  unit: null
+  limit: 2.6
+  limit_type: Concentration3
+  exceedance_pct: 174.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '5'
+    severity_desc: Significant/Category I Noncompliance Effluent Violation
+- period_end: '2026-02-28'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: MO AVG
+  value: 4.007
+  unit: null
+  limit: 1.7
+  limit_type: Concentration2
+  exceedance_pct: 136.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2026-02-28'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: WKLY MAX
+  value: 7.521
+  unit: null
+  limit: 2.6
+  limit_type: Concentration3
+  exceedance_pct: 189.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '5'
+    severity_desc: Significant/Category I Noncompliance Effluent Violation
+- period_end: '2026-02-28'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: MO AVG
+  value: 180.6
+  unit: null
+  limit: 119.0
+  limit_type: Quantity1
+  exceedance_pct: 52.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2026-02-28'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: WKLY MAX
+  value: 283.1
+  unit: null
+  limit: 182.0
+  limit_type: Quantity2
+  exceedance_pct: 56.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '5'
+    severity_desc: Significant/Category I Noncompliance Effluent Violation
+- period_end: '2023-10-31'
+  outfall: '001'
+  parameter_code: '31648'
+  parameter: E. coli, MTEC-MF
+  stat_base: MO GEOMN
+  value: 140.38
+  unit: null
+  limit: 126.0
+  limit_type: Concentration2
+  exceedance_pct: 11.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2023-10-31'
+  outfall: '001'
+  parameter_code: '31648'
+  parameter: E. coli, MTEC-MF
+  stat_base: WK GEOMN
+  value: 986.97
+  unit: null
+  limit: 284.0
+  limit_type: Concentration3
+  exceedance_pct: 248.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2025-10-31'
+  outfall: '001'
+  parameter_code: '31648'
+  parameter: E. coli, MTEC-MF
+  stat_base: WK GEOMN
+  value: 864.58
+  unit: null
+  limit: 284.0
+  limit_type: Concentration3
+  exceedance_pct: 204.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2023-05-31'
+  outfall: '001'
+  parameter_code: '31648'
+  parameter: E. coli, MTEC-MF
+  stat_base: WK GEOMN
+  value: 680.35
+  unit: null
+  limit: 284.0
+  limit_type: Concentration3
+  exceedance_pct: 140.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2023-06-30'
+  outfall: '001'
+  parameter_code: '31648'
+  parameter: E. coli, MTEC-MF
+  stat_base: WK GEOMN
+  value: 403.76
+  unit: null
+  limit: 284.0
+  limit_type: Concentration3
+  exceedance_pct: 42.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2023-08-31'
+  outfall: '001'
+  parameter_code: '50092'
+  parameter: Mercury, total low level
+  stat_base: MO AVG
+  value: 6.67
+  unit: null
+  limit: 3.5
+  limit_type: Concentration2
+  exceedance_pct: 91.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2024-08-31'
+  outfall: '001'
+  parameter_code: '61426'
+  parameter: Toxicity [chronic], Ceriodaphnia dubia
+  stat_base: MO AVG
+  value: 1.2
+  unit: null
+  limit: 1.0
+  limit_type: Concentration2
+  exceedance_pct: 20.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2023-06-30'
+  outfall: '001'
+  parameter_code: '61426'
+  parameter: Toxicity [chronic], Ceriodaphnia dubia
+  stat_base: MO AVG
+  value: 1.2
+  unit: null
+  limit: 1.0
+  limit_type: Concentration2
+  exceedance_pct: 20.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2025-09-30'
+  outfall: '001'
+  parameter_code: '61942'
+  parameter: pH, minimum
+  stat_base: DAILY MN
+  value: 6.4
+  unit: null
+  limit: 6.5
+  limit_type: Concentration1
+  exceedance_pct: null
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2023-01-31'
+  outfall: '604'
+  parameter_code: '00530'
+  parameter: Solids, total suspended
+  stat_base: WKLY MAX
+  value: 20.8
+  unit: null
+  limit: 20.0
+  limit_type: Concentration3
+  exceedance_pct: 4.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation

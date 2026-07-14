@@ -1,0 +1,35 @@
+id: wwtp-oh0026069-lima
+title: City of Lima WWTP (NPDES OH0026069) Effluent Record — DMR
+scope: extracted
+status: reviewed
+producer:
+  kind: connector
+  command: dmr OH0026069 --start 2023-01-01 --end 2026-06-30 --design-flow 18.5
+  connector_ref: watermark.hydrology.connectors.echo_dmr
+  source: EPA ECHO eff_rest_services DMR for NPDES OH0026069 (City of Lima WWTP), Allen County OH
+  external_url: https://echo.epa.gov/tools/web-services
+license: U.S. Government work (public domain)
+access_tier: public
+site_scope: lima-legacy
+storage:
+- relpath: extracted/oepa/lima-wwtp-OH0026069.dmr.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: connector
+tags:
+- wwtp
+- npdes
+- dmr
+- echo
+- receiving-water
+- lima
+notes: 'Verbatim ECHO effluent-chart data for the City of Lima WWTP (OH0026069 / Ohio EPA
+  2PE00000), outfall 001 → Ottawa River at River Mile 37.6. Design 18.5 MGD; actual mean
+  13.068 MGD (2023-01..2026-06 MO AVG, 70.6% utilization); max 19.671 MGD; CSO/bypass
+  outfalls: 5; 33 ECHO-flagged effluent exceedances (ammonia, E. coli, mercury, Ceriodaphnia
+  toxicity, pH, TSS). The un-requested municipal custodian record (issue #1536) — the
+  municipal design flow the routed mass balance previously left uncounted. Regenerable via
+  `watermark dmr OH0026069 --start 2023-01-01 --end 2026-06-30 --design-flow 18.5 --out
+  data/extracted/oepa/lima-wwtp-OH0026069.dmr.yaml`. Permit + fact sheet: 2PE00000.npdes.yaml.'

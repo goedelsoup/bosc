@@ -213,8 +213,9 @@ _LIMA = SiteProfile(
     lmp_pnode_name="AEP",
     # rsei
     county_name="Allen County, OH",
-    # oepa permits (#844)
-    npdes_permits=["2PH00006", "2PH00007", "2PK00002"],
+    # oepa permits (#844); 2PE00000 = the City of Lima WWTP, the municipal receiving
+    # plant / un-requested municipal custodian (#1536)
+    npdes_permits=["2PH00006", "2PH00007", "2PK00002", "2PE00000"],
 )
 
 

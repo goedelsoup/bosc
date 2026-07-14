@@ -24,9 +24,14 @@
 #
 # Datum note: the cited Ottawa 7Q10 (0.2 cfs) is the design low flow measured AT the
 # Lima gage (USGS 04187100), already net of the historical upstream abstraction for
-# Lima's water supply. It is injected as the receiving-reach low flow, and the campus
-# FM-2 industrial discharge returns to the Ottawa via Lima's sewer + Lima WWTP and is
-# routed as an effluent gain.
+# Lima's water supply. It is injected as the receiving-reach low flow. The Ottawa at
+# Lima receives two effluent gains here: the City of Lima WWTP's own municipal design
+# discharge (18.5 MGD, node lima-wwtp — the major municipal plant, OEPA 2PE00000 /
+# OH0026069, outfall 2PE00000001 -> Ottawa River RM 37.6, #1536) and, additively, the
+# campus FM-2 industrial discharge (2.5 MGD, node bosc-fm2-return), which is piped to
+# the same Lima WWTP via the City's 78" sewer. The 18.5 MGD is the plant's current
+# permitted baseline; the FM-2 is the campus's new incremental load — the two are
+# modeled as baseline-plus-increment, not a double count.
 #
 # Separately, the campus STORMWATER (not the FM-2 process discharge above) leaves the
 # site via a constructed BOSC Storm Outfall channel that discharges to Pike Run — per the
@@ -74,7 +79,7 @@ meta:
   caveats:
     - "Topology is cited; only confluence ORDER is a screening assumption."
     - "System totals (Σ natural, Σ effluent, net) are order-invariant; per-reach values are screening."
-    - "Lima WWTP's OWN municipal discharge is not counted (no cited design flow in corpus) — the effluent share is therefore a CONSERVATIVE undercount."
+    - "Lima WWTP's OWN municipal design flow (18.5 MGD; OEPA 2PE00000 / OH0026069, outfall 2PE00000001 -> Ottawa River RM 37.6) is now COUNTED as the lima-wwtp node (#1536), additive to the separately-routed campus FM-2. The effluent share no longer omits the major municipal discharge; it remains conservative only in that WWTP inputs are permitted DESIGN flows, not metered actuals (ECHO DMRs show the Lima plant's actual mean ~13.1 MGD, 70.6% of design)."
 
 nodes:
   # --- Ottawa mainstem: headwater -> abstraction/cooling draw -> Lima reach ---
@@ -160,6 +165,23 @@ nodes:
     status: confirmed
     citation: "OEPA NPDES 2PK00002 — Shawnee II WWTP discharges to Ottawa River (routing.yaml)"
 
+  - id: lima-wwtp
+    name: City of Lima WWTP outfall (municipal effluent)
+    kind: outfall
+    receiving_water: Ottawa River
+    balance_return: watch-lima-wwtp
+    downstream: lima-reach
+    status: confirmed
+    citation: >-
+      OEPA NPDES 2PE00000 (application OH0026069) — City of Lima WWTP, outfall
+      2PE00000001 -> Ottawa River at River Mile 37.6; 18.5 MGD average design flow
+      (70 MGD peak wet-weather), data/extracted/oepa/2PE00000.npdes.yaml. The
+      municipal receiving plant's OWN discharge — previously uncounted (#1536). It
+      is ADDITIVE to the separately-routed campus FM-2 (bosc-fm2-return): the 18.5
+      MGD is the plant's current permitted municipal design, the FM-2 (2.5 MGD) is
+      the campus's new incremental load piped to the same plant — so the two nodes
+      are the plant's own baseline plus the campus increment, not a double count.
+
   - id: bosc-fm2-return
     name: BOSC FM-2 industrial discharge (via Lima sewer + Lima WWTP)
     kind: outfall
@@ -167,7 +189,7 @@ nodes:
     balance_return: bosc-campus
     downstream: lima-reach
     status: confirmed
-    citation: "bosc-fm2 -> City of Lima 78\" sewer -> Lima WWTP -> Ottawa River (routing.yaml; sanitary-basis.yaml)"
+    citation: "bosc-fm2 -> City of Lima 78\" sewer -> Lima WWTP -> Ottawa River (routing.yaml; sanitary-basis.yaml). The campus increment ON TOP of the Lima WWTP municipal design flow (lima-wwtp node)."
 
   # --- The assimilative reach (gage) and the outlet to the Auglaize/Maumee ---
   - id: lima-reach

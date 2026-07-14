@@ -13,7 +13,7 @@
 > wants — is it too much — stays `[open]`, and the page is built to say so.
 
 The plainest way to say what this report is: the campus does not discharge into a
-clean river. At design low flow the Ottawa River leaving Lima is **93% treated
+clean river. At design low flow the Ottawa River leaving Lima is **98% treated
 effluent** `[verified]`, and the corridor it runs through already carries the county's
 heaviest industrial toxic load. The campus adds to that loop — a process discharge and
 a stormwater outfall — at two of its weakest points. None of that, by itself, is a
@@ -35,12 +35,17 @@ streams carry almost nothing.
 Routing the cited headwater low flows and the documented discharges through the
 confluence network, the loop's streams carry, in total, only **1.01 cfs** of _natural_
 low flow (Ottawa 0.2 + Dug Run 0.78 + Pike Run 0.03) `[verified: document]`. The three
-county wastewater plants alone add **8.82 cfs** of treated effluent — **8.7×** the
-streams' entire natural low flow, _with no data center in the picture_. Add the
-campus's own documented **3.87 cfs** FM-2 process discharge (routed through Lima's sewer
-and WWTP) and the Ottawa leaving Lima reaches **93% treated effluent**
-`[verified: docs/HYDROLOGY.md §1]` — and that is a _conservative_ floor, because Lima's
-own large municipal plant has no cited design flow in the corpus and isn't even counted.
+small county wastewater plants alone add **8.82 cfs** of treated effluent — **8.7×** the
+streams' entire natural low flow, _with no data center in the picture_. Add the campus's
+own documented **3.87 cfs** FM-2 process discharge (routed through Lima's sewer and WWTP)
+and those county-plus-campus discharges alone already put the Ottawa leaving Lima at
+**93% treated effluent**. But the largest discharge on the reach is the one the corpus
+long lacked: the **City of Lima WWTP** itself — the major municipal plant — runs a
+**28.62 cfs** design discharge (18.5 MGD; OEPA NPDES 2PE00000 / OH0026069, outfall to the
+Ottawa at River Mile 37.6; obtained as a public record, `#1536`). Counting it, the full
+routed balance reaches **98% treated effluent** `[verified: docs/HYDROLOGY.md §1]` —
+closing the gap the earlier _conservative floor_ left open, since the municipal plant's
+own design flow is now in the corpus.
 
 The seasonal floor is worse than an average suggests. The Ottawa's **1Q10 is 0 cfs** —
 the mainstem literally dries, in **21% of years** on the public USGS record
