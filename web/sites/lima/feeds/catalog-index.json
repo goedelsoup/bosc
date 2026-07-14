@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "8e847c2b15f39649aab18553976686ce579cc24f0d80d079e225f84f6b424650",
+  "catalog_version": "209ed1bd4b0934f93463f13e6b0cd626be29a08959dd6ba5dc508be0ace74736",
   "contract_version": "1.24.0",
   "atoms": [
     {
@@ -676,6 +676,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:limaohio",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "limaohio",
+      "title": "The Lima News (LimaOhio.com) — Project BOSC News Coverage",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:lsc-status-report",
       "kind": "dataset",
       "site": "lima",
@@ -836,6 +844,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:permits-dazzler-portsmouth",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "permits-dazzler-portsmouth",
+      "title": "Project Dazzler Permit Extractions (Scioto County §401 / wetland mitigation)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:perry-township-meetings",
       "kind": "dataset",
       "site": "lima",
@@ -916,6 +932,22 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:troy-piqua-gis",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "troy-piqua-gis",
+      "title": "City of Piqua, Ohio Zoning Districts",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:troy-piqua-watch-items",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "troy-piqua-watch-items",
+      "title": "Troy·Piqua site watch-items (WWTP infrastructure geometry)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:urbana",
       "kind": "dataset",
       "site": "lima",
@@ -960,7 +992,7 @@
       "kind": "dataset",
       "site": "lima",
       "local_id": "wpafb",
-      "title": "WPAFB (Greene + Montgomery Co., OH) Investigative Findings & Onboarding Record",
+      "title": "WPAFB (Greene + Montgomery Co., OH) Groundwater Primary Records & Onboarding Findings",
       "feed": "catalog"
     },
     {
@@ -1156,14 +1188,6 @@
       "feed": "entities"
     },
     {
-      "handle": "entity:lima:EMH&T ENGINEERS",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "EMH&T ENGINEERS",
-      "title": "EMH&T (Engineers, Surveyors, Planners, Scientists)",
-      "feed": "entities"
-    },
-    {
       "handle": "entity:lima:EQUILON LIMA TERMINAL",
       "kind": "entity",
       "site": "lima",
@@ -1212,14 +1236,6 @@
       "feed": "entities"
     },
     {
-      "handle": "entity:lima:HEATHER DARDINGER",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "HEATHER DARDINGER",
-      "title": "Heather Dardinger",
-      "feed": "entities"
-    },
-    {
       "handle": "entity:lima:HUME",
       "kind": "entity",
       "site": "lima",
@@ -1265,14 +1281,6 @@
       "site": "lima",
       "local_id": "JILL TANGEMAN",
       "title": "Jill Tangeman",
-      "feed": "entities"
-    },
-    {
-      "handle": "entity:lima:KATIE SAMPLES",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "KATIE SAMPLES",
-      "title": "Katie Samples",
       "feed": "entities"
     },
     {
@@ -1476,14 +1484,6 @@
       "feed": "entities"
     },
     {
-      "handle": "entity:lima:RANDY BARRERA",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "RANDY BARRERA",
-      "title": "Randy Barrera",
-      "feed": "entities"
-    },
-    {
       "handle": "entity:lima:RLR INVESTMENTS",
       "kind": "entity",
       "site": "lima",
@@ -1564,14 +1564,6 @@
       "feed": "entities"
     },
     {
-      "handle": "entity:lima:TIMOTHY CHADWICK",
-      "kind": "entity",
-      "site": "lima",
-      "local_id": "TIMOTHY CHADWICK",
-      "title": "Timothy Chadwick",
-      "feed": "entities"
-    },
-    {
       "handle": "entity:lima:TIMOTHY PIEPER",
       "kind": "entity",
       "site": "lima",
@@ -1608,7 +1600,7 @@
       "kind": "entity",
       "site": "lima",
       "local_id": "UNNAMED TRIBUTARY OF LYTLE CREEK",
-      "title": "Unnamed Tributary of Lytle Creek",
+      "title": "unnamed tributary of Lytle Creek",
       "feed": "entities"
     },
     {
@@ -1953,6 +1945,22 @@
       "site": "lima",
       "local_id": "H2-AUTH",
       "title": "The campus's federal authorization posture is undisclosed",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:LIMA-CONSTR-TRAFFIC",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "LIMA-CONSTR-TRAFFIC",
+      "title": "Corridor residents contest the Google-funded roundabout construction and easement takings",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:LIMA-LIMEDUST",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "LIMA-LIMEDUST",
+      "title": "Ohio EPA is monitoring lime-kiln dust drifting off the data-center construction site",
       "feed": "leads"
     },
     {
@@ -2740,30 +2748,6 @@
       "feed": "records"
     },
     {
-      "handle": "record:lima:permits/4071697.epa.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "permits/4071697.epa.yaml",
-      "title": "Project Dazzler",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:permits/4071709.epa.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "permits/4071709.epa.yaml",
-      "title": "Project Dazzler Site Wetland Mitigation",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:permits/4071710.epa.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "permits/4071710.epa.yaml",
-      "title": "Project Dazzler",
-      "feed": "records"
-    },
-    {
       "handle": "record:lima:permits/4074527.epa.yaml",
       "kind": "record",
       "site": "lima",
@@ -2785,62 +2769,6 @@
       "site": "lima",
       "local_id": "permits/4074551.epa.yaml",
       "title": "BOSC-1A Private Sanitary Sewer Improvement Plan",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:permits/4081890.epa.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "permits/4081890.epa.yaml",
-      "title": "Project Dazzler",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:permits/4081896.epa.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "permits/4081896.epa.yaml",
-      "title": "Project Dazzler",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:permits/4081897.epa.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "permits/4081897.epa.yaml",
-      "title": "Project Dazzler",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:permits/4081903.epa.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "permits/4081903.epa.yaml",
-      "title": "Project Dazzler Property",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:permits/4081908.epa.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "permits/4081908.epa.yaml",
-      "title": "Project Dazzler Site Wetland Mitigation",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:permits/4081909.epa.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "permits/4081909.epa.yaml",
-      "title": "Project Dazzler",
-      "feed": "records"
-    },
-    {
-      "handle": "record:lima:permits/4081910.epa.yaml",
-      "kind": "record",
-      "site": "lima",
-      "local_id": "permits/4081910.epa.yaml",
-      "title": "Project Dazzler",
       "feed": "records"
     },
     {
@@ -2988,14 +2916,6 @@
       "feed": "timeline"
     },
     {
-      "handle": "timeline:lima:20250390",
-      "kind": "timeline",
-      "site": "lima",
-      "local_id": "20250390",
-      "title": "Section 404 / Waters of the United States Investigation (Jurisdictional Determination) 20250390 — application (Project Dazzler)",
-      "feed": "timeline"
-    },
-    {
       "handle": "timeline:lima:202508130008300",
       "kind": "timeline",
       "site": "lima",
@@ -3108,14 +3028,6 @@
       "feed": "timeline"
     },
     {
-      "handle": "timeline:lima:495265945",
-      "kind": "timeline",
-      "site": "lima",
-      "local_id": "495265945",
-      "title": "401 Water Quality Certification and Isolated Wetland Permit 495265945 — application (Project Dazzler)",
-      "feed": "timeline"
-    },
-    {
       "handle": "timeline:lima:A0080278 (+ PBR21722)",
       "kind": "timeline",
       "site": "lima",
@@ -3153,30 +3065,6 @@
       "site": "lima",
       "local_id": "DSWPTI-260294",
       "title": "Surface Water Permit-to-Install DSWPTI-260294 — application (BOSC-1A Private Sanitary Sewer Improvement Plan)",
-      "feed": "timeline"
-    },
-    {
-      "handle": "timeline:lima:LRH-2025-00939-OHR",
-      "kind": "timeline",
-      "site": "lima",
-      "local_id": "LRH-2025-00939-OHR",
-      "title": "Section 404 / Jurisdictional Determination LRH-2025-00939-OHR — correspondence (Project Dazzler Property)",
-      "feed": "timeline"
-    },
-    {
-      "handle": "timeline:lima:LRH-2025-00939OHR",
-      "kind": "timeline",
-      "site": "lima",
-      "local_id": "LRH-2025-00939OHR",
-      "title": "401 Water Quality Certification LRH-2025-00939OHR — application (Project Dazzler)",
-      "feed": "timeline"
-    },
-    {
-      "handle": "timeline:lima:LST-002",
-      "kind": "timeline",
-      "site": "lima",
-      "local_id": "LST-002",
-      "title": "Huntington In-Lieu Fee Program (Wetland Mitigation) LST-002 — correspondence (Project Dazzler Site Wetland Mitigation)",
       "feed": "timeline"
     },
     {

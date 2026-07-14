@@ -351,6 +351,20 @@
       "map_zoom": 13
     },
     {
+      "slug": "portsmouth",
+      "place": "Portsmouth \u00b7 Green Twp",
+      "basin": "Ohio River \u00b7 lower Scioto",
+      "state": "OH",
+      "codename": null,
+      "mono": "PSM",
+      "status": "tracking",
+      "selectable": false,
+      "issue": "484",
+      "map_lat": 38.6067,
+      "map_lon": -82.8392,
+      "map_zoom": 12
+    },
+    {
       "slug": "newark",
       "place": "Newark",
       "basin": "Licking River",

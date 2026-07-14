@@ -1,0 +1,112 @@
+[
+  {
+    "src": "RANDY BARRERA",
+    "rel": "principal_of",
+    "dst": "TILTED GATE",
+    "date": "",
+    "ref": "",
+    "source": "permits/dazzler-permits/4071709.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "TILTED GATE",
+    "rel": "represented_by",
+    "dst": "HEATHER DARDINGER",
+    "date": "",
+    "ref": "",
+    "source": "permits/dazzler-permits/4071709.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "HEATHER DARDINGER",
+    "rel": "affiliated_with",
+    "dst": "EMH&T",
+    "date": "",
+    "ref": "",
+    "source": "permits/dazzler-permits/4071709.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "TILTED GATE",
+    "rel": "represented_by",
+    "dst": "KATIE SAMPLES",
+    "date": "",
+    "ref": "",
+    "source": "permits/dazzler-permits/4081903.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "KATIE SAMPLES",
+    "rel": "affiliated_with",
+    "dst": "EMH&T",
+    "date": "",
+    "ref": "",
+    "source": "permits/dazzler-permits/4081903.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "TILTED GATE",
+    "rel": "represented_by",
+    "dst": "SCOTT ZIANCE",
+    "date": "",
+    "ref": "",
+    "source": "permits/dazzler-permits/4081908.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "SCOTT ZIANCE",
+    "rel": "affiliated_with",
+    "dst": "EMH&T",
+    "date": "",
+    "ref": "",
+    "source": "permits/dazzler-permits/4081908.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "HEATHER DARDINGER",
+    "rel": "affiliated_with",
+    "dst": "VORYS",
+    "date": "",
+    "ref": "",
+    "source": "permits/dazzler-permits/4081908.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "SCOTT ZIANCE",
+    "rel": "affiliated_with",
+    "dst": "VORYS",
+    "date": "",
+    "ref": "",
+    "source": "permits/dazzler-permits/4081908.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "TIMOTHY CHADWICK",
+    "rel": "principal_of",
+    "dst": "TILTED GATE",
+    "date": "",
+    "ref": "",
+    "source": "permits/dazzler-permits/4081910.epa.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "GENERAL DYNAMICS LAND SYSTEMS",
+    "rel": "owned_by",
+    "dst": "GENERAL DYNAMICS",
+    "date": "",
+    "ref": "GLEIF 875500ULXB4CYQSJVA03 → 9C1X8XOOTYY2FNYTVH06",
+    "source": "data/reference/gleif/lei-records.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  }
+]

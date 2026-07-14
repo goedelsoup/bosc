@@ -3268,6 +3268,78 @@ _BOWLING_GREEN = SiteProfile(
 )
 
 
+# Portsmouth / Scioto County — the network's lower-Scioto / Ohio-River-confluence node, registered
+# to HOME "Project Dazzler" (the hyperscale campus in Green Township, Scioto County — Google's LLC
+# on ~792-914 ac west of U.S. Route 52 near Franklin Furnace/Jr. Furnace, ~38.6067,-82.8392). The
+# ten Dazzler §401/PTI wetland-mitigation filings landed FLAT in `data/extracted/permits/*.epa.yaml`
+# (their source PDFs are correctly under `data/documents/permits/dazzler-permits/`), so with no site
+# owning them they fell through Lima's whole-tree-minus-peers scope and rendered inside Lima's
+# Allen-County record/documents/timeline feeds — the #1505 leak, one collection deeper. Registering
+# this profile with `corpus_relpaths=("portsmouth", "permits/dazzler-permits")` (the extracted YAMLs
+# were relocated under that subdir to mirror the source, per the "extracted mirrors documents by
+# collection" rule) subtracts the Dazzler subtree from Lima and homes it here — the same fix pattern
+# as Troy/Piqua's #1484 relocation. Thin/registered-only for now (backdrop floor + hydrology/grid/GIS
+# knobs are follow-on onboarding, its own readiness epic); `record` is the one active domain.
+_PORTSMOUTH = SiteProfile(
+    slug="portsmouth",
+    # [inference] Scioto County / lower-Scioto / Ohio-confluence region (subregion 0506). The Green
+    # Township footprint discharges directly to the OHIO RIVER mainstem below the Scioto confluence
+    # (~RM 348), not the Scioto River — the precise receiving-water HUC-12 is [open] pending the
+    # source-water/POTW screen. The basin slug is the regional grouping only; no committed POTW
+    # inventory exists yet, so the basin screen degrades to empty (correct, not a gap).
+    basin="scioto",
+    nwis_sites=["TODO"],  # [open] pending the receiving-reach gage (Ohio River / Little Scioto)
+    nasa_power_lat=38.606686,  # [verified] Dazzler footprint (permits/dazzler-permits/4081910.epa.yaml)
+    nasa_power_lon=-82.839197,  # [verified] "approx. 38.606686 latitude, -82.839197 longitude"
+    rsei_fips="39145",  # [verified] Scioto County, OH (state 39 / county 145)
+    econ_fips="39145",
+    eia861_utility_number=0,  # [open] pending the Scioto County serving-utility EIA-861 id
+    eia_state="OH",
+    parcels_url="TODO",  # [open] pending the Scioto County OH parcel FeatureServer/MapServer REST endpoint
+    zoning_url="TODO",  # [open] pending a Scioto County / Green Township zoning REST endpoint
+    floodzone_url="TODO",
+    gnis_default_state="OH",
+    hydro_utm_epsg=32617,  # [verified] UTM 17N (Portsmouth area ~82.84 degW; zone 17 spans 84-78 degW)
+    lsc_default_ga="136",
+    gis_parcel=None,  # [open] pending Scioto County OH parcel-layer discovery
+    gis_zoning=None,
+    gis_flood=None,
+    design_lat=38.606686,  # [verified] Dazzler footprint = NOAA Atlas-14 point
+    design_lon=-82.839197,
+    corridor_name="TODO",  # [open] pending the receiving-water design corridor
+    dominant_hsg="TODO",  # [open] pending an SSURGO pull over the campus footprint
+    hsg_citation="TODO",
+    pre_cover="TODO",
+    post_cover="TODO",
+    developed_pervious_cover="TODO",
+    noaa_fallback_24h_depth_in={},
+    parcels_relpath="reference/portsmouth/parcel-assemblage.geojson",  # [open] commit the site's own geometry
+    footprint_relpath="extracted/portsmouth/bosc-site-footprint.yaml",  # [open] pending the campus footprint
+    climatology_relpath="reference/hydrology/portsmouth/nasa-power-climatology.yaml",
+    corridor_ddf_relpath="reference/hydrology/portsmouth/atlas14-corridor-ddf.yaml",
+    baseline_relpath="reference/economics/portsmouth/baseline.yaml",
+    rsei_relpath="reference/rsei/portsmouth/inventory.yaml",
+    consumer_energy_relpath="reference/eia/portsmouth/consumer-energy.yaml",
+    demand_pressure_relpath="reference/eia/portsmouth/demand-pressure.yaml",
+    grid_relpath="reference/eia/portsmouth/grid-profile.yaml",
+    toxic_corridor_bbox=(0.0, 0.0, 0.0, 0.0),
+    plant_receiving={},
+    abstraction_gage="TODO",
+    supply_gage_primary="TODO",
+    supply_gage_secondary="TODO",
+    passby_primary_cfs=0.0,
+    passby_secondary_cfs=0.0,
+    facility=None,  # [open] the disclosed Project Dazzler SiteFacility — pending the site-plan/permit hunt
+    serving_utility_citation="TODO",  # [open] pending the Scioto County serving-utility record
+    lmp_usd_mwh=0.0,
+    lmp_citation="TODO",
+    # Home the Dazzler filings here and off Lima: this site's own slug subtree plus the relocated
+    # `permits/dazzler-permits/` collection (subtracted from Lima by `_peer_scope_prefixes`, #1505).
+    corpus_relpaths=("portsmouth", "permits/dazzler-permits"),
+    county_name="Scioto County, OH",  # [verified] FIPS 39145
+)
+
+
 SITES: dict[str, SiteProfile] = {
     _LIMA.slug: _LIMA,
     _FINDLAY.slug: _FINDLAY,
@@ -3294,6 +3366,7 @@ SITES: dict[str, SiteProfile] = {
     _WEST_UNION.slug: _WEST_UNION,
     _MANSFIELD.slug: _MANSFIELD,
     _BOWLING_GREEN.slug: _BOWLING_GREEN,
+    _PORTSMOUTH.slug: _PORTSMOUTH,
 }
 
 # The per-site output relpaths `watermark onboard` writes. Each must be unique to its site so

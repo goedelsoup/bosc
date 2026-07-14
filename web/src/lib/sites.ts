@@ -373,6 +373,9 @@ const PLACEMENT: Record<string, { state: string; basin: string }> = {
   "new-albany": { state: "Ohio", basin: "Scioto" },
   columbus: { state: "Ohio", basin: "Scioto" },
   piketon: { state: "Ohio", basin: "Scioto" },
+  // Lower Scioto / Ohio-River confluence — Project Dazzler in Green Township, Scioto County; the
+  // footprint discharges to the Ohio mainstem below the confluence but groups with the Scioto basin.
+  portsmouth: { state: "Ohio", basin: "Scioto" },
   // The Ohio River (direct) branch — Ohio Brush Creek drains straight to the Ohio, no Scioto/Miami
   // loop. Far-southern unglaciated Appalachian Adams County OH (#1117); grouped with the southern
   // Appalachian basins, adjacent to the Scioto.

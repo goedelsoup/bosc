@@ -11,6 +11,28 @@
     "note": "time-sensitive — the comment window closes on or about 2026-07-31 (issue"
   },
   {
+    "id": "LIMA-LIMEDUST",
+    "kind": "signal",
+    "status": "review",
+    "tag": "open",
+    "title": "Ohio EPA is monitoring lime-kiln dust drifting off the data-center construction site",
+    "detail": "The first construction-phase environmental signal on record. Per an email from Ohio EPA Public Information Officer Anthony Chenault (reported by The Lima News 2026-05-11), inspectors visited the North Cole St site because lime kiln dust and alkaline powder used to dry and stabilize wet soil was being carried off-site by the wind. Ohio EPA \"asked the company to reduce and contain the spread of dust\"; the construction company's plan adds water trucks and monitors wind conditions during lime-kiln application, and agency staff said they would \"visit the site frequently over the next few weeks.\" A cited Safety Data Sheet notes the dust can irritate eyes, skin, and the respiratory and gastrointestinal tracts. Whether the suppression plan holds — and whether dust reaches residents — is unresolved. Secondary reporting; the underlying Ohio EPA correspondence is not yet in the corpus.",
+    "source": "The Lima News 2026-05-11 · data/extracted/limaohio/lima-news-construction-wave.news.yaml",
+    "issue": 1477,
+    "note": "first post-permit construction-impact signal (distinct from the 313 MW backup-genset air permit)"
+  },
+  {
+    "id": "LIMA-CONSTR-TRAFFIC",
+    "kind": "signal",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "Corridor residents contest the Google-funded roundabout construction and easement takings",
+    "detail": "At a Port Authority of Allen County open house (2026-05-14, reported by The Lima News 2026-05-15), Sugar Creek Township residents said the North Cole St roundabouts (SR-115 construction from 2026-06-01, Bluelick Rd in August, Beery Rd TBD) benefit Google more than the community. Lynne Focht, ceding a permanent right-of-way easement near the SR-115 intersection, said she \"will never own that land again\"; David Streeter said \"none of it has to do with long-term health to the individuals, to the residents.\" Their unifying ask was transparency and a Google contact person — still unanswered. The first construction-phase community-reaction signal; extends the PAAC transparency record (paac-board-minutes) into the build. Secondary reporting.",
+    "source": "The Lima News 2026-05-15 · data/extracted/limaohio/lima-news-construction-wave.news.yaml",
+    "issue": 1477,
+    "note": null
+  },
+  {
     "id": "PRR-04",
     "kind": "redaction",
     "status": "withheld",

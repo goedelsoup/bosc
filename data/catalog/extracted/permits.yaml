@@ -70,15 +70,6 @@ storage:
 - relpath: extracted/permits/4009043.epa.yaml
   media_type: application/x-yaml
   lfs: false
-- relpath: extracted/permits/4071697.epa.yaml
-  media_type: application/x-yaml
-  lfs: false
-- relpath: extracted/permits/4071709.epa.yaml
-  media_type: application/x-yaml
-  lfs: false
-- relpath: extracted/permits/4071710.epa.yaml
-  media_type: application/x-yaml
-  lfs: false
 - relpath: extracted/permits/4074527.epa.yaml
   media_type: application/x-yaml
   lfs: false
@@ -86,27 +77,6 @@ storage:
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/permits/4074551.epa.yaml
-  media_type: application/x-yaml
-  lfs: false
-- relpath: extracted/permits/4081890.epa.yaml
-  media_type: application/x-yaml
-  lfs: false
-- relpath: extracted/permits/4081896.epa.yaml
-  media_type: application/x-yaml
-  lfs: false
-- relpath: extracted/permits/4081897.epa.yaml
-  media_type: application/x-yaml
-  lfs: false
-- relpath: extracted/permits/4081903.epa.yaml
-  media_type: application/x-yaml
-  lfs: false
-- relpath: extracted/permits/4081908.epa.yaml
-  media_type: application/x-yaml
-  lfs: false
-- relpath: extracted/permits/4081909.epa.yaml
-  media_type: application/x-yaml
-  lfs: false
-- relpath: extracted/permits/4081910.epa.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/permits/4132514.epa.yaml

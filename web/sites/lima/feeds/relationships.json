@@ -550,36 +550,6 @@
     "relation_basis": null
   },
   {
-    "src": "RANDY BARRERA",
-    "rel": "principal_of",
-    "dst": "TILTED GATE",
-    "date": "",
-    "ref": "",
-    "source": "permits/4071709.epa.yaml",
-    "relation_class": null,
-    "relation_basis": null
-  },
-  {
-    "src": "TILTED GATE",
-    "rel": "represented_by",
-    "dst": "HEATHER DARDINGER",
-    "date": "",
-    "ref": "",
-    "source": "permits/4071709.epa.yaml",
-    "relation_class": null,
-    "relation_basis": null
-  },
-  {
-    "src": "HEATHER DARDINGER",
-    "rel": "affiliated_with",
-    "dst": "EMH&T",
-    "date": "",
-    "ref": "",
-    "source": "permits/4071709.epa.yaml",
-    "relation_class": null,
-    "relation_basis": null
-  },
-  {
     "src": "BISTROZZI",
     "rel": "represented_by",
     "dst": "ROBERT ZIZZO",
@@ -596,66 +566,6 @@
     "date": "",
     "ref": "",
     "source": "permits/4074529.epa.yaml",
-    "relation_class": null,
-    "relation_basis": null
-  },
-  {
-    "src": "TILTED GATE",
-    "rel": "represented_by",
-    "dst": "KATIE SAMPLES",
-    "date": "",
-    "ref": "",
-    "source": "permits/4081903.epa.yaml",
-    "relation_class": null,
-    "relation_basis": null
-  },
-  {
-    "src": "KATIE SAMPLES",
-    "rel": "affiliated_with",
-    "dst": "EMH&T",
-    "date": "",
-    "ref": "",
-    "source": "permits/4081903.epa.yaml",
-    "relation_class": null,
-    "relation_basis": null
-  },
-  {
-    "src": "TILTED GATE",
-    "rel": "represented_by",
-    "dst": "SCOTT ZIANCE",
-    "date": "",
-    "ref": "",
-    "source": "permits/4081908.epa.yaml",
-    "relation_class": null,
-    "relation_basis": null
-  },
-  {
-    "src": "HEATHER DARDINGER",
-    "rel": "affiliated_with",
-    "dst": "VORYS",
-    "date": "",
-    "ref": "",
-    "source": "permits/4081908.epa.yaml",
-    "relation_class": null,
-    "relation_basis": null
-  },
-  {
-    "src": "SCOTT ZIANCE",
-    "rel": "affiliated_with",
-    "dst": "VORYS",
-    "date": "",
-    "ref": "",
-    "source": "permits/4081908.epa.yaml",
-    "relation_class": null,
-    "relation_basis": null
-  },
-  {
-    "src": "TIMOTHY CHADWICK",
-    "rel": "principal_of",
-    "dst": "TILTED GATE",
-    "date": "",
-    "ref": "",
-    "source": "permits/4081910.epa.yaml",
     "relation_class": null,
     "relation_basis": null
   },

@@ -390,6 +390,23 @@ sites:
     map_lon: -82.5155
     map_zoom: 13
 
+  - slug: portsmouth
+    place: "Portsmouth · Green Twp"
+    basin_label: "Ohio River · lower Scioto"
+    # [open] the Green Township / Franklin Furnace footprint (Project Dazzler) discharges to the
+    # Ohio River mainstem below the Scioto confluence; precise receiving water pending the screen —
+    # kept null per the field guide (tracking-only) until the record/water domain is active
+    receiving_water: null
+    state: "OH"
+    codename: null
+    mono: "PSM"
+    status: "tracking"
+    selectable: false
+    issue: "484"  # tracked under the Scioto-basin expansion umbrella epic; a dedicated Portsmouth sub-epic (cf. #485/#486/#1063) is follow-up
+    map_lat: 38.6067
+    map_lon: -82.8392
+    map_zoom: 12
+
   # ── Tracking only (GitHub issue, no Python profile yet) ─────────────────────────────────
   # Scioto basin (the data-center epicenter)
 

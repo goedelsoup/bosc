@@ -1,0 +1,410 @@
+{
+  "sink": "Lake Erie",
+  "shared_constraint": "2023 Maumee Watershed Nutrient TMDL (phosphorus)",
+  "generated_at": null,
+  "nodes": [
+    {
+      "slug": "findlay",
+      "place": "Findlay",
+      "county": "Hancock County, OH",
+      "huc8": "04100008",
+      "receiving_water": "Blanchard River",
+      "drainage_path": [
+        "Blanchard River",
+        "Auglaize River",
+        "Maumee River"
+      ],
+      "subtree": "Auglaize",
+      "downstream": "defiance",
+      "regime": "gaged_tributary_river",
+      "screen": {
+        "npdes": "OH0025135",
+        "discharger": "OH0025135",
+        "receiving_water": null,
+        "design_flow_mgd": null,
+        "dilution_ratio": null,
+        "flag": null,
+        "status": "not_in_inventory",
+        "detail": ""
+      },
+      "grid": {
+        "utility": "AEP Ohio (Ohio Power Company)",
+        "ownership": null,
+        "holding_company": "American Electric Power (AEP)",
+        "balancing_authority": "PJM Interconnection",
+        "retail_regulator": "Public Utilities Commission of Ohio (PUCO)",
+        "avg_price_cents_kwh": 18.61
+      },
+      "economy": {
+        "year": 2023,
+        "total_employment": 44290.0,
+        "employment_change_pct": -2.9,
+        "population": 74885,
+        "manufacturing_lq": 2.92,
+        "information_lq": 0.28
+      },
+      "toxics": {
+        "facility_count": 29,
+        "top_emitter": "CASCADE CORP",
+        "vintage_last_year": 2014
+      },
+      "activity": {
+        "has_disclosed_facility": false,
+        "it_load_mw": null,
+        "summary": "no disclosed data-center facility"
+      }
+    },
+    {
+      "slug": "lima",
+      "place": "Lima",
+      "county": "Allen County, OH",
+      "huc8": "04100007",
+      "receiving_water": "Ottawa River",
+      "drainage_path": [
+        "Ottawa River",
+        "Auglaize River",
+        "Maumee River"
+      ],
+      "subtree": "Auglaize",
+      "downstream": "defiance",
+      "regime": "effluent_dominated_tributary",
+      "screen": {
+        "npdes": "OH0026069",
+        "discharger": "OH0026069",
+        "receiving_water": null,
+        "design_flow_mgd": null,
+        "dilution_ratio": null,
+        "flag": null,
+        "status": "not_in_inventory",
+        "detail": ""
+      },
+      "grid": {
+        "utility": "AEP Ohio (Ohio Power Company)",
+        "ownership": null,
+        "holding_company": "American Electric Power (AEP)",
+        "balancing_authority": "PJM Interconnection",
+        "retail_regulator": "Public Utilities Commission of Ohio (PUCO)",
+        "avg_price_cents_kwh": 18.61
+      },
+      "economy": {
+        "year": 2024,
+        "total_employment": 49690.0,
+        "employment_change_pct": -0.2,
+        "population": 101685,
+        "manufacturing_lq": 2.15,
+        "information_lq": 0.0
+      },
+      "toxics": {
+        "facility_count": 49,
+        "top_emitter": "INEOS NITRILES USA LLC",
+        "vintage_last_year": 2022
+      },
+      "activity": {
+        "has_disclosed_facility": true,
+        "it_load_mw": 275.0,
+        "summary": "disclosed facility — IT load ~275 MW"
+      }
+    },
+    {
+      "slug": "ottawa",
+      "place": "Ottawa",
+      "county": "Putnam County, OH",
+      "huc8": "04100008",
+      "receiving_water": "Blanchard River",
+      "drainage_path": [
+        "Blanchard River",
+        "Auglaize River",
+        "Maumee River"
+      ],
+      "subtree": "Auglaize",
+      "downstream": "defiance",
+      "regime": "gaged_tributary_river",
+      "screen": {
+        "npdes": "OH0026921",
+        "discharger": "OH0026921",
+        "receiving_water": null,
+        "design_flow_mgd": null,
+        "dilution_ratio": null,
+        "flag": null,
+        "status": "not_in_inventory",
+        "detail": ""
+      },
+      "grid": {
+        "utility": "AEP Ohio (Ohio Power Company)",
+        "ownership": "Investor Owned",
+        "holding_company": "American Electric Power (AEP)",
+        "balancing_authority": "PJM Interconnection",
+        "retail_regulator": "Public Utilities Commission of Ohio (PUCO)",
+        "avg_price_cents_kwh": 18.61
+      },
+      "economy": {
+        "year": 2023,
+        "total_employment": 12320.0,
+        "employment_change_pct": 4.1,
+        "population": 34352,
+        "manufacturing_lq": 3.72,
+        "information_lq": 0.21
+      },
+      "toxics": {
+        "facility_count": 14,
+        "top_emitter": "LG.PHILIPS DISPLAYS USA INC.",
+        "vintage_last_year": 2014
+      },
+      "activity": {
+        "has_disclosed_facility": false,
+        "it_load_mw": null,
+        "summary": "no disclosed data-center facility"
+      }
+    },
+    {
+      "slug": "van-wert",
+      "place": "Van Wert",
+      "county": "Van Wert County, OH",
+      "huc8": "04100007",
+      "receiving_water": "Town Creek",
+      "drainage_path": [
+        "Town Creek",
+        "Little Auglaize River",
+        "Auglaize River",
+        "Maumee River"
+      ],
+      "subtree": "Auglaize",
+      "downstream": "defiance",
+      "regime": "effluent_dominated_tributary",
+      "screen": {
+        "npdes": "OH0027910",
+        "discharger": "OH0027910",
+        "receiving_water": null,
+        "design_flow_mgd": null,
+        "dilution_ratio": null,
+        "flag": null,
+        "status": "not_in_inventory",
+        "detail": ""
+      },
+      "grid": {
+        "utility": "AEP Ohio (Ohio Power Company)",
+        "ownership": "Investor Owned",
+        "holding_company": "American Electric Power (AEP)",
+        "balancing_authority": "PJM Interconnection",
+        "retail_regulator": "Public Utilities Commission of Ohio (PUCO)",
+        "avg_price_cents_kwh": 18.61
+      },
+      "economy": {
+        "year": 2023,
+        "total_employment": 11586.0,
+        "employment_change_pct": 3.7,
+        "population": 28824,
+        "manufacturing_lq": 3.14,
+        "information_lq": 0.09
+      },
+      "toxics": {
+        "facility_count": 14,
+        "top_emitter": "SONOCO FIBRE DRUM INC.",
+        "vintage_last_year": 2014
+      },
+      "activity": {
+        "has_disclosed_facility": true,
+        "it_load_mw": 500.0,
+        "summary": "disclosed facility — IT load ~500 MW"
+      }
+    },
+    {
+      "slug": "bryan",
+      "place": "Bryan",
+      "county": "Williams County, OH",
+      "huc8": "04100006",
+      "receiving_water": "Prairie Creek",
+      "drainage_path": [
+        "Prairie Creek",
+        "Tiffin River",
+        "Maumee River"
+      ],
+      "subtree": "Tiffin",
+      "downstream": "defiance",
+      "regime": "effluent_dominated_tributary",
+      "screen": {
+        "npdes": "OH0020532",
+        "discharger": "OH0020532",
+        "receiving_water": null,
+        "design_flow_mgd": null,
+        "dilution_ratio": null,
+        "flag": null,
+        "status": "not_in_inventory",
+        "detail": ""
+      },
+      "grid": {
+        "utility": "City of Bryan - (OH)",
+        "ownership": "Municipal",
+        "holding_company": "City of Bryan (municipal; American Municipal Power member)",
+        "balancing_authority": "PJM Interconnection",
+        "retail_regulator": "municipal (home rule, OH)",
+        "avg_price_cents_kwh": 10.75
+      },
+      "economy": {
+        "year": 2023,
+        "total_employment": 16635.0,
+        "employment_change_pct": -5.1,
+        "population": 36862,
+        "manufacturing_lq": 4.54,
+        "information_lq": 0.19
+      },
+      "toxics": {
+        "facility_count": 35,
+        "top_emitter": "NEW ERA OHIO   LLC",
+        "vintage_last_year": 2014
+      },
+      "activity": {
+        "has_disclosed_facility": false,
+        "it_load_mw": null,
+        "summary": "no disclosed data-center facility"
+      }
+    },
+    {
+      "slug": "fort-wayne",
+      "place": "Fort Wayne",
+      "county": "Allen County, IN",
+      "huc8": "04100005",
+      "receiving_water": "Maumee River",
+      "drainage_path": [
+        "Maumee River"
+      ],
+      "subtree": "Maumee mainstem",
+      "downstream": "defiance",
+      "regime": "diluted_mainstem",
+      "screen": {
+        "npdes": "IN0032191",
+        "discharger": "IN0032191",
+        "receiving_water": null,
+        "design_flow_mgd": null,
+        "dilution_ratio": null,
+        "flag": null,
+        "status": "not_in_inventory",
+        "detail": ""
+      },
+      "grid": {
+        "utility": "Indiana Michigan Power Co",
+        "ownership": "Investor Owned",
+        "holding_company": "American Electric Power (AEP)",
+        "balancing_authority": "PJM Interconnection",
+        "retail_regulator": "Indiana Utility Regulatory Commission (IURC)",
+        "avg_price_cents_kwh": 11.62
+      },
+      "economy": {
+        "year": 2023,
+        "total_employment": 196725.0,
+        "employment_change_pct": 4.6,
+        "population": 388791,
+        "manufacturing_lq": 1.78,
+        "information_lq": 0.44
+      },
+      "toxics": {
+        "facility_count": 128,
+        "top_emitter": "VALBRUNA SLATER STAINLESS INC",
+        "vintage_last_year": 2014
+      },
+      "activity": {
+        "has_disclosed_facility": true,
+        "it_load_mw": 90.0,
+        "summary": "disclosed facility — IT load ~90 MW"
+      }
+    },
+    {
+      "slug": "defiance",
+      "place": "Defiance",
+      "county": "Defiance County, OH",
+      "huc8": "04100009",
+      "receiving_water": "Maumee River",
+      "drainage_path": [
+        "Maumee River"
+      ],
+      "subtree": "Maumee mainstem",
+      "downstream": "toledo",
+      "regime": "diluted_mainstem",
+      "screen": {
+        "npdes": "OH0024899",
+        "discharger": "OH0024899",
+        "receiving_water": null,
+        "design_flow_mgd": null,
+        "dilution_ratio": null,
+        "flag": null,
+        "status": "not_in_inventory",
+        "detail": ""
+      },
+      "grid": {
+        "utility": "The Toledo Edison Co",
+        "ownership": null,
+        "holding_company": "FirstEnergy Corp",
+        "balancing_authority": "PJM Interconnection",
+        "retail_regulator": "Public Utilities Commission of Ohio (PUCO)",
+        "avg_price_cents_kwh": 16.77
+      },
+      "economy": {
+        "year": 2023,
+        "total_employment": 15264.0,
+        "employment_change_pct": -2.8,
+        "population": 38258,
+        "manufacturing_lq": 2.32,
+        "information_lq": 0.55
+      },
+      "toxics": {
+        "facility_count": 19,
+        "top_emitter": "GM DEFIANCE CASTING OPERATIONS",
+        "vintage_last_year": 2014
+      },
+      "activity": {
+        "has_disclosed_facility": false,
+        "it_load_mw": null,
+        "summary": "no disclosed data-center facility"
+      }
+    },
+    {
+      "slug": "toledo",
+      "place": "Toledo",
+      "county": "Lucas County, OH",
+      "huc8": "04100009",
+      "receiving_water": "Maumee River",
+      "drainage_path": [
+        "Maumee River"
+      ],
+      "subtree": "Maumee mainstem",
+      "downstream": "Lake Erie",
+      "regime": "tidal_lake_outlet",
+      "screen": {
+        "npdes": "OH0034223",
+        "discharger": "OH0034223",
+        "receiving_water": null,
+        "design_flow_mgd": null,
+        "dilution_ratio": null,
+        "flag": null,
+        "status": "not_in_inventory",
+        "detail": ""
+      },
+      "grid": {
+        "utility": "The Toledo Edison Co",
+        "ownership": null,
+        "holding_company": "FirstEnergy Corp",
+        "balancing_authority": "PJM Interconnection",
+        "retail_regulator": "Public Utilities Commission of Ohio (PUCO)",
+        "avg_price_cents_kwh": 16.77
+      },
+      "economy": {
+        "year": 2023,
+        "total_employment": 196306.0,
+        "employment_change_pct": -6.4,
+        "population": 428748,
+        "manufacturing_lq": 1.5,
+        "information_lq": 0.49
+      },
+      "toxics": {
+        "facility_count": 117,
+        "top_emitter": "BP-HUSKY REFINING LLC",
+        "vintage_last_year": 2014
+      },
+      "activity": {
+        "has_disclosed_facility": false,
+        "it_load_mw": null,
+        "summary": "no disclosed data-center facility"
+      }
+    }
+  ]
+}
