@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from functools import lru_cache
 from pathlib import Path
+from typing import Any
 
 from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -598,25 +599,40 @@ class Settings(BaseSettings):
             )
         return self
 
-    @model_validator(mode="after")
-    def _resolve_site_profile(self) -> Settings:
+    @model_validator(mode="before")
+    @classmethod
+    def _resolve_site_profile(cls, data: Any) -> Any:
         """Fill the per-site config knobs from the active site profile.
 
         A profile field is applied only when the matching setting was *not* set
-        explicitly (env vars, ``.env`` and constructor kwargs all populate
-        ``model_fields_set``), so an explicit ``WATERMARK_NWIS_SITES`` / ``Settings(...)``
-        override still wins. An unknown ``site`` is a hard error.
+        explicitly (env vars, ``.env`` and constructor kwargs all land in ``data``
+        here), so an explicit ``WATERMARK_NWIS_SITES`` / ``Settings(...)`` override
+        still wins. An unknown ``site`` is a hard error.
+
+        Runs in ``mode="before"`` so profile values flow through normal field
+        validation, which matters twice over. ``nwis_sites`` is a ``list``: injecting
+        it here makes Pydantic re-validate it into a fresh per-instance list rather
+        than aliasing the frozen module-level ``SiteProfile`` singleton's list — so a
+        connector that sorts/appends/removes can't silently mutate it for every later
+        consumer (``get_settings()`` is ``lru_cache``d and ``SITES`` is a singleton).
+        And because each knob now enters ``data``, it is recorded in
+        ``model_fields_set``, so a ``model_dump(exclude_unset=True)`` echo/snapshot
+        keeps the per-site knobs instead of dropping exactly the values that pin the
+        run to a site (#1366).
         """
+        if not isinstance(data, dict):
+            return data
+        site = data.get("site", cls.model_fields["site"].default)
         try:
-            profile = SITES[self.site]
-        except KeyError:
+            profile = SITES[site]
+        except (KeyError, TypeError):
             raise ValueError(
-                f"unknown WATERMARK_SITE {self.site!r}; known sites: {sorted(SITES)}"
+                f"unknown WATERMARK_SITE {site!r}; known sites: {sorted(SITES)}"
             ) from None
         for field in PROFILE_SETTINGS_FIELDS:
-            if field not in self.model_fields_set:
-                object.__setattr__(self, field, getattr(profile, field))
-        return self
+            if field not in data:
+                data[field] = getattr(profile, field)
+        return data
 
 
 @lru_cache(maxsize=1)

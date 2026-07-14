@@ -4,7 +4,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from watermark.config import Settings, repo_fixtures_dir
+from watermark.sites import SITES
 
 
 def test_defaults() -> None:
@@ -63,3 +66,34 @@ def test_env_overrides_site_profile(monkeypatch) -> None:  # type: ignore[no-unt
     settings = Settings()
     assert settings.nwis_sites == ["99999999"]
     assert settings.rsei_fips == "39003"  # untouched -> from the Lima profile
+
+
+def test_profile_list_not_aliased_to_singleton() -> None:
+    # #1366 finding 1: the resolved list must be a fresh per-instance copy, NOT the
+    # frozen SITES["lima"] singleton's list — otherwise a connector doing
+    # settings.nwis_sites.sort()/.append() silently mutates the module-level profile
+    # for every later consumer (get_settings() is lru_cached, SITES is a singleton).
+    settings = Settings()
+    assert settings.nwis_sites == SITES["lima"].nwis_sites
+    assert settings.nwis_sites is not SITES["lima"].nwis_sites
+    before = list(SITES["lima"].nwis_sites)
+    settings.nwis_sites.append("00000000")
+    assert SITES["lima"].nwis_sites == before  # singleton untouched
+
+
+def test_profile_fields_recorded_in_fields_set() -> None:
+    # #1366 finding 2: profile-resolved knobs must land in model_fields_set so a
+    # model_dump(exclude_unset=True) echo/snapshot reproduces the run instead of
+    # silently dropping exactly the per-site knobs.
+    settings = Settings()
+    assert "nwis_sites" in settings.model_fields_set
+    assert "rsei_fips" in settings.model_fields_set
+    dumped = settings.model_dump(exclude_unset=True)
+    assert dumped["nwis_sites"] == ["04187100", "04186500"]
+    assert dumped["rsei_fips"] == "39003"
+
+
+def test_unknown_site_is_a_hard_error(monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    monkeypatch.setenv("WATERMARK_SITE", "atlantis")
+    with pytest.raises(ValueError, match="unknown WATERMARK_SITE 'atlantis'"):
+        Settings()
