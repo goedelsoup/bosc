@@ -1,9 +1,11 @@
 ---
 /**
- * The shared "not enabled yet" fallback for the gated user-Stories routes (#1096/#1097) —
+ * The shared "coming soon" fallback for the gated user-Stories routes (#1096/#1097) —
  * `stories/{read,compose,mine}` render this when `storiesUiEnabled()` is false, instead of each
- * repeating the same dashed panel. The message is a prop; the preview-link sub-line is the default
- * slot (omitted when empty).
+ * repeating the same dashed panel. The copy is worded "coming soon" (#1530) to match the editorial
+ * story teaser (#1528) so the whole Stories surface speaks with one voice — System B stays dark,
+ * this is copy only. The message is a prop; the preview-link sub-line is the default slot (omitted
+ * when empty).
  */
 interface Props {
   message: string;

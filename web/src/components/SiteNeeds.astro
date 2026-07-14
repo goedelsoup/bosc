@@ -12,16 +12,22 @@
  */
 import { SECTION_META, coolingMethodUndisclosed, lockedSections } from "../lib/readiness";
 import { withSite } from "../lib/site";
+import { comingSoonStories } from "../lib/sites";
 
 interface Props {
   slug: string;
 }
 const { slug } = Astro.props as Props;
 
-const needs = lockedSections(slug).map((s) => ({
-  label: SECTION_META[s].label,
-  holds: SECTION_META[s].holds,
-}));
+// A `comingSoon` editorial story is HELD, not a gap (#1526) — it advertises itself as a teaser, so
+// it must not read as "seeking a source." Drop the `story` need when the site has a coming-soon walk.
+const heldStory = comingSoonStories(slug).length > 0;
+const needs = lockedSections(slug)
+  .filter((s) => !(s === "story" && heldStory))
+  .map((s) => ({
+    label: SECTION_META[s].label,
+    holds: SECTION_META[s].holds,
+  }));
 // The cooling-method disclosure lead (#1057): a facility on the record with no disclosed
 // cooling method means every water number is a bracketed range — the single most valuable
 // source a visitor could contribute here is the disclosure itself.

@@ -9,9 +9,11 @@ import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { getCollection, getEntry, render } from "astro:content";
 import { STORY_COMPONENTS } from "~/components/story";
+import StoryComingSoon from "~/components/story/StoryComingSoon.astro";
 import Base from "~/layouts/Base.astro";
 import { siteBase } from "~/lib/routes";
-import { SITES } from "~/lib/sites";
+import { SITES, storyComingSoon } from "~/lib/sites";
+import { storyFor } from "~/lib/walk";
 
 export async function getStaticPaths() {
   const selectable = new Set(SITES.filter((s) => s.selectable).map((s) => s.slug));
@@ -32,18 +34,32 @@ export async function getStaticPaths() {
 }
 
 const { entryId } = Astro.props as { entryId: string };
+const [slug, codename] = String(entryId).split("/");
+// A `comingSoon` story (#1526) holds its content: serve the interstitial, not the on-ramp. Its
+// title/dek come from the retained registry entry; the `_home` MDX stays but is never rendered, so
+// no on-ramp prose is reachable by direct URL (#1529).
+const held = storyComingSoon(slug, codename) ? storyFor(slug, codename) : undefined;
+
 const entry = await getEntry("stories", entryId);
 if (!entry || !("kind" in entry.data) || entry.data.kind !== "home") {
   throw new Error(`Story home not found: ${entryId}`);
 }
 const fm = entry.data;
-const { Content } = await render(entry);
+const Content = held ? undefined : (await render(entry)).Content;
 ---
 
-<Base title={fm.pageTitle ?? fm.h1} section="story" description={fm.description}>
-  <div class="walk-onramp">
-    {fm.kicker && <div class="walk-kicker">{fm.kicker}</div>}
-    <h1>{fm.h1}</h1>
-    <Content components={STORY_COMPONENTS} />
-  </div>
-</Base>
+{
+  held ? (
+    <Base title={`${held.title} — coming soon`} section="story" description={held.dek}>
+      <StoryComingSoon title={held.title} dek={held.dek} slug={slug} />
+    </Base>
+  ) : (
+    <Base title={fm.pageTitle ?? fm.h1} section="story" description={fm.description}>
+      <div class="walk-onramp">
+        {fm.kicker && <div class="walk-kicker">{fm.kicker}</div>}
+        <h1>{fm.h1}</h1>
+        {Content && <Content components={STORY_COMPONENTS} />}
+      </div>
+    </Base>
+  )
+}

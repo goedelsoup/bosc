@@ -1,0 +1,119 @@
+---
+/**
+ * Story · StoryTeaser — the visible "coming soon" teaser for an editorial story held behind the
+ * `comingSoon` state (#1526/#1528). It renders where a site's readable story door / "in N chapters"
+ * grid renders today: a `comingSoon` story shows its **title + dek** plus a coming-soon badge, and
+ * links to the coming-soon interstitial (#1529) as its reachable target — advertised as coming, not
+ * silently dropped.
+ *
+ * Swiss-03 documentary grammar: bone paper, the one forest signal, square corners, no shadows,
+ * Archivo for language + IBM Plex Mono for the eyebrow/badge. It reuses the site's "— coming soon"
+ * vocabulary and the door affordance so it sits beside the record door without a bespoke palette.
+ */
+interface Props {
+  /** Story display title, e.g. "Project BOSC". */
+  title: string;
+  /** The story's one-line dek — its on-ramp blurb. */
+  dek: string;
+  /** The reachable target — the coming-soon interstitial (the story home route). */
+  href: string;
+  /** `full` — the live-home treatment (stands where the door + grid were); `compact` — the peer card. */
+  variant?: "full" | "compact";
+}
+const { title, dek, href, variant = "full" } = Astro.props as Props;
+---
+
+<a class:list={["story-teaser", `story-teaser--${variant}`]} href={href}>
+  <div class="story-teaser-top">
+    <span class="story-teaser-eyebrow">The story</span>
+    <span class="story-teaser-badge">Coming soon</span>
+  </div>
+  <span class="story-teaser-title">{title}</span>
+  <span class="story-teaser-dek">{dek}</span>
+  <span class="story-teaser-note">
+    A guided walk that teaches the record one document at a time — being finished in the open.
+  </span>
+  <span class="story-teaser-go">Preview what's coming →</span>
+</a>
+
+<style>
+  .story-teaser {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border: 1px solid var(--bosc-rule);
+    background: var(--bosc-surface);
+    border-radius: 0;
+    padding: 1.25rem 1.4rem;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.12s ease;
+  }
+  .story-teaser:hover {
+    border-color: var(--bosc-ink);
+  }
+  .story-teaser-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .story-teaser-eyebrow {
+    font-family: var(--bosc-mono);
+    font-size: 0.72rem;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--bosc-forest);
+    font-weight: 700;
+  }
+  /* The held-content state reads muted, per the evidence grammar (open/coming = muted, not the
+     forest signal). Square badge — the documentary system, no pill. */
+  .story-teaser-badge {
+    font-family: var(--bosc-mono);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+    background: var(--td-open-bg, #e8e4d8);
+    border: 1px solid var(--bosc-rule);
+    border-radius: 0;
+    padding: 3px 8px;
+    white-space: nowrap;
+  }
+  .story-teaser-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    color: var(--bosc-ink);
+  }
+  .story-teaser-dek {
+    font-size: 0.98rem;
+    line-height: 1.5;
+    color: var(--bosc-ink);
+    max-width: 52ch;
+  }
+  .story-teaser-note {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--bosc-muted);
+    max-width: 56ch;
+  }
+  .story-teaser-go {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--bosc-forest);
+    margin-top: 0.4rem;
+  }
+  /* Compact peer treatment — a touch tighter, matching the psite card scale. */
+  .story-teaser--compact {
+    padding: 1rem 1.1rem;
+  }
+  .story-teaser--compact .story-teaser-title {
+    font-size: 1.25rem;
+  }
+  .story-teaser--compact .story-teaser-dek {
+    font-size: 0.9rem;
+  }
+</style>

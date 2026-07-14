@@ -43,6 +43,18 @@ export interface StoryRef {
    * out; `storyMetaFor` (title/dek lookup) deliberately still reads them.
    */
   hidden?: boolean;
+  /**
+   * "Coming soon" — advertised as coming, but not readable (#1526). The distinct, *visible* peer of
+   * `hidden`: where `hidden` silently unsurfaces a story (no teaser, still reachable by direct URL),
+   * `comingSoon` does the opposite — the story is **advertised** as a visible teaser (title + dek +
+   * a coming-soon badge, `comingSoonStories`) but its content is **held** (the `/stories/<codename>`
+   * routes serve a coming-soon interstitial, not the narrative; `storyComingSoon`). Like `hidden`, a
+   * `comingSoon` story contributes **no readable surfaces**: `surfacedStories` excludes it, so no
+   * catalog atoms, no record/timeline → chapter backlinks, and the story readiness facet locks. Its
+   * MDX content, routes, and title/dek all stay intact. `hidden` wins if both are set (silent beats
+   * advertised).
+   */
+  comingSoon?: boolean;
 }
 
 export interface NetworkSite {
@@ -80,16 +92,22 @@ export interface NetworkSite {
 // are authored here because they reference story codemnames + prose that aren't site-identity.
 //
 // A story surfaces (in the switcher, the hub, the catalog/atoms, the record backlinks) only when
-// it's registered here AND not `hidden` — see `surfacedStories`. The `hidden` flag (#1256) keeps a
-// story's content, its `/stories/<codename>` routes, the `WALK_*` guard, and its title/dek intact
-// while advertising it nowhere (hidden, not removed — reachable by direct URL) — used for a site
-// still in its early build state.
+// it's registered here AND readable — neither `hidden` nor `comingSoon` — see `surfacedStories`.
+// Two "not-readable" states share this overlay: `hidden` (#1256) unsurfaces a story *silently*
+// (reachable by direct URL, no teaser); `comingSoon` (#1526) unsurfaces it *visibly* (a teaser
+// advertises title/dek, the routes serve an interstitial). Both keep the story's content, its
+// `/stories/<codename>` routes, the `WALK_*` guard, and its title/dek intact.
+//
+// Both editorial ("in-line") stories are marked `comingSoon` (#1526): the guided walks are held
+// behind a visible teaser while the record they teach is finished. `surfacedStories` returns
+// neither; `comingSoonStories` returns both.
 const STORIES: Partial<Record<string, readonly StoryRef[]>> = {
   lima: [
     {
       codename: DEFAULT_STORY_CODENAME,
       title: "Project BOSC",
       dek: "Project BOSC — read the record one document at a time, no prior knowledge.",
+      comingSoon: true,
     },
   ],
   "fort-wayne": [
@@ -97,6 +115,7 @@ const STORIES: Partial<Record<string, readonly StoryRef[]>> = {
       codename: "project-zodiac",
       title: "Project Zodiac",
       dek: "Project Zodiac — a $2B Google data center in Fort Wayne, read from the records.",
+      comingSoon: true,
     },
   ],
 };
@@ -403,14 +422,35 @@ export function siteForSlug(slug: string): NetworkSite | undefined {
 }
 
 /**
- * The stories a site *surfaces* — its registered stories minus any `hidden` ones (#1256). Every
- * surface (the hub, the story catalog/atoms, the record→chapter backlinks, the readiness `story`
- * gate) resolves through this, so a hidden story (Lima's Project BOSC in its early build state)
- * shows nowhere while its content, routes, and metadata stay intact. Metadata lookups
- * (`storyMetaFor`) read the raw `site.stories` instead, so a hidden story keeps its title/dek.
+ * The stories a site *surfaces* — the **readable** ones: its registered stories minus any `hidden`
+ * (#1256) or `comingSoon` (#1526) ones. Every readable surface (the hub, the story catalog/atoms,
+ * the record→chapter backlinks, the readiness `story` gate) resolves through this, so a
+ * not-readable story (both editorial walks are `comingSoon` today) contributes nothing readable
+ * while its content, routes, and metadata stay intact. Metadata lookups (`storyMetaFor`) read the
+ * raw `site.stories` instead, so a not-readable story keeps its title/dek for its teaser.
  */
 export function surfacedStories(slug: string): readonly StoryRef[] {
-  return siteForSlug(slug)?.stories?.filter((s) => !s.hidden) ?? [];
+  return siteForSlug(slug)?.stories?.filter((s) => !s.hidden && !s.comingSoon) ?? [];
+}
+
+/**
+ * The stories a site advertises as **coming soon** (#1526) — the visible-teaser peer of
+ * {@link surfacedStories}. These are *not* readable (excluded from every readable surface above)
+ * but *are* advertised: the site home renders their title/dek as a teaser card, and their routes
+ * serve a coming-soon interstitial. `hidden` still wins — a `hidden` story is silent, never a
+ * coming-soon teaser — so this excludes it.
+ */
+export function comingSoonStories(slug: string): readonly StoryRef[] {
+  return siteForSlug(slug)?.stories?.filter((s) => s.comingSoon && !s.hidden) ?? [];
+}
+
+/**
+ * Whether a site advertises a specific story codename as coming soon — the route-interstitial gate
+ * (#1529). The story pages render the held-content interstitial (not the narrative) when this is
+ * true for the resolved `(slug, codename)`.
+ */
+export function storyComingSoon(slug: string, codename: string): boolean {
+  return comingSoonStories(slug).some((s) => s.codename === codename);
 }
 
 /**

@@ -49,8 +49,9 @@ export function webOnlyAtoms(site: string): CatalogAtom[] {
   const atoms: CatalogAtom[] = [];
 
   // chapter — the `stories` MDX collection; grabbable as `chapter:<site>:<codename>/<slug>`. Only a
-  // *surfaced* story contributes atoms (#1256): a hidden story (content retained, overlay entry
-  // removed — Lima's Project BOSC) is grabbable nowhere, so it drops out of the catalog + atoms.
+  // *surfaced* (readable) story contributes atoms: a not-readable story — `hidden` (#1256) or
+  // `comingSoon` (#1526), content retained — is grabbable nowhere, so it drops out of the catalog +
+  // atoms. Both editorial walks are `comingSoon` today, so no editorial chapter atoms are emitted.
   for (const story of STORIES) {
     if (story.site !== site) continue;
     if (!siteSurfacesStory(story.site, story.codename)) continue;
