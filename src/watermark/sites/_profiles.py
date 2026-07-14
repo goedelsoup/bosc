@@ -1385,7 +1385,71 @@ _SPRINGFIELD = SiteProfile(
     supply_gage_secondary="03268100",  # [verified] Buck Creek bl CJ Brown Reservoir (the second supply water)
     passby_primary_cfs=0.0,  # [open] pending the in-stream passby minimum
     passby_secondary_cfs=0.0,  # [open]
-    facility=None,  # [open] data-center dimension = 5C/Vultr + Crusoe at PrimeOhio (#454); pending a pinned facility
+    # 5C Data Centers USA / Vultr "CMH01" at PrimeOhio Corporate Park — the facility domain (#1412).
+    # FAQ-grounded (as Urbana #1327 is site-plan-grounded / Sidney #1378 investment-grounded): the
+    # City of Springfield 5C FAQ + JobsOhio DISCLOSE a max load, a footprint and an investment, but
+    # no air permit is pinned yet — that's #1414, which upgrades the grounding mode and fills the
+    # genset/air fields. The IT load is therefore a DISCLOSURE-anchored bracket, not a permit figure:
+    # it_load_citation grounds it and the disclosed interconnection/air-permit MW stays [open].
+    facility=SiteFacility(
+        it_load_mw=100.0,  # central = midpoint of the disclosed 50->150 MW corridor; NOT the 900 MW buildout
+        it_load_low_mw=50.0,  # [verified] disclosed first tranche — 50 MW / 24,000-GPU AMD MI355X supercluster (2025-12)
+        it_load_high_mw=150.0,  # [verified] disclosed "up to 150 MW max load" ceiling (City of Springfield 5C FAQ)
+        it_load_citation=(
+            "[verified/inference] DISCLOSURE-anchored bracket — NOT an air-permit figure (the "
+            "disclosed interconnection/air-permit MW stays [open] until the Ohio EPA Air PTI lands, "
+            "#1414). Anchored on two disclosed hard figures: the City of Springfield 5C FAQ "
+            "'up to 150 MW max load' (springfieldohio.gov/5c-data-center-faqs) as the HIGH, and the "
+            "announced first tranche — a 50 MW / 24,000-GPU AMD MI355X supercluster (2025-12) — as "
+            "the LOW; the 100 MW central is the midpoint of that disclosed 50-150 MW corridor. The "
+            "register (data/extracted/springfield/data-centers.md, hydrology hook) treats the 150 MW "
+            "max as the IT-load screening input. The ~900 MW ultimate buildout (datacentermap "
+            "facility 'CMH01') and the 75/200 MW interim-phase figures are [open] — unconfirmed by "
+            "any primary instrument and DELIBERATELY EXCLUDED from this band; the air permit settles "
+            "the stack. Crusoe (75 MW, parcel undisclosed) is a SEPARATE register and is not blended "
+            "in. Replace with the disclosed load when the Ohio EPA Air PTI or a PJM interconnection "
+            "filing names 5C's MW."
+        ),
+        # No air permit pinned yet (#1414) and no genset figures ingested → genset_count / genset_mw /
+        # air_permit_citation stay None: the register's "3 existing + 16 planned diesel gensets" is a
+        # FAQ CLAIM, not an extracted permit — #1414 fills these and flips the grounding to a PTI.
+        facility_type=(
+            'data-center campus (5C Data Centers USA, Inc. / anchor tenant Vultr, "CMH01") — '
+            "601 Benjamin Drive, PrimeOhio Corporate Park; under construction"
+        ),  # [verified] operator/tenant + site + status
+        gross_floor_area_sqft=214_000,  # [verified] buildout footprint (67,000 existing -> 214,000; JobsOhio)
+        disclosed_investment_usd=1_300_000_000,  # [verified] up to $1.3B total (Constant Company capital $901.3M/JobsOhio)
+        disclosure_citation=(
+            "[verified] City of Springfield 5C FAQ (springfieldohio.gov/5c-data-center-faqs) + "
+            "JobsOhio (Vultr / The Constant Company, LLC capital $901,311,378) + Springfield "
+            "News-Sun (2026-07-10). Operator 5C Data Centers USA, Inc. (parent 5C Group Inc., "
+            "Montreal); anchor cloud tenant Vultr (product of The Constant Company, LLC); site the "
+            "former LexisNexis data center at 601 Benjamin Drive, PrimeOhio Corporate Park. "
+            "Investment up to $1.3B total; footprint 67,000 -> 214,000 sq ft; ~120 FT jobs. Status: "
+            "UNDER CONSTRUCTION (Vultr operational target early 2026, full build 'late 2027 if "
+            "financing and construction move forward', News-Sun 2026-07-10); no Vultr Ohio "
+            "public-cloud region live (api.vultr.com/v2/regions checked 2026-07-10). Enterprise-Zone "
+            "counterparty CMH01 Holdings Inc. (SOS pull -> #1413). See "
+            "data/extracted/springfield/data-centers.md, 'Project 1'."
+        ),
+        # Cooling archetype (#1054): CLOSED_LOOP_DRY — the City FAQ discloses closed-loop /
+        # direct-liquid recirculating cooling, EXPLICITLY "not evaporative". [reference] disclosure,
+        # not a document extraction; the water sub-issue (#1415) owns the discharge / receiving-water
+        # screen. blowdown_mgd stays None — the disclosed 300,000 gal/day is a permitted WITHDRAWAL
+        # ceiling (~30k gal/day realistic), not a blowdown discharge, so there is no FM-2-style cross-check.
+        cooling_model=CoolingModelType.CLOSED_LOOP_DRY,
+        cooling_model_source="reference",
+        cooling_model_citation=(
+            "[reference] Closed-loop / direct-liquid recirculating cooling, disclosed 'not "
+            "evaporative' by the City of Springfield 5C FAQ (springfieldohio.gov/5c-data-center-"
+            "faqs); up to 300,000 gal/day permitted from the municipal system at an >80degF "
+            "extreme-heat max ('near zero' most of the year, ~30k gal/day realistic), with an "
+            "on-site reservoir under study to avoid the municipal tap. A largely dry recirculating "
+            "design undercuts the Mad River buried-valley abstraction thesis. Not a document "
+            "extraction; refine to [verified] on an ingested mechanical/plumbing permit. The "
+            "receiving-water / source-water screen is the water sub-issue (#1415)."
+        ),
+    ),
     serving_utility_citation="EIA-861 2024 Service_Territory: Clark County, OH is served by Dayton Power & Light (#4922), Duke Energy Ohio (#3542) and Ohio Edison — no AEP; the Springfield city LSE is DP&L #4922. [verified]",
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(
