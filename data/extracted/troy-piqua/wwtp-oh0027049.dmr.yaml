@@ -24,7 +24,7 @@ discharge_summary:
   actual_flow_max_mgd: 5.822
   flow_pct_of_design: 37.1
   cso_outfalls: 0
-  reported_exceedances: 0
+  reported_exceedances: 4
 flow_monthly:
 - period_end: '2023-01-31'
   value_mgd: 3.46
@@ -98,4 +98,64 @@ flow_monthly:
 - period_end: '2023-12-31'
   value_mgd: 2.578
   stat_base: DAILY MX
-exceedances: []
+exceedances:
+- period_end: '2023-07-31'
+  outfall: '001'
+  parameter_code: '00300'
+  parameter: Oxygen, dissolved [DO]
+  stat_base: DAILY MN
+  value: 3.8
+  unit: null
+  limit: 6.0
+  limit_type: Concentration1
+  exceedance_pct: 37.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2023-06-30'
+  outfall: '001'
+  parameter_code: '00610'
+  parameter: Nitrogen, ammonia total [as N]
+  stat_base: WKLY MAX
+  value: 3.445
+  unit: null
+  limit: 1.5
+  limit_type: Concentration3
+  exceedance_pct: 130.0
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2023-06-30'
+  outfall: '001'
+  parameter_code: '31648'
+  parameter: E. coli, MTEC-MF
+  stat_base: MO GEOMN
+  value: null
+  unit: null
+  limit: 126.0
+  limit_type: Concentration2
+  exceedance_pct: null
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
+- period_end: '2023-06-30'
+  outfall: '001'
+  parameter_code: '31648'
+  parameter: E. coli, MTEC-MF
+  stat_base: WK GEOMN
+  value: null
+  unit: null
+  limit: 284.0
+  limit_type: Concentration3
+  exceedance_pct: null
+  violations:
+  - code: E90
+    desc: DMR, Limited - Numeric Violation
+    severity: '2'
+    severity_desc: Non-Reportable Noncompliance Effluent Violation
