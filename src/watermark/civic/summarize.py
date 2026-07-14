@@ -23,10 +23,11 @@ from pydantic import BaseModel, ConfigDict
 from watermark.agent.extractor import StructuredExtractor
 from watermark.civic.indexer import extract_text
 from watermark.civic.keywords import CORRIDOR_SUBJECTS
+from watermark.civic.layout import meetings_dir
 from watermark.civic.models import Subdivision
 from watermark.config import Settings, get_settings
 from watermark.logging import get_logger
-from watermark.pipeline.corpus import relpath_in_scope
+from watermark.pipeline.corpus import iter_meeting_artifacts, relpath_in_scope
 from watermark.sites import CorpusScopeArg
 
 log = get_logger(__name__)
@@ -109,9 +110,9 @@ def summarize_corridor_meetings(
     """
     settings = settings or get_settings()
     extractor = extractor or StructuredExtractor(settings=settings)
-    base = settings.extracted_dir / subdivision.slug / "meetings"
+    base = meetings_dir(settings.extracted_dir, subdivision.slug, settings)
     index_path = index_path or (base / "meeting-index.yaml")
-    docs_dir = docs_dir or (settings.documents_dir / subdivision.slug / "meetings")
+    docs_dir = docs_dir or meetings_dir(settings.documents_dir, subdivision.slug, settings)
     data = yaml.safe_load(index_path.read_text(encoding="utf-8")) if index_path.exists() else {}
     docs = [
         d
@@ -150,7 +151,7 @@ def load_committed_summaries(
     *,
     scope: CorpusScopeArg = None,
 ) -> list[tuple[str, dict[str, Any]]]:
-    """Read every committed ``<slug>/meetings/meeting-summaries.yaml``.
+    """Read every committed ``meeting-summaries.yaml`` across both site layouts (#1522).
 
     Returns ``(slug, meeting)`` pairs across all bodies, sorted by ``(slug, date)``;
     each ``meeting`` is the flat committed shape written by :func:`write_summaries`
@@ -158,15 +159,17 @@ def load_committed_summaries(
     Shared by the timeline (event-detail enrichment) and the site meetings page so
     neither re-parses the artifact independently.
 
-    ``scope`` is the active site's corpus prefixes (#762): when set, only summaries under an
-    in-scope ``<body>/meetings/`` path are read, so a non-Lima site's meetings feed carries its
-    own bodies (none yet for the basin's newer sites). ``None`` reads every body (Lima).
+    Reads both Lima's flat ``<body>/meetings/`` and a peer's nested ``<site>/<body>/meetings/``
+    (:func:`~watermark.pipeline.corpus.iter_meeting_artifacts`). ``scope`` is the active site's
+    corpus prefixes (#762): each summaries file is gated on its real path through
+    ``relpath_in_scope``, so a non-Lima site's meetings feed carries only its own bodies and Lima's
+    whole-tree-minus-peers scope excludes every nested peer tree. ``None`` reads every body.
     """
     settings = settings or get_settings()
     extracted = settings.extracted_dir
     out: list[tuple[str, dict[str, Any]]] = []
-    for path in sorted(extracted.glob("*/meetings/meeting-summaries.yaml")):
-        if not relpath_in_scope(str(path.relative_to(extracted)), scope):
+    for path in iter_meeting_artifacts(extracted, "meeting-summaries.yaml"):
+        if not relpath_in_scope(path.relative_to(extracted).as_posix(), scope):
             continue
         try:
             data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
