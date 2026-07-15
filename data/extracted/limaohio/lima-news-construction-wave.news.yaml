@@ -22,9 +22,10 @@ provenance:
     limaohio.com is CAPTCHA/bot-gated and returned HTTP 403 to every automated fetch, and no
     Wayback snapshot exists for any URL (checked 2026-07-13). The canonical publisher bytes are
     not retrievable here; the Yahoo syndication mirror is the faithful capture path. The
-    2026-07-09 commissioners item and the 2026-06-22 Wendel op-ed were not syndicated to
-    Yahoo/AOL/MSN — their substance is confirmed at the search-snippet level and extracted as
-    [reference]; a full raw byte capture is OWED (see data/documents/limaohio/SOURCES.md).
+    2026-06-22 Wendel op-ed, the 2026-07-09 commissioners item, and the 2026-07-14
+    resident-transparency item were not syndicated to Yahoo/AOL/MSN (re-checked 2026-07-14) —
+    their substance is confirmed at the search-snippet level and extracted as [reference]; a
+    full raw byte capture is OWED (see data/documents/limaohio/SOURCES.md).
   tags: [reference, news, lima, bosc, google, construction-phase, story, record]
 
 headline_findings:
@@ -160,6 +161,26 @@ headline_findings:
       the corpus otherwise documents through the permit/CMAR record. Opinion, lowest priority.
     confidence: medium
 
+  transparency_and_nda_concerns:
+    finding: >-
+      Reported 2026-07-14 [reference — Yahoo un-syndicated; snippet-confirmed, raw capture owed]:
+      residents questioned the transparency of the Allen County (Google / Project BOSC) data center,
+      citing backup-generator specifications redacted from the permit record as "proprietary" and
+      non-disclosure agreements signed by public officials that keep the company's identity and the
+      facility's detailed plans from residents. Only the transparency/redaction/NDA thrust is
+      snippet-confirmed; specific equipment counts attributed to the piece by news aggregators are
+      NOT transcribed here — they are neither in the captured corpus nor confirmed to appear in this
+      article, and await the owed raw capture.
+    significance: >-
+      Extends the transparency thread the corpus already carries — the County–Bistrozzi mutual NDA
+      (legal/prr-mandamus: mutual-nda-bistrozzi) and the PAAC transparency/well-concerns record
+      (paac-board-minutes; roundabout_open_house_and_resident_concerns above) — into the air-permit
+      layer: the residents' new grievance is the redaction of backup-genset specifications as
+      proprietary, which sits against the permitted backup-genset air envelope in the oepa PTI thread.
+      The redacted-spec / NDA framing is the confirmed substance; the raw byte capture is owed
+      (SOURCES.md). Byline not yet confirmed.
+    confidence: medium
+
 named_actors:
   - name: Anthony Chenault
     role: Public Information Officer, Ohio EPA
@@ -233,6 +254,13 @@ posts:
     canonical_url: https://www.limaohio.com/news/2026/07/09/allen-commissioners-approve-construction-projects/
     capture: owed   # not syndicated to Yahoo/AOL/MSN; snippet-confirmed; raw byte capture owed
     role: buried fiber-for-data-centers + Brightspeed RUMA + county roadwork (Droll)
+  - slug: residents-question-transparency-with-allen-county-data-center
+    title: Residents question transparency with Allen County data center
+    published: '2026-07-14'
+    byline: (unconfirmed)
+    canonical_url: https://www.limaohio.com/top-stories/2026/07/14/residents-question-transparency-with-allen-county-data-center/
+    capture: owed   # not syndicated to Yahoo/AOL/MSN (checked 2026-07-14); snippet-confirmed; raw byte capture owed
+    role: transparency/NDA grievance — redacted "proprietary" backup-genset specs; officials under NDA
 
 cross_references:
   - data/documents/limaohio/SOURCES.md                                    # chain-of-custody manifest
@@ -251,6 +279,7 @@ relevance:
     open house (2026-05-15) are the first post-permit construction-impact signals; the 2026-05-15
     piece independently corroborates the Peterson CMAR (#378-26) and dates completion to ~Jan–Mar
     2028; the Chamber (2026-04-24) and Wendel (2026-06-22) items are proponent framing to weigh;
-    the 2026-07-09 commissioners item adds the buried-fiber telecom layer and the Brightspeed RUMA.
-    All [reference]. Captured via the Yahoo syndication mirror because limaohio.com is bot-gated
-    (403) with no Wayback snapshot; two un-syndicated items have raw captures still owed.
+    the 2026-07-09 commissioners item adds the buried-fiber telecom layer and the Brightspeed RUMA;
+    the 2026-07-14 piece adds a resident transparency/NDA grievance over backup-genset specs redacted
+    as proprietary. All [reference]. Captured via the Yahoo syndication mirror because limaohio.com is
+    bot-gated (403) with no Wayback snapshot; three un-syndicated items have raw captures still owed.
