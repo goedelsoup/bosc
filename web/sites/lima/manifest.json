@@ -2,9 +2,9 @@
   "site": "lima",
   "bundle_version": "1.0.0",
   "contract_version": "1.24.0",
-  "generated_at": "2026-07-14T15:08:55+00:00",
+  "generated_at": "2026-07-15T23:11:39+00:00",
   "feed_count": 42,
-  "row_total": 788,
+  "row_total": 798,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -22,7 +22,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 57
+      "count": 59
     },
     {
       "name": "timeline",
@@ -38,7 +38,7 @@
       "media_type": "application/json",
       "schema": "schemas/entities.schema.json",
       "kind": "collection",
-      "count": 94
+      "count": 96
     },
     {
       "name": "relationships",
@@ -46,7 +46,7 @@
       "media_type": "application/json",
       "schema": "schemas/relationships.schema.json",
       "kind": "collection",
-      "count": 86
+      "count": 88
     },
     {
       "name": "people",
@@ -118,7 +118,7 @@
       "media_type": "application/json",
       "schema": "schemas/leads.schema.json",
       "kind": "collection",
-      "count": 25
+      "count": 26
     },
     {
       "name": "contacts",
@@ -270,7 +270,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 114
+      "count": 117
     },
     {
       "name": "geo/campus",

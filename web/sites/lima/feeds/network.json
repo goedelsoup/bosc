@@ -69,14 +69,14 @@
       "downstream": "defiance",
       "regime": "effluent_dominated_tributary",
       "screen": {
-        "npdes": "OH0023841",
-        "discharger": "AMERICAN-BATH WWTP",
-        "receiving_water": "Pike Run",
-        "design_flow_mgd": 1.5,
-        "dilution_ratio": 0.013,
+        "npdes": "OH0026069",
+        "discharger": "LIMA WWTP",
+        "receiving_water": "Ottawa River",
+        "design_flow_mgd": 18.5,
+        "dilution_ratio": 0.007,
         "flag": "violation",
         "status": "screened",
-        "detail": "Pike Run 7Q10 0.03 cfs (document) vs discharge 2.32 cfs -> 0.01:1 dilution (violation)"
+        "detail": "Ottawa River 7Q10 0.20 cfs (document) vs discharge 28.62 cfs -> 0.01:1 dilution (violation)"
       },
       "grid": {
         "utility": "AEP Ohio (Ohio Power Company)",

@@ -1,0 +1,45 @@
+id: lima
+title: Lima (Allen County, OH) Reference-Site Investigative Findings
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Primary/authoritative instrument surfaces — USASpending.gov API, FedRAMP Marketplace,
+    Google Cloud public-sector disclosures, Allen County GIS, corpus cross-references
+license: Public record / public-domain federal data
+access_tier: public
+site_scope: site:lima
+storage:
+- relpath: extracted/lima/federal-authorization-instrument-search.md
+  media_type: text/markdown
+  lfs: false
+refresh:
+  cadence: static
+provenance: document
+tags:
+- lima
+- allen-county
+- defense-nexus
+- hypothesis-h2
+- fedramp
+- dod-impact-level
+- usaspending
+- bistrozzi
+- jsmc
+- negative-search
+notes: >
+  Site-scoped investigative findings for the Lima reference watershed point (Ottawa/Auglaize
+  corridor, Allen County OH). Distinct from the slug-scoped civic meetings tree
+  (extracted/lima/meetings/*, cataloged as `meetings`) and the `limaohio` secondary-news
+  collection. federal-authorization-instrument-search.md is the #1480 documented NEGATIVE
+  search for a facility-naming federal-authorization instrument under hypothesis H2 (Defense &
+  Federal Enclave): USASpending/SAM.gov return no award or recipient for the Bistrozzi LLC /
+  Bistrozzi Addition LLC owner-of-record shell; the FedRAMP Marketplace lists Google Cloud
+  service-wide (High) and names no Lima facility; Google's public-sector posture runs on
+  Assured Workloads (a software-defined community cloud on the commercial data centers), so a
+  facility-scoped authorization instrument for Lima cannot exist by construction. The JSMC
+  (Lima Army Tank Plant / GDLS) co-location stays coincidental geography — no supply or
+  authorization link found or forced. The H2 nexus stays [inference] and the H2-AUTH
+  authorization posture stays undisclosed/[open], now investigated and bounded rather than a
+  standing un-run inference (cf. Urbana #1353). Backs docs/defense-nexus.md and the
+  data/hypotheses/defense/lima.yaml assessment cell.

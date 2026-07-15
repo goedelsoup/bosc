@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "209ed1bd4b0934f93463f13e6b0cd626be29a08959dd6ba5dc508be0ace74736",
+  "catalog_version": "8234f463b7220c7667e570c311b526d5bed6e7f64e9ebe0823a8eb41f2a3b9ae",
   "contract_version": "1.24.0",
   "atoms": [
     {
@@ -380,6 +380,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:findlay-flood",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "findlay-flood",
+      "title": "Findlay — Flood-Mitigation Instrument Chain (Extractions)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:findlay-gis",
       "kind": "dataset",
       "site": "lima",
@@ -665,6 +673,14 @@
       "site": "lima",
       "local_id": "legal-web-vendor-audit-allen-county-web-vendor-audit",
       "title": "Allen County Government Web-Vendor & CMS-Custody Audit (41 entities, captured 2026-06-05)",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:lima:lima",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "lima",
+      "title": "Lima (Allen County, OH) Reference-Site Investigative Findings",
       "feed": "catalog"
     },
     {
@@ -996,6 +1012,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:lima:wwtp-oh0026069-lima",
+      "kind": "dataset",
+      "site": "lima",
+      "local_id": "wwtp-oh0026069-lima",
+      "title": "City of Lima WWTP (NPDES OH0026069) Effluent Record — DMR",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:lima:wwtp-oh0027049-troy-piqua",
       "kind": "dataset",
       "site": "lima",
@@ -1121,6 +1145,14 @@
       "site": "lima",
       "local_id": "CINDY LEIS",
       "title": "Cindy Leis",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:CITY OF LIMA",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "CITY OF LIMA",
+      "title": "City of Lima",
       "feed": "entities"
     },
     {
@@ -1600,7 +1632,7 @@
       "kind": "entity",
       "site": "lima",
       "local_id": "UNNAMED TRIBUTARY OF LYTLE CREEK",
-      "title": "unnamed tributary of Lytle Creek",
+      "title": "Unnamed Tributary of Lytle Creek",
       "feed": "entities"
     },
     {
@@ -1737,6 +1769,14 @@
       "site": "lima",
       "local_id": "npdes:2PD00006",
       "title": "Van Wert WWTP",
+      "feed": "entities"
+    },
+    {
+      "handle": "entity:lima:npdes:2PE00000",
+      "kind": "entity",
+      "site": "lima",
+      "local_id": "npdes:2PE00000",
+      "title": "City of Lima WWTP",
       "feed": "entities"
     },
     {
@@ -1944,7 +1984,7 @@
       "kind": "lead",
       "site": "lima",
       "local_id": "H2-AUTH",
-      "title": "The campus's federal authorization posture is undisclosed",
+      "title": "The campus's federal authorization posture is undisclosed — searched, negative",
       "feed": "leads"
     },
     {
@@ -1961,6 +2001,14 @@
       "site": "lima",
       "local_id": "LIMA-LIMEDUST",
       "title": "Ohio EPA is monitoring lime-kiln dust drifting off the data-center construction site",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:LIMA-WWTP-SHARE",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "LIMA-WWTP-SHARE",
+      "title": "The campus's allocated share into the City of Lima WWTP is unquantified",
       "feed": "leads"
     },
     {
@@ -2529,6 +2577,22 @@
       "site": "lima",
       "local_id": "oepa/2PD00006.npdes.yaml",
       "title": "Van Wert WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/2PE00000.npdes.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/2PE00000.npdes.yaml",
+      "title": "City of Lima WWTP",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:oepa/lima-wwtp-OH0026069.dmr.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "oepa/lima-wwtp-OH0026069.dmr.yaml",
+      "title": "LIMA WWTP",
       "feed": "records"
     },
     {

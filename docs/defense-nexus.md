@@ -125,6 +125,21 @@ it should be `[verified: relator testimony]`. Until it is disclosed, the questio
 held open by two things at once: the classification that would keep a real defense
 use quiet, and the "no records" wall that keeps even the absence of one unproven.
 
+The public instrument surfaces have now been searched for it, and they come back
+empty on every path `[verified: federal-authorization-instrument-search.md, #1480]`.
+USASpending and SAM.gov hold no award or recipient for the campus's owner-of-record
+shell (Bistrozzi LLC / Bistrozzi Addition LLC); the FedRAMP Marketplace lists Google
+Cloud service-wide, at High, and names **no** Lima facility. That last point is the
+one worth holding onto, because it is structural, not circumstantial: Google's
+public-sector compliance runs on **Assured Workloads**, which by Google's own account
+"does not rely on physical infrastructure distinct from Google's public cloud data
+centers" `[reference: Google Cloud, FedRAMP High blog]`. A FedRAMP or DoD-IL
+authorization in that model binds to the _service_, not to a building — so a
+facility-scoped instrument for Lima **cannot exist by construction**, and its absence
+proves nothing in either direction. The negative maps where the ceiling is; it does
+not lower it. The nexus stays `[inference]` and the search declines to force a link —
+the same discipline Urbana's analogous search held to `[reference: #1353]`.
+
 That is an uncomfortable place to end, and it is the correct one. A defense nexus is
 not a finding of this record. It is a question the record raises by what it contains —
 a federal plant a few miles down the corridor, a developer cleared to SECRET, a procurement
@@ -145,4 +160,5 @@ honest end is the open one.
 - AWS / DoW + CIA + "all classification levels"; hearing cross-read —
   `data/extracted/legal/select-committee-2026/select-committee-2026.hearing-index.yaml`
 - The "no records" defense-channel response — `data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-05.response-index.yaml` (item 2)
+- The #1480 documented negative search for a facility-naming federal-authorization instrument (FedRAMP / DoD IL / GSA-DoD award / cloud-region) — `data/extracted/lima/federal-authorization-instrument-search.md`
 - The end-use frame this sits inside — [end-use-and-workloads.md](end-use-and-workloads.md), [DOSSIER.md](DOSSIER.md)

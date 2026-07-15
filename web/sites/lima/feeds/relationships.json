@@ -330,6 +330,26 @@
     "relation_basis": null
   },
   {
+    "src": "CITY OF LIMA",
+    "rel": "operates",
+    "dst": "npdes:2PE00000",
+    "date": "",
+    "ref": "2PE00000*OD",
+    "source": "oepa/2PE00000.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
+    "src": "npdes:2PE00000",
+    "rel": "discharges_to",
+    "dst": "OTTAWA RIVER",
+    "date": "",
+    "ref": "2PE00000*OD",
+    "source": "oepa/2PE00000.npdes.yaml",
+    "relation_class": null,
+    "relation_basis": null
+  },
+  {
     "src": "ALLEN COUNTY BOARD OF COMMISSIONERS",
     "rel": "operates",
     "dst": "npdes:2PH00006",
