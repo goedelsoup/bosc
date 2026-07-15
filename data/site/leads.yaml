@@ -164,11 +164,20 @@ leads:
   kind: question
   status: unanswered
   tag: inference
-  title: The campus's federal authorization posture is undisclosed
-  detail: The Joint Systems Manufacturing Center (Lima Army Tank Plant) is co-located with the campus
+  title: The campus's federal authorization posture is undisclosed — searched, negative
+  detail: >-
+    The Joint Systems Manufacturing Center (Lima Army Tank Plant) is co-located with the campus
     — documented geography under hypothesis H2 — but the campus's authorization posture (FedRAMP / DoD
-    impact level) is undisclosed, so the causal link to the boom remains an inference.
-  source: Hypothesis H2 · defense nexus
+    impact level) is undisclosed, so the causal link to the boom remains an inference. A #1480 search
+    of the primary instrument surfaces came back negative on every path: USASpending/SAM.gov return no
+    recipient or award for Bistrozzi LLC / Bistrozzi Addition LLC; the FedRAMP Marketplace lists Google
+    Cloud service-wide (High), naming no Lima facility; and Google's public-sector posture runs on
+    Assured Workloads — a software-defined community cloud that uses no physical infrastructure distinct
+    from the commercial data centers — so a facility-scoped authorization instrument for Lima cannot
+    exist by construction. The question stays open (the posture is genuinely undisclosed, not merely
+    un-found), but it is now investigated and bounded, not a standing un-run inference.
+  source: 'Hypothesis H2 · defense nexus · data/extracted/lima/federal-authorization-instrument-search.md
+    (#1480 documented negative search)'
 - id: H1-DRAW
   kind: claim
   status: low

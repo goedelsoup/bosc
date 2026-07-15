@@ -2482,6 +2482,75 @@
     "source_doc_published": true
   },
   {
+    "rel": "oepa/2PE00000.npdes.yaml",
+    "group": "permits-npdes",
+    "title": "City of Lima WWTP",
+    "confidence": "high",
+    "warnings": [
+      "Text-layer extraction (digital PDF, no OCR); figures read verbatim from the permit text layer, not a 300 DPI render.",
+      "Downstream stream network beyond the Ottawa River not specified in the document (receiving water stated only as \"the Ottawa River at River Mile 37.6\").",
+      "No separate public-notice number stated on the issued permit; the fact sheet (pp. 77-118) is titled \"Fact Sheet for NPDES Permit Renewal, Lima WWTP, 2023\"."
+    ],
+    "fields": {
+      "facility_name": "City of Lima WWTP",
+      "permit_no": "2PE00000*OD",
+      "permit_action": "renewal",
+      "applicant": "City of Lima",
+      "application_no": "OH0026069",
+      "public_notice_no": null,
+      "public_notice_date": null,
+      "comment_period_end": null,
+      "facility_address": "1200 Fort Amanda Road, Lima, Ohio, Allen County",
+      "discharge_address": "Ottawa River at River Mile 37.6, Allen County",
+      "receiving_water": "Ottawa River",
+      "stream_network": null,
+      "outfalls": [
+        "2PE00000001"
+      ],
+      "note": "2023 NPDES permit renewal for the City of Lima WWTP (the municipal receiving plant). Ohio EPA permit 2PE00000*OD, application OH0026069; action date June 2, 2023, effective July 1, 2023, expiration June 30, 2028. Final outfall 2PE00000001 discharges to the Ottawa River at River Mile 37.6. Average daily design flow 18.5 MGD (p3 footnote and fact-sheet p83: \"the average design flow is 18.5 million [gallons per day]\"); the plant is designed for peak wet-weather flows up to 70 MGD, with full secondary treatment sustained to 18.5 MGD and flow splitting at the 30/40/70 MGD thresholds (p39, p84). Final effluent WQBELs (outfall 001): TSS 20 mg/l wkly / 14 mg/l monthly (1402 / 982 kg/day); ammonia-N summer 2.4 / 1.6 mg/l, winter 2.6 / 1.7 mg/l; total phosphorus 1.5 / 1.0 mg/l (105 / 70 kg/day); dissolved oxygen 5.0 mg/l minimum. The permit renews the general mercury variance (Part I; pp. 32-35, 92) — mercury is a monitored parameter, and ECHO DMRs show a 2023-08 mercury exceedance (see lima-wwtp-OH0026069.dmr.yaml). The permittee operates a State-Approved Pretreatment Program initially approved January 14, 1992 (p36), with categorical users discharging 0.71 MGD and 4 significant non-categorical users discharging 0.412 MGD (p84). Plant constructed 1930, last upgraded 2016 (p83); CSOs reduced to five events per year (p84). Signed by Director Anne M. Vogel. Total permit-body pages 79 (119-page PDF including the fact sheet). Source document is the un-requested City-of-Lima municipal custodian record (issue #1536); obtained from Ohio EPA DAM (public record, no PRR)."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/2PE00000.npdes.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 36, 39, 83, 84, 92]",
+      "verified": true
+    },
+    "source_doc_rel": "oepa/2PE00000.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": true
+  },
+  {
+    "rel": "oepa/lima-wwtp-OH0026069.dmr.yaml",
+    "group": "permits-npdes",
+    "title": "LIMA WWTP",
+    "confidence": null,
+    "warnings": [],
+    "fields": {
+      "npdes_id": "OH0026069",
+      "name": "LIMA WWTP",
+      "permit_type": "NPDES Individual Permit",
+      "permit_status": "Effective",
+      "major_minor": "M",
+      "snc_status": null,
+      "window": "2023-01-01..2026-06-30"
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "oepa/lima-wwtp-OH0026069.dmr.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": null,
+    "source_doc_render_class": null,
+    "source_doc_published": false
+  },
+  {
     "rel": "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.npdes.yaml",
     "group": "permits-npdes",
     "title": "American II Wastewater Treatment Plant",

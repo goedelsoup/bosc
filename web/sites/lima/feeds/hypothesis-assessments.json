@@ -40,6 +40,14 @@
         "confidence": "high",
         "note": "The Joint Systems Manufacturing Center (Lima Army Tank Plant) is co-located with the Shawnee campus in Allen County. The nexus is documented geography; the causal link to the boom remains an inference (the campus authorization posture is undisclosed).",
         "verified": false
+      },
+      {
+        "source": "data/extracted/lima/federal-authorization-instrument-search.md",
+        "source_kind": "derived",
+        "page": null,
+        "confidence": "high",
+        "note": "#1480 documented negative search for a facility-naming federal-authorization instrument: USASpending/SAM.gov show no award or recipient for the Bistrozzi owner-of-record shell; the FedRAMP Marketplace lists Google Cloud service-wide, naming no Lima facility; and the Assured Workloads authorization model binds to the service, not an address, so a facility-scoped instrument cannot exist by construction. The authorization posture stays undisclosed and the JSMC co-location stays coincidental geography — no supply/authorization link was found or forced (cf. Urbana #1353).",
+        "verified": false
       }
     ]
   },

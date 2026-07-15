@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-15T17:15:14.154692+00:00'
+reconciled_at: '2026-07-15T23:06:31.273900+00:00'
 entries:
   aedg:
     exists: true
@@ -720,6 +720,16 @@ entries:
     asof: null
     stale: false
     site_scope: lima-legacy
+  lima:
+    exists: true
+    sha256: 34fd95a7446e55343da159443e2b71093b588786c5fbe1e7f04f6764f7f7247e
+    size_bytes: 13935
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:lima
   lima-gis:
     exists: true
     sha256: 8059316b4367a3c49208bf713329eae72d46f5b2af364f82c7be62a2b9fd967e

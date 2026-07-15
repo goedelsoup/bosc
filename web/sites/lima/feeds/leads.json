@@ -104,10 +104,21 @@
     "status": "unanswered",
     "tag": "open",
     "title": "Nobody owns the forcemain's MGD design capacity",
-    "detail": "The Hume / Shawnee forcemain's design capacity (item 9) is disclaimed by every county body — each points to Ohio EPA or the townships. Batch 2 produced the financing and the engineering contract, not the MGD figure.",
+    "detail": "The Hume / Shawnee forcemain's design capacity (item 9) is disclaimed by every county body — each points to Ohio EPA or the townships. Batch 2 produced the financing and the engineering contract, not the MGD figure. (Distinct from the City of Lima WWTP's own 18.5 MGD design flow, now in the corpus via the public NPDES permit — see LIMA-WWTP-SHARE.)",
     "source": "Cross-production referral · item 9",
     "issue": null,
     "note": null
+  },
+  {
+    "id": "LIMA-WWTP-SHARE",
+    "kind": "question",
+    "status": "unanswered",
+    "tag": "open",
+    "title": "The campus's allocated share into the City of Lima WWTP is unquantified",
+    "detail": "The City of Lima WWTP's own NPDES permit + design flow are now in the corpus (Ohio EPA 2PE00000 / OH0026069, 18.5 MGD average / 70 MGD peak design; pulled from the public record without a records request, and counted in the routed water balance — the Ottawa leaving Lima now computes 98% treated effluent). What the permit does NOT quantify is the campus's allocated share of that capacity — the ~2.5 MGD FM-2 industrial stream routed to the plant via Lima's 78\" sewer. The headroom / allocation / IU-pretreatment record is City-held (Water Pollution Control) and needs the first City of Lima R.C. 149.43 request — the un-requested municipal custodian.",
+    "source": "data/extracted/oepa/2PE00000.npdes.yaml · data/extracted/oepa/lima-wwtp-OH0026069.dmr.yaml",
+    "issue": 1536,
+    "note": "obtained the permit + DMRs as a public record; the campus-share capacity analysis is PRR-only"
   },
   {
     "id": "PRR-02",
@@ -158,9 +169,9 @@
     "kind": "question",
     "status": "unanswered",
     "tag": "inference",
-    "title": "The campus's federal authorization posture is undisclosed",
-    "detail": "The Joint Systems Manufacturing Center (Lima Army Tank Plant) is co-located with the campus — documented geography under hypothesis H2 — but the campus's authorization posture (FedRAMP / DoD impact level) is undisclosed, so the causal link to the boom remains an inference.",
-    "source": "Hypothesis H2 · defense nexus",
+    "title": "The campus's federal authorization posture is undisclosed — searched, negative",
+    "detail": "The Joint Systems Manufacturing Center (Lima Army Tank Plant) is co-located with the campus — documented geography under hypothesis H2 — but the campus's authorization posture (FedRAMP / DoD impact level) is undisclosed, so the causal link to the boom remains an inference. A #1480 search of the primary instrument surfaces came back negative on every path: USASpending/SAM.gov return no recipient or award for Bistrozzi LLC / Bistrozzi Addition LLC; the FedRAMP Marketplace lists Google Cloud service-wide (High), naming no Lima facility; and Google's public-sector posture runs on Assured Workloads — a software-defined community cloud that uses no physical infrastructure distinct from the commercial data centers — so a facility-scoped authorization instrument for Lima cannot exist by construction. The question stays open (the posture is genuinely undisclosed, not merely un-found), but it is now investigated and bounded, not a standing un-run inference.",
+    "source": "Hypothesis H2 · defense nexus · data/extracted/lima/federal-authorization-instrument-search.md (#1480 documented negative search)",
     "issue": null,
     "note": null
   },

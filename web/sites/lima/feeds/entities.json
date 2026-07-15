@@ -859,6 +859,29 @@
     "federal_obligations": null
   },
   {
+    "key": "npdes:2PE00000",
+    "display": "City of Lima WWTP",
+    "kind": "facility",
+    "classification": "facility",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Lima WWTP"
+    ],
+    "signals": [],
+    "roles": {
+      "facility": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/2PE00000.npdes.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
     "key": "npdes:2PH00006",
     "display": "American II Wastewater Treatment Plant",
     "kind": "facility",
@@ -1038,6 +1061,29 @@
     "addresses": [],
     "sources": [
       "american-township/meetings/meeting-summaries.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "CITY OF LIMA",
+    "display": "City of Lima",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "City of Lima"
+    ],
+    "signals": [],
+    "roles": {
+      "applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "oepa/2PE00000.npdes.yaml"
     ],
     "lei": null,
     "uei": null,
@@ -2292,11 +2338,12 @@
     ],
     "signals": [],
     "roles": {
-      "receiving_water": 3
+      "receiving_water": 4
     },
     "parcels": [],
     "addresses": [],
     "sources": [
+      "oepa/2PE00000.npdes.yaml",
       "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.npdes.yaml",
       "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.npdes.yaml",
       "oepa/oepa-2PK00002-shawnee-ii-permit.npdes.yaml"
@@ -2379,7 +2426,7 @@
   },
   {
     "key": "UNNAMED TRIBUTARY OF LYTLE CREEK",
-    "display": "unnamed tributary of Lytle Creek",
+    "display": "Unnamed Tributary of Lytle Creek",
     "kind": "water",
     "classification": "receiving_water",
     "relation_class": null,
