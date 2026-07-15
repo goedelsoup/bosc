@@ -321,15 +321,6 @@ def _zoning_events(settings: Settings, scope: CorpusScope | None = None) -> list
     return events
 
 
-# Project-specific subjects that put a subdivision meeting on the corridor timeline.
-# Generic township topics (rezoning/easement/annexation/solar/setback/...) and
-# ambiguous names — ``hume`` (also a local road/surname that predates the project)
-# and ``amazon`` (the separate warehouse, not the data center) — stay searchable in
-# the meeting index ``hits`` but don't by themselves pull routine business onto the
-# chronology. (The fuller vocabulary lives in ``watermark.civic.keywords``.)
-_CORRIDOR_SUBJECTS = frozenset({"bosc", "bistrozzi", "datacenter", "google"})
-
-
 def _summary_detail(meeting: dict[str, Any]) -> str:
     """Grounded one-line detail from a committed meeting summary: relevance + figures."""
     rel = re.sub(r"\s+", " ", str(meeting.get("corridor_relevance") or "")).strip()
@@ -342,22 +333,32 @@ def _summary_detail(meeting: dict[str, Any]) -> str:
 
 
 def _subdivision_meeting_events(
-    settings: Settings, scope: CorpusScope | None = None
+    settings: Settings,
+    scope: CorpusScope | None = None,
+    subjects: tuple[str, ...] | None = None,
 ) -> list[TimelineEvent]:
     """Subdivision meetings that name the corridor project in their minutes/agendas.
 
     Reads every committed ``<slug>/meetings/meeting-index.yaml`` (built by
-    ``watermark subdivisions index``) and surfaces only meetings whose text hit a
-    project-specific subject (``_CORRIDOR_SUBJECTS``) — routine township business
-    stays in the index as searchable corpus but off the chronology. Agenda + minutes
-    for the same meeting collapse via a shared ``ref``. When a meeting has a committed
-    summary (``meeting-summaries.yaml``), its grounded relevance + dollar figures
-    become the event detail; otherwise the detail is the raw hit set.
+    ``watermark subdivisions index``) and surfaces only meetings whose text hit one of
+    the active site's corridor ``subjects`` — routine township business stays in the
+    index as searchable corpus but off the chronology. Agenda + minutes for the same
+    meeting collapse via a shared ``ref``. When a meeting has a committed summary
+    (``meeting-summaries.yaml``), its grounded relevance + dollar figures become the
+    event detail; otherwise the detail is the raw hit set.
+
+    ``subjects`` is the per-site corridor vocabulary (#1523): the single source of truth
+    is ``SiteProfile.corridor_subjects``, so ``None`` derives it from ``active_profile``
+    (Lima's BOSC set by default). A peer with an **empty** set surfaces no
+    ``subdivision_meeting`` events (its hits stay in the index, undropped) until it
+    declares its own subjects — the safe/honest default.
 
     ``scope`` bounds the glob to the active site's collections (#762): each index is
     keyed by its own ``rel``, so a sibling site only sees its own meeting indices, not
     Lima's Allen-County townships.
     """
+    if subjects is None:
+        subjects = active_profile(settings).corridor_subjects
     events: list[TimelineEvent] = []
     for index_path in sorted(settings.extracted_dir.glob("*/meetings/meeting-index.yaml")):
         if not relpath_in_scope(index_path.relative_to(settings.extracted_dir).as_posix(), scope):
@@ -374,7 +375,7 @@ def _subdivision_meeting_events(
             if not isinstance(d, dict):
                 continue
             hits = [str(h) for h in d.get("hits", [])]
-            corridor = [h for h in hits if h in _CORRIDOR_SUBJECTS]
+            corridor = [h for h in hits if h in subjects]
             date = d.get("date_verified") or d.get("date_listing")
             if not corridor or not date:
                 continue
@@ -423,13 +424,12 @@ def build_timeline(
     )
     if include_curated:
         settings = get_settings()
-        site_scope = (
-            scope if scope is not None else effective_corpus_scope(active_profile(settings))
-        )
+        profile = active_profile(settings)
+        site_scope = scope if scope is not None else effective_corpus_scope(profile)
         events += (
             _commissioners_events(settings, site_scope)
             + _zoning_events(settings, site_scope)
-            + _subdivision_meeting_events(settings, site_scope)
+            + _subdivision_meeting_events(settings, site_scope, profile.corridor_subjects)
         )
     events = _dedup(events)
     events.sort(key=lambda e: e.sort_key)

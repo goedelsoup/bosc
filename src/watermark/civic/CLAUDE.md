@@ -68,11 +68,16 @@ Defers to the root [`CLAUDE.md`](../../../CLAUDE.md).
   restate the date), and scans for corridor topics (`keywords.scan_text`). Writes
   `data/extracted/<slug>/meetings/meeting-index.yaml`. The timeline
   (`pipeline/timeline.py:_subdivision_meeting_events`) surfaces **only** meetings
-  whose text names a project-specific subject (`datacenter`/`bosc`/`bistrozzi`/
-  `google` — `_CORRIDOR_SUBJECTS`) as `category: subdivision_meeting` (agenda+minutes
-  collapse via a shared `ref`). Generic township topics (rezoning/easement/
-  annexation/solar/...) and ambiguous names (`hume`, `amazon`) stay in the index
-  `hits` as searchable corpus but don't flood the chronology. Site picks the
+  whose text names one of the **active site's** corridor subjects as `category:
+  subdivision_meeting` (agenda+minutes collapse via a shared `ref`). That vocabulary
+  is per-site (#1523): the single source of truth is `SiteProfile.corridor_subjects`
+  (Lima's `datacenter`/`bosc`/`bistrozzi`/`google`; **empty for a peer** until it
+  declares its own — no `subdivision_meeting` flooding meanwhile), read via
+  `active_profile(settings)` and threaded into both the timeline and `summarize`
+  (`keywords.is_corridor_relevant(hits, subjects)` takes the vocabulary as an argument, so
+  `keywords` stays pure — no module constant, no `pipeline`→`civic` import). Generic township
+  topics (rezoning/easement/annexation/solar/...) and ambiguous names (`hume`, `amazon`) stay
+  in the index `hits` as searchable corpus but don't flood the chronology. Site picks the
   category up automatically.
 - **Pipeline complete:** `discover → fetch → download → index → timeline`. The OCR
   pass for image-only scans is now wired (`index --ocr` / `summarize --ocr`,

@@ -108,6 +108,30 @@ def test_summarize_selects_corridor_only_and_skips_textless(tmp_path: Path) -> N
     assert report.skipped == ["c.html"]  # corridor-relevant but no extractable text
 
 
+def test_summarize_keys_on_active_site_vocab(tmp_path: Path, monkeypatch: Any) -> None:
+    # Corridor selection is per-site (#1523): a peer that has declared no corridor subjects
+    # selects NO meetings, even for hits that would gate under Lima (datacenter/google). The
+    # existing lima-default tests cover the positive path — they only pass because Lima's
+    # SiteProfile.corridor_subjects carries those subjects.
+    from watermark.sites import SITES
+
+    peer = SITES["lima"].model_copy(update={"slug": "peersite", "corridor_subjects": ()})
+    monkeypatch.setitem(SITES, "peersite", peer)
+    docs = [
+        {
+            "filename": "a.html",
+            "kind": "minutes",
+            "date_verified": "2026-02-09",
+            "hits": ["datacenter", "google"],
+        }
+    ]
+    _seed(tmp_path, docs, {"a.html": "data center discussion"})
+    peer_settings = Settings(data_dir=tmp_path, site="peersite")
+    report = summarize_corridor_meetings(_body(), settings=peer_settings, extractor=_extractor())
+    assert report.entries == []
+    assert report.skipped == []
+
+
 def test_summarize_respects_limit(tmp_path: Path) -> None:
     docs = [
         {

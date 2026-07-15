@@ -213,6 +213,11 @@ _LIMA = SiteProfile(
     lmp_pnode_name="AEP",
     # rsei
     county_name="Allen County, OH",
+    # civic corridor vocabulary (#1523): the project-specific subjects that put a subdivision
+    # meeting on the corridor timeline. Verbatim the former module constant (bosc/bistrozzi/
+    # datacenter/google) — ambiguous names (hume/amazon) stay searchable in the index but off
+    # the chronology. Peers default empty until they declare their own.
+    corridor_subjects=("bosc", "bistrozzi", "datacenter", "google"),
     # oepa permits (#844); 2PE00000 = the City of Lima WWTP, the municipal receiving
     # plant / un-requested municipal custodian (#1536)
     npdes_permits=["2PH00006", "2PH00007", "2PK00002", "2PE00000"],

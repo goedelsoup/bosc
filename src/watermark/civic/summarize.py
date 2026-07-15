@@ -22,12 +22,12 @@ from pydantic import BaseModel, ConfigDict
 
 from watermark.agent.extractor import StructuredExtractor
 from watermark.civic.indexer import extract_text
-from watermark.civic.keywords import CORRIDOR_SUBJECTS
+from watermark.civic.keywords import is_corridor_relevant
 from watermark.civic.models import Subdivision
 from watermark.config import Settings, get_settings
 from watermark.logging import get_logger
 from watermark.pipeline.corpus import relpath_in_scope
-from watermark.sites import CorpusScopeArg
+from watermark.sites import CorpusScopeArg, active_profile
 
 log = get_logger(__name__)
 
@@ -102,13 +102,15 @@ def summarize_corridor_meetings(
 ) -> SummaryReport:
     """Summarize every corridor-relevant meeting in a body's index.
 
-    Selects meetings whose ``hits`` name a project-specific subject
-    (``CORRIDOR_SUBJECTS``), re-extracts each file's text (OCR'ing scans by default),
-    and runs the structured summary. A file with no extractable text is recorded in
-    ``skipped`` rather than summarized from nothing.
+    Selects meetings whose ``hits`` name one of the active site's corridor subjects
+    (``SiteProfile.corridor_subjects``, #1523 — Lima's BOSC set by default, empty for a
+    peer that hasn't declared its own), re-extracts each file's text (OCR'ing scans by
+    default), and runs the structured summary. A file with no extractable text is
+    recorded in ``skipped`` rather than summarized from nothing.
     """
     settings = settings or get_settings()
     extractor = extractor or StructuredExtractor(settings=settings)
+    subjects = active_profile(settings).corridor_subjects
     base = settings.extracted_dir / subdivision.slug / "meetings"
     index_path = index_path or (base / "meeting-index.yaml")
     docs_dir = docs_dir or (settings.documents_dir / subdivision.slug / "meetings")
@@ -116,7 +118,7 @@ def summarize_corridor_meetings(
     docs = [
         d
         for d in (data or {}).get("documents", [])
-        if isinstance(d, dict) and any(h in CORRIDOR_SUBJECTS for h in d.get("hits", []))
+        if isinstance(d, dict) and is_corridor_relevant(d.get("hits", []), subjects)
     ]
     if limit is not None:
         docs = docs[:limit]
