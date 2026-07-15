@@ -89,8 +89,10 @@ class _FakeClient:
         self.messages = _FakeMessages()
 
 
-def _extractor() -> StructuredExtractor:
-    return StructuredExtractor(client=_FakeClient(), settings=Settings())
+def _extractor(settings: Settings) -> StructuredExtractor:
+    # The injected fake client makes this hermetic; pass the test's tmp_path-anchored settings
+    # so the extractor never falls back to a live-env ``Settings()`` (e.g. WATERMARK_EXTRACT_MODEL).
+    return StructuredExtractor(client=_FakeClient(), settings=settings)
 
 
 # --- the round-trip: download → index → summarize → export on a fixture peer ------------------
@@ -138,7 +140,7 @@ def test_peer_round_trip_download_index_summarize_export(tmp_path: Path, monkeyp
     write_index(idx, meetings_dir(peer.extracted_dir, PEER_BODY, peer) / "meeting-index.yaml")
 
     # 3. summarize — selects the corridor meeting under the PEER's own vocab, writes summaries.
-    summ = summarize_corridor_meetings(body, settings=peer, extractor=_extractor())
+    summ = summarize_corridor_meetings(body, settings=peer, extractor=_extractor(peer))
     assert [e.filename for e in summ.entries] == ["2026-03-02-minutes.html"]
     write_summaries(
         summ, meetings_dir(peer.extracted_dir, PEER_BODY, peer) / "meeting-summaries.yaml"
