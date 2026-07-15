@@ -113,6 +113,12 @@ watermark onboard <slug> --offline  # cached/committed fixtures only (hermetic)
   grid profile (per-utility — **sparse until the site has a documented facility load**, the
   data-center dimension). All per-site outputs are slug-scoped so they never clobber Lima.
 - runs **`basin-screen`** as a coverage validation (read-only).
+- **scaffolds the civic registry**: an empty per-site subdivisions stub
+  (`data/reference/subdivisions/<slug>/subdivisions.yaml` — `meta.site` + `subdivisions: []`) and
+  a house-style README, so the site has a place to enumerate its meeting-holding bodies and a
+  prompt to discover them (`watermark.civic`). Idempotent — a curated registry is never
+  clobbered. It's **evidence-gated**: an empty registry does **not** flip the `record`/`story`
+  readiness domains live ([#1220](https://github.com/watermark-directory/the-watermark-directory/issues/1220)).
 - prints a step table + the **blocking review checklist** (step 4).
 
 Use `watermark onboard <slug> --dry-run` to preview the plan (every step + its target path)
@@ -166,8 +172,14 @@ before promotion:
 4. The site's GIS field-maps are registered (`gis_parcel`/`gis_zoning`/`gis_flood`) for the
    layers it publishes — field names taken from the live `/<layer>?f=json`, not fabricated; a
    layer the site lacks stays `None` (the connector refuses cleanly). See the known lift below.
-5. Self-research first pass reviewed (`watermark onboard <slug> --research`; triage the proposals — see below).
-6. Promotion is a separate manual edit (step 5).
+5. The civic registry is enumerated: fill
+   `data/reference/subdivisions/<slug>/subdivisions.yaml` (scaffolded empty by onboard) with the
+   county's meeting-holding bodies from a committed roster (grounded facts + `grounded_from`),
+   then run `watermark --site <slug> subdivisions discover` and fold the confirmed `publishing:`
+   platforms in **by hand** (discovery is read-only). An empty registry does not make
+   `record`/`story` live.
+6. Self-research first pass reviewed (`watermark onboard <slug> --research`; triage the proposals — see below).
+7. Promotion is a separate manual edit (step 5).
 
 The invariant is also enforced in CI by
 [`web/src/lib/sites.test.ts`](../web/src/lib/sites.test.ts): every `selectable`

@@ -108,6 +108,7 @@ def test_onboard_writes_under_slug_not_lima(tmp_path, monkeypatch) -> None:  # t
         "reference/rsei/inventory.yaml",
         "reference/eia/consumer-energy.yaml",
         "reference/eia/grid-profile.yaml",
+        "reference/subdivisions/subdivisions.yaml",  # Lima's flat civic registry
     ):
         assert not (tmp_path / lima_path).exists(), lima_path
 
@@ -178,6 +179,66 @@ def test_dry_run_writes_nothing(tmp_path, monkeypatch) -> None:  # type: ignore[
     assert by_name["econ-baseline"].output_path == "reference/economics/fw/baseline.yaml"
     assert by_name["rsei"].output_path == "reference/rsei/fw/inventory.yaml"
     assert by_name["grid-profile"].output_path == "reference/eia/fw/grid-profile.yaml"
+
+
+def test_civic_scaffold_creates_registry_stub_and_readme(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    # The civic step lands an empty, load-clean per-site subdivisions registry + README (#1524).
+    _fw(monkeypatch)
+    settings = _settings(tmp_path)
+    report = onboard_site(settings=settings)
+
+    civic = next(s for s in report.steps if s.name == "civic-registry")
+    assert civic.status == "ok"
+    assert civic.output_path == "reference/subdivisions/fw/subdivisions.yaml"
+
+    base = tmp_path / "reference" / "subdivisions" / "fw"
+    assert (base / "subdivisions.yaml").is_file()
+    readme = base / "README.md"
+    assert readme.is_file()
+    assert "Fort Wayne" in readme.read_text(encoding="utf-8")
+
+    # The stub is load-clean for the active site and starts empty (evidence-gated — no bodies).
+    from watermark.civic import load_registry
+
+    reg = load_registry(settings)
+    assert reg.meta["site"] == "fw"
+    assert reg.subdivisions == []
+
+
+def test_civic_scaffold_does_not_clobber_curated_registry(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    # A reviewer's enumerated bodies must survive a re-run; the step then reports skipped.
+    _fw(monkeypatch)
+    settings = _settings(tmp_path)
+    onboard_site(settings=settings)
+    reg_path = tmp_path / "reference" / "subdivisions" / "fw" / "subdivisions.yaml"
+    curated = (
+        "meta:\n  site: fw\nsubdivisions:\n"
+        "  - slug: acme-twp\n    name: Acme Township\n    type: township\n"
+    )
+    reg_path.write_text(curated, encoding="utf-8")
+
+    report = onboard_site(settings=settings)
+    assert reg_path.read_text(encoding="utf-8") == curated  # untouched
+    civic = next(s for s in report.steps if s.name == "civic-registry")
+    assert civic.status == "skipped"
+
+
+def test_dry_run_plans_civic_step_without_writing(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    _fw(monkeypatch)
+    report = onboard_site(settings=_settings(tmp_path), dry_run=True)
+    civic = next(s for s in report.steps if s.name == "civic-registry")
+    assert civic.status == "dry-run"
+    assert civic.output_path == "reference/subdivisions/fw/subdivisions.yaml"
+    assert not (tmp_path / "reference" / "subdivisions").exists()
+
+
+def test_civic_review_item_captured_onto_onboarding_doc(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    _fw(monkeypatch)
+    report = onboard_site(settings=_settings(tmp_path))
+    assert any("subdivisions discover" in c for c in report.review_checklist)
+    doc = (tmp_path / "extracted" / "fw" / "ONBOARDING.md").read_text(encoding="utf-8")
+    assert "subdivisions discover" in doc  # the checklist item is persisted
+    assert "[ ] **Civic records**" in doc  # the dimension-coverage line
 
 
 @pytest.mark.parametrize(
