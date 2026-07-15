@@ -26,11 +26,13 @@ byline, and ISO publish date preserved in the page's JSON-LD). They were fetched
 best faithful capture available given the 403. Provenance is recorded per row below:
 the canonical source is LimaOhio.com; the captured-from source is the Yahoo mirror.
 
-Two articles (the 2026-07-09 commissioners item and the 2026-06-22 Wendel op-ed) are in
-the `news`/`top-stories` sections that Yahoo did not syndicate (confirmed: not on Yahoo,
-AOL, MSN, or hometownstations). Their headline, date, byline, URL, and substance are
-confirmed at the search-snippet level and extracted as `[reference]`; a full raw byte
-capture remains **owed** (manual browser pull), matching the issue's own fetch-block caveat.
+Three articles (the 2026-06-22 Wendel op-ed, the 2026-07-09 commissioners item, and the
+2026-07-14 resident-transparency item) are in the `news`/`top-stories` sections that Yahoo did
+not syndicate (confirmed: not on Yahoo, AOL, MSN, or hometownstations — the 2026-07-14 item
+re-checked 2026-07-14). Their headline, date, URL, and substance are confirmed at the
+search-snippet level and extracted as `[reference]` (the 2026-07-14 byline is not yet
+confirmed); a full raw byte capture remains **owed** (manual browser pull), matching the
+issue's own fetch-block caveat.
 
 ## Articles
 
@@ -41,6 +43,7 @@ capture remains **owed** (manual browser pull), matching the issue's own fetch-b
 | 2026-05-15 | Temporary Google construction traffic among resident concerns | Peter Bonasso | captured (Yahoo mirror) |
 | 2026-06-22 | Brad Wendel: Allen County's biggest investment is putting our members to work | Brad Wendel (op-ed) | owed (not syndicated) |
 | 2026-07-09 | Allen commissioners approve construction projects | (staff) | owed (not syndicated) |
+| 2026-07-14 | Residents question transparency with Allen County data center | (unconfirmed) | owed (not syndicated) |
 
 ### Canonical URLs
 
@@ -49,6 +52,7 @@ capture remains **owed** (manual browser pull), matching the issue's own fetch-b
 - 2026-05-15 — <https://www.limaohio.com/top-stories/2026/05/15/temporary-google-construction-traffic-among-resident-concerns/>
 - 2026-06-22 — <https://www.limaohio.com/top-stories/2026/06/22/brad-wendel-allen-countys-biggest-investment-is-putting-our-members-to-work/>
 - 2026-07-09 — <https://www.limaohio.com/news/2026/07/09/allen-commissioners-approve-construction-projects/>
+- 2026-07-14 — <https://www.limaohio.com/top-stories/2026/07/14/residents-question-transparency-with-allen-county-data-center/>
 
 ### Captured-from (Yahoo syndication mirror) URLs
 
