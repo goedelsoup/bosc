@@ -455,6 +455,19 @@ class SiteProfile(BaseModel):
     # build that owns the un-slugged Allen-County-OH collections (keeps its bundle byte-identical).
     corpus_relpaths: tuple[str, ...] | None = None
 
+    # --- Civic corridor vocabulary (civic.keywords / pipeline.timeline, #1523) ------------
+    # The project-specific meeting subjects that put a subdivision meeting on the corridor
+    # timeline (``category: subdivision_meeting``) and select it for summarization: a meeting
+    # whose index ``hits`` name one of these is corridor-relevant. Generic township topics
+    # (rezoning/easement/annexation/solar/...) and ambiguous names (``hume``/``amazon``) stay
+    # searchable in the meeting index ``hits`` but don't by themselves pull routine business onto
+    # the chronology. Per-site (#1523) — Lima carries its BOSC corridor set (``bosc``/``bistrozzi``/
+    # ``datacenter``/``google``); every other site defaults **empty**, so a peer floods no
+    # ``subdivision_meeting`` events until it declares its own subjects (the safe/honest default
+    # per the readiness model — a corridor term is never invented). Read directly off
+    # ``active_profile(settings)`` (NOT a Settings knob, never bled into ``Settings``).
+    corridor_subjects: tuple[str, ...] = ()
+
     # --- RSEI county (rsei.py) ----------------------------------------------------------
     county_name: str
     # Optional per-site economic-unit caveat, appended to the ``EconomicBaseline.note`` by

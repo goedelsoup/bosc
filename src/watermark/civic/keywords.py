@@ -9,6 +9,7 @@ one entry point; add a term here, not in the indexer.
 from __future__ import annotations
 
 import re
+from collections.abc import Collection, Iterable
 
 # slug -> case-insensitive pattern. Subjects (named parties) + topics (corridor acts).
 _TERMS: dict[str, str] = {
@@ -36,13 +37,6 @@ _TERMS: dict[str, str] = {
 _COMPILED: dict[str, re.Pattern[str]] = {k: re.compile(v, re.IGNORECASE) for k, v in _TERMS.items()}
 
 
-# Project-specific subjects — naming one of these (not a generic township topic or
-# an ambiguous name like hume/amazon) is what makes a meeting corridor-relevant for
-# the timeline and the summarization pass. (timeline.py keeps a mirrored copy to
-# avoid a pipeline->civic import.)
-CORRIDOR_SUBJECTS = frozenset({"bosc", "bistrozzi", "datacenter", "google"})
-
-
 def scan_text(text: str) -> list[str]:
     """Sorted corridor-topic slugs whose pattern appears in ``text`` (empty if none)."""
     if not text:
@@ -50,6 +44,20 @@ def scan_text(text: str) -> list[str]:
     return sorted(slug for slug, pat in _COMPILED.items() if pat.search(text))
 
 
-def is_corridor_relevant(hits: list[str]) -> bool:
-    """True if ``hits`` includes a project-specific subject (timeline/summary-worthy)."""
-    return any(h in CORRIDOR_SUBJECTS for h in hits)
+# The project-specific subjects that make a meeting corridor-relevant (timeline/summary-worthy)
+# are **per-site**, not a module constant: they live on ``SiteProfile.corridor_subjects``
+# (``bosc``/``bistrozzi``/``datacenter``/``google`` for Lima; empty for a peer until it declares
+# its own) — the single source of truth (#1523). This predicate takes that vocabulary as an
+# argument so the module stays pure (no config/sites import); callers read
+# ``active_profile(settings).corridor_subjects`` and pass it in. Generic township topics
+# (rezoning/easement/...) and ambiguous names (``hume``/``amazon``) stay in ``scan_text``'s
+# vocabulary — searchable index ``hits`` — but never appear in ``subjects``.
+
+
+def is_corridor_relevant(hits: Iterable[str], subjects: Collection[str]) -> bool:
+    """True if ``hits`` names one of the active site's corridor ``subjects``.
+
+    ``subjects`` is the active site's ``SiteProfile.corridor_subjects``; empty when a site
+    declares none, so nothing is corridor-relevant there (the safe/honest default).
+    """
+    return any(h in subjects for h in hits)

@@ -18,7 +18,9 @@ values instead of baking in Lima's. Defers to the root [`CLAUDE.md`](../../../CL
   and the connector refuses cleanly); stormwater/hydrology constants (design point, HSG,
   refill + abstraction gages, receiving waters); per-site **onboard output relpaths**; the
   optional disclosed `SiteFacility` (gensets/IT load/cooling model); grid/market identity;
-  and the `corpus_relpaths` scope. `*_relpath`s are relative to `settings.data_dir`.
+  the `corpus_relpaths` scope; and the per-site civic **`corridor_subjects`** vocabulary
+  (#1523 — the meeting subjects that reach the corridor timeline, empty for a peer until it
+  declares its own). `*_relpath`s are relative to `settings.data_dir`.
 - **Only `PROFILE_SETTINGS_FIELDS` (`_model.py`) crosses into `Settings`.** `Settings`
   copies each of those knobs (`nwis_sites`, `rsei_fips`, `econ_fips`, `eia861_utility_number`,
   `eia_state`, the GIS URLs, `nasa_power_lat/lon`, `gnis_default_state`, `hydro_utm_epsg`,

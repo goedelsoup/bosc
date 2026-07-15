@@ -108,6 +108,35 @@ def test_summarize_selects_corridor_only_and_skips_textless(tmp_path: Path) -> N
     assert report.skipped == ["c.html"]  # corridor-relevant but no extractable text
 
 
+def test_summarize_gated_by_active_site_corridor_vocab(tmp_path: Path, monkeypatch: Any) -> None:
+    # Corridor selection is per-site (#1523): a site whose corridor_subjects is empty selects
+    # NO meetings, even for hits that gate under Lima's populated vocab (datacenter/google).
+    # Contrast test_summarize_selects_corridor_only_and_skips_textless, which selects the same
+    # kind of doc under Lima's real vocab — isolating the vocabulary as the gate. (Patching the
+    # reference site keeps the flat meetings layout so the seeded index is still found; it's the
+    # empty vocab, not a missing tree, that yields nothing.)
+    from watermark.sites import SITES
+
+    no_vocab = SITES["lima"].model_copy(update={"corridor_subjects": ()})
+    monkeypatch.setitem(SITES, "lima", no_vocab)
+    docs = [
+        {
+            "filename": "a.html",
+            "kind": "minutes",
+            "date_verified": "2026-02-09",
+            "hits": ["datacenter", "google"],
+        }
+    ]
+    settings = _seed(tmp_path, docs, {"a.html": "data center discussion"})
+    report = summarize_corridor_meetings(_body(), settings=settings, extractor=_extractor())
+    assert report.entries == []
+    assert report.skipped == []
+    # The index is untouched on disk — the hits stay searchable, just not summarized.
+    assert (
+        settings.extracted_dir / "american-township" / "meetings" / "meeting-index.yaml"
+    ).exists()
+
+
 def test_summarize_respects_limit(tmp_path: Path) -> None:
     docs = [
         {

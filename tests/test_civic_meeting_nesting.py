@@ -214,8 +214,16 @@ def test_timeline_meeting_events_isolate_by_site(tmp_path: Path) -> None:
     lima = Settings(data_dir=tmp_path, site="lima")
     peer = Settings(data_dir=tmp_path, site=PEER)
 
-    lima_events = _subdivision_meeting_events(lima, effective_corpus_scope(active_profile(lima)))
-    peer_events = _subdivision_meeting_events(peer, effective_corpus_scope(active_profile(peer)))
+    # This is a *provenance-isolation* test, not a vocabulary test: pass an explicit corridor
+    # vocab so the seeded ``datacenter`` meeting surfaces for BOTH sites regardless of each
+    # profile's own ``corridor_subjects`` (the peer, findlay, declares none by default — #1523).
+    # Per-site vocabulary selection has its own coverage in tests/test_civic_indexer.py.
+    lima_events = _subdivision_meeting_events(
+        lima, effective_corpus_scope(active_profile(lima)), subjects=("datacenter",)
+    )
+    peer_events = _subdivision_meeting_events(
+        peer, effective_corpus_scope(active_profile(peer)), subjects=("datacenter",)
+    )
 
     assert {e.source for e in lima_events} == {f"{LIMA_BODY}/meetings/meeting-index.yaml"}
     # The peer event cites its real NESTED path (provenance follows the layout, #1522).

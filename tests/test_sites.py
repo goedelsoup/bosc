@@ -110,6 +110,7 @@ _LIMA_GOLDEN = {
     "campus_dry_weather_mgd": 2.5,
     "lmp_usd_mwh": 45.81,  # connector-sourced AEP-zone 2025 day-ahead annual mean (#121)
     "county_name": "Allen County, OH",
+    "corridor_subjects": ("bosc", "bistrozzi", "datacenter", "google"),  # #1523 reference set
     "map_view_lat": 40.792,
     "map_view_lon": -84.122,
     "map_view_zoom": 14,
