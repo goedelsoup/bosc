@@ -97,6 +97,75 @@ def _readme_body(place: str, slug: str, basin: str, purpose: str, source: str) -
     )
 
 
+def _civic_registry_stub(prof: SiteProfile) -> str:
+    """An empty, load-clean subdivisions-registry stub for a newly onboarded site (#1524).
+
+    ``meta.site`` + an empty ``subdivisions: []`` — the minimum ``civic.load_registry`` accepts,
+    so ``watermark --site <slug> subdivisions discover`` runs against it immediately (an empty
+    body list, not a crash). The county's meeting-holding bodies are enumerated here BY HAND from
+    a committed county roster (the grounded facts); discovery only fills the ``publishing:`` block.
+    """
+    return (
+        f"# {prof.place} ({prof.slug}) — political-subdivision public-meeting records registry.\n"
+        f"# Scaffolded empty by `watermark onboard {prof.slug}` (#1524). Enumerate this site's\n"
+        "# meeting-holding bodies BELOW from a committed county roster (grounded facts:\n"
+        "# name/type/governing_body/meeting_schedule/office, each with `grounded_from`), then run\n"
+        f"# `watermark --site {prof.slug} subdivisions discover` and fold the confirmed\n"
+        "# `publishing:` platforms in BY HAND — discovery is read-only (see civic/CLAUDE.md).\n"
+        "# An empty registry is honest: it does NOT make the record/story domains live.\n"
+        "meta:\n"
+        f"  site: {prof.slug}\n"
+        f"  subject: {prof.place} political subdivisions — public-meeting records registry\n"
+        "  description: >-\n"
+        f"    Meeting-holding bodies for the {prof.place} watershed point, each with the verbatim\n"
+        "    governing-body meeting cadence and contact carried in a committed county roster, plus\n"
+        "    a `publishing:` block recording where the body posts its minutes/agendas online. The\n"
+        "    grounded roster facts are immutable source; the `publishing:` block is filled by the\n"
+        "    read-only discovery pass and carries its own `discovered:` provenance. Empty until\n"
+        "    the bodies are enumerated by hand.\n"
+        "  grounded_sources: []\n"
+        "subdivisions: []\n"
+    )
+
+
+def _civic_readme_body(prof: SiteProfile) -> str:
+    """House-style README for the scaffolded per-site subdivisions registry dir (#1524).
+
+    Unlike the connector-output READMEs (``_readme_body``, "regenerate, don't hand-edit"), the
+    civic registry is **hand-curated**: grounded facts are transcribed verbatim from committed
+    county rosters and the ``publishing:`` block is folded in by hand from the read-only
+    discovery pass. So this documents that curation contract, not a regenerate command.
+    """
+    slug, place = prof.slug, prof.place
+    return (
+        f"# {place} ({slug}) — subdivision meeting-records registry\n\n"
+        f"Per-site registry of {place}'s meeting-holding bodies (townships, municipalities, "
+        "meeting-holding special districts) and **where each publishes its minutes/agendas "
+        f"online**. Scaffolded empty by `watermark onboard {slug}` (#1524); read per active site "
+        "by `watermark.civic` (`registry_path`). This peer slug-scopes under "
+        f"`subdivisions/{slug}/`; Lima (the reference build) keeps the flat legacy path.\n\n"
+        "## Source\n\n"
+        "Hand-curated, not connector-generated. **Grounded** fields "
+        "(`name`/`type`/`governing_body`/`meeting_schedule`/`office`) are transcribed **verbatim** "
+        f"from a committed {place}-area county-published roster named in `meta.grounded_sources` "
+        "(`grounded_from` per body) — never from outside knowledge. **Discovered** fields "
+        "(`publishing.*`) are a live-web finding with their own `publishing.discovered:` "
+        f"provenance, folded in BY HAND from `watermark --site {slug} subdivisions discover` "
+        "(read-only; it never rewrites this file).\n\n"
+        "## Known gaps & caveats\n\n"
+        "- **Scaffolded empty** — enumerate the county's bodies before promotion. An empty "
+        'registry is honest, never a finding of "publishes nothing."\n'
+        "- `publishing.platform: unknown` = *not yet looked*, never *publishes nothing*; a null "
+        "`records_url` is never evidence of withholding.\n"
+        "- An empty/seeded registry does **not** flip the `record`/`story` readiness domains "
+        "live (#1220) — those rise only when meetings are actually ingested and summarized.\n\n"
+        "## Populate\n\n"
+        "Enumerate bodies by hand from a committed roster, then "
+        f"`watermark --site {slug} subdivisions discover` and fold the confirmed platforms in. "
+        "See `docs/onboarding.md` and `src/watermark/civic/CLAUDE.md`.\n"
+    )
+
+
 def scaffold_dirs(settings: Settings, *, dry_run: bool = False) -> tuple[list[str], list[str]]:
     """Create the per-site data dirs + a README in each (idempotent).
 
@@ -273,6 +342,8 @@ def render_onboarding_doc(report: OnboardReport) -> str:
         "- [x] **Economics** — county baseline, RSEI toxics, consumer energy, grid profile\n"
         "- [ ] **Data-center activity** — extracted permits/records + entity graph "
         "(corpus extraction; seed proposals via `watermark onboard --research`, #247)\n"
+        "- [ ] **Civic records** — per-site subdivisions registry + meeting minutes/agendas "
+        "(feeds record/story; scaffolded empty, evidence-gated)\n"
         "- [ ] **Per-jurisdiction GIS** — parcels/zoning connector (the known lift; see docs/onboarding.md)\n\n"
         "## Last onboard run\n\n"
         "| step | status | output |\n|---|---|---|\n" + rows + "\n\n"
@@ -411,6 +482,45 @@ def _exec_grid(settings: Settings) -> OnboardStep:
     )
 
 
+def _exec_civic_scaffold(settings: Settings, prof: SiteProfile) -> OnboardStep:
+    """Scaffold the per-site subdivisions registry stub + README (idempotent, #1524).
+
+    Gives a newly onboarded site an empty, ready-to-fill civic registry
+    (``data/reference/subdivisions/<slug>/subdivisions.yaml`` — ``meta.site`` + ``subdivisions:
+    []``) and a house-style README, so it has a place to declare its meeting-holding bodies and
+    a prompt to discover them. Resolves the path through ``civic.registry_path`` (not a hardcoded
+    slug), so a peer slug-scopes and the reference build keeps its flat legacy layout. Never
+    clobbers a curated registry: an existing registry (or README) is left untouched. Scaffolding
+    an empty registry does NOT flip the ``record``/``story`` readiness domains live (#1220) —
+    those rise only when meetings are actually ingested and summarized.
+    """
+    from watermark.civic.registry import registry_path
+
+    path = registry_path(settings)
+    readme = path.parent / "README.md"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    wrote: list[str] = []
+    if not path.is_file():
+        path.write_text(_civic_registry_stub(prof), encoding="utf-8")
+        wrote.append("registry")
+    if not readme.is_file():
+        readme.write_text(_civic_readme_body(prof), encoding="utf-8")
+        wrote.append("README")
+    if not wrote:
+        return OnboardStep(
+            name="civic-registry",
+            status="skipped",
+            detail="registry already present (curated — not clobbered)",
+            output_path=_rel(settings, path),
+        )
+    return OnboardStep(
+        name="civic-registry",
+        status="ok",
+        detail=f"empty stub ({', '.join(wrote)}) — enumerate bodies + discover",
+        output_path=_rel(settings, path),
+    )
+
+
 class _StepSpec(NamedTuple):
     """One onboard reach step: the dry-run plan (detail + target path) and the real executor."""
 
@@ -425,7 +535,15 @@ def _step_specs(settings: Settings, prof: SiteProfile, research: bool) -> list[_
     and the real run, so the two can't silently drift (#604). ``planned_detail``/``planned_path``
     describe the step before it runs; ``execute`` runs the connector and reports its real outcome.
     """
+    from watermark.civic.registry import registry_path
+
     specs = [
+        _StepSpec(
+            "civic-registry",
+            "per-site subdivisions registry stub (empty; evidence-gated — no domain flip)",
+            _rel(settings, registry_path(settings)),
+            lambda: _exec_civic_scaffold(settings, prof),
+        ),
         _StepSpec(
             "derive-low-flows",
             "basin-level (shared across Maumee sites)",
@@ -549,6 +667,10 @@ def _review_checklist(slug: str) -> list[str]:
         "SSURGO dominant HSG matches the profile, or the SiteProfile is updated with a citation.",
         "basin-screen coverage is sane for this site's receiving waters.",
         "A per-jurisdiction County/City GIS connector exists (the known lift — see docs/onboarding.md).",
+        f"Civic registry: enumerate the county's meeting-holding bodies for {slug!r} from a "
+        f"committed roster into data/reference/subdivisions/{slug}/subdivisions.yaml; run "
+        f"`watermark --site {slug} subdivisions discover` and fold confirmed platforms in BY HAND "
+        "(discovery is read-only). An empty registry does not make record/story live.",
         "Self-research first pass reviewed (run with --research; triage data/research/<slug>-<date>/).",
         f"PROMOTION IS A SEPARATE MANUAL EDIT: flip status->live + selectable->true for {slug!r} in "
         "web/src/lib/sites.ts, parity-gated. onboard never auto-promotes; only one live build "
