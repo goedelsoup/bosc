@@ -30,6 +30,7 @@ import yaml
 from pydantic import BaseModel, ConfigDict
 
 from watermark.civic.keywords import scan_text
+from watermark.civic.layout import meetings_dir
 from watermark.civic.models import Subdivision
 from watermark.config import Settings, get_settings
 from watermark.documents.pdf import PdfDocument
@@ -274,9 +275,9 @@ def index_meetings(
     default leaves them ``text_method: none``.
     """
     settings = settings or get_settings()
-    base = settings.extracted_dir / subdivision.slug / "meetings"
+    base = meetings_dir(settings.extracted_dir, subdivision.slug, settings)
     manifest_path = manifest_path or (base / "download-manifest.yaml")
-    docs_dir = docs_dir or (settings.documents_dir / subdivision.slug / "meetings")
+    docs_dir = docs_dir or meetings_dir(settings.documents_dir, subdivision.slug, settings)
     manifest = (
         yaml.safe_load(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else {}
     )

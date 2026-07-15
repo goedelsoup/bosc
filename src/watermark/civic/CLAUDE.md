@@ -46,10 +46,23 @@ Defers to the root [`CLAUDE.md`](../../../CLAUDE.md).
     links, percent-decodes the href, parses dates from the link text/filename, and
     classifies minutes/agenda. A JS-rendered or embedded list yields an honest
     empty result — never a fabricated entry.
+- **Meeting trees nest per site (`layout.py`, #1520/#1522).** A body slug keys the meeting
+  namespace, and where that namespace lives is `meetings_dir(root, body_slug, settings)`: Lima —
+  the reference build — keeps the flat legacy `<body>/meetings/` (chain of custody, never
+  relocated), and every **peer** nests one level deeper under its **site** slug,
+  `<site>/<body>/meetings/`, so the peer's default corpus scope `(slug,)` owns the whole subtree
+  for free and Lima's whole-tree-minus-peers scope excludes it (the `<site>` segment is a peer
+  prefix). Which site owns the flat layout is `watermark.sites.is_reference_site`, not a hardcoded
+  slug (same rule as the registry). **Every write path** (`downloader`/`indexer`/`summarize`/
+  `audit` + the CLI) routes both roots (`documents_dir`, `extracted_dir`) through this helper;
+  **every read path** funnels through `pipeline.corpus.iter_meeting_artifacts` (two bounded globs
+  over the one- and two-segment depths, then `relpath_in_scope`) — timeline, `load_committed_summaries`,
+  and the entity fold-in — so a tree lands in **exactly one** site. `retrieval.iter_extracted_chunks`
+  and `load_corpus` already `rglob` + scope-gate, so they pick up the nested tree without change.
 - **Fetchers return a `MeetingDoc` inventory, not files.** `downloader.py` is the
-  step that pulls the binaries into `data/documents/<slug>/meetings/` (raw, LFS,
-  immutable) and writes a non-destructive **download manifest** under
-  `data/extracted/<slug>/meetings/download-manifest.yaml` (sha256, bytes,
+  step that pulls the binaries into the body's meeting subtree (raw, LFS, immutable — flat for
+  Lima, `<site>/`-nested for a peer, above) and writes a non-destructive **download manifest**
+  under the parallel `data/extracted/…/meetings/download-manifest.yaml` (sha256, bytes,
   content-type, source URL, listing-derived date). `watermark subdivisions download
   <slug> [--limit N] [--dry-run]`. Chain of custody: on-disk names are as-received
   (Content-Disposition → URL basename); a differing byte is never overwritten

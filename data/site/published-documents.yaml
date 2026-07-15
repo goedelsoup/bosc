@@ -33,3 +33,16 @@ documents:        # exact data/documents rels, e.g.  - recorder/bistrozzi-deeds/
   # auto-include (#1301 closed that path); kept public here as an explicit, reviewed entry.
   # review: { by: goedelsoup, date: 2026-07-08, result: publish, basis: public-epa-permit }
   - permits/bistrozzi-permits/4132514.pdf
+  # The AEDG "Data Center Updates" web captures — AEDG's OWN public website pages about the
+  # Google / Project BOSC data-center build (the marketing/news set captured through 2026-04-27;
+  # provenance in data/documents/limaohio/SOURCES.md). Published on the basis that these are
+  # already-public web pages by the Allen Economic Development Group with no private PII — the
+  # captured bytes re-expose only what AEDG itself served publicly. Per the root CLAUDE.md,
+  # any embedded analytics tokens are evidence, not a leak; the allowlist (not deletion) is the
+  # exposure control. Listed per-document (not a whole-aedg-collection rule) so the PRR bundle's
+  # recorded-instrument pages keep their own explicit basis and a future AEDG capture is reviewed.
+  # review: { by: goedelsoup, date: 2026-07-15, result: publish, basis: aedg-public-web-captures }
+  - aedg/data-center-updates/data-center-updates.index.html
+  - aedg/data-center-updates/google-data-center-website-now-live-for-allen-county-community.html
+  - aedg/data-center-updates/google-to-build-data-center-in-lima-ohio-with-500-million-capital-investment.html
+  - aedg/data-center-updates/what-is-a-data-center-and-why-does-it-matter-for-communities-like-ours.html

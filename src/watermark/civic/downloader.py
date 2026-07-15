@@ -1,9 +1,10 @@
 """Download a body's meeting documents into the corpus, under chain of custody.
 
-Takes the ``MeetingDoc`` inventory a fetcher produced and pulls each binary into
-``data/documents/<slug>/meetings/`` — the raw, immutable, LFS-tracked evidence tree
-— then writes a non-destructive **download manifest** under
-``data/extracted/<slug>/meetings/`` recording, per file: the as-received filename,
+Takes the ``MeetingDoc`` inventory a fetcher produced and pulls each binary into the raw,
+immutable, LFS-tracked evidence tree — Lima's flat ``data/documents/<body>/meetings/``, a peer's
+nested ``data/documents/<site>/<body>/meetings/`` (:func:`watermark.civic.layout.meetings_dir`,
+#1522) — then writes a non-destructive **download manifest** under the parallel
+``data/extracted/…/meetings/`` recording, per file: the as-received filename,
 source URL, sha256, byte count, content-type, fetch time, and the
 listing-derived date/kind.
 
@@ -36,6 +37,7 @@ import yaml
 from pydantic import BaseModel, ConfigDict
 
 from watermark.civic._http import _browser_request
+from watermark.civic.layout import meetings_dir
 from watermark.civic.models import MeetingDoc, Subdivision
 from watermark.config import Settings, get_settings
 from watermark.logging import get_logger
@@ -157,7 +159,11 @@ def download_meetings(
     fetcher: BytesFetcher = _get_bytes,
     source_page: str | None = None,
 ) -> DownloadReport:
-    """Download ``docs`` into ``data/documents/<slug>/meetings/`` (chain of custody).
+    """Download ``docs`` into the body's meeting subtree (chain of custody).
+
+    The destination is the active site's layout (:func:`~watermark.civic.layout.meetings_dir`):
+    Lima's flat ``<body>/meetings/`` or a peer's nested ``<site>/<body>/meetings/``; ``dest_root``
+    overrides it outright (tests).
 
     Idempotent: an identical existing file is skipped; a differing file under the
     same name is written beside it and flagged ``conflict`` (never overwritten).
@@ -167,7 +173,7 @@ def download_meetings(
     pages differ); it falls back to the registry ``records_url`` for the manifest.
     """
     settings = settings or get_settings()
-    dest = dest_root or (settings.documents_dir / subdivision.slug / "meetings")
+    dest = dest_root or meetings_dir(settings.documents_dir, subdivision.slug, settings)
     dest.mkdir(parents=True, exist_ok=True)
     selected = docs[:limit] if limit is not None else docs
     results: list[DownloadedDoc] = []

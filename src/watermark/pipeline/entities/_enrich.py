@@ -16,7 +16,7 @@ import yaml
 
 from watermark.config import Settings, get_settings
 from watermark.logging import get_logger
-from watermark.pipeline.corpus import relpath_in_scope
+from watermark.pipeline.corpus import iter_meeting_artifacts, relpath_in_scope
 from watermark.pipeline.entities._graph import Entity, EntityGraph, Relationship
 from watermark.pipeline.entities._names import RELATION_CLASS_ORDER, normalize_name
 from watermark.sites import active_profile, effective_corpus_scope, site_scoped_path
@@ -108,20 +108,22 @@ def _narrative_actors(meeting: dict[str, Any]) -> list[str]:
 def _subdivision_meeting_entities(graph: EntityGraph, *, settings: Settings | None = None) -> None:
     """Fold corridor-relevant meeting participants into the graph (opt-in).
 
-    Reads every committed ``<slug>/meetings/meeting-summaries.yaml`` and, per corridor
-    party, merges it into the graph (enriching a known entity with the meeting as a
-    source) and links it to the subdivision body via one ``discussed_at`` edge —
-    connecting township actors to the corridor network. One-off residents/vendors stay
-    in the summaries, not the graph (see :func:`_corridor_key`); the per-party meeting
-    count lives in the entity's ``roles``.
+    Reads every committed ``meeting-summaries.yaml`` — Lima's flat ``<body>/meetings/`` and a
+    peer's nested ``<site>/<body>/meetings/`` (:func:`~watermark.pipeline.corpus.iter_meeting_artifacts`)
+    — and, per corridor party, merges it into the graph (enriching a known entity with the meeting
+    as a source) and links it to the subdivision body via one ``discussed_at`` edge — connecting
+    township actors to the corridor network. One-off residents/vendors stay in the summaries, not
+    the graph (see :func:`_corridor_key`); the per-party meeting count lives in the entity's
+    ``roles``.
     """
     settings = settings or get_settings()
     scope = effective_corpus_scope(active_profile(settings))
     seen_edges: set[tuple[str, str]] = set()
-    for path in sorted(settings.extracted_dir.glob("*/meetings/meeting-summaries.yaml")):
-        # Per-site (#762): these meeting indices are Lima's Allen-County townships; a
-        # sibling site only folds in its own. Match the actual path, not the meta slug.
-        if not relpath_in_scope(path.relative_to(settings.extracted_dir).as_posix(), scope):
+    for path in iter_meeting_artifacts(settings.extracted_dir, "meeting-summaries.yaml"):
+        # Per-site (#762): a sibling site only folds in its own meetings; Lima's whole-tree-minus-
+        # peers scope excludes every nested peer tree. Gate on the actual path, not the meta slug.
+        rel = path.relative_to(settings.extracted_dir).as_posix()
+        if not relpath_in_scope(rel, scope):
             continue
         try:
             data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
@@ -130,7 +132,6 @@ def _subdivision_meeting_entities(graph: EntityGraph, *, settings: Settings | No
         if not isinstance(data, dict):
             continue
         slug = str(data.get("meta", {}).get("slug", path.parent.parent.name))
-        rel = f"{slug}/meetings/meeting-summaries.yaml"
         sub_name = slug.replace("-", " ").title()
         sub_key = normalize_name(sub_name)
         sub_registered = False

@@ -21,7 +21,12 @@ import yaml
 
 from watermark.config import Settings, get_settings
 from watermark.logging import get_logger
-from watermark.pipeline.corpus import Corpus, load_corpus, relpath_in_scope
+from watermark.pipeline.corpus import (
+    Corpus,
+    iter_meeting_artifacts,
+    load_corpus,
+    relpath_in_scope,
+)
 from watermark.sites import CorpusScope, active_profile, effective_corpus_scope
 
 log = get_logger(__name__)
@@ -339,13 +344,13 @@ def _subdivision_meeting_events(
 ) -> list[TimelineEvent]:
     """Subdivision meetings that name the corridor project in their minutes/agendas.
 
-    Reads every committed ``<slug>/meetings/meeting-index.yaml`` (built by
-    ``watermark subdivisions index``) and surfaces only meetings whose text hit one of
-    the active site's corridor ``subjects`` — routine township business stays in the
-    index as searchable corpus but off the chronology. Agenda + minutes for the same
-    meeting collapse via a shared ``ref``. When a meeting has a committed summary
-    (``meeting-summaries.yaml``), its grounded relevance + dollar figures become the
-    event detail; otherwise the detail is the raw hit set.
+    Reads every committed ``meeting-index.yaml`` (built by ``watermark subdivisions index``) across
+    both layouts — Lima's flat ``<body>/meetings/`` and a peer's nested ``<site>/<body>/meetings/``
+    (:func:`~watermark.pipeline.corpus.iter_meeting_artifacts`) — and surfaces only meetings whose
+    text hit one of the active site's corridor ``subjects`` — routine township business stays in the
+    index as searchable corpus but off the chronology. Agenda + minutes for the same meeting collapse
+    via a shared ``ref``. When a meeting has a committed summary (``meeting-summaries.yaml``), its
+    grounded relevance + dollar figures become the event detail; otherwise the detail is the raw hit set.
 
     ``subjects`` is the per-site corridor vocabulary (#1523): the single source of truth
     is ``SiteProfile.corridor_subjects``, so ``None`` derives it from ``active_profile``
@@ -353,19 +358,19 @@ def _subdivision_meeting_events(
     ``subdivision_meeting`` events (its hits stay in the index, undropped) until it
     declares its own subjects — the safe/honest default.
 
-    ``scope`` bounds the glob to the active site's collections (#762): each index is
-    keyed by its own ``rel``, so a sibling site only sees its own meeting indices, not
-    Lima's Allen-County townships.
+    ``scope`` bounds the read to the active site's collections (#762): each index is gated on its
+    real path through ``relpath_in_scope``, so a sibling site only sees its own meeting indices and
+    Lima's whole-tree-minus-peers scope excludes every nested peer tree.
     """
     if subjects is None:
         subjects = active_profile(settings).corridor_subjects
     events: list[TimelineEvent] = []
-    for index_path in sorted(settings.extracted_dir.glob("*/meetings/meeting-index.yaml")):
-        if not relpath_in_scope(index_path.relative_to(settings.extracted_dir).as_posix(), scope):
+    for index_path in iter_meeting_artifacts(settings.extracted_dir, "meeting-index.yaml"):
+        rel = index_path.relative_to(settings.extracted_dir).as_posix()
+        if not relpath_in_scope(rel, scope):
             continue
         data = _load_yaml(index_path)
         slug = str(data.get("meta", {}).get("slug", index_path.parent.parent.name))
-        rel = f"{slug}/meetings/meeting-index.yaml"
         name = slug.replace("-", " ").title()
         summaries = _load_yaml(index_path.parent / "meeting-summaries.yaml")
         by_file = {

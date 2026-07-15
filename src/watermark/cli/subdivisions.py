@@ -175,17 +175,19 @@ def subdivisions_download(
         "undated docs are skipped. Use to ingest just the new meetings.",
     ),
 ) -> None:
-    """Download a body's minutes/agendas into data/documents/<slug>/meetings/.
+    """Download a body's minutes/agendas into the active site's meeting subtree.
 
     Fetches the body's MeetingDoc inventory, then pulls each binary into the raw,
-    LFS-tracked evidence tree under its as-received name, and writes a
-    non-destructive download manifest under data/extracted/<slug>/meetings/.
+    LFS-tracked evidence tree under its as-received name — Lima's flat
+    data/documents/<body>/meetings/ or a peer's nested data/documents/<site>/<body>/meetings/
+    — and writes a non-destructive download manifest under the parallel data/extracted tree.
     Idempotent: unchanged files are skipped, conflicting bytes are kept beside the
     original. Dates in the manifest are listing-derived (not yet content-verified).
     """
     from watermark.civic import load_registry
     from watermark.civic.downloader import download_meetings, write_manifest
     from watermark.civic.fetchers import FetcherNotImplementedError, fetch_meetings
+    from watermark.civic.layout import meetings_dir
 
     settings = get_settings()
     reg = load_registry(settings)
@@ -212,7 +214,7 @@ def subdivisions_download(
     if dry_run:
         console.print(
             f"[bold]{body.name}[/] — would download [bold]{len(selected)}[/] of "
-            f"{len(docs)} documents to {settings.documents_dir / slug / 'meetings'}:"
+            f"{len(docs)} documents to {meetings_dir(settings.documents_dir, slug, settings)}:"
         )
         for d in selected[:30]:
             console.print(f"  [dim]{d.date or '—'}[/] {d.kind:7} {d.url}")
@@ -224,7 +226,7 @@ def subdivisions_download(
         body, docs, settings=settings, limit=limit, source_page=url or body.publishing.records_url
     )
     manifest = write_manifest(
-        report, settings.extracted_dir / slug / "meetings" / "download-manifest.yaml"
+        report, meetings_dir(settings.extracted_dir, slug, settings) / "download-manifest.yaml"
     )
     console.print(
         f"[green]{report.downloaded}[/] downloaded, {report.skipped} skipped, "
@@ -245,13 +247,15 @@ def subdivisions_index(
 ) -> None:
     """OCR/text-index a body's downloaded meetings: verify dates + scan corridor topics.
 
-    Reads data/extracted/<slug>/meetings/download-manifest.yaml, extracts each file's
+    Reads the body's download-manifest.yaml (flat for Lima, <site>/-nested for a peer),
+    extracts each file's
     text (PDF text layer / DOCX / HTML; --ocr also reads image-only scans), confirms
     the listing date against the file's own content, scans for corridor topics, and
     writes meeting-index.yaml. Meetings with a corridor hit then surface on the timeline.
     """
     from watermark.civic import load_registry
     from watermark.civic.indexer import OcrUnavailableError, index_meetings, write_index
+    from watermark.civic.layout import meetings_dir
 
     settings = get_settings()
     reg = load_registry(settings)
@@ -272,7 +276,9 @@ def subdivisions_index(
         )
         raise typer.Exit(1)
 
-    out = write_index(report, settings.extracted_dir / slug / "meetings" / "meeting-index.yaml")
+    out = write_index(
+        report, meetings_dir(settings.extracted_dir, slug, settings) / "meeting-index.yaml"
+    )
     scanned = report.text_extracted
     console.print(
         f"[green]{report.text_extracted}/{len(report.docs)}[/] text-extracted, "
@@ -299,6 +305,7 @@ def subdivisions_audit(
     """
     from watermark.civic import load_registry
     from watermark.civic.audit import audit_body, write_audit
+    from watermark.civic.layout import meetings_dir
 
     settings = get_settings()
     reg = load_registry(settings)
@@ -317,7 +324,8 @@ def subdivisions_audit(
             continue
         audited += 1
         write_audit(
-            report, settings.extracted_dir / body.slug / "meetings" / "completeness-audit.yaml"
+            report,
+            meetings_dir(settings.extracted_dir, body.slug, settings) / "completeness-audit.yaml",
         )
         cov = "—" if not report.parsed else f"{report.coverage:.0%}"
         span = f"{report.span_start}..{report.span_end}" if report.span_start else "—"
@@ -353,6 +361,7 @@ def subdivisions_summarize(
     parcels, dollar figures), writing meeting-summaries.yaml. Requires ANTHROPIC_API_KEY.
     """
     from watermark.civic import load_registry
+    from watermark.civic.layout import meetings_dir
     from watermark.civic.summarize import summarize_corridor_meetings, write_summaries
 
     settings = get_settings()
@@ -375,7 +384,7 @@ def subdivisions_summarize(
         table.add_row(e.date or "—", e.kind, e.summary.corridor_relevance[:70])
     console.print(table)
     out = write_summaries(
-        report, settings.extracted_dir / slug / "meetings" / "meeting-summaries.yaml"
+        report, meetings_dir(settings.extracted_dir, slug, settings) / "meeting-summaries.yaml"
     )
     console.print(f"[green]{len(report.entries)}[/] meetings summarized → {out}")
     if report.skipped:

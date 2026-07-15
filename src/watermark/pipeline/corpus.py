@@ -13,6 +13,7 @@ so downstream analysis can cite the artifact it came from.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any
 
 import yaml
@@ -58,6 +59,25 @@ def relpath_in_scope(rel: str, scope: CorpusScopeArg) -> bool:
     if isinstance(scope, CorpusScope):
         return scope.contains(rel)
     return CorpusScope(include=scope).contains(rel)
+
+
+def iter_meeting_artifacts(extracted_dir: Path, filename: str) -> list[Path]:
+    """Every committed meeting artifact named ``filename``, across both site layouts (#1522).
+
+    Meeting-holding bodies live in a body-slug namespace: Lima's six bodies stay flat at
+    ``<body>/meetings/<filename>``; a peer's bodies nest one level deeper under the site slug at
+    ``<site>/<body>/meetings/<filename>`` (:func:`watermark.civic.layout.meetings_dir`), which the
+    peer's default corpus scope ``(slug,)`` owns for free. Two bounded globs cover exactly those
+    one- and two-segment depths — cheaper and more precise than a ``**`` walk of the whole
+    extracted tree, and independent of body count: the meeting read surfaces (timeline, committed
+    summaries, entity fold-in) run this once, then gate each path through :func:`relpath_in_scope`,
+    so a nested tree lands in **exactly one** site's scope. Returns a sorted, de-duplicated list.
+    """
+    hits = {
+        *extracted_dir.glob(f"*/meetings/{filename}"),
+        *extracted_dir.glob(f"*/*/meetings/{filename}"),
+    }
+    return sorted(hits)
 
 
 @dataclass(frozen=True)
