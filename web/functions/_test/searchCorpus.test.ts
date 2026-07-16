@@ -337,15 +337,28 @@ describe("handleSearchCorpus governance (#1581)", () => {
 });
 
 describe("handleSearchCorpus hybrid retrieval (#1586)", () => {
-  // "records:kw" is the only BM25 match for "roundabout"; "records:semantic" shares no query
-  // keyword, so only the hybrid vector path can surface it. "records:noise" matches neither.
+  // Four records exercise every retrieval channel for the query "roundabout":
+  //   records:both     — matches BM25 (keyword) AND is the vector-nearest → scores in both lists
+  //   records:kw       — BM25 keyword match only (its embedding is orthogonal to the query)
+  //   records:semantic — vector-only (shares no query keyword, but points near the query)
+  //   records:noise    — neither channel
+  // So reciprocal-rank fusion must promote records:both ahead of either single-channel hit.
   const HYBRID_UNITS: AskUnit[] = [
+    {
+      id: "records:both",
+      feed: "records",
+      title: "Roundabout corridor summary",
+      url: "/u/both",
+      text: "roundabout roundabout intersection corridor summary",
+      verified: true,
+      site: "lima",
+    },
     {
       id: "records:kw",
       feed: "records",
-      title: "Roundabout keyword match",
+      title: "Intersection cost estimate",
       url: "/u/kw",
-      text: "roundabout intersection earthwork subtotal",
+      text: "roundabout earthwork subtotal",
       verified: true,
       site: "lima",
     },
@@ -369,13 +382,14 @@ describe("handleSearchCorpus hybrid retrieval (#1586)", () => {
     },
   ];
 
-  // The query embeds to "north" ([1,0]); only records:semantic points north (cosine 1). The
-  // others are orthogonal (cosine 0 → excluded from vector hits), so the vector ranking
-  // returns records:semantic alone — a match BM25 can never produce for "roundabout".
+  // The query embeds to "north" ([1,0]). records:both points due north (cosine 1) and
+  // records:semantic near-north (cosine 0.8) → both are vector hits, records:both ranked
+  // first; records:kw and records:noise are orthogonal (cosine 0 → excluded from vector hits).
   const QUERY_VECTOR = [1, 0];
   const EMB: EmbeddingEntry[] = [
+    { id: "records:both", embedding: [1, 0] },
     { id: "records:kw", embedding: [0, 1] },
-    { id: "records:semantic", embedding: [1, 0] },
+    { id: "records:semantic", embedding: [0.8, 0.6] },
     { id: "records:noise", embedding: [0, 1] },
   ];
 
@@ -421,14 +435,20 @@ describe("handleSearchCorpus hybrid retrieval (#1586)", () => {
     return parsed.results.map((r) => r.id as string);
   }
 
-  it("fuses vector similarity with BM25 — surfaces a semantic-only match BM25 misses", async () => {
+  it("fuses vector + BM25 via RRF — a dual-channel record outranks single-channel hits", async () => {
     const ai = fakeAI([QUERY_VECTOR]);
     const got = await ids({ query: "roundabout", response_mode: "ids_only" }, { AI: ai }, [
       indexRoute,
       embeddingsRoute,
     ]);
-    expect(got).toContain("records:kw"); // keyword hit
-    expect(got).toContain("records:semantic"); // vector-only hit, surfaced by RRF
+    // Both channels contribute — the BM25-only and the vector-only hits are each present …
+    expect(got).toContain("records:kw"); // BM25-only
+    expect(got).toContain("records:semantic"); // vector-only, surfaced by the vector path
+    // … and reciprocal-rank fusion ranks the record scored in BOTH lists first, ahead of either
+    // single-channel hit — a plain set union / list concatenation could not produce this order.
+    expect(got[0]).toBe("records:both");
+    expect(got.indexOf("records:both")).toBeLessThan(got.indexOf("records:kw"));
+    expect(got.indexOf("records:both")).toBeLessThan(got.indexOf("records:semantic"));
     // The query was embedded with the same Workers AI model /api/ask uses.
     expect(ai.calls).toHaveLength(1);
     expect(ai.calls[0].model).toBe("@cf/sentence-transformers/all-minilm-l6-v2");
