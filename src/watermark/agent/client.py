@@ -22,7 +22,7 @@ from claude_agent_sdk import (
 )
 from opentelemetry.trace import StatusCode
 
-from watermark.agent import tools
+from watermark.agent import tools, yidam_tools
 from watermark.config import Settings, get_settings
 from watermark.logging import get_logger
 from watermark.tasks import PipelineTask
@@ -68,6 +68,7 @@ class ResearchAgent:
         max_turns: int | None = None,
         settings: Settings | None = None,
         enable_tools: bool = True,
+        enable_yidam: bool = True,
         skills: list[str] | None = None,
         task: PipelineTask | str = PipelineTask.ASK,
     ) -> None:
@@ -76,12 +77,25 @@ class ResearchAgent:
         self.system_prompt = system_prompt
         self.max_turns = max_turns or self.settings.max_turns
         self.enable_tools = enable_tools
+        # #1563: also serve the yidam corpus mirror (yidam://corpus/*) as an MCP backend so the
+        # agent can browse/query the projected method-layer graph. Rides on `enable_tools`.
+        self.enable_yidam = enable_yidam
         self.skills = RESEARCH_SKILLS if skills is None else skills
         # The pipeline task this agent's calls are attributed to (#1080): selects the per-task
         # workspace key, routed into the Agent SDK subprocess via ClaudeAgentOptions.env below.
         # Normalize once so later `.value` access (the trace attribute in converse) is always
         # safe; an unknown task string falls back to the default rather than raising mid-turn.
         self.task: PipelineTask = PipelineTask.coerce(task, default=PipelineTask.ASK)
+
+    def _allowed_tool_names(self) -> list[str]:
+        """The BOSC tool allowlist for this agent: the extraction/hydrology tools, plus (by
+        default) the yidam corpus-mirror backend (#1563). Empty when tools are disabled."""
+        if not self.enable_tools:
+            return []
+        allowed = list(tools.ALLOWED_TOOL_NAMES)
+        if self.enable_yidam:
+            allowed += yidam_tools.ALLOWED_TOOL_NAMES
+        return allowed
 
     def _options(self) -> ClaudeAgentOptions:
         kwargs: dict[str, object] = {
@@ -98,8 +112,14 @@ class ResearchAgent:
             "setting_sources": ["project"],
         }
         if self.enable_tools:
-            kwargs["mcp_servers"] = {tools.SERVER_NAME: tools.build_server()}
-            kwargs["allowed_tools"] = tools.ALLOWED_TOOL_NAMES
+            # The BOSC extraction/hydrology tools, plus (by default) the yidam corpus-mirror
+            # backend (#1563) as a second in-process server with its own `mcp__yidam__*`
+            # namespace — the agent's window onto the projected method-layer graph.
+            servers: dict[str, object] = {tools.SERVER_NAME: tools.build_server()}
+            if self.enable_yidam:
+                servers[yidam_tools.YIDAM_SERVER_NAME] = yidam_tools.build_server()
+            kwargs["mcp_servers"] = servers
+            kwargs["allowed_tools"] = self._allowed_tool_names()
         # Route this task's calls through its own workspace key (#1080). The SDK merges
         # `env` over the inherited process env, so we override only ANTHROPIC_API_KEY — and
         # only when a key actually resolves, leaving ambient auth untouched otherwise.
@@ -121,10 +141,7 @@ class ResearchAgent:
             span.set_attribute("agent.model", self.model)
             span.set_attribute("agent.task", self.task.value)
             span.set_attribute("agent.max_turns", self.max_turns)
-            span.set_attribute(
-                "agent.tool_names",
-                list(tools.ALLOWED_TOOL_NAMES) if self.enable_tools else [],
-            )
+            span.set_attribute("agent.tool_names", self._allowed_tool_names())
             log.info("agent.run", model=self.model, tools=self.enable_tools)
             parts: list[str] = []
             result = AgentResult(text="")
