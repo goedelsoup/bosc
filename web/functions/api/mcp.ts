@@ -21,10 +21,12 @@ import { verifyToken, type McpAuthEnv } from "./_lib/mcpAuth";
 import {
   DEFAULT_KEY_DAILY,
   DEFAULT_PUBLIC_DAILY,
+  addBudgetUsage,
   isOverBudget,
   keyedBudgetKey,
   publicBudgetKey,
 } from "./_lib/mcpBudget";
+import { estimateTokens } from "./_lib/mcpGovern";
 
 interface Env extends McpAuthEnv {
   /** Kill switch — anything but "true" disables the endpoint. */
@@ -115,10 +117,14 @@ export async function onRequestPost({ request, env, waitUntil }: RequestContext)
     if (denied) return denied;
   }
 
-  // Budget guard (#912) — only active when MCP_BUDGET_ENABLED="true"
+  // Budget guard (#912) — only active when MCP_BUDGET_ENABLED="true". The resolved KV +
+  // per-day key are hoisted so the post-dispatch debit (#1581) reuses the same tier/key.
   const nowMs = Date.now();
-  if (env.MCP_BUDGET_ENABLED === "true" && env.MCP_ALLOW_UNCAPPED !== "true") {
-    const budgetKv = env.MCP_BUDGET;
+  const budgetEnabled = env.MCP_BUDGET_ENABLED === "true" && env.MCP_ALLOW_UNCAPPED !== "true";
+  let budgetKv: KVLike | undefined;
+  let budgetKey = "";
+  if (budgetEnabled) {
+    budgetKv = env.MCP_BUDGET;
     if (!budgetKv) {
       console.error("mcp: MCP_BUDGET_ENABLED=true but no MCP_BUDGET KV bound — refusing (fail-closed)");
       return json(503, {
@@ -127,7 +133,7 @@ export async function onRequestPost({ request, env, waitUntil }: RequestContext)
         error: { code: RPC.INTERNAL_ERROR, message: "budget store not configured" },
       });
     }
-    const budgetKey =
+    budgetKey =
       authResult.tier === "cognito" ? keyedBudgetKey(authResult.keyHash, nowMs) : publicBudgetKey(nowMs);
     const limit =
       authResult.tier === "cognito"
@@ -224,9 +230,14 @@ export async function onRequestPost({ request, env, waitUntil }: RequestContext)
     response = new Response(null, { status: 202, headers: sessionHeaders });
   } else if (body.method === "tools/call") {
     // tools/call: SSE stream so implementations can stream results.
-    // These are pure retrieval tools (no model calls), so output-token spend is 0.
-    // Wire addBudgetUsage here when model-calling tools are added in the future.
     const eventData = frame("message", rpcResponse);
+    // Debit the daily budget by the response's output-token cost (#1581). The corpus text
+    // we inject into the caller's context is the spend these tools govern — estimated from
+    // the serialized frame so the debit tracks exactly what leaves the endpoint. Errors
+    // don't debit (no corpus was returned). Best-effort via waitUntil; fails open.
+    if (budgetEnabled && budgetKv && !rpcResponse.error) {
+      waitUntil(addBudgetUsage(budgetKv, budgetKey, estimateTokens(eventData)));
+    }
     response = sseResponse(eventData, sessionHeaders);
   } else {
     // All other methods: direct JSON

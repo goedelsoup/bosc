@@ -59,9 +59,22 @@ const askIndexRoute: FetchRoute = {
   respond: () => jsonResponse(200, UNITS),
 };
 
-async function call(args: Record<string, unknown>): Promise<unknown[]> {
+interface Envelope {
+  results: Record<string, unknown>[];
+  token_estimate: number;
+  truncated: boolean;
+  next_cursor: string | null;
+}
+
+/** The full governed envelope (#1581). */
+async function envelope(args: Record<string, unknown>): Promise<Envelope> {
   const content = await handleSearchCorpus(args, REQ);
-  return JSON.parse(content[0].text) as unknown[];
+  return JSON.parse(content[0].text) as Envelope;
+}
+
+/** Just the `results` array — the shape the pre-envelope tests assert against. */
+async function call(args: Record<string, unknown>): Promise<Record<string, unknown>[]> {
+  return (await envelope(args)).results;
 }
 
 beforeEach(() => {
@@ -201,5 +214,106 @@ describe("handleSearchCorpus response_mode", () => {
     const results = (await call({ query: "roundabout", site: "fort-wayne" })) as Record<string, unknown>[];
     expect(results.length).toBeGreaterThan(0);
     for (const r of results) expect(r.site).toBe("fort-wayne");
+  });
+});
+
+describe("handleSearchCorpus governance (#1581)", () => {
+  it("wraps results in the governed envelope", async () => {
+    const env = await envelope({ query: "roundabout" });
+    expect(Array.isArray(env.results)).toBe(true);
+    expect(typeof env.token_estimate).toBe("number");
+    expect(env.token_estimate).toBeGreaterThan(0);
+    expect(typeof env.truncated).toBe("boolean");
+    expect("next_cursor" in env).toBe(true);
+  });
+
+  it("an empty query returns an exhausted, zero-cost envelope", async () => {
+    expect(await envelope({ query: "  " })).toEqual({
+      results: [],
+      token_estimate: 0,
+      truncated: false,
+      next_cursor: null,
+    });
+  });
+
+  it("caps the page at max_results and hands back a next_cursor", async () => {
+    const env = await envelope({ query: "roundabout", max_results: 1 });
+    expect(env.results).toHaveLength(1);
+    expect(env.truncated).toBe(true);
+    expect(env.next_cursor).toBeTruthy();
+  });
+
+  it("paginates the ranked pool across cursor pages without repeats", async () => {
+    const page1 = await envelope({ query: "roundabout", max_results: 1 });
+    const page2 = await envelope({
+      query: "roundabout",
+      max_results: 1,
+      cursor: page1.next_cursor,
+    });
+    expect(page1.results[0].id).not.toBe(page2.results[0]?.id);
+    // Walk to exhaustion — the final page reports no continuation.
+    let cursor = page2.next_cursor;
+    let guard = 0;
+    while (cursor && guard++ < 10) {
+      const next = await envelope({ query: "roundabout", max_results: 1, cursor });
+      cursor = next.next_cursor;
+    }
+    expect(cursor).toBeNull();
+  });
+
+  it("the legacy `limit` param acts as the page-size cap", async () => {
+    const env = await envelope({ query: "roundabout", limit: 1 });
+    expect(env.results).toHaveLength(1);
+    expect(env.truncated).toBe(true);
+  });
+
+  it("a tiny max_tokens truncates to fewer results (but always at least one)", async () => {
+    const full = await envelope({ query: "roundabout", response_mode: "full", max_tokens: 40000 });
+    const tiny = await envelope({ query: "roundabout", response_mode: "full", max_tokens: 100 });
+    expect(tiny.results.length).toBeGreaterThanOrEqual(1); // forward progress
+    expect(tiny.results.length).toBeLessThan(full.results.length);
+    expect(tiny.truncated).toBe(true);
+    expect(tiny.next_cursor).toBeTruthy();
+  });
+
+  it("max_tokens_per_result trims an over-cap full-text hit", async () => {
+    const capped = await envelope({
+      query: "roundabout",
+      collection: "records",
+      site: "lima",
+      response_mode: "full",
+      max_tokens_per_result: 80,
+    });
+    const rec = capped.results[0];
+    expect((rec.text as string).length).toBeLessThan(LONG_TEXT.length);
+    expect((rec.text as string).endsWith("…")).toBe(true);
+  });
+
+  it("intent=fact_lookup seeds compact defaults; explicit knobs still win", async () => {
+    const factLookup = await envelope({ query: "roundabout", intent: "fact_lookup" });
+    // fact_lookup caps at 3 results and yields compact cards (no full text).
+    expect(factLookup.results.length).toBeLessThanOrEqual(3);
+    expect(factLookup.results[0]).toHaveProperty("estimated_tokens");
+    expect(factLookup.results[0]).not.toHaveProperty("text");
+
+    // An explicit response_mode overrides the intent's compact shape.
+    const overridden = await envelope({
+      query: "roundabout",
+      intent: "fact_lookup",
+      response_mode: "full",
+      collection: "records",
+      site: "lima",
+    });
+    expect(overridden.results[0]).toHaveProperty("text");
+  });
+
+  it("intent=exhaustive_audit seeds full-text results", async () => {
+    const env = await envelope({
+      query: "roundabout",
+      intent: "exhaustive_audit",
+      collection: "records",
+      site: "lima",
+    });
+    expect(env.results[0]).toHaveProperty("text");
   });
 });

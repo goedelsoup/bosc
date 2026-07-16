@@ -18,6 +18,46 @@ export interface ToolSchema {
   example?: string;
 }
 
+// Response-size governance knobs (#1581), shared by every tool. Enforced peer:
+// functions/api/_lib/mcpGovern.ts (this package can't import from @watermark/functions —
+// dependency order is core → functions — so the intent names are duplicated here as the
+// schema contract). Every tool response is wrapped as
+// `{ results, token_estimate, truncated, next_cursor }` and bounded by these knobs.
+const INTENT_NAMES = [
+  "fact_lookup",
+  "evidence_lookup",
+  "timeline_reconstruction",
+  "entity_research",
+  "document_discovery",
+  "cross_document_synthesis",
+  "exhaustive_audit",
+] as const;
+
+const GOVERNANCE_PROPS = {
+  intent: {
+    type: "string",
+    enum: INTENT_NAMES,
+    description:
+      "Preset that seeds sensible response-size defaults (max_results/max_tokens/max_tokens_per_result, plus the search_corpus response shape). Explicit knobs override it.",
+  },
+  max_results: {
+    type: "integer",
+    description: "Cap on results returned in one response (page size).",
+  },
+  max_tokens: {
+    type: "integer",
+    description: "Whole-response token ceiling; results are withheld (paginated) to stay under it.",
+  },
+  max_tokens_per_result: {
+    type: "integer",
+    description: "Per-result token ceiling; an over-cap result is shortened before it counts.",
+  },
+  cursor: {
+    type: "string",
+    description: "Continuation cursor from a prior response's next_cursor, to fetch the next page.",
+  },
+} as const;
+
 export const MCP_TOOLS: readonly ToolSchema[] = [
   {
     name: "search_corpus",
@@ -49,6 +89,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
             "Approx. size (in tokens) of the query-focused excerpt in snippets mode (default 250).",
           default: 250,
         },
+        ...GOVERNANCE_PROPS,
       },
       required: ["query"],
     },
@@ -64,6 +105,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
         until: { type: "string", description: "ISO-8601 date upper bound (inclusive)" },
         category: { type: "string", description: "Event category filter" },
         site: { type: "string", description: "Site slug (default: active site)" },
+        ...GOVERNANCE_PROPS,
       },
     },
     example: '{"since": "2015-01-01", "until": "2020-12-31", "category": "permit"}',
@@ -79,6 +121,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
           description: "Entity type filter (e.g. company, person, parcel)",
         },
         site: { type: "string", description: "Site slug (default: active site)" },
+        ...GOVERNANCE_PROPS,
       },
     },
     example: '{"type": "company", "site": "fort-wayne"}',
@@ -90,6 +133,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
       type: "object",
       properties: {
         site: { type: "string", description: "Site slug (default: all sites)" },
+        ...GOVERNANCE_PROPS,
       },
     },
     example: '{"site": "lima"}',
@@ -105,6 +149,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
           description: "Collection filter (e.g. oepa, recorder, aedg, commissioners)",
         },
         site: { type: "string", description: "Site slug (default: active site)" },
+        ...GOVERNANCE_PROPS,
       },
     },
     example: '{"collection": "oepa", "site": "lima"}',
