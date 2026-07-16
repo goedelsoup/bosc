@@ -1,5 +1,5 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
+import { selectableSitePaths } from "@watermark/core/sites";
 // Lima-only: the example teardowns (OPC/AIR/NPDES) use Lima-specific records.
 export const getStaticPaths = () => selectableSitePaths().filter((p) => p.props.slug === "lima");
 /**
@@ -19,8 +19,8 @@ import BackLink from "~/components/BackLink.astro";
 import EvidenceLegend from "~/components/EvidenceLegend.astro";
 import RecordTeardown from "~/components/RecordTeardown.astro";
 import Base from "~/layouts/Base.astro";
-import { AIR_TEARDOWN, NPDES_TEARDOWN, OPC_TEARDOWN } from "~/lib/teardowns";
-import { withSite } from "~/lib/site";
+import { AIR_TEARDOWN, NPDES_TEARDOWN, OPC_TEARDOWN } from "@watermark/core/teardowns";
+import { withSite } from "@watermark/core/site";
 ---
 
 <Base

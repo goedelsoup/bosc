@@ -1,7 +1,7 @@
 ---
 import Base from "~/layouts/Base.astro";
-import { hasFeed, loadManifest } from "~/lib/bundle";
-import { withBase, siteUrl } from "~/lib/site";
+import { hasFeed, loadManifest } from "@watermark/core/bundle";
+import { withBase, siteUrl } from "@watermark/core/site";
 
 const manifest = loadManifest();
 const byName = new Map(manifest.feeds.map((f) => [f.name, f]));

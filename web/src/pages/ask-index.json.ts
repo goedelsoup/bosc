@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { buildAskIndex } from "../lib/askIndex";
+import { buildAskIndex } from "@watermark/core/askIndex";
 
 // Static endpoint: emits `/ask-index.json` at build time (#209). The `/api/ask` Pages
 // Function fetches it as a static asset and runs BM25 retrieval over it server-side

@@ -1,10 +1,10 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
+import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import type { PlaceItem } from "~/lib/feeds";
-import { withSite } from "~/lib/site";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { PlaceItem } from "@watermark/core/feeds";
+import { withSite } from "@watermark/core/site";
 
 const places = hasFeed("places") ? loadFeed<PlaceItem[]>("places") : [];
 const sorted = [...places].sort((a, b) => a.name.localeCompare(b.name));

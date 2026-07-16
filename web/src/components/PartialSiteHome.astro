@@ -17,16 +17,16 @@
  */
 import SiteNeeds from "./SiteNeeds.astro";
 import StoryTeaser from "./story/StoryTeaser.astro";
-import { loadManifest } from "../lib/bundle";
-import { type ReadinessSection, SECTION_META, isAvailable, lockedSections } from "../lib/readiness";
-import { withBase, withSite, withStory } from "../lib/site";
+import { loadManifest } from "@watermark/core/bundle";
+import { type ReadinessSection, SECTION_META, isAvailable, lockedSections } from "@watermark/core/readiness";
+import { withBase, withSite, withStory } from "@watermark/core/site";
 import {
   FACILITY_STATUS_META,
   type NetworkSite,
   comingSoonStories,
   facilityStatus,
   surfacedStories,
-} from "../lib/sites";
+} from "@watermark/core/sites";
 
 interface Props {
   slug: string;

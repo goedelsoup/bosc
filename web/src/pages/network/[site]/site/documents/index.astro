@@ -1,11 +1,11 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
+import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import { docAccess } from "~/lib/docView";
-import { formatBytes, type DocumentCollectionItem } from "~/lib/feeds";
-import { withSite } from "~/lib/site";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import { docAccess } from "@watermark/core/docView";
+import { formatBytes, type DocumentCollectionItem } from "@watermark/core/feeds";
+import { withSite } from "@watermark/core/site";
 
 const collections = hasFeed("documents") ? loadFeed<DocumentCollectionItem[]>("documents") : [];
 

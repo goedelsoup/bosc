@@ -1,7 +1,7 @@
 // Dependency-free BM25 retrieval over the build-time ask-index (#209).
 //
 // Tokenization + scoring happen here, at *query* time, on the Workers runtime — so
-// the build (frontend/src/lib/askIndex.ts) only ships raw text units and there is no
+// the build (@watermark/core/askIndex) only ships raw text units and there is no
 // way for build-time and query-time tokenization to drift apart. Mirrors the
 // no-dependency posture of the site search (src/scripts/search.ts): plain JS, no lunr,
 // no CDN, runs on Web platform globals only.
@@ -12,7 +12,7 @@
 
 /**
  * One retrieval unit — a citation-bearing thing in the bundle (a record, timeline
- * event, entity, …). The shape is duplicated in `src/lib/askIndex.ts` (the build-time
+ * event, entity, …). The shape is duplicated in `@watermark/core/askIndex` (the build-time
  * producer), exactly as `SearchDoc` is duplicated between `lib/search.ts` and
  * `scripts/search.ts`: the emitted `/ask-index.json` is the contract between them.
  */

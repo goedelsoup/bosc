@@ -10,9 +10,9 @@
  * default). `getStaticPaths` runs before middleware, so its enumeration is Lima-default too — a
  * second selectable site's per-site path enumeration is handled at onboarding (#235).
  */
-import { runWithSite } from "./lib/bundle";
-import { LIMA_SLUG, slugForSiteId } from "./lib/routes";
-import { SITES } from "./lib/sites";
+import { runWithSite } from "@watermark/core/bundle";
+import { LIMA_SLUG, slugForSiteId } from "@watermark/core/routes";
+import { SITES } from "@watermark/core/sites";
 import { defineMiddleware } from "astro:middleware";
 
 const SELECTABLE = new Set(SITES.filter((s) => s.selectable).map((s) => s.slug));

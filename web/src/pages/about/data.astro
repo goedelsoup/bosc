@@ -5,8 +5,8 @@
 // to the hand-maintained corpus-completeness audit. Static + JS-off (no interactive
 // filters): grouped by collection, freshness/scope shown as pills.
 import Base from "~/layouts/Base.astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import { catalogFreshness, type CatalogFreshness, type CatalogItem } from "~/lib/feeds";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import { catalogFreshness, type CatalogFreshness, type CatalogItem } from "@watermark/core/feeds";
 
 const items = hasFeed("catalog") ? loadFeed<CatalogItem[]>("catalog") : [];
 

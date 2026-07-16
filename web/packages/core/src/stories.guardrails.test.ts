@@ -9,14 +9,14 @@ import { storyFor } from "./walk";
 // imports only). CI fails on a broken/incomplete story or an off-vocabulary chapter import.
 
 /** Raw text of every chapter + on-ramp MDX, keyed by collection-relative path. */
-const RAW = import.meta.glob("../content/stories/**/*.mdx", {
+const RAW = import.meta.glob("../../../src/content/stories/**/*.mdx", {
   eager: true,
   query: "?raw",
   import: "default",
 }) as Record<string, string>;
 
-/** The repo-root `data/extracted` dir (this test lives at frontend/src/lib/). */
-const EXTRACTED = fileURLToPath(new URL("../../../data/extracted/", import.meta.url));
+/** The repo-root `data/extracted` dir (this test lives at web/packages/core/src/). */
+const EXTRACTED = fileURLToPath(new URL("../../../../data/extracted/", import.meta.url));
 
 interface Parsed {
   path: string; // collection-relative mdx path
@@ -52,12 +52,16 @@ const STORY_KEYS = [...new Set(FILES.map((f) => `${f.site}/${f.codename}`))];
 
 // The curated story-component vocabulary (#742): a chapter may import only these — the story libs
 // and the island components. New vocabulary is added here deliberately (a reviewed change), which
-// is the point: it keeps chapter authoring portable and free of ad-hoc one-off imports.
+// is the point: it keeps chapter authoring portable and free of ad-hoc one-off imports. The libs
+// now live in @watermark/core (Epic #1549, Phase 1 #1551); `~/lib/*` is still accepted for any
+// as-yet-unmigrated chapter.
 const ALLOWED_LIB = new Set(["site", "walk", "teardowns", "bundle", "dilution", "moneyFlow"]);
 function isAllowedImport(spec: string): boolean {
-  const lib = spec.match(/^~\/lib\/([A-Za-z0-9_]+)$/);
+  const lib = spec.match(/^(?:~\/lib|@watermark\/core)\/([A-Za-z0-9_]+)$/);
   if (lib) return ALLOWED_LIB.has(lib[1]);
-  return /^~\/components\/islands\/[A-Za-z0-9_]+\.tsx$/.test(spec);
+  // The React islands moved to @watermark/viz (Epic #1549, Phase 4 #1554); `~/components/islands/*`
+  // is still accepted for any as-yet-unmigrated chapter.
+  return /^(?:~\/components\/islands|@watermark\/viz\/islands)\/[A-Za-z0-9_]+\.tsx$/.test(spec);
 }
 
 describe("story completeness (#742)", () => {

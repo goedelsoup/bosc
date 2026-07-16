@@ -3,7 +3,7 @@
 // readable with JS off, so this only *adds* the toolbar (un-hides it) and wiring.
 // Sort/filter keys read from each row's `data-*` (no cell-text parsing); the pure
 // match/compare logic lives in (and is tested via) `lib/docCatalog.ts`.
-import { compareDocs, type DocFilters, matchesDoc } from "../lib/docCatalog";
+import { compareDocs, type DocFilters, matchesDoc } from "@watermark/core/docCatalog";
 
 const table = document.querySelector<HTMLTableElement>("#doccat-table");
 const tools = document.querySelector<HTMLElement>(".doccat-tools");

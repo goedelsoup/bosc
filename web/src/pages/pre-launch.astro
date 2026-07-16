@@ -5,8 +5,8 @@
  * record (counts only), the three sealed hypotheses, how the record is built, and a notify-me /
  * contribute path. Deliberately not wired into Base (no chrome); the live site stays reachable.
  */
-import { SITES } from "../lib/sites";
-import { withBase } from "../lib/site";
+import { SITES } from "@watermark/core/sites";
+import { withBase } from "@watermark/core/site";
 import "../styles/site.css";
 
 const cognitoDomain = import.meta.env.PUBLIC_COGNITO_DOMAIN;

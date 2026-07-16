@@ -1,8 +1,8 @@
 ---
 import Base from "~/layouts/Base.astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import type { LeiInventory } from "~/lib/feeds";
-import { withBase } from "~/lib/site";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { LeiInventory } from "@watermark/core/feeds";
+import { withBase } from "@watermark/core/site";
 
 const lei = hasFeed("lei") ? loadFeed<LeiInventory>("lei") : null;
 const records = [...(lei?.records ?? [])].sort((a, b) => a.legal_name.localeCompare(b.legal_name));

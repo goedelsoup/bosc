@@ -1,0 +1,17 @@
+{
+  "//": "Standalone type-check for @watermark/core (Epic #1549, Phase 1). The package is runtime-agnostic: React-free and DOM-free (no `document`/`window`/`sessionStorage`) so it imports from the Astro site AND the Cloudflare Pages Functions (Workers, under nodejs_compat) AND vitest. `lib` is plain ES2023 (NOT `DOM`); `types:[\"node\"]` supplies the Node/build-time surface the domain logic legitimately uses — node: builtins (bundle.ts's fs/async_hooks) plus the web-standard globals Node implements (crypto/URL/TextEncoder/btoa/atob), all of which Workers also provide. Excluding `DOM` is what enforces the boundary: a stray `sessionStorage`/`document` fails here (that's why browser-only `auth.ts` stays in the site). `import.meta.env` (Vite) is declared in src/vite-env-shim.d.ts and `astro:content` (lazily imported by src/stories.ts) in src/astro-content-shim.d.ts; the site/Vite supply the real ones. `npm run check` in web/ runs this via `tsc -p packages/core/tsconfig.json`.",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2023"],
+    "types": ["node"],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts"]
+}

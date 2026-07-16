@@ -1,9 +1,9 @@
 ---
-import { withSitePaths } from "~/lib/sites";
+import { withSitePaths } from "@watermark/core/sites";
 import { getCollection, render } from "astro:content";
 import Base from "~/layouts/Base.astro";
-import { legalBySlug } from "~/lib/legal";
-import { withSite } from "~/lib/site";
+import { legalBySlug } from "@watermark/core/legal";
+import { withSite } from "@watermark/core/site";
 
 export async function getStaticPaths() {
   // Only the curated legal-history set (lib/legal.ts) is published.

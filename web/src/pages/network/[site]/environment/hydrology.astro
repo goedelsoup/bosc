@@ -1,14 +1,14 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
+import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
 import FigureStat from "~/components/FigureStat.astro";
 import BulletChart from "~/components/charts/BulletChart.astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import type { CoolingModel, ProvenancedValue, ScenarioResult } from "~/lib/feeds";
-import type { FigureStatData } from "~/lib/viz";
-import { withSite } from "~/lib/site";
-import { fmtRanged } from "~/lib/format";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { CoolingModel, ProvenancedValue, ScenarioResult } from "@watermark/core/feeds";
+import type { FigureStatData } from "@watermark/core/viz";
+import { withSite } from "@watermark/core/site";
+import { fmtRanged } from "@watermark/core/format";
 
 const scenarios = hasFeed("hydrology-scenarios") ? loadFeed<ScenarioResult[]>("hydrology-scenarios") : [];
 

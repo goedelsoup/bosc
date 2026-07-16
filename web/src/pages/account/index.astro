@@ -1,7 +1,7 @@
 ---
 import Base from "~/layouts/Base.astro";
-import { withBase } from "~/lib/site";
-import { SITES } from "~/lib/sites";
+import { withBase } from "@watermark/core/site";
+import { SITES } from "@watermark/core/sites";
 
 // Auth gate: page requires Cognito vars at build time to render the live form.
 const authEnabled = Boolean(

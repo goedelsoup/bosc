@@ -9,8 +9,8 @@
  */
 import EvidenceTag from "~/components/EvidenceTag.astro";
 import Base from "~/layouts/Base.astro";
-import { type Domain, DOMAINS } from "~/lib/methodology";
-import { withBase } from "~/lib/site";
+import { type Domain, DOMAINS } from "@watermark/core/methodology";
+import { withBase } from "@watermark/core/site";
 
 export function getStaticPaths() {
   return DOMAINS.map((domain, i) => {

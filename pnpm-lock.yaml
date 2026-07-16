@@ -23,42 +23,27 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.7.3
         version: 3.7.3
-      '@deck.gl/core':
-        specifier: ^9.3.3
-        version: 9.3.6
-      '@deck.gl/geo-layers':
-        specifier: ^9.3.3
-        version: 9.3.6(@deck.gl/core@9.3.6)(@deck.gl/extensions@9.3.6(@deck.gl/core@9.3.6)(@luma.gl/core@9.3.6)(@luma.gl/engine@9.3.6(@luma.gl/core@9.3.6)(@luma.gl/shadertools@9.3.6(@luma.gl/core@9.3.6))))(@deck.gl/layers@9.3.6(@deck.gl/core@9.3.6)(@loaders.gl/core@4.4.3)(@luma.gl/core@9.3.6)(@luma.gl/engine@9.3.6(@luma.gl/core@9.3.6)(@luma.gl/shadertools@9.3.6(@luma.gl/core@9.3.6))))(@deck.gl/mesh-layers@9.3.6(@deck.gl/core@9.3.6)(@loaders.gl/core@4.4.3)(@luma.gl/core@9.3.6)(@luma.gl/engine@9.3.6(@luma.gl/core@9.3.6)(@luma.gl/shadertools@9.3.6(@luma.gl/core@9.3.6)))(@luma.gl/gltf@9.3.6(@luma.gl/core@9.3.6)(@luma.gl/engine@9.3.6(@luma.gl/core@9.3.6)(@luma.gl/shadertools@9.3.6(@luma.gl/core@9.3.6)))(@luma.gl/shadertools@9.3.6(@luma.gl/core@9.3.6)))(@luma.gl/shadertools@9.3.6(@luma.gl/core@9.3.6)))(@loaders.gl/core@4.4.3)(@luma.gl/core@9.3.6)(@luma.gl/engine@9.3.6(@luma.gl/core@9.3.6)(@luma.gl/shadertools@9.3.6(@luma.gl/core@9.3.6)))
-      '@deck.gl/layers':
-        specifier: ^9.3.3
-        version: 9.3.6(@deck.gl/core@9.3.6)(@loaders.gl/core@4.4.3)(@luma.gl/core@9.3.6)(@luma.gl/engine@9.3.6(@luma.gl/core@9.3.6)(@luma.gl/shadertools@9.3.6(@luma.gl/core@9.3.6)))
-      '@deck.gl/react':
-        specifier: ^9.3.3
-        version: 9.3.6(@deck.gl/core@9.3.6)(@deck.gl/widgets@9.3.6(@deck.gl/core@9.3.6)(@luma.gl/core@9.3.6))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@watermark/charts':
+        specifier: workspace:*
+        version: link:packages/charts
+      '@watermark/core':
+        specifier: workspace:*
+        version: link:packages/core
+      '@watermark/functions':
+        specifier: workspace:*
+        version: link:functions
+      '@watermark/viz':
+        specifier: workspace:*
+        version: link:packages/viz
       astro:
         specifier: ^5.6.0
         version: 5.18.2(@types/node@22.20.1)(rollup@4.62.2)(typescript@5.9.3)(yaml@2.9.0)
-      d3-force:
-        specifier: ^3.0.0
-        version: 3.0.0
-      maplibre-gl:
-        specifier: ^4.7.1
-        version: 4.7.1
-      pdfjs-dist:
-        specifier: ^4.10.38
-        version: 4.10.38
-      postgres:
-        specifier: ^3.4.9
-        version: 3.4.9
       react:
         specifier: ^18.3.1
         version: 18.3.1
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
-      react-map-gl:
-        specifier: ^7.1.9
-        version: 7.1.9(mapbox-gl@3.26.0)(maplibre-gl@4.7.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       remark-directive:
         specifier: ^4.0.0
         version: 4.0.0
@@ -75,9 +60,6 @@ importers:
       '@electric-sql/pglite':
         specifier: ^0.2.17
         version: 0.2.17
-      '@types/d3-force':
-        specifier: ^3.0.10
-        version: 3.0.10
       '@types/geojson':
         specifier: ^7946.0.16
         version: 7946.0.16
@@ -102,6 +84,113 @@ importers:
       yaml:
         specifier: 2.9.0
         version: 2.9.0
+
+  web/functions:
+    dependencies:
+      '@watermark/core':
+        specifier: workspace:*
+        version: link:../packages/core
+      postgres:
+        specifier: ^3.4.9
+        version: 3.4.9
+
+  web/packages/charts:
+    dependencies:
+      '@watermark/core':
+        specifier: workspace:*
+        version: link:../core
+
+  web/packages/core:
+    dependencies:
+      remark-directive:
+        specifier: ^4.0.0
+        version: 4.0.0
+      remark-mdx:
+        specifier: ^3.1.1
+        version: 3.1.1
+      remark-parse:
+        specifier: ^11.0.0
+        version: 11.0.0
+      unified:
+        specifier: ^11.0.5
+        version: 11.0.5
+      unist-util-visit:
+        specifier: ^5.1.0
+        version: 5.1.0
+      yaml:
+        specifier: 2.9.0
+        version: 2.9.0
+    devDependencies:
+      '@types/geojson':
+        specifier: ^7946.0.16
+        version: 7946.0.16
+      '@types/hast':
+        specifier: ^3.0.5
+        version: 3.0.5
+      '@types/node':
+        specifier: ^22.19.20
+        version: 22.20.1
+      '@types/unist':
+        specifier: ^3.0.3
+        version: 3.0.3
+      typescript:
+        specifier: ^5.7.0
+        version: 5.9.3
+      vfile:
+        specifier: ^6.0.3
+        version: 6.0.3
+
+  web/packages/viz:
+    dependencies:
+      '@deck.gl/core':
+        specifier: ^9.3.3
+        version: 9.3.6
+      '@deck.gl/geo-layers':
+        specifier: ^9.3.3
+        version: 9.3.6(@deck.gl/core@9.3.6)(@deck.gl/extensions@9.3.6(@deck.gl/core@9.3.6)(@luma.gl/core@9.3.6)(@luma.gl/engine@9.3.6(@luma.gl/core@9.3.6)(@luma.gl/shadertools@9.3.6(@luma.gl/core@9.3.6))))(@deck.gl/layers@9.3.6(@deck.gl/core@9.3.6)(@loaders.gl/core@4.4.3)(@luma.gl/core@9.3.6)(@luma.gl/engine@9.3.6(@luma.gl/core@9.3.6)(@luma.gl/shadertools@9.3.6(@luma.gl/core@9.3.6))))(@deck.gl/mesh-layers@9.3.6(@deck.gl/core@9.3.6)(@loaders.gl/core@4.4.3)(@luma.gl/core@9.3.6)(@luma.gl/engine@9.3.6(@luma.gl/core@9.3.6)(@luma.gl/shadertools@9.3.6(@luma.gl/core@9.3.6)))(@luma.gl/gltf@9.3.6(@luma.gl/core@9.3.6)(@luma.gl/engine@9.3.6(@luma.gl/core@9.3.6)(@luma.gl/shadertools@9.3.6(@luma.gl/core@9.3.6)))(@luma.gl/shadertools@9.3.6(@luma.gl/core@9.3.6)))(@luma.gl/shadertools@9.3.6(@luma.gl/core@9.3.6)))(@loaders.gl/core@4.4.3)(@luma.gl/core@9.3.6)(@luma.gl/engine@9.3.6(@luma.gl/core@9.3.6)(@luma.gl/shadertools@9.3.6(@luma.gl/core@9.3.6)))
+      '@deck.gl/layers':
+        specifier: ^9.3.3
+        version: 9.3.6(@deck.gl/core@9.3.6)(@loaders.gl/core@4.4.3)(@luma.gl/core@9.3.6)(@luma.gl/engine@9.3.6(@luma.gl/core@9.3.6)(@luma.gl/shadertools@9.3.6(@luma.gl/core@9.3.6)))
+      '@deck.gl/react':
+        specifier: ^9.3.3
+        version: 9.3.6(@deck.gl/core@9.3.6)(@deck.gl/widgets@9.3.6(@deck.gl/core@9.3.6)(@luma.gl/core@9.3.6))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@watermark/core':
+        specifier: workspace:*
+        version: link:../core
+      d3-force:
+        specifier: ^3.0.0
+        version: 3.0.0
+      maplibre-gl:
+        specifier: ^4.7.1
+        version: 4.7.1
+      pdfjs-dist:
+        specifier: ^4.10.38
+        version: 4.10.38
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+      react-map-gl:
+        specifier: ^7.1.9
+        version: 7.1.9(mapbox-gl@3.26.0)(maplibre-gl@4.7.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+    devDependencies:
+      '@types/d3-force':
+        specifier: ^3.0.10
+        version: 3.0.10
+      '@types/geojson':
+        specifier: ^7946.0.16
+        version: 7946.0.16
+      '@types/react':
+        specifier: ^18.3.31
+        version: 18.3.31
+      '@types/react-dom':
+        specifier: ^18.3.7
+        version: 18.3.7(@types/react@18.3.31)
+      typescript:
+        specifier: ^5.7.0
+        version: 5.9.3
 
 packages:
 
@@ -4959,7 +5048,7 @@ snapshots:
 
   '@types/mdast@4.0.4':
     dependencies:
-      '@types/unist': 2.0.11
+      '@types/unist': 3.0.3
 
   '@types/mdx@2.0.14': {}
 
@@ -4967,7 +5056,7 @@ snapshots:
 
   '@types/nlcst@2.0.3':
     dependencies:
-      '@types/unist': 2.0.11
+      '@types/unist': 3.0.3
 
   '@types/node@22.20.1':
     dependencies:

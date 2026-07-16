@@ -8,8 +8,8 @@
  * shows *why it's withheld*, not a guessed number. Degrades to the static box
  * with JS off (native `<details>` toggles without script).
  */
-import type { TeardownRedaction } from "../lib/teardown";
-import { withBase } from "../lib/site";
+import type { TeardownRedaction } from "@watermark/core/teardown";
+import { withBase } from "@watermark/core/site";
 
 interface Props {
   redaction: TeardownRedaction;

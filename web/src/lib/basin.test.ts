@@ -17,8 +17,8 @@ import {
   reachAttenuationRows,
   totalDesignFlow,
 } from "./basin";
-import type { ReachRouting, RoutedHydrographNetwork, WatershedNode } from "./feeds";
-import type { NetworkSite } from "./sites";
+import type { ReachRouting, RoutedHydrographNetwork, WatershedNode } from "@watermark/core/feeds";
+import type { NetworkSite } from "@watermark/core/sites";
 
 const site = (slug: string, over: Partial<NetworkSite> = {}): NetworkSite => ({
   slug,

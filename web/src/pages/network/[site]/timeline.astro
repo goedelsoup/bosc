@@ -1,12 +1,12 @@
 ---
 import Base from "~/layouts/Base.astro";
 import Timeline from "~/components/Timeline.astro";
-import type { TimelineItem } from "~/lib/viz";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import { evidenceKind, type TimelineEntry } from "~/lib/feeds";
-import { activeStoryAnchorFor } from "~/lib/walk";
-import { withStory } from "~/lib/site";
-import { selectableSitePaths } from "~/lib/sites";
+import type { TimelineItem } from "@watermark/core/viz";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import { evidenceKind, type TimelineEntry } from "@watermark/core/feeds";
+import { activeStoryAnchorFor } from "@watermark/core/walk";
+import { withStory } from "@watermark/core/site";
+import { selectableSitePaths } from "@watermark/core/sites";
 
 // One `network/[site]/…` route per selectable site (#724/#734); Lima alone today.
 export const getStaticPaths = selectableSitePaths;

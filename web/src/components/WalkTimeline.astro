@@ -7,8 +7,8 @@
  * `timeline` feed; the fourth beat is the customer reveal, held as an annotation,
  * not a node (Google stays an annotation).
  */
-import { buildWalkSpine } from "../lib/walkTimeline";
-import { withSite } from "../lib/site";
+import { buildWalkSpine } from "@watermark/core/walkTimeline";
+import { withSite } from "@watermark/core/site";
 
 const spine = buildWalkSpine();
 const timelineHref = withSite("/timeline");

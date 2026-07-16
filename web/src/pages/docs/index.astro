@@ -7,9 +7,9 @@
  * root, not per selectable site. Essays group by the thematic section each belongs to.
  */
 import Base from "~/layouts/Base.astro";
-import { NARRATIVE } from "~/lib/narrative";
-import { getSection, sections, type SectionId } from "~/lib/nav";
-import { withBase } from "~/lib/site";
+import { NARRATIVE } from "@watermark/core/narrative";
+import { getSection, sections, type SectionId } from "@watermark/core/nav";
+import { withBase } from "@watermark/core/site";
 
 // Group the narrative by the thematic section each piece belongs to.
 const groups = sections()

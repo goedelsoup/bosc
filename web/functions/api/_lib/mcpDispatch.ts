@@ -1,9 +1,9 @@
 // JSON-RPC 2.0 router for the MCP Streamable HTTP transport (#911).
 // Tool implementations: #913 (search_corpus), #914 (bundle readers).
 // Resource implementations: #915 (watermark://{site}/feeds/{name}).
-// Tool schemas live in src/lib/mcpTools.ts (shared with /network/connect, #917).
+// Tool schemas live in @watermark/core/mcpTools (shared with /network/connect, #917).
 
-import { MCP_TOOLS } from "../../../src/lib/mcpTools";
+import { MCP_TOOLS } from "@watermark/core/mcpTools";
 import { handleSearchCorpus } from "./mcpTools/searchCorpus";
 import {
   handleGetDocuments,

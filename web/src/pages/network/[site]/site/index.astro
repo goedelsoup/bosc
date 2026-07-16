@@ -1,12 +1,12 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
+import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
-import { hasFeed, loadFeed, loadManifest } from "~/lib/bundle";
-import type { DocumentCollectionItem, MeetingItem, TimelineEntry } from "~/lib/feeds";
-import { isAvailable } from "~/lib/readiness";
-import { scopedReference } from "~/lib/reference";
-import { withSite } from "~/lib/site";
+import { hasFeed, loadFeed, loadManifest } from "@watermark/core/bundle";
+import type { DocumentCollectionItem, MeetingItem, TimelineEntry } from "@watermark/core/feeds";
+import { isAvailable } from "@watermark/core/readiness";
+import { scopedReference } from "@watermark/core/reference";
+import { withSite } from "@watermark/core/site";
 
 const { slug } = Astro.props as { slug: string };
 // The reference door is a facet of The Record: scope its count to THIS site's datasets, and drop

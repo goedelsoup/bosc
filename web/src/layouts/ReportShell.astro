@@ -15,9 +15,9 @@
 import Base from "./Base.astro";
 import BackLink from "../components/BackLink.astro";
 import SectionLocked from "../components/SectionLocked.astro";
-import { activeSite } from "../lib/bundle";
-import { sectionStatus } from "../lib/readiness";
-import { withBase, withSite } from "../lib/site";
+import { activeSite } from "@watermark/core/bundle";
+import { sectionStatus } from "@watermark/core/readiness";
+import { withBase, withSite } from "@watermark/core/site";
 
 interface Props {
   title: string;

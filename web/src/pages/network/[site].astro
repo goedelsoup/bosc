@@ -9,9 +9,9 @@ import FacilityStatusRail from "~/components/FacilityStatusRail.astro";
 import Icon from "~/components/Icon.astro";
 import SiteLocked from "~/components/SiteLocked.astro";
 import Base from "~/layouts/Base.astro";
-import { siteHref } from "~/lib/base";
-import { LIMA_SLUG } from "~/lib/routes";
-import { type NetworkSite, comingSoonSites } from "~/lib/sites";
+import { siteHref } from "@watermark/core/base";
+import { LIMA_SLUG } from "@watermark/core/routes";
+import { type NetworkSite, comingSoonSites } from "@watermark/core/sites";
 
 export function getStaticPaths() {
   return comingSoonSites().map((site) => ({ params: { site: site.slug }, props: { site } }));

@@ -1,12 +1,12 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
+import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
 import SectionLocked from "~/components/SectionLocked.astro";
-import { NARRATIVE } from "~/lib/narrative";
-import { sectionStatus } from "~/lib/readiness";
-import { hasInteractive, reportUrl } from "~/lib/reports";
-import { withBase, withStory, withSite } from "~/lib/site";
+import { NARRATIVE } from "@watermark/core/narrative";
+import { sectionStatus } from "@watermark/core/readiness";
+import { hasInteractive, reportUrl } from "@watermark/core/reports";
+import { withBase, withStory, withSite } from "@watermark/core/site";
 
 // The reports are the network-global `docs/` narrative — Lima's, today. A thinner peer locks the
 // section (and is invited to contribute) rather than borrow another site's analysis (#781).

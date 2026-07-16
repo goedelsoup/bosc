@@ -1,8 +1,8 @@
 ---
 import Base from "~/layouts/Base.astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import type { ConceptItem } from "~/lib/feeds";
-import { withBase } from "~/lib/site";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { ConceptItem } from "@watermark/core/feeds";
+import { withBase } from "@watermark/core/site";
 
 const concepts = hasFeed("concepts") ? loadFeed<ConceptItem[]>("concepts") : [];
 ---

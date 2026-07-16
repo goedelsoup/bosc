@@ -1,12 +1,12 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
+import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import { getCollection } from "astro:content";
 import Base from "~/layouts/Base.astro";
 import SectionLocked from "~/components/SectionLocked.astro";
-import { isAvailable } from "~/lib/readiness";
-import { refBySlug, scopedReference } from "~/lib/reference";
-import { withSite } from "~/lib/site";
+import { isAvailable } from "@watermark/core/readiness";
+import { refBySlug, scopedReference } from "@watermark/core/reference";
+import { withSite } from "@watermark/core/site";
 
 const { slug } = Astro.props as { slug: string };
 // Reference is a facet of The Record: a site whose `record` domain is inactive locks it (and is

@@ -1,16 +1,16 @@
 ---
-import { withSitePaths } from "~/lib/sites";
+import { withSitePaths } from "@watermark/core/sites";
 import type { GetStaticPaths } from "astro";
 import Base from "~/layouts/Base.astro";
 import BackLink from "~/components/BackLink.astro";
 import Provenance from "~/components/Provenance.astro";
 import ProfileHeader from "~/components/ProfileHeader.astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import { evidenceKind, type PersonItem } from "~/lib/feeds";
-import type { ProfileAttr, ProfileHeaderData } from "~/lib/profile";
-import { entityHref } from "~/lib/entityLinks";
-import { withSite } from "~/lib/site";
-import { renderBody } from "~/lib/wiki";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import { evidenceKind, type PersonItem } from "@watermark/core/feeds";
+import type { ProfileAttr, ProfileHeaderData } from "@watermark/core/profile";
+import { entityHref } from "@watermark/core/entityLinks";
+import { withSite } from "@watermark/core/site";
+import { renderBody } from "@watermark/core/wiki";
 
 export const getStaticPaths: GetStaticPaths = () =>
   withSitePaths(() => {

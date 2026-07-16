@@ -30,11 +30,11 @@ import {
   reachAttenuationRows,
   totalDesignFlow,
 } from "../lib/basin";
-import { hasFeed, loadFeed } from "../lib/bundle";
-import type { EvidenceKind } from "../lib/evidence";
-import type { BasinNetwork, RoutedHydrographNetwork } from "../lib/feeds";
-import { withBase } from "../lib/site";
-import { groupSites, siteState } from "../lib/sites";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { EvidenceKind } from "@watermark/core/evidence";
+import type { BasinNetwork, RoutedHydrographNetwork } from "@watermark/core/feeds";
+import { withBase } from "@watermark/core/site";
+import { groupSites, siteState } from "@watermark/core/sites";
 
 const group = groupSites("basin").find((g) => g.label === "Maumee");
 const sites = group?.sites ?? [];

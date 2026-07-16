@@ -11,10 +11,10 @@
  * rest are "Not yet assessed". Counts are real (Lima from the bundle) or a dash — never invented.
  */
 import Base from "~/layouts/Base.astro";
-import { getHypotheses, hasFeed, loadFeed, loadManifest } from "~/lib/bundle";
-import { buildLens, indexAssessments, LENS_ORDER, lensConfig, lensCount } from "~/lib/directory";
-import type { DocumentCollectionItem, HypothesisAssessmentItem } from "~/lib/feeds";
-import { withBase } from "~/lib/site";
+import { getHypotheses, hasFeed, loadFeed, loadManifest } from "@watermark/core/bundle";
+import { buildLens, indexAssessments, LENS_ORDER, lensConfig, lensCount } from "@watermark/core/directory";
+import type { DocumentCollectionItem, HypothesisAssessmentItem } from "@watermark/core/feeds";
+import { withBase } from "@watermark/core/site";
 
 const manifest = loadManifest();
 const byName = new Map(manifest.feeds.map((f) => [f.name, f]));

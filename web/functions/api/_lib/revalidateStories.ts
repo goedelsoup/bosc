@@ -1,11 +1,11 @@
 // The catalog revalidation job (#1099) — "a scheduled job over one table". Ties the pure core
-// (`src/lib/revalidate`) to the Lakebase (Postgres) store: walk every Story not yet validated against the current
+// (`@watermark/core/revalidate`) to the Lakebase (Postgres) store: walk every Story not yet validated against the current
 // catalog_version, re-resolve its cited handles, auto-heal renamed ones (rewrite refs + SDM), and
 // flag the rest `stale` so the author is nudged. Idempotent: a second pass over the same catalog is a
 // no-op (healed handles now resolve; still-dangling stay flagged; up-to-date stories are skipped).
 
-import type { StoryDocument } from "../../../src/lib/sdm";
-import { type RenameMap, remapSdmHandles, revalidateHandles } from "../../../src/lib/revalidate";
+import type { StoryDocument } from "@watermark/core/sdm";
+import { type RenameMap, remapSdmHandles, revalidateHandles } from "@watermark/core/revalidate";
 import { type PgLike, type StoryRef, applyStoryRevalidation, storiesToRevalidate } from "./storiesStore";
 
 export interface RevalidationSummary {

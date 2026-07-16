@@ -11,9 +11,9 @@ import { getCollection, getEntry, render } from "astro:content";
 import { STORY_COMPONENTS } from "~/components/story";
 import StoryComingSoon from "~/components/story/StoryComingSoon.astro";
 import Base from "~/layouts/Base.astro";
-import { siteBase } from "~/lib/routes";
-import { SITES, storyComingSoon } from "~/lib/sites";
-import { storyFor } from "~/lib/walk";
+import { siteBase } from "@watermark/core/routes";
+import { SITES, storyComingSoon } from "@watermark/core/sites";
+import { storyFor } from "@watermark/core/walk";
 
 export async function getStaticPaths() {
   const selectable = new Set(SITES.filter((s) => s.selectable).map((s) => s.slug));

@@ -9,7 +9,12 @@
  * `status`. Pure SSR markup + CSS, no JS island. Stages up to the current one are filled in
  * the current stage's status color (FACILITY_STATUS_META); future stages are muted.
  */
-import { FACILITY_STAGES, FACILITY_STATUS_META, facilityStageIndex, facilityStatus } from "../lib/sites";
+import {
+  FACILITY_STAGES,
+  FACILITY_STATUS_META,
+  facilityStageIndex,
+  facilityStatus,
+} from "@watermark/core/sites";
 
 interface Props {
   /** Registry slug — the facility status is resolved from it. */

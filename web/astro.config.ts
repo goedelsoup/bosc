@@ -2,8 +2,8 @@ import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
-import rehypeDocLinks from "./src/lib/rehype-doc-links";
-import { SITE_BASE } from "./src/lib/routes";
+import rehypeDocLinks from "@watermark/core/rehype-doc-links";
+import { SITE_BASE } from "@watermark/core/routes";
 import { watermarkBundle } from "./plugins/watermark-bundle";
 
 // Static build (the default). `site`/`base` come from the environment so the

@@ -1,6 +1,6 @@
 ---
 import Base from "~/layouts/Base.astro";
-import { withBase } from "~/lib/site";
+import { withBase } from "@watermark/core/site";
 
 // No auth gate: the signed token in the URL is the credential.
 // The page reads `?token=` from the URL client-side and calls the API.
@@ -19,7 +19,7 @@ import { withBase } from "~/lib/site";
 </Base>
 
 <script>
-  import { withBase } from "~/lib/base";
+  import { withBase } from "@watermark/core/base";
 
   (async function () {
     const msg = document.getElementById("unsub-msg");

@@ -3,15 +3,15 @@
 // the compile-once-store-run-many split — it runs the #1094 compiler server-side (never trusts a
 // client-supplied SDM), so every handle is validated against the live catalog before persist.
 
-import type { Catalog } from "../../../src/lib/catalog";
-import { sdmAtomBlocks } from "../../../src/lib/sdm";
+import type { Catalog } from "@watermark/core/catalog";
+import { sdmAtomBlocks } from "@watermark/core/sdm";
 import {
   type StoryError,
   type StoryFormat,
   compileStory,
   dslFormat,
   mdxDataFormat,
-} from "../../../src/lib/storyCompile";
+} from "@watermark/core/storyCompile";
 import type { StoryRef, StorySourceFormat, StoryStatus, StoryWrite } from "./storiesStore";
 
 const FORMATS: Record<StorySourceFormat, StoryFormat> = {
