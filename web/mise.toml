@@ -7,22 +7,25 @@
 # [tools]. These wrap the package.json scripts so backend and frontend share one verb set.
 
 # Frontend-only tools (node still comes from the root). wrangler is mise-managed here — NOT an
-# npm devDependency — so it's pinned + isolated without bloating `npm ci` or the frontend CI
-# job (which uses setup-node, not mise). Used only by `dev:stack` (the local Functions stack).
+# npm devDependency — so it's pinned + isolated without bloating `pnpm install` or the frontend
+# CI job (which uses setup-node, not mise). Used only by `dev:stack` (the local Functions stack).
 [tools]
 "npm:wrangler" = "4"
 
 [tasks.install]
-description = "Install frontend deps (clean, lockfile-exact)"
-run = "npm ci"
+description = "Install frontend deps (clean, lockfile-exact) — installs the whole pnpm workspace"
+# pnpm run from a member dir resolves the repo-root workspace and installs every member
+# (root tooling + web), so this doubles as the whole-repo Node install. --frozen-lockfile
+# is the `npm ci` equivalent: it fails rather than mutating the committed pnpm-lock.yaml.
+run = "pnpm install --frozen-lockfile"
 
 [tasks.dev]
 description = "Run the Astro dev server (hot reload) — static pages only, no Pages Functions"
-run = "npm run dev"
+run = "pnpm run dev"
 
 [tasks."dev:stack"]
 description = "Full local stack: astro build + wrangler pages dev (runs /api/submit·ask·doc) with mocked externals"
-run = "npm run dev:stack"
+run = "pnpm run dev:stack"
 
 [tasks.check]
 description = "Frontend gate (CI parity): Biome lint + astro/tsc types + vitest + build + link check"
@@ -30,37 +33,37 @@ description = "Frontend gate (CI parity): Biome lint + astro/tsc types + vitest 
 # sites is an explicit opt-in here — not a silent fallback from bundle.ts.
 env = { WATERMARK_SKIP_EXPORT = "1", WATERMARK_BUNDLE_DIR = "sites" }
 run = [
-  "npm run lint",        # Biome (format + lint) — the gate CI runs that `npm run check` omits
-  "npm run check",       # astro check + tsc (functions)
-  "npm test",            # vitest
-  "npm run build",       # astro build against sites/ (offline, no Python)
-  "npm run check:links", # internal-link check over the build
+  "pnpm run lint",        # Biome (format + lint) — the gate CI runs that `pnpm run check` omits
+  "pnpm run check",       # astro check + tsc (functions)
+  "pnpm test",            # vitest
+  "pnpm run build",       # astro build against sites/ (offline, no Python)
+  "pnpm run check:links", # internal-link check over the build
 ]
 
 [tasks.test]
 description = "Frontend tests only (vitest)"
-run = "npm test"
+run = "pnpm test"
 
 [tasks.lint]
 description = "Frontend lint only (Biome ci — format + lint gate)"
-run = "npm run lint"
+run = "pnpm run lint"
 
 [tasks.types]
 description = "Frontend type-check only (astro check + tsc)"
-run = "npm run check"
+run = "pnpm run check"
 
 [tasks.build]
 description = "Build the static site (astro build → dist/)"
-run = "npm run build"
+run = "pnpm run build"
 
 [tasks.links]
 description = "Check internal links over the build"
-run = "npm run check:links"
+run = "pnpm run check:links"
 
 [tasks.fmt]
 description = "Auto-fix the frontend with Biome (format + safe lint fixes)"
-run = "npm run format"
+run = "pnpm run format"
 
 [tasks.preview]
 description = "Serve the built site locally (astro preview)"
-run = "npm run preview"
+run = "pnpm run preview"

@@ -1,0 +1,27 @@
+# pnpm workspace — the single install root for all Node code in this repo (Epic #1549).
+#
+# Two members today (Phase 0, #1550): the repo-root tooling package (bosc-repo-tools,
+# markdownlint-cli2) implicit as the workspace root, and the Astro site under `web/`.
+# Later phases (#1551–#1555) carve `web/` into `web/packages/*`; the glob below already
+# admits them, so those splits need no further workspace edit.
+#
+# NOT members (they keep their own package-lock.json + npm-based workflows, out of scope):
+#   .github/config/ (repo-config.yml) · deploy/ (deploy-infra.yml)
+#
+# One lockfile lives beside this file: pnpm-lock.yaml. The npm foot-guns this retires —
+# homebrew-vs-pinned biome, `npx markdownlint-cli2` pulling a newer version — both stemmed
+# from having no single pinned resolution; the workspace store is that single resolution.
+packages:
+  - web
+  - web/packages/*
+
+# pnpm 10 blocks dependency lifecycle (postinstall/build) scripts unless the package is
+# allow-listed here. These are the only tree deps that legitimately build on install —
+# each fetches or compiles a native binary (esbuild via astro/vite, biome the linter,
+# sharp image processing). A fresh `pnpm install` reports no *other* ignored build
+# scripts; regenerate this list interactively with `pnpm approve-builds` after a dep bump.
+# (wrangler/workerd are mise-managed, not npm deps, so they never appear here.)
+onlyBuiltDependencies:
+  - esbuild
+  - "@biomejs/biome"
+  - sharp

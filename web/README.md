@@ -14,18 +14,21 @@ deploy was never flipped and Cloudflare supersedes it.
 ## Toolchain
 
 Node is pinned via mise (`node = "24"` in [`mise.toml`](../mise.toml)); `mise install`
-gets it. Without mise, use any Node 24.x. Dependencies are locked in
-`package-lock.json` — use `npm ci` for reproducible installs.
+gets it. The package manager is **pnpm** (Epic #1549) — also mise-pinned (`npm:pnpm` in
+the root `[tools]`) and matched by the `packageManager` field in the root `package.json`.
+This app is one member of a repo-root **pnpm workspace**, so dependencies are locked in a
+single [`pnpm-lock.yaml`](../pnpm-lock.yaml) at the repo root — use
+`pnpm install --frozen-lockfile` for reproducible installs.
 
 ## Develop
 
 ```sh
-cd frontend
-npm ci            # or: npm install   (first time / after dep changes)
-npm run dev       # dev server with HMR  → http://localhost:4321
-npm run check     # astro check (types + template diagnostics)
-npm run build     # static build         → dist/
-npm run preview   # serve the built dist/ locally
+cd web
+pnpm install --frozen-lockfile   # or: pnpm install   (first time / after dep changes)
+pnpm run dev       # dev server with HMR  → http://localhost:4321
+pnpm run check     # astro check (types + template diagnostics)
+pnpm run build     # static build         → dist/
+pnpm run preview   # serve the built dist/ locally
 ```
 
 This project is a mise monorepo subproject: from anywhere, `mise run //frontend:check`
@@ -43,12 +46,12 @@ success instead.
 
 ## Local dev & testing — the Pages Functions
 
-`npm run dev` (astro) serves every **static** page but **not** the Cloudflare Pages
+`pnpm run dev` (astro) serves every **static** page but **not** the Cloudflare Pages
 Functions in [`functions/`](functions/) — `/api/submit`, `/api/ask`, `/api/doc`. Those run
 only on the Workers runtime. There are two ways to exercise them locally, and you usually
 want the first:
 
-**Tier A — automated route tests (offline, in CI).** `npm test` drives each handler
+**Tier A — automated route tests (offline, in CI).** `pnpm test` drives each handler
 end-to-end with a faked `Env` + a stubbed `fetch` (`src/lib/{submit,ask,doc}Route.test.ts`
 over the shared `src/lib/_routeHarness.ts`). No wrangler, no network, no real issues filed,
 no Anthropic spend — and it gates every frontend PR. This is the safety net; reach for it
@@ -67,9 +70,9 @@ submit/ask/doc in a browser (→ http://localhost:8788). It:
 - binds local KV (rate-limit / budget / contact) and a local R2 simulator for `DOCS`.
 
 `wrangler` is managed by **mise** (`frontend/mise.toml` `[tools]`, `npm:wrangler`), not an npm
-dependency — so it's pinned + isolated without bloating `npm ci` or the frontend CI job (which
+dependency — so it's pinned + isolated without bloating `pnpm install` or the frontend CI job (which
 uses `setup-node`, not mise). Run the stack via `mise run //frontend:dev:stack` (not a bare
-`npm run dev:stack`) so wrangler is on `PATH`; its workerd binary downloads lazily on first run.
+`pnpm run dev:stack`) so wrangler is on `PATH`; its workerd binary downloads lazily on first run.
 Turnstile verification still makes one real call to Cloudflare's siteverify (the dummy secret
 always passes), so this needs network. For real end-to-end submit/ask instead of mocks, point
 the `*_API_BASE` vars in `.dev.vars` at the real hosts and supply real creds.
@@ -80,7 +83,7 @@ wrangler's own `getPlatformProxy()` into the *same* store `wrangler pages dev` r
 fill it with `wrangler r2 object put`). So PDFs/images load with **no Cloudflare creds and no
 remote bucket**. It's incremental and LFS-aware; you need a real content bundle
 (`WATERMARK_BUNDLE_DIR` or `watermark export`) and `git lfs pull` for the bytes. To serve more than the
-published set, `npm run seed:r2 -- --collection <slug>` (or pass explicit rels) and restart the
+published set, `pnpm run seed:r2 -- --collection <slug>` (or pass explicit rels) and restart the
 stack. Skip seeding with `DEV_STACK_NO_SEED=1`. The doc-serving *logic* (gate, ranges,
 content-type) is covered offline by `src/lib/docRoute.test.ts`.
 
@@ -94,13 +97,13 @@ directory that contains a `manifest.json`:
 3. **`./sample-bundle`** — the committed minimal fixture (the default in a fresh
    checkout and in CI; see [`sample-bundle/README.md`](sample-bundle/README.md)).
 
-So a plain `npm run build` works with zero Python (it uses the fixture). To build
+So a plain `pnpm run build` works with zero Python (it uses the fixture). To build
 the full site against real data:
 
 ```sh
 watermark export                                   # → data/site/bundle/  (the loader then prefers it)
 # or point anywhere:
-WATERMARK_BUNDLE_DIR=/path/to/bundle npm run build
+WATERMARK_BUNDLE_DIR=/path/to/bundle pnpm run build
 ```
 
 Read `manifest.json` first, then feeds it lists:
@@ -206,7 +209,7 @@ the re-root, the plugin **base-prefixes Lima routes with `/bosc`** (`limaBase` i
 > Note: editing `astro.config.ts`-imported modules (the rehype plugin / its data) requires
 > clearing **`node_modules/.astro`** (Astro caches markdown rehype output there — a stale
 > cache silently survives a base/`LINK_MAP` change) and `node_modules/.vite` (the config
-> bundle cache); a fresh `npm ci` in CI is unaffected.
+> bundle cache); a fresh `pnpm install --frozen-lockfile` in CI is unaffected.
 
 ## Evidence tags
 

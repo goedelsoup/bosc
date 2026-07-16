@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "description": "Repo-level dev tooling for Project BOSC — Markdown lint/format (markdownlint-cli2). The Astro public site has its own package.json under web/.",
+  "packageManager": "pnpm@10.33.2",
   "scripts": {
     "lint:md": "markdownlint-cli2",
     "fix:md": "markdownlint-cli2 --fix"

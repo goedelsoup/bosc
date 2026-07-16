@@ -29,7 +29,7 @@ The **public site** is built in two tiers. The Python data tier (`src/watermark/
 emits a typed **content bundle** — JSON feeds + a manifest with a `CONTRACT_VERSION`,
 Pydantic models in `watermark.site.feeds`, written by `watermark export`. The presentation tier lives
 in **`web/`**: an Astro + MDX static site that reads that bundle at build time
-(Epic #54). It's pure Node (npm, no uv/LFS) and builds against the committed
+(Epic #54). It's pure Node (pnpm, no uv/LFS) and builds against the committed
 `web/sample-bundle/` fixture offline; deck.gl map/graph visualizations are the
 only React islands. The frontend is structured as **the BOSC network** (Epic #308):
 one build hosting a network of watershed-point sites — Lima (the live reference build)
@@ -66,7 +66,7 @@ repo-working agents now.
   `Brewfile` fallback) as a **monorepo** — backend tasks at the repo root, `web/` tasks
   namespaced `//web:*`, and a bare task name runs the project you're standing in.
   **`mise run check` is the gate to run before declaring done** (`mise run //web:check` for
-  `web/` changes; `mise run ci` for both). `markdown` (`npx markdownlint-cli2`) is a
+  `web/` changes; `mise run ci` for both). `markdown` (`pnpm exec markdownlint-cli2`) is a
   **separate required CI check** on any `.md` edit — run it locally (common failures
   `MD032` missing-blank-before-list, `MD012` consecutive-blanks; config + excludes in
   `.markdownlint-cli2.yaml`). CI (`.github/workflows/ci.yml`) gates its two halves at the

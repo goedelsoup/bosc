@@ -80,7 +80,7 @@ Two endpoints live here:
   speaks the Postgres wire protocol to Databricks Lakebase over a Cloudflare Hyperdrive socket —
   there's no Web-Crypto substitute for a SQL client. It runs in the Workers runtime via
   `cloudflare:sockets` (auto-detected); nothing else in this tree pulls a package.
-- **Typecheck:** `npm run check` runs `tsc -p functions/tsconfig.json` (WebWorker libs).
+- **Typecheck:** `pnpm run check` runs `tsc -p functions/tsconfig.json` (WebWorker libs).
   This tree is **excluded** from the Astro project's tsconfig so `astro check` doesn't
   typecheck Workers code with DOM/Astro libs.
 - **Pure logic is split out** into `api/_lib/` (submit's `schema.ts`/`issue.ts` + the

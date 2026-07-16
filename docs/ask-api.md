@@ -182,7 +182,7 @@ A public, **paid** LLM endpoint. Controls (reusing submit's `_lib/`):
 - **Page:** `web/src/pages/ask.astro` + `src/scripts/ask.ts` — framework-free, in the
   zero-React style of submit. Renders the live form only when `PUBLIC_TURNSTILE_SITE_KEY`
   is set at build time, else a not-yet-live placeholder pointing at browsing the corpus.
-- **Build/deploy:** unchanged — `watermark export` → `npm run build` → Wrangler uploads
+- **Build/deploy:** unchanged — `watermark export` → `pnpm run build` → Wrangler uploads
   `web/dist` + `web/functions/` to **Cloudflare Pages** (`pages.yml`). This is
   production; the GitHub Pages deploy was never flipped and Cloudflare supersedes it.
 

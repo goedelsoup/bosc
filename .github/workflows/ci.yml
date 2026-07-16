@@ -63,13 +63,19 @@ jobs:
               - 'data/**'
             frontend:
               - 'web/**'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+              - '.npmrc'
               - 'mise.toml'
               - '.github/workflows/ci.yml'
             markdown:
               - '**/*.md'
               - '.markdownlint-cli2.yaml'
               - 'package.json'
-              - 'package-lock.json'
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+              - '.npmrc'
               - '.github/workflows/ci.yml'
 
   # --- Backend legs (#682) -------------------------------------------------------------
@@ -223,30 +229,38 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # pnpm/action-setup reads the version from the root package.json `packageManager`
+      # field and must run BEFORE setup-node so `cache: pnpm` can find the store.
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: "24"
-          cache: npm
-          cache-dependency-path: web/package-lock.json
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
 
+      # Run from the workspace root (not web/) so the single root lockfile drives the
+      # whole install; the job's working-directory: web still governs the build steps.
       - name: Install dependencies
-        run: npm ci
+        working-directory: .
+        run: pnpm install --frozen-lockfile
 
       - name: Lint + format (Biome)
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Type check
-        run: npm run check
+        run: pnpm run check
 
       - name: Unit tests
-        run: npm test
+        run: pnpm test
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
 
       - name: Check internal links
-        run: npm run check:links
+        run: pnpm run check:links
 
   # Repo-wide Markdown lint (markdownlint-cli2). Node, but separate from the Astro
   # frontend job — it lints hand-authored docs across the repo (data/, docs/, root, …),
@@ -259,15 +273,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: "24"
-          cache: npm
-          cache-dependency-path: package-lock.json
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
 
+      # Only the root tooling package is needed here — `--filter` skips the heavy web
+      # tree (astro/deck.gl) so a Markdown lint doesn't install the whole site.
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile --filter bosc-repo-tools
 
+      # `pnpm exec` runs the workspace-pinned markdownlint-cli2 (retires the old `npx`
+      # foot-gun that could pull a newer version than the lockfile).
       - name: Markdown lint
-        run: npx markdownlint-cli2
+        run: pnpm exec markdownlint-cli2

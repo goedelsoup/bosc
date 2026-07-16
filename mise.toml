@@ -31,6 +31,11 @@ aws = "latest"
 python = "3.11"
 uv = "latest"
 node = "24"        # pinned LTS for the Astro web/ build (CI uses the same major)
+# The single Node package manager for the whole repo (Epic #1549). Pinned to match the
+# `packageManager` field in package.json — that field is what `pnpm/action-setup` reads in
+# CI, so the two must agree. One pnpm store retires the npm version foot-guns (homebrew-vs-
+# pinned biome, `npx` pulling a newer markdownlint).
+"npm:pnpm" = "10.33.2"
 git-lfs = "latest"
 pulumi = "latest"  # deploy/ stack — `cd deploy && pulumi up` (see deploy/README.md)
 
@@ -42,12 +47,13 @@ UV_PROJECT_ENVIRONMENT = ".venv"
 # === cross-cutting (both projects) ==========================================
 [tasks.setup]
 description = "Bootstrap both projects: Python + web deps, Git LFS, Claude Code CLI"
+# `//web:install` (pnpm install) installs the ENTIRE workspace — root tooling
+# (markdownlint-cli2) and the Astro site both — so there's no separate root Node install.
 depends = ["//web:install"]
 run = [
   "uv sync --extra dev",
-  "npm install",   # root dev tooling (markdownlint-cli2); the Astro site installs via //web:install
   "git lfs install --local",
-  "npm install -g @anthropic-ai/claude-code",
+  "npm install -g @anthropic-ai/claude-code",   # a global CLI, not a workspace dep
 ]
 
 [tasks.ci]
@@ -68,7 +74,7 @@ description = "Backend gate: ruff + format-check + Markdown lint + mypy + catalo
 run = [
   "uv run ruff check .",
   "uv run ruff format --check .",
-  "node_modules/.bin/markdownlint-cli2",   # repo-wide Markdown (config: .markdownlint-cli2.yaml)
+  "pnpm exec markdownlint-cli2",   # repo-wide Markdown (config: .markdownlint-cli2.yaml)
   "uv run mypy",
   "uv run watermark catalog check",   # data-catalog gate: schema · missing · orphan · drift (#631)
   "uv run watermark sites check",     # sites-registry gate: YAML ↔ Python ↔ JSON in sync (#1027)
@@ -96,7 +102,7 @@ description = "Auto-fix the backend: ruff lint --fix + ruff format + Markdown"
 run = [
   "uv run ruff check --fix .",
   "uv run ruff format .",
-  "node_modules/.bin/markdownlint-cli2 --fix",
+  "pnpm exec markdownlint-cli2 --fix",
 ]
 
 [tasks.export]

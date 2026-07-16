@@ -136,7 +136,7 @@ APP_BASE_URL = "https://watermarkdirectory.org"
 
 These must be set in the GitHub Actions build environment (`.github/workflows/pages.yml`)
 and in the Cloudflare Pages build settings so the `PUBLIC_*` vars are available
-at `npm run build` time:
+at `pnpm run build` time:
 
 ```bash
 PUBLIC_COGNITO_DOMAIN=watermark-auth.auth.us-east-1.amazoncognito.com

@@ -24,9 +24,10 @@ htmlcov/
 # uv
 uv.lock.bak
 
-# Node — root-level dev tooling only (Markdown lint, markdownlint-cli2). The Astro
-# site under frontend/ has its own node_modules (ignored by frontend/.gitignore).
-# package.json + package-lock.json ARE committed; node_modules is not.
+# Node — one pnpm workspace (Epic #1549). The repo-root package.json holds dev tooling
+# (markdownlint-cli2); web/ is a workspace member with its own node_modules. package.json
+# files + the single root pnpm-lock.yaml ARE committed; node_modules (incl. the pnpm
+# virtual store at node_modules/.pnpm) is not.
 node_modules/
 
 # Environment / secrets

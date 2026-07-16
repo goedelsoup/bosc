@@ -208,7 +208,7 @@ stream because they come from a different identity.
   `target`. A no-JS fallback states the endpoint needs JavaScript (Turnstile requires
   it) and links to opening a GitHub issue manually.
 - **Build:** unchanged from the host migration — GitHub Actions runs `watermark export` →
-  `npm run build` (the Python bundle step stays where uv caching works), then deploys
+  `pnpm run build` (the Python bundle step stays where uv caching works), then deploys
   `web/dist` **and** `web/functions/` to Cloudflare Pages via Wrangler. This
   supersedes the GitHub Pages flip ([#102](https://github.com/watermark-directory/the-watermark-directory/issues/102)/[#107](https://github.com/watermark-directory/the-watermark-directory/issues/107)).
 
