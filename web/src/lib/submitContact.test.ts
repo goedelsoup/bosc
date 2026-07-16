@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { buildIssue, dedupeInput } from "@fn/api/_lib/issue";
-import { LIMITS, type Submission, validateSubmission } from "@fn/api/_lib/schema";
+import { buildIssue, dedupeInput } from "@watermark/functions/api/_lib/issue";
+import { LIMITS, type Submission, validateSubmission } from "@watermark/functions/api/_lib/schema";
 
 // A contact value with both an email and a phone, so absence assertions catch either piece.
 const CONTACT = "secret@private.example / +15551234567";

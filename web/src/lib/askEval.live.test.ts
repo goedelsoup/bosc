@@ -6,9 +6,9 @@
 //   ANTHROPIC_API_KEY=sk-... npm test -- askEval.live   (optionally ASK_EVAL_MODEL=...)
 
 import { describe, expect, it } from "vitest";
-import { assemblePrompt, extractCitations, isRefusal } from "@fn/api/_lib/ask";
-import { createMessage } from "@fn/api/_lib/anthropic";
-import { retrieve } from "@fn/api/_lib/retrieval";
+import { assemblePrompt, extractCitations, isRefusal } from "@watermark/functions/api/_lib/ask";
+import { createMessage } from "@watermark/functions/api/_lib/anthropic";
+import { retrieve } from "@watermark/functions/api/_lib/retrieval";
 import { CORPUS, HALLUCINATION_BAIT, IN_CORPUS } from "./askEval.fixtures";
 
 const apiKey = process.env.ANTHROPIC_API_KEY;

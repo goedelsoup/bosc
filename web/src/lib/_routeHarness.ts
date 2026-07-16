@@ -12,8 +12,8 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { PGlite } from "@electric-sql/pglite";
-import type { KVLike } from "@fn/api/_lib/ratelimit";
-import type { PgLike } from "@fn/api/_lib/storiesStore";
+import type { KVLike } from "@watermark/functions/api/_lib/ratelimit";
+import type { PgLike } from "@watermark/functions/api/_lib/storiesStore";
 
 /** A `fetch`-compatible response carrying JSON. */
 export function jsonResponse(status: number, data: unknown, headers?: Record<string, string>): Response {

@@ -18,8 +18,8 @@ import {
   setModeration,
   storyIdForShareId,
   updateStory,
-} from "@fn/api/_lib/storiesStore";
-import { revalidateAll } from "@fn/api/_lib/revalidateStories";
+} from "@watermark/functions/api/_lib/storiesStore";
+import { revalidateAll } from "@watermark/functions/api/_lib/revalidateStories";
 import { fakePg } from "./_routeHarness";
 
 const owner: StoryOwner = { kind: "user", id: "user-1" };

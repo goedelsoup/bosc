@@ -1,7 +1,7 @@
 // Unit tests for the shared Pages-Function HTTP helpers — focus on the external-call
 // timeout glue (#590). The envelopes/guards are covered via the route harnesses.
 import { describe, expect, it, vi } from "vitest";
-import { fetchWithTimeout, isTimeoutError } from "@fn/api/_lib/http";
+import { fetchWithTimeout, isTimeoutError } from "@watermark/functions/api/_lib/http";
 
 describe("isTimeoutError (#590)", () => {
   it("recognizes timeout/abort rejections, rejects everything else", () => {

@@ -12,7 +12,7 @@ import {
   listPublicBulletinPosts,
   publicConnectTally,
   setBulletinModeration,
-} from "@fn/api/_lib/contactsStore";
+} from "@watermark/functions/api/_lib/contactsStore";
 import { fakePg } from "./_routeHarness";
 
 const NOW = "2026-07-03T00:00:00.000Z";

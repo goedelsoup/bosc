@@ -6,8 +6,8 @@
 // in-memory bytes.
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { _resetPublishedCache } from "@fn/api/_lib/docAllowlist";
-import { onRequest } from "@fn/api/doc/[[path]]";
+import { _resetPublishedCache } from "@watermark/functions/api/_lib/docAllowlist";
+import { onRequest } from "@watermark/functions/api/doc/[[path]]";
 import { type FetchRoute, fakeR2, jsonResponse, routingFetch } from "./_routeHarness";
 
 const KEY = "recorder/deeds/2019-deed.pdf";

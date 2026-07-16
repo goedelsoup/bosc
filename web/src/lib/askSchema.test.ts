@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ASK_LIMITS, validateAsk } from "@fn/api/_lib/askSchema";
+import { ASK_LIMITS, validateAsk } from "@watermark/functions/api/_lib/askSchema";
 
 describe("validateAsk", () => {
   it("accepts a trimmed question and an optional turnstile token", () => {

@@ -4,9 +4,15 @@
 // full request path — kill switch → auth → prefs store — is exercised offline.
 
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
-import { onRequestGet as profileGet, onRequestPatch as profilePatch } from "@fn/api/account/profile";
-import { onRequestGet as notifGet, onRequestPatch as notifPatch } from "@fn/api/account/notifications";
-import { setDisplayName, setNotifications, type UserPrefs } from "@fn/api/_lib/authStore";
+import {
+  onRequestGet as profileGet,
+  onRequestPatch as profilePatch,
+} from "@watermark/functions/api/account/profile";
+import {
+  onRequestGet as notifGet,
+  onRequestPatch as notifPatch,
+} from "@watermark/functions/api/account/notifications";
+import { setDisplayName, setNotifications, type UserPrefs } from "@watermark/functions/api/_lib/authStore";
 import {
   type CognitoTestKeyPair,
   type FakePg,

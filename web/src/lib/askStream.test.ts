@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { mapAnthropicEvent } from "@fn/api/_lib/anthropicStream";
-import { drainSse, frame } from "@fn/api/_lib/sse";
+import { mapAnthropicEvent } from "@watermark/functions/api/_lib/anthropicStream";
+import { drainSse, frame } from "@watermark/functions/api/_lib/sse";
 
 describe("drainSse", () => {
   it("pulls complete events and keeps the incomplete tail", () => {

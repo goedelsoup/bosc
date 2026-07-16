@@ -3,9 +3,9 @@
 // stored prefs. Drives the handler with a real in-memory Postgres (pglite) bound as AUTH_DB.
 
 import { beforeEach, describe, expect, it } from "vitest";
-import { onRequestGet as unsubscribe } from "@fn/api/auth/unsubscribe";
-import { getPrefs, setNotifications } from "@fn/api/_lib/authStore";
-import { signUnsubToken } from "@fn/api/_lib/unsub";
+import { onRequestGet as unsubscribe } from "@watermark/functions/api/auth/unsubscribe";
+import { getPrefs, setNotifications } from "@watermark/functions/api/_lib/authStore";
+import { signUnsubToken } from "@watermark/functions/api/_lib/unsub";
 import { type FakePg, fakePg } from "./_routeHarness";
 
 const BASE = "https://bosc.test/api/auth/unsubscribe";

@@ -3,8 +3,8 @@
 // grounded in retrieval, and the record's silence becomes a refusal (not a guess).
 
 import { describe, expect, it } from "vitest";
-import { assemblePrompt, extractCitations, isRefusal, REFUSAL } from "@fn/api/_lib/ask";
-import { retrieve } from "@fn/api/_lib/retrieval";
+import { assemblePrompt, extractCitations, isRefusal, REFUSAL } from "@watermark/functions/api/_lib/ask";
+import { retrieve } from "@watermark/functions/api/_lib/retrieval";
 import { CORPUS, IN_CORPUS, OUT_OF_CORPUS } from "./askEval.fixtures";
 
 describe("grounding — in-corpus questions surface the right source", () => {

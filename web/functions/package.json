@@ -1,0 +1,17 @@
+{
+  "name": "@watermark/functions",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "The Cloudflare Pages Functions (Workers runtime) — /api/submit, /api/ask, /api/doc, the MCP endpoint, Stories/AUTH Lakebase routes. Epic #1549, Phase 2 (#1552). Stays physically at web/functions so Cloudflare Pages discovers it at the project root (wrangler compiles <project-root>/functions); this package.json just gives it a scoped dependency list. wrangler itself is mise-managed (web/mise.toml [tools]), not a devDep here.",
+  "exports": {
+    "./*": "./*.ts"
+  },
+  "scripts": {
+    "check": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@watermark/core": "workspace:*",
+    "postgres": "^3.4.9"
+  }
+}
