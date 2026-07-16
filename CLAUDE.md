@@ -68,9 +68,14 @@ skills (evidentiary-discipline is the spine; the rest defer to it), and
 `docs/investigative-method/` carries the candidate agent system prompt plus the
 `ENRICHMENT.md` that binds those skills to this repo's artifacts (the `[verified]`/
 `[inference]`/`[reference]`/`[open]` tag vocabulary, the `EntityGraph`,
-`ProvenancedValue`, `docs/legal/`, the corpus audit). Wiring it into the in-app
-`watermark.agent` research agent is deferred follow-up; the skills are usable by
-repo-working agents now.
+`ProvenancedValue`, `docs/legal/`, the corpus audit). The in-app `watermark.agent`
+research agent already loads the discipline system prompt + the read-only research
+skill subset; **#1563 completed the method-layer → in-app-agent wiring** by serving
+the **yidam corpus mirror** (Epic #1560 E1/E3 — the committed corpus projected into
+`yidam://corpus/*` nodes by `watermark corpus-mirror`) to it as a second in-process
+MCP backend (`watermark.agent.yidam_tools`, BOSC's Python realization of
+`yidam serve --mcp`), so the agent can list / read / query those nodes and run
+open-questions over the projected graph. The skills are usable by repo-working agents now.
 
 ## Conventions
 
