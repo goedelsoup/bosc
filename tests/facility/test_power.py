@@ -42,7 +42,8 @@ def test_power_basis_is_none_without_a_facility() -> None:
     """A registered site with no documented facility has no power basis (no fabrication)."""
     from watermark.config import Settings
 
-    assert derive_power_basis(settings=Settings(site="findlay")) is None
+    # xenia is deliberately facility-less (Findlay now carries a disclosed SiteFacility, #1459).
+    assert derive_power_basis(settings=Settings(site="xenia")) is None
 
 
 def test_site_plan_grounded_facility_has_no_genset_basis() -> None:
@@ -121,8 +122,9 @@ def test_compute_capacity_refuses_a_facility_less_site() -> None:
     from watermark.config import Settings
     from watermark.facility.compute import derive_compute_capacity
 
+    # xenia is deliberately facility-less (Findlay now carries a disclosed SiteFacility, #1459).
     with pytest.raises(ValueError, match="no documented facility"):
-        derive_compute_capacity(settings=Settings(site="findlay"))
+        derive_compute_capacity(settings=Settings(site="xenia"))
 
 
 def test_generation_cycle_efficiency_coefficient() -> None:

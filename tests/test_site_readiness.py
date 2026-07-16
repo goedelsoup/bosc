@@ -193,8 +193,9 @@ def test_tier_backdrop_leads_only() -> None:
 
 
 def test_tier_backdrop_staged() -> None:
-    # Floor on disk, nothing above → backdrop.
-    prof = SITES["findlay"]
+    # Floor on disk, nothing above → backdrop. Uses xenia (facility=None, not in STORY_SLUGS) —
+    # Findlay now carries a disclosed SiteFacility (#1459), so it is a Case site, not a backdrop one.
+    prof = SITES["xenia"]
     states = domain_states(prof, _counts())
     assert states["backdrop"] == "live"
     assert all(states[d] == "absent" for d in DOMAINS if d != "backdrop")

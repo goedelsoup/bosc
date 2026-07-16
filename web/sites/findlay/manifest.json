@@ -2,14 +2,14 @@
   "site": "findlay",
   "bundle_version": "1.0.0",
   "contract_version": "1.24.0",
-  "generated_at": "2026-07-14T20:22:06+00:00",
-  "feed_count": 24,
-  "row_total": 78,
+  "generated_at": "2026-07-16T12:14:17+00:00",
+  "feed_count": 25,
+  "row_total": 79,
   "readiness": {
     "tier": "case",
     "domains": {
       "backdrop": "live",
-      "facility": "absent",
+      "facility": "live",
       "places": "absent",
       "record": "live",
       "story": "seeded"
@@ -133,6 +133,14 @@
       "path": "feeds/consumer-energy.json",
       "media_type": "application/json",
       "schema": "schemas/consumer-energy.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "economics-demand-pressure",
+      "path": "feeds/economics-demand-pressure.json",
+      "media_type": "application/json",
+      "schema": "schemas/economics-demand-pressure.schema.json",
       "kind": "object",
       "count": 1
     },

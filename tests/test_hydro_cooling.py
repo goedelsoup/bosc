@@ -218,8 +218,9 @@ def _stub_facility(**overrides: object) -> SiteFacility:
 
 def test_no_facility_resolves_off() -> None:
     assert resolve_cooling_model(None) == CoolingModelType.OFF
-    findlay = Settings(data_dir=Path("data"), site="findlay", hydro_offline=True)
-    assert derive_cooling_basis(findlay).cooling_model == CoolingModelType.OFF
+    # xenia is deliberately facility-less (Findlay now carries a disclosed SiteFacility, #1459).
+    xenia = Settings(data_dir=Path("data"), site="xenia", hydro_offline=True)
+    assert derive_cooling_basis(xenia).cooling_model == CoolingModelType.OFF
 
 
 def test_undisclosed_method_defaults_unknown_never_evaporative() -> None:
@@ -242,7 +243,11 @@ def test_lima_profile_is_explicit_evaporative() -> None:
     assert lima.cooling_model_source == "assumption"  # asserted, not disclosed (CBI-withheld)
     fw = SITES["fort-wayne"].facility
     assert fw is not None and fw.cooling_model == CoolingModelType.UNKNOWN
-    assert SITES["findlay"].facility is None  # ⇒ off
+    # Findlay's disclosed One Power / MARA facility (#1459) carries UNKNOWN cooling (MARA's Findlay
+    # cooling design is not on the record — a bracketed range, never the evaporative default).
+    fnd = SITES["findlay"].facility
+    assert fnd is not None and fnd.cooling_model == CoolingModelType.UNKNOWN
+    assert SITES["xenia"].facility is None  # a facility-less site ⇒ off
 
 
 def test_registry_covers_every_enum_member() -> None:
@@ -250,11 +255,11 @@ def test_registry_covers_every_enum_member() -> None:
 
 
 def test_explicit_model_without_facility_is_refused() -> None:
-    # A facility-less site (Findlay) must never derive a non-off basis from the Lima
+    # A facility-less site (xenia) must never derive a non-off basis from the Lima
     # module fallbacks — that would leak Lima's air-permit provenance into its figures.
-    findlay = Settings(data_dir=Path("data"), site="findlay", hydro_offline=True)
+    xenia = Settings(data_dir=Path("data"), site="xenia", hydro_offline=True)
     with pytest.raises(ValueError, match=r"requires a SiteProfile\.facility"):
-        derive_cooling_basis(findlay, cooling_model="evaporative_tower")
+        derive_cooling_basis(xenia, cooling_model="evaporative_tower")
 
 
 def test_override_without_citation_is_rejected() -> None:

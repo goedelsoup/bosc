@@ -88,13 +88,15 @@ def test_run_dispersion_degrades_without_binary(air_settings: Settings) -> None:
 
 def test_dispersion_none_for_site_without_facility() -> None:
     # A site with no documented facility has no fleet/rates to model → None (section locks).
-    findlay = Settings(
-        site="findlay",
+    # xenia is deliberately facility-less (Findlay now carries a disclosed SiteFacility, #1459 —
+    # but with no air permit / genset fleet, so its dispersion would still lock).
+    xenia = Settings(
+        site="xenia",
         data_dir=REPO_ROOT / "data",
         econ_offline=True,
         econ_fixtures_dir=REPO_ROOT / "tests" / "fixtures" / "economics",
     )
-    assert d.run_dispersion(pollutant="NOx", settings=findlay) is None
+    assert d.run_dispersion(pollutant="NOx", settings=xenia) is None
 
 
 # --- event-anchored calibration -----------------------------------------------------
