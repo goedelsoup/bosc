@@ -8,7 +8,10 @@ export interface ToolSchema {
   description: string;
   inputSchema: {
     type: "object";
-    properties: Record<string, { type: string; description: string; default?: unknown }>;
+    properties: Record<
+      string,
+      { type: string; description: string; default?: unknown; enum?: readonly string[] }
+    >;
     required?: string[];
   };
   /** One representative query that illustrates the tool's use. */
@@ -18,7 +21,8 @@ export interface ToolSchema {
 export const MCP_TOOLS: readonly ToolSchema[] = [
   {
     name: "search_corpus",
-    description: "Semantic + keyword search over the documentary corpus",
+    description:
+      "Semantic + keyword search over the documentary corpus. Returns compact evidence cards by default (id, title, site, collection, date, source_kind, score, snippet, estimated_tokens, verified) — no full record text. Use response_mode=full to pull a hit's whole text.",
     inputSchema: {
       type: "object",
       properties: {
@@ -32,6 +36,19 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
           description: "Collection filter (e.g. oepa, recorder, aedg)",
         },
         limit: { type: "integer", description: "Max results (default 10)", default: 10 },
+        response_mode: {
+          type: "string",
+          enum: ["ids_only", "compact", "snippets", "full"],
+          description:
+            "Result shape (default compact). compact = evidence cards, no full text; ids_only = id + score only; snippets = compact plus a query-focused excerpt; full = the whole record text (opt-in, expensive — ~18–24k tokens per record).",
+          default: "compact",
+        },
+        snippet_tokens: {
+          type: "integer",
+          description:
+            "Approx. size (in tokens) of the query-focused excerpt in snippets mode (default 250).",
+          default: 250,
+        },
       },
       required: ["query"],
     },

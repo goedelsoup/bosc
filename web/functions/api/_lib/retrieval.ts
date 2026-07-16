@@ -34,6 +34,9 @@ export interface AskUnit {
   verified?: boolean;
   /** Site slug this unit belongs to (e.g. "lima"). Absent on legacy index entries. */
   site?: string;
+  /** Structured event/record date, when the source feed carries one (timeline/meetings).
+   * Surfaced on compact discovery cards (#1580); absent on units with no dated source. */
+  date?: string | null;
 }
 
 /** One scored hit: the unit plus its BM25 score. */
