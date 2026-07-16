@@ -3,7 +3,7 @@ import Icon from "./Icon.astro";
 import Logo from "./Logo.astro";
 import SwitcherRow from "./SwitcherRow.astro";
 import SwitcherRowV2 from "./SwitcherRowV2.astro";
-import AuthShell from "./islands/AuthShell";
+import AuthShell from "@watermark/viz/islands/AuthShell.tsx";
 import {
   comingSoonSiteTabs,
   networkTabs,
@@ -13,10 +13,10 @@ import {
   navItemActive,
   navItemLinks,
   type SectionId,
-} from "../lib/nav";
-import { getHypotheses } from "../lib/bundle";
-import { withBase } from "../lib/site";
-import { currentSiteForPath, groupSites, SITE_STATUS_META, SITES, siteForPath } from "../lib/sites";
+} from "@watermark/core/nav";
+import { getHypotheses } from "@watermark/core/bundle";
+import { withBase } from "@watermark/core/site";
+import { currentSiteForPath, groupSites, SITE_STATUS_META, SITES, siteForPath } from "@watermark/core/sites";
 
 interface Props {
   active: SectionId;

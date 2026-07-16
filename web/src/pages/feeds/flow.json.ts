@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import type { ReachNetwork, RoutedHydrographNetwork, ScenarioResult } from "~/lib/feeds";
-import { buildFlowReaches } from "~/lib/flowModel";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { ReachNetwork, RoutedHydrographNetwork, ScenarioResult } from "@watermark/core/feeds";
+import { buildFlowReaches } from "@watermark/viz/flowModel";
 
 // Static feed endpoint: the joined `FlowReach[]` the deck.gl FlowLayer island advects over
 // (epic #1237 / #1235) — the `reach-network` river centerlines keyed to `routed-hydrograph`

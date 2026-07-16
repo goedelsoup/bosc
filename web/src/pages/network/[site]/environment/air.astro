@@ -1,14 +1,14 @@
 ---
-import { selectableSitePaths, siteForSlug } from "~/lib/sites";
+import { selectableSitePaths, siteForSlug } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import BackLink from "~/components/BackLink.astro";
 import EvidenceTag from "~/components/EvidenceTag.astro";
-import DispersionMap from "~/components/islands/DispersionMap.tsx";
+import DispersionMap from "@watermark/viz/islands/DispersionMap.tsx";
 import Base from "~/layouts/Base.astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import type { DispersionField } from "~/lib/feeds";
-import { isReferenceSite } from "~/lib/readiness";
-import { withBase, withSite } from "~/lib/site";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { DispersionField } from "@watermark/core/feeds";
+import { isReferenceSite } from "@watermark/core/readiness";
+import { withBase, withSite } from "@watermark/core/site";
 
 // The air-dispersion field view (#1234, epic #1237): the deck.gl FieldLayer island over the
 // gridded AERMOD screening surface, plus the always-rendered peak-concentration table that is the

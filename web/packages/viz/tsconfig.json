@@ -1,0 +1,19 @@
+{
+  "//": "Standalone type-check for @watermark/viz (Epic #1549, Phase 4). Unlike core/charts this IS a DOM + React package (the client:only island cluster), so the lib includes DOM and jsx is the automatic react-jsx runtime. `import.meta.env` (Vite) is declared in islands/vite-env-shim.d.ts. `npm run check` in web/ runs this via `tsc -p packages/viz/tsconfig.json`.",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "types": [],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["islands/**/*.ts", "islands/**/*.tsx", "islands/**/*.d.ts", "lib/**/*.ts"]
+}

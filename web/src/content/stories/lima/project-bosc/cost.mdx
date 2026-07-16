@@ -11,9 +11,9 @@ pageTitle: "What it costs the public — Chapter 5"
 description: "The public's share of the data-center project arrives as roads, booked as a private gift. Read the cost estimate and the agreement that prices it."
 ---
 
-import { OPC_TEARDOWN, RDA_TEARDOWN } from "~/lib/teardowns";
-import MoneyFlow from "~/components/islands/MoneyFlow.tsx";
-import { buildMoneyFlow, fmtUsd, fmtUsdFull, fmtUsdM } from "~/lib/moneyFlow";
+import { OPC_TEARDOWN, RDA_TEARDOWN } from "@watermark/core/teardowns";
+import MoneyFlow from "@watermark/viz/islands/MoneyFlow.tsx";
+import { buildMoneyFlow, fmtUsd, fmtUsdFull, fmtUsdM } from "@watermark/core/moneyFlow";
 
 export const money = buildMoneyFlow();
 export const perJob = money.abatementPerJob;

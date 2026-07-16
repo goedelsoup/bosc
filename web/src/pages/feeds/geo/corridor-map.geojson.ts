@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { mergedGeo } from "~/lib/geo";
+import { mergedGeo } from "@watermark/viz/geo";
 
 // Static endpoint: the corridor map's data — every geo layer feed merged into one
 // FeatureCollection, emitted at build time. The CorridorMap island fetches it

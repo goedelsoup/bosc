@@ -1,0 +1,34 @@
+{
+  "name": "@watermark/viz",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "The React + WebGL island cluster (Epic #1549, Phase 4 #1554): deck.gl/MapLibre maps, the d3-force EntityGraph, the PDF viewer, the scenario simulators, and their layer/data models (field, flow, flowModel, geoStyle, graph, geo, defenseNexus, relationClasses) + the browser-only auth helper. Owns the heavy dependency cluster (deck.gl ×4, maplibre-gl, react-map-gl, d3-force, pdfjs-dist) so the otherwise zero-framework site never loads it — islands mount client:only from the site. Depends on @watermark/core. react/react-dom are also declared by the site (@astrojs/react renders the islands), so pnpm dedupes them to one instance.",
+  "exports": {
+    "./islands/*": "./islands/*",
+    "./*": "./lib/*.ts"
+  },
+  "scripts": {
+    "check": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@watermark/core": "workspace:*",
+    "@deck.gl/core": "^9.3.3",
+    "@deck.gl/geo-layers": "^9.3.3",
+    "@deck.gl/layers": "^9.3.3",
+    "@deck.gl/react": "^9.3.3",
+    "d3-force": "^3.0.0",
+    "maplibre-gl": "^4.7.1",
+    "pdfjs-dist": "^4.10.38",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-map-gl": "^7.1.9"
+  },
+  "devDependencies": {
+    "@types/d3-force": "^3.0.10",
+    "@types/geojson": "^7946.0.16",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "typescript": "^5.7.0"
+  }
+}

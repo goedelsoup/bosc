@@ -6,10 +6,10 @@
  */
 import Base from "~/layouts/Base.astro";
 import StoriesDisabled from "~/components/StoriesDisabled.astro";
-import MyStories from "~/components/islands/stories/MyStories.tsx";
-import { withSite } from "~/lib/site";
-import { activeSite, selectableSitePaths, siteForSlug } from "~/lib/sites";
-import { storiesUiEnabled } from "~/lib/storiesFlag";
+import MyStories from "@watermark/viz/islands/stories/MyStories.tsx";
+import { withSite } from "@watermark/core/site";
+import { activeSite, selectableSitePaths, siteForSlug } from "@watermark/core/sites";
+import { storiesUiEnabled } from "@watermark/core/storiesFlag";
 
 export const getStaticPaths = selectableSitePaths;
 
