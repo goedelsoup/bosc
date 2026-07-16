@@ -32,6 +32,13 @@ def corpus_mirror(
         "--check/--no-check",
         help="Run the yidam graph-check rules after writing and fail on any issue.",
     ),
+    index: bool = typer.Option(
+        False,
+        "--index/--no-index",
+        help="Also build the LanceDB vector index over the mirror (.yidam/index; yidam "
+        "embed + index-build). Off by default — downloads the ~80 MB embedding model on "
+        "first run and is rebuilt lazily by `yidam serve --mcp` regardless.",
+    ),
 ) -> None:
     """Project the corpus (entities, relationships, concepts, people, leads, hypotheses,
     [open] claims) into yidam corpus nodes under .yidam/corpus/ for the active site, and
@@ -81,3 +88,13 @@ def corpus_mirror(
                     console.print(f"    - {problem}")
             raise typer.Exit(code=1)
         console.print(f"[green]graph-check clean[/] — {len(mirror.nodes)} instances.")
+
+    if index:
+        from watermark.site.yidam_index import build_yidam_index
+
+        console.print("[dim]  embedding nodes → LanceDB vector index (all-MiniLM-L6-v2)…[/]")
+        built = build_yidam_index(settings, mirror=mirror)
+        console.print(
+            f"[green]Indexed[/] {built.nodes} nodes ({built.dimension}-dim) → {built.index_dir} "
+            f"[dim](reconciled with the /ask embeddings; queryable via yidam serve --mcp)[/]"
+        )

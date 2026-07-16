@@ -233,7 +233,8 @@ def test_options_wire_the_discipline_prompt_and_research_skills() -> None:
     # backend's `mcp__yidam__*` tools (enabled by default).
     assert opts.allowed_tools == tools.ALLOWED_TOOL_NAMES + yidam_tools.ALLOWED_TOOL_NAMES
     assert len(tools.ALLOWED_TOOL_NAMES) == 25  # +search_web, +fetch_url (#1048)
-    assert len(yidam_tools.ALLOWED_TOOL_NAMES) == 4  # list/read/query/open-questions (#1563)
+    # list/read/query/open-questions (#1563) + semantic-search (#1564)
+    assert len(yidam_tools.ALLOWED_TOOL_NAMES) == 5
     assert "data-center-sweep" in RESEARCH_SKILLS  # +data-center-sweep (#1049)
 
 

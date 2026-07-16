@@ -5,6 +5,9 @@
 # NOT vendor the yidam template or build the Rust `yidam` CLI: BOSC replicates yidam's report
 # logic in Python (watermark.site.corpus_mirror) so the mirror + reports regenerate offline,
 # with no Rust toolchain — which is why this repo has no yidam/ · sadhana/ · samudaya/ overlay.
+# `yidam embed` + `yidam index-build` are likewise realized in Python (watermark.site.yidam_index,
+# `watermark corpus-mirror --index`): a LanceDB vector index over the mirror under .yidam/index/,
+# on the same all-MiniLM-L6-v2 backend as the /ask embeddings, queried via `yidam serve --mcp`.
 #
 # This file pins the yidam version whose graph-check / corpus-index / open-questions / lint
 # rules the Python replicas track, so drift against upstream is visible. The optional
