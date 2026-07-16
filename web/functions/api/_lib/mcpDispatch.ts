@@ -6,6 +6,7 @@
 import { MCP_TOOLS } from "@watermark/core/mcpTools";
 import { handleSearchCorpus } from "./mcpTools/searchCorpus";
 import {
+  handleGetDocument,
   handleGetDocuments,
   handleGetEntities,
   handleGetHypotheses,
@@ -110,6 +111,9 @@ async function handleToolsCall(params: unknown, requestUrl: string): Promise<unk
       break;
     case "get_documents":
       content = await handleGetDocuments(toolParams, requestUrl);
+      break;
+    case "get_document":
+      content = await handleGetDocument(toolParams, requestUrl);
       break;
     default:
       throw new McpError(RPC.INVALID_PARAMS, `Tool "${name}" has no implementation`);

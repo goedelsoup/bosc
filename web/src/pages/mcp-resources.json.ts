@@ -14,7 +14,14 @@ import { activeSite, loadManifest } from "@watermark/core/bundle";
 
 // Feeds with a /feeds/{name}.json static endpoint. hypothesis-assessments shares
 // the /feeds/hypotheses.json endpoint and is handled as a sub-key by readResource().
-const READABLE_FEEDS = new Set(["timeline", "entities", "hypotheses", "hypothesis-assessments", "documents"]);
+const READABLE_FEEDS = new Set([
+  "records",
+  "timeline",
+  "entities",
+  "hypotheses",
+  "hypothesis-assessments",
+  "documents",
+]);
 
 const FEED_DESCRIPTIONS: Record<string, string> = {
   records:

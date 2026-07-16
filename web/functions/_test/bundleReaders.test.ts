@@ -5,6 +5,7 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
+  handleGetDocument,
   handleGetDocuments,
   handleGetEntities,
   handleGetHypotheses,
@@ -76,7 +77,58 @@ const DOCUMENTS = [
         published: true,
         available: true,
       },
+      {
+        rel: "recorder/scans/deed-1.pdf",
+        name: "deed-1.pdf",
+        size_bytes: 12345,
+        suffix: "pdf",
+        media_type: "application/pdf",
+        render_class: "pdf",
+        published: true,
+        available: true,
+        download_url: null,
+      },
     ],
+  },
+];
+
+const RECORDS = [
+  {
+    rel: "recorder/deed-1.deed.yaml",
+    group: "deeds",
+    title: "Warranty Deed",
+    confidence: "high",
+    warnings: ["consideration not stated"],
+    fields: { grantor: "Alice", grantee: "Bob LLC", parcel_ids: ["1", "2"], note: "z".repeat(4000) },
+    approximate_paths: [],
+    citation: {
+      source: "recorder/deed-1.deed.yaml",
+      source_kind: "document",
+      page: null,
+      confidence: "high",
+      verified: true,
+    },
+    source_doc_rel: "recorder/scans/deed-1.pdf",
+    source_doc_render_class: "pdf",
+    source_doc_published: true,
+  },
+  {
+    // Unjoined record — no source document (e.g. an assembled OPC estimate).
+    rel: "aedg/roundabouts.opc.yaml",
+    group: "opc",
+    title: "OPC estimate",
+    confidence: "medium",
+    warnings: [],
+    fields: { total: 1_000_000, sections: { paving: 500_000 } },
+    approximate_paths: [],
+    citation: {
+      source: "aedg/roundabouts.opc.yaml",
+      source_kind: "document",
+      page: null,
+      confidence: "medium",
+      verified: false,
+    },
+    source_doc_rel: null,
   },
 ];
 
@@ -92,6 +144,7 @@ beforeEach(() => {
       feedRoute("entities", ENTITIES),
       feedRoute("hypotheses", HYPOTHESES),
       feedRoute("documents", DOCUMENTS),
+      feedRoute("records", RECORDS),
     ]),
   );
 });
@@ -191,5 +244,105 @@ describe("handleGetDocuments", () => {
     const oepa = env.results[0];
     expect(oepa.entry_count).toBe(30); // reported total unchanged
     expect((oepa.entries as unknown[]).length).toBeLessThan(30); // list trimmed
+  });
+});
+
+describe("handleGetDocument", () => {
+  interface Metadata {
+    record_rel: string | null;
+    title: string | null;
+    source_doc_rel: string | null;
+    document_file: { rel: string } | null;
+  }
+
+  it("resolves by record id and joins its source document + fields + citation", async () => {
+    const env = await run(handleGetDocument, { document_id: "recorder/deed-1.deed.yaml" });
+    expect(env.results).toHaveLength(1);
+    const doc = env.results[0];
+    expect(doc.document_id).toBe("recorder/deed-1.deed.yaml");
+    expect(doc.collection).toBe("recorder");
+    const meta = doc.metadata as unknown as Metadata;
+    expect(meta.title).toBe("Warranty Deed");
+    expect(meta.document_file?.rel).toBe("recorder/scans/deed-1.pdf"); // joined via source_doc_rel
+    expect((doc.fields as Record<string, unknown>).grantor).toBe("Alice");
+    expect(doc.field_count).toBe(4);
+    expect((doc.citation as { verified: boolean }).verified).toBe(true);
+    expect(doc.warnings).toEqual(["consideration not stated"]);
+    expect(doc.source_text).toBeUndefined(); // off by default
+    expect(env.truncated).toBe(false);
+    expect(env.next_cursor).toBeNull();
+  });
+
+  it("resolves by document rel, reverse-joining the record (canonical id = record rel)", async () => {
+    const env = await run(handleGetDocument, { document_id: "recorder/scans/deed-1.pdf" });
+    expect(env.results).toHaveLength(1);
+    const doc = env.results[0];
+    expect(doc.document_id).toBe("recorder/deed-1.deed.yaml");
+    expect((doc.metadata as unknown as Metadata).document_file?.rel).toBe("recorder/scans/deed-1.pdf");
+    expect((doc.fields as Record<string, unknown>).grantee).toBe("Bob LLC");
+  });
+
+  it("strips a search_corpus `records:` id prefix", async () => {
+    const env = await run(handleGetDocument, { document_id: "records:recorder/deed-1.deed.yaml" });
+    expect(env.results[0].document_id).toBe("recorder/deed-1.deed.yaml");
+  });
+
+  it("projects only the requested fields, keeping field_count as the true total", async () => {
+    const env = await run(handleGetDocument, {
+      document_id: "recorder/deed-1.deed.yaml",
+      fields: ["grantor", "parcel_ids"],
+    });
+    const doc = env.results[0];
+    expect(Object.keys(doc.fields as object).sort()).toEqual(["grantor", "parcel_ids"]);
+    expect(doc.field_count).toBe(4);
+  });
+
+  it("projects only the requested sections", async () => {
+    const env = await run(handleGetDocument, {
+      document_id: "recorder/deed-1.deed.yaml",
+      sections: ["metadata"],
+    });
+    const doc = env.results[0];
+    expect(doc.metadata).toBeDefined();
+    expect(doc.fields).toBeUndefined();
+    expect(doc.citation).toBeUndefined();
+    expect(doc.warnings).toBeUndefined();
+  });
+
+  it("attaches flattened source_text on request", async () => {
+    const env = await run(handleGetDocument, {
+      document_id: "recorder/deed-1.deed.yaml",
+      include_source_text: true,
+    });
+    const text = env.results[0].source_text as string;
+    expect(typeof text).toBe("string");
+    expect(text).toContain("grantor Alice");
+  });
+
+  it("resolves an unjoined record with no document_file", async () => {
+    const env = await run(handleGetDocument, { document_id: "aedg/roundabouts.opc.yaml" });
+    const doc = env.results[0];
+    expect((doc.metadata as unknown as Metadata).document_file).toBeNull();
+    expect((doc.fields as Record<string, unknown>).total).toBe(1_000_000);
+  });
+
+  it("returns an empty result set for an unknown id", async () => {
+    const env = await run(handleGetDocument, { document_id: "nope/nope.yaml" });
+    expect(env.results).toHaveLength(0);
+    expect(env.truncated).toBe(false);
+    expect(env.next_cursor).toBeNull();
+  });
+
+  it("sheds fields to satisfy max_tokens while keeping citation + a truthful field_count", async () => {
+    const env = await run(handleGetDocument, {
+      document_id: "recorder/deed-1.deed.yaml",
+      max_tokens: 100,
+    });
+    const doc = env.results[0];
+    expect(env.truncated).toBe(true);
+    expect(doc.field_count).toBe(4); // true total preserved
+    expect(Object.keys(doc.fields as object).length).toBeLessThan(4); // list shed
+    expect(doc.citation).toBeDefined(); // provenance never dropped
+    expect(doc.metadata).toBeDefined();
   });
 });

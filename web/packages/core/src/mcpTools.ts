@@ -3,15 +3,22 @@
 // /network/connect page so the tool reference table is generated from the real schemas,
 // not duplicated by hand.
 
+/** A JSON-Schema property node. `items` is set on `type: "array"` params (e.g. the
+ * get_document `fields`/`sections` projections). */
+export interface ToolProperty {
+  type: string;
+  description: string;
+  default?: unknown;
+  enum?: readonly string[];
+  items?: { type: string; enum?: readonly string[] };
+}
+
 export interface ToolSchema {
   name: string;
   description: string;
   inputSchema: {
     type: "object";
-    properties: Record<
-      string,
-      { type: string; description: string; default?: unknown; enum?: readonly string[] }
-    >;
+    properties: Record<string, ToolProperty>;
     required?: string[];
   };
   /** One representative query that illustrates the tool's use. */
@@ -153,5 +160,43 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
       },
     },
     example: '{"collection": "oepa", "site": "lima"}',
+  },
+  {
+    name: "get_document",
+    description:
+      "Fetch ONE document by id, with field/section projection — the targeted peer of get_documents (which only lists collections). Addressed by its `collection/rel` file path (e.g. recorder/bistrozzi-deeds/202508130008300.pdf) OR the joined extraction-record id (e.g. recorder/202508130008300.deed.yaml); ids returned by search_corpus work directly. Returns the document's metadata joined to its extraction record — structured `fields` and a `Citation` — bounded by max_tokens. IMPORTANT: the bundle carries document metadata + record `fields`, NOT the raw source-document body text. `fields`/`sections` projection operates over those extracted fields; there is no per-page body-text projection here (that is separate search_passages work). `include_source_text` returns the record's flattened extraction text, not scanned page text.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        document_id: {
+          type: "string",
+          description:
+            "Document address: a `collection/rel` file path or the joined record id (rel). An id from a search_corpus result (with or without a `records:` prefix) resolves directly.",
+        },
+        fields: {
+          type: "array",
+          items: { type: "string" },
+          description:
+            "Project only these keys from the record's `fields` (default: all). Unknown keys are ignored; `field_count` always reports the record's true total so a subset is detectable.",
+        },
+        sections: {
+          type: "array",
+          items: { type: "string", enum: ["metadata", "fields", "citation", "warnings"] },
+          description:
+            "Project only these top-level response sections (default: all). `metadata` and `citation` are also the sections never shed to satisfy max_tokens.",
+        },
+        include_source_text: {
+          type: "boolean",
+          description:
+            "Also return `source_text`: the record's flattened, searchable extraction text (a serialization of its `fields`), NOT raw source-document body/page text. Default false.",
+        },
+        site: { type: "string", description: "Site slug (default: active site)" },
+        intent: GOVERNANCE_PROPS.intent,
+        max_tokens: GOVERNANCE_PROPS.max_tokens,
+      },
+      required: ["document_id"],
+    },
+    example:
+      '{"document_id": "recorder/202508130008300.deed.yaml", "fields": ["grantors", "grantees", "parcel_ids"]}',
   },
 ];
