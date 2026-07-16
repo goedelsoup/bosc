@@ -155,6 +155,9 @@ interface HypothesesPayload {
 
 interface JoinedHypothesis extends HypothesisItem {
   assessments: HypothesisAssessmentItem[];
+  /** True total before any per-result shrink — a capped `assessments` list is detectable as
+   * `assessments.length < assessments_total` (mirrors documents' `entry_count`). */
+  assessments_total: number;
 }
 
 interface GetHypothesesParams {
@@ -199,10 +202,10 @@ export async function handleGetHypotheses(params: unknown, requestUrl: string): 
     filteredAssessments = assessments.filter((a) => a.site === siteFilter);
   }
 
-  const joined: JoinedHypothesis[] = hypotheses.map((h) => ({
-    ...h,
-    assessments: filteredAssessments.filter((a) => a.hypothesis === h.id),
-  }));
+  const joined: JoinedHypothesis[] = hypotheses.map((h) => {
+    const own = filteredAssessments.filter((a) => a.hypothesis === h.id);
+    return { ...h, assessments: own, assessments_total: own.length };
+  });
 
   return paginate(joined, knobs, offset, shrinkHypothesis);
 }

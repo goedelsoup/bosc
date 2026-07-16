@@ -59,6 +59,14 @@ describe("parseIntent / resolveKnobs", () => {
     expect(parseIntent(42)).toBeNull();
   });
 
+  it("rejects inherited Object.prototype keys (no prototype-chain leak)", () => {
+    for (const k of ["toString", "constructor", "hasOwnProperty", "__proto__", "valueOf"]) {
+      expect(parseIntent(k)).toBeNull();
+      // …and resolveKnobs must fall back to the neutral default rather than crash.
+      expect(resolveKnobs({ intent: k })).toEqual(DEFAULT_KNOBS);
+    }
+  });
+
   it("falls back to the neutral default with no intent or knobs", () => {
     expect(resolveKnobs({})).toEqual(DEFAULT_KNOBS);
   });
@@ -93,6 +101,14 @@ describe("cursor round-trip", () => {
     expect(decodeCursorOffset("")).toBe(0);
     expect(decodeCursorOffset("not-base64!!")).toBe(0);
     expect(decodeCursorOffset(encodeCursor(-5))).toBe(0); // negative rejected upstream anyway
+  });
+
+  it("reads a cursor that decodes to a non-object (null / primitive / array) as offset 0", () => {
+    const raw = (s: string) => btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+    expect(decodeCursorOffset(raw("null"))).toBe(0); // JSON null — must not throw on `.o`
+    expect(decodeCursorOffset(raw("5"))).toBe(0); // bare number
+    expect(decodeCursorOffset(raw("[1,2]"))).toBe(0); // array, no `o`
+    expect(decodeCursorOffset(raw(JSON.stringify({ o: 7 })))).toBe(7); // still works
   });
 });
 

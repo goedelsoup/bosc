@@ -131,7 +131,9 @@ export const INTENTS: Record<Intent, IntentPreset> = {
 export const INTENT_NAMES = Object.keys(INTENTS) as readonly Intent[];
 
 export function parseIntent(v: unknown): Intent | null {
-  return typeof v === "string" && v in INTENTS ? (v as Intent) : null;
+  // Object.hasOwn, not `in` — `in` walks the prototype chain, so "toString"/"constructor"/
+  // "__proto__" would read as valid intents and then crash resolveKnobs on the missing knobs.
+  return typeof v === "string" && Object.hasOwn(INTENTS, v) ? (v as Intent) : null;
 }
 
 function clampInt(v: unknown, fallback: number, lo: number, hi: number): number {
@@ -182,8 +184,10 @@ export function encodeCursor(offset: number): string {
 export function decodeCursorOffset(v: unknown): number {
   if (typeof v !== "string" || !v) return 0;
   try {
-    const d = JSON.parse(b64urlDecode(v)) as { o?: unknown };
-    return typeof d.o === "number" && Number.isInteger(d.o) && d.o >= 0 ? d.o : 0;
+    const d: unknown = JSON.parse(b64urlDecode(v));
+    if (!d || typeof d !== "object") return 0; // null / primitive / array-with-no-`o`
+    const o = (d as { o?: unknown }).o;
+    return typeof o === "number" && Number.isInteger(o) && o >= 0 ? o : 0;
   } catch {
     return 0;
   }
