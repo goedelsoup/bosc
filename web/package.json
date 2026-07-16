@@ -1,16 +1,16 @@
 {
-  "name": "bosc-frontend",
+  "name": "@watermark/site",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "The redesigned BOSC site — an Astro + MDX frontend over the committed content bundle (Epic #54).",
+  "description": "The Watermark public site — an Astro + MDX frontend over the committed content bundle (Epic #54). The Astro app package in the pnpm workspace (Epic #1549, Phase 5 #1555): pages, layouts, the residual site components, plugins, config, middleware, and content. Depends on @watermark/{core,charts,viz} (and @watermark/functions for the local dev stack); all shared domain/chart/island/Functions code lives in those packages.",
   "scripts": {
     "dev": "astro dev",
     "dev:stack": "node scripts/dev-stack.mjs",
     "seed:r2": "node scripts/seed-r2.mjs",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check && npm run check:functions && npm run check:core && npm run check:charts && npm run check:viz",
+    "check": "astro check && pnpm run check:functions && pnpm run check:core && pnpm run check:charts && pnpm run check:viz",
     "check:functions": "tsc -p functions/tsconfig.json",
     "check:core": "tsc -p packages/core/tsconfig.json",
     "check:charts": "tsc -p packages/charts/tsconfig.json",
@@ -18,8 +18,8 @@
     "check:links": "node scripts/check-links.mjs",
     "gen:icons": "node scripts/gen-icons.mjs",
     "test": "vitest run",
-    "lint": "biome ci src functions/api scripts packages",
-    "format": "biome check --write src functions/api scripts packages",
+    "lint": "biome ci src functions scripts packages",
+    "format": "biome check --write src functions scripts packages",
     "astro": "astro"
   },
   "dependencies": {
@@ -39,7 +39,6 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@biomejs/biome": "2.5.0",
-    "@electric-sql/pglite": "^0.2.17",
     "@types/geojson": "^7946.0.16",
     "@types/node": "^22.19.20",
     "@types/react": "^18.3.31",

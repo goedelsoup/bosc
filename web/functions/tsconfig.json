@@ -1,5 +1,5 @@
 {
-  "//": "Standalone typecheck for the Cloudflare Pages Functions (the Workers runtime, not the Astro/DOM project). `npm run check` runs this via `tsc -p functions/tsconfig.json`. WebWorker lib supplies fetch/Request/Response/FormData/URL/crypto/atob/btoa; no @cloudflare/workers-types dependency.",
+  "//": "Standalone typecheck for the Cloudflare Pages Functions (the Workers runtime, not the Astro/DOM project). `pnpm run check` runs this via `tsc -p functions/tsconfig.json`. WebWorker lib supplies fetch/Request/Response/FormData/URL/crypto/atob/btoa; no @cloudflare/workers-types dependency. `_test/` (the Node/vitest tests, #1555) is excluded — it uses node:fs + pglite under a Node runtime, not WebWorker, and is exercised by vitest (which transpiles it), not tsc.",
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",
@@ -12,5 +12,6 @@
     "isolatedModules": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts"],
+  "exclude": ["_test"]
 }
