@@ -8,7 +8,14 @@
         "public": {
           "rateLimit": "60 req/hour per IP",
           "dailyBudget": "100k output tokens",
-          "tools": ["search_corpus", "get_timeline", "get_entities", "get_hypotheses", "get_documents"]
+          "tools": [
+            "search_corpus",
+            "get_timeline",
+            "get_entities",
+            "get_hypotheses",
+            "get_documents",
+            "get_document"
+          ]
         },
         "cognito": {
           "auth": "Bearer token",
