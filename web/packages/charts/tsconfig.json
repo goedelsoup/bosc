@@ -1,0 +1,16 @@
+{
+  "//": "Standalone type-check for @watermark/charts (Epic #1549, Phase 3). The chart lib is pure geometry: React-free and DOM-free, so plain ES2023 with no ambient globals (no `DOM`, no `@types/node`) enforces that at type-check time. `npm run check` in web/ runs this via `tsc -p packages/charts/tsconfig.json`.",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2023"],
+    "types": [],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*.ts"]
+}

@@ -1,10 +1,10 @@
 ---
 /**
  * Vertical bar chart (record-grammar chart set, #306) — categorical, peak highlighted.
- * SSR SVG, no JS; geometry from `lib/charts`. Forest data palette, monospace figures.
+ * SSR SVG, no JS; geometry from `@watermark/charts`. Forest data palette, monospace figures.
  */
-import type { TagKind } from "~/lib/teardown";
-import { type BarDatum, buildVBars } from "~/lib/charts";
+import type { TagKind } from "@watermark/core/teardown";
+import { type BarDatum, buildVBars } from "@watermark/charts/charts";
 import EvidenceTag from "../EvidenceTag.astro";
 
 interface Props {

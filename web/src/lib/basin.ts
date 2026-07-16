@@ -9,9 +9,9 @@
  * equivalents render instead: the receiving WWTPs' NPDES design flows, the assembled dilution
  * screens, and the one disclosed IT load. A site with nothing on file reads [open], not a number.
  */
-import type { LinePoint, RankedBarDatum } from "./charts";
-import type { EvidenceKind, TagKind } from "./evidence";
-import type { ReachRouting, RoutedHydrographNetwork, WatershedNode } from "./feeds";
+import type { LinePoint, RankedBarDatum } from "@watermark/charts/charts";
+import type { EvidenceKind, TagKind } from "@watermark/core/evidence";
+import type { ReachRouting, RoutedHydrographNetwork, WatershedNode } from "@watermark/core/feeds";
 import {
   type FacilityStatus,
   facilityStatus,
@@ -19,7 +19,7 @@ import {
   SITE_STATUS_META,
   siteBadge,
   type SiteStatus,
-} from "./sites";
+} from "@watermark/core/sites";
 
 /** Build-phase ink (design "Basin — Maumee" legend; the peer of the directory home's
  *  PHASE_COLOR): live is the forest signal, building is ink, queued/tracking step down.
