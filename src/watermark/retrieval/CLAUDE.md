@@ -30,13 +30,23 @@ cosine-similarity retrieval to the research agent. Defers to the root
   (score = `1 - distance`), with filters as escaped WHERE clauses. Writes are **rebuild or
   per-site update only** (`rebuild()` drops+recreates; `update_site(slug, chunks)` replaces one
   site's rows) — no partial-row edits.
-- **Two distinct retrieval paths — don't conflate them.** *This* package backs the in-process
-  research agent's `retrieve_corpus` tool (`watermark.agent`), over the full LanceDB index of the
-  raw corpus. The **public `/api/ask`** Pages Function is separate (`web/functions/api/ask.ts`,
-  [`docs/ask-api.md`](../../../docs/ask-api.md)): it runs BM25 (± an optional Workers-AI vector
-  upgrade, RRF-merged) over the **build-time bundle feeds**, not this index, and refuses
-  deterministically when retrieval is empty. `watermark.site.embeddings` precomputes the
-  `ask-embeddings` bundle asset for that path.
+- **Three vector surfaces — same backend, deliberately different content; don't conflate them.**
+  All three embed with the *same* `get_provider` here (all-MiniLM-L6-v2, 384-dim) so they share
+  one semantic space and never drift model-to-model — but each indexes a different projection of
+  the corpus and serves a different consumer:
+  - **this package** (`data/cache/lancedb/`) — the **raw corpus chunks**; backs the in-process
+    research agent's `retrieve_corpus` tool (`watermark.agent`).
+  - **`watermark.site.embeddings`** (`ask-embeddings` bundle asset) — the **build-time bundle
+    feeds**; the canonical index for the **public `/api/ask`** Pages Function
+    (`web/functions/api/ask.ts`, [`docs/ask-api.md`](../../../docs/ask-api.md)), which runs BM25
+    (± an optional Workers-AI vector upgrade, RRF-merged) over the feeds and refuses
+    deterministically when retrieval is empty. **This is the canon for `/ask`; the yidam index
+    below is additive and never touches it.**
+  - **`watermark.site.yidam_index`** (`.yidam/index/`) — the projected **yidam corpus-mirror
+    nodes** (the method-layer graph — entities/relationships/concepts/people/leads/hypotheses/
+    `[open]` claims); powers the `yidam_semantic_search` tool served through `yidam serve --mcp`
+    (#1564). Built by `watermark corpus-mirror --index` and lazily by the MCP server. Reuses
+    this `get_provider`, so it is *reconciled* with the `/ask` embeddings by construction.
 - **CLI:** `watermark index` (`cli/retrieval.py`) rebuilds the LanceDB index from all sources
   (`--no-documents`/`--no-reference`/`--no-extracted`, `--collection`, `--site` for a scoped
   update). Tests are hermetic: the sentence-transformers provider is stubbed with deterministic

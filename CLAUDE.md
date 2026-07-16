@@ -75,7 +75,12 @@ the **yidam corpus mirror** (Epic #1560 E1/E3 — the committed corpus projected
 `yidam://corpus/*` nodes by `watermark corpus-mirror`) to it as a second in-process
 MCP backend (`watermark.agent.yidam_tools`, BOSC's Python realization of
 `yidam serve --mcp`), so the agent can list / read / query those nodes and run
-open-questions over the projected graph. The skills are usable by repo-working agents now.
+open-questions over the projected graph. **#1564 (E4)** added a LanceDB **vector index**
+over the mirror (`watermark.site.yidam_index`, `.yidam/index/` — `watermark corpus-mirror
+--index`, lazily rebuilt by the MCP server) powering a `semantic_search` tool; it reuses the
+**same** all-MiniLM-L6-v2 backend as the `/ask` embeddings (`watermark.retrieval.get_provider`),
+so it is *reconciled* with them, not a competing index (the `/ask` feed stays canonical for
+`/api/ask`). The skills are usable by repo-working agents now.
 
 ## Conventions
 
