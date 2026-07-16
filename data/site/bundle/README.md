@@ -22,7 +22,7 @@ watermark export --out /tmp/b             # → anywhere
 The generator is [`watermark.site.export.export_bundle`](../../../src/watermark/site/export.py); each
 feed comes from an `export_X()` next to the matching `render_X()` in `watermark.site.*`. The
 frontend resolves a site's bundle by slug (`bundleFor(slug)` in
-[`web/src/lib/bundle.ts`](../../../web/src/lib/bundle.ts)).
+[`web/packages/core/src/bundle.ts`](../../../web/packages/core/src/bundle.ts)).
 
 ## Layout
 

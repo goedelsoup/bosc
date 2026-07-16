@@ -142,7 +142,7 @@ guarded by the eval below.
 
 ### Faithfulness eval (CI guard)
 
-`web/src/lib/askEval*.test.ts` (set in `askEval.fixtures.ts`):
+`web/functions/_test/askEval*.test.ts` (set in `askEval.fixtures.ts`):
 
 - **Fixture tier** — deterministic, runs in CI via `npm test`: in-corpus questions must
   surface the right source (grounding); out-of-corpus questions must retrieve nothing
@@ -177,7 +177,7 @@ A public, **paid** LLM endpoint. Controls (reusing submit's `_lib/`):
   API is called directly over `fetch`. Pure logic (BM25, prompt/citation assembly, SSE
   parsing, budget) lives in `api/_lib/`.
 - **Index:** `/ask-index.json` is emitted by the Astro static endpoint
-  `src/pages/ask-index.json.ts` over `src/lib/askIndex.ts`. The Function fetches it as a
+  `src/pages/ask-index.json.ts` over `packages/core/src/askIndex.ts`. The Function fetches it as a
   static asset and caches it per isolate.
 - **Page:** `web/src/pages/ask.astro` + `src/scripts/ask.ts` — framework-free, in the
   zero-React style of submit. Renders the live form only when `PUBLIC_TURNSTILE_SITE_KEY`
@@ -261,7 +261,7 @@ placeholder on the next build), or unset `ANTHROPIC_API_KEY`.
 Two ways to exercise this endpoint locally without spending tokens, both detailed in
 [`web/README.md`](../web/README.md) → *Local dev & testing*:
 
-- **Automated:** `src/lib/askRoute.test.ts` drives `onRequestPost` end-to-end — the gates,
+- **Automated:** `functions/_test/askRoute.test.ts` drives `onRequestPost` end-to-end — the gates,
   the deterministic no-model refusal, and both the JSON and SSE answer paths (real retrieval
   and real stream parsing) — with a stubbed `fetch`, under `npm test`. No model call.
 - **Interactive:** `mise run //web:dev:stack` serves the `/ask` page + endpoint under

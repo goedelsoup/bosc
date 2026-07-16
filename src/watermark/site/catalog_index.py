@@ -9,7 +9,7 @@ without forking it (chain of custody).
 This module emits the **feed-backed** kinds (record, timeline, entity, person, place, meeting,
 exhibit, concept, lead, contact, dataset) by normalising over feeds the bundle already ships. The web-only
 kinds (``teardown``/``doc``/``chapter``/``figure``) are overlaid by the Astro build at render time
-(`web/src/lib/catalog.ts`), since they are web artifacts the Python tier can't see. The two tiers
+(`web/packages/core/src/catalog.ts`), since they are web artifacts the Python tier can't see. The two tiers
 union into one catalog the resolver consumes.
 
 The builder takes already-assembled feed rows (parsed dicts, ``by_alias`` serialisation) so it does

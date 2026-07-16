@@ -15,7 +15,7 @@ the board; those children often lack a site label, so their Site/Basin/Readiness
 inherited from the parent tracker here.
 
 Readiness mirrors ``data/sites.yaml`` (peer of ``watermark.sites`` /
-``web/src/lib/sites.ts``) — the registry is the single source of truth. To promote a site,
+``web/packages/core/src/sites.ts``) — the registry is the single source of truth. To promote a site,
 edit the registry; the daily sync re-mirrors the field. This script never writes back.
 
 Usage:

@@ -6,7 +6,7 @@ This module classifies a site into five domains, each in one of three states
 (``absent | seeded | live``), from ``(SiteProfile, feed counts)`` alone — no hardcoded
 Lima/Allen values — and derives a single site **tier** from that vector.
 
-It is the Python peer of ``web/src/lib/readiness.ts``. Here it is import-only; #1222 wires it
+It is the Python peer of ``web/packages/core/src/readiness.ts``. Here it is import-only; #1222 wires it
 into ``watermark export`` so the computed block is written into ``manifest.json`` and the
 frontend becomes a thin reader (#1223). Because the readiness is recomputed at every export,
 it is a **standing** property — it goes up when a source lands and down when one dries up,
@@ -91,7 +91,7 @@ RECORD_LIVE_THRESHOLD = 2
 # The leads feed — the open-questions / source-solicitation board for the site.
 LEADS_FEED = "leads"
 # Sites with a registered story (the guided walk). The peer of the ``STORIES`` overlay in
-# ``web/src/lib/sites.ts`` — stories are a TypeScript-only overlay (#1027), so this small
+# ``web/packages/core/src/sites.ts`` — stories are a TypeScript-only overlay (#1027), so this small
 # mirror is kept in sync by convention + test, the same way ``is_reference_site`` mirrors
 # ``isReferenceSite``. A ``[[network-baseline-domain-activation]]`` follow-up may lift both to
 # ``data/sites.yaml``.

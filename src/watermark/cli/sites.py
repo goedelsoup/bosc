@@ -12,7 +12,10 @@ from watermark.cli._base import (
     sites_app,
 )
 
-_REGISTRY_PATH = Path(__file__).parents[3] / "web" / "src" / "lib" / "sites-registry.json"
+# The frontend registry lives in @watermark/core now (Epic #1549, Phase 1 #1551) — it moved
+# out of web/src/lib when the shared domain logic was extracted into a workspace package.
+_REGISTRY_REL = "web/packages/core/src/sites-registry.json"
+_REGISTRY_PATH = Path(__file__).parents[3] / _REGISTRY_REL
 
 
 def _build_registry_json() -> str:
@@ -99,7 +102,10 @@ def sites_new(
 
 @sites_app.command("sync")
 def sites_sync() -> None:
-    """Write web/src/lib/sites-registry.json from data/sites.yaml (the identity SSOT, #1027)."""
+    """Write the frontend registry from data/sites.yaml (the identity SSOT, #1027).
+
+    Target: web/packages/core/src/sites-registry.json (the @watermark/core copy).
+    """
     content = _build_registry_json()
     _REGISTRY_PATH.write_text(content, encoding="utf-8")
     console.print(f"[green]Wrote[/] {_REGISTRY_PATH.relative_to(Path.cwd())}")
@@ -111,7 +117,7 @@ def sites_check() -> None:
 
     Checks:
     - Every Python SITES slug has an entry in data/sites.yaml.
-    - web/src/lib/sites-registry.json byte-matches what `watermark sites sync` would write.
+    - The @watermark/core registry byte-matches what `watermark sites sync` would write.
     """
     from watermark.sites._model import _get_identity
 
@@ -130,10 +136,10 @@ def sites_check() -> None:
         actual = _REGISTRY_PATH.read_text(encoding="utf-8")
         if actual != expected:
             errors.append(
-                "web/src/lib/sites-registry.json is out of sync — run `watermark sites sync`"
+                f"{_REGISTRY_REL} is out of sync — run `watermark sites sync`"
             )
     else:
-        errors.append("web/src/lib/sites-registry.json does not exist — run `watermark sites sync`")
+        errors.append(f"{_REGISTRY_REL} does not exist — run `watermark sites sync`")
 
     if errors:
         for e in errors:

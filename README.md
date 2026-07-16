@@ -148,7 +148,7 @@ are registered profiles at varying readiness — *registered is not live.*
 Each site is a `SiteProfile` in
 [`watermark.sites.SITES`](src/watermark/sites/) carrying every per-site knob
 (USGS gages, county FIPS, GIS URLs, EIA utility number, output relpaths). The
-frontend registry mirrors it in [`web/src/lib/sites.ts`](web/src/lib/sites.ts).
+frontend registry mirrors it in [`web/packages/core/src/sites.ts`](web/packages/core/src/sites.ts).
 Onboard a new site with `watermark onboard <slug>` (runbook:
 [docs/onboarding.md](docs/onboarding.md)). Promotion to `selectable` in the
 frontend stays a manual, parity-gated edit — a thin site **degrades, it doesn't

@@ -1,6 +1,6 @@
 """Tests for the boom-origin hypothesis axis (the third axis: site x hypothesis).
 
-The registry is ported from ``web/src/lib/directory.ts`` (LENSES + LENS_DATA); the
+The registry is ported from ``web/packages/core/src/directory.ts`` (LENSES + LENS_DATA); the
 port-parity test below is the zero-drift contract — if a cell's signal/group/field was
 mistranscribed when it moved into ``data/hypotheses/``, this fails before the frontend
 cutover (Phase 2) can render the wrong thing.

@@ -382,7 +382,7 @@ replace" discipline). Each batch: edit the mirror spec → `finalize_plan` → `
 ### Batch 1 — the stale chrome (2026-06-24) ✅ pushed
 `ui_kits/directory/NetworkChrome.jsx` · `ui_kits/site/SiteChrome.jsx` (+ both kit
 `index.html` preview harnesses). The two-tier chrome comps described navigation that no
-longer exists; brought to the shipped IA (`src/lib/nav.ts`, authoritative): network tabs
+longer exists; brought to the shipped IA (`packages/core/src/nav.ts`, authoritative): network tabs
 `Report · Hypotheses · Submit · About` → **`Directory · Research · About▾`**; site tabs
 `The site · The record · The watershed` → **`The site▾ (mega) · The story · The record`**;
 and **Submit moved off the left tabs to a right-cluster `+` pill** on both tiers (watershed +

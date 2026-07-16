@@ -107,7 +107,7 @@
     },
     "SiteReadiness": {
       "additionalProperties": false,
-      "description": "The manifest's standing **readiness** block (#1220 / #1222): the per-domain states plus\nthe tier :func:`watermark.site.readiness.site_tier` derives from them.\n\nRecomputed at every ``watermark export``, so it rises when a source lands and falls when one\ndries up — a standing property, not an onboard-time snapshot. The frontend\n(``web/src/lib/readiness.ts``) reads this instead of re-deriving section gating from raw\nfeed counts (#1223).",
+      "description": "The manifest's standing **readiness** block (#1220 / #1222): the per-domain states plus\nthe tier :func:`watermark.site.readiness.site_tier` derives from them.\n\nRecomputed at every ``watermark export``, so it rises when a source lands and falls when one\ndries up — a standing property, not an onboard-time snapshot. The frontend\n(``web/packages/core/src/readiness.ts``) reads this instead of re-deriving section gating from raw\nfeed counts (#1223).",
       "properties": {
         "tier": {
           "enum": [

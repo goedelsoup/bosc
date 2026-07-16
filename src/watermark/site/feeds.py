@@ -658,7 +658,7 @@ class AskEmbeddingEntry(BaseModel):
 
 # --- hydrated catalog index feed (epic #1090 / #1093) -------------------------
 # The closed catalog kind set — the shared vocabulary of both tiers. The Python builder emits only
-# the feed-backed kinds; the Astro overlay (`web/src/lib/catalog.ts`) adds the web-only ones
+# the feed-backed kinds; the Astro overlay (`web/packages/core/src/catalog.ts`) adds the web-only ones
 # (teardown/doc/chapter/figure). Typing `kind` as this Literal makes the generated
 # `catalog-index.schema.json` carry a `kind` enum, which the frontend parity-tests against so the
 # two tiers' kind sets can't silently drift (`watermark.site.catalog_index.CATALOG_KINDS`).
@@ -1003,7 +1003,7 @@ class SiteReadiness(BaseModel):
 
     Recomputed at every ``watermark export``, so it rises when a source lands and falls when one
     dries up — a standing property, not an onboard-time snapshot. The frontend
-    (``web/src/lib/readiness.ts``) reads this instead of re-deriving section gating from raw
+    (``web/packages/core/src/readiness.ts``) reads this instead of re-deriving section gating from raw
     feed counts (#1223).
     """
 

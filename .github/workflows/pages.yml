@@ -61,7 +61,7 @@ jobs:
       # renders its disabled placeholder. Setting it flips the form live.
       PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.PUBLIC_TURNSTILE_SITE_KEY }}
       # Stripe Payment Link URLs for the Donate section of /about/contributing (#969). Read
-      # at *build* time (import.meta.env in src/lib/donate.ts), so they must be present here.
+      # at *build* time (import.meta.env in @watermark/core's donate.ts), so they must be present here.
       # Public (a payment link is not a secret) — repo variables. Until the three monthly-tier
       # links are set the Donate section stays hidden; setting them flips it live (the
       # one-time strip gates separately on PUBLIC_STRIPE_LINK_ONETIME).

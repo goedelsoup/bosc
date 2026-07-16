@@ -77,7 +77,7 @@ def _read_feed(feeds_dir: str, name: str) -> list[dict[str, Any]]:
 
 def build_text_units(bundle_dir: Path | str) -> list[_TextUnit]:
     """Read corpus feeds from a bundle directory and produce one text unit per
-    ask-index entry, mirroring ``buildAskIndex()`` in ``web/src/lib/askIndex.ts``.
+    ask-index entry, mirroring ``buildAskIndex()`` in ``web/packages/core/src/askIndex.ts``.
 
     The ``title + key_fields`` text mirrors the BM25 indexed text so both
     retrieval signals draw from the same content signal.

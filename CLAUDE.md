@@ -31,12 +31,25 @@ Pydantic models in `watermark.site.feeds`, written by `watermark export`. The pr
 in **`web/`**: an Astro + MDX static site that reads that bundle at build time
 (Epic #54). It's pure Node (pnpm, no uv/LFS) and builds against the committed
 `web/sample-bundle/` fixture offline; deck.gl map/graph visualizations are the
-only React islands. The frontend is structured as **the BOSC network** (Epic #308):
+only React islands. **`web/` is a pnpm workspace of focused packages, not one flat
+package** (Epic #1549): the Astro app is **`@watermark/site`** (`web/` itself —
+pages, layouts, residual components, plugins, config, middleware, content), depending on
+**`@watermark/core`** (`web/packages/core` — DOM-free domain logic: feeds, catalog, sites,
+nav, readiness, evidence, dilution, storyCompile, …), **`@watermark/charts`**
+(`web/packages/charts` — the SVG chart geometry `charts.ts`), **`@watermark/viz`**
+(`web/packages/viz` — the deck.gl/MapLibre React island cluster), and **`@watermark/functions`**
+(`web/functions` — the Pages Functions; stays physically at the project root so Cloudflare
+discovers them). Dependency order `core → {functions, charts, viz} → site`; the `@fn/*`
+alias is retired (workspace packages resolve via `node_modules`) and the surviving `~/*`
+is **site-internal only** (`web/src/*`). Each package owns its `tsconfig.json`; one
+shared-root `web/vitest.config.ts` scopes each package's tests via `projects` (site / core /
+charts / viz / functions — the Functions tests live under `web/functions/_test`). The
+frontend is structured as **the BOSC network** (Epic #308):
 one build hosting a network of watershed-point sites — Lima (the live reference build)
 is physically re-rooted under **`/bosc`** so future sites are clean siblings, with
 cross-cutting pages (about, wiki, ask, search, the `/network/*` hub) global at the root
-and a topbar switcher (`src/lib/sites.ts`) between them. Charts are a hand-rolled SVG
-library (`src/lib/charts.ts` + `components/charts/`) — indigo encodes data, the evidence
+and a topbar switcher (`@watermark/core`'s `sites.ts`) between them. Charts are a hand-rolled SVG
+library (`@watermark/charts` + `web/src/components/charts/`) — indigo encodes data, the evidence
 palette only encodes evidence. The legacy Python SSG was retired at the parity cutover —
 the Astro `web/` is now the sole presentation tier. Production is
 **Cloudflare Pages** (`.github/workflows/pages.yml` + `web/wrangler.toml`,
@@ -44,7 +57,7 @@ where the `web/functions/api/*` Pages Functions — `/api/submit`, `/api/ask` �
 also deploy), **not** GitHub Pages: that deploy was never flipped and Cloudflare
 supersedes it. See
 `web/README.md` for the architecture; **don't edit `docs/**` to fix the new
-site's cross-links** — they're rewritten at build time (`web/src/lib/rehype-doc-links.ts`,
+site's cross-links** — they're rewritten at build time (`@watermark/core`'s `rehype-doc-links.ts`,
 base-aware: Lima routes get the `/bosc` prefix, network-global ones don't), keeping the
 `docs/**` source canonical. After a base/`LINK_MAP` change, clear
 `node_modules/.astro` (Astro caches markdown rehype output there).
@@ -80,7 +93,7 @@ repo-working agents now.
 - **Site axis (the BOSC network):** the platform hosts a network of watershed-point
   sites (Lima today; Fort Wayne/Defiance/… queued — #323/#308). Per-site values are
   **not** baked in: they live on a `SiteProfile` in `watermark.sites` (the Python peer of
-  `web/src/lib/sites.ts`), selected by `WATERMARK_SITE` (`Settings.site`, default
+  `web/packages/core/src/sites.ts`), selected by `WATERMARK_SITE` (`Settings.site`, default
   `lima`) or the global `watermark --site <slug>` flag. `Settings` fills the per-site config
   knobs (`PROFILE_SETTINGS_FIELDS`: `nwis_sites`, `rsei_fips`, `eia861_utility_number`,
   the GIS URLs, …) from the active profile unless a knob is set explicitly (env/`.env`/
@@ -94,7 +107,7 @@ repo-working agents now.
   `docs/onboarding.md`): it scaffolds the per-site data dirs, runs the portable reach
   connectors (per-site point outputs are slug-scoped so Lima is never clobbered; basin-level
   outputs stay shared), and prints a **blocking review checklist** — promotion to
-  `live`/`selectable` in `web/src/lib/sites.ts` stays a manual, parity-gated edit.
+  `live`/`selectable` in `web/packages/core/src/sites.ts` stays a manual, parity-gated edit.
   **Registered ≠ selectable, and a thin peer is still engageable** (#781/#782): a
   non-reference `/network/<site>` page **degrades, doesn't break**. Readiness is **domain
   activation, not Lima-shape-matching** (#1220): a site is defined by the **domains that
@@ -108,7 +121,7 @@ repo-working agents now.
   consumer-energy, RSEI); **above the floor triggers on evidence, never scaffolds** (facility on
   a disclosed permit + its feed, places on committed campus/footprint geometry, record on
   extracted `records`/`documents`, story on a registered story + leads). The frontend
-  (`web/src/lib/readiness.ts`) is a **thin reader** of the block: primary sections gate on their
+  (`web/packages/core/src/readiness.ts`) is a **thin reader** of the block: primary sections gate on their
   parent domain, leaf facets add a feed/registry check so an active domain never opens an empty
   page, and it surfaces a needs/leads board for the locked ones. `is_reference_site` survives
   **only** for the **network-global-host role** (routed-hydrograph, the hypothesis matrix, the

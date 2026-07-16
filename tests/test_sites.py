@@ -230,8 +230,11 @@ def test_readiness_clean_for_lima() -> None:
 def test_python_sites_registered_in_frontend() -> None:
     # Every Python-registered site must also exist in the shared identity registry (#1027).
     # The registry JSON is the SSOT consumed by both Python (via _model.py) and TypeScript.
+    # The registry moved into @watermark/core when web/ was split into packages (Epic #1549).
     registry = json.loads(
-        (REPO_ROOT / "web" / "src" / "lib" / "sites-registry.json").read_text(encoding="utf-8")
+        (REPO_ROOT / "web" / "packages" / "core" / "src" / "sites-registry.json").read_text(
+            encoding="utf-8"
+        )
     )
     registry_slugs = {entry["slug"] for entry in registry["sites"]}
     assert registry_slugs, "sites-registry.json has no entries — run `watermark sites sync`"
