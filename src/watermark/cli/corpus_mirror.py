@@ -1,8 +1,9 @@
-"""``watermark corpus-mirror`` — project the BOSC corpus into yidam node format (#1561).
+"""``watermark corpus-mirror`` — project the BOSC corpus into yidam node format + reports (#1561/#1562).
 
-A thin wrapper over :mod:`watermark.site.corpus_mirror`: load the active site's corpus, project
-it into ``.yidam/corpus/`` as yidam nodes, and (by default) run the yidam ``graph-check`` rules
-over the result so a broken mirror fails loudly. Per-site via the global ``--site`` flag.
+A thin wrapper over :func:`watermark.site.corpus_mirror.regenerate_mirror`: load the active
+site's corpus, project it into ``.yidam/corpus/`` as yidam nodes, regenerate the yidam reports
+(``corpus-index`` / ``open-questions`` / ``graph-check`` / ``lint``) under ``.yidam/reports/``,
+and (by default) fail loudly if the ``graph-check`` gate is dirty. Per-site via ``--site``.
 """
 
 from __future__ import annotations
@@ -21,6 +22,11 @@ def corpus_mirror(
         "--out",
         help="Corpus dir to write (default: <repo-root>/.yidam/corpus, what the yidam CLI reads).",
     ),
+    reports: str | None = typer.Option(
+        None,
+        "--reports",
+        help="Reports dir to write (default: <repo-root>/.yidam/reports).",
+    ),
     check: bool = typer.Option(
         True,
         "--check/--no-check",
@@ -28,58 +34,50 @@ def corpus_mirror(
     ),
 ) -> None:
     """Project the corpus (entities, relationships, concepts, people, leads, hypotheses,
-    [open] claims) into yidam corpus nodes under .yidam/corpus/ for the active site.
+    [open] claims) into yidam corpus nodes under .yidam/corpus/ for the active site, and
+    regenerate the yidam reports under .yidam/reports/.
 
     The mirror is the bridge that lets ``yidam corpus-index`` / ``graph-check`` / ``serve --mcp``
-    and the vector index read BOSC's corpus (Epic #1560, E1). It's a git-ignored, regenerable
-    artifact — re-run any time (`watermark --site <slug> corpus-mirror`); the committed corpus
-    stays the source of truth. Every node is site-tagged and emits ≥1 outgoing link (the yidam
-    graph rule); claim tags ([verified]/[inference]/[reference]/[open]) are preserved.
+    and the vector index read BOSC's corpus (Epic #1560). It's a git-ignored, regenerable
+    artifact — re-run any time (`watermark --site <slug> corpus-mirror`), and every
+    ``watermark export`` refreshes it; the committed corpus stays the source of truth. Every
+    node is site-tagged and emits ≥1 outgoing link (the yidam graph rule); claim tags
+    ([verified]/[inference]/[reference]/[open]) are preserved.
     """
     from watermark.site.corpus_mirror import (
-        build_mirror,
         default_corpus_dir,
-        render_corpus_index,
-        validate_mirror,
-        write_mirror,
+        default_reports_dir,
+        regenerate_mirror,
     )
 
     settings = get_settings()
     corpus_dir = Path(out) if out else default_corpus_dir(settings)
+    reports_dir = Path(reports) if reports else default_reports_dir(settings)
 
-    mirror = build_mirror(settings)
-    write_mirror(mirror, corpus_dir)
+    regen = regenerate_mirror(settings, corpus_dir=corpus_dir, reports_dir=reports_dir)
+    mirror = regen.mirror
 
     by_class = ", ".join(f"{cls} {n}" for cls, n in mirror.counts_by_class().items())
     console.print(
         f"[green]Mirrored[/] {settings.site} → {corpus_dir} — "
         f"{len(mirror.nodes)} nodes across {len(mirror.classes)} classes ([dim]{by_class}[/])."
     )
+    console.print(
+        f"[dim]  reports → {reports_dir} "
+        f"(open-questions · graph-check · lint; corpus-index in corpus/README.md)[/]"
+    )
+    if regen.lint_issues:
+        console.print(
+            f"[yellow]lint: {len(regen.lint_issues)} advisory finding(s)[/] "
+            f"[dim](see {reports_dir.name}/lint.txt)[/]"
+        )
 
     if check:
-        issues = validate_mirror(corpus_dir)
-        if issues:
-            console.print(f"[red]graph-check: {len(issues)} node(s) with issues[/]")
-            for issue in issues:
+        if regen.graph_issues:
+            console.print(f"[red]graph-check: {len(regen.graph_issues)} node(s) with issues[/]")
+            for issue in regen.graph_issues:
                 console.print(f"  [yellow]{issue.node}[/]")
                 for problem in issue.problems:
                     console.print(f"    - {problem}")
             raise typer.Exit(code=1)
         console.print(f"[green]graph-check clean[/] — {len(mirror.nodes)} instances.")
-        # Populate the corpus README's regen block (the yidam corpus-index target).
-        _write_index_readme(corpus_dir, render_corpus_index(corpus_dir))
-
-
-def _write_index_readme(corpus_dir: Path, index_md: str) -> None:
-    """Drop the rendered corpus-index into the README's REGEN block (best-effort)."""
-    readme = corpus_dir / "README.md"
-    if not readme.exists():
-        return
-    text = readme.read_text(encoding="utf-8")
-    start = text.find("<!-- REGEN: yidam corpus-index -->")
-    end = text.find("<!-- /REGEN -->")
-    if start == -1 or end == -1 or end < start:
-        return
-    head = text[: start + len("<!-- REGEN: yidam corpus-index -->")]
-    tail = text[end:]
-    readme.write_text(f"{head}\n{index_md}\n{tail}", encoding="utf-8")

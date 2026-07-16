@@ -17,8 +17,13 @@ from watermark.config import Settings
 from watermark.hypotheses import HYPOTHESES, HypothesisAssessment
 from watermark.site.corpus_mirror import (
     build_mirror,
+    lint_mirror,
     project_mirror,
+    regenerate_mirror,
     render_corpus_index,
+    render_graph_check,
+    render_lint,
+    render_open_questions,
     validate_mirror,
     write_mirror,
 )
@@ -303,7 +308,144 @@ def test_render_corpus_index_lists_instances(tmp_path: Path) -> None:
     assert "site-lima.yml" in index
 
 
+# --- the yidam reports: open-questions / graph-check / lint (#1562) -------------------------
+def test_open_questions_lists_only_open_nodes(tmp_path: Path) -> None:
+    corpus = tmp_path / "corpus"
+    write_mirror(_project(), corpus)
+    report = render_open_questions(corpus)
+    # the [open]-tagged lead and the open hypothesis cell are open...
+    assert "question/lead-lead-1.yml" in report
+    assert "question/open-water.yml" in report
+    # ...the [inference] lead is NOT (not every question is an open question)
+    assert "question/lead-lead-2.yml" not in report
+
+
+def test_open_questions_is_faithful_to_yidam_signals(tmp_path: Path) -> None:
+    """yidam opens on a '?'-prefixed label OR a literal ``[open]`` in the text — both, plus
+    BOSC's structured ``claim_tag: open``, must trigger; an unrelated node must not."""
+    corpus = tmp_path / "corpus"
+    (corpus / "concept").mkdir(parents=True)
+    (corpus / "concept.ont.yml").write_text("class: concept\n")
+    (corpus / "concept" / "q-label.yml").write_text(
+        "class: concept\nlabel: '? a question label'\nlinks:\n  - target: other.yml\n"
+    )
+    (corpus / "concept" / "bracket.yml").write_text(
+        "class: concept\nlabel: Bracketed\ndescription: has [open] in text\n"
+        "links:\n  - target: other.yml\n"
+    )
+    (corpus / "concept" / "tagged.yml").write_text(
+        "class: concept\nlabel: Tagged\nclaim_tag: open\nlinks:\n  - target: other.yml\n"
+    )
+    (corpus / "concept" / "other.yml").write_text(
+        "class: concept\nlabel: Settled\nlinks:\n  - target: q-label.yml\n"
+    )
+    report = render_open_questions(corpus)
+    assert "concept/q-label.yml" in report  # label starts with '?'
+    assert "concept/bracket.yml" in report  # literal [open]
+    assert "concept/tagged.yml" in report  # structured claim_tag: open
+    assert "concept/other.yml" not in report  # settled — not open
+
+
+def test_open_questions_empty_reads_none() -> None:
+    # a corpus dir with no open nodes renders the yidam sentinel
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as d:
+        assert render_open_questions(Path(d)) == "_No open questions._"
+
+
+def test_lint_is_advisory_and_flags_structural_gaps(tmp_path: Path) -> None:
+    corpus = tmp_path / "corpus"
+    (corpus / "concept").mkdir(parents=True)
+    (corpus / "concept.ont.yml").write_text("class: concept\n")
+    # missing description, orphan-out (no links) → and orphan-in (nothing points to it)
+    (corpus / "concept" / "lonely.yml").write_text("class: concept\nlabel: Lonely\n")
+    # unknown class + broken link + no description; it is pointed at by nobody (orphan-in)
+    (corpus / "concept" / "bad.yml").write_text(
+        "class: nonesuch\nlabel: Bad\nlinks:\n  - target: nowhere.yml\n"
+    )
+    by_node: dict[str, set[str]] = {}
+    for issue in lint_mirror(corpus):
+        by_node.setdefault(issue.node, set()).add(issue.kind)
+    assert {"no-description", "orphan-out", "orphan-in"} <= by_node["concept/lonely.yml"]
+    assert {"unknown-class", "broken-link", "no-description", "orphan-in"} <= by_node[
+        "concept/bad.yml"
+    ]
+    # the rendered report is advisory — it names the count as reported, not failing
+    text = render_lint(corpus)
+    assert "advisory" in text and "not failing" in text
+
+
+def test_lint_clean_on_a_fully_connected_described_graph(tmp_path: Path) -> None:
+    corpus = tmp_path / "corpus"
+    (corpus / "concept").mkdir(parents=True)
+    (corpus / "concept.ont.yml").write_text("class: concept\n")
+    (corpus / "concept" / "alpha.yml").write_text(
+        "class: concept\nlabel: Alpha\ndescription: A.\nlinks:\n  - target: beta.yml\n"
+    )
+    (corpus / "concept" / "beta.yml").write_text(
+        "class: concept\nlabel: Beta\ndescription: B.\nlinks:\n  - target: alpha.yml\n"
+    )
+    assert lint_mirror(corpus) == []
+    assert render_lint(corpus) == "lint: 2 instance(s) checked — all clean."
+
+
+def test_graph_check_report_text(tmp_path: Path) -> None:
+    corpus = tmp_path / "corpus"
+    write_mirror(_project(), corpus)
+    clean = render_graph_check(corpus)
+    assert "all clean" in clean
+    # a manufactured orphan flips the summary to an issue count
+    (corpus / "concept" / "orphan.yml").write_text("class: concept\nlabel: Orphan\n")
+    dirty = render_graph_check(corpus)
+    assert "with issues" in dirty and "orphan node" in dirty
+
+
 # --- integration: the real committed Lima corpus -------------------------------------------
+def test_regenerate_mirror_writes_corpus_and_reports(tmp_path: Path) -> None:
+    """The one call behind `watermark corpus-mirror` and `watermark export`: over the real Lima
+    corpus it writes the node tree, populates the corpus-index README, and drops all four
+    reports — graph-check clean, lint advisory."""
+    settings = Settings(data_dir=REPO_ROOT / "data", site="lima")
+    corpus = tmp_path / ".yidam" / "corpus"
+    reports = tmp_path / ".yidam" / "reports"
+    regen = regenerate_mirror(settings, corpus_dir=corpus, reports_dir=reports)
+
+    assert regen.ok  # graph-check clean ⇒ the mirror is valid
+    assert regen.graph_issues == []
+    assert regen.mirror.nodes
+    # corpus written + the corpus-index REGEN block populated with real rows
+    index = (corpus / "README.md").read_text(encoding="utf-8")
+    assert "<!-- REGEN: yidam corpus-index -->" in index
+    assert "site-lima.yml" in index
+    # every report artifact landed
+    assert set(regen.reports) == {"open-questions.md", "graph-check.txt", "lint.txt"}
+    for path in regen.reports.values():
+        assert path.exists() and path.read_text(encoding="utf-8").strip()
+    assert (reports / "README.md").exists()
+    assert "all clean" in (reports / "graph-check.txt").read_text(encoding="utf-8")
+    # Lima has orphan-in question/relation nodes → lint reports advisory findings, never raises
+    assert regen.lint_issues
+
+
+def test_export_skips_the_canonical_mirror_for_a_redirected_bundle(tmp_path: Path) -> None:
+    """A redirected one-off export (``--out``, and every hermetic test) must NOT touch the
+    repo's canonical .yidam/ mirror — the mirror regenerates only on ``watermark export`` with
+    no ``--out``. The BundleResult reflects the skip."""
+    from watermark.site.export import export_bundle
+
+    settings = Settings(data_dir=REPO_ROOT / "data", site="lima")
+    result = export_bundle(
+        settings,
+        out_dir=tmp_path / "bundle",
+        generated_at="2026-01-01T00:00:00+00:00",
+        skip_embeddings=True,
+    )
+    assert result.mirror_nodes == 0
+    assert result.mirror_graph_issues == 0
+    assert result.mirror_reports_dir is None
+
+
 def test_build_mirror_over_the_real_lima_corpus_is_clean(tmp_path: Path) -> None:
     settings = Settings(data_dir=REPO_ROOT / "data", site="lima")
     mirror = build_mirror(settings)
