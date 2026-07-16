@@ -1,7 +1,9 @@
 // search_corpus MCP tool handler (#913).
-// BM25 retrieval over the ask-index, with optional site and collection filters.
-// Every result carries full provenance; clients must cite source + page, and
-// must not paraphrase beyond what the source text says ([verified]/[inference] discipline).
+// Hybrid retrieval over the ask-index — BM25 keyword ranking fused with vector (semantic)
+// similarity via Reciprocal Rank Fusion (#1586), degrading to BM25-only when the Workers AI
+// binding or the committed ask-embeddings feed is unavailable — with optional site and
+// collection filters. Every result carries full provenance; clients must cite source + page,
+// and must not paraphrase beyond what the source text says ([verified]/[inference] discipline).
 //
 // Progressive disclosure (#1580): discovery defaults to compact evidence cards — no full
 // `text` blob — so a single permit match no longer injects a whole normalized record
@@ -26,8 +28,9 @@ import {
   resolveKnobs,
   truncateToTokens,
 } from "../mcpGovern";
+import { type HybridRetrievalEnv, hybridSearch } from "../hybridRetrieve";
 import type { AskUnit, Hit } from "../retrieval";
-import { prepare, search, tokenize } from "../retrieval";
+import { prepare, tokenize } from "../retrieval";
 
 // Rough GPT-style byte→token heuristic — good enough for budgeting, not billing.
 const AVG_CHARS_PER_TOKEN = 4;
@@ -212,6 +215,7 @@ const EMPTY: Governed<SearchHit> = { results: [], token_estimate: 0, truncated: 
 export async function handleSearchCorpus(
   params: unknown,
   requestUrl: string,
+  env: HybridRetrievalEnv = {},
 ): Promise<Array<{ type: "text"; text: string }>> {
   const p = (params ?? {}) as SearchCorpusParams;
   const query = typeof p.query === "string" ? p.query.trim() : "";
@@ -251,11 +255,16 @@ export async function handleSearchCorpus(
     units = units.filter((u) => u.feed === collectionFilter);
   }
 
-  // Rank just deep enough to serve this page and detect a next one; the corpus is small
-  // (low hundreds of units) so ranking cost is linear and cheap. Render only the window
-  // from the cursor offset onward so `full` mode never materializes hits we'll drop.
-  const pool = search(prepare(units), query, offset + knobs.maxResults + 1);
-  const window = renderHits(pool.slice(offset), query, mode, snippetTokens);
+  // Rank the whole (filtered) matched pool at a page-independent depth, then slice the
+  // cursor window. Ranking the full pool — not just `offset + maxResults` deep — keeps the
+  // hybrid order stable across cursor pages: RRF's last-place penalty depends on each input
+  // list's length, so truncating the lists to the page depth would let single-list hits
+  // drift between pages. The corpus is small (low hundreds of units) so full-depth ranking is
+  // cheap, and only the sliced window (`maxResults + 1`, one look-ahead) is rendered, so
+  // `full` mode still never materializes hits we'll drop.
+  const prepared = prepare(units);
+  const pool = await hybridSearch(prepared, query, prepared.n, env, requestUrl);
+  const window = renderHits(pool.slice(offset, offset + knobs.maxResults + 1), query, mode, snippetTokens);
   const governed = govern(window, { knobs, baseOffset: offset, shrink: shrinkSearchHit });
 
   return governedContent(governed);

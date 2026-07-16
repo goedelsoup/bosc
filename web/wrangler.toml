@@ -103,9 +103,10 @@ preview_bucket_name = "watermark-submission-attachments-dev"
 #   daily budget above still gate plugin traffic. Set out-of-band like the other secrets:
 #     wrangler pages secret put ASK_PLUGIN_TOKEN
 
-# --- Ask: hybrid semantic retrieval (Workers AI, #329) ----------------------------
-# Binding the Workers AI service enables embedding-based hybrid (BM25 + vector) retrieval.
-# Without it the ask endpoint degrades gracefully to BM25-only keyword retrieval.
+# --- Hybrid semantic retrieval (Workers AI, #329, #1586) --------------------------
+# Binding the Workers AI service enables embedding-based hybrid (BM25 + vector) retrieval for
+# BOTH the /api/ask endpoint and the /api/mcp search_corpus tool (#1586) — the binding is shared
+# across all Pages Functions. Without it each degrades gracefully to BM25-only keyword retrieval.
 # The query is encoded at runtime with @cf/sentence-transformers/all-minilm-l6-v2 (384 dims),
 # the same model `bosc export` uses to precompute document vectors (skip with --no-embeddings).
 # Uncomment once `bosc export` has been run and the bundle (with ask-embeddings.json) is deployed:

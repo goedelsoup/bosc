@@ -51,6 +51,11 @@ interface Env extends McpAuthEnv {
   HONEYCOMB_API_KEY?: string;
   /** Sets deployment.environment on spans (default "prod"). */
   OTEL_ENVIRONMENT?: string;
+  /** Cloudflare Workers AI binding (#1586) — query embedding for hybrid search_corpus.
+   *  Absent ⇒ BM25-only keyword retrieval (graceful degradation, mirrors /api/ask). */
+  AI?: { run(model: string, input: { text: string[] }): Promise<{ data: number[][] }> };
+  /** Optional override for the ask-embeddings asset URL (e.g. CDN-hosted). */
+  ASK_EMBEDDINGS_URL?: string;
 }
 
 const DEFAULT_MCP_RATE_LIMIT = { max: 60, windowSec: 60 }; // 60 req/min per IP
@@ -204,12 +209,12 @@ export async function onRequestPost({ request, env, waitUntil }: RequestContext)
     const toolName = String((body.params as Record<string, unknown> | undefined)?.name ?? "unknown");
     const toolSpan = otelHandle?.startSpan("mcp.tool", rpcSpan);
     const t0 = Date.now();
-    rpcResponse = await dispatch(parsed.value, request.url);
+    rpcResponse = await dispatch(parsed.value, request.url, env);
     toolSpan?.setAttribute("tool.name", toolName);
     toolSpan?.setAttribute("tool.latency_ms", Date.now() - t0);
     toolSpan?.end();
   } else {
-    rpcResponse = await dispatch(parsed.value, request.url);
+    rpcResponse = await dispatch(parsed.value, request.url, env);
   }
 
   // Persist the session after a successful initialize

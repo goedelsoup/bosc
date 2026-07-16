@@ -3,9 +3,10 @@
 // globalThis.fetch, so each case stubs that route and resets the isolate cache.
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { _resetAskEmbeddingsCache } from "@watermark/functions/api/_lib/askEmbeddingsLoad";
 import { _resetAskIndexCache } from "@watermark/functions/api/_lib/askIndexLoad";
 import { handleSearchCorpus } from "@watermark/functions/api/_lib/mcpTools/searchCorpus";
-import type { AskUnit } from "@watermark/functions/api/_lib/retrieval";
+import type { AskUnit, EmbeddingEntry } from "@watermark/functions/api/_lib/retrieval";
 import { type FetchRoute, jsonResponse, routingFetch } from "./_routeHarness";
 
 const REQ = "https://directory.example/api/mcp";
@@ -79,12 +80,14 @@ async function call(args: Record<string, unknown>): Promise<Record<string, unkno
 
 beforeEach(() => {
   _resetAskIndexCache();
+  _resetAskEmbeddingsCache();
   vi.stubGlobal("fetch", routingFetch([askIndexRoute]));
 });
 
 afterEach(() => {
   vi.unstubAllGlobals();
   _resetAskIndexCache();
+  _resetAskEmbeddingsCache();
 });
 
 describe("handleSearchCorpus response_mode", () => {
@@ -330,5 +333,144 @@ describe("handleSearchCorpus governance (#1581)", () => {
       site: "lima",
     });
     expect(env.results[0]).toHaveProperty("text");
+  });
+});
+
+describe("handleSearchCorpus hybrid retrieval (#1586)", () => {
+  // "records:kw" is the only BM25 match for "roundabout"; "records:semantic" shares no query
+  // keyword, so only the hybrid vector path can surface it. "records:noise" matches neither.
+  const HYBRID_UNITS: AskUnit[] = [
+    {
+      id: "records:kw",
+      feed: "records",
+      title: "Roundabout keyword match",
+      url: "/u/kw",
+      text: "roundabout intersection earthwork subtotal",
+      verified: true,
+      site: "lima",
+    },
+    {
+      id: "records:semantic",
+      feed: "records",
+      title: "Traffic circle geometry",
+      url: "/u/sem",
+      text: "traffic circle geometry at the junction",
+      verified: true,
+      site: "lima",
+    },
+    {
+      id: "records:noise",
+      feed: "records",
+      title: "Unrelated permit",
+      url: "/u/noise",
+      text: "wastewater discharge outfall monitoring report",
+      verified: false,
+      site: "lima",
+    },
+  ];
+
+  // The query embeds to "north" ([1,0]); only records:semantic points north (cosine 1). The
+  // others are orthogonal (cosine 0 → excluded from vector hits), so the vector ranking
+  // returns records:semantic alone — a match BM25 can never produce for "roundabout".
+  const QUERY_VECTOR = [1, 0];
+  const EMB: EmbeddingEntry[] = [
+    { id: "records:kw", embedding: [0, 1] },
+    { id: "records:semantic", embedding: [1, 0] },
+    { id: "records:noise", embedding: [0, 1] },
+  ];
+
+  const indexRoute: FetchRoute = {
+    test: (url) => url.pathname === "/ask-index.json",
+    respond: () => jsonResponse(200, HYBRID_UNITS),
+  };
+  const embeddingsRoute: FetchRoute = {
+    test: (url) => url.pathname === "/ask-embeddings.json",
+    respond: () => jsonResponse(200, EMB),
+  };
+  const embeddings404: FetchRoute = {
+    test: (url) => url.pathname === "/ask-embeddings.json",
+    respond: () => new Response("not found", { status: 404 }),
+  };
+
+  interface FakeAI {
+    calls: Array<{ model: string; text: string[] }>;
+    run(model: string, input: { text: string[] }): Promise<{ data: number[][] }>;
+  }
+  /** A Workers AI stub recording each call; `throws` forces the embed to reject. */
+  function fakeAI(data: number[][], opts: { throws?: boolean } = {}): FakeAI {
+    const calls: FakeAI["calls"] = [];
+    return {
+      calls,
+      run: async (model, input) => {
+        calls.push({ model, text: input.text });
+        if (opts.throws) throw new Error("workers-ai unavailable");
+        return { data };
+      },
+    };
+  }
+
+  /** Run a search with the given env + routes and return the ranked ids. */
+  async function ids(
+    args: Record<string, unknown>,
+    env: { AI?: FakeAI; ASK_EMBEDDINGS_URL?: string },
+    routes: FetchRoute[],
+  ): Promise<string[]> {
+    vi.stubGlobal("fetch", routingFetch(routes));
+    const content = await handleSearchCorpus(args, REQ, env);
+    const parsed = JSON.parse(content[0].text) as Envelope;
+    return parsed.results.map((r) => r.id as string);
+  }
+
+  it("fuses vector similarity with BM25 — surfaces a semantic-only match BM25 misses", async () => {
+    const ai = fakeAI([QUERY_VECTOR]);
+    const got = await ids({ query: "roundabout", response_mode: "ids_only" }, { AI: ai }, [
+      indexRoute,
+      embeddingsRoute,
+    ]);
+    expect(got).toContain("records:kw"); // keyword hit
+    expect(got).toContain("records:semantic"); // vector-only hit, surfaced by RRF
+    // The query was embedded with the same Workers AI model /api/ask uses.
+    expect(ai.calls).toHaveLength(1);
+    expect(ai.calls[0].model).toBe("@cf/sentence-transformers/all-minilm-l6-v2");
+    expect(ai.calls[0].text).toEqual(["roundabout"]);
+  });
+
+  it("degrades to BM25-only with no AI binding — no embeddings fetch, no semantic hit", async () => {
+    // No AI in env → the vector path is skipped entirely; ask-embeddings is never fetched, so
+    // the harness (which throws on unmatched routes) proves the fetch never happens.
+    const got = await ids({ query: "roundabout", response_mode: "ids_only" }, {}, [indexRoute]);
+    expect(got).toContain("records:kw");
+    expect(got).not.toContain("records:semantic");
+  });
+
+  it("degrades to BM25-only when the embeddings feed is absent (404), without embedding the query", async () => {
+    const ai = fakeAI([QUERY_VECTOR]);
+    const got = await ids({ query: "roundabout", response_mode: "ids_only" }, { AI: ai }, [
+      indexRoute,
+      embeddings404,
+    ]);
+    expect(got).toContain("records:kw");
+    expect(got).not.toContain("records:semantic");
+    expect(ai.calls).toHaveLength(0); // short-circuits before spending a Workers AI embed
+  });
+
+  it("degrades to BM25-only when the AI embed call throws", async () => {
+    const ai = fakeAI([QUERY_VECTOR], { throws: true });
+    const got = await ids({ query: "roundabout", response_mode: "ids_only" }, { AI: ai }, [
+      indexRoute,
+      embeddingsRoute,
+    ]);
+    expect(got).toContain("records:kw");
+    expect(got).not.toContain("records:semantic");
+  });
+
+  it("degrades to BM25-only when the AI returns an empty query vector", async () => {
+    const ai = fakeAI([[]]); // empty embedding
+    const got = await ids({ query: "roundabout", response_mode: "ids_only" }, { AI: ai }, [
+      indexRoute,
+      embeddingsRoute,
+    ]);
+    expect(got).toContain("records:kw");
+    expect(got).not.toContain("records:semantic");
   });
 });
