@@ -4,8 +4,8 @@
 // attachments.test.ts; this covers the wiring those leave out.
 
 import { describe, expect, it } from "vitest";
-import { onRequestPost } from "@fn/api/attach";
-import type { R2Like } from "@fn/api/_lib/attachments";
+import { onRequestPost } from "@watermark/functions/api/attach";
+import type { R2Like } from "@watermark/functions/api/_lib/attachments";
 
 const ATTACH_URL = "https://bosc.test/api/attach";
 

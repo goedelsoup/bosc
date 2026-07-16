@@ -14,6 +14,10 @@
 packages:
   - web
   - web/packages/*
+  # The Cloudflare Pages Functions are a scoped workspace package (@watermark/functions, #1552)
+  # but stay physically at web/functions — Cloudflare Pages discovers Functions at the project
+  # root (wrangler compiles <project-root>/functions), so they can't move under packages/*.
+  - web/functions
 
 # pnpm 10 blocks dependency lifecycle (postinstall/build) scripts unless the package is
 # allow-listed here. These are the only tree deps that legitimately build on install —

@@ -3,7 +3,7 @@
 // provenance-tagged rows. Handles: tool selection, form field generation,
 // example injection, SSE streaming response, abort, and tab switching.
 
-import { drainSse } from "@fn/api/_lib/sse";
+import { drainSse } from "@watermark/functions/api/_lib/sse";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

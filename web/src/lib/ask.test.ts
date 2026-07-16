@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { assemblePrompt, candidateCitations, extractCitations, isRefusal, REFUSAL } from "@fn/api/_lib/ask";
-import type { Hit } from "@fn/api/_lib/retrieval";
+import {
+  assemblePrompt,
+  candidateCitations,
+  extractCitations,
+  isRefusal,
+  REFUSAL,
+} from "@watermark/functions/api/_lib/ask";
+import type { Hit } from "@watermark/functions/api/_lib/retrieval";
 
 const HITS: Hit[] = [
   {

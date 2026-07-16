@@ -11,7 +11,7 @@ import {
   setNotifications,
   unsubscribeCategory,
   writeAuditEntry,
-} from "@fn/api/_lib/authStore";
+} from "@watermark/functions/api/_lib/authStore";
 import { type FakePg, fakePg } from "./_routeHarness";
 
 const NOW = "2026-07-04T12:00:00.000Z";

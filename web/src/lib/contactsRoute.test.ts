@@ -5,10 +5,19 @@
 // runs offline. Turnstile is skipped (no TURNSTILE_SECRET), matching the dark-launch config.
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { ContactsEnv } from "@fn/api/_lib/contactsRoute";
-import { onRequestGet as adminGet, onRequestPost as adminPost } from "@fn/api/admin/contacts";
-import { onRequestGet as bulletinGet, onRequestPost as bulletinPost } from "@fn/api/bulletin";
-import { onRequestGet as connectGet, onRequestPost as connectPost } from "@fn/api/petition/connect";
+import type { ContactsEnv } from "@watermark/functions/api/_lib/contactsRoute";
+import {
+  onRequestGet as adminGet,
+  onRequestPost as adminPost,
+} from "@watermark/functions/api/admin/contacts";
+import {
+  onRequestGet as bulletinGet,
+  onRequestPost as bulletinPost,
+} from "@watermark/functions/api/bulletin";
+import {
+  onRequestGet as connectGet,
+  onRequestPost as connectPost,
+} from "@watermark/functions/api/petition/connect";
 import {
   type CognitoTestKeyPair,
   type FakePg,

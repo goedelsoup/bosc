@@ -1,7 +1,7 @@
 // Unit tests for the unsubscribe token helpers (#939 E2).
 
 import { describe, expect, it } from "vitest";
-import { signUnsubToken, verifyUnsubToken } from "@fn/api/_lib/unsub";
+import { signUnsubToken, verifyUnsubToken } from "@watermark/functions/api/_lib/unsub";
 
 const SECRET = "test-unsub-secret-32-bytes-long!!";
 const SUB = "user-sub-abc123";

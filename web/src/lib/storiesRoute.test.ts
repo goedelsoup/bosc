@@ -5,13 +5,13 @@
 // write — runs offline.
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { _resetCatalogCache } from "@fn/api/_lib/catalogAsset";
-import type { StoriesEnv } from "@fn/api/_lib/storiesRoute";
-import { onRequestGet as adminList, onRequestPost as adminAct } from "@fn/api/admin/stories";
-import { onRequestDelete, onRequestGet as getOne, onRequestPut } from "@fn/api/stories/[id]";
-import { onRequestPost as postReport } from "@fn/api/stories/report";
-import { onRequestGet as getShared } from "@fn/api/stories/shared/[shareId]";
-import { onRequestGet as listStoriesRoute, onRequestPost } from "@fn/api/stories";
+import { _resetCatalogCache } from "@watermark/functions/api/_lib/catalogAsset";
+import type { StoriesEnv } from "@watermark/functions/api/_lib/storiesRoute";
+import { onRequestGet as adminList, onRequestPost as adminAct } from "@watermark/functions/api/admin/stories";
+import { onRequestDelete, onRequestGet as getOne, onRequestPut } from "@watermark/functions/api/stories/[id]";
+import { onRequestPost as postReport } from "@watermark/functions/api/stories/report";
+import { onRequestGet as getShared } from "@watermark/functions/api/stories/shared/[shareId]";
+import { onRequestGet as listStoriesRoute, onRequestPost } from "@watermark/functions/api/stories";
 import {
   type CognitoTestKeyPair,
   type FetchRoute,

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { addUsage, dayKey, isOverBudget } from "@fn/api/_lib/budget";
-import type { KVLike } from "@fn/api/_lib/ratelimit";
+import { addUsage, dayKey, isOverBudget } from "@watermark/functions/api/_lib/budget";
+import type { KVLike } from "@watermark/functions/api/_lib/ratelimit";
 
 /** An in-memory KVLike for the pure logic. */
 function fakeKV(initial: Record<string, string> = {}): KVLike & { store: Map<string, string> } {

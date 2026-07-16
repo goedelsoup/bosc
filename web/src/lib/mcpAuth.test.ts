@@ -2,8 +2,8 @@
 // Drives verifyToken() directly (no HTTP handler wiring needed — pure logic over KVLike).
 
 import { describe, expect, it } from "vitest";
-import { verifyToken } from "@fn/api/_lib/mcpAuth";
-import type { KVLike } from "@fn/api/_lib/ratelimit";
+import { verifyToken } from "@watermark/functions/api/_lib/mcpAuth";
+import type { KVLike } from "@watermark/functions/api/_lib/ratelimit";
 
 function fakeKV(seed: Record<string, string> = {}): KVLike {
   const store = new Map(Object.entries(seed));

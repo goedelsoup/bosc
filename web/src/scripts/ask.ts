@@ -8,8 +8,8 @@
 // incrementally as tokens stream, not only at `done`. The control row offers Stop /
 // Copy / Retry, with Stop aborting the in-flight request.
 
-import { drainSse } from "@fn/api/_lib/sse";
-import { type AskCitation, renderAnswer, renderSources, searchingHint } from "../lib/askRender";
+import { drainSse } from "@watermark/functions/api/_lib/sse";
+import { type AskCitation, renderAnswer, renderSources, searchingHint } from "@watermark/core/askRender";
 
 interface AskResponse {
   answer?: string;

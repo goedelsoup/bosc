@@ -3,7 +3,7 @@
 // same code path used by the middleware and the account endpoint.
 
 import { describe, expect, it } from "vitest";
-import { mintEaCookie, isValidEaCookie, MAX_AGE_SEC } from "@fn/api/_lib/eaCookie";
+import { mintEaCookie, isValidEaCookie, MAX_AGE_SEC } from "@watermark/functions/api/_lib/eaCookie";
 
 const SECRET = "test-secret-32-bytes-padded-here";
 

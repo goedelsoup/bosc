@@ -13,7 +13,7 @@
  * permits, the confidentiality agreement, corridor entities, commissioners' meetings, the
  * glossary) — enough for BM25 to separate on-topic from off-topic deterministically.
  */
-import type { AskUnit } from "@fn/api/_lib/retrieval";
+import type { AskUnit } from "@watermark/functions/api/_lib/retrieval";
 
 export const CORPUS: AskUnit[] = [
   {

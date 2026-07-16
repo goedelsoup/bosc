@@ -7,11 +7,11 @@
 // seam by pointing the model call at a stubbed host.
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { _resetAskIndexCache } from "@fn/api/_lib/askIndexLoad";
-import { dayKey } from "@fn/api/_lib/budget";
-import { windowKey } from "@fn/api/_lib/ratelimit";
-import type { AskUnit } from "@fn/api/_lib/retrieval";
-import { onRequestPost } from "@fn/api/ask";
+import { _resetAskIndexCache } from "@watermark/functions/api/_lib/askIndexLoad";
+import { dayKey } from "@watermark/functions/api/_lib/budget";
+import { windowKey } from "@watermark/functions/api/_lib/ratelimit";
+import type { AskUnit } from "@watermark/functions/api/_lib/retrieval";
+import { onRequestPost } from "@watermark/functions/api/ask";
 import { type FetchRoute, fakeKV, jsonResponse, postJson, routingFetch } from "./_routeHarness";
 
 const ASK_URL = "https://bosc.test/api/ask";

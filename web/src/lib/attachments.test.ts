@@ -9,7 +9,7 @@ import {
   attachmentKey,
   detectMime,
   sanitizeFilename,
-} from "@fn/api/_lib/attachments";
+} from "@watermark/functions/api/_lib/attachments";
 
 describe("detectMime", () => {
   it("detects JPEG", () => {

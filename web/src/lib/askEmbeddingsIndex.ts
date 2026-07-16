@@ -5,8 +5,8 @@
  * when the feed is absent (offline / fast-mode builds) — the Worker degrades to
  * BM25-only retrieval in that case.
  */
-import { hasFeed, loadFeed } from "./bundle";
-import type { EmbeddingEntry } from "@fn/api/_lib/retrieval";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { EmbeddingEntry } from "@watermark/functions/api/_lib/retrieval";
 
 export function buildAskEmbeddingsIndex(): EmbeddingEntry[] {
   if (!hasFeed("ask-embeddings")) return [];
