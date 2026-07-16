@@ -70,6 +70,12 @@ runs/
 /data/site/bundle/feeds/
 /data/site/bundle/manifest.json
 
+# yidam corpus mirror (`watermark corpus-mirror`, epic #1560/#1561). The committed corpus
+# (entities, relationships, concepts, people, leads, hypotheses, [open] claims) projected into
+# yidam node format under .yidam/corpus/. Regenerable, per-site, never a source of truth — so
+# it stays out of git (like the content bundle). Regenerate: `watermark --site <slug> corpus-mirror`.
+/.yidam/corpus/
+
 # RSEI v2.3.12 offline test fixture (a small committed Allen County slice zip). The
 # user's global gitignore excludes *.zip, so re-include just this fixture (#1148).
 !tests/fixtures/rsei/*.zip
