@@ -69,7 +69,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
   {
     name: "search_corpus",
     description:
-      "Semantic + keyword search over the documentary corpus. Returns compact evidence cards by default (id, title, site, collection, date, source_kind, score, snippet, estimated_tokens, verified) — no full record text. Use response_mode=full to pull a hit's whole text.",
+      "Keyword (BM25) search across the whole corpus — the discovery entrypoint. Use to FIND relevant items across every feed (records, documents, timeline, entities, …); narrow with site/collection. This is keyword-only, NOT semantic/vector search (that runs only behind /api/ask), and NOT the way to pull one known document — use get_document for that. Returns ranked evidence cards (id, title, site, collection, date, source_kind, score, snippet, estimated_tokens, verified) — NO full record text by default; pass a hit's id to get_document to fetch its projected fields + citation. Size knobs: response_mode (ids_only|compact|snippets|full — full reproduces the whole record, ~18–24k tokens/hit, opt-in), limit/max_results, snippet_tokens, max_tokens, cursor.",
     inputSchema: {
       type: "object",
       properties: {
@@ -80,7 +80,8 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
         },
         collection: {
           type: "string",
-          description: "Collection filter (e.g. oepa, recorder, aedg)",
+          description:
+            "Feed filter — restrict to one bundle feed: records, documents, timeline, entities, meetings, people, places, concepts.",
         },
         limit: { type: "integer", description: "Max results (default 10)", default: 10 },
         response_mode: {
@@ -104,7 +105,8 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
   },
   {
     name: "get_timeline",
-    description: "Dated events filterable by date range and category",
+    description:
+      "Dated events for a site (permits, filings, meetings, transactions), oldest-first. Use to build a chronology or find what happened in a window; filter by since/until/category. Returns event records directly (date, category, title, parties, detail, citation) — a terminal read, not a discovery index; to open the document behind an event, take its parties/title into search_corpus or get_document. Size knobs: max_results, max_tokens, max_tokens_per_result (sheds detail/parties first), cursor, intent.",
     inputSchema: {
       type: "object",
       properties: {
@@ -119,7 +121,8 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
   },
   {
     name: "get_entities",
-    description: "Entity graph: parties, roles, parcels, and relationships",
+    description:
+      "Entity graph for a site — parties, companies, people, parcels and their roles/relationships. Use to resolve who is involved or enumerate the parcels/companies on the record; filter by type. Returns entity nodes directly (key, display, kind, roles, parcels, addresses, sources, signals). Not a document fetch — take an entity's name into search_corpus to find the documents behind it. Size knobs: max_results, max_tokens, max_tokens_per_result (sheds variants/addresses/signals/parcels/roles first), cursor, intent.",
     inputSchema: {
       type: "object",
       properties: {
@@ -135,7 +138,8 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
   },
   {
     name: "get_hypotheses",
-    description: "Boom-origin hypothesis signals per site",
+    description:
+      "Per-site boom-origin hypotheses joined to their signal assessments — the investigation's open theses and how the evidence scores against each. Use to see the analytic frame or what is being tested; filter by site. Returns each hypothesis (claim, thesis, status, signals) with its assessments (tag, group, citations); assessments_total flags a budget-shrunk list. Not a document fetch — follow a signal's citation via search_corpus/get_document. Size knobs: max_results, max_tokens, max_tokens_per_result, cursor, intent.",
     inputSchema: {
       type: "object",
       properties: {
@@ -147,7 +151,8 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
   },
   {
     name: "get_documents",
-    description: "Ingested source documents by collection",
+    description:
+      "Lists source-document COLLECTIONS and their file entries (metadata only — rel, name, media_type, published, available), by collection. Use to browse what documents exist or find a document's id; filter by collection. Returns collection cards with entry_count + entries, NO document bodies or extracted fields. Then fetch: pass an entry's rel to get_document for its extraction fields + citation. Contrast get_document (one document, projected) and search_corpus (keyword search across every feed). Size knobs: max_results, max_tokens, max_tokens_per_result (caps the entries list), cursor, intent.",
     inputSchema: {
       type: "object",
       properties: {
@@ -164,7 +169,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
   {
     name: "get_document",
     description:
-      "Fetch ONE document by id, with field/section projection — the targeted peer of get_documents (which only lists collections). Addressed by its `collection/rel` file path (e.g. recorder/bistrozzi-deeds/202508130008300.pdf) OR the joined extraction-record id (e.g. recorder/202508130008300.deed.yaml); ids returned by search_corpus work directly. Returns the document's metadata joined to its extraction record — structured `fields` and a `Citation` — bounded by max_tokens. IMPORTANT: the bundle carries document metadata + record `fields`, NOT the raw source-document body text. `fields`/`sections` projection operates over those extracted fields; there is no per-page body-text projection here (that is separate search_passages work). `include_source_text` returns the record's flattened extraction text, not scanned page text.",
+      "Fetch ONE document you already have an id for, with field/section projection — the targeted peer of get_documents (which only lists collections). Use it to pull a specific document's evidence AFTER discovery; for discovery itself use search_corpus or get_documents, and note this does no keyword search. Addressed by its `collection/rel` file path (e.g. recorder/bistrozzi-deeds/202508130008300.pdf) OR the joined extraction-record id (e.g. recorder/202508130008300.deed.yaml); ids returned by search_corpus work directly. Returns the document's metadata joined to its extraction record — structured `fields` and a `Citation` — bounded by max_tokens, projected by fields/sections. IMPORTANT: the bundle carries document metadata + record `fields`, NOT the raw source-document body text. `fields`/`sections` projection operates over those extracted fields; there is no per-page body-text projection here (that is separate search_passages work). `include_source_text` returns the record's flattened extraction text, not scanned page text.",
     inputSchema: {
       type: "object",
       properties: {
