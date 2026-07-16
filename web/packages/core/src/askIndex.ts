@@ -48,6 +48,10 @@ export interface AskUnit {
   verified?: boolean;
   /** Site slug (e.g. "lima"). Set at build time from the active bundle. */
   site?: string;
+  /** Structured event/record date (ISO-ish), when the source feed carries one — timeline
+   * and meeting units today. Surfaced on discovery cards so a caller can filter/sort by
+   * date without paying for the full record (#1580). */
+  date?: string | null;
 }
 
 /** Flatten a record's `fields` into "key value" pairs so figures are searchable (#327).
@@ -107,6 +111,7 @@ export function buildAskIndex(): AskUnit[] {
         feed: "timeline",
         title: `${e.date} — ${e.title}`,
         url: siteUrl("/timeline"),
+        date: e.date,
         text: blob(e.category, e.detail, e.source, ...e.parties, ...e.also_sources),
         // The timeline carries an explicit source string even when citation is null.
         ...(e.citation ? cite(e.citation) : { source: e.source, source_kind: "document" }),
@@ -135,6 +140,7 @@ export function buildAskIndex(): AskUnit[] {
         feed: "meetings",
         title: `${m.date ?? ""} — ${m.kind ?? "meeting"} (${m.slug})`.trim(),
         url: siteUrl("/site/legal#meetings"),
+        date: m.date ?? null,
         text: blob(m.summary, m.corridor_relevance, ...m.decisions, ...m.parties, ...m.dollar_figures),
         ...cite(m.citation),
       });

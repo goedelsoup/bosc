@@ -75,6 +75,17 @@ const ENTITY = {
   sources: ["data/extracted/entities/graph.yaml"],
 };
 
+const TIMELINE = {
+  date: "2019-03-01",
+  category: "legal",
+  title: "Confidentiality agreement signed",
+  ref: "2019-nda",
+  parties: ["City of Lima"],
+  detail: "NDA covering the project",
+  source: "data/extracted/legal/nda.yaml",
+  also_sources: [],
+};
+
 describe("buildAskIndex", () => {
   it("emits one citation-keyed, deep-linked unit per record with its figures in text", async () => {
     const dir = makeBundle([feedRef("records", "feeds/records.json", 1)], {
@@ -105,6 +116,16 @@ describe("buildAskIndex", () => {
     expect(u.id).toBe("entities:AMAZON COM SERVICES");
     expect(u.url).toBe("/wiki/entities/amazon-com-services/");
     expect(u.source).toBe("data/extracted/entities/graph.yaml");
+  });
+
+  it("carries the source feed's structured date onto timeline units (#1580)", async () => {
+    const dir = makeBundle([feedRef("timeline", "feeds/timeline.json", 1)], {
+      "feeds/timeline.json": JSON.stringify([TIMELINE]),
+    });
+    const m = await loadAskIndex(dir);
+    const [u] = m.buildAskIndex();
+    expect(u.feed).toBe("timeline");
+    expect(u.date).toBe("2019-03-01");
   });
 
   it("skips feeds absent from the manifest", async () => {
