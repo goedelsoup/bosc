@@ -61,12 +61,14 @@ def test_node_uri_and_normalize_id_round_trip() -> None:
     mirror = _tiny_mirror()
     hyp = mirror.nodes[1]
     assert yidam_tools.node_uri(hyp) == "yidam://corpus/hypothesis/water"
-    # URI, bare id, and a `.yml`-suffixed / slash-wrapped path all normalize to the id.
+    # URI, bare id, a `.yml`-suffixed / slash-wrapped path, and a rendered cross-class link
+    # target (`../<class>/<name>.yml`) all normalize to the canonical id.
     for raw in (
         "yidam://corpus/hypothesis/water",
         "hypothesis/water",
         "/hypothesis/water/",
         "hypothesis/water.yml",
+        "../hypothesis/water.yml",
     ):
         assert yidam_tools.normalize_id(raw) == "hypothesis/water"
 
@@ -77,6 +79,8 @@ def test_find_node_accepts_uri_bare_id_and_unique_name() -> None:
     assert yidam_tools.find_node(mirror, "yidam://corpus/hypothesis/water") is hyp
     assert yidam_tools.find_node(mirror, "hypothesis/water") is hyp
     assert yidam_tools.find_node(mirror, "water") is hyp  # unique bare name
+    # A rendered cross-class link target resolves to its node.
+    assert yidam_tools.find_node(mirror, "../hypothesis/water.yml") is hyp
     assert yidam_tools.find_node(mirror, "no/such-node") is None
 
 
@@ -99,6 +103,18 @@ def test_query_ranks_label_over_meta_and_honours_class_filter() -> None:
     assert yidam_tools.query_nodes(mirror, "cooling", node_class="hypothesis") == []
     # An empty query matches nothing (no accidental full dump).
     assert yidam_tools.query_nodes(mirror, "   ") == []
+
+
+def test_query_limit_is_validated_not_max_of_one() -> None:
+    mirror = _tiny_mirror()
+    # A non-positive limit returns nothing (not a silent single result via max(1, limit)).
+    assert yidam_tools.query_nodes(mirror, "site", limit=0) == []
+    assert yidam_tools.query_nodes(mirror, "site", limit=-5) == []
+    # A positive limit truncates; the cap bounds even an absurd request.
+    assert len(yidam_tools.query_nodes(mirror, "site", limit=1)) == 1
+    assert (
+        len(yidam_tools.query_nodes(mirror, "site", limit=10_000)) <= yidam_tools._MAX_QUERY_RESULTS
+    )
 
 
 def test_open_question_nodes_flags_the_claim_tag_marker() -> None:
@@ -147,6 +163,28 @@ async def test_tools_serve_the_tiny_mirror(monkeypatch: pytest.MonkeyPatch) -> N
 
     opens = (await yidam_tools.yidam_open_questions.handler({}))["content"][0]["text"]
     assert "Cooling-water intake for the campus" in opens
+
+
+async def test_read_node_follows_a_rendered_cross_class_link(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # The agent follows links straight from a node's rendered YAML: a cross-class edge reads
+    # `../artifact/site-demo.yml`. Feeding that verbatim back to read_node must resolve to the
+    # canonical id, not 404.
+    mirror = _tiny_mirror()
+    monkeypatch.setattr(yidam_tools, "_mirror", lambda settings=None: mirror)
+
+    hyp = (await yidam_tools.yidam_read_node.handler({"id": "hypothesis/water"}))["content"][0][
+        "text"
+    ]
+    target = re.search(r"target:\s*(\.\./artifact/\S+\.yml)", hyp)
+    assert target, "the hypothesis node should render a `../artifact/...` link"
+
+    followed = (await yidam_tools.yidam_read_node.handler({"id": target.group(1)}))["content"][0][
+        "text"
+    ]
+    assert followed.startswith("# yidam://corpus/artifact/site-demo")
+    assert "label: Demo" in followed
 
 
 def test_mirror_is_built_once_and_cached(monkeypatch: pytest.MonkeyPatch) -> None:
