@@ -13,7 +13,7 @@
 #
 # Cloudflare's own Git build is NOT used — the content bundle is produced by the
 # watermarkBundle Vite plugin (shells out to `uv run watermark --site <slug> export`)
-# inside `npm run build`, so the build runs here and Wrangler does a direct upload.
+# inside `pnpm run build`, so the build runs here and Wrangler does a direct upload.
 # Pages config lives in `web/wrangler.toml`.
 #
 # One-time setup before the first deploy (see docs/submissions-api.md):
@@ -82,7 +82,7 @@ jobs:
         # ~1.5 GB of bandwidth per deploy for no benefit.
 
       # 1. Python toolchain: the watermarkBundle Vite plugin shells out to
-      #    `uv run watermark --site <slug> export` inside `npm run build`.
+      #    `uv run watermark --site <slug> export` inside `pnpm run build`.
       - name: Install uv
         uses: astral-sh/setup-uv@v5
         with:
@@ -93,18 +93,21 @@ jobs:
         run: uv sync
 
       # 2. Build the Astro site (plugin runs export for each site first).
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: "24"
-          cache: npm
-          cache-dependency-path: web/package-lock.json
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+      # Install the whole workspace from the root (single lockfile); the build step still
+      # runs in web/ so the watermarkBundle plugin's export + astro build resolve there.
       - name: Install frontend dependencies
-        working-directory: web
-        run: npm ci
+        run: pnpm install --frozen-lockfile
       - name: Build the site (-> web/dist)
         working-directory: web
-        run: npm run build
+        run: pnpm run build
 
       # Hand the built assets to the deploy job (Functions come from source at checkout).
       - name: Upload the build

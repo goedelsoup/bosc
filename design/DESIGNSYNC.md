@@ -107,7 +107,7 @@ as-built values — possibly the first DesignSync push):
 | fonts | richer fallback stacks | fewer fallbacks | push the richer stacks to the DS, then alias |
 
 Adopting the scales is a **visual-change refactor** (the as-built values aren't on the DS scale), so
-it needs `npm run build` + a visual pass — out of scope for token availability.
+it needs `pnpm run build` + a visual pass — out of scope for token availability.
 
 ## Scope status
 

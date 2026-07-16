@@ -77,7 +77,7 @@ level (skipped job = success), not the workflow trigger level (path-filtered
 workflow = stuck pending). Don't add a top-level `paths:` to `ci.yml`.
 
 Markdown is a **separate required CI check**: any PR that adds or edits `.md`
-files runs `npx markdownlint-cli2`. Config in `.markdownlint-cli2.yaml`;
+files runs `pnpm exec markdownlint-cli2`. Config in `.markdownlint-cli2.yaml`;
 generated docs are excluded. Run it locally before pushing.
 
 ## Settings

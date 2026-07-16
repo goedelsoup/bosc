@@ -84,7 +84,7 @@ The `oepa-permit` mise task does this automatically for permit runs.
   `gh label list` for the live set; don't invent an off-vocabulary label.
 - Run `mise run check` (backend) or `mise run //web:check` (frontend)
   before opening a PR. Both must pass on `mise run ci`.
-- Markdown edits: run `npx markdownlint-cli2` locally. Common failures are
+- Markdown edits: run `pnpm exec markdownlint-cli2` locally. Common failures are
   `MD032` (missing blank line before list) and `MD012` (consecutive blank lines).
 
 ## Catalog waiver
