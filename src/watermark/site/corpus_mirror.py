@@ -556,6 +556,24 @@ def write_mirror(mirror: Mirror, corpus_dir: Path) -> None:
     log.info("corpus_mirror.written", dir=str(corpus_dir), nodes=len(mirror.nodes))
 
 
+# --- walking a written mirror (yidam's walk.rs, in Python) ----------------------------------
+def _iter_instances(corpus_dir: Path) -> list[Path]:
+    """Every corpus *instance* file, sorted — the ``.yml`` files at depth ≥2 that are not
+    ``<class>.ont.yml`` schemas (yidam's ``walk_corpus_instances``)."""
+    out: list[Path] = []
+    for inst in sorted(corpus_dir.rglob("*.yml")):
+        rel = inst.relative_to(corpus_dir)
+        if len(rel.parts) < 2 or inst.name.endswith(".ont.yml"):
+            continue
+        out.append(inst)
+    return out
+
+
+def _defined_classes(corpus_dir: Path) -> set[str]:
+    """Class names that have a ``<class>.ont.yml`` schema at the corpus root."""
+    return {p.name[: -len(".ont.yml")] for p in corpus_dir.glob("*.ont.yml")}
+
+
 # --- validation (the yidam graph-check rules, in Python) -----------------------------------
 @dataclass
 class MirrorIssue:
@@ -573,12 +591,10 @@ def validate_mirror(corpus_dir: Path) -> list[MirrorIssue]:
     ≥1 outgoing link whose ``target:`` resolves to a file that exists. Instance files are the
     ``.yml`` files at depth ≥2 that don't end in ``.ont.yml``.
     """
-    defined = {p.name[: -len(".ont.yml")] for p in corpus_dir.glob("*.ont.yml")}
+    defined = _defined_classes(corpus_dir)
     issues: list[MirrorIssue] = []
-    for inst in sorted(corpus_dir.rglob("*.yml")):
+    for inst in _iter_instances(corpus_dir):
         rel = inst.relative_to(corpus_dir)
-        if len(rel.parts) < 2 or inst.name.endswith(".ont.yml"):
-            continue
         data = yaml.safe_load(inst.read_text(encoding="utf-8")) or {}
         problems: list[str] = []
 
@@ -612,13 +628,12 @@ def render_corpus_index(corpus_dir: Path) -> str:
     Faithful to `render_corpus_index` in yidam: one row per instance, sorted by path, with
     class, label, outgoing-link count, and line count.
     """
+    instances = _iter_instances(corpus_dir)
+    if not instances:
+        return "_No corpus instances yet._"
     rows: list[str] = ["| Instance | Class | Label | Links out | Lines |", "|---|---|---|---|---|"]
-    found = False
-    for inst in sorted(corpus_dir.rglob("*.yml")):
+    for inst in instances:
         rel = inst.relative_to(corpus_dir)
-        if len(rel.parts) < 2 or inst.name.endswith(".ont.yml"):
-            continue
-        found = True
         text = inst.read_text(encoding="utf-8")
         data = yaml.safe_load(text) or {}
         node_class = data.get("class", "—")
@@ -626,6 +641,269 @@ def render_corpus_index(corpus_dir: Path) -> str:
         links = len(data.get("links") or [])
         lines = len(text.splitlines())
         rows.append(f"| [{inst.name}]({rel}) | {node_class} | {label} | {links} | {lines} |")
-    if not found:
-        return "_No corpus instances yet._"
     return "\n".join(rows)
+
+
+def render_open_questions(corpus_dir: Path) -> str:
+    """Replicate ``yidam open-questions`` — the still-open nodes, as a markdown bullet list.
+
+    Faithful to `yidam/cli/src/cmd/corpus.rs::render_open_questions` + ``has_open_claim``: a
+    node is open when its ``label`` starts with ``?`` or its text carries the ``[open]`` tag.
+    BOSC's mirror stores that tag as the structured ``claim_tag: open`` field (the ``[open]``
+    claim vocabulary — leads and open hypothesis cells), so ``claim_tag == "open"`` is treated
+    as open too: the same signal, projected. Paths are relative to ``corpus_dir``.
+    """
+    items: list[str] = []
+    for inst in _iter_instances(corpus_dir):
+        text = inst.read_text(encoding="utf-8")
+        data = yaml.safe_load(text) or {}
+        label = str(data.get("label") or "")
+        if label.startswith("?") or "[open]" in text or data.get("claim_tag") == "open":
+            rel = inst.relative_to(corpus_dir)
+            items.append(f"- [{label or rel.name}]({rel})")
+    if not items:
+        return "_No open questions._"
+    return "\n".join(sorted(items))
+
+
+@dataclass
+class LintIssue:
+    """One advisory ``yidam lint`` finding (``kind`` is the yidam issue slug)."""
+
+    node: str  # path relative to the corpus dir
+    kind: str
+    message: str
+
+
+def lint_mirror(corpus_dir: Path) -> list[LintIssue]:
+    """Replicate yidam ``lint``'s structural checks over a written mirror (advisory).
+
+    Faithful to `yidam/cli/src/cmd/lint.rs`: flags a missing/unknown ``class:``, a missing
+    ``label:``/``description:``, orphan-out (no outgoing links), broken links, and orphan-in
+    (no *incoming* links). Unlike :func:`validate_mirror` (``graph-check``), lint is **advisory**
+    — many valid mirror nodes are legitimately orphan-in or prose-free (a lead has no incoming
+    edge; a projected label needs no separate description), so ``watermark export`` reports lint
+    but never fails on it. yidam's ``unused-catalog`` check is omitted: BOSC has no yidam
+    ``catalog/`` tree — its sources live in the committed corpus, not a yidam catalog.
+    """
+    instances = _iter_instances(corpus_dir)
+    defined = _defined_classes(corpus_dir)
+    parsed: list[tuple[Path, dict[str, Any]]] = [
+        (inst, yaml.safe_load(inst.read_text(encoding="utf-8")) or {}) for inst in instances
+    ]
+    # Every resolved link target (absolute) → so a node with none pointing at it is orphan-in.
+    targets: set[Path] = set()
+    for inst, data in parsed:
+        for link in data.get("links") or []:
+            target = link.get("target") if isinstance(link, dict) else None
+            if target:
+                targets.add((inst.parent / target).resolve())
+
+    issues: list[LintIssue] = []
+    for inst, data in parsed:
+        rel = str(inst.relative_to(corpus_dir))
+        node_class = data.get("class")
+        if node_class is None:
+            issues.append(LintIssue(rel, "missing-class", "missing 'class:' field"))
+        elif defined and node_class not in defined:
+            issues.append(
+                LintIssue(
+                    rel,
+                    "unknown-class",
+                    f"unknown class '{node_class}': no matching {node_class}.ont.yml",
+                )
+            )
+        if data.get("label") is None:
+            issues.append(LintIssue(rel, "missing-label", "missing 'label:' field"))
+        if data.get("description") is None:
+            issues.append(LintIssue(rel, "no-description", "missing 'description:' field"))
+
+        links = data.get("links") or []
+        if not links:
+            issues.append(LintIssue(rel, "orphan-out", "no outgoing links — isolated node"))
+        else:
+            for link in links:
+                target = link.get("target") if isinstance(link, dict) else None
+                if target is None:
+                    issues.append(
+                        LintIssue(rel, "broken-link", "link entry missing 'target:' field")
+                    )
+                elif not (inst.parent / target).exists():
+                    issues.append(LintIssue(rel, "broken-link", f"broken link target: {target}"))
+        if inst.resolve() not in targets:
+            issues.append(
+                LintIssue(rel, "orphan-in", "no incoming links — nothing points to this node")
+            )
+    return issues
+
+
+def render_graph_check(corpus_dir: Path, *, issues: list[MirrorIssue] | None = None) -> str:
+    """Render the ``yidam graph-check`` report text over a written mirror.
+
+    Faithful to `yidam/cli/src/cmd/corpus.rs::render_graph_check`: the clean/issue summary plus
+    a trailing "schema but no instances" note. Pass ``issues`` to reuse an existing
+    :func:`validate_mirror` result instead of recomputing it.
+    """
+    instances = _iter_instances(corpus_dir)
+    defined = _defined_classes(corpus_dir)
+    if not instances and not defined:
+        return f"No corpus content found in {corpus_dir}."
+    issues = validate_mirror(corpus_dir) if issues is None else issues
+    total = len(instances)
+    n_issues = len(issues)
+
+    out: list[str] = []
+    if not issues:
+        out.append(f"Checked {total} instances across {len(defined)} classes — all clean.")
+    else:
+        out.append(
+            f"Checked {total} instances across {len(defined)} classes — "
+            f"{total - n_issues} clean, {n_issues} with issues:"
+        )
+        for issue in issues:
+            out.append(f"  {issue.node}")
+            out.extend(f"    - {problem}" for problem in issue.problems)
+    empty = sorted(defined - {inst.parent.name for inst in instances})
+    if empty:
+        out.append(f"Classes with schema but no instances: {', '.join(empty)}")
+    return "\n".join(out)
+
+
+def render_lint(corpus_dir: Path, *, issues: list[LintIssue] | None = None) -> str:
+    """Render the ``yidam lint --warn`` report text over a written mirror (advisory)."""
+    instances = _iter_instances(corpus_dir)
+    issues = lint_mirror(corpus_dir) if issues is None else issues
+    if not issues:
+        return f"lint: {len(instances)} instance(s) checked — all clean."
+    lines = [f"[{issue.kind}] {issue.node}: {issue.message}" for issue in issues]
+    lines.append(f"lint: {len(issues)} issue(s) (advisory — reported, not failing)")
+    return "\n".join(lines)
+
+
+# --- reports + one-call regeneration (#1562) -----------------------------------------------
+def _write_index_readme(corpus_dir: Path, index_md: str) -> None:
+    """Drop the rendered ``corpus-index`` into the corpus README's REGEN block (best-effort)."""
+    readme = corpus_dir / "README.md"
+    if not readme.exists():
+        return
+    text = readme.read_text(encoding="utf-8")
+    start = text.find("<!-- REGEN: yidam corpus-index -->")
+    end = text.find("<!-- /REGEN -->")
+    if start == -1 or end == -1 or end < start:
+        return
+    head = text[: start + len("<!-- REGEN: yidam corpus-index -->")]
+    tail = text[end:]
+    readme.write_text(f"{head}\n{index_md}\n{tail}", encoding="utf-8")
+
+
+def default_reports_dir(settings: Settings | None = None) -> Path:
+    """Where the regenerated yidam reports land — ``<repo-root>/.yidam/reports`` (git-ignored)."""
+    settings = settings or get_settings()
+    return settings.data_dir.parent / ".yidam" / "reports"
+
+
+_REPORTS_README = """# reports
+
+The regenerated **yidam reports** over the BOSC corpus mirror (`../corpus/`), written by every
+`watermark corpus-mirror` and `watermark export`. Git-ignored, regenerable, never a source of
+truth. Node paths are relative to `../corpus/`.
+
+- `open-questions.md` — `yidam open-questions`: leads + `[open]` claims still open.
+- `graph-check.txt` — `yidam graph-check`: the hard integrity gate (clean ⇒ the real
+  `yidam graph-check` passes over this mirror too).
+- `lint.txt` — `yidam lint --warn`: advisory structural findings (orphans, missing prose, …).
+
+The corpus index (`yidam corpus-index`) lives in `../corpus/README.md`.
+"""
+
+
+def write_reports(
+    corpus_dir: Path,
+    reports_dir: Path,
+    *,
+    graph_issues: list[MirrorIssue] | None = None,
+    lint_issues: list[LintIssue] | None = None,
+) -> dict[str, Path]:
+    """Render the yidam reports over ``corpus_dir`` and write them under ``reports_dir``.
+
+    Returns ``{filename: path}``. Pass ``graph_issues``/``lint_issues`` to reuse results already
+    computed by the caller (:func:`regenerate_mirror`) rather than re-walking the mirror.
+    """
+    reports_dir.mkdir(parents=True, exist_ok=True)
+    payloads = {
+        "open-questions.md": render_open_questions(corpus_dir),
+        "graph-check.txt": render_graph_check(corpus_dir, issues=graph_issues),
+        "lint.txt": render_lint(corpus_dir, issues=lint_issues),
+    }
+    written: dict[str, Path] = {}
+    for name, body in payloads.items():
+        path = reports_dir / name
+        path.write_text(body.rstrip() + "\n", encoding="utf-8")
+        written[name] = path
+    (reports_dir / "README.md").write_text(_REPORTS_README, encoding="utf-8")
+    return written
+
+
+@dataclass
+class MirrorRegen:
+    """The outcome of one mirror regeneration — the written artifacts + the report findings."""
+
+    site: str
+    corpus_dir: Path
+    reports_dir: Path
+    mirror: Mirror
+    graph_issues: list[MirrorIssue]
+    lint_issues: list[LintIssue]
+    reports: dict[str, Path]
+
+    @property
+    def ok(self) -> bool:
+        """True when the ``graph-check`` gate is clean — the mirror is valid."""
+        return not self.graph_issues
+
+
+def regenerate_mirror(
+    settings: Settings | None = None,
+    *,
+    corpus_dir: Path | None = None,
+    reports_dir: Path | None = None,
+) -> MirrorRegen:
+    """Project the active site's corpus into ``.yidam/corpus/`` and regenerate every yidam report
+    under ``.yidam/reports/`` — the one call behind ``watermark corpus-mirror`` and the tail of
+    ``watermark export`` (#1562).
+
+    Independent of the yidam binary: ``corpus-index`` / ``open-questions`` / ``graph-check`` /
+    ``lint`` are the Python replicas, so a single ``watermark export`` yields a fresh, valid
+    mirror + reports offline. The mirror is git-ignored and regenerated for the *active* site
+    (like the content bundle); ``graph-check`` is the hard validity gate, ``lint`` is advisory.
+    """
+    settings = settings or get_settings()
+    corpus_dir = corpus_dir or default_corpus_dir(settings)
+    reports_dir = reports_dir or default_reports_dir(settings)
+
+    mirror = build_mirror(settings)
+    write_mirror(mirror, corpus_dir)
+    graph_issues = validate_mirror(corpus_dir)
+    lint_issues = lint_mirror(corpus_dir)
+    # corpus-index → the corpus README's REGEN block (the yidam corpus-index write target).
+    _write_index_readme(corpus_dir, render_corpus_index(corpus_dir))
+    reports = write_reports(
+        corpus_dir, reports_dir, graph_issues=graph_issues, lint_issues=lint_issues
+    )
+    log.info(
+        "corpus_mirror.regenerated",
+        site=settings.site,
+        nodes=len(mirror.nodes),
+        graph_issues=len(graph_issues),
+        lint_issues=len(lint_issues),
+        reports_dir=str(reports_dir),
+    )
+    return MirrorRegen(
+        site=settings.site,
+        corpus_dir=corpus_dir,
+        reports_dir=reports_dir,
+        mirror=mirror,
+        graph_issues=graph_issues,
+        lint_issues=lint_issues,
+        reports=reports,
+    )

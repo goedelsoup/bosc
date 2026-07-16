@@ -157,6 +157,10 @@ class BundleResult:
     out_dir: Path
     feeds: list[FeedRef] = field(default_factory=list)
     row_total: int = 0
+    # yidam corpus mirror (#1562): the mirror regenerated at the tail of the export, if any.
+    mirror_nodes: int = 0
+    mirror_graph_issues: int = 0
+    mirror_reports_dir: Path | None = None
 
     @property
     def feed_count(self) -> int:
@@ -972,5 +976,43 @@ def export_bundle(
         _dump_json(manifest.model_dump(mode="json", by_alias=True)), encoding="utf-8"
     )
 
+    # yidam corpus mirror + reports (#1562): on the canonical export, project the just-loaded
+    # corpus into yidam nodes under the git-ignored .yidam/ (at the repo root, where the yidam
+    # CLI reads) and regenerate the corpus-index / open-questions / graph-check / lint reports,
+    # so a single `watermark export` yields a fresh, valid mirror for the active site (like the
+    # bundle itself). Only when writing to the default location (``out_dir is None``): a
+    # redirected one-off bundle (``--out``, tests) must not clobber the repo's canonical mirror,
+    # which also keeps `-n auto` test runs from racing on the shared .yidam/ dir. A secondary
+    # artifact — a graph-check issue is a warning and never aborts the export (`watermark
+    # corpus-mirror` is the hard gate); a mirror failure degrades to a warning, like embeddings.
+    mirror_nodes = 0
+    mirror_graph_issues = 0
+    reports_dir: Path | None = None
+    if out_dir is None:
+        try:
+            from watermark.site.corpus_mirror import regenerate_mirror
+
+            regen = regenerate_mirror(settings)
+            mirror_nodes = len(regen.mirror.nodes)
+            mirror_graph_issues = len(regen.graph_issues)
+            reports_dir = regen.reports_dir
+            if regen.graph_issues:
+                log.warning(
+                    "corpus_mirror.graph_issues", site=settings.site, count=len(regen.graph_issues)
+                )
+        except Exception as exc:
+            log.warning(
+                "corpus_mirror.failed",
+                error=next(iter(str(exc).splitlines()), repr(exc)),
+                hint="run `watermark corpus-mirror` directly to see the failure",
+            )
+
     log.info("bundle.exported", out=str(out), feeds=len(refs), rows=row_total)
-    return BundleResult(out_dir=out, feeds=refs, row_total=row_total)
+    return BundleResult(
+        out_dir=out,
+        feeds=refs,
+        row_total=row_total,
+        mirror_nodes=mirror_nodes,
+        mirror_graph_issues=mirror_graph_issues,
+        mirror_reports_dir=reports_dir,
+    )
