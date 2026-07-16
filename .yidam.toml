@@ -1,0 +1,22 @@
+# .yidam.toml — the pinned yidam upstream for Project BOSC (epic #1560).
+#
+# BOSC bridges its committed corpus into yidam node format with `watermark corpus-mirror`
+# (and at the tail of every `watermark export`) under the git-ignored .yidam/ tree. It does
+# NOT vendor the yidam template or build the Rust `yidam` CLI: BOSC replicates yidam's report
+# logic in Python (watermark.site.corpus_mirror) so the mirror + reports regenerate offline,
+# with no Rust toolchain — which is why this repo has no yidam/ · sadhana/ · samudaya/ overlay.
+#
+# This file pins the yidam version whose graph-check / corpus-index / open-questions / lint
+# rules the Python replicas track, so drift against upstream is visible. The optional
+# `mise run yidam-*` tasks (mise.toml) run the REAL `yidam` binary at this ref for a
+# cross-check, when it is installed. yidam's own drift tooling (`claudesync`) reads this file.
+
+[yidam]
+origin    = "git@github.com:goedelsoup/yidam.git"
+template  = "0.1.0"  # template layer — matches a yidam monorepo tag
+bootstrap = "0.1.0"  # bootstrap protocol — matches PROTOCOL_VERSION in the yidam harness
+
+# The yidam CLI (cli/, v0.1.0) whose report logic watermark.site.corpus_mirror replicates.
+# Not published to crates.io; built from source with `cargo install --path yidam/cli`.
+cli         = "0.1.0"
+cli_ref     = "8f7ada9984a4ac69db3696a5dd8c8cd4012500d1"

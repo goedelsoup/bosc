@@ -838,6 +838,17 @@ def export(
     )
     for ref in result.feeds:
         console.print(f"[dim]  {ref.name:<22} {ref.count:>6}  {ref.path}[/]")
+    # yidam corpus mirror + reports (#1562), regenerated at the tail of the export.
+    if result.mirror_nodes:
+        console.print(
+            f"[green]yidam mirror[/] {result.mirror_nodes} nodes → .yidam/corpus/ "
+            f"[dim](reports: .yidam/reports/)[/]"
+        )
+        if result.mirror_graph_issues:
+            console.print(
+                f"[yellow]  graph-check: {result.mirror_graph_issues} issue(s)[/] — "
+                f"run `watermark corpus-mirror` to inspect"
+            )
 
 
 def _export_preflight() -> None:
