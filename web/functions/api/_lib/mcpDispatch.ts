@@ -4,6 +4,7 @@
 // Tool schemas live in @watermark/core/mcpTools (shared with /network/connect, #917).
 
 import { MCP_TOOLS } from "@watermark/core/mcpTools";
+import type { HybridRetrievalEnv } from "./hybridRetrieve";
 import { handleSearchCorpus } from "./mcpTools/searchCorpus";
 import {
   handleGetDocument,
@@ -82,7 +83,11 @@ function handleToolsList(): unknown {
   return { tools: MCP_TOOLS };
 }
 
-async function handleToolsCall(params: unknown, requestUrl: string): Promise<unknown> {
+async function handleToolsCall(
+  params: unknown,
+  requestUrl: string,
+  env: HybridRetrievalEnv,
+): Promise<unknown> {
   const p = (params ?? {}) as Record<string, unknown>;
   const name = p.name;
   if (typeof name !== "string") {
@@ -98,7 +103,7 @@ async function handleToolsCall(params: unknown, requestUrl: string): Promise<unk
   let content: Array<{ type: string; text: string }>;
   switch (name) {
     case "search_corpus":
-      content = await handleSearchCorpus(toolParams, requestUrl);
+      content = await handleSearchCorpus(toolParams, requestUrl, env);
       break;
     case "get_timeline":
       content = await handleGetTimeline(toolParams, requestUrl);
@@ -122,7 +127,11 @@ async function handleToolsCall(params: unknown, requestUrl: string): Promise<unk
   return { content, isError: false };
 }
 
-export async function dispatch(body: unknown, requestUrl: string): Promise<JsonRpcResponse> {
+export async function dispatch(
+  body: unknown,
+  requestUrl: string,
+  env: HybridRetrievalEnv = {},
+): Promise<JsonRpcResponse> {
   let req: JsonRpcRequest;
   try {
     req = parseRequest(body);
@@ -148,7 +157,7 @@ export async function dispatch(body: unknown, requestUrl: string): Promise<JsonR
         result = handleToolsList();
         break;
       case "tools/call":
-        result = await handleToolsCall(req.params, requestUrl);
+        result = await handleToolsCall(req.params, requestUrl, env);
         break;
       case "resources/list":
         result = await listResources(requestUrl);

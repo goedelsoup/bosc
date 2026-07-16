@@ -23,13 +23,13 @@ import {
 import { AnthropicError, type AnthropicUsage, createMessage } from "./_lib/anthropic";
 import { streamMessage } from "./_lib/anthropicStream";
 import { loadAskIndex } from "./_lib/askIndexLoad";
-import { loadAskEmbeddings } from "./_lib/askEmbeddingsLoad";
 import { validateAsk } from "./_lib/askSchema";
 import { addUsage, costDollars, DEFAULT_DAILY_TOKEN_BUDGET, isOverBudget } from "./_lib/budget";
 import { intEnv } from "./_lib/env";
+import { hybridSearch } from "./_lib/hybridRetrieve";
 import { json, parseJsonBody, requireEnabled } from "./_lib/http";
 import { enforceRateLimit, type KVLike } from "./_lib/ratelimit";
-import { type PreparedIndex, prepare, rrf, search, vectorSearch } from "./_lib/retrieval";
+import { type PreparedIndex, prepare } from "./_lib/retrieval";
 import { frame } from "./_lib/sse";
 import { initTracer } from "./_lib/otel";
 import { isPluginAuthorized } from "./_lib/askPluginAuth";
@@ -238,26 +238,7 @@ export const onRequestPost = async (ctx: RequestContext): Promise<Response> => {
     return json(500, { error: "the corpus index is unavailable" });
   }
   const k = Math.max(1, intEnv(env.ASK_TOP_K, DEFAULT_TOP_K));
-  const bm25Hits = search(getPrepared(units), question, k);
-  let hits = bm25Hits; // may be upgraded to RRF-merged result below
-  if (env.AI) {
-    try {
-      const embeddings = await loadAskEmbeddings(request.url, env.ASK_EMBEDDINGS_URL);
-      if (embeddings) {
-        const aiRes = await env.AI.run("@cf/sentence-transformers/all-minilm-l6-v2", {
-          text: [question],
-        });
-        const qv = aiRes.data[0];
-        if (qv?.length) {
-          const vecHits = vectorSearch(units, embeddings, qv, k);
-          hits = rrf(bm25Hits, vecHits, k);
-        }
-      }
-    } catch (e) {
-      // Vector path failed — log and fall through to BM25-only result.
-      console.warn("ask: vector retrieval failed, using BM25:", String(e));
-    }
-  }
+  const hits = await hybridSearch(getPrepared(units), question, k, env, request.url);
 
   const model = env.ASK_MODEL || DEFAULT_MODEL;
   const maxTokens = Math.max(256, intEnv(env.ASK_MAX_TOKENS, DEFAULT_MAX_TOKENS));
