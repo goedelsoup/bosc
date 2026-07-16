@@ -53,6 +53,39 @@ export interface TimelineEntry {
   citation?: Citation | null;
 }
 
+/** The evidence-discipline tag a normalized fact renders as (`bosc.site.feeds.FactStatus`). */
+export type FactStatus = "verified" | "inference" | "reference" | "open";
+
+/** Where a normalized fact came from — the `Citation` shape projected from a value's provenance
+ * (`bosc.site.feeds.FactEvidence`). `page` is populated only where the source carries one. */
+export interface FactEvidence {
+  source?: string | null;
+  source_kind: string;
+  page?: number | null;
+  citation?: string | null;
+  confidence?: Confidence | null;
+  asof?: string | null;
+  verified: boolean;
+}
+
+/** One normalized `(subject, predicate, value, unit, status, evidence)` fact
+ * (`bosc.site.feeds.FactItem`) — a projection over the bundle's provenanced values (#1587),
+ * the tuple `get_facts` retrieves. */
+export interface FactItem {
+  subject: string;
+  subject_label: string;
+  subject_kind: string;
+  predicate: string;
+  value?: number | null;
+  unit?: string | null;
+  status: FactStatus;
+  approximate?: boolean;
+  low?: number | null;
+  high?: number | null;
+  evidence: FactEvidence;
+  feed: string;
+}
+
 export interface EntityNode {
   key: string;
   display: string;

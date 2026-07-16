@@ -86,6 +86,7 @@ from watermark.site import records as records_mod
 from watermark.site import rsei as rsei_mod
 from watermark.site.catalog_index import build_catalog_index
 from watermark.site.embeddings import build_ask_embeddings
+from watermark.site.facts import build_facts
 from watermark.site.feeds import (
     CONTRACT_VERSION,
     AskEmbeddingEntry,
@@ -100,6 +101,7 @@ from watermark.site.feeds import (
     DocumentCollectionItem,
     EntityNode,
     ExhibitItem,
+    FactItem,
     FeedKind,
     FeedRef,
     GeoFeatureCollection,
@@ -851,6 +853,27 @@ def _catalog_index_feed(feeds: Sequence[_Feed], settings: Settings) -> _Feed:
     return _object_feed("catalog-index", index)
 
 
+def _facts_feed(feeds: Sequence[_Feed], settings: Settings) -> _Feed | None:
+    """Build the normalized `facts` feed (#1587) as a projection over the assembled feeds.
+
+    Like `_catalog_index_feed`, a post-pass over feeds already in hand (no corpus re-load): it
+    re-keys each `ProvenancedValue` in the economics / greenops / hydrology / air feeds (plus the
+    derived facility `PowerBasis`) into a flat `(subject, predicate, value, unit, status, evidence)`
+    table. `None` (feed skipped) when a site surfaces no projectable facts, so `hasFeed("facts")`
+    is false and the section degrades rather than shipping an empty list.
+    """
+    payloads_by_feed: dict[str, object] = {}
+    for feed in feeds:
+        if feed.kind == "collection":
+            payloads_by_feed[feed.name] = _collection_rows(feed)
+        elif feed.kind == "object":
+            payloads_by_feed[feed.name] = json.loads(feed.payload)
+    facts = build_facts(payloads_by_feed, settings=settings)
+    if not facts:
+        return None
+    return _collection_feed("facts", FactItem, facts)
+
+
 def _now_iso() -> str:
     return datetime.now(UTC).replace(microsecond=0).isoformat()
 
@@ -883,6 +906,12 @@ def export_bundle(
     feeds_dir.mkdir(parents=True, exist_ok=True)
 
     feeds = _collect_feeds(settings)
+    # The normalized facts feed (#1587) — a projection over the just-assembled provenanced feeds,
+    # so it is built before the catalog index (which then indexes `facts` as a dataset too) and
+    # after `_collect_feeds`. Skipped (None) for a site with no projectable facts.
+    facts_feed = _facts_feed(feeds, settings)
+    if facts_feed is not None:
+        feeds.append(facts_feed)
     # The hydrated catalog index (#1093) — a normalisation over the just-assembled collection
     # feeds, so it must be appended after `_collect_feeds`. Written + indexed through the same
     # loops below like any other feed.

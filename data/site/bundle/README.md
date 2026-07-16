@@ -94,6 +94,7 @@ over 500 rows), or `application/geo+json`. `count` is rows, features, or `1` for
 | `lei` | object | the GLEIF LEI resolution inventory (already provenanced) |
 | `economics-baseline` | object | the localized BLS QCEW / Census ACS baseline (every value a `ProvenancedValue`) |
 | `hydrology-scenarios` | collection | committed water-balance scenario results (`data/scenarios/*.scenario.yaml`) |
+| `facts` | collection | the normalized `(subject, predicate, value, unit, status, evidence)` projection over the bundle's provenanced numeric facts (#1587) — a `catalog-index`-style post-pass that re-keys each `ProvenancedValue` in the economics/greenops/hydrology/air feeds (+ the derived facility `PowerBasis`) into one queryable table; `status` is the evidence tag off the value's `source_kind`, `evidence.page` stays null where the source carries none. Powers the `get_facts` MCP tool |
 | `catalog-index` | object | the hydrated catalog (epic #1090) — addressable "grabbable" atoms (`handle` = `<kind>:<site>:<local_id>`, a live pointer into its source feed) that user-authored Stories cite; `catalog_version` stamps the set for handle-drift revalidation |
 | `geo/campus` | geojson | recorded campus footprint (Bistrozzi parcels) |
 | `geo/jsmc` | geojson | federally-held JSMC / Lima Army Tank Plant land |
@@ -130,6 +131,12 @@ Every figure-bearing feed carries provenance as **data**, so a consumer renders
 The already-provenanced feeds (`rsei`, `lei`, `economics-baseline`, `hydrology-scenarios`)
 export their existing Pydantic models, which already carry `ProvenancedValue` /
 `meta.source` — so they satisfy the same discipline natively.
+
+The `facts` feed (#1587) is a **projection** over those provenanced values: every `FactItem`
+re-keys one `ProvenancedValue` into a `(subject, predicate, value, unit, status, evidence)`
+tuple, where `evidence` is the same `Citation` shape (page populated only where the source
+carries one — never invented) and `status` is the evidence tag derived from the value's
+`source_kind` (`watermark.provenance.evidence_tag`).
 
 ## Versioning & backward compatibility
 

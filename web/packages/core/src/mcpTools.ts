@@ -204,4 +204,39 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
     example:
       '{"document_id": "recorder/202508130008300.deed.yaml", "fields": ["grantors", "grantees", "parcel_ids"]}',
   },
+  {
+    name: "get_facts",
+    description:
+      'Retrieve normalized (subject, predicate, value, unit, status) FACTS — the numbers a site\'s provenanced feeds already carry (economics, energy, water/cooling, air, facility power), flattened into one queryable table so a fact question is a tiny retrieval + arithmetic instead of a whole-record pull. Use it to look up or compute over specific quantities (e.g. genset_count × genset_rating → backup MW; county employment; demand_share_pct); filter by subject and/or predicate. `subject` matches flexibly (case-insensitive, over the `<kind>:<id>` key + human label + kind — e.g. "Allen County", "facility", "air-scenario"); `predicate` takes one name or a list of the exact snake_case field names. Returns compact tuples by default (subject, predicate, value, unit, status, low/high band); status is the evidence tag (verified|inference|reference|open). NOT a document fetch and NOT search — for the record behind a fact, take its subject into search_corpus/get_document. Pass include_evidence=true to attach each fact\'s provenance (source, source_kind, page, citation, verified); note page is null where the source carries none — never invented. Size knobs: max_results, max_tokens, max_tokens_per_result (sheds evidence then the band), cursor, intent.',
+    inputSchema: {
+      type: "object",
+      properties: {
+        subject: {
+          type: "string",
+          description:
+            'Flexible subject match (case-insensitive substring over the `<kind>:<id>` key, the human label, and the kind). E.g. "facility", "Allen County", "county:39003", "air-scenario". Omit to return every subject.',
+        },
+        predicate: {
+          type: "array",
+          items: { type: "string" },
+          description:
+            "Filter to these exact predicate names (snake_case field names, e.g. genset_count, genset_rating, total_employment, demand_share_pct, consumptive_loss). A single string is also accepted. Omit for all predicates of the matched subjects.",
+        },
+        status: {
+          type: "string",
+          enum: ["verified", "inference", "reference", "open"],
+          description:
+            "Filter by evidence status: verified (document/live), inference (assumption/derived), reference (published spec), open (asserted but unquantified).",
+        },
+        include_evidence: {
+          type: "boolean",
+          description:
+            "Attach each fact's evidence block (source, source_kind, page, citation, confidence, asof, verified). Default false — compact tuples only. `page` is null where the source value carries none.",
+        },
+        site: { type: "string", description: "Site slug (default: active site)" },
+        ...GOVERNANCE_PROPS,
+      },
+    },
+    example: '{"subject": "facility", "predicate": ["genset_count", "genset_rating"]}',
+  },
 ];

@@ -12,7 +12,13 @@
 // cursor pages the deterministic ordered feed; over-cap items shed their heaviest optional
 // fields (prose detail, variant lists, assessment internals, entry lists) before counting.
 
-import type { Citation, DocumentCollectionItem, DocumentEntry, RecordItem } from "@watermark/core/feeds";
+import type {
+  Citation,
+  DocumentCollectionItem,
+  DocumentEntry,
+  FactItem,
+  RecordItem,
+} from "@watermark/core/feeds";
 import { fetchWithTimeout } from "../http";
 import {
   type BudgetKnobs,
@@ -481,4 +487,94 @@ export async function handleGetDocument(params: unknown, requestUrl: string): Pr
     next_cursor: null,
   };
   return governedContent(governed);
+}
+
+// --- get_facts (#1587) -----------------------------------------------------------
+// Normalized `(subject, predicate, value, unit, status)` facts, projected from the bundle's
+// provenanced values. A fact question is a tiny retrieval + arithmetic instead of a whole-record
+// pull: filter by subject/predicate/status, and only attach the evidence block on request.
+
+interface GetFactsParams {
+  subject?: unknown;
+  predicate?: unknown;
+  status?: unknown;
+  include_evidence?: unknown;
+}
+
+/** The compact result: the tuple minus the evidence block (attached only when requested). A
+ * present-but-absent optional field (unit/low/high/approximate) is dropped so the row stays lean. */
+interface FactView {
+  subject: string;
+  subject_label: string;
+  subject_kind: string;
+  predicate: string;
+  value: number | null;
+  unit?: string | null;
+  status: string;
+  low?: number | null;
+  high?: number | null;
+  approximate?: boolean;
+  feed: string;
+  evidence?: FactItem["evidence"];
+}
+
+/** Normalize the `predicate` param to a lowercased set (a single string or a string[]). */
+function parsePredicates(raw: unknown): Set<string> | null {
+  const list = Array.isArray(raw) ? raw : typeof raw === "string" ? [raw] : [];
+  const cleaned = list.filter((x): x is string => typeof x === "string" && x.trim() !== "");
+  return cleaned.length ? new Set(cleaned.map((s) => s.trim().toLowerCase())) : null;
+}
+
+function toView(f: FactItem, includeEvidence: boolean): FactView {
+  const view: FactView = {
+    subject: f.subject,
+    subject_label: f.subject_label,
+    subject_kind: f.subject_kind,
+    predicate: f.predicate,
+    value: f.value ?? null,
+    status: f.status,
+    feed: f.feed,
+  };
+  if (f.unit != null) view.unit = f.unit;
+  if (f.low != null) view.low = f.low;
+  if (f.high != null) view.high = f.high;
+  if (f.approximate) view.approximate = true;
+  if (includeEvidence) view.evidence = f.evidence;
+  return view;
+}
+
+export async function handleGetFacts(params: unknown, requestUrl: string): Promise<McpContent[]> {
+  const p = (params ?? {}) as GetFactsParams;
+  // `subject` matches flexibly (case-insensitive substring over the key + label + kind) so a
+  // caller can pass a human subject ("Allen County", "facility") without knowing the key grammar.
+  const subject = typeof p.subject === "string" && p.subject.trim() ? p.subject.trim().toLowerCase() : null;
+  const predicates = parsePredicates(p.predicate);
+  const status = typeof p.status === "string" && p.status.trim() ? p.status.trim().toLowerCase() : null;
+  const includeEvidence = p.include_evidence === true;
+  const { knobs, offset } = governanceOf(p as Record<string, unknown>);
+
+  let facts = await fetchFeed<FactItem[]>("facts", requestUrl);
+
+  if (subject) {
+    facts = facts.filter(
+      (f) =>
+        f.subject.toLowerCase().includes(subject) ||
+        f.subject_label.toLowerCase().includes(subject) ||
+        f.subject_kind.toLowerCase().includes(subject),
+    );
+  }
+  if (predicates) facts = facts.filter((f) => predicates.has(f.predicate.toLowerCase()));
+  if (status) facts = facts.filter((f) => f.status.toLowerCase() === status);
+
+  // Deterministic order (the feed is already sorted; re-sort so filtering can't perturb it).
+  facts = [...facts].sort((a, b) =>
+    a.subject === b.subject ? a.predicate.localeCompare(b.predicate) : a.subject.localeCompare(b.subject),
+  );
+
+  const views = facts.map((f) => toView(f, includeEvidence));
+  // Over-cap shed: drop the evidence block first, then the uncertainty band — never the
+  // subject/predicate/value/status that make the fact answerable.
+  return paginate(views, knobs, offset, (v, cap) =>
+    dropKeysUntilUnderCap(v, ["evidence", "low", "high", "subject_label"], cap),
+  );
 }

@@ -10,6 +10,7 @@ import {
   handleGetDocument,
   handleGetDocuments,
   handleGetEntities,
+  handleGetFacts,
   handleGetHypotheses,
   handleGetTimeline,
 } from "./mcpTools/bundleReaders";
@@ -119,6 +120,9 @@ async function handleToolsCall(
       break;
     case "get_document":
       content = await handleGetDocument(toolParams, requestUrl);
+      break;
+    case "get_facts":
+      content = await handleGetFacts(toolParams, requestUrl);
       break;
     default:
       throw new McpError(RPC.INVALID_PARAMS, `Tool "${name}" has no implementation`);

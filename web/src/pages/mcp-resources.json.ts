@@ -21,6 +21,7 @@ const READABLE_FEEDS = new Set([
   "hypotheses",
   "hypothesis-assessments",
   "documents",
+  "facts",
 ]);
 
 const FEED_DESCRIPTIONS: Record<string, string> = {
@@ -48,6 +49,8 @@ const FEED_DESCRIPTIONS: Record<string, string> = {
     "Economic baseline figures (tax increment, utility rates, public subsidy). All figures are document-sourced.",
   "hydrology-scenarios": "Water-balance scenarios for the municipal loop. Lima reference site only.",
   rsei: "EPA RSEI toxics risk scores by facility and chemical. County-level aggregates only; read methodological notes before drawing conclusions.",
+  facts:
+    "Normalized (subject, predicate, value, unit, status, evidence) facts projected from the provenanced feeds (economics, energy, water/cooling, air, facility power). Status is the evidence tag: [verified] = document/live; [reference] = published spec; [inference] = assumption/derived; [open] = asserted but unquantified. evidence.page is null where the source carries none — never invented.",
 };
 
 export const GET: APIRoute = () => {

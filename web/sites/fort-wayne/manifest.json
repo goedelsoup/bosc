@@ -1,10 +1,10 @@
 {
   "site": "fort-wayne",
   "bundle_version": "1.0.0",
-  "contract_version": "1.24.0",
+  "contract_version": "1.25.0",
   "generated_at": "2026-07-08T21:11:19+00:00",
-  "feed_count": 25,
-  "row_total": 78,
+  "feed_count": 26,
+  "row_total": 155,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -199,6 +199,14 @@
       "schema": "schemas/geo.schema.json",
       "kind": "geojson",
       "count": 1
+    },
+    {
+      "name": "facts",
+      "path": "feeds/facts.json",
+      "media_type": "application/json",
+      "schema": "schemas/facts.schema.json",
+      "kind": "collection",
+      "count": 77
     },
     {
       "name": "catalog-index",
