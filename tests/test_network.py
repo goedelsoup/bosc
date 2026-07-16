@@ -128,13 +128,15 @@ def test_toxics_present(net: BasinNetwork) -> None:
         assert n.toxics.facility_count and n.toxics.facility_count > 0, n.slug
 
 
-def test_disclosed_facilities_are_lima_fort_wayne_and_van_wert(net: BasinNetwork) -> None:
+def test_disclosed_facilities_are_lima_fort_wayne_van_wert_and_findlay(net: BasinNetwork) -> None:
     # Lima (OEPA Air PTI) and Fort Wayne (IDEM Title V air permit, #360) are AIR-PERMIT-grounded
     # facilities; Van Wert (the QTS Mega Site, #1402) is SITE-PLAN-grounded (the #1327 Urbana
-    # precedent) — its 500 MW is a [reference] bracket, not an air-permit disclosure. Every other
-    # Maumee node carries the grid backdrop without a campus load.
+    # precedent) — its 500 MW is a [reference] bracket, not an air-permit disclosure. Findlay (the
+    # One Power "Findlay Megawatt Hub" / MARA 150 MW take-or-pay, #1459) is SEC-INSTRUMENT-grounded
+    # — its MW is a [verified] disclosure. Every other Maumee node carries the grid backdrop
+    # without a campus load.
     disclosed = {n.slug for n in net.nodes if n.activity.has_disclosed_facility}
-    assert disclosed == {"lima", "fort-wayne", "van-wert"}
+    assert disclosed == {"lima", "fort-wayne", "van-wert", "findlay"}
     for slug in disclosed:
         node = _node(net, slug)
         assert node.activity.it_load_mw and node.activity.it_load_mw > 0

@@ -225,10 +225,12 @@ _LIMA = SiteProfile(
 
 
 # The first cohort watershed point (#237): Findlay, OH on the Blanchard River (a Maumee
-# tributary via the Auglaize). A *coming-soon* point — its watershed identity is sourced and
-# cited below; the facility-specific model inputs (the development land-cover scenario, the
-# toxics corridor, per-WWTP receiving waters, the refill supply gages + passby minimums) stay
-# `TODO` until an actual data-center development site is identified — that's the data-center
+# tributary via the Auglaize). The data-center dimension is now DISCLOSED (#1459): the One Power
+# Co "Findlay Megawatt Hub" and its 150 MW MARA Holdings take-or-pay customer populate the
+# `facility` power basis below — SEC-instrument-grounded, not a screening inference (see
+# data/extracted/findlay/data-centers.md). The remaining facility-specific hydrology inputs (the
+# development land-cover scenario, the toxics corridor, per-WWTP receiving waters, the refill
+# supply gages + passby minimums) stay `TODO` pending their own epic #1265 sub-issues — the
 # dimension onboard does not capture, and `watermark onboard findlay --check` tracks the gaps.
 # Provenance tags inline: [verified] cited primary source; [inference] grounded reasoning;
 # [reference] authoritative dataset; [open] genuinely unsourced (a known lift / pending a site).
@@ -321,8 +323,74 @@ _FINDLAY = SiteProfile(
     supply_gage_secondary="TODO",
     passby_primary_cfs=0.0,  # [open] in-stream passby minimums — pending the model
     passby_secondary_cfs=0.0,
-    # grid / facility (no identified data-center facility → grid backdrop only, no campus share)
-    facility=None,  # [open] the data-center dimension onboard doesn't capture (no disclosed facility)
+    # grid / facility
+    # facility CONFIRMED (#1459) — the One Power Co "Findlay Megawatt Hub" (MWHub 01), the ~170-ac
+    # campus in Allen Township (I-75 at TR 215 / CR 99), and its anchor take-or-pay customer MARA
+    # Holdings, Inc. (NASDAQ: MARA, ex-Marathon Digital — bitcoin mining). Unlike the network's
+    # site-plan-grounded facilities (Urbana #1327 / Sidney #1378 / Van Wert #1402), where NO MW is
+    # disclosed and the IT load is a floor-area / investment SCREENING bracket, here the load IS
+    # DISCLOSED from both sides via SEC instruments: One Power Co's Form S-1/A (EDGAR CIK 2039139)
+    # states the hub is "Operating" with "Current Capacity 30 MW, Planned Maximum 150 MW" and names
+    # MARA as the 150 MW / 15-yr take-or-pay customer, and MARA's own 2024-11-11 release confirms
+    # "a 150-megawatt operation in Findlay, Ohio, which already has 30 megawatts of capacity." So
+    # the IT load is grounded on it_load_citation as a [verified] DISCLOSURE (central = the 150 MW
+    # contracted take-or-pay; low = the 30 MW currently energized), NOT a screening inference. No
+    # air permit / genset bank was findable at web level (an [open] check), so genset_count/
+    # genset_mw/air_permit_citation stay None and the air-dispatch fleet model refuses cleanly.
+    # cooling_model stays UNKNOWN — MARA's Findlay cooling design is not on the public record (a
+    # bracketed range, never the evaporative default). ⚠️ EntityGraph guard: MARA Holdings, Inc.
+    # (NASDAQ: MARA) != Marathon Petroleum Corp (the Findlay-HQ refiner + a Hancock-County NPDES
+    # permittee) — two unrelated companies; never merge them. See data/extracted/findlay/data-centers.md.
+    facility=SiteFacility(
+        it_load_mw=150.0,  # [verified] contracted take-or-pay / planned maximum; see it_load_citation
+        it_load_low_mw=30.0,  # [verified] currently energized ("Current Capacity 30 MW, Status: Operating")
+        it_load_high_mw=150.0,  # [verified] contracted / planned maximum (150 MW take-or-pay)
+        it_load_citation=(
+            "[verified] DISCLOSED load (NOT a screening inference): One Power Co Form S-1/A (EDGAR "
+            "CIK 2039139) describes MWHub 01 / Findlay Megawatt Hub — 'Current Capacity 30 MW, "
+            "Planned Maximum 150 MW, Status: Operating' — and names MARA Holdings, Inc. as the 150 "
+            "MW, 15-year take-or-pay customer ('due regardless of whether or not the customer elects "
+            "to purchase power'); corroborated by MARA's 2024-11-11 release ('a 150-megawatt "
+            "operation in Findlay, Ohio, which already has 30 megawatts of capacity', part of ~372 "
+            "MW across three Ohio sites, full energization intended by end-2025). Central = the 150 "
+            "MW contracted take-or-pay; low = the 30 MW currently energized; high = the 150 MW "
+            "contracted maximum. MARA's energization status as of 2026 is [open — MARA 10-K/ops "
+            "updates]. A separate +300 MW 'standalone interconnection site' expansion (S-1/A, 2024) "
+            "has NO named customer and is NOT in this basis (it stays [open], the epic #1265 grid "
+            "sub-issue's PUCO/PJM/AEP target). See data/extracted/findlay/data-centers.md."
+        ),
+        # No disclosed gensets / air permit found at web level (an [open] check — OEPA eSuite, One
+        # Power / MARA generator banks) → genset/backup basis + air-dispatch fleet model absent;
+        # genset_count/genset_mw/air_permit_citation stay None (no fabricated fleet).
+        facility_type=(
+            "behind-the-meter compute load — bitcoin mining (MARA Holdings, Inc.; NASDAQ: MARA) at "
+            'the One Power Co "Findlay Megawatt Hub" (MWHub 01), Allen Township — Status: Operating'
+        ),  # [verified] operator / host / status
+        # gross_floor_area_sqft / disclosed_investment_usd = [open]: neither a building size nor a
+        # compute-operation capital figure is disclosed for the MARA operation (the $5.9M / 110-ac
+        # 2026-03-05 land assembly is a separate recorder/places thread under epic #1265, not this
+        # facility's investment; hyperscale end-use for the assembly is press speculation [reference]).
+        disclosure_citation=(
+            "[verified] One Power Co Form S-1/A (EDGAR CIK 2039139: DRS 2024-11-12, IPO S-1 filed "
+            "2025-01-23, withdrawn Form RW 2025-05-09, Form D private placement 2025-07-23) + MARA "
+            "Holdings 2024-11-11 press release (ir.mara.com/news-events/press-releases/detail/1375). "
+            "Host: One Power Co (CEO Jereme Kent); OnSite Partners — funds advised by Basalt "
+            "Infrastructure Partners — acquired One Power, announced 2026-02-16. The hub first "
+            "energized 2023 with 'the first fully digital substation in the United States.' See "
+            "data/extracted/findlay/data-centers.md."
+        ),
+        # Cooling archetype (#1054): UNKNOWN — MARA's Findlay cooling design is not on the public
+        # record, so it gets a bracketed range, never the water-intensive evaporative default. Not
+        # asserted. (Bitcoin-mining loads span air-cooled / immersion / hydro-cooled designs.)
+        cooling_model=CoolingModelType.UNKNOWN,
+        cooling_model_source="reference",
+        cooling_model_citation=(
+            "[reference] cooling method not disclosed in the record — kept UNKNOWN (bracketed "
+            "range). MARA has not stated the Findlay cooling design; the One Power hub is a "
+            "behind-the-meter natural-gas-generation compute campus. Refine to a selected model on "
+            "a disclosed mechanical/plumbing permit or an ingested cooling spec."
+        ),
+    ),
     serving_utility_citation=(  # [reference] not Lima's corpus
         "EIA-861 service-territory file (Ohio Power Co #14006) + PUCO certified-territory map; "
         "AEP Ohio serving Findlay corroborated by the City of Findlay (AEP smart-meter notice)"

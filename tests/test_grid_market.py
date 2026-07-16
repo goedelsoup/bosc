@@ -115,5 +115,6 @@ def test_committed_pjm_market_loads() -> None:
 def test_market_scenario_refuses_a_facility_less_site() -> None:
     """A site with no documented facility cannot have a campus PJM market scenario —
     the connector refuses (no fabrication) rather than reusing Lima's facility."""
+    # xenia is deliberately facility-less (Findlay now carries a disclosed SiteFacility, #1459).
     with pytest.raises(ValueError, match="no documented facility"):
-        derive_pjm_market_scenario(settings=Settings(site="findlay"))
+        derive_pjm_market_scenario(settings=Settings(site="xenia"))

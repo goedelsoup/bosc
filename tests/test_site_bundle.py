@@ -335,13 +335,16 @@ def test_backdrop_staged_site_exports_at_backdrop_tier(
 
 
 def test_findlay_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) -> None:
-    """Findlay's floor (economics-baseline, consumer-energy, rsei) is committed, and the #1465
-    flood-mitigation-chain ingest lifts ``record`` to ``live``: the FEMA Flood Mitigation
-    Assistance $24M obligation and the USACE Blanchard-watershed feasibility Review Plan are two
-    in-scope ``permits-epa`` extractions clearing ``RECORD_LIVE_THRESHOLD``. ``story`` is
-    ``seeded`` (the committed per-site leads board, ``data/site/findlay/leads.yaml``, is a
-    leads-first resting state — Findlay is not yet in ``STORY_SLUGS``). ``facility``/``places``
-    stay ``absent`` (no disclosed SiteFacility, no committed campus geometry), so this needs its
+    """Findlay's floor (economics-baseline, consumer-energy, rsei) is committed. Two above-floor
+    domains are live: ``record`` from the #1465 flood-mitigation-chain ingest (the FEMA Flood
+    Mitigation Assistance $24M obligation + the USACE Blanchard-watershed feasibility Review Plan,
+    two in-scope ``permits-epa`` extractions clearing ``RECORD_LIVE_THRESHOLD``), and ``facility``
+    from the disclosed One Power "Findlay Megawatt Hub" / MARA 150 MW take-or-pay ``SiteFacility``
+    + its demand-pressure feed (#1459). Unlike the site-plan-grounded Urbana/Sidney facilities, the
+    MW here is a `[verified]` disclosure (30 MW energized / 150 MW contracted), not a screening
+    bracket. ``story`` is ``seeded`` (the committed per-site leads board,
+    ``data/site/findlay/leads.yaml``, is a leads-first resting state — Findlay is not yet in
+    ``STORY_SLUGS``). ``places`` stays ``absent`` (no committed campus geometry), so this needs its
     own test rather than the backdrop parametrize group (which asserts ``record`` stays
     unscaffolded)."""
     out = tmp_path_factory.mktemp("case-findlay") / "b"
@@ -356,11 +359,12 @@ def test_findlay_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) 
     domains = readiness["domains"]
     assert domains["backdrop"] == "live"
     assert domains["record"] == "live"
+    # The disclosed SiteFacility + its committed demand-pressure feed lift facility to live (#1459).
+    assert domains["facility"] == "live"
     # ``story`` is seeded off the committed leads board, not a registered guided walk.
     assert domains["story"] == "seeded"
-    # Nothing else above the floor is scaffolded: no disclosed facility, no committed campus geometry.
-    for absent_domain in ("facility", "places"):
-        assert domains[absent_domain] == "absent", f"findlay {absent_domain} must not scaffold"
+    # ``places`` stays absent: no committed campus geometry (a separate epic #1265 sub-issue).
+    assert domains["places"] == "absent", "findlay places must not scaffold"
 
     # ``record`` is live because the site owns exactly its two real, in-scope agency records — the
     # FEMA FMA obligation and the USACE feasibility Review Plan — not scaffolding: assert the
