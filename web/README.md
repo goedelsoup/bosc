@@ -1,9 +1,13 @@
-# `frontend/` — the redesigned BOSC site (Astro + MDX)
+# `web/` — the Watermark site (`@watermark/site`, Astro + MDX)
 
 Tier 2 of the two-tier site refactor ([Epic #54](https://github.com/watermark-directory/the-watermark-directory/issues/54)).
 An in-repo [Astro](https://astro.build) + MDX app that reads the committed
 **content bundle** (the typed JSON feeds the Python data tier emits, Epic #53)
 at build time and renders the site as static HTML.
+
+`web/` is no longer one flat package: it's the **`@watermark/site` app** plus a small set
+of focused workspace packages it depends on (Epic [#1549](https://github.com/watermark-directory/the-watermark-directory/issues/1549)).
+See [**Workspace packages**](#workspace-packages) below.
 
 This is the **sole presentation tier** — the legacy Python SSG was retired at the parity
 cutover. Production is **Cloudflare Pages**
@@ -20,6 +24,34 @@ This app is one member of a repo-root **pnpm workspace**, so dependencies are lo
 single [`pnpm-lock.yaml`](../pnpm-lock.yaml) at the repo root — use
 `pnpm install --frozen-lockfile` for reproducible installs.
 
+## Workspace packages
+
+`web/` used to be one flat package doing three logically distinct jobs. Epic
+[#1549](https://github.com/watermark-directory/the-watermark-directory/issues/1549) decomposed it into a set of
+focused workspace packages, so shared code is a real dependency instead of a reach across
+`src/`. The Astro app stays at `web/` (it keeps `astro.config.ts`, `wrangler.toml`,
+`pages_build_output_dir`, and pages.yml's `working-directory: web`); the extracted packages
+live under [`web/packages/*`](packages/), except the Functions, which stay physically at
+[`web/functions`](functions/) because Cloudflare Pages discovers them at the project root.
+
+| Package | Path | Contains | Depends on |
+|---|---|---|---|
+| `@watermark/core` | [`packages/core`](packages/core) | runtime-agnostic domain logic — feeds, catalog, sdm, storyCompile, revalidate, mcpTools, readiness, evidence, dilution, sites, nav, narrative, rehype-doc-links, … (no DOM, no React) | — |
+| `@watermark/charts` | [`packages/charts`](packages/charts) | the hand-rolled SVG chart library (`charts.ts`) — pure geometry/scale builders | core |
+| `@watermark/viz` | [`packages/viz`](packages/viz) | the React + WebGL island cluster (deck.gl/MapLibre maps, the d3-force graph, the PDF viewer) + their layer/data models | core |
+| `@watermark/functions` | [`functions`](functions/) | the Cloudflare Pages Functions (Workers runtime) — `/api/submit`, `/api/ask`, `/api/doc`, MCP, Stories/AUTH; route/store tests under [`functions/_test`](functions/_test) | core |
+| `@watermark/site` | `web/` (this package) | the Astro app: pages, layouts, the residual site components (`mcp`, `story`, loose top-level), plugins, config, middleware, content | core, charts, viz |
+
+**Dependency order:** `core` → { `functions`, `charts`, `viz` } → `site`. Shared code moving
+out of `src/lib` is why the old `@fn/*` path alias is retired (workspace packages resolve
+through `node_modules`); the surviving `~/*` alias is **site-internal only** (`./src/*`).
+
+**Ownership of lint/test/types:** each extracted package owns its own `tsconfig.json` (a
+`check:<pkg>` script runs `tsc -p` per package); tests run under one shared-root
+[`vitest.config.ts`](vitest.config.ts) whose `projects` scope each package's tests to its
+own tree (site / core / charts / viz / functions), so the run no longer straddles the trees.
+Biome lints the whole `web/` tree from the single [`biome.json`](biome.json).
+
 ## Develop
 
 ```sh
@@ -31,14 +63,14 @@ pnpm run build     # static build         → dist/
 pnpm run preview   # serve the built dist/ locally
 ```
 
-This project is a mise monorepo subproject: from anywhere, `mise run //frontend:check`
-runs the full gate (Biome + types + vitest + build + link check), `mise run //frontend:dev`
-starts the dev server, and `mise run //frontend:<task>` reaches `test`/`lint`/`build`/`fmt`/
-`preview`. Inside `frontend/`, a bare `mise run <task>` works too (see `frontend/mise.toml`).
+This project is a mise monorepo subproject: from anywhere, `mise run //web:check`
+runs the full gate (Biome + types + vitest + build + link check), `mise run //web:dev`
+starts the dev server, and `mise run //web:<task>` reaches `test`/`lint`/`build`/`fmt`/
+`preview`. Inside `web/`, a bare `mise run <task>` works too (see [`web/mise.toml`](mise.toml)).
 
 In CI, the `frontend` job in [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)
 does the same against the sample bundle (pure Node — no uv/LFS). It's path-filtered:
-a `changes` gate runs it only when `frontend/` changed, so a backend-only PR skips
+a `changes` gate runs it only when `web/` changed, so a backend-only PR skips
 it (and a frontend-only PR skips the Python `check` job). Don't add a trigger-level
 `paths:` filter to that workflow — `check` is a required status check, and skipping
 the *workflow* would leave it stuck pending; skipping a *job* via the gate reports
@@ -52,16 +84,17 @@ only on the Workers runtime. There are two ways to exercise them locally, and yo
 want the first:
 
 **Tier A — automated route tests (offline, in CI).** `pnpm test` drives each handler
-end-to-end with a faked `Env` + a stubbed `fetch` (`src/lib/{submit,ask,doc}Route.test.ts`
-over the shared `src/lib/_routeHarness.ts`). No wrangler, no network, no real issues filed,
+end-to-end with a faked `Env` + a stubbed `fetch` (`functions/_test/{submit,ask,doc}Route.test.ts`
+over the shared `functions/_test/_routeHarness.ts` — the Functions tests live with the
+`@watermark/functions` package now, #1555). No wrangler, no network, no real issues filed,
 no Anthropic spend — and it gates every frontend PR. This is the safety net; reach for it
 first when changing a Function.
 
-**Tier B — the full interactive stack.** `mise run //frontend:dev:stack` builds the site and
+**Tier B — the full interactive stack.** `mise run //web:dev:stack` builds the site and
 serves it **with** the Functions via `wrangler pages dev`, so you can click through
 submit/ask/doc in a browser (→ http://localhost:8788). It:
 
-- creates `frontend/.dev.vars` from [`.dev.vars.example`](.dev.vars.example) on first run
+- creates `web/.dev.vars` from [`.dev.vars.example`](.dev.vars.example) on first run
   (with a throwaway App key) — kill switches on, **mocked externals by default**;
 - builds with Cloudflare's always-pass **dummy Turnstile** keys so the widgets render;
 - starts a local mock origin ([`scripts/dev-mocks.mjs`](scripts/dev-mocks.mjs)) that stands
@@ -69,9 +102,9 @@ submit/ask/doc in a browser (→ http://localhost:8788). It:
   **submit files no real issue and ask spends no tokens**;
 - binds local KV (rate-limit / budget / contact) and a local R2 simulator for `DOCS`.
 
-`wrangler` is managed by **mise** (`frontend/mise.toml` `[tools]`, `npm:wrangler`), not an npm
+`wrangler` is managed by **mise** ([`web/mise.toml`](mise.toml) `[tools]`, `npm:wrangler`), not an npm
 dependency — so it's pinned + isolated without bloating `pnpm install` or the frontend CI job (which
-uses `setup-node`, not mise). Run the stack via `mise run //frontend:dev:stack` (not a bare
+uses `setup-node`, not mise). Run the stack via `mise run //web:dev:stack` (not a bare
 `pnpm run dev:stack`) so wrangler is on `PATH`; its workerd binary downloads lazily on first run.
 Turnstile verification still makes one real call to Cloudflare's siteverify (the dummy secret
 always passes), so this needs network. For real end-to-end submit/ask instead of mocks, point
@@ -85,11 +118,11 @@ remote bucket**. It's incremental and LFS-aware; you need a real content bundle
 (`WATERMARK_BUNDLE_DIR` or `watermark export`) and `git lfs pull` for the bytes. To serve more than the
 published set, `pnpm run seed:r2 -- --collection <slug>` (or pass explicit rels) and restart the
 stack. Skip seeding with `DEV_STACK_NO_SEED=1`. The doc-serving *logic* (gate, ranges,
-content-type) is covered offline by `src/lib/docRoute.test.ts`.
+content-type) is covered offline by `functions/_test/docRoute.test.ts`.
 
 ## How the content bundle is resolved
 
-`src/lib/bundle.ts` reads the bundle at build time. It picks the **first**
+`@watermark/core`'s [`bundle.ts`](packages/core/src/bundle.ts) reads the bundle at build time. It picks the **first**
 directory that contains a `manifest.json`:
 
 1. **`$WATERMARK_BUNDLE_DIR`** — explicit override (absolute or relative to CWD).
@@ -109,7 +142,7 @@ WATERMARK_BUNDLE_DIR=/path/to/bundle pnpm run build
 Read `manifest.json` first, then feeds it lists:
 
 ```ts
-import { loadManifest, loadFeed } from "../lib/bundle";
+import { loadManifest, loadFeed } from "@watermark/core/bundle";
 const manifest = loadManifest();
 const records = loadFeed<RecordItem[]>("records");
 ```
@@ -121,8 +154,10 @@ in [`data/site/bundle/README.md`](../data/site/bundle/README.md).
 
 The site is **one build** that hosts a *network* of watershed-point sites (the multi-site
 pivot, [#308](https://github.com/watermark-directory/the-watermark-directory/issues/308)). Lima is the live reference
-build; the basin sites come online incrementally. Two sources of truth: the sites registry
-(`src/lib/sites.ts`) and the header IA (`src/lib/nav.ts` — the header tabs, the per-section
+build; the basin sites come online incrementally. Two sources of truth (both in
+`@watermark/core`): the sites registry
+([`sites.ts`](packages/core/src/sites.ts)) and the header IA
+([`nav.ts`](packages/core/src/nav.ts) — the header tabs, the per-section
 TOC rail, and the search index).
 
 - **Lima's record content is physically re-rooted under `/bosc`** so future sites are clean
@@ -161,8 +196,8 @@ All-terms substring match, title hits first; `↵` opens `/search?q=…`. No lun
 
 A hand-rolled SVG chart library (no charting dependency) in the record grammar
 ([#306](https://github.com/watermark-directory/the-watermark-directory/issues/306)): pure geometry builders in
-`src/lib/charts.ts` (`buildVBars`/`buildHBars`/`buildLine`/`buildBullet`/`buildStacked`/
-`buildDonut`/`buildSparkline`) feed seven SSR components in `src/components/charts/`. Two
+`@watermark/charts` ([`charts.ts`](packages/charts/src/charts.ts) — `buildVBars`/`buildHBars`/`buildLine`/`buildBullet`/`buildStacked`/
+`buildDonut`/`buildSparkline`) feed the SSR components in `src/components/charts/`. Two
 palette rules: **indigo encodes data**; the **evidence palette** (`EVIDENCE_FILL` — green/
 amber/grey) is spent *only* on encoding evidence. Real, no-fork uses are wired into records
 (a by-group donut), reports (a discharge bullet), and the watershed hydrology screen (a
@@ -171,19 +206,20 @@ draw-vs-7Q10 bullet drawn from the scenarios feed).
 ## Interactive maps & the entity graph (deck.gl)
 
 The map/graph visualizations (Epic #55) are **React islands** — the only React in
-the app — mounted `client:only` so their JS (deck.gl + MapLibre, ~heavy) loads
+the app, and the whole cluster lives in the [`@watermark/viz`](packages/viz) package —
+mounted `client:only` so their JS (deck.gl + MapLibre, ~heavy) loads
 **only** on those pages; the rest of the site stays zero-framework. Each island
 has a **server-rendered no-JS fallback** (a legend + feature table, or the entity
 list) that doubles as a plain data view.
 
-- **Corridor map** (`/bosc/watershed/map`, [#71](https://github.com/watermark-directory/the-watermark-directory/issues/71)) — `src/components/islands/CorridorMap.tsx`, deck.gl `GeoJsonLayer`s over a MapLibre basemap with dated Esri Wayback aerials. Styled **entirely from the feed** (`color`/`role`/`radius`); the data is the geo feeds merged by the `/feeds/geo/corridor-map.geojson` endpoint.
-- **Entity graph** (`/wiki/graph`, [#73](https://github.com/watermark-directory/the-watermark-directory/issues/73)) — `src/components/islands/EntityGraph.tsx`, a deck.gl `OrthographicView` over nodes/edges laid out at build time by `d3-force` (`/feeds/graph.json`, deterministic). Click a node → its wiki page; entity pages deep-link `/wiki/graph#<slug>` to focus a neighborhood.
+- **Corridor map** (`/bosc/watershed/map`, [#71](https://github.com/watermark-directory/the-watermark-directory/issues/71)) — [`packages/viz/islands/CorridorMap.tsx`](packages/viz/islands/CorridorMap.tsx), deck.gl `GeoJsonLayer`s over a MapLibre basemap with dated Esri Wayback aerials. Styled **entirely from the feed** (`color`/`role`/`radius`); the data is the geo feeds merged by the `/feeds/geo/corridor-map.geojson` endpoint.
+- **Entity graph** (`/wiki/graph`, [#73](https://github.com/watermark-directory/the-watermark-directory/issues/73)) — [`packages/viz/islands/EntityGraph.tsx`](packages/viz/islands/EntityGraph.tsx), a deck.gl `OrthographicView` over nodes/edges laid out at build time by `d3-force` (`/feeds/graph.json`, deterministic). Click a node → its wiki page; entity pages deep-link `/wiki/graph#<slug>` to focus a neighborhood.
 
 The islands are build-verified (bundle, mount, endpoint fetch); a quick **browser
 visual pass** is still worth doing (WebGL rendering isn't covered by `astro check`).
 The watershed map (`/bosc/watershed/map`) and the before/during/after imagery slider
 (`/bosc/watershed/imagery`, [#72](https://github.com/watermark-directory/the-watermark-directory/issues/72)) ship too —
-`ImagerySlider.tsx` over the `geo/imagery` Wayback feed, against the committed
+[`packages/viz/islands/ImagerySlider.tsx`](packages/viz/islands/ImagerySlider.tsx) over the `geo/imagery` Wayback feed, against the committed
 watershed-boundary + AOI geometry feeds.
 
 ## Narrative content (the `docs/` collection)
@@ -195,12 +231,12 @@ from the repo-root `docs/` **as-is** ([#69](https://github.com/watermark-directo
 **Single-source decision:** `docs/` stays at the repo root and is **not** moved or
 edited — it's also general repo documentation.
 The frontend reads it with a `glob` loader over `../docs` (`src/content.config.ts`),
-publishing only the curated set in `src/lib/narrative.ts`, rendered at `/bosc/docs/<slug>`.
+publishing only the curated set in `@watermark/core`'s [`narrative.ts`](packages/core/src/narrative.ts), rendered at `/bosc/docs/<slug>`.
 
 Because the source links target the *legacy* `web/docs/` layout, a build-time
-rehype plugin (`src/lib/rehype-doc-links.ts`) rewrites them without touching the
+rehype plugin (`@watermark/core`'s [`rehype-doc-links.ts`](packages/core/src/rehype-doc-links.ts)) rewrites them without touching the
 source: intra-narrative links → `/bosc/docs/<slug>`, known legacy pages → their new-IA
-route (`src/lib/narrative.ts` `LINK_MAP`), and any other in-repo file (the corpus,
+route (`narrative.ts` `LINK_MAP`), and any other in-repo file (the corpus,
 not-yet-migrated pages) → its GitHub source — so cross-links resolve in both tiers. Since
 the re-root, the plugin **base-prefixes Lima routes with `/bosc`** (`limaBase` in
 `astro.config.ts`), with a `GLOBAL_ROUTE` guard so network-global targets (`/wiki`, `/about`,
@@ -215,48 +251,38 @@ the re-root, the plugin **base-prefixes Lima routes with `/bosc`** (`limaBase` i
 
 `src/components/EvidenceTag.astro` renders the corpus's inline confidence markers
 (`[verified]` / `[inference]` / `[open]` / `[filename]`) as tinted pills; derive
-the kind from a citation with `evidenceKind()` in `src/lib/feeds.ts`.
+the kind from a citation with `evidenceKind()` in `@watermark/core`'s [`feeds.ts`](packages/core/src/feeds.ts).
 
 ## Layout
 
+`web/` is the `@watermark/site` app; the shared domain / chart / island / Functions code
+lives in the workspace packages ([Workspace packages](#workspace-packages) above).
+
 ```
-frontend/
-  astro.config.ts      # MDX + React integrations; static output; rehype link
-                       #   rewriter for the docs collection; site/base from env
+web/                     # @watermark/site — the Astro app
+  astro.config.ts        # MDX + React integrations; static output; rehype link
+                         #   rewriter for the docs collection; site/base from env
+  vitest.config.ts       # shared-root vitest: one project per package (site/core/charts/viz/functions)
+  biome.json             # lints the whole web/ tree
   src/
-    content.config.ts  # the docs/ narrative content collection (glob over ../docs)
-    lib/
-      bundle.ts          # build-time bundle reader (resolve dir, manifest, feeds, hasFeed)
-      feeds.ts           # TS shapes for the feed rows + evidenceKind()
-      nav.ts             # the 4-tab IA + section ids + per-section TOC (single source of truth)
-      sites.ts           # the BOSC-network registry + siteForPath() (switcher source of truth)
-      charts.ts          # pure SVG geometry builders for the chart library
-      icons.ts           # the inline icon set (paired with Icon.astro)
-      search.ts          # build-time search-index assembly over the bundle
-      site.ts            # site constants + withBase() base-path helper
-      narrative.ts       # which docs/ files are published + the legacy→IA link map
-      rehype-doc-links.ts # build-time rewriter for in-repo links inside docs/ (base-aware)
-      geo.ts / graph.ts  # build-time geo merge + deterministic d3-force graph layout
-      geoStyle.ts        # client-safe geo types/colors (shared with the islands)
-    components/          # Header (switcher + tabs + Ask + search), SectionToc rail, Logo/Icon
-      charts/            # seven SSR chart primitives (bar/ranked/line/donut/bullet/stacked/spark)
-      islands/           # CorridorMap + EntityGraph — the only React (deck.gl)
+    content.config.ts    # the docs/ narrative content collection (glob over ../docs)
+    lib/                 # site-only helpers: basin.ts (chart-data prep), askEmbeddingsIndex.ts
+    components/          # Header (switcher + tabs + Ask + search), SectionToc rail, Logo/Icon,
+      charts/            #   the SSR chart primitives (render @watermark/charts geometry),
+      mcp/ story/        #   + the residual mcp/story component groups
     layouts/Base.astro   # the app shell (header + TOC rail + content + footer)
     scripts/             # searchEngine.ts (shared) + search.ts/search-page.ts + toc.ts (no-dep)
     styles/site.css      # shell styling (indigo chrome, evidence pills, chart + search grammar)
-    pages/
-      index.astro         # the network root — redirects to the live site (/bosc)
-      bosc/               # Lima's record content, re-rooted: site/ watershed/ docs/ reports/
-                          #   timeline start submit walk (the four tabs + the walk spine)
-      wiki/               # entities, concepts, the entity graph (network-global)
-      network/            # the network hub + per-site coming-soon pages (/network/<slug>)
-      about.mdx about-me.astro ask.astro search.astro   # network-global pages (root)
-      search-index.json.ts ask-index.json.ts            # build-time client-index endpoints
-      published-documents.json.ts robots.txt.ts
-      feeds/              # build-time data endpoints (geojson, graph.json) for the islands
-  functions/            # Cloudflare Pages Functions — /api/submit, /api/ask (see functions/README.md)
-  public/_redirects     # Cloudflare 301/302s: / → /bosc (302) + old Lima URLs → /bosc/*
-  sample-bundle/        # committed minimal bundle fixture (offline/CI build input)
+    pages/               # every route (see the IA section) + the build-time JSON endpoints
+    middleware.ts        # the pre-launch gate (mirrors functions/_middleware.ts semantics)
+  packages/
+    core/                # @watermark/core   — DOM-free domain logic (bundle, feeds, nav, sites, …)
+    charts/              # @watermark/charts — the SVG chart geometry library
+    viz/                 # @watermark/viz    — the deck.gl/MapLibre React island cluster
+  functions/             # @watermark/functions — Cloudflare Pages Functions (see functions/README.md)
+    _test/               #   the route/store tests (underscore = excluded from Pages routing)
+  public/_redirects      # Cloudflare 301/302s: / → /bosc (302) + old Lima URLs → /bosc/*
+  sample-bundle/         # committed minimal bundle fixture (offline/CI build input)
 ```
 
 ## Status / roadmap

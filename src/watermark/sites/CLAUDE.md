@@ -6,10 +6,10 @@ values instead of baking in Lima's. Defers to the root [`CLAUDE.md`](../../../CL
 (read its **Site axis** section first). Onboarding runbook:
 [`docs/onboarding.md`](../../../docs/onboarding.md).
 
-- **This package is the Python peer of `web/src/lib/sites.ts`.** The two registries stay
-  in sync via `watermark sites sync` (writes `web/src/lib/sites-registry.json` from
+- **This package is the Python peer of `web/packages/core/src/sites.ts`.** The two registries stay
+  in sync via `watermark sites sync` (writes `web/packages/core/src/sites-registry.json` from
   `data/sites.yaml`); `is_reference_site` here is the peer of the frontend's `isReferenceSite`
-  in `web/src/lib/readiness.ts`. Change a site's identity in **`data/sites.yaml`**, not in
+  in `web/packages/core/src/readiness.ts`. Change a site's identity in **`data/sites.yaml`**, not in
   two places — the profile back-fills identity from it (below).
 - **`SiteProfile` (`_model.py`) is a frozen, `extra="forbid"` Pydantic model** — the master
   record for a site. Its fields fall in bands: identity (slug/place/basin); the
@@ -61,5 +61,5 @@ values instead of baking in Lima's. Defers to the root [`CLAUDE.md`](../../../CL
   and fill each TODO **from a cited source** → add GIS schema instances if the site publishes
   layers → `profile_readiness(slug)` / `watermark onboard <slug>` lints unfilled placeholders and
   values still copied from Lima → run `watermark onboard <slug>` → **manual, parity-gated**
-  promotion to `live`/`selectable` in `data/sites.yaml` + `web/src/lib/sites.ts`. Registered ≠
+  promotion to `live`/`selectable` in `data/sites.yaml` + `web/packages/core/src/sites.ts`. Registered ≠
   selectable; a thin peer still degrades gracefully via the readiness layer.

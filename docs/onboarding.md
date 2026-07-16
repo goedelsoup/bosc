@@ -59,7 +59,7 @@ watermark onboard <slug> --check   # flags fields still unfilled (placeholder) o
   to the site (and a CI test enforces it), but scope them correctly from the start.
 - The `SITES` key must equal the profile's `slug` (CI enforces this too).
 
-Also register the site in the frontend [`web/src/lib/sites.ts`](../web/src/lib/sites.ts)
+Also register the site in the frontend [`web/packages/core/src/sites.ts`](../web/packages/core/src/sites.ts)
 `SITES` with `status: "open"` (or `"onboarding"` once the build is queued) and
 `selectable: false` — that alone auto-builds its `/network/<slug>` coming-soon page. (A CI
 test asserts every Python-registered site also exists in the frontend registry.)
@@ -156,7 +156,7 @@ watermark catalog audit --apply        # regenerate COMPLETENESS.md (else `catal
 an **onboarding seed** until reviewed against a cited source — keep the
 `[verified]`/`[inference]`/`[reference]`/`[open]` discipline (see the
 [evidentiary-discipline skill](../.claude/skills/evidentiary-discipline/SKILL.md); the tag
-taxonomy lives in `web/src/lib/evidence.ts`, surfaced on the network `/methodology` hub);
+taxonomy lives in `web/packages/core/src/evidence.ts`, surfaced on the network `/methodology` hub);
 "no data-center here yet" is a finding, not a gap.
 
 ### 4. The review gate (blocking)
@@ -182,14 +182,14 @@ before promotion:
 7. Promotion is a separate manual edit (step 5).
 
 The invariant is also enforced in CI by
-[`web/src/lib/sites.test.ts`](../web/src/lib/sites.test.ts): every `selectable`
+[`web/packages/core/src/sites.test.ts`](../web/packages/core/src/sites.test.ts): every `selectable`
 site must be `status: "live"`, and no `onboarding`/`open` site may be `selectable` — so a
 site cannot slip live without the deliberate two-field change.
 
 ### 5. Promote (manual, parity-gated)
 
 Once the site reaches parity, flip `status: "live"` + `selectable: true` for it in
-`web/src/lib/sites.ts`. **Note the single-live-build constraint:** today only Lima is a
+`web/packages/core/src/sites.ts`. **Note the single-live-build constraint:** today only Lima is a
 built site (re-rooted under `/bosc`); standing up a *second* live build at its own root is a
 deeper, separate cutover, not part of routine onboarding.
 
@@ -285,7 +285,7 @@ the site is promoted (step 5). To bring it live:
    the site's committed records (the backlinks the library shows). Re-add the record-teardown
    islands / bundle-count imports as in `stories/lima/project-bosc/`. Keep figures cited.
 2. **Set chapters `live: true`** as each is finished (it gates that chapter's wayfinding links).
-3. **Register the story** on the site's `web/src/lib/sites.ts` entry (`stories: [{ codename,
+3. **Register the story** on the site's `web/packages/core/src/sites.ts` entry (`stories: [{ codename,
    title, dek }]`) so the switcher/nav surface it.
 4. **Promote** (step 5 above): the parity-gated `status: "live"` + `selectable: true` flip makes
    every `network/[site]/…` route — including the story — render for the site. No new page files

@@ -45,7 +45,7 @@ def onboard_cmd(
     """Onboard a watershed-point site: scaffold per-site data + run the reach connectors.
 
     Builds its own Settings for SLUG (the global --site is not needed). Proposes; never
-    promotes — flipping the site live in web/src/lib/sites.ts stays a manual,
+    promotes — flipping the site live in web/packages/core/src/sites.ts stays a manual,
     parity-gated edit. See docs/onboarding.md.
     """
     from watermark.onboard import onboard_site
@@ -118,7 +118,7 @@ def onboard_cmd(
         console.print(f"  [dim]still needed (catalog per-site axis):[/] {', '.join(r.missing)}")
     console.print(
         "\n[dim]onboard never promotes. When parity is reached, flip status/selectable in "
-        "web/src/lib/sites.ts by hand (one reviewed edit).[/]"
+        "web/packages/core/src/sites.ts by hand (one reviewed edit).[/]"
     )
 
 

@@ -29,7 +29,7 @@ workflow enabled — it's how task issues reach the board.
 | **Readiness** | registered · tracking · queued · building · live | **mirrors `data/sites.yaml` `status`** |
 
 **Readiness is a mirror, never a source of truth.** `data/sites.yaml` (peer of
-`watermark.sites` / `web/src/lib/sites.ts`) is canonical for a site's phase; the board
+`watermark.sites` / `web/packages/core/src/sites.ts`) is canonical for a site's phase; the board
 reflects it. To promote a site, edit `data/sites.yaml` — the daily sync re-mirrors the
 field. The `readiness:*` labels exist so the same axis is queryable in plain issue search.
 

@@ -111,7 +111,7 @@ cd frontend && npm run seed:r2 -- --collection recorder   # or pass explicit dat
 **`watermark objectstore sync --target local` is a different thing:** it uploads to the **remote**
 `watermark-documents-dev` bucket that Cloudflare **preview deployments** bind — *not* the local stack.
 Run it before a preview deploy, not for local dev. The doc-serving logic (gate, ranges,
-content-type) is also covered offline by `src/lib/docRoute.test.ts`. See
+content-type) is also covered offline by `functions/_test/docRoute.test.ts`. See
 [`web/README.md`](../web/README.md) → *Local dev & testing*.
 
 ## Production

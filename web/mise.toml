@@ -1,12 +1,13 @@
-# mise tasks for the `frontend` project (the Astro site) — part of the BOSC monorepo
-# (root mise.toml declares `[monorepo] config_roots = ["frontend"]`). It's pure Node:
-# no uv/LFS, builds against the committed sites/ offline.
+# mise tasks for the `web` project (the Astro site, @watermark/site) — part of the BOSC
+# monorepo (root mise.toml declares `[monorepo] config_roots = ["web"]`). It's pure Node:
+# no uv/LFS, builds against the committed sites/ offline. The site is one member of a
+# pnpm workspace rooted at web/ — see web/README.md for the package map (Epic #1549).
 #
-# Run from inside frontend/ with a bare name (`mise run dev`), or from anywhere with the
-# project path (`mise run //frontend:dev`). The node version is inherited from the root
-# [tools]. These wrap the package.json scripts so backend and frontend share one verb set.
+# Run from inside web/ with a bare name (`mise run dev`), or from anywhere with the
+# project path (`mise run //web:dev`). The node version is inherited from the root
+# [tools]. These wrap the package.json scripts so backend and web share one verb set.
 
-# Frontend-only tools (node still comes from the root). wrangler is mise-managed here — NOT an
+# web-only tools (node still comes from the root). wrangler is mise-managed here — NOT an
 # npm devDependency — so it's pinned + isolated without bloating `pnpm install` or the frontend
 # CI job (which uses setup-node, not mise). Used only by `dev:stack` (the local Functions stack).
 [tools]

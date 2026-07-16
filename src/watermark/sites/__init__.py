@@ -1,6 +1,6 @@
 """The BOSC network — the Python registry of watershed-point site profiles.
 
-The data-tier peer of ``web/src/lib/sites.ts`` (Epic #308 / #323, Track 1): one
+The data-tier peer of ``web/packages/core/src/sites.ts`` (Epic #308 / #323, Track 1): one
 :class:`SiteProfile` per watershed point, holding every value that is specific to *that*
 site. Lima is the live reference build; basin sites (Fort Wayne, Defiance, …) come online
 incrementally and are populated by their onboarding issues (#235-#238), not here.

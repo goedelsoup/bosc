@@ -137,7 +137,7 @@ src/watermark/
 1. `watermark sites new <slug>` — prints a paste-ready `SiteProfile` stub.
 2. Fill every field from a cited source; `watermark onboard <slug> --check`
    flags unfilled placeholders.
-3. Register in `web/src/lib/sites.ts` with `status: "open"`,
+3. Register in `web/packages/core/src/sites.ts` with `status: "open"`,
    `selectable: false`.
 4. `watermark onboard <slug>` — scaffolds per-site data dirs, runs portable
    reach connectors, prints the blocking review checklist.

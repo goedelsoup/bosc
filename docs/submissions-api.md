@@ -328,7 +328,7 @@ shows the placeholder on the next build), or uninstall the App.
 Two ways to exercise this endpoint locally without filing a real issue, both detailed in
 [`web/README.md`](../web/README.md) → *Local dev & testing*:
 
-- **Automated:** `src/lib/submitRoute.test.ts` drives `onRequestPost` end-to-end (kill
+- **Automated:** `functions/_test/submitRoute.test.ts` drives `onRequestPost` end-to-end (kill
   switch → validation → rate-limit → Turnstile → App-JWT → dedupe → issue → contact store)
   with a stubbed `fetch`, under `npm test`. No network, no issue filed.
 - **Interactive:** `mise run //web:dev:stack` serves the form + endpoint under

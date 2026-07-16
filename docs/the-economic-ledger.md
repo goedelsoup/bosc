@@ -229,7 +229,7 @@ it belongs — waiting on a disclosure the county has so far declined to make.
   / §5.5; synthesized in [ECONOMICS.md](ECONOMICS.md) §2
 - The abatement-per-job model and its labeled constants (assessment 0.35, ~63 mills,
   75%/15-yr, the four profiles) — the Cost chapter's follow-the-money model
-  (`web/src/lib/moneyFlow.ts`, `buildAbatementPerJob`); the non-public school terms —
+  (`web/packages/core/src/moneyFlow.ts`, `buildAbatementPerJob`); the non-public school terms —
   `cra-agreement.cra.yaml` (`amounts_public: false`)
 - The 15-year ledger figures — `[inference: computed]` from those constants (building
   share, job count, and the ~7.25% Allen County sales-tax rate turned across scenarios)
