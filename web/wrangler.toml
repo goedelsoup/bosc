@@ -97,6 +97,11 @@ preview_bucket_name = "watermark-submission-attachments-dev"
 # ASK_RATE_LIMIT_MAX = "10"        # per-IP questions per window ("0" = block all)
 # ASK_RATE_LIMIT_WINDOW_SEC = "3600"
 # ASK_DAILY_TOKEN_BUDGET = "200000"  # account-wide daily total-token cap, input+output ("0" = hard stop)
+# ASK_PLUGIN_TOKEN — SECRET (not set here). The shared Bearer service token that lets a ChatGPT
+#   plugin / GPT Action bypass Turnstile on /api/ask (#1578; see /.well-known/ai-plugin.json +
+#   /openapi.yaml). Absent ⇒ no bypass, so Turnstile stays required. The per-IP rate limit and
+#   daily budget above still gate plugin traffic. Set out-of-band like the other secrets:
+#     wrangler pages secret put ASK_PLUGIN_TOKEN
 
 # --- Ask: hybrid semantic retrieval (Workers AI, #329) ----------------------------
 # Binding the Workers AI service enables embedding-based hybrid (BM25 + vector) retrieval.

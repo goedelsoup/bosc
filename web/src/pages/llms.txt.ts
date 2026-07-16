@@ -15,6 +15,7 @@ export const GET: APIRoute = ({ site }) => {
     "## Programmatic access",
     "",
     `- MCP server manifest: ${base}/.well-known/mcp.json`,
+    `- ChatGPT plugin manifest: ${base}/.well-known/ai-plugin.json (OpenAPI: ${base}/openapi.yaml)`,
     `- Corpus search (Q&A interface): ${base}/ask`,
     `- Network hub: ${base}/network`,
     "",

@@ -32,6 +32,7 @@ import { enforceRateLimit, type KVLike } from "./_lib/ratelimit";
 import { type PreparedIndex, prepare, rrf, search, vectorSearch } from "./_lib/retrieval";
 import { frame } from "./_lib/sse";
 import { initTracer } from "./_lib/otel";
+import { isPluginAuthorized } from "./_lib/askPluginAuth";
 import { verifyTurnstile } from "./_lib/turnstile";
 
 interface Env {
@@ -41,6 +42,9 @@ interface Env {
   ANTHROPIC_API_KEY?: string;
   /** Server-side Turnstile secret (Cloudflare secret). Absent ⇒ misconfigured. */
   TURNSTILE_SECRET_KEY?: string;
+  /** Shared Bearer service token for the ChatGPT-plugin bypass of Turnstile (#1578).
+   *  Absent ⇒ no bypass (Turnstile stays required for every request). */
+  ASK_PLUGIN_TOKEN?: string;
   /** Override the Messages API endpoint (local dev mock). Absent ⇒ api.anthropic.com. */
   ANTHROPIC_API_BASE?: string;
   /** Model id; defaults to the repo default. */
@@ -192,10 +196,16 @@ export const onRequestPost = async (ctx: RequestContext): Promise<Response> => {
     if (blocked) return blocked;
   }
 
-  // Turnstile applies to all requests including cache hits — the token is single-use either way.
-  if (!turnstile_token) return json(403, { error: "verification required — please complete the challenge" });
-  const human = await verifyTurnstile(turnstile_token, env.TURNSTILE_SECRET_KEY, remoteip);
-  if (!human) return json(403, { error: "verification failed — please retry the challenge" });
+  // Human-verification gate — applies to all requests including cache hits (the token is
+  // single-use either way). A ChatGPT plugin / GPT Action can't solve Turnstile, so a request
+  // bearing a valid `Authorization: Bearer <ASK_PLUGIN_TOKEN>` stands in for the challenge
+  // (#1578); the per-IP rate limit + daily budget guards still apply to that traffic.
+  if (!isPluginAuthorized(request, env)) {
+    if (!turnstile_token)
+      return json(403, { error: "verification required — please complete the challenge" });
+    const human = await verifyTurnstile(turnstile_token, env.TURNSTILE_SECRET_KEY, remoteip);
+    if (!human) return json(403, { error: "verification failed — please retry the challenge" });
+  }
 
   // Answer cache (#332): fail-closed, rate-limit, and Turnstile have already passed; skip the
   // budget guard and model call for cache hits (no token spend). ASK_CACHE_MAX_AGE=0 disables.

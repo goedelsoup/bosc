@@ -1,0 +1,19 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Watermark Directory",
+  "name_for_model": "watermark_directory",
+  "description_for_human": "Ask questions about the Watermark Directory documentary corpus — a public-records investigation of the American Sugar Creek / Maumee-basin watershed points.",
+  "description_for_model": "Grounded question-answering over the Watermark Directory corpus: an investigative-grade record of the American Sugar Creek / Maumee-basin watershed points (Lima OH, Fort Wayne IN, and siblings), built from public records. Use the askCorpus operation to answer questions about NPDES discharge permits, engineering estimates and plan sheets, commissioners' minutes, the watershed timeline, the entity graph, and boom-origin hypotheses. Answers are generated ONLY from retrieved source documents; always cite the returned sources to the user. Evidence carries tags [verified] / [inference] / [reference] / [open] — preserve them and never present an [inference] claim with the confidence of a [verified] one. When the response has refused=true (\"I don't find that in the record.\"), tell the user the record is silent rather than answering from outside knowledge.",
+  "auth": {
+    "type": "service_http",
+    "authorization_type": "bearer",
+    "verification_tokens": {}
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://watermark.directory/openapi.yaml"
+  },
+  "logo_url": "https://watermark.directory/apple-touch-icon.png",
+  "contact_email": "noreply@watermark.directory",
+  "legal_info_url": "https://watermark.directory/network/connect"
+}
