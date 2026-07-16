@@ -216,10 +216,10 @@ def _stub_facility(**overrides: object) -> SiteFacility:
     return SiteFacility(**base)  # type: ignore[arg-type]
 
 
-def test_no_facility_resolves_off() -> None:
+def test_no_facility_resolves_off(hydro_settings: Settings) -> None:
     assert resolve_cooling_model(None) == CoolingModelType.OFF
     # xenia is deliberately facility-less (Findlay now carries a disclosed SiteFacility, #1459).
-    xenia = Settings(data_dir=Path("data"), site="xenia", hydro_offline=True)
+    xenia = hydro_settings.model_copy(update={"site": "xenia"})
     assert derive_cooling_basis(xenia).cooling_model == CoolingModelType.OFF
 
 
@@ -254,10 +254,10 @@ def test_registry_covers_every_enum_member() -> None:
     assert set(COOLING_MODELS) == set(CoolingModelType)
 
 
-def test_explicit_model_without_facility_is_refused() -> None:
+def test_explicit_model_without_facility_is_refused(hydro_settings: Settings) -> None:
     # A facility-less site (xenia) must never derive a non-off basis from the Lima
     # module fallbacks — that would leak Lima's air-permit provenance into its figures.
-    xenia = Settings(data_dir=Path("data"), site="xenia", hydro_offline=True)
+    xenia = hydro_settings.model_copy(update={"site": "xenia"})
     with pytest.raises(ValueError, match=r"requires a SiteProfile\.facility"):
         derive_cooling_basis(xenia, cooling_model="evaporative_tower")
 
