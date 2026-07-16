@@ -38,6 +38,7 @@ from claude_agent_sdk import create_sdk_mcp_server, tool
 from watermark.agent.tracing import traced_tool
 from watermark.config import Settings, get_settings
 from watermark.site.corpus_mirror import CLASSES, Mirror, MirrorNode, build_mirror
+from watermark.site.yidam_index import YidamVectorIndex, default_index_dir
 
 YIDAM_SERVER_NAME = "yidam"
 
@@ -74,8 +75,34 @@ def _mirror(settings: Settings | None = None) -> Mirror:
 
 
 def clear_mirror_cache() -> None:
-    """Drop the cached mirrors — call between sites/corpus edits (used by the tests)."""
+    """Drop the cached mirrors + vector indexes — call between sites/corpus edits (the tests)."""
     _MIRROR_CACHE.clear()
+    _INDEX_CACHE.clear()
+
+
+# --- the served vector index (built/loaded once per site, cached for the turn) --------------
+_INDEX_CACHE: dict[tuple[str, str], YidamVectorIndex] = {}
+
+
+def _index(settings: Settings | None = None) -> YidamVectorIndex:
+    """The active site's yidam vector index, opened once and cached per ``(site, data_dir)``.
+
+    Lazily built from the in-memory mirror when the ``.yidam/index/`` table is absent, so
+    ``yidam serve --mcp`` semantic search works even if ``watermark corpus-mirror --index``
+    was never run. Reuses the shared embedding backend (:func:`get_provider`) so its vectors
+    live in the same space as the ``/ask`` embeddings.
+    """
+    from watermark.retrieval.embeddings import get_provider
+
+    settings = settings or get_settings()
+    key = (settings.site, str(settings.data_dir))
+    index = _INDEX_CACHE.get(key)
+    if index is None:
+        index = YidamVectorIndex(default_index_dir(settings), get_provider(settings))
+        if not index.exists:
+            index.build(_mirror(settings))
+        _INDEX_CACHE[key] = index
+    return index
 
 
 # --- pure serving over an in-memory Mirror (independently testable) --------------------------
@@ -281,6 +308,56 @@ async def yidam_query(args: dict[str, Any]) -> dict[str, Any]:
 
 
 @tool(
+    "yidam_semantic_search",
+    "Semantically search the active site's yidam corpus mirror — ranks nodes by meaning "
+    "(vector similarity over all-MiniLM-L6-v2 embeddings of each node, the same model the /ask "
+    "index uses), complementing the exact-term yidam_query. Use it when the wording may differ "
+    "from the corpus (concepts, paraphrases). Optional node_class filter "
+    f"({_CLASS_LIST}) and limit (default 10). Read a hit with yidam_read_node.",
+    {
+        "type": "object",
+        "properties": {
+            "query": {
+                "type": "string",
+                "description": "Natural-language query to match by meaning.",
+            },
+            "node_class": {
+                "type": "string",
+                "description": f"Optional: restrict to one class ({_CLASS_LIST}).",
+            },
+            "limit": {"type": "integer", "description": "Max hits to return (default 10)."},
+        },
+        "required": ["query"],
+    },
+)
+@traced_tool
+async def yidam_semantic_search(args: dict[str, Any]) -> dict[str, Any]:
+    settings = get_settings()
+    args = args or {}
+    query = str(args.get("query", "")).strip()
+    if not query:
+        return _text("Pass a non-empty 'query'.")
+    node_class = args.get("node_class") or None
+    if node_class is not None and node_class not in CLASSES:
+        return _text(f"Unknown node_class '{node_class}'. Valid: {_CLASS_LIST}.")
+    limit = int(args.get("limit") or 10)
+    hits = _index(settings).query(query, node_class=node_class, limit=limit)
+    if not hits:
+        return _text(f"No corpus nodes semantically match {query!r}.")
+    # Render from the live mirror node when it resolves, so a semantic hit reads identically to a
+    # keyword one (same URI/label/description) and stays consistent if the disk index lags.
+    mirror = _mirror(settings)
+    lines = [f"{len(hits)} semantic match(es) for {query!r}:"]
+    for hit in hits:
+        node = find_node(mirror, hit.node_id)
+        label = node.label if node else hit.label
+        description = node.description if node else hit.description
+        detail = f"  — {description}" if description else ""
+        lines.append(f"- {hit.uri}  [{hit.node_class}]  ({hit.score:.2f})  {label}{detail}")
+    return _text("\n".join(lines))
+
+
+@tool(
     "yidam_open_questions",
     "List the active site's open threads from the corpus mirror — the leads board and the "
     "[open]-tagged hypothesis claims (nodes with no documented nexus yet). The yidam "
@@ -303,6 +380,7 @@ ALL_TOOLS = [
     yidam_list_nodes,
     yidam_read_node,
     yidam_query,
+    yidam_semantic_search,
     yidam_open_questions,
 ]
 ALLOWED_TOOL_NAMES = [f"mcp__{YIDAM_SERVER_NAME}__{t.name}" for t in ALL_TOOLS]

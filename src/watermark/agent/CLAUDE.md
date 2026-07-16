@@ -41,10 +41,15 @@ Wraps the Claude Agent SDK and the Anthropic Messages API. Defers to the root
   `mcp__yidam__*`), BOSC's Python realization of `yidam serve --mcp` (#1563). It serves the
   **yidam corpus mirror** (`watermark.site.corpus_mirror`, Epic #1560) — the committed corpus
   projected into `yidam://corpus/<class>/<name>` nodes — so the agent can `list` / `read` /
-  `query` nodes and run `open_questions` over the projected method-layer graph (entities,
-  relationships, concepts, people, leads, hypotheses, `[open]` claims). It builds the mirror
-  **in-memory** for the active site (offline read of committed corpus, cached per turn) rather
-  than reading the git-ignored `.yidam/corpus/` tree, so it never depends on a prior `export`.
+  `query` (keyword) / `semantic_search` (vector) nodes and run `open_questions` over the
+  projected method-layer graph (entities, relationships, concepts, people, leads, hypotheses,
+  `[open]` claims). It builds the mirror **in-memory** for the active site (offline read of
+  committed corpus, cached per turn) rather than reading the git-ignored `.yidam/corpus/` tree,
+  so it never depends on a prior `export`. `semantic_search` (#1564) queries the LanceDB vector
+  index (`watermark.site.yidam_index`, `.yidam/index/`) — built by `watermark corpus-mirror
+  --index` and lazily by this server on first use — over the **same** all-MiniLM-L6-v2 backend
+  as the `/ask` embeddings + `retrieve_corpus` (`watermark.retrieval.get_provider`), so it is
+  reconciled with them, not a competing index.
   The SDK's in-process server exposes **tools only** (no MCP resources), so the
   `yidam://corpus/*` "resources" are delivered as list/read tools (nodes still carry the URI).
   Wired into `client.py` via `enable_yidam` (default on, rides on `enable_tools`).

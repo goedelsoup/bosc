@@ -125,6 +125,14 @@ run = "uv run watermark export"
 description = "Regenerate the yidam corpus mirror + reports for the active site (Python engine)."
 run = "uv run watermark corpus-mirror"
 
+# The corpus VECTOR index (#1564): embed the mirror nodes into a LanceDB index (.yidam/index/)
+# with the same all-MiniLM-L6-v2 backend as the /ask embeddings, so `yidam serve --mcp` can
+# search the method-layer graph by meaning. Opt-in (downloads the ~80 MB model on first run);
+# the MCP server rebuilds it lazily too, so this task is only for a warm, committed-free artifact.
+[tasks.corpus-vector-index]
+description = "Build the LanceDB vector index over the yidam corpus mirror (.yidam/index; #1564)."
+run = "uv run watermark corpus-mirror --index"
+
 [tasks.yidam-graph-check]
 description = "Cross-check the mirror with the real yidam CLI (optional; needs `yidam` on PATH)."
 run = "yidam graph-check"

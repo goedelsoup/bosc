@@ -202,6 +202,40 @@ def test_mirror_is_built_once_and_cached(monkeypatch: pytest.MonkeyPatch) -> Non
     assert calls["n"] == 1  # second call served from cache
 
 
+# --- semantic search (#1564): the vector index, served through the MCP backend --------------
+async def test_semantic_search_lazily_builds_the_index_and_ranks(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    from tests.test_yidam_index import _BagProvider
+
+    mirror = _tiny_mirror()
+    monkeypatch.setattr(yidam_tools, "_mirror", lambda settings=None: mirror)
+    monkeypatch.setattr(yidam_tools, "default_index_dir", lambda settings=None: tmp_path / "index")
+    monkeypatch.setattr(
+        "watermark.retrieval.embeddings.get_provider", lambda settings: _BagProvider()
+    )
+
+    # No prior `watermark corpus-mirror --index` run — the first search must build the index
+    # from the in-memory mirror on demand (the `yidam serve --mcp` never-depends-on-a-build rule).
+    assert not (tmp_path / "index").exists()
+    out = (await yidam_tools.yidam_semantic_search.handler({"query": "cooling water intake"}))[
+        "content"
+    ][0]["text"]
+    assert "semantic match" in out
+    assert "yidam://corpus/question/lead-cooling" in out
+    assert (tmp_path / "index").exists()  # the LanceDB index was materialized
+
+
+async def test_semantic_search_validates_its_args() -> None:
+    # Both guards short-circuit before the index is touched (no provider/model needed).
+    empty = (await yidam_tools.yidam_semantic_search.handler({"query": "  "}))["content"][0]["text"]
+    assert empty == "Pass a non-empty 'query'."
+    bad = (await yidam_tools.yidam_semantic_search.handler({"query": "x", "node_class": "bogus"}))[
+        "content"
+    ][0]["text"]
+    assert "Unknown node_class" in bad
+
+
 # --- against the real Lima mirror (offline read of the committed corpus) --------------------
 def test_serves_the_real_lima_mirror_end_to_end() -> None:
     settings = Settings(site="lima", data_dir=REPO_ROOT / "data")
