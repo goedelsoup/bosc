@@ -16,14 +16,14 @@
 import Base from "~/layouts/Base.astro";
 import Icon from "~/components/Icon.astro";
 import SectionLocked from "~/components/SectionLocked.astro";
-import BulletinBoard from "~/components/islands/contacts/BulletinBoard";
-import PetitionConnect from "~/components/islands/contacts/PetitionConnect";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import { CONTACT_FILTERS, type Contact, KIND_META, contactCount } from "~/lib/contacts";
-import { contactsUiEnabled, turnstileSiteKey } from "~/lib/contactsFlag";
-import { sectionStatus } from "~/lib/readiness";
-import { withSite } from "~/lib/site";
-import { activeSite, selectableSitePaths, siteForSlug, siteState } from "~/lib/sites";
+import BulletinBoard from "@watermark/viz/islands/contacts/BulletinBoard.tsx";
+import PetitionConnect from "@watermark/viz/islands/contacts/PetitionConnect.tsx";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import { CONTACT_FILTERS, type Contact, KIND_META, contactCount } from "@watermark/core/contacts";
+import { contactsUiEnabled, turnstileSiteKey } from "@watermark/core/contactsFlag";
+import { sectionStatus } from "@watermark/core/readiness";
+import { withSite } from "@watermark/core/site";
+import { activeSite, selectableSitePaths, siteForSlug, siteState } from "@watermark/core/sites";
 
 // One `network/[site]/…` route per selectable site (#724/#734); Lima alone today.
 export const getStaticPaths = selectableSitePaths;

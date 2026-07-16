@@ -7,9 +7,9 @@
  * states are legible in one place. Always available (no live data), so it isn't gated.
  */
 import Base from "~/layouts/Base.astro";
-import StoryGrab from "~/components/islands/stories/StoryGrab.tsx";
-import { withSite } from "~/lib/site";
-import { activeSite, selectableSitePaths, siteForSlug } from "~/lib/sites";
+import StoryGrab from "@watermark/viz/islands/stories/StoryGrab.tsx";
+import { withSite } from "@watermark/core/site";
+import { activeSite, selectableSitePaths, siteForSlug } from "@watermark/core/sites";
 
 export const getStaticPaths = selectableSitePaths;
 

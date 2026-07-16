@@ -1,13 +1,13 @@
 ---
-import { selectableSitePaths, siteForSlug } from "~/lib/sites";
+import { selectableSitePaths, siteForSlug } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import BackLink from "~/components/BackLink.astro";
-import CorridorMap from "~/components/islands/CorridorMap.tsx";
+import CorridorMap from "@watermark/viz/islands/CorridorMap.tsx";
 import Base from "~/layouts/Base.astro";
-import { mergedGeo } from "~/lib/geo";
-import { layerLabel, layersPresent, type GeoFeature } from "~/lib/geoStyle";
-import { isReferenceSite } from "~/lib/readiness";
-import { withBase, withSite } from "~/lib/site";
+import { mergedGeo } from "@watermark/viz/geo";
+import { layerLabel, layersPresent, type GeoFeature } from "@watermark/viz/geoStyle";
+import { isReferenceSite } from "@watermark/core/readiness";
+import { withBase, withSite } from "@watermark/core/site";
 
 // The section-lead names Lima's specific parcels/corridor/subwatershed, so it's gated to the
 // reference build; a peer site gets a generic layer description keyed off its own place (#1217).

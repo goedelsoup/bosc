@@ -1,5 +1,5 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
+import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 /**
  * The defense nexus — the interactive companion to the full report
@@ -11,11 +11,11 @@ export const getStaticPaths = selectableSitePaths;
  * island-over-SSR pattern; pays off into the full cited essay.
  */
 import ReportShell from "~/layouts/ReportShell.astro";
-import DefenseNexusMap from "~/components/islands/DefenseNexusMap.tsx";
+import DefenseNexusMap from "@watermark/viz/islands/DefenseNexusMap.tsx";
 import RedactionReveal from "~/components/RedactionReveal.astro";
-import { buildDefenseNexus } from "~/lib/defenseNexus";
-import type { TeardownRedaction } from "~/lib/teardown";
-import { withBase } from "~/lib/site";
+import { buildDefenseNexus } from "@watermark/viz/defenseNexus";
+import type { TeardownRedaction } from "@watermark/core/teardown";
+import { withBase } from "@watermark/core/site";
 
 const dn = buildDefenseNexus();
 const m = dn.metrics;

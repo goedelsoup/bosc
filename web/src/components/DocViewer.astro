@@ -2,9 +2,9 @@
 // Tiered source-document viewer (epic #274 / D1). Dispatches on the *real* render_class
 // (from the file itself, #275), fetching bytes from /api/doc/<rel> (B2). Degrades to a
 // download/open affordance offline or when the bytes aren't bound — no console errors.
-import { docApiUrl, viewerTier } from "../lib/docView";
-import type { DocumentEntry } from "../lib/feeds";
-import PdfViewer from "./islands/PdfViewer";
+import { docApiUrl, viewerTier } from "@watermark/core/docView";
+import type { DocumentEntry } from "@watermark/core/feeds";
+import PdfViewer from "@watermark/viz/islands/PdfViewer.tsx";
 
 interface Props {
   entry: DocumentEntry;

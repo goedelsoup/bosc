@@ -1,5 +1,5 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
+import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 /**
  * OPC scenario explorer — the interactive companion to the Cost chapter, and the native
@@ -10,13 +10,13 @@ export const getStaticPaths = selectableSitePaths;
  * Island-over-SSR: the <noscript> table is the no-JS fallback — the source totals at the
  * source's own 25% convention, from the same `opcScenario` model the island runs.
  */
-import OpcScenario from "~/components/islands/OpcScenario.tsx";
+import OpcScenario from "@watermark/viz/islands/OpcScenario.tsx";
 import ReportShell from "~/layouts/ReportShell.astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import type { RecordItem } from "~/lib/feeds";
-import { fmtUsdFull } from "~/lib/money";
-import { opcScenarioFromRecords, sourceProgramTotal } from "~/lib/opcScenario";
-import { withSite, withStory } from "~/lib/site";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { RecordItem } from "@watermark/core/feeds";
+import { fmtUsdFull } from "@watermark/core/money";
+import { opcScenarioFromRecords, sourceProgramTotal } from "@watermark/core/opcScenario";
+import { withSite, withStory } from "@watermark/core/site";
 
 const records = hasFeed("records") ? loadFeed<RecordItem[]>("records") : [];
 const scenario = opcScenarioFromRecords(records);

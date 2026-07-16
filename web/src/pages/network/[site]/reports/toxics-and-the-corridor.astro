@@ -1,5 +1,5 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
+import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 /**
  * Toxics and the corridor — the interactive companion (docs/toxics-and-the-corridor.md,
@@ -13,11 +13,11 @@ export const getStaticPaths = selectableSitePaths;
  * simulator is the client island. The discharge constants come from buildDilution (the
  * feed — no fork).
  */
-import ToxicsDilutionScreen from "~/components/islands/ToxicsDilutionScreen.tsx";
+import ToxicsDilutionScreen from "@watermark/viz/islands/ToxicsDilutionScreen.tsx";
 import BulletChart from "~/components/charts/BulletChart.astro";
 import ReportShell from "~/layouts/ReportShell.astro";
-import { buildDilution } from "~/lib/dilution";
-import { withBase } from "~/lib/site";
+import { buildDilution } from "@watermark/core/dilution";
+import { withBase } from "@watermark/core/site";
 
 const d = buildDilution();
 const dc = d.discharge;

@@ -1,15 +1,15 @@
 ---
-import { selectableSitePaths, siteForSlug } from "~/lib/sites";
+import { selectableSitePaths, siteForSlug } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import BackLink from "~/components/BackLink.astro";
 import EvidenceTag from "~/components/EvidenceTag.astro";
-import FlowMap from "~/components/islands/FlowMap.tsx";
+import FlowMap from "@watermark/viz/islands/FlowMap.tsx";
 import Base from "~/layouts/Base.astro";
 import { reachAttenuationRows } from "~/lib/basin";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import type { RoutedHydrographNetwork } from "~/lib/feeds";
-import { isReferenceSite } from "~/lib/readiness";
-import { withBase, withSite } from "~/lib/site";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { RoutedHydrographNetwork } from "@watermark/core/feeds";
+import { isReferenceSite } from "@watermark/core/readiness";
+import { withBase, withSite } from "@watermark/core/site";
 
 // The water-flow view (#1235, epic #1237): the deck.gl FlowLayer island advecting GPU particles
 // down the real reach-network river centerlines, plus the always-rendered reach-attenuation table

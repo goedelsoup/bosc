@@ -43,7 +43,7 @@
       }
     },
     {
-      "includes": ["src/components/islands/stories/**"],
+      "includes": ["packages/viz/islands/stories/**"],
       "linter": {
         "rules": {
           "suspicious": { "noArrayIndexKey": "off" }

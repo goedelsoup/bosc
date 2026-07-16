@@ -1,10 +1,10 @@
 ---
-import EntityGraph from "~/components/islands/EntityGraph.tsx";
+import EntityGraph from "@watermark/viz/islands/EntityGraph.tsx";
 import Base from "~/layouts/Base.astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import { slugify, type EntityNode } from "~/lib/feeds";
-import { RELATION_CLASSES } from "~/lib/relationClasses";
-import { withBase } from "~/lib/site";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import { slugify, type EntityNode } from "@watermark/core/feeds";
+import { RELATION_CLASSES } from "@watermark/viz/relationClasses";
+import { withBase } from "@watermark/core/site";
 
 // SSR fallback / data view: the entity list the island visualizes.
 const entities = hasFeed("entities") ? loadFeed<EntityNode[]>("entities") : [];

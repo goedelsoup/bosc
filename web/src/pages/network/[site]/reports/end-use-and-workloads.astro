@@ -1,5 +1,5 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
+import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 /**
  * End-use & workloads — the interactive companion to the full report
@@ -9,8 +9,8 @@ export const getStaticPaths = selectableSitePaths;
  * Lima record leaves the answer [open]. Pays off into the full cited essay.
  */
 import ReportShell from "~/layouts/ReportShell.astro";
-import EndUseExplorer from "~/components/islands/EndUseExplorer.tsx";
-import { buildEndUse } from "~/lib/endUse";
+import EndUseExplorer from "@watermark/viz/islands/EndUseExplorer.tsx";
+import { buildEndUse } from "@watermark/core/endUse";
 
 const endUse = buildEndUse();
 const limaLabel = (s: string): string => (s === "ruled-out" ? "ruled out" : "[open]");

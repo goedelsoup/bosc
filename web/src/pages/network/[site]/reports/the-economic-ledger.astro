@@ -1,5 +1,5 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
+import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 /**
  * The economic ledger — the interactive companion to the full report
@@ -12,11 +12,11 @@ export const getStaticPaths = selectableSitePaths;
  * Island-over-SSR: the table below is the no-JS fallback (the essay's ledger in a band,
  * computed from the same model the island runs); the simulator is the client island.
  */
-import EconLedgerSimulator from "~/components/islands/EconLedgerSimulator.tsx";
+import EconLedgerSimulator from "@watermark/viz/islands/EconLedgerSimulator.tsx";
 import ReportShell from "~/layouts/ReportShell.astro";
-import { COUNTY_JOBS_2023, ledgerLines, ledgerProfiles } from "~/lib/econLedger";
-import { fmtUsdM } from "~/lib/money";
-import { withBase } from "~/lib/site";
+import { COUNTY_JOBS_2023, ledgerLines, ledgerProfiles } from "@watermark/core/econLedger";
+import { fmtUsdM } from "@watermark/core/money";
+import { withBase } from "@watermark/core/site";
 
 const lines = ledgerLines();
 const profiles = ledgerProfiles();

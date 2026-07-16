@@ -1,5 +1,5 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
+import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 /**
  * The public balance sheet (epic #271 Phase 4 capstone, #273) — the meta-view that
@@ -11,12 +11,12 @@ export const getStaticPaths = selectableSitePaths;
  * models). The toxics band needs the feed's discharge constants (buildDilution) — passed
  * to the island so the balance sheet never forks the narratives.
  */
-import BalanceSheet from "~/components/islands/BalanceSheet.tsx";
+import BalanceSheet from "@watermark/viz/islands/BalanceSheet.tsx";
 import ReportShell from "~/layouts/ReportShell.astro";
-import { type BalanceUnit, buildBalanceSheet } from "~/lib/balanceSheet";
-import { buildDilution } from "~/lib/dilution";
-import { fmtUsdM } from "~/lib/money";
-import { withSite } from "~/lib/site";
+import { type BalanceUnit, buildBalanceSheet } from "@watermark/core/balanceSheet";
+import { buildDilution } from "@watermark/core/dilution";
+import { fmtUsdM } from "@watermark/core/money";
+import { withSite } from "@watermark/core/site";
 
 const dc = buildDilution().discharge;
 const effluentCfs = dc.wwtpCfs + dc.campusFm2Cfs;

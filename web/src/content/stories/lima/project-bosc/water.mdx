@@ -11,9 +11,9 @@ pageTitle: "What it does to the water — Chapter 4"
 description: "A data center cools itself with water. Read what the receiving streams can spare — Ohio EPA already wrote it down, in the low flows it uses to permit every discharge."
 ---
 
-import { NPDES_TEARDOWN } from "~/lib/teardowns";
-import DilutionScreen from "~/components/islands/DilutionScreen.tsx";
-import { buildDilution, dilutionMultiple } from "~/lib/dilution";
+import { NPDES_TEARDOWN } from "@watermark/core/teardowns";
+import DilutionScreen from "@watermark/viz/islands/DilutionScreen.tsx";
+import { buildDilution, dilutionMultiple } from "@watermark/core/dilution";
 
 export const dilution = buildDilution();
 export const fmtMult = (m) =>
