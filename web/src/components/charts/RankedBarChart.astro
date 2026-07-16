@@ -3,8 +3,8 @@
  * Horizontal ranked bar chart (#306) — with a disclosed/withheld two-tone (a present
  * value whose companion figure is withheld gets the soft forest fill). SSR, no JS.
  */
-import type { TagKind } from "~/lib/teardown";
-import { buildHBars, type RankedBarDatum } from "~/lib/charts";
+import type { TagKind } from "@watermark/core/teardown";
+import { buildHBars, type RankedBarDatum } from "@watermark/charts/charts";
 import EvidenceTag from "../EvidenceTag.astro";
 
 interface Props {

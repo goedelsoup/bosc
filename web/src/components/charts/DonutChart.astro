@@ -3,8 +3,8 @@
  * Donut chart (#306) — composition, the total in the center, a labeled legend beside it.
  * SSR SVG, no JS. Forest tints for the slices.
  */
-import type { TagKind } from "~/lib/teardown";
-import { buildDonut, type DonutSlice } from "~/lib/charts";
+import type { TagKind } from "@watermark/core/teardown";
+import { buildDonut, type DonutSlice } from "@watermark/charts/charts";
 import EvidenceTag from "../EvidenceTag.astro";
 
 interface Props {

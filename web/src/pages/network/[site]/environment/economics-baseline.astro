@@ -1,19 +1,19 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
+import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import BackLink from "~/components/BackLink.astro";
 import LineChart from "~/components/charts/LineChart.astro";
 import Base from "~/layouts/Base.astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import type { LinePoint } from "~/lib/charts";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { LinePoint } from "@watermark/charts/charts";
 import type {
   ConsumerEnergyCosts,
   ConsumerEnergyPrice,
   EconomicBaseline,
   EnergyBurden,
   ProvenancedValue,
-} from "~/lib/feeds";
-import { withBase, withSite } from "~/lib/site";
+} from "@watermark/core/feeds";
+import { withBase, withSite } from "@watermark/core/site";
 
 const eb = hasFeed("economics-baseline") ? loadFeed<EconomicBaseline>("economics-baseline") : null;
 // State-level EIA consumer energy costs (issue #1125) — guarded independently of the county
@@ -54,7 +54,7 @@ const delta = first && last ? (last.total_employment.value ?? 0) - (first.total_
 const pct = first?.total_employment.value ? (delta / first.total_employment.value) * 100 : 0;
 
 // --- trend charts (issue #1125) -----------------------------------------------------------
-// Hand-rolled SVG line charts (indigo encodes data, per web/src/lib/charts.ts). Thin the year
+// Hand-rolled SVG line charts (indigo encodes data, per @watermark/charts). Thin the year
 // axis so a multi-decade series stays legible: label the endpoints and every `stride`-th year,
 // blank the rest (the dot still plots). `window` keeps the last N points so the long EIA series
 // (natural gas runs from 1967) shares a readable ~quarter-century window with the shorter ones.

@@ -10,10 +10,10 @@ import DonutChart from "~/components/charts/DonutChart.astro";
 import GaugeBar from "~/components/charts/GaugeBar.astro";
 import LineChart from "~/components/charts/LineChart.astro";
 import RankedBarChart from "~/components/charts/RankedBarChart.astro";
-import type { DonutSlice, LinePoint, RankedBarDatum } from "~/lib/charts";
-import type { FigureStatData } from "~/lib/viz";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import { type GreenopsReport, provenanceEvidence } from "~/lib/feeds";
+import type { DonutSlice, LinePoint, RankedBarDatum } from "@watermark/charts/charts";
+import type { FigureStatData } from "@watermark/core/viz";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import { type GreenopsReport, provenanceEvidence } from "@watermark/core/feeds";
 
 // Editorial cards (the architecture principles + how models touch the record) are prose, not
 // metered data — they stay authored here. Everything numeric comes from the greenops feed below.
