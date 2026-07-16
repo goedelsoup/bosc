@@ -8,13 +8,26 @@
 // (~18–24k tokens). `full` reproduces the legacy shape; `snippets` adds a query-focused
 // windowed excerpt; `ids_only` is the leanest candidate list. Each hit carries an
 // `estimated_tokens` cost so the caller can budget a follow-up `full` fetch.
+//
+// Response-size governance (#1581): the rendered hits are fitted to an explicit budget
+// (max_results / max_tokens / max_tokens_per_result, or an `intent` preset) and returned in
+// the uniform `{ results, token_estimate, truncated, next_cursor }` envelope. Over-cap hits
+// have their snippet/text trimmed; the cursor pages through the ranked candidate pool.
 
 import { loadAskIndex } from "../askIndexLoad";
+import {
+  type Governed,
+  INTENTS,
+  decodeCursorOffset,
+  estimateTokens,
+  govern,
+  governedContent,
+  parseIntent,
+  resolveKnobs,
+  truncateToTokens,
+} from "../mcpGovern";
 import type { AskUnit, Hit } from "../retrieval";
 import { prepare, search, tokenize } from "../retrieval";
-
-const MAX_LIMIT = 30;
-const DEFAULT_LIMIT = 10;
 
 // Rough GPT-style byte→token heuristic — good enough for budgeting, not billing.
 const AVG_CHARS_PER_TOKEN = 4;
@@ -35,6 +48,12 @@ interface SearchCorpusParams {
   limit?: unknown;
   response_mode?: unknown;
   snippet_tokens?: unknown;
+  // Governance knobs (#1581) — resolved via mcpGovern.
+  intent?: unknown;
+  max_results?: unknown;
+  max_tokens?: unknown;
+  max_tokens_per_result?: unknown;
+  cursor?: unknown;
 }
 
 /** ids_only: the leanest candidate list — an id to fetch and its rank score. */
@@ -74,15 +93,19 @@ interface FullHit {
   score: number;
 }
 
-function parseMode(v: unknown): ResponseMode {
+type SearchHit = IdsOnlyHit | CompactHit | FullHit;
+
+/** Explicit response_mode wins; else the intent preset seeds it; else compact. */
+function parseMode(v: unknown): ResponseMode | null {
   return typeof v === "string" && (RESPONSE_MODES as readonly string[]).includes(v)
     ? (v as ResponseMode)
-    : DEFAULT_MODE;
+    : null;
 }
 
-function parseSnippetTokens(v: unknown): number {
-  const n = typeof v === "number" && Number.isFinite(v) ? Math.floor(v) : DEFAULT_SNIPPET_TOKENS;
-  return Math.min(Math.max(MIN_SNIPPET_TOKENS, n), MAX_SNIPPET_TOKENS);
+/** Explicit snippet_tokens (clamped) wins; else null so the intent preset can seed it. */
+function parseSnippetTokens(v: unknown): number | null {
+  if (typeof v !== "number" || !Number.isFinite(v)) return null;
+  return Math.min(Math.max(MIN_SNIPPET_TOKENS, Math.floor(v)), MAX_SNIPPET_TOKENS);
 }
 
 function roundScore(score: number): number {
@@ -90,7 +113,7 @@ function roundScore(score: number): number {
 }
 
 /** Estimate the token cost of pulling this unit's full text (what `full` mode returns). */
-function estimateTokens(u: AskUnit): number {
+function estimateFullTokens(u: AskUnit): number {
   return Math.ceil(((u.title?.length ?? 0) + u.text.length + 1) / AVG_CHARS_PER_TOKEN);
 }
 
@@ -129,7 +152,7 @@ function compactCard(h: Hit, terms: string[], snippetTokens: number): CompactHit
     date: u.date ?? null,
     score: roundScore(h.score),
     snippet: snippetOf(u.text, terms, snippetTokens),
-    estimated_tokens: estimateTokens(u),
+    estimated_tokens: estimateFullTokens(u),
     verified: u.verified ?? false,
   };
 }
@@ -151,12 +174,7 @@ function fullHit(h: Hit): FullHit {
   };
 }
 
-function renderHits(
-  hits: Hit[],
-  query: string,
-  mode: ResponseMode,
-  snippetTokens: number,
-): IdsOnlyHit[] | CompactHit[] | FullHit[] {
+function renderHits(hits: Hit[], query: string, mode: ResponseMode, snippetTokens: number): SearchHit[] {
   switch (mode) {
     case "ids_only":
       return hits.map((h) => ({ id: h.unit.id, score: roundScore(h.score) }));
@@ -169,20 +187,46 @@ function renderHits(
   }
 }
 
+/** Per-result shrink: trim whichever heavy field a hit carries so it fits `capTokens`. */
+function shrinkSearchHit(item: SearchHit, capTokens: number): SearchHit {
+  if ("text" in item) {
+    const rest = estimateTokens({ ...item, text: "" });
+    return { ...item, text: truncateToTokens(item.text, Math.max(MIN_SNIPPET_TOKENS, capTokens - rest)) };
+  }
+  if ("snippet" in item) {
+    const rest = estimateTokens({ ...item, snippet: "" });
+    return {
+      ...item,
+      snippet: truncateToTokens(item.snippet, Math.max(MIN_SNIPPET_TOKENS, capTokens - rest)),
+    };
+  }
+  return item; // ids_only — nothing to shrink
+}
+
+const EMPTY: Governed<SearchHit> = { results: [], token_estimate: 0, truncated: false, next_cursor: null };
+
 export async function handleSearchCorpus(
   params: unknown,
   requestUrl: string,
 ): Promise<Array<{ type: "text"; text: string }>> {
   const p = (params ?? {}) as SearchCorpusParams;
   const query = typeof p.query === "string" ? p.query.trim() : "";
-  if (!query) {
-    return [{ type: "text", text: JSON.stringify([]) }];
-  }
+  if (!query) return governedContent(EMPTY);
 
-  const mode = parseMode(p.response_mode);
-  const snippetTokens = parseSnippetTokens(p.snippet_tokens);
-  const rawLimit = typeof p.limit === "number" ? p.limit : DEFAULT_LIMIT;
-  const limit = Math.min(Math.max(1, Math.floor(rawLimit)), MAX_LIMIT);
+  const intent = parseIntent(p.intent);
+  const preset = intent ? INTENTS[intent] : null;
+  const mode = parseMode(p.response_mode) ?? preset?.search.responseMode ?? DEFAULT_MODE;
+  const snippetTokens =
+    parseSnippetTokens(p.snippet_tokens) ?? preset?.search.snippetTokens ?? DEFAULT_SNIPPET_TOKENS;
+
+  // `limit` is the legacy page-size knob; `max_results` supersedes it under governance.
+  const knobs = resolveKnobs({
+    intent: p.intent,
+    max_results: p.max_results ?? p.limit,
+    max_tokens: p.max_tokens,
+    max_tokens_per_result: p.max_tokens_per_result,
+  });
+  const offset = decodeCursorOffset(p.cursor);
 
   let units = await loadAskIndex(requestUrl);
 
@@ -203,8 +247,12 @@ export async function handleSearchCorpus(
     units = units.filter((u) => u.feed === collectionFilter);
   }
 
-  const hits = search(prepare(units), query, limit);
-  const results = renderHits(hits, query, mode, snippetTokens);
+  // Rank just deep enough to serve this page and detect a next one; the corpus is small
+  // (low hundreds of units) so ranking cost is linear and cheap. Render only the window
+  // from the cursor offset onward so `full` mode never materializes hits we'll drop.
+  const pool = search(prepare(units), query, offset + knobs.maxResults + 1);
+  const window = renderHits(pool.slice(offset), query, mode, snippetTokens);
+  const governed = govern(window, { knobs, baseOffset: offset, shrink: shrinkSearchHit });
 
-  return [{ type: "text", text: JSON.stringify(results) }];
+  return governedContent(governed);
 }
