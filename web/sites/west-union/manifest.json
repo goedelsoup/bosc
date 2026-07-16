@@ -1,10 +1,10 @@
 {
   "site": "west-union",
   "bundle_version": "1.0.0",
-  "contract_version": "1.24.0",
+  "contract_version": "1.25.0",
   "generated_at": "2026-07-08T21:17:59+00:00",
-  "feed_count": 23,
-  "row_total": 60,
+  "feed_count": 24,
+  "row_total": 132,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -183,6 +183,14 @@
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
       "count": 41
+    },
+    {
+      "name": "facts",
+      "path": "feeds/facts.json",
+      "media_type": "application/json",
+      "schema": "schemas/facts.schema.json",
+      "kind": "collection",
+      "count": 72
     },
     {
       "name": "catalog-index",

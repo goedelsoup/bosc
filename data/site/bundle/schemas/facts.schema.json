@@ -1,0 +1,200 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "facts feed",
+  "type": "array",
+  "items": {
+    "additionalProperties": false,
+    "description": "One normalized ``(subject, predicate, value, unit, status, evidence)`` fact.\n\nThe `facts` feed is a projection (`watermark.site.facts`), not a new extraction: every row\nre-keys a `ProvenancedValue` the bundle already ships (or the derived facility\n`PowerBasis`) into a flat, queryable tuple, so ``get_facts`` answers a fact question with a\ntiny retrieval instead of a whole-record pull. ``subject`` is a stable ``<kind>:<id>`` key\n(mirroring the catalog handle grammar) with a human ``subject_label``; ``predicate`` is a\nnormalized snake_case field name; ``status`` is the evidence-discipline tag\n(`watermark.provenance.evidence_tag`) derived from the value's ``source_kind``; ``feed``\nnames the source bundle feed the fact was projected from (a pointer, not a copy).",
+    "properties": {
+      "subject": {
+        "title": "Subject",
+        "type": "string"
+      },
+      "subject_label": {
+        "title": "Subject Label",
+        "type": "string"
+      },
+      "subject_kind": {
+        "title": "Subject Kind",
+        "type": "string"
+      },
+      "predicate": {
+        "title": "Predicate",
+        "type": "string"
+      },
+      "value": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Value"
+      },
+      "unit": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Unit"
+      },
+      "status": {
+        "enum": [
+          "verified",
+          "inference",
+          "reference",
+          "open"
+        ],
+        "title": "Status",
+        "type": "string"
+      },
+      "approximate": {
+        "default": false,
+        "title": "Approximate",
+        "type": "boolean"
+      },
+      "low": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Low"
+      },
+      "high": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "High"
+      },
+      "evidence": {
+        "$ref": "#/$defs/FactEvidence"
+      },
+      "feed": {
+        "title": "Feed",
+        "type": "string"
+      }
+    },
+    "required": [
+      "subject",
+      "subject_label",
+      "subject_kind",
+      "predicate",
+      "status",
+      "evidence",
+      "feed"
+    ],
+    "title": "FactItem",
+    "type": "object"
+  },
+  "$defs": {
+    "FactEvidence": {
+      "additionalProperties": false,
+      "description": "Where a normalized fact came from — the `Citation` shape, projected from a value's\nprovenance.\n\nA `ProvenancedValue` (the carrier of every typed numeric fact — economics, greenops,\nhydrology, air, facility power) records provenance as a single free-text ``citation``\nwith **no structured page**, so a projected fact keeps that text verbatim in\n``citation`` and lifts a repo-relative artifact path into ``source`` only when the text\n*is* one. ``page`` is populated **only** where the source genuinely carries one and is\n**never invented** — the chain-of-custody discipline (root CLAUDE.md): a value with no\npage yields ``page=null``, honestly.",
+      "properties": {
+        "source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source"
+        },
+        "source_kind": {
+          "default": "document",
+          "enum": [
+            "document",
+            "connector",
+            "reference",
+            "assumption",
+            "derived"
+          ],
+          "title": "Source Kind",
+          "type": "string"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page"
+        },
+        "citation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Citation"
+        },
+        "confidence": {
+          "default": "medium",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "asof": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Asof"
+        },
+        "verified": {
+          "description": "True when grounded in a record or a live gauge (``[verified]`` in prose).",
+          "readOnly": true,
+          "title": "Verified",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "verified"
+      ],
+      "title": "FactEvidence",
+      "type": "object"
+    }
+  }
+}

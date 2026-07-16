@@ -1,10 +1,10 @@
 {
   "site": "springfield",
   "bundle_version": "1.0.0",
-  "contract_version": "1.24.0",
+  "contract_version": "1.25.0",
   "generated_at": "2026-07-08T21:15:25+00:00",
-  "feed_count": 24,
-  "row_total": 63,
+  "feed_count": 25,
+  "row_total": 139,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -191,6 +191,14 @@
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
       "count": 42
+    },
+    {
+      "name": "facts",
+      "path": "feeds/facts.json",
+      "media_type": "application/json",
+      "schema": "schemas/facts.schema.json",
+      "kind": "collection",
+      "count": 76
     },
     {
       "name": "catalog-index",

@@ -1,0 +1,156 @@
+[
+  {
+    "subject": "platform:bosc",
+    "subject_label": "Watermark / BOSC platform",
+    "subject_kind": "platform",
+    "predicate": "ai_inferences",
+    "value": 1395.0,
+    "unit": "calls",
+    "status": "inference",
+    "approximate": false,
+    "low": null,
+    "high": null,
+    "evidence": {
+      "source": null,
+      "source_kind": "derived",
+      "page": null,
+      "citation": "Anthropic total tokens (5,580,000) ÷ 4000 avg tokens/call (the Admin API exposes no per-message count)",
+      "confidence": "low",
+      "asof": null,
+      "verified": false
+    },
+    "feed": "greenops"
+  },
+  {
+    "subject": "platform:bosc",
+    "subject_label": "Watermark / BOSC platform",
+    "subject_kind": "platform",
+    "predicate": "compute",
+    "value": 6366.0,
+    "unit": "vCPU-hrs",
+    "status": "inference",
+    "approximate": false,
+    "low": null,
+    "high": null,
+    "evidence": {
+      "source": null,
+      "source_kind": "derived",
+      "page": null,
+      "citation": "AWS billed instance-hours x vCPU/instance + GitHub Actions minutes x runner cores",
+      "confidence": "medium",
+      "asof": null,
+      "verified": false
+    },
+    "feed": "greenops"
+  },
+  {
+    "subject": "platform:bosc",
+    "subject_label": "Watermark / BOSC platform",
+    "subject_kind": "platform",
+    "predicate": "electricity",
+    "value": 0.0535,
+    "unit": "MWh",
+    "status": "inference",
+    "approximate": false,
+    "low": null,
+    "high": null,
+    "evidence": {
+      "source": null,
+      "source_kind": "derived",
+      "page": null,
+      "citation": "6366 vCPU-hrs x 7 W/vCPU x PUE 1.2",
+      "confidence": "low",
+      "asof": null,
+      "verified": false
+    },
+    "feed": "greenops"
+  },
+  {
+    "subject": "platform:bosc",
+    "subject_label": "Watermark / BOSC platform",
+    "subject_kind": "platform",
+    "predicate": "water",
+    "value": 52.2,
+    "unit": "gal",
+    "status": "inference",
+    "approximate": false,
+    "low": null,
+    "high": null,
+    "evidence": {
+      "source": null,
+      "source_kind": "derived",
+      "page": null,
+      "citation": "direct on-site cooling (site WUE) + upstream generation (source WUE)",
+      "confidence": "low",
+      "asof": null,
+      "verified": false
+    },
+    "feed": "greenops"
+  },
+  {
+    "subject": "platform:bosc",
+    "subject_label": "Watermark / BOSC platform",
+    "subject_kind": "platform",
+    "predicate": "water_budget_cap",
+    "value": 150.0,
+    "unit": "gal",
+    "status": "inference",
+    "approximate": false,
+    "low": null,
+    "high": null,
+    "evidence": {
+      "source": null,
+      "source_kind": "assumption",
+      "page": null,
+      "citation": "stated internal annual water-draw budget (a target, not metered)",
+      "confidence": "low",
+      "asof": null,
+      "verified": false
+    },
+    "feed": "greenops"
+  },
+  {
+    "subject": "platform:bosc",
+    "subject_label": "Watermark / BOSC platform",
+    "subject_kind": "platform",
+    "predicate": "water_direct",
+    "value": 25.4,
+    "unit": "gal",
+    "status": "inference",
+    "approximate": false,
+    "low": null,
+    "high": null,
+    "evidence": {
+      "source": null,
+      "source_kind": "derived",
+      "page": null,
+      "citation": "electricity x 1.8 L/kWh site WUE (direct on-site cooling), L → gal",
+      "confidence": "low",
+      "asof": null,
+      "verified": false
+    },
+    "feed": "greenops"
+  },
+  {
+    "subject": "platform:bosc",
+    "subject_label": "Watermark / BOSC platform",
+    "subject_kind": "platform",
+    "predicate": "water_indirect",
+    "value": 26.8,
+    "unit": "gal",
+    "status": "inference",
+    "approximate": false,
+    "low": null,
+    "high": null,
+    "evidence": {
+      "source": null,
+      "source_kind": "derived",
+      "page": null,
+      "citation": "electricity x 1.9 L/kWh source WUE (upstream generation), L → gal",
+      "confidence": "low",
+      "asof": null,
+      "verified": false
+    },
+    "feed": "greenops"
+  }
+]

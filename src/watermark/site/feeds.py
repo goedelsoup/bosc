@@ -136,7 +136,20 @@ from watermark.site.readiness import State, Tier  # the readiness vocabulary SSO
 #   addresses stay server-side. The spine the petition-connect + bulletin surfaces reference;
 #   absent → the feed is skipped and the section degrades. Back-compatible (additive feed +
 #   the `contact` catalog kind).
-CONTRACT_VERSION = "1.24.0"
+# 1.25.0: adds the `facts` collection feed — the normalized `(subject, predicate, value, unit,
+#   status, evidence)` projection over the bundle's already-provenanced numeric facts (#1587,
+#   epic #1579 Phase 3). A `catalog-index`-style post-pass (`watermark.site.facts`): it mints no
+#   values and copies no payloads, it re-keys each `ProvenancedValue` already in the economics /
+#   greenops / hydrology / air feeds (plus the derived facility `PowerBasis`) into one flat,
+#   queryable table so a fact question is a tiny retrieval + arithmetic, not a whole-record pull.
+#   `status` is the evidence-discipline tag derived from each value's `source_kind`
+#   (`watermark.provenance.evidence_tag`: document/connector→verified, reference→reference,
+#   assumption/derived→inference; `open` is reserved for unquantified facts). `evidence` reuses
+#   the shared provenance shape but `page` stays null where the source `ProvenancedValue` carries
+#   none — never invented (chain of custody). Powers the `get_facts` MCP tool. `rsei`/`records`
+#   projection + `aggregate_facts` (#1588) are deferred follow-ups. Back-compatible (an additive
+#   collection feed; registered in the `catalog` like any dataset, no new catalog-index kind).
+CONTRACT_VERSION = "1.25.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -190,6 +203,73 @@ class Figure(BaseModel):
     approximate: bool = False
     unit: str | None = None
     citation: Citation | None = None
+
+
+# --- facts feed (#1587) --------------------------------------------------------
+# The evidence-discipline vocabulary a normalized fact renders as: the three tags a
+# `source_kind` maps to (`watermark.provenance.evidence_tag`), plus `open` for an asserted-
+# but-unquantified fact (a known predicate with no value yet — a lead). A projection over the
+# provenanced feeds yields only verified/inference/reference; `open` rides along for the
+# readiness/leads tie-in (deferred).
+FactStatus = Literal["verified", "inference", "reference", "open"]
+
+
+class FactEvidence(BaseModel):
+    """Where a normalized fact came from — the `Citation` shape, projected from a value's
+    provenance.
+
+    A `ProvenancedValue` (the carrier of every typed numeric fact — economics, greenops,
+    hydrology, air, facility power) records provenance as a single free-text ``citation``
+    with **no structured page**, so a projected fact keeps that text verbatim in
+    ``citation`` and lifts a repo-relative artifact path into ``source`` only when the text
+    *is* one. ``page`` is populated **only** where the source genuinely carries one and is
+    **never invented** — the chain-of-custody discipline (root CLAUDE.md): a value with no
+    page yields ``page=null``, honestly.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    source: str | None = None  # repo-relative artifact path / dataset label / doc id, when known
+    source_kind: SourceKind = "document"
+    page: int | None = None  # 1-based page, only where the source carries it — never fabricated
+    citation: str | None = None  # the ProvenancedValue free-text citation, verbatim
+    confidence: Confidence = "medium"
+    asof: str | None = None  # ISO date/datetime for a live (connector) value
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def verified(self) -> bool:
+        """True when grounded in a record or a live gauge (``[verified]`` in prose)."""
+        return source_is_verified(self.source_kind)
+
+
+class FactItem(BaseModel):
+    """One normalized ``(subject, predicate, value, unit, status, evidence)`` fact.
+
+    The `facts` feed is a projection (`watermark.site.facts`), not a new extraction: every row
+    re-keys a `ProvenancedValue` the bundle already ships (or the derived facility
+    `PowerBasis`) into a flat, queryable tuple, so ``get_facts`` answers a fact question with a
+    tiny retrieval instead of a whole-record pull. ``subject`` is a stable ``<kind>:<id>`` key
+    (mirroring the catalog handle grammar) with a human ``subject_label``; ``predicate`` is a
+    normalized snake_case field name; ``status`` is the evidence-discipline tag
+    (`watermark.provenance.evidence_tag`) derived from the value's ``source_kind``; ``feed``
+    names the source bundle feed the fact was projected from (a pointer, not a copy).
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    subject: str  # canonical key, e.g. "facility:lima", "county:39003", "naics:39003:62"
+    subject_label: str  # human display, e.g. "Allen County, Ohio"
+    subject_kind: str  # site | county | state | facility | sector | hydrology-scenario | ...
+    predicate: str  # normalized snake_case field name, e.g. "genset_count", "demand_share_pct"
+    value: float | int | None = None  # None ⇒ an asserted-but-unquantified fact (status=open)
+    unit: str | None = None
+    status: FactStatus
+    approximate: bool = False  # the transcription `~` marker, as data
+    low: float | None = None  # quantitative uncertainty band (#760), carried through
+    high: float | None = None
+    evidence: FactEvidence
+    feed: str  # the source bundle feed this fact was projected from
 
 
 # --- records feed --------------------------------------------------------------

@@ -45,3 +45,25 @@ def source_is_verified(source_kind: SourceKind) -> bool:
     the evidence-discipline sense.
     """
     return source_kind in ("document", "connector")
+
+
+# The evidence-discipline tag vocabulary the prose + dossier speak (``[verified]`` /
+# ``[inference]`` / ``[reference]`` / ``[open]``). ``open`` is not derivable from a
+# ``SourceKind`` — it marks an asserted-but-*unquantified* fact (a known predicate with no
+# value yet), so it lives on the caller, not here.
+EvidenceTag = Literal["verified", "inference", "reference"]
+
+
+def evidence_tag(source_kind: SourceKind) -> EvidenceTag:
+    """Map a value's ``source_kind`` to its evidence-discipline tag (#1587 facts feed).
+
+    ``document``/``connector`` → ``verified``; ``reference`` → ``reference``;
+    ``assumption``/``derived`` → ``inference``. The complement of
+    :func:`source_is_verified`, but keeping the three non-``open`` tags distinct so a
+    normalized fact can render ``[reference]`` vs ``[inference]`` rather than a bare boolean.
+    """
+    if source_is_verified(source_kind):
+        return "verified"
+    if source_kind == "reference":
+        return "reference"
+    return "inference"

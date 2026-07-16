@@ -8,6 +8,7 @@ import {
   handleGetDocument,
   handleGetDocuments,
   handleGetEntities,
+  handleGetFacts,
   handleGetHypotheses,
   handleGetTimeline,
 } from "@watermark/functions/api/_lib/mcpTools/bundleReaders";
@@ -132,6 +133,72 @@ const RECORDS = [
   },
 ];
 
+const ev = (source_kind: string, extra: Record<string, unknown> = {}) => ({
+  source: null,
+  source_kind,
+  page: null,
+  citation: "cite",
+  confidence: "high",
+  asof: null,
+  verified: source_kind === "document" || source_kind === "connector",
+  ...extra,
+});
+
+const FACTS = [
+  {
+    subject: "facility:lima",
+    subject_label: "Lima data center",
+    subject_kind: "facility",
+    predicate: "genset_count",
+    value: 114,
+    unit: "count",
+    status: "verified",
+    low: null,
+    high: null,
+    evidence: ev("document"),
+    feed: "facility-power",
+  },
+  {
+    subject: "facility:lima",
+    subject_label: "Lima data center",
+    subject_kind: "facility",
+    predicate: "genset_rating",
+    value: 2.75,
+    unit: "MW",
+    status: "verified",
+    low: null,
+    high: null,
+    evidence: ev("document"),
+    feed: "facility-power",
+  },
+  {
+    subject: "facility:lima",
+    subject_label: "Lima data center",
+    subject_kind: "facility",
+    predicate: "facility_draw",
+    value: 347.9,
+    unit: "MW",
+    status: "inference",
+    low: 302.5,
+    high: 393.2,
+    evidence: ev("derived"),
+    feed: "facility-power",
+  },
+  {
+    subject: "county:39003",
+    subject_label: "Allen County, Ohio",
+    subject_kind: "county",
+    predicate: "total_employment",
+    value: 49690,
+    unit: "jobs",
+    status: "verified",
+    low: null,
+    high: null,
+    evidence: ev("connector"),
+    feed: "economics-baseline",
+  },
+];
+
 function feedRoute(name: string, data: unknown): FetchRoute {
   return { test: (url) => url.pathname === `/feeds/${name}.json`, respond: () => jsonResponse(200, data) };
 }
@@ -145,6 +212,7 @@ beforeEach(() => {
       feedRoute("hypotheses", HYPOTHESES),
       feedRoute("documents", DOCUMENTS),
       feedRoute("records", RECORDS),
+      feedRoute("facts", FACTS),
     ]),
   );
 });
@@ -344,5 +412,71 @@ describe("handleGetDocument", () => {
     expect(Object.keys(doc.fields as object).length).toBeLessThan(4); // list shed
     expect(doc.citation).toBeDefined(); // provenance never dropped
     expect(doc.metadata).toBeDefined();
+  });
+});
+
+describe("handleGetFacts", () => {
+  it("returns compact tuples (no evidence) in a governed envelope, sorted", async () => {
+    const env = await run(handleGetFacts, {});
+    expect(env.results.length).toBe(4);
+    // county:… sorts before facility:… ; within a subject, predicate ascending.
+    expect(env.results.map((f) => `${f.subject}/${f.predicate}`)).toEqual([
+      "county:39003/total_employment",
+      "facility:lima/facility_draw",
+      "facility:lima/genset_count",
+      "facility:lima/genset_rating",
+    ]);
+    expect(env.results[0].evidence).toBeUndefined(); // compact by default
+    expect(env.results[0]).toMatchObject({ value: 49690, unit: "jobs", status: "verified" });
+    expect(env.next_cursor).toBeNull();
+  });
+
+  it("filters by subject flexibly (key / label / kind, case-insensitive)", async () => {
+    const byKind = await run(handleGetFacts, { subject: "facility" });
+    expect(byKind.results.every((f) => f.subject === "facility:lima")).toBe(true);
+    expect(byKind.results.length).toBe(3);
+    const byLabel = await run(handleGetFacts, { subject: "allen county" });
+    expect(byLabel.results.map((f) => f.subject)).toEqual(["county:39003"]);
+  });
+
+  it("filters by predicate list and computes the motivating example", async () => {
+    const env = await run(handleGetFacts, {
+      subject: "facility",
+      predicate: ["genset_count", "genset_rating"],
+    });
+    const byPred = Object.fromEntries(env.results.map((f) => [f.predicate, f.value as number]));
+    expect(Object.keys(byPred).sort()).toEqual(["genset_count", "genset_rating"]);
+    expect(byPred.genset_count * byPred.genset_rating).toBeCloseTo(313.5);
+  });
+
+  it("accepts a single predicate string and filters by status", async () => {
+    const one = await run(handleGetFacts, { predicate: "total_employment" });
+    expect(one.results.map((f) => f.subject)).toEqual(["county:39003"]);
+    const inf = await run(handleGetFacts, { status: "inference" });
+    expect(inf.results.map((f) => f.predicate)).toEqual(["facility_draw"]);
+  });
+
+  it("attaches evidence + the uncertainty band only when requested", async () => {
+    const withEv = await run(handleGetFacts, {
+      subject: "facility",
+      predicate: "facility_draw",
+      include_evidence: true,
+    });
+    const draw = withEv.results.find((f) => f.predicate === "facility_draw");
+    expect(draw?.evidence).toMatchObject({ source_kind: "derived", page: null, verified: false });
+    expect(draw?.low).toBe(302.5);
+    expect(draw?.high).toBe(393.2);
+    const compact = await run(handleGetFacts, { predicate: "genset_count" });
+    expect(compact.results[0].evidence).toBeUndefined();
+  });
+
+  it("paginates with a cursor", async () => {
+    const first = await run(handleGetFacts, { max_results: 2 });
+    expect(first.results.length).toBe(2);
+    expect(first.next_cursor).not.toBeNull();
+    expect(decodeCursorOffset(first.next_cursor)).toBe(2);
+    const second = await run(handleGetFacts, { max_results: 2, cursor: first.next_cursor });
+    expect(second.results.length).toBe(2);
+    expect(second.next_cursor).toBeNull();
   });
 });
