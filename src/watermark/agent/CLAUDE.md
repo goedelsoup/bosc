@@ -37,6 +37,17 @@ Wraps the Claude Agent SDK and the Anthropic Messages API. Defers to the root
     and only carries a data-center campus node where a `bosc-fm2` discharge is committed. The
     remaining Lima-specific hydrology tools (`stormwater_runoff`, `hydrology_scenario`,
     `tier1_swmm`) still return a `_reference_only(...)` notice off-home — tracked in #900.
+- `yidam_tools.py` — a **second** in-process SDK MCP server (`yidam`, namespace
+  `mcp__yidam__*`), BOSC's Python realization of `yidam serve --mcp` (#1563). It serves the
+  **yidam corpus mirror** (`watermark.site.corpus_mirror`, Epic #1560) — the committed corpus
+  projected into `yidam://corpus/<class>/<name>` nodes — so the agent can `list` / `read` /
+  `query` nodes and run `open_questions` over the projected method-layer graph (entities,
+  relationships, concepts, people, leads, hypotheses, `[open]` claims). It builds the mirror
+  **in-memory** for the active site (offline read of committed corpus, cached per turn) rather
+  than reading the git-ignored `.yidam/corpus/` tree, so it never depends on a prior `export`.
+  The SDK's in-process server exposes **tools only** (no MCP resources), so the
+  `yidam://corpus/*` "resources" are delivered as list/read tools (nodes still carry the URI).
+  Wired into `client.py` via `enable_yidam` (default on, rides on `enable_tools`).
 - Models come from `get_settings()` (`WATERMARK_MODEL` for research, `WATERMARK_EXTRACT_MODEL`
   for bulk extraction) — never hardcode a model id here.
 - Figures come from the rendered **image**, not the OCR text layer; the extractor

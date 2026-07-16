@@ -13,7 +13,7 @@ import pytest
 from claude_agent_sdk import AssistantMessage, ResultMessage, TextBlock, ToolUseBlock
 
 from watermark.agent import client as client_mod
-from watermark.agent import tools
+from watermark.agent import tools, yidam_tools
 from watermark.agent.client import DEFAULT_SYSTEM_PROMPT, RESEARCH_SKILLS, ResearchAgent
 from watermark.agent.extractor import StructuredExtractor
 from watermark.config import Settings
@@ -229,10 +229,28 @@ def test_options_wire_the_discipline_prompt_and_research_skills() -> None:
     assert opts.skills == RESEARCH_SKILLS
     assert opts.setting_sources == ["project"]
     # Setting `skills` lets the SDK add the `Skill` tool itself — our allowlist stays the
-    # read-only BOSC tools (no Bash/Write/etc. leak in).
-    assert opts.allowed_tools == tools.ALLOWED_TOOL_NAMES
+    # read-only BOSC tools (no Bash/Write/etc. leak in). #1563 appends the yidam corpus-mirror
+    # backend's `mcp__yidam__*` tools (enabled by default).
+    assert opts.allowed_tools == tools.ALLOWED_TOOL_NAMES + yidam_tools.ALLOWED_TOOL_NAMES
     assert len(tools.ALLOWED_TOOL_NAMES) == 25  # +search_web, +fetch_url (#1048)
+    assert len(yidam_tools.ALLOWED_TOOL_NAMES) == 4  # list/read/query/open-questions (#1563)
     assert "data-center-sweep" in RESEARCH_SKILLS  # +data-center-sweep (#1049)
+
+
+def test_yidam_backend_wires_a_second_server_and_can_be_disabled() -> None:
+    # #1563: the yidam corpus-mirror backend is a second in-process MCP server, on by default.
+    opts = ResearchAgent()._options()
+    assert set(opts.mcp_servers) == {tools.SERVER_NAME, yidam_tools.YIDAM_SERVER_NAME}
+    assert opts.allowed_tools[-1] == "mcp__yidam__yidam_open_questions"
+
+    # enable_yidam=False drops the server + its tools, leaving only the base BOSC tools.
+    bare = ResearchAgent(enable_yidam=False)._options()
+    assert set(bare.mcp_servers) == {tools.SERVER_NAME}
+    assert bare.allowed_tools == tools.ALLOWED_TOOL_NAMES
+
+    # enable_tools=False drops both servers entirely.
+    none = ResearchAgent(enable_tools=False)._options()
+    assert none.mcp_servers is None or none.mcp_servers == {}
 
 
 def test_per_task_key_routes_into_the_agent_subprocess_env() -> None:
