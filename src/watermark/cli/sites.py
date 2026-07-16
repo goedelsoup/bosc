@@ -135,9 +135,7 @@ def sites_check() -> None:
     if _REGISTRY_PATH.exists():
         actual = _REGISTRY_PATH.read_text(encoding="utf-8")
         if actual != expected:
-            errors.append(
-                f"{_REGISTRY_REL} is out of sync — run `watermark sites sync`"
-            )
+            errors.append(f"{_REGISTRY_REL} is out of sync — run `watermark sites sync`")
     else:
         errors.append(f"{_REGISTRY_REL} does not exist — run `watermark sites sync`")
 
