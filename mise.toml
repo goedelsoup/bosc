@@ -109,6 +109,38 @@ run = [
 description = "Regenerate the content bundle the web site reads (watermark export → data/site/bundle/)"
 run = "uv run watermark export"
 
+# === yidam corpus mirror (epic #1560 / #1561 / #1562) =======================
+# `watermark export` (and `watermark corpus-mirror`) projects the committed corpus into yidam
+# node format under the git-ignored .yidam/corpus/ and regenerates the yidam reports
+# (corpus-index / open-questions / graph-check / lint) under .yidam/reports/. BOSC replicates
+# yidam's report logic in Python (watermark.site.corpus_mirror), so the mirror regenerates
+# offline with no Rust toolchain — the pinned upstream is .yidam.toml.
+#
+# The real `yidam` CLI is OPTIONAL. It is not published to crates.io and is not a `[tools]`
+# entry here (building it needs Rust 1.88 + protoc + lancedb — out of scope for BOSC's CI); to
+# use it, build it from the pinned ref (`cargo install --path yidam/cli` in a yidam checkout).
+# When it is on PATH, the `yidam-*` tasks below run its reports over the SAME mirror to
+# cross-check the Python replicas.
+[tasks.corpus-mirror]
+description = "Regenerate the yidam corpus mirror + reports for the active site (Python engine)."
+run = "uv run watermark corpus-mirror"
+
+[tasks.yidam-graph-check]
+description = "Cross-check the mirror with the real yidam CLI (optional; needs `yidam` on PATH)."
+run = "yidam graph-check"
+
+[tasks.yidam-corpus-index]
+description = "Regenerate the corpus index with the real yidam CLI (optional)."
+run = "yidam corpus-index"
+
+[tasks.yidam-open-questions]
+description = "List open questions with the real yidam CLI (optional)."
+run = "yidam open-questions"
+
+[tasks.yidam-lint]
+description = "Lint the mirror with the real yidam CLI (optional; advisory)."
+run = "yidam lint --warn"
+
 [tasks.onboard-site]
 description = "Bootstrap a site's connector data — the catalog DAG in dependency order (#1025)"
 usage = '''
