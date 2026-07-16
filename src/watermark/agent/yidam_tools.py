@@ -46,6 +46,10 @@ YIDAM_SERVER_NAME = "yidam"
 # id or this full URI interchangeably.
 URI_SCHEME = "yidam://corpus/"
 
+# Cap a single query's result window — the corpus is small (Lima ≈ 170 nodes), so this is a
+# sanity bound on a caller-supplied `limit`, not a paging mechanism.
+_MAX_QUERY_RESULTS = 100
+
 _CLASS_LIST = "|".join(CLASSES)
 
 
@@ -81,11 +85,18 @@ def node_uri(node: MirrorNode) -> str:
 
 
 def normalize_id(raw: str) -> str:
-    """Accept a ``yidam://corpus/<class>/<name>`` URI, a bare ``<class>/<name>`` id, or a
-    ``<name>.yml`` file path and reduce it to the canonical ``<class>/<name>`` id (or bare name)."""
+    """Reduce any node reference to its canonical ``<class>/<name>`` id (or bare name).
+
+    Accepts a ``yidam://corpus/<class>/<name>`` URI, a bare ``<class>/<name>`` id, a
+    ``<name>.yml`` file path, or a **rendered relative link target** — a node's outgoing links
+    serialize relative to its class dir, so a cross-class edge reads ``../<class>/<name>.yml``.
+    Dropping the leading ``../`` traversal lets the agent follow a link straight into
+    :func:`find_node`."""
     s = (raw or "").strip()
     if s.startswith(URI_SCHEME):
         s = s[len(URI_SCHEME) :]
+    while s.startswith("../"):
+        s = s[len("../") :]
     s = s.strip("/")
     if s.endswith(".yml"):
         s = s[: -len(".yml")]
@@ -108,19 +119,18 @@ def list_nodes(mirror: Mirror, *, node_class: str | None = None) -> list[MirrorN
     return sorted(nodes, key=lambda n: n.id)
 
 
-def _haystack(node: MirrorNode) -> str:
-    """The searchable text for a node — label, description, name, and its projected meta."""
-    return " ".join((node.label, node.description, node.name, str(node.meta))).lower()
-
-
 def query_nodes(
     mirror: Mirror, query: str, *, node_class: str | None = None, limit: int = 20
 ) -> list[MirrorNode]:
     """Rank nodes by a case-insensitive term match over label > description/name > meta.
 
     A whitespace-tokenized ``query``; label hits weigh most, then name/description, then the
-    projected provenance meta. Empty/zero-score nodes are dropped; ties break on ``id``.
+    projected provenance meta. Empty/zero-score nodes are dropped; ties break on ``id``. A
+    non-positive ``limit`` returns nothing; a positive one is capped at :data:`_MAX_QUERY_RESULTS`.
     """
+    if limit <= 0:
+        return []
+    limit = min(limit, _MAX_QUERY_RESULTS)
     terms = [t for t in re.split(r"\s+", query.lower().strip()) if t]
     if not terms:
         return []
@@ -142,7 +152,7 @@ def query_nodes(
         if score > 0:
             scored.append((score, node))
     scored.sort(key=lambda s: (-s[0], s[1].id))
-    return [node for _, node in scored[: max(1, limit)]]
+    return [node for _, node in scored[:limit]]
 
 
 def open_question_nodes(mirror: Mirror) -> list[MirrorNode]:
