@@ -1,5 +1,5 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
+import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 /**
  * The economy section hub (design "Chrome", the 5-tab site bar). The economic ground the
@@ -8,10 +8,10 @@ export const getStaticPaths = selectableSitePaths;
  * economics prose companion. A hub like the environment hub; doors point to real routes.
  */
 import Base from "~/layouts/Base.astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import type { EconomicBaseline } from "~/lib/feeds";
-import { withBase, withSite } from "~/lib/site";
-import { activeStory, chapterHref } from "~/lib/walk";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { EconomicBaseline } from "@watermark/core/feeds";
+import { withBase, withSite } from "@watermark/core/site";
+import { activeStory, chapterHref } from "@watermark/core/walk";
 
 // The cost-of-opacity door links THIS site's own "cost of opacity" chapter — resolved from the
 // current site's surfaced story (#1256), never the Lima-pinned `storyUrl`. It's shown only when

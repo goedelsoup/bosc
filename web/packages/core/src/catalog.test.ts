@@ -210,7 +210,7 @@ describe("catalog kind parity (#1093)", () => {
     // The schema is generated from `bosc.site.feeds.CatalogKind`, so this pins the two tiers'
     // kind vocabularies together — adding a kind on one side without the other fails CI.
     const schemaPath = fileURLToPath(
-      new URL("../../../data/site/bundle/schemas/catalog-index.schema.json", import.meta.url),
+      new URL("../../../../data/site/bundle/schemas/catalog-index.schema.json", import.meta.url),
     );
     const schema = JSON.parse(readFileSync(schemaPath, "utf-8")) as {
       $defs: { CatalogAtom: { properties: { kind: { enum: string[] } } } };

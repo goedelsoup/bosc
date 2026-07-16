@@ -1,10 +1,10 @@
 ---
-import { selectableSitePaths, siteForSlug } from "~/lib/sites";
+import { selectableSitePaths, siteForSlug } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
-import { hasFeed, loadManifest } from "~/lib/bundle";
-import { isReferenceSite } from "~/lib/readiness";
-import { withSite } from "~/lib/site";
+import { hasFeed, loadManifest } from "@watermark/core/bundle";
+import { isReferenceSite } from "@watermark/core/readiness";
+import { withSite } from "@watermark/core/site";
 
 // The section-lead + hub-count are Lima's real hydrology (the 7Q10 design low flow), so they're
 // gated to the reference build; a peer site reads its own place + receiving water from the

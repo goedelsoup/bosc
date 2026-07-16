@@ -7,7 +7,7 @@
  * exactly like /ask (a client index can't search without JS).
  */
 import Base from "../layouts/Base.astro";
-import { withBase, withSite } from "../lib/site";
+import { withBase, withSite } from "@watermark/core/site";
 
 const q = Astro.url.searchParams.get("q") ?? "";
 const base = import.meta.env.BASE_URL || "/";

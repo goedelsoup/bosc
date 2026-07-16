@@ -1,13 +1,13 @@
 ---
-import { withSitePaths } from "~/lib/sites";
+import { withSitePaths } from "@watermark/core/sites";
 // One deep-linkable page per source document (epic #274 / D2) — good for citations.
 // Resolves the doc from the documents feed and renders the tiered <DocViewer>.
 import DocViewer from "~/components/DocViewer.astro";
 import Base from "~/layouts/Base.astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import { docAccess } from "~/lib/docView";
-import { type DocumentCollectionItem, type DocumentEntry, formatBytes } from "~/lib/feeds";
-import { withSite } from "~/lib/site";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import { docAccess } from "@watermark/core/docView";
+import { type DocumentCollectionItem, type DocumentEntry, formatBytes } from "@watermark/core/feeds";
+import { withSite } from "@watermark/core/site";
 
 export function getStaticPaths() {
   return withSitePaths(() => {

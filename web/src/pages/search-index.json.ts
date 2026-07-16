@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { buildSearchIndex } from "../lib/search";
+import { buildSearchIndex } from "@watermark/core/search";
 
 // Static endpoint: emits `/search-index.json` at build time. The dependency-free
 // client matcher (scripts/search.ts) fetches it. URLs inside are root-absolute

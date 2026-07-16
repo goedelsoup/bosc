@@ -1,7 +1,7 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
-import { LEGAL } from "./lib/legal";
-import { REFERENCE } from "./lib/reference";
+import { LEGAL } from "@watermark/core/legal";
+import { REFERENCE } from "@watermark/core/reference";
 
 // The `stories` collection (#724/#730): a site's *story* as data — one MDX file per chapter
 // under `src/content/stories/<site>/<codename>/<slug>.mdx`. The frontmatter is the chapter

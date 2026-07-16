@@ -8,8 +8,8 @@
  */
 import { getCollection, render } from "astro:content";
 import Base from "~/layouts/Base.astro";
-import { bySlug } from "~/lib/narrative";
-import { withBase } from "~/lib/site";
+import { bySlug } from "@watermark/core/narrative";
+import { withBase } from "@watermark/core/site";
 
 export async function getStaticPaths() {
   // Only the curated narrative set (lib/narrative.ts) is published; the glob may

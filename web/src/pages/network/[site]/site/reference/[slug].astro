@@ -1,10 +1,10 @@
 ---
-import { withSitePaths } from "~/lib/sites";
+import { withSitePaths } from "@watermark/core/sites";
 import { getCollection, render } from "astro:content";
 import Base from "~/layouts/Base.astro";
-import { isAvailable } from "~/lib/readiness";
-import { refBySlug, scopedReference } from "~/lib/reference";
-import { withSite } from "~/lib/site";
+import { isAvailable } from "@watermark/core/readiness";
+import { refBySlug, scopedReference } from "@watermark/core/reference";
+import { withSite } from "@watermark/core/site";
 
 export async function getStaticPaths() {
   // Only the curated reference set (lib/reference.ts) is published.

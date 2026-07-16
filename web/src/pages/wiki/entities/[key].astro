@@ -2,12 +2,12 @@
 import type { GetStaticPaths } from "astro";
 import Base from "~/layouts/Base.astro";
 import ProfileHeader from "~/components/ProfileHeader.astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import { slugify, type EntityNode, type PersonItem, type RelationshipEdge } from "~/lib/feeds";
-import type { ProfileAttr, ProfileHeaderData, ProfileRel } from "~/lib/profile";
-import type { FigureStatData } from "~/lib/viz";
-import { entityHref } from "~/lib/entityLinks";
-import { withBase, withSite } from "~/lib/site";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import { slugify, type EntityNode, type PersonItem, type RelationshipEdge } from "@watermark/core/feeds";
+import type { ProfileAttr, ProfileHeaderData, ProfileRel } from "@watermark/core/profile";
+import type { FigureStatData } from "@watermark/core/viz";
+import { entityHref } from "@watermark/core/entityLinks";
+import { withBase, withSite } from "@watermark/core/site";
 
 export const getStaticPaths = (() => {
   const entities = hasFeed("entities") ? loadFeed<EntityNode[]>("entities") : [];

@@ -5,7 +5,7 @@
 // Admin view: search all users by email → edit groups + adminSites.
 // Site-admin view: same, but the API only returns users in the caller's site scope.
 
-import { withBase } from "../lib/base";
+import { withBase } from "@watermark/core/base";
 
 const LOGIN_PATH = withBase("/account/login");
 const USERS_URL = withBase("/api/admin/users");

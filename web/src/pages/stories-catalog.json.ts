@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { loadCatalog } from "../lib/catalogBuild";
+import { loadCatalog } from "@watermark/core/catalogBuild";
 
 // Static endpoint: emits `/stories-catalog.json` at build time (#1095) — the hydrated catalog the
 // /api/stories write path validates handles against server-side (functions/api/_lib/catalogAsset.ts

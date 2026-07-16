@@ -14,10 +14,10 @@
  * viewer page, which is dev-full / prod-gated. SSR-readable — the <DocViewer> embed
  * degrades to its own download/open affordances with JS off.
  */
-import type { DocumentEntry } from "../lib/feeds";
-import type { BlockField } from "../lib/recordBlock";
-import { withBase, withSite } from "../lib/site";
-import type { TeardownPin, TeardownSource } from "../lib/teardown";
+import type { DocumentEntry } from "@watermark/core/feeds";
+import type { BlockField } from "@watermark/core/recordBlock";
+import { withBase, withSite } from "@watermark/core/site";
+import type { TeardownPin, TeardownSource } from "@watermark/core/teardown";
 import DocViewer from "./DocViewer.astro";
 
 interface Props {

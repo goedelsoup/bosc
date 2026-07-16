@@ -16,9 +16,9 @@ import PathWayfinding from "~/components/PathWayfinding.astro";
 import { STORY_COMPONENTS } from "~/components/story";
 import StoryComingSoon from "~/components/story/StoryComingSoon.astro";
 import Base from "~/layouts/Base.astro";
-import { siteBase } from "~/lib/routes";
-import { SITES, siteForSlug, storyComingSoon } from "~/lib/sites";
-import { withBase } from "~/lib/site";
+import { siteBase } from "@watermark/core/routes";
+import { SITES, siteForSlug, storyComingSoon } from "@watermark/core/sites";
+import { withBase } from "@watermark/core/site";
 import {
   type Story,
   chapterHref,
@@ -26,7 +26,7 @@ import {
   storyContentsHref,
   storyFor,
   storyHomeHref,
-} from "~/lib/walk";
+} from "@watermark/core/walk";
 import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {

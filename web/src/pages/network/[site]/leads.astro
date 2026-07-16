@@ -15,7 +15,7 @@
 import Base from "~/layouts/Base.astro";
 import Icon from "~/components/Icon.astro";
 import SiteNeeds from "~/components/SiteNeeds.astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import {
   KIND_META,
   LEAD_FILTERS,
@@ -25,10 +25,10 @@ import {
   STATUS_META,
   leadCount,
   leadStats,
-} from "~/lib/leads";
-import { isReferenceSite, lockedSections } from "~/lib/readiness";
-import { withBase, withSite } from "~/lib/site";
-import { activeSite, selectableSitePaths, siteForSlug, siteState } from "~/lib/sites";
+} from "@watermark/core/leads";
+import { isReferenceSite, lockedSections } from "@watermark/core/readiness";
+import { withBase, withSite } from "@watermark/core/site";
+import { activeSite, selectableSitePaths, siteForSlug, siteState } from "@watermark/core/sites";
 
 // One `network/[site]/…` route per selectable site (#724/#734); Lima alone today.
 export const getStaticPaths = selectableSitePaths;

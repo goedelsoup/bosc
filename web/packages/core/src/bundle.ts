@@ -28,7 +28,21 @@ import type { HypothesisItem } from "./feeds";
 import { LIMA_SLUG } from "./routes";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const FRONTEND_ROOT = resolve(HERE, "..", "..");
+// `web/` (the Astro frontend root) — the anchor for the committed-bundle fallback paths below
+// (`FRONTEND_ROOT/../data/...`). Since Epic #1549 this module lives at web/packages/core/src, so
+// we can't count a fixed number of `..`; walk up to the directory that holds astro.config.ts.
+// That's robust to the extra nesting AND to the pnpm symlink layout (web/node_modules/@watermark/
+// core → …/packages/core). Only ever evaluated in Node/build contexts — the Workers-runtime
+// function closure never imports bundle.ts, so `existsSync` here is safe.
+function findFrontendRoot(start: string): string {
+  let dir = start;
+  for (let i = 0; i < 8 && dir !== dirname(dir); i++) {
+    if (existsSync(join(dir, "astro.config.ts"))) return dir;
+    dir = dirname(dir);
+  }
+  return resolve(start, "..", "..", ".."); // fallback: web/packages/core/src → web/
+}
+const FRONTEND_ROOT = findFrontendRoot(HERE);
 
 /**
  * The active network site (#724/#739) — an ambient context so every `loadFeed`/`hasFeed` reads

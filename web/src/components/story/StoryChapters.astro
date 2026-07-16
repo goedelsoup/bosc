@@ -5,7 +5,7 @@
  * `Story` model, so it lists whatever chapters a site's story registers. Reuses the existing
  * `.walk-chapters` site styles (no scoped CSS → safe to import in MDX with no chunk leak).
  */
-import { type Story, chapterHref } from "~/lib/walk";
+import { type Story, chapterHref } from "@watermark/core/walk";
 
 interface Props {
   story: Story;

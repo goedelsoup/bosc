@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import type { SeasonalField } from "~/lib/feeds";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { SeasonalField } from "@watermark/core/feeds";
 
 // Static feed endpoint: exposes the `water-seasonal-field` feed (the seasonal net-atmospheric-
 // withdrawal climograph, one object per site) as a root-absolute JSON asset the deck.gl FieldLayer

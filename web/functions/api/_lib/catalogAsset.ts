@@ -5,7 +5,7 @@
 // per isolate). The Worker can't read the bundle off disk, so this is how server-side handle
 // validation gets its catalog at runtime.
 
-import { type Catalog, type CatalogAtom, catalogFromAtoms } from "../../../src/lib/catalog";
+import { type Catalog, type CatalogAtom, catalogFromAtoms } from "@watermark/core/catalog";
 import { fetchWithTimeout } from "./http";
 
 interface CatalogAsset {

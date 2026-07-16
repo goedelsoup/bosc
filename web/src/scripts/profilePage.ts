@@ -3,7 +3,7 @@
 // Fetches /api/account/profile + /api/account/notifications and populates the form.
 // Handles PATCH on form submit for each section independently.
 
-import { withBase } from "../lib/base";
+import { withBase } from "@watermark/core/base";
 
 const PROFILE_URL = "/api/account/profile";
 const NOTIF_URL = "/api/account/notifications";

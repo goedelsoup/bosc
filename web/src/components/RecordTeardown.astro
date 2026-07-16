@@ -13,8 +13,8 @@
 import EvidenceTag from "./EvidenceTag.astro";
 import RedactionReveal from "./RedactionReveal.astro";
 import TeardownSourceCard from "./TeardownSourceCard.astro";
-import type { TeardownLayout, TeardownRecord } from "../lib/teardown";
-import { resolveTeardown } from "../lib/teardownResolve";
+import type { TeardownLayout, TeardownRecord } from "@watermark/core/teardown";
+import { resolveTeardown } from "@watermark/core/teardownResolve";
 
 interface Props {
   record: TeardownRecord;

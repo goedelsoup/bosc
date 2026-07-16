@@ -111,7 +111,7 @@ export async function loadStories(): Promise<Story[]> {
 // Read every chapter's frontmatter at build, plugin-free: `?raw` gives the file text (no MDX
 // transform needed, so this resolves the same in vitest as in the Astro build), and we parse the
 // YAML frontmatter ourselves. Build-only — `walk.ts` has no client consumers (like `bundle.ts`).
-const STORY_RAW = import.meta.glob("../content/stories/**/*.mdx", {
+const STORY_RAW = import.meta.glob("../../../src/content/stories/**/*.mdx", {
   eager: true,
   query: "?raw",
   import: "default",

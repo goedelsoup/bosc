@@ -9,7 +9,7 @@
 // `admin` role. The public report endpoint feeds the queue; the revalidate action can also be driven
 // by an external scheduler (cron POST) since it's a plain job over one table.
 
-import { HANDLE_RENAMES } from "../../../src/lib/handleRenames";
+import { HANDLE_RENAMES } from "@watermark/core/handleRenames";
 import { loadCatalogAsset } from "../_lib/catalogAsset";
 import { json, parseJsonBody } from "../_lib/http";
 import { revalidateAll } from "../_lib/revalidateStories";

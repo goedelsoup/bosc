@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { activeSite, loadManifest } from "../lib/bundle";
+import { activeSite, loadManifest } from "@watermark/core/bundle";
 
 // Static endpoint: emits the MCP resource descriptors for readable bundle feeds.
 // The MCP `resources/list` handler fetches this at runtime to build its response (#915).

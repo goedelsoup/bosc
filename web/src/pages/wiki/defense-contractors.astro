@@ -1,8 +1,8 @@
 ---
 import Base from "~/layouts/Base.astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import { slugify, type DefenseContractors } from "~/lib/feeds";
-import { withBase, withSite } from "~/lib/site";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import { slugify, type DefenseContractors } from "@watermark/core/feeds";
+import { withBase, withSite } from "@watermark/core/site";
 
 const dc = hasFeed("defense-contractors") ? loadFeed<DefenseContractors>("defense-contractors") : null;
 const contractors = dc?.contractors ?? [];

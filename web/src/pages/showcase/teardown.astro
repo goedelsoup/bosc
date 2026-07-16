@@ -10,8 +10,8 @@ import Base from "~/layouts/Base.astro";
 import BackLink from "~/components/BackLink.astro";
 import EvidenceLegend from "~/components/EvidenceLegend.astro";
 import RecordTeardown from "~/components/RecordTeardown.astro";
-import { OPC_TEARDOWN, RDA_TEARDOWN } from "~/lib/teardowns";
-import { withSite } from "~/lib/site";
+import { OPC_TEARDOWN, RDA_TEARDOWN } from "@watermark/core/teardowns";
+import { withSite } from "@watermark/core/site";
 
 // Literal braces would be parsed as JSX expressions inside markup, so the
 // contract snippet is a plain string.

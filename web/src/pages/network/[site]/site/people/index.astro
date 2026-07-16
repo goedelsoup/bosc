@@ -1,10 +1,10 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
+import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import type { PersonItem } from "~/lib/feeds";
-import { withSite } from "~/lib/site";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { PersonItem } from "@watermark/core/feeds";
+import { withSite } from "@watermark/core/site";
 
 const people = hasFeed("people") ? loadFeed<PersonItem[]>("people") : [];
 ---

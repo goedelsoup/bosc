@@ -1,5 +1,5 @@
 ---
-import { withSitePaths } from "~/lib/sites";
+import { withSitePaths } from "@watermark/core/sites";
 /**
  * The Record Screen (design "Record Screen", #193): the per-record leaf at
  * /site/records/<group>/<id>. It opens with the reference Record Block (the
@@ -13,12 +13,12 @@ import Base from "~/layouts/Base.astro";
 import Breadcrumb from "~/components/Breadcrumb.astro";
 import RecordBlock from "~/components/RecordBlock.astro";
 import RecordTeardown from "~/components/RecordTeardown.astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import { slugify, type RecordItem } from "~/lib/feeds";
-import { groupLabel } from "~/lib/records";
-import { recordToBlock } from "~/lib/recordBlock";
-import { teardownForRel } from "~/lib/teardowns";
-import { withSite } from "~/lib/site";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import { slugify, type RecordItem } from "@watermark/core/feeds";
+import { groupLabel } from "@watermark/core/records";
+import { recordToBlock } from "@watermark/core/recordBlock";
+import { teardownForRel } from "@watermark/core/teardowns";
+import { withSite } from "@watermark/core/site";
 
 export const getStaticPaths: GetStaticPaths = () =>
   withSitePaths(() => {

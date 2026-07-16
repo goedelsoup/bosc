@@ -10,10 +10,10 @@ import { fileURLToPath } from "node:url";
 import StoryChapters from "~/components/story/StoryChapters.astro";
 import StoryComingSoon from "~/components/story/StoryComingSoon.astro";
 import Base from "~/layouts/Base.astro";
-import { siteBase } from "~/lib/routes";
-import { siteHref } from "~/lib/site";
-import { SITES, storyComingSoon } from "~/lib/sites";
-import { type Story, chapterHref, storyFor, storyHomeHref } from "~/lib/walk";
+import { siteBase } from "@watermark/core/routes";
+import { siteHref } from "@watermark/core/site";
+import { SITES, storyComingSoon } from "@watermark/core/sites";
+import { type Story, chapterHref, storyFor, storyHomeHref } from "@watermark/core/walk";
 
 export async function getStaticPaths() {
   const paths = [];

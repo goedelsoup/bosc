@@ -11,10 +11,10 @@ import Base from "~/layouts/Base.astro";
 import FigureStat from "~/components/FigureStat.astro";
 import PartialSiteHome from "~/components/PartialSiteHome.astro";
 import StoryTeaser from "~/components/story/StoryTeaser.astro";
-import { isReferenceSite } from "~/lib/readiness";
-import { hasFeed, loadFeed, loadManifest } from "~/lib/bundle";
-import type { DocumentCollectionItem } from "~/lib/feeds";
-import { NARRATIVE } from "~/lib/narrative";
+import { isReferenceSite } from "@watermark/core/readiness";
+import { hasFeed, loadFeed, loadManifest } from "@watermark/core/bundle";
+import type { DocumentCollectionItem } from "@watermark/core/feeds";
+import { NARRATIVE } from "@watermark/core/narrative";
 import {
   activeSite,
   comingSoonStories,
@@ -23,10 +23,10 @@ import {
   selectableSitePaths,
   siteForSlug,
   siteState,
-} from "~/lib/sites";
-import type { FigureStatData } from "~/lib/viz";
-import { activeStory, chapterHref } from "~/lib/walk";
-import { withBase, withSite, withStory } from "~/lib/site";
+} from "@watermark/core/sites";
+import type { FigureStatData } from "@watermark/core/viz";
+import { activeStory, chapterHref } from "@watermark/core/walk";
+import { withBase, withSite, withStory } from "@watermark/core/site";
 
 // One `network/[site]/…` route per selectable site (#724/#734); Lima alone today.
 export const getStaticPaths = selectableSitePaths;

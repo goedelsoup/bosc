@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
-import { buildRenderCatalog } from "~/lib/renderCatalog";
-import { selectableSitePaths } from "~/lib/sites";
+import { buildRenderCatalog } from "@watermark/core/renderCatalog";
+import { selectableSitePaths } from "@watermark/core/sites";
 
 // Per-site render-catalog asset: emits `/network/<site>/stories-atoms.json` at build time (#1097) —
 // the hydrated atoms the reader/editor islands resolve each SDM `atom` handle against. One asset per

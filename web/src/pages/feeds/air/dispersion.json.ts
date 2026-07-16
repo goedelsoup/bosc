@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import type { DispersionField } from "~/lib/feeds";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { DispersionField } from "@watermark/core/feeds";
 
 // Static feed endpoint: exposes the `air-dispersion-field` feed (the gridded AERMOD
 // concentration surfaces, one per pollutant) as a root-absolute JSON asset the deck.gl

@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
-import { hasFeed, loadFeed } from "../lib/bundle";
-import type { DocumentCollectionItem } from "../lib/feeds";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { DocumentCollectionItem } from "@watermark/core/feeds";
 
 // Static endpoint: emits `/published-documents.json` at build time (#280) — the set of
 // data/documents rels cleared for PUBLIC serving (`DocumentItem.published`, set by the

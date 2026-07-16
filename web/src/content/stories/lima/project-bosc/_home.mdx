@@ -6,9 +6,9 @@ pageTitle: "Project BOSC — the story"
 description: "The Project BOSC story: told through the records, with every figure checkable."
 ---
 
-import { hasFeed, loadFeed, loadManifest } from "~/lib/bundle";
-import { withBase, withSite } from "~/lib/site";
-import { chapterHref, storyContentsHref, storyFor } from "~/lib/walk";
+import { hasFeed, loadFeed, loadManifest } from "@watermark/core/bundle";
+import { withBase, withSite } from "@watermark/core/site";
+import { chapterHref, storyContentsHref, storyFor } from "@watermark/core/walk";
 
 export const story = storyFor("lima", "project-bosc");
 export const manifest = loadManifest();

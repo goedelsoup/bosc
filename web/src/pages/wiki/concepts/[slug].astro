@@ -2,11 +2,11 @@
 import type { GetStaticPaths } from "astro";
 import Base from "~/layouts/Base.astro";
 import ProfileHeader from "~/components/ProfileHeader.astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import type { ConceptItem } from "~/lib/feeds";
-import type { ProfileHeaderData, ProfileRel } from "~/lib/profile";
-import { withBase } from "~/lib/site";
-import { conceptBacklinks, norm, renderBody, wikiIndex } from "~/lib/wiki";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { ConceptItem } from "@watermark/core/feeds";
+import type { ProfileHeaderData, ProfileRel } from "@watermark/core/profile";
+import { withBase } from "@watermark/core/site";
+import { conceptBacklinks, norm, renderBody, wikiIndex } from "@watermark/core/wiki";
 
 export const getStaticPaths: GetStaticPaths = () => {
   const concepts = hasFeed("concepts") ? loadFeed<ConceptItem[]>("concepts") : [];

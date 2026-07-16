@@ -9,11 +9,11 @@
  * from lib/directory + the bundle feeds. Figures are counts or a dash, never invented.
  */
 import Base from "../layouts/Base.astro";
-import { hasFeed, loadFeed } from "../lib/bundle";
-import { LENS_ORDER, lensConfig } from "../lib/directory";
-import type { HypothesisItem } from "../lib/feeds";
-import { withBase, withSite, siteUrl } from "../lib/site";
-import { groupSites, SITE_STATUS_META, SITES, type SiteStatus } from "../lib/sites";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import { LENS_ORDER, lensConfig } from "@watermark/core/directory";
+import type { HypothesisItem } from "@watermark/core/feeds";
+import { withBase, withSite, siteUrl } from "@watermark/core/site";
+import { groupSites, SITE_STATUS_META, SITES, type SiteStatus } from "@watermark/core/sites";
 
 const totalSites = SITES.length;
 const basins = groupSites("basin").length;

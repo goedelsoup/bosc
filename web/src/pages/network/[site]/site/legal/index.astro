@@ -1,13 +1,13 @@
 ---
-import { selectableSitePaths } from "~/lib/sites";
+import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import { getCollection } from "astro:content";
 import Provenance from "~/components/Provenance.astro";
 import Base from "~/layouts/Base.astro";
-import { hasFeed, loadFeed } from "~/lib/bundle";
-import type { MeetingItem } from "~/lib/feeds";
-import { LEGAL, LEGAL_GROUPS, legalBySlug } from "~/lib/legal";
-import { withBase, withSite } from "~/lib/site";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { MeetingItem } from "@watermark/core/feeds";
+import { LEGAL, LEGAL_GROUPS, legalBySlug } from "@watermark/core/legal";
+import { withBase, withSite } from "@watermark/core/site";
 
 const meetings = hasFeed("meetings") ? loadFeed<MeetingItem[]>("meetings") : [];
 const sorted = [...meetings].sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
