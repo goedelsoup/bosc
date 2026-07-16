@@ -289,6 +289,21 @@ describe("handleSearchCorpus governance (#1581)", () => {
     expect((rec.text as string).endsWith("…")).toBe(true);
   });
 
+  it("collapses the heavy field toward a marker when metadata alone exhausts the cap", async () => {
+    // A tiny cap (clamped up to the 50-token floor) is still below this hit's provenance
+    // metadata, so the text budget is 0 — the field collapses to a marker instead of being
+    // padded back up to a fixed minimum (the pre-fix overshoot).
+    const env = await envelope({
+      query: "roundabout",
+      collection: "records",
+      site: "lima",
+      response_mode: "full",
+      max_tokens_per_result: 1,
+    });
+    const rec = env.results[0];
+    expect((rec.text as string).length).toBeLessThan(20);
+  });
+
   it("intent=fact_lookup seeds compact defaults; explicit knobs still win", async () => {
     const factLookup = await envelope({ query: "roundabout", intent: "fact_lookup" });
     // fact_lookup caps at 3 results and yields compact cards (no full text).

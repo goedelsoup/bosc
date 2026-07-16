@@ -162,15 +162,20 @@ describe("handleGetHypotheses", () => {
     const h2 = env.results.find((h) => h.id === "h2");
     expect((h1?.assessments as unknown[]).length).toBe(1);
     expect((h2?.assessments as unknown[]).length).toBe(0);
+    // The true total travels alongside the (possibly capped) list.
+    expect(h1?.assessments_total).toBe(1);
+    expect(h2?.assessments_total).toBe(0);
   });
 
-  it("strips assessment internals on an over-cap hypothesis", async () => {
+  it("strips assessment internals on an over-cap hypothesis, keeping the true total", async () => {
     const env = await run(handleGetHypotheses, { max_tokens_per_result: 60, max_tokens: 100000 });
     const h1 = env.results.find((h) => h.id === "h1");
     const assessments = h1?.assessments as Record<string, unknown>[];
     // Identity retained, heavy `fields` payload gone.
     expect(assessments[0]).toHaveProperty("tag");
     expect(assessments[0]).not.toHaveProperty("fields");
+    // assessments_total stays truthful even if the list itself was capped.
+    expect(h1?.assessments_total).toBe(2);
   });
 });
 

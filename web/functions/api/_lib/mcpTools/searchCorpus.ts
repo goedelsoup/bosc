@@ -187,18 +187,22 @@ function renderHits(hits: Hit[], query: string, mode: ResponseMode, snippetToken
   }
 }
 
-/** Per-result shrink: trim whichever heavy field a hit carries so it fits `capTokens`. */
+/**
+ * Per-result shrink: trim whichever heavy field a hit carries down to the room left under
+ * `capTokens` after the hit's provenance metadata. The field budget is the *remaining* room
+ * (floored at 0, so metadata that already exhausts the cap collapses the field to a marker
+ * rather than adding tokens back on top). Provenance (id/source/page/…) is never dropped, so
+ * a hit whose metadata alone exceeds `capTokens` stays marginally over — the evidentiary
+ * contract requires the citation, and the response is still hard-bounded by `max_tokens`.
+ */
 function shrinkSearchHit(item: SearchHit, capTokens: number): SearchHit {
   if ("text" in item) {
-    const rest = estimateTokens({ ...item, text: "" });
-    return { ...item, text: truncateToTokens(item.text, Math.max(MIN_SNIPPET_TOKENS, capTokens - rest)) };
+    const budget = Math.max(0, capTokens - estimateTokens({ ...item, text: "" }));
+    return { ...item, text: truncateToTokens(item.text, budget) };
   }
   if ("snippet" in item) {
-    const rest = estimateTokens({ ...item, snippet: "" });
-    return {
-      ...item,
-      snippet: truncateToTokens(item.snippet, Math.max(MIN_SNIPPET_TOKENS, capTokens - rest)),
-    };
+    const budget = Math.max(0, capTokens - estimateTokens({ ...item, snippet: "" }));
+    return { ...item, snippet: truncateToTokens(item.snippet, budget) };
   }
   return item; // ids_only — nothing to shrink
 }
