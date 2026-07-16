@@ -75,5 +75,11 @@ notes: >-
   its own; absent → the feed is skipped and the section locks). It's curated site content, not a
   catalog-tracked reference dataset, so it adds no new committed upstream; it's the spine the
   interactive petition-connect + bulletin surfaces reference.
+  The `facts` feed (#1587, contract 1.25.0) is the normalized `(subject, predicate, value, unit,
+  status, evidence)` projection over the bundle's already-provenanced numeric values — a
+  `catalog-index`-style post-pass (`watermark.site.facts`) that re-keys each `ProvenancedValue`
+  in the economics / greenops / hydrology / air feeds plus the derived facility `PowerBasis` into
+  one queryable table (powering the `get_facts` MCP tool). It reads only feeds/derivations already
+  declared above (and the profile-derived power basis), so it adds no new committed upstream.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.
