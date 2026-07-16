@@ -64,6 +64,17 @@ unit carries the item's provenance and a deep link to the page it lives on.
 Send `Accept: text/event-stream` to receive the answer **streamed** as SSE (below);
 otherwise the full answer is returned as one JSON object.
 
+**Programmatic access (ChatGPT plugin / agents).** An automated caller can't solve a
+Turnstile challenge, so a request bearing `Authorization: Bearer <ASK_PLUGIN_TOKEN>` stands
+in for the human check and may omit `turnstile_token` (#1578). The bypass is **off** unless
+the `ASK_PLUGIN_TOKEN` secret is set — with none bound, no header value authorizes and
+Turnstile stays required for every request. The Bearer token replaces **only** the
+human-verification step: the per-IP rate limit and account-wide daily budget below still
+apply. This is the surface described by the discovery files
+[`web/public/.well-known/ai-plugin.json`](../web/public/.well-known/ai-plugin.json) +
+[`web/public/openapi.yaml`](../web/public/openapi.yaml), the ChatGPT-side sibling of
+[`web/public/.well-known/mcp.json`](../web/public/.well-known/mcp.json).
+
 ### Response — JSON (non-streaming)
 
 ```jsonc
@@ -155,7 +166,9 @@ guarded by the eval below.
 
 A public, **paid** LLM endpoint. Controls (reusing submit's `_lib/`):
 
-- **Cloudflare Turnstile** — required on every request, verified server-side. First line.
+- **Cloudflare Turnstile** — required on every request, verified server-side. First line. A
+  valid `ASK_PLUGIN_TOKEN` Bearer token substitutes for it (plugin/agent access, #1578); the
+  rate-limit + budget guards below still apply to that traffic.
 - **Per-IP rate limit** — a fixed-window KV counter (default **10 / IP / hour**,
   `ASK_RATE_LIMIT_MAX` / `ASK_RATE_LIMIT_WINDOW_SEC`); over-limit → `429` + `Retry-After`.
   **Opt-in and fail-open**: with no `ASK_RATE_LIMIT` KV namespace bound it's off, and a KV
@@ -192,6 +205,7 @@ A public, **paid** LLM endpoint. Controls (reusing submit's `_lib/`):
 | --- | --- | --- |
 | `ANTHROPIC_API_KEY` | Cloudflare (Function **secret**) | the Anthropic Messages API key ([#124](https://github.com/watermark-directory/the-watermark-directory/issues/124)) |
 | `TURNSTILE_SECRET_KEY` | Cloudflare (Function **secret**) | server-side Turnstile verification — **shared** with submit |
+| `ASK_PLUGIN_TOKEN` | Cloudflare (Function **secret**, optional) | shared Bearer service token letting a ChatGPT plugin / agent bypass Turnstile (#1578); absent ⇒ no bypass |
 | `ASK_ENABLED` | Cloudflare (Function var) | on / kill switch — anything but `true` ⇒ `503` and the form shows disabled |
 | `PUBLIC_TURNSTILE_SITE_KEY` | GitHub Actions **build** var (in `pages.yml`) | the Turnstile widget's public site key — read at build time by `ask.astro`; **shared** with submit, so setting it flips both forms live |
 | `ASK_MODEL` | Cloudflare (Function var) | model id; default `claude-opus-4-8` |

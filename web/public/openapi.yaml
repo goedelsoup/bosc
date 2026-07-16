@@ -1,0 +1,177 @@
+# OpenAPI 3 description of the public Watermark Directory corpus API, for ChatGPT plugin /
+# GPT Action registration (#1578). Served static at https://watermark.directory/openapi.yaml
+# and referenced by /.well-known/ai-plugin.json. Keep the schemas in step with the live
+# endpoint contract in docs/ask-api.md and web/functions/api/ask.ts.
+openapi: 3.0.3
+info:
+  title: Watermark Directory — Corpus Q&A
+  description: >-
+    Grounded question-answering over the Watermark Directory documentary corpus: an
+    investigative-grade public-records record of the American Sugar Creek / Maumee-basin
+    watershed points (Lima OH, Fort Wayne IN, and siblings). Answers are generated ONLY
+    from retrieved source documents and carry citations back to those sources; when the
+    record is silent the endpoint refuses ("I don't find that in the record.") rather than
+    guessing. Evidence is tagged [verified] / [inference] / [reference] / [open]; preserve
+    those tags and never assert an [inference] claim with the confidence of a [verified] one.
+  version: "1.0.0"
+  license:
+    name: Public records — attribution required; see terms
+    url: https://watermark.directory/network/connect
+servers:
+  - url: https://watermark.directory
+paths:
+  /api/ask:
+    post:
+      operationId: askCorpus
+      summary: Ask a grounded question about the corpus
+      description: >-
+        Retrieve the most relevant source documents for the question and return a
+        Claude-generated answer grounded strictly in them, with per-claim citations. Returns
+        `refused: true` with no citations when nothing relevant is found or the record cannot
+        support an answer. Cite the returned sources to the user and preserve their evidence
+        tags. (A browser client may request Server-Sent Events with `Accept: text/event-stream`;
+        this operation documents the default `application/json` response.)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AskRequest"
+      responses:
+        "200":
+          description: A grounded answer with citations, or a refusal when the record is silent.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AskResult"
+        "400":
+          description: Malformed request — missing / too-short / too-long question, or an unexpected field.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Authentication required or failed (missing / invalid bearer token).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "429":
+          description: Per-IP rate limit exceeded — retry after the `Retry-After` interval.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "502":
+          description: The upstream model call failed.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "503":
+          description: Endpoint disabled or the daily token budget is exhausted.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        A shared service token issued for plugin / agent access (stands in for the browser
+        Turnstile challenge). Sent as `Authorization: Bearer <token>`.
+  schemas:
+    AskRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - question
+      properties:
+        question:
+          type: string
+          minLength: 3
+          maxLength: 1000
+          description: The natural-language question about the corpus. A Q&A prompt, not an essay.
+          example: What do the roundabout OPC estimates total?
+    AskResult:
+      type: object
+      required:
+        - answer
+        - citations
+        - refused
+        - model
+      properties:
+        answer:
+          type: string
+          description: The grounded answer as markdown, with bracketed [n] citation markers.
+        citations:
+          type: array
+          description: The sources actually cited by the answer (empty when refused).
+          items:
+            $ref: "#/components/schemas/AskCitation"
+        refused:
+          type: boolean
+          description: True when the record is silent — the answer is the fixed refusal sentence.
+        model:
+          type: string
+          description: The model id that produced the answer.
+          example: claude-opus-4-8
+        usage:
+          type: object
+          description: Token accounting for the request (absent on a deterministic refusal).
+          properties:
+            input_tokens:
+              type: integer
+            output_tokens:
+              type: integer
+    AskCitation:
+      type: object
+      required:
+        - marker
+        - id
+        - feed
+        - title
+        - url
+      properties:
+        marker:
+          type: integer
+          description: The 1-based [n] marker as it appears in the answer text.
+        id:
+          type: string
+          description: The corpus unit id, "${feed}:${localId}".
+          example: records:aedg/roundabouts.summary.opc.yaml
+        feed:
+          type: string
+          description: The bundle feed the source belongs to (records, timeline, entities, …).
+        title:
+          type: string
+        url:
+          type: string
+          description: Root-absolute deep link to the page the source lives on.
+          example: /site/records/opc/
+        source:
+          type: string
+          nullable: true
+          description: The originating source document path, when the unit is document-grounded.
+        page:
+          type: integer
+          nullable: true
+          description: The 1-based printed page within the source document, when applicable.
+        source_kind:
+          type: string
+          nullable: true
+        verified:
+          type: boolean
+          description: True when the source is record/connector-grounded ([verified]).
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: A human-readable error message.

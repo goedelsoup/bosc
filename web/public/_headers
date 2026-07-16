@@ -13,3 +13,10 @@
 
 /robots.txt
   Cache-Control: public, max-age=86400, s-maxage=604800
+
+# ChatGPT-plugin discovery files (#1578) — the manifest + its OpenAPI spec.
+/.well-known/ai-plugin.json
+  Cache-Control: public, max-age=86400, s-maxage=604800
+
+/openapi.yaml
+  Cache-Control: public, max-age=86400, s-maxage=604800

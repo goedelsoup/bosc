@@ -154,6 +154,48 @@ describe("/api/ask route", () => {
     expect(fetchStub.calls.some((c) => c.url.includes("/v1/messages"))).toBe(false);
   });
 
+  // --- #1578: ASK_PLUGIN_TOKEN Bearer bypass (ChatGPT plugin / agent access) --------------
+  it("authorizes via ASK_PLUGIN_TOKEN Bearer (no Turnstile token, no siteverify call)", async () => {
+    const answer = "The roundabout opinion of probable cost totals $1,234,567 [1].";
+    const fetchStub = routingFetch([askIndexRoute, anthropicJsonRoute(answer)]);
+    vi.stubGlobal("fetch", fetchStub);
+    const res = await onRequestPost({
+      request: ask(
+        { question: "what is the roundabout cost?" }, // no turnstile_token
+        { Authorization: "Bearer plugin-secret-xyz" },
+      ),
+      env: askEnv({ ASK_PLUGIN_TOKEN: "plugin-secret-xyz" }),
+    } as never);
+    expect(res.status).toBe(200);
+    const data = await res.json();
+    expect(data.answer).toBe(answer);
+    expect(data.citations).toHaveLength(1);
+    // Turnstile was bypassed — no siteverify call was made.
+    expect(fetchStub.calls.some((c) => c.url.includes("/siteverify"))).toBe(false);
+  });
+
+  it("403s on a wrong Bearer token with no Turnstile token (bypass rejects, falls through)", async () => {
+    const fetchStub = routingFetch([askIndexRoute, anthropicJsonRoute("x")]);
+    vi.stubGlobal("fetch", fetchStub);
+    const res = await onRequestPost({
+      request: ask({ question: "what is the roundabout cost?" }, { Authorization: "Bearer wrong-token" }),
+      env: askEnv({ ASK_PLUGIN_TOKEN: "plugin-secret-xyz" }),
+    } as never);
+    expect(res.status).toBe(403);
+    expect(fetchStub.calls.some((c) => c.url.includes("/v1/messages"))).toBe(false);
+  });
+
+  it("ignores the Bearer header when ASK_PLUGIN_TOKEN is unset (bypass disabled)", async () => {
+    const fetchStub = routingFetch([askIndexRoute, anthropicJsonRoute("x")]);
+    vi.stubGlobal("fetch", fetchStub);
+    const res = await onRequestPost({
+      request: ask({ question: "what is the roundabout cost?" }, { Authorization: "Bearer anything" }),
+      env: askEnv(), // no ASK_PLUGIN_TOKEN configured
+    } as never);
+    expect(res.status).toBe(403); // Turnstile still required
+    expect(fetchStub.calls.some((c) => c.url.includes("/v1/messages"))).toBe(false);
+  });
+
   it("403s when Turnstile verification fails", async () => {
     vi.stubGlobal("fetch", routingFetch([turnstileRoute(false), askIndexRoute]));
     const res = await onRequestPost({
