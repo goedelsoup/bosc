@@ -437,11 +437,32 @@ def project_mirror(
     return Mirror(site=site, nodes=nodes)
 
 
-def build_mirror(settings: Settings | None = None) -> Mirror:
-    """Load the committed corpus for the active site and project it into a :class:`Mirror`.
+@dataclass
+class MirrorFeeds:
+    """The committed corpus for one site, loaded into the feeds the mirror projects from.
+
+    The shared read behind :func:`build_mirror` and the wiki-link audit
+    (:mod:`watermark.site.wiki_lint`, #1571) — both need the same site-scoped entities,
+    concepts, and people, and loading the entity graph is the expensive half, so it happens
+    once here. Offline by construction (no live enrichments).
+    """
+
+    site: str
+    site_label: str
+    site_detail: str
+    entities: list[EntityNode]
+    relationships: list[RelationshipEdge]
+    concepts: list[ConceptItem]
+    people: list[PersonItem]
+    leads: list[LeadItem]
+    open_claims: list[HypothesisAssessment]
+
+
+def load_mirror_feeds(settings: Settings | None = None) -> MirrorFeeds:
+    """Load the committed corpus for the active site into the feeds the mirror projects from.
 
     Offline by construction: the entity graph is built with no live enrichments (all
-    ``enrich_*`` default off), so the mirror is a pure read of the committed corpus.
+    ``enrich_*`` default off), so this is a pure read of the committed corpus.
     """
     settings = settings or get_settings()
     profile = active_profile(settings)
@@ -449,36 +470,54 @@ def build_mirror(settings: Settings | None = None) -> Mirror:
     corpus = load_corpus(settings)
     egraph = build_entity_graph(corpus, settings=settings)
 
-    entities = graph_mod.export_entities(egraph)
-    relationships = graph_mod.export_relationships(egraph)
-    concepts = concepts_mod.load_concepts(settings.concepts_dir, site=settings.site)
-    people = people_mod.export_people(
-        load_people(site_scoped_path(settings.people_dir, settings.site, is_dir=True)),
-        egraph=egraph,
-    )
-    leads = leads_mod.export_leads(
-        site_scoped_path(settings.data_dir / "site" / "leads.yaml", settings.site, is_dir=False),
-    )
     # The [open] claims: the open-tagged hypothesis cells committed for *this* site.
     open_claims = [
         cell
         for cell in load_assessments(settings=settings)
         if cell.site == settings.site and cell.tag == "open"
     ]
-
-    mirror = project_mirror(
+    return MirrorFeeds(
         site=settings.site,
         site_label=profile.place or settings.site.replace("-", " ").title(),
         site_detail=(
             f"{profile.place or settings.site} — {profile.basin} basin." if profile.basin else ""
         ),
-        entities=entities,
-        relationships=relationships,
-        concepts=concepts,
-        people=people,
-        leads=leads,
-        hypotheses=HYPOTHESES,
+        entities=graph_mod.export_entities(egraph),
+        relationships=graph_mod.export_relationships(egraph),
+        concepts=concepts_mod.load_concepts(settings.concepts_dir, site=settings.site),
+        people=people_mod.export_people(
+            load_people(site_scoped_path(settings.people_dir, settings.site, is_dir=True)),
+            egraph=egraph,
+        ),
+        leads=leads_mod.export_leads(
+            site_scoped_path(
+                settings.data_dir / "site" / "leads.yaml", settings.site, is_dir=False
+            ),
+        ),
         open_claims=open_claims,
+    )
+
+
+def build_mirror(settings: Settings | None = None) -> Mirror:
+    """Load the committed corpus for the active site and project it into a :class:`Mirror`.
+
+    Offline by construction: the entity graph is built with no live enrichments (all
+    ``enrich_*`` default off), so the mirror is a pure read of the committed corpus.
+    """
+    settings = settings or get_settings()
+    feeds = load_mirror_feeds(settings)
+
+    mirror = project_mirror(
+        site=feeds.site,
+        site_label=feeds.site_label,
+        site_detail=feeds.site_detail,
+        entities=feeds.entities,
+        relationships=feeds.relationships,
+        concepts=feeds.concepts,
+        people=feeds.people,
+        leads=feeds.leads,
+        hypotheses=HYPOTHESES,
+        open_claims=feeds.open_claims,
     )
     log.info(
         "corpus_mirror.built",
