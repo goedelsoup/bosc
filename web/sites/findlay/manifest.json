@@ -1,10 +1,10 @@
 {
   "site": "findlay",
   "bundle_version": "1.0.0",
-  "contract_version": "1.26.0",
+  "contract_version": "1.27.0",
   "generated_at": "2026-07-16T12:14:17+00:00",
-  "feed_count": 26,
-  "row_total": 234,
+  "feed_count": 27,
+  "row_total": 240,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -207,6 +207,14 @@
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
       "count": 87
+    },
+    {
+      "name": "open-questions",
+      "path": "feeds/open-questions.json",
+      "media_type": "application/json",
+      "schema": "schemas/open-questions.schema.json",
+      "kind": "collection",
+      "count": 6
     },
     {
       "name": "catalog-index",

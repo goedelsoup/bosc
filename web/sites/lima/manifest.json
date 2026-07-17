@@ -1,10 +1,10 @@
 {
   "site": "lima",
   "bundle_version": "1.0.0",
-  "contract_version": "1.26.0",
+  "contract_version": "1.27.0",
   "generated_at": "2026-07-15T23:11:39+00:00",
-  "feed_count": 43,
-  "row_total": 1028,
+  "feed_count": 44,
+  "row_total": 1053,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -343,6 +343,14 @@
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
       "count": 162
+    },
+    {
+      "name": "open-questions",
+      "path": "feeds/open-questions.json",
+      "media_type": "application/json",
+      "schema": "schemas/open-questions.schema.json",
+      "kind": "collection",
+      "count": 25
     },
     {
       "name": "catalog-index",
