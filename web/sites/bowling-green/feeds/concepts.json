@@ -20,6 +20,26 @@
     "body": "The **7Q10** is a low-flow statistic: the lowest average streamflow over any\nseven consecutive days that, statistically, recurs about once every ten years. It\nis the conventional *design low flow* in NPDES permitting — the worst-case\ndilution condition a discharge must meet water-quality criteria under.\n\nBecause it represents the stream at its weakest, the 7Q10 is the denominator in an\n[[assimilative capacity]] screen: the lower the design flow, the less clean water\nis available to dilute a pollutant load or to absorb a reduction in flow from\n[[consumptive cooling]]. In the analysis the receiving water's 7Q10 is read from\nthe NPDES permit fact sheet stream-flows table, not estimated."
   },
   {
+    "slug": "aep",
+    "title": "AEP",
+    "kind": "term",
+    "aliases": [
+      "American Electric Power",
+      "AEP Ohio"
+    ],
+    "tags": [
+      "energy",
+      "utility"
+    ],
+    "summary": "The investor-owned utility whose Ohio operating company serves much of the grid footprint in this record.",
+    "related": [
+      "puco",
+      "pjm",
+      "eia"
+    ],
+    "body": "**American Electric Power** is one of the largest electric utilities in the United\nStates; its Ohio operating company, AEP Ohio, is the distribution utility across much\nof the territory this record covers. As a regulated utility it delivers power under\nrates and terms set by the [[PUCO]], and its transmission sits inside the [[PJM]]\nmarket.\n\nAEP is a recurring named party in the data-center story because it is the utility that\nmust actually serve the new load — building substations, negotiating special\narrangements for hyperscale customers, and forecasting the demand growth those\ncustomers drive. Its filings at the PUCO and its role in [[PJM]] planning are where the\nutility's own account of a project's power needs appears, to be read against the\nneutral baseline of the [[EIA]] utility data."
+  },
+  {
     "slug": "assimilative-capacity",
     "title": "Assimilative capacity",
     "kind": "concept",
@@ -37,6 +57,148 @@
       "consumptive-cooling"
     ],
     "body": "**Assimilative capacity** is the headroom a receiving water has to absorb a\npollutant load — or a withdrawal of flow — before a water-quality criterion would\nbe exceeded. It is evaluated at a design low flow, conventionally the\n[[7Q10]], so the screen reflects the stream when it is least able to dilute.\n\nIn the water-balance analysis, the campus's [[consumptive cooling]] draw is\nsubtracted from the live receiving-water flow and compared against the 7Q10: a\nnegative balance means the consumptive loss erodes the dilution flow the permit\nrecord assumes, shrinking assimilative headroom. A negative figure is a screening\nflag — a lead to verify against the live gauge and the permit, not a verdict."
+  },
+  {
+    "slug": "behind-the-meter",
+    "title": "Behind-the-meter",
+    "kind": "concept",
+    "aliases": [
+      "BTM",
+      "behind the meter"
+    ],
+    "tags": [
+      "energy",
+      "grid",
+      "data-center"
+    ],
+    "summary": "On-site generation that serves a load directly, without that power crossing the utility meter or the public grid.",
+    "related": [
+      "interconnection-queue",
+      "hyperscale-data-center",
+      "pjm"
+    ],
+    "body": "**Behind-the-meter** generation sits on the customer's side of the utility meter and\nfeeds its load directly — gas turbines, engines, fuel cells, or solar paired with\nstorage. In a self-supply, non-export configuration that power need never cross the\nmeter onto the public grid; many BTM assets, though, stay grid-connected for backup\nor to export surplus, which pulls them back under the utility's and market's rules.\nThe arrangement lets a large user self-supply some or all of its demand rather than\ndraw it entirely from the utility.\n\nFor a [[hyperscale data center]], behind-the-meter generation is a way around the\ngrid's constraints: it can bring a campus online without waiting out the\n[[interconnection queue]] or funding the transmission upgrades a full grid connection\nwould require. But it moves the impact rather than removing it — on-site combustion\nbecomes an air-permitting question (a [[permit to install]]), and a \"behind-the-meter\"\nplant that also leans on the grid for backup still shows up in [[PJM]]'s planning. The\nplatform treats a claimed behind-the-meter design as a sourced assumption to verify,\nbecause it changes both the emissions and the grid-cost story."
+  },
+  {
+    "slug": "brownfield",
+    "title": "Brownfield",
+    "kind": "concept",
+    "aliases": [
+      "brownfield site",
+      "brownfield redevelopment"
+    ],
+    "tags": [
+      "land-use",
+      "environment"
+    ],
+    "summary": "A property whose redevelopment is complicated by real or perceived contamination, often carrying cleanup obligations and dedicated funding.",
+    "related": [
+      "cercla",
+      "tax-abatement"
+    ],
+    "body": "A **brownfield** is a property — usually a former industrial or commercial site —\nwhose reuse is complicated by the presence, or the suspicion, of contamination. The\nlabel is regulatory shorthand that unlocks assessment and cleanup programs and\ndedicated grants, on the theory that redeveloping an already-disturbed site is\npreferable to consuming greenfield land.\n\nA brownfield sits at the seam of the environmental and land-use threads. Its\ncontamination history may tie to a formal [[CERCLA]] liability or to a lesser state\ncleanup, and its redevelopment is frequently sweetened with a [[tax abatement]] on top\nof remediation funding. For a facility record, the brownfield designation is both a\nconstraint and a lead: it flags residual contamination that governs what can be built\nand how, and it points back to the site's prior uses and the parties responsible for\nthem."
+  },
+  {
+    "slug": "cercla",
+    "title": "CERCLA",
+    "kind": "term",
+    "aliases": [
+      "Superfund",
+      "Comprehensive Environmental Response, Compensation, and Liability Act"
+    ],
+    "tags": [
+      "environment",
+      "legal"
+    ],
+    "summary": "The federal Superfund statute governing the cleanup of contaminated sites and the strict, retroactive liability of the parties responsible for them.",
+    "related": [
+      "ffa",
+      "brownfield",
+      "epa",
+      "pfas"
+    ],
+    "body": "**CERCLA** — the Comprehensive Environmental Response, Compensation, and Liability Act,\nbetter known as Superfund — is the federal law for cleaning up releases of hazardous\nsubstances. Its defining feature is liability: it imposes strict and retroactive\nresponsibility on the parties connected to a site — joint and several where the harm\nis indivisible, though a party that proves a divisible share can be apportioned only\nthat much — so cleanup costs can attach to owners and operators long after the\ncontamination occurred.\n\nCERCLA anchors the most serious contamination in the record. A site on the National\nPriorities List carries a formal cleanup and, for a federal installation, a\n[[federal facility agreement]] setting the schedule. The statute is also expanding —\nthe designation of certain [[PFAS]] as hazardous substances pulls those compounds into\nits liability scheme. Where a contaminated property is being redeveloped rather than\nlisted, it usually appears instead as a [[brownfield]], the lighter-touch cousin of a\nSuperfund cleanup."
+  },
+  {
+    "slug": "cgp",
+    "title": "CGP",
+    "kind": "term",
+    "aliases": [
+      "construction general permit"
+    ],
+    "tags": [
+      "water",
+      "stormwater",
+      "permitting"
+    ],
+    "summary": "The NPDES general permit that authorizes stormwater discharges from construction sites disturbing an acre or more — including smaller sites within a common plan of development or sale that reaches an acre — under a standard set of conditions.",
+    "related": [
+      "esc",
+      "hsg",
+      "npdes",
+      "curve-number"
+    ],
+    "body": "A **construction general permit** is the [[NPDES]] mechanism for stormwater running\noff a construction site. Rather than issue an individual permit to every project, the\nregulator writes one general permit and a site enrolls under it by filing a notice of\nintent and a stormwater pollution prevention plan. It applies to construction\ndisturbing an acre or more — the threshold most large campus builds clear easily.\n\nThe CGP is the earliest water-side paper trail of a project's *construction* phase,\ndistinct from the operating [[NPDES]] permit that governs the finished facility. Its\nenrollment names the operator, the acreage disturbed, and the receiving water, and it\nobligates the [[erosion and sediment control]] practices that keep bare-soil runoff —\namplified by the site's soils and [[curve number]] — out of the stream during the\nbuild. For the platform, a CGP filing is often the first hard confirmation that a\nproposed data-center site is actually moving dirt."
+  },
+  {
+    "slug": "closed-loop-cooling",
+    "title": "Closed-loop cooling",
+    "kind": "concept",
+    "aliases": [
+      "recirculating cooling",
+      "recirculating tower cooling"
+    ],
+    "tags": [
+      "water",
+      "cooling",
+      "data-center"
+    ],
+    "summary": "A recirculating cooling design whose water loss is chiefly evaporation and blowdown, so it withdraws little but consumes most of what it takes.",
+    "related": [
+      "once-through-cooling",
+      "consumptive-cooling",
+      "hyperscale-data-center"
+    ],
+    "body": "**Closed-loop cooling** recirculates its cooling water rather than returning it to\nthe source. The system loses water two ways — evaporation from the cooling tower, and\nperiodic *blowdown* to purge concentrated minerals — and makes up the difference with\nfresh withdrawal. The result inverts the once-through profile: a modest withdrawal\nbut a high consumptive fraction.\n\nFor a [[hyperscale data center]] this is the design that matters to the river,\nbecause most of what it withdraws is lost to evaporation and never returns\ndownstream — the [[consumptive cooling]] that is subtracted from live flow in the\n[[dilution]] and [[assimilative capacity]] screen. It also concentrates whatever is\nin the make-up water, so blowdown itself can become a permitted discharge. A\nrecirculating design cuts the withdrawal an [[once-through cooling]] plant would need\nwhile raising the share that leaves the watershed for good."
+  },
+  {
+    "slug": "cmar",
+    "title": "CMAR",
+    "kind": "term",
+    "aliases": [
+      "construction manager at risk",
+      "CM at risk"
+    ],
+    "tags": [
+      "procurement",
+      "construction"
+    ],
+    "summary": "A project-delivery method in which the construction manager joins during design and commits to a guaranteed maximum price for the build.",
+    "related": [
+      "opc",
+      "rfq",
+      "rfp"
+    ],
+    "body": "**Construction manager at risk** is a delivery method in which the owner hires a\nconstruction manager early, during design, to advise on cost and constructability, and\nthe CM then commits to a *guaranteed maximum price* to build the project. The \"at risk\"\nis literal: overruns above the GMP are the manager's exposure, not the owner's, which\naligns the CM with holding the budget.\n\nCMAR matters to the platform because it shapes the cost record. Under this method the\nearly [[opinion of probable cost]] and the later GMP are the checkpoints where a public\nproject's price is set and can be reconstructed, and the CM is usually selected through\na qualifications-based [[request for qualifications]] rather than low bid. Knowing a\nproject used CMAR tells the analyst which documents carry the authoritative numbers and\nhow the contractor was chosen."
+  },
+  {
+    "slug": "colocation",
+    "title": "Colocation",
+    "kind": "concept",
+    "aliases": [
+      "colo",
+      "colocation facility"
+    ],
+    "tags": [
+      "data-center"
+    ],
+    "summary": "A data center that leases space, power, and cooling to multiple tenants who install their own hardware — distinct from a single operator's owned campus.",
+    "related": [
+      "hyperscale-data-center",
+      "hyperscaler",
+      "il6"
+    ],
+    "body": "**Colocation** is the data-center model in which the facility operator sells space,\npower, and cooling by the rack, cage, or suite to multiple tenants who bring their own\nservers. The colo provider owns the building and the infrastructure; the customers own\nthe computing. It contrasts with an owner-operated campus, where a single company like\na [[hyperscaler]] builds and runs the whole facility for its own workloads.\n\nThe distinction shapes who is accountable in the record. A [[hyperscale data center]]\nhas one identifiable operator behind its water and power footprint; a colocation\nfacility diffuses that across a shifting set of tenants who may be undisclosed, which\ncomplicates tracing the end user of a given load. Some colos also accredit to secure\ntiers like [[IL6]] to host government tenants — another reason the tenant behind a\ncolo's capacity can be harder to pin down than its operator."
   },
   {
     "slug": "common-control-plumbing",
@@ -57,6 +219,65 @@
       "public-records-mandamus"
     ],
     "body": "**Common-control plumbing** is the term this project uses for the administrative\noverlaps that recur across the entity record: a shared registered agent, the same\norganizer or counsel, a reused mailing address. Those overlaps are evidence that\nentities are *administered together* — the plumbing of common control — and are\nuseful for resolving who is really one actor in the entity graph.\n\nThey are deliberately **not** statements about beneficial ownership. Per the\nsite's evidence discipline, such links are tagged `[inference]` (a labelled\nreading of the record), and the graph's roles and edges are leads to verify, not\nverdicts. The distinction matters most where the plumbing connects the entities\nassembling a [[hyperscale data center]] campus."
+  },
+  {
+    "slug": "conditional-use",
+    "title": "Conditional use",
+    "kind": "concept",
+    "aliases": [
+      "conditional-use permit",
+      "special use permit",
+      "special exception"
+    ],
+    "tags": [
+      "land-use",
+      "governance"
+    ],
+    "summary": "A use allowed in a zoning district only by case-by-case approval, granted with conditions rather than by right.",
+    "related": [
+      "rezoning",
+      "variance",
+      "moratorium"
+    ],
+    "body": "A **conditional use** is a use the zoning code lists as permissible in a district but\nonly with discretionary approval — the applicant must show it meets standards and\naccept conditions attached to it. It is decided administratively or by a zoning board,\nnot by the legislature, which distinguishes it from a [[rezoning]]: the underlying\ndistrict does not change, the use is simply cleared within it.\n\nThe conditional-use path lets a project avoid a full rezoning fight when its zoning\nalready contemplates the use, trading a legislative vote for negotiated conditions —\nbuffers, hours, traffic or utility commitments. For the record, the value is in those\nconditions: they are where a community extracts concrete obligations from a\ndata-center or industrial user, and where a later dispute over compliance is\nanchored. A conditional use is a narrower instrument than a [[variance]], which waives\na standard rather than authorizing a listed use."
+  },
+  {
+    "slug": "consent-decree",
+    "title": "Consent decree",
+    "kind": "concept",
+    "aliases": [
+      "consent order",
+      "judicial consent decree"
+    ],
+    "tags": [
+      "legal",
+      "enforcement"
+    ],
+    "summary": "A court-approved settlement in which a party agrees to specified actions under continuing judicial oversight, carrying the force of a court order.",
+    "related": [
+      "echo",
+      "cercla",
+      "snc"
+    ],
+    "body": "A **consent decree** is a settlement that a court adopts as its own order. Rather than\nlitigate to judgment, the parties negotiate terms — often injunctive steps, a\ncompliance schedule, and penalties — and the court enters them, so the agreement\nbecomes judicially enforceable and stays under the court's supervision until its\nobligations are met.\n\nIn the environmental record the consent decree is the usual endpoint of a serious\nenforcement track: a discharger in [[significant non-compliance]], or a party liable\nunder [[CERCLA]], resolves the matter by agreeing to a decree that fixes what it must\ndo and by when. Because it is a public court document, a consent decree is a\nhigh-value, [verified] source — it states the violations conceded, the remedy imposed,\nand the deadlines that follow, and it often surfaces in [[ECHO]] as the formal action\nthat closed out a compliance case."
+  },
+  {
+    "slug": "constructive-denial",
+    "title": "Constructive denial",
+    "kind": "concept",
+    "aliases": [
+      "constructive denial of records"
+    ],
+    "tags": [
+      "records",
+      "legal"
+    ],
+    "summary": "An agency's failure to produce public records within a reasonable time, treated in law as a denial even though no formal refusal was issued.",
+    "related": [
+      "public-records-mandamus",
+      "orc"
+    ],
+    "body": "**Constructive denial** is the doctrine that an agency can deny a public-records\nrequest without ever saying no. Under Ohio's Public Records Act (R.C. 149.43), records\nmust be produced within a *reasonable* time; when an agency instead lets a request sit,\nruns out the clock, or answers with open-ended delay, the law can treat that silence as\na denial the requester may act on.\n\nThe concept matters because it closes an obvious loophole: if only an explicit refusal\nwere reviewable, an agency could defeat transparency simply by not responding.\nConstructive denial gives the requester a ripened claim — the predicate for a\n[[public-records mandamus]] action to compel production. In this record, where the\nrequester seeks documents an agency is slow to release, the timing and content of the\nagency's non-response is what establishes whether a denial has constructively occurred\nunder the [[Ohio Revised Code]]."
   },
   {
     "slug": "consumptive-cooling",
@@ -81,6 +302,291 @@
     "body": "**Consumptive cooling** is the share of a facility's cooling-water withdrawal that\ndoes not return to the watercourse — primarily evaporative loss from cooling\ntowers. Unlike a once-through return, a consumptive draw permanently removes flow\nfrom the system downstream of the intake.\n\nFor a [[hyperscale data center]], the consumptive fraction of the cooling demand\nis the quantity that matters to the river: it is subtracted from live flow in the\n[[assimilative capacity]] screen against the [[7Q10]]. The water-balance model\ntreats the cooling demand and its consumptive fraction as scenario inputs\n(labelled assumptions), while the receiving-water flows are read from live gauges\nand the permit record.\n\nWhether the rejected heat is dumped or recovered is a separate design axis —\nsee [[heat reuse]] — that can shift the consumptive fraction where recovery\ndisplaces evaporative rejection."
   },
   {
+    "slug": "cra",
+    "title": "CRA",
+    "kind": "term",
+    "aliases": [
+      "community reinvestment area"
+    ],
+    "tags": [
+      "land-use",
+      "finance"
+    ],
+    "summary": "An Ohio property-tax-abatement district (R.C. 3735) that lets a municipality exempt the value of new construction to incentivize development.",
+    "related": [
+      "tax-abatement",
+      "tif",
+      "enterprise-zone",
+      "jedd",
+      "pilot"
+    ],
+    "body": "A **community reinvestment area** is an Ohio economic-development tool under R.C.\n3735: a local government designates an area where new construction and improvements\ncan receive a partial or total exemption from real-property taxes for a set term. It\nis one of the state's most-used [[tax abatement]] vehicles, and for a large project\nthe abatement is usually memorialized in a negotiated agreement with job and\ninvestment commitments.\n\nThe CRA is central to the data-center financing thread because it is how the abated\nvalue is delivered: a campus worth hundreds of millions can have most of that value\nexempted for a decade or more, shifting the visible public benefit from property tax\nto a negotiated [[payment in lieu of taxes]] or a school-district revenue-share.\nReading a CRA agreement — its term, its exemption percentage, and what the developer\npromised in return — is how the platform tests whether a deal's public benefit\nmatches its public cost."
+  },
+  {
+    "slug": "curve-number",
+    "title": "Curve number",
+    "kind": "term",
+    "aliases": [
+      "runoff curve number",
+      "SCS curve number"
+    ],
+    "tags": [
+      "hydrology",
+      "stormwater"
+    ],
+    "summary": "The NRCS coefficient (0–100) relating land cover and soil to the depth of runoff a storm produces — the core parameter of the curve-number runoff method.",
+    "related": [
+      "hsg",
+      "esc"
+    ],
+    "body": "The **runoff curve number** is a single coefficient between 0 and 100 that captures\nhow much of a rainfall a piece of land turns into runoff. A low CN (forest on sandy\n[[HSG]] A soil) absorbs most of a storm; a high CN (pavement, or clay HSG D soil)\nsheds nearly all of it. The NRCS method looks the number up from a land-cover ×\nsoil-group table.\n\nCurve number is where land-use change becomes hydrology. Converting cropland or\nwoods to the roofs and parking of a large campus raises the site CN, so the same\nstorm yields more runoff, faster — the effect a post-construction stormwater design\nand its [[erosion and sediment control]] have to hold. Because the output is\nsensitive to the CN, a small error in the assumed soil group or cover class\npropagates straight into the modeled peak flow."
+  },
+  {
+    "slug": "dilution",
+    "title": "Dilution",
+    "kind": "concept",
+    "aliases": [
+      "dilution flow",
+      "mixing zone"
+    ],
+    "tags": [
+      "water",
+      "water-quality"
+    ],
+    "summary": "The clean receiving-water flow available to dilute a discharged load, sized at design low flow — the physical basis of a water-quality-based effluent limit.",
+    "related": [
+      "assimilative-capacity",
+      "7q10",
+      "effluent",
+      "consumptive-cooling",
+      "npdes"
+    ],
+    "body": "**Dilution** is the mixing of a discharged pollutant load into the clean flow of the\nreceiving water. Because a stream is weakest at low flow, water-quality-based\n[[effluent]] limits are sized against the design low flow — the [[7Q10]] — so the\ndischarge still meets criteria under the worst realistic dilution. Regulators may\nrecognize a bounded *mixing zone* immediately downstream of an outfall where\ncriteria are allowed to be met at the zone's edge rather than the pipe.\n\nDilution is the hinge between the water-quality thread and the data-center thread of\nthis record. A large [[consumptive cooling]] withdrawal removes flow from the same\nreach that dilutes a downstream discharge, so it shrinks the [[assimilative capacity]]\navailable to every permitted load below the intake — a coupling the water-balance\nmodel makes explicit rather than assuming away."
+  },
+  {
+    "slug": "dissolved-oxygen",
+    "title": "Dissolved oxygen",
+    "kind": "concept",
+    "aliases": [
+      "DO"
+    ],
+    "tags": [
+      "water",
+      "water-quality"
+    ],
+    "summary": "The oxygen dissolved in water and available to aquatic life; a core water-quality criterion that a discharge must not depress below standard.",
+    "related": [
+      "total-phosphorus",
+      "effluent",
+      "npdes"
+    ],
+    "body": "**Dissolved oxygen** is the concentration of oxygen dissolved in water, the supply\nthat fish and aquatic insects breathe. It is a foundational water-quality criterion:\na stream must hold dissolved oxygen above a numeric floor, and an [[NPDES]] permit's\n[[effluent]] limits are set partly to protect it.\n\nDissolved oxygen is where several loads converge. Oxygen-demanding organic matter\nand ammonia in a discharge consume it directly; nutrient loading consumes it\nindirectly, because the algal blooms that [[total phosphorus]] and\n[[total nitrogen]] feed die and decay, drawing the reach down into an oxygen sag.\nLow flow makes all of this worse — less water holds less oxygen and dilutes less\nload — which is why a discharge's oxygen impact is judged at the same design low\nflow as its [[dilution]]."
+  },
+  {
+    "slug": "dmr",
+    "title": "DMR",
+    "kind": "term",
+    "aliases": [
+      "discharge monitoring report"
+    ],
+    "tags": [
+      "water",
+      "permitting",
+      "records"
+    ],
+    "summary": "The self-reported effluent-monitoring data a permittee files with the regulator, the primary public record of whether a discharge meets its permit.",
+    "related": [
+      "npdes",
+      "effluent",
+      "snc",
+      "echo"
+    ],
+    "body": "A **discharge monitoring report** is the periodic (usually monthly) filing in which\nan [[NPDES]] permittee reports its measured [[effluent]] — flow, concentrations, and\nloads — against each permit limit. It is a self-report, but a federally enforceable\none: a false or omitted DMR is itself a violation.\n\nThe DMR is the workhorse record of water compliance. Because the reports are public\nand machine-readable through EPA's [[ECHO]], they let an outside analyst reconstruct\na facility's compliance history without a records request — recurring exceedances\nare what tip a permittee into [[significant non-compliance]]. For the platform they\nare a source of *reported* quantities: a DMR value is [verified] as filed, while any\nfigure derived from it (a load trend, an annual mass) is an [inference] built on top."
+  },
+  {
+    "slug": "echo",
+    "title": "ECHO",
+    "kind": "term",
+    "aliases": [
+      "Enforcement and Compliance History Online"
+    ],
+    "tags": [
+      "environment",
+      "enforcement",
+      "data-source"
+    ],
+    "summary": "EPA's public database of facility permits, inspections, violations, and enforcement actions across its major programs.",
+    "related": [
+      "rsei",
+      "tri",
+      "snc",
+      "npdes",
+      "dmr",
+      "epa"
+    ],
+    "body": "**Enforcement and Compliance History Online** is the [[EPA]] portal that consolidates\na facility's regulatory record — its permits, inspections, reported violations, and\nformal enforcement — across the water, air, and waste programs. It ingests the\nself-reported [[discharge monitoring report]] data and surfaces derived flags like\n[[significant non-compliance]], all keyed to a facility identifier.\n\nECHO is the platform's workhorse for facility compliance because it is public,\nqueryable, and national — an outside analyst can reconstruct a discharger's history\nwithout a records request. Its data seeds several of the platform's reference\ndatasets, including the [[NPDES]] inventory and the facility list behind the [[RSEI]]\nrisk screen. An ECHO record is [reference] as pulled; the platform dates and caches it\nso a compliance claim stays anchored to the snapshot it was drawn from."
+  },
+  {
+    "slug": "effluent",
+    "title": "Effluent",
+    "kind": "concept",
+    "aliases": [
+      "effluent limit",
+      "effluent limitation"
+    ],
+    "tags": [
+      "water",
+      "water-quality"
+    ],
+    "summary": "Treated wastewater discharged to a receiving water; its pollutant concentrations and loads are capped by limits written into the NPDES permit.",
+    "related": [
+      "npdes",
+      "dilution",
+      "dmr",
+      "wwtp",
+      "assimilative-capacity"
+    ],
+    "body": "**Effluent** is the treated water a facility discharges to a stream, river, or\nlake. Its permitted *effluent limits* — numeric caps on concentration and mass load\nfor each regulated pollutant — are the operative terms of an [[NPDES]] permit, and\nthe permittee proves compliance by reporting measured effluent quality in the\nmonthly [[discharge monitoring report]].\n\nEffluent limits are set two ways, and the stricter governs: technology-based limits\nreflect what treatment can achieve, while water-quality-based limits protect the\nreceiving water given its [[dilution]] at design low flow. That second path is why a\n[[WWTP]] discharge to a small stream can carry tighter limits than the same plant on\na large river — the same [[assimilative capacity]] logic that a new\n[[consumptive cooling]] draw erodes by removing dilution flow."
+  },
+  {
+    "slug": "eia",
+    "title": "EIA",
+    "kind": "term",
+    "aliases": [
+      "Energy Information Administration",
+      "U.S. Energy Information Administration"
+    ],
+    "tags": [
+      "energy",
+      "data-source"
+    ],
+    "summary": "The federal statistical agency for U.S. energy production, consumption, and prices, and a primary source of utility-level demand data.",
+    "related": [
+      "aep",
+      "pjm"
+    ],
+    "body": "The **Energy Information Administration** is the independent statistical arm of the\nU.S. Department of Energy. It publishes the authoritative public numbers on energy —\ngeneration, fuel mix, prices, and, through survey forms like EIA-861, the sales and\ncustomer counts of individual electric utilities.\n\nEIA data is the platform's neutral baseline for the energy backdrop of a site: it\nestablishes a utility's existing load and customer base as [reference] facts, against\nwhich the *demand pressure* of a new hyperscale campus can be measured. Because it is\nsurvey-based and utility-level, EIA is how an outside analyst estimates what share of\na utility's growth a single data center represents — a framing that a company like\n[[AEP]] or the [[PJM]] load forecast can then corroborate or complicate."
+  },
+  {
+    "slug": "enterprise-zone",
+    "title": "Enterprise zone",
+    "kind": "term",
+    "aliases": [
+      "enterprise zone agreement"
+    ],
+    "tags": [
+      "land-use",
+      "finance"
+    ],
+    "summary": "An Ohio program that grants property-tax exemptions on new investment in a designated area in exchange for job-creation and investment commitments.",
+    "related": [
+      "tax-abatement",
+      "cra",
+      "jedd"
+    ],
+    "body": "An **enterprise zone** is an Ohio economic-development program in which a local\ngovernment designates an area and offers real- and personal-property tax exemptions\nto firms that invest and create jobs there. The deal is struck in an *enterprise zone\nagreement* that sets the exemption percentage and term against specific, enforceable\ncommitments — dollars invested, jobs created and retained, payroll thresholds.\n\nThe enterprise zone sits alongside the [[community reinvestment area]] as one of\nOhio's two main [[tax abatement]] frameworks; which one a project uses turns on\nstatutory eligibility and local practice. What makes the enterprise-zone agreement\nuseful to the record is its *clawback* structure: because the exemption is tied to\nperformance promises, the agreement states what the developer owes if the jobs or\ninvestment fail to materialize — a test a capital-intensive but low-headcount data\ncenter frequently strains."
+  },
+  {
+    "slug": "epa",
+    "title": "EPA",
+    "kind": "term",
+    "aliases": [
+      "Environmental Protection Agency",
+      "U.S. EPA",
+      "USEPA"
+    ],
+    "tags": [
+      "environment",
+      "regulator"
+    ],
+    "summary": "The U.S. Environmental Protection Agency — the federal environmental regulator that sets national standards and delegates much of their enforcement to states.",
+    "related": [
+      "oepa",
+      "echo",
+      "tri",
+      "rsei",
+      "cercla"
+    ],
+    "body": "The **U.S. Environmental Protection Agency** is the federal environmental regulator.\nIt writes the national rules under statutes like the Clean Water Act and CERCLA, runs\nthe public data systems the platform relies on — [[ECHO]], the [[TRI]], and the\n[[RSEI]] model built on it — and retains direct authority over federal programs and\nfacilities.\n\nMuch of the day-to-day permitting and enforcement, though, is *delegated*: the EPA\nsets the floor and a state agency like the [[Ohio EPA]] issues the permits and brings\nmost of the cases. That division is why a facility's record usually has both a federal\nand a state layer, and why the platform reads EPA data as the neutral national\nbaseline while treating a state agency's actions as the operative local decisions."
+  },
+  {
+    "slug": "esc",
+    "title": "ESC",
+    "kind": "concept",
+    "aliases": [
+      "erosion and sediment control",
+      "erosion & sediment control"
+    ],
+    "tags": [
+      "water",
+      "stormwater"
+    ],
+    "summary": "The construction practices that keep disturbed soil and sediment out of stormwater and receiving waters while a site is being built.",
+    "related": [
+      "cgp",
+      "hsg",
+      "curve-number"
+    ],
+    "body": "**Erosion and sediment control** is the set of temporary practices — silt fence,\nsediment basins, stabilized entrances, cover on bare ground — that a construction\nsite uses to keep loosened soil from washing into storm drains and streams. Sediment\nis itself a regulated pollutant, and it carries phosphorus and other contaminants\nwith it, so controlling it protects downstream water quality during the build.\n\nESC is the operative content of a site's stormwater plan under its\n[[construction general permit]]. Its demands scale with the site: erodible soils, the\nlower-infiltration [[HSG]] classes (C and D), and steeper slopes raise the\n[[curve number]] and shed more sediment-laden runoff, so they need more control. On a multi-hundred-acre data-center clearing, the adequacy and\nupkeep of erosion and sediment control is a recurring compliance question — and a\nlapse in it is a common early violation in the construction record."
+  },
+  {
+    "slug": "ferc",
+    "title": "FERC",
+    "kind": "term",
+    "aliases": [
+      "Federal Energy Regulatory Commission"
+    ],
+    "tags": [
+      "energy",
+      "grid",
+      "regulator"
+    ],
+    "summary": "The federal regulator of interstate electricity transmission, wholesale power markets, and the RTOs that operate them.",
+    "related": [
+      "pjm",
+      "rto",
+      "puco",
+      "opsb"
+    ],
+    "body": "The **Federal Energy Regulatory Commission** is the federal agency that regulates\ninterstate transmission and wholesale electricity markets. It approves the tariffs and\nmarket rules that a [[regional transmission organization]] like [[PJM]] operates\nunder, including the interconnection process and the capacity market that shape how new\nload and generation are accommodated.\n\nFERC sits at the top of the grid's three-tier oversight in this record: it governs the\nwholesale, interstate layer; the [[PUCO]] governs retail utility service inside Ohio;\nand the [[Ohio Power Siting Board]] certifies where *major* energy facilities are\nsited. A\nhyperscale project can touch all three, and knowing which body owns which decision is\nhow the platform locates the right docket for a given question about power supply."
+  },
+  {
+    "slug": "ffa",
+    "title": "FFA",
+    "kind": "term",
+    "aliases": [
+      "federal facility agreement"
+    ],
+    "tags": [
+      "environment",
+      "legal"
+    ],
+    "summary": "A CERCLA cleanup agreement between EPA and a federal facility that sets the enforceable schedule and terms for remediating a listed site.",
+    "related": [
+      "cercla",
+      "epa"
+    ],
+    "body": "A **federal facility agreement** is the enforceable compact between the [[EPA]] (often\nwith the state) and a federal installation on the Superfund National Priorities List.\nUnder CERCLA §120, a federal agency running a listed facility must enter such an\nagreement, and it is the instrument that binds the cleanup: it fixes the schedule,\nthe milestones, and the interagency oversight for remediating the site's\ncontamination under [[CERCLA]].\n\nFor a record that touches a military or other federal installation, the FFA is the\nbackbone document of the environmental story. It establishes what contamination was\nfound, what the responsible agency committed to do about it, and on what timeline —\nturning a diffuse cleanup into a set of dated, [verified] obligations the platform can\ntrack and hold the facility to."
+  },
+  {
+    "slug": "hb",
+    "title": "HB",
+    "kind": "term",
+    "aliases": [
+      "House Bill"
+    ],
+    "tags": [
+      "legal",
+      "governance"
+    ],
+    "summary": "A bill originating in the Ohio House of Representatives, cited by number where it changes the siting, tax, or environmental law a project turns on.",
+    "related": [
+      "orc",
+      "opsb"
+    ],
+    "body": "A **House Bill** is a legislative measure introduced in the Ohio House of\nRepresentatives, referred to by number (HB 6, for example). Until enacted it is a\nproposal; once passed by both chambers and signed, it amends the [[Ohio Revised Code]],\nso a bill number is how a change in the law is tracked from introduction through its\ncodified result.\n\nHouse bills matter to the record because the rules governing large projects are\nactively being rewritten. Legislation reshaping utility and energy law, the siting\nauthority of the [[Ohio Power Siting Board]], or the property-tax tools behind a\ndata-center deal moves through numbered bills, often amid heavy lobbying. Following the\nbill — its sponsors, its amendments, and the R.C. sections it alters — is how the\nplatform connects a statutory shift to the interests that pushed for it."
+  },
+  {
     "slug": "heat-reuse",
     "title": "Heat reuse",
     "kind": "concept",
@@ -99,7 +605,47 @@
       "consumptive-cooling",
       "hyperscale-data-center"
     ],
-    "body": "**Heat reuse** is the design choice to *recover* a data center's rejected thermal\nenergy — piping it to on-site heating or a neighboring building / district-heat\nloop — rather than *dumping* it through evaporative towers or dry coolers. It is a\nthird axis on the cooling-design space, orthogonal to the withdraw-vs-consume\nquestion that [[consumptive cooling]] describes: a campus can dump or recover heat\nat either end of the water-use band.\n\nThe axis matters here for two reasons. First, where recovery displaces evaporative\nrejection it couples to the water story — less heat sent to a cooling tower is less\nwater evaporated. Second, closed-loop **chip cooling** (direct-to-chip liquid loops,\noil-free magnetic-bearing compressors) sits on the efficient, low-water pole and is\nnow a deployed hyperscale option, not just a spec sheet.\n\nFor a [[hyperscale data center]] the reuse choice is a disclosed-design fact, not\nsomething the footprint reveals. It is treated here as an **industry reference**\ndesign lever — bounding the space of what a campus *could* do — and never as a claim\nabout any watershed point's cooling design, which stays `[open]` until the operator\ndiscloses it. The named-vendor examples (Danfoss heat-reuse modules and Turbocor\ncompressors in Google data centers) are a single promotional source: they establish\nthat the technology is real and deployed, not that any particular campus uses it."
+    "body": "**Heat reuse** is the design choice to *recover* a data center's rejected thermal\nenergy — piping it to on-site heating or a neighboring building / district-heat\nloop — rather than *dumping* it through evaporative towers or dry coolers. It is a\nthird axis on the cooling-design space, orthogonal to the withdraw-vs-consume\nquestion that [[consumptive cooling]] describes: a campus can dump or recover heat\nat either end of the water-use band.\n\nThe axis matters here for two reasons. First, where recovery displaces evaporative\nrejection it couples to the water story — less heat sent to a cooling tower is less\nwater evaporated. Second, closed-loop **chip cooling** (direct-to-chip liquid loops,\noil-free magnetic-bearing compressors) sits on the efficient, low-water pole and is\nnow a deployed hyperscale option, not just a spec sheet.\n\nFor a [[hyperscale data center]] the reuse choice is a disclosed-design fact, not\nsomething the footprint reveals. It is treated here as an **industry reference**\ndesign lever — bounding the space of what a campus *could* do — and never as a claim\nabout any watershed point's cooling design, which stays `[open]` until the operator\ndiscloses it. The named-vendor examples (Danfoss heat-reuse modules and Turbocor\ncompressors in Google data centers) rest on a single promotional source — the\nDanfoss–Google strategic-partnership announcement (Jan 2024), catalogued as\n`[reference]` in the `heat_reuse` prior of\n`data/reference/datacenter-industry/priors.yaml` (which carries the release URL):\nit establishes that the technology is real and deployed, not that any particular\ncampus uses it."
+  },
+  {
+    "slug": "hsg",
+    "title": "HSG",
+    "kind": "term",
+    "aliases": [
+      "hydrologic soil group"
+    ],
+    "tags": [
+      "hydrology",
+      "stormwater"
+    ],
+    "summary": "The NRCS A–D classification of a soil by how readily it infiltrates water — a primary input to runoff curve-number modeling.",
+    "related": [
+      "curve-number",
+      "esc",
+      "cgp"
+    ],
+    "body": "A **hydrologic soil group** sorts a soil into one of four classes — A, B, C, or D —\nby its infiltration rate when thoroughly wet. Group A soils (sand, gravel) soak up\nrain and shed little runoff; group D soils (clay, shallow-to-bedrock) infiltrate\npoorly and run off fast. The classification comes from the NRCS soil survey.\n\nHSG is the soil half of the runoff calculation: paired with land cover it fixes the\n[[curve number]] that sets how much of a storm becomes runoff. It matters twice for\na development record. It decides how sensitive a site is to the impervious cover a\ndata-center campus adds, and — because the group can shift between survey editions —\nchoosing the wrong HSG (say C instead of B) silently changes the modeled runoff, a\ndrift the platform pins by sourcing the group explicitly rather than defaulting it."
+  },
+  {
+    "slug": "huc",
+    "title": "HUC",
+    "kind": "term",
+    "aliases": [
+      "hydrologic unit code",
+      "HUC-8",
+      "HUC-12"
+    ],
+    "tags": [
+      "hydrology",
+      "watershed"
+    ],
+    "summary": "The USGS nested numeric code that keys a hydrologic area at a chosen scale, from large subbasins (HUC-8) down to local subwatersheds (HUC-12).",
+    "related": [
+      "usgs",
+      "nwis",
+      "swat"
+    ],
+    "body": "A **hydrologic unit code** is the [[USGS]] spatial key for a hydrologic drainage\narea. The codes nest by scale: each added pair of digits subdivides the area, so a\nHUC-8 identifies a subbasin (the working unit for a [[total maximum daily load]]) and\na HUC-12 a much smaller local subwatershed.\n\nThe HUC is the join key for hydrology in this record. It is how a facility's outfall\nis tied to the impaired water it discharges to, how [[NWIS]] gauges and nutrient\nloads are rolled up to a consistent drainage area, and how a watershed model like\n[[SWAT]] is bounded. Getting the HUC right is what keeps a downstream analysis\nanchored to the actual receiving system rather than a nearby but hydrologically\nseparate one."
   },
   {
     "slug": "hyperscale-data-center",
@@ -123,6 +669,370 @@
     "body": "A **hyperscale data center** is a data center built and operated at cloud scale —\ntypically multiple large halls on a single campus, with substantial electrical\nand cooling infrastructure. The term is not just colloquial here: the American\nTownship zoning resolution defines *Data Center / Hyperscale Data Center* and\ntreats it as a conditional use in its industrial district.\n\nThe land-use footprint is what ties the term to the rest of this record — the\nparcels assembled for the campus, the conditional-use application, and the\n[[consumptive cooling]] draw the cooling infrastructure implies. Who controls the\nassembling entities is a separate question, read through\n[[common-control plumbing]] rather than asserted."
   },
   {
+    "slug": "hyperscaler",
+    "title": "Hyperscaler",
+    "kind": "concept",
+    "aliases": [
+      "hyperscale operator",
+      "cloud hyperscaler"
+    ],
+    "tags": [
+      "data-center"
+    ],
+    "summary": "A cloud operator that builds and runs data centers at massive scale — the class of companies (AWS, Microsoft, Google, Meta) behind most large campus projects.",
+    "related": [
+      "hyperscale-data-center",
+      "colocation",
+      "behind-the-meter"
+    ],
+    "body": "A **hyperscaler** is one of the handful of companies that operate cloud and computing\ninfrastructure at the largest scale — Amazon, Microsoft, Google, and Meta foremost among\nthem. They design, own, and run their [[hyperscale data center]] campuses directly, as\nopposed to renting capacity in a multi-tenant [[colocation]] facility.\n\nThe hyperscaler is the actor at the center of the siting story, and usually the hardest\nto see. Behind a code-named LLC and a [[non-disclosure agreement]], the same few\noperators are driving the land options, the power demand that fills the\n[[interconnection queue]] or forces [[behind-the-meter]] generation, and the water draw\na community is asked to accommodate. Identifying which hyperscaler stands behind a\nproject — from its power profile, its secure-tier requirements, its known expansion\npattern — is often the pivotal [inference] the platform works to establish and then\nconfirm."
+  },
+  {
+    "slug": "il6",
+    "title": "IL6",
+    "kind": "term",
+    "aliases": [
+      "Impact Level 6",
+      "DoD IL6"
+    ],
+    "tags": [
+      "data-center",
+      "security"
+    ],
+    "summary": "The U.S. Department of Defense cloud security classification for classified (SECRET-level) workloads — the tier that dictates a data center's physical and personnel controls.",
+    "related": [
+      "hyperscale-data-center",
+      "colocation"
+    ],
+    "body": "**Impact Level 6** is the highest tier in the Department of Defense's cloud security\nmodel, authorizing workloads classified up to SECRET. Reaching it requires a facility\nand its staff to meet stringent controls — physical separation, cleared personnel,\naccreditation — well beyond a commercial data center's baseline.\n\nIL6 is a signal in the siting record because it narrows who a facility can be for.\nA campus built or accredited to IL6 is serving a government-secure mission, which\nconstrains the operator, the tenants, and often the secrecy around it — a stronger\nconfidentiality posture than a commercial [[hyperscale data center]] or a multi-tenant\n[[colocation]] site. Where the record hints at an IL6 requirement, the platform treats\nit as a lead about the customer and the purpose, held as an [inference] until an\naccreditation or contract document confirms it."
+  },
+  {
+    "slug": "interconnection-queue",
+    "title": "Interconnection queue",
+    "kind": "concept",
+    "aliases": [
+      "interconnection request",
+      "generation interconnection",
+      "queue position"
+    ],
+    "tags": [
+      "energy",
+      "grid"
+    ],
+    "summary": "The backlog of proposed generators and large loads awaiting the grid-connection studies and approvals an RTO requires before they can energize.",
+    "related": [
+      "pjm",
+      "opsb",
+      "behind-the-meter",
+      "rto"
+    ],
+    "body": "The **interconnection queue** is the ordered backlog of projects — new generators and,\nincreasingly, large loads like data centers — waiting for the [[regional transmission\norganization]] to study their effect on the grid and approve their connection. Each\nentrant holds a dated queue position, and its studies determine what network upgrades\nit must fund before it can energize.\n\nThe queue is one of the most reliable early indicators of a hyperscale project. A\ncampus that has said nothing publicly may already sit in [[PJM]]'s queue with a load\nfigure and a point of interconnection attached, and the studies expose the upgrade\ncost and timeline the local grid faces. A long queue or a costly upgrade is also what\npushes an operator toward [[behind-the-meter]] generation to sidestep the wait — so\nthe queue shapes not just *when* a project connects but *how* it chooses to power\nitself."
+  },
+  {
+    "slug": "jedd",
+    "title": "JEDD",
+    "kind": "term",
+    "aliases": [
+      "joint economic development district"
+    ],
+    "tags": [
+      "land-use",
+      "finance",
+      "governance"
+    ],
+    "summary": "An Ohio township–municipality compact (R.C. 715.70) that shares income-tax revenue from a development area without annexation.",
+    "related": [
+      "cra",
+      "enterprise-zone",
+      "tax-abatement"
+    ],
+    "body": "A **joint economic development district** is an Ohio compact under R.C. 715.70 in\nwhich a township and a municipality jointly govern a development area and share the\nincome-tax revenue it generates. It lets a township host commercial development —\nwhich townships otherwise cannot tax on income — by borrowing a city's taxing\nauthority, in exchange for city services or a revenue split, and without the parcel\nbeing annexed.\n\nThe JEDD matters to a large project because it decides *who* collects the payroll tax\na campus generates and *who* has a governance seat over it. A data-center JEDD can\nroute income-tax revenue across jurisdictional lines and bundle in the same\n[[tax abatement]] and [[community reinvestment area]] terms as a straight municipal\ndeal. Because a JEDD is a negotiated multi-party contract, its text is often where the\nreal allocation of a project's benefits and obligations is written down."
+  },
+  {
+    "slug": "moratorium",
+    "title": "Moratorium",
+    "kind": "concept",
+    "aliases": [
+      "development moratorium",
+      "zoning moratorium"
+    ],
+    "tags": [
+      "land-use",
+      "governance"
+    ],
+    "summary": "A temporary local ban on approving a class of development while a government reconsiders the rules that govern it.",
+    "related": [
+      "rezoning",
+      "conditional-use",
+      "variance"
+    ],
+    "body": "A **moratorium** is a time-limited pause a local government imposes on accepting or\napproving a category of development — commonly while it drafts or revises zoning to\ncatch up with a pressure it did not anticipate. It freezes the status quo so\napplications cannot vest under rules the community has decided to change.\n\nIn this record the moratorium is a recurring civic response to data-center demand: a\ntownship or city facing a rush of large-load proposals halts approvals to write siting\nstandards, buffer or water rules, or an outright district. A moratorium is a live\nsignal — it marks where a community is contesting a project rather than waving it\nthrough — and its timing relative to a specific application often determines whether\nthat project proceeds under old rules or new ones. It typically travels with a\n[[rezoning]] fight, since the rules being paused are the ones a rezoning would apply."
+  },
+  {
+    "slug": "nda",
+    "title": "NDA",
+    "kind": "concept",
+    "aliases": [
+      "non-disclosure agreement",
+      "nondisclosure agreement"
+    ],
+    "tags": [
+      "legal",
+      "governance"
+    ],
+    "summary": "A confidentiality agreement that binds a party to secrecy, often shielding the terms and identity behind a data-center deal during site selection.",
+    "related": [
+      "hyperscale-data-center",
+      "hyperscaler"
+    ],
+    "body": "A **non-disclosure agreement** is a contract in which a party agrees not to reveal\nspecified information. In economic development it is the routine instrument by which a\n[[hyperscaler]] keeps a project confidential during site selection — binding a city,\ncounty, utility, or economic-development agency to secrecy about the company's identity,\nthe incentives under negotiation, and the load involved, often under a code name.\n\nThe NDA is where public accountability and private deal-making collide in this record.\nA confidentiality agreement between a public body and a private developer can wall off\nexactly the terms — the [[tax abatement]], the water and power commitments — that the\npublic has an interest in seeing, and its scope is frequently contested through\npublic-records law. An NDA cannot override a statutory records duty, so the tension\nbetween a signed confidentiality clause and R.C. 149.43 is a recurring seam the\nplatform documents rather than accepts at face value."
+  },
+  {
+    "slug": "npdes",
+    "title": "NPDES",
+    "kind": "term",
+    "aliases": [
+      "National Pollutant Discharge Elimination System",
+      "NPDES permit"
+    ],
+    "tags": [
+      "water",
+      "permitting"
+    ],
+    "summary": "The Clean Water Act permit program that sets and enforces pollutant limits on point-source discharges to surface water.",
+    "related": [
+      "effluent",
+      "dmr",
+      "wla",
+      "tmdl",
+      "dilution",
+      "pti",
+      "oepa",
+      "wwtp"
+    ],
+    "body": "The **National Pollutant Discharge Elimination System** is the Clean Water Act\nprogram that licenses point-source discharges to waters of the United States. An\nNPDES permit names the outfall and receiving water, caps each regulated pollutant\nwith numeric [[effluent]] limits, and sets the monitoring and reporting requirements\nthe permittee must meet — chiefly by filing the [[discharge monitoring report]].\n\nIn Ohio the program is delegated to the [[Ohio EPA]], which issues NPDES permits\nunder state authority; a new or expanded source also needs a [[permit to install]]\nbefore construction. The permit's fact sheet is the platform's primary source for a\nreceiving water's design low flow (the [[7Q10]]) and the [[assimilative capacity]]\navailable to dilute a load — the same denominators that a large new\n[[consumptive cooling]] withdrawal would draw down.\n\nWhere a receiving water is impaired, the permit's limits are meant to implement the\nwater body's [[total maximum daily load]] through a point-source\n[[wasteload allocation]]. Compliance history — inspections, violations, and any\n[[significant non-compliance]] flag — is public through EPA's [[ECHO]]."
+  },
+  {
+    "slug": "nwis",
+    "title": "NWIS",
+    "kind": "term",
+    "aliases": [
+      "National Water Information System"
+    ],
+    "tags": [
+      "hydrology",
+      "data-source"
+    ],
+    "summary": "The USGS system that serves real-time and historical streamflow and water-quality data from the national gauge network.",
+    "related": [
+      "usgs",
+      "7q10",
+      "huc"
+    ],
+    "body": "The **National Water Information System** is the [[USGS]] database and web service\nbehind the nation's streamgages. It publishes discharge (flow) and stage, plus water\ntemperature and quality where instrumented, as both a live feed and a long historical\nrecord, each gauge addressed by a site number.\n\nNWIS is the live-flow spine of the water balance. The platform's hydrology\nconnectors pull gauge records from NWIS to establish a reach's actual flow regime,\nand the long record is what a design low flow like the [[7Q10]] is computed from.\nReading flow from a real, dated NWIS gauge — rather than estimating it — is what lets\na receiving-water value be tagged [verified] and joined by [[HUC]] to the facility\nunder study."
+  },
+  {
+    "slug": "oepa",
+    "title": "OEPA",
+    "kind": "term",
+    "aliases": [
+      "Ohio EPA",
+      "Ohio Environmental Protection Agency"
+    ],
+    "tags": [
+      "environment",
+      "regulator"
+    ],
+    "summary": "The Ohio Environmental Protection Agency — the state permitting and enforcement authority for water, air, and waste under delegated federal programs.",
+    "related": [
+      "epa",
+      "npdes",
+      "pti",
+      "opsb"
+    ],
+    "body": "The **Ohio Environmental Protection Agency** is the state agency that carries out most\nenvironmental permitting and enforcement in Ohio under authority delegated by the\nfederal [[EPA]]. It issues the [[NPDES]] water-discharge permits, the\n[[permit to install]] that precedes construction, and the air permits a facility\noperates under, and it brings the enforcement actions when those permits are violated.\n\nFor this record the Ohio EPA is the agency whose files carry the operative facts about\na facility's water and air impact — the permit terms, the fact sheets, the compliance\nhistory. It is also the agency a public-records request most often targets, and where\nthe tension between disclosure and a company's confidentiality claims plays out. Its\ndecisions sit alongside those of the [[Ohio Power Siting Board]] on the energy side and\nthe federal EPA above it."
+  },
+  {
+    "slug": "once-through-cooling",
+    "title": "Once-through cooling",
+    "kind": "concept",
+    "aliases": [
+      "open-loop cooling"
+    ],
+    "tags": [
+      "water",
+      "cooling",
+      "data-center"
+    ],
+    "summary": "A cooling design that withdraws water, passes it once to absorb heat, and returns nearly all of it to the source — warmer but not consumed.",
+    "related": [
+      "closed-loop-cooling",
+      "consumptive-cooling",
+      "heat-reuse"
+    ],
+    "body": "**Once-through cooling** draws water, runs it once through a heat exchanger, and\nreturns almost all of it to the source. Its signature is a large *withdrawal* but a\nsmall *consumption*: the water comes back, chiefly warmer. The environmental question\nit raises is thermal — the heat load and intake entrainment — rather than lost flow.\n\nIt is the mirror image of [[closed-loop cooling]], and the distinction is decisive\nfor the water balance. A once-through data center barely dents downstream flow but\nadds a thermal load a receiving water may not tolerate at low flow; a recirculating\none withdraws far less yet consumes most of what it takes through evaporation. Which\ndesign an operator chooses therefore determines whether a campus reads as a\n[[consumptive cooling]] problem or a thermal one — so the platform keeps the cooling\ntype an explicit, sourced assumption, not a guess."
+  },
+  {
+    "slug": "opc",
+    "title": "OPC",
+    "kind": "term",
+    "aliases": [
+      "opinion of probable cost",
+      "engineer's estimate"
+    ],
+    "tags": [
+      "procurement",
+      "construction"
+    ],
+    "summary": "A design-phase cost estimate for a public project — the engineer's structured projection of what construction will cost, and the artifact this platform reconstructs from source PDFs.",
+    "related": [
+      "cmar",
+      "rfq",
+      "rfp"
+    ],
+    "body": "An **opinion of probable cost** is the design engineer's structured estimate of what a\npublic project will cost to build, prepared before bids come in. It rolls up quantities\nand unit prices into sections and subtotals, then adds markups for contingency and soft\ncosts — a document precise enough to budget against but explicitly an *opinion*, not a\nbid.\n\nThe OPC is the reference artifact of the platform's extract stage: the six Tetra Tech\nroundabout estimates it reconstructs from a scanned bundle are OPCs, and the\nextraction model is built to hold any contractor's section-and-markup structure\nwithout hardcoding one firm's taxonomy. Because the OCR text layer of a scanned OPC\ngarbles digits, its figures are read from the page image, and each extracted value\ncarries its page provenance — a dollar total is [verified] from the sheet, an\nuncertain quantity marked approximate. It is the cost counterpart to how a project is\nprocured, whether by [[construction manager at risk]] or competitive bid."
+  },
+  {
+    "slug": "opsb",
+    "title": "OPSB",
+    "kind": "term",
+    "aliases": [
+      "Ohio Power Siting Board"
+    ],
+    "tags": [
+      "energy",
+      "grid",
+      "permitting"
+    ],
+    "summary": "The Ohio board that reviews and certifies the siting of major electric generation and transmission facilities.",
+    "related": [
+      "puco",
+      "pjm",
+      "ferc",
+      "interconnection-queue"
+    ],
+    "body": "The **Ohio Power Siting Board** is the state body that must certify major energy\ninfrastructure — large generating plants, high-voltage transmission lines, and big\nsubstations — before they are built. Its review weighs need, environmental impact,\nand public comment through an evidentiary case docketed under a case number, which\nmakes the OPSB file a rich public record of a project's rationale and opposition.\n\nFor the data-center thread the OPSB is often where the *power* side of a campus first\nsurfaces publicly. A new substation or a behind-the-meter generation plant sized to a\nhyperscale load lands on the board's docket, and the filing can reveal the load —\nand the operator — before any economic-development announcement does. The board is\ndistinct from the [[PUCO]], which regulates utility service and rates, and from the\nfederal [[FERC]]; the OPSB decides *where* big energy facilities go."
+  },
+  {
+    "slug": "orc",
+    "title": "ORC",
+    "kind": "term",
+    "aliases": [
+      "Ohio Revised Code",
+      "R.C."
+    ],
+    "tags": [
+      "legal"
+    ],
+    "summary": "The codified statutes of Ohio, cited throughout the record — from public-records law to the economic-development and siting authorities.",
+    "related": [
+      "public-records-mandamus",
+      "hb",
+      "constructive-denial"
+    ],
+    "body": "The **Ohio Revised Code** is the compiled, numbered body of Ohio's statutes, cited in\nthe form *R.C. 149.43* (or ORC 149.43). It is the legal backbone of the record: nearly\nevery authority a party invokes — an agency's duty, a tool it uses, a right the\nrequester asserts — traces to a specific section of the code.\n\nThe same citations recur across the platform's threads. R.C. 149.43 is the Public\nRecords Act behind a [[constructive denial]] and a [[public-records mandamus]];\nR.C. 3735 authorizes the [[community reinvestment area]]; R.C. 715.70 the\n[[joint economic development district]]; R.C. 6111 the state water-pollution program.\nA section number changes only when the legislature amends it through a\n[[House Bill]] — so pinning a claim to its exact R.C. citation is how the platform ties\nan action to the precise authority in force when it was taken."
+  },
+  {
+    "slug": "pfas",
+    "title": "PFAS",
+    "kind": "term",
+    "aliases": [
+      "per- and polyfluoroalkyl substances",
+      "forever chemicals"
+    ],
+    "tags": [
+      "water",
+      "contaminants"
+    ],
+    "summary": "A large class of persistent synthetic fluorinated compounds, increasingly regulated in drinking water, effluent, and biosolids.",
+    "related": [
+      "dmr",
+      "npdes",
+      "cercla",
+      "tri"
+    ],
+    "body": "**Per- and polyfluoroalkyl substances** are a class of thousands of synthetic\ncompounds built around highly stable carbon–fluorine bonds. That stability is why\nthey are called *forever chemicals*: they resist breakdown, accumulate in water and\ntissue, and are mobile in groundwater. EPA has set enforceable drinking-water limits\nfor several PFAS and is phasing them into discharge monitoring and cleanup programs.\n\nPFAS cut across several threads of this record. They appear as a drinking-water and\n[[NPDES]] concern where a discharge or biosolids land application is a pathway; as a\n[[CERCLA]] liability now that two PFAS (PFOA and PFOS) were designated hazardous\nsubstances as of EPA's 2024 final rule; and as\nreported releases in EPA's [[TRI]]. Because the regulatory picture is still moving,\nthe platform tags a specific PFAS finding to its dated source — a [verified] limit or\na [reference] sampling result — rather than to a general expectation."
+  },
+  {
+    "slug": "pilot",
+    "title": "PILOT",
+    "kind": "term",
+    "aliases": [
+      "payment in lieu of taxes"
+    ],
+    "tags": [
+      "land-use",
+      "finance"
+    ],
+    "summary": "A negotiated payment that substitutes for the property taxes abated on a development, often directed to specific recipients like a school district.",
+    "related": [
+      "tax-abatement",
+      "tif",
+      "cra"
+    ],
+    "body": "A **payment in lieu of taxes** is money a developer agrees to pay in place of the\nproperty taxes a [[tax abatement]] has exempted. Because an abatement can strip most\nof a project's value off the tax rolls, a PILOT is how the affected jurisdictions —\nespecially the school district, which depends on property tax — recover part of what\nthey would otherwise have collected.\n\nThe PILOT is where the real fiscal bargain of an abated deal lives. Its size relative\nto the taxes forgone, and who receives it, determine whether an abatement is roughly\nrevenue-neutral for schools or a large net transfer to the developer. A\n[[tax increment financing]] service payment is a close structural cousin — both\nconvert a tax obligation into a directed payment. The platform reads the PILOT terms\nnext to the abatement they offset, because one number without the other overstates\nthe public benefit."
+  },
+  {
+    "slug": "pjm",
+    "title": "PJM",
+    "kind": "term",
+    "aliases": [
+      "PJM Interconnection"
+    ],
+    "tags": [
+      "energy",
+      "grid",
+      "market"
+    ],
+    "summary": "The regional transmission organization that operates the high-voltage grid and wholesale electricity market across Ohio and the mid-Atlantic.",
+    "related": [
+      "rto",
+      "ferc",
+      "interconnection-queue",
+      "opsb"
+    ],
+    "body": "**PJM Interconnection** is the [[regional transmission organization]] that runs the\ntransmission grid and the wholesale power market for Ohio and all or parts of a dozen\nneighboring states plus the District of Columbia. It dispatches generation, runs the capacity market, and — critically for this\nrecord — administers the [[interconnection queue]] that every new generator or large\nload must clear before it can connect.\n\nPJM is where a data center's grid impact becomes visible at regional scale. Its\nqueue, capacity-auction results, and load forecasts document the demand that\nhyperscale campuses are placing on the system, often earlier and more concretely than\nany local filing. As a federally regulated market operator PJM answers to [[FERC]],\nwhile the physical facilities it interconnects are sited through state bodies like the\n[[Ohio Power Siting Board]] — so a single project leaves a trail across all three."
+  },
+  {
+    "slug": "potw",
+    "title": "POTW",
+    "kind": "term",
+    "aliases": [
+      "publicly owned treatment works"
+    ],
+    "tags": [
+      "water",
+      "infrastructure"
+    ],
+    "summary": "The Clean Water Act term for a municipally owned wastewater treatment works — the public peer of a private industrial discharger.",
+    "related": [
+      "wwtp",
+      "npdes",
+      "effluent"
+    ],
+    "body": "A **publicly owned treatment works** is the Clean Water Act's name for a\nmunicipally owned [[WWTP]] and its collection system. The label matters because a\nPOTW carries obligations a private plant does not: it must administer a\n*pretreatment* program that limits what industrial users may send to the sewer, and\nit discharges its own treated [[effluent]] under a municipal [[NPDES]] permit.\n\nFor the platform, the POTW distinction sorts a discharger by who runs it. A\nhyperscale campus that routes cooling blowdown or sanitary flow to the local POTW\nbecomes an industrial user inside that public permit *for that stream* rather than a\npermittee in its own right — which changes where the monitoring record lives and who\nis accountable for an exceedance. Any separate direct discharge, stormwater, or other\nregulated source at the same campus can still require its own facility-specific\npermit."
+  },
+  {
+    "slug": "pti",
+    "title": "PTI",
+    "kind": "term",
+    "aliases": [
+      "permit to install"
+    ],
+    "tags": [
+      "permitting",
+      "air",
+      "water"
+    ],
+    "summary": "Ohio EPA's pre-construction permit for a new or modified source of air or water pollution, issued before ground is broken.",
+    "related": [
+      "npdes",
+      "oepa",
+      "cgp"
+    ],
+    "body": "A **permit to install** is the [[Ohio EPA]] authorization a project must obtain\n*before* it builds or modifies a source of pollution — a treatment unit, an outfall,\nan air-emitting process. It is the pre-construction counterpart to an operating\npermit: the PTI reviews the design, while an operating permit governs the source once\nit runs — where applicable an [[NPDES]] permit for a water discharge, and for air a\nTitle V permit for a major source or a permit-to-install-and-operate (PTIO) for a\nsmaller one.\n\nThe PTI is often the earliest hard document in a facility's public trail, because it\npredates operation. For a data-center campus, a permit-to-install application can\nsurface the on-site combustion, backup generation, or wastewater handling before the\noperator has said anything publicly — which is why the platform treats a PTI as a\nhigh-value discovery target alongside the [[construction general permit]] that covers\nits stormwater during the build."
+  },
+  {
     "slug": "public-records-mandamus",
     "title": "Public-records mandamus",
     "kind": "term",
@@ -141,5 +1051,463 @@
       "common-control-plumbing"
     ],
     "body": "A **public-records request (PRR)** asks a public office to produce records under\nOhio's Public Records Act (R.C. 149.43). When an office withholds or fails to\nproduce responsive records, the statutory remedy is a writ of **mandamus** — a\ncourt order compelling production (and, in some cases, statutory damages).\n\nThe mandamus thread is the lever that pries loose otherwise withheld material:\nthe withholding map, the source instruments, and the production analyses sit\nunder the legal-history section. The records it produced are what the structured\nextractions and the entity graph are built on — which is why the\n[[common-control plumbing]] read from them is only as complete as the\nproduction was."
+  },
+  {
+    "slug": "puco",
+    "title": "PUCO",
+    "kind": "term",
+    "aliases": [
+      "Public Utilities Commission of Ohio"
+    ],
+    "tags": [
+      "energy",
+      "grid",
+      "regulator"
+    ],
+    "summary": "Ohio's utility regulator, overseeing the rates and service of electric, gas, water, and telecom utilities in the state.",
+    "related": [
+      "opsb",
+      "aep",
+      "ferc"
+    ],
+    "body": "The **Public Utilities Commission of Ohio** regulates the state's investor-owned\nutilities — setting the rates, terms, and service standards under which a company\nlike [[AEP]] Ohio delivers electricity. Its cases run as docketed proceedings with\nfiled testimony and public comment, so a PUCO docket is a durable record of what a\nutility proposed and what it was allowed.\n\nPUCO is where the *cost* of accommodating a new large load can surface: a utility's\nrequest to build infrastructure, recover a special-contract arrangement, or shift the\ncost of serving a hyperscale customer onto or away from other ratepayers runs through\nthe commission. It pairs with the [[Ohio Power Siting Board]], which certifies where a\nmajor facility is built; the separate federal [[FERC]] holds jurisdiction over\ninterstate wholesale power, while the PUCO's own authority is the state's retail\nservice and rates — a division of labor the platform keeps straight when\ntracing who approved what."
+  },
+  {
+    "slug": "pue",
+    "title": "PUE",
+    "kind": "term",
+    "aliases": [
+      "power usage effectiveness"
+    ],
+    "tags": [
+      "data-center",
+      "energy"
+    ],
+    "summary": "A data center's total facility energy divided by its IT-load energy — the standard measure of how much overhead (mostly cooling) its computing carries.",
+    "related": [
+      "wue",
+      "hyperscale-data-center",
+      "consumptive-cooling"
+    ],
+    "body": "**Power usage effectiveness** is the ratio of a data center's total energy use to the\nenergy delivered to its IT equipment. A PUE of 1.0 would mean every watt reached the\nservers; real facilities land above that, and the gap is overhead — chiefly cooling and\npower conversion. A modern efficient campus reports a PUE near 1.1–1.2.\n\nPUE is the lever that connects computing to cooling, and through cooling to water. A\nlower PUE means less energy spent moving heat, but the efficient designs that achieve\nit often lean on evaporative [[consumptive cooling]], trading electricity for water —\nwhich is why PUE and its water counterpart, [[WUE]], have to be read together. The\nplatform treats an operator's reported PUE as a claimed [reference] figure, useful for\nscaling a [[hyperscale data center]]'s total draw from its IT load but not a\nsubstitute for the actual metered demand."
+  },
+  {
+    "slug": "rezoning",
+    "title": "Rezoning",
+    "kind": "concept",
+    "aliases": [
+      "rezone",
+      "zoning amendment",
+      "map amendment"
+    ],
+    "tags": [
+      "land-use",
+      "governance"
+    ],
+    "summary": "A legislative change to a parcel's zoning district, frequently the approval that unlocks — or blocks — a large project.",
+    "related": [
+      "moratorium",
+      "conditional-use",
+      "variance"
+    ],
+    "body": "A **rezoning** is a legislative act that changes the zoning classification of a\nparcel — an industrial district applied to former farmland, say — so a use the old\nzoning barred becomes permitted. Because it is legislative, it is usually decided by\nthe elected body after a planning-commission recommendation and public hearing, and it\nis the approval most exposed to organized opposition and, in some jurisdictions, to\nreferendum.\n\nRezoning is usually the hinge in a data-center land record: the campus needs\nindustrial or a special district, and the vote to grant it is where a community's\nposition becomes official and, depending on the jurisdiction, open to referendum or\njudicial challenge. It is distinct from the lesser approvals a\nproject might instead seek — a [[conditional use]] permit within the existing zoning,\nor a [[variance]] from a single standard — and it is the approval a\n[[moratorium]] most often pauses. Tracking the rezoning vote, its conditions, and any\nreferendum is how the platform fixes when and on what terms a project was actually\nauthorized."
+  },
+  {
+    "slug": "rfp",
+    "title": "RFP",
+    "kind": "term",
+    "aliases": [
+      "request for proposals"
+    ],
+    "tags": [
+      "procurement"
+    ],
+    "summary": "A solicitation asking firms to submit a scoped, priced proposal, evaluated on a combination of approach and cost.",
+    "related": [
+      "rfq",
+      "cmar",
+      "opc"
+    ],
+    "body": "A **request for proposals** is a public solicitation that asks firms for a complete,\nscoped, and priced offer to do the work. Unlike a pure low-bid invitation, an RFP is\nscored on stated criteria — technical approach, schedule, team, and price together — so\nthe agency can select the best value rather than merely the cheapest number.\n\nFor the platform, an RFP and the proposals it draws are a rich seam of the public\nrecord: they lay out how a project was defined, who competed, and what each offered.\nAn RFP typically follows a [[request for qualifications]] when an agency first\nshortlists on competence and then seeks priced proposals from the shortlist, and its\nfigures can be read against the design-phase [[opinion of probable cost]] to see how\nbid reality tracked the engineer's estimate."
+  },
+  {
+    "slug": "rfq",
+    "title": "RFQ",
+    "kind": "term",
+    "aliases": [
+      "request for qualifications"
+    ],
+    "tags": [
+      "procurement"
+    ],
+    "summary": "A solicitation asking firms to submit their qualifications, used to shortlist or select on competence rather than price.",
+    "related": [
+      "rfp",
+      "cmar",
+      "opc"
+    ],
+    "body": "A **request for qualifications** is a public solicitation that asks interested firms to\ndocument their experience, staffing, and capacity — their *qualifications* — rather than\na price. An agency uses it to shortlist candidates before a priced proposal, or, for\nprofessional and qualifications-based services, to select outright and negotiate the fee\nafterward.\n\nThe RFQ is the front door to a project's procurement record and often names the field of\ncompetitors before anyone is chosen. It is the customary selection route for a\n[[construction manager at risk]] and for design engineers, where qualifications rather\nthan low bid govern. It pairs with the [[request for proposals]], which does ask for a\nscoped, priced offer — together they mark how and on what basis a public project's team\nwas assembled."
+  },
+  {
+    "slug": "rsei",
+    "title": "RSEI",
+    "kind": "term",
+    "aliases": [
+      "Risk-Screening Environmental Indicators"
+    ],
+    "tags": [
+      "environment",
+      "data-source"
+    ],
+    "summary": "EPA's model that converts Toxics Release Inventory reports into a comparative, toxicity- and exposure-weighted chronic-risk score.",
+    "related": [
+      "tri",
+      "echo",
+      "epa"
+    ],
+    "body": "**Risk-Screening Environmental Indicators** is the [[EPA]] model that turns the raw\npounds in the [[TRI]] into a comparative risk score. It weights each reported release\nby the chemical's toxicity and models how it disperses and reaches people, so a small\nrelease of a potent compound near a population can outrank a large release of a benign\none far from anyone.\n\nRSEI is a *screening* tool, not a measurement of harm to any individual — its value is\nin ranking and trend, letting an analyst compare facilities and watch a site's risk\nprofile move over time. The platform pulls RSEI as a committed [reference] dataset\nscoped to a site's geography, and treats a score as an [inference] about relative\nchronic risk rather than a [verified] exposure. Its inputs are only as current as the\nTRI year it was run on."
+  },
+  {
+    "slug": "rto",
+    "title": "RTO",
+    "kind": "term",
+    "aliases": [
+      "regional transmission organization",
+      "ISO",
+      "independent system operator"
+    ],
+    "tags": [
+      "energy",
+      "grid",
+      "market"
+    ],
+    "summary": "The independent operator that runs the transmission grid and wholesale energy market for a multi-state region — PJM in this record.",
+    "related": [
+      "pjm",
+      "ferc",
+      "interconnection-queue"
+    ],
+    "body": "A **regional transmission organization** is an independent, FERC-regulated entity\nthat operates the high-voltage grid and wholesale electricity market for a region,\nkeeping the transmission system neutral among the utilities and generators that use\nit. An *independent system operator* (ISO) is the functionally equivalent term; the\nlabel differs by region but the role is the same.\n\nThe RTO is the level at which grid capacity is actually allocated, through the\n[[interconnection queue]] and capacity market it administers. For this record the RTO\nis [[PJM]], and its rules — set under [[FERC]] tariffs — determine how quickly a new\nhyperscale load or a behind-the-meter plant can connect, and what it must pay to do\nso. Understanding the RTO's process is what turns a vague \"grid constraint\" into a\nspecific, dated position in a queue."
+  },
+  {
+    "slug": "snc",
+    "title": "SNC",
+    "kind": "term",
+    "aliases": [
+      "significant non-compliance",
+      "significant noncompliance"
+    ],
+    "tags": [
+      "water",
+      "enforcement",
+      "records"
+    ],
+    "summary": "EPA's flag for a permittee whose violations are serious or chronic enough to warrant a formal enforcement response.",
+    "related": [
+      "dmr",
+      "echo",
+      "npdes",
+      "consent-decree"
+    ],
+    "body": "**Significant non-compliance** is EPA's threshold for a permit violation serious\nenough to demand a formal response rather than a routine notice. For a water\npermittee it is triggered by patterns in the [[discharge monitoring report]] —\neffluent exceedances above defined magnitudes, or chronic reporting failures — not\nby a single stray value.\n\nAn SNC flag is a signal worth following: it marks the facilities EPA itself has\nsorted as problem dischargers, and it is visible through [[ECHO]] without any\nrecords request. An unresolved SNC is frequently the on-ramp to a formal enforcement\naction and, ultimately, a [[consent decree]]. The platform reads an SNC designation\nas [verified] when it appears in the ECHO record, and treats the underlying cause as\na lead to trace back through the [[NPDES]] permit and its monitoring history."
+  },
+  {
+    "slug": "sos",
+    "title": "SOS",
+    "kind": "term",
+    "aliases": [
+      "Secretary of State"
+    ],
+    "tags": [
+      "legal",
+      "governance"
+    ],
+    "summary": "The state office that holds business-entity filings — the public trail from an LLC back toward the people and companies behind it.",
+    "related": [
+      "orc",
+      "nda"
+    ],
+    "body": "The **Secretary of State** is the state office that registers business entities and\nkeeps their public filings — articles of organization, statutory agents, annual\nreports, and the record of mergers and name changes. For an investigator it is the\nentry point of corporate genealogy: the place a limited-liability company's paper trail\nbegins.\n\nThe SOS record is central to the entity work in this platform because data-center\ndevelopers routinely route a project through single-purpose LLCs with anodyne names.\nChasing the filings — the registered agent shared across shells, the formation date\nthat lines up with a land option, the parent disclosed in an out-of-state filing — is\nhow the platform pierces a code name toward the operator behind it. The trail is often\npartial by design, which is where a [[non-disclosure agreement]] and other\nconfidentiality layers pick up where the public filing goes quiet."
+  },
+  {
+    "slug": "ssa",
+    "title": "SSA",
+    "kind": "term",
+    "aliases": [
+      "sole source aquifer"
+    ],
+    "tags": [
+      "water",
+      "groundwater"
+    ],
+    "summary": "An EPA designation for an aquifer that supplies most of the drinking water for an area with no readily available alternative source.",
+    "related": [
+      "epa",
+      "cercla"
+    ],
+    "body": "A **sole source aquifer** is an aquifer that the [[EPA]] has designated as the\nprincipal drinking-water source for its service area — one supplying at least half\nthe area's drinking water with no economically feasible alternative if it were\ncontaminated. The designation does not create a cleanup program, but it triggers EPA\nreview of federally funded projects that could contaminate the aquifer.\n\nThe label raises the stakes of any subsurface contamination in the designated area:\na release that would be a local matter over a redundant aquifer becomes a threat to\nthe region's only water supply. Where a sole-source aquifer underlies a facility\nalready inside a federal cleanup — a [[CERCLA]] site — the two designations\ncompound, and the groundwater pathway becomes the controlling exposure route in the\nrecord."
+  },
+  {
+    "slug": "swat",
+    "title": "SWAT",
+    "kind": "term",
+    "aliases": [
+      "Soil and Water Assessment Tool"
+    ],
+    "tags": [
+      "hydrology",
+      "modeling"
+    ],
+    "summary": "A watershed-scale model that simulates runoff, sediment, and nutrient loading across a basin to support TMDL and land-use analysis.",
+    "related": [
+      "tmdl",
+      "total-phosphorus",
+      "huc"
+    ],
+    "body": "The **Soil and Water Assessment Tool** is a watershed model that routes rainfall\nthrough a basin's soils, land cover, and channels to estimate runoff, sediment, and\nnutrient loads over time. It works at the [[HUC]] scale, dividing a basin into\nsubwatersheds so land-use change in one area can be traced to loading downstream.\n\nSWAT is the kind of model that stands behind a nutrient [[total maximum daily load]]:\nit apportions a reach's [[total phosphorus]] and nitrogen load among its sources,\nwhich is what a load budget and its allocations are built on. The platform treats a\nSWAT output as a modeled [inference] — useful for attributing and comparing loads,\nbut distinct from a measured [[discharge monitoring report]] value, and only as good\nas the land-cover and soil inputs it was run on."
+  },
+  {
+    "slug": "swcd",
+    "title": "SWCD",
+    "kind": "term",
+    "aliases": [
+      "Soil and Water Conservation District"
+    ],
+    "tags": [
+      "water",
+      "governance"
+    ],
+    "summary": "A local district that administers soil, drainage, and stormwater conservation programs, often reviewing the erosion controls on new development.",
+    "related": [
+      "cgp",
+      "esc",
+      "oepa"
+    ],
+    "body": "A **soil and water conservation district** is a local governmental unit — typically\ncounty-based — that carries out soil, drainage, and stormwater conservation work. Its\nroots are agricultural, but on the development side it frequently reviews grading and\ndrainage plans and — where a local MS4 program, ordinance, or delegation agreement\nprovides for it — inspects the [[erosion and sediment control]] a construction site\nmust maintain under its [[construction general permit]]. Formal enforcement of the\npermit itself stays with the regulator, not the district.\n\nThe SWCD is the local eyes on a large construction disturbance. Where the [[Ohio EPA]]\nholds the discharge permit, the district is often the body that actually walks the site\nand flags a sediment-control failure, and its records can document a project's\ncompliance — or its lapses — during the build. For a multi-hundred-acre data-center\nclearing, the district's review and inspection file is a ground-level source the\nplatform mines for what actually happened on the dirt."
+  },
+  {
+    "slug": "tax-abatement",
+    "title": "Tax abatement",
+    "kind": "concept",
+    "aliases": [
+      "abatement",
+      "property-tax abatement"
+    ],
+    "tags": [
+      "land-use",
+      "finance"
+    ],
+    "summary": "A negotiated reduction or exemption of property taxes granted to attract or retain development — the umbrella over Ohio's CRA, enterprise-zone, and TIF tools.",
+    "related": [
+      "cra",
+      "tif",
+      "pilot",
+      "enterprise-zone",
+      "jedd"
+    ],
+    "body": "A **tax abatement** is a negotiated agreement to forgive some or all of the property\ntaxes a development would otherwise owe, granted to induce the investment. In Ohio it\nis delivered through named vehicles — a [[community reinvestment area]], an\n[[enterprise zone]], or a [[tax increment financing]] district — each with its own\nstatute, term limits, and approval path, but all resting on the same trade: public\nrevenue given up now for private investment and jobs later.\n\nAbatement is the fiscal core of the data-center siting story, because the projects\nare enormous in assessed value but modest in permanent employment, so the value\nexempted can dwarf the payroll returned. Reading a deal honestly means netting the\nabatement against what offsets it — a [[payment in lieu of taxes]], a school\nrevenue-share, a grant-refund clause that lets the public recover if promises\nfail — rather than citing the headline investment alone. That netting is how the\nplatform tests a claimed public benefit against its documented public cost."
+  },
+  {
+    "slug": "tif",
+    "title": "TIF",
+    "kind": "term",
+    "aliases": [
+      "tax increment financing"
+    ],
+    "tags": [
+      "land-use",
+      "finance"
+    ],
+    "summary": "A financing tool that earmarks the property-tax increment from new development to pay for public infrastructure serving it.",
+    "related": [
+      "tax-abatement",
+      "cra",
+      "pilot"
+    ],
+    "body": "**Tax increment financing** freezes the taxable value of a parcel or district at its\npre-development level and diverts the *increment* — the added taxes owed on the new\nvalue — to pay for public improvements that serve the development, often through\npayments the owner makes in lieu of the diverted taxes. Ohio structures a TIF as an\nexemption paired with a service payment, so mechanically it resembles a\n[[tax abatement]] with the savings recycled into infrastructure.\n\nTIF is the tool that funds the roads, water, and sewer a large campus needs without a\ngeneral tax increase, by capturing the project's own future tax growth up front. In a\ndata-center deal it frequently rides alongside a [[community reinvestment area]]\nabatement — the CRA exempts the building value while the TIF finances the offsite\ninfrastructure. Untangling which mechanism captures which value, and for how long, is\nwhat separates a project's advertised investment from its net fiscal effect."
+  },
+  {
+    "slug": "tmdl",
+    "title": "TMDL",
+    "kind": "term",
+    "aliases": [
+      "total maximum daily load"
+    ],
+    "tags": [
+      "water",
+      "water-quality",
+      "permitting"
+    ],
+    "summary": "The maximum pollutant load an impaired water body can receive and still meet water-quality standards, apportioned among the sources that contribute it.",
+    "related": [
+      "wla",
+      "npdes",
+      "total-phosphorus",
+      "total-nitrogen",
+      "dilution"
+    ],
+    "body": "A **total maximum daily load** is the pollutant budget for an impaired water body:\nthe maximum daily load of a given pollutant the water can absorb and still meet its\nwater-quality standard, plus a margin of safety. The Clean Water Act requires a\nstate to write one for each impaired water body–pollutant combination on its list.\n\nThe budget is then divided. Point sources — permitted dischargers — receive a\n[[wasteload allocation]], which a state implements by writing that share into each\nfacility's [[NPDES]] permit; nonpoint sources (runoff) receive a load allocation.\nIn this watershed the binding TMDLs are nutrient budgets for\n[[total phosphorus]] and [[total nitrogen]], the loads that drive the Lake\nErie / Maumee algae problem. A TMDL tightens the [[dilution]] math: it can leave a\nreach with little or no headroom for a new load, regardless of that reach's flow."
+  },
+  {
+    "slug": "total-nitrogen",
+    "title": "Total nitrogen",
+    "kind": "concept",
+    "aliases": [
+      "TN",
+      "nitrogen loading"
+    ],
+    "tags": [
+      "water",
+      "water-quality"
+    ],
+    "summary": "A nutrient water-quality parameter summing the nitrogen species in a sample, tracked alongside phosphorus in loading and TMDL analysis.",
+    "related": [
+      "total-phosphorus",
+      "tmdl",
+      "dissolved-oxygen"
+    ],
+    "body": "**Total nitrogen** is a reporting aggregate of a sample's nitrogen forms — derived,\ndepending on what a lab measures, either as a direct TN result or by summing nitrate,\nnitrite, ammonia, and organic nitrogen (often via total Kjeldahl nitrogen plus nitrate\nand nitrite). Like [[total phosphorus]], it is a nutrient that\nfuels algal growth; while phosphorus usually limits freshwater blooms, nitrogen\nco-drives them and governs the toxicity of some cyanobacteria, so a nutrient\n[[total maximum daily load]] typically tracks both.\n\nNitrogen also matters directly to permit compliance: ammonia is toxic to aquatic\nlife at low concentrations and its decay consumes oxygen, so a discharge's nitrogen\nload ties straight into the receiving water's [[dissolved oxygen]] budget. The\nplatform reads total nitrogen as one of the two nutrient loads that decide whether a\nreach can absorb a new discharge, not as a stand-alone number."
+  },
+  {
+    "slug": "total-phosphorus",
+    "title": "Total phosphorus",
+    "kind": "concept",
+    "aliases": [
+      "TP",
+      "phosphorus loading"
+    ],
+    "tags": [
+      "water",
+      "water-quality"
+    ],
+    "summary": "A nutrient water-quality parameter measuring all forms of phosphorus in a sample; excess loading drives the Lake Erie / Maumee algal-bloom problem.",
+    "related": [
+      "total-nitrogen",
+      "tmdl",
+      "dissolved-oxygen",
+      "wla"
+    ],
+    "body": "**Total phosphorus** measures every form of phosphorus in a water sample —\ndissolved and particulate — as a single number. Phosphorus is usually the limiting\nnutrient for freshwater algae, so it is the parameter regulators watch most closely\nin the Western Lake Erie basin, where phosphorus loading feeds the harmful algal\nblooms that recur in the [[Maumee]] watershed.\n\nBecause it is the driver, total phosphorus is the pollutant most likely to carry a\nbinding [[total maximum daily load]] and a point-source [[wasteload allocation]] in\nthis record. A reach already over its phosphorus budget has no assimilative headroom\nfor a new load no matter how much water it carries — and the bloom itself worsens the\n[[dissolved oxygen]] sag that stresses aquatic life downstream."
+  },
+  {
+    "slug": "tri",
+    "title": "TRI",
+    "kind": "term",
+    "aliases": [
+      "Toxics Release Inventory"
+    ],
+    "tags": [
+      "environment",
+      "data-source"
+    ],
+    "summary": "EPA's annual, facility-level inventory of reported toxic-chemical releases to air, water, and land — the data behind the RSEI risk model.",
+    "related": [
+      "rsei",
+      "echo",
+      "pfas"
+    ],
+    "body": "The **Toxics Release Inventory** is EPA's annual, self-reported accounting of toxic\nchemicals released or transferred by industrial and federal facilities above\nreporting thresholds. Each facility files quantities by chemical and medium — air,\nwater, land — creating a long, comparable public time series of who released what,\nwhere.\n\nTRI is a raw inventory of *pounds*, not of risk: a large release of a low-toxicity\nchemical and a small release of a potent one look different on paper but not in\nproximity to people. That gap is exactly what the [[RSEI]] model closes, weighting TRI\nquantities by toxicity and population exposure. The platform uses TRI as the neutral,\n[reference] baseline of a site's release profile, and watches the list expand as newly\nregulated compounds like some [[PFAS]] are phased into reporting."
+  },
+  {
+    "slug": "usgs",
+    "title": "USGS",
+    "kind": "term",
+    "aliases": [
+      "United States Geological Survey",
+      "U.S. Geological Survey"
+    ],
+    "tags": [
+      "hydrology",
+      "data-source"
+    ],
+    "summary": "The federal science agency that operates the national streamgage network and publishes the water, terrain, and geology data the analysis rests on.",
+    "related": [
+      "nwis",
+      "huc",
+      "7q10"
+    ],
+    "body": "The **United States Geological Survey** is the federal earth-science agency. For this\nrecord its role is water and terrain: it runs the streamgage network served through\n[[NWIS]], defines the watershed addressing of the [[hydrologic unit code]], and\npublishes the elevation and geologic layers that underpin drainage and siting work.\n\nUSGS data is authoritative reference in the platform's evidence grammar — a gauge\nreading or a mapped watershed boundary is a [reference] fact from a neutral federal\nsource, not an agency's contested position. That neutrality is why a design low-flow\nstatistic like the [[7Q10]] — the one that applies varies with the pollutant,\nreceiving water, jurisdiction, and permit method — is anchored to the USGS record: it\nlets the water-quality math start from ground the parties don't dispute."
+  },
+  {
+    "slug": "variance",
+    "title": "Variance",
+    "kind": "concept",
+    "aliases": [
+      "zoning variance",
+      "area variance",
+      "use variance"
+    ],
+    "tags": [
+      "land-use",
+      "governance"
+    ],
+    "summary": "A parcel-specific waiver of a zoning standard granted by a board of zoning appeals when strict application would impose an undue hardship.",
+    "related": [
+      "rezoning",
+      "conditional-use",
+      "moratorium"
+    ],
+    "body": "A **variance** is a waiver from a specific zoning requirement — a setback, a height,\na lot-coverage limit — granted by a board of zoning appeals for one parcel because\nstrict application would create a practical difficulty or hardship peculiar to that\nproperty. An *area* variance relaxes a dimensional standard; a *use* variance, rarer\nand harder to win, permits a use the district otherwise bars.\n\nA variance is the narrowest of the land-use approvals: it does not change the\ndistrict ([[rezoning]]) or authorize a listed use ([[conditional use]]), it just bends\none rule for one site. In a large-project record variances tend to be the tell in the\ndetails — the setback or buffer a campus needed to have relaxed, the standard it could not\nmeet as-designed — and a stack of them can reveal how far a project departs from the\nzoning the parcel was granted. (Note this is a zoning variance, distinct from an\nNPDES water-quality variance, which is an unrelated permitting instrument.)"
+  },
+  {
+    "slug": "wla",
+    "title": "WLA",
+    "kind": "term",
+    "aliases": [
+      "wasteload allocation"
+    ],
+    "tags": [
+      "water",
+      "water-quality",
+      "permitting"
+    ],
+    "summary": "The share of a TMDL assigned to point-source dischargers, translated into the effluent limits of their NPDES permits.",
+    "related": [
+      "tmdl",
+      "npdes",
+      "effluent"
+    ],
+    "body": "A **wasteload allocation** is the portion of a [[total maximum daily load]] handed\nto point sources — the permitted dischargers, as distinct from the *load allocation*\ngiven to diffuse runoff. It is the mechanism that turns a watershed-scale pollutant\nbudget into an enforceable limit at a specific pipe.\n\nA state implements a WLA by writing it into the discharger's [[NPDES]] permit as a\nwater-quality-based [[effluent]] limit. So a WLA is where the abstract budget\nbecomes concrete: it determines whether a plant on an impaired reach has any load\nheadroom to absorb growth, or whether a new industrial or municipal load forces an\noffset somewhere else in the watershed. When a reach's WLAs are already fully\nsubscribed, an added discharge has nowhere to go on paper."
+  },
+  {
+    "slug": "wue",
+    "title": "WUE",
+    "kind": "term",
+    "aliases": [
+      "water usage effectiveness"
+    ],
+    "tags": [
+      "data-center",
+      "water"
+    ],
+    "summary": "A data center's water use per unit of IT energy — the cooling-water efficiency ratio; whether it counts withdrawal or consumption depends on how it is reported, so the basis has to be recorded before the number is used.",
+    "related": [
+      "pue",
+      "consumptive-cooling",
+      "hyperscale-data-center"
+    ],
+    "body": "**Water usage effectiveness** measures a data center's cooling-water use against the\nenergy delivered to its IT equipment, usually stated in liters per kilowatt-hour. It is\nthe water peer of [[PUE]]: where PUE captures energy overhead, WUE captures how much\nwater the cooling system uses to reject the resulting heat. The convention counts\non-site *consumption*, but a reported WUE may instead be built on *withdrawal* — a\ndistinct quantity — so the metric basis has to be recorded, not assumed.\n\nWUE is the coefficient that turns a computing load into a cooling-water quantity, which\nis why it is central to the water thread. An evaporative, [[closed-loop cooling]] design\nposts a higher WUE — it spends water to save electricity — while an air-cooled or\n[[once-through cooling]] design posts a lower one. Multiplying a facility's IT energy by\na WUE yields that water quantity on the metric's own basis; getting to the\n[[consumptive cooling]] draw the water-balance model tests against a reach's low flow\ntakes a further, separately labeled withdrawal-to-consumption assumption when the WUE\nis a withdrawal figure. Because operators report WUE inconsistently, the platform\ncarries it as a labeled scenario input, not a measured fact."
+  },
+  {
+    "slug": "wwtp",
+    "title": "WWTP",
+    "kind": "term",
+    "aliases": [
+      "wastewater treatment plant",
+      "water reclamation facility",
+      "WRF"
+    ],
+    "tags": [
+      "water",
+      "infrastructure"
+    ],
+    "summary": "The plant that treats sewage and industrial wastewater before discharging treated effluent to a receiving water under an NPDES permit.",
+    "related": [
+      "potw",
+      "effluent",
+      "npdes",
+      "dmr"
+    ],
+    "body": "A **wastewater treatment plant** collects, treats, and discharges a community's\nsewage. A municipally owned plant is a [[POTW]] in Clean Water Act terms; some\noperators brand a modernized plant a *water reclamation facility* (WRF) to signal\nhigher-grade treatment and reuse. Either way, its treated [[effluent]] leaves\nthrough a permitted outfall governed by an [[NPDES]] permit and is logged in the\nplant's monthly [[discharge monitoring report]].\n\nA WWTP is a load *and* a dilution source in the water balance: it adds treated flow\nto the receiving water, so its discharge is part of the low-flow denominator that a\nnew [[consumptive cooling]] withdrawal competes against. When a data-center or\nindustrial user is added upstream, the plant's headroom — hydraulic and permitted —\nis one of the first constraints the record tests."
   }
 ]
