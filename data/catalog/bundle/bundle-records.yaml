@@ -98,5 +98,12 @@ notes: >-
   new committed upstream; a lead names its own `source`, and an open matrix cell (which carries no
   citation by rule) traces to its committed `data/hypotheses/<hid>/<site>.yaml` file. Skipped for a
   site with no open threads.
+  The `documents` feed gains version / duplicate-cluster metadata (#1590, contract 1.27.1) —
+  `duplicate_cluster` / `canonical_document_id` / `version` / `supersedes` — projected onto the
+  catalogued source files by `watermark.site.docversions` from the curated custody manifest
+  `data/site/document-versions.yaml` (a slug-scoped site input, like `published-documents.yaml`, so
+  it adds no new committed reference upstream). It lets retrieval collapse a filing's versions to
+  the canonical one while keeping a superseded version's distinct evidence (the `deduplicate` /
+  `version_policy` args on `search_corpus` / `search_passages`).
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.

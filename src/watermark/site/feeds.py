@@ -533,9 +533,9 @@ class DocumentItem(BaseModel):
     # evidence a superseded version carries (e.g. a draft's CBI-unredacted figure). All optional
     # and absent for a document with no declared cluster.
     duplicate_cluster: str | None = None  # stable cluster id, e.g. "oepa:2PH00006"
-    canonical_document_id: str | None = None  # rel of the cluster's canonical member (self if canonical)
+    canonical_document_id: str | None = None  # canonical member's rel (self if this is canonical)
     version: str | None = None  # "final" | "draft" | "fact_sheet" | "duplicate" | "v2" | …
-    supersedes: list[str] = Field(default_factory=list)  # rels this member supersedes (canonical only)
+    supersedes: list[str] = Field(default_factory=list)  # rels superseded (canonical member only)
 
 
 class DocumentCollectionItem(BaseModel):
