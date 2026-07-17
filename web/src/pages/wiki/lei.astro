@@ -47,8 +47,8 @@ const addr = (a: { city?: string; region?: string; country?: string } | null | u
                   <td><code>{r.lei}</code></td>
                   <td>{addr(r.legal_address) === "—" ? (r.jurisdiction ?? "—") : addr(r.legal_address)}</td>
                   <td>{[r.entity_status, r.registration_status].filter(Boolean).join(" / ") || "—"}</td>
-                  <td>{r.direct_parent ?? "—"}</td>
-                  <td>{r.ultimate_parent ?? "—"}</td>
+                  <td>{r.direct_parent?.name ?? "—"}</td>
+                  <td>{r.ultimate_parent?.name ?? "—"}</td>
                 </tr>
               ))}
             </tbody>

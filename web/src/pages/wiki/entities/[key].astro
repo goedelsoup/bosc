@@ -8,7 +8,8 @@ import type { ProfileAttr, ProfileHeaderData, ProfileRel } from "@watermark/core
 import type { FigureStatData } from "@watermark/core/viz";
 import { entityHref } from "@watermark/core/entityLinks";
 import { withBase, withSite } from "@watermark/core/site";
-import { hypothesisBacklinks, openQuestionBacklinks } from "@watermark/core/wiki";
+import { hypothesisBacklinks, openQuestionBacklinks, relatedConcepts } from "@watermark/core/wiki";
+import { entityDegree, entityLei, leiAddress, leiParent } from "@watermark/core/entityEnrich";
 
 export const getStaticPaths = (() => {
   const entities = hasFeed("entities") ? loadFeed<EntityNode[]>("entities") : [];
@@ -33,7 +34,18 @@ const label = (key: string): string => display[key] ?? key;
 const roleTotal = Object.values(entity.roles ?? {}).reduce((a, b) => a + b, 0);
 const topRole = Object.entries(entity.roles ?? {}).sort((a, b) => b[1] - a[1])[0];
 
+// Graph degree — the same count a yidam `corpus-index` reports for this node, read off the
+// `relationships` edge set the page already partitioned into outgoing/incoming (#1572).
+const degree = entityDegree(entity.key, outgoing, incoming);
+
 const stats: FigureStatData[] = [];
+if (degree.total)
+  stats.push({
+    label: "Graph degree",
+    value: String(degree.total),
+    evidence: "verified",
+    sub: `${degree.out} out · ${degree.in} in · ${degree.neighbors} neighbor${degree.neighbors === 1 ? "" : "s"}`,
+  });
 if (entity.parcels.length)
   stats.push({ label: "Parcels", value: String(entity.parcels.length), evidence: "verified" });
 if (roleTotal)
@@ -79,6 +91,17 @@ const header: ProfileHeaderData = {
   ),
 };
 
+// GLEIF registry join — the full LEI record behind the bare `entity.lei` code, joined by exact
+// ID against the `lei` feed, with its parent chain resolved to entity pages where the parent is
+// itself a node (#1572). Null when the entity has no LEI or the code isn't in the inventory.
+const gleif = entityLei(entity);
+const directParent = leiParent(gleif?.direct_parent);
+const ultimateParent = leiParent(gleif?.ultimate_parent);
+const gleifAddress = leiAddress(gleif?.legal_address);
+
+// Concepts that name this entity in their prose — the glossary terms it cross-links to (#1572).
+const concepts = relatedConcepts([entity.display, ...entity.variants]);
+
 // Open questions that raise this entity — the backlink peer of `[[wiki links]]` over the
 // prose-only `open-questions` feed (#1569).
 const openQuestions = openQuestionBacklinks([entity.display, ...entity.variants]);
@@ -88,7 +111,9 @@ const hypotheses = hypothesisBacklinks([entity.display, ...entity.variants]);
 
 const profileToc = [
   { anchor: "overview", label: "Identity" },
+  ...(gleif ? [{ anchor: "registry", label: "Registry" }] : []),
   { anchor: "neighborhood", label: "Relationships" },
+  ...(concepts.length ? [{ anchor: "related-concepts", label: "Related concepts" }] : []),
   ...(entity.sources.length ? [{ anchor: "sources", label: "Sources" }] : []),
   ...(profiles.length ? [{ anchor: "backlinks", label: "Backlinks" }] : []),
   ...(hypotheses.length ? [{ anchor: "hypotheses", label: "Hypotheses" }] : []),
@@ -101,6 +126,78 @@ const profileToc = [
   <div id="overview"><ProfileHeader profile={header} /></div>
 
   <article class="prose">
+    {
+      gleif && (
+        <section id="registry">
+          <h2>Corporate registry</h2>
+          <p class="card-meta">
+            GLEIF legal entity identifier — resolved by exact ID (no fuzzy name match), so the
+            legal name and parent chain are authoritative.
+          </p>
+          <dl class="reg-grid">
+            <dt>Legal name</dt>
+            <dd>{gleif.legal_name}</dd>
+            {gleif.jurisdiction && (
+              <>
+                <dt>Jurisdiction</dt>
+                <dd>{gleif.jurisdiction}</dd>
+              </>
+            )}
+            {gleif.legal_form && (
+              <>
+                <dt>Legal form</dt>
+                <dd>{gleif.legal_form}</dd>
+              </>
+            )}
+            {(gleif.entity_status || gleif.registration_status) && (
+              <>
+                <dt>Status</dt>
+                <dd>{[gleif.entity_status, gleif.registration_status].filter(Boolean).join(" / ")}</dd>
+              </>
+            )}
+            {gleifAddress && (
+              <>
+                <dt>Registered address</dt>
+                <dd>{gleifAddress}</dd>
+              </>
+            )}
+            {directParent && (
+              <>
+                <dt>Direct parent</dt>
+                <dd>
+                  {directParent.href ? <a href={directParent.href}>{directParent.name}</a> : directParent.name}
+                  <span class="card-meta"><code>{directParent.lei}</code></span>
+                </dd>
+              </>
+            )}
+            {ultimateParent && (
+              <>
+                <dt>Ultimate parent</dt>
+                <dd>
+                  {ultimateParent.href ? (
+                    <a href={ultimateParent.href}>{ultimateParent.name}</a>
+                  ) : (
+                    ultimateParent.name
+                  )}
+                  <span class="card-meta"><code>{ultimateParent.lei}</code></span>
+                </dd>
+              </>
+            )}
+            {gleif.last_update && (
+              <>
+                <dt>Last updated</dt>
+                <dd>{gleif.last_update.slice(0, 10)}</dd>
+              </>
+            )}
+          </dl>
+          {gleif.note && <p class="card-meta">{gleif.note}</p>}
+          <p>
+            <a href={withBase("/wiki/lei/")}>See the full GLEIF inventory →</a>
+          </p>
+        </section>
+      )
+    }
+
     <h2 id="neighborhood">Graph neighborhood</h2>
     {
       outgoing.length === 0 && incoming.length === 0 ? (
@@ -135,6 +232,22 @@ const profileToc = [
         View this neighborhood in the interactive graph →
       </a>
     </p>
+
+    {
+      concepts.length > 0 && (
+        <>
+          <h2 id="related-concepts">Related concepts</h2>
+          <p class="card-meta">Glossary terms whose entries name this entity.</p>
+          <ul class="neighborhood">
+            {concepts.map((c) => (
+              <li>
+                <a href={c.url}>{c.title}</a>
+              </li>
+            ))}
+          </ul>
+        </>
+      )
+    }
 
     {
       entity.sources.length > 0 && (

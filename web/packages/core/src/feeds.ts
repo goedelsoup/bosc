@@ -397,6 +397,13 @@ export interface DefenseContractors {
   notes?: { subject?: string; source?: string; finding?: string; [k: string]: unknown } | null;
 }
 
+/** A minimal reference to a related LEI entity — the `direct`/`ultimate` parent of an
+ *  LEI record (`watermark.gleif.LeiRef`), an `{lei, name}` pair, never a bare code. */
+export interface LeiRef {
+  lei: string;
+  name: string;
+}
+
 /** One GLEIF LEI record (`lei` feed) — corridor entity parents. */
 export interface LeiRecord {
   lei: string;
@@ -405,8 +412,8 @@ export interface LeiRecord {
   legal_form?: string | null;
   entity_status?: string | null;
   registration_status?: string | null;
-  direct_parent?: string | null;
-  ultimate_parent?: string | null;
+  direct_parent?: LeiRef | null;
+  ultimate_parent?: LeiRef | null;
   legal_address?: { city?: string; region?: string; country?: string } | null;
   last_update?: string | null;
   watchlist_name?: string | null;
