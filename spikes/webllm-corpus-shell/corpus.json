@@ -1,0 +1,1917 @@
+{
+"site":"lima",
+"generated_by":"watermark corpus-mirror (Epic #1560 E1/#1561) — snapshot for spike #1576",
+"counts":{
+"concept":77,
+"relation":60,
+"artifact":71,
+"question":27,
+"hypothesis":3
+},
+"nodes":[
+{
+"id":"artifact/site-lima",
+"cls":"artifact",
+"label":"Lima",
+"desc":"Lima — maumee basin.",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"hypothesis/water",
+"cls":"hypothesis",
+"label":"H1 · Water & Coercion",
+"desc":"Where discharge becomes leverage.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"hypothesis/defense",
+"cls":"hypothesis",
+"label":"H2 · Defense & Federal Enclave",
+"desc":"Where the build-out meets federal land and the defense base.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"hypothesis/surveillance",
+"cls":"hypothesis",
+"label":"H3 · Consumer Surveillance",
+"desc":"What the compute is for, who it watches, and who's paying.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/7q10",
+"cls":"concept",
+"label":"7Q10",
+"desc":"The lowest 7-consecutive-day average streamflow expected on average once every ten years — the design low flow for sizing effluent dilution.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/aep",
+"cls":"concept",
+"label":"AEP",
+"desc":"The investor-owned utility whose Ohio operating company serves much of the grid footprint in this record.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/assimilative-capacity",
+"cls":"concept",
+"label":"Assimilative capacity",
+"desc":"A stream's ability to dilute or assimilate an added load (or a loss of flow) without breaching water-quality criteria, evaluated at design low flow.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/behind-the-meter",
+"cls":"concept",
+"label":"Behind-the-meter",
+"desc":"On-site generation that serves a load directly, without that power crossing the utility meter or the public grid.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/brownfield",
+"cls":"concept",
+"label":"Brownfield",
+"desc":"A property whose redevelopment is complicated by real or perceived contamination, often carrying cleanup obligations and dedicated funding.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/cercla",
+"cls":"concept",
+"label":"CERCLA",
+"desc":"The federal Superfund statute governing the cleanup of contaminated sites and the strict, retroactive liability of the parties responsible for them.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/cgp",
+"cls":"concept",
+"label":"CGP",
+"desc":"The NPDES general permit that authorizes stormwater discharges from construction sites disturbing an acre or more — including smaller sites within a common plan of development or sale that reaches an acre — under a standard set of conditions.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/closed-loop-cooling",
+"cls":"concept",
+"label":"Closed-loop cooling",
+"desc":"A recirculating cooling design whose water loss is chiefly evaporation and blowdown, so it withdraws little but consumes most of what it takes.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/cmar",
+"cls":"concept",
+"label":"CMAR",
+"desc":"A project-delivery method in which the construction manager joins during design and commits to a guaranteed maximum price for the build.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/colocation",
+"cls":"concept",
+"label":"Colocation",
+"desc":"A data center that leases space, power, and cooling to multiple tenants who install their own hardware — distinct from a single operator's owned campus.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/common-control-plumbing",
+"cls":"concept",
+"label":"Common-control plumbing",
+"desc":"Shared registered agents, organizers, or addresses across entities — evidence of common administrative control, not of beneficial ownership.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/conditional-use",
+"cls":"concept",
+"label":"Conditional use",
+"desc":"A use allowed in a zoning district only by case-by-case approval, granted with conditions rather than by right.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/consent-decree",
+"cls":"concept",
+"label":"Consent decree",
+"desc":"A court-approved settlement in which a party agrees to specified actions under continuing judicial oversight, carrying the force of a court order.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/constructive-denial",
+"cls":"concept",
+"label":"Constructive denial",
+"desc":"An agency's failure to produce public records within a reasonable time, treated in law as a denial even though no formal refusal was issued.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/consumptive-cooling",
+"cls":"concept",
+"label":"Consumptive cooling",
+"desc":"Cooling water that is withdrawn and lost (mostly to evaporation) rather than returned to the source, reducing downstream flow.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/cra",
+"cls":"concept",
+"label":"CRA",
+"desc":"An Ohio property-tax-abatement district (R.C. 3735) that lets a municipality exempt the value of new construction to incentivize development.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/curve-number",
+"cls":"concept",
+"label":"Curve number",
+"desc":"The NRCS coefficient (0–100) relating land cover and soil to the depth of runoff a storm produces — the core parameter of the curve-number runoff method.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/dilution",
+"cls":"concept",
+"label":"Dilution",
+"desc":"The clean receiving-water flow available to dilute a discharged load, sized at design low flow — the physical basis of a water-quality-based effluent limit.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/dissolved-oxygen",
+"cls":"concept",
+"label":"Dissolved oxygen",
+"desc":"The oxygen dissolved in water and available to aquatic life; a core water-quality criterion that a discharge must not depress below standard.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/dmr",
+"cls":"concept",
+"label":"DMR",
+"desc":"The self-reported effluent-monitoring data a permittee files with the regulator, the primary public record of whether a discharge meets its permit.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/echo",
+"cls":"concept",
+"label":"ECHO",
+"desc":"EPA's public database of facility permits, inspections, violations, and enforcement actions across its major programs.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/effluent",
+"cls":"concept",
+"label":"Effluent",
+"desc":"Treated wastewater discharged to a receiving water; its pollutant concentrations and loads are capped by limits written into the NPDES permit.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/eia",
+"cls":"concept",
+"label":"EIA",
+"desc":"The federal statistical agency for U.S. energy production, consumption, and prices, and a primary source of utility-level demand data.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/enterprise-zone",
+"cls":"concept",
+"label":"Enterprise zone",
+"desc":"An Ohio program that grants property-tax exemptions on new investment in a designated area in exchange for job-creation and investment commitments.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/epa",
+"cls":"concept",
+"label":"EPA",
+"desc":"The U.S. Environmental Protection Agency — the federal environmental regulator that sets national standards and delegates much of their enforcement to states.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/esc",
+"cls":"concept",
+"label":"ESC",
+"desc":"The construction practices that keep disturbed soil and sediment out of stormwater and receiving waters while a site is being built.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/ferc",
+"cls":"concept",
+"label":"FERC",
+"desc":"The federal regulator of interstate electricity transmission, wholesale power markets, and the RTOs that operate them.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/ffa",
+"cls":"concept",
+"label":"FFA",
+"desc":"A CERCLA cleanup agreement between EPA and a federal facility that sets the enforceable schedule and terms for remediating a listed site.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/grant-refund-clause",
+"cls":"concept",
+"label":"Grant-refund clause",
+"desc":"RDA §5.5 — public grant awards (State 629 / ODOD Jobs & Commerce) can backfill and refund the developer's \"private\" road-work contribution, dollar for dollar.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/hb",
+"cls":"concept",
+"label":"HB",
+"desc":"A bill originating in the Ohio House of Representatives, cited by number where it changes the siting, tax, or environmental law a project turns on.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/heat-reuse",
+"cls":"concept",
+"label":"Heat reuse",
+"desc":"Capturing a data center's rejected thermal energy and redirecting it to on-site or district heating instead of dumping it — a cooling-design axis distinct from how much water the cooling draw consumes.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/hsg",
+"cls":"concept",
+"label":"HSG",
+"desc":"The NRCS A–D classification of a soil by how readily it infiltrates water — a primary input to runoff curve-number modeling.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/huc",
+"cls":"concept",
+"label":"HUC",
+"desc":"The USGS nested numeric code that keys a hydrologic area at a chosen scale, from large subbasins (HUC-8) down to local subwatersheds (HUC-12).",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/hyperscale-data-center",
+"cls":"concept",
+"label":"Hyperscale data center",
+"desc":"A very large, cloud-scale data center campus; the local zoning code defines the term and gates it as a conditional use.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/hyperscaler",
+"cls":"concept",
+"label":"Hyperscaler",
+"desc":"A cloud operator that builds and runs data centers at massive scale — the class of companies (AWS, Microsoft, Google, Meta) behind most large campus projects.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/il6",
+"cls":"concept",
+"label":"IL6",
+"desc":"The U.S. Department of Defense cloud security classification for classified (SECRET-level) workloads — the tier that dictates a data center's physical and personnel controls.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/interconnection-queue",
+"cls":"concept",
+"label":"Interconnection queue",
+"desc":"The backlog of proposed generators and large loads awaiting the grid-connection studies and approvals an RTO requires before they can energize.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/jedd",
+"cls":"concept",
+"label":"JEDD",
+"desc":"An Ohio township–municipality compact (R.C. 715.70) that shares income-tax revenue from a development area without annexation.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/moratorium",
+"cls":"concept",
+"label":"Moratorium",
+"desc":"A temporary local ban on approving a class of development while a government reconsiders the rules that govern it.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/nda",
+"cls":"concept",
+"label":"NDA",
+"desc":"A confidentiality agreement that binds a party to secrecy, often shielding the terms and identity behind a data-center deal during site selection.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/npdes",
+"cls":"concept",
+"label":"NPDES",
+"desc":"The Clean Water Act permit program that sets and enforces pollutant limits on point-source discharges to surface water.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/nwis",
+"cls":"concept",
+"label":"NWIS",
+"desc":"The USGS system that serves real-time and historical streamflow and water-quality data from the national gauge network.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/oepa",
+"cls":"concept",
+"label":"OEPA",
+"desc":"The Ohio Environmental Protection Agency — the state permitting and enforcement authority for water, air, and waste under delegated federal programs.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/once-through-cooling",
+"cls":"concept",
+"label":"Once-through cooling",
+"desc":"A cooling design that withdraws water, passes it once to absorb heat, and returns nearly all of it to the source — warmer but not consumed.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/opc",
+"cls":"concept",
+"label":"OPC",
+"desc":"A design-phase cost estimate for a public project — the engineer's structured projection of what construction will cost, and the artifact this platform reconstructs from source PDFs.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/opsb",
+"cls":"concept",
+"label":"OPSB",
+"desc":"The Ohio board that reviews and certifies the siting of major electric generation and transmission facilities.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/orc",
+"cls":"concept",
+"label":"ORC",
+"desc":"The codified statutes of Ohio, cited throughout the record — from public-records law to the economic-development and siting authorities.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/pfas",
+"cls":"concept",
+"label":"PFAS",
+"desc":"A large class of persistent synthetic fluorinated compounds, increasingly regulated in drinking water, effluent, and biosolids.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/pilot",
+"cls":"concept",
+"label":"PILOT",
+"desc":"A negotiated payment that substitutes for the property taxes abated on a development, often directed to specific recipients like a school district.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/pjm",
+"cls":"concept",
+"label":"PJM",
+"desc":"The regional transmission organization that operates the high-voltage grid and wholesale electricity market across Ohio and the mid-Atlantic.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/potw",
+"cls":"concept",
+"label":"POTW",
+"desc":"The Clean Water Act term for a municipally owned wastewater treatment works — the public peer of a private industrial discharger.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/pti",
+"cls":"concept",
+"label":"PTI",
+"desc":"Ohio EPA's pre-construction permit for a new or modified source of air or water pollution, issued before ground is broken.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/public-records-mandamus",
+"cls":"concept",
+"label":"Public-records mandamus",
+"desc":"In Ohio, a writ of mandamus is the remedy that compels a public office to produce records improperly withheld under the Public Records Act.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/puco",
+"cls":"concept",
+"label":"PUCO",
+"desc":"Ohio's utility regulator, overseeing the rates and service of electric, gas, water, and telecom utilities in the state.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/pue",
+"cls":"concept",
+"label":"PUE",
+"desc":"A data center's total facility energy divided by its IT-load energy — the standard measure of how much overhead (mostly cooling) its computing carries.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/rezoning",
+"cls":"concept",
+"label":"Rezoning",
+"desc":"A legislative change to a parcel's zoning district, frequently the approval that unlocks — or blocks — a large project.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/rfp",
+"cls":"concept",
+"label":"RFP",
+"desc":"A solicitation asking firms to submit a scoped, priced proposal, evaluated on a combination of approach and cost.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/rfq",
+"cls":"concept",
+"label":"RFQ",
+"desc":"A solicitation asking firms to submit their qualifications, used to shortlist or select on competence rather than price.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/roadwork-development-agreement",
+"cls":"concept",
+"label":"Roadwork Development Agreement",
+"desc":"The agreement under which the developer funds the public road work around the campus — a ~$14.5M \"Company Contribution\" set against the $14.2M cost estimate, with clauses on grant-refunds, records-notice, and procurement.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/rsei",
+"cls":"concept",
+"label":"RSEI",
+"desc":"EPA's model that converts Toxics Release Inventory reports into a comparative, toxicity- and exposure-weighted chronic-risk score.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/rto",
+"cls":"concept",
+"label":"RTO",
+"desc":"The independent operator that runs the transmission grid and wholesale energy market for a multi-state region — PJM in this record.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/snc",
+"cls":"concept",
+"label":"SNC",
+"desc":"EPA's flag for a permittee whose violations are serious or chronic enough to warrant a formal enforcement response.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/sos",
+"cls":"concept",
+"label":"SOS",
+"desc":"The state office that holds business-entity filings — the public trail from an LLC back toward the people and companies behind it.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/ssa",
+"cls":"concept",
+"label":"SSA",
+"desc":"An EPA designation for an aquifer that supplies most of the drinking water for an area with no readily available alternative source.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/swat",
+"cls":"concept",
+"label":"SWAT",
+"desc":"A watershed-scale model that simulates runoff, sediment, and nutrient loading across a basin to support TMDL and land-use analysis.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/swcd",
+"cls":"concept",
+"label":"SWCD",
+"desc":"A local district that administers soil, drainage, and stormwater conservation programs, often reviewing the erosion controls on new development.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/tax-abatement",
+"cls":"concept",
+"label":"Tax abatement",
+"desc":"A negotiated reduction or exemption of property taxes granted to attract or retain development — the umbrella over Ohio's CRA, enterprise-zone, and TIF tools.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/tif",
+"cls":"concept",
+"label":"TIF",
+"desc":"A financing tool that earmarks the property-tax increment from new development to pay for public infrastructure serving it.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/tmdl",
+"cls":"concept",
+"label":"TMDL",
+"desc":"The maximum pollutant load an impaired water body can receive and still meet water-quality standards, apportioned among the sources that contribute it.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/total-nitrogen",
+"cls":"concept",
+"label":"Total nitrogen",
+"desc":"A nutrient water-quality parameter summing the nitrogen species in a sample, tracked alongside phosphorus in loading and TMDL analysis.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/total-phosphorus",
+"cls":"concept",
+"label":"Total phosphorus",
+"desc":"A nutrient water-quality parameter measuring all forms of phosphorus in a sample; excess loading drives the Lake Erie / Maumee algal-bloom problem.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/tri",
+"cls":"concept",
+"label":"TRI",
+"desc":"EPA's annual, facility-level inventory of reported toxic-chemical releases to air, water, and land — the data behind the RSEI risk model.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/usgs",
+"cls":"concept",
+"label":"USGS",
+"desc":"The federal science agency that operates the national streamgage network and publishes the water, terrain, and geology data the analysis rests on.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/variance",
+"cls":"concept",
+"label":"Variance",
+"desc":"A parcel-specific waiver of a zoning standard granted by a board of zoning appeals when strict application would impose an undue hardship.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/wla",
+"cls":"concept",
+"label":"WLA",
+"desc":"The share of a TMDL assigned to point-source dischargers, translated into the effluent limits of their NPDES permits.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/wue",
+"cls":"concept",
+"label":"WUE",
+"desc":"A data center's water use per unit of IT energy — the cooling-water efficiency ratio; whether it counts withdrawal or consumption depends on how it is reported, so the basis has to be recorded before the number is used.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"concept/wwtp",
+"cls":"concept",
+"label":"WWTP",
+"desc":"The plant that treats sewage and industrial wastewater before discharging treated effluent to a receiving water under an NPDES permit.",
+"tag":"",
+"scope":"network"
+},
+{
+"id":"artifact/amazon-com-services",
+"cls":"artifact",
+"label":"Amazon.com Services LLC",
+"desc":"corporate · corporate_domestic; roles: grantee",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/bistrozzi",
+"cls":"artifact",
+"label":"BISTROZZI LLC",
+"desc":"corporate · corporate_out_of_state; roles: applicant, epa_applicant, firm, grantee",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/bistrozzi-addition",
+"cls":"artifact",
+"label":"Bistrozzi Addition LLC",
+"desc":"corporate · corporate_out_of_state; roles: grantee, registrant",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/c-t",
+"cls":"artifact",
+"label":"C T Corporation",
+"desc":"corporate · corporate_domestic; roles: registered_agent",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/corporation-service",
+"cls":"artifact",
+"label":"Corporation Service Company",
+"desc":"corporate · corporate_domestic; roles: registered_agent",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/magenta-capital-ohio-llc-magenta-capital",
+"cls":"artifact",
+"label":"Magenta Capital (Ohio) LLC (Magenta Capital LLC)",
+"desc":"corporate · corporate_out_of_state; roles: registrant",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/neff-farms",
+"cls":"artifact",
+"label":"NEFF FARMS, INC.",
+"desc":"corporate · corporate_domestic; roles: grantor",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/pike-run-farms",
+"cls":"artifact",
+"label":"PIKE RUN FARMS LLC",
+"desc":"corporate · corporate_domestic; roles: grantor",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/rlr-investments",
+"cls":"artifact",
+"label":"RLR Investments, LLC dba Pine Hills Mobile Home Park",
+"desc":"corporate · corporate_domestic; roles: applicant",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/tilted-gate",
+"cls":"artifact",
+"label":"Tilted Gate LLC",
+"desc":"corporate · corporate_out_of_state; roles: registrant",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/turner-construction",
+"cls":"artifact",
+"label":"Turner Construction Company",
+"desc":"corporate · corporate_domestic; roles: epa_applicant, firm",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/american-bath-wastewater-treatment-plant-potw",
+"cls":"artifact",
+"label":"American – Bath Wastewater Treatment Plant (POTW)",
+"desc":"facility · facility; roles: receiving_water",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/van-wert-wwtp",
+"cls":"artifact",
+"label":"Van Wert WWTP",
+"desc":"facility · facility; roles: applicant",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/npdes-1pd00013",
+"cls":"artifact",
+"label":"City of Wilmington WWTP",
+"desc":"facility · facility; roles: facility",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/npdes-2pd00006",
+"cls":"artifact",
+"label":"Van Wert WWTP",
+"desc":"facility · facility; roles: facility",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/npdes-2pe00000",
+"cls":"artifact",
+"label":"City of Lima WWTP",
+"desc":"facility · facility; roles: facility",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/npdes-2ph00006",
+"cls":"artifact",
+"label":"American II Wastewater Treatment Plant",
+"desc":"facility · facility; roles: facility",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/npdes-2ph00007",
+"cls":"artifact",
+"label":"American Bath WWTP",
+"desc":"facility · facility; roles: facility",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/npdes-2pk00002",
+"cls":"artifact",
+"label":"Shawnee II WWTP",
+"desc":"facility · facility; roles: facility",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/allen-county-board-of-commissioners",
+"cls":"artifact",
+"label":"Allen County Board of Commissioners",
+"desc":"government · government_local; roles: applicant",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/allen-county-sanitary-engineering-department",
+"cls":"artifact",
+"label":"Allen County Sanitary Engineering Department",
+"desc":"government · government_local; roles: applicant",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/city-of-lima",
+"cls":"artifact",
+"label":"City of Lima",
+"desc":"government · government_local; roles: applicant",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/city-of-van-wert",
+"cls":"artifact",
+"label":"City of Van Wert, 515 North Main Street, Van Wert, OH 45891",
+"desc":"government · government_local; roles: applicant",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/city-of-wilmington",
+"cls":"artifact",
+"label":"City of Wilmington",
+"desc":"government · government_local; roles: applicant",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/clinton-county-board-of-developmental-disabiliti",
+"cls":"artifact",
+"label":"Clinton County Board of Developmental Disabilities",
+"desc":"government · government_local; roles: applicant",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/port-authority-of-allen-county",
+"cls":"artifact",
+"label":"THE PORT AUTHORITY OF ALLEN COUNTY, OHIO",
+"desc":"government · government_local; roles: grantor",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/npdes-1pt00125",
+"cls":"artifact",
+"label":"Clinton County Board of Developmental Disabilities",
+"desc":"government · government_local; roles: facility",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/alexander-reck-dba-hidden-valley-mhp",
+"cls":"artifact",
+"label":"Alexander R. Reck dba Hidden Valley MHP",
+"desc":"individual · individual; roles: applicant",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/emh-t",
+"cls":"artifact",
+"label":"EMH&T",
+"desc":"individual · individual; roles: firm",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/james-neighbors",
+"cls":"artifact",
+"label":"James W. Neighbors",
+"desc":"individual · individual; roles: grantor",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/jared-grigg-project-ehs-manager",
+"cls":"artifact",
+"label":"Jared Grigg (Project EHS Manager)",
+"desc":"individual · individual; roles: permit_contact",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/jill-tangeman",
+"cls":"artifact",
+"label":"Jill Tangeman",
+"desc":"individual · individual; roles: permit_contact",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/keaton-brenneman",
+"cls":"artifact",
+"label":"Keaton A. Brenneman",
+"desc":"individual · individual; roles: trustee",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/kristen-brenneman",
+"cls":"artifact",
+"label":"Kristen M. Brenneman",
+"desc":"individual · individual; roles: trustee",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/kyle-brenneman",
+"cls":"artifact",
+"label":"Kyle C. Brenneman",
+"desc":"individual · individual; roles: trustee",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/kyle-isler",
+"cls":"artifact",
+"label":"Kyle Isler, Wilmington Nursery",
+"desc":"individual · individual; roles: applicant",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/melissa-queen-darby",
+"cls":"artifact",
+"label":"Melissa Queen Darby",
+"desc":"individual · individual; roles: permit_contact",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/mhc-tt",
+"cls":"artifact",
+"label":"MHC TT, L.P.",
+"desc":"individual · individual; roles: applicant",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/michael-montfort",
+"cls":"artifact",
+"label":"Michael Montfort",
+"desc":"individual · individual; roles: organizer, permit_contact",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/raeann-pieper",
+"cls":"artifact",
+"label":"RaeAnn Pieper",
+"desc":"individual · individual; roles: grantor",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/robert-zizzo",
+"cls":"artifact",
+"label":"Robert Zizzo",
+"desc":"individual · individual; roles: permit_contact",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/sarah-brenneman",
+"cls":"artifact",
+"label":"Sarah N. Brenneman",
+"desc":"individual · individual; roles: trustee",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/scott-ziance",
+"cls":"artifact",
+"label":"Scott Ziance",
+"desc":"individual · individual; roles: organizer, permit_contact",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/suzanne-neighbors",
+"cls":"artifact",
+"label":"Suzanne M. Neighbors",
+"desc":"individual · individual; roles: grantor",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/timothy-pieper",
+"cls":"artifact",
+"label":"Timothy R. Pieper",
+"desc":"individual · individual; roles: grantor",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/unnamed-tributary-of-todd-fork",
+"cls":"artifact",
+"label":"unnamed tributary of Todd Fork",
+"desc":"individual · individual; roles: receiving_water",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/vorys",
+"cls":"artifact",
+"label":"Vorys",
+"desc":"individual · individual; roles: firm",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/wilmington-water-plant",
+"cls":"artifact",
+"label":"Wilmington Water Plant",
+"desc":"individual · individual; roles: applicant",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/wilson-sonsini-goodrich-rosati-wsgr",
+"cls":"artifact",
+"label":"Wilson Sonsini Goodrich & Rosati (WSGR)",
+"desc":"individual · individual; roles: firm",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/npdes-1ii00129",
+"cls":"artifact",
+"label":"Wilmington Sanitary Landfill",
+"desc":"individual · individual; roles: facility",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/npdes-1iw00240",
+"cls":"artifact",
+"label":"Wilmington Water Plant",
+"desc":"individual · individual; roles: facility",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/npdes-1mp00060",
+"cls":"artifact",
+"label":"Wilmington Nursery",
+"desc":"individual · individual; roles: facility",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/npdes-1pv00037",
+"cls":"artifact",
+"label":"Hidden Valley Mobile Home Park",
+"desc":"individual · individual; roles: facility",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/npdes-1pv00089",
+"cls":"artifact",
+"label":"Pine Hills Mobile Home Park",
+"desc":"individual · individual; roles: facility",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/npdes-1px00010",
+"cls":"artifact",
+"label":"Wilmington RV Resort",
+"desc":"individual · individual; roles: facility",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/npdes-2dp00130",
+"cls":"artifact",
+"label":"Bosc",
+"desc":"individual · individual; roles: facility",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/keaton-brenneman-living",
+"cls":"artifact",
+"label":"Keaton A. Brenneman Living Trust",
+"desc":"trust · trust; roles: grantor",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/kyle-brenneman-living",
+"cls":"artifact",
+"label":"Kyle C. Brenneman Living Trust",
+"desc":"trust · trust; roles: grantor",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/dug-run",
+"cls":"artifact",
+"label":"Dug Run",
+"desc":"water · receiving_water; roles: receiving_water",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/lytle-creek",
+"cls":"artifact",
+"label":"Lytle Creek",
+"desc":"water · receiving_water; roles: receiving_water",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/ottawa-river",
+"cls":"artifact",
+"label":"Ottawa River",
+"desc":"water · receiving_water; roles: receiving_water",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/pike-run",
+"cls":"artifact",
+"label":"Pike Run",
+"desc":"water · receiving_water; roles: receiving_water",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/tawawa-creek",
+"cls":"artifact",
+"label":"Tawawa Creek",
+"desc":"water · receiving_water; roles: receiving_water",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/town-creek",
+"cls":"artifact",
+"label":"Town Creek",
+"desc":"water · receiving_water; roles: receiving_water",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/unnamed-tributary-of-lytle-creek",
+"cls":"artifact",
+"label":"Unnamed Tributary of Lytle Creek",
+"desc":"water · receiving_water; roles: receiving_water",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/unnamed-tributary-of-wilson-creek",
+"cls":"artifact",
+"label":"unnamed tributary of Wilson Creek",
+"desc":"water · receiving_water; roles: receiving_water",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/person-cynthia-leis",
+"cls":"artifact",
+"label":"Cynthia Leis",
+"desc":"AEDG President/CEO AND PAAC Executive Director — the single locus of control over the economic-development trade-secret shield and the records custody for Project BOSC.",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/person-jill-tangeman",
+"cls":"artifact",
+"label":"Jill Tangeman",
+"desc":"Vorys counsel for Bistrozzi LLC — company counsel on the Roadwork Development Agreement, the land-option assignments, and a recurring contact of record across the EPA permit file.",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/person-john-willamowski-jr",
+"cls":"artifact",
+"label":"John R. Willamowski, Jr.",
+"desc":"Assistant Prosecuting Attorney for Allen County; County counsel of record on the Roadwork Development Agreement and the originator of the County–Bistrozzi Mutual NDA.",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"artifact/person-scott-ziance",
+"cls":"artifact",
+"label":"Scott J. Ziance",
+"desc":"Organizer and contact of record on the Project BOSC entities and approvals.",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/kyle-brenneman--trustee-of--kyle-brenneman-living",
+"cls":"relation",
+"label":"KYLE BRENNEMAN trustee_of KYLE BRENNEMAN LIVING",
+"desc":"recorder/202508130008300.deed.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/sarah-brenneman--trustee-of--kyle-brenneman-living",
+"cls":"relation",
+"label":"SARAH BRENNEMAN trustee_of KYLE BRENNEMAN LIVING",
+"desc":"recorder/202508130008300.deed.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/kyle-brenneman-living--conveyed-to--bistrozzi",
+"cls":"relation",
+"label":"KYLE BRENNEMAN LIVING conveyed_to BISTROZZI",
+"desc":"2025-08-13 · 202508130008300 · recorder/202508130008300.deed.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/keaton-brenneman--trustee-of--keaton-brenneman-living",
+"cls":"relation",
+"label":"KEATON BRENNEMAN trustee_of KEATON BRENNEMAN LIVING",
+"desc":"recorder/202508130008300.deed.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/kristen-brenneman--trustee-of--keaton-brenneman-living",
+"cls":"relation",
+"label":"KRISTEN BRENNEMAN trustee_of KEATON BRENNEMAN LIVING",
+"desc":"recorder/202508130008300.deed.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/keaton-brenneman-living--conveyed-to--bistrozzi",
+"cls":"relation",
+"label":"KEATON BRENNEMAN LIVING conveyed_to BISTROZZI",
+"desc":"2025-08-13 · 202508130008300 · recorder/202508130008300.deed.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/neff-farms--conveyed-to--bistrozzi",
+"cls":"relation",
+"label":"NEFF FARMS conveyed_to BISTROZZI",
+"desc":"2025-08-13 · 202508130008312 · recorder/202508130008312.deed.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/pike-run-farms--conveyed-to--bistrozzi",
+"cls":"relation",
+"label":"PIKE RUN FARMS conveyed_to BISTROZZI",
+"desc":"2025-08-13 · 202508130008316 · recorder/202508130008316.deed.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/port-authority-of-allen-county--conveyed-to--amazon-com-services",
+"cls":"relation",
+"label":"PORT AUTHORITY OF ALLEN COUNTY conveyed_to AMAZON COM SERVICES",
+"desc":"2025-11-18 · 202511180011830 · recorder/202511180011830-amazon-deed.deed.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/james-neighbors--conveyed-to--bistrozzi",
+"cls":"relation",
+"label":"JAMES NEIGHBORS conveyed_to BISTROZZI",
+"desc":"2026-03-04 · 202603040002064 · recorder/202603040002064.deed.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/suzanne-neighbors--conveyed-to--bistrozzi",
+"cls":"relation",
+"label":"SUZANNE NEIGHBORS conveyed_to BISTROZZI",
+"desc":"2026-03-04 · 202603040002064 · recorder/202603040002064.deed.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/timothy-pieper--conveyed-to--bistrozzi-addition",
+"cls":"relation",
+"label":"TIMOTHY PIEPER conveyed_to BISTROZZI ADDITION",
+"desc":"2026-04-21 · 202604210003890 · recorder/202604210003890.deed.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/raeann-pieper--conveyed-to--bistrozzi-addition",
+"cls":"relation",
+"label":"RAEANN PIEPER conveyed_to BISTROZZI ADDITION",
+"desc":"2026-04-21 · 202604210003890 · recorder/202604210003890.deed.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/city-of-wilmington--operates--npdes-1ii00129",
+"cls":"relation",
+"label":"CITY OF WILMINGTON operates npdes:1II00129",
+"desc":"1II00129*HD · oepa/1II00129.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/npdes-1ii00129--discharges-to--lytle-creek",
+"cls":"relation",
+"label":"npdes:1II00129 discharges_to LYTLE CREEK",
+"desc":"1II00129*HD · oepa/1II00129.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/wilmington-water-plant--operates--npdes-1iw00240",
+"cls":"relation",
+"label":"WILMINGTON WATER PLANT operates npdes:1IW00240",
+"desc":"1IW00240*ID · oepa/1IW00240.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/npdes-1iw00240--discharges-to--unnamed-tributary-of-lytle-creek",
+"cls":"relation",
+"label":"npdes:1IW00240 discharges_to UNNAMED TRIBUTARY OF LYTLE CREEK",
+"desc":"1IW00240*ID · oepa/1IW00240.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/kyle-isler--operates--npdes-1mp00060",
+"cls":"relation",
+"label":"KYLE ISLER operates npdes:1MP00060",
+"desc":"1MP00060*AM · oepa/1MP00060.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/city-of-wilmington--operates--npdes-1pd00013",
+"cls":"relation",
+"label":"CITY OF WILMINGTON operates npdes:1PD00013",
+"desc":"1PD00013*QD · oepa/1PD00013.fs.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/npdes-1pd00013--discharges-to--lytle-creek",
+"cls":"relation",
+"label":"npdes:1PD00013 discharges_to LYTLE CREEK",
+"desc":"1PD00013*QD · oepa/1PD00013.fs.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/clinton-county-board-of-developmental-disabiliti--operates--npdes-1pt00125",
+"cls":"relation",
+"label":"CLINTON COUNTY BOARD OF DEVELOPMENTAL DISABILITIES operates npdes:1PT00125",
+"desc":"1PT00125*BD · oepa/1PT00125.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/npdes-1pt00125--discharges-to--unnamed-tributary-of-wilson-creek",
+"cls":"relation",
+"label":"npdes:1PT00125 discharges_to UNNAMED TRIBUTARY OF WILSON CREEK",
+"desc":"1PT00125*BD · oepa/1PT00125.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/alexander-reck-dba-hidden-valley-mhp--operates--npdes-1pv00037",
+"cls":"relation",
+"label":"ALEXANDER RECK DBA HIDDEN VALLEY MHP operates npdes:1PV00037",
+"desc":"1PV00037*ED · oepa/1PV00037.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/npdes-1pv00037--discharges-to--tawawa-creek",
+"cls":"relation",
+"label":"npdes:1PV00037 discharges_to TAWAWA CREEK",
+"desc":"1PV00037*ED · oepa/1PV00037.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/rlr-investments--operates--npdes-1pv00089",
+"cls":"relation",
+"label":"RLR INVESTMENTS operates npdes:1PV00089",
+"desc":"1PV00089*DD · oepa/1PV00089.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/npdes-1pv00089--discharges-to--unnamed-tributary-of-lytle-creek",
+"cls":"relation",
+"label":"npdes:1PV00089 discharges_to UNNAMED TRIBUTARY OF LYTLE CREEK",
+"desc":"1PV00089*DD · oepa/1PV00089.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/mhc-tt--operates--npdes-1px00010",
+"cls":"relation",
+"label":"MHC TT operates npdes:1PX00010",
+"desc":"1PX00010*HD · oepa/1PX00010.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/npdes-1px00010--discharges-to--unnamed-tributary-of-todd-fork",
+"cls":"relation",
+"label":"npdes:1PX00010 discharges_to UNNAMED TRIBUTARY OF TODD FORK",
+"desc":"1PX00010*HD · oepa/1PX00010.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/bistrozzi--operates--npdes-2dp00130",
+"cls":"relation",
+"label":"BISTROZZI operates npdes:2DP00130",
+"desc":"2DP00130*AP · oepa/2DP00130.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/npdes-2dp00130--discharges-to--american-bath-wastewater-treatment-plant-potw",
+"cls":"relation",
+"label":"npdes:2DP00130 discharges_to AMERICAN BATH WASTEWATER TREATMENT PLANT POTW",
+"desc":"2DP00130*AP · oepa/2DP00130.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/city-of-van-wert--operates--npdes-2pd00006",
+"cls":"relation",
+"label":"CITY OF VAN WERT operates npdes:2PD00006",
+"desc":"2PD00006*VD · oepa/2PD00006.fs.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/npdes-2pd00006--discharges-to--town-creek",
+"cls":"relation",
+"label":"npdes:2PD00006 discharges_to TOWN CREEK",
+"desc":"2PD00006*VD · oepa/2PD00006.fs.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/van-wert-wwtp--operates--npdes-2pd00006",
+"cls":"relation",
+"label":"VAN WERT WWTP operates npdes:2PD00006",
+"desc":"2PD00006*VD · oepa/2PD00006.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/city-of-lima--operates--npdes-2pe00000",
+"cls":"relation",
+"label":"CITY OF LIMA operates npdes:2PE00000",
+"desc":"2PE00000*OD · oepa/2PE00000.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/npdes-2pe00000--discharges-to--ottawa-river",
+"cls":"relation",
+"label":"npdes:2PE00000 discharges_to OTTAWA RIVER",
+"desc":"2PE00000*OD · oepa/2PE00000.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/allen-county-board-of-commissioners--operates--npdes-2ph00006",
+"cls":"relation",
+"label":"ALLEN COUNTY BOARD OF COMMISSIONERS operates npdes:2PH00006",
+"desc":"2PH00006*LD · oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/npdes-2ph00006--discharges-to--dug-run",
+"cls":"relation",
+"label":"npdes:2PH00006 discharges_to DUG RUN",
+"desc":"2PH00006*LD · oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/allen-county-board-of-commissioners--operates--npdes-2ph00007",
+"cls":"relation",
+"label":"ALLEN COUNTY BOARD OF COMMISSIONERS operates npdes:2PH00007",
+"desc":"2PH00007*MD · oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/npdes-2ph00007--discharges-to--pike-run",
+"cls":"relation",
+"label":"npdes:2PH00007 discharges_to PIKE RUN",
+"desc":"2PH00007*MD · oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/allen-county-sanitary-engineering-department--operates--npdes-2pk00002",
+"cls":"relation",
+"label":"ALLEN COUNTY SANITARY ENGINEERING DEPARTMENT operates npdes:2PK00002",
+"desc":"2PK00002*MD · oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/npdes-2pk00002--discharges-to--ottawa-river",
+"cls":"relation",
+"label":"npdes:2PK00002 discharges_to OTTAWA RIVER",
+"desc":"2PK00002*MD · oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/allen-county-board-of-commissioners--operates--npdes-2pk00002",
+"cls":"relation",
+"label":"ALLEN COUNTY BOARD OF COMMISSIONERS operates npdes:2PK00002",
+"desc":"2PK00002*LD · oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.npdes.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/bistrozzi-addition--registered-agent--c-t",
+"cls":"relation",
+"label":"BISTROZZI ADDITION registered_agent C T",
+"desc":"2026-04-08 · 202609704236 · permits/sos-bistrozzi-addition-llc-2026-04-08.sos.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/bistrozzi-addition--organized-by--scott-ziance",
+"cls":"relation",
+"label":"BISTROZZI ADDITION organized_by SCOTT ZIANCE",
+"desc":"2026-04-08 · 202609704236 · permits/sos-bistrozzi-addition-llc-2026-04-08.sos.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/magenta-capital-ohio-llc-magenta-capital--registered-agent--corporation-service",
+"cls":"relation",
+"label":"MAGENTA CAPITAL OHIO LLC MAGENTA CAPITAL registered_agent CORPORATION SERVICE",
+"desc":"2025-10-17 · 202529003142 · permits/sos-magenta-capital-llc-2025-10-17.sos.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/magenta-capital-ohio-llc-magenta-capital--organized-by--michael-montfort",
+"cls":"relation",
+"label":"MAGENTA CAPITAL OHIO LLC MAGENTA CAPITAL organized_by MICHAEL MONTFORT",
+"desc":"2025-10-17 · 202529003142 · permits/sos-magenta-capital-llc-2025-10-17.sos.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/tilted-gate--registered-agent--corporation-service",
+"cls":"relation",
+"label":"TILTED GATE registered_agent CORPORATION SERVICE",
+"desc":"2025-09-29 · 202527204518 · permits/sos-tilted-gate-llc-2025-09-29.sos.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/tilted-gate--organized-by--michael-montfort",
+"cls":"relation",
+"label":"TILTED GATE organized_by MICHAEL MONTFORT",
+"desc":"2025-09-29 · 202527204518 · permits/sos-tilted-gate-llc-2025-09-29.sos.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/bistrozzi--represented-by--jill-tangeman",
+"cls":"relation",
+"label":"BISTROZZI represented_by JILL TANGEMAN",
+"desc":"permits/3702676.epa.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/jill-tangeman--affiliated-with--emh-t",
+"cls":"relation",
+"label":"JILL TANGEMAN affiliated_with EMH&T",
+"desc":"permits/3702676.epa.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/jill-tangeman--affiliated-with--vorys",
+"cls":"relation",
+"label":"JILL TANGEMAN affiliated_with VORYS",
+"desc":"permits/3727059.epa.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/bistrozzi--represented-by--scott-ziance",
+"cls":"relation",
+"label":"BISTROZZI represented_by SCOTT ZIANCE",
+"desc":"permits/3789048.epa.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/scott-ziance--affiliated-with--emh-t",
+"cls":"relation",
+"label":"SCOTT ZIANCE affiliated_with EMH&T",
+"desc":"permits/3789048.epa.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/bistrozzi--represented-by--michael-montfort",
+"cls":"relation",
+"label":"BISTROZZI represented_by MICHAEL MONTFORT",
+"desc":"permits/3859883.epa.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/michael-montfort--affiliated-with--wilson-sonsini-goodrich-rosati-wsgr",
+"cls":"relation",
+"label":"MICHAEL MONTFORT affiliated_with WILSON SONSINI GOODRICH ROSATI WSGR",
+"desc":"permits/3859883.epa.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/bistrozzi--represented-by--melissa-queen-darby",
+"cls":"relation",
+"label":"BISTROZZI represented_by MELISSA QUEEN DARBY",
+"desc":"permits/3966517.epa.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/melissa-queen-darby--affiliated-with--emh-t",
+"cls":"relation",
+"label":"MELISSA QUEEN DARBY affiliated_with EMH&T",
+"desc":"permits/3966517.epa.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/bistrozzi--represented-by--robert-zizzo",
+"cls":"relation",
+"label":"BISTROZZI represented_by ROBERT ZIZZO",
+"desc":"permits/4074529.epa.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/robert-zizzo--affiliated-with--emh-t",
+"cls":"relation",
+"label":"ROBERT ZIZZO affiliated_with EMH&T",
+"desc":"permits/4074529.epa.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"relation/turner-construction--represented-by--jared-grigg-project-ehs-manager",
+"cls":"relation",
+"label":"TURNER CONSTRUCTION represented_by JARED GRIGG PROJECT EHS MANAGER",
+"desc":"permits/lma1a-npdes-cgp-coverage.epa.yaml",
+"tag":"",
+"scope":"site"
+},
+{
+"id":"question/lead-oepa-2dp00130",
+"cls":"question",
+"label":"Public-comment window on the Bistrozzi \"Bosc\" indirect-discharge permit closes ~2026-07-31",
+"desc":"Ohio EPA has a draft Indirect Discharge Permit (2DP00130*AP, Public Notice 222503, dated 2026-07-01) out for public comment — BISTROZZI LLC's \"Bosc\" data center at 4110 N Cole St, Lima, proposing to route domestic waste + non-contact cooling water through a private sanitary main and a temporary lift station to the American–Bath WWTP (a POTW that lacks a State-approved pretreatment program). Monitored parameters are water temperature, pH, and flow rate; the draft expires 2028-12-31. The 30-day comment window (standard Ohio EPA practice) puts the deadline at ~2026-07-31 — the exact end date is…",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-lima-limedust",
+"cls":"question",
+"label":"Ohio EPA is monitoring lime-kiln dust drifting off the data-center construction site",
+"desc":"The first construction-phase environmental signal on record. Per an email from Ohio EPA Public Information Officer Anthony Chenault (reported by The Lima News 2026-05-11), inspectors visited the North Cole St site because lime kiln dust and alkaline powder used to dry and stabilize wet soil was being carried off-site by the wind. Ohio EPA \"asked the company to reduce and contain the spread of dust\"; the construction company's plan adds water trucks and monitors wind conditions during lime-kiln application, and agency staff said they would \"visit the site frequently over the next few weeks.\" A…",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-lima-constr-traffic",
+"cls":"question",
+"label":"Corridor residents contest the Google-funded roundabout construction and easement takings",
+"desc":"At a Port Authority of Allen County open house (2026-05-14, reported by The Lima News 2026-05-15), Sugar Creek Township residents said the North Cole St roundabouts (SR-115 construction from 2026-06-01, Bluelick Rd in August, Beery Rd TBD) benefit Google more than the community. Lynne Focht, ceding a permanent right-of-way easement near the SR-115 intersection, said she \"will never own that land again\"; David Streeter said \"none of it has to do with long-term health to the individuals, to the residents.\" Their unifying ask was transparency and a Google contact person — still unanswered. The f…",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-prr-04",
+"cls":"question",
+"label":"The project's cost-benefit analysis is withheld",
+"desc":"Item 4 of the BOSC public-records request — the projected tax-revenue impact and public-ROI inputs and assumptions — is held by county legal counsel under R.C. 149.43 and the §9.66(D) data-center exemption. Not produced.",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-pti-313mw",
+"cls":"question",
+"label":"The per-engine output behind the 313 MW figure is trade-secret-redacted",
+"desc":"The final air permit-to-install (eDoc 4132514, 2026-05-28) confirms the generator count and three-hall emission-unit grouping on a primary footing, but the per-engine ekW behind the disclosed 313 MW is redacted as trade secret.",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-aswcd-plans",
+"cls":"question",
+"label":"The site plan sets are withheld twice over",
+"desc":"The County withholds the BOSC-1A plan sets; the Soil & Water district shields the same documents again under R.C. 149.433 (infrastructure records) and R.C. 1333.61 (trade secret — “water and wastewater usage for a data center”), a ground that reaches even the plan-share links inside produced emails.",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-prr-16",
+"cls":"question",
+"label":"The county website's edit history is disclaimed, not absent",
+"desc":"Item 16 (the CMS audit trail for the Sanitary Engineering pages) was answered “no records — we don't manage the website,” yet the WordPress /revisions endpoint returns HTTP 401 (gated, not 404). The version history exists; custody sits with the host.",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-aswcd-03",
+"cls":"question",
+"label":"Wetland determination: “no records” — but a produced inspection says otherwise",
+"desc":"The SWCD answered “no records” for the 0.7-acre forested wetland (DSW401251760W), yet a produced site inspection records that “the existing wetland was mitigated.” A produced record contradicts the answer.",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-aswcd-04",
+"cls":"question",
+"label":"Farm-tile drainage impact: “no records” — yet a failure is photographed",
+"desc":"The SWCD answered “no records” on tile / agricultural-drainage impact, but the 2026-06-05 inspection documents an east farm-tile diversion-swale failure (photo captioned “East farm tile bypass”).",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-forcemain-mgd",
+"cls":"question",
+"label":"Nobody owns the forcemain's MGD design capacity",
+"desc":"The Hume / Shawnee forcemain's design capacity (item 9) is disclaimed by every county body — each points to Ohio EPA or the townships. Batch 2 produced the financing and the engineering contract, not the MGD figure. (Distinct from the City of Lima WWTP's own 18.5 MGD design flow, now in the corpus via the public NPDES permit — see LIMA-WWTP-SHARE.)",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-lima-wwtp-share",
+"cls":"question",
+"label":"The campus's allocated share into the City of Lima WWTP is unquantified",
+"desc":"The City of Lima WWTP's own NPDES permit + design flow are now in the corpus (Ohio EPA 2PE00000 / OH0026069, 18.5 MGD average / 70 MGD peak design; pulled from the public record without a records request, and counted in the routed water balance — the Ottawa leaving Lima now computes 98% treated effluent). What the permit does NOT quantify is the campus's allocated share of that capacity — the ~2.5 MGD FM-2 industrial stream routed to the plant via Lima's 78\" sewer. The headroom / allocation / IU-pretreatment record is City-held (Water Pollution Control) and needs the first City of Lima R.C. 1…",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-prr-02",
+"cls":"question",
+"label":"County ⇄ DoD / federal-contractor comms — narrowed to nothing",
+"desc":"Item 2 sought County communications with DoD or federal contractors (GDIT, GDLS) about the American Township facility and corridor. The county narrowed the ask and returned “no records.”",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-prr-19",
+"cls":"question",
+"label":"County ⇄ engineer-of-record (EMH&T) comms not produced",
+"desc":"Item 19 sought County communications with EMH&T. None produced as to the Commissioners; the SWCD produced its own EMH&T emails, but the County's are still owed (it may supplement from Sanitary Engineering).",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-glri-instrument",
+"cls":"question",
+"label":"The grant instrument behind the $650k Lost Creek project",
+"desc":"The funding source is verified — a GLRI subaward through Ohio EPA, OSU portion $327,450, term 2023–2025 — but the signed award instrument (deliverables, match, reporting) on the Maumee-headwater ag-runoff project is still owed.",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-osu-monitoring",
+"cls":"question",
+"label":"The OSU monitoring data quantifying the Maumee-headwater load",
+"desc":"Continuous flow and water-quality from three ISCO6712 sites would quantify the actual nutrient / flow reduction on Lost Creek (HUC12 041000070305). The load-reduction table is referenced on the captured SWCD page but not transcribed.",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-h2-auth",
+"cls":"question",
+"label":"The campus's federal authorization posture is undisclosed — searched, negative",
+"desc":"The Joint Systems Manufacturing Center (Lima Army Tank Plant) is co-located with the campus — documented geography under hypothesis H2 — but the campus's authorization posture (FedRAMP / DoD impact level) is undisclosed, so the causal link to the boom remains an inference. A #1480 search of the primary instrument surfaces came back negative on every path: USASpending/SAM.gov return no recipient or award for Bistrozzi LLC / Bistrozzi Addition LLC; the FedRAMP Marketplace lists Google Cloud service-wide (High), naming no Lima facility; and Google's public-sector posture runs on Assured Workload…",
+"tag":"inference",
+"scope":"site"
+},
+{
+"id":"question/lead-h1-draw",
+"cls":"question",
+"label":"The consumptive cooling draw against the river's cited 7Q10",
+"desc":"The Ottawa's design low flow is about 0.2 cfs (cited); the campus's consumptive cooling loss is the keystone of hypothesis H1. The measured draw against that 7Q10 is predicted evidence the record still needs to close end to end.",
+"tag":"inference",
+"scope":"site"
+},
+{
+"id":"question/lead-gh-34",
+"cls":"question",
+"label":"Acquire the GLRI / Ohio EPA Lost Creek grant instruments (subaward, design, load-reduction table, monitoring)",
+"desc":"The corpus holds a **secondary** Allen SWCD summary of a \\$650,000 ag-runoff retention/treatment grant (Project `ALLENSWCD-FDFARM22`) on **Lost Creek HUC12 041000070305** (a Maumee headwater 2.7 mi east of I-75) — baseline nutrient-burden context for the hydrology axis. The funding source is verified (GLRI subaward via Ohio EPA, OSU portion \\$327,450, 2023-2025), but the primary instruments are not in hand. ### Scope — documents still owed (see audit §2 table) - **Grant agreement / award instrument** — the signed GLRI / Ohio EPA subaward (deliverables, match, reporting). Source: Ohio EPA GLRI…",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-gh-35",
+"cls":"question",
+"label":"Pursue outstanding PRR records: item 4 cost-benefit + items 5-15 county wastewater universe",
+"desc":"Two outstanding clusters from the county PRR production tracker (cover letter 2026-06-05). Production is rolling (\"every Friday\"); these are the items to watch in subsequent batches. This is an external-dependency tracking issue, not an engineering task. ### Item 4 — Project BOSC cost-benefit analysis (WITHHELD) Cost-benefit analysis / projected tax-revenue impact / public-ROI inputs & assumptions — withheld \"being reviewed by our legal counsel for compliance with R.C. 149.43 and R.C. 9.66.\" Watch for release in later productions. ### Items 5-15 — county wastewater works (DEFERRED to the Sani…",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-gh-144",
+"cls":"question",
+"label":"Follow up on Allen SWCD request items 3 & 4 (wetland determinations + tile drainage)",
+"desc":"**Context.** In the Allen SWCD PRR production (merged in #142) the District answered **item 3** (wetland / floodplain / water-resource determinations) and **item 4** (tile / field-tile / agricultural-drainage system affected by construction) with *\"no responsive records\"* — each qualified *\"unless your request also implicates the previously identified sets of plans\"* (which it withheld). **Worth a second look.** The inspection forms the SWCD *did* produce speak directly to both subjects: - **Item 3 (wetland).** Inspections from **2025-12-08** onward record *\"the existing wetland was mitigated…",
+"tag":"inference",
+"scope":"site"
+},
+{
+"id":"question/lead-gh-155",
+"cls":"question",
+"label":"Track the disposition of the Level-2 wetland permit DSW401252260W (incomplete 2025-12-23)",
+"desc":"## Context Open question surfaced by the permit-vs-disturbance sequence reconstruction (#150 / #153), observation **`level2-401-after-clearing`** in [`bosc-site-permit-sequence.yaml`](../blob/main/data/extracted/legal/prr-mandamus/bosc-site-permit-sequence.yaml). ## The question Was the broader **Level-2** isolated-wetland fill at the BOSC site authorized before the fill area was disturbed — and what is its current disposition? ## What the records show - The narrow **Category-1** isolated wetlands (0.33 ac) *were* authorized first: DSW401251760W, granted **2025-08-12** (before disturbance) —…",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-gh-160",
+"cls":"question",
+"label":"Acquire the architectural footprint sheets / emission-unit plot plan to re-ground compute Method 3",
+"desc":"**Refines #33.** The issued PTI **P0138965** confirms the emission-unit **grouping** (P001–P114 in three groups of 38 + 36 cooling towers in three groups of 12 → **≈ three data halls**) but carries **no plot-plan attachment and no floor area**. So compute **Method 3** (`docs/COMPUTE.md`) stays the flagged-weak **land-area envelope**, not real floor area. **To get.** The **architectural site-plan sheets** (CI Design / WSP / EMH&T) showing the data-hall building footprints, or the permit's plot-plan attachment if one exists. The committed plan set is a single grading & storm sheet (`1A-C-3104`)…",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-gh-161",
+"cls":"question",
+"label":"Acquire the corridor environmental records (forcemain + Shawnee II Ph2 NPDES/SWPPP/ESC; item-9 MGD) — the #151 referral",
+"desc":"Surfaced by the cross-production referral map (**#151**, `legal/prr-mandamus/cross-production-referral-map.yaml`). With three producing bodies now on the record, the **corridor-level environmental** records are owned by **no county body** — each disclaims and points to the next: - **ASWCD item 6** — BOSC-1A forcemain NPDES / SWPPP / ESC → \"Ohio EPA / Sanitary Eng\" - **ASWCD item 8** — Shawnee II Phase 2 stormwater / ESC → \"Ohio EPA / Sanitary Eng\" - **ASWCD item 9** — Hume/Shawnee forcemain **MGD design capacity** → \"Ohio EPA / Sanitary Eng\" - **ASWCD item 7** — forcemain drainage / tile / we…",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-gh-162",
+"cls":"question",
+"label":"Pursue the item-16 CMS / WordPress revision history (county Sanitary pages) at the web host",
+"desc":"PRR **item 16** asked for the CMS audit trail / edit history of the county **Sanitary Engineering** pages (2025-01-01→). The Commissioners answered \"**No records… do not manage the county website**\" — **contested**: - The Sanitary pages' WordPress `modified` dates fall **inside** the requested window. - The `/wp-json/wp/v2/.../revisions` endpoint returns **HTTP 401 (gated, not 404)** — the version history **exists**; custody simply sits with the **host** (AhelioTech / CorpComm-built site). **To get.** The page revision history from the **host** (or via a custody-directed request), and/or docu…",
+"tag":"inference",
+"scope":"site"
+},
+{
+"id":"question/lead-gh-752",
+"cls":"question",
+"label":"gap(extraction): extract the LACRPC CAC agenda .jpg — first use of the #703 image path",
+"desc":"**Follow-up to #703** (the raw image-source extraction path), now on `main`. #703 built the `.png/.jpg/.tif` read path but ran **no** live extraction — the path ships, nothing uses it yet. This is its first real use. ## Target `data/documents/lacrpc/meetings/20260120 CAC Agenda and Meeting Notice.jpg` — the one image-only source in the corpus (a Lima–Allen County Regional Planning Commission Citizens Advisory Committee agenda / meeting notice). Currently reference-only; the #703 path can now read it straight into the vision extractor (single image, no OCR hint). ## Scope - Run the live image…",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/lead-aep-lyka-opsb",
+"cls":"question",
+"label":"AEP Ohio's Lyka 345kV substation/line has no OPSB case yet — filing expected early 2027, final route undetermined",
+"desc":"AEP Ohio's own project fact sheet (captured 2026-07-11, dated 2026-04-08) schedules the Ohio Power Siting Board (OPSB) regulatory filing for \"Early 2027\" and an anticipated OPSB decision for \"Spring 2027\" — as of this writing no OPSB case number has been assigned or filed (confirmed by direct search of opsb.ohio.gov and AEP's own regulatory-filings index). The Lyka Substation site (a customer-owned parcel between N West St and N Cole St, Sugar Creek Township) is fixed, but the ~4-mile 345kV line route is not — AEP's own map shows 45 numbered \"study segments\" still under consideration, and the…",
+"tag":"open",
+"scope":"site"
+},
+{
+"id":"question/open-water",
+"cls":"question",
+"label":"Open thread — H1 Water & Coercion @ lima",
+"desc":"No documented nexus yet for lima under H1 Water & Coercion. Fields: {'wwtp': 'Allen County Sanitary District (FM-1: American Bath / American II; FM-2: City of Lima)'}.",
+"tag":"open",
+"scope":"site"
+}
+]
+}
