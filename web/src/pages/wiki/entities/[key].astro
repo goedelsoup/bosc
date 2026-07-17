@@ -8,7 +8,7 @@ import type { ProfileAttr, ProfileHeaderData, ProfileRel } from "@watermark/core
 import type { FigureStatData } from "@watermark/core/viz";
 import { entityHref } from "@watermark/core/entityLinks";
 import { withBase, withSite } from "@watermark/core/site";
-import { openQuestionBacklinks } from "@watermark/core/wiki";
+import { hypothesisBacklinks, openQuestionBacklinks } from "@watermark/core/wiki";
 
 export const getStaticPaths = (() => {
   const entities = hasFeed("entities") ? loadFeed<EntityNode[]>("entities") : [];
@@ -82,12 +82,16 @@ const header: ProfileHeaderData = {
 // Open questions that raise this entity — the backlink peer of `[[wiki links]]` over the
 // prose-only `open-questions` feed (#1569).
 const openQuestions = openQuestionBacklinks([entity.display, ...entity.variants]);
+// The boom-origin hypotheses this entity bears on — the reverse of the hypothesis node's
+// "Entities it bears on" rail (#1570).
+const hypotheses = hypothesisBacklinks([entity.display, ...entity.variants]);
 
 const profileToc = [
   { anchor: "overview", label: "Identity" },
   { anchor: "neighborhood", label: "Relationships" },
   ...(entity.sources.length ? [{ anchor: "sources", label: "Sources" }] : []),
   ...(profiles.length ? [{ anchor: "backlinks", label: "Backlinks" }] : []),
+  ...(hypotheses.length ? [{ anchor: "hypotheses", label: "Hypotheses" }] : []),
   ...(openQuestions.length ? [{ anchor: "open-questions", label: "Open questions" }] : []),
 ];
 ---
@@ -153,6 +157,24 @@ const profileToc = [
             {profiles.map((p) => (
               <li>
                 Profile: <a href={`${withSite("/site/people/")}${p.slug}/`}>{p.name}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    {
+      hypotheses.length > 0 && (
+        <div class="backlinks">
+          <h2 id="hypotheses">Hypotheses</h2>
+          <p class="card-meta">The boom-origin readings this entity bears on.</p>
+          <ul class="neighborhood">
+            {hypotheses.map((h) => (
+              <li>
+                <a href={h.url}>
+                  {h.number} · {h.name}
+                </a>
               </li>
             ))}
           </ul>

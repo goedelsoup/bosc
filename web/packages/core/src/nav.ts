@@ -216,6 +216,7 @@ export function sections(): Section[] {
         { label: "Entities", anchor: "entities" },
         { label: "People", anchor: "people" },
         { label: "Concepts", anchor: "concepts" },
+        { label: "Hypotheses", anchor: "hypotheses" },
         { label: "Open questions", anchor: "open-questions" },
         { label: "Curated entities", anchor: "curated" },
       ],

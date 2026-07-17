@@ -1,0 +1,188 @@
+---
+/**
+ * The hypothesis matrix index (`/wiki/hypotheses/`, issue #1570, epic #1560 workstream B) — the
+ * three boom-origin readings of the data-center build-out as wiki node pages. This is the
+ * knowledge-graph door on the matrix (each lens cross-linked to the concepts, entities, and open
+ * questions it bears on); the `/research/hypotheses` scorecard is the same data read the other way,
+ * scored across every site. Network-global (`is_reference_site` host role): the reference build
+ * ships the `hypotheses` feed, so a build without it renders the honest empty state.
+ */
+import Base from "~/layouts/Base.astro";
+import { getHypotheses, hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { HypothesisAssessmentItem } from "@watermark/core/feeds";
+import { withBase } from "@watermark/core/site";
+import { hypothesisHref } from "@watermark/core/wiki";
+
+const hyps = getHypotheses();
+const cells = hasFeed("hypothesis-assessments")
+  ? loadFeed<HypothesisAssessmentItem[]>("hypothesis-assessments")
+  : [];
+const cellCount = (id: string): number => cells.filter((c) => c.hypothesis === id).length;
+---
+
+<Base
+  title="Hypotheses"
+  section="wiki"
+  description="The three boom-origin readings of the data-center build-out — water & coercion, defense & federal enclave, consumer surveillance — as cross-linked wiki nodes."
+>
+  <div class="hyx">
+    <p class="prose"><a href={withBase("/wiki/")}>← Wiki</a></p>
+    <div class="hyx-head">
+      <div class="hyx-kicker">Wiki · hypotheses</div>
+      <h1>The three hypotheses</h1>
+      <p class="section-lead">
+        One network, read three ways. Each is a competing reading of what explains the data-center
+        boom — surfaced here as a node cross-linked to the <a href={withBase("/wiki/concepts/")}>concepts</a>,
+        <a href={withBase("/wiki/entities/")}>entities</a>, and <a href={withBase("/wiki/open-questions/")}>open
+        questions</a> it bears on. Each is <strong>a reading under test, not a verdict</strong>. See the same
+        lenses scored across every site on the <a href={withBase("/research/hypotheses")}>network directory</a>.
+      </p>
+    </div>
+
+    {
+      hyps.length === 0 ? (
+        <p class="stub-note">The hypothesis matrix isn't assembled on this build.</p>
+      ) : (
+        <ul class="hyx-list">
+          {hyps.map((h) => {
+            const reference = h.status === "reference";
+            const n = cellCount(h.id);
+            return (
+              <li class="hyx-card">
+                <a class="hyx-card-link" href={hypothesisHref(h.id)}>
+                  <div class="hyx-card-top">
+                    <span class="hyx-num">{h.number}</span>
+                    <span class:list={["hyx-status", { "is-ref": reference }]}>
+                      <span class="hyx-status-dot" aria-hidden="true" />
+                      {reference ? "Reference build" : "Emerging — under test"}
+                    </span>
+                    <span class="hyx-n">{n} {n === 1 ? "cell" : "cells"}</span>
+                  </div>
+                  <div class="hyx-name">{h.name}</div>
+                  <div class="hyx-claim">{h.claim}</div>
+                  <div class="hyx-thesis">{h.thesis}</div>
+                  <span class="hyx-more">Open the node ›</span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      )
+    }
+  </div>
+</Base>
+
+<style>
+  .hyx {
+    max-width: 60rem;
+  }
+  .hyx-head {
+    margin-bottom: var(--sp-5);
+  }
+  .hyx-kicker {
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-nano);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bosc-faint);
+    margin-bottom: 0.4rem;
+  }
+  .hyx-head h1 {
+    margin: 0 0 0.5rem;
+  }
+
+  .hyx-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+  }
+  .hyx-card {
+    border: 1px solid var(--bosc-rule);
+    background: var(--bosc-surface);
+  }
+  .hyx-card-link {
+    display: block;
+    padding: var(--sp-4);
+    text-decoration: none;
+    color: inherit;
+  }
+  .hyx-card-link:hover {
+    background: var(--td-tint, #e4ece4);
+  }
+  .hyx-card-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+  }
+  .hyx-num {
+    font-family: var(--bosc-mono);
+    font-weight: 700;
+    font-size: var(--fs-meta);
+    color: var(--bosc-ink);
+  }
+  .hyx-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-nano);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+    border: 1px solid var(--bosc-rule);
+    padding: 0.15em 0.6em;
+  }
+  .hyx-status-dot {
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+    background: var(--bosc-faint);
+  }
+  .hyx-status.is-ref {
+    color: var(--bosc-ink-green);
+    border-color: var(--bosc-forest);
+  }
+  .hyx-status.is-ref .hyx-status-dot {
+    background: var(--bosc-forest);
+  }
+  .hyx-n {
+    margin-left: auto;
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-nano);
+    color: var(--bosc-faint);
+  }
+  .hyx-name {
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--bosc-ink);
+  }
+  .hyx-claim {
+    font-weight: 600;
+    color: var(--bosc-ink);
+    margin: 0.2rem 0 0.5rem;
+  }
+  .hyx-thesis {
+    font-size: var(--fs-meta);
+    line-height: 1.55;
+    color: var(--bosc-muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .hyx-more {
+    display: inline-block;
+    margin-top: 0.7rem;
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-nano);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--bosc-link);
+  }
+</style>

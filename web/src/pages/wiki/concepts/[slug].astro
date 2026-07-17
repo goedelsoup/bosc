@@ -6,7 +6,14 @@ import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { ConceptItem } from "@watermark/core/feeds";
 import type { ProfileHeaderData, ProfileRel } from "@watermark/core/profile";
 import { withBase } from "@watermark/core/site";
-import { conceptBacklinks, norm, openQuestionBacklinks, renderBody, wikiIndex } from "@watermark/core/wiki";
+import {
+  conceptBacklinks,
+  hypothesisBacklinks,
+  norm,
+  openQuestionBacklinks,
+  renderBody,
+  wikiIndex,
+} from "@watermark/core/wiki";
 
 export const getStaticPaths: GetStaticPaths = () => {
   const concepts = hasFeed("concepts") ? loadFeed<ConceptItem[]>("concepts") : [];
@@ -26,6 +33,9 @@ const backlinks = conceptBacklinks(concept.slug);
 // Open questions that raise this concept — the backlink peer of `[[wiki links]]` over the
 // prose-only `open-questions` feed (#1569).
 const openQuestions = openQuestionBacklinks([concept.title, ...concept.aliases]);
+// The boom-origin hypotheses this concept bears on — the reverse of the hypothesis node's
+// "Concepts it bears on" rail (#1570).
+const hypotheses = hypothesisBacklinks([concept.title, ...concept.aliases]);
 
 const rels: ProfileRel[] = related.map((t) => ({ kind: t.kind, label: t.label, href: t.url }));
 
@@ -45,6 +55,7 @@ const header: ProfileHeaderData = {
 const sections = [
   { anchor: "overview", label: "Identity" },
   ...(backlinks.length ? [{ anchor: "backlinks", label: "Backlinks" }] : []),
+  ...(hypotheses.length ? [{ anchor: "hypotheses", label: "Hypotheses" }] : []),
   ...(openQuestions.length ? [{ anchor: "open-questions", label: "Open questions" }] : []),
 ];
 const profileToc = sections.length >= 2 ? sections : [];
@@ -75,6 +86,24 @@ const profileToc = sections.length >= 2 ? sections : [];
             {backlinks.map((b) => (
               <li>
                 <a href={b.url}>{b.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    {
+      hypotheses.length > 0 && (
+        <div class="backlinks">
+          <h2 id="hypotheses">Hypotheses</h2>
+          <p class="card-meta">The boom-origin readings this concept bears on.</p>
+          <ul class="neighborhood">
+            {hypotheses.map((h) => (
+              <li>
+                <a href={h.url}>
+                  {h.number} · {h.name}
+                </a>
               </li>
             ))}
           </ul>
