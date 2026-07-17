@@ -89,6 +89,15 @@ const doors = [
     desc: "Meeting summaries, PRR & mandamus, and Select-Committee testimony.",
     note: "filings & analysis",
   },
+  {
+    id: "concepts",
+    kind: "Glossary",
+    href: withSite("/site/concepts/"),
+    count: num(count("concepts")),
+    title: "Glossary",
+    desc: "Term and method definitions for this site — the shared network vocabulary plus the terms specific to this watershed point.",
+    note: "the method, defined",
+  },
   ...(recordOpen
     ? [
         {

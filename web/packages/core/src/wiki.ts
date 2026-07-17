@@ -6,7 +6,7 @@
  * slug, or alias — to the page for that concept, entity, or person. Unresolved
  * links render as a dotted "missing" span (a TODO marker), never a dead anchor.
  */
-import { hasFeed, loadFeed } from "./bundle";
+import { activeSite, hasFeed, loadFeed } from "./bundle";
 import { slugify, type ConceptItem, type EntityNode, type PersonItem } from "./feeds";
 import { escapeHtml } from "./format";
 import { withBase, withSite } from "./site";
@@ -17,6 +17,18 @@ export interface WikiTarget {
   kind: "concept" | "entity" | "person";
 }
 
+export interface WikiIndexOptions {
+  /**
+   * Resolve concept links to the **active site's own** glossary
+   * (`/network/<id>/site/concepts/<slug>/`) instead of the network-global
+   * `/wiki/concepts/<slug>/` (#1567). Set it on per-site pages so a `[[term]]` in a
+   * concept/person/place body stays inside that site's build and points at the same
+   * scoped concept feed the page renders. People are always site-scoped; entities stay
+   * network-global (the entity graph is a network-global host) in both modes.
+   */
+  scoped?: boolean;
+}
+
 /** Normalize any label/key/slug to a comparable token. */
 export function norm(s: string): string {
   return s
@@ -25,11 +37,26 @@ export function norm(s: string): string {
     .trim();
 }
 
-let cached: Map<string, WikiTarget> | undefined;
+/**
+ * The concept page URL for a slug, network-global or scoped to the active site.
+ * Both feed off the same per-site `concepts` feed; only the page root differs.
+ */
+function conceptHref(slug: string, scoped: boolean): string {
+  return scoped ? withSite(`/site/concepts/${slug}/`) : `${withBase("/wiki/concepts/")}${slug}/`;
+}
 
-/** The resolution index: normalized name/alias/slug → its page. */
-export function wikiIndex(): Map<string, WikiTarget> {
-  if (cached) return cached;
+// Keyed by `${activeSite()}::${scoped}` — a single module-level Map that isn't
+// site-aware silently serves the first site's index to every other site in a
+// multi-site build (#1567), bleeding e.g. Lima's concepts into a peer's pages.
+const cache = new Map<string, Map<string, WikiTarget>>();
+
+/** The resolution index: normalized name/alias/slug → its page, for the active site. */
+export function wikiIndex(options: WikiIndexOptions = {}): Map<string, WikiTarget> {
+  const scoped = options.scoped ?? false;
+  const key = `${activeSite()}::${scoped ? "site" : "global"}`;
+  const hit = cache.get(key);
+  if (hit) return hit;
+
   const index = new Map<string, WikiTarget>();
   const add = (names: (string | null | undefined)[], target: WikiTarget): void => {
     for (const n of names) {
@@ -41,7 +68,7 @@ export function wikiIndex(): Map<string, WikiTarget> {
   if (hasFeed("concepts")) {
     for (const c of loadFeed<ConceptItem[]>("concepts")) {
       add([c.slug, c.title, ...c.aliases], {
-        url: `${withBase("/wiki/concepts/")}${c.slug}/`,
+        url: conceptHref(c.slug, scoped),
         label: c.title,
         kind: "concept",
       });
@@ -65,7 +92,7 @@ export function wikiIndex(): Map<string, WikiTarget> {
       });
     }
   }
-  cached = index;
+  cache.set(key, index);
   return index;
 }
 
@@ -143,8 +170,12 @@ export function renderBody(body: string, index = wikiIndex()): string {
 }
 
 /** Concepts that point at `slug` — via `related` or a `[[link]]` in their body. */
-export function conceptBacklinks(slug: string): { url: string; label: string }[] {
+export function conceptBacklinks(
+  slug: string,
+  options: WikiIndexOptions = {},
+): { url: string; label: string }[] {
   if (!hasFeed("concepts")) return [];
+  const scoped = options.scoped ?? false;
   const concepts = loadFeed<ConceptItem[]>("concepts");
   const self = concepts.find((c) => c.slug === slug);
   const names = self
@@ -156,7 +187,7 @@ export function conceptBacklinks(slug: string): { url: string; label: string }[]
     const viaRelated = c.related.some((r) => norm(r) === norm(slug));
     const viaBody = [...c.body.matchAll(/\[\[([^\]]+)\]\]/g)].some((m) => names.has(norm(m[1])));
     if (viaRelated || viaBody) {
-      out.push({ url: `${withBase("/wiki/concepts/")}${c.slug}/`, label: c.title });
+      out.push({ url: conceptHref(c.slug, scoped), label: c.title });
     }
   }
   return out;
