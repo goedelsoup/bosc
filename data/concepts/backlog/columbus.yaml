@@ -6,7 +6,7 @@
 scope: columbus
 sources_scanned: 1
 glossary_defined: 9
-term_count: 16
+term_count: 15
 candidate_count: 9
 candidates_found: 9
 terms:
@@ -35,18 +35,6 @@ terms:
     (PUCO 24-508-EL-ATA) `[verified]`/`[reference]` The central "mature end of the complex mix" ins…'
   sources:
     data/extracted/columbus/data-centers.md: 6
-- term: EPA
-  kind: term
-  tags:
-  - environment
-  - regulator
-  provenance: lexicon
-  count: 5
-  note: The U.S. Environmental Protection Agency, the federal environmental regulator.
-  example: …old for **$15.29M in Jan 2021** (Franklin Co records). `[verified]` - **Air (pin):** Ohio
-    EPA PTI — the Scioto-Darby campus, **158 emergency diesel gensets** (ULSD/HVO), comment perio…
-  sources:
-    data/extracted/columbus/data-centers.md: 5
 - term: OEPA
   kind: term
   tags:

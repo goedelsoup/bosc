@@ -37,7 +37,7 @@ from typing import TYPE_CHECKING
 import yaml
 from pydantic import BaseModel, ConfigDict, Field
 
-from watermark.config import Settings
+from watermark.config import Settings, get_settings
 from watermark.logging import get_logger
 from watermark.site.feeds import ConceptItem
 
@@ -94,6 +94,11 @@ class LexiconEntry(BaseModel):
     kind: str = "term"  # concept | term | method (mirrors the concept frontmatter)
     tags: list[str] = Field(default_factory=list)
     note: str = ""
+    # Homonym phrases that disqualify a match when the match falls inside them — the escape hatch
+    # for a surface form that collides with an unrelated term (``variance`` in "mercury variance",
+    # ``dilution`` in "isotope-dilution", ``TIF`` in a ``.tif`` file path). Whitespace matches
+    # whitespace or a hyphen; no other anchoring — containment is what disqualifies.
+    exclude: list[str] = Field(default_factory=list)
 
     @property
     def surface_forms(self) -> list[str]:
@@ -182,6 +187,16 @@ def _compile_surface_pattern(forms: Iterable[str]) -> re.Pattern[str]:
     # The non-capturing group is load-bearing: without it the boundary anchors would bind only to
     # the first/last alternative (``|`` has lowest precedence), matching middle forms as substrings.
     return re.compile(rf"(?<![A-Za-z0-9])(?:{alt})(?![A-Za-z0-9])", re.IGNORECASE)
+
+
+def _compile_exclude(phrase: str) -> re.Pattern[str]:
+    """A case-insensitive pattern for a homonym-disqualifying phrase, unanchored.
+
+    No boundary anchors: containment of the term match inside the phrase's span is what
+    disqualifies (so ``.tif`` disqualifies the ``TIF`` inside a ``…date.tif`` path). Internal
+    whitespace matches whitespace *or* a hyphen, so ``isotope dilution`` catches ``isotope-dilution``.
+    """
+    return re.compile(re.escape(phrase.strip()).replace(r"\ ", r"[\s\-]+"), re.IGNORECASE)
 
 
 def _accept_acronym(token: str, *, exclude: frozenset[str], stopwords: frozenset[str]) -> bool:
@@ -305,9 +320,16 @@ def harvest_scope(
     ``max_candidates`` caps the discovery bucket (0 = uncapped); the pre-cap total is reported as
     ``candidates_found``. Pure: no filesystem access, so tests pass literal blobs.
     """
-    # Lexicon entries not already defined in the glossary, each with a compiled surface pattern.
+    if min_count < 1:
+        raise ValueError(f"min_count must be >= 1, got {min_count}")
+    if max_candidates < 0:
+        raise ValueError(f"max_candidates must be >= 0, got {max_candidates}")
+
+    # Lexicon entries not already defined in the glossary, each with a compiled surface pattern
+    # and (optionally) homonym-exclusion patterns.
     lex_accs: dict[str, _Accumulator] = {}
     lex_patterns: dict[str, re.Pattern[str]] = {}
+    lex_excludes: dict[str, list[re.Pattern[str]]] = {}
     lex_surface_keys: set[str] = set()
     for entry in lexicon.terms:
         keys = {_normalize(f) for f in entry.surface_forms if _normalize(f)}
@@ -322,6 +344,8 @@ def harvest_scope(
             note=entry.note,
         )
         lex_patterns[entry.term] = _compile_surface_pattern(entry.surface_forms)
+        if entry.exclude:
+            lex_excludes[entry.term] = [_compile_exclude(p) for p in entry.exclude]
 
     # Tokens discovery must never surface: already-defined + every lexicon surface form.
     discovery_exclude = glossary_index | frozenset(lex_surface_keys)
@@ -331,10 +355,7 @@ def harvest_scope(
         flat = _flatten(raw)
         if not flat:
             continue
-        for term, pattern in lex_patterns.items():
-            matches = list(pattern.finditer(flat))
-            if matches:
-                lex_accs[term].add(relpath, len(matches), _example(flat, matches[0]))
+        _harvest_lexicon(flat, relpath, lex_accs, lex_patterns, lex_excludes)
         if discover:
             _harvest_discovery(flat, relpath, disc_accs, discovery_exclude, lexicon.stopword_keys)
 
@@ -348,6 +369,54 @@ def harvest_scope(
         terms=_rank(lex_accs.values(), min_count=min_count),
         candidates=capped,
     )
+
+
+def _harvest_lexicon(
+    flat: str,
+    relpath: str,
+    accs: dict[str, _Accumulator],
+    patterns: dict[str, re.Pattern[str]],
+    excludes: dict[str, list[re.Pattern[str]]],
+) -> None:
+    """Fold one file's lexicon hits into ``accs``, overlap-aware.
+
+    All surface matches across every term are collected, then resolved so **the longest matching
+    surface form wins any overlap** — so ``OEPA``'s "Ohio EPA" claims the span and the generic
+    ``EPA`` doesn't also count it. A match contained in one of its term's exclude spans (a homonym
+    like "mercury variance") is dropped. Non-overlapping matches are all retained.
+    """
+    # (start, end, term, match) for every surface hit of every term.
+    spans: list[tuple[int, int, str, re.Match[str]]] = []
+    for term, pattern in patterns.items():
+        spans.extend((m.start(), m.end(), term, m) for m in pattern.finditer(flat))
+    if not spans:
+        return
+    # Per-term exclude spans (a match inside one of these, for the same term, is a homonym).
+    blocked: dict[str, list[tuple[int, int]]] = {}
+    for term, pats in excludes.items():
+        ex_spans = [(m.start(), m.end()) for pat in pats for m in pat.finditer(flat)]
+        if ex_spans:
+            blocked[term] = ex_spans
+
+    # Longest-span-first at each position (ties broken lexically → deterministic); greedily accept
+    # a span only if it neither is excluded nor overlaps an already-accepted (longer/earlier) span.
+    spans.sort(key=lambda s: (s[0], -(s[1] - s[0]), s[2]))
+    occupied: list[tuple[int, int]] = []
+    kept: list[tuple[str, re.Match[str]]] = []
+    for start, end, term, m in spans:
+        if any(bs <= start and end <= be for bs, be in blocked.get(term, ())):
+            continue
+        if any(start < e and s < end for s, e in occupied):
+            continue
+        occupied.append((start, end))
+        kept.append((term, m))
+
+    per_term: Counter[str] = Counter(term for term, _ in kept)
+    first: dict[str, re.Match[str]] = {}
+    for term, m in kept:
+        first.setdefault(term, m)
+    for term, hits in per_term.items():
+        accs[term].add(relpath, hits, _example(flat, first[term]))
 
 
 def _harvest_discovery(
@@ -434,7 +503,7 @@ def harvest_backlog(
     """
     from watermark.sites import SITES, effective_corpus_scope
 
-    settings = settings or Settings()
+    settings = settings or get_settings()
     repo_root = settings.data_dir.parent
     lexicon = load_lexicon(settings.concepts_dir)
     glossary_index, defined_count = load_glossary(settings.concepts_dir)
@@ -519,12 +588,14 @@ def render_backlog(backlog: ScopeBacklog) -> str:
 def write_backlog(backlog: ScopeBacklog, out_dir: Path) -> Path | None:
     """Write ``<out_dir>/<scope>.yaml`` when the scope has any harvested term; else skip.
 
-    Returns the written path, or ``None`` when nothing was harvested (no file for an empty scope,
-    so the committed backlog tree stays signal-only).
+    Returns the written path, or ``None`` when nothing was harvested. An empty scope writes no
+    file *and* removes a stale ``<scope>.yaml`` from a prior run (e.g. once its last term is
+    authored), so a regeneration never leaves a signal-free artifact behind.
     """
+    path = out_dir / f"{backlog.scope}.yaml"
     if not backlog.terms and not backlog.candidates:
+        path.unlink(missing_ok=True)
         return None
     out_dir.mkdir(parents=True, exist_ok=True)
-    path = out_dir / f"{backlog.scope}.yaml"
     path.write_text(render_backlog(backlog), encoding="utf-8")
     return path

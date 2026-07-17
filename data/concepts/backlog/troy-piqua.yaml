@@ -10,18 +10,6 @@ term_count: 20
 candidate_count: 23
 candidates_found: 23
 terms:
-- term: EPA
-  kind: term
-  tags:
-  - environment
-  - regulator
-  provenance: lexicon
-  count: 11
-  note: The U.S. Environmental Protection Agency, the federal environmental regulator.
-  example: …GREEMENT` (#1486). - **WWTP headroom vs. the reserved wastewater draw:** Piqua WWTP (Ohio
-    EPA 1PD00008\*WD / NPDES OH0027049; renewal eff. 2022-09-01 – 2027-08-31) is design **8.7 MGD…
-  sources:
-    data/extracted/troy-piqua/data-centers.md: 11
 - term: OEPA
   kind: term
   tags:
@@ -109,6 +97,18 @@ terms:
     DMR). `[verified]` Source: `1PD00008.fs.npdes.yaml`; `wwtp-oh0027049.dmr.yaml`. The reserved…'
   sources:
     data/extracted/troy-piqua/data-centers.md: 4
+- term: EPA
+  kind: term
+  tags:
+  - environment
+  - regulator
+  provenance: lexicon
+  count: 3
+  note: The U.S. Environmental Protection Agency, the federal environmental regulator.
+  example: …WDO, Miami County, entity "J5 LLC"); confirmed-negative as of 2026-07-11. 6. **Ohio EPA /
+    EPA ECHO** — the Piqua WWTP NPDES 1PD00008 fact sheet (committed reference) and any data-cent…
+  sources:
+    data/extracted/troy-piqua/data-centers.md: 3
 - term: tax abatement
   kind: concept
   tags:

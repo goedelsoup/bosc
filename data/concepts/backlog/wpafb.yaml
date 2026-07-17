@@ -6,7 +6,7 @@
 scope: wpafb
 sources_scanned: 4
 glossary_defined: 9
-term_count: 18
+term_count: 17
 candidate_count: 26
 candidates_found: 26
 terms:
@@ -31,15 +31,15 @@ terms:
   - environment
   - regulator
   provenance: lexicon
-  count: 24
+  count: 19
   note: The U.S. Environmental Protection Agency, the federal environmental regulator.
-  example: …purpose shell holding the entitlements). Keep any find a **separate register**. 3. **Ohio
-    EPA / EPA ECHO** — data-center stormwater coverage under draft general permit **OHD000001**;…
+  example: …e shell holding the entitlements). Keep any find a **separate register**. 3. **Ohio EPA /
+    EPA ECHO** — data-center stormwater coverage under draft general permit **OHD000001**; any ne…
   sources:
-    data/extracted/wpafb/data-centers.md: 4
+    data/extracted/wpafb/data-centers.md: 2
     data/extracted/wpafb/dayton-ccr-2025-pfas.md: 3
     data/extracted/wpafb/groundwater-corroboration.md: 6
-    data/extracted/wpafb/groundwater-screen.md: 11
+    data/extracted/wpafb/groundwater-screen.md: 8
 - term: OEPA
   kind: term
   tags:
@@ -160,19 +160,6 @@ terms:
     SOS / OEPA permit) is still **to-run**; every open item below names the primary instrument to…
   sources:
     data/extracted/wpafb/data-centers.md: 4
-- term: dilution
-  kind: concept
-  tags:
-  - water
-  - water-quality
-  provenance: lexicon
-  count: 3
-  note: The receiving water's clean-flow available to dilute a discharged load, sized at design low flow.
-  example: …s (22 sampled) across the GM-BVA; total depths 21–101 ft; 24 PFAS analyzed by two isotope-dilution
-    adaptations of EPA Method 537.1. - **Key finding:** PFOS of **1.9 ng/L** at well CL-275 a…
-  sources:
-    data/extracted/wpafb/groundwater-corroboration.md: 1
-    data/extracted/wpafb/groundwater-screen.md: 2
 - term: HSG
   kind: term
   tags:
@@ -185,6 +172,18 @@ terms:
     `[reference]`):** "Dayton / WPAFB sits on the Great Miami / Mad River Buried V…
   sources:
     data/extracted/wpafb/groundwater-screen.md: 3
+- term: dilution
+  kind: concept
+  tags:
+  - water
+  - water-quality
+  provenance: lexicon
+  count: 2
+  note: The receiving water's clean-flow available to dilute a discharged load, sized at design low flow.
+  example: …ning WPAFB receiving-water dimension** (#463). WPAFB's water risk is **not** surface-7Q10
+    dilution — it is **groundwater**. This document defines the **buried-valley + plume overlay** as a…
+  sources:
+    data/extracted/wpafb/groundwater-screen.md: 2
 - term: WWTP
   kind: term
   tags:
@@ -197,18 +196,6 @@ terms:
     4. **AES Ohio (DP&L) large-load / PJM interconnection queue** — a >100 MW ta…'
   sources:
     data/extracted/wpafb/data-centers.md: 2
-- term: interconnection queue
-  kind: concept
-  tags:
-  - energy
-  - grid
-  provenance: lexicon
-  count: 1
-  note: The backlog of proposed generators and large loads awaiting grid-connection study and approval.
-  example: …`data/reference/echo/great-miami-wwtp.potw.yaml`.) 4. **AES Ohio (DP&L) large-load / PJM interconnection
-    queue** — a >100 MW tap in the DAY zone is the earliest hard signal of a sited campus. `[open]`…
-  sources:
-    data/extracted/wpafb/data-centers.md: 1
 - term: PJM
   kind: term
   tags:

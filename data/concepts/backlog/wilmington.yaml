@@ -10,19 +10,6 @@ term_count: 24
 candidate_count: 21
 candidates_found: 21
 terms:
-- term: EPA
-  kind: term
-  tags:
-  - environment
-  - regulator
-  provenance: lexicon
-  count: 11
-  note: The U.S. Environmental Protection Agency, the federal environmental regulator.
-  example: '…**PTI #1543170 expansion to 4.5 MGD**, new limits effective 2026-03-01. `[verified — Ohio
-    EPA NPDES fact sheet 1PD00013.fs, 2023-05-19]` - **Site process/stormwater discharge:** likel…'
-  sources:
-    data/extracted/wilmington/data-centers.md: 7
-    data/extracted/wilmington/low-flow-screen.md: 4
 - term: WWTP
   kind: term
   tags:
@@ -101,6 +88,18 @@ terms:
     rezoning corridor (§2) — together ~1,000+ acres of one US-68 S / SR-730 corridor `[inference — the…
   sources:
     data/extracted/wilmington/data-centers.md: 6
+- term: EPA
+  kind: term
+  tags:
+  - environment
+  - regulator
+  provenance: lexicon
+  count: 5
+  note: The U.S. Environmental Protection Agency, the federal environmental regulator.
+  example: …, comment period closed **2026-01-16**, under comment evaluation, not final. `[verified —
+    epa.ohio.gov + draft/fact-sheet/public-notice PDFs]` - **WWTP compliance:** ECHO SNC/DMR hist…
+  sources:
+    data/extracted/wilmington/data-centers.md: 5
 - term: CRA
   kind: term
   tags:

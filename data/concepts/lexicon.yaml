@@ -60,6 +60,7 @@ terms:
     note: Treated wastewater discharged to a receiving water; its pollutant limits are set in the NPDES permit.
   - term: dilution
     aliases: [dilution flow, mixing zone]
+    exclude: [isotope dilution]  # an analytical-chemistry method, not receiving-water dilution
     kind: concept
     tags: [water, water-quality]
     note: The receiving water's clean-flow available to dilute a discharged load, sized at design low flow.
@@ -91,7 +92,8 @@ terms:
     tags: [hydrology, stormwater]
     note: The NRCS A–D infiltration class of a soil, an input to runoff curve-number modeling.
   - term: curve number
-    aliases: [runoff curve number, "SCS curve number", CN]
+    # No bare "CN" alias — it is a homonym for cyanide (Cd/CN/Pb), a rail carrier, etc.
+    aliases: [runoff curve number, "SCS curve number"]
     kind: term
     tags: [hydrology, stormwater]
     note: The NRCS coefficient (0–100) relating land cover and soil to storm runoff depth.
@@ -114,6 +116,7 @@ terms:
   # --- land use / local finance ---------------------------------------------------------------
   - term: TIF
     aliases: [tax increment financing]
+    exclude: [".tif"]  # the GeoTIFF file extension, not tax increment financing
     kind: term
     tags: [land-use, finance]
     note: A financing tool that earmarks the property-tax increment from new development to pay for it.
@@ -161,6 +164,7 @@ terms:
     tags: [land-use, governance]
     note: A use allowed in a zoning district only with case-by-case approval and conditions.
   - term: variance
+    exclude: [mercury variance]  # an NPDES water-quality variance, not a zoning variance
     kind: concept
     tags: [land-use, governance]
     note: A parcel-specific waiver of a zoning standard granted by a board of zoning appeals.

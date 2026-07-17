@@ -29,12 +29,12 @@ terms:
   - environment
   - regulator
   provenance: lexicon
-  count: 5
+  count: 3
   note: The U.S. Environmental Protection Agency, the federal environmental regulator.
   example: …sk with a real possibility of a flat no-activity outcome** — the web pass (parcel / SOS /
     EPA permit) is **to-run**. Every open item names the primary instrument to pull. **Nothing he…
   sources:
-    data/extracted/xenia/data-centers.md: 5
+    data/extracted/xenia/data-centers.md: 3
 - term: NPDES
   kind: term
   tags:

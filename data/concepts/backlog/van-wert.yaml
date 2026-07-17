@@ -10,18 +10,6 @@ term_count: 16
 candidate_count: 3
 candidates_found: 3
 terms:
-- term: EPA
-  kind: term
-  tags:
-  - environment
-  - regulator
-  provenance: lexicon
-  count: 13
-  note: The U.S. Environmental Protection Agency, the federal environmental regulator.
-  example: '…Lower Little Auglaize River (04100007 08 04). `[verified]` Source: City of Van Wert; Ohio
-    EPA HUC-12 reports. ### Hydrology screen - **Receiving water:** Town Creek / Little Auglaize…'
-  sources:
-    data/extracted/van-wert/data-centers.md: 13
 - term: OEPA
   kind: term
   tags:
@@ -46,6 +34,18 @@ terms:
     NPDES:** not disclosed for the facility; no facility-specific NPDES number found. `[open]` - **…
   sources:
     data/extracted/van-wert/data-centers.md: 8
+- term: EPA
+  kind: term
+  tags:
+  - environment
+  - regulator
+  provenance: lexicon
+  count: 5
+  note: The U.S. Environmental Protection Agency, the federal environmental regulator.
+  example: …mergency generator bank PTI(s) for the Mega Site (NWDO, Van Wert County). 4. **Ohio EPA /
+    EPA ECHO** — any facility NPDES coverage / notice-of-intent under OHD000001; the wastewater d…
+  sources:
+    data/extracted/van-wert/data-centers.md: 5
 - term: PTI
   kind: term
   tags:

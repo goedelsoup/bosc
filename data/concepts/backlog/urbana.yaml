@@ -87,28 +87,13 @@ terms:
   - environment
   - regulator
   provenance: lexicon
-  count: 7
+  count: 6
   note: The U.S. Environmental Protection Agency, the federal environmental regulator.
   example: …342)**, a > withdrawn 40 MW solar generator, unrelated. `[verified]` > - **OEPA air.** US-EPA
     ECHO **ICIS-AIR** shows **no campus air permit** at the SR-55/US-68 site — > the 7 air so…
   sources:
     data/extracted/urbana/datacenter-facility.md: 2
-    data/extracted/urbana/facility-power-instrument-search.md: 5
-- term: interconnection queue
-  kind: concept
-  tags:
-  - energy
-  - grid
-  provenance: lexicon
-  count: 7
-  note: The backlog of proposed generators and large loads awaiting grid-connection study and approval.
-  example: '…d]` serving utility (EIA-861 #4922, PJM DAY zone). `[reference]` - The MW load, the **PJM
-    interconnection queue position**, and any **air permit** for emergency gensets are the tracked `[open]`
-    sub-lea…'
-  sources:
-    data/extracted/urbana/datacenter-facility.md: 2
     data/extracted/urbana/facility-power-instrument-search.md: 4
-    data/extracted/urbana/highland55-findings.md: 1
 - term: ORC
   kind: term
   tags:
@@ -149,6 +134,18 @@ terms:
     data/extracted/urbana/datacenter-facility.md: 1
     data/extracted/urbana/facility-power-instrument-search.md: 1
     data/extracted/urbana/highland55-findings.md: 1
+- term: interconnection queue
+  kind: concept
+  tags:
+  - energy
+  - grid
+  provenance: lexicon
+  count: 3
+  note: The backlog of proposed generators and large loads awaiting grid-connection study and approval.
+  example: …/ AES Ohio (Dayton) TEAC — **no Urbana request** `[verified]` A generation or large-load interconnection
+    request pinned to Champaign County / Urbana in the **AES Ohio (DAY) zone** would name the MW and…
+  sources:
+    data/extracted/urbana/facility-power-instrument-search.md: 3
 - term: PILOT
   kind: term
   tags:

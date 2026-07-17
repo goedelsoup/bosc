@@ -16,12 +16,11 @@ terms:
   - environment
   - regulator
   provenance: lexicon
-  count: 10
+  count: 9
   note: The U.S. Environmental Protection Agency, the federal environmental regulator.
-  example: '…ses a figure. Do not invent one. ### Regulatory record (status as of 2026-07-16) - **Ohio
-    EPA air PTI (generator banks):** `[open]` — **no One Power / MARA generator-bank PTI found at…'
+  example: …OHD_DataCenter_PP-FINAL-PresentationFull-Slides](https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/permits/Data_Centers/OHD_DataCenter_PP-FINAL-PresentationFull-Slides-…
   sources:
-    data/extracted/findlay/data-centers.md: 4
+    data/extracted/findlay/data-centers.md: 3
     data/extracted/findlay/flood-mitigation.md: 6
 - term: AEP
   kind: term

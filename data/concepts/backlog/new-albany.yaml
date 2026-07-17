@@ -6,22 +6,10 @@
 scope: new-albany
 sources_scanned: 1
 glossary_defined: 9
-term_count: 18
+term_count: 17
 candidate_count: 10
 candidates_found: 10
 terms:
-- term: EPA
-  kind: term
-  tags:
-  - environment
-  - regulator
-  provenance: lexicon
-  count: 7
-  note: The U.S. Environmental Protection Agency, the federal environmental regulator.
-  example: …cioto/Columbus** system though the site sits Licking-side. `[verified]` - **Air PTI (Ohio
-    EPA, issued Sept 20–21, 2022):** 4 fab cleanrooms, **28 boilers, 46 emergency generators, 1 f…
-  sources:
-    data/extracted/new-albany/data-centers.md: 7
 - term: OEPA
   kind: term
   tags:
