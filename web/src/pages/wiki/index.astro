@@ -55,6 +55,17 @@ const doors: Door[] = [
     note: "profiles",
   },
 ];
+if (hasFeed("hypotheses")) {
+  doors.push({
+    id: "hypotheses",
+    kind: "Readings",
+    href: "/wiki/hypotheses/",
+    count: num(count("hypotheses")),
+    title: "Hypotheses",
+    desc: "The boom-origin readings of the build-out as cross-linked nodes — each lens, its evidence matrix, and the concepts and entities it bears on.",
+    note: "how to read the network",
+  });
+}
 if (hasFeed("open-questions")) {
   doors.push({
     id: "open-questions",

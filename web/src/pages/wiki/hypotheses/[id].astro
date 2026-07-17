@@ -1,0 +1,470 @@
+---
+/**
+ * A hypothesis node page (`/wiki/hypotheses/<id>`, issue #1570, epic #1560 workstream B) — one
+ * boom-origin reading of the data-center build-out, surfaced as a first-class, cross-linked wiki
+ * node. The three lenses (H1 Water & Coercion, H2 Defense & Federal Enclave, H3 Consumer
+ * Surveillance) are network-global: this page reads the same `hypotheses` + `hypothesis-assessments`
+ * feeds the `/research/hypotheses` scorecard does, but presents one lens as a knowledge-graph node —
+ * its reading, the evidence matrix committed under it, what would confirm it, and the concepts,
+ * entities, and open questions it bears on (derived from prose by `hypothesisRelatedNodes`, never a
+ * hand-kept edge list). The hypothesis matrix is a network-global-host surface (`is_reference_site`),
+ * so the pages exist on the reference build and `getStaticPaths` yields none on a build without it.
+ */
+import type { GetStaticPaths } from "astro";
+import Base from "~/layouts/Base.astro";
+import EvidenceTag from "~/components/EvidenceTag.astro";
+import Icon from "~/components/Icon.astro";
+import { getHypotheses, hasFeed, loadFeed } from "@watermark/core/bundle";
+import { SIGNAL_META, type Signal } from "@watermark/core/directory";
+import type { HypothesisAssessmentItem, HypothesisItem, OpenQuestionItem } from "@watermark/core/feeds";
+import { SITES } from "@watermark/core/sites";
+import { withBase } from "@watermark/core/site";
+import { hypothesisRelatedNodes, openQuestionAnchor } from "@watermark/core/wiki";
+
+export const getStaticPaths: GetStaticPaths = () =>
+  getHypotheses().map((hyp) => ({ params: { id: hyp.id }, props: { hyp } }));
+
+interface Props {
+  hyp: HypothesisItem;
+}
+const { hyp } = Astro.props;
+
+const allCells = hasFeed("hypothesis-assessments")
+  ? loadFeed<HypothesisAssessmentItem[]>("hypothesis-assessments")
+  : [];
+// The matrix column for this lens, loudest signal first (anchor → watch), then by place.
+const SIGNAL_RANK: Record<string, number> = { anchor: 0, strong: 1, moderate: 2, watch: 3 };
+const cells = allCells
+  .filter((c) => c.hypothesis === hyp.id)
+  .sort(
+    (a, b) =>
+      (SIGNAL_RANK[a.signal ?? "watch"] ?? 3) - (SIGNAL_RANK[b.signal ?? "watch"] ?? 3) ||
+      a.site.localeCompare(b.site),
+  );
+
+const related = hypothesisRelatedNodes(hyp, allCells);
+const openQs = (hasFeed("open-questions") ? loadFeed<OpenQuestionItem[]>("open-questions") : []).filter(
+  (q) => q.origin === "hypothesis" && q.hypothesis === hyp.id,
+);
+
+// Resolve a cell's site slug to its network place + page (every committed cell's slug is a
+// registered network point — a live build or a `/network/<slug>` watch page).
+const siteMap = new Map(SITES.map((s) => [s.slug, s]));
+const prettySlug = (slug: string): string => slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+const signalMeta = (s?: string | null) => (s && s in SIGNAL_META ? SIGNAL_META[s as Signal] : undefined);
+const prettyKey = (k: string): string => k.replace(/_/g, " ");
+
+const reference = hyp.status === "reference";
+const statusLabel = reference ? "Reference build" : "Emerging — under test";
+
+const toc = [
+  { anchor: "overview", label: "The reading" },
+  { anchor: "matrix", label: "The matrix" },
+  { anchor: "predicted", label: "What would confirm it" },
+  ...(related.concepts.length ? [{ anchor: "concepts", label: "Concepts" }] : []),
+  ...(related.entities.length ? [{ anchor: "entities", label: "Entities" }] : []),
+  ...(openQs.length ? [{ anchor: "open-questions", label: "Open questions" }] : []),
+];
+---
+
+<Base
+  title={`${hyp.number} · ${hyp.name}`}
+  section="wiki"
+  description={`${hyp.claim} — the ${hyp.number} reading of the data-center build-out, its evidence matrix, and the concepts, entities, and open questions it bears on.`}
+  toc={toc}
+>
+  <div class="hyp">
+    <p class="prose"><a href={withBase("/wiki/hypotheses/")}>← Hypotheses</a></p>
+
+    <div class="hyp-head" id="overview">
+      <div class="hyp-kicker">Wiki · hypothesis · {hyp.number}</div>
+      <h1>{hyp.name}</h1>
+      <div class="hyp-tags">
+        <span class:list={["hyp-status", { "is-ref": reference }]}>
+          <span class="hyp-status-dot" aria-hidden="true"></span>{statusLabel}
+        </span>
+        <span class="hyp-claim">{hyp.claim}</span>
+      </div>
+      <p class="section-lead">{hyp.thesis}</p>
+      <p class="hyp-cross">
+        See the same lens as a cross-site scorecard on the
+        <a href={`${withBase("/research/hypotheses")}?lens=${hyp.id}`}>network directory →</a>
+      </p>
+    </div>
+
+    <section class="hyp-block" id="matrix">
+      <div class="hyp-block-head">
+        <h2>The matrix</h2>
+        <span class="hyp-block-n">{cells.length} {cells.length === 1 ? "cell" : "cells"}</span>
+      </div>
+      <p class="hyp-block-blurb">
+        Every <code>(site × {hyp.number})</code> evidence cell committed under this reading — each a
+        signal strength and an evidence tag, provenanced. A federal or corporate nexus is a signal,
+        <strong>not a verdict</strong>.
+      </p>
+      {
+        cells.length === 0 ? (
+          <p class="stub-note">No sites are assessed under this hypothesis yet.</p>
+        ) : (
+          <ul class="hyp-cells">
+            {cells.map((c) => {
+              const site = siteMap.get(c.site);
+              const sig = signalMeta(c.signal);
+              const fields = Object.entries(c.fields).filter(([, v]) => v && v !== "—");
+              return (
+                <li class="hyp-cell">
+                  <div class="hyp-cell-top">
+                    {site ? (
+                      <a class="hyp-cell-site" href={withBase(site.href)}>
+                        {site.place}
+                      </a>
+                    ) : (
+                      <span class="hyp-cell-site">{prettySlug(c.site)}</span>
+                    )}
+                    <EvidenceTag kind={c.tag} />
+                    {sig && (
+                      <span class="hyp-chip" style={`--sig:${sig.dot}`}>
+                        <span class="hyp-chip-dot" aria-hidden="true" />
+                        {sig.label}
+                      </span>
+                    )}
+                    {c.sub_thesis && <span class="hyp-subthesis">{c.sub_thesis}</span>}
+                  </div>
+                  {fields.length > 0 && (
+                    <dl class="hyp-fields">
+                      {fields.map(([k, v]) => (
+                        <div class="hyp-field">
+                          <dt>{prettyKey(k)}</dt>
+                          <dd>{v}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
+                  {c.citations.length > 0 &&
+                    c.citations.map((cit) => (
+                      <div class="hyp-cite">
+                        {cit.source && <span class="hyp-cite-src">{cit.source}</span>}
+                        {cit.note && <span class="hyp-cite-note">{cit.note}</span>}
+                      </div>
+                    ))}
+                </li>
+              );
+            })}
+          </ul>
+        )
+      }
+    </section>
+
+    <section class="hyp-block" id="predicted">
+      <div class="hyp-block-head">
+        <h2>What would confirm it</h2>
+        <span class="hyp-block-n">{hyp.predicted_evidence.length}</span>
+      </div>
+      <p class="hyp-block-blurb">
+        The evidence this reading predicts — what a site should show if the hypothesis holds. Absence
+        is not disproof; it's an <EvidenceTag kind="open" /> thread.
+      </p>
+      <ul class="hyp-predicted">
+        {hyp.predicted_evidence.map((p) => <li>{p}</li>)}
+      </ul>
+    </section>
+
+    {
+      related.concepts.length > 0 && (
+        <section class="hyp-block" id="concepts">
+          <div class="hyp-block-head">
+            <h2>Concepts it bears on</h2>
+            <span class="hyp-block-n">{related.concepts.length}</span>
+          </div>
+          <p class="hyp-block-blurb">Glossary terms this reading names.</p>
+          <ul class="hyp-nodes">
+            {related.concepts.map((t) => (
+              <li>
+                <a href={t.url}>{t.label}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      related.entities.length > 0 && (
+        <section class="hyp-block" id="entities">
+          <div class="hyp-block-head">
+            <h2>Entities it bears on</h2>
+            <span class="hyp-block-n">{related.entities.length}</span>
+          </div>
+          <p class="hyp-block-blurb">Parties in the record this reading names.</p>
+          <ul class="hyp-nodes">
+            {related.entities.map((t) => (
+              <li>
+                <a href={t.url}>{t.label}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      openQs.length > 0 && (
+        <section class="hyp-block" id="open-questions">
+          <div class="hyp-block-head">
+            <h2>Open questions</h2>
+            <span class="hyp-block-n">{openQs.length}</span>
+          </div>
+          <p class="hyp-block-blurb">
+            The <EvidenceTag kind="open" /> cells under this reading, on the{" "}
+            <a href={withBase("/wiki/open-questions/")}>open-questions board</a>.
+          </p>
+          <ul class="hyp-oq">
+            {openQs.map((q) => (
+              <li>
+                <a href={`${withBase("/wiki/open-questions/")}#${openQuestionAnchor(q.id)}`}>
+                  {q.question}
+                </a>
+                {q.hypothesis_label && <span class="hyp-oq-lens"> · {q.hypothesis_label}</span>}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+  </div>
+</Base>
+
+<style>
+  .hyp {
+    max-width: 60rem;
+  }
+  .hyp-head {
+    margin-bottom: var(--sp-6);
+    scroll-margin-top: 5rem;
+  }
+  .hyp-kicker {
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-nano);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bosc-faint);
+    margin-bottom: 0.4rem;
+  }
+  .hyp-head h1 {
+    margin: 0 0 0.6rem;
+  }
+  .hyp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.8rem;
+  }
+  .hyp-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-nano);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--bosc-muted);
+    border: 1px solid var(--bosc-rule);
+    padding: 0.15em 0.6em;
+  }
+  .hyp-status-dot {
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+    background: var(--bosc-faint);
+  }
+  .hyp-status.is-ref {
+    color: var(--bosc-ink-green);
+    border-color: var(--bosc-forest);
+  }
+  .hyp-status.is-ref .hyp-status-dot {
+    background: var(--bosc-forest);
+  }
+  .hyp-claim {
+    font-weight: 600;
+    color: var(--bosc-ink);
+  }
+  .hyp-cross {
+    margin: 0.8rem 0 0;
+    font-size: var(--fs-meta);
+    color: var(--bosc-muted);
+  }
+
+  .hyp-block {
+    margin: var(--sp-6) 0;
+    scroll-margin-top: 5rem;
+  }
+  .hyp-block-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-2);
+    border-bottom: 1px solid var(--bosc-rule);
+    padding-bottom: 0.4rem;
+  }
+  .hyp-block-head h2 {
+    margin: 0;
+    font-size: var(--fs-h3);
+  }
+  .hyp-block-n {
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-meta);
+    color: var(--bosc-faint);
+  }
+  .hyp-block-blurb {
+    color: var(--bosc-muted);
+    font-size: var(--fs-meta);
+    margin: 0.5rem 0 var(--sp-3);
+    max-width: 52rem;
+  }
+
+  .hyp-cells {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+  }
+  .hyp-cell {
+    border: 1px solid var(--bosc-rule);
+    border-left: 3px solid var(--bosc-rule);
+    background: var(--bosc-surface);
+    padding: var(--sp-3) var(--sp-4);
+  }
+  .hyp-cell-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .hyp-cell-site {
+    font-weight: 600;
+    color: var(--bosc-ink);
+    text-decoration: none;
+  }
+  a.hyp-cell-site:hover {
+    color: var(--bosc-link);
+    text-decoration: underline;
+  }
+  .hyp-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    font-size: var(--fs-nano);
+    color: var(--bosc-muted);
+    padding: 0.1em 0.5em;
+    border: 1px solid var(--bosc-rule);
+  }
+  .hyp-chip-dot {
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+    background: var(--sig, var(--bosc-faint));
+    flex: none;
+  }
+  .hyp-subthesis {
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-nano);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--bosc-ink-green);
+  }
+  .hyp-fields {
+    margin: 0 0 0.5rem;
+    display: grid;
+    grid-template-columns: minmax(6rem, max-content) 1fr;
+    gap: 0.2rem 0.9rem;
+  }
+  .hyp-field {
+    display: contents;
+  }
+  .hyp-fields dt {
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-nano);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--bosc-faint);
+  }
+  .hyp-fields dd {
+    margin: 0;
+    font-size: var(--fs-meta);
+    color: var(--bosc-ink);
+  }
+  .hyp-cite {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--bosc-rule);
+    margin-top: 0.5rem;
+  }
+  .hyp-cite-src {
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-nano);
+    color: var(--bosc-faint);
+  }
+  .hyp-cite-note {
+    font-size: var(--fs-meta);
+    line-height: 1.55;
+    color: var(--bosc-muted);
+  }
+
+  .hyp-predicted {
+    margin: 0;
+    padding-left: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .hyp-predicted li {
+    font-size: var(--fs-meta);
+    line-height: 1.55;
+    color: var(--bosc-ink);
+  }
+
+  .hyp-nodes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .hyp-nodes li a {
+    display: inline-block;
+    font-size: var(--fs-meta);
+    color: var(--bosc-link);
+    text-decoration: none;
+    border: 1px solid var(--bosc-rule);
+    padding: 0.2em 0.65em;
+    background: var(--bosc-surface);
+  }
+  .hyp-nodes li a:hover {
+    border-color: var(--bosc-forest);
+    text-decoration: underline;
+  }
+
+  .hyp-oq {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .hyp-oq li {
+    font-size: var(--fs-meta);
+    line-height: 1.5;
+  }
+  .hyp-oq-lens {
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-nano);
+    color: var(--bosc-faint);
+  }
+</style>

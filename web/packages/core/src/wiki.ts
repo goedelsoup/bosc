@@ -6,8 +6,16 @@
  * slug, or alias — to the page for that concept, entity, or person. Unresolved
  * links render as a dotted "missing" span (a TODO marker), never a dead anchor.
  */
-import { activeSite, hasFeed, loadFeed } from "./bundle";
-import { slugify, type ConceptItem, type EntityNode, type OpenQuestionItem, type PersonItem } from "./feeds";
+import { activeSite, getHypotheses, hasFeed, loadFeed } from "./bundle";
+import {
+  slugify,
+  type ConceptItem,
+  type EntityNode,
+  type HypothesisAssessmentItem,
+  type HypothesisItem,
+  type OpenQuestionItem,
+  type PersonItem,
+} from "./feeds";
 import { escapeHtml } from "./format";
 import { withBase, withSite } from "./site";
 
@@ -244,6 +252,103 @@ export function openQuestionBacklinks(names: (string | null | undefined)[]): Ope
         status: q.status,
         url: `${withBase("/wiki/open-questions/")}#${openQuestionAnchor(q.id)}`,
       });
+    }
+  }
+  return out;
+}
+
+// --- hypothesis nodes (`/wiki/hypotheses/*`, issue #1570, epic #1560 workstream B) ------------
+// The network-global hypothesis matrix, surfaced as first-class wiki node pages cross-linked to
+// the concepts, entities, and open questions each boom-origin reading bears on. Every link is
+// derived from prose (the reading + its committed cells), never a hand-maintained edge list — the
+// forward peer (`hypothesisRelatedNodes`) drives the "Related" rails on the hypothesis page, the
+// reverse peer (`hypothesisBacklinks`) drives the "Hypotheses" backlink on a concept/entity page.
+
+/** The wiki node-page URL for a hypothesis id ("water" | "defense" | "surveillance"). */
+export function hypothesisHref(id: string): string {
+  return `${withBase("/wiki/hypotheses/")}${id}/`;
+}
+
+/**
+ * The name-matching haystack for a hypothesis, space-padded and normalized so a node name matches
+ * only as a whole phrase. It is the hypothesis's own reading (claim + thesis + predicted evidence)
+ * plus the prose of every evidence cell committed under it — the `fields` values and citation
+ * notes, where the real operators and federal nexuses are actually named (an entity like a named
+ * air base or shell LLC never appears in the abstract thesis, only in a cell).
+ */
+function hypothesisHaystack(h: HypothesisItem, cells: readonly HypothesisAssessmentItem[]): string {
+  const cellText = cells
+    .filter((c) => c.hypothesis === h.id)
+    .map((c) => `${Object.values(c.fields).join(" ")} ${c.citations.map((ci) => ci.note ?? "").join(" ")}`)
+    .join(" ");
+  return ` ${norm(`${h.claim} ${h.thesis} ${h.predicted_evidence.join(" ")} ${cellText}`)} `;
+}
+
+/** The committed evidence cells for the active build, or `[]` — shared by both link directions. */
+function assessmentCells(): HypothesisAssessmentItem[] {
+  return hasFeed("hypothesis-assessments")
+    ? loadFeed<HypothesisAssessmentItem[]>("hypothesis-assessments")
+    : [];
+}
+
+/** A concept/entity node a hypothesis bears on — one "Related" row on the hypothesis page. */
+export interface HypothesisRelated {
+  concepts: WikiTarget[];
+  entities: WikiTarget[];
+}
+
+/**
+ * The concept and entity nodes a hypothesis *names* — every wiki node whose title/alias appears as
+ * a whole phrase in the hypothesis haystack (#1570). People fold in with entities (both are graph
+ * nodes). Deduped by page URL, with the same specificity floor as the open-questions backlink so a
+ * two-letter initialism can't match noise. This is the forward peer of `hypothesisBacklinks`: the
+ * same match drives the "Related" rails here and the "Hypotheses" backlink on the node page.
+ */
+export function hypothesisRelatedNodes(
+  h: HypothesisItem,
+  cells: readonly HypothesisAssessmentItem[] = assessmentCells(),
+): HypothesisRelated {
+  const hay = hypothesisHaystack(h, cells);
+  const seen = new Set<string>();
+  const concepts: WikiTarget[] = [];
+  const entities: WikiTarget[] = [];
+  for (const [name, target] of wikiIndex()) {
+    if (!backlinkable(name) || seen.has(target.url)) continue;
+    if (!hay.includes(` ${name} `)) continue;
+    seen.add(target.url);
+    (target.kind === "concept" ? concepts : entities).push(target);
+  }
+  return { concepts, entities };
+}
+
+/** One hypothesis that raises a node — the backlink row on a concept/entity page (#1570). */
+export interface HypothesisBacklink {
+  id: string;
+  number: string; // "H1" | "H2" | "H3"
+  name: string;
+  status: HypothesisItem["status"];
+  url: string;
+}
+
+/**
+ * The boom-origin hypotheses whose reading *raises* any of these names — the backlink a concept or
+ * entity page shows ("the readings this node bears on"), the reverse of `hypothesisRelatedNodes`.
+ * Pass a node's own names (a concept's title/aliases, an entity's display/variants); a name matches
+ * only as a whole normalized phrase against the hypothesis haystack (its thesis prose plus its
+ * cells' fields and citation notes). Reads the active build's `hypotheses` +
+ * `hypothesis-assessments` feeds — a build without the network-global matrix yields none.
+ */
+export function hypothesisBacklinks(names: (string | null | undefined)[]): HypothesisBacklink[] {
+  const hyps = getHypotheses();
+  if (!hyps.length) return [];
+  const tokens = [...new Set(names.filter((n): n is string => n != null && backlinkable(n)).map(norm))];
+  if (!tokens.length) return [];
+  const cells = assessmentCells();
+  const out: HypothesisBacklink[] = [];
+  for (const h of hyps) {
+    const hay = hypothesisHaystack(h, cells);
+    if (tokens.some((t) => hay.includes(` ${t} `))) {
+      out.push({ id: h.id, number: h.number, name: h.name, status: h.status, url: hypothesisHref(h.id) });
     }
   }
   return out;
