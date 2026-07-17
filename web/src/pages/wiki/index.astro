@@ -55,6 +55,17 @@ const doors: Door[] = [
     note: "profiles",
   },
 ];
+if (hasFeed("open-questions")) {
+  doors.push({
+    id: "open-questions",
+    kind: "Open threads",
+    href: "/wiki/open-questions/",
+    count: num(count("open-questions")),
+    title: "Open questions",
+    desc: "Every unanswered thread in the record — open leads and hypothesis cells, linked from the nodes that raise them.",
+    note: "what's unresolved",
+  });
+}
 const curated: string[] = [];
 if (hasFeed("candidates")) curated.push("candidates");
 if (hasFeed("defense-contractors")) curated.push("defense-contractors");

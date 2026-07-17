@@ -760,6 +760,41 @@ export interface HypothesisAssessmentItem {
   citations: Citation[];
 }
 
+// --- open-questions feed (`bosc.site.feeds.OpenQuestionItem`, issue #1568, epic #1560 wk B) ---
+/** Where a still-open question was aggregated from: a `leads`-board row or a hypothesis-matrix cell. */
+export type OpenQuestionOrigin = "lead" | "hypothesis";
+
+/**
+ * One unanswered question in the corpus — an `[open]`-tagged lead or hypothesis cell.
+ *
+ * A **projection** feed (`bosc.site.open_questions`), not a new extraction: it aggregates every
+ * still-open thread the bundle already ships — the `[open]`-tagged rows of the `leads` board and
+ * the `[open]`-tagged cells of the `hypothesis-assessments` matrix — into one flat, provenanced
+ * list (an `[inference]` lead, a labelled reading rather than a gap, is deliberately excluded, so
+ * every row is `[open]`). The lead-derived fields (`kind`/`status`/`issue`) are present only for
+ * `origin === "lead"`; the hypothesis-derived fields (`hypothesis`/`hypothesis_label`/`signal`)
+ * only for `origin === "hypothesis"`.
+ */
+export interface OpenQuestionItem {
+  /** Stable id: the lead id, or `hyp:<hypothesis>:<site>` for a matrix cell. */
+  id: string;
+  origin: OpenQuestionOrigin;
+  /** The open question — the lead title, or a synthesized cell prompt. */
+  question: string;
+  /** One honest paragraph of context (never fabricated). */
+  detail: string;
+  /** The real provenance citation — where this gap is recorded. */
+  source: string;
+  // lead-derived context (present when origin === "lead") — the lead:kind:* / lead:status:* vocab.
+  kind?: import("./leads").LeadKind | null;
+  status?: import("./leads").LeadStatus | null;
+  issue?: number | null;
+  // hypothesis-derived context (present when origin === "hypothesis").
+  hypothesis?: string | null; // the lens id ("water" | "defense" | "surveillance")
+  hypothesis_label?: string | null; // the human lens label, e.g. "H1 Water & Coercion"
+  signal?: string | null; // the cell's signal strength ("anchor"|"strong"|"moderate"|"watch")
+}
+
 // --- the data catalog (`bosc.site.feeds.CatalogItem`, epic #631 Phase 3 / #659) -----------
 /** One storage file of a catalog dataset. */
 export interface CatalogStorageFile {

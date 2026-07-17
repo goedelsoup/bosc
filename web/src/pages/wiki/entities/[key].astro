@@ -8,6 +8,7 @@ import type { ProfileAttr, ProfileHeaderData, ProfileRel } from "@watermark/core
 import type { FigureStatData } from "@watermark/core/viz";
 import { entityHref } from "@watermark/core/entityLinks";
 import { withBase, withSite } from "@watermark/core/site";
+import { openQuestionBacklinks } from "@watermark/core/wiki";
 
 export const getStaticPaths = (() => {
   const entities = hasFeed("entities") ? loadFeed<EntityNode[]>("entities") : [];
@@ -78,11 +79,16 @@ const header: ProfileHeaderData = {
   ),
 };
 
+// Open questions that raise this entity — the backlink peer of `[[wiki links]]` over the
+// prose-only `open-questions` feed (#1569).
+const openQuestions = openQuestionBacklinks([entity.display, ...entity.variants]);
+
 const profileToc = [
   { anchor: "overview", label: "Identity" },
   { anchor: "neighborhood", label: "Relationships" },
   ...(entity.sources.length ? [{ anchor: "sources", label: "Sources" }] : []),
   ...(profiles.length ? [{ anchor: "backlinks", label: "Backlinks" }] : []),
+  ...(openQuestions.length ? [{ anchor: "open-questions", label: "Open questions" }] : []),
 ];
 ---
 
@@ -147,6 +153,22 @@ const profileToc = [
             {profiles.map((p) => (
               <li>
                 Profile: <a href={`${withSite("/site/people/")}${p.slug}/`}>{p.name}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    {
+      openQuestions.length > 0 && (
+        <div class="backlinks">
+          <h2 id="open-questions">Open questions</h2>
+          <p class="card-meta">Unanswered threads in the record that raise this entity.</p>
+          <ul class="neighborhood">
+            {openQuestions.map((q) => (
+              <li>
+                <a href={q.url}>{q.question}</a>
               </li>
             ))}
           </ul>
