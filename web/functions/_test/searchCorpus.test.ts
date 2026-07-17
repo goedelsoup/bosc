@@ -601,3 +601,95 @@ describe("handleSearchCorpus duplicate-cluster dedup (#1590)", () => {
     expect(got).toEqual(["records:permit"]);
   });
 });
+
+// End-to-end evidence tiering (#1591): a mixed pool of a strong primary record, a secondary
+// entity view, and a glossary concept all matching the query — the record tops the ranking and
+// is `direct`, the glossary is `background` however it scores, the entity is never `direct`.
+describe("handleSearchCorpus evidence tiering (#1591)", () => {
+  const TIER_UNITS: AskUnit[] = [
+    {
+      // Repeats the query terms so BM25 tops it → top relevance band, primary evidence → direct.
+      id: "records:genset",
+      feed: "records",
+      title: "Backup generator inventory",
+      url: "/u/genset",
+      text: "generator generator generator power power backup diesel rating count",
+      source_kind: "document",
+      verified: true,
+      site: "lima",
+    },
+    {
+      id: "entities:acme",
+      feed: "entities",
+      title: "Acme Power LLC",
+      url: "/u/acme",
+      text: "generator operator company power holdings",
+      source_kind: "document",
+      verified: false,
+      site: "lima",
+    },
+    {
+      // The glossary is editorial synthesis (source_kind derived) — background whatever it scores.
+      id: "concepts:generator",
+      feed: "concepts",
+      title: "Generator (definition)",
+      url: "/u/def",
+      text: "generator power electricity generation definition glossary term",
+      source_kind: "derived",
+      site: "lima",
+    },
+  ];
+
+  const routes: FetchRoute[] = [
+    { test: (u) => u.pathname === "/ask-index.json", respond: () => jsonResponse(200, TIER_UNITS) },
+  ];
+
+  interface TieredHit {
+    id: string;
+    tier?: string;
+    tier_reason?: string;
+    [k: string]: unknown;
+  }
+
+  async function tieredResults(args: Record<string, unknown>): Promise<TieredHit[]> {
+    _resetAskIndexCache();
+    vi.stubGlobal("fetch", routingFetch(routes));
+    const content = await handleSearchCorpus({ query: "generator power", ...args }, REQ);
+    return (JSON.parse(content[0].text) as { results: TieredHit[] }).results;
+  }
+
+  it("tiers the top-band primary record as direct evidence", async () => {
+    const results = await tieredResults({});
+    const rec = results.find((r) => r.id === "records:genset");
+    expect(rec?.tier).toBe("direct");
+    expect(rec?.tier_reason).toMatch(/primary evidence/);
+  });
+
+  it("tiers the glossary concept as background regardless of its score", async () => {
+    const results = await tieredResults({});
+    const concept = results.find((r) => r.id === "concepts:generator");
+    expect(concept?.tier).toBe("background");
+    expect(concept?.tier_reason).toMatch(/context, not evidence/);
+  });
+
+  it("never tiers a secondary entity view as direct", async () => {
+    const results = await tieredResults({});
+    const entity = results.find((r) => r.id === "entities:acme");
+    expect(entity?.tier).toBeDefined();
+    expect(entity?.tier).not.toBe("direct");
+  });
+
+  it("carries the tier on full-mode hits too", async () => {
+    const results = await tieredResults({ response_mode: "full" });
+    const rec = results.find((r) => r.id === "records:genset");
+    expect(rec?.tier).toBe("direct");
+    expect(rec).toHaveProperty("text"); // still the full-record shape
+  });
+
+  it("omits the tier from ids_only hits (stays a bare id + score)", async () => {
+    const results = await tieredResults({ response_mode: "ids_only" });
+    for (const r of results) {
+      expect(Object.keys(r).sort()).toEqual(["id", "score"]);
+    }
+  });
+});
