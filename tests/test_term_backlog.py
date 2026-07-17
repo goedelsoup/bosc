@@ -330,8 +330,17 @@ def test_harvest_backlog_over_fixture_tree(tmp_path: Path) -> None:
     )
     concepts = tmp_path / "concepts"
     concepts.mkdir()
+    # An explicit lexicon, not a copy of the committed one: as A2 (#1566) authors a curated term
+    # into data/concepts/, its entry migrates out of the committed lexicon, so pinning this
+    # end-to-end assertion to a self-contained fixture keeps it stable.
     (concepts / "lexicon.yaml").write_text(
-        (_CONCEPTS_DIR / "lexicon.yaml").read_text(encoding="utf-8"), encoding="utf-8"
+        "terms:\n"
+        "  - term: NPDES\n"
+        "    aliases: [National Pollutant Discharge Elimination System]\n"
+        "  - term: PJM\n"
+        "  - term: behind-the-meter\n"
+        "    kind: concept\n",
+        encoding="utf-8",
     )
     settings = Settings(data_dir=tmp_path)
     out = harvest_backlog(settings, sites=["findlay"], include_network=False)

@@ -1,8 +1,10 @@
 # `data/concepts/backlog/` — the wiki term-backlog
 
 The **undefined-term backlog** for the wiki glossary: domain terms the platform's prose leans on
-that [`data/concepts/`](../) doesn't yet define. It drives **A2** (batch-author concepts, #1566)
-in the wiki epic ([#1560](../../../README.md)), workstream A1 ([#1565](../../../README.md)).
+that [`data/concepts/`](../) doesn't yet define. It drove **A2** (batch-author concepts, #1566)
+in the wiki epic ([#1560](../../../README.md)), workstream A1 ([#1565](../../../README.md)). A2
+authored the curated-lexicon terms into `data/concepts/`, so the `terms` buckets below are now
+empty; what remains is the `candidates` bucket — mechanically discovered acronyms awaiting triage.
 
 One `<scope>.yaml` per scope with any hits:
 

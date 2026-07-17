@@ -5,35 +5,11 @@
 # `count` is total occurrences; `sources` maps each file to its hit count.
 scope: mansfield
 sources_scanned: 1
-glossary_defined: 9
-term_count: 2
+glossary_defined: 77
+term_count: 0
 candidate_count: 8
 candidates_found: 8
-terms:
-- term: PFAS
-  kind: term
-  tags:
-  - water
-  - contaminants
-  provenance: lexicon
-  count: 11
-  note: A class of persistent fluorinated compounds increasingly regulated in water and biosolids.
-  example: '…25-086 text, pp. 19–20). ## Instrument ledger (the nexus) The substation, water loop, and
-    PFAS threads below are the **airport nexus** but sit primarily in sibling domains (`record` #1…'
-  sources:
-    data/extracted/mansfield/airport-nexus.md: 11
-- term: rezoning
-  kind: concept
-  tags:
-  - land-use
-  - governance
-  provenance: lexicon
-  count: 5
-  note: A legislative change to a parcel's zoning district, often the trigger for a large project.
-  example: '…nd holds the instrument ledger. ## Discipline (read first) Geographic adjacency — the I-2
-    rezone sits beside the base, beside the water loop, beside the future substation — is **not** a…'
-  sources:
-    data/extracted/mansfield/airport-nexus.md: 5
+terms: []
 candidates:
 - term: SI
   kind: term
