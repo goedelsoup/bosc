@@ -147,6 +147,9 @@ class DocumentEntry:
     published: bool  # cleared for public serving by the allowlist (#280); default-deny
     available: bool  # the bytes are servable (real file or LFS pointer → R2), not missing
     download_url: str | None  # exhibit link or external mirror URL, when present
+    # Version / duplicate-cluster metadata (#1590) is NOT carried here: it's stamped by
+    # watermark.site.docversions onto the Pydantic DocumentItems after the catalog is built
+    # (apply_document_versions), so DocumentItem's own defaults apply for an unclustered file.
 
 
 @dataclass
@@ -369,6 +372,8 @@ def export_documents(
                 published=e.published,
                 available=e.available,
                 download_url=e.download_url,
+                # duplicate_cluster / canonical_document_id / version / supersedes default here;
+                # apply_document_versions stamps them onto the clustered items afterward (#1590).
             )
             for e in c.entries
             if relpath_in_scope(e.rel, scope)

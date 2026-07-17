@@ -168,7 +168,13 @@ from watermark.site.readiness import State, Tier  # the readiness vocabulary SSO
 #   (open ⇔ the `[open]` tag). Skipped for a site with no open threads, so `hasFeed("open-questions")`
 #   is false and the section degrades rather than shipping an empty list. Not cataloged (a derived
 #   view — the underlying leads are already cataloged). Back-compatible (one additive feed).
-CONTRACT_VERSION = "1.27.0"
+# 1.27.1: `DocumentItem` gains optional version/duplicate-cluster metadata — `duplicate_cluster`,
+#   `canonical_document_id`, `version`, `supersedes` (#1590, epic #1579 Phase 3), projected from the
+#   curated custody manifest (`data/site/document-versions.yaml`) by watermark.site.docversions so
+#   retrieval can collapse a filing's versions to the canonical one while retaining a superseded
+#   version's distinct evidence (`deduplicate` / `version_policy` args on search_corpus/passages).
+#   Additive/optional — absent for a document with no declared cluster (PATCH, back-compatible).
+CONTRACT_VERSION = "1.27.1"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -521,6 +527,15 @@ class DocumentItem(BaseModel):
     published: bool
     available: bool  # locally present (not an unresolved Git-LFS pointer)
     download_url: str | None = None
+    # Version / duplicate-cluster metadata (#1590, epic #1579 Phase 3), projected from the
+    # curated custody manifest (`data/site/document-versions.yaml`, watermark.site.docversions)
+    # so retrieval can collapse a filing's versions to the authoritative one without losing the
+    # evidence a superseded version carries (e.g. a draft's CBI-unredacted figure). All optional
+    # and absent for a document with no declared cluster.
+    duplicate_cluster: str | None = None  # stable cluster id, e.g. "oepa:2PH00006"
+    canonical_document_id: str | None = None  # canonical member's rel (self if this is canonical)
+    version: str | None = None  # "final" | "draft" | "fact_sheet" | "duplicate" | "v2" | …
+    supersedes: list[str] = Field(default_factory=list)  # rels superseded (canonical member only)
 
 
 class DocumentCollectionItem(BaseModel):

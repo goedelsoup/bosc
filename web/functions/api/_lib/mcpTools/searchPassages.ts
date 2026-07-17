@@ -12,6 +12,8 @@
 // uniform `{ results, token_estimate, truncated, next_cursor }` envelope; an over-cap excerpt is
 // trimmed to the room left after its citation, and the cursor pages through the ranked pool.
 
+import { type VersionInfo, loadDocVersionsSafe } from "../docVersionsLoad";
+import { dedupeByCluster, parseDeduplicate, parseVersionPolicy } from "../mcpDedup";
 import { type HybridRetrievalEnv, hybridSearch } from "../hybridRetrieve";
 import {
   type Governed,
@@ -26,9 +28,16 @@ import { type PassageRow, loadPassages } from "../passagesLoad";
 import type { AskUnit } from "../retrieval";
 import { prepare } from "../retrieval";
 
+// Passages collapse ONLY byte-identical duplicate documents (their pages are truly redundant). A
+// draft/final page variant is NOT collapsed — its pages legitimately differ and are both evidence.
+const PASSAGE_COLLAPSIBLE: ReadonlySet<string> = new Set(["duplicate"]);
+
 interface SearchPassagesParams {
   query?: unknown;
   document_ids?: unknown;
+  // Duplicate-cluster dedup knobs (#1590) — resolved via mcpDedup.
+  deduplicate?: unknown;
+  version_policy?: unknown;
   // Governance knobs (#1581) — resolved via mcpGovern.
   intent?: unknown;
   max_results?: unknown;
@@ -111,8 +120,28 @@ export async function handleSearchPassages(
   const embeddingsUrl = new URL("/feeds/passage-embeddings.json", requestUrl).toString();
   const pool = await hybridSearch(prepared, query, prepared.n, env, requestUrl, embeddingsUrl);
 
+  // Drop passages from a byte-identical duplicate document (its pages already appear under the
+  // canonical) — but keep draft/final page variants (#1590). Full-pool pass before the cursor slice.
+  const deduplicate = parseDeduplicate(p.deduplicate);
+  const versionPolicy = parseVersionPolicy(p.version_policy);
+  // Skip the version-map fetch when dedup is a no-op (`none`/`all`); otherwise fail open (see
+  // search_corpus): a missing/unreachable map degrades dedup to a no-op, never a hard failure.
+  const versions: Map<string, VersionInfo> =
+    deduplicate === "none" || versionPolicy === "all" ? new Map() : await loadDocVersionsSafe(requestUrl);
+  const deduped = dedupeByCluster(pool, {
+    deduplicate,
+    versionPolicy,
+    query,
+    versions,
+    access: {
+      relOf: (h) => byId.get(h.unit.id)?.document_id,
+      textOf: (h) => byId.get(h.unit.id)?.text ?? "",
+    },
+    collapsibleVersions: PASSAGE_COLLAPSIBLE,
+  });
+
   const window: PassageHit[] = [];
-  for (const h of pool.slice(offset, offset + knobs.maxResults + 1)) {
+  for (const h of deduped.slice(offset, offset + knobs.maxResults + 1)) {
     const row = byId.get(h.unit.id);
     if (!row) continue; // unreachable — every unit came from a row — but keeps the map lookup total
     window.push({

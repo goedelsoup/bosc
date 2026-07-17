@@ -17,6 +17,8 @@
 // have their snippet/text trimmed; the cursor pages through the ranked candidate pool.
 
 import { loadAskIndex } from "../askIndexLoad";
+import { type VersionInfo, loadDocVersionsSafe } from "../docVersionsLoad";
+import { dedupeByCluster, parseDeduplicate, parseVersionPolicy } from "../mcpDedup";
 import {
   type Governed,
   INTENTS,
@@ -51,6 +53,9 @@ interface SearchCorpusParams {
   limit?: unknown;
   response_mode?: unknown;
   snippet_tokens?: unknown;
+  // Duplicate-cluster dedup knobs (#1590) — resolved via mcpDedup.
+  deduplicate?: unknown;
+  version_policy?: unknown;
   // Governance knobs (#1581) — resolved via mcpGovern.
   intent?: unknown;
   max_results?: unknown;
@@ -264,7 +269,25 @@ export async function handleSearchCorpus(
   // `full` mode still never materializes hits we'll drop.
   const prepared = prepare(units);
   const pool = await hybridSearch(prepared, query, prepared.n, env, requestUrl);
-  const window = renderHits(pool.slice(offset, offset + knobs.maxResults + 1), query, mode, snippetTokens);
+  // Collapse a filing's version/duplicate cluster to its canonical member (#1590), retaining a
+  // superseded version only when it carries a query-relevant term the canonical lacks. Runs over the
+  // full ranked pool (before the cursor slice) so the canonical is chosen across every page and
+  // pagination stays stable. Default-on; `deduplicate:"none"` reproduces the raw pool.
+  const deduplicate = parseDeduplicate(p.deduplicate);
+  const versionPolicy = parseVersionPolicy(p.version_policy);
+  // Only load the version map when dedup will actually run — `none`/`all` are no-ops, so skip the
+  // fetch entirely. Otherwise fail open: an unloadable map degrades dedup to a no-op, never a hard
+  // failure (it's a refinement, not an essential like the ask-index).
+  const versions: Map<string, VersionInfo> =
+    deduplicate === "none" || versionPolicy === "all" ? new Map() : await loadDocVersionsSafe(requestUrl);
+  const deduped = dedupeByCluster(pool, {
+    deduplicate,
+    versionPolicy,
+    query,
+    versions,
+    access: { relOf: (h) => h.unit.doc_rel, textOf: (h) => `${h.unit.title} ${h.unit.text}` },
+  });
+  const window = renderHits(deduped.slice(offset, offset + knobs.maxResults + 1), query, mode, snippetTokens);
   const governed = govern(window, { knobs, baseOffset: offset, shrink: shrinkSearchHit });
 
   return governedContent(governed);

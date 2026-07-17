@@ -1,0 +1,154 @@
+"""Tests for the document version / duplicate-cluster projection (#1590).
+
+`watermark.site.docversions` reads the curated custody manifest and stamps
+`duplicate_cluster` / `canonical_document_id` / `version` / `supersedes` onto the matching
+`DocumentItem`s so retrieval can collapse a filing's versions to canonical. The projection is
+stale-safe (a member rel absent from the catalog is skipped; a <2-present-member cluster is
+dropped) and a missing/malformed manifest is a no-op.
+"""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+from watermark.site import docversions
+from watermark.site.feeds import DocumentCollectionItem, DocumentItem
+
+
+def _item(rel: str) -> DocumentItem:
+    return DocumentItem(
+        rel=rel,
+        name=rel.rsplit("/", 1)[-1],
+        size_bytes=1,
+        suffix="pdf",
+        media_type="application/pdf",
+        render_class="pdf",
+        published=True,
+        available=True,
+    )
+
+
+def _collection(*rels: str) -> list[DocumentCollectionItem]:
+    return [DocumentCollectionItem(slug="oepa", title="Ohio EPA", entries=[_item(r) for r in rels])]
+
+
+_MANIFEST = """
+clusters:
+  - id: oepa:2PH00006
+    canonical: oepa/permit.pdf
+    source: filename convention + _base_permit(2PH00006)
+    members:
+      - rel: oepa/permit.pdf
+        version: final
+      - rel: oepa/draft.pdf
+        version: draft
+        evidence_note: draft carries the un-redacted rating
+      - rel: oepa/fact-sheet.pdf
+        version: fact_sheet
+"""
+
+
+def _by_rel(colls: list[DocumentCollectionItem]) -> dict[str, DocumentItem]:
+    return {e.rel: e for c in colls for e in c.entries}
+
+
+def test_projects_cluster_metadata_onto_members(tmp_path: Path) -> None:
+    path = tmp_path / "document-versions.yaml"
+    path.write_text(_MANIFEST, encoding="utf-8")
+    colls = _collection("oepa/permit.pdf", "oepa/draft.pdf", "oepa/fact-sheet.pdf")
+
+    docversions.apply_document_versions(colls, docversions.load_document_versions(path))
+
+    items = _by_rel(colls)
+    for e in items.values():
+        assert e.duplicate_cluster == "oepa:2PH00006"
+        assert e.canonical_document_id == "oepa/permit.pdf"
+    assert items["oepa/permit.pdf"].version == "final"
+    assert items["oepa/draft.pdf"].version == "draft"
+    assert items["oepa/fact-sheet.pdf"].version == "fact_sheet"
+    # `supersedes` is set on the canonical member only.
+    assert set(items["oepa/permit.pdf"].supersedes) == {"oepa/draft.pdf", "oepa/fact-sheet.pdf"}
+    assert items["oepa/draft.pdf"].supersedes == []
+
+
+def test_absent_member_is_skipped_but_cluster_survives(tmp_path: Path) -> None:
+    """A member rel not in the catalog is dropped; the rest of the cluster still projects."""
+    path = tmp_path / "document-versions.yaml"
+    path.write_text(_MANIFEST, encoding="utf-8")
+    # fact-sheet.pdf is not catalogued (e.g. filtered out of scope / removed).
+    colls = _collection("oepa/permit.pdf", "oepa/draft.pdf")
+
+    docversions.apply_document_versions(colls, docversions.load_document_versions(path))
+
+    items = _by_rel(colls)
+    assert items["oepa/permit.pdf"].duplicate_cluster == "oepa:2PH00006"
+    # The dropped member never appears, so it can't be in supersedes.
+    assert items["oepa/permit.pdf"].supersedes == ["oepa/draft.pdf"]
+
+
+def test_thin_cluster_is_dropped(tmp_path: Path) -> None:
+    """A cluster left with a single present member has nothing to collapse — no metadata stamped."""
+    path = tmp_path / "document-versions.yaml"
+    path.write_text(_MANIFEST, encoding="utf-8")
+    colls = _collection("oepa/permit.pdf")  # only the canonical present
+
+    docversions.apply_document_versions(colls, docversions.load_document_versions(path))
+
+    assert _by_rel(colls)["oepa/permit.pdf"].duplicate_cluster is None
+
+
+def test_canonical_absent_promotes_first_present_member(tmp_path: Path) -> None:
+    """When the declared canonical isn't catalogued, the first present member becomes canonical."""
+    path = tmp_path / "document-versions.yaml"
+    path.write_text(_MANIFEST, encoding="utf-8")
+    colls = _collection("oepa/draft.pdf", "oepa/fact-sheet.pdf")  # no permit.pdf
+
+    docversions.apply_document_versions(colls, docversions.load_document_versions(path))
+
+    items = _by_rel(colls)
+    assert items["oepa/draft.pdf"].canonical_document_id == "oepa/draft.pdf"
+    assert set(items["oepa/draft.pdf"].supersedes) == {"oepa/fact-sheet.pdf"}
+
+
+def test_missing_manifest_is_a_noop(tmp_path: Path) -> None:
+    colls = _collection("oepa/permit.pdf", "oepa/draft.pdf")
+    versions = docversions.load_document_versions(tmp_path / "does-not-exist.yaml")
+    assert not versions
+    docversions.apply_document_versions(colls, versions)
+    assert all(e.duplicate_cluster is None for e in _by_rel(colls).values())
+
+
+def test_malformed_manifest_is_a_noop(tmp_path: Path) -> None:
+    path = tmp_path / "document-versions.yaml"
+    path.write_text("clusters:\n  - id: broken\n    members: not-a-list\n", encoding="utf-8")
+    versions = docversions.load_document_versions(path)
+    assert not versions  # the malformed cluster is skipped, leaving no clusters
+
+
+def test_canonical_must_be_a_member(tmp_path: Path) -> None:
+    """A cluster whose canonical isn't among its members is rejected (never a dangling canonical)."""
+    path = tmp_path / "document-versions.yaml"
+    path.write_text(
+        "clusters:\n"
+        "  - id: oepa:x\n"
+        "    canonical: oepa/not-listed.pdf\n"
+        "    members:\n"
+        "      - rel: oepa/a.pdf\n"
+        "      - rel: oepa/b.pdf\n",
+        encoding="utf-8",
+    )
+    assert not docversions.load_document_versions(path)
+
+
+def test_committed_lima_manifest_loads() -> None:
+    """The committed Lima manifest parses and declares the three OEPA permit triads."""
+    repo_root = Path(__file__).resolve().parents[1]
+    versions = docversions.load_document_versions(
+        repo_root / "data" / "site" / "document-versions.yaml"
+    )
+    ids = {c.id for c in versions.clusters}
+    assert ids == {"oepa:2PH00006", "oepa:2PH00007", "oepa:2PK00002"}
+    for c in versions.clusters:
+        assert c.canonical.endswith("-permit.pdf")
+        assert len(c.members) == 3
+        assert any(m.rel == c.canonical for m in c.members)

@@ -1,0 +1,79 @@
+# Curated document version / duplicate-cluster manifest (#1590, epic #1579 Phase 3).
+#
+# Declares which catalogued source documents are versions of ONE filing, so retrieval can
+# collapse a cluster to its canonical (authoritative) member without losing the distinct
+# evidence a superseded version carries. Read at `watermark export` by
+# watermark.site.docversions and projected onto the `documents` feed's DocumentItems
+# (duplicate_cluster / canonical_document_id / version / supersedes); the search_corpus /
+# search_passages `deduplicate` + `version_policy` args act on it.
+#
+# Slug-scoped like leads.yaml / contacts.yaml: Lima reads this flat file; a sibling site reads
+# its own `data/site/<slug>/document-versions.yaml` (absent -> no dedup metadata, never Lima's).
+#
+# Chain of custody: this is a READING of already-committed evidence — it renames/alters nothing
+# and invents no documents. A member whose rel is not in the catalog is skipped at export; a
+# cluster with fewer than two present members is dropped. Each cluster names its `source` — the
+# custody signal it was read from.
+#
+# `canonical` is the authoritative version (for an OEPA permit, the issued final permit).
+# `version` labels each member: final | draft | fact_sheet | duplicate | v2 | …  `duplicate` is
+# reserved for byte-identical copies (search_passages collapses only those; draft/final page
+# variants stay distinct — their pages legitimately differ and are both evidence).
+
+meta:
+  subject: Document version / duplicate clusters for retrieval dedup
+  generated_for: lima
+  policy: >
+    Curated from the custody manifests + the entity graph's _base_permit(*) draft/final/fact-sheet
+    collapsing. Canonical = the authoritative member; other members are retained per version_policy.
+
+clusters:
+  # OEPA NPDES permit lifecycle: each permit is filed as a draft public notice, accompanied by a
+  # permit-writer's fact sheet (the rationale/basis for the limits), then issued as a final permit.
+  # All three share the base permit number, so the entity graph's _base_permit collapses them to
+  # one facility node — the natural duplicate cluster. The final permit is authoritative; the draft
+  # PN and fact sheet carry the proposed limits and rationale the final can supersede or omit.
+  - id: oepa:2PH00006
+    canonical: oepa/oepa-2PH00006-american-ii-permit.pdf
+    source: filename convention (oepa-<permit>-<name>-{draft-pn,fact-sheet,permit}) + _base_permit(2PH00006)
+    members:
+      - rel: oepa/oepa-2PH00006-american-ii-permit.pdf
+        version: final
+      - rel: oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.pdf
+        version: draft
+        evidence_note: >
+          Draft public notice (2025-04) — carries the proposed effluent limits and public-comment
+          basis the final permit may modify.
+      - rel: oepa/oepa-2PH00006-american-ii-fact-sheet.pdf
+        version: fact_sheet
+        evidence_note: Permit-writer's fact sheet — the rationale/basis for the limits, not re-stated in the final.
+
+  - id: oepa:2PH00007
+    canonical: oepa/oepa-2PH00007-american-bath-permit.pdf
+    source: filename convention (oepa-<permit>-<name>-{draft-pn,fact-sheet,permit}) + _base_permit(2PH00007)
+    members:
+      - rel: oepa/oepa-2PH00007-american-bath-permit.pdf
+        version: final
+      - rel: oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.pdf
+        version: draft
+        evidence_note: >
+          Draft public notice (2024-03) — carries the proposed effluent limits and public-comment
+          basis the final permit may modify.
+      - rel: oepa/oepa-2PH00007-american-bath-fact-sheet.pdf
+        version: fact_sheet
+        evidence_note: Permit-writer's fact sheet — the rationale/basis for the limits, not re-stated in the final.
+
+  - id: oepa:2PK00002
+    canonical: oepa/oepa-2PK00002-shawnee-ii-permit.pdf
+    source: filename convention (oepa-<permit>-<name>-{draft-pn,fact-sheet,permit}) + _base_permit(2PK00002)
+    members:
+      - rel: oepa/oepa-2PK00002-shawnee-ii-permit.pdf
+        version: final
+      - rel: oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.pdf
+        version: draft
+        evidence_note: >
+          Draft public notice (2026-03) — carries the proposed effluent limits and public-comment
+          basis the final permit may modify.
+      - rel: oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.pdf
+        version: fact_sheet
+        evidence_note: Permit-writer's fact sheet (2023) — the rationale/basis for the limits, not re-stated in the final.

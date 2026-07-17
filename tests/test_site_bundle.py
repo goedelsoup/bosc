@@ -169,6 +169,36 @@ def test_cross_feed_references_resolve(bundle: Path) -> None:
                 assert sib in slugs, f"concept {c['slug']} relates to unknown concept {sib}"
 
 
+def test_documents_carry_version_cluster_metadata(bundle: Path) -> None:
+    """The exported documents feed carries the #1590 version/dedup metadata from the curated
+    manifest: the OEPA permit triad clusters, its final permit canonical + superseding the draft
+    and fact sheet."""
+    by_name = _feeds_by_name(bundle)
+    docs_by_rel = {
+        e["rel"]: e for coll in _rows(bundle, by_name["documents"]) for e in coll["entries"]
+    }
+    permit = "oepa/oepa-2PH00006-american-ii-permit.pdf"
+    draft = "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.pdf"
+    fact = "oepa/oepa-2PH00006-american-ii-fact-sheet.pdf"
+    assert {permit, draft, fact} <= docs_by_rel.keys(), "OEPA 2PH00006 triad missing from catalog"
+
+    for rel in (permit, draft, fact):
+        e = docs_by_rel[rel]
+        assert e["duplicate_cluster"] == "oepa:2PH00006"
+        assert e["canonical_document_id"] == permit
+    assert docs_by_rel[permit]["version"] == "final"
+    assert docs_by_rel[draft]["version"] == "draft"
+    assert docs_by_rel[fact]["version"] == "fact_sheet"
+    # Only the canonical member enumerates what it supersedes.
+    assert set(docs_by_rel[permit]["supersedes"]) == {draft, fact}
+    assert docs_by_rel[draft]["supersedes"] == []
+
+    # An unclustered document carries the fields defaulted (additive/optional — never invented).
+    unclustered = next(e for e in docs_by_rel.values() if e["rel"] not in {permit, draft, fact})
+    assert unclustered["duplicate_cluster"] is None
+    assert unclustered["supersedes"] == []
+
+
 def _assert_lima_bundle_peer_free(bundle_dir: Path) -> None:
     """#1505 — the reference build must not swallow a peer's slug-scoped records. A Lima bundle's
     corpus-derived feeds (records, documents, timeline) may cite only paths inside Lima's own
@@ -324,7 +354,7 @@ def test_backdrop_staged_site_exports_at_backdrop_tier(
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.27.0"
+    assert manifest["contract_version"] == "1.27.1"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "backdrop", f"{slug} should be a Backdrop site, got {readiness}"
     domains = readiness["domains"]
@@ -353,7 +383,7 @@ def test_findlay_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) 
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.27.0"
+    assert manifest["contract_version"] == "1.27.1"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "case", f"findlay should be a Case site, got {readiness}"
     domains = readiness["domains"]
@@ -394,7 +424,7 @@ def test_wpafb_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) ->
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.27.0"
+    assert manifest["contract_version"] == "1.27.1"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "case", f"wpafb should be a Case site, got {readiness}"
     domains = readiness["domains"]
@@ -435,7 +465,7 @@ def test_troy_piqua_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactor
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.27.0"
+    assert manifest["contract_version"] == "1.27.1"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "case", f"troy-piqua should be a Case site, got {readiness}"
     domains = readiness["domains"]
@@ -477,7 +507,7 @@ def test_sidney_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) -
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.27.0"
+    assert manifest["contract_version"] == "1.27.1"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "case", f"sidney should be a Case site, got {readiness}"
     domains = readiness["domains"]

@@ -65,11 +65,52 @@ const GOVERNANCE_PROPS = {
   },
 } as const;
 
+// Duplicate-cluster dedup knobs (#1590), shared by the search tools. Enforced peer:
+// functions/api/_lib/mcpDedup.ts, over the version/duplicate-cluster metadata the `documents`
+// feed carries (curated from the custody manifests). A filing's versions — a permit's final +
+// draft + fact sheet, or byte-identical copies — collapse to the authoritative (canonical) member.
+const DEDUP_PROPS = {
+  deduplicate: {
+    type: "string",
+    enum: ["none", "canonical"],
+    description:
+      "Collapse duplicate/version clusters (default canonical): a filing's versions fold to the canonical (authoritative) member. `none` returns every version separately (the raw ranked pool).",
+    default: "canonical",
+  },
+  version_policy: {
+    type: "string",
+    enum: ["all", "latest_only", "latest_with_relevant_older_evidence"],
+    description:
+      "When deduplicate=canonical, how superseded versions are treated (default latest_with_relevant_older_evidence): keep the canonical PLUS any older version that carries a query-relevant term the canonical lacks (e.g. a draft's un-redacted figure). `latest_only` keeps only the canonical; `all` keeps every version (no collapse).",
+    default: "latest_with_relevant_older_evidence",
+  },
+} as const;
+
+// search_passages-specific dedup knobs: passages collapse ONLY byte-identical duplicate documents
+// (identical pages) — draft/final page variants are always retained (their pages legitimately
+// differ), so `version_policy` here governs only the duplicate pages, not draft-vs-final.
+const PASSAGE_DEDUP_PROPS = {
+  deduplicate: {
+    type: "string",
+    enum: ["none", "canonical"],
+    description:
+      "Collapse byte-identical duplicate documents to the canonical copy (default canonical): identical pages fold to one. Draft/final page variants are ALWAYS kept distinct (their pages differ). `none` returns every page.",
+    default: "canonical",
+  },
+  version_policy: {
+    type: "string",
+    enum: ["all", "latest_only", "latest_with_relevant_older_evidence"],
+    description:
+      "Governs ONLY byte-identical duplicate pages here — draft/final page variants are always retained regardless. Both the default (latest_with_relevant_older_evidence) and `latest_only` drop the redundant duplicate pages; `all` disables collapse entirely.",
+    default: "latest_with_relevant_older_evidence",
+  },
+} as const;
+
 export const MCP_TOOLS: readonly ToolSchema[] = [
   {
     name: "search_corpus",
     description:
-      "Hybrid search across the whole corpus — the discovery entrypoint. Ranking fuses semantic (vector) similarity with BM25 keyword scoring via reciprocal-rank-fusion, degrading to keyword-only when query embeddings are unavailable. Use to FIND relevant items across every feed (records, documents, timeline, entities, …); narrow with site/collection. This is NOT the way to pull one known document — use get_document for that. Returns ranked evidence cards (id, title, site, collection, date, source_kind, score, snippet, estimated_tokens, verified) — NO full record text by default; pass a hit's id to get_document to fetch its projected fields + citation. Size knobs: response_mode (ids_only|compact|snippets|full — full reproduces the whole record, ~18–24k tokens/hit, opt-in), limit/max_results, snippet_tokens, max_tokens, cursor.",
+      "Hybrid search across the whole corpus — the discovery entrypoint. Ranking fuses semantic (vector) similarity with BM25 keyword scoring via reciprocal-rank-fusion, degrading to keyword-only when query embeddings are unavailable. Use to FIND relevant items across every feed (records, documents, timeline, entities, …); narrow with site/collection. This is NOT the way to pull one known document — use get_document for that. Returns ranked evidence cards (id, title, site, collection, date, source_kind, score, snippet, estimated_tokens, verified) — NO full record text by default; pass a hit's id to get_document to fetch its projected fields + citation. A filing's versions (e.g. a permit's final + draft + fact sheet) collapse to the canonical member by default — pass deduplicate:\"none\" to see every version, or version_policy to tune which superseded versions survive. Size knobs: response_mode (ids_only|compact|snippets|full — full reproduces the whole record, ~18–24k tokens/hit, opt-in), limit/max_results, snippet_tokens, max_tokens, cursor.",
     inputSchema: {
       type: "object",
       properties: {
@@ -97,6 +138,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
             "Approx. size (in tokens) of the query-focused excerpt in snippets mode (default 250).",
           default: 250,
         },
+        ...DEDUP_PROPS,
         ...GOVERNANCE_PROPS,
       },
       required: ["query"],
@@ -106,7 +148,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
   {
     name: "search_passages",
     description:
-      "Page-level excerpt search over PUBLISHED source PDFs — returns the exact supporting page(s) with a citation, not a whole record. Use when you need the verbatim passage behind a claim (a permit condition, a board vote, a dollar figure) plus a page cite — especially for PDFs, where one relevant page shouldn't require pulling the full extracted document. This is the deeper peer of search_corpus: search_corpus finds WHICH item is relevant; search_passages finds WHICH PAGE says it. Ranking fuses semantic (vector) similarity with BM25, degrading to keyword-only when query embeddings are unavailable. Scoped to the public-publish allowlist, so it covers only documents whose bytes are publicly served — not the whole corpus. Narrow to specific documents with document_ids (the document_id / rel from search_corpus or get_documents). Returns page excerpts (id, document_id, page, section, title, text, score). The text is the PDF text layer verbatim — for scanned pages that is garbled OCR, so treat it as a locator for the cited page, not a transcription; open the page itself with get_document. Size knobs: max_results, max_tokens, max_tokens_per_result (trims the excerpt), cursor, intent.",
+      'Page-level excerpt search over PUBLISHED source PDFs — returns the exact supporting page(s) with a citation, not a whole record. Use when you need the verbatim passage behind a claim (a permit condition, a board vote, a dollar figure) plus a page cite — especially for PDFs, where one relevant page shouldn\'t require pulling the full extracted document. This is the deeper peer of search_corpus: search_corpus finds WHICH item is relevant; search_passages finds WHICH PAGE says it. Ranking fuses semantic (vector) similarity with BM25, degrading to keyword-only when query embeddings are unavailable. Scoped to the public-publish allowlist, so it covers only documents whose bytes are publicly served — not the whole corpus. Narrow to specific documents with document_ids (the document_id / rel from search_corpus or get_documents). Returns page excerpts (id, document_id, page, section, title, text, score). The text is the PDF text layer verbatim — for scanned pages that is garbled OCR, so treat it as a locator for the cited page, not a transcription; open the page itself with get_document. By default pages from a byte-identical duplicate document are collapsed to the canonical copy (deduplicate:"none" to disable); draft/final page variants are always kept distinct. Size knobs: max_results, max_tokens, max_tokens_per_result (trims the excerpt), cursor, intent.',
     inputSchema: {
       type: "object",
       properties: {
@@ -117,6 +159,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
           description:
             'Restrict to these documents by document_id / rel (e.g. "oepa/2PE00000.pdf"), as returned by search_corpus or get_documents. Leave blank to search all published documents.',
         },
+        ...PASSAGE_DEDUP_PROPS,
         ...GOVERNANCE_PROPS,
       },
       required: ["query"],

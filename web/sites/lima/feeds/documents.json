@@ -14782,7 +14782,11 @@
         "render_class": "pdf",
         "published": true,
         "available": true,
-        "download_url": null
+        "download_url": null,
+        "duplicate_cluster": "oepa:2PH00006",
+        "canonical_document_id": "oepa/oepa-2PH00006-american-ii-permit.pdf",
+        "version": "draft",
+        "supersedes": []
       },
       {
         "rel": "oepa/oepa-2PH00006-american-ii-fact-sheet.pdf",
@@ -14793,7 +14797,11 @@
         "render_class": "pdf",
         "published": true,
         "available": true,
-        "download_url": null
+        "download_url": null,
+        "duplicate_cluster": "oepa:2PH00006",
+        "canonical_document_id": "oepa/oepa-2PH00006-american-ii-permit.pdf",
+        "version": "fact_sheet",
+        "supersedes": []
       },
       {
         "rel": "oepa/oepa-2PH00006-american-ii-permit.pdf",
@@ -14804,7 +14812,14 @@
         "render_class": "pdf",
         "published": true,
         "available": true,
-        "download_url": null
+        "download_url": null,
+        "duplicate_cluster": "oepa:2PH00006",
+        "canonical_document_id": "oepa/oepa-2PH00006-american-ii-permit.pdf",
+        "version": "final",
+        "supersedes": [
+          "oepa/oepa-2PH00006-american-ii-draft-pn-2025-04.pdf",
+          "oepa/oepa-2PH00006-american-ii-fact-sheet.pdf"
+        ]
       },
       {
         "rel": "oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.pdf",
@@ -14815,7 +14830,11 @@
         "render_class": "pdf",
         "published": true,
         "available": true,
-        "download_url": null
+        "download_url": null,
+        "duplicate_cluster": "oepa:2PH00007",
+        "canonical_document_id": "oepa/oepa-2PH00007-american-bath-permit.pdf",
+        "version": "draft",
+        "supersedes": []
       },
       {
         "rel": "oepa/oepa-2PH00007-american-bath-fact-sheet.pdf",
@@ -14826,7 +14845,11 @@
         "render_class": "pdf",
         "published": true,
         "available": true,
-        "download_url": null
+        "download_url": null,
+        "duplicate_cluster": "oepa:2PH00007",
+        "canonical_document_id": "oepa/oepa-2PH00007-american-bath-permit.pdf",
+        "version": "fact_sheet",
+        "supersedes": []
       },
       {
         "rel": "oepa/oepa-2PH00007-american-bath-permit.pdf",
@@ -14837,7 +14860,14 @@
         "render_class": "pdf",
         "published": true,
         "available": true,
-        "download_url": null
+        "download_url": null,
+        "duplicate_cluster": "oepa:2PH00007",
+        "canonical_document_id": "oepa/oepa-2PH00007-american-bath-permit.pdf",
+        "version": "final",
+        "supersedes": [
+          "oepa/oepa-2PH00007-american-bath-draft-pn-2024-03.pdf",
+          "oepa/oepa-2PH00007-american-bath-fact-sheet.pdf"
+        ]
       },
       {
         "rel": "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.pdf",
@@ -14848,7 +14878,11 @@
         "render_class": "pdf",
         "published": true,
         "available": true,
-        "download_url": null
+        "download_url": null,
+        "duplicate_cluster": "oepa:2PK00002",
+        "canonical_document_id": "oepa/oepa-2PK00002-shawnee-ii-permit.pdf",
+        "version": "draft",
+        "supersedes": []
       },
       {
         "rel": "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.pdf",
@@ -14859,7 +14893,11 @@
         "render_class": "pdf",
         "published": true,
         "available": true,
-        "download_url": null
+        "download_url": null,
+        "duplicate_cluster": "oepa:2PK00002",
+        "canonical_document_id": "oepa/oepa-2PK00002-shawnee-ii-permit.pdf",
+        "version": "fact_sheet",
+        "supersedes": []
       },
       {
         "rel": "oepa/oepa-2PK00002-shawnee-ii-permit.pdf",
@@ -14870,7 +14908,14 @@
         "render_class": "pdf",
         "published": true,
         "available": true,
-        "download_url": null
+        "download_url": null,
+        "duplicate_cluster": "oepa:2PK00002",
+        "canonical_document_id": "oepa/oepa-2PK00002-shawnee-ii-permit.pdf",
+        "version": "final",
+        "supersedes": [
+          "oepa/oepa-2PK00002-shawnee-ii-draft-pn-2026-03.pdf",
+          "oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.pdf"
+        ]
       },
       {
         "rel": "oepa/sidney/1PV00037.pdf",
