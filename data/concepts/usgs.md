@@ -14,6 +14,7 @@ publishes the elevation and geologic layers that underpin drainage and siting wo
 
 USGS data is authoritative reference in the platform's evidence grammar — a gauge
 reading or a mapped watershed boundary is a [reference] fact from a neutral federal
-source, not an agency's contested position. That neutrality is why the design low
-flow that governs a discharge, the [[7Q10]], is anchored to the USGS record: it lets
-the water-quality math start from ground the parties don't dispute.
+source, not an agency's contested position. That neutrality is why a design low-flow
+statistic like the [[7Q10]] — the one that applies varies with the pollutant,
+receiving water, jurisdiction, and permit method — is anchored to the USGS record: it
+lets the water-quality math start from ground the parties don't dispute.

@@ -9,9 +9,11 @@ related: [ffa, brownfield, epa, pfas]
 
 **CERCLA** — the Comprehensive Environmental Response, Compensation, and Liability Act,
 better known as Superfund — is the federal law for cleaning up releases of hazardous
-substances. Its defining feature is liability: it imposes strict, joint-and-several,
-and retroactive responsibility on the parties connected to a site, so cleanup costs
-can attach to owners and operators long after the contamination occurred.
+substances. Its defining feature is liability: it imposes strict and retroactive
+responsibility on the parties connected to a site — joint and several where the harm
+is indivisible, though a party that proves a divisible share can be apportioned only
+that much — so cleanup costs can attach to owners and operators long after the
+contamination occurred.
 
 CERCLA anchors the most serious contamination in the record. A site on the National
 Priorities List carries a formal cleanup and, for a federal installation, a

@@ -8,8 +8,8 @@ related: [rto, ferc, interconnection-queue, opsb]
 ---
 
 **PJM Interconnection** is the [[regional transmission organization]] that runs the
-transmission grid and the wholesale power market for Ohio and a dozen states around
-it. It dispatches generation, runs the capacity market, and — critically for this
+transmission grid and the wholesale power market for Ohio and all or parts of a dozen
+neighboring states plus the District of Columbia. It dispatches generation, runs the capacity market, and — critically for this
 record — administers the [[interconnection queue]] that every new generator or large
 load must clear before it can connect.
 

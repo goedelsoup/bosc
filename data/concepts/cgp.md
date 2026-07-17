@@ -3,7 +3,7 @@ title: CGP
 kind: term
 aliases: [construction general permit]
 tags: [water, stormwater, permitting]
-summary: The NPDES general permit that authorizes stormwater discharges from construction sites disturbing an acre or more, under a standard set of conditions.
+summary: The NPDES general permit that authorizes stormwater discharges from construction sites disturbing an acre or more — including smaller sites within a common plan of development or sale that reaches an acre — under a standard set of conditions.
 related: [esc, hsg, npdes, curve-number]
 ---
 

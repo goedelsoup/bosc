@@ -15,6 +15,7 @@ load and generation are accommodated.
 
 FERC sits at the top of the grid's three-tier oversight in this record: it governs the
 wholesale, interstate layer; the [[PUCO]] governs retail utility service inside Ohio;
-and the [[Ohio Power Siting Board]] certifies where physical facilities are built. A
+and the [[Ohio Power Siting Board]] certifies where *major* energy facilities are
+sited. A
 hyperscale project can touch all three, and knowing which body owns which decision is
 how the platform locates the right docket for a given question about power supply.

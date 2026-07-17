@@ -17,6 +17,7 @@ PUCO is where the *cost* of accommodating a new large load can surface: a utilit
 request to build infrastructure, recover a special-contract arrangement, or shift the
 cost of serving a hyperscale customer onto or away from other ratepayers runs through
 the commission. It pairs with the [[Ohio Power Siting Board]], which certifies where a
-facility is built, and sits under the federal [[FERC]] for anything touching
-interstate wholesale power — a three-way division the platform keeps straight when
+major facility is built; the separate federal [[FERC]] holds jurisdiction over
+interstate wholesale power, while the PUCO's own authority is the state's retail
+service and rates — a division of labor the platform keeps straight when
 tracing who approved what.

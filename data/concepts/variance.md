@@ -16,7 +16,7 @@ and harder to win, permits a use the district otherwise bars.
 A variance is the narrowest of the land-use approvals: it does not change the
 district ([[rezoning]]) or authorize a listed use ([[conditional use]]), it just bends
 one rule for one site. In a large-project record variances tend to be the tell in the
-details — the setback or buffer a campus needed relaxed, the standard it could not
+details — the setback or buffer a campus needed to have relaxed, the standard it could not
 meet as-designed — and a stack of them can reveal how far a project departs from the
 zoning the parcel was granted. (Note this is a zoning variance, distinct from an
 NPDES water-quality variance, which is an unrelated permitting instrument.)

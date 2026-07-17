@@ -9,9 +9,11 @@ related: [interconnection-queue, hyperscale-data-center, pjm]
 
 **Behind-the-meter** generation sits on the customer's side of the utility meter and
 feeds its load directly — gas turbines, engines, fuel cells, or solar paired with
-storage — so the power never transacts across the grid. The arrangement lets a large
-user self-supply some or all of its demand rather than draw it entirely from the
-utility.
+storage. In a self-supply, non-export configuration that power need never cross the
+meter onto the public grid; many BTM assets, though, stay grid-connected for backup
+or to export surplus, which pulls them back under the utility's and market's rules.
+The arrangement lets a large user self-supply some or all of its demand rather than
+draw it entirely from the utility.
 
 For a [[hyperscale data center]], behind-the-meter generation is a way around the
 grid's constraints: it can bring a campus online without waiting out the

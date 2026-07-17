@@ -10,7 +10,7 @@ related: [wla, npdes, total-phosphorus, total-nitrogen, dilution]
 A **total maximum daily load** is the pollutant budget for an impaired water body:
 the maximum daily load of a given pollutant the water can absorb and still meet its
 water-quality standard, plus a margin of safety. The Clean Water Act requires a
-state to write one for each pollutant on its impaired-waters list.
+state to write one for each impaired water body–pollutant combination on its list.
 
 The budget is then divided. Point sources — permitted dischargers — receive a
 [[wasteload allocation]], which a state implements by writing that share into each

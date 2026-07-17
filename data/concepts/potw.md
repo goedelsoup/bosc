@@ -15,6 +15,8 @@ it discharges its own treated [[effluent]] under a municipal [[NPDES]] permit.
 
 For the platform, the POTW distinction sorts a discharger by who runs it. A
 hyperscale campus that routes cooling blowdown or sanitary flow to the local POTW
-becomes an industrial user inside that public permit rather than a permittee in its
-own right — which changes where the monitoring record lives and who is accountable
-for an exceedance.
+becomes an industrial user inside that public permit *for that stream* rather than a
+permittee in its own right — which changes where the monitoring record lives and who
+is accountable for an exceedance. Any separate direct discharge, stormwater, or other
+regulated source at the same campus can still require its own facility-specific
+permit.
