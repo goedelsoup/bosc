@@ -149,6 +149,11 @@ jobs:
       # Sites-registry gate (#1027): YAML identity ↔ Python SITES ↔ sites-registry.json in sync.
       - name: Sites registry check
         run: uv run watermark sites check
+      # Wiki cross-link gate (#1571, area:corpus-hygiene): fail on any unresolved [[wiki link]]
+      # in the reference glossary — a broken link ships as a visible dead span. Advisory orphan /
+      # under-linked findings never fail. Peer-site cleanliness is enforced by the pytest suite.
+      - name: Wiki cross-link lint
+        run: uv run watermark wiki-lint
       # Producer→entry drift gate (#629): a changed connector without its catalog entry fails.
       # Resolves origin/main from the full-history checkout; skips cleanly if it can't, so it
       # never false-fails. Bypass with a `[catalog-waiver: <reason>]` commit token.

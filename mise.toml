@@ -125,6 +125,14 @@ run = "uv run watermark export"
 description = "Regenerate the yidam corpus mirror + reports for the active site (Python engine)."
 run = "uv run watermark corpus-mirror"
 
+# The wiki cross-link audit (#1571): flag unresolved [[wiki links]] (the hard gate), orphan
+# concepts, and under-linked concepts over the active site's glossary — the content-level pass
+# corpus-mirror's node-graph graph-check is blind to. CI runs the same command (the optional
+# corpus-hygiene gate); `--suggest` adds link hints, `--no-check` reports without failing.
+[tasks.wiki-lint]
+description = "Audit the wiki [[link]] cross-reference graph for the active site (#1571)."
+run = "uv run watermark wiki-lint"
+
 # The corpus VECTOR index (#1564): embed the mirror nodes into a LanceDB index (.yidam/index/)
 # with the same all-MiniLM-L6-v2 backend as the /ask embeddings, so `yidam serve --mcp` can
 # search the method-layer graph by meaning. Opt-in (downloads the ~80 MB model on first run);

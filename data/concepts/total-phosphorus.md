@@ -11,7 +11,7 @@ related: [total-nitrogen, tmdl, dissolved-oxygen, wla]
 dissolved and particulate — as a single number. Phosphorus is usually the limiting
 nutrient for freshwater algae, so it is the parameter regulators watch most closely
 in the Western Lake Erie basin, where phosphorus loading feeds the harmful algal
-blooms that recur in the [[Maumee]] watershed.
+blooms that recur in the Maumee watershed.
 
 Because it is the driver, total phosphorus is the pollutant most likely to carry a
 binding [[total maximum daily load]] and a point-source [[wasteload allocation]] in

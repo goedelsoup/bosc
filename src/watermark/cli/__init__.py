@@ -8,6 +8,7 @@ Commands:
     watermark extract <doc-id> ...   # run an agentic extraction (seam for your data)
     watermark export                 # write the typed content bundle the frontend reads
     watermark corpus-mirror          # project the corpus into yidam node format (.yidam/corpus/)
+    watermark wiki-lint              # audit the wiki [[link]] cross-reference graph (corpus-hygiene)
 """
 
 from __future__ import annotations
