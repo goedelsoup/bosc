@@ -37,6 +37,10 @@ export interface AskUnit {
   /** Structured event/record date, when the source feed carries one (timeline/meetings).
    * Surfaced on compact discovery cards (#1580); absent on units with no dated source. */
   date?: string | null;
+  /** The `data/documents` rel of this unit's source document — the version/duplicate-cluster
+   * dedup join key (#1590), matching `DocumentItem.rel`. Built into the ask-index; absent for a
+   * unit with no documents-feed source. */
+  doc_rel?: string | null;
 }
 
 /** One scored hit: the unit plus its BM25 score. */

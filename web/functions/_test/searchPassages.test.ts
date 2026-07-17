@@ -5,6 +5,7 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { _resetAskEmbeddingsCache } from "@watermark/functions/api/_lib/askEmbeddingsLoad";
+import { _resetDocVersionsCache } from "@watermark/functions/api/_lib/docVersionsLoad";
 import { handleSearchPassages } from "@watermark/functions/api/_lib/mcpTools/searchPassages";
 import { _resetPassagesCache, type PassageRow } from "@watermark/functions/api/_lib/passagesLoad";
 import type { EmbeddingEntry } from "@watermark/functions/api/_lib/retrieval";
@@ -260,5 +261,97 @@ describe("handleSearchPassages hybrid retrieval (#1586 kernel over passages)", (
     const ids = env.results.map((r) => r.id as string);
     expect(ids).toContain("oepa/b.pdf#p1");
     expect(ids).not.toContain("oepa/c.pdf#p1");
+  });
+});
+
+// Passages collapse ONLY byte-identical duplicate documents (identical pages); draft/final page
+// variants stay distinct — their pages legitimately differ and are both evidence (#1590).
+describe("handleSearchPassages duplicate-cluster dedup (#1590)", () => {
+  const CLUSTER = "oepa:2PH00006";
+  const PERMIT = "oepa/permit.pdf";
+  const COPY = "oepa/permit-copy.pdf"; // byte-identical duplicate of the permit
+  const DRAFT = "oepa/draft.pdf"; // a version variant (different pages)
+
+  const DEDUP_PASSAGES: PassageRow[] = [
+    {
+      id: `${PERMIT}#p1`,
+      document_id: PERMIT,
+      collection: "oepa",
+      title: "permit.pdf",
+      page: 1,
+      section: null,
+      text: "total phosphorus effluent limit 0.5 final",
+    },
+    {
+      id: `${COPY}#p1`,
+      document_id: COPY,
+      collection: "oepa",
+      title: "permit-copy.pdf",
+      page: 1,
+      section: null,
+      text: "total phosphorus effluent limit 0.5 final",
+    },
+    {
+      id: `${DRAFT}#p1`,
+      document_id: DRAFT,
+      collection: "oepa",
+      title: "draft.pdf",
+      page: 1,
+      section: null,
+      text: "total phosphorus effluent limit 0.4 draft proposed",
+    },
+  ];
+
+  const DOCUMENTS_FEED = [
+    {
+      slug: "oepa",
+      entries: [
+        {
+          rel: PERMIT,
+          duplicate_cluster: CLUSTER,
+          canonical_document_id: PERMIT,
+          version: "final",
+          supersedes: [COPY, DRAFT],
+        },
+        {
+          rel: COPY,
+          duplicate_cluster: CLUSTER,
+          canonical_document_id: PERMIT,
+          version: "duplicate",
+          supersedes: [],
+        },
+        {
+          rel: DRAFT,
+          duplicate_cluster: CLUSTER,
+          canonical_document_id: PERMIT,
+          version: "draft",
+          supersedes: [],
+        },
+      ],
+    },
+  ];
+
+  const routes: FetchRoute[] = [
+    { test: (u) => u.pathname === "/feeds/passages.json", respond: () => jsonResponse(200, DEDUP_PASSAGES) },
+    { test: (u) => u.pathname === "/feeds/documents.json", respond: () => jsonResponse(200, DOCUMENTS_FEED) },
+  ];
+
+  async function ids(args: Record<string, unknown>): Promise<string[]> {
+    _resetPassagesCache();
+    _resetDocVersionsCache();
+    const env = await envelope({ max_results: 10, ...args }, {}, routes);
+    return env.results.map((r) => r.id as string);
+  }
+
+  it("drops a byte-identical duplicate's pages but keeps the draft variant's", async () => {
+    const got = await ids({ query: "phosphorus effluent" });
+    expect(got).toContain(`${PERMIT}#p1`); // canonical kept
+    expect(got).not.toContain(`${COPY}#p1`); // byte-identical duplicate collapsed away
+    expect(got).toContain(`${DRAFT}#p1`); // draft variant is not a byte-identical dup — kept
+  });
+
+  it("deduplicate:none keeps every page", async () => {
+    const got = await ids({ query: "phosphorus effluent", deduplicate: "none" });
+    expect(got).toEqual(expect.arrayContaining([`${PERMIT}#p1`, `${COPY}#p1`, `${DRAFT}#p1`]));
   });
 });

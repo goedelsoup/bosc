@@ -72,6 +72,7 @@ from watermark.site import catalog as catalog_mod
 from watermark.site import concepts as concepts_mod
 from watermark.site import contacts as contacts_mod
 from watermark.site import documents as documents_mod
+from watermark.site import docversions as docversions_mod
 from watermark.site import economics as economics_mod
 from watermark.site import exhibits as exhibits_mod
 from watermark.site import gismap as gismap_mod
@@ -643,6 +644,18 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         mirror_base_url=settings.documents_mirror_base_url,
         allowlist=allowlist,
         scope=corpus_scope,
+    )
+    # Version / duplicate-cluster metadata (#1590): stamp the curated custody manifest onto the
+    # just-catalogued documents (stale-safe — a member absent from this site's scoped catalog is
+    # skipped), so retrieval can collapse a filing's versions to canonical while keeping a
+    # superseded version's distinct evidence. Per-site like leads/contacts; absent → no dedup meta.
+    docversions_mod.apply_document_versions(
+        doc_collections,
+        docversions_mod.load_document_versions(
+            site_scoped_path(
+                settings.data_dir / "site" / "document-versions.yaml", settings.site, is_dir=False
+            )
+        ),
     )
     doc_index = documents_mod.build_doc_index(doc_collections)
 

@@ -5,6 +5,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { _resetAskEmbeddingsCache } from "@watermark/functions/api/_lib/askEmbeddingsLoad";
 import { _resetAskIndexCache } from "@watermark/functions/api/_lib/askIndexLoad";
+import { _resetDocVersionsCache } from "@watermark/functions/api/_lib/docVersionsLoad";
 import { handleSearchCorpus } from "@watermark/functions/api/_lib/mcpTools/searchCorpus";
 import type { AskUnit, EmbeddingEntry } from "@watermark/functions/api/_lib/retrieval";
 import { type FetchRoute, jsonResponse, routingFetch } from "./_routeHarness";
@@ -492,5 +493,111 @@ describe("handleSearchCorpus hybrid retrieval (#1586)", () => {
     ]);
     expect(got).toContain("records:kw");
     expect(got).not.toContain("records:semantic");
+  });
+});
+
+// End-to-end proof that the doc_rel join (askIndex) + docVersionsLoad + the dedup kernel connect:
+// three records read from one permit filing's final/draft/fact-sheet collapse to the final by
+// default, and the draft survives only when the query hits its draft-only evidence (#1590).
+describe("handleSearchCorpus duplicate-cluster dedup (#1590)", () => {
+  const CLUSTER = "oepa:2PH00006";
+  const PERMIT = "oepa/permit.pdf";
+  const DRAFT = "oepa/draft.pdf";
+  const FACT = "oepa/fact.pdf";
+
+  const DEDUP_UNITS: AskUnit[] = [
+    {
+      id: "records:permit",
+      feed: "records",
+      title: "American II NPDES permit",
+      url: "/x",
+      text: "npdes permit generator count 115 final",
+      doc_rel: PERMIT,
+      site: "lima",
+    },
+    {
+      id: "records:draft",
+      feed: "records",
+      title: "American II draft public notice",
+      url: "/x",
+      text: "npdes permit generator rating 313 mw unredacted draft",
+      doc_rel: DRAFT,
+      site: "lima",
+    },
+    {
+      id: "records:fact",
+      feed: "records",
+      title: "American II fact sheet",
+      url: "/x",
+      text: "npdes permit generator summary fact sheet",
+      doc_rel: FACT,
+      site: "lima",
+    },
+  ];
+
+  const DOCUMENTS_FEED = [
+    {
+      slug: "oepa",
+      entries: [
+        {
+          rel: PERMIT,
+          duplicate_cluster: CLUSTER,
+          canonical_document_id: PERMIT,
+          version: "final",
+          supersedes: [DRAFT, FACT],
+        },
+        {
+          rel: DRAFT,
+          duplicate_cluster: CLUSTER,
+          canonical_document_id: PERMIT,
+          version: "draft",
+          supersedes: [],
+        },
+        {
+          rel: FACT,
+          duplicate_cluster: CLUSTER,
+          canonical_document_id: PERMIT,
+          version: "fact_sheet",
+          supersedes: [],
+        },
+      ],
+    },
+  ];
+
+  const routes: FetchRoute[] = [
+    { test: (u) => u.pathname === "/ask-index.json", respond: () => jsonResponse(200, DEDUP_UNITS) },
+    { test: (u) => u.pathname === "/feeds/documents.json", respond: () => jsonResponse(200, DOCUMENTS_FEED) },
+  ];
+
+  async function ids(args: Record<string, unknown>): Promise<string[]> {
+    _resetAskIndexCache();
+    _resetDocVersionsCache();
+    vi.stubGlobal("fetch", routingFetch(routes));
+    const content = await handleSearchCorpus({ response_mode: "ids_only", ...args }, REQ);
+    return (JSON.parse(content[0].text) as Envelope).results.map((r) => r.id as string);
+  }
+
+  it("collapses the draft + fact-sheet into the canonical permit by default", async () => {
+    const got = await ids({ query: "npdes permit generator" });
+    expect(got).toContain("records:permit");
+    expect(got).not.toContain("records:draft");
+    expect(got).not.toContain("records:fact");
+  });
+
+  it("retains the draft when the query hits its draft-only evidence", async () => {
+    const got = await ids({ query: "generator rating unredacted" });
+    expect(got).toContain("records:permit"); // canonical always kept
+    expect(got).toContain("records:draft"); // carries "rating"/"unredacted" the final lacks
+    expect(got).not.toContain("records:fact"); // adds no novel query term
+  });
+
+  it("deduplicate:none returns every version separately", async () => {
+    const got = await ids({ query: "npdes permit generator", deduplicate: "none" });
+    expect(got).toEqual(expect.arrayContaining(["records:permit", "records:draft", "records:fact"]));
+  });
+
+  it("version_policy:latest_only keeps only the canonical", async () => {
+    const got = await ids({ query: "generator rating unredacted", version_policy: "latest_only" });
+    expect(got).toEqual(["records:permit"]);
   });
 });

@@ -52,6 +52,21 @@ export interface AskUnit {
    * and meeting units today. Surfaced on discovery cards so a caller can filter/sort by
    * date without paying for the full record (#1580). */
   date?: string | null;
+  /** The `data/documents` rel of the source document this unit reads from — the robust join key
+   * for version/duplicate-cluster dedup (#1590), keyed the same as `DocumentItem.rel`. Set from a
+   * record's `source_doc_rel` (the #276 join), else from `source` with a leading `data/documents/`
+   * stripped; absent when the unit has no documents-feed source. Unlike `source` (which is often
+   * an extracted-yaml path and carries a `data/documents/` prefix), this always matches a rel. */
+  doc_rel?: string | null;
+}
+
+/** The `data/documents`-relative rel a unit's `source` points at, or undefined when `source`
+ * isn't a documents path (e.g. an extracted-yaml artifact). Strips the corpus prefix so the
+ * value matches `DocumentItem.rel`. */
+function docRelOf(source: string | null | undefined): string | undefined {
+  if (!source) return undefined;
+  const prefix = "data/documents/";
+  return source.startsWith(prefix) ? source.slice(prefix.length) : undefined;
 }
 
 /** Flatten a record's `fields` into "key value" pairs so figures are searchable (#327).
@@ -100,6 +115,9 @@ export function buildAskIndex(): AskUnit[] {
         url: siteUrl(`/site/records/${r.group}/`),
         text: blob(r.group, r.confidence, ...r.warnings, fieldText(r.fields)),
         ...cite(r.citation),
+        // The #276 join to the real source document is the robust dedup key (#1590) — far more
+        // reliable than citation.source, which is often the extracted-yaml path.
+        doc_rel: r.source_doc_rel ?? docRelOf(r.citation?.source),
       });
     }
   }
@@ -115,6 +133,7 @@ export function buildAskIndex(): AskUnit[] {
         text: blob(e.category, e.detail, e.source, ...e.parties, ...e.also_sources),
         // The timeline carries an explicit source string even when citation is null.
         ...(e.citation ? cite(e.citation) : { source: e.source, source_kind: "document" }),
+        doc_rel: docRelOf(e.citation?.source ?? e.source),
       });
     }
   }
@@ -191,6 +210,7 @@ export function buildAskIndex(): AskUnit[] {
         // Entities carry source paths, not a Citation; treat the first as the artifact.
         source: e.sources[0],
         source_kind: "document",
+        doc_rel: docRelOf(e.sources[0]),
       });
     }
   }
