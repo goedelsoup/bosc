@@ -1,0 +1,15 @@
+[
+  {
+    "id": "GH-523",
+    "origin": "lead",
+    "question": "Records request: Clark County rezoning Z-2026-05 (5232 Peacock Rd / Springfield-Beckley airport JEDD) — name the end use",
+    "detail": "A filed **Clark County Rural Zoning Commission** notice (Case **#Z-2026-05**, dated 2026-06-18; public hearing **2026-07-09**, Springview Government Center) shows the **City of Springfield** (applicant/owner) rezoning **71.19 acres at 5232 Peacock Rd, Green Township** from **A-1 (Agricultural) → I-1 (Light Industrial)** \"to ensure zoning consistency for parcels surrounding the **Springfield-Beckley Airport** and/or parcels within the **Joint Economic Development District**.\" Senior Planner Stephanie Dunlap; advances to the Board of Clark County Commissioners after the hearing. Recorded in `data/extracted/springfield/data-centers.md`. The notice names **no end user**. `[open]`: whether this ties to the Springfield data-center thread (5C/Vultr at PrimeOhio; **Crusoe's still-undisclosed parcel**) or is generic airport-JEDD industrial readiness. The Springfield-Beckley Municipal Airport is City-of-Springfield-owned and anchors a real JEDD (Ohio Auditor \"Springfield-Beckley Municipal Airport JEDD\" report) + the ~190-ac Airpark Ohio industrial park. ## Task — public-records request to Clark County Community & Economic Development (3130 E. Main St., Suite 1A, Springfield, OH 45505; communitydevelopment@clarkcountyohio.gov; 937.521.2160) - The full **Z-2026-05** application file + planning **staff report** + the parcel **map** (the reverse of the mailed notice). - The **Springfield-Beckley Municipal Airport JEDD** agreement + any development/end-user agreement touching the 5232 Peacock Rd parcels. - Any **tenant / end use** identified for the I-1 parcels (data center vs. generic industrial). **Outcome:** if a data center, ingest the instruments and pin the parcel/JEDD edge into the corpus; if generic, record a dated finding closing the question. ## Guardrails - \"Green Township\" is ambiguous in Ohio — this is **Clark County's** (the airport), **NOT** Scioto County's Green Township (Google \"Project Dazzler,\" ~792 ac by the Ohio River). Do not conflate. - The Roshel / Int…",
+    "source": "watermark-directory/the-watermark-directory#523",
+    "kind": "question",
+    "status": "unanswered",
+    "issue": 523,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
+  }
+]

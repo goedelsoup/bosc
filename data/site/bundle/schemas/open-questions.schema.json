@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "open-questions feed",
+  "type": "array",
+  "items": {
+    "additionalProperties": false,
+    "description": "One unanswered question in the corpus — an `[open]`-tagged lead or hypothesis cell.\n\nThe `open-questions` feed is a **projection** (`watermark.site.open_questions`), not a new\nextraction: it aggregates every still-open thread the bundle already ships — the `[open]`-tagged\nrows of the `leads` feed (the per-site board, wired to the `lead:kind:question` /\n`lead:status:unanswered` label vocabulary) and the `[open]`-tagged cells of the\n`hypothesis-assessments` matrix (a documented gap under a boom-origin lens) — into one flat,\nprovenanced list. It ports yidam's `open-questions` model: a node is open when it carries the\n`[open]` tag (`claim_tag == \"open\"`), so an `[inference]`-tagged lead (a labeled reading, not a\ngap) is deliberately excluded, exactly as `render_open_questions` excludes it.\n\nEvery row names a real ``source`` — the citation where the gap is recorded (a lead's source, or\nthe hypothesis cell's committed matrix file). The lead-derived fields (``kind``/``status``/\n``issue``) are present only for ``origin == \"lead\"``; the hypothesis-derived fields\n(``hypothesis``/``hypothesis_label``/``signal``) only for ``origin == \"hypothesis\"``.",
+    "properties": {
+      "id": {
+        "title": "Id",
+        "type": "string"
+      },
+      "origin": {
+        "enum": [
+          "lead",
+          "hypothesis"
+        ],
+        "title": "Origin",
+        "type": "string"
+      },
+      "question": {
+        "title": "Question",
+        "type": "string"
+      },
+      "detail": {
+        "title": "Detail",
+        "type": "string"
+      },
+      "source": {
+        "title": "Source",
+        "type": "string"
+      },
+      "kind": {
+        "anyOf": [
+          {
+            "enum": [
+              "signal",
+              "question",
+              "redaction",
+              "claim"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Kind"
+      },
+      "status": {
+        "anyOf": [
+          {
+            "enum": [
+              "low",
+              "unanswered",
+              "withheld",
+              "review"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Status"
+      },
+      "issue": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Issue"
+      },
+      "hypothesis": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Hypothesis"
+      },
+      "hypothesis_label": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Hypothesis Label"
+      },
+      "signal": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Signal"
+      }
+    },
+    "required": [
+      "id",
+      "origin",
+      "question",
+      "detail",
+      "source"
+    ],
+    "title": "OpenQuestionItem",
+    "type": "object"
+  }
+}
