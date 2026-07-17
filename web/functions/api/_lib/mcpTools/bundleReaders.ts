@@ -12,6 +12,14 @@
 // cursor pages the deterministic ordered feed; over-cap items shed their heaviest optional
 // fields (prose detail, variant lists, assessment internals, entry lists) before counting.
 
+import {
+  FACT_METRICS,
+  type FactAggregate,
+  aggregateFacts,
+  listMetrics,
+  parseGroupBy,
+  resolveMetric,
+} from "@watermark/core/factAggregate";
 import type {
   Citation,
   DocumentCollectionItem,
@@ -518,6 +526,17 @@ interface FactView {
   evidence?: FactItem["evidence"];
 }
 
+/** Flexible subject match (case-insensitive substring over the key + human label + kind) — the
+ * caller can pass "Allen County" or "facility" without knowing the `<kind>:<id>` grammar. Shared
+ * by get_facts and aggregate_facts. */
+function factMatchesSubject(f: FactItem, needle: string): boolean {
+  return (
+    f.subject.toLowerCase().includes(needle) ||
+    f.subject_label.toLowerCase().includes(needle) ||
+    f.subject_kind.toLowerCase().includes(needle)
+  );
+}
+
 /** Normalize the `predicate` param to a lowercased set (a single string or a string[]). */
 function parsePredicates(raw: unknown): Set<string> | null {
   const list = Array.isArray(raw) ? raw : typeof raw === "string" ? [raw] : [];
@@ -555,14 +574,7 @@ export async function handleGetFacts(params: unknown, requestUrl: string): Promi
 
   let facts = await fetchFeed<FactItem[]>("facts", requestUrl);
 
-  if (subject) {
-    facts = facts.filter(
-      (f) =>
-        f.subject.toLowerCase().includes(subject) ||
-        f.subject_label.toLowerCase().includes(subject) ||
-        f.subject_kind.toLowerCase().includes(subject),
-    );
-  }
+  if (subject) facts = facts.filter((f) => factMatchesSubject(f, subject));
   if (predicates) facts = facts.filter((f) => predicates.has(f.predicate.toLowerCase()));
   if (status) facts = facts.filter((f) => f.status.toLowerCase() === status);
 
@@ -576,5 +588,65 @@ export async function handleGetFacts(params: unknown, requestUrl: string): Promi
   // subject/predicate/value/status that make the fact answerable.
   return paginate(views, knobs, offset, (v, cap) =>
     dropKeysUntilUnderCap(v, ["evidence", "low", "high", "subject_label"], cap),
+  );
+}
+
+// --- aggregate_facts (#1588) -----------------------------------------------------
+// The arithmetic tier on top of the facts feed: the server does the sum / count / mean /
+// product so the model never pulls every row just to total something. Given a `metric`
+// (a registered recipe like backup_generation_capacity_mw, or the generic `<op>:<predicate>`
+// grammar) and a `group_by` dimension, it returns one grouped total per group — value, unit,
+// a human-readable `derivation`, `confidence`, `caveat`, and the `evidence_ids` that fed it.
+// Called with no `metric`, it lists the registered metrics (discovery). Pure arithmetic lives
+// in @watermark/core/factAggregate; this handler is the facts.json fetch + filter + envelope.
+
+interface AggregateFactsParams {
+  metric?: unknown;
+  group_by?: unknown;
+  subject?: unknown;
+  status?: unknown;
+}
+
+/** The unknown-metric envelope: name the miss and hand back the vocabulary the caller can use. */
+function unknownMetric(metric: string): McpContent[] {
+  return governedContent({
+    results: [
+      {
+        error: `unknown metric "${metric}"`,
+        available_metrics: FACT_METRICS.map((m) => m.key),
+        grammar: "or use sum:<predicate> | count:<predicate> | mean:<predicate> | product:<a>,<b>",
+      },
+    ],
+    token_estimate: 0,
+    truncated: false,
+    next_cursor: null,
+  });
+}
+
+export async function handleAggregateFacts(params: unknown, requestUrl: string): Promise<McpContent[]> {
+  const p = (params ?? {}) as AggregateFactsParams;
+  const { knobs, offset } = governanceOf(p as Record<string, unknown>);
+  const metricRaw = typeof p.metric === "string" ? p.metric.trim() : "";
+
+  // Discovery: no metric ⇒ advertise the registered recipes so the caller can pick one.
+  if (!metricRaw) return paginate(listMetrics(), knobs, offset);
+
+  const metric = resolveMetric(metricRaw);
+  if (!metric) return unknownMetric(metricRaw);
+
+  const groupBy = parseGroupBy(p.group_by);
+  const subject = typeof p.subject === "string" && p.subject.trim() ? p.subject.trim().toLowerCase() : null;
+  const status = typeof p.status === "string" && p.status.trim() ? p.status.trim().toLowerCase() : null;
+
+  let facts = await fetchFeed<FactItem[]>("facts", requestUrl);
+  if (subject) facts = facts.filter((f) => factMatchesSubject(f, subject));
+  if (status) facts = facts.filter((f) => f.status.toLowerCase() === status);
+
+  const aggregates = aggregateFacts(facts, metric, groupBy);
+
+  // Over-cap shed: drop the evidence ids first, then the prose (caveat, derivation, label) —
+  // never value/unit/group/status, the answer itself.
+  return paginate(aggregates, knobs, offset, (a: FactAggregate, cap) =>
+    dropKeysUntilUnderCap(a, ["evidence_ids", "caveat", "derivation", "group_label"], cap),
   );
 }

@@ -5,6 +5,7 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
+  handleAggregateFacts,
   handleGetDocument,
   handleGetDocuments,
   handleGetEntities,
@@ -478,5 +479,74 @@ describe("handleGetFacts", () => {
     const second = await run(handleGetFacts, { max_results: 2, cursor: first.next_cursor });
     expect(second.results.length).toBe(2);
     expect(second.next_cursor).toBeNull();
+  });
+});
+
+describe("handleAggregateFacts (#1588)", () => {
+  it("lists the registered metrics in discovery mode (no metric)", async () => {
+    const env = await run(handleAggregateFacts, {});
+    const keys = env.results.map((m) => m.key);
+    expect(keys).toContain("backup_generation_capacity_mw");
+    expect(env.results[0]).toHaveProperty("op");
+    expect(env.results[0]).toHaveProperty("caveat");
+  });
+
+  it("computes the motivating example: 114 × 2.75 = 313.5 MW", async () => {
+    const env = await run(handleAggregateFacts, {
+      metric: "backup_generation_capacity_mw",
+      group_by: "project",
+    });
+    expect(env.results.length).toBe(1);
+    expect(env.results[0]).toMatchObject({
+      group: "facility:lima",
+      value: 313.5,
+      unit: "MW",
+      derivation: "114 × 2.75 MW",
+      status: "inference", // a product is never reported stronger than inference
+    });
+    expect(env.results[0].evidence_ids).toEqual([
+      "facility:lima/genset_count",
+      "facility:lima/genset_rating",
+    ]);
+  });
+
+  it("computes a generic sum over a whole-site group", async () => {
+    const env = await run(handleAggregateFacts, {
+      metric: "sum:total_employment",
+      group_by: "all",
+    });
+    expect(env.results.length).toBe(1);
+    expect(env.results[0]).toMatchObject({ group: "site", value: 49690, unit: "jobs" });
+  });
+
+  it("returns an unknown-metric envelope naming the vocabulary", async () => {
+    const env = await run(handleAggregateFacts, { metric: "no_such_metric" });
+    expect(env.results[0].error).toContain("no_such_metric");
+    expect(env.results[0].available_metrics).toContain("backup_generation_capacity_mw");
+  });
+
+  it("pre-filters inputs by subject before aggregating", async () => {
+    const hit = await run(handleAggregateFacts, {
+      metric: "sum:total_employment",
+      subject: "allen county",
+      group_by: "all",
+    });
+    expect(hit.results[0].value).toBe(49690);
+    // A subject with no matching facts yields no groups.
+    const miss = await run(handleAggregateFacts, {
+      metric: "sum:total_employment",
+      subject: "facility",
+      group_by: "all",
+    });
+    expect(miss.results.length).toBe(0);
+  });
+
+  it("groups a product by subject_kind", async () => {
+    const env = await run(handleAggregateFacts, {
+      metric: "backup_generation_capacity_mw",
+      group_by: "kind",
+    });
+    expect(env.results.map((r) => r.group)).toEqual(["facility"]);
+    expect(env.results[0].value).toBe(313.5);
   });
 });

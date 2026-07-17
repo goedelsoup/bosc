@@ -193,7 +193,8 @@ a lead). v1 projection over `ProvenancedValue`s yields only verified/inference/r
 - **`records.fields`** — untyped payloads need per-`RecordGroup` predicate rules (OPC
   totals, deed amounts, permit limits). Highest fabrication risk; needs its own care.
 - **`aggregate_facts`** (#1588) — server-side sum/count/group over the same feed. `get_facts`
-  ships the tuples; `aggregate_facts` is the arithmetic tier on top.
+  ships the tuples; `aggregate_facts` is the arithmetic tier on top. **Done** — see
+  [aggregate-facts.md](aggregate-facts.md).
 - **The leads/`open` tie-in** — surfacing readiness "needs" as `open` facts.
 
 Each projector is a small pure function `fn(feed_row_or_model) -> list[FactItem]`, so adding

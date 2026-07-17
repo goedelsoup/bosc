@@ -239,4 +239,37 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
     },
     example: '{"subject": "facility", "predicate": ["genset_count", "genset_rating"]}',
   },
+  {
+    name: "aggregate_facts",
+    description:
+      'Compute a deterministic GROUPED TOTAL over the facts feed server-side — sum / count / mean / product — so you never pull every row just to total something. Returns one row per group with the value, unit, a human-readable `derivation` (e.g. "114 × 2.75 MW"), a `confidence`, a `caveat`, and the `evidence_ids` (the <subject>/<predicate> handles) that fed it. `metric` is either a registered recipe (backup_generation_capacity_mw = genset_count × genset_rating; facility_draw_mw = it_load × PUE) or the generic grammar sum:<predicate> | mean:<predicate> | count:<predicate> | product:<a>,<b> (e.g. "sum:annual_avg_employment"). Call it with NO metric to list the registered metrics (discovery). `group_by` partitions the total: project/subject (per facility/county/scenario — the default), kind (subject_kind), feed, or all/site (one whole-site total). A product is computed per subject then summed up to a coarser group. Optionally pre-filter inputs by `subject` (flexible match, like get_facts) and `status`. Status/confidence take the weakest input; a product is never reported stronger than inference (a derivation is not a document). For the raw tuples behind a total, use get_facts with the same subject/predicate.',
+    inputSchema: {
+      type: "object",
+      properties: {
+        metric: {
+          type: "string",
+          description:
+            'The aggregation: a registered recipe (backup_generation_capacity_mw, facility_draw_mw) or the generic sum:<predicate> | mean:<predicate> | count:<predicate> | product:<a>,<b> (bare "count" counts every matching fact). Omit to list the registered metrics.',
+        },
+        group_by: {
+          type: "string",
+          description:
+            'How to partition the total: "project"/"subject" (per facility/county/scenario — default), "kind" (subject_kind), "feed", or "all"/"site" (one whole-site total).',
+        },
+        subject: {
+          type: "string",
+          description:
+            'Restrict the inputs to matching subjects before aggregating (flexible, case-insensitive over the `<kind>:<id>` key + label + kind — e.g. "facility", "Allen County"). Omit to aggregate over every subject.',
+        },
+        status: {
+          type: "string",
+          enum: ["verified", "inference", "reference", "open"],
+          description: "Restrict the inputs to this evidence status before aggregating.",
+        },
+        site: { type: "string", description: "Site slug (default: active site)" },
+        ...GOVERNANCE_PROPS,
+      },
+    },
+    example: '{"metric": "backup_generation_capacity_mw", "group_by": "project"}',
+  },
 ];
