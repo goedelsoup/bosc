@@ -1,0 +1,543 @@
+# data/concepts/lexicon.yaml — the wiki term-harvest lexicon (#1565 / epic #1560, A1)
+#
+# The curated domain vocabulary the platform's prose leans on. `watermark term-backlog`
+# scans each site's investigative prose (plus the shared docs/skills/method layer) for these
+# terms and reports the ones NOT yet defined under data/concepts/ — a per-site, density-ranked
+# backlog that drives A2 (#1566, batch-author concepts). Already-defined terms are filtered out
+# automatically by the harvest (matched against every concept slug/title/alias), so an entry
+# here is harmless once its concept lands.
+#
+# This is a *seed* list, not a closed one: the harvest also runs a mechanical acronym-discovery
+# pass over the same prose and emits anything uppercase-and-undefined into each backlog's
+# `candidates:` bucket. Promote the good candidates into `terms:` here; drop the noise into
+# `stopwords:` below.
+#
+# Keep `note:` factual and non-fabricated — it is an authoring hint for A2, not a published
+# definition. Expansions are the public, well-known ones; cite specifics in the concept body,
+# not here. `kind:` is concept | term | method (mirrors the concept frontmatter).
+
+terms:
+  # --- water quality / permitting -------------------------------------------------------------
+  - term: NPDES
+    aliases: ["National Pollutant Discharge Elimination System"]
+    kind: term
+    tags: [water, permitting]
+    note: The Clean Water Act permit program governing point-source discharges to surface water.
+  - term: WWTP
+    aliases: [wastewater treatment plant, "water reclamation facility", WRF]
+    kind: term
+    tags: [water, infrastructure]
+    note: The publicly owned plant that treats sewage before discharging effluent to a receiving water.
+  - term: POTW
+    aliases: [publicly owned treatment works]
+    kind: term
+    tags: [water, infrastructure]
+    note: The Clean Water Act term for a municipally owned wastewater treatment works.
+  - term: TMDL
+    aliases: [total maximum daily load]
+    kind: term
+    tags: [water, water-quality, permitting]
+    note: The maximum pollutant load a water body can receive and still meet water-quality standards.
+  - term: WLA
+    aliases: [wasteload allocation]
+    kind: term
+    tags: [water, water-quality, permitting]
+    note: The share of a TMDL assigned to point-source (permitted) dischargers.
+  - term: DMR
+    aliases: [discharge monitoring report]
+    kind: term
+    tags: [water, permitting, records]
+    note: The self-reported effluent-monitoring data a permittee files with the regulator.
+  - term: PTI
+    aliases: [permit to install]
+    kind: term
+    tags: [permitting, air, water]
+    note: Ohio EPA's pre-construction permit for a new source of air or water pollution.
+  - term: effluent
+    aliases: [effluent limit]
+    kind: concept
+    tags: [water, water-quality]
+    note: Treated wastewater discharged to a receiving water; its pollutant limits are set in the NPDES permit.
+  - term: dilution
+    aliases: [dilution flow, mixing zone]
+    kind: concept
+    tags: [water, water-quality]
+    note: The receiving water's clean-flow available to dilute a discharged load, sized at design low flow.
+  - term: PFAS
+    aliases: [per- and polyfluoroalkyl substances, forever chemicals]
+    kind: term
+    tags: [water, contaminants]
+    note: A class of persistent fluorinated compounds increasingly regulated in water and biosolids.
+  - term: SNC
+    aliases: [significant non-compliance, significant noncompliance]
+    kind: term
+    tags: [water, enforcement, records]
+    note: EPA's flag for a permittee's serious or chronic permit violations.
+  - term: SSA
+    aliases: [sole source aquifer]
+    kind: term
+    tags: [water, groundwater]
+    note: An EPA designation for an aquifer that is the principal drinking-water source for an area.
+
+  # --- hydrology / watershed ------------------------------------------------------------------
+  - term: HUC
+    aliases: ["hydrologic unit code", HUC-8, HUC-12]
+    kind: term
+    tags: [hydrology, watershed]
+    note: The USGS nested code that identifies a watershed at a given scale (HUC-8 subbasin, HUC-12 subwatershed).
+  - term: HSG
+    aliases: [hydrologic soil group]
+    kind: term
+    tags: [hydrology, stormwater]
+    note: The NRCS A–D infiltration class of a soil, an input to runoff curve-number modeling.
+  - term: curve number
+    aliases: [runoff curve number, "SCS curve number", CN]
+    kind: term
+    tags: [hydrology, stormwater]
+    note: The NRCS coefficient (0–100) relating land cover and soil to storm runoff depth.
+  - term: once-through cooling
+    aliases: [open-loop cooling]
+    kind: concept
+    tags: [water, cooling, data-center]
+    note: A cooling design that draws water, passes it once, and returns nearly all of it warmed.
+  - term: closed-loop cooling
+    aliases: [recirculating cooling]
+    kind: concept
+    tags: [water, cooling, data-center]
+    note: A recirculating cooling design whose consumptive loss is chiefly evaporation and blowdown.
+  - term: NWIS
+    aliases: ["National Water Information System"]
+    kind: term
+    tags: [hydrology, data-source]
+    note: The USGS system serving real-time and historical streamflow and water-quality data.
+
+  # --- land use / local finance ---------------------------------------------------------------
+  - term: TIF
+    aliases: [tax increment financing]
+    kind: term
+    tags: [land-use, finance]
+    note: A financing tool that earmarks the property-tax increment from new development to pay for it.
+  - term: CRA
+    aliases: [community reinvestment area]
+    kind: term
+    tags: [land-use, finance]
+    note: An Ohio property-tax-abatement district used to incentivize development (ORC 3735).
+  - term: JEDD
+    aliases: [joint economic development district]
+    kind: term
+    tags: [land-use, finance, governance]
+    note: An Ohio township–municipality compact that shares income-tax revenue from a development area (ORC 715.70).
+  - term: PILOT
+    aliases: [payment in lieu of taxes]
+    kind: term
+    tags: [land-use, finance]
+    note: A negotiated payment substituting for abated property taxes on a development.
+  - term: enterprise zone
+    aliases: [enterprise zone agreement]
+    kind: term
+    tags: [land-use, finance]
+    note: An Ohio program granting property-tax exemptions in exchange for investment and job commitments.
+  - term: tax abatement
+    aliases: [abatement, property-tax abatement]
+    kind: concept
+    tags: [land-use, finance]
+    note: A negotiated reduction or exemption of property taxes to attract or retain development.
+  - term: special assessment
+    kind: concept
+    tags: [land-use, finance]
+    note: A charge levied on benefited parcels to fund a public improvement, distinct from general taxes.
+  - term: moratorium
+    kind: concept
+    tags: [land-use, governance]
+    note: A temporary local ban on approving a class of development while rules are reconsidered.
+  - term: rezoning
+    aliases: [rezone, zoning amendment]
+    kind: concept
+    tags: [land-use, governance]
+    note: A legislative change to a parcel's zoning district, often the trigger for a large project.
+  - term: conditional use
+    aliases: [conditional-use permit, special use permit]
+    kind: concept
+    tags: [land-use, governance]
+    note: A use allowed in a zoning district only with case-by-case approval and conditions.
+  - term: variance
+    kind: concept
+    tags: [land-use, governance]
+    note: A parcel-specific waiver of a zoning standard granted by a board of zoning appeals.
+  - term: brownfield
+    kind: concept
+    tags: [land-use, environment]
+    note: A property whose reuse is complicated by real or perceived contamination.
+
+  # --- energy / grid --------------------------------------------------------------------------
+  - term: OPSB
+    aliases: [Ohio Power Siting Board]
+    kind: term
+    tags: [energy, grid, permitting]
+    note: The Ohio board that reviews and certifies major generation and transmission facilities.
+  - term: PUCO
+    aliases: [Public Utilities Commission of Ohio]
+    kind: term
+    tags: [energy, grid, regulator]
+    note: Ohio's utility regulator, overseeing electric, gas, water, and telecom service.
+  - term: PJM
+    aliases: [PJM Interconnection]
+    kind: term
+    tags: [energy, grid, market]
+    note: The regional transmission organization operating the grid and wholesale market across Ohio and the mid-Atlantic.
+  - term: FERC
+    aliases: [Federal Energy Regulatory Commission]
+    kind: term
+    tags: [energy, grid, regulator]
+    note: The federal regulator of interstate electricity transmission and wholesale power markets.
+  - term: RTO
+    aliases: [regional transmission organization, ISO, independent system operator]
+    kind: term
+    tags: [energy, grid, market]
+    note: The independent operator that runs the transmission grid and energy market for a region (PJM here).
+  - term: interconnection queue
+    aliases: [interconnection request, generation interconnection]
+    kind: concept
+    tags: [energy, grid]
+    note: The backlog of proposed generators and large loads awaiting grid-connection study and approval.
+  - term: behind-the-meter
+    aliases: [BTM, behind the meter]
+    kind: concept
+    tags: [energy, grid, data-center]
+    note: On-site generation serving a load directly, without drawing that power across the utility meter.
+  - term: EIA
+    aliases: ["Energy Information Administration", "U.S. Energy Information Administration"]
+    kind: term
+    tags: [energy, data-source]
+    note: The federal statistical agency for U.S. energy production, consumption, and prices.
+  - term: AEP
+    aliases: [American Electric Power]
+    kind: term
+    tags: [energy, utility]
+    note: The investor-owned utility serving much of the Ohio grid footprint in this record.
+
+  # --- environment / enforcement --------------------------------------------------------------
+  - term: RSEI
+    aliases: ["Risk-Screening Environmental Indicators"]
+    kind: term
+    tags: [environment, data-source]
+    note: EPA's model that turns Toxics Release Inventory reports into a comparative chronic-risk score.
+  - term: TRI
+    aliases: [Toxics Release Inventory]
+    kind: term
+    tags: [environment, data-source]
+    note: EPA's annual inventory of reported toxic-chemical releases by facility.
+  - term: ECHO
+    aliases: ["Enforcement and Compliance History Online"]
+    kind: term
+    tags: [environment, enforcement, data-source]
+    note: EPA's public database of facility permits, inspections, violations, and enforcement.
+  - term: CERCLA
+    aliases: [Superfund, "Comprehensive Environmental Response, Compensation, and Liability Act"]
+    kind: term
+    tags: [environment, legal]
+    note: The federal Superfund statute governing cleanup and liability for contaminated sites.
+  - term: FFA
+    aliases: [federal facility agreement]
+    kind: term
+    tags: [environment, legal]
+    note: A CERCLA cleanup agreement between EPA and a federal facility (e.g. an installation on the NPL).
+  - term: SWCD
+    aliases: [Soil and Water Conservation District]
+    kind: term
+    tags: [water, governance]
+    note: A local district administering soil, drainage, and stormwater conservation programs.
+  - term: EPA
+    aliases: ["Environmental Protection Agency", "U.S. EPA", USEPA]
+    kind: term
+    tags: [environment, regulator]
+    note: The U.S. Environmental Protection Agency, the federal environmental regulator.
+  - term: OEPA
+    aliases: ["Ohio EPA", "Ohio Environmental Protection Agency"]
+    kind: term
+    tags: [environment, regulator]
+    note: The Ohio Environmental Protection Agency, the state permitting and enforcement authority.
+  - term: USGS
+    aliases: ["United States Geological Survey", "U.S. Geological Survey"]
+    kind: term
+    tags: [hydrology, data-source]
+    note: The federal agency that operates the streamgage network and publishes water data (see NWIS).
+  - term: CGP
+    aliases: [construction general permit]
+    kind: term
+    tags: [water, stormwater, permitting]
+    note: The NPDES general permit governing stormwater discharges from construction sites.
+  - term: ESC
+    aliases: [erosion and sediment control, "erosion & sediment control"]
+    kind: concept
+    tags: [water, stormwater]
+    note: The construction practices that keep soil and sediment out of stormwater and receiving waters.
+  - term: SWAT
+    aliases: ["Soil and Water Assessment Tool"]
+    kind: term
+    tags: [hydrology, modeling]
+    note: A watershed model simulating runoff, sediment, and nutrient loading across a basin.
+  - term: total phosphorus
+    kind: concept
+    tags: [water, water-quality]
+    note: A nutrient water-quality parameter; excess loading drives the Lake Erie / Maumee algae problem.
+  - term: total nitrogen
+    kind: concept
+    tags: [water, water-quality]
+    note: A nutrient water-quality parameter tracked alongside phosphorus in loading and TMDL analysis.
+  - term: dissolved oxygen
+    kind: concept
+    tags: [water, water-quality]
+    note: The oxygen available in water to aquatic life; a core water-quality criterion for a discharge.
+
+  # --- procurement / project delivery ---------------------------------------------------------
+  - term: CMAR
+    aliases: [construction manager at risk, "CM at risk"]
+    kind: term
+    tags: [procurement, construction]
+    note: A delivery method where the construction manager commits to a guaranteed maximum price.
+  - term: OPC
+    aliases: [opinion of probable cost, "engineer's estimate"]
+    kind: term
+    tags: [procurement, construction]
+    note: A design-phase cost estimate for a public project, the artifact this platform reconstructs from source PDFs.
+  - term: RFQ
+    aliases: [request for qualifications]
+    kind: term
+    tags: [procurement]
+    note: A solicitation asking firms to submit qualifications, often ahead of a request for proposals.
+  - term: RFP
+    aliases: [request for proposals]
+    kind: term
+    tags: [procurement]
+    note: A solicitation asking firms to submit priced, scoped proposals for a project.
+
+  # --- public records / legal -----------------------------------------------------------------
+  # (Note: PRR / mandamus / "public records request" are already covered by the
+  # public-records-mandamus concept; they intentionally live there, not here.)
+  - term: constructive denial
+    kind: concept
+    tags: [records, legal]
+    note: An agency's failure to produce records within a reasonable time, treated in law as a denial.
+  - term: ORC
+    aliases: [Ohio Revised Code, "R.C."]
+    kind: term
+    tags: [legal]
+    note: The codified statutes of Ohio, cited throughout the record (e.g. R.C. 149.43 public records).
+  - term: consent decree
+    kind: concept
+    tags: [legal, enforcement]
+    note: A court-approved settlement in which a party agrees to specified actions under judicial oversight.
+  - term: HB
+    aliases: [House Bill]
+    kind: term
+    tags: [legal, governance]
+    note: A bill in the Ohio House of Representatives, cited by number where it changes siting or tax law.
+  - term: SOS
+    aliases: [Secretary of State]
+    kind: term
+    tags: [legal, governance]
+    note: The state office holding business-entity filings — the trail from an LLC to its principals.
+  - term: NDA
+    aliases: [non-disclosure agreement, nondisclosure agreement]
+    kind: concept
+    tags: [legal, governance]
+    note: A confidentiality agreement that often shields a data-center deal's terms during site selection.
+
+  # --- data centers ---------------------------------------------------------------------------
+  - term: IL6
+    aliases: ["Impact Level 6", DoD IL6]
+    kind: term
+    tags: [data-center, security]
+    note: The U.S. Department of Defense cloud security classification for classified (SECRET) workloads.
+  - term: colocation
+    aliases: [colo, colocation facility]
+    kind: concept
+    tags: [data-center]
+    note: A data center leasing space, power, and cooling to multiple tenants' own hardware.
+  - term: PUE
+    aliases: [power usage effectiveness]
+    kind: term
+    tags: [data-center, energy]
+    note: A data center's total energy divided by its IT-load energy — the standard efficiency ratio.
+  - term: WUE
+    aliases: [water usage effectiveness]
+    kind: term
+    tags: [data-center, water]
+    note: A data center's water consumption per unit of IT energy — the cooling-water efficiency ratio.
+  - term: hyperscaler
+    aliases: [hyperscale operator]
+    kind: concept
+    tags: [data-center]
+    note: A cloud operator running data centers at massive scale (AWS, Microsoft, Google, Meta).
+
+# Uppercase tokens the acronym-discovery pass must never surface as candidates: units, file
+# formats, geography/direction, transcript boilerplate, and project scaffolding. Compared
+# case-insensitively against each discovered token. Grow this as noise appears in a backlog's
+# `candidates:` bucket.
+stopwords:
+  # units & quantities
+  - MW
+  - GW
+  - KW
+  - MWH
+  - GWH
+  - KWH
+  - MGD
+  - MGY
+  - KV
+  - CFS
+  - GPM
+  - GPD
+  - PSI
+  - DPI
+  - PPB
+  - PPM
+  - PPT
+  - AC
+  - SF
+  - FT
+  # file formats / tech / this platform
+  - PDF
+  - OCR
+  - YAML
+  - JSON
+  - CSV
+  - HTML
+  - XML
+  - URL
+  - URI
+  - API
+  - SDK
+  - CLI
+  - MCP
+  - RRF
+  - BM25
+  - GIS
+  - POI
+  - CI
+  - CD
+  - LFS
+  - TTL
+  - UUID
+  - WASM
+  - GPU
+  - CPU
+  - AI
+  - IT
+  - BOSC
+  - README
+  - FAQ
+  - TBD
+  - TODO
+  - NOTE
+  - DOSSIER
+  - HTTP
+  - HTTPS
+  - REST
+  - SQL
+  - DOM
+  - CSS
+  - JSX
+  - TSX
+  - JS
+  - TS
+  - PY
+  - NPM
+  - PNPM
+  - ENV
+  - DB
+  - KEY
+  - APP
+  - AUTH
+  - GET
+  - POST
+  - PUT
+  - ASK
+  - RATE
+  - LIMIT
+  - UI
+  - UX
+  - IP
+  - ID
+  - CLAUDE
+  - GB
+  - TB
+  - KB
+  - HZ
+  - FM
+  - RUM
+  - PMB
+  - GITHUB
+  - TOKEN
+  - ADMIN
+  - CLIENT
+  - SERVER
+  - SSO
+  - CDN
+  - MAX
+  - MIN
+  - DEF
+  - MG
+  - PR
+  # generic english that slips through as ALL-CAPS in prose/headings
+  - SITE
+  - PUBLIC
+  - STATE
+  - OHIO
+  - LAW
+  - TIME
+  - DATA
+  - PART
+  # corporate / generic
+  - LLC
+  - INC
+  - LP
+  - LLP
+  - CO
+  - USA
+  - US
+  - DC
+  # geography / direction (Ohio-region)
+  - OH
+  - IN
+  - MI
+  - KY
+  - WV
+  - PA
+  - NE
+  - NW
+  - SE
+  - SW
+  - ALLEN
+  - COUNTY
+  # meeting-transcript boilerplate (ALL-CAPS headings)
+  - RECESS
+  - ADJOURN
+  - MOTION
+  - SECOND
+  - ROLL
+  - CALL
+  - AYE
+  - AYES
+  - NAY
+  - NAYS
+  - YEA
+  - YEAS
+  - ABSENT
+  - PRESENT
+  - CHAIR
+  - CLERK
+  # bare uppercase english / roman numerals that slip through
+  - OF
+  - THE
+  - AND
+  - FOR
+  - WITH
+  - II
+  - III
+  - IV
+  - VI
+  - VII
+  - VIII
+  - IX
