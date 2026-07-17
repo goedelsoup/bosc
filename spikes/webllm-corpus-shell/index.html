@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WebLLM corpus shell — spike #1576</title>
+<!--
+  Runnable prototype for spike #1576 (Epic #1560, workstream D3): evaluate a static,
+  in-browser WebLLM chat shell over the yidam corpus mirror + a vector index.
+
+  Zero-build, mirrors the deckgl spike's UMD-scripting approach so it runs against the
+  real committed corpus with no node_modules. Two panes:
+    1. Retrieval  — lexical search over corpus.json (238 real Lima mirror nodes). Instant,
+                    zero-dependency, no WebGPU, no model download. This is the half the
+                    spike recommends shipping (production would swap in the MiniLM/Arrow
+                    vector index — watermark.site.yidam_index).
+    2. WebLLM chat — @mlc-ai/web-llm loaded from a CDN, gated behind WebGPU. Downloads a
+                    small quantised model (0.4–0.9 GB) and generates a grounded answer
+                    from the retrieved nodes. This is the half the spike recommends NOT
+                    shipping — it exists here so a reviewer can *feel* the download, the
+                    WebGPU requirement, and the hallucination risk against litigation
+                    evidence.
+
+  Not shipped to web/. This file loads WebLLM/model weights from a public CDN — a local
+  spike allowance, not the offline/self-contained production build.
+-->
+<style>
+  /* ---- Swiss 03 tokens (mirrored from design/tokens/colors.css) ---- */
+  :root {
+    --bone-page: #e9e6dc;
+    --bone-surface: #f5f2ea;
+    --bone-raised: #faf8f1;
+    --bone-sunk: #efece2;
+    --ink: #16201a;
+    --ink-prose: #3a4036;
+    --ink-muted: #566159;
+    --ink-faint: #8c9389;
+    --forest: #1f6f4a;
+    --forest-bright: #3d8f63;
+    --forest-tint: #e4ece4;
+    --forest-line: #bcd2c4;
+    --line-hair: #dcd8cc;
+    --line-2: #cdc8b8;
+    --rule-ink: #16201a;
+    --ev-verified-fg: #1f6f4a; --ev-verified-bg: #e4ece4; --ev-verified-border: #bcd2c4;
+    --ev-inference-fg: #9a6a14; --ev-inference-bg: #efe6d0; --ev-inference-border: #dcc98a;
+    --ev-open-fg: #566159; --ev-open-bg: #e8e4d8; --ev-open-border: #cdc8b8;
+    --ev-gap-fg: #7a2230; --ev-gap-bg: #f3e6e2; --ev-gap-border: #d8b8b2;
+    --serif: "Archivo", "Helvetica Neue", Arial, system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bone-page);
+    color: var(--ink-prose);
+    font-family: var(--serif);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px 64px; }
+
+  /* ---- Header (ink bar over the frame) ---- */
+  header.bar {
+    background: var(--ink);
+    color: var(--bone-surface);
+    border-bottom: 2px solid var(--rule-ink);
+  }
+  header.bar .inner { max-width: 1120px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  header.bar .wordmark { font-weight: 700; letter-spacing: .01em; font-size: 16px; }
+  header.bar .wordmark b { color: var(--forest-bright); }
+  header.bar .eyebrow { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: var(--forest-line); }
+  header.bar .spike { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,.55); margin-left: auto; }
+
+  h1 { font-family: var(--serif); font-weight: 700; color: var(--ink); font-size: 27px; line-height: 1.15; margin: 30px 0 8px; letter-spacing: -.01em; }
+  .lede { font-size: 16px; color: var(--ink-prose); margin: 0 0 6px; max-width: 74ch; }
+  .lede strong { color: var(--ink); }
+  .fineprint { font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); max-width: 82ch; margin: 6px 0 0; }
+
+  /* ---- WebGPU status banner ---- */
+  .gpu-banner {
+    display: flex; align-items: flex-start; gap: 12px;
+    border: 1px solid var(--line-2); background: var(--bone-surface);
+    padding: 12px 14px; margin: 22px 0 0; border-left: 3px solid var(--ink-faint);
+  }
+  .gpu-banner .dot { width: 9px; height: 9px; border-radius: 50%; margin-top: 6px; flex: none; background: var(--ink-faint); }
+  .gpu-banner.ok { border-left-color: var(--forest); }
+  .gpu-banner.ok .dot { background: var(--forest); }
+  .gpu-banner.bad { border-left-color: var(--ev-gap-fg); background: var(--ev-gap-bg); border-color: var(--ev-gap-border); }
+  .gpu-banner.bad .dot { background: var(--ev-gap-fg); }
+  .gpu-banner .txt { font-size: 13.5px; }
+  .gpu-banner .txt b { color: var(--ink); }
+  .gpu-banner code { font-family: var(--mono); font-size: 12px; }
+
+  /* ---- Two-column layout ---- */
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 22px; align-items: start; }
+  @media (max-width: 860px) { .cols { grid-template-columns: 1fr; } }
+
+  .panel { border: 1px solid var(--line-hair); background: var(--bone-surface); }
+  .panel > .head { border-bottom: 1px solid var(--line-hair); padding: 12px 16px; display: flex; align-items: baseline; gap: 10px; }
+  .panel > .head .n { font-family: var(--mono); font-size: 11px; color: var(--forest); font-weight: 600; }
+  .panel > .head h2 { font-family: var(--serif); font-size: 16px; font-weight: 700; color: var(--ink); margin: 0; }
+  .panel > .head .tag { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; margin-left: auto; padding: 2px 7px; border: 1px solid var(--forest-line); background: var(--forest-tint); color: var(--forest); }
+  .panel > .head .tag.warn { border-color: var(--ev-inference-border); background: var(--ev-inference-bg); color: var(--ev-inference-fg); }
+  .panel > .body { padding: 16px; }
+
+  label.fl { display: block; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-muted); margin: 0 0 6px; }
+  textarea, input, select {
+    width: 100%; font-family: var(--serif); font-size: 14.5px; color: var(--ink);
+    background: var(--bone-raised); border: 1px solid var(--line-2); border-radius: 0; padding: 9px 11px;
+  }
+  textarea { resize: vertical; min-height: 58px; }
+  textarea:focus, input:focus, select:focus { outline: 2px solid var(--forest); outline-offset: -1px; }
+
+  .btn { font-family: var(--serif); font-weight: 600; font-size: 14px; color: var(--bone-surface); background: var(--ink); border: 1px solid var(--ink); border-radius: 0; padding: 8px 16px; cursor: pointer; }
+  .btn:hover { background: #0f1712; }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn.ghost { background: transparent; color: var(--ink); }
+  .btn.ghost:hover { background: var(--bone-sunk); }
+  .btn.forest { background: var(--forest); border-color: var(--forest); }
+  .btn.forest:hover { background: #1a5e3f; }
+
+  .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0 0; }
+  .chip { font-family: var(--mono); font-size: 11.5px; color: var(--ink-muted); background: var(--bone-raised); border: 1px solid var(--line-2); padding: 4px 9px; cursor: pointer; }
+  .chip:hover { border-color: var(--forest); color: var(--forest); }
+
+  .muted { color: var(--ink-muted); }
+  .faint { color: var(--ink-faint); font-family: var(--mono); font-size: 11.5px; }
+
+  /* ---- Retrieval results ---- */
+  .hits { margin-top: 14px; display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--line-hair); }
+  .hit { border-bottom: 1px solid var(--line-hair); padding: 11px 2px; display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: baseline; }
+  .hit .rank { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); }
+  .hit .label { color: var(--ink); font-weight: 600; }
+  .hit .desc { grid-column: 2; font-size: 13px; color: var(--ink-muted); margin-top: 2px; }
+  .hit .uri { grid-column: 2; font-family: var(--mono); font-size: 10.5px; color: var(--forest); margin-top: 3px; }
+  .hit .score { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); }
+
+  .ev { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: .08em; padding: 1px 6px; border: 1px solid; }
+  .ev.concept { color: var(--forest); border-color: var(--forest-line); background: var(--forest-tint); }
+  .ev.relation { color: #4a5a86; border-color: #b8c2dc; background: #e6eaf3; }
+  .ev.artifact { color: var(--ink-muted); border-color: var(--line-2); background: var(--bone-sunk); }
+  .ev.question { color: var(--ev-open-fg); border-color: var(--ev-open-border); background: var(--ev-open-bg); }
+  .ev.hypothesis { color: var(--ev-inference-fg); border-color: var(--ev-inference-border); background: var(--ev-inference-bg); }
+  .ev.open { color: var(--ev-open-fg); border-color: var(--ev-open-border); background: var(--ev-open-bg); }
+
+  /* ---- WebLLM chat ---- */
+  .costnote { border: 1px solid var(--ev-inference-border); background: var(--ev-inference-bg); color: var(--ev-inference-fg); padding: 10px 12px; font-size: 12.5px; margin: 0 0 14px; }
+  .costnote b { color: #6a4a0a; }
+  .progress { height: 6px; background: var(--bone-sunk); border: 1px solid var(--line-2); margin-top: 10px; overflow: hidden; }
+  .progress > i { display: block; height: 100%; width: 0; background: var(--forest); transition: width .2s ease; }
+  .plog { font-family: var(--mono); font-size: 11px; color: var(--ink-muted); margin-top: 6px; min-height: 15px; }
+  .answer { margin-top: 14px; border: 1px solid var(--line-hair); background: var(--bone-raised); padding: 13px 15px; white-space: pre-wrap; font-size: 14px; color: var(--ink-prose); min-height: 30px; }
+  .answer:empty::before { content: "The grounded answer will stream here."; color: var(--ink-faint); font-style: italic; }
+  .metric { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); margin-top: 8px; }
+
+  footer.note { margin-top: 34px; border-top: 2px solid var(--rule-ink); padding-top: 14px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); }
+  footer.note a, .lede a { color: var(--forest); }
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="inner">
+    <span class="wordmark">The Watermark Directory<b>.</b></span>
+    <span class="eyebrow">Spike · WebLLM corpus shell</span>
+    <span class="spike">#1576 · Epic #1560 D3</span>
+  </div>
+</header>
+
+<div class="wrap">
+  <h1>An in-browser LLM over the corpus — does it earn its weight?</h1>
+  <p class="lede">
+    This prototype puts the two halves of <code>yidam export web</code> side by side against
+    <strong>238 real Lima mirror nodes</strong>: an <strong>in-browser retrieval</strong> index (cheap,
+    grounded, cites its sources) and a <strong>WebLLM chat model</strong> that generates prose from
+    what retrieval finds (heavy, WebGPU-only, and prone to inventing citations against evidence
+    that is <em>litigation record</em>).
+  </p>
+  <p class="fineprint">
+    Corpus: <code>corpus.json</code> — projected by <code>watermark corpus-mirror</code> (Epic #1560 E1/#1561),
+    concept 77 · relation 60 · artifact 71 · question 27 · hypothesis 3. The retrieval pane needs no
+    network. The chat pane downloads a model from a CDN and needs WebGPU.
+  </p>
+
+  <div id="gpu-banner" class="gpu-banner">
+    <span class="dot"></span>
+    <span class="txt" id="gpu-text">Checking WebGPU support…</span>
+  </div>
+
+  <div class="cols">
+    <!-- ============ RETRIEVAL ============ -->
+    <section class="panel">
+      <div class="head">
+        <span class="n">1</span>
+        <h2>Retrieve from the corpus</h2>
+        <span class="tag">Recommended · ships</span>
+      </div>
+      <div class="body">
+        <label class="fl" for="q">Ask about the record</label>
+        <textarea id="q" placeholder="e.g. What is the design low flow that sizes effluent dilution?"></textarea>
+        <div class="chips" id="examples"></div>
+        <div class="row">
+          <button class="btn forest" id="search">Search corpus</button>
+          <span class="faint" id="ret-meta"></span>
+        </div>
+        <div class="hits" id="hits"></div>
+        <p class="faint" style="margin-top:14px">
+          Lexical scorer over label + description, zero-dependency. Production would swap in the
+          committed MiniLM / Arrow vector index (<code>watermark.site.yidam_index</code>) — same
+          nodes, same citations, ~80&nbsp;MB embedder, WebGPU-optional.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ WEBLLM ============ -->
+    <section class="panel">
+      <div class="head">
+        <span class="n">2</span>
+        <h2>Generate with WebLLM</h2>
+        <span class="tag warn">Under evaluation</span>
+      </div>
+      <div class="body">
+        <div class="costnote">
+          <b>What this costs.</b> The model runs entirely in your browser via WebGPU. First load
+          <b>downloads the whole model</b> (0.4–0.9&nbsp;GB below), then caches it. It needs a
+          discrete/modern GPU and a WebGPU-capable browser. A 0.5–1B model is far weaker than the
+          Claude behind <code>/api/ask</code> and <b>will paraphrase or invent</b> — treat its output
+          as a demo of the mechanics, not as a reading of the record.
+        </div>
+
+        <label class="fl" for="model">Model</label>
+        <select id="model"></select>
+
+        <div class="row">
+          <button class="btn" id="load">Download &amp; load model</button>
+          <button class="btn ghost" id="ask" disabled>Answer grounded question</button>
+        </div>
+        <div class="progress" id="progress" hidden><i></i></div>
+        <div class="plog" id="plog"></div>
+
+        <div class="answer" id="answer"></div>
+        <div class="metric" id="metric"></div>
+        <p class="faint" style="margin-top:12px">
+          The system prompt restricts the model to the retrieved nodes and asks it to cite node ids
+          and to say when the record is silent — the same discipline <code>/api/ask</code> enforces.
+          Watch how well a small in-browser model actually honours it.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <footer class="note">
+    Spike prototype for <a href="https://github.com/watermark-directory/the-watermark-directory/issues/1576">#1576</a>.
+    Decision + numbers: <code>docs/webllm-spike.md</code>. Loads
+    <code>@mlc-ai/web-llm</code> from a CDN — a local-demo allowance, not the production build.
+  </footer>
+</div>
+
+<script type="module">
+  // ---------------------------------------------------------------------------
+  // 0. State + example questions
+  // ---------------------------------------------------------------------------
+  const EXAMPLES = [
+    "What is the design low flow that sizes effluent dilution?",
+    "What is the Roadwork Development Agreement and its grant-refund clause?",
+    "Which open questions concern the Bistrozzi indirect-discharge permit?",
+    "How does closed-loop cooling affect the water thesis?",
+  ];
+  let CORPUS = [];
+  let lastHits = [];
+  let engine = null;
+
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+
+  // ---------------------------------------------------------------------------
+  // 1. WebGPU detection — the gate for the whole chat pane
+  // ---------------------------------------------------------------------------
+  async function detectGPU() {
+    const banner = $("gpu-banner"), text = $("gpu-text");
+    if (!("gpu" in navigator)) {
+      banner.className = "gpu-banner bad";
+      text.innerHTML = "<b>WebGPU is not available in this browser.</b> The retrieval pane still works; " +
+        "the WebLLM chat pane is disabled. WebLLM requires WebGPU — Chrome/Edge 113+, Safari 18+, or Firefox 141+.";
+      $("load").disabled = true;
+      return false;
+    }
+    try {
+      const adapter = await navigator.gpu.requestAdapter();
+      if (!adapter) throw new Error("no adapter");
+      banner.className = "gpu-banner ok";
+      const info = adapter.info || {};
+      const desc = [info.vendor, info.architecture].filter(Boolean).join(" / ") || "adapter present";
+      text.innerHTML = `<b>WebGPU is available</b> (${esc(desc)}). The chat pane can download and run a model.`;
+      return true;
+    } catch (e) {
+      banner.className = "gpu-banner bad";
+      text.innerHTML = "<b>WebGPU present but no adapter could be acquired.</b> " +
+        "The chat pane is disabled (common on headless/remote/older-GPU setups).";
+      $("load").disabled = true;
+      return false;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // 2. Retrieval — a small lexical scorer over the mirror nodes
+  // ---------------------------------------------------------------------------
+  const STOP = new Set("the a an of to in on at for and or is are was be as by with from that this it its into what which who whom how does do".split(" "));
+  const tokenize = (s) => (s.toLowerCase().match(/[a-z0-9]+/g) || []).filter((t) => t.length > 1 && !STOP.has(t));
+
+  function score(qTokens, node) {
+    const label = node.label.toLowerCase();
+    const desc = (node.desc || "").toLowerCase();
+    let s = 0;
+    for (const t of qTokens) {
+      if (label.split(/[^a-z0-9]+/).includes(t)) s += 6;         // exact word in label
+      else if (label.includes(t)) s += 3;                        // substring in label
+      if (desc.split(/[^a-z0-9]+/).includes(t)) s += 2;          // exact word in description
+      else if (desc.includes(t)) s += 1;                         // substring in description
+    }
+    return s;
+  }
+
+  function retrieve(query, k = 6) {
+    const q = tokenize(query);
+    if (!q.length) return [];
+    return CORPUS
+      .map((n) => ({ n, s: score(q, n) }))
+      .filter((x) => x.s > 0)
+      .sort((a, b) => b.s - a.s)
+      .slice(0, k);
+  }
+
+  function renderHits(scored) {
+    const el = $("hits");
+    if (!scored.length) { el.innerHTML = '<p class="faint" style="padding:12px 2px">No nodes matched — the record may be silent on this. Try a corpus term.</p>'; return; }
+    el.innerHTML = scored.map(({ n, s }, i) => {
+      const evCls = n.tag === "open" ? "open" : n.cls;
+      const evLabel = n.tag === "open" ? "open" : n.cls;
+      return `<div class="hit">
+        <span class="rank">${String(i + 1).padStart(2, "0")}</span>
+        <span><span class="label">${esc(n.label)}</span> <span class="ev ${evCls}">${esc(evLabel)}</span></span>
+        <span class="score">${s}</span>
+        <span class="desc">${esc(n.desc || "—")}</span>
+        <span class="uri">yidam://corpus/${esc(n.id)}</span>
+      </div>`;
+    }).join("");
+  }
+
+  function doSearch() {
+    const query = $("q").value.trim();
+    lastHits = retrieve(query);
+    renderHits(lastHits);
+    $("ret-meta").textContent = lastHits.length ? `${lastHits.length} nodes · scored ${CORPUS.length} in <1ms` : "";
+    $("ask").disabled = !(engine && lastHits.length);
+  }
+
+  // ---------------------------------------------------------------------------
+  // 3. WebLLM — load model, then generate a grounded answer
+  // ---------------------------------------------------------------------------
+  // Curated small models with approximate download sizes (from WebLLM's prebuilt config).
+  const MODELS = [
+    { id: "Qwen2.5-0.5B-Instruct-q4f16_1-MLC", label: "Qwen2.5 0.5B · ~0.4 GB", vram: 945 },
+    { id: "SmolLM2-360M-Instruct-q4f16_1-MLC", label: "SmolLM2 360M · ~0.3 GB", vram: 580 },
+    { id: "Llama-3.2-1B-Instruct-q4f16_1-MLC", label: "Llama 3.2 1B · ~0.9 GB", vram: 1129 },
+  ];
+
+  function populateModels() {
+    const sel = $("model");
+    sel.innerHTML = MODELS.map((m) => `<option value="${m.id}">${m.label}</option>`).join("");
+  }
+
+  async function loadModel() {
+    const banner = $("progress"), bar = banner.querySelector("i"), log = $("plog");
+    $("load").disabled = true;
+    banner.hidden = false;
+    log.textContent = "Fetching WebLLM runtime from CDN…";
+    let webllm;
+    try {
+      webllm = await import("https://esm.run/@mlc-ai/web-llm");
+    } catch (e) {
+      log.textContent = "Could not load the WebLLM runtime (needs network access to the CDN).";
+      $("load").disabled = false;
+      return;
+    }
+    const model = $("model").value;
+    const t0 = performance.now();
+    try {
+      engine = await webllm.CreateMLCEngine(model, {
+        initProgressCallback: (p) => {
+          log.textContent = p.text;
+          const m = /(\d+)\/(\d+)/.exec(p.text);
+          if (m) bar.style.width = `${Math.round((+m[1] / +m[2]) * 100)}%`;
+          else if (typeof p.progress === "number") bar.style.width = `${Math.round(p.progress * 100)}%`;
+        },
+      });
+      bar.style.width = "100%";
+      log.textContent = `Model ready in ${((performance.now() - t0) / 1000).toFixed(1)}s (cached for next time).`;
+      $("ask").disabled = !lastHits.length;
+    } catch (e) {
+      log.textContent = "Model load failed: " + (e && e.message ? e.message : e);
+      $("load").disabled = false;
+    }
+  }
+
+  function buildContext(hits) {
+    return hits.map(({ n }, i) =>
+      `[${i + 1}] (yidam://corpus/${n.id}) ${n.label} — ${n.desc || ""}`.trim()).join("\n");
+  }
+
+  async function ask() {
+    if (!engine) return;
+    const query = $("q").value.trim();
+    if (!lastHits.length) { doSearch(); }
+    if (!lastHits.length) return;
+    const answer = $("answer"), metric = $("metric");
+    answer.textContent = "";
+    metric.textContent = "";
+    $("ask").disabled = true;
+
+    const context = buildContext(lastHits);
+    const system =
+      "You answer questions about a public-records corpus using ONLY the numbered corpus nodes " +
+      "provided. Cite the node ids you use, in brackets like [1]. If the nodes do not contain the " +
+      "answer, say the record is silent — never guess or invent facts, figures, or citations.";
+    const user = `Corpus nodes:\n${context}\n\nQuestion: ${query}\n\nAnswer using only the nodes above, with [n] citations.`;
+
+    const t0 = performance.now();
+    let tokens = 0, ttft = 0;
+    try {
+      const stream = await engine.chat.completions.create({
+        messages: [{ role: "system", content: system }, { role: "user", content: user }],
+        temperature: 0.2, stream: true,
+      });
+      for await (const chunk of stream) {
+        const delta = chunk.choices?.[0]?.delta?.content || "";
+        if (delta) { if (!tokens) ttft = performance.now() - t0; answer.textContent += delta; tokens++; }
+      }
+      const dt = (performance.now() - t0) / 1000;
+      metric.textContent =
+        `~${tokens} chunks in ${dt.toFixed(1)}s · first token ${(ttft / 1000).toFixed(1)}s · ` +
+        `grounded on ${lastHits.length} nodes. Verify every [n] against its node.`;
+    } catch (e) {
+      answer.textContent = "Generation failed: " + (e && e.message ? e.message : e);
+    } finally {
+      $("ask").disabled = false;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // 4. Boot
+  // ---------------------------------------------------------------------------
+  async function boot() {
+    $("examples").innerHTML = EXAMPLES.map((q) => `<span class="chip" data-q="${esc(q)}">${esc(q)}</span>`).join("");
+    $("examples").addEventListener("click", (e) => {
+      const chip = e.target.closest(".chip");
+      if (chip) { $("q").value = chip.dataset.q; doSearch(); }
+    });
+    $("search").addEventListener("click", doSearch);
+    $("q").addEventListener("keydown", (e) => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) doSearch(); });
+    $("load").addEventListener("click", loadModel);
+    $("ask").addEventListener("click", ask);
+    populateModels();
+    detectGPU();
+    try {
+      const res = await fetch("./corpus.json");
+      const data = await res.json();
+      CORPUS = data.nodes || [];
+      $("ret-meta").textContent = `${CORPUS.length} nodes loaded`;
+    } catch (e) {
+      $("hits").innerHTML = '<p class="faint" style="padding:12px 2px">Could not load corpus.json — serve this file over HTTP (see README).</p>';
+    }
+  }
+  boot();
+</script>
+</body>
+</html>
