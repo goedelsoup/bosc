@@ -1,12 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { loadFeed } from "./bundle";
-import {
-  KIND_META,
-  KIND_ORDER,
-  groupByKind,
-  summarizeByKind,
-  topByDegree,
-} from "./corpusIndex";
+import { KIND_META, KIND_ORDER, groupByKind, summarizeByKind, topByDegree } from "./corpusIndex";
 import type { CorpusNodeItem } from "./feeds";
 
 // The corpus node DATA is the `corpus-index` bundle feed (#1573); the reducers are exercised
