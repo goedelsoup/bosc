@@ -105,5 +105,12 @@ notes: >-
   it adds no new committed reference upstream). It lets retrieval collapse a filing's versions to
   the canonical one while keeping a superseded version's distinct evidence (the `deduplicate` /
   `version_policy` args on `search_corpus` / `search_passages`).
+  The `corpus-index` feed (#1573, contract 1.28.0) is the browsable node map behind `/wiki/corpus` —
+  one row per node of the yidam corpus mirror (`watermark corpus-mirror`) with its display kind,
+  in/out degree, line count, and freshness (the newest commit of the committed source the node
+  derives from; null when it has none). Unlike the `catalog-index`-style post-passes above it
+  re-builds the mirror itself (`watermark.site.corpus_index` over `build_mirror`), so it reads the
+  committed corpus directly and adds no new committed reference upstream; always emitted (a mirror
+  is never empty).
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.

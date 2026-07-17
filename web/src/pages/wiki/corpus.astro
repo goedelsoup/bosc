@@ -13,12 +13,7 @@
  */
 import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
-import {
-  type KindGroup,
-  groupByKind,
-  summarizeByKind,
-  topByDegree,
-} from "@watermark/core/corpusIndex";
+import { type KindGroup, groupByKind, summarizeByKind, topByDegree } from "@watermark/core/corpusIndex";
 import type { CorpusNodeItem, CorpusNodeKind } from "@watermark/core/feeds";
 import { withBase } from "@watermark/core/site";
 
