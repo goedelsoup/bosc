@@ -60,6 +60,51 @@
       "title": "DomainReadiness",
       "type": "object"
     },
+    "ExportRef": {
+      "additionalProperties": false,
+      "description": "One entry in the manifest's graph-**exports** index (#1574) — a downloadable serialization\nof the corpus mirror (:mod:`watermark.site.graph_exports`), not a typed feed.\n\nDistinct from :class:`FeedRef`: an export is an interchange artifact (RDF / GraphML) for\nexternal graph tools, keyed by ``format`` rather than storage ``kind``, carrying the graph's\nnode/edge counts. The wiki graph page reads this list to render the download links.",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "media_type": {
+          "title": "Media Type",
+          "type": "string"
+        },
+        "format": {
+          "enum": [
+            "turtle",
+            "jsonld",
+            "graphml"
+          ],
+          "title": "Format",
+          "type": "string"
+        },
+        "node_count": {
+          "title": "Node Count",
+          "type": "integer"
+        },
+        "edge_count": {
+          "title": "Edge Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "path",
+        "media_type",
+        "format",
+        "node_count",
+        "edge_count"
+      ],
+      "title": "ExportRef",
+      "type": "object"
+    },
     "FeedRef": {
       "additionalProperties": false,
       "description": "One entry in the manifest's feed index — what it is and how to read it.",
@@ -166,6 +211,13 @@
         "$ref": "#/$defs/FeedRef"
       },
       "title": "Feeds",
+      "type": "array"
+    },
+    "exports": {
+      "items": {
+        "$ref": "#/$defs/ExportRef"
+      },
+      "title": "Exports",
       "type": "array"
     }
   },

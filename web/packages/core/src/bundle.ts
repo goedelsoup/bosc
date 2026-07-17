@@ -78,6 +78,20 @@ export interface FeedRef {
   count: number;
 }
 
+/** A downloadable graph export's format (`bosc.site.feeds.ExportFormat`). */
+export type ExportFormat = "turtle" | "jsonld" | "graphml";
+
+/** One graph export's entry in the manifest's `exports` index (`bosc.site.feeds.ExportRef`, #1574) —
+ *  an RDF/GraphML serialization of the corpus mirror, downloadable from the wiki graph page. */
+export interface ExportRef {
+  name: string;
+  path: string;
+  media_type: string;
+  format: ExportFormat;
+  node_count: number;
+  edge_count: number;
+}
+
 /** A domain's activation state (`bosc.site.readiness.State`). */
 export type DomainState = "absent" | "seeded" | "live";
 /** A site's readiness tier (`bosc.site.readiness.Tier`). */
@@ -110,6 +124,9 @@ export interface Manifest {
    *  synthetic/pre-1.17 fixture without the block degrades (all-absent) rather than crashing. */
   readiness?: Readiness;
   feeds: FeedRef[];
+  /** Downloadable graph exports of the corpus mirror (#1574 / contract 1.28.0). Optional: absent
+   *  from a redirected/test bundle or a pre-1.28 fixture, so the graph page degrades to no downloads. */
+  exports?: ExportRef[];
 }
 
 function candidateDirs(slug: string): string[] {
@@ -208,6 +225,22 @@ export function loadFeed<T = unknown>(name: string, slug: string = activeSite())
     return rows as T;
   }
   return JSON.parse(raw) as T;
+}
+
+/** The downloadable graph exports a site's bundle advertises (#1574), or [] when the bundle
+ *  carries none (a redirected/test export, a thin peer, or a pre-1.28 fixture). The wiki graph
+ *  page reads this to render the download links and degrades cleanly to none. */
+export function getExports(slug: string = activeSite()): ExportRef[] {
+  return loadManifest(slug).exports ?? [];
+}
+
+/**
+ * Read a raw (non-JSON) bundle artifact — a graph export's `.ttl`/`.jsonld`/`.graphml` payload
+ * (#1574) — as text, by its bundle-root-relative `path`. The `/exports/[file]` endpoints serve
+ * these verbatim with the export's own media type; unlike `loadFeed` it never JSON-parses.
+ */
+export function readBundleText(path: string, slug: string = activeSite()): string {
+  return readFileSync(join(bundleDir(slug), path), "utf-8");
 }
 
 /** Convenience wrapper — the three-hypothesis feed, or [] if unavailable. */

@@ -39,6 +39,13 @@ def corpus_mirror(
         "embed + index-build). Off by default — downloads the ~80 MB embedding model on "
         "first run and is rebuilt lazily by `yidam serve --mcp` regardless.",
     ),
+    exports: bool = typer.Option(
+        False,
+        "--exports/--no-exports",
+        help="Also render the downloadable graph exports (RDF Turtle + JSON-LD, GraphML) of the "
+        "mirror into .yidam/exports/ (yidam export rdf|graphml). `watermark export` writes these "
+        "into the bundle's exports/ automatically; this is the standalone inspection path.",
+    ),
 ) -> None:
     """Project the corpus (entities, relationships, concepts, people, leads, hypotheses,
     [open] claims) into yidam corpus nodes under .yidam/corpus/ for the active site, and
@@ -88,6 +95,21 @@ def corpus_mirror(
                     console.print(f"    - {problem}")
             raise typer.Exit(code=1)
         console.print(f"[green]graph-check clean[/] — {len(mirror.nodes)} instances.")
+
+    if exports:
+        from watermark.site.graph_exports import (
+            default_exports_dir,
+            resolve_provenance,
+            write_exports,
+        )
+
+        exports_dir = default_exports_dir(settings)
+        written = write_exports(mirror, exports_dir, resolve_provenance(settings))
+        listed = ", ".join(f"{e.fmt} → {e.filename}" for e in written)
+        console.print(
+            f"[green]Exported[/] the graph → {exports_dir} "
+            f"[dim]({written[0].node_count} nodes / {written[0].edge_count} edges; {listed})[/]"
+        )
 
     if index:
         from watermark.site.yidam_index import build_yidam_index

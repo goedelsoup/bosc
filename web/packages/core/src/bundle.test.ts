@@ -1,6 +1,6 @@
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
 
 const tmpDirs: string[] = [];
@@ -20,7 +20,11 @@ function makeBundle(manifest: object, files: Record<string, string>): string {
   const dir = mkdtempSync(join(tmpdir(), "bosc-bundle-"));
   tmpDirs.push(dir);
   writeFileSync(join(dir, "manifest.json"), JSON.stringify(manifest));
-  for (const [name, body] of Object.entries(files)) writeFileSync(join(dir, name), body);
+  for (const [name, body] of Object.entries(files)) {
+    const target = join(dir, name);
+    mkdirSync(dirname(target), { recursive: true }); // support nested paths like exports/corpus.ttl
+    writeFileSync(target, body);
+  }
   return dir;
 }
 
@@ -116,6 +120,32 @@ describe("contract-version guard", () => {
     const dir = makeBundle(manifestWith([], "1.9"), {});
     const m = await loadBundleModule(dir);
     expect(m.loadManifest().contract_version).toBe("1.9");
+  });
+});
+
+describe("graph exports (#1574)", () => {
+  const exportRef = {
+    name: "corpus-graph.ttl",
+    path: "exports/corpus.ttl",
+    media_type: "text/turtle",
+    format: "turtle",
+    node_count: 3,
+    edge_count: 2,
+  };
+
+  it("reads the manifest's exports block and the raw export payload", async () => {
+    const manifest = { ...manifestWith([]), exports: [exportRef] };
+    const dir = makeBundle(manifest, { "exports/corpus.ttl": "@prefix yidam: <x> .\n" });
+    const m = await loadBundleModule(dir);
+
+    expect(m.getExports()).toEqual([exportRef]);
+    expect(m.readBundleText("exports/corpus.ttl")).toBe("@prefix yidam: <x> .\n");
+  });
+
+  it("degrades to no exports when the manifest omits the block (pre-1.28 / test bundle)", async () => {
+    const dir = makeBundle(manifestWith([]), {});
+    const m = await loadBundleModule(dir);
+    expect(m.getExports()).toEqual([]);
   });
 });
 
