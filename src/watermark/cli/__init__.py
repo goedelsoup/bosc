@@ -35,6 +35,7 @@ from watermark.cli import (  # noqa: F401
     sites,
     subdivisions,
     sweep,
+    wiki,
 )
 from watermark.cli._base import app
 
