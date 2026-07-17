@@ -22,18 +22,6 @@ terms:
     CRA tax filing cites 893,034 ft²; stopohiodatacenters cites 899,065 ft²). `[verified]` (range…
   sources:
     data/extracted/hamilton-middletown/data-centers.md: 7
-- term: EPA
-  kind: term
-  tags:
-  - environment
-  - regulator
-  provenance: lexicon
-  count: 6
-  note: The U.S. Environmental Protection Agency, the federal environmental regulator.
-  example: …e Great Miami). `[verified]` - **NPDES permit:** LeSourdsville facility ID 1PK00011 (Ohio
-    EPA). `[reference]` — confirm the current NPDES number via Ohio EPA / EPA ECHO before citing…
-  sources:
-    data/extracted/hamilton-middletown/data-centers.md: 6
 - term: OEPA
   kind: term
   tags:
@@ -119,6 +107,18 @@ terms:
   note: EPA's public database of facility permits, inspections, violations, and enforcement.
   example: …1PK00011 (Ohio EPA). `[reference]` — confirm the current NPDES number via Ohio EPA / EPA ECHO
     before citing as `[verified]`. No project-specific NPDES for Project Mila surfaced. `[ope…
+  sources:
+    data/extracted/hamilton-middletown/data-centers.md: 2
+- term: EPA
+  kind: term
+  tags:
+  - environment
+  - regulator
+  provenance: lexicon
+  count: 2
+  note: The U.S. Environmental Protection Agency, the federal environmental regulator.
+  example: …y ID 1PK00011 (Ohio EPA). `[reference]` — confirm the current NPDES number via Ohio EPA /
+    EPA ECHO before citing as `[verified]`. No project-specific NPDES for Project Mila surfaced.…
   sources:
     data/extracted/hamilton-middletown/data-centers.md: 2
 - term: moratorium

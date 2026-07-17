@@ -47,8 +47,13 @@ def term_backlog(
     ``<scope>.yaml`` per scope with any hits under ``data/concepts/backlog/`` (#1565). Regenerable;
     the committed backlog drives A2 (batch-author concepts, #1566).
     """
+    from watermark.cli._base import SITES
     from watermark.site import term_backlog as tb
 
+    if site is not None and site not in SITES:
+        raise typer.BadParameter(
+            f"unknown site {site!r}; known: {sorted(SITES)}", param_hint="--site"
+        )
     settings = get_settings()
     sites = [site] if site else None
     backlogs = tb.harvest_backlog(

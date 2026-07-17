@@ -6,7 +6,7 @@
 scope: fort-wayne
 sources_scanned: 2
 glossary_defined: 9
-term_count: 25
+term_count: 23
 candidate_count: 18
 candidates_found: 18
 terms:
@@ -100,18 +100,6 @@ terms:
     SNC mechanics, quantified (#359) `[verified: ECHO DMR]` Over the full 2023-01 → 2026-06 DMR w…'
   sources:
     data/extracted/fort-wayne/wwtp-receiving-water.md: 6
-- term: EPA
-  kind: term
-  tags:
-  - environment
-  - regulator
-  provenance: lexicon
-  count: 5
-  note: The U.S. Environmental Protection Agency, the federal environmental regulator.
-  example: …23-01-01 --end 2026-06-30 --design-flow 74.0`. - **Maumee Watershed Nutrient TMDL** (Ohio
-    EPA 2023, US EPA-approved) — `data/documents/maumee-tmdl/` (Table ES1, boundary conditions).…
-  sources:
-    data/extracted/fort-wayne/wwtp-receiving-water.md: 5
 - term: NPDES
   kind: term
   tags:
@@ -174,6 +162,18 @@ terms:
     AEP, IURC, PJM AEP zone) | ## 2. Timeline `[verified]` - **Oct 2023** — a 12-building, 700+ a…'
   sources:
     data/extracted/fort-wayne/datacenter-facility.md: 3
+- term: EPA
+  kind: term
+  tags:
+  - environment
+  - regulator
+  provenance: lexicon
+  count: 3
+  note: The U.S. Environmental Protection Agency, the federal environmental regulator.
+  example: …d 2026-06-30 --design-flow 74.0`. - **Maumee Watershed Nutrient TMDL** (Ohio EPA 2023, US
+    EPA-approved) — `data/documents/maumee-tmdl/` (Table ES1, boundary conditions). - ECHO invent…
+  sources:
+    data/extracted/fort-wayne/wwtp-receiving-water.md: 3
 - term: consent decree
   kind: concept
   tags:
@@ -249,18 +249,6 @@ terms:
     Rezoning approved locally. (The full abatement ordinance + the development agreement — described i…
   sources:
     data/extracted/fort-wayne/datacenter-facility.md: 2
-- term: curve number
-  kind: term
-  tags:
-  - hydrology
-  - stormwater
-  provenance: lexicon
-  count: 1
-  note: The NRCS coefficient (0–100) relating land cover and soil to storm runoff depth.
-  example: …mg/l MO / 7.5 mg/l weekly (mass @ 100 MGD) | 85% removal waived (CSO policy) | The new Cd/CN/Pb
-    limits were added because prior-cycle monitoring showed a **reasonable potential to ex…
-  sources:
-    data/extracted/fort-wayne/wwtp-receiving-water.md: 1
 - term: EIA
   kind: term
   tags:
@@ -309,18 +297,6 @@ terms:
   note: A nutrient water-quality parameter; excess loading drives the Lake Erie / Maumee algae problem.
   example: …low per IDEM's CSO max-flow policy. | Parameter | Renewal term | Note | |---|---|---| | **Total
     phosphorus** | 1.0 mg/l (sliding scale or 1.0, whichever more stringent) | unchanged from prior perm…
-  sources:
-    data/extracted/fort-wayne/wwtp-receiving-water.md: 1
-- term: variance
-  kind: concept
-  tags:
-  - land-use
-  - governance
-  provenance: lexicon
-  count: 1
-  note: A parcel-specific waiver of a zoning standard granted by a board of zoning appeals.
-  example: …g/l** (12-mo rolling avg of daily max); final WQBELs 1.3 / 3.2 ng/l | Streamlined Mercury
-    Variance renewed (in effect since 2007); wildlife criterion, no mixing zone | | TSS | 10 mg/l MO /…
   sources:
     data/extracted/fort-wayne/wwtp-receiving-water.md: 1
 candidates:

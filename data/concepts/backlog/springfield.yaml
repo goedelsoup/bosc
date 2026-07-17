@@ -6,7 +6,7 @@
 scope: springfield
 sources_scanned: 1
 glossary_defined: 9
-term_count: 13
+term_count: 12
 candidate_count: 4
 candidates_found: 4
 terms:
@@ -36,18 +36,6 @@ terms:
     rezoning (Z-2026-05, below) is in **Clark County's** Green Township (the Springfield-Beckley Airpo…
   sources:
     data/extracted/springfield/data-centers.md: 6
-- term: EPA
-  kind: term
-  tags:
-  - environment
-  - regulator
-  provenance: lexicon
-  count: 5
-  note: The U.S. Environmental Protection Agency, the federal environmental regulator.
-  example: …r:** 3 existing + 16 planned diesel backup generators; "all generators operate under Ohio
-    EPA permits." `[verified]` - **Investment/jobs:** up to **$1.3B** total (Constant Company cap…
-  sources:
-    data/extracted/springfield/data-centers.md: 5
 - term: OEPA
   kind: term
   tags:

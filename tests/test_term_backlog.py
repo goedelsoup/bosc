@@ -342,3 +342,94 @@ def test_harvest_backlog_over_fixture_tree(tmp_path: Path) -> None:
 
 def test_backlog_dirname_constant() -> None:
     assert BACKLOG_DIRNAME == "backlog"
+
+
+# --- overlap resolution + homonym excludes --------------------------------------------------
+def _overlap_lexicon() -> Lexicon:
+    return Lexicon(
+        terms=[
+            LexiconEntry(term="EPA", aliases=["Environmental Protection Agency"]),
+            LexiconEntry(term="OEPA", aliases=["Ohio EPA"]),
+            LexiconEntry(term="variance", exclude=["mercury variance"]),
+            LexiconEntry(term="dilution", exclude=["isotope dilution"]),
+            LexiconEntry(term="TIF", aliases=["tax increment financing"], exclude=[".tif"]),
+        ]
+    )
+
+
+def test_longer_alias_wins_the_overlapping_span() -> None:
+    # "Ohio EPA" is attributed only to OEPA; a bare "EPA" still counts for EPA.
+    text = "The Ohio EPA issued a PTI; separately the EPA agreed and the U.S. EPA concurred."
+    bl = harvest_scope(
+        "s",
+        [("f.md", text)],
+        lexicon=_overlap_lexicon(),
+        glossary_index=frozenset(),
+        defined_count=0,
+        discover=False,
+    )
+    counts = {t.term: t.count for t in bl.terms}
+    assert counts["OEPA"] == 1  # "Ohio EPA"
+    assert counts["EPA"] == 2  # "the EPA" + "U.S. EPA" — NOT the "Ohio EPA" occurrence
+
+
+@pytest.mark.parametrize(
+    ("text", "term", "expected"),
+    [
+        ("A Streamlined Mercury Variance renewed; also a zoning variance filed.", "variance", 1),
+        ("Only a Mercury Variance appears here.", "variance", None),
+        ("Analyzed by isotope-dilution EPA Method 537.1 at the plant.", "dilution", None),
+        ("Effluent dilution matters; isotope-dilution is a lab method.", "dilution", 1),
+        ("Wrote scene.tif then formed a TIF district downtown.", "TIF", 1),
+        ("The pipeline writes a dated <acq-date>.tif sidecar only.", "TIF", None),
+    ],
+)
+def test_exclude_phrases_drop_homonyms(text: str, term: str, expected: int | None) -> None:
+    bl = harvest_scope(
+        "s",
+        [("f.md", text)],
+        lexicon=_overlap_lexicon(),
+        glossary_index=frozenset(),
+        defined_count=0,
+        discover=False,
+    )
+    counts = {t.term: t.count for t in bl.terms}
+    assert counts.get(term) == expected
+
+
+# --- input validation -----------------------------------------------------------------------
+@pytest.mark.parametrize(("min_count", "max_candidates"), [(0, 40), (-1, 40), (1, -1)])
+def test_harvest_scope_rejects_bad_thresholds(min_count: int, max_candidates: int) -> None:
+    with pytest.raises(ValueError):
+        harvest_scope(
+            "s",
+            [("f.md", "NPDES")],
+            lexicon=_lexicon(),
+            glossary_index=frozenset(),
+            defined_count=0,
+            min_count=min_count,
+            max_candidates=max_candidates,
+        )
+
+
+# --- write_backlog removes stale empty artifacts --------------------------------------------
+def test_write_backlog_unlinks_stale_empty_file(tmp_path: Path) -> None:
+    nonempty = harvest_scope(
+        "s", [("f.md", "NPDES")], lexicon=_lexicon(), glossary_index=frozenset(), defined_count=0
+    )
+    path = write_backlog(nonempty, tmp_path)
+    assert path is not None and path.exists()
+    # A later run where the scope went empty must remove the stale file (idempotent regen).
+    assert write_backlog(ScopeBacklog(scope="s"), tmp_path) is None
+    assert not path.exists()
+
+
+# --- CLI --site validation ------------------------------------------------------------------
+def test_cli_rejects_unknown_site() -> None:
+    from typer.testing import CliRunner
+
+    from watermark.cli import app
+
+    result = CliRunner().invoke(app, ["term-backlog", "--site", "atlantis", "--no-write"])
+    assert result.exit_code != 0
+    assert "unknown site" in result.output.lower()

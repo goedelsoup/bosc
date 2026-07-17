@@ -22,18 +22,6 @@ terms:
     Ohio EPA regulations; no on-site waste ponds. `[verified]` Source: sidneyoh.com/526. ### Hydrology…'
   sources:
     data/extracted/sidney/data-centers.md: 6
-- term: EPA
-  kind: term
-  tags:
-  - environment
-  - regulator
-  provenance: lexicon
-  count: 4
-  note: The U.S. Environmental Protection Agency, the federal environmental regulator.
-  example: '…erified]` Source: sidneyoh.com/526. - **Stormwater:** retention/detention basins per Ohio
-    EPA regulations; no on-site waste ponds. `[verified]` Source: sidneyoh.com/526. ### Hydrology…'
-  sources:
-    data/extracted/sidney/data-centers.md: 4
 - term: NPDES
   kind: term
   tags:
@@ -181,6 +169,18 @@ terms:
     permit.
   example: …tic; regulatory passby threshold not yet set — see SiteProfile `passby_primary_cfs`.) - **Effluent
     path:** all process water returns via OH0027421 (design 7.0 MGD, actual 4.01 MGD 2023); t…
+  sources:
+    data/extracted/sidney/data-centers.md: 1
+- term: EPA
+  kind: term
+  tags:
+  - environment
+  - regulator
+  provenance: lexicon
+  count: 1
+  note: The U.S. Environmental Protection Agency, the federal environmental regulator.
+  example: '…ng, or food processing. `[verified]` Source: `data/reference/rsei/sidney/inventory.yaml`
+    (EPA RSEI Public Data Set v234, county FIPS 39149). ECHO Great Miami all-NPDES (committed 2026…'
   sources:
     data/extracted/sidney/data-centers.md: 1
 - term: OPC

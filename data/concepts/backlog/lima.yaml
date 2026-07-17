@@ -6,30 +6,10 @@
 scope: lima
 sources_scanned: 19
 glossary_defined: 9
-term_count: 49
+term_count: 47
 candidate_count: 40
 candidates_found: 109
 terms:
-- term: EPA
-  kind: term
-  tags:
-  - environment
-  - regulator
-  provenance: lexicon
-  count: 81
-  note: The U.S. Environmental Protection Agency, the federal environmental regulator.
-  example: …urced) - **IT load 275 MW** [document — OEPA Air PTI P0138965, committed `permits/4132514.epa.yaml`
-    (final, 2026-05-28); 114 gensets × 2.75 ekW ≈ 313 MW backup (per-engine ekW from th…
-  sources:
-    data/extracted/commissioners/bosc-water-balance.analysis.md: 1
-    data/extracted/legal/corpus-completeness-audit.md: 31
-    data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-12-aswcd.analysis.md: 11
-    data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-12.analysis.md: 1
-    data/extracted/legal/prr-mandamus/bosc-site-permit-sequence.md: 23
-    data/extracted/legal/select-committee-2026/hearings-audio/bosc-committee-hearing-2026-06-04-am.transcript.md: 4
-    data/extracted/legal/select-committee-2026/hearings-audio/bosc-committee-hearing-2026-06-04-pm.transcript.md: 8
-    data/extracted/watershed/shedekar-edge-of-field.findings.md: 1
-    data/extracted/watershed/shedekar-vinayak.bibliography.md: 1
 - term: OEPA
   kind: term
   tags:
@@ -65,6 +45,25 @@ terms:
     data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-12-aswcd.analysis.md: 5
     data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-12.analysis.md: 1
     data/extracted/legal/prr-mandamus/bosc-site-permit-sequence.md: 25
+- term: EPA
+  kind: term
+  tags:
+  - environment
+  - regulator
+  provenance: lexicon
+  count: 37
+  note: The U.S. Environmental Protection Agency, the federal environmental regulator.
+  example: …urced) - **IT load 275 MW** [document — OEPA Air PTI P0138965, committed `permits/4132514.epa.yaml`
+    (final, 2026-05-28); 114 gensets × 2.75 ekW ≈ 313 MW backup (per-engine ekW from th…
+  sources:
+    data/extracted/commissioners/bosc-water-balance.analysis.md: 1
+    data/extracted/legal/corpus-completeness-audit.md: 12
+    data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-12-aswcd.analysis.md: 6
+    data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-12.analysis.md: 1
+    data/extracted/legal/prr-mandamus/bosc-site-permit-sequence.md: 9
+    data/extracted/legal/select-committee-2026/hearings-audio/bosc-committee-hearing-2026-06-04-am.transcript.md: 3
+    data/extracted/legal/select-committee-2026/hearings-audio/bosc-committee-hearing-2026-06-04-pm.transcript.md: 4
+    data/extracted/watershed/shedekar-edge-of-field.findings.md: 1
 - term: CGP
   kind: term
   tags:
@@ -578,18 +577,6 @@ terms:
     · **…'
   sources:
     data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-05.analysis.md: 1
-- term: curve number
-  kind: term
-  tags:
-  - hydrology
-  - stormwater
-  provenance: lexicon
-  count: 1
-  note: The NRCS coefficient (0–100) relating land cover and soil to storm runoff depth.
-  example: '…drology/bosc-stormwater-discharge.yaml) — the calibrated discharge screen: composite post
-    CN, 60-in outfall capacity, peak vs Dug Run 7Q10 (`watermark storm-discharge`, #149) - [`../…'
-  sources:
-    data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-12-aswcd.analysis.md: 1
 - term: interconnection queue
   kind: concept
   tags:
@@ -693,18 +680,6 @@ terms:
     TMDL WLAs, sanitary basis - [docs/HYDROLOGY.md](../../../docs/HYDROLOGY.md) — the full generat…
   sources:
     data/extracted/commissioners/bosc-water-balance.analysis.md: 1
-- term: variance
-  kind: concept
-  tags:
-  - land-use
-  - governance
-  provenance: lexicon
-  count: 1
-  note: A parcel-specific waiver of a zoning standard granted by a board of zoning appeals.
-  example: …users 0.71 MGD + significant non-categorical 0.412 MGD); and a renewed general **mercury variance**.
-    Registered in the Lima `SiteProfile.npdes_permits`. - **The reported effluent record (…
-  sources:
-    data/extracted/legal/corpus-completeness-audit.md: 1
 candidates:
 - term: ASABE
   kind: term

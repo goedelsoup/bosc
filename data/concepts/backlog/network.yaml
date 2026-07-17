@@ -8,7 +8,7 @@ sources_scanned: 44
 glossary_defined: 9
 term_count: 56
 candidate_count: 40
-candidates_found: 259
+candidates_found: 260
 terms:
 - term: CRA
   kind: term
@@ -48,34 +48,6 @@ terms:
     docs/reference/periplus/minutes-flag-report.md: 220
     docs/reference/periplus/shawnee-ii-public-meeting-request.md: 1
     docs/the-economic-ledger.md: 1
-- term: EPA
-  kind: term
-  tags:
-  - environment
-  - regulator
-  provenance: lexicon
-  count: 103
-  note: The U.S. Environmental Protection Agency, the federal environmental regulator.
-  example: …ck parameters and permit-certified emission rates; `watermark.air.aermod.engine` runs the
-    EPA binary and parses the modeled ground-level concentrations. This note covers **where the b…
-  sources:
-    .claude/skills/data-center-sweep/SKILL.md: 2
-    .claude/skills/watermark-onboard/SKILL.md: 1
-    docs/AERMOD.md: 7
-    docs/COMPUTE.md: 6
-    docs/COURSE.md: 9
-    docs/DOSSIER.md: 19
-    docs/ECONOMICS.md: 1
-    docs/HYDROLOGY.md: 14
-    docs/bigger-picture.md: 3
-    docs/investigative-method/ENRICHMENT.md: 2
-    docs/legal/mandamus-analysis.md: 2
-    docs/marimo-integration-investigation.md: 2
-    docs/reference/periplus/bosc-supporting-docs.md: 7
-    docs/reference/periplus/minutes-flag-report.md: 1
-    docs/reference/periplus/shawnee-ii-public-meeting-request.md: 13
-    docs/the-load-and-the-grid.md: 5
-    docs/toxics-and-the-corridor.md: 9
 - term: tax abatement
   kind: concept
   tags:
@@ -160,6 +132,33 @@ terms:
   sources:
     docs/reference/periplus/bosc-supporting-docs.md: 27
     docs/reference/periplus/minutes-flag-report.md: 47
+- term: EPA
+  kind: term
+  tags:
+  - environment
+  - regulator
+  provenance: lexicon
+  count: 66
+  note: The U.S. Environmental Protection Agency, the federal environmental regulator.
+  example: …ck parameters and permit-certified emission rates; `watermark.air.aermod.engine` runs the
+    EPA binary and parses the modeled ground-level concentrations. This note covers **where the b…
+  sources:
+    .claude/skills/data-center-sweep/SKILL.md: 1
+    .claude/skills/watermark-onboard/SKILL.md: 1
+    docs/AERMOD.md: 7
+    docs/COMPUTE.md: 4
+    docs/COURSE.md: 7
+    docs/DOSSIER.md: 15
+    docs/ECONOMICS.md: 1
+    docs/HYDROLOGY.md: 5
+    docs/bigger-picture.md: 2
+    docs/investigative-method/ENRICHMENT.md: 1
+    docs/legal/mandamus-analysis.md: 1
+    docs/marimo-integration-investigation.md: 2
+    docs/reference/periplus/bosc-supporting-docs.md: 4
+    docs/reference/periplus/shawnee-ii-public-meeting-request.md: 6
+    docs/the-load-and-the-grid.md: 4
+    docs/toxics-and-the-corridor.md: 5
 - term: NPDES
   kind: term
   tags:
@@ -217,19 +216,6 @@ terms:
   sources:
     docs/reference/periplus/bosc-supporting-docs.md: 28
     docs/reference/periplus/minutes-flag-report.md: 28
-- term: TIF
-  kind: term
-  tags:
-  - land-use
-  - finance
-  provenance: lexicon
-  count: 48
-  note: A financing tool that earmarks the property-tax increment from new development to pay for it.
-  example: '…d write a dated GeoTIFF. - Output: `data/reference/imagery/<site>/<collection>/<acq-date>.tif`
-    plus a provenance sidecar (see §4). Raw scene bytes cache under git-ignored `data/cache/…'
-  sources:
-    docs/imagery-subsystem.md: 1
-    docs/reference/periplus/minutes-flag-report.md: 47
 - term: enterprise zone
   kind: term
   tags:
@@ -241,6 +227,19 @@ terms:
   example: '…tion #45-24. Authorize the renewal ofa contract with Allen Economic Development Group for
     Enterprise zone/community reinvestment area technical assistance for 2024. . Resolution #46-24. Renew
     an…'
+  sources:
+    docs/reference/periplus/minutes-flag-report.md: 47
+- term: TIF
+  kind: term
+  tags:
+  - land-use
+  - finance
+  provenance: lexicon
+  count: 47
+  note: A financing tool that earmarks the property-tax increment from new development to pay for it.
+  example: …from the Allen County Engineer and AEDG on scheduling a meeting to discuss Discussion on Tax
+    Increment Financing (TIF) -Brion Rhodes, Allen County Engineer, would like to have a m | | 2025-01-14
+    | regul…
   sources:
     docs/reference/periplus/minutes-flag-report.md: 47
 - term: effluent
@@ -719,19 +718,6 @@ terms:
   sources:
     .claude/skills/public-records-and-legal-strategy/SKILL.md: 2
     docs/legal/mandamus-analysis.md: 3
-- term: curve number
-  kind: term
-  tags:
-  - hydrology
-  - stormwater
-  provenance: lexicon
-  count: 5
-  note: The NRCS coefficient (0–100) relating land cover and soil to storm runoff depth.
-  example: …s (and its tributaries') **low flow**. We bring over Periplus's *Tier-0 design idea* (SCS-CN
-    + mass-balance) as document-grounded Python, not its solver/GIS stack. Every numeric inpu…
-  sources:
-    docs/COURSE.md: 3
-    docs/HYDROLOGY.md: 2
 - term: variance
   kind: concept
   tags:
@@ -864,6 +850,19 @@ terms:
     and…
   sources:
     docs/legal/proponent-analysis.md: 1
+- term: curve number
+  kind: term
+  tags:
+  - hydrology
+  - stormwater
+  provenance: lexicon
+  count: 1
+  note: The NRCS coefficient (0–100) relating land cover and soil to storm runoff depth.
+  example: '…torm (4.25 in `[inference: assumption]`) over the 340-ac footprint `[verified]`: | case |
+    curve number | peak (cfs) | volume (ac-ft) | |---|---|---|---| | pre-development (cropland) | 85 |
+    373…'
+  sources:
+    docs/HYDROLOGY.md: 1
 - term: dissolved oxygen
   kind: concept
   tags:
