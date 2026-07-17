@@ -86,6 +86,26 @@ const DEDUP_PROPS = {
   },
 } as const;
 
+// search_passages-specific dedup knobs: passages collapse ONLY byte-identical duplicate documents
+// (identical pages) — draft/final page variants are always retained (their pages legitimately
+// differ), so `version_policy` here governs only the duplicate pages, not draft-vs-final.
+const PASSAGE_DEDUP_PROPS = {
+  deduplicate: {
+    type: "string",
+    enum: ["none", "canonical"],
+    description:
+      "Collapse byte-identical duplicate documents to the canonical copy (default canonical): identical pages fold to one. Draft/final page variants are ALWAYS kept distinct (their pages differ). `none` returns every page.",
+    default: "canonical",
+  },
+  version_policy: {
+    type: "string",
+    enum: ["all", "latest_only", "latest_with_relevant_older_evidence"],
+    description:
+      "Governs ONLY byte-identical duplicate pages here — draft/final page variants are always retained regardless. Both the default (latest_with_relevant_older_evidence) and `latest_only` drop the redundant duplicate pages; `all` disables collapse entirely.",
+    default: "latest_with_relevant_older_evidence",
+  },
+} as const;
+
 export const MCP_TOOLS: readonly ToolSchema[] = [
   {
     name: "search_corpus",
@@ -139,7 +159,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
           description:
             'Restrict to these documents by document_id / rel (e.g. "oepa/2PE00000.pdf"), as returned by search_corpus or get_documents. Leave blank to search all published documents.',
         },
-        ...DEDUP_PROPS,
+        ...PASSAGE_DEDUP_PROPS,
         ...GOVERNANCE_PROPS,
       },
       required: ["query"],

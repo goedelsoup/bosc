@@ -141,6 +141,15 @@ export function dedupeByCluster<T>(pool: T[], opts: DedupOptions<T>): T[] {
       out.push(item); // the representative, or a non-collapsible variant
       continue;
     }
+    // Restricted-collapse mode (passages): a "duplicate" member is byte-identical to its CANONICAL,
+    // not to whatever else is present. When the canonical is absent the representative fell back to
+    // some other present member — possibly a different-content variant (a draft) — so collapsing a
+    // duplicate here could drop the canonical's real page. Retain it. (Unrestricted corpus mode keeps
+    // its "never zero out" fallback: a best-ranked variant legitimately represents the cluster.)
+    if (collapsibleVersions !== null && !canonicalPresent.has(r.info.cluster)) {
+      out.push(item);
+      continue;
+    }
     if (versionPolicy === "latest_only") continue; // drop every non-representative member
     // latest_with_relevant_older_evidence: retain only when this member adds a query-relevant term
     // the representative lacks. No representative text to compare against ⇒ retain (never drop

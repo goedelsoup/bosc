@@ -12,7 +12,7 @@
 // uniform `{ results, token_estimate, truncated, next_cursor }` envelope; an over-cap excerpt is
 // trimmed to the room left after its citation, and the cursor pages through the ranked pool.
 
-import { loadDocVersionsSafe } from "../docVersionsLoad";
+import { type VersionInfo, loadDocVersionsSafe } from "../docVersionsLoad";
 import { dedupeByCluster, parseDeduplicate, parseVersionPolicy } from "../mcpDedup";
 import { type HybridRetrievalEnv, hybridSearch } from "../hybridRetrieve";
 import {
@@ -122,11 +122,15 @@ export async function handleSearchPassages(
 
   // Drop passages from a byte-identical duplicate document (its pages already appear under the
   // canonical) — but keep draft/final page variants (#1590). Full-pool pass before the cursor slice.
-  // Fail open (see search_corpus): a missing/unreachable version map degrades dedup to a no-op.
-  const versions = await loadDocVersionsSafe(requestUrl);
+  const deduplicate = parseDeduplicate(p.deduplicate);
+  const versionPolicy = parseVersionPolicy(p.version_policy);
+  // Skip the version-map fetch when dedup is a no-op (`none`/`all`); otherwise fail open (see
+  // search_corpus): a missing/unreachable map degrades dedup to a no-op, never a hard failure.
+  const versions: Map<string, VersionInfo> =
+    deduplicate === "none" || versionPolicy === "all" ? new Map() : await loadDocVersionsSafe(requestUrl);
   const deduped = dedupeByCluster(pool, {
-    deduplicate: parseDeduplicate(p.deduplicate),
-    versionPolicy: parseVersionPolicy(p.version_policy),
+    deduplicate,
+    versionPolicy,
     query,
     versions,
     access: {

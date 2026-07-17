@@ -149,6 +149,29 @@ describe("dedupeByCluster", () => {
     expect(rels(out)).toEqual([PERMIT, "aedg/other.pdf"]);
   });
 
+  it("passages: retains a duplicate when its canonical is absent (never collapses into a variant)", () => {
+    // Cluster canonical is PERMIT (absent from the pool). A byte-identical COPY is a duplicate OF
+    // PERMIT — not of the DRAFT that happens to rank first — so it must not collapse into the draft.
+    const copyPool: Item[] = [
+      { rel: DRAFT, text: "draft proposed limit 0.4" },
+      { rel: "oepa/copy.pdf", text: "final permit limit 0.5" },
+    ];
+    const versions = new Map<string, VersionInfo>([
+      ["oepa/copy.pdf", { cluster: "oepa:y", canonical: PERMIT, version: "duplicate", isCanonical: false }],
+      [DRAFT, { cluster: "oepa:y", canonical: PERMIT, version: "draft", isCanonical: false }],
+    ]);
+    const out = dedupeByCluster(copyPool, {
+      deduplicate: "canonical",
+      versionPolicy: "latest_only",
+      query: "limit",
+      versions,
+      access,
+      collapsibleVersions: new Set(["duplicate"]),
+    });
+    // Canonical absent → nothing safe to collapse the duplicate into; both members survive.
+    expect(rels(out)).toEqual([DRAFT, "oepa/copy.pdf"]);
+  });
+
   it("an empty version map is a no-op", () => {
     const out = dedupeByCluster(POOL, {
       deduplicate: "canonical",
