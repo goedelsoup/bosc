@@ -1,10 +1,10 @@
 {
   "site": "van-wert",
   "bundle_version": "1.0.0",
-  "contract_version": "1.27.1",
+  "contract_version": "1.28.0",
   "generated_at": "2026-07-13T12:16:27+00:00",
-  "feed_count": 25,
-  "row_total": 218,
+  "feed_count": 26,
+  "row_total": 297,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -215,6 +215,14 @@
       "schema": "schemas/ask-embeddings.schema.json",
       "kind": "collection",
       "count": 0
+    },
+    {
+      "name": "corpus-index",
+      "path": "feeds/corpus-index.json",
+      "media_type": "application/json",
+      "schema": "schemas/corpus-index.schema.json",
+      "kind": "collection",
+      "count": 79
     }
   ]
 }

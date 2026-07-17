@@ -174,7 +174,16 @@ from watermark.site.readiness import State, Tier  # the readiness vocabulary SSO
 #   retrieval can collapse a filing's versions to the canonical one while retaining a superseded
 #   version's distinct evidence (`deduplicate` / `version_policy` args on search_corpus/passages).
 #   Additive/optional — absent for a document with no declared cluster (PATCH, back-compatible).
-CONTRACT_VERSION = "1.27.1"
+# 1.28.0: adds the `corpus-index` collection feed (#1573, epic #1560 workstream C) — the at-a-glance
+#   map of the yidam corpus mirror, one `CorpusNodeItem` per projected node with its display `kind`,
+#   in/out degree, line count, and freshness (last commit of the committed source it derives from).
+#   A post-pass over the just-built `Mirror` (`watermark.site.corpus_index`): `links_in`/`links_out`
+#   are the resolved edge counts, `lines` replicates `write_mirror`'s serialization for parity with
+#   `yidam corpus-index`, and `updated` is the newest git commit date over the node's backing corpus
+#   file(s) (null when a node is aggregated/code-derived — never fabricated). Always emitted (every
+#   site's mirror has ≥1 node), so the schema set stays stable. Not cataloged (a derived view of the
+#   corpus, like `open-questions`). Back-compatible (one additive feed).
+CONTRACT_VERSION = "1.28.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -635,6 +644,53 @@ class OpenQuestionItem(BaseModel):
     hypothesis: str | None = None  # the lens id ("water" | "defense" | "surveillance")
     hypothesis_label: str | None = None  # the human lens label, e.g. "H1 Water & Coercion"
     signal: str | None = None  # the cell's signal strength ("anchor"|"strong"|"moderate"|"watch")
+
+
+# --- corpus-index feed (issue #1573, epic #1560 workstream C) ------------------
+# One row per node of the yidam corpus mirror (`watermark.site.corpus_mirror`): the at-a-glance map
+# of the whole corpus. `kind` is the BOSC display kind (site/entity/person/concept/hypothesis/lead/
+# open-question/relation) refined from the node's `class` + meta — the yidam `class` alone folds
+# entities, people, and the site anchor all into `artifact`, so the finer `kind` is what a reader
+# scans by. Ports the columns of `yidam corpus-index` (class, label, links-out, lines) and adds the
+# in-degree and freshness the issue calls for.
+CorpusNodeKind = Literal[
+    "site",
+    "entity",
+    "person",
+    "concept",
+    "hypothesis",
+    "lead",
+    "open-question",
+    "relation",
+    "node",
+]
+
+
+class CorpusNodeItem(BaseModel):
+    """One node of the corpus mirror — a browsable row for the wiki node-index page.
+
+    The `corpus-index` feed is a **post-pass projection** (`watermark.site.corpus_index`), not a new
+    extraction: it re-reads the just-built :class:`~watermark.site.corpus_mirror.Mirror` (which is
+    itself a projection of the committed corpus) into a flat, sortable table. `node_class` is the
+    yidam class (`artifact`/`concept`/`hypothesis`/`question`/`relation`); `kind` is the finer BOSC
+    display kind derived from the node's meta. `links_out` is the node's own outgoing-edge count and
+    `links_in` the number of other nodes that point at it (both resolved within the mirror). `lines`
+    replicates the serialized node's line count exactly as `yidam corpus-index` reports it. `updated`
+    is the newest commit date (ISO-8601 date) over the committed source file(s) the node derives from
+    — null for an aggregated or code-derived node with no single backing file (never fabricated).
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: str  # the yidam node id — `<class>/<name>`
+    node_class: str  # the yidam class — artifact | concept | hypothesis | question | relation
+    kind: CorpusNodeKind  # the BOSC display kind refined from meta
+    label: str
+    scope: str | None = None  # "site" | "network" (from the node's meta.scope), when known
+    links_out: int  # outgoing edges (this node → others)
+    links_in: int  # incoming edges (others → this node), resolved within the mirror
+    lines: int  # serialized-node line count (parity with `yidam corpus-index`)
+    updated: str | None = None  # ISO date of the newest commit touching the node's source(s)
 
 
 # --- contacts feed ------------------------------------------------------------

@@ -1,10 +1,10 @@
 {
   "site": "findlay",
   "bundle_version": "1.0.0",
-  "contract_version": "1.27.1",
+  "contract_version": "1.28.0",
   "generated_at": "2026-07-16T12:14:17+00:00",
-  "feed_count": 27,
-  "row_total": 240,
+  "feed_count": 28,
+  "row_total": 328,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -231,6 +231,14 @@
       "schema": "schemas/ask-embeddings.schema.json",
       "kind": "collection",
       "count": 0
+    },
+    {
+      "name": "corpus-index",
+      "path": "feeds/corpus-index.json",
+      "media_type": "application/json",
+      "schema": "schemas/corpus-index.schema.json",
+      "kind": "collection",
+      "count": 88
     }
   ]
 }

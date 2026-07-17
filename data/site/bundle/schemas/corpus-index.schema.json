@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "corpus-index feed",
+  "type": "array",
+  "items": {
+    "additionalProperties": false,
+    "description": "One node of the corpus mirror — a browsable row for the wiki node-index page.\n\nThe `corpus-index` feed is a **post-pass projection** (`watermark.site.corpus_index`), not a new\nextraction: it re-reads the just-built :class:`~watermark.site.corpus_mirror.Mirror` (which is\nitself a projection of the committed corpus) into a flat, sortable table. `node_class` is the\nyidam class (`artifact`/`concept`/`hypothesis`/`question`/`relation`); `kind` is the finer BOSC\ndisplay kind derived from the node's meta. `links_out` is the node's own outgoing-edge count and\n`links_in` the number of other nodes that point at it (both resolved within the mirror). `lines`\nreplicates the serialized node's line count exactly as `yidam corpus-index` reports it. `updated`\nis the newest commit date (ISO-8601 date) over the committed source file(s) the node derives from\n— null for an aggregated or code-derived node with no single backing file (never fabricated).",
+    "properties": {
+      "id": {
+        "title": "Id",
+        "type": "string"
+      },
+      "node_class": {
+        "title": "Node Class",
+        "type": "string"
+      },
+      "kind": {
+        "enum": [
+          "site",
+          "entity",
+          "person",
+          "concept",
+          "hypothesis",
+          "lead",
+          "open-question",
+          "relation",
+          "node"
+        ],
+        "title": "Kind",
+        "type": "string"
+      },
+      "label": {
+        "title": "Label",
+        "type": "string"
+      },
+      "scope": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Scope"
+      },
+      "links_out": {
+        "title": "Links Out",
+        "type": "integer"
+      },
+      "links_in": {
+        "title": "Links In",
+        "type": "integer"
+      },
+      "lines": {
+        "title": "Lines",
+        "type": "integer"
+      },
+      "updated": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Updated"
+      }
+    },
+    "required": [
+      "id",
+      "node_class",
+      "kind",
+      "label",
+      "links_out",
+      "links_in",
+      "lines"
+    ],
+    "title": "CorpusNodeItem",
+    "type": "object"
+  }
+}
