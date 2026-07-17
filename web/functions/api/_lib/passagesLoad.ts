@@ -24,11 +24,13 @@ export interface PassageRow {
   text: string;
 }
 
-let cached: PassageRow[] | null = null;
+// Keyed by resolved URL so a different indexUrl (e.g. a per-site override) doesn't return
+// another feed's cached rows. Mirrors askEmbeddingsLoad.
+const cache = new Map<string, PassageRow[]>();
 
 /** Test seam: drop the isolate cache. */
 export function _resetPassagesCache(): void {
-  cached = null;
+  cache.clear();
 }
 
 /**
@@ -37,16 +39,18 @@ export function _resetPassagesCache(): void {
  * degrades to "no passages" rather than a failure. Throws on other fetch/parse failures.
  */
 export async function loadPassages(requestUrl: string, indexUrl?: string): Promise<PassageRow[]> {
-  if (cached) return cached;
   const url = indexUrl ?? new URL("/feeds/passages.json", requestUrl).toString();
+  const hit = cache.get(url);
+  if (hit) return hit;
   const res = await fetchWithTimeout(url);
   if (res.status === 404) {
-    cached = []; // feed absent (no published PDFs) → treat as empty, not a failure
-    return cached;
+    const empty: PassageRow[] = []; // feed absent (no published PDFs) → treat as empty, not a failure
+    cache.set(url, empty);
+    return empty;
   }
   if (!res.ok) throw new Error(`passages fetch failed: ${res.status}`);
   const rows = (await res.json()) as PassageRow[];
   if (!Array.isArray(rows)) throw new Error("passages is not an array");
-  cached = rows;
+  cache.set(url, rows);
   return rows;
 }

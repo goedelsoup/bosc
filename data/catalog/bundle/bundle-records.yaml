@@ -81,5 +81,11 @@ notes: >-
   in the economics / greenops / hydrology / air feeds plus the derived facility `PowerBasis` into
   one queryable table (powering the `get_facts` MCP tool). It reads only feeds/derivations already
   declared above (and the profile-derived power basis), so it adds no new committed upstream.
+  The `passages` + `passage-embeddings` feeds (#1589, contract 1.26.0) are the page-level excerpt
+  index the `search_passages` MCP tool reads — one page-cited passage per text-bearing page of each
+  *published* source PDF (`watermark.site.passages`, scoped to the default-deny publish allowlist
+  so no non-published source text ships), plus its all-MiniLM-L6-v2 vector companion. It reads the
+  already-assembled `documents` feed's published-PDF set (the same `data/documents` corpus the
+  documents feed reads), so it adds no new committed upstream.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.
