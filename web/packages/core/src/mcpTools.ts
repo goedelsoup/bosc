@@ -104,6 +104,26 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
     example: '{"query": "NPDES permit violations", "site": "lima", "limit": 5}',
   },
   {
+    name: "search_passages",
+    description:
+      "Page-level excerpt search over PUBLISHED source PDFs — returns the exact supporting page(s) with a citation, not a whole record. Use when you need the verbatim passage behind a claim (a permit condition, a board vote, a dollar figure) plus a page cite — especially for PDFs, where one relevant page shouldn't require pulling the full extracted document. This is the deeper peer of search_corpus: search_corpus finds WHICH item is relevant; search_passages finds WHICH PAGE says it. Ranking fuses semantic (vector) similarity with BM25, degrading to keyword-only when query embeddings are unavailable. Scoped to the public-publish allowlist, so it covers only documents whose bytes are publicly served — not the whole corpus. Narrow to specific documents with document_ids (the document_id / rel from search_corpus or get_documents). Returns page excerpts (id, document_id, page, section, title, text, score). The text is the PDF text layer verbatim — for scanned pages that is garbled OCR, so treat it as a locator for the cited page, not a transcription; open the page itself with get_document. Size knobs: max_results, max_tokens, max_tokens_per_result (trims the excerpt), cursor, intent.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        query: { type: "string", description: "Search query" },
+        document_ids: {
+          type: "array",
+          items: { type: "string" },
+          description:
+            'Restrict to these documents by document_id / rel (e.g. "oepa/2PE00000.pdf"), as returned by search_corpus or get_documents. Leave blank to search all published documents.',
+        },
+        ...GOVERNANCE_PROPS,
+      },
+      required: ["query"],
+    },
+    example: '{"query": "effluent limit total phosphorus", "document_ids": ["oepa/2PE00000.pdf"]}',
+  },
+  {
     name: "get_timeline",
     description:
       "Dated events for a site (permits, filings, meetings, transactions), oldest-first. Use to build a chronology or find what happened in a window; filter by since/until/category. Returns event records directly (date, category, title, parties, detail, citation) — a terminal read, not a discovery index; to open the document behind an event, take its parties/title into search_corpus or get_document. Size knobs: max_results, max_tokens, max_tokens_per_result (sheds detail/parties first), cursor, intent.",
@@ -169,7 +189,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
   {
     name: "get_document",
     description:
-      "Fetch ONE document you already have an id for, with field/section projection — the targeted peer of get_documents (which only lists collections). Use it to pull a specific document's evidence AFTER discovery; for discovery itself use search_corpus or get_documents, and note this does no corpus search. Addressed by its `collection/rel` file path (e.g. recorder/bistrozzi-deeds/202508130008300.pdf) OR the joined extraction-record id (e.g. recorder/202508130008300.deed.yaml); ids returned by search_corpus work directly. Returns the document's metadata joined to its extraction record — structured `fields` and a `Citation` — bounded by max_tokens, projected by fields/sections. IMPORTANT: the bundle carries document metadata + record `fields`, NOT the raw source-document body text. `fields`/`sections` projection operates over those extracted fields; there is no per-page body-text projection here (that is separate search_passages work). `include_source_text` returns the record's flattened extraction text, not scanned page text.",
+      "Fetch ONE document you already have an id for, with field/section projection — the targeted peer of get_documents (which only lists collections). Use it to pull a specific document's evidence AFTER discovery; for discovery itself use search_corpus or get_documents, and note this does no corpus search. Addressed by its `collection/rel` file path (e.g. recorder/bistrozzi-deeds/202508130008300.pdf) OR the joined extraction-record id (e.g. recorder/202508130008300.deed.yaml); ids returned by search_corpus work directly. Returns the document's metadata joined to its extraction record — structured `fields` and a `Citation` — bounded by max_tokens, projected by fields/sections. IMPORTANT: the bundle carries document metadata + record `fields`, NOT the raw source-document body text. `fields`/`sections` projection operates over those extracted fields; there is no per-page body-text projection here — use search_passages to retrieve a published PDF's page text with a page cite. `include_source_text` returns the record's flattened extraction text, not scanned page text.",
     inputSchema: {
       type: "object",
       properties: {

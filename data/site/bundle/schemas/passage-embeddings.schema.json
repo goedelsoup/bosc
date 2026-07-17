@@ -1,0 +1,24 @@
+{
+  "additionalProperties": false,
+  "description": "One precomputed all-MiniLM-L6-v2 embedding for a :class:`PassageItem` (#1589).\n\nThe passage-level peer of :class:`AskEmbeddingEntry`: stored as ``passage-embeddings.json`` and\nserved as a static asset so the ``search_passages`` Worker can embed the query at runtime (the\nsame 384-dim space) and compute cosine similarity for the hybrid BM25+vector rank. Absent\nentries degrade the tool to BM25-only, so a partial index is fine.",
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "embedding": {
+      "items": {
+        "type": "number"
+      },
+      "title": "Embedding",
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "embedding"
+  ],
+  "title": "PassageEmbeddingEntry",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

@@ -38,7 +38,8 @@ export interface HybridRetrievalEnv {
  * BM25-only — silently, never throwing — when any part of the vector path is unavailable.
  *
  * `requestUrl` locates the same-origin `/ask-embeddings.json` asset (overridable via
- * `env.ASK_EMBEDDINGS_URL`). Vector similarity is scored over `prepared.units`, so any
+ * `env.ASK_EMBEDDINGS_URL`, or the explicit `embeddingsUrl` arg — search_passages points it at
+ * `/feeds/passage-embeddings.json`). Vector similarity is scored over `prepared.units`, so any
  * site/collection filtering the caller applied before `prepare` carries through both paths.
  */
 export async function hybridSearch(
@@ -47,11 +48,12 @@ export async function hybridSearch(
   k: number,
   env: HybridRetrievalEnv,
   requestUrl: string,
+  embeddingsUrl?: string,
 ): Promise<Hit[]> {
   const bm25Hits = search(prepared, query, k);
   if (!env.AI) return bm25Hits;
   try {
-    const embeddings = await loadAskEmbeddings(requestUrl, env.ASK_EMBEDDINGS_URL);
+    const embeddings = await loadAskEmbeddings(requestUrl, embeddingsUrl ?? env.ASK_EMBEDDINGS_URL);
     if (!embeddings) return bm25Hits; // no committed embeddings feed → keyword-only
     const aiRes = await env.AI.run(EMBED_MODEL, { text: [query] });
     const qv = aiRes.data[0];

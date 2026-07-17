@@ -149,7 +149,18 @@ from watermark.site.readiness import State, Tier  # the readiness vocabulary SSO
 #   none — never invented (chain of custody). Powers the `get_facts` MCP tool. `rsei`/`records`
 #   projection + `aggregate_facts` (#1588) are deferred follow-ups. Back-compatible (an additive
 #   collection feed; registered in the `catalog` like any dataset, no new catalog-index kind).
-CONTRACT_VERSION = "1.25.0"
+# 1.26.0: adds the `passages` collection feed + its `passage-embeddings` companion — the page-level
+#   excerpt index the `search_passages` MCP tool returns instead of a whole extracted record (#1589,
+#   epic #1579 Phase 3). `passages` carries one `PassageItem` per text-bearing page of a *published*
+#   source PDF (scoped to the default-deny publish allowlist #280, so no non-published source text
+#   ships): `document_id` joins to the `documents` feed / `get_document` by `DocumentItem.rel`, `page`
+#   is the 1-indexed printed page, `text` is the pypdf text-layer extraction verbatim (garbled OCR for
+#   scans — a locator, never a transcription; image-only pages are omitted). `passage-embeddings` is
+#   the all-MiniLM-L6-v2 vector companion (the same 384-dim space as `ask-embeddings`) for the hybrid
+#   BM25+vector search; like `ask-embeddings` both feeds are always emitted (empty when the source PDFs
+#   are absent / `--no-embeddings`) so the schema set stays stable. Not cataloged (a retrieval index,
+#   like `ask-embeddings`). Back-compatible (two additive feeds, no changed shapes).
+CONTRACT_VERSION = "1.26.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -732,6 +743,49 @@ class AskEmbeddingEntry(BaseModel):
 
     id: str
     """Stable id matching the corresponding AskUnit, ``{feed}:{local_id}``."""
+    embedding: list[float]
+    """384-dimensional L2-normalised float vector (all-MiniLM-L6-v2)."""
+
+
+# --- passages feed (issue #1589, epic #1579 Phase 3) --------------------------
+class PassageItem(BaseModel):
+    """One page-level passage from a *published* source PDF — a page-cited excerpt (#1589).
+
+    The unit the ``search_passages`` MCP tool returns instead of a whole extracted record: one
+    relevant permit page shouldn't require pulling the full extraction. Scoped to the default-deny
+    public-publish allowlist (#280) so no non-published source text ever ships in the bundle.
+
+    ``document_id`` is the source document's ``DocumentItem.rel`` (path relative to
+    ``data/documents``) — the join key to the ``documents`` feed and ``get_document``. ``text`` is
+    the pypdf text-layer extraction verbatim; for a scanned document it is garbled OCR (per the root
+    CLAUDE.md, never trust its digits), so treat it as a **locator** for the cited page, not a
+    transcription. Image-only pages (no text layer) carry no excerpt and are omitted from the feed.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: str  # stable passage id — ``{document_id}#p{page}``
+    document_id: str  # DocumentItem.rel — path relative to data/documents (the join key)
+    collection: str  # first path segment of document_id (e.g. "oepa") — the collection axis
+    title: str  # the source document's catalog name, for display
+    page: int  # 1-indexed printed page number (matches DocumentEntry provenance)
+    section: str | None = None  # sub-page heading when known; page chunks carry none today
+    text: str  # the page's text-layer extraction (capped), verbatim
+
+
+class PassageEmbeddingEntry(BaseModel):
+    """One precomputed all-MiniLM-L6-v2 embedding for a :class:`PassageItem` (#1589).
+
+    The passage-level peer of :class:`AskEmbeddingEntry`: stored as ``passage-embeddings.json`` and
+    served as a static asset so the ``search_passages`` Worker can embed the query at runtime (the
+    same 384-dim space) and compute cosine similarity for the hybrid BM25+vector rank. Absent
+    entries degrade the tool to BM25-only, so a partial index is fine.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: str
+    """Stable id matching the corresponding :class:`PassageItem`, ``{document_id}#p{page}``."""
     embedding: list[float]
     """384-dimensional L2-normalised float vector (all-MiniLM-L6-v2)."""
 

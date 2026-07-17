@@ -85,7 +85,7 @@ from watermark.site import places as places_mod
 from watermark.site import records as records_mod
 from watermark.site import rsei as rsei_mod
 from watermark.site.catalog_index import build_catalog_index
-from watermark.site.embeddings import build_ask_embeddings
+from watermark.site.embeddings import build_ask_embeddings, build_passage_embeddings
 from watermark.site.facts import build_facts
 from watermark.site.feeds import (
     CONTRACT_VERSION,
@@ -108,6 +108,8 @@ from watermark.site.feeds import (
     LeadItem,
     Manifest,
     MeetingItem,
+    PassageEmbeddingEntry,
+    PassageItem,
     PersonItem,
     PlaceItem,
     ReachLine,
@@ -119,6 +121,7 @@ from watermark.site.feeds import (
     SiteReadiness,
     TimelineEntry,
 )
+from watermark.site.passages import build_passages
 from watermark.site.readiness import compute_readiness
 from watermark.sites import (
     active_profile,
@@ -221,6 +224,33 @@ def _collection_feed(name: str, item_model: type[BaseModel], rows: Sequence[Base
         schema_file=schema_file,
         schema=_array_schema(item_model, f"{name} feed"),
         payload=_dump_json(dumped),
+        count=len(dumped),
+    )
+
+
+def _retrieval_collection_feed(
+    name: str, item_model: type[BaseModel], rows: Sequence[BaseModel]
+) -> _Feed:
+    """A collection feed whose *schema form* is independent of row count (#1589).
+
+    `_collection_feed` picks the array schema below the NDJSON threshold and the per-row object
+    schema above it — fine for a corpus-shaped feed whose volume is stable, but the retrieval-index
+    feeds (`passages`, the embedding companions) swing across that threshold with the environment
+    (LFS-resolved PDFs vs. pointers, `--no-embeddings`), which would flip the committed schema and
+    trip the drift guard. This always emits the per-row object schema + compact NDJSON payload (also
+    the right encoding for large float-vector rows — no `indent=2` blow-up), so the schema is
+    deterministic at 0 rows or 10k.
+    """
+    dumped = [r.model_dump(mode="json", by_alias=True) for r in rows]
+    payload = "".join(json.dumps(d, ensure_ascii=False) + "\n" for d in dumped)
+    return _Feed(
+        name=name,
+        path=f"feeds/{name}.ndjson",
+        kind="collection",
+        media_type="application/x-ndjson",
+        schema_file=f"schemas/{name}.schema.json",
+        schema=_object_schema(item_model, f"{name} row"),
+        payload=payload,
         count=len(dumped),
     )
 
@@ -874,6 +904,24 @@ def _facts_feed(feeds: Sequence[_Feed], settings: Settings) -> _Feed | None:
     return _collection_feed("facts", FactItem, facts)
 
 
+def _passages_feed(feeds: Sequence[_Feed], settings: Settings) -> _Feed:
+    """Build the `passages` feed (#1589) — page excerpts over the published PDFs in `documents`.
+
+    A post-pass over the assembled `documents` feed (so passages and the public document catalog
+    agree on what's published), then a pypdf text-layer read of each published PDF. Always emitted
+    (empty when no published PDF is readable — e.g. unresolved Git-LFS pointers) so the schema set
+    stays stable, mirroring `ask-embeddings`. `search_passages` reads this over BM25 (+ the optional
+    `passage-embeddings` vector upgrade).
+    """
+    documents_rows: list[dict[str, Any]] = []
+    for feed in feeds:
+        if feed.name == "documents" and feed.kind == "collection":
+            documents_rows = _collection_rows(feed)
+            break
+    passages = build_passages(documents_rows, settings.documents_dir)
+    return _retrieval_collection_feed("passages", PassageItem, passages)
+
+
 def _now_iso() -> str:
     return datetime.now(UTC).replace(microsecond=0).isoformat()
 
@@ -912,6 +960,11 @@ def export_bundle(
     facts_feed = _facts_feed(feeds, settings)
     if facts_feed is not None:
         feeds.append(facts_feed)
+    # The page-level `passages` index (#1589) — a post-pass over the just-assembled `documents`
+    # feed's published PDFs, so it's appended after `_collect_feeds` (like facts). Always emitted
+    # (empty when no published PDF is readable) so the schema set is stable. Its `passage-embeddings`
+    # vector companion is built after the feeds land on disk, alongside `ask-embeddings` below.
+    feeds.append(_passages_feed(feeds, settings))
     # The hydrated catalog index (#1093) — a normalisation over the just-assembled collection
     # feeds, so it must be appended after `_collect_feeds`. Written + indexed through the same
     # loops below like any other feed.
@@ -951,35 +1004,45 @@ def export_bundle(
             )
         )
 
-    # ask-embeddings feed (#329): generated after the corpus feeds are written to disk so
-    # build_ask_embeddings() reads fresh data, not the previous export's stale files.
-    # Always emitted (empty when skipped) so the schema is stable and manifest stays consistent.
+    # Embedding feeds (#329 ask-embeddings, #1589 passage-embeddings): generated after the corpus
+    # feeds are written to disk so the builders read fresh data, not the previous export's stale
+    # files. Both are always emitted (empty when `--no-embeddings` or the source text is absent) so
+    # the schema set is stable and the manifest stays consistent; both degrade retrieval to BM25.
+    def _write_extra_feed(feed: _Feed) -> None:
+        if feed.schema_file not in written_schemas:
+            (out / feed.schema_file).write_text(_dump_json(feed.schema), encoding="utf-8")
+            written_schemas.add(feed.schema_file)
+        target = out / feed.path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(feed.payload, encoding="utf-8")
+        refs.append(
+            FeedRef(
+                name=feed.name,
+                path=feed.path,
+                media_type=feed.media_type,
+                schema_ref=feed.schema_file,
+                kind=feed.kind,
+                count=feed.count,
+            )
+        )
+
     emb_models: list[AskEmbeddingEntry] = []
+    pemb_models: list[PassageEmbeddingEntry] = []
     if not skip_embeddings:
         try:
-            emb_rows = build_ask_embeddings(out)
-            emb_models = [AskEmbeddingEntry.model_validate(r) for r in emb_rows]
+            emb_models = [AskEmbeddingEntry.model_validate(r) for r in build_ask_embeddings(out)]
+            pemb_models = [
+                PassageEmbeddingEntry.model_validate(r) for r in build_passage_embeddings(out)
+            ]
         except Exception as exc:
             log.warning(
                 "embeddings.failed",
                 error=next(iter(str(exc).splitlines()), repr(exc)),
                 hint="run with --no-embeddings to skip; hybrid retrieval will degrade to BM25",
             )
-    emb_feed = _collection_feed("ask-embeddings", AskEmbeddingEntry, emb_models)
-    if emb_feed.schema_file not in written_schemas:
-        (out / emb_feed.schema_file).write_text(_dump_json(emb_feed.schema), encoding="utf-8")
-    emb_target = out / emb_feed.path
-    emb_target.parent.mkdir(parents=True, exist_ok=True)
-    emb_target.write_text(emb_feed.payload, encoding="utf-8")
-    refs.append(
-        FeedRef(
-            name=emb_feed.name,
-            path=emb_feed.path,
-            media_type=emb_feed.media_type,
-            schema_ref=emb_feed.schema_file,
-            kind=emb_feed.kind,
-            count=emb_feed.count,
-        )
+    _write_extra_feed(_collection_feed("ask-embeddings", AskEmbeddingEntry, emb_models))
+    _write_extra_feed(
+        _retrieval_collection_feed("passage-embeddings", PassageEmbeddingEntry, pemb_models)
     )
 
     row_total = sum(r.count for r in refs)
