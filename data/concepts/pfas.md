@@ -15,7 +15,8 @@ for several PFAS and is phasing them into discharge monitoring and cleanup progr
 
 PFAS cut across several threads of this record. They appear as a drinking-water and
 [[NPDES]] concern where a discharge or biosolids land application is a pathway; as a
-[[CERCLA]] liability now that two PFAS are designated hazardous substances; and as
+[[CERCLA]] liability now that two PFAS (PFOA and PFOS) were designated hazardous
+substances as of EPA's 2024 final rule; and as
 reported releases in EPA's [[TRI]]. Because the regulatory picture is still moving,
 the platform tags a specific PFAS finding to its dated source — a [verified] limit or
 a [reference] sampling result — rather than to a general expectation.

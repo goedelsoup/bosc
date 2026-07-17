@@ -1,7 +1,7 @@
 ---
 title: Closed-loop cooling
 kind: concept
-aliases: [recirculating cooling, evaporative cooling]
+aliases: [recirculating cooling, recirculating tower cooling]
 tags: [water, cooling, data-center]
 summary: A recirculating cooling design whose water loss is chiefly evaporation and blowdown, so it withdraws little but consumes most of what it takes.
 related: [once-through-cooling, consumptive-cooling, hyperscale-data-center]

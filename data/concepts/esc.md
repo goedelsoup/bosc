@@ -14,8 +14,8 @@ is itself a regulated pollutant, and it carries phosphorus and other contaminant
 with it, so controlling it protects downstream water quality during the build.
 
 ESC is the operative content of a site's stormwater plan under its
-[[construction general permit]]. Its demands scale with the site: erodible soils and
-steeper ground (higher [[HSG]] and [[curve number]]) shed more sediment-laden runoff
-and need more control. On a multi-hundred-acre data-center clearing, the adequacy and
+[[construction general permit]]. Its demands scale with the site: erodible soils, the
+lower-infiltration [[HSG]] classes (C and D), and steeper slopes raise the
+[[curve number]] and shed more sediment-laden runoff, so they need more control. On a multi-hundred-acre data-center clearing, the adequacy and
 upkeep of erosion and sediment control is a recurring compliance question — and a
 lapse in it is a common early violation in the construction record.

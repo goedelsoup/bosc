@@ -7,8 +7,10 @@ summary: A nutrient water-quality parameter summing the nitrogen species in a sa
 related: [total-phosphorus, tmdl, dissolved-oxygen]
 ---
 
-**Total nitrogen** is the sum of a sample's nitrogen forms — nitrate, nitrite,
-ammonia, and organic nitrogen. Like [[total phosphorus]], it is a nutrient that
+**Total nitrogen** is a reporting aggregate of a sample's nitrogen forms — derived,
+depending on what a lab measures, either as a direct TN result or by summing nitrate,
+nitrite, ammonia, and organic nitrogen (often via total Kjeldahl nitrogen plus nitrate
+and nitrite). Like [[total phosphorus]], it is a nutrient that
 fuels algal growth; while phosphorus usually limits freshwater blooms, nitrogen
 co-drives them and governs the toxicity of some cyanobacteria, so a nutrient
 [[total maximum daily load]] typically tracks both.

@@ -10,8 +10,10 @@ related: [cgp, esc, oepa]
 A **soil and water conservation district** is a local governmental unit — typically
 county-based — that carries out soil, drainage, and stormwater conservation work. Its
 roots are agricultural, but on the development side it frequently reviews grading and
-drainage plans and inspects the [[erosion and sediment control]] a construction site
-must maintain under its [[construction general permit]].
+drainage plans and — where a local MS4 program, ordinance, or delegation agreement
+provides for it — inspects the [[erosion and sediment control]] a construction site
+must maintain under its [[construction general permit]]. Formal enforcement of the
+permit itself stays with the regulator, not the district.
 
 The SWCD is the local eyes on a large construction disturbance. Where the [[Ohio EPA]]
 holds the discharge permit, the district is often the body that actually walks the site
