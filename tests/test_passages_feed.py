@@ -17,7 +17,13 @@ import pytest
 
 from watermark.config import Settings
 from watermark.site.export import export_bundle
-from watermark.site.passages import _published_pdf_entries, build_passages
+from watermark.site.feeds import PassageItem
+from watermark.site.passages import (
+    _published_pdf_entries,
+    build_passages,
+    load_committed_passages,
+    write_committed_passages,
+)
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
@@ -160,6 +166,28 @@ def test_published_pdf_entries_filters_correctly() -> None:
     assert _published_pdf_entries(feed) == [("a.pdf", "A")]
 
 
+# --- the committed artifact ----------------------------------------------------------------
+def test_committed_passages_round_trip(tmp_path: Path) -> None:
+    """`write_committed_passages` → `load_committed_passages` preserves the rows; a missing artifact
+    reads as empty (the LFS-free build degrades to no passages rather than failing)."""
+    settings = Settings(data_dir=tmp_path)
+    assert load_committed_passages(settings) == []  # absent → empty
+    items = [
+        PassageItem(
+            id="oepa/p.pdf#p1",
+            document_id="oepa/p.pdf",
+            collection="oepa",
+            title="p.pdf",
+            page=1,
+            section=None,
+            text="effluent limit",
+        )
+    ]
+    write_committed_passages(items, settings)
+    assert (tmp_path / "site" / "passages.ndjson").is_file()
+    assert load_committed_passages(settings) == items
+
+
 # --- integration: the real Lima export -----------------------------------------------------
 @pytest.fixture(scope="module")
 def lima_bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
@@ -181,40 +209,35 @@ def _feed_ref(bundle: Path, name: str) -> dict[str, Any]:
     return ref
 
 
-def _pdf_materialized(rel: str) -> bool:
-    """True when a Git-LFS-tracked source PDF's real bytes are present, not an unresolved pointer.
-
-    Passage *text* is LFS-gated: a no-LFS checkout (CI's frontend/test shards check out without
-    LFS) sees pointer files, so `build_passages` reads zero pages there — correct degradation, not
-    a failure. The integration test asserts the row count only when the bytes are actually present.
-    """
-    try:
-        return (REPO_ROOT / "data" / "documents" / rel).read_bytes()[:5] == b"%PDF-"
-    except OSError:
-        return False
-
-
 def test_reference_export_emits_passages_and_embeddings_feeds(lima_bundle: Path) -> None:
     """Lima's published PDFs (the OEPA collection + the PRR bundle) feed `passages`;
     `passage-embeddings` is emitted (empty here — skip_embeddings) so the schema is stable. Both are
-    always-emitted retrieval-index feeds (like `ask-embeddings`). Passage text is LFS-gated, so the
-    count is asserted against whether the source bytes are materialized (see `_pdf_materialized`)."""
+    always-emitted retrieval-index feeds (like `ask-embeddings`). The export reads the committed
+    `data/site/passages.ndjson` artifact (not the LFS PDFs), so this holds without a git-lfs pull."""
     passages_ref = _feed_ref(lima_bundle, "passages")
+    assert passages_ref["count"] > 0, "committed passages artifact should yield Lima passages"
     rows = [
         json.loads(line)
         for line in (lima_bundle / passages_ref["path"]).read_text(encoding="utf-8").splitlines()
         if line.strip()
     ]
     assert len(rows) == passages_ref["count"]
-    if _pdf_materialized("aedg/PRR-01-bundle.ocr.pdf"):
-        assert passages_ref["count"] > 0
-        # Every passage traces to a real published PDF document_id and carries a 1-indexed page.
-        for r in rows[:50]:
-            assert r["id"] == f"{r['document_id']}#p{r['page']}"
-            assert r["page"] >= 1
-            assert r["text"].strip()
-    else:
-        assert passages_ref["count"] == 0  # no-LFS checkout: pointer files → graceful skip
+    # Every passage traces to a published PDF document_id and carries a 1-indexed page.
+    for r in rows[:50]:
+        assert r["id"] == f"{r['document_id']}#p{r['page']}"
+        assert r["page"] >= 1
+        assert r["text"].strip()
+    # Filter invariant: every passage's document is a *published PDF* in this bundle's documents
+    # feed — the export filters the global artifact to the site's published set (no leak of
+    # non-published or peer-scoped source text).
+    docs_ref = _feed_ref(lima_bundle, "documents")
+    published_pdf_rels = {
+        e["rel"]
+        for coll in json.loads((lima_bundle / docs_ref["path"]).read_text(encoding="utf-8"))
+        for e in coll["entries"]
+        if e["published"] and e["render_class"] == "pdf"
+    }
+    assert {r["document_id"] for r in rows} <= published_pdf_rels
     # passage-embeddings is present (schema-stable), empty under skip_embeddings.
     emb_ref = _feed_ref(lima_bundle, "passage-embeddings")
     assert emb_ref["count"] == 0

@@ -27,6 +27,7 @@ from watermark.cli import (  # noqa: F401
     leads,
     objectstore,
     oepa,
+    passages,
     pipeline,
     poi,
     reference,
