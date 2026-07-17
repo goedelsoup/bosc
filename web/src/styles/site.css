@@ -1451,6 +1451,16 @@ a.card:hover { border-color: var(--bosc-forest); background: var(--bosc-surface)
 .neighborhood li { padding: var(--sp-1) 0; }
 .rel-arrow { color: var(--bosc-muted); }
 
+/* Wiki entity: the GLEIF corporate-registry definition list (#1572) — a label/value grid. */
+.reg-grid { display: grid; grid-template-columns: minmax(9rem, max-content) 1fr; gap: var(--sp-1) var(--sp-3); margin: 0.6rem 0 1rem; }
+.reg-grid dt { font-weight: 700; font-size: var(--fs-sm); color: var(--bosc-muted); }
+.reg-grid dd { margin: 0; }
+.reg-grid dd .card-meta { display: inline; margin-left: var(--sp-2); margin-top: 0; }
+@media (max-width: 560px) {
+  .reg-grid { grid-template-columns: 1fr; gap: 0.1rem 0; }
+  .reg-grid dt { margin-top: var(--sp-2); }
+}
+
 /* Entity-graph relation-class legend (#182) — swatch · term · definition. */
 .relclass-legend { margin: 0.6rem 0 1.4rem; display: grid; gap: var(--sp-2); }
 .relclass-row { display: grid; grid-template-columns: 13px minmax(7rem, max-content) 1fr; align-items: start; gap: var(--sp-2); }
