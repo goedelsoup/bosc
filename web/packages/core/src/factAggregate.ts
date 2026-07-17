@@ -216,17 +216,43 @@ function groupOf(f: FactItem, dim: GroupDim): { key: string; label: string } {
   }
 }
 
-/** The output unit: the recipe's declared unit, else the inputs' common unit (else null). */
-function resolveUnit(metric: FactMetric, facts: FactItem[]): string | null {
-  if (metric.unit !== null) return metric.unit;
-  const units = new Set(facts.map((f) => f.unit ?? "").filter((u) => u !== ""));
-  return units.size === 1 ? [...units][0] : null;
+/** The (key, label) a sub-product rolls up into. A product can draw its factors from more than
+ * one feed, so for `feed` the key is the sorted set of the factors' feeds joined by `+`
+ * (a single-feed product keeps its bare feed name) — attribution is explicit, never silently
+ * pinned to the first factor. The other dims read off the subject the factors share. */
+function productGroup(sp: SubProduct, dim: GroupDim): { key: string; label: string } {
+  if (dim === "subject") return { key: sp.subject, label: sp.subject_label };
+  if (dim === "feed") {
+    const feeds = [...new Set(sp.factors.map((f) => f.feed))].sort();
+    const key = feeds.join("+");
+    return { key, label: key };
+  }
+  return groupOf(sp.factors[0], dim); // subject_kind / site — every factor shares the subject
 }
 
-/** Assemble the caveat: the recipe note, plus flags for modeled inputs / dropped subjects. */
-function buildCaveat(base: string, hasInference: boolean, incomplete: boolean): string | null {
+/** The unit for ONE reduction group: the single shared unit of its (valued) facts, or a `mixed`
+ * flag when they disagree — MW + kW, or unitless + MW. A mixed group must not be summed; an
+ * unlabelled value is not treated as compatible with a declared unit. Resolved per group so a
+ * consistent group never loses its unit to a sibling group that happens to use another. */
+function reduceGroupUnit(facts: FactItem[]): { unit: string | null; mixed: boolean; distinct: string[] } {
+  const distinct = [...new Set(facts.map((f) => (f.unit ?? "").trim()))];
+  if (distinct.length <= 1) {
+    return { unit: distinct[0] || null, mixed: false, distinct: [distinct[0] || "unitless"] };
+  }
+  return { unit: null, mixed: true, distinct: distinct.map((u) => u || "unitless") };
+}
+
+/** Assemble the caveat: the recipe note, plus flags for mixed units / modeled inputs / dropped
+ * subjects. `mixedUnits`, when present, names the units that stopped the group being summed. */
+function buildCaveat(
+  base: string,
+  hasInference: boolean,
+  incomplete: boolean,
+  mixedUnits: string[] | null = null,
+): string | null {
   const parts: string[] = [];
   if (base) parts.push(base);
+  if (mixedUnits) parts.push(`Mixed units (${mixedUnits.join(", ")}) — the group's values were not summed.`);
   if (hasInference) parts.push("Includes modeled/assumption inputs (status ≤ inference).");
   if (incomplete) parts.push("Some subjects lacked the required inputs and were omitted.");
   return parts.length ? parts.join(" ") : null;
@@ -262,35 +288,44 @@ function aggregateReduce(facts: FactItem[], metric: FactMetric, dim: GroupDim): 
     groups.set(g.key, bucket);
   }
 
-  const unit = resolveUnit(metric, numeric);
   const out: FactAggregate[] = [];
   for (const [key, { label, facts: gFacts }] of groups) {
     const values = gFacts.filter(hasValue).map((f) => f.value as number);
     const n = gFacts.length;
-    let value: number;
+    let value: number | null;
     let unitOut: string | null;
     let derivation: string;
+    let mixedUnits: string[] | null = null;
     if (metric.op === "count") {
       value = n;
       unitOut = "facts";
       derivation = preds.size ? `${n} facts with ${[...preds].join("/")}` : `${n} matching facts`;
     } else {
-      const total = values.reduce((a, b) => a + b, 0);
-      unitOut = unit;
-      const terms = values.map(fmtNum);
-      const shown =
-        terms.length > MAX_DERIVATION_TERMS
-          ? `${terms.slice(0, MAX_DERIVATION_TERMS).join(" + ")} + … (${terms.length} terms)`
-          : terms.join(" + ");
-      if (metric.op === "mean") {
-        value = values.length ? round(total / values.length, 4) : 0;
-        derivation = `(${shown}) / ${values.length} = ${fmtNum(value)}${unitSuffix(unitOut)}`;
+      // Resolve the unit for THIS group; a group mixing distinct units (MW + kW, or unitless +
+      // MW) is not summable, so refuse to emit a bogus total (value stays null, unit null).
+      const resolved = reduceGroupUnit(gFacts.filter(hasValue));
+      unitOut = resolved.unit;
+      if (resolved.mixed) {
+        mixedUnits = resolved.distinct;
+        value = null;
+        derivation = `not summable — mixed units (${resolved.distinct.join(", ")})`;
       } else {
-        value = round(total, 4);
-        derivation =
-          values.length > 1
-            ? `${shown} = ${fmtNum(value)}${unitSuffix(unitOut)}`
-            : `${fmtNum(value)}${unitSuffix(unitOut)}`;
+        const total = values.reduce((a, b) => a + b, 0);
+        const terms = values.map(fmtNum);
+        const shown =
+          terms.length > MAX_DERIVATION_TERMS
+            ? `${terms.slice(0, MAX_DERIVATION_TERMS).join(" + ")} + … (${terms.length} terms)`
+            : terms.join(" + ");
+        if (metric.op === "mean") {
+          value = values.length ? round(total / values.length, 4) : 0;
+          derivation = `(${shown}) / ${values.length} = ${fmtNum(value)}${unitSuffix(unitOut)}`;
+        } else {
+          value = round(total, 4);
+          derivation =
+            values.length > 1
+              ? `${shown} = ${fmtNum(value)}${unitSuffix(unitOut)}`
+              : `${fmtNum(value)}${unitSuffix(unitOut)}`;
+        }
       }
     }
     const statuses = gFacts.map((f) => f.status);
@@ -313,6 +348,7 @@ function aggregateReduce(facts: FactItem[], metric: FactMetric, dim: GroupDim): 
         metric.caveat,
         statuses.some((s) => STATUS_RANK[s] <= STATUS_RANK.inference),
         false,
+        mixedUnits,
       ),
       evidence_ids: gFacts.map(factKey),
     });
@@ -336,9 +372,12 @@ function aggregateProduct(facts: FactItem[], metric: FactMetric, dim: GroupDim):
   // already deduped on (subject, predicate), so there is at most one).
   const bySubject = new Map<string, { label: string; byPred: Map<string, FactItem> }>();
   for (const f of facts) {
-    if (!preds.includes(f.predicate) || !hasValue(f)) continue;
+    if (!preds.includes(f.predicate)) continue;
+    // Index the subject on any relevant predicate — even a null/non-finite factor — so a
+    // subject present in the data but missing a usable value still reaches the omission check
+    // below; only a valued fact is stored (first wins; the feed already deduped per predicate).
     const s = bySubject.get(f.subject) ?? { label: f.subject_label, byPred: new Map() };
-    if (!s.byPred.has(f.predicate)) s.byPred.set(f.predicate, f);
+    if (hasValue(f) && !s.byPred.has(f.predicate)) s.byPred.set(f.predicate, f);
     bySubject.set(f.subject, s);
   }
 
@@ -347,18 +386,18 @@ function aggregateProduct(facts: FactItem[], metric: FactMetric, dim: GroupDim):
   for (const [subject, { label, byPred }] of bySubject) {
     const factors = preds.map((p) => byPred.get(p)).filter((f): f is FactItem => f !== undefined);
     if (factors.length !== preds.length) {
-      incomplete = true; // subject is missing at least one factor — omit it
+      incomplete = true; // subject is missing at least one valued factor — omit it
       continue;
     }
+    // Keep full precision here — the aggregate rounds once, after the sub-products are summed.
     const value = factors.reduce((acc, f) => acc * (f.value as number), 1);
-    subProducts.push({ subject, subject_label: label, value: round(value, 4), factors });
+    subProducts.push({ subject, subject_label: label, value, factors });
   }
 
-  // Roll the per-subject products up to the requested dimension.
+  // Roll the per-subject products up to the requested dimension (feed attribution is explicit).
   const groups = new Map<string, { label: string; subs: SubProduct[] }>();
   for (const sp of subProducts) {
-    // A product's natural row is the subject; coarser dims read the group off any factor fact.
-    const g = dim === "subject" ? { key: sp.subject, label: sp.subject_label } : groupOf(sp.factors[0], dim);
+    const g = productGroup(sp, dim);
     const bucket = groups.get(g.key) ?? { label: g.label, subs: [] };
     bucket.subs.push(sp);
     groups.set(g.key, bucket);

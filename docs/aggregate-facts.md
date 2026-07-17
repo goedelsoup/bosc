@@ -77,8 +77,10 @@ Called with **no `metric`**, the tool lists the registered recipes (discovery).
 
 A **product** is computed **per subject first** (each subject supplies one value per factor),
 then rolled up to a coarser `group_by` by **summing** the per-subject products — so a
-multi-facility site totals correctly. A subject missing a factor is omitted and flagged in the
-`caveat`.
+multi-facility site totals correctly. A subject missing a factor (absent **or** present but
+unquantified) is omitted and flagged in the `caveat`. Under `group_by: "feed"`, a product whose
+factors span more than one feed is attributed to the **sorted set** of those feeds
+(`feed-a+feed-b`), never silently pinned to the first factor's feed.
 
 ## 5. The evidentiary contract
 
@@ -97,6 +99,10 @@ Every result carries provenance, following the same discipline as the rest of th
   to its tuples.
 - **`derivation`** is the literal arithmetic: `"114 × 2.75 MW"` for a single-subject product,
   `"12000 + 20000 = 32000 jobs"` for a sum (bounded to a few terms for a long list).
+- **Units are resolved per group.** A sum/mean group whose facts carry **incompatible units**
+  (MW + kW, or a unitless value mixed with a declared unit) is **not summed** — the row returns
+  `value: null` with a `caveat` naming the units, rather than adding numbers that don't add. A
+  consistent group keeps its own unit regardless of what a sibling group uses.
 
 ## 6. Wiring
 

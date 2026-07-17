@@ -217,6 +217,79 @@ describe("aggregateFacts — sum / count / mean", () => {
   });
 });
 
+describe("aggregateFacts — review fixes (#1650)", () => {
+  // Finding 4: units resolve per group, and a group mixing units is not summed.
+  it("keeps each group's own unit and refuses to sum a mixed-unit group", () => {
+    const facts = [
+      fact({ subject: "a", subject_kind: "s", predicate: "p", value: 10, unit: "MW", feed: "f1" }),
+      fact({ subject: "a", subject_kind: "s", predicate: "p", value: 20, unit: "kW", feed: "f2" }),
+      fact({ subject: "b", subject_kind: "s", predicate: "p", value: 5, unit: "MW", feed: "f3" }),
+    ];
+    // group_by subject: "a" mixes MW + kW (not summable); "b" keeps its own MW (not lost to a).
+    const rows = aggregateFacts(facts, resolveMetric("sum:p")!, parseGroupBy("subject"));
+    const a = rows.find((r) => r.group === "a")!;
+    const b = rows.find((r) => r.group === "b")!;
+    expect(a.value).toBeNull();
+    expect(a.unit).toBeNull();
+    expect(a.derivation).toContain("mixed units");
+    expect(a.caveat).toContain("Mixed units");
+    expect(b.value).toBe(5);
+    expect(b.unit).toBe("MW"); // a consistent group is not dragged to null by its sibling
+  });
+
+  it("treats a unitless value as incompatible with a declared unit", () => {
+    const facts = [
+      fact({ subject: "a", subject_kind: "s", predicate: "p", value: 10, unit: "MW" }),
+      fact({ subject: "a", subject_kind: "s", predicate: "p", value: 20, unit: null }),
+    ];
+    const [row] = aggregateFacts(facts, resolveMetric("sum:p")!, parseGroupBy("all"));
+    expect(row.value).toBeNull();
+    expect(row.derivation).toContain("mixed units");
+  });
+
+  // Finding 3: a product spanning feeds gets an explicit composite feed key, not factors[0].
+  it("attributes a cross-feed product to the sorted set of its feeds under group_by feed", () => {
+    const facts = [
+      fact({ subject: "facility:z", predicate: "genset_count", value: 4, unit: "count", feed: "feed-b" }),
+      fact({ subject: "facility:z", predicate: "genset_rating", value: 2.5, unit: "MW", feed: "feed-a" }),
+    ];
+    const [row] = aggregateFacts(
+      facts,
+      resolveMetric("product:genset_count,genset_rating")!,
+      parseGroupBy("feed"),
+    );
+    expect(row.group).toBe("feed-a+feed-b"); // sorted, explicit — not silently pinned to one
+    expect(row.value).toBe(10);
+  });
+
+  // Finding 2: sub-products keep full precision; the aggregate rounds once, after summing.
+  it("rounds only after summing sub-products (no per-term rounding drift)", () => {
+    const facts = [
+      fact({ subject: "a", predicate: "x", value: 0.0001 }),
+      fact({ subject: "a", predicate: "y", value: 0.5 }),
+      fact({ subject: "b", predicate: "x", value: 0.0001 }),
+      fact({ subject: "b", predicate: "y", value: 0.5 }),
+    ];
+    // Each sub-product is 0.00005. Rounding each to 4dp first would give 0.0001 + 0.0001 =
+    // 0.0002; summing full-precision first gives 0.0001 (round(0.0001, 4)).
+    const [row] = aggregateFacts(facts, resolveMetric("product:x,y")!, parseGroupBy("all"));
+    expect(row.value).toBe(0.0001);
+  });
+
+  // Finding 5: a subject whose factors are all present-but-null still counts as omitted.
+  it("flags a subject with only null-valued factors as omitted, not silently absent", () => {
+    const facts = [
+      ...LIMA, // facility:lima computes 313.5
+      fact({ subject: "facility:z", subject_kind: "facility", predicate: "genset_count", value: null }),
+      fact({ subject: "facility:z", subject_kind: "facility", predicate: "genset_rating", value: null }),
+    ];
+    const metric = resolveMetric("backup_generation_capacity_mw")!;
+    const [row] = aggregateFacts(facts, metric, parseGroupBy("all"));
+    expect(row.value).toBe(313.5); // only the valued subject contributes
+    expect(row.caveat).toContain("omitted"); // …but the null-factored subject is acknowledged
+  });
+});
+
 describe("listMetrics + parseGroupBy", () => {
   it("advertises every registered metric", () => {
     const keys = listMetrics().map((m) => m.key);
