@@ -1,0 +1,53 @@
+{
+  "additionalProperties": false,
+  "description": "One page-level passage from a *published* source PDF — a page-cited excerpt (#1589).\n\nThe unit the ``search_passages`` MCP tool returns instead of a whole extracted record: one\nrelevant permit page shouldn't require pulling the full extraction. Scoped to the default-deny\npublic-publish allowlist (#280) so no non-published source text ever ships in the bundle.\n\n``document_id`` is the source document's ``DocumentItem.rel`` (path relative to\n``data/documents``) — the join key to the ``documents`` feed and ``get_document``. ``text`` is\nthe pypdf text-layer extraction verbatim; for a scanned document it is garbled OCR (per the root\nCLAUDE.md, never trust its digits), so treat it as a **locator** for the cited page, not a\ntranscription. Image-only pages (no text layer) carry no excerpt and are omitted from the feed.",
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "document_id": {
+      "title": "Document Id",
+      "type": "string"
+    },
+    "collection": {
+      "title": "Collection",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "page": {
+      "title": "Page",
+      "type": "integer"
+    },
+    "section": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Section"
+    },
+    "text": {
+      "title": "Text",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "document_id",
+    "collection",
+    "title",
+    "page",
+    "text"
+  ],
+  "title": "PassageItem",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

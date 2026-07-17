@@ -1,4 +1,5 @@
-"""Precompute all-MiniLM-L6-v2 sentence embeddings for the ask-index (#329).
+"""Precompute all-MiniLM-L6-v2 sentence embeddings for the ask-index (#329) and the
+page-level passage index (#1589).
 
 Called from :func:`watermark.site.export.export_bundle` (unless ``--no-embeddings``
 is passed).  Uses the same model as the Cloudflare Workers AI endpoint
@@ -6,7 +7,8 @@ is passed).  Uses the same model as the Cloudflare Workers AI endpoint
 runtime, so document and query vectors share the same 384-dimensional semantic space.
 
 The model is downloaded on first use (~80 MB, cached under
-``~/.cache/huggingface/hub`` by the transformers library).
+``~/.cache/huggingface/hub`` by the transformers library) and memoised per process
+(:func:`_get_model`) so the ask + passage passes don't reload it.
 """
 
 from __future__ import annotations
@@ -25,6 +27,33 @@ from watermark.logging import get_logger
 log = get_logger(__name__)
 
 _MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+_model_cache: SentenceTransformer | None = None
+
+
+def _get_model() -> SentenceTransformer:
+    """Load (once per process) the shared embedding model — reused by the ask + passage passes."""
+    global _model_cache
+    if _model_cache is None:
+        _model_cache = SentenceTransformer(_MODEL)
+    return _model_cache
+
+
+def _encode_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Encode ``{id, text}`` rows into the shipped ``{id, embedding}`` feed shape.
+
+    Vectors are L2-normalised so cosine similarity equals dot product at query time (cheaper on the
+    Worker). An empty input short-circuits without loading the model.
+    """
+    if not rows:
+        return []
+    model = _get_model()
+    vectors = model.encode(
+        [r["text"] for r in rows],
+        normalize_embeddings=True,
+        show_progress_bar=False,
+        batch_size=64,
+    )
+    return [{"id": r["id"], "embedding": v.tolist()} for r, v in zip(rows, vectors, strict=True)]
 
 
 @dataclass
@@ -229,13 +258,27 @@ def build_ask_embeddings(bundle_dir: Path | str) -> list[dict[str, Any]]:
         return []
 
     log.info("embeddings.encode", units=len(units), model=_MODEL)
-    model = SentenceTransformer(_MODEL)
-    texts = [u.text for u in units]
-    vectors = model.encode(
-        texts,
-        normalize_embeddings=True,
-        show_progress_bar=False,
-        batch_size=64,
-    )
+    rows = _encode_rows([{"id": u.id, "text": u.text} for u in units])
     log.info("embeddings.done", units=len(units))
-    return [{"id": u.id, "embedding": v.tolist()} for u, v in zip(units, vectors, strict=True)]
+    return rows
+
+
+def build_passage_embeddings(bundle_dir: Path | str) -> list[dict[str, Any]]:
+    """Encode the ``passages`` feed's page excerpts with all-MiniLM-L6-v2 (#1589).
+
+    Reads the just-written ``feeds/passages`` (JSON or NDJSON) and returns ``{"id", "embedding"}``
+    rows for the ``passage-embeddings`` feed — the vector companion to the passage text index, in
+    the same 384-dim space as ``ask-embeddings`` so ``search_passages`` shares the runtime query
+    embedding. Empty when the passages feed is absent/empty (no published PDF text to embed).
+    """
+    feeds = os.path.join(str(bundle_dir), "feeds")
+    rows = _read_feed(feeds, "passages")
+    passages = [{"id": r["id"], "text": r.get("text", "")} for r in rows if r.get("id")]
+    if not passages:
+        log.info("passage_embeddings.skip", reason="no passages in bundle")
+        return []
+
+    log.info("passage_embeddings.encode", passages=len(passages), model=_MODEL)
+    out = _encode_rows(passages)
+    log.info("passage_embeddings.done", passages=len(passages))
+    return out

@@ -6,6 +6,7 @@
 import { MCP_TOOLS } from "@watermark/core/mcpTools";
 import type { HybridRetrievalEnv } from "./hybridRetrieve";
 import { handleSearchCorpus } from "./mcpTools/searchCorpus";
+import { handleSearchPassages } from "./mcpTools/searchPassages";
 import {
   handleAggregateFacts,
   handleGetDocument,
@@ -106,6 +107,9 @@ async function handleToolsCall(
   switch (name) {
     case "search_corpus":
       content = await handleSearchCorpus(toolParams, requestUrl, env);
+      break;
+    case "search_passages":
+      content = await handleSearchPassages(toolParams, requestUrl, env);
       break;
     case "get_timeline":
       content = await handleGetTimeline(toolParams, requestUrl);
