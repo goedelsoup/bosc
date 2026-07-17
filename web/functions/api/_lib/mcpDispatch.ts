@@ -7,6 +7,7 @@ import { MCP_TOOLS } from "@watermark/core/mcpTools";
 import type { HybridRetrievalEnv } from "./hybridRetrieve";
 import { handleSearchCorpus } from "./mcpTools/searchCorpus";
 import {
+  handleAggregateFacts,
   handleGetDocument,
   handleGetDocuments,
   handleGetEntities,
@@ -123,6 +124,9 @@ async function handleToolsCall(
       break;
     case "get_facts":
       content = await handleGetFacts(toolParams, requestUrl);
+      break;
+    case "aggregate_facts":
+      content = await handleAggregateFacts(toolParams, requestUrl);
       break;
     default:
       throw new McpError(RPC.INVALID_PARAMS, `Tool "${name}" has no implementation`);
