@@ -1,0 +1,89 @@
+---
+import type { GetStaticPaths } from "astro";
+import { withSitePaths } from "@watermark/core/sites";
+import Base from "~/layouts/Base.astro";
+import ProfileHeader from "~/components/ProfileHeader.astro";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { ConceptItem } from "@watermark/core/feeds";
+import type { ProfileHeaderData, ProfileRel } from "@watermark/core/profile";
+import { withSite } from "@watermark/core/site";
+import { conceptBacklinks, norm, renderBody, wikiIndex } from "@watermark/core/wiki";
+
+// One concept page per (selectable site × its scoped concepts). The callback form runs
+// inside `runWithSite(slug)`, so `loadFeed` binds to each site's own scoped `concepts`
+// feed — Lima enumerates its 77 (incl. `sites:[lima]`), a peer only the network-global set.
+export const getStaticPaths: GetStaticPaths = () =>
+  withSitePaths((_slug) => {
+    const concepts = hasFeed("concepts") ? loadFeed<ConceptItem[]>("concepts") : [];
+    return concepts.map((concept) => ({ params: { slug: concept.slug }, props: { concept } }));
+  });
+
+interface Props {
+  concept: ConceptItem;
+}
+const { concept } = Astro.props;
+
+// Scoped index: `[[links]]` and related/backlink URLs resolve to THIS site's own
+// glossary (`/network/<id>/site/concepts/…`), staying inside the site build (#1567).
+const index = wikiIndex({ scoped: true });
+const bodyHtml = renderBody(concept.body, index);
+const related = concept.related
+  .map((r) => index.get(norm(r)))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+const backlinks = conceptBacklinks(concept.slug, { scoped: true });
+
+const rels: ProfileRel[] = related.map((t) => ({ kind: t.kind, label: t.label, href: t.url }));
+
+const header: ProfileHeaderData = {
+  kindLabel: `Concept${concept.kind && concept.kind !== "concept" ? ` · ${concept.kind}` : ""}`,
+  name: concept.title,
+  variants: concept.aliases,
+  descriptor: concept.summary || undefined,
+  evidence: "verified",
+  relLabel: "Related",
+  relationships: rels.length ? rels : undefined,
+  correctHref: withSite(
+    `/submit?ref_kind=concept&ref_id=${encodeURIComponent(concept.slug)}&ref_label=${encodeURIComponent(concept.title)}`,
+  ),
+};
+
+const sections = [
+  { anchor: "overview", label: "Identity" },
+  ...(backlinks.length ? [{ anchor: "backlinks", label: "Backlinks" }] : []),
+];
+const profileToc = sections.length >= 2 ? sections : [];
+---
+
+<Base title={concept.title} section="site" description={concept.summary} toc={profileToc}>
+  <p class="prose"><a href={withSite("/site/concepts/")}>← Glossary</a></p>
+  <div id="overview"><ProfileHeader profile={header} /></div>
+
+  <article class="prose">
+    {
+      concept.tags.length > 0 && (
+        <ul class="chips">
+          {concept.tags.map((t) => (
+            <li class="chip">{t}</li>
+          ))}
+        </ul>
+      )
+    }
+
+    <Fragment set:html={bodyHtml} />
+
+    {
+      backlinks.length > 0 && (
+        <div class="backlinks">
+          <h2 id="backlinks">Backlinks</h2>
+          <ul class="neighborhood">
+            {backlinks.map((b) => (
+              <li>
+                <a href={b.url}>{b.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+  </article>
+</Base>

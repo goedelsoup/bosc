@@ -10,7 +10,7 @@ import { evidenceKind, type PersonItem } from "@watermark/core/feeds";
 import type { ProfileAttr, ProfileHeaderData } from "@watermark/core/profile";
 import { entityHref } from "@watermark/core/entityLinks";
 import { withSite } from "@watermark/core/site";
-import { renderBody } from "@watermark/core/wiki";
+import { renderBody, wikiIndex } from "@watermark/core/wiki";
 
 export const getStaticPaths: GetStaticPaths = () =>
   withSitePaths(() => {
@@ -65,7 +65,7 @@ const profileToc = sections.length >= 2 ? sections : [];
       )
     }
 
-    {person.body && <Fragment set:html={renderBody(person.body)} />}
+    {person.body && <Fragment set:html={renderBody(person.body, wikiIndex({ scoped: true }))} />}
 
     {
       person.sources.length > 0 && (

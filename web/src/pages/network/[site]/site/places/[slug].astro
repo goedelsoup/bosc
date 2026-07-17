@@ -11,7 +11,7 @@ import type { ProfileAttr, ProfileHeaderData } from "@watermark/core/profile";
 import type { FigureStatData } from "@watermark/core/viz";
 import { entityHref } from "@watermark/core/entityLinks";
 import { withSite } from "@watermark/core/site";
-import { renderBody } from "@watermark/core/wiki";
+import { renderBody, wikiIndex } from "@watermark/core/wiki";
 
 export const getStaticPaths: GetStaticPaths = () =>
   withSitePaths(() => {
@@ -79,7 +79,7 @@ const profileToc = sections.length >= 2 ? sections : [];
       )
     }
 
-    {place.body && <Fragment set:html={renderBody(place.body)} />}
+    {place.body && <Fragment set:html={renderBody(place.body, wikiIndex({ scoped: true }))} />}
 
     {
       place.members.length > 0 && (
