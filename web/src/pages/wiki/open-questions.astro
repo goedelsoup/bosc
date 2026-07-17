@@ -1,0 +1,202 @@
+---
+/**
+ * Open questions (`/wiki/open-questions`, issue #1569, epic #1560 workstream B) — the browsable
+ * board of every still-open thread in the record, projected by the `open-questions` bundle feed
+ * (#1568). Two origins: the `[open]` rows of the per-site leads board, and the `[open]` cells of
+ * the network's boom-origin hypothesis matrix. Every row is `[open]` by construction (an
+ * `[inference]` lead — a labelled reading, not a gap — is filtered out in the projector), and each
+ * deep-links (`#<anchor>`) from the concepts/entities that raise it (the backlink peer, #1569).
+ *
+ * The wiki is network-global and reads the active (reference) build, so this is Lima's own leads
+ * plus the network-wide open hypothesis cells it hosts. It gates on the feed's presence — the
+ * parent `story` readiness domain: the projector ships no feed for a site with no open threads, so
+ * a build without one shows the honest empty state instead of a barren board (#1569).
+ */
+import Base from "~/layouts/Base.astro";
+import EvidenceTag from "~/components/EvidenceTag.astro";
+import Icon from "~/components/Icon.astro";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import { SIGNAL_META, type Signal } from "@watermark/core/directory";
+import type { OpenQuestionItem } from "@watermark/core/feeds";
+import { KIND_META, STATUS_META } from "@watermark/core/leads";
+import { withBase } from "@watermark/core/site";
+import { openQuestionAnchor } from "@watermark/core/wiki";
+
+const questions = hasFeed("open-questions") ? loadFeed<OpenQuestionItem[]>("open-questions") : [];
+const leadQs = questions.filter((q) => q.origin === "lead");
+const hypQs = questions.filter((q) => q.origin === "hypothesis");
+
+const ghIssue = (n: number): string =>
+  `https://github.com/watermark-directory/the-watermark-directory/issues/${n}`;
+const signalMeta = (s?: string | null) => (s && s in SIGNAL_META ? SIGNAL_META[s as Signal] : undefined);
+
+const groups: { id: string; label: string; blurb: string; rows: OpenQuestionItem[] }[] = [];
+if (leadQs.length)
+  groups.push({
+    id: "from-leads",
+    label: "From the open-leads board",
+    blurb: "Gaps we're chasing on the site — each traces to the record where the gap is documented.",
+    rows: leadQs,
+  });
+if (hypQs.length)
+  groups.push({
+    id: "from-hypotheses",
+    label: "From the hypothesis matrix",
+    blurb: "Cells with no documented nexus yet under a boom-origin lens — an open thread, not a verdict.",
+    rows: hypQs,
+  });
+
+const toc = groups.map((g) => ({ anchor: g.id, label: g.label }));
+---
+
+<Base
+  title="Open questions"
+  section="wiki"
+  description="Every still-open thread in the record — the open leads and the unanswered hypothesis cells, cross-linked from the concepts and entities that raise them."
+  toc={toc}
+>
+  <div class="oq">
+    <p class="prose"><a href={withBase("/wiki/")}>← Wiki</a></p>
+    <div class="oq-head">
+      <div class="oq-kicker">Wiki · open threads</div>
+      <h1>Open questions</h1>
+      <p class="section-lead">
+        Every unanswered thread in the record, in the open — the <a href={withBase("/wiki/concepts/")}>concepts</a>
+        and <a href={withBase("/wiki/entities/")}>entities</a> that raise a question link straight down to it.
+        Each is <strong>a question, not a verdict</strong>: marked <EvidenceTag kind="open" /> and tracing to
+        the record where the gap is recorded. {questions.length} open.
+      </p>
+    </div>
+
+    {
+      questions.length === 0 ? (
+        <p class="stub-note">
+          No open questions are recorded for this site yet — once a lead or a hypothesis cell opens,
+          it lands here.
+        </p>
+      ) : (
+        groups.map((g) => (
+          <section class="oq-group" id={g.id}>
+            <div class="oq-group-head">
+              <h2>{g.label}</h2>
+              <span class="oq-group-n">{g.rows.length}</span>
+            </div>
+            <p class="oq-group-blurb">{g.blurb}</p>
+            <ul class="oq-list">
+              {g.rows.map((q) => {
+                const kind = q.kind ? KIND_META[q.kind] : undefined;
+                const status = q.status ? STATUS_META[q.status] : undefined;
+                const sig = signalMeta(q.signal);
+                return (
+                  <li class="oq-item" id={openQuestionAnchor(q.id)}>
+                    <div class="oq-meta">
+                      <EvidenceTag kind="open" />
+                      {kind && <span class="oq-kind">{kind.label}</span>}
+                      {status && <span class="oq-chip" data-mod={status.mod}>{status.label}</span>}
+                      {q.hypothesis_label && <span class="oq-kind">{q.hypothesis_label}</span>}
+                      {sig && (
+                        <span class="oq-chip oq-chip-sig" style={`--sig:${sig.dot}`}>
+                          <span class="oq-chip-dot" aria-hidden="true" />
+                          {sig.label}
+                        </span>
+                      )}
+                    </div>
+                    <p class="oq-q">{q.question}</p>
+                    <p class="oq-detail">{q.detail}</p>
+                    <div class="oq-foot">
+                      <span class="oq-source">{q.source}</span>
+                      {q.issue && (
+                        <a
+                          class="oq-gh"
+                          href={ghIssue(q.issue)}
+                          rel="noopener noreferrer"
+                          title="Linked tracking issue"
+                        >
+                          <Icon name="repo" size={11} /> #{q.issue}
+                        </a>
+                      )}
+                      <span class="oq-id">{q.id}</span>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        ))
+      )
+    }
+  </div>
+</Base>
+
+<style>
+  .oq-head { margin-bottom: var(--sp-5); }
+  .oq-kicker {
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-nano);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bosc-faint);
+    margin-bottom: 0.4rem;
+  }
+  .oq-head h1 { margin: 0 0 0.5rem; }
+
+  .oq-group { margin: var(--sp-6) 0; scroll-margin-top: 5rem; }
+  .oq-group-head { display: flex; align-items: baseline; gap: var(--sp-2); border-bottom: 1px solid var(--bosc-rule); padding-bottom: 0.4rem; }
+  .oq-group-head h2 { margin: 0; font-size: var(--fs-h3); }
+  .oq-group-n {
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-meta);
+    color: var(--bosc-faint);
+  }
+  .oq-group-blurb { color: var(--bosc-muted); font-size: var(--fs-meta); margin: 0.5rem 0 var(--sp-3); max-width: 52rem; }
+
+  .oq-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-3); }
+  .oq-item {
+    border: 1px solid var(--bosc-rule);
+    border-left: 3px solid var(--bosc-open, #8a7a3a);
+    background: var(--bosc-surface);
+    padding: var(--sp-3) var(--sp-4);
+    scroll-margin-top: 5rem;
+  }
+  .oq-item:target { border-left-color: var(--bosc-forest); background: var(--td-tint, #e4ece4); }
+
+  .oq-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; }
+  .oq-kind {
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-nano);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--bosc-ink-green);
+  }
+  .oq-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    font-size: var(--fs-nano);
+    color: var(--bosc-muted);
+    padding: 0.1em 0.5em;
+    border: 1px solid var(--bosc-rule);
+    border-radius: 2px;
+  }
+  .oq-chip-dot { width: 0.5em; height: 0.5em; border-radius: 50%; background: var(--sig, var(--bosc-faint)); flex: none; }
+
+  .oq-q { font-weight: 600; margin: 0 0 0.3rem; color: var(--bosc-ink); }
+  .oq-detail { margin: 0 0 0.6rem; color: var(--bosc-muted); font-size: var(--fs-meta); line-height: 1.55; }
+  .oq-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+  .oq-source, .oq-id {
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-nano);
+    color: var(--bosc-faint);
+  }
+  .oq-id { margin-left: auto; }
+  .oq-gh {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25em;
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-nano);
+    color: var(--bosc-link);
+    text-decoration: none;
+  }
+  .oq-gh:hover { text-decoration: underline; }
+</style>

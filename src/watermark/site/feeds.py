@@ -160,13 +160,21 @@ from watermark.site.readiness import State, Tier  # the readiness vocabulary SSO
 #   BM25+vector search; like `ask-embeddings` both feeds are always emitted (empty when the source PDFs
 #   are absent / `--no-embeddings`) so the schema set stays stable. Not cataloged (a retrieval index,
 #   like `ask-embeddings`). Back-compatible (two additive feeds, no changed shapes).
-# 1.26.1: `DocumentItem` gains optional version/duplicate-cluster metadata — `duplicate_cluster`,
+# 1.27.0: adds the `open-questions` collection feed (#1568, epic #1560 workstream B) — the aggregated
+#   still-open threads of the corpus, each with provenance. A post-pass projection
+#   (`watermark.site.open_questions`) over the just-assembled `leads` + `hypothesis-assessments` feeds:
+#   every `[open]`-tagged lead (wired to the `lead:kind:question` / `lead:status:unanswered` label
+#   vocabulary) + every `[open]`-tagged hypothesis cell, ported from yidam's `open-questions` model
+#   (open ⇔ the `[open]` tag). Skipped for a site with no open threads, so `hasFeed("open-questions")`
+#   is false and the section degrades rather than shipping an empty list. Not cataloged (a derived
+#   view — the underlying leads are already cataloged). Back-compatible (one additive feed).
+# 1.27.1: `DocumentItem` gains optional version/duplicate-cluster metadata — `duplicate_cluster`,
 #   `canonical_document_id`, `version`, `supersedes` (#1590, epic #1579 Phase 3), projected from the
 #   curated custody manifest (`data/site/document-versions.yaml`) by watermark.site.docversions so
 #   retrieval can collapse a filing's versions to the canonical one while retaining a superseded
 #   version's distinct evidence (`deduplicate` / `version_policy` args on search_corpus/passages).
 #   Additive/optional — absent for a document with no declared cluster (PATCH, back-compatible).
-CONTRACT_VERSION = "1.26.1"
+CONTRACT_VERSION = "1.27.1"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -585,6 +593,48 @@ class LeadItem(BaseModel):
         None  # a linked watermark-directory/the-watermark-directory tracking issue, when one exists
     )
     note: str | None = None  # a short standing note, used sparingly + truthfully
+
+
+# --- open-questions feed (issue #1568, epic #1560 workstream B) ----------------
+# Where a still-open question was aggregated from: the per-site `leads` board, or an `[open]`-tagged
+# cell of the boom-origin hypothesis matrix. Ports yidam's `open-questions` model (a node is open
+# when it carries the `[open]` tag) — see `watermark.site.corpus_mirror.render_open_questions`.
+OpenQuestionOrigin = Literal["lead", "hypothesis"]
+
+
+class OpenQuestionItem(BaseModel):
+    """One unanswered question in the corpus — an `[open]`-tagged lead or hypothesis cell.
+
+    The `open-questions` feed is a **projection** (`watermark.site.open_questions`), not a new
+    extraction: it aggregates every still-open thread the bundle already ships — the `[open]`-tagged
+    rows of the `leads` feed (the per-site board, wired to the `lead:kind:question` /
+    `lead:status:unanswered` label vocabulary) and the `[open]`-tagged cells of the
+    `hypothesis-assessments` matrix (a documented gap under a boom-origin lens) — into one flat,
+    provenanced list. It ports yidam's `open-questions` model: a node is open when it carries the
+    `[open]` tag (`claim_tag == "open"`), so an `[inference]`-tagged lead (a labeled reading, not a
+    gap) is deliberately excluded, exactly as `render_open_questions` excludes it.
+
+    Every row names a real ``source`` — the citation where the gap is recorded (a lead's source, or
+    the hypothesis cell's committed matrix file). The lead-derived fields (``kind``/``status``/
+    ``issue``) are present only for ``origin == "lead"``; the hypothesis-derived fields
+    (``hypothesis``/``hypothesis_label``/``signal``) only for ``origin == "hypothesis"``.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: str  # stable id: the lead id, or `hyp:<hypothesis>:<site>` for a matrix cell
+    origin: OpenQuestionOrigin
+    question: str  # the open question — the lead title, or a synthesized cell prompt
+    detail: str  # one honest paragraph of context (never fabricated)
+    source: str  # the real provenance citation — where this gap is recorded
+    # lead-derived context (present when origin == "lead") — the lead:kind:* / lead:status:* vocab.
+    kind: LeadKind | None = None
+    status: LeadStatus | None = None
+    issue: int | None = None  # a linked tracking issue, when the lead names one
+    # hypothesis-derived context (present when origin == "hypothesis").
+    hypothesis: str | None = None  # the lens id ("water" | "defense" | "surveillance")
+    hypothesis_label: str | None = None  # the human lens label, e.g. "H1 Water & Coercion"
+    signal: str | None = None  # the cell's signal strength ("anchor"|"strong"|"moderate"|"watch")
 
 
 # --- contacts feed ------------------------------------------------------------

@@ -6,7 +6,7 @@ import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { ConceptItem } from "@watermark/core/feeds";
 import type { ProfileHeaderData, ProfileRel } from "@watermark/core/profile";
 import { withBase } from "@watermark/core/site";
-import { conceptBacklinks, norm, renderBody, wikiIndex } from "@watermark/core/wiki";
+import { conceptBacklinks, norm, openQuestionBacklinks, renderBody, wikiIndex } from "@watermark/core/wiki";
 
 export const getStaticPaths: GetStaticPaths = () => {
   const concepts = hasFeed("concepts") ? loadFeed<ConceptItem[]>("concepts") : [];
@@ -23,6 +23,9 @@ const related = concept.related
   .map((r) => index.get(norm(r)))
   .filter((t): t is NonNullable<typeof t> => Boolean(t));
 const backlinks = conceptBacklinks(concept.slug);
+// Open questions that raise this concept — the backlink peer of `[[wiki links]]` over the
+// prose-only `open-questions` feed (#1569).
+const openQuestions = openQuestionBacklinks([concept.title, ...concept.aliases]);
 
 const rels: ProfileRel[] = related.map((t) => ({ kind: t.kind, label: t.label, href: t.url }));
 
@@ -42,6 +45,7 @@ const header: ProfileHeaderData = {
 const sections = [
   { anchor: "overview", label: "Identity" },
   ...(backlinks.length ? [{ anchor: "backlinks", label: "Backlinks" }] : []),
+  ...(openQuestions.length ? [{ anchor: "open-questions", label: "Open questions" }] : []),
 ];
 const profileToc = sections.length >= 2 ? sections : [];
 ---
@@ -71,6 +75,22 @@ const profileToc = sections.length >= 2 ? sections : [];
             {backlinks.map((b) => (
               <li>
                 <a href={b.url}>{b.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    {
+      openQuestions.length > 0 && (
+        <div class="backlinks">
+          <h2 id="open-questions">Open questions</h2>
+          <p class="card-meta">Unanswered threads in the record that raise this concept.</p>
+          <ul class="neighborhood">
+            {openQuestions.map((q) => (
+              <li>
+                <a href={q.url}>{q.question}</a>
               </li>
             ))}
           </ul>

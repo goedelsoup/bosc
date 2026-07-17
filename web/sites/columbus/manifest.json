@@ -1,10 +1,10 @@
 {
   "site": "columbus",
   "bundle_version": "1.0.0",
-  "contract_version": "1.26.1",
+  "contract_version": "1.27.1",
   "generated_at": "2026-07-08T21:09:13+00:00",
-  "feed_count": 24,
-  "row_total": 206,
+  "feed_count": 25,
+  "row_total": 207,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -191,6 +191,14 @@
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
       "count": 72
+    },
+    {
+      "name": "open-questions",
+      "path": "feeds/open-questions.json",
+      "media_type": "application/json",
+      "schema": "schemas/open-questions.schema.json",
+      "kind": "collection",
+      "count": 1
     },
     {
       "name": "catalog-index",

@@ -1,0 +1,80 @@
+[
+  {
+    "id": "AWARD-2026-07-14",
+    "origin": "lead",
+    "question": "MWCD board award votes + Norfolk Southern bid opening fall on 2026-07-14 — capture the outcomes",
+    "detail": "The two cornerstone flood contracts bid 2026-06-30 with apparent low bidders only — Miller Brothers Construction at $32,075,000 for the Eagle Creek Dry Storage Basin (est. $42,376,000) and Helms & Sons at $3,699,040 for the Phase 2 downtown benching / Additional Hydraulic Improvements (est. $6,170,000). The Maumee Watershed Conservancy District Board of Directors was to consider award recommendations at its 9:00 a.m. 2026-07-14 meeting in Defiance; the Norfolk Southern bridge bid opening was extended to 2026-07-14 at NS headquarters in Atlanta. As of ingest neither outcome was published. OPEN — do not upgrade \"apparent low\" to \"awarded\" without the board minutes; pull the 07-14 results and the NS bid tabulation and add award rows.",
+    "source": "wfin.com \"Bids Received For Flood Mitigation Projects\" (2026-06-30, 403 on direct fetch; search-rendered) · data/extracted/findlay/flood-mitigation.md",
+    "kind": "signal",
+    "status": "unanswered",
+    "issue": 1465,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
+  },
+  {
+    "id": "ASSESSMENT-OM-METHOD",
+    "origin": "lead",
+    "question": "Resolve whether MWCD levies a Blanchard-subdistrict assessment for basin O&M (method not finalized)",
+    "detail": "The program FAQ states the O&M funding method verbatim: \"The annual operation and maintenance expenses are estimated at $100,000. The method for covering this expense has yet to be finalized but may include funding through grants, the City of Findlay, the County, or assessments.\" So an assessment is one of four listed possibilities, not an enacted instrument; no source confirms a Blanchard-subdistrict assessment has been levied. OPEN — watch for a conservancy-court assessment order. DISAMBIGUATION: the Hancock County \"Proposed Assessments — Revised 11-4-24\" is the Howard Run petition ditch (ORC 6131, County Commissioners, approved 2025-01-16), NOT the MWCD flood assessment — do not conflate.",
+    "source": "hancockcountyflooding.com/faq (read direct) · data/extracted/findlay/flood-mitigation.md",
+    "kind": "question",
+    "status": "unanswered",
+    "issue": 1465,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
+  },
+  {
+    "id": "CONSERVANCY-COURT-2021",
+    "origin": "lead",
+    "question": "Pull the July-2021 conservancy-court plan amendment adding Eagle Creek to the District plan",
+    "detail": "In July 2021 the MWCD Conservancy Court (the Common Pleas judges of the 15 member counties) voted to add the Eagle Creek Floodwater Storage Basin to the District's official plan, after a May 2021 meeting at which the panel tabled it. OPEN — the exact July 2021 date and wording are secondary/ search-corroborated only (WTOL timed out, WFIN 403, The Courier paywalled), and no case/record number surfaced. Retrieve the conservancy-court record (district office, Defiance) and file it as a plan-amendment record row.",
+    "source": "WebSearch corroboration (WTOL \"Eagle Creek flood basin project tabled by conservancy court\", May 2021) · data/extracted/findlay/flood-mitigation.md",
+    "kind": "question",
+    "status": "unanswered",
+    "issue": 1465,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
+  },
+  {
+    "id": "PHASE1-CONTRACTOR",
+    "origin": "lead",
+    "question": "Identify the Phase 1 benching contractor and contract price",
+    "detail": "Phase 1 benching (floodplain benching near Swale Park, removal of four low-head dams downstream of Lye Creek, instream riffle construction; the reach between Howard Run and the NS railroad bridge) was completed in 2024, but the construction contractor and the contract price are not disclosed in any reachable source. OPEN. Note: the \"$2.56 million\" figure in circulation is the U.S. 68 / SR 15 roundabout (ODOT-administered), NOT the Phase 1 benching — do not attribute it here.",
+    "source": "hancockcountyflooding.com/about-us · findlayecondev.com/2024-year-in-review (both read direct) · data/extracted/findlay/flood-mitigation.md",
+    "kind": "question",
+    "status": "unanswered",
+    "issue": 1465,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
+  },
+  {
+    "id": "RIVERSIDE-DAM-SEDIMENT",
+    "origin": "lead",
+    "question": "Find the sediment-characterization study at Riverside Park dam (only a dredging project is documented)",
+    "detail": "The Blanchard River Watershed Partnership is running \"sediment removal near the dam located at Riverside Park\" — WTOL reporting (search-rendered) describes removing \"up to 40,000 cubic yards\" of sediment from a reservoir that shoaled from 7–8 ft to 3–4 ft deep, with pre-construction from December 2022 and construction from early 2024. OPEN — no formal sediment-CHARACTERIZATION / sampling report, OEPA 401 water-quality certification, or Section 404 sediment-management plan was located; this water-quality project is distinct from the Phase 1 low-head-dam removals downstream of Lye Creek. Cross-filed per the issue's leads bullet.",
+    "source": "hancockcountyflooding.com/about-us (read direct) · WTOL sediment-dredge article (timeout; search-rendered) · data/extracted/findlay/flood-mitigation.md",
+    "kind": "question",
+    "status": "unanswered",
+    "issue": 1465,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
+  },
+  {
+    "id": "TAXONOMY-GRANTS",
+    "origin": "lead",
+    "question": "The record-group taxonomy has no federal-grant / disaster-mitigation bucket (network-level follow-up)",
+    "detail": "Findlay's flood chain surfaces a taxonomy gap the expanding network will hit repeatedly: the contract's RecordGroup enum (deeds, permits-epa, permits-idem, permits-npdes, permits-sos, plans, opc) has no home for a FEMA FMA grant, an FRA RAISE grant, an ODNR Dam Safety construction permit, or a floodplain LOMR. The FEMA $24M obligation is filed under permits-epa (\"Permits — Ohio EPA / USACE\") with a disclosed taxonomy warning, since only the USACE Review Plan is a clean fit for that bucket. OPEN — propose a dedicated grants / federal-award record group (feeds.py RecordGroup + records._BLOCK_TO_GROUP + web records.ts labels + the committed records.schema.json enums, likely a CONTRACT_VERSION bump) as a network-level change, not a per-site edit. Deferred out of this evidence-ingest issue on purpose.",
+    "source": "src/watermark/site/feeds.py RecordGroup · data/extracted/findlay/flood/fema-fma-obligation-2026.epa.yaml (warnings)",
+    "kind": "question",
+    "status": "low",
+    "issue": null,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
+  }
+]

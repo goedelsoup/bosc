@@ -7,7 +7,7 @@
  * links render as a dotted "missing" span (a TODO marker), never a dead anchor.
  */
 import { activeSite, hasFeed, loadFeed } from "./bundle";
-import { slugify, type ConceptItem, type EntityNode, type PersonItem } from "./feeds";
+import { slugify, type ConceptItem, type EntityNode, type OpenQuestionItem, type PersonItem } from "./feeds";
 import { escapeHtml } from "./format";
 import { withBase, withSite } from "./site";
 
@@ -188,6 +188,62 @@ export function conceptBacklinks(
     const viaBody = [...c.body.matchAll(/\[\[([^\]]+)\]\]/g)].some((m) => names.has(norm(m[1])));
     if (viaRelated || viaBody) {
       out.push({ url: conceptHref(c.slug, scoped), label: c.title });
+    }
+  }
+  return out;
+}
+
+/** One open question that raises a node — the backlink row on a concept/entity page (#1569). */
+export interface OpenQuestionBacklink {
+  id: string;
+  question: string;
+  origin: OpenQuestionItem["origin"];
+  kind?: OpenQuestionItem["kind"];
+  status?: OpenQuestionItem["status"];
+  /** The `/wiki/open-questions/#…` deep link to this row on the board. */
+  url: string;
+}
+
+/** The stable `#anchor` an open-question row is addressable at on the board page. */
+export function openQuestionAnchor(id: string): string {
+  return slugify(id);
+}
+
+/**
+ * Whether a normalized name is specific enough to raise a backlink. The `open-questions` feed
+ * carries plain prose, not `[[wiki links]]`, so a name is matched as a whole phrase against a
+ * question's text — but a very short single token (`pH`, an initialism of two) would match noise,
+ * so only multi-word names or single tokens of ≥4 chars qualify.
+ */
+function backlinkable(name: string): boolean {
+  const n = norm(name);
+  return n.length > 0 && (n.includes(" ") || n.length >= 4);
+}
+
+/**
+ * Open questions whose prose (`question` + `detail`) *raises* any of these names — the reverse of
+ * the `[[wiki link]]` backlink (#68), for a feed that names its subjects in prose rather than in
+ * bracket syntax (#1569). Pass a node's own names (a concept's title/aliases, an entity's
+ * display/variants); a name matches only as a whole normalized phrase (`ohio epa`, not a substring
+ * of `ohio epated`), so the resulting backlinks stay on-topic. Reads the active site's feed, so a
+ * build whose site ships no `open-questions` feed yields none — no empty backlink block.
+ */
+export function openQuestionBacklinks(names: (string | null | undefined)[]): OpenQuestionBacklink[] {
+  if (!hasFeed("open-questions")) return [];
+  const tokens = [...new Set(names.filter((n): n is string => n != null && backlinkable(n)).map(norm))];
+  if (!tokens.length) return [];
+  const out: OpenQuestionBacklink[] = [];
+  for (const q of loadFeed<OpenQuestionItem[]>("open-questions")) {
+    const hay = ` ${norm(`${q.question} ${q.detail}`)} `;
+    if (tokens.some((t) => hay.includes(` ${t} `))) {
+      out.push({
+        id: q.id,
+        question: q.question,
+        origin: q.origin,
+        kind: q.kind,
+        status: q.status,
+        url: `${withBase("/wiki/open-questions/")}#${openQuestionAnchor(q.id)}`,
+      });
     }
   }
   return out;

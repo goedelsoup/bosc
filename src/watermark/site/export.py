@@ -109,6 +109,7 @@ from watermark.site.feeds import (
     LeadItem,
     Manifest,
     MeetingItem,
+    OpenQuestionItem,
     PassageEmbeddingEntry,
     PassageItem,
     PersonItem,
@@ -122,6 +123,7 @@ from watermark.site.feeds import (
     SiteReadiness,
     TimelineEntry,
 )
+from watermark.site.open_questions import build_open_questions
 from watermark.site.passages import load_committed_passages
 from watermark.site.readiness import compute_readiness
 from watermark.sites import (
@@ -917,6 +919,26 @@ def _facts_feed(feeds: Sequence[_Feed], settings: Settings) -> _Feed | None:
     return _collection_feed("facts", FactItem, facts)
 
 
+def _open_questions_feed(feeds: Sequence[_Feed]) -> _Feed | None:
+    """Build the `open-questions` feed (#1568) as a projection over the assembled feeds.
+
+    Like `_facts_feed`, a post-pass over feeds already in hand (no corpus re-load): it aggregates
+    every `[open]`-tagged row of the `leads` board + `[open]`-tagged cell of the
+    `hypothesis-assessments` matrix (labelled via `hypotheses`) into one provenanced list. `None`
+    (feed skipped) when a site has no open threads, so `hasFeed("open-questions")` is false and the
+    section degrades rather than shipping an empty list.
+    """
+    sources = ("leads", "hypothesis-assessments", "hypotheses")
+    payloads_by_feed: dict[str, object] = {}
+    for feed in feeds:
+        if feed.name in sources and feed.kind == "collection":
+            payloads_by_feed[feed.name] = _collection_rows(feed)
+    questions = build_open_questions(payloads_by_feed)
+    if not questions:
+        return None
+    return _collection_feed("open-questions", OpenQuestionItem, questions)
+
+
 def _passages_feed(feeds: Sequence[_Feed], settings: Settings) -> _Feed:
     """Build the `passages` feed (#1589) — page excerpts for this site's published PDFs.
 
@@ -981,6 +1003,12 @@ def export_bundle(
     facts_feed = _facts_feed(feeds, settings)
     if facts_feed is not None:
         feeds.append(facts_feed)
+    # The aggregated `open-questions` feed (#1568) — a projection over the just-assembled `leads`
+    # + `hypothesis-assessments` feeds, so it's appended after `_collect_feeds` (like facts).
+    # Skipped (None) for a site with no open threads.
+    open_questions_feed = _open_questions_feed(feeds)
+    if open_questions_feed is not None:
+        feeds.append(open_questions_feed)
     # The page-level `passages` index (#1589) — a post-pass over the just-assembled `documents`
     # feed's published PDFs, so it's appended after `_collect_feeds` (like facts). Always emitted
     # (empty when no published PDF is readable) so the schema set is stable. Its `passage-embeddings`
