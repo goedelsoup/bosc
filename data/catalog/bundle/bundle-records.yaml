@@ -105,5 +105,13 @@ notes: >-
   it adds no new committed reference upstream). It lets retrieval collapse a filing's versions to
   the canonical one while keeping a superseded version's distinct evidence (the `deduplicate` /
   `version_policy` args on `search_corpus` / `search_passages`).
+  The manifest also carries an `exports` block (#1574, contract 1.28.0) — the yidam corpus mirror
+  (the committed corpus projected into `yidam://corpus/*` nodes) serialized into downloadable graph
+  interchange files under `exports/` (`corpus.ttl` + `corpus.jsonld` RDF and `corpus.graphml`), each
+  recorded as an `ExportRef` with its node/edge counts. `watermark.site.graph_exports` renders them
+  from the same in-memory mirror the `.yidam` regen builds (a faithful Python peer of yidam's
+  `export_rdf` / `export_graphml`), so it reads only the corpus already assembled above and adds no
+  new committed upstream; emitted at canonical export only and git-ignored like the rest of the
+  bundle, surfaced for download from `/wiki/graph/exports`.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.
