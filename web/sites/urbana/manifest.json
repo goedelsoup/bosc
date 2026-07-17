@@ -4,7 +4,7 @@
   "contract_version": "1.26.0",
   "generated_at": "2026-07-09T19:27:16+00:00",
   "feed_count": 27,
-  "row_total": 155,
+  "row_total": 224,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -62,7 +62,7 @@
       "media_type": "application/json",
       "schema": "schemas/concepts.schema.json",
       "kind": "collection",
-      "count": 6
+      "count": 75
     },
     {
       "name": "places",
