@@ -27,7 +27,7 @@ from watermark.site.open_questions import (
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-_CV = "1.27.1"
+_CV = "1.28.0"
 
 # A hypotheses feed's lens rows (id → number/name), as they appear in an assembled bundle.
 _HYPS = [

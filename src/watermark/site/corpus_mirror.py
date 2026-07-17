@@ -121,6 +121,12 @@ class MirrorNode:
     description: str = ""
     links: list[MirrorLink] = field(default_factory=list)
     meta: dict[str, Any] = field(default_factory=dict)  # extra BOSC provenance (kept, not lost)
+    # Hints at the committed corpus file(s) this node derives from, used by the `corpus-index` feed
+    # (#1573) to date each node's freshness. Deliberately **not** serialized by :meth:`to_dict` — it
+    # never enters the yidam node YAML, so the mirror stays byte-identical (and its line counts too).
+    # A `concept:<slug>` sentinel (resolved against ``concepts_dir``) or a raw corpus source path/
+    # citation (resolved best-effort); non-path citations resolve to nothing → null freshness.
+    source_refs: list[str] = field(default_factory=list)
 
     @property
     def id(self) -> str:
@@ -288,6 +294,7 @@ def project_mirror(
                     "tags": list(concept.tags),
                     "site": site,
                 },
+                source_refs=[f"concept:{concept.slug}"],  # → `concepts_dir/<slug>.md`
                 links=related or [anchor_link("in-corpus", cross=True)],
             )
         )
@@ -314,6 +321,7 @@ def project_mirror(
                     "sources": list(ent.sources),
                     "site": site,
                 },
+                source_refs=list(ent.sources),  # committed corpus source paths → freshness
                 # Same class (artifact) → the anchor target needs no `../`.
                 links=[MirrorLink(f"{anchor_name}.yml", "in-site")],
             )
@@ -344,6 +352,7 @@ def project_mirror(
                     ],
                     "site": site,
                 },
+                source_refs=[s.source for s in person.sources if s.source],
                 links=[link],
             )
         )
@@ -377,6 +386,7 @@ def project_mirror(
                     "relation_basis": edge.relation_basis,
                     "site": site,
                 },
+                source_refs=[edge.source] if edge.source else [],
                 links=edge_links,
             )
         )
@@ -399,6 +409,7 @@ def project_mirror(
                     "note": lead.note,
                     "site": site,
                 },
+                source_refs=[lead.source] if lead.source else [],
                 links=[anchor_link("on-site", cross=True)],
             )
         )

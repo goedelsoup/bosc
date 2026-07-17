@@ -1,10 +1,10 @@
 {
   "site": "west-union",
   "bundle_version": "1.0.0",
-  "contract_version": "1.27.1",
+  "contract_version": "1.28.0",
   "generated_at": "2026-07-08T21:17:59+00:00",
-  "feed_count": 24,
-  "row_total": 201,
+  "feed_count": 25,
+  "row_total": 280,
   "readiness": {
     "tier": "backdrop",
     "domains": {
@@ -207,6 +207,14 @@
       "schema": "schemas/ask-embeddings.schema.json",
       "kind": "collection",
       "count": 0
+    },
+    {
+      "name": "corpus-index",
+      "path": "feeds/corpus-index.json",
+      "media_type": "application/json",
+      "schema": "schemas/corpus-index.schema.json",
+      "kind": "collection",
+      "count": 79
     }
   ]
 }

@@ -77,6 +77,17 @@ if (hasFeed("open-questions")) {
     note: "what's unresolved",
   });
 }
+if (hasFeed("corpus-index")) {
+  doors.push({
+    id: "corpus-index",
+    kind: "Node map",
+    href: "/wiki/corpus/",
+    count: num(count("corpus-index")),
+    title: "Corpus map",
+    desc: "The at-a-glance index of every node in the record — entities, concepts, relationships, leads, and open threads, with degree and freshness.",
+    note: "the whole corpus",
+  });
+}
 const curated: string[] = [];
 if (hasFeed("candidates")) curated.push("candidates");
 if (hasFeed("defense-contractors")) curated.push("defense-contractors");
