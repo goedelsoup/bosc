@@ -15,6 +15,12 @@
 // (max_results / max_tokens / max_tokens_per_result, or an `intent` preset) and returned in
 // the uniform `{ results, token_estimate, truncated, next_cursor }` envelope. Over-cap hits
 // have their snippet/text trimmed; the cursor pages through the ranked candidate pool.
+//
+// Evidence tiering (#1591): every compact/snippets/full hit carries a `tier`
+// (`direct` / `corroborating` / `background`) and a `tier_reason`, so a caller doesn't treat
+// every semantic match as equally useful. The tier is an evidence-grounded judgment from the
+// hit's evidence class (feed + source_kind) and its relevance band (score ÷ the pool's top
+// score) — see `../mcpTier`. `ids_only` stays a bare id + score list (no tier).
 
 import { loadAskIndex } from "../askIndexLoad";
 import { type VersionInfo, loadDocVersionsSafe } from "../docVersionsLoad";
@@ -33,6 +39,7 @@ import {
 import { type HybridRetrievalEnv, hybridSearch } from "../hybridRetrieve";
 import type { AskUnit, Hit } from "../retrieval";
 import { prepare, tokenize } from "../retrieval";
+import { type Tier, tierHit } from "../mcpTier";
 
 // Rough GPT-style byte→token heuristic — good enough for budgeting, not billing.
 const AVG_CHARS_PER_TOKEN = 4;
@@ -84,6 +91,9 @@ interface CompactHit {
   snippet: string;
   estimated_tokens: number;
   verified: boolean;
+  /** Evidence role for the query (#1591) — direct / corroborating / background. */
+  tier: Tier;
+  tier_reason: string;
 }
 
 /** full: the legacy shape — the whole flattened unit text (opt-in, #1580). */
@@ -99,6 +109,9 @@ interface FullHit {
   confidence: string | null;
   verified: boolean;
   score: number;
+  /** Evidence role for the query (#1591) — direct / corroborating / background. */
+  tier: Tier;
+  tier_reason: string;
 }
 
 type SearchHit = IdsOnlyHit | CompactHit | FullHit;
@@ -149,8 +162,9 @@ function snippetOf(text: string, terms: string[], maxTokens: number): string {
   return `${start > 0 ? "…" : ""}${text.slice(start, end).trim()}${end < text.length ? "…" : ""}`;
 }
 
-function compactCard(h: Hit, terms: string[], snippetTokens: number): CompactHit {
+function compactCard(h: Hit, terms: string[], snippetTokens: number, topScore: number): CompactHit {
   const u = h.unit;
+  const verdict = tierHit(u.feed, u.source_kind, h.score, topScore);
   return {
     id: u.id,
     title: u.title,
@@ -162,11 +176,14 @@ function compactCard(h: Hit, terms: string[], snippetTokens: number): CompactHit
     snippet: snippetOf(u.text, terms, snippetTokens),
     estimated_tokens: estimateFullTokens(u),
     verified: u.verified ?? false,
+    tier: verdict.tier,
+    tier_reason: verdict.reason,
   };
 }
 
-function fullHit(h: Hit): FullHit {
+function fullHit(h: Hit, topScore: number): FullHit {
   const u = h.unit;
+  const verdict = tierHit(u.feed, u.source_kind, h.score, topScore);
   return {
     id: u.id,
     feed: u.feed,
@@ -179,19 +196,29 @@ function fullHit(h: Hit): FullHit {
     confidence: u.confidence ?? null,
     verified: u.verified ?? false,
     score: roundScore(h.score),
+    tier: verdict.tier,
+    tier_reason: verdict.reason,
   };
 }
 
-function renderHits(hits: Hit[], query: string, mode: ResponseMode, snippetTokens: number): SearchHit[] {
+/** `topScore` is the pool's top score (deduped[0]) so the relevance band that feeds a hit's
+ * tier is stable across cursor pages. `ids_only` stays a bare id + score list — no tier. */
+function renderHits(
+  hits: Hit[],
+  query: string,
+  mode: ResponseMode,
+  snippetTokens: number,
+  topScore: number,
+): SearchHit[] {
   switch (mode) {
     case "ids_only":
       return hits.map((h) => ({ id: h.unit.id, score: roundScore(h.score) }));
     case "full":
-      return hits.map(fullHit);
+      return hits.map((h) => fullHit(h, topScore));
     case "snippets":
-      return hits.map((h) => compactCard(h, tokenize(query), snippetTokens));
+      return hits.map((h) => compactCard(h, tokenize(query), snippetTokens, topScore));
     default: // compact — short generic head preview, no query windowing
-      return hits.map((h) => compactCard(h, [], COMPACT_SNIPPET_TOKENS));
+      return hits.map((h) => compactCard(h, [], COMPACT_SNIPPET_TOKENS, topScore));
   }
 }
 
@@ -287,7 +314,17 @@ export async function handleSearchCorpus(
     versions,
     access: { relOf: (h) => h.unit.doc_rel, textOf: (h) => `${h.unit.title} ${h.unit.text}` },
   });
-  const window = renderHits(deduped.slice(offset, offset + knobs.maxResults + 1), query, mode, snippetTokens);
+  // Tier each hit's relevance band against the pool's top score (deduped is score-sorted, so
+  // deduped[0] is the strongest match across every page) — not the page-local top, which would
+  // spuriously promote page 2's leader to `direct` (#1591).
+  const topScore = deduped.length > 0 ? deduped[0].score : 0;
+  const window = renderHits(
+    deduped.slice(offset, offset + knobs.maxResults + 1),
+    query,
+    mode,
+    snippetTokens,
+    topScore,
+  );
   const governed = govern(window, { knobs, baseOffset: offset, shrink: shrinkSearchHit });
 
   return governedContent(governed);
