@@ -89,5 +89,14 @@ notes: >-
   needs `git lfs pull`) into the committed `data/site/passages.ndjson` artifact; the export reads
   that artifact and filters it to the site's published docs, adding no new committed reference
   upstream (the artifact is a curated site input, like `published-documents.yaml`).
+  The `open-questions` feed (#1568, contract 1.27.0) aggregates the corpus's still-open threads —
+  every `[open]`-tagged lead (the curated `leads` board) + every `[open]`-tagged cell of the
+  `(site × hypothesis)` matrix — into one flat, provenanced list, porting yidam's `open-questions`
+  model (open ⇔ the `[open]` tag). Like `facts`, it's a `catalog-index`-style post-pass projection
+  (`watermark.site.open_questions`) over the just-assembled `leads` + `hypothesis-assessments`
+  (+ `hypotheses` for lens labels) feeds, so it reads only feeds already produced above and adds no
+  new committed upstream; a lead names its own `source`, and an open matrix cell (which carries no
+  citation by rule) traces to its committed `data/hypotheses/<hid>/<site>.yaml` file. Skipped for a
+  site with no open threads.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.
