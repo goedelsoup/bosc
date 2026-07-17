@@ -31,7 +31,6 @@
           "type": "null"
         }
       ],
-      "default": null,
       "title": "Section"
     },
     "text": {
@@ -45,6 +44,7 @@
     "collection",
     "title",
     "page",
+    "section",
     "text"
   ],
   "title": "PassageItem",

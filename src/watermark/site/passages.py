@@ -80,25 +80,31 @@ def build_passages(
             skipped_docs += 1
             continue
         collection = rel.split("/", 1)[0] if "/" in rel else ""
-        for page_idx, page in enumerate(reader.pages):
-            try:
-                text = (page.extract_text() or "").strip()
-            except Exception:
-                text = ""
-            if not text:
-                continue  # image-only / empty page — no excerpt to index
-            page_1 = page_idx + 1
-            passages.append(
-                PassageItem(
-                    id=f"{rel}#p{page_1}",
-                    document_id=rel,
-                    collection=collection,
-                    title=title,
-                    page=page_1,
-                    section=None,
-                    text=text[:_MAX_PASSAGE_CHARS],
+        # Iterating reader.pages lazily parses each page, and a malformed PDF can raise mid-traversal
+        # (not just in extract_text) — wrap the loop so a broken document contributes what it could
+        # and is skipped, never aborting the whole export.
+        try:
+            for page_idx, page in enumerate(reader.pages):
+                try:
+                    text = (page.extract_text() or "").strip()
+                except Exception:
+                    text = ""
+                if not text:
+                    continue  # image-only / empty page — no excerpt to index
+                page_1 = page_idx + 1
+                passages.append(
+                    PassageItem(
+                        id=f"{rel}#p{page_1}",
+                        document_id=rel,
+                        collection=collection,
+                        title=title,
+                        page=page_1,
+                        section=None,
+                        text=text[:_MAX_PASSAGE_CHARS],
+                    )
                 )
-            )
+        except Exception:
+            skipped_docs += 1
     log.info(
         "passages.built",
         passages=len(passages),

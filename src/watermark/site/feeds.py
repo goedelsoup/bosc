@@ -769,7 +769,9 @@ class PassageItem(BaseModel):
     collection: str  # first path segment of document_id (e.g. "oepa") — the collection axis
     title: str  # the source document's catalog name, for display
     page: int  # 1-indexed printed page number (matches DocumentEntry provenance)
-    section: str | None = None  # sub-page heading when known; page chunks carry none today
+    # Sub-page heading when known; page chunks carry none today. Required-but-nullable (the builder
+    # always emits it, `null` for unknown) so the feed contract matches the web `PassageRow` shape.
+    section: str | None
     text: str  # the page's text-layer extraction (capped), verbatim
 
 

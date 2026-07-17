@@ -1026,20 +1026,22 @@ def export_bundle(
             )
         )
 
-    emb_models: list[AskEmbeddingEntry] = []
-    pemb_models: list[PassageEmbeddingEntry] = []
-    if not skip_embeddings:
+    def _encode(build: Callable[[Path], list[dict[str, Any]]], model: type[BaseModel]) -> list[Any]:
+        """Run one embedding builder in isolation — a failure of one feed never blocks the other."""
+        if skip_embeddings:
+            return []
         try:
-            emb_models = [AskEmbeddingEntry.model_validate(r) for r in build_ask_embeddings(out)]
-            pemb_models = [
-                PassageEmbeddingEntry.model_validate(r) for r in build_passage_embeddings(out)
-            ]
+            return [model.model_validate(r) for r in build(out)]
         except Exception as exc:
             log.warning(
                 "embeddings.failed",
                 error=next(iter(str(exc).splitlines()), repr(exc)),
                 hint="run with --no-embeddings to skip; hybrid retrieval will degrade to BM25",
             )
+            return []
+
+    emb_models = _encode(build_ask_embeddings, AskEmbeddingEntry)
+    pemb_models = _encode(build_passage_embeddings, PassageEmbeddingEntry)
     _write_extra_feed(_collection_feed("ask-embeddings", AskEmbeddingEntry, emb_models))
     _write_extra_feed(
         _retrieval_collection_feed("passage-embeddings", PassageEmbeddingEntry, pemb_models)

@@ -181,22 +181,40 @@ def _feed_ref(bundle: Path, name: str) -> dict[str, Any]:
     return ref
 
 
+def _pdf_materialized(rel: str) -> bool:
+    """True when a Git-LFS-tracked source PDF's real bytes are present, not an unresolved pointer.
+
+    Passage *text* is LFS-gated: a no-LFS checkout (CI's frontend/test shards check out without
+    LFS) sees pointer files, so `build_passages` reads zero pages there — correct degradation, not
+    a failure. The integration test asserts the row count only when the bytes are actually present.
+    """
+    try:
+        return (REPO_ROOT / "data" / "documents" / rel).read_bytes()[:5] == b"%PDF-"
+    except OSError:
+        return False
+
+
 def test_reference_export_emits_passages_and_embeddings_feeds(lima_bundle: Path) -> None:
-    """Lima ships real published PDFs (the OEPA collection + the PRR bundle), so `passages` carries
-    page excerpts; `passage-embeddings` is emitted (empty here — skip_embeddings) so the schema is
-    stable. Both are always-emitted retrieval-index feeds (like `ask-embeddings`)."""
+    """Lima's published PDFs (the OEPA collection + the PRR bundle) feed `passages`;
+    `passage-embeddings` is emitted (empty here — skip_embeddings) so the schema is stable. Both are
+    always-emitted retrieval-index feeds (like `ask-embeddings`). Passage text is LFS-gated, so the
+    count is asserted against whether the source bytes are materialized (see `_pdf_materialized`)."""
     passages_ref = _feed_ref(lima_bundle, "passages")
-    assert passages_ref["count"] > 0
     rows = [
         json.loads(line)
         for line in (lima_bundle / passages_ref["path"]).read_text(encoding="utf-8").splitlines()
         if line.strip()
     ]
-    # Every passage traces to a real published PDF document_id and carries a 1-indexed page.
-    for r in rows[:50]:
-        assert r["id"] == f"{r['document_id']}#p{r['page']}"
-        assert r["page"] >= 1
-        assert r["text"].strip()
+    assert len(rows) == passages_ref["count"]
+    if _pdf_materialized("aedg/PRR-01-bundle.ocr.pdf"):
+        assert passages_ref["count"] > 0
+        # Every passage traces to a real published PDF document_id and carries a 1-indexed page.
+        for r in rows[:50]:
+            assert r["id"] == f"{r['document_id']}#p{r['page']}"
+            assert r["page"] >= 1
+            assert r["text"].strip()
+    else:
+        assert passages_ref["count"] == 0  # no-LFS checkout: pointer files → graceful skip
     # passage-embeddings is present (schema-stable), empty under skip_embeddings.
     emb_ref = _feed_ref(lima_bundle, "passage-embeddings")
     assert emb_ref["count"] == 0
