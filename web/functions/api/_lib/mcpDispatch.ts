@@ -53,11 +53,15 @@ export const RPC = {
 
 // The MCP revision this server speaks. Bumped to 2025-06-18 (#1577) — the revision that
 // formalizes tool `outputSchema` + result `structuredContent`, which every tool now declares
-// and returns. The negotiation below still downgrades to an older client's version; the
-// structured fields are additive, so an older-protocol client simply ignores them and reads the
-// back-compat `content` text block. No new capability flag is needed — `structuredContent` is
-// implied by a tool carrying an `outputSchema`.
+// and returns. No new capability flag is needed — `structuredContent` is implied by a tool
+// carrying an `outputSchema`.
 export const PROTOCOL_VERSION = "2025-06-18";
+// The revisions this server can actually speak. Negotiation echoes the client's requested
+// version only when it is one of these; anything else (a future or unrecognized value) falls back
+// to PROTOCOL_VERSION — the server offers its latest and the client decides. 2025-03-26 is the
+// original transport revision this server was written against; the 2025-06-18 fields are additive,
+// so a 2025-03-26 client just ignores structuredContent/outputSchema.
+const SUPPORTED_PROTOCOL_VERSIONS: ReadonlySet<string> = new Set(["2025-06-18", "2025-03-26"]);
 const SERVER_INFO = { name: "watermark-directory", version: "1.0.0" };
 
 function parseRequest(body: unknown): JsonRpcRequest {
@@ -76,8 +80,9 @@ function parseRequest(body: unknown): JsonRpcRequest {
 
 function handleInitialize(params: unknown): unknown {
   const p = (params ?? {}) as Record<string, unknown>;
-  const clientVersion = typeof p.protocolVersion === "string" ? p.protocolVersion : PROTOCOL_VERSION;
-  const negotiated = clientVersion <= PROTOCOL_VERSION ? clientVersion : PROTOCOL_VERSION;
+  const clientVersion = typeof p.protocolVersion === "string" ? p.protocolVersion : "";
+  // Negotiate down only to a revision we actually support; otherwise offer our latest.
+  const negotiated = SUPPORTED_PROTOCOL_VERSIONS.has(clientVersion) ? clientVersion : PROTOCOL_VERSION;
   return {
     protocolVersion: negotiated,
     capabilities: {

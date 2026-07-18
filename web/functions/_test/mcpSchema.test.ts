@@ -11,13 +11,15 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { type JsonSchema, MCP_TOOLS } from "@watermark/core/mcpTools";
+import { onRequestPost } from "@watermark/functions/api/mcp";
 import { PROTOCOL_VERSION, dispatch } from "@watermark/functions/api/_lib/mcpDispatch";
 import { _resetAskEmbeddingsCache } from "@watermark/functions/api/_lib/askEmbeddingsLoad";
 import { _resetAskIndexCache } from "@watermark/functions/api/_lib/askIndexLoad";
 import { _resetDocVersionsCache } from "@watermark/functions/api/_lib/docVersionsLoad";
+import { getSession } from "@watermark/functions/api/_lib/mcpSession";
 import { _resetPassagesCache } from "@watermark/functions/api/_lib/passagesLoad";
 import type { AskUnit } from "@watermark/functions/api/_lib/retrieval";
-import { type FetchRoute, jsonResponse, routingFetch } from "./_routeHarness";
+import { type FetchRoute, fakeKV, jsonResponse, routingFetch } from "./_routeHarness";
 
 const REQ = "https://directory.example/api/mcp";
 
@@ -42,7 +44,7 @@ function matchesType(t: string, v: unknown): boolean {
     case "null":
       return v === null;
     default:
-      return true; // unknown type name — don't fail on it
+      return false; // unknown/misspelled type name — fail closed so a bad schema is caught
   }
 }
 
@@ -354,13 +356,43 @@ describe("MCP output schemas (#1577)", () => {
     expect((res.result as { protocolVersion: string }).protocolVersion).toBe("2025-06-18");
   });
 
-  it("downgrades the negotiated protocol for an older client", async () => {
+  it("downgrades the negotiated protocol for an older client and persists it to the session", async () => {
+    // Drive the whole route (not just dispatch) so the session-persistence path in mcp.ts —
+    // which records the *negotiated* version, not the server default — is covered.
+    const sessions = fakeKV();
+    const res = await onRequestPost({
+      request: new Request(REQ, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          jsonrpc: "2.0",
+          id: 1,
+          method: "initialize",
+          params: { protocolVersion: "2025-03-26" },
+        }),
+      }),
+      env: { MCP_ENABLED: "true", MCP_SESSIONS: sessions },
+      waitUntil: () => {},
+    });
+
+    // The negotiated response downgrades to the older supported revision…
+    const body = (await res.json()) as { result: { protocolVersion: string } };
+    expect(body.result.protocolVersion).toBe("2025-03-26");
+
+    // …and the stored session records that negotiated version.
+    const sessionId = res.headers.get("mcp-session-id");
+    expect(sessionId).toBeTruthy();
+    const stored = await getSession(sessions, sessionId as string);
+    expect(stored?.protocol).toBe("2025-03-26");
+  });
+
+  it("offers PROTOCOL_VERSION when the client requests an unsupported revision", async () => {
     const res = await dispatch(
-      { jsonrpc: "2.0", id: 1, method: "initialize", params: { protocolVersion: "2025-03-26" } },
+      { jsonrpc: "2.0", id: 1, method: "initialize", params: { protocolVersion: "2020-01-01" } },
       REQ,
       {},
     );
-    expect((res.result as { protocolVersion: string }).protocolVersion).toBe("2025-03-26");
+    expect((res.result as { protocolVersion: string }).protocolVersion).toBe(PROTOCOL_VERSION);
   });
 });
 
