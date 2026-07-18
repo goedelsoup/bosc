@@ -148,6 +148,15 @@ jobs:
         with:
           working_directory: web
           experimental: true
+      # Wrangler compiles the Pages Functions (web/functions/) from source at deploy time,
+      # so this job needs the workspace's node_modules too — without them esbuild can't
+      # resolve the `@watermark/core/*` workspace imports or `postgres`, and the deploy dies
+      # with "Could not resolve". The build job installs on its own (separate) runner, so
+      # install again here: one root lockfile, run via the mise-provisioned pnpm; standing in
+      # web/ resolves the repo-root workspace and links every member (like `mise run install`).
+      - name: Install workspace dependencies (Functions build)
+        working-directory: web
+        run: mise exec -- pnpm install --frozen-lockfile
       # Deploy with Wrangler direct-upload. Wrangler reads CLOUDFLARE_API_TOKEN /
       # CLOUDFLARE_ACCOUNT_ID from the env, and the project name + output dir (dist) from
       # web/wrangler.toml. The deployment URL is scraped back into a step output for the
