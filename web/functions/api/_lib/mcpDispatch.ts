@@ -51,7 +51,17 @@ export const RPC = {
   INTERNAL_ERROR: -32603,
 } as const;
 
-const PROTOCOL_VERSION = "2025-03-26";
+// The MCP revision this server speaks. Bumped to 2025-06-18 (#1577) — the revision that
+// formalizes tool `outputSchema` + result `structuredContent`, which every tool now declares
+// and returns. No new capability flag is needed — `structuredContent` is implied by a tool
+// carrying an `outputSchema`.
+export const PROTOCOL_VERSION = "2025-06-18";
+// The revisions this server can actually speak. Negotiation echoes the client's requested
+// version only when it is one of these; anything else (a future or unrecognized value) falls back
+// to PROTOCOL_VERSION — the server offers its latest and the client decides. 2025-03-26 is the
+// original transport revision this server was written against; the 2025-06-18 fields are additive,
+// so a 2025-03-26 client just ignores structuredContent/outputSchema.
+const SUPPORTED_PROTOCOL_VERSIONS: ReadonlySet<string> = new Set(["2025-06-18", "2025-03-26"]);
 const SERVER_INFO = { name: "watermark-directory", version: "1.0.0" };
 
 function parseRequest(body: unknown): JsonRpcRequest {
@@ -70,8 +80,9 @@ function parseRequest(body: unknown): JsonRpcRequest {
 
 function handleInitialize(params: unknown): unknown {
   const p = (params ?? {}) as Record<string, unknown>;
-  const clientVersion = typeof p.protocolVersion === "string" ? p.protocolVersion : PROTOCOL_VERSION;
-  const negotiated = clientVersion <= PROTOCOL_VERSION ? clientVersion : PROTOCOL_VERSION;
+  const clientVersion = typeof p.protocolVersion === "string" ? p.protocolVersion : "";
+  // Negotiate down only to a revision we actually support; otherwise offer our latest.
+  const negotiated = SUPPORTED_PROTOCOL_VERSIONS.has(clientVersion) ? clientVersion : PROTOCOL_VERSION;
   return {
     protocolVersion: negotiated,
     capabilities: {
@@ -84,6 +95,24 @@ function handleInitialize(params: unknown): unknown {
 
 function handleToolsList(): unknown {
   return { tools: MCP_TOOLS };
+}
+
+/**
+ * Derive the MCP `structuredContent` (spec 2025-06-18) from a handler's `content` (#1577).
+ * Every tool handler already returns exactly one text block whose `text` is the JSON
+ * serialization of its governed envelope, so re-parsing it is the single source of truth —
+ * `structuredContent` is guaranteed to match the `content` block byte-for-byte, and no handler
+ * needs to return the object twice. Returns undefined only for a non-JSON or non-object body
+ * (no current handler produces one), so `structuredContent` is simply omitted there.
+ */
+function structuredFromContent(content: Array<{ type: string; text: string }>): unknown | undefined {
+  if (content.length !== 1 || content[0]?.type !== "text") return undefined;
+  try {
+    const parsed: unknown = JSON.parse(content[0].text);
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 async function handleToolsCall(
@@ -136,7 +165,15 @@ async function handleToolsCall(
       throw new McpError(RPC.INVALID_PARAMS, `Tool "${name}" has no implementation`);
   }
 
-  return { content, isError: false };
+  // Alongside the back-compat `content` text block, return the MCP `structuredContent`
+  // (#1577) that validates against the tool's declared `outputSchema`.
+  const result: { content: typeof content; isError: boolean; structuredContent?: unknown } = {
+    content,
+    isError: false,
+  };
+  const structuredContent = structuredFromContent(content);
+  if (structuredContent !== undefined) result.structuredContent = structuredContent;
+  return result;
 }
 
 export async function dispatch(

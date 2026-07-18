@@ -15,6 +15,24 @@ export interface ToolProperty {
   properties?: Record<string, ToolProperty>;
 }
 
+/**
+ * A JSON-Schema node (draft 2020-12 subset) for a tool's `outputSchema` (#1577). Richer than
+ * the input-only `ToolProperty`: it nests (`properties` / `items`) and admits union/nullable
+ * types (`type: ["string", "null"]`), so it can describe the whole governed result envelope and
+ * its per-result item shapes — what MCP `structuredContent` is validated against.
+ */
+export interface JsonSchema {
+  type?: string | readonly string[];
+  description?: string;
+  properties?: Record<string, JsonSchema>;
+  required?: readonly string[];
+  items?: JsonSchema;
+  enum?: readonly unknown[];
+  /** Closed only where the shape is fixed (the envelope); item schemas leave it open so a tool
+   * can gain a field without breaking a client validating against this contract. */
+  additionalProperties?: boolean;
+}
+
 export interface ToolSchema {
   name: string;
   description: string;
@@ -23,6 +41,13 @@ export interface ToolSchema {
     properties: Record<string, ToolProperty>;
     required?: string[];
   };
+  /**
+   * The result contract (#1577, MCP 2025-06-18): the JSON Schema the tool's `structuredContent`
+   * conforms to. Every tool returns the uniform governance envelope
+   * `{ results, token_estimate, truncated, next_cursor }` (#1581), so this is that envelope
+   * wrapping the tool's per-result item shape.
+   */
+  outputSchema: JsonSchema;
   /** One representative query that illustrates the tool's use. */
   example?: string;
 }
@@ -163,6 +188,270 @@ const SEARCH_FILTERS_PROP = {
   },
 } as const;
 
+// --- Output schemas (#1577) --------------------------------------------------------
+// The MCP 2025-06-18 revision formalizes `outputSchema` (on the tool) + `structuredContent`
+// (on the tool-call result). Every tool returns the uniform governance envelope
+// `{ results, token_estimate, truncated, next_cursor }` (see GOVERNANCE_PROPS / mcpGovern), so
+// each `outputSchema` is `governedEnvelope(<item shape>)`. An item schema names only the
+// always-present fields as `required` and leaves the mode-/projection-/budget-dependent ones
+// optional; `additionalProperties` stays open on items so a shape can grow a field without
+// breaking a client that validates against this contract.
+
+// Terse scalar-node builders (a JSON Schema is verbose written out longhand).
+const str = (description: string): JsonSchema => ({ type: "string", description });
+const int = (description: string): JsonSchema => ({ type: "integer", description });
+const num = (description: string): JsonSchema => ({ type: "number", description });
+const bool = (description: string): JsonSchema => ({ type: "boolean", description });
+/** A scalar that is legitimately `null` when absent (a page cite the source never carried, an
+ * exhausted cursor) — `type: [<t>, "null"]`, not a dropped key. */
+const nullable = (type: string, description: string): JsonSchema => ({
+  type: [type, "null"],
+  description,
+});
+/** An opaque nested object (provenance blocks, citations) — described by name, not field-by-field. */
+const obj = (description: string): JsonSchema => ({ type: "object", description });
+const arr = (description: string, items: JsonSchema): JsonSchema => ({ type: "array", description, items });
+
+/** Wrap a per-result `items` shape in the governed response envelope (#1581) shared by every tool. */
+function governedEnvelope(items: JsonSchema, resultsDescription: string): JsonSchema {
+  return {
+    type: "object",
+    description:
+      "The uniform governed response envelope (#1581): the ordered result window plus the response's own size accounting.",
+    properties: {
+      results: arr(resultsDescription, items),
+      token_estimate: int("Estimated token cost of the returned `results` array."),
+      truncated: bool(
+        "True when results were withheld to stay under budget — pass `next_cursor` to fetch the rest.",
+      ),
+      next_cursor: nullable(
+        "string",
+        "Opaque continuation cursor for the next page, or null when the result set is exhausted.",
+      ),
+    },
+    required: ["results", "token_estimate", "truncated", "next_cursor"],
+    additionalProperties: false,
+  };
+}
+
+const SEARCH_CORPUS_HIT: JsonSchema = {
+  type: "object",
+  description:
+    "A ranked evidence card. The field set depends on response_mode: ids_only = {id, score}; compact/snippets add the card fields (title/site/collection/snippet/tier/…); full replaces the card with the whole record (feed/text/url/source/page/…). `id` and `score` are present in every mode.",
+  properties: {
+    id: str("Item id — pass to get_document to fetch its projected fields + citation."),
+    score: num("Hybrid (BM25 + vector RRF) relevance score."),
+    // compact / snippets card
+    title: str("Item title."),
+    site: nullable("string", "Site slug, or null."),
+    collection: str("Bundle feed the hit came from (records, timeline, entities, …)."),
+    source_kind: nullable("string", "Provenance kind (document, connector, …)."),
+    date: nullable("string", "Structured source date, when the feed carries one."),
+    snippet: str("Query-focused excerpt (snippets mode) or short head preview (compact mode)."),
+    estimated_tokens: int("Token cost of pulling this hit in full mode."),
+    verified: bool("Whether the underlying claim is [verified]."),
+    tier: {
+      type: "string",
+      enum: ["direct", "corroborating", "background"],
+      description: "Evidence role for the query (#1591). Absent in ids_only mode.",
+    },
+    tier_reason: str("Why the hit earned its tier."),
+    // full record
+    feed: str("Bundle feed (full mode)."),
+    text: str("The whole flattened record text (full mode; ~18–24k tokens)."),
+    url: str("Deep link to the item's page (full mode)."),
+    source: nullable("string", "Source path (full mode)."),
+    page: nullable("integer", "Source page (full mode), or null."),
+    confidence: nullable("string", "Evidence confidence (full mode)."),
+  },
+  required: ["id", "score"],
+};
+
+const SEARCH_PASSAGES_HIT: JsonSchema = {
+  type: "object",
+  description: "A page-cited passage hit — the verbatim excerpt plus its provenance and rank score.",
+  properties: {
+    id: str("Stable passage id (`<document_id>#p<page>`)."),
+    document_id: str("Source document rel — the join key to get_document."),
+    collection: str("First path segment of document_id (the collection axis)."),
+    title: str("Source document catalog name."),
+    page: int("1-indexed printed page number."),
+    section: nullable("string", "Sub-page heading, or null."),
+    text: str("The page's text-layer excerpt (verbatim; garbled OCR for scans)."),
+    score: num("Hybrid (BM25 + vector RRF) relevance score."),
+  },
+  required: ["id", "document_id", "collection", "title", "page", "section", "text", "score"],
+};
+
+const TIMELINE_EVENT: JsonSchema = {
+  type: "object",
+  description: "A dated event (permit, filing, meeting, transaction).",
+  properties: {
+    date: str("ISO-8601 event date."),
+    category: str("Event category."),
+    title: str("Event title."),
+    ref: str("Optional source reference id."),
+    parties: arr("Parties involved.", str("Party name.")),
+    detail: str("Prose detail (shed first under a per-result budget)."),
+    source: str("Source path."),
+    citation: obj("Structured provenance (verified / confidence / source_kind / page)."),
+  },
+  required: ["date", "category", "title"],
+};
+
+const ENTITY_NODE: JsonSchema = {
+  type: "object",
+  description: "An entity-graph node — a party, company, person, or parcel and its roles.",
+  properties: {
+    key: str("Stable entity key."),
+    display: str("Human display name."),
+    kind: str("Entity kind (company, person, parcel, …)."),
+    classification: nullable("string", "Optional classification."),
+    variants: arr("Name variants.", str("Variant.")),
+    roles: obj("Role → count map."),
+    parcels: arr("Parcel ids.", str("Parcel id.")),
+    addresses: arr("Addresses.", str("Address.")),
+    sources: arr("Source paths.", str("Source.")),
+    signals: arr("Signal tags.", str("Signal.")),
+  },
+  required: ["key", "display", "kind"],
+};
+
+const HYPOTHESIS: JsonSchema = {
+  type: "object",
+  description: "A boom-origin hypothesis joined to its signal assessments.",
+  properties: {
+    id: str("Hypothesis id."),
+    number: str("Display number."),
+    name: str("Short name."),
+    claim: str("The claim under test."),
+    thesis: str("The thesis statement."),
+    status: str("Assessment status."),
+    signals: arr("Signal ids.", str("Signal id.")),
+    groups: arr("Signal groups.", str("Group.")),
+    assessments: arr(
+      "The signal assessments scored against this hypothesis (may be budget-shrunk — compare length to assessments_total).",
+      obj("An assessment (site / hypothesis / signal / tag, plus optional group / fields / citations)."),
+    ),
+    assessments_total: int("True assessment count before any per-result shrink."),
+  },
+  required: [
+    "id",
+    "name",
+    "claim",
+    "thesis",
+    "status",
+    "signals",
+    "groups",
+    "assessments",
+    "assessments_total",
+  ],
+};
+
+const DOCUMENT_COLLECTION: JsonSchema = {
+  type: "object",
+  description: "A source-document collection and its file entries (metadata only).",
+  properties: {
+    slug: str("Collection slug."),
+    title: str("Collection title."),
+    description: str("Collection description."),
+    entry_count: int("True entry count (the entries list may be budget-capped)."),
+    entries: arr("File entries.", {
+      type: "object",
+      description: "One document file entry.",
+      properties: {
+        rel: str("Path relative to data/documents — the get_document id."),
+        name: str("File name."),
+        media_type: str("MIME type."),
+        published: bool("Whether the bytes are publicly served."),
+        available: bool("Whether the file is present."),
+      },
+      required: ["rel", "name", "media_type", "published", "available"],
+    }),
+  },
+  required: ["slug", "title", "entry_count", "entries"],
+};
+
+const DOCUMENT_VIEW: JsonSchema = {
+  type: "object",
+  description:
+    "One document's metadata joined to its extraction record, with field/section projection. Section-projected: metadata/fields/citation/warnings appear only when requested (default all).",
+  properties: {
+    document_id: str("Canonical id echoed back (the joined record rel, else the doc rel)."),
+    collection: str("First path segment of the id."),
+    metadata: obj(
+      "Record + source-file metadata (record_rel / title / group / confidence / source_doc_rel / document_file).",
+    ),
+    fields: obj(
+      "The record's extracted fields (projected/shrunk — compare Object.keys length to field_count).",
+    ),
+    field_count: int("True field count before projection/shrink."),
+    citation: nullable("object", "The record's structured Citation, or null."),
+    warnings: arr("Extraction warnings.", str("Warning.")),
+    source_text: str("Flattened extraction text (only when include_source_text)."),
+  },
+  required: ["document_id", "collection"],
+};
+
+const FACT_VIEW: JsonSchema = {
+  type: "object",
+  description: "A normalized (subject, predicate, value, unit, status) fact tuple.",
+  properties: {
+    subject: str("`<kind>:<id>` subject key."),
+    subject_label: str("Human subject label (shed first under budget)."),
+    subject_kind: str("Subject kind (facility, county, …)."),
+    predicate: str("snake_case field name."),
+    value: nullable("number", "Numeric value, or null when unquantified."),
+    unit: nullable("string", "Unit, when the fact carries one."),
+    status: {
+      type: "string",
+      enum: ["verified", "inference", "reference", "open"],
+      description: "Evidence status.",
+    },
+    low: nullable("number", "Uncertainty-band low, when present."),
+    high: nullable("number", "Uncertainty-band high, when present."),
+    approximate: bool("True when the value is approximate."),
+    feed: str("Source feed."),
+    evidence: obj("Provenance block (only when include_evidence)."),
+  },
+  required: ["subject", "subject_kind", "predicate", "value", "status", "feed"],
+};
+
+const FACT_AGGREGATE: JsonSchema = {
+  type: "object",
+  description:
+    "One aggregate row. In normal use a grouped total (metric / op / group / value / unit / derivation / confidence / status / caveat / evidence_ids). With no `metric` it is instead a registered-metric descriptor (key / label / op / inputs / unit / caveat) — discovery mode. An unknown `metric` yields a single {error, available_metrics, grammar} row. No field is universal across the three shapes.",
+  properties: {
+    // grouped total
+    metric: str("The metric key."),
+    op: {
+      type: "string",
+      enum: ["sum", "count", "mean", "product"],
+      description: "Aggregation op.",
+    },
+    group_by: str("Grouping dimension."),
+    group: str("Group key."),
+    group_label: str("Group label."),
+    value: nullable("number", "The total, or null."),
+    unit: nullable("string", "Output unit, or null."),
+    derivation: str("Human-readable arithmetic, e.g. `114 × 2.75 MW`."),
+    n: int("How many source facts fed the total."),
+    confidence: str("Weakest input confidence."),
+    status: str("Weakest input evidence status."),
+    caveat: nullable("string", "Honesty note, or null."),
+    evidence_ids: arr("`<subject>/<predicate>` handles that fed the total.", str("Handle.")),
+    // discovery (MetricDescriptor)
+    key: str("Registered metric key (discovery mode)."),
+    label: str("Registered metric label (discovery mode)."),
+    inputs: arr("Predicate inputs (discovery mode).", str("Predicate.")),
+    // unknown-metric error
+    error: str("Error message (unknown metric)."),
+    available_metrics: arr("Known metric keys (unknown-metric error).", str("Metric key.")),
+    grammar: str("The generic metric grammar (unknown-metric error)."),
+  },
+  required: [],
+};
+
 export const MCP_TOOLS: readonly ToolSchema[] = [
   {
     name: "search_corpus",
@@ -202,6 +491,10 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
       },
       required: ["query"],
     },
+    outputSchema: governedEnvelope(
+      SEARCH_CORPUS_HIT,
+      "Ranked evidence cards (shape governed by response_mode), most-relevant first.",
+    ),
     example:
       '{"query": "NPDES permit violations", "filters": {"site": "lima", "feed": "records", "verified": true}, "limit": 5}',
   },
@@ -224,6 +517,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
       },
       required: ["query"],
     },
+    outputSchema: governedEnvelope(SEARCH_PASSAGES_HIT, "Page-cited passage excerpts, most-relevant first."),
     example: '{"query": "effluent limit total phosphorus", "document_ids": ["oepa/2PE00000.pdf"]}',
   },
   {
@@ -240,6 +534,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
         ...GOVERNANCE_PROPS,
       },
     },
+    outputSchema: governedEnvelope(TIMELINE_EVENT, "Dated events, oldest-first."),
     example: '{"since": "2015-01-01", "until": "2020-12-31", "category": "permit"}',
   },
   {
@@ -257,6 +552,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
         ...GOVERNANCE_PROPS,
       },
     },
+    outputSchema: governedEnvelope(ENTITY_NODE, "Entity-graph nodes."),
     example: '{"type": "company", "site": "fort-wayne"}',
   },
   {
@@ -270,6 +566,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
         ...GOVERNANCE_PROPS,
       },
     },
+    outputSchema: governedEnvelope(HYPOTHESIS, "Hypotheses joined to their signal assessments."),
     example: '{"site": "lima"}',
   },
   {
@@ -287,6 +584,10 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
         ...GOVERNANCE_PROPS,
       },
     },
+    outputSchema: governedEnvelope(
+      DOCUMENT_COLLECTION,
+      "Document collections with their file entries (metadata only).",
+    ),
     example: '{"collection": "oepa", "site": "lima"}',
   },
   {
@@ -324,6 +625,10 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
       },
       required: ["document_id"],
     },
+    outputSchema: governedEnvelope(
+      DOCUMENT_VIEW,
+      "The single addressed document (a one-element list, or empty when the id resolves to nothing).",
+    ),
     example:
       '{"document_id": "recorder/202508130008300.deed.yaml", "fields": ["grantors", "grantees", "parcel_ids"]}',
   },
@@ -360,6 +665,7 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
         ...GOVERNANCE_PROPS,
       },
     },
+    outputSchema: governedEnvelope(FACT_VIEW, "Normalized fact tuples."),
     example: '{"subject": "facility", "predicate": ["genset_count", "genset_rating"]}',
   },
   {
@@ -393,6 +699,10 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
         ...GOVERNANCE_PROPS,
       },
     },
+    outputSchema: governedEnvelope(
+      FACT_AGGREGATE,
+      "Grouped totals — or the registered-metric list (no metric), or an unknown-metric error row.",
+    ),
     example: '{"metric": "backup_generation_capacity_mw", "group_by": "project"}',
   },
 ];

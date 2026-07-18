@@ -11,7 +11,7 @@
 // Flow: kill switch → auth (#916) → per-IP rate limit → budget guard (#912)
 //       → parse body → session lookup/create → dispatch → return JSON or SSE.
 
-import { dispatch, RPC } from "./_lib/mcpDispatch";
+import { PROTOCOL_VERSION, dispatch, RPC } from "./_lib/mcpDispatch";
 import { json, parseJsonBody } from "./_lib/http";
 import { initTracer } from "./_lib/otel";
 import { enforceRateLimit, type KVLike } from "./_lib/ratelimit";
@@ -217,11 +217,15 @@ export async function onRequestPost({ request, env, waitUntil }: RequestContext)
     rpcResponse = await dispatch(parsed.value, request.url, env);
   }
 
-  // Persist the session after a successful initialize
+  // Persist the session after a successful initialize, recording the *negotiated* protocol
+  // version (what handleInitialize echoed back to this client), not a hardcoded constant —
+  // it may be downgraded below the server's PROTOCOL_VERSION for an older client (#1577).
   if (isInitialize && env.MCP_SESSIONS && !rpcResponse.error) {
+    const negotiated =
+      (rpcResponse.result as { protocolVersion?: string } | undefined)?.protocolVersion ?? PROTOCOL_VERSION;
     await putSession(env.MCP_SESSIONS, {
       id: sessionId,
-      protocol: "2025-03-26",
+      protocol: negotiated,
       created: Date.now(),
     });
   }
