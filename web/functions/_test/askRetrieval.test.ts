@@ -235,7 +235,7 @@ describe("applyCorpusFilters (#1582)", () => {
     expect(applyCorpusFilters(FILTER_UNITS, { source_kind: "document" })).toHaveLength(3);
   });
 
-  it("filters by verified true/false, treating a missing flag as unverified", () => {
+  it("filters by verified true/false on units with an explicit flag", () => {
     expect(ids(applyCorpusFilters(FILTER_UNITS, { verified: true }))).toEqual([
       "records:permit",
       "timeline:2015-rezone",
@@ -244,6 +244,25 @@ describe("applyCorpusFilters (#1582)", () => {
       "concepts:dilution",
       "records:fw",
     ]);
+  });
+
+  it("treats a unit with no verified flag as unverified (matches false, excluded from true)", () => {
+    // Units whose source carries no verified flag — documents, entities, uncited timeline
+    // entries in the real index — render as `verified: false` (`u.verified ?? false`) and ARE
+    // "unverified units", so verified:false must return them and verified:true must not. The
+    // flag is strictly binary (the output-schema types it a plain boolean), NOT a three-valued
+    // field where a missing flag is an "unknown" both filters would drop.
+    const noFlag: AskUnit = {
+      id: "documents:uncited",
+      feed: "documents",
+      title: "Uncited",
+      url: "/x",
+      text: "x",
+      site: "lima",
+    };
+    const pool = [...FILTER_UNITS, noFlag];
+    expect(ids(applyCorpusFilters(pool, { verified: true }))).not.toContain("documents:uncited");
+    expect(ids(applyCorpusFilters(pool, { verified: false }))).toContain("documents:uncited");
   });
 
   it("windows by date_from/date_to and excludes undated units", () => {
