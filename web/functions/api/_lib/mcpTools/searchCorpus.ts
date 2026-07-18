@@ -37,8 +37,8 @@ import {
   truncateToTokens,
 } from "../mcpGovern";
 import { type HybridRetrievalEnv, hybridSearch } from "../hybridRetrieve";
-import type { AskUnit, Hit } from "../retrieval";
-import { prepare, tokenize } from "../retrieval";
+import type { AskUnit, CorpusFilters, Hit } from "../retrieval";
+import { applyCorpusFilters, prepare, tokenize } from "../retrieval";
 import { type Tier, tierHit } from "../mcpTier";
 
 // Rough GPT-style byte→token heuristic — good enough for budgeting, not billing.
@@ -55,8 +55,11 @@ const DEFAULT_MODE: ResponseMode = "compact";
 
 interface SearchCorpusParams {
   query?: unknown;
+  // Legacy top-level facet shorthands (#1582): mirror `filters.site` / `filters.feed`.
   site?: unknown;
   collection?: unknown;
+  // Structured facet filters over indexed fields (#1582) — resolved via `parseFilters`.
+  filters?: unknown;
   limit?: unknown;
   response_mode?: unknown;
   snippet_tokens?: unknown;
@@ -127,6 +130,29 @@ function parseMode(v: unknown): ResponseMode | null {
 function parseSnippetTokens(v: unknown): number | null {
   if (typeof v !== "number" || !Number.isFinite(v)) return null;
   return Math.min(Math.max(MIN_SNIPPET_TOKENS, Math.floor(v)), MAX_SNIPPET_TOKENS);
+}
+
+const asStr = (v: unknown): string | undefined => (typeof v === "string" && v ? v : undefined);
+const asBool = (v: unknown): boolean | undefined => (typeof v === "boolean" ? v : undefined);
+
+/**
+ * Resolve the structured facet filters (#1582), folding the legacy top-level `site`/`collection`
+ * shorthands into the same set — an explicit `filters.*` wins, else the legacy top-level param,
+ * else unconstrained. `feed` is the canonical bundle-feed key; `collection` is accepted as an
+ * alias (both in `filters` and top-level) but always names a BUNDLE FEED, never a
+ * document-collection slug — reconciling the historical naming collision with get_documents.
+ */
+function parseFilters(p: SearchCorpusParams): CorpusFilters {
+  const f = (p.filters ?? {}) as Record<string, unknown>;
+  return {
+    site: asStr(f.site) ?? asStr(p.site),
+    feed: asStr(f.feed) ?? asStr(f.collection) ?? asStr(p.collection),
+    source_kind: asStr(f.source_kind),
+    verified: asBool(f.verified),
+    date_from: asStr(f.date_from),
+    date_to: asStr(f.date_to),
+    confidence: asStr(f.confidence),
+  };
 }
 
 function roundScore(score: number): number {
@@ -268,24 +294,13 @@ export async function handleSearchCorpus(
   });
   const offset = decodeCursorOffset(p.cursor);
 
-  let units = await loadAskIndex(requestUrl);
+  const units0 = await loadAskIndex(requestUrl);
 
-  // Site filter: if any units carry a site tag (i.e. this is a tagged index build),
-  // filter strictly — `!u.site` would silently leak cross-site results in a mixed
-  // index. If NO units have a site tag (legacy index), skip filtering entirely.
-  const siteFilter = typeof p.site === "string" && p.site ? p.site : null;
-  if (siteFilter) {
-    const hasTaggedUnits = units.some((u) => typeof u.site === "string" && u.site.length > 0);
-    if (hasTaggedUnits) {
-      units = units.filter((u) => u.site === siteFilter);
-    }
-  }
-
-  // Collection filter maps to the `feed` field (e.g. "timeline", "entities", "records").
-  const collectionFilter = typeof p.collection === "string" && p.collection ? p.collection : null;
-  if (collectionFilter) {
-    units = units.filter((u) => u.feed === collectionFilter);
-  }
+  // Structured facet filters (#1582): narrow the pool to units matching every present facet
+  // over indexed fields (site/feed/source_kind/verified/date/confidence) before ranking, so
+  // unrelated feeds and records don't crowd the results. Legacy top-level site/collection are
+  // folded in by parseFilters. Site stays a special case (tagged-index guard) inside the helper.
+  const units = applyCorpusFilters(units0, parseFilters(p));
 
   // Rank the whole (filtered) matched pool at a page-independent depth, then slice the
   // cursor window. Ranking the full pool — not just `offset + maxResults` deep — keeps the

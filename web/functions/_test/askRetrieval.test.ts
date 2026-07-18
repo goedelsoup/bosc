@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  applyCorpusFilters,
   type AskUnit,
   cosineScore,
   type EmbeddingEntry,
@@ -154,5 +155,119 @@ describe("rrf", () => {
     const list1 = makeHits([UNITS[0].id, UNITS[1].id, UNITS[2].id]);
     const list2 = makeHits([UNITS[2].id, UNITS[1].id, UNITS[0].id]);
     expect(rrf(list1, list2, 2).length).toBe(2);
+  });
+});
+
+describe("applyCorpusFilters (#1582)", () => {
+  // A varied, site-tagged corpus that exercises every facet: two feeds, both source_kinds,
+  // verified true/false, dated and undated units, and two confidence bands across two sites.
+  const FILTER_UNITS: AskUnit[] = [
+    {
+      id: "records:permit",
+      feed: "records",
+      title: "Lima NPDES permit",
+      url: "/x",
+      text: "npdes permit effluent limit",
+      source_kind: "document",
+      confidence: "high",
+      verified: true,
+      site: "lima",
+      date: "2019-06-01",
+    },
+    {
+      id: "concepts:dilution",
+      feed: "concepts",
+      title: "Dilution (definition)",
+      url: "/x",
+      text: "dilution factor glossary definition",
+      source_kind: "derived",
+      confidence: "medium",
+      verified: false,
+      site: "lima",
+    },
+    {
+      id: "timeline:2015-rezone",
+      feed: "timeline",
+      title: "2015-02-01 — Rezoning",
+      url: "/x",
+      text: "county rezoning hearing",
+      source_kind: "document",
+      verified: true,
+      site: "lima",
+      date: "2015-02-01",
+    },
+    {
+      id: "records:fw",
+      feed: "records",
+      title: "Fort Wayne estimate",
+      url: "/x",
+      text: "corridor cost estimate",
+      source_kind: "document",
+      confidence: "high",
+      verified: false,
+      site: "fort-wayne",
+      date: "2021-01-01",
+    },
+  ];
+  const ids = (units: AskUnit[]) => units.map((u) => u.id).sort();
+
+  it("no filters is a pass-through", () => {
+    expect(applyCorpusFilters(FILTER_UNITS, {})).toEqual(FILTER_UNITS);
+  });
+
+  it("filters strictly by site on a tagged index", () => {
+    const out = applyCorpusFilters(FILTER_UNITS, { site: "fort-wayne" });
+    expect(ids(out)).toEqual(["records:fw"]);
+  });
+
+  it("skips the site constraint on an untagged (legacy) index", () => {
+    const untagged = FILTER_UNITS.map(({ site, ...rest }) => rest);
+    expect(applyCorpusFilters(untagged, { site: "lima" })).toEqual(untagged);
+  });
+
+  it("filters by feed", () => {
+    const out = applyCorpusFilters(FILTER_UNITS, { feed: "records" });
+    expect(ids(out)).toEqual(["records:fw", "records:permit"]);
+  });
+
+  it("filters by source_kind (document vs derived)", () => {
+    expect(ids(applyCorpusFilters(FILTER_UNITS, { source_kind: "derived" }))).toEqual(["concepts:dilution"]);
+    expect(applyCorpusFilters(FILTER_UNITS, { source_kind: "document" })).toHaveLength(3);
+  });
+
+  it("filters by verified true/false, treating a missing flag as unverified", () => {
+    expect(ids(applyCorpusFilters(FILTER_UNITS, { verified: true }))).toEqual([
+      "records:permit",
+      "timeline:2015-rezone",
+    ]);
+    expect(ids(applyCorpusFilters(FILTER_UNITS, { verified: false }))).toEqual([
+      "concepts:dilution",
+      "records:fw",
+    ]);
+  });
+
+  it("windows by date_from/date_to and excludes undated units", () => {
+    const out = applyCorpusFilters(FILTER_UNITS, { date_from: "2016-01-01", date_to: "2020-01-01" });
+    // 2019 permit is in-window; 2015 rezone and 2021 estimate are out; the undated concept is dropped.
+    expect(ids(out)).toEqual(["records:permit"]);
+  });
+
+  it("filters by confidence band, matched exactly", () => {
+    expect(ids(applyCorpusFilters(FILTER_UNITS, { confidence: "high" }))).toEqual([
+      "records:fw",
+      "records:permit",
+    ]);
+  });
+
+  it("AND-combines every present facet", () => {
+    const out = applyCorpusFilters(FILTER_UNITS, {
+      site: "lima",
+      feed: "records",
+      source_kind: "document",
+      verified: true,
+      confidence: "high",
+      date_from: "2019-01-01",
+    });
+    expect(ids(out)).toEqual(["records:permit"]);
   });
 });
