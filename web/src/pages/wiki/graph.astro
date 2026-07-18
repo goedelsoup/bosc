@@ -30,6 +30,10 @@ const classified = RELATION_CLASSES.map((c) => ({
       Click a node to open its page; hover for its degree. Open an entity's page
       and use “view in graph” to focus its neighborhood.
     </p>
+    <p class="graph-export-cta">
+      Take the whole graph with you —
+      <a href={withBase("/wiki/graph/exports/")}>download it as RDF or GraphML →</a>
+    </p>
 
     <div class="deck-surface">
       <EntityGraph client:only="react" src={withBase("/feeds/graph.json")} />

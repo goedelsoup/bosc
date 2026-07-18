@@ -183,7 +183,14 @@ from watermark.site.readiness import State, Tier  # the readiness vocabulary SSO
 #   file(s) (null when a node is aggregated/code-derived — never fabricated). Always emitted (every
 #   site's mirror has ≥1 node), so the schema set stays stable. Not cataloged (a derived view of the
 #   corpus, like `open-questions`). Back-compatible (one additive feed).
-CONTRACT_VERSION = "1.28.0"
+# 1.29.0: the manifest gains an optional `exports` block (#1574, epic #1560 workstream D1) — the
+#   graph exports (RDF Turtle + JSON-LD, GraphML) of the corpus mirror (#1561), rendered by
+#   `watermark.site.graph_exports` and written under the bundle's `exports/` as downloadable
+#   research artifacts (the wiki graph page links them). Each `ExportRef` names a file, its media
+#   type, format, and node/edge counts. Additive/optional — absent when the mirror wasn't
+#   projected for this bundle (a redirected/test export); the frontend degrades to no downloads
+#   (one additive manifest field, no changed feed shapes, back-compatible).
+CONTRACT_VERSION = "1.29.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -1237,6 +1244,28 @@ class FeedRef(BaseModel):
     count: int  # rows (collection), features (geojson), or 1 (object)
 
 
+ExportFormat = Literal["turtle", "jsonld", "graphml"]
+
+
+class ExportRef(BaseModel):
+    """One entry in the manifest's graph-**exports** index (#1574) — a downloadable serialization
+    of the corpus mirror (:mod:`watermark.site.graph_exports`), not a typed feed.
+
+    Distinct from :class:`FeedRef`: an export is an interchange artifact (RDF / GraphML) for
+    external graph tools, keyed by ``format`` rather than storage ``kind``, carrying the graph's
+    node/edge counts. The wiki graph page reads this list to render the download links.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    name: str
+    path: str  # relative to the bundle root, e.g. "exports/corpus.ttl"
+    media_type: str  # text/turtle | application/ld+json | application/graphml+xml
+    format: ExportFormat
+    node_count: int  # mirror nodes serialized
+    edge_count: int  # resolved (non-dangling) links serialized
+
+
 class DomainReadiness(BaseModel):
     """Per-domain activation state (#1220): each of the five domains is ``absent|seeded|live``.
 
@@ -1283,3 +1312,7 @@ class Manifest(BaseModel):
     row_total: int  # sum of feed counts — a quick internal-consistency check
     readiness: SiteReadiness  # standing domain-activation readiness (#1220) — tier + per-domain
     feeds: list[FeedRef] = Field(default_factory=list)
+    # Downloadable graph exports of the corpus mirror (#1574) — RDF/GraphML interchange artifacts,
+    # present on a canonical `watermark export` (absent for a redirected/test bundle). Optional so a
+    # pre-1.28 bundle without the block still validates.
+    exports: list[ExportRef] = Field(default_factory=list)

@@ -917,6 +917,7 @@ def regenerate_mirror(
     *,
     corpus_dir: Path | None = None,
     reports_dir: Path | None = None,
+    mirror: Mirror | None = None,
 ) -> MirrorRegen:
     """Project the active site's corpus into ``.yidam/corpus/`` and regenerate every yidam report
     under ``.yidam/reports/`` — the one call behind ``watermark corpus-mirror`` and the tail of
@@ -926,12 +927,15 @@ def regenerate_mirror(
     ``lint`` are the Python replicas, so a single ``watermark export`` yields a fresh, valid
     mirror + reports offline. The mirror is git-ignored and regenerated for the *active* site
     (like the content bundle); ``graph-check`` is the hard validity gate, ``lint`` is advisory.
+
+    Pass a pre-projected ``mirror`` to reuse it (``watermark export`` builds one for the graph
+    exports, #1574, and hands it back here so the corpus is projected once, not twice).
     """
     settings = settings or get_settings()
     corpus_dir = corpus_dir or default_corpus_dir(settings)
     reports_dir = reports_dir or default_reports_dir(settings)
 
-    mirror = build_mirror(settings)
+    mirror = mirror if mirror is not None else build_mirror(settings)
     write_mirror(mirror, corpus_dir)
     graph_issues = validate_mirror(corpus_dir)
     lint_issues = lint_mirror(corpus_dir)

@@ -68,11 +68,29 @@ and are deterministic, so they're committed and a test guards them against drift
 | `generated_at` | ISO-8601 UTC timestamp of the export |
 | `feed_count` / `row_total` | quick internal-consistency checks (counts must match the feed list) |
 | `feeds[]` | one entry per feed: `name`, `path`, `media_type`, `schema`, `kind`, `count` |
+| `exports[]` | optional (contract ≥ 1.29.0): downloadable graph serializations of the corpus mirror — see below |
 
 `kind` is `collection` (a JSON array / NDJSON of rows), `object` (a single object — an
 inventory or baseline), or `geojson` (a `FeatureCollection`). `media_type` is
 `application/json`, `application/x-ndjson` (one JSON row per line — used for any collection
 over 500 rows), or `application/geo+json`. `count` is rows, features, or `1` for an object.
+
+### Graph exports (`exports[]`, #1574)
+
+On a canonical `watermark export` the corpus mirror (`watermark corpus-mirror`, #1561 — the
+committed corpus projected into yidam nodes) is also serialized into `exports/` as downloadable
+interchange artifacts for external graph tools; the wiki graph page links them. Each `exports[]`
+entry is `name`, `path` (`exports/corpus.<ext>`), `media_type`, `format`, `node_count`,
+`edge_count`. Formats (yidam's `export rdf|graphml`, replicated in Python):
+
+| format | file | media type | for |
+|---|---|---|---|
+| `turtle` | `exports/corpus.ttl` | `text/turtle` | RDF / SPARQL (`yidam:` ontology + owl/rdfs/skos/prov) |
+| `jsonld` | `exports/corpus.jsonld` | `application/ld+json` | RDF as JSON — same vocabulary, `@graph` document |
+| `graphml` | `exports/corpus.graphml` | `application/graphml+xml` | Gephi / Cytoscape / yEd (directed link graph) |
+
+The block is absent from a redirected/test export (`--out`); the SQLite export (yidam's vector
+DB) is deferred to a follow-up (needs the vector index, #1564).
 
 ## Feeds
 

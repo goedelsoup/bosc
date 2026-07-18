@@ -849,6 +849,13 @@ def export(
                 f"[yellow]  graph-check: {result.mirror_graph_issues} issue(s)[/] — "
                 f"run `watermark corpus-mirror` to inspect"
             )
+    # Downloadable graph exports (#1574) — RDF/GraphML of the mirror, written under the bundle.
+    if result.exports:
+        fmts = ", ".join(e.format for e in result.exports)
+        console.print(
+            f"[green]graph exports[/] {result.exports[0].node_count} nodes / "
+            f"{result.exports[0].edge_count} edges → {result.out_dir.name}/exports/ [dim]({fmts})[/]"
+        )
 
 
 def _export_preflight() -> None:
