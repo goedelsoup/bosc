@@ -4,7 +4,7 @@
   "contract_version": "1.28.0",
   "generated_at": "2026-07-15T23:11:39+00:00",
   "feed_count": 45,
-  "row_total": 1291,
+  "row_total": 1287,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -30,7 +30,7 @@
       "media_type": "application/json",
       "schema": "schemas/timeline.schema.json",
       "kind": "collection",
-      "count": 176
+      "count": 172
     },
     {
       "name": "entities",
