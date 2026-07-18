@@ -1,7 +1,7 @@
 {
   "site": "lima",
-  "catalog_version": "8234f463b7220c7667e570c311b526d5bed6e7f64e9ebe0823a8eb41f2a3b9ae",
-  "contract_version": "1.28.0",
+  "catalog_version": "03e8f778a5b4d404bba9185feed9239c56f3d4f6f4354968ce65ccb12754e57a",
+  "contract_version": "1.29.0",
   "atoms": [
     {
       "handle": "concept:lima:7q10",
@@ -3156,43 +3156,11 @@
       "feed": "timeline"
     },
     {
-      "handle": "timeline:lima:amtwp-zoning-2021-02-11",
-      "kind": "timeline",
-      "site": "lima",
-      "local_id": "amtwp-zoning-2021-02-11",
-      "title": "American Township Zoning Resolution — amended & adopted by Trustees",
-      "feed": "timeline"
-    },
-    {
-      "handle": "timeline:lima:amtwp-zoning-2024-01-08",
-      "kind": "timeline",
-      "site": "lima",
-      "local_id": "amtwp-zoning-2024-01-08",
-      "title": "American Township Zoning Resolution — amended & adopted by Trustees",
-      "feed": "timeline"
-    },
-    {
-      "handle": "timeline:lima:amtwp-zoning-2024-08-28",
-      "kind": "timeline",
-      "site": "lima",
-      "local_id": "amtwp-zoning-2024-08-28",
-      "title": "American Township Zoning Resolution — amended & adopted by Trustees",
-      "feed": "timeline"
-    },
-    {
       "handle": "timeline:lima:amtwp-zoning-2025-09-08",
       "kind": "timeline",
       "site": "lima",
       "local_id": "amtwp-zoning-2025-09-08",
-      "title": "American Township Zoning Resolution — amended & adopted by Trustees",
-      "feed": "timeline"
-    },
-    {
-      "handle": "timeline:lima:amtwp-zoning-2026-02-09",
-      "kind": "timeline",
-      "site": "lima",
-      "local_id": "amtwp-zoning-2026-02-09",
-      "title": "American Township Zoning Resolution — amended & adopted by Trustees",
+      "title": "American Township zoning text amendment — data-center provisions adopted (#09-082025)",
       "feed": "timeline"
     },
     {

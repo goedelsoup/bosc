@@ -124,7 +124,7 @@ export interface Manifest {
    *  synthetic/pre-1.17 fixture without the block degrades (all-absent) rather than crashing. */
   readiness?: Readiness;
   feeds: FeedRef[];
-  /** Downloadable graph exports of the corpus mirror (#1574 / contract 1.28.0). Optional: absent
+  /** Downloadable graph exports of the corpus mirror (#1574 / contract 1.29.0). Optional: absent
    *  from a redirected/test bundle or a pre-1.28 fixture, so the graph page degrades to no downloads. */
   exports?: ExportRef[];
 }

@@ -68,7 +68,7 @@ and are deterministic, so they're committed and a test guards them against drift
 | `generated_at` | ISO-8601 UTC timestamp of the export |
 | `feed_count` / `row_total` | quick internal-consistency checks (counts must match the feed list) |
 | `feeds[]` | one entry per feed: `name`, `path`, `media_type`, `schema`, `kind`, `count` |
-| `exports[]` | optional (contract ≥ 1.28.0): downloadable graph serializations of the corpus mirror — see below |
+| `exports[]` | optional (contract ≥ 1.29.0): downloadable graph serializations of the corpus mirror — see below |
 
 `kind` is `collection` (a JSON array / NDJSON of rows), `object` (a single object — an
 inventory or baseline), or `geojson` (a `FeatureCollection`). `media_type` is
@@ -114,6 +114,7 @@ DB) is deferred to a follow-up (needs the vector index, #1564).
 | `hydrology-scenarios` | collection | committed water-balance scenario results (`data/scenarios/*.scenario.yaml`) |
 | `facts` | collection | the normalized `(subject, predicate, value, unit, status, evidence)` projection over the bundle's provenanced numeric facts (#1587) — a `catalog-index`-style post-pass that re-keys each `ProvenancedValue` in the economics/greenops/hydrology/air feeds (+ the derived facility `PowerBasis`) into one queryable table; `status` is the evidence tag off the value's `source_kind`, `evidence.page` stays null where the source carries none. Powers the `get_facts` MCP tool |
 | `catalog-index` | object | the hydrated catalog (epic #1090) — addressable "grabbable" atoms (`handle` = `<kind>:<site>:<local_id>`, a live pointer into its source feed) that user-authored Stories cite; `catalog_version` stamps the set for handle-drift revalidation |
+| `corpus-index` | collection | the browsable node map of the site's yidam corpus mirror (#1573) — one row per node with its display `kind`, in/out degree, line count, and freshness (`updated`, the newest commit of the committed source it derives from; null when aggregated/code-derived). A post-pass over the just-built mirror; always emitted (never empty). Backs the `/wiki/corpus` page |
 | `geo/campus` | geojson | recorded campus footprint (Bistrozzi parcels) |
 | `geo/jsmc` | geojson | federally-held JSMC / Lima Army Tank Plant land |
 | `geo/femaflood` | geojson | FEMA regulatory floodway + 1%-annual-chance floodplain |

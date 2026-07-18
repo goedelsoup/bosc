@@ -1,10 +1,10 @@
 {
   "site": "portsmouth",
   "bundle_version": "1.0.0",
-  "contract_version": "1.27.1",
+  "contract_version": "1.29.0",
   "generated_at": "2026-07-14T15:13:03+00:00",
-  "feed_count": 21,
-  "row_total": 173,
+  "feed_count": 22,
+  "row_total": 271,
   "readiness": {
     "tier": "stub",
     "domains": {
@@ -183,6 +183,14 @@
       "schema": "schemas/ask-embeddings.schema.json",
       "kind": "collection",
       "count": 0
+    },
+    {
+      "name": "corpus-index",
+      "path": "feeds/corpus-index.json",
+      "media_type": "application/json",
+      "schema": "schemas/corpus-index.schema.json",
+      "kind": "collection",
+      "count": 98
     }
   ]
 }

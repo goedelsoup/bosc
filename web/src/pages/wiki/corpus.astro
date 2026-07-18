@@ -1,0 +1,226 @@
+---
+/**
+ * Corpus node index (`/wiki/corpus`, issue #1573, epic #1560 workstream C) — the at-a-glance map
+ * of the whole corpus. One row per node of the yidam mirror (`watermark corpus-mirror`), grouped
+ * by display kind, with its in/out degree, line count, and freshness (last commit of the committed
+ * source it derives from). Rendered from the `corpus-index` bundle feed (`watermark.site.corpus_index`),
+ * the frontend-readable projection of `yidam corpus-index`.
+ *
+ * The wiki is network-global and reads the active (reference) build, so this maps Lima's corpus —
+ * the network glossary plus Lima's own entities, relationships, leads, and open threads. The feed
+ * is always emitted (a mirror is never empty), but the page still gates on its presence so a build
+ * without it degrades gracefully.
+ */
+import Base from "~/layouts/Base.astro";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import { type KindGroup, groupByKind, summarizeByKind, topByDegree } from "@watermark/core/corpusIndex";
+import type { CorpusNodeItem, CorpusNodeKind } from "@watermark/core/feeds";
+import { withBase } from "@watermark/core/site";
+
+const nodes = hasFeed("corpus-index") ? loadFeed<CorpusNodeItem[]>("corpus-index") : [];
+const tallies = summarizeByKind(nodes);
+const groups = groupByKind(nodes);
+const hubs = topByDegree(nodes, 8);
+
+// A node with no resolvable committed source has no freshness — shown as an em dash, never a date.
+const freshness = (n: CorpusNodeItem): string => n.updated ?? "—";
+// The newest source commit across the whole corpus — the map's own "as of".
+const asOf = nodes.reduce<string | null>(
+  (max, n) => (n.updated && (!max || n.updated > max) ? n.updated : max),
+  null,
+);
+
+// Where a kind's group header points, when a browsable section for it exists (else no link).
+const SECTION_HREF: Partial<Record<CorpusNodeKind, string>> = {
+  entity: "/wiki/entities/",
+  concept: "/wiki/concepts/",
+  hypothesis: "/wiki/hypotheses/",
+  relation: "/wiki/graph",
+  lead: "/wiki/open-questions/",
+  "open-question": "/wiki/open-questions/",
+};
+const sectionHref = (g: KindGroup): string | undefined => SECTION_HREF[g.kind];
+
+const toc = groups.map((g) => ({ anchor: g.kind, label: `${g.label} · ${g.nodes.length}` }));
+---
+
+<Base
+  title="Corpus map"
+  section="wiki"
+  description="The at-a-glance node map of the whole corpus — every entity, concept, relationship, lead, and open thread, with its degree and freshness."
+  toc={toc}
+>
+  <div class="cx">
+    <p class="prose"><a href={withBase("/wiki/")}>← Wiki</a></p>
+    <div class="cx-head">
+      <div class="cx-kicker">Wiki · corpus map</div>
+      <h1>Corpus map</h1>
+      <p class="section-lead">
+        Every node in the record, in one table — the projected <strong>corpus mirror</strong>
+        (<code>yidam corpus-index</code>), grouped by kind with its in/out degree, line count, and
+        freshness. {nodes.length} nodes{asOf && <> · newest source {asOf}</>}.
+      </p>
+    </div>
+
+    {
+      nodes.length === 0 ? (
+        <p class="stub-note">No corpus mirror is available for this build yet.</p>
+      ) : (
+        <>
+          <div class="cx-tiles">
+            {tallies.map((t) => (
+              <a class="cx-tile" href={`#${t.kind}`} data-mod={t.mod}>
+                <span class="cx-tile-n">{t.count}</span>
+                <span class="cx-tile-k">{t.label}</span>
+              </a>
+            ))}
+          </div>
+
+          <section class="cx-hubs">
+            <h2>Most connected</h2>
+            <p class="cx-blurb">The corpus's hubs — the nodes the most edges run through.</p>
+            <ul class="cx-hublist">
+              {hubs.map((n) => (
+                <li class="cx-hub">
+                  <span class="cx-hub-deg">{n.links_in + n.links_out}</span>
+                  <span class="cx-hub-label">{n.label}</span>
+                  <span class="cx-hub-kind" data-mod={n.kind}>{n.kind}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {groups.map((g) => {
+            const href = sectionHref(g);
+            return (
+              <section class="cx-group" id={g.kind}>
+                <div class="cx-group-head">
+                  <h2>{href ? <a href={withBase(href)}>{g.label}</a> : g.label}</h2>
+                  <span class="cx-group-n">{g.nodes.length}</span>
+                </div>
+                <p class="cx-blurb">{g.blurb}</p>
+                <div class="cx-tablewrap">
+                  <table class="cx-table">
+                    <thead>
+                      <tr>
+                        <th class="cx-c-label">Node</th>
+                        <th class="cx-c-num" title="Incoming edges">In</th>
+                        <th class="cx-c-num" title="Outgoing edges">Out</th>
+                        <th class="cx-c-num" title="Serialized node lines">Lines</th>
+                        <th class="cx-c-date">Updated</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {g.nodes.map((n) => (
+                        <tr>
+                          <td class="cx-c-label">
+                            <span class="cx-node-label">{n.label}</span>
+                            <span class="cx-node-id">{n.id}</span>
+                          </td>
+                          <td class="cx-c-num">{n.links_in}</td>
+                          <td class="cx-c-num">{n.links_out}</td>
+                          <td class="cx-c-num">{n.lines}</td>
+                          <td class="cx-c-date" data-null={n.updated ? undefined : "true"}>
+                            {freshness(n)}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            );
+          })}
+        </>
+      )
+    }
+  </div>
+</Base>
+
+<style>
+  .cx-head { margin-bottom: var(--sp-5); }
+  .cx-kicker {
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-nano);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bosc-faint);
+    margin-bottom: 0.4rem;
+  }
+  .cx-head h1 { margin: 0 0 0.5rem; }
+  .cx-head code { font-family: var(--bosc-mono); font-size: 0.9em; }
+
+  /* Summary tiles */
+  .cx-tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+    gap: var(--sp-2);
+    margin: var(--sp-5) 0;
+  }
+  .cx-tile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    border: 1px solid var(--bosc-rule);
+    background: var(--bosc-surface);
+    padding: var(--sp-3);
+    text-decoration: none;
+    color: inherit;
+    border-left: 3px solid var(--bosc-faint);
+  }
+  .cx-tile:hover { border-left-color: var(--bosc-forest); }
+  .cx-tile-n { font-family: var(--bosc-mono); font-size: var(--fs-h3); color: var(--bosc-ink); }
+  .cx-tile-k { font-size: var(--fs-meta); color: var(--bosc-muted); }
+
+  /* Hubs */
+  .cx-hubs { margin: var(--sp-6) 0; }
+  .cx-hubs h2 { margin: 0 0 0.3rem; font-size: var(--fs-h3); }
+  .cx-blurb { color: var(--bosc-muted); font-size: var(--fs-meta); margin: 0 0 var(--sp-3); max-width: 52rem; }
+  .cx-hublist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1px; }
+  .cx-hub {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    align-items: center;
+    gap: var(--sp-2);
+    background: var(--bosc-surface);
+    border: 1px solid var(--bosc-rule);
+    padding: 0.4rem var(--sp-3);
+  }
+  .cx-hub-deg { font-family: var(--bosc-mono); color: var(--bosc-ink-green); text-align: right; }
+  .cx-hub-label { color: var(--bosc-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cx-hub-kind, .cx-node-kind {
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-nano);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--bosc-faint);
+  }
+
+  /* Grouped tables */
+  .cx-group { margin: var(--sp-6) 0; scroll-margin-top: 5rem; }
+  .cx-group-head { display: flex; align-items: baseline; gap: var(--sp-2); border-bottom: 1px solid var(--bosc-rule); padding-bottom: 0.4rem; }
+  .cx-group-head h2 { margin: 0; font-size: var(--fs-h3); }
+  .cx-group-head a { color: var(--bosc-link); text-decoration: none; }
+  .cx-group-head a:hover { text-decoration: underline; }
+  .cx-group-n { font-family: var(--bosc-mono); font-size: var(--fs-meta); color: var(--bosc-faint); }
+
+  .cx-tablewrap { overflow-x: auto; margin-top: var(--sp-3); }
+  .cx-table { width: 100%; border-collapse: collapse; font-size: var(--fs-meta); }
+  .cx-table th {
+    text-align: left;
+    font-family: var(--bosc-mono);
+    font-size: var(--fs-nano);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--bosc-faint);
+    font-weight: 400;
+    border-bottom: 1px solid var(--bosc-rule);
+    padding: 0.35rem 0.6rem;
+  }
+  .cx-table td { padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--bosc-rule-faint, var(--bosc-rule)); vertical-align: top; }
+  .cx-c-num { font-family: var(--bosc-mono); text-align: right; width: 3.5rem; color: var(--bosc-muted); }
+  .cx-c-date { font-family: var(--bosc-mono); white-space: nowrap; color: var(--bosc-muted); width: 6.5rem; }
+  .cx-c-date[data-null] { color: var(--bosc-faint); }
+  .cx-node-label { display: block; color: var(--bosc-ink); }
+  .cx-node-id { display: block; font-family: var(--bosc-mono); font-size: var(--fs-nano); color: var(--bosc-faint); }
+</style>

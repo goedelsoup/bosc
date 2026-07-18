@@ -201,6 +201,41 @@ export function conceptBacklinks(
   return out;
 }
 
+/** A concept that names an entity in its prose — one "Related concepts" row on an entity page. */
+export interface RelatedConcept {
+  slug: string;
+  title: string;
+  url: string;
+}
+
+/**
+ * The concepts that *name* an entity — the glossary terms an entity page cross-links to (#1572).
+ * The corpus concepts don't `[[link]]` to entities (entities are network-global, concept bodies
+ * cite terms, not parties), so this is a prose match, not an edge lookup: a concept qualifies when
+ * any of the entity's names (its display + variants, passed in) appears as a **whole normalized
+ * phrase** in the concept's title/summary/body — the same specificity floor as the open-questions
+ * and hypothesis backlinks (`backlinkable`), so a two-letter initialism can't match noise. Reads
+ * the active site's `concepts` feed; a build without one yields none. `scoped` points the links at
+ * the site-own glossary rather than the network-global one, matching `wikiIndex`.
+ */
+export function relatedConcepts(
+  names: (string | null | undefined)[],
+  options: WikiIndexOptions = {},
+): RelatedConcept[] {
+  if (!hasFeed("concepts")) return [];
+  const scoped = options.scoped ?? false;
+  const tokens = [...new Set(names.filter((n): n is string => n != null && backlinkable(n)).map(norm))];
+  if (!tokens.length) return [];
+  const out: RelatedConcept[] = [];
+  for (const c of loadFeed<ConceptItem[]>("concepts")) {
+    const hay = ` ${norm(`${c.title} ${c.summary} ${c.body}`)} `;
+    if (tokens.some((t) => hay.includes(` ${t} `))) {
+      out.push({ slug: c.slug, title: c.title, url: conceptHref(c.slug, scoped) });
+    }
+  }
+  return out;
+}
+
 /** One open question that raises a node — the backlink row on a concept/entity page (#1569). */
 export interface OpenQuestionBacklink {
   id: string;

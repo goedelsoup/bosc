@@ -135,11 +135,40 @@ jobs:
         with:
           name: site-dist
           path: web/dist
+
+      # Provision Wrangler via mise — the repo's declared mechanism (web/mise.toml [tools]
+      # `npm:wrangler = "4"`), the SAME pin the local `dev:stack` uses. It is deliberately
+      # NOT an npm dependency, so `cloudflare/wrangler-action` can't be used here: with no
+      # `pnpm-lock.yaml` in web/ (the single lockfile lives at the repo root) it can't detect
+      # pnpm and falls back to `npm i wrangler` in web/, which dies on the `workspace:*`
+      # protocol in web/package.json (`EUNSUPPORTEDPROTOCOL`). Standing in web/, mise merges
+      # web/mise.toml with the root config, so node + pnpm + wrangler v4 all install.
+      - name: Set up mise (provisions Wrangler v4)
+        uses: jdx/mise-action@v2
+        with:
+          working_directory: web
+          experimental: true
+      # Wrangler compiles the Pages Functions (web/functions/) from source at deploy time,
+      # so this job needs the workspace's node_modules too — without them esbuild can't
+      # resolve the `@watermark/core/*` workspace imports or `postgres`, and the deploy dies
+      # with "Could not resolve". The build job installs on its own (separate) runner, so
+      # install again here: one root lockfile, run via the mise-provisioned pnpm; standing in
+      # web/ resolves the repo-root workspace and links every member (like `mise run install`).
+      - name: Install workspace dependencies (Functions build)
+        working-directory: web
+        run: mise exec -- pnpm install --frozen-lockfile
+      # Deploy with Wrangler direct-upload. Wrangler reads CLOUDFLARE_API_TOKEN /
+      # CLOUDFLARE_ACCOUNT_ID from the env, and the project name + output dir (dist) from
+      # web/wrangler.toml. The deployment URL is scraped back into a step output for the
+      # GitHub Environment link (best-effort — an empty value just leaves the link unset).
       - name: Deploy to Cloudflare Pages
         id: deploy
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          workingDirectory: web
-          command: pages deploy --branch=main
+        working-directory: web
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -o pipefail
+          mise exec -- wrangler pages deploy --branch=main 2>&1 | tee deploy.log
+          url="$(grep -oiE 'https://[a-z0-9._-]+\.pages\.dev' deploy.log | tail -n 1)"
+          echo "deployment-url=$url" >> "$GITHUB_OUTPUT"

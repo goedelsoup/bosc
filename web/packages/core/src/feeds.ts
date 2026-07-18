@@ -397,6 +397,13 @@ export interface DefenseContractors {
   notes?: { subject?: string; source?: string; finding?: string; [k: string]: unknown } | null;
 }
 
+/** A minimal reference to a related LEI entity — the `direct`/`ultimate` parent of an
+ *  LEI record (`watermark.gleif.LeiRef`), an `{lei, name}` pair, never a bare code. */
+export interface LeiRef {
+  lei: string;
+  name: string;
+}
+
 /** One GLEIF LEI record (`lei` feed) — corridor entity parents. */
 export interface LeiRecord {
   lei: string;
@@ -405,8 +412,8 @@ export interface LeiRecord {
   legal_form?: string | null;
   entity_status?: string | null;
   registration_status?: string | null;
-  direct_parent?: string | null;
-  ultimate_parent?: string | null;
+  direct_parent?: LeiRef | null;
+  ultimate_parent?: LeiRef | null;
   legal_address?: { city?: string; region?: string; country?: string } | null;
   last_update?: string | null;
   watchlist_name?: string | null;
@@ -793,6 +800,47 @@ export interface OpenQuestionItem {
   hypothesis?: string | null; // the lens id ("water" | "defense" | "surveillance")
   hypothesis_label?: string | null; // the human lens label, e.g. "H1 Water & Coercion"
   signal?: string | null; // the cell's signal strength ("anchor"|"strong"|"moderate"|"watch")
+}
+
+// --- corpus-index feed (`bosc.site.feeds.CorpusNodeItem`, issue #1573, epic #1560 wk C) ------
+/** The BOSC display kind of a corpus node — the yidam `class` folds several of these into one. */
+export type CorpusNodeKind =
+  | "site"
+  | "entity"
+  | "person"
+  | "concept"
+  | "hypothesis"
+  | "lead"
+  | "open-question"
+  | "relation"
+  | "node";
+
+/**
+ * One node of the yidam corpus mirror — a browsable row for the `/wiki/corpus` node-index page.
+ *
+ * A **projection** feed (`bosc.site.corpus_index`), not a new extraction: it re-reads the projected
+ * corpus mirror into a flat, sortable table. `node_class` is the yidam class
+ * (`artifact`/`concept`/`hypothesis`/`question`/`relation`); `kind` is the finer BOSC display kind
+ * (an `artifact` is a site anchor, an entity, or a person; a `question` is a lead or an open cell).
+ * `links_out` is the node's outgoing-edge count, `links_in` the edges pointing at it, `lines` the
+ * serialized-node line count (parity with `yidam corpus-index`). `updated` is the newest commit
+ * date (`YYYY-MM-DD`) of the committed source the node derives from — null when it has none.
+ */
+export interface CorpusNodeItem {
+  /** The yidam node id — `<class>/<name>`. */
+  id: string;
+  /** The yidam class — `artifact` | `concept` | `hypothesis` | `question` | `relation`. */
+  node_class: string;
+  /** The finer BOSC display kind, refined from the node's meta. */
+  kind: CorpusNodeKind;
+  label: string;
+  /** `"site"` | `"network"` (from the node's meta), when known. */
+  scope?: string | null;
+  links_out: number;
+  links_in: number;
+  lines: number;
+  /** ISO date of the newest commit touching the node's source(s), or null when unknown. */
+  updated?: string | null;
 }
 
 // --- the data catalog (`bosc.site.feeds.CatalogItem`, epic #631 Phase 3 / #659) -----------

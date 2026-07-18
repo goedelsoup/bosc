@@ -89,6 +89,8 @@ from watermark.site import places as places_mod
 from watermark.site import records as records_mod
 from watermark.site import rsei as rsei_mod
 from watermark.site.catalog_index import build_catalog_index
+from watermark.site.corpus_index import build_corpus_index
+from watermark.site.corpus_mirror import build_mirror
 from watermark.site.embeddings import build_ask_embeddings, build_passage_embeddings
 from watermark.site.facts import build_facts
 from watermark.site.feeds import (
@@ -99,6 +101,7 @@ from watermark.site.feeds import (
     Citation,
     ConceptItem,
     ContactItem,
+    CorpusNodeItem,
     DispersionField,
     DispersionGeoRef,
     DispersionGrid,
@@ -945,6 +948,20 @@ def _open_questions_feed(feeds: Sequence[_Feed]) -> _Feed | None:
     return _collection_feed("open-questions", OpenQuestionItem, questions)
 
 
+def _corpus_index_feed(settings: Settings) -> _Feed:
+    """Build the `corpus-index` feed (#1573) — the node map of the site's yidam corpus mirror.
+
+    Unlike `facts`/`open-questions` (post-passes over the assembled feeds), this projects the
+    just-built `Mirror` (`build_mirror` re-reads the committed corpus, offline). Always emitted:
+    every site's mirror has at least the site anchor + hypothesis lenses, so the schema set stays
+    stable and `hasFeed("corpus-index")` is always true (the node map is never empty). Freshness is
+    resolved from git here because the frontend build can run neither git nor Python.
+    """
+    mirror = build_mirror(settings)
+    nodes = build_corpus_index(mirror, settings=settings)
+    return _collection_feed("corpus-index", CorpusNodeItem, nodes)
+
+
 def _passages_feed(feeds: Sequence[_Feed], settings: Settings) -> _Feed:
     """Build the `passages` feed (#1589) — page excerpts for this site's published PDFs.
 
@@ -1024,6 +1041,9 @@ def export_bundle(
     # feeds, so it must be appended after `_collect_feeds`. Written + indexed through the same
     # loops below like any other feed.
     feeds.append(_catalog_index_feed(feeds, settings))
+    # The corpus node-index (#1573) — the browsable map of this site's yidam mirror. Built from its
+    # own `build_mirror` (not the assembled feeds), always emitted (the mirror is never empty).
+    feeds.append(_corpus_index_feed(settings))
 
     # Schema files (geo feeds share one file — dedup by schema_file path).
     written_schemas: set[str] = set()
