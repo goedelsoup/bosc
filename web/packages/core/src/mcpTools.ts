@@ -4,13 +4,15 @@
 // not duplicated by hand.
 
 /** A JSON-Schema property node. `items` is set on `type: "array"` params (e.g. the
- * get_document `fields`/`sections` projections). */
+ * get_document `fields`/`sections` projections); `properties` on a nested `type: "object"`
+ * param (e.g. the search_corpus `filters` facet bag, #1582). */
 export interface ToolProperty {
   type: string;
   description: string;
   default?: unknown;
   enum?: readonly string[];
   items?: { type: string; enum?: readonly string[] };
+  properties?: Record<string, ToolProperty>;
 }
 
 /**
@@ -128,6 +130,61 @@ const PASSAGE_DEDUP_PROPS = {
     description:
       "Governs ONLY byte-identical duplicate pages here — draft/final page variants are always retained regardless. Both the default (latest_with_relevant_older_evidence) and `latest_only` drop the redundant duplicate pages; `all` disables collapse entirely.",
     default: "latest_with_relevant_older_evidence",
+  },
+} as const;
+
+// Structured facet filters for search_corpus (#1582) — a bag of AND-combined constraints over
+// fields the ask-index ALREADY carries, so the ranked pool is narrowed before scoring. The
+// canonical feed key is `feed`; `collection` here (and the legacy top-level param) is accepted as
+// an alias but names a BUNDLE FEED, not a document-collection slug — reconciling the historical
+// collision with get_documents' `collection`. Un-indexed facets (county, agency, permit_number,
+// document_type, entity, project/campus, fact_category) are deliberately absent — they need
+// upstream ask-index enrichment (packages/core/src/askIndex.ts) and are tracked separately.
+const SEARCH_FILTERS_PROP = {
+  filters: {
+    type: "object",
+    description:
+      "Structured facet constraints over indexed corpus fields — all optional and AND-combined, applied before ranking so unrelated feeds/records don't crowd the results. Facets: site, feed (alias collection), source_kind, verified, date_from, date_to, confidence. NOTE: `feed`/`collection` here is a BUNDLE FEED, not a document-collection slug — for oepa/recorder/aedg collections use get_documents.",
+    properties: {
+      site: {
+        type: "string",
+        description: "Site slug (e.g. lima, fort-wayne). Mirrors the top-level `site`.",
+      },
+      feed: {
+        type: "string",
+        description:
+          "Bundle feed: records, documents, timeline, entities, meetings, people, places, concepts. A BUNDLE FEED, NOT a document-collection slug (oepa/recorder/aedg → get_documents). `collection` is an accepted alias.",
+      },
+      collection: {
+        type: "string",
+        description:
+          "Alias of `feed` (kept for back-compat); names a bundle feed, not a document collection.",
+      },
+      source_kind: {
+        type: "string",
+        enum: ["document", "derived"],
+        description:
+          "Provenance class: `document` (grounded in a primary source) vs `derived` (editorial synthesis, e.g. glossary concepts).",
+      },
+      verified: {
+        type: "boolean",
+        description: "Keep only [verified] units (true) or only unverified units (false).",
+      },
+      date_from: {
+        type: "string",
+        description:
+          "Inclusive ISO-8601 lower bound on a unit's structured date (dated feeds only — timeline/meetings). Undated units are excluded when set.",
+      },
+      date_to: {
+        type: "string",
+        description:
+          "Inclusive ISO-8601 upper bound on a unit's structured date. Undated units are excluded when set.",
+      },
+      confidence: {
+        type: "string",
+        description: "Citation confidence band (e.g. high, medium, low), matched exactly.",
+      },
+    },
   },
 } as const;
 
@@ -399,20 +456,22 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
   {
     name: "search_corpus",
     description:
-      "Hybrid search across the whole corpus — the discovery entrypoint. Ranking fuses semantic (vector) similarity with BM25 keyword scoring via reciprocal-rank-fusion, degrading to keyword-only when query embeddings are unavailable. Use to FIND relevant items across every feed (records, documents, timeline, entities, …); narrow with site/collection. This is NOT the way to pull one known document — use get_document for that. Returns ranked evidence cards (id, title, site, collection, date, source_kind, score, snippet, estimated_tokens, verified, tier, tier_reason) — NO full record text by default; pass a hit's id to get_document to fetch its projected fields + citation. Each hit is tiered by evidence role so you don't treat every match as equal: `tier` is `direct` (top-relevance-band primary evidence — records/documents/timeline/meetings that answer the query), `corroborating` (relevant supporting material — a secondary entity/person/place view, or primary evidence below the top band), or `background` (definitional/derived context — glossary concepts, or a weak-relevance match); `tier_reason` says why. The tier is an evidence-grounded heuristic (evidence class + score band), never score alone — a glossary hit is never `direct`. A filing's versions (e.g. a permit's final + draft + fact sheet) collapse to the canonical member by default — pass deduplicate:\"none\" to see every version, or version_policy to tune which superseded versions survive. Size knobs: response_mode (ids_only|compact|snippets|full — ids_only omits the tier; full reproduces the whole record, ~18–24k tokens/hit, opt-in), limit/max_results, snippet_tokens, max_tokens, cursor.",
+      "Hybrid search across the whole corpus — the discovery entrypoint. Ranking fuses semantic (vector) similarity with BM25 keyword scoring via reciprocal-rank-fusion, degrading to keyword-only when query embeddings are unavailable. Use to FIND relevant items across every feed (records, documents, timeline, entities, …); narrow with a `filters` bag over indexed fields (site, feed, source_kind, verified, date_from/date_to, confidence — all AND-combined) so unrelated feeds don't crowd the results. This is NOT the way to pull one known document — use get_document for that. Returns ranked evidence cards (id, title, site, collection, date, source_kind, score, snippet, estimated_tokens, verified, tier, tier_reason) — NO full record text by default; pass a hit's id to get_document to fetch its projected fields + citation. Each hit is tiered by evidence role so you don't treat every match as equal: `tier` is `direct` (top-relevance-band primary evidence — records/documents/timeline/meetings that answer the query), `corroborating` (relevant supporting material — a secondary entity/person/place view, or primary evidence below the top band), or `background` (definitional/derived context — glossary concepts, or a weak-relevance match); `tier_reason` says why. The tier is an evidence-grounded heuristic (evidence class + score band), never score alone — a glossary hit is never `direct`. A filing's versions (e.g. a permit's final + draft + fact sheet) collapse to the canonical member by default — pass deduplicate:\"none\" to see every version, or version_policy to tune which superseded versions survive. Size knobs: response_mode (ids_only|compact|snippets|full — ids_only omits the tier; full reproduces the whole record, ~18–24k tokens/hit, opt-in), limit/max_results, snippet_tokens, max_tokens, cursor.",
     inputSchema: {
       type: "object",
       properties: {
         query: { type: "string", description: "Search query" },
         site: {
           type: "string",
-          description: "Site slug (e.g. lima, fort-wayne). Leave blank to search all sites.",
+          description:
+            "Site slug (e.g. lima, fort-wayne). Leave blank to search all sites. Legacy shorthand for `filters.site`.",
         },
         collection: {
           type: "string",
           description:
-            "Feed filter — restrict to one bundle feed: records, documents, timeline, entities, meetings, people, places, concepts.",
+            "Legacy shorthand for `filters.feed` — restrict to one BUNDLE FEED (records, documents, timeline, entities, meetings, people, places, concepts). Prefer `filters.feed`; NOTE this is a bundle feed, NOT a document-collection slug (oepa/recorder/aedg → get_documents).",
         },
+        ...SEARCH_FILTERS_PROP,
         limit: { type: "integer", description: "Max results (default 10)", default: 10 },
         response_mode: {
           type: "string",
@@ -436,7 +495,8 @@ export const MCP_TOOLS: readonly ToolSchema[] = [
       SEARCH_CORPUS_HIT,
       "Ranked evidence cards (shape governed by response_mode), most-relevant first.",
     ),
-    example: '{"query": "NPDES permit violations", "site": "lima", "limit": 5}',
+    example:
+      '{"query": "NPDES permit violations", "filters": {"site": "lima", "feed": "records", "verified": true}, "limit": 5}',
   },
   {
     name: "search_passages",

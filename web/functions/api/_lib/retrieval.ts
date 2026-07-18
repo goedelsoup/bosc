@@ -49,6 +49,77 @@ export interface Hit {
   score: number;
 }
 
+/**
+ * Structured facet filters over indexed AskUnit fields (#1582). Every field is optional; an
+ * absent field imposes no constraint, and every present constraint must hold (AND-combined).
+ * These are the facets the ask-index *already carries* — un-indexed facets (county, agency,
+ * permit_number, …) await upstream index enrichment and are deliberately not modeled here.
+ */
+export interface CorpusFilters {
+  /** Site slug (e.g. "lima"). */
+  site?: string;
+  /** Bundle feed name (records, documents, timeline, …) — NOT a document-collection slug. */
+  feed?: string;
+  /** Provenance class: "document" (primary source) vs "derived" (editorial synthesis). */
+  source_kind?: string;
+  /** Keep only [verified] units (true) or only unverified units (false). */
+  verified?: boolean;
+  /** Inclusive ISO-8601 lower bound on the unit's structured `date`. */
+  date_from?: string;
+  /** Inclusive ISO-8601 upper bound on the unit's structured `date`. */
+  date_to?: string;
+  /** Citation confidence band (e.g. "high"), matched exactly. */
+  confidence?: string;
+}
+
+/**
+ * Narrow `units` to those satisfying every present facet in `filters` (#1582).
+ *
+ * `site` is special: it filters strictly only when the index actually carries site tags — an
+ * untagged (legacy) index skips the site constraint rather than silently returning nothing.
+ * Every other facet compares directly against the indexed field, so a unit missing that field
+ * fails the constraint: `verified:true` drops untagged units, and either date bound drops
+ * undated units (a date filter can't be satisfied by a unit with no date). ISO-8601 dates sort
+ * lexically, so string comparison is a correct date comparison.
+ */
+export function applyCorpusFilters(units: AskUnit[], filters: CorpusFilters): AskUnit[] {
+  let out = units;
+
+  if (filters.site) {
+    // Only filter when the index is site-tagged — `!u.site` would silently leak cross-site
+    // results on a mixed index, but a wholly untagged (legacy) index means "single site".
+    const site = filters.site;
+    const hasTaggedUnits = out.some((u) => typeof u.site === "string" && u.site.length > 0);
+    if (hasTaggedUnits) out = out.filter((u) => u.site === site);
+  }
+  if (filters.feed) {
+    const feed = filters.feed;
+    out = out.filter((u) => u.feed === feed);
+  }
+  if (filters.source_kind) {
+    const kind = filters.source_kind;
+    out = out.filter((u) => u.source_kind === kind);
+  }
+  if (filters.verified !== undefined) {
+    const verified = filters.verified;
+    out = out.filter((u) => (u.verified ?? false) === verified);
+  }
+  if (filters.date_from) {
+    const from = filters.date_from;
+    out = out.filter((u) => typeof u.date === "string" && u.date >= from);
+  }
+  if (filters.date_to) {
+    const to = filters.date_to;
+    out = out.filter((u) => typeof u.date === "string" && u.date <= to);
+  }
+  if (filters.confidence) {
+    const confidence = filters.confidence;
+    out = out.filter((u) => u.confidence === confidence);
+  }
+
+  return out;
+}
+
 // A compact English stoplist — enough to keep BM25 from rewarding filler, small enough
 // to stay honest about a record-search vocabulary (kept words like "no"/"not" matter).
 const STOPWORDS = new Set([

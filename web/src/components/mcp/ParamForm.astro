@@ -24,7 +24,7 @@ const SCHEMAS: Record<
     fields: [
       { name: "query", label: "Query", required: true },
       { name: "site", label: "Site", placeholder: "e.g. lima, fort-wayne — leave blank for all" },
-      { name: "collection", label: "Collection", placeholder: "e.g. oepa, recorder" },
+      { name: "collection", label: "Feed", placeholder: "e.g. records, timeline, documents — a bundle feed" },
       { name: "limit", label: "Limit", type: "number", placeholder: "10" },
     ],
   },
@@ -112,14 +112,14 @@ const SCHEMAS: Record<
         </div>
         <div class="field-group">
           <label class="field-label" for="mcp-f-collection">
-            COLLECTION<span class="field-optional">— optional</span>
+            FEED<span class="field-optional">— optional</span>
           </label>
           <input
             id="mcp-f-collection"
             class="field-input"
             type="text"
             name="collection"
-            placeholder="e.g. oepa, recorder"
+            placeholder="e.g. records, timeline, documents — a bundle feed"
             data-field="collection"
           />
         </div>

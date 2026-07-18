@@ -693,3 +693,114 @@ describe("handleSearchCorpus evidence tiering (#1591)", () => {
     }
   });
 });
+
+// Structured facet filters (#1582): a `filters` bag over indexed fields narrows the ranked pool
+// before scoring. Legacy top-level site/collection still work and fold into the same set; the
+// canonical feed key is `filters.feed` (an alias for the historically-named `collection`).
+describe("handleSearchCorpus structured filters (#1582)", () => {
+  // Every unit matches the query term "corridor" so ranking never drops a facet-eligible unit;
+  // the spread across feed/source_kind/verified/date/confidence/site is what the filters select on.
+  const FILTER_UNITS: AskUnit[] = [
+    {
+      id: "records:permit",
+      feed: "records",
+      title: "Lima corridor NPDES permit",
+      url: "/x",
+      text: "corridor npdes permit effluent limit",
+      source_kind: "document",
+      confidence: "high",
+      verified: true,
+      site: "lima",
+      date: "2019-06-01",
+    },
+    {
+      id: "concepts:corridor",
+      feed: "concepts",
+      title: "Corridor (definition)",
+      url: "/x",
+      text: "corridor glossary definition derived synthesis",
+      source_kind: "derived",
+      confidence: "medium",
+      verified: false,
+      site: "lima",
+    },
+    {
+      id: "timeline:2015-corridor",
+      feed: "timeline",
+      title: "2015-02-01 — Corridor rezoning",
+      url: "/x",
+      text: "corridor county rezoning hearing",
+      source_kind: "document",
+      verified: true,
+      site: "lima",
+      date: "2015-02-01",
+    },
+    {
+      id: "records:fw",
+      feed: "records",
+      title: "Fort Wayne corridor estimate",
+      url: "/x",
+      text: "corridor cost estimate fort wayne",
+      source_kind: "document",
+      confidence: "high",
+      verified: false,
+      site: "fort-wayne",
+      date: "2021-01-01",
+    },
+  ];
+
+  const routes: FetchRoute[] = [
+    { test: (u) => u.pathname === "/ask-index.json", respond: () => jsonResponse(200, FILTER_UNITS) },
+  ];
+
+  async function ids(args: Record<string, unknown>): Promise<string[]> {
+    _resetAskIndexCache();
+    vi.stubGlobal("fetch", routingFetch(routes));
+    const content = await handleSearchCorpus({ query: "corridor", response_mode: "ids_only", ...args }, REQ);
+    return (JSON.parse(content[0].text) as Envelope).results.map((r) => r.id as string).sort();
+  }
+
+  it("filters.feed restricts to one bundle feed", async () => {
+    expect(await ids({ filters: { feed: "records" } })).toEqual(["records:fw", "records:permit"]);
+  });
+
+  it("filters.collection is an accepted alias of filters.feed", async () => {
+    expect(await ids({ filters: { collection: "records" } })).toEqual(["records:fw", "records:permit"]);
+  });
+
+  it("legacy top-level collection still filters on feed (back-compat)", async () => {
+    expect(await ids({ collection: "records" })).toEqual(["records:fw", "records:permit"]);
+  });
+
+  it("filters.source_kind separates document from derived", async () => {
+    expect(await ids({ filters: { source_kind: "derived" } })).toEqual(["concepts:corridor"]);
+  });
+
+  it("filters.verified keeps only verified (or only unverified) units", async () => {
+    expect(await ids({ filters: { verified: true } })).toEqual(["records:permit", "timeline:2015-corridor"]);
+    expect(await ids({ filters: { verified: false } })).toEqual(["concepts:corridor", "records:fw"]);
+  });
+
+  it("filters.date_from/date_to windows dated units and excludes undated ones", async () => {
+    expect(await ids({ filters: { date_from: "2016-01-01", date_to: "2020-01-01" } })).toEqual([
+      "records:permit",
+    ]);
+  });
+
+  it("filters.confidence matches the citation band exactly", async () => {
+    expect(await ids({ filters: { confidence: "high" } })).toEqual(["records:fw", "records:permit"]);
+  });
+
+  it("filters.site wins over the legacy top-level site when both are set", async () => {
+    // Top-level says fort-wayne, but the structured filter (fort-wayne overridden to lima) wins.
+    const got = await ids({ site: "fort-wayne", filters: { site: "lima", feed: "records" } });
+    expect(got).toEqual(["records:permit"]);
+  });
+
+  it("AND-combines facets across the bag", async () => {
+    const got = await ids({
+      filters: { site: "lima", feed: "records", verified: true, confidence: "high" },
+    });
+    expect(got).toEqual(["records:permit"]);
+  });
+});
