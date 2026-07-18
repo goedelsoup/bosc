@@ -2,9 +2,15 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
+from watermark.config import Settings
 from watermark.models import Deed, DeedExtraction, NpdesExtraction, NpdesPermit
 from watermark.pipeline.corpus import Corpus
-from watermark.pipeline.timeline import _date_key, build_timeline
+from watermark.pipeline.timeline import _date_key, _zoning_events, build_timeline
+from watermark.sites import CorpusScope
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 def _deed(
@@ -97,3 +103,29 @@ def test_build_timeline_keeps_differing_dates_separate() -> None:
         if e.category == "npdes_public_notice"
     ]
     assert {e.date for e in notices} == {"2025-04-28", "2025-06-17"}
+
+
+def test_zoning_events_resolve_to_the_single_data_center_amendment() -> None:
+    """The American Township zoning basis must be ONE event, not one per re-adoption date.
+
+    The resolution PDF has no change-log, so the projector must not stamp every trustee
+    re-adoption with the data-center caption (the "same change five times" defect). It resolves
+    to the single carrier the corpus content-verifies — Res #09-082025, adopted 2025-09-08.
+    """
+    events = _zoning_events(Settings(data_dir=REPO_ROOT / "data"))
+    assert len(events) == 1, [e.ref for e in events]
+    (event,) = events
+    assert event.category == "zoning_amendment"
+    assert event.date == "2025-09-08"
+    assert event.ref == "amtwp-zoning-2025-09-08"
+    # The pre-deal re-adoptions must no longer masquerade as the data-center change.
+    assert not {"2021-02-11", "2024-01-08", "2024-08-28"} & {event.date}
+    # Honest tagging: an inference corroborated by the township minutes, not a bare assertion.
+    assert "inference" in event.detail.lower()
+    assert "american-township/meetings/meeting-summaries.yaml" in event.also_sources
+
+
+def test_zoning_events_gated_out_of_scope() -> None:
+    """A sibling site whose scope excludes ``lacrpc/`` gets no Lima zoning event (#762)."""
+    settings = Settings(data_dir=REPO_ROOT / "data")
+    assert _zoning_events(settings, scope=CorpusScope(include=("oepa/",))) == []

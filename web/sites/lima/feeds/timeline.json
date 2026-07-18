@@ -1,23 +1,5 @@
 [
   {
-    "date": "2021-02-11",
-    "category": "zoning_amendment",
-    "title": "American Township Zoning Resolution — amended & adopted by Trustees",
-    "ref": "amtwp-zoning-2021-02-11",
-    "parties": [],
-    "detail": "defines Data Center / Hyperscale Data Center; M-2 conditional use (11.2.4)",
-    "source": "lacrpc/american-township-zoning.zoning.yaml",
-    "also_sources": [],
-    "citation": {
-      "source": "lacrpc/american-township-zoning.zoning.yaml",
-      "source_kind": "document",
-      "page": null,
-      "confidence": "medium",
-      "note": null,
-      "verified": true
-    }
-  },
-  {
     "date": "2022-10-31",
     "category": "npdes_public_notice",
     "title": "NPDES 1PT00125*BD (Clinton County Board of Developmental Disabilities) — public notice",
@@ -177,24 +159,6 @@
     "also_sources": [],
     "citation": {
       "source": "perry-township/meetings/meeting-index.yaml",
-      "source_kind": "document",
-      "page": null,
-      "confidence": "medium",
-      "note": null,
-      "verified": true
-    }
-  },
-  {
-    "date": "2024-01-08",
-    "category": "zoning_amendment",
-    "title": "American Township Zoning Resolution — amended & adopted by Trustees",
-    "ref": "amtwp-zoning-2024-01-08",
-    "parties": [],
-    "detail": "defines Data Center / Hyperscale Data Center; M-2 conditional use (11.2.4)",
-    "source": "lacrpc/american-township-zoning.zoning.yaml",
-    "also_sources": [],
-    "citation": {
-      "source": "lacrpc/american-township-zoning.zoning.yaml",
       "source_kind": "document",
       "page": null,
       "confidence": "medium",
@@ -611,24 +575,6 @@
     "also_sources": [],
     "citation": {
       "source": "commissioners/meetings/meeting-index.yaml",
-      "source_kind": "document",
-      "page": null,
-      "confidence": "medium",
-      "note": null,
-      "verified": true
-    }
-  },
-  {
-    "date": "2024-08-28",
-    "category": "zoning_amendment",
-    "title": "American Township Zoning Resolution — amended & adopted by Trustees",
-    "ref": "amtwp-zoning-2024-08-28",
-    "parties": [],
-    "detail": "defines Data Center / Hyperscale Data Center; M-2 conditional use (11.2.4)",
-    "source": "lacrpc/american-township-zoning.zoning.yaml",
-    "also_sources": [],
-    "citation": {
-      "source": "lacrpc/american-township-zoning.zoning.yaml",
       "source_kind": "document",
       "page": null,
       "confidence": "medium",
@@ -1990,12 +1936,14 @@
   {
     "date": "2025-09-08",
     "category": "zoning_amendment",
-    "title": "American Township Zoning Resolution — amended & adopted by Trustees",
+    "title": "American Township zoning text amendment — data-center provisions adopted (#09-082025)",
     "ref": "amtwp-zoning-2025-09-08",
     "parties": [],
-    "detail": "defines Data Center / Hyperscale Data Center; M-2 conditional use (11.2.4)",
+    "detail": "#09-082025 zoning text amendment — Data Center / Hyperscale Data Center definitions + M-2 conditional use (11.2.4); the deal-window amendment carrying the data-center text [inference, corroborated by the American Township minutes]",
     "source": "lacrpc/american-township-zoning.zoning.yaml",
-    "also_sources": [],
+    "also_sources": [
+      "american-township/meetings/meeting-summaries.yaml"
+    ],
     "citation": {
       "source": "lacrpc/american-township-zoning.zoning.yaml",
       "source_kind": "document",
@@ -2725,24 +2673,6 @@
     "also_sources": [],
     "citation": {
       "source": "american-township/meetings/meeting-index.yaml",
-      "source_kind": "document",
-      "page": null,
-      "confidence": "medium",
-      "note": null,
-      "verified": true
-    }
-  },
-  {
-    "date": "2026-02-09",
-    "category": "zoning_amendment",
-    "title": "American Township Zoning Resolution — amended & adopted by Trustees",
-    "ref": "amtwp-zoning-2026-02-09",
-    "parties": [],
-    "detail": "defines Data Center / Hyperscale Data Center; M-2 conditional use (11.2.4)",
-    "source": "lacrpc/american-township-zoning.zoning.yaml",
-    "also_sources": [],
-    "citation": {
-      "source": "lacrpc/american-township-zoning.zoning.yaml",
       "source_kind": "document",
       "page": null,
       "confidence": "medium",

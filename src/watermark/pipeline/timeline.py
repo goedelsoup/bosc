@@ -301,29 +301,52 @@ def _commissioners_events(
 
 
 def _zoning_events(settings: Settings, scope: CorpusScope | None = None) -> list[TimelineEvent]:
-    """The American Township zoning-resolution adoption dates (data-center M-2 basis).
+    """The single American Township zoning **text amendment** that carried the data-center basis.
 
     Lima-specific (``lacrpc/``) and gated on the active site's scope (#762): a sibling
     site whose scope excludes ``lacrpc/`` gets nothing here.
+
+    The resolution PDF lists five trustee re-adoptions but has **no change-log**, so the source
+    artifact does not — and must not — claim which one introduced the Data Center / Hyperscale
+    definitions + M-2 conditional use (11.2.4). Emitting one ``zoning_amendment`` event per
+    re-adoption stamped *every* date (three of them pre-dating the project) with that data-center
+    caption — the same change asserted five times over. Instead emit a **single** event for the
+    amendment the corpus resolves as the carrier: ``document.data_center_amendment`` (Res #09-082025,
+    adopted 2025-09-08 — the only zoning text amendment content-verified in the township minutes,
+    inside the BOSC deal window), citing those minutes as a corroborating source. Absent that
+    resolved block, emit nothing (honest null) rather than fabricate the attribution.
     """
     rel = "lacrpc/american-township-zoning.zoning.yaml"
     if not relpath_in_scope(rel, scope):
         return []
     data = _load_yaml(settings.extracted_dir / "lacrpc" / "american-township-zoning.zoning.yaml")
     doc = data.get("document", {}) if isinstance(data.get("document"), dict) else {}
-    events: list[TimelineEvent] = []
-    for adopted in doc.get("amended_and_adopted_by_trustees", []):
-        events.append(
-            TimelineEvent(
-                date=str(adopted),
-                category="zoning_amendment",
-                title="American Township Zoning Resolution — amended & adopted by Trustees",
-                source=rel,
-                ref=f"amtwp-zoning-{adopted}",
-                detail="defines Data Center / Hyperscale Data Center; M-2 conditional use (11.2.4)",
-            )
+    amendment = doc.get("data_center_amendment")
+    if not isinstance(amendment, dict) or not amendment.get("date"):
+        return []
+    date = str(amendment["date"])
+    resolution = str(amendment.get("resolution", "")).strip()
+    minutes_rel = str(amendment.get("corroborating_source", "")).strip()
+    prefix = f"{resolution} " if resolution else ""
+    title = "American Township zoning text amendment — data-center provisions adopted"
+    if resolution:
+        title = f"{title} ({resolution})"
+    detail = (
+        f"{prefix}zoning text amendment — Data Center / Hyperscale Data Center definitions "
+        "+ M-2 conditional use (11.2.4); the deal-window amendment carrying the data-center "
+        "text [inference, corroborated by the American Township minutes]"
+    )
+    return [
+        TimelineEvent(
+            date=date,
+            category="zoning_amendment",
+            title=title,
+            source=rel,
+            ref=f"amtwp-zoning-{date}",
+            detail=detail,
+            also_sources=(minutes_rel,) if minutes_rel else (),
         )
-    return events
+    ]
 
 
 def _summary_detail(meeting: dict[str, Any]) -> str:

@@ -40,9 +40,28 @@ document:
     - '2026-02-09'   # most recent; the file's content_verified_date
   note: >-
     The PDF contains NO record-of-amendments / change-log page, so which specific amendment introduced
-    the data-center language cannot be content-verified from this document. The definitions and the
+    the data-center language cannot be content-verified from THIS document. The definitions and the
     M-2 conditional-use entry are present in the current (2026-02-09) consolidated text. [verified that
-    the language is present; NOT verified which amendment added it.]
+    the language is present; NOT verified which amendment added it from the PDF alone.] Cross-referencing
+    the township's OWN minutes resolves the carrier to the 2025-09-08 text amendment — see
+    ``data_center_amendment`` below. This artifact must NOT stamp every re-adoption date as the
+    data-center change: only 2025-09-08 (Res #09-082025) is the resolved carrier.
+
+  data_center_amendment:               # RESOLVED — the single adoption that carried the data-center text
+    date: '2025-09-08'
+    resolution: '#09-082025'
+    tag: inference
+    basis: >-
+      Of the five cover-block re-adoptions, only the 2025-09-08 / 2026-02-09 cycle falls inside the
+      BOSC deal window, and American Township's own minutes content-verify a zoning TEXT amendment on
+      2025-09-08 — "Motion ... to approve Resolution #09-082025 relating to zoning text amendments"
+      (9-8-25 minutes). It is the ONLY zoning text amendment in the corpus and the deal-window vehicle
+      for the Data Center / Hyperscale definitions + M-2 conditional use (11.2.4), which are present in
+      the current (2026-02-09) consolidated text. The 2021-02-11 / 2024-01-08 / 2024-08-28 re-adoptions
+      predate the project and did not carry it; 2026-02-09 is the consolidated re-adoption, not the
+      change. The resolution PDF has no change-log, so this data-center-specific attribution is
+      [inference] corroborated by the township minutes — not [verified].
+    corroborating_source: american-township/meetings/meeting-summaries.yaml   # Res #09-082025, 2025-09-08
 
 definitions:                          # source: document, transcribed verbatim (printed pp.21, 25)
   data_center: >-
@@ -128,7 +147,7 @@ bosc_relevance: >-
 open_questions:
   - "Is the BOSC site already mapped M-2, or was it rezoned to M-2 (and when / by what township resolution)? Not answerable from the resolution text — needs the Official Zoning Map + rezoning record."
   - "Has a BZA conditional-use certificate under 11.2.4 issued for the site? Hearing-notice + decision records?"
-  - "Which amendment (2025-09-08 vs 2026-02-09 vs earlier) added the Data Center / Hyperscale definitions and 11.2.4 — needs the township amendment resolutions (not in this PDF)."
+  - "[RESOLVED — see data_center_amendment] Which amendment added the Data Center / Hyperscale definitions and 11.2.4 resolves to Res #09-082025 (2025-09-08) [inference], via the American Township minutes; still open from the PDF alone (no change-log), so obtaining the text of Res #09-082025 would upgrade this to [verified]."
   - "2009 comp-plan future-land-use designation for the site (map review)."
 
 cross_refs:
