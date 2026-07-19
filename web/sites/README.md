@@ -32,6 +32,17 @@ These are checked-in build artifacts — regenerate, don't hand-edit. To refresh
 ```
 watermark --site <slug> export --no-embeddings --out web/sites/<slug>
 rm -rf web/sites/<slug>/schemas   # the contract schemas live once at data/site/bundle/schemas/
+# Drop the heavy retrieval-index feeds — the lean committed bundle omits them (see below):
+python - "$slug" <<'PY'
+import json, sys, pathlib
+d = pathlib.Path("web/sites") / sys.argv[1]
+for f in ("passages", "passage-embeddings"):
+    (d / "feeds" / f"{f}.ndjson").unlink(missing_ok=True)
+m = json.loads((d / "manifest.json").read_text())
+m["feeds"] = [x for x in m["feeds"] if x["name"] not in ("passages", "passage-embeddings")]
+m["feed_count"], m["row_total"] = len(m["feeds"]), sum(x["count"] for x in m["feeds"])
+(d / "manifest.json").write_text(json.dumps(m, indent=2, ensure_ascii=False) + "\n")
+PY
 ```
 
 Notes on what's committed here vs. a raw export:
@@ -42,6 +53,11 @@ Notes on what's committed here vs. a raw export:
 - **`ask-embeddings.json` is present but empty** — exported with `--no-embeddings` to keep the
   tree offline and lean (no ~80 MB model download). Hybrid retrieval degrades to BM25-only over
   these committed bundles; the live per-site exports carry the real vectors.
+- **No `passages` / `passage-embeddings` feeds** — the page-level retrieval indexes (#1589) are
+  large (Lima's `passages.ndjson` is ~3.7 MB, LFS-resolved-PDF dependent) and every committed
+  bundle omits them. A raw export always emits both, so the regen step above drops the files
+  **and** their manifest entries; the frontend degrades to declaring-absent (`hasFeed` → `[]`),
+  and if the manifest declared them without the files the static build would `ENOENT`.
 
 ## Drift guard
 
