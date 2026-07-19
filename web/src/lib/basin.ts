@@ -7,7 +7,7 @@
  * dash — never invented. The design mock's placeholder projections (a cumulative-draw curve,
  * per-site draw bars, "~890 MW proj.") have no backing feed, so the honest on-record
  * equivalents render instead: the receiving WWTPs' NPDES design flows, the assembled dilution
- * screens, and the one disclosed IT load. A site with nothing on file reads [open], not a number.
+ * screens, and the one estimated IT load. A site with nothing on file reads [open], not a number.
  */
 import type { LinePoint, RankedBarDatum } from "@watermark/charts/charts";
 import type { EvidenceKind, TagKind } from "@watermark/core/evidence";
@@ -145,12 +145,18 @@ export function designFlowBars(nodes: readonly WatershedNode[]): RankedBarDatum[
     .sort((a, b) => b.value - a.value);
 }
 
-/** The disclosed IT load across the basin — a sum of what's actually on the record. */
-export function disclosedLoad(nodes: readonly WatershedNode[]): { mw: number; count: number } {
-  const disclosed = nodes.filter((n) => n.activity.has_disclosed_facility && n.activity.it_load_mw != null);
+/**
+ * The estimated IT load across the basin — a sum of per-site `it_load_mw` over the sites that
+ * carry a disclosed facility. The *facility* is on the record; each load figure is a labelled
+ * derivation of mixed provenance (Lima/Fort-Wayne N+1 backup reads, Van Wert's announced "up to
+ * 500 MW" ceiling, Findlay's contracted take, Urbana's floor-area screen), never a disclosed
+ * meter reading — so the sum is "estimated", not "disclosed" (#1702).
+ */
+export function estimatedItLoad(nodes: readonly WatershedNode[]): { mw: number; count: number } {
+  const withLoad = nodes.filter((n) => n.activity.has_disclosed_facility && n.activity.it_load_mw != null);
   return {
-    mw: disclosed.reduce((a, n) => a + (n.activity.it_load_mw as number), 0),
-    count: disclosed.length,
+    mw: withLoad.reduce((a, n) => a + (n.activity.it_load_mw as number), 0),
+    count: withLoad.length,
   };
 }
 

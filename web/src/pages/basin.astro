@@ -8,7 +8,7 @@
  * feed or they are a dash. The design mock's placeholder projections (cumulative draw vs. a
  * modeled cap, per-site draw bars) have no backing feed, so the honest on-record equivalents
  * render instead — the receiving WWTPs' NPDES design flows, the assembled dilution screens,
- * and the one disclosed IT load. The gaps section says exactly what's missing.
+ * and the one estimated IT load. The gaps section says exactly what's missing.
  *
  * Sits under the Research tab (design "Chrome": Research ▾ → Basin views → Maumee).
  */
@@ -21,7 +21,7 @@ import {
   cumulativeFlowSeries,
   designFlowBars,
   dischargeRows,
-  disclosedLoad,
+  estimatedItLoad,
   hucRange,
   nodeIndex,
   outletHydrographSeries,
@@ -50,7 +50,7 @@ const routed = hasFeed("routed-hydrograph") ? loadFeed<RoutedHydrographNetwork>(
 // --- hero ledger — registry counts + what the feed actually carries ------------------------
 const states = [...new Set(sites.map((s) => siteState(s.slug)).filter(Boolean))];
 const liveBuilding = sites.filter((s) => s.status === "live" || s.status === "building");
-const load = disclosedLoad(nodes);
+const load = estimatedItLoad(nodes);
 const flowTot = totalDesignFlow(nodes);
 
 interface Tile {
@@ -79,15 +79,15 @@ const tiles: Tile[] = [
   },
   load.count > 0
     ? {
-        label: "Disclosed IT load",
+        label: "Estimated IT load",
         value: String(Math.round(load.mw)),
         unit: "MW",
-        sub: `${load.count} of ${sites.length} sites disclosed`,
+        sub: `est. across ${load.count} of ${sites.length} sites with a facility on file`,
         evidence: "inference",
         basis: "modeled",
         source: "Read from filed permits — a labelled derivation, not a meter",
       }
-    : { label: "Disclosed IT load", value: "—", sub: "no disclosed load on file", evidence: "open" },
+    : { label: "Estimated IT load", value: "—", sub: "no facility load on file", evidence: "open" },
   flowTot.count > 0
     ? {
         label: "Receiving design flow",
@@ -318,8 +318,8 @@ const EV_INK: Record<string, string> = {
       <p class="basin-agg-note">
         {
           load.count > 0
-            ? `${load.count} of ${sites.length} sites carries a disclosed facility load${verifiedCount > 0 ? ` and ${verifiedCount} a screened facility record` : ""}; none carries a filed draw volume — the water figure behind any projection is still open.`
-            : "No site in this basin carries a disclosed facility load or a filed draw volume."
+            ? `${load.count} of ${sites.length} sites carries an estimated facility load${verifiedCount > 0 ? ` and ${verifiedCount} a screened facility record` : ""}; none carries a filed draw volume — the water figure behind any projection is still open.`
+            : "No site in this basin carries an estimated facility load or a filed draw volume."
         }
         The design flows above are the receiving plants' permitted capacity — the denominator any projected draw must be read
         against, not a measure of the draw itself. A projected basin total would be an open range, not a claim.
