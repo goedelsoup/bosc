@@ -290,12 +290,20 @@ class Node(BaseModel):
 
 
 class WaterBalanceNode(BaseModel):
-    """One node's flow terms. Conservation: inflow + stormwater = return + consumptive.
+    """One node's known flow terms — an *inventory*, not a closed per-node balance.
 
-    Terms are optional — a node carries only what's known/relevant (an abstraction
-    node has ``inflow``; a demand node has ``consumptive_use`` + ``return_flow``).
-    All flows are in **cfs**. ``stormwater`` is the Increment-2 seam: a cited zero
-    today, filled by the SCS-CN solver later.
+    Terms are optional and a node carries only what's known/relevant: an abstraction
+    node has ``inflow`` (live river-flow context, not a metered withdrawal); a WWTP node
+    has ``return_flow``; the campus demand node has ``return_flow`` + ``consumptive_use``.
+    No assembled node carries every term — the intake *withdrawal* that would tie
+    source -> use -> discharge into a closed per-node loop is not quantified in the corpus
+    — so this model does **not** assert ``inflow + stormwater = return + consumptive`` and
+    must not be read as a self-closing balance. The genuine, order-invariant
+    mass-conservation check runs downstream on the accumulated network:
+    :attr:`RoutedNetwork.closes`, which routes these ``return_flow`` terms through the
+    cited confluence graph and is exercised in the tests. All flows are in **cfs**.
+    ``stormwater`` is the Increment-2 seam: a cited zero today, filled by the SCS-CN
+    solver later.
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -313,7 +321,21 @@ class WaterBalanceNode(BaseModel):
 
 
 class WaterBalance(BaseModel):
-    """The assembled source -> use -> WWTP -> receiving loop."""
+    """The assembled source -> use -> WWTP -> receiving loop as a per-node flow *inventory*.
+
+    Each :class:`WaterBalanceNode` carries only its known terms (see that class); no node
+    carries the full ``inflow``/``return``/``consumptive`` set, so this container is an
+    inventory of grounded discharges, not a self-closing balance. Mass conservation is
+    checked downstream, where these ``return_flow`` terms are routed through the cited
+    confluence graph: :attr:`RoutedNetwork.closes` (built by
+    :func:`watermark.hydrology.network.route_network`, surfaced as the
+    ``mass-balance-closes`` finding, and exercised in the tests).
+
+    A per-node ``closes()`` once lived here; it was vacuous — it ``continue``\\ d on every
+    node because none held both ``inflow`` and ``return_flow``, so it returned ``True``
+    unconditionally and could never fail — and was removed (WS-05, #1605) in favor of the
+    routed check. Don't reintroduce a self-test that cannot fail.
+    """
 
     model_config = ConfigDict(extra="forbid")
 
@@ -329,16 +351,3 @@ class WaterBalance(BaseModel):
 
     def all_values(self) -> list[ProvenancedValue]:
         return [v for n in self.nodes for v in n.all_values()]
-
-    def closes(self, *, rel_tol: float = 0.05) -> bool:
-        """True if, where all terms are present, each node conserves mass within tol."""
-        for n in self.nodes:
-            if n.inflow is None or n.return_flow is None:
-                continue
-            storm = n.stormwater.value if n.stormwater else 0.0
-            consume = n.consumptive_use.value if n.consumptive_use else 0.0
-            lhs = n.inflow.value + storm
-            rhs = n.return_flow.value + consume
-            if abs(lhs - rhs) > max(0.01, abs(lhs) * rel_tol):
-                return False
-        return True

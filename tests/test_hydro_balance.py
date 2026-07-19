@@ -131,6 +131,30 @@ def test_abstraction_node_is_profile_driven(hydro_settings: Settings) -> None:
     assert any("no abstraction node configured" in w for w in balance.warnings)
 
 
+def test_water_balance_is_an_inventory_not_a_self_closing_check(hydro_settings: Settings) -> None:
+    # WS-05 (#1605): the per-node WaterBalance is an inventory of grounded discharges, not
+    # a self-closing balance. The old WaterBalance.closes() was vacuous — no assembled node
+    # ever held both `inflow` and `return_flow`, so its loop `continue`d on every node and
+    # it returned True unconditionally, was never called, and was never asserted. It is
+    # gone; guard against reintroducing a self-test that cannot fail.
+    balance = build_water_balance(settings=hydro_settings, live=True)
+    assert not hasattr(balance, "closes"), "vacuous WaterBalance.closes() must stay removed"
+    # The precondition that made the per-node check vacuous — no node carries both an inflow
+    # and a return — confirms the inventory shape the docstring now documents.
+    assert not any(n.inflow is not None and n.return_flow is not None for n in balance.nodes)
+
+    # The genuine, falsifiable mass-conservation check lives on the routed network: it routes
+    # the balance's return flows through the cited confluence graph and holds only when
+    # Sum(base) + Sum(gain) - Sum(applied loss) == outlet flow. Lean on it here (#1605 fix), show
+    # it actually fails when the inventory is corrupted.
+    from watermark.hydrology import network as net
+
+    rn = net.route_network(balance, consumptive_cfs=0.0, settings=hydro_settings)
+    assert rn.closes
+    broken = rn.model_copy(update={"outlet_cfs": rn.outlet_cfs + 5.0})
+    assert not broken.closes
+
+
 def test_check_skips_uncited_receiving_water(hydro_settings: Settings) -> None:
     # A receiving water with no cited 7Q10 is skipped, not invented. (All three real
     # streams are now cited, so inject a plant whose receiving water is uncited.)
