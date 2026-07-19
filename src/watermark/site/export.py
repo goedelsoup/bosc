@@ -1144,21 +1144,21 @@ def export_bundle(
     row_total = sum(r.count for r in refs)
     generated = generated_at or _now_iso()
 
-    # yidam corpus mirror + graph exports (#1562/#1574): on the canonical export, project the
-    # just-committed corpus once into an in-memory mirror, then (a) render its downloadable graph
-    # exports (RDF Turtle + JSON-LD, GraphML) into the bundle's `exports/` — the wiki graph page
-    # links them — and (b) reuse the SAME mirror for the .yidam/ regen below (one projection, not
-    # two). Gated to the default location (``out_dir is None``) like the .yidam mirror: a redirected
-    # one-off bundle (``--out``, tests) must not build the mirror or clobber the repo's canonical
-    # .yidam/, which also keeps `-n auto` test runs from racing on the shared dir. A secondary
-    # artifact — an export/mirror failure degrades to a warning (like embeddings), never aborting.
+    # yidam corpus mirror + graph exports (#1562/#1574): on the canonical export, reuse the
+    # `corpus_mirror` already projected above for the `corpus-index`/`corpus-nodes` feeds — so the
+    # export performs exactly ONE corpus projection, shared by (a) the downloadable graph exports
+    # (RDF Turtle + JSON-LD, GraphML) rendered into the bundle's `exports/` (the wiki graph page
+    # links them) and (b) the .yidam/ regen below. Gated to the default location (``out_dir is None``)
+    # like the .yidam mirror: a redirected one-off bundle (``--out``, tests) must not clobber the
+    # repo's canonical .yidam/, which also keeps `-n auto` test runs from racing on the shared dir. A
+    # secondary artifact — an exports failure degrades to a warning (like embeddings), never aborting.
     export_refs: list[ExportRef] = []
     mirror: Mirror | None = None
     if out_dir is None:
+        mirror = corpus_mirror  # the single projection, reused for exports + the .yidam regen
         try:
             from watermark.site.graph_exports import resolve_provenance, write_exports
 
-            mirror = build_mirror(settings)
             written = write_exports(
                 mirror, out / "exports", resolve_provenance(settings, generated_at=generated)
             )
@@ -1179,7 +1179,8 @@ def export_bundle(
                 error=next(iter(str(exc).splitlines()), repr(exc)),
                 hint="run `watermark corpus-mirror --exports` directly to see the failure",
             )
-            mirror = None  # fall through — the .yidam regen below builds its own mirror
+            # The exports render failed, but `mirror` (the shared projection) stays valid — the
+            # .yidam regen below still reuses it, so the export never re-projects the corpus.
 
     # Standing domain-activation readiness (#1220/#1222): computed here, at the end of every
     # export, from the just-assembled feed counts + the active profile — so it rises when a
