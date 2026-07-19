@@ -1,0 +1,243 @@
+{
+  "payload": {
+    "Results": {
+      "SourceId": "OH0091234",
+      "CWPName": "MAUMEE TEST WWTP",
+      "CWPPermitTypeDesc": "NPDES Individual Permit",
+      "CWPPermitStatusDesc": "Effective",
+      "CWPMajorMinorStatusFlag": "N",
+      "CWPCurrentSNCStatus": null,
+      "PermFeatures": [
+        {
+          "PermFeatureNmbr": "001",
+          "PermFeatureTypeDesc": "External Outfall",
+          "Parameters": [
+            {
+              "ParameterCode": "50050",
+              "ParameterDesc": "Flow, in conduit or thru treatment plant",
+              "MonitoringLocationDesc": "Effluent Gross",
+              "DischargeMonitoringReports": [
+                {
+                  "MonitoringPeriodEndDate": "31-JAN-23",
+                  "DMRValueNmbr": "2000000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "MK",
+                  "StatisticalBaseDesc": "Monthly Average",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "28-FEB-23",
+                  "DMRValueNmbr": "2500000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "MK",
+                  "StatisticalBaseDesc": "Monthly Average",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "31-MAR-23",
+                  "DMRValueNmbr": "3000000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "MK",
+                  "StatisticalBaseDesc": "Monthly Average",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "30-APR-23",
+                  "DMRValueNmbr": "2800000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "MK",
+                  "StatisticalBaseDesc": "Monthly Average",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "31-MAY-23",
+                  "DMRValueNmbr": "3100000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "MK",
+                  "StatisticalBaseDesc": "Monthly Average",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "30-JUN-23",
+                  "DMRValueNmbr": "3500000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "MK",
+                  "StatisticalBaseDesc": "Monthly Average",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "31-JUL-23",
+                  "DMRValueNmbr": "4000000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "MK",
+                  "StatisticalBaseDesc": "Monthly Average",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "31-AUG-23",
+                  "DMRValueNmbr": "3800000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "MK",
+                  "StatisticalBaseDesc": "Monthly Average",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "30-SEP-23",
+                  "DMRValueNmbr": "3200000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "MK",
+                  "StatisticalBaseDesc": "Monthly Average",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "31-OCT-23",
+                  "DMRValueNmbr": "2900000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "MK",
+                  "StatisticalBaseDesc": "Monthly Average",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "30-NOV-23",
+                  "DMRValueNmbr": "2600000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "MK",
+                  "StatisticalBaseDesc": "Monthly Average",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "31-DEC-23",
+                  "DMRValueNmbr": "2400000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "MK",
+                  "StatisticalBaseDesc": "Monthly Average",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "31-JAN-23",
+                  "DMRValueNmbr": "4000000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "DD",
+                  "StatisticalBaseDesc": "Daily Maximum",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "28-FEB-23",
+                  "DMRValueNmbr": "5000000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "DD",
+                  "StatisticalBaseDesc": "Daily Maximum",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "31-MAR-23",
+                  "DMRValueNmbr": "6000000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "DD",
+                  "StatisticalBaseDesc": "Daily Maximum",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "30-APR-23",
+                  "DMRValueNmbr": "5600000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "DD",
+                  "StatisticalBaseDesc": "Daily Maximum",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "31-MAY-23",
+                  "DMRValueNmbr": "6200000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "DD",
+                  "StatisticalBaseDesc": "Daily Maximum",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "30-JUN-23",
+                  "DMRValueNmbr": "7000000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "DD",
+                  "StatisticalBaseDesc": "Daily Maximum",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "31-JUL-23",
+                  "DMRValueNmbr": "8000000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "DD",
+                  "StatisticalBaseDesc": "Daily Maximum",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "31-AUG-23",
+                  "DMRValueNmbr": "7600000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "DD",
+                  "StatisticalBaseDesc": "Daily Maximum",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "30-SEP-23",
+                  "DMRValueNmbr": "6400000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "DD",
+                  "StatisticalBaseDesc": "Daily Maximum",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "31-OCT-23",
+                  "DMRValueNmbr": "5800000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "DD",
+                  "StatisticalBaseDesc": "Daily Maximum",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "30-NOV-23",
+                  "DMRValueNmbr": "5200000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "DD",
+                  "StatisticalBaseDesc": "Daily Maximum",
+                  "NPDESViolations": []
+                },
+                {
+                  "MonitoringPeriodEndDate": "31-DEC-23",
+                  "DMRValueNmbr": "4800000",
+                  "DMRUnitDesc": "GPD",
+                  "DMRValueQualifierCode": "=",
+                  "StatisticalBaseCode": "DD",
+                  "StatisticalBaseDesc": "Daily Maximum",
+                  "NPDESViolations": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

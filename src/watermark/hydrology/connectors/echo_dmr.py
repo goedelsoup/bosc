@@ -39,18 +39,38 @@ from pydantic import BaseModel, ConfigDict
 from watermark.config import Settings, get_settings
 from watermark.connectors import to_float, to_str
 from watermark.hydrology.connectors._cache import cached_get
-from watermark.hydrology.units import mgd_to_cfs
+from watermark.hydrology.units import CFS_TO_MGD, mgd_to_cfs
 from watermark.logging import get_logger
 
 log = get_logger(__name__)
 
 # NPDES parameter codes we care about for a receiving-water characterization.
-FLOW_PARAM = "50050"  # "Flow, in conduit or thru treatment plant" (the effluent flow, MGD)
+FLOW_PARAM = "50050"  # "Flow, in conduit or thru treatment plant" (the effluent flow)
 OVERFLOW_PARAM = "74063"  # "Overflow volume [SSO volume, CSO volume]" (a CSO/bypass outfall)
-# ECHO returns multiple stat-base rows per period (e.g. "MO AVG" and "DAILY MX"). Only the
-# monthly-average series is meaningful for the mean-flow / utilisation computation; mixing in
-# daily-max rows inflates both the mean and n_flow_months.
-_MONTHLY_AVG_STAT = "MO AVG"
+
+# ECHO returns multiple stat-base rows per period (e.g. a monthly average and a daily
+# maximum). Only the monthly-average series is meaningful for the mean-flow / utilisation
+# computation; mixing in daily-max rows inflates both the mean and n_flow_months. Match it on
+# the stable ICIS ``StatisticalBaseCode`` ("MK"), and, when ECHO omits the code, on the short
+# ("MO AVG") or long ("Monthly Average") descriptor case-insensitively — an exact "MO AVG"
+# string match silently collapsed the whole flow series to n_flow_months=0 / mean=None
+# whenever ECHO returned only the long "Monthly Average" label (#1601).
+_MONTHLY_AVG_CODE = "MK"
+_MONTHLY_AVG_LABELS = frozenset({"MO AVG", "MONTHLY AVERAGE", "MONTHLY AVG"})
+
+# Flow (parameter 50050) is *usually* reported in MGD but not guaranteed — a permit may report
+# GPD or CFS — so the value is converted by its reported unit, never assumed MGD (#1601). A
+# unit absent from this table is unrecognized: the row is dropped (with a warning), never
+# averaged as if it were already MGD. Each factor reduces one unit to MGD; because the table is
+# only ever applied to 50050 flow rows, "MGD"/"MG/D" are unambiguously volumetric flow.
+_FLOW_UNIT_TO_MGD: dict[str, float] = {
+    "MGD": 1.0,  # million gallons/day — ECHO's standard flow unit for 50050
+    "MG/D": 1.0,
+    "GPD": 1e-6,  # gallons/day
+    "GAL/D": 1e-6,
+    "GPM": 1_440e-6,  # gallons/minute -> MGD (1,440 min/day)
+    "CFS": CFS_TO_MGD,  # cubic feet/second
+}
 
 _EFF_SERVICE = "eff_rest_services"
 # Three-letter month tokens ECHO returns in MonitoringPeriodEndDate ("31-JAN-23").
@@ -132,10 +152,15 @@ class DmrRow(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     period_end: str | None  # ISO date (converted from ECHO's DD-MON-YY)
-    value: float | None
-    unit: str | None
+    value: float | None  # DMRValueNmbr, in `unit`
+    unit: str | None  # DMRUnitDesc — the permittee's reported unit (e.g. "MGD", "GPD")
+    # ECHO also standardizes the value to a canonical unit; carried so a flow row can be read
+    # in MGD without trusting `unit` (both default None — ECHO omits them for some permits).
+    std_value: float | None = None  # DMRValueStdUnits — the value in the standard unit
+    std_unit: str | None = None  # StdUnitDesc — the standard unit (MGD for flow 50050)
     qualifier: str | None  # "=", "<", ...
     stat_base: str | None  # ECHO StatisticalBaseShortDesc/Desc (e.g. "Monthly Average")
+    stat_base_code: str | None = None  # ECHO StatisticalBaseCode (stable; "MK" = monthly avg)
     limit: float | None
     limit_type: str | None  # ECHO LimitValueTypeDesc (Quantity1, Concentration1, ...)
     exceedance_pct: float | None
@@ -293,10 +318,13 @@ def _parse_rows(dmrs: list[dict[str, Any]]) -> list[DmrRow]:
                 period_end=_iso_period(to_str(dm.get("MonitoringPeriodEndDate"))),
                 value=to_float(dm.get("DMRValueNmbr")),
                 unit=to_str(dm.get("DMRUnitDesc")),
+                std_value=to_float(dm.get("DMRValueStdUnits")),
+                std_unit=to_str(dm.get("StdUnitDesc")),
                 qualifier=to_str(dm.get("DMRValueQualifierCode")),
                 stat_base=to_str(
                     dm.get("StatisticalBaseShortDesc") or dm.get("StatisticalBaseDesc")
                 ),
+                stat_base_code=to_str(dm.get("StatisticalBaseCode")),
                 limit=to_float(dm.get("LimitValueNmbr")),
                 limit_type=to_str(dm.get("LimitValueTypeDesc")),
                 exceedance_pct=_pct_to_float(dm.get("ExceedencePct")),
@@ -372,6 +400,50 @@ def fetch_effluent_chart(
     return chart
 
 
+def _norm(token: str | None) -> str:
+    """Upper-cased, stripped token for case-insensitive matching ("" when absent)."""
+    return (token or "").strip().upper()
+
+
+def _is_monthly_avg(row: DmrRow) -> bool:
+    """True for a monthly-average DMR row, robust to ECHO's stat-base representation (#1601).
+
+    Prefers the stable ICIS ``StatisticalBaseCode`` ("MK"); when ECHO omits the code it
+    accepts the short ("MO AVG") or long ("Monthly Average") descriptor case-insensitively.
+    The exact ``stat_base == "MO AVG"`` match this replaces collapsed the whole flow series to
+    ``n_flow_months=0`` / ``mean=None`` whenever ECHO returned only the long label.
+    """
+    if row.stat_base_code:
+        return _norm(row.stat_base_code) == _MONTHLY_AVG_CODE
+    return _norm(row.stat_base) in _MONTHLY_AVG_LABELS
+
+
+def _flow_mgd(row: DmrRow) -> float | None:
+    """Reduce one flow (50050) DMR row to MGD, honoring the reported unit (#1601).
+
+    Preference order, so a non-MGD permit is converted rather than misread as MGD:
+
+    1. ECHO's own standardized value when it standardized to MGD (``DMRValueStdUnits`` in
+       ``StdUnitDesc``) — ECHO already did the conversion.
+    2. the reported value converted by its reported unit (``DMRUnitDesc``).
+    3. an absent unit taken as MGD — 50050 is definitionally a flow and ECHO reports it in
+       MGD; the historical assumption, kept only when there is *no* unit signal at all.
+
+    Returns ``None`` for a no-value row and for a row whose unit is present but not a
+    recognized flow unit — the caller drops the latter (with a warning) rather than
+    averaging a non-MGD number as if it were MGD.
+    """
+    if _norm(row.std_unit) == "MGD" and row.std_value is not None:
+        return row.std_value
+    if row.value is None:
+        return None
+    unit = _norm(row.unit)
+    if not unit:
+        return row.value  # no unit signal; 50050 is MGD by ECHO convention
+    factor = _FLOW_UNIT_TO_MGD.get(unit)
+    return row.value * factor if factor is not None else None
+
+
 def summarize_discharge(
     chart: EffluentChart, *, design_flow_mgd: float | None = None
 ) -> DischargeSummary:
@@ -380,23 +452,41 @@ def summarize_discharge(
     The primary effluent outfall is the one whose flow series (parameter 50050) carries
     the most reported (non-null) monthly values — i.e. the continuous discharge, not a
     CSO/bypass outfall that only flows in wet weather. Flow stats are computed over the
-    reported monthly values; ``None`` (no-discharge) periods are excluded, never zero-filled.
+    reported monthly values, each reduced to MGD by its reported unit (never assumed —
+    #1601); ``None`` (no-discharge) periods are excluded, never zero-filled.
     """
     flow_params = chart.series(FLOW_PARAM)
+
+    def monthly_mgd(param: DmrParameter) -> list[float]:
+        """Monthly-average flow values reduced to MGD (daily-max + unrecognized-unit rows out)."""
+        return [v for r in param.rows if _is_monthly_avg(r) and (v := _flow_mgd(r)) is not None]
+
     # Pick the outfall with the most reported monthly-average flow values as the continuous
-    # effluent point. Limit to MO AVG rows so DAILY MX rows don't inflate the count.
-    primary = max(
-        flow_params,
-        key=lambda p: sum(
-            1 for r in p.rows if r.value is not None and r.stat_base == _MONTHLY_AVG_STAT
-        ),
-        default=None,
-    )
-    flows = [
-        r.value
-        for r in (primary.rows if primary else [])
-        if r.value is not None and r.stat_base == _MONTHLY_AVG_STAT
-    ]
+    # effluent point (a CSO/bypass outfall flows only in wet weather); the values are MGD.
+    primary = max(flow_params, key=lambda p: len(monthly_mgd(p)), default=None)
+    flows = monthly_mgd(primary) if primary else []
+
+    # Loud on a silent unit mismatch: a monthly-average flow row ECHO reported in a unit we
+    # can't reduce to MGD is dropped, never averaged as MGD — warn so the gap isn't invisible.
+    if primary is not None:
+        unconvertible = sorted(
+            {
+                r.unit
+                for r in primary.rows
+                if r.unit is not None
+                and r.value is not None
+                and _is_monthly_avg(r)
+                and _flow_mgd(r) is None
+            }
+        )
+        if unconvertible:
+            log.warning(
+                "echo_dmr.flow_unit_unconvertible",
+                npdes=chart.npdes_id,
+                outfall=primary.outfall,
+                units=unconvertible,
+            )
+
     mean = round(sum(flows) / len(flows), 3) if flows else None
     pct = round(100.0 * mean / design_flow_mgd, 1) if (mean and design_flow_mgd) else None
 
@@ -507,7 +597,7 @@ def dmr_document(chart: EffluentChart, summary: DischargeSummary) -> dict[str, A
             "reported_exceedances": len(summary.exceedances),
         },
         "flow_monthly": [
-            {"period_end": r.period_end, "value_mgd": r.value, "stat_base": r.stat_base}
+            {"period_end": r.period_end, "value_mgd": _flow_mgd(r), "stat_base": r.stat_base}
             for r in (primary.rows if primary else [])
         ],
         "exceedances": [
