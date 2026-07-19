@@ -40,7 +40,8 @@ _L_PER_GAL = 3.785411784
 _GENSET_COUNT = 114
 _GENSET_MW = 2.75  # ekW each, per the air permit
 _BACKUP_MW = _GENSET_COUNT * _GENSET_MW  # ~313 MW
-_IT_LOAD_MW = 275.0  # midpoint of the 250-300 MW estimate (IT ~= backup at N+1)
+_IT_LOAD_MW = 275.0  # [inference] midpoint of the 250-300 MW N+1 estimate (IT ~= backup net of
+# mechanical overhead) — derived from the disclosed ~313 MW backup, NOT a permit disclosure (#1697)
 _AIR_PERMIT_CITE = (
     "OEPA Air PTI P0138965 (Facility 0302022054), committed "
     "data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): "
@@ -239,6 +240,18 @@ def _resolve_it_load(facility: SiteFacility | None, params: CoolingParams) -> tu
     return it, cite
 
 
+def _it_load_pv(it_load_mw: float, citation: str) -> ProvenancedValue:
+    """The IT load as an ``[inference]`` (``derived``) — never ``[verified: document]`` (#1697).
+
+    An air permit discloses the *backup* capacity (genset count x rating), not the IT
+    load: the load is inferred from it (N+1 — IT ~= backup net of mechanical overhead) or
+    from floor-area screening. So it is ``derived`` in every case, and the permit citation
+    it carries is the derivation *basis*, not a disclosure of the load itself. The single
+    home for this decision, so the five archetype derivations can't drift on it.
+    """
+    return ProvenancedValue.derived(it_load_mw, "MW", citation=citation)
+
+
 def _resolve_wue(facility: SiteFacility | None, params: CoolingParams) -> tuple[float, str]:
     if params.wue_l_per_kwh is not None:
         return params.wue_l_per_kwh, _WUE_CITE
@@ -289,7 +302,7 @@ def _derive_off(
     """No cooling-water load — every water quantity is an explicit zero, not an absence."""
     if facility is not None:
         it, it_cite = _resolve_it_load(facility, params)
-        it_load = ProvenancedValue.from_document(it, "MW", citation=it_cite)
+        it_load = _it_load_pv(it, it_cite)
     else:
         it_load = ProvenancedValue.assume(
             0.0, "MW", why="no identified cooling-water facility (SiteProfile.facility is None)"
@@ -362,7 +375,7 @@ def _derive_evaporative_tower(
 
     return CoolingBasis(
         cooling_model=CoolingModelType.EVAPORATIVE_TOWER,
-        it_load=ProvenancedValue.from_document(it_load_mw, "MW", citation=it_load_cite),
+        it_load=_it_load_pv(it_load_mw, it_load_cite),
         wue=ProvenancedValue.assume(wue_l_per_kwh, "L/kWh", why=wue_cite),
         cycles_of_concentration=ProvenancedValue.assume(cycles, "ratio", why=cycles_cite),
         consumptive_fraction=ProvenancedValue.derived(
@@ -417,7 +430,7 @@ def _derive_once_through(
     frac_central = (_OT_EVAP_FRAC_LOW + _OT_EVAP_FRAC_HIGH) / 2.0
     return CoolingBasis(
         cooling_model=CoolingModelType.ONCE_THROUGH,
-        it_load=ProvenancedValue.from_document(it_load_mw, "MW", citation=it_load_cite),
+        it_load=_it_load_pv(it_load_mw, it_load_cite),
         consumptive_fraction=ProvenancedValue.assume(
             frac_central, "fraction", why=f"{_OT_EVAP_CITE} (central)"
         ),
@@ -465,7 +478,7 @@ def _derive_closed_loop_dry(
     )
     return CoolingBasis(
         cooling_model=CoolingModelType.CLOSED_LOOP_DRY,
-        it_load=ProvenancedValue.from_document(it_load_mw, "MW", citation=it_load_cite),
+        it_load=_it_load_pv(it_load_mw, it_load_cite),
         consumptive_fraction=ProvenancedValue.derived(0.0, "fraction", citation=zero_cite),
         makeup_demand=ProvenancedValue.derived(0.0, "MGD", citation=zero_cite),
         consumptive_low=ProvenancedValue.derived(0.0, "MGD", citation=zero_cite),
@@ -540,7 +553,7 @@ def _derive_hybrid_adiabatic(
 
     return CoolingBasis(
         cooling_model=CoolingModelType.HYBRID_ADIABATIC,
-        it_load=ProvenancedValue.from_document(it_load_mw, "MW", citation=it_load_cite),
+        it_load=_it_load_pv(it_load_mw, it_load_cite),
         wue=ProvenancedValue.assume(
             wue_l_per_kwh, "L/kWh", why=f"warm-season (assist) WUE: {wue_cite}"
         ),

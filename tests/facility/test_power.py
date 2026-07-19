@@ -11,7 +11,9 @@ def test_power_basis_traces_to_air_permit() -> None:
     b = derive_power_basis()
     assert b is not None
     assert b.it_load.value == pytest.approx(275.0)
-    assert b.it_load.source == "document" and "P0138965" in (b.it_load.citation or "")
+    # IT load is an [inference]: derived (N+1) from the disclosed backup, not permit-disclosed
+    # (#1697) — it carries the air-permit citation as the derivation basis.
+    assert b.it_load.source == "derived" and "P0138965" in (b.it_load.citation or "")
     # Backup power is the genset count x rating, derived (not asserted).
     assert b.backup_power.source == "derived"
     assert b.backup_power.value == pytest.approx(313.5, abs=0.1)  # 114 x 2.75

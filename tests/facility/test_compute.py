@@ -12,11 +12,12 @@ from watermark.facility.compute import (
 )
 
 
-def test_method1_power_is_document_anchored(facility_settings: Settings) -> None:
+def test_method1_power_is_permit_grounded(facility_settings: Settings) -> None:
     cap = derive_compute_capacity(settings=facility_settings)
-    # Method 1 (primary): the IT load is the air-permit ~275 MW, document-sourced.
+    # Method 1 (primary): the IT load is the ~275 MW N+1 inference from the air-permit backup —
+    # [inference] (derived), not permit-disclosed (#1697), carrying the permit citation as basis.
     assert cap.it_load_power.value == pytest.approx(275.0)
-    assert cap.it_load_power.source == "document"
+    assert cap.it_load_power.source == "derived"
     assert "P0138965" in (cap.it_load_power.citation or "")
 
 
@@ -225,9 +226,9 @@ def test_rack_profile_geometry_drives_floor_area(facility_settings: Settings) ->
 
 def test_every_output_is_provenance_tagged(facility_settings: Settings) -> None:
     cap = derive_compute_capacity(settings=facility_settings)
-    # Nothing is presented without a source tag; no output claims to be a facility fact
-    # except the document-anchored IT load (which cites the air permit).
-    assert cap.it_load_power.source == "document"
+    # Nothing is presented without a source tag; the IT load is an [inference] (derived from
+    # the air-permit backup by N+1), never presented as a permit disclosure (#1697).
+    assert cap.it_load_power.source == "derived"
     for s in cap.scenarios:
         assert s.spec.tdp_w.source == "reference"
         assert s.spec.all_in_w.source == "derived"

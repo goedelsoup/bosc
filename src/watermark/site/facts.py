@@ -373,8 +373,10 @@ def build_facts(
     )
 
     collected: list[FactItem] = []
-    # PowerBasis first: its facility facts are document-anchored (the air permit), so on any
-    # predicate clash with a downstream derived feed the verified fact wins the dedup below.
+    # PowerBasis first: its disclosed facts (genset count/rating/backup) are document-anchored
+    # (the air permit), so on any predicate clash with a downstream feed they win the ordered,
+    # first-wins dedup below. Its it_load / PUE / draw facts are [inference] (derived from the
+    # disclosed backup), not disclosures — #1697.
     collected.extend(_project_power_basis(settings, settings.site, facility_label))
 
     obj = payloads_by_feed
