@@ -9,7 +9,8 @@ power/water/footprint -> accelerator count -> aggregate FLOPS -> "AI capacity".
 Three estimators of the campus IT load, then a shared accelerator chain:
 
 * **Power / gensets (PRIMARY, best-grounded).** Air permit P0138965: 114 gensets
-  x 2.75 ekW ≈ 313 MW backup -> ~275 MW IT (N+1, document). Usable accelerator power
+  x 2.75 ekW ≈ 313 MW backup [document] -> ~275 MW IT (N+1 inference — the permit
+  discloses the backup, not the load; #1697). Usable accelerator power
   = IT load x an accelerator-power fraction (~0.5-0.7: the share of IT power that
   reaches accelerators vs CPU host / storage / network). Accelerator count =
   accelerator power / per-accelerator all-in power; aggregate FLOPS = count x
@@ -466,9 +467,9 @@ def derive_compute_capacity(
     bracket_hi = max(it_power_high, it_water_high, it_fp_high)
 
     return ComputeCapacity(
-        it_load_power=ProvenancedValue.from_document(
+        it_load_power=ProvenancedValue.derived(
             round(it_power, 1), "MW", citation=power.it_load.citation or ""
-        ),
+        ),  # [inference] — mirrors PowerBasis.it_load (an N+1/screening derivation, #1697)
         it_load_water_low=ProvenancedValue.derived(
             round(it_water_low, 1), "MW", citation=water_low_cite
         ),

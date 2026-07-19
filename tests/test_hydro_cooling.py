@@ -32,9 +32,10 @@ from watermark.sites import SITES, CoolingModelType, SiteFacility
 def test_basis_is_derived_from_cited_power() -> None:
     b = derive_cooling_basis()
     assert b.cooling_model == CoolingModelType.EVAPORATIVE_TOWER
-    # IT load traces to the air permit genset count (document-sourced).
+    # IT load is an [inference]: derived (N+1) from the disclosed backup, not permit-disclosed
+    # (#1697). It carries the air-permit citation as the derivation basis.
     assert b.it_load.value == pytest.approx(275.0)
-    assert b.it_load.source == "document" and "P0138965" in (b.it_load.citation or "")
+    assert b.it_load.source == "derived" and "P0138965" in (b.it_load.citation or "")
     # WUE and cycles are explicit assumptions, not silent constants.
     assert b.wue is not None and b.wue.source == "assumption"
     assert b.cycles_of_concentration is not None
@@ -375,7 +376,7 @@ def test_buildout_defaults_to_sourced_basis() -> None:
     # Default knobs come from the basis (derived), not a bare assumption.
     assert s.cooling_demand.source == "derived"
     assert s.consumptive_fraction.source == "derived"
-    assert s.basis is not None and s.basis.it_load.source == "document"
+    assert s.basis is not None and s.basis.it_load.source == "derived"  # N+1 inference (#1697)
     assert s.cooling_model == CoolingModelType.EVAPORATIVE_TOWER
 
 

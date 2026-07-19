@@ -50,7 +50,7 @@ def compute(
         "[bold]Facility IT load[/] — three independent estimators "
         "[dim](nothing here is a measured fact about the facility)[/]\n"
         f"  1. power / gensets [bold](primary)[/]: [bold]{cap.it_load_power.value:g} MW[/] "
-        f"[dim](doc: air permit P0138965)[/]\n"
+        f"[dim](inference: N+1 from the air permit P0138965 backup)[/]\n"
         f"  2. cooling-water back-solve: {cap.it_load_water_low.value:g} MW (low, recovers #1) "
         f"… {cap.it_load_water_high.value:g} MW [dim](FM-2 upper bound; shares the WUE assumption)[/]\n"
         f"  3. footprint [dim](weakest)[/]: {cap.it_load_footprint_low.value:,.0f}"

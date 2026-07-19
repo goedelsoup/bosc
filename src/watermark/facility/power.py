@@ -280,15 +280,15 @@ def derive_power_basis(*, settings: Settings | None = None) -> PowerBasis | None
     cooling_share_hi = (pue_hi - 1.0) / pue_hi  # cooling as a share of facility power
     draw_central = fac.it_load_mw * pue_central
 
-    # IT-load provenance: permit-grounded (``from_document``, Lima/Fort Wayne) vs a
-    # floor-area SCREENING inference (``derived``, Urbana). Exactly one citation grounds
-    # it (SiteFacility-validated); never present a screening bracket as a disclosure.
+    # IT-load provenance is ``derived`` — an ``[inference]``, never ``[verified: document]``
+    # (#1697). An air permit discloses the *backup* capacity (gensets x rating), not the IT
+    # load: for Lima/Fort Wayne the load is the N+1 inference from that backup, for Urbana a
+    # floor-area screening bracket. Exactly one citation grounds it (SiteFacility-validated)
+    # and rides along as the derivation *basis*; never present it as a disclosure.
     load_cite = fac.air_permit_citation or fac.it_load_citation or ""
-    if fac.air_permit_citation is not None:
-        it_load_pv = ProvenancedValue.from_document(fac.it_load_mw, "MW", citation=load_cite)
-    else:
-        it_load_pv = ProvenancedValue.derived(fac.it_load_mw, "MW", citation=load_cite)
-    it_load_pv = it_load_pv.with_range(low=fac.it_load_low_mw, high=fac.it_load_high_mw)
+    it_load_pv = ProvenancedValue.derived(fac.it_load_mw, "MW", citation=load_cite).with_range(
+        low=fac.it_load_low_mw, high=fac.it_load_high_mw
+    )
 
     # Genset backup + N+1 cross-check only when the facility discloses gensets (an air
     # permit). A site-plan-grounded facility leaves these ``None`` — no fabricated fleet.

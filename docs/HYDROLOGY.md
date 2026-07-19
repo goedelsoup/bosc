@@ -228,7 +228,7 @@ This is a design-basis / scope-completeness reading, not a sizing of the roundab
 
 The cooling demand is **sourced**, derived from disclosed campus data by two methods:
 
-- top-down: IT load 275.00 MW `[verified: document]` x WUE 1.80 L/kWh `[inference: assumption]` → **3.14 MGD** consumptive
+- top-down: IT load 275.00 MW `[inference: derived]` x WUE 1.80 L/kWh `[inference: assumption]` → **3.14 MGD** consumptive
 - bottom-up: FM-2 blowdown x 5 cycles → **10 MGD** consumptive (upper bound)
 
 

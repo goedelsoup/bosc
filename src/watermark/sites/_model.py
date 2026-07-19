@@ -86,7 +86,10 @@ class SiteFacility(BaseModel):
     Present only for a site with an identified, documented facility. Two grounding modes:
 
     * **Air-permit-grounded** (Lima, from Ohio EPA Air PTI P0138965; Fort Wayne, IDEM Title V):
-      gensets + IT load disclosed/derived from the permit — the full power + air-dispatch basis.
+      the permit discloses the **backup** capacity (gensets x rating) — that is the ``[verified]``
+      figure. The **IT load is an ``[inference]``**, derived from the backup by the N+1 relation
+      (IT ~= backup net of mechanical overhead), never a permit disclosure (#1697). Full power +
+      air-dispatch basis.
     * **Site-plan-grounded** (Urbana Technology Hub, from the disclosed data-center site plan):
       the facility is on the public record (type / floor area / investment / cooling) but the
       MW load is **not** disclosed. Gensets and the air permit are ``None``; the IT load is a
@@ -101,12 +104,12 @@ class SiteFacility(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
     # --- IT-load power basis --------------------------------------------------
-    # The central IT load and its low/high range. For an air-permit-grounded site
-    # (Lima, Fort Wayne) it is disclosed/derived from the permit; for a site-plan-
-    # grounded facility whose load is NOT disclosed (Urbana Technology Hub), it is a
-    # floor-area SCREENING bracket — [inference], never presented as a disclosure, its
-    # basis in ``it_load_citation``. The disclosed interconnection/air-permit MW stays
-    # ``[open]`` until an instrument discloses it.
+    # The central IT load and its low/high range. It is an [inference] in EVERY mode, never
+    # a disclosure (#1697): for an air-permit-grounded site (Lima, Fort Wayne) it is DERIVED
+    # from the disclosed backup by the N+1 relation (the permit discloses the backup, not the
+    # load); for a site-plan-grounded facility whose load is NOT disclosed (Urbana Technology
+    # Hub) it is a floor-area SCREENING bracket, its basis in ``it_load_citation``. The
+    # disclosed interconnection/air-permit MW stays ``[open]`` until an instrument discloses it.
     it_load_mw: float  # central IT load (N+1 backup ~= IT, or floor-area screening central)
     it_load_low_mw: float  # low end of the range
     it_load_high_mw: float  # high end

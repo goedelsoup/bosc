@@ -150,7 +150,8 @@ _LIMA = SiteProfile(
     facility=SiteFacility(
         genset_count=114,
         genset_mw=2.75,  # MW each (~2,750 ekW), per the air permit
-        it_load_mw=275.0,  # midpoint of the 250-300 MW estimate (IT ~= backup at N+1)
+        it_load_mw=275.0,  # [inference] midpoint of the 250-300 MW N+1 estimate (IT ~= backup),
+        # derived from the disclosed ~313 MW backup — NOT a permit disclosure (#1697)
         it_load_low_mw=250.0,
         it_load_high_mw=300.0,
         air_permit_citation=(
