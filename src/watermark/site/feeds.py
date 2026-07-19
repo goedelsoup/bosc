@@ -190,7 +190,17 @@ from watermark.site.readiness import State, Tier  # the readiness vocabulary SSO
 #   type, format, and node/edge counts. Additive/optional — absent when the mirror wasn't
 #   projected for this bundle (a redirected/test export); the frontend degrades to no downloads
 #   (one additive manifest field, no changed feed shapes, back-compatible).
-CONTRACT_VERSION = "1.29.0"
+# 1.30.0: adds the `corpus-nodes` retrieval feed (#1575, epic #1560 workstream D2) — the searchable
+#   substrate behind the wiki "ask this concept" affordance. A second post-pass over the same
+#   `Mirror` the `corpus-index` map is built from (`watermark.site.corpus_nodes`), but carrying each
+#   node's *searchable text* (`text`, the one canonical `node_text` the semantic index also embeds,
+#   so the lexical and vector surfaces tokenize the same content), its evidence tag when it bears one
+#   (`evidence`), its page key (`ref`, a concept slug today), and its undirected 1-hop adjacency
+#   (`neighbors`) so the frontend can scope client-side lexical retrieval to one concept's corpus
+#   neighborhood — no server, offline. Always emitted (the mirror is never empty), so the schema set
+#   stays stable. Not cataloged (a derived retrieval index, like `corpus-index`/`open-questions`).
+#   Back-compatible (one additive feed).
+CONTRACT_VERSION = "1.30.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -698,6 +708,38 @@ class CorpusNodeItem(BaseModel):
     links_in: int  # incoming edges (others → this node), resolved within the mirror
     lines: int  # serialized-node line count (parity with `yidam corpus-index`)
     updated: str | None = None  # ISO date of the newest commit touching the node's source(s)
+
+
+# --- corpus-nodes retrieval feed (issue #1575, epic #1560 workstream D2) -------
+# The searchable substrate behind the wiki "ask this concept" affordance: the same yidam mirror the
+# `corpus-index` map projects, but carrying each node's *searchable text* + evidence tag + 1-hop
+# adjacency, so a concept page can run client-side lexical retrieval scoped to its own corpus
+# neighborhood (offline, no server — the D3 spike's verdict, #1576). A retrieval index, not a
+# browsable table: a post-pass over the `Mirror` (`watermark.site.corpus_nodes`), never re-extracted.
+class CorpusRetrievalNodeItem(BaseModel):
+    """One corpus-mirror node as a client-side retrieval unit.
+
+    `text` is the one canonical `node_text` derivation the semantic index also embeds
+    (`watermark.site.corpus_mirror.node_text`) — label · description · class · salient meta — so the
+    lexical (`corpus-nodes`) and vector (`yidam_index`) surfaces tokenize the *same* content and never
+    drift. `kind` is the same BOSC display kind as `corpus-index`. `evidence` is the node's claim tag
+    when it carries one (`[open]` leads/questions, `[inference]` readings) and null otherwise — a
+    structural node (a concept, a resolved entity) asserts no evidence tag, so the evidence palette is
+    never spent on it. `ref` is the node's wiki page key — the concept slug for a `concept` node
+    (its slug↔node join key + route param), null for kinds without a dedicated page today.
+    `neighbors` is the node's undirected 1-hop adjacency (out-links plus in-links, resolved within
+    the mirror), the graph the frontend walks to build a concept's neighborhood.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: str  # the yidam node id — `<class>/<name>`
+    kind: CorpusNodeKind  # the BOSC display kind (same mapping as `corpus-index`)
+    label: str
+    text: str  # searchable blob — the canonical `node_text` (reconciled with the vector index)
+    evidence: FactStatus | None = None  # the node's claim tag when it bears one, else null
+    ref: str | None = None  # wiki page key — concept slug today (slug↔node join), else null
+    neighbors: list[str] = []  # undirected 1-hop neighbor ids, for neighborhood scoping
 
 
 # --- contacts feed ------------------------------------------------------------

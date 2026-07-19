@@ -148,6 +148,57 @@ class MirrorNode:
         return out
 
 
+def _meta_bits(node: MirrorNode) -> list[str]:
+    """Salient, human-meaningful ``meta`` values for a node, flattened to search text.
+
+    Structural provenance (``site``/``scope``) and machine ids (``lei``/``uei``/``issue``) add
+    noise, not meaning, to a semantic vector, so they are skipped; the fields that carry what a
+    node *is about* (its kind, roles, relationship, tags, aliases, the hypothesis it hangs
+    under) are kept.
+    """
+    keep = (
+        "kind",
+        "entity_kind",
+        "classification",
+        "rel",
+        "src",
+        "dst",
+        "lead_kind",
+        "hypothesis",
+        "sub_thesis",
+        "signal",
+        "roles",
+        "affiliations",
+        "tags",
+        "aliases",
+        "relation_class",
+    )
+    bits: list[str] = []
+    for key in keep:
+        value = node.meta.get(key)
+        if not value:
+            continue
+        if isinstance(value, (list, tuple)):
+            scalars = [str(x) for x in value if x]
+            if scalars:
+                bits.append(" ".join(scalars))
+        else:
+            bits.append(str(value))
+    return bits
+
+
+def node_text(node: MirrorNode) -> str:
+    """The text unit for a mirror node — label, description, class, and salient meta.
+
+    Deterministic and self-contained (no I/O), so the same node always yields the same text.
+    The one canonical node-text derivation, shared by the semantic vector index
+    (:func:`watermark.site.yidam_index.YidamVectorIndex.build`) and the lexical ``corpus-nodes``
+    retrieval feed (:mod:`watermark.site.corpus_nodes`) so both surfaces tokenize the same content.
+    """
+    parts = [node.label, node.description, node.node_class, *_meta_bits(node)]
+    return " · ".join(p for p in (s.strip() for s in parts if s) if p)
+
+
 @dataclass
 class Mirror:
     """A projected, in-memory corpus mirror for one site — write it with :func:`write_mirror`."""

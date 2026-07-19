@@ -1474,6 +1474,48 @@ a.card:hover { border-color: var(--bosc-forest); background: var(--bosc-surface)
 .backlinks { border-top: 1px solid var(--bosc-rule); margin-top: 1.5rem; padding-top: var(--sp-3); }
 .wikilink-missing { color: var(--bosc-muted); border-bottom: 1px dotted var(--bosc-muted); cursor: help; }
 
+/* ---- "Ask this concept" — corpus-scoped retrieval widget (#1575, epic #1560 D2) ----
+   Styles are global (not Astro-scoped): the result <li>s are injected by ~/scripts/conceptAsk.ts
+   at runtime and never carry a scoped-style attribute. Square corners + hairline rules, mono for
+   the status/kind eyebrows, forest only on links — the evidence palette rides the global
+   `.evidence-*` pills the script emits. */
+.concept-ask { border-top: 1px solid var(--bosc-rule); margin-top: 1.5rem; padding-top: var(--sp-3); }
+.concept-ask h2 { margin: 0 0 0.3rem; font-size: var(--fs-body); }
+.ask-field { margin: var(--sp-2) 0 var(--sp-1); }
+.concept-ask input[type="search"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--sp-2) var(--sp-3);
+  border: 1px solid var(--bosc-rule);
+  border-radius: 0;
+  background: var(--bosc-surface);
+  color: var(--bosc-ink);
+  font: inherit;
+}
+.concept-ask input[type="search"]:focus-visible { outline: 2px solid var(--forest); outline-offset: 1px; }
+.ask-status {
+  font-family: var(--font-mono);
+  font-size: var(--fs-nano);
+  color: var(--bosc-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 var(--sp-2);
+}
+.ask-results { display: flex; flex-direction: column; gap: 0; }
+.ask-hit { padding: var(--sp-2) 0; border-top: 1px solid var(--bosc-rule); }
+.ask-hit:first-child { border-top: 0; }
+.ask-hit-head { display: flex; align-items: center; gap: var(--sp-2); margin-bottom: 0.15rem; }
+.ask-hit-kind {
+  font-family: var(--font-mono);
+  font-size: var(--fs-nano);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--bosc-muted);
+}
+.ask-hit-title { font-size: var(--fs-body); }
+.ask-hit-snippet { margin: 0.15rem 0 0; font-size: var(--fs-meta); color: var(--bosc-muted); }
+.ask-empty { padding: var(--sp-2) 0; font-size: var(--fs-meta); color: var(--bosc-muted); }
+
 /* ---- deck.gl islands (Epic #55: corridor map, entity graph) ---- */
 .deck-surface {
   position: relative;

@@ -1,10 +1,10 @@
 {
   "site": "lima",
   "bundle_version": "1.0.0",
-  "contract_version": "1.29.0",
+  "contract_version": "1.30.0",
   "generated_at": "2026-07-15T23:11:39+00:00",
-  "feed_count": 45,
-  "row_total": 1287,
+  "feed_count": 46,
+  "row_total": 1525,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -373,6 +373,14 @@
       "path": "feeds/corpus-index.json",
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
+      "kind": "collection",
+      "count": 238
+    },
+    {
+      "name": "corpus-nodes",
+      "path": "feeds/corpus-nodes.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
       "count": 238
     }

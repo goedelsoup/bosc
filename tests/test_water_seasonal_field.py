@@ -28,7 +28,7 @@ def test_contract_version_bumped() -> None:
     passages feed 1.26.0 #1589, the open-questions feed 1.27.0 #1568, DocumentItem version/dedup
     metadata 1.27.1 #1590, the corpus-index feed 1.28.0 #1573, then the manifest exports block
     1.29.0 #1574)."""
-    assert CONTRACT_VERSION == "1.29.0"
+    assert CONTRACT_VERSION == "1.30.0"
 
 
 @pytest.fixture(scope="module")
@@ -55,7 +55,7 @@ def test_reference_export_emits_the_seasonal_field(lima_bundle: Path) -> None:
     """The reference build ships `water-seasonal-field` with real months (climate normals are
     committed, so it does not degrade like the AERMOD field), `reference`-provenanced."""
     manifest = json.loads((lima_bundle / "manifest.json").read_text(encoding="utf-8"))
-    assert manifest["contract_version"] == "1.29.0"
+    assert manifest["contract_version"] == "1.30.0"
 
     field = _field(lima_bundle)
     assert field["site"] == "lima"

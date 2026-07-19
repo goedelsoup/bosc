@@ -843,6 +843,34 @@ export interface CorpusNodeItem {
   updated?: string | null;
 }
 
+// --- corpus-nodes retrieval feed (`bosc.site.feeds.CorpusRetrievalNodeItem`, #1575, wk D2) ----
+/**
+ * One corpus-mirror node as a client-side retrieval unit — the searchable peer of `CorpusNodeItem`.
+ *
+ * The `corpus-nodes` feed (`bosc.site.corpus_nodes`) is the substrate behind the wiki "ask this
+ * concept" affordance: the same mirror the `/wiki/corpus` map projects, but carrying each node's
+ * searchable `text` (the canonical `node_text` the semantic index also embeds — so lexical and
+ * vector surfaces tokenize the same content), its `evidence` tag when it bears one, its wiki page
+ * key `ref` (the concept slug for a `concept` node), and its undirected 1-hop `neighbors`. A concept
+ * page loads it, scopes to the concept's neighborhood, and runs client-side lexical retrieval over
+ * that subset — offline, no server (the D3 spike's verdict, #1576).
+ */
+export interface CorpusRetrievalNodeItem {
+  /** The yidam node id — `<class>/<name>`. */
+  id: string;
+  /** The BOSC display kind (same mapping as `corpus-index`). */
+  kind: CorpusNodeKind;
+  label: string;
+  /** Searchable blob — label · description · class · salient meta (reconciled with the vector index). */
+  text: string;
+  /** The node's evidence tag when it bears one (`[open]` leads/questions, `[inference]`), else null. */
+  evidence?: FactStatus | null;
+  /** Wiki page key — the concept slug for a `concept` node (slug↔node join + route param), else null. */
+  ref?: string | null;
+  /** Undirected 1-hop neighbor ids (out-links ∪ in-links), the graph a concept's neighborhood walks. */
+  neighbors: string[];
+}
+
 // --- the data catalog (`bosc.site.feeds.CatalogItem`, epic #631 Phase 3 / #659) -----------
 /** One storage file of a catalog dataset. */
 export interface CatalogStorageFile {
