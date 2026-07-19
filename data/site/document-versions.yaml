@@ -15,9 +15,10 @@
 # cluster with fewer than two present members is dropped. Each cluster names its `source` — the
 # custody signal it was read from.
 #
-# `canonical` is the authoritative version (for an OEPA permit, the issued final permit).
-# `version` labels each member: final | draft | fact_sheet | duplicate | v2 | …  `duplicate` is
-# reserved for byte-identical copies (search_passages collapses only those; draft/final page
+# `canonical` is the authoritative version (for an OEPA permit, the issued final permit; for a
+# draft-only filing with no final yet, the draft body). `version` labels each member:
+# final | draft | public_notice | fact_sheet | duplicate | v2 | …  `duplicate` is reserved for
+# byte-identical copies (search_passages collapses only those; draft/final/public-notice page
 # variants stay distinct — their pages legitimately differ and are both evidence).
 
 meta:
@@ -77,3 +78,141 @@ clusters:
       - rel: oepa/oepa-2PK00002-shawnee-ii-fact-sheet-2023.pdf
         version: fact_sheet
         evidence_note: Permit-writer's fact sheet (2023) — the rationale/basis for the limits, not re-stated in the final.
+
+  # Draft-only lifecycle: Ohio's first statewide General NPDES Permit for Data Center Facilities
+  # (OHD000001) is still in the draft/comment stage — no final permit has issued (drafted 2025-10-31;
+  # public hearing 2025-12-17), so the draft permit BODY is the authoritative member, not a final.
+  # The three artifacts are distinct page sets (31 / 2 / 7 pp.), NOT byte-identical copies, so they
+  # collapse to canonical in search_corpus but stay separate in search_passages (their pages differ).
+  - id: oepa:OHD000001
+    canonical: oepa/OHD000001_Draft.pdf
+    source: oepa/README.md "Statewide general permits" + filename convention (OHD000001_Draft{,_PN,.fs})
+    members:
+      - rel: oepa/OHD000001_Draft.pdf
+        version: draft
+        evidence_note: >
+          The 31-page draft General NPDES permit body (Permit No. OHD000001) — the substantive
+          proposed limits. Authoritative member: no final has issued (draft out for comment 2025-10-31,
+          public hearing 2025-12-17).
+      - rel: oepa/OHD000001_Draft_PN.pdf
+        version: public_notice
+        evidence_note: >
+          Public notice No. 215991 (2 pp.) — the comment-period announcement, distinct pages from the
+          permit body and the fact sheet.
+      - rel: oepa/OHD000001_Draft.fs.pdf
+        version: fact_sheet
+        evidence_note: Permit-writer's fact sheet (7 pp.) — the rationale/basis for the draft limits.
+
+  # Cross-site OEPA permit pairs catalogued under Lima's oepa/ tree (permit + its fact sheet). The
+  # bare `<permit>.pdf` from the Ohio EPA DAM permits/doc/ path is the issued (effective) permit; the
+  # `.fs.pdf` sibling is its fact sheet. Both are two-member clusters (no draft PN captured).
+  - id: oepa:2PD00006
+    canonical: oepa/van-wert/2PD00006.pdf
+    source: oepa/van-wert/filename-map.yaml (DAM permits/doc/2PD00006{,.fs}.pdf) — Van Wert WWTP OH0027910
+    members:
+      - rel: oepa/van-wert/2PD00006.pdf
+        version: final
+        evidence_note: >
+          Issued Van Wert WWTP permit (action 2025-04-18, effective 2025-06-01, expires 2030-05-31).
+      - rel: oepa/van-wert/2PD00006.fs.pdf
+        version: fact_sheet
+        evidence_note: Permit-writer's fact sheet — the rationale/basis for the limits, not re-stated in the permit.
+
+  - id: oepa:1PD00013
+    canonical: oepa/wilmington/1PD00013.pdf
+    source: oepa/wilmington/{README.md,filename-map.yaml} (DAM permits/doc/1PD00013{,.fs}.pdf) — City of Wilmington WWTP
+    members:
+      - rel: oepa/wilmington/1PD00013.pdf
+        version: final
+        evidence_note: >
+          Issued City of Wilmington WWTP permit (1PD00013*QD modification, effective 2023-07-01),
+          discharging to Lytle Creek.
+      - rel: oepa/wilmington/1PD00013.fs.pdf
+        version: fact_sheet
+        evidence_note: Permit-writer's fact sheet — the rationale/basis for the limits, not re-stated in the permit.
+
+  # Byte-identical meeting-record duplicates (version: duplicate — search_passages collapses these,
+  # since the pages ARE the same bytes). Verified byte-for-byte via the committed download-manifest
+  # sha256 (and matching git-LFS oids), NOT inferred from the filenames. Canonical = the primary,
+  # human-legible copy; the twin is the same bytes re-fetched under a second name.
+  #
+  # Commissioners: the county's meeting-records site links ONE minutes PDF under two adjacent listing
+  # dates; the connector saved the second fetch with a `-1` collision suffix. Same sha256 both ways —
+  # the two dated listings resolve to identical bytes. (This surfaces a county-side listing anomaly:
+  # the note records it; retrieval just avoids returning the same bytes twice. Both files stay in the
+  # corpus.)
+  - id: commissioners:M031126-Special
+    canonical: commissioners/meetings/M031126-Special.pdf
+    source: commissioners meetings download-manifest.yaml — sha256 284050ae61a9 shared by both listings (2026-03-11 & 2026-03-12)
+    members:
+      - rel: commissioners/meetings/M031126-Special.pdf
+        version: duplicate
+      - rel: commissioners/meetings/M031126-Special-1.pdf
+        version: duplicate
+        evidence_note: >
+          Byte-identical to the canonical (sha256 284050ae61a9); the county lists the same PDF under a
+          second adjacent date (2026-03-12) — the connector's `-1` collision-suffixed re-fetch.
+
+  - id: commissioners:M031926
+    canonical: commissioners/meetings/M031926.pdf
+    source: commissioners meetings download-manifest.yaml — sha256 1df31e1bab81 shared by both listings (2026-03-19 & 2026-03-23)
+    members:
+      - rel: commissioners/meetings/M031926.pdf
+        version: duplicate
+      - rel: commissioners/meetings/M031926-1.pdf
+        version: duplicate
+        evidence_note: >
+          Byte-identical to the canonical (sha256 1df31e1bab81); the county lists the same PDF under a
+          second date (2026-03-23-Special) — the connector's `-1` collision-suffixed re-fetch.
+
+  - id: commissioners:M090825-Special-Session
+    canonical: commissioners/meetings/M090825-Special-Session.pdf
+    source: commissioners meetings download-manifest.yaml — sha256 491886f87475 shared by both listings (2025-09-08 & 2025-09-09)
+    members:
+      - rel: commissioners/meetings/M090825-Special-Session.pdf
+        version: duplicate
+      - rel: commissioners/meetings/M090825-Special-Session-1.pdf
+        version: duplicate
+        evidence_note: >
+          Byte-identical to the canonical (sha256 491886f87475); the county lists the same PDF under a
+          second date (2025-09-09) — the connector's `-1` collision-suffixed re-fetch.
+
+  # LACRPC: the CivicPlus AgendaCenter serves ONE signed DCC "meeting cancelled" notice under both the
+  # Agenda and Minutes views of the same DocumentCenter id. The connector fetched both endpoints,
+  # producing a legible-named copy (Agenda view) and an id-named copy (Minutes view) with identical
+  # bytes. Cluster id = the shared DocumentCenter id; canonical = the human-legible copy.
+  - id: lacrpc:_01132026-261
+    canonical: "lacrpc/meetings/20260113 Minutes cancelled signed.pdf"
+    source: lacrpc meetings download-manifest.yaml — DocumentCenter id _01132026-261 served from both Agenda & Minutes (sha256 870873a911e2)
+    members:
+      - rel: "lacrpc/meetings/20260113 Minutes cancelled signed.pdf"
+        version: duplicate
+      - rel: lacrpc/meetings/_01132026-261.pdf
+        version: duplicate
+        evidence_note: >
+          Byte-identical to the canonical (sha256 870873a911e2); same DocumentCenter id (_01132026-261)
+          fetched from the AgendaCenter Minutes endpoint — the DCC 2026-01-13 cancellation notice.
+
+  - id: lacrpc:_01272026-262
+    canonical: "lacrpc/meetings/20260127 Minutes cancelled signed.pdf"
+    source: lacrpc meetings download-manifest.yaml — DocumentCenter id _01272026-262 served from both Agenda & Minutes (sha256 3c573971033e)
+    members:
+      - rel: "lacrpc/meetings/20260127 Minutes cancelled signed.pdf"
+        version: duplicate
+      - rel: lacrpc/meetings/_01272026-262.pdf
+        version: duplicate
+        evidence_note: >
+          Byte-identical to the canonical (sha256 3c573971033e); same DocumentCenter id (_01272026-262)
+          fetched from the AgendaCenter Minutes endpoint — the DCC 2026-01-27 cancellation notice.
+
+  - id: lacrpc:_02102026-266
+    canonical: "lacrpc/meetings/20260210 Minutes cancelled signed.pdf"
+    source: lacrpc meetings download-manifest.yaml — DocumentCenter id _02102026-266 served from both Agenda & Minutes (sha256 9cb534ee38bd)
+    members:
+      - rel: "lacrpc/meetings/20260210 Minutes cancelled signed.pdf"
+        version: duplicate
+      - rel: lacrpc/meetings/_02102026-266.pdf
+        version: duplicate
+        evidence_note: >
+          Byte-identical to the canonical (sha256 9cb534ee38bd); same DocumentCenter id (_02102026-266)
+          fetched from the AgendaCenter Minutes endpoint — the DCC 2026-02-10 cancellation notice.

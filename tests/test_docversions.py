@@ -141,14 +141,49 @@ def test_canonical_must_be_a_member(tmp_path: Path) -> None:
 
 
 def test_committed_lima_manifest_loads() -> None:
-    """The committed Lima manifest parses and declares the three OEPA permit triads."""
+    """The committed Lima manifest parses and declares every curated cluster (#1590, #1696)."""
     repo_root = Path(__file__).resolve().parents[1]
     versions = docversions.load_document_versions(
         repo_root / "data" / "site" / "document-versions.yaml"
     )
     ids = {c.id for c in versions.clusters}
-    assert ids == {"oepa:2PH00006", "oepa:2PH00007", "oepa:2PK00002"}
+    assert ids == {
+        # OEPA permit triads (draft PN + fact sheet + issued permit).
+        "oepa:2PH00006",
+        "oepa:2PH00007",
+        "oepa:2PK00002",
+        # OHD000001 draft-only lifecycle (draft body + public notice + fact sheet).
+        "oepa:OHD000001",
+        # Cross-site permit + fact-sheet pairs.
+        "oepa:2PD00006",
+        "oepa:1PD00013",
+        # Byte-identical commissioners meeting-record pairs.
+        "commissioners:M031126-Special",
+        "commissioners:M031926",
+        "commissioners:M090825-Special-Session",
+        # Byte-identical LACRPC agenda/minutes-endpoint pairs.
+        "lacrpc:_01132026-261",
+        "lacrpc:_01272026-262",
+        "lacrpc:_02102026-266",
+    }
+    by_id = {c.id: c for c in versions.clusters}
+    # Every cluster's canonical is one of its own members (never a dangling ref).
     for c in versions.clusters:
+        assert any(m.rel == c.canonical for m in c.members)
+    # The classic OEPA triads keep the issued permit as canonical.
+    for pid in ("oepa:2PH00006", "oepa:2PH00007", "oepa:2PK00002"):
+        c = by_id[pid]
         assert c.canonical.endswith("-permit.pdf")
         assert len(c.members) == 3
-        assert any(m.rel == c.canonical for m in c.members)
+    # The byte-identical meeting pairs label BOTH members `duplicate` (passages-collapsible).
+    for did in (
+        "commissioners:M031126-Special",
+        "commissioners:M031926",
+        "commissioners:M090825-Special-Session",
+        "lacrpc:_01132026-261",
+        "lacrpc:_01272026-262",
+        "lacrpc:_02102026-266",
+    ):
+        c = by_id[did]
+        assert len(c.members) == 2
+        assert {m.version for m in c.members} == {"duplicate"}
