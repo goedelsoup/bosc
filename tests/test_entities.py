@@ -15,6 +15,7 @@ from watermark.models import (
 )
 from watermark.pipeline.corpus import Corpus
 from watermark.pipeline.entities import (
+    Entity,
     _base_permit,
     _looks_like_person,
     _parse_trustee_recital,
@@ -287,6 +288,20 @@ def test_build_graph_resolves_and_links() -> None:
     # "Ottawa River" and "Ottawa River at River Mile 5" collapse to one water node.
     discharges = [r for r in graph.relationships if r.rel == "discharges_to"]
     assert len(discharges) == 1
+
+
+def test_display_breaks_length_ties_deterministically() -> None:
+    # Two casings of the same water tie on length; display must not depend on
+    # set-iteration order (which Python randomizes per process) — it churned every
+    # mirror feed run to run (#1699). The lexical tie-break prefers the capitalized
+    # spelling regardless of insertion order.
+    ent = Entity(key="unnamed tributary of lytle creek", kind="water", classification="water")
+    ent.variants = {"unnamed tributary of Lytle Creek", "Unnamed Tributary of Lytle Creek"}
+    assert ent.display == "Unnamed Tributary of Lytle Creek"
+
+    reversed_insert = Entity(key="k", kind="water", classification="water")
+    reversed_insert.variants = {"Unnamed Tributary of Lytle Creek", "unnamed tributary of Lytle Creek"}
+    assert reversed_insert.display == ent.display
 
 
 def test_parcel_enrichment_adds_jsmc_node(hydro_settings: Settings) -> None:
