@@ -300,7 +300,10 @@ def test_display_breaks_length_ties_deterministically() -> None:
     assert ent.display == "Unnamed Tributary of Lytle Creek"
 
     reversed_insert = Entity(key="k", kind="water", classification="water")
-    reversed_insert.variants = {"Unnamed Tributary of Lytle Creek", "unnamed tributary of Lytle Creek"}
+    reversed_insert.variants = {
+        "Unnamed Tributary of Lytle Creek",
+        "unnamed tributary of Lytle Creek",
+    }
     assert reversed_insert.display == ent.display
 
 
