@@ -8,8 +8,8 @@ import {
   cumulativeFlowSeries,
   designFlowBars,
   dischargeRows,
-  disclosedLoad,
   drawRecordKind,
+  estimatedItLoad,
   hucRange,
   nodeIndex,
   outletHydrographSeries,
@@ -108,15 +108,15 @@ describe("basin view model (design Basin — Maumee)", () => {
     ]);
   });
 
-  it("disclosedLoad and totalDesignFlow sum only what the record carries", () => {
+  it("estimatedItLoad and totalDesignFlow sum only what the record carries", () => {
     const nodes = [
       screened("a", 1.5, { activity: { has_disclosed_facility: true, it_load_mw: 275 } }),
-      node("b", { activity: { has_disclosed_facility: true } }), // disclosed but no load figure
+      node("b", { activity: { has_disclosed_facility: true } }), // facility on file but no load figure
       screened("c", 12),
     ];
-    expect(disclosedLoad(nodes)).toEqual({ mw: 275, count: 1 });
+    expect(estimatedItLoad(nodes)).toEqual({ mw: 275, count: 1 });
     expect(totalDesignFlow(nodes)).toEqual({ mgd: 13.5, count: 2 });
-    expect(disclosedLoad([])).toEqual({ mw: 0, count: 0 });
+    expect(estimatedItLoad([])).toEqual({ mw: 0, count: 0 });
   });
 
   it("basinSiteRows joins registry order with the feed and keeps phase distinct from evidence", () => {
