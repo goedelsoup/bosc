@@ -318,7 +318,7 @@ const EV_INK: Record<string, string> = {
       <p class="basin-agg-note">
         {
           load.count > 0
-            ? `${load.count} of ${sites.length} sites carries an estimated facility load${verifiedCount > 0 ? ` and ${verifiedCount} a screened facility record` : ""}; none carries a filed draw volume — the water figure behind any projection is still open.`
+            ? `${load.count} of ${sites.length} sites ${load.count === 1 ? "carries" : "carry"} an estimated facility load${verifiedCount > 0 ? ` and ${verifiedCount} a screened facility record` : ""}; none carries a filed draw volume — the water figure behind any projection is still open.`
             : "No site in this basin carries an estimated facility load or a filed draw volume."
         }
         The design flows above are the receiving plants' permitted capacity — the denominator any projected draw must be read
