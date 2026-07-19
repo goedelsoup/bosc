@@ -96,9 +96,9 @@ scenario:
       value: 12.5
       unit: MGD
       source: derived
-      citation: upper-bound intake = 2.5 MGD blowdown x (CoC-1); bosc-fm2 2.5 MGD
-        industrial discharge (CMAR RFQ §A.6), taken as cooling blowdown upper bound
-        / evap fraction (blowdown x CoC)
+      citation: upper-bound intake = 2.5 MGD blowdown x CoC(5) = 12.5 MGD; bosc-fm2
+        2.5 MGD industrial discharge (CMAR RFQ §A.6), taken as cooling blowdown upper
+        bound
       confidence: medium
       asof: null
       low: null
@@ -133,7 +133,7 @@ receiving_live:
   source: connector
   citation: NWIS 04187100 (Ottawa River at Lima OH)
   confidence: high
-  asof: '2026-07-18T21:30:00.000-04:00'
+  asof: '2026-07-19T00:30:00.000-04:00'
   low: null
   high: null
 receiving_water_name: Ottawa River
@@ -255,7 +255,7 @@ balance:
       source: connector
       citation: NWIS 04187100 (Ottawa River at Lima OH)
       confidence: high
-      asof: '2026-07-18T21:30:00.000-04:00'
+      asof: '2026-07-19T00:30:00.000-04:00'
       low: null
       high: null
     consumptive_use: null

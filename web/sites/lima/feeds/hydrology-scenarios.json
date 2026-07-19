@@ -212,7 +212,6 @@
       "warnings": [
         "Shawnee II WWTP: summary states a flow expansion; used the first value (3.0 MGD).",
         "BOSC routing via theorized-fm3-shawnee-ii to watch-shawnee-ii-wwtp is THEORIZED (unconfirmed) — excluded from the balance; Shawnee II has no known BOSC routing.",
-        "BOSC campus consumptive cooling is a derived central estimate (~4.9 cfs; 3.14-10 MGD evaporative range) from the air-permit power figure x WUE — not a metered or permitted value.",
         "Lima WTP intake (Ottawa/Auglaize) withdrawal rate is not documented; abstraction shown as river-flow context only."
       ]
     },
@@ -432,7 +431,7 @@
           "value": 12.5,
           "unit": "MGD",
           "source": "derived",
-          "citation": "upper-bound intake = 2.5 MGD blowdown x (CoC-1); bosc-fm2 2.5 MGD industrial discharge (CMAR RFQ §A.6), taken as cooling blowdown upper bound / evap fraction (blowdown x CoC)",
+          "citation": "upper-bound intake = 2.5 MGD blowdown x CoC(5) = 12.5 MGD; bosc-fm2 2.5 MGD industrial discharge (CMAR RFQ §A.6), taken as cooling blowdown upper bound",
           "confidence": "medium",
           "asof": null,
           "low": null,

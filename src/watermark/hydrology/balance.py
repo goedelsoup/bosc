@@ -149,6 +149,13 @@ def _wwtp_nodes(
     return nodes
 
 
+# The static prefix of the campus derived-cooling caveat. A no-cooling scenario (baseline)
+# zeroes the campus draw, so the scenario layer drops this warning by prefix (`scenario.py`).
+CAMPUS_COOLING_DERIVED_WARNING_PREFIX = (
+    "BOSC campus consumptive cooling is a derived central estimate"
+)
+
+
 def _campus_node(path: Path, warnings: list[str], *, settings: Settings) -> WaterBalanceNode | None:
     """The BOSC data-center campus: documented FM-2 discharge + a derived cooling loss.
 
@@ -215,7 +222,7 @@ def _campus_node(path: Path, warnings: list[str], *, settings: Settings) -> Wate
         ),
     )
     warnings.append(
-        f"BOSC campus consumptive cooling is a derived central estimate (~{loss_cfs:.1f} cfs; "
+        f"{CAMPUS_COOLING_DERIVED_WARNING_PREFIX} (~{loss_cfs:.1f} cfs; "
         f"{low:g}-{high:g} MGD evaporative range) from the air-permit power figure x WUE — not "
         f"a metered or permitted value."
     )
