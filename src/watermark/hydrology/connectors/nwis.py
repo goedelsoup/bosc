@@ -253,7 +253,7 @@ def _time_series(payload: Mapping[str, Any]) -> list[dict[str, Any]]:
     time_series = value.get("timeSeries")
     if not isinstance(time_series, list):
         raise ValueError("NWIS payload missing 'value.timeSeries' (schema drift)")
-    return time_series
+    return cast("list[dict[str, Any]]", time_series)
 
 
 def _ts_key(point: tuple[str, float, list[str]]) -> datetime:
