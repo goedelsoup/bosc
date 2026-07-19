@@ -48,8 +48,17 @@ class Entity:
 
     @property
     def display(self) -> str:
-        """Shortest legible variant (the long legal recitals aren't useful here)."""
-        return min(self.variants, key=len) if self.variants else self.key
+        """Shortest legible variant (the long legal recitals aren't useful here).
+
+        The lexical secondary key makes the choice deterministic when two variants
+        tie on length — otherwise ``min`` fell back to set-iteration order, which
+        Python randomizes per process, flipping display casing (e.g. ``"Unnamed
+        Tributary of Lytle Creek"`` ↔ ``"unnamed tributary of Lytle Creek"``) run
+        to run and churning every mirror-derived feed (#1699). ASCII orders
+        uppercase before lowercase, so the tie-break also prefers the capitalized
+        spelling.
+        """
+        return min(self.variants, key=lambda v: (len(v), v)) if self.variants else self.key
 
 
 @dataclass(frozen=True)
