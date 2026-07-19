@@ -332,8 +332,13 @@ def _derive_evaporative_tower(
     if blowdown_mgd is not None:
         consumptive_high = blowdown_mgd * (cycles - 1.0)  # blowdown x (CoC-1) = evaporation
         high_cite = f"{blowdown_mgd:g} MGD blowdown x (CoC-1); {blowdown_cite}"
-        # The blowdown method implies a genuinely larger intake: blowdown x CoC.
-        makeup_high_cite = f"upper-bound intake = {high_cite} / evap fraction (blowdown x CoC)"
+        # The blowdown method implies a genuinely larger intake: makeup = blowdown x CoC
+        # (= consumptive_high / evap fraction). State that derivation directly — reusing the
+        # consumptive `(CoC-1)` citation here read as the makeup formula, which it is not.
+        makeup_high_cite = (
+            f"upper-bound intake = {blowdown_mgd:g} MGD blowdown x CoC({cycles:g}) = "
+            f"{blowdown_mgd * cycles:g} MGD; {blowdown_cite}"
+        )
     else:
         # No disclosed discharge for this site — the power-method consumptive is the high bound,
         # and the intake at that bound is unchanged from the central power-method makeup.

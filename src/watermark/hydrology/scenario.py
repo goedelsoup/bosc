@@ -19,7 +19,10 @@ import yaml
 
 from watermark.config import Settings, get_settings
 from watermark.hydrology.assimilative import check_assimilative
-from watermark.hydrology.balance import build_water_balance
+from watermark.hydrology.balance import (
+    CAMPUS_COOLING_DERIVED_WARNING_PREFIX,
+    build_water_balance,
+)
 from watermark.hydrology.connectors.nwis import DISCHARGE_CFS, fetch_streamflow
 from watermark.hydrology.cooling import derive_cooling_basis
 from watermark.hydrology.lowflow import low_flow_context, low_flow_for
@@ -123,6 +126,14 @@ def evaluate(
     campus = balance.node("bosc-campus")
     if campus is not None:
         campus.consumptive_use = consumptive
+        # A no-cooling scenario (baseline) zeroes the campus draw, so the balance's derived
+        # cooling caveat — a buildout-only figure — doesn't apply here; drop it.
+        if scenario.cooling_model is CoolingModelType.OFF:
+            balance.warnings[:] = [
+                w
+                for w in balance.warnings
+                if not w.startswith(CAMPUS_COOLING_DERIVED_WARNING_PREFIX)
+            ]
 
     receiving_water = active_profile(settings).receiving_water_name
     receiving_7q10 = low_flow_for(receiving_water, settings=settings)

@@ -47,7 +47,7 @@ receiving_live:
   source: connector
   citation: NWIS 04187100 (Ottawa River at Lima OH)
   confidence: high
-  asof: '2026-07-18T21:30:00.000-04:00'
+  asof: '2026-07-19T00:30:00.000-04:00'
   low: null
   high: null
 receiving_water_name: Ottawa River
@@ -169,7 +169,7 @@ balance:
       source: connector
       citation: NWIS 04187100 (Ottawa River at Lima OH)
       confidence: high
-      asof: '2026-07-18T21:30:00.000-04:00'
+      asof: '2026-07-19T00:30:00.000-04:00'
       low: null
       high: null
     consumptive_use: null
@@ -180,9 +180,6 @@ balance:
   - 'Shawnee II WWTP: summary states a flow expansion; used the first value (3.0 MGD).'
   - BOSC routing via theorized-fm3-shawnee-ii to watch-shawnee-ii-wwtp is THEORIZED
     (unconfirmed) — excluded from the balance; Shawnee II has no known BOSC routing.
-  - BOSC campus consumptive cooling is a derived central estimate (~4.9 cfs; 3.14-10
-    MGD evaporative range) from the air-permit power figure x WUE — not a metered
-    or permitted value.
   - Lima WTP intake (Ottawa/Auglaize) withdrawal rate is not documented; abstraction
     shown as river-flow context only.
 assimilative:
