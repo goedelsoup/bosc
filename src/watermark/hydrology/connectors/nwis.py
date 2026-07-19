@@ -20,12 +20,12 @@ Synchronous (``httpx.Client``) to match BOSC's otherwise-sync pipeline layer.
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from datetime import datetime
 from typing import Any, cast
 
 import httpx
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, model_validator
 
 from watermark.config import Settings, get_settings
 from watermark.hydrology.connectors._cache import cached_get
@@ -37,6 +37,14 @@ DISSOLVED_OXYGEN_MG_L = "00300"
 TURBIDITY_FNU = "63680"
 PHYCOCYANIN_UG_L = "32319"  # fPC — cyanobacterial pigment fluorescence (NOT 32316 = chlorophyll-a)
 DAILY_MEAN = "00003"  # NWIS statistic code: daily mean (the Daily Values service)
+
+# NWIS point qualifier codes (the ``qualifiers`` array carried on every value). "P" =
+# provisional (subject to revision), "A" = approved (review complete), "e" = estimated. A
+# real-time IV reading is always provisional; the DV historical record is mostly approved.
+# Captured per point (#1602) so a provisional value can be filtered out of a design-low-flow
+# fit or down-weighted in the water balance — before this they entered indistinguishably.
+PROVISIONAL_CODE = "P"
+APPROVED_CODE = "A"
 
 
 class NwisReading(BaseModel):
@@ -50,8 +58,16 @@ class NwisReading(BaseModel):
     value: float | None
     unit: str
     datetime: str | None
+    # NWIS qualifier codes on the reported value (e.g. ``["P"]`` provisional, ``["A"]``
+    # approved). Empty when NWIS carries none; a real-time IV reading is normally ``["P"]``.
+    qualifiers: list[str] = []
     lat: float | None = None
     lon: float | None = None
+
+    @property
+    def provisional(self) -> bool:
+        """True when the reported value is NWIS provisional (``P`` — subject to revision)."""
+        return PROVISIONAL_CODE in self.qualifiers
 
 
 class InstantaneousSeries(BaseModel):
@@ -74,6 +90,15 @@ class InstantaneousSeries(BaseModel):
     lon: float | None = None
     timestamps: list[str]
     values: list[float]
+    # Per-point NWIS qualifier codes, parallel to ``values`` (#1602). Empty for a
+    # hand-built series; a live event record is normally all ``["P"]`` (provisional).
+    qualifiers: list[list[str]] = []
+
+    @model_validator(mode="after")
+    def _qualifiers_parallel(self) -> InstantaneousSeries:
+        if self.qualifiers and len(self.qualifiers) != len(self.timestamps):
+            raise ValueError("qualifiers must be parallel to timestamps/values")
+        return self
 
     def __len__(self) -> int:
         return len(self.timestamps)
@@ -81,6 +106,11 @@ class InstantaneousSeries(BaseModel):
     def points(self) -> list[tuple[str, float]]:
         """The (timestamp, value) pairs, no-data already dropped at parse time."""
         return list(zip(self.timestamps, self.values, strict=True))
+
+    @property
+    def provisional(self) -> bool:
+        """True when any point in the record is NWIS provisional (``P``, #1602)."""
+        return any(PROVISIONAL_CODE in q for q in self.qualifiers)
 
 
 class DailyDischargeSeries(BaseModel):
@@ -102,13 +132,45 @@ class DailyDischargeSeries(BaseModel):
     lon: float | None = None
     dates: list[str]  # ISO calendar dates, ascending
     values_cfs: list[float]
+    # Per-day NWIS qualifier codes, parallel to ``values_cfs`` (#1602). Empty for a
+    # hand-built series; a fetched record carries ``["A"]`` (approved) or ``["P"]``
+    # (provisional — unreviewed recent water-years) per day.
+    qualifiers: list[list[str]] = []
+
+    @model_validator(mode="after")
+    def _qualifiers_parallel(self) -> DailyDischargeSeries:
+        if self.qualifiers and len(self.qualifiers) != len(self.dates):
+            raise ValueError("qualifiers must be parallel to dates/values_cfs")
+        return self
 
     def __len__(self) -> int:
         return len(self.dates)
 
-    def points(self) -> list[tuple[str, float]]:
-        """The (date, cfs) pairs, no-data already dropped at parse time."""
-        return list(zip(self.dates, self.values_cfs, strict=True))
+    def points(self, *, include_provisional: bool = True) -> list[tuple[str, float]]:
+        """The (date, cfs) pairs, no-data already dropped at parse time.
+
+        Set ``include_provisional=False`` to drop NWIS provisional (``P``) days — the
+        mitigation for the known bias of fitting a design low-flow statistic over
+        unreviewed recent water-years (#1602). A series with no qualifiers recorded (a
+        hand-built series) returns every point regardless: absence of a code is not
+        evidence of provisionality.
+        """
+        pairs = list(zip(self.dates, self.values_cfs, strict=True))
+        if include_provisional or not self.qualifiers:
+            return pairs
+        return [
+            pair
+            for pair, quals in zip(pairs, self.qualifiers, strict=True)
+            if PROVISIONAL_CODE not in quals
+        ]
+
+    @property
+    def provisional_fraction(self) -> float:
+        """Share of days flagged NWIS provisional (0.0 when no qualifiers are recorded)."""
+        if not self.qualifiers:
+            return 0.0
+        provisional = sum(1 for quals in self.qualifiers if PROVISIONAL_CODE in quals)
+        return provisional / len(self.qualifiers)
 
 
 def _nwis_request(
@@ -154,9 +216,14 @@ def _iv_request(settings: Settings, params: dict[str, Any]) -> dict[str, Any]:
     )
 
 
-def _series(ts: dict[str, Any]) -> list[tuple[str, float]]:
-    """Extract (dateTime, value) pairs from one NWIS timeSeries block, dropping no-data."""
-    out: list[tuple[str, float]] = []
+def _series(ts: dict[str, Any]) -> list[tuple[str, float, list[str]]]:
+    """Extract (dateTime, value, qualifiers) triples from one NWIS timeSeries block.
+
+    No-data points are dropped. Each point's ``qualifiers`` array (P/A/e codes) is
+    carried through so a provisional value stays distinguishable from an approved one
+    (#1602) — before this the codes were silently discarded.
+    """
+    out: list[tuple[str, float, list[str]]] = []
     for values_block in ts.get("values", []):
         for point in values_block.get("value", []):
             raw = point.get("value")
@@ -166,12 +233,31 @@ def _series(ts: dict[str, Any]) -> list[tuple[str, float]]:
                 continue
             if num <= -999999:  # NWIS no-data sentinel
                 continue
-            out.append((point.get("dateTime", ""), num))
+            quals = [str(q) for q in (point.get("qualifiers") or [])]
+            out.append((point.get("dateTime", ""), num, quals))
     return out
 
 
-def _ts_key(point: tuple[str, float]) -> datetime:
-    """Chronological sort key for a ``(dateTime, value)`` pair.
+def _time_series(payload: Mapping[str, Any]) -> list[dict[str, Any]]:
+    """The ``value.timeSeries`` blocks of a NWIS payload, raising on envelope drift (#1602).
+
+    NWIS wraps every response as ``{"value": {"timeSeries": [...]}}``. A *missing*
+    ``value`` or ``timeSeries`` key means the payload isn't a NWIS response at all (schema
+    drift, or an error document) — raise, rather than degrade to ``[]``, which a caller
+    reads as "gage carrying no data" instead of "connector failed". An *empty*
+    ``timeSeries`` list is a legitimate "no matching series" and passes through.
+    """
+    value = payload.get("value")
+    if not isinstance(value, Mapping):
+        raise ValueError("NWIS payload missing 'value' envelope (schema drift)")
+    time_series = value.get("timeSeries")
+    if not isinstance(time_series, list):
+        raise ValueError("NWIS payload missing 'value.timeSeries' (schema drift)")
+    return time_series
+
+
+def _ts_key(point: tuple[str, float, list[str]]) -> datetime:
+    """Chronological sort key for a ``(dateTime, value, qualifiers)`` triple.
 
     Parses the NWIS ISO timestamp so a series that spans a daylight-saving offset change
     orders by the real instant — a raw-string sort mis-orders across a fall-back, when the
@@ -221,10 +307,10 @@ def fetch_streamflow(
 
     payload = _iv_request(settings, params)
     readings: list[NwisReading] = []
-    for ts in payload.get("value", {}).get("timeSeries", []):
+    for ts in _time_series(payload):
         site_no, name, lat, lon, parameter_cd, unit = _site_info(ts)
         series = _series(ts)
-        last = series[-1] if series else (None, None)
+        last = series[-1] if series else ("", None, [])
         readings.append(
             NwisReading(
                 site_no=site_no,
@@ -233,6 +319,7 @@ def fetch_streamflow(
                 value=last[1],
                 unit=unit,
                 datetime=last[0] or None,
+                qualifiers=last[2],
                 lat=lat,
                 lon=lon,
             )
@@ -255,10 +342,10 @@ def observed_min_discharge(
     params = {"sites": site_no, "parameterCd": DISCHARGE_CFS, "period": f"P{days}D"}
     payload = _iv_request(settings, params)
     values: list[float] = []
-    for ts in payload.get("value", {}).get("timeSeries", []):
+    for ts in _time_series(payload):
         _, _, _, _, parameter_cd, _ = _site_info(ts)
         if parameter_cd == DISCHARGE_CFS:
-            values.extend(v for _, v in _series(ts))
+            values.extend(v for _, v, _ in _series(ts))
     if not values:
         return None
     return ProvenancedValue.derived(
@@ -296,7 +383,7 @@ def fetch_instantaneous_series(
         },
     )
     out: list[InstantaneousSeries] = []
-    for ts in payload.get("value", {}).get("timeSeries", []):
+    for ts in _time_series(payload):
         resolved_site, name, lat, lon, parameter_cd, unit = _site_info(ts)
         series = sorted(_series(ts), key=_ts_key)  # ascending by parsed instant
         if not series:
@@ -310,8 +397,9 @@ def fetch_instantaneous_series(
                 unit=unit,
                 lat=lat,
                 lon=lon,
-                timestamps=[t for t, _ in series],
-                values=[v for _, v in series],
+                timestamps=[t for t, _, _ in series],
+                values=[v for _, v, _ in series],
+                qualifiers=[q for _, _, q in series],
             )
         )
     return out
@@ -342,7 +430,7 @@ def fetch_daily_discharge(
         "endDT": end_date,
     }
     payload = _nwis_request(settings, "dv", query)
-    for ts in payload.get("value", {}).get("timeSeries", []):
+    for ts in _time_series(payload):
         resolved_site, name, lat, lon, parameter_cd, unit = _site_info(ts)
         if parameter_cd != DISCHARGE_CFS:
             continue
@@ -355,7 +443,8 @@ def fetch_daily_discharge(
             unit=unit,
             lat=lat,
             lon=lon,
-            dates=[dt[:10] for dt, _ in series],
-            values_cfs=[v for _, v in series],
+            dates=[dt[:10] for dt, _, _ in series],
+            values_cfs=[v for _, v, _ in series],
+            qualifiers=[q for _, _, q in series],
         )
     raise ValueError(f"NWIS {site_no}: no discharge daily values for {start_date}..{end_date}")

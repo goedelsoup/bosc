@@ -41,6 +41,11 @@ def test_fetch_instantaneous_series_parses_the_event_fixture(hydro_settings: Set
     q = by[nwis.DISCHARGE_CFS]
     assert min(q.values) == pytest.approx(424.0)
 
+    # Per-point qualifiers are carried, parallel to the values (#1602). A live event
+    # record is provisional real-time data, so the series reads as provisional.
+    assert len(turb.qualifiers) == len(turb)
+    assert turb.provisional is True
+
 
 def test_offline_miss_on_an_unfixtured_window_raises(hydro_settings: Settings) -> None:
     from watermark.hydrology.connectors._cache import HydroOfflineError

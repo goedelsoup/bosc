@@ -34,6 +34,15 @@ def test_consumptive_loss_from_knobs(hydro_settings: Settings) -> None:
     assert campus.consumptive_use.value == pytest.approx(6.188, abs=0.01)
 
 
+def test_provisional_live_flow_is_low_confidence(hydro_settings: Settings) -> None:
+    """The live Ottawa reading is NWIS provisional, so it must not enter as high-confidence (#1602)."""
+    result = scenario.evaluate(scenario.buildout_scenario(), settings=hydro_settings, live=True)
+    assert result.receiving_live is not None
+    assert result.receiving_live.source == "connector"
+    # The committed fixture flags the current reading "P" (provisional, subject to revision).
+    assert result.receiving_live.confidence == "low"
+
+
 def test_diff_against_ottawa_7q10(hydro_settings: Settings) -> None:
     base, _build, delta = run_scenarios(
         cooling_demand_mgd=5.0, consumptive_fraction=0.8, settings=hydro_settings, live=True

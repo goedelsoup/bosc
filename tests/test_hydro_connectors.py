@@ -17,6 +17,33 @@ def test_fetch_streamflow_from_fixture(hydro_settings: Settings) -> None:
     assert "Ottawa River at Lima" in by_param[nwis.DISCHARGE_CFS].name
 
 
+def test_streamflow_captures_provisional_qualifier(hydro_settings: Settings) -> None:
+    """The P/A qualifier on the reported value is carried through, not silently dropped (#1602)."""
+    readings = nwis.fetch_streamflow(sites=["04187100"], settings=hydro_settings)
+    discharge = next(r for r in readings if r.parameter_cd == nwis.DISCHARGE_CFS)
+    # The committed Ottawa-at-Lima current reading is flagged provisional.
+    assert discharge.qualifiers == ["P"]
+    assert discharge.provisional is True
+
+
+def test_missing_envelope_raises_not_empty(
+    hydro_settings: Settings, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A payload whose NWIS envelope shifted must raise, not degrade to [] (#1602).
+
+    Returning ``[]`` reads downstream as "gage carrying no data" rather than "connector
+    failed" — the exact silent-failure this guards against.
+    """
+    for drifted in ({}, {"value": None}, {"value": {}}, {"value": {"timeSeries": None}}):
+        monkeypatch.setattr(nwis, "cached_get", lambda *a, _p=drifted, **k: _p)
+        with pytest.raises(ValueError, match="schema drift"):
+            nwis.fetch_streamflow(sites=["04187100"], settings=hydro_settings)
+
+    # A present-but-empty timeSeries is a legitimate "no matching series" — no raise.
+    monkeypatch.setattr(nwis, "cached_get", lambda *a, **k: {"value": {"timeSeries": []}})
+    assert nwis.fetch_streamflow(sites=["04187100"], settings=hydro_settings) == []
+
+
 def test_offline_cache_miss_raises(hydro_settings: Settings) -> None:
     with pytest.raises(HydroOfflineError):
         nwis.fetch_streamflow(sites=["00000000"], settings=hydro_settings)

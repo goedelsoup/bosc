@@ -258,8 +258,15 @@ def _abstraction_node(settings: Settings, warnings: list[str]) -> WaterBalanceNo
             None,
         )
         if flow is not None and flow.value is not None:
+            # A real-time IV reading NWIS flags provisional ("P") is unreviewed and subject
+            # to revision — down-weight it so the balance never treats it as authoritative
+            # as an approved value (#1602).
             inflow = ProvenancedValue.from_connector(
-                flow.value, "cfs", citation=f"NWIS {flow.site_no} ({flow.name})", asof=flow.datetime
+                flow.value,
+                "cfs",
+                citation=f"NWIS {flow.site_no} ({flow.name})",
+                asof=flow.datetime,
+                confidence="low" if flow.provisional else "high",
             )
     except Exception as exc:
         warnings.append(

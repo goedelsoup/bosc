@@ -205,14 +205,23 @@ def annual_nday_minima(
     nday: int,
     *,
     completeness_days: int = DEFAULT_COMPLETENESS_DAYS,
+    exclude_provisional: bool = False,
 ) -> list[AnnualMinimum]:
     """Per-climatic-year minimum n-day trailing-average discharge.
 
     A window counts only when it spans ``nday`` *consecutive* calendar days (no
     internal gap). ``complete`` marks years carrying ``>= completeness_days`` daily
     values; only those should enter a frequency fit.
+
+    ``exclude_provisional`` drops NWIS provisional (``P``) days before the fit — the
+    mitigation for the known bias of fitting a design low-flow statistic over unreviewed
+    recent water-years (#1602). Default off so a hand-built or all-approved record is
+    unaffected; dropping days can push a partial recent year below ``completeness_days``.
     """
-    by_date: dict[date, float] = {date.fromisoformat(d): v for d, v in series.points()}
+    by_date: dict[date, float] = {
+        date.fromisoformat(d): v
+        for d, v in series.points(include_provisional=not exclude_provisional)
+    }
     days = sorted(by_date)
     valid_by_year: dict[int, int] = defaultdict(int)
     for d in days:
@@ -330,9 +339,15 @@ def compute_low_flow_frequency(
     ndays: tuple[int, ...] = DEFAULT_NDAYS,
     return_period_yr: int = DEFAULT_RETURN_PERIOD_YR,
     completeness_days: int = DEFAULT_COMPLETENESS_DAYS,
+    exclude_provisional: bool = False,
     settings: Settings | None = None,
 ) -> LowFlowFrequency:
-    """Compute the 1Q10 / 7Q10 / 30Q10 for one gage from its daily-discharge record."""
+    """Compute the 1Q10 / 7Q10 / 30Q10 for one gage from its daily-discharge record.
+
+    ``exclude_provisional=True`` drops NWIS provisional (``P``) days from the fit — keeping
+    unreviewed recent water-years out of a design low-flow statistic (#1602). Off by
+    default so the committed reference (a full-record fit) stays reproducible.
+    """
     settings = settings or get_settings()
     series = fetch_daily_discharge(
         site_no, start_date=start_date, end_date=end_date, settings=settings
@@ -345,7 +360,12 @@ def compute_low_flow_frequency(
     statistics: list[LowFlowStatistic] = []
     complete_years = 0
     for nday in ndays:
-        minima = annual_nday_minima(series, nday, completeness_days=completeness_days)
+        minima = annual_nday_minima(
+            series,
+            nday,
+            completeness_days=completeness_days,
+            exclude_provisional=exclude_provisional,
+        )
         all_minima.extend(minima)
         complete_years = max(complete_years, sum(1 for m in minima if m.complete))
         statistics.append(
