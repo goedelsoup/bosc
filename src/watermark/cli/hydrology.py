@@ -595,7 +595,10 @@ def hydro_hypotheses(
         out_dir.mkdir(parents=True, exist_ok=True)
         path = out_dir / "hypotheses.comparison.yaml"
         path.write_text(
-            yaml.safe_dump(comparison.model_dump(), sort_keys=False, allow_unicode=True),
+            # mode="json" coerces enums (e.g. CoolingModelType) and other rich types to
+            # YAML-safe scalars; a bare model_dump() leaves enum members that safe_dump can't
+            # represent.
+            yaml.safe_dump(comparison.model_dump(mode="json"), sort_keys=False, allow_unicode=True),
             encoding="utf-8",
         )
         wrote(path)
