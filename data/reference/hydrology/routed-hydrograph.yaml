@@ -82,5 +82,5 @@ reaches:
   attenuation_pct: 0.41
   lag_hr: 0.4
 warnings: []
-series_note: 480 timesteps at dt=0.1 hr omitted here; the full outlet + summed series ship in the site
+series_note: 723 timesteps at dt=0.1 hr omitted here; the full outlet + summed series ship in the site
   bundle's routed-hydrograph feed. Regenerate with `watermark basin-route --write`.
