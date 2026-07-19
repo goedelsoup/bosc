@@ -1,10 +1,10 @@
 {
   "site": "urbana",
   "bundle_version": "1.0.0",
-  "contract_version": "1.29.0",
+  "contract_version": "1.30.0",
   "generated_at": "2026-07-09T19:27:16+00:00",
-  "feed_count": 28,
-  "row_total": 306,
+  "feed_count": 29,
+  "row_total": 388,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -237,6 +237,14 @@
       "path": "feeds/corpus-index.json",
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
+      "kind": "collection",
+      "count": 82
+    },
+    {
+      "name": "corpus-nodes",
+      "path": "feeds/corpus-nodes.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
       "count": 82
     }

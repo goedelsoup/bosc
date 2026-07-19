@@ -1,0 +1,48 @@
+---
+// "Ask this concept" — corpus-scoped retrieval embedded on a wiki concept page (#1575, epic #1560
+// workstream D2). The page computes the concept's corpus neighborhood (`neighborhoodFor`,
+// `@watermark/core`) from the `corpus-nodes` feed and passes it here; the client script
+// (`~/scripts/conceptAsk.ts`) runs a BM25 search over that subset in the browser as the reader
+// types — instant, offline, no server, no generation. It surfaces **cited corpus nodes**, never
+// prose: the record is the answer, the widget only points at it. This is the shippable outcome of
+// the D3 spike (#1576), which ruled out client-side generation on litigation evidence.
+import type { NeighborNode } from "~/lib/conceptAsk";
+
+interface Props {
+  conceptTitle: string;
+  /** The concept's corpus neighborhood — self + curated neighbors + nodes that name it. */
+  nodes: NeighborNode[];
+}
+const { conceptTitle, nodes } = Astro.props;
+// Guard against a `</script>` breakout when inlining the neighborhood as a JSON island.
+const payload = JSON.stringify(nodes).replace(/</g, "\\u003c");
+---
+
+{
+  nodes.length > 0 && (
+    <section class="concept-ask" aria-labelledby="ask-concept-heading">
+      <h2 id="ask-concept-heading">Ask this concept</h2>
+      <p class="card-meta">
+        Search the corpus around <strong>{conceptTitle}</strong> — the records, entities, and open
+        questions in its neighborhood. Results are cited corpus nodes, not a written answer; for a
+        drafted answer over the whole record, use the site-wide <a href="/ask">Ask</a>.
+      </p>
+      <div class="ask-field">
+        <input
+          type="search"
+          placeholder={`Ask about ${conceptTitle}…`}
+          aria-label={`Ask about ${conceptTitle}`}
+          autocomplete="off"
+          spellcheck={false}
+        />
+      </div>
+      <p class="ask-status" role="status" aria-live="polite" />
+      <ol class="ask-results neighborhood" />
+      <script type="application/json" data-concept-ask-nodes set:html={payload} />
+    </section>
+  )
+}
+
+<script>
+  import "~/scripts/conceptAsk.ts";
+</script>

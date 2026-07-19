@@ -1,9 +1,12 @@
 ---
 import type { GetStaticPaths } from "astro";
 import Base from "~/layouts/Base.astro";
+import ConceptAsk from "~/components/ConceptAsk.astro";
 import ProfileHeader from "~/components/ProfileHeader.astro";
+import type { NeighborNode } from "~/lib/conceptAsk";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
-import type { ConceptItem } from "@watermark/core/feeds";
+import { neighborhoodFor } from "@watermark/core/corpusNeighbors";
+import type { ConceptItem, CorpusRetrievalNodeItem } from "@watermark/core/feeds";
 import type { ProfileHeaderData, ProfileRel } from "@watermark/core/profile";
 import { withBase } from "@watermark/core/site";
 import {
@@ -17,13 +20,23 @@ import {
 
 export const getStaticPaths: GetStaticPaths = () => {
   const concepts = hasFeed("concepts") ? loadFeed<ConceptItem[]>("concepts") : [];
-  return concepts.map((concept) => ({ params: { slug: concept.slug }, props: { concept } }));
+  // The corpus-scoped "ask this concept" substrate (#1575). Computed here (not in the body) so it
+  // matches the scoped page, and links resolve pre-base to each concept's global wiki page.
+  const nodes = hasFeed("corpus-nodes") ? loadFeed<CorpusRetrievalNodeItem[]>("corpus-nodes") : [];
+  return concepts.map((concept) => {
+    const neighborNodes: NeighborNode[] = neighborhoodFor(concept, nodes).map((n) => ({
+      ...n,
+      href: n.kind === "concept" && n.ref ? withBase(`/wiki/concepts/${n.ref}/`) : null,
+    }));
+    return { params: { slug: concept.slug }, props: { concept, neighborNodes } };
+  });
 };
 
 interface Props {
   concept: ConceptItem;
+  neighborNodes: NeighborNode[];
 }
-const { concept } = Astro.props;
+const { concept, neighborNodes } = Astro.props;
 const index = wikiIndex();
 const bodyHtml = renderBody(concept.body, index);
 const related = concept.related
@@ -57,6 +70,7 @@ const sections = [
   ...(backlinks.length ? [{ anchor: "backlinks", label: "Backlinks" }] : []),
   ...(hypotheses.length ? [{ anchor: "hypotheses", label: "Hypotheses" }] : []),
   ...(openQuestions.length ? [{ anchor: "open-questions", label: "Open questions" }] : []),
+  ...(neighborNodes.length ? [{ anchor: "ask-concept-heading", label: "Ask this concept" }] : []),
 ];
 const profileToc = sections.length >= 2 ? sections : [];
 ---
@@ -126,5 +140,7 @@ const profileToc = sections.length >= 2 ? sections : [];
         </div>
       )
     }
+
+    <ConceptAsk conceptTitle={concept.title} nodes={neighborNodes} />
   </article>
 </Base>

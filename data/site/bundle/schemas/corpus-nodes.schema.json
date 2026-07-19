@@ -1,0 +1,80 @@
+{
+  "additionalProperties": false,
+  "description": "One corpus-mirror node as a client-side retrieval unit.\n\n`text` is the one canonical `node_text` derivation the semantic index also embeds\n(`watermark.site.corpus_mirror.node_text`) — label · description · class · salient meta — so the\nlexical (`corpus-nodes`) and vector (`yidam_index`) surfaces tokenize the *same* content and never\ndrift. `kind` is the same BOSC display kind as `corpus-index`. `evidence` is the node's claim tag\nwhen it carries one (`[open]` leads/questions, `[inference]` readings) and null otherwise — a\nstructural node (a concept, a resolved entity) asserts no evidence tag, so the evidence palette is\nnever spent on it. `ref` is the node's wiki page key — the concept slug for a `concept` node\n(its slug↔node join key + route param), null for kinds without a dedicated page today.\n`neighbors` is the node's undirected 1-hop adjacency (out-links plus in-links, resolved within\nthe mirror), the graph the frontend walks to build a concept's neighborhood.",
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "site",
+        "entity",
+        "person",
+        "concept",
+        "hypothesis",
+        "lead",
+        "open-question",
+        "relation",
+        "node"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "label": {
+      "title": "Label",
+      "type": "string"
+    },
+    "text": {
+      "title": "Text",
+      "type": "string"
+    },
+    "evidence": {
+      "anyOf": [
+        {
+          "enum": [
+            "verified",
+            "inference",
+            "reference",
+            "open"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Evidence"
+    },
+    "ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Ref"
+    },
+    "neighbors": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Neighbors",
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "kind",
+    "label",
+    "text"
+  ],
+  "title": "CorpusRetrievalNodeItem",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

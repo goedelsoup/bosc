@@ -91,6 +91,7 @@ from watermark.site import rsei as rsei_mod
 from watermark.site.catalog_index import build_catalog_index
 from watermark.site.corpus_index import build_corpus_index
 from watermark.site.corpus_mirror import build_mirror
+from watermark.site.corpus_nodes import build_corpus_nodes
 from watermark.site.embeddings import build_ask_embeddings, build_passage_embeddings
 from watermark.site.facts import build_facts
 from watermark.site.feeds import (
@@ -102,6 +103,7 @@ from watermark.site.feeds import (
     ConceptItem,
     ContactItem,
     CorpusNodeItem,
+    CorpusRetrievalNodeItem,
     DispersionField,
     DispersionGeoRef,
     DispersionGrid,
@@ -948,7 +950,7 @@ def _open_questions_feed(feeds: Sequence[_Feed]) -> _Feed | None:
     return _collection_feed("open-questions", OpenQuestionItem, questions)
 
 
-def _corpus_index_feed(settings: Settings) -> _Feed:
+def _corpus_index_feed(mirror: Mirror, settings: Settings) -> _Feed:
     """Build the `corpus-index` feed (#1573) — the node map of the site's yidam corpus mirror.
 
     Unlike `facts`/`open-questions` (post-passes over the assembled feeds), this projects the
@@ -957,9 +959,22 @@ def _corpus_index_feed(settings: Settings) -> _Feed:
     stable and `hasFeed("corpus-index")` is always true (the node map is never empty). Freshness is
     resolved from git here because the frontend build can run neither git nor Python.
     """
-    mirror = build_mirror(settings)
     nodes = build_corpus_index(mirror, settings=settings)
     return _collection_feed("corpus-index", CorpusNodeItem, nodes)
+
+
+def _corpus_nodes_feed(mirror: Mirror) -> _Feed:
+    """Build the `corpus-nodes` retrieval feed (#1575) — the searchable peer of `corpus-index`.
+
+    A second post-pass over the *same* mirror (`build_corpus_nodes`), carrying each node's
+    searchable text + evidence tag + 1-hop adjacency so the wiki "ask this concept" widget can
+    scope client-side lexical retrieval to a concept's corpus neighborhood. Always emitted (the
+    mirror is never empty), count-independent NDJSON schema so it never trips the drift guard as a
+    site's node count grows.
+    """
+    return _retrieval_collection_feed(
+        "corpus-nodes", CorpusRetrievalNodeItem, build_corpus_nodes(mirror)
+    )
 
 
 def _passages_feed(feeds: Sequence[_Feed], settings: Settings) -> _Feed:
@@ -1041,9 +1056,13 @@ def export_bundle(
     # feeds, so it must be appended after `_collect_feeds`. Written + indexed through the same
     # loops below like any other feed.
     feeds.append(_catalog_index_feed(feeds, settings))
-    # The corpus node-index (#1573) — the browsable map of this site's yidam mirror. Built from its
-    # own `build_mirror` (not the assembled feeds), always emitted (the mirror is never empty).
-    feeds.append(_corpus_index_feed(settings))
+    # The corpus feeds (#1573/#1575) — projected from this site's yidam mirror, not the assembled
+    # feeds. The mirror is built once here and shared by both projectors: the browsable node map
+    # (`corpus-index`) and its searchable retrieval peer (`corpus-nodes`, the "ask this concept"
+    # substrate). Always emitted (the mirror is never empty), so the schema set stays stable.
+    corpus_mirror = build_mirror(settings)
+    feeds.append(_corpus_index_feed(corpus_mirror, settings))
+    feeds.append(_corpus_nodes_feed(corpus_mirror))
 
     # Schema files (geo feeds share one file — dedup by schema_file path).
     written_schemas: set[str] = set()
@@ -1137,7 +1156,6 @@ def export_bundle(
     mirror: Mirror | None = None
     if out_dir is None:
         try:
-            from watermark.site.corpus_mirror import build_mirror
             from watermark.site.graph_exports import resolve_provenance, write_exports
 
             mirror = build_mirror(settings)

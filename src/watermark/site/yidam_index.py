@@ -39,7 +39,7 @@ from typing import Any
 from watermark.config import Settings, get_settings
 from watermark.logging import get_logger
 from watermark.retrieval.embeddings import EmbeddingProvider, get_provider
-from watermark.site.corpus_mirror import CLASSES, Mirror, MirrorNode, build_mirror
+from watermark.site.corpus_mirror import CLASSES, Mirror, build_mirror, node_text
 
 log = get_logger(__name__)
 
@@ -49,54 +49,6 @@ _BATCH = 256  # rows per embedding call (matches watermark.retrieval.store)
 # The URI a mirror node is addressed by — kept in sync with watermark.agent.yidam_tools so a
 # semantic hit renders/resolves identically to a keyword one (`yidam://corpus/<class>/<name>`).
 _URI_SCHEME = "yidam://corpus/"
-
-
-def _meta_bits(node: MirrorNode) -> list[str]:
-    """Salient, human-meaningful ``meta`` values for a node, flattened to search text.
-
-    Structural provenance (``site``/``scope``) and machine ids (``lei``/``uei``/``issue``) add
-    noise, not meaning, to a semantic vector, so they are skipped; the fields that carry what a
-    node *is about* (its kind, roles, relationship, tags, aliases, the hypothesis it hangs
-    under) are kept.
-    """
-    keep = (
-        "kind",
-        "entity_kind",
-        "classification",
-        "rel",
-        "src",
-        "dst",
-        "lead_kind",
-        "hypothesis",
-        "sub_thesis",
-        "signal",
-        "roles",
-        "affiliations",
-        "tags",
-        "aliases",
-        "relation_class",
-    )
-    bits: list[str] = []
-    for key in keep:
-        value = node.meta.get(key)
-        if not value:
-            continue
-        if isinstance(value, (list, tuple)):
-            scalars = [str(x) for x in value if x]
-            if scalars:
-                bits.append(" ".join(scalars))
-        else:
-            bits.append(str(value))
-    return bits
-
-
-def node_text(node: MirrorNode) -> str:
-    """The text unit embedded for a mirror node — label, description, class, and salient meta.
-
-    Deterministic and self-contained (no I/O), so the same node always yields the same vector.
-    """
-    parts = [node.label, node.description, node.node_class, *_meta_bits(node)]
-    return " · ".join(p for p in (s.strip() for s in parts if s) if p)
 
 
 def node_uri(node_id: str) -> str:

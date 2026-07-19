@@ -2,9 +2,12 @@
 import type { GetStaticPaths } from "astro";
 import { withSitePaths } from "@watermark/core/sites";
 import Base from "~/layouts/Base.astro";
+import ConceptAsk from "~/components/ConceptAsk.astro";
 import ProfileHeader from "~/components/ProfileHeader.astro";
+import type { NeighborNode } from "~/lib/conceptAsk";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
-import type { ConceptItem } from "@watermark/core/feeds";
+import { neighborhoodFor } from "@watermark/core/corpusNeighbors";
+import type { ConceptItem, CorpusRetrievalNodeItem } from "@watermark/core/feeds";
 import type { ProfileHeaderData, ProfileRel } from "@watermark/core/profile";
 import { withSite } from "@watermark/core/site";
 import { conceptBacklinks, norm, renderBody, wikiIndex } from "@watermark/core/wiki";
@@ -15,13 +18,23 @@ import { conceptBacklinks, norm, renderBody, wikiIndex } from "@watermark/core/w
 export const getStaticPaths: GetStaticPaths = () =>
   withSitePaths((_slug) => {
     const concepts = hasFeed("concepts") ? loadFeed<ConceptItem[]>("concepts") : [];
-    return concepts.map((concept) => ({ params: { slug: concept.slug }, props: { concept } }));
+    // The corpus-scoped "ask this concept" substrate (#1575), from THIS site's scoped
+    // `corpus-nodes` feed (we're inside `runWithSite`); concept links stay inside the site build.
+    const nodes = hasFeed("corpus-nodes") ? loadFeed<CorpusRetrievalNodeItem[]>("corpus-nodes") : [];
+    return concepts.map((concept) => {
+      const neighborNodes: NeighborNode[] = neighborhoodFor(concept, nodes).map((n) => ({
+        ...n,
+        href: n.kind === "concept" && n.ref ? withSite(`/site/concepts/${n.ref}/`) : null,
+      }));
+      return { params: { slug: concept.slug }, props: { concept, neighborNodes } };
+    });
   });
 
 interface Props {
   concept: ConceptItem;
+  neighborNodes: NeighborNode[];
 }
-const { concept } = Astro.props;
+const { concept, neighborNodes } = Astro.props;
 
 // Scoped index: `[[links]]` and related/backlink URLs resolve to THIS site's own
 // glossary (`/network/<id>/site/concepts/…`), staying inside the site build (#1567).
@@ -50,6 +63,7 @@ const header: ProfileHeaderData = {
 const sections = [
   { anchor: "overview", label: "Identity" },
   ...(backlinks.length ? [{ anchor: "backlinks", label: "Backlinks" }] : []),
+  ...(neighborNodes.length ? [{ anchor: "ask-concept-heading", label: "Ask this concept" }] : []),
 ];
 const profileToc = sections.length >= 2 ? sections : [];
 ---
@@ -85,5 +99,7 @@ const profileToc = sections.length >= 2 ? sections : [];
         </div>
       )
     }
+
+    <ConceptAsk conceptTitle={concept.title} nodes={neighborNodes} />
   </article>
 </Base>
