@@ -28,6 +28,8 @@ frequency:
       citation: log-Pearson III on 24 climatic-year 1-day minima, NWIS 04187100 1988-09-30—2024-12-31
       confidence: medium
       asof: null
+      low: null
+      high: null
     weibull_cfs:
       value: 0.0
       unit: cfs
@@ -35,6 +37,8 @@ frequency:
       citation: Weibull plotting position, 24 climatic-year 1-day minima, NWIS 04187100
       confidence: medium
       asof: null
+      low: null
+      high: null
     log_skew: 0.0
     zero_fraction: 0.2083
     cited_cfs:
@@ -44,6 +48,8 @@ frequency:
       citation: cited 1Q10 for Ottawa River
       confidence: high
       asof: null
+      low: null
+      high: null
     cited_basis: 1Q10
     corroborates: true
   - label: 7Q10
@@ -58,6 +64,8 @@ frequency:
       citation: log-Pearson III on 24 climatic-year 7-day minima, NWIS 04187100 1988-09-30—2024-12-31
       confidence: medium
       asof: null
+      low: null
+      high: null
     weibull_cfs:
       value: 0.15
       unit: cfs
@@ -65,6 +73,8 @@ frequency:
       citation: Weibull plotting position, 24 climatic-year 7-day minima, NWIS 04187100
       confidence: medium
       asof: null
+      low: null
+      high: null
     log_skew: -0.4731
     zero_fraction: 0.0
     cited_cfs:
@@ -75,6 +85,8 @@ frequency:
         at Lima, USGS gage 04187100, 1989-2021
       confidence: high
       asof: null
+      low: null
+      high: null
     cited_basis: 7Q10
     corroborates: true
   - label: 30Q10
@@ -89,6 +101,8 @@ frequency:
       citation: log-Pearson III on 24 climatic-year 30-day minima, NWIS 04187100 1988-09-30—2024-12-31
       confidence: medium
       asof: null
+      low: null
+      high: null
     weibull_cfs:
       value: 1.9077
       unit: cfs
@@ -96,6 +110,8 @@ frequency:
       citation: Weibull plotting position, 24 climatic-year 30-day minima, NWIS 04187100
       confidence: medium
       asof: null
+      low: null
+      high: null
     log_skew: -0.0303
     zero_fraction: 0.0
     cited_cfs:
@@ -105,6 +121,8 @@ frequency:
       citation: cited summer 30Q10 for Ottawa River
       confidence: high
       asof: null
+      low: null
+      high: null
     cited_basis: summer 30Q10
     corroborates: true
   annual_minima:

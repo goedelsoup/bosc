@@ -31,18 +31,12 @@ discharge:
   low_flow_dilution_ratio: 3.71
 turbidity:
   baseline:
-    value: 29.9
+    value: 27.1
     unit: FNU
     source: connector
     citation: NWIS 04193500 63680 median
     asof: '2026-07-12'
-  spikes:
-  - timestamp: '2026-07-10T12:00:00.000-04:00'
-    value: 324.0
-    unit: FNU
-  - timestamp: '2026-07-10T17:30:00.000-04:00'
-    value: 363.0
-    unit: FNU
+  spikes: []
 dissolved_oxygen:
   sag:
     value: 4.3
@@ -77,11 +71,11 @@ phycocyanin:
     citation: NWIS 04193500 fPC (32319) month max
     asof: '2026-07-01T19:30:00.000-04:00'
   at_turbidity_spike:
-    value: 3.36
+    value: 4.24
     unit: ug/l
     source: connector
     citation: NWIS 04193500 fPC (32319) at the turbidity spike
-    asof: '2026-07-10T12:00:00.000-04:00'
+    asof: '2026-07-01T19:30:00.000-04:00'
 attribution:
   reach_river_km:
     value: 41.9
@@ -98,11 +92,9 @@ attribution:
     low: 21.2
     high: 31.8
   release_start: 2026-07-11T00:00-04:00
-  spikes_precede_release: true
-  verdict: '[inference] The turbidity spikes (324 FNU @ 2026-07-10T12:00, 363 FNU @ 2026-07-10T17:30)
-    pre-date the overnight dam failure (2026-07-11); at the ~21-32 h reach travel time the release plume
-    cannot reach Waterville until late Jul 11-Jul 12, so the spikes are storm first-flush / resuspension,
-    NOT the release plume.'
+  spikes_precede_release: false
+  verdict: '[inference] The observed spikes post-date the release, but optical/ionic surrogates are not
+    a nitrogen measurement; plume attribution needs the OEPA/Napoleon grab samples.'
 caveats:
 - Turbidity, fPC and specific conductance are optical/ionic SURROGATES; 04193500 has no ammonia or nitrate
   probe, so the reach's nitrogen signal must come from grab samples.

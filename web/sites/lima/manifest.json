@@ -2,9 +2,9 @@
   "site": "lima",
   "bundle_version": "1.0.0",
   "contract_version": "1.30.0",
-  "generated_at": "2026-07-15T23:11:39+00:00",
-  "feed_count": 46,
-  "row_total": 1525,
+  "generated_at": "2026-07-19T03:12:28+00:00",
+  "feed_count": 48,
+  "row_total": 3056,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -353,20 +353,20 @@
       "count": 25
     },
     {
+      "name": "passages",
+      "path": "feeds/passages.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passages.schema.json",
+      "kind": "collection",
+      "count": 1531
+    },
+    {
       "name": "catalog-index",
       "path": "feeds/catalog-index.json",
       "media_type": "application/json",
       "schema": "schemas/catalog-index.schema.json",
       "kind": "object",
       "count": 1
-    },
-    {
-      "name": "ask-embeddings",
-      "path": "feeds/ask-embeddings.json",
-      "media_type": "application/json",
-      "schema": "schemas/ask-embeddings.schema.json",
-      "kind": "collection",
-      "count": 0
     },
     {
       "name": "corpus-index",
@@ -383,6 +383,23 @@
       "schema": "schemas/corpus-nodes.schema.json",
       "kind": "collection",
       "count": 238
+    },
+    {
+      "name": "ask-embeddings",
+      "path": "feeds/ask-embeddings.json",
+      "media_type": "application/json",
+      "schema": "schemas/ask-embeddings.schema.json",
+      "kind": "collection",
+      "count": 0
+    },
+    {
+      "name": "passage-embeddings",
+      "path": "feeds/passage-embeddings.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/passage-embeddings.schema.json",
+      "kind": "collection",
+      "count": 0
     }
-  ]
+  ],
+  "exports": []
 }

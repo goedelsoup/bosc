@@ -1192,7 +1192,7 @@
     "subject_label": "baseline — Ottawa River",
     "subject_kind": "hydrology-scenario",
     "predicate": "receiving_live",
-    "value": 36.3,
+    "value": 31.8,
     "unit": "cfs",
     "status": "verified",
     "approximate": false,
@@ -1204,7 +1204,7 @@
       "page": null,
       "citation": "NWIS 04187100 (Ottawa River at Lima OH)",
       "confidence": "high",
-      "asof": "2026-05-31T12:30:00.000-04:00",
+      "asof": "2026-07-18T21:30:00.000-04:00",
       "verified": true
     },
     "feed": "hydrology-scenarios"
@@ -1302,7 +1302,7 @@
     "subject_label": "buildout — Ottawa River",
     "subject_kind": "hydrology-scenario",
     "predicate": "receiving_live",
-    "value": 36.3,
+    "value": 31.8,
     "unit": "cfs",
     "status": "verified",
     "approximate": false,
@@ -1314,7 +1314,7 @@
       "page": null,
       "citation": "NWIS 04187100 (Ottawa River at Lima OH)",
       "confidence": "high",
-      "asof": "2026-05-31T12:30:00.000-04:00",
+      "asof": "2026-07-18T21:30:00.000-04:00",
       "verified": true
     },
     "feed": "hydrology-scenarios"

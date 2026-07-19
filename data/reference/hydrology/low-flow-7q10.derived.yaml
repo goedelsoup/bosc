@@ -40,19 +40,17 @@ streams:
     complete_years: 44
     aliases:
     - auglaize river at ottawa confluence
-    citation: >-
-      NOT the raw Fort Jennings 7Q10 above (1.91 cfs) -- that gage sits a few miles BELOW the
-      real Ottawa/Auglaize confluence, so its own LP3 7Q10 already reflects the Ottawa's
-      historical contribution; injecting it directly as the Auglaize's OWN base flow at the
-      Lima network's outlet would double-count the Ottawa (already separately routed through
-      the loop). Drainage-area-ratio transfer isolates the Auglaize's own contribution: USGS
-      04186500 drains 332 sq mi (NWIS site service, drain_area_va) and USGS 04187100 (Ottawa
-      River at Lima) drains 128 sq mi -- (332 - 128) / 332 = 0.614 applied to the Fort Jennings
-      7Q10 (1.91 x 0.614 = 1.17 cfs). A coarse screening estimate, not a rigorous baseflow
-      separation: it nets out the Ottawa's drainage area AT LIMA, not at its own mouth (a few
-      miles further and somewhat larger), so 1.17 cfs is itself a slight OVER-estimate of the
-      Auglaize's true contribution -- the real value would only tighten the dilution violation
-      already flagged at this confluence, never loosen it.
+    citation: 'NOT the raw Fort Jennings 7Q10 above (1.91 cfs) -- that gage sits a few miles BELOW the
+      real Ottawa/Auglaize confluence, so its own LP3 7Q10 already reflects the Ottawa''s historical contribution;
+      injecting it directly as the Auglaize''s OWN base flow at the Lima network''s outlet would double-count
+      the Ottawa (already separately routed through the loop). Drainage-area-ratio transfer isolates the
+      Auglaize''s own contribution: USGS 04186500 drains 332 sq mi (NWIS site service, drain_area_va)
+      and USGS 04187100 (Ottawa River at Lima) drains 128 sq mi -- (332 - 128) / 332 = 0.614 applied to
+      the Fort Jennings 7Q10 (1.91 x 0.614 = 1.17 cfs). A coarse screening estimate, not a rigorous baseflow
+      separation: it nets out the Ottawa''s drainage area AT LIMA, not at its own mouth (a few miles further
+      and somewhat larger), so 1.17 cfs is itself a slight OVER-estimate of the Auglaize''s true contribution
+      -- the real value would only tighten the dilution violation already flagged at this confluence,
+      never loosen it.'
     confidence: low
   st. marys river:
     seven_q10_cfs: 15.65
@@ -343,7 +341,7 @@ streams:
       (gage value; screening proxy for the discharge reach)
     confidence: medium
   auglaize river near defiance:
-    seven_q10_cfs: 18.62
+    seven_q10_cfs: 17.97
     source: derived
     gage: 04191500
     gage_name: Auglaize River near Defiance OH

@@ -10,6 +10,8 @@ scenario:
     citation: 275 MW x 1.8 L/kWh / evap fraction
     confidence: medium
     asof: null
+    low: null
+    high: null
   consumptive_fraction:
     value: 0.8
     unit: fraction
@@ -17,6 +19,8 @@ scenario:
     citation: (CoC-1)/CoC at CoC=5
     confidence: medium
     asof: null
+    low: null
+    high: null
   basis:
     cooling_model: evaporative_tower
     it_load:
@@ -24,12 +28,14 @@ scenario:
       unit: MW
       source: document
       citation: 'OEPA Air PTI P0138965 (Facility 0302022054), committed data/extracted/permits/4132514.epa.yaml
-        (final, 2026-05-28): 114 hall gensets x 2.75 ekW = ~313 MW backup; IT ~250-300
-        MW (N+1). Per-engine ekW from the draft public notice (3987141/3987144); engine
-        size CBI-redacted in the final permit under an Ohio EPA trade-secret grant
-        (OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).'
+        (final, 2026-05-28): 114 hall gensets x 2.75 MW (~2,750 ekW) = ~313 MW backup;
+        IT ~250-300 MW (N+1). Per-engine rating from the draft public notice (3987141/3987144);
+        engine size CBI-redacted in the final permit under an Ohio EPA trade-secret
+        grant (OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).'
       confidence: high
       asof: null
+      low: null
+      high: null
     wue:
       value: 1.8
       unit: L/kWh
@@ -38,6 +44,8 @@ scenario:
         36 cooling towers on the air permit)
       confidence: low
       asof: null
+      low: null
+      high: null
     cycles_of_concentration:
       value: 5.0
       unit: ratio
@@ -45,6 +53,8 @@ scenario:
       citation: cooling-tower cycles of concentration ~5 (typical 4-6)
       confidence: low
       asof: null
+      low: null
+      high: null
     consumptive_fraction:
       value: 0.8
       unit: fraction
@@ -52,6 +62,8 @@ scenario:
       citation: (CoC-1)/CoC at CoC=5
       confidence: medium
       asof: null
+      low: null
+      high: null
     makeup_demand:
       value: 3.92
       unit: MGD
@@ -59,6 +71,8 @@ scenario:
       citation: 275 MW x 1.8 L/kWh / evap fraction
       confidence: medium
       asof: null
+      low: null
+      high: null
     consumptive_low:
       value: 3.14
       unit: MGD
@@ -66,6 +80,8 @@ scenario:
       citation: 275 MW x 1.8 L/kWh (power x WUE)
       confidence: medium
       asof: null
+      low: null
+      high: null
     consumptive_high:
       value: 10.0
       unit: MGD
@@ -74,6 +90,19 @@ scenario:
         (CMAR RFQ §A.6), taken as cooling blowdown upper bound
       confidence: medium
       asof: null
+      low: null
+      high: null
+    makeup_high:
+      value: 12.5
+      unit: MGD
+      source: derived
+      citation: upper-bound intake = 2.5 MGD blowdown x (CoC-1); bosc-fm2 2.5 MGD
+        industrial discharge (CMAR RFQ §A.6), taken as cooling blowdown upper bound
+        / evap fraction (blowdown x CoC)
+      confidence: medium
+      asof: null
+      low: null
+      high: null
     method: power x WUE (central); blowdown x cycles (upper bound)
     method_disclosed: true
     is_bracketed: false
@@ -86,6 +115,8 @@ consumptive_loss:
   citation: 3.92 MGD x 0.8 consumptive (scenario buildout)
   confidence: medium
   asof: null
+  low: null
+  high: null
 receiving_7q10:
   value: 0.2
   unit: cfs
@@ -94,13 +125,17 @@ receiving_7q10:
     — Ottawa River at Lima, USGS gage 04187100, 1989-2021
   confidence: high
   asof: null
+  low: null
+  high: null
 receiving_live:
-  value: 36.3
+  value: 31.8
   unit: cfs
   source: connector
   citation: NWIS 04187100 (Ottawa River at Lima OH)
   confidence: high
-  asof: '2026-05-31T12:30:00.000-04:00'
+  asof: '2026-07-18T21:30:00.000-04:00'
+  low: null
+  high: null
 receiving_water_name: Ottawa River
 balance:
   nodes:
@@ -120,6 +155,8 @@ balance:
       citation: watch-shawnee-ii-wwtp (3.0 MGD design)
       confidence: high
       asof: null
+      low: null
+      high: null
     stormwater: null
   - node:
       id: watch-american-bath-wwtp
@@ -137,6 +174,8 @@ balance:
       citation: watch-american-bath-wwtp (1.5 MGD design)
       confidence: high
       asof: null
+      low: null
+      high: null
     stormwater: null
   - node:
       id: watch-american-ii-wwtp
@@ -154,6 +193,27 @@ balance:
       citation: watch-american-ii-wwtp (1.2 MGD design)
       confidence: high
       asof: null
+      low: null
+      high: null
+    stormwater: null
+  - node:
+      id: watch-lima-wwtp
+      name: Lima WWTP
+      role: wwtp
+      receiving_water: Ottawa River
+      lat: 40.72298
+      lon: -84.12747
+    inflow: null
+    consumptive_use: null
+    return_flow:
+      value: 28.62373190554965
+      unit: cfs
+      source: document
+      citation: watch-lima-wwtp (18.5 MGD design)
+      confidence: high
+      asof: null
+      low: null
+      high: null
     stormwater: null
   - node:
       id: bosc-campus
@@ -170,6 +230,8 @@ balance:
       citation: 3.92 MGD x 0.8 consumptive (scenario buildout)
       confidence: medium
       asof: null
+      low: null
+      high: null
     return_flow:
       value: 3.8680718791283315
       unit: cfs
@@ -177,6 +239,8 @@ balance:
       citation: bosc-fm2 (2.5 MGD industrial discharge to Lima)
       confidence: high
       asof: null
+      low: null
+      high: null
     stormwater: null
   - node:
       id: lima-wtp
@@ -186,21 +250,27 @@ balance:
       lat: null
       lon: null
     inflow:
-      value: 36.3
+      value: 31.8
       unit: cfs
       source: connector
       citation: NWIS 04187100 (Ottawa River at Lima OH)
       confidence: high
-      asof: '2026-05-31T12:30:00.000-04:00'
+      asof: '2026-07-18T21:30:00.000-04:00'
+      low: null
+      high: null
     consumptive_use: null
     return_flow: null
     stormwater: null
   tier: tier0
   warnings:
   - 'Shawnee II WWTP: summary states a flow expansion; used the first value (3.0 MGD).'
-  - BOSC campus consumptive cooling demand is an unsourced assumption (0 cfs placeholder).
-  - Lima WTP withdrawal rate is not documented; abstraction shown as river-flow context
-    only.
+  - BOSC routing via theorized-fm3-shawnee-ii to watch-shawnee-ii-wwtp is THEORIZED
+    (unconfirmed) — excluded from the balance; Shawnee II has no known BOSC routing.
+  - BOSC campus consumptive cooling is a derived central estimate (~4.9 cfs; 3.14-10
+    MGD evaporative range) from the air-permit power figure x WUE — not a metered
+    or permitted value.
+  - Lima WTP intake (Ottawa/Auglaize) withdrawal rate is not documented; abstraction
+    shown as river-flow context only.
 assimilative:
 - receiving_water: Ottawa River
   discharger: Shawnee II WWTP
@@ -212,6 +282,8 @@ assimilative:
       table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
     confidence: high
     asof: null
+    low: null
+    high: null
   discharge:
     value: 4.6416862549539974
     unit: cfs
@@ -219,6 +291,8 @@ assimilative:
     citation: watch-shawnee-ii-wwtp (3.0 MGD design)
     confidence: high
     asof: null
+    low: null
+    high: null
   upstream_returns: null
   dilution_ratio: 0.04308778944
   flag: violation
@@ -233,6 +307,8 @@ assimilative:
       table — USGS Gauge 04186500 adjusted for drainage area
     confidence: high
     asof: null
+    low: null
+    high: null
   discharge:
     value: 2.3208431274769987
     unit: cfs
@@ -240,6 +316,8 @@ assimilative:
     citation: watch-american-bath-wwtp (1.5 MGD design)
     confidence: high
     asof: null
+    low: null
+    high: null
   upstream_returns: null
   dilution_ratio: 0.012926336832
   flag: violation
@@ -254,6 +332,8 @@ assimilative:
       table — USGS Station 04187500
     confidence: high
     asof: null
+    low: null
+    high: null
   discharge:
     value: 1.856674501981599
     unit: cfs
@@ -261,7 +341,34 @@ assimilative:
     citation: watch-american-ii-wwtp (1.2 MGD design)
     confidence: high
     asof: null
+    low: null
+    high: null
   upstream_returns: null
   dilution_ratio: 0.42010594704000004
   flag: violation
   detail: Dug Run 7Q10 0.78 cfs vs discharge 1.86 cfs -> 0.42:1 dilution (violation)
+- receiving_water: Ottawa River
+  discharger: Lima WWTP
+  design_low_flow:
+    value: 0.2
+    unit: cfs
+    source: document
+    citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+      table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+    confidence: high
+    asof: null
+    low: null
+    high: null
+  discharge:
+    value: 28.62373190554965
+    unit: cfs
+    source: document
+    citation: watch-lima-wwtp (18.5 MGD design)
+    confidence: high
+    asof: null
+    low: null
+    high: null
+  upstream_returns: null
+  dilution_ratio: 0.006987209098378379
+  flag: violation
+  detail: Ottawa River 7Q10 0.20 cfs vs discharge 28.62 cfs -> 0.01:1 dilution (violation)

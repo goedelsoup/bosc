@@ -48,12 +48,12 @@
       "high": null
     },
     "receiving_live": {
-      "value": 36.3,
+      "value": 31.8,
       "unit": "cfs",
       "source": "connector",
       "citation": "NWIS 04187100 (Ottawa River at Lima OH)",
       "confidence": "high",
-      "asof": "2026-05-31T12:30:00.000-04:00",
+      "asof": "2026-07-18T21:30:00.000-04:00",
       "low": null,
       "high": null
     },
@@ -131,6 +131,29 @@
         },
         {
           "node": {
+            "id": "watch-lima-wwtp",
+            "name": "Lima WWTP",
+            "role": "wwtp",
+            "receiving_water": "Ottawa River",
+            "lat": 40.72298,
+            "lon": -84.12747
+          },
+          "inflow": null,
+          "consumptive_use": null,
+          "return_flow": {
+            "value": 28.62373190554965,
+            "unit": "cfs",
+            "source": "document",
+            "citation": "watch-lima-wwtp (18.5 MGD design)",
+            "confidence": "high",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "stormwater": null
+        },
+        {
+          "node": {
             "id": "bosc-campus",
             "name": "BOSC data-center campus",
             "role": "demand",
@@ -171,12 +194,12 @@
             "lon": null
           },
           "inflow": {
-            "value": 36.3,
+            "value": 31.8,
             "unit": "cfs",
             "source": "connector",
             "citation": "NWIS 04187100 (Ottawa River at Lima OH)",
             "confidence": "high",
-            "asof": "2026-05-31T12:30:00.000-04:00",
+            "asof": "2026-07-18T21:30:00.000-04:00",
             "low": null,
             "high": null
           },
@@ -188,8 +211,9 @@
       "tier": "tier0",
       "warnings": [
         "Shawnee II WWTP: summary states a flow expansion; used the first value (3.0 MGD).",
-        "BOSC campus consumptive cooling demand is an unsourced assumption (0 cfs placeholder).",
-        "Lima WTP withdrawal rate is not documented; abstraction shown as river-flow context only."
+        "BOSC routing via theorized-fm3-shawnee-ii to watch-shawnee-ii-wwtp is THEORIZED (unconfirmed) — excluded from the balance; Shawnee II has no known BOSC routing.",
+        "BOSC campus consumptive cooling is a derived central estimate (~4.9 cfs; 3.14-10 MGD evaporative range) from the air-permit power figure x WUE — not a metered or permitted value.",
+        "Lima WTP intake (Ottawa/Auglaize) withdrawal rate is not documented; abstraction shown as river-flow context only."
       ]
     },
     "assimilative": [
@@ -276,6 +300,34 @@
         "dilution_ratio": 0.42010594704000004,
         "flag": "violation",
         "detail": "Dug Run 7Q10 0.78 cfs vs discharge 1.86 cfs -> 0.42:1 dilution (violation)"
+      },
+      {
+        "receiving_water": "Ottawa River",
+        "discharger": "Lima WWTP",
+        "design_low_flow": {
+          "value": 0.2,
+          "unit": "cfs",
+          "source": "document",
+          "citation": "Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+          "confidence": "high",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "discharge": {
+          "value": 28.62373190554965,
+          "unit": "cfs",
+          "source": "document",
+          "citation": "watch-lima-wwtp (18.5 MGD design)",
+          "confidence": "high",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "upstream_returns": null,
+        "dilution_ratio": 0.006987209098378379,
+        "flag": "violation",
+        "detail": "Ottawa River 7Q10 0.20 cfs vs discharge 28.62 cfs -> 0.01:1 dilution (violation)"
       }
     ]
   },
@@ -310,7 +362,7 @@
           "value": 275.0,
           "unit": "MW",
           "source": "document",
-          "citation": "OEPA Air PTI P0138965 (Facility 0302022054), committed data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): 114 hall gensets x 2.75 ekW = ~313 MW backup; IT ~250-300 MW (N+1). Per-engine ekW from the draft public notice (3987141/3987144); engine size CBI-redacted in the final permit under an Ohio EPA trade-secret grant (OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).",
+          "citation": "OEPA Air PTI P0138965 (Facility 0302022054), committed data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): 114 hall gensets x 2.75 MW (~2,750 ekW) = ~313 MW backup; IT ~250-300 MW (N+1). Per-engine rating from the draft public notice (3987141/3987144); engine size CBI-redacted in the final permit under an Ohio EPA trade-secret grant (OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).",
           "confidence": "high",
           "asof": null,
           "low": null,
@@ -376,7 +428,16 @@
           "low": null,
           "high": null
         },
-        "makeup_high": null,
+        "makeup_high": {
+          "value": 12.5,
+          "unit": "MGD",
+          "source": "derived",
+          "citation": "upper-bound intake = 2.5 MGD blowdown x (CoC-1); bosc-fm2 2.5 MGD industrial discharge (CMAR RFQ §A.6), taken as cooling blowdown upper bound / evap fraction (blowdown x CoC)",
+          "confidence": "medium",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
         "method": "power x WUE (central); blowdown x cycles (upper bound)",
         "method_disclosed": true,
         "is_bracketed": false,
@@ -405,12 +466,12 @@
       "high": null
     },
     "receiving_live": {
-      "value": 36.3,
+      "value": 31.8,
       "unit": "cfs",
       "source": "connector",
       "citation": "NWIS 04187100 (Ottawa River at Lima OH)",
       "confidence": "high",
-      "asof": "2026-05-31T12:30:00.000-04:00",
+      "asof": "2026-07-18T21:30:00.000-04:00",
       "low": null,
       "high": null
     },
@@ -488,6 +549,29 @@
         },
         {
           "node": {
+            "id": "watch-lima-wwtp",
+            "name": "Lima WWTP",
+            "role": "wwtp",
+            "receiving_water": "Ottawa River",
+            "lat": 40.72298,
+            "lon": -84.12747
+          },
+          "inflow": null,
+          "consumptive_use": null,
+          "return_flow": {
+            "value": 28.62373190554965,
+            "unit": "cfs",
+            "source": "document",
+            "citation": "watch-lima-wwtp (18.5 MGD design)",
+            "confidence": "high",
+            "asof": null,
+            "low": null,
+            "high": null
+          },
+          "stormwater": null
+        },
+        {
+          "node": {
             "id": "bosc-campus",
             "name": "BOSC data-center campus",
             "role": "demand",
@@ -528,12 +612,12 @@
             "lon": null
           },
           "inflow": {
-            "value": 36.3,
+            "value": 31.8,
             "unit": "cfs",
             "source": "connector",
             "citation": "NWIS 04187100 (Ottawa River at Lima OH)",
             "confidence": "high",
-            "asof": "2026-05-31T12:30:00.000-04:00",
+            "asof": "2026-07-18T21:30:00.000-04:00",
             "low": null,
             "high": null
           },
@@ -545,8 +629,9 @@
       "tier": "tier0",
       "warnings": [
         "Shawnee II WWTP: summary states a flow expansion; used the first value (3.0 MGD).",
-        "BOSC campus consumptive cooling demand is an unsourced assumption (0 cfs placeholder).",
-        "Lima WTP withdrawal rate is not documented; abstraction shown as river-flow context only."
+        "BOSC routing via theorized-fm3-shawnee-ii to watch-shawnee-ii-wwtp is THEORIZED (unconfirmed) — excluded from the balance; Shawnee II has no known BOSC routing.",
+        "BOSC campus consumptive cooling is a derived central estimate (~4.9 cfs; 3.14-10 MGD evaporative range) from the air-permit power figure x WUE — not a metered or permitted value.",
+        "Lima WTP intake (Ottawa/Auglaize) withdrawal rate is not documented; abstraction shown as river-flow context only."
       ]
     },
     "assimilative": [
@@ -633,6 +718,34 @@
         "dilution_ratio": 0.42010594704000004,
         "flag": "violation",
         "detail": "Dug Run 7Q10 0.78 cfs vs discharge 1.86 cfs -> 0.42:1 dilution (violation)"
+      },
+      {
+        "receiving_water": "Ottawa River",
+        "discharger": "Lima WWTP",
+        "design_low_flow": {
+          "value": 0.2,
+          "unit": "cfs",
+          "source": "document",
+          "citation": "Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021",
+          "confidence": "high",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "discharge": {
+          "value": 28.62373190554965,
+          "unit": "cfs",
+          "source": "document",
+          "citation": "watch-lima-wwtp (18.5 MGD design)",
+          "confidence": "high",
+          "asof": null,
+          "low": null,
+          "high": null
+        },
+        "upstream_returns": null,
+        "dilution_ratio": 0.006987209098378379,
+        "flag": "violation",
+        "detail": "Ottawa River 7Q10 0.20 cfs vs discharge 28.62 cfs -> 0.01:1 dilution (violation)"
       }
     ]
   }
