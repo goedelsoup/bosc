@@ -10018,9 +10018,9 @@
         "published": false,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "commissioners:M031126-Special",
+        "canonical_document_id": "commissioners/meetings/M031126-Special.pdf",
+        "version": "duplicate",
         "supersedes": []
       },
       {
@@ -10033,10 +10033,12 @@
         "published": false,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "commissioners:M031126-Special",
+        "canonical_document_id": "commissioners/meetings/M031126-Special.pdf",
+        "version": "duplicate",
+        "supersedes": [
+          "commissioners/meetings/M031126-Special-1.pdf"
+        ]
       },
       {
         "rel": "commissioners/meetings/M031224.pdf",
@@ -10213,9 +10215,9 @@
         "published": false,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "commissioners:M031926",
+        "canonical_document_id": "commissioners/meetings/M031926.pdf",
+        "version": "duplicate",
         "supersedes": []
       },
       {
@@ -10228,10 +10230,12 @@
         "published": false,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "commissioners:M031926",
+        "canonical_document_id": "commissioners/meetings/M031926.pdf",
+        "version": "duplicate",
+        "supersedes": [
+          "commissioners/meetings/M031926-1.pdf"
+        ]
       },
       {
         "rel": "commissioners/meetings/M032025.pdf",
@@ -13408,9 +13412,9 @@
         "published": false,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "commissioners:M090825-Special-Session",
+        "canonical_document_id": "commissioners/meetings/M090825-Special-Session.pdf",
+        "version": "duplicate",
         "supersedes": []
       },
       {
@@ -13423,10 +13427,12 @@
         "published": false,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "commissioners:M090825-Special-Session",
+        "canonical_document_id": "commissioners/meetings/M090825-Special-Session.pdf",
+        "version": "duplicate",
+        "supersedes": [
+          "commissioners/meetings/M090825-Special-Session-1.pdf"
+        ]
       },
       {
         "rel": "commissioners/meetings/M091024.pdf",
@@ -16399,10 +16405,12 @@
         "published": false,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "lacrpc:_01132026-261",
+        "canonical_document_id": "lacrpc/meetings/20260113 Minutes cancelled signed.pdf",
+        "version": "duplicate",
+        "supersedes": [
+          "lacrpc/meetings/_01132026-261.pdf"
+        ]
       },
       {
         "rel": "lacrpc/meetings/20260115 CDC Agenda and Meeting Notice.pdf",
@@ -16504,10 +16512,12 @@
         "published": false,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "lacrpc:_01272026-262",
+        "canonical_document_id": "lacrpc/meetings/20260127 Minutes cancelled signed.pdf",
+        "version": "duplicate",
+        "supersedes": [
+          "lacrpc/meetings/_01272026-262.pdf"
+        ]
       },
       {
         "rel": "lacrpc/meetings/20260210 Minutes cancelled signed.pdf",
@@ -16519,10 +16529,12 @@
         "published": false,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "lacrpc:_02102026-266",
+        "canonical_document_id": "lacrpc/meetings/20260210 Minutes cancelled signed.pdf",
+        "version": "duplicate",
+        "supersedes": [
+          "lacrpc/meetings/_02102026-266.pdf"
+        ]
       },
       {
         "rel": "lacrpc/meetings/20260224 DCC Agenda and Meeting Notice.docx",
@@ -16759,9 +16771,9 @@
         "published": false,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "lacrpc:_01132026-261",
+        "canonical_document_id": "lacrpc/meetings/20260113 Minutes cancelled signed.pdf",
+        "version": "duplicate",
         "supersedes": []
       },
       {
@@ -16849,9 +16861,9 @@
         "published": false,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "lacrpc:_01272026-262",
+        "canonical_document_id": "lacrpc/meetings/20260127 Minutes cancelled signed.pdf",
+        "version": "duplicate",
         "supersedes": []
       },
       {
@@ -16864,9 +16876,9 @@
         "published": false,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "lacrpc:_02102026-266",
+        "canonical_document_id": "lacrpc/meetings/20260210 Minutes cancelled signed.pdf",
+        "version": "duplicate",
         "supersedes": []
       },
       {
@@ -20078,9 +20090,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa:OHD000001",
+        "canonical_document_id": "oepa/OHD000001_Draft.pdf",
+        "version": "fact_sheet",
         "supersedes": []
       },
       {
@@ -20093,10 +20105,13 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "oepa:OHD000001",
+        "canonical_document_id": "oepa/OHD000001_Draft.pdf",
+        "version": "draft",
+        "supersedes": [
+          "oepa/OHD000001_Draft_PN.pdf",
+          "oepa/OHD000001_Draft.fs.pdf"
+        ]
       },
       {
         "rel": "oepa/OHD000001_Draft_PN.pdf",
@@ -20108,9 +20123,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa:OHD000001",
+        "canonical_document_id": "oepa/OHD000001_Draft.pdf",
+        "version": "public_notice",
         "supersedes": []
       },
       {
@@ -20282,9 +20297,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa:2PD00006",
+        "canonical_document_id": "oepa/van-wert/2PD00006.pdf",
+        "version": "fact_sheet",
         "supersedes": []
       },
       {
@@ -20297,10 +20312,12 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "oepa:2PD00006",
+        "canonical_document_id": "oepa/van-wert/2PD00006.pdf",
+        "version": "final",
+        "supersedes": [
+          "oepa/van-wert/2PD00006.fs.pdf"
+        ]
       },
       {
         "rel": "oepa/wilmington/1II00129.pdf",
@@ -20357,9 +20374,9 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
+        "duplicate_cluster": "oepa:1PD00013",
+        "canonical_document_id": "oepa/wilmington/1PD00013.pdf",
+        "version": "fact_sheet",
         "supersedes": []
       },
       {
@@ -20372,10 +20389,12 @@
         "published": true,
         "available": true,
         "download_url": null,
-        "duplicate_cluster": null,
-        "canonical_document_id": null,
-        "version": null,
-        "supersedes": []
+        "duplicate_cluster": "oepa:1PD00013",
+        "canonical_document_id": "oepa/wilmington/1PD00013.pdf",
+        "version": "final",
+        "supersedes": [
+          "oepa/wilmington/1PD00013.fs.pdf"
+        ]
       },
       {
         "rel": "oepa/wilmington/1PT00125.pdf",
