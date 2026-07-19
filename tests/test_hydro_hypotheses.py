@@ -36,3 +36,17 @@ def test_shawnee_held_out_unless_promoted(hydro_settings: Settings) -> None:
 def test_level_is_carried(hydro_settings: Settings) -> None:
     comparison = hyp_stage.run_hypotheses(settings=hydro_settings, live=False)
     assert {h.hypothesis.level for h in comparison.hypotheses} == {"site"}
+
+
+def test_comparison_is_yaml_serializable(hydro_settings: Settings) -> None:
+    """`hydro-hypotheses --write` safe-dumps the comparison; a bare model_dump() leaves a
+    ``CoolingModelType`` enum that ``yaml.safe_dump`` cannot represent, so the CLI dumps with
+    ``mode="json"``. Lock that the comparison round-trips to YAML with the enum as its scalar.
+    """
+    import yaml
+
+    comparison = hyp_stage.run_hypotheses(settings=hydro_settings, live=False)
+    text = yaml.safe_dump(comparison.model_dump(mode="json"), sort_keys=False, allow_unicode=True)
+    assert "cooling_model" in text
+    assert "CoolingModelType" not in text  # serialized to its value ("off"/…), not the enum repr
+    yaml.safe_load(text)  # round-trips without error
