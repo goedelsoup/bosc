@@ -14,6 +14,34 @@ import pytest
 from watermark.config import Settings
 from watermark.hydrology.connectors import echo_dmr
 from watermark.hydrology.connectors._cache import HydroOfflineError
+from watermark.hydrology.units import CFS_TO_MGD
+
+
+def _row(
+    *,
+    value: float | None = 1.0,
+    unit: str | None = "MGD",
+    stat_base: str | None = "MO AVG",
+    stat_base_code: str | None = None,
+    std_value: float | None = None,
+    std_unit: str | None = None,
+) -> echo_dmr.DmrRow:
+    """A DmrRow with harmless defaults; override only the fields a test cares about."""
+    return echo_dmr.DmrRow(
+        period_end="2023-01-31",
+        value=value,
+        unit=unit,
+        std_value=std_value,
+        std_unit=std_unit,
+        qualifier="=",
+        stat_base=stat_base,
+        stat_base_code=stat_base_code,
+        limit=None,
+        limit_type=None,
+        exceedance_pct=None,
+        nodi=None,
+        violations=[],
+    )
 
 
 def test_iso_period_parses_echo_date() -> None:
@@ -322,6 +350,107 @@ def test_offline_cache_miss_raises(hydro_settings: Settings) -> None:
         echo_dmr.fetch_effluent_chart(
             "XX9999999", start_date="2023-01-01", end_date="2023-12-31", settings=hydro_settings
         )
+
+
+def test_is_monthly_avg_robust_to_stat_base_representation() -> None:
+    # The #1601 fix: don't rely on an exact "MO AVG" string. The stable ICIS
+    # StatisticalBaseCode ("MK") wins when present, whatever the descriptor reads.
+    assert echo_dmr._is_monthly_avg(_row(stat_base_code="MK", stat_base="Monthly Average"))
+    assert echo_dmr._is_monthly_avg(_row(stat_base_code="mk", stat_base=None))
+    assert not echo_dmr._is_monthly_avg(_row(stat_base_code="DD", stat_base="MO AVG"))
+    # With no code, accept the short OR the long descriptor, case-insensitively — the exact
+    # "MO AVG" match this replaces silently zeroed flow when ECHO sent only "Monthly Average".
+    assert echo_dmr._is_monthly_avg(_row(stat_base_code=None, stat_base="MO AVG"))
+    assert echo_dmr._is_monthly_avg(_row(stat_base_code=None, stat_base="Monthly Average"))
+    assert echo_dmr._is_monthly_avg(_row(stat_base_code=None, stat_base="monthly avg"))
+    assert not echo_dmr._is_monthly_avg(_row(stat_base_code=None, stat_base="DAILY MX"))
+    assert not echo_dmr._is_monthly_avg(_row(stat_base_code=None, stat_base=None))
+
+
+def test_flow_mgd_converts_reported_unit() -> None:
+    # ECHO's 50050 is usually — but not always — MGD, so the value is converted by its
+    # reported unit rather than assumed MGD (#1601).
+    assert echo_dmr._flow_mgd(_row(value=12.0, unit="MGD")) == pytest.approx(12.0)
+    assert echo_dmr._flow_mgd(_row(value=3_000_000.0, unit="GPD")) == pytest.approx(3.0)
+    assert echo_dmr._flow_mgd(_row(value=2.0, unit="CFS")) == pytest.approx(2.0 * CFS_TO_MGD)
+    # ECHO's own standardized value is preferred when it standardized to MGD.
+    row = _row(value=99.0, unit=None, std_value=9.38, std_unit="MGD")
+    assert echo_dmr._flow_mgd(row) == pytest.approx(9.38)
+    # No unit signal at all -> the historical MGD assumption (50050 is a flow), kept only then.
+    assert echo_dmr._flow_mgd(_row(value=4.0, unit=None)) == pytest.approx(4.0)
+    # A present-but-unrecognized unit is NOT silently averaged as MGD -> dropped.
+    assert echo_dmr._flow_mgd(_row(value=17.0, unit="mg/L")) is None
+    assert echo_dmr._flow_mgd(_row(value=None, unit="MGD")) is None
+
+
+def test_stat_base_and_unit_read_from_dual_field_fixture(hydro_settings: Settings) -> None:
+    """A permit whose flow ECHO reports in GPD with the stat base given as only the long
+    "Monthly Average" descriptor (+ the "MK" code) — the dual short/long fragility (#1601).
+
+    The old exact-"MO AVG" match would have collapsed the series to zero, and the assume-MGD
+    reduction would have mislabeled the raw GPD figure as MGD; the robust stat match plus
+    unit conversion recover the true 12-month MGD mean.
+    """
+    chart = echo_dmr.fetch_effluent_chart(
+        "OH0091234", start_date="2023-01-01", end_date="2023-12-31", settings=hydro_settings
+    )
+    prim = next(p for p in chart.series(echo_dmr.FLOW_PARAM) if p.outfall == "001")
+    jan = next(r for r in prim.rows if r.period_end == "2023-01-31" and echo_dmr._is_monthly_avg(r))
+    assert jan.unit == "GPD"  # reported in gallons/day, not MGD
+    assert jan.stat_base == "Monthly Average"  # only the long descriptor — no "MO AVG"
+    assert jan.stat_base_code == "MK"
+    assert jan.value == pytest.approx(2_000_000.0)  # verbatim GPD, never rewritten
+
+    summary = echo_dmr.summarize_discharge(chart, design_flow_mgd=5.0)
+    assert summary.primary_outfall == "001"
+    assert summary.n_flow_months == 12  # robust match found all 12 monthly rows, not 0
+    assert summary.actual_flow_mean_mgd == pytest.approx(2.983, abs=0.001)  # GPD reduced to MGD
+    assert summary.actual_flow_min_mgd == pytest.approx(2.0)
+    assert summary.actual_flow_max_mgd == pytest.approx(4.0)  # not a daily-max (DD) row
+    assert summary.flow_pct_of_design == pytest.approx(59.7, abs=0.1)
+
+    doc = echo_dmr.dmr_document(chart, summary)
+    assert doc["discharge_summary"]["actual_flow_mean_mgd"] == pytest.approx(2.983, abs=0.001)
+    # The document's monthly series is in MGD, not the raw GPD figure.
+    jan_doc = next(
+        s
+        for s in doc["flow_monthly"]
+        if s["period_end"] == "2023-01-31" and s["stat_base"] == "Monthly Average"
+    )
+    assert jan_doc["value_mgd"] == pytest.approx(2.0)
+
+
+def test_summarize_drops_flow_row_with_unconvertible_unit() -> None:
+    # A monthly-average flow row ECHO reported in a non-flow unit must NOT be averaged as MGD
+    # (the silent-wrong-number the #1601 fix prevents): it is dropped, so the mean is over the
+    # two convertible rows only, never inflated by the raw 999 figure.
+    param = echo_dmr.DmrParameter(
+        outfall="001",
+        outfall_type="External Outfall",
+        parameter_code=echo_dmr.FLOW_PARAM,
+        parameter_desc="Flow",
+        monitoring_location="Effluent Gross",
+        rows=[
+            _row(value=2.0, unit="MGD", stat_base="MO AVG"),
+            _row(value=4.0, unit="MGD", stat_base="MO AVG"),
+            _row(value=999.0, unit="mg/L", stat_base="MO AVG"),  # bogus unit -> dropped
+        ],
+    )
+    chart = echo_dmr.EffluentChart(
+        npdes_id="TEST002",
+        name="Unit Test Plant",
+        permit_type=None,
+        permit_status=None,
+        major_minor=None,
+        snc_status=None,
+        start_date="2023-01-01",
+        end_date="2023-12-31",
+        parameters=[param],
+    )
+    summary = echo_dmr.summarize_discharge(chart, design_flow_mgd=10.0)
+    assert summary.n_flow_months == 2  # the mg/L row is excluded, not counted
+    assert summary.actual_flow_mean_mgd == pytest.approx(3.0)  # mean(2, 4), not (2+4+999)/3
+    assert summary.actual_flow_max_mgd == pytest.approx(4.0)  # 999 never enters the series
 
 
 def test_lima_wwtp_reports_effluent_exceedances(hydro_settings: Settings) -> None:
