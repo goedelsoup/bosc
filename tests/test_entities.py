@@ -2,6 +2,10 @@
 
 from __future__ import annotations
 
+import os
+import subprocess
+import sys
+
 from watermark.config import Settings
 from watermark.models import (
     BusinessFiling,
@@ -15,7 +19,6 @@ from watermark.models import (
 )
 from watermark.pipeline.corpus import Corpus
 from watermark.pipeline.entities import (
-    Entity,
     _base_permit,
     _looks_like_person,
     _parse_trustee_recital,
@@ -291,20 +294,30 @@ def test_build_graph_resolves_and_links() -> None:
 
 
 def test_display_breaks_length_ties_deterministically() -> None:
-    # Two casings of the same water tie on length; display must not depend on
-    # set-iteration order (which Python randomizes per process) — it churned every
-    # mirror feed run to run (#1699). The lexical tie-break prefers the capitalized
-    # spelling regardless of insertion order.
-    ent = Entity(key="unnamed tributary of lytle creek", kind="water", classification="water")
-    ent.variants = {"unnamed tributary of Lytle Creek", "Unnamed Tributary of Lytle Creek"}
-    assert ent.display == "Unnamed Tributary of Lytle Creek"
-
-    reversed_insert = Entity(key="k", kind="water", classification="water")
-    reversed_insert.variants = {
-        "Unnamed Tributary of Lytle Creek",
-        "unnamed tributary of Lytle Creek",
-    }
-    assert reversed_insert.display == ent.display
+    # Two casings of the same water tie on length. The old `min(variants, key=len)`
+    # fell back to set-iteration order, which Python randomizes per process
+    # (PYTHONHASHSEED) — so the display flipped run to run and churned every mirror
+    # feed (#1699). A set literal can't reproduce that here (iteration order is fixed
+    # for the life of one process), so resolve the display in fresh subprocesses under
+    # distinct seeds and assert one stable winner: the lexical tie-break picks the
+    # capitalized spelling (ASCII orders uppercase before lowercase) every time.
+    snippet = (
+        "from watermark.pipeline.entities import Entity\n"
+        "e = Entity(key='k', kind='water', classification='water')\n"
+        "e.variants = {'unnamed tributary of Lytle Creek', 'Unnamed Tributary of Lytle Creek'}\n"
+        "print(e.display)\n"
+    )
+    winners = set()
+    for seed in ("0", "1", "2", "7", "42", "1000"):
+        proc = subprocess.run(
+            [sys.executable, "-c", snippet],
+            check=True,
+            capture_output=True,
+            text=True,
+            env={**os.environ, "PYTHONHASHSEED": seed},
+        )
+        winners.add(proc.stdout.strip())
+    assert winners == {"Unnamed Tributary of Lytle Creek"}
 
 
 def test_parcel_enrichment_adds_jsmc_node(hydro_settings: Settings) -> None:
