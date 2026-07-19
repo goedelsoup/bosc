@@ -456,7 +456,7 @@
     },
     "WaterBalance": {
       "additionalProperties": false,
-      "description": "The assembled source -> use -> WWTP -> receiving loop.",
+      "description": "The assembled source -> use -> WWTP -> receiving loop as a per-node flow *inventory*.\n\nEach :class:`WaterBalanceNode` carries only its known terms (see that class); no node\ncarries the full ``inflow``/``return``/``consumptive`` set, so this container is an\ninventory of grounded discharges, not a self-closing balance. Mass conservation is\nchecked downstream, where these ``return_flow`` terms are routed through the cited\nconfluence graph: :attr:`RoutedNetwork.closes` (built by\n:func:`watermark.hydrology.network.route_network`, surfaced as the\n``mass-balance-closes`` finding, and exercised in the tests).\n\nA per-node ``closes()`` once lived here; it was vacuous — it ``continue``\\ d on every\nnode because none held both ``inflow`` and ``return_flow``, so it returned ``True``\nunconditionally and could never fail — and was removed (WS-05, #1605) in favor of the\nrouted check. Don't reintroduce a self-test that cannot fail.",
       "properties": {
         "nodes": {
           "items": {
@@ -488,7 +488,7 @@
     },
     "WaterBalanceNode": {
       "additionalProperties": false,
-      "description": "One node's flow terms. Conservation: inflow + stormwater = return + consumptive.\n\nTerms are optional — a node carries only what's known/relevant (an abstraction\nnode has ``inflow``; a demand node has ``consumptive_use`` + ``return_flow``).\nAll flows are in **cfs**. ``stormwater`` is the Increment-2 seam: a cited zero\ntoday, filled by the SCS-CN solver later.",
+      "description": "One node's known flow terms — an *inventory*, not a closed per-node balance.\n\nTerms are optional and a node carries only what's known/relevant: an abstraction\nnode has ``inflow`` (live river-flow context, not a metered withdrawal); a WWTP node\nhas ``return_flow``; the campus demand node has ``return_flow`` + ``consumptive_use``.\nNo assembled node carries every term — the intake *withdrawal* that would tie\nsource -> use -> discharge into a closed per-node loop is not quantified in the corpus\n— so this model does **not** assert ``inflow + stormwater = return + consumptive`` and\nmust not be read as a self-closing balance. The genuine, order-invariant\nmass-conservation check runs downstream on the accumulated network:\n:attr:`RoutedNetwork.closes`, which routes these ``return_flow`` terms through the\ncited confluence graph and is exercised in the tests. All flows are in **cfs**.\n``stormwater`` is the Increment-2 seam: a cited zero today, filled by the SCS-CN\nsolver later.",
       "properties": {
         "node": {
           "$ref": "#/$defs/Node"
