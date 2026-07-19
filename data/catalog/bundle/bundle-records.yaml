@@ -120,5 +120,14 @@ notes: >-
   `export_rdf` / `export_graphml`), so it reads only the corpus already assembled above and adds no
   new committed upstream; emitted at canonical export only and git-ignored like the rest of the
   bundle, surfaced for download from `/wiki/graph/exports`.
+  The `corpus-nodes` feed (#1575, contract 1.30.0) is the searchable peer of `corpus-index` — the
+  substrate behind the wiki "ask this concept" affordance. It projects the *same* yidam mirror
+  (`watermark.site.corpus_nodes`, sharing the one `build_mirror` projection with `corpus-index`)
+  into one retrieval unit per node, carrying its searchable text (the canonical `node_text`,
+  reconciled with the semantic index so lexical + vector surfaces tokenize the same content), its
+  evidence tag, its wiki page key, and its undirected 1-hop adjacency — so a concept page runs
+  client-side lexical retrieval scoped to its own corpus neighborhood (offline, no server; the D3
+  spike's verdict, #1576). Like `corpus-index` it reads the committed corpus directly and adds no
+  new committed upstream; always emitted (a mirror is never empty).
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.
