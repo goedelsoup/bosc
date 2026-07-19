@@ -166,8 +166,14 @@ def _receiving_live(*, settings: Settings, live: bool) -> ProvenancedValue | Non
     )
     if flow is None or flow.value is None:
         return None
+    # A provisional ("P") real-time reading is unreviewed and subject to revision; tag it
+    # low-confidence so it never enters the scenario as an authoritative flow (#1602).
     return ProvenancedValue.from_connector(
-        flow.value, "cfs", citation=f"NWIS {flow.site_no} ({flow.name})", asof=flow.datetime
+        flow.value,
+        "cfs",
+        citation=f"NWIS {flow.site_no} ({flow.name})",
+        asof=flow.datetime,
+        confidence="low" if flow.provisional else "high",
     )
 
 

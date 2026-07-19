@@ -132,6 +132,72 @@ def test_fetch_daily_discharge_parses_fixture(hydro_settings: Settings) -> None:
     assert all(v >= 0 for v in series.values_cfs)
 
 
+def test_fetch_daily_discharge_captures_qualifiers(hydro_settings: Settings) -> None:
+    """The per-day P/A qualifier is carried on the daily record, not dropped (#1602)."""
+    series = fetch_daily_discharge(
+        "04187100", start_date="2021-06-01", end_date="2021-08-31", settings=hydro_settings
+    )
+    # The committed 2021 record is fully approved (a reviewed historical window).
+    assert len(series.qualifiers) == len(series.dates)
+    assert all(q == ["A"] for q in series.qualifiers)
+    assert series.provisional_fraction == 0.0
+    # Nothing to exclude, so the approved-only view equals the full record.
+    assert series.points(include_provisional=False) == series.points()
+
+
+def test_daily_series_filters_provisional_days() -> None:
+    """points(include_provisional=False) drops NWIS 'P' days; provisional_fraction reports the share."""
+    series = DailyDischargeSeries(
+        site_no="TEST",
+        name="Synthetic",
+        unit="ft3/s",
+        dates=["2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04"],
+        values_cfs=[10.0, 9.0, 8.0, 7.0],
+        qualifiers=[["A"], ["A"], ["P"], ["P"]],
+    )
+    assert series.provisional_fraction == pytest.approx(0.5)
+    assert series.points(include_provisional=False) == [("2024-01-01", 10.0), ("2024-01-02", 9.0)]
+    assert len(series.points()) == 4  # default keeps everything
+
+
+def test_daily_series_qualifiers_must_be_parallel() -> None:
+    """A qualifiers list that isn't parallel to the values is a construction error (#1602)."""
+    with pytest.raises(ValueError, match="parallel"):
+        DailyDischargeSeries(
+            site_no="TEST",
+            name="Synthetic",
+            unit="ft3/s",
+            dates=["2024-01-01", "2024-01-02"],
+            values_cfs=[10.0, 9.0],
+            qualifiers=[["A"]],  # one code for two days
+        )
+
+
+def test_annual_minima_can_exclude_provisional() -> None:
+    """A provisional dip biases the annual minimum low; exclude_provisional removes it (#1602)."""
+    by_date: dict[str, float] = {}
+    d, end = date(2015, 4, 1), date(2016, 3, 31)
+    while d <= end:
+        by_date[d.isoformat()] = 100.0
+        d += timedelta(days=1)
+    by_date["2015-08-15"] = 20.0  # an approved dip
+    by_date["2015-09-10"] = 2.0  # an unreviewed provisional dip, lower still
+    items = sorted(by_date.items())
+    series = DailyDischargeSeries(
+        site_no="TEST",
+        name="Synthetic",
+        unit="ft3/s",
+        dates=[k for k, _ in items],
+        values_cfs=[v for _, v in items],
+        qualifiers=[["P"] if k == "2015-09-10" else ["A"] for k, _ in items],
+    )
+
+    with_prov = lf.annual_nday_minima(series, 1)
+    without_prov = lf.annual_nday_minima(series, 1, exclude_provisional=True)
+    assert with_prov[0].min_cfs == pytest.approx(2.0)  # the provisional low wins
+    assert without_prov[0].min_cfs == pytest.approx(20.0)  # dropped -> the approved dip
+
+
 # --------------------------------------------------- committed-artifact regression
 
 

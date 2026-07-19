@@ -39,6 +39,9 @@ def test_baseline_flags_tributary_violations(hydro_settings: Settings) -> None:
     abstraction = balance.node("lima-wtp")
     assert abstraction is not None and abstraction.inflow is not None
     assert abstraction.inflow.source == "connector"  # grounded by the NWIS fixture
+    # The fixture reading is NWIS provisional ("P"), so it enters low-confidence, not as
+    # an authoritative approved value (#1602).
+    assert abstraction.inflow.confidence == "low"
 
     # American II -> Dug Run is the binding, document-cited near-undiluted case.
     dug = next(c for c in checks if c.receiving_water == "Dug Run")
