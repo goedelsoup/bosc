@@ -10,6 +10,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from watermark.site.documents import (
     PublishAllowlist,
     PublishScope,
@@ -218,6 +220,34 @@ def test_load_publish_allowlist_parses_withhold(tmp_path: Path) -> None:
     al2 = load_publish_allowlist(allow)
     assert al2.is_published("aedg/ok.pdf")
     assert not al2.is_published("aedg/cbi.pdf")
+
+
+def test_load_publish_allowlist_warns_on_scalar_withhold(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # A scalar `withhold:` silently no-ops (the file stays PUBLIC) — the fail-unsafe
+    # direction. It must be surfaced, not swallowed, and never char-exploded.
+    import watermark.site.documents as documents_mod
+
+    warnings: list[tuple[str, dict[str, object]]] = []
+    monkeypatch.setattr(
+        documents_mod.log, "warning", lambda event, **kw: warnings.append((event, kw))
+    )
+    allow = tmp_path / "published-documents.yaml"
+    allow.write_text("collections:\n  - aedg\nwithhold: aedg/cbi.pdf\n", encoding="utf-8")
+    al = load_publish_allowlist(allow)
+    assert al.withhold == PublishScope()  # scalar skipped -> nothing withheld
+    assert al.is_published("aedg/anything.pdf")  # cleared collection still resolves
+    assert any(ev == "site.documents.bad_allowlist" for ev, _ in warnings)
+
+
+def test_parse_scope_skips_scalar_mapping_values(tmp_path: Path) -> None:
+    # `collections: oepa` (scalar where a list belongs) must NOT clear collections o/e/p/a.
+    allow = tmp_path / "published-documents.yaml"
+    allow.write_text("collections: oepa\n", encoding="utf-8")
+    al = load_publish_allowlist(allow)
+    assert not al.is_published("o/whatever.pdf")
+    assert not al.is_published("oepa/x.pdf")  # scalar skipped -> nothing cleared
 
 
 def test_publishable_exhibit_sources_excludes_sliced_bundles() -> None:

@@ -438,12 +438,20 @@ class PublishAllowlist:
     withhold: PublishScope = PublishScope()  # declarative opt-out; wins over the cleared scope
 
     def is_published(self, rel: str) -> bool:
-        cleared = (
-            rel in self.documents
-            or rel.split("/", 1)[0] in self.collections
-            or any(fnmatch(rel, g) for g in self.globs)
-        )
-        return cleared and not self.withhold.matches(rel)
+        cleared = PublishScope(self.collections, self.globs, self.documents)
+        return cleared.matches(rel) and not self.withhold.matches(rel)
+
+
+def _str_list(value: Any) -> list[str]:
+    """Stripped, non-empty strings from a YAML list.
+
+    Returns ``[]`` for ``None`` or a non-list scalar — a scalar where a list was expected is
+    skipped, never exploded into per-character entries (a stray ``collections: oepa`` must not
+    clear collections ``o`` / ``e`` / ``p`` / ``a``).
+    """
+    if not isinstance(value, list):
+        return []
+    return [str(x).strip() for x in value if str(x).strip()]
 
 
 def _parse_scope(data: Any) -> tuple[list[str], list[str], list[str]]:
@@ -451,15 +459,16 @@ def _parse_scope(data: Any) -> tuple[list[str], list[str], list[str]]:
 
     Accepts either a mapping carrying optional ``collections`` / ``globs`` / ``documents``
     lists, or a bare list — shorthand for ``documents`` (exact rels), the common withhold form.
+    A mapping value that isn't a list is skipped (see :func:`_str_list`).
     """
     if isinstance(data, Mapping):
         return (
-            [str(s).strip() for s in (data.get("collections") or []) if str(s).strip()],
-            [str(g).strip() for g in (data.get("globs") or []) if str(g).strip()],
-            [str(r).strip() for r in (data.get("documents") or []) if str(r).strip()],
+            _str_list(data.get("collections")),
+            _str_list(data.get("globs")),
+            _str_list(data.get("documents")),
         )
     if isinstance(data, list):
-        return ([], [], [str(r).strip() for r in data if str(r).strip()])
+        return ([], [], _str_list(data))
     return ([], [], [])
 
 
@@ -489,7 +498,16 @@ def load_publish_allowlist(path: Path, *, exhibit_sources: Iterable[str] = ()) -
             cleared_c, cleared_g, cleared_d = _parse_scope(data)
             collections, globs = cleared_c, cleared_g
             documents += cleared_d
-            wc, wg, wd = _parse_scope(data.get("withhold"))
+            withhold_raw = data.get("withhold")
+            if withhold_raw is not None and not isinstance(withhold_raw, (Mapping, list)):
+                # A scalar withhold silently no-ops — the fail-UNSAFE direction (a file the
+                # operator meant to withhold would stay public). Surface it, don't swallow it.
+                log.warning(
+                    "site.documents.bad_allowlist",
+                    path=str(path),
+                    error=f"withhold must be a mapping or list, not {type(withhold_raw).__name__}",
+                )
+            wc, wg, wd = _parse_scope(withhold_raw)
             withhold = PublishScope(frozenset(wc), tuple(wg), frozenset(wd))
     return PublishAllowlist(
         collections=frozenset(collections),

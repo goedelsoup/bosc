@@ -155,9 +155,11 @@ def extract_published_passages(settings: Settings) -> list[PassageItem]:
     """Extract page passages for **every** published PDF across the whole corpus (the regen source).
 
     Reads the raw LFS PDFs, so it must run with ``git lfs pull`` (via ``watermark passages``), never
-    at export time. The publish allowlist + exhibit auto-includes are resolved exactly as the export
-    does, but over the **whole tree** (``scope=None``) so the one global artifact covers every site's
-    published docs; each per-site ``_passages_feed`` filters it back down to its own set.
+    at export time. The publish policy (cleared scope minus the ``withhold`` denylist, exhibits
+    auto-included) is resolved exactly as the export does, so a passage ships only where the
+    ``documents`` feed marks the doc ``published`` — but over the **whole tree** (``scope=None``) so
+    the one global artifact covers every site's published docs; each per-site ``_passages_feed``
+    filters it back down to its own set.
     """
     from watermark.site import documents as documents_mod
     from watermark.site import exhibits as exhibits_mod
