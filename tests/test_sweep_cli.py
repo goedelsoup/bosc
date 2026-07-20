@@ -161,9 +161,7 @@ def test_successful_run_writes_register_and_catalog(
     assert "data-centers.candidates.yaml" in catalog_text
 
 
-def test_no_distill_skips_candidate_record(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_no_distill_skips_candidate_record(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     settings = Settings(data_dir=tmp_path)
     monkeypatch.setattr("watermark.cli.sweep.get_settings", lambda: settings)
     monkeypatch.setattr("watermark.agent.client.ResearchAgent", _FakeAgent)
@@ -176,6 +174,59 @@ def test_no_distill_skips_candidate_record(
     assert not (settings.extracted_dir / "lima" / "data-centers.candidates.yaml").exists()
     catalog = settings.data_dir / "catalog" / "extracted" / "data-centers-lima.yaml"
     assert "data-centers.candidates.yaml" not in catalog.read_text(encoding="utf-8")
+
+
+def test_no_distill_removes_stale_candidate_sidecar(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    settings = Settings(data_dir=tmp_path)
+    # A prior run left a register + candidate sidecar; re-sweeping with --force --no-distill must
+    # not leave the now-stale sidecar paired with the freshly-swept register.
+    register = settings.extracted_dir / "lima" / "data-centers.md"
+    register.parent.mkdir(parents=True)
+    register.write_text("old register", encoding="utf-8")
+    stale = settings.extracted_dir / "lima" / "data-centers.candidates.yaml"
+    stale.write_text("site: lima\ncandidates: []\n", encoding="utf-8")
+
+    monkeypatch.setattr("watermark.cli.sweep.get_settings", lambda: settings)
+    monkeypatch.setattr("watermark.agent.client.ResearchAgent", _FakeAgent)
+
+    result = runner.invoke(
+        app, ["--site", "lima", "sweep", "data-centers", "--force", "--no-distill"]
+    )
+
+    assert result.exit_code == 0, result.output
+    assert "# Register" in register.read_text(encoding="utf-8")  # register was overwritten
+    assert not stale.exists()  # the stale sidecar was removed
+    catalog = settings.data_dir / "catalog" / "extracted" / "data-centers-lima.yaml"
+    assert "data-centers.candidates.yaml" not in catalog.read_text(encoding="utf-8")
+
+
+def test_distill_failure_preserves_register_and_catalog(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    settings = Settings(data_dir=tmp_path)
+
+    def _boom(*_args: object, **_kwargs: object) -> object:
+        raise RuntimeError("model unavailable")
+
+    monkeypatch.setattr("watermark.cli.sweep.get_settings", lambda: settings)
+    monkeypatch.setattr("watermark.agent.client.ResearchAgent", _FakeAgent)
+    monkeypatch.setattr("watermark.cli.sweep.distill_candidates", _boom)
+    # StructuredExtractor construction is lazy (no key until first use), so _boom raises first.
+
+    result = runner.invoke(app, ["--site", "lima", "sweep", "data-centers"])
+
+    # A distillation failure must not lose the expensive sweep or the catalog entry.
+    assert result.exit_code == 0, result.output
+    assert (settings.extracted_dir / "lima" / "data-centers.md").exists()
+    assert not (settings.extracted_dir / "lima" / "data-centers.candidates.yaml").exists()
+    catalog = settings.data_dir / "catalog" / "extracted" / "data-centers-lima.yaml"
+    assert catalog.exists()
+    assert "data-centers.candidates.yaml" not in catalog.read_text(encoding="utf-8")
+    # ...and the user gets actionable recovery guidance.
+    assert "distillation failed" in result.output.lower()
+    assert "facility distill --force" in result.output
 
 
 # ---------------------------------------------------------------------------
