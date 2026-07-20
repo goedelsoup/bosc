@@ -257,6 +257,14 @@
           },
           "title": "Top Chemicals",
           "type": "array"
+        },
+        "top_water_chemicals": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/RseiWaterChemical"
+          },
+          "title": "Top Water Chemicals",
+          "type": "array"
         }
       },
       "required": [
@@ -266,6 +274,42 @@
         "fips"
       ],
       "title": "RseiFacility",
+      "type": "object"
+    },
+    "RseiWaterChemical": {
+      "description": "A chemical's cumulative pounds released **to water** at a facility (media bucket 3).\n\nDistinct from :class:`RseiChemicalScore`, whose ``pounds`` are cumulative across *all*\nmedia (dominated by air/underground injection) and whose ranking is by modeled Score —\nso its top-N routinely omits the actual top water pollutants. This is the per-chemical\n*water* breakdown a chemical-specific dilution screen needs (#1607): it sums only the\ndirect-water (``MediaCode == 3``) release rows and reconciles to\n``pounds_by_media[\"water\"]``. ``reporting_years`` is the count of distinct years this\nchemical was reported to water — the faithful annualization divisor (mirrors\n:func:`watermark.hydrology.toxics._annual_water_pounds`), never the calendar span.",
+      "properties": {
+        "chemical": {
+          "title": "Chemical",
+          "type": "string"
+        },
+        "cas": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cas"
+        },
+        "water_pounds": {
+          "title": "Water Pounds",
+          "type": "number"
+        },
+        "reporting_years": {
+          "title": "Reporting Years",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "chemical",
+        "water_pounds",
+        "reporting_years"
+      ],
+      "title": "RseiWaterChemical",
       "type": "object"
     },
     "RseiYearScore": {

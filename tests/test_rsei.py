@@ -223,3 +223,34 @@ def test_committed_inventory_loads() -> None:
     gdls = next((f for f in inv.facilities if "GENERAL DYNAMICS" in f.name.upper()), None)
     assert gdls is not None and gdls.score > 0
     assert gdls.parent_name is not None and gdls.parent_name.startswith("GENERAL DYNAMICS")
+
+
+def test_water_chemical_breakdown_reconciles(tmp_path: Path) -> None:
+    """`top_water_chemicals` (media-3 per chemical) sums to `pounds_by_media['water']` (#1607).
+
+    And it surfaces the actual top *water* pollutant (ammonia at INEOS), which the all-media
+    `top_chemicals` ranking (dominated by underground injection) omits entirely.
+    """
+    settings = Settings(data_dir=tmp_path / "data", rsei_offline=True)
+    dest = rsei.archive_path(settings)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_bytes(FIXTURE.read_bytes())
+    inv = rsei.build_inventory(settings, fips="39003", county_name="Allen County, OH")
+
+    releasers = [f for f in inv.facilities if f.top_water_chemicals]
+    assert releasers, "no facility carried a per-chemical water breakdown"
+    for fac in releasers:
+        water_total = round((fac.pounds_by_media or {}).get("water", 0.0), 1)
+        chem_sum = round(sum(w.water_pounds for w in fac.top_water_chemicals), 1)
+        assert abs(chem_sum - water_total) < 0.5, f"{fac.name}: {chem_sum} != {water_total}"
+        # Ranked descending by water pounds; every entry positive with >=1 reporting year.
+        pounds = [w.water_pounds for w in fac.top_water_chemicals]
+        assert pounds == sorted(pounds, reverse=True)
+        assert all(w.water_pounds > 0 and w.reporting_years >= 1 for w in fac.top_water_chemicals)
+
+    ineos = next(f for f in inv.facilities if "INEOS" in f.name)
+    # The top water chemical is ammonia — NOT INEOS's top-by-score chemical (cobalt/acrylonitrile,
+    # which are underground/air-driven and carry ~0 water pounds).
+    assert ineos.top_water_chemicals[0].cas == "7664-41-7"
+    assert "Ammonia" in ineos.top_water_chemicals[0].chemical
+    assert ineos.top_chemicals[0].cas != "7664-41-7"

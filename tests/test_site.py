@@ -229,10 +229,12 @@ def test_merge_rsei_layer_rings_flagged_water_dischargers() -> None:
     base: dict = {"type": "FeatureCollection", "features": []}
     fc, _ = merge_rsei_layer(base, inv, screen)
     flagged = [f for f in fc["features"] if f["properties"].get("water_flag")]
-    # The three Ottawa-corridor majors plus the one elevated terminal.
+    # Critical/elevated water dischargers on the Ottawa corridor (per-chemical screen, WS-07).
     unexpected_flags = {f["properties"]["water_flag"] for f in flagged} - {"critical", "elevated"}
     assert not unexpected_flags, f"unexpected water_flag values: {unexpected_flags}"
-    assert sum(1 for f in flagged if f["properties"]["water_flag"] == "critical") == 3
+    # The map's critical rings match the screen's critical count exactly (no over/under-flagging).
+    ringed_critical = sum(1 for f in flagged if f["properties"]["water_flag"] == "critical")
+    assert ringed_critical == screen.meta["critical_count"] >= 3
     # A ringed feature names its receiving water in the popup label.
     crit_list = [f for f in flagged if f["properties"]["water_flag"] == "critical"]
     assert crit_list, (

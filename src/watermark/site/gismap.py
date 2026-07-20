@@ -97,17 +97,19 @@ def merge_rsei_layer(
         sc = by_id.get(fac.facility_id)
         if sc and sc.flag in ("critical", "elevated"):
             props["water_flag"] = sc.flag
-            conc = (
-                f", ~{sc.screening_concentration.value:g} mg/L"
-                if sc.screening_concentration
-                else ""
+            # Name the worst chemical exceedances (WS-07 per-chemical screen), not the aggregate.
+            from watermark.hydrology.toxics import format_factor, worst_exceedances
+
+            chems = "; ".join(
+                f"{chem.split(' (')[0].strip()} {ctype} {format_factor(ef)}"
+                for ef, chem, ctype in worst_exceedances(sc.chemical_screens, k=2)
             )
             cite = "ECHO-cited" if sc.receiving_water_source == "connector" else "corridor-inferred"
             props["label"] = label + (
                 f"<br><b>toxic water discharger → {sc.receiving_water}</b> "
-                f"({sc.flag}{conc} at the {sc.low_flow_7q10.value:g} cfs 7Q10; {cite})"
-                if sc.low_flow_7q10
-                else ""
+                f"({sc.flag}; {chems} vs Ohio WQS; {cite})"
+                if chems
+                else f"<br><b>toxic water discharger → {sc.receiving_water}</b> ({sc.flag}; {cite})"
             )
         feats.append(
             {

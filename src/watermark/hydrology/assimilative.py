@@ -5,6 +5,17 @@ low flow. The dilution ratio is ``7Q10 / discharge`` (how many parts of low-flow
 stream per part of effluent). Below ~1, the effluent dominates the stream at design
 low flow — effectively undiluted. This is a *screening band*, not a permit
 determination; the real wasteload allocation is in the Ohio EPA fact sheets.
+
+**This is a HYDRAULIC dilution ratio, not per-parameter assimilative capacity.** A
+municipal WWTP is characterized here only by its design *flow* (cfs) — the corpus holds no
+per-parameter effluent chemistry for these plants. So, unlike the industrial toxic screen
+(:mod:`watermark.hydrology.toxics`, WS-07 / #1607), which now reads each RSEI discharger's
+per-chemical water load against its own Ohio water-quality criterion (loading capacity =
+Q·criterion), this check cannot yet screen ammonia / CBOD / total residual chlorine / metals
+against their WQBEL-driving criteria. Doing so needs the plants' reported effluent
+*concentrations* (the Ohio EPA NPDES DMR record); until that is ingested, the dilution ratio is
+the honest ceiling of what the flow-only data supports — no fabricated per-parameter rigor. The
+gap is tracked as an open lead (``WWTP-PARAM-ASSIM`` in ``data/site/leads.yaml``).
 """
 
 from __future__ import annotations

@@ -1,19 +1,35 @@
 meta:
-  subject: Industrial toxic water dischargers vs cited receiving-stream 7Q10
-  source: EPA RSEI (water-media releases) x EPA ECHO (receiving water) x Ohio EPA
-    cited 7Q10 (data/reference/hydrology/low-flow-7q10.yaml)
+  subject: Industrial toxic water dischargers vs chemical-specific Ohio WQS criteria
+  source: EPA RSEI (per-chemical water-media releases) x EPA ECHO (receiving water)
+    x Ohio EPA cited design low flows (data/reference/hydrology/low-flow-7q10.yaml)
+    x Ohio WQS criteria (data/reference/wqs/ohio-water-quality-criteria.yaml)
+  criteria_source: Ohio Administrative Code Chapter 3745-1 — Ohio Water Quality Standards
   county_fips: '39003'
   county_name: Allen County, OH
   water_releaser_count: 13
-  critical_count: 3
+  critical_count: 5
+  exceeding_chemical_count: 24
+  design_flows:
+    acute_cmc: 1Q10
+    chronic_ccc: 7Q10
+    human_health: harmonic mean
+  hardness_assumption_mg_l: 100
+  ammonia_condition: pH 8.0, 25 C, March-November (growing season)
   caveats:
+  - Each water chemical's derived concentration is screened against its OWN Ohio criterion
+    (acute CMC at 1Q10, chronic CCC at 7Q10, human health at harmonic mean) — not
+    a flat aggregate band. A chemical with no committed Ohio criterion is reported
+    'no_criterion' (omitted, never guessed).
   - Receiving water is ECHO-cited where available, else inferred from the Ottawa River
     industrial corridor coordinate cluster (tagged assumption).
-  - 'The screening concentration is a derived order-of-magnitude value: annual reported
-    water pounds, fully mixed at the 7Q10, no decay/mixing zone. It is a screen, not
-    a permit determination or a measured concentration.'
+  - 'Derived concentrations are order-of-magnitude: annual reported water pounds,
+    fully mixed at the design flow, no decay or mixing-zone credit — a screen, not
+    a permit wasteload allocation. Exceedance flags the need for a WQBEL determination.'
+  - Metals criteria are evaluated at a stated reference hardness (100 mg/L CaCO3);
+    ammonia at a stated pH/temperature; chromium screened conservatively as Cr(VI).
+    See data/reference/wqs/ for the re-derivable assumptions.
   - RSEI Score is EPA's modeled, population-weighted Risk-Screening Score (unitless,
-    comparative only).
+    comparative only); the aggregate screening_concentration is coarse context only.
 screens:
 - facility: INEOS NITRILES USA LLC
   rsei_facility_id: 45805BPCHMFORTA
@@ -24,7 +40,9 @@ screens:
   water_pounds: 706520.0
   annual_water_pounds: 20186.3
   year_span: 1988-2022
-  top_water_chemical: Cobalt compounds
+  top_water_chemical: Ammonia (includes anhydrous ammonia and aqueous ammonia from
+    water dissociable ammonium salts and other sources; 10 percent of total aqueous
+    ammonia is reportable under this listing)
   npdes_id: null
   receiving_water: Ottawa River
   receiving_water_source: assumption
@@ -38,8 +56,10 @@ screens:
       table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
     confidence: high
     asof: null
+    low: null
+    high: null
   screening_concentration:
-    value: 51.293
+    value: 51.301
     unit: mg/L
     source: derived
     citation: 20,186 lb/yr reported to water / 365 d, fully mixed at the 0.2 cfs 7Q10
@@ -47,9 +67,364 @@ screens:
       no decay/mixing zone)
     confidence: low
     asof: null
+    low: null
+    high: null
+  chemical_screens:
+  - chemical: Ammonia (includes anhydrous ammonia and aqueous ammonia from water dissociable
+      ammonium salts and other sources; 10 percent of total aqueous ammonia is reportable
+      under this listing)
+    cas: 7664-41-7
+    annual_water_pounds: 77980.0
+    reporting_years: 5
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 5.9
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-2 (WWH outside-mixing-zone maximum total
+          ammonia-N), pH 8.0, 25 C
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 213.6438
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.6
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-5 (WWH 30-day-average total ammonia-N), March-November,
+          pH 8.0, 25 C
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 213.6438
+      loading_capacity_lb_day: 0.6468
+      derived_concentration:
+        value: 198.175
+        unit: mg/L
+        source: derived
+        citation: 77,980 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 —
+          screening order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 330.292
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Chlorine
+    cas: 7782-50-5
+    annual_water_pounds: 56300.0
+    reporting_years: 5
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.019
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (chlorine, WWH, OMZM)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 154.2466
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.011
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (chlorine, WWH, OMZA)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 154.2466
+      loading_capacity_lb_day: 0.0119
+      derived_concentration:
+        value: 143.0784
+        unit: mg/L
+        source: derived
+        citation: 56,300 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 —
+          screening order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 13007.125
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Hydroquinone
+    cas: 123-31-9
+    annual_water_pounds: 3600.0
+    reporting_years: 5
+    criteria: []
+    flag: no_criterion
+  - chemical: Ethylene glycol
+    cas: 107-21-1
+    annual_water_pounds: 4033.3
+    reporting_years: 3
+    criteria: []
+    flag: no_criterion
+  - chemical: Chromium compounds (except for chromite ore mined in the Transvaal Region
+      of South Africa and the unreacted ore component of the chromite ore processing
+      residue (COPR).  COPR is the solid waste remaining after aqueous extraction
+      of oxidized chromite ore that has been combined with soda ash and kiln roasted
+      at approximately 2,000 F.)
+    cas: N090
+    annual_water_pounds: 250.0
+    reporting_years: 5
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.016
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (chromium VI, dissolved, OMZM)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.6849
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.011
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (chromium VI, dissolved, OMZA)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.6849
+      loading_capacity_lb_day: 0.0119
+      derived_concentration:
+        value: 0.6353
+        unit: mg/L
+        source: derived
+        citation: 250 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 57.758
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Hydrogen cyanide
+    cas: 74-90-8
+    annual_water_pounds: 250.0
+    reporting_years: 5
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.022
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (free cyanide, OMZM)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.6849
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.0052
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (free cyanide, OMZA)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.6849
+      loading_capacity_lb_day: 0.0056
+      derived_concentration:
+        value: 0.6353
+        unit: mg/L
+        source: derived
+        citation: 250 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 122.181
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Acrylonitrile
+    cas: 107-13-1
+    annual_water_pounds: 250.0
+    reporting_years: 4
+    criteria:
+    - criterion_type: human_health
+      design_flow:
+        value: 4.8
+        unit: cfs
+        source: document
+        citation: harmonic mean — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining
+          Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.00059
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-33 Table 33-1 (acrylonitrile, public water supply)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.6849
+      loading_capacity_lb_day: 0.0153
+      derived_concentration:
+        value: 0.0265
+        unit: mg/L
+        source: derived
+        citation: 250 lb/yr to water / 365 d, fully mixed at the 4.8 cfs harmonic
+          mean — screening order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 44.869
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Acetonitrile
+    cas: 75-05-8
+    annual_water_pounds: 250.0
+    reporting_years: 4
+    criteria: []
+    flag: no_criterion
+  - chemical: Diethanolamine
+    cas: 111-42-2
+    annual_water_pounds: 103.0
+    reporting_years: 5
+    criteria: []
+    flag: no_criterion
+  - chemical: Formaldehyde
+    cas: 50-00-0
+    annual_water_pounds: 5.0
+    reporting_years: 1
+    criteria: []
+    flag: no_criterion
   flag: critical
-  detail: 'INEOS NITRILES USA LLC: RSEI Score 39,726,351, 706,520 lb to water → Ottawa
-    River (inferred, 0.2 cfs 7Q10; ~51.293 mg/L at design low flow) [critical].'
+  detail: 'INEOS NITRILES USA LLC: 5/10 water chemicals vs Ohio criteria on Ottawa
+    River (inferred) — Chlorine (chronic 13,007x); Ammonia (chronic 330x); Hydrogen
+    cyanide (chronic 122x) [critical].'
 - facility: LIMA REFINING CO
   rsei_facility_id: 45804SHLCM1150S
   latitude: 40.720649
@@ -59,11 +434,8 @@ screens:
   water_pounds: 1801063.7
   annual_water_pounds: 51459.0
   year_span: 1988-2022
-  top_water_chemical: Chromium compounds (except for chromite ore mined in the Transvaal
-    Region of South Africa and the unreacted ore component of the chromite ore processing
-    residue (COPR).  COPR is the solid waste remaining after aqueous extraction of
-    oxidized chromite ore that has been combined with soda ash and kiln roasted at
-    approximately 2,000 F.)
+  top_water_chemical: Nitrate compounds (water dissociable; reportable only when in
+    aqueous solution)
   npdes_id: OH0002623
   receiving_water: OTTAWA RIVER
   receiving_water_source: connector
@@ -76,8 +448,10 @@ screens:
       table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
     confidence: high
     asof: null
+    low: null
+    high: null
   screening_concentration:
-    value: 130.756
+    value: 130.776
     unit: mg/L
     source: derived
     citation: 51,459 lb/yr reported to water / 365 d, fully mixed at the 0.2 cfs 7Q10
@@ -85,9 +459,1115 @@ screens:
       no decay/mixing zone)
     confidence: low
     asof: null
+    low: null
+    high: null
+  chemical_screens:
+  - chemical: Nitrate compounds (water dissociable; reportable only when in aqueous
+      solution)
+    cas: N511
+    annual_water_pounds: 61848.0
+    reporting_years: 27
+    criteria:
+    - criterion_type: human_health
+      design_flow:
+        value: 4.8
+        unit: cfs
+        source: document
+        citation: harmonic mean — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining
+          Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 44.0
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-33 Table 33-1 (nitrate+nitrite as N, 10 mg/L public water
+          supply MCL); expressed as 44 mg/L NO3
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 169.4464
+      loading_capacity_lb_day: 1138.4277
+      derived_concentration:
+        value: 6.5491
+        unit: mg/L
+        source: derived
+        citation: 61,848 lb/yr to water / 365 d, fully mixed at the 4.8 cfs harmonic
+          mean — screening order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 0.149
+      flag: approach
+      note: null
+    flag: approach
+  - chemical: Ammonia (includes anhydrous ammonia and aqueous ammonia from water dissociable
+      ammonium salts and other sources; 10 percent of total aqueous ammonia is reportable
+      under this listing)
+    cas: 7664-41-7
+    annual_water_pounds: 3155.6
+    reporting_years: 35
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 5.9
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-2 (WWH outside-mixing-zone maximum total
+          ammonia-N), pH 8.0, 25 C
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 8.6456
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.6
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-5 (WWH 30-day-average total ammonia-N), March-November,
+          pH 8.0, 25 C
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 8.6456
+      loading_capacity_lb_day: 0.6468
+      derived_concentration:
+        value: 8.0196
+        unit: mg/L
+        source: derived
+        citation: 3,156 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 —
+          screening order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 13.366
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Barium
+    cas: 7440-39-3
+    annual_water_pounds: 973.9
+    reporting_years: 7
+    criteria: []
+    flag: no_criterion
+  - chemical: Nickel
+    cas: 7440-02-0
+    annual_water_pounds: 1014.0
+    reporting_years: 3
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.468
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved nickel, OMZM) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 2.7781
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.052
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved nickel, OMZA) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 2.7781
+      loading_capacity_lb_day: 0.0561
+      derived_concentration:
+        value: 2.5769
+        unit: mg/L
+        source: derived
+        citation: 1,014 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 —
+          screening order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 49.556
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Lead
+    cas: 7439-92-1
+    annual_water_pounds: 130.7
+    reporting_years: 20
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.0969
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved lead, OMZM) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.3581
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.00508
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved lead, OMZA) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.3581
+      loading_capacity_lb_day: 0.0055
+      derived_concentration:
+        value: 0.3322
+        unit: mg/L
+        source: derived
+        citation: 131 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 65.385
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Chromium compounds (except for chromite ore mined in the Transvaal Region
+      of South Africa and the unreacted ore component of the chromite ore processing
+      residue (COPR).  COPR is the solid waste remaining after aqueous extraction
+      of oxidized chromite ore that has been combined with soda ash and kiln roasted
+      at approximately 2,000 F.)
+    cas: N090
+    annual_water_pounds: 750.0
+    reporting_years: 3
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.016
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (chromium VI, dissolved, OMZM)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 2.0548
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.011
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (chromium VI, dissolved, OMZA)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 2.0548
+      loading_capacity_lb_day: 0.0119
+      derived_concentration:
+        value: 1.906
+        unit: mg/L
+        source: derived
+        citation: 750 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 173.274
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Phenol
+    cas: 108-95-2
+    annual_water_pounds: 349.3
+    reporting_years: 4
+    criteria:
+    - criterion_type: human_health
+      design_flow:
+        value: 4.8
+        unit: cfs
+        source: document
+        citation: harmonic mean — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining
+          Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 4.0
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-33 Table 33-1 (phenol, human health / organism)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.9569
+      loading_capacity_lb_day: 103.4934
+      derived_concentration:
+        value: 0.037
+        unit: mg/L
+        source: derived
+        citation: 349 lb/yr to water / 365 d, fully mixed at the 4.8 cfs harmonic
+          mean — screening order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 0.009
+      flag: ok
+      note: null
+    flag: ok
+  - chemical: Chlorine
+    cas: 7782-50-5
+    annual_water_pounds: 147.4
+    reporting_years: 8
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.019
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (chlorine, WWH, OMZM)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.4039
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.011
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (chlorine, WWH, OMZA)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.4039
+      loading_capacity_lb_day: 0.0119
+      derived_concentration:
+        value: 0.3747
+        unit: mg/L
+        source: derived
+        citation: 147 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 34.06
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Selenium
+    cas: 7782-49-2
+    annual_water_pounds: 104.2
+    reporting_years: 7
+    criteria:
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.005
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (selenium, total recoverable, OMZA)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.2856
+      loading_capacity_lb_day: 0.0054
+      derived_concentration:
+        value: 0.2649
+        unit: mg/L
+        source: derived
+        citation: 104 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 52.976
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Chromium
+    cas: 7440-47-3
+    annual_water_pounds: 560.0
+    reporting_years: 1
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.016
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (chromium VI, dissolved, OMZM)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 1.5342
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.011
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (chromium VI, dissolved, OMZA)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 1.5342
+      loading_capacity_lb_day: 0.0119
+      derived_concentration:
+        value: 1.4232
+        unit: mg/L
+        source: derived
+        citation: 560 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 129.378
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Benzene
+    cas: 71-43-2
+    annual_water_pounds: 168.3
+    reporting_years: 3
+    criteria:
+    - criterion_type: human_health
+      design_flow:
+        value: 4.8
+        unit: cfs
+        source: document
+        citation: harmonic mean — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining
+          Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.005
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-33 Table 33-1 (benzene, public water supply / SDWA MCL
+          5 ug/L)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.4612
+      loading_capacity_lb_day: 0.1294
+      derived_concentration:
+        value: 0.0178
+        unit: mg/L
+        source: derived
+        citation: 168 lb/yr to water / 365 d, fully mixed at the 4.8 cfs harmonic
+          mean — screening order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 3.565
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Cyanide compounds
+    cas: N106
+    annual_water_pounds: 66.3
+    reporting_years: 7
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.022
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (free cyanide, OMZM)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.1817
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.0052
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (free cyanide, OMZA)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.1817
+      loading_capacity_lb_day: 0.0056
+      derived_concentration:
+        value: 0.1686
+        unit: mg/L
+        source: derived
+        citation: 66 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 32.416
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Toluene
+    cas: 108-88-3
+    annual_water_pounds: 127.5
+    reporting_years: 2
+    criteria:
+    - criterion_type: human_health
+      design_flow:
+        value: 4.8
+        unit: cfs
+        source: document
+        citation: harmonic mean — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining
+          Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 1.0
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-33 Table 33-1 (toluene, public water supply / SDWA MCL
+          1000 ug/L)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.3493
+      loading_capacity_lb_day: 25.8734
+      derived_concentration:
+        value: 0.0135
+        unit: mg/L
+        source: derived
+        citation: 128 lb/yr to water / 365 d, fully mixed at the 4.8 cfs harmonic
+          mean — screening order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 0.014
+      flag: ok
+      note: null
+    flag: ok
+  - chemical: Ethylbenzene
+    cas: 100-41-4
+    annual_water_pounds: 127.5
+    reporting_years: 2
+    criteria:
+    - criterion_type: human_health
+      design_flow:
+        value: 4.8
+        unit: cfs
+        source: document
+        citation: harmonic mean — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining
+          Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.7
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-33 Table 33-1 (ethylbenzene, public water supply / SDWA
+          MCL 700 ug/L)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.3493
+      loading_capacity_lb_day: 18.1113
+      derived_concentration:
+        value: 0.0135
+        unit: mg/L
+        source: derived
+        citation: 128 lb/yr to water / 365 d, fully mixed at the 4.8 cfs harmonic
+          mean — screening order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 0.019
+      flag: ok
+      note: null
+    flag: ok
+  - chemical: Carbon tetrachloride
+    cas: 56-23-5
+    annual_water_pounds: 127.5
+    reporting_years: 2
+    criteria:
+    - criterion_type: human_health
+      design_flow:
+        value: 4.8
+        unit: cfs
+        source: document
+        citation: harmonic mean — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining
+          Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.0025
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-33 Table 33-1 (carbon tetrachloride, public water supply)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.3493
+      loading_capacity_lb_day: 0.0647
+      derived_concentration:
+        value: 0.0135
+        unit: mg/L
+        source: derived
+        citation: 128 lb/yr to water / 365 d, fully mixed at the 4.8 cfs harmonic
+          mean — screening order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 5.4
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Mercury
+    cas: 7439-97-6
+    annual_water_pounds: 12.1
+    reporting_years: 17
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.0017
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (mercury, total recoverable, OMZM)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0331
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.00091
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (mercury, total recoverable, OMZA)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0331
+      loading_capacity_lb_day: 0.001
+      derived_concentration:
+        value: 0.0307
+        unit: mg/L
+        source: derived
+        citation: 12 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 33.71
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Copper
+    cas: 7440-50-8
+    annual_water_pounds: 25.8
+    reporting_years: 6
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.0134
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved copper, OMZM) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0708
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.00895
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved copper, OMZA) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0708
+      loading_capacity_lb_day: 0.0096
+      derived_concentration:
+        value: 0.0657
+        unit: mg/L
+        source: derived
+        citation: 26 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 7.335
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Zinc compounds
+    cas: N982
+    annual_water_pounds: 10.8
+    reporting_years: 3
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.117
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved zinc, OMZM) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0295
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.118
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved zinc, OMZA) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0295
+      loading_capacity_lb_day: 0.1272
+      derived_concentration:
+        value: 0.0274
+        unit: mg/L
+        source: derived
+        citation: 11 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 0.232
+      flag: approach
+      note: null
+    flag: exceedance
+  - chemical: Xylene (mixed isomers)
+    cas: 1330-20-7
+    annual_water_pounds: 5.0
+    reporting_years: 1
+    criteria:
+    - criterion_type: human_health
+      design_flow:
+        value: 4.8
+        unit: cfs
+        source: document
+        citation: harmonic mean — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining
+          Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 10.0
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-33 Table 33-1 (xylenes, public water supply / SDWA MCL
+          10000 ug/L)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0137
+      loading_capacity_lb_day: 258.7336
+      derived_concentration:
+        value: 0.0005
+        unit: mg/L
+        source: derived
+        citation: 5 lb/yr to water / 365 d, fully mixed at the 4.8 cfs harmonic mean
+          — screening order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 0.0
+      flag: ok
+      note: null
+    flag: ok
+  - chemical: Lead compounds
+    cas: N420
+    annual_water_pounds: 0.6
+    reporting_years: 1
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.0969
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved lead, OMZM) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0016
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.00508
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved lead, OMZA) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0016
+      loading_capacity_lb_day: 0.0055
+      derived_concentration:
+        value: 0.0015
+        unit: mg/L
+        source: derived
+        citation: 1 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 0.3
+      flag: approach
+      note: null
+    flag: exceedance
+  - chemical: Bromomethane (Methyl bromide)
+    cas: 74-83-9
+    annual_water_pounds: 0.1
+    reporting_years: 1
+    criteria: []
+    flag: no_criterion
   flag: critical
-  detail: 'LIMA REFINING CO: RSEI Score 3,300,621, 1,801,064 lb to water → OTTAWA
-    RIVER (cited, 0.2 cfs 7Q10; ~130.756 mg/L at design low flow) [critical].'
+  detail: 'LIMA REFINING CO: 19/21 water chemicals vs Ohio criteria on OTTAWA RIVER
+    (cited) — Chromium compounds (chronic 173x); Chromium (chronic 129x); Lead (chronic
+    65x) [critical].'
 - facility: PCS NITROGEN OHIO L.P.
   rsei_facility_id: 45802RCDNH1900F
   latitude: 40.717499
@@ -97,7 +1577,8 @@ screens:
   water_pounds: 3108266.8
   annual_water_pounds: 103608.9
   year_span: 1993-2022
-  top_water_chemical: Hydroquinone
+  top_water_chemical: Nitrate compounds (water dissociable; reportable only when in
+    aqueous solution)
   npdes_id: OH0002615
   receiving_water: Ottawa River
   receiving_water_source: assumption
@@ -111,8 +1592,10 @@ screens:
       table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
     confidence: high
     asof: null
+    low: null
+    high: null
   screening_concentration:
-    value: 263.268
+    value: 263.307
     unit: mg/L
     source: derived
     citation: 103,609 lb/yr reported to water / 365 d, fully mixed at the 0.2 cfs
@@ -120,9 +1603,561 @@ screens:
       reach; no decay/mixing zone)
     confidence: low
     asof: null
+    low: null
+    high: null
+  chemical_screens:
+  - chemical: Nitrate compounds (water dissociable; reportable only when in aqueous
+      solution)
+    cas: N511
+    annual_water_pounds: 98908.9
+    reporting_years: 28
+    criteria:
+    - criterion_type: human_health
+      design_flow:
+        value: 4.8
+        unit: cfs
+        source: document
+        citation: harmonic mean — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining
+          Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 44.0
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-33 Table 33-1 (nitrate+nitrite as N, 10 mg/L public water
+          supply MCL); expressed as 44 mg/L NO3
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 270.9834
+      loading_capacity_lb_day: 1138.4277
+      derived_concentration:
+        value: 10.4735
+        unit: mg/L
+        source: derived
+        citation: 98,909 lb/yr to water / 365 d, fully mixed at the 4.8 cfs harmonic
+          mean — screening order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 0.238
+      flag: approach
+      note: null
+    flag: approach
+  - chemical: Ammonia (includes anhydrous ammonia and aqueous ammonia from water dissociable
+      ammonium salts and other sources; 10 percent of total aqueous ammonia is reportable
+      under this listing)
+    cas: 7664-41-7
+    annual_water_pounds: 8854.8
+    reporting_years: 30
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 5.9
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-2 (WWH outside-mixing-zone maximum total
+          ammonia-N), pH 8.0, 25 C
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 24.2596
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.6
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-5 (WWH 30-day-average total ammonia-N), March-November,
+          pH 8.0, 25 C
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 24.2596
+      loading_capacity_lb_day: 0.6468
+      derived_concentration:
+        value: 22.5031
+        unit: mg/L
+        source: derived
+        citation: 8,855 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 —
+          screening order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 37.505
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Methanol
+    cas: 67-56-1
+    annual_water_pounds: 8648.6
+    reporting_years: 7
+    criteria: []
+    flag: no_criterion
+  - chemical: Hydroquinone
+    cas: 123-31-9
+    annual_water_pounds: 298.4
+    reporting_years: 17
+    criteria: []
+    flag: no_criterion
+  - chemical: Chlorine
+    cas: 7782-50-5
+    annual_water_pounds: 310.3
+    reporting_years: 16
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.019
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (chlorine, WWH, OMZM)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.8502
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.011
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (chlorine, WWH, OMZA)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.8502
+      loading_capacity_lb_day: 0.0119
+      derived_concentration:
+        value: 0.7886
+        unit: mg/L
+        source: derived
+        citation: 310 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 71.692
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Copper compounds (this category does not include copper phthalocyanine
+      compounds that are substituted with only hydrogen, and/or chlorine, and/or bromine.)
+    cas: N100
+    annual_water_pounds: 72.1
+    reporting_years: 16
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.0134
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved copper, OMZM) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.1975
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.00895
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved copper, OMZA) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.1975
+      loading_capacity_lb_day: 0.0096
+      derived_concentration:
+        value: 0.1832
+        unit: mg/L
+        source: derived
+        citation: 72 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 20.471
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Cyanide compounds
+    cas: N106
+    annual_water_pounds: 88.6
+    reporting_years: 12
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.022
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (free cyanide, OMZM)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.2427
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.0052
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (free cyanide, OMZA)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.2427
+      loading_capacity_lb_day: 0.0056
+      derived_concentration:
+        value: 0.2251
+        unit: mg/L
+        source: derived
+        citation: 89 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 43.293
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Zinc compounds
+    cas: N982
+    annual_water_pounds: 170.0
+    reporting_years: 1
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.117
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved zinc, OMZM) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.4658
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.118
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved zinc, OMZA) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.4658
+      loading_capacity_lb_day: 0.1272
+      derived_concentration:
+        value: 0.432
+        unit: mg/L
+        source: derived
+        citation: 170 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 3.661
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Diethanolamine
+    cas: 111-42-2
+    annual_water_pounds: 5.0
+    reporting_years: 15
+    criteria: []
+    flag: no_criterion
+  - chemical: Mercury compounds
+    cas: N458
+    annual_water_pounds: 4.5
+    reporting_years: 16
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.0017
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (mercury, total recoverable, OMZM)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0124
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.00091
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (mercury, total recoverable, OMZA)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0124
+      loading_capacity_lb_day: 0.001
+      derived_concentration:
+        value: 0.0115
+        unit: mg/L
+        source: derived
+        citation: 5 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 12.62
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Nickel compounds
+    cas: N495
+    annual_water_pounds: 52.0
+    reporting_years: 1
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.468
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved nickel, OMZM) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.1425
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.052
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved nickel, OMZA) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.1425
+      loading_capacity_lb_day: 0.0561
+      derived_concentration:
+        value: 0.1322
+        unit: mg/L
+        source: derived
+        citation: 52 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 2.541
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Formaldehyde
+    cas: 50-00-0
+    annual_water_pounds: 5.0
+    reporting_years: 2
+    criteria: []
+    flag: no_criterion
   flag: critical
-  detail: 'PCS NITROGEN OHIO L.P.: RSEI Score 1,996,618, 3,108,267 lb to water → Ottawa
-    River (inferred, 0.2 cfs 7Q10; ~263.268 mg/L at design low flow) [critical].'
+  detail: 'PCS NITROGEN OHIO L.P.: 8/12 water chemicals vs Ohio criteria on Ottawa
+    River (inferred) — Chlorine (chronic 72x); Cyanide compounds (chronic 43x); Ammonia
+    (chronic 38x) [critical].'
 - facility: U S ARMY JOINT SYSTEMS MANUFACTURING CENTER
   rsei_facility_id: 45804SRMYL1155B
   latitude: 40.708654
@@ -146,6 +2181,8 @@ screens:
       table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
     confidence: high
     asof: null
+    low: null
+    high: null
   screening_concentration:
     value: 0.016
     unit: mg/L
@@ -155,20 +2192,233 @@ screens:
       no decay/mixing zone)
     confidence: low
     asof: null
-  flag: elevated
-  detail: 'U S ARMY JOINT SYSTEMS MANUFACTURING CENTER: RSEI Score 1,248,109, 160
-    lb to water → Ottawa River (inferred, 0.2 cfs 7Q10; ~0.016 mg/L at design low
-    flow) [elevated].'
-- facility: EQUILON ENTERPRISES LLC LIMA SOUTH TERMINAL
-  rsei_facility_id: 45804LMTRM1500B
-  latitude: 40.70863
-  longitude: -84.13103
-  score: 7964.3
-  cancer_score: 7874.2
-  water_pounds: 329.0
-  annual_water_pounds: 54.8
-  year_span: 1998-2003
-  top_water_chemical: Benzene
+    low: null
+    high: null
+  chemical_screens:
+  - chemical: Chromium
+    cas: 7440-47-3
+    annual_water_pounds: 5.0
+    reporting_years: 8
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.016
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (chromium VI, dissolved, OMZM)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0137
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.011
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (chromium VI, dissolved, OMZA)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0137
+      loading_capacity_lb_day: 0.0119
+      derived_concentration:
+        value: 0.0127
+        unit: mg/L
+        source: derived
+        citation: 5 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 1.155
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Nickel
+    cas: 7440-02-0
+    annual_water_pounds: 5.0
+    reporting_years: 8
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.468
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved nickel, OMZM) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0137
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.052
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved nickel, OMZA) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0137
+      loading_capacity_lb_day: 0.0561
+      derived_concentration:
+        value: 0.0127
+        unit: mg/L
+        source: derived
+        citation: 5 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 0.244
+      flag: approach
+      note: null
+    flag: exceedance
+  - chemical: Manganese
+    cas: 7439-96-5
+    annual_water_pounds: 5.0
+    reporting_years: 8
+    criteria: []
+    flag: no_criterion
+  - chemical: Copper
+    cas: 7440-50-8
+    annual_water_pounds: 5.0
+    reporting_years: 8
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.0134
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved copper, OMZM) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0137
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.00895
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved copper, OMZA) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0137
+      loading_capacity_lb_day: 0.0096
+      derived_concentration:
+        value: 0.0127
+        unit: mg/L
+        source: derived
+        citation: 5 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 1.42
+      flag: exceedance
+      note: null
+    flag: exceedance
+  flag: critical
+  detail: 'U S ARMY JOINT SYSTEMS MANUFACTURING CENTER: 3/4 water chemicals vs Ohio
+    criteria on Ottawa River (inferred) — Copper (chronic 1.4x); Chromium (chronic
+    1.2x); Nickel (acute ∞) [critical].'
+- facility: MPLX TERMINALS LLC - LIMA OH TERMINAL
+  rsei_facility_id: 45804MRTHN2990S
+  latitude: 40.69669
+  longitude: -84.12393
+  score: 17598.7
+  cancer_score: 16296.6
+  water_pounds: 39.9
+  annual_water_pounds: 1.6
+  year_span: 1998-2022
+  top_water_chemical: Naphthalene
   npdes_id: null
   receiving_water: Ottawa River
   receiving_water_source: assumption
@@ -182,19 +2432,225 @@ screens:
       table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
     confidence: high
     asof: null
+    low: null
+    high: null
   screening_concentration:
-    value: 0.139
+    value: 0.004
     unit: mg/L
     source: derived
-    citation: 55 lb/yr reported to water / 365 d, fully mixed at the 0.2 cfs 7Q10
-      — screening order-of-magnitude only (assumes all water releases reach this reach;
+    citation: 2 lb/yr reported to water / 365 d, fully mixed at the 0.2 cfs 7Q10 —
+      screening order-of-magnitude only (assumes all water releases reach this reach;
       no decay/mixing zone)
     confidence: low
     asof: null
-  flag: elevated
-  detail: 'EQUILON ENTERPRISES LLC LIMA SOUTH TERMINAL: RSEI Score 7,964, 329 lb to
-    water → Ottawa River (inferred, 0.2 cfs 7Q10; ~0.139 mg/L at design low flow)
-    [elevated].'
+    low: null
+    high: null
+  chemical_screens:
+  - chemical: Naphthalene
+    cas: 91-20-3
+    annual_water_pounds: 2.3
+    reporting_years: 6
+    criteria: []
+    flag: no_criterion
+  - chemical: Benzene
+    cas: 71-43-2
+    annual_water_pounds: 5.5
+    reporting_years: 2
+    criteria:
+    - criterion_type: human_health
+      design_flow:
+        value: 4.8
+        unit: cfs
+        source: document
+        citation: harmonic mean — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining
+          Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.005
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-33 Table 33-1 (benzene, public water supply / SDWA MCL
+          5 ug/L)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0151
+      loading_capacity_lb_day: 0.1294
+      derived_concentration:
+        value: 0.0006
+        unit: mg/L
+        source: derived
+        citation: 6 lb/yr to water / 365 d, fully mixed at the 4.8 cfs harmonic mean
+          — screening order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 0.116
+      flag: approach
+      note: null
+    flag: approach
+  - chemical: Cyclohexane
+    cas: 110-82-7
+    annual_water_pounds: 3.0
+    reporting_years: 2
+    criteria: []
+    flag: no_criterion
+  - chemical: Benzo[g,h,i]perylene
+    cas: 191-24-2
+    annual_water_pounds: 1.2
+    reporting_years: 2
+    criteria: []
+    flag: no_criterion
+  - chemical: Polycyclic aromatic compounds
+    cas: N590
+    annual_water_pounds: 1.1
+    reporting_years: 2
+    criteria: []
+    flag: no_criterion
+  - chemical: Lead compounds
+    cas: N420
+    annual_water_pounds: 2.2
+    reporting_years: 1
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.0969
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved lead, OMZM) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.006
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.00508
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved lead, OMZA) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.006
+      loading_capacity_lb_day: 0.0055
+      derived_concentration:
+        value: 0.0056
+        unit: mg/L
+        source: derived
+        citation: 2 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 1.101
+      flag: exceedance
+      note: null
+    flag: exceedance
+  - chemical: Lead
+    cas: 7439-92-1
+    annual_water_pounds: 1.0
+    reporting_years: 2
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.0969
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved lead, OMZM) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0027
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.00508
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved lead, OMZA) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0027
+      loading_capacity_lb_day: 0.0055
+      derived_concentration:
+        value: 0.0025
+        unit: mg/L
+        source: derived
+        citation: 1 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 0.5
+      flag: approach
+      note: null
+    flag: exceedance
+  flag: critical
+  detail: 'MPLX TERMINALS LLC - LIMA OH TERMINAL: 3/7 water chemicals vs Ohio criteria
+    on Ottawa River (inferred) — Lead compounds (chronic 1.1x); Lead (acute ∞) [critical].'
 - facility: TELEDYNE OHIO STEEL
   rsei_facility_id: 45802TLDYNWESTF
   latitude: 40.71582
@@ -222,6 +2678,8 @@ screens:
       table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
     confidence: high
     asof: null
+    low: null
+    high: null
   screening_concentration:
     value: 0.004
     unit: mg/L
@@ -231,19 +2689,163 @@ screens:
       no decay/mixing zone)
     confidence: low
     asof: null
-  flag: context
-  detail: 'TELEDYNE OHIO STEEL: RSEI Score 52,485, 5 lb to water → Ottawa River (inferred,
-    0.2 cfs 7Q10; ~0.004 mg/L at design low flow) [context].'
-- facility: MPLX TERMINALS LLC - LIMA OH TERMINAL
-  rsei_facility_id: 45804MRTHN2990S
-  latitude: 40.69669
-  longitude: -84.12393
-  score: 17598.7
-  cancer_score: 16296.6
-  water_pounds: 39.9
-  annual_water_pounds: 1.6
-  year_span: 1998-2022
-  top_water_chemical: Benzene
+    low: null
+    high: null
+  chemical_screens:
+  - chemical: Chromium compounds (except for chromite ore mined in the Transvaal Region
+      of South Africa and the unreacted ore component of the chromite ore processing
+      residue (COPR).  COPR is the solid waste remaining after aqueous extraction
+      of oxidized chromite ore that has been combined with soda ash and kiln roasted
+      at approximately 2,000 F.)
+    cas: N090
+    annual_water_pounds: 1.0
+    reporting_years: 3
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.016
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (chromium VI, dissolved, OMZM)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0027
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.011
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-1 (chromium VI, dissolved, OMZA)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0027
+      loading_capacity_lb_day: 0.0119
+      derived_concentration:
+        value: 0.0025
+        unit: mg/L
+        source: derived
+        citation: 1 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 0.231
+      flag: approach
+      note: null
+    flag: exceedance
+  - chemical: Copper compounds (this category does not include copper phthalocyanine
+      compounds that are substituted with only hydrogen, and/or chlorine, and/or bromine.)
+    cas: N100
+    annual_water_pounds: 1.0
+    reporting_years: 2
+    criteria:
+    - criterion_type: acute
+      design_flow:
+        value: 0.0
+        unit: cfs
+        source: document
+        citation: 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream
+          Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.0134
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved copper, OMZM) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0027
+      loading_capacity_lb_day: 0.0
+      derived_concentration: null
+      exceedance_factor: null
+      flag: exceedance
+      note: '1Q10 = 0 cfs: no assimilative capacity at design low flow — any load
+        exceeds the criterion by construction'
+    - criterion_type: chronic
+      design_flow:
+        value: 0.2
+        unit: cfs
+        source: document
+        citation: Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows
+          table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.00895
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-35 Table 35-9 (dissolved copper, OMZA) at 100 mg/L hardness
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0027
+      loading_capacity_lb_day: 0.0096
+      derived_concentration:
+        value: 0.0025
+        unit: mg/L
+        source: derived
+        citation: 1 lb/yr to water / 365 d, fully mixed at the 0.2 cfs 7Q10 — screening
+          order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 0.284
+      flag: approach
+      note: null
+    flag: exceedance
+  flag: elevated
+  detail: 'TELEDYNE OHIO STEEL: 2/2 water chemicals vs Ohio criteria on Ottawa River
+    (inferred) — Chromium compounds (acute ∞); Copper compounds (acute ∞) [elevated].'
+- facility: EQUILON ENTERPRISES LLC LIMA SOUTH TERMINAL
+  rsei_facility_id: 45804LMTRM1500B
+  latitude: 40.70863
+  longitude: -84.13103
+  score: 7964.3
+  cancer_score: 7874.2
+  water_pounds: 329.0
+  annual_water_pounds: 54.8
+  year_span: 1998-2003
+  top_water_chemical: Methyl tert-butyl ether
   npdes_id: null
   receiving_water: Ottawa River
   receiving_water_source: assumption
@@ -257,18 +2859,209 @@ screens:
       table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
     confidence: high
     asof: null
+    low: null
+    high: null
   screening_concentration:
-    value: 0.004
+    value: 0.139
     unit: mg/L
     source: derived
-    citation: 2 lb/yr reported to water / 365 d, fully mixed at the 0.2 cfs 7Q10 —
-      screening order-of-magnitude only (assumes all water releases reach this reach;
+    citation: 55 lb/yr reported to water / 365 d, fully mixed at the 0.2 cfs 7Q10
+      — screening order-of-magnitude only (assumes all water releases reach this reach;
       no decay/mixing zone)
     confidence: low
     asof: null
+    low: null
+    high: null
+  chemical_screens:
+  - chemical: Methyl tert-butyl ether
+    cas: 1634-04-4
+    annual_water_pounds: 250.0
+    reporting_years: 1
+    criteria: []
+    flag: no_criterion
+  - chemical: Toluene
+    cas: 108-88-3
+    annual_water_pounds: 5.2
+    reporting_years: 6
+    criteria:
+    - criterion_type: human_health
+      design_flow:
+        value: 4.8
+        unit: cfs
+        source: document
+        citation: harmonic mean — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining
+          Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 1.0
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-33 Table 33-1 (toluene, public water supply / SDWA MCL
+          1000 ug/L)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0142
+      loading_capacity_lb_day: 25.8734
+      derived_concentration:
+        value: 0.0005
+        unit: mg/L
+        source: derived
+        citation: 5 lb/yr to water / 365 d, fully mixed at the 4.8 cfs harmonic mean
+          — screening order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 0.001
+      flag: ok
+      note: null
+    flag: ok
+  - chemical: Xylene (mixed isomers)
+    cas: 1330-20-7
+    annual_water_pounds: 4.5
+    reporting_years: 4
+    criteria:
+    - criterion_type: human_health
+      design_flow:
+        value: 4.8
+        unit: cfs
+        source: document
+        citation: harmonic mean — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining
+          Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 10.0
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-33 Table 33-1 (xylenes, public water supply / SDWA MCL
+          10000 ug/L)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0123
+      loading_capacity_lb_day: 258.7336
+      derived_concentration:
+        value: 0.0005
+        unit: mg/L
+        source: derived
+        citation: 4 lb/yr to water / 365 d, fully mixed at the 4.8 cfs harmonic mean
+          — screening order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 0.0
+      flag: ok
+      note: null
+    flag: ok
+  - chemical: Benzene
+    cas: 71-43-2
+    annual_water_pounds: 5.0
+    reporting_years: 3
+    criteria:
+    - criterion_type: human_health
+      design_flow:
+        value: 4.8
+        unit: cfs
+        source: document
+        citation: harmonic mean — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining
+          Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.005
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-33 Table 33-1 (benzene, public water supply / SDWA MCL
+          5 ug/L)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0137
+      loading_capacity_lb_day: 0.1294
+      derived_concentration:
+        value: 0.0005
+        unit: mg/L
+        source: derived
+        citation: 5 lb/yr to water / 365 d, fully mixed at the 4.8 cfs harmonic mean
+          — screening order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 0.106
+      flag: approach
+      note: null
+    flag: approach
+  - chemical: 1,2,4-Trimethylbenzene
+    cas: 95-63-6
+    annual_water_pounds: 5.0
+    reporting_years: 1
+    criteria: []
+    flag: no_criterion
+  - chemical: n-Hexane (Hexane)
+    cas: 110-54-3
+    annual_water_pounds: 5.0
+    reporting_years: 1
+    criteria: []
+    flag: no_criterion
+  - chemical: Ethylbenzene
+    cas: 100-41-4
+    annual_water_pounds: 5.0
+    reporting_years: 1
+    criteria:
+    - criterion_type: human_health
+      design_flow:
+        value: 4.8
+        unit: cfs
+        source: document
+        citation: harmonic mean — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining
+          Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      criterion:
+        value: 0.7
+        unit: mg/L
+        source: reference
+        citation: OAC 3745-1-33 Table 33-1 (ethylbenzene, public water supply / SDWA
+          MCL 700 ug/L)
+        confidence: high
+        asof: null
+        low: null
+        high: null
+      reported_load_lb_day: 0.0137
+      loading_capacity_lb_day: 18.1113
+      derived_concentration:
+        value: 0.0005
+        unit: mg/L
+        source: derived
+        citation: 5 lb/yr to water / 365 d, fully mixed at the 4.8 cfs harmonic mean
+          — screening order-of-magnitude only (no decay/mixing zone)
+        confidence: low
+        asof: null
+        low: null
+        high: null
+      exceedance_factor: 0.001
+      flag: ok
+      note: null
+    flag: ok
   flag: context
-  detail: 'MPLX TERMINALS LLC - LIMA OH TERMINAL: RSEI Score 17,599, 40 lb to water
-    → Ottawa River (inferred, 0.2 cfs 7Q10; ~0.004 mg/L at design low flow) [context].'
+  detail: 'EQUILON ENTERPRISES LLC LIMA SOUTH TERMINAL: 4/7 water chemicals screened
+    on Ottawa River (inferred) — no criterion exceedance [context].'
 - facility: VALTIR LLC PLT 1055
   rsei_facility_id: 45801TRNTY425EO
   latitude: 40.75743
@@ -278,13 +3071,14 @@ screens:
   water_pounds: 124.2
   annual_water_pounds: 3.7
   year_span: 1988-2022
-  top_water_chemical: Chromium
+  top_water_chemical: Manganese
   npdes_id: null
   receiving_water: null
   receiving_water_source: null
   receiving_water_citation: null
   low_flow_7q10: null
   screening_concentration: null
+  chemical_screens: []
   flag: uncharacterized
   detail: 'VALTIR LLC PLT 1055: water releaser with no cited/inferred receiving water.'
 - facility: CHEMTRADE LOGISTICS INC CAIRO SULFUR PRODS
@@ -304,6 +3098,7 @@ screens:
   receiving_water_citation: null
   low_flow_7q10: null
   screening_concentration: null
+  chemical_screens: []
   flag: uncharacterized
   detail: 'CHEMTRADE LOGISTICS INC CAIRO SULFUR PRODS: water releaser with no cited/inferred
     receiving water.'
@@ -316,13 +3111,15 @@ screens:
   water_pounds: 80.0
   annual_water_pounds: 4.0
   year_span: 1988-2007
-  top_water_chemical: Ethylbenzene
+  top_water_chemical: Copper compounds (this category does not include copper phthalocyanine
+    compounds that are substituted with only hydrogen, and/or chlorine, and/or bromine.)
   npdes_id: null
   receiving_water: null
   receiving_water_source: null
   receiving_water_citation: null
   low_flow_7q10: null
   screening_concentration: null
+  chemical_screens: []
   flag: uncharacterized
   detail: 'MARATHON ELECTRIC MANUFACTURING CORP: water releaser with no cited/inferred
     receiving water.'
@@ -335,13 +3132,14 @@ screens:
   water_pounds: 2775.0
   annual_water_pounds: 231.2
   year_span: 1988-2005
-  top_water_chemical: Trichloroethylene
+  top_water_chemical: Zinc (fume or dust)
   npdes_id: null
   receiving_water: null
   receiving_water_source: null
   receiving_water_citation: null
   low_flow_7q10: null
   screening_concentration: null
+  chemical_screens: []
   flag: uncharacterized
   detail: 'OHIO DECORATIVE PRODUCTS INC: water releaser with no cited/inferred receiving
     water.'
@@ -362,6 +3160,7 @@ screens:
   receiving_water_citation: null
   low_flow_7q10: null
   screening_concentration: null
+  chemical_screens: []
   flag: uncharacterized
   detail: 'HAYES-ALBION CORP TRIM TRENDS DIV: water releaser with no cited/inferred
     receiving water.'
@@ -381,6 +3180,7 @@ screens:
   receiving_water_citation: null
   low_flow_7q10: null
   screening_concentration: null
+  chemical_screens: []
   flag: uncharacterized
   detail: 'PURINA ANIMAL NUTRITION LLC - LIMA: water releaser with no cited/inferred
     receiving water.'
