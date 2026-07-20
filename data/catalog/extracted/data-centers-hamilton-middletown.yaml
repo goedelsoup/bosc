@@ -14,6 +14,9 @@ storage:
 - relpath: extracted/hamilton-middletown/data-centers.md
   media_type: text/markdown
   lfs: false
+- relpath: extracted/hamilton-middletown/data-centers.candidates.yaml
+  media_type: application/yaml
+  lfs: false
 refresh:
   cadence: on-demand
 provenance: document

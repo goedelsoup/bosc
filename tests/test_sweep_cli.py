@@ -10,6 +10,7 @@ from typer.testing import CliRunner
 from watermark.agent.client import AgentResult
 from watermark.cli import app
 from watermark.config import Settings
+from watermark.facility.candidate import ProvenancedFigure, SiteCandidates, build_candidate
 
 runner = CliRunner()
 
@@ -26,6 +27,29 @@ class _FakeAgent:
         if callable(on_text):
             on_text("Sweep output.")  # type: ignore[operator]
         return AgentResult(text="# Register\n\nContent.", num_turns=2, cost_usd=0.001)
+
+
+def _fake_distill(
+    register_text: str,
+    *,
+    site: str,
+    source_register: str,
+    generated_at: str,
+    extractor: object,
+) -> SiteCandidates:
+    """Stand-in for the forced-tool-use distillation (which needs API keys) — returns a canned,
+    promotable candidate so the sweep's structured-emit path is exercised hermetically."""
+    op = ProvenancedFigure(value="Acme DC", source_kind="reference", citation="press")
+    mw = ProvenancedFigure(value=100, unit="MW", source_kind="reference", citation="press")
+    candidate = build_candidate(
+        project_name="Test Project", operator=op, it_load_mw=mw, register_prose=register_text
+    )
+    return SiteCandidates(
+        site=site,
+        generated_at=generated_at,
+        source_register=source_register,
+        candidates=[candidate],
+    )
 
 
 class _ErrorAgent(_FakeAgent):
@@ -113,6 +137,7 @@ def test_successful_run_writes_register_and_catalog(
     settings = Settings(data_dir=tmp_path)
     monkeypatch.setattr("watermark.cli.sweep.get_settings", lambda: settings)
     monkeypatch.setattr("watermark.agent.client.ResearchAgent", _FakeAgent)
+    monkeypatch.setattr("watermark.cli.sweep.distill_candidates", _fake_distill)
 
     result = runner.invoke(app, ["--site", "lima", "sweep", "data-centers"])
 
@@ -122,11 +147,86 @@ def test_successful_run_writes_register_and_catalog(
     assert register.exists()
     assert "# Register" in register.read_text(encoding="utf-8")
 
+    # The structured candidate record is emitted alongside the prose (#1627).
+    candidates = settings.extracted_dir / "lima" / "data-centers.candidates.yaml"
+    assert candidates.exists()
+    assert "Test Project" in candidates.read_text(encoding="utf-8")
+
     catalog = settings.data_dir / "catalog" / "extracted" / "data-centers-lima.yaml"
     assert catalog.exists()
     catalog_text = catalog.read_text(encoding="utf-8")
     assert "needs-review" in catalog_text
     assert "data-centers-lima" in catalog_text
+    # ...and the sidecar is registered as a second storage relpath in the catalog entry.
+    assert "data-centers.candidates.yaml" in catalog_text
+
+
+def test_no_distill_skips_candidate_record(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    settings = Settings(data_dir=tmp_path)
+    monkeypatch.setattr("watermark.cli.sweep.get_settings", lambda: settings)
+    monkeypatch.setattr("watermark.agent.client.ResearchAgent", _FakeAgent)
+
+    result = runner.invoke(app, ["--site", "lima", "sweep", "data-centers", "--no-distill"])
+
+    assert result.exit_code == 0, result.output
+    assert (settings.extracted_dir / "lima" / "data-centers.md").exists()
+    # No candidate sidecar, and the catalog lists only the register storage.
+    assert not (settings.extracted_dir / "lima" / "data-centers.candidates.yaml").exists()
+    catalog = settings.data_dir / "catalog" / "extracted" / "data-centers-lima.yaml"
+    assert "data-centers.candidates.yaml" not in catalog.read_text(encoding="utf-8")
+
+
+def test_no_distill_removes_stale_candidate_sidecar(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    settings = Settings(data_dir=tmp_path)
+    # A prior run left a register + candidate sidecar; re-sweeping with --force --no-distill must
+    # not leave the now-stale sidecar paired with the freshly-swept register.
+    register = settings.extracted_dir / "lima" / "data-centers.md"
+    register.parent.mkdir(parents=True)
+    register.write_text("old register", encoding="utf-8")
+    stale = settings.extracted_dir / "lima" / "data-centers.candidates.yaml"
+    stale.write_text("site: lima\ncandidates: []\n", encoding="utf-8")
+
+    monkeypatch.setattr("watermark.cli.sweep.get_settings", lambda: settings)
+    monkeypatch.setattr("watermark.agent.client.ResearchAgent", _FakeAgent)
+
+    result = runner.invoke(
+        app, ["--site", "lima", "sweep", "data-centers", "--force", "--no-distill"]
+    )
+
+    assert result.exit_code == 0, result.output
+    assert "# Register" in register.read_text(encoding="utf-8")  # register was overwritten
+    assert not stale.exists()  # the stale sidecar was removed
+    catalog = settings.data_dir / "catalog" / "extracted" / "data-centers-lima.yaml"
+    assert "data-centers.candidates.yaml" not in catalog.read_text(encoding="utf-8")
+
+
+def test_distill_failure_preserves_register_and_catalog(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    settings = Settings(data_dir=tmp_path)
+
+    def _boom(*_args: object, **_kwargs: object) -> object:
+        raise RuntimeError("model unavailable")
+
+    monkeypatch.setattr("watermark.cli.sweep.get_settings", lambda: settings)
+    monkeypatch.setattr("watermark.agent.client.ResearchAgent", _FakeAgent)
+    monkeypatch.setattr("watermark.cli.sweep.distill_candidates", _boom)
+    # StructuredExtractor construction is lazy (no key until first use), so _boom raises first.
+
+    result = runner.invoke(app, ["--site", "lima", "sweep", "data-centers"])
+
+    # A distillation failure must not lose the expensive sweep or the catalog entry.
+    assert result.exit_code == 0, result.output
+    assert (settings.extracted_dir / "lima" / "data-centers.md").exists()
+    assert not (settings.extracted_dir / "lima" / "data-centers.candidates.yaml").exists()
+    catalog = settings.data_dir / "catalog" / "extracted" / "data-centers-lima.yaml"
+    assert catalog.exists()
+    assert "data-centers.candidates.yaml" not in catalog.read_text(encoding="utf-8")
+    # ...and the user gets actionable recovery guidance.
+    assert "distillation failed" in result.output.lower()
+    assert "facility distill --force" in result.output
 
 
 # ---------------------------------------------------------------------------
@@ -151,6 +251,7 @@ def test_force_preserves_reviewed_catalog_status(
 
     monkeypatch.setattr("watermark.cli.sweep.get_settings", lambda: settings)
     monkeypatch.setattr("watermark.agent.client.ResearchAgent", _FakeAgent)
+    monkeypatch.setattr("watermark.cli.sweep.distill_candidates", _fake_distill)
 
     result = runner.invoke(app, ["--site", "lima", "sweep", "data-centers", "--force"])
 

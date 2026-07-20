@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-20T18:55:57.910299+00:00'
+reconciled_at: '2026-07-20T20:07:41.384154+00:00'
 entries:
   aedg:
     exists: true
@@ -162,10 +162,10 @@ entries:
     site_scope: slug-scoped
   data-centers-hamilton-middletown:
     exists: true
-    sha256: 200d6d872634423689671d339f5068bf60d0054759bc1f3180d0b4cd4337fc76
-    size_bytes: 10872
+    sha256: 9f92b78b8c31f7557304cf5a315d94679b8591bd2fd2d249de7c51f616cb7337
+    size_bytes: 20803
     lfs_materialized: true
-    file_count: 1
+    file_count: 2
     missing: []
     asof: null
     stale: false
