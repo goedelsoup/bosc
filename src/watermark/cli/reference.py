@@ -312,16 +312,23 @@ def toxics_cmd(
 
     inv = toxics.build_screen(settings)
 
-    table = Table("flag", "facility", "to water (lb)", "receiving", "7Q10", "screen mg/L")
+    table = Table("flag", "facility", "receiving", "worst chemical exceedance (vs Ohio WQS)")
     for s in inv.screens:
-        q7 = f"{s.low_flow_7q10.value:g} cfs" if s.low_flow_7q10 else "—"
-        conc = f"{s.screening_concentration.value:g}" if s.screening_concentration else "—"
+        worst = toxics.worst_exceedances(s.chemical_screens, k=2)
+        exc = (
+            "; ".join(
+                f"{chem.split(' (')[0].strip()} {ctype} {toxics.format_factor(ef)}"
+                for ef, chem, ctype in worst
+            )
+            or "—"
+        )
         rw = (s.receiving_water or "—") + (" *" if s.receiving_water_source == "assumption" else "")
-        table.add_row(s.flag, s.facility[:30], f"{s.water_pounds:,.0f}", rw[:22], q7, conc)
+        table.add_row(s.flag, s.facility[:28], rw[:20], exc[:48])
     console.print(table)
     console.print(
         f"\n[bold]{inv.meta['water_releaser_count']}[/] water dischargers, "
-        f"[red]{inv.meta['critical_count']} critical[/] (toxic load on a near-undiluted reach). "
+        f"[red]{inv.meta['critical_count']} critical[/] (a chemical exceeds its Ohio aquatic-life "
+        f"criterion), [yellow]{inv.meta['exceeding_chemical_count']}[/] chemical exceedances. "
         "[dim]* = receiving water inferred from corridor, not independently cited.[/]"
     )
 

@@ -190,8 +190,9 @@ def _burden_toxics(settings: Settings) -> BurdenItem | None:
     return BurdenItem(
         thread="toxics x dilution",
         headline=(
-            f"{tx.meta['critical_count']} of {tx.meta['water_releaser_count']} county "
-            "toxic water dischargers sit on the Ottawa at Lima (7Q10 0.2 cfs, 1Q10 0)"
+            f"{tx.meta['critical_count']} of {tx.meta['water_releaser_count']} county toxic "
+            "water dischargers exceed an Ohio aquatic-life criterion on the Ottawa at Lima "
+            "(1Q10 0 cfs — no acute assimilative capacity)"
         ),
         source="data/reference/rsei/toxic-discharge-screen.yaml",
     )

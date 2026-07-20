@@ -1,0 +1,235 @@
+# Ohio numeric water-quality criteria (OAC Chapter 3745-1) — the per-chemical thresholds
+# the industrial toxic screen (watermark.hydrology.toxics) compares each pollutant's derived
+# receiving-water concentration against, replacing the old flat 1.0 mg/L aggregate band
+# (epic #1600, finding WS-07 / #1607).
+#
+# These are PUBLISHED STATE STANDARDS (Ohio Administrative Code 3745-1), not facility facts —
+# tagged `reference` when surfaced as ProvenancedValues, never `verified`. Regenerable:
+# re-transcribe from the cited OAC rule/table if a standard is revised.
+#
+# Ohio expresses aquatic-life criteria by position relative to a mixing zone:
+#   IMZM = inside mixing zone maximum   OMZM = maximum OUTSIDE the mixing zone (acute, ~CMC)
+#   OMZA = outside mixing zone 30-day average (chronic, ~CCC)
+# This screen assumes complete mix at design low flow (no mixing-zone credit), so it reads
+# OMZM as the acute criterion and OMZA as the chronic criterion. Each criterion type pairs to
+# its regulatory design flow (watermark.hydrology.toxics wires these):
+#   acute (CMC/OMZM)  -> 1Q10        chronic (CCC/OMZA) -> 7Q10        human health -> harmonic mean
+#
+# A criterion below is a SCREENING threshold: a derived concentration under it is reassuring,
+# a value over it flags the need for a permit-level wasteload allocation, not an automatic
+# violation. Chemicals with no numeric Ohio criterion are OMITTED (the screen reports them as
+# "no criterion"), never assigned a guessed value.
+
+source:
+  document: Ohio Administrative Code Chapter 3745-1 — Ohio Water Quality Standards
+  aquatic_life_rule: "OAC 3745-1-35 — aquatic life and wildlife criteria (Tables 35-1, 35-2, 35-5, 35-9)"
+  human_health_rule: "OAC 3745-1-33 — criteria for the protection of human health (Table 33-1, public water supply)"
+  urls:
+    - https://codes.ohio.gov/ohio-administrative-code/rule-3745-1-35
+    - https://codes.ohio.gov/ohio-administrative-code/rule-3745-1-33
+    - https://www.law.cornell.edu/regulations/ohio/Ohio-Admin-Code-3745-1-35
+  retrieved: "2026-07-20"
+  use_designation: Warmwater Habitat (WWH)
+  note: >-
+    Screening reference only. Cross-checked against EPA National Recommended Water Quality
+    Criteria (the hardness-metal equations reproduce EPA's 100 mg/L tabulated values: nickel
+    468 vs 470, zinc 117 vs 120, copper 13 vs 13 ug/L). Ohio public-water-supply human-health
+    values (Table 33-1) are used for the human-health screen; where Ohio adopts the Safe
+    Drinking Water Act MCL the value is the MCL.
+
+# Two stated screening assumptions, applied wherever a criterion depends on receiving-water
+# chemistry we cannot cite from the corpus. Recorded here so a reviewer can re-derive any
+# affected criterion once a value is cited.
+assumptions:
+  # Metals criteria (OAC 3745-1-35 Table 35-9) are hardness-dependent. No Ottawa River hardness
+  # is cited in the corpus, so criteria are evaluated at EPA/Ohio's standard REFERENCE hardness.
+  # Each metal below carries its Table 35-9 equation so the criterion re-derives at a cited hardness.
+  hardness_mg_l_caco3: 100
+  # Ammonia criteria (Tables 35-2 / 35-5) are a pH x temperature surface, not a scalar. Screened
+  # at a stated summer growing-season design condition (the May-Oct precipitation-deficit window
+  # the report already frames), where the Ottawa mainstem's assimilative capacity is lowest.
+  ammonia_ph: 8.0
+  ammonia_temp_c: 25
+  ammonia_season: "March-November (growing season)"
+  # RSEI's "Chromium" / "Chromium compounds" (N090) category lumps trivalent and hexavalent
+  # chromium. Screened conservatively against the far more protective Cr(VI) criterion.
+  chromium_form: "Cr(VI) (conservative; RSEI category lumps III/VI)"
+  # RSEI reports "Nitrate compounds" (N511) as the nitrate-ion (NO3) mass. The public-water-supply
+  # criterion is 10 mg/L as nitrogen (N); it is expressed below as 44 mg/L as NO3 (10 x 62/14) so
+  # the load basis (NO3 mass) and the criterion basis match. Conservative: if the reported mass
+  # were already as N, this UNDERstates the exceedance.
+  nitrate_basis: "criterion expressed as NO3 (44 mg/L) to match RSEI's reported nitrate-ion mass"
+
+# Each entry keys on the RSEI chemical token (`cas`), which is either a real CAS number or an
+# RSEI category code (Nxxx). `aka_cas` lists other RSEI tokens that resolve to the same criterion
+# (e.g. the elemental metal and its "compounds" category). Criteria in mg/L; null = no numeric
+# Ohio criterion of that type (screen omits it, never guesses).
+criteria:
+  # --- Aquatic-life, fixed criteria (OAC 3745-1-35 Table 35-1) --------------------------------
+  - cas: "7664-41-7"
+    name: "Ammonia (total, as N)"
+    acute_cmc_mg_l: 5.9
+    chronic_ccc_mg_l: 0.6
+    human_health_mg_l: null
+    basis_acute: "OAC 3745-1-35 Table 35-2 (WWH outside-mixing-zone maximum total ammonia-N), pH 8.0, 25 C"
+    basis_chronic: "OAC 3745-1-35 Table 35-5 (WWH 30-day-average total ammonia-N), March-November, pH 8.0, 25 C"
+    notes: "pH/temperature-dependent; screened at the stated design condition (pH 8.0, 25 C, growing season)."
+
+  - cas: "7782-50-5"
+    name: "Total residual chlorine"
+    acute_cmc_mg_l: 0.019
+    chronic_ccc_mg_l: 0.011
+    human_health_mg_l: null
+    basis_acute: "OAC 3745-1-35 Table 35-1 (chlorine, WWH, OMZM)"
+    basis_chronic: "OAC 3745-1-35 Table 35-1 (chlorine, WWH, OMZA)"
+    notes: "RSEI 'Chlorine' (Cl2) released to water screened as total residual chlorine (proxy; reactive/short-lived)."
+
+  - cas: "74-90-8"
+    aka_cas: ["N106"]
+    name: "Cyanide (free)"
+    acute_cmc_mg_l: 0.022
+    chronic_ccc_mg_l: 0.0052
+    human_health_mg_l: null
+    basis_acute: "OAC 3745-1-35 Table 35-1 (free cyanide, OMZM)"
+    basis_chronic: "OAC 3745-1-35 Table 35-1 (free cyanide, OMZA)"
+    notes: "Hydrogen cyanide (74-90-8) and RSEI cyanide compounds (N106) screened against the free-cyanide criterion."
+
+  - cas: "7440-47-3"
+    aka_cas: ["N090"]
+    name: "Chromium (screened as Cr VI)"
+    acute_cmc_mg_l: 0.016
+    chronic_ccc_mg_l: 0.011
+    human_health_mg_l: null
+    basis_acute: "OAC 3745-1-35 Table 35-1 (chromium VI, dissolved, OMZM)"
+    basis_chronic: "OAC 3745-1-35 Table 35-1 (chromium VI, dissolved, OMZA)"
+    notes: "RSEI category lumps Cr(III)/Cr(VI); screened conservatively against the more-protective Cr(VI) criterion."
+
+  - cas: "7782-49-2"
+    name: "Selenium"
+    acute_cmc_mg_l: null
+    chronic_ccc_mg_l: 0.005
+    human_health_mg_l: null
+    basis_chronic: "OAC 3745-1-35 Table 35-1 (selenium, total recoverable, OMZA)"
+    notes: "Ohio lists a chronic (OMZA) selenium criterion; no separate acute value screened."
+
+  - cas: "7439-97-6"
+    aka_cas: ["N458"]
+    name: "Mercury"
+    acute_cmc_mg_l: 0.0017
+    chronic_ccc_mg_l: 0.00091
+    human_health_mg_l: null
+    basis_acute: "OAC 3745-1-35 Table 35-1 (mercury, total recoverable, OMZM)"
+    basis_chronic: "OAC 3745-1-35 Table 35-1 (mercury, total recoverable, OMZA)"
+
+  # --- Aquatic-life, hardness-dependent metals (OAC 3745-1-35 Table 35-9) ---------------------
+  # criterion (ug/L) = exp(m * ln(hardness_mg_l) + b); mg/L values below are at hardness 100 mg/L.
+  - cas: "7440-50-8"
+    aka_cas: ["N100"]
+    name: "Copper (dissolved)"
+    acute_cmc_mg_l: 0.0134
+    chronic_ccc_mg_l: 0.00895
+    human_health_mg_l: null
+    hardness_dependent: true
+    hardness_mg_l: 100
+    hardness_acute: {m: 0.9422, b: -1.741}
+    hardness_chronic: {m: 0.8545, b: -1.743}
+    basis_acute: "OAC 3745-1-35 Table 35-9 (dissolved copper, OMZM) at 100 mg/L hardness"
+    basis_chronic: "OAC 3745-1-35 Table 35-9 (dissolved copper, OMZA) at 100 mg/L hardness"
+
+  - cas: "7440-02-0"
+    aka_cas: ["N495"]
+    name: "Nickel (dissolved)"
+    acute_cmc_mg_l: 0.468
+    chronic_ccc_mg_l: 0.0520
+    human_health_mg_l: null
+    hardness_dependent: true
+    hardness_mg_l: 100
+    hardness_acute: {m: 0.846, b: 2.253}
+    hardness_chronic: {m: 0.846, b: 0.0554}
+    basis_acute: "OAC 3745-1-35 Table 35-9 (dissolved nickel, OMZM) at 100 mg/L hardness"
+    basis_chronic: "OAC 3745-1-35 Table 35-9 (dissolved nickel, OMZA) at 100 mg/L hardness"
+
+  - cas: "7439-92-1"
+    aka_cas: ["N420"]
+    name: "Lead (dissolved)"
+    acute_cmc_mg_l: 0.0969
+    chronic_ccc_mg_l: 0.00508
+    human_health_mg_l: null
+    hardness_dependent: true
+    hardness_mg_l: 100
+    hardness_acute: {m: 1.273, b: -1.289}
+    hardness_chronic: {m: 1.273, b: -4.237}
+    basis_acute: "OAC 3745-1-35 Table 35-9 (dissolved lead, OMZM) at 100 mg/L hardness"
+    basis_chronic: "OAC 3745-1-35 Table 35-9 (dissolved lead, OMZA) at 100 mg/L hardness"
+
+  - cas: "N982"
+    aka_cas: ["7440-66-6"]
+    name: "Zinc (dissolved)"
+    acute_cmc_mg_l: 0.117
+    chronic_ccc_mg_l: 0.118
+    human_health_mg_l: null
+    hardness_dependent: true
+    hardness_mg_l: 100
+    hardness_acute: {m: 0.8473, b: 0.862}
+    hardness_chronic: {m: 0.8473, b: 0.870}
+    basis_acute: "OAC 3745-1-35 Table 35-9 (dissolved zinc, OMZM) at 100 mg/L hardness"
+    basis_chronic: "OAC 3745-1-35 Table 35-9 (dissolved zinc, OMZA) at 100 mg/L hardness"
+    notes: "RSEI zinc compounds (N982) and zinc fume/dust (7440-66-6) screened against the zinc criterion."
+
+  # --- Human-health, public water supply (OAC 3745-1-33 Table 33-1); screened at harmonic mean --
+  - cas: "N511"
+    name: "Nitrate compounds (as NO3)"
+    acute_cmc_mg_l: null
+    chronic_ccc_mg_l: null
+    human_health_mg_l: 44.0
+    basis_human_health: "OAC 3745-1-33 Table 33-1 (nitrate+nitrite as N, 10 mg/L public water supply MCL); expressed as 44 mg/L NO3"
+    notes: "No aquatic-life criterion; public-water-supply/drinking-water threshold. See assumptions.nitrate_basis."
+
+  - cas: "71-43-2"
+    name: "Benzene"
+    acute_cmc_mg_l: null
+    chronic_ccc_mg_l: null
+    human_health_mg_l: 0.005
+    basis_human_health: "OAC 3745-1-33 Table 33-1 (benzene, public water supply / SDWA MCL 5 ug/L)"
+
+  - cas: "56-23-5"
+    name: "Carbon tetrachloride"
+    acute_cmc_mg_l: null
+    chronic_ccc_mg_l: null
+    human_health_mg_l: 0.0025
+    basis_human_health: "OAC 3745-1-33 Table 33-1 (carbon tetrachloride, public water supply)"
+
+  - cas: "107-13-1"
+    name: "Acrylonitrile"
+    acute_cmc_mg_l: null
+    chronic_ccc_mg_l: null
+    human_health_mg_l: 0.00059
+    basis_human_health: "OAC 3745-1-33 Table 33-1 (acrylonitrile, public water supply)"
+
+  - cas: "100-41-4"
+    name: "Ethylbenzene"
+    acute_cmc_mg_l: null
+    chronic_ccc_mg_l: null
+    human_health_mg_l: 0.700
+    basis_human_health: "OAC 3745-1-33 Table 33-1 (ethylbenzene, public water supply / SDWA MCL 700 ug/L)"
+
+  - cas: "108-88-3"
+    name: "Toluene"
+    acute_cmc_mg_l: null
+    chronic_ccc_mg_l: null
+    human_health_mg_l: 1.0
+    basis_human_health: "OAC 3745-1-33 Table 33-1 (toluene, public water supply / SDWA MCL 1000 ug/L)"
+
+  - cas: "1330-20-7"
+    name: "Xylene (mixed isomers)"
+    acute_cmc_mg_l: null
+    chronic_ccc_mg_l: null
+    human_health_mg_l: 10.0
+    basis_human_health: "OAC 3745-1-33 Table 33-1 (xylenes, public water supply / SDWA MCL 10000 ug/L)"
+
+  - cas: "108-95-2"
+    name: "Phenol"
+    acute_cmc_mg_l: null
+    chronic_ccc_mg_l: null
+    human_health_mg_l: 4.0
+    basis_human_health: "OAC 3745-1-33 Table 33-1 (phenol, human health / organism)"

@@ -200,7 +200,12 @@ from watermark.site.readiness import State, Tier  # the readiness vocabulary SSO
 #   neighborhood — no server, offline. Always emitted (the mirror is never empty), so the schema set
 #   stays stable. Not cataloged (a derived retrieval index, like `corpus-index`/`open-questions`).
 #   Back-compatible (one additive feed).
-CONTRACT_VERSION = "1.30.0"
+# 1.30.1: the `rsei` feed (the `RseiInventory` model) gains a per-facility `top_water_chemicals`
+#   array — each facility's cumulative pounds released *to water* by chemical (the media-3 breakdown,
+#   reconciling to `pounds_by_media["water"]`), the input the chemical-specific toxic screen reads
+#   (WS-07 / #1607). Additive/optional (absent facilities default to `[]`), so an existing rsei.json
+#   without it stays valid — PATCH, back-compatible.
+CONTRACT_VERSION = "1.30.1"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

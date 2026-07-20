@@ -6,8 +6,8 @@ producer:
   kind: derived
   command: rsei
   connector_ref: watermark.rsei
-  source: EPA RSEI (water-media releases) × EPA ECHO (receiving water) × Ohio EPA cited 7Q10 — a multi-source
-    derivation
+  source: EPA RSEI (per-chemical water-media releases) × EPA ECHO (receiving water) × Ohio EPA cited
+    design low flows (1Q10/7Q10/harmonic mean) × Ohio WQS criteria (OAC 3745-1) — a multi-source derivation
   external_url: https://www.epa.gov/rsei/ways-get-rsei-results
 license: U.S. Government work (public domain)
 access_tier: public
@@ -25,5 +25,8 @@ tags:
 - water
 - screening
 - derived
-notes: A derived water-discharge screen crossing RSEI water-media releases with ECHO receiving water and
-  the Ohio-EPA cited 7Q10 low flow; provenance is a derivation, not a single connector pull.
+notes: A derived water-discharge screen crossing RSEI per-chemical water-media releases with ECHO receiving
+  water, the Ohio-EPA cited design low flows, and the Ohio WQS numeric criteria (wqs-criteria) — each
+  chemical's derived concentration is screened against its own acute/chronic/human-health criterion at the
+  matching design flow (WS-07, issue 1607), not a flat aggregate band. Provenance is a derivation, not a single
+  connector pull.

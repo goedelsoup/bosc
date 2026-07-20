@@ -117,6 +117,25 @@ class RseiChemicalScore(BaseModel):
     pounds: float
 
 
+class RseiWaterChemical(BaseModel):
+    """A chemical's cumulative pounds released **to water** at a facility (media bucket 3).
+
+    Distinct from :class:`RseiChemicalScore`, whose ``pounds`` are cumulative across *all*
+    media (dominated by air/underground injection) and whose ranking is by modeled Score —
+    so its top-N routinely omits the actual top water pollutants. This is the per-chemical
+    *water* breakdown a chemical-specific dilution screen needs (#1607): it sums only the
+    direct-water (``MediaCode == 3``) release rows and reconciles to
+    ``pounds_by_media["water"]``. ``reporting_years`` is the count of distinct years this
+    chemical was reported to water — the faithful annualization divisor (mirrors
+    :func:`watermark.hydrology.toxics._annual_water_pounds`), never the calendar span.
+    """
+
+    chemical: str
+    cas: str | None = None  # a real CAS or an RSEI category code (Nxxx)
+    water_pounds: float  # cumulative pounds to water across the record
+    reporting_years: int  # distinct years reported to water (annualization divisor)
+
+
 class RseiFacility(BaseModel):
     """One TRI/RSEI facility in the target county, with modeled results rolled up."""
 
@@ -146,6 +165,9 @@ class RseiFacility(BaseModel):
     last_year: int | None = None
     years: list[RseiYearScore] = []
     top_chemicals: list[RseiChemicalScore] = []
+    # Per-chemical *water* breakdown (media bucket 3), ranked by water pounds — the input the
+    # chemical-specific toxic-dilution screen reads (#1607). Sums to pounds_by_media["water"].
+    top_water_chemicals: list[RseiWaterChemical] = []
 
 
 class RseiInventory(BaseModel):
@@ -375,6 +397,10 @@ def build_inventory(
     pounds_fy: dict[tuple[str, int], float] = defaultdict(float)
     pounds_media: dict[tuple[str, str], float] = defaultdict(float)
     pounds_chem: dict[tuple[str, str], float] = defaultdict(float)
+    # Per-chemical *water* pounds + the distinct years reported to water (#1607) — the
+    # media-split the flat pounds_chem can't give, needed for the chemical-specific screen.
+    pounds_chem_water: dict[tuple[str, str], float] = defaultdict(float)
+    years_chem_water: dict[tuple[str, str], set[int]] = defaultdict(set)
     for row in _iter_table(settings, "release"):
         meta = sub.get(row["SubmissionNumber"])
         if meta is None:
@@ -382,9 +408,13 @@ def build_inventory(
         fn, yr, cn = meta
         rel[row["ReleaseNumber"]] = (fn, yr, cn)
         lbs = _f(row.get("PoundsReleased"))
+        bucket = media_group.get(row.get("Media", ""), "other")
         pounds_fy[(fn, yr)] += lbs
-        pounds_media[(fn, media_group.get(row.get("Media", ""), "other"))] += lbs
+        pounds_media[(fn, bucket)] += lbs
         pounds_chem[(fn, cn)] += lbs
+        if bucket == "water" and lbs > 0:
+            pounds_chem_water[(fn, cn)] += lbs
+            years_chem_water[(fn, cn)].add(yr)
 
     # elements -> modeled Score/Cancer/NonCancer/Hazard, summed per facility/year/chemical.
     score_fy: dict[tuple[str, int], list[float]] = defaultdict(lambda: [0.0, 0.0, 0.0, 0.0])
@@ -405,7 +435,17 @@ def build_inventory(
         score_chem[(fn, cn)] += s
     log.info("rsei.elements_matched", n=n_elem)
 
-    _rollup(facilities, pounds_fy, pounds_media, pounds_chem, score_fy, score_chem, chem)
+    _rollup(
+        facilities,
+        pounds_fy,
+        pounds_media,
+        pounds_chem,
+        pounds_chem_water,
+        years_chem_water,
+        score_fy,
+        score_chem,
+        chem,
+    )
 
     ranked = sorted(facilities.values(), key=lambda f: (-f.score, -f.pounds, f.name))
     n_scored = sum(1 for f in ranked if f.score > 0)
@@ -431,6 +471,8 @@ def _rollup(
     pounds_fy: dict[tuple[str, int], float],
     pounds_media: dict[tuple[str, str], float],
     pounds_chem: dict[tuple[str, str], float],
+    pounds_chem_water: dict[tuple[str, str], float],
+    years_chem_water: dict[tuple[str, str], set[int]],
     score_fy: dict[tuple[str, int], list[float]],
     score_chem: dict[tuple[str, str], float],
     chem: dict[str, dict[str, str | None]],
@@ -488,6 +530,27 @@ def _rollup(
             )
             for cn in top[:_TOP_CHEMICALS]
         ]
+
+        # Per-chemical *water* breakdown, ranked by water pounds (#1607). Every water chemical
+        # with a positive load is kept (bounded — a facility reports ≤ a couple dozen); this is
+        # the input the chemical-specific dilution screen reads, and it sums to the "water"
+        # bucket of pounds_by_media.
+        water_cn = {cn: lb for (f2, cn), lb in pounds_chem_water.items() if f2 == fn and lb > 0}
+        # Rank by water pounds desc, with a deterministic (cas, name) tiebreak so equal-pounds
+        # chemicals never flip order across RSEI releases (the committed artifact stays stable
+        # and `top_water_chemicals[0]` — the screen's headline water chemical — is well-defined).
+        fac.top_water_chemicals = sorted(
+            (
+                RseiWaterChemical(
+                    chemical=(chem.get(cn, {}).get("name") or f"chem#{cn}"),
+                    cas=chem.get(cn, {}).get("cas"),
+                    water_pounds=round(lb, 1),
+                    reporting_years=len(years_chem_water.get((fn, cn), set())) or 1,
+                )
+                for cn, lb in water_cn.items()
+            ),
+            key=lambda w: (-w.water_pounds, w.cas or "", w.chemical),
+        )
 
 
 # --- Load / write ----------------------------------------------------------

@@ -1,0 +1,25 @@
+id: wqs-criteria
+title: Ohio Water Quality Standards — numeric criteria (OAC 3745-1)
+scope: reference
+status: reviewed
+producer:
+  kind: manual
+  source: OAC 3745-1-35 (aquatic life, Tables 35-1/35-2/35-5/35-9) + 3745-1-33 (human health, Table 33-1) — verbatim transcription of the numeric criteria, cross-checked against EPA's National Recommended Water Quality Criteria
+license: Ohio public record (Ohio Administrative Code publication)
+access_tier: public
+site_scope: basin-shared
+storage:
+- relpath: reference/wqs/ohio-water-quality-criteria.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: reference
+schema_ref: watermark.hydrology.criteria.CriteriaTable
+tags:
+- wqs
+- water
+- criteria
+- toxics
+- reference
+notes: The per-chemical Ohio water-quality criteria (acute CMC / chronic CCC / human-health, mg/L) the industrial toxic screen reads each pollutant's derived receiving-water concentration against (watermark.hydrology.toxics, WS-07, issue 1607). Screening reference (complete mix, no mixing-zone credit) — an exceedance flags the need for a WQBEL determination, not an automatic violation. Metals are hardness-dependent (evaluated at a stated 100 mg/L reference hardness, equation committed for re-derivation); ammonia at a stated pH/temperature. Static published standards — re-transcribe from the cited OAC rule on a revision; not connector-regenerable.

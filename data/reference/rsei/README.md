@@ -118,7 +118,7 @@ the other two are corridor inferences.
 
 ### `rsei` — RSEI Toxic-Discharge Water Screen
 
-Source: EPA RSEI (water-media releases) × EPA ECHO (receiving water) × Ohio EPA cited 7Q10 — a multi-source derivation · License: U.S. Government work (public domain) · Access: public · Site scope: basin-shared · Refresh: on-demand
+Source: EPA RSEI (per-chemical water-media releases) × EPA ECHO (receiving water) × Ohio EPA cited design low flows (1Q10/7Q10/harmonic mean) × Ohio WQS criteria (OAC 3745-1) — a multi-source derivation · License: U.S. Government work (public domain) · Access: public · Site scope: basin-shared · Refresh: on-demand
 
 Regenerate: `watermark rsei`
 

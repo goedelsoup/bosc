@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-20T18:07:32.029297+00:00'
+reconciled_at: '2026-07-20T20:42:42.709470+00:00'
 entries:
   aedg:
     exists: true
@@ -1012,8 +1012,8 @@ entries:
     site_scope: lima-legacy
   rsei:
     exists: true
-    sha256: 55b000e4196114be8a9fef6c11ef5815a3e56364b5b9418a2a1658ae7c94943f
-    size_bytes: 14049
+    sha256: 1e58be1c6b489f56a0d0a1c60563c2f19047f94d6dd5ea557313ad98485f6d32
+    size_bytes: 99958
     lfs_materialized: true
     file_count: 1
     missing: []
@@ -1022,8 +1022,8 @@ entries:
     site_scope: basin-shared
   rsei-inventory:
     exists: true
-    sha256: e78ebd57927a63bb3f9a51427ab5f50fee826f7735b354a06af72e6f6f1e6389
-    size_bytes: 2721640
+    sha256: 5779cd9e898f577d98ee88a01dbadc6dcfa84d8fe15e661d5c479c40a06bf4cd
+    size_bytes: 2732458
     lfs_materialized: true
     file_count: 22
     missing: []
@@ -1140,6 +1140,16 @@ entries:
     asof: null
     stale: false
     site_scope: site:wpafb
+  wqs-criteria:
+    exists: true
+    sha256: 8628dd7859ba60a3b71b9c6b4ab91619d510cf468e0bdb1f645044317be24fc4
+    size_bytes: 11202
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: basin-shared
   wwtp-oh0026069-lima:
     exists: true
     sha256: 0c0911c228b331bf4c00432c90cdcfa5049e9b5f8837ab92c49701ffa8da17ff

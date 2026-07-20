@@ -488,3 +488,19 @@ leads:
     until an OPSB filing names the load.
   source: AEP Ohio Lyka Transmission Project fact sheet (captured 2026-07-11) · data/extracted/grid/aep-lyka-transmission-2026.project.yaml
   note: time-sensitive — monitor opsb.ohio.gov for the case filing, expected Early 2027; the line route is not final until then (issue #1476)
+- id: WWTP-PARAM-ASSIM
+  kind: question
+  status: unanswered
+  tag: open
+  title: The municipal-WWTP dilution check is hydraulic only — no per-parameter assimilative capacity on record
+  detail: The industrial toxic screen now reads each RSEI water discharger's per-chemical load against
+    its own Ohio water-quality criterion (WS-07, issue 1607; data/reference/wqs/). The parallel check for
+    the three municipal WWTPs (hydrology/assimilative.py) is still a purely HYDRAULIC dilution ratio
+    (7Q10 / effluent flow) — a true per-parameter assimilative-capacity screen (ammonia, CBOD, total
+    residual chlorine, metals against their WQBEL-driving criteria) needs each plant's reported
+    effluent CONCENTRATIONS by parameter, which the corpus does not yet hold. The Ohio EPA NPDES DMR
+    record (effluent monitoring) is the missing input; ingesting it via the ECHO DMR connector would let
+    the municipal check screen per parameter the same way the industrial one now does, rather than
+    asserting a rigor the flow-only data can't support.
+  source: src/watermark/hydrology/assimilative.py · src/watermark/hydrology/toxics.py
+  note: WS-07 companion — extend the per-chemical criterion screen to the municipal WWTPs once DMR effluent chemistry is ingested (issue 1607)
