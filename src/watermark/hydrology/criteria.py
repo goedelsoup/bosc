@@ -28,9 +28,12 @@ import yaml
 from pydantic import BaseModel, ConfigDict, PrivateAttr
 
 from watermark.config import get_settings
+from watermark.logging import get_logger
 
 if TYPE_CHECKING:
     from watermark.config import Settings
+
+log = get_logger(__name__)
 
 # The committed WQS reference dataset, relative to ``settings.reference_dir``.
 _CRITERIA_RELPATH = "wqs/ohio-water-quality-criteria.yaml"
@@ -50,7 +53,13 @@ class HardnessEquation(BaseModel):
     b: float
 
     def at(self, hardness_mg_l: float) -> float:
-        """The criterion in **µg/L** at a given hardness (mg/L as CaCO₃)."""
+        """The criterion in **µg/L** at a given hardness (mg/L as CaCO₃).
+
+        Hardness must be positive (the equation is ``exp(m·ln(H) + b)``); a non-positive
+        hardness is physically meaningless and raises rather than emit a ``math domain error``.
+        """
+        if hardness_mg_l <= 0:
+            raise ValueError(f"hardness must be > 0 mg/L, got {hardness_mg_l}")
         return math.exp(self.m * math.log(hardness_mg_l) + self.b)
 
 
@@ -83,14 +92,27 @@ class WaterQualityCriterion(BaseModel):
         return [self.cas, *self.aka_cas]
 
     def acute_at(self, hardness_mg_l: float | None = None) -> float | None:
-        """Acute criterion (mg/L), re-derived at ``hardness_mg_l`` for a hardness metal."""
-        if hardness_mg_l is not None and self.hardness_dependent and self.hardness_acute:
+        """Acute criterion (mg/L), re-derived at ``hardness_mg_l`` for a hardness metal.
+
+        Falls back to the stored (reference-hardness) value when no positive hardness is given
+        or the chemical is not hardness-dependent.
+        """
+        if hardness_mg_l and hardness_mg_l > 0 and self.hardness_dependent and self.hardness_acute:
             return self.hardness_acute.at(hardness_mg_l) / 1000.0
         return self.acute_cmc_mg_l
 
     def chronic_at(self, hardness_mg_l: float | None = None) -> float | None:
-        """Chronic criterion (mg/L), re-derived at ``hardness_mg_l`` for a hardness metal."""
-        if hardness_mg_l is not None and self.hardness_dependent and self.hardness_chronic:
+        """Chronic criterion (mg/L), re-derived at ``hardness_mg_l`` for a hardness metal.
+
+        Falls back to the stored (reference-hardness) value when no positive hardness is given
+        or the chemical is not hardness-dependent.
+        """
+        if (
+            hardness_mg_l
+            and hardness_mg_l > 0
+            and self.hardness_dependent
+            and self.hardness_chronic
+        ):
             return self.hardness_chronic.at(hardness_mg_l) / 1000.0
         return self.chronic_ccc_mg_l
 
@@ -104,24 +126,34 @@ class CriteriaTable(BaseModel):
     assumptions: dict[str, Any] = {}
     criteria: list[WaterQualityCriterion] = []
 
+    # Token -> criterion index, built lazily on first `match` (NOT in model_post_init): pydantic
+    # skips post-init on model_copy(), which would leave a copied table with an empty index and
+    # silently match nothing. Lazy build survives copies — an empty index just rebuilds.
     _index: dict[str, WaterQualityCriterion] = PrivateAttr(default_factory=dict)
-
-    def model_post_init(self, __context: Any) -> None:
-        for crit in self.criteria:
-            for token in crit.tokens:
-                self._index[_norm(token)] = crit
 
     def match(self, token: str | None) -> WaterQualityCriterion | None:
         """The criterion for an RSEI chemical token (CAS or ``Nxxx``), or ``None``."""
-        return self._index.get(_norm(token)) if token else None
+        if not token:
+            return None
+        if not self._index:
+            self._index = {_norm(t): c for c in self.criteria for t in c.tokens}
+        return self._index.get(_norm(token))
 
 
 def load_criteria(*, settings: Settings | None = None) -> CriteriaTable:
-    """The committed Ohio WQS criteria table (or raise if the reference dataset is missing)."""
+    """The committed Ohio WQS criteria table, or an empty table if the dataset is absent.
+
+    Degrades (empty table + a warning) rather than raising, mirroring the screen's other inputs
+    (``_load_echo`` / ``load_low_flows`` return empty when their file is missing) so a partial
+    checkout doesn't crash ``build_screen``. With an empty table every chemical resolves to
+    ``no_criterion`` — a visible "we have no criteria to screen against" signal, not a silent
+    "nothing exceeds".
+    """
     settings = settings or get_settings()
     path = settings.reference_dir / _CRITERIA_RELPATH
     if not path.is_file():
-        raise FileNotFoundError(f"WQS criteria reference dataset missing: {path}")
+        log.warning("wqs.criteria_missing", path=str(path))
+        return CriteriaTable()
     data = cast("dict[str, Any]", yaml.safe_load(path.read_text(encoding="utf-8")) or {})
     return CriteriaTable.model_validate(data)
 

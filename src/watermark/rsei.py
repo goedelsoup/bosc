@@ -536,15 +536,21 @@ def _rollup(
         # the input the chemical-specific dilution screen reads, and it sums to the "water"
         # bucket of pounds_by_media.
         water_cn = {cn: lb for (f2, cn), lb in pounds_chem_water.items() if f2 == fn and lb > 0}
-        fac.top_water_chemicals = [
-            RseiWaterChemical(
-                chemical=(chem.get(cn, {}).get("name") or f"chem#{cn}"),
-                cas=chem.get(cn, {}).get("cas"),
-                water_pounds=round(lb, 1),
-                reporting_years=len(years_chem_water.get((fn, cn), set())) or 1,
-            )
-            for cn, lb in sorted(water_cn.items(), key=lambda kv: -kv[1])
-        ]
+        # Rank by water pounds desc, with a deterministic (cas, name) tiebreak so equal-pounds
+        # chemicals never flip order across RSEI releases (the committed artifact stays stable
+        # and `top_water_chemicals[0]` — the screen's headline water chemical — is well-defined).
+        fac.top_water_chemicals = sorted(
+            (
+                RseiWaterChemical(
+                    chemical=(chem.get(cn, {}).get("name") or f"chem#{cn}"),
+                    cas=chem.get(cn, {}).get("cas"),
+                    water_pounds=round(lb, 1),
+                    reporting_years=len(years_chem_water.get((fn, cn), set())) or 1,
+                )
+                for cn, lb in water_cn.items()
+            ),
+            key=lambda w: (-w.water_pounds, w.cas or "", w.chemical),
+        )
 
 
 # --- Load / write ----------------------------------------------------------

@@ -3,6 +3,10 @@
 from __future__ import annotations
 
 import math
+import tempfile
+from pathlib import Path
+
+import pytest
 
 from watermark.config import Settings
 from watermark.hydrology import criteria
@@ -14,6 +18,34 @@ def test_committed_table_loads_and_indexes() -> None:
     # The two stated screening assumptions are recorded (re-derivable).
     assert table.assumptions["hardness_mg_l_caco3"] == 100
     assert table.assumptions["ammonia_ph"] == 8.0
+
+
+def test_index_survives_model_copy() -> None:
+    """The token index is built lazily in match(), so a model_copy still resolves (review #5)."""
+    table = criteria.load_criteria(settings=Settings())
+    assert table.match("7664-41-7") is not None  # populate the index on the original
+    copy = table.model_copy()
+    assert copy.match("7664-41-7") is not None  # pydantic skips post_init on copy — lazy rebuild
+    assert copy.match("N106") is not None
+
+
+def test_missing_dataset_degrades_to_empty_table() -> None:
+    """A missing WQS file yields an empty table (no crash), like the screen's other inputs (#4)."""
+    settings = Settings(data_dir=Path(tempfile.mkdtemp()) / "nodata")
+    table = criteria.load_criteria(settings=settings)
+    assert table.criteria == []
+    assert table.match("7664-41-7") is None
+
+
+def test_hardness_at_rejects_nonpositive_and_methods_fall_back() -> None:
+    """HardnessEquation.at raises on hardness<=0; acute_at/chronic_at fall back to stored (#6)."""
+    copper = criteria.load_criteria(settings=Settings()).match("7440-50-8")
+    assert copper is not None and copper.hardness_chronic is not None
+    with pytest.raises(ValueError, match="hardness must be > 0"):
+        copper.hardness_chronic.at(0)
+    assert copper.chronic_at(0) == copper.chronic_ccc_mg_l  # non-positive -> stored value, no crash
+    assert copper.chronic_at(-1) == copper.chronic_ccc_mg_l
+    assert copper.acute_at(0) == copper.acute_cmc_mg_l
 
 
 def test_resolves_by_cas_and_rsei_category_code() -> None:

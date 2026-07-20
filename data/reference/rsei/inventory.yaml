@@ -316,15 +316,15 @@ facilities:
     cas: 107-21-1
     water_pounds: 12100.0
     reporting_years: 3
+  - chemical: Hydrogen cyanide
+    cas: 74-90-8
+    water_pounds: 1250.0
+    reporting_years: 5
   - chemical: Chromium compounds (except for chromite ore mined in the Transvaal Region of South Africa
       and the unreacted ore component of the chromite ore processing residue (COPR).  COPR is the solid
       waste remaining after aqueous extraction of oxidized chromite ore that has been combined with soda
       ash and kiln roasted at approximately 2,000 F.)
     cas: N090
-    water_pounds: 1250.0
-    reporting_years: 5
-  - chemical: Hydrogen cyanide
-    cas: 74-90-8
     water_pounds: 1250.0
     reporting_years: 5
   - chemical: Acrylonitrile
@@ -928,12 +928,12 @@ facilities:
     cas: N106
     water_pounds: 464.3
     reporting_years: 7
-  - chemical: Toluene
-    cas: 108-88-3
-    water_pounds: 255.0
-    reporting_years: 2
   - chemical: Ethylbenzene
     cas: 100-41-4
+    water_pounds: 255.0
+    reporting_years: 2
+  - chemical: Toluene
+    cas: 108-88-3
     water_pounds: 255.0
     reporting_years: 2
   - chemical: Carbon tetrachloride
@@ -1952,16 +1952,16 @@ facilities:
     score: 0.0
     pounds: 64.1
   top_water_chemicals:
-  - chemical: Chromium
-    cas: 7440-47-3
+  - chemical: Manganese
+    cas: 7439-96-5
     water_pounds: 40.0
     reporting_years: 8
   - chemical: Nickel
     cas: 7440-02-0
     water_pounds: 40.0
     reporting_years: 8
-  - chemical: Manganese
-    cas: 7439-96-5
+  - chemical: Chromium
+    cas: 7440-47-3
     water_pounds: 40.0
     reporting_years: 8
   - chemical: Copper
@@ -5320,16 +5320,16 @@ facilities:
     cas: 71-43-2
     water_pounds: 15.0
     reporting_years: 3
-  - chemical: 1,2,4-Trimethylbenzene
-    cas: 95-63-6
+  - chemical: Ethylbenzene
+    cas: 100-41-4
     water_pounds: 5.0
     reporting_years: 1
   - chemical: n-Hexane (Hexane)
     cas: 110-54-3
     water_pounds: 5.0
     reporting_years: 1
-  - chemical: Ethylbenzene
-    cas: 100-41-4
+  - chemical: 1,2,4-Trimethylbenzene
+    cas: 95-63-6
     water_pounds: 5.0
     reporting_years: 1
 - facility_id: 45817TRPLTONETR
@@ -6131,12 +6131,12 @@ facilities:
     cas: 7440-50-8
     water_pounds: 503.0
     reporting_years: 4
-  - chemical: Cyanide compounds
-    cas: N106
-    water_pounds: 500.0
-    reporting_years: 2
   - chemical: Aluminum (fume or dust)
     cas: 7429-90-5
+    water_pounds: 500.0
+    reporting_years: 2
+  - chemical: Cyanide compounds
+    cas: N106
     water_pounds: 500.0
     reporting_years: 2
   - chemical: Hydrochloric acid (acid aerosols including mists, vapors, gas, fog, and other airborne forms

@@ -155,6 +155,37 @@ def test_trace_discharger_with_only_zero_flow_acute_is_elevated_not_critical() -
     )
 
 
+def test_human_health_approach_lifts_facility_to_elevated() -> None:
+    """A human-health *approach* (no aquatic exceedance) flags the facility elevated (review #2).
+
+    Symmetric with an aquatic-life approach — no aquatic/human-health asymmetry.
+    """
+    s = _by_name(toxics.build_screen(Settings()), "EQUILON")
+    hh = _crit(_chem(s, "Benzene"), "human_health")
+    assert hh.flag == "approach"  # ~0.1x the drinking-water benzene criterion at the harmonic mean
+    # No aquatic-life exceedance anywhere on this facility...
+    assert not any(
+        c.criterion_type in ("acute", "chronic") and c.flag == "exceedance"
+        for cs in s.chemical_screens
+        for c in cs.criteria
+    )
+    # ...yet it is elevated — the human-health approach is not silently dropped to "context".
+    assert s.flag == "elevated"
+
+
+def test_stored_factor_and_flag_never_disagree() -> None:
+    """exceedance_factor and flag derive from the same rounded value — no boundary mismatch (#1)."""
+    inv = toxics.build_screen(Settings())
+    for s in inv.screens:
+        for cs in s.chemical_screens:
+            for c in cs.criteria:
+                if c.exceedance_factor is not None:
+                    assert c.flag == toxics._criterion_flag(c.exceedance_factor), (
+                        f"{cs.chemical} {c.criterion_type}: flag {c.flag} disagrees with "
+                        f"factor {c.exceedance_factor}"
+                    )
+
+
 def test_every_critical_facility_has_a_computed_aquatic_exceedance() -> None:
     inv = toxics.build_screen(Settings())
     for s in inv.flagged:

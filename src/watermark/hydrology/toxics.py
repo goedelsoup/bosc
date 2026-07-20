@@ -353,6 +353,9 @@ def _criterion_screen(
     conc = load_lb_day / (mgd * _LBS_PER_MGL_MGD)
     loading_capacity = criterion.value * mgd * _LBS_PER_MGL_MGD
     ratio = conc / criterion.value if criterion.value else None
+    # Flag off the SAME rounded factor that is stored/displayed, so `exceedance_factor` and
+    # `flag` can never disagree at the band boundary (a stored 1.0 always reads as an exceedance).
+    factor = round(ratio, 3) if ratio is not None else None
     conc_pv = ProvenancedValue.derived(
         round(conc, 4),
         "mg/L",
@@ -369,16 +372,23 @@ def _criterion_screen(
         reported_load_lb_day=round(load_lb_day, 4),
         loading_capacity_lb_day=round(loading_capacity, 4),
         derived_concentration=conc_pv,
-        exceedance_factor=round(ratio, 3) if ratio is not None else None,
-        flag=_criterion_flag(ratio),
+        exceedance_factor=factor,
+        flag=_criterion_flag(factor),
     )
 
 
+def _annual_lbs(wc: RseiWaterChemical) -> float:
+    """A chemical's cumulative water pounds annualized over its own water reporting years."""
+    return wc.water_pounds / (wc.reporting_years or 1)
+
+
 def _screen_chemical(
-    wc: RseiWaterChemical, flows: dict[str, ProvenancedValue | None], crit: WaterQualityCriterion
+    wc: RseiWaterChemical,
+    annual: float,
+    flows: dict[str, ProvenancedValue | None],
+    crit: WaterQualityCriterion,
 ) -> ChemicalScreen:
     """Screen one water chemical against every applicable Ohio criterion type."""
-    annual = wc.water_pounds / (wc.reporting_years or 1)
     crit_values = {
         "acute": crit.acute_cmc_mg_l,
         "chronic": crit.chronic_ccc_mg_l,
@@ -408,6 +418,9 @@ def _facility_flag(chem_screens: list[ChemicalScreen], receiving: str | None) ->
     degenerate acute exceedance (any load "exceeds" a zero-capacity stream) is surfaced honestly
     but on its own only yields ``elevated`` — otherwise every trace corridor discharger (e.g. 5
     lb of chromium over the record) would read ``critical``, which is alarmist and rebuttable.
+    ``elevated`` then covers every remaining concern uniformly — any approach or a non-critical
+    exceedance, aquatic **or** human-health (no aquatic/human-health asymmetry); ``context`` is
+    only all-``ok`` / ``no_criterion``.
     """
     if receiving is None:
         return "uncharacterized"
@@ -418,15 +431,7 @@ def _facility_flag(chem_screens: list[ChemicalScreen], receiving: str | None) ->
         for c in cs
     ):
         return "critical"
-    degenerate_acute = any(
-        c.criterion_type == "acute" and c.flag == "exceedance" and c.exceedance_factor is None
-        for c in cs
-    )
-    if (
-        degenerate_acute
-        or any(c.criterion_type in aquatic and c.flag == "approach" for c in cs)
-        or any(c.criterion_type == "human_health" and c.flag == "exceedance" for c in cs)
-    ):
+    if any(c.flag in ("exceedance", "approach") for c in cs):
         return "elevated"
     return "context"
 
@@ -437,20 +442,21 @@ def _screen_water_chemicals(
     """Every water chemical of a facility, screened (or reported ``no_criterion``)."""
     out: list[ChemicalScreen] = []
     for wc in fac.top_water_chemicals:
+        annual = _annual_lbs(wc)
         crit = table.match(wc.cas)
         if crit is None:
             out.append(
                 ChemicalScreen(
                     chemical=wc.chemical,
                     cas=wc.cas,
-                    annual_water_pounds=round(wc.water_pounds / (wc.reporting_years or 1), 1),
+                    annual_water_pounds=round(annual, 1),
                     reporting_years=wc.reporting_years,
                     criteria=[],
                     flag="no_criterion",
                 )
             )
         else:
-            out.append(_screen_chemical(wc, flows, crit))
+            out.append(_screen_chemical(wc, annual, flows, crit))
     return out
 
 

@@ -17,6 +17,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 from watermark.config import Settings, get_settings
+from watermark.hydrology.toxics import format_factor, worst_exceedances
 from watermark.site.feeds import GeoFeature, GeoFeatureCollection, GeoProperties
 from watermark.sites import active_profile, site_scoped_path
 
@@ -98,8 +99,6 @@ def merge_rsei_layer(
         if sc and sc.flag in ("critical", "elevated"):
             props["water_flag"] = sc.flag
             # Name the worst chemical exceedances (WS-07 per-chemical screen), not the aggregate.
-            from watermark.hydrology.toxics import format_factor, worst_exceedances
-
             chems = "; ".join(
                 f"{chem.split(' (')[0].strip()} {ctype} {format_factor(ef)}"
                 for ef, chem, ctype in worst_exceedances(sc.chemical_screens, k=2)
