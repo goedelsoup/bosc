@@ -178,3 +178,12 @@ air_app = typer.Typer(
     add_completion=False,
 )
 app.add_typer(air_app, name="air")
+
+
+facility_app = typer.Typer(
+    name="facility",
+    help="Data-center facility modeling: distill swept registers + the prose→SiteFacility promotion report (epic #1626).",
+    no_args_is_help=True,
+    add_completion=False,
+)
+app.add_typer(facility_app, name="facility")
