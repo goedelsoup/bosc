@@ -1,0 +1,162 @@
+site: hamilton-middletown
+generated_at: '2026-07-20'
+source_register: extracted/hamilton-middletown/data-centers.md
+candidates:
+- key: project-mila
+  project_name: Project Mila
+  operator:
+    value: Prologis, Inc.
+    source_kind: reference
+    citation: Data Center Dynamics; Journal-News; WVXU; WCPO (all concur)
+    note: San Francisco industrial REIT; developer/operator. Anchor hyperscaler not named [open].
+  status: approved
+  location: Trenton Industrial Park, near Kennel Road & Woodsdale Road, City of Trenton
+  county: Butler County, OH
+  it_load_mw:
+    value: 250
+    unit: MW
+    source_kind: reference
+    citation: Journal-News; stopohiodatacenters.org
+    note: register tags [verified]; sources are media. Duke Woodsdale 345-kV circuits (F34564/F34565)
+      corroborate a large customer load; no interconnect MW filing pulled.
+  gross_floor_area_sqft:
+    value: 893034
+    unit: sqft
+    source_kind: reference
+    citation: Journal-News (from the CRA tax filing)
+    note: range ~880,000–899,065 ft² across sources; CRA filing cites 893,034; stopohiodatacenters cites
+      899,065. Four single-story buildings.
+  investment_usd:
+    value: 1000000000
+    unit: USD
+    source_kind: reference
+    citation: Data Center Dynamics; advocacy/trade press
+    note: ~$1B construction; not yet confirmed against a city/state filing.
+  acreage:
+    value: 141
+    unit: acres
+    source_kind: reference
+    citation: Journal-News; Data Center Dynamics
+    note: land purchase $7.7–7.75M, Prologis → City of Trenton, Oct 2025; zoned I-G Industrial.
+  water_draw_mgd:
+    value: 15.8
+    unit: Mgal/yr
+    source_kind: reference
+    citation: WVXU (developer statement); Journal-News
+    note: ANNUAL draw (~15–15.8 M gal/yr), not a daily max; developer claims free-air cooling needs water
+      ~3% of the year. ~0.067 cfs avg consumptive is [inference].
+  cooling:
+    value: direct evaporative free-air cooling
+    source_kind: reference
+    citation: Prologis (via WVXU)
+    note: developer assertion; cooling water needed ~3% of the year.
+  utility:
+    value: Duke Energy Ohio, Inc.
+    source_kind: document
+    citation: duke-energy.com Woodsdale 345-kV transmission project page (circuits F34564/F34565)
+    note: Duke's own filing describes two new 345-kV circuits from Woodsdale Substation to 'a new customer
+      facility located north of the substation' (the Prologis site). PJM DEOK. Advocacy-site 'AEP Ohio'
+      is contradicted by this primary filing.
+  npdes_permit:
+    note: no project-specific NPDES for Project Mila surfaced. Wastewater routes via Trenton sewer → Butler
+      County LeSourdsville WRF (facility ID 1PK00011, unconfirmed) → Great Miami River.
+  air_permit:
+    note: 'no Butler County air PTI found. Instrument to pull: OEPA air permits DB / eDoc, Butler County,
+      entity ''Prologis'' or a shell LLC (emergency-generator bank is the air trigger).'
+  register_prose: |
+    ## 1 — Prologis "Project Mila" (Trenton data-center campus)
+
+    - **Developer / operator:** Prologis, Inc. (San Francisco industrial REIT). `[verified]`
+      Source: Data Center Dynamics; Journal-News; WVXU; WCPO (all concur).
+    - **Project name:** Project Mila (developer's project name). `[verified]`
+    - **Anchor tenant / hyperscaler:** not named publicly. `[open]` — no end-user disclosed.
+    - **Developer shell / entity of record:** not disclosed in reviewed sources. `[open]` — pull
+      the Butler County Recorder deed for the October 2025 conveyance to identify the grantee LLC.
+    - **Location:** Trenton Industrial Park, near Kennel Road and Woodsdale Road, ~1 mile south of
+      downtown Trenton, east of the Molson Coors / Trenton brewery. Within Trenton city limits,
+      zoned **I-G General Industrial** (no rezoning required). `[verified]` Source: WVXU; WCPO.
+    - **Land / parcel acreage:** ~141 acres. `[verified]` Source: Journal-News; DCD.
+    - **Buildings:** four single-story data-center buildings + an electrical substation + a utility
+      building. `[verified]`
+    - **Square footage:** ~880,000–899,065 ft² at buildout (220,000 ft²/building → 880,000; the CRA
+      tax filing cites 893,034 ft²; stopohiodatacenters cites 899,065 ft²). `[verified]` (range);
+      exact total `[reference]`.
+    - **Investment:** ~$1 billion construction. `[reference]` (advocacy/trade press; not yet
+      confirmed against a city/state filing).
+    - **Land purchase:** $7.7–7.75 million, Prologis → City of Trenton, October 2025. `[verified]`
+      Source: WCPO; WVXU; Journal-News. (DCD's "$7.7M / Oct 2024" appears to be a date error.)
+    - **Assessed building value:** $233.2 million (basis $265/ft² × four buildings). `[reference]`
+      Source: Journal-News (from the CRA filing).
+    - **Power draw (MW):** 250 MW. `[verified]` Source: Journal-News; stopohiodatacenters.
+    - **Power utility:** Duke Energy Ohio, Inc. `[verified]` — Duke's own transmission-project page
+      describes two new 345-kV circuits (F34564/F34565) from the Woodsdale Substation to "a new
+      customer facility located north of the substation" (the Prologis site sits directly north);
+      substation expanded ~3.3 acres, work completion by December 2028. Prologis committed to pay
+      100% of the power-infrastructure upgrade costs. Source: duke-energy.com Woodsdale project page.
+      *Note: the advocacy site's "AEP Ohio" is contradicted by Duke's primary filing — Trenton is
+      Duke Energy Ohio (#3542, PJM DEOK) territory. `[verified]`*
+    - **Jobs:** ~120 permanent full-time by December 31, 2035; ~$5M annual payroll (~$41,666/job).
+      `[verified]` (media round to ~140). Construction jobs not quantified. `[open]`
+
+    ### Financial / tax instruments
+
+    - **CRA abatement:** 15-year, 75% abatement on building value (Community Reinvestment Area).
+      Taxable building value after abatement $58.3M; total taxable value incl. land $67.6M; projected
+      ~$1.34M/yr to city + school districts. `[reference]` Source: Journal-News (CRA agreement).
+    - **PILOT payments:** Edgewood City Schools $940,200; Butler Tech $59,800. `[reference]`
+    - **Upfront infrastructure:** $2.47M water tap-in (617 ERUs); $210,400 sewer capacity (263 ERUs);
+      ~$120,000/yr municipal water/sewer/stormwater fees. `[reference]` Source: Journal-News.
+    - **TIF / enterprise-zone / sales-tax exemption:** not separately documented (the structure is a
+      CRA + PILOT, not a TIF). `[open]`
+
+    ### Water / hydrology hook
+
+    - **Draw:** up to ~15–15.8 million gallons/year; Prologis claims water cooling needed ~3% of the
+      year via direct evaporative free-air cooling. `[verified]` (draw range); cooling claim
+      `[reference]` (developer assertion).
+    - **Water source:** City of Trenton municipal system — Trenton's own groundwater (four supply
+      wells + a 2006 ion-exchange treatment plant); **not** purchased from City of Hamilton.
+      `[verified]` Source: trentonoh.gov/239.
+    - **Wastewater:** Trenton gravity sewer → lift station → force main under the Great Miami River →
+      Butler County's LeSourdsville Water Reclamation Facility (5260 Hamilton-Middletown Rd), under a
+      Butler County Sewer Dept. contract. `[verified]` Source: trentonoh.gov/238; bcohio.gov.
+    - **Receiving water:** Great Miami River (LeSourdsville WRF discharges treated effluent to the
+      Great Miami). `[verified]`
+    - **NPDES permit:** LeSourdsville facility ID 1PK00011 (Ohio EPA). `[reference]` — confirm the
+      current NPDES number via Ohio EPA / EPA ECHO before citing as `[verified]`. No project-specific
+      NPDES for Project Mila surfaced. `[open]`
+
+    ### Hydrology screen
+
+    - **Receiving water (indirect):** Great Miami River, lower reach — the basin-screen mainstem
+      proxy is gage 03274000 (Great Miami River at Hamilton OH; `watermark.hydrology.basin`).
+      `[verified]`
+    - **Abstraction vs. flow:** ~15.8M gal/yr = 0.067 cfs average consumptive; against a lower Great
+      Miami mainstem flow this is a negligible fraction — **no assimilative flag on water-quantity
+      grounds.** `[inference]` (arithmetic from cited inputs; the Trenton-reach 7Q10 denominator is
+      not yet derived — pending a basin low-flow pull at Hamilton.)
+
+    ### Regulatory record (status as of 2026-07-02)
+
+    - **Site-plan approval:** Trenton Planning Commission, March 30, 2026 (~10-minute meeting, no
+      public hearing — land pre-zoned I-G Industrial). `[verified]` Source: WVXU; WCPO.
+    - **Construction start:** fall 2026 (substation site work underway as of March 2026); first
+      building ~2028, all four complete ~2029. `[verified]`/`[reference]`.
+    - **Zoning:** no rezoning action — I-G General Industrial; only a site-plan approval was required.
+      `[verified]`
+    - **Stormwater:** stormwater-management system under technical review at approval; NPDES
+      construction/stormwater permit implied but not documented. `[open]`
+    - **Ohio EPA air PTI (emergency generators):** `[open]` — Prologis states backup diesel generators
+      run only for testing/emergencies; no Butler County PTI found in reviewed sources. Instrument to
+      pull: OEPA air permits DB / eDoc, Butler County, entity "Prologis" or a shell LLC.
+
+    ### Opposition / litigation
+
+    - **Organized opposition:** W.A.T.E.R. (Woodsdale and Trenton Environmental Resistance).
+      `[verified]`
+    - **Moratorium:** denied — Butler County Commissioners lack authority over incorporated Trenton;
+      a residents' moratorium petition was rejected on jurisdictional grounds. `[verified]`
+    - **Ballot effort:** signature drive for a proposed Ohio constitutional amendment to ban data
+      centers >25 MW (statewide, targets ~413,000 signatures by July 1, 2026). `[reference]`
+      (advocacy source — treat targets as a lead, not verified.)
+    - **Litigation:** none identified. `[open]`

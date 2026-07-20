@@ -27,6 +27,7 @@ from pydantic import ValidationError
 from watermark.agent.client import AgentResult, ResearchAgent
 from watermark.agent.extractor import ExtractionError, StructuredExtractor
 from watermark.config import Settings, get_settings
+from watermark.facility.sweep import SWEEP_METHODOLOGY
 from watermark.hypotheses import HYPOTHESES, HypothesisAssessment
 from watermark.logging import get_logger
 from watermark.research.models import (
@@ -387,15 +388,12 @@ Cover the following areas for {site}:
 4. GIS: parcel / zoning connectors wired; footprint geometry present.
 5. Extracted corpus: what's been extracted vs what source documents exist.
 6. Hypothesis assessments: which cells are populated vs open.
-7. Data-center activity sweep: run search_web with I-75/rail-corridor data-center queries for
-   {site}. Use the data-center-sweep skill methodology: disambiguation guardrail first, then
-   source-priority order (city council resolutions → county recorder → Ohio SOS → OEPA →
-   ECHO → trade press). For any active project, call fetch_url on the primary city/council
-   resolution source to confirm operator, location, water draw, and tax instruments. Check
-   RSEI county inventory and ECHO NPDES for NAICS 518210 entries; record a negative result
-   explicitly if no project is found. Tag every claim with the BOSC evidence vocabulary:
-   [verified] for cited primary-source instruments, [inference] for arithmetic, [open] for
-   unconfirmed items. Do not bridge Lima/Allen County entities onto {site}.
+7. Data-center activity sweep for {site}. Follow the shared sweep methodology below, then record
+   the findings as a section of this onboarding review (not a standalone register) — for any
+   active project confirm operator, location, water draw, and tax instruments from the primary
+   source, and record a negative result explicitly if none is found.
+
+{sweep_methodology}
 
 End with a prioritized checklist of blocking gaps (items that must be resolved before the
 site can be promoted to selectable) and non-blocking gaps (good follow-up leads).
@@ -419,7 +417,7 @@ class _SiteOnboardRecipe(ResearchRecipe):
             raise ValueError(f"recipe {self.name!r} needs context['site'] (the active --site slug)")
 
     def build_prompt(self, *, topic: str, ctx: dict[str, Any]) -> str:
-        return _ONBOARD_PROMPT.format(site=ctx["site"])
+        return _ONBOARD_PROMPT.format(site=ctx["site"], sweep_methodology=SWEEP_METHODOLOGY)
 
     def distill(
         self,

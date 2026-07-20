@@ -19,6 +19,7 @@ from watermark.cli import (  # noqa: F401
     air,
     catalog,
     corpus_mirror,
+    facility,
     gis,
     greenops,
     grid,

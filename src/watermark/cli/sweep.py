@@ -17,6 +17,8 @@ from watermark.cli._base import (
     sweep_app,
     wrote,
 )
+from watermark.facility.candidate import candidates_path, save_candidates
+from watermark.facility.sweep import build_sweep_prompt, distill_candidates
 
 # ---------------------------------------------------------------------------
 # Catalog entry template (needs-review; human promotes to reviewed after QA)
@@ -40,7 +42,7 @@ storage:
 - relpath: extracted/{site}/data-centers.md
   media_type: text/markdown
   lfs: false
-refresh:
+{candidates_storage}refresh:
   cadence: on-demand
 provenance: reference
 tags:
@@ -53,59 +55,6 @@ notes: >-
   #1050 data-center sweep ({date}). Status needs-review — human QA required
   before promoting to reviewed. Run `watermark catalog reconcile` after commit.
 """
-
-# ---------------------------------------------------------------------------
-# Sweep prompt
-# ---------------------------------------------------------------------------
-
-_SWEEP_PROMPT = """\
-Perform a data-center activity sweep for {city} / {county}, {state} (site slug: {site}).
-
-Follow the data-center-sweep skill methodology exactly:
-
-STEP 1 — DISAMBIGUATION GUARDRAIL
-Before recording any project, confirm it is physically located in {county}, not an
-adjacent county. Check the street address and the resolution/deed text.
-
-STEP 2 — CORRIDOR SWEEP
-Use search_web to discover documented data-center projects along the I-75 corridor
-and rail freight corridors near {city}. Suggested queries:
-  "data center" "{city}" "{state}"
-  "hyperscale" OR "cloud campus" "{county}"
-  "data center" "{city}" "I-75"
-  "{city}" "PILOT" OR "CRA" "data center"
-  "{city}" "large load" OR "utility agreement" "data center"
-
-STEP 3 — PRIMARY SOURCE FETCH
-For every project found, call fetch_url on the city council resolution, municipal FAQ,
-or county resolution that is the primary instrument for that project.
-
-STEP 4 — REGULATORY SCAN
-Search for Ohio EPA air PTI, NPDES stormwater coverage, and Ohio SOS entity registrations
-for any operator found. Use the ECHO and OEPA tools if available; otherwise use search_web
-for the permit reference and fetch_url on the OEPA/ECHO result page.
-
-STEP 5 — NEGATIVE CHECKS
-Call retrieve_corpus (site="{site}") and check list_extractions for any existing
-data-center records. Note the RSEI county FIPS = {rsei_fips}; if the rsei corpus is
-accessible, check for NAICS 518210 entries. Otherwise note it as [open].
-
-STEP 6 — PRODUCE THE REGISTER
-Write the full discover-and-pin register in the format defined by the data-center-sweep
-skill, including:
-  - Header with site name, county, and today's date
-  - Disambiguation guardrail section
-  - One numbered section per confirmed project (or "No activity found")
-  - For each project: financial/tax instruments, water/hydrology hook, hydrology screen,
-    regulatory record
-  - Instruments to pull (priority order)
-  - Sources section
-
-Tag every claim: [verified] [inference] [open] [reference]
-Do not fabricate figures. Use [open] for any value not found in a cited source.
-Do not bridge Lima / Allen County (OH) entities onto {county} — no evidentiary link.
-"""
-
 
 # ---------------------------------------------------------------------------
 # Command
@@ -133,6 +82,11 @@ def sweep_data_centers(
         0,
         "--max-turns",
         help="Agent turn cap (0 = settings default).",
+    ),
+    no_distill: bool = typer.Option(
+        False,
+        "--no-distill",
+        help="Skip the prose→structured candidate-record distillation (write the register only).",
     ),
 ) -> None:
     """Sweep the I-75/rail corridor for data-center activity for the active site and write
@@ -173,7 +127,7 @@ def sweep_data_centers(
         raise typer.Exit(code=1)
 
     date = datetime.now(UTC).strftime("%Y-%m-%d")
-    prompt = _SWEEP_PROMPT.format(
+    prompt = build_sweep_prompt(
         city=city,
         county=county,
         state=state,
@@ -213,6 +167,32 @@ def sweep_data_centers(
     register_path.write_text(register_text, encoding="utf-8")
     wrote(register_path)
 
+    # Distill the prose register into a structured, provenance-carrying candidate record so the
+    # sweep output is consumable (not prose-only) — the #1627 seam. Reviewed like the register.
+    candidates_storage = ""
+    if not no_distill:
+        from watermark.agent.extractor import StructuredExtractor
+
+        cand_path = candidates_path(settings, site)
+        record = distill_candidates(
+            register_text,
+            site=site,
+            source_register=str(register_path.relative_to(settings.data_dir)),
+            generated_at=date,
+            extractor=StructuredExtractor(settings=settings),
+        )
+        save_candidates(record, cand_path)
+        wrote(cand_path)
+        console.print(
+            f"[dim]distilled {len(record.candidates)} candidate(s), "
+            f"{len(record.promotable)} promotable[/]"
+        )
+        candidates_storage = (
+            f"- relpath: extracted/{site}/data-centers.candidates.yaml\n"
+            "  media_type: application/yaml\n"
+            "  lfs: false\n"
+        )
+
     # Preserve an existing "reviewed" status rather than resetting it to needs-review.
     catalog_status = "needs-review"
     if catalog_path.exists():
@@ -230,6 +210,7 @@ def sweep_data_centers(
         county_tag=county_tag,
         date=date,
         status=catalog_status,
+        candidates_storage=candidates_storage,
     )
     catalog_path.parent.mkdir(parents=True, exist_ok=True)
     catalog_path.write_text(catalog_text, encoding="utf-8")
