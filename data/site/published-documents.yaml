@@ -1,11 +1,20 @@
-# Public publish allowlist for source documents — DEFAULT-DENY (epic #274 / #280).
+# Public publish policy for source documents — PUBLISHABLE-BY-DEFAULT WITHIN REVIEWED
+# SCOPE, WITHHOLD DECLARATIVELY (epic #274 / #280).
 #
 # The object store serves the WHOLE corpus in dev/preview, but the PUBLIC site exposes
-# only what this file allows. Nothing is public unless it matches a rule below — EXCEPT
-# the curated exhibits in exhibits.yaml, which are auto-included (they are already
-# published downloads). See published-documents.README.md.
+# only what this file clears. The model is two-sided:
 #
-# A rel is added here ONLY after the C2 redaction/PII pre-publication pass (#281).
+#   * CLEARED SCOPE (below) — the fail-safe eligibility gate. A rel is public only if it
+#     falls inside a cleared boundary; a file in NO cleared boundary is never public, so an
+#     unreviewed file stays private by default. INSIDE a cleared boundary every file
+#     publishes — you no longer restate each one. Curated exhibits (exhibits.yaml) are
+#     auto-included (they are already published downloads).
+#   * WITHHOLD (bottom) — the declarative opt-out. A withhold rule carves a specific rel,
+#     subtree, or glob back out of a cleared boundary. Withhold WINS over everything,
+#     including the auto-included exhibits.
+#
+# A boundary is cleared here ONLY after the C2 redaction/PII pre-publication pass (#281);
+# a withhold rule then carves individual files back out. See published-documents.README.md.
 # Three rule kinds (all optional; combine freely):
 collections:      # whole data/documents/<slug> trees, e.g.  - aedg
   # The whole Ohio EPA collection — 40 PDFs (permits, draft permits, fact sheets, public
@@ -46,3 +55,17 @@ documents:        # exact data/documents rels, e.g.  - recorder/bistrozzi-deeds/
   - aedg/data-center-updates/google-data-center-website-now-live-for-allen-county-community.html
   - aedg/data-center-updates/google-to-build-data-center-in-lima-ohio-with-500-million-capital-investment.html
   - aedg/data-center-updates/what-is-a-data-center-and-why-does-it-matter-for-communities-like-ours.html
+
+# DECLARATIVE OPT-OUT — carve specific rels back out of the cleared scope above. A withhold
+# rule WINS over everything, including the auto-included exhibits, so this is the authoritative
+# way to keep a single file (a CBI page, a PII-bearing recorded instrument, a captured page
+# that turned out to carry a live secret) off the public surface without un-clearing its whole
+# boundary. Same three rule kinds as the cleared scope (mapping form), or a bare list of exact
+# rels as shorthand. Record the reason with each entry, as with a clear.
+#
+# withhold:
+#   documents:
+#     - aedg/PRR-01-bundle.ocr.pdf   # example only — not withheld; PRR bundle is cleared whole
+#   globs: []
+#   collections: []
+withhold: {}

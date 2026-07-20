@@ -12,6 +12,7 @@ from pathlib import Path
 
 from watermark.site.documents import (
     PublishAllowlist,
+    PublishScope,
     _document_stat,
     _lfs_pointer_size,
     build_doc_index,
@@ -180,7 +181,43 @@ def test_publish_allowlist_is_default_deny_plus_exhibits(tmp_path: Path) -> None
     assert al2.is_published("permits/bistrozzi-permits/4132514.pdf")  # glob
     assert al2.is_published("recorder/one.pdf")  # exact
     assert al2.is_published("legal/x.pdf")  # exhibit auto-included
-    assert not al2.is_published("recorder/two.pdf")  # default-deny
+    assert not al2.is_published("recorder/two.pdf")  # not in any cleared boundary
+
+
+def test_publish_withhold_carves_out_within_cleared_scope() -> None:
+    # Publishable-by-default within a cleared collection, minus the declarative withhold.
+    al = PublishAllowlist(
+        collections=frozenset({"aedg"}),
+        documents=frozenset({"legal/exhibit.pdf"}),  # e.g. an auto-included exhibit
+        withhold=PublishScope(
+            documents=frozenset({"aedg/PRR-01-bundle/cbi-page.pdf", "legal/exhibit.pdf"}),
+            globs=("aedg/*/*.secret.html",),
+        ),
+    )
+    assert al.is_published("aedg/data-center-updates/index.html")  # cleared, not withheld
+    assert not al.is_published("aedg/PRR-01-bundle/cbi-page.pdf")  # withheld exact rel
+    assert not al.is_published("aedg/x/y.secret.html")  # withheld glob
+    assert not al.is_published("legal/exhibit.pdf")  # withhold WINS over the exhibit
+    assert not al.is_published("recorder/two.pdf")  # still never public (uncleared)
+
+
+def test_load_publish_allowlist_parses_withhold(tmp_path: Path) -> None:
+    allow = tmp_path / "published-documents.yaml"
+    allow.write_text(
+        "collections:\n  - aedg\n"
+        "withhold:\n  documents:\n    - aedg/cbi.pdf\n  globs:\n    - 'aedg/*.secret.html'\n",
+        encoding="utf-8",
+    )
+    al = load_publish_allowlist(allow)
+    assert al.is_published("aedg/ok.pdf")  # cleared collection, not withheld
+    assert not al.is_published("aedg/cbi.pdf")  # withheld document
+    assert not al.is_published("aedg/leak.secret.html")  # withheld glob
+
+    # A bare list under `withhold:` is shorthand for exact `documents` rels.
+    allow.write_text("collections:\n  - aedg\nwithhold:\n  - aedg/cbi.pdf\n", encoding="utf-8")
+    al2 = load_publish_allowlist(allow)
+    assert al2.is_published("aedg/ok.pdf")
+    assert not al2.is_published("aedg/cbi.pdf")
 
 
 def test_publishable_exhibit_sources_excludes_sliced_bundles() -> None:

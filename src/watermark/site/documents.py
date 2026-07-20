@@ -19,10 +19,11 @@ renames, or alters a byte under ``data/documents``.
 
 from __future__ import annotations
 
-from collections.abc import Iterable
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass, field
 from fnmatch import fnmatch
 from pathlib import Path
+from typing import Any
 from urllib.parse import quote
 
 import yaml
@@ -144,7 +145,7 @@ class DocumentEntry:
     suffix: str
     media_type: str  # MIME, from the real file (extension + content sniff)
     render_class: RenderClass  # what the viewer dispatches on (#274/#275)
-    published: bool  # cleared for public serving by the allowlist (#280); default-deny
+    published: bool  # cleared for public serving: in cleared scope and not withheld (#280)
     available: bool  # the bytes are servable (real file or LFS pointer → R2), not missing
     download_url: str | None  # exhibit link or external mirror URL, when present
     # Version / duplicate-cluster metadata (#1590) is NOT carried here: it's stamped by
@@ -389,20 +390,19 @@ def export_documents(
 
 
 @dataclass(frozen=True)
-class PublishAllowlist:
-    """The default-deny public publish allowlist (epic #274 / C1 #280).
+class PublishScope:
+    """A set of ``data/documents`` rels named by three optional rule kinds.
 
-    A rel is **public** only if it matches an explicit rule — nothing is published by
-    default. Three rule kinds, plus the curated exhibits which are always auto-included
-    (so existing exhibit links keep working): exact ``documents`` rels, whole
-    ``collections`` (first path segment), and ``globs`` (``fnmatch`` over the rel).
+    A rel is *in scope* when it's an exact ``documents`` rel, its first path segment is a
+    whole ``collections`` entry, or it matches any ``globs`` (``fnmatch``) pattern. Used for
+    both sides of the publish policy: the cleared scope and the withhold denylist.
     """
 
     collections: frozenset[str] = frozenset()
     globs: tuple[str, ...] = ()
-    documents: frozenset[str] = frozenset()  # exact rels, incl. auto-included exhibits
+    documents: frozenset[str] = frozenset()
 
-    def is_published(self, rel: str) -> bool:
+    def matches(self, rel: str) -> bool:
         if rel in self.documents:
             return True
         if rel.split("/", 1)[0] in self.collections:
@@ -410,17 +410,73 @@ class PublishAllowlist:
         return any(fnmatch(rel, g) for g in self.globs)
 
 
-def load_publish_allowlist(path: Path, *, exhibit_sources: Iterable[str] = ()) -> PublishAllowlist:
-    """Load the default-deny allowlist YAML, auto-including the curated exhibits.
+@dataclass(frozen=True)
+class PublishAllowlist:
+    """The public publish policy: publishable-by-default within reviewed scope, withhold
+    declaratively (epic #274 / C1 #280).
 
-    The file (``data/site/published-documents.yaml``, C1 / #280) carries optional
-    ``collections`` / ``globs`` / ``documents`` lists. A missing or empty file means
-    nothing is public **except** the exhibits — which are always allowed because they're
-    already published downloads. A rel is added by hand only after the C2 redaction pass.
+    A rel is **public** iff it falls inside a **cleared** boundary *and* is not on the
+    **withhold** denylist:
+
+    * **Cleared scope** — the fail-safe eligibility gate. The three flat fields name it with
+      the same three rule kinds as :class:`PublishScope`: exact ``documents`` rels (incl. the
+      curated exhibits, which are always auto-included so their existing download links keep
+      working), whole ``collections`` (first path segment), and ``globs``. A rel in **no**
+      cleared boundary is never public, so an unreviewed file stays private by default — a
+      boundary is cleared only after the C2 redaction/PII pass.
+    * **Publishable-by-default within scope** — inside a cleared boundary every file publishes;
+      you no longer have to restate each one.
+    * **Withhold** — the declarative opt-out. A withhold rule carves a rel (or subtree, or
+      glob) back out of a cleared boundary. Withhold **wins over everything**, including the
+      auto-included exhibits, so it is the authoritative way to keep a specific file off the
+      public surface.
+    """
+
+    collections: frozenset[str] = frozenset()
+    globs: tuple[str, ...] = ()
+    documents: frozenset[str] = frozenset()  # cleared exact rels, incl. auto-included exhibits
+    withhold: PublishScope = PublishScope()  # declarative opt-out; wins over the cleared scope
+
+    def is_published(self, rel: str) -> bool:
+        cleared = (
+            rel in self.documents
+            or rel.split("/", 1)[0] in self.collections
+            or any(fnmatch(rel, g) for g in self.globs)
+        )
+        return cleared and not self.withhold.matches(rel)
+
+
+def _parse_scope(data: Any) -> tuple[list[str], list[str], list[str]]:
+    """Parse one scope block into ``(collections, globs, documents)``.
+
+    Accepts either a mapping carrying optional ``collections`` / ``globs`` / ``documents``
+    lists, or a bare list — shorthand for ``documents`` (exact rels), the common withhold form.
+    """
+    if isinstance(data, Mapping):
+        return (
+            [str(s).strip() for s in (data.get("collections") or []) if str(s).strip()],
+            [str(g).strip() for g in (data.get("globs") or []) if str(g).strip()],
+            [str(r).strip() for r in (data.get("documents") or []) if str(r).strip()],
+        )
+    if isinstance(data, list):
+        return ([], [], [str(r).strip() for r in data if str(r).strip()])
+    return ([], [], [])
+
+
+def load_publish_allowlist(path: Path, *, exhibit_sources: Iterable[str] = ()) -> PublishAllowlist:
+    """Load the publish-policy YAML, auto-including the curated exhibits in the cleared scope.
+
+    The file (``data/site/published-documents.yaml``, C1 / #280) carries the cleared scope as
+    top-level ``collections`` / ``globs`` / ``documents`` lists, plus an optional ``withhold``
+    block (a mapping of the same three kinds, or a bare list of exact rels). A missing or empty
+    file means nothing is cleared **except** the exhibits — which are always allowed because
+    they're already published downloads. A boundary is cleared by hand only after the C2
+    redaction pass; a withhold rule then carves individual files back out.
     """
     collections: list[str] = []
     globs: list[str] = []
     documents: list[str] = list(exhibit_sources)
+    withhold = PublishScope()
     if path.is_file():
         try:
             data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
@@ -429,16 +485,17 @@ def load_publish_allowlist(path: Path, *, exhibit_sources: Iterable[str] = ()) -
                 "site.documents.bad_allowlist", path=str(path), error=str(exc).splitlines()[0]
             )
             data = {}
-        if isinstance(data, dict):
-            collections = [
-                str(s).strip() for s in (data.get("collections") or []) if str(s).strip()
-            ]
-            globs = [str(g).strip() for g in (data.get("globs") or []) if str(g).strip()]
-            documents += [str(r).strip() for r in (data.get("documents") or []) if str(r).strip()]
+        if isinstance(data, Mapping):
+            cleared_c, cleared_g, cleared_d = _parse_scope(data)
+            collections, globs = cleared_c, cleared_g
+            documents += cleared_d
+            wc, wg, wd = _parse_scope(data.get("withhold"))
+            withhold = PublishScope(frozenset(wc), tuple(wg), frozenset(wd))
     return PublishAllowlist(
         collections=frozenset(collections),
         globs=tuple(globs),
         documents=frozenset(documents),
+        withhold=withhold,
     )
 
 
