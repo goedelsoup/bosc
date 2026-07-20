@@ -19,7 +19,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from typing import TypeVar
 
-from pydantic import BaseModel, ConfigDict, ValidationError
+from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from watermark.agent.extractor import ExtractionError, StructuredExtractor
 from watermark.facility.candidate import (
@@ -42,8 +42,10 @@ Follow the data-center-sweep skill methodology exactly.
 
 STEP 1 — DISAMBIGUATION GUARDRAIL
 Before recording any project, confirm it is physically located in the site's own county, not an
-adjacent county. Check the street address and the resolution/deed text. Do not bridge Lima / Allen
-County (OH) entities onto another county — there is no evidentiary link.
+adjacent county. Check the street address against the county parcel system and the
+resolution/deed text, and confirm the city/village name matches the site. Do not bridge one
+jurisdiction's entities onto another county's projects — a same-named operator or a nearby campus
+in an adjacent county is context, not an entry, absent a cited evidentiary link.
 
 STEP 2 — CORRIDOR SWEEP
 Use search_web to discover documented data-center projects along the I-75 corridor and rail freight
@@ -176,7 +178,10 @@ class _CandidateDraft(BaseModel):
     utility: ProvenancedFigure | None = None
     npdes_permit: ProvenancedFigure | None = None
     air_permit: ProvenancedFigure | None = None
-    register_prose: str = ""
+    # Required + non-empty: preserving the project's reviewed prose is the whole point of the
+    # record. An omitted or empty draft fails validation and is re-rolled by `_with_retry`, so a
+    # distilled candidate never carries an empty narrative (build_candidate forwards this verbatim).
+    register_prose: str = Field(min_length=1)
 
 
 class _CandidatesDraft(BaseModel):

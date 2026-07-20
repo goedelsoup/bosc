@@ -90,13 +90,15 @@ def sweep_data_centers(
     ),
 ) -> None:
     """Sweep the I-75/rail corridor for data-center activity for the active site and write
-    data/extracted/<site>/data-centers.md + the catalog entry.  Uses search_web and
-    fetch_url to gather publicly documented projects; follow the data-center-sweep skill
-    methodology (disambiguation → primary sources → regulatory scan → register).
+    data/extracted/<site>/data-centers.md, its structured data-centers.candidates.yaml sidecar,
+    and the catalog entry.  Uses search_web and fetch_url to gather publicly documented projects;
+    follow the data-center-sweep skill methodology (disambiguation → primary sources →
+    regulatory scan → register).
 
-    The output is a discover-and-pin register tagged with the BOSC evidence vocabulary.
-    Status is written as needs-review — a human pass is required before promoting to
-    reviewed in the catalog entry."""
+    The register is a discover-and-pin document tagged with the BOSC evidence vocabulary; the
+    candidate sidecar is its machine-readable, provenance-carrying peer (#1627), written by
+    default. Pass --no-distill to write the register only (no candidate YAML). Status is written
+    as needs-review — a human pass is required before promoting to reviewed in the catalog entry."""
     from datetime import UTC, datetime
 
     from watermark.agent.client import ResearchAgent
@@ -170,28 +172,47 @@ def sweep_data_centers(
     # Distill the prose register into a structured, provenance-carrying candidate record so the
     # sweep output is consumable (not prose-only) — the #1627 seam. Reviewed like the register.
     candidates_storage = ""
-    if not no_distill:
+    cand_path = candidates_path(settings, site)
+    if no_distill:
+        # No candidate record this run. Drop any prior sidecar so a freshly-swept register is
+        # never paired with a stale, no-longer-matching candidate file — keeping the on-disk
+        # state consistent with the catalog entry (which omits candidates_storage below).
+        if cand_path.exists():
+            cand_path.unlink()
+            console.print(f"[dim]removed stale candidate record {cand_path.name} (--no-distill)[/]")
+    else:
         from watermark.agent.extractor import StructuredExtractor
 
-        cand_path = candidates_path(settings, site)
-        record = distill_candidates(
-            register_text,
-            site=site,
-            source_register=str(register_path.relative_to(settings.data_dir)),
-            generated_at=date,
-            extractor=StructuredExtractor(settings=settings),
-        )
-        save_candidates(record, cand_path)
-        wrote(cand_path)
-        console.print(
-            f"[dim]distilled {len(record.candidates)} candidate(s), "
-            f"{len(record.promotable)} promotable[/]"
-        )
-        candidates_storage = (
-            f"- relpath: extracted/{site}/data-centers.candidates.yaml\n"
-            "  media_type: application/yaml\n"
-            "  lfs: false\n"
-        )
+        try:
+            record = distill_candidates(
+                register_text,
+                site=site,
+                source_register=str(register_path.relative_to(settings.data_dir)),
+                generated_at=date,
+                extractor=StructuredExtractor(settings=settings),
+            )
+        except Exception as exc:
+            # Keep the expensive sweep: the register is already written, and a distillation failure
+            # (model error, exhausted retries, missing key) must not lose it. Skip the candidate
+            # sidecar (candidates_storage stays "") and still write the catalog below.
+            console.print(
+                f"[yellow]Candidate distillation failed:[/] {exc}\n"
+                "The register was written and will be cataloged. Once the cause is resolved, rerun\n"
+                "  watermark facility distill --force\n"
+                "to build data-centers.candidates.yaml."
+            )
+        else:
+            save_candidates(record, cand_path)
+            wrote(cand_path)
+            console.print(
+                f"[dim]distilled {len(record.candidates)} candidate(s), "
+                f"{len(record.promotable)} promotable[/]"
+            )
+            candidates_storage = (
+                f"- relpath: extracted/{site}/data-centers.candidates.yaml\n"
+                "  media_type: application/yaml\n"
+                "  lfs: false\n"
+            )
 
     # Preserve an existing "reviewed" status rather than resetting it to needs-review.
     catalog_status = "needs-review"
