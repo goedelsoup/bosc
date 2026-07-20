@@ -48,9 +48,40 @@ _DURATIONS: tuple[str, ...] = (
     "45-day",
     "60-day",
 )
-_DURATION_HOURS: dict[str, float] = {"6-hr": 6.0, "12-hr": 12.0, "24-hr": 24.0}
-
 _QUANTILES_RE = re.compile(r"quantiles\s*=\s*(\[.*?\])\s*;", re.DOTALL)
+
+
+def _duration_to_hours(duration: str) -> float:
+    """Hours for an Atlas-14 duration label (``5-min`` / ``3-hr`` / ``2-day``).
+
+    Derived from the label unit rather than a hardcoded lookup so every duration in
+    ``_DURATIONS`` maps to its true length — a ``3-hr`` request no longer silently
+    inherits ``24.0`` (which would stretch a 3-hr depth across a 24-hr hyetograph).
+    """
+    magnitude, _, unit = duration.partition("-")
+    hours_per = {"min": 1.0 / 60.0, "hr": 1.0, "day": 24.0}.get(unit)
+    if hours_per is None:
+        raise ValueError(f"cannot derive hours from duration {duration!r}")
+    return float(magnitude) * hours_per
+
+
+def _validate_grid(grid: list[list[float]]) -> list[list[float]]:
+    """Assert the parsed quantiles grid matches the expected duration x return-period shape.
+
+    ``design_storm``/``precip_frequency_grid`` index the grid purely by the fixed
+    ``_DURATIONS`` x ``_RETURN_PERIODS`` order, so a NOAA HDSC layout change (reordered
+    durations, an added/removed return period, a shifted page) would otherwise return the
+    wrong cell's depth — or ``IndexError`` — with no signal. Fail loudly instead.
+    """
+    n_dur, n_rp = len(_DURATIONS), len(_RETURN_PERIODS)
+    if len(grid) != n_dur or any(len(row) != n_rp for row in grid):
+        shape = f"{len(grid)}x{{{','.join(str(len(row)) for row in grid)}}}"
+        raise ValueError(
+            f"NOAA Atlas-14 quantiles grid is {shape}, expected {n_dur}x{n_rp} "
+            f"({n_dur} durations x {n_rp} return periods) — the response layout changed; "
+            "reading depths by fixed grid position is no longer safe"
+        )
+    return grid
 
 
 def _fetch_quantiles(settings: Settings, lat: float, lon: float) -> list[list[float]]:
@@ -77,7 +108,7 @@ def _fetch_quantiles(settings: Settings, lat: float, lon: float) -> list[list[fl
         return [[float(v) for v in row] for row in grid]
 
     payload = cached_get("noaa_atlas14", params, fetch, settings=settings)
-    return [[float(v) for v in row] for row in payload]
+    return _validate_grid([[float(v) for v in row] for row in payload])
 
 
 def precip_frequency_grid(
@@ -113,7 +144,7 @@ def design_storm(
     depth = grid[row][col]
     return DesignStorm(
         return_period_yr=return_period_yr,
-        duration_hr=_DURATION_HOURS.get(duration, 24.0),
+        duration_hr=_duration_to_hours(duration),
         depth=ProvenancedValue.from_connector(
             depth,
             "in",

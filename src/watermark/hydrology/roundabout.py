@@ -22,6 +22,7 @@ from __future__ import annotations
 
 from watermark.config import Settings, get_settings
 from watermark.hydrology.climate import load_climatology
+from watermark.hydrology.connectors._cache import HydroOfflineError
 from watermark.hydrology.drainage import load_corridor_ddf
 from watermark.hydrology.model import (
     HydroFinding,
@@ -100,7 +101,18 @@ def _storm_depths(settings: Settings, return_periods: tuple[int, ...]) -> dict[i
         depth = None
         if ddf is not None:
             depth = ddf.depths_in.get("24-hr", {}).get(str(rp))
-        out[rp] = depth if depth is not None else fallback.get(rp, 4.25)
+        if depth is None:
+            # No committed corridor DDF entry: fall back to the ACTIVE SITE's cited Atlas-14
+            # table. If it too lacks this return period, fail loudly rather than substituting
+            # Lima's 4.25 for a different site/frequency (#1604).
+            if rp not in fallback:
+                raise HydroOfflineError(
+                    f"no 24-hr storm depth for site {settings.site!r} at {rp}-yr: neither "
+                    "the committed corridor DDF nor SiteProfile.noaa_fallback_24h_depth_in "
+                    f"({sorted(fallback)}) has it — run the NOAA Atlas-14 pull or add the depth"
+                )
+            depth = fallback[rp]
+        out[rp] = depth
     return out
 
 

@@ -227,8 +227,19 @@ def _resolve_storm(return_period_yr: int, *, settings: Settings, live: bool) -> 
             )
         except HydroOfflineError:
             log.info("hydro.storm.offline_fallback", return_period=return_period_yr)
-    # No live fetch / cache: fall back to the cited corridor-point depth, flagged.
-    depth = prof.noaa_fallback_24h_depth_in.get(return_period_yr, 4.25)
+    # No live fetch / cache: fall back to the ACTIVE SITE's cited Atlas-14 corridor-point
+    # depth, flagged. If the site has no cited depth for this return period, fail loudly
+    # naming the missing (site, return-period) key rather than substituting Lima's — mirrors
+    # the connector-cache "fail rather than fabricate" discipline (#1604).
+    fallback = prof.noaa_fallback_24h_depth_in
+    if return_period_yr not in fallback:
+        raise HydroOfflineError(
+            f"no offline NOAA Atlas-14 24-hr design-storm depth for site {settings.site!r} "
+            f"at return period {return_period_yr}-yr "
+            f"(SiteProfile.noaa_fallback_24h_depth_in has {sorted(fallback)}); run the "
+            "NOAA Atlas-14 pull for this site or add the cited corridor-point depth"
+        )
+    depth = fallback[return_period_yr]
     return DesignStorm(
         return_period_yr=return_period_yr,
         duration_hr=24.0,
