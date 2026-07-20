@@ -85,3 +85,16 @@ def test_storm_depths_fallback_reads_the_active_profile(
     assert rb._storm_depths(hydro_settings, (2, 10, 100)) == {2: 2.52, 10: 3.58, 100: 5.39}  # Lima
     findlay = hydro_settings.model_copy(update={"site": "findlay"})
     assert rb._storm_depths(findlay, (2, 10, 100)) == {2: 2.44, 10: 3.48, 100: 5.26}  # distinct
+
+
+def test_storm_depths_raises_when_site_lacks_depth(hydro_settings: Settings, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    # #1604: with no committed corridor DDF and an empty profile fallback table, a site's
+    # roundabout storm depths must fail loudly (naming the site + return period), never
+    # substitute Lima's 4.25 for a different site/frequency.
+    from watermark.hydrology.connectors._cache import HydroOfflineError
+
+    monkeypatch.setattr(rb, "load_corridor_ddf", lambda **_: None)
+    urbana = hydro_settings.model_copy(update={"site": "urbana"})  # empty fallback map
+    with pytest.raises(HydroOfflineError) as exc:
+        rb._storm_depths(urbana, (2, 100))
+    assert "urbana" in str(exc.value)

@@ -274,6 +274,43 @@ def test_pipeline_run_network(hydro_settings: Settings) -> None:
     assert baseline.closes and buildout.closes
 
 
+def test_fm2_and_lima_wwtp_are_additive_not_double_counted(hydro_settings: Settings) -> None:
+    """#1606: the campus FM-2 industrial discharge physically leaves through the City of Lima
+    WWTP outfall (2PE00000001 -> Ottawa RM 37.6). network.yaml's accounting is explicit and
+    must stay so: the ``lima-wwtp`` gain is the plant's OWN municipal design flow (18.5 MGD);
+    the campus is a separate INCREMENT on top (2.5 MGD FM-2) — baseline-plus-increment, not
+    one folded into the other. Were the campus ever silently folded into the plant's figure
+    (18.5 -> 21 MGD) the two nodes would double-count the 2.5 MGD (~3.9 cfs) at the same reach,
+    against a loop whose natural low flow is ~1 cfs."""
+    from watermark.hydrology.units import mgd_to_cfs
+
+    balance = build_water_balance(settings=hydro_settings, live=False)
+    rn = net.route_network(balance, consumptive_cfs=0.0, settings=hydro_settings)
+
+    wwtp = rn.reach("lima-wwtp")
+    fm2 = rn.reach("bosc-fm2-return")
+    assert wwtp is not None and wwtp.gain is not None
+    assert fm2 is not None and fm2.gain is not None
+    # Distinct, additive gains draining to the same reach (not one absorbed into the other).
+    assert wwtp.gain is not fm2.gain
+    # The plant's gain is its municipal design flow ALONE (18.5 MGD) — strictly less than
+    # design + campus (21 MGD), so it does not already convey the FM-2 it shares an outfall with.
+    assert wwtp.gain.value == pytest.approx(mgd_to_cfs(18.5), abs=0.01)
+    assert wwtp.gain.value < mgd_to_cfs(18.5 + 2.5)
+    assert fm2.gain.value == pytest.approx(mgd_to_cfs(2.5), abs=0.01)
+
+
+def test_no_effluent_gain_is_double_counted(hydro_settings: Settings) -> None:
+    """#1606 (general): every grounded outfall discharge is summed into the effluent total
+    exactly once — no reach's gain is folded into another's. Pinning Σ(distinct reach gains)
+    == effluent_total_cfs catches a future edit that merges two outfalls' flows (e.g. a
+    campus increment absorbed into its receiving plant's design figure)."""
+    balance = build_water_balance(settings=hydro_settings, live=False)
+    rn = net.route_network(balance, consumptive_cfs=0.0, settings=hydro_settings)
+    gain_sum = sum(r.gain.value for r in rn.reaches if r.gain is not None)
+    assert gain_sum == pytest.approx(rn.effluent_total_cfs, abs=1e-3)  # no baseline injects
+
+
 # ----------------------------------------------------- toggleable theory overlays
 
 

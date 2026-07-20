@@ -8,6 +8,7 @@ import pytest
 
 from watermark.config import Settings
 from watermark.hydrology.connectors import noaa_atlas14
+from watermark.hydrology.connectors._cache import HydroOfflineError
 from watermark.pipeline.hydrology import run_storm
 
 
@@ -77,3 +78,52 @@ def test_storm_offline_fallback_is_flagged(tmp_path: Path) -> None:
     assert storm.depth.source == "assumption"
     assert storm.depth.value == pytest.approx(4.25, abs=0.01)
     assert "offline" in (storm.depth.citation or "")
+
+
+def test_storm_offline_fallback_raises_when_site_lacks_depth(tmp_path: Path) -> None:
+    # #1604: a site whose profile carries no cited Atlas-14 fallback for the requested
+    # return period must FAIL LOUDLY, naming the (site, return-period) it needs — never
+    # silently substitute Lima's 4.25 (a wrong-magnitude, cross-site, cross-frequency depth
+    # presented as that site's design storm).
+    from watermark.hydrology.stormwater import _resolve_storm
+
+    settings = Settings(data_dir=tmp_path, hydro_offline=True, site="urbana")
+    with pytest.raises(HydroOfflineError) as exc:
+        _resolve_storm(100, settings=settings, live=True)
+    assert "urbana" in str(exc.value)
+    assert "100" in str(exc.value)
+
+
+def test_duration_hours_derived_from_label() -> None:
+    # #1603: hours come from the duration label unit, not a 3-entry lookup that defaulted
+    # every non-{6,12,24}-hr duration to 24.0.
+    d = noaa_atlas14._duration_to_hours
+    assert d("24-hr") == 24.0
+    assert d("6-hr") == 6.0
+    assert d("3-hr") == 3.0  # regression: previously fell through to the 24.0 default
+    assert d("5-min") == pytest.approx(5.0 / 60.0)
+    assert d("2-day") == 48.0
+
+
+def test_design_storm_carries_true_duration_hours(hydro_settings: Settings) -> None:
+    # #1603: a 3-hr design storm is tagged duration_hr=3.0 (not 24.0), so the Type-II
+    # builder no longer stretches a 3-hr depth across a full day.
+    storm = noaa_atlas14.design_storm(
+        lat=40.797, lon=-84.123, return_period_yr=25, duration="3-hr", settings=hydro_settings
+    )
+    assert storm.duration_hr == 3.0
+    assert storm.depth.value == pytest.approx(2.75, abs=0.01)  # fixture row "3-hr", col 25-yr
+
+
+def test_quantiles_grid_dimension_check() -> None:
+    # #1603: reading depths by fixed grid position is only safe if the grid is the expected
+    # 19x10 shape; a reordered/resized NOAA table must raise, not return the wrong cell.
+    good = [[0.0] * len(noaa_atlas14._RETURN_PERIODS) for _ in noaa_atlas14._DURATIONS]
+    assert noaa_atlas14._validate_grid(good) is good
+    with pytest.raises(ValueError, match="quantiles grid"):
+        noaa_atlas14._validate_grid([[1.0, 2.0, 3.0]])  # wrong shape
+    with pytest.raises(ValueError, match="quantiles grid"):
+        # right row count, one short row (a dropped return period)
+        short = [[0.0] * len(noaa_atlas14._RETURN_PERIODS) for _ in noaa_atlas14._DURATIONS]
+        short[9] = short[9][:-1]
+        noaa_atlas14._validate_grid(short)
