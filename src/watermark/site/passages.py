@@ -6,10 +6,11 @@ whole-record pull: one :class:`~watermark.site.feeds.PassageItem` per text-beari
 
 Two invariants shape the scope:
 
-* **Publish allowlist (#280).** Passages come only from documents the ``documents`` feed marks
-  ``published`` — the same default-deny allowlist that governs which source *bytes* are served
-  publicly. A non-published document's text never enters the bundle (chain of custody), which also
-  keeps the feed small (the allowlist is a curated handful of collections, not the whole corpus).
+* **Publish policy (#280).** Passages come only from documents the ``documents`` feed marks
+  ``published`` — the same policy (cleared scope minus the ``withhold`` denylist) that governs
+  which source *bytes* are served publicly, so a withheld page's text never ships either. A
+  non-published document's text never enters the bundle (chain of custody), which also keeps the
+  feed small (the cleared scope is a curated handful of collections, not the whole corpus).
 * **Text layer only.** Page text is the pypdf text-layer extraction, the same source the agent-side
   :func:`watermark.retrieval.ingestion.iter_document_chunks` reads — but here scoped to the published
   set and joined to the ``documents`` feed. For a scanned document the text layer is garbled OCR
