@@ -348,7 +348,13 @@ def write_demand_pressure(
     ``derive_demand_pressure`` raises for a facility-less site, so callers gate on the profile.
     """
     settings = settings or get_settings()
-    path = settings.data_dir / active_profile(settings).demand_pressure_relpath
+    relpath = active_profile(settings).demand_pressure_relpath
+    if relpath is None:
+        raise ValueError(
+            "the active site declares no demand_pressure_relpath (facility-less site) — "
+            "a demand-pressure sensitivity has no destination without a documented facility"
+        )
+    path = settings.data_dir / relpath
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
         yaml.safe_dump(pressure.model_dump(), sort_keys=False, allow_unicode=True),
@@ -366,7 +372,10 @@ def load_demand_pressure(settings: Settings | None = None) -> FacilityDemandPres
     omits the feed, exactly as the derivation is gated on ``SiteProfile.facility``.
     """
     settings = settings or get_settings()
-    path = settings.data_dir / active_profile(settings).demand_pressure_relpath
+    relpath = active_profile(settings).demand_pressure_relpath
+    if relpath is None:
+        return None  # facility-less site: no destination, so nothing to load
+    path = settings.data_dir / relpath
     if not path.is_file():
         return None
     data = yaml.safe_load(path.read_text(encoding="utf-8"))

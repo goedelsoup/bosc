@@ -1,7 +1,7 @@
 {
   "site": "wpafb",
-  "catalog_version": "afdf4f58440fa1465e22415651ed131a299e0c69343a004aab35daaf51c0e686",
-  "contract_version": "1.29.0",
+  "catalog_version": "6ff1a25f05f30b6643ea43fb4a7680625fd0f3534d15a3eb25e3ac026f8d5ad9",
+  "contract_version": "1.30.3",
   "atoms": [
     {
       "handle": "concept:wpafb:7q10",
@@ -9,6 +9,14 @@
       "site": "wpafb",
       "local_id": "7q10",
       "title": "7Q10",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:aep",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "aep",
+      "title": "AEP",
       "feed": "concepts"
     },
     {
@@ -20,11 +28,91 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:wpafb:behind-the-meter",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "behind-the-meter",
+      "title": "Behind-the-meter",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:brownfield",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "brownfield",
+      "title": "Brownfield",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:cercla",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "cercla",
+      "title": "CERCLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:cgp",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "cgp",
+      "title": "CGP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:closed-loop-cooling",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "closed-loop-cooling",
+      "title": "Closed-loop cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:cmar",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "cmar",
+      "title": "CMAR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:colocation",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "colocation",
+      "title": "Colocation",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:wpafb:common-control-plumbing",
       "kind": "concept",
       "site": "wpafb",
       "local_id": "common-control-plumbing",
       "title": "Common-control plumbing",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:conditional-use",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "conditional-use",
+      "title": "Conditional use",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:consent-decree",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "consent-decree",
+      "title": "Consent decree",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:constructive-denial",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "constructive-denial",
+      "title": "Constructive denial",
       "feed": "concepts"
     },
     {
@@ -36,6 +124,142 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:wpafb:cra",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "cra",
+      "title": "CRA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:curve-number",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "curve-number",
+      "title": "Curve number",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:dilution",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "dilution",
+      "title": "Dilution",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:dissolved-oxygen",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "dissolved-oxygen",
+      "title": "Dissolved oxygen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:dmr",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "dmr",
+      "title": "DMR",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:echo",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "echo",
+      "title": "ECHO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:effluent",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "effluent",
+      "title": "Effluent",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:eia",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "eia",
+      "title": "EIA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:enterprise-zone",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "enterprise-zone",
+      "title": "Enterprise zone",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:epa",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "epa",
+      "title": "EPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:esc",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "esc",
+      "title": "ESC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:ferc",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "ferc",
+      "title": "FERC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:ffa",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "ffa",
+      "title": "FFA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:hb",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "hb",
+      "title": "HB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:heat-reuse",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "heat-reuse",
+      "title": "Heat reuse",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:hsg",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "hsg",
+      "title": "HSG",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:huc",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "huc",
+      "title": "HUC",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:wpafb:hyperscale-data-center",
       "kind": "concept",
       "site": "wpafb",
@@ -44,11 +268,339 @@
       "feed": "concepts"
     },
     {
+      "handle": "concept:wpafb:hyperscaler",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "hyperscaler",
+      "title": "Hyperscaler",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:il6",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "il6",
+      "title": "IL6",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:interconnection-queue",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "interconnection-queue",
+      "title": "Interconnection queue",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:jedd",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "jedd",
+      "title": "JEDD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:moratorium",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "moratorium",
+      "title": "Moratorium",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:nda",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "nda",
+      "title": "NDA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:npdes",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "npdes",
+      "title": "NPDES",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:nwis",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "nwis",
+      "title": "NWIS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:oepa",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "oepa",
+      "title": "OEPA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:once-through-cooling",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "once-through-cooling",
+      "title": "Once-through cooling",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:opc",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "opc",
+      "title": "OPC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:opsb",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "opsb",
+      "title": "OPSB",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:orc",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "orc",
+      "title": "ORC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:pfas",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "pfas",
+      "title": "PFAS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:pilot",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "pilot",
+      "title": "PILOT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:pjm",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "pjm",
+      "title": "PJM",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:potw",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "potw",
+      "title": "POTW",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:pti",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "pti",
+      "title": "PTI",
+      "feed": "concepts"
+    },
+    {
       "handle": "concept:wpafb:public-records-mandamus",
       "kind": "concept",
       "site": "wpafb",
       "local_id": "public-records-mandamus",
       "title": "Public-records mandamus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:puco",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "puco",
+      "title": "PUCO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:pue",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "pue",
+      "title": "PUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:rezoning",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "rezoning",
+      "title": "Rezoning",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:rfp",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "rfp",
+      "title": "RFP",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:rfq",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "rfq",
+      "title": "RFQ",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:rsei",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "rsei",
+      "title": "RSEI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:rto",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "rto",
+      "title": "RTO",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:snc",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "snc",
+      "title": "SNC",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:sos",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "sos",
+      "title": "SOS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:ssa",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "ssa",
+      "title": "SSA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:swat",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "swat",
+      "title": "SWAT",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:swcd",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "swcd",
+      "title": "SWCD",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:tax-abatement",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "tax-abatement",
+      "title": "Tax abatement",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:tif",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "tif",
+      "title": "TIF",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:tmdl",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "tmdl",
+      "title": "TMDL",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:total-nitrogen",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "total-nitrogen",
+      "title": "Total nitrogen",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:total-phosphorus",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "total-phosphorus",
+      "title": "Total phosphorus",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:tri",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "tri",
+      "title": "TRI",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:usgs",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "usgs",
+      "title": "USGS",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:variance",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "variance",
+      "title": "Variance",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:wla",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "wla",
+      "title": "WLA",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:wue",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "wue",
+      "title": "WUE",
+      "feed": "concepts"
+    },
+    {
+      "handle": "concept:wpafb:wwtp",
+      "kind": "concept",
+      "site": "wpafb",
+      "local_id": "wwtp",
+      "title": "WWTP",
       "feed": "concepts"
     },
     {
@@ -224,7 +776,7 @@
       "kind": "dataset",
       "site": "wpafb",
       "local_id": "grid",
-      "title": "Grid Reliability Event Extractions (PJM §202(c) backup-generation dispatch)",
+      "title": "Grid Reliability + Siting Extractions (PJM §202(c) dispatch; AEP Ohio Lyka 345kV project)",
       "feed": "catalog"
     },
     {
@@ -388,6 +940,14 @@
       "feed": "catalog"
     },
     {
+      "handle": "dataset:wpafb:thermal",
+      "kind": "dataset",
+      "site": "wpafb",
+      "local_id": "thermal",
+      "title": "EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)",
+      "feed": "catalog"
+    },
+    {
       "handle": "dataset:wpafb:usaspending",
       "kind": "dataset",
       "site": "wpafb",
@@ -400,7 +960,15 @@
       "kind": "dataset",
       "site": "wpafb",
       "local_id": "wpafb",
-      "title": "WPAFB (Greene + Montgomery Co., OH) Investigative Findings & Onboarding Record",
+      "title": "WPAFB (Greene + Montgomery Co., OH) Groundwater Primary Records & Onboarding Findings",
+      "feed": "catalog"
+    },
+    {
+      "handle": "dataset:wpafb:wqs-criteria",
+      "kind": "dataset",
+      "site": "wpafb",
+      "local_id": "wqs-criteria",
+      "title": "Ohio Water Quality Standards — numeric criteria (OAC 3745-1)",
       "feed": "catalog"
     },
     {
@@ -428,12 +996,52 @@
       "feed": "entities"
     },
     {
+      "handle": "entity:wpafb:MIAMI VALLEY REGIONAL PLANNING COMMISSION DAYTON",
+      "kind": "entity",
+      "site": "wpafb",
+      "local_id": "MIAMI VALLEY REGIONAL PLANNING COMMISSION DAYTON",
+      "title": "Miami Valley Regional Planning Commission (Dayton, Ohio)",
+      "feed": "entities"
+    },
+    {
       "handle": "entity:wpafb:SHELL PLC",
       "kind": "entity",
       "site": "wpafb",
       "local_id": "SHELL PLC",
       "title": "SHELL PLC",
       "feed": "entities"
+    },
+    {
+      "handle": "entity:wpafb:UNITED STATES DEPARTMENT OF THE AIR FORCE WRIGHT PATTERSON AFB",
+      "kind": "entity",
+      "site": "wpafb",
+      "local_id": "UNITED STATES DEPARTMENT OF THE AIR FORCE WRIGHT PATTERSON AFB",
+      "title": "United States Department of the Air Force (Wright-Patterson AFB)",
+      "feed": "entities"
+    },
+    {
+      "handle": "record:wpafb:wpafb/cercla-ffa-1991.epa.yaml",
+      "kind": "record",
+      "site": "wpafb",
+      "local_id": "wpafb/cercla-ffa-1991.epa.yaml",
+      "title": "Wright-Patterson AFB Federal Facility Agreement (CERCLA §120)",
+      "feed": "records"
+    },
+    {
+      "handle": "record:wpafb:wpafb/ssa-53fr15876.epa.yaml",
+      "kind": "record",
+      "site": "wpafb",
+      "local_id": "wpafb/ssa-53fr15876.epa.yaml",
+      "title": "Buried Valley Aquifer System (BVAS), Sole Source Aquifer Petition",
+      "feed": "records"
+    },
+    {
+      "handle": "timeline:wpafb:FRL-3369-5",
+      "kind": "timeline",
+      "site": "wpafb",
+      "local_id": "FRL-3369-5",
+      "title": "Sole Source Aquifer designation under SDWA Section 1424(e) FRL-3369-5 — final determination (Buried Valley Aquifer System (BVAS), Sole Source Aquifer Petition)",
+      "feed": "timeline"
     }
   ]
 }

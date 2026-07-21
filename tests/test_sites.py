@@ -183,8 +183,31 @@ def test_per_site_output_relpaths_unique() -> None:
     for slug in SITES:
         assert output_path_collisions(slug) == {}, slug
     for field in PER_SITE_OUTPUT_FIELDS:
-        values = [getattr(p, field) for p in SITES.values()]
+        # ``None`` is a valid "no destination" for an optional output (a facility-less site's
+        # ``demand_pressure_relpath``, #1660) — only the concrete paths must be unique.
+        values = [v for p in SITES.values() if (v := getattr(p, field)) is not None]
         assert len(values) == len(set(values)), f"duplicate {field} across SITES"
+
+
+def test_facility_less_site_declares_no_demand_pressure_destination() -> None:
+    # ``demand_pressure_relpath`` is facility-gated: the feed only exists for a site with a
+    # documented ``facility`` (``derive_demand_pressure`` raises otherwise). A facility-less site
+    # must declare ``None`` — no destination — rather than a dangling path to a file that can
+    # never be written (#1660, ME-A: WPAFB shipped a path to a nonexistent demand-pressure.yaml).
+    # Enforced at model construction: a profile WITH a documented facility must carry a
+    # destination (else the feed it's entitled to could never be written). WPAFB (facility-less)
+    # is exempt and legitimately None; forcing a facility profile to None must raise.
+    lima = SITES["lima"]
+    assert lima.facility is not None and lima.demand_pressure_relpath is not None
+    with pytest.raises(ValidationError, match="demand_pressure_relpath"):
+        SiteProfile.model_validate({**lima.model_dump(), "demand_pressure_relpath": None})
+
+    wpafb = SITES["wpafb"]
+    assert wpafb.facility is None
+    assert wpafb.demand_pressure_relpath is None, (
+        "a facility-less site must not carry a demand_pressure_relpath pointing at a file that "
+        "can never be written"
+    )
 
 
 def test_scaffold_stub_is_constructible_and_collision_safe(monkeypatch) -> None:  # type: ignore[no-untyped-def]

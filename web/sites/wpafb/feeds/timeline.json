@@ -1,1 +1,42 @@
-[]
+[
+  {
+    "date": "1988-04-14",
+    "category": "epa_permit_action",
+    "title": "Sole Source Aquifer designation under SDWA Section 1424(e) FRL-3369-5 — final determination (Buried Valley Aquifer System (BVAS), Sole Source Aquifer Petition)",
+    "ref": "FRL-3369-5",
+    "parties": [
+      "Miami Valley Regional Planning Commission (Dayton, Ohio)"
+    ],
+    "detail": "affected Buried Valley Aquifer System — the sole or principal drinking-water source for the petitioned area; all Federal financially assisted projects in the aquifer area and its principal recharge zone become subject to EPA project review under SDWA 1424(e).",
+    "source": "wpafb/ssa-53fr15876.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "wpafb/ssa-53fr15876.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  },
+  {
+    "date": "1991-03-31",
+    "category": "epa_permit_action",
+    "title": "CERCLA Section 120 Federal Facility Agreement (Superfund; DoD Installation Restoration Program) — executed (Wright-Patterson AFB Federal Facility Agreement (CERCLA §120))",
+    "ref": "",
+    "parties": [
+      "United States Department of the Air Force (Wright-Patterson AFB)"
+    ],
+    "detail": "affected Miami Buried Valley Aquifer (the sole-source drinking-water aquifer; 17 WPAFB supply wells + Dayton/Fairborn municipal well fields) contaminated by VOCs (TCE, PCE, carbon tetrachloride, 1,1,1-TCA, chloroform, 1,2-DCE, toluene) from ≥58 base waste-disposal sites.",
+    "source": "wpafb/cercla-ffa-1991.epa.yaml",
+    "also_sources": [],
+    "citation": {
+      "source": "wpafb/cercla-ffa-1991.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "medium",
+      "note": null,
+      "verified": true
+    }
+  }
+]

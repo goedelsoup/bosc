@@ -202,6 +202,8 @@ def output_path_collisions(slug: str) -> dict[str, list[str]]:
     clashes: dict[str, list[str]] = {}
     for field in PER_SITE_OUTPUT_FIELDS:
         value = getattr(prof, field)
+        if value is None:
+            continue  # optional output (e.g. a facility-less site's demand_pressure_relpath) — no destination to clash
         others = [s for s, p in SITES.items() if s != slug and getattr(p, field) == value]
         if others:
             clashes[field] = others

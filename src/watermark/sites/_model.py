@@ -278,6 +278,22 @@ class SiteProfile(BaseModel):
             data.setdefault("map_view_zoom", entry.map_zoom)
         return data
 
+    @model_validator(mode="after")
+    def _facility_has_demand_pressure_destination(self) -> SiteProfile:
+        # The demand-pressure sensitivity is facility-gated (``derive_demand_pressure`` raises for
+        # a facility-less site), and ``write_demand_pressure`` needs a destination. So a profile
+        # WITH a documented facility must carry a non-None ``demand_pressure_relpath`` — else the
+        # feed it is entitled to could never be written (#1660). The reverse (a facility-less site
+        # must be None) is intentionally NOT enforced here: 15 registered peers still carry a
+        # dangling path pending the network-wide cleanup this ME-A fix deferred — WPAFB is the
+        # first facility-less profile set to None.
+        if self.facility is not None and self.demand_pressure_relpath is None:
+            raise ValueError(
+                f"site {self.slug!r} has a documented facility but demand_pressure_relpath is None "
+                "— a facility site needs a destination for its demand-pressure feed"
+            )
+        return self
+
     # A raw "TODO" in a grid-identity citation would render verbatim on the grid backdrop, so
     # it is gated at the REGISTRY level (`grid_identity_todo_violations` → `watermark sites
     # check`, B3/#1639) rather than at construction — a scaffolded DRAFT profile legitimately
@@ -362,7 +378,11 @@ class SiteProfile(BaseModel):
     baseline_relpath: str  # Census+QCEW county baseline (economics/baseline.py)
     rsei_relpath: str  # EPA RSEI county toxics inventory (rsei.py)
     consumer_energy_relpath: str  # EIA consumer energy prices (economics/energy.py)
-    demand_pressure_relpath: str  # facility demand→price-pressure sensitivity (economics/energy.py)
+    # Facility demand→price-pressure sensitivity (economics/energy.py). Facility-GATED: the feed
+    # only exists for a site with a documented ``facility`` (``derive_demand_pressure`` raises
+    # otherwise), so a facility-less site declares ``None`` — no destination — rather than a path
+    # to a file that can never be written. Mirrors onboard's ``… if facility is not None else None``.
+    demand_pressure_relpath: str | None = None
     grid_relpath: str  # EIA-861 utility + grid profile (grid/utility.py)
 
     # --- Toxics corridor inference (hydrology/toxics.py) ---------------------------------

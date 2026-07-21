@@ -17,6 +17,25 @@ from watermark.site.feeds import (
     ScanParcel,
 )
 
+# The defense cross-match runs against the whole entity graph, and the graph's LEI enrichment
+# folds a defense-operator overlay (the reference build's JSMC / General Dynamics operator chain +
+# its GLEIF ultimate parent) into *every* site's graph, network-global. So "GENERAL DYNAMICS" lands
+# in ``matched_entities`` on sites with no General Dynamics presence in their own records. The feed
+# already routes around this for readiness (``watermark.site.readiness`` excludes
+# ``defense-contractors`` from the record-domain signal), but the feed itself carried no disclaimer
+# — a reader of a peer bundle could misread a match as a local finding. This note travels on every
+# site's feed to say so (#1660, ME-A). It is deliberately a module constant, not threaded per-site:
+# the overlay it describes is network-global and identical on every bundle, so a "dynamic per-site"
+# note would misrepresent a shared reference-build overlay as this site's own value.
+MATCH_PROVENANCE_KEY = "matched_entities_provenance"
+_MATCH_PROVENANCE_NOTE = (
+    "matched_entities are resolved against this site's entity graph, whose LEI enrichment folds a "
+    "network-global defense-operator overlay — the reference build's JSMC / General Dynamics "
+    "operator chain and its GLEIF ultimate parent — into every site's graph. A match here may "
+    "reflect that shared overlay rather than any presence of the contractor in this site's own "
+    "records; treat it as a cross-reference to follow up, not a site-local finding."
+)
+
 
 def _corpus_names(egraph: EntityGraph) -> list[str]:
     """Every legible party name in the graph (displays + raw variants)."""
@@ -82,11 +101,13 @@ def export_defense_contractors(
                 matched_entities=keys,
             )
         )
+    notes: dict[str, object] = dict(scan.meta) if scan is not None else {}
+    notes[MATCH_PROVENANCE_KEY] = _MATCH_PROVENANCE_NOTE
     return DefenseFeed(
         contractors=contractors,
         prime_owned=[ScanParcel.model_validate(r) for r in (scan.prime_owned if scan else [])],
         army_controlled=[
             ScanParcel.model_validate(r) for r in (scan.army_controlled if scan else [])
         ],
-        notes=dict(scan.meta) if scan is not None else {},
+        notes=notes,
     )
