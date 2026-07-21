@@ -15,7 +15,7 @@ the model did not previously carry.
 **All three County receiving streams already FAIL the 7Q10 low-flow dilution screen
 at their design flows — before any data-center load.** The Ottawa River's regulatory
 7Q10 is **0.20 cfs (≈0.13 MGD)**; the BOSC campus's *consumptive cooling draw alone*
-is modeled at **3.14–10 MGD** — i.e. the data center's evaporative loss is **24–77×
+is modeled at **3.14–3.84 MGD** — i.e. the data center's evaporative loss is **24–30×
 the receiving river's 7Q10 low flow**.
 
 ## The assimilative screen (Tier-0, 7Q10 dilution)
@@ -33,8 +33,8 @@ effluent-dominated at low flow.*
 ## The BOSC cooling load (buildout scenario, sourced)
 
 - **IT load 275 MW** [document — OEPA Air PTI P0138965, committed `permits/4132514.epa.yaml` (final, 2026-05-28); 114 gensets × 2.75 ekW ≈ 313 MW backup (per-engine ekW from the draft public notice — CBI-redacted in the final permit); IT 250–300 MW N+1].
-- **Makeup demand ≈ 3.92 MGD**; **consumptive 3.14 MGD** (power × WUE 1.8 L/kWh [assumption]) to **10 MGD** (FM-2 2.5 MGD blowdown × (CoC−1) [derived]). The two methods disagree ~3× — the consumptive draw is the model's dominant uncertainty.
-- Drawn on **Lima's Ottawa/Auglaize supply** (7Q10 0.20 cfs). A 3–10 MGD consumptive loss on a river whose low-flow design condition is 0.13 MGD is the core assimilative concern.
+- **Makeup demand ≈ 3.92 MGD**; **consumptive 3.14 MGD** (power × WUE 1.8 L/kWh [assumption]) to **3.84 MGD** [derived] — the FM-2 blowdown method (2.5 MGD × (CoC−1) = 10 MGD) implies ~5.7 L/kWh, unreachable for cooling, so it is capped at the physical evaporative-WUE ceiling (FM-2 is not purely cooling blowdown). The WUE assumption driving both bounds is the model's dominant uncertainty.
+- Drawn on **Lima's Ottawa/Auglaize supply** (7Q10 0.20 cfs). A 3–4 MGD consumptive loss on a river whose low-flow design condition is 0.13 MGD is the core assimilative concern.
 
 ## New from the minutes (folded in here)
 
@@ -47,14 +47,14 @@ effluent-dominated at low flow.*
 ## What the run shows
 
 - The municipal loop's WWTPs are **already effluent-dominated** at low flow (2–25× over a 1:1 dilution); BOSC is added on top of a failing baseline, not a clean one.
-- BOSC's **consumptive** cooling draw (3–10 MGD) is large relative to the Ottawa's low-flow supply — a withdrawal concern distinct from the discharge concern, and consistent with the residents' well-drawdown questions in the PAAC minutes.
+- BOSC's **consumptive** cooling draw (3–4 MGD) is large relative to the Ottawa's low-flow supply — a withdrawal concern distinct from the discharge concern, and consistent with the residents' well-drawdown questions in the PAAC minutes.
 - The County's own **reroute** concentrates more flow on Shawnee II → Ottawa, the worst-screening node.
 
 ## Caveats
 
 Tier-0 screen only. The 7Q10 is the cited regulatory low-flow (NPDES fact sheets); the
 live NWIS reading only sanity-checks ambient flow. WUE and cycles-of-concentration are
-**assumptions** (low confidence); the 3–10 MGD consumptive range is the headline
+**assumptions** (low confidence); the 3.14–3.84 MGD consumptive range is the headline
 uncertainty. The 83 °F thermal effect is noted, not modeled. Figures from the minutes
 are OCR-approximate discussion items — verify against the source PDFs.
 

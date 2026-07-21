@@ -83,22 +83,28 @@ scenario:
       low: null
       high: null
     consumptive_high:
-      value: 10.0
+      value: 3.84
       unit: MGD
       source: derived
-      citation: 2.5 MGD blowdown x (CoC-1); bosc-fm2 2.5 MGD industrial discharge
-        (CMAR RFQ §A.6), taken as cooling blowdown upper bound
+      citation: 'cooling upper bound capped at the WUE ceiling: 275 MW x 2.2 L/kWh
+        = 3.84 MGD. The disclosed 2.5 MGD blowdown x (CoC-1) = 10 MGD implies ~5.7
+        L/kWh cooling WUE, above the ~2.2 L/kWh ceiling, so the 2.5 MGD discharge
+        is not all cooling blowdown (it bundles process/sanitary flow) and cooling
+        alone can''t reach it. evaporative-hyperscale WUE ceiling ~2.2 L/kWh (top
+        of the ~1.8-2.2 L/kWh real-world evaporative range; Google fleet avg ~1.1)
+        — a blowdown-implied cooling WUE above this indicates the disclosed discharge
+        is not all cooling-tower blowdown; bosc-fm2 2.5 MGD industrial discharge (CMAR
+        RFQ §A.6), taken as cooling blowdown upper bound'
       confidence: medium
       asof: null
       low: null
       high: null
     makeup_high:
-      value: 12.5
+      value: 4.79
       unit: MGD
       source: derived
-      citation: upper-bound intake = 2.5 MGD blowdown x CoC(5) = 12.5 MGD; bosc-fm2
-        2.5 MGD industrial discharge (CMAR RFQ §A.6), taken as cooling blowdown upper
-        bound
+      citation: upper-bound intake = capped consumptive 3.84 MGD / evap fraction (WUE-ceiling
+        cap; disclosed blowdown bundles non-cooling flow)
       confidence: medium
       asof: null
       low: null

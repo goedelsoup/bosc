@@ -44,9 +44,11 @@ def test_basis_is_derived_from_cited_power() -> None:
 
 def test_basis_two_methods_bracket_demand() -> None:
     b = derive_cooling_basis()
-    # Power x WUE central vs blowdown x cycles upper bound — both derived.
+    # Power x WUE central vs the upper bound. The blowdown method (2.5 MGD x (CoC-1) = 10 MGD)
+    # implies ~5.7 L/kWh — unreachable for cooling — so WS-16 (#1616) caps the upper bound at
+    # the WUE ceiling (275 MW x 2.2 L/kWh = 3.84 MGD). Both bounds are derived.
     assert b.consumptive_low.value == pytest.approx(3.14, abs=0.05)
-    assert b.consumptive_high.value == pytest.approx(10.0, abs=0.1)
+    assert b.consumptive_high.value == pytest.approx(3.84, abs=0.05)
     assert b.consumptive_low.value < b.consumptive_high.value
     assert b.makeup_demand.source == "derived"
     # Evaporation/makeup fraction follows cycles of concentration: (CoC-1)/CoC.
@@ -283,14 +285,56 @@ def test_cycles_at_or_below_one_is_rejected() -> None:
 
 
 def test_consumptive_high_pairs_with_makeup_high_not_makeup_demand() -> None:
-    # The trap #1170 guards: consumptive_high is the blowdown-method evaporation, whose
-    # implied intake is the larger makeup_high — not makeup_demand (the power-method
-    # central). Dividing consumptive_high by the matching intake stays a valid fraction.
+    # The trap #1170 guards: consumptive_high's implied intake is the larger makeup_high — not
+    # makeup_demand (the power-method central) — so consumptive_high / makeup_high is a valid
+    # evaporative fraction while consumptive_high / makeup_demand is not. (WS-16 #1616 caps
+    # consumptive_high at the WUE ceiling; makeup_high is then the ceiling-WUE intake, still
+    # larger than the central makeup, so the pairing invariant is unchanged.)
     b = derive_cooling_basis(cooling_model="evaporative_tower")
-    assert b.consumptive_high.value > b.makeup_demand.value  # non-physical if paired as a stream
     makeup_high = b.headline_makeup_high()
-    assert makeup_high is not None and makeup_high.value > b.makeup_demand.value
-    assert 0.0 < b.consumptive_high.value / makeup_high.value <= 1.0
+    assert makeup_high is not None
+    assert makeup_high.value > b.makeup_demand.value  # the intake genuinely grows at the bound
+    # consumptive_high over its matching intake is the evap fraction (<= 1); dividing by
+    # makeup_demand instead would misstate it.
+    frac = b.consumptive_high.value / makeup_high.value
+    assert 0.0 < frac <= 1.0
+    assert frac == pytest.approx(b.consumptive_fraction.value, abs=0.02)
+
+
+def test_ws16_blowdown_upper_bound_capped_at_wue_ceiling() -> None:
+    # WS-16 (#1616): the FM-2 blowdown implies ~5.7 L/kWh, physically unreachable for cooling,
+    # so the tower's upper bound is capped at the WUE ceiling instead of published at 10 MGD.
+    from watermark.hydrology.cooling_models import (
+        _WUE_CEILING_L_PER_KWH,
+        _consumptive_mgd_from_power,
+    )
+
+    b = derive_cooling_basis(cooling_model="evaporative_tower")
+    ceiling = _consumptive_mgd_from_power(b.it_load.value, _WUE_CEILING_L_PER_KWH)
+    # The published upper bound is the ceiling, not the raw blowdown evaporation (10 MGD).
+    assert b.consumptive_high.value == pytest.approx(round(ceiling, 2), abs=0.01)
+    assert b.consumptive_high.value < 10.0
+    # It stays a real upper bound: above the central power-method draw, below the raw blowdown.
+    assert b.consumptive_low.value < b.consumptive_high.value
+    # The intake at the capped bound follows the evap fraction, not the uncapped blowdown x CoC.
+    makeup_high = b.headline_makeup_high()
+    assert makeup_high is not None and makeup_high.value < 2.5 * 5.0  # < uncapped 12.5 MGD
+    # The citation preserves the raw figure and the reason for the cap (auditable).
+    cite = b.consumptive_high.citation or ""
+    assert "capped" in cite and "2.2 L/kWh" in cite
+    assert "10 MGD" in cite and "5.7 L/kWh" in cite
+    assert "not all cooling" in cite
+
+
+def test_ws16_no_cap_when_blowdown_implies_a_reachable_wue() -> None:
+    # A disclosed blowdown whose implied cooling WUE is within the ceiling is NOT capped — the
+    # blowdown method still sets the upper bound (blowdown x (CoC-1)). 0.3 MGD blowdown at CoC 5
+    # => 1.2 MGD evaporation; at 275 MW that's ~0.7 L/kWh, well under the 2.2 ceiling.
+    b = derive_cooling_basis(cooling_model="evaporative_tower", blowdown_mgd=0.3)
+    assert b.consumptive_high.value == pytest.approx(0.3 * 4.0, abs=0.01)
+    cite = b.consumptive_high.citation or ""
+    assert "capped" not in cite
+    assert "blowdown x (CoC-1)" in cite
 
 
 def test_consumptive_range_label_collapses_point_estimates() -> None:
@@ -299,7 +343,7 @@ def test_consumptive_range_label_collapses_point_estimates() -> None:
     dry = derive_cooling_basis(cooling_model="closed_loop_dry")
     assert consumptive_range_label(dry) == "0 MGD"
     tower = derive_cooling_basis(cooling_model="evaporative_tower")
-    assert consumptive_range_label(tower) == "3.14-10 MGD"
+    assert consumptive_range_label(tower) == "3.14-3.84 MGD"
 
 
 # ---------------------------------------------------------------------------------------

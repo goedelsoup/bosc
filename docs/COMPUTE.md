@@ -110,13 +110,14 @@ figure is an assumption — no deployment is disclosed.
 ### Method 2 — cooling-water back-solve (independent cross-check)
 
 The disclosed cooling consumptive figures from `CoolingBasis` — power × WUE low
-≈ **3.1 MGD**, FM-2 blowdown × cycles high ≈ **10 MGD** — divided back by the
+≈ **3.1 MGD**, WUE-ceiling-capped high ≈ **3.84 MGD** — divided back by the
 water-use effectiveness (WUE ≈ 1.8 L/kWh) recover an IT energy → IT load. The low
 figure inverts to **~275 MW** `[inference: derived]`, exactly recovering Method 1 —
-the loop closes (the buildout scenario *derived* 3.1–10 MGD *from* 275 MW, so going
-backward validates it). The FM-2 high inverts to **~876 MW**, but that treats the
-entire 10 MGD as evaporative cooling, which it is not (FM-2 is industrial discharge,
-not pure cooling blowdown), so it is reported as an **upper bound only**
+the loop closes (the buildout scenario *derived* 3.1–3.84 MGD *from* 275 MW, so going
+backward validates it). The FM-2 blowdown method would put the high at 10 MGD, but
+that implies ~5.7 L/kWh — unreachable for cooling — so it is capped at the physical
+evaporative-WUE ceiling (FM-2 is industrial discharge, not pure cooling blowdown); the
+capped high inverts to **~336 MW**, reported as an **upper bound only**
 `[inference, low confidence]`. This method **shares Method 1's WUE assumption**, so
 it is a consistency check, not a fully independent line of evidence — stated plainly.
 
@@ -170,13 +171,13 @@ presented as such.
 ## The derived bracket
 
 **IT load.** Methods 1 and 2-low agree to within ~0.1 MW (the loop closes); Method 2's
-FM-2 upper bound and Method 3's footprint envelope flag how much *room* exists above
-the operative figure. The operative, document-anchored figure is **~250–300 MW**.
+cooling-water upper bound and Method 3's footprint envelope flag how much *room* exists
+above the operative figure. The operative, document-anchored figure is **~250–300 MW**.
 
 | method | IT load (MW) | tag |
 |---|--:|---|
 | 1. power / gensets (primary) | **250–300** (central 275) | `[verified: document]` — air permit P0138965 |
-| 2. cooling-water back-solve | 275 (low, recovers #1) … 876 (FM-2 upper bound) | `[inference: derived]` — shares the WUE assumption |
+| 2. cooling-water back-solve | 275 (low, recovers #1) … 336 (capped upper bound) | `[inference: derived]` — shares the WUE assumption |
 | 3. building footprint (weakest) | ~1,100 … ~10,300 (physical envelope) | `[inference: assumption]` — land ≠ floor area |
 
 **Equivalent H100-class GPUs** at the central IT load: **~137,000–231,000**
@@ -210,7 +211,7 @@ AI compute facility — is robust to the disagreement.
 | PUE → total facility draw | 1.1–1.43 → ~303–393 MW (central ~348 MW) | `[inference: assumption]`/`[inference: derived]` cooling ≤~30% of facility power (#87) |
 | Generation net efficiency — simple / combined cycle | 0.38 / 0.55 (heat rate ~9.0 / ~6.2 MMBtu/MWh) | `[inference: assumption]` power-loss coefficient per cycle (#90) |
 | Combined-cycle steam-loop water | ~1.3 MGD additional | `[inference: assumption]` conditional; cross-ref `watermark.hydrology.cooling` (#90) |
-| Cooling consumptive (low / high) | 3.1 / 10 MGD | `[inference: derived]` `CoolingBasis` (power×WUE; FM-2 blowdown×cycles) |
+| Cooling consumptive (low / high) | 3.1 / 3.84 MGD | `[inference: derived]` `CoolingBasis` (power×WUE; FM-2 blowdown×cycles capped at the WUE ceiling) |
 | WUE | 1.8 L/kWh | `[inference: assumption]` evaporative hyperscale (shared with cooling) |
 | Campus land area | ~340 acres | `[verified: document]` recorded Bistrozzi parcels geojson |
 | Accelerator chip specs (TDP, peak FLOPS) | per chip | `[reference]` [`data/reference/compute/accelerators.yaml`](../data/reference/compute/) (vendor datasheets, as of 2026-06) |

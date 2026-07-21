@@ -453,7 +453,7 @@ cooling towers, and 113 fuel-storage tanks**.
 
 Those numbers are not incidental to the records fight — they are **why it matters.**
 The genset/cooling/fuel inventory is the same data the BOSC hydrology work uses to
-derive a **3.1–10 MGD consumptive cooling demand (~24× the Ottawa River 7Q10)** and a
+derive a **3.1–3.84 MGD consumptive cooling demand (~24× the Ottawa River 7Q10)** and a
 wet-weather sanitary surcharge that **exceeds both receiving plants' documented
 headroom** on a collection system already under a **2005 SSO-elimination mandate**.
 The public interest in the withheld records is concrete: water allocation, sewer

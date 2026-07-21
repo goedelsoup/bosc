@@ -336,11 +336,12 @@ assumption|derived`. (`watermark.hydrology`, see [the plan](../../.claude/plans/
    disclosed campus data by two independent cited methods: top-down **power × WUE** (OEPA
    air permit P0138965: 114 gensets × 2.75 MW ≈ 313 MW backup → ~275 MW IT load × ~1.8
    L/kWh evaporative WUE → ~3.1 MGD consumptive) and bottom-up **blowdown × cycles** (the
-   documented 2.5 MGD FM-2 discharge at ~5 cycles → ~10 MGD upper bound). They disagree
-   ~3× (FM-2 isn't purely cooling blowdown), so the basis reports the **3.1–10 MGD**
+   documented 2.5 MGD FM-2 discharge at ~5 cycles → 10 MGD raw). The raw blowdown figure
+   implies ~5.7 L/kWh — unreachable for cooling — so it is capped at the physical
+   evaporative-WUE ceiling (FM-2 isn't purely cooling blowdown), giving a **3.1–3.84 MGD**
    range; the buildout scenario defaults to the conservative power-based central
    (overridable via `--cooling-demand`). Headline is now sourced and robust: even the low
-   estimate = **4.85 cfs net basin loss ≈ 24× the Ottawa 7Q10**; the upper bound ~77×.
+   estimate = **4.85 cfs net basin loss ≈ 24× the Ottawa 7Q10**; the upper bound ~30×.
    Inputs are document/assumption-tagged, demands `derived`.
 12. **Tier-1 escalation — EPA SWMM.** `[done]` — `watermark tier1` (+ agent `tier1_swmm` tool)
    runs the real EPA SWMM5 engine (`watermark.hydrology.swmm`, via pyswmm) for two questions

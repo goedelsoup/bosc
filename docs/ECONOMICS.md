@@ -22,11 +22,11 @@ The one hard, document-anchored magnitude is electrical:
 | Backup generation | **114 gensets × 2,750 ekW ≈ 313 MW** | `[verified]` | OEPA Air PTI **P0138965** (`data/extracted/permits/3987141.epa.yaml`) |
 | Implied IT load | **~250–300 MW** (midpoint 275) | `[inference]` | N+1 backup≈IT (`watermark.hydrology.cooling`) |
 | Cooling towers | **36** | `[verified]` | air permit |
-| Consumptive water | **3.1–10 MGD** | `[inference]` | power × WUE / blowdown × cycles ([HYDROLOGY §3](HYDROLOGY.md)) |
+| Consumptive water | **3.1–3.84 MGD** | `[inference]` | power × WUE / blowdown × cycles, WUE-ceiling capped ([HYDROLOGY §3](HYDROLOGY.md)) |
 
 A ~275 MW IT load is a **large** consumer — roughly the scale of a mid-size city's
 electricity demand, sited on one corridor. The water consequence is already
-modeled in HYDROLOGY (net basin loss ≈ 24–77× the Ottawa 7Q10). This page is the
+modeled in HYDROLOGY (net basin loss ≈ 24–30× the Ottawa 7Q10). This page is the
 *power and tax-base* half of that consumption story.
 
 ## 2. The public benefits extended to it
@@ -45,7 +45,7 @@ data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-05.response-index.
 
 Set the verified columns side by side:
 
-- **~275 MW IT load** and **3.1–10 MGD** consumptive water, against
+- **~275 MW IT load** and **3.1–3.84 MGD** consumptive water, against
 - **~50 permanent jobs** and a **15-yr/75%** abatement on a **~$500M** build.
 
 That is on the order of **~5–6 MW per job** and a multi-MGD basin draw for a
@@ -96,7 +96,7 @@ with its cited sources — though whether each applies to *this* campus stays
 |---|---|
 | ~313 MW backup / ~275 MW IT; 36 cooling towers | `[verified]` / `[inference]` |
 | 15-yr/75% CRA; ~$500M; ~50 jobs; $14.2M roadwork | `[verified]` |
-| 3.1–10 MGD consumptive; basin-loss multiple | `[inference]` (see HYDROLOGY) |
+| 3.1–3.84 MGD consumptive; basin-loss multiple | `[inference]` (see HYDROLOGY) |
 | ~5–6 MW/job; "subsidizes load not jobs" | `[inference]` |
 | GovCloud premium ~20–30%; GPU/rack/facility magnitudes | `[verified: data appendix]` (industry ranges) |
 | Whether those magnitudes apply to *this* campus | `[open]` / `[inference]` |
