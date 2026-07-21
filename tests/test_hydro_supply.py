@@ -68,7 +68,8 @@ def test_campus_budget_from_cooling_basis(hydro_settings: Settings) -> None:
     assert budget.campus_consumptive.value == pytest.approx(
         basis.makeup_demand.value * basis.consumptive_fraction.value, abs=0.01
     )
-    # The blowdown-method upper bound rides along as a warning (the methods disagree ~3x).
+    # The cooling upper bound rides along as a warning; its citation still traces the disclosed
+    # blowdown even after the WS-16 (#1616) WUE-ceiling cap reconciles the two methods.
     assert any("blowdown" in w for w in budget.warnings)
 
 

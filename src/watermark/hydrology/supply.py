@@ -148,8 +148,10 @@ def campus_budget_from_cooling(
     """Build the water budget from the sourced cooling basis (the default campus draw).
 
     Uses the central power x WUE estimate: ``makeup_demand`` as the gross treated draw and
-    ``makeup x consumptive_fraction`` as the net basin loss. The high blowdown-method bound
-    rides along as a warning, since the two methods disagree ~3x.
+    ``makeup x consumptive_fraction`` as the net basin loss. The cooling upper bound rides
+    along as a warning; for the evaporative tower that is the blowdown method, bounded to a
+    physical WUE ceiling when the disclosed discharge implies an unreachable cooling WUE
+    (WS-16, #1616), so it no longer overstates cooling consumptive by ~3x.
     """
     basis = basis or derive_cooling_basis()
     # Honesty guard (CLAUDE.md): a bracketed (undisclosed-method) basis has no single
@@ -175,10 +177,11 @@ def campus_budget_from_cooling(
         ),
         scenario_name=scenario_name,
     )
-    ratio = basis.consumptive_high.value / consumptive if consumptive else 0.0
+    high_pv = basis.consumptive_high
+    ratio = high_pv.value / consumptive if consumptive else 0.0
     budget.warnings.append(
-        f"central power x WUE basis (consumptive {consumptive:g} MGD); the blowdown-method "
-        f"upper bound is ~{basis.consumptive_high.value:g} MGD consumptive (~{ratio:.1f}x higher)."
+        f"central power x WUE basis (consumptive {consumptive:g} MGD); the cooling upper bound "
+        f"is ~{high_pv.value:g} MGD consumptive (~{ratio:.1f}x higher). {high_pv.citation}"
     )
     return budget
 

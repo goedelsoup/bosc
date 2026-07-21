@@ -342,8 +342,8 @@ def derive_compute_capacity(
             f"{wue_basis:g} L/kWh (recovers the power method; shares its WUE)"
         )
         water_high_cite = (
-            f"FM-2 {cooling.consumptive_high.value:g} MGD upper bound / "
-            f"{wue_basis:g} L/kWh — UPPER BOUND only; FM-2 is not purely cooling"
+            f"cooling {cooling.consumptive_high.value:g} MGD upper bound / {wue_basis:g} L/kWh "
+            f"— UPPER BOUND only ({cooling.consumptive_high.citation})"
         )
 
     # --- Method 3: footprint (WEAKEST, physical upper envelope) --------------

@@ -229,10 +229,10 @@ This is a design-basis / scope-completeness reading, not a sizing of the roundab
 The cooling demand is **sourced**, derived from disclosed campus data by two methods:
 
 - top-down: IT load 275.00 MW `[inference: derived]` x WUE 1.80 L/kWh `[inference: assumption]` → **3.14 MGD** consumptive
-- bottom-up: FM-2 blowdown x 5 cycles → **10 MGD** consumptive (upper bound)
+- bottom-up: FM-2 blowdown x 5 cycles, capped at the physical evaporative-WUE ceiling (FM-2 is not purely cooling blowdown, so the raw blowdown figure is unreachable for cooling alone) → **3.84 MGD** consumptive (upper bound)
 
 
-They bracket the consumptive demand at **3.14-10 MGD** (FM-2 is not purely cooling blowdown). The conclusion is robust to the range.
+They bracket the consumptive demand at **3.14-3.84 MGD**. The conclusion is robust to the range.
 
 
 | scenario | cooling intake | consumptive fraction | net basin loss |

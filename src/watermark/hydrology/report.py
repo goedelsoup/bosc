@@ -912,16 +912,29 @@ def render_report(*, settings: Settings | None = None, live: bool = False) -> st
     if basis is not None and basis.wue is not None and basis.cycles_of_concentration is not None:
         # The evaporative-tower two-method bracket (Lima's archetype).
         w("The cooling demand is **sourced**, derived from disclosed campus data by two methods:\n")
+        # WS-16 (#1616): the blowdown method's upper bound is capped at the physical WUE ceiling
+        # when the disclosed discharge implies an unreachable cooling WUE — say so, rather than
+        # print the capped figure under a "blowdown x cycles" label that no longer computes it.
+        capped = "capped at the WUE ceiling" in (basis.consumptive_high.citation or "")
+        bottom_up = (
+            f"- bottom-up: FM-2 blowdown x {basis.cycles_of_concentration.value:g} cycles"
+            + (
+                ", capped at the physical evaporative-WUE ceiling (FM-2 is not purely cooling "
+                "blowdown, so the raw blowdown figure is unreachable for cooling alone)"
+                if capped
+                else ""
+            )
+            + f" → **{basis.consumptive_high.value:g} MGD** consumptive (upper bound)\n"
+        )
         w(
             f"- top-down: IT load {_ev(basis.it_load)} x WUE {_ev(basis.wue)} → "
-            f"**{basis.consumptive_low.value:g} MGD** consumptive\n"
-            f"- bottom-up: FM-2 blowdown x {basis.cycles_of_concentration.value:g} cycles → "
-            f"**{basis.consumptive_high.value:g} MGD** consumptive (upper bound)\n"
+            f"**{basis.consumptive_low.value:g} MGD** consumptive\n" + bottom_up
         )
         w(
             f"\nThey bracket the consumptive demand at "
-            f"**{basis.consumptive_low.value:g}-{basis.consumptive_high.value:g} MGD** "
-            f"(FM-2 is not purely cooling blowdown). The conclusion is robust to the range.\n"
+            f"**{basis.consumptive_low.value:g}-{basis.consumptive_high.value:g} MGD**"
+            + ("." if capped else " (FM-2 is not purely cooling blowdown).")
+            + " The conclusion is robust to the range.\n"
         )
     elif basis is not None:
         span = basis.consumptive_low.value != basis.consumptive_high.value

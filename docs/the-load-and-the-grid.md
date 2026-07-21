@@ -85,7 +85,7 @@ power be generated_ — it can. It is _who pays for moving it_.
 This is the comparison the public record actually substantiates. Set the verified
 columns side by side `[verified: ECONOMICS.md §2, the county's own production]`:
 
-- a **~275 MW** IT load (inferred) and **3.1–10 MGD** of consumptive cooling water,
+- a **~275 MW** IT load (inferred) and **3.1–3.84 MGD** of consumptive cooling water,
   against
 - **~50 permanent jobs** and **~$4M** of payroll by 2030, on a **15-year / 75%** tax
   abatement over a **~$500M** build, with **$14.2M** of roadwork routed through the
