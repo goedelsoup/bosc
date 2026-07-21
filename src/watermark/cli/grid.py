@@ -45,24 +45,50 @@ def compute(
         frac = (accel_fraction_low, accel_fraction_high)
     cap = derive_compute_capacity(settings=settings, accelerator_power_fraction=frac, mfu=mfu)
 
-    # The three IT-load estimators (the bracket headline).
+    # The three IT-load estimators (the bracket headline). The cooling-water back-solve is
+    # None for a dry / undisclosed-method archetype (it consumes ~0 water, so it does not bound
+    # the IT load) — render that honestly instead of a 0-MW floor (#1641 D4).
+    water_low, water_high = cap.it_load_water_low, cap.it_load_water_high
+    if water_low is not None and water_high is not None:
+        method2 = (
+            f"{water_low.value:g} MW (low, recovers #1) … {water_high.value:g} MW "
+            "[dim](upper bound; shares the WUE assumption)[/]"
+        )
+    elif water_high is not None:
+        method2 = (
+            f"upper bound only [bold]{water_high.value:g} MW[/] [dim](a dry/undisclosed-method "
+            "archetype's back-solve does not bound the low; #1641 D4)[/]"
+        )
+    else:
+        method2 = (
+            "[dim]not applicable — a dry/undisclosed-method archetype consumes ~0 cooling water, "
+            "so the back-solve does not constrain the IT load (#1641 D4)[/]"
+        )
     console.print(
         "[bold]Facility IT load[/] — three independent estimators "
         "[dim](nothing here is a measured fact about the facility)[/]\n"
-        f"  1. power / gensets [bold](primary)[/]: [bold]{cap.it_load_power.value:g} MW[/] "
-        f"[dim](inference: N+1 from the air permit P0138965 backup)[/]\n"
-        f"  2. cooling-water back-solve: {cap.it_load_water_low.value:g} MW (low, recovers #1) "
-        f"… {cap.it_load_water_high.value:g} MW [dim](FM-2 upper bound; shares the WUE assumption)[/]\n"
+        f"  1. power basis [bold](primary)[/]: [bold]{cap.it_load_power.value:g} MW[/] "
+        "[dim](inference from the disclosed power basis — N+1 backup or screening)[/]\n"
+        f"  2. cooling-water back-solve: {method2}\n"
         f"  3. footprint [dim](weakest)[/]: {cap.it_load_footprint_low.value:,.0f}"
         f"-{cap.it_load_footprint_high.value:,.0f} MW "
         f"[dim](physical envelope; land != floor area — not a likely load)[/]"
     )
-    console.print(
-        f"\nMethods 1 and 2-low [bold]agree to within {abs(cap.it_load_water_low.value - cap.it_load_power.value):.1f} MW[/] "
-        f"(the loop closes). The power method is the operative figure; the footprint method only "
-        f"shows the land could physically hold far more — [bold]power, not floor space, is the "
-        f"binding constraint[/]."
-    )
+    if water_low is not None:
+        console.print(
+            f"\nMethods 1 and 2-low [bold]agree to within "
+            f"{abs(water_low.value - cap.it_load_power.value):.1f} MW[/] (the loop closes). "
+            "The power method is the operative figure; the footprint method only shows the land "
+            "could physically hold far more — [bold]power, not floor space, is the binding "
+            "constraint[/]."
+        )
+    else:
+        console.print(
+            "\nThe power method is the operative figure; the cooling-water back-solve does not "
+            "bound a dry/undisclosed-method campus, and the footprint method only shows the land "
+            "could physically hold far more — [bold]power, not floor space, is the binding "
+            "constraint[/]."
+        )
     console.print(
         f"\n[bold]Equivalent H100-class GPUs[/] at the central IT load: "
         f"[bold]~{cap.equivalent_h100_low.value:,.0f}-{cap.equivalent_h100_high.value:,.0f}[/] "

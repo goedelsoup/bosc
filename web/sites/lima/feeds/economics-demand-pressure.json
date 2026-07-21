@@ -4,11 +4,11 @@
     "value": 347.9,
     "unit": "MW",
     "source": "derived",
-    "citation": "PowerBasis.facility_draw central (#87): 275 MW IT x PUE 1.265 (band mean) — total facility draw",
+    "citation": "PowerBasis.facility_draw central (#87): 275 MW IT (central) x PUE 1.265 — total facility draw; band = 250-300 MW IT x PUE 1.1-1.43 (efficient .. cooling-dominated)",
     "confidence": "medium",
     "asof": null,
-    "low": 302.5,
-    "high": 393.2
+    "low": 275.0,
+    "high": 429.0
   },
   "load_factor": {
     "value": 0.9,
@@ -44,7 +44,7 @@
     "value": 1.69,
     "unit": "percent",
     "source": "derived",
-    "citation": "campus 2743 GWh / Ohio retail 161934 GWh",
+    "citation": "campus 2742.8 GWh / Ohio retail 161934 GWh",
     "confidence": "medium",
     "asof": null,
     "low": null,

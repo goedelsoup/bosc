@@ -28,6 +28,23 @@ ai_rack_kw_band: [40, 140]
 # power, i.e. IT/total ~= 0.70 -> PUE ~= 1.43 (cooling share = (PUE-1)/PUE).
 pue_band: [1.1, 1.43]      # hyperscale evaporative/liquid PUE; 1.43 = ~30% cooling (assumption)
 
+# PUE is cooling-model-AWARE (#1641 D5). A single evaporative-tuned band understated the
+# overhead for air-cooled campuses (dry cooling's fan energy + worse hot-day performance
+# RAISE PUE) and overstated it for a surface-water pass-through (whose only cooling energy
+# is circulating pumps). These per-archetype bands (keyed on watermark.sites CoolingModelType)
+# are stated ASSUMPTIONS aligned with the datacenter_profiles PUEs below (air 1.43 / liquid
+# 1.25 / dense-liquid 1.15) and with published DC-cooling PUE ranges (Uptime/ASHRAE/DOE).
+# derive_power_basis reads the active facility's archetype; a facility with no matching key
+# falls back to pue_band. once_through's central (1.15) is set EQUAL to the ~1.15 heat-
+# rejection multiplier in watermark.hydrology.cooling_models (_OT_HEAT_REJECT_MULT) so the two
+# representations of the same cooling overhead reconcile instead of disagreeing ~10%.
+pue_band_by_cooling_model:
+  evaporative_tower: [1.1, 1.43]   # wet tower: low fan/chiller energy (Lima); the base band
+  once_through: [1.1, 1.2]         # surface-water pass-through: circ pumps only -> low PUE; central 1.15 == heat-reject mult
+  closed_loop_dry: [1.15, 1.5]     # dry/air rejection: fan-energy penalty RAISES PUE above evaporative
+  hybrid_adiabatic: [1.13, 1.45]   # dry + seasonal evaporative assist: between dry and evaporative
+  unknown: [1.1, 1.5]              # method undisclosed: spans the dry<->evaporative candidates (low confidence)
+
 # Share of IT power that reaches the ACCELERATORS (vs CPU host, storage, network,
 # in-rack conversion). The remainder is non-accelerator IT load. Assumption with a
 # wide band — this is the single largest lever in the power method.

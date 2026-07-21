@@ -9,6 +9,7 @@ omitted here and supplied by the :class:`SiteProfile` model defaults — only th
 
 from __future__ import annotations
 
+from watermark.facility.screening import floor_area_screen, investment_screen
 from watermark.sites._gis_schemas import (
     ALLEN_IN_PARCEL_SCHEMA,
     CHAMPAIGN_PARCEL_SCHEMA,
@@ -1293,6 +1294,9 @@ _OTTAWA = SiteProfile(
 # Erie, and there is no Maumee-style basin TMDL — a genuinely different mix of influences.
 # Registered for onboarding (#440); most fields are [open] research targets filled by
 # `watermark onboard urbana --research` — only the verified geography/gages are set here.
+# IT load is undisclosed → a floor-area SCREENING bracket off the disclosed 460k sq ft
+# (watermark.facility.screening, the single home for the 75-250 W/sq ft band — #1641 D2).
+_URBANA_LOAD = floor_area_screen(460_000)
 _URBANA = SiteProfile(
     slug="urbana",
     basin="great-miami",  # [verified] Mad River → Great Miami River → Ohio River (HUC-8 05080001)
@@ -1411,15 +1415,16 @@ _URBANA = SiteProfile(
             ),
             # end_use left [open] — a Thor-developed campus whose ultimate tenant/workload is undisclosed
             # (the naming site-plan/permit instrument was not reachable to ingest, #1263).
-            it_load_mw=70.0,  # [inference] SCREENING central — NOT disclosed; see it_load_citation
-            it_load_low_mw=35.0,  # 460k sqft x 75 W/sqft whole-building IT density (low)
-            it_load_high_mw=115.0,  # 460k sqft x 250 W/sqft whole-building IT density (high)
+            it_load_mw=_URBANA_LOAD.central,  # [inference] SCREENING central (MW-midpoint); see it_load_citation
+            it_load_low_mw=_URBANA_LOAD.low,  # 460k sqft x 75 W/sqft whole-building IT density (low)
+            it_load_high_mw=_URBANA_LOAD.high,  # 460k sqft x 250 W/sqft whole-building IT density (high)
             it_load_citation=(
                 "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/"
                 "air-permit MW is [open] (#1263 sub-lead: PJM queue position / air permit). Derived "
                 "from the disclosed 460,000 sq ft gross floor area (Urbana Technology Hub site-plan "
                 "application, Feb 2026) x a whole-building IT power-density band of 75-250 W/sq ft "
-                "(stated screening assumption): 35 MW low, ~70 MW central, 115 MW high. The "
+                "(stated screening assumption): ~34.5 MW low, ~74.8 MW central (MW-midpoint), 115 MW "
+                "high (watermark.facility.screening — #1641 D2). The "
                 "single-story ~40 ft form factor + the disclosed CLOSED-LOOP DRY cooling ('water use "
                 "comparable to a standard office building') argue against the max-density liquid-AI "
                 "archetype, so the band is bounded well below GB200-class rack densities. Replace with "
@@ -1948,6 +1953,8 @@ _HAMILTON_MIDDLETOWN = SiteProfile(
 # 40-yr franchise, first reading only / pending adoption). The site
 # also carries a distinct second supply water — the **Stillwater River** (gage 03265000). Both cities
 # sit west of the 84 degW meridian, so this is a **UTM 16N** site (like WPAFB / Hamilton-Middletown).
+# IT load undisclosed → floor-area SCREENING bracket off the disclosed 700k sq ft (#1641 D2).
+_TROY_PIQUA_LOAD = floor_area_screen(700_000)
 _TROY_PIQUA = SiteProfile(
     slug="troy-piqua",
     basin="great-miami",  # [verified] upper Great Miami River → Ohio River (HUC-8 05080001)
@@ -2065,9 +2072,9 @@ _TROY_PIQUA = SiteProfile(
             ),
             # end_use left [open] — the developer of record is J5 LLC/Shaytura; the end user (Meta) is
             # [reported] only, so the workload archetype is not on the record.
-            it_load_mw=113.75,  # [inference] SCREENING central — NOT disclosed; see it_load_citation
-            it_load_low_mw=52.5,  # 700k sqft x 75 W/sqft whole-building IT density (low)
-            it_load_high_mw=175.0,  # 700k sqft x 250 W/sqft whole-building IT density (high)
+            it_load_mw=_TROY_PIQUA_LOAD.central,  # [inference] SCREENING central (MW-midpoint); see it_load_citation
+            it_load_low_mw=_TROY_PIQUA_LOAD.low,  # 700k sqft x 75 W/sqft whole-building IT density (low)
+            it_load_high_mw=_TROY_PIQUA_LOAD.high,  # 700k sqft x 250 W/sqft whole-building IT density (high)
             it_load_citation=(
                 "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/"
                 "air-permit MW stays [open] (a direct OEPA eSuite/DAPC search for 'J5 LLC' / "
@@ -2076,8 +2083,9 @@ _TROY_PIQUA = SiteProfile(
                 "~350,000 sq ft buildings; City of Piqua project page piquaoh.gov/1673, approved by "
                 "the Piqua City Commission 4-0 on 2025-11-03) x the same whole-building IT "
                 "power-density screening band used elsewhere in the network (75-250 W/sq ft, the "
-                "Urbana Technology Hub precedent, #1327): 52.5 MW low, ~113.75 MW central, 175 MW "
-                "high. Unlike Urbana, this band is NOT bounded by a disclosed cooling design — the "
+                "Urbana Technology Hub precedent, #1327): 52.5 MW low, ~113.8 MW central (MW-midpoint), "
+                "175 MW high (watermark.facility.screening — #1641 D2). Unlike Urbana, this band is "
+                "NOT bounded by a disclosed cooling design — the "
                 "facility's cooling_model stays UNKNOWN pending #1486 (the unreconciled closed-loop-"
                 "FAQ-vs-2.0-MGD-water-agreement conflict). A candidate-site tracker (ryangrissinger.com, "
                 "OH-DC-0028) reports ~180 MW peak IT for the initial two buildings — [reported], not "
@@ -2165,6 +2173,9 @@ _TROY_PIQUA = SiteProfile(
 # Miami buried-valley sole-source aquifer as Troy/Piqua (groundwater-dominated HSG A/B), and a
 # compressor/refrigeration-manufacturing town (Emerson/Copeland HQ) — the upstream sibling of the
 # Troy/Piqua manufacturing reach. Tracking -> onboarding (#481 / epic #440).
+# Neither floor area nor load disclosed → INVESTMENT SCREENING off the disclosed $3B campus
+# ($8.5-20M per MW-IT band; watermark.facility.screening — #1641 D2).
+_SIDNEY_LOAD = investment_screen(3_000_000_000)
 _SIDNEY = SiteProfile(
     slug="sidney",
     basin="great-miami",  # [verified] upper Great Miami River → Ohio River (HUC-8 05080001)
@@ -2269,9 +2280,9 @@ _SIDNEY = SiteProfile(
             end_use_citation=(
                 "[verified] hyperscale data-center campus — Amazon Web Services (public disclosure)."
             ),
-            it_load_mw=250.0,  # [inference] SCREENING central — NOT disclosed; see it_load_citation
-            it_load_low_mw=150.0,  # $3B / ~$20M per MW-IT (capex-intensive / liquid-AI) whole-campus screen
-            it_load_high_mw=350.0,  # $3B / ~$8.5M per MW-IT (capex-light / air-cooled) whole-campus screen
+            it_load_mw=_SIDNEY_LOAD.central,  # [inference] SCREENING central (MW-midpoint); see it_load_citation
+            it_load_low_mw=_SIDNEY_LOAD.low,  # $3B / ~$20M per MW-IT (capex-intensive / liquid-AI) whole-campus screen
+            it_load_high_mw=_SIDNEY_LOAD.high,  # $3B / ~$8.5M per MW-IT (capex-light / air-cooled) whole-campus screen
             it_load_citation=(
                 "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/"
                 "air-permit MW stays [open] (no OEPA air PTI and no PJM interconnection instrument is "
@@ -2282,7 +2293,8 @@ _SIDNEY = SiteProfile(
                 "— the $3 billion campus investment (sidneyoh.com/526; Data Center Dynamics Oct 2025) "
                 "— divided by a hyperscale critical-IT construction-cost band of ~$8.5-20M per MW-IT "
                 "([reference] industry cost norm, NOT a Sidney disclosure): $20M/MW -> 150 MW low, "
-                "~$12M/MW -> ~250 MW central, ~$8.5M/MW -> 350 MW high. $3B spans land + shell + all "
+                "~353 MW high ($8.5M/MW), ~251 MW central (MW-midpoint; watermark.facility.screening "
+                "— #1641 D2). $3B spans land + shell + all "
                 "phases (screen runs high) while it is a multi-year campus (near-term load runs low), "
                 "the two roughly offsetting to an order-of-magnitude ~150-350 MW. Corroborated (not a "
                 "second source): comparable disclosed AWS-Ohio hyperscale-campus interconnections sit "
@@ -2499,6 +2511,9 @@ _GREENVILLE = SiteProfile(
 # -> Little Miami (a National & State Scenic River, the same anti-degradation overlay as Xenia) — but
 # Todd Fork is UNGAGED (the old 03244000 is discontinued; Clinton County has no active gage), so the
 # nearest mainstem integrators bracket it. Tracking -> onboarding (#492 / epic #440).
+# IT load undisclosed → floor-area SCREENING off the disclosed 1,920,299 sq ft site plan
+# (watermark.facility.screening — #1641 D2; reconciles the old off-midpoint 300 MW central).
+_WILMINGTON_LOAD = floor_area_screen(1_920_299)
 _WILMINGTON = SiteProfile(
     slug="wilmington",
     basin="little-miami",  # [verified] Todd Fork → Little Miami River → Ohio River (HUC-8 05090202)
@@ -2589,20 +2604,21 @@ _WILMINGTON = SiteProfile(
             end_use_citation=(
                 "[reported] hyperscale data-center campus — Amazon Data Services, Inc. (wnewsj 2025-12-03; WCPO)."
             ),
-            it_load_mw=300.0,  # [inference] SCREENING central — NOT disclosed; see it_load_citation
-            it_load_low_mw=150.0,  # floor-area low (1.92M sqft x 75 W/sqft ~= 144, rounded)
-            it_load_high_mw=480.0,  # floor-area high (1.92M sqft x 250 W/sqft = 480)
+            it_load_mw=_WILMINGTON_LOAD.central,  # [inference] SCREENING central (MW-midpoint); see it_load_citation
+            it_load_low_mw=_WILMINGTON_LOAD.low,  # floor-area low (1,920,299 sqft x 75 W/sqft = 144.0)
+            it_load_high_mw=_WILMINGTON_LOAD.high,  # floor-area high (1,920,299 sqft x 250 W/sqft = 480.1)
             it_load_citation=(
                 "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/"
                 "air-permit MW stays [open] (#1469: OPSB 25-0871-EL-BLN 345kV build-out + the PJM-queue "
                 "lead). No MW figure is primary-sourced for the campus. Primary basis = the network "
                 "floor-area screen (cf. Urbana #1327 / Troy-Piqua): the disclosed 9-building site plan's "
                 "1,920,299 sq ft gross floor area (Nov/Dec 2025) x a whole-building IT power-density band "
-                "of 75-250 W/sq ft (stated screening assumption) -> 144 MW low, ~288 MW central, 480 MW "
-                "high. Corroborated (not a second source) by the investment screen (cf. Sidney): the "
+                "of 75-250 W/sq ft (stated screening assumption) -> 144.0 MW low, ~312 MW central "
+                "(MW-midpoint; watermark.facility.screening — #1641 D2), 480.1 MW high. Corroborated "
+                "(not a second source) by the investment screen (cf. Sidney): the "
                 "[reported] $4B campus / a hyperscale ~$8.5-20M-per-MW-IT construction-cost band -> ~200 "
                 "MW ($20M/MW) .. ~470 MW ($8.5M/MW) — the two independent screens agree at an "
-                "order-of-magnitude ~150-480 MW, so the bracket is set there (central 300 MW). Signals "
+                "order-of-magnitude ~150-480 MW, so the bracket is set there (central ~312 MW). Signals "
                 "that point HIGHER but are NOT adopted into the bracket: (a) the 9->12-building revision "
                 "tabled 2026-03-27 is unreconciled [open] and would scale the floor area up; (b) the "
                 "[reported] 252 Tier-4 diesel gensets, at a typical hyperscale per-unit rating (undisclosed), "
@@ -3333,6 +3349,9 @@ _MANSFIELD = SiteProfile(
 # a sibling OPSB instrument (25-0973-EL-BGN, the Apollo BTM plant) names Liames, LLC as customer of
 # record. See data/extracted/bowling-green/data-centers.md. Backdrop floor + facility only; places/
 # record/story stay locked pending their sub-issues (#1436/#1438/#1439/#1441).
+# MIXED basis: central/high = the DISCLOSED ~180 MW design ceiling (#1435, carried as central);
+# only the LOW bound is a floor-area SCREENING floor off the disclosed 715k sq ft (#1641 D2).
+_BOWLING_GREEN_SCREEN = floor_area_screen(715_000)
 _BOWLING_GREEN = SiteProfile(
     slug="bowling-green",
     basin="portage",  # [verified] discharges to North Branch Portage → Portage River → Lake Erie;
@@ -3442,7 +3461,7 @@ _BOWLING_GREEN = SiteProfile(
                 "[verified] hyperscale data center — Meta Platforms (Meta 'Hello, Bowling Green', 2025-04-09)."
             ),
             it_load_mw=180.0,  # [reference] the disclosed "up to ~180 MW at peak" — a design ceiling, not an air-permit disclosure
-            it_load_low_mw=53.6,  # 715,000 sq ft x 75 W/sq ft whole-building IT density (screening floor — avg draw is below peak)
+            it_load_low_mw=_BOWLING_GREEN_SCREEN.low,  # 715,000 sq ft x 75 W/sq ft screening floor (avg draw is below the disclosed peak)
             it_load_high_mw=180.0,  # the disclosed ~180 MW peak (the 715k sq ft x 250 W/sq ft screen reproduces 178.75 MW, corroborating it)
             it_load_citation=(
                 "[reference] the disclosed 'up to ~180 MW at peak' for the initial phase — reported via "

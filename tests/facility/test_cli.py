@@ -15,7 +15,8 @@ def test_compute_command_runs_and_brackets() -> None:
     out = result.output
     # The three estimators and the headline are present.
     assert "three independent estimators" in out
-    assert "power / gensets" in out and "primary" in out
+    assert "power basis" in out and "primary" in out
+    assert "cooling-water back-solve" in out
     assert "footprint" in out
     # The equivalent-H100 cross-scenario figure and at least one TPU scenario row.
     assert "Equivalent H100-class GPUs" in out
