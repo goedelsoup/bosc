@@ -126,18 +126,23 @@ def penman_monteith_et0(
 
 
 # --- Open-water evaporation ------------------------------------------------------------
-# A first-order screening sink for a standing water surface (e.g. a reservoir). Reference
-# ET0 (grass) is used *directly* as the open-water evaporation depth — a defensible
-# screening proxy: on an annual basis lake evaporation is comparable to ET0, though a deep
-# reservoir's heat storage shifts the seasonal timing (summer lake evaporation runs a
-# little below ET0, autumn a little above). The ``coefficient`` knob leaves room to apply a
-# pan/lake factor later; it defaults to 1.0 (ET0 as-is).
+# A first-order screening sink for a standing water surface (e.g. a reservoir). Reference (grass)
+# ET0 is the input, scaled by an **open-water coefficient**: open water evaporates ABOVE grass
+# ET0 in the warm season because its albedo is far lower (~0.06-0.08 vs grass 0.23, so it absorbs
+# more net shortwave) and it carries no canopy/surface resistance (rs -> 0 vs the grass 70 s/m).
+# A Penman open-water estimate therefore runs ~1.05-1.3x annual ET0, weighted to the high-
+# radiation months. The caller passes the coefficient (see refill._OPEN_WATER_COEFFICIENT); this
+# helper is the units multiply, so its own ``coefficient`` defaults to 1.0 (ET0 as-is).
 
 
 def reservoir_evaporation_mgd(
     et0: Et0Climatology, surface_acres: float, *, coefficient: float = 1.0
 ) -> dict[str, float]:
-    """Monthly open-water evaporation (MGD) = ET0(mm/day) x surface(acres), JAN..DEC."""
+    """Monthly open-water evaporation (MGD) = ET0(mm/day) x coefficient x surface(acres).
+
+    ``coefficient`` is the open-water:grass-ET0 multiplier for a standing-water surface
+    (``> 1`` in the warm season — see the section note above); ``1.0`` returns ET0 as-is.
+    """
     return {
         m: round(acre_mm_to_mg(et0.monthly_mm_day[m] * coefficient, surface_acres), 4)
         for m in _MONTHS

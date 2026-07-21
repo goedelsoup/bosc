@@ -69,3 +69,13 @@ def test_reservoir_evaporation_scales_with_area_and_matches_units() -> None:
     assert doubled["JUL"] == pytest.approx(2 * evap["JUL"], abs=1e-3)
     # Days-weighted annual volume (flat 5 mm/day -> 365 * daily MGD).
     assert et.annual_evaporation_mg(evap) == pytest.approx(365 * evap["JAN"], abs=0.2)
+
+
+def test_open_water_coefficient_scales_the_loss_above_grass_et0() -> None:
+    # WS-17 (#1617): a >1 open-water coefficient lifts grass ET0 into the open-water band, so the
+    # reservoir loss scales linearly with the coefficient (open water evaporates above grass ET0).
+    et0 = et.Et0Climatology(monthly_mm_day=dict.fromkeys(et._MONTHS, 5.0), annual_mm=1825.0)
+    grass = et.reservoir_evaporation_mgd(et0, 1000.0)  # coefficient 1.0
+    open_water = et.reservoir_evaporation_mgd(et0, 1000.0, coefficient=1.15)
+    assert open_water["JUL"] == pytest.approx(1.15 * grass["JUL"], abs=1e-3)
+    assert open_water["JUL"] > grass["JUL"]

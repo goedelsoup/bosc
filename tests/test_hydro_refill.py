@@ -6,7 +6,7 @@ from __future__ import annotations
 import pytest
 
 from watermark.config import Settings
-from watermark.hydrology import refill
+from watermark.hydrology import climate, et, refill
 from watermark.sites import get_profile
 
 # ----------------------------------------------------------- pure algorithm
@@ -128,14 +128,22 @@ def test_committed_refill_applies_the_intake_da_transfer(hydro_settings: Setting
 
 
 def test_committed_refill_has_a_reservoir_evaporation_sink(hydro_settings: Settings) -> None:
-    # #1164: a first-order reservoir-evaporation sink (ET0 x surface area), tagged derived and
-    # disclosed in the caveats, folded into the drought bound.
+    # #1164: a first-order reservoir-evaporation sink (ET0 x open-water coefficient x surface
+    # area), tagged derived and disclosed in the caveats, folded into the drought bound.
     ra = refill.load_refill_adequacy(settings=hydro_settings)
     assert ra is not None
     ev = ra.evaporation
     assert ev is not None, "the drought bound must reflect reservoir evaporation"
     assert ev.source == "derived"
     assert ev.surface_area_acres == pytest.approx(1603.0, abs=1.0)  # summed ODNR acreages
+    # WS-17 (#1617): grass ET0 is scaled by a >1 open-water coefficient (low albedo / no canopy
+    # resistance put warm-season pool evaporation above ET0), so the sink is not raw grass ET0.
+    assert ev.open_water_coefficient > 1.0
+    assert ev.open_water_coefficient == pytest.approx(refill._OPEN_WATER_COEFFICIENT)
+    # The committed monthly loss reflects that scaling (peak month > the raw-ET0 depth x area).
+    et0 = et.penman_monteith_et0(climate.load_climatology(settings=hydro_settings))
+    raw = et.reservoir_evaporation_mgd(et0, ev.surface_area_acres)  # coefficient 1.0
+    assert ev.monthly_evap_mgd[ev.peak_month] > raw[ev.peak_month]
     assert set(ev.monthly_evap_mgd) == {
         "JAN",
         "FEB",

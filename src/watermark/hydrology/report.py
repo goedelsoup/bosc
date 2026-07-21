@@ -478,7 +478,8 @@ def _render_refill_adequacy(emit: Callable[[str], None], settings: Settings) -> 
     )
     ev = ra.evaporation
     evap_txt = (
-        " A first-order reservoir-evaporation sink is folded in — FAO-56 ET0 over the "
+        " A first-order reservoir-evaporation sink is folded in — FAO-56 ET0 x a "
+        f"{ev.open_water_coefficient:g} open-water coefficient over the "
         f"{ev.surface_area_acres:g}-acre reservoir surface, ~**{ev.mean_evap_mgd:g} MGD** mean "
         f"(peaking at {ev.peak_evap_mgd:g} MGD in {ev.peak_month}) `[derived]`, which tightens the "
         "drought bound above."
