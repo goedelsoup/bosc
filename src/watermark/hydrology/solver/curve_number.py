@@ -102,3 +102,30 @@ def excess_rainfall(
     eff = cumulative_p - ia
     q = np.where(eff > 0.0, eff**2 / (eff + s), 0.0)
     return np.asarray(q, dtype=np.float64)
+
+
+def weighted_excess_rainfall(
+    cumulative_p: NDArray[np.float64],
+    parts: list[tuple[float, float]],
+) -> NDArray[np.float64]:
+    """Area-weighted cumulative excess rainfall over a mixed footprint — the TR-55
+    *weighted-runoff* method: run each cover's own CN separately, then area-weight the
+    resulting runoff **depths**.
+
+    Applying the CN equation to a single area-weighted *composite* CN under-predicts runoff
+    once the covers differ, because runoff is convex in CN (Jensen's inequality). TR-55 (Ch. 2)
+    flags this once directly-connected impervious area passes ~30%: the impervious fraction runs
+    off hard while the pervious fraction abstracts, so the honest combined depth is the
+    area-weighted mean of the per-cover depths, not the depth at the mean CN. This reduces
+    exactly to :func:`excess_rainfall` for a single cover, and falls back to a bare CN-70 series
+    when the areas sum to non-positive (mirrors :func:`composite_cn`).
+    """
+    total = sum(a for a, _ in parts)
+    if total <= 0.0:
+        return excess_rainfall(cumulative_p, 70.0)
+    combined = np.zeros_like(cumulative_p, dtype=np.float64)
+    for area, cn in parts:
+        if area <= 0.0:
+            continue
+        combined += (area / total) * excess_rainfall(cumulative_p, cn)
+    return combined

@@ -52,6 +52,17 @@ def test_composite_post_cn_is_far_below_full_buildout(hydro_settings: Settings) 
     assert as_permitted_bump < blanket_bump / 3.0
 
 
+def test_post_runoff_uses_tr55_weighted_runoff(hydro_settings: Settings) -> None:
+    # #1611 / WS-11: at ~34% impervious the post-development runoff is computed by the TR-55
+    # weighted-runoff method (each cover's CN run separately, runoff depths area-weighted), not
+    # a single composite CN applied to the whole footprint — which under-predicts runoff above
+    # ~30% impervious. The composite CN is still reported as the area-weighted summary descriptor.
+    screen = screen_campus_discharge(settings=hydro_settings, live=True)
+    assert "weighted-runoff" in screen.method
+    assert any("weighted-runoff method" in c for c in screen.caveats)
+    assert screen.pre_cn < screen.post_cn_as_permitted < screen.post_cn_full_buildout
+
+
 def test_tc_shortens_with_imperviousness(hydro_settings: Settings) -> None:
     # #1163: Tc is scenario-dependent — pervious pre is the longest, the as-permitted
     # composite is shorter (partly paved), and the blanket full-buildout is the shortest.

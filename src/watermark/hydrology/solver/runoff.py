@@ -13,11 +13,18 @@ hydrograph conserve volume (total flow volume == excess depth over the area).
 
 from __future__ import annotations
 
+from typing import Literal
+
 import numpy as np
 from numpy.typing import NDArray
 
 from watermark.hydrology.model import Hydrograph
-from watermark.hydrology.solver.curve_number import adjust_amc, excess_rainfall
+from watermark.hydrology.solver.curve_number import (
+    adjust_amc,
+    composite_cn,
+    excess_rainfall,
+    weighted_excess_rainfall,
+)
 from watermark.hydrology.solver.rainfall import scs_type_ii_hyetograph
 
 # Dimensionless SCS unit hydrograph: t/Tp -> q/Qp (NEH-630 Table 16-1, abridged).
@@ -98,26 +105,47 @@ def _unit_hydrograph(area_sqmi: float, tc_hr: float, dt_hr: float) -> NDArray[np
 def simulate_runoff(
     *,
     area_acres: float,
-    curve_number: float,
+    curve_number: float | None = None,
     tc_hr: float,
     storm_depth_in: float,
     amc: str = "II",
+    cn_parts: list[tuple[float, float]] | None = None,
     dt_hr: float = 0.1,
     duration_hr: float = 24.0,
 ) -> Hydrograph:
     """Run the Tier-0 SCS chain for one footprint and one design storm.
 
-    ``curve_number`` is the tabulated AMC-II (average antecedent moisture) value;
-    ``amc`` selects the antecedent condition the storm falls on — ``"III"`` (wet, prior
-    rain has saturated the ground) raises the effective CN and yields the conservative
-    upper-bound peak, ``"I"`` (dry) lowers it. The returned hydrograph records both the
-    effective ``curve_number`` and the ``amc`` it was run under, so a reader can tell
-    whether a reported peak is wet-antecedent.
+    Provide **exactly one** cover input. ``curve_number`` is one tabulated AMC-II value for a
+    homogeneous footprint. ``cn_parts`` is a list of ``(area, cn)`` covers for a *mixed*
+    footprint: the excess rainfall is then computed by the TR-55 weighted-runoff method (each
+    cover's CN run separately, runoff depths area-weighted; :func:`weighted_excess_rainfall`),
+    which does not under-predict runoff the way a single composite CN does once the impervious
+    share passes ~30%. Either way the reported ``curve_number`` is the (composite) CN and the
+    hydrograph records the ``runoff_method`` used.
+
+    ``amc`` selects the antecedent condition the storm falls on — ``"III"`` (wet, prior rain has
+    saturated the ground) raises the effective CN and yields the conservative upper-bound peak,
+    ``"I"`` (dry) lowers it. The returned hydrograph records both the effective ``curve_number``
+    and the ``amc`` it was run under, so a reader can tell whether a reported peak is
+    wet-antecedent.
     """
+    if (curve_number is None) == (cn_parts is None):
+        raise ValueError("simulate_runoff needs exactly one of curve_number or cn_parts")
     area_sqmi = area_acres / 640.0
-    effective_cn = adjust_amc(curve_number, amc)
     _, cumulative, _ = scs_type_ii_hyetograph(storm_depth_in, dt_hr=dt_hr, duration_hr=duration_hr)
-    cum_excess = excess_rainfall(cumulative, effective_cn)
+    runoff_method: Literal["composite_cn", "weighted_runoff"]
+    if cn_parts is not None:
+        # AMC adjusts each cover's own CN before the depths are combined (a per-cover soil
+        # property), so the wet/dry bound is applied to the honest weighted-runoff depth.
+        adjusted = [(area, adjust_amc(cn, amc)) for area, cn in cn_parts]
+        cum_excess = weighted_excess_rainfall(cumulative, adjusted)
+        effective_cn = composite_cn(adjusted)  # composite, reported as a summary descriptor
+        runoff_method = "weighted_runoff"
+    else:
+        assert curve_number is not None  # narrowed by the exactly-one guard above
+        effective_cn = adjust_amc(curve_number, amc)
+        cum_excess = excess_rainfall(cumulative, effective_cn)
+        runoff_method = "composite_cn"
     inc_excess = np.diff(cum_excess, prepend=0.0)  # inches per step
     uh = _unit_hydrograph(area_sqmi, tc_hr, dt_hr)
 
@@ -139,4 +167,5 @@ def simulate_runoff(
         curve_number=round(effective_cn, 1),
         tc_hr=round(tc_hr, 3),
         amc=amc,  # str param, validated against the Hydrograph Literal at construction
+        runoff_method=runoff_method,
     )
