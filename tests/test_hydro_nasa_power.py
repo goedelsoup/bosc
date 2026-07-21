@@ -59,3 +59,13 @@ def test_annual_precip_raises_on_ann_unit_drift(hydro_settings: Settings) -> Non
     precip.annual = round(precip.annual * nasa_power._DAYS_PER_YEAR, 1)  # type: ignore[operator]
     with pytest.raises(nasa_power.NasaPowerUnitError):
         clim.annual_precip_mm()
+
+
+def test_annual_precip_raises_on_monthly_unit_drift(hydro_settings: Settings) -> None:
+    """WS-18 (#1618): the monthly block is assumed mm/day — a unit change fails loud."""
+    clim = nasa_power.fetch_climatology(settings=hydro_settings)
+    precip = clim.get("PRECTOTCORR")
+    assert precip is not None
+    precip.units = "in/day"  # POWER switching the monthly normal off mm/day
+    with pytest.raises(nasa_power.NasaPowerUnitError, match=r"mm/day"):
+        clim.annual_precip_mm()

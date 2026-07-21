@@ -21,7 +21,7 @@ import math
 
 from pydantic import BaseModel, ConfigDict
 
-from watermark.hydrology.connectors.nasa_power import NasaPowerClimatology
+from watermark.hydrology.connectors.nasa_power import NasaPowerClimatology, NasaPowerUnitError
 from watermark.hydrology.units import acre_mm_to_mg
 
 _MONTHS = ("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC")
@@ -32,6 +32,22 @@ _MID_J = (15, 46, 74, 105, 135, 166, 196, 227, 258, 288, 319, 349)
 _GSC = 0.0820  # solar constant, MJ m^-2 min^-1
 _SIGMA = 4.903e-9  # Stefan-Boltzmann, MJ K^-4 m^-2 day^-1
 _ALBEDO = 0.23  # reference grass
+
+# FAO-56 consumes each meteorology input in a fixed unit, and the equations here use the
+# POWER normals directly (e.g. rns = (1-albedo)*rs). POWER's AG community returns them so
+# — °C, %, m/s, and shortwave in MJ/m^2/day — but the RE community ships the same
+# ALLSKY_SFC_SW_DWN parameter in kW-hr/m^2/day, a 3.6x inflation that would silently swell
+# net shortwave and ET0 with no test failing. Guard the units at read time (prefix-matched
+# against what AG returns) so a re-fetch under a different community, or a POWER unit
+# change, fails loud rather than corrupting ET0. See WS-18 (#1618).
+_EXPECTED_UNIT_PREFIX: dict[str, str] = {
+    "T2M": "C",
+    "T2M_MAX": "C",
+    "T2M_MIN": "C",
+    "RH2M": "%",
+    "WS2M": "m/s",
+    "ALLSKY_SFC_SW_DWN": "MJ",
+}
 
 
 class Et0Climatology(BaseModel):
@@ -80,6 +96,14 @@ def penman_monteith_et0(
         p = clim.get(name)
         if p is None or not p.monthly:
             raise ValueError(f"climatology missing parameter {name!r} for ET0")
+        expected = _EXPECTED_UNIT_PREFIX.get(name)
+        if expected is not None and not p.units.strip().startswith(expected):
+            raise NasaPowerUnitError(
+                f"NASA POWER {name} units ({p.units!r}) are not the FAO-56 input unit "
+                f"(expected a {expected!r} prefix); ET0 assumes AG-community units. A "
+                f"re-fetch under another community (RE ships ALLSKY_SFC_SW_DWN in "
+                f"kW-hr/m^2/day, ~3.6x MJ/m^2/day) would silently corrupt ET0."
+            )
         return p.monthly
 
     tmean, tmax, tmin = series("T2M"), series("T2M_MAX"), series("T2M_MIN")
