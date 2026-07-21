@@ -129,5 +129,14 @@ notes: >-
   client-side lexical retrieval scoped to its own corpus neighborhood (offline, no server; the D3
   spike's verdict, #1576). Like `corpus-index` it reads the committed corpus directly and adds no
   new committed upstream; always emitted (a mirror is never empty).
+  The `facility` feed (#1628, epic #1626 F2, contract 1.31.0) is the disclosed data-center inventory
+  — one row per campus of the primary+secondary `SiteProfile.facilities` list with its lifecycle
+  status / operator / end-use / IT-load bracket / disclosure / cooling model / committed geometry —
+  plus the compact `facility` manifest block (the primary campus's status + campus count, the per-slug
+  badge source the frontend reads in place of the retired hardcoded `FACILITY_STATUS` dict). It
+  projects the site profile's structured facilities (`watermark.site.facility`), reading only
+  profile-declared data + the already-committed per-facility geometry (a slug-scoped site input, like
+  `leads`/`contacts`), so it adds no new committed reference upstream; facility-gated — the feed is
+  skipped and the manifest block absent for a site with no disclosed facility.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.

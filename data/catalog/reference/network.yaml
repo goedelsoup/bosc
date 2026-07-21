@@ -34,4 +34,7 @@ tags:
 notes: topology.yaml is curated/cited; basin-network.yaml is the computed, regenerable cross-site join
   carrying each attribute's own provenance — regenerate via `watermark basin-network --write`, do not
   hand-edit. findlay-ottawa-comparison.yaml is curated/cited (#417) — the network's only along-one-river
-  control, both plants screened against the shared derived Blanchard 7Q10.
+  control, both plants screened against the shared derived Blanchard 7Q10. Each node's `activity` block
+  now carries the primary campus's disclosed lifecycle — `facility_status` / `operator` / `end_use` /
+  `facility_count` (#1628) — so the pure frontend basin/directory builders read data-center status off
+  this feed instead of a hardcoded per-slug dict; regenerate basin-network.yaml after a facilities change.
