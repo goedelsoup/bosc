@@ -27,7 +27,13 @@ from watermark.sites._gis_schemas import (
     RICHLAND_PARCEL_SCHEMA,
     VAN_WERT_PARCEL_SCHEMA,
 )
-from watermark.sites._model import CoolingModelType, SiteFacility, SiteProfile
+from watermark.sites._model import (
+    CoolingModelType,
+    DcEndUse,
+    FacilityLifecycle,
+    SiteFacility,
+    SiteProfile,
+)
 
 # The live reference build. Every value reproduces the pre-#325 hardcoded default exactly —
 # see tests/test_sites.py for the zero-drift golden snapshot.
@@ -151,51 +157,62 @@ _LIMA = SiteProfile(
     ],
     campus_dry_weather_mgd=2.5,  # documented FM-2 industrial discharge (fallback dry base)
     # grid / facility (the disclosed Lima campus; serving-utility provenance = the corpus)
-    facility=SiteFacility(
-        genset_count=114,
-        genset_mw=2.75,  # MW each (~2,750 ekW), per the air permit
-        it_load_mw=275.0,  # [inference] midpoint of the 250-300 MW N+1 estimate (IT ~= backup),
-        # derived from the disclosed ~313 MW backup — NOT a permit disclosure (#1697)
-        it_load_low_mw=250.0,
-        it_load_high_mw=300.0,
-        air_permit_citation=(
-            "OEPA Air PTI P0138965 (Facility 0302022054), committed "
-            "data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): "
-            "114 hall gensets x 2.75 MW (~2,750 ekW) = ~313 MW backup; IT ~250-300 MW (N+1). "
-            "Per-engine rating from the draft public notice (3987141/3987144); engine "
-            "size CBI-redacted in the final permit under an Ohio EPA trade-secret grant "
-            "(OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml)."
+    facilities=(
+        SiteFacility(
+            name="Shawnee Energy Campus",
+            status=FacilityLifecycle.CONSTRUCTION,  # air-permit-grounded; the disclosed build (#234)
+            operator="Google (developer of record)",
+            operator_citation=(
+                "[verified] Google is the developer of record for the Lima campus (Select-Committee "
+                "record #234); the deed fixes the builder, not the occupant."
+            ),
+            # end_use left [open] on purpose — which type the Lima campus is (and who can use it) is the
+            # unresolved question the end-use explorer (endUse.ts / docs/end-use-and-workloads.md) turns on.
+            genset_count=114,
+            genset_mw=2.75,  # MW each (~2,750 ekW), per the air permit
+            it_load_mw=275.0,  # [inference] midpoint of the 250-300 MW N+1 estimate (IT ~= backup),
+            # derived from the disclosed ~313 MW backup — NOT a permit disclosure (#1697)
+            it_load_low_mw=250.0,
+            it_load_high_mw=300.0,
+            air_permit_citation=(
+                "OEPA Air PTI P0138965 (Facility 0302022054), committed "
+                "data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): "
+                "114 hall gensets x 2.75 MW (~2,750 ekW) = ~313 MW backup; IT ~250-300 MW (N+1). "
+                "Per-engine rating from the draft public notice (3987141/3987144); engine "
+                "size CBI-redacted in the final permit under an Ohio EPA trade-secret grant "
+                "(OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml)."
+            ),
+            blowdown_mgd=2.5,  # documented FM-2 industrial discharge, as a blowdown upper bound
+            blowdown_citation=(
+                "bosc-fm2 2.5 MGD industrial discharge (CMAR RFQ §A.6), taken as cooling "
+                "blowdown upper bound"
+            ),
+            # Cooling archetype (#1054): makes the platform's historical implicit assumption
+            # EXPLICIT — [inference] the air permit lists 36 cooling towers (consistent with an
+            # open recirculating evaporative plant), but no cooling-system flowrates (CBI-
+            # withheld), so the archetype is an assumption, not a documented disclosure.
+            # Numbers must not move: the WUE/CoC overrides below carry the exact pre-taxonomy
+            # defaults + citations (regression-locked by tests/test_hydro_cooling.py).
+            cooling_model=CoolingModelType.EVAPORATIVE_TOWER,
+            cooling_model_source="assumption",
+            cooling_model_citation=(
+                "36 cooling towers on OEPA Air PTI P0138965 imply an evaporative (open "
+                "recirculating) plant; cooling-system flowrates are CBI-withheld, so the "
+                "archetype is asserted, not disclosed"
+            ),
+            wue_l_per_kwh=1.8,  # evaporative hyperscale; Google fleet avg ~1.1, evaporative higher
+            wue_citation=(
+                "evaporative-cooled hyperscale WUE ~1.8 L/kWh (Google fleet avg ~1.1; "
+                "36 cooling towers on the air permit)"
+            ),
+            cycles_of_concentration=5.0,  # cooling-tower cycles of concentration (typical 4-6)
+            cycles_citation="cooling-tower cycles of concentration ~5 (typical 4-6)",
+            # Air-quality modeling (#1172/#1180): the committed OEPA PTI P0138965 extraction that
+            # grounds the fleet's emission rates + synthetic-minor NSR caps. Stack geometry is
+            # deliberately left unset — the final permit redacts engine make/model/size as CBI, so
+            # the AERMOD deck uses the assumption-tagged screening geometry, never a fabricated fact.
+            air_permit_relpath="permits/4132514.epa.yaml",
         ),
-        blowdown_mgd=2.5,  # documented FM-2 industrial discharge, as a blowdown upper bound
-        blowdown_citation=(
-            "bosc-fm2 2.5 MGD industrial discharge (CMAR RFQ §A.6), taken as cooling "
-            "blowdown upper bound"
-        ),
-        # Cooling archetype (#1054): makes the platform's historical implicit assumption
-        # EXPLICIT — [inference] the air permit lists 36 cooling towers (consistent with an
-        # open recirculating evaporative plant), but no cooling-system flowrates (CBI-
-        # withheld), so the archetype is an assumption, not a documented disclosure.
-        # Numbers must not move: the WUE/CoC overrides below carry the exact pre-taxonomy
-        # defaults + citations (regression-locked by tests/test_hydro_cooling.py).
-        cooling_model=CoolingModelType.EVAPORATIVE_TOWER,
-        cooling_model_source="assumption",
-        cooling_model_citation=(
-            "36 cooling towers on OEPA Air PTI P0138965 imply an evaporative (open "
-            "recirculating) plant; cooling-system flowrates are CBI-withheld, so the "
-            "archetype is asserted, not disclosed"
-        ),
-        wue_l_per_kwh=1.8,  # evaporative hyperscale; Google fleet avg ~1.1, evaporative higher
-        wue_citation=(
-            "evaporative-cooled hyperscale WUE ~1.8 L/kWh (Google fleet avg ~1.1; "
-            "36 cooling towers on the air permit)"
-        ),
-        cycles_of_concentration=5.0,  # cooling-tower cycles of concentration (typical 4-6)
-        cycles_citation="cooling-tower cycles of concentration ~5 (typical 4-6)",
-        # Air-quality modeling (#1172/#1180): the committed OEPA PTI P0138965 extraction that
-        # grounds the fleet's emission rates + synthetic-minor NSR caps. Stack geometry is
-        # deliberately left unset — the final permit redacts engine make/model/size as CBI, so
-        # the AERMOD deck uses the assumption-tagged screening geometry, never a fabricated fact.
-        air_permit_relpath="permits/4132514.epa.yaml",
     ),
     serving_utility_source="document",
     serving_utility_citation=(
@@ -346,54 +363,69 @@ _FINDLAY = SiteProfile(
     # bracketed range, never the evaporative default). ⚠️ EntityGraph guard: MARA Holdings, Inc.
     # (NASDAQ: MARA) != Marathon Petroleum Corp (the Findlay-HQ refiner + a Hancock-County NPDES
     # permittee) — two unrelated companies; never merge them. See data/extracted/findlay/data-centers.md.
-    facility=SiteFacility(
-        it_load_mw=150.0,  # [verified] contracted take-or-pay / planned maximum; see it_load_citation
-        it_load_low_mw=30.0,  # [verified] currently energized ("Current Capacity 30 MW, Status: Operating")
-        it_load_high_mw=150.0,  # [verified] contracted / planned maximum (150 MW take-or-pay)
-        it_load_citation=(
-            "[verified] DISCLOSED load (NOT a screening inference): One Power Co Form S-1/A (EDGAR "
-            "CIK 2039139) describes MWHub 01 / Findlay Megawatt Hub — 'Current Capacity 30 MW, "
-            "Planned Maximum 150 MW, Status: Operating' — and names MARA Holdings, Inc. as the 150 "
-            "MW, 15-year take-or-pay customer ('due regardless of whether or not the customer elects "
-            "to purchase power'); corroborated by MARA's 2024-11-11 release ('a 150-megawatt "
-            "operation in Findlay, Ohio, which already has 30 megawatts of capacity', part of ~372 "
-            "MW across three Ohio sites, full energization intended by end-2025). Central = the 150 "
-            "MW contracted take-or-pay; low = the 30 MW currently energized; high = the 150 MW "
-            "contracted maximum. MARA's energization status as of 2026 is [open — MARA 10-K/ops "
-            "updates]. A separate +300 MW 'standalone interconnection site' expansion (S-1/A, 2024) "
-            "has NO named customer and is NOT in this basis (it stays [open], the epic #1265 grid "
-            "sub-issue's PUCO/PJM/AEP target). See data/extracted/findlay/data-centers.md."
-        ),
-        # No disclosed gensets / air permit found at web level (an [open] check — OEPA eSuite, One
-        # Power / MARA generator banks) → genset/backup basis + air-dispatch fleet model absent;
-        # genset_count/genset_mw/air_permit_citation stay None (no fabricated fleet).
-        facility_type=(
-            "behind-the-meter compute load — bitcoin mining (MARA Holdings, Inc.; NASDAQ: MARA) at "
-            'the One Power Co "Findlay Megawatt Hub" (MWHub 01), Allen Township — Status: Operating'
-        ),  # [verified] operator / host / status
-        # gross_floor_area_sqft / disclosed_investment_usd = [open]: neither a building size nor a
-        # compute-operation capital figure is disclosed for the MARA operation (the $5.9M / 110-ac
-        # 2026-03-05 land assembly is a separate recorder/places thread under epic #1265, not this
-        # facility's investment; hyperscale end-use for the assembly is press speculation [reference]).
-        disclosure_citation=(
-            "[verified] One Power Co Form S-1/A (EDGAR CIK 2039139: DRS 2024-11-12, IPO S-1 filed "
-            "2025-01-23, withdrawn Form RW 2025-05-09, Form D private placement 2025-07-23) + MARA "
-            "Holdings 2024-11-11 press release (ir.mara.com/news-events/press-releases/detail/1375). "
-            "Host: One Power Co (CEO Jereme Kent); OnSite Partners — funds advised by Basalt "
-            "Infrastructure Partners — acquired One Power, announced 2026-02-16. The hub first "
-            "energized 2023 with 'the first fully digital substation in the United States.' See "
-            "data/extracted/findlay/data-centers.md."
-        ),
-        # Cooling archetype (#1054): UNKNOWN — MARA's Findlay cooling design is not on the public
-        # record, so it gets a bracketed range, never the water-intensive evaporative default. Not
-        # asserted. (Bitcoin-mining loads span air-cooled / immersion / hydro-cooled designs.)
-        cooling_model=CoolingModelType.UNKNOWN,
-        cooling_model_source="reference",
-        cooling_model_citation=(
-            "[reference] cooling method not disclosed in the record — kept UNKNOWN (bracketed "
-            "range). MARA has not stated the Findlay cooling design; the One Power hub is a "
-            "behind-the-meter natural-gas-generation compute campus. Refine to a selected model on "
-            "a disclosed mechanical/plumbing permit or an ingested cooling spec."
+    facilities=(
+        SiteFacility(
+            name="Findlay Megawatt Hub (MWHub 01)",
+            status=FacilityLifecycle.LIVE,  # "Status: Operating" — 30 MW energized (One Power S-1/A)
+            operator="MARA Holdings, Inc. (NASDAQ: MARA); host One Power Co",
+            operator_citation=(
+                "[verified] One Power Co Form S-1/A (EDGAR CIK 2039139) + MARA Holdings 2024-11-11 "
+                "release: MARA is the 150 MW, 15-year take-or-pay customer at the One Power Findlay "
+                "Megawatt Hub (host/host-operator One Power Co)."
+            ),
+            end_use=DcEndUse.BITCOIN,
+            end_use_citation=(
+                "[verified] behind-the-meter bitcoin mining — MARA Holdings' Findlay operation "
+                "('we don't have customers in Bitcoin'; MARA 2024-11-11 release)."
+            ),
+            it_load_mw=150.0,  # [verified] contracted take-or-pay / planned maximum; see it_load_citation
+            it_load_low_mw=30.0,  # [verified] currently energized ("Current Capacity 30 MW, Status: Operating")
+            it_load_high_mw=150.0,  # [verified] contracted / planned maximum (150 MW take-or-pay)
+            it_load_citation=(
+                "[verified] DISCLOSED load (NOT a screening inference): One Power Co Form S-1/A (EDGAR "
+                "CIK 2039139) describes MWHub 01 / Findlay Megawatt Hub — 'Current Capacity 30 MW, "
+                "Planned Maximum 150 MW, Status: Operating' — and names MARA Holdings, Inc. as the 150 "
+                "MW, 15-year take-or-pay customer ('due regardless of whether or not the customer elects "
+                "to purchase power'); corroborated by MARA's 2024-11-11 release ('a 150-megawatt "
+                "operation in Findlay, Ohio, which already has 30 megawatts of capacity', part of ~372 "
+                "MW across three Ohio sites, full energization intended by end-2025). Central = the 150 "
+                "MW contracted take-or-pay; low = the 30 MW currently energized; high = the 150 MW "
+                "contracted maximum. MARA's energization status as of 2026 is [open — MARA 10-K/ops "
+                "updates]. A separate +300 MW 'standalone interconnection site' expansion (S-1/A, 2024) "
+                "has NO named customer and is NOT in this basis (it stays [open], the epic #1265 grid "
+                "sub-issue's PUCO/PJM/AEP target). See data/extracted/findlay/data-centers.md."
+            ),
+            # No disclosed gensets / air permit found at web level (an [open] check — OEPA eSuite, One
+            # Power / MARA generator banks) → genset/backup basis + air-dispatch fleet model absent;
+            # genset_count/genset_mw/air_permit_citation stay None (no fabricated fleet).
+            facility_type=(
+                "behind-the-meter compute load — bitcoin mining (MARA Holdings, Inc.; NASDAQ: MARA) at "
+                'the One Power Co "Findlay Megawatt Hub" (MWHub 01), Allen Township — Status: Operating'
+            ),  # [verified] operator / host / status
+            # gross_floor_area_sqft / disclosed_investment_usd = [open]: neither a building size nor a
+            # compute-operation capital figure is disclosed for the MARA operation (the $5.9M / 110-ac
+            # 2026-03-05 land assembly is a separate recorder/places thread under epic #1265, not this
+            # facility's investment; hyperscale end-use for the assembly is press speculation [reference]).
+            disclosure_citation=(
+                "[verified] One Power Co Form S-1/A (EDGAR CIK 2039139: DRS 2024-11-12, IPO S-1 filed "
+                "2025-01-23, withdrawn Form RW 2025-05-09, Form D private placement 2025-07-23) + MARA "
+                "Holdings 2024-11-11 press release (ir.mara.com/news-events/press-releases/detail/1375). "
+                "Host: One Power Co (CEO Jereme Kent); OnSite Partners — funds advised by Basalt "
+                "Infrastructure Partners — acquired One Power, announced 2026-02-16. The hub first "
+                "energized 2023 with 'the first fully digital substation in the United States.' See "
+                "data/extracted/findlay/data-centers.md."
+            ),
+            # Cooling archetype (#1054): UNKNOWN — MARA's Findlay cooling design is not on the public
+            # record, so it gets a bracketed range, never the water-intensive evaporative default. Not
+            # asserted. (Bitcoin-mining loads span air-cooled / immersion / hydro-cooled designs.)
+            cooling_model=CoolingModelType.UNKNOWN,
+            cooling_model_source="reference",
+            cooling_model_citation=(
+                "[reference] cooling method not disclosed in the record — kept UNKNOWN (bracketed "
+                "range). MARA has not stated the Findlay cooling design; the One Power hub is a "
+                "behind-the-meter natural-gas-generation compute campus. Refine to a selected model on "
+                "a disclosed mechanical/plumbing permit or an ingested cooling spec."
+            ),
         ),
     ),
     serving_utility_citation=(  # [reference] not Lima's corpus
@@ -529,35 +561,46 @@ _FORT_WAYNE = SiteProfile(
     # Facility CONFIRMED — Google "Project Zodiac" $2B campus (#360, data/extracted/fort-wayne/
     # datacenter-facility.md). Power basis populated from the committed IDEM Title V air-permit
     # extraction (data/extracted/idem/fort-wayne/47378f.idem.yaml).
-    facility=SiteFacility(
-        # Project Zodiac (Hatchworks LLC) — IDEM Title V air permit 003-47378-00530. The permit
-        # discloses heat input (26.4 MMBTU/hr per engine), NOT an electrical rating, so genset_mw
-        # is DERIVED (heat-input x efficiency), unlike Lima's disclosed ekW. genset_count is verbatim.
-        genset_count=34,  # [verified] "Thirty-four (34) diesel-fired emergency generators, Gen 1..34" (A.2)
-        genset_mw=3.0,  # [inference] 26.4 MMBTU/hr HHV / engine at ~38-43% electrical eff -> ~2.9-3.3 MWe
-        it_load_mw=90.0,  # [inference] N+1: IT ~= 0.88 x backup (Lima 275/313 convention); 34 x 3.0 ~= 102 MW backup
-        it_load_low_mw=80.0,
-        it_load_high_mw=100.0,
-        air_permit_citation=(
-            "IDEM Title V air permit 003-47378-00530 (issued 2024-09-06), committed "
-            "data/extracted/idem/fort-wayne/47378f.idem.yaml: 34 diesel emergency gensets "
-            "(Gen 1-34), each 26.4 MMBTU/hr heat input (A.2), operator 'a stationary data center' "
-            "(SIC 7374, 650-area phone). genset_mw/it_load are DERIVED from heat input (no disclosed "
-            "ekW); refine if the engine nameplate surfaces in the application or the 003-48739 "
-            "significant modification (data/documents/idem/fort-wayne/48739d.pdf)."
-        ),
-        # No disclosed cooling/industrial blowdown (the air permit doesn't cover discharge) → None,
-        # so the cooling back-solve uses the power-derived consumptive as the high bound (no Lima leak).
-        # Cooling archetype (#1054): [open] the facility is confirmed (IDEM Title V, §401)
-        # but no water-cooling method is on record — the Title V permit covers the gensets,
-        # not the cooling plant. `unknown` ⇒ a bracketed range (closed_loop_dry…evaporative_
-        # tower), never a defaulted evaporative headline (#1057). Refine when the cooling
-        # method surfaces (utility water contract, wastewater permit, or the 003-48739 mod).
-        cooling_model=CoolingModelType.UNKNOWN,
-        cooling_model_source="assumption",
-        cooling_model_citation=(
-            "cooling method not disclosed: IDEM Title V 003-47378-00530 covers the emergency "
-            "gensets only, no cooling-system disclosure on record for Project Zodiac"
+    facilities=(
+        SiteFacility(
+            name="Project Zodiac",
+            status=FacilityLifecycle.LIVE,  # operating data center on an issued IDEM Title V permit
+            operator="Hatchworks LLC (Project Zodiac) — 'a stationary data center'",
+            operator_citation=(
+                "[verified] IDEM Title V air permit 003-47378-00530 (issued 2024-09-06) names the "
+                "operator as 'a stationary data center' (SIC 7374); developer entity Hatchworks LLC."
+            ),
+            # end_use left [open] — the permit discloses a stationary data center, not the workload
+            # type or the ultimate operator identity (the GCP attribution is [inference], not on record).
+            # Project Zodiac (Hatchworks LLC) — IDEM Title V air permit 003-47378-00530. The permit
+            # discloses heat input (26.4 MMBTU/hr per engine), NOT an electrical rating, so genset_mw
+            # is DERIVED (heat-input x efficiency), unlike Lima's disclosed ekW. genset_count is verbatim.
+            genset_count=34,  # [verified] "Thirty-four (34) diesel-fired emergency generators, Gen 1..34" (A.2)
+            genset_mw=3.0,  # [inference] 26.4 MMBTU/hr HHV / engine at ~38-43% electrical eff -> ~2.9-3.3 MWe
+            it_load_mw=90.0,  # [inference] N+1: IT ~= 0.88 x backup (Lima 275/313 convention); 34 x 3.0 ~= 102 MW backup
+            it_load_low_mw=80.0,
+            it_load_high_mw=100.0,
+            air_permit_citation=(
+                "IDEM Title V air permit 003-47378-00530 (issued 2024-09-06), committed "
+                "data/extracted/idem/fort-wayne/47378f.idem.yaml: 34 diesel emergency gensets "
+                "(Gen 1-34), each 26.4 MMBTU/hr heat input (A.2), operator 'a stationary data center' "
+                "(SIC 7374, 650-area phone). genset_mw/it_load are DERIVED from heat input (no disclosed "
+                "ekW); refine if the engine nameplate surfaces in the application or the 003-48739 "
+                "significant modification (data/documents/idem/fort-wayne/48739d.pdf)."
+            ),
+            # No disclosed cooling/industrial blowdown (the air permit doesn't cover discharge) → None,
+            # so the cooling back-solve uses the power-derived consumptive as the high bound (no Lima leak).
+            # Cooling archetype (#1054): [open] the facility is confirmed (IDEM Title V, §401)
+            # but no water-cooling method is on record — the Title V permit covers the gensets,
+            # not the cooling plant. `unknown` ⇒ a bracketed range (closed_loop_dry…evaporative_
+            # tower), never a defaulted evaporative headline (#1057). Refine when the cooling
+            # method surfaces (utility water contract, wastewater permit, or the 003-48739 mod).
+            cooling_model=CoolingModelType.UNKNOWN,
+            cooling_model_source="assumption",
+            cooling_model_citation=(
+                "cooling method not disclosed: IDEM Title V 003-47378-00530 covers the emergency "
+                "gensets only, no cooling-system disclosure on record for Project Zodiac"
+            ),
         ),
     ),
     serving_utility_citation=(  # [reference] not corpus
@@ -680,71 +723,85 @@ _VAN_WERT = SiteProfile(
     # gensets or air permit are disclosed (emergency backup only, no PTI found), so genset_count/
     # genset_mw/air_permit_citation stay None and the it_load is grounded by it_load_citation.
     # See data/extracted/van-wert/data-centers.md.
-    facility=SiteFacility(
-        it_load_mw=500.0,  # [reference] the announced "up to 500 MW" ceiling — carried central, not disclosed
-        it_load_low_mw=350.0,  # if "up to 500 MW" names the ALL-IN campus draw: 500 / 1.43 PUE ceiling ~= 350 MW IT
-        it_load_high_mw=500.0,  # the announced "up to 500 MW" ceiling
-        it_load_citation=(
-            "[reference] 'up to 500 MW' — Thor Equities / Form8tion's 2025-08-19 land-acquisition "
-            "release (GlobeNewswire; citybiz; Data Center Dynamics) and local press; NOT an "
-            "air-permit or PJM-interconnection disclosure of the campus's own load. QTS's own site "
-            "DECLINES to state capacity ('we don't disclose specific power capacity', "
-            "q.com/data-centers/van-wert), so this stays a [reference] bracket, never a point "
-            "disclosure — the official/interconnection MW is [open]. Carried central at the announced "
-            "500 MW ceiling per #1402 (like the Bowling Green disclosed-peak precedent, #1435): 500 is "
-            "an 'up to'/campus-draw ceiling, so treating it as the IT load makes downstream figures "
-            "(facility_draw = IT x PUE, then x load factor) run conservative-high. The low bound reads "
-            "the same 'up to 500 MW' as the ALL-IN campus/grid-interconnection draw and divides out "
-            "the cooling-dominated PUE ceiling (1.43, data/reference/compute/rack-density.yaml): "
-            "500 / 1.43 ~= 350 MW implied IT load — the bracket (350-500 MW) thus spans the "
-            "campus-total-vs-IT-only interpretive ambiguity. No floor-area screen is possible (gross "
-            "floor area is not disclosed, unlike Urbana #1327 / Troy-Piqua #1482 / Bowling Green "
-            "#1435). Replace with the disclosed load when an OEPA air PTI, a PJM interconnection "
-            "filing, or the AEP Ohio load contract (PUCO tariff 24-508-EL-ATA) surfaces it; the "
-            "AEP Ohio Transco Van Wert-Haviland 138 kV LON (OPSB 25-0697-EL-BLN, $45M, in-service "
-            "Dec 2026) is a [reference] transmission signal whose stated need is generic (#1401)."
-        ),
-        # No disclosed gensets or air permit (site-plan-grounded) → the N+1 backup cross-check and the
-        # air-dispatch fleet model are absent; QTS states the generators are emergency backup only
-        # (tested monthly) and no facility-specific PTI was found (#1408).
-        facility_type=(
-            'hyperscale data-center campus ("Van Wert Mega Site"; end user/operator QTS Data Centers '
-            "(QTS Realty Trust, LLC — Blackstone); developer of record Thor Equities Group via "
-            "Form8tion; land-holding entity QTS Van Wert LLC)"
-        ),  # [verified] operator/developer; [reference] land-holding LLC (pending deed/SOS pulls, #1404)
-        # gross_floor_area_sqft NOT disclosed → left None (up to 7 buildings; no floor area on record).
-        disclosed_investment_usd=10_000_000_000,  # [verified] ~$10B total capital investment (QTS; all outlets)
-        disclosure_citation=(
-            "[verified] QTS Data Centers publicly named as the Van Wert Mega Site end user/owner on "
-            "2026-05-29 (q.com/data-centers/van-wert; Data Center Dynamics; VW Independent 2026-05-29; "
-            "corroborated by Toledo Blade, WANE): a ~$10B campus on 902 ac of the ~962 ac annexed by "
-            "the City on 2026-05-11 (emergency ordinances, 6-0 — annexed + zoned I-2 General "
-            "Industrial with conditional data-center use), up to 7 buildings, ~200 permanent "
-            "full-time jobs (>1,500 construction), groundbreaking Q4 2026, first building operational "
-            "Q1 2029, buildout ~2032. Land assembled by Thor Equities / Form8tion from the Marsh "
-            "Foundation (~221-ac initial buy Aug 2025, anchor parcel 170347180100). Gross floor area "
-            "is NOT disclosed (left None). End-use [verified] (public disclosure by the named "
-            "operator); ingesting the naming annexation/site-plan instrument set is #1401's job. See "
-            "data/extracted/van-wert/data-centers.md."
-        ),
-        # Cooling archetype (#1054): CLOSED_LOOP_DRY recorded as the operator's [reference] claim —
-        # the same closed-loop pattern that undercut the Urbana water thesis (#1327), not a document
-        # extraction. The initial-fill volume + still-negotiated water/sewer carry an [open]
-        # discrepancy tracked at the water-service / leads sub-issues, not decided here.
-        cooling_model=CoolingModelType.CLOSED_LOOP_DRY,
-        cooling_model_source="reference",
-        cooling_model_citation=(
-            "[reference] operator/developer claim (NOT instrument-confirmed): closed-loop cooling "
-            "(Danfoss-patented equipment); QTS states the campus 'does not consume water for cooling "
-            "once operational', characterizing ongoing use as 'about what 4 households use per month' "
-            "(q.com/data-centers/van-wert; vanwert.org/water-treatment). Same closed-loop pattern that "
-            "undercut the Urbana water thesis (#1327). Carries an [open] discrepancy on the initial "
-            "closed-loop fill (~660,000 gal from the City of Van Wert — local press frames it "
-            "'annually' while the 2026-06-11 event framed it as a one-time fill); reconciling the fill "
-            "volume + the still-negotiated water/sewer service agreement is the water-service "
-            "instrument (#1407) / water-contradiction lead (#1409), not this pin. Replace with a "
-            "documented cooling design when an NPDES/mechanical instrument lands (the OHD000001 draft "
-            "data-center general permit is not yet linked to the facility by name, #1408)."
+    facilities=(
+        SiteFacility(
+            name="Van Wert Mega Site",
+            status=FacilityLifecycle.CONFIRMED,  # land assembled/annexed/zoned; groundbreaking Q4 2026
+            operator="QTS Data Centers (QTS Realty Trust, LLC — Blackstone); developer Thor Equities Group",
+            operator_citation=(
+                "[verified] QTS Data Centers publicly named as the Van Wert Mega Site end user/owner "
+                "2026-05-29 (q.com/data-centers/van-wert; Data Center Dynamics; VW Independent); land "
+                "assembled by Thor Equities / Form8tion."
+            ),
+            end_use=DcEndUse.HYPERSCALE,
+            end_use_citation=(
+                "[verified] hyperscale data-center campus — QTS Data Centers (public disclosure 2026-05-29)."
+            ),
+            it_load_mw=500.0,  # [reference] the announced "up to 500 MW" ceiling — carried central, not disclosed
+            it_load_low_mw=350.0,  # if "up to 500 MW" names the ALL-IN campus draw: 500 / 1.43 PUE ceiling ~= 350 MW IT
+            it_load_high_mw=500.0,  # the announced "up to 500 MW" ceiling
+            it_load_citation=(
+                "[reference] 'up to 500 MW' — Thor Equities / Form8tion's 2025-08-19 land-acquisition "
+                "release (GlobeNewswire; citybiz; Data Center Dynamics) and local press; NOT an "
+                "air-permit or PJM-interconnection disclosure of the campus's own load. QTS's own site "
+                "DECLINES to state capacity ('we don't disclose specific power capacity', "
+                "q.com/data-centers/van-wert), so this stays a [reference] bracket, never a point "
+                "disclosure — the official/interconnection MW is [open]. Carried central at the announced "
+                "500 MW ceiling per #1402 (like the Bowling Green disclosed-peak precedent, #1435): 500 is "
+                "an 'up to'/campus-draw ceiling, so treating it as the IT load makes downstream figures "
+                "(facility_draw = IT x PUE, then x load factor) run conservative-high. The low bound reads "
+                "the same 'up to 500 MW' as the ALL-IN campus/grid-interconnection draw and divides out "
+                "the cooling-dominated PUE ceiling (1.43, data/reference/compute/rack-density.yaml): "
+                "500 / 1.43 ~= 350 MW implied IT load — the bracket (350-500 MW) thus spans the "
+                "campus-total-vs-IT-only interpretive ambiguity. No floor-area screen is possible (gross "
+                "floor area is not disclosed, unlike Urbana #1327 / Troy-Piqua #1482 / Bowling Green "
+                "#1435). Replace with the disclosed load when an OEPA air PTI, a PJM interconnection "
+                "filing, or the AEP Ohio load contract (PUCO tariff 24-508-EL-ATA) surfaces it; the "
+                "AEP Ohio Transco Van Wert-Haviland 138 kV LON (OPSB 25-0697-EL-BLN, $45M, in-service "
+                "Dec 2026) is a [reference] transmission signal whose stated need is generic (#1401)."
+            ),
+            # No disclosed gensets or air permit (site-plan-grounded) → the N+1 backup cross-check and the
+            # air-dispatch fleet model are absent; QTS states the generators are emergency backup only
+            # (tested monthly) and no facility-specific PTI was found (#1408).
+            facility_type=(
+                'hyperscale data-center campus ("Van Wert Mega Site"; end user/operator QTS Data Centers '
+                "(QTS Realty Trust, LLC — Blackstone); developer of record Thor Equities Group via "
+                "Form8tion; land-holding entity QTS Van Wert LLC)"
+            ),  # [verified] operator/developer; [reference] land-holding LLC (pending deed/SOS pulls, #1404)
+            # gross_floor_area_sqft NOT disclosed → left None (up to 7 buildings; no floor area on record).
+            disclosed_investment_usd=10_000_000_000,  # [verified] ~$10B total capital investment (QTS; all outlets)
+            disclosure_citation=(
+                "[verified] QTS Data Centers publicly named as the Van Wert Mega Site end user/owner on "
+                "2026-05-29 (q.com/data-centers/van-wert; Data Center Dynamics; VW Independent 2026-05-29; "
+                "corroborated by Toledo Blade, WANE): a ~$10B campus on 902 ac of the ~962 ac annexed by "
+                "the City on 2026-05-11 (emergency ordinances, 6-0 — annexed + zoned I-2 General "
+                "Industrial with conditional data-center use), up to 7 buildings, ~200 permanent "
+                "full-time jobs (>1,500 construction), groundbreaking Q4 2026, first building operational "
+                "Q1 2029, buildout ~2032. Land assembled by Thor Equities / Form8tion from the Marsh "
+                "Foundation (~221-ac initial buy Aug 2025, anchor parcel 170347180100). Gross floor area "
+                "is NOT disclosed (left None). End-use [verified] (public disclosure by the named "
+                "operator); ingesting the naming annexation/site-plan instrument set is #1401's job. See "
+                "data/extracted/van-wert/data-centers.md."
+            ),
+            # Cooling archetype (#1054): CLOSED_LOOP_DRY recorded as the operator's [reference] claim —
+            # the same closed-loop pattern that undercut the Urbana water thesis (#1327), not a document
+            # extraction. The initial-fill volume + still-negotiated water/sewer carry an [open]
+            # discrepancy tracked at the water-service / leads sub-issues, not decided here.
+            cooling_model=CoolingModelType.CLOSED_LOOP_DRY,
+            cooling_model_source="reference",
+            cooling_model_citation=(
+                "[reference] operator/developer claim (NOT instrument-confirmed): closed-loop cooling "
+                "(Danfoss-patented equipment); QTS states the campus 'does not consume water for cooling "
+                "once operational', characterizing ongoing use as 'about what 4 households use per month' "
+                "(q.com/data-centers/van-wert; vanwert.org/water-treatment). Same closed-loop pattern that "
+                "undercut the Urbana water thesis (#1327). Carries an [open] discrepancy on the initial "
+                "closed-loop fill (~660,000 gal from the City of Van Wert — local press frames it "
+                "'annually' while the 2026-06-11 event framed it as a one-time fill); reconciling the fill "
+                "volume + the still-negotiated water/sewer service agreement is the water-service "
+                "instrument (#1407) / water-contradiction lead (#1409), not this pin. Replace with a "
+                "documented cooling design when an NPDES/mechanical instrument lands (the OHD000001 draft "
+                "data-center general permit is not yet linked to the facility by name, #1408)."
+            ),
         ),
     ),
     serving_utility_citation=(  # [reference] not corpus
@@ -857,7 +914,7 @@ _TOLEDO = SiteProfile(
     passby_primary_cfs=0.0,  # [open] in-stream passby minimums — pending the model
     passby_secondary_cfs=0.0,
     # grid / facility (no identified data-center facility → grid backdrop only, no campus share)
-    facility=None,  # [open] the data-center dimension onboarding doesn't capture (no disclosed facility)
+    facilities=(),  # [open] the data-center dimension onboarding doesn't capture (no disclosed facility)
     serving_utility_citation=(  # [reference] not corpus
         "EIA-861 service-territory file (The Toledo Edison Co #18997, a FirstEnergy operating "
         "company) + PUCO certified-territory; Toledo Edison serves the Toledo metro"
@@ -960,7 +1017,7 @@ _DEFIANCE = SiteProfile(
     passby_primary_cfs=0.0,  # [open] in-stream passby minimums — pending the model
     passby_secondary_cfs=0.0,
     # grid / facility (no identified data-center facility → grid backdrop only, no campus share)
-    facility=None,  # [open] the data-center dimension onboarding doesn't capture (no disclosed facility)
+    facilities=(),  # [open] the data-center dimension onboarding doesn't capture (no disclosed facility)
     serving_utility_citation=(  # [reference] not corpus
         "EIA-861 service-territory file (The Toledo Edison Co #18997, a FirstEnergy operating "
         "company; the largest IOU in Defiance County) + PUCO certified-territory; the City of "
@@ -1080,7 +1137,7 @@ _BRYAN = SiteProfile(
     passby_primary_cfs=0.0,  # [open] in-stream passby minimums — pending the model
     passby_secondary_cfs=0.0,
     # grid / facility (no identified data-center facility → grid backdrop only, no campus share)
-    facility=None,  # [open] the data-center dimension onboarding doesn't capture (no disclosed facility)
+    facilities=(),  # [open] the data-center dimension onboarding doesn't capture (no disclosed facility)
     serving_utility_citation=(  # [reference] municipal home-rule electric (NOT PUCO rate-regulated)
         "EIA-861S Short Form (City of Bryan - OH, #2439; Municipal, BA=PJM, ~160 GWh sold 2024) — "
         "Bryan Municipal Utilities, a municipally-owned electric system and American Municipal "
@@ -1196,7 +1253,7 @@ _OTTAWA = SiteProfile(
     passby_primary_cfs=0.0,  # [open] in-stream passby minimums — pending the model
     passby_secondary_cfs=0.0,
     # grid / facility (no identified data-center facility → grid backdrop only, no campus share)
-    facility=None,  # [open] the data-center dimension onboarding doesn't capture (no disclosed facility)
+    facilities=(),  # [open] the data-center dimension onboarding doesn't capture (no disclosed facility)
     serving_utility_citation=(  # [reference] not corpus
         "EIA-861 service-territory file (Ohio Power Co #14006) + PUCO certified-territory: AEP Ohio "
         "serves the incorporated Village of Ottawa; rural Putnam County is served by cooperatives "
@@ -1331,53 +1388,65 @@ _URBANA = SiteProfile(
     # ([inference], see it_load_citation), never presented as a disclosure. The disclosed
     # interconnection/air-permit MW stays [open] (a tracked #1263 sub-lead: PJM queue position,
     # air permit). See data/extracted/urbana/datacenter-facility.md.
-    facility=SiteFacility(
-        it_load_mw=70.0,  # [inference] SCREENING central — NOT disclosed; see it_load_citation
-        it_load_low_mw=35.0,  # 460k sqft x 75 W/sqft whole-building IT density (low)
-        it_load_high_mw=115.0,  # 460k sqft x 250 W/sqft whole-building IT density (high)
-        it_load_citation=(
-            "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/"
-            "air-permit MW is [open] (#1263 sub-lead: PJM queue position / air permit). Derived "
-            "from the disclosed 460,000 sq ft gross floor area (Urbana Technology Hub site-plan "
-            "application, Feb 2026) x a whole-building IT power-density band of 75-250 W/sq ft "
-            "(stated screening assumption): 35 MW low, ~70 MW central, 115 MW high. The "
-            "single-story ~40 ft form factor + the disclosed CLOSED-LOOP DRY cooling ('water use "
-            "comparable to a standard office building') argue against the max-density liquid-AI "
-            "archetype, so the band is bounded well below GB200-class rack densities. Replace with "
-            "the disclosed load when a PJM interconnection application or an air permit surfaces it. "
-            "RETAINED after a documented NEGATIVE search (#1353, 2026-07-10): the AES Ohio (Dayton) "
-            "PJM TEAC large-load customer requests name Piqua/Adams/Marysville/Tipp City/"
-            "Jeffersonville/Wilmington — NOT Champaign County/Urbana; the only Champaign PJM-queue "
-            "item is Woodstock Solar AE2-342 (40 MW, withdrawn); and US-EPA ECHO ICIS-AIR shows no "
-            "campus air permit at the SR-55/US-68 site (7 pre-existing Urbana sources only). No MW "
-            "was disclosed at the Feb-2026 city meeting; no figure fabricated. NB: the 100 MW->1.3 GW "
-            "AES Ohio figure is ADAMS COUNTY (Stuart substation) and the ~500 MW figure is Thor's "
-            "VAN WERT campus — neither is Urbana. Full record: "
-            "data/extracted/urbana/facility-power-instrument-search.md."
-        ),
-        # No disclosed gensets or air permit (site-plan-grounded) → genset/backup basis and the
-        # air-dispatch fleet model are absent; genset_count/genset_mw/air_permit_citation stay None.
-        # Confirmed still None by the #1353 negative air-permit search (ECHO ICIS-AIR, 2026-07-10).
-        facility_type="data-center campus (Urbana Technology Hub)",  # [reference]
-        gross_floor_area_sqft=460_000,  # [reference] disclosed site plan — 460k sqft, single-story, ~40 ft
-        disclosed_investment_usd=1_000_000_000,  # [reference] ~$1B disclosed investment
-        disclosure_citation=(
-            "[reference] Disclosed at the Feb-2026 City of Urbana meeting + the Feb-2026 site-plan "
-            "application; Urbana Daily Citizen 'Data center plans revealed at city meeting' "
-            "(2026-02-18); DataCenterDynamics 'Thor Equities ... 460,000 sq ft data center campus "
-            "near Urbana'. End-use [reference] (public disclosure), not yet [verified] — the naming "
-            "site-plan/permit instrument was not reachable to ingest from this build env (#1263)."
-        ),
-        # Cooling archetype (#1054): CLOSED_LOOP_DRY — the key water-thesis finding. The developer
-        # disclosed closed-loop cooling with 'water use comparable to a standard office building',
-        # which undercuts the Mad River water-abstraction thesis. [reference], not a document extraction.
-        cooling_model=CoolingModelType.CLOSED_LOOP_DRY,
-        cooling_model_source="reference",
-        cooling_model_citation=(
-            "[reference] Closed-loop cooling disclosed at the Feb-2026 City of Urbana meeting — "
-            "developer stated water use 'comparable to a standard office building' (Urbana Daily "
-            "Citizen 2026-02-18). Undercuts the buried-valley water-abstraction thesis. Not a "
-            "document extraction; refine to [verified] on an ingested mechanical/plumbing permit."
+    facilities=(
+        SiteFacility(
+            name="Urbana Technology Hub",
+            status=FacilityLifecycle.CONFIRMED,  # disclosed Feb 2026; MW load still [open] (#1327/#1353)
+            operator="Thor Equities Group (developer of record)",
+            operator_citation=(
+                "[reference] Disclosed at the Feb-2026 City of Urbana meeting + site-plan application "
+                "(Urbana Daily Citizen 2026-02-18; DataCenterDynamics) — Thor Equities' 460,000 sq ft "
+                "Urbana Technology Hub campus."
+            ),
+            # end_use left [open] — a Thor-developed campus whose ultimate tenant/workload is undisclosed
+            # (the naming site-plan/permit instrument was not reachable to ingest, #1263).
+            it_load_mw=70.0,  # [inference] SCREENING central — NOT disclosed; see it_load_citation
+            it_load_low_mw=35.0,  # 460k sqft x 75 W/sqft whole-building IT density (low)
+            it_load_high_mw=115.0,  # 460k sqft x 250 W/sqft whole-building IT density (high)
+            it_load_citation=(
+                "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/"
+                "air-permit MW is [open] (#1263 sub-lead: PJM queue position / air permit). Derived "
+                "from the disclosed 460,000 sq ft gross floor area (Urbana Technology Hub site-plan "
+                "application, Feb 2026) x a whole-building IT power-density band of 75-250 W/sq ft "
+                "(stated screening assumption): 35 MW low, ~70 MW central, 115 MW high. The "
+                "single-story ~40 ft form factor + the disclosed CLOSED-LOOP DRY cooling ('water use "
+                "comparable to a standard office building') argue against the max-density liquid-AI "
+                "archetype, so the band is bounded well below GB200-class rack densities. Replace with "
+                "the disclosed load when a PJM interconnection application or an air permit surfaces it. "
+                "RETAINED after a documented NEGATIVE search (#1353, 2026-07-10): the AES Ohio (Dayton) "
+                "PJM TEAC large-load customer requests name Piqua/Adams/Marysville/Tipp City/"
+                "Jeffersonville/Wilmington — NOT Champaign County/Urbana; the only Champaign PJM-queue "
+                "item is Woodstock Solar AE2-342 (40 MW, withdrawn); and US-EPA ECHO ICIS-AIR shows no "
+                "campus air permit at the SR-55/US-68 site (7 pre-existing Urbana sources only). No MW "
+                "was disclosed at the Feb-2026 city meeting; no figure fabricated. NB: the 100 MW->1.3 GW "
+                "AES Ohio figure is ADAMS COUNTY (Stuart substation) and the ~500 MW figure is Thor's "
+                "VAN WERT campus — neither is Urbana. Full record: "
+                "data/extracted/urbana/facility-power-instrument-search.md."
+            ),
+            # No disclosed gensets or air permit (site-plan-grounded) → genset/backup basis and the
+            # air-dispatch fleet model are absent; genset_count/genset_mw/air_permit_citation stay None.
+            # Confirmed still None by the #1353 negative air-permit search (ECHO ICIS-AIR, 2026-07-10).
+            facility_type="data-center campus (Urbana Technology Hub)",  # [reference]
+            gross_floor_area_sqft=460_000,  # [reference] disclosed site plan — 460k sqft, single-story, ~40 ft
+            disclosed_investment_usd=1_000_000_000,  # [reference] ~$1B disclosed investment
+            disclosure_citation=(
+                "[reference] Disclosed at the Feb-2026 City of Urbana meeting + the Feb-2026 site-plan "
+                "application; Urbana Daily Citizen 'Data center plans revealed at city meeting' "
+                "(2026-02-18); DataCenterDynamics 'Thor Equities ... 460,000 sq ft data center campus "
+                "near Urbana'. End-use [reference] (public disclosure), not yet [verified] — the naming "
+                "site-plan/permit instrument was not reachable to ingest from this build env (#1263)."
+            ),
+            # Cooling archetype (#1054): CLOSED_LOOP_DRY — the key water-thesis finding. The developer
+            # disclosed closed-loop cooling with 'water use comparable to a standard office building',
+            # which undercuts the Mad River water-abstraction thesis. [reference], not a document extraction.
+            cooling_model=CoolingModelType.CLOSED_LOOP_DRY,
+            cooling_model_source="reference",
+            cooling_model_citation=(
+                "[reference] Closed-loop cooling disclosed at the Feb-2026 City of Urbana meeting — "
+                "developer stated water use 'comparable to a standard office building' (Urbana Daily "
+                "Citizen 2026-02-18). Undercuts the buried-valley water-abstraction thesis. Not a "
+                "document extraction; refine to [verified] on an ingested mechanical/plumbing permit."
+            ),
         ),
     ),
     serving_utility_citation="EIA-861 2024 Service_Territory: Dayton Power & Light Co (AES Ohio, #4922) is the IOU serving Champaign County, OH — the Urbana LSE (no municipal electric). [verified]",
@@ -1470,63 +1539,77 @@ _SPRINGFIELD = SiteProfile(
     # no air permit is pinned yet — that's #1414, which upgrades the grounding mode and fills the
     # genset/air fields. The IT load is therefore a DISCLOSURE-anchored bracket, not a permit figure:
     # it_load_citation grounds it and the disclosed interconnection/air-permit MW stays [open].
-    facility=SiteFacility(
-        it_load_mw=100.0,  # central = midpoint of the disclosed 50->150 MW corridor; NOT the 900 MW buildout
-        it_load_low_mw=50.0,  # [verified] disclosed first tranche — 50 MW / 24,000-GPU AMD MI355X supercluster (2025-12)
-        it_load_high_mw=150.0,  # [verified] disclosed "up to 150 MW max load" ceiling (City of Springfield 5C FAQ)
-        it_load_citation=(
-            "[verified/inference] DISCLOSURE-anchored bracket — NOT an air-permit figure (the "
-            "disclosed interconnection/air-permit MW stays [open] until the Ohio EPA Air PTI lands, "
-            "#1414). Anchored on two disclosed hard figures: the City of Springfield 5C FAQ "
-            "'up to 150 MW max load' (springfieldohio.gov/5c-data-center-faqs) as the HIGH, and the "
-            "announced first tranche — a 50 MW / 24,000-GPU AMD MI355X supercluster (2025-12) — as "
-            "the LOW; the 100 MW central is the midpoint of that disclosed 50-150 MW corridor. The "
-            "register (data/extracted/springfield/data-centers.md, hydrology hook) treats the 150 MW "
-            "max as the IT-load screening input. The ~900 MW ultimate buildout (datacentermap "
-            "facility 'CMH01') and the 75/200 MW interim-phase figures are [open] — unconfirmed by "
-            "any primary instrument and DELIBERATELY EXCLUDED from this band; the air permit settles "
-            "the stack. Crusoe (75 MW, parcel undisclosed) is a SEPARATE register and is not blended "
-            "in. Replace with the disclosed load when the Ohio EPA Air PTI or a PJM interconnection "
-            "filing names 5C's MW."
-        ),
-        # No air permit pinned yet (#1414) and no genset figures ingested → genset_count / genset_mw /
-        # air_permit_citation stay None: the register's "3 existing + 16 planned diesel gensets" is a
-        # FAQ CLAIM, not an extracted permit — #1414 fills these and flips the grounding to a PTI.
-        facility_type=(
-            'data-center campus (5C Data Centers USA, Inc. / anchor tenant Vultr, "CMH01") — '
-            "601 Benjamin Drive, PrimeOhio Corporate Park; under construction"
-        ),  # [verified] operator/tenant + site + status
-        gross_floor_area_sqft=214_000,  # [verified] buildout footprint (67,000 existing -> 214,000; JobsOhio)
-        disclosed_investment_usd=1_300_000_000,  # [verified] up to $1.3B total (Constant Company capital $901.3M/JobsOhio)
-        disclosure_citation=(
-            "[verified] City of Springfield 5C FAQ (springfieldohio.gov/5c-data-center-faqs) + "
-            "JobsOhio (Vultr / The Constant Company, LLC capital $901,311,378) + Springfield "
-            "News-Sun (2026-07-10). Operator 5C Data Centers USA, Inc. (parent 5C Group Inc., "
-            "Montreal); anchor cloud tenant Vultr (product of The Constant Company, LLC); site the "
-            "former LexisNexis data center at 601 Benjamin Drive, PrimeOhio Corporate Park. "
-            "Investment up to $1.3B total; footprint 67,000 -> 214,000 sq ft; ~120 FT jobs. Status: "
-            "UNDER CONSTRUCTION (Vultr operational target early 2026, full build 'late 2027 if "
-            "financing and construction move forward', News-Sun 2026-07-10); no Vultr Ohio "
-            "public-cloud region live (api.vultr.com/v2/regions checked 2026-07-10). Enterprise-Zone "
-            "counterparty CMH01 Holdings Inc. (SOS pull -> #1413). See "
-            "data/extracted/springfield/data-centers.md, 'Project 1'."
-        ),
-        # Cooling archetype (#1054): CLOSED_LOOP_DRY — the City FAQ discloses closed-loop /
-        # direct-liquid recirculating cooling, EXPLICITLY "not evaporative". [reference] disclosure,
-        # not a document extraction; the water sub-issue (#1415) owns the discharge / receiving-water
-        # screen. blowdown_mgd stays None — the disclosed 300,000 gal/day is a permitted WITHDRAWAL
-        # ceiling (~30k gal/day realistic), not a blowdown discharge, so there is no FM-2-style cross-check.
-        cooling_model=CoolingModelType.CLOSED_LOOP_DRY,
-        cooling_model_source="reference",
-        cooling_model_citation=(
-            "[reference] Closed-loop / direct-liquid recirculating cooling, disclosed 'not "
-            "evaporative' by the City of Springfield 5C FAQ (springfieldohio.gov/5c-data-center-"
-            "faqs); up to 300,000 gal/day permitted from the municipal system at an >80degF "
-            "extreme-heat max ('near zero' most of the year, ~30k gal/day realistic), with an "
-            "on-site reservoir under study to avoid the municipal tap. A largely dry recirculating "
-            "design undercuts the Mad River buried-valley abstraction thesis. Not a document "
-            "extraction; refine to [verified] on an ingested mechanical/plumbing permit. The "
-            "receiving-water / source-water screen is the water sub-issue (#1415)."
+    facilities=(
+        SiteFacility(
+            name='5C Data Centers "CMH01"',
+            status=FacilityLifecycle.CONSTRUCTION,  # "under construction" (5C FAQ / JobsOhio)
+            operator="5C Data Centers USA, Inc. (anchor tenant Vultr)",
+            operator_citation=(
+                "[verified] City of Springfield 5C FAQ (springfieldohio.gov/5c-data-center-faqs) — 5C "
+                "Data Centers USA, Inc., anchor tenant Vultr, 601 Benjamin Drive, PrimeOhio Corporate Park."
+            ),
+            end_use=DcEndUse.HYPERSCALE,
+            end_use_citation=(
+                "[verified] cloud/hyperscale (5C Data Centers, anchor tenant Vultr) — City of "
+                "Springfield 5C FAQ."
+            ),
+            it_load_mw=100.0,  # central = midpoint of the disclosed 50->150 MW corridor; NOT the 900 MW buildout
+            it_load_low_mw=50.0,  # [verified] disclosed first tranche — 50 MW / 24,000-GPU AMD MI355X supercluster (2025-12)
+            it_load_high_mw=150.0,  # [verified] disclosed "up to 150 MW max load" ceiling (City of Springfield 5C FAQ)
+            it_load_citation=(
+                "[verified/inference] DISCLOSURE-anchored bracket — NOT an air-permit figure (the "
+                "disclosed interconnection/air-permit MW stays [open] until the Ohio EPA Air PTI lands, "
+                "#1414). Anchored on two disclosed hard figures: the City of Springfield 5C FAQ "
+                "'up to 150 MW max load' (springfieldohio.gov/5c-data-center-faqs) as the HIGH, and the "
+                "announced first tranche — a 50 MW / 24,000-GPU AMD MI355X supercluster (2025-12) — as "
+                "the LOW; the 100 MW central is the midpoint of that disclosed 50-150 MW corridor. The "
+                "register (data/extracted/springfield/data-centers.md, hydrology hook) treats the 150 MW "
+                "max as the IT-load screening input. The ~900 MW ultimate buildout (datacentermap "
+                "facility 'CMH01') and the 75/200 MW interim-phase figures are [open] — unconfirmed by "
+                "any primary instrument and DELIBERATELY EXCLUDED from this band; the air permit settles "
+                "the stack. Crusoe (75 MW, parcel undisclosed) is a SEPARATE register and is not blended "
+                "in. Replace with the disclosed load when the Ohio EPA Air PTI or a PJM interconnection "
+                "filing names 5C's MW."
+            ),
+            # No air permit pinned yet (#1414) and no genset figures ingested → genset_count / genset_mw /
+            # air_permit_citation stay None: the register's "3 existing + 16 planned diesel gensets" is a
+            # FAQ CLAIM, not an extracted permit — #1414 fills these and flips the grounding to a PTI.
+            facility_type=(
+                'data-center campus (5C Data Centers USA, Inc. / anchor tenant Vultr, "CMH01") — '
+                "601 Benjamin Drive, PrimeOhio Corporate Park; under construction"
+            ),  # [verified] operator/tenant + site + status
+            gross_floor_area_sqft=214_000,  # [verified] buildout footprint (67,000 existing -> 214,000; JobsOhio)
+            disclosed_investment_usd=1_300_000_000,  # [verified] up to $1.3B total (Constant Company capital $901.3M/JobsOhio)
+            disclosure_citation=(
+                "[verified] City of Springfield 5C FAQ (springfieldohio.gov/5c-data-center-faqs) + "
+                "JobsOhio (Vultr / The Constant Company, LLC capital $901,311,378) + Springfield "
+                "News-Sun (2026-07-10). Operator 5C Data Centers USA, Inc. (parent 5C Group Inc., "
+                "Montreal); anchor cloud tenant Vultr (product of The Constant Company, LLC); site the "
+                "former LexisNexis data center at 601 Benjamin Drive, PrimeOhio Corporate Park. "
+                "Investment up to $1.3B total; footprint 67,000 -> 214,000 sq ft; ~120 FT jobs. Status: "
+                "UNDER CONSTRUCTION (Vultr operational target early 2026, full build 'late 2027 if "
+                "financing and construction move forward', News-Sun 2026-07-10); no Vultr Ohio "
+                "public-cloud region live (api.vultr.com/v2/regions checked 2026-07-10). Enterprise-Zone "
+                "counterparty CMH01 Holdings Inc. (SOS pull -> #1413). See "
+                "data/extracted/springfield/data-centers.md, 'Project 1'."
+            ),
+            # Cooling archetype (#1054): CLOSED_LOOP_DRY — the City FAQ discloses closed-loop /
+            # direct-liquid recirculating cooling, EXPLICITLY "not evaporative". [reference] disclosure,
+            # not a document extraction; the water sub-issue (#1415) owns the discharge / receiving-water
+            # screen. blowdown_mgd stays None — the disclosed 300,000 gal/day is a permitted WITHDRAWAL
+            # ceiling (~30k gal/day realistic), not a blowdown discharge, so there is no FM-2-style cross-check.
+            cooling_model=CoolingModelType.CLOSED_LOOP_DRY,
+            cooling_model_source="reference",
+            cooling_model_citation=(
+                "[reference] Closed-loop / direct-liquid recirculating cooling, disclosed 'not "
+                "evaporative' by the City of Springfield 5C FAQ (springfieldohio.gov/5c-data-center-"
+                "faqs); up to 300,000 gal/day permitted from the municipal system at an >80degF "
+                "extreme-heat max ('near zero' most of the year, ~30k gal/day realistic), with an "
+                "on-site reservoir under study to avoid the municipal tap. A largely dry recirculating "
+                "design undercuts the Mad River buried-valley abstraction thesis. Not a document "
+                "extraction; refine to [verified] on an ingested mechanical/plumbing permit. The "
+                "receiving-water / source-water screen is the water sub-issue (#1415)."
+            ),
         ),
     ),
     serving_utility_citation="EIA-861 2024 Service_Territory: Clark County, OH is served by Dayton Power & Light (#4922), Duke Energy Ohio (#3542) and Ohio Edison — no AEP; the Springfield city LSE is DP&L #4922. [verified]",
@@ -1611,7 +1694,7 @@ _XENIA = SiteProfile(
     supply_gage_secondary="03241500",  # [verified] Massies Creek at Wilberforce (the local tributary)
     passby_primary_cfs=0.0,  # [open] pending the in-stream passby minimum (scenic-river protection likely raises it)
     passby_secondary_cfs=0.0,  # [open]
-    facility=None,  # [open] the WPAFB-corridor defense/data-center dimension is the research target (#444)
+    facilities=(),  # [open] the WPAFB-corridor defense/data-center dimension is the research target (#444)
     serving_utility_citation="EIA-861 2024 Service_Territory: Dayton Power & Light Co (AES Ohio, #4922) is the IOU serving Greene County, OH — the Xenia LSE (Duke #3542 fringes the SW county; Village of Yellow Springs muni is separate). [verified]",
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(
@@ -1724,7 +1807,7 @@ _WPAFB = SiteProfile(
     supply_gage_secondary="03270500",  # [verified] Great Miami River at Dayton (the well-field mainstem)
     passby_primary_cfs=0.0,  # [open] pending the in-stream passby minimum
     passby_secondary_cfs=0.0,  # [open]
-    facility=None,  # [open] the DoD-cloud / GDIT-RSO data-center dimension is the research target (#442)
+    facilities=(),  # [open] the DoD-cloud / GDIT-RSO data-center dimension is the research target (#442)
     serving_utility_citation="EIA-861 2024 Service_Territory: Dayton Power & Light Co (AES Ohio, #4922) serves both Greene and Montgomery counties, OH — the WPAFB-area LSE. [verified]",
     lmp_usd_mwh=46.42,  # connector-sourced DAY-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(
@@ -1824,7 +1907,7 @@ _HAMILTON_MIDDLETOWN = SiteProfile(
     supply_gage_secondary="03272100",  # [verified] Great Miami River at Middletown (the Works reach)
     passby_primary_cfs=0.0,  # [open] pending the in-stream passby minimum
     passby_secondary_cfs=0.0,  # [open]
-    facility=None,  # [open] the I-75-corridor data-center dimension is the research target (#443)
+    facilities=(),  # [open] the I-75-corridor data-center dimension is the research target (#443)
     serving_utility_citation="EIA-861 2024 Service_Territory: Butler County, OH is split — Duke Energy Ohio Inc (#3542, PJM DEOK) serves Middletown + most of the county; the City of Hamilton municipal (#7977) serves Hamilton. Pinned to Duke #3542 as the dominant IOU (the Middletown Works mainstem load); the Hamilton-muni share is [inference]. [verified]",
     lmp_usd_mwh=45.10,  # connector-sourced DEOK-zone 2025 day-ahead annual mean [verified]
     lmp_citation=(
@@ -1953,62 +2036,74 @@ _TROY_PIQUA = SiteProfile(
     # cooling_model stays UNKNOWN (deliberately not picked) — the City's closed-loop FAQ and the
     # 2.0 MGD water-agreement reservation conflict, and resolving that tension is #1486's job,
     # not this one. See data/extracted/troy-piqua/data-centers.md.
-    facility=SiteFacility(
-        it_load_mw=113.75,  # [inference] SCREENING central — NOT disclosed; see it_load_citation
-        it_load_low_mw=52.5,  # 700k sqft x 75 W/sqft whole-building IT density (low)
-        it_load_high_mw=175.0,  # 700k sqft x 250 W/sqft whole-building IT density (high)
-        it_load_citation=(
-            "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/"
-            "air-permit MW stays [open] (a direct OEPA eSuite/DAPC search for 'J5 LLC' / "
-            "'Shaytura LLC' / the Farrington Road address found no PTI filing, confirmed-negative "
-            "as of 2026-07-11). Derived from the disclosed 700,000 sq ft gross floor area (two "
-            "~350,000 sq ft buildings; City of Piqua project page piquaoh.gov/1673, approved by "
-            "the Piqua City Commission 4-0 on 2025-11-03) x the same whole-building IT "
-            "power-density screening band used elsewhere in the network (75-250 W/sq ft, the "
-            "Urbana Technology Hub precedent, #1327): 52.5 MW low, ~113.75 MW central, 175 MW "
-            "high. Unlike Urbana, this band is NOT bounded by a disclosed cooling design — the "
-            "facility's cooling_model stays UNKNOWN pending #1486 (the unreconciled closed-loop-"
-            "FAQ-vs-2.0-MGD-water-agreement conflict). A candidate-site tracker (ryangrissinger.com, "
-            "OH-DC-0028) reports ~180 MW peak IT for the initial two buildings — [reported], not "
-            "officially disclosed (the City page and Data Center Dynamics state capacity figures "
-            "'weren't shared') — sitting just above (~3%) the top of this screening bracket, "
-            "consistent within rounding for a screening estimate, not a reconciliation. Replace "
-            "with the disclosed load when the 40-yr AES Ohio franchise ordinance's load schedule, "
-            "an air permit, or a PJM interconnection filing surfaces it."
-        ),
-        # No disclosed gensets or air permit (site-plan-grounded) → genset/backup basis and the
-        # air-dispatch fleet model are absent; genset_count/genset_mw/air_permit_citation stay None.
-        facility_type='data-center campus ("Project Klondike"; developer of record J5 LLC dba Shaytura LLC)',  # [verified]
-        gross_floor_area_sqft=700_000,  # [verified] two ~350,000 sq ft buildings
-        disclosed_investment_usd=1_000_000_000,  # [verified] "$1 billion plus" fixed-asset investment
-        disclosure_citation=(
-            "[verified] Disclosed on the City of Piqua's official project page "
-            "(piquaoh.gov/1673/Data-Center-Project); approved by the Piqua City Commission 4-0 on "
-            "2025-11-03 (emergency resolution, three readings waived); Data Center Dynamics 'Data "
-            "center project coming to Piqua, Ohio'; Miami Valley Today commission coverage. Two "
-            "~350,000 sq ft buildings (~700,000 sq ft total), '$1 billion plus' fixed-asset "
-            "investment plus ~$76M developer-funded utility infrastructure, in the Piqua I-75 "
-            "Business & Industrial Park. The Miami County auditor pull (#1483) shows the "
-            "developer-owned campus is ~607.8 ac (three parcels deeded to J5 LLC, purchased "
-            "2025-12-24 for $62.23M; data/reference/troy-piqua/parcel-assemblage.geojson) — a "
-            "NESTED SCOPE within the ~1,026-ac cumulative annexation record (2022-2025) and the "
-            "~1,200-ac whole business park, not a fourth-parcel gap (reconciliation in "
-            "data/extracted/troy-piqua/bosc-site-footprint.yaml). See "
-            "data/extracted/troy-piqua/data-centers.md."
-        ),
-        # Cooling archetype (#1054): deliberately left UNKNOWN — a real, unresolved conflict
-        # between two public disclosures (not a case of "cooling method not disclosed"). #1486
-        # (the standing water & regulatory watch) owns reconciling it; never pick a side here.
-        cooling_model=CoolingModelType.UNKNOWN,
-        cooling_model_source="reference",
-        cooling_model_citation=(
-            "[reference] UNRESOLVED, deliberately not picked: the City's public FAQ describes "
-            "closed-loop cooling with only an 'initial fill-up' + occasional top-offs "
-            "(domestic-only ongoing use), but the negotiated Water & Wastewater Agreement "
-            "(effective 2026-01-23) reserves up to 500,000 GPD (Tier I) scaling to 2.0 MGD "
-            "(Tier II / full operation) — these two public disclosures conflict. Tracked at #1486 "
-            "(the standing water & regulatory watch); see "
-            "data/extracted/troy-piqua/data-centers.md, 'Water / hydrology hook'."
+    facilities=(
+        SiteFacility(
+            name="Project Klondike",
+            status=FacilityLifecycle.CONFIRMED,  # approved 4-0 2025-11-03; MW load still [open] (#1482)
+            operator="J5 LLC dba Shaytura LLC (developer of record)",
+            operator_citation=(
+                "[verified] City of Piqua project page (piquaoh.gov/1673); approved by the Piqua City "
+                "Commission 4-0 on 2025-11-03. Developer of record J5 LLC dba Shaytura LLC; the Meta "
+                "attribution is [reported], not confirmed."
+            ),
+            # end_use left [open] — the developer of record is J5 LLC/Shaytura; the end user (Meta) is
+            # [reported] only, so the workload archetype is not on the record.
+            it_load_mw=113.75,  # [inference] SCREENING central — NOT disclosed; see it_load_citation
+            it_load_low_mw=52.5,  # 700k sqft x 75 W/sqft whole-building IT density (low)
+            it_load_high_mw=175.0,  # 700k sqft x 250 W/sqft whole-building IT density (high)
+            it_load_citation=(
+                "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/"
+                "air-permit MW stays [open] (a direct OEPA eSuite/DAPC search for 'J5 LLC' / "
+                "'Shaytura LLC' / the Farrington Road address found no PTI filing, confirmed-negative "
+                "as of 2026-07-11). Derived from the disclosed 700,000 sq ft gross floor area (two "
+                "~350,000 sq ft buildings; City of Piqua project page piquaoh.gov/1673, approved by "
+                "the Piqua City Commission 4-0 on 2025-11-03) x the same whole-building IT "
+                "power-density screening band used elsewhere in the network (75-250 W/sq ft, the "
+                "Urbana Technology Hub precedent, #1327): 52.5 MW low, ~113.75 MW central, 175 MW "
+                "high. Unlike Urbana, this band is NOT bounded by a disclosed cooling design — the "
+                "facility's cooling_model stays UNKNOWN pending #1486 (the unreconciled closed-loop-"
+                "FAQ-vs-2.0-MGD-water-agreement conflict). A candidate-site tracker (ryangrissinger.com, "
+                "OH-DC-0028) reports ~180 MW peak IT for the initial two buildings — [reported], not "
+                "officially disclosed (the City page and Data Center Dynamics state capacity figures "
+                "'weren't shared') — sitting just above (~3%) the top of this screening bracket, "
+                "consistent within rounding for a screening estimate, not a reconciliation. Replace "
+                "with the disclosed load when the 40-yr AES Ohio franchise ordinance's load schedule, "
+                "an air permit, or a PJM interconnection filing surfaces it."
+            ),
+            # No disclosed gensets or air permit (site-plan-grounded) → genset/backup basis and the
+            # air-dispatch fleet model are absent; genset_count/genset_mw/air_permit_citation stay None.
+            facility_type='data-center campus ("Project Klondike"; developer of record J5 LLC dba Shaytura LLC)',  # [verified]
+            gross_floor_area_sqft=700_000,  # [verified] two ~350,000 sq ft buildings
+            disclosed_investment_usd=1_000_000_000,  # [verified] "$1 billion plus" fixed-asset investment
+            disclosure_citation=(
+                "[verified] Disclosed on the City of Piqua's official project page "
+                "(piquaoh.gov/1673/Data-Center-Project); approved by the Piqua City Commission 4-0 on "
+                "2025-11-03 (emergency resolution, three readings waived); Data Center Dynamics 'Data "
+                "center project coming to Piqua, Ohio'; Miami Valley Today commission coverage. Two "
+                "~350,000 sq ft buildings (~700,000 sq ft total), '$1 billion plus' fixed-asset "
+                "investment plus ~$76M developer-funded utility infrastructure, in the Piqua I-75 "
+                "Business & Industrial Park. The Miami County auditor pull (#1483) shows the "
+                "developer-owned campus is ~607.8 ac (three parcels deeded to J5 LLC, purchased "
+                "2025-12-24 for $62.23M; data/reference/troy-piqua/parcel-assemblage.geojson) — a "
+                "NESTED SCOPE within the ~1,026-ac cumulative annexation record (2022-2025) and the "
+                "~1,200-ac whole business park, not a fourth-parcel gap (reconciliation in "
+                "data/extracted/troy-piqua/bosc-site-footprint.yaml). See "
+                "data/extracted/troy-piqua/data-centers.md."
+            ),
+            # Cooling archetype (#1054): deliberately left UNKNOWN — a real, unresolved conflict
+            # between two public disclosures (not a case of "cooling method not disclosed"). #1486
+            # (the standing water & regulatory watch) owns reconciling it; never pick a side here.
+            cooling_model=CoolingModelType.UNKNOWN,
+            cooling_model_source="reference",
+            cooling_model_citation=(
+                "[reference] UNRESOLVED, deliberately not picked: the City's public FAQ describes "
+                "closed-loop cooling with only an 'initial fill-up' + occasional top-offs "
+                "(domestic-only ongoing use), but the negotiated Water & Wastewater Agreement "
+                "(effective 2026-01-23) reserves up to 500,000 GPD (Tier I) scaling to 2.0 MGD "
+                "(Tier II / full operation) — these two public disclosures conflict. Tracked at #1486 "
+                "(the standing water & regulatory watch); see "
+                "data/extracted/troy-piqua/data-centers.md, 'Water / hydrology hook'."
+            ),
         ),
     ),
     serving_utility_citation=(  # confirmed for #830 (primary EIA-861 2024 file + the franchise ordinance)
@@ -2144,65 +2239,78 @@ _SIDNEY = SiteProfile(
     # [open]. cooling_model stays UNKNOWN (the register discloses water figures, not a cooling
     # design). genset_count/genset_mw/air_permit_citation stay None (no disclosed on-site
     # generation / air permit found). See data/extracted/sidney/data-centers.md (2026-07-02).
-    facility=SiteFacility(
-        it_load_mw=250.0,  # [inference] SCREENING central — NOT disclosed; see it_load_citation
-        it_load_low_mw=150.0,  # $3B / ~$20M per MW-IT (capex-intensive / liquid-AI) whole-campus screen
-        it_load_high_mw=350.0,  # $3B / ~$8.5M per MW-IT (capex-light / air-cooled) whole-campus screen
-        it_load_citation=(
-            "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/"
-            "air-permit MW stays [open] (no OEPA air PTI and no PJM interconnection instrument is "
-            "public as of 2026-07-02 — data/extracted/sidney/data-centers.md, 'Regulatory "
-            "record'). AWS discloses NEITHER a gross floor area NOR a load for Project Galaxy, so "
-            "the floor-area screen used elsewhere in the network (Urbana #1327 / Troy-Piqua / "
-            "Bowling Green) has no input; this brackets instead off the ONE disclosed hard figure "
-            "— the $3 billion campus investment (sidneyoh.com/526; Data Center Dynamics Oct 2025) "
-            "— divided by a hyperscale critical-IT construction-cost band of ~$8.5-20M per MW-IT "
-            "([reference] industry cost norm, NOT a Sidney disclosure): $20M/MW -> 150 MW low, "
-            "~$12M/MW -> ~250 MW central, ~$8.5M/MW -> 350 MW high. $3B spans land + shell + all "
-            "phases (screen runs high) while it is a multi-year campus (near-term load runs low), "
-            "the two roughly offsetting to an order-of-magnitude ~150-350 MW. Corroborated (not a "
-            "second source): comparable disclosed AWS-Ohio hyperscale-campus interconnections sit "
-            "~100-250 MW/campus (interconnection.fyi [reference], a DIFFERENT Amazon campus in "
-            "Franklin County — not Sidney's figure). Replace with the disclosed load the moment an "
-            "OEPA air PTI or a PJM interconnection filing names Project Galaxy's MW."
-        ),
-        # No disclosed gensets or air permit (site-plan-grounded) → genset/backup basis and the
-        # air-dispatch fleet model are absent; genset_count/genset_mw/air_permit_citation stay None.
-        facility_type=(
-            'hyperscale data-center campus ("Project Galaxy"; operator Amazon Web Services, Inc.; '
-            "developer Amazon Data Services, Inc.) — under construction"
-        ),  # [verified] operator/developer + status
-        # gross_floor_area_sqft = [open]: AWS has disclosed no building size for Project Galaxy.
-        disclosed_investment_usd=3_000_000_000,  # [verified] $3 billion campus (DCD Oct 2025; sidneyoh.com/526)
-        disclosure_citation=(
-            "[verified] City of Sidney FAQ (sidneyoh.com/526/Proposed-Data-Center-FAQ) + Data "
-            "Center Dynamics 'Amazon secures tax break for $3bn data center campus in Sidney, "
-            "Ohio' (Oct 2025). Amazon Data Services, Inc. (developer) / Amazon Web Services, Inc. "
-            "(operator); $3B campus at 2388 W. Millcreek Road (NW corner of Vandemark & Millcreek "
-            "Roads), Sidney. Status: UNDER CONSTRUCTION — grading permit issued 2026-05-14, "
-            "groundbreaking ~January 2026, site plan under City-staff review as of June 2026; "
-            "operations target 2028-12-31 (CRA Agreement 80-25 deadline). ~75 long-term jobs by "
-            "2030 / $6.75M annual payroll; 30-yr 100% CRA real-property abatement (Res 18-25); "
-            "$50M PILOT over 15 yr; up to $8.0M AWS Millcreek Road reconstruction (Res 27-26, "
-            "adopted 2026-04-27). Land/parcel acreage [open]. See data/extracted/sidney/data-centers.md."
-        ),
-        # Cooling archetype (#1054): UNKNOWN — the register discloses WATER FIGURES, not a cooling
-        # DESIGN, so the method is not on record (a disclosed facility with an undisclosed method
-        # gets a bracketed range, never the water-intensive evaporative default). Not asserted.
-        cooling_model=CoolingModelType.UNKNOWN,
-        cooling_model_source="reference",
-        cooling_model_citation=(
-            "[reference] cooling method not disclosed in the record — kept UNKNOWN (bracketed "
-            "range). The Res 26-26 water/sewer agreement (adopted 2026-04-27; sidneyoh.com/526) "
-            "discloses a 1.0 MGD peak-withdrawal ceiling (694 gpm) and a projected 4.6M gal/yr "
-            "(~12,600 GPD avg) cooling-water CONSUMPTION; that consumption is <1.3% of the 1.0 MGD "
-            "ceiling, consistent with a largely closed-loop/dry design rather than an evaporative "
-            "tower — but AWS has not stated the cooling design, so this is NOT selected as "
-            "closed_loop_dry. Facility wastewater returns to the Sidney sanitary sewer -> "
-            "OH0027421 -> Great Miami River. Net consumptive draw ~= 0.0195 cfs avg vs the Great "
-            "Miami 7Q10 = 30.95 cfs (<0.1%) — [inference] from the cited water figures (see "
-            "data/extracted/sidney/data-centers.md, 'Water / hydrology hook'); the regulatory "
-            "passby threshold stays SiteProfile.passby_primary_cfs pending the OH0027421 fact sheet."
+    facilities=(
+        SiteFacility(
+            name='AWS "Project Galaxy"',
+            status=FacilityLifecycle.CONSTRUCTION,  # grading permit 2026-05-14; groundbreaking ~Jan 2026
+            operator="Amazon Web Services, Inc. (operator); Amazon Data Services, Inc. (developer)",
+            operator_citation=(
+                "[verified] City of Sidney FAQ (sidneyoh.com/526) + Data Center Dynamics (Oct 2025) — "
+                "Amazon's $3B Project Galaxy; grading permit issued 2026-05-14."
+            ),
+            end_use=DcEndUse.HYPERSCALE,
+            end_use_citation=(
+                "[verified] hyperscale data-center campus — Amazon Web Services (public disclosure)."
+            ),
+            it_load_mw=250.0,  # [inference] SCREENING central — NOT disclosed; see it_load_citation
+            it_load_low_mw=150.0,  # $3B / ~$20M per MW-IT (capex-intensive / liquid-AI) whole-campus screen
+            it_load_high_mw=350.0,  # $3B / ~$8.5M per MW-IT (capex-light / air-cooled) whole-campus screen
+            it_load_citation=(
+                "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/"
+                "air-permit MW stays [open] (no OEPA air PTI and no PJM interconnection instrument is "
+                "public as of 2026-07-02 — data/extracted/sidney/data-centers.md, 'Regulatory "
+                "record'). AWS discloses NEITHER a gross floor area NOR a load for Project Galaxy, so "
+                "the floor-area screen used elsewhere in the network (Urbana #1327 / Troy-Piqua / "
+                "Bowling Green) has no input; this brackets instead off the ONE disclosed hard figure "
+                "— the $3 billion campus investment (sidneyoh.com/526; Data Center Dynamics Oct 2025) "
+                "— divided by a hyperscale critical-IT construction-cost band of ~$8.5-20M per MW-IT "
+                "([reference] industry cost norm, NOT a Sidney disclosure): $20M/MW -> 150 MW low, "
+                "~$12M/MW -> ~250 MW central, ~$8.5M/MW -> 350 MW high. $3B spans land + shell + all "
+                "phases (screen runs high) while it is a multi-year campus (near-term load runs low), "
+                "the two roughly offsetting to an order-of-magnitude ~150-350 MW. Corroborated (not a "
+                "second source): comparable disclosed AWS-Ohio hyperscale-campus interconnections sit "
+                "~100-250 MW/campus (interconnection.fyi [reference], a DIFFERENT Amazon campus in "
+                "Franklin County — not Sidney's figure). Replace with the disclosed load the moment an "
+                "OEPA air PTI or a PJM interconnection filing names Project Galaxy's MW."
+            ),
+            # No disclosed gensets or air permit (site-plan-grounded) → genset/backup basis and the
+            # air-dispatch fleet model are absent; genset_count/genset_mw/air_permit_citation stay None.
+            facility_type=(
+                'hyperscale data-center campus ("Project Galaxy"; operator Amazon Web Services, Inc.; '
+                "developer Amazon Data Services, Inc.) — under construction"
+            ),  # [verified] operator/developer + status
+            # gross_floor_area_sqft = [open]: AWS has disclosed no building size for Project Galaxy.
+            disclosed_investment_usd=3_000_000_000,  # [verified] $3 billion campus (DCD Oct 2025; sidneyoh.com/526)
+            disclosure_citation=(
+                "[verified] City of Sidney FAQ (sidneyoh.com/526/Proposed-Data-Center-FAQ) + Data "
+                "Center Dynamics 'Amazon secures tax break for $3bn data center campus in Sidney, "
+                "Ohio' (Oct 2025). Amazon Data Services, Inc. (developer) / Amazon Web Services, Inc. "
+                "(operator); $3B campus at 2388 W. Millcreek Road (NW corner of Vandemark & Millcreek "
+                "Roads), Sidney. Status: UNDER CONSTRUCTION — grading permit issued 2026-05-14, "
+                "groundbreaking ~January 2026, site plan under City-staff review as of June 2026; "
+                "operations target 2028-12-31 (CRA Agreement 80-25 deadline). ~75 long-term jobs by "
+                "2030 / $6.75M annual payroll; 30-yr 100% CRA real-property abatement (Res 18-25); "
+                "$50M PILOT over 15 yr; up to $8.0M AWS Millcreek Road reconstruction (Res 27-26, "
+                "adopted 2026-04-27). Land/parcel acreage [open]. See data/extracted/sidney/data-centers.md."
+            ),
+            # Cooling archetype (#1054): UNKNOWN — the register discloses WATER FIGURES, not a cooling
+            # DESIGN, so the method is not on record (a disclosed facility with an undisclosed method
+            # gets a bracketed range, never the water-intensive evaporative default). Not asserted.
+            cooling_model=CoolingModelType.UNKNOWN,
+            cooling_model_source="reference",
+            cooling_model_citation=(
+                "[reference] cooling method not disclosed in the record — kept UNKNOWN (bracketed "
+                "range). The Res 26-26 water/sewer agreement (adopted 2026-04-27; sidneyoh.com/526) "
+                "discloses a 1.0 MGD peak-withdrawal ceiling (694 gpm) and a projected 4.6M gal/yr "
+                "(~12,600 GPD avg) cooling-water CONSUMPTION; that consumption is <1.3% of the 1.0 MGD "
+                "ceiling, consistent with a largely closed-loop/dry design rather than an evaporative "
+                "tower — but AWS has not stated the cooling design, so this is NOT selected as "
+                "closed_loop_dry. Facility wastewater returns to the Sidney sanitary sewer -> "
+                "OH0027421 -> Great Miami River. Net consumptive draw ~= 0.0195 cfs avg vs the Great "
+                "Miami 7Q10 = 30.95 cfs (<0.1%) — [inference] from the cited water figures (see "
+                "data/extracted/sidney/data-centers.md, 'Water / hydrology hook'); the regulatory "
+                "passby threshold stays SiteProfile.passby_primary_cfs pending the OH0027421 fact sheet."
+            ),
         ),
     ),
     serving_utility_citation="EIA-861 2024 Service_Territory: Dayton Power & Light Co (AES Ohio, #4922) is the IOU serving Shelby County, OH / Sidney — distinct from 'City of Shelby' (#17043, a Richland-County muni). [verified]",
@@ -2330,7 +2438,7 @@ _GREENVILLE = SiteProfile(
     # Stillwater at Pleasant Hill (03265000): 7Q10 = 15.69 cfs, 44 yr 1980-2024.
     passby_primary_cfs=11.34,
     passby_secondary_cfs=15.69,
-    facility=None,  # [verified] zero Greenville/Darke-County data-center records in RSEI, ECHO NPDES,
+    facilities=(),  # [verified] zero Greenville/Darke-County data-center records in RSEI, ECHO NPDES,
     # and the onboarding self-research pass (#482/#515); the site angle is greenfield ag-land
     # conversion — no disclosed facility as of 2026-07-02.
     serving_utility_citation=(
@@ -2448,79 +2556,110 @@ _WILMINGTON = SiteProfile(
     # grid / facility — the disclosed AWS "Cosler Farm" campus (#1468). Site-plan-grounded (the
     # Urbana #1327 seam): a floor-area/investment [inference] IT-load bracket, NOT a fabricated MW.
     # The disclosed interconnection/air-permit MW stays [open] (#1469). Ardent/TAC (§2 of the
-    # register) stays a register entry — no instruments yet — not a second SiteFacility.
-    facility=SiteFacility(
-        it_load_mw=300.0,  # [inference] SCREENING central — NOT disclosed; see it_load_citation
-        it_load_low_mw=150.0,  # floor-area low (1.92M sqft x 75 W/sqft ~= 144, rounded)
-        it_load_high_mw=480.0,  # floor-area high (1.92M sqft x 250 W/sqft = 480)
-        it_load_citation=(
-            "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/"
-            "air-permit MW stays [open] (#1469: OPSB 25-0871-EL-BLN 345kV build-out + the PJM-queue "
-            "lead). No MW figure is primary-sourced for the campus. Primary basis = the network "
-            "floor-area screen (cf. Urbana #1327 / Troy-Piqua): the disclosed 9-building site plan's "
-            "1,920,299 sq ft gross floor area (Nov/Dec 2025) x a whole-building IT power-density band "
-            "of 75-250 W/sq ft (stated screening assumption) -> 144 MW low, ~288 MW central, 480 MW "
-            "high. Corroborated (not a second source) by the investment screen (cf. Sidney): the "
-            "[reported] $4B campus / a hyperscale ~$8.5-20M-per-MW-IT construction-cost band -> ~200 "
-            "MW ($20M/MW) .. ~470 MW ($8.5M/MW) — the two independent screens agree at an "
-            "order-of-magnitude ~150-480 MW, so the bracket is set there (central 300 MW). Signals "
-            "that point HIGHER but are NOT adopted into the bracket: (a) the 9->12-building revision "
-            "tabled 2026-03-27 is unreconciled [open] and would scale the floor area up; (b) the "
-            "[reported] 252 Tier-4 diesel gensets, at a typical hyperscale per-unit rating (undisclosed), "
-            "imply a larger N+1 backup envelope; (c) the widely repeated '1.5 GW' is [reference] press "
-            "analysis of PJM interconnection filings (interconnection capacity != near-term IT load) — "
-            "a lead tracked on #1469, not a document in hand. Replace with the disclosed load the "
-            "moment a PJM interconnection / OPSB / SWOAQA air-permit instrument names the campus MW. "
-            "Full record: data/extracted/wilmington/data-centers.md. Discipline: this Clinton-County "
-            "thread is SELF-CONTAINED — do NOT bridge the Lima/Allen Bistrozzi land-assembly graph."
+    # register) is now this site's SECOND facility (#1628) — known by its rezoning only, every
+    # figure [open]; the primary Cosler Farm campus (first) is what drives the water/power math.
+    facilities=(
+        SiteFacility(
+            name="Cosler Farm campus",
+            status=FacilityLifecycle.CONFIRMED,  # proposed/disclosed; zoning ordinances in remand (Sharp v. City)
+            operator="Amazon Data Services, Inc. (AWS)",
+            operator_citation=(
+                "[verified] joint Clinton County Port Authority / City of Wilmington Data Center FAQs — "
+                "AWS acquired the former Cosler Farm in a private transaction; Amazon Data Services, Inc. "
+                "is the intervenor in Sharp v. City of Wilmington (S.D. Ohio 1:26-cv-00448)."
+            ),
+            end_use=DcEndUse.HYPERSCALE,
+            end_use_citation=(
+                "[reported] hyperscale data-center campus — Amazon Data Services, Inc. (wnewsj 2025-12-03; WCPO)."
+            ),
+            it_load_mw=300.0,  # [inference] SCREENING central — NOT disclosed; see it_load_citation
+            it_load_low_mw=150.0,  # floor-area low (1.92M sqft x 75 W/sqft ~= 144, rounded)
+            it_load_high_mw=480.0,  # floor-area high (1.92M sqft x 250 W/sqft = 480)
+            it_load_citation=(
+                "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/"
+                "air-permit MW stays [open] (#1469: OPSB 25-0871-EL-BLN 345kV build-out + the PJM-queue "
+                "lead). No MW figure is primary-sourced for the campus. Primary basis = the network "
+                "floor-area screen (cf. Urbana #1327 / Troy-Piqua): the disclosed 9-building site plan's "
+                "1,920,299 sq ft gross floor area (Nov/Dec 2025) x a whole-building IT power-density band "
+                "of 75-250 W/sq ft (stated screening assumption) -> 144 MW low, ~288 MW central, 480 MW "
+                "high. Corroborated (not a second source) by the investment screen (cf. Sidney): the "
+                "[reported] $4B campus / a hyperscale ~$8.5-20M-per-MW-IT construction-cost band -> ~200 "
+                "MW ($20M/MW) .. ~470 MW ($8.5M/MW) — the two independent screens agree at an "
+                "order-of-magnitude ~150-480 MW, so the bracket is set there (central 300 MW). Signals "
+                "that point HIGHER but are NOT adopted into the bracket: (a) the 9->12-building revision "
+                "tabled 2026-03-27 is unreconciled [open] and would scale the floor area up; (b) the "
+                "[reported] 252 Tier-4 diesel gensets, at a typical hyperscale per-unit rating (undisclosed), "
+                "imply a larger N+1 backup envelope; (c) the widely repeated '1.5 GW' is [reference] press "
+                "analysis of PJM interconnection filings (interconnection capacity != near-term IT load) — "
+                "a lead tracked on #1469, not a document in hand. Replace with the disclosed load the "
+                "moment a PJM interconnection / OPSB / SWOAQA air-permit instrument names the campus MW. "
+                "Full record: data/extracted/wilmington/data-centers.md. Discipline: this Clinton-County "
+                "thread is SELF-CONTAINED — do NOT bridge the Lima/Allen Bistrozzi land-assembly graph."
+            ),
+            # 252 Tier-4 gensets are disclosed by COUNT only (no per-unit rating on the record), so no
+            # backup figure can be formed without inventing the rating: genset_count/genset_mw stay None
+            # (site-plan-grounded, like Urbana/Sidney). The count lives in the register + the citation
+            # above, not the power basis; the air-dispatch fleet model refuses cleanly.
+            facility_type=(
+                'hyperscale data-center campus ("Cosler Farm"; developer/operator Amazon Data Services, '
+                "Inc., the intervenor in Sharp v. City of Wilmington) — proposed"
+            ),  # [verified] entity + [reported] type
+            gross_floor_area_sqft=1_920_299,  # [reported] 9-building site plan (Nov/Dec 2025); 9->12 revision unreconciled [open]
+            disclosed_investment_usd=4_000_000_000,  # [reported — wnewsj 2025-12-03; WCPO] $4B proposal
+            disclosure_citation=(
+                "Disclosed Nov 2025 via the joint Clinton County Port Authority / City of Wilmington "
+                "Data Center FAQs [verified — chooseclintoncountyoh.org/news/data-center-faqs, "
+                "wilmingtonohio.gov/data-center-faqs]: a ~471-acre campus on the former Cosler Farm at "
+                "1488 S US Route 68 (SW Wilmington), acquired by AWS in a PRIVATE transaction (not "
+                "brokered by the Port Authority / City / JobsOhio); minimum 100 permanent jobs / ~$8M "
+                "annual payroll. The $4B investment and the 9-building / 1,920,299 sq ft site plan are "
+                "[reported — wnewsj 2025-12-03 'officials detail $4B AWS data center proposal'; WCPO]; a "
+                "revised 12-building plan tabled 2026-03-27 is UNRECONCILED against the 9-building figure "
+                "[open — resolve from the site-plan PDFs, #1470]. Legal posture (carried honestly): a "
+                "federal court ordered the City to REDO three ordinances underpinning the campus — the "
+                "data-center zoning-text amendment, the generator-noise exemption, and the Cosler Farm "
+                "map rezoning — for defective public notice (Sharp v. City of Wilmington, S.D. Ohio "
+                "1:26-cv-00448, ruling ~2026-07-09/10 [reported — WCPO/WDTN/wnewsj converging]); the "
+                "conditional-use ordinance O-26-33 has its final vote 2026-07-16. A proposed campus whose "
+                "zoning basis is in remand is still a disclosed facility with pullable instruments, not a "
+                "reason to zero the domain out. Ardent/TAC (a second ~545-ac rezoning corridor, O-26-04-07, "
+                "5-2 on 2026-02-19/20) is now structured as this site's SECOND facility (below), its "
+                "investment / MW / instruments all [open]. See data/extracted/wilmington/data-centers.md."
+            ),
+            # Cooling archetype (#1054): HYBRID_ADIABATIC — the FAQs disclose DIRECT EVAPORATIVE cooling
+            # operated only ~11 days/yr (dry/free-cooling the rest of the year), the defining seasonal-
+            # evaporative-assist signature. The deep water back-solve / WUE reconciliation is the water
+            # plan's job (#1472); the reserved withdrawal MGD is [open]. Recorded metadata here — the
+            # cooling model does not run in export for a non-reference site.
+            cooling_model=CoolingModelType.HYBRID_ADIABATIC,
+            cooling_model_source="reference",
+            cooling_model_citation=(
+                "[reference] DIRECT EVAPORATIVE cooling disclosed in the joint Port Authority / City "
+                "Data Center FAQs, with a projected ~6M gal/yr cooling-water CONSUMPTION and water-cooled "
+                "operation only ~11 days/yr (dry/free-cooling otherwise) — mapped to the HYBRID_ADIABATIC "
+                "archetype (dry with seasonal evaporative assist). The disclosed ~6M gal/yr at the "
+                "screening IT load implies a very low water-use effectiveness (near-dry operation), which "
+                "UNDERCUTS a large-abstraction premise — the water-thesis finding. Not a document "
+                "extraction; the reserved withdrawal MGD, the Caesar Creek Lake source contract, and the "
+                "WUE/back-solve reconciliation are the water plan (#1472). Wastewater returns to the City "
+                "WWTP -> NPDES OH0028134 -> Lytle Creek -> Todd Fork -> Little Miami."
+            ),
         ),
-        # 252 Tier-4 gensets are disclosed by COUNT only (no per-unit rating on the record), so no
-        # backup figure can be formed without inventing the rating: genset_count/genset_mw stay None
-        # (site-plan-grounded, like Urbana/Sidney). The count lives in the register + the citation
-        # above, not the power basis; the air-dispatch fleet model refuses cleanly.
-        facility_type=(
-            'hyperscale data-center campus ("Cosler Farm"; developer/operator Amazon Data Services, '
-            "Inc., the intervenor in Sharp v. City of Wilmington) — proposed"
-        ),  # [verified] entity + [reported] type
-        gross_floor_area_sqft=1_920_299,  # [reported] 9-building site plan (Nov/Dec 2025); 9->12 revision unreconciled [open]
-        disclosed_investment_usd=4_000_000_000,  # [reported — wnewsj 2025-12-03; WCPO] $4B proposal
-        disclosure_citation=(
-            "Disclosed Nov 2025 via the joint Clinton County Port Authority / City of Wilmington "
-            "Data Center FAQs [verified — chooseclintoncountyoh.org/news/data-center-faqs, "
-            "wilmingtonohio.gov/data-center-faqs]: a ~471-acre campus on the former Cosler Farm at "
-            "1488 S US Route 68 (SW Wilmington), acquired by AWS in a PRIVATE transaction (not "
-            "brokered by the Port Authority / City / JobsOhio); minimum 100 permanent jobs / ~$8M "
-            "annual payroll. The $4B investment and the 9-building / 1,920,299 sq ft site plan are "
-            "[reported — wnewsj 2025-12-03 'officials detail $4B AWS data center proposal'; WCPO]; a "
-            "revised 12-building plan tabled 2026-03-27 is UNRECONCILED against the 9-building figure "
-            "[open — resolve from the site-plan PDFs, #1470]. Legal posture (carried honestly): a "
-            "federal court ordered the City to REDO three ordinances underpinning the campus — the "
-            "data-center zoning-text amendment, the generator-noise exemption, and the Cosler Farm "
-            "map rezoning — for defective public notice (Sharp v. City of Wilmington, S.D. Ohio "
-            "1:26-cv-00448, ruling ~2026-07-09/10 [reported — WCPO/WDTN/wnewsj converging]); the "
-            "conditional-use ordinance O-26-33 has its final vote 2026-07-16. A proposed campus whose "
-            "zoning basis is in remand is still a disclosed facility with pullable instruments, not a "
-            "reason to zero the domain out. Ardent/TAC (a second ~545-ac rezoning corridor, O-26-04-07, "
-            "5-2 on 2026-02-19/20) stays a register entry — investment/MW/instruments all undisclosed "
-            "— not a second SiteFacility. See data/extracted/wilmington/data-centers.md."
-        ),
-        # Cooling archetype (#1054): HYBRID_ADIABATIC — the FAQs disclose DIRECT EVAPORATIVE cooling
-        # operated only ~11 days/yr (dry/free-cooling the rest of the year), the defining seasonal-
-        # evaporative-assist signature. The deep water back-solve / WUE reconciliation is the water
-        # plan's job (#1472); the reserved withdrawal MGD is [open]. Recorded metadata here — the
-        # cooling model does not run in export for a non-reference site.
-        cooling_model=CoolingModelType.HYBRID_ADIABATIC,
-        cooling_model_source="reference",
-        cooling_model_citation=(
-            "[reference] DIRECT EVAPORATIVE cooling disclosed in the joint Port Authority / City "
-            "Data Center FAQs, with a projected ~6M gal/yr cooling-water CONSUMPTION and water-cooled "
-            "operation only ~11 days/yr (dry/free-cooling otherwise) — mapped to the HYBRID_ADIABATIC "
-            "archetype (dry with seasonal evaporative assist). The disclosed ~6M gal/yr at the "
-            "screening IT load implies a very low water-use effectiveness (near-dry operation), which "
-            "UNDERCUTS a large-abstraction premise — the water-thesis finding. Not a document "
-            "extraction; the reserved withdrawal MGD, the Caesar Creek Lake source contract, and the "
-            "WUE/back-solve reconciliation are the water plan (#1472). Wastewater returns to the City "
-            "WWTP -> NPDES OH0028134 -> Lytle Creek -> Todd Fork -> Little Miami."
+        SiteFacility(
+            name="Ardent/TAC corridor",
+            status=FacilityLifecycle.CONFIRMED,  # rezoning O-26-04-07 passed 5-2 (2026-02-19/20)
+            # No operator / end_use / IT-load / cooling on the record — the campus is known by its
+            # rezoning ONLY, so every disclosed figure stays [open]. facility_type + its paired
+            # disclosure_citation record that the corridor exists and cite the rezoning; nothing more.
+            facility_type=(
+                "second ~545-ac data-center rezoning corridor (Ardent / TAC) — investment / MW / "
+                "instruments all undisclosed"
+            ),
+            disclosure_citation=(
+                "[reference] Ardent/TAC — a second ~545-ac data-center rezoning corridor, ordinance "
+                "O-26-04-07, passed 5-2 on 2026-02-19/20; investment / MW / cooling / air + "
+                "interconnection instruments all [open]. See data/extracted/wilmington/data-centers.md."
+            ),
         ),
     ),
     serving_utility_citation="EIA-861 2024 Service_Territory: Dayton Power & Light Co (AES Ohio, #4922) is the IOU serving Clinton County, OH — the Wilmington / Air Park LSE (Duke #3542 + South Central Power co-op also in-county). [verified]",
@@ -2615,7 +2754,7 @@ _NEW_ALBANY = SiteProfile(
     supply_gage_secondary="03229500",  # [verified] Big Walnut Creek at Rees (the larger downstream reach)
     passby_primary_cfs=0.0,  # [open] pending the in-stream passby minimum
     passby_secondary_cfs=0.0,  # [open]
-    facility=None,  # [open] data-center dimension = Intel "Ohio One" + Google/Meta/AWS/Microsoft/QTS (#485); pending a pinned facility
+    facilities=(),  # [open] data-center dimension = Intel "Ohio One" + Google/Meta/AWS/Microsoft/QTS (#485); pending a pinned facility
     serving_utility_citation=(
         "EIA-861 service territory (Ohio Power Co #14006) + PJM AEP zone; AEP Ohio serves New "
         "Albany / the New Albany International Business Park. [verified] No municipal electric utility."
@@ -2701,7 +2840,7 @@ _COLUMBUS = SiteProfile(
     supply_gage_secondary="03226800",  # [verified] Olentangy River near Worthington
     passby_primary_cfs=0.0,  # [open] pending the in-stream passby minimum
     passby_secondary_cfs=0.0,  # [open]
-    facility=None,  # [open] data-center dimension = the Columbus-metro cluster + AEP tariff exposure (#486); pending a pinned facility
+    facilities=(),  # [open] data-center dimension = the Columbus-metro cluster + AEP tariff exposure (#486); pending a pinned facility
     serving_utility_citation=(
         "EIA-861 service territory (Ohio Power Co #14006, AEP HQ Columbus) + PJM AEP zone. [verified]"
     ),
@@ -2781,7 +2920,7 @@ _COSHOCTON = SiteProfile(
     supply_gage_secondary="03138500",  # [verified] Walhonding below Mohawk Dam at Nellie (confluence input)
     passby_primary_cfs=0.0,  # [open] pending the in-stream passby minimum
     passby_secondary_cfs=0.0,  # [open]
-    facility=None,  # [open] data-center dimension = Aligned Conesville AI campus (#495); pending a pinned facility
+    facilities=(),  # [open] data-center dimension = Aligned Conesville AI campus (#495); pending a pinned facility
     serving_utility_citation=(
         "AEP Ohio (Ohio Power Co #14006, PJM AEP zone) — the Conesville Industrial Park is fed by "
         "on-site 138/345-kV AEP substations per the park utility page; Frontier Power Company co-op "
@@ -2861,7 +3000,7 @@ _PIKETON = SiteProfile(
     supply_gage_secondary="03234500",  # [verified] Scioto River at Higby (upstream long-record)
     passby_primary_cfs=0.0,  # [open] pending the in-stream passby minimum
     passby_secondary_cfs=0.0,  # [open]
-    facility=None,  # [open] data-center dimension = SB Energy PORTS Technology Campus; pending a pinned facility
+    facilities=(),  # [open] data-center dimension = SB Energy PORTS Technology Campus; pending a pinned facility
     serving_utility_citation=(
         "AEP Ohio (Ohio Power Co #14006, PJM AEP zone) — the PORTS Technology Campus interconnect is "
         "AEP Ohio ($4.2B in 765-kV transmission upgrades, SB-Energy-funded); South Central Power "
@@ -2944,7 +3083,7 @@ _SANDUSKY = SiteProfile(
     supply_gage_secondary="TODO",
     passby_primary_cfs=0.0,  # [open] in-stream passby minimums — pending the model
     passby_secondary_cfs=0.0,
-    facility=None,  # [open] data-center dimension = Aligned NEO-01 campus; pending a pinned facility
+    facilities=(),  # [open] data-center dimension = Aligned NEO-01 campus; pending a pinned facility
     serving_utility_citation=(
         "FirstEnergy / PJM ATSI zone — City of Sandusky aggregation materials point to Ohio Edison "
         "Co (#13998) as the distribution utility; The Toledo Edison Co (#18997) also serves parts of "
@@ -3053,7 +3192,7 @@ _WEST_UNION = SiteProfile(
     passby_primary_cfs=0.0,  # [open] in-stream passby minimums — pending the model
     passby_secondary_cfs=0.0,
     # grid / facility (no identified data-center facility → grid backdrop only, no campus share)
-    facility=None,  # [open] the data-center dimension onboarding doesn't capture (no disclosed facility)
+    facilities=(),  # [open] the data-center dimension onboarding doesn't capture (no disclosed facility)
     serving_utility_citation=(  # [reference] not corpus
         "Adams County, OH is predominantly served by Adams Rural Electric Cooperative, Inc. — EIA-861 "
         "#118 [verified] against the primary EIA-861 2024 Service_Territory file (utility 'Adams Rural "
@@ -3147,7 +3286,7 @@ _MANSFIELD = SiteProfile(
     supply_gage_secondary="TODO",
     passby_primary_cfs=0.0,  # TODO
     passby_secondary_cfs=0.0,  # TODO
-    facility=None,  # [open] pending the facility instrument hunt (#1428)
+    facilities=(),  # [open] pending the facility instrument hunt (#1428)
     serving_utility_citation="EIA-861 2024 Service_Territory: Ohio Edison Co (#13998, FirstEnergy — "
     "PJM ATSI zone) is the IOU serving Richland County, OH / Mansfield; Ohio Power Co/AEP (#14006) "
     "also serves rural Richland-Co territory. 'City of Shelby' (#17043) is a separate Richland-County "
@@ -3263,62 +3402,75 @@ _BOWLING_GREEN = SiteProfile(
     # meter ([reference] the Ohio HB 15 self-generation pathway), the economics-demand-pressure feed
     # is a GRID-SERVED COUNTERFACTUAL — the actual grid draw is ~0; the grid-posture modeling is the
     # grid sub-issue (#1440). See data/extracted/bowling-green/data-centers.md.
-    facility=SiteFacility(
-        it_load_mw=180.0,  # [reference] the disclosed "up to ~180 MW at peak" — a design ceiling, not an air-permit disclosure
-        it_load_low_mw=53.6,  # 715,000 sq ft x 75 W/sq ft whole-building IT density (screening floor — avg draw is below peak)
-        it_load_high_mw=180.0,  # the disclosed ~180 MW peak (the 715k sq ft x 250 W/sq ft screen reproduces 178.75 MW, corroborating it)
-        it_load_citation=(
-            "[reference] the disclosed 'up to ~180 MW at peak' for the initial phase — reported via "
-            "the Apollo OPSB filings (25-0973-EL-BGN) in press (BG Independent, Data Center "
-            "Dynamics), NOT an air-permit or PJM-interconnection disclosure of the data center's own "
-            "load, so the official/interconnection MW stays [open]. Carried as the it_load central "
-            "per #1435; it is a design CEILING (peak), so downstream figures (peak x PUE x load "
-            "factor) run conservative-high. The low bound is a floor-area SCREENING floor — the "
-            "disclosed 715,000 sq ft initial building x 75 W/sq ft whole-building IT density (53.6 "
-            "MW); the same screen at 250 W/sq ft yields 178.75 MW, independently bracketing the "
-            "disclosed ~180 MW peak at its top (corroboration, not a second source). The campus is "
-            "designed SELF-POWERED behind the meter by the Apollo plant (350 MW gas + ~120 MW BESS, "
-            "Will-Power OH LLC, OPSB 25-0973-EL-BGN, approved 2026-02-03 — #1437); the ~2x 350-vs-180 "
-            "MW oversizing signals Phase 2 (Meta's 2026-01-07 trustees letter). Replace with the "
-            "disclosed load when an air permit or interconnection filing names it."
-        ),
-        # No disclosed gensets or air permit for the DC itself (site-plan-grounded) → the N+1 backup
-        # cross-check and the air-dispatch fleet model are absent; the Apollo gensets belong to a
-        # separate OPSB-permitted power facility (#1437), not the DC's own emergency fleet.
-        facility_type=(
-            'hyperscale data center campus ("Bowling Green Data Center"; operator Meta Platforms; '
-            'land/nominee entity Liames, LLC; codename "Project Accordion")'
-        ),  # [verified] operator; [reference] codename
-        gross_floor_area_sqft=715_000,  # [verified] Meta — 715,000 sq ft initial phase (+ ~1,700 parking spaces)
-        disclosed_investment_usd=800_000_000,  # [verified] Meta ">$800M" (earlier Liames pro-forma ~$750M is [reference])
-        disclosure_citation=(
-            "[verified] Meta, 'Hello, Bowling Green' (2025-04-09) — the 'Bowling Green Data Center', "
-            "Meta's 24th US / 28th global, 2nd in Ohio: 715,000 sq ft initial phase + ~1,700 parking "
-            "spaces, >$800M, ~100 permanent jobs (avg ~mid-$80k) / >1,000 peak construction; "
-            "corroborated by Middleton Township ('Meta introduced as company behind township data "
-            "center'). Site: Middleton Twp, SR-582 between SR-25 and I-75, adjacent the FirstEnergy "
-            "Mercer Rd substation; ~280-ac initial site inside a ~750-ac Liames, LLC assembly "
-            "([reference] acreage; deeds from 2023-09-05). Liames is the customer of record on OPSB "
-            "25-0973-EL-BGN. Phase 2 signaled in Meta's 2026-01-07 trustees letter. See "
-            "data/extracted/bowling-green/data-centers.md."
-        ),
-        # No disclosed cooling/industrial blowdown → None (the cooling back-solve uses the power-
-        # derived consumptive as the high bound, no Lima FM-2 leak). The company claims "no
-        # operational water".
-        # Cooling archetype (#1054): the COMPANY'S CLAIM, recorded as [reference] pending an
-        # instrument. Meta describes closed-loop, liquid-cooled with dry coolers ("no operational
-        # water"; domestic/cleaning/fire only) → closed_loop_dry. This is in tension with the NWWSD
-        # BG-water wholesale (1.5 MGD contract ceiling; conflicting ~50k vs ~600k GPD) — reconciling
-        # that is the water sub-issue's job (#1439), not this pin's. Not asserted as verified.
-        cooling_model=CoolingModelType.CLOSED_LOOP_DRY,
-        cooling_model_source="reference",
-        cooling_model_citation=(
-            "[reference] company claim (NOT instrument-confirmed): Meta describes closed-loop, "
-            "liquid-cooled with dry coolers — 'no operational water', with domestic/cleaning/fire "
-            "use only. In tension with the NWWSD wholesaling BG water to Meta (contract ceiling 1.5 "
-            "MGD, Aug 2024; conflicting ~50k vs ~600k GPD figures; a Meta-funded 2 MG tank + 16-in "
-            "main) — that reconciliation is tracked at the water sub-issue #1439, not decided here. "
-            "Replace with a documented cooling design when an NPDES/water instrument lands."
+    facilities=(
+        SiteFacility(
+            name="Bowling Green Data Center (Project Accordion)",
+            status=FacilityLifecycle.CONFIRMED,  # Meta announced 2025-04-09; Apollo OPSB approved 2026-02-03
+            operator="Meta Platforms; land/nominee entity Liames, LLC",
+            operator_citation=(
+                "[verified] Meta, 'Hello, Bowling Green' (2025-04-09); land/nominee entity Liames, LLC "
+                "is the customer of record on OPSB 25-0973-EL-BGN."
+            ),
+            end_use=DcEndUse.HYPERSCALE,
+            end_use_citation=(
+                "[verified] hyperscale data center — Meta Platforms (Meta 'Hello, Bowling Green', 2025-04-09)."
+            ),
+            it_load_mw=180.0,  # [reference] the disclosed "up to ~180 MW at peak" — a design ceiling, not an air-permit disclosure
+            it_load_low_mw=53.6,  # 715,000 sq ft x 75 W/sq ft whole-building IT density (screening floor — avg draw is below peak)
+            it_load_high_mw=180.0,  # the disclosed ~180 MW peak (the 715k sq ft x 250 W/sq ft screen reproduces 178.75 MW, corroborating it)
+            it_load_citation=(
+                "[reference] the disclosed 'up to ~180 MW at peak' for the initial phase — reported via "
+                "the Apollo OPSB filings (25-0973-EL-BGN) in press (BG Independent, Data Center "
+                "Dynamics), NOT an air-permit or PJM-interconnection disclosure of the data center's own "
+                "load, so the official/interconnection MW stays [open]. Carried as the it_load central "
+                "per #1435; it is a design CEILING (peak), so downstream figures (peak x PUE x load "
+                "factor) run conservative-high. The low bound is a floor-area SCREENING floor — the "
+                "disclosed 715,000 sq ft initial building x 75 W/sq ft whole-building IT density (53.6 "
+                "MW); the same screen at 250 W/sq ft yields 178.75 MW, independently bracketing the "
+                "disclosed ~180 MW peak at its top (corroboration, not a second source). The campus is "
+                "designed SELF-POWERED behind the meter by the Apollo plant (350 MW gas + ~120 MW BESS, "
+                "Will-Power OH LLC, OPSB 25-0973-EL-BGN, approved 2026-02-03 — #1437); the ~2x 350-vs-180 "
+                "MW oversizing signals Phase 2 (Meta's 2026-01-07 trustees letter). Replace with the "
+                "disclosed load when an air permit or interconnection filing names it."
+            ),
+            # No disclosed gensets or air permit for the DC itself (site-plan-grounded) → the N+1 backup
+            # cross-check and the air-dispatch fleet model are absent; the Apollo gensets belong to a
+            # separate OPSB-permitted power facility (#1437), not the DC's own emergency fleet.
+            facility_type=(
+                'hyperscale data center campus ("Bowling Green Data Center"; operator Meta Platforms; '
+                'land/nominee entity Liames, LLC; codename "Project Accordion")'
+            ),  # [verified] operator; [reference] codename
+            gross_floor_area_sqft=715_000,  # [verified] Meta — 715,000 sq ft initial phase (+ ~1,700 parking spaces)
+            disclosed_investment_usd=800_000_000,  # [verified] Meta ">$800M" (earlier Liames pro-forma ~$750M is [reference])
+            disclosure_citation=(
+                "[verified] Meta, 'Hello, Bowling Green' (2025-04-09) — the 'Bowling Green Data Center', "
+                "Meta's 24th US / 28th global, 2nd in Ohio: 715,000 sq ft initial phase + ~1,700 parking "
+                "spaces, >$800M, ~100 permanent jobs (avg ~mid-$80k) / >1,000 peak construction; "
+                "corroborated by Middleton Township ('Meta introduced as company behind township data "
+                "center'). Site: Middleton Twp, SR-582 between SR-25 and I-75, adjacent the FirstEnergy "
+                "Mercer Rd substation; ~280-ac initial site inside a ~750-ac Liames, LLC assembly "
+                "([reference] acreage; deeds from 2023-09-05). Liames is the customer of record on OPSB "
+                "25-0973-EL-BGN. Phase 2 signaled in Meta's 2026-01-07 trustees letter. See "
+                "data/extracted/bowling-green/data-centers.md."
+            ),
+            # No disclosed cooling/industrial blowdown → None (the cooling back-solve uses the power-
+            # derived consumptive as the high bound, no Lima FM-2 leak). The company claims "no
+            # operational water".
+            # Cooling archetype (#1054): the COMPANY'S CLAIM, recorded as [reference] pending an
+            # instrument. Meta describes closed-loop, liquid-cooled with dry coolers ("no operational
+            # water"; domestic/cleaning/fire only) → closed_loop_dry. This is in tension with the NWWSD
+            # BG-water wholesale (1.5 MGD contract ceiling; conflicting ~50k vs ~600k GPD) — reconciling
+            # that is the water sub-issue's job (#1439), not this pin's. Not asserted as verified.
+            cooling_model=CoolingModelType.CLOSED_LOOP_DRY,
+            cooling_model_source="reference",
+            cooling_model_citation=(
+                "[reference] company claim (NOT instrument-confirmed): Meta describes closed-loop, "
+                "liquid-cooled with dry coolers — 'no operational water', with domestic/cleaning/fire "
+                "use only. In tension with the NWWSD wholesaling BG water to Meta (contract ceiling 1.5 "
+                "MGD, Aug 2024; conflicting ~50k vs ~600k GPD figures; a Meta-funded 2 MG tank + 16-in "
+                "main) — that reconciliation is tracked at the water sub-issue #1439, not decided here. "
+                "Replace with a documented cooling design when an NPDES/water instrument lands."
+            ),
         ),
     ),
     serving_utility_citation=(  # [reference] not corpus
@@ -3408,7 +3560,7 @@ _PORTSMOUTH = SiteProfile(
     supply_gage_secondary="TODO",
     passby_primary_cfs=0.0,
     passby_secondary_cfs=0.0,
-    facility=None,  # [open] the disclosed Project Dazzler SiteFacility — pending the site-plan/permit hunt
+    facilities=(),  # [open] the disclosed Project Dazzler SiteFacility — pending the site-plan/permit hunt
     serving_utility_citation="TODO",  # [open] pending the Scioto County serving-utility record
     lmp_usd_mwh=0.0,
     lmp_citation="TODO",

@@ -24,7 +24,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, isAbsolute, join, resolve } from "node:path";
 import { cwd, env } from "node:process";
 import { fileURLToPath } from "node:url";
-import type { HypothesisItem } from "./feeds";
+import type { FacilitySummary, HypothesisItem } from "./feeds";
 import { LIMA_SLUG } from "./routes";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -123,6 +123,9 @@ export interface Manifest {
   /** Standing domain-activation readiness (#1220 / contract 1.17.0). Optional only so a
    *  synthetic/pre-1.17 fixture without the block degrades (all-absent) rather than crashing. */
   readiness?: Readiness;
+  /** The primary facility's lifecycle status + count (#1628 / contract 1.31.0). Optional so a
+   *  pre-1.31 bundle or a facility-less site degrades — the reader defaults to `investigation`. */
+  facility?: FacilitySummary;
   feeds: FeedRef[];
   /** Downloadable graph exports of the corpus mirror (#1574 / contract 1.29.0). Optional: absent
    *  from a redirected/test bundle or a pre-1.28 fixture, so the graph page degrades to no downloads. */
@@ -190,6 +193,16 @@ export function loadManifest(slug: string = activeSite()): Manifest {
   }
   cachedManifests.set(slug, manifest);
   return manifest;
+}
+
+/** A site's manifest, or `null` when it has no committed bundle (a registered-but-unbuilt slug).
+ *  Non-throwing peer of {@link loadManifest} — for cross-site readers (the directory, switchers)
+ *  that walk every registered site, including ones whose bundle isn't committed yet (#1628). */
+export function manifestOrNull(slug: string = activeSite()): Manifest | null {
+  for (const dir of candidateDirs(slug)) {
+    if (existsSync(join(dir, "manifest.json"))) return loadManifest(slug);
+  }
+  return null;
 }
 
 /** Whether a site's bundle exposes a feed by this name. Section pages and the search

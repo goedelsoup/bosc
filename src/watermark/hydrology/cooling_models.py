@@ -226,9 +226,10 @@ def resolve_cooling_model(
 def _resolve_it_load(facility: SiteFacility | None, params: CoolingParams) -> tuple[float, str]:
     if params.it_load_mw is not None:
         it = params.it_load_mw
-    elif facility is not None:
+    elif facility is not None and facility.it_load_mw is not None:
         it = facility.it_load_mw
     else:
+        # No facility, or a facility whose load is entirely [open] (#1628) → the module fallback.
         it = _IT_LOAD_MW
     # A site-plan-grounded facility (Urbana) has no air permit; its IT load is a
     # floor-area screening bracket cited via ``it_load_citation``. Fall back to the

@@ -14,7 +14,6 @@ import type { EvidenceKind, TagKind } from "@watermark/core/evidence";
 import type { ReachRouting, RoutedHydrographNetwork, WatershedNode } from "@watermark/core/feeds";
 import {
   type FacilityStatus,
-  facilityStatus,
   type NetworkSite,
   SITE_STATUS_META,
   siteBadge,
@@ -79,17 +78,22 @@ export function basinSiteRows(
   sites: readonly NetworkSite[],
   nodes: Map<string, WatershedNode>,
 ): BasinSiteRow[] {
-  return sites.map((s) => ({
-    slug: s.slug,
-    code: siteBadge(s),
-    place: s.place,
-    subbasin: s.basin,
-    phase: s.status,
-    phaseLabel: SITE_STATUS_META[s.status].label,
-    phaseInk: PHASE_INK[s.status],
-    evidence: drawRecordKind(nodes.get(s.slug), facilityStatus(s.slug)),
-    href: s.href,
-  }));
+  return sites.map((s) => {
+    const node = nodes.get(s.slug);
+    return {
+      slug: s.slug,
+      code: siteBadge(s),
+      place: s.place,
+      subbasin: s.basin,
+      phase: s.status,
+      phaseLabel: SITE_STATUS_META[s.status].label,
+      phaseInk: PHASE_INK[s.status],
+      // Facility lifecycle now rides on the network feed's node activity (#1628) — read it off the
+      // node this builder already receives, so basin.ts stays pure (no bundle import).
+      evidence: drawRecordKind(node, node?.activity.facility_status ?? "investigation"),
+      href: s.href,
+    };
+  });
 }
 
 /** Build-phase split for the proportion bar — real counts, phases with zero sites dropped. */

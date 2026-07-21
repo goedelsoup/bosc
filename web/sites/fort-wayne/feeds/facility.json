@@ -1,0 +1,24 @@
+[
+  {
+    "key": "project-zodiac",
+    "name": "Project Zodiac",
+    "is_primary": true,
+    "status": "live",
+    "operator": "Hatchworks LLC (Project Zodiac) — 'a stationary data center'",
+    "operator_citation": "[verified] IDEM Title V air permit 003-47378-00530 (issued 2024-09-06) names the operator as 'a stationary data center' (SIC 7374); developer entity Hatchworks LLC.",
+    "end_use": null,
+    "end_use_citation": null,
+    "facility_type": null,
+    "it_load_mw": 90.0,
+    "it_load_low_mw": 80.0,
+    "it_load_high_mw": 100.0,
+    "it_load_citation": "IDEM Title V air permit 003-47378-00530 (issued 2024-09-06), committed data/extracted/idem/fort-wayne/47378f.idem.yaml: 34 diesel emergency gensets (Gen 1-34), each 26.4 MMBTU/hr heat input (A.2), operator 'a stationary data center' (SIC 7374, 650-area phone). genset_mw/it_load are DERIVED from heat input (no disclosed ekW); refine if the engine nameplate surfaces in the application or the 003-48739 significant modification (data/documents/idem/fort-wayne/48739d.pdf).",
+    "gross_floor_area_sqft": null,
+    "disclosed_investment_usd": null,
+    "disclosure_citation": null,
+    "cooling_model": "unknown",
+    "cooling_model_citation": "cooling method not disclosed: IDEM Title V 003-47378-00530 covers the emergency gensets only, no cooling-system disclosure on record for Project Zodiac",
+    "parcels_relpath": "reference/fort-wayne/parcel-assemblage.geojson",
+    "footprint_relpath": "extracted/fort-wayne/bosc-site-footprint.yaml"
+  }
+]

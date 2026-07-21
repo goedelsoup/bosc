@@ -16,9 +16,14 @@
  *  sections coming online; `queued` = registered profile + coming-soon page, in the build queue;
  *  `tracking` = a GitHub-tracked candidate with an issue but no registered profile yet (the
  *  earliest phase — it routes to a lightweight "watch" page). Only `live` is selectable. */
-import { runWithSite } from "./bundle";
+import { manifestOrNull, runWithSite } from "./bundle";
+import type { FacilityStatus } from "./feeds";
 import { DEFAULT_STORY_CODENAME, SITE_BASE, siteBase } from "./routes";
 import sitesRegistry from "./sites-registry.json";
+
+// The facility lifecycle vocabulary now lives with the bundle feed types (#1628) — re-exported
+// here so existing `@watermark/core/sites` importers (the rail, switchers, basin.ts) are unchanged.
+export type { FacilityEndUse, FacilityStatus } from "./feeds";
 
 export type SiteStatus = "live" | "building" | "queued" | "tracking";
 
@@ -299,19 +304,15 @@ export function withSitePaths(
  * document one still under investigation. A site with no disclosed facility is "investigation"
  * (the data-center dimension is inferential until a project is on the record).
  */
-export type FacilityStatus = "investigation" | "confirmed" | "construction" | "live";
-
-const FACILITY_STATUS: Record<string, FacilityStatus> = {
-  lima: "construction", // Shawnee Energy Campus — air-permit-grounded, ~313 MW (the disclosed build)
-  "fort-wayne": "live", // GCP — a disclosed facility, not yet a construction record
-  urbana: "confirmed", // Urbana Technology Hub (Thor) — disclosed Feb 2026; MW load still [open] (#1327)
-  "troy-piqua": "confirmed", // Project Klondike (J5 LLC/Shaytura) — approved 4-0 Nov 2025; MW load still [open] (#1482)
-  sidney: "construction", // AWS "Project Galaxy" — grading permit 2026-05-14, groundbreaking ~Jan 2026; MW load still [open] (#1378)
-};
-
-/** A site's facility lifecycle stage; "investigation" when no facility is disclosed. */
+/**
+ * A site's facility lifecycle stage, read from its exported bundle (#1628, epic #1626 F2) — the
+ * primary campus's status in the manifest `facility` block (`bosc.site.facility.build_facility_summary`,
+ * derived from `SiteProfile.facilities`). Retires the hand-maintained `FACILITY_STATUS` per-slug
+ * dict that silently drifted from the model. `"investigation"` (the inferential floor) when the
+ * site has no disclosed facility OR no committed bundle yet — never a fabricated stage.
+ */
 export function facilityStatus(slug: string): FacilityStatus {
-  return FACILITY_STATUS[slug] ?? "investigation";
+  return manifestOrNull(slug)?.facility?.status ?? "investigation";
 }
 
 export const FACILITY_STATUS_META: Record<

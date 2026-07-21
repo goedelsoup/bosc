@@ -1,10 +1,10 @@
 {
   "site": "findlay",
   "bundle_version": "1.0.0",
-  "contract_version": "1.29.0",
+  "contract_version": "1.31.0",
   "generated_at": "2026-07-16T12:14:17+00:00",
-  "feed_count": 28,
-  "row_total": 328,
+  "feed_count": 29,
+  "row_total": 329,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -14,6 +14,13 @@
       "record": "live",
       "story": "seeded"
     }
+  },
+  "facility": {
+    "status": "live",
+    "count": 1,
+    "primary_name": "Findlay Megawatt Hub (MWHub 01)",
+    "primary_operator": "MARA Holdings, Inc. (NASDAQ: MARA); host One Power Co",
+    "primary_end_use": "bitcoin"
   },
   "feeds": [
     {
@@ -153,6 +160,14 @@
       "count": 1
     },
     {
+      "name": "facility",
+      "path": "feeds/facility.json",
+      "media_type": "application/json",
+      "schema": "schemas/facility.schema.json",
+      "kind": "collection",
+      "count": 1
+    },
+    {
       "name": "greenops",
       "path": "feeds/greenops.json",
       "media_type": "application/json",
@@ -240,5 +255,6 @@
       "kind": "collection",
       "count": 88
     }
-  ]
+  ],
+  "exports": []
 }

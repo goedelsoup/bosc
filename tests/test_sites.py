@@ -29,6 +29,7 @@ from watermark.sites import (
     PUTNAM_PARCEL_SCHEMA,
     SITES,
     VAN_WERT_PARCEL_SCHEMA,
+    SiteFacility,
     SiteProfile,
     active_profile,
     get_profile,
@@ -676,3 +677,101 @@ def test_fort_wayne_gis_is_allen_in_imap_owner_bearing() -> None:
         }
     )
     assert (FIXTURES / p.connector / f"{key}.json").is_file(), f"allen-in param drift: {key}"
+
+
+# --- Multi-facility model (#1628, epic #1626 F2) -------------------------------------------
+def _fac(name: str, **kw: object) -> SiteFacility:
+    from watermark.sites import FacilityLifecycle
+
+    kw.setdefault("status", FacilityLifecycle.CONFIRMED)
+    return SiteFacility(name=name, **kw)
+
+
+def test_facility_property_returns_the_primary_campus() -> None:
+    """`facility` is the first of `facilities` (the modeled campus) — every legacy `.facility`
+    reader keeps working through it; a facility-less site resolves to None."""
+    wilmington = SITES["wilmington"]
+    assert len(wilmington.facilities) >= 2, "Wilmington is the migrated multi-campus site"
+    assert wilmington.facility is wilmington.facilities[0]
+    assert wilmington.facility is not None and wilmington.facility.name == "Cosler Farm campus"
+    assert SITES["toledo"].facilities == () and SITES["toledo"].facility is None
+
+
+def test_facility_key_is_minted_from_name_and_unique_within_a_site() -> None:
+    from pydantic import ValidationError
+
+    from watermark.sites import SiteProfile
+
+    assert SITES["lima"].facility is not None
+    assert SITES["lima"].facility.key == "shawnee-energy-campus"  # auto-filled from name
+    # Two facilities that slug to the same key are rejected within one site.
+    dup = SITES["toledo"].model_copy(
+        update={"facilities": (_fac("Same Name"), _fac("Same Name"))}
+    )  # model_copy re-validates
+    with pytest.raises(ValidationError, match="facility keys must be unique"):
+        SiteProfile.model_validate(dup.model_dump())
+
+
+def test_facility_load_may_be_entirely_open() -> None:
+    """A rezoning-only second campus (Wilmington Ardent/TAC) is a valid facility with no IT load —
+    the three it_load fields move together and carry no basis citation when all-open."""
+    from pydantic import ValidationError
+
+    ardent = SITES["wilmington"].facilities[1]
+    assert ardent.name == "Ardent/TAC corridor"
+    assert ardent.it_load_mw is None and ardent.it_load_low_mw is None
+    assert ardent.air_permit_citation is None and ardent.it_load_citation is None
+    # A partial load triple is rejected (all set, or all None).
+    with pytest.raises(ValidationError, match="set together"):
+        _fac("Bad", it_load_mw=100.0)  # low/high omitted
+
+
+def test_facility_geometry_inherits_the_site_default() -> None:
+    """`facility_geometry` resolves a facility's parcels/footprint, falling back to the site-level
+    paths when the facility carries none of its own."""
+    lima = SITES["lima"]
+    assert lima.facility is not None
+    parcels, footprint = lima.facility_geometry(lima.facility)
+    assert parcels == lima.parcels_relpath and footprint == lima.footprint_relpath
+
+
+def test_facility_feed_and_summary_project_the_model() -> None:
+    """The `facility` feed + manifest summary are a faithful projection of `SiteProfile.facilities`
+    (facility-gated: absent for a facility-less site)."""
+    from watermark.config import Settings
+    from watermark.site.facility import build_facility_feed, build_facility_summary
+    from watermark.sites import DcEndUse, FacilityLifecycle
+
+    feed = build_facility_feed(Settings(site="wilmington"))
+    assert feed is not None and len(feed) == 2
+    primary = feed[0]
+    assert primary.is_primary and primary.key == "cosler-farm-campus"
+    assert primary.end_use == DcEndUse.HYPERSCALE and primary.status == FacilityLifecycle.CONFIRMED
+    assert not feed[1].is_primary and feed[1].it_load_mw is None  # Ardent/TAC — load [open]
+
+    summary = build_facility_summary(Settings(site="wilmington"))
+    assert summary is not None and summary.count == 2
+    assert (
+        summary.status == FacilityLifecycle.CONFIRMED
+        and summary.primary_name == "Cosler Farm campus"
+    )
+
+    # Facility-gated: a facility-less site emits neither.
+    assert build_facility_feed(Settings(site="toledo")) is None
+    assert build_facility_summary(Settings(site="toledo")) is None
+
+
+def test_network_activity_carries_the_primary_facility_status() -> None:
+    """The `network` feed's NodeActivity exposes the primary campus's lifecycle status (#1628), so
+    the pure basin/directory builders read it off the feed instead of a hardcoded dict."""
+    from watermark.config import Settings
+    from watermark.network import build_basin_network
+    from watermark.sites import FacilityLifecycle
+
+    net = build_basin_network(settings=Settings(site="lima"))
+    by_slug = {n.slug: n for n in net.nodes}
+    lima_act = by_slug["lima"].activity
+    assert lima_act.has_disclosed_facility and lima_act.facility_count == 1
+    assert lima_act.facility_status == FacilityLifecycle.CONSTRUCTION
+    if "findlay" in by_slug:  # a bitcoin/live campus in the same cross-site synthesis
+        assert by_slug["findlay"].activity.facility_status == FacilityLifecycle.LIVE

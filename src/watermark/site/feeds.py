@@ -32,6 +32,11 @@ from watermark.provenance import Confidence as Confidence
 from watermark.provenance import SourceKind as SourceKind
 from watermark.provenance import source_is_verified
 from watermark.site.readiness import State, Tier  # the readiness vocabulary SSOT (#1220)
+from watermark.sites import (
+    CoolingModelType,
+    DcEndUse,
+    FacilityLifecycle,
+)  # the facility vocab (#1628)
 
 # --- bundle contract version ---------------------------------------------------
 # Bumped per the back-compat policy in data/site/bundle/README.md: PATCH for additive
@@ -205,7 +210,17 @@ from watermark.site.readiness import State, Tier  # the readiness vocabulary SSO
 #   reconciling to `pounds_by_media["water"]`), the input the chemical-specific toxic screen reads
 #   (WS-07 / #1607). Additive/optional (absent facilities default to `[]`), so an existing rsei.json
 #   without it stays valid — PATCH, back-compatible.
-CONTRACT_VERSION = "1.30.1"
+# 1.31.0: adds the `facility` collection feed (#1628, epic #1626 F2) — the machine-readable
+#   projection of the now multi-facility `SiteProfile.facilities`: one `FacilityItem` per disclosed
+#   campus carrying its lifecycle `status`, structured `operator` / `end_use`, IT-load bracket,
+#   site-plan disclosure, cooling archetype, and resolved geometry link. The manifest gains an
+#   optional `facility` summary block (`FacilitySummary`: the primary campus's status + the facility
+#   count) the frontend reads for the per-site status badge (retiring the hardcoded TS
+#   `FACILITY_STATUS` dict), and the `network` feed's `NodeActivity` gains `facility_status` /
+#   `operator` / `end_use` / `facility_count`. Facility-gated (feed skipped, block absent for a
+#   facility-less site). One new feed → MINOR, back-compatible (the manifest block + activity fields
+#   are optional, so a pre-1.31 bundle degrades to `investigation`).
+CONTRACT_VERSION = "1.31.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -326,6 +341,65 @@ class FactItem(BaseModel):
     high: float | None = None
     evidence: FactEvidence
     feed: str  # the source bundle feed this fact was projected from
+
+
+# --- facility feed (#1628) -----------------------------------------------------
+class FacilityItem(BaseModel):
+    """One disclosed data-center campus — the machine-readable projection of a
+    :class:`watermark.sites.SiteFacility` (#1628, epic #1626 F2).
+
+    A site holds N of these (``is_primary`` marks the modeled campus that drives the water/power/air
+    math). Each carries the structured facts the model now holds instead of freetext comments: the
+    lifecycle ``status``, the ``operator`` / ``end_use`` (each with its citation), the IT-load bracket
+    (``None`` when the load is entirely ``[open]`` — a rezoning-only campus), the site-plan
+    disclosure, the cooling archetype, and the resolved geometry link (facility-level, or inherited
+    from the site). Nothing here is re-keyed by hand — it is projected from the validated model, so a
+    provenance travels with its value across the seam.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    key: str  # the facility's stable slug (unique within a site)
+    name: str  # display identity, e.g. "Shawnee Energy Campus"
+    is_primary: bool  # the first/modeled campus (drives the water/power/air math)
+    status: FacilityLifecycle  # investigation | confirmed | construction | live
+    operator: str | None = None
+    operator_citation: str | None = None
+    end_use: DcEndUse | None = None  # None ⇒ end use is [open] (never asserted — Lima's question)
+    end_use_citation: str | None = None
+    facility_type: str | None = None  # the freetext site-plan type, retained alongside end_use
+    it_load_mw: float | None = None  # central IT load; None ⇒ load entirely [open]
+    it_load_low_mw: float | None = None
+    it_load_high_mw: float | None = None
+    it_load_citation: str | None = (
+        None  # the load basis (air permit or a non-permit derivation cite)
+    )
+    gross_floor_area_sqft: int | None = None
+    disclosed_investment_usd: float | None = None
+    disclosure_citation: str | None = None
+    cooling_model: CoolingModelType
+    cooling_model_citation: str
+    parcels_relpath: str | None = None  # resolved: facility-level, else the site-level default
+    footprint_relpath: str | None = None
+
+
+class FacilitySummary(BaseModel):
+    """The manifest's compact **facility** block (#1628) — the primary campus's lifecycle status +
+    the facility count.
+
+    The cheap per-slug source the frontend reads for the site's facility-status badge (retiring the
+    hardcoded ``FACILITY_STATUS`` dict in ``web/packages/core/src/sites.ts``), mirroring how the
+    ``readiness`` block is read. Absent (``Manifest.facility is None``) for a facility-less site, so
+    the reader defaults to ``investigation``.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    status: FacilityLifecycle  # the PRIMARY campus's lifecycle stage — drives the site badge
+    count: int  # number of disclosed facilities on the site
+    primary_name: str
+    primary_operator: str | None = None
+    primary_end_use: DcEndUse | None = None
 
 
 # --- records feed --------------------------------------------------------------
@@ -1358,6 +1432,10 @@ class Manifest(BaseModel):
     feed_count: int
     row_total: int  # sum of feed counts — a quick internal-consistency check
     readiness: SiteReadiness  # standing domain-activation readiness (#1220) — tier + per-domain
+    # The primary facility's lifecycle status + facility count (#1628) — the per-slug source the
+    # frontend badge reads. Optional so a pre-1.31 bundle (or a facility-less site) degrades to
+    # `investigation` rather than crashing.
+    facility: FacilitySummary | None = None
     feeds: list[FeedRef] = Field(default_factory=list)
     # Downloadable graph exports of the corpus mirror (#1574) — RDF/GraphML interchange artifacts,
     # present on a canonical `watermark export` (absent for a redirected/test bundle). Optional so a

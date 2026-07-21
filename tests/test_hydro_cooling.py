@@ -206,6 +206,8 @@ def test_fort_wayne_is_unknown_and_leaks_no_lima_figure() -> None:
 
 def _stub_facility(**overrides: object) -> SiteFacility:
     base: dict[str, object] = {
+        "name": "Stub Campus",
+        "status": "confirmed",
         "genset_count": 10,
         "genset_mw": 2.0,
         "it_load_mw": 20.0,

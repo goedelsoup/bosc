@@ -1,0 +1,24 @@
+[
+  {
+    "key": "aws-project-galaxy",
+    "name": "AWS \"Project Galaxy\"",
+    "is_primary": true,
+    "status": "construction",
+    "operator": "Amazon Web Services, Inc. (operator); Amazon Data Services, Inc. (developer)",
+    "operator_citation": "[verified] City of Sidney FAQ (sidneyoh.com/526) + Data Center Dynamics (Oct 2025) — Amazon's $3B Project Galaxy; grading permit issued 2026-05-14.",
+    "end_use": "hyperscale",
+    "end_use_citation": "[verified] hyperscale data-center campus — Amazon Web Services (public disclosure).",
+    "facility_type": "hyperscale data-center campus (\"Project Galaxy\"; operator Amazon Web Services, Inc.; developer Amazon Data Services, Inc.) — under construction",
+    "it_load_mw": 250.0,
+    "it_load_low_mw": 150.0,
+    "it_load_high_mw": 350.0,
+    "it_load_citation": "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/air-permit MW stays [open] (no OEPA air PTI and no PJM interconnection instrument is public as of 2026-07-02 — data/extracted/sidney/data-centers.md, 'Regulatory record'). AWS discloses NEITHER a gross floor area NOR a load for Project Galaxy, so the floor-area screen used elsewhere in the network (Urbana #1327 / Troy-Piqua / Bowling Green) has no input; this brackets instead off the ONE disclosed hard figure — the $3 billion campus investment (sidneyoh.com/526; Data Center Dynamics Oct 2025) — divided by a hyperscale critical-IT construction-cost band of ~$8.5-20M per MW-IT ([reference] industry cost norm, NOT a Sidney disclosure): $20M/MW -> 150 MW low, ~$12M/MW -> ~250 MW central, ~$8.5M/MW -> 350 MW high. $3B spans land + shell + all phases (screen runs high) while it is a multi-year campus (near-term load runs low), the two roughly offsetting to an order-of-magnitude ~150-350 MW. Corroborated (not a second source): comparable disclosed AWS-Ohio hyperscale-campus interconnections sit ~100-250 MW/campus (interconnection.fyi [reference], a DIFFERENT Amazon campus in Franklin County — not Sidney's figure). Replace with the disclosed load the moment an OEPA air PTI or a PJM interconnection filing names Project Galaxy's MW.",
+    "gross_floor_area_sqft": null,
+    "disclosed_investment_usd": 3000000000.0,
+    "disclosure_citation": "[verified] City of Sidney FAQ (sidneyoh.com/526/Proposed-Data-Center-FAQ) + Data Center Dynamics 'Amazon secures tax break for $3bn data center campus in Sidney, Ohio' (Oct 2025). Amazon Data Services, Inc. (developer) / Amazon Web Services, Inc. (operator); $3B campus at 2388 W. Millcreek Road (NW corner of Vandemark & Millcreek Roads), Sidney. Status: UNDER CONSTRUCTION — grading permit issued 2026-05-14, groundbreaking ~January 2026, site plan under City-staff review as of June 2026; operations target 2028-12-31 (CRA Agreement 80-25 deadline). ~75 long-term jobs by 2030 / $6.75M annual payroll; 30-yr 100% CRA real-property abatement (Res 18-25); $50M PILOT over 15 yr; up to $8.0M AWS Millcreek Road reconstruction (Res 27-26, adopted 2026-04-27). Land/parcel acreage [open]. See data/extracted/sidney/data-centers.md.",
+    "cooling_model": "unknown",
+    "cooling_model_citation": "[reference] cooling method not disclosed in the record — kept UNKNOWN (bracketed range). The Res 26-26 water/sewer agreement (adopted 2026-04-27; sidneyoh.com/526) discloses a 1.0 MGD peak-withdrawal ceiling (694 gpm) and a projected 4.6M gal/yr (~12,600 GPD avg) cooling-water CONSUMPTION; that consumption is <1.3% of the 1.0 MGD ceiling, consistent with a largely closed-loop/dry design rather than an evaporative tower — but AWS has not stated the cooling design, so this is NOT selected as closed_loop_dry. Facility wastewater returns to the Sidney sanitary sewer -> OH0027421 -> Great Miami River. Net consumptive draw ~= 0.0195 cfs avg vs the Great Miami 7Q10 = 30.95 cfs (<0.1%) — [inference] from the cited water figures (see data/extracted/sidney/data-centers.md, 'Water / hydrology hook'); the regulatory passby threshold stays SiteProfile.passby_primary_cfs pending the OH0027421 fact sheet.",
+    "parcels_relpath": "reference/sidney/parcel-assemblage.geojson",
+    "footprint_relpath": "extracted/sidney/bosc-site-footprint.yaml"
+  }
+]

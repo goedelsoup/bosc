@@ -7,6 +7,7 @@ Split out of the former monolithic ``sites.py`` (#597). Re-exported by the packa
 
 from __future__ import annotations
 
+import re
 from enum import StrEnum
 from pathlib import Path
 from typing import Literal
@@ -80,6 +81,50 @@ class CoolingModelType(StrEnum):
     UNKNOWN = "unknown"  # disclosed facility, undisclosed method -> bracketed range
 
 
+class FacilityLifecycle(StrEnum):
+    """A disclosed facility's real-world lifecycle stage (#1628) — the four-stage clock the
+    frontend's facility-status rail walks (``investigation → confirmed → construction → live``).
+
+    The 1:1 Python peer of the TS ``FacilityStatus`` in ``web/packages/core/src/sites.ts``; the
+    frontend now reads this off the bundle instead of a hand-maintained per-slug dict. Distinct
+    from the SITE-BUILD status (how far along OUR website is) and from
+    :class:`watermark.facility.candidate.CandidateStatus` (the richer discovery-stage vocabulary a
+    swept candidate carries — mapped to this at promotion). ``investigation`` is the honest floor
+    for a site with **no** disclosed facility; a site that *has* a :class:`SiteFacility` is at least
+    ``confirmed`` (a project is on the record).
+    """
+
+    INVESTIGATION = "investigation"  # no disclosed project yet — the inferential floor
+    CONFIRMED = "confirmed"  # a project is on the record (announced / approved / disclosed)
+    CONSTRUCTION = "construction"  # under construction (grading/build permit, groundbreaking)
+    LIVE = "live"  # operational / energized
+
+
+class DcEndUse(StrEnum):
+    """The disclosed data-center **end-use** archetype (#1628) — the controlled vocabulary shared
+    with the frontend's end-use explorer (``DcKey`` in ``web/packages/core/src/endUse.ts``).
+
+    Set only where the record discloses the type (with ``end_use_citation``); left ``None`` = the
+    end use is ``[open]`` — the sharp unanswered question for Lima itself, which must NOT be
+    asserted (``endUse.ts`` exists precisely because Lima's type is open). ``bitcoin`` is its own
+    customer (behind-the-meter mining); ``hyperscale`` = the operator runs its own workloads;
+    ``colocation`` = a landlord with unnamed tenants; ``enclave`` = an authorized-only federal
+    environment.
+    """
+
+    BITCOIN = "bitcoin"
+    HYPERSCALE = "hyperscale"
+    COLOCATION = "colocation"
+    ENCLAVE = "enclave"
+
+
+def _facility_slug(text: str, *, max_len: int = 64) -> str:
+    """A stable dedupe slug for a facility ``key`` (local peer of ``facility.candidate._slug`` —
+    kept here so ``watermark.sites`` doesn't depend on ``watermark.facility``)."""
+    s = re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
+    return s[:max_len].strip("-") or "facility"
+
+
 class SiteFacility(BaseModel):
     """A site's disclosed data-center facility power basis.
 
@@ -103,6 +148,28 @@ class SiteFacility(BaseModel):
 
     model_config = ConfigDict(extra="forbid", frozen=True)
 
+    # --- Identity / structured facts (#1628) ----------------------------------
+    # A site now holds N facilities (``SiteProfile.facilities``); ``name`` is the display
+    # identity (e.g. "Shawnee Energy Campus") and ``key`` its stable dedupe slug (filled from
+    # ``name`` when left blank — unique within a site). ``status`` is the real-world lifecycle
+    # stage the frontend rail reads off the bundle (retiring the hand-maintained TS
+    # ``FACILITY_STATUS`` dict): a disclosed facility is at least ``confirmed``. ``operator`` and
+    # ``end_use`` are the structured peers of the old freetext ``facility_type`` — each paired
+    # with its own citation (enforced below) so a disclosed value never passes uncited; ``end_use``
+    # left ``None`` = the end use is ``[open]`` (Lima's unanswered question — never asserted).
+    name: str
+    key: str = ""
+    status: FacilityLifecycle
+    operator: str | None = None
+    operator_citation: str | None = None
+    end_use: DcEndUse | None = None
+    end_use_citation: str | None = None
+    # Facility-level geometry link (#1628): the campus's own parcels/footprint artifacts, relative
+    # to ``settings.data_dir``. ``None`` = inherit the site-level ``SiteProfile.parcels_relpath`` /
+    # ``footprint_relpath`` (the single-facility default), resolved via ``geometry_relpaths``.
+    footprint_relpath: str | None = None
+    parcels_relpath: str | None = None
+
     # --- IT-load power basis --------------------------------------------------
     # The central IT load and its low/high range. It is an [inference] in EVERY mode, never
     # a disclosure (#1697): for an air-permit-grounded site (Lima, Fort Wayne) it is DERIVED
@@ -110,9 +177,12 @@ class SiteFacility(BaseModel):
     # load); for a site-plan-grounded facility whose load is NOT disclosed (Urbana Technology
     # Hub) it is a floor-area SCREENING bracket, its basis in ``it_load_citation``. The
     # disclosed interconnection/air-permit MW stays ``[open]`` until an instrument discloses it.
-    it_load_mw: float  # central IT load (N+1 backup ~= IT, or floor-area screening central)
-    it_load_low_mw: float  # low end of the range
-    it_load_high_mw: float  # high end
+    # ``None`` = the load is entirely ``[open]`` — a disclosed facility (e.g. a rezoning-only
+    # second campus) whose MW/instruments are all undisclosed; the three move together (enforced
+    # below) and no load-basis citation is carried.
+    it_load_mw: float | None = None  # central IT load (N+1 backup ~= IT, or floor-area screening)
+    it_load_low_mw: float | None = None  # low end of the range
+    it_load_high_mw: float | None = None  # high end
     # The disclosing air permit + committed extraction, when the load is permit-grounded;
     # also the citation the genset/backup figures carry. ``None`` for a site whose load is
     # not permit-disclosed — then ``it_load_citation`` carries the derivation basis instead.
@@ -184,17 +254,49 @@ class SiteFacility(BaseModel):
     genset_stack_exit_temp_k: float | None = None
     genset_stack_citation: str | None = None
 
+    @model_validator(mode="before")
+    @classmethod
+    def _fill_key(cls, data: object) -> object:
+        """Mint the stable dedupe ``key`` from ``name`` when a profile leaves it blank (#1628)."""
+        if isinstance(data, dict) and not data.get("key"):
+            name = data.get("name")
+            if isinstance(name, str) and name:
+                data["key"] = _facility_slug(name)
+        return data
+
     @model_validator(mode="after")
     def _override_citations_paired(self) -> SiteFacility:
-        # The IT load must be grounded by EXACTLY ONE basis: an air permit (Lima/Fort Wayne)
-        # or a non-permit derivation cite (Urbana's floor-area screening). Neither ⇒ an
-        # uncited load figure; both ⇒ an ambiguous ground (``derive_power_basis`` would
-        # silently drop ``it_load_citation`` and treat the load as permit-grounded).
-        if (self.air_permit_citation is None) == (self.it_load_citation is None):
+        # The IT-load triple moves together: all three set (a bracketed load) or all None (the
+        # load is entirely [open] — a disclosed facility, e.g. a rezoning-only second campus,
+        # whose MW/instruments are all undisclosed).
+        load_parts = (self.it_load_mw, self.it_load_low_mw, self.it_load_high_mw)
+        if any(v is not None for v in load_parts) and any(v is None for v in load_parts):
+            raise ValueError(
+                "it_load_mw / it_load_low_mw / it_load_high_mw must be set together (a bracketed "
+                "load) or all left None (the load is entirely [open])"
+            )
+        # A disclosed load must be grounded by EXACTLY ONE basis: an air permit (Lima/Fort Wayne)
+        # or a non-permit derivation cite (Urbana's floor-area screening). Neither ⇒ an uncited
+        # load figure; both ⇒ an ambiguous ground (``derive_power_basis`` would silently drop
+        # ``it_load_citation`` and treat the load as permit-grounded). An [open] load (None)
+        # carries no basis citation at all.
+        if self.it_load_mw is None:
+            if self.air_permit_citation is not None or self.it_load_citation is not None:
+                raise ValueError(
+                    "an open IT load (it_load_mw=None) carries no basis citation — set a load to "
+                    "ground it, or leave both air_permit_citation / it_load_citation None"
+                )
+        elif (self.air_permit_citation is None) == (self.it_load_citation is None):
             raise ValueError(
                 "the IT load needs exactly one basis citation — set air_permit_citation "
                 "(permit-grounded) or it_load_citation (a non-permit derivation basis), not both/neither"
             )
+        # Operator / end-use each travel with their own citation (#1628): a disclosed value can
+        # never pass uncited, and end_use=None keeps the end use honestly [open].
+        if (self.operator is None) != (self.operator_citation is None):
+            raise ValueError("operator and operator_citation must be set together")
+        if (self.end_use is None) != (self.end_use_citation is None):
+            raise ValueError("end_use and end_use_citation must be set together")
         # Gensets are paired: a count without a rating (or vice-versa) can't form a backup
         # figure. A site-plan-grounded facility with no disclosed generation leaves both None.
         if (self.genset_count is None) != (self.genset_mw is None):
@@ -412,11 +514,13 @@ class SiteProfile(BaseModel):
     campus_dry_weather_mgd: float = 0.0
 
     # --- Grid / facility (grid/*.py, facility/power.py) ---------------------------------
-    # The disclosed DC facility (None = no identified facility yet → grid backdrop only, no
-    # fabricated campus load share). The serving-utility *identity* (name) is connector-sourced
-    # (EIA-861); only its provenance is per-site: a corpus document for Lima, the EIA-861/PUCO
-    # service-territory record for a site without corpus coverage.
-    facility: SiteFacility | None = None
+    # The disclosed DC facilities (#1628): a site holds N campuses (empty = no identified facility
+    # yet → grid backdrop only, no fabricated campus load share). The FIRST is the primary/modeled
+    # campus (``facility`` property) that drives the water/power/air math; later entries are
+    # structured but not each run through hydrology. The serving-utility *identity* (name) is
+    # connector-sourced (EIA-861); only its provenance is per-site: a corpus document for Lima, the
+    # EIA-861/PUCO service-territory record for a site without corpus coverage.
+    facilities: tuple[SiteFacility, ...] = ()
     serving_utility_citation: str
     # Default "reference" (EIA-861/PUCO service-territory record); only a corpus-grounded site
     # (Lima, from its air permit) overrides to "document".
@@ -493,6 +597,32 @@ class SiteProfile(BaseModel):
     map_view_lat: float = 0.0  # authoritative in data/sites.yaml; filled by _fill_from_yaml
     map_view_lon: float = 0.0
     map_view_zoom: int = 0
+
+    @model_validator(mode="after")
+    def _facility_keys_unique(self) -> SiteProfile:
+        keys = [f.key for f in self.facilities]
+        if len(keys) != len(set(keys)):
+            raise ValueError(f"facility keys must be unique within a site; got {keys}")
+        return self
+
+    @property
+    def facility(self) -> SiteFacility | None:
+        """The primary (modeled) campus — the first facility, or ``None`` when the site has none.
+
+        Backward-compatible accessor (#1628): every subsystem that reads a single disclosed
+        facility (hydrology cooling, :func:`watermark.facility.power.derive_power_basis`, air,
+        readiness, the basin network) operates on this primary campus. Additional
+        :attr:`facilities` are structured but not each run through the water/power/air math.
+        """
+        return self.facilities[0] if self.facilities else None
+
+    def facility_geometry(self, fac: SiteFacility) -> tuple[str, str]:
+        """Resolve a facility's ``(parcels_relpath, footprint_relpath)`` (#1628) — inheriting the
+        site-level paths when the facility carries none of its own (the single-facility default)."""
+        return (
+            fac.parcels_relpath or self.parcels_relpath,
+            fac.footprint_relpath or self.footprint_relpath,
+        )
 
 
 # Fields whose authoritative values live in data/sites.yaml and are filled at construction time

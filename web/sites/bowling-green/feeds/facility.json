@@ -1,0 +1,24 @@
+[
+  {
+    "key": "bowling-green-data-center-project-accordion",
+    "name": "Bowling Green Data Center (Project Accordion)",
+    "is_primary": true,
+    "status": "confirmed",
+    "operator": "Meta Platforms; land/nominee entity Liames, LLC",
+    "operator_citation": "[verified] Meta, 'Hello, Bowling Green' (2025-04-09); land/nominee entity Liames, LLC is the customer of record on OPSB 25-0973-EL-BGN.",
+    "end_use": "hyperscale",
+    "end_use_citation": "[verified] hyperscale data center — Meta Platforms (Meta 'Hello, Bowling Green', 2025-04-09).",
+    "facility_type": "hyperscale data center campus (\"Bowling Green Data Center\"; operator Meta Platforms; land/nominee entity Liames, LLC; codename \"Project Accordion\")",
+    "it_load_mw": 180.0,
+    "it_load_low_mw": 53.6,
+    "it_load_high_mw": 180.0,
+    "it_load_citation": "[reference] the disclosed 'up to ~180 MW at peak' for the initial phase — reported via the Apollo OPSB filings (25-0973-EL-BGN) in press (BG Independent, Data Center Dynamics), NOT an air-permit or PJM-interconnection disclosure of the data center's own load, so the official/interconnection MW stays [open]. Carried as the it_load central per #1435; it is a design CEILING (peak), so downstream figures (peak x PUE x load factor) run conservative-high. The low bound is a floor-area SCREENING floor — the disclosed 715,000 sq ft initial building x 75 W/sq ft whole-building IT density (53.6 MW); the same screen at 250 W/sq ft yields 178.75 MW, independently bracketing the disclosed ~180 MW peak at its top (corroboration, not a second source). The campus is designed SELF-POWERED behind the meter by the Apollo plant (350 MW gas + ~120 MW BESS, Will-Power OH LLC, OPSB 25-0973-EL-BGN, approved 2026-02-03 — #1437); the ~2x 350-vs-180 MW oversizing signals Phase 2 (Meta's 2026-01-07 trustees letter). Replace with the disclosed load when an air permit or interconnection filing names it.",
+    "gross_floor_area_sqft": 715000,
+    "disclosed_investment_usd": 800000000.0,
+    "disclosure_citation": "[verified] Meta, 'Hello, Bowling Green' (2025-04-09) — the 'Bowling Green Data Center', Meta's 24th US / 28th global, 2nd in Ohio: 715,000 sq ft initial phase + ~1,700 parking spaces, >$800M, ~100 permanent jobs (avg ~mid-$80k) / >1,000 peak construction; corroborated by Middleton Township ('Meta introduced as company behind township data center'). Site: Middleton Twp, SR-582 between SR-25 and I-75, adjacent the FirstEnergy Mercer Rd substation; ~280-ac initial site inside a ~750-ac Liames, LLC assembly ([reference] acreage; deeds from 2023-09-05). Liames is the customer of record on OPSB 25-0973-EL-BGN. Phase 2 signaled in Meta's 2026-01-07 trustees letter. See data/extracted/bowling-green/data-centers.md.",
+    "cooling_model": "closed_loop_dry",
+    "cooling_model_citation": "[reference] company claim (NOT instrument-confirmed): Meta describes closed-loop, liquid-cooled with dry coolers — 'no operational water', with domestic/cleaning/fire use only. In tension with the NWWSD wholesaling BG water to Meta (contract ceiling 1.5 MGD, Aug 2024; conflicting ~50k vs ~600k GPD figures; a Meta-funded 2 MG tank + 16-in main) — that reconciliation is tracked at the water sub-issue #1439, not decided here. Replace with a documented cooling design when an NPDES/water instrument lands.",
+    "parcels_relpath": "reference/bowling-green/parcel-assemblage.geojson",
+    "footprint_relpath": "extracted/bowling-green/bosc-site-footprint.yaml"
+  }
+]

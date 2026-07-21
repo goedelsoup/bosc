@@ -1,10 +1,10 @@
 {
   "site": "fort-wayne",
   "bundle_version": "1.0.0",
-  "contract_version": "1.30.1",
+  "contract_version": "1.31.0",
   "generated_at": "2026-07-08T21:11:19+00:00",
-  "feed_count": 28,
-  "row_total": 382,
+  "feed_count": 29,
+  "row_total": 383,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -14,6 +14,13 @@
       "record": "live",
       "story": "seeded"
     }
+  },
+  "facility": {
+    "status": "live",
+    "count": 1,
+    "primary_name": "Project Zodiac",
+    "primary_operator": "Hatchworks LLC (Project Zodiac) — 'a stationary data center'",
+    "primary_end_use": null
   },
   "feeds": [
     {
@@ -137,6 +144,14 @@
       "count": 1
     },
     {
+      "name": "facility",
+      "path": "feeds/facility.json",
+      "media_type": "application/json",
+      "schema": "schemas/facility.schema.json",
+      "kind": "collection",
+      "count": 1
+    },
+    {
       "name": "greenops",
       "path": "feeds/greenops.json",
       "media_type": "application/json",
@@ -240,5 +255,6 @@
       "kind": "collection",
       "count": 79
     }
-  ]
+  ],
+  "exports": []
 }
