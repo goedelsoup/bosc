@@ -93,6 +93,7 @@ _LIMA_GOLDEN = {
     "passby_secondary_cfs": 0.2,
     "supply_river_primary": "Auglaize River",
     "supply_river_secondary": "Ottawa River",
+    "intake_da_ratio_primary": 0.614,
     "forcemain_labels": {"bosc-fm1": "FM-1", "bosc-fm2": "FM-2"},
     "sanitary_receiver_names": {
         "watch-lima-fm2-terminus": "City of Lima WWTP",

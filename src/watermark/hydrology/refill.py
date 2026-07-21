@@ -52,12 +52,14 @@ from watermark.sites import active_profile
 
 log = get_logger(__name__)
 
-# The two supply rivers' discharge gages and in-stream passby minimums are per-site (the
-# active SiteProfile: supply_gage_primary/secondary, passby_primary_cfs/passby_secondary_cfs).
-# For Lima, the Auglaize is gauged at Fort Jennings (04186500, 1921-present) — DOWNSTREAM of
-# the intakes with more drainage area, so it OVERSTATES the intake flow (an optimistic refill
-# bound, flagged in the caveats); the Ottawa passby is its cited 7Q10, the Auglaize's a small
-# assumption near its 99% exceedance (no cited 7Q10 in the corpus).
+# The two supply rivers' discharge gages, in-stream passby minimums, and the primary gage's
+# intake drainage-area ratio are per-site (the active SiteProfile: supply_gage_primary/secondary,
+# passby_primary_cfs/passby_secondary_cfs, intake_da_ratio_primary). For Lima, the Auglaize is
+# gauged at Fort Jennings (04186500, 1921-present) — DOWNSTREAM of the intakes with more drainage
+# area, and below the Ottawa confluence, so its raw record OVERSTATES the intake flow (and carries
+# the separately-routed Ottawa). The committed 0.614 drainage-area ratio scales it to the intake
+# reach before the sequent-peak (#1613); the Ottawa passby is its cited 7Q10, the Auglaize's a
+# small assumption near its 99% exceedance (no cited 7Q10 in the corpus).
 _START, _END = "1980-01-01", "2024-12-31"
 _DAYS_PER_YEAR = 365.0
 _MONTH_KEYS = ("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC")
@@ -205,6 +207,7 @@ def compute_refill_adequacy(
     end_date: str = _END,
     passby_primary_cfs: float | None = None,
     passby_secondary_cfs: float | None = None,
+    intake_da_ratio_primary: float | None = None,
     settings: Settings | None = None,
 ) -> RefillAdequacy:
     """Compute the refill adequacy / drought storage-requirement from the live gage records.
@@ -213,8 +216,8 @@ def compute_refill_adequacy(
     discharge, characterizes each, and runs the sequent-peak storage requirement for the
     baseline-city / +campus / +campus-high demand scenarios against the committed storage.
 
-    The supply gages + passby minimums default to the active site profile; pass them
-    explicitly to override.
+    The supply gages, passby minimums, and the primary gage's intake drainage-area ratio
+    default to the active site profile; pass them explicitly to override.
     """
     settings = settings or get_settings()
     prof = active_profile(settings)
@@ -225,6 +228,11 @@ def compute_refill_adequacy(
     )
     passby_secondary_cfs = (
         passby_secondary_cfs if passby_secondary_cfs is not None else prof.passby_secondary_cfs
+    )
+    intake_da_ratio_primary = (
+        intake_da_ratio_primary
+        if intake_da_ratio_primary is not None
+        else prof.intake_da_ratio_primary
     )
     # Fail loud rather than silently apply Lima's rivers: the refill / water-balance supply model
     # is Lima-only today (non-Lima profiles leave the supply gages [open] as "TODO"). The river
@@ -291,19 +299,31 @@ def compute_refill_adequacy(
         ),
     ]
 
-    # Align both records on common dates for the combined sequent-peak.
+    # Align both records on common dates for the combined sequent-peak. The primary gage sits
+    # downstream of the intake (and, for Lima, below the confluence with the separately-routed
+    # secondary river), so its raw daily flow is scaled by the committed drainage-area ratio to
+    # the intake reach BEFORE it is combined with the secondary — the same transfer applied to its
+    # 7Q10 at the network outlet (#1613). The per-river stat above stays on the raw gage record;
+    # only the combined available-supply figures (this mean and the sequent-peak inflow) use the
+    # intake-reach flow. The passby minimum is left in-stream at the (scaled) intake reach.
     aug_by_date = dict(aug_pts)
     ott_by_date = dict(ott_pts)
     dates = sorted(set(aug_by_date) & set(ott_by_date))
     available_mgd = [
         cfs_to_mgd(
-            max(0.0, aug_by_date[d] - passby_primary_cfs)
+            max(0.0, aug_by_date[d] * intake_da_ratio_primary - passby_primary_cfs)
             + max(0.0, ott_by_date[d] - passby_secondary_cfs)
         )
         for d in dates
     ]
     combined_mean_cfs = (
-        round(sum(aug_by_date[d] + ott_by_date[d] for d in dates) / len(dates), 1) if dates else 0.0
+        round(
+            sum(aug_by_date[d] * intake_da_ratio_primary + ott_by_date[d] for d in dates)
+            / len(dates),
+            1,
+        )
+        if dates
+        else 0.0
     )
 
     # Reservoir-evaporation sink (#1164): a first-order open-water loss on storage — reference
@@ -338,9 +358,27 @@ def compute_refill_adequacy(
     record_span = (
         f"{(dates[0] if dates else start_date)[:4]}-{(dates[-1] if dates else end_date)[:4]}"
     )
+    # The primary-gage caveat depends on whether the drainage-area transfer is applied (#1613):
+    # a site with a configured ratio (Lima's 0.614) discloses the transfer + its residual over-
+    # estimate; an un-configured gage (ratio 1.0) keeps the original overstates-the-intake caveat.
+    if intake_da_ratio_primary != 1.0:
+        primary_caveat = (
+            f"{prof.supply_river_primary} {prof.supply_note_primary}. Its daily series IS scaled "
+            f"to the intake reach by the committed {intake_da_ratio_primary:g} drainage-area ratio "
+            f"before the sequent-peak — the same transfer applied to its 7Q10 at the network outlet "
+            "(low-flow-7q10.derived.yaml). That ratio nets the secondary river's drainage out of "
+            "the downstream gage but at the gage's confluence, not the tributary's own mouth, so it "
+            "is itself a coarse screening OVER-estimate of the primary river's contribution — the "
+            "storage requirement is therefore a slight residual UNDER-estimate, far less optimistic "
+            "than the un-scaled gage."
+        )
+    else:
+        primary_caveat = (
+            f"{prof.supply_river_primary} {prof.supply_note_primary}; the storage requirement is "
+            "therefore an UNDER-estimate (optimistic)."
+        )
     caveats = [
-        f"{prof.supply_river_primary} {prof.supply_note_primary}; the storage requirement is "
-        "therefore an UNDER-estimate (optimistic).",
+        primary_caveat,
         "Pure sequent-peak captures all surplus above passby (no pump-rate cap) — also "
         "optimistic; a real pump-capacity limit would raise the storage requirement.",
         f"Passby flows are screening assumptions ({prof.supply_river_secondary} "

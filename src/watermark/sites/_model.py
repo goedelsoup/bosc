@@ -388,6 +388,15 @@ class SiteProfile(BaseModel):
     supply_river_secondary: str = ""
     supply_note_primary: str = ""
     supply_note_secondary: str = ""
+    # Drainage-area-ratio transfer of the primary gage's daily flow to the intake reach (#1613).
+    # The primary gage sits DOWNSTREAM of the intake with more drainage area, so its record
+    # overstates the flow available at the intake — and when it also sits below a confluence
+    # whose tributary is routed separately (the secondary river), it double-counts that tributary.
+    # This ratio scales the primary series to the intake reach before the sequent-peak; default
+    # 1.0 = the gage is the intake (no transfer). Lima's 0.614 = (332-128)/332 nets the Ottawa's
+    # drainage out of the Fort-Jennings Auglaize record — the SAME committed transfer already
+    # applied to that gage's 7Q10 at the network outlet (low-flow-7q10.derived.yaml).
+    intake_da_ratio_primary: float = 1.0
 
     # --- Tier-1 SWMM sanitary campus routing (hydrology/tier1.py, #1159) -----------------
     # The campus forcemain display labels (routing ``via`` id -> label, e.g. bosc-fm2 -> FM-2)

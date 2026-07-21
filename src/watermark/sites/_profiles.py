@@ -129,6 +129,10 @@ _LIMA = SiteProfile(
         "drainage area — overstates the flow at the intake (optimistic refill)"
     ),
     supply_note_secondary="net of Lima's upstream Ottawa intakes; reaches 0 cfs in drought",
+    # (332-128)/332 = 0.614: nets the Ottawa's drainage (128 sq mi at Lima, routed separately as
+    # the secondary river) out of the 332-sq-mi Fort-Jennings Auglaize record to isolate the
+    # Auglaize's own flow at the intake reach — the committed transfer from low-flow-7q10.derived.yaml.
+    intake_da_ratio_primary=0.614,
     # tier-1 SWMM campus sanitary routing (#1159): FM labels, receiving-plant names, the
     # dry-weather base + capacity fallback consulted only when the cited basis is absent
     forcemain_labels={"bosc-fm1": "FM-1", "bosc-fm2": "FM-2"},

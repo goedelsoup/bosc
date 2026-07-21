@@ -202,7 +202,7 @@ class RefillAdequacy(BaseModel):
     period_end: str
     aligned_days: int
     storage_capacity_mg: float
-    combined_mean_cfs: float  # mean of (Auglaize + Ottawa) over the aligned record
+    combined_mean_cfs: float  # mean pumpable supply: intake-DA-scaled primary + secondary, aligned
     annual_demand_mg: float  # buildout gross annual demand
     annual_supply_multiple: float  # mean annual river supply / annual buildout demand
     rivers: list[RiverFlowStat]

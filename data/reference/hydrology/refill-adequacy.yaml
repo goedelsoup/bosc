@@ -13,9 +13,9 @@ refill:
   period_end: '2024-12-31'
   aligned_days: 9734
   storage_capacity_mg: 14413.0
-  combined_mean_cfs: 451.3
+  combined_mean_cfs: 324.6
   annual_demand_mg: 6906.0
-  annual_supply_multiple: 15.4
+  annual_supply_multiple: 11.1
   rivers:
   - site_no: 04186500
     site_name: Auglaize River near Fort Jennings OH
@@ -51,24 +51,24 @@ refill:
   scenarios:
   - label: baseline city
     demand_mgd: 15.0
-    required_storage_mg: 3507.5
-    pct_of_capacity: 24.3
-    worst_spell_start: '1999-07-05'
-    worst_spell_days: 251
+    required_storage_mg: 4515.0
+    pct_of_capacity: 31.3
+    worst_spell_start: '1999-06-23'
+    worst_spell_days: 325
     survives: true
   - label: +campus (central)
     demand_mgd: 18.92
-    required_storage_mg: 4629.6
-    pct_of_capacity: 32.1
-    worst_spell_start: '1999-07-05'
-    worst_spell_days: 310
+    required_storage_mg: 5927.0
+    pct_of_capacity: 41.1
+    worst_spell_start: '1999-06-22'
+    worst_spell_days: 338
     survives: true
   - label: +campus (high bound)
     demand_mgd: 27.5
-    required_storage_mg: 7696.2
-    pct_of_capacity: 53.4
-    worst_spell_start: '1999-06-22'
-    worst_spell_days: 337
+    required_storage_mg: 9034.1
+    pct_of_capacity: 62.7
+    worst_spell_start: '1999-06-21'
+    worst_spell_days: 354
     survives: true
   evaporation:
     source: derived
@@ -102,8 +102,12 @@ refill:
   warnings: []
   caveats:
   - Auglaize River gauged at Fort Jennings, DOWNSTREAM of Lima's Auglaize intakes with more drainage area
-    — overstates the flow at the intake (optimistic refill); the storage requirement is therefore an UNDER-estimate
-    (optimistic).
+    — overstates the flow at the intake (optimistic refill). Its daily series IS scaled to the intake
+    reach by the committed 0.614 drainage-area ratio before the sequent-peak — the same transfer applied
+    to its 7Q10 at the network outlet (low-flow-7q10.derived.yaml). That ratio nets the secondary river's
+    drainage out of the downstream gage but at the gage's confluence, not the tributary's own mouth, so
+    it is itself a coarse screening OVER-estimate of the primary river's contribution — the storage requirement
+    is therefore a slight residual UNDER-estimate, far less optimistic than the un-scaled gage.
   - Pure sequent-peak captures all surplus above passby (no pump-rate cap) — also optimistic; a real pump-capacity
     limit would raise the storage requirement.
   - Passby flows are screening assumptions (Ottawa River 0.2 cfs; Auglaize River 2.5 cfs).
