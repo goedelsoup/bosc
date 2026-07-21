@@ -105,6 +105,39 @@ def test_serving_utility_municipal_is_home_rule_not_puco() -> None:
     assert "PUC-certified IOU territory" in su.note
 
 
+def test_ba_confirmed_map_site_is_pjm_high() -> None:
+    """B2/#1639: a serving utility in the confirmed per-utility map resolves PJM at high conf."""
+    from watermark.grid.utility import _balancing_authority, _utility_grid
+    from watermark.sites import get_profile
+
+    prof = get_profile("lima")  # #14006 is in _UTILITY_GRID
+    ba = _balancing_authority(prof, _utility_grid(prof.eia861_utility_number, "AEP Ohio"))
+    assert ba.confirmed is True and ba.ba_code == "PJM" and ba.confidence == "high"
+
+
+def test_ba_unlisted_utility_is_unconfirmed_not_pjm() -> None:
+    """B2/#1639: an off-map serving utility with no ba_code pin reports the RTO as unconfirmed,
+    NOT PJM at high confidence — Portsmouth (#0, unpinned) is the stub case."""
+    from watermark.grid.utility import _balancing_authority, _utility_grid
+    from watermark.sites import get_profile
+
+    prof = get_profile("portsmouth")
+    ba = _balancing_authority(prof, _utility_grid(prof.eia861_utility_number, "serving utility"))
+    assert ba.confirmed is False
+    assert ba.ba_code == "" and "PJM" not in ba.rto_name
+    assert ba.confidence == "low"
+
+
+def test_ba_off_map_pinned_site_uses_pin() -> None:
+    """B2/#1639: an off-map but ba_code-pinned site (Hamilton/Duke) resolves its pinned BA."""
+    from watermark.grid.utility import _balancing_authority, _utility_grid
+    from watermark.sites import get_profile
+
+    prof = get_profile("hamilton-middletown")
+    ba = _balancing_authority(prof, _utility_grid(prof.eia861_utility_number, "Duke Energy Ohio"))
+    assert ba.confirmed is True and ba.ba_code == "PJM"
+
+
 def test_committed_grid_profile_loads() -> None:
     """The committed reference YAML round-trips into the model."""
     gp = load_grid_profile(Settings(data_dir=REPO_ROOT / "data"))

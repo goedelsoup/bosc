@@ -314,14 +314,19 @@ def derive_pjm_market_scenario(*, settings: Settings | None = None) -> PjmMarket
     )
 
 
-def _reference_path(reference_dir: Path) -> Path:
-    return reference_dir / "pjm" / "pjm-market.yaml"
+def _reference_path(settings: Settings) -> Path:
+    """The active site's PJM-market path (#1639/B1). Per-site because the reference embeds the
+    site's LMP pricing zone (AEP→ATSI→DAY) — a slug-scoped default unless the profile pins one
+    (Lima keeps the un-slugged legacy path)."""
+    prof = active_profile(settings)
+    rel = prof.pjm_relpath or f"reference/pjm/{prof.slug}/pjm-market.yaml"
+    return settings.data_dir / rel
 
 
 def write_pjm_market(reference: PjmMarketReference, *, settings: Settings | None = None) -> str:
-    """Persist the transcribed PJM market reference as committed YAML; return the path."""
+    """Persist the PJM market reference as committed YAML for the active site; return the path."""
     settings = settings or get_settings()
-    path = _reference_path(settings.reference_dir)
+    path = _reference_path(settings)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
         yaml.safe_dump(reference.model_dump(), sort_keys=False, allow_unicode=True),
@@ -331,9 +336,10 @@ def write_pjm_market(reference: PjmMarketReference, *, settings: Settings | None
     return str(path)
 
 
-def load_pjm_market(reference_dir: Path) -> PjmMarketReference | None:
-    """Read the committed PJM market reference YAML, or ``None`` if absent."""
-    path = _reference_path(reference_dir)
+def load_pjm_market(settings: Settings | None = None) -> PjmMarketReference | None:
+    """Read the committed PJM market reference YAML for the active site, or ``None`` if absent."""
+    settings = settings or get_settings()
+    path = _reference_path(settings)
     if not path.is_file():
         return None
     data = yaml.safe_load(path.read_text(encoding="utf-8"))

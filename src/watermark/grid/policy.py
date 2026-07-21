@@ -46,6 +46,7 @@ from watermark.facility.power import derive_power_basis
 from watermark.grid.model import CitedFact
 from watermark.hydrology.model import ProvenancedValue
 from watermark.logging import get_logger
+from watermark.sites import active_profile
 
 log = get_logger(__name__)
 
@@ -330,14 +331,19 @@ def derive_federal_backdrop(*, settings: Settings | None = None) -> FederalBackd
     return backdrop
 
 
-def _reference_path(reference_dir: Path) -> Path:
-    return reference_dir / "federal" / "federal-energy.yaml"
+def _reference_path(settings: Settings) -> Path:
+    """The active site's federal-backdrop path (#1639/B1). Per-site because the backdrop embeds
+    the campus-vs-national load shares — a slug-scoped default unless the profile pins one
+    (Lima keeps the un-slugged legacy path)."""
+    prof = active_profile(settings)
+    rel = prof.federal_relpath or f"reference/federal/{prof.slug}/federal-energy.yaml"
+    return settings.data_dir / rel
 
 
 def write_federal_backdrop(backdrop: FederalBackdrop, *, settings: Settings | None = None) -> str:
-    """Persist the federal backdrop as committed reference YAML; return the path."""
+    """Persist the federal backdrop as committed reference YAML for the active site; return path."""
     settings = settings or get_settings()
-    path = _reference_path(settings.reference_dir)
+    path = _reference_path(settings)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
         yaml.safe_dump(backdrop.model_dump(), sort_keys=False, allow_unicode=True),
@@ -347,9 +353,10 @@ def write_federal_backdrop(backdrop: FederalBackdrop, *, settings: Settings | No
     return str(path)
 
 
-def load_federal_backdrop(reference_dir: Path) -> FederalBackdrop | None:
-    """Read the committed federal-energy YAML, or ``None`` if absent."""
-    path = _reference_path(reference_dir)
+def load_federal_backdrop(settings: Settings | None = None) -> FederalBackdrop | None:
+    """Read the committed federal-energy YAML for the active site, or ``None`` if absent."""
+    settings = settings or get_settings()
+    path = _reference_path(settings)
     if not path.is_file():
         return None
     data = yaml.safe_load(path.read_text(encoding="utf-8"))
