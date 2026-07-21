@@ -29,6 +29,7 @@ from watermark.facility.power import derive_power_basis
 from watermark.grid.model import BAInterchange, CampusInterchangeComparison
 from watermark.hydrology.model import ProvenancedValue
 from watermark.logging import get_logger
+from watermark.sites import active_profile
 
 log = get_logger(__name__)
 
@@ -61,6 +62,15 @@ def _reduce_region_data(
             except (TypeError, ValueError):
                 continue
     d, ng, ti = by_type["D"], by_type["NG"], by_type["TI"]
+    # An empty response (a wrong BA code, or an HTTP-200 hiccup with an empty data[]) must not
+    # become a zero-filled interchange model — the comparison needs all three series, so refuse
+    # rather than fabricate demand=netgen=interchange=0 (A2/#1638; mirrors the LMP _reduce guard).
+    if not d or not ng or not ti:
+        missing = ", ".join(t for t, xs in (("D", d), ("NG", ng), ("TI", ti)) if not xs)
+        raise Eia930Error(
+            f"EIA-930 region-data for {ba} {start}..{end} returned no rows for [{missing}] — "
+            "refusing to build a zero-filled interchange model (wrong BA code or empty response)"
+        )
     return {
         "ba": ba,
         "start": start,
@@ -130,6 +140,13 @@ def fetch_ba_interchange(
         ),
     )
     hours = int(payload["hours"])
+    if hours <= 0:
+        # Defends the offline path too: a committed fixture that reduced to zero rows must
+        # raise on read, not silently produce a zeros model (A2/#1638).
+        raise Eia930Error(
+            f"EIA-930 region-data payload for {ba} {start}..{end} has no hours — empty/poisoned "
+            "response; refusing to build a zero-filled interchange model"
+        )
     cite = f"EIA-930 region-data {ba} {start}..{end} ({hours} h)"
     import_frac = payload["import_hours"] / hours if hours else 0.0
     return BAInterchange(
@@ -217,6 +234,13 @@ def fetch_ba_annual_load(
             ) from exc
         rows = (((body or {}).get("response") or {}).get("data")) or []
         vals = [float(r["value"]) for r in rows if r.get("value") is not None]
+        if not vals:
+            # An empty annual-load response must not become a 0 GWh/yr denominator (A2/#1638):
+            # a wrong BA code or a silent hiccup would otherwise be committed as zero.
+            raise Eia930Error(
+                f"EIA-930 daily demand for {ba} {year} returned no daily values — refusing to "
+                "report a zero annual load (wrong BA code or empty response)"
+            )
         return {"ba": ba, "year": year, "days": len(vals), "annual_demand_mwh": sum(vals)}
 
     payload = cast(
@@ -230,6 +254,13 @@ def fetch_ba_annual_load(
             fixtures_dir=settings.econ_fixtures_dir,
         ),
     )
+    if int(payload["days"]) <= 0 or not payload["annual_demand_mwh"]:
+        # Defends the offline path: a committed fixture that reduced to zero days/demand must
+        # raise on read, not become a 0 GWh/yr denominator (A2/#1638).
+        raise Eia930Error(
+            f"EIA-930 daily-demand payload for {payload['ba']} {payload['year']} is empty/zero — "
+            "refusing to report a zero annual load"
+        )
     return ProvenancedValue.from_connector(
         round(payload["annual_demand_mwh"] / 1000.0, 1),
         "GWh/yr",
@@ -243,9 +274,22 @@ def derive_interchange_comparison(
     interchange: BAInterchange | None = None,
     settings: Settings | None = None,
 ) -> CampusInterchangeComparison:
-    """Situate the campus load against the BA's interchange & in-BA generation."""
+    """Situate the campus load against the BA's interchange & coincident-peak adequacy.
+
+    C1/C2/#1638: the headline is no longer an "in-BA generation headroom" (mean net
+    generation - mean demand), which by the EIA-930 identity D = NG - TI is algebraically
+    net interchange and made the "no imports needed" conclusion circular. Adequacy is judged
+    at the **coincident peak** (the binding case for a flat 24x7 load), using the window peak
+    demand that was previously collected and discarded.
+    """
     settings = settings or get_settings()
-    bai = interchange or fetch_ba_interchange(settings=settings)
+    if interchange is None:
+        # Per-site BA (B2/#1639): a pinned MISO/SPP site pulls its own EIA-930 respondent; PJM
+        # is the default for the (all-PJM) network today, not an assumption baked into the pull.
+        ba_code = active_profile(settings).ba_code or "PJM"
+        bai = fetch_ba_interchange(ba=ba_code, settings=settings)
+    else:
+        bai = interchange
     power = derive_power_basis(settings=settings)
     if power is None:
         raise ValueError(
@@ -255,28 +299,48 @@ def derive_interchange_comparison(
 
     draw = power.facility_draw.value
     demand = bai.demand_mean_mw.value
+    demand_peak = bai.demand_peak_mw.value
     netgen = bai.net_generation_mean_mw.value
     ti = bai.total_interchange_mean_mw.value
-    headroom = netgen - demand
-    met = headroom >= draw
-    share_demand = draw / demand * 100.0 if demand else 0.0
-    vs_interchange = draw / abs(ti) * 100.0 if ti else 0.0
+    # A3/#1638: a zero/absent BA denominator means a broken upstream (empty connector, fixture
+    # drift), not a negligible campus share — refuse to synthesize a 0% share (cf. #1103). After
+    # A2 a non-empty window guarantees these, but guard explicitly at the share math too.
+    if not demand or not demand_peak:
+        raise ValueError(
+            f"{bai.ba} mean/peak demand is zero/absent ({demand!r}/{demand_peak!r}) — cannot "
+            "size the campus against a broken demand denominator"
+        )
+    if not ti:
+        raise ValueError(
+            f"{bai.ba} mean net interchange is zero/absent — cannot size the campus against a "
+            "broken interchange denominator"
+        )
+    share_demand = draw / demand * 100.0
+    share_peak = draw / demand_peak * 100.0
+    vs_interchange = draw / abs(ti) * 100.0
+    # Coincident-peak adequacy (C2): how far the window peak demand exceeds the mean in-BA net
+    # generation. Not the balance identity (peak demand and mean net-gen are independent
+    # quantities), so — unlike the dropped "headroom" — it is a genuine second signal. A
+    # screening upper bound: generation also ramps at peak, which the reduced payload discards.
+    peak_import_need = demand_peak - netgen
+    import_dependent_at_peak = demand_peak > netgen
 
     flow = "a net exporter" if ti > 0 else "a net importer"
     interp = (
         f"Over this window {bai.ba} is {flow} on average (mean net interchange "
-        f"{ti:,.0f} MW), with in-BA net generation {'above' if headroom >= 0 else 'below'} "
-        f"demand by {headroom:,.0f} MW. The campus load ({draw:g} MW) is "
-        f"{'within' if met else 'NOT within'} that in-BA generation headroom, so the added "
-        f"draw is {'comfortably met by in-BA generation without requiring net imports' if met else 'not covered by the mean in-BA generation margin and would lean on net imports'} "
-        f"— though it is ~{vs_interchange:.0f}% of the mean net-interchange swing."
+        f"{ti:,.0f} MW; the campus is ~{vs_interchange:.0f}% of that swing). But at the "
+        f"window coincident peak, demand ({demand_peak:,.0f} MW) "
+        f"{'exceeds' if import_dependent_at_peak else 'stays within'} the mean in-BA net "
+        f"generation ({netgen:,.0f} MW) by {peak_import_need:,.0f} MW — so the BA "
+        f"{'already leans on imports / peaking capacity at peak, and the campus ' + f'({draw:g} MW) adds on top of that' if import_dependent_at_peak else f'covers its own peak on average, with the campus ({draw:g} MW) a small addition'}. "
+        f"The campus is ~{share_demand:.2f}% of mean demand and ~{share_peak:.2f}% of the peak."
     )
 
     log.info(
         "grid.interchange",
         ba=bai.ba,
-        headroom_mw=round(headroom),
-        met=met,
+        peak_import_need_mw=round(peak_import_need),
+        import_dependent_at_peak=import_dependent_at_peak,
         campus_vs_interchange_pct=round(vs_interchange, 1),
     )
     return CampusInterchangeComparison(
@@ -287,6 +351,7 @@ def derive_interchange_comparison(
             citation=f"PowerBasis.facility_draw central (#87): {power.facility_draw.citation or ''}",
         ),
         ba_demand_mean_mw=bai.demand_mean_mw,
+        ba_demand_peak_mw=bai.demand_peak_mw,
         ba_net_generation_mean_mw=bai.net_generation_mean_mw,
         ba_interchange_mean_mw=bai.total_interchange_mean_mw,
         campus_share_of_demand_pct=ProvenancedValue.derived(
@@ -294,21 +359,31 @@ def derive_interchange_comparison(
             "percent",
             citation=f"campus {draw:g} MW / {bai.ba} mean demand {demand:,.0f} MW",
         ),
+        campus_share_of_peak_demand_pct=ProvenancedValue.derived(
+            round(share_peak, 3),
+            "percent",
+            citation=f"campus {draw:g} MW / {bai.ba} peak demand {demand_peak:,.0f} MW",
+        ),
         campus_vs_interchange_pct=ProvenancedValue.derived(
             round(vs_interchange, 1),
             "percent",
             citation=f"campus {draw:g} MW / |mean net interchange| {abs(ti):,.0f} MW",
         ),
-        in_ba_generation_headroom_mw=ProvenancedValue.derived(
-            round(headroom),
+        peak_import_need_mw=ProvenancedValue.derived(
+            round(peak_import_need),
             "MW",
-            citation=f"{bai.ba} mean net generation {netgen:,.0f} - mean demand {demand:,.0f} MW",
+            citation=f"{bai.ba} peak demand {demand_peak:,.0f} - mean net generation {netgen:,.0f} MW "
+            "(coincident-peak gap vs mean in-BA generation; screening upper bound)",
         ),
-        met_by_in_ba_generation=met,
+        import_dependent_at_peak=import_dependent_at_peak,
         interpretation=interp,
         caveats=[
-            "A screening comparison over WINDOW-MEAN conditions, not an hourly dispatch "
-            "or locational (LMP/congestion) model — the marginal unit varies hour to hour.",
+            "A screening comparison over WINDOW aggregates, not an hourly dispatch or "
+            "locational (LMP/congestion) model — the marginal unit varies hour to hour.",
+            "The coincident-peak gap compares the window PEAK demand against the window MEAN "
+            "net generation (the reduced payload discards hourly net-gen), so it is a "
+            "screening upper bound on the peak deficit, not a reserve-margin calculation "
+            "(installed capacity is not in the EIA-930 region-data feed).",
             "Net interchange is a BA-wide balance; it says nothing about transmission "
             "deliverability to the campus's specific bus (that is the #96 PJM-queue layer).",
             "The window is representative, not the full year; EIA-930 figures are "

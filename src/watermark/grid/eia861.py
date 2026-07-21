@@ -22,6 +22,7 @@ The EIA-861 bulk file needs no API key (public download).
 from __future__ import annotations
 
 import io
+import time
 import zipfile
 from pathlib import Path
 from typing import Any, cast
@@ -80,16 +81,40 @@ def _zip_path(settings: Settings, year: int) -> Path:
     return settings.econ_cache_dir / "eia861" / f"f861{year}.zip"
 
 
+def _cache_is_fresh(path: Path, ttl_hours: int) -> bool:
+    """True if ``path`` exists and its mtime is within ``ttl_hours`` (else re-download)."""
+    if not path.is_file():
+        return False
+    age_h = (time.time() - path.stat().st_mtime) / 3600.0
+    return age_h <= ttl_hours
+
+
 def _ensure_zip(settings: Settings, year: int) -> bytes:
-    """Return the EIA-861 annual zip bytes, downloading to cache on first use."""
+    """Return the EIA-861 annual zip bytes, downloading to cache on first use / when stale.
+
+    Hardened (A4/#1638): the download is ``raise_for_status``-checked and the body is
+    verified to be a real zip (PK magic) BEFORE it is cached — a 404 / redirect HTML page
+    is never written to ``econ_cache_dir/eia861/``, so a poisoned body can't turn every
+    subsequent run into a confusing ``BadZipFile``. The cached zip also carries a TTL
+    (``eia861_cache_ttl_hours``) so it ages out instead of being pinned forever.
+    """
     path = _zip_path(settings, year)
-    if path.is_file():
+    if _cache_is_fresh(path, settings.eia861_cache_ttl_hours):
         return path.read_bytes()
     url = f"{settings.eia861_base_url}/f861{year}.zip"
     log.info("eia861.download", url=url, year=year)
-    data = httpx.get(
+    resp = httpx.get(
         url, timeout=max(settings.econ_request_timeout_s, 120.0), follow_redirects=True
-    ).content
+    )
+    resp.raise_for_status()
+    data = resp.content
+    # A 200 with an HTML error/redirect body would otherwise poison the cache; a real zip
+    # begins with the "PK" local-file-header magic. Refuse (and don't cache) anything else.
+    if not data.startswith(b"PK"):
+        raise Eia861Error(
+            f"EIA-861 download for {year} is not a zip (HTTP {resp.status_code}, "
+            f"{len(data)} bytes, starts {data[:16]!r}) — not caching {url}"
+        )
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_bytes(data)
     return data

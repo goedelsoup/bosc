@@ -282,6 +282,10 @@ class Settings(BaseSettings):
     # utility's rows; the reduced payload is cached/fixtured like the other econ pulls.
     eia861_base_url: str = "https://www.eia.gov/electricity/data/eia861/zip"
     eia861_year: int = 2024  # latest published EIA-861 vintage
+    # TTL (hours) on the raw downloaded EIA-861 zip in econ_cache_dir/eia861/. Unlike the
+    # reduced payloads (which ride cached_get's TTL), the raw zip is a plain file download;
+    # a stale/poisoned body is otherwise cached forever (A4/#1638), so age it out.
+    eia861_cache_ttl_hours: int = DEFAULT_CACHE_TTL_HOURS
     # Per-site (from the active SiteProfile): the retail utility (Lima = AEP Ohio 14006).
     eia861_utility_number: int = 0
     # Per-site (from the active SiteProfile): the county FIPS (Lima = Allen County 39003).

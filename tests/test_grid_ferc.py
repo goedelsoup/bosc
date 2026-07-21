@@ -95,9 +95,52 @@ def test_seam_note_cross_references_economics(grid_settings: Settings) -> None:
     assert "FERC wholesale" in seam.note
 
 
+def test_form1_and_utility_grid_maps_cover_the_same_utilities() -> None:
+    """A5/#1638: the ferc _FORM1_FILER and utility _UTILITY_GRID maps must stay reconciled.
+
+    They are two per-utility dicts keyed by the same EIA-861 utility number; a key present in
+    one but not the other (which lost WPAFB/Xenia — #4922 — their FERC filer) is a silent
+    drift. Enforce keyset equality until GP-H/#1645 collapses them into one source.
+    """
+    from watermark.grid.ferc import _FORM1_FILER
+    from watermark.grid.utility import _UTILITY_GRID
+
+    assert set(_FORM1_FILER) == set(_UTILITY_GRID), (
+        "grid _FORM1_FILER (ferc) and _UTILITY_GRID (utility) have drifted: "
+        f"only in FORM1={set(_FORM1_FILER) - set(_UTILITY_GRID)}, "
+        f"only in UTILITY_GRID={set(_UTILITY_GRID) - set(_FORM1_FILER)}"
+    )
+
+
+def test_aes_ohio_sites_name_their_ferc_filer(grid_settings: Settings) -> None:
+    """A5/#1638: a #4922 (AES Ohio) site now names Dayton P&L, not 'the serving utility'."""
+    settings = Settings(
+        site="wpafb", data_dir=REPO_ROOT / "data", hydro_offline=True, econ_offline=True
+    )
+    seam = derive_ferc_seam(settings=settings)
+    assert "Dayton Power and Light" in seam.form1.utility
+    assert "the serving utility" not in seam.form1.utility
+    assert seam.form1.rate_base is None  # still a cited pointer, not a fabricated figure
+
+
+def test_ferc_seam_path_is_per_site(tmp_path: Path) -> None:
+    """B1/#1639: a non-Lima site resolves a slug-scoped path, never Lima's shared file.
+
+    The seam embeds per-site content (jurisdiction OH→IN, the serving utility), so a
+    ``watermark --site fort-wayne ferc`` write must not clobber Lima's committed file.
+    """
+    from watermark.grid.ferc import _reference_path
+
+    lima = _reference_path(Settings(site="lima", data_dir=tmp_path))
+    fw = _reference_path(Settings(site="fort-wayne", data_dir=tmp_path))
+    assert lima != fw
+    assert lima.name == "ferc-seam.yaml" and "fort-wayne" not in str(lima)
+    assert "fort-wayne" in str(fw)
+
+
 def test_committed_ferc_seam_loads() -> None:
     """The committed reference YAML round-trips into the model."""
-    seam = load_ferc_seam(REPO_ROOT / "data" / "reference")
+    seam = load_ferc_seam(Settings(data_dir=REPO_ROOT / "data"))
     assert seam is not None
     assert "FERC" in seam.boundary.ferc_scope.value
     assert "PUCO" in seam.boundary.puco_scope.value

@@ -103,7 +103,7 @@ def test_campus_vs_us_datacenter_share_links_facility_draw(grid_settings: Settin
 
 def test_committed_federal_backdrop_round_trips() -> None:
     """The committed reference YAML round-trips into the model."""
-    fb = load_federal_backdrop(REPO_ROOT / "data" / "reference")
+    fb = load_federal_backdrop(Settings(data_dir=REPO_ROOT / "data"))
     assert fb is not None
     assert len(fb.policy_levers) >= 5
     assert fb.share_of_us_datacenter_pct.value > 0.0

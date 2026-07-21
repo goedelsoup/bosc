@@ -39,17 +39,18 @@ from watermark.grid.model import (
 )
 from watermark.hydrology.model import ProvenancedValue
 from watermark.logging import get_logger
-from watermark.sites import active_profile
+from watermark.sites import SiteProfile, active_profile
 
 log = get_logger(__name__)
 
 _LOAD_FACTOR_CITE = "data-center capacity utilization ~0.9 (near-flat 24x7); assumption (cf. #91)"
 
-# The AEP-Ohio (EIA-861 per-utility) and PJM (EIA-930 annual) figures are now LIVE
-# connector pulls — fetch_utility_retail (watermark.grid.eia861) + fetch_ba_annual_load
-# (watermark.grid.interchange). Only the Ohio state-retail fallback stays a transcribed const.
-_OH_STATE_RETAIL_GWH = 149_003.0
-_OH_STATE_CITE = "EIA ELEC.SALES.OH-ALL.A 2023 (Ohio total retail electricity sales)"
+# All three load denominators are now LIVE connector pulls — fetch_utility_retail
+# (watermark.grid.eia861), fetch_ba_annual_load (watermark.grid.interchange), and the state
+# retail from the committed #91 EIA consumer-energy dataset. There is deliberately NO
+# hardcoded state fallback: a missing state denominator RAISES (A1/#1638), never silently
+# substitutes Ohio's figure for another state's — the economics demand-pressure layer (#1103)
+# raises on the identical condition.
 
 
 # Full state name for prose/citation labels (keyed by EIA state). Keeps the readable form
@@ -163,15 +164,68 @@ _UTILITY_GRID: dict[int, _UtilityGrid] = {
 
 
 def _utility_grid(utility_number: int, utility_name: str) -> _UtilityGrid:
-    """Parent/zone provenance for a utility; a generic PJM fallback for an unlisted one."""
+    """Parent/zone provenance for a utility; a neutral fallback for an unlisted one.
+
+    An unlisted utility no longer asserts PJM (B2/#1639): its balancing authority / RTO is
+    resolved separately by :func:`_balancing_authority` (profile pin → confirmed map →
+    unconfirmed), so the fallback carries only the holding-company chain, not an RTO claim.
+    """
     known = _UTILITY_GRID.get(utility_number)
     if known is not None:
         return known
     return _UtilityGrid(
         holding_company=utility_name,
         holding_citation=f"{utility_name} parent/holding company — identified from the EIA-861 record",
-        ba_citation=f"{utility_name}'s transmission zone is within the PJM RTO footprint",
-        rto_citation=f"PJM is the FERC-jurisdictional wholesale-market RTO for {utility_name}",
+        ba_citation=f"{utility_name}'s balancing authority / RTO is not confirmed (see SiteProfile.ba_code)",
+        rto_citation=f"{utility_name}'s wholesale-market RTO is not confirmed (see SiteProfile.ba_code)",
+    )
+
+
+class _BalancingAuthority(NamedTuple):
+    """The active site's balancing authority / RTO, resolved (not assumed PJM)."""
+
+    ba_code: str  # EIA-930 respondent code, e.g. "PJM" ("" = unconfirmed)
+    rto_name: str  # display name, e.g. "PJM Interconnection"
+    confidence: str  # high / medium / low
+    citation: str
+    confirmed: bool  # True when a fact (profile pin or confirmed utility map), not a guess
+
+
+def _balancing_authority(prof: SiteProfile, grid: _UtilityGrid) -> _BalancingAuthority:
+    """The site's BA / RTO — profile pin → confirmed per-utility map → unconfirmed (B2/#1639).
+
+    PJM was previously hardcoded at high confidence for **every** utility, including the
+    unlisted generic fallback — wrong for the Indiana MISO footprint or any future MISO/SPP
+    site. Resolution order: an explicit ``SiteProfile.ba_code`` (a MISO/SPP site pins it);
+    else a serving utility in the confirmed :data:`_UTILITY_GRID` map is PJM (the map encodes
+    the transmission zone); else the BA is **unconfirmed** — never assumed PJM.
+    """
+    if prof.ba_code:
+        rto = prof.rto_name or prof.ba_code
+        return _BalancingAuthority(
+            ba_code=prof.ba_code,
+            rto_name=rto,
+            confidence="high",
+            citation=f"{rto} balancing authority / RTO (SiteProfile.ba_code={prof.ba_code!r})",
+            confirmed=True,
+        )
+    if prof.eia861_utility_number in _UTILITY_GRID:
+        return _BalancingAuthority(
+            ba_code="PJM",
+            rto_name="PJM Interconnection",
+            confidence="high",
+            citation=grid.rto_citation,
+            confirmed=True,
+        )
+    return _BalancingAuthority(
+        ba_code="",
+        rto_name="unknown/unconfirmed",
+        confidence="low",
+        citation=(
+            "balancing authority / RTO not confirmed for this serving utility — pin "
+            "SiteProfile.ba_code (the network is PJM today, but this is not assumed as fact)"
+        ),
+        confirmed=False,
     )
 
 
@@ -185,8 +239,8 @@ def _serving_utility(
     municipal, member-regulated for a cooperative. The holding company / market zone are
     per-utility (:data:`_UTILITY_GRID`): AEP for Lima/Findlay/Van Wert (#14006) and Fort
     Wayne's I&M (#9324), FirstEnergy/ATSI for Toledo's Toledo Edison (#18997), AMP/PJM for
-    Bryan's municipal system (#2439). RTO is PJM for every registered site; an unlisted
-    utility gets a generic PJM fallback.
+    Bryan's municipal system (#2439). The RTO is resolved by :func:`_balancing_authority`
+    (profile pin → confirmed utility map → unconfirmed), **not** assumed PJM (B2/#1639).
     """
     prof = active_profile(settings)
     reg_value, reg_citation = _retail_regulator(prof.eia_state, ownership)
@@ -195,6 +249,7 @@ def _serving_utility(
         reg_value[reg_value.find("(") + 1 : reg_value.rfind(")")] if "(" in reg_value else reg_value
     )
     grid = _utility_grid(prof.eia861_utility_number, utility_name)
+    ba = _balancing_authority(prof, grid)
     # Provenance grounding follows the per-site serving_utility source: Lima's is a corpus
     # document (the AEP-Ohio tariff in the relator appendix); a site without corpus coverage is
     # grounded in the EIA-861 service-territory record instead.
@@ -202,6 +257,11 @@ def _serving_utility(
         "corpus-grounded (AEP Ohio tariff referenced for this campus)"
         if prof.serving_utility_source == "document"
         else "identified from the EIA-861 service-territory file"
+    )
+    rto_clause = (
+        f"RTO={ba.rto_name} is authoritative"
+        if ba.confirmed
+        else f"the RTO is {ba.rto_name} (pin SiteProfile.ba_code to confirm)"
     )
     return ServingUtility(
         utility=CitedFact(
@@ -217,16 +277,16 @@ def _serving_utility(
             confidence="high",
         ),
         balancing_authority=CitedFact(
-            value="PJM Interconnection",
+            value=ba.rto_name,
             source="reference",
-            citation=grid.ba_citation,
-            confidence="high",
+            citation=ba.citation,
+            confidence=ba.confidence,
         ),
         rto=CitedFact(
-            value="PJM Interconnection (RTO/ISO)",
+            value=f"{ba.rto_name} (RTO/ISO)" if ba.confirmed else ba.rto_name,
             source="reference",
-            citation=grid.rto_citation,
-            confidence="high",
+            citation=ba.citation,
+            confidence=ba.confidence,
         ),
         retail_regulator=CitedFact(
             value=reg_value,
@@ -236,13 +296,13 @@ def _serving_utility(
         ),
         note=(
             (
-                f"Serving utility is {grounding}; RTO=PJM is authoritative. The retail "
+                f"Serving utility is {grounding}; {rto_clause}. The retail "
                 f"service area is the utility's own ({reg_short}), not a PUC-certified IOU "
                 f"territory; it is confirmed against the EIA-861 service-territory file (#94)."
             )
             if is_public
             else (
-                f"Serving utility is {grounding}; RTO=PJM is authoritative. The retail "
+                f"Serving utility is {grounding}; {rto_clause}. The retail "
                 f"service-territory boundary is formally confirmed against the EIA-861 territory "
                 f"file / {reg_short} map (#94)."
             )
@@ -251,19 +311,35 @@ def _serving_utility(
 
 
 def _state_retail_gwh(settings: Settings) -> ProvenancedValue:
-    """State total retail sales from the committed #91 EIA dataset (connector), or a
-    transcribed reference fallback. EIA 'million kWh' is numerically GWh.
+    """State total retail sales from the committed #91 EIA dataset (connector). GWh.
+
+    EIA 'million kWh' is numerically GWh. The state denominator is connector-sourced,
+    state-aware, and never a hardcoded fallback (A1/#1638): a missing dataset or a
+    zero/absent retail-sales series RAISES (mirroring the economics demand-pressure guard,
+    #1103) rather than silently substituting one state's figure for another's — so a
+    non-Ohio site can never inherit Ohio's 149,003 GWh denominator.
     """
+    prof = active_profile(settings)
+    state = prof.eia_state
     costs = load_consumer_energy(settings)
-    if costs is not None:
-        sales = costs.by_metric("electricity", "sales")
-        if sales is not None:
-            return ProvenancedValue.from_connector(
-                round(sales.value.value, 1),
-                "GWh/yr",
-                citation=f"EIA {sales.series_id} ({sales.period}); shared with #91",
-            )
-    return ProvenancedValue.from_reference(_OH_STATE_RETAIL_GWH, "GWh/yr", citation=_OH_STATE_CITE)
+    if costs is None:
+        raise ValueError(
+            f"site {settings.site!r} ({state}): no committed consumer-energy dataset at "
+            f"{prof.consumer_energy_relpath} — cannot source the state retail denominator; "
+            "run `watermark eia` for this site first (refusing to fall back to Ohio's figure)"
+        )
+    sales = costs.by_metric("electricity", "sales")
+    if sales is None or not sales.value.value:
+        raise ValueError(
+            f"consumer-energy dataset for {state} has a missing/zero electricity retail-sales "
+            f"series ({sales.value.value if sales else None!r}) — cannot derive a state load "
+            "share from an absent denominator"
+        )
+    return ProvenancedValue.from_connector(
+        round(sales.value.value, 1),
+        "GWh/yr",
+        citation=f"EIA {sales.series_id} ({sales.period}); shared with #91",
+    )
 
 
 def derive_grid_profile(*, settings: Settings | None = None) -> GridProfile:
@@ -275,23 +351,40 @@ def derive_grid_profile(*, settings: Settings | None = None) -> GridProfile:
     fabricate against it (the data-center dimension onboarding does not capture).
     """
     settings = settings or get_settings()
+    prof = active_profile(settings)
     power = derive_power_basis(settings=settings)
 
-    # Live connector pulls (#94/#120): per-utility EIA-861 + PJM annual EIA-930 + Ohio state.
+    # Live connector pulls (#94/#120): per-utility EIA-861 + the BA's annual EIA-930 demand.
     utility_profile = fetch_utility_retail(settings=settings)
-    ba_load = fetch_ba_annual_load(settings=settings)
-    state_retail = _state_retail_gwh(settings)
+    # The BA is resolved per-site (B2/#1639), not assumed PJM — a MISO/SPP site would pull its
+    # own respondent. Confirmed sites resolve "PJM"; the connector default backstops the rest.
+    ba = _balancing_authority(
+        prof, _utility_grid(prof.eia861_utility_number, utility_profile.utility)
+    )
+    ba_code = ba.ba_code or "PJM"
+    ba_load = fetch_ba_annual_load(ba=ba_code, settings=settings)
 
     load_share: GridLoadShare | None = None
     if power is not None:
         draw_mw = power.facility_draw.value
         consumption_gwh = annual_consumption_gwh(draw_mw)
         utility_retail = utility_profile.retail_sales_gwh
+        # The state denominator is only needed for the campus share, so resolve it here (a
+        # facility-less site skips it and never trips the A1 raise for an absent dataset).
+        state_retail = _state_retail_gwh(settings)
         eia_state = active_profile(settings).eia_state
         state_name = _STATE_NAME.get(eia_state, eia_state)
 
-        def _share(denom: float) -> float:
-            return consumption_gwh / denom * 100.0 if denom else 0.0
+        def _share(denom: float, *, of: str) -> float:
+            # A zero/absent denominator means a broken upstream (empty connector, fixture
+            # drift), not that the campus is a negligible share. Refuse to synthesize a "0%
+            # load share" from an absent denominator (A3/#1638; the #1103 raise-on-zero guard).
+            if not denom:
+                raise ValueError(
+                    f"grid load-share denominator {of!r} is zero/absent for site "
+                    f"{settings.site!r} — cannot derive a load share from a broken denominator"
+                )
+            return consumption_gwh / denom * 100.0
 
         load_share = GridLoadShare(
             campus_load_mw=ProvenancedValue.derived(
@@ -311,19 +404,19 @@ def derive_grid_profile(*, settings: Settings | None = None) -> GridProfile:
             ba_load_gwh=ba_load,
             state_retail_gwh=state_retail,
             share_of_utility_pct=ProvenancedValue.derived(
-                round(_share(utility_retail.value), 2),
+                round(_share(utility_retail.value, of="utility retail (EIA-861)"), 2),
                 "percent",
                 citation=f"campus {consumption_gwh:.0f} GWh / {utility_profile.utility} "
                 f"{utility_retail.value:,.0f} GWh (EIA-861 {settings.eia861_year} per-utility)",
             ),
             share_of_ba_pct=ProvenancedValue.derived(
-                round(_share(ba_load.value), 3),
+                round(_share(ba_load.value, of="BA annual load (EIA-930)"), 3),
                 "percent",
-                citation=f"campus {consumption_gwh:.0f} GWh / PJM {ba_load.value:,.0f} GWh "
+                citation=f"campus {consumption_gwh:.0f} GWh / {ba_code} {ba_load.value:,.0f} GWh "
                 "(EIA-930 annual demand)",
             ),
             share_of_state_pct=ProvenancedValue.derived(
-                round(_share(state_retail.value), 2),
+                round(_share(state_retail.value, of="state retail (EIA)"), 2),
                 "percent",
                 citation=f"campus {consumption_gwh:.0f} GWh / "
                 f"{state_name} {state_retail.value:.0f} GWh",
@@ -333,18 +426,17 @@ def derive_grid_profile(*, settings: Settings | None = None) -> GridProfile:
     log.info(
         "grid.profile",
         utility=utility_profile.utility,
-        ba="PJM",
+        ba=ba_code,
         consumption_gwh=(load_share.annual_consumption_gwh.value if load_share else None),
         share_utility_pct=(load_share.share_of_utility_pct.value if load_share else None),
     )
-    state_label = _STATE_NAME.get(
-        active_profile(settings).eia_state, active_profile(settings).eia_state
-    )
+    state_label = _STATE_NAME.get(prof.eia_state, prof.eia_state)
     note = (
-        f"Grid foundation layer (#94). The state, {utility_profile.utility}, and PJM denominators "
-        f"are now all connector-sourced — {state_label} retail from EIA (shared with #91), "
-        "per-utility retail from the EIA-861 file, and PJM annual demand from EIA-930. The campus "
-        "is a single load equal to a material fraction of its serving utility's entire retail sales."
+        f"Grid foundation layer (#94). The state, {utility_profile.utility}, and {ba_code} "
+        f"denominators are now all connector-sourced — {state_label} retail from EIA (shared with "
+        f"#91), per-utility retail from the EIA-861 file, and {ba_code} annual demand from EIA-930. "
+        "The campus is a single load equal to a material fraction of its serving utility's entire "
+        "retail sales."
         if load_share is not None
         else (
             "Grid foundation layer (#94): per-site grid backdrop only. This site has no "
@@ -360,7 +452,7 @@ def derive_grid_profile(*, settings: Settings | None = None) -> GridProfile:
         ),
         utility_profile=utility_profile,
         ba_profile=BalancingAuthorityProfile(
-            ba="PJM Interconnection",
+            ba=ba.rto_name,
             eia_source="EIA-930 daily demand sum, annual (connector)",
             annual_load_gwh=ba_load,
         ),

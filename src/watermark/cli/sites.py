@@ -118,7 +118,9 @@ def sites_check() -> None:
     Checks:
     - Every Python SITES slug has an entry in data/sites.yaml.
     - The @watermark/core registry byte-matches what `watermark sites sync` would write.
+    - No registered profile carries a raw 'TODO' grid-identity citation (B3/#1639).
     """
+    from watermark.sites import grid_identity_todo_violations
     from watermark.sites._model import _get_identity
 
     errors: list[str] = []
@@ -130,6 +132,11 @@ def sites_check() -> None:
                 f"Python profile {slug!r} is missing from data/sites.yaml — "
                 "add it there and run `watermark sites sync`"
             )
+
+    for violation in grid_identity_todo_violations():
+        errors.append(
+            f"{violation} — replace with an honest citation or an '[open] …' pending note (B3/#1639)"
+        )
 
     expected = _build_registry_json()
     if _REGISTRY_PATH.exists():

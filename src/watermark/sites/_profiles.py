@@ -96,6 +96,11 @@ _LIMA = SiteProfile(
     consumer_energy_relpath="reference/eia/consumer-energy.yaml",
     demand_pressure_relpath="reference/eia/demand-pressure.yaml",
     grid_relpath="reference/eia/grid-profile.yaml",
+    # Lima pins the un-slugged legacy regulatory-stack paths (#1639/B1); peers use the
+    # slug-scoped default. (ba-interchange stays basin-shared — not a per-site relpath.)
+    ferc_relpath="reference/ferc/ferc-seam.yaml",
+    pjm_relpath="reference/pjm/pjm-market.yaml",
+    federal_relpath="reference/federal/federal-energy.yaml",
     # civil plan artifact (#901)
     storm_inventory_relpath="extracted/plans/lma1a.storm-inventory.yaml",
     # toxics
@@ -1777,6 +1782,8 @@ _HAMILTON_MIDDLETOWN = SiteProfile(
     rsei_fips="39017",  # [verified] Butler County, OH (seat = City of Hamilton; NOT Hamilton County/Cincinnati)
     econ_fips="39017",
     eia861_utility_number=3542,  # Duke Energy Ohio (dominant Butler Co IOU, PJM DEOK) — EIA-861 2024 Service_Territory [verified]; Hamilton muni #7977 is the Hamilton-side split [inference]
+    ba_code="PJM",  # off the confirmed _UTILITY_GRID map (#3542), so pin the BA (Duke = PJM DEOK) — B2/#1639
+    rto_name="PJM Interconnection",
     parcels_url="TODO",  # [open] pending the Butler County, OH GIS REST endpoint discovery
     zoning_url="TODO",  # [open] pending the City of Hamilton / Middletown GIS REST endpoint discovery
     floodzone_url=(  # [verified] FEMA NFHL S_FLD_HAZ_AR (national layer 28)
@@ -2901,6 +2908,8 @@ _SANDUSKY = SiteProfile(
     rsei_fips="39043",  # [verified] Erie County, OH
     econ_fips="39043",
     eia861_utility_number=13998,  # [inference] Ohio Edison Co (FirstEnergy, PJM ATSI) — City of Sandusky aggregation points to Ohio Edison; Toledo Edison #18997 is the alternative; parcel-specific confirmation [open]
+    ba_code="PJM",  # off the confirmed _UTILITY_GRID map (#13998), so pin the BA (Ohio Edison = PJM ATSI) — B2/#1639
+    rto_name="PJM Interconnection",
     parcels_url=(  # [reference] OGRIP Ohio statewide parcels public view, scoped to County='Erie'
         "https://services2.arcgis.com/MlJ0G8iWUyC7jAmu/arcgis/rest/services/"
         "OhioStatewidePacels_full_view/FeatureServer/0"
@@ -3104,6 +3113,8 @@ _MANSFIELD = SiteProfile(
     rsei_fips="39139",  # [verified] Richland County, OH
     econ_fips="39139",
     eia861_utility_number=13998,  # [verified] Ohio Edison Co — EIA-861 2024 Service_Territory file
+    ba_code="PJM",  # off the confirmed _UTILITY_GRID map (#13998), so pin the BA (Ohio Edison = PJM ATSI) — B2/#1639
+    rto_name="PJM Interconnection",
     # confirms Ohio Edison serves Richland County (Ohio Power Co/AEP #14006 also serves rural
     # Richland Co territory; City of Shelby is a separate Richland-County municipal utility, #17043
     # — NOT Ohio Edison — the footgun already flagged on the Sidney profile)
@@ -3152,8 +3163,11 @@ _MANSFIELD = SiteProfile(
     "PJM ATSI zone) is the IOU serving Richland County, OH / Mansfield; Ohio Power Co/AEP (#14006) "
     "also serves rural Richland-Co territory. 'City of Shelby' (#17043) is a separate Richland-County "
     "municipal utility — NOT Ohio Edison. [verified]",
-    lmp_usd_mwh=0.0,  # TODO
-    lmp_citation="TODO",
+    lmp_usd_mwh=35.0,  # [inference] PJM ATSI-zone placeholder (Ohio Edison, same zone as Defiance/Toledo) — verify via PJM Data Miner 2 (not the AEP value)
+    lmp_citation=(
+        "PJM ATSI zone (FirstEnergy / Ohio Edison) ~2024 annual average LMP ($/MWh) via PJM Data "
+        "Miner 2 da_hrl_lmps; [inference] not the AEP-zone value used by the AEP OH sites — verify"
+    ),
     county_name="Richland County",  # [verified] FIPS 39139
 )
 
@@ -3186,6 +3200,8 @@ _BOWLING_GREEN = SiteProfile(
     nasa_power_lon=-83.6513,  # in Middleton Twp; the county-level floor connectors key on the city)
     rsei_fips="39173",  # [verified] Wood County, OH
     econ_fips="39173",
+    ba_code="PJM",  # off the confirmed _UTILITY_GRID map (#2054), so pin the BA (Bowling Green muni → AMP/PJM) — B2/#1639
+    rto_name="PJM Interconnection",
     eia861_utility_number=2054,  # [verified] City of Bowling Green - (OH), Municipal (AMP member) —
     # EIA-861 2024 Utility_Data / Sales_Ult_Cust (f8612024.zip, released 2025-10-06), BA=PJM.
     # NB the Bowling Green, KY muni is #2056 (SERC/TVA) — the KY disambiguation trap, avoided here.
@@ -3409,9 +3425,12 @@ _PORTSMOUTH = SiteProfile(
     passby_primary_cfs=0.0,
     passby_secondary_cfs=0.0,
     facility=None,  # [open] the disclosed Project Dazzler SiteFacility — pending the site-plan/permit hunt
-    serving_utility_citation="TODO",  # [open] pending the Scioto County serving-utility record
+    # [open] grid identity unconfirmed — Scioto County serving utility + PJM pricing zone pending
+    # (eia861_utility_number=0). Honest [open] citations, not raw "TODO" (B3/#1639): the grid-knob
+    # readiness check flags this site's grid identity as incomplete so it locks rather than renders.
+    serving_utility_citation="[open] Scioto County serving-utility EIA-861 record pending — not yet confirmed",
     lmp_usd_mwh=0.0,
-    lmp_citation="TODO",
+    lmp_citation="[open] PJM pricing zone pending the Scioto County serving-utility confirmation",
     # Home the Dazzler filings here and off Lima: this site's own slug subtree plus the relocated
     # `permits/dazzler-permits/` collection (subtracted from Lima by `_peer_scope_prefixes`, #1505).
     corpus_relpaths=("portsmouth", "permits/dazzler-permits"),

@@ -278,6 +278,11 @@ class SiteProfile(BaseModel):
             data.setdefault("map_view_zoom", entry.map_zoom)
         return data
 
+    # A raw "TODO" in a grid-identity citation would render verbatim on the grid backdrop, so
+    # it is gated at the REGISTRY level (`grid_identity_todo_violations` → `watermark sites
+    # check`, B3/#1639) rather than at construction — a scaffolded DRAFT profile legitimately
+    # carries TODO placeholders while it is being authored (see `scaffold_profile_src`).
+
     # --- Identity (mirrors sites.ts; ``basin`` is the shared-across-Maumee axis) ---------
     slug: str
     # place, receiving_water_name, map_view_* are authoritative in data/sites.yaml and filled
@@ -444,6 +449,26 @@ class SiteProfile(BaseModel):
     # (e.g. Bryan/AMP #411, Fort Wayne/I&M #361 — zones not yet pinned). AEP=8445784, ATSI=116013753.
     lmp_pnode_id: int = 0
     lmp_pnode_name: str = ""
+    # Balancing authority / RTO (B2/#1639). The EIA-930 respondent code (``ba_code``, e.g.
+    # "PJM", "MISO") + its RTO display name. Empty = unconfirmed: the grid layer then resolves
+    # PJM only for a serving utility in the confirmed per-utility map, and otherwise reports the
+    # BA as "unknown/unconfirmed" rather than ASSUMING PJM (much of Indiana + any future MISO/SPP
+    # site is not PJM). A site whose confirmed utility is off that map pins this explicitly.
+    ba_code: str = ""
+    rto_name: str = ""
+
+    # --- Per-site committed reference outputs for the regulatory-stack writers (#1639/B1) ----
+    # `watermark ferc` / `pjm` / `federal` write PER-SITE content — the FERC↔state-PUC
+    # jurisdiction (OH→IN), the LMP pricing zone (AEP→ATSI→DAY), and the campus load shares all
+    # vary by site — but historically wrote a single basin-shared path, so a non-Lima run
+    # clobbered Lima's committed file (and a non-Lima read returned Lima's data). These relpaths
+    # make the write+read per-site (relative to data_dir, like `grid_relpath`). Optional: `None`
+    # resolves to a slug-scoped default (`reference/<dir>/<slug>/<file>` — the #762/#780
+    # safe-default idiom, `_grid_ref_relpath`); Lima pins the un-slugged legacy paths.
+    # (`ba-interchange` is legitimately BA-wide, not per-site — deliberately NOT here.)
+    ferc_relpath: str | None = None  # FERC seam (grid/ferc.py)
+    pjm_relpath: str | None = None  # PJM market reference (grid/market.py)
+    federal_relpath: str | None = None  # federal backdrop (grid/policy.py)
 
     # --- OEPA permit registry (#844) -----------------------------------------------------
     # Known NPDES permit IDs for this site's facilities. Used by ``watermark oepa discover``

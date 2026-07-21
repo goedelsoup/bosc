@@ -73,12 +73,20 @@ For PJM over a representative summer month `[connector: EIA-930]`:
 | Net interchange | **+5,753** (net **exporter**); range −837 … +11,509 |
 | Net-import hours | ~0.6% (4 of 720 h) |
 
-**The derived comparison.** PJM's in-BA net generation exceeds demand by ~5,747 MW on
-average, so the campus's ~348 MW added load is **within the in-BA generation headroom —
-comfortably met by in-BA generation without requiring net imports** — though it is
-~6% of the mean net-interchange swing (~0.34% of PJM demand). This is a **screening**
-view over window means, not an hourly dispatch or locational (LMP/congestion) model;
-deliverability to the campus's specific bus is the PJM-queue layer (#96).
+**The derived comparison.** An earlier version headlined an "in-BA generation headroom"
+(mean net generation − mean demand). By the EIA-930 balance identity `D = NG − TI` that
+quantity is **algebraically net interchange** (`NG − D ≡ TI`, ~5,747 ≈ +5,753 MW), so it
+merely restated the interchange line and made the "no imports needed" conclusion circular.
+It is dropped (C1/#1638). Adequacy is now judged at the **coincident peak** (the binding
+case for a flat 24×7 load): PJM's window **peak** demand (~147,976 MW) exceeds its **mean**
+in-BA net generation (~107,884 MW) by ~40,092 MW, so the BA already leans on imports and
+peaking capacity at peak and the campus's ~348 MW adds on top of that. The campus is
+~6% of the mean net-interchange swing, ~0.34% of mean demand, and ~0.24% of the peak. This
+is a **screening** view over window aggregates — the coincident-peak gap compares peak
+demand against *mean* net generation (a screening upper bound; the reduced payload discards
+hourly net-gen), not a reserve-margin calculation (installed capacity is not in the
+region-data feed) or an hourly-dispatch / locational (LMP/congestion) model; deliverability
+to the campus's specific bus is the PJM-queue layer (#96).
 
 ## #96 - RTO / wholesale market (PJM)
 

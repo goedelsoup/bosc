@@ -76,13 +76,17 @@ class _Form1Filer(NamedTuple):
 
 
 # Serving-utility FERC identity, keyed by EIA-861 utility number (profile-only — mirrors
-# watermark.grid.utility._UTILITY_GRID). Lima/Findlay/Van Wert = Ohio Power (#14006); Fort Wayne =
-# Indiana Michigan Power (#9324); Toledo = Toledo Edison (#18997); Bryan = a municipal system
-# (#2439), not a FERC Form-1 filer.
+# watermark.grid.utility._UTILITY_GRID; the two maps MUST cover the same utilities — a keyset
+# drift is what lost WPAFB/Xenia their FERC filer, A5/#1638, and is now CI-guarded. GP-H/#1645
+# is the deeper fix: collapse the two into one source). Lima/Findlay/Van Wert = Ohio Power
+# (#14006); Fort Wayne = Indiana Michigan Power (#9324); Toledo = Toledo Edison (#18997); the
+# Miami-basin sites (WPAFB/Xenia/Troy-Piqua/Sidney/Greenville/Wilmington) = Dayton P&L / AES
+# Ohio (#4922); Bryan = a municipal system (#2439), not a FERC Form-1 filer.
 _FORM1_FILER: dict[int, _Form1Filer] = {
     14006: _Form1Filer("AEP Ohio", "Ohio Power Company", True),
     9324: _Form1Filer("AEP I&M", "Indiana Michigan Power Company", True),
     18997: _Form1Filer("FirstEnergy (Toledo Edison)", "The Toledo Edison Company", True),
+    4922: _Form1Filer("AES Ohio (Dayton P&L)", "The Dayton Power and Light Company", True),
     2439: _Form1Filer("Bryan Municipal Utilities", "Bryan Municipal Utilities", False),
 }
 
@@ -402,14 +406,19 @@ def derive_ferc_seam(*, settings: Settings | None = None) -> FercSeam:
     )
 
 
-def _reference_path(reference_dir: Path) -> Path:
-    return reference_dir / "ferc" / "ferc-seam.yaml"
+def _reference_path(settings: Settings) -> Path:
+    """The active site's FERC-seam path (#1639/B1). Per-site because the seam embeds per-site
+    content (the FERC↔state-PUC jurisdiction, the serving utility) — a slug-scoped default
+    unless the profile pins one (Lima keeps the un-slugged legacy path)."""
+    prof = active_profile(settings)
+    rel = prof.ferc_relpath or f"reference/ferc/{prof.slug}/ferc-seam.yaml"
+    return settings.data_dir / rel
 
 
 def write_ferc_seam(seam: FercSeam, *, settings: Settings | None = None) -> str:
-    """Persist the FERC seam as committed reference YAML; return the path."""
+    """Persist the FERC seam as committed reference YAML for the active site; return the path."""
     settings = settings or get_settings()
-    path = _reference_path(settings.reference_dir)
+    path = _reference_path(settings)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
         yaml.safe_dump(seam.model_dump(), sort_keys=False, allow_unicode=True),
@@ -419,9 +428,10 @@ def write_ferc_seam(seam: FercSeam, *, settings: Settings | None = None) -> str:
     return str(path)
 
 
-def load_ferc_seam(reference_dir: Path) -> FercSeam | None:
-    """Read the committed FERC-seam YAML, or ``None`` if absent."""
-    path = _reference_path(reference_dir)
+def load_ferc_seam(settings: Settings | None = None) -> FercSeam | None:
+    """Read the committed FERC-seam YAML for the active site, or ``None`` if absent."""
+    settings = settings or get_settings()
+    path = _reference_path(settings)
     if not path.is_file():
         return None
     data = yaml.safe_load(path.read_text(encoding="utf-8"))
