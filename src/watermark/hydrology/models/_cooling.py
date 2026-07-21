@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, PrivateAttr
 
 from watermark.hydrology.models._core import ProvenancedValue, WaterBalance
 from watermark.hydrology.models._lowflow import AssimilativeCheck
@@ -59,6 +59,21 @@ class CoolingBasis(BaseModel):
     # hybrid_adiabatic (#1058): the months with evaporative assist (ET0 > precip); the
     # consumptive draw is ~0 outside them. None for the constant-draw archetypes.
     seasonal_months: list[str] | None = None
+
+    # WS-16 (#1616): True when the evaporative upper bound (``consumptive_high``) was limited
+    # by the physical WUE ceiling rather than the blowdown method — set by
+    # ``_derive_evaporative_tower``. Derivation-time metadata, deliberately NOT a serialized
+    # field: it has no cross-tier (bundle/frontend) consumer — the cap's rationale already
+    # travels in ``consumptive_high.citation`` — so keeping it off the model spares the
+    # published bundle contract a version bump. Consumers that need it (the HYDROLOGY report
+    # generator) read a freshly-derived in-process basis; a deserialized basis defaults False
+    # (safe degradation — the "capped" annotation is omitted, the value stays correct).
+    _consumptive_high_capped: bool = PrivateAttr(default=False)
+
+    @property
+    def consumptive_high_capped(self) -> bool:
+        """True when ``consumptive_high`` was capped at the physical WUE ceiling (#1616)."""
+        return self._consumptive_high_capped
 
     def headline_consumptive(self) -> ProvenancedValue | None:
         """The single central consumptive draw (MGD), or ``None`` for a bracketed basis.

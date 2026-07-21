@@ -372,6 +372,7 @@ def _derive_evaporative_tower(
     frac = (cycles - 1.0) / cycles  # evaporation / makeup
     consumptive_low = _consumptive_mgd_from_power(it_load_mw, wue_l_per_kwh)
     makeup = consumptive_low / frac if frac > 0 else consumptive_low
+    consumptive_high_capped = False  # WS-16 (#1616): set when the WUE-ceiling cap binds
     if blowdown_mgd is not None:
         blowdown_consumptive = blowdown_mgd * (cycles - 1.0)  # blowdown x (CoC-1) = evaporation
         # WS-16 (#1616): bound the blowdown method to a physical WUE ceiling. The disclosed
@@ -384,6 +385,7 @@ def _derive_evaporative_tower(
         ceiling_wue = max(wue_l_per_kwh, _WUE_CEILING_L_PER_KWH)
         implied_wue = _wue_from_consumptive_mgd(it_load_mw, blowdown_consumptive)
         if implied_wue > ceiling_wue:
+            consumptive_high_capped = True
             consumptive_high = _consumptive_mgd_from_power(it_load_mw, ceiling_wue)
             high_cite = (
                 f"cooling upper bound capped at the WUE ceiling: {it_load_mw:g} MW x "
@@ -431,7 +433,7 @@ def _derive_evaporative_tower(
             "upper-bound intake = central makeup (CoC <= 1, evap fraction non-positive)"
         )
 
-    return CoolingBasis(
+    basis = CoolingBasis(
         cooling_model=CoolingModelType.EVAPORATIVE_TOWER,
         it_load=_it_load_pv(it_load_mw, it_load_cite),
         wue=ProvenancedValue.assume(wue_l_per_kwh, "L/kWh", why=wue_cite),
@@ -465,6 +467,10 @@ def _derive_evaporative_tower(
             citation=high_cite,
         ),
     )
+    # WS-16 (#1616): record whether the WUE-ceiling cap bound the upper estimate, so the
+    # report generator reads an explicit flag instead of string-matching the citation.
+    basis._consumptive_high_capped = consumptive_high_capped
+    return basis
 
 
 def _derive_once_through(
