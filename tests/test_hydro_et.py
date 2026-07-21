@@ -6,7 +6,11 @@ import pytest
 
 from watermark.config import Settings
 from watermark.hydrology import climate, et
-from watermark.hydrology.connectors.nasa_power import ClimatologyParameter, NasaPowerClimatology
+from watermark.hydrology.connectors.nasa_power import (
+    ClimatologyParameter,
+    NasaPowerClimatology,
+    NasaPowerUnitError,
+)
 
 
 def test_et0_from_committed_climatology() -> None:
@@ -56,6 +60,32 @@ def test_et0_missing_parameter_raises() -> None:
     )
     with pytest.raises(ValueError, match=r"ALLSKY_SFC_SW_DWN|T2M_MAX|RH2M|WS2M"):
         et.penman_monteith_et0(thin)
+
+
+def test_et0_rejects_non_mj_shortwave_units() -> None:
+    """WS-18 (#1618): shortwave in kW-hr/m^2/day (RE community) is a 3.6x error — reject it.
+
+    The committed climatology is AG-community MJ/m^2/day; a re-fetch under RE would ship
+    ALLSKY_SFC_SW_DWN in kW-hr/m^2/day and silently inflate net shortwave -> ET0.
+    """
+    clim = climate.load_climatology(settings=Settings())
+    assert clim is not None
+    rs = clim.get("ALLSKY_SFC_SW_DWN")
+    assert rs is not None
+    rs.units = "kW-hr/m^2/day"  # what POWER's RE community returns for this parameter
+    with pytest.raises(NasaPowerUnitError, match=r"ALLSKY_SFC_SW_DWN|kW-hr"):
+        et.penman_monteith_et0(clim)
+
+
+def test_et0_rejects_non_celsius_temperature_units() -> None:
+    """The temperature/humidity/wind inputs are guarded too, not only radiation."""
+    clim = climate.load_climatology(settings=Settings())
+    assert clim is not None
+    t2m = clim.get("T2M")
+    assert t2m is not None
+    t2m.units = "K"  # Kelvin, not the FAO-56 °C the equations assume
+    with pytest.raises(NasaPowerUnitError, match=r"T2M"):
+        et.penman_monteith_et0(clim)
 
 
 def test_reservoir_evaporation_scales_with_area_and_matches_units() -> None:

@@ -88,10 +88,20 @@ class NasaPowerClimatology(BaseModel):
         assumption that ``ANN`` is a mm/day rate; a mismatch (e.g. POWER switching ``ANN``
         to an annual total — a ~365x drift) raises :class:`NasaPowerUnitError` rather than
         silently mis-reporting the user-visible precip headline.
+
+        The days-weighted sum also assumes the **monthly** block is mm/day; that unit is
+        asserted here so a POWER unit change (e.g. to inches or m/day) fails loud rather
+        than skewing the depth (WS-18, #1618).
         """
         p = self.get("PRECTOTCORR")
         if p is None or len(p.monthly) < len(_MONTHS):
             return None
+        if not p.units.strip().startswith("mm"):
+            raise NasaPowerUnitError(
+                f"NASA POWER PRECTOTCORR monthly units ({p.units!r}) are not mm/day; the "
+                f"annual precip depth is a days-weighted sum of mm/day monthly normals, so "
+                f"a unit change (e.g. inches or m/day) would mis-report the precip headline."
+            )
         derived = sum(p.monthly[m] * _DAYS_IN_MONTH[m] for m in _MONTHS)
         if p.annual is not None:
             ann_as_rate = p.annual * _DAYS_PER_YEAR
