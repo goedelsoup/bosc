@@ -6,9 +6,9 @@ Maps the grid subsystem's already-computed interchange aggregates (:mod:`waterma
 runtime when the grid cannot serve firm load (an EEA / capacity-shortfall event).
 Economic peak-shaving / demand-response is explicitly out of scope for this epic.
 
-The honest core: the EIA-930 signals we have (net-import-hours fraction, in-BA generation
-headroom, whether that headroom covers the campus) are **BA-wide window means**. They do
-not directly give reliability-event hours. So the mapping introduces one explicit,
+The honest core: the EIA-930 signals we have (net-import-hours fraction, the coincident-peak
+import need, whether the BA is import-dependent at peak) are **BA-wide window aggregates**.
+They do not directly give reliability-event hours. So the mapping introduces one explicit,
 labeled bridge — an *escalation fraction*: the share of import-dependent hours that, under
 a reliability event, coincide with a firm-capacity shortfall forcing on-site backup. That
 fraction is `[inference]` and stays so until the real event is captured (#1174). The
@@ -55,7 +55,7 @@ class RuntimeEstimate(BaseModel):
     """A backup fleet's forced runtime-hours band under grid reliability stress (#1176).
 
     ``runtime_hours_*`` are per-engine hours per year (the fleet runs together in a
-    reliability event). ``import_hours_per_year`` and ``generation_headroom_mw`` are the
+    reliability event). ``import_hours_per_year`` and ``peak_import_need_mw`` are the
     real grid signals the band is built from; the band itself is `[inference]` through
     :class:`DispatchAssumptions`.
     """
@@ -65,8 +65,8 @@ class RuntimeEstimate(BaseModel):
     ba: str
     regime: str = "reliability_dispatch"
     import_hours_per_year: ProvenancedValue  # derived from EIA-930 net-import-hours fraction
-    generation_headroom_mw: ProvenancedValue  # in-BA net generation minus demand (mean)
-    met_by_in_ba_generation: bool  # headroom covers the campus load (no net imports needed)
+    peak_import_need_mw: ProvenancedValue  # peak demand minus mean in-BA net generation (C2/#1638)
+    import_dependent_at_peak: bool  # BA leans on imports/peaking at the window coincident peak
     runtime_hours_low: ProvenancedValue
     runtime_hours_central: ProvenancedValue
     runtime_hours_high: ProvenancedValue
@@ -84,9 +84,10 @@ def estimate_reliability_runtime(
 
     ``runtime = import_hours_per_year * escalation_fraction`` for each band point.
     Import-hours are derived from the real ``net_import_hours_fraction``; the escalation
-    fractions are the `[inference]` bridge. When BA-wide generation comfortably covers the
-    campus (``met_by_in_ba_generation``), the band is a lower bound — the residual risk is
-    acute local / transmission-deliverability events the BA-wide mean does not resolve.
+    fractions are the `[inference]` bridge. When the BA covers its own coincident peak on
+    average (``not import_dependent_at_peak``), the band is a lower bound — the residual
+    risk is acute local / transmission-deliverability events the BA-wide aggregate does not
+    resolve.
     """
     assumptions = assumptions or DispatchAssumptions()
     ba = interchange.ba
@@ -112,27 +113,27 @@ def estimate_reliability_runtime(
             ),
         )
 
-    met = comparison.met_by_in_ba_generation
+    import_dependent = comparison.import_dependent_at_peak
     caveats = [
         "Reliability / compliance stress-test only — economic peak-shaving and "
         "demand-response are out of scope for this epic.",
         "The escalation fraction is [inference], NOT an observed dispatch — it stays "
         "ungrounded until the real reliability-triggered event is captured (#1174).",
-        "Built on BA-WIDE EIA-930 window means; it does not resolve acute local or "
+        "Built on BA-WIDE EIA-930 window aggregates; it does not resolve acute local or "
         "transmission-deliverability events at the campus bus (the #96 PJM-queue layer).",
     ]
-    if met:
+    if not import_dependent:
         caveats.append(
-            f"In-BA generation headroom ({comparison.in_ba_generation_headroom_mw.value:,.0f} MW) "
-            "comfortably covers the campus load in this window, so BA-wide shortfall does not "
+            f"The BA covers its own coincident peak on average (peak import need "
+            f"{comparison.peak_import_need_mw.value:,.0f} MW ≤ 0), so a BA-wide shortfall does not "
             "drive dispatch — this band is a lower bound anchored on the residual import hours."
         )
 
     est = RuntimeEstimate(
         ba=ba,
         import_hours_per_year=import_hours_pv,
-        generation_headroom_mw=comparison.in_ba_generation_headroom_mw,
-        met_by_in_ba_generation=met,
+        peak_import_need_mw=comparison.peak_import_need_mw,
+        import_dependent_at_peak=import_dependent,
         runtime_hours_low=_runtime(assumptions.escalation_fraction_low, "low"),
         runtime_hours_central=_runtime(assumptions.escalation_fraction_central, "central"),
         runtime_hours_high=_runtime(assumptions.escalation_fraction_high, "high"),
@@ -144,7 +145,7 @@ def estimate_reliability_runtime(
         ba=ba,
         import_hours_yr=round(import_hours, 1),
         central_hr=est.runtime_hours_central.value,
-        met=met,
+        import_dependent_at_peak=import_dependent,
     )
     return est
 

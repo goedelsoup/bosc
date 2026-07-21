@@ -31,7 +31,7 @@ backup fleet into runtime, what is the air burden — and does forced generation
   conservative cross-check, at `load` only. (The `#1175` *factor model* stays AP-42-primary
   per its reconciliation — a separate concern from the compliance question.)
 - **No new grid work** (`dispatch.py`): consume `watermark.grid` interchange outputs
-  (`net_import_hours_fraction`, `in_ba_generation_headroom_mw`, `met_by_in_ba_generation`).
+  (`net_import_hours_fraction`, `peak_import_need_mw`, `import_dependent_at_peak`).
   The grid→runtime magnitude is `[inference]` (the escalation fraction) and stays so until
   the real reliability-triggered event is captured (#1174). For PJM's comfortable window
   the BA-wide band is small and honestly says so — don't inflate it.
