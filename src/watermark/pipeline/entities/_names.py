@@ -45,6 +45,19 @@ _GOV_PHRASES = (
     "COUNTY ENGINEER",
     "LAND BANK",
     "HOUSING AUTHORITY",
+    "PLANNING COMMISSION",  # regional/metropolitan planning commissions (e.g. Miami Valley RPC)
+)
+# Federal military departments / defense agencies — a government body, but ``government_military``
+# not ``government_local`` (checked before ``_GOV_PHRASES``). Kept specific so it never catches a
+# corporate "Air Force Federal Credit Union"-style name (#1660: the WPAFB CERCLA FFA names the
+# "United States Department of the Air Force", which was mis-classified as ``individual``).
+_MILITARY_GOV_PHRASES = (
+    "DEPARTMENT OF THE AIR FORCE",
+    "DEPARTMENT OF THE ARMY",
+    "DEPARTMENT OF THE NAVY",
+    "DEPARTMENT OF DEFENSE",
+    "DEFENSE LOGISTICS AGENCY",
+    "ARMY CORPS OF ENGINEERS",
 )
 # Out-of-state incorporation hints — a shell-adjacent *signal*, never a verdict.
 _FOREIGN_HINTS = ("DELAWARE", "WYOMING", "NEVADA")
@@ -191,6 +204,8 @@ def classify(raw: str) -> tuple[str, str, tuple[str, ...]]:
 
     if any(h in up for h in _FACILITY_HINTS):
         return "facility", "facility", signals
+    if any(p in up for p in _MILITARY_GOV_PHRASES):
+        return "government", "government_military", signals
     is_county_body = bool(re.search(r"\bCOUNTY\b", up)) and "FARM" not in up
     if any(p in up for p in _GOV_PHRASES) or is_county_body:
         return "government", "government_local", signals

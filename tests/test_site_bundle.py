@@ -339,6 +339,38 @@ def test_urbana_sample_bundle_tracks_the_export_contract(urbana_bundle: Path) ->
     _assert_fixture_tracks_export(REPO_ROOT / "web" / "sites" / "urbana", _manifest(urbana_bundle))
 
 
+def test_wpafb_committed_bundle_is_fresh(wpafb_bundle: Path) -> None:
+    """The committed ``web/sites/wpafb/`` bundle must track ``watermark --site wpafb export`` — and
+    in particular its **readiness must not lag its own evidence on disk** (#1660, ME-A).
+
+    The original defect this guards: #1397 ingested the two ``permits-epa`` records (the US-EPA
+    Sole Source Aquifer designation + the CERCLA §120 Federal Facility Agreement) that clear
+    ``RECORD_LIVE_THRESHOLD``, but the committed bundle was never re-exported — so it shipped
+    ``tier: backdrop`` / ``record: absent`` with a 0-length ``records`` feed while the exporter
+    (and ``test_wpafb_exports_at_case_tier``) already produced ``tier: case`` / ``record: live``.
+    The generic ``_assert_fixture_tracks_export`` alone would have caught it *only because* the
+    contract version had also moved (1.29.0 → 1.30.2); to catch the "live in code, absent on
+    disk" class even at a steady contract, this additionally pins the committed readiness block
+    and the ``records`` feed to what a fresh export produces."""
+    fixture = REPO_ROOT / "web" / "sites" / "wpafb"
+    fresh = _manifest(wpafb_bundle)
+    _assert_fixture_tracks_export(fixture, fresh)
+
+    committed = _manifest(fixture)
+    assert committed["readiness"] == fresh["readiness"], (
+        "committed wpafb readiness drifted from a fresh export — re-export the bundle "
+        "(see web/sites/README.md); a record ingest must re-export the affected site"
+    )
+    # The record domain is live because the site owns exactly its two in-scope agency records;
+    # pin the committed feed to those extracted-tree source paths so a dropped/renamed record
+    # (readiness silently falling back to seeded/absent on disk) fails here, not in production.
+    committed_records = {r["rel"] for r in _rows(fixture, _feeds_by_name(fixture)["records"])}
+    assert committed_records == {
+        "wpafb/ssa-53fr15876.epa.yaml",
+        "wpafb/cercla-ffa-1991.epa.yaml",
+    }, f"committed wpafb records feed drifted, got {sorted(committed_records)}"
+
+
 # --- Backdrop-tier network sites (#1220 / #1224) --------------------------------------------
 # The epic's promotion-candidate proof: the backdrop-staged sites bundle at `backdrop` tier off
 # their committed floor data alone (no fabricated corpus), and the true stubs stay `stub`. We
@@ -550,6 +582,19 @@ def urbana_bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
     scope. Hermetic: no network, same committed data."""
     out = tmp_path_factory.mktemp("urbanabundle") / "b"
     settings = Settings(data_dir=REPO_ROOT / "data", site="urbana")
+    export_bundle(settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00")
+    return out
+
+
+@pytest.fixture(scope="module")
+def wpafb_bundle(tmp_path_factory: pytest.TempPathFactory) -> Path:
+    """A WPAFB bundle exported off the committed corpus — the network's federal-enclave site
+    whose two ``permits-epa`` records (the SSA designation + the CERCLA FFA, #1397) lift ``record``
+    to ``live`` / ``tier`` to ``case``. Backs the committed-bundle freshness guard below (#1660):
+    the committed bundle silently drifted a full tier below its own evidence because no drift test
+    covered it. Hermetic: no network, same committed data."""
+    out = tmp_path_factory.mktemp("wpafbbundle") / "b"
+    settings = Settings(data_dir=REPO_ROOT / "data", site="wpafb")
     export_bundle(settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00")
     return out
 

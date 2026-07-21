@@ -38,3 +38,19 @@ def test_defense_contractors_load_and_match() -> None:
     assert hits.get("Boeing") == ["The Boeing Company - Plant 4"]
     # The Harris false-positive guard: bare "HARRIS" must not match a person.
     assert dcl.match(["WILLIAM HARRIS"]) == {}
+
+
+def test_defense_feed_carries_match_provenance_disclaimer() -> None:
+    # The cross-match resolves against an entity graph whose LEI enrichment folds the JSMC
+    # operator chain (General Dynamics …) into every site, so "GENERAL DYNAMICS" bleeds onto
+    # peers with no local presence. The feed must ship a per-site provenance disclaimer so a
+    # reader can't misread a match as a site-local finding (#1660, ME-A). It travels on every
+    # bundle's feed — including a facility-less peer with no scan and no graph.
+    from watermark.site.candidates import MATCH_PROVENANCE_KEY, export_defense_contractors
+
+    dcl = candidates.load_defense_contractors(ENTITIES)
+    assert dcl is not None
+    feed = export_defense_contractors(dcl)  # no egraph, no scan — the leanest peer
+    assert MATCH_PROVENANCE_KEY in feed.notes
+    note = feed.notes[MATCH_PROVENANCE_KEY]
+    assert isinstance(note, str) and "General Dynamics" in note

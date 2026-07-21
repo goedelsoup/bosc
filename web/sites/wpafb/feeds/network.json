@@ -49,9 +49,9 @@
         "vintage_last_year": 2014
       },
       "activity": {
-        "has_disclosed_facility": false,
-        "it_load_mw": null,
-        "summary": "no disclosed data-center facility"
+        "has_disclosed_facility": true,
+        "it_load_mw": 150.0,
+        "summary": "disclosed facility — IT load ~150 MW"
       }
     },
     {
@@ -183,7 +183,7 @@
       },
       "grid": {
         "utility": "AEP Ohio (Ohio Power Company)",
-        "ownership": null,
+        "ownership": "Investor Owned",
         "holding_company": "American Electric Power (AEP)",
         "balancing_authority": "PJM Interconnection",
         "retail_regulator": "Public Utilities Commission of Ohio (PUCO)",
@@ -203,9 +203,9 @@
         "vintage_last_year": 2014
       },
       "activity": {
-        "has_disclosed_facility": false,
-        "it_load_mw": null,
-        "summary": "no disclosed data-center facility"
+        "has_disclosed_facility": true,
+        "it_load_mw": 500.0,
+        "summary": "disclosed facility — IT load ~500 MW"
       }
     },
     {

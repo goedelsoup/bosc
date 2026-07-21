@@ -1,1 +1,71 @@
-[]
+[
+  {
+    "rel": "wpafb/cercla-ffa-1991.epa.yaml",
+    "group": "permits-epa",
+    "title": "Wright-Patterson AFB Federal Facility Agreement (CERCLA §120)",
+    "confidence": "high",
+    "warnings": [
+      "Source is an OCR'd scan of the 1991 FFA; the OCR is garbled in places (\"PwwLcuu\" = Program, \"cxarvleted\" = completed). Dates, statutory citations, and the Findings of Fact were read against context; verbatim quotes above are normalized only where OCR mangled obvious words.",
+      "The administrative docket number is blank on the executed cover sheet in this copy. The document's own metadata keyword is \"3/31/91\" (the execution/signature date); the FFA becomes formally EFFECTIVE only when U.S. EPA issues its post-public-comment notice (Section 40), a date not stated in this copy — recorded here as execution_date, not effective_date."
+    ],
+    "fields": {
+      "agency": "U.S. Environmental Protection Agency, Region V (and U.S. Department of the Air Force)",
+      "program": "CERCLA Section 120 Federal Facility Agreement (Superfund; DoD Installation Restoration Program)",
+      "permit_no": null,
+      "action": "executed",
+      "action_date": "1991-03-31",
+      "applicant": "United States Department of the Air Force (Wright-Patterson AFB)",
+      "project_name": "Wright-Patterson AFB Federal Facility Agreement (CERCLA §120)",
+      "site_address": "Wright-Patterson AFB, Miami River Valley Basin northeast of Dayton, Greene and Montgomery Counties, Ohio — approx. 8,200 acres (\"Areas A and C\" and \"Area B\")",
+      "affected_resource": "Miami Buried Valley Aquifer (the sole-source drinking-water aquifer; 17 WPAFB supply wells + Dayton/Fairborn municipal well fields) contaminated by VOCs (TCE, PCE, carbon tetrachloride, 1,1,1-TCA, chloroform, 1,2-DCE, toluene) from ≥58 base waste-disposal sites.",
+      "note": "The CERCLA Section 120 Federal Facility Agreement between U.S. EPA Region V and the U.S. Air Force governing Superfund cleanup at WPAFB. Executed 1991 (metadata 3/31/91), following the base's NPL listing on 1989-10-04 (54 Fed. Reg. 41021). Findings of Fact tie the contamination directly to the Miami Buried Valley Aquifer — the SAME sole-source aquifer designated at 53 FR 15876 (see ssa-53fr15876.epa.yaml). This is the [verified] primary instrument behind the WPAFB profile's TCE/PFAS-plume receiving-water dimension."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "wpafb/cercla-ffa-1991.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 8, 9, 10, 71]",
+      "verified": true
+    },
+    "source_doc_rel": "wpafb/cercla/wright-pattersonafb.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "wpafb/ssa-53fr15876.epa.yaml",
+    "group": "permits-epa",
+    "title": "Buried Valley Aquifer System (BVAS), Sole Source Aquifer Petition",
+    "confidence": "high",
+    "warnings": [
+      "The primary source is a 2006 U.S. EPA Region 5 full-text TRANSCRIPTION of the Federal Register notice (\"Not Original Document\"), not the original Federal Register page image. All figures below are transcribed verbatim from that transcription.",
+      "The petition designated the ENTIRE Buried Valley Aquifer System (BVAS) across nine counties; \"Great Miami North\" in the source filename is the Ohio-EPA source-water map segment label, not a separate designation. WPAFB (Greene + Montgomery) sits within the designated area."
+    ],
+    "fields": {
+      "agency": "U.S. Environmental Protection Agency, Region V",
+      "program": "Sole Source Aquifer designation under SDWA Section 1424(e)",
+      "permit_no": "FRL-3369-5",
+      "action": "final determination",
+      "action_date": "1988-04-14",
+      "effective_date": "1988-04-14",
+      "applicant": "Miami Valley Regional Planning Commission (Dayton, Ohio)",
+      "project_name": "Buried Valley Aquifer System (BVAS), Sole Source Aquifer Petition",
+      "site_address": "Great Miami / Little Miami River Basins, Southwestern Ohio (Preble, Dark, Champaign, Miami, Montgomery, Logan, Clark, Greene and Shelby Counties)",
+      "affected_resource": "Buried Valley Aquifer System — the sole or principal drinking-water source for the petitioned area; all Federal financially assisted projects in the aquifer area and its principal recharge zone become subject to EPA project review under SDWA 1424(e).",
+      "note": "U.S. EPA Region V final determination designating the Buried Valley Aquifer System (BVAS) of the Great Miami/Little Miami River Basins of southwestern Ohio a SOLE SOURCE AQUIFER under SDWA Section 1424(e) (42 U.S.C. 300f, 300h-3(e)), signed by Regional Administrator Valdas V. Adamkus on 1988-04-14, published at 53 Fed. Reg. 15876 (May 4, 1988), FR Doc. 88-9103. Petition submitted by the Miami Valley Regional Planning Commission (complete petition received 1987-11-25); public comment 1987-12-22 through 1988-02-22 drew a single comment, in support. This is the [verified] primary instrument behind the WPAFB profile's sole-source-aquifer claim: the base's drinking-water and plume story rests on this aquifer."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "wpafb/ssa-53fr15876.epa.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "wpafb/ssa/SSA_greatmiaminorth_FR.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  }
+]

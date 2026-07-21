@@ -1695,7 +1695,10 @@ _WPAFB = SiteProfile(
     baseline_relpath="reference/economics/wpafb/baseline.yaml",
     rsei_relpath="reference/rsei/wpafb/inventory.yaml",
     consumer_energy_relpath="reference/eia/wpafb/consumer-energy.yaml",
-    demand_pressure_relpath="reference/eia/wpafb/demand-pressure.yaml",
+    # facility=None (the DoD-cloud dimension is the #442 research target), so there is no facility
+    # to size a demand→price-pressure sensitivity against — the feed is facility-gated and omitted.
+    # None (no destination) rather than a dangling path to a file that can never be written (#1660).
+    demand_pressure_relpath=None,
     grid_relpath="reference/eia/wpafb/grid-profile.yaml",
     toxic_corridor_bbox=(
         0.0,
@@ -1743,14 +1746,14 @@ _WPAFB = SiteProfile(
     # [inference] Reader guard (#465): WPAFB straddles Greene + Montgomery; the econ unit here is
     # Montgomery (well-field/plume/Dayton-metro toxics context). The defense-supplier signature the
     # WPAFB thesis rests on is NOT in this unit — Montgomery Professional/Scientific/Technical
-    # (NAICS 54) LQ 0.81, Information (NAICS 51) LQ 0.90, neither elevated. That concentration lives
+    # (NAICS 54) LQ 0.82, Information (NAICS 51) LQ 0.85, neither elevated. That concentration lives
     # in adjacent Greene County (NAICS 54 LQ 2.11), carried by the Xenia baseline (FIPS 39057, #444).
     econ_unit_note=(
         "Economic-unit caveat: Wright-Patterson AFB straddles Greene + Montgomery counties; this "
         "baseline is Montgomery County (39113) — the well-field / TCE-PFAS-plume / Dayton-metro "
         "toxics context. The defense-supplier Professional/Scientific/Technical concentration the "
-        "WPAFB thesis rests on is NOT visible in this unit (Montgomery NAICS 54 LQ 0.81, NAICS 51 "
-        "LQ 0.90 — neither elevated); it lives in adjacent Greene County (NAICS 54 LQ 2.11), "
+        "WPAFB thesis rests on is NOT visible in this unit (Montgomery NAICS 54 LQ 0.82, NAICS 51 "
+        "LQ 0.85 — neither elevated); it lives in adjacent Greene County (NAICS 54 LQ 2.11), "
         "covered by the Xenia baseline (Greene County, FIPS 39057). Do not read this single-county "
         "unit as 'no defense concentration.'"
     ),

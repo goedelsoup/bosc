@@ -84,6 +84,19 @@ def test_classify_is_conservative() -> None:
     assert classify("James W. Neighbors")[0] == "individual"
     # A corporate token wins over the water-name heuristic.
     assert classify("Pike Run Farms LLC")[0] == "corporate"
+    # Government bodies that used to fall through to ``individual`` (#1660): a federal military
+    # department is ``government_military``; a regional planning commission is ``government_local``.
+    assert classify("United States Department of the Air Force")[:2] == (
+        "government",
+        "government_military",
+    )
+    assert classify("Miami Valley Regional Planning Commission")[:2] == (
+        "government",
+        "government_local",
+    )
+    # …but the military phrase is specific: a corporate name carrying "Air Force" is not swept in.
+    assert classify("Air Force Federal Credit Union")[0] == "individual"
+    assert classify("United States Steel Corporation")[0] == "corporate"
 
 
 def test_looks_like_person() -> None:
