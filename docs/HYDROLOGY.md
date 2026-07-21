@@ -91,7 +91,7 @@ The data center draws **treated** municipal water like any large customer, so it
 
 ### Can the rivers refill the reservoirs — even in drought?
 
-Off-stream storage only helps if high-flow pumping keeps it filled. Two questions, two answers from the gauged record (Auglaize at Fort Jennings + Ottawa at Lima, 1988-09-30—2024-12-31). **In a normal year, refill is amply adequate**: the two rivers' combined mean flow (**451.3 cfs**) is ~**15.4x** the city+campus demand `[verified: connector]`. **The binding case is drought**: the Ottawa reaches 0 cfs and the Auglaize sits below the city+campus draw ~25.8% of the time, so the system draws down storage.
+Off-stream storage only helps if high-flow pumping keeps it filled. Two questions, two answers from the gauged record (Auglaize at Fort Jennings + Ottawa at Lima, 1988-09-30—2024-12-31). **In a normal year, refill is amply adequate**: the two rivers' combined mean flow at the intakes (**324.6 cfs**, Auglaize scaled to its intake reach) is ~**11.1x** the city+campus demand `[verified: connector]`. **The binding case is drought**: the Ottawa reaches 0 cfs and the Auglaize sits below the city+campus draw ~25.8% of the time, so the system draws down storage.
 
 
 The **sequent-peak storage requirement** — the active storage the worst gauged drawdown calls on at a constant demand — measures the drought margin and the campus's bite:
@@ -99,14 +99,14 @@ The **sequent-peak storage requirement** — the active storage the worst gauged
 
 | demand scenario | storage the worst drought needs | of the 14.4 BG | worst drawdown |
 |---|--:|--:|---|
-| baseline city (15 MGD) | 3,508 MG | 24.3% | ~251 d from 1999-07-05 |
-| +campus (central) (18.92 MGD) | 4,630 MG | 32.1% | ~310 d from 1999-07-05 |
-| +campus (high bound) (27.5 MGD) | 7,696 MG | 53.4% | ~337 d from 1999-06-22 |
+| baseline city (15 MGD) | 4,515 MG | 31.3% | ~325 d from 1999-06-23 |
+| +campus (central) (18.92 MGD) | 5,927 MG | 41.1% | ~338 d from 1999-06-22 |
+| +campus (high bound) (27.5 MGD) | 9,034 MG | 62.7% | ~354 d from 1999-06-21 |
 
-The worst gauged drought (the 1999 event, a ~310-day drawdown) is survived with large margin — but the campus raises the storage it calls on from **24.3% to 32.1%** of capacity (**+1,122 MG**, and ~59 more days of drawdown). At the high cooling bound (27.5 MGD) it rises to **53.4%**. `[inference: derived]` So refill is adequate and the system survives the historical record — but the campus measurably erodes the buffer, and **a drought longer or deeper than 1988—2024 is the residual exposure** this screen cannot bound.
+The worst gauged drought (the 1999 event, a ~338-day drawdown) is survived with large margin — but the campus raises the storage it calls on from **31.3% to 41.1%** of capacity (**+1,412 MG**, and ~13 more days of drawdown). At the high cooling bound (27.5 MGD) it rises to **62.7%**. `[inference: derived]` So refill is adequate and the system survives the historical record — but the campus measurably erodes the buffer, and **a drought longer or deeper than 1988—2024 is the residual exposure** this screen cannot bound.
 
 
-The estimate remains *optimistic* (the Auglaize gage is downstream of the intakes; no pump-rate cap), so the real margin is still somewhat tighter than shown. A first-order reservoir-evaporation sink is folded in — FAO-56 ET0 over the 1603-acre reservoir surface, ~**5.095 MGD** mean (peaking at 8.8479 MGD in JUL) `[derived]`, which tightens the drought bound above.
+The estimate remains *optimistic* (the 0.614 drainage-area transfer scaling the downstream Auglaize River gage to the intake is itself a coarse over-estimate; no pump-rate cap), so the real margin is still somewhat tighter than shown. A first-order reservoir-evaporation sink is folded in — FAO-56 ET0 over the 1603-acre reservoir surface, ~**5.095 MGD** mean (peaking at 8.8479 MGD in JUL) `[derived]`, which tightens the drought bound above.
 
 
 **Industrial toxic dischargers on the same reaches.** The municipal screen above covers the three WWTPs; the *industrial* side is larger. Of the 13 EPA-RSEI facilities that release toxics to water in the county, **3** sit on a near-undiluted reach. Placing each on its receiving stream (ECHO-cited where available, else inferred from the Ottawa River industrial corridor) and reading it against the same cited 7Q10:

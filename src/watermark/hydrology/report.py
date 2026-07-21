@@ -21,6 +21,7 @@ from watermark.hydrology.model import (
     StormRunoff,
 )
 from watermark.pipeline import hydrology as hydro_stage
+from watermark.sites import active_profile
 
 _TAG = {
     "document": "verified",
@@ -433,8 +434,9 @@ def _render_refill_adequacy(emit: Callable[[str], None], settings: Settings) -> 
         "Off-stream storage only helps if high-flow pumping keeps it filled. Two questions, two "
         "answers from the gauged record "
         f"(Auglaize at Fort Jennings + Ottawa at Lima, {ra.period_start}—{ra.period_end}). "
-        "**In a normal year, refill is amply adequate**: the two rivers' combined mean flow "
-        f"(**{ra.combined_mean_cfs:g} cfs**) is ~**{ra.annual_supply_multiple:g}x** the city+campus "
+        "**In a normal year, refill is amply adequate**: the two rivers' combined mean flow at the "
+        f"intakes (**{ra.combined_mean_cfs:g} cfs**, Auglaize scaled to its intake reach) is "
+        f"~**{ra.annual_supply_multiple:g}x** the city+campus "
         "demand `[verified: connector]`. **The binding case is drought**: the Ottawa reaches 0 cfs "
         f"and the Auglaize sits below the city+campus draw ~{ra.rivers[0].pct_days_below_demand:g}% "
         "of the time, so the system draws down storage.\n"
@@ -483,9 +485,17 @@ def _render_refill_adequacy(emit: Callable[[str], None], settings: Settings) -> 
         if ev is not None
         else " Reservoir evaporation is not yet subtracted."
     )
+    prof = active_profile(settings)
+    ratio, primary_river = prof.intake_da_ratio_primary, prof.supply_river_primary
+    optimism = (
+        f"the {ratio:g} drainage-area transfer scaling the downstream {primary_river} gage to the "
+        "intake is itself a coarse over-estimate; no pump-rate cap"
+        if ratio != 1.0
+        else f"the {primary_river} gage is downstream of the intakes; no pump-rate cap"
+    )
     emit(
-        f"\nThe estimate remains *optimistic* (the Auglaize gage is downstream of the intakes; no "
-        f"pump-rate cap), so the real margin is still somewhat tighter than shown.{evap_txt}\n"
+        f"\nThe estimate remains *optimistic* ({optimism}), so the real margin is still somewhat "
+        f"tighter than shown.{evap_txt}\n"
     )
 
 
