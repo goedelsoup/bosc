@@ -157,14 +157,23 @@ class BAInterchange(BaseModel):
 
 
 class CampusInterchangeComparison(BaseModel):
-    """Campus load situated against the BA's interchange & in-BA generation (#95, derived).
+    """Campus load situated against the BA's interchange & coincident-peak adequacy (#95, derived).
 
-    Answers the call's question — does the added ~275 MW plausibly come from in-BA
-    generation or net imports? The headline is the in-BA generation **headroom** (mean
-    net generation minus mean demand): when it exceeds the campus load, the added draw
-    is comfortably within the BA's own generation and does not require net imports. The
-    campus is also sized against the mean net-interchange magnitude (the swing it eats
-    into). A screening comparison over mean conditions, not an hourly dispatch model.
+    Answers the call's question — how does the added ~275 MW sit against the BA's balance?
+    The comparison sizes the campus against the BA's **mean demand**, its **coincident
+    peak** (the binding case for a flat 24x7 data-center load), and the magnitude of its
+    **net interchange** (the import/export swing).
+
+    Evidentiary note (C1/C2/#1638): an earlier version headlined an "in-BA generation
+    headroom" = mean net generation - mean demand. By the EIA-930 balance identity
+    D = NG - TI, that quantity is **algebraically net interchange** (NG - D ≡ TI), so it
+    duplicated ``ba_interchange_mean_mw`` and made the "fits within in-BA headroom → no
+    imports needed" conclusion circular. It is dropped. Adequacy is now judged at the
+    **coincident peak** — where the window peak demand exceeds mean in-BA net generation
+    (``import_dependent_at_peak``), the BA already leans on imports/peaking and the campus
+    adds on top — using the peak that was previously collected and discarded. A screening
+    comparison over window aggregates, not an hourly dispatch or reserve-margin model
+    (installed capacity is not in the EIA-930 region-data feed).
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -172,11 +181,13 @@ class CampusInterchangeComparison(BaseModel):
     ba: str
     campus_load_mw: ProvenancedValue  # total facility draw, central (#87)
     ba_demand_mean_mw: ProvenancedValue  # connector (EIA-930)
+    ba_demand_peak_mw: ProvenancedValue  # connector: the window coincident peak (C2)
     ba_net_generation_mean_mw: ProvenancedValue
-    ba_interchange_mean_mw: ProvenancedValue
+    ba_interchange_mean_mw: ProvenancedValue  # + = net exports, - = net imports
     campus_share_of_demand_pct: ProvenancedValue  # derived: campus / BA mean demand
+    campus_share_of_peak_demand_pct: ProvenancedValue  # derived: campus / BA peak demand (C2)
     campus_vs_interchange_pct: ProvenancedValue  # derived: campus / |BA mean interchange|
-    in_ba_generation_headroom_mw: ProvenancedValue  # derived: net generation - demand (mean)
-    met_by_in_ba_generation: bool  # headroom >= campus load (no net imports needed)
+    peak_import_need_mw: ProvenancedValue  # derived: peak demand - mean in-BA net generation (C2)
+    import_dependent_at_peak: bool  # peak demand exceeds mean in-BA net generation (C2)
     interpretation: str = ""
     caveats: list[str] = []
