@@ -15,6 +15,7 @@ import { getHypotheses, hasFeed, loadFeed, loadManifest } from "@watermark/core/
 import { buildLens, indexAssessments, LENS_ORDER, lensConfig, lensCount } from "@watermark/core/directory";
 import type { DocumentCollectionItem, HypothesisAssessmentItem } from "@watermark/core/feeds";
 import { withBase } from "@watermark/core/site";
+import { facilityStatus } from "@watermark/core/sites";
 
 const manifest = loadManifest();
 const byName = new Map(manifest.feeds.map((f) => [f.name, f]));
@@ -38,7 +39,7 @@ const lensData = indexAssessments(cells);
 
 const lenses = LENS_ORDER.map((key) => ({
   cfg: lensConfig(key, hypByKey.get(key)),
-  view: buildLens(key, limaCounts, lensData),
+  view: buildLens(key, limaCounts, lensData, facilityStatus),
   count: lensCount(key, lensData),
 }));
 

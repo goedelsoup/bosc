@@ -1,13 +1,74 @@
 {
   "$defs": {
+    "DcEndUse": {
+      "description": "The disclosed data-center **end-use** archetype (#1628) — the controlled vocabulary shared\nwith the frontend's end-use explorer (``DcKey`` in ``web/packages/core/src/endUse.ts``).\n\nSet only where the record discloses the type (with ``end_use_citation``); left ``None`` = the\nend use is ``[open]`` — the sharp unanswered question for Lima itself, which must NOT be\nasserted (``endUse.ts`` exists precisely because Lima's type is open). ``bitcoin`` is its own\ncustomer (behind-the-meter mining); ``hyperscale`` = the operator runs its own workloads;\n``colocation`` = a landlord with unnamed tenants; ``enclave`` = an authorized-only federal\nenvironment.",
+      "enum": [
+        "bitcoin",
+        "hyperscale",
+        "colocation",
+        "enclave"
+      ],
+      "title": "DcEndUse",
+      "type": "string"
+    },
+    "FacilityLifecycle": {
+      "description": "A disclosed facility's real-world lifecycle stage (#1628) — the four-stage clock the\nfrontend's facility-status rail walks (``investigation → confirmed → construction → live``).\n\nThe 1:1 Python peer of the TS ``FacilityStatus`` in ``web/packages/core/src/sites.ts``; the\nfrontend now reads this off the bundle instead of a hand-maintained per-slug dict. Distinct\nfrom the SITE-BUILD status (how far along OUR website is) and from\n:class:`watermark.facility.candidate.CandidateStatus` (the richer discovery-stage vocabulary a\nswept candidate carries — mapped to this at promotion). ``investigation`` is the honest floor\nfor a site with **no** disclosed facility; a site that *has* a :class:`SiteFacility` is at least\n``confirmed`` (a project is on the record).",
+      "enum": [
+        "investigation",
+        "confirmed",
+        "construction",
+        "live"
+      ],
+      "title": "FacilityLifecycle",
+      "type": "string"
+    },
     "NodeActivity": {
       "additionalProperties": false,
-      "description": "The node's disclosed data-center activity (from the SiteProfile facility).",
+      "description": "The node's disclosed data-center activity (from the primary ``SiteProfile`` facility).\n\nCarries the primary campus's real-world lifecycle ``facility_status`` (#1628) so the pure\nbasin/directory builders read it off the ``network`` feed instead of a hardcoded per-slug dict —\n``None`` when the site has no disclosed facility (the reader defaults to ``investigation``).\n``facility_count`` reflects the full multi-facility list.",
       "properties": {
         "has_disclosed_facility": {
           "default": false,
           "title": "Has Disclosed Facility",
           "type": "boolean"
+        },
+        "facility_count": {
+          "default": 0,
+          "title": "Facility Count",
+          "type": "integer"
+        },
+        "facility_status": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FacilityLifecycle"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "operator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Operator"
+        },
+        "end_use": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DcEndUse"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "it_load_mw": {
           "anyOf": [

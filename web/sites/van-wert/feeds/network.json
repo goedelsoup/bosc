@@ -49,9 +49,13 @@
         "vintage_last_year": 2014
       },
       "activity": {
-        "has_disclosed_facility": false,
-        "it_load_mw": null,
-        "summary": "no disclosed data-center facility"
+        "has_disclosed_facility": true,
+        "facility_count": 1,
+        "facility_status": "live",
+        "operator": "MARA Holdings, Inc. (NASDAQ: MARA); host One Power Co",
+        "end_use": "bitcoin",
+        "it_load_mw": 150.0,
+        "summary": "disclosed facility (live) — IT load ~150 MW"
       }
     },
     {
@@ -69,14 +73,14 @@
       "downstream": "defiance",
       "regime": "effluent_dominated_tributary",
       "screen": {
-        "npdes": "OH0023841",
-        "discharger": "AMERICAN-BATH WWTP",
-        "receiving_water": "Pike Run",
-        "design_flow_mgd": 1.5,
-        "dilution_ratio": 0.013,
+        "npdes": "OH0026069",
+        "discharger": "LIMA WWTP",
+        "receiving_water": "Ottawa River",
+        "design_flow_mgd": 18.5,
+        "dilution_ratio": 0.007,
         "flag": "violation",
         "status": "screened",
-        "detail": "Pike Run 7Q10 0.03 cfs (document) vs discharge 2.32 cfs -> 0.01:1 dilution (violation)"
+        "detail": "Ottawa River 7Q10 0.20 cfs (document) vs discharge 28.62 cfs -> 0.01:1 dilution (violation)"
       },
       "grid": {
         "utility": "AEP Ohio (Ohio Power Company)",
@@ -101,8 +105,12 @@
       },
       "activity": {
         "has_disclosed_facility": true,
+        "facility_count": 1,
+        "facility_status": "construction",
+        "operator": "Google (developer of record)",
+        "end_use": null,
         "it_load_mw": 275.0,
-        "summary": "disclosed facility — IT load ~275 MW"
+        "summary": "disclosed facility (construction) — IT load ~275 MW"
       }
     },
     {
@@ -152,6 +160,10 @@
       },
       "activity": {
         "has_disclosed_facility": false,
+        "facility_count": 0,
+        "facility_status": null,
+        "operator": null,
+        "end_use": null,
         "it_load_mw": null,
         "summary": "no disclosed data-center facility"
       }
@@ -204,8 +216,12 @@
       },
       "activity": {
         "has_disclosed_facility": true,
+        "facility_count": 1,
+        "facility_status": "confirmed",
+        "operator": "QTS Data Centers (QTS Realty Trust, LLC — Blackstone); developer Thor Equities Group",
+        "end_use": "colocation",
         "it_load_mw": 500.0,
-        "summary": "disclosed facility — IT load ~500 MW"
+        "summary": "disclosed facility (confirmed) — IT load ~500 MW"
       }
     },
     {
@@ -255,6 +271,10 @@
       },
       "activity": {
         "has_disclosed_facility": false,
+        "facility_count": 0,
+        "facility_status": null,
+        "operator": null,
+        "end_use": null,
         "it_load_mw": null,
         "summary": "no disclosed data-center facility"
       }
@@ -304,8 +324,12 @@
       },
       "activity": {
         "has_disclosed_facility": true,
+        "facility_count": 1,
+        "facility_status": "live",
+        "operator": "Hatchworks LLC (Project Zodiac) — 'a stationary data center'",
+        "end_use": null,
         "it_load_mw": 90.0,
-        "summary": "disclosed facility — IT load ~90 MW"
+        "summary": "disclosed facility (live) — IT load ~90 MW"
       }
     },
     {
@@ -353,6 +377,10 @@
       },
       "activity": {
         "has_disclosed_facility": false,
+        "facility_count": 0,
+        "facility_status": null,
+        "operator": null,
+        "end_use": null,
         "it_load_mw": null,
         "summary": "no disclosed data-center facility"
       }
@@ -402,6 +430,10 @@
       },
       "activity": {
         "has_disclosed_facility": false,
+        "facility_count": 0,
+        "facility_status": null,
+        "operator": null,
+        "end_use": null,
         "it_load_mw": null,
         "summary": "no disclosed data-center facility"
       }

@@ -208,6 +208,8 @@ def test_fort_wayne_is_unknown_and_leaks_no_lima_figure() -> None:
 
 def _stub_facility(**overrides: object) -> SiteFacility:
     base: dict[str, object] = {
+        "name": "Stub Campus",
+        "status": "confirmed",
         "genset_count": 10,
         "genset_mw": 2.0,
         "it_load_mw": 20.0,
@@ -261,7 +263,7 @@ def test_explicit_model_without_facility_is_refused(hydro_settings: Settings) ->
     # A facility-less site (xenia) must never derive a non-off basis from the Lima
     # module fallbacks — that would leak Lima's air-permit provenance into its figures.
     xenia = hydro_settings.model_copy(update={"site": "xenia"})
-    with pytest.raises(ValueError, match=r"requires a SiteProfile\.facility"):
+    with pytest.raises(ValueError, match=r"has no resolvable IT load"):
         derive_cooling_basis(xenia, cooling_model="evaporative_tower")
 
 

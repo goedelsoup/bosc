@@ -452,12 +452,12 @@ def _exec_consumer_energy(settings: Settings) -> OnboardStep:
 
 
 def _exec_demand_pressure(settings: Settings, prof: SiteProfile) -> OnboardStep:
-    # Facility demand→consumer-price-pressure sensitivity (#1105) — needs a documented facility.
-    if prof.facility is None:
+    # Facility demand→consumer-price-pressure sensitivity (#1105) — needs a derivable power basis.
+    if not prof.has_facility_power_basis:
         return OnboardStep(
             name="demand-pressure",
             status="skipped",
-            detail="no documented facility (SiteProfile.facility is None)",
+            detail="no disclosed facility, or its IT load is entirely [open]",
         )
     pressure = econ_energy.derive_demand_pressure(settings=settings)
     path = econ_energy.write_demand_pressure(pressure, settings=settings)
@@ -581,8 +581,8 @@ def _step_specs(settings: Settings, prof: SiteProfile, research: bool) -> list[_
         ),
         _StepSpec(
             "demand-pressure",
-            "per-site (facility-gated; skipped without a documented facility)",
-            prof.demand_pressure_relpath if prof.facility is not None else None,
+            "per-site (facility-gated; skipped without a derivable facility load basis)",
+            prof.demand_pressure_relpath if prof.has_facility_power_basis else None,
             lambda: _exec_demand_pressure(settings, prof),
         ),
         _StepSpec(

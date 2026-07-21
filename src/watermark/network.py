@@ -31,7 +31,7 @@ from watermark.grid.model import GridProfile
 from watermark.hydrology.basin import build_low_flow_lookup, load_dischargers, screen_facility
 from watermark.logging import get_logger
 from watermark.rsei import RseiInventory
-from watermark.sites import SITES, get_profile
+from watermark.sites import SITES, DcEndUse, FacilityLifecycle, SiteFacility, get_profile
 
 log = get_logger(__name__)
 
@@ -98,11 +98,21 @@ class NodeToxics(BaseModel):
 
 
 class NodeActivity(BaseModel):
-    """The node's disclosed data-center activity (from the SiteProfile facility)."""
+    """The node's disclosed data-center activity (from the primary ``SiteProfile`` facility).
+
+    Carries the primary campus's real-world lifecycle ``facility_status`` (#1628) so the pure
+    basin/directory builders read it off the ``network`` feed instead of a hardcoded per-slug dict —
+    ``None`` when the site has no disclosed facility (the reader defaults to ``investigation``).
+    ``facility_count`` reflects the full multi-facility list.
+    """
 
     model_config = ConfigDict(extra="forbid")
 
     has_disclosed_facility: bool = False
+    facility_count: int = 0
+    facility_status: FacilityLifecycle | None = None
+    operator: str | None = None
+    end_use: DcEndUse | None = None
     it_load_mw: float | None = None
     summary: str = "no disclosed data-center facility"
 
@@ -315,6 +325,20 @@ def _toxics_of(inv: RseiInventory | None) -> NodeToxics:
     )
 
 
+def _activity_summary(facility: SiteFacility | None, count: int) -> str:
+    """The node card's one-line data-center activity summary (#1628) — lifecycle-aware and safe for
+    a facility whose IT load is entirely ``[open]`` (never the primary today, but guarded)."""
+    if facility is None:
+        return "no disclosed data-center facility"
+    load = (
+        f"IT load ~{facility.it_load_mw:g} MW"
+        if facility.it_load_mw is not None
+        else "IT load [open]"
+    )
+    extra = f" (+{count - 1} more campus)" if count > 1 else ""
+    return f"disclosed facility ({facility.status.value}) — {load}{extra}"
+
+
 def build_basin_network(
     *, settings: Settings | None = None, generated_at: str | None = None
 ) -> BasinNetwork:
@@ -359,12 +383,12 @@ def build_basin_network(
                 toxics=_toxics_of(inv),
                 activity=NodeActivity(
                     has_disclosed_facility=facility is not None,
+                    facility_count=len(prof.facilities),
+                    facility_status=facility.status if facility else None,
+                    operator=facility.operator if facility else None,
+                    end_use=facility.end_use if facility else None,
                     it_load_mw=facility.it_load_mw if facility else None,
-                    summary=(
-                        f"disclosed facility — IT load ~{facility.it_load_mw:g} MW"
-                        if facility
-                        else "no disclosed data-center facility"
-                    ),
+                    summary=_activity_summary(facility, len(prof.facilities)),
                 ),
             )
         )
@@ -386,7 +410,10 @@ def write_basin_network(network: BasinNetwork, *, settings: Settings | None = No
     out = settings.reference_dir / "network" / "basin-network.yaml"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(
-        yaml.safe_dump(network.model_dump(), sort_keys=False, allow_unicode=True), encoding="utf-8"
+        # mode="json" so the FacilityLifecycle/DcEndUse StrEnum fields (#1628) serialize to their
+        # string values — plain model_dump keeps enum instances that safe_dump can't represent.
+        yaml.safe_dump(network.model_dump(mode="json"), sort_keys=False, allow_unicode=True),
+        encoding="utf-8",
     )
     log.info("network.write", path=str(out), nodes=len(network.nodes))
     return out

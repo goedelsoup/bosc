@@ -1,7 +1,7 @@
 {
   "site": "west-union",
   "bundle_version": "1.0.0",
-  "contract_version": "1.29.0",
+  "contract_version": "1.31.0",
   "generated_at": "2026-07-08T21:17:59+00:00",
   "feed_count": 25,
   "row_total": 280,
@@ -15,6 +15,7 @@
       "story": "absent"
     }
   },
+  "facility": null,
   "feeds": [
     {
       "name": "records",
@@ -216,5 +217,6 @@
       "kind": "collection",
       "count": 79
     }
-  ]
+  ],
+  "exports": []
 }

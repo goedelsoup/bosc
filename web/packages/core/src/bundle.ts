@@ -24,7 +24,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, isAbsolute, join, resolve } from "node:path";
 import { cwd, env } from "node:process";
 import { fileURLToPath } from "node:url";
-import type { HypothesisItem } from "./feeds";
+import type { FacilitySummary, HypothesisItem } from "./feeds";
 import { LIMA_SLUG } from "./routes";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -123,6 +123,9 @@ export interface Manifest {
   /** Standing domain-activation readiness (#1220 / contract 1.17.0). Optional only so a
    *  synthetic/pre-1.17 fixture without the block degrades (all-absent) rather than crashing. */
   readiness?: Readiness;
+  /** The primary facility's lifecycle status + count (#1628 / contract 1.31.0). Optional so a
+   *  pre-1.31 bundle or a facility-less site degrades — the reader defaults to `investigation`. */
+  facility?: FacilitySummary;
   feeds: FeedRef[];
   /** Downloadable graph exports of the corpus mirror (#1574 / contract 1.29.0). Optional: absent
    *  from a redirected/test bundle or a pre-1.28 fixture, so the graph page degrades to no downloads. */
@@ -190,6 +193,44 @@ export function loadManifest(slug: string = activeSite()): Manifest {
   }
   cachedManifests.set(slug, manifest);
   return manifest;
+}
+
+const missingBundles = new Set<string>();
+
+/** A site's manifest, or `null` when it has no committed bundle (a registered-but-unbuilt slug).
+ *  Non-throwing peer of {@link loadManifest} — for cross-site readers (the directory, switchers)
+ *  that walk every registered site, including ones whose bundle isn't committed yet (#1628).
+ *
+ *  It degrades to `null` for a genuinely tolerable miss (no bundle on disk; a corrupt or
+ *  contract-incompatible `manifest.json`; or — the single-bundle `WATERMARK_BUNDLE_DIR` override —
+ *  a manifest whose own `site` field doesn't match the requested slug, which would otherwise serve
+ *  every slug the override bundle's data). A registered-but-unbuilt slug is negatively cached so a
+ *  header switcher doesn't re-`stat` it on every one of hundreds of pages. */
+export function manifestOrNull(slug: string = activeSite()): Manifest | null {
+  const cached = cachedManifests.get(slug);
+  if (cached) return cached;
+  if (missingBundles.has(slug)) return null;
+  const present = candidateDirs(slug).some((dir) => existsSync(join(dir, "manifest.json")));
+  if (!present) {
+    missingBundles.add(slug);
+    return null;
+  }
+  try {
+    const manifest = loadManifest(slug);
+    // In single-bundle override mode `candidateDirs` falls back to the override root for every
+    // slug, so a miss there resolves to the ONE override bundle — guard against serving its data
+    // under a different slug (the retired hardcoded dict was slug-correct).
+    if (manifest.site && manifest.site !== slug) {
+      missingBundles.add(slug);
+      return null;
+    }
+    return manifest;
+  } catch {
+    // Corrupt / contract-incompatible manifest: degrade this one badge rather than failing the
+    // build of every page that renders a cross-site switcher.
+    missingBundles.add(slug);
+    return null;
+  }
 }
 
 /** Whether a site's bundle exposes a feed by this name. Section pages and the search

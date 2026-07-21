@@ -33,11 +33,11 @@ def compute(
     from watermark.sites import active_profile
 
     settings = get_settings()
-    if active_profile(settings).facility is None:
+    if not active_profile(settings).has_facility_power_basis:
         console.print(
-            f"[yellow]No documented facility for site '{settings.site}' "
-            "(SiteProfile.facility is None) — this command needs an identified data-center "
-            "facility (the data-center dimension onboarding does not capture).[/]"
+            f"[yellow]No derivable facility power basis for site '{settings.site}' "
+            "(no disclosed facility, or its IT load is entirely [open]) — this command needs an "
+            "identified data-center facility with a load basis.[/]"
         )
         raise typer.Exit(0)
     frac = None
@@ -290,7 +290,7 @@ def eia_cmd(
 
     from watermark.sites import active_profile
 
-    if active_profile(settings).facility is not None:
+    if active_profile(settings).has_facility_power_basis:
         dp = derive_demand_pressure(costs=costs, settings=settings)
         console.print(
             f"\n[bold]Data-center demand → consumer price pressure[/] "

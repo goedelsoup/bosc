@@ -1,0 +1,27 @@
+[
+  {
+    "key": "findlay-megawatt-hub-mwhub-01",
+    "name": "Findlay Megawatt Hub (MWHub 01)",
+    "is_primary": true,
+    "status": "live",
+    "operator": "MARA Holdings, Inc. (NASDAQ: MARA); host One Power Co",
+    "operator_citation": "[verified] One Power Co Form S-1/A (EDGAR CIK 2039139) + MARA Holdings 2024-11-11 release: MARA is the 150 MW, 15-year take-or-pay customer at the One Power Findlay Megawatt Hub (host/host-operator One Power Co).",
+    "end_use": "bitcoin",
+    "end_use_citation": "[verified] behind-the-meter bitcoin mining — MARA Holdings, Inc. is a bitcoin miner (its own customer); MARA volunteered the distinction 'we don't have customers in Bitcoin' at the 2026-06-04 Lima Select-Committee hearing (data/extracted/legal/select-committee-2026/hearings-audio/bosc-committee-hearing-2026-06-04-pm2.transcript.md [11:55]).",
+    "facility_type": "behind-the-meter compute load — bitcoin mining (MARA Holdings, Inc.; NASDAQ: MARA) at the One Power Co \"Findlay Megawatt Hub\" (MWHub 01), Allen Township — Status: Operating",
+    "it_load_mw": 150.0,
+    "it_load_low_mw": 30.0,
+    "it_load_high_mw": 150.0,
+    "air_permit_citation": null,
+    "air_permit_relpath": null,
+    "it_load_citation": "[verified] DISCLOSED load (NOT a screening inference): One Power Co Form S-1/A (EDGAR CIK 2039139) describes MWHub 01 / Findlay Megawatt Hub — 'Current Capacity 30 MW, Planned Maximum 150 MW, Status: Operating' — and names MARA Holdings, Inc. as the 150 MW, 15-year take-or-pay customer ('due regardless of whether or not the customer elects to purchase power'); corroborated by MARA's 2024-11-11 release ('a 150-megawatt operation in Findlay, Ohio, which already has 30 megawatts of capacity', part of ~372 MW across three Ohio sites, full energization intended by end-2025). Central = the 150 MW contracted take-or-pay; low = the 30 MW currently energized; high = the 150 MW contracted maximum. MARA's energization status as of 2026 is [open — MARA 10-K/ops updates]. A separate +300 MW 'standalone interconnection site' expansion (S-1/A, 2024) has NO named customer and is NOT in this basis (it stays [open], the epic #1265 grid sub-issue's PUCO/PJM/AEP target). See data/extracted/findlay/data-centers.md.",
+    "gross_floor_area_sqft": null,
+    "disclosed_investment_usd": null,
+    "disclosure_citation": "[verified] One Power Co Form S-1/A (EDGAR CIK 2039139: DRS 2024-11-12, IPO S-1 filed 2025-01-23, withdrawn Form RW 2025-05-09, Form D private placement 2025-07-23) + MARA Holdings 2024-11-11 press release (ir.mara.com/news-events/press-releases/detail/1375). Host: One Power Co (CEO Jereme Kent); OnSite Partners — funds advised by Basalt Infrastructure Partners — acquired One Power, announced 2026-02-16. The hub first energized 2023 with 'the first fully digital substation in the United States.' See data/extracted/findlay/data-centers.md.",
+    "cooling_model": "unknown",
+    "cooling_model_source": "reference",
+    "cooling_model_citation": "[reference] cooling method not disclosed in the record — kept UNKNOWN (bracketed range). MARA has not stated the Findlay cooling design; the One Power hub is a behind-the-meter natural-gas-generation compute campus. Refine to a selected model on a disclosed mechanical/plumbing permit or an ingested cooling spec.",
+    "parcels_relpath": null,
+    "footprint_relpath": null
+  }
+]

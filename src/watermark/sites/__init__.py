@@ -81,6 +81,12 @@ from watermark.sites._model import (
     CoolingModelType as CoolingModelType,
 )
 from watermark.sites._model import (
+    DcEndUse as DcEndUse,
+)
+from watermark.sites._model import (
+    FacilityLifecycle as FacilityLifecycle,
+)
+from watermark.sites._model import (
     SiteEntry as SiteEntry,
 )
 from watermark.sites._model import (
@@ -339,7 +345,7 @@ def profile_readiness(slug: str) -> list[ReadinessFinding]:
         if name == "slug" or name in YAML_BACKED_PROFILE_FIELDS:
             continue
         value = getattr(prof, name)
-        # An optional field left at its default (e.g. facility=None) is a deliberate absence,
+        # An optional field left at its default (e.g. facilities=()) is a deliberate absence,
         # not an unfilled gap — don't flag it.
         if not field.is_required() and value == field.get_default():
             continue

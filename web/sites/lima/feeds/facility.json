@@ -1,0 +1,27 @@
+[
+  {
+    "key": "shawnee-energy-campus",
+    "name": "Shawnee Energy Campus",
+    "is_primary": true,
+    "status": "construction",
+    "operator": "Google (developer of record)",
+    "operator_citation": "[verified] Google is the developer of record for the Lima campus (Select-Committee record #234); the deed fixes the builder, not the occupant.",
+    "end_use": null,
+    "end_use_citation": null,
+    "facility_type": null,
+    "it_load_mw": 275.0,
+    "it_load_low_mw": 250.0,
+    "it_load_high_mw": 300.0,
+    "air_permit_citation": "OEPA Air PTI P0138965 (Facility 0302022054), committed data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): 114 hall gensets x 2.75 MW (~2,750 ekW) = ~313 MW backup; IT ~250-300 MW (N+1). Per-engine rating from the draft public notice (3987141/3987144); engine size CBI-redacted in the final permit under an Ohio EPA trade-secret grant (OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml).",
+    "air_permit_relpath": "permits/4132514.epa.yaml",
+    "it_load_citation": null,
+    "gross_floor_area_sqft": null,
+    "disclosed_investment_usd": null,
+    "disclosure_citation": null,
+    "cooling_model": "evaporative_tower",
+    "cooling_model_source": "assumption",
+    "cooling_model_citation": "36 cooling towers on OEPA Air PTI P0138965 imply an evaporative (open recirculating) plant; cooling-system flowrates are CBI-withheld, so the archetype is asserted, not disclosed",
+    "parcels_relpath": "reference/periplus/bosc-parcels.geojson",
+    "footprint_relpath": "extracted/plans/bosc-site-footprint.yaml"
+  }
+]

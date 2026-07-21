@@ -1,19 +1,26 @@
 {
   "site": "wilmington",
   "bundle_version": "1.0.0",
-  "contract_version": "1.29.0",
+  "contract_version": "1.31.0",
   "generated_at": "2026-07-08T21:18:30+00:00",
-  "feed_count": 25,
-  "row_total": 292,
+  "feed_count": 26,
+  "row_total": 294,
   "readiness": {
-    "tier": "backdrop",
+    "tier": "case",
     "domains": {
       "backdrop": "live",
-      "facility": "absent",
+      "facility": "live",
       "places": "absent",
       "record": "absent",
       "story": "absent"
     }
+  },
+  "facility": {
+    "status": "confirmed",
+    "count": 2,
+    "primary_name": "Cosler Farm campus",
+    "primary_operator": "Amazon Data Services, Inc. (AWS)",
+    "primary_end_use": "hyperscale"
   },
   "feeds": [
     {
@@ -129,6 +136,14 @@
       "count": 1
     },
     {
+      "name": "facility",
+      "path": "feeds/facility.json",
+      "media_type": "application/json",
+      "schema": "schemas/facility.schema.json",
+      "kind": "collection",
+      "count": 2
+    },
+    {
       "name": "network",
       "path": "feeds/network.json",
       "media_type": "application/json",
@@ -216,5 +231,6 @@
       "kind": "collection",
       "count": 79
     }
-  ]
+  ],
+  "exports": []
 }

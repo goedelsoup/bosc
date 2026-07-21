@@ -42,9 +42,13 @@ nodes:
     top_emitter: CASCADE CORP
     vintage_last_year: 2014
   activity:
-    has_disclosed_facility: false
-    it_load_mw: null
-    summary: no disclosed data-center facility
+    has_disclosed_facility: true
+    facility_count: 1
+    facility_status: live
+    operator: 'MARA Holdings, Inc. (NASDAQ: MARA); host One Power Co'
+    end_use: bitcoin
+    it_load_mw: 150.0
+    summary: disclosed facility (live) — IT load ~150 MW
 - slug: lima
   place: Lima
   county: Allen County, OH
@@ -58,15 +62,15 @@ nodes:
   downstream: defiance
   regime: effluent_dominated_tributary
   screen:
-    npdes: OH0023841
-    discharger: AMERICAN-BATH WWTP
-    receiving_water: Pike Run
-    design_flow_mgd: 1.5
-    dilution_ratio: 0.013
+    npdes: OH0026069
+    discharger: LIMA WWTP
+    receiving_water: Ottawa River
+    design_flow_mgd: 18.5
+    dilution_ratio: 0.007
     flag: violation
     status: screened
-    detail: Pike Run 7Q10 0.03 cfs (document) vs discharge 2.32 cfs -> 0.01:1 dilution
-      (violation)
+    detail: Ottawa River 7Q10 0.20 cfs (document) vs discharge 28.62 cfs -> 0.01:1
+      dilution (violation)
   grid:
     utility: AEP Ohio (Ohio Power Company)
     ownership: null
@@ -75,20 +79,24 @@ nodes:
     retail_regulator: Public Utilities Commission of Ohio (PUCO)
     avg_price_cents_kwh: 18.61
   economy:
-    year: 2023
-    total_employment: 49577.0
-    employment_change_pct: -2.5
+    year: 2024
+    total_employment: 49690.0
+    employment_change_pct: -0.2
     population: 101685
-    manufacturing_lq: 2.08
-    information_lq: 0.37
+    manufacturing_lq: 2.15
+    information_lq: 0.0
   toxics:
-    facility_count: 45
-    top_emitter: INEOS USA LLC
-    vintage_last_year: 2014
+    facility_count: 49
+    top_emitter: INEOS NITRILES USA LLC
+    vintage_last_year: 2022
   activity:
     has_disclosed_facility: true
+    facility_count: 1
+    facility_status: construction
+    operator: Google (developer of record)
+    end_use: null
     it_load_mw: 275.0
-    summary: disclosed facility — IT load ~275 MW
+    summary: disclosed facility (construction) — IT load ~275 MW
 - slug: ottawa
   place: Ottawa
   county: Putnam County, OH
@@ -130,6 +138,10 @@ nodes:
     vintage_last_year: 2014
   activity:
     has_disclosed_facility: false
+    facility_count: 0
+    facility_status: null
+    operator: null
+    end_use: null
     it_load_mw: null
     summary: no disclosed data-center facility
 - slug: van-wert
@@ -148,15 +160,16 @@ nodes:
   screen:
     npdes: OH0027910
     discharger: VAN WERT WWTP
-    receiving_water: null
+    receiving_water: Town Creek
     design_flow_mgd: 4.0
-    dilution_ratio: null
-    flag: null
-    status: no_receiving_water
-    detail: unscreened (no_receiving_water)
+    dilution_ratio: 0.026
+    flag: violation
+    status: screened
+    detail: Town Creek 7Q10 0.16 cfs (document) vs discharge 6.19 cfs -> 0.03:1 dilution
+      (violation)
   grid:
     utility: AEP Ohio (Ohio Power Company)
-    ownership: null
+    ownership: Investor Owned
     holding_company: American Electric Power (AEP)
     balancing_authority: PJM Interconnection
     retail_regulator: Public Utilities Commission of Ohio (PUCO)
@@ -173,9 +186,14 @@ nodes:
     top_emitter: SONOCO FIBRE DRUM INC.
     vintage_last_year: 2014
   activity:
-    has_disclosed_facility: false
-    it_load_mw: null
-    summary: no disclosed data-center facility
+    has_disclosed_facility: true
+    facility_count: 1
+    facility_status: confirmed
+    operator: QTS Data Centers (QTS Realty Trust, LLC — Blackstone); developer Thor
+      Equities Group
+    end_use: colocation
+    it_load_mw: 500.0
+    summary: disclosed facility (confirmed) — IT load ~500 MW
 - slug: bryan
   place: Bryan
   county: Williams County, OH
@@ -217,6 +235,10 @@ nodes:
     vintage_last_year: 2014
   activity:
     has_disclosed_facility: false
+    facility_count: 0
+    facility_status: null
+    operator: null
+    end_use: null
     it_load_mw: null
     summary: no disclosed data-center facility
 - slug: fort-wayne
@@ -240,7 +262,7 @@ nodes:
     detail: unscreened (no_7q10)
   grid:
     utility: Indiana Michigan Power Co
-    ownership: null
+    ownership: Investor Owned
     holding_company: American Electric Power (AEP)
     balancing_authority: PJM Interconnection
     retail_regulator: Indiana Utility Regulatory Commission (IURC)
@@ -257,9 +279,13 @@ nodes:
     top_emitter: VALBRUNA SLATER STAINLESS INC
     vintage_last_year: 2014
   activity:
-    has_disclosed_facility: false
-    it_load_mw: null
-    summary: no disclosed data-center facility
+    has_disclosed_facility: true
+    facility_count: 1
+    facility_status: live
+    operator: Hatchworks LLC (Project Zodiac) — 'a stationary data center'
+    end_use: null
+    it_load_mw: 90.0
+    summary: disclosed facility (live) — IT load ~90 MW
 - slug: defiance
   place: Defiance
   county: Defiance County, OH
@@ -275,10 +301,10 @@ nodes:
     discharger: DEFIANCE WWTP
     receiving_water: Maumee River
     design_flow_mgd: 12.0
-    dilution_ratio: 6.149
+    dilution_ratio: 6.148
     flag: tight
     status: screened
-    detail: Maumee River 7Q10 114.15 cfs (derived) vs discharge 18.56 cfs -> 6.15:1
+    detail: Maumee River 7Q10 114.15 cfs (derived) vs discharge 18.57 cfs -> 6.15:1
       dilution (tight)
   grid:
     utility: The Toledo Edison Co
@@ -300,6 +326,10 @@ nodes:
     vintage_last_year: 2014
   activity:
     has_disclosed_facility: false
+    facility_count: 0
+    facility_status: null
+    operator: null
+    end_use: null
     it_load_mw: null
     summary: no disclosed data-center facility
 - slug: toledo
@@ -341,5 +371,9 @@ nodes:
     vintage_last_year: 2014
   activity:
     has_disclosed_facility: false
+    facility_count: 0
+    facility_status: null
+    operator: null
+    end_use: null
     it_load_mw: null
     summary: no disclosed data-center facility

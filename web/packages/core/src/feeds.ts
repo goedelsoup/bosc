@@ -553,10 +553,62 @@ export interface NodeToxics {
   top_emitter?: string | null;
   vintage_last_year?: number | null;
 }
+/** A disclosed facility's real-world lifecycle stage (`bosc.sites.FacilityLifecycle`, #1628) — the
+ *  four-stage clock the facility-status rail walks. Read off the bundle, not a hardcoded dict. */
+export type FacilityStatus = "investigation" | "confirmed" | "construction" | "live";
+
+/** The disclosed data-center end-use archetype (`bosc.sites.DcEndUse`) — the SAME vocabulary as the
+ *  end-use explorer's `DcKey`, aliased (not re-typed) so the two can never drift (#1628 review).
+ *  `null`/absent ⇒ the end use is `[open]` (never asserted). */
+export type FacilityEndUse = import("./endUse").DcKey;
+
 export interface NodeActivity {
   has_disclosed_facility: boolean;
+  facility_count?: number;
+  facility_status?: FacilityStatus | null;
+  operator?: string | null;
+  end_use?: FacilityEndUse | null;
   it_load_mw?: number | null;
   summary?: string;
+}
+
+/** One disclosed data-center campus — the `facility` feed row (`bosc.site.feeds.FacilityItem`, #1628). */
+export interface FacilityItem {
+  key: string;
+  name: string;
+  is_primary: boolean;
+  status: FacilityStatus;
+  operator?: string | null;
+  operator_citation?: string | null;
+  end_use?: FacilityEndUse | null;
+  end_use_citation?: string | null;
+  facility_type?: string | null;
+  it_load_mw?: number | null;
+  it_load_low_mw?: number | null;
+  it_load_high_mw?: number | null;
+  // The two IT-load groundings stay distinct so permit-grounded vs screening-bracket is a typed
+  // discriminant, not a prose regex (#1697 / #1628 review): exactly one is set on a disclosed load.
+  air_permit_citation?: string | null;
+  air_permit_relpath?: string | null;
+  it_load_citation?: string | null;
+  gross_floor_area_sqft?: number | null;
+  disclosed_investment_usd?: number | null;
+  disclosure_citation?: string | null;
+  cooling_model: CoolingModel;
+  cooling_model_source: "document" | "connector" | "reference" | "assumption";
+  cooling_model_citation: string;
+  parcels_relpath?: string | null;
+  footprint_relpath?: string | null;
+}
+
+/** The manifest's compact facility block (`bosc.site.feeds.FacilitySummary`, #1628) — the primary
+ *  campus's lifecycle status + the facility count, the per-slug source the badge reads. */
+export interface FacilitySummary {
+  status: FacilityStatus;
+  count: number;
+  primary_name: string;
+  primary_operator?: string | null;
+  primary_end_use?: FacilityEndUse | null;
 }
 export interface WatershedNode {
   slug: string;
