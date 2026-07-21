@@ -174,7 +174,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        group: [1, 2, 3, 4]
+        group: [1, 2, 3, 4, 5, 6]
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-python-env
@@ -186,15 +186,15 @@ jobs:
           restore-keys: |
             pytestcache-${{ runner.os }}-py311-${{ hashFiles('uv.lock') }}-g${{ matrix.group }}-
             pytestcache-${{ runner.os }}-py311-${{ hashFiles('uv.lock') }}-
-      - name: Test (shard ${{ matrix.group }}/4)
-        run: uv run pytest -n auto --splits 4 --group ${{ matrix.group }}
+      - name: Test (shard ${{ matrix.group }}/6)
+        run: uv run pytest -n auto --splits 6 --group ${{ matrix.group }}
 
   # The required backend status check (#682): a thin aggregator over the three legs above.
   # It keeps the job name `check` (the gate keys on it — see .github/config/index.ts
   # `requiredChecks`) and `if: always()` so it ALWAYS reports a status, never stuck
   # pending. It passes only when each leg succeeded or was skipped — so a backend-untouched
   # PR (all legs skipped) is green, and any leg failing fails `check`. `test` is a matrix
-  # (4 shards), so its rolled-up result is success only when every shard passed.
+  # (6 shards), so its rolled-up result is success only when every shard passed.
   check:
     needs: [changes, lint, types, catalog, test]
     if: ${{ always() }}
