@@ -205,7 +205,14 @@ from watermark.site.readiness import State, Tier  # the readiness vocabulary SSO
 #   reconciling to `pounds_by_media["water"]`), the input the chemical-specific toxic screen reads
 #   (WS-07 / #1607). Additive/optional (absent facilities default to `[]`), so an existing rsei.json
 #   without it stays valid — PATCH, back-compatible.
-CONTRACT_VERSION = "1.30.1"
+# 1.30.2: each `hydrology-scenarios` `AssimilativeCheck` gains `effluent_credited_ratio` +
+#   `effluent_credited_flag`, and its long-reserved `upstream_returns` field is now *computed*
+#   (WS-15 / #1615): the permitted effluent already in the reach (Σ other WWTPs sharing the
+#   receiving water) credited into a second, effluent-credited dilution ratio, presented alongside
+#   the conservative cited-7Q10-only `dilution_ratio` (unchanged). Additive/optional (all three are
+#   null when a plant is alone on its stream), so an existing feed row stays valid — PATCH,
+#   back-compatible.
+CONTRACT_VERSION = "1.30.2"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
