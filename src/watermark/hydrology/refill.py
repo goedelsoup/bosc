@@ -63,14 +63,27 @@ log = get_logger(__name__)
 _START, _END = "1980-01-01", "2024-12-31"
 _DAYS_PER_YEAR = 365.0
 _MONTH_KEYS = ("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC")
-# ET0 -> open-water evaporation multiplier. Kept as one constant so the rate fed to
-# reservoir_evaporation_mgd() and the value recorded on ReservoirEvaporation cannot drift.
-_OPEN_WATER_COEFFICIENT = 1.0
+# Grass-ET0 -> open-water evaporation multiplier (WS-17 / #1617). A stated screening
+# **assumption** (provenance: `assumption`, per this package's tagging), not a measured or
+# site-calibrated value. Basis: reference ET0 is a *grass* rate — albedo 0.23, surface resistance
+# 70 s/m (Allen et al. 1998, FAO Irrigation & Drainage Paper 56, which defines ET0; see et.py).
+# Open water has albedo ~0.06-0.08 and no canopy resistance, so a Penman open-water estimate runs
+# ABOVE grass ET0 in the warm season; the open-water:reference-ET0 ratio reported in the open-
+# water evaporation literature is ~1.05-1.3x on an annual basis (the band recorded in the WS-17
+# finding). Using ET0 as-is (1.0) would UNDER-state warm-season pool loss and leave the drought
+# bound less conservative. 1.15 is a documented screening MIDPOINT of that band, targeting the
+# warm (drought-binding) season's open-water:ET0 ratio; the seasonal curve is not resolved (a flat
+# factor over-states the small winter loss — conservative). Kept as one constant so the rate fed
+# to reservoir_evaporation_mgd() and the value recorded on ReservoirEvaporation cannot drift.
+_OPEN_WATER_COEFFICIENT = 1.15
 _FILENAME = "refill-adequacy.yaml"
 _METHOD = (
     "sequent-peak (Rippl) storage requirement on aligned daily NWIS discharge, passby-adjusted"
 )
-_METHOD_EVAP = ", net of a first-order reservoir-evaporation sink (ET0 x surface area)"
+_METHOD_EVAP = (
+    ", net of a first-order reservoir-evaporation sink "
+    f"(ET0 x {_OPEN_WATER_COEFFICIENT:g} open-water coefficient x surface area)"
+)
 
 
 def _exceedance(asc: list[float], frac: float) -> float:
@@ -182,12 +195,19 @@ def _reservoir_evaporation(
         peak_month=peak_month,
         peak_evap_mgd=monthly_evap[peak_month],
         citation=(
-            "ET0 FAO-56 Penman-Monteith (NASA POWER climatology) over "
-            f"{surface_acres:g} ac of committed reservoir surface area (water-supply.yaml)"
+            "ET0 FAO-56 Penman-Monteith (NASA POWER climatology) x "
+            f"{_OPEN_WATER_COEFFICIENT:g} open-water coefficient (a screening-assumption midpoint "
+            "of the ~1.05-1.3x open-water:ET0 band; albedo/resistance basis per Allen et al. 1998, "
+            f"FAO-56) over {surface_acres:g} ac of committed reservoir surface area "
+            "(water-supply.yaml)"
         ),
         note=(
-            "first-order screening sink; ET0 used directly as the open-water rate and "
-            "precipitation onto the pool not credited (conservative)"
+            "first-order screening sink; grass ET0 scaled by a "
+            f"{_OPEN_WATER_COEFFICIENT:g} open-water coefficient — a documented screening-"
+            "assumption MIDPOINT of the ~1.05-1.3x open-water:ET0 band, not a measured value "
+            "(water's ~0.06-0.08 albedo and zero canopy resistance vs grass ET0's 0.23 / 70 s/m "
+            "per FAO-56 put warm-season open-water evaporation above grass ET0). Precipitation "
+            "onto the pool is not credited (conservative)."
         ),
     )
     # Subtract each day's calendar-month evaporation from the pumpable inflow (may go
@@ -327,11 +347,13 @@ def compute_refill_adequacy(
     )
 
     # Reservoir-evaporation sink (#1164): a first-order open-water loss on storage — reference
-    # ET0 (FAO-56 Penman-Monteith over the committed NASA POWER climatology) x the reservoirs'
-    # combined ODNR surface area — folded into the sequent-peak as an added monthly draw on
-    # storage (subtracted from the pumpable inflow by calendar month). Conservative: ET0 is used
-    # directly as the open-water rate and precipitation onto the pool is not credited, so it can
-    # only tighten the drought bound. Absent a climatology or surface areas the sink is omitted.
+    # ET0 (FAO-56 Penman-Monteith over the committed NASA POWER climatology) x an open-water
+    # coefficient (#1617) x the reservoirs' combined ODNR surface area — folded into the sequent-
+    # peak as an added monthly draw on storage (subtracted from the pumpable inflow by calendar
+    # month). Grass ET0 alone under-states warm-season pool evaporation (open water's low albedo /
+    # no canopy resistance), so the coefficient lifts it into the open-water band; precipitation
+    # onto the pool is still not credited, so the sink can only tighten the drought bound. Absent a
+    # climatology or surface areas the sink is omitted.
     evaporation, available_for_drawdown = _reservoir_evaporation(
         supply.total_surface_area_acres, available_mgd, dates, settings
     )
@@ -386,12 +408,14 @@ def compute_refill_adequacy(
     ]
     if evaporation is not None:
         caveats.append(
-            "A first-order reservoir-evaporation sink IS subtracted: FAO-56 ET0 over the "
+            "A first-order reservoir-evaporation sink IS subtracted: FAO-56 ET0 x a "
+            f"{evaporation.open_water_coefficient:g} open-water coefficient over the "
             f"{evaporation.surface_area_acres:g}-acre committed pool surface "
             f"(~{evaporation.mean_evap_mgd:g} MGD mean, {evaporation.peak_evap_mgd:g} MGD in "
-            f"{evaporation.peak_month}), folded in monthly `[derived]`. ET0 is used directly as "
-            "the open-water rate and rain onto the pool is not credited, so the sink is a "
-            "conservative lower bound on the true evaporative loss."
+            f"{evaporation.peak_month}), folded in monthly `[derived]`. The coefficient lifts "
+            "grass ET0 into the open-water band (low albedo / no canopy resistance push warm-"
+            "season pool evaporation above ET0); rain onto the pool is not credited, so the sink "
+            "stays a conservative lower bound on the true evaporative loss."
         )
     else:
         caveats.append("Reservoir evaporation is not subtracted (no climatology/surface areas).")
@@ -483,8 +507,9 @@ def refill_findings(ra: RefillAdequacy) -> list[HydroFinding]:
                     f"{ev.peak_evap_mgd:g} MGD in {ev.peak_month}; ~{ev.annual_evap_mg:,.0f} MG/yr) "
                     f"off the {ev.surface_area_acres:g}-acre reservoir surface is subtracted from "
                     f"pumpable inflow in the sequent-peak, tightening every drought bound. FAO-56 "
-                    f"ET0 over the committed climatology `[derived]`; conservative (rain onto the "
-                    "pool is not credited)."
+                    f"ET0 x a {ev.open_water_coefficient:g} open-water coefficient over the "
+                    "committed climatology `[derived]`; conservative (rain onto the pool is not "
+                    "credited)."
                 ),
             )
         )

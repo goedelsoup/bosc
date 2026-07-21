@@ -160,11 +160,14 @@ class DroughtDrawdown(BaseModel):
 class ReservoirEvaporation(BaseModel):
     """First-order open-water evaporation sink on the reservoir storage (``derived``).
 
-    Reference ET0 (FAO-56 Penman-Monteith, from the committed NASA POWER climatology) over
-    the reservoirs' combined open-water surface area (ODNR Division of Wildlife fishing-map
-    acreages). A *screening* sink: ET0 is used directly as a first-order proxy for open-water
-    evaporation and precipitation onto the pool is not credited, so the term is conservative —
-    it can only tighten the drought bound. Folded into the sequent-peak as an added monthly
+    Reference ET0 (FAO-56 Penman-Monteith, from the committed NASA POWER climatology) scaled
+    by an **open-water coefficient** over the reservoirs' combined open-water surface area
+    (ODNR Division of Wildlife fishing-map acreages). A *screening* sink: grass ET0 under-
+    states warm-season pool evaporation — open water's albedo is far lower (~0.06-0.08 vs
+    grass 0.23) and it carries no canopy resistance (rs -> 0 vs 70 s/m), so a Penman open-
+    water estimate runs ~1.05-1.3x ET0 in the warm season — hence the ``open_water_coefficient``
+    (WS-17 / #1617). Precipitation onto the pool is not credited, so the term stays conservative
+    (it can only tighten the drought bound). Folded into the sequent-peak as an added monthly
     loss on storage (subtracted from the pumpable inflow, by calendar month).
     """
 
@@ -174,7 +177,7 @@ class ReservoirEvaporation(BaseModel):
     surface_area_acres: float
     et0_method: str = "FAO-56 Penman-Monteith"
     et0_annual_mm: float  # reference ET0 depth (grass), mm/yr
-    open_water_coefficient: float = 1.0  # ET0 -> open-water evaporation multiplier
+    open_water_coefficient: float = 1.0  # grass-ET0 -> open-water multiplier (>1 warm-season)
     monthly_evap_mgd: dict[str, float]  # JAN..DEC
     annual_evap_mg: float  # days-weighted annual volume
     mean_evap_mgd: float  # annual_evap_mg / 365

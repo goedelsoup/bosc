@@ -3,7 +3,7 @@ meta:
   source: 'USGS NWIS daily discharge: Auglaize 04186500 (Fort Jennings) + Ottawa 04187100 (Lima); storage
     from water-supply.yaml'
   method: sequent-peak (Rippl) storage requirement on aligned daily NWIS discharge, passby-adjusted, net
-    of a first-order reservoir-evaporation sink (ET0 x surface area)
+    of a first-order reservoir-evaporation sink (ET0 x 1.15 open-water coefficient x surface area)
   discipline: 'Derived screening: sequent-peak storage requirement vs committed reservoir storage. Refill
     is amply adequate in normal years; the binding case is the worst gauged drought, and the residual
     risk is a drought beyond the record.'
@@ -51,54 +51,57 @@ refill:
   scenarios:
   - label: baseline city
     demand_mgd: 15.0
-    required_storage_mg: 4515.0
-    pct_of_capacity: 31.3
+    required_storage_mg: 4828.4
+    pct_of_capacity: 33.5
     worst_spell_start: '1999-06-23'
-    worst_spell_days: 325
+    worst_spell_days: 329
     survives: true
   - label: +campus (central)
     demand_mgd: 18.92
-    required_storage_mg: 5927.0
-    pct_of_capacity: 41.1
+    required_storage_mg: 6241.7
+    pct_of_capacity: 43.3
     worst_spell_start: '1999-06-22'
-    worst_spell_days: 338
+    worst_spell_days: 340
     survives: true
   - label: +campus (high bound)
-    demand_mgd: 27.5
-    required_storage_mg: 9034.1
-    pct_of_capacity: 62.7
-    worst_spell_start: '1999-06-21'
-    worst_spell_days: 354
+    demand_mgd: 19.79
+    required_storage_mg: 6555.8
+    pct_of_capacity: 45.5
+    worst_spell_start: '1999-06-22'
+    worst_spell_days: 342
     survives: true
   evaporation:
     source: derived
     surface_area_acres: 1603.0
     et0_method: FAO-56 Penman-Monteith
     et0_annual_mm: 1085.2
-    open_water_coefficient: 1.0
+    open_water_coefficient: 1.15
     monthly_evap_mgd:
-      JAN: 1.5098
-      FEB: 2.2141
-      MAR: 3.7016
-      APR: 5.0966
-      MAY: 6.4538
-      JUN: 8.3355
-      JUL: 8.8479
-      AUG: 7.9088
-      SEP: 6.8617
-      OCT: 5.2508
-      NOV: 3.0487
-      DEC: 1.7309
-    annual_evap_mg: 1859.8
-    mean_evap_mgd: 5.095
+      JAN: 1.7362
+      FEB: 2.5462
+      MAR: 4.2569
+      APR: 5.8611
+      MAY: 7.4219
+      JUN: 9.5858
+      JUL: 10.1751
+      AUG: 9.0951
+      SEP: 7.891
+      OCT: 6.0384
+      NOV: 3.506
+      DEC: 1.9905
+    annual_evap_mg: 2138.7
+    mean_evap_mgd: 5.859
     peak_month: JUL
-    peak_evap_mgd: 8.8479
-    citation: ET0 FAO-56 Penman-Monteith (NASA POWER climatology) over 1603 ac of committed reservoir
-      surface area (water-supply.yaml)
-    note: first-order screening sink; ET0 used directly as the open-water rate and precipitation onto
-      the pool not credited (conservative)
+    peak_evap_mgd: 10.1751
+    citation: ET0 FAO-56 Penman-Monteith (NASA POWER climatology) x 1.15 open-water coefficient (a screening-assumption
+      midpoint of the ~1.05-1.3x open-water:ET0 band; albedo/resistance basis per Allen et al. 1998, FAO-56)
+      over 1603 ac of committed reservoir surface area (water-supply.yaml)
+    note: first-order screening sink; grass ET0 scaled by a 1.15 open-water coefficient — a documented
+      screening-assumption MIDPOINT of the ~1.05-1.3x open-water:ET0 band, not a measured value (water's
+      ~0.06-0.08 albedo and zero canopy resistance vs grass ET0's 0.23 / 70 s/m per FAO-56 put warm-season
+      open-water evaporation above grass ET0). Precipitation onto the pool is not credited (conservative).
   method: sequent-peak (Rippl) storage requirement on aligned daily NWIS discharge, passby-adjusted, net
-    of a first-order reservoir-evaporation sink (ET0 x surface area)
+    of a first-order reservoir-evaporation sink (ET0 x 1.15 open-water coefficient x surface area)
   warnings: []
   caveats:
   - Auglaize River gauged at Fort Jennings, DOWNSTREAM of Lima's Auglaize intakes with more drainage area
@@ -111,9 +114,10 @@ refill:
   - Pure sequent-peak captures all surplus above passby (no pump-rate cap) — also optimistic; a real pump-capacity
     limit would raise the storage requirement.
   - Passby flows are screening assumptions (Ottawa River 0.2 cfs; Auglaize River 2.5 cfs).
-  - 'A first-order reservoir-evaporation sink IS subtracted: FAO-56 ET0 over the 1603-acre committed pool
-    surface (~5.095 MGD mean, 8.8479 MGD in JUL), folded in monthly `[derived]`. ET0 is used directly
-    as the open-water rate and rain onto the pool is not credited, so the sink is a conservative lower
-    bound on the true evaporative loss.'
+  - 'A first-order reservoir-evaporation sink IS subtracted: FAO-56 ET0 x a 1.15 open-water coefficient
+    over the 1603-acre committed pool surface (~5.859 MGD mean, 10.1751 MGD in JUL), folded in monthly
+    `[derived]`. The coefficient lifts grass ET0 into the open-water band (low albedo / no canopy resistance
+    push warm-season pool evaporation above ET0); rain onto the pool is not credited, so the sink stays
+    a conservative lower bound on the true evaporative loss.'
   - The binding drought is the worst in the GAUGED record — a longer/deeper drought than the 1988-2024
     record would call on more storage than shown.
