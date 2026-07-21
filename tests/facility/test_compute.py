@@ -236,3 +236,23 @@ def test_every_output_is_provenance_tagged(facility_settings: Settings) -> None:
         assert s.spec.all_in_w.source == "derived"
         assert s.count_central.source == "derived"
         assert s.bf16_dense_eflops_high.source == "derived"
+
+
+def test_dry_archetype_water_method_is_none_not_a_zero_bracket_floor() -> None:
+    """#1641 D4: a closed-loop-dry campus consumes ~0 cooling water, so the back-solve returns
+    None (the water method does not bound the load) instead of a 0-MW figure that collapsed the
+    whole IT-load bracket floor to 0. Urbana is dry AND has committed parcels for the footprint
+    method, so — unlike every prior Lima/evaporative compute test — it runs end to end."""
+    from watermark.facility.power import derive_power_basis
+    from watermark.sites import SITES
+
+    assert SITES["urbana"].facility.cooling_model.value == "closed_loop_dry"
+    cap = derive_compute_capacity(settings=Settings(site="urbana"))
+    # The water method does not constrain a dry archetype — both bounds are None (not 0).
+    assert cap.it_load_water_low is None
+    assert cap.it_load_water_high is None
+    # The cross-method bracket floor is the power method's IT-load low, NOT 0 (the pre-fix bug).
+    power = derive_power_basis(settings=Settings(site="urbana"))
+    assert power is not None
+    assert cap.it_load_bracket_low.value > 0.0
+    assert cap.it_load_bracket_low.value == pytest.approx(power.it_load.low_or_value, abs=0.1)

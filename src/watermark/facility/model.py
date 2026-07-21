@@ -108,8 +108,13 @@ class ComputeCapacity(BaseModel):
 
     # --- The three independent IT-load estimates (MW) ------------------------
     it_load_power: ProvenancedValue  # method 1: air-permit gensets (PRIMARY)
-    it_load_water_low: ProvenancedValue  # method 2: cooling-water back-solve (low)
-    it_load_water_high: ProvenancedValue  # method 2: cooling-water back-solve (high)
+    # Method 2 (cooling-water back-solve) is ``None`` when the archetype consumes ~0 water
+    # (closed_loop_dry / off, or the dry lower bound of unknown): dividing a 0 MGD consumptive
+    # by the WUE recovers a meaningless 0 MW, which then collapsed the whole bracket floor to
+    # 0 (#1641 D4). A None here means "the water method does not constrain this bound", and it
+    # is excluded from the cross-method bracket rather than dragging it to 0.
+    it_load_water_low: ProvenancedValue | None = None  # method 2: cooling-water back-solve (low)
+    it_load_water_high: ProvenancedValue | None = None  # method 2: cooling-water back-solve (high)
     it_load_footprint_low: ProvenancedValue  # method 3: footprint (WEAKEST)
     it_load_footprint_high: ProvenancedValue  # method 3 (high)
 

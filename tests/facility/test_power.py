@@ -200,14 +200,69 @@ def test_cooling_pue_overhead_and_facility_draw() -> None:
     assert b.cooling_share_high.value == pytest.approx((b.pue.high - 1.0) / b.pue.high, abs=1e-3)
     assert b.cooling_share_high.value == pytest.approx(0.30, abs=0.01)
 
-    # The IT <-> total-facility-draw relationship: draw = IT central x PUE, banded (#760).
+    # The IT <-> total-facility-draw relationship: central draw = IT central x PUE central,
+    # and the band combines BOTH uncertainties — the IT-load band x the PUE band (#1641 D3),
+    # not the central IT alone x the PUE band (which discarded the IT band and narrowed it).
     assert b.facility_draw.source == "derived" and b.facility_draw.has_range
-    assert b.facility_draw.low == pytest.approx(b.it_load.value * b.pue.low, abs=0.1)
-    assert b.facility_draw.high == pytest.approx(b.it_load.value * b.pue.high, abs=0.1)
+    assert b.it_load.low is not None and b.it_load.high is not None
+    assert b.facility_draw.low == pytest.approx(b.it_load.low * b.pue.low, abs=0.1)
+    assert b.facility_draw.high == pytest.approx(b.it_load.high * b.pue.high, abs=0.1)
+    assert b.facility_draw.value == pytest.approx(b.it_load.value * b.pue.value, abs=0.1)
     assert b.facility_draw.low < b.facility_draw.value < b.facility_draw.high
+    # The combined band is strictly wider than the PUE-only band it replaced (the D3 fix).
+    assert b.facility_draw.low < b.it_load.value * b.pue.low
+    assert b.facility_draw.high > b.it_load.value * b.pue.high
     # Facility draw exceeds IT load by exactly the cooling/mechanical overhead.
     assert b.facility_draw.value > b.it_load.value
     assert b.cooling_overhead_mw == pytest.approx(b.facility_draw.value - b.it_load.value, abs=0.1)
+
+
+def test_pue_is_cooling_model_aware() -> None:
+    """Issue #1641 D5: the PUE band is resolved per cooling archetype, not a single band."""
+    from watermark.config import Settings
+    from watermark.facility.power import _load_pue_band
+    from watermark.hydrology.cooling_models import _OT_HEAT_REJECT_MULT
+    from watermark.sites import CoolingModelType
+
+    s = Settings(site="lima")
+    evap = _load_pue_band(s, CoolingModelType.EVAPORATIVE_TOWER)
+    dry = _load_pue_band(s, CoolingModelType.CLOSED_LOOP_DRY)
+    once = _load_pue_band(s, CoolingModelType.ONCE_THROUGH)
+
+    # Dry/air cooling's fan penalty raises PUE above the evaporative band.
+    assert (dry[0] + dry[1]) / 2.0 > (evap[0] + evap[1]) / 2.0
+    # Once-through PUE is low and RECONCILES with the heat-rejection multiplier: its central
+    # equals ~1.15 (the two representations of the same cooling overhead no longer disagree).
+    assert (once[0] + once[1]) / 2.0 == pytest.approx(_OT_HEAT_REJECT_MULT)
+    # The evaporative band is unchanged (Lima's committed figures don't move).
+    assert evap == pytest.approx((1.1, 1.43))
+    # An unknown archetype (no matching key would fall back) still resolves a band.
+    unknown = _load_pue_band(s, CoolingModelType.UNKNOWN)
+    assert unknown[0] < unknown[1]
+
+
+def test_dry_site_pue_exceeds_evaporative_site() -> None:
+    """A closed-loop-dry campus (Urbana) carries a higher PUE than evaporative Lima (#1641 D5)."""
+    from watermark.config import Settings
+
+    lima = derive_power_basis(settings=Settings(site="lima"))
+    urbana = derive_power_basis(settings=Settings(site="urbana"))
+    assert lima is not None and urbana is not None
+    assert urbana.pue.value > lima.pue.value
+
+
+def test_steam_water_sized_to_facility_draw_not_it_load() -> None:
+    """Issue #1641 D5: combined-cycle steam condenser water scales with GENERATION (the
+    facility draw the plant must supply), not the IT load alone (understated by the PUE factor)."""
+    b = derive_power_basis()
+    assert b is not None
+    combined = b.generation_config("combined")
+    assert combined is not None and combined.steam_cycle_water is not None
+    # gal/kWh -> MGD: MW x 1000 kW/MW x 24 h x 0.2 gal/kWh / 1e6.
+    expected_from_draw = round(b.facility_draw.value * 1_000.0 * 24.0 * 0.2 / 1_000_000.0, 2)
+    expected_from_it = round(b.it_load.value * 1_000.0 * 24.0 * 0.2 / 1_000_000.0, 2)
+    assert combined.steam_cycle_water.value == pytest.approx(expected_from_draw, abs=0.01)
+    assert combined.steam_cycle_water.value > expected_from_it  # draw > IT (PUE > 1)
 
 
 def test_facility_draw_vs_backup_n_plus_one_crosscheck() -> None:

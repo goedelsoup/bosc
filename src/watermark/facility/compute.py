@@ -313,6 +313,9 @@ def derive_compute_capacity(
     # would be an additional consumptive pathway (see power.py GenerationConfig /
     # issue #90), biasing this back-solve high — but that is unproven (the disclosed
     # gensets are backup), so we do not add it here.
+    # None ⇒ the water method does not constrain that bound (a dry/undisclosed archetype, #1641 D4).
+    it_water_low: float | None
+    it_water_high: float | None
     if cooling.cooling_model is CoolingModelType.ONCE_THROUGH:
         # Once-through consumptive is only ~1-2% forced evaporation of the withdrawal, not
         # it_load x WUE — inverting it with a tower WUE badly understates the load. The
@@ -336,9 +339,22 @@ def derive_compute_capacity(
         # Invert with the exact WUE the consumptive basis was built from (which honours a
         # per-facility SiteFacility.wue_l_per_kwh override), falling back to the archetype
         # default only when the basis carries no WUE (e.g. dry modes with ~0 consumptive).
+        # A dry / undisclosed-method archetype consumes ~0 water (closed_loop_dry, off, and the
+        # dry LOWER bound of unknown): back-solving 0 MGD / WUE recovers a meaningless 0 MW that
+        # collapsed the whole IT-load bracket floor to 0 (#1641 D4). Where the consumptive is ~0
+        # the water method does not constrain that bound — leave it None and drop it from the
+        # bracket instead of publishing a 0-MW floor.
         wue_basis = cooling.wue.value if cooling.wue is not None else _WUE_L_PER_KWH
-        it_water_low = _it_load_from_consumptive_mgd(cooling.consumptive_low.value, wue_basis)
-        it_water_high = _it_load_from_consumptive_mgd(cooling.consumptive_high.value, wue_basis)
+        it_water_low = (
+            _it_load_from_consumptive_mgd(cooling.consumptive_low.value, wue_basis)
+            if cooling.consumptive_low.value > 0.0
+            else None
+        )
+        it_water_high = (
+            _it_load_from_consumptive_mgd(cooling.consumptive_high.value, wue_basis)
+            if cooling.consumptive_high.value > 0.0
+            else None
+        )
         water_low_cite = (
             f"cooling consumptive {cooling.consumptive_low.value:g} MGD / "
             f"{wue_basis:g} L/kWh (recovers the power method; shares its WUE)"
@@ -463,20 +479,28 @@ def derive_compute_capacity(
     eq_h100_high = _count(accel_power_high_mw, h100_all_in_w)
 
     # Cross-method IT-load bracket (the headline). The footprint high is a physical
-    # envelope; we include it but flag it. The robust *operative* range is
-    # method 1 (power) corroborated by the method-2 low.
-    bracket_lo = min(it_power_low, it_water_low, it_fp_low)
-    bracket_hi = max(it_power_high, it_water_high, it_fp_high)
+    # envelope; we include it but flag it. The robust *operative* range is method 1 (power)
+    # corroborated by the method-2 low. A dry/undisclosed archetype's water bound is None
+    # (it doesn't constrain the load), so it drops out rather than dragging the floor to 0
+    # (#1641 D4) — the power and footprint methods always contribute.
+    bracket_lo = min(x for x in (it_power_low, it_water_low, it_fp_low) if x is not None)
+    bracket_hi = max(x for x in (it_power_high, it_water_high, it_fp_high) if x is not None)
 
     return ComputeCapacity(
         it_load_power=ProvenancedValue.derived(
             round(it_power, 1), "MW", citation=power.it_load.citation or ""
         ),  # [inference] — mirrors PowerBasis.it_load (an N+1/screening derivation, #1697)
-        it_load_water_low=ProvenancedValue.derived(
-            round(it_water_low, 1), "MW", citation=water_low_cite
+        it_load_water_low=(
+            None
+            if it_water_low is None
+            else ProvenancedValue.derived(round(it_water_low, 1), "MW", citation=water_low_cite)
         ),
-        it_load_water_high=ProvenancedValue.derived(
-            round(it_water_high, 1), "MW", citation=water_high_cite, confidence="low"
+        it_load_water_high=(
+            None
+            if it_water_high is None
+            else ProvenancedValue.derived(
+                round(it_water_high, 1), "MW", citation=water_high_cite, confidence="low"
+            )
         ),
         it_load_footprint_low=ProvenancedValue.assume(
             round(it_fp_low, 0),
