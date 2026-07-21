@@ -28,7 +28,7 @@ from watermark.site.facts import (
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-_CV = "1.30.2"
+_CV = "1.30.3"
 
 
 def _pv(value: Any, unit: str, source: str, **extra: Any) -> dict[str, Any]:

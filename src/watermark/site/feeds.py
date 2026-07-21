@@ -212,7 +212,13 @@ from watermark.site.readiness import State, Tier  # the readiness vocabulary SSO
 #   the conservative cited-7Q10-only `dilution_ratio` (unchanged). Additive/optional (all three are
 #   null when a plant is alone on its stream), so an existing feed row stays valid — PATCH,
 #   back-compatible.
-CONTRACT_VERSION = "1.30.2"
+# 1.30.3: each `routed-hydrograph` reach (the `ReachRouting` model) gains `subreaches` + `courant`
+#   — the sub-reach discretization the Muskingum-Cunge routing ran at (WS-09 / #1609): the reach is
+#   split into `subreaches` Courant≈1 steps routed in series (curing the coarse-single-step
+#   coefficient blow-up the old output clamp masked), and `courant` (c·Δt/Δx, ≈ 1) is the routing
+#   validity flag. Additive with defaults (`subreaches=1`, `courant=0.0`), so an existing
+#   routed-hydrograph.json without them stays valid — PATCH, back-compatible.
+CONTRACT_VERSION = "1.30.3"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

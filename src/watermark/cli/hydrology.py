@@ -200,12 +200,21 @@ def basin_route(
         f"({rn.storm_depth_in:.2f} in, 24-hr) — routed down the cited confluence graph"
     )
     table = Table(
-        "reach", "length (ft)", "in peak (cfs)", "out peak (cfs)", "attenuation", "lag (hr)"
+        "reach",
+        "length (ft)",
+        "sub-reaches",
+        "Courant",
+        "in peak (cfs)",
+        "out peak (cfs)",
+        "attenuation",
+        "lag (hr)",
     )
     for r in rn.reaches:
         table.add_row(
             r.name,
             f"{r.length_ft:,.0f}",
+            f"{r.subreaches}",
+            f"{r.courant:.2f}",
             f"{r.inflow_peak_cfs:,.0f}",
             f"{r.outflow_peak_cfs:,.0f}",
             f"{r.attenuation_pct:g}%",

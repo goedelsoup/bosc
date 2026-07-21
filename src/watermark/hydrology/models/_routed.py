@@ -208,7 +208,10 @@ class ReachRouting(BaseModel):
 
     ``attenuation_pct`` is the peak reduction (inflow peak -> outflow peak) and ``lag_hr`` the
     delay in time-to-peak — the two signatures of Muskingum-Cunge routing that a naive
-    peak-sum ignores.
+    peak-sum ignores. ``subreaches`` / ``courant`` record the sub-reach discretization the
+    reach was routed at (WS-09 / #1609): the reach is split into ``subreaches`` Courant≈1 steps
+    routed in series, and ``courant`` (``c·Δt/Δx``, ≈ 1 by construction) is the routing
+    validity flag — non-negative Muskingum coefficients + a grid-independent peak.
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -223,6 +226,8 @@ class ReachRouting(BaseModel):
     outflow_time_to_peak_hr: float
     attenuation_pct: float  # 100 * (inflow_peak - outflow_peak) / inflow_peak, >= 0
     lag_hr: float  # outflow_time_to_peak - inflow_time_to_peak, >= 0
+    subreaches: int = 1  # series Courant≈1 sub-reaches the reach was split into (WS-09 / #1609)
+    courant: float = 0.0  # sub-reach Courant number c·Δt/Δx (routing validity flag; ≈ 1)
 
 
 class RoutedHydrographNetwork(BaseModel):

@@ -174,3 +174,76 @@ def test_routing_attenuates_and_lags_peak() -> None:
     out = routing.route(inflow, length_ft=8000.0, slope=0.001, dt_hr=0.1)
     assert out.max() <= inflow.max() + 1e-6  # never amplifies
     assert int(out.argmax()) >= int(inflow.argmax())  # peak no earlier
+
+
+def _storm_inflow() -> np.ndarray:
+    """A design-storm-shaped inflow with a long zero tail (room for the routed peak to land)."""
+    hg = simulate_runoff(
+        area_acres=30000, curve_number=80, tc_hr=6.0, storm_depth_in=4.25, dt_hr=0.1
+    )
+    return np.concatenate([np.asarray(hg.flows_cfs, dtype=np.float64), np.zeros(300)])
+
+
+def test_long_reach_is_subdivided_to_courant_near_one() -> None:
+    # WS-09 / #1609: a long reach (routing the whole 82k-ft length as ONE Muskingum step drives
+    # c1 strongly negative) is split into n sub-reaches so the grid Courant number lands near 1.
+    inflow = _storm_inflow()
+    rr = routing.route_reach(inflow, length_ft=82000.0, slope=0.001, dt_hr=0.1)
+    assert rr.subreaches > 1  # not routed as a single coarse step
+    assert 0.9 <= rr.courant <= 1.5  # Courant ≈ 1 by construction (the validity flag)
+    assert rr.dx_ft == pytest.approx(82000.0 / rr.subreaches)
+
+
+def test_subdivided_muskingum_coefficients_are_all_nonnegative() -> None:
+    # The point of subdivision: at Courant ≈ 1 with X∈[0,½] every coefficient is non-negative,
+    # so the routed hydrograph is a convex combination — no leading-limb oscillation for the
+    # output clamp to mask. The single coarse step drives c1 negative; the sub-reach step does not.
+    q_ref = float(_storm_inflow().max())
+    geom = {"slope": 0.001, "manning_n": 0.04, "bottom_width_ft": 10.0, "side_slope_z": 2.0}
+    single = routing.muskingum_coeffs(q_ref, length_ft=82000.0, dt_hr=0.1, **geom)
+    assert single[0] < 0  # the coarse whole-reach step: c1 < 0 (the masked pathology)
+    n = routing.subreach_count(q_ref, length_ft=82000.0, dt_hr=0.1, **geom)
+    dx = 82000.0 / n
+    sub = routing.muskingum_coeffs(q_ref, length_ft=dx, dt_hr=0.1, **geom)
+    assert all(c >= 0 for c in sub), sub  # every sub-reach coefficient is non-negative
+    assert sum(sub) == pytest.approx(1.0, abs=1e-9)
+
+
+def test_routed_peak_is_grid_independent() -> None:
+    # Halving Δx (doubling the sub-reach count) must barely move the outlet peak — the routed
+    # peak is a physical quantity, not a grid artifact. The single coarse step, by contrast, is
+    # meaningfully off. (Cunge's method matches physical diffusion at any Δx, so refining converges.)
+    inflow = _storm_inflow()
+    auto = routing.route_reach(inflow, length_ft=82000.0, slope=0.001, dt_hr=0.1)
+    finer = routing.route_reach(
+        inflow, length_ft=82000.0, slope=0.001, dt_hr=0.1, subreaches=auto.subreaches * 2
+    )
+    single = routing.route_reach(inflow, length_ft=82000.0, slope=0.001, dt_hr=0.1, subreaches=1)
+    rel = abs(finer.outflow_cfs.max() - auto.outflow_cfs.max()) / auto.outflow_cfs.max()
+    assert rel < 0.03, f"outlet peak moved {rel:.1%} on halving Δx — not grid-independent"
+    # The un-subdivided single step is the outlier the subdivision fixes.
+    assert abs(single.outflow_cfs.max() - auto.outflow_cfs.max()) / auto.outflow_cfs.max() > rel
+
+
+def test_subreach_count_is_bounded_for_a_pathological_reach() -> None:
+    # WS-09 / #1609: a very slow/flat reach (tiny celerity from a near-zero slope) would ask for
+    # an unbounded ⌈L/(c·Δt)⌉; the count is capped at _MAX_SUBREACHES so routing can't explode
+    # into a runaway number of O(series) passes. A normal reach stays far below the cap.
+    geom = {"slope": 1e-6, "manning_n": 0.04, "bottom_width_ft": 10.0, "side_slope_z": 2.0}
+    n = routing.subreach_count(500.0, length_ft=200_000.0, dt_hr=0.1, **geom)
+    assert n == routing._MAX_SUBREACHES  # capped (the uncapped ⌈L/(c·Δt)⌉ is far larger)
+    # route_reach honors the cap through its real entry point (q_ref = the inflow peak).
+    inflow = np.array([0, 100, 300, 500, 300, 100, 0, 0, 0, 0], dtype=np.float64)
+    assert routing.route_reach(inflow, length_ft=200_000.0, dt_hr=0.1, **geom).subreaches == n
+    # A committed-scale reach is nowhere near the cap.
+    normal = routing.subreach_count(
+        12000.0, length_ft=82000.0, dt_hr=0.1, **(geom | {"slope": 0.001})
+    )
+    assert 1 < normal < routing._MAX_SUBREACHES
+
+
+def test_route_reach_passthrough_on_zero_inflow() -> None:
+    # A dry reach (no peak to derive celerity from) passes through: one sub-reach, zero Courant.
+    rr = routing.route_reach(np.zeros(50), length_ft=1000.0, slope=0.001)
+    assert rr.subreaches == 1 and rr.courant == 0.0
+    assert np.array_equal(rr.outflow_cfs, np.zeros(50))
