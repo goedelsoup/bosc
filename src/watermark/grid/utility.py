@@ -45,11 +45,12 @@ log = get_logger(__name__)
 
 _LOAD_FACTOR_CITE = "data-center capacity utilization ~0.9 (near-flat 24x7); assumption (cf. #91)"
 
-# The AEP-Ohio (EIA-861 per-utility) and PJM (EIA-930 annual) figures are now LIVE
-# connector pulls — fetch_utility_retail (watermark.grid.eia861) + fetch_ba_annual_load
-# (watermark.grid.interchange). Only the Ohio state-retail fallback stays a transcribed const.
-_OH_STATE_RETAIL_GWH = 149_003.0
-_OH_STATE_CITE = "EIA ELEC.SALES.OH-ALL.A 2023 (Ohio total retail electricity sales)"
+# All three load denominators are now LIVE connector pulls — fetch_utility_retail
+# (watermark.grid.eia861), fetch_ba_annual_load (watermark.grid.interchange), and the state
+# retail from the committed #91 EIA consumer-energy dataset. There is deliberately NO
+# hardcoded state fallback: a missing state denominator RAISES (A1/#1638), never silently
+# substitutes Ohio's figure for another state's — the economics demand-pressure layer (#1103)
+# raises on the identical condition.
 
 
 # Full state name for prose/citation labels (keyed by EIA state). Keeps the readable form
@@ -251,19 +252,35 @@ def _serving_utility(
 
 
 def _state_retail_gwh(settings: Settings) -> ProvenancedValue:
-    """State total retail sales from the committed #91 EIA dataset (connector), or a
-    transcribed reference fallback. EIA 'million kWh' is numerically GWh.
+    """State total retail sales from the committed #91 EIA dataset (connector). GWh.
+
+    EIA 'million kWh' is numerically GWh. The state denominator is connector-sourced,
+    state-aware, and never a hardcoded fallback (A1/#1638): a missing dataset or a
+    zero/absent retail-sales series RAISES (mirroring the economics demand-pressure guard,
+    #1103) rather than silently substituting one state's figure for another's — so a
+    non-Ohio site can never inherit Ohio's 149,003 GWh denominator.
     """
+    prof = active_profile(settings)
+    state = prof.eia_state
     costs = load_consumer_energy(settings)
-    if costs is not None:
-        sales = costs.by_metric("electricity", "sales")
-        if sales is not None:
-            return ProvenancedValue.from_connector(
-                round(sales.value.value, 1),
-                "GWh/yr",
-                citation=f"EIA {sales.series_id} ({sales.period}); shared with #91",
-            )
-    return ProvenancedValue.from_reference(_OH_STATE_RETAIL_GWH, "GWh/yr", citation=_OH_STATE_CITE)
+    if costs is None:
+        raise ValueError(
+            f"site {settings.site!r} ({state}): no committed consumer-energy dataset at "
+            f"{prof.consumer_energy_relpath} — cannot source the state retail denominator; "
+            "run `watermark eia` for this site first (refusing to fall back to Ohio's figure)"
+        )
+    sales = costs.by_metric("electricity", "sales")
+    if sales is None or not sales.value.value:
+        raise ValueError(
+            f"consumer-energy dataset for {state} has a missing/zero electricity retail-sales "
+            f"series ({sales.value.value if sales else None!r}) — cannot derive a state load "
+            "share from an absent denominator"
+        )
+    return ProvenancedValue.from_connector(
+        round(sales.value.value, 1),
+        "GWh/yr",
+        citation=f"EIA {sales.series_id} ({sales.period}); shared with #91",
+    )
 
 
 def derive_grid_profile(*, settings: Settings | None = None) -> GridProfile:
@@ -277,21 +294,31 @@ def derive_grid_profile(*, settings: Settings | None = None) -> GridProfile:
     settings = settings or get_settings()
     power = derive_power_basis(settings=settings)
 
-    # Live connector pulls (#94/#120): per-utility EIA-861 + PJM annual EIA-930 + Ohio state.
+    # Live connector pulls (#94/#120): per-utility EIA-861 + PJM annual EIA-930.
     utility_profile = fetch_utility_retail(settings=settings)
     ba_load = fetch_ba_annual_load(settings=settings)
-    state_retail = _state_retail_gwh(settings)
 
     load_share: GridLoadShare | None = None
     if power is not None:
         draw_mw = power.facility_draw.value
         consumption_gwh = annual_consumption_gwh(draw_mw)
         utility_retail = utility_profile.retail_sales_gwh
+        # The state denominator is only needed for the campus share, so resolve it here (a
+        # facility-less site skips it and never trips the A1 raise for an absent dataset).
+        state_retail = _state_retail_gwh(settings)
         eia_state = active_profile(settings).eia_state
         state_name = _STATE_NAME.get(eia_state, eia_state)
 
-        def _share(denom: float) -> float:
-            return consumption_gwh / denom * 100.0 if denom else 0.0
+        def _share(denom: float, *, of: str) -> float:
+            # A zero/absent denominator means a broken upstream (empty connector, fixture
+            # drift), not that the campus is a negligible share. Refuse to synthesize a "0%
+            # load share" from an absent denominator (A3/#1638; the #1103 raise-on-zero guard).
+            if not denom:
+                raise ValueError(
+                    f"grid load-share denominator {of!r} is zero/absent for site "
+                    f"{settings.site!r} — cannot derive a load share from a broken denominator"
+                )
+            return consumption_gwh / denom * 100.0
 
         load_share = GridLoadShare(
             campus_load_mw=ProvenancedValue.derived(
@@ -311,19 +338,19 @@ def derive_grid_profile(*, settings: Settings | None = None) -> GridProfile:
             ba_load_gwh=ba_load,
             state_retail_gwh=state_retail,
             share_of_utility_pct=ProvenancedValue.derived(
-                round(_share(utility_retail.value), 2),
+                round(_share(utility_retail.value, of="utility retail (EIA-861)"), 2),
                 "percent",
                 citation=f"campus {consumption_gwh:.0f} GWh / {utility_profile.utility} "
                 f"{utility_retail.value:,.0f} GWh (EIA-861 {settings.eia861_year} per-utility)",
             ),
             share_of_ba_pct=ProvenancedValue.derived(
-                round(_share(ba_load.value), 3),
+                round(_share(ba_load.value, of="BA annual load (EIA-930)"), 3),
                 "percent",
                 citation=f"campus {consumption_gwh:.0f} GWh / PJM {ba_load.value:,.0f} GWh "
                 "(EIA-930 annual demand)",
             ),
             share_of_state_pct=ProvenancedValue.derived(
-                round(_share(state_retail.value), 2),
+                round(_share(state_retail.value, of="state retail (EIA)"), 2),
                 "percent",
                 citation=f"campus {consumption_gwh:.0f} GWh / "
                 f"{state_name} {state_retail.value:.0f} GWh",

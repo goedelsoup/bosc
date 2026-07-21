@@ -76,13 +76,17 @@ class _Form1Filer(NamedTuple):
 
 
 # Serving-utility FERC identity, keyed by EIA-861 utility number (profile-only — mirrors
-# watermark.grid.utility._UTILITY_GRID). Lima/Findlay/Van Wert = Ohio Power (#14006); Fort Wayne =
-# Indiana Michigan Power (#9324); Toledo = Toledo Edison (#18997); Bryan = a municipal system
-# (#2439), not a FERC Form-1 filer.
+# watermark.grid.utility._UTILITY_GRID; the two maps MUST cover the same utilities — a keyset
+# drift is what lost WPAFB/Xenia their FERC filer, A5/#1638, and is now CI-guarded. GP-H/#1645
+# is the deeper fix: collapse the two into one source). Lima/Findlay/Van Wert = Ohio Power
+# (#14006); Fort Wayne = Indiana Michigan Power (#9324); Toledo = Toledo Edison (#18997); the
+# Miami-basin sites (WPAFB/Xenia/Troy-Piqua/Sidney/Greenville/Wilmington) = Dayton P&L / AES
+# Ohio (#4922); Bryan = a municipal system (#2439), not a FERC Form-1 filer.
 _FORM1_FILER: dict[int, _Form1Filer] = {
     14006: _Form1Filer("AEP Ohio", "Ohio Power Company", True),
     9324: _Form1Filer("AEP I&M", "Indiana Michigan Power Company", True),
     18997: _Form1Filer("FirstEnergy (Toledo Edison)", "The Toledo Edison Company", True),
+    4922: _Form1Filer("AES Ohio (Dayton P&L)", "The Dayton Power and Light Company", True),
     2439: _Form1Filer("Bryan Municipal Utilities", "Bryan Municipal Utilities", False),
 }
 
