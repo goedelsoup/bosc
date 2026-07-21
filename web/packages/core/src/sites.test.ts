@@ -111,31 +111,33 @@ describe("sites registry — the Watermark network (#304)", () => {
 });
 
 describe("editorial story states — live vs coming-soon vs hidden (#1526/#1527)", () => {
-  it("marks both editorial walks `comingSoon`, and no story anywhere `hidden`", () => {
-    // The two in-line stories are Lima's project-bosc and Fort Wayne's project-zodiac; both are held.
+  it("Lima's walk is readable (live), Fort Wayne's stays `comingSoon`, and no story anywhere `hidden`", () => {
+    // The two in-line stories are Lima's project-bosc and Fort Wayne's project-zodiac. Lima's record
+    // is finished, so its walk is readable; Fort Wayne's is still held behind the coming-soon teaser.
     const lima = siteForSlug("lima")?.stories ?? [];
     const ftw = siteForSlug("fort-wayne")?.stories ?? [];
     expect(lima.map((s) => s.codename)).toEqual(["project-bosc"]);
     expect(ftw.map((s) => s.codename)).toEqual(["project-zodiac"]);
-    expect(lima.every((s) => s.comingSoon === true)).toBe(true);
+    expect(lima.every((s) => !s.comingSoon)).toBe(true);
     expect(ftw.every((s) => s.comingSoon === true)).toBe(true);
     // The silent `hidden` state is unused today — every registered story is either live or coming-soon.
     expect(SITES.every((s) => (s.stories ?? []).every((r) => !r.hidden))).toBe(true);
   });
 
-  it("surfacedStories returns neither, comingSoonStories returns both — the states are distinguishable", () => {
-    for (const [slug, codename] of [
-      ["lima", "project-bosc"],
-      ["fort-wayne", "project-zodiac"],
-    ] as const) {
-      // Held: excluded from every readable surface, but advertised (teaser) + interstitial-gated.
-      expect(surfacedStories(slug)).toHaveLength(0);
-      expect(comingSoonStories(slug).map((r) => r.codename)).toEqual([codename]);
-      expect(storyComingSoon(slug, codename)).toBe(true);
-      // title/dek stay on the ref so the teaser + interstitial can render them.
-      expect(comingSoonStories(slug)[0]?.title.length).toBeGreaterThan(0);
-      expect(comingSoonStories(slug)[0]?.dek.length).toBeGreaterThan(0);
-    }
+  it("surfacedStories returns Lima's, comingSoonStories returns Fort Wayne's — the states are distinguishable", () => {
+    // Lima: readable — surfaced, and NOT coming-soon.
+    expect(surfacedStories("lima").map((r) => r.codename)).toEqual(["project-bosc"]);
+    expect(comingSoonStories("lima")).toHaveLength(0);
+    expect(storyComingSoon("lima", "project-bosc")).toBe(false);
+
+    // Fort Wayne: held — excluded from every readable surface, but advertised (teaser) + interstitial-gated.
+    expect(surfacedStories("fort-wayne")).toHaveLength(0);
+    expect(comingSoonStories("fort-wayne").map((r) => r.codename)).toEqual(["project-zodiac"]);
+    expect(storyComingSoon("fort-wayne", "project-zodiac")).toBe(true);
+    // title/dek stay on the ref so the teaser + interstitial can render them.
+    expect(comingSoonStories("fort-wayne")[0]?.title.length).toBeGreaterThan(0);
+    expect(comingSoonStories("fort-wayne")[0]?.dek.length).toBeGreaterThan(0);
+
     // A site with no registered story is neither surfaced nor coming-soon (nothing to advertise).
     expect(surfacedStories("urbana")).toHaveLength(0);
     expect(comingSoonStories("urbana")).toHaveLength(0);

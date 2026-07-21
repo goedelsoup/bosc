@@ -103,16 +103,17 @@ export interface NetworkSite {
 // advertises title/dek, the routes serve an interstitial). Both keep the story's content, its
 // `/stories/<codename>` routes, the `WALK_*` guard, and its title/dek intact.
 //
-// Both editorial ("in-line") stories are marked `comingSoon` (#1526): the guided walks are held
-// behind a visible teaser while the record they teach is finished. `surfacedStories` returns
-// neither; `comingSoonStories` returns both.
+// Lima's Project BOSC walk is now *readable* — its record is finished, so it surfaces (switcher,
+// hub, catalog/atoms, record backlinks); `surfacedStories("lima")` returns it, `comingSoonStories`
+// does not. Fort Wayne's Project Zodiac stays `comingSoon` (#1526): held behind a visible teaser
+// while its record is finished — `comingSoonStories("fort-wayne")` returns it, `surfacedStories`
+// does not.
 const STORIES: Partial<Record<string, readonly StoryRef[]>> = {
   lima: [
     {
       codename: DEFAULT_STORY_CODENAME,
       title: "Project BOSC",
       dek: "Project BOSC — read the record one document at a time, no prior knowledge.",
-      comingSoon: true,
     },
   ],
   "fort-wayne": [

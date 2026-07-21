@@ -124,31 +124,31 @@ describe("Story model", () => {
   });
 });
 
-describe("coming-soon story resolution (#1526 — advertised, content held)", () => {
-  it("keeps both editorial stories' content resolvable while holding them from every readable surface", () => {
-    // The MDX content, the WALK_* guard, AND the title/dek metadata all still resolve — the walks are
-    // retained, only held …
+describe("story surface resolution — Lima readable, Fort Wayne coming-soon (#1526)", () => {
+  it("surfaces Lima's readable walk while holding Fort Wayne's from every readable surface", () => {
+    // Lima's MDX content, the WALK_* guard, and its metadata resolve — and its record is finished, so
+    // the walk now *surfaces* (readable): included in surfacedStories, excluded from comingSoon.
     const story = storyFor("lima", "project-bosc");
     expect(story?.title).toBe("Project BOSC");
     expect(WALK_CHAPTERS.length).toBe(WALK_TOTAL);
-    // … but both editorial overlays are `comingSoon`, so neither *surfaces* (readable). The
-    // teaser-vs-held distinction is explicit: surfaced excludes them, comingSoon includes them.
-    expect(siteSurfacesStory("lima", "project-bosc")).toBe(false);
+    expect(siteSurfacesStory("lima", "project-bosc")).toBe(true);
+    expect(surfacedStories("lima").map((s) => s.codename)).toEqual(["project-bosc"]);
+    expect(comingSoonStories("lima")).toHaveLength(0);
+    expect(storyComingSoon("lima", "project-bosc")).toBe(false);
+    // Fort Wayne's walk stays `comingSoon`, so it never *surfaces* (readable). The teaser-vs-held
+    // distinction is explicit: surfaced excludes it, comingSoon includes it.
     expect(siteSurfacesStory("fort-wayne", "project-zodiac")).toBe(false);
-    expect(surfacedStories("lima")).toHaveLength(0);
     expect(surfacedStories("fort-wayne")).toHaveLength(0);
-    expect(comingSoonStories("lima").map((s) => s.codename)).toEqual(["project-bosc"]);
     expect(comingSoonStories("fort-wayne").map((s) => s.codename)).toEqual(["project-zodiac"]);
-    expect(storyComingSoon("lima", "project-bosc")).toBe(true);
     expect(storyComingSoon("fort-wayne", "project-zodiac")).toBe(true);
   });
 
-  it("resolves no ambient readable story while the walks are coming-soon (no leak, no backlinks)", () => {
-    // Lima (default active site): its walk is held → no ambient readable story, and the record→chapter
-    // backlink resolves nothing (the content-held guarantee at the surface layer).
-    expect(activeStory()).toBeUndefined();
-    expect(activeStoryAnchorFor("aedg/roundabouts.summary.opc.yaml")).toBeUndefined();
-    // Fort Wayne: its own walk is held too → also no ambient readable story (never Lima's).
+  it("resolves Lima's ambient readable story + backlinks, but none for a held or story-less site", () => {
+    // Lima (default active site): its walk surfaces → the ambient readable story is Project BOSC, and
+    // the record→chapter backlink resolves (aedg roundabouts OPC anchors the `cost` chapter).
+    expect(activeStory()?.codename).toBe("project-bosc");
+    expect(activeStoryAnchorFor("aedg/roundabouts.summary.opc.yaml")?.slug).toBe("cost");
+    // Fort Wayne: its own walk is held → no ambient readable story (and never Lima's).
     runWithSite("fort-wayne", () => {
       expect(activeStory()).toBeUndefined();
     });

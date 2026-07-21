@@ -28,17 +28,16 @@ describe("isReferenceSite", () => {
 });
 
 describe("the reference build", () => {
-  it("has every section available except its held (coming-soon) story", () => {
-    // Lima hosts all the network-global content, so every section opens — except `story`: its Project
-    // BOSC walk is `comingSoon` (#1526), so the story facet locks (no *readable* walk) and renders a
-    // teaser + "— coming soon" marker instead of a readable door. Everything else stays available.
+  it("has every section available, including its now-readable story", () => {
+    // Lima hosts all the network-global content, so every section opens — including `story`: its
+    // Project BOSC walk is readable now (its record is finished), so the facet unlocks and the story
+    // door renders instead of a coming-soon teaser.
     const readiness = siteReadiness("lima");
     for (const section of Object.keys(SECTION_META) as ReadinessSection[]) {
-      if (section === "story") continue;
       expect(readiness[section]).toBe("available");
     }
-    expect(readiness.story).toBe("locked");
-    expect(lockedSections("lima")).toEqual(["story"]);
+    expect(readiness.story).toBe("available");
+    expect(lockedSections("lima")).toEqual([]);
   });
 });
 
