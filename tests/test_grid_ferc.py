@@ -95,6 +95,32 @@ def test_seam_note_cross_references_economics(grid_settings: Settings) -> None:
     assert "FERC wholesale" in seam.note
 
 
+def test_form1_and_utility_grid_maps_cover_the_same_utilities() -> None:
+    """A5/#1638: the ferc _FORM1_FILER and utility _UTILITY_GRID maps must stay reconciled.
+
+    They are two per-utility dicts keyed by the same EIA-861 utility number; a key present in
+    one but not the other (which lost WPAFB/Xenia — #4922 — their FERC filer) is a silent
+    drift. Enforce keyset equality until GP-H/#1645 collapses them into one source.
+    """
+    from watermark.grid.ferc import _FORM1_FILER
+    from watermark.grid.utility import _UTILITY_GRID
+
+    assert set(_FORM1_FILER) == set(_UTILITY_GRID), (
+        "grid _FORM1_FILER (ferc) and _UTILITY_GRID (utility) have drifted: "
+        f"only in FORM1={set(_FORM1_FILER) - set(_UTILITY_GRID)}, "
+        f"only in UTILITY_GRID={set(_UTILITY_GRID) - set(_FORM1_FILER)}"
+    )
+
+
+def test_aes_ohio_sites_name_their_ferc_filer(grid_settings: Settings) -> None:
+    """A5/#1638: a #4922 (AES Ohio) site now names Dayton P&L, not 'the serving utility'."""
+    settings = Settings(site="wpafb", data_dir=REPO_ROOT / "data", hydro_offline=True, econ_offline=True)
+    seam = derive_ferc_seam(settings=settings)
+    assert "Dayton Power and Light" in seam.form1.utility
+    assert "the serving utility" not in seam.form1.utility
+    assert seam.form1.rate_base is None  # still a cited pointer, not a fabricated figure
+
+
 def test_committed_ferc_seam_loads() -> None:
     """The committed reference YAML round-trips into the model."""
     seam = load_ferc_seam(REPO_ROOT / "data" / "reference")

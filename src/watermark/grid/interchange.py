@@ -61,6 +61,15 @@ def _reduce_region_data(
             except (TypeError, ValueError):
                 continue
     d, ng, ti = by_type["D"], by_type["NG"], by_type["TI"]
+    # An empty response (a wrong BA code, or an HTTP-200 hiccup with an empty data[]) must not
+    # become a zero-filled interchange model — the comparison needs all three series, so refuse
+    # rather than fabricate demand=netgen=interchange=0 (A2/#1638; mirrors the LMP _reduce guard).
+    if not d or not ng or not ti:
+        missing = ", ".join(t for t, xs in (("D", d), ("NG", ng), ("TI", ti)) if not xs)
+        raise Eia930Error(
+            f"EIA-930 region-data for {ba} {start}..{end} returned no rows for [{missing}] — "
+            "refusing to build a zero-filled interchange model (wrong BA code or empty response)"
+        )
     return {
         "ba": ba,
         "start": start,
@@ -130,6 +139,13 @@ def fetch_ba_interchange(
         ),
     )
     hours = int(payload["hours"])
+    if hours <= 0:
+        # Defends the offline path too: a committed fixture that reduced to zero rows must
+        # raise on read, not silently produce a zeros model (A2/#1638).
+        raise Eia930Error(
+            f"EIA-930 region-data payload for {ba} {start}..{end} has no hours — empty/poisoned "
+            "response; refusing to build a zero-filled interchange model"
+        )
     cite = f"EIA-930 region-data {ba} {start}..{end} ({hours} h)"
     import_frac = payload["import_hours"] / hours if hours else 0.0
     return BAInterchange(
@@ -217,6 +233,13 @@ def fetch_ba_annual_load(
             ) from exc
         rows = (((body or {}).get("response") or {}).get("data")) or []
         vals = [float(r["value"]) for r in rows if r.get("value") is not None]
+        if not vals:
+            # An empty annual-load response must not become a 0 GWh/yr denominator (A2/#1638):
+            # a wrong BA code or a silent hiccup would otherwise be committed as zero.
+            raise Eia930Error(
+                f"EIA-930 daily demand for {ba} {year} returned no daily values — refusing to "
+                "report a zero annual load (wrong BA code or empty response)"
+            )
         return {"ba": ba, "year": year, "days": len(vals), "annual_demand_mwh": sum(vals)}
 
     payload = cast(
@@ -230,6 +253,13 @@ def fetch_ba_annual_load(
             fixtures_dir=settings.econ_fixtures_dir,
         ),
     )
+    if int(payload["days"]) <= 0 or not payload["annual_demand_mwh"]:
+        # Defends the offline path: a committed fixture that reduced to zero days/demand must
+        # raise on read, not become a 0 GWh/yr denominator (A2/#1638).
+        raise Eia930Error(
+            f"EIA-930 daily-demand payload for {payload['ba']} {payload['year']} is empty/zero — "
+            "refusing to report a zero annual load"
+        )
     return ProvenancedValue.from_connector(
         round(payload["annual_demand_mwh"] / 1000.0, 1),
         "GWh/yr",
