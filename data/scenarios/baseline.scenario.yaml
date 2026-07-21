@@ -204,10 +204,24 @@ assimilative:
     asof: null
     low: null
     high: null
-  upstream_returns: null
+  upstream_returns:
+    value: 28.623731905549654
+    unit: cfs
+    source: derived
+    citation: Σ permitted design discharge of 1 other WWTP(s) on Ottawa River (Lima
+      WWTP) — effluent already in the reach, credited into the low-flow denominator
+      (co-reach sum, not longitudinal-position resolved; see the routed network for
+      the accumulated picture)
+    confidence: medium
+    asof: null
+    low: null
+    high: null
   dilution_ratio: 0.04308778944
   flag: violation
-  detail: Ottawa River 7Q10 0.20 cfs vs discharge 4.64 cfs -> 0.04:1 dilution (violation)
+  effluent_credited_ratio: 6.209754456106667
+  effluent_credited_flag: tight
+  detail: Ottawa River 7Q10 0.20 cfs vs discharge 4.64 cfs -> 0.04:1 dilution (violation);
+    effluent-credited 0.20+28.62 cfs -> 6.21:1 (tight)
 - receiving_water: Pike Run
   discharger: American Bath WWTP
   design_low_flow:
@@ -232,6 +246,8 @@ assimilative:
   upstream_returns: null
   dilution_ratio: 0.012926336832
   flag: violation
+  effluent_credited_ratio: null
+  effluent_credited_flag: null
   detail: Pike Run 7Q10 0.03 cfs vs discharge 2.32 cfs -> 0.01:1 dilution (violation)
 - receiving_water: Dug Run
   discharger: American II WWTP
@@ -257,6 +273,8 @@ assimilative:
   upstream_returns: null
   dilution_ratio: 0.42010594704000004
   flag: violation
+  effluent_credited_ratio: null
+  effluent_credited_flag: null
   detail: Dug Run 7Q10 0.78 cfs vs discharge 1.86 cfs -> 0.42:1 dilution (violation)
 - receiving_water: Ottawa River
   discharger: Lima WWTP
@@ -279,7 +297,21 @@ assimilative:
     asof: null
     low: null
     high: null
-  upstream_returns: null
+  upstream_returns:
+    value: 4.641686254953999
+    unit: cfs
+    source: derived
+    citation: Σ permitted design discharge of 1 other WWTP(s) on Ottawa River (Shawnee
+      II WWTP) — effluent already in the reach, credited into the low-flow denominator
+      (co-reach sum, not longitudinal-position resolved; see the routed network for
+      the accumulated picture)
+    confidence: medium
+    asof: null
+    low: null
+    high: null
   dilution_ratio: 0.006987209098378379
   flag: violation
-  detail: Ottawa River 7Q10 0.20 cfs vs discharge 28.62 cfs -> 0.01:1 dilution (violation)
+  effluent_credited_ratio: 0.1691493712605406
+  effluent_credited_flag: violation
+  detail: Ottawa River 7Q10 0.20 cfs vs discharge 28.62 cfs -> 0.01:1 dilution (violation);
+    effluent-credited 0.20+4.64 cfs -> 0.17:1 (violation)

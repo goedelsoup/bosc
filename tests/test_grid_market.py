@@ -101,7 +101,7 @@ def test_caveats_present(market_settings: Settings) -> None:
 
 def test_committed_pjm_market_loads() -> None:
     """The committed reference YAML round-trips into the model."""
-    ref = load_pjm_market(REPO_ROOT / "data" / "reference")
+    ref = load_pjm_market(Settings(data_dir=REPO_ROOT / "data"))
     assert ref is not None
     assert "PJM" in ref.rto.value
     # Zonal LMP is connector-sourced (#121); RPM remains transcribed reference, flagged verify.

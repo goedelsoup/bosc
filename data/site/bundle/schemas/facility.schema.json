@@ -116,6 +116,30 @@
         "default": null,
         "title": "It Load High Mw"
       },
+      "air_permit_citation": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Air Permit Citation"
+      },
+      "air_permit_relpath": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Air Permit Relpath"
+      },
       "it_load_citation": {
         "anyOf": [
           {
@@ -167,6 +191,16 @@
       "cooling_model": {
         "$ref": "#/$defs/CoolingModelType"
       },
+      "cooling_model_source": {
+        "enum": [
+          "document",
+          "connector",
+          "reference",
+          "assumption"
+        ],
+        "title": "Cooling Model Source",
+        "type": "string"
+      },
       "cooling_model_citation": {
         "title": "Cooling Model Citation",
         "type": "string"
@@ -202,6 +236,7 @@
       "is_primary",
       "status",
       "cooling_model",
+      "cooling_model_source",
       "cooling_model_citation"
     ],
     "title": "FacilityItem",

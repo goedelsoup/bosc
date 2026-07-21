@@ -97,11 +97,14 @@ def test_routed_outlet_peak_is_below_the_naive_sum_and_later() -> None:
     assert rn.lag_hr > 0.0  # the routed peak arrives later than the un-routed sum
     # Series share one horizon and are non-trivial.
     assert len(rn.times_hr) == len(rn.outlet_hydrograph_cfs) == len(rn.summed_hydrograph_cfs) > 0
-    # Every routed reach attenuates (outflow peak <= inflow peak) and lags (>= 0).
+    # Every routed reach attenuates (outflow peak <= inflow peak) and lags (>= 0), and records
+    # the sub-reach discretization it was routed at (WS-09 / #1609): Courant ≈ 1, coeffs positive.
     assert {r.node_id for r in rn.reaches} == {"head-a", "head-b", "confluence"}
     for r in rn.reaches:
         assert r.outflow_peak_cfs <= r.inflow_peak_cfs + 1e-6
         assert r.lag_hr >= -1e-6
+        assert r.subreaches >= 1
+        assert 0.5 <= r.courant <= 2.0  # near 1 by construction — the routing validity flag
 
 
 def test_node_without_a_reach_passes_flow_through_unrouted() -> None:
@@ -176,6 +179,11 @@ def test_committed_lima_loop_routes_and_attenuates(hydro_settings: Settings) -> 
     assert rn.lag_hr > 0.0
     assert rn.reaches, "the committed loop should route several reaches"
     assert not rn.warnings, "every routed node in the committed topology has reach geometry"
+    # Every reach is sub-reach-resolved to Courant ≈ 1 (WS-09 / #1609): a long reach is split
+    # into several steps, and no reach is under-resolved (a single step with a large Courant).
+    assert any(r.subreaches > 1 for r in rn.reaches), "the long mainstem reaches should subdivide"
+    for r in rn.reaches:
+        assert 0.5 <= r.courant <= 2.0, f"{r.node_id} Courant {r.courant} off the validity band"
     assert rn.site == "Lima", "the reference-build loop is labelled from the active SiteProfile"
     # The findings headline is site-labelled, reports the attenuation, and passes.
     findings = hr.hydrograph_findings(rn)

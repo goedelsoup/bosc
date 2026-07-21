@@ -195,14 +195,42 @@ export function loadManifest(slug: string = activeSite()): Manifest {
   return manifest;
 }
 
+const missingBundles = new Set<string>();
+
 /** A site's manifest, or `null` when it has no committed bundle (a registered-but-unbuilt slug).
  *  Non-throwing peer of {@link loadManifest} — for cross-site readers (the directory, switchers)
- *  that walk every registered site, including ones whose bundle isn't committed yet (#1628). */
+ *  that walk every registered site, including ones whose bundle isn't committed yet (#1628).
+ *
+ *  It degrades to `null` for a genuinely tolerable miss (no bundle on disk; a corrupt or
+ *  contract-incompatible `manifest.json`; or — the single-bundle `WATERMARK_BUNDLE_DIR` override —
+ *  a manifest whose own `site` field doesn't match the requested slug, which would otherwise serve
+ *  every slug the override bundle's data). A registered-but-unbuilt slug is negatively cached so a
+ *  header switcher doesn't re-`stat` it on every one of hundreds of pages. */
 export function manifestOrNull(slug: string = activeSite()): Manifest | null {
-  for (const dir of candidateDirs(slug)) {
-    if (existsSync(join(dir, "manifest.json"))) return loadManifest(slug);
+  const cached = cachedManifests.get(slug);
+  if (cached) return cached;
+  if (missingBundles.has(slug)) return null;
+  const present = candidateDirs(slug).some((dir) => existsSync(join(dir, "manifest.json")));
+  if (!present) {
+    missingBundles.add(slug);
+    return null;
   }
-  return null;
+  try {
+    const manifest = loadManifest(slug);
+    // In single-bundle override mode `candidateDirs` falls back to the override root for every
+    // slug, so a miss there resolves to the ONE override bundle — guard against serving its data
+    // under a different slug (the retired hardcoded dict was slug-correct).
+    if (manifest.site && manifest.site !== slug) {
+      missingBundles.add(slug);
+      return null;
+    }
+    return manifest;
+  } catch {
+    // Corrupt / contract-incompatible manifest: degrade this one badge rather than failing the
+    // build of every page that renders a cross-site switcher.
+    missingBundles.add(slug);
+    return null;
+  }
 }
 
 /** Whether a site's bundle exposes a feed by this name. Section pages and the search

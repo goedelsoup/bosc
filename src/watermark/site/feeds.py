@@ -210,6 +210,19 @@ from watermark.sites import (
 #   reconciling to `pounds_by_media["water"]`), the input the chemical-specific toxic screen reads
 #   (WS-07 / #1607). Additive/optional (absent facilities default to `[]`), so an existing rsei.json
 #   without it stays valid — PATCH, back-compatible.
+# 1.30.2: each `hydrology-scenarios` `AssimilativeCheck` gains `effluent_credited_ratio` +
+#   `effluent_credited_flag`, and its long-reserved `upstream_returns` field is now *computed*
+#   (WS-15 / #1615): the permitted effluent already in the reach (Σ other WWTPs sharing the
+#   receiving water) credited into a second, effluent-credited dilution ratio, presented alongside
+#   the conservative cited-7Q10-only `dilution_ratio` (unchanged). Additive/optional (all three are
+#   null when a plant is alone on its stream), so an existing feed row stays valid — PATCH,
+#   back-compatible.
+# 1.30.3: each `routed-hydrograph` reach (the `ReachRouting` model) gains `subreaches` + `courant`
+#   — the sub-reach discretization the Muskingum-Cunge routing ran at (WS-09 / #1609): the reach is
+#   split into `subreaches` Courant≈1 steps routed in series (curing the coarse-single-step
+#   coefficient blow-up the old output clamp masked), and `courant` (c·Δt/Δx, ≈ 1) is the routing
+#   validity flag. Additive with defaults (`subreaches=1`, `courant=0.0`), so an existing
+#   routed-hydrograph.json without them stays valid — PATCH, back-compatible.
 # 1.31.0: adds the `facility` collection feed (#1628, epic #1626 F2) — the machine-readable
 #   projection of the now multi-facility `SiteProfile.facilities`: one `FacilityItem` per disclosed
 #   campus carrying its lifecycle `status`, structured `operator` / `end_use`, IT-load bracket,
@@ -371,15 +384,26 @@ class FacilityItem(BaseModel):
     it_load_mw: float | None = None  # central IT load; None ⇒ load entirely [open]
     it_load_low_mw: float | None = None
     it_load_high_mw: float | None = None
-    it_load_citation: str | None = (
-        None  # the load basis (air permit or a non-permit derivation cite)
-    )
+    # The two IT-load groundings are kept DISTINCT (not coalesced) so a consumer can tell a
+    # permit-grounded load (Lima/Fort Wayne — the [verified] backup → N+1 inference) from a
+    # non-permit screening/derivation bracket (Urbana — [inference]) structurally, not by parsing
+    # prose (#1697 discipline; #1628 review). Exactly one is set on a disclosed load; both None on
+    # an [open] load. `air_permit_relpath` is the committed extraction the permit basis points at.
+    air_permit_citation: str | None = None
+    air_permit_relpath: str | None = None
+    it_load_citation: str | None = None  # a NON-permit derivation basis (screening bracket)
     gross_floor_area_sqft: int | None = None
     disclosed_investment_usd: float | None = None
     disclosure_citation: str | None = None
     cooling_model: CoolingModelType
+    # The provenance CLASS of the cooling archetype — `assumption` (asserted, e.g. Lima's
+    # evaporative tower) vs `reference`/`document` (disclosed) — so the evidence grammar has a typed
+    # field to key on instead of regexing the citation (#1628 review).
+    cooling_model_source: Literal["document", "connector", "reference", "assumption"]
     cooling_model_citation: str
-    parcels_relpath: str | None = None  # resolved: facility-level, else the site-level default
+    parcels_relpath: str | None = (
+        None  # resolved geometry link (only when the artifact exists on disk)
+    )
     footprint_relpath: str | None = None
 
 

@@ -68,7 +68,7 @@ like the military."
   (wetlands in the Buckeye Lake watershed), not a statement of **Ohio-site operational
   consumptive use**. It says nothing about how much the Lima/American Township design will
   evaporate locally — the precise figure the corpus's cooling-basis work estimates at
-  **~3–10 MGD** for that site (36 cooling towers). A 120%-global-replenishment pledge and a
+  **~3–4 MGD** for that site (36 cooling towers). A 120%-global-replenishment pledge and a
   large local consumptive draw are not mutually exclusive.
 - **The BOSC omission** (`notable`). Google's testimony names New Albany, Columbus, and
   Lancaster — but **not** the **American Township / Lima** project under scrutiny in the

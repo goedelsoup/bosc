@@ -2,7 +2,7 @@
   "$defs": {
     "ReachRouting": {
       "additionalProperties": false,
-      "description": "How one reach's channel attenuated and lagged the hydrograph passing through it.\n\n``attenuation_pct`` is the peak reduction (inflow peak -> outflow peak) and ``lag_hr`` the\ndelay in time-to-peak — the two signatures of Muskingum-Cunge routing that a naive\npeak-sum ignores.",
+      "description": "How one reach's channel attenuated and lagged the hydrograph passing through it.\n\n``attenuation_pct`` is the peak reduction (inflow peak -> outflow peak) and ``lag_hr`` the\ndelay in time-to-peak — the two signatures of Muskingum-Cunge routing that a naive\npeak-sum ignores. ``subreaches`` / ``courant`` record the sub-reach discretization the\nreach was routed at (WS-09 / #1609): the reach is split into ``subreaches`` Courant≈1 steps\nrouted in series, and ``courant`` (``c·Δt/Δx``, ≈ 1 by construction) is the routing\nvalidity flag — non-negative Muskingum coefficients + a grid-independent peak.",
       "properties": {
         "node_id": {
           "title": "Node Id",
@@ -42,6 +42,16 @@
         },
         "lag_hr": {
           "title": "Lag Hr",
+          "type": "number"
+        },
+        "subreaches": {
+          "default": 1,
+          "title": "Subreaches",
+          "type": "integer"
+        },
+        "courant": {
+          "default": 0.0,
+          "title": "Courant",
           "type": "number"
         }
       },

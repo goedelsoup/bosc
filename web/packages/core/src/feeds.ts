@@ -242,9 +242,14 @@ export interface AssimilativeCheck {
   discharger: string;
   design_low_flow: ProvenancedValue; // the cited 7Q10
   discharge: ProvenancedValue;
+  // Permitted effluent already in the reach (Σ other WWTPs on this receiving water),
+  // credited into `effluent_credited_ratio`; null when the plant is alone on its stream (WS-15).
   upstream_returns?: ProvenancedValue | null;
-  dilution_ratio: number;
-  flag: DilutionFlag;
+  dilution_ratio: number; // conservative: cited 7Q10 / discharge (no effluent credit)
+  flag: DilutionFlag; // band on `dilution_ratio`
+  // Effluent-credited: (7Q10 + upstream_returns) / discharge; null when nothing to credit.
+  effluent_credited_ratio?: number | null;
+  effluent_credited_flag?: DilutionFlag | null;
   detail: string;
 }
 
@@ -552,9 +557,10 @@ export interface NodeToxics {
  *  four-stage clock the facility-status rail walks. Read off the bundle, not a hardcoded dict. */
 export type FacilityStatus = "investigation" | "confirmed" | "construction" | "live";
 
-/** The disclosed data-center end-use archetype (`bosc.sites.DcEndUse`) — the `endUse.ts` `DcKey`
- *  vocabulary. `null`/absent ⇒ the end use is `[open]` (never asserted). */
-export type FacilityEndUse = "bitcoin" | "hyperscale" | "colocation" | "enclave";
+/** The disclosed data-center end-use archetype (`bosc.sites.DcEndUse`) — the SAME vocabulary as the
+ *  end-use explorer's `DcKey`, aliased (not re-typed) so the two can never drift (#1628 review).
+ *  `null`/absent ⇒ the end use is `[open]` (never asserted). */
+export type FacilityEndUse = import("./endUse").DcKey;
 
 export interface NodeActivity {
   has_disclosed_facility: boolean;
@@ -580,11 +586,16 @@ export interface FacilityItem {
   it_load_mw?: number | null;
   it_load_low_mw?: number | null;
   it_load_high_mw?: number | null;
+  // The two IT-load groundings stay distinct so permit-grounded vs screening-bracket is a typed
+  // discriminant, not a prose regex (#1697 / #1628 review): exactly one is set on a disclosed load.
+  air_permit_citation?: string | null;
+  air_permit_relpath?: string | null;
   it_load_citation?: string | null;
   gross_floor_area_sqft?: number | null;
   disclosed_investment_usd?: number | null;
   disclosure_citation?: string | null;
-  cooling_model: string;
+  cooling_model: CoolingModel;
+  cooling_model_source: "document" | "connector" | "reference" | "assumption";
   cooling_model_citation: string;
   parcels_relpath?: string | null;
   footprint_relpath?: string | null;
@@ -637,6 +648,8 @@ export interface ReachRouting {
   outflow_time_to_peak_hr: number;
   attenuation_pct: number; // peak reduction across the reach, >= 0
   lag_hr: number; // delay in time-to-peak across the reach, >= 0
+  subreaches?: number; // series Courant≈1 sub-reaches the reach was split into (WS-09 / #1609)
+  courant?: number; // sub-reach Courant number c·Δt/Δx — routing validity flag, ≈ 1
 }
 
 // The `routed-hydrograph` object feed — the routed outlet hydrograph vs. the naive summed

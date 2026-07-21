@@ -189,5 +189,7 @@
   ],
   "prime_owned": [],
   "army_controlled": [],
-  "notes": {}
+  "notes": {
+    "matched_entities_provenance": "matched_entities are resolved against this site's entity graph, whose LEI enrichment folds a network-global defense-operator overlay — the reference build's JSMC / General Dynamics operator chain and its GLEIF ultimate parent — into every site's graph. A match here may reflect that shared overlay rather than any presence of the contractor in this site's own records; treat it as a cross-reference to follow up, not a site-local finding."
+  }
 }

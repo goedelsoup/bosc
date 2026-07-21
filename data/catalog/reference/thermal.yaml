@@ -1,0 +1,40 @@
+id: thermal
+title: EPA Thermal-Discharge NPDES Permitting Guidance (EPA-833-F-23-007)
+scope: reference
+status: reviewed
+producer:
+  kind: manual
+  source: EPA Office of Water, Water Permits Division, Office of Wastewater Management
+  external_url: https://www.epa.gov/npdes
+license: Public domain (U.S. federal government work)
+access_tier: public
+site_scope: basin-shared
+storage:
+  - relpath: reference/thermal/epa-833-f-23-007-thermal-discharges-npdes-2023.pdf
+    media_type: application/pdf
+    lfs: true
+refresh:
+  cadence: on-demand
+  last_refreshed: '2026-07-21'
+provenance: reference
+tags:
+  - epa
+  - npdes
+  - thermal
+  - temperature
+  - cwa-316a
+  - wqs
+  - cooling-water
+  - methodology
+notes: >-
+  EPA guidance "Thermal Discharges in NPDES Permits: Overview of Resources and Tools"
+  (EPA-833-F-23-007, June 2023, 272 pp.). The federal methodology reference that grounds a
+  future receiving-water thermal screen — the heat-side peer of the chemical toxic screen
+  that data/reference/wqs/ grounds. Covers the CWA NPDES thermal framework (TBEL/WQBEL,
+  mixing zones, the Section 316(a) thermal variance / ATEL, 316(b) interaction; 40 CFR Part
+  125 Subpart H), Great Lakes RIS thermal tolerances (the region for Lima -> Maumee -> Lake
+  Erie), a hydrodynamic thermal-mixing model review (CORMIX, Delft3D, EFDC, MIKE 3, CE-QUAL-W2),
+  and six 316(a) case studies. Tagged [reference], never [verified] — published federal
+  guidance, "does not have the force and effect of law." Ohio numeric temperature criteria
+  (OAC 3745-1-07) supply the thresholds and live beside the chemical criteria in
+  reference/wqs/. Integration tracked under epic #1715 (subs #1716-#1719).

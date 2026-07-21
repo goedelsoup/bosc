@@ -208,6 +208,8 @@ def output_path_collisions(slug: str) -> dict[str, list[str]]:
     clashes: dict[str, list[str]] = {}
     for field in PER_SITE_OUTPUT_FIELDS:
         value = getattr(prof, field)
+        if value is None:
+            continue  # optional output (e.g. a facility-less site's demand_pressure_relpath) — no destination to clash
         others = [s for s, p in SITES.items() if s != slug and getattr(p, field) == value]
         if others:
             clashes[field] = others
@@ -360,3 +362,46 @@ def profile_readiness(slug: str) -> list[ReadinessFinding]:
                 )
             )
     return findings
+
+
+def grid_knobs_complete(slug: str) -> list[str]:
+    """The grid-identity knobs still incomplete for a site — empty when the identity is whole.
+
+    The grid-knob readiness check (B3/#1639): a site can be backdrop-live yet carry an empty
+    grid identity (serving utility / RTO / LMP zone unset). This reports the gaps so the grid
+    backdrop **locks and asks for the source** rather than rendering an empty/placeholder
+    identity — the repo spine, never fake a value to look complete. A knob is incomplete when
+    it is unset/zero or still an ``[open]`` pending note.
+    """
+    prof = SITES[slug]
+    gaps: list[str] = []
+    if prof.eia861_utility_number == 0:
+        gaps.append("eia861_utility_number")
+    cite = prof.serving_utility_citation
+    if not cite or cite.startswith("[open]"):
+        gaps.append("serving_utility_citation")
+    # LMP is complete via EITHER a pinned PJM pnode (the live connector) OR a non-zero
+    # placeholder carrying a real (non-``[open]``) citation.
+    if not prof.lmp_pnode_id and (
+        prof.lmp_usd_mwh == 0.0 or prof.lmp_citation.startswith("[open]")
+    ):
+        gaps.append("lmp")
+    return gaps
+
+
+def grid_identity_todo_violations() -> list[str]:
+    """Registered profiles whose grid-identity citations still carry a raw ``TODO`` (B3/#1639).
+
+    The registry-level "reject raw TODO" gate — enforced by ``watermark sites check`` (and so
+    CI). A raw ``TODO`` in ``serving_utility_citation`` / ``lmp_citation`` would render verbatim
+    on the grid backdrop; an honest ``[open] …`` pending note is required instead. This gates
+    only what is **registered** in :data:`SITES` — a scaffolded DRAFT profile may legitimately
+    carry ``TODO`` placeholders while it is being authored (``profile_readiness`` lints those).
+    """
+    violations: list[str] = []
+    for slug, prof in SITES.items():
+        for field in ("serving_utility_citation", "lmp_citation"):
+            value = getattr(prof, field)
+            if isinstance(value, str) and "TODO" in value:
+                violations.append(f"{slug}.{field} is a raw 'TODO' placeholder")
+    return violations

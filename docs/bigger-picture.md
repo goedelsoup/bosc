@@ -20,8 +20,9 @@ MW**. `[inference]`
 **5–15 kW/rack** the data appendix cites, 275 MW of IT is on the order of **~18,000–
 55,000 racks**; at the **40–140 kW/rack** of dense AI/accelerator halls, it is
 **~2,000–7,000 racks**. `[inference: data appendix rack-density bands]` The 36
-cooling towers and the **1.8–1.9 L/kWh** WUE put the consumptive draw at **3.1–10
-MGD** — the [hydrology](HYDROLOGY.md) headline. `[verified via HYDROLOGY]`
+cooling towers and the **1.8–1.9 L/kWh** WUE put the central consumptive draw at
+**~3.1 MGD**, with a **3.84 MGD** upper bound at the ~2.2 L/kWh physical evaporative
+ceiling — the [hydrology](HYDROLOGY.md) headline. `[inference: derived]`
 
 **Which workloads — the GovCloud question, substantially answered.** Asked directly
 about the campus, **Liz Schwab answered in indirect language — "classification

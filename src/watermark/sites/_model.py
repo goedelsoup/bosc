@@ -281,15 +281,33 @@ class SiteFacility(BaseModel):
         # ``it_load_citation`` and treat the load as permit-grounded). An [open] load (None)
         # carries no basis citation at all.
         if self.it_load_mw is None:
-            if self.air_permit_citation is not None or self.it_load_citation is not None:
+            # An [open] load carries no load-DERIVATION basis — a screening/derivation cite is
+            # meaningless with no load to ground.
+            if self.it_load_citation is not None:
                 raise ValueError(
-                    "an open IT load (it_load_mw=None) carries no basis citation — set a load to "
-                    "ground it, or leave both air_permit_citation / it_load_citation None"
+                    "an open IT load (it_load_mw=None) carries no it_load_citation — set a load to "
+                    "ground it, or leave it_load_citation None"
+                )
+            # An air permit MAY still be cited on an open-load facility, but only in its documented
+            # secondary role — grounding disclosed gensets (#1628 review; e.g. a permit disclosing a
+            # genset fleet before any IT load is derived). With no gensets it would ground nothing.
+            if self.air_permit_citation is not None and self.genset_count is None:
+                raise ValueError(
+                    "air_permit_citation on an open-load facility (it_load_mw=None) must ground "
+                    "disclosed gensets — set genset_count/genset_mw, or leave air_permit_citation None"
                 )
         elif (self.air_permit_citation is None) == (self.it_load_citation is None):
             raise ValueError(
                 "the IT load needs exactly one basis citation — set air_permit_citation "
                 "(permit-grounded) or it_load_citation (a non-permit derivation basis), not both/neither"
+            )
+        # A disclosed facility is at least `confirmed` (#1628): `investigation` is the honest floor
+        # for a site with NO SiteFacility — the frontend equates it with facility-absence, so a
+        # facility carrying it would ship the self-contradiction "disclosed facility (investigation)".
+        if self.status is FacilityLifecycle.INVESTIGATION:
+            raise ValueError(
+                "a disclosed SiteFacility is at least `confirmed` — `investigation` is the "
+                "facility-absent floor (there is no SiteFacility to attach it to)"
             )
         # Operator / end-use each travel with their own citation (#1628): a disclosed value can
         # never pass uncited, and end_use=None keeps the end use honestly [open].
@@ -380,6 +398,27 @@ class SiteProfile(BaseModel):
             data.setdefault("map_view_zoom", entry.map_zoom)
         return data
 
+    @model_validator(mode="after")
+    def _facility_has_demand_pressure_destination(self) -> SiteProfile:
+        # The demand-pressure sensitivity is facility-gated (``derive_demand_pressure`` raises for
+        # a facility-less site), and ``write_demand_pressure`` needs a destination. So a profile
+        # WITH a documented facility must carry a non-None ``demand_pressure_relpath`` — else the
+        # feed it is entitled to could never be written (#1660). The reverse (a facility-less site
+        # must be None) is intentionally NOT enforced here: 15 registered peers still carry a
+        # dangling path pending the network-wide cleanup this ME-A fix deferred — WPAFB is the
+        # first facility-less profile set to None.
+        if self.facility is not None and self.demand_pressure_relpath is None:
+            raise ValueError(
+                f"site {self.slug!r} has a documented facility but demand_pressure_relpath is None "
+                "— a facility site needs a destination for its demand-pressure feed"
+            )
+        return self
+
+    # A raw "TODO" in a grid-identity citation would render verbatim on the grid backdrop, so
+    # it is gated at the REGISTRY level (`grid_identity_todo_violations` → `watermark sites
+    # check`, B3/#1639) rather than at construction — a scaffolded DRAFT profile legitimately
+    # carries TODO placeholders while it is being authored (see `scaffold_profile_src`).
+
     # --- Identity (mirrors sites.ts; ``basin`` is the shared-across-Maumee axis) ---------
     slug: str
     # place, receiving_water_name, map_view_* are authoritative in data/sites.yaml and filled
@@ -459,7 +498,11 @@ class SiteProfile(BaseModel):
     baseline_relpath: str  # Census+QCEW county baseline (economics/baseline.py)
     rsei_relpath: str  # EPA RSEI county toxics inventory (rsei.py)
     consumer_energy_relpath: str  # EIA consumer energy prices (economics/energy.py)
-    demand_pressure_relpath: str  # facility demand→price-pressure sensitivity (economics/energy.py)
+    # Facility demand→price-pressure sensitivity (economics/energy.py). Facility-GATED: the feed
+    # only exists for a site with a documented ``facility`` (``derive_demand_pressure`` raises
+    # otherwise), so a facility-less site declares ``None`` — no destination — rather than a path
+    # to a file that can never be written. Mirrors onboard's ``… if facility is not None else None``.
+    demand_pressure_relpath: str | None = None
     grid_relpath: str  # EIA-861 utility + grid profile (grid/utility.py)
 
     # --- Toxics corridor inference (hydrology/toxics.py) ---------------------------------
@@ -548,6 +591,26 @@ class SiteProfile(BaseModel):
     # (e.g. Bryan/AMP #411, Fort Wayne/I&M #361 — zones not yet pinned). AEP=8445784, ATSI=116013753.
     lmp_pnode_id: int = 0
     lmp_pnode_name: str = ""
+    # Balancing authority / RTO (B2/#1639). The EIA-930 respondent code (``ba_code``, e.g.
+    # "PJM", "MISO") + its RTO display name. Empty = unconfirmed: the grid layer then resolves
+    # PJM only for a serving utility in the confirmed per-utility map, and otherwise reports the
+    # BA as "unknown/unconfirmed" rather than ASSUMING PJM (much of Indiana + any future MISO/SPP
+    # site is not PJM). A site whose confirmed utility is off that map pins this explicitly.
+    ba_code: str = ""
+    rto_name: str = ""
+
+    # --- Per-site committed reference outputs for the regulatory-stack writers (#1639/B1) ----
+    # `watermark ferc` / `pjm` / `federal` write PER-SITE content — the FERC↔state-PUC
+    # jurisdiction (OH→IN), the LMP pricing zone (AEP→ATSI→DAY), and the campus load shares all
+    # vary by site — but historically wrote a single basin-shared path, so a non-Lima run
+    # clobbered Lima's committed file (and a non-Lima read returned Lima's data). These relpaths
+    # make the write+read per-site (relative to data_dir, like `grid_relpath`). Optional: `None`
+    # resolves to a slug-scoped default (`reference/<dir>/<slug>/<file>` — the #762/#780
+    # safe-default idiom, `_grid_ref_relpath`); Lima pins the un-slugged legacy paths.
+    # (`ba-interchange` is legitimately BA-wide, not per-site — deliberately NOT here.)
+    ferc_relpath: str | None = None  # FERC seam (grid/ferc.py)
+    pjm_relpath: str | None = None  # PJM market reference (grid/market.py)
+    federal_relpath: str | None = None  # federal backdrop (grid/policy.py)
 
     # --- OEPA permit registry (#844) -----------------------------------------------------
     # Known NPDES permit IDs for this site's facilities. Used by ``watermark oepa discover``
@@ -615,6 +678,20 @@ class SiteProfile(BaseModel):
         :attr:`facilities` are structured but not each run through the water/power/air math.
         """
         return self.facilities[0] if self.facilities else None
+
+    @property
+    def has_facility_power_basis(self) -> bool:
+        """True when the primary facility has a **derivable** IT-load power basis (#1628): a
+        facility exists AND its load is not entirely ``[open]``.
+
+        The honest gate for the grid / compute / demand-pressure commands, which derive a campus
+        power basis (:func:`watermark.facility.power.derive_power_basis` returns ``None`` in both the
+        no-facility and the open-load cases). A rezoning-only campus (load all ``[open]``) is treated
+        like no facility for that purpose — never a fabricated Lima-scale load — so those commands
+        skip cleanly instead of crashing.
+        """
+        fac = self.facility
+        return fac is not None and fac.it_load_mw is not None
 
     def facility_geometry(self, fac: SiteFacility) -> tuple[str, str]:
         """Resolve a facility's ``(parcels_relpath, footprint_relpath)`` (#1628) — inheriting the

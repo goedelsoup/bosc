@@ -22,13 +22,15 @@ The Lima system is one closed loop on two rivers:
 
 **Low-flow assimilative screen** (discharge vs the receiving stream's cited 7Q10):
 
-- ❌ **Shawnee II WWTP → Ottawa River**: 7Q10 0.2 cfs vs discharge 4.64 cfs → 0.04:1 dilution (violation). `[verified]` Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+- ❌ **Shawnee II WWTP → Ottawa River**: 7Q10 0.2 cfs vs discharge 4.64 cfs → 0.04:1 dilution (violation). `[verified]` Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021 Crediting the 28.62 cfs of permitted effluent already in the reach `[inference]` → **6.21:1** (tight).
 - ❌ **American Bath WWTP → Pike Run**: 7Q10 0.03 cfs vs discharge 2.32 cfs → 0.01:1 dilution (violation). `[verified]` Ohio EPA NPDES fact sheet 2PH00007 (American Bath WWTP), Stream Flows table — USGS Gauge 04186500 adjusted for drainage area
 - ❌ **American II WWTP → Dug Run**: 7Q10 0.78 cfs vs discharge 1.86 cfs → 0.42:1 dilution (violation). `[verified]` Ohio EPA NPDES fact sheet 2PH00006 (American II WWTP), Stream Flows table — USGS Station 04187500
-- ❌ **Lima WWTP → Ottawa River**: 7Q10 0.2 cfs vs discharge 28.62 cfs → 0.01:1 dilution (violation). `[verified]` Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021
+- ❌ **Lima WWTP → Ottawa River**: 7Q10 0.2 cfs vs discharge 28.62 cfs → 0.01:1 dilution (violation). `[verified]` Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021 Crediting the 4.64 cfs of permitted effluent already in the reach `[inference]` → **0.17:1** (violation).
 
 At design low flow the receiving streams carry less than the effluent they
-receive — the discharges are effectively undiluted.
+receive — the discharges are effectively undiluted by *natural* flow. Where a plant
+shares the reach with other permitted dischargers, the effluent-credited ratio shows
+the more honest system picture: it is diluted by standing effluent, not clean water.
 
 
 **A second campus pathway — stormwater to Pike Run.** Distinct from the FM-2 *process* discharge above (routed to Lima's WWTP), the campus's **stormwater** leaves the site via a constructed **BOSC Storm Outfall** channel that discharges to **Pike Run** — the loop's most flow-starved tributary (7Q10 **0.03 cfs**, already shown undiluted by the American Bath WWTP). Per the roundabout/outfall **SWP3** (Ohio EPA eDoc 4091286; operator George J. Igel & Company, Inc., engineer WSP USA Inc.; prepared 2026-04-16) `[verified: document]`, the site drains east-to-west by subsurface tile and the outfall channel terminates at Pike Run. That SWP3 documents *construction* disturbance (5.71 ac), not a continuous low-flow discharge, so the pathway is recorded as a receiving-water fact, not added to the routed mass balance below.
@@ -229,10 +231,10 @@ This is a design-basis / scope-completeness reading, not a sizing of the roundab
 The cooling demand is **sourced**, derived from disclosed campus data by two methods:
 
 - top-down: IT load 275.00 MW `[inference: derived]` x WUE 1.80 L/kWh `[inference: assumption]` → **3.14 MGD** consumptive
-- bottom-up: FM-2 blowdown x 5 cycles → **10 MGD** consumptive (upper bound)
+- bottom-up: FM-2 blowdown x 5 cycles, capped at the physical evaporative-WUE ceiling (FM-2 is not purely cooling blowdown, so the raw blowdown figure is unreachable for cooling alone) → **3.84 MGD** consumptive (upper bound)
 
 
-They bracket the consumptive demand at **3.14-10 MGD** (FM-2 is not purely cooling blowdown). The conclusion is robust to the range.
+They bracket the consumptive demand at **3.14-3.84 MGD**. The conclusion is robust to the range.
 
 
 | scenario | cooling intake | consumptive fraction | net basin loss |

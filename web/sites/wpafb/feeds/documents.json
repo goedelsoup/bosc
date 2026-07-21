@@ -1,1 +1,54 @@
-[]
+[
+  {
+    "slug": "wpafb",
+    "title": "Wpafb",
+    "description": "",
+    "entries": [
+      {
+        "rel": "wpafb/ccr/2025-Water-Quality-Report.pdf",
+        "name": "2025-Water-Quality-Report.pdf",
+        "size_bytes": 1276985,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "wpafb/cercla/wright-pattersonafb.pdf",
+        "name": "wright-pattersonafb.pdf",
+        "size_bytes": 2385648,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      },
+      {
+        "rel": "wpafb/ssa/SSA_greatmiaminorth_FR.pdf",
+        "name": "SSA_greatmiaminorth_FR.pdf",
+        "size_bytes": 38318,
+        "suffix": "pdf",
+        "media_type": "application/pdf",
+        "render_class": "pdf",
+        "published": false,
+        "available": true,
+        "download_url": null,
+        "duplicate_cluster": null,
+        "canonical_document_id": null,
+        "version": null,
+        "supersedes": []
+      }
+    ]
+  }
+]

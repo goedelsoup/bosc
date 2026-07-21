@@ -184,8 +184,31 @@ def test_per_site_output_relpaths_unique() -> None:
     for slug in SITES:
         assert output_path_collisions(slug) == {}, slug
     for field in PER_SITE_OUTPUT_FIELDS:
-        values = [getattr(p, field) for p in SITES.values()]
+        # ``None`` is a valid "no destination" for an optional output (a facility-less site's
+        # ``demand_pressure_relpath``, #1660) — only the concrete paths must be unique.
+        values = [v for p in SITES.values() if (v := getattr(p, field)) is not None]
         assert len(values) == len(set(values)), f"duplicate {field} across SITES"
+
+
+def test_facility_less_site_declares_no_demand_pressure_destination() -> None:
+    # ``demand_pressure_relpath`` is facility-gated: the feed only exists for a site with a
+    # documented ``facility`` (``derive_demand_pressure`` raises otherwise). A facility-less site
+    # must declare ``None`` — no destination — rather than a dangling path to a file that can
+    # never be written (#1660, ME-A: WPAFB shipped a path to a nonexistent demand-pressure.yaml).
+    # Enforced at model construction: a profile WITH a documented facility must carry a
+    # destination (else the feed it's entitled to could never be written). WPAFB (facility-less)
+    # is exempt and legitimately None; forcing a facility profile to None must raise.
+    lima = SITES["lima"]
+    assert lima.facility is not None and lima.demand_pressure_relpath is not None
+    with pytest.raises(ValidationError, match="demand_pressure_relpath"):
+        SiteProfile.model_validate({**lima.model_dump(), "demand_pressure_relpath": None})
+
+    wpafb = SITES["wpafb"]
+    assert wpafb.facility is None
+    assert wpafb.demand_pressure_relpath is None, (
+        "a facility-less site must not carry a demand_pressure_relpath pointing at a file that "
+        "can never be written"
+    )
 
 
 def test_scaffold_stub_is_constructible_and_collision_safe(monkeypatch) -> None:  # type: ignore[no-untyped-def]
@@ -227,6 +250,33 @@ def test_readiness_flags_placeholders_and_lima_copies(monkeypatch) -> None:  # t
 
 def test_readiness_clean_for_lima() -> None:
     assert profile_readiness("lima") == []
+
+
+def test_grid_knobs_complete_flags_incomplete_and_passes_lima() -> None:
+    """B3/#1639: the grid-knob readiness check locks an incomplete grid identity, passes Lima."""
+    from watermark.sites import grid_knobs_complete
+
+    # Portsmouth is a stub: no serving utility (#0), no LMP zone → grid identity incomplete.
+    gaps = grid_knobs_complete("portsmouth")
+    assert set(gaps) >= {"eia861_utility_number", "serving_utility_citation", "lmp"}
+    # Lima's grid identity is complete (AEP Ohio #14006, pinned AEP LMP zone).
+    assert grid_knobs_complete("lima") == []
+
+
+def test_no_registered_profile_renders_raw_todo_grid_identity() -> None:
+    """B3/#1639: no registered site carries a raw 'TODO' in a grid-identity citation."""
+    from watermark.sites import grid_identity_todo_violations
+
+    assert grid_identity_todo_violations() == []
+
+
+def test_grid_identity_todo_gate_detects_a_registered_violation(monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    """B3/#1639: the `watermark sites check` gate flags a registered raw-'TODO' grid citation."""
+    from watermark.sites import grid_identity_todo_violations
+
+    bad = SITES["lima"].model_copy(update={"slug": "badgrid", "lmp_citation": "TODO"})
+    monkeypatch.setitem(SITES, "badgrid", bad)
+    assert any("badgrid.lmp_citation" in v for v in grid_identity_todo_violations())
 
 
 def test_python_sites_registered_in_frontend() -> None:
@@ -775,3 +825,68 @@ def test_network_activity_carries_the_primary_facility_status() -> None:
     assert lima_act.facility_status == FacilityLifecycle.CONSTRUCTION
     if "findlay" in by_slug:  # a bitcoin/live campus in the same cross-site synthesis
         assert by_slug["findlay"].activity.facility_status == FacilityLifecycle.LIVE
+
+
+def test_investigation_status_on_a_disclosed_facility_is_rejected() -> None:
+    """A disclosed SiteFacility must be at least `confirmed` (#1628 review) — `investigation` is
+    the facility-absent floor, so it can't attach to a facility that exists."""
+    from pydantic import ValidationError
+
+    with pytest.raises(ValidationError, match="at least"):
+        _fac("Ghost Campus", status="investigation")
+
+
+def test_open_load_facility_has_no_power_basis_and_leaks_no_lima_figures(monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    """A rezoning-only primary (load entirely [open]) is not a derivable power basis, and the
+    cooling model refuses it rather than substituting Lima's 275 MW / air-permit citation
+    (#1628 review — the parallel leak `derive_power_basis` was already guarded against)."""
+    import watermark.sites as sites
+    from watermark.config import Settings
+    from watermark.hydrology.cooling import derive_cooling_basis
+
+    open_primary = _fac(
+        "Rezoning-Only Campus",
+        facility_type="a rezoning corridor — every figure [open]",
+        disclosure_citation="[reference] a rezoning ordinance",
+    )
+    assert open_primary.it_load_mw is None
+    stub = sites.SITES["toledo"].model_copy(update={"facilities": (open_primary,)})
+    monkeypatch.setitem(sites.SITES, "toledo", stub)
+    assert stub.facility is not None and not stub.has_facility_power_basis
+    with pytest.raises(ValueError, match="no resolvable IT load"):
+        derive_cooling_basis(Settings(site="toledo"), cooling_model="evaporative_tower")
+
+
+def test_facility_feed_keeps_permit_vs_screening_grounding_distinct() -> None:
+    """The `facility` feed carries air_permit_citation and it_load_citation as SEPARATE fields so a
+    permit-grounded load (Lima) is structurally distinguishable from a screening bracket (Urbana),
+    not collapsed into one prose blob (#1697 / #1628 review)."""
+    from watermark.config import Settings
+    from watermark.site.facility import build_facility_feed
+
+    lima = build_facility_feed(Settings(site="lima"))
+    assert lima is not None
+    assert lima[0].air_permit_citation is not None and lima[0].it_load_citation is None
+    assert (
+        lima[0].cooling_model_source == "assumption"
+    )  # Lima's archetype is asserted, not disclosed
+
+    urbana = build_facility_feed(Settings(site="urbana"))
+    assert urbana is not None
+    assert urbana[0].it_load_citation is not None and urbana[0].air_permit_citation is None
+
+
+def test_secondary_facility_does_not_inherit_the_primary_geometry() -> None:
+    """A non-primary campus carries only its own geometry (None when unset) — never the primary
+    campus's parcels/footprint, which would misattribute one campus's geometry to another; and a
+    placeholder path that isn't committed on disk ships as null, not a phantom link (#1628 review)."""
+    from watermark.config import Settings
+    from watermark.site.facility import build_facility_feed
+
+    feed = build_facility_feed(Settings(site="wilmington"))
+    assert feed is not None and len(feed) == 2
+    ardent = feed[1]
+    assert not ardent.is_primary and ardent.name == "Ardent/TAC corridor"
+    # Wilmington's site-level geometry is an [open] placeholder (not committed) → both rows null.
+    assert ardent.parcels_relpath is None and ardent.footprint_relpath is None
+    assert feed[0].parcels_relpath is None and feed[0].footprint_relpath is None

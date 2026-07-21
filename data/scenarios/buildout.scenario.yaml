@@ -83,22 +83,28 @@ scenario:
       low: null
       high: null
     consumptive_high:
-      value: 10.0
+      value: 3.84
       unit: MGD
       source: derived
-      citation: 2.5 MGD blowdown x (CoC-1); bosc-fm2 2.5 MGD industrial discharge
-        (CMAR RFQ §A.6), taken as cooling blowdown upper bound
+      citation: 'cooling upper bound capped at the WUE ceiling: 275 MW x 2.2 L/kWh
+        = 3.84 MGD. The disclosed 2.5 MGD blowdown x (CoC-1) = 10 MGD implies ~5.7
+        L/kWh cooling WUE, above the ~2.2 L/kWh ceiling, so the 2.5 MGD discharge
+        is not all cooling blowdown (it bundles process/sanitary flow) and cooling
+        alone can''t reach it. evaporative-hyperscale WUE ceiling ~2.2 L/kWh (top
+        of the ~1.8-2.2 L/kWh real-world evaporative range; Google fleet avg ~1.1)
+        — a blowdown-implied cooling WUE above this indicates the disclosed discharge
+        is not all cooling-tower blowdown; bosc-fm2 2.5 MGD industrial discharge (CMAR
+        RFQ §A.6), taken as cooling blowdown upper bound'
       confidence: medium
       asof: null
       low: null
       high: null
     makeup_high:
-      value: 12.5
+      value: 4.79
       unit: MGD
       source: derived
-      citation: upper-bound intake = 2.5 MGD blowdown x CoC(5) = 12.5 MGD; bosc-fm2
-        2.5 MGD industrial discharge (CMAR RFQ §A.6), taken as cooling blowdown upper
-        bound
+      citation: upper-bound intake = capped consumptive 3.84 MGD / evap fraction (WUE-ceiling
+        cap; disclosed blowdown bundles non-cooling flow)
       confidence: medium
       asof: null
       low: null
@@ -293,10 +299,24 @@ assimilative:
     asof: null
     low: null
     high: null
-  upstream_returns: null
+  upstream_returns:
+    value: 28.623731905549654
+    unit: cfs
+    source: derived
+    citation: Σ permitted design discharge of 1 other WWTP(s) on Ottawa River (Lima
+      WWTP) — effluent already in the reach, credited into the low-flow denominator
+      (co-reach sum, not longitudinal-position resolved; see the routed network for
+      the accumulated picture)
+    confidence: medium
+    asof: null
+    low: null
+    high: null
   dilution_ratio: 0.04308778944
   flag: violation
-  detail: Ottawa River 7Q10 0.20 cfs vs discharge 4.64 cfs -> 0.04:1 dilution (violation)
+  effluent_credited_ratio: 6.209754456106667
+  effluent_credited_flag: tight
+  detail: Ottawa River 7Q10 0.20 cfs vs discharge 4.64 cfs -> 0.04:1 dilution (violation);
+    effluent-credited 0.20+28.62 cfs -> 6.21:1 (tight)
 - receiving_water: Pike Run
   discharger: American Bath WWTP
   design_low_flow:
@@ -321,6 +341,8 @@ assimilative:
   upstream_returns: null
   dilution_ratio: 0.012926336832
   flag: violation
+  effluent_credited_ratio: null
+  effluent_credited_flag: null
   detail: Pike Run 7Q10 0.03 cfs vs discharge 2.32 cfs -> 0.01:1 dilution (violation)
 - receiving_water: Dug Run
   discharger: American II WWTP
@@ -346,6 +368,8 @@ assimilative:
   upstream_returns: null
   dilution_ratio: 0.42010594704000004
   flag: violation
+  effluent_credited_ratio: null
+  effluent_credited_flag: null
   detail: Dug Run 7Q10 0.78 cfs vs discharge 1.86 cfs -> 0.42:1 dilution (violation)
 - receiving_water: Ottawa River
   discharger: Lima WWTP
@@ -368,7 +392,21 @@ assimilative:
     asof: null
     low: null
     high: null
-  upstream_returns: null
+  upstream_returns:
+    value: 4.641686254953999
+    unit: cfs
+    source: derived
+    citation: Σ permitted design discharge of 1 other WWTP(s) on Ottawa River (Shawnee
+      II WWTP) — effluent already in the reach, credited into the low-flow denominator
+      (co-reach sum, not longitudinal-position resolved; see the routed network for
+      the accumulated picture)
+    confidence: medium
+    asof: null
+    low: null
+    high: null
   dilution_ratio: 0.006987209098378379
   flag: violation
-  detail: Ottawa River 7Q10 0.20 cfs vs discharge 28.62 cfs -> 0.01:1 dilution (violation)
+  effluent_credited_ratio: 0.1691493712605406
+  effluent_credited_flag: violation
+  detail: Ottawa River 7Q10 0.20 cfs vs discharge 28.62 cfs -> 0.01:1 dilution (violation);
+    effluent-credited 0.20+4.64 cfs -> 0.17:1 (violation)

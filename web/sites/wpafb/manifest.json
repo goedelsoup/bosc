@@ -2,16 +2,16 @@
   "site": "wpafb",
   "bundle_version": "1.0.0",
   "contract_version": "1.31.0",
-  "generated_at": "2026-07-08T21:19:04+00:00",
-  "feed_count": 25,
-  "row_total": 289,
+  "generated_at": "2026-07-21T18:18:55+00:00",
+  "feed_count": 27,
+  "row_total": 430,
   "readiness": {
-    "tier": "backdrop",
+    "tier": "case",
     "domains": {
       "backdrop": "live",
       "facility": "absent",
       "places": "absent",
-      "record": "absent",
+      "record": "live",
       "story": "absent"
     }
   },
@@ -23,7 +23,7 @@
       "media_type": "application/json",
       "schema": "schemas/records.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 2
     },
     {
       "name": "timeline",
@@ -31,7 +31,7 @@
       "media_type": "application/json",
       "schema": "schemas/timeline.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 2
     },
     {
       "name": "entities",
@@ -39,7 +39,7 @@
       "media_type": "application/json",
       "schema": "schemas/entities.schema.json",
       "kind": "collection",
-      "count": 4
+      "count": 6
     },
     {
       "name": "relationships",
@@ -95,7 +95,7 @@
       "media_type": "application/json",
       "schema": "schemas/documents.schema.json",
       "kind": "collection",
-      "count": 0
+      "count": 1
     },
     {
       "name": "exhibits",
@@ -126,6 +126,14 @@
       "path": "feeds/consumer-energy.json",
       "media_type": "application/json",
       "schema": "schemas/consumer-energy.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "energy-burden",
+      "path": "feeds/energy-burden.json",
+      "media_type": "application/json",
+      "schema": "schemas/energy-burden.schema.json",
       "kind": "object",
       "count": 1
     },
@@ -183,7 +191,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog.schema.json",
       "kind": "collection",
-      "count": 44
+      "count": 46
     },
     {
       "name": "facts",
@@ -191,7 +199,7 @@
       "media_type": "application/json",
       "schema": "schemas/facts.schema.json",
       "kind": "collection",
-      "count": 72
+      "count": 122
     },
     {
       "name": "catalog-index",
@@ -202,20 +210,28 @@
       "count": 1
     },
     {
-      "name": "ask-embeddings",
-      "path": "feeds/ask-embeddings.json",
-      "media_type": "application/json",
-      "schema": "schemas/ask-embeddings.schema.json",
-      "kind": "collection",
-      "count": 0
-    },
-    {
       "name": "corpus-index",
       "path": "feeds/corpus-index.json",
       "media_type": "application/json",
       "schema": "schemas/corpus-index.schema.json",
       "kind": "collection",
       "count": 81
+    },
+    {
+      "name": "corpus-nodes",
+      "path": "feeds/corpus-nodes.ndjson",
+      "media_type": "application/x-ndjson",
+      "schema": "schemas/corpus-nodes.schema.json",
+      "kind": "collection",
+      "count": 81
+    },
+    {
+      "name": "ask-embeddings",
+      "path": "feeds/ask-embeddings.json",
+      "media_type": "application/json",
+      "schema": "schemas/ask-embeddings.schema.json",
+      "kind": "collection",
+      "count": 0
     }
   ],
   "exports": []

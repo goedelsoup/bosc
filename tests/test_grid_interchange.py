@@ -69,20 +69,30 @@ def test_offline_miss_raises(tmp_path: Path) -> None:
         )
 
 
-def test_comparison_links_facility_draw_and_in_ba_generation(econ_settings: Settings) -> None:
+def test_comparison_links_facility_draw_and_coincident_peak(econ_settings: Settings) -> None:
     cmp = derive_interchange_comparison(settings=econ_settings)
     power = derive_power_basis(settings=econ_settings)
 
     # The campus load IS the first-class facility_draw (#87).
     assert cmp.campus_load_mw.value == pytest.approx(power.facility_draw.value, abs=0.1)
 
-    # In-BA generation headroom = net generation - demand; campus fits within it.
-    assert cmp.in_ba_generation_headroom_mw.value > 0
-    assert cmp.met_by_in_ba_generation is True
-    assert cmp.in_ba_generation_headroom_mw.value >= cmp.campus_load_mw.value
+    # C1/#1638: the circular "in-BA generation headroom" (≡ net interchange) is gone.
+    assert not hasattr(cmp, "in_ba_generation_headroom_mw")
+    assert not hasattr(cmp, "met_by_in_ba_generation")
 
-    # The campus is a small share of demand but a noticeable share of the interchange swing.
+    # C2/#1638: adequacy is judged at the coincident peak — PJM's window peak demand exceeds
+    # its mean in-BA net generation, so it is import/peaking-dependent at peak (the peak was
+    # collected but previously discarded). The gap is peak demand - mean net generation.
+    assert cmp.import_dependent_at_peak is True
+    assert cmp.ba_demand_peak_mw.value > cmp.ba_net_generation_mean_mw.value
+    assert cmp.peak_import_need_mw.value == pytest.approx(
+        cmp.ba_demand_peak_mw.value - cmp.ba_net_generation_mean_mw.value, abs=1.0
+    )
+
+    # The campus is a small share of demand but a noticeable share of the interchange swing;
+    # its share of the (higher) peak demand is smaller than its share of mean demand.
     assert cmp.campus_share_of_demand_pct.value < 1.0
+    assert cmp.campus_share_of_peak_demand_pct.value < cmp.campus_share_of_demand_pct.value
     assert cmp.campus_vs_interchange_pct.value > cmp.campus_share_of_demand_pct.value
     # The interpretation + screening caveats are present.
     assert "net exporter" in cmp.interpretation

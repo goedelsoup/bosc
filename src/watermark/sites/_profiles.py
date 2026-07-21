@@ -102,6 +102,11 @@ _LIMA = SiteProfile(
     consumer_energy_relpath="reference/eia/consumer-energy.yaml",
     demand_pressure_relpath="reference/eia/demand-pressure.yaml",
     grid_relpath="reference/eia/grid-profile.yaml",
+    # Lima pins the un-slugged legacy regulatory-stack paths (#1639/B1); peers use the
+    # slug-scoped default. (ba-interchange stays basin-shared — not a per-site relpath.)
+    ferc_relpath="reference/ferc/ferc-seam.yaml",
+    pjm_relpath="reference/pjm/pjm-market.yaml",
+    federal_relpath="reference/federal/federal-energy.yaml",
     # civil plan artifact (#901)
     storm_inventory_relpath="extracted/plans/lma1a.storm-inventory.yaml",
     # toxics
@@ -375,8 +380,11 @@ _FINDLAY = SiteProfile(
             ),
             end_use=DcEndUse.BITCOIN,
             end_use_citation=(
-                "[verified] behind-the-meter bitcoin mining — MARA Holdings' Findlay operation "
-                "('we don't have customers in Bitcoin'; MARA 2024-11-11 release)."
+                "[verified] behind-the-meter bitcoin mining — MARA Holdings, Inc. is a bitcoin miner "
+                "(its own customer); MARA volunteered the distinction 'we don't have customers in "
+                "Bitcoin' at the 2026-06-04 Lima Select-Committee hearing (data/extracted/legal/"
+                "select-committee-2026/hearings-audio/bosc-committee-hearing-2026-06-04-pm2."
+                "transcript.md [11:55])."
             ),
             it_load_mw=150.0,  # [verified] contracted take-or-pay / planned maximum; see it_load_citation
             it_load_low_mw=30.0,  # [verified] currently energized ("Current Capacity 30 MW, Status: Operating")
@@ -733,9 +741,12 @@ _VAN_WERT = SiteProfile(
                 "2026-05-29 (q.com/data-centers/van-wert; Data Center Dynamics; VW Independent); land "
                 "assembled by Thor Equities / Form8tion."
             ),
-            end_use=DcEndUse.HYPERSCALE,
+            end_use=DcEndUse.COLOCATION,
             end_use_citation=(
-                "[verified] hyperscale data-center campus — QTS Data Centers (public disclosure 2026-05-29)."
+                "[verified] colocation — QTS Data Centers is a landlord/colocation operator (it "
+                "builds and powers the hall; tenants own the compute), the network's canonical "
+                "colocation example (docs/end-use-and-workloads.md), NOT an owner-runs-own-workloads "
+                "hyperscaler; public disclosure 2026-05-29 (q.com/data-centers/van-wert)."
             ),
             it_load_mw=500.0,  # [reference] the announced "up to 500 MW" ceiling — carried central, not disclosed
             it_load_low_mw=350.0,  # if "up to 500 MW" names the ALL-IN campus draw: 500 / 1.43 PUE ceiling ~= 350 MW IT
@@ -1548,10 +1559,11 @@ _SPRINGFIELD = SiteProfile(
                 "[verified] City of Springfield 5C FAQ (springfieldohio.gov/5c-data-center-faqs) — 5C "
                 "Data Centers USA, Inc., anchor tenant Vultr, 601 Benjamin Drive, PrimeOhio Corporate Park."
             ),
-            end_use=DcEndUse.HYPERSCALE,
+            end_use=DcEndUse.COLOCATION,
             end_use_citation=(
-                "[verified] cloud/hyperscale (5C Data Centers, anchor tenant Vultr) — City of "
-                "Springfield 5C FAQ."
+                "[verified] colocation — 5C Data Centers is the landlord/operator that builds and "
+                "powers the hall; its anchor TENANT Vultr owns and runs the compute (a named tenant, "
+                "not an owner-operated hyperscale campus). City of Springfield 5C FAQ."
             ),
             it_load_mw=100.0,  # central = midpoint of the disclosed 50->150 MW corridor; NOT the 900 MW buildout
             it_load_low_mw=50.0,  # [verified] disclosed first tranche — 50 MW / 24,000-GPU AMD MI355X supercluster (2025-12)
@@ -1773,7 +1785,10 @@ _WPAFB = SiteProfile(
     baseline_relpath="reference/economics/wpafb/baseline.yaml",
     rsei_relpath="reference/rsei/wpafb/inventory.yaml",
     consumer_energy_relpath="reference/eia/wpafb/consumer-energy.yaml",
-    demand_pressure_relpath="reference/eia/wpafb/demand-pressure.yaml",
+    # facility=None (the DoD-cloud dimension is the #442 research target), so there is no facility
+    # to size a demand→price-pressure sensitivity against — the feed is facility-gated and omitted.
+    # None (no destination) rather than a dangling path to a file that can never be written (#1660).
+    demand_pressure_relpath=None,
     grid_relpath="reference/eia/wpafb/grid-profile.yaml",
     toxic_corridor_bbox=(
         0.0,
@@ -1821,14 +1836,14 @@ _WPAFB = SiteProfile(
     # [inference] Reader guard (#465): WPAFB straddles Greene + Montgomery; the econ unit here is
     # Montgomery (well-field/plume/Dayton-metro toxics context). The defense-supplier signature the
     # WPAFB thesis rests on is NOT in this unit — Montgomery Professional/Scientific/Technical
-    # (NAICS 54) LQ 0.81, Information (NAICS 51) LQ 0.90, neither elevated. That concentration lives
+    # (NAICS 54) LQ 0.82, Information (NAICS 51) LQ 0.85, neither elevated. That concentration lives
     # in adjacent Greene County (NAICS 54 LQ 2.11), carried by the Xenia baseline (FIPS 39057, #444).
     econ_unit_note=(
         "Economic-unit caveat: Wright-Patterson AFB straddles Greene + Montgomery counties; this "
         "baseline is Montgomery County (39113) — the well-field / TCE-PFAS-plume / Dayton-metro "
         "toxics context. The defense-supplier Professional/Scientific/Technical concentration the "
-        "WPAFB thesis rests on is NOT visible in this unit (Montgomery NAICS 54 LQ 0.81, NAICS 51 "
-        "LQ 0.90 — neither elevated); it lives in adjacent Greene County (NAICS 54 LQ 2.11), "
+        "WPAFB thesis rests on is NOT visible in this unit (Montgomery NAICS 54 LQ 0.82, NAICS 51 "
+        "LQ 0.85 — neither elevated); it lives in adjacent Greene County (NAICS 54 LQ 2.11), "
         "covered by the Xenia baseline (Greene County, FIPS 39057). Do not read this single-county "
         "unit as 'no defense concentration.'"
     ),
@@ -1860,6 +1875,8 @@ _HAMILTON_MIDDLETOWN = SiteProfile(
     rsei_fips="39017",  # [verified] Butler County, OH (seat = City of Hamilton; NOT Hamilton County/Cincinnati)
     econ_fips="39017",
     eia861_utility_number=3542,  # Duke Energy Ohio (dominant Butler Co IOU, PJM DEOK) — EIA-861 2024 Service_Territory [verified]; Hamilton muni #7977 is the Hamilton-side split [inference]
+    ba_code="PJM",  # off the confirmed _UTILITY_GRID map (#3542), so pin the BA (Duke = PJM DEOK) — B2/#1639
+    rto_name="PJM Interconnection",
     parcels_url="TODO",  # [open] pending the Butler County, OH GIS REST endpoint discovery
     zoning_url="TODO",  # [open] pending the City of Hamilton / Middletown GIS REST endpoint discovery
     floodzone_url=(  # [verified] FEMA NFHL S_FLD_HAZ_AR (national layer 28)
@@ -3040,6 +3057,8 @@ _SANDUSKY = SiteProfile(
     rsei_fips="39043",  # [verified] Erie County, OH
     econ_fips="39043",
     eia861_utility_number=13998,  # [inference] Ohio Edison Co (FirstEnergy, PJM ATSI) — City of Sandusky aggregation points to Ohio Edison; Toledo Edison #18997 is the alternative; parcel-specific confirmation [open]
+    ba_code="PJM",  # off the confirmed _UTILITY_GRID map (#13998), so pin the BA (Ohio Edison = PJM ATSI) — B2/#1639
+    rto_name="PJM Interconnection",
     parcels_url=(  # [reference] OGRIP Ohio statewide parcels public view, scoped to County='Erie'
         "https://services2.arcgis.com/MlJ0G8iWUyC7jAmu/arcgis/rest/services/"
         "OhioStatewidePacels_full_view/FeatureServer/0"
@@ -3243,6 +3262,8 @@ _MANSFIELD = SiteProfile(
     rsei_fips="39139",  # [verified] Richland County, OH
     econ_fips="39139",
     eia861_utility_number=13998,  # [verified] Ohio Edison Co — EIA-861 2024 Service_Territory file
+    ba_code="PJM",  # off the confirmed _UTILITY_GRID map (#13998), so pin the BA (Ohio Edison = PJM ATSI) — B2/#1639
+    rto_name="PJM Interconnection",
     # confirms Ohio Edison serves Richland County (Ohio Power Co/AEP #14006 also serves rural
     # Richland Co territory; City of Shelby is a separate Richland-County municipal utility, #17043
     # — NOT Ohio Edison — the footgun already flagged on the Sidney profile)
@@ -3291,8 +3312,11 @@ _MANSFIELD = SiteProfile(
     "PJM ATSI zone) is the IOU serving Richland County, OH / Mansfield; Ohio Power Co/AEP (#14006) "
     "also serves rural Richland-Co territory. 'City of Shelby' (#17043) is a separate Richland-County "
     "municipal utility — NOT Ohio Edison. [verified]",
-    lmp_usd_mwh=0.0,  # TODO
-    lmp_citation="TODO",
+    lmp_usd_mwh=35.0,  # [inference] PJM ATSI-zone placeholder (Ohio Edison, same zone as Defiance/Toledo) — verify via PJM Data Miner 2 (not the AEP value)
+    lmp_citation=(
+        "PJM ATSI zone (FirstEnergy / Ohio Edison) ~2024 annual average LMP ($/MWh) via PJM Data "
+        "Miner 2 da_hrl_lmps; [inference] not the AEP-zone value used by the AEP OH sites — verify"
+    ),
     county_name="Richland County",  # [verified] FIPS 39139
 )
 
@@ -3325,6 +3349,8 @@ _BOWLING_GREEN = SiteProfile(
     nasa_power_lon=-83.6513,  # in Middleton Twp; the county-level floor connectors key on the city)
     rsei_fips="39173",  # [verified] Wood County, OH
     econ_fips="39173",
+    ba_code="PJM",  # off the confirmed _UTILITY_GRID map (#2054), so pin the BA (Bowling Green muni → AMP/PJM) — B2/#1639
+    rto_name="PJM Interconnection",
     eia861_utility_number=2054,  # [verified] City of Bowling Green - (OH), Municipal (AMP member) —
     # EIA-861 2024 Utility_Data / Sales_Ult_Cust (f8612024.zip, released 2025-10-06), BA=PJM.
     # NB the Bowling Green, KY muni is #2056 (SERC/TVA) — the KY disambiguation trap, avoided here.
@@ -3561,9 +3587,12 @@ _PORTSMOUTH = SiteProfile(
     passby_primary_cfs=0.0,
     passby_secondary_cfs=0.0,
     facilities=(),  # [open] the disclosed Project Dazzler SiteFacility — pending the site-plan/permit hunt
-    serving_utility_citation="TODO",  # [open] pending the Scioto County serving-utility record
+    # [open] grid identity unconfirmed — Scioto County serving utility + PJM pricing zone pending
+    # (eia861_utility_number=0). Honest [open] citations, not raw "TODO" (B3/#1639): the grid-knob
+    # readiness check flags this site's grid identity as incomplete so it locks rather than renders.
+    serving_utility_citation="[open] Scioto County serving-utility EIA-861 record pending — not yet confirmed",
     lmp_usd_mwh=0.0,
-    lmp_citation="TODO",
+    lmp_citation="[open] PJM pricing zone pending the Scioto County serving-utility confirmation",
     # Home the Dazzler filings here and off Lima: this site's own slug subtree plus the relocated
     # `permits/dazzler-permits/` collection (subtracted from Lima by `_peer_scope_prefixes`, #1505).
     corpus_relpaths=("portsmouth", "permits/dazzler-permits"),

@@ -137,7 +137,7 @@ def test_compute_capacity_refuses_a_facility_less_site() -> None:
     from watermark.facility.compute import derive_compute_capacity
 
     # xenia is deliberately facility-less (Findlay now carries a disclosed SiteFacility, #1459).
-    with pytest.raises(ValueError, match="no documented facility"):
+    with pytest.raises(ValueError, match="no derivable facility power basis"):
         derive_compute_capacity(settings=Settings(site="xenia"))
 
 

@@ -104,10 +104,10 @@ routed_discharge:
     confidence: low
   at_outfall_peak_cfs: 351.393
   at_outfall_time_to_peak_hr: 12.3
-  routed_peak_cfs: 292.433
-  routed_time_to_peak_hr: 13.2
-  attenuation_pct: 16.78
-  lag_hr: 0.9
+  routed_peak_cfs: 307.598
+  routed_time_to_peak_hr: 13.6
+  attenuation_pct: 12.46
+  lag_hr: 1.3
   method: Constant-parameter Muskingum-Cunge (watermark.hydrology.solver.routing)
     of the as-permitted post-development outfall hydrograph down the committed reaches.yaml
     Dug Run channel to the Ottawa confluence; reach length/slope/geometry are stated

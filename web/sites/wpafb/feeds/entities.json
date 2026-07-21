@@ -88,5 +88,51 @@
     "lei": null,
     "uei": null,
     "federal_obligations": null
+  },
+  {
+    "key": "MIAMI VALLEY REGIONAL PLANNING COMMISSION DAYTON",
+    "display": "Miami Valley Regional Planning Commission (Dayton, Ohio)",
+    "kind": "government",
+    "classification": "government_local",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "Miami Valley Regional Planning Commission (Dayton, Ohio)"
+    ],
+    "signals": [],
+    "roles": {
+      "epa_applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "wpafb/ssa-53fr15876.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
+  },
+  {
+    "key": "UNITED STATES DEPARTMENT OF THE AIR FORCE WRIGHT PATTERSON AFB",
+    "display": "United States Department of the Air Force (Wright-Patterson AFB)",
+    "kind": "government",
+    "classification": "government_military",
+    "relation_class": null,
+    "relation_basis": null,
+    "variants": [
+      "United States Department of the Air Force (Wright-Patterson AFB)"
+    ],
+    "signals": [],
+    "roles": {
+      "epa_applicant": 1
+    },
+    "parcels": [],
+    "addresses": [],
+    "sources": [
+      "wpafb/cercla-ffa-1991.epa.yaml"
+    ],
+    "lei": null,
+    "uei": null,
+    "federal_obligations": null
   }
 ]

@@ -14,11 +14,24 @@ Flag = Literal["ok", "tight", "violation"]
 class AssimilativeCheck(BaseModel):
     """Low-flow dilution of one discharge into its receiving water.
 
-    The dilution ratio is ``design_low_flow / discharge`` — parts of receiving-water low
-    flow per part of effluent. ``upstream_returns`` is a **reserved** field for crediting
-    an upstream WWTP's effluent return to the low-flow denominator; it is not yet computed,
-    is always ``None`` today, and the ratio does **not** credit it. A screening heuristic
-    flags the result; it is **not** a permit determination.
+    Two dilution ratios are carried, and the honest picture is *both* (WS-15, #1615):
+
+    * ``dilution_ratio`` (the **conservative default**) is ``design_low_flow / discharge``
+      — parts of the receiving stream's cited natural low flow per part of effluent. It
+      credits **no** upstream effluent; ``flag`` bands it.
+    * ``effluent_credited_ratio`` is ``(design_low_flow + upstream_returns) / discharge``,
+      crediting the permitted effluent **already in the reach** into the denominator, with
+      ``effluent_credited_flag`` its band. It is ``None`` when there is no co-reach effluent
+      to credit (the discharger is alone on its stream), so a tributary-only plant is
+      untouched and stays at the conservative default.
+
+    ``upstream_returns`` is that credited term: the summed **permitted design discharge of the
+    other WWTP(s) sharing this receiving water** — the loop's own thesis is that the Ottawa
+    *is* effluent at design low flow (93-98%), so a plant discharging into it is diluted by
+    that standing effluent mass, not by the ~0.2 cfs of natural water. It is a screening
+    co-reach sum (``derived``), not a longitudinal-position-resolved routing term; the routed
+    accumulation lives in :class:`RoutedNetwork`. Both bands are heuristics, **not** permit
+    determinations.
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -27,11 +40,14 @@ class AssimilativeCheck(BaseModel):
     discharger: str
     design_low_flow: ProvenancedValue  # the 7Q10 (cited)
     discharge: ProvenancedValue
-    # Reserved: not yet credited into `dilution_ratio` (see the hydrology review). Kept on
-    # the model (defaulted None) so the committed bundle contract stays stable.
+    # Permitted effluent already in the reach (Σ other WWTPs on this receiving water), credited
+    # into `effluent_credited_ratio`. None when the discharger is alone on its stream (WS-15).
     upstream_returns: ProvenancedValue | None = None
-    dilution_ratio: float
-    flag: Flag
+    dilution_ratio: float  # conservative: cited 7Q10 / discharge (no effluent credit)
+    flag: Flag  # band on `dilution_ratio`
+    # Effluent-credited: (7Q10 + upstream_returns) / discharge; None when nothing to credit.
+    effluent_credited_ratio: float | None = None
+    effluent_credited_flag: Flag | None = None
     detail: str
 
 

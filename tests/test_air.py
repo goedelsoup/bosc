@@ -160,9 +160,12 @@ def test_dispatch_band_is_ordered_and_grid_derived(air_settings: Settings) -> No
     )
     for pv in (est.runtime_hours_low, est.runtime_hours_central, est.runtime_hours_high):
         assert pv.source == "assumption"
-    # PJM's June window comfortably covers the campus -> the met caveat is present.
-    assert est.met_by_in_ba_generation is True
-    assert any("lower bound" in c for c in est.caveats)
+    # C1/C2/#1638: PJM's window peak demand exceeds its mean in-BA net generation, so it is
+    # import-dependent at peak. The old (circular) "comfortably covered → lower bound" caveat,
+    # which rode the headroom ≡ net-interchange identity, no longer fires.
+    assert est.import_dependent_at_peak is True
+    assert est.peak_import_need_mw.value > 0
+    assert not any("lower bound" in c for c in est.caveats)
 
 
 def test_dispatch_assumptions_scale_runtime(air_settings: Settings) -> None:

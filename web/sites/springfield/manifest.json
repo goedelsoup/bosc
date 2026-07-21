@@ -6,10 +6,10 @@
   "feed_count": 28,
   "row_total": 290,
   "readiness": {
-    "tier": "backdrop",
+    "tier": "case",
     "domains": {
       "backdrop": "live",
-      "facility": "absent",
+      "facility": "live",
       "places": "absent",
       "record": "absent",
       "story": "seeded"
@@ -20,7 +20,7 @@
     "count": 1,
     "primary_name": "5C Data Centers \"CMH01\"",
     "primary_operator": "5C Data Centers USA, Inc. (anchor tenant Vultr)",
-    "primary_end_use": "hyperscale"
+    "primary_end_use": "colocation"
   },
   "feeds": [
     {
@@ -144,19 +144,19 @@
       "count": 1
     },
     {
-      "name": "network",
-      "path": "feeds/network.json",
-      "media_type": "application/json",
-      "schema": "schemas/network.schema.json",
-      "kind": "object",
-      "count": 1
-    },
-    {
       "name": "facility",
       "path": "feeds/facility.json",
       "media_type": "application/json",
       "schema": "schemas/facility.schema.json",
       "kind": "collection",
+      "count": 1
+    },
+    {
+      "name": "network",
+      "path": "feeds/network.json",
+      "media_type": "application/json",
+      "schema": "schemas/network.schema.json",
+      "kind": "object",
       "count": 1
     },
     {

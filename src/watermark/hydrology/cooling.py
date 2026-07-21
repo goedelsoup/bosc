@@ -82,14 +82,21 @@ def derive_cooling_basis(
     settings = settings or get_settings()
     facility = active_profile(settings).facility
     model = cooling_models.resolve_cooling_model(facility, override=cooling_model)
-    if model is not CoolingModelType.OFF and facility is None:
-        # Only `off` is derivable without a facility. The module-level fallback constants
-        # are the *Lima* air-permit basis — substituting them for another site would leak
-        # Lima provenance (IT load, WUE cite) into that site's figures.
+    # Only `off` is derivable without a resolvable IT load. The module-level fallback constants
+    # are the *Lima* air-permit basis (275 MW + the P0138965 citation); substituting them for
+    # another site — whether it has no facility at all, OR a facility whose load is entirely
+    # `[open]` (a rezoning-only campus, now representable per #1628) — would leak Lima provenance
+    # into that site's figures. A keyword ``it_load_mw`` override (sensitivity sweeps) supplies the
+    # load and is exempt.
+    if (
+        model is not CoolingModelType.OFF
+        and it_load_mw is None
+        and (facility is None or facility.it_load_mw is None)
+    ):
         raise ValueError(
-            f"cooling model {model.value!r} requires a SiteProfile.facility for site "
-            f"{settings.site!r} — only `off` is derivable without one; another site's "
-            "constants are never substituted"
+            f"cooling model {model.value!r} for site {settings.site!r} has no resolvable IT load "
+            "(no facility, or the facility's load is entirely [open]) — only `off` is derivable "
+            "without one; another site's constants (the Lima air-permit basis) are never substituted"
         )
     spec = cooling_models.get(model)
     params = CoolingParams(

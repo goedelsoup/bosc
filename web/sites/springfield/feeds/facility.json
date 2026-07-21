@@ -6,19 +6,22 @@
     "status": "construction",
     "operator": "5C Data Centers USA, Inc. (anchor tenant Vultr)",
     "operator_citation": "[verified] City of Springfield 5C FAQ (springfieldohio.gov/5c-data-center-faqs) — 5C Data Centers USA, Inc., anchor tenant Vultr, 601 Benjamin Drive, PrimeOhio Corporate Park.",
-    "end_use": "hyperscale",
-    "end_use_citation": "[verified] cloud/hyperscale (5C Data Centers, anchor tenant Vultr) — City of Springfield 5C FAQ.",
+    "end_use": "colocation",
+    "end_use_citation": "[verified] colocation — 5C Data Centers is the landlord/operator that builds and powers the hall; its anchor TENANT Vultr owns and runs the compute (a named tenant, not an owner-operated hyperscale campus). City of Springfield 5C FAQ.",
     "facility_type": "data-center campus (5C Data Centers USA, Inc. / anchor tenant Vultr, \"CMH01\") — 601 Benjamin Drive, PrimeOhio Corporate Park; under construction",
     "it_load_mw": 100.0,
     "it_load_low_mw": 50.0,
     "it_load_high_mw": 150.0,
+    "air_permit_citation": null,
+    "air_permit_relpath": null,
     "it_load_citation": "[verified/inference] DISCLOSURE-anchored bracket — NOT an air-permit figure (the disclosed interconnection/air-permit MW stays [open] until the Ohio EPA Air PTI lands, #1414). Anchored on two disclosed hard figures: the City of Springfield 5C FAQ 'up to 150 MW max load' (springfieldohio.gov/5c-data-center-faqs) as the HIGH, and the announced first tranche — a 50 MW / 24,000-GPU AMD MI355X supercluster (2025-12) — as the LOW; the 100 MW central is the midpoint of that disclosed 50-150 MW corridor. The register (data/extracted/springfield/data-centers.md, hydrology hook) treats the 150 MW max as the IT-load screening input. The ~900 MW ultimate buildout (datacentermap facility 'CMH01') and the 75/200 MW interim-phase figures are [open] — unconfirmed by any primary instrument and DELIBERATELY EXCLUDED from this band; the air permit settles the stack. Crusoe (75 MW, parcel undisclosed) is a SEPARATE register and is not blended in. Replace with the disclosed load when the Ohio EPA Air PTI or a PJM interconnection filing names 5C's MW.",
     "gross_floor_area_sqft": 214000,
     "disclosed_investment_usd": 1300000000.0,
     "disclosure_citation": "[verified] City of Springfield 5C FAQ (springfieldohio.gov/5c-data-center-faqs) + JobsOhio (Vultr / The Constant Company, LLC capital $901,311,378) + Springfield News-Sun (2026-07-10). Operator 5C Data Centers USA, Inc. (parent 5C Group Inc., Montreal); anchor cloud tenant Vultr (product of The Constant Company, LLC); site the former LexisNexis data center at 601 Benjamin Drive, PrimeOhio Corporate Park. Investment up to $1.3B total; footprint 67,000 -> 214,000 sq ft; ~120 FT jobs. Status: UNDER CONSTRUCTION (Vultr operational target early 2026, full build 'late 2027 if financing and construction move forward', News-Sun 2026-07-10); no Vultr Ohio public-cloud region live (api.vultr.com/v2/regions checked 2026-07-10). Enterprise-Zone counterparty CMH01 Holdings Inc. (SOS pull -> #1413). See data/extracted/springfield/data-centers.md, 'Project 1'.",
     "cooling_model": "closed_loop_dry",
+    "cooling_model_source": "reference",
     "cooling_model_citation": "[reference] Closed-loop / direct-liquid recirculating cooling, disclosed 'not evaporative' by the City of Springfield 5C FAQ (springfieldohio.gov/5c-data-center-faqs); up to 300,000 gal/day permitted from the municipal system at an >80degF extreme-heat max ('near zero' most of the year, ~30k gal/day realistic), with an on-site reservoir under study to avoid the municipal tap. A largely dry recirculating design undercuts the Mad River buried-valley abstraction thesis. Not a document extraction; refine to [verified] on an ingested mechanical/plumbing permit. The receiving-water / source-water screen is the water sub-issue (#1415).",
-    "parcels_relpath": "reference/springfield/parcel-assemblage.geojson",
-    "footprint_relpath": "extracted/springfield/bosc-site-footprint.yaml"
+    "parcels_relpath": null,
+    "footprint_relpath": null
   }
 ]

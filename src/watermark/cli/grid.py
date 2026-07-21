@@ -33,11 +33,11 @@ def compute(
     from watermark.sites import active_profile
 
     settings = get_settings()
-    if active_profile(settings).facility is None:
+    if not active_profile(settings).has_facility_power_basis:
         console.print(
-            f"[yellow]No documented facility for site '{settings.site}' "
-            "(SiteProfile.facility is None) — this command needs an identified data-center "
-            "facility (the data-center dimension onboarding does not capture).[/]"
+            f"[yellow]No derivable facility power basis for site '{settings.site}' "
+            "(no disclosed facility, or its IT load is entirely [open]) — this command needs an "
+            "identified data-center facility with a load basis.[/]"
         )
         raise typer.Exit(0)
     frac = None
@@ -290,7 +290,7 @@ def eia_cmd(
 
     from watermark.sites import active_profile
 
-    if active_profile(settings).facility is not None:
+    if active_profile(settings).has_facility_power_basis:
         dp = derive_demand_pressure(costs=costs, settings=settings)
         console.print(
             f"\n[bold]Data-center demand → consumer price pressure[/] "
@@ -432,14 +432,16 @@ def interchange_cmd(
         f"(range {bai.interchange_min_mw.value:,.0f}..{bai.interchange_max_mw.value:,.0f}); "
         f"net-import hours {bai.net_import_hours_fraction.value * 100:.0f}%"
     )
-    headroom = cmp.in_ba_generation_headroom_mw.value
+    peak_gap = cmp.peak_import_need_mw.value
     console.print(
         f"\n[bold]Campus load vs the interchange[/] "
         f"[dim](facility draw {cmp.campus_load_mw.value:g} MW)[/]\n"
-        f"  in-BA generation headroom [bold]{headroom:,.0f} MW[/] "
-        f"{'≥' if cmp.met_by_in_ba_generation else '<'} campus load → "
-        f"[bold]{'met by in-BA generation' if cmp.met_by_in_ba_generation else 'leans on net imports'}[/]\n"
-        f"  campus is {cmp.campus_share_of_demand_pct.value:g}% of {bai.ba} demand, "
+        f"  coincident-peak gap [bold]{peak_gap:,.0f} MW[/] "
+        f"(peak demand {cmp.ba_demand_peak_mw.value:,.0f} - mean net generation "
+        f"{cmp.ba_net_generation_mean_mw.value:,.0f}) → "
+        f"[bold]{'import/peaking-dependent at peak' if cmp.import_dependent_at_peak else 'covers its own peak on average'}[/]\n"
+        f"  campus is {cmp.campus_share_of_demand_pct.value:g}% of {bai.ba} mean demand, "
+        f"{cmp.campus_share_of_peak_demand_pct.value:g}% of the peak, "
         f"~{cmp.campus_vs_interchange_pct.value:g}% of the mean net-interchange swing"
     )
     console.print(f"\n[dim]{cmp.interpretation}[/]")

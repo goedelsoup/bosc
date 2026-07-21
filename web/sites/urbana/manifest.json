@@ -152,19 +152,19 @@
       "count": 1
     },
     {
-      "name": "network",
-      "path": "feeds/network.json",
-      "media_type": "application/json",
-      "schema": "schemas/network.schema.json",
-      "kind": "object",
-      "count": 1
-    },
-    {
       "name": "facility",
       "path": "feeds/facility.json",
       "media_type": "application/json",
       "schema": "schemas/facility.schema.json",
       "kind": "collection",
+      "count": 1
+    },
+    {
+      "name": "network",
+      "path": "feeds/network.json",
+      "media_type": "application/json",
+      "schema": "schemas/network.schema.json",
+      "kind": "object",
       "count": 1
     },
     {

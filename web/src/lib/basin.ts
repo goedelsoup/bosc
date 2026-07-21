@@ -89,8 +89,9 @@ export function basinSiteRows(
       phaseLabel: SITE_STATUS_META[s.status].label,
       phaseInk: PHASE_INK[s.status],
       // Facility lifecycle now rides on the network feed's node activity (#1628) — read it off the
-      // node this builder already receives, so basin.ts stays pure (no bundle import).
-      evidence: drawRecordKind(node, node?.activity.facility_status ?? "investigation"),
+      // node this builder already receives, so basin.ts stays pure (no bundle import). Guard
+      // `activity` too (a stale/hand-patched network node may lack it) — degrade, don't throw.
+      evidence: drawRecordKind(node, node?.activity?.facility_status ?? "investigation"),
       href: s.href,
     };
   });

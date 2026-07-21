@@ -55,6 +55,22 @@ _AIR_PERMIT_CITE = (
 _WUE_L_PER_KWH = 1.8  # evaporative hyperscale; Google fleet avg ~1.1, evaporative higher
 _WUE_CITE = "evaporative-cooled hyperscale WUE ~1.8 L/kWh (Google fleet avg ~1.1; 36 cooling towers on the air permit)"
 
+# The empirical ceiling on evaporative-hyperscale water-use effectiveness (WS-16, #1616). The
+# blowdown-method upper bound (blowdown x (CoC-1)) is a valid *cooling* bound only if the
+# disclosed discharge is pure cooling-tower blowdown. Cross-check the WUE it implies
+# (consumptive / IT energy); when it exceeds this ceiling the discharge is physically
+# unreachable for cooling alone — strong evidence it bundles non-cooling (process/sanitary)
+# flow — so the cooling-only upper bound is capped here instead of publishing an unreachable
+# evaporative loss. The ceiling is the top of the real evaporative range, not a thermodynamic
+# limit; it is applied per :func:`_derive_evaporative_tower` and never drops below the
+# facility's own central WUE (a plant may cite one above this generic ceiling).
+_WUE_CEILING_L_PER_KWH = 2.2  # top of the ~1.8-2.2 L/kWh real evaporative-hyperscale range
+_WUE_CEILING_CITE = (
+    "evaporative-hyperscale WUE ceiling ~2.2 L/kWh (top of the ~1.8-2.2 L/kWh real-world "
+    "evaporative range; Google fleet avg ~1.1) — a blowdown-implied cooling WUE above this "
+    "indicates the disclosed discharge is not all cooling-tower blowdown"
+)
+
 _CYCLES = 5.0  # cooling-tower cycles of concentration (typical 4-6)
 _CYCLES_CITE = "cooling-tower cycles of concentration ~5 (typical 4-6)"
 
@@ -113,6 +129,20 @@ def _consumptive_mgd_from_power(it_load_mw: float, wue_l_per_kwh: float) -> floa
     """Evaporative consumptive water (MGD) = IT energy x WUE."""
     liters_per_day = it_load_mw * 1_000.0 * 24.0 * wue_l_per_kwh  # kW x h/day x L/kWh
     return _mgd_from_liters_per_day(liters_per_day)
+
+
+def _wue_from_consumptive_mgd(it_load_mw: float, consumptive_mgd: float) -> float:
+    """Inverse of :func:`_consumptive_mgd_from_power`: the WUE (L/kWh) a consumptive draw implies.
+
+    The evaporative tower uses this to cross-check a blowdown-method upper bound against the
+    physical WUE ceiling (#1616): consumptive / IT energy = the implied water-use effectiveness.
+    Returns 0 for a zero IT load (no energy denominator), so the caller's ceiling test is a
+    no-op rather than a divide-by-zero.
+    """
+    energy_kwh_per_day = it_load_mw * 1_000.0 * 24.0  # kW x h/day
+    if energy_kwh_per_day <= 0.0:
+        return 0.0
+    return _liters_per_day_from_mgd(consumptive_mgd) / energy_kwh_per_day
 
 
 def it_load_mw_from_once_through_withdrawal(
@@ -343,16 +373,46 @@ def _derive_evaporative_tower(
     frac = (cycles - 1.0) / cycles  # evaporation / makeup
     consumptive_low = _consumptive_mgd_from_power(it_load_mw, wue_l_per_kwh)
     makeup = consumptive_low / frac if frac > 0 else consumptive_low
+    consumptive_high_capped = False  # WS-16 (#1616): set when the WUE-ceiling cap binds
     if blowdown_mgd is not None:
-        consumptive_high = blowdown_mgd * (cycles - 1.0)  # blowdown x (CoC-1) = evaporation
-        high_cite = f"{blowdown_mgd:g} MGD blowdown x (CoC-1); {blowdown_cite}"
-        # The blowdown method implies a genuinely larger intake: makeup = blowdown x CoC
-        # (= consumptive_high / evap fraction). State that derivation directly — reusing the
-        # consumptive `(CoC-1)` citation here read as the makeup formula, which it is not.
-        makeup_high_cite = (
-            f"upper-bound intake = {blowdown_mgd:g} MGD blowdown x CoC({cycles:g}) = "
-            f"{blowdown_mgd * cycles:g} MGD; {blowdown_cite}"
-        )
+        blowdown_consumptive = blowdown_mgd * (cycles - 1.0)  # blowdown x (CoC-1) = evaporation
+        # WS-16 (#1616): bound the blowdown method to a physical WUE ceiling. The disclosed
+        # discharge is a valid *cooling* upper bound only if it is all cooling-tower blowdown;
+        # cross-check the cooling WUE it implies against the empirical evaporative ceiling
+        # (never below the facility's own central WUE, so the cap can't invert the low/high
+        # bracket). Above the ceiling the discharge is unreachable for cooling alone — it
+        # bundles non-cooling (process/sanitary) flow — so cap the cooling-only bound to the
+        # ceiling rather than publish an evaporative loss cooling can't reach.
+        ceiling_wue = max(wue_l_per_kwh, _WUE_CEILING_L_PER_KWH)
+        implied_wue = _wue_from_consumptive_mgd(it_load_mw, blowdown_consumptive)
+        if implied_wue > ceiling_wue:
+            consumptive_high_capped = True
+            consumptive_high = _consumptive_mgd_from_power(it_load_mw, ceiling_wue)
+            high_cite = (
+                f"cooling upper bound capped at the WUE ceiling: {it_load_mw:g} MW x "
+                f"{ceiling_wue:g} L/kWh = {consumptive_high:.2f} MGD. The disclosed "
+                f"{blowdown_mgd:g} MGD blowdown x (CoC-1) = {blowdown_consumptive:g} MGD implies "
+                f"~{implied_wue:.1f} L/kWh cooling WUE, above the ~{ceiling_wue:g} L/kWh ceiling, "
+                f"so the {blowdown_mgd:g} MGD discharge is not all cooling blowdown (it bundles "
+                f"process/sanitary flow) and cooling alone can't reach it. {_WUE_CEILING_CITE}; "
+                f"{blowdown_cite}"
+            )
+            # Intake at the capped bound follows the evap fraction (consumptive / frac), NOT the
+            # uncapped blowdown x CoC — that inflated intake belongs to the discarded raw figure.
+            makeup_high_cite = (
+                f"upper-bound intake = capped consumptive {consumptive_high:.2f} MGD / evap "
+                "fraction (WUE-ceiling cap; disclosed blowdown bundles non-cooling flow)"
+            )
+        else:
+            consumptive_high = blowdown_consumptive
+            high_cite = f"{blowdown_mgd:g} MGD blowdown x (CoC-1); {blowdown_cite}"
+            # The blowdown method implies a genuinely larger intake: makeup = blowdown x CoC
+            # (= consumptive_high / evap fraction). State that derivation directly — reusing the
+            # consumptive `(CoC-1)` citation here read as the makeup formula, which it is not.
+            makeup_high_cite = (
+                f"upper-bound intake = {blowdown_mgd:g} MGD blowdown x CoC({cycles:g}) = "
+                f"{blowdown_mgd * cycles:g} MGD; {blowdown_cite}"
+            )
     else:
         # No disclosed discharge for this site — the power-method consumptive is the high bound,
         # and the intake at that bound is unchanged from the central power-method makeup.
@@ -374,7 +434,7 @@ def _derive_evaporative_tower(
             "upper-bound intake = central makeup (CoC <= 1, evap fraction non-positive)"
         )
 
-    return CoolingBasis(
+    basis = CoolingBasis(
         cooling_model=CoolingModelType.EVAPORATIVE_TOWER,
         it_load=_it_load_pv(it_load_mw, it_load_cite),
         wue=ProvenancedValue.assume(wue_l_per_kwh, "L/kWh", why=wue_cite),
@@ -408,6 +468,10 @@ def _derive_evaporative_tower(
             citation=high_cite,
         ),
     )
+    # WS-16 (#1616): record whether the WUE-ceiling cap bound the upper estimate, so the
+    # report generator reads an explicit flag instead of string-matching the citation.
+    basis._consumptive_high_capped = consumptive_high_capped
+    return basis
 
 
 def _derive_once_through(

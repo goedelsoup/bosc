@@ -881,15 +881,29 @@ def render_report(*, settings: Settings | None = None, live: bool = False) -> st
     w("\n**Low-flow assimilative screen** (discharge vs the receiving stream's cited 7Q10):\n")
     for c in assim:
         mark = _flag_mark(c.flag)
+        # The conservative default: cited natural 7Q10 only, crediting no effluent.
+        credited = ""
+        if c.effluent_credited_ratio is not None and c.upstream_returns is not None:
+            # Effluent-credited alternative (WS-15): the permitted effluent already in the
+            # reach is real dilution water, so present it alongside — never in place of — the
+            # conservative figure. Both together avoid over- and under-stating the dilution.
+            credited = (
+                f" Crediting the {c.upstream_returns.value:.2f} cfs of permitted effluent "
+                f"already in the reach `[{_TAG[c.upstream_returns.source]}]` → "
+                f"**{c.effluent_credited_ratio:.2f}:1** ({c.effluent_credited_flag})."
+            )
         w(
             f"- {mark} **{c.discharger} → {c.receiving_water}**: 7Q10 "
             f"{c.design_low_flow.value:g} cfs vs discharge {c.discharge.value:.2f} cfs "
             f"→ {c.dilution_ratio:.2f}:1 dilution ({c.flag}). "
             f"`[{_TAG[c.design_low_flow.source]}]` {c.design_low_flow.citation}"
+            f"{credited}"
         )
     w(
         "\nAt design low flow the receiving streams carry less than the effluent they\n"
-        "receive — the discharges are effectively undiluted.\n"
+        "receive — the discharges are effectively undiluted by *natural* flow. Where a plant\n"
+        "shares the reach with other permitted dischargers, the effluent-credited ratio shows\n"
+        "the more honest system picture: it is diluted by standing effluent, not clean water.\n"
     )
 
     _render_stormwater_pathway_note(w, settings)
@@ -912,16 +926,30 @@ def render_report(*, settings: Settings | None = None, live: bool = False) -> st
     if basis is not None and basis.wue is not None and basis.cycles_of_concentration is not None:
         # The evaporative-tower two-method bracket (Lima's archetype).
         w("The cooling demand is **sourced**, derived from disclosed campus data by two methods:\n")
+        # WS-16 (#1616): the blowdown method's upper bound is capped at the physical WUE ceiling
+        # when the disclosed discharge implies an unreachable cooling WUE — say so, rather than
+        # print the capped figure under a "blowdown x cycles" label that no longer computes it.
+        # The cap state is an explicit flag on the derived basis (not a citation string-match).
+        capped = basis.consumptive_high_capped
+        bottom_up = (
+            f"- bottom-up: FM-2 blowdown x {basis.cycles_of_concentration.value:g} cycles"
+            + (
+                ", capped at the physical evaporative-WUE ceiling (FM-2 is not purely cooling "
+                "blowdown, so the raw blowdown figure is unreachable for cooling alone)"
+                if capped
+                else ""
+            )
+            + f" → **{basis.consumptive_high.value:g} MGD** consumptive (upper bound)\n"
+        )
         w(
             f"- top-down: IT load {_ev(basis.it_load)} x WUE {_ev(basis.wue)} → "
-            f"**{basis.consumptive_low.value:g} MGD** consumptive\n"
-            f"- bottom-up: FM-2 blowdown x {basis.cycles_of_concentration.value:g} cycles → "
-            f"**{basis.consumptive_high.value:g} MGD** consumptive (upper bound)\n"
+            f"**{basis.consumptive_low.value:g} MGD** consumptive\n" + bottom_up
         )
         w(
             f"\nThey bracket the consumptive demand at "
-            f"**{basis.consumptive_low.value:g}-{basis.consumptive_high.value:g} MGD** "
-            f"(FM-2 is not purely cooling blowdown). The conclusion is robust to the range.\n"
+            f"**{basis.consumptive_low.value:g}-{basis.consumptive_high.value:g} MGD**"
+            + ("." if capped else " (FM-2 is not purely cooling blowdown).")
+            + " The conclusion is robust to the range.\n"
         )
     elif basis is not None:
         span = basis.consumptive_low.value != basis.consumptive_high.value

@@ -21,6 +21,7 @@ subcatchment inflows superposed with no channel routing): ``peak_attenuation_pct
 from __future__ import annotations
 
 from pathlib import Path
+from typing import TypedDict
 
 import numpy as np
 import yaml
@@ -36,7 +37,7 @@ from watermark.hydrology.model import (
     ReachTable,
     RoutedHydrographNetwork,
 )
-from watermark.hydrology.solver.routing import route
+from watermark.hydrology.solver.routing import route_reach
 from watermark.hydrology.solver.runoff import simulate_runoff
 from watermark.logging import get_logger
 
@@ -64,9 +65,18 @@ def load_reaches(*, settings: Settings | None = None) -> ReachTable | None:
     )
 
 
-def _geometry_kwargs(reach: Reach) -> dict[str, float]:
+class _ReachGeometry(TypedDict, total=False):
+    """The trapezoid overrides a reach may carry (a precise kwargs type so unpacking into
+    ``route_reach`` can't be confused with its ``subreaches`` control knob)."""
+
+    bottom_width_ft: float
+    side_slope_z: float
+    manning_n: float
+
+
+def _geometry_kwargs(reach: Reach) -> _ReachGeometry:
     """The optional trapezoid overrides present on a reach (the rest fall back to ``route``)."""
-    kw: dict[str, float] = {}
+    kw: _ReachGeometry = {}
     if reach.bottom_width_ft is not None:
         kw["bottom_width_ft"] = reach.bottom_width_ft.value
     if reach.side_slope_z is not None:
@@ -166,13 +176,14 @@ def route_storm_network(
             if node.downstream is not None and node.kind not in ("outfall", "outlet"):
                 warnings.append(f"node {node.id!r} has no reach geometry; routed as pass-through")
             continue
-        outflow = route(
+        rr = route_reach(
             inflow,
             length_ft=reach.length_ft.value,
             slope=reach.slope.value,
             dt_hr=dt_hr,
             **_geometry_kwargs(reach),
         )
+        outflow = rr.outflow_cfs
         node_outflow[node.id] = outflow
         in_peak, in_ttp = _peak(inflow, times)
         out_peak, out_ttp = _peak(outflow, times)
@@ -190,8 +201,19 @@ def route_storm_network(
                 if in_peak
                 else 0.0,
                 lag_hr=round(out_ttp - in_ttp, 3),
+                subreaches=rr.subreaches,
+                courant=round(rr.courant, 3),
             )
         )
+        # Validity flag (WS-09 / #1609): a reach shorter than one c·Δt step can't be subdivided
+        # to Courant≈1 (n stays 1, Cr>1), so its single Muskingum step is under-resolved in time
+        # — routed as near-translation, not a numerical failure, but flagged as soft.
+        if rr.subreaches == 1 and rr.courant > 2.0:
+            warnings.append(
+                f"reach {node.id!r} is short relative to the routing step (Courant "
+                f"{rr.courant:.2f}); routed as a single near-translation step, soft — a "
+                "finer dt would resolve it"
+            )
 
     # 3. Routed outlet hydrograph vs. the naive summed (un-routed) local inflows.
     outlet_id = next((n.id for n in nodes if n.kind == "outlet"), None)

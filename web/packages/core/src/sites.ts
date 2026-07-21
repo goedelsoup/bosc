@@ -311,8 +311,19 @@ export function withSitePaths(
  * dict that silently drifted from the model. `"investigation"` (the inferential floor) when the
  * site has no disclosed facility OR no committed bundle yet — never a fabricated stage.
  */
+/** The four known facility lifecycle stages — the guard that keeps a foreign/newer-minor bundle's
+ *  unrecognized `status` string from indexing `FACILITY_STATUS_META` (or the rail) to `undefined`
+ *  and crashing the render (#1628 review). */
+const FACILITY_STATUSES: ReadonlySet<FacilityStatus> = new Set([
+  "investigation",
+  "confirmed",
+  "construction",
+  "live",
+]);
+
 export function facilityStatus(slug: string): FacilityStatus {
-  return manifestOrNull(slug)?.facility?.status ?? "investigation";
+  const status = manifestOrNull(slug)?.facility?.status;
+  return status && FACILITY_STATUSES.has(status) ? status : "investigation";
 }
 
 export const FACILITY_STATUS_META: Record<
