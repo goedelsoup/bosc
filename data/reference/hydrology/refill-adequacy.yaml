@@ -93,11 +93,13 @@ refill:
     mean_evap_mgd: 5.859
     peak_month: JUL
     peak_evap_mgd: 10.1751
-    citation: ET0 FAO-56 Penman-Monteith (NASA POWER climatology) x 1.15 open-water coefficient over 1603
-      ac of committed reservoir surface area (water-supply.yaml)
-    note: first-order screening sink; grass ET0 scaled by a 1.15 open-water coefficient (water's ~0.06-0.08
-      albedo and zero canopy resistance vs grass ET0's 0.23 / 70 s/m put warm-season open-water evaporation
-      ~1.05-1.3x ET0), and precipitation onto the pool not credited (conservative)
+    citation: ET0 FAO-56 Penman-Monteith (NASA POWER climatology) x 1.15 open-water coefficient (a screening-assumption
+      midpoint of the ~1.05-1.3x open-water:ET0 band; albedo/resistance basis per Allen et al. 1998, FAO-56)
+      over 1603 ac of committed reservoir surface area (water-supply.yaml)
+    note: first-order screening sink; grass ET0 scaled by a 1.15 open-water coefficient — a documented
+      screening-assumption MIDPOINT of the ~1.05-1.3x open-water:ET0 band, not a measured value (water's
+      ~0.06-0.08 albedo and zero canopy resistance vs grass ET0's 0.23 / 70 s/m per FAO-56 put warm-season
+      open-water evaporation above grass ET0). Precipitation onto the pool is not credited (conservative).
   method: sequent-peak (Rippl) storage requirement on aligned daily NWIS discharge, passby-adjusted, net
     of a first-order reservoir-evaporation sink (ET0 x 1.15 open-water coefficient x surface area)
   warnings: []

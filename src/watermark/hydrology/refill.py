@@ -63,15 +63,18 @@ log = get_logger(__name__)
 _START, _END = "1980-01-01", "2024-12-31"
 _DAYS_PER_YEAR = 365.0
 _MONTH_KEYS = ("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC")
-# Grass-ET0 -> open-water evaporation multiplier (WS-17 / #1617). Reference ET0 is a *grass*
-# rate (albedo 0.23, surface resistance 70 s/m); an open pool has albedo ~0.06-0.08 and no
-# canopy resistance, so a Penman open-water estimate runs ABOVE grass ET0 in the warm season
-# (annual open-water ~1.05-1.3x ET0). Using ET0 as-is (1.0) would UNDER-state warm-season pool
-# loss and leave the drought bound less conservative. 1.15 is a documented screening midpoint of
-# that band, targeting the warm (drought-binding) season's open-water:ET0 ratio; the seasonal
-# curve is not resolved (a flat factor over-states the small winter loss — conservative). Kept as
-# one constant so the rate fed to reservoir_evaporation_mgd() and the value recorded on
-# ReservoirEvaporation cannot drift.
+# Grass-ET0 -> open-water evaporation multiplier (WS-17 / #1617). A stated screening
+# **assumption** (provenance: `assumption`, per this package's tagging), not a measured or
+# site-calibrated value. Basis: reference ET0 is a *grass* rate — albedo 0.23, surface resistance
+# 70 s/m (Allen et al. 1998, FAO Irrigation & Drainage Paper 56, which defines ET0; see et.py).
+# Open water has albedo ~0.06-0.08 and no canopy resistance, so a Penman open-water estimate runs
+# ABOVE grass ET0 in the warm season; the open-water:reference-ET0 ratio reported in the open-
+# water evaporation literature is ~1.05-1.3x on an annual basis (the band recorded in the WS-17
+# finding). Using ET0 as-is (1.0) would UNDER-state warm-season pool loss and leave the drought
+# bound less conservative. 1.15 is a documented screening MIDPOINT of that band, targeting the
+# warm (drought-binding) season's open-water:ET0 ratio; the seasonal curve is not resolved (a flat
+# factor over-states the small winter loss — conservative). Kept as one constant so the rate fed
+# to reservoir_evaporation_mgd() and the value recorded on ReservoirEvaporation cannot drift.
 _OPEN_WATER_COEFFICIENT = 1.15
 _FILENAME = "refill-adequacy.yaml"
 _METHOD = (
@@ -193,15 +196,18 @@ def _reservoir_evaporation(
         peak_evap_mgd=monthly_evap[peak_month],
         citation=(
             "ET0 FAO-56 Penman-Monteith (NASA POWER climatology) x "
-            f"{_OPEN_WATER_COEFFICIENT:g} open-water coefficient over {surface_acres:g} ac of "
-            "committed reservoir surface area (water-supply.yaml)"
+            f"{_OPEN_WATER_COEFFICIENT:g} open-water coefficient (a screening-assumption midpoint "
+            "of the ~1.05-1.3x open-water:ET0 band; albedo/resistance basis per Allen et al. 1998, "
+            f"FAO-56) over {surface_acres:g} ac of committed reservoir surface area "
+            "(water-supply.yaml)"
         ),
         note=(
             "first-order screening sink; grass ET0 scaled by a "
-            f"{_OPEN_WATER_COEFFICIENT:g} open-water coefficient (water's ~0.06-0.08 albedo and "
-            "zero canopy resistance vs grass ET0's 0.23 / 70 s/m put warm-season open-water "
-            "evaporation ~1.05-1.3x ET0), and precipitation onto the pool not credited "
-            "(conservative)"
+            f"{_OPEN_WATER_COEFFICIENT:g} open-water coefficient — a documented screening-"
+            "assumption MIDPOINT of the ~1.05-1.3x open-water:ET0 band, not a measured value "
+            "(water's ~0.06-0.08 albedo and zero canopy resistance vs grass ET0's 0.23 / 70 s/m "
+            "per FAO-56 put warm-season open-water evaporation above grass ET0). Precipitation "
+            "onto the pool is not credited (conservative)."
         ),
     )
     # Subtract each day's calendar-month evaporation from the pumpable inflow (may go

@@ -136,10 +136,12 @@ def test_committed_refill_has_a_reservoir_evaporation_sink(hydro_settings: Setti
     assert ev is not None, "the drought bound must reflect reservoir evaporation"
     assert ev.source == "derived"
     assert ev.surface_area_acres == pytest.approx(1603.0, abs=1.0)  # summed ODNR acreages
-    # WS-17 (#1617): grass ET0 is scaled by a >1 open-water coefficient (low albedo / no canopy
-    # resistance put warm-season pool evaporation above ET0), so the sink is not raw grass ET0.
-    assert ev.open_water_coefficient > 1.0
-    assert ev.open_water_coefficient == pytest.approx(refill._OPEN_WATER_COEFFICIENT)
+    # WS-17 (#1617): grass ET0 is scaled by a documented 1.15 open-water coefficient (low albedo /
+    # no canopy resistance put warm-season pool evaporation above ET0), so the sink is not raw
+    # grass ET0. Pin the calibrated value so a silent drift of the constant or the artifact fails.
+    expected_coefficient = pytest.approx(1.15)
+    assert expected_coefficient == refill._OPEN_WATER_COEFFICIENT
+    assert expected_coefficient == ev.open_water_coefficient
     # The committed monthly loss reflects that scaling (peak month > the raw-ET0 depth x area).
     et0 = et.penman_monteith_et0(climate.load_climatology(settings=hydro_settings))
     raw = et.reservoir_evaporation_mgd(et0, ev.surface_area_acres)  # coefficient 1.0
