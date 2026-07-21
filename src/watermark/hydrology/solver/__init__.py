@@ -14,6 +14,7 @@ from watermark.hydrology.solver.curve_number import (
     composite_cn,
     excess_rainfall,
     storage_s,
+    weighted_excess_rainfall,
 )
 from watermark.hydrology.solver.rainfall import scs_type_ii_hyetograph
 from watermark.hydrology.solver.routing import muskingum_coeffs, route
@@ -28,4 +29,5 @@ __all__ = [
     "scs_type_ii_hyetograph",
     "simulate_runoff",
     "storage_s",
+    "weighted_excess_rainfall",
 ]

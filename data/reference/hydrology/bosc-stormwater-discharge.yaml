@@ -36,21 +36,21 @@ peaks:
 - return_period_yr: 10
   depth_in: 3.58
   pre_peak_cfs: 209.493
-  post_peak_cfs: 263.326
+  post_peak_cfs: 268.355
   full_buildout_peak_cfs: 468.214
-  post_peak_wet_cfs: 389.428
+  post_peak_wet_cfs: 382.713
 - return_period_yr: 25
   depth_in: 4.25
   pre_peak_cfs: 284.478
-  post_peak_cfs: 350.101
+  post_peak_cfs: 351.393
   full_buildout_peak_cfs: 572.143
-  post_peak_wet_cfs: 482.498
+  post_peak_wet_cfs: 474.123
 - return_period_yr: 100
   depth_in: 5.39
   pre_peak_cfs: 421.339
-  post_peak_cfs: 503.09
+  post_peak_cfs: 498.504
   full_buildout_peak_cfs: 747.729
-  post_peak_wet_cfs: 640.391
+  post_peak_wet_cfs: 630.192
 design_return_period_yr: 25
 outfall_diameter_in:
   value: 60.0
@@ -81,7 +81,7 @@ receiving_note: 'Dug Run: cited 7Q10 0.78 cfs; Warmwater Habitat; impaired (aqua
   a cited dilution violation. A storm peak many times the design low flow is a channel-stability
   / erosion signal — corroborated by the 2026-06-05 ''check the outlet ... not releasing
   sediment'' inspection note — distinct from continuous-effluent dilution.'
-peak_to_7q10_ratio: 449.0
+peak_to_7q10_ratio: 451.0
 detention_design_shown: false
 basin_chronology_note: The 95% SPS grading sheet shows NO detention/retention storage
   (lma1a.storm-inventory.yaml); the ESC inspections show basins under construction
@@ -102,25 +102,29 @@ routed_discharge:
       an UPPER bound on outfall->confluence travel — the outfall''s entry point on
       Dug Run is not in the record'
     confidence: low
-  at_outfall_peak_cfs: 350.101
+  at_outfall_peak_cfs: 351.393
   at_outfall_time_to_peak_hr: 12.3
-  routed_peak_cfs: 289.187
+  routed_peak_cfs: 292.433
   routed_time_to_peak_hr: 13.2
-  attenuation_pct: 17.4
+  attenuation_pct: 16.78
   lag_hr: 0.9
   method: Constant-parameter Muskingum-Cunge (watermark.hydrology.solver.routing)
     of the as-permitted post-development outfall hydrograph down the committed reaches.yaml
     Dug Run channel to the Ottawa confluence; reach length/slope/geometry are stated
     Tier-0 assumptions (reaches.yaml), not a calibrated HEC-RAS model.
-method: Tier-0 SCS-CN screening over the measured parcel footprint; post CN = area-weighted
-  composite from the ASWCD-declared impervious/developed split; time of concentration
-  shortens with imperviousness (pre 1 hr -> as-permitted 0.779882 hr -> full-buildout
-  0.35 hr); peaks are AMC-II (average antecedent moisture) with a wet-antecedent (AMC-III)
-  conservative bound on the as-permitted post peak; outfall capacity = Manning full-flow
-  (n=0.013) across an assumed slope band; receiving 7Q10 cited from the OEPA NPDES
-  fact sheet (2PH00006). The receiving-water peak is additionally routed down the
-  cited reach chain to the Ottawa confluence (Tier-0 Muskingum-Cunge; see routed_discharge)
-  so it reflects reach travel, not only the at-outfall peak.
+method: Tier-0 SCS-CN screening over the measured parcel footprint; post-development
+  runoff uses the TR-55 weighted-runoff method (each ASWCD-declared cover's CN run
+  separately over the impervious/developed-pervious/undeveloped split, runoff depths
+  area-weighted; the reported post CN is the area-weighted composite summary) — compositing
+  a single CN under-predicts runoff once the ~34% impervious footprint passes TR-55's
+  ~30% directly-connected threshold; time of concentration shortens with imperviousness
+  (pre 1 hr -> as-permitted 0.779882 hr -> full-buildout 0.35 hr); peaks are AMC-II
+  (average antecedent moisture) with a wet-antecedent (AMC-III) conservative bound
+  on the as-permitted post peak; outfall capacity = Manning full-flow (n=0.013) across
+  an assumed slope band; receiving 7Q10 cited from the OEPA NPDES fact sheet (2PH00006).
+  The receiving-water peak is additionally routed down the cited reach chain to the
+  Ottawa confluence (Tier-0 Muskingum-Cunge; see routed_discharge) so it reflects
+  reach travel, not only the at-outfall peak.
 caveats:
 - Screening-grade — the receiving-water peak is a Tier-0 Muskingum-Cunge reach route
   on stated reach assumptions (reaches.yaml), not a calibrated HEC-RAS model or a
@@ -130,8 +134,16 @@ caveats:
 - The outfall pipe slope is not in the record; capacity is bracketed across 0.3-1.0%.
 - The peak is computed over the whole measured footprint; the tributary area to the
   single 60-inch trunk is not stated, so the capacity comparison is a bracket.
-- The composite post CN treats the developed-pervious remainder as graded open space
+- The post cover split treats the developed-pervious remainder as graded open space
   and the undeveloped remainder as keeping prior cropland cover.
+- Post-development runoff uses the TR-55 weighted-runoff method (runoff computed per
+  cover, then area-weighted on depths). Because runoff is convex in CN, this yields
+  more runoff volume than applying the single composite post CN — the detention-deficit
+  understatement compositing hides. The volume gap is largest for small/frequent storms
+  (the impervious fraction runs off while the pervious fraction still abstracts) and
+  narrows as the design storm grows; the peak, which also depends on how the mixed
+  cover redistributes excess in time, shifts only marginally at the design and rarer
+  storms.
 - The outfall's entry point on the receiving tributary is not in the record, so the
   routed channel length is an upper bound on travel — the routed attenuation/lag are
   upper bounds and the confluence peak a lower bound; reaches between the outfall

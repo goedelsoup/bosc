@@ -76,6 +76,12 @@ class Hydrograph(BaseModel):
     curve_number: float  # the effective CN the chain ran on (AMC-adjusted when amc != "II")
     tc_hr: float = 0.0  # time of concentration the unit hydrograph ran on (impervious-shortened)
     amc: Literal["I", "II", "III"] = "II"  # antecedent moisture condition; "III" = wet
+    # How the excess rainfall was computed: "composite_cn" applies the CN equation to one
+    # (area-weighted composite) CN; "weighted_runoff" is the TR-55 method — run each cover's CN
+    # separately and area-weight the runoff depths, which exceeds the composite result once a
+    # mixed footprint's impervious share passes ~30% (#1611). ``curve_number`` still reports the
+    # composite as a summary descriptor. Optional/defaulted so pre-#1611 hydrographs still load.
+    runoff_method: Literal["composite_cn", "weighted_runoff"] = "composite_cn"
     tier: Literal["tier0"] = "tier0"
 
 
@@ -150,7 +156,8 @@ class DischargePeak(BaseModel):
     return_period_yr: int
     depth_in: float
     pre_peak_cfs: float  # prior cropland cover
-    post_peak_cfs: float  # as-permitted composite (only impervious_acres paved), AMC-II
+    # as-permitted split (only impervious_acres paved), AMC-II, TR-55 weighted-runoff (#1611)
+    post_peak_cfs: float
     full_buildout_peak_cfs: float  # blanket near-impervious upper bound (whole parcel)
     # As-permitted post peak under wet antecedent (AMC-III) — the conservative bound when
     # the design storm falls on ground already saturated by prior rain. Optional so

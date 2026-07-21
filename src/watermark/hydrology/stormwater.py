@@ -95,19 +95,22 @@ def _scenario_tc_hr(impervious_fraction: float, *, settings: Settings) -> float:
     return prof.pre_tc_hr - (prof.pre_tc_hr - prof.post_tc_hr) * frac
 
 
-def _composite_post_cn(
+def _post_cover_parts(
     total_acres: float,
     footprint: SiteFootprint,
     hsg_letter: str,
     *,
     settings: Settings,
-) -> tuple[float, str]:
-    """Area-weighted post-development CN from the declared footprint split.
+) -> tuple[list[tuple[float, float]], str]:
+    """The declared post-development ``(area, CN)`` cover split + a human breakdown.
 
     Only ``impervious_acres`` of the parcel is paved (near-impervious campus); the rest of
     the developed area is graded/landscaped pervious ground; the undeveloped remainder keeps
     its prior cropland cover. Acreages are clamped to the measured runoff footprint so the
-    weights never exceed the total area. Returns the composite CN and a human breakdown.
+    weights never exceed the total area. These parts feed the TR-55 weighted-runoff computation
+    (each cover's CN run separately, runoff depths area-weighted — ``simulate_runoff(cn_parts=)``),
+    which does not under-predict runoff the way a single composite CN does once the ~34%
+    impervious footprint passes TR-55's ~30% directly-connected threshold (#1611).
     """
     prof = active_profile(settings)
     imperv = max(0.0, min(footprint.impervious_acres.value, total_acres))
@@ -123,7 +126,7 @@ def _composite_post_cn(
         f"{imperv:.0f} ac impervious + {dev_pervious:.0f} ac developed-pervious + "
         f"{remainder:.0f} ac undeveloped (of {total_acres:.0f} ac)"
     )
-    return composite_cn(parts), breakdown
+    return parts, breakdown
 
 
 def run_storm_scenario(
@@ -148,14 +151,19 @@ def run_storm_scenario(
 
     pre_cn = cn_for(prof.pre_cover, hsg_letter, settings=settings)
     # Calibrate the post-development cover to the ASWCD-declared footprint when committed:
-    # only ~115 of ~344 ac is permanently impervious, so the post CN is an area-weighted
-    # composite, not a blanket near-impervious value over the whole parcel. Falls back to
-    # the blanket near-impervious cover (the full-buildout bound) if the footprint is absent.
+    # only ~115 of ~344 ac is permanently impervious, so the post runoff is the TR-55
+    # weighted-runoff of the impervious/developed-pervious/undeveloped split (each cover's CN
+    # run separately, runoff depths area-weighted; post_cn is the composite summary), not a
+    # blanket near-impervious value over the whole parcel. Falls back to the blanket
+    # near-impervious cover (the full-buildout bound) if the footprint is absent.
     footprint = load_site_footprint(settings)
+    post_parts: list[tuple[float, float]] | None
     if footprint is not None:
-        post_cn, _ = _composite_post_cn(acres, footprint, hsg_letter, settings=settings)
+        post_parts, _ = _post_cover_parts(acres, footprint, hsg_letter, settings=settings)
+        post_cn = composite_cn(post_parts)
         post_imperv_frac = min(footprint.impervious_acres.value, acres) / acres if acres else 0.0
     else:
+        post_parts = None
         post_cn = cn_for(prof.post_cover, hsg_letter, settings=settings)
         post_imperv_frac = 1.0  # blanket near-impervious buildout — the shortest Tc
     depth = storm.depth.value
@@ -164,9 +172,14 @@ def run_storm_scenario(
     pre_tc = _scenario_tc_hr(0.0, settings=settings)
     post_tc = _scenario_tc_hr(post_imperv_frac, settings=settings)
     pre = simulate_runoff(area_acres=acres, curve_number=pre_cn, tc_hr=pre_tc, storm_depth_in=depth)
-    post = simulate_runoff(
-        area_acres=acres, curve_number=post_cn, tc_hr=post_tc, storm_depth_in=depth
-    )
+    if post_parts is not None:
+        post = simulate_runoff(
+            area_acres=acres, cn_parts=post_parts, tc_hr=post_tc, storm_depth_in=depth
+        )
+    else:
+        post = simulate_runoff(
+            area_acres=acres, curve_number=post_cn, tc_hr=post_tc, storm_depth_in=depth
+        )
 
     runoff = StormRunoff(
         name="BOSC data-center campus", area=area, hsg=hsg, storm=storm, pre=pre, post=post
@@ -464,7 +477,8 @@ def screen_campus_discharge(
     hsg_letter, hsg = _resolve_hsg(parcels, settings=settings, live=live)
 
     pre_cn = cn_for(prof.pre_cover, hsg_letter, settings=settings)
-    post_cn, breakdown = _composite_post_cn(acres, footprint, hsg_letter, settings=settings)
+    post_parts, breakdown = _post_cover_parts(acres, footprint, hsg_letter, settings=settings)
+    post_cn = composite_cn(post_parts)  # composite summary; runoff uses the parts (weighted-runoff)
     full_cn = cn_for(prof.post_cover, hsg_letter, settings=settings)
 
     # Tc shortens with imperviousness: pre is pervious (fraction 0), the as-permitted post
@@ -483,15 +497,15 @@ def screen_campus_discharge(
             area_acres=acres, curve_number=pre_cn, tc_hr=pre_tc, storm_depth_in=depth
         )
         post = simulate_runoff(
-            area_acres=acres, curve_number=post_cn, tc_hr=post_tc, storm_depth_in=depth
+            area_acres=acres, cn_parts=post_parts, tc_hr=post_tc, storm_depth_in=depth
         )
         if rp == design_return_period_yr:
             design_post = post  # the at-outfall hydrograph routed to the confluence below
-        # Conservative wet-antecedent bound: the same as-permitted composite CN (and its
-        # shorter post Tc) under AMC-III (ground already saturated by prior rain), which
-        # raises the peak the 60-inch outfall and Dug Run's low flow have to absorb.
+        # Conservative wet-antecedent bound: the same as-permitted cover split (and its shorter
+        # post Tc) under AMC-III (ground already saturated by prior rain), which raises the peak
+        # the 60-inch outfall and Dug Run's low flow have to absorb.
         post_wet = simulate_runoff(
-            area_acres=acres, curve_number=post_cn, tc_hr=post_tc, storm_depth_in=depth, amc="III"
+            area_acres=acres, cn_parts=post_parts, tc_hr=post_tc, storm_depth_in=depth, amc="III"
         )
         full = simulate_runoff(
             area_acres=acres, curve_number=full_cn, tc_hr=full_tc, storm_depth_in=depth
@@ -580,8 +594,12 @@ def screen_campus_discharge(
             "discharges straight to the 60-inch outfall."
         ),
         method=(
-            "Tier-0 SCS-CN screening over the measured parcel footprint; post CN = "
-            "area-weighted composite from the ASWCD-declared impervious/developed split; "
+            "Tier-0 SCS-CN screening over the measured parcel footprint; post-development "
+            "runoff uses the TR-55 weighted-runoff method (each ASWCD-declared cover's CN run "
+            "separately over the impervious/developed-pervious/undeveloped split, runoff depths "
+            "area-weighted; the reported post CN is the area-weighted composite summary) — "
+            "compositing a single CN under-predicts runoff once the ~34% impervious footprint "
+            "passes TR-55's ~30% directly-connected threshold; "
             f"time of concentration shortens with imperviousness (pre {pre_tc:g} hr -> "
             f"as-permitted {post_tc:g} hr -> full-buildout {full_tc:g} hr); "
             "peaks are AMC-II (average antecedent moisture) with a wet-antecedent (AMC-III) "
@@ -600,8 +618,15 @@ def screen_campus_discharge(
             "The outfall pipe slope is not in the record; capacity is bracketed across 0.3-1.0%.",
             "The peak is computed over the whole measured footprint; the tributary area to the "
             "single 60-inch trunk is not stated, so the capacity comparison is a bracket.",
-            "The composite post CN treats the developed-pervious remainder as graded open space "
+            "The post cover split treats the developed-pervious remainder as graded open space "
             "and the undeveloped remainder as keeping prior cropland cover.",
+            "Post-development runoff uses the TR-55 weighted-runoff method (runoff computed per "
+            "cover, then area-weighted on depths). Because runoff is convex in CN, this yields "
+            "more runoff volume than applying the single composite post CN — the detention-deficit "
+            "understatement compositing hides. The volume gap is largest for small/frequent storms "
+            "(the impervious fraction runs off while the pervious fraction still abstracts) and "
+            "narrows as the design storm grows; the peak, which also depends on how the mixed cover "
+            "redistributes excess in time, shifts only marginally at the design and rarer storms.",
             "The outfall's entry point on the receiving tributary is not in the record, so the "
             "routed channel length is an upper bound on travel — the routed attenuation/lag are "
             "upper bounds and the confluence peak a lower bound; reaches between the outfall and "

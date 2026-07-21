@@ -13,6 +13,7 @@ from watermark.hydrology.solver.curve_number import (
     composite_cn,
     excess_rainfall,
     storage_s,
+    weighted_excess_rainfall,
 )
 from watermark.hydrology.solver.rainfall import scs_type_ii_hyetograph
 from watermark.hydrology.solver.runoff import simulate_runoff
@@ -51,6 +52,67 @@ def test_amc_adjustment_direction() -> None:
 def test_composite_cn_area_weighted() -> None:
     assert composite_cn([(50.0, 80.0), (50.0, 90.0)]) == pytest.approx(85.0)
     assert composite_cn([]) == 70.0  # documented fallback
+
+
+def test_weighted_excess_exceeds_composite_cn_excess() -> None:
+    # #1611 / TR-55: run each cover's CN separately and area-weight the runoff DEPTHS, rather
+    # than applying one composite CN. Because runoff is convex in CN (Jensen), the weighted
+    # depth is >= the composite-CN depth, strictly so when the covers differ — the runoff a
+    # composite CN under-predicts once the impervious share passes ~30%.
+    _, cumulative, _ = scs_type_ii_hyetograph(2.5, dt_hr=0.1)
+    parts = [(115.0, 98.0), (225.0, 68.0)]  # ~34% impervious, wide CN spread
+    weighted = weighted_excess_rainfall(cumulative, parts)
+    lumped = excess_rainfall(cumulative, composite_cn(parts))
+    assert float(weighted[-1]) > float(lumped[-1])
+    # A single cover reduces exactly to the plain CN equation (nothing to weight).
+    solo = weighted_excess_rainfall(cumulative, [(200.0, 85.0)])
+    assert np.allclose(solo, excess_rainfall(cumulative, 85.0))
+    # Degenerate zero-area parts fall back to the documented bare CN-70 series.
+    degenerate = weighted_excess_rainfall(cumulative, [(0.0, 90.0)])
+    assert np.allclose(degenerate, excess_rainfall(cumulative, 70.0))
+
+
+def test_weighted_runoff_raises_depth_volume_and_frequent_peak() -> None:
+    # The pipeline-level effect of the weighted-runoff method: more runoff depth and volume
+    # (the detention-deficit signal), and a higher peak for a small/frequent storm.
+    parts = [(115.0, 98.0), (225.0, 68.0)]
+    composite = composite_cn(parts)
+    common = {"area_acres": 340.0, "tc_hr": 0.6, "storm_depth_in": 2.5, "dt_hr": 0.1}
+    weighted = simulate_runoff(cn_parts=parts, **common)
+    lumped = simulate_runoff(curve_number=composite, **common)
+    assert weighted.runoff_method == "weighted_runoff"
+    assert lumped.runoff_method == "composite_cn"
+    assert weighted.runoff_depth_in > lumped.runoff_depth_in
+    assert weighted.volume_acft > lumped.volume_acft
+    assert weighted.peak_cfs > lumped.peak_cfs
+    # The reported CN stays the area-weighted composite (a summary descriptor, not storm-derived).
+    assert weighted.curve_number == pytest.approx(composite, abs=0.1)
+
+
+def test_weighted_runoff_understatement_largest_for_frequent_storms() -> None:
+    # The compositing understatement in runoff DEPTH is largest for small/frequent storms — the
+    # impervious fraction runs off while the pervious fraction still abstracts — and narrows as
+    # the storm grows. This is why TR-55 separates high-impervious footprints; the frequent,
+    # channel-forming storms are where the erosion signal is most understated.
+    parts = [(115.0, 98.0), (225.0, 65.0)]
+    composite = composite_cn(parts)
+
+    def depth_gap(depth_in: float) -> float:
+        common = {"area_acres": 340.0, "tc_hr": 0.6, "storm_depth_in": depth_in}
+        return (
+            simulate_runoff(cn_parts=parts, **common).runoff_depth_in
+            - simulate_runoff(curve_number=composite, **common).runoff_depth_in
+        )
+
+    assert depth_gap(1.5) > depth_gap(6.0) > 0
+
+
+def test_simulate_runoff_requires_exactly_one_cn_input() -> None:
+    common = {"area_acres": 100.0, "tc_hr": 0.6, "storm_depth_in": 4.0}
+    with pytest.raises(ValueError, match="exactly one"):
+        simulate_runoff(**common)  # neither curve_number nor cn_parts
+    with pytest.raises(ValueError, match="exactly one"):
+        simulate_runoff(curve_number=80.0, cn_parts=[(100.0, 80.0)], **common)  # both
 
 
 def test_cn_lookup_from_cited_table() -> None:
