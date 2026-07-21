@@ -16,10 +16,9 @@
  * Pure (no bundle import) so it unit-tests offline: the page loads the `hypotheses` +
  * `hypothesis-assessments` feeds and passes the folded assessment data (and Lima's counts) in.
  */
-import type { HypothesisAssessmentItem, HypothesisItem } from "./feeds";
+import type { FacilityStatus, HypothesisAssessmentItem, HypothesisItem } from "./feeds";
 import {
   FACILITY_STATUS_META,
-  facilityStatus,
   groupSites,
   type NetworkSite,
   SITES,
@@ -346,17 +345,20 @@ const textCell = (t: string, muted = false): Cell => {
 const numCell = (t: string): Cell => ({ kind: "num", text: t, muted: t === "—" });
 const pillCell = (s: Swatch): Cell => ({ kind: "pill", pill: s });
 
-const facPill = (slug: string): Cell => pillCell(FACILITY_STATUS_META[facilityStatus(slug)]);
+const facPill = (status: FacilityStatus): Cell => pillCell(FACILITY_STATUS_META[status]);
 
 /**
  * Build a lens's full view model: the scorecard column spec, the grouped rows (or chip groups),
  * and the framing-panel axis chips. `limaCounts` carries Lima's real bundle figures; every other
- * site shows "—" (no assembled record yet).
+ * site shows "—" (no assembled record yet). `facilityStatusOf` resolves each site's facility
+ * lifecycle stage — the page passes the bundle-backed `facilityStatus` (#1628), so this builder
+ * stays pure (no bundle import); a caller may pass a stub in an offline unit test.
  */
 export function buildLens(
   lens: DirLens,
   limaCounts: { docs: string; records: string },
   data: LensData,
+  facilityStatusOf: (slug: string) => FacilityStatus,
 ): LensView {
   const cfg = LENSES[lens];
   const cols = cfg.cols.map((c) => ({ label: c.label, align: c.align ?? ("left" as const) }));
@@ -380,7 +382,7 @@ export function buildLens(
             pillCell(PHASE_PILL[s.status]),
             numCell(s.slug === "lima" ? limaCounts.docs : "—"),
             numCell(s.slug === "lima" ? limaCounts.records : "—"),
-            facPill(s.slug),
+            facPill(facilityStatusOf(s.slug)),
           ],
         }));
         const g: Group = {
@@ -420,14 +422,14 @@ export function buildLens(
           textCell(dat.def.nexus + defTag),
           textCell(dat.def.linkage, true),
           pillCell(SIGNAL_META[dat.def.signal]),
-          facPill(s.slug),
+          facPill(facilityStatusOf(s.slug)),
         ]
       : [
           siteCell(s),
           textCell(dat.surv.operator + survTag),
           textCell(dat.surv.capital),
           pillCell(SIGNAL_META[dat.surv.signal]),
-          facPill(s.slug),
+          facPill(facilityStatusOf(s.slug)),
         ];
     return { slug: s.slug, live: s.status === "live", cells };
   };

@@ -1,9 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { buildLens, indexAssessments, LENS_ORDER, lensConfig, lensCount, lensDatum } from "./directory";
-import type { HypothesisAssessmentItem, HypothesisItem } from "./feeds";
+import type { FacilityStatus, HypothesisAssessmentItem, HypothesisItem } from "./feeds";
 import { SITES } from "./sites";
 
 const LIMA_COUNTS = { docs: "2,140", records: "318" };
+
+// A pure stub for buildLens's facility-status lookup (#1628) — the real page passes the
+// bundle-backed `facilityStatus`; this keeps the unit test offline (no bundle).
+const FAC_STATUS = (slug: string): FacilityStatus => (slug === "lima" ? "construction" : "investigation");
 
 // The committed (site x hypothesis) cells, as they arrive from the `hypothesis-assessments`
 // feed. Mirrors data/hypotheses/**; the Python port-parity test guards these against LENS_DATA.
@@ -107,7 +111,7 @@ describe("directory lenses — one network, read three ways (#308)", () => {
   });
 
   it("water lens groups all sites by basin, nested under the two divides", () => {
-    const v = buildLens("water", LIMA_COUNTS, DATA);
+    const v = buildLens("water", LIMA_COUNTS, DATA, FAC_STATUS);
     expect(v.groups).toHaveLength(11); // eleven basins
     const total = v.groups.reduce((n, g) => n + g.rows.length, 0);
     expect(total).toBe(SITES.length);
@@ -131,7 +135,7 @@ describe("directory lenses — one network, read three ways (#308)", () => {
   });
 
   it("water lens shows Lima's real counts and a dash everywhere else — never a fabricated number", () => {
-    const v = buildLens("water", LIMA_COUNTS, DATA);
+    const v = buildLens("water", LIMA_COUNTS, DATA, FAC_STATUS);
     const rows = v.groups.flatMap((g) => g.rows);
     const lima = rows.find((r) => r.slug === "lima");
     // cols: site, watershed, phase, documents, records, facility
@@ -146,7 +150,7 @@ describe("directory lenses — one network, read three ways (#308)", () => {
   });
 
   it("defense lens groups assessed sites and sweeps the rest into a 'not yet assessed' chip tail", () => {
-    const v = buildLens("defense", LIMA_COUNTS, DATA);
+    const v = buildLens("defense", LIMA_COUNTS, DATA, FAC_STATUS);
     const rowGroups = v.groups.filter((g) => g.kind === "rows");
     const chipGroups = v.groups.filter((g) => g.kind === "chips");
     expect(rowGroups.map((g) => [g.abbr, g.count])).toEqual([
@@ -162,7 +166,7 @@ describe("directory lenses — one network, read three ways (#308)", () => {
   });
 
   it("surveillance lens splits on-record from signal-only, with the rest in the chip tail", () => {
-    const v = buildLens("surveillance", LIMA_COUNTS, DATA);
+    const v = buildLens("surveillance", LIMA_COUNTS, DATA, FAC_STATUS);
     const rowGroups = v.groups.filter((g) => g.kind === "rows");
     expect(rowGroups.map((g) => [g.abbr, g.count])).toEqual([
       ["OPR", 2], // Lima, New Albany
@@ -211,7 +215,7 @@ describe("directory lenses — one network, read three ways (#308)", () => {
     const data = indexAssessments(cellsWithTag);
     expect(lensDatum("lima", data).surv.sub_thesis).toBe("capture");
     // The scorecard row appends · [capture] to the operator cell.
-    const v = buildLens("surveillance", LIMA_COUNTS, data);
+    const v = buildLens("surveillance", LIMA_COUNTS, data, FAC_STATUS);
     const limaRow = v.groups.flatMap((g) => g.rows).find((r) => r.slug === "lima");
     expect(limaRow?.cells[1].text).toBe("Shawnee Energy Campus · [capture]");
   });

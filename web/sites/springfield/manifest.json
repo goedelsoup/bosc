@@ -1,19 +1,26 @@
 {
   "site": "springfield",
   "bundle_version": "1.0.0",
-  "contract_version": "1.29.0",
+  "contract_version": "1.31.0",
   "generated_at": "2026-07-08T21:15:25+00:00",
-  "feed_count": 27,
-  "row_total": 289,
+  "feed_count": 28,
+  "row_total": 290,
   "readiness": {
-    "tier": "backdrop",
+    "tier": "case",
     "domains": {
       "backdrop": "live",
-      "facility": "absent",
+      "facility": "live",
       "places": "absent",
       "record": "absent",
       "story": "seeded"
     }
+  },
+  "facility": {
+    "status": "construction",
+    "count": 1,
+    "primary_name": "5C Data Centers \"CMH01\"",
+    "primary_operator": "5C Data Centers USA, Inc. (anchor tenant Vultr)",
+    "primary_end_use": "colocation"
   },
   "feeds": [
     {
@@ -137,6 +144,14 @@
       "count": 1
     },
     {
+      "name": "facility",
+      "path": "feeds/facility.json",
+      "media_type": "application/json",
+      "schema": "schemas/facility.schema.json",
+      "kind": "collection",
+      "count": 1
+    },
+    {
       "name": "network",
       "path": "feeds/network.json",
       "media_type": "application/json",
@@ -232,5 +247,6 @@
       "kind": "collection",
       "count": 80
     }
-  ]
+  ],
+  "exports": []
 }

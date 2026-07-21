@@ -72,9 +72,11 @@ def derive_demand_pressure(
     costs = costs or build_consumer_energy(settings=settings)
     power = derive_power_basis(settings=settings)
     if power is None:
+        # No power basis: either no disclosed facility, or a facility whose IT load is entirely
+        # `[open]` (a rezoning-only campus, #1628) — don't claim `facility is None` when it isn't.
         raise ValueError(
-            f"site {settings.site!r} has no documented facility (SiteProfile.facility is None) — "
-            "the facility demand-pressure sensitivity needs a facility power basis"
+            f"site {settings.site!r} has no derivable facility power basis (no disclosed facility, "
+            "or its IT load is entirely [open]) — the demand-pressure sensitivity needs one"
         )
 
     # The state retail-sales + residential-price series, templated by the dataset's OWN state

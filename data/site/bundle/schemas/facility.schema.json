@@ -1,0 +1,282 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "facility feed",
+  "type": "array",
+  "items": {
+    "additionalProperties": false,
+    "description": "One disclosed data-center campus — the machine-readable projection of a\n:class:`watermark.sites.SiteFacility` (#1628, epic #1626 F2).\n\nA site holds N of these (``is_primary`` marks the modeled campus that drives the water/power/air\nmath). Each carries the structured facts the model now holds instead of freetext comments: the\nlifecycle ``status``, the ``operator`` / ``end_use`` (each with its citation), the IT-load bracket\n(``None`` when the load is entirely ``[open]`` — a rezoning-only campus), the site-plan\ndisclosure, the cooling archetype, and the resolved geometry link (facility-level, or inherited\nfrom the site). Nothing here is re-keyed by hand — it is projected from the validated model, so a\nprovenance travels with its value across the seam.",
+    "properties": {
+      "key": {
+        "title": "Key",
+        "type": "string"
+      },
+      "name": {
+        "title": "Name",
+        "type": "string"
+      },
+      "is_primary": {
+        "title": "Is Primary",
+        "type": "boolean"
+      },
+      "status": {
+        "$ref": "#/$defs/FacilityLifecycle"
+      },
+      "operator": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Operator"
+      },
+      "operator_citation": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Operator Citation"
+      },
+      "end_use": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/DcEndUse"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "end_use_citation": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "End Use Citation"
+      },
+      "facility_type": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Facility Type"
+      },
+      "it_load_mw": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "It Load Mw"
+      },
+      "it_load_low_mw": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "It Load Low Mw"
+      },
+      "it_load_high_mw": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "It Load High Mw"
+      },
+      "air_permit_citation": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Air Permit Citation"
+      },
+      "air_permit_relpath": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Air Permit Relpath"
+      },
+      "it_load_citation": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "It Load Citation"
+      },
+      "gross_floor_area_sqft": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Gross Floor Area Sqft"
+      },
+      "disclosed_investment_usd": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Disclosed Investment Usd"
+      },
+      "disclosure_citation": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Disclosure Citation"
+      },
+      "cooling_model": {
+        "$ref": "#/$defs/CoolingModelType"
+      },
+      "cooling_model_source": {
+        "enum": [
+          "document",
+          "connector",
+          "reference",
+          "assumption"
+        ],
+        "title": "Cooling Model Source",
+        "type": "string"
+      },
+      "cooling_model_citation": {
+        "title": "Cooling Model Citation",
+        "type": "string"
+      },
+      "parcels_relpath": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Parcels Relpath"
+      },
+      "footprint_relpath": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Footprint Relpath"
+      }
+    },
+    "required": [
+      "key",
+      "name",
+      "is_primary",
+      "status",
+      "cooling_model",
+      "cooling_model_source",
+      "cooling_model_citation"
+    ],
+    "title": "FacilityItem",
+    "type": "object"
+  },
+  "$defs": {
+    "CoolingModelType": {
+      "description": "The cooling-water archetype of a data-center facility, keyed on physical mechanism.\n\nEach member selects one spec in :data:`watermark.hydrology.cooling_models.COOLING_MODELS` —\nits own consumptive/withdrawal math and parameter set. The enum lives here (not in\n``watermark.hydrology``) because the archetype is a **per-site facility attribute**\n(:class:`SiteFacility.cooling_model`) and ``watermark.config`` imports this package,\nso hydrology modules cannot be imported from here.\n\nNaming ([reference]): the enum is keyed on mechanism because the data-center industry's\n\"open loop / closed loop\" labels are ambiguous — EPA WaterSense at Work (§6, Cooling\nTowers) calls a recirculating wet tower an *open recirculating* system, which trade\nusage shortens to \"open loop\", while \"closed loop\" is used both for sealed dry/air-\ncooled circuits and (confusingly) for tower condenser-water loops. The open/closed\nlabels are display-only **aliases**, documented per spec in\n:mod:`watermark.hydrology.cooling_models`; the engine never dispatches on them.\n\n``unknown`` means \"facility disclosed, cooling method not on record\" — never \"no\ncooling\". It yields a bracketed range, not a single figure. ``off`` is the explicit\nno-cooling-water-load case; ``SiteProfile.facility is None`` also resolves to it.",
+      "enum": [
+        "off",
+        "evaporative_tower",
+        "once_through",
+        "closed_loop_dry",
+        "hybrid_adiabatic",
+        "unknown"
+      ],
+      "title": "CoolingModelType",
+      "type": "string"
+    },
+    "DcEndUse": {
+      "description": "The disclosed data-center **end-use** archetype (#1628) — the controlled vocabulary shared\nwith the frontend's end-use explorer (``DcKey`` in ``web/packages/core/src/endUse.ts``).\n\nSet only where the record discloses the type (with ``end_use_citation``); left ``None`` = the\nend use is ``[open]`` — the sharp unanswered question for Lima itself, which must NOT be\nasserted (``endUse.ts`` exists precisely because Lima's type is open). ``bitcoin`` is its own\ncustomer (behind-the-meter mining); ``hyperscale`` = the operator runs its own workloads;\n``colocation`` = a landlord with unnamed tenants; ``enclave`` = an authorized-only federal\nenvironment.",
+      "enum": [
+        "bitcoin",
+        "hyperscale",
+        "colocation",
+        "enclave"
+      ],
+      "title": "DcEndUse",
+      "type": "string"
+    },
+    "FacilityLifecycle": {
+      "description": "A disclosed facility's real-world lifecycle stage (#1628) — the four-stage clock the\nfrontend's facility-status rail walks (``investigation → confirmed → construction → live``).\n\nThe 1:1 Python peer of the TS ``FacilityStatus`` in ``web/packages/core/src/sites.ts``; the\nfrontend now reads this off the bundle instead of a hand-maintained per-slug dict. Distinct\nfrom the SITE-BUILD status (how far along OUR website is) and from\n:class:`watermark.facility.candidate.CandidateStatus` (the richer discovery-stage vocabulary a\nswept candidate carries — mapped to this at promotion). ``investigation`` is the honest floor\nfor a site with **no** disclosed facility; a site that *has* a :class:`SiteFacility` is at least\n``confirmed`` (a project is on the record).",
+      "enum": [
+        "investigation",
+        "confirmed",
+        "construction",
+        "live"
+      ],
+      "title": "FacilityLifecycle",
+      "type": "string"
+    }
+  }
+}

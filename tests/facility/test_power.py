@@ -78,10 +78,18 @@ def test_site_facility_requires_exactly_one_load_basis_citation() -> None:
 
     # Neither citation → uncited load.
     with pytest.raises(ValueError, match="exactly one basis citation"):
-        SiteFacility(it_load_mw=70.0, it_load_low_mw=35.0, it_load_high_mw=115.0)
+        SiteFacility(
+            name="Test",
+            status="confirmed",
+            it_load_mw=70.0,
+            it_load_low_mw=35.0,
+            it_load_high_mw=115.0,
+        )
     # Both citations → ambiguous ground (derive_power_basis would silently drop it_load_citation).
     with pytest.raises(ValueError, match="exactly one basis citation"):
         SiteFacility(
+            name="Test",
+            status="confirmed",
             it_load_mw=70.0,
             it_load_low_mw=35.0,
             it_load_high_mw=115.0,
@@ -96,6 +104,8 @@ def test_site_facility_disclosure_fields_require_a_citation() -> None:
 
     with pytest.raises(ValueError, match="disclosure_citation must be set together"):
         SiteFacility(
+            name="Test",
+            status="confirmed",
             it_load_mw=70.0,
             it_load_low_mw=35.0,
             it_load_high_mw=115.0,
@@ -110,6 +120,8 @@ def test_site_facility_gensets_are_paired() -> None:
 
     with pytest.raises(ValueError, match="genset_count and genset_mw must be set together"):
         SiteFacility(
+            name="Test",
+            status="confirmed",
             it_load_mw=70.0,
             it_load_low_mw=35.0,
             it_load_high_mw=115.0,
@@ -125,7 +137,7 @@ def test_compute_capacity_refuses_a_facility_less_site() -> None:
     from watermark.facility.compute import derive_compute_capacity
 
     # xenia is deliberately facility-less (Findlay now carries a disclosed SiteFacility, #1459).
-    with pytest.raises(ValueError, match="no documented facility"):
+    with pytest.raises(ValueError, match="no derivable facility power basis"):
         derive_compute_capacity(settings=Settings(site="xenia"))
 
 

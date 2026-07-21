@@ -1,7 +1,7 @@
 {
   "site": "piketon",
   "bundle_version": "1.0.0",
-  "contract_version": "1.29.0",
+  "contract_version": "1.31.0",
   "generated_at": "2026-07-08T21:13:53+00:00",
   "feed_count": 22,
   "row_total": 212,
@@ -15,6 +15,7 @@
       "story": "absent"
     }
   },
+  "facility": null,
   "feeds": [
     {
       "name": "records",
@@ -192,5 +193,6 @@
       "kind": "collection",
       "count": 79
     }
-  ]
+  ],
+  "exports": []
 }

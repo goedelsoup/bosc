@@ -51,7 +51,7 @@ def test_method2_uses_the_basis_wue_not_a_fixed_constant(
         update={"wue_l_per_kwh": 2.6, "wue_citation": "test override"}
     )
     monkeypatch.setitem(
-        sites.SITES, "lima", lima.model_copy(update={"facility": override_facility})
+        sites.SITES, "lima", lima.model_copy(update={"facilities": (override_facility,)})
     )
 
     cap = derive_compute_capacity(settings=facility_settings)
@@ -74,7 +74,9 @@ def test_method2_once_through_recovers_load_from_withdrawal(
     lima = sites.SITES["lima"]
     assert lima.facility is not None
     once_through = lima.facility.model_copy(update={"cooling_model": CoolingModelType.ONCE_THROUGH})
-    monkeypatch.setitem(sites.SITES, "lima", lima.model_copy(update={"facility": once_through}))
+    monkeypatch.setitem(
+        sites.SITES, "lima", lima.model_copy(update={"facilities": (once_through,)})
+    )
 
     cap = derive_compute_capacity(settings=facility_settings)
     assert cap.it_load_water_low.value == pytest.approx(cap.it_load_power.value, abs=2.0)

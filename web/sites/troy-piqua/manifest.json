@@ -1,10 +1,10 @@
 {
   "site": "troy-piqua",
   "bundle_version": "1.0.0",
-  "contract_version": "1.29.0",
+  "contract_version": "1.31.0",
   "generated_at": "2026-07-13T13:16:07+00:00",
-  "feed_count": 26,
-  "row_total": 328,
+  "feed_count": 27,
+  "row_total": 329,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -14,6 +14,13 @@
       "record": "live",
       "story": "absent"
     }
+  },
+  "facility": {
+    "status": "confirmed",
+    "count": 1,
+    "primary_name": "Project Klondike",
+    "primary_operator": "J5 LLC dba Shaytura LLC (developer of record)",
+    "primary_end_use": null
   },
   "feeds": [
     {
@@ -137,6 +144,14 @@
       "count": 1
     },
     {
+      "name": "facility",
+      "path": "feeds/facility.json",
+      "media_type": "application/json",
+      "schema": "schemas/facility.schema.json",
+      "kind": "collection",
+      "count": 1
+    },
+    {
       "name": "network",
       "path": "feeds/network.json",
       "media_type": "application/json",
@@ -224,5 +239,6 @@
       "kind": "collection",
       "count": 96
     }
-  ]
+  ],
+  "exports": []
 }

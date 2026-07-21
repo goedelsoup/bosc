@@ -86,6 +86,8 @@ def test_stack_params_from_profile_documents_disclosed_geometry(
     from watermark.sites import SiteFacility
 
     fac = SiteFacility(
+        name="Test",
+        status="confirmed",
         genset_count=10,
         genset_mw=3.0,
         it_load_mw=25.0,
@@ -115,6 +117,8 @@ def test_sitefacility_partial_stack_geometry_rejected() -> None:
 
     with pytest.raises(ValidationError, match="stack geometry"):
         SiteFacility(
+            name="Test",
+            status="confirmed",
             genset_count=10,
             genset_mw=3.0,
             it_load_mw=25.0,

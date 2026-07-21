@@ -1,3 +1,5 @@
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import {
   ACTIVE_SITE_SLUG,
@@ -16,6 +18,13 @@ import {
   storyComingSoon,
   surfacedStories,
 } from "./sites";
+
+// `facilityStatus` is bundle-backed (#1628), so the facility-rail assertions below read the
+// committed per-site bundles. Pin `WATERMARK_BUNDLE_DIR` at `web/sites` (absolute, CWD-independent)
+// when it isn't already set by the mise task env — so this stays hermetic under a bare `vitest`
+// (matching the readiness/directory tests' bundle dependency) instead of silently reading a stale
+// local `data/site/bundles/` and drifting to "investigation".
+process.env.WATERMARK_BUNDLE_DIR ??= resolve(fileURLToPath(new URL(".", import.meta.url)), "../../../sites");
 
 describe("sites registry — the Watermark network (#304)", () => {
   it("has unique slugs; the active build (Lima) is selectable; a selectable site is live or building", () => {

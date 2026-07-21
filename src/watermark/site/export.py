@@ -78,6 +78,7 @@ from watermark.site import documents as documents_mod
 from watermark.site import docversions as docversions_mod
 from watermark.site import economics as economics_mod
 from watermark.site import exhibits as exhibits_mod
+from watermark.site import facility as facility_mod
 from watermark.site import gismap as gismap_mod
 from watermark.site import gleif as gleif_mod
 from watermark.site import graph as graph_mod
@@ -111,6 +112,7 @@ from watermark.site.feeds import (
     EntityNode,
     ExhibitItem,
     ExportRef,
+    FacilityItem,
     FactItem,
     FeedKind,
     FeedRef,
@@ -807,6 +809,10 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
                 None if econ_burden is None else economics_mod.export_energy_burden(econ_burden)
             ),
         ),
+        # The disclosed data-center facilities (#1628, epic #1626 F2): one row per campus with its
+        # lifecycle status / operator / end-use / IT-load bracket / disclosure / cooling / geometry.
+        # Facility-gated — None (feed skipped) for a site with no disclosed facility.
+        ("facility", FacilityItem, lambda: facility_mod.build_facility_feed(settings)),
         # Cross-site basin synthesis (#308/#323): the watershed points as one connected basin.
         ("network", None, lambda: build_basin_network(settings=settings)),
         # Watermark's own compute footprint (the GreenOps report, #1076/#1084) — the platform's
@@ -1190,6 +1196,9 @@ def export_bundle(
     readiness = SiteReadiness.model_validate(
         compute_readiness(active_profile(settings), feed_counts)
     )
+    # The compact facility block (#1628) — the primary campus's status + count, the per-slug source
+    # the frontend badge reads. Absent for a facility-less site (the reader defaults to investigation).
+    facility_summary = facility_mod.build_facility_summary(settings)
     manifest = Manifest(
         site=settings.site,
         bundle_version=BUNDLE_VERSION,
@@ -1198,6 +1207,7 @@ def export_bundle(
         feed_count=len(refs),
         row_total=row_total,
         readiness=readiness,
+        facility=facility_summary,
         feeds=refs,
         exports=export_refs,
     )

@@ -1,10 +1,10 @@
 {
   "site": "urbana",
   "bundle_version": "1.0.0",
-  "contract_version": "1.30.3",
+  "contract_version": "1.31.0",
   "generated_at": "2026-07-09T19:27:16+00:00",
-  "feed_count": 29,
-  "row_total": 388,
+  "feed_count": 30,
+  "row_total": 389,
   "readiness": {
     "tier": "case",
     "domains": {
@@ -14,6 +14,13 @@
       "record": "live",
       "story": "seeded"
     }
+  },
+  "facility": {
+    "status": "confirmed",
+    "count": 1,
+    "primary_name": "Urbana Technology Hub",
+    "primary_operator": "Thor Equities Group (developer of record)",
+    "primary_end_use": null
   },
   "feeds": [
     {
@@ -145,6 +152,14 @@
       "count": 1
     },
     {
+      "name": "facility",
+      "path": "feeds/facility.json",
+      "media_type": "application/json",
+      "schema": "schemas/facility.schema.json",
+      "kind": "collection",
+      "count": 1
+    },
+    {
       "name": "network",
       "path": "feeds/network.json",
       "media_type": "application/json",
@@ -248,5 +263,6 @@
       "kind": "collection",
       "count": 82
     }
-  ]
+  ],
+  "exports": []
 }
