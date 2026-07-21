@@ -591,6 +591,8 @@ export interface ReachRouting {
   outflow_time_to_peak_hr: number;
   attenuation_pct: number; // peak reduction across the reach, >= 0
   lag_hr: number; // delay in time-to-peak across the reach, >= 0
+  subreaches?: number; // series Courant≈1 sub-reaches the reach was split into (WS-09 / #1609)
+  courant?: number; // sub-reach Courant number c·Δt/Δx — routing validity flag, ≈ 1
 }
 
 // The `routed-hydrograph` object feed — the routed outlet hydrograph vs. the naive summed

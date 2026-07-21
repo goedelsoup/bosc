@@ -205,7 +205,13 @@ from watermark.site.readiness import State, Tier  # the readiness vocabulary SSO
 #   reconciling to `pounds_by_media["water"]`), the input the chemical-specific toxic screen reads
 #   (WS-07 / #1607). Additive/optional (absent facilities default to `[]`), so an existing rsei.json
 #   without it stays valid — PATCH, back-compatible.
-CONTRACT_VERSION = "1.30.1"
+# 1.30.2: each `routed-hydrograph` reach (the `ReachRouting` model) gains `subreaches` + `courant`
+#   — the sub-reach discretization the Muskingum-Cunge routing ran at (WS-09 / #1609): the reach is
+#   split into `subreaches` Courant≈1 steps routed in series (curing the coarse-single-step
+#   coefficient blow-up the old output clamp masked), and `courant` (c·Δt/Δx, ≈ 1) is the routing
+#   validity flag. Additive with defaults (`subreaches=1`, `courant=0.0`), so an existing
+#   routed-hydrograph.json without them stays valid — PATCH, back-compatible.
+CONTRACT_VERSION = "1.30.2"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
