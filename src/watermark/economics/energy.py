@@ -165,13 +165,13 @@ def derive_demand_pressure(
         price_pressure_pct_low=ProvenancedValue.derived(
             round(share_pct * _KAPPA_LOW, 2),
             "percent",
-            citation=f"{share_pct:.2f}% demand x {_KAPPA_LOW:g} transmission (STYLIZED lower bound)",
+            citation=f"{share_pct:g}% demand x {_KAPPA_LOW:g} transmission (STYLIZED lower bound)",
             confidence="low",
         ),
         price_pressure_pct_high=ProvenancedValue.derived(
             round(share_pct * _KAPPA_HIGH, 2),
             "percent",
-            citation=f"{share_pct:.2f}% demand x {_KAPPA_HIGH:g} transmission (STYLIZED upper bound)",
+            citation=f"{share_pct:g}% demand x {_KAPPA_HIGH:g} transmission (STYLIZED upper bound)",
             confidence="low",
         ),
         caveats=[
