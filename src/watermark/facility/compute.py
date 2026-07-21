@@ -482,9 +482,15 @@ def derive_compute_capacity(
     # envelope; we include it but flag it. The robust *operative* range is method 1 (power)
     # corroborated by the method-2 low. A dry/undisclosed archetype's water bound is None
     # (it doesn't constrain the load), so it drops out rather than dragging the floor to 0
-    # (#1641 D4) — the power and footprint methods always contribute.
-    bracket_lo = min(x for x in (it_power_low, it_water_low, it_fp_low) if x is not None)
-    bracket_hi = max(x for x in (it_power_high, it_water_high, it_fp_high) if x is not None)
+    # (#1641 D4) — the power and footprint methods always contribute. The bracket citation
+    # names only the methods that actually contributed, so a dry-site result never claims all
+    # three (#1641 review).
+    low_bounds = {"power": it_power_low, "cooling-water": it_water_low, "footprint": it_fp_low}
+    high_bounds = {"power": it_power_high, "cooling-water": it_water_high, "footprint": it_fp_high}
+    low_methods = [m for m, v in low_bounds.items() if v is not None]
+    high_methods = [m for m, v in high_bounds.items() if v is not None]
+    bracket_lo = min(v for v in low_bounds.values() if v is not None)
+    bracket_hi = max(v for v in high_bounds.values() if v is not None)
 
     return ComputeCapacity(
         it_load_power=ProvenancedValue.derived(
@@ -515,12 +521,22 @@ def derive_compute_capacity(
             f"— physical UPPER ENVELOPE, not a likely load (power is the constraint)",
         ),
         it_load_bracket_low=ProvenancedValue.derived(
-            round(bracket_lo, 1), "MW", citation="min IT load across the three methods"
+            round(bracket_lo, 1),
+            "MW",
+            citation=f"min IT load across the {len(low_methods)} contributing "
+            f"method(s): {', '.join(low_methods)}"
+            + (
+                ""
+                if it_water_low is not None
+                else " (the cooling-water back-solve does not bound a dry/undisclosed "
+                "archetype, #1641 D4)"
+            ),
         ),
         it_load_bracket_high=ProvenancedValue.derived(
             round(bracket_hi, 0),
             "MW",
-            citation="max IT load across methods (footprint high = physical envelope, flagged)",
+            citation=f"max IT load across the {len(high_methods)} "
+            f"method(s): {', '.join(high_methods)} (footprint high = physical envelope, flagged)",
             confidence="low",
         ),
         accelerator_power_fraction_low=ProvenancedValue.assume(frac_lo, "fraction", why=frac_cite),

@@ -87,7 +87,7 @@ price_pressure_pct_low:
   value: 0.85
   unit: percent
   source: derived
-  citation: 1.69% demand x 0.5 transmission (STYLIZED lower bound)
+  citation: 1.6938% demand x 0.5 transmission (STYLIZED lower bound)
   confidence: low
   asof: null
   low: null
@@ -96,7 +96,7 @@ price_pressure_pct_high:
   value: 1.69
   unit: percent
   source: derived
-  citation: 1.69% demand x 1 transmission (STYLIZED upper bound)
+  citation: 1.6938% demand x 1 transmission (STYLIZED upper bound)
   confidence: low
   asof: null
   low: null
