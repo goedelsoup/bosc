@@ -80,7 +80,7 @@
   "$defs": {
     "AssimilativeCheck": {
       "additionalProperties": false,
-      "description": "Low-flow dilution of one discharge into its receiving water.\n\nThe dilution ratio is ``design_low_flow / discharge`` — parts of receiving-water low\nflow per part of effluent. ``upstream_returns`` is a **reserved** field for crediting\nan upstream WWTP's effluent return to the low-flow denominator; it is not yet computed,\nis always ``None`` today, and the ratio does **not** credit it. A screening heuristic\nflags the result; it is **not** a permit determination.",
+      "description": "Low-flow dilution of one discharge into its receiving water.\n\nTwo dilution ratios are carried, and the honest picture is *both* (WS-15, #1615):\n\n* ``dilution_ratio`` (the **conservative default**) is ``design_low_flow / discharge``\n  — parts of the receiving stream's cited natural low flow per part of effluent. It\n  credits **no** upstream effluent; ``flag`` bands it.\n* ``effluent_credited_ratio`` is ``(design_low_flow + upstream_returns) / discharge``,\n  crediting the permitted effluent **already in the reach** into the denominator, with\n  ``effluent_credited_flag`` its band. It is ``None`` when there is no co-reach effluent\n  to credit (the discharger is alone on its stream), so a tributary-only plant is\n  untouched and stays at the conservative default.\n\n``upstream_returns`` is that credited term: the summed **permitted design discharge of the\nother WWTP(s) sharing this receiving water** — the loop's own thesis is that the Ottawa\n*is* effluent at design low flow (93-98%), so a plant discharging into it is diluted by\nthat standing effluent mass, not by the ~0.2 cfs of natural water. It is a screening\nco-reach sum (``derived``), not a longitudinal-position-resolved routing term; the routed\naccumulation lives in :class:`RoutedNetwork`. Both bands are heuristics, **not** permit\ndeterminations.",
       "properties": {
         "receiving_water": {
           "title": "Receiving Water",
@@ -119,6 +119,35 @@
           ],
           "title": "Flag",
           "type": "string"
+        },
+        "effluent_credited_ratio": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effluent Credited Ratio"
+        },
+        "effluent_credited_flag": {
+          "anyOf": [
+            {
+              "enum": [
+                "ok",
+                "tight",
+                "violation"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effluent Credited Flag"
         },
         "detail": {
           "title": "Detail",

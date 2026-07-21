@@ -242,9 +242,14 @@ export interface AssimilativeCheck {
   discharger: string;
   design_low_flow: ProvenancedValue; // the cited 7Q10
   discharge: ProvenancedValue;
+  // Permitted effluent already in the reach (Σ other WWTPs on this receiving water),
+  // credited into `effluent_credited_ratio`; null when the plant is alone on its stream (WS-15).
   upstream_returns?: ProvenancedValue | null;
-  dilution_ratio: number;
-  flag: DilutionFlag;
+  dilution_ratio: number; // conservative: cited 7Q10 / discharge (no effluent credit)
+  flag: DilutionFlag; // band on `dilution_ratio`
+  // Effluent-credited: (7Q10 + upstream_returns) / discharge; null when nothing to credit.
+  effluent_credited_ratio?: number | null;
+  effluent_credited_flag?: DilutionFlag | null;
   detail: string;
 }
 

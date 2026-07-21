@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-21T16:14:58.988794+00:00'
+reconciled_at: '2026-07-21T17:30:43.881745+00:00'
 entries:
   aedg:
     exists: true
@@ -1050,6 +1050,16 @@ entries:
     asof: null
     stale: false
     site_scope: lima-legacy
+  thermal:
+    exists: true
+    sha256: 914f2576686459704ce56c416e57f6ebe1f1770fc24f4660fcdc4508da790c88
+    size_bytes: 26861427
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: basin-shared
   toledo-napoleon-spill-waterville-monitor-read:
     exists: true
     sha256: 9c2ca8ba591fd3633009b49276d60389b62d6b8e06c0d70cb8f36783edc07997

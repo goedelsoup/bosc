@@ -5,7 +5,12 @@ import Base from "~/layouts/Base.astro";
 import FigureStat from "~/components/FigureStat.astro";
 import BulletChart from "~/components/charts/BulletChart.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
-import type { CoolingModel, ProvenancedValue, ScenarioResult } from "@watermark/core/feeds";
+import type {
+  AssimilativeCheck,
+  CoolingModel,
+  ProvenancedValue,
+  ScenarioResult,
+} from "@watermark/core/feeds";
 import type { FigureStatData } from "@watermark/core/viz";
 import { withSite } from "@watermark/core/site";
 import { fmtRanged } from "@watermark/core/format";
@@ -191,8 +196,17 @@ const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.valu
             {assim.length > 0 && (
               <p class="card-meta">
                 Assimilative screen · {violations} of {assim.length} receiving reaches fail the dilution
-                band at design low flow ({assim.map((r) => `${r.discharger} ${r.dilution_ratio.toFixed(2)}:1`).join(" · ")}).
-                A screening band, not a permit determination.
+                band at design low flow ({assim
+                  .map((r: AssimilativeCheck) =>
+                    // The conservative natural-7Q10 ratio, and — where the plant shares its reach
+                    // with other permitted dischargers — the effluent-credited ratio alongside it (WS-15).
+                    r.effluent_credited_ratio != null
+                      ? `${r.discharger} ${r.dilution_ratio.toFixed(2)}:1 (${r.effluent_credited_ratio.toFixed(2)}:1 effluent-credited)`
+                      : `${r.discharger} ${r.dilution_ratio.toFixed(2)}:1`,
+                  )
+                  .join(" · ")}). The natural-flow ratio is the conservative default; the effluent-credited
+                ratio counts the permitted effluent already in the reach. A screening band, not a permit
+                determination.
               </p>
             )}
             {s.balance.warnings.length > 0 && (

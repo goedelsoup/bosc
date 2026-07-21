@@ -881,15 +881,29 @@ def render_report(*, settings: Settings | None = None, live: bool = False) -> st
     w("\n**Low-flow assimilative screen** (discharge vs the receiving stream's cited 7Q10):\n")
     for c in assim:
         mark = _flag_mark(c.flag)
+        # The conservative default: cited natural 7Q10 only, crediting no effluent.
+        credited = ""
+        if c.effluent_credited_ratio is not None and c.upstream_returns is not None:
+            # Effluent-credited alternative (WS-15): the permitted effluent already in the
+            # reach is real dilution water, so present it alongside — never in place of — the
+            # conservative figure. Both together avoid over- and under-stating the dilution.
+            credited = (
+                f" Crediting the {c.upstream_returns.value:.2f} cfs of permitted effluent "
+                f"already in the reach `[{_TAG[c.upstream_returns.source]}]` → "
+                f"**{c.effluent_credited_ratio:.2f}:1** ({c.effluent_credited_flag})."
+            )
         w(
             f"- {mark} **{c.discharger} → {c.receiving_water}**: 7Q10 "
             f"{c.design_low_flow.value:g} cfs vs discharge {c.discharge.value:.2f} cfs "
             f"→ {c.dilution_ratio:.2f}:1 dilution ({c.flag}). "
             f"`[{_TAG[c.design_low_flow.source]}]` {c.design_low_flow.citation}"
+            f"{credited}"
         )
     w(
         "\nAt design low flow the receiving streams carry less than the effluent they\n"
-        "receive — the discharges are effectively undiluted.\n"
+        "receive — the discharges are effectively undiluted by *natural* flow. Where a plant\n"
+        "shares the reach with other permitted dischargers, the effluent-credited ratio shows\n"
+        "the more honest system picture: it is diluted by standing effluent, not clean water.\n"
     )
 
     _render_stormwater_pathway_note(w, settings)
