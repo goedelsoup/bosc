@@ -23,11 +23,12 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_contract_version_bumped() -> None:
-    """This feed landed at 1.22.0 (additive/MINOR); the contract has since advanced to 1.29.0
+    """This feed landed at 1.22.0 (additive/MINOR); the contract has since advanced to 1.30.2
     (ProvenancedValue range 1.23.0 #760, contacts feed 1.24.0, facts feed 1.25.0 #1587, the
     passages feed 1.26.0 #1589, the open-questions feed 1.27.0 #1568, DocumentItem version/dedup
-    metadata 1.27.1 #1590, the corpus-index feed 1.28.0 #1573, then the manifest exports block
-    1.29.0 #1574)."""
+    metadata 1.27.1 #1590, the corpus-index feed 1.28.0 #1573, the manifest exports block
+    1.29.0 #1574, the corpus-nodes feed 1.30.0 #1575, the rsei top_water_chemicals 1.30.1
+    (WS-07 #1607), then the routed-hydrograph reach subreaches/courant 1.30.2 (WS-09 #1609))."""
     assert CONTRACT_VERSION == "1.30.2"
 
 

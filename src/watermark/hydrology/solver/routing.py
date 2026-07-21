@@ -44,6 +44,11 @@ import numpy as np
 from numpy.typing import NDArray
 
 _SECONDS_PER_HOUR = 3600.0
+# Compute guard (WS-09 / #1609): a very slow / flat reach (tiny celerity from a low slope or a
+# data-entry error) makes dx_per_step -> 0, so the Courant≈1 count ⌈L/(c·Δt)⌉ would explode and
+# each sub-reach is an O(len(series)) routing pass. Cap it far above any real reach (the committed
+# loop needs ≤ ~19); when the cap bites, the recorded Courant number drops below 1 to reveal it.
+_MAX_SUBREACHES = 1000
 
 
 def normal_depth(
@@ -121,7 +126,9 @@ def subreach_count(
     Routing the whole reach as one coarse Muskingum step drives ``c1`` negative (WS-09 / #1609);
     splitting it into ``n`` Courant≈1 steps and routing them in series keeps every coefficient
     non-negative and makes the routed peak grid-independent. A degenerate (zero-celerity) reach
-    returns ``1`` (the callers pass it through unrouted).
+    returns ``1`` (the callers pass it through unrouted); the count is bounded by
+    ``_MAX_SUBREACHES`` so a pathologically slow/flat reach can't explode into an unbounded
+    number of O(series) routing passes.
     """
     celerity, _ = reach_kinematics(
         q_ref,
@@ -133,7 +140,7 @@ def subreach_count(
     dx_per_step = celerity * dt_hr * _SECONDS_PER_HOUR  # ft a kinematic wave travels in one Δt
     if dx_per_step <= 0 or length_ft <= 0:
         return 1
-    return max(1, math.ceil(length_ft / dx_per_step))
+    return max(1, min(_MAX_SUBREACHES, math.ceil(length_ft / dx_per_step)))
 
 
 def muskingum_coeffs(

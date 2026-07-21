@@ -225,6 +225,23 @@ def test_routed_peak_is_grid_independent() -> None:
     assert abs(single.outflow_cfs.max() - auto.outflow_cfs.max()) / auto.outflow_cfs.max() > rel
 
 
+def test_subreach_count_is_bounded_for_a_pathological_reach() -> None:
+    # WS-09 / #1609: a very slow/flat reach (tiny celerity from a near-zero slope) would ask for
+    # an unbounded ⌈L/(c·Δt)⌉; the count is capped at _MAX_SUBREACHES so routing can't explode
+    # into a runaway number of O(series) passes. A normal reach stays far below the cap.
+    geom = {"slope": 1e-6, "manning_n": 0.04, "bottom_width_ft": 10.0, "side_slope_z": 2.0}
+    n = routing.subreach_count(500.0, length_ft=200_000.0, dt_hr=0.1, **geom)
+    assert n == routing._MAX_SUBREACHES  # capped (the uncapped ⌈L/(c·Δt)⌉ is far larger)
+    # route_reach honors the cap through its real entry point (q_ref = the inflow peak).
+    inflow = np.array([0, 100, 300, 500, 300, 100, 0, 0, 0, 0], dtype=np.float64)
+    assert routing.route_reach(inflow, length_ft=200_000.0, dt_hr=0.1, **geom).subreaches == n
+    # A committed-scale reach is nowhere near the cap.
+    normal = routing.subreach_count(
+        12000.0, length_ft=82000.0, dt_hr=0.1, **(geom | {"slope": 0.001})
+    )
+    assert 1 < normal < routing._MAX_SUBREACHES
+
+
 def test_route_reach_passthrough_on_zero_inflow() -> None:
     # A dry reach (no peak to derive celerity from) passes through: one sub-reach, zero Courant.
     rr = routing.route_reach(np.zeros(50), length_ft=1000.0, slope=0.001)
