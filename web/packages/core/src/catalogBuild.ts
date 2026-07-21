@@ -51,7 +51,8 @@ export function webOnlyAtoms(site: string): CatalogAtom[] {
   // chapter — the `stories` MDX collection; grabbable as `chapter:<site>:<codename>/<slug>`. Only a
   // *surfaced* (readable) story contributes atoms: a not-readable story — `hidden` (#1256) or
   // `comingSoon` (#1526), content retained — is grabbable nowhere, so it drops out of the catalog +
-  // atoms. Both editorial walks are `comingSoon` today, so no editorial chapter atoms are emitted.
+  // atoms. Lima's Project BOSC walk is readable, so its chapters are grabbable; Fort Wayne's Project
+  // Zodiac stays `comingSoon`, so it emits no chapter atoms.
   for (const story of STORIES) {
     if (story.site !== site) continue;
     if (!siteSurfacesStory(story.site, story.codename)) continue;

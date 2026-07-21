@@ -98,7 +98,8 @@ export function recordToBlock(r: RecordItem): LibraryRecord {
     }
   }
   // The record→chapter backlink resolves against the *active site's surfaced story* — none when
-  // the site surfaces no story (a thin peer, or Lima with its walk hidden, #1256), so no walk chip.
+  // the site surfaces no story (a thin peer, or a site whose walk is held — `hidden` #1256 or
+  // `comingSoon` #1526), so no walk chip.
   const anchor = activeStoryAnchorFor(r.rel);
   const c = r.citation;
   const groupName = groupLabel(r.group).replace(/ —.*$/, "");

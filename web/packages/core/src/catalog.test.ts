@@ -142,10 +142,10 @@ describe("loadCatalog", () => {
     expect(kinds.has("doc")).toBe(true); // narrative/legal/reference
     expect(kinds.has("teardown")).toBe(true); // ALL_TEARDOWNS with a recordRel
     expect(kinds.has("figure")).toBe(true); // curated viz registry
-    // Lima's Project BOSC walk is `comingSoon` (#1526) → not a *readable* surface, so it contributes
-    // NO chapter atoms: a held story is grabbable nowhere. The catalog carries no `chapter` kind.
-    expect(kinds.has("chapter")).toBe(false);
-    expect(m.webOnlyAtoms("lima").some((a) => a.kind === "chapter")).toBe(false);
+    // Lima's Project BOSC walk is readable → its chapters *surface* as grabbable atoms, so the
+    // catalog carries the `chapter` kind.
+    expect(kinds.has("chapter")).toBe(true);
+    expect(m.webOnlyAtoms("lima").some((a) => a.kind === "chapter")).toBe(true);
   });
 
   it("emits no chapter atoms for a site whose only story is held coming-soon (#1526)", async () => {
