@@ -228,6 +228,33 @@ def test_readiness_clean_for_lima() -> None:
     assert profile_readiness("lima") == []
 
 
+def test_grid_knobs_complete_flags_incomplete_and_passes_lima() -> None:
+    """B3/#1639: the grid-knob readiness check locks an incomplete grid identity, passes Lima."""
+    from watermark.sites import grid_knobs_complete
+
+    # Portsmouth is a stub: no serving utility (#0), no LMP zone → grid identity incomplete.
+    gaps = grid_knobs_complete("portsmouth")
+    assert set(gaps) >= {"eia861_utility_number", "serving_utility_citation", "lmp"}
+    # Lima's grid identity is complete (AEP Ohio #14006, pinned AEP LMP zone).
+    assert grid_knobs_complete("lima") == []
+
+
+def test_no_registered_profile_renders_raw_todo_grid_identity() -> None:
+    """B3/#1639: no registered site carries a raw 'TODO' in a grid-identity citation."""
+    from watermark.sites import grid_identity_todo_violations
+
+    assert grid_identity_todo_violations() == []
+
+
+def test_grid_identity_todo_gate_detects_a_registered_violation(monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    """B3/#1639: the `watermark sites check` gate flags a registered raw-'TODO' grid citation."""
+    from watermark.sites import grid_identity_todo_violations
+
+    bad = SITES["lima"].model_copy(update={"slug": "badgrid", "lmp_citation": "TODO"})
+    monkeypatch.setitem(SITES, "badgrid", bad)
+    assert any("badgrid.lmp_citation" in v for v in grid_identity_todo_violations())
+
+
 def test_python_sites_registered_in_frontend() -> None:
     # Every Python-registered site must also exist in the shared identity registry (#1027).
     # The registry JSON is the SSOT consumed by both Python (via _model.py) and TypeScript.

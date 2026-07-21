@@ -121,9 +121,24 @@ def test_aes_ohio_sites_name_their_ferc_filer(grid_settings: Settings) -> None:
     assert seam.form1.rate_base is None  # still a cited pointer, not a fabricated figure
 
 
+def test_ferc_seam_path_is_per_site(tmp_path: Path) -> None:
+    """B1/#1639: a non-Lima site resolves a slug-scoped path, never Lima's shared file.
+
+    The seam embeds per-site content (jurisdiction OH→IN, the serving utility), so a
+    ``watermark --site fort-wayne ferc`` write must not clobber Lima's committed file.
+    """
+    from watermark.grid.ferc import _reference_path
+
+    lima = _reference_path(Settings(site="lima", data_dir=tmp_path))
+    fw = _reference_path(Settings(site="fort-wayne", data_dir=tmp_path))
+    assert lima != fw
+    assert lima.name == "ferc-seam.yaml" and "fort-wayne" not in str(lima)
+    assert "fort-wayne" in str(fw)
+
+
 def test_committed_ferc_seam_loads() -> None:
     """The committed reference YAML round-trips into the model."""
-    seam = load_ferc_seam(REPO_ROOT / "data" / "reference")
+    seam = load_ferc_seam(Settings(data_dir=REPO_ROOT / "data"))
     assert seam is not None
     assert "FERC" in seam.boundary.ferc_scope.value
     assert "PUCO" in seam.boundary.puco_scope.value
