@@ -915,7 +915,8 @@ def render_report(*, settings: Settings | None = None, live: bool = False) -> st
         # WS-16 (#1616): the blowdown method's upper bound is capped at the physical WUE ceiling
         # when the disclosed discharge implies an unreachable cooling WUE — say so, rather than
         # print the capped figure under a "blowdown x cycles" label that no longer computes it.
-        capped = "capped at the WUE ceiling" in (basis.consumptive_high.citation or "")
+        # The cap state is an explicit flag on the derived basis (not a citation string-match).
+        capped = basis.consumptive_high_capped
         bottom_up = (
             f"- bottom-up: FM-2 blowdown x {basis.cycles_of_concentration.value:g} cycles"
             + (

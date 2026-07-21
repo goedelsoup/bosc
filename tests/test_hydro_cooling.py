@@ -319,6 +319,8 @@ def test_ws16_blowdown_upper_bound_capped_at_wue_ceiling() -> None:
     # The intake at the capped bound follows the evap fraction, not the uncapped blowdown x CoC.
     makeup_high = b.headline_makeup_high()
     assert makeup_high is not None and makeup_high.value < 2.5 * 5.0  # < uncapped 12.5 MGD
+    # The capped state is an explicit flag on the basis (not a citation string-match).
+    assert b.consumptive_high_capped is True
     # The citation preserves the raw figure and the reason for the cap (auditable).
     cite = b.consumptive_high.citation or ""
     assert "capped" in cite and "2.2 L/kWh" in cite
@@ -332,6 +334,7 @@ def test_ws16_no_cap_when_blowdown_implies_a_reachable_wue() -> None:
     # => 1.2 MGD evaporation; at 275 MW that's ~0.7 L/kWh, well under the 2.2 ceiling.
     b = derive_cooling_basis(cooling_model="evaporative_tower", blowdown_mgd=0.3)
     assert b.consumptive_high.value == pytest.approx(0.3 * 4.0, abs=0.01)
+    assert b.consumptive_high_capped is False
     cite = b.consumptive_high.citation or ""
     assert "capped" not in cite
     assert "blowdown x (CoC-1)" in cite

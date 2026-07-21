@@ -33,7 +33,7 @@ effluent-dominated at low flow.*
 ## The BOSC cooling load (buildout scenario, sourced)
 
 - **IT load 275 MW** [document — OEPA Air PTI P0138965, committed `permits/4132514.epa.yaml` (final, 2026-05-28); 114 gensets × 2.75 ekW ≈ 313 MW backup (per-engine ekW from the draft public notice — CBI-redacted in the final permit); IT 250–300 MW N+1].
-- **Makeup demand ≈ 3.92 MGD**; **consumptive 3.14 MGD** (power × WUE 1.8 L/kWh [assumption]) to **3.84 MGD** [derived] — the FM-2 blowdown method (2.5 MGD × (CoC−1) = 10 MGD) implies ~5.7 L/kWh, unreachable for cooling, so it is capped at the physical evaporative-WUE ceiling (FM-2 is not purely cooling blowdown). The WUE assumption driving both bounds is the model's dominant uncertainty.
+- **Makeup demand ≈ 3.92 MGD**. The consumptive draw brackets two *distinct* WUE inputs, not a verified range: the central **3.14 MGD** is power × WUE at the **1.8 L/kWh** assumption [assumption]; the upper **3.84 MGD** is power × the **~2.2 L/kWh** physical evaporative-WUE ceiling [derived] — the FM-2 blowdown method (2.5 MGD × (CoC−1) = 10 MGD) implies ~5.7 L/kWh, unreachable for cooling, so it is capped at that ceiling (FM-2 is not purely cooling blowdown). The WUE inputs driving both bounds are the model's dominant uncertainty.
 - Drawn on **Lima's Ottawa/Auglaize supply** (7Q10 0.20 cfs). A 3–4 MGD consumptive loss on a river whose low-flow design condition is 0.13 MGD is the core assimilative concern.
 
 ## New from the minutes (folded in here)
