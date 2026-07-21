@@ -114,7 +114,9 @@ def test_form1_and_utility_grid_maps_cover_the_same_utilities() -> None:
 
 def test_aes_ohio_sites_name_their_ferc_filer(grid_settings: Settings) -> None:
     """A5/#1638: a #4922 (AES Ohio) site now names Dayton P&L, not 'the serving utility'."""
-    settings = Settings(site="wpafb", data_dir=REPO_ROOT / "data", hydro_offline=True, econ_offline=True)
+    settings = Settings(
+        site="wpafb", data_dir=REPO_ROOT / "data", hydro_offline=True, econ_offline=True
+    )
     seam = derive_ferc_seam(settings=settings)
     assert "Dayton Power and Light" in seam.form1.utility
     assert "the serving utility" not in seam.form1.utility
