@@ -136,7 +136,17 @@ from watermark.site.feeds import (
 )
 from watermark.site.open_questions import build_open_questions
 from watermark.site.passages import load_committed_passages
-from watermark.site.readiness import compute_readiness
+from watermark.site.readiness import (
+    CONSUMER_ENERGY_FEED,
+    DOCUMENTS_FEED,
+    ECONOMICS_BASELINE_FEED,
+    FACILITY_FEED,
+    LEADS_FEED,
+    PLACES_RECORD_FEED,
+    RECORD_LIVE_FEED,
+    RSEI_FEED,
+    compute_readiness,
+)
 from watermark.sites import (
     active_profile,
     effective_corpus_scope,
@@ -721,7 +731,7 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
     # feed is one row here. The geo feeds (variable count / conditional) stay below.
     specs: list[tuple[str, type[BaseModel] | None, Callable[[], object | None]]] = [
         (
-            "records",
+            RECORD_LIVE_FEED,
             RecordItem,
             lambda: records_mod.export_records(
                 settings.extracted_dir, doc_index=doc_index, scope=corpus_scope
@@ -732,7 +742,7 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         ("relationships", RelationshipEdge, lambda: graph_mod.export_relationships(egraph)),
         ("people", PersonItem, lambda: people_mod.export_people(people, egraph=egraph)),
         ("concepts", ConceptItem, lambda: concepts_mod.export_concepts(concepts)),
-        ("places", PlaceItem, lambda: places_mod.export_places(pois)),
+        (PLACES_RECORD_FEED, PlaceItem, lambda: places_mod.export_places(pois)),
         (
             "candidates",
             CandidateItem,
@@ -754,11 +764,11 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
             ),
         ),
         ("meetings", MeetingItem, lambda: meetings_mod.export_meetings(summaries)),
-        ("documents", DocumentCollectionItem, lambda: doc_collections),
+        (DOCUMENTS_FEED, DocumentCollectionItem, lambda: doc_collections),
         ("exhibits", ExhibitItem, lambda: exhibit_items),
         # `or None` skips the feed when a site has no curated leads, so `hasFeed("leads")` is false
         # and the frontend cleanly falls back to the readiness-derived needs board (not an empty list).
-        ("leads", LeadItem, lambda: lead_items or None),
+        (LEADS_FEED, LeadItem, lambda: lead_items or None),
         # `or None` skips the feed when a site has no curated contacts, so `hasFeed("contacts")` is
         # false and the frontend cleanly locks the section (not an empty list).
         ("contacts", ContactItem, lambda: contact_items or None),
@@ -768,13 +778,13 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         # inventory must therefore be dropped (return None), not shipped as an empty shell that
         # floats `backdrop` to `live` on zero facilities/sectors/prices (#1364).
         (
-            "rsei",
+            RSEI_FEED,
             None,
             lambda: rsei_mod.export_rsei(rsei_inv) if rsei_inv and rsei_inv.facilities else None,
         ),
         ("lei", None, lambda: None if lei_inv is None else gleif_mod.export_gleif(lei_inv)),
         (
-            "economics-baseline",
+            ECONOMICS_BASELINE_FEED,
             None,
             lambda: economics_mod.export_economics(econ) if econ and econ.latest.sectors else None,
         ),
@@ -782,7 +792,7 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         # (issue #1111); absent when the site has no committed consumer-energy dataset — or when
         # it loaded with no price series at all (present-but-empty, #1364).
         (
-            "consumer-energy",
+            CONSUMER_ENERGY_FEED,
             None,
             lambda: (
                 economics_mod.export_consumer_energy(econ_energy)
@@ -792,12 +802,17 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         ),
         # The facility demand→consumer-price-pressure sensitivity (#1105): households-equivalent,
         # demand share, and the STYLIZED price-pressure band. Facility-gated — absent (feed skipped)
-        # for a thin site with no documented facility, exactly as the derivation is gated.
+        # for a thin site with no documented facility, exactly as the derivation is gated. The
+        # ``has_material_load`` guard applies the #1364 present-but-empty rule the sibling object
+        # feeds already carry: a stale/degenerate demand-pressure YAML with a zero draw is dropped,
+        # not shipped as a ``count == 1`` shell that floats facility readiness to ``live`` (#1631).
         (
-            "economics-demand-pressure",
+            FACILITY_FEED,
             None,
             lambda: (
-                None if econ_demand is None else economics_mod.export_demand_pressure(econ_demand)
+                economics_mod.export_demand_pressure(econ_demand)
+                if econ_demand is not None and econ_demand.has_material_load
+                else None
             ),
         ),
         # Household energy burden (#1110): % of median household income (Census B19013) on

@@ -195,6 +195,20 @@ class FacilityDemandPressure(BaseModel):
     )
     caveats: list[str] = []
 
+    @property
+    def has_material_load(self) -> bool:
+        """True when the sensitivity rests on a real (nonzero) facility draw.
+
+        ``derive_demand_pressure`` never produces a zero-draw record — it raises when the
+        facility has no derivable power basis. But a stale or hand-authored demand-pressure
+        YAML round-tripped through :func:`load_demand_pressure` can carry a degenerate zero
+        draw (e.g. a rezoning-only campus whose IT load is entirely ``[open]``). Such a shell
+        has no demand pressure to speak of: the ``economics-demand-pressure`` object feed must
+        drop it rather than ship a ``count == 1`` shell that floats facility readiness to
+        ``live`` (the #1364 present-but-empty rule, applied on the facility axis — #1631).
+        """
+        return self.facility_draw_mw.value > 0
+
 
 class EnergyBurden(BaseModel):
     """Household energy burden: annual home-energy spend as a % of median household income.

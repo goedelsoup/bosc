@@ -210,6 +210,27 @@ def test_demand_pressure_links_facility_draw(econ_settings: Settings) -> None:
     assert dp.households_equivalent.value > 50_000
 
 
+def test_demand_pressure_has_material_load_guard(econ_settings: Settings) -> None:
+    """#1631: the ``economics-demand-pressure`` object feed applies the #1364 present-but-empty
+    rule via ``has_material_load``. A real derivation always rests on a nonzero draw; a stale or
+    hand-authored zero-draw shell (a rezoning-only campus with an entirely ``[open]`` IT load,
+    round-tripped through ``load_demand_pressure``) is immaterial and must be dropped so it can't
+    float facility readiness to ``live`` on a ``count == 1`` shell."""
+    dp = derive_demand_pressure(settings=econ_settings)
+    assert dp.facility_draw_mw.value > 0
+    assert dp.has_material_load
+
+    # A degenerate zero-draw payload (drop the PUE band too — low must not exceed the value).
+    degenerate = dp.model_copy(
+        update={
+            "facility_draw_mw": dp.facility_draw_mw.model_copy(
+                update={"value": 0.0, "low": None, "high": None}
+            )
+        }
+    )
+    assert not degenerate.has_material_load
+
+
 def test_demand_pressure_band_is_stylized_and_flagged(econ_settings: Settings) -> None:
     dp = derive_demand_pressure(settings=econ_settings)
     # The price-pressure band scales with the demand share and is low-confidence.
