@@ -1,0 +1,317 @@
+kind: legislation
+subject: >-
+  Sub. H.B. No. 314, 136th Ohio General Assembly — As Passed by the House. Amends
+  R.C. 149.43 (Ohio Public Records Act) to restrict "harassing or disruptive"
+  records requests and to let public offices engage private contractors to answer
+  "voluminous" requests.
+
+provenance:
+  # The provision reads below track the operative (As Passed by the House) text.
+  source: data/documents/legal/records-legislation/hb314_02_PH.pdf
+  canonical: ohio-sub-hb314-136ga-as-passed-house-149-43-2026.pdf
+  sha256: "1465f0aa947445c7df341ec1610ce71ead6f9f3de8627ca4012d8f7693fbf1c9"
+  pages: 48
+  content_verified: '2026-07-22'   # read from the bill's native text layer
+  version: As Passed by the House   # enrolled-House text; not the enacted Act
+  general_assembly: "136th (2025-2026)"
+  note: >-
+    Provision reads are tagged [verified] — they trace to the cited division/page of
+    the bill text. The relevance-to-the-relator synthesis is tagged [inference];
+    unresolved questions are [open]. Strike/underline amendatory markup is lost in the
+    text layer; verify exact new-vs-existing wording against the source PDF and against
+    existing R.C. 149.43 before quoting in a filing.
+
+versions_ingested:
+  - version: As Introduced
+    file: data/documents/legal/records-legislation/hb314_00_IN.pdf
+    sha256: "8190af27093c8add2431ea0433eab6c1e821c0e8a44db1e61cedb9cc25720c77"
+    pages: 42
+    bill: "H.B. No. 314"
+    cosponsors: 0
+  - version: As Passed by the House   # operative text these reads track
+    file: data/documents/legal/records-legislation/hb314_02_PH.pdf
+    sha256: "1465f0aa947445c7df341ec1610ce71ead6f9f3de8627ca4012d8f7693fbf1c9"
+    pages: 48
+    bill: "Sub. H.B. No. 314"
+    cosponsors: 6
+
+# ----------------------------------------------------------------------------
+# What the committee substitute changed (As Introduced → As Passed by the House)
+# Verified by textual diff of the two ingested PDFs. The substitute grew the bill
+# by 6 pages and added 6 cosponsors; the operative changes are below.
+# ----------------------------------------------------------------------------
+substitute_changes:
+  tiered_fee_schedule_added:
+    # The single largest requester-facing addition in the substitute — absent
+    # entirely from the introduced restatement of R.C. 149.43.
+    - tag: verified
+      change: hours-tier-fee-schedule-added
+      division: "(B)(1)(b)"
+      introduced: "No hours-based fee schedule anywhere in the introduced text (0 textual hits)."
+      passed: >-
+        NEW: a POLITICAL SUBDIVISION may, instead of copies at cost, charge a fee tiered
+        on the total "hours to produce" per request: 1-10 hours NO CHARGE; 11-20 hours
+        up to $25; 21-30 up to $50; 31-40 up to $100; more than 40 hours up to $200.
+        Paired with a new fee-estimate duty ((B)(1)(c): the office must provide each
+        requester an estimate of the fee) and the new (A)(23) "hours to produce"
+        definition (which counts private-contractor hours).
+      direction: mixed   # free under 10 hrs; a payable meter above it
+    - tag: verified
+      change: anti-splitting-combination-power-added
+      division: "(B)(1)(b)"
+      passed: >-
+        NEW: if the office has a reasonable basis to suspect a requester split related
+        requests to duck the fee tiers, it may COMBINE the requests' hours in
+        calculating the fee.
+      direction: office-protective
+    - tag: verified
+      change: unreasonable-combination-aggrieved-ground-added
+      division: "(C)(1)"
+      passed: >-
+        NEW counterweight: an "unreasonable combination of the person's requests for the
+        purpose of calculating fees under division (B)(1)(b)" is itself an enumerated
+        ground of aggrievement feeding the complaint/mandamus paths.
+      direction: requester-protective
+  harassing_or_disruptive_action:
+    - tag: verified
+      change: prospective-ban-capped
+      division: "(B)(2)(c)(iii)"
+      introduced: >-
+        A future-request order "remains in force INDEFINITELY unless the order provides
+        for its expiration after a specified period of time."
+      passed: >-
+        The order runs "for a period of up to FIVE YEARS"; a request in violation lets
+        the court extend it for a period at the court's discretion.
+      direction: requester-protective   # a hard 5-yr cap replaces an open-ended ban
+    - tag: verified
+      change: anonymous-circumvention-fine-added
+      division: "(B)(2)(c)(iii)"
+      passed: >-
+        NEW: a person who submits a request anonymously to circumvent an order may be
+        fined up to $100 per violation.
+      direction: office-protective
+    - tag: verified
+      change: requester-fee-shift-added
+      division: "(B)(2)(c)(iv)"
+      introduced: "No fee recovery for a requester who defeats the office's action."
+      passed: >-
+        NEW (B)(2)(c)(iv): if the court finds the requests were NOT intended to harass or
+        disrupt, it MAY award the requester reasonable attorney's fees and litigation
+        expenses against the office that sued (subject to R.C. 9.86). This inserted a new
+        clause and renumbered the exemptions list from introduced (iv) to passed (v).
+      direction: requester-protective
+  voluminous_contractor_route:
+    - tag: verified
+      change: fee-cap-added
+      division: "(B)(6)(b)(i)"
+      introduced: >-
+        Office "may include the cost of the contractor's services in calculating the
+        cost involved in providing the copy" — no explicit ceiling.
+      passed: >-
+        NEW ceiling: including contractor cost "does not permit" charging "a fee in
+        excess of the highest permissible fee" in the existing fee structure.
+      direction: requester-protective
+    - tag: verified
+      change: contractor-duties-clause-added
+      division: "(B)(6)(b)(ii)"
+      passed: >-
+        NEW: the contractor must promptly dispose of copies, return originals, not use
+        the records for profit outside the engagement, and not disclose redacted
+        information.
+      direction: guardrail
+  victim_video_fee_waiver_and_renumbering:
+    - tag: verified
+      change: victim-video-fee-waiver-inserted
+      division: "(B)(11)"
+      introduced: "Absent (the video-cost machinery — $75/hr, $750 cap — was in both versions, but with no victim waiver)."
+      passed: >-
+        NEW (B)(11): law enforcement / prosecutors shall not charge the video-record
+        preparation fee when the requester is the victim (or the victim's counsel or
+        insurer), on an affidavit that the video is used to investigate the harm.
+      direction: requester-protective
+    - tag: verified
+      change: stale-cross-references-left-behind
+      division: "(B)(2)(c)(vii) and (A)(1)(ccc)"
+      finding: >-
+        A DRAFTING ERROR in the as-passed text. Inserting the new (B)(11) waiver pushed
+        the public-defender request-for-evidence division from introduced (B)(11) to
+        passed (B)(12) — but (B)(2)(c)(vii) (the pre-suit evidence-demand gate) and
+        (A)(1)(ccc) (the non-public status of evidence produced) still cite
+        "division (B)(11)", which in the as-passed text is the victim video fee waiver.
+        Read literally, both provisions now point at the wrong division; the evidence
+        division's own text ((B)(12)) says "pursuant to this division." Watch whether
+        the Senate corrects the references.
+  net_read:
+    tag: inference
+    note: >-
+      The committee did far more than balance the harass/disrupt action at the edges. It
+      added an entire hours-tier fee schedule for political subdivisions — free under 10
+      hours, a payable meter up to $200/request above that, with an anti-splitting
+      combination power — which is the fee structure the contractor costs feed and the
+      concrete meaning of the (B)(6)(b) "highest permissible fee" cap. On the
+      harass/disrupt action it softened the worst edge (indefinite ban → 5-year cap) and
+      added a fee-shift for a wrongly-sued requester, while adding anti-circumvention
+      teeth. The tolling provision (B)(2)(c)(ii) — the sharpest lever against the
+      corpus's delay theory — was present in BOTH versions and survived unchanged.
+
+bill:
+  number: "Sub. H.B. No. 314"
+  title: >-
+    To amend section 149.43 of the Revised Code to restrict harassing or disruptive
+    public records requests and permit private contractors to respond to voluminous
+    public records requests.
+  primary_sponsors: ["Rep. Isaacsohn", "Rep. Ray"]
+  cosponsors: ["Rep. Abrams", "Rep. Brennan", "Rep. Miller, J.", "Rep. Russo", "Rep. Schmidt", "Rep. Young"]
+  vehicle: >-
+    Substitute bill; amends R.C. 149.43 in full and (Section 2) repeals the existing
+    section — the standard amendatory form, not a wholesale rewrite of the Act.
+
+# ----------------------------------------------------------------------------
+# The two operative mechanisms this bill adds (both in division (B))
+# ----------------------------------------------------------------------------
+new_mechanisms:
+
+  harassing_or_disruptive_action:
+    tag: verified
+    division: "(B)(2)(c)"
+    location: "bill body ≈ printed pp. 28-30 (PDF pp. 27-29)"
+    summary: >-
+      Creates an affirmative court action FOR the public office. Where a requester
+      submits multiple related or unrelated requests to the same office and, based on
+      the VOLUME or the REPEATED NATURE of the requests, the office "has reason to
+      believe" they are intended to harass the office or to disrupt its essential
+      functions, the office may sue the requester in common pleas court (county where
+      the office is located) to limit or deny the requests.
+    mechanics:
+      - "Proceeds as an ordinary civil action under the Ohio Rules of Civil Procedure; the requester gets notice and an opportunity to be heard. [(B)(2)(c)(ii)]"
+      - "TOLLING: while the action or any appeal is pending, the office's duty to respond to the requests is tolled. [(B)(2)(c)(ii)]"
+      - "On a preponderance finding of harass/disrupt intent, the court may limit or deny the requests. [(B)(2)(c)(iii)]"
+      - "If the court also finds the requester likely to submit future harassing/disrupting requests, it may enjoin future requests to that office for up to FIVE YEARS; a violation can extend the order. [(B)(2)(c)(iii)]"
+      - "A person who requests anonymously to circumvent such an order may be fined up to $100 per violation. [(B)(2)(c)(iii)]"
+    requester_fee_shift:
+      tag: verified
+      division: "(B)(2)(c)(iv)"
+      summary: >-
+        If the court determines the requests were NOT intended to harass or disrupt,
+        it MAY award the requester (against the office that sued) reasonable attorney's
+        fees and litigation expenses incurred in the action — discretionary ("may"),
+        and subject to R.C. 9.86 (immunity).
+    exemptions_from_the_action:
+      tag: verified
+      division: "(B)(2)(c)(v)-(vii)"
+      does_not_apply_to:
+        - "A journalist as defined in (B)(9)(c)."
+        - "A pro se litigant requesting records pertaining to litigation in which the pro se litigant is a NAMED PARTY."
+        - "A state agency / public college or university / public defender / other government attorney (and their staff/agents), with a carve-back for a public defender's non-work-scope requests."
+      guardrails:
+        - "No court shall limit, deny, or restrict a listed requester's access under this division. [(B)(2)(c)(vi)]"
+        - "An office may not bring the action against a known/suspected public defender unless the requester fails to answer a (B)(11) request for evidence within 5 business days. [(B)(2)(c)(vii)]"
+      evidence_demand:
+        division: "(B)(12) as passed (introduced (B)(11))"
+        note: >-
+          The demand-documentary-evidence power is PUBLIC-DEFENDER-SPECIFIC — an office
+          that knows/believes a requester is a public defender may require proof the
+          records relate to the defender's work scope; attorney-client / work-product
+          materials cannot be compelled, and the evidence produced is itself non-public
+          ((A)(1)(ccc)). There is NO general power to demand proof that a requester
+          falls within the other exemptions (journalist, pro se). CAUTION: the bill's
+          own cross-references in (B)(2)(c)(vii) and (A)(1)(ccc) still say "(B)(11)" —
+          which, as passed, is the victim video fee waiver — a renumbering artifact of
+          the substitute (see substitute_changes.victim_video_fee_waiver_and_renumbering).
+
+  private_contractor_for_voluminous_requests:
+    tag: verified
+    division: "(B)(6)(b)"
+    location: "bill body ≈ printed pp. 31-32 (PDF pp. 30-31)"
+    summary: >-
+      If a request is "voluminous and it is therefore reasonable to do so," the office
+      may engage a private contractor to respond — INCLUDING making required redactions
+      — on the office's behalf, and may include the contractor's services in the cost to
+      produce the records.
+    mechanics:
+      - "Fee cap: including contractor cost may NOT push the fee above the highest permissible fee in the (B)(1)(b) hours-tier structure — concretely, $200/request for a political subdivision. [(B)(6)(b)(i)]"
+      - "Contractor duties: promptly dispose of copies, return originals, not use records for profit outside the engagement, and not disclose redacted information. [(B)(6)(b)(ii)]"
+      - "'Hours to produce' (A)(23) — the meter the (B)(1)(b) fee tiers run on — expressly includes hours worked by a private contractor engaged under (B)(6)(b)."
+      - "In the promptness/mandamus inquiry, a court SHALL NOT consider whether engaging a private contractor would have produced records faster. [bill body ≈ printed p. 23 / PDF p. 22]"
+
+  tiered_fee_schedule_for_political_subdivisions:
+    tag: verified
+    division: "(B)(1)(b)-(c) + (A)(23) + (C)(1)"
+    location: "bill body ≈ printed pp. 24-25; added by the committee substitute (absent from the introduced text)"
+    summary: >-
+      A political subdivision may, INSTEAD of providing copies at cost, charge a fee
+      tiered on the total "hours to produce" the request: 1-10 hours no charge; 11-20
+      up to $25; 21-30 up to $50; 31-40 up to $100; over 40 hours up to $200. "Hours
+      to produce" ((A)(23)) counts employee AND engaged-contractor hours.
+    mechanics:
+      - "Anti-splitting: on a reasonable basis to suspect a requester split related requests to duck the tiers, the office may combine the requests' hours in calculating the fee. [(B)(1)(b)]"
+      - "Fee estimate: an office adopting the schedule must give each requester an estimate of the fee. [(B)(1)(c)]"
+      - "Counterweight: an 'unreasonable combination' of requests for fee-calculation purposes is an enumerated ground of aggrievement in (C)(1) — it feeds the complaint/mandamus paths."
+
+# ----------------------------------------------------------------------------
+# What the bill leaves UNCHANGED that the corpus relies on
+# ----------------------------------------------------------------------------
+unchanged_load_bearing_provisions:
+  - tag: verified
+    division: "(C)(3)"
+    location: "≈ printed p. 40 (PDF p. 39)"
+    finding: >-
+      The statutory-damages engine is intact: $100 per business day of non-compliance
+      with a (B) obligation, from the day the requester files a mandamus action, to a
+      $1,000 cap; injury "conclusively presumed"; "not a penalty" but compensation for
+      lost use. The mandamus remedy the corpus is pursuing survives this bill.
+  - tag: verified
+    division: "(C)(1)(b)"
+    finding: >-
+      The mandamus path (aggrieved requester → writ + court costs + statutory damages,
+      attorney's fees available) remains the requester's mechanism. HB 314 adds a
+      SEPARATE, office-initiated (B) action; it does not replace division (C).
+
+# ----------------------------------------------------------------------------
+# Relevance to the relator's public-records program (Cory Parent / BOSC)
+# ----------------------------------------------------------------------------
+bosc_relevance:
+  - tag: inference
+    point: >-
+      The relator's methodology — voluminous, multi-office, iterative PRRs under
+      R.C. 149.43 (Allen County commissioners, ASWCD, sanitary engineering, school
+      district, et al.) — is the exact profile both new mechanisms target: "voluminous"
+      requests (contractor-fee route) and "multiple related or unrelated requests …
+      volume or repeated nature" (harass/disrupt action).
+  - tag: inference
+    point: >-
+      The tolling provision (B)(2)(c)(ii) is the sharpest edge against the corpus's core
+      theory. The mandamus analysis frames "unreasonable delay = constructive denial"
+      as the live §149.43(B) violation that powers (C)(3) damages
+      (docs/legal/mandamus-analysis.md). An office that files a harass/disrupt action
+      TOLLS its own duty to respond while the action and any appeal are pending — turning
+      delay from a liability into a litigated stay.
+  - tag: inference
+    point: >-
+      Fee exposure compounds: a political subdivision can now put the relator's requests
+      on the (B)(1)(b) hours meter (free under 10 hours, up to $200/request beyond 40),
+      count a private contractor's review/redaction hours on that meter, COMBINE related
+      requests it suspects were split, and a mandamus court may not credit the office
+      for NOT using a contractor to go faster. Cost becomes a friction lever on breadth
+      — though the sub-10-hour tier is free, which rewards the narrow, well-scoped
+      request pattern the corpus already uses.
+  - tag: open
+    point: >-
+      Is the relator categorically exempt? Not obviously. The pro se exemption is narrow
+      — records "pertaining to litigation in which the pro se litigant is a named party,"
+      which reaches the records at issue in the relator's own PRR mandamus but not the
+      broader research corpus. The journalist exemption ((B)(9)(c): "engaged in …
+      disseminating information for the general public" through a "news medium") is a
+      plausible fit given the published investigative series, but it is untested here and
+      turns on whether the Watermark Directory qualifies as a "news medium." [open]
+  - tag: open
+    point: >-
+      Enacted-text tracking. This is the As-Passed-by-the-House version. Senate
+      amendments, any conference version, the effective date, and the final enacted R.C.
+      149.43 language are [open] ingest targets before any of the above is relied on as
+      current law.
+
+related:
+  - "R.C. 149.43 — the amended statute; corpus refs in docs/legal/mandamus-analysis.md"
+  - "docs/legal/mandamus-analysis.md — the PRR mandamus this bill's (B) mechanisms bear on"
+  - "data/extracted/legal/select-committee-2026/ — the parallel 136th-GA data-center hearing record (HB 184 / R.C. 9.66(D) is the sibling confidentiality lever)"
