@@ -46,12 +46,13 @@ class CoolingBasis(BaseModel):
     # ``makeup_demand`` as one stream yields a >100% evaporative fraction (Lima: 10 vs 3.93
     # MGD) — divide by the matching intake via ``headline_makeup_high()`` instead (#1170).
     consumptive_high: ProvenancedValue
-    # The intake at the upper consumptive bound (MGD). For the evaporative tower the
-    # blowdown-method upper bound implies a *larger* intake (blowdown x CoC); for the
-    # fraction-uncertainty archetypes (once_through) the intake is unchanged, so this stays
-    # None and ``headline_makeup_high()`` falls back to ``makeup_demand``. This is what
+    # The intake at the upper consumptive bound (MGD). Larger than ``makeup_demand`` wherever the
+    # upper bound is driven by a larger intake: the evaporative tower's blowdown-method bound
+    # (blowdown x CoC) and once_through's HIGH-IT withdrawal (#1632 — the intake grows with the
+    # disclosed MW range). Stays None for archetypes whose upper bound is not a larger intake
+    # (dry/off), where ``headline_makeup_high()`` falls back to ``makeup_demand``. This is what
     # ``refill`` reads instead of dividing ``consumptive_high`` by ``consumptive_fraction``
-    # (incompatible bases when the bracket varies the fraction, not the method — #1153).
+    # (incompatible bases — #1153).
     makeup_high: ProvenancedValue | None = None
     method: str = "power x WUE (central); blowdown x cycles (upper bound)"
     method_disclosed: bool = True  # False = archetype not on record (`unknown`)
@@ -84,9 +85,10 @@ class CoolingBasis(BaseModel):
         annual-average power x WUE draw), but for the ``evaporative_tower`` and
         ``once_through`` the central sits **inside** the ``consumptive_low..consumptive_high``
         bracket: the tower low is now the LOW-IT power bound (power-side uncertainty, #1632)
-        and the central is the CENTRAL-IT power x WUE; once_through's range is a
-        fraction-uncertainty bracket around a *central* fraction (evap x 1% vs the central
-        1.5%). Returning the product keeps ``balance`` (this headline) and
+        and the central is the CENTRAL-IT power x WUE; once_through's range combines the
+        IT-load AND forced-evaporation-fraction uncertainty (low-IT withdrawal x 1% to high-IT
+        withdrawal x 2%, around the central-IT withdrawal x 1.5%). Returning the product keeps
+        ``balance`` (this headline) and
         ``scenario``/``supply`` (which both compute ``demand x fraction``) in agreement for
         every archetype.
 
@@ -120,10 +122,10 @@ class CoolingBasis(BaseModel):
     def headline_makeup_high(self) -> ProvenancedValue | None:
         """The campus intake at the **upper** consumptive bound (MGD), or ``None`` if bracketed.
 
-        Only the evaporative tower's upper (blowdown-method) bound implies a genuinely
-        larger intake; there ``makeup_high`` is set (blowdown x CoC). For the archetypes
-        whose consumptive range is a *fraction* uncertainty at a fixed intake (once_through)
-        the intake does not grow, so ``makeup_high`` is ``None`` and this falls back to
+        The intake grows at the upper bound for the evaporative tower (the blowdown-method
+        ``makeup_high`` = blowdown x CoC) and for once_through (the HIGH-IT withdrawal, #1632 —
+        the intake scales with the disclosed MW range). For the archetypes whose upper bound is
+        not a larger intake (dry/off) ``makeup_high`` is ``None`` and this falls back to
         ``makeup_demand``. ``refill`` reads this instead of back-calculating
         ``consumptive_high / consumptive_fraction`` — a division that is only valid when the
         bracket varies the method at a constant fraction, and produces a physically
