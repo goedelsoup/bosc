@@ -62,6 +62,38 @@ def test_baseline_flags_tributary_violations(hydro_settings: Settings) -> None:
     }
 
 
+def test_wwtp_design_flow_sourced_from_structured_field_not_prose(hydro_settings: Settings) -> None:
+    """WS-22 (issue 1622): the balance reads each WWTP's design flow from the structured
+    routing.yaml ``design_flow_mgd`` (a document-cited field), not by first-match regex over the
+    watch-items summary. Because Shawnee's post-expansion 3.0 MGD is now pinned structurally, the
+    old 'summary states a flow expansion; used the first value' heuristic caveat no longer fires."""
+    from watermark.hydrology.units import mgd_to_cfs
+
+    balance = build_water_balance(settings=hydro_settings, live=False)
+    flows = {n.node.id: n.return_flow for n in balance.nodes if n.return_flow is not None}
+    # Structured design flows -> discharge (cfs), unchanged in value but no longer prose-derived.
+    assert flows["watch-shawnee-ii-wwtp"].value == pytest.approx(mgd_to_cfs(3.0))
+    assert flows["watch-american-ii-wwtp"].value == pytest.approx(mgd_to_cfs(1.2))
+    assert flows["watch-lima-wwtp"].value == pytest.approx(mgd_to_cfs(18.5))
+    # The campus FM-2 discharge is structured too.
+    assert flows["bosc-campus"].value == pytest.approx(mgd_to_cfs(2.5))
+    # No regex-fallback expansion caveat survives now that the value is structured.
+    assert not any("flow expansion" in w for w in balance.warnings)
+    assert not any("used the first value" in w for w in balance.warnings)
+
+
+def test_design_mgd_prefers_structured_and_regex_is_a_fallback() -> None:
+    """The resolver prefers the structured value; the prose regex is only a fallback, and it
+    surfaces the multi-figure (expansion) heuristic only on that fallback path."""
+    # Structured wins outright — the prose isn't even consulted, so no expansion flag.
+    assert bal._design_mgd(3.0, "2.0 -> 3.0 MGD avg / 12.6 MGD peak", subject="x") == (3.0, False)
+    # No structured value -> first "N MGD" token; multiple figures raise the expansion flag.
+    assert bal._design_mgd(None, "2.0 -> 3.0 MGD avg / 12.6 MGD peak", subject="x") == (3.0, True)
+    assert bal._design_mgd(None, "1.5 MGD design", subject="x") == (1.5, False)
+    # No figure at all -> no value, no expansion.
+    assert bal._design_mgd(None, "no flow stated here", subject="x") == (None, False)
+
+
 def test_provenance_invariant(hydro_settings: Settings) -> None:
     """Every numeric input carries a source; document values carry a citation."""
     balance, _checks, _findings = run_baseline(settings=hydro_settings, live=True)

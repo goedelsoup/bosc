@@ -1,11 +1,12 @@
 """Assemble the municipal water-balance loop from cited records + live gauges.
 
-The spine is the four county/Lima WWTP discharges (document-sourced design flows
-from ``watch-items.geojson``), each routed to its cited receiving water. The
-forcing function — the BOSC data-center campus — contributes its documented FM-2
-discharge plus a *derived* consumptive cooling loss (the sourced power-based central
-from ``watermark.hydrology.cooling``). The abstraction end is grounded with *live* NWIS
-river flow when available.
+The spine is the four county/Lima WWTP discharges — each plant's permitted design flow
+read from the structured, document-cited ``design_flow_mgd`` in ``routing.yaml`` (the
+``watch-items.geojson`` summary prose is only a logged fallback; WS-22, issue 1622) —
+routed to its cited receiving water. The forcing function — the BOSC data-center campus —
+contributes its documented FM-2 discharge plus a *derived* consumptive cooling loss (the
+sourced power-based central from ``watermark.hydrology.cooling``). The abstraction end is
+grounded with *live* NWIS river flow when available.
 
 Everything the headline assimilative check depends on (WWTP discharge -> named
 receiving water) is ``document``-sourced; the abstraction/demand context is clearly
@@ -35,6 +36,9 @@ log = get_logger(__name__)
 # gauge (SiteProfile.abstraction_gage) are per-site. The fallback is consulted only when
 # data/reference/hydrology/routing.yaml is absent, so the balance never breaks during rollout.
 
+# Fallback only: the first "N MGD" token in a feature summary. Load-bearing design flows
+# are read from the structured `design_flow_mgd` in routing.yaml (WS-22, issue 1622); this
+# regex over prose is a logged last resort for a site that hasn't curated the structured value.
 _MGD_RE = re.compile(r"(\d+(?:\.\d+)?)\s*MGD", re.IGNORECASE)
 
 
@@ -67,11 +71,29 @@ def _default_watch_items(settings: Settings) -> Path:
     return settings.data_dir / "reference" / "periplus" / "watch-items.geojson"
 
 
-def _design_mgd(summary: str) -> tuple[float | None, bool]:
-    """First design flow (MGD) stated in a summary; flag if more than one (expansion)."""
+def _design_mgd(
+    structured: float | None, summary: str, *, subject: str
+) -> tuple[float | None, bool]:
+    """Resolve a feature's design flow (MGD), preferring the structured, curated value.
+
+    ``structured`` is the ``design_flow_mgd`` read from the routing table — the structured,
+    document-cited source (the analog of the ECHO ``CWPTotalDesignFlowNmbr`` column). When it
+    is present it wins and no prose heuristic runs. Only when it is absent do we fall back to
+    the first ``N MGD`` token in the prose ``summary``, logging the fallback so a load-bearing
+    number sourced by regex-over-prose is never silent; ``expanding`` (multiple MGD figures in
+    the summary, e.g. an expansion) is a fallback-only heuristic. Returns ``(mgd, expanding)``.
+    """
+    if structured is not None:
+        return structured, False
     found = [float(m) for m in _MGD_RE.findall(summary)]
     if not found:
         return None, False
+    log.info(
+        "hydro.design_flow.regex_fallback",
+        subject=subject,
+        mgd=found[0],
+        matches=len(found),
+    )
     return found[0], len(found) > 1
 
 
@@ -116,7 +138,10 @@ def _wwtp_nodes(
             continue
 
         receiving, recv_cite = _receiving_for(fid, routing, settings=settings)
-        mgd, expanding = _design_mgd(str(props.get("summary", "")))
+        structured_mgd = routing.design_flow_for(fid) if routing is not None else None
+        mgd, expanding = _design_mgd(
+            structured_mgd, str(props.get("summary", "")), subject=title or fid
+        )
         lon, lat = geom["coordinates"][0], geom["coordinates"][1]
         node = Node(
             id=fid or title,
@@ -156,7 +181,9 @@ CAMPUS_COOLING_DERIVED_WARNING_PREFIX = (
 )
 
 
-def _campus_node(path: Path, warnings: list[str], *, settings: Settings) -> WaterBalanceNode | None:
+def _campus_node(
+    path: Path, warnings: list[str], routing: RoutingTable | None, *, settings: Settings
+) -> WaterBalanceNode | None:
     """The BOSC data-center campus: documented FM-2 discharge + a derived cooling loss.
 
     Gated on a committed campus-discharge feature (``bosc-fm2``) in the site's
@@ -175,7 +202,12 @@ def _campus_node(path: Path, warnings: list[str], *, settings: Settings) -> Wate
         if is_reference_site(settings.site):
             warnings.append("BOSC campus: FM-2 discharge not found in watch-items.")
         return None
-    fm2_mgd, _ = _design_mgd(str((fm2_feat.get("properties") or {}).get("summary", "")))
+    structured_fm2 = routing.forcemain_design_flow("bosc-fm2") if routing is not None else None
+    fm2_mgd, _ = _design_mgd(
+        structured_fm2,
+        str((fm2_feat.get("properties") or {}).get("summary", "")),
+        subject="bosc-fm2",
+    )
 
     return_flow = None
     if fm2_mgd is not None:
@@ -297,7 +329,7 @@ def build_water_balance(
     routing = load_routing(settings=settings)
     nodes = _wwtp_nodes(path, warnings, routing, settings=settings)
     _surface_bosc_routing(routing, warnings)
-    campus = _campus_node(path, warnings, settings=settings)
+    campus = _campus_node(path, warnings, routing, settings=settings)
     if campus is not None:
         nodes.append(campus)
     if live:

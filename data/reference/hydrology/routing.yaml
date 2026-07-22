@@ -1,9 +1,13 @@
 # Discharge routing for the Lima municipal water loop — two distinct flows.
 #
-# 1. `wwtp_receiving` — which receiving STREAM each county WWTP discharges to.
-#    This is the denominator side of the assimilative screen; every route is read
-#    from an Ohio EPA NPDES fact sheet in our corpus and tagged status:confirmed.
-#    (This externalizes what used to be hardcoded in watermark.hydrology.balance.)
+# 1. `wwtp_receiving` — which receiving STREAM each county WWTP discharges to, and
+#    the plant's permitted `design_flow_mgd` (average design flow). Together these are
+#    the two per-plant inputs to the assimilative screen: the stream sets the low-flow
+#    denominator, the design flow the discharge numerator. Every route is read from an
+#    Ohio EPA NPDES fact sheet in our corpus and tagged status:confirmed. The design flow
+#    is the structured source `watermark.hydrology.balance` reads (WS-22, issue 1622); the
+#    number stated in prose in the Periplus watch-items summary is only a logged fallback.
+#    (This externalizes what used to be hardcoded / prose-parsed in the balance.)
 #
 # 2. `bosc_routing` — where the BOSC data-center campus sends its OWN wastewater,
 #    by forcemain. This is the requirement to encode explicitly: BOSC output is
@@ -29,21 +33,25 @@ meta:
 wwtp_receiving:
   watch-american-ii-wwtp:
     receiving_water: Dug Run
+    design_flow_mgd: 1.2  # permitted average design flow
     status: confirmed
     confidence: high
     citation: "Ohio EPA fact sheet 2PH00006 (American II WWTP)"
   watch-american-bath-wwtp:
     receiving_water: Pike Run
+    design_flow_mgd: 1.5  # permitted average design flow
     status: confirmed
     confidence: high
     citation: "Ohio EPA fact sheet 2PH00007 (American Bath WWTP)"
   watch-shawnee-ii-wwtp:
     receiving_water: Ottawa River
+    design_flow_mgd: 3.0  # permitted average design flow (Phase-2 buildout; 2.0 pre-expansion)
     status: confirmed
     confidence: high
     citation: "Ohio EPA fact sheet 2PK00002 (Shawnee II WWTP)"
   watch-lima-wwtp:
     receiving_water: Ottawa River
+    design_flow_mgd: 18.5  # permitted average design flow
     status: confirmed
     confidence: high
     citation: "Ohio EPA NPDES permit 2PE00000 (City of Lima WWTP) cover page — outfall 2PE00000001 to the Ottawa River at River Mile 37.6 (data/extracted/oepa/2PE00000.npdes.yaml; #1536)"
@@ -53,6 +61,7 @@ wwtp_receiving:
 bosc_routing:
   - via: bosc-fm2
     to: [watch-lima-fm2-terminus]
+    design_flow_mgd: 2.5  # BOSC industrial discharge to Lima (structured source for the campus node)
     status: confirmed
     confidence: high
     citation: 'BOSC FM-2 (16", 17,900 LF) -> City of Lima 78" sewer (watch-items bosc-fm2 / lima-fm2-terminus)'
