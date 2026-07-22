@@ -1,0 +1,131 @@
+meta:
+  subject: SYNTHETIC TEST FIXTURE — Lima NASA POWER normals with July precip perturbed
+  note: Derived from data/reference/hydrology/nasa-power-climatology.yaml (real Lima normals) with only
+    PRECTOTCORR JUL raised to 20.0 mm/day so reference ET0 < precip in July. This decouples the climatic
+    growing season from the regulatory summer window so the WS-24 (#1624) floor-selection regression can
+    assert July stays a summer-30Q10 month. NOT real climate data — do not use outside tests.
+climatology:
+  latitude: 40.74
+  longitude: -84.11
+  elevation_m: 276.17
+  source_title: SYNTHETIC TEST FIXTURE (perturbed Lima normals)
+  parameters:
+  - parameter: PRECTOTCORR
+    units: mm/day
+    longname: Precipitation Corrected
+    monthly:
+      JAN: 2.07
+      FEB: 2.02
+      MAR: 2.54
+      APR: 3.15
+      MAY: 3.63
+      JUN: 3.53
+      JUL: 20.0
+      AUG: 2.83
+      SEP: 2.59
+      OCT: 2.5
+      NOV: 2.48
+      DEC: 2.27
+    annual: 4.13
+  - parameter: T2M
+    units: C
+    longname: Temperature at 2 Meters
+    monthly:
+      JAN: -3.26
+      FEB: -1.95
+      MAR: 3.6
+      APR: 10.32
+      MAY: 16.32
+      JUN: 21.14
+      JUL: 23.23
+      AUG: 22.66
+      SEP: 18.91
+      OCT: 11.75
+      NOV: 4.95
+      DEC: -0.6
+    annual: 10.65
+  - parameter: T2M_MAX
+    units: C
+    longname: Temperature at 2 Meters Maximum
+    monthly:
+      JAN: 17.65
+      FEB: 21.88
+      MAR: 27.06
+      APR: 27.31
+      MAY: 32.28
+      JUN: 38.23
+      JUL: 39.09
+      AUG: 35.96
+      SEP: 35.56
+      OCT: 32.09
+      NOV: 25.33
+      DEC: 20.62
+    annual: 39.09
+  - parameter: T2M_MIN
+    units: C
+    longname: Temperature at 2 Meters Minimum
+    monthly:
+      JAN: -25.54
+      FEB: -23.59
+      MAR: -16.14
+      APR: -6.26
+      MAY: -3.83
+      JUN: 4.27
+      JUL: 8.27
+      AUG: 8.27
+      SEP: 2.69
+      OCT: -2.74
+      NOV: -12.2
+      DEC: -22.55
+    annual: -25.54
+  - parameter: RH2M
+    units: '%'
+    longname: Relative Humidity at 2 Meters
+    monthly:
+      JAN: 85.87
+      FEB: 84.26
+      MAR: 80.34
+      APR: 76.68
+      MAY: 77.62
+      JUN: 77.29
+      JUL: 74.92
+      AUG: 72.14
+      SEP: 71.52
+      OCT: 73.99
+      NOV: 79.3
+      DEC: 85.52
+    annual: 78.27
+  - parameter: WS2M
+    units: m/s
+    longname: Wind Speed at 2 Meters
+    monthly:
+      JAN: 4.04
+      FEB: 3.92
+      MAR: 3.78
+      APR: 3.86
+      MAY: 3.11
+      JUN: 2.58
+      JUL: 2.16
+      AUG: 2.07
+      SEP: 2.37
+      OCT: 3.1
+      NOV: 3.48
+      DEC: 3.7
+    annual: 3.18
+  - parameter: ALLSKY_SFC_SW_DWN
+    units: MJ/m^2/day
+    longname: All Sky Surface Shortwave Downward Irradiance
+    monthly:
+      JAN: 6.1
+      FEB: 9.36
+      MAR: 12.85
+      APR: 17.26
+      MAY: 19.91
+      JUN: 22.28
+      JUL: 22.35
+      AUG: 20.04
+      SEP: 16.1
+      OCT: 10.97
+      NOV: 7.43
+      DEC: 5.24
+    annual: 14.18

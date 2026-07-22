@@ -211,6 +211,22 @@ def test_facility_less_site_declares_no_demand_pressure_destination() -> None:
     )
 
 
+def test_summer_season_months_validation() -> None:
+    # The regulatory summer window (#1624) must be canonical month tokens: an unknown token or a
+    # duplicate is a profile error (a typo would otherwise silently vanish from the seasonal
+    # screen), lowercase input is normalized, and the empty tuple is the inherit-default signal.
+    lima = SITES["lima"]
+    with pytest.raises(ValidationError, match="unrecognized month"):
+        SiteProfile.model_validate({**lima.model_dump(), "summer_season_months": ["JLY"]})
+    with pytest.raises(ValidationError, match="duplicate month"):
+        SiteProfile.model_validate({**lima.model_dump(), "summer_season_months": ["MAY", "MAY"]})
+    normalized = SiteProfile.model_validate(
+        {**lima.model_dump(), "summer_season_months": ["jun", "jul"]}
+    )
+    assert normalized.summer_season_months == ("JUN", "JUL")
+    assert lima.summer_season_months == ()  # unset → inherit the Ohio EPA default
+
+
 def test_scaffold_stub_is_constructible_and_collision_safe(monkeypatch) -> None:  # type: ignore[no-untyped-def]
     # The generated stub must (a) construct a SiteProfile and (b) slug-scope its outputs so it
     # passes the collision guard against Lima — the whole point of the scaffold (#326 authoring).

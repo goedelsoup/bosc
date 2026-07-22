@@ -13,11 +13,18 @@ from pathlib import Path
 from typing import Literal
 
 import yaml
-from pydantic import BaseModel, ConfigDict, model_validator
+from pydantic import BaseModel, ConfigDict, field_validator, model_validator
 
 from watermark.connectors.gis_schema import GisFloodSchema, GisParcelSchema, GisZoningSchema
 
 _YAML_PATH = Path(__file__).parents[3] / "data" / "sites.yaml"
+
+# Canonical three-letter month abbreviations (English, uppercase) — hardcoded rather than derived
+# from `calendar` (which is locale-dependent) or `watermark.hydrology.et` (hydrology cannot be
+# imported here). Used to validate `SiteProfile.summer_season_months` (#1624).
+_MONTH_ABBRS: frozenset[str] = frozenset(
+    {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"}
+)
 
 
 class SiteEntry(BaseModel):
@@ -757,6 +764,29 @@ class SiteProfile(BaseModel):
         if len(keys) != len(set(keys)):
             raise ValueError(f"facility keys must be unique within a site; got {keys}")
         return self
+
+    @field_validator("summer_season_months", mode="before")
+    @classmethod
+    def _validate_summer_months(cls, v: object) -> tuple[str, ...]:
+        """Uppercase-normalize + validate the regulatory summer-season months (#1624).
+
+        The empty tuple stays empty — the signal to inherit the Ohio EPA default. Any token must
+        be a recognized three-letter month abbreviation (``JAN``..``DEC``); an unknown token
+        (``"JLY"``) or a duplicate is a profile error, not silently ignored — a typo would
+        otherwise never match the canonical month keys and vanish from the seasonal screen.
+        Normalization happens here so the stored value is already canonical for comparison.
+        """
+        if v is None:
+            return ()
+        if isinstance(v, str) or not isinstance(v, (list, tuple)):
+            raise ValueError("summer_season_months must be a sequence of month abbreviations")
+        months = [str(m).strip().upper() for m in v]
+        unknown = sorted({m for m in months if m not in _MONTH_ABBRS})
+        if unknown:
+            raise ValueError(f"summer_season_months has unrecognized month(s): {unknown}")
+        if len(set(months)) != len(months):
+            raise ValueError(f"summer_season_months has duplicate month(s): {months}")
+        return tuple(months)
 
     @property
     def facility(self) -> SiteFacility | None:

@@ -129,27 +129,17 @@ def test_summer_season_is_cited_oepa_window(hydro_settings: Settings) -> None:
     assert summer_season_months(settings=hydro_settings) == OEPA_SUMMER_MONTHS
 
 
-def test_floor_keyed_on_permit_window_not_growing_season(
-    hydro_settings: Settings, tmp_path: Path
-) -> None:
+def test_floor_keyed_on_permit_window_not_growing_season(hydro_settings: Settings) -> None:
     """A drenched July (ET0 < precip) is still a summer-30Q10 month — the switch is the
-    regulatory permit window, not the ET0 > precip heuristic (finding WS-24 / #1624)."""
-    # Mirror the real reference tree into a tmp data dir, then make July wet enough that
-    # reference ET0 falls below rainfall — decoupling the climatic season from the calendar.
-    dst_ref = tmp_path / "reference" / "hydrology"
-    dst_ref.mkdir(parents=True)
-    src_ref = hydro_settings.data_dir / "reference" / "hydrology"
-    for f in src_ref.glob("*.yaml"):
-        (dst_ref / f.name).write_text(f.read_text(encoding="utf-8"), encoding="utf-8")
-    clim_path = dst_ref / "nasa-power-climatology.yaml"
-    doc = yaml.safe_load(clim_path.read_text(encoding="utf-8"))
-    for p in doc["climatology"]["parameters"]:
-        if p["parameter"] == "PRECTOTCORR":
-            p["monthly"]["JUL"] = 20.0  # drench July: precip >> ET0 → not growing
-    clim_path.write_text(yaml.safe_dump(doc), encoding="utf-8")
+    regulatory permit window, not the ET0 > precip heuristic (finding WS-24 / #1624).
 
+    Reads a committed synthetic fixture (`fixtures/hydrology/seasonal-wet-july/`): the real
+    Lima normals with July precip perturbed above reference ET0, so the climatic growing
+    season and the permit calendar diverge — no runtime mutation of reference data.
+    """
+    data_dir = hydro_settings.hydro_fixtures_dir / "seasonal-wet-july"
     s = Settings(
-        data_dir=tmp_path,
+        data_dir=data_dir,
         hydro_offline=True,
         hydro_fixtures_dir=hydro_settings.hydro_fixtures_dir,
     )

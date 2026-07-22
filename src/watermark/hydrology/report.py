@@ -605,23 +605,44 @@ def _render_seasonal_withdrawal(
     consumptive_cfs: float,
     basis: CoolingBasis | None = None,
 ) -> None:
-    """The cooling draw read against the receiving water's growing-season low flow.
+    """The cooling draw read against the receiving water's regulatory-summer design low flow.
 
-    The basis rides along so a ``hybrid_adiabatic`` facility's draw is month-varying (#1058).
+    The design low flow is selected by the cited permit summer window (#1624); the growing
+    season (ET0 > precip) is rendered separately as a diagnostic (the 🔴 mark). The basis rides
+    along so a ``hybrid_adiabatic`` facility's draw is month-varying (#1058).
     """
     from watermark.hydrology import scenario
 
     sw = scenario.evaluate_seasonal(consumptive_cfs, settings=settings, basis=basis)
-    if sw is None or not sw.growing_season_months:
+    if sw is None or not sw.months:
         return
 
-    win = f"{sw.growing_season_months[0]}-{sw.growing_season_months[-1]}"
+    # The regulatory summer window (the months the cited summer 30Q10 governs) — distinct from
+    # the climatic growing season (ET0 > precip); they coincide for Lima but need not (#1624).
+    summer_win_months = [r.month for r in sw.months if r.low_flow_basis == "30Q10 summer"]
+    summer_win = f"{summer_win_months[0]}-{summer_win_months[-1]}" if summer_win_months else ""
+    grow_win = (
+        f"{sw.growing_season_months[0]}-{sw.growing_season_months[-1]}"
+        if sw.growing_season_months
+        else ""
+    )
+    lede = (
+        f"In the regulatory summer season (**{summer_win}**, the permit's fixed design-flow "
+        f"window) the Ottawa sits at its cited summer design low flow (30Q10)"
+        if summer_win
+        else "Against the cited design low flow"
+    )
+    grow_note = (
+        f", and across the growing season (**{grow_win}**, where reference ET exceeds "
+        "precipitation — §3) that floor arrives with no rainfall buffer"
+        if grow_win
+        else ""
+    )
     emit(
         "\n### The seasonal pinch: the draw lands when the river is lowest\n\n"
-        "The annual-7Q10 multiple understates the constraint. The growing season "
-        f"(**{win}**, where reference ET exceeds precipitation — §3) is exactly when the "
-        "Ottawa sits at its summer design low flow, with no rainfall buffer. Reading the "
-        "same consumptive draw against the *cited seasonal* floor:\n"
+        f"The annual-7Q10 multiple understates the constraint. {lede}{grow_note}. Reading the "
+        "same consumptive draw against the *cited seasonal* floor (🔴 = growing season, ET0 > "
+        "precip):\n"
     )
     emit("\n| month | ET0 - precip (mm/d) | Ottawa low flow | draw ÷ low flow |")
     emit("|---|--:|---|--:|")
@@ -631,14 +652,15 @@ def _render_seasonal_withdrawal(
         mult = f"{r.multiple:g}x" if r.multiple is not None else "—"
         mark = " 🔴" if r.growing_season else ""
         emit(f"| {r.month}{mark} | {net} | {floor} | {mult} |")
-    emit(
-        f"\nIn the **{win}** window the draw is **{sw.summer_multiple:g}x** the cited "
-        f"summer 30Q10 ({sw.summer_30q10_cfs:g} cfs) — vs {sw.annual_multiple:g}x the annual "
-        f"7Q10. And the summer 30Q10 is the *generous* floor: the Ottawa's absolute design "
-        f"low flow is **1Q10 = {sw.one_q10_cfs:g} cfs** `[verified: document]`, so in the "
-        "driest growing-season weeks there is no flow to draw against at all. The cooling "
-        "draw peaks against supply precisely when the atmosphere is also taking the most.\n"
-    )
+    if sw.summer_multiple is not None and sw.summer_30q10_cfs is not None and summer_win:
+        emit(
+            f"\nIn the **{summer_win}** summer window the draw is **{sw.summer_multiple:g}x** the "
+            f"cited summer 30Q10 ({sw.summer_30q10_cfs:g} cfs) — vs {sw.annual_multiple:g}x the "
+            f"annual 7Q10. And the summer 30Q10 is the *generous* floor: the Ottawa's absolute "
+            f"design low flow is **1Q10 = {sw.one_q10_cfs:g} cfs** `[verified: document]`, so in "
+            "the driest weeks there is no flow to draw against at all. The cooling draw peaks "
+            "against supply precisely when the atmosphere is also taking the most.\n"
+        )
 
 
 def _render_wwtp_floodzones(emit: Callable[[str], None], settings: Settings) -> None:

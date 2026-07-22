@@ -1,0 +1,13 @@
+# SYNTHETIC TEST FIXTURE — minimal Ottawa-only design low flows for the WS-24 (#1624)
+# seasonal floor-selection regression. Values mirror the real committed low-flow table's
+# `ottawa river` entry (see data/reference/hydrology/low-flow-7q10.yaml); trimmed to the one
+# stream the wet-July decoupling test screens. NOT a substitute for the committed table.
+streams:
+  ottawa river:
+    seven_q10_cfs: 0.2
+    source: document
+    citation: "Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.) — mirrored for test fixture"
+    confidence: high
+    context:
+      one_q10_cfs: 0.0
+      thirty_q10_summer_cfs: 1.6
