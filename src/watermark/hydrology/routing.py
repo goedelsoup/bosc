@@ -29,11 +29,15 @@ Confidence = Literal["high", "medium", "low"]
 
 
 class Route(BaseModel):
-    """One WWTP -> receiving-stream route."""
+    """One WWTP -> receiving-stream route, with the plant's permitted design flow."""
 
     model_config = ConfigDict(extra="forbid")
 
     receiving_water: str | None = None
+    # Permitted average design flow (MGD) — the structured, document-cited discharge
+    # magnitude the assimilative screen uses (WS-22, issue 1622). ``None`` ⇒ the balance
+    # falls back to the first ``N MGD`` token in the watch-items summary prose.
+    design_flow_mgd: float | None = None
     status: RouteStatus = "confirmed"
     confidence: Confidence = "high"
     citation: str | None = None
@@ -46,6 +50,9 @@ class BoscRoute(BaseModel):
 
     via: str  # forcemain id (bosc-fm1, bosc-fm2, theorized-fm3-shawnee-ii)
     to: list[str]  # receiver node ids
+    # Permitted industrial discharge (MGD) carried by this forcemain, when documented —
+    # the structured source the campus node reads for its FM discharge (WS-22, issue 1622).
+    design_flow_mgd: float | None = None
     status: RouteStatus
     confidence: Confidence = "medium"
     citation: str | None = None
@@ -65,6 +72,21 @@ class RoutingTable(BaseModel):
         if route is None:
             return None, ""
         return route.receiving_water, (route.citation or "")
+
+    def design_flow_for(self, node_id: str) -> float | None:
+        """The WWTP's permitted design flow (MGD), or ``None`` if not curated here.
+
+        ``None`` ⇒ the balance falls back to parsing the watch-items summary prose. This is
+        the structured analog of the ECHO ``design_flow_mgd`` column (WS-22, issue 1622)."""
+        route = self.wwtp_receiving.get(node_id)
+        return route.design_flow_mgd if route is not None else None
+
+    def forcemain_design_flow(self, via: str) -> float | None:
+        """The industrial discharge (MGD) documented for a campus forcemain, or ``None``."""
+        for route in self.bosc_routing:
+            if route.via == via and route.design_flow_mgd is not None:
+                return route.design_flow_mgd
+        return None
 
     def confirmed_bosc_routes(self) -> list[BoscRoute]:
         return [r for r in self.bosc_routing if r.status == "confirmed"]
