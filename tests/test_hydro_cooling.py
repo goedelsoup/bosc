@@ -178,10 +178,13 @@ def test_once_through_headline_is_central_not_range_low() -> None:
     assert headline.value == pytest.approx(b.makeup_demand.value * b.consumptive_fraction.value)
     assert headline.value > b.consumptive_low.value  # central sits above the range low
     assert headline.value < b.consumptive_high.value
-    # The intake does not grow with the consumptive fraction: the high-bound makeup is the
-    # same withdrawal, so refill must not inflate it by dividing consumptive_high / fraction.
+    # The intake at the upper bound is the HIGH-IT withdrawal (#1632): it grows with the disclosed
+    # MW range, above the central makeup — but is NOT the inflated consumptive_high / fraction
+    # (the #1153 trap; the fraction and the withdrawal are incompatible bases).
     makeup_high = b.headline_makeup_high()
-    assert makeup_high is not None and makeup_high.value == pytest.approx(b.makeup_demand.value)
+    assert makeup_high is not None
+    assert makeup_high.value > b.makeup_demand.value
+    assert makeup_high.value < b.consumptive_high.value / b.consumptive_fraction.value
 
 
 # ---------------------------------------------------------------------------------------
@@ -346,20 +349,19 @@ def test_consumptive_high_pairs_with_makeup_high_not_makeup_demand() -> None:
     assert frac == pytest.approx(b.consumptive_fraction.value, abs=0.02)
 
 
-def test_ws16_blowdown_upper_bound_capped_at_wue_ceiling() -> None:
+def test_ws16_blowdown_upper_bound_capped_at_wue_ceiling(hydro_settings: Settings) -> None:
     # WS-16 (#1616): the FM-2 blowdown implies ~5.3 L/kWh at the high IT, physically unreachable
     # for cooling, so the tower's upper bound is capped at the WUE ceiling instead of published
     # at 10 MGD. The cap now co-scales with the disclosed MW range (#1632): it is HIGH IT x the
     # ceiling WUE, not central IT.
-    from watermark.config import get_settings
     from watermark.hydrology.cooling_models import (
         _WUE_CEILING_L_PER_KWH,
         _consumptive_mgd_from_power,
     )
     from watermark.sites import active_profile
 
-    b = derive_cooling_basis(cooling_model="evaporative_tower")
-    facility = active_profile(get_settings()).facility
+    b = derive_cooling_basis(hydro_settings, cooling_model="evaporative_tower")
+    facility = active_profile(hydro_settings).facility
     assert facility is not None and facility.it_load_high_mw is not None
     ceiling = _consumptive_mgd_from_power(facility.it_load_high_mw, _WUE_CEILING_L_PER_KWH)
     # The published upper bound is the ceiling (at the high IT), not the raw blowdown (10 MGD).

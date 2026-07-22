@@ -545,6 +545,18 @@ def _derive_once_through(
                 "withdrawal, nearly all returned"
             ),
         ),
+        # The intake at the upper consumptive bound is the HIGH-IT withdrawal (#1632): since the
+        # consumptive high uses the high-IT withdrawal, the intake it evaporates from grows with
+        # the MW range too — so ``refill`` reads this, not the central ``makeup_demand``.
+        makeup_high=ProvenancedValue.derived(
+            round(withdrawal_high, 2),
+            "MGD",
+            citation=(
+                f"high-IT ({it_load_high:g} MW) withdrawal = {it_load_high:g} MW x {mult:g} "
+                f"heat-rejection overhead / (rho x c x dT) — the intake at the upper consumptive "
+                f"bound; {_OT_DELTA_T_CITE}; {mult_cite}"
+            ),
+        ),
         consumptive_low=ProvenancedValue.derived(
             round(withdrawal_low * _OT_EVAP_FRAC_LOW, 2),
             "MGD",
