@@ -3,6 +3,9 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
 import {
+  domainPresent,
+  facilityLoadAvailable,
+  facilityState,
   isAvailable,
   isReferenceSite,
   lockedSections,
@@ -97,7 +100,9 @@ describe("domain activation (manifest readiness block)", () => {
     expect(urbana.backdrop).toBe("live"); // the floor is real
     expect(urbana.record).toBe("live"); // Highland55/OEPA document corpus, scoped in (#1328)
     expect(urbana.places).toBe("live"); // committed parcel footprint (parcel-assemblage.geojson)
-    expect(urbana.facility).toBe("live"); // Urbana Technology Hub SiteFacility + demand-pressure (#1327)
+    // The Urbana Technology Hub facility is SCREENING-only (floor-area [inference] load, MW [open]) →
+    // `seeded`, distinguished from a permit-grounded facility, not floated to `live` (#1630).
+    expect(urbana.facility).toBe("seeded");
   });
 
   it("opens Urbana's own leads board (feed-driven, #796) without borrowing Lima's", () => {
@@ -108,6 +113,29 @@ describe("domain activation (manifest readiness block)", () => {
     expect(sectionStatus("urbana", "economy")).toBe("available");
     expect(sectionStatus("urbana", "record")).toBe("available");
     expect(sectionStatus("urbana", "places")).toBe("available");
+  });
+});
+
+// --- facility-domain gating (#1630) -------------------------------------------------------
+describe("facility-domain gating", () => {
+  it("gates the campus-load read on the facility domain being live, not merely present", () => {
+    // Lima's facility is permit-grounded (instrument depth) → live → its load read renders.
+    expect(facilityState("lima")).toBe("live");
+    expect(facilityLoadAvailable("lima")).toBe(true);
+    // Urbana's facility is disclosed but SCREENING-only → seeded: the domain is PRESENT, but the
+    // load read is withheld — the #1630 distinction the old `live`-collapse erased.
+    expect(facilityState("urbana")).toBe("seeded");
+    expect(domainPresent("urbana", "facility")).toBe(true); // present…
+    expect(facilityLoadAvailable("urbana")).toBe(false); //   …but not grounded → gate closed
+    // A live → seeded regression visibly flips the gate (the acceptance's observability check).
+    expect(facilityLoadAvailable("lima")).not.toBe(facilityLoadAvailable("urbana"));
+  });
+
+  it("is closed for a facility-less site (no campus load to read)", () => {
+    // xenia carries no SiteFacility → facility absent → the load read is off, not fabricated.
+    expect(facilityState("xenia")).toBe("absent");
+    expect(domainPresent("xenia", "facility")).toBe(false);
+    expect(facilityLoadAvailable("xenia")).toBe(false);
   });
 });
 

@@ -160,8 +160,28 @@ export function coolingMethodUndisclosed(slug: string): boolean {
 }
 
 /** A domain carries evidence (is worth opening its sections for) when it is `seeded` or `live`. */
-function domainPresent(slug: string, domain: Domain): boolean {
+export function domainPresent(slug: string, domain: Domain): boolean {
   return siteDomainStates(slug)[domain] !== "absent";
+}
+
+/** The facility domain's state (`absent | seeded | live`) for a site — the facility-output gate reads
+ *  this directly so a `live → seeded` regression (a permit-grounded load decaying to a screening
+ *  lead) is visible to users, not swallowed into the chrome tier alone (#1630). */
+export function facilityState(slug: string): DomainState {
+  return siteDomainStates(slug).facility;
+}
+
+/**
+ * Whether the site's facility-load read (the campus load / demand-pressure content on the economy
+ * hub) may render as grounded output — the facility domain is `live`, i.e. its IT load is
+ * **instrument-grounded** (an air permit or a filed disclosure), not a screening [inference] or a
+ * [reference] announcement (#1630). A `seeded` (screening-only) or `absent` facility fails this, so
+ * the load door is withheld rather than presenting a screening bracket as a settled load. This is
+ * the facility axis's peer of the domain gates above — the facility domain, not one economics feed,
+ * drives it.
+ */
+export function facilityLoadAvailable(slug: string): boolean {
+  return facilityState(slug) === "live";
 }
 
 /**

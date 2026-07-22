@@ -110,6 +110,7 @@ def test_site_facility_disclosure_fields_require_a_citation() -> None:
             it_load_low_mw=35.0,
             it_load_high_mw=115.0,
             it_load_citation="screening",
+            it_load_source="screening",
             gross_floor_area_sqft=460_000,  # disclosed value, no citation
         )
 
@@ -126,6 +127,7 @@ def test_site_facility_gensets_are_paired() -> None:
             it_load_low_mw=35.0,
             it_load_high_mw=115.0,
             it_load_citation="screening",
+            it_load_source="screening",
             genset_count=34,  # rating omitted
         )
 

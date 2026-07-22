@@ -776,6 +776,81 @@ def test_facility_load_may_be_entirely_open() -> None:
         _fac("Bad", it_load_mw=100.0)  # low/high omitted
 
 
+def test_it_load_grounding_grades_documentary_depth() -> None:
+    """The #1630 grounding grade drives facility readiness. ``permit`` is DERIVED from a wired air
+    permit; a non-permit disclosed load reports its declared grade; an [open] load has none.
+    ``is_instrument_grounded`` (the readiness ``live`` signal) is true only for permit / disclosure
+    grounding (or a document-disclosed cooling mechanism)."""
+    from watermark.sites import ItLoadGrounding
+
+    lima = SITES["lima"].facility  # air-permit-grounded (OEPA PTI)
+    assert lima is not None
+    assert lima.it_load_grounding is ItLoadGrounding.PERMIT and lima.is_instrument_grounded
+    findlay = SITES["findlay"].facility  # filed SEC S-1 disclosure
+    assert findlay is not None
+    assert (
+        findlay.it_load_grounding is ItLoadGrounding.DISCLOSURE and findlay.is_instrument_grounded
+    )
+    urbana = SITES["urbana"].facility  # floor-area SCREENING [inference]
+    assert urbana is not None
+    assert urbana.it_load_grounding is ItLoadGrounding.SCREENING
+    assert not urbana.is_instrument_grounded
+    van_wert = SITES["van-wert"].facility  # announced-ceiling [reference]
+    assert van_wert is not None
+    assert van_wert.it_load_grounding is ItLoadGrounding.REFERENCE
+    assert not van_wert.is_instrument_grounded
+    # An [open] load has no grade at all (a rezoning-only campus).
+    ardent = SITES["wilmington"].facilities[1]
+    assert ardent.it_load_mw is None and ardent.it_load_grounding is None
+
+
+def test_it_load_source_pairs_with_the_non_permit_basis() -> None:
+    """``it_load_source`` grades a NON-permit disclosed load only (#1630): a permit-grounded or
+    [open] load leaves it None (permit grounding is derived from the air permit), and a non-permit
+    disclosed load must declare a non-``permit`` grade — the readiness grade is structured, never
+    re-keyed from the [verified]/[inference] tag in citation prose."""
+    from pydantic import ValidationError
+
+    # A non-permit disclosed load without a grade is rejected.
+    with pytest.raises(ValidationError, match="must declare it_load_source"):
+        _fac(
+            "NoGrade",
+            it_load_mw=70.0,
+            it_load_low_mw=35.0,
+            it_load_high_mw=115.0,
+            it_load_citation="a floor-area screen",
+        )
+    # 'permit' is derived from a wired air permit, never hand-set on a non-permit basis.
+    with pytest.raises(ValidationError, match="must declare it_load_source"):
+        _fac(
+            "PermitByHand",
+            it_load_mw=70.0,
+            it_load_low_mw=35.0,
+            it_load_high_mw=115.0,
+            it_load_citation="a floor-area screen",
+            it_load_source="permit",
+        )
+    # A grade with no non-permit basis (an [open] load) is rejected.
+    with pytest.raises(ValidationError, match="set it only alongside it_load_citation"):
+        _fac(
+            "OpenWithGrade",
+            it_load_source="screening",
+            facility_type="a rezoning corridor",
+            disclosure_citation="[reference] a rezoning ordinance",
+        )
+    # A properly graded screening load validates and resolves to its declared grade.
+    ok = _fac(
+        "Screened",
+        it_load_mw=70.0,
+        it_load_low_mw=35.0,
+        it_load_high_mw=115.0,
+        it_load_citation="a floor-area screen",
+        it_load_source="screening",
+    )
+    assert ok.it_load_grounding is not None and ok.it_load_grounding.value == "screening"
+    assert not ok.is_instrument_grounded
+
+
 def test_facility_geometry_inherits_the_site_default() -> None:
     """`facility_geometry` resolves a facility's parcels/footprint, falling back to the site-level
     paths when the facility carries none of its own."""

@@ -32,6 +32,7 @@ from watermark.sites._model import (
     CoolingModelType,
     DcEndUse,
     FacilityLifecycle,
+    ItLoadGrounding,
     SiteFacility,
     SiteProfile,
 )
@@ -390,6 +391,7 @@ _FINDLAY = SiteProfile(
             it_load_mw=150.0,  # [verified] contracted take-or-pay / planned maximum; see it_load_citation
             it_load_low_mw=30.0,  # [verified] currently energized ("Current Capacity 30 MW, Status: Operating")
             it_load_high_mw=150.0,  # [verified] contracted / planned maximum (150 MW take-or-pay)
+            it_load_source=ItLoadGrounding.DISCLOSURE,
             it_load_citation=(
                 "[verified] DISCLOSED load (NOT a screening inference): One Power Co Form S-1/A (EDGAR "
                 "CIK 2039139) describes MWHub 01 / Findlay Megawatt Hub — 'Current Capacity 30 MW, "
@@ -756,6 +758,7 @@ _VAN_WERT = SiteProfile(
             it_load_mw=_VAN_WERT_LOAD.central,  # [reference] the announced "up to 500 MW" ceiling — carried central/high
             it_load_low_mw=_VAN_WERT_LOAD.low,  # ceiling / PUE ceiling (implied IT); see it_load_citation
             it_load_high_mw=_VAN_WERT_LOAD.high,  # the announced "up to 500 MW" ceiling
+            it_load_source=ItLoadGrounding.REFERENCE,
             it_load_citation=(
                 "[reference] 'up to 500 MW' — Thor Equities / Form8tion's 2025-08-19 land-acquisition "
                 "release (GlobeNewswire; citybiz; Data Center Dynamics) and local press; NOT an "
@@ -1423,6 +1426,7 @@ _URBANA = SiteProfile(
             it_load_mw=_URBANA_LOAD.central,  # [inference] SCREENING central (MW-midpoint); see it_load_citation
             it_load_low_mw=_URBANA_LOAD.low,  # 460k sqft x 75 W/sqft whole-building IT density (low)
             it_load_high_mw=_URBANA_LOAD.high,  # 460k sqft x 250 W/sqft whole-building IT density (high)
+            it_load_source=ItLoadGrounding.SCREENING,
             it_load_citation=(
                 "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/"
                 "air-permit MW is [open] (#1263 sub-lead: PJM queue position / air permit). Derived "
@@ -1578,6 +1582,7 @@ _SPRINGFIELD = SiteProfile(
             it_load_mw=100.0,  # central = midpoint of the disclosed 50->150 MW corridor; NOT the 900 MW buildout
             it_load_low_mw=50.0,  # [verified] disclosed first tranche — 50 MW / 24,000-GPU AMD MI355X supercluster (2025-12)
             it_load_high_mw=150.0,  # [verified] disclosed "up to 150 MW max load" ceiling (City of Springfield 5C FAQ)
+            it_load_source=ItLoadGrounding.REFERENCE,
             it_load_citation=(
                 "[verified/inference] DISCLOSURE-anchored bracket — NOT an air-permit figure (the "
                 "disclosed interconnection/air-permit MW stays [open] until the Ohio EPA Air PTI lands, "
@@ -2080,6 +2085,7 @@ _TROY_PIQUA = SiteProfile(
             it_load_mw=_TROY_PIQUA_LOAD.central,  # [inference] SCREENING central (MW-midpoint); see it_load_citation
             it_load_low_mw=_TROY_PIQUA_LOAD.low,  # 700k sqft x 75 W/sqft whole-building IT density (low)
             it_load_high_mw=_TROY_PIQUA_LOAD.high,  # 700k sqft x 250 W/sqft whole-building IT density (high)
+            it_load_source=ItLoadGrounding.SCREENING,
             it_load_citation=(
                 "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/"
                 "air-permit MW stays [open] (a direct OEPA eSuite/DAPC search for 'J5 LLC' / "
@@ -2289,6 +2295,7 @@ _SIDNEY = SiteProfile(
             it_load_mw=_SIDNEY_LOAD.central,  # [inference] SCREENING central (MW-midpoint); see it_load_citation
             it_load_low_mw=_SIDNEY_LOAD.low,  # $3B / ~$20M per MW-IT (capex-intensive / liquid-AI) whole-campus screen
             it_load_high_mw=_SIDNEY_LOAD.high,  # $3B / ~$8.5M per MW-IT (capex-light / air-cooled) whole-campus screen
+            it_load_source=ItLoadGrounding.SCREENING,
             it_load_citation=(
                 "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/"
                 "air-permit MW stays [open] (no OEPA air PTI and no PJM interconnection instrument is "
@@ -2613,6 +2620,7 @@ _WILMINGTON = SiteProfile(
             it_load_mw=_WILMINGTON_LOAD.central,  # [inference] SCREENING central (MW-midpoint); see it_load_citation
             it_load_low_mw=_WILMINGTON_LOAD.low,  # floor-area low (1,920,299 sqft x 75 W/sqft = 144.0)
             it_load_high_mw=_WILMINGTON_LOAD.high,  # floor-area high (1,920,299 sqft x 250 W/sqft = 480.1)
+            it_load_source=ItLoadGrounding.SCREENING,
             it_load_citation=(
                 "[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/"
                 "air-permit MW stays [open] (#1469: OPSB 25-0871-EL-BLN 345kV build-out + the PJM-queue "
@@ -3469,6 +3477,7 @@ _BOWLING_GREEN = SiteProfile(
             it_load_mw=180.0,  # [reference] the disclosed "up to ~180 MW at peak" — a design ceiling, not an air-permit disclosure
             it_load_low_mw=_BOWLING_GREEN_SCREEN.low,  # 715,000 sq ft x 75 W/sq ft screening floor (avg draw is below the disclosed peak)
             it_load_high_mw=180.0,  # the disclosed ~180 MW peak (the 715k sq ft x 250 W/sq ft screen reproduces 178.75 MW, corroborating it)
+            it_load_source=ItLoadGrounding.REFERENCE,
             it_load_citation=(
                 "[reference] the disclosed 'up to ~180 MW at peak' for the initial phase — reported via "
                 "the Apollo OPSB filings (25-0973-EL-BGN) in press (BG Independent, Data Center "
