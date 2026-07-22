@@ -13,11 +13,19 @@
  */
 import { reportUrl } from "./reports";
 import { netSubsidyOutcome } from "./econLedger";
-import { facilityDrawOutcome } from "./gridLoad";
+import { facilityDrawOutcome, gridPriorsFromFacility } from "./gridLoad";
 import { assimilativeOutcome } from "./toxicsDilution";
 import type { UncertainOutcome } from "./uncertainty";
 
 export type BalanceUnit = "usd" | "pct" | "mw";
+
+/** The facility's disclosed IT-load bracket (from the `facility` feed) — passed so the grid
+ *  row sources the same figure the load report and /basin do (#1632). Null ⇒ Lima defaults. */
+export interface GridItLoad {
+  central: number;
+  low?: number | null;
+  high?: number | null;
+}
 
 export interface BalanceRow {
   outcome: UncertainOutcome;
@@ -45,9 +53,16 @@ export function buildBalanceSheet(
   toxicsEffluentCfs: number,
   toxicsNaturalAnnualCfs: number,
   siteSlug: string,
+  gridItLoad?: GridItLoad | null,
 ): BalanceSheetData {
   const econ = netSubsidyOutcome();
-  const grid = facilityDrawOutcome();
+  // #1632: source the grid band's IT-load prior from the facility feed when supplied, so this
+  // sheet's load row matches the-load-and-the-grid and /basin (one sourced IT figure, not a
+  // hardcoded band). Falls back to the Lima GRID_PRIORS default when absent.
+  const gridPriors = gridItLoad
+    ? gridPriorsFromFacility(gridItLoad.central, gridItLoad.low, gridItLoad.high)
+    : undefined;
+  const grid = facilityDrawOutcome(gridPriors);
   const toxics = assimilativeOutcome(toxicsEffluentCfs, toxicsNaturalAnnualCfs);
 
   const rows: BalanceRow[] = [

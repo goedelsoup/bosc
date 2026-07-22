@@ -74,20 +74,20 @@ scenario:
       low: null
       high: null
     consumptive_low:
-      value: 3.14
+      value: 2.85
       unit: MGD
       source: derived
-      citation: 275 MW x 1.8 L/kWh (power x WUE)
+      citation: 250 MW (low IT) x 1.8 L/kWh (power x WUE)
       confidence: medium
       asof: null
       low: null
       high: null
     consumptive_high:
-      value: 3.84
+      value: 4.18
       unit: MGD
       source: derived
-      citation: 'cooling upper bound capped at the WUE ceiling: 275 MW x 2.2 L/kWh
-        = 3.84 MGD. The disclosed 2.5 MGD blowdown x (CoC-1) = 10 MGD implies ~5.7
+      citation: 'cooling upper bound capped at the WUE ceiling: 300 MW (high IT) x 2.2 L/kWh
+        = 4.18 MGD. The disclosed 2.5 MGD blowdown x (CoC-1) = 10 MGD implies ~5.3
         L/kWh cooling WUE, above the ~2.2 L/kWh ceiling, so the 2.5 MGD discharge
         is not all cooling blowdown (it bundles process/sanitary flow) and cooling
         alone can''t reach it. evaporative-hyperscale WUE ceiling ~2.2 L/kWh (top
@@ -100,10 +100,10 @@ scenario:
       low: null
       high: null
     makeup_high:
-      value: 4.79
+      value: 5.23
       unit: MGD
       source: derived
-      citation: upper-bound intake = capped consumptive 3.84 MGD / evap fraction (WUE-ceiling
+      citation: upper-bound intake = capped consumptive 4.18 MGD / evap fraction (WUE-ceiling
         cap; disclosed blowdown bundles non-cooling flow)
       confidence: medium
       asof: null
@@ -277,7 +277,7 @@ balance:
   warnings:
   - BOSC routing via theorized-fm3-shawnee-ii to watch-shawnee-ii-wwtp is THEORIZED
     (unconfirmed) — excluded from the balance; Shawnee II has no known BOSC routing.
-  - BOSC campus consumptive cooling is a derived central estimate (~4.9 cfs; 3.14-10
+  - BOSC campus consumptive cooling is a derived central estimate (~4.9 cfs; 2.85-4.18
     MGD evaporative range) from the air-permit power figure x WUE — not a metered
     or permitted value.
   - Lima WTP intake (Ottawa/Auglaize) withdrawal rate is not documented; abstraction

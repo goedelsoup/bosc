@@ -79,13 +79,16 @@ class CoolingBasis(BaseModel):
         """The single central consumptive draw (MGD), or ``None`` for a bracketed basis.
 
         The archetype's **central** consumptive: ``makeup_demand x consumptive_fraction``,
-        by construction, for every disclosed archetype (#1153). This coincides with
-        ``consumptive_low`` for the tower/hybrid (where the range low *is* the central
-        power x WUE estimate) but **not** for ``once_through``, whose range is a
-        fraction-uncertainty bracket around a *central* fraction — there ``consumptive_low``
-        is the range low (evap x 1%), not the central (evap x 1.5%). Returning the product
-        keeps ``balance`` (this headline) and ``scenario``/``supply`` (which both compute
-        ``demand x fraction``) in agreement for every archetype.
+        by construction, for every disclosed archetype (#1153). It coincides with
+        ``consumptive_low`` for ``hybrid_adiabatic`` (where the range low *is* the
+        annual-average power x WUE draw), but for the ``evaporative_tower`` and
+        ``once_through`` the central sits **inside** the ``consumptive_low..consumptive_high``
+        bracket: the tower low is now the LOW-IT power bound (power-side uncertainty, #1632)
+        and the central is the CENTRAL-IT power x WUE; once_through's range is a
+        fraction-uncertainty bracket around a *central* fraction (evap x 1% vs the central
+        1.5%). Returning the product keeps ``balance`` (this headline) and
+        ``scenario``/``supply`` (which both compute ``demand x fraction``) in agreement for
+        every archetype.
 
         For the ``unknown`` archetype (``is_bracketed``) there is **no single headline**:
         callers must present ``consumptive_low``..``consumptive_high`` as a range and lock

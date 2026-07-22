@@ -345,9 +345,16 @@ def derive_compute_capacity(
         # the water method does not constrain that bound — leave it None and drop it from the
         # bracket instead of publishing a 0-MW floor.
         wue_basis = cooling.wue.value if cooling.wue is not None else _WUE_L_PER_KWH
+        # Invert the CENTRAL consumptive (power x WUE at the central IT) to recover the power
+        # method — NOT ``consumptive_low``, which since #1632 is the LOW-IT bound (it would
+        # back-solve to the low end of the disclosed MW range, not close the loop on the
+        # central). ``headline_consumptive()`` is the central for every disclosed archetype and
+        # is None for a bracketed (undisclosed-method) basis, so the water-low bound drops out
+        # there just as the old ~0 ``consumptive_low`` guard did.
+        central_consumptive = cooling.headline_consumptive()
         it_water_low = (
-            _it_load_from_consumptive_mgd(cooling.consumptive_low.value, wue_basis)
-            if cooling.consumptive_low.value > 0.0
+            _it_load_from_consumptive_mgd(central_consumptive.value, wue_basis)
+            if central_consumptive is not None and central_consumptive.value > 0.0
             else None
         )
         it_water_high = (
@@ -356,8 +363,10 @@ def derive_compute_capacity(
             else None
         )
         water_low_cite = (
-            f"cooling consumptive {cooling.consumptive_low.value:g} MGD / "
+            f"cooling consumptive {central_consumptive.value:g} MGD / "
             f"{wue_basis:g} L/kWh (recovers the power method; shares its WUE)"
+            if central_consumptive is not None
+            else "no central consumptive (bracketed basis)"
         )
         water_high_cite = (
             f"cooling {cooling.consumptive_high.value:g} MGD upper bound / {wue_basis:g} L/kWh "
