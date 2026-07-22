@@ -3,8 +3,9 @@
 # 1. `wwtp_receiving` — which receiving STREAM each county WWTP discharges to, and
 #    the plant's permitted `design_flow_mgd` (average design flow). Together these are
 #    the two per-plant inputs to the assimilative screen: the stream sets the low-flow
-#    denominator, the design flow the discharge numerator. Every route is read from an
-#    Ohio EPA NPDES fact sheet in our corpus and tagged status:confirmed. The design flow
+#    denominator, the design flow the discharge numerator. Every route is sourced from that
+#    plant's own Ohio EPA NPDES record in our corpus (a permit or its fact sheet, cited
+#    per-route below) and tagged status:confirmed. The design flow
 #    is the structured source `watermark.hydrology.balance` reads (WS-22, issue 1622); the
 #    number stated in prose in the Periplus watch-items summary is only a logged fallback.
 #    (This externalizes what used to be hardcoded / prose-parsed in the balance.)

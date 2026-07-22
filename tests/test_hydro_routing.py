@@ -25,18 +25,26 @@ def test_routing_table_carries_structured_design_flows(hydro_settings: Settings)
     table — the analog of the ECHO design_flow_mgd column — not a first-match regex over prose."""
     routing = load_routing(settings=hydro_settings)
     assert routing is not None
-    # Every WWTP the balance screens carries its permitted average design flow here.
-    assert routing.design_flow_for("watch-american-ii-wwtp") == 1.2
-    assert routing.design_flow_for("watch-american-bath-wwtp") == 1.5
+    # Each accessor returns (design flow MGD, its authoritative NPDES citation) so the value's
+    # real source travels with it into the evidence record, not a generic watch-item id.
+    assert routing.design_flow_for("watch-american-ii-wwtp") == (
+        1.2,
+        "Ohio EPA fact sheet 2PH00006 (American II WWTP)",
+    )
+    mgd, cite = routing.design_flow_for("watch-american-bath-wwtp")
+    assert mgd == 1.5 and "2PH00007" in (cite or "")
     # Shawnee II's summary states an expansion (2.0 -> 3.0 MGD); the structured value pins the
     # post-expansion design flow rather than depending on which prose token the regex catches.
-    assert routing.design_flow_for("watch-shawnee-ii-wwtp") == 3.0
-    assert routing.design_flow_for("watch-lima-wwtp") == 18.5
+    mgd, cite = routing.design_flow_for("watch-shawnee-ii-wwtp")
+    assert mgd == 3.0 and "2PK00002" in (cite or "")
+    mgd, cite = routing.design_flow_for("watch-lima-wwtp")
+    assert mgd == 18.5 and "2PE00000" in (cite or "")
     # The campus forcemain's industrial discharge is structured too (read by the campus node).
-    assert routing.forcemain_design_flow("bosc-fm2") == 2.5
-    # Unknown ids -> no invented flow.
-    assert routing.design_flow_for("nope") is None
-    assert routing.forcemain_design_flow("bosc-fm1") is None  # no design flow curated for FM-1
+    mgd, cite = routing.forcemain_design_flow("bosc-fm2")
+    assert mgd == 2.5 and "FM-2" in (cite or "")
+    # Unknown ids -> no invented flow, and no dangling citation.
+    assert routing.design_flow_for("nope") == (None, None)
+    assert routing.forcemain_design_flow("bosc-fm1") == (None, None)  # no flow curated for FM-1
 
 
 def test_bosc_routing_confirmed_vs_theorized(hydro_settings: Settings) -> None:

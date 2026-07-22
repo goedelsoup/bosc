@@ -158,7 +158,8 @@ balance:
       value: 4.6416862549539974
       unit: cfs
       source: document
-      citation: watch-shawnee-ii-wwtp (3.0 MGD design)
+      citation: watch-shawnee-ii-wwtp (3.0 MGD design) — Ohio EPA fact sheet 2PK00002
+        (Shawnee II WWTP)
       confidence: high
       asof: null
       low: null
@@ -177,7 +178,8 @@ balance:
       value: 2.3208431274769987
       unit: cfs
       source: document
-      citation: watch-american-bath-wwtp (1.5 MGD design)
+      citation: watch-american-bath-wwtp (1.5 MGD design) — Ohio EPA fact sheet 2PH00007
+        (American Bath WWTP)
       confidence: high
       asof: null
       low: null
@@ -196,7 +198,8 @@ balance:
       value: 1.856674501981599
       unit: cfs
       source: document
-      citation: watch-american-ii-wwtp (1.2 MGD design)
+      citation: watch-american-ii-wwtp (1.2 MGD design) — Ohio EPA fact sheet 2PH00006
+        (American II WWTP)
       confidence: high
       asof: null
       low: null
@@ -215,7 +218,9 @@ balance:
       value: 28.62373190554965
       unit: cfs
       source: document
-      citation: watch-lima-wwtp (18.5 MGD design)
+      citation: 'watch-lima-wwtp (18.5 MGD design) — Ohio EPA NPDES permit 2PE00000
+        (City of Lima WWTP) cover page — outfall 2PE00000001 to the Ottawa River at
+        River Mile 37.6 (data/extracted/oepa/2PE00000.npdes.yaml; #1536)'
       confidence: high
       asof: null
       low: null
@@ -242,7 +247,8 @@ balance:
       value: 3.8680718791283315
       unit: cfs
       source: document
-      citation: bosc-fm2 (2.5 MGD industrial discharge to Lima)
+      citation: bosc-fm2 (2.5 MGD industrial discharge to Lima) — BOSC FM-2 (16",
+        17,900 LF) -> City of Lima 78" sewer (watch-items bosc-fm2 / lima-fm2-terminus)
       confidence: high
       asof: null
       low: null
@@ -293,7 +299,8 @@ assimilative:
     value: 4.6416862549539974
     unit: cfs
     source: document
-    citation: watch-shawnee-ii-wwtp (3.0 MGD design)
+    citation: watch-shawnee-ii-wwtp (3.0 MGD design) — Ohio EPA fact sheet 2PK00002
+      (Shawnee II WWTP)
     confidence: high
     asof: null
     low: null
@@ -332,7 +339,8 @@ assimilative:
     value: 2.3208431274769987
     unit: cfs
     source: document
-    citation: watch-american-bath-wwtp (1.5 MGD design)
+    citation: watch-american-bath-wwtp (1.5 MGD design) — Ohio EPA fact sheet 2PH00007
+      (American Bath WWTP)
     confidence: high
     asof: null
     low: null
@@ -359,7 +367,8 @@ assimilative:
     value: 1.856674501981599
     unit: cfs
     source: document
-    citation: watch-american-ii-wwtp (1.2 MGD design)
+    citation: watch-american-ii-wwtp (1.2 MGD design) — Ohio EPA fact sheet 2PH00006
+      (American II WWTP)
     confidence: high
     asof: null
     low: null
@@ -386,7 +395,9 @@ assimilative:
     value: 28.62373190554965
     unit: cfs
     source: document
-    citation: watch-lima-wwtp (18.5 MGD design)
+    citation: 'watch-lima-wwtp (18.5 MGD design) — Ohio EPA NPDES permit 2PE00000
+      (City of Lima WWTP) cover page — outfall 2PE00000001 to the Ottawa River at
+      River Mile 37.6 (data/extracted/oepa/2PE00000.npdes.yaml; #1536)'
     confidence: high
     asof: null
     low: null

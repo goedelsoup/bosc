@@ -39,7 +39,9 @@ log = get_logger(__name__)
 # Fallback only: the first "N MGD" token in a feature summary. Load-bearing design flows
 # are read from the structured `design_flow_mgd` in routing.yaml (WS-22, issue 1622); this
 # regex over prose is a logged last resort for a site that hasn't curated the structured value.
-_MGD_RE = re.compile(r"(\d+(?:\.\d+)?)\s*MGD", re.IGNORECASE)
+# The optional leading "~" is captured so an approximate transcription (``~2.5 MGD``, the
+# repo's approximate-number convention) keeps its provenance instead of being read as exact.
+_MGD_RE = re.compile(r"(~)?\s*(\d+(?:\.\d+)?)\s*MGD", re.IGNORECASE)
 
 
 def _features(path: Path) -> list[dict[str, Any]]:
@@ -73,28 +75,47 @@ def _default_watch_items(settings: Settings) -> Path:
 
 def _design_mgd(
     structured: float | None, summary: str, *, subject: str
-) -> tuple[float | None, bool]:
+) -> tuple[float | None, bool, bool]:
     """Resolve a feature's design flow (MGD), preferring the structured, curated value.
 
     ``structured`` is the ``design_flow_mgd`` read from the routing table — the structured,
     document-cited source (the analog of the ECHO ``CWPTotalDesignFlowNmbr`` column). When it
     is present it wins and no prose heuristic runs. Only when it is absent do we fall back to
     the first ``N MGD`` token in the prose ``summary``, logging the fallback so a load-bearing
-    number sourced by regex-over-prose is never silent; ``expanding`` (multiple MGD figures in
-    the summary, e.g. an expansion) is a fallback-only heuristic. Returns ``(mgd, expanding)``.
+    number sourced by regex-over-prose is never silent.
+
+    Returns ``(mgd, expanding, approximate)``: ``expanding`` (multiple MGD figures in the
+    summary, e.g. an expansion) and ``approximate`` (the matched token carried the repo's
+    ``~`` marker, so the value is a transcription estimate) are both fallback-only signals —
+    a curated structured value is exact and non-expanding by construction.
     """
     if structured is not None:
-        return structured, False
-    found = [float(m) for m in _MGD_RE.findall(summary)]
-    if not found:
-        return None, False
+        return structured, False, False
+    matches = list(_MGD_RE.finditer(summary))
+    if not matches:
+        return None, False, False
+    first = matches[0]
+    approximate = bool(first.group(1))  # the "~" prefix, preserved rather than silently dropped
+    mgd = float(first.group(2))
     log.info(
         "hydro.design_flow.regex_fallback",
         subject=subject,
-        mgd=found[0],
-        matches=len(found),
+        mgd=mgd,
+        matches=len(matches),
+        approximate=approximate,
     )
-    return found[0], len(found) > 1
+    return mgd, len(matches) > 1, approximate
+
+
+def _design_flow_citation(base: str, structured_cite: str | None) -> str:
+    """Compose the design-flow evidence citation.
+
+    Appends the authoritative source — the routing table's Ohio EPA NPDES record — when the
+    value came from the structured field, so the ``document`` evidence record names the real
+    source instead of only the generic watch-item id (WS-22, issue 1622). A prose-fallback
+    value (``structured_cite is None``) keeps just the watch-item base label.
+    """
+    return f"{base} — {structured_cite}" if structured_cite is not None else base
 
 
 def _receiving_for(
@@ -138,8 +159,10 @@ def _wwtp_nodes(
             continue
 
         receiving, recv_cite = _receiving_for(fid, routing, settings=settings)
-        structured_mgd = routing.design_flow_for(fid) if routing is not None else None
-        mgd, expanding = _design_mgd(
+        structured_mgd, structured_cite = (
+            routing.design_flow_for(fid) if routing is not None else (None, None)
+        )
+        mgd, expanding, approximate = _design_mgd(
             structured_mgd, str(props.get("summary", "")), subject=title or fid
         )
         lon, lat = geom["coordinates"][0], geom["coordinates"][1]
@@ -153,10 +176,13 @@ def _wwtp_nodes(
         )
         return_flow = None
         if mgd is not None:
+            marker = "~" if approximate else ""
             return_flow = ProvenancedValue.from_document(
                 mgd_to_cfs(mgd),
                 "cfs",
-                citation=f"{fid} ({mgd} MGD design)",
+                citation=_design_flow_citation(
+                    f"{fid} ({marker}{mgd} MGD design)", structured_cite
+                ),
             )
             if expanding:
                 warnings.append(
@@ -202,8 +228,10 @@ def _campus_node(
         if is_reference_site(settings.site):
             warnings.append("BOSC campus: FM-2 discharge not found in watch-items.")
         return None
-    structured_fm2 = routing.forcemain_design_flow("bosc-fm2") if routing is not None else None
-    fm2_mgd, _ = _design_mgd(
+    structured_fm2, structured_fm2_cite = (
+        routing.forcemain_design_flow("bosc-fm2") if routing is not None else (None, None)
+    )
+    fm2_mgd, _expanding, fm2_approx = _design_mgd(
         structured_fm2,
         str((fm2_feat.get("properties") or {}).get("summary", "")),
         subject="bosc-fm2",
@@ -211,10 +239,14 @@ def _campus_node(
 
     return_flow = None
     if fm2_mgd is not None:
+        marker = "~" if fm2_approx else ""
         return_flow = ProvenancedValue.from_document(
             mgd_to_cfs(fm2_mgd),
             "cfs",
-            citation=f"bosc-fm2 ({fm2_mgd} MGD industrial discharge to Lima)",
+            citation=_design_flow_citation(
+                f"bosc-fm2 ({marker}{fm2_mgd} MGD industrial discharge to Lima)",
+                structured_fm2_cite,
+            ),
         )
     else:
         warnings.append("BOSC campus: FM-2 discharge not found in watch-items.")
