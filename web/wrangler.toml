@@ -69,7 +69,8 @@ PUBLIC_CONTACTS_ENABLED = "false"
 # CI vars (pages.yml), not runtime.
 # NOTE: APP_BASE_URL is the live origin AND the OAuth redirect_uri base — it must match a
 # callbackUrl on the Cognito app client, which Pulumi derives from `siteDomain` (deploy/index.ts).
-# Setting APP_BASE_URL here without `siteDomain` set in Pulumi ⇒ redirect_uri mismatch at login.
+# `siteDomain` is set to the.watermark.directory in deploy/Pulumi.prod.yaml — keep the two in sync;
+# a `pulumi up` is required for the callbackUrl change to take effect (redirect_uri mismatch until).
 COGNITO_REGION = "us-east-2"
 COGNITO_USER_POOL_ID = "us-east-2_2d6JQGMLo"                        # pulumi stack output cognitoUserPoolId
 COGNITO_CLIENT_ID = "45rgjn6tneevilq2de14ctk9il"                   # pulumi stack output cognitoClientId

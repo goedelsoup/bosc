@@ -54,6 +54,13 @@ config:
     - the.watermark.directory
   watermark-deploy:cloudflareAccountId: ee26c477941559ca2dcd8af81d232d54
   watermark-deploy:route53ZoneId: Z05836731KT50KWSPRWQG
+  # Canonical production origin. Drives APP_BASE_URL + the Cognito app-client callbackUrls
+  # (https://the.watermark.directory/account/callback) AND the Pages custom-domain + Route53
+  # CNAME (deploy/index.ts). The domain is already live, so BEFORE `pulumi up`: run
+  # `pulumi preview`, `pulumi import` the existing PagesDomain + DNS record if they aren't
+  # already managed here, and confirm the route53ZoneId above owns watermark.directory
+  # (skip/adjust if DNS is on Cloudflare, not Route53).
+  watermark-deploy:siteDomain: the.watermark.directory
   watermark-deploy:tipsAppId:
     secure: v1:eYqJxiRYhiBze7ks:LBbsKxRT4Ri5bRnZB3PrxOD4bwYXzYI=
   watermark-deploy:tipsAppPrivateKey:
