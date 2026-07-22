@@ -1,0 +1,46 @@
+meta:
+  subject: >
+    Canonical filename map for legal/records-legislation/ — Ohio public-records
+    legislation of the 136th General Assembly that amends R.C. 149.43, the statute
+    the corpus's PRR mandamus and voluminous-request methodology rest on.
+  note: >
+    Per chain-of-custody rules (CLAUDE.md → Data discipline), source files keep their
+    as-received names. The Ohio Legislature / LSC serves each bill version under a
+    coded filename ("hb314_02_PH" = House Bill 314, document sequence 02, "PH" = As
+    Passed by the House), retained as-received; the canonical name is recorded here.
+    content_verified is read from the document's own native text layer (the bill body
+    + the "As Passed by the House" running header), NOT the filename.
+
+documents:
+  - filename: hb314_02_PH.pdf
+    canonical: ohio-sub-hb314-136ga-as-passed-house-149-43-2026.pdf
+    type: legislation
+    body: Ohio House of Representatives
+    general_assembly: "136th (2025-2026 Regular Session)"
+    bill: "Sub. H.B. No. 314"
+    version: As Passed by the House
+    version_code: "02_PH"          # LSC document sequence 02; PH = Passed House
+    amends: "R.C. 149.43 (Ohio Public Records Act)"
+    pages: 48
+    bytes: 163996
+    sha256: "1465f0aa947445c7df341ec1610ce71ead6f9f3de8627ca4012d8f7693fbf1c9"
+    content_verified: text-layer   # native text layer present (verified 2026-07-22)
+    primary_sponsors:
+      - "Rep. Isaacsohn"
+      - "Rep. Ray"
+    cosponsors:
+      - "Rep. Abrams"
+      - "Rep. Brennan"
+      - "Rep. Miller, J."
+      - "Rep. Russo"
+      - "Rep. Schmidt"
+      - "Rep. Young"
+    notes: >
+      "Sub." = a substitute bill (the version reported out of committee and passed by
+      the full House, not the as-introduced text). This PDF is the enrolled-House text
+      only; Senate action, any conference version, and the final enacted Act are
+      separate [open] ingest targets. The strike/underline amendatory markup present in
+      the source is lost in the plain text layer — quote line numbers/pages against the
+      PDF, and treat the reviewed reads under
+      data/extracted/legal/records-legislation/ as the digest, not a substitute for the
+      bill text.
