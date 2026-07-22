@@ -9,7 +9,10 @@
         "LOCKHEED CORP",
         "SIKORSKY AIRCRAFT"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Boeing",
@@ -17,7 +20,10 @@
       "patterns": [
         "BOEING"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "RTX (Raytheon Technologies)",
@@ -31,7 +37,10 @@
         "COLLINS AEROSPACE",
         "ROCKWELL COLLINS"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Northrop Grumman",
@@ -40,7 +49,10 @@
         "NORTHROP GRUMMAN",
         "NORTHROP-GRUMMAN"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "General Dynamics (broader)",
@@ -56,7 +68,10 @@
       ],
       "matched_entities": [
         "GENERAL DYNAMICS"
-      ]
+      ],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "L3Harris Technologies",
@@ -67,7 +82,10 @@
         "L3 TECHNOLOGIES",
         "L-3 TECHNOLOGIES"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "BAE Systems",
@@ -75,7 +93,10 @@
       "patterns": [
         "BAE SYSTEMS"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Booz Allen Hamilton",
@@ -85,7 +106,10 @@
         "BOOZ ALLEN",
         "BOOZ-ALLEN"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Leidos",
@@ -93,7 +117,10 @@
       "patterns": [
         "LEIDOS"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "SAIC (Science Applications International)",
@@ -104,7 +131,10 @@
         "SAIC CORPORATION",
         "SAIC CORP"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "CACI International",
@@ -114,7 +144,10 @@
         "CACI INC",
         "CACI, INC"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "ManTech",
@@ -122,7 +155,10 @@
       "patterns": [
         "MANTECH"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Honeywell",
@@ -130,7 +166,10 @@
       "patterns": [
         "HONEYWELL"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Huntington Ingalls Industries",
@@ -140,7 +179,10 @@
         "NEWPORT NEWS SHIPBUILDING",
         "INGALLS SHIPBUILDING"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Textron",
@@ -153,7 +195,10 @@
       "matched_entities": [
         "KAUTEX TEXTRON",
         "TEXTRON"
-      ]
+      ],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Oshkosh Defense",
@@ -163,7 +208,10 @@
         "OSHKOSH CORPORATION",
         "OSHKOSH CORP"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Anduril Industries",
@@ -171,7 +219,10 @@
       "patterns": [
         "ANDURIL"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Palantir Technologies",
@@ -179,7 +230,10 @@
       "patterns": [
         "PALANTIR"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Peraton",
@@ -187,7 +241,10 @@
       "patterns": [
         "PERATON"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     }
   ],
   "prime_owned": [],

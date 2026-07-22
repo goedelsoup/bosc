@@ -129,12 +129,20 @@ def test_cross_feed_references_resolve(bundle: Path) -> None:
             if cand["entity_key"]:
                 assert cand["entity_key"] in entity_keys
 
-    # Defense-contractor matches are entity keys.
+    # Defense-contractor matches are entity keys, and each joined award reconciles with the
+    # entity it resolves through — the entity carries the same federal_obligations (#1662, ME-C).
     if "defense-contractors" in by_name:
         defense = _rows(bundle, by_name["defense-contractors"])[0]
+        ents_by_key = {e["key"]: e for e in _rows(bundle, by_name["entities"])}
         for contractor in defense["contractors"]:
             for key in contractor["matched_entities"]:
                 assert key in entity_keys, f"defense match {key} not in entities"
+            for award in contractor.get("awards", []):
+                assert award["entity_key"] in entity_keys
+                ent = ents_by_key[award["entity_key"]]
+                assert ent["federal_obligations"] == award["total_obligations"], (
+                    f"defense award for {award['entity_key']} disagrees with its entity total"
+                )
 
     # Every record cites an extraction artifact that exists (chain of custody).
     extracted = REPO_ROOT / "data" / "extracted"
@@ -449,7 +457,7 @@ def test_backdrop_staged_site_exports_at_backdrop_tier(
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.31.0"
+    assert manifest["contract_version"] == "1.32.0"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "backdrop", f"{slug} should be a Backdrop site, got {readiness}"
     domains = readiness["domains"]
@@ -480,7 +488,7 @@ def test_findlay_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) 
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.31.0"
+    assert manifest["contract_version"] == "1.32.0"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "case", f"findlay should be a Case site, got {readiness}"
     domains = readiness["domains"]
@@ -522,7 +530,7 @@ def test_wpafb_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) ->
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.31.0"
+    assert manifest["contract_version"] == "1.32.0"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "case", f"wpafb should be a Case site, got {readiness}"
     domains = readiness["domains"]
@@ -564,7 +572,7 @@ def test_troy_piqua_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactor
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.31.0"
+    assert manifest["contract_version"] == "1.32.0"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "case", f"troy-piqua should be a Case site, got {readiness}"
     domains = readiness["domains"]
@@ -607,7 +615,7 @@ def test_sidney_exports_at_backdrop_tier(tmp_path_factory: pytest.TempPathFactor
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.31.0"
+    assert manifest["contract_version"] == "1.32.0"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "backdrop", f"sidney should be a Backdrop site, got {readiness}"
     domains = readiness["domains"]

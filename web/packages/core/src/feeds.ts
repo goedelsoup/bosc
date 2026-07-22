@@ -388,12 +388,40 @@ export interface CandidateItem {
   basis?: string | null;
 }
 
-/** A DoD-prime pattern match (`defense-contractors` feed) — leads, not verdicts. */
+/** One federal fiscal year's prime-award obligations (annual flow, #1662). */
+export interface FederalAnnualFlow {
+  fiscal_year: number;
+  obligations: number;
+}
+/** One PSC/NAICS category's share of a recipient's federal obligations (#1662). */
+export interface FederalCategory {
+  code: string;
+  name: string;
+  obligations: number;
+}
+/** A USASpending federal-award record joined to a matched corpus entity (#1662, ME-C). */
+export interface ContractorAward {
+  entity_key: string;
+  recipient_name: string;
+  uei: string;
+  total_obligations: number;
+  nexus: string; // verified | context | open
+  defense_share?: number | null; // DoD-family / all-agency obligations, 0..1
+  annual_obligations: FederalAnnualFlow[];
+  by_psc: FederalCategory[];
+  by_naics: FederalCategory[];
+}
+
+/** A DoD-prime pattern match (`defense-contractors` feed) — leads, not verdicts. Each match that
+ *  resolves to a USASpending recipient carries the federal dollars it already reached (#1662). */
 export interface DefenseContractor {
   name: string;
   note?: string | null;
   patterns: string[];
   matched_entities: string[]; // entity keys
+  awards?: ContractorAward[];
+  total_obligations?: number | null; // Σ distinct matched awards (USD); null if none
+  nexus?: string | null; // strongest matched nexus (verified > context > open); null if none
 }
 export interface DefenseContractors {
   contractors: DefenseContractor[];

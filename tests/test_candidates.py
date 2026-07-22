@@ -54,3 +54,61 @@ def test_defense_feed_carries_match_provenance_disclaimer() -> None:
     assert MATCH_PROVENANCE_KEY in feed.notes
     note = feed.notes[MATCH_PROVENANCE_KEY]
     assert isinstance(note, str) and "General Dynamics" in note
+
+
+def test_defense_feed_joins_federal_awards() -> None:
+    """A matched entity carrying a stamped UEI joins its USASpending award onto the contractor,
+    rolling up the total + strongest nexus (#1662, ME-C). Unmatched contractors stay dollar-less.
+    """
+    from watermark.candidates import DefenseContractor, DefenseContractorList
+    from watermark.pipeline.entities import Entity, EntityGraph, normalize_name
+    from watermark.site.candidates import export_defense_contractors
+    from watermark.usaspending import (
+        AnnualObligation,
+        CategoryShare,
+        RecipientAward,
+        UsaSpendingInventory,
+    )
+
+    key = normalize_name("GENERAL DYNAMICS CORPORATION")
+    ent = Entity(key=key, kind="corporate", classification="corporate")
+    ent.variants.add("GENERAL DYNAMICS CORPORATION")
+    ent.uei = "VF58HFRNGEL8"  # as the federal-award enrichment stamps it
+    graph = EntityGraph(entities={key: ent})
+
+    dcl = DefenseContractorList(
+        defense_contractors=[
+            DefenseContractor(name="General Dynamics", patterns=["GENERAL DYNAMICS CORPORATION"]),
+            DefenseContractor(name="Boeing", patterns=["BOEING"]),  # no corpus match
+        ]
+    )
+    awards = UsaSpendingInventory(
+        meta={},
+        records=[
+            RecipientAward(
+                watchlist_name="General Dynamics Corp",
+                recipient_id="gd-P",
+                uei="VF58HFRNGEL8",
+                recipient_name="GENERAL DYNAMICS CORPORATION",
+                total_obligations=301e9,
+                nexus="verified",
+                defense_share=0.88,
+                annual_obligations=[AnnualObligation(fiscal_year=2025, obligations=1.0)],
+                by_psc=[CategoryShare(code="2350", name="TANKS", obligations=2.0)],
+            )
+        ],
+    )
+
+    feed = export_defense_contractors(dcl, egraph=graph, awards=awards)
+    by_name = {c.name: c for c in feed.contractors}
+    gd = by_name["General Dynamics"]
+    assert gd.total_obligations == 301e9 and gd.nexus == "verified"
+    assert len(gd.awards) == 1
+    award = gd.awards[0]
+    assert award.entity_key == key and award.uei == "VF58HFRNGEL8"
+    assert award.defense_share == 0.88 and award.annual_obligations and award.by_psc
+    # A contractor with no matched recipient carries no dollars.
+    assert by_name["Boeing"].awards == [] and by_name["Boeing"].total_obligations is None
+    # Without an awards inventory the join is a no-op (a peer with no watchlist).
+    peer = export_defense_contractors(dcl, egraph=graph, awards=None)
+    assert all(c.total_obligations is None for c in peer.contractors)

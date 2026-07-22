@@ -224,6 +224,12 @@ class Settings(BaseSettings):
     usaspending_base_url: str = "https://api.usaspending.gov/api/v2"
     usaspending_offline: bool = False  # serve cached API responses only; never fetch
     usaspending_request_timeout_s: float = 60.0
+    # Beyond the all-time total, resolve an annual flow + PSC/NAICS category mix + a
+    # defense-vs-civilian awarding-agency split for each recipient (#1662, ME-C stretch).
+    # Off drops to the single lifetime scalar; the annual span is how many trailing federal
+    # fiscal years the flow series covers.
+    usaspending_breakdown: bool = True
+    usaspending_annual_span_years: int = 10
 
     # --- Air (AERMOD preprocessing connectors; epic #1172, #1179) --------------
     # AERMET (meteorology) + AERMAP (terrain) input connectors, following the same

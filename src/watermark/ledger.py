@@ -241,7 +241,7 @@ def _burden_drainage(settings: Settings) -> BurdenItem | None:
 def _burden_federal(settings: Settings) -> BurdenItem | None:
     from watermark.usaspending import load_inventory as load_awards
 
-    inv = load_awards(settings.reference_dir)
+    inv = load_awards(settings.reference_dir, settings.site)
     if inv is None:
         return None
     gdls = {r.watchlist_name: r for r in inv.records}.get("General Dynamics Land Systems Inc.")

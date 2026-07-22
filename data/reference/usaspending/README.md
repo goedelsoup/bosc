@@ -72,12 +72,13 @@ corroborating the GLEIF ownership chain (`data/reference/gleif/`).
 
 ### `usaspending` — Federal-Award Footprint (USASpending.gov)
 
-Source: USASpending.gov API (api.usaspending.gov), U.S. Treasury · License: U.S. Government work (public domain) · Access: public · Site scope: basin-shared · Refresh: on-demand
+Source: USASpending.gov API (api.usaspending.gov), U.S. Treasury · License: U.S. Government work (public domain) · Access: public · Site scope: slug-scoped · Refresh: on-demand
 
 Regenerate: `watermark usaspending`
 
 | file | type | lfs |
 | --- | --- | --- |
 | `reference/usaspending/awards.yaml` | application/x-yaml | no |
+| `reference/usaspending/{site}/awards.yaml` | application/x-yaml | no |
 
 <!-- catalog:end -->

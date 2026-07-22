@@ -1,16 +1,22 @@
 meta:
-  subject: USASpending federal-award totals — corridor real-party-in-interest
+  subject: USASpending federal-award watchlist — corridor real-party-in-interest
+  site: lima
   source: USASpending.gov API (api.usaspending.gov), U.S. Treasury; public domain
   award_window: all-time prime-award obligations (year=all)
+  breakdown: true
   recipient_count: 5
   verified_nexus_count: 3
   caveats:
   - Totals are all-time prime-award obligations as reported by USASpending (total_transaction_amount,
     year=all), recorded verbatim — not BOSC estimates.
   - Recipients are pinned by recipient_id + UEI; a UEI mismatch drops to a lead.
-  - The `nexus` tag distinguishes a verified corridor tie from context/open — the
-    Amazon corridor recipient is a warehouse, NOT the data center, and Google is linked
-    only to the separate Scioto Project Dazzler, not the Lima campus.
+  - The `nexus` tag distinguishes a verified corridor tie from context/open.
+  - The annual flow, PSC/NAICS mix, and defense-vs-civilian split are verbatim USASpending
+    category rollups over the recorded window; the split classifies the DoD toptier
+    (and military departments) as defense, all other agencies as civilian.
+  - 'The Lima corridor nexus is precise: the Amazon corridor land recipient is a WAREHOUSE,
+    not the data center, and Google is linked only to the separate Scioto Project
+    Dazzler, not the Lima campus (tagged `context`/`open` accordingly).'
 records:
 - watchlist_name: General Dynamics Land Systems Inc.
   recipient_id: 99938bc0-e262-06ff-9f94-386fd3da88dc-C
@@ -19,13 +25,89 @@ records:
   lei: 875500ULXB4CYQSJVA03
   duns: '131266926'
   recipient_level: C
-  total_obligations: 33579510703.85
+  total_obligations: 33710781629.02
   award_window: all-time (year=all)
   parent_name: GENERAL DYNAMICS LAND SYSTEMS INC.
   parent_uei: HAWKSQF848W7
   nexus: verified
   note: 'JSMC / Lima Army Tank Plant operator (Allen County RSEI #3 facility) — the
     corridor''s federal defense nexus. GLEIF LEI 875500ULXB4CYQSJVA03.'
+  breakdown_window: 2007-10-01..2026-09-30
+  annual_obligations:
+  - fiscal_year: 2017
+    obligations: 1824756170.01
+  - fiscal_year: 2018
+    obligations: 2642850669.95
+  - fiscal_year: 2019
+    obligations: 2343745575.82
+  - fiscal_year: 2020
+    obligations: 2190728525.66
+  - fiscal_year: 2021
+    obligations: 2512494988.24
+  - fiscal_year: 2022
+    obligations: 3954276191.28
+  - fiscal_year: 2023
+    obligations: 3523195501.64
+  - fiscal_year: 2024
+    obligations: 2649485114.46
+  - fiscal_year: 2025
+    obligations: 1526659770.09
+  - fiscal_year: 2026
+    obligations: 1151985809.12
+  by_psc:
+  - code: '2350'
+    name: COMBAT, ASSAULT, AND TACTICAL VEHICLES, TRACKED
+    obligations: 14264345858.81
+  - code: '2355'
+    name: COMBAT, ASSAULT, AND TACTICAL VEHICLES, WHEELED
+    obligations: 9857930135.14
+  - code: K010
+    name: MODIFICATION OF EQUIPMENT- WEAPONS
+    obligations: 1934691374.23
+  - code: R425
+    name: 'SUPPORT- PROFESSIONAL: ENGINEERING/TECHNICAL'
+    obligations: 1241395880.64
+  - code: R499
+    name: 'SUPPORT- PROFESSIONAL: OTHER'
+    obligations: 1220304448.84
+  - code: AC41
+    name: 'R&D- DEFENSE SYSTEM: TANK/AUTOMOTIVE (BASIC RESEARCH)'
+    obligations: 770601232.24
+  - code: '2590'
+    name: MISCELLANEOUS VEHICULAR COMPONENTS
+    obligations: 477124904.48
+  - code: AC13
+    name: NATIONAL DEFENSE R&D SERVICES; DEPARTMENT OF DEFENSE - MILITARY; EXPERIMENTAL
+      DEVELOPMENT
+    obligations: 465220000.0
+  by_naics:
+  - code: '336992'
+    name: Military Armored Vehicle, Tank, and Tank Component Manufacturing
+    obligations: 29594887137.08
+  - code: '541330'
+    name: Engineering Services
+    obligations: 2057892488.72
+  - code: '811111'
+    name: General Automotive Repair
+    obligations: 398740588.7
+  - code: '561990'
+    name: All Other Support Services
+    obligations: 328493501.26
+  - code: '561210'
+    name: Facilities Support Services
+    obligations: 254719514.87
+  - code: '332994'
+    name: Small Arms, Ordnance, and Ordnance Accessories Manufacturing
+    obligations: 140744199.35
+  - code: '336999'
+    name: All Other Transportation Equipment Manufacturing
+    obligations: 118602719.24
+  - code: '541614'
+    name: Process, Physical Distribution, and Logistics Consulting Services
+    obligations: 107514065.0
+  defense_obligations: 33710780282.02
+  civilian_obligations: 1347.0
+  defense_share: 0.9999999600424572
 - watchlist_name: General Dynamics Corp
   recipient_id: f58f9621-d1de-5f11-1041-3c65987927ff-P
   uei: VF58HFRNGEL8
@@ -33,7 +115,7 @@ records:
   lei: 9C1X8XOOTYY2FNYTVH06
   duns: 001381284
   recipient_level: P
-  total_obligations: 299067439090.79
+  total_obligations: 301282862963.3
   award_window: all-time (year=all)
   parent_name: GENERAL DYNAMICS CORP
   parent_uei: VF58HFRNGEL8
@@ -41,6 +123,81 @@ records:
   note: Ultimate parent of the JSMC operator (parent-level total spans all GD subsidiaries).
     GLEIF LEI 9C1X8XOOTYY2FNYTVH06; the GDLS profile independently records GDLS ->
     GD Corp, corroborating the GLEIF ownership chain.
+  breakdown_window: 2007-10-01..2026-09-30
+  annual_obligations:
+  - fiscal_year: 2017
+    obligations: 15412823814.1
+  - fiscal_year: 2018
+    obligations: 17638251347.8
+  - fiscal_year: 2019
+    obligations: 20961891565.87
+  - fiscal_year: 2020
+    obligations: 25517849807.54
+  - fiscal_year: 2021
+    obligations: 20464188035.75
+  - fiscal_year: 2022
+    obligations: 24686759579.18
+  - fiscal_year: 2023
+    obligations: 24360591203.47
+  - fiscal_year: 2024
+    obligations: 3403661449.88
+  - fiscal_year: 2025
+    obligations: 3097347520.22
+  - fiscal_year: 2026
+    obligations: 4504424426.33
+  by_psc:
+  - code: '1905'
+    name: COMBAT SHIPS AND LANDING VESSELS
+    obligations: 90275167874.22
+  - code: '2350'
+    name: COMBAT, ASSAULT, AND TACTICAL VEHICLES, TRACKED
+    obligations: 22636339002.98
+  - code: '1904'
+    name: SUBMARINES
+    obligations: 21327228442.58
+  - code: '2355'
+    name: COMBAT, ASSAULT, AND TACTICAL VEHICLES, WHEELED
+    obligations: 10618292530.94
+  - code: R499
+    name: 'SUPPORT- PROFESSIONAL: OTHER'
+    obligations: 9594985499.42
+  - code: '1915'
+    name: CARGO AND TANKER VESSELS
+    obligations: 9155333824.05
+  - code: '5895'
+    name: MISCELLANEOUS COMMUNICATION EQUIPMENT
+    obligations: 9038951460.39
+  - code: R425
+    name: 'SUPPORT- PROFESSIONAL: ENGINEERING/TECHNICAL'
+    obligations: 8127773026.72
+  by_naics:
+  - code: '336611'
+    name: Ship Building and Repairing
+    obligations: 119419044393.21
+  - code: '541330'
+    name: Engineering Services
+    obligations: 41979270219.83
+  - code: '336992'
+    name: Military Armored Vehicle, Tank, and Tank Component Manufacturing
+    obligations: 37856743319.62
+  - code: '541512'
+    name: Computer Systems Design Services
+    obligations: 13376211368.17
+  - code: '332993'
+    name: Ammunition (except Small Arms) Manufacturing
+    obligations: 11301128521.33
+  - code: '541513'
+    name: Computer Facilities Management Services
+    obligations: 4900845902.29
+  - code: '334111'
+    name: Electronic Computer Manufacturing
+    obligations: 4508696561.44
+  - code: '541519'
+    name: Other Computer Related Services
+    obligations: 4368899362.08
+  defense_obligations: 264028476971.96
+  civilian_obligations: 37254385991.33998
+  defense_share: 0.8763474775003116
 - watchlist_name: Amazon.com Services LLC
   recipient_id: 06d55b8d-0bcb-c654-8213-1001f38dd3d2-C
   uei: TMKBFBRHFKH3
@@ -48,7 +205,7 @@ records:
   lei: null
   duns: '128990418'
   recipient_level: C
-  total_obligations: 726730.83
+  total_obligations: 920665.88
   award_window: all-time (year=all)
   parent_name: AMAZON.COM, INC.
   parent_uei: G5F2C46HBCM3
@@ -56,6 +213,84 @@ records:
   note: The corridor land recipient (deed instrument 202511180011830, Nov 2025) —
     an Amazon.com WAREHOUSE, NOT the data center. Negligible federal-award footprint;
     distinct from Amazon Web Services (the federal cloud arm) below.
+  breakdown_window: 2007-10-01..2026-09-30
+  annual_obligations:
+  - fiscal_year: 2017
+    obligations: 0.0
+  - fiscal_year: 2018
+    obligations: 0.0
+  - fiscal_year: 2019
+    obligations: 0.0
+  - fiscal_year: 2020
+    obligations: 65762.0
+  - fiscal_year: 2021
+    obligations: 79896.26
+  - fiscal_year: 2022
+    obligations: 39729.35
+  - fiscal_year: 2023
+    obligations: 25172.93
+  - fiscal_year: 2024
+    obligations: 256565.2
+  - fiscal_year: 2025
+    obligations: 202982.66
+  - fiscal_year: 2026
+    obligations: 250557.48
+  by_psc:
+  - code: '7510'
+    name: OFFICE SUPPLIES
+    obligations: 581456.88
+  - code: '6530'
+    name: HOSPITAL FURNITURE, EQUIPMENT, UTENSILS, AND SUPPLIES
+    obligations: 43577.0
+  - code: '7520'
+    name: OFFICE DEVICES AND ACCESSORIES
+    obligations: 37446.99
+  - code: '8415'
+    name: CLOTHING, SPECIAL PURPOSE
+    obligations: 36745.01
+  - code: R499
+    name: 'SUPPORT- PROFESSIONAL: OTHER'
+    obligations: 25200.0
+  - code: 7E21
+    name: IT AND TELECOM - MOBILE DEVICE PRODUCTS (HARDWARE AND PERPETUAL LICENSE
+      SOFTWARE)
+    obligations: 22038.3
+  - code: '5820'
+    name: RADIO AND TELEVISION COMMUNICATION EQUIPMENT, EXCEPT AIRBORNE
+    obligations: 21896.75
+  - code: R699
+    name: 'SUPPORT- ADMINISTRATIVE: OTHER'
+    obligations: 18407.56
+  by_naics:
+  - code: '424120'
+    name: Stationery and Office Supplies Merchant Wholesalers
+    obligations: 500818.71
+  - code: '339940'
+    name: Office Supplies (except Paper) Manufacturing
+    obligations: 47873.35
+  - code: '333413'
+    name: Industrial and Commercial Fan and Blower and Air Purification Equipment
+      Manufacturing
+    obligations: 43577.0
+  - code: '423430'
+    name: Computer and Computer Peripheral Equipment and Software Merchant Wholesalers
+    obligations: 37231.25
+  - code: '523910'
+    name: Miscellaneous Intermediation
+    obligations: 25960.0
+  - code: '334290'
+    name: Other Communications Equipment Manufacturing
+    obligations: 25200.0
+  - code: '425120'
+    name: Wholesale Trade Agents and Brokers
+    obligations: 24647.6
+  - code: '334220'
+    name: Radio and Television Broadcasting and Wireless Communications Equipment
+      Manufacturing
+    obligations: 21896.75
+  defense_obligations: 24647.6
+  civilian_obligations: 896018.28
+  defense_share: 0.02677149282430234
 - watchlist_name: Amazon Web Services, Inc.
   recipient_id: 645df5f2-66e3-8d2b-a612-3bff6ed3da30-C
   uei: NQEWN6C1LSU5
@@ -63,13 +298,92 @@ records:
   lei: null
   duns: '965048981'
   recipient_level: C
-  total_obligations: 931826854.75
+  total_obligations: 1074599789.36
   award_window: all-time (year=all)
   parent_name: AMAZON.COM, INC.
   parent_uei: G5F2C46HBCM3
   nexus: context
   note: Amazon's federal cloud-contracting arm — context for the parent group's federal
     entanglement, NOT the corridor land recipient.
+  breakdown_window: 2007-10-01..2026-09-30
+  annual_obligations:
+  - fiscal_year: 2017
+    obligations: 659722.85
+  - fiscal_year: 2018
+    obligations: 1007186.74
+  - fiscal_year: 2019
+    obligations: 2147953.32
+  - fiscal_year: 2020
+    obligations: 20539449.49
+  - fiscal_year: 2021
+    obligations: 39217948.22
+  - fiscal_year: 2022
+    obligations: 27282214.67
+  - fiscal_year: 2023
+    obligations: 98638078.07
+  - fiscal_year: 2024
+    obligations: 245886384.54
+  - fiscal_year: 2025
+    obligations: 314481892.96
+  - fiscal_year: 2026
+    obligations: 323621934.53
+  by_psc:
+  - code: DB10
+    name: 'IT AND TELECOM - COMPUTE AS A SERVICE: MAINFRAME/SERVERS'
+    obligations: 658691993.27
+  - code: DA01
+    name: IT AND TELECOM - BUSINESS APPLICATION/APPLICATION DEVELOPMENT SUPPORT SERVICES
+      (LABOR)
+    obligations: 106977478.33
+  - code: R608
+    name: 'SUPPORT- ADMINISTRATIVE: TRANSLATION AND INTERPRETING'
+    obligations: 48126560.63
+  - code: DB02
+    name: IT AND TELECOM - COMPUTE SUPPORT SERVICES, NON-HPC (LABOR)
+    obligations: 39769258.52
+  - code: 7G21
+    name: 'IT AND TELECOM - NETWORK: DIGITAL NETWORK PRODUCTS (HARDWARE AND PERPETUAL
+      LICENSE SOFTWARE)'
+    obligations: 33203070.71
+  - code: 7C20
+    name: IT AND TELECOM - DATA CENTER PRODUCTS (HARDWARE AND PERPETUAL LICENSE SOFTWARE)
+    obligations: 20394450.8
+  - code: DH10
+    name: 'IT AND TELECOM - PLATFORM AS A SERVICE: DATABASE, MAINFRAME, MIDDLEWARE'
+    obligations: 18573150.4
+  - code: D305
+    name: IT AND TELECOM – TELEPROCESSING, TIMESHARE, CLOUD COMPUTING, AND HIGH PERFORMANCE
+      COMPUTING
+    obligations: 18554791.67
+  by_naics:
+  - code: '518210'
+    name: Computing Infrastructure Providers, Data Processing, Web Hosting, and Related
+      Services
+    obligations: 984098503.61
+  - code: '541512'
+    name: Computer Systems Design Services
+    obligations: 83554207.96
+  - code: '541511'
+    name: Custom Computer Programming Services
+    obligations: 6030809.15
+  - code: '541519'
+    name: Other Computer Related Services
+    obligations: 239760.44
+  - code: '339113'
+    name: Surgical Appliance and Supplies Manufacturing
+    obligations: 107947.12
+  - code: '519130'
+    name: Internet Publishing and Broadcasting and Web Search Portals
+    obligations: 55500.0
+  - code: '453210'
+    name: Office Supplies and Stationery Stores
+    obligations: 43620.41
+  - code: '454110'
+    name: Electronic Shopping and Mail-Order Houses
+    obligations: 42446.96
+  defense_obligations: 842502674.65
+  civilian_obligations: 232097114.71
+  defense_share: 0.7840152985250163
 - watchlist_name: Google LLC
   recipient_id: eddf926f-f4fe-e72c-14f1-ab22d5925171-C
   uei: NQV3T7DDKNT6
@@ -85,4 +399,81 @@ records:
   note: Linked to the SEPARATE Project Dazzler (Scioto County) via a google.com applicant
     email, NOT to the Lima corridor campus. The corridor data-center end-user attribution
     remains open (Google attribution rests on the AEDG release, not yet in the corpus).
+  breakdown_window: 2007-10-01..2026-09-30
+  annual_obligations:
+  - fiscal_year: 2017
+    obligations: 41307.18
+  - fiscal_year: 2018
+    obligations: -44899.26
+  - fiscal_year: 2019
+    obligations: 0.0
+  - fiscal_year: 2020
+    obligations: 64696.54
+  - fiscal_year: 2021
+    obligations: 11117.94
+  - fiscal_year: 2022
+    obligations: 31822.0
+  - fiscal_year: 2023
+    obligations: 1361057.7
+  - fiscal_year: 2024
+    obligations: 6001790.75
+  - fiscal_year: 2025
+    obligations: 3949282.26
+  - fiscal_year: 2026
+    obligations: 7989432.64
+  by_psc:
+  - code: DA10
+    name: IT AND TELECOM - BUSINESS APPLICATION/APPLICATION DEVELOPMENT SOFTWARE AS
+      A SERVICE
+    obligations: 15906900.99
+  - code: R499
+    name: 'SUPPORT- PROFESSIONAL: OTHER'
+    obligations: 1024060.33
+  - code: R701
+    name: 'SUPPORT- MANAGEMENT: ADVERTISING'
+    obligations: 524911.74
+  - code: '7030'
+    name: INFORMATION TECHNOLOGY SOFTWARE
+    obligations: 294949.52
+  - code: '5895'
+    name: MISCELLANEOUS COMMUNICATION EQUIPMENT
+    obligations: 72853.5
+  - code: '7021'
+    name: INFORMATION TECHNOLOGY CENTRAL PROCESSING UNIT (CPU, COMPUTER), DIGITAL
+    obligations: 54510.0
+  - code: '7045'
+    name: INFORMATION TECHNOLOGY SUPPLIES
+    obligations: 38180.0
+  - code: '7435'
+    name: OFFICE INFORMATION SYSTEM EQUIPMENT
+    obligations: 37500.0
+  by_naics:
+  - code: '518210'
+    name: Computing Infrastructure Providers, Data Processing, Web Hosting, and Related
+      Services
+    obligations: 15906900.99
+  - code: '511210'
+    name: Software Publishers
+    obligations: 906617.92
+  - code: '541810'
+    name: Advertising Agencies
+    obligations: 614030.46
+  - code: '519130'
+    name: Internet Publishing and Broadcasting and Web Search Portals
+    obligations: 210866.14
+  - code: '541199'
+    name: All Other Legal Services
+    obligations: 202000.0
+  - code: '423430'
+    name: Computer and Computer Peripheral Equipment and Software Merchant Wholesalers
+    obligations: 69536.6
+  - code: '517410'
+    name: Satellite Telecommunications
+    obligations: 61900.0
+  - code: '541519'
+    name: Other Computer Related Services
+    obligations: 54510.0
+  defense_obligations: 170802.93
+  civilian_obligations: 73351158.84000002
+  defense_share: 0.0023231552299206276
 leads: []
