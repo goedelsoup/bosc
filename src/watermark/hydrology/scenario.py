@@ -25,7 +25,12 @@ from watermark.hydrology.balance import (
 )
 from watermark.hydrology.connectors.nwis import DISCHARGE_CFS, fetch_streamflow
 from watermark.hydrology.cooling import derive_cooling_basis
-from watermark.hydrology.lowflow import low_flow_context, low_flow_for, seasonal_low_flows
+from watermark.hydrology.lowflow import (
+    low_flow_context,
+    low_flow_for,
+    seasonal_low_flows,
+    summer_season_months,
+)
 from watermark.hydrology.model import (
     CoolingBasis,
     MonthlyWithdrawal,
@@ -211,20 +216,28 @@ def evaluate_seasonal(
 ) -> SeasonalWithdrawal | None:
     """Screen the consumptive draw against the receiving water's *seasonal* low flow.
 
-    The growing season is the months where reference ET0 exceeds precipitation (from
-    the committed NASA POWER normals + FAO-56 ET0). In those months the draw is read
-    against the cited **summer 30Q10**; otherwise against the annual **7Q10**. All
-    low-flow figures are cited; nothing is interpolated to a per-month statistic we do
-    not have. Returns ``None`` if the climate/ET inputs are absent.
+    Two distinct seasons drive this screen, kept separate (#1624):
 
-    For a ``hybrid_adiabatic`` ``basis`` (#1058) the draw itself is **month-varying**:
-    the warm-season (assist) rate — ``basis.consumptive_high`` — applies in the ET0 >
-    precip months and ~0 elsewhere, instead of smearing an annual average across the
-    year. Constant-draw archetypes ignore ``basis`` and use ``consumptive_cfs`` as is.
+    * The **regulatory summer season** — a fixed permit calendar window (Ohio EPA: May 1-
+      Oct 31, cited via :func:`watermark.hydrology.lowflow.summer_season_months`) — SELECTS
+      the design low flow: the cited **summer 30Q10** in-season, the annual **7Q10**
+      otherwise. All low-flow figures are cited; nothing is interpolated to a per-month
+      statistic we do not have.
+    * The **climatic growing season** — the months where reference ET0 exceeds precipitation
+      (committed NASA POWER normals + FAO-56 ET0) — is reported only as a diagnostic
+      (``growing_season`` per month, ``growing_season_months``); it does **not** select the
+      design low flow. Earlier this heuristic *was* the switch, which could apply the summer
+      statistic in the wrong months (a dry warm April, a wet July).
+
+    For a ``hybrid_adiabatic`` ``basis`` (#1058) the draw itself is **month-varying**: the
+    warm-season (assist) rate — ``basis.consumptive_high`` — applies in the ET0 > precip
+    months and ~0 elsewhere, instead of smearing an annual average across the year. That
+    assist is a physical response to atmospheric demand, so it stays keyed on the *growing*
+    season, not the regulatory window. Constant-draw archetypes ignore ``basis`` and use
+    ``consumptive_cfs`` as is. Returns ``None`` if the climate/ET inputs are absent.
     """
     settings = settings or get_settings()
     from watermark.hydrology import climate, et
-    from watermark.sites import active_profile
 
     hybrid = basis is not None and basis.cooling_model == CoolingModelType.HYBRID_ADIABATIC
     # The warm-season assist rate; the seasonal headline for a hybrid facility.
@@ -244,6 +257,9 @@ def evaluate_seasonal(
         return None
     summer_30q10 = ctx.get("thirty_q10_summer_cfs")
     one_q10 = ctx.get("one_q10_cfs")
+    # The regulatory summer window (cited permit calendar, Ohio EPA May-Oct) — selects the
+    # design low flow. NOT the ET0 > precip growing season, which is only a diagnostic (#1624).
+    summer_months = set(summer_season_months(settings=settings))
 
     months: list[MonthlyWithdrawal] = []
     growing: list[str] = []
@@ -251,15 +267,19 @@ def evaluate_seasonal(
         e = et0.monthly_mm_day[m]
         p = precip.monthly[m]
         net = round(e - p, 3)
+        # Climatic growing season (diagnostic only): the months reference ET exceeds rainfall.
         is_growing = net > 0
         if is_growing:
             growing.append(m)
-        # Growing-season months use the cited summer design low flow if available.
-        if is_growing and summer_30q10 is not None:
+        # The design low flow is selected by the REGULATORY summer season (the permit's fixed
+        # calendar window), not the climatic growing season (#1624). They coincide for Lima but
+        # need not: a wet July stays a summer-30Q10 month; a dry warm April stays a 7Q10 month.
+        if m in summer_months and summer_30q10 is not None:
             floor, floor_basis = summer_30q10, "30Q10 summer"
         else:
             floor, floor_basis = annual_7q10, "7Q10 annual"
-        # Hybrid (#1058): the evaporative assist runs only in ET0 > precip months.
+        # Hybrid (#1058): the evaporative assist is a physical response to atmospheric demand,
+        # so it runs in the ET0 > precip (growing-season) months — independent of the floor switch.
         month_cfs = (warm_cfs if is_growing else 0.0) if hybrid else consumptive_cfs
         multiple = round(month_cfs / floor, 1) if floor and floor > 0 else None
         months.append(

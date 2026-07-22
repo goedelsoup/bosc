@@ -9,7 +9,7 @@ import yaml
 
 from watermark.config import Settings
 from watermark.hydrology import report, scenario
-from watermark.hydrology.lowflow import low_flow_for
+from watermark.hydrology.lowflow import OEPA_SUMMER_MONTHS, low_flow_for, summer_season_months
 from watermark.pipeline.hydrology import run_scenarios
 
 
@@ -105,9 +105,11 @@ def test_seasonal_multiples_use_cited_floors(hydro_settings: Settings) -> None:
     assert sw.one_q10_cfs == pytest.approx(0.0)
     assert sw.annual_multiple == pytest.approx(24.3, abs=0.1)
     assert sw.summer_multiple == pytest.approx(3.0, abs=0.1)
-    # Growing-season months read against the 30Q10; off-season against the 7Q10.
+    # The design low flow is selected by the cited regulatory summer window (not ET0 > precip):
+    # summer-season months read against the 30Q10, the rest against the annual 7Q10 (#1624).
+    summer = set(summer_season_months(settings=hydro_settings))
     for m in sw.months:
-        if m.growing_season:
+        if m.month in summer:
             assert m.low_flow_basis == "30Q10 summer" and m.low_flow_cfs == pytest.approx(1.6)
         else:
             assert m.low_flow_basis == "7Q10 annual" and m.low_flow_cfs == pytest.approx(0.2)
@@ -118,3 +120,45 @@ def test_seasonal_no_fabricated_monthly_statistic(hydro_settings: Settings) -> N
     sw = scenario.evaluate_seasonal(4.851, settings=hydro_settings)
     assert sw is not None
     assert {m.low_flow_basis for m in sw.months} == {"30Q10 summer", "7Q10 annual"}
+
+
+def test_summer_season_is_cited_oepa_window(hydro_settings: Settings) -> None:
+    """The floor switch is the cited Ohio EPA permit window (May-Oct), inherited by Lima."""
+    assert OEPA_SUMMER_MONTHS == ("MAY", "JUN", "JUL", "AUG", "SEP", "OCT")
+    # Lima sets no per-site override, so it inherits the cited Ohio EPA default.
+    assert summer_season_months(settings=hydro_settings) == OEPA_SUMMER_MONTHS
+
+
+def test_floor_keyed_on_permit_window_not_growing_season(
+    hydro_settings: Settings, tmp_path: Path
+) -> None:
+    """A drenched July (ET0 < precip) is still a summer-30Q10 month — the switch is the
+    regulatory permit window, not the ET0 > precip heuristic (finding WS-24 / #1624)."""
+    # Mirror the real reference tree into a tmp data dir, then make July wet enough that
+    # reference ET0 falls below rainfall — decoupling the climatic season from the calendar.
+    dst_ref = tmp_path / "reference" / "hydrology"
+    dst_ref.mkdir(parents=True)
+    src_ref = hydro_settings.data_dir / "reference" / "hydrology"
+    for f in src_ref.glob("*.yaml"):
+        (dst_ref / f.name).write_text(f.read_text(encoding="utf-8"), encoding="utf-8")
+    clim_path = dst_ref / "nasa-power-climatology.yaml"
+    doc = yaml.safe_load(clim_path.read_text(encoding="utf-8"))
+    for p in doc["climatology"]["parameters"]:
+        if p["parameter"] == "PRECTOTCORR":
+            p["monthly"]["JUL"] = 20.0  # drench July: precip >> ET0 → not growing
+    clim_path.write_text(yaml.safe_dump(doc), encoding="utf-8")
+
+    s = Settings(
+        data_dir=tmp_path,
+        hydro_offline=True,
+        hydro_fixtures_dir=hydro_settings.hydro_fixtures_dir,
+    )
+    sw = scenario.evaluate_seasonal(4.851, settings=s)
+    assert sw is not None
+    jul = next(m for m in sw.months if m.month == "JUL")
+    # Climatically no longer a growing month — the old heuristic would have picked the 7Q10.
+    assert jul.growing_season is False
+    assert "JUL" not in sw.growing_season_months
+    # But July is inside the permit summer window, so the summer 30Q10 still governs.
+    assert jul.low_flow_basis == "30Q10 summer"
+    assert jul.low_flow_cfs == pytest.approx(1.6)

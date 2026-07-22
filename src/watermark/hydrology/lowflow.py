@@ -17,6 +17,31 @@ import yaml
 
 from watermark.config import Settings, get_settings
 from watermark.hydrology.model import ProvenancedValue
+from watermark.sites import active_profile
+
+# Ohio EPA regulatory SUMMER season — the fixed calendar window the summer design low flow
+# (30Q10 summer) governs. This is the window that *selects* the design low flow (summer 30Q10
+# in-season, annual 7Q10 otherwise), distinct from the climatic ET0 > precip growing season the
+# seasonal scenario reports only as a diagnostic (finding WS-24 / issue 1624). Cited: Ohio EPA
+# NPDES permit 2PH00006 (American II WWTP), Part II standard-conditions definitions — "'Summer'
+# shall be considered to be the period from May 1 through October 31"; "'Winter' ... November 1
+# through April 30." This is boilerplate Ohio EPA permit language, so it applies network-wide for
+# Ohio sites; a non-Ohio site pins its own window on its SiteProfile.
+OEPA_SUMMER_MONTHS: tuple[str, ...] = ("MAY", "JUN", "JUL", "AUG", "SEP", "OCT")
+
+
+def summer_season_months(*, settings: Settings | None = None) -> tuple[str, ...]:
+    """The regulatory summer-season months for the active site (Ohio EPA May-Oct by default).
+
+    This is the fixed permit calendar window that selects the design low flow — the cited
+    summer 30Q10 in-season, the annual 7Q10 otherwise — **not** the climatic ET0 > precip
+    growing season, which the seasonal scenario reports separately as a diagnostic (#1624). A
+    site whose permit defines a different window overrides via ``SiteProfile.summer_season_months``;
+    an empty override inherits the cited Ohio EPA default (:data:`OEPA_SUMMER_MONTHS`).
+    """
+    settings = settings or get_settings()
+    override = active_profile(settings).summer_season_months
+    return tuple(str(m).upper() for m in override) if override else OEPA_SUMMER_MONTHS
 
 
 def _normalize(water: str) -> str:
