@@ -51,9 +51,13 @@ def test_compute_command_renders_all_three_water_bound_cases(
     """
     from watermark.config import get_settings
 
-    # monkeypatch records + restores WATERMARK_SITE at teardown; the `--site` callback is the
-    # environment writer under test. get_settings is lru_cache(maxsize=1), so clear it too.
-    monkeypatch.delenv("WATERMARK_SITE", raising=False)
+    # The `--site` callback writes os.environ["WATERMARK_SITE"] directly, so monkeypatch must
+    # OWN the var (setenv, not delenv) for its teardown to undo that write — delenv on an unset
+    # var registers no restoration, so the last `--site` value would LEAK to later tests. The
+    # placeholder value is inert (every invoke passes `--site` explicitly, which wins), and
+    # teardown restores WATERMARK_SITE to its original (unset) state. get_settings is
+    # lru_cache(maxsize=1), so clear it too.
+    monkeypatch.setenv("WATERMARK_SITE", "lima")
 
     def run(slug: str) -> str:
         get_settings.cache_clear()  # force `--site` to re-resolve per invoke
