@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-22T17:41:51.438078+00:00'
+reconciled_at: '2026-07-22T18:28:46.433055+00:00'
 entries:
   aedg:
     exists: true
@@ -1070,6 +1070,16 @@ entries:
     asof: null
     stale: false
     site_scope: basin-shared
+  thermal-ris-tolerances:
+    exists: true
+    sha256: 086d35cec2809069f67596fc44bf96ce7c96885b3ea8afed13dbbed458d34cb0
+    size_bytes: 18725
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: basin-shared
   toledo-napoleon-spill-waterville-monitor-read:
     exists: true
     sha256: 9c2ca8ba591fd3633009b49276d60389b62d6b8e06c0d70cb8f36783edc07997
@@ -1164,6 +1174,16 @@ entries:
     exists: true
     sha256: 8628dd7859ba60a3b71b9c6b4ab91619d510cf468e0bdb1f645044317be24fc4
     size_bytes: 11202
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: basin-shared
+  wqs-temperature:
+    exists: true
+    sha256: da61a7ffc8d5e473e27aeaa3160c915af6d518b084c6ac4386fc90be922b0616
+    size_bytes: 18429
     lfs_materialized: true
     file_count: 1
     missing: []

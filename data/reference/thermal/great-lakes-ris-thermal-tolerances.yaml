@@ -1,0 +1,290 @@
+# Great Lakes Representative Important Species (RIS) thermal tolerances — the BIOLOGICAL limits
+# for a CWA Section 316(a)-style read of a thermal discharge into a Lima -> Maumee -> Lake Erie
+# (Great Lakes region) receiving water. Transcribed verbatim from EPA-833-F-23-007, "Thermal
+# Discharges in NPDES Permits: Overview of Resources and Tools" (June 2023), Tables 3-4, 3-5, 3-6
+# (the ingested guidance PDF in this directory, PR #1714). Phase 1 of epic #1715.
+#
+# These are PUBLISHED FEDERAL GUIDANCE values ("does not have the force and effect of law"),
+# tagged `reference` when surfaced, never `verified`. They complement the Ohio numeric temperature
+# CRITERIA (data/reference/wqs/ohio-temperature-criteria.yaml): the Ohio tables supply the
+# regulatory thresholds; these RIS tolerances supply the species/life-stage biological limits a
+# Section 316(a) "balanced indigenous community" (BIC) argument turns on. Screening context, not a
+# permit determination or a plume model.
+#
+# TRANSCRIPTION FIDELITY. Temperature values are kept as the VERBATIM strings the table prints,
+# including ranges ("32-35.6", "3-4.9", "22.5-23.5") — the loader parses a (low, high) span from
+# each. A blank cell in the table is OMITTED (no key), never guessed. Reference numbers cite
+# `references` below (Table 3-6). Metrics: `acute` and `chronic` are the upper/lower thermal limits;
+# `optimal` is the optimal thermal range. `upper_c` / `lower_c` are degrees Celsius.
+
+source:
+  document: "EPA-833-F-23-007, Thermal Discharges in NPDES Permits: Overview of Resources and Tools"
+  publisher: "U.S. EPA, Office of Water, Water Permits Division, Office of Wastewater Management"
+  date: "June 2023"
+  region: "Great Lakes"
+  tables: "Table 3-4 (RIS list), Table 3-5 (thermal tolerances), Table 3-6 (references)"
+  relpath: "reference/thermal/epa-833-f-23-007-thermal-discharges-npdes-2023.pdf"
+  pdf_pages: "34-44 (printed section 3.3)"
+  retrieved: "2026-07-22"
+  note: >-
+    The Great Lakes region here is the region for Lima -> Maumee -> Lake Erie. Guidance, not law:
+    cite as method/biological context, not as a binding numeric standard.
+
+region: great_lakes
+
+# Species from Table 3-4/3-5. `trophic` and `ris_status` are the Table 3-4 context; `tolerances`
+# are the Table 3-5 numbers. Life stages: Eggs, Larvae, Juvenile, Adult (fish/invertebrates) or NA
+# (single-stage plant/plankton). Only life stages / metrics with a printed value are listed.
+species:
+  # ---- FISH ------------------------------------------------------------------------------------
+  - scientific_name: "Esox lucius"
+    common_name: "Northern Pike"
+    category: fish
+    trophic: "T-3 piscivore"
+    ris_status: "Commercial and recreational value; important food web link"
+    tolerances:
+      - {life_stage: Eggs,     chronic: {upper_c: "24.2", refs: [13]}}
+      - {life_stage: Larvae,   chronic: {upper_c: "20.6-28.5", refs: [13]}}
+      - {life_stage: Juvenile, chronic: {upper_c: "29-33", refs: [13]}}
+      - {life_stage: Adult,    chronic: {upper_c: "32-35.6", lower_c: "3-4.9", refs: [13]}, optimal: {upper_c: "20", lower_c: "18.9", refs: [13]}}
+
+  - scientific_name: "Salvelinus namaycush"
+    common_name: "Lake Trout"
+    category: fish
+    trophic: "T-3 piscivore"
+    ris_status: "Thermal sensitive species; commercial and recreational value"
+    tolerances:
+      - {life_stage: Juvenile, chronic: {upper_c: "22.5-23.5", refs: [10]}, optimal: {upper_c: "12.1", lower_c: "7.2", refs: [13]}}
+      - {life_stage: Adult,    chronic: {upper_c: "22.7-25.1", refs: [13]}, optimal: {upper_c: "12.8", lower_c: "6.7", refs: [5]}}
+
+  - scientific_name: "Morone chrysops"
+    common_name: "White Bass"
+    category: fish
+    trophic: "T-3 piscivore"
+    ris_status: "Commercial and recreational value; locally abundant species"
+    tolerances:
+      - {life_stage: Larvae,   chronic: {upper_c: "30-32", lower_c: "12.8", refs: [13]}}
+      - {life_stage: Juvenile, acute: {upper_c: "35.3", refs: [13]}, chronic: {upper_c: "33.5", refs: [13]}, optimal: {upper_c: "31", lower_c: "27.8", refs: [13]}}
+      - {life_stage: Adult,    chronic: {upper_c: "35", refs: [13]}, optimal: {upper_c: "25", lower_c: "18", refs: [13]}}
+
+  - scientific_name: "Micropterus dolomieu"
+    common_name: "Smallmouth bass"
+    category: fish
+    trophic: "T-3 piscivore"
+    ris_status: "Commercial and recreational value"
+    tolerances:
+      - {life_stage: Larvae,   chronic: {upper_c: "30-33", lower_c: "10", refs: [13]}}
+      - {life_stage: Juvenile, acute: {upper_c: "36.3", refs: [13]}, chronic: {upper_c: "35", lower_c: "2-10", refs: [13]}, optimal: {upper_c: "30", lower_c: "28", refs: [13]}}
+      - {life_stage: Adult,    chronic: {upper_c: "35", refs: [13]}, optimal: {upper_c: "31", lower_c: "15", refs: [13]}}
+
+  - scientific_name: "Sander vitreus"
+    common_name: "Walleye"
+    category: fish
+    trophic: "T-3 piscivore"
+    ris_status: "Locally abundant species; commercial and recreational value"
+    tolerances:
+      - {life_stage: Eggs,     optimal: {upper_c: "19.4", lower_c: "16.7", refs: [20]}}
+      - {life_stage: Larvae,   optimal: {upper_c: "21", lower_c: "15", refs: [20]}}
+      - {life_stage: Juvenile, acute: {upper_c: "33-35", refs: [20]}, chronic: {upper_c: "27-31.6", refs: [20]}, optimal: {upper_c: "26", lower_c: "22", refs: [20]}}
+      - {life_stage: Adult,    acute: {upper_c: "34.4", refs: [20]}}
+
+  - scientific_name: "Perca flavescens"
+    common_name: "Yellow Perch"
+    category: fish
+    trophic: "T-3 piscivore"
+    ris_status: "Commercial and recreational value; locally abundant species"
+    tolerances:
+      - {life_stage: Larvae,   acute: {upper_c: "34.8-37.6", refs: [13]}, chronic: {upper_c: "26.5-33.3", refs: [10]}}
+      - {life_stage: Juvenile, acute: {upper_c: "33.4", refs: [13]}, chronic: {upper_c: "29.7", refs: [10]}}
+      - {life_stage: Adult,    acute: {upper_c: "35", refs: [13]}, chronic: {upper_c: "21.0-32.3", refs: [10]}, optimal: {upper_c: "21.1", lower_c: "18.9", refs: [8]}}
+
+  - scientific_name: "Lota lota"
+    common_name: "Burbot"
+    category: fish
+    trophic: "T-3 piscivore"
+    ris_status: "Locally abundant species; commercial and recreational value"
+    tolerances:
+      - {life_stage: Larvae, optimal: {upper_c: "12", lower_c: "6", refs: [14]}}
+      - {life_stage: Adult,  chronic: {upper_c: "23.3", refs: [13]}, optimal: {upper_c: "21", refs: [12]}}
+
+  - scientific_name: "Coregonus clupeaformis"
+    common_name: "Lake Whitefish"
+    category: fish
+    trophic: "T-2 omnivore"
+    ris_status: "Commercial and recreational value; important food web link"
+    tolerances:
+      - {life_stage: Larvae,   optimal: {upper_c: "16", lower_c: "12", refs: [13]}}
+      - {life_stage: Juvenile, chronic: {upper_c: "20.6-26.6", refs: [13]}, optimal: {upper_c: "17", refs: [13]}}
+      - {life_stage: Adult,    optimal: {upper_c: "15", lower_c: "3.5", refs: [13]}}
+
+  - scientific_name: "Acipenser fulvescens"
+    common_name: "Lake Sturgeon"
+    category: fish
+    trophic: "T-2 omnivore"
+    ris_status: "Rare, threatened or endangered species"
+    tolerances:
+      - {life_stage: Juvenile, acute: {upper_c: "35.1", refs: [24]}}
+      - {life_stage: Adult,    optimal: {upper_c: "17.8", lower_c: "12.8", refs: [6]}}
+
+  - scientific_name: "Coregonus hoyi"
+    common_name: "Bloater"
+    category: fish
+    trophic: "T-2 omnivore"
+    ris_status: "Commercial and recreational value; thermal sensitive species"
+    tolerances:
+      - {life_stage: Larvae,   optimal: {upper_c: "7", lower_c: "3.8", refs: [13]}}
+      - {life_stage: Juvenile, acute: {upper_c: "27-29", refs: [13]}, chronic: {upper_c: "22.2-26.7", refs: [13]}, optimal: {upper_c: "14", lower_c: "11", refs: [13]}}
+      - {life_stage: Adult,    chronic: {upper_c: "26-27", refs: [13]}, optimal: {upper_c: "10", lower_c: "7", refs: [13]}}
+
+  - scientific_name: "Alosa pseudoharengus"
+    common_name: "Alewife"
+    category: fish
+    trophic: "T-2 omnivore"
+    ris_status: "Commercial and recreational value; nuisance species; important food web link (non-native)"
+    tolerances:
+      - {life_stage: Eggs,     acute: {upper_c: "35.6", refs: [1]}, chronic: {upper_c: "28", refs: [2]}}
+      - {life_stage: Larvae,   acute: {upper_c: "31", refs: [1]}, optimal: {upper_c: "29", lower_c: "23", refs: [1]}}
+      - {life_stage: Juvenile, acute: {upper_c: "31.9-34.4", refs: [13]}, chronic: {upper_c: "26.5-32.1", lower_c: "3", refs: [13]}, optimal: {upper_c: "20", lower_c: "15", refs: [1]}}
+      - {life_stage: Adult,    acute: {upper_c: "28.6-32", lower_c: "6-8", refs: [13]}, optimal: {upper_c: "21", lower_c: "11", refs: [1]}}
+
+  - scientific_name: "Ameiurus nebulosus"
+    common_name: "Brown Bullhead"
+    category: fish
+    trophic: "T-2 omnivore"
+    ris_status: "Commercial and recreational value"
+    tolerances:
+      - {life_stage: Larvae,   chronic: {upper_c: "36.4-38.2", refs: [13]}}
+      - {life_stage: Juvenile, chronic: {upper_c: "35.6-36.5", refs: [13]}, optimal: {upper_c: "31", refs: [13]}}
+      - {life_stage: Adult,    acute: {upper_c: "38", refs: [13]}, chronic: {upper_c: "29-37.5", refs: [13]}, optimal: {upper_c: "31", lower_c: "29", refs: [13]}}
+
+  - scientific_name: "Pomoxis nigromaculatus"
+    common_name: "Black Crappie"
+    category: fish
+    trophic: "T-2 omnivore"
+    ris_status: "Commercial and recreational value"
+    tolerances:
+      - {life_stage: Larvae,   optimal: {upper_c: "20", lower_c: "18", refs: [13]}}
+      - {life_stage: Juvenile, chronic: {upper_c: "33", refs: [13]}, optimal: {upper_c: "25", lower_c: "22", refs: [13]}}
+      - {life_stage: Adult,    acute: {upper_c: "34.9", refs: [13]}, chronic: {upper_c: "32.5-34", refs: [13]}, optimal: {upper_c: "28.2", lower_c: "21", refs: [13]}}
+
+  - scientific_name: "Cottus bairdi"
+    common_name: "Mottled Sculpin"
+    category: fish
+    trophic: "T-2 omnivore"
+    ris_status: "Locally abundant species"
+    tolerances:
+      - {life_stage: Adult, acute: {upper_c: "30.4-33.8", refs: [13, 20]}, optimal: {upper_c: "22", lower_c: "16", refs: [21]}}
+
+  - scientific_name: "Notropis hudsonius"
+    common_name: "Spottail Shiner"
+    category: fish
+    trophic: "T-2 omnivore"
+    ris_status: "Commercial and recreational value"
+    tolerances:
+      - {life_stage: Juvenile, chronic: {upper_c: "37.3-38.1", refs: [10]}, optimal: {upper_c: "28.5", lower_c: "20.1", refs: [13]}}
+      - {life_stage: Adult,    acute: {upper_c: "32.8", refs: [13]}, chronic: {upper_c: "30.6-31.1", refs: [10]}, optimal: {upper_c: "23.9", lower_c: "10", refs: [7]}}
+
+  - scientific_name: "Dorosoma cepedianum"
+    common_name: "American Gizzard Shad"
+    category: fish
+    trophic: "T-1 planktivore"
+    ris_status: "Locally abundant species; commercial and recreational value"
+    tolerances:
+      - {life_stage: Juvenile, acute: {upper_c: "31", lower_c: "10.8-14.5", refs: [13]}, chronic: {upper_c: "28.5", refs: [20]}}
+      - {life_stage: Adult,    chronic: {upper_c: "34-36.5", refs: [20]}, optimal: {upper_c: "31", lower_c: "19", refs: [13, 20]}}
+
+  # ---- INVERTEBRATE ----------------------------------------------------------------------------
+  - scientific_name: "Strophitus undulatus"
+    common_name: "Freshwater Mussel"
+    category: invertebrate
+    trophic: "filter feeder"
+    ris_status: "Habitat formers; important food web link; thermal sensitive species"
+    note: "Table 3-5 footnote 2: optimal tolerances based on Epioblasma brevidens, Epioblasma capsaeformis, and Lampsilis fasciola."
+    tolerances:
+      - {life_stage: Juvenile, optimal: {upper_c: "28", lower_c: "26", refs: [16]}}
+      - {life_stage: Adult,    acute: {upper_c: "39-42.2", refs: [15]}}
+
+  - scientific_name: "Dreissena polymorpha"
+    common_name: "Zebra Mussel"
+    category: invertebrate
+    trophic: "filter feeder"
+    ris_status: "Nuisance species (non-native)"
+    tolerances:
+      - {life_stage: Adult, acute: {upper_c: "33-36", refs: [25]}, chronic: {upper_c: "30", refs: [25]}, optimal: {upper_c: "25", lower_c: "20", refs: [26]}}
+
+  - scientific_name: "Hexagenia spp."
+    common_name: "Burrowing Mayfly"
+    category: invertebrate
+    trophic: "detritivore"
+    ris_status: "Important food web link"
+    tolerances:
+      - {life_stage: Eggs,     optimal: {upper_c: "34", lower_c: "31", refs: [18]}}
+      - {life_stage: Larvae,   chronic: {upper_c: "27.1", lower_c: "26.1", refs: [19]}, optimal: {upper_c: "20", lower_c: "15", refs: [28]}}
+      - {life_stage: Juvenile, optimal: {upper_c: "9.5", refs: [17]}}
+
+  - scientific_name: "Gammarus fasciatus"
+    common_name: "Scud"
+    category: invertebrate
+    trophic: "benthic filter feeder"
+    ris_status: "Locally abundant species (potentially non-native)"
+    tolerances:
+      - {life_stage: Larvae, chronic: {upper_c: "14.55", refs: [19]}}
+      - {life_stage: Adult,  acute: {upper_c: "34-35", refs: [9]}, optimal: {upper_c: "15", lower_c: "10", refs: [9]}}
+
+  # ---- PLANT AND ALGAE -------------------------------------------------------------------------
+  - scientific_name: "Microcystis aeruginosa"
+    common_name: "Cyanobacteria (blue-green algae)"
+    category: plant_algae
+    trophic: "Primary producer"
+    ris_status: "Important food web link; nuisance species"
+    note: "Source Tables 3-4/3-5 print the genus as 'Microcycstis'; corrected to Microcystis (apparent source typo)."
+    tolerances:
+      - {life_stage: NA, acute: {upper_c: "37", lower_c: "15", refs: [27]}, optimal: {upper_c: "30", lower_c: "25", refs: [27]}}
+
+  # ---- PLANKTONIC ------------------------------------------------------------------------------
+  - scientific_name: "Mysis relicta"
+    common_name: "Opossum Shrimp"
+    category: planktonic
+    trophic: "Primary level"
+    ris_status: "Locally abundant species; thermal sensitive species; important food web link"
+    tolerances:
+      - {life_stage: NA, acute: {upper_c: "22", refs: [22]}, chronic: {upper_c: "20.5", refs: [22]}, optimal: {upper_c: "6-8", refs: [10]}}
+
+  - scientific_name: "Diporeia spp."
+    common_name: "Amphipod"
+    category: planktonic
+    trophic: "Primary level"
+    ris_status: "Important food web link"
+    tolerances:
+      - {life_stage: NA, chronic: {upper_c: "28", refs: [23]}}
+
+# Table 3-6 — references cited by the `refs` numbers above (short-form citations).
+references:
+  1: "Llauda, R. J. and S. A. Fischer. (1991). Alewife and Blueback Herring (Alosa pseudoharengus and Alosa aestivalis). In Habitat requirements for Chesapeake Bay living resources. Chesapeake Bay Program."
+  2: "Brungs, W. A., B. R. Jones, and D. I. Mount. (1977). Temperature Criteria for Freshwater Fish. Environmental Research Laboratory-Duluth, US EPA."
+  3: "Michigan Department of Natural Resources. 2015. Brook Trout, Salvelinus fontinalis."
+  4: "Becker, G. C. (1983). Fishes of Wisconsin."
+  5: "Michigan Department of Natural Resources. 2015. Lake Trout, Salvelinus namaycush."
+  6: "USFWS. 2015. Lake Sturgeon Biology and Population History in the Great Lakes."
+  7: "Minnesota Sea Grant. 2014. Spottail Shiner (Notropis hudsonius)."
+  8: "Michigan Department of Natural Resources. 2015. Yellow Perch, Perca flavescens."
+  9: "USGS. 2015. Nonindigenous Aquatic Species: Gammarus fasciatus Say, 1818."
+  10: "EA. (2008). Point Beach Nuclear Plant Evaluation of the Thermal Effects Due to a Planned Extended Power Uprate."
+  11: "Beitinger, T. L. (2000). Temperature tolerances of North American Freshwater fishes exposed to dynamic changes in temperature. Environmental Biology of Fishes 58: 237-275."
+  12: "Wolnicki, J., R. Kaminski, and L. Myszkowski. (2002). Temperature-influenced growth and survival of burbot Lota lota (L.) larvae fed live food under controlled conditions. Archiwum Rybactwa Polskiego, 10(1), 109-114."
+  13: "Wismer, D. A., and A. E. Christie. (1987). Temperature relationships of Great Lakes fishes: A Data Compilation. Great Lakes Fishery Commission Special Publication 87-3."
+  14: "Mansfield, P. J., D. J. Jude, D. T. Michaud, D. C. Brazo, and J. Gulvas. (1983). Distribution and abundance of larval burbot and deepwater sculpin in Lake Michigan. Transactions of the American Fisheries Society, 112(2A), 162-172."
+  15: "Galbraith, H. S., C. J. Blakeslee, and W. A. Lellis. (2012). Recent thermal history influences thermal tolerance in freshwater mussel species (Bivalvia: Unionoida). Freshwater Science 31(1): 83-92."
+  16: "Carey, C. S., J. W. Jones, E. M. Hallerman, and R. S. Butler. (2013). Determining optimum temperature for growth and survival of laboratory-propagated juvenile freshwater mussels. North American Journal of Aquaculture, 75(4), 532-542."
+  17: "Winter, A., J. J. Ciborowski, and T. B. Reynoldson. (1996). Effects of chronic hypoxia and reduced temperature on survival and growth of burrowing mayflies (Hexagenia limbata) (Ephemeroptera: Ephemeridae). Canadian Journal of Fisheries and Aquatic Sciences, 53(7), 1565-1571."
+  18: "Tennessen, K. J., and J. L. Miller. (1978). Effects of thermal discharge on aquatic insects in the Tennessee Valley (No. PB-295415). Tennessee Valley Authority, Div. of Environmental Planning."
+  19: "Gaufin, A. R. (1973). Water quality requirements of aquatic insects. USGPO."
+  20: "Yoder, C. O., E. T. Rankin, and B. J. Armitage. (2006). Re-evaluation of the technical justification for existing Ohio River mainstem temperature criteria. Report to the Ohio River Valley Water Sanitation Commission. Tech. Rept. MBI/05-05-2."
+  21: "St. Joseph Energy Center (SJEC) LLC. (2013). Request for Alternative Thermal Effluent Limits. Submitted to IDEM, January 2013."
+  22: "DeGraeve, G. M., and J. B. Reynolds. (1975). Feeding behavior and temperature and light tolerance of Mysis relicta in the laboratory. Transactions of the American Fisheries Society, 104(2), 394-397."
+  23: "Gossiaux, D. C., P. F. Landrum, and V. N. Tsymbal. (1992). Response of the amphipod Diporeia spp. to various stressors: Cadmium, salinity, and temperature. Journal of Great Lakes Research, 18(3), 364-371."
+  24: "Wilkes, P. A. (2011). Thermal Tolerance of Lake Sturgeon. Unpublished manuscript."
+  25: "McMahon, R. F., and T. A. Ussary. (1995). Thermal tolerance of zebra mussels (Dreissena polymorpha) relative to rate of temperature increase and acclimation temperature. University of Texas at Arlington, Department of Biology."
+  26: "USGS. 2015. Nonindigenous Aquatic Species: Dreissena polymorpha."
+  27: "Konopka, A. and B. Holt. (1978). Effect of Temperature on Blue-Green Algae (Cyanobacteria) in Lake Mendota. Applied and Environmental Microbiology 36(4): 572-576."
+  28: "Wright, L. L. and J. S. Mattice. (1985). Emergence Patterns of Hexagenia bilineata: Integration of Laboratory and Field Data. Freshwater Invertebrate Biology 4(3): 109-124."

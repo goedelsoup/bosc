@@ -1,0 +1,31 @@
+id: thermal-ris-tolerances
+title: Great Lakes RIS thermal tolerances (EPA-833-F-23-007 Table 3-5)
+scope: reference
+status: reviewed
+producer:
+  kind: manual
+  source: EPA-833-F-23-007 "Thermal Discharges in NPDES Permits" (June 2023), Tables 3-4/3-5/3-6 — verbatim transcription of the Great Lakes Representative Important Species thermal tolerances
+  external_url: https://www.epa.gov/npdes
+depends_on:
+- thermal
+license: Public domain (U.S. federal government work)
+access_tier: public
+site_scope: basin-shared
+storage:
+- relpath: reference/thermal/great-lakes-ris-thermal-tolerances.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: reference
+schema_ref: watermark.hydrology.thermal_criteria.ThermalToleranceTable
+tags:
+- epa
+- thermal
+- temperature
+- cwa-316a
+- biological
+- great-lakes
+- ris
+- reference
+notes: The Great Lakes Representative Important Species (RIS) thermal tolerances transcribed from EPA-833-F-23-007 Table 3-5 (with Table 3-4 trophic/status context and the Table 3-6 reference list) — the biological limits (acute/chronic upper-lower + optimal thermal range, per species and life stage, degC) for a CWA Section 316(a) balanced-indigenous-community read of a thermal discharge into a Lima -> Maumee -> Lake Erie receiving water. Federal guidance ("does not have the force and effect of law"), tagged [reference], never [verified] — the complement to the Ohio numeric temperature CRITERIA (wqs-temperature), which supply the regulatory thresholds. Values are the verbatim table strings (ranges preserved, e.g. "32-35.6"); the loader parses a (low, high) span. Derived from the ingested guidance PDF (catalog entry `thermal`); re-transcribe if the guidance is revised. 23 species, 28 references.
