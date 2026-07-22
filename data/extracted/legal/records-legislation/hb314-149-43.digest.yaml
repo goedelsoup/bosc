@@ -6,6 +6,7 @@ subject: >-
   "voluminous" requests.
 
 provenance:
+  # The provision reads below track the operative (As Passed by the House) text.
   source: data/documents/legal/records-legislation/hb314_02_PH.pdf
   canonical: ohio-sub-hb314-136ga-as-passed-house-149-43-2026.pdf
   sha256: "1465f0aa947445c7df341ec1610ce71ead6f9f3de8627ca4012d8f7693fbf1c9"
@@ -19,6 +20,82 @@ provenance:
     unresolved questions are [open]. Strike/underline amendatory markup is lost in the
     text layer; verify exact new-vs-existing wording against the source PDF and against
     existing R.C. 149.43 before quoting in a filing.
+
+versions_ingested:
+  - version: As Introduced
+    file: data/documents/legal/records-legislation/hb314_00_IN.pdf
+    sha256: "8190af27093c8add2431ea0433eab6c1e821c0e8a44db1e61cedb9cc25720c77"
+    pages: 42
+    bill: "H.B. No. 314"
+    cosponsors: 0
+  - version: As Passed by the House   # operative text these reads track
+    file: data/documents/legal/records-legislation/hb314_02_PH.pdf
+    sha256: "1465f0aa947445c7df341ec1610ce71ead6f9f3de8627ca4012d8f7693fbf1c9"
+    pages: 48
+    bill: "Sub. H.B. No. 314"
+    cosponsors: 6
+
+# ----------------------------------------------------------------------------
+# What the committee substitute changed (As Introduced → As Passed by the House)
+# Verified by textual diff of the two ingested PDFs. The substitute grew the bill
+# by 6 pages and added 6 cosponsors; the operative changes are below.
+# ----------------------------------------------------------------------------
+substitute_changes:
+  harassing_or_disruptive_action:
+    - tag: verified
+      change: prospective-ban-capped
+      division: "(B)(2)(c)(iii)"
+      introduced: >-
+        A future-request order "remains in force INDEFINITELY unless the order provides
+        for its expiration after a specified period of time."
+      passed: >-
+        The order runs "for a period of up to FIVE YEARS"; a request in violation lets
+        the court extend it for a period at the court's discretion.
+      direction: requester-protective   # a hard 5-yr cap replaces an open-ended ban
+    - tag: verified
+      change: anonymous-circumvention-fine-added
+      division: "(B)(2)(c)(iii)"
+      passed: >-
+        NEW: a person who submits a request anonymously to circumvent an order may be
+        fined up to $100 per violation.
+      direction: office-protective
+    - tag: verified
+      change: requester-fee-shift-added
+      division: "(B)(2)(c)(iv)"
+      introduced: "No fee recovery for a requester who defeats the office's action."
+      passed: >-
+        NEW (B)(2)(c)(iv): if the court finds the requests were NOT intended to harass or
+        disrupt, it MAY award the requester reasonable attorney's fees and litigation
+        expenses against the office that sued (subject to R.C. 9.86). This inserted a new
+        clause and renumbered the exemptions list from introduced (iv) to passed (v).
+      direction: requester-protective
+  voluminous_contractor_route:
+    - tag: verified
+      change: fee-cap-added
+      division: "(B)(6)(b)(i)"
+      introduced: >-
+        Office "may include the cost of the contractor's services in calculating the
+        cost involved in providing the copy" — no explicit ceiling.
+      passed: >-
+        NEW ceiling: including contractor cost "does not permit" charging "a fee in
+        excess of the highest permissible fee" in the existing fee structure.
+      direction: requester-protective
+    - tag: verified
+      change: contractor-duties-clause-added
+      division: "(B)(6)(b)(ii)"
+      passed: >-
+        NEW: the contractor must promptly dispose of copies, return originals, not use
+        the records for profit outside the engagement, and not disclose redacted
+        information.
+      direction: guardrail
+  net_read:
+    tag: inference
+    note: >-
+      The committee softened the harass/disrupt action's worst edge for a requester
+      (indefinite ban → 5-year cap) and added a fee-shift for a wrongly-sued requester,
+      while adding anti-circumvention teeth and confidentiality duties on the contractor
+      route. The tolling provision (B)(2)(c)(ii) — the sharpest lever against the corpus's
+      delay theory — was present in BOTH versions and survived unchanged.
 
 bill:
   number: "Sub. H.B. No. 314"

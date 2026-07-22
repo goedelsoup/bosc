@@ -36,6 +36,17 @@ If a request is "**voluminous** and it is therefore reasonable to do so," the of
 
 **3. Cost becomes a breadth lever.** `[inference]` An office can now bill the relator for a contractor's review/redaction of a voluminous request (capped at the statutory per-page fee), and the mandamus court may not credit the office for *declining* to use a contractor to go faster `[verified: (B)(6)(b), printed p. 23]`. The practical counter is the same discipline the corpus already applies — **narrow, well-scoped, itemized requests** that are hard to characterize as "voluminous" or "harassing," and a written record that each request maps to a specific documented question.
 
+## What the committee substitute changed (As Introduced → As Passed)
+
+Both versions are in the corpus: `hb314_00_IN.pdf` (As Introduced, 42 pp, no cosponsors) and `hb314_02_PH.pdf` (Sub., As Passed, 48 pp, 6 cosponsors). A textual diff shows the committee did not soften the core design — the two new mechanisms and the response-**tolling** were in the bill from introduction — but it **balanced** it at the edges `[verified: diff of the two PDFs]`:
+
+- **The prospective ban got a ceiling.** Introduced, a future-request order "remains in force **indefinitely** unless the order provides for its expiration." As passed, it runs "for a period of **up to five years**" (extendable on violation) `[(B)(2)(c)(iii)]`. An open-ended ban became a capped one — the single most requester-protective change.
+- **A requester fee-shift was added.** Introduced gave a requester who *defeated* the office's action **nothing**. The substitute inserted **new (B)(2)(c)(iv)**: if the court finds the requests were not harassing/disrupting, it *may* award the requester attorney's fees and litigation expenses against the office (subject to R.C. 9.86) `[verified]`. That new clause is why the exemptions list renumbered from introduced (iv) to passed (v).
+- **Anti-circumvention teeth were added.** The **$100/violation** fine for requesting anonymously to circumvent an order is new in the substitute `[(B)(2)(c)(iii)]`.
+- **The contractor route gained a fee cap and confidentiality duties.** Introduced let the office fold contractor cost into the fee with no stated ceiling. The substitute added the **highest-permissible-fee cap** and **new (B)(6)(b)(ii)** — the contractor must dispose of copies, return originals, not profit from the records, and not disclose redacted content `[verified]`.
+
+Net: the committee made the harass/disrupt action more balanced for a requester who is ultimately vindicated, while hardening it against evasion — but the lever that matters most here, **response-tolling while the office's own action is pending, was in both versions and survived**. `[inference]`
+
 ## What is NOT here (open ingest targets)
 
 - The **enacted** text. This is the House-passed version; Senate amendments, any conference version, the **effective date**, and the final R.C. 149.43 language are `[open]` — track before treating any of the above as current law.

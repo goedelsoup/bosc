@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-22T15:16:44.969936+00:00'
+reconciled_at: '2026-07-22T17:05:15.762086+00:00'
 entries:
   aedg:
     exists: true
@@ -630,6 +630,16 @@ entries:
     asof: null
     stale: false
     site_scope: lima-legacy
+  legal-records-legislation:
+    exists: true
+    sha256: 2dd94cbfe95b7a5f957d8e0185d662c18166f37af44fb3e2bb2919330743ef52
+    size_bytes: 22950
+    lfs_materialized: true
+    file_count: 2
+    missing: []
+    asof: null
+    stale: false
+    site_scope: basin-shared
   legal-select-committee-2026:
     exists: true
     sha256: edd1222c67b88e5bd6ab20b110c48990a7940f86255cd664c2e16e6eca60a405

@@ -12,6 +12,30 @@ meta:
     + the "As Passed by the House" running header), NOT the filename.
 
 documents:
+  - filename: hb314_00_IN.pdf
+    canonical: ohio-hb314-136ga-as-introduced-149-43-2026.pdf
+    type: legislation
+    body: Ohio House of Representatives
+    general_assembly: "136th (2025-2026 Regular Session)"
+    bill: "H.B. No. 314"
+    version: As Introduced
+    version_code: "00_IN"          # LSC document sequence 00; IN = Introduced
+    amends: "R.C. 149.43 (Ohio Public Records Act)"
+    pages: 42
+    bytes: 141750
+    sha256: "8190af27093c8add2431ea0433eab6c1e821c0e8a44db1e61cedb9cc25720c77"
+    content_verified: text-layer   # native text layer present (verified 2026-07-22)
+    primary_sponsors:
+      - "Rep. Isaacsohn"
+      - "Rep. Ray"
+    cosponsors: []                 # none on the as-introduced version
+    notes: >
+      The as-introduced text (no "Sub." prefix; no cosponsors yet). Superseded by the
+      committee substitute (hb314_02_PH.pdf). Kept for the introduced→passed diff — the
+      committee grew the bill by 6 pages and added a 5-year cap + requester fee-shift +
+      anonymous-circumvention fine to the harass/disrupt action and a fee cap +
+      contractor-duties clause to the voluminous-request route (see the digest's
+      `substitute_changes`).
   - filename: hb314_02_PH.pdf
     canonical: ohio-sub-hb314-136ga-as-passed-house-149-43-2026.pdf
     type: legislation

@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-07-22T15:16:44.969936+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-07-22T17:05:15.762086+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
-- **119** catalogued datasets — **118** reviewed.
-- **119** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **120** catalogued datasets — **119** reviewed.
+- **120** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -28,7 +28,7 @@ Snapshot reconciled: **2026-07-22T15:16:44.969936+00:00**. Regenerate with `wate
 | extracted | history | 1 | 1 | 0 | 0 |
 | extracted | idem | 1 | 1 | 0 | 0 |
 | extracted | lacrpc | 2 | 2 | 0 | 0 |
-| extracted | legal | 15 | 15 | 0 | 0 |
+| extracted | legal | 16 | 16 | 0 | 0 |
 | extracted | lima | 1 | 1 | 0 | 0 |
 | extracted | limaohio | 1 | 1 | 0 | 0 |
 | extracted | mansfield | 1 | 1 | 0 | 0 |
@@ -86,32 +86,32 @@ Snapshot reconciled: **2026-07-22T15:16:44.969936+00:00**. Regenerate with `wate
 
 | site | relevant | present | missing |
 | --- | --- | --- | --- |
-| bowling-green | 43 | 37 | 6 |
-| bryan | 45 | 37 | 8 |
-| columbus | 43 | 36 | 7 |
-| coshocton | 43 | 29 | 14 |
-| defiance | 45 | 37 | 8 |
-| findlay | 47 | 41 | 6 |
-| fort-wayne | 39 | 30 | 9 |
-| greenville | 44 | 36 | 8 |
-| hamilton-middletown | 45 | 38 | 7 |
-| lima | 90 | 86 | 4 |
-| mansfield | 44 | 37 | 7 |
-| new-albany | 43 | 36 | 7 |
-| ottawa | 45 | 37 | 8 |
-| piketon | 43 | 29 | 14 |
-| portsmouth | 44 | 30 | 14 |
-| sandusky | 43 | 29 | 14 |
-| sidney | 47 | 41 | 6 |
-| springfield | 44 | 38 | 6 |
-| toledo | 47 | 39 | 8 |
-| troy-piqua | 49 | 44 | 5 |
-| urbana | 45 | 39 | 6 |
-| van-wert | 47 | 41 | 6 |
-| west-union | 43 | 35 | 8 |
-| wilmington | 48 | 42 | 6 |
-| wpafb | 46 | 39 | 7 |
-| xenia | 45 | 38 | 7 |
+| bowling-green | 44 | 38 | 6 |
+| bryan | 46 | 38 | 8 |
+| columbus | 44 | 37 | 7 |
+| coshocton | 44 | 30 | 14 |
+| defiance | 46 | 38 | 8 |
+| findlay | 48 | 42 | 6 |
+| fort-wayne | 40 | 31 | 9 |
+| greenville | 45 | 37 | 8 |
+| hamilton-middletown | 46 | 39 | 7 |
+| lima | 91 | 87 | 4 |
+| mansfield | 45 | 38 | 7 |
+| new-albany | 44 | 37 | 7 |
+| ottawa | 46 | 38 | 8 |
+| piketon | 44 | 30 | 14 |
+| portsmouth | 45 | 31 | 14 |
+| sandusky | 44 | 30 | 14 |
+| sidney | 48 | 42 | 6 |
+| springfield | 45 | 39 | 6 |
+| toledo | 48 | 40 | 8 |
+| troy-piqua | 50 | 45 | 5 |
+| urbana | 46 | 40 | 6 |
+| van-wert | 48 | 42 | 6 |
+| west-union | 44 | 36 | 8 |
+| wilmington | 49 | 43 | 6 |
+| wpafb | 47 | 40 | 7 |
+| xenia | 46 | 39 | 7 |
 
 ## Integrity gaps
 
