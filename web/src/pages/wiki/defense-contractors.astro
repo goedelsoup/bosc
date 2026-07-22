@@ -10,6 +10,14 @@ const primeOwned = dc?.prime_owned ?? [];
 const armyControlled = dc?.army_controlled ?? [];
 const field = (row: Record<string, unknown>, key: string): string =>
   row[key] == null ? "—" : String(row[key]);
+const usd = (n: number): string =>
+  n >= 1e9
+    ? `$${(n / 1e9).toFixed(1)}B`
+    : n >= 1e6
+      ? `$${(n / 1e6).toFixed(1)}M`
+      : `$${n.toLocaleString("en-US")}`;
+// Any contractor with a resolved federal-award join (#1662) turns on the federal column.
+const hasAwards = contractors.some((c) => (c.awards?.length ?? 0) > 0);
 ---
 
 <Base title="Defense contractors" section="wiki">
@@ -35,9 +43,22 @@ const field = (row: Record<string, unknown>, key: string): string =>
           </div>
 
           <h2>Prime-contractor patterns</h2>
+          {hasAwards && (
+            <p class="card-meta">
+              Federal dollars are all-time prime-award obligations from USASpending.gov, joined to a
+              matched entity by its verified UEI (verbatim from the Treasury API — a resolved
+              cross-reference, not a corridor claim). The defense share splits obligations by
+              awarding agency (DoD-family vs civilian).
+            </p>
+          )}
           <table>
             <thead>
-              <tr><th>Prime</th><th>Name patterns</th><th>Matched corridor entities</th></tr>
+              <tr>
+                <th>Prime</th>
+                <th>Name patterns</th>
+                <th>Matched corridor entities</th>
+                {hasAwards && <th>Federal awards (USASpending)</th>}
+              </tr>
             </thead>
             <tbody>
               {contractors.map((c) => (
@@ -54,6 +75,24 @@ const field = (row: Record<string, unknown>, key: string): string =>
                           </>
                         ))}
                   </td>
+                  {hasAwards && (
+                    <td>
+                      {!c.awards || c.awards.length === 0 ? (
+                        "—"
+                      ) : (
+                        <>
+                          <strong>{usd(c.total_obligations ?? 0)}</strong>
+                          {c.nexus && <span class="card-meta"> · {c.nexus}</span>}
+                          {c.awards.map((a) => (
+                            <div class="card-meta">
+                              {a.recipient_name}: {usd(a.total_obligations)}
+                              {a.defense_share != null && ` · ${Math.round(a.defense_share * 100)}% defense`}
+                            </div>
+                          ))}
+                        </>
+                      )}
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>

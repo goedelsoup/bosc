@@ -9,7 +9,10 @@
         "LOCKHEED CORP",
         "SIKORSKY AIRCRAFT"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Boeing",
@@ -17,7 +20,10 @@
       "patterns": [
         "BOEING"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "RTX (Raytheon Technologies)",
@@ -31,7 +37,10 @@
         "COLLINS AEROSPACE",
         "ROCKWELL COLLINS"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Northrop Grumman",
@@ -40,7 +49,10 @@
         "NORTHROP GRUMMAN",
         "NORTHROP-GRUMMAN"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "General Dynamics (broader)",
@@ -56,7 +68,145 @@
       ],
       "matched_entities": [
         "GENERAL DYNAMICS"
-      ]
+      ],
+      "awards": [
+        {
+          "entity_key": "GENERAL DYNAMICS",
+          "recipient_name": "GENERAL DYNAMICS CORP",
+          "uei": "VF58HFRNGEL8",
+          "total_obligations": 301282862963.3,
+          "nexus": "verified",
+          "defense_share": 0.8763474775003116,
+          "annual_obligations": [
+            {
+              "fiscal_year": 2017,
+              "obligations": 15412823814.1
+            },
+            {
+              "fiscal_year": 2018,
+              "obligations": 17638251347.8
+            },
+            {
+              "fiscal_year": 2019,
+              "obligations": 20961891565.87
+            },
+            {
+              "fiscal_year": 2020,
+              "obligations": 25517849807.54
+            },
+            {
+              "fiscal_year": 2021,
+              "obligations": 20464188035.75
+            },
+            {
+              "fiscal_year": 2022,
+              "obligations": 24686759579.18
+            },
+            {
+              "fiscal_year": 2023,
+              "obligations": 24360591203.47
+            },
+            {
+              "fiscal_year": 2024,
+              "obligations": 3403661449.88
+            },
+            {
+              "fiscal_year": 2025,
+              "obligations": 3097347520.22
+            },
+            {
+              "fiscal_year": 2026,
+              "obligations": 4504424426.33
+            }
+          ],
+          "by_psc": [
+            {
+              "code": "1905",
+              "name": "COMBAT SHIPS AND LANDING VESSELS",
+              "obligations": 90275167874.22
+            },
+            {
+              "code": "2350",
+              "name": "COMBAT, ASSAULT, AND TACTICAL VEHICLES, TRACKED",
+              "obligations": 22636339002.98
+            },
+            {
+              "code": "1904",
+              "name": "SUBMARINES",
+              "obligations": 21327228442.58
+            },
+            {
+              "code": "2355",
+              "name": "COMBAT, ASSAULT, AND TACTICAL VEHICLES, WHEELED",
+              "obligations": 10618292530.94
+            },
+            {
+              "code": "R499",
+              "name": "SUPPORT- PROFESSIONAL: OTHER",
+              "obligations": 9594985499.42
+            },
+            {
+              "code": "1915",
+              "name": "CARGO AND TANKER VESSELS",
+              "obligations": 9155333824.05
+            },
+            {
+              "code": "5895",
+              "name": "MISCELLANEOUS COMMUNICATION EQUIPMENT",
+              "obligations": 9038951460.39
+            },
+            {
+              "code": "R425",
+              "name": "SUPPORT- PROFESSIONAL: ENGINEERING/TECHNICAL",
+              "obligations": 8127773026.72
+            }
+          ],
+          "by_naics": [
+            {
+              "code": "336611",
+              "name": "Ship Building and Repairing",
+              "obligations": 119419044393.21
+            },
+            {
+              "code": "541330",
+              "name": "Engineering Services",
+              "obligations": 41979270219.83
+            },
+            {
+              "code": "336992",
+              "name": "Military Armored Vehicle, Tank, and Tank Component Manufacturing",
+              "obligations": 37856743319.62
+            },
+            {
+              "code": "541512",
+              "name": "Computer Systems Design Services",
+              "obligations": 13376211368.17
+            },
+            {
+              "code": "332993",
+              "name": "Ammunition (except Small Arms) Manufacturing",
+              "obligations": 11301128521.33
+            },
+            {
+              "code": "541513",
+              "name": "Computer Facilities Management Services",
+              "obligations": 4900845902.29
+            },
+            {
+              "code": "334111",
+              "name": "Electronic Computer Manufacturing",
+              "obligations": 4508696561.44
+            },
+            {
+              "code": "541519",
+              "name": "Other Computer Related Services",
+              "obligations": 4368899362.08
+            }
+          ]
+        }
+      ],
+      "total_obligations": 301282862963.3,
+      "nexus": "verified"
     },
     {
       "name": "L3Harris Technologies",
@@ -67,7 +217,10 @@
         "L3 TECHNOLOGIES",
         "L-3 TECHNOLOGIES"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "BAE Systems",
@@ -75,7 +228,10 @@
       "patterns": [
         "BAE SYSTEMS"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Booz Allen Hamilton",
@@ -85,7 +241,10 @@
         "BOOZ ALLEN",
         "BOOZ-ALLEN"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Leidos",
@@ -93,7 +252,10 @@
       "patterns": [
         "LEIDOS"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "SAIC (Science Applications International)",
@@ -104,7 +266,10 @@
         "SAIC CORPORATION",
         "SAIC CORP"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "CACI International",
@@ -114,7 +279,10 @@
         "CACI INC",
         "CACI, INC"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "ManTech",
@@ -122,7 +290,10 @@
       "patterns": [
         "MANTECH"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Honeywell",
@@ -130,7 +301,10 @@
       "patterns": [
         "HONEYWELL"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Huntington Ingalls Industries",
@@ -140,7 +314,10 @@
         "NEWPORT NEWS SHIPBUILDING",
         "INGALLS SHIPBUILDING"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Textron",
@@ -153,7 +330,10 @@
       "matched_entities": [
         "AIRFOIL TEXTRON",
         "TEXTRON"
-      ]
+      ],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Oshkosh Defense",
@@ -163,7 +343,10 @@
         "OSHKOSH CORPORATION",
         "OSHKOSH CORP"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Anduril Industries",
@@ -171,7 +354,10 @@
       "patterns": [
         "ANDURIL"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Palantir Technologies",
@@ -179,7 +365,10 @@
       "patterns": [
         "PALANTIR"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     },
     {
       "name": "Peraton",
@@ -187,7 +376,10 @@
       "patterns": [
         "PERATON"
       ],
-      "matched_entities": []
+      "matched_entities": [],
+      "awards": [],
+      "total_obligations": null,
+      "nexus": null
     }
   ],
   "prime_owned": [],

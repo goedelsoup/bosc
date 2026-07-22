@@ -153,6 +153,7 @@ from watermark.sites import (
     is_reference_site,
     site_scoped_path,
 )
+from watermark.usaspending import load_inventory as load_award_inventory
 
 log = get_logger(__name__)
 
@@ -699,6 +700,8 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         site_scoped_path(settings.entities_dir, settings.site, is_dir=True)
     )
     defense = load_defense_contractors(settings.entities_dir)
+    # The per-site USASpending awards (Lima flat, a peer slug-scoped; None → no federal join, #1662).
+    federal_awards = load_award_inventory(settings.reference_dir, settings.site)
     rsei_inv = load_rsei_inventory(settings)
     lei_inv = load_lei_inventory(
         site_scoped_path(settings.reference_dir, settings.site, is_dir=True)
@@ -759,7 +762,7 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
                 None
                 if defense is None
                 else candidates_mod.export_defense_contractors(
-                    defense, egraph=egraph, scan=load_defense_scan(settings)
+                    defense, egraph=egraph, scan=load_defense_scan(settings), awards=federal_awards
                 )
             ),
         ),

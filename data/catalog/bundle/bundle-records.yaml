@@ -25,6 +25,7 @@ depends_on:
 - hydrology-reaches
 - hydrology-wbd
 - rsei-inventory
+- usaspending
 refresh:
   cadence: on-demand
 provenance: derived
@@ -138,5 +139,13 @@ notes: >-
   profile-declared data + the already-committed per-facility geometry (a slug-scoped site input, like
   `leads`/`contacts`), so it adds no new committed reference upstream; facility-gated — the feed is
   skipped and the manifest block absent for a site with no disclosed facility.
+  The `defense-contractors` feed (#1662, ME-C, contract 1.32.0) now joins the committed `usaspending`
+  reference dataset — the per-site pinned federal-award watchlist resolved against USASpending.gov —
+  onto each seed prime through its matched corpus entities (the same `uei`/`lei` the entity graph is
+  enriched by), so a contractor finally carries the federal dollars (`total_obligations`, `nexus`,
+  defense-vs-civilian share, annual flow, PSC/NAICS mix) that previously reached only the graph. This
+  adds `usaspending` as a declared upstream (slug-scoped like `rsei-inventory`; Lima flat, a peer reads
+  its own `<slug>/awards.yaml`); the seed list + parcel scan the feed also reads are curated site
+  inputs, not catalog-tracked reference datasets.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.

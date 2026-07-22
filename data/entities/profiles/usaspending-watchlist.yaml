@@ -9,6 +9,13 @@ meta:
     The recipient_ids were obtained by exact-name recipient search. Totals are
     all-time prime-award obligations (`year=all`). Regenerate with `bosc usaspending`.
   source: USASpending.gov API (api.usaspending.gov), U.S. Treasury; public domain
+  # Site-specific nexus caveats, carried verbatim onto the resolved inventory's `meta.caveats`
+  # (the resolver keeps only the generic caveats site-agnostic, #1662). Lima's corridor read:
+  caveats:
+    - >-
+      The Lima corridor nexus is precise: the Amazon corridor land recipient is a WAREHOUSE,
+      not the data center, and Google is linked only to the separate Scioto Project Dazzler,
+      not the Lima campus (tagged `context`/`open` accordingly).
 # Pinned recipients (resolved by recipient_id, verified against the pinned UEI).
 # `nexus` records HOW each ties to the corridor — verified vs context vs open — so
 # the federal layer never overclaims.

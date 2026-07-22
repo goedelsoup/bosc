@@ -1,8 +1,76 @@
 {
   "$defs": {
+    "ContractorAward": {
+      "additionalProperties": false,
+      "description": "A USASpending federal-award record joined to a matched corpus entity (#1662, ME-C).\n\nThe dollars are verbatim from ``data/reference/usaspending/[<slug>/]awards.yaml``; the join\nkey is the entity node's ``uei`` (stamped by the same watchlist), so the feed's federal totals\nreconcile with the entity graph rather than re-deriving them.",
+      "properties": {
+        "entity_key": {
+          "title": "Entity Key",
+          "type": "string"
+        },
+        "recipient_name": {
+          "title": "Recipient Name",
+          "type": "string"
+        },
+        "uei": {
+          "title": "Uei",
+          "type": "string"
+        },
+        "total_obligations": {
+          "title": "Total Obligations",
+          "type": "number"
+        },
+        "nexus": {
+          "title": "Nexus",
+          "type": "string"
+        },
+        "defense_share": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Defense Share"
+        },
+        "annual_obligations": {
+          "items": {
+            "$ref": "#/$defs/FederalAnnualFlow"
+          },
+          "title": "Annual Obligations",
+          "type": "array"
+        },
+        "by_psc": {
+          "items": {
+            "$ref": "#/$defs/FederalCategory"
+          },
+          "title": "By Psc",
+          "type": "array"
+        },
+        "by_naics": {
+          "items": {
+            "$ref": "#/$defs/FederalCategory"
+          },
+          "title": "By Naics",
+          "type": "array"
+        }
+      },
+      "required": [
+        "entity_key",
+        "recipient_name",
+        "uei",
+        "total_obligations",
+        "nexus"
+      ],
+      "title": "ContractorAward",
+      "type": "object"
+    },
     "DefenseContractorItem": {
       "additionalProperties": false,
-      "description": "A seed prime defense contractor + the corpus entities its patterns matched.",
+      "description": "A seed prime defense contractor + the corpus entities its patterns matched.\n\nWhen a matched entity resolves to a USASpending recipient, its awards are stamped here (#1662):\n``awards`` carries the per-entity federal records, and ``total_obligations`` / ``nexus`` roll\nthem up (the summed dollars + the strongest nexus). A contractor with no matched award keeps\nan empty ``awards`` and null totals.",
       "properties": {
         "name": {
           "title": "Name",
@@ -33,12 +101,88 @@
           },
           "title": "Matched Entities",
           "type": "array"
+        },
+        "awards": {
+          "items": {
+            "$ref": "#/$defs/ContractorAward"
+          },
+          "title": "Awards",
+          "type": "array"
+        },
+        "total_obligations": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Total Obligations"
+        },
+        "nexus": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nexus"
         }
       },
       "required": [
         "name"
       ],
       "title": "DefenseContractorItem",
+      "type": "object"
+    },
+    "FederalAnnualFlow": {
+      "additionalProperties": false,
+      "description": "One federal fiscal year's prime-award obligations (the annual flow, #1662).",
+      "properties": {
+        "fiscal_year": {
+          "title": "Fiscal Year",
+          "type": "integer"
+        },
+        "obligations": {
+          "title": "Obligations",
+          "type": "number"
+        }
+      },
+      "required": [
+        "fiscal_year",
+        "obligations"
+      ],
+      "title": "FederalAnnualFlow",
+      "type": "object"
+    },
+    "FederalCategory": {
+      "additionalProperties": false,
+      "description": "One PSC/NAICS category's share of a recipient's federal obligations (#1662).",
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "obligations": {
+          "title": "Obligations",
+          "type": "number"
+        }
+      },
+      "required": [
+        "code",
+        "name",
+        "obligations"
+      ],
+      "title": "FederalCategory",
       "type": "object"
     },
     "ScanParcel": {

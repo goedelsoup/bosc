@@ -14,12 +14,11 @@
     "parcels": [],
     "addresses": [],
     "sources": [
-      "data/reference/gleif/lei-records.yaml",
-      "data/reference/usaspending/awards.yaml"
+      "data/reference/gleif/lei-records.yaml"
     ],
     "lei": "9C1X8XOOTYY2FNYTVH06",
-    "uei": "VF58HFRNGEL8",
-    "federal_obligations": 299067439090.79
+    "uei": null,
+    "federal_obligations": null
   },
   {
     "key": "GENERAL DYNAMICS LAND SYSTEMS",
@@ -38,12 +37,11 @@
     "parcels": [],
     "addresses": [],
     "sources": [
-      "data/reference/gleif/lei-records.yaml",
-      "data/reference/usaspending/awards.yaml"
+      "data/reference/gleif/lei-records.yaml"
     ],
     "lei": "875500ULXB4CYQSJVA03",
-    "uei": "HAWKSQF848W7",
-    "federal_obligations": 33579510703.85
+    "uei": null,
+    "federal_obligations": null
   },
   {
     "key": "npdes:1PD00008",

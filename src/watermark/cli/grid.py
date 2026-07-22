@@ -709,50 +709,54 @@ def usaspending_cmd(
     offline: bool = typer.Option(
         False, "--offline", help="Use cached USASpending responses only; never touch the network."
     ),
+    no_breakdown: bool = typer.Option(
+        False,
+        "--no-breakdown",
+        help="Resolve only the all-time total (skip the annual/PSC/defense-share breakdown calls).",
+    ),
     out_dir: str | None = typer.Option(
-        None, "--out", help="Output directory (default: data/reference/usaspending)."
+        None, "--out", help="Output directory (default: data/reference/usaspending[/<site>])."
     ),
 ) -> None:
-    """Resolve the federal-award watchlist against USASpending -> committed awards YAML.
+    """Resolve the active site's federal-award watchlist against USASpending -> awards YAML.
 
-    Each recipient is fetched by its pinned recipient_id and verified against the
-    pinned UEI (no fuzzy match); the total is all-time prime-award obligations. The
-    `nexus` tag marks verified corridor ties vs context/open. Raw responses cache
+    Each recipient is fetched by its pinned recipient_id and verified against the pinned UEI (no
+    fuzzy match); the total is all-time prime-award obligations, and (unless `--no-breakdown`) each
+    record also carries an annual flow + PSC/NAICS mix + a defense-vs-civilian split. The `nexus`
+    tag marks verified corridor ties vs context/open. The watchlist + output are per-site
+    (`watermark --site <slug> usaspending`; Lima flat, a peer slug-scoped). Raw responses cache
     under data/cache/usaspending; the curated YAML is the committed artifact.
     """
     from watermark import usaspending
     from watermark.catalog import output_dir_for_command
+    from watermark.sites import site_scoped_path
 
-    settings = get_settings()
-    if offline:
-        settings = Settings(usaspending_offline=True)
-    target = (
-        Path(out_dir)
-        if out_dir
-        else (
+    settings = Settings(usaspending_offline=offline, usaspending_breakdown=not no_breakdown)
+    if out_dir:
+        target = Path(out_dir)
+    else:
+        base = (
             output_dir_for_command("usaspending", settings=settings)
             or settings.reference_dir / "usaspending"
         )
-    )
+        target = site_scoped_path(base, settings.site, is_dir=True)
 
     inv = usaspending.resolve_watchlist(settings)
 
-    table = Table("Recipient", "UEI", "nexus", "all-time prime obligations", "parent")
+    table = Table("Recipient", "UEI", "nexus", "all-time prime obligations", "defense share")
     for r in sorted(inv.records, key=lambda x: -x.total_obligations):
         table.add_row(
             r.recipient_name[:32],
             r.uei,
             r.nexus,
             f"${r.total_obligations:,.0f}",
-            (r.parent_name or "—")[:24],
+            "—" if r.defense_share is None else f"{r.defense_share:.0%}",
         )
     console.print(table)
     console.print(
-        f"\n[bold]{len(inv.records)}[/] recipients resolved "
-        f"([green]{inv.meta['verified_nexus_count']} verified corridor nexus[/]), "
-        f"{len(inv.leads)} lead(s). "
-        "[dim]Amazon corridor recipient is a warehouse, not the data center; "
-        "Google ties to Scioto's Project Dazzler, not the Lima campus.[/]"
+        f"\n[bold]{len(inv.records)}[/] recipient(s) resolved for site "
+        f"[bold]{settings.site}[/] "
+        f"([green]{inv.meta['verified_nexus_count']} verified nexus[/]), {len(inv.leads)} lead(s)."
     )
 
     path = usaspending.write_inventory(inv, target)

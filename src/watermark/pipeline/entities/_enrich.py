@@ -493,12 +493,14 @@ def enrich_with_federal_awards(
     ``uei`` + ``federal_obligations`` stamped. Context/open recipients with no corpus node
     (Amazon Web Services, Google) are intentionally **not** added — they live on the
     USASpending reference page, not the graph, so the federal layer never overclaims.
+    The awards are read **per-site** (#1662): Lima's watchlist enriches Lima's graph, and a
+    peer with no committed watchlist gets no federal stamp (rather than inheriting Lima's).
     Run after :func:`enrich_with_lei`. Idempotent; no-op if the reference is absent.
     """
     settings = settings or get_settings()
     from watermark.usaspending import load_inventory as load_award_inventory
 
-    inv = load_award_inventory(settings.reference_dir)
+    inv = load_award_inventory(settings.reference_dir, settings.site)
     if inv is None:
         return graph
 

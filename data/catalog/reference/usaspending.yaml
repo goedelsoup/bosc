@@ -10,9 +10,12 @@ producer:
   external_url: https://api.usaspending.gov/
 license: U.S. Government work (public domain)
 access_tier: public
-site_scope: basin-shared
+site_scope: slug-scoped
 storage:
 - relpath: reference/usaspending/awards.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: reference/usaspending/{site}/awards.yaml
   media_type: application/x-yaml
   lfs: false
 refresh:
@@ -25,6 +28,8 @@ tags:
 - awards
 - entities
 - corridor
-notes: All-time federal prime-award obligations for a pinned recipient watchlist, each verified by recipient_id
-  + UEI and tagged with a verified/context/open corridor nexus; figures verbatim from the public Treasury
-  API.
+notes: All-time federal prime-award obligations for a per-site pinned recipient watchlist, each verified
+  by recipient_id + UEI and tagged with a verified/context/open corridor nexus; figures verbatim from the
+  public Treasury API. Slug-scoped (#1662, ME-C) — Lima keeps the legacy flat path, a sibling site reads
+  its own `<slug>/awards.yaml`. Beyond the all-time scalar each record carries an optional breakdown
+  (annual flow, PSC/NAICS category mix, and a defense-vs-civilian awarding-agency split).

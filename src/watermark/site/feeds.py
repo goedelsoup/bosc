@@ -233,7 +233,15 @@ from watermark.sites import (
 #   `operator` / `end_use` / `facility_count`. Facility-gated (feed skipped, block absent for a
 #   facility-less site). One new feed → MINOR, back-compatible (the manifest block + activity fields
 #   are optional, so a pre-1.31 bundle degrades to `investigation`).
-CONTRACT_VERSION = "1.31.0"
+# 1.32.0: the `defense-contractors` feed's `DefenseContractorItem` gains a resolved federal-dollar
+#   join (#1662, ME-C): each seed prime carries the USASpending awards its matched corpus entities
+#   resolve to (`awards` — `ContractorAward` with `total_obligations`, `nexus`, a defense-vs-civilian
+#   `defense_share`, the trailing `annual_obligations` flow, and the top `by_psc` / `by_naics`
+#   category mix), plus a rolled-up `total_obligations` scalar + strongest `nexus`. The federal
+#   dollars already reached the entity graph; this joins them to the feed that names the contractor.
+#   Additive/optional (a contractor with no matched award keeps empty `awards` / null totals), so a
+#   pre-1.32 defense-contractors.json stays valid — MINOR, back-compatible.
+CONTRACT_VERSION = "1.32.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -596,8 +604,54 @@ class ScanParcel(BaseModel):
     model_config = ConfigDict(extra="allow")
 
 
+class FederalAnnualFlow(BaseModel):
+    """One federal fiscal year's prime-award obligations (the annual flow, #1662)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    fiscal_year: int
+    obligations: float
+
+
+class FederalCategory(BaseModel):
+    """One PSC/NAICS category's share of a recipient's federal obligations (#1662)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    code: str
+    name: str
+    obligations: float
+
+
+class ContractorAward(BaseModel):
+    """A USASpending federal-award record joined to a matched corpus entity (#1662, ME-C).
+
+    The dollars are verbatim from ``data/reference/usaspending/[<slug>/]awards.yaml``; the join
+    key is the entity node's ``uei`` (stamped by the same watchlist), so the feed's federal totals
+    reconcile with the entity graph rather than re-deriving them.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    entity_key: str  # the matched graph node this award resolves through
+    recipient_name: str
+    uei: str
+    total_obligations: float  # all-time prime-award obligations (USD)
+    nexus: str  # verified | context | open — how the recipient ties to the corridor
+    defense_share: float | None = None  # DoD-family / all-agency obligations, 0..1
+    annual_obligations: list[FederalAnnualFlow] = Field(default_factory=list)
+    by_psc: list[FederalCategory] = Field(default_factory=list)
+    by_naics: list[FederalCategory] = Field(default_factory=list)
+
+
 class DefenseContractorItem(BaseModel):
-    """A seed prime defense contractor + the corpus entities its patterns matched."""
+    """A seed prime defense contractor + the corpus entities its patterns matched.
+
+    When a matched entity resolves to a USASpending recipient, its awards are stamped here (#1662):
+    ``awards`` carries the per-entity federal records, and ``total_obligations`` / ``nexus`` roll
+    them up (the summed dollars + the strongest nexus). A contractor with no matched award keeps
+    an empty ``awards`` and null totals.
+    """
 
     model_config = ConfigDict(extra="forbid")
 
@@ -605,6 +659,9 @@ class DefenseContractorItem(BaseModel):
     note: str | None = None
     patterns: list[str] = Field(default_factory=list)
     matched_entities: list[str] = Field(default_factory=list)  # entity keys
+    awards: list[ContractorAward] = Field(default_factory=list)
+    total_obligations: float | None = None  # Σ distinct matched awards (USD); null if none
+    nexus: str | None = None  # strongest matched nexus (verified > context > open); null if none
 
 
 class DefenseFeed(BaseModel):
