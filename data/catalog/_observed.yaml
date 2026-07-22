@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-22T11:04:33.025554+00:00'
+reconciled_at: '2026-07-22T15:01:08.106899+00:00'
 entries:
   aedg:
     exists: true
@@ -452,10 +452,10 @@ entries:
     site_scope: lima-legacy
   hydrology:
     exists: true
-    sha256: d457dff8d5fc9b0f4f80d47607d107a2b48a80904c67edc2075fca85b840a89d
-    size_bytes: 104811
+    sha256: 60ed3638d4cadb3268585c69d47fee1c4353f95b99e5d93cf2b82819e35aebf7
+    size_bytes: 108693
     lfs_materialized: true
-    file_count: 18
+    file_count: 19
     missing: []
     asof: null
     stale: false

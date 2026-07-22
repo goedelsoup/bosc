@@ -11,6 +11,7 @@ which are cached, not committed here.
 | File | What | Source |
 |---|---|---|
 | `cn-lookup.yaml` | SCS Curve Numbers by NLCD land-cover class × hydrologic soil group (AMC-II), plus the dry/wet AMC adjustment forms. | USDA NRCS TR-55 Table 2-2, mapped to NLCD 2021 classes (same mapping Periplus used). |
+| `tier0-parameters.yaml` | The load-bearing per-method Tier-0 solver + screening constants — the SCS UH **peak factor** (484), the **initial-abstraction ratio** (Ia = 0.2·S), the default channel **Manning n** (0.04), and the low-flow **dilution bands** (violation 1:1 / tight 10:1) — externalized from buried literals so each carries a citation and a per-call override seam (WS-23 / #1623). Read by `watermark.hydrology.solver.parameters`; the solver functions take `peak_factor=` / `ia_ratio=` / `manning_n=` / `bands=` to override, and `reaches.yaml` overrides Manning n per reach. Time-of-concentration endpoints are per-site on `SiteProfile`, not here. `source: reference`/`assumption`. | NRCS NEH-630 Ch. 16 (peak factor) · TR-55 (Ia) · Chow 1959 Table 5-6 (Manning n) · screening conventions (dilution bands). |
 | `low-flow-7q10.yaml` | Cited 7Q10 (7-day, 10-year) low-flow statistics for the receiving waters. | As cited; the regulatory statistic used by `watermark.hydrology.lowflow`. |
 | `low-flow-frequency.yaml` | **Independently computed** 1Q10/7Q10/30Q10 for the Ottawa-at-Lima gage (NWIS 04187100) — log-Pearson III + Weibull on climatic-year n-day minima — with the per-year minima preserved for audit, read against the cited values above. The computed 7Q10 (≈0.24 cfs) reproduces the cited 0.2 cfs; the 1Q10 is 0 cfs (dry). `source: derived`. | USGS NWIS Daily Values service, pulled via `watermark lowflow-freq --write`; computed by `watermark.hydrology.lowflow_frequency`. A *corroboration* of the cited regulatory 7Q10, **not** a substitute. |
 | `low-flow-7q10.derived.yaml` | **Derived** LP3 7Q10s for the four major USGS-gaged Maumee mainstems (Maumee ≈114, Auglaize ≈1.9, St. Marys ≈16, St. Joseph ≈30 cfs) — the denominators that extend the assimilative screen basin-wide (`watermark basin-screen`) beyond Lima's cited streams. `source: derived`; a screening proxy (the gage value, not the discharge reach), never a substitute for a cited regulatory 7Q10. Regenerate with `watermark derive-low-flows`. | USGS NWIS daily discharge → log-Pearson III (`watermark.hydrology.lowflow_frequency`); gages 04193500 / 04186500 / 04182000 / 04178000. |
@@ -69,6 +70,7 @@ Source: Mixed-provenance hydrology working set — USGS NWIS, Ohio EPA TMDL docu
 | `reference/hydrology/routing.yaml` | application/x-yaml | no |
 | `reference/hydrology/lima/sanitary-basis.yaml` | application/x-yaml | no |
 | `reference/hydrology/theories.yaml` | application/x-yaml | no |
+| `reference/hydrology/tier0-parameters.yaml` | application/x-yaml | no |
 | `reference/hydrology/tier1-swmm.yaml` | application/x-yaml | no |
 | `reference/hydrology/water-supply.yaml` | application/x-yaml | no |
 | `reference/hydrology/wwtp-floodzone.yaml` | application/x-yaml | no |

@@ -20,26 +20,36 @@ gap is tracked as an open lead (``WWTP-PARAM-ASSIM`` in ``data/site/leads.yaml``
 
 from __future__ import annotations
 
+from watermark.config import Settings
 from watermark.hydrology.lowflow import _normalize, load_low_flows
 from watermark.hydrology.model import (
-    DILUTION_TIGHT,
-    DILUTION_VIOLATION,
     AssimilativeCheck,
     Flag,
     HydroFinding,
     ProvenancedValue,
     WaterBalance,
 )
+from watermark.hydrology.solver.parameters import dilution_bands
 from watermark.logging import get_logger
 
 log = get_logger(__name__)
 
 
-def dilution_flag(ratio: float) -> Flag:
-    """Screening band for a 7Q10/discharge dilution ratio (violation < tight < ok)."""
-    if ratio < DILUTION_VIOLATION:
+def dilution_flag(
+    ratio: float,
+    *,
+    bands: tuple[float, float] | None = None,
+    settings: Settings | None = None,
+) -> Flag:
+    """Screening band for a 7Q10/discharge dilution ratio (violation < tight < ok).
+
+    The ``(violation, tight)`` bands default to the cited ``tier0-parameters.yaml`` values
+    (1.0 / 10.0 — coarse screening, not a permit determination); pass ``bands=`` to override.
+    """
+    violation, tight = bands if bands is not None else dilution_bands(settings=settings)
+    if ratio < violation:
         return "violation"
-    if ratio < DILUTION_TIGHT:
+    if ratio < tight:
         return "tight"
     return "ok"
 

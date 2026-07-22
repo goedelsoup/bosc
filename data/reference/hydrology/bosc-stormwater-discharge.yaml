@@ -35,22 +35,22 @@ cover_breakdown: 115 ac impervious + 80 ac developed-pervious + 145 ac undevelop
 peaks:
 - return_period_yr: 10
   depth_in: 3.58
-  pre_peak_cfs: 209.493
-  post_peak_cfs: 268.355
-  full_buildout_peak_cfs: 468.214
-  post_peak_wet_cfs: 382.713
+  pre_peak_cfs: 210.0
+  post_peak_cfs: 270.0
+  full_buildout_peak_cfs: 470.0
+  post_peak_wet_cfs: 380.0
 - return_period_yr: 25
   depth_in: 4.25
-  pre_peak_cfs: 284.478
-  post_peak_cfs: 351.393
-  full_buildout_peak_cfs: 572.143
-  post_peak_wet_cfs: 474.123
+  pre_peak_cfs: 280.0
+  post_peak_cfs: 350.0
+  full_buildout_peak_cfs: 570.0
+  post_peak_wet_cfs: 470.0
 - return_period_yr: 100
   depth_in: 5.39
-  pre_peak_cfs: 421.339
-  post_peak_cfs: 498.504
-  full_buildout_peak_cfs: 747.729
-  post_peak_wet_cfs: 630.192
+  pre_peak_cfs: 420.0
+  post_peak_cfs: 500.0
+  full_buildout_peak_cfs: 750.0
+  post_peak_wet_cfs: 630.0
 design_return_period_yr: 25
 outfall_diameter_in:
   value: 60.0
@@ -81,7 +81,7 @@ receiving_note: 'Dug Run: cited 7Q10 0.78 cfs; Warmwater Habitat; impaired (aqua
   a cited dilution violation. A storm peak many times the design low flow is a channel-stability
   / erosion signal — corroborated by the 2026-06-05 ''check the outlet ... not releasing
   sediment'' inspection note — distinct from continuous-effluent dilution.'
-peak_to_7q10_ratio: 451.0
+peak_to_7q10_ratio: 449.0
 detention_design_shown: false
 basin_chronology_note: The 95% SPS grading sheet shows NO detention/retention storage
   (lma1a.storm-inventory.yaml); the ESC inspections show basins under construction
@@ -102,11 +102,11 @@ routed_discharge:
       an UPPER bound on outfall->confluence travel — the outfall''s entry point on
       Dug Run is not in the record'
     confidence: low
-  at_outfall_peak_cfs: 351.393
+  at_outfall_peak_cfs: 350.0
   at_outfall_time_to_peak_hr: 12.3
   routed_peak_cfs: 307.598
   routed_time_to_peak_hr: 13.6
-  attenuation_pct: 12.46
+  attenuation_pct: 12.11
   lag_hr: 1.3
   method: Constant-parameter Muskingum-Cunge (watermark.hydrology.solver.routing)
     of the as-permitted post-development outfall hydrograph down the committed reaches.yaml

@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import math
 from pathlib import Path
+from typing import TypedDict
 
 import numpy as np
 import yaml
@@ -318,9 +319,18 @@ _ROUTING_HEADROOM_HR = 24.0
 _ROUTING_DT_HR = 0.1
 
 
-def _reach_route_kwargs(reach: Reach) -> dict[str, float]:
+class _ReachRouteKwargs(TypedDict, total=False):
+    """The trapezoid overrides a reach may carry — a precise kwargs type so unpacking into
+    ``route`` can't be confused with its ``settings`` keyword."""
+
+    bottom_width_ft: float
+    side_slope_z: float
+    manning_n: float
+
+
+def _reach_route_kwargs(reach: Reach) -> _ReachRouteKwargs:
     """The optional trapezoid overrides on a reach; the rest fall back to ``route``'s defaults."""
-    kw: dict[str, float] = {}
+    kw: _ReachRouteKwargs = {}
     if reach.bottom_width_ft is not None:
         kw["bottom_width_ft"] = reach.bottom_width_ft.value
     if reach.side_slope_z is not None:

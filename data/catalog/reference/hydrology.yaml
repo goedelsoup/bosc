@@ -58,6 +58,9 @@ storage:
 - relpath: reference/hydrology/theories.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: reference/hydrology/tier0-parameters.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: reference/hydrology/tier1-swmm.yaml
   media_type: application/x-yaml
   lfs: false

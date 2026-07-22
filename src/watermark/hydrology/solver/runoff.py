@@ -4,11 +4,13 @@ Turns a design-storm depth + curve number + basin parameters into a runoff
 hydrograph:
 
     Tp = dt/2 + 0.6 * Tc           time to peak (hr)
-    Qp = 484 * A / Tp              UH peak (cfs per inch of excess; A in sq mi)
+    Qp = peak_factor * A / Tp      UH peak (cfs per inch of excess; A in sq mi)
 
 The dimensionless SCS unit hydrograph (q/Qp vs t/Tp) is scaled by ``(Tp, Qp)`` and
-convolved with the incremental excess rainfall. The 484 peak factor makes the
-hydrograph conserve volume (total flow volume == excess depth over the area).
+convolved with the incremental excess rainfall. The peak factor (484 by convention) makes
+the hydrograph conserve volume (total flow volume == excess depth over the area). It is the
+cited Tier-0 constant in ``tier0-parameters.yaml``
+(:mod:`watermark.hydrology.solver.parameters`), overridable per call via ``peak_factor=``.
 """
 
 from __future__ import annotations
@@ -18,6 +20,7 @@ from typing import Literal
 import numpy as np
 from numpy.typing import NDArray
 
+from watermark.config import Settings
 from watermark.hydrology.model import Hydrograph
 from watermark.hydrology.solver.curve_number import (
     adjust_amc,
@@ -25,6 +28,8 @@ from watermark.hydrology.solver.curve_number import (
     excess_rainfall,
     weighted_excess_rainfall,
 )
+from watermark.hydrology.solver.parameters import peak_factor as _peak_factor
+from watermark.hydrology.solver.parameters import round_sig
 from watermark.hydrology.solver.rainfall import scs_type_ii_hyetograph
 
 # Dimensionless SCS unit hydrograph: t/Tp -> q/Qp (NEH-630 Table 16-1, abridged).
@@ -93,10 +98,12 @@ _SQFT_PER_ACRE = 43560.0
 _SEC_PER_HR = 3600.0
 
 
-def _unit_hydrograph(area_sqmi: float, tc_hr: float, dt_hr: float) -> NDArray[np.float64]:
+def _unit_hydrograph(
+    area_sqmi: float, tc_hr: float, dt_hr: float, *, peak_factor: float
+) -> NDArray[np.float64]:
     """UH ordinates (cfs per inch of excess) at ``dt_hr`` spacing."""
     tp = dt_hr / 2.0 + 0.6 * tc_hr
-    qp = 484.0 * area_sqmi / tp
+    qp = peak_factor * area_sqmi / tp
     n = int(np.ceil(5.0 * tp / dt_hr)) + 1  # the dimensionless curve tails out by t/Tp=5
     t = np.arange(n, dtype=np.float64) * dt_hr
     return qp * np.interp(t / tp, _T_OVER_TP, _Q_OVER_QP)
@@ -112,6 +119,8 @@ def simulate_runoff(
     cn_parts: list[tuple[float, float]] | None = None,
     dt_hr: float = 0.1,
     duration_hr: float = 24.0,
+    peak_factor: float | None = None,
+    settings: Settings | None = None,
 ) -> Hydrograph:
     """Run the Tier-0 SCS chain for one footprint and one design storm.
 
@@ -128,9 +137,16 @@ def simulate_runoff(
     ``"I"`` (dry) lowers it. The returned hydrograph records both the effective ``curve_number``
     and the ``amc`` it was run under, so a reader can tell whether a reported peak is
     wet-antecedent.
+
+    ``peak_factor`` (the SCS UH peak factor) defaults to the cited ``tier0-parameters.yaml``
+    value (484); pass it to override for a calibrated basin. The reported ``peak_cfs`` is stored
+    to 2 significant figures — a Tier-0 screen's inputs are ~2 sig figs, so a finer stored peak
+    would read as false confidence — while the full ``flows_cfs``/``times_hr`` series keeps its
+    precision (it feeds the volume and any downstream routing).
     """
     if (curve_number is None) == (cn_parts is None):
         raise ValueError("simulate_runoff needs exactly one of curve_number or cn_parts")
+    pf = peak_factor if peak_factor is not None else _peak_factor(settings=settings)
     area_sqmi = area_acres / 640.0
     _, cumulative, _ = scs_type_ii_hyetograph(storm_depth_in, dt_hr=dt_hr, duration_hr=duration_hr)
     runoff_method: Literal["composite_cn", "weighted_runoff"]
@@ -138,16 +154,16 @@ def simulate_runoff(
         # AMC adjusts each cover's own CN before the depths are combined (a per-cover soil
         # property), so the wet/dry bound is applied to the honest weighted-runoff depth.
         adjusted = [(area, adjust_amc(cn, amc)) for area, cn in cn_parts]
-        cum_excess = weighted_excess_rainfall(cumulative, adjusted)
+        cum_excess = weighted_excess_rainfall(cumulative, adjusted, settings=settings)
         effective_cn = composite_cn(adjusted)  # composite, reported as a summary descriptor
         runoff_method = "weighted_runoff"
     else:
         assert curve_number is not None  # narrowed by the exactly-one guard above
         effective_cn = adjust_amc(curve_number, amc)
-        cum_excess = excess_rainfall(cumulative, effective_cn)
+        cum_excess = excess_rainfall(cumulative, effective_cn, settings=settings)
         runoff_method = "composite_cn"
     inc_excess = np.diff(cum_excess, prepend=0.0)  # inches per step
-    uh = _unit_hydrograph(area_sqmi, tc_hr, dt_hr)
+    uh = _unit_hydrograph(area_sqmi, tc_hr, dt_hr, peak_factor=pf)
 
     # Keep the full convolution (len(inc_excess)+len(uh)-1 samples): truncating to the
     # input length would drop the recession tail after the last rainfall increment,
@@ -160,7 +176,7 @@ def simulate_runoff(
     return Hydrograph(
         times_hr=[round(t, 4) for t in times.tolist()],
         flows_cfs=[round(q, 4) for q in flows.tolist()],
-        peak_cfs=round(float(flows[peak_idx]), 3),
+        peak_cfs=round_sig(float(flows[peak_idx])),  # 2 sig figs — Tier-0 inputs are ~2 sf
         time_to_peak_hr=round(float(times[peak_idx]), 3),
         volume_acft=round(volume_acft, 3),
         runoff_depth_in=round(float(cum_excess[-1]), 4),
