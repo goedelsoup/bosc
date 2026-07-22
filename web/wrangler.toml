@@ -50,6 +50,21 @@ MCP_ENABLED = "true"
 RUM_ENABLED = "true"
 PUBLIC_RUM_ENABLED = "true"
 AUTH_ENABLED = "true"
+# Cognito auth (#919) — non-secret plaintext identifiers Pulumi writes to the Pages project
+# (deploy/index.ts pageEnvVars, type: "plain_text"). `wrangler pages deploy` makes this file
+# authoritative and STRIPS any plaintext var not listed here (the same reason the *_ENABLED
+# flags moved into wrangler.toml in 680c37e6). AUTH_ENABLED="true" carried forward WITHOUT these
+# makes /api/submit return 500 "endpoint is misconfigured" (submit.ts:89) and breaks the OAuth
+# token/refresh flow. Not secrets — COGNITO_CLIENT_ID is also exposed to the browser as
+# PUBLIC_COGNITO_CLIENT_ID. REGION/DOMAIN/APP_BASE_URL are derived from committed Pulumi config
+# (deploy/Pulumi.prod.yaml: cognitoRegion=us-east-2, cognitoDomainPrefix=watermark-auth; siteDomain
+# unset ⇒ pages.dev). The two AWS-generated ids come from `pulumi stack output` — update them here
+# if the Cognito pool is ever recreated. The COGNITO_CLIENT_SECRET stays a Wrangler secret.
+COGNITO_REGION = "us-east-2"
+COGNITO_USER_POOL_ID = "REPLACE_ME"  # pulumi stack output cognitoUserPoolId  (us-east-2_XXXXXXXXX)
+COGNITO_CLIENT_ID = "REPLACE_ME"     # pulumi stack output cognitoClientId
+COGNITO_DOMAIN = "watermark-auth.auth.us-east-2.amazoncognito.com"
+APP_BASE_URL = "https://the-watermark-directory.pages.dev"
 STORIES_ENABLED = "false"
 PUBLIC_STORIES_ENABLED = "false"
 CONTACTS_ENABLED = "false"
@@ -162,9 +177,16 @@ preview_bucket_name = "watermark-submission-attachments-dev"
 # id = "<namespace-id>"
 
 # --- Cognito auth (Epic #919) -----------------------------------------------------
-# AUTH_ENABLED, COGNITO_REGION, COGNITO_USER_POOL_ID, COGNITO_CLIENT_ID, COGNITO_DOMAIN,
-# PUBLIC_COGNITO_CLIENT_ID, PUBLIC_COGNITO_DOMAIN, and APP_BASE_URL are written to the
-# Pages project by `pulumi up` (deploy/index.ts) — do NOT set them here or in the dashboard.
+# The non-secret Function-runtime Cognito vars (AUTH_ENABLED, COGNITO_REGION,
+# COGNITO_USER_POOL_ID, COGNITO_CLIENT_ID, COGNITO_DOMAIN, APP_BASE_URL) MUST live in the
+# `[vars]` block above: `wrangler pages deploy` is authoritative and strips any plaintext var
+# not listed in this file, so a value set only by `pulumi up` never reaches the deployed
+# Functions (this is what made /api/submit 500 "endpoint is misconfigured"). Pulumi still
+# writes the same values to the project (deploy/index.ts) — harmless, wrangler's copy wins on
+# deploy. Keep the two ids in `[vars]` in sync with `pulumi stack output` if the pool is
+# recreated. The PUBLIC_COGNITO_* peers are BUILD-TIME (Astro import.meta.env) — set them as CI
+# repo vars in .github/workflows/pages.yml, not here (wrangler [vars] land at runtime, after the
+# build). COGNITO_CLIENT_SECRET is a real secret: `wrangler pages secret put` (persists).
 # To activate auth: set authEnabled=true in Pulumi config + flip auth: true in features.yaml.
 # See deploy/Pulumi.prod.yaml for the full runbook and docs/auth.md for the auth layer.
 #
