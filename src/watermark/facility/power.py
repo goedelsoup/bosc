@@ -69,9 +69,10 @@ from watermark.sites import CoolingModelType, active_profile
 _PUE_CITE = (
     "PUE = total facility power / IT power, a banded assumption read PER COOLING ARCHETYPE "
     "from data/reference/compute/rack-density.yaml (pue_band_by_cooling_model, fallback "
-    "pue_band); dry/air cooling's fan penalty raises PUE, a once-through pass-through's PUE "
-    "is low (central 1.15 == the heat-rejection multiplier), and the evaporative ceiling 1.43 "
-    "admits cooling-dominated designs (~30% of facility power for cooling, 2026-06-10 call)"
+    "pue_band); the EVAPORATIVE band tops at ~1.43 for cooling-dominated designs (~30% of "
+    "facility power for cooling, 2026-06-10 call), dry/air cooling's fan penalty pushes its "
+    "band above that, and a once-through pass-through's PUE is low (central 1.15 == the "
+    "heat-rejection multiplier) — the applicable range is this facility's own archetype band"
 )
 
 
