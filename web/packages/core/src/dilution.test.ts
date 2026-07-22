@@ -61,7 +61,11 @@ const BUILDOUT = {
   },
   consumptive_loss: pv(4.851392),
   receiving_7q10: pv(0.2),
+  // The seasonal floors + campus discharge are now feed fields (#1633), not hardcoded constants.
+  receiving_summer_30q10: pv(1.6),
+  receiving_1q10: pv(0),
   receiving_live: pv(36.3),
+  campus_routed_discharge: pv(3.87),
   balance: pv(0),
   assimilative: [
     assim("Shawnee II WWTP", "Ottawa River", 4.641, 0.2),
@@ -96,27 +100,29 @@ describe("dilution math", () => {
 });
 
 describe("buildDilution — feed-sourced (no fork)", () => {
-  it("reads the buildout draw + annual 7Q10 from the feed", async () => {
+  it("reads the buildout draw + all three low-flow floors from the feed", async () => {
     const { buildDilution } = await loadDilution(makeBundle([BUILDOUT]));
     const data = buildDilution();
     expect(data.fromFeed).toBe(true);
     expect(data.maxCoolingMgd).toBe(3.92);
     expect(data.consumptiveFraction).toBe(0.8);
     expect(data.drawAtBuildoutCfs).toBeCloseTo(4.851392, 5);
-    // annual floor is the feed's receiving_7q10; the seasonal floors are cited consts.
+    // Every floor is feed-sourced now (#1633) — annual 7Q10 + the two seasonal floors.
     expect(data.floors.find((f) => f.key === "annual")?.cfs).toBe(0.2);
     expect(data.floors.find((f) => f.key === "summer")?.cfs).toBe(1.6);
     expect(data.floors.find((f) => f.key === "driest")?.cfs).toBe(0);
   });
 
-  it("falls back to curated defaults when the feed is absent (CI fixture path)", async () => {
+  it("locks (no Lima fallback) when the feed carries no buildout scenario", async () => {
     const { buildDilution } = await loadDilution(makeBundle([]));
     const data = buildDilution();
+    // A thin site degrades to the empty locked shell — never Lima's constants (#1633).
     expect(data.fromFeed).toBe(false);
-    expect(data.maxCoolingMgd).toBeGreaterThan(0);
-    expect(data.floors).toHaveLength(3);
-    // The discharge finding still resolves from the curated fallback rows.
-    expect(data.discharge.rows).toHaveLength(3);
+    expect(data.maxCoolingMgd).toBe(0);
+    expect(data.floors).toHaveLength(0);
+    expect(data.discharge.rows).toHaveLength(0);
+    expect(data.discharge.campusFm2Cfs).toBe(0);
+    expect(data.discharge.effluentPct).toBe(0);
   });
 });
 
@@ -126,7 +132,7 @@ describe("the discharge finding — the river is already effluent ([verified])",
     const { discharge } = buildDilution();
     expect(discharge.wwtpCfs).toBeCloseTo(8.82, 2); // 4.64 + 2.32 + 1.86
     expect(discharge.naturalCfs).toBeCloseTo(1.01, 2); // 0.2 + 0.03 + 0.78
-    expect(discharge.campusFm2Cfs).toBe(3.87); // cited water-balance constant, not in the feed
+    expect(discharge.campusFm2Cfs).toBe(3.87); // now the feed's campus_routed_discharge (#1633)
     // (8.82 + 3.87) / (8.82 + 3.87 + 1.01) ≈ 93%
     expect(discharge.effluentPct).toBe(93);
     expect(discharge.rows).toHaveLength(3);

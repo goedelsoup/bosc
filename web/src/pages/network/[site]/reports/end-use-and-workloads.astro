@@ -11,8 +11,12 @@ export const getStaticPaths = selectableSitePaths;
 import ReportShell from "~/layouts/ReportShell.astro";
 import EndUseExplorer from "@watermark/viz/islands/EndUseExplorer.tsx";
 import { buildEndUse } from "@watermark/core/endUse";
+import { withSite } from "@watermark/core/site";
 
-const endUse = buildEndUse();
+// Per-site (#1633): the taxonomy is the Lima committee-record read — null for any other site, so
+// this page locks and asks for the source rather than emitting Lima's analysis verbatim. (The whole
+// reports section already locks for a thin peer at the ReportShell; this is the finer guard.)
+const endUse = buildEndUse(Astro.locals.site);
 const limaLabel = (s: string): string => (s === "ruled-out" ? "ruled out" : "[open]");
 ---
 
@@ -34,6 +38,8 @@ const limaLabel = (s: string): string => (s === "ruled-out" ? "ruled out" : "[op
       </p>
   </Fragment>
 
+    {endUse ? (
+    <Fragment>
     <section class="walk-interactive" aria-label="The four things called a data center">
       <h2 class="walk-explore-h">Pick a type — read who can use it</h2>
       <div class="eu-surface">
@@ -63,6 +69,7 @@ const limaLabel = (s: string): string => (s === "ruled-out" ? "ruled out" : "[op
               <th scope="col">Type</th>
               <th scope="col">Who owns the compute</th>
               <th scope="col">Who can use it</th>
+              <th scope="col">Evidence</th>
               <th scope="col">Lima</th>
             </tr>
           </thead>
@@ -76,6 +83,12 @@ const limaLabel = (s: string): string => (s === "ruled-out" ? "ruled out" : "[op
                   </td>
                   <td>{t.ownsCompute}</td>
                   <td>{t.whoCanUse}</td>
+                  {/* The evidence register + its committee-record anchor — carried through the
+                      no-JS fallback, not only the interactive explorer (#1633). */}
+                  <td>
+                    <code>[{t.evidenceRegister}]</code>
+                    <span class="eu-td-tag">{t.evidence}</span>
+                  </td>
                   <td>{limaLabel(t.limaStatus)}</td>
                 </tr>
               ))
@@ -99,6 +112,18 @@ const limaLabel = (s: string): string => (s === "ruled-out" ? "ruled out" : "[op
         absence of an answer.
       </p>
     </div>
+    </Fragment>
+    ) : (
+    <div class="callout callout--open">
+      <p class="callout-title">Not on record for this site</p>
+      <p>
+        The end-use taxonomy is read from the Lima Select-Committee record — a Google-specific
+        read. This site has no such record yet, so the question of <strong>what the facility is
+        for, and who can use it</strong> stays <code>[open]</code> rather than borrowing Lima's
+        four-type analysis. Have a disclosure? <a href={withSite("/submit")}>Submit it →</a>
+      </p>
+    </div>
+    )}
 
     <Fragment slot="full-report">
       the hyperscale-vs-colocation split, the “cannot say” abatement opacity, the FedRAMP /

@@ -167,8 +167,16 @@ class ScenarioResult(BaseModel):
     cooling_model: CoolingModelType | None = None
     consumptive_loss: ProvenancedValue  # net basin loss (cfs), derived from the knobs
     receiving_7q10: ProvenancedValue | None = None  # per-site receiving-water low flow (#900)
+    # Per-site seasonal design low flows, surfaced so the frontend reads them from the feed
+    # instead of hardcoding Lima's floors (#1633). None when the cited table omits them.
+    receiving_summer_30q10: ProvenancedValue | None = None  # growing-season 30Q10 (cfs)
+    receiving_1q10: ProvenancedValue | None = None  # absolute driest-week 1Q10 (cfs, often 0)
     receiving_live: ProvenancedValue | None = None  # live receiving-water streamflow, for context
     receiving_water_name: str | None = None  # which receiving water the 7Q10 is for (#900)
+    # The campus's own routed industrial discharge (cfs) — the demand node's return flow (Lima's
+    # FM-2). Surfaced top-level (#1633) so the dilution model's effluent share is feed-sourced, not
+    # a hardcoded constant; None for a scenario whose balance has no discharging demand node.
+    campus_routed_discharge: ProvenancedValue | None = None
     balance: WaterBalance
     assimilative: list[AssimilativeCheck]
 

@@ -11,6 +11,12 @@
  * type directly. Every cell traces to docs/end-use-and-workloads.md.
  */
 
+import { LIMA_SLUG } from "./routes";
+
+// `DcKey` is the client-safe mirror of the Python `watermark.sites.DcEndUse` vocabulary (F2,
+// #1628): the two must stay in lockstep — a facility that discloses an `end_use` on the `facility`
+// feed uses these exact keys. This taxonomy is the Lima committee-record read; a non-Lima site has
+// no such record, so `buildEndUse` returns null there rather than re-keying Lima's analysis (#1633).
 export type DcKey = "bitcoin" | "hyperscale" | "colocation" | "enclave";
 
 /** What the Lima record establishes about whether the campus is this type. */
@@ -163,7 +169,15 @@ const TYPES: DcType[] = [
   },
 ];
 
-export function buildEndUse(): EndUseData {
+/**
+ * The end-use taxonomy for a site, or null when the site is not the Lima reference build.
+ *
+ * The content is the Lima Select-Committee record read (Google-specific); a non-Lima selectable
+ * site has no such record, so this returns null and the page locks + asks for the source rather
+ * than emitting Lima's four-type analysis verbatim (#1633). The caller passes the active site slug.
+ */
+export function buildEndUse(site: string): EndUseData | null {
+  if (site !== LIMA_SLUG) return null;
   return {
     types: TYPES,
     verified:

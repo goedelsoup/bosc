@@ -241,7 +241,13 @@ from watermark.sites import (
 #   dollars already reached the entity graph; this joins them to the feed that names the contractor.
 #   Additive/optional (a contractor with no matched award keeps empty `awards` / null totals), so a
 #   pre-1.32 defense-contractors.json stays valid — MINOR, back-compatible.
-CONTRACT_VERSION = "1.32.0"
+# 1.32.1: each `hydrology-scenarios` `ScenarioResult` gains three optional provenanced fields
+#   (#1633, epic #1626 F7) — `receiving_summer_30q10` + `receiving_1q10` (the cited seasonal design
+#   low flows) and `campus_routed_discharge` (the demand node's own routed industrial discharge,
+#   Lima's FM-2). They surface figures already grounded in the balance / low-flow table so the
+#   frontend dilution model reads them per-site instead of hardcoding Lima's floors + FM-2 constant.
+#   All three default null (a scenario without them stays valid) — PATCH, back-compatible.
+CONTRACT_VERSION = "1.32.1"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

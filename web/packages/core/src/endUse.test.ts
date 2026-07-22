@@ -1,8 +1,19 @@
 import { describe, expect, it } from "vitest";
 import { IL_LADDER, buildEndUse } from "./endUse";
+import { LIMA_SLUG } from "./routes";
+
+describe("endUse — per-site guard (#1633)", () => {
+  it("returns the taxonomy for Lima, null for any other site", () => {
+    expect(buildEndUse(LIMA_SLUG)).not.toBeNull();
+    // A non-Lima selectable site has no committee record → lock, never Lima's analysis verbatim.
+    expect(buildEndUse("fort-wayne")).toBeNull();
+    expect(buildEndUse("van-wert")).toBeNull();
+  });
+});
 
 describe("endUse — the access ladder + benefit-capture (#266)", () => {
-  const data = buildEndUse();
+  const data = buildEndUse(LIMA_SLUG);
+  if (data === null) throw new Error("Lima must have an end-use taxonomy");
   const byKey = Object.fromEntries(data.types.map((t) => [t.key, t]));
 
   it("the IL ladder runs broad commercial → sealed IL-6 enclave", () => {
