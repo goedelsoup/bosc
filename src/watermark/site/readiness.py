@@ -55,7 +55,10 @@ DOMAINS: tuple[Domain, ...] = get_args(Domain)
 # inventory (``watermark.site.export``: an RSEI feed with zero facilities, an economic baseline
 # with no sectors) so it is absent, not a ``count == 1`` shell that floats backdrop to ``live`` on
 # an empty inventory (#1364).
-BACKDROP_FLOOR_FEEDS: tuple[str, ...] = ("economics-baseline", "consumer-energy", "rsei")
+ECONOMICS_BASELINE_FEED = "economics-baseline"
+CONSUMER_ENERGY_FEED = "consumer-energy"
+RSEI_FEED = "rsei"
+BACKDROP_FLOOR_FEEDS: tuple[str, ...] = (ECONOMICS_BASELINE_FEED, CONSUMER_ENERGY_FEED, RSEI_FEED)
 
 # The facility demand→price-pressure feed, present only where a facility is disclosed (#1220:
 # "demand-pressure missing across 22 sites is not a gap — it's facility-gated").
@@ -83,7 +86,8 @@ PLACES_RECORD_FEED = "places"
 # zero extractions (#1364). Catalogued-but-unworked scans SEED the record domain; they never lift
 # it — "let it lock and ask for the source" rather than read present-but-empty as complete.
 RECORD_LIVE_FEED = "records"
-RECORD_SEED_FEEDS: tuple[str, ...] = ("records", "documents")
+DOCUMENTS_FEED = "documents"
+RECORD_SEED_FEEDS: tuple[str, ...] = (RECORD_LIVE_FEED, DOCUMENTS_FEED)
 # ``records`` at/above this is ``live``; any record signal below it is ``seeded``; nothing is
 # ``absent``. Two extracted items is the "real worked corpus" bar (a lone stray extraction seeds).
 RECORD_LIVE_THRESHOLD = 2
@@ -96,6 +100,23 @@ LEADS_FEED = "leads"
 # ``isReferenceSite``. A ``[[network-baseline-domain-activation]]`` follow-up may lift both to
 # ``data/sites.yaml``.
 STORY_SLUGS: frozenset[str] = frozenset({"lima", "fort-wayne"})
+
+# Every manifest feed name this module keys a domain on — the single enumerable coupling to the
+# exporter's feed spec (``watermark.site.export``). ``export.py`` shares these very constants for
+# the feeds it can name directly; the composed geo feed (``geo/campus``) can't, so this set is what
+# ``tests/test_site_bundle.py`` asserts the exporter still produces — a rename in ``export.py``
+# that skips ``readiness.py`` then drops a feed out of the produced set and fails the guard, rather
+# than silently dropping every site's facility/backdrop to ``seeded`` with green tests (#1631).
+READINESS_FEED_NAMES: frozenset[str] = frozenset(
+    {
+        *BACKDROP_FLOOR_FEEDS,
+        FACILITY_FEED,
+        PLACES_GEOMETRY_FEED,
+        PLACES_RECORD_FEED,
+        *RECORD_SEED_FEEDS,
+        LEADS_FEED,
+    }
+)
 
 
 def _count(feed_counts: Mapping[str, int], name: str) -> int:

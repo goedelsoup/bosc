@@ -169,6 +169,65 @@ def test_cross_feed_references_resolve(bundle: Path) -> None:
                 assert sib in slugs, f"concept {c['slug']} relates to unknown concept {sib}"
 
 
+# --- Readiness ↔ exporter feed-name coupling (#1631) ----------------------------------------
+def test_readiness_feed_names_are_produced_by_export(bundle: Path) -> None:
+    """Every manifest feed name ``watermark.site.readiness`` keys a domain on must be a name the
+    exporter actually produces (#1631). The two were decoupled string literals — renaming
+    ``economics-demand-pressure`` in ``export.py`` without updating ``readiness.py`` would
+    silently drop every site's facility to ``seeded`` with green tests. The Lima bundle activates
+    all five domains, so its feed set must contain every readiness feed name (incl. the composed
+    ``geo/campus`` that ``export.py`` can't share as a literal)."""
+    from watermark.site.readiness import READINESS_FEED_NAMES
+
+    produced = set(_feeds_by_name(bundle))
+    missing = READINESS_FEED_NAMES - produced
+    assert not missing, (
+        f"readiness keys on feeds the exporter no longer produces: {sorted(missing)} — a feed "
+        "was renamed in export.py without updating watermark.site.readiness"
+    )
+
+
+def test_degenerate_demand_pressure_does_not_float_facility_live(
+    tmp_path_factory: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """#1631: the #1364 present-but-empty guard, applied on the facility axis. A stale/degenerate
+    demand-pressure payload (zero draw, e.g. a rezoning-only campus whose IT load is entirely
+    ``[open]`` round-tripped through ``load_demand_pressure``) must be dropped — not shipped as a
+    ``count == 1`` object shell that floats facility readiness to ``live``. Exercised end-to-end:
+    Lima has a disclosed facility, so with a zeroed draw the ``economics-demand-pressure`` feed is
+    absent and the facility domain reads ``seeded`` (disclosed) rather than ``live``."""
+    from watermark.economics.energy import load_demand_pressure
+    from watermark.site import export as export_mod
+
+    settings = Settings(data_dir=REPO_ROOT / "data")  # lima, a facility site
+    real = load_demand_pressure(settings)
+    assert real is not None and real.has_material_load, (
+        "Lima's committed demand-pressure is material"
+    )
+
+    degenerate = real.model_copy(
+        update={
+            "facility_draw_mw": real.facility_draw_mw.model_copy(
+                update={"value": 0.0, "low": None, "high": None}
+            )
+        }
+    )
+    assert not degenerate.has_material_load
+    monkeypatch.setattr(export_mod, "load_demand_pressure", lambda *a, **k: degenerate)
+
+    out = tmp_path_factory.mktemp("degenerate-dp") / "b"
+    export_mod.export_bundle(
+        settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
+    )
+    manifest = _manifest(out)
+    assert "economics-demand-pressure" not in {f["name"] for f in manifest["feeds"]}, (
+        "a zero-draw demand-pressure shell was shipped as a feed"
+    )
+    assert manifest["readiness"]["domains"]["facility"] == "seeded", (
+        "facility floated above seeded on an immaterial demand-pressure shell"
+    )
+
+
 def test_documents_carry_version_cluster_metadata(bundle: Path) -> None:
     """The exported documents feed carries the #1590 version/dedup metadata from the curated
     manifest: the OEPA permit triad clusters, its final permit canonical + superseding the draft
