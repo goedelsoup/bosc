@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-import os
-
+import pytest
 from typer.testing import CliRunner
 
 from watermark.cli import app
@@ -37,7 +36,9 @@ def test_compute_command_honors_overrides() -> None:
     assert "MFU=0.3" in result.output
 
 
-def test_compute_command_renders_all_three_water_bound_cases() -> None:
+def test_compute_command_renders_all_three_water_bound_cases(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     """#1641 D4: the cooling-water back-solve renders in three shapes by archetype, and the
     "the loop closes" agreement line appears ONLY when a low water bound exists (full range).
 
@@ -50,15 +51,16 @@ def test_compute_command_renders_all_three_water_bound_cases() -> None:
     """
     from watermark.config import get_settings
 
+    # monkeypatch records + restores WATERMARK_SITE at teardown; the `--site` callback is the
+    # environment writer under test. get_settings is lru_cache(maxsize=1), so clear it too.
+    monkeypatch.delenv("WATERMARK_SITE", raising=False)
+
     def run(slug: str) -> str:
-        # get_settings is lru_cache(maxsize=1) — clear it so `--site` re-resolves per invoke,
-        # and normalize rich's line-wrapping so wrapped phrases match as substrings.
-        get_settings.cache_clear()
+        get_settings.cache_clear()  # force `--site` to re-resolve per invoke
         result = runner.invoke(app, ["--site", slug, "compute"])
         assert result.exit_code == 0, result.output
-        return " ".join(result.output.split())
+        return " ".join(result.output.split())  # normalize rich's line-wrapping for matching
 
-    saved_site = os.environ.get("WATERMARK_SITE")
     try:
         # Full range (Lima): both water bounds -> low "recovers #1" .. high upper bound, and the
         # power/water-low agreement footer ("the loop closes") is present.
@@ -88,7 +90,3 @@ def test_compute_command_renders_all_three_water_bound_cases() -> None:
         )
     finally:
         get_settings.cache_clear()
-        if saved_site is None:
-            os.environ.pop("WATERMARK_SITE", None)
-        else:
-            os.environ["WATERMARK_SITE"] = saved_site
