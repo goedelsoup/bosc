@@ -9,7 +9,7 @@ omitted here and supplied by the :class:`SiteProfile` model defaults — only th
 
 from __future__ import annotations
 
-from watermark.facility.screening import floor_area_screen, investment_screen
+from watermark.facility.screening import ceiling_screen, floor_area_screen, investment_screen
 from watermark.sites._gis_schemas import (
     ALLEN_IN_PARCEL_SCHEMA,
     CHAMPAIGN_PARCEL_SCHEMA,
@@ -644,6 +644,10 @@ _FORT_WAYNE = SiteProfile(
 # ($10B, 902 ac of the ~962 ac annexed 2026-05-11), so a SITE-PLAN-grounded `SiteFacility` is now
 # pinned below (#1402, the #1327 Urbana precedent) — the campus MW is a [reference] bracket, never
 # a fabricated disclosure. See data/extracted/van-wert/data-centers.md.
+# Neither floor area nor investment-scaled load screens Van Wert; the only MW figure is the
+# announced "up to 500 MW" ceiling → the announced-ceiling screen (watermark.facility.screening,
+# #1629; central/high = the ceiling, low divides out the PUE ceiling). Replaces the old literal.
+_VAN_WERT_LOAD = ceiling_screen(500.0)
 _VAN_WERT = SiteProfile(
     slug="van-wert",
     basin="maumee",  # [verified] Town Creek → Little Auglaize → Auglaize → Maumee; HUC-8 04100007
@@ -749,9 +753,9 @@ _VAN_WERT = SiteProfile(
                 "colocation example (docs/end-use-and-workloads.md), NOT an owner-runs-own-workloads "
                 "hyperscaler; public disclosure 2026-05-29 (q.com/data-centers/van-wert)."
             ),
-            it_load_mw=500.0,  # [reference] the announced "up to 500 MW" ceiling — carried central, not disclosed
-            it_load_low_mw=350.0,  # if "up to 500 MW" names the ALL-IN campus draw: 500 / 1.43 PUE ceiling ~= 350 MW IT
-            it_load_high_mw=500.0,  # the announced "up to 500 MW" ceiling
+            it_load_mw=_VAN_WERT_LOAD.central,  # [reference] the announced "up to 500 MW" ceiling — carried central/high
+            it_load_low_mw=_VAN_WERT_LOAD.low,  # ceiling / PUE ceiling (implied IT); see it_load_citation
+            it_load_high_mw=_VAN_WERT_LOAD.high,  # the announced "up to 500 MW" ceiling
             it_load_citation=(
                 "[reference] 'up to 500 MW' — Thor Equities / Form8tion's 2025-08-19 land-acquisition "
                 "release (GlobeNewswire; citybiz; Data Center Dynamics) and local press; NOT an "
@@ -763,9 +767,10 @@ _VAN_WERT = SiteProfile(
                 "an 'up to'/campus-draw ceiling, so treating it as the IT load makes downstream figures "
                 "(facility_draw = IT x PUE, then x load factor) run conservative-high. The low bound reads "
                 "the same 'up to 500 MW' as the ALL-IN campus/grid-interconnection draw and divides out "
-                "the cooling-dominated PUE ceiling (1.43, data/reference/compute/rack-density.yaml): "
-                "500 / 1.43 ~= 350 MW implied IT load — the bracket (350-500 MW) thus spans the "
-                "campus-total-vs-IT-only interpretive ambiguity. No floor-area screen is possible (gross "
+                "the cooling-dominated PUE ceiling (the announced-ceiling screen, "
+                f"watermark.facility.screening — #1629): 500 / 1.43 ~= {_VAN_WERT_LOAD.low:g} MW implied "
+                f"IT load — the bracket ({_VAN_WERT_LOAD.low:g}-{_VAN_WERT_LOAD.high:g} MW) thus spans "
+                "the campus-total-vs-IT-only interpretive ambiguity. No floor-area screen is possible (gross "
                 "floor area is not disclosed, unlike Urbana #1327 / Troy-Piqua #1482 / Bowling Green "
                 "#1435). Replace with the disclosed load when an OEPA air PTI, a PJM interconnection "
                 "filing, or the AEP Ohio load contract (PUCO tariff 24-508-EL-ATA) surfaces it; the "
@@ -2091,7 +2096,8 @@ _TROY_PIQUA = SiteProfile(
                 "OH-DC-0028) reports ~180 MW peak IT for the initial two buildings — [reported], not "
                 "officially disclosed (the City page and Data Center Dynamics state capacity figures "
                 "'weren't shared') — sitting just above (~3%) the top of this screening bracket, "
-                "consistent within rounding for a screening estimate, not a reconciliation. Replace "
+                "within the screening estimate's uncertainty (a ~3% gap, not rounding), not a "
+                "reconciliation. Replace "
                 "with the disclosed load when the 40-yr AES Ohio franchise ordinance's load schedule, "
                 "an air permit, or a PJM interconnection filing surfaces it."
             ),
@@ -3471,8 +3477,8 @@ _BOWLING_GREEN = SiteProfile(
                 "per #1435; it is a design CEILING (peak), so downstream figures (peak x PUE x load "
                 "factor) run conservative-high. The low bound is a floor-area SCREENING floor — the "
                 "disclosed 715,000 sq ft initial building x 75 W/sq ft whole-building IT density (53.6 "
-                "MW); the same screen at 250 W/sq ft yields 178.75 MW, independently bracketing the "
-                "disclosed ~180 MW peak at its top (corroboration, not a second source). The campus is "
+                "MW); the same screen at 250 W/sq ft yields 178.75 MW, closely corroborating the "
+                "disclosed ~180 MW peak from just under it (a corroboration, not a second source). The campus is "
                 "designed SELF-POWERED behind the meter by the Apollo plant (350 MW gas + ~120 MW BESS, "
                 "Will-Power OH LLC, OPSB 25-0973-EL-BGN, approved 2026-02-03 — #1437); the ~2x 350-vs-180 "
                 "MW oversizing signals Phase 2 (Meta's 2026-01-07 trustees letter). Replace with the "

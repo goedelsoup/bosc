@@ -13,6 +13,8 @@ import pytest
 from watermark.facility.screening import (
     FLOOR_AREA_W_PER_SQFT,
     INVESTMENT_USD_PER_MW_IT,
+    PUE_CEILING,
+    ceiling_screen,
     floor_area_screen,
     investment_screen,
 )
@@ -47,10 +49,25 @@ def test_central_is_always_the_midpoint() -> None:
         assert b.central == pytest.approx(round((b.low + b.high) / 2.0, 1))
 
 
-# (slug, screen) — every PURE floor-area/investment screening site: its whole bracket is
+def test_ceiling_screen_arithmetic() -> None:
+    """The announced-ceiling screen carries central = high = the ceiling (conservative-high, #1402),
+    NOT the midpoint; the low divides out the cooling-dominated PUE ceiling (#1629)."""
+    b = ceiling_screen(500.0)
+    assert b.high == b.central == 500.0
+    assert b.low == pytest.approx(round(500.0 / PUE_CEILING, 1))  # 349.7
+    assert b.low < b.central  # deliberately not the midpoint
+
+
+def test_ceiling_screen_rejects_non_positive_pue() -> None:
+    with pytest.raises(ValueError, match="strictly positive"):
+        ceiling_screen(500.0, pue_ceiling=0.0)
+
+
+# (slug, screen) — every PURE floor-area/investment/ceiling screening site: its whole bracket is
 # re-derived from its disclosed field, so a mistyped literal fails here.
 _FLOOR_AREA_SITES = ("urbana", "troy-piqua", "wilmington")
 _INVESTMENT_SITES = ("sidney",)
+_CEILING_SITES = ("van-wert",)
 
 
 @pytest.mark.parametrize("slug", _FLOOR_AREA_SITES)
@@ -66,6 +83,16 @@ def test_investment_profiles_match_the_helper(slug: str) -> None:
     fac = SITES[slug].facility
     assert fac is not None and fac.disclosed_investment_usd is not None
     b = investment_screen(fac.disclosed_investment_usd)
+    assert (fac.it_load_low_mw, fac.it_load_mw, fac.it_load_high_mw) == (b.low, b.central, b.high)
+
+
+@pytest.mark.parametrize("slug", _CEILING_SITES)
+def test_ceiling_profiles_match_the_helper(slug: str) -> None:
+    """Van Wert's whole bracket is re-derived from its announced ceiling (its disclosed high bound),
+    so the low (ceiling / PUE) can't drift from a hand-typed literal (#1629)."""
+    fac = SITES[slug].facility
+    assert fac is not None and fac.it_load_high_mw is not None
+    b = ceiling_screen(fac.it_load_high_mw)
     assert (fac.it_load_low_mw, fac.it_load_mw, fac.it_load_high_mw) == (b.low, b.central, b.high)
 
 
