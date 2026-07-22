@@ -517,17 +517,18 @@ def scenario(
             f"low flow ({q7:g} cfs)"
             + (f"; live flow now {live_flow:,.0f} cfs." if live_flow else ".")
         )
-    # Seasonal screen: the draw against the growing-season design low flow. The basis
-    # rides along so a hybrid_adiabatic facility's draw is month-varying (#1058).
+    # Seasonal screen: the draw against the regulatory summer-season design low flow (the cited
+    # permit window, #1624). The basis rides along so a hybrid facility's draw is month-varying.
     sw = scenario_stage.evaluate_seasonal(
         build.consumptive_loss.value, settings=settings, basis=basis
     )
-    if sw is not None and sw.summer_multiple is not None and sw.growing_season_months:
-        win = f"{sw.growing_season_months[0]}-{sw.growing_season_months[-1]}"
+    if sw is not None and sw.summer_multiple is not None:
+        summer_win_months = [m.month for m in sw.months if m.low_flow_basis == "30Q10 summer"]
+        win = f"{summer_win_months[0]}-{summer_win_months[-1]}" if summer_win_months else "summer"
         console.print(
-            f"\n[bold]Seasonal pinch[/] — in the [bold]{win}[/] growing season "
-            f"(ET > precip), the draw is [bold red]{sw.summer_multiple:g}x[/] the cited summer "
-            f"30Q10 ({sw.summer_30q10_cfs:g} cfs), vs {sw.annual_multiple:g}x the annual 7Q10. "
+            f"\n[bold]Seasonal pinch[/] — in the [bold]{win}[/] regulatory summer season, the "
+            f"draw is [bold red]{sw.summer_multiple:g}x[/] the cited summer 30Q10 "
+            f"({sw.summer_30q10_cfs:g} cfs), vs {sw.annual_multiple:g}x the annual 7Q10. "
             f"The absolute floor is 1Q10 = {sw.one_q10_cfs:g} cfs — no flow to draw against."
         )
     console.print(
