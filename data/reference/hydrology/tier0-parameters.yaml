@@ -1,0 +1,76 @@
+# Load-bearing Tier-0 solver + screening constants for `watermark.hydrology`.
+#
+# These are the per-method physics/screening parameters the Tier-0 SCS runoff chain
+# (`solver/runoff.py`, `solver/curve_number.py`), the Muskingum-Cunge channel routing
+# (`solver/routing.py`), and the assimilative dilution screen (`assimilative.py`) run on.
+# They are published REFERENCE values / stated modeling ASSUMPTIONS — NOT document-derived
+# figures — each consumed as a tagged hydrology input, mirroring `cn-lookup.yaml`.
+#
+# Loaded by `watermark.hydrology.solver.parameters`, which reads the value here and exposes
+# a per-call override seam (the solver functions take `peak_factor=` / `ia_ratio=` /
+# `manning_n=` / `bands=`; `reaches.yaml` overrides `manning_n` per reach; time-of-concentration
+# endpoints are per-site on `SiteProfile.pre_tc_hr` / `post_tc_hr`, NOT here). Each accessor
+# falls back to the same value hard-coded as a documented default, so a data_dir without this
+# file still runs; a coupling test keeps the two in sync.
+
+runoff:
+  # SCS dimensionless unit-hydrograph peak factor: Qp = peak_factor * A / Tp (A in sq mi).
+  peak_factor:
+    value: 484
+    source: reference
+    citation: >-
+      USDA NRCS, National Engineering Handbook Part 630, Ch. 16 "Hydrographs" (Eq. 16-1) /
+      TR-55. The 484 constant is fixed by the standard dimensionless UH shape — ~37.5% of the
+      runoff volume falls under the rising limb — so it conserves volume for that shape.
+    confidence: high
+    note: >-
+      Standard-hydrograph value, not universal: flat/swampy watersheds use ~300, steep ones up
+      to ~600. A calibrated basin should override via `simulate_runoff(peak_factor=...)`.
+
+  # Initial abstraction as a fraction of maximum retention S: Ia = initial_abstraction_ratio * S.
+  initial_abstraction_ratio:
+    value: 0.2
+    source: reference
+    citation: >-
+      USDA NRCS TR-55, "Urban Hydrology for Small Watersheds" (the SCS runoff equation,
+      Ia = 0.2*S). The lambda = 0.2 ratio is the tabulated CN convention.
+    confidence: high
+    note: >-
+      Contested: Hawkins et al. (2009) re-analysis of gauged events supports lambda ~= 0.05
+      (with re-fit CNs). Kept at 0.2 to stay consistent with the standard-CN `cn-lookup.yaml`
+      table; override via `excess_rainfall(ia_ratio=...)`.
+
+routing:
+  # Manning's roughness n for the natural-channel Muskingum-Cunge reach default.
+  manning_n:
+    value: 0.04
+    source: assumption
+    citation: >-
+      Chow (1959), "Open-Channel Hydraulics", Table 5-6 — a natural minor stream, clean and
+      winding with some pools/shoals, sits around n = 0.035-0.05. 0.04 is the stated Tier-0
+      default when a reach carries no measured roughness.
+    confidence: medium
+    note: >-
+      Per-reach override lives in `reaches.yaml` (`ReachEdge.manning_n`); this is only the
+      fallback used when a reach does not set one. Also overridable via `route(manning_n=...)`.
+
+dilution:
+  # Coarse screening bands on the low-flow dilution ratio (receiving-water 7Q10 / discharge).
+  # A hydraulic screen only, NOT a regulatory mixing-zone determination (that is the Ohio EPA
+  # wasteload allocation in the NPDES fact sheets).
+  violation_ratio:
+    value: 1.0
+    source: assumption
+    citation: >-
+      Screening convention: below 1:1 the effluent volume exceeds the receiving stream's cited
+      design low flow, so the effluent is effectively undiluted at 7Q10.
+    confidence: medium
+    note: Coarse screening band, not a permit limit; override via `dilution_flag(bands=...)`.
+  tight_ratio:
+    value: 10.0
+    source: assumption
+    citation: >-
+      Screening convention: a 10:1 low-flow dilution is a common rule-of-thumb comfort
+      threshold; between 1:1 and 10:1 the reach is flagged "tight".
+    confidence: medium
+    note: Coarse screening band, not a permit limit; override via `dilution_flag(bands=...)`.

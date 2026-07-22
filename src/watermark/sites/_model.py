@@ -549,9 +549,13 @@ class SiteProfile(BaseModel):
     # is the pervious (prior-cover) catchment and ``post_tc_hr`` the fully-impervious bound. Each
     # scenario's Tc is interpolated on its impervious fraction between the two
     # (``stormwater._scenario_tc_hr``); the full-buildout peak uses the shorter ``post_tc_hr``.
-    # Screening-grade assumptions — the defaults hold for pre-parity sites; a reference site sets
-    # both from its catchment. ``roundabout_tc_hr`` is the small Cole/Beery roundabout catchment
-    # (``roundabout.py``) — a distinct single fully-impervious scenario, not a pre/post pair.
+    # Stated Tier-0 screening ``assumption``s (`source: assumption`) — a single-slope proxy for the
+    # NRCS velocity method, which needs flow lengths not in the record. These ARE the per-site
+    # override seam (a reference site sets both from its catchment); the defaults hold for
+    # pre-parity sites. Distinct from the per-method physics constants, which are cited in
+    # ``data/reference/hydrology/tier0-parameters.yaml``. ``roundabout_tc_hr`` is the small
+    # Cole/Beery roundabout catchment (``roundabout.py``) — a distinct single fully-impervious
+    # scenario, not a pre/post pair.
     pre_tc_hr: float = 1.0
     post_tc_hr: float = 0.35
     roundabout_tc_hr: float = 0.2
