@@ -20,7 +20,7 @@ from watermark.site.readiness import (
     domain_states,
     site_tier,
 )
-from watermark.sites import SITES, is_reference_site
+from watermark.sites import SITES, ItLoadGrounding, is_reference_site
 
 # A full floor — every always-pull feed present (so backdrop is live).
 FLOOR = dict.fromkeys(BACKDROP_FLOOR_FEEDS, 1)
@@ -44,25 +44,53 @@ def test_backdrop_live_seeded_absent() -> None:
 
 # --- facility -------------------------------------------------------------------------------
 def test_facility_states() -> None:
-    fw = SITES["fort-wayne"]  # facility disclosed
+    # Facility readiness grades on DOCUMENTARY DEPTH (#1630), independent of the demand-pressure
+    # feed: instrument-grounded → live, screening/announcement → seeded, facility-less → absent.
+    # The feed no longer floats facility — pass it in or not, the grade is the same.
+    # Permit-grounded → live (Fort Wayne's IDEM Title V); feed presence is now irrelevant.
+    fw = SITES["fort-wayne"]
+    assert fw.facility is not None and fw.facility.it_load_grounding is ItLoadGrounding.PERMIT
+    assert domain_states(fw, _counts())["facility"] == "live"
     assert domain_states(fw, _counts(**{"economics-demand-pressure": 1}))["facility"] == "live"
-    # Facility disclosed but no demand-pressure feed → seeded.
-    assert domain_states(fw, _counts())["facility"] == "seeded"
-    # Urbana's site-plan-grounded facility (#1327): disclosed + its demand-pressure feed → live.
+    # Filed-disclosure-grounded → live (Findlay's SEC S-1: 30 MW operating / 150 MW take-or-pay).
+    findlay = SITES["findlay"]
+    assert findlay.facility is not None
+    assert findlay.facility.it_load_grounding is ItLoadGrounding.DISCLOSURE
+    assert domain_states(findlay, _counts())["facility"] == "live"
+    # Screening-only [inference] → seeded (Urbana's floor-area bracket, MW [open], #1327). No longer
+    # floated to `live` by its demand-pressure feed — distinguished from Lima / Fort Wayne (#1630).
     urbana = SITES["urbana"]
     assert urbana.facility is not None
-    assert domain_states(urbana, _counts(**{"economics-demand-pressure": 1}))["facility"] == "live"
-    # Springfield's FAQ-grounded facility (#1412, 5C/Vultr "CMH01"): disclosed + its feed → live.
+    assert urbana.facility.it_load_grounding is ItLoadGrounding.SCREENING
+    assert (
+        domain_states(urbana, _counts(**{"economics-demand-pressure": 1}))["facility"] == "seeded"
+    )
+    # Announced-ceiling [reference] → seeded (Springfield's 5C FAQ / AMD supercluster announcement).
     springfield = SITES["springfield"]
     assert springfield.facility is not None
+    assert springfield.facility.it_load_grounding is ItLoadGrounding.REFERENCE
     assert (
         domain_states(springfield, _counts(**{"economics-demand-pressure": 1}))["facility"]
-        == "live"
+        == "seeded"
     )
     # No facility disclosed → absent (grid backdrop only, no fabricated campus load share).
     xenia = SITES["xenia"]
     assert xenia.facility is None
     assert domain_states(xenia, _counts(**{"economics-demand-pressure": 1}))["facility"] == "absent"
+
+
+def test_facility_grading_distinguishes_permit_from_screening() -> None:
+    """The #1630 acceptance: a permit-grounded and a screening-only facility produce DISTINGUISHABLE
+    readiness (they collapsed to one ``live`` label before). Same floor, same (irrelevant) feeds —
+    only the facility grade differs, driven by the profile's own documentary depth."""
+    counts = _counts(**{"economics-demand-pressure": 1})
+    permit = SITES["lima"]  # air-permit-grounded (OEPA PTI)
+    screening = SITES["urbana"]  # floor-area [inference] screening, MW [open]
+    assert permit.facility is not None and permit.facility.is_instrument_grounded
+    assert screening.facility is not None and not screening.facility.is_instrument_grounded
+    assert domain_states(permit, counts)["facility"] == "live"
+    assert domain_states(screening, counts)["facility"] == "seeded"
+    assert domain_states(permit, counts)["facility"] != domain_states(screening, counts)["facility"]
 
 
 # --- places ---------------------------------------------------------------------------------
@@ -160,9 +188,10 @@ def test_tier_case_via_record_only() -> None:
 
 def test_tier_case_urbana() -> None:
     # Urbana's real shape (#1327 / #1328): the floor, plus a committed parcel footprint (places
-    # live, geo/campus), its scoped Highland55 / OEPA document corpus (record live), and the
-    # disclosed Urbana Technology Hub facility + its demand-pressure feed (facility live). Story
-    # seeded on leads. Multiple above-floor domains live over the floor ⇒ `case`.
+    # live, geo/campus) and its scoped Highland55 / OEPA document corpus (record live). The
+    # disclosed Urbana Technology Hub facility is SCREENING-only ([inference] floor-area load, MW
+    # [open]) → facility `seeded`, not live (#1630) — its demand-pressure feed no longer floats it.
+    # Story seeded on leads. Places + record live over the floor still ⇒ `case`.
     urbana = SITES["urbana"]
     states = domain_states(
         urbana,
@@ -172,7 +201,9 @@ def test_tier_case_urbana() -> None:
     )
     assert states["record"] == "live"
     assert states["places"] == "live"
-    assert states["facility"] == "live"
+    assert (
+        states["facility"] == "seeded"
+    )  # screening-only, distinguished from permit-grounded (#1630)
     assert states["story"] == "seeded"
     assert site_tier(states) == "case"
 

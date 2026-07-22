@@ -187,19 +187,23 @@ def test_readiness_feed_names_are_produced_by_export(bundle: Path) -> None:
     )
 
 
-def test_degenerate_demand_pressure_does_not_float_facility_live(
+def test_degenerate_demand_pressure_feed_is_dropped(
     tmp_path_factory: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    """#1631: the #1364 present-but-empty guard, applied on the facility axis. A stale/degenerate
+    """#1631: the #1364 present-but-empty guard on the facility axis. A stale/degenerate
     demand-pressure payload (zero draw, e.g. a rezoning-only campus whose IT load is entirely
-    ``[open]`` round-tripped through ``load_demand_pressure``) must be dropped — not shipped as a
-    ``count == 1`` object shell that floats facility readiness to ``live``. Exercised end-to-end:
-    Lima has a disclosed facility, so with a zeroed draw the ``economics-demand-pressure`` feed is
-    absent and the facility domain reads ``seeded`` (disclosed) rather than ``live``."""
+    ``[open]`` round-tripped through ``load_demand_pressure``) must be DROPPED — never shipped as a
+    ``count == 1`` object shell the frontend's facility-leaf check (``hasFeed(FACILITY_FEED)``)
+    would render as a zero-draw sensitivity. Exercised end-to-end on Lima (a facility site).
+
+    Note (#1630 interaction): the demand-pressure feed no longer *grades* facility readiness — that
+    is now the profile's documentary depth — so Lima stays ``facility: live`` on its air permit even
+    with the feed dropped. This asserts both: the shell is dropped, and facility grading is decoupled
+    from the feed (it does not fall to ``seeded`` just because the feed is gone)."""
     from watermark.economics.energy import load_demand_pressure
     from watermark.site import export as export_mod
 
-    settings = Settings(data_dir=REPO_ROOT / "data")  # lima, a facility site
+    settings = Settings(data_dir=REPO_ROOT / "data")  # lima, a permit-grounded facility site
     real = load_demand_pressure(settings)
     assert real is not None and real.has_material_load, (
         "Lima's committed demand-pressure is material"
@@ -223,9 +227,9 @@ def test_degenerate_demand_pressure_does_not_float_facility_live(
     assert "economics-demand-pressure" not in {f["name"] for f in manifest["feeds"]}, (
         "a zero-draw demand-pressure shell was shipped as a feed"
     )
-    assert manifest["readiness"]["domains"]["facility"] == "seeded", (
-        "facility floated above seeded on an immaterial demand-pressure shell"
-    )
+    # Facility grading is profile-driven (#1630): Lima is air-permit-grounded, so dropping the
+    # demand-pressure feed does NOT change its facility state — it stays live, not seeded.
+    assert manifest["readiness"]["domains"]["facility"] == "live"
 
 
 def test_documents_carry_version_cluster_metadata(bundle: Path) -> None:
@@ -461,9 +465,11 @@ def test_findlay_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) 
     Mitigation Assistance $24M obligation + the USACE Blanchard-watershed feasibility Review Plan,
     two in-scope ``permits-epa`` extractions clearing ``RECORD_LIVE_THRESHOLD``), and ``facility``
     from the disclosed One Power "Findlay Megawatt Hub" / MARA 150 MW take-or-pay ``SiteFacility``
-    + its demand-pressure feed (#1459). Unlike the site-plan-grounded Urbana/Sidney facilities, the
-    MW here is a `[verified]` disclosure (30 MW energized / 150 MW contracted), not a screening
-    bracket. ``story`` is ``seeded`` (the committed per-site leads board,
+    (#1459). Facility is graded ``live`` on DOCUMENTARY DEPTH (#1630): unlike the site-plan-grounded
+    Urbana/Sidney facilities, the MW here is a `[verified]` filed disclosure (One Power's SEC Form
+    S-1/A: 30 MW energized / 150 MW contracted — ``it_load_grounding`` is ``disclosure``), an
+    instrument-grounded load, not a screening bracket — so it lifts the domain, not merely seeds it.
+    ``story`` is ``seeded`` (the committed per-site leads board,
     ``data/site/findlay/leads.yaml``, is a leads-first resting state — Findlay is not yet in
     ``STORY_SLUGS``). ``places`` stays ``absent`` (no committed campus geometry), so this needs its
     own test rather than the backdrop parametrize group (which asserts ``record`` stays
@@ -480,7 +486,8 @@ def test_findlay_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) 
     domains = readiness["domains"]
     assert domains["backdrop"] == "live"
     assert domains["record"] == "live"
-    # The disclosed SiteFacility + its committed demand-pressure feed lift facility to live (#1459).
+    # The disclosed SiteFacility's [verified] filed load disclosure (SEC S-1) grades facility live —
+    # instrument-grounded documentary depth, not its demand-pressure feed (#1630 / #1459).
     assert domains["facility"] == "live"
     # ``story`` is seeded off the committed leads board, not a registered guided walk.
     assert domains["story"] == "seeded"
@@ -540,10 +547,11 @@ def test_wpafb_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) ->
 
 
 def test_troy_piqua_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) -> None:
-    """Troy/Piqua's floor (economics-baseline, consumer-energy, rsei) is committed (#1481), and
-    the disclosed "Project Klondike" ``SiteFacility`` + its demand-pressure feed (#1482) lift
-    ``facility`` to ``live`` — one above-floor domain live over the floor is enough for ``case``.
-    ``record`` is ``live``: the Piqua WWTP NPDES permit + fact sheet (1PD00008) and the DMR are
+    """Troy/Piqua's floor (economics-baseline, consumer-energy, rsei) is committed (#1481). The
+    disclosed "Project Klondike" ``SiteFacility`` is SCREENING-only (a floor-area [inference]
+    bracket, MW [open]) → ``facility`` grades ``seeded`` on documentary depth (#1630), NOT live.
+    ``places`` and ``record`` carry the tier: the committed J5 campus assemblage (#1483) and the
+    Piqua WWTP NPDES permit + fact sheet (1PD00008) + DMR are
     all in-scope now that #1484 relocated the two OEPA extractions under ``oepa/troy-piqua/`` and
     set ``corpus_relpaths=("troy-piqua", "oepa/troy-piqua")`` — three extractions clearing
     ``RECORD_LIVE_THRESHOLD`` (previously the two permit extractions orphaned in the flat
@@ -561,7 +569,8 @@ def test_troy_piqua_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactor
     assert readiness["tier"] == "case", f"troy-piqua should be a Case site, got {readiness}"
     domains = readiness["domains"]
     assert domains["backdrop"] == "live"
-    assert domains["facility"] == "live"
+    # Screening-only facility → seeded, not live (#1630); places + record carry the case tier.
+    assert domains["facility"] == "seeded"
     assert domains["places"] == "live"  # committed J5 "Project Klondike" campus assemblage (#1483)
     assert domains["record"] == "live"
     # ``story`` is ``seeded``: the site's curated leads board (data/site/troy-piqua/leads.yaml, #1485)
@@ -583,16 +592,16 @@ def test_troy_piqua_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactor
     assert len(records) == 3
 
 
-def test_sidney_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) -> None:
-    """Sidney's floor (economics-baseline, consumer-energy, rsei) is committed, and the disclosed
-    AWS "Project Galaxy" ``SiteFacility`` + its demand-pressure feed (#1378) lift ``facility`` to
-    ``live`` — one above-floor domain live over the floor is enough for ``case``. The MW load is
-    NOT disclosed (AWS discloses no floor area or interconnection figure): the IT load is an
-    investment-scaled ``[inference]`` screening bracket, never a disclosure. ``record`` stays
-    ``seeded`` (one in-scope DMR extraction, below ``RECORD_LIVE_THRESHOLD``). Its own test rather
-    than the shared parametrize group above, since that group asserts ``record``/``facility`` stay
-    fully unscaffolded."""
-    out = tmp_path_factory.mktemp("case-sidney") / "b"
+def test_sidney_exports_at_backdrop_tier(tmp_path_factory: pytest.TempPathFactory) -> None:
+    """Sidney's floor (economics-baseline, consumer-energy, rsei) is committed, and it carries the
+    disclosed AWS "Project Galaxy" ``SiteFacility`` (#1378). But that facility is SCREENING-only —
+    AWS discloses no floor area or interconnection figure, so the IT load is an investment-scaled
+    ``[inference]`` bracket, never a disclosure — so facility grades ``seeded``, not ``live`` (#1630).
+    With ``record`` also only ``seeded`` (one in-scope DMR extraction, below ``RECORD_LIVE_THRESHOLD``)
+    and ``places``/``story`` absent, NOTHING above the floor is live: the honest tier is ``backdrop``,
+    a floor plus a facility LEAD, not a ``case``. This is the #1630 downgrade — a screening-only
+    facility seeds the domain and asks for the source (an air PTI / PJM filing), it doesn't lift it."""
+    out = tmp_path_factory.mktemp("backdrop-sidney") / "b"
     settings = Settings(data_dir=REPO_ROOT / "data", site="sidney")
     export_bundle(
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
@@ -600,10 +609,10 @@ def test_sidney_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) -
     manifest = _manifest(out)
     assert manifest["contract_version"] == "1.31.0"
     readiness = manifest["readiness"]
-    assert readiness["tier"] == "case", f"sidney should be a Case site, got {readiness}"
+    assert readiness["tier"] == "backdrop", f"sidney should be a Backdrop site, got {readiness}"
     domains = readiness["domains"]
     assert domains["backdrop"] == "live"
-    assert domains["facility"] == "live"
+    assert domains["facility"] == "seeded"  # disclosed but screening-only → seeded (#1630)
     assert domains["places"] == "absent"
     assert domains["record"] == "seeded"
     assert domains["story"] == "absent"

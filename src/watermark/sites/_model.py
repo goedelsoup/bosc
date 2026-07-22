@@ -118,6 +118,27 @@ class DcEndUse(StrEnum):
     ENCLAVE = "enclave"
 
 
+class ItLoadGrounding(StrEnum):
+    """The evidentiary grounding of a facility's disclosed IT load — the grade #1630 keys facility
+    readiness (``watermark.site.readiness``) on, so a permit-grounded and a screening-only facility
+    produce distinguishable readiness instead of collapsing to one ``live`` label.
+
+    ``permit``/``disclosure`` are **instrument-grounded** ([verified]): an air permit disclosing the
+    backup (Lima/Fort Wayne → N+1 IT) or a filed primary-instrument load disclosure (Findlay's SEC
+    Form S-1: "30 MW operating / 150 MW take-or-pay"). ``screening`` is an [inference] bracket
+    (floor-area / investment; Urbana, Sidney, Troy-Piqua, Wilmington); ``reference`` is a
+    [reference] announced "up to" ceiling / press peak (Van Wert, Bowling Green, Springfield). The
+    last two are on the record but **not instrument-documented** — they SEED the facility domain
+    rather than lifting it to ``live``. A screening bracket is [inference] by construction (epic
+    #1626); never collapse it with a [verified] disclosure.
+    """
+
+    PERMIT = "permit"  # air-permit-grounded backup → derived IT (Lima, Fort Wayne)
+    DISCLOSURE = "disclosure"  # a filed primary-instrument load disclosure (Findlay's SEC S-1)
+    SCREENING = "screening"  # an [inference] floor-area / investment bracket
+    REFERENCE = "reference"  # a [reference] announced "up to" ceiling / press peak
+
+
 def _facility_slug(text: str, *, max_len: int = 64) -> str:
     """A stable dedupe slug for a facility ``key`` (local peer of ``facility.candidate._slug`` —
     kept here so ``watermark.sites`` doesn't depend on ``watermark.facility``)."""
@@ -191,6 +212,14 @@ class SiteFacility(BaseModel):
     # inference). Exactly one of ``air_permit_citation`` / ``it_load_citation`` grounds the
     # IT load (enforced below).
     it_load_citation: str | None = None
+    # The evidentiary GRADE of a non-permit disclosed load (#1630): a ``disclosure`` (a filed
+    # primary instrument — Findlay's SEC S-1), a ``screening`` [inference] bracket (Urbana/Sidney/
+    # …), or a ``reference`` announced ceiling (Van Wert/Bowling Green/Springfield). Paired with
+    # ``it_load_citation`` (enforced below): a **permit**-grounded load derives ``permit`` grounding
+    # from the air permit (leave this None), and an [open] load has no grade. Read via the
+    # ``it_load_grounding`` property, which folds in the permit case, so facility readiness grades
+    # ``live`` (instrument-grounded) vs ``seeded`` (screening/announcement) without parsing prose.
+    it_load_source: ItLoadGrounding | None = None
     # Emergency gensets disclosed in the air permit. ``None`` for a facility with no
     # disclosed on-site generation (a site-plan-grounded facility): the power basis then
     # carries no backup / implied-PUE cross-check and the air-dispatch fleet model
@@ -301,6 +330,23 @@ class SiteFacility(BaseModel):
                 "the IT load needs exactly one basis citation — set air_permit_citation "
                 "(permit-grounded) or it_load_citation (a non-permit derivation basis), not both/neither"
             )
+        # The IT-load grounding GRADE (#1630) pairs with the non-permit basis: a load grounded by
+        # ``it_load_citation`` declares which grade via ``it_load_source`` (disclosure / screening /
+        # reference). A permit-grounded load derives ``permit`` grounding from the air permit, and an
+        # [open] load has no grade — both leave ``it_load_source`` None. ``permit`` is never set by
+        # hand (it would double-declare, and disagree silently if the permit citation were dropped).
+        if self.it_load_citation is None:
+            if self.it_load_source is not None:
+                raise ValueError(
+                    "it_load_source grades a non-permit disclosed load — set it only alongside "
+                    "it_load_citation; a permit-grounded or [open] load leaves it None (permit "
+                    "grounding is derived from air_permit_citation)"
+                )
+        elif self.it_load_source is None or self.it_load_source is ItLoadGrounding.PERMIT:
+            raise ValueError(
+                "a non-permit disclosed IT load (it_load_citation set) must declare it_load_source "
+                "as disclosure / screening / reference — 'permit' is derived from a wired air permit"
+            )
         # A disclosed facility is at least `confirmed` (#1628): `investigation` is the honest floor
         # for a site with NO SiteFacility — the frontend equates it with facility-absence, so a
         # facility carrying it would ship the self-contradiction "disclosed facility (investigation)".
@@ -360,6 +406,38 @@ class SiteFacility(BaseModel):
     def has_disclosed_stack(self) -> bool:
         """True if the site discloses a documented genset stack geometry (not the CBI case)."""
         return self.genset_stack_citation is not None
+
+    @property
+    def it_load_grounding(self) -> ItLoadGrounding | None:
+        """The evidentiary grade of the IT load, or ``None`` when the load is [open] (#1630).
+
+        Permit grounding is DERIVED from a wired air permit (so it can never silently disagree with
+        ``air_permit_citation``); a non-permit disclosed load reports the grade its profile declared
+        in ``it_load_source``. ``None`` = the load is entirely [open] (``it_load_mw is None``) — a
+        disclosed facility with no gradeable load (a rezoning-only campus).
+        """
+        if self.it_load_mw is None:
+            return None
+        if self.air_permit_citation is not None:
+            return ItLoadGrounding.PERMIT
+        return self.it_load_source
+
+    @property
+    def is_instrument_grounded(self) -> bool:
+        """True when the facility carries instrument-grade documentary evidence — the #1630 signal
+        that grades facility readiness ``live`` rather than ``seeded``.
+
+        Instrument-grounded = an IT load grounded in a primary instrument (a wired air permit or a
+        filed disclosure — ``it_load_grounding`` in {permit, disclosure}) **or** a cooling mechanism
+        disclosed by a [verified] document/connector. A site-plan / FAQ / floor-area SCREENING
+        ([inference]) or a [reference] announced ceiling is on the record but not instrument-
+        documented — it SEEDS the facility domain rather than lifting it. Never collapse a screening
+        bracket with a permit/disclosure figure (epic #1626).
+        """
+        return self.it_load_grounding in (
+            ItLoadGrounding.PERMIT,
+            ItLoadGrounding.DISCLOSURE,
+        ) or self.cooling_model_source in ("document", "connector")
 
 
 class SiteProfile(BaseModel):

@@ -6,10 +6,10 @@
   "feed_count": 28,
   "row_total": 290,
   "readiness": {
-    "tier": "case",
+    "tier": "backdrop",
     "domains": {
       "backdrop": "live",
-      "facility": "live",
+      "facility": "seeded",
       "places": "absent",
       "record": "absent",
       "story": "seeded"

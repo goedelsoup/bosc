@@ -18,11 +18,17 @@ The domain model (the two problems #1220 fixes — see the epic):
 domain        live when                                         signal
 ============  ================================================  =========================
 **backdrop**  every always-pull floor feed present              floor feeds (FIPS/state)
-**facility**  ``SiteProfile.facility`` disclosed + its feed     profile + demand-pressure
+**facility**  ``SiteProfile.facility`` instrument-grounded      profile facility grounding
 **places**    committed campus/footprint geometry exported      ``geo/campus`` feed
 **record**    extracted corpus over threshold                   records+documents+entities
 **story**     a registered story + a leads feed                 ``STORY_SLUGS`` + leads
 ============  ================================================  =========================
+
+Facility is graded on **documentary depth** (#1630), not on one economics feed: a facility whose
+load is grounded in a primary instrument (an air permit, or a filed disclosure) or whose cooling is
+document-disclosed is ``live``; a facility on the record only by name / announcement / site-plan
+SCREENING ([inference]) is ``seeded``. The old rule keyed ``live`` on the ``economics-demand-pressure``
+feed, collapsing permit-grounded (Lima) and screening-only (Urbana) evidence onto one label.
 
 The trigger *is* the evidence: nothing above the floor scaffolds. A partial site **locks**
 the domains it lacks and asks for the source, per the repo's spine — never fabricate a value
@@ -61,7 +67,12 @@ RSEI_FEED = "rsei"
 BACKDROP_FLOOR_FEEDS: tuple[str, ...] = (ECONOMICS_BASELINE_FEED, CONSUMER_ENERGY_FEED, RSEI_FEED)
 
 # The facility demand→price-pressure feed, present only where a facility is disclosed (#1220:
-# "demand-pressure missing across 22 sites is not a gap — it's facility-gated").
+# "demand-pressure missing across 22 sites is not a gap — it's facility-gated"). Since #1630 this
+# is the facility domain's **leaf feed** — the facility-facing data the frontend renders — NOT the
+# Python live-trigger: ``_facility_state`` now grades on the profile's own facility evidence, and
+# the frontend's thin reader gates the demand-pressure section on ``domainPresent(…, "facility")``
+# plus ``hasFeed(FACILITY_FEED)`` so an active facility never opens an empty page. Kept in
+# ``READINESS_FEED_NAMES`` so the coupling guard still catches a rename that would break that gate.
 FACILITY_FEED = "economics-demand-pressure"
 
 # Committed campus/footprint geometry (the exported parcel/footprint layer) vs. place *records*
@@ -136,11 +147,18 @@ def _backdrop_state(feed_counts: Mapping[str, int]) -> State:
     return _tri(present, len(BACKDROP_FLOOR_FEEDS))
 
 
-def _facility_state(profile: SiteProfile, feed_counts: Mapping[str, int]) -> State:
+def _facility_state(profile: SiteProfile) -> State:
     # No disclosed facility → absent (grid backdrop only, no fabricated campus load share).
-    if profile.facility is None:
+    fac = profile.facility
+    if fac is None:
         return "absent"
-    return "live" if _count(feed_counts, FACILITY_FEED) > 0 else "seeded"
+    # Documentary depth grades live vs seeded (#1630): an instrument-grounded facility — an air
+    # permit / filed disclosure grounding the load, or a document-disclosed cooling mechanism —
+    # reads `live`; a facility on the record only by name / announcement / site-plan SCREENING
+    # ([inference]) reads `seeded`. Keyed on the profile's OWN facility evidence, not on the
+    # presence of the demand-pressure feed (which the pre-#1630 rule collapsed permit and screening
+    # onto — Urbana's floor-area [inference] and Lima's permit-grounded load both read `live`).
+    return "live" if fac.is_instrument_grounded else "seeded"
 
 
 def _places_state(feed_counts: Mapping[str, int]) -> State:
@@ -178,7 +196,7 @@ def domain_states(profile: SiteProfile, feed_counts: Mapping[str, int]) -> dict[
     """
     return {
         "backdrop": _backdrop_state(feed_counts),
-        "facility": _facility_state(profile, feed_counts),
+        "facility": _facility_state(profile),
         "places": _places_state(feed_counts),
         "record": _record_state(feed_counts),
         "story": _story_state(profile, feed_counts),

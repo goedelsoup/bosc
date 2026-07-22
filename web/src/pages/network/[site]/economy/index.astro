@@ -10,8 +10,17 @@ export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { EconomicBaseline } from "@watermark/core/feeds";
+import { facilityLoadAvailable } from "@watermark/core/readiness";
 import { withBase, withSite } from "@watermark/core/site";
 import { activeStory, chapterHref } from "@watermark/core/walk";
+
+const { slug } = Astro.props as { slug: string };
+// The campus load / end-use read is a FACILITY-domain door: it renders only where the facility is
+// graded `live` — an instrument-grounded load (air permit / filed disclosure), not a screening
+// [inference] or a [reference] announcement (#1630). A screening-only (`seeded`) or facility-less
+// site withholds it rather than presenting a screening bracket as a settled campus load, so a
+// `live → seeded` regression visibly drops the door. The labor baseline below stays on the floor.
+const facilityLive = facilityLoadAvailable(slug);
 
 // The cost-of-opacity door links THIS site's own "cost of opacity" chapter — resolved from the
 // current site's surfaced story (#1256), never the Lima-pinned `storyUrl`. It's shown only when
@@ -44,15 +53,22 @@ const doors: Door[] = [
     desc: `What ${area}'s economy actually is — employment by NAICS sector with each sector's location quotient, and population. BLS QCEW + US Census, every figure connector-sourced.`,
     note: "BLS · Census",
   },
-  {
-    id: "end-use",
-    kind: "Load & workloads",
-    href: withSite("/reports/end-use-and-workloads"),
-    count: "—",
-    title: "End-use & workloads",
-    desc: "Where the campus load actually goes — the end-use mix and the workload profile behind the megawatts, against the grid backdrop the site sits on.",
-    note: "interactive",
-  },
+  // Facility-gated (#1630): the campus-load read renders only where the facility is `live`
+  // (instrument-grounded load), not for a screening-only or facility-less site — a `live → seeded`
+  // regression drops this door rather than presenting a screening bracket as a settled load.
+  ...(facilityLive
+    ? [
+        {
+          id: "end-use",
+          kind: "Load & workloads",
+          href: withSite("/reports/end-use-and-workloads"),
+          count: "—",
+          title: "End-use & workloads",
+          desc: "Where the campus load actually goes — the end-use mix and the workload profile behind the megawatts, against the grid backdrop the site sits on.",
+          note: "interactive",
+        },
+      ]
+    : []),
   // The cost-of-opacity door links this site's own `cost` chapter — present only when the current
   // site's surfaced story actually carries one (#1256), so it drops on a hidden/absent story or a
   // story without that chapter, never leaking into Lima's.
