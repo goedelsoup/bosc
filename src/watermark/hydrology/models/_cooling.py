@@ -201,9 +201,11 @@ class MonthlyWithdrawal(BaseModel):
     changes by month is the receiving stream's *available* low flow and whether rainfall
     offsets atmospheric demand. A ``hybrid_adiabatic`` facility's draw is itself
     month-varying (#1058): the warm-season assist rate in ET0 > precip months, ~0
-    otherwise. In the growing season the draw is read against the cited summer design
-    low flow (30Q10), not the annual 7Q10 — and arrives when reference ET exceeds
-    precip, so there is no rainfall buffer.
+    otherwise. The design low flow is selected by the **regulatory summer season** (the
+    permit's fixed calendar window): the cited summer 30Q10 in-season, the annual 7Q10
+    otherwise. ``growing_season`` (ET0 > precip) is a *separate* diagnostic, not the floor
+    switch (#1624) — it flags the months with no rainfall buffer, which for Lima coincide
+    with the summer window but need not everywhere.
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -223,9 +225,11 @@ class SeasonalWithdrawal(BaseModel):
     """The cooling draw screened month-by-month against the Ottawa's seasonal low flow.
 
     Bridges the climate baseline (reference ET vs precip) and the cooling scenario: the
-    annual-7Q10 multiple understates the growing-season pinch, when the river sits at its
-    summer design low flow *and* ET exceeds precip. All low-flow figures are cited
-    (`data/reference/hydrology/low-flow-7q10.yaml`); no monthly statistic is fabricated.
+    annual-7Q10 multiple understates the summer pinch, when the river sits at its cited
+    summer design low flow (selected by the regulatory summer season, #1624) — a pinch the
+    growing season (ET0 > precip) compounds by removing the rainfall buffer. All low-flow
+    figures are cited (`data/reference/hydrology/low-flow-7q10.yaml`); no monthly statistic
+    is fabricated.
     """
 
     model_config = ConfigDict(extra="forbid")

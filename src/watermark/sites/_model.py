@@ -625,6 +625,14 @@ class SiteProfile(BaseModel):
     # applied to that gage's 7Q10 at the network outlet (low-flow-7q10.derived.yaml).
     intake_da_ratio_primary: float = 1.0
 
+    # Regulatory SUMMER-season months — the fixed permit calendar window the summer design low
+    # flow (30Q10 summer) governs, which SELECTS the design low flow in the seasonal screen
+    # (`hydrology.scenario.evaluate_seasonal`, #1624). Distinct from the climatic ET0 > precip
+    # growing season (a diagnostic, never the switch). Empty = inherit the cited Ohio EPA default
+    # (May-Oct, `hydrology.lowflow.OEPA_SUMMER_MONTHS`, from NPDES permit 2PH00006 Part II); a
+    # non-Ohio site (e.g. an Indiana/IDEM permit) pins its own window here.
+    summer_season_months: tuple[str, ...] = ()
+
     # --- Tier-1 SWMM sanitary campus routing (hydrology/tier1.py, #1159) -----------------
     # The campus forcemain display labels (routing ``via`` id -> label, e.g. bosc-fm2 -> FM-2)
     # and the receiving-plant node-id -> name map used to render the sanitary surcharge, plus
