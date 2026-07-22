@@ -12,6 +12,7 @@ fabricated.
 | File | What | Source |
 |---|---|---|
 | `ohio-water-quality-criteria.yaml` | Per-chemical acute (CMC/OMZM), chronic (CCC/OMZA), and human-health (public water supply) criteria in mg/L, keyed by the RSEI chemical token (CAS or `Nxxx` category code). Hardness-dependent metals carry their Table 35-9 equation. | OAC **3745-1-35** (aquatic life, Tables 35-1/35-2/35-5/35-9) and **3745-1-33** (human health, Table 33-1). `source: reference`. |
+| `ohio-temperature-criteria.yaml` | Numeric **temperature** criteria — the heat-side peer, read by `watermark.hydrology.thermal_criteria` for the thermal-discharge screen (epic #1715). Ohio sets these **geographically** (per water body / basin), not per aquatic-life use: each zone gives an average + daily-maximum temperature for 18 half-month periods. degF integers verbatim, degC derived. Includes the OAC 3745-1-06 (O) thermal-mixing-zone rule (ambient → max daily-average ceiling; closed-cycle-blowdown `< 5% of 7Q10` exemption). | OAC **3745-1-35** Table 35-11 (inland, zones A–L) + **3745-1-31** Table 31-1 (Lake Erie) + **3745-1-06** (O) Table 1. Formerly codified in **3745-1-07**. `source: reference`. |
 
 ## Discipline
 
@@ -58,5 +59,13 @@ Source: OAC 3745-1-35 (aquatic life, Tables 35-1/35-2/35-5/35-9) + 3745-1-33 (hu
 | file | type | lfs |
 | --- | --- | --- |
 | `reference/wqs/ohio-water-quality-criteria.yaml` | application/x-yaml | no |
+
+### `wqs-temperature` — Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)
+
+Source: OAC 3745-1-35 Table 35-11 (inland streams/rivers, by geographic zone) + 3745-1-31 Table 31-1 (Lake Erie) + 3745-1-06 (O) Table 1 (thermal mixing zones) — verbatim transcription of the numeric temperature criteria (degF primary, degC derived) · License: Ohio public record (Ohio Administrative Code publication) · Access: public · Site scope: basin-shared · Refresh: on-demand
+
+| file | type | lfs |
+| --- | --- | --- |
+| `reference/wqs/ohio-temperature-criteria.yaml` | application/x-yaml | no |
 
 <!-- catalog:end -->

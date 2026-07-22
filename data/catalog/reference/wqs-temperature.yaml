@@ -1,0 +1,27 @@
+id: wqs-temperature
+title: Ohio Water Quality Standards — numeric temperature criteria (OAC 3745-1)
+scope: reference
+status: reviewed
+producer:
+  kind: manual
+  source: OAC 3745-1-35 Table 35-11 (inland streams/rivers, by geographic zone) + 3745-1-31 Table 31-1 (Lake Erie) + 3745-1-06 (O) Table 1 (thermal mixing zones) — verbatim transcription of the numeric temperature criteria (degF primary, degC derived)
+license: Ohio public record (Ohio Administrative Code publication)
+access_tier: public
+site_scope: basin-shared
+storage:
+- relpath: reference/wqs/ohio-temperature-criteria.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: reference
+schema_ref: watermark.hydrology.thermal_criteria.TemperatureCriteriaTable
+tags:
+- wqs
+- water
+- temperature
+- thermal
+- cwa-316a
+- criteria
+- reference
+notes: The Ohio numeric temperature criteria the thermal-discharge screen (watermark.hydrology.thermal, epic #1715 Phase 2) reads a cooling discharge's fully-mixed in-stream temperature against — the heat-side peer of the per-chemical toxic criteria (wqs-criteria). Ohio sets temperature criteria GEOGRAPHICALLY (by water body / basin), not per aquatic-life use — each zone gives an average and a daily-maximum temperature for 18 half-month periods. degF integers are stored verbatim; degC is derived as round((degF-32)*5/9, 1). Covers OAC 3745-1-35 Table 35-11 zones (A)-(L) (inland; Lima's Ottawa River uses the general Lake Erie basin zone), OAC 3745-1-31 Table 31-1 (Lake Erie proper), and the OAC 3745-1-06 (O) thermal-mixing-zone Table 1 plus its closed-cycle-blowdown <5%-of-7Q10 exemption. Formerly codified in OAC 3745-1-07 (the issue/epic cite of "3745-1-07" refers to this origin); the Ohio-river MAINSTEM table (3745-1-32 Table 32-3) is deliberately omitted (different axis, no network site on the mainstem). Screening reference (complete mix, no plume credit) — a T_mixed above the daily-max flags the need for a permit-level thermal / Section 316(a) analysis, not an automatic violation. Static published standards — re-transcribe from the cited OAC rule on a revision; not connector-regenerable.

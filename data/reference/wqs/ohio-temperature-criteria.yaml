@@ -1,0 +1,320 @@
+# Ohio numeric TEMPERATURE water-quality criteria (OAC 3745-1) — the receiving-water thermal
+# thresholds the thermal-discharge screen (watermark.hydrology.thermal, Phase 2 of epic #1715)
+# compares a cooling discharge's fully-mixed in-stream temperature against. The heat-side peer
+# of the per-chemical toxic criteria in ohio-water-quality-criteria.yaml (WS-07 / #1607).
+#
+# These are PUBLISHED STATE STANDARDS (Ohio Administrative Code chapter 3745-1), not facility
+# facts — tagged `reference` when surfaced as ProvenancedValues, never `verified`. Regenerable:
+# re-transcribe from the cited OAC rule/table if a standard is revised.
+#
+# WHERE THE CRITERIA LIVE (important — the issue/epic cite "OAC 3745-1-07"; that is the
+# HISTORICAL location). Ohio reorganized chapter 3745-1: the temperature tables were moved OUT
+# of 3745-1-07 (now "Beneficial use designations and biological criteria") and now live in:
+#   - OAC 3745-1-35 Table 35-11  — inland streams/rivers, keyed by GEOGRAPHIC zone (the core;
+#     footer of the rule still reads "Part of: 3745-1-07", recording the origin).
+#   - OAC 3745-1-31 Table 31-1   — Lake Erie proper (western basin, central basin, hypolimnion).
+#   - OAC 3745-1-06 (O) Table 1  — thermal-mixing-zone daily-average-temperature ceilings, plus
+#     the closed-cycle-blowdown exemption and the >=15 C case-by-case rule.
+# The Ohio-river MAINSTEM table (OAC 3745-1-32 Table 32-3) is deliberately OMITTED: it uses a
+# different (14-period, degF-only) axis, is ORSANCO-governed, and no BOSC network site discharges
+# to the Ohio-river mainstem — add it if one ever does. Ohio-river-BASIN tributaries (Springfield,
+# Urbana, Troy-Piqua, Sidney, Wilmington) use zone `ohio_river_basin_general` (35-11 A), which IS
+# included here.
+#
+# STRUCTURE (differs from the chemical file). Ohio sets temperature criteria GEOGRAPHICALLY — by
+# water body / basin — NOT as a per-aquatic-life-use column (WWH/EWH/CWH/...). Each `zone` below
+# gives an `average` and a `daily_max` temperature for each of 18 half-month `periods`. Values are
+# stored as the PRIMARY published degF integers (verbatim); degC is derived deterministically in
+# the loader as round((degF - 32) * 5/9, 1), which reproduces the rule's own (Celsius) parenthetical
+# (e.g. 85 -> 29.4, 47 -> 8.3). Storing degF sidesteps the rule's rounded/typo'd Celsius cells (see
+# transcription_notes). A `null` entry means the rule prints no criterion for that period (omit,
+# never guess).
+#
+# A criterion here is a SCREENING threshold. The Phase-2 screen carries a cooling discharge's heat
+# load into the receiving reach at a design low flow, fully mixed, no plume credit; T_mixed above a
+# zone's daily_max flags the need for a permit-level thermal / CWA Section 316(a) analysis, NOT an
+# automatic violation. It is not a CORMIX plume model or a permit determination.
+
+source:
+  document: Ohio Administrative Code Chapter 3745-1 — Ohio Water Quality Standards
+  inland_temperature_rule: "OAC 3745-1-35 Table 35-11 — temperature criteria, by geographic zone (A)-(L)"
+  lake_erie_rule: "OAC 3745-1-31 Table 31-1 — Lake Erie temperature criteria (western/central basin, hypolimnion)"
+  thermal_mixing_zone_rule: "OAC 3745-1-06 paragraph (O) + Table 1 — thermal mixing zones"
+  historical_origin: >-
+    These tables were formerly codified in OAC 3745-1-07; the 3745-1-35 rule footer still records
+    "Part of: 3745-1-07". The issue/epic #1715 cite of "OAC 3745-1-07" refers to this origin.
+  omitted: "OAC 3745-1-32 Table 32-3 (Ohio-river mainstem temperature) — different axis, no network site on the Ohio-river mainstem."
+  urls:
+    - https://codes.ohio.gov/ohio-administrative-code/rule-3745-1-35
+    - https://codes.ohio.gov/ohio-administrative-code/rule-3745-1-31
+    - https://codes.ohio.gov/ohio-administrative-code/rule-3745-1-06
+    - https://dam.assets.ohio.gov/image/upload/epa.ohio.gov/Portals/35/rules/01-all.pdf
+  retrieved: "2026-07-22"
+  effective:
+    "3745-1-35": "2017-02-06"
+    "3745-1-31": "2024-04-04"
+    "3745-1-06": "2024-03-20"
+  note: >-
+    Screening reference only. Ohio expresses temperature criteria in degF with a rounded (Celsius)
+    parenthetical; the degF integers are stored here verbatim and degC is derived in the loader.
+
+# The Ottawa River at Lima drains Ottawa -> Auglaize -> Maumee -> Lake Erie: it is an inland
+# tributary in the Lake Erie drainage basin (NOT the Maumee mainstem), so the applicable zone is
+# `lake_erie_basin_general` (OAC 3745-1-35 Table 35-11 (G)). Site -> zone selection is a Phase-3
+# wiring concern (a SiteProfile knob), NOT baked into this basin-shared reference dataset.
+default_zone_hint: lake_erie_basin_general
+
+# The 18 half-month reporting periods shared by every zone table in 35-11 and 31-1, in order. Each
+# period is a single calendar month span [day_start, day_end]. Zone `average_f` / `daily_max_f`
+# arrays are aligned to this order and MUST have exactly 18 entries (the loader enforces this).
+periods:
+  - {key: jan,       label: "Jan 1-31",   month: 1,  day_start: 1,  day_end: 31}
+  - {key: feb,       label: "Feb 1-29",   month: 2,  day_start: 1,  day_end: 29}
+  - {key: mar_1_15,  label: "Mar 1-15",   month: 3,  day_start: 1,  day_end: 15}
+  - {key: mar_16_31, label: "Mar 16-31",  month: 3,  day_start: 16, day_end: 31}
+  - {key: apr_1_15,  label: "Apr 1-15",   month: 4,  day_start: 1,  day_end: 15}
+  - {key: apr_16_30, label: "Apr 16-30",  month: 4,  day_start: 16, day_end: 30}
+  - {key: may_1_15,  label: "May 1-15",   month: 5,  day_start: 1,  day_end: 15}
+  - {key: may_16_31, label: "May 16-31",  month: 5,  day_start: 16, day_end: 31}
+  - {key: jun_1_15,  label: "Jun 1-15",   month: 6,  day_start: 1,  day_end: 15}
+  - {key: jun_16_30, label: "Jun 16-30",  month: 6,  day_start: 16, day_end: 30}
+  - {key: jul,       label: "Jul 1-31",   month: 7,  day_start: 1,  day_end: 31}
+  - {key: aug,       label: "Aug 1-31",   month: 8,  day_start: 1,  day_end: 31}
+  - {key: sep_1_15,  label: "Sep 1-15",   month: 9,  day_start: 1,  day_end: 15}
+  - {key: sep_16_30, label: "Sep 16-30",  month: 9,  day_start: 16, day_end: 30}
+  - {key: oct_1_15,  label: "Oct 1-15",   month: 10, day_start: 1,  day_end: 15}
+  - {key: oct_16_31, label: "Oct 16-31",  month: 10, day_start: 16, day_end: 31}
+  - {key: nov,       label: "Nov 1-30",   month: 11, day_start: 1,  day_end: 30}
+  - {key: dec,       label: "Dec 1-31",   month: 12, day_start: 1,  day_end: 31}
+
+# period order for the arrays below (verbatim degF; null = no criterion printed):
+#          jan feb mar1 mar2 apr1 apr2 may1 may2 jun1 | jun2 jul aug sep1 sep2 oct1 oct2 nov dec
+zones:
+  # ---- OAC 3745-1-35 Table 35-11 — inland streams/rivers (geographic zones A-L) ----------------
+  - id: ohio_river_basin_general
+    rule: "OAC 3745-1-35 Table 35-11 (A)"
+    name: "General Ohio river basin"
+    basin: ohio_river
+    description: >-
+      All waters of the state within the Ohio river drainage basin, excluding the Ohio river and
+      the water bodies designated in 35-11 (B)-(F). Applies to Ohio-river-basin tributaries.
+    average_f:   [47, 47, 51, 54, 59, 65, 67, 70, 74,  82, 82, 82, 82, 73, 71, 65, 60, 47]
+    daily_max_f: [52, 52, 56, 59, 65, 70, 73, 76, 80,  85, 85, 85, 85, 78, 76, 70, 65, 52]
+
+  - id: lower_great_miami
+    rule: "OAC 3745-1-35 Table 35-11 (B)"
+    name: "Lower Great Miami river"
+    basin: ohio_river
+    description: "Steele dam in Dayton (river mile 81.3) to the confluence with the Ohio river."
+    average_f:   [49, 49, 53, 56, 59, 65, 67, 70, 75,  85, 85, 85, 85, 78, 71, 66, 63, 49]
+    daily_max_f: [54, 54, 58, 61, 68, 74, 77, 79, 83,  89, 89, 89, 89, 83, 76, 71, 68, 54]
+
+  - id: scioto_river
+    rule: "OAC 3745-1-35 Table 35-11 (C)"
+    name: "Scioto river"
+    basin: ohio_river
+    description: "Griggs dam in Columbus (river mile 136) to the confluence with the Ohio river."
+    average_f:   [47, 47, 51, 54, 59, 62, 67, 72, 75,  83, 83, 83, 83, 75, 71, 65, 58, 47]
+    daily_max_f: [52, 52, 56, 59, 65, 70, 75, 79, 82,  87, 87, 87, 87, 80, 76, 70, 63, 52]
+
+  - id: hocking_river
+    rule: "OAC 3745-1-35 Table 35-11 (D)"
+    name: "Hocking river"
+    basin: ohio_river
+    description: "Entire mainstem."
+    average_f:   [45, 45, 51, 56, 59, 65, 67, 70, 74,  83, 83, 83, 83, 77, 65, 62, 58, 45]
+    daily_max_f: [50, 50, 56, 61, 66, 70, 73, 76, 80,  87, 87, 87, 87, 82, 70, 67, 63, 50]
+
+  - id: muskingum_river
+    rule: "OAC 3745-1-35 Table 35-11 (E)"
+    name: "Muskingum river"
+    basin: ohio_river
+    description: "Entire mainstem."
+    average_f:   [45, 45, 53, 53, 58, 65, 68, 72, 76,  85, 85, 85, 85, 80, 73, 67, 62, 47]
+    daily_max_f: [50, 50, 58, 58, 63, 70, 74, 77, 84,  89, 89, 89, 89, 85, 77, 72, 67, 52]
+
+  - id: mahoning_river
+    rule: "OAC 3745-1-35 Table 35-11 (F)"
+    name: "Mahoning river"
+    basin: ohio_river
+    description: "Leavitt road dam (river mile 46.1) to the Ohio-Pennsylvania state line (river mile 12.6)."
+    average_f:   [47, 47, 50, 54, 59, 65, 68, 73, 77,  85, 85, 85, 85, 78, 73, 67, 60, 51]
+    daily_max_f: [53, 53, 57, 61, 65, 70, 76, 79, 84,  89, 89, 89, 89, 83, 77, 72, 66, 55]
+
+  - id: lake_erie_basin_general
+    rule: "OAC 3745-1-35 Table 35-11 (G)"
+    name: "General Lake Erie basin"
+    basin: lake_erie
+    description: >-
+      All surface waters of the state within the Lake Erie drainage basin, excluding Lake Erie and
+      the water bodies designated in 35-11 (H)-(L). Applies to the Ottawa River at Lima and to most
+      Lake-Erie-basin tributaries (Blanchard/Findlay, Portage/Bowling Green, ...).
+    average_f:   [44, 44, 48, 51, 54, 60, 64, 66, 72,  82, 82, 82, 82, 75, 67, 61, 54, 44]
+    daily_max_f: [49, 49, 53, 56, 61, 65, 69, 72, 76,  85, 85, 85, 85, 80, 72, 66, 59, 49]
+
+  - id: lake_erie_tributary_estuaries
+    rule: "OAC 3745-1-35 Table 35-11 (H)"
+    name: "Lake Erie tributary estuaries"
+    basin: lake_erie
+    description: >-
+      All Lake Erie tributary estuaries within the lake breakwaters, upstream to the Lake Erie mean
+      high water level. The rule prints no average criterion outside Jun 16 - Sep 15.
+    average_f:   [null, null, null, null, null, null, null, null, null,  84, 84, 84, 84, null, null, null, null, null]
+    daily_max_f: [52, 52, 55, 55, 59, 63, 66, 76, 82,  88, 88, 88, 88, 84, 75, 70, 65, 55]
+
+  - id: maumee_river
+    rule: "OAC 3745-1-35 Table 35-11 (I)"
+    name: "Maumee river"
+    basin: lake_erie
+    description: "Ohio-Indiana state line to the Maumee river estuary (mainstem). Fort Wayne/Defiance mainstem discharges."
+    average_f:   [45, 45, 47, 53, 58, 61, 67, 70, 75,  85, 85, 85, 85, 80, 71, 65, 58, 45]
+    daily_max_f: [50, 50, 52, 58, 63, 68, 72, 76, 80,  89, 89, 89, 89, 85, 76, 70, 63, 50]
+
+  - id: maumee_bay
+    rule: "OAC 3745-1-35 Table 35-11 (J)"
+    name: "Maumee bay"
+    basin: lake_erie
+    description: "Maumee bay including the Maumee river estuary and the estuary portions of its tributaries."
+    average_f:   [47, 47, 48, 50, 52, 57, 61, 65, 71,  83, 83, 83, 83, 75, 69, 64, 59, 47]
+    daily_max_f: [52, 52, 53, 54, 59, 63, 63, 76, 77,  87, 87, 87, 87, 80, 74, 69, 64, 52]
+
+  - id: sandusky_bay
+    rule: "OAC 3745-1-35 Table 35-11 (K)"
+    name: "Sandusky bay"
+    basin: lake_erie
+    description: "Sandusky bay including the Sandusky river estuary and the estuary portions of its tributaries."
+    average_f:   [47, 47, 48, 50, 52, 57, 63, 68, 74,  83, 83, 83, 83, 75, 69, 64, 59, 47]
+    daily_max_f: [52, 52, 53, 55, 57, 62, 68, 73, 79,  87, 87, 87, 87, 80, 74, 69, 64, 52]
+
+  - id: cuyahoga_river
+    rule: "OAC 3745-1-35 Table 35-11 (L)"
+    name: "Cuyahoga river"
+    basin: lake_erie
+    description: "Headwaters of the Cuyahoga river gorge dam pool (river mile 46.2) to the ship channel (river mile 5.6)."
+    average_f:   [45, 45, 51, 53, 55, 60, 65, 71, 80,  84, 84, 84, 84, 77, 70, 63, 55, 45]
+    daily_max_f: [49, 49, 55, 57, 62, 66, 70, 78, 84,  88, 88, 88, 88, 82, 75, 69, 64, 52]
+
+  # ---- OAC 3745-1-31 Table 31-1 — Lake Erie proper --------------------------------------------
+  - id: lake_erie_western_basin
+    rule: "OAC 3745-1-31 Table 31-1 (A)"
+    name: "Lake Erie western basin"
+    basin: lake_erie
+    description: >-
+      Lake Erie west of a line from Pelee point, Canada to Scott point on Catawba island. Lake Erie
+      is designated exceptional warmwater habitat. The rule prints no average outside Apr 16 - Nov 30.
+    average_f:   [null, null, null, null, null, 53, 59, 65, 75,  80, 83, 83, 78, 76, 66, 60, 53, null]
+    daily_max_f: [35, 38, 39, 45, 51, 56, 64, 72, 78,  83, 85, 85, 83, 81, 71, 65, 58, 46]
+
+  - id: lake_erie_central_basin
+    rule: "OAC 3745-1-31 Table 31-1 (B)"
+    name: "Lake Erie central basin"
+    basin: lake_erie
+    description: >-
+      Lake Erie east of the Pelee-point/Scott-point line to the Pennsylvania-Ohio state line. The
+      rule prints no average outside Apr 1 - Nov 30.
+    average_f:   [null, null, null, null, 43, 53, 59, 63, 75,  80, 83, 83, 76, 71, 66, 58, 48, null]
+    daily_max_f: [35, 38, 39, 45, 48, 56, 63, 72, 78,  83, 85, 85, 81, 76, 71, 63, 53, 46]
+
+  - id: lake_erie_hypolimnetic
+    rule: "OAC 3745-1-31 Table 31-1 (C)"
+    name: "Lake Erie hypolimnetic regions"
+    basin: lake_erie
+    description: >-
+      Seasonal daily-maximum limit for the hypolimnetic (cold, deep) regions of Lake Erie — the
+      cold-water refuge. Published MONTHLY (daily maximum only, no average); the value is constant
+      within a month and is repeated across that month's two half-periods here.
+    average_f:   [null, null, null, null, null, null, null, null, null,  null, null, null, null, null, null, null, null, null]
+    daily_max_f: [44, 44, 44, 44, 47, 47, 51, 51, 54, 54, 59, 59, 55, 55, 46, 46, 41, 38]
+
+# OAC 3745-1-06 (O) — thermal mixing zones. The director may permit a thermal mixing zone in which
+# organism response to temperature is time-dependent. Key operative rules for the screen:
+thermal_mixing_zone:
+  rule: "OAC 3745-1-06 (O) + Table 1"
+  # (O)(1)(b)-(c): inside the thermal mixing zone at the point nearest the discharge accessible to
+  # resident organisms, the DAILY AVERAGE temperature may not exceed the Table 1 limit at the
+  # corresponding ambient temperature. At ambient >= 15 C (59 F) the limit is CASE-BY-CASE (untabulated).
+  case_by_case_ambient_c: 15.0
+  # (O)(5): a screening OFF-RAMP the Phase-2 screen wires directly — a closed-cycle cooling blowdown
+  # discharge whose flow is < 5% of the receiving water's 7Q10 is EXEMPT from the thermal-mixing-zone
+  # requirement (O)(1). (Lima's evaporative-tower blowdown is the archetype this bears on.)
+  closed_cycle_blowdown_exempt_fraction_of_7q10: 0.05
+  # (O)(3): a thermal-mixing-zone request in any of these waters requires a treatment-alternatives +
+  # cost-benefit evaluation first (Section 316(a) demonstrations are exempt from this paragraph).
+  elevated_review_waters:
+    - "any stream designated coldwater habitat"
+    - "any stream designated exceptional warmwater habitat"
+    - "any lake other than Lake Erie"
+  # Table 1 — max daily-average temperature inside a thermal mixing zone vs. ambient (verbatim degF).
+  # Stored are only the regulatorily-operative rows for ambient < 15 C (59 F); at/above 15 C the
+  # limit is case-by-case. See transcription_notes for the source's anomalous >=62 F trailing rows.
+  curves:
+    - id: non_lake_erie
+      applies_to: "all waters other than Lake Erie"
+      source: "OAC 3745-1-06 Table 1 (a)"
+      applies_below_ambient_c: 15.0
+      # {ambient_f: max daily-average temperature limit degF}
+      limits:
+        - {ambient_f: 32, limit_f: 50}
+        - {ambient_f: 33, limit_f: 50}
+        - {ambient_f: 34, limit_f: 50}
+        - {ambient_f: 35, limit_f: 51}
+        - {ambient_f: 36, limit_f: 52}
+        - {ambient_f: 37, limit_f: 54}
+        - {ambient_f: 38, limit_f: 55}
+        - {ambient_f: 39, limit_f: 57}
+        - {ambient_f: 40, limit_f: 58}
+        - {ambient_f: 41, limit_f: 60}
+        - {ambient_f: 42, limit_f: 62}
+        - {ambient_f: 43, limit_f: 63}
+        - {ambient_f: 48, limit_f: 71}
+        - {ambient_f: 49, limit_f: 73}
+        - {ambient_f: 50, limit_f: 75}
+        - {ambient_f: 51, limit_f: 76}
+        - {ambient_f: 52, limit_f: 78}
+        - {ambient_f: 53, limit_f: 79}
+        - {ambient_f: 54, limit_f: 81}
+        - {ambient_f: 55, limit_f: 83}
+        - {ambient_f: 56, limit_f: 85}
+        - {ambient_f: 57, limit_f: 86}
+        - {ambient_f: 58, limit_f: 88}
+    - id: lake_erie
+      applies_to: "Lake Erie"
+      source: "OAC 3745-1-06 Table 1 (b)"
+      applies_below_ambient_c: 15.0
+      limits:
+        - {ambient_f: 32, limit_f: 52}
+        - {ambient_f: 33, limit_f: 52.5}
+        - {ambient_f: 34, limit_f: 53.5}
+        - {ambient_f: 35, limit_f: 54.4}
+        - {ambient_f: 36, limit_f: 55}
+        - {ambient_f: 37, limit_f: 56}
+        - {ambient_f: 38, limit_f: 57}
+        - {ambient_f: 39, limit_f: 58}
+        - {ambient_f: 40, limit_f: 59}
+        - {ambient_f: 41, limit_f: 59.5}
+        - {ambient_f: 42, limit_f: 60}
+        - {ambient_f: 43, limit_f: 61}
+        - {ambient_f: 48, limit_f: 68}
+        - {ambient_f: 49, limit_f: 70}
+        - {ambient_f: 50, limit_f: 71}
+        - {ambient_f: 51, limit_f: 73}
+        - {ambient_f: 52, limit_f: 75}
+        - {ambient_f: 53, limit_f: 77}
+        - {ambient_f: 54, limit_f: 78}
+        - {ambient_f: 55, limit_f: 80}
+        - {ambient_f: 56, limit_f: 82}
+        - {ambient_f: 57, limit_f: 84}
+        - {ambient_f: 58, limit_f: 86}
+
+# Non-destructive record of source quirks (chain-of-custody discipline — flag, don't silently fix):
+transcription_notes:
+  - >-
+    OAC 3745-1-35 Table 35-11 (J) Maumee bay, average Jun 16-30: the rule prints "83 (29.3)". The
+    degF value (83) is stored; 83 F converts to 28.3 C and every sibling 83 F cell reads (28.3), so
+    the source's "(29.3)" parenthetical is an apparent typo. degC is derived from the degF, not the
+    parenthetical, so the typo does not propagate.
+  - >-
+    OAC 3745-1-06 Table 1 (a) and (b) each print trailing rows at ambient 62-70 F whose tabulated
+    "limits" (44-47 F) fall BELOW the ambient. Those ambient temperatures are >= 15 C, where the rule
+    itself makes the limit case-by-case; the anomalous rows are recorded here but excluded from the
+    usable curves above. (a): 65->45, 68->47, 66->46, 70->(blank). (b): 62->45, 65->47, 63->46, 66->(blank).
