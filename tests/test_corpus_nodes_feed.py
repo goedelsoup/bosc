@@ -24,7 +24,7 @@ from watermark.site.export import export_bundle
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-_CV = "1.32.0"
+_CV = "1.32.1"
 
 
 def _mirror() -> Mirror:

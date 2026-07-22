@@ -106,18 +106,48 @@ def test_power_side_range_widens_the_consumptive_bracket(hydro_settings: Setting
 
 
 def test_lima_committed_buildout_figures_are_regression_locked(hydro_settings: Settings) -> None:
-    """The dispatch refactor must not move the reference build's committed figures (#1055)."""
-    committed = yaml.safe_load(
+    """The committed reference build must equal what the model derives offline (#1055/#1633).
+
+    Broadened past the old five scalars: the committed ``buildout.scenario.yaml`` must be a
+    byte-for-byte match of a fresh hermetic ``evaluate(live=False)`` — so the basis, the whole
+    balance, the assimilative rows, and the seasonal/discharge feed fields are all locked. It must
+    also stay *hermetic*: no frozen live gauge reading (#1633) may re-enter the committed golden.
+    """
+    committed_raw = yaml.safe_load(
         (Path("data") / "scenarios" / "buildout.scenario.yaml").read_text(encoding="utf-8")
     )
+    committed = ScenarioResult.model_validate(committed_raw)
+    fresh = scenario.evaluate(
+        scenario.buildout_scenario(settings=hydro_settings), settings=hydro_settings, live=False
+    )
+    # The full golden lock: the committed artifact IS the model's offline output, not a subset.
+    assert committed.model_dump(mode="json") == fresh.model_dump(mode="json"), (
+        "committed buildout.scenario.yaml drifted from the model — regenerate it "
+        "(scenario.evaluate(buildout, live=False))"
+    )
+
+    # No connector/live value survives in the committed golden — it is fully derived/document.
+    assert committed.receiving_live is None
+    assert all(v.source != "connector" for n in committed.balance.nodes for v in n.all_values()), (
+        "a frozen live gauge reading re-entered the committed golden (#1633)"
+    )
+
+    # Spot-lock the load-bearing figures against the derived basis (the #1055 intent) …
     b = derive_cooling_basis(hydro_settings)
-    assert committed["scenario"]["cooling_demand"]["value"] == b.makeup_demand.value
-    assert committed["scenario"]["consumptive_fraction"]["value"] == b.consumptive_fraction.value
-    assert committed["scenario"]["basis"]["consumptive_low"]["value"] == b.consumptive_low.value
-    assert committed["scenario"]["basis"]["consumptive_high"]["value"] == b.consumptive_high.value
-    assert committed["consumptive_loss"]["value"] == pytest.approx(
+    assert committed.scenario.cooling_demand.value == b.makeup_demand.value
+    assert committed.scenario.consumptive_fraction.value == b.consumptive_fraction.value
+    assert committed.scenario.basis is not None
+    assert committed.scenario.basis.consumptive_low.value == b.consumptive_low.value
+    assert committed.scenario.basis.consumptive_high.value == b.consumptive_high.value
+    assert committed.consumptive_loss.value == pytest.approx(
         mgd_to_cfs(b.makeup_demand.value * b.consumptive_fraction.value)
     )
+    # … and the feed fields the frontend now reads instead of hardcoding Lima's (#1633).
+    assert committed.receiving_summer_30q10 is not None
+    assert committed.receiving_summer_30q10.value == pytest.approx(1.6)
+    assert committed.receiving_1q10 is not None and committed.receiving_1q10.value == 0.0
+    assert committed.campus_routed_discharge is not None
+    assert committed.campus_routed_discharge.value == pytest.approx(3.87, abs=0.01)
 
 
 # ---------------------------------------------------------------------------------------

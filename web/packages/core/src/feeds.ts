@@ -297,8 +297,16 @@ export interface ScenarioResult {
   // Renamed from ottawa_* in the backend's per-site generalization (#900); nullable —
   // a site without a cited receiving-water low flow carries null, never a faked figure.
   receiving_7q10?: ProvenancedValue | null;
+  // Per-site cited seasonal design low flows (#1633) — the growing-season 30Q10 and the absolute
+  // driest-week 1Q10 (often 0). The dilution model reads these instead of hardcoding Lima's floors;
+  // null when the cited low-flow table omits them.
+  receiving_summer_30q10?: ProvenancedValue | null;
+  receiving_1q10?: ProvenancedValue | null;
   receiving_live?: ProvenancedValue | null;
   receiving_water_name?: string | null;
+  // The campus's own routed industrial discharge (cfs) — the demand node's return flow (Lima's
+  // FM-2), surfaced top-level (#1633) so the effluent-share model is feed-sourced, not a constant.
+  campus_routed_discharge?: ProvenancedValue | null;
   // `balance` is the composite Tier-0 loop and `assimilative` is a per-discharger
   // array — NOT scalar provenanced values. (Previously both mistyped as
   // ProvenancedValue, which rendered blank, falsely-tagged headline tiles — #635.)

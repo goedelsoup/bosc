@@ -86,9 +86,9 @@ scenario:
       value: 4.18
       unit: MGD
       source: derived
-      citation: 'cooling upper bound capped at the WUE ceiling: 300 MW (high IT) x 2.2 L/kWh
-        = 4.18 MGD. The disclosed 2.5 MGD blowdown x (CoC-1) = 10 MGD implies ~5.3
-        L/kWh cooling WUE, above the ~2.2 L/kWh ceiling, so the 2.5 MGD discharge
+      citation: 'cooling upper bound capped at the WUE ceiling: 300 MW (high IT) x
+        2.2 L/kWh = 4.18 MGD. The disclosed 2.5 MGD blowdown x (CoC-1) = 10 MGD implies
+        ~5.3 L/kWh cooling WUE, above the ~2.2 L/kWh ceiling, so the 2.5 MGD discharge
         is not all cooling blowdown (it bundles process/sanitary flow) and cooling
         alone can''t reach it. evaporative-hyperscale WUE ceiling ~2.2 L/kWh (top
         of the ~1.8-2.2 L/kWh real-world evaporative range; Google fleet avg ~1.1)
@@ -133,16 +133,42 @@ receiving_7q10:
   asof: null
   low: null
   high: null
-receiving_live:
-  value: 31.8
+receiving_summer_30q10:
+  value: 1.6
   unit: cfs
-  source: connector
-  citation: NWIS 04187100 (Ottawa River at Lima OH)
+  source: document
+  citation: summer 30Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.),
+    Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021 (Ottawa
+    mainstem at Lima nearly dries at design low flow (1Q10 = 0 cfs) — heavily abstracted
+    upstream for Lima's water supply)
   confidence: high
-  asof: '2026-07-19T00:30:00.000-04:00'
+  asof: null
   low: null
   high: null
+receiving_1q10:
+  value: 0.0
+  unit: cfs
+  source: document
+  citation: driest-week 1Q10 — Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.),
+    Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021 (Ottawa
+    mainstem at Lima nearly dries at design low flow (1Q10 = 0 cfs) — heavily abstracted
+    upstream for Lima's water supply)
+  confidence: high
+  asof: null
+  low: null
+  high: null
+receiving_live: null
 receiving_water_name: Ottawa River
+campus_routed_discharge:
+  value: 3.8680718791283315
+  unit: cfs
+  source: document
+  citation: bosc-fm2 (2.5 MGD industrial discharge to Lima) — BOSC FM-2 (16", 17,900
+    LF) -> City of Lima 78" sewer (watch-items bosc-fm2 / lima-fm2-terminus)
+  confidence: high
+  asof: null
+  low: null
+  high: null
 balance:
   nodes:
   - node:
@@ -254,25 +280,6 @@ balance:
       low: null
       high: null
     stormwater: null
-  - node:
-      id: lima-wtp
-      name: Lima WTP intake (Ottawa/Auglaize)
-      role: abstraction
-      receiving_water: Ottawa River
-      lat: null
-      lon: null
-    inflow:
-      value: 31.8
-      unit: cfs
-      source: connector
-      citation: NWIS 04187100 (Ottawa River at Lima OH)
-      confidence: high
-      asof: '2026-07-19T00:30:00.000-04:00'
-      low: null
-      high: null
-    consumptive_use: null
-    return_flow: null
-    stormwater: null
   tier: tier0
   warnings:
   - BOSC routing via theorized-fm3-shawnee-ii to watch-shawnee-ii-wwtp is THEORIZED
@@ -280,8 +287,6 @@ balance:
   - BOSC campus consumptive cooling is a derived central estimate (~4.9 cfs; 2.85-4.18
     MGD evaporative range) from the air-permit power figure x WUE — not a metered
     or permitted value.
-  - Lima WTP intake (Ottawa/Auglaize) withdrawal rate is not documented; abstraction
-    shown as river-flow context only.
 assimilative:
 - receiving_water: Ottawa River
   discharger: Shawnee II WWTP

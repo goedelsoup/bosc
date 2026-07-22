@@ -21,8 +21,12 @@ import { withBase } from "@watermark/core/site";
 
 const d = buildDilution();
 const dc = d.discharge;
+// The whole reports section locks per-site at the ReportShell (a thin peer never renders this
+// body). buildDilution still runs in frontmatter, so keep the derived math divide-by-zero-safe:
+// a thin site's feed carries no buildout scenario → the dilution model returns the empty locked
+// shell (#1633), never Lima's constants.
 const effluentCfs = Math.round((dc.wwtpCfs + dc.campusFm2Cfs) * 100) / 100;
-const effluentMultiple = Math.round(effluentCfs / dc.naturalCfs);
+const effluentMultiple = dc.naturalCfs > 0 ? Math.round(effluentCfs / dc.naturalCfs) : 0;
 ---
 
 <ReportShell

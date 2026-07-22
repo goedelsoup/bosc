@@ -42,19 +42,27 @@ _CRA_REL = ("legal", "prr-mandamus", "cra-agreement.cra.yaml")
 
 
 def _buildout_consumptive_cfs(settings: Settings) -> float | None:
-    """The buildout scenario's net consumptive cooling draw (cfs), from the committed artifact.
+    """The buildout scenario's net consumptive cooling draw (cfs), re-derived from the cooling basis.
 
-    Reads ``consumptive_loss.value`` off ``data/scenarios/buildout.scenario.yaml`` rather than
-    carrying a per-site literal — a non-Lima site supplies its own reviewed scenario.
+    Re-derives from the active site facility's cooling archetype
+    (:func:`watermark.hydrology.cooling.derive_cooling_basis`) rather than reading a number back off
+    the committed ``buildout.scenario.yaml`` snapshot (#1633) — so the ledger never depends on a
+    hand-committed artifact that can drift out of sync with the model. A facility whose cooling
+    method is undisclosed exposes no single headline (bracketed) → ``None``, and a facility-less /
+    ``off`` site derives ``0`` → ``None``: in both cases the cooling burden stays absent rather than
+    publishing a fabricated point estimate.
     """
-    path = settings.scenarios_dir / "buildout.scenario.yaml"
-    if not path.is_file():
-        return None
+    from watermark.hydrology.cooling import derive_cooling_basis
+    from watermark.hydrology.units import mgd_to_cfs
+
     try:
-        data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-        return float(data["consumptive_loss"]["value"])
-    except (KeyError, TypeError, ValueError):
+        basis = derive_cooling_basis(settings)
+    except ValueError:
         return None
+    headline = basis.headline_consumptive()  # net consumptive MGD, or None when bracketed
+    if headline is None or not headline.value:
+        return None
+    return mgd_to_cfs(headline.value)
 
 
 # Ohio real-property tax mechanics: assessed value = 35% of market value (R.C. 5715.01).
@@ -219,7 +227,7 @@ def _burden_cooling(settings: Settings) -> BurdenItem | None:
             f"~{sw.consumptive_cfs:g} cfs consumptive cooling draw — {sw.summer_multiple:g}x "
             f"the Ottawa summer 30Q10, {sw.annual_multiple:g}x the annual 7Q10"
         ),
-        source="data/scenarios/buildout.scenario.yaml + low-flow-7q10.yaml",
+        source="derived cooling basis (site facility cooling archetype) + low-flow-7q10.yaml",
     )
 
 

@@ -34,6 +34,28 @@
         ],
         "default": null
       },
+      "receiving_summer_30q10": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/ProvenancedValue"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "receiving_1q10": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/ProvenancedValue"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
       "receiving_live": {
         "anyOf": [
           {
@@ -56,6 +78,17 @@
         ],
         "default": null,
         "title": "Receiving Water Name"
+      },
+      "campus_routed_discharge": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/ProvenancedValue"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
       },
       "balance": {
         "$ref": "#/$defs/WaterBalance"

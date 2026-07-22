@@ -25,7 +25,7 @@ from watermark.hydrology.balance import (
 )
 from watermark.hydrology.connectors.nwis import DISCHARGE_CFS, fetch_streamflow
 from watermark.hydrology.cooling import derive_cooling_basis
-from watermark.hydrology.lowflow import low_flow_context, low_flow_for
+from watermark.hydrology.lowflow import low_flow_context, low_flow_for, seasonal_low_flows
 from watermark.hydrology.model import (
     CoolingBasis,
     MonthlyWithdrawal,
@@ -137,15 +137,24 @@ def evaluate(
 
     receiving_water = active_profile(settings).receiving_water_name
     receiving_7q10 = low_flow_for(receiving_water, settings=settings)
+    summer_30q10, one_q10 = seasonal_low_flows(receiving_water, settings=settings)
     receiving_live = _receiving_live(settings=settings, live=live)
+
+    # The campus's own routed industrial discharge (Lima's FM-2), read portably off the demand
+    # node's return flow — the same grounded figure the balance already carries (#1633).
+    demand = next(iter(balance.by_role("demand")), None)
+    campus_routed_discharge = demand.return_flow if demand is not None else None
 
     return ScenarioResult(
         scenario=scenario,
         cooling_model=scenario.cooling_model,
         consumptive_loss=consumptive,
         receiving_7q10=receiving_7q10,
+        receiving_summer_30q10=summer_30q10,
+        receiving_1q10=one_q10,
         receiving_live=receiving_live,
         receiving_water_name=receiving_water,
+        campus_routed_discharge=campus_routed_discharge,
         balance=balance,
         assimilative=check_assimilative(balance),
     )

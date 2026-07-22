@@ -15,14 +15,17 @@
  *     river's low flow is a basin-scale **worst-case bound**, carried as
  *     `[inference]`, never a river withdrawal.
  *
- * Figures come from the `hydrology-scenarios` feed (the same numbers the hydrology
- * dashboard renders — no fork): the buildout cooling demand / consumptive fraction
- * / consumptive loss, the assimilative discharge rows, and `receiving_7q10`. The
- * seasonal floors (summer 30Q10, driest 1Q10) and the campus FM-2 discharge are
- * cited constants. NOT client-safe; the island consumes the plain `DilutionData`.
+ * Figures come entirely from the `hydrology-scenarios` feed (the same numbers the hydrology
+ * dashboard renders — no fork): the buildout cooling demand / consumptive fraction /
+ * consumptive loss, the assimilative discharge rows, `receiving_7q10`, and — since #1633 — the
+ * cited **seasonal floors** (`receiving_summer_30q10` / `receiving_1q10`) and the campus's own
+ * routed **industrial discharge** (`campus_routed_discharge`, Lima's FM-2). No Lima constant is
+ * baked in here: a site whose feed carries no buildout scenario **locks** (`fromFeed: false`,
+ * empty floors/rows) rather than rendering Lima's numbers as a fallback. NOT client-safe; the
+ * island consumes the plain `DilutionData`.
  */
 import { hasFeed, loadFeed } from "./bundle";
-import type { ScenarioResult } from "./feeds";
+import type { ProvenancedValue, ScenarioResult } from "./feeds";
 import { round } from "./format";
 
 export interface DilutionFloor {
@@ -54,7 +57,8 @@ export interface DilutionDischarge {
   wwtpCfs: number;
   /** Natural low flow of the receiving streams summed, cfs (feed). */
   naturalCfs: number;
-  /** The campus's routed FM-2 industrial discharge, cfs (cited; not in this feed). */
+  /** The campus's own routed industrial discharge, cfs — the feed's `campus_routed_discharge`
+   *  (Lima's FM-2); 0 when the scenario's balance has no discharging demand node. */
   campusFm2Cfs: number;
   /** Effluent share of the Ottawa leaving Lima at design low flow, % (derived). */
   effluentPct: number;
@@ -82,87 +86,90 @@ export interface DilutionData {
   fromFeed: boolean;
 }
 
-// MGD → cfs (1 million gallons/day = 1.547 cubic feet/second). A standard unit
-// conversion, used only as the fallback slope when the feed is absent.
-const CFS_PER_MGD = 1.547;
+// The locked shell for a thin site (no buildout scenario in its feed): empty, never Lima's
+// numbers. Consumers gate on `fromFeed` and render an "ask for the source" panel instead (#1633).
+const LOCKED: DilutionData = {
+  maxCoolingMgd: 0,
+  consumptiveFraction: 0,
+  cfsPerCoolingMgd: 0,
+  drawAtBuildoutCfs: 0,
+  ottawaLiveCfs: null,
+  floors: [],
+  discharge: { wwtpCfs: 0, naturalCfs: 0, campusFm2Cfs: 0, effluentPct: 0, rows: [], cite: "" },
+  fromFeed: false,
+};
 
-const OTTAWA_SEASONAL_CITE =
-  "data/reference/hydrology/low-flow-7q10.yaml · Ottawa River context (Ohio EPA NPDES 2IG00001, USGS 04187100)";
-
-// The campus's routed FM-2 industrial discharge, cfs — the cited water-balance
-// figure (docs/HYDROLOGY.md §1); not carried in the hydrology-scenarios feed.
-const CAMPUS_FM2_CFS = 3.87;
-
-const FALLBACK_DISCHARGE_ROWS: DischargeRow[] = [
-  { discharger: "Shawnee II WWTP", receiving: "Ottawa River", dischargeCfs: 4.64, lowFlowCfs: 0.2 },
-  { discharger: "American Bath WWTP", receiving: "Pike Run", dischargeCfs: 2.32, lowFlowCfs: 0.03 },
-  { discharger: "American II WWTP", receiving: "Dug Run", dischargeCfs: 1.86, lowFlowCfs: 0.78 },
-];
+/** One cited low-flow floor from a feed provenanced value, or null when the feed omits it. */
+function floorFrom(
+  key: DilutionFloor["key"],
+  label: string,
+  v: ProvenancedValue | null | undefined,
+  note?: string,
+): DilutionFloor | null {
+  if (v?.value == null) return null;
+  return { key, label, cfs: v.value, cite: v.citation ?? v.source ?? "", note };
+}
 
 export function buildDilution(): DilutionData {
   const scenarios = hasFeed("hydrology-scenarios") ? loadFeed<ScenarioResult[]>("hydrology-scenarios") : [];
   const buildout = scenarios.find((s) => s.scenario.name === "buildout");
+  // Thin site: lock rather than fall back to Lima's constants (the #1633 discipline).
+  if (!buildout) return LOCKED;
 
-  // Feed-sourced (no fork); curated fallbacks only for the minimal CI fixture.
-  const maxCoolingMgd = buildout?.scenario.cooling_demand.value ?? 3.92;
-  const consumptiveFraction = buildout?.scenario.consumptive_fraction.value ?? 0.8;
-  const drawAtBuildoutCfs =
-    buildout?.consumptive_loss.value ?? maxCoolingMgd * consumptiveFraction * CFS_PER_MGD;
-  const annual7q10 = buildout?.receiving_7q10?.value ?? 0.2;
-  const ottawaLiveCfs = buildout?.receiving_live?.value ?? null;
-  const cfsPerCoolingMgd =
-    maxCoolingMgd > 0 ? drawAtBuildoutCfs / maxCoolingMgd : consumptiveFraction * CFS_PER_MGD;
+  // Every figure is feed-sourced — no fork, no Lima literal.
+  const maxCoolingMgd = buildout.scenario.cooling_demand.value ?? 0;
+  const consumptiveFraction = buildout.scenario.consumptive_fraction.value ?? 0;
+  const drawAtBuildoutCfs = buildout.consumptive_loss.value ?? 0;
+  const ottawaLiveCfs = buildout.receiving_live?.value ?? null;
+  const cfsPerCoolingMgd = maxCoolingMgd > 0 ? drawAtBuildoutCfs / maxCoolingMgd : 0;
 
+  // The cited low-flow floors: annual 7Q10 + the two seasonal floors, all from the feed (#1633).
+  // A driest-week floor of 0 means the mainstem effectively dries at design low flow.
+  const driest = buildout.receiving_1q10;
   const floors: DilutionFloor[] = [
-    {
-      key: "annual",
-      label: "Annual 7Q10",
-      cfs: annual7q10,
-      cite: "Ohio EPA NPDES fact sheet 2IG00001 (Ottawa at Lima, USGS 04187100)",
-    },
-    {
-      key: "summer",
-      label: "Summer 30Q10",
-      cfs: 1.6,
-      cite: OTTAWA_SEASONAL_CITE,
-      note: "the May–Oct pinch — when the cooling draw also peaks",
-    },
-    {
-      key: "driest",
-      label: "Driest week 1Q10",
-      cfs: 0.0,
-      cite: OTTAWA_SEASONAL_CITE,
-      note: "the Ottawa mainstem nearly dries — 1Q10 = 0 cfs",
-    },
-  ];
+    floorFrom("annual", "Annual 7Q10", buildout.receiving_7q10),
+    floorFrom(
+      "summer",
+      "Summer 30Q10",
+      buildout.receiving_summer_30q10,
+      "the growing-season pinch — when the cooling draw also peaks",
+    ),
+    floorFrom(
+      "driest",
+      "Driest week 1Q10",
+      driest,
+      driest?.value === 0 ? "the mainstem nearly dries — 1Q10 = 0 cfs" : undefined,
+    ),
+  ].filter((f): f is DilutionFloor => f !== null);
 
-  // The discharge story (the river is already effluent): WWTP discharges + the
-  // receiving streams' natural low flows from the feed's assimilative rows; the
-  // campus FM-2 routed discharge is the cited constant; the effluent share derives.
-  const assim = buildout?.assimilative ?? [];
+  // The discharge story (the river is already effluent): WWTP discharges + the receiving streams'
+  // natural low flows from the feed's assimilative rows; the campus's own routed discharge from the
+  // feed's `campus_routed_discharge` (Lima's FM-2); the effluent share derives.
+  const assim = buildout.assimilative ?? [];
   const rows: DischargeRow[] = assim.map((a) => ({
     discharger: a.discharger,
     receiving: a.receiving_water,
     dischargeCfs: round(a.discharge.value ?? 0, 2),
     lowFlowCfs: a.design_low_flow.value ?? 0,
   }));
-  const dischargeRows = rows.length > 0 ? rows : FALLBACK_DISCHARGE_ROWS;
   const wwtpCfs = round(
-    dischargeRows.reduce((s, r) => s + r.dischargeCfs, 0),
+    rows.reduce((s, r) => s + r.dischargeCfs, 0),
     2,
   );
   const naturalCfs = round(
-    dischargeRows.reduce((s, r) => s + r.lowFlowCfs, 0),
+    rows.reduce((s, r) => s + r.lowFlowCfs, 0),
     2,
   );
-  const effluentCfs = wwtpCfs + CAMPUS_FM2_CFS;
+  const campusFm2Cfs = round(buildout.campus_routed_discharge?.value ?? 0, 2);
+  const effluentCfs = wwtpCfs + campusFm2Cfs;
+  const denom = effluentCfs + naturalCfs;
   const discharge: DilutionDischarge = {
     wwtpCfs,
     naturalCfs,
-    campusFm2Cfs: CAMPUS_FM2_CFS,
-    effluentPct: Math.round((effluentCfs / (effluentCfs + naturalCfs)) * 100),
-    rows: dischargeRows,
-    cite: "docs/HYDROLOGY.md §1 · feed assimilative (Ohio EPA NPDES fact sheets) + the cited campus FM-2 routed discharge",
+    campusFm2Cfs,
+    effluentPct: denom > 0 ? Math.round((effluentCfs / denom) * 100) : 0,
+    rows,
+    cite: "feed assimilative (NPDES fact sheets) + the campus's cited routed discharge (hydrology-scenarios)",
   };
 
   return {
@@ -173,7 +180,7 @@ export function buildDilution(): DilutionData {
     ottawaLiveCfs,
     floors,
     discharge,
-    fromFeed: !!buildout,
+    fromFeed: true,
   };
 }
 
