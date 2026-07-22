@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-22T15:43:03.177760+00:00'
+reconciled_at: '2026-07-22T17:19:05.186487+00:00'
 entries:
   aedg:
     exists: true
@@ -1102,14 +1102,14 @@ entries:
     site_scope: site:urbana
   usaspending:
     exists: true
-    sha256: de5f7d7fec8ff97ab3b5f5202de00386fcf2026f78723def180d31d73597f270
-    size_bytes: 3659
+    sha256: 852950738dcdbcb6938598bde10013c63871d3f267064a9087d2aa43e1afa600
+    size_bytes: 15854
     lfs_materialized: true
     file_count: 1
     missing: []
     asof: null
     stale: false
-    site_scope: basin-shared
+    site_scope: slug-scoped
   watershed:
     exists: true
     sha256: 1d32b846a2251c42211a79025438d858de56db29ea39e6519a352c4cfc4fea63

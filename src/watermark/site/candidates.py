@@ -8,14 +8,26 @@ peers were removed at the SSG-cutover cleanup, #603.)
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from watermark.candidates import CandidateInventory, DefenseContractorList, DefenseLandScan
 from watermark.pipeline.entities import EntityGraph, normalize_name
 from watermark.site.feeds import (
     CandidateItem,
+    ContractorAward,
     DefenseContractorItem,
     DefenseFeed,
+    FederalAnnualFlow,
+    FederalCategory,
     ScanParcel,
 )
+
+if TYPE_CHECKING:
+    from watermark.pipeline.entities import Entity
+    from watermark.usaspending import RecipientAward, UsaSpendingInventory
+
+# nexus strength ordering for the rolled-up contractor nexus (strongest wins).
+_NEXUS_RANK = {"verified": 3, "context": 2, "open": 1}
 
 # The defense cross-match runs against the whole entity graph, and the graph's LEI enrichment
 # folds a defense-operator overlay (the reference build's JSMC / General Dynamics operator chain +
@@ -74,24 +86,87 @@ def export_candidates(
     return items
 
 
+def _award_index(awards: UsaSpendingInventory | None) -> dict[str, RecipientAward]:
+    """Index a USASpending inventory by every key an entity node might join on (uei / lei / name)."""
+    index: dict[str, RecipientAward] = {}
+    for rec in awards.records if awards is not None else []:
+        index[rec.uei] = rec
+        if rec.lei:
+            index[rec.lei] = rec
+        index[normalize_name(rec.recipient_name)] = rec
+        index[normalize_name(rec.watchlist_name)] = rec
+    return index
+
+
+def _entity_award(ent: Entity, index: dict[str, RecipientAward]) -> RecipientAward | None:
+    """The award a matched graph node joins to — by its stamped uei, else lei, else name."""
+    for key in (ent.uei, ent.lei, normalize_name(ent.display)):
+        if key and key in index:
+            return index[key]
+    return None
+
+
+def _contractor_award(entity_key: str, rec: RecipientAward) -> ContractorAward:
+    """Project a resolved :class:`RecipientAward` onto the feed's :class:`ContractorAward`."""
+    return ContractorAward(
+        entity_key=entity_key,
+        recipient_name=rec.recipient_name,
+        uei=rec.uei,
+        total_obligations=rec.total_obligations,
+        nexus=rec.nexus,
+        defense_share=rec.defense_share,
+        annual_obligations=[
+            FederalAnnualFlow(fiscal_year=a.fiscal_year, obligations=a.obligations)
+            for a in rec.annual_obligations
+        ],
+        by_psc=[
+            FederalCategory(code=c.code, name=c.name, obligations=c.obligations) for c in rec.by_psc
+        ],
+        by_naics=[
+            FederalCategory(code=c.code, name=c.name, obligations=c.obligations)
+            for c in rec.by_naics
+        ],
+    )
+
+
 def export_defense_contractors(
     dcl: DefenseContractorList,
     *,
     egraph: EntityGraph | None = None,
     scan: DefenseLandScan | None = None,
+    awards: UsaSpendingInventory | None = None,
 ) -> DefenseFeed:
     """Export the defense-contractor seed list + parcel scan as a :class:`DefenseFeed`.
 
     Each contractor's ``matched_entities`` are the **entity keys** its name patterns hit
     in the corpus graph (resolved, so they link into the entities feed) — the data peer
-    of the renderer's 'Corpus matches' table.
+    of the renderer's 'Corpus matches' table. When ``awards`` is supplied, each matched entity
+    that resolves to a USASpending recipient is joined onto the contractor's ``awards`` (with a
+    rolled-up ``total_obligations`` + strongest ``nexus``), so the feed finally shows the federal
+    dollars that already reached the entity graph (#1662, ME-C).
     """
     matches: dict[str, list[str]] = dcl.match(_corpus_names(egraph)) if egraph is not None else {}
+    index = _award_index(awards)
     contractors: list[DefenseContractorItem] = []
     for dc in dcl.defense_contractors:
         hits: list[str] = matches.get(dc.name, [])
         keys = sorted(
             {ent.key for h in hits if egraph is not None and (ent := egraph.get(h)) is not None}
+        )
+        seen_uei: set[str] = set()
+        dc_awards: list[ContractorAward] = []
+        for key in keys:
+            ent = egraph.get(key) if egraph is not None else None
+            rec = _entity_award(ent, index) if ent is not None else None
+            if rec is None or rec.uei in seen_uei:
+                continue
+            seen_uei.add(rec.uei)
+            dc_awards.append(_contractor_award(key, rec))
+        total = sum(a.total_obligations for a in dc_awards) if dc_awards else None
+        nexus = (
+            max((a.nexus for a in dc_awards), key=lambda n: _NEXUS_RANK.get(n, 0))
+            if dc_awards
+            else None
         )
         contractors.append(
             DefenseContractorItem(
@@ -99,6 +174,9 @@ def export_defense_contractors(
                 note=dc.note,
                 patterns=list(dc.patterns),
                 matched_entities=keys,
+                awards=dc_awards,
+                total_obligations=total,
+                nexus=nexus,
             )
         )
     notes: dict[str, object] = dict(scan.meta) if scan is not None else {}
