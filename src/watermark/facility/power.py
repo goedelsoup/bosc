@@ -49,7 +49,7 @@ from pydantic import BaseModel, ConfigDict
 
 from watermark.config import Settings, get_settings
 from watermark.hydrology.model import ProvenancedValue
-from watermark.sites import active_profile
+from watermark.sites import CoolingModelType, active_profile
 
 # The air-permit-disclosed facility constants (genset count/rating, IT load, the permit
 # citation) are now per-site: they live on ``SiteProfile.facility`` (Lima, from Air PTI
@@ -61,20 +61,37 @@ from watermark.sites import active_profile
 # --- Cooling / mechanical overhead (issue #87) -------------------------------
 # PUE = total facility power / IT power, a banded ASSUMPTION read from the reference
 # yaml (not a disclosure). The cooling share of facility power is (PUE-1)/PUE; the
-# 2026-06-10 call's "~30% of power for cooling" pins the ceiling at PUE ~1.43.
+# 2026-06-10 call's "~30% of power for cooling" pins the evaporative ceiling at PUE ~1.43.
+# The band is now cooling-model-AWARE (#1641 D5): dry/air cooling carries a fan-energy
+# penalty that RAISES PUE, while a once-through pass-through's PUE is low and reconciles
+# with its ~1.15 heat-rejection multiplier — so a single evaporative band no longer
+# mislabels every archetype's overhead.
 _PUE_CITE = (
-    "PUE = total facility power / IT power, banded assumption "
-    "(data/reference/compute/rack-density.yaml pue_band); ceiling 1.43 admits "
-    "cooling-dominated designs (~30% of facility power for cooling, 2026-06-10 "
-    "facility-design call)"
+    "PUE = total facility power / IT power, a banded assumption read PER COOLING ARCHETYPE "
+    "from data/reference/compute/rack-density.yaml (pue_band_by_cooling_model, fallback "
+    "pue_band); the EVAPORATIVE band tops at ~1.43 for cooling-dominated designs (~30% of "
+    "facility power for cooling, 2026-06-10 call), dry/air cooling's fan penalty pushes its "
+    "band above that, and a once-through pass-through's PUE is low (central 1.15 == the "
+    "heat-rejection multiplier) — the applicable range is this facility's own archetype band"
 )
 
 
-def _load_pue_band(settings: Settings) -> tuple[float, float]:
-    """Read the (low, high) PUE band from the committed reference data."""
+def _load_pue_band(
+    settings: Settings, cooling_model: CoolingModelType | None = None
+) -> tuple[float, float]:
+    """Read the (low, high) PUE band for the facility's cooling archetype (#1641 D5).
+
+    Resolves ``pue_band_by_cooling_model[cooling_model]`` from the committed reference data,
+    falling back to the evaporative-tuned ``pue_band`` when no archetype is given or the
+    archetype has no specific band.
+    """
     path = settings.reference_dir / "compute" / "rack-density.yaml"
     data = cast("dict[str, Any]", yaml.safe_load(path.read_text(encoding="utf-8")))
-    lo, hi = (float(x) for x in data["pue_band"])
+    by_model = cast("dict[str, Any]", data.get("pue_band_by_cooling_model") or {})
+    band = by_model.get(cooling_model.value) if cooling_model is not None else None
+    if band is None:
+        band = data["pue_band"]
+    lo, hi = (float(x) for x in band)
     return lo, hi
 
 
@@ -101,16 +118,19 @@ _ETA_COMBINED_CITE = (
 # Steam (bottoming) cycle condenser water — the ADDITIONAL consumptive pathway a
 # combined cycle introduces beyond IT cooling. Wet recirculating CCGT cooling
 # consumes ~0.2 gal/kWh of generation (NREL/USGS range ~0.13-0.30); a simple cycle
-# has no steam loop, so ~0. Applied to the ~275 MW load as the conditional case
-# "if primary on-site generation were combined-cycle and supplied the IT load".
+# has no steam loop, so ~0. Sized to the facility DRAW (not the IT load, #1641 D5): to
+# run the campus, on-site primary generation must supply IT + mechanical = facility_draw,
+# and the steam condenser water scales with the MWh actually generated. Conditional case
+# "if primary on-site generation were combined-cycle and supplied the full facility load".
 _STEAM_WATER_GAL_PER_KWH = 0.2
 _STEAM_WATER_CITE = (
     "combined-cycle wet-recirculating condenser water ~0.2 gal/kWh of generation "
-    "(band ~0.1-0.3) applied to the IT load: an ADDITIONAL consumptive pathway "
-    "beyond IT cooling. Cross-ref watermark.hydrology.cooling, whose makeup figure covers "
-    "data-hall cooling only; compute.py's water back-solve assumes cooling is the "
-    "dominant draw. CONDITIONAL: the disclosed gensets are backup, so on-site primary "
-    "combined-cycle generation is unproven (#33) — likely ruled out, not additive today"
+    "(band ~0.1-0.3) applied to the facility DRAW (IT + mechanical = generation the plant "
+    "must supply, #1641 D5 — not the IT load, which understated it by the PUE factor): an "
+    "ADDITIONAL consumptive pathway beyond IT cooling. Cross-ref watermark.hydrology.cooling, "
+    "whose makeup figure covers data-hall cooling only; compute.py's water back-solve assumes "
+    "cooling is the dominant draw. CONDITIONAL: the disclosed gensets are backup, so on-site "
+    "primary combined-cycle generation is unproven (#33) — likely ruled out, not additive today"
 )
 
 GenerationCycle = Literal["simple", "combined"]
@@ -211,12 +231,13 @@ class PowerBasis(BaseModel):
         return round(self.facility_draw.value - self.it_load.value, 1)
 
 
-def _generation_configs(it_load_mw: float) -> list[GenerationConfig]:
+def _generation_configs(generation_mw: float) -> list[GenerationConfig]:
     """The simple- and combined-cycle generation scenarios (issue #90).
 
     Each carries a provenance-tagged net electrical efficiency (the "power-loss
     coefficient") and a derived heat rate; the combined cycle additionally carries
-    the steam-loop water pathway (sized to ``it_load_mw``), cross-referenced to
+    the steam-loop water pathway (sized to ``generation_mw`` — the facility draw the
+    plant must supply, IT + mechanical, #1641 D5), cross-referenced to
     :mod:`watermark.hydrology.cooling`.
     """
     simple = GenerationConfig(
@@ -236,9 +257,9 @@ def _generation_configs(it_load_mw: float) -> list[GenerationConfig]:
             "steam loop, so no generation-side consumptive water pathway."
         ),
     )
-    # If on-site primary generation were combined-cycle and supplied the IT load, its
-    # steam condenser would consume water beyond data-hall cooling (conditional/flagged).
-    steam_mgd = it_load_mw * 1_000.0 * 24.0 * _STEAM_WATER_GAL_PER_KWH / 1_000_000.0
+    # If on-site primary generation were combined-cycle and supplied the full facility draw,
+    # its steam condenser would consume water beyond data-hall cooling (conditional/flagged).
+    steam_mgd = generation_mw * 1_000.0 * 24.0 * _STEAM_WATER_GAL_PER_KWH / 1_000_000.0
     combined = GenerationConfig(
         cycle="combined",
         label="combined-cycle (double-phase) — exhaust heat recovered to a steam turbine",
@@ -282,7 +303,7 @@ def derive_power_basis(*, settings: Settings | None = None) -> PowerBasis | None
         or fac.it_load_high_mw is None
     ):
         return None
-    pue_lo, pue_hi = _load_pue_band(settings)
+    pue_lo, pue_hi = _load_pue_band(settings, fac.cooling_model)  # cooling-model-aware (#1641 D5)
     pue_central = (pue_lo + pue_hi) / 2.0
     cooling_share_hi = (pue_hi - 1.0) / pue_hi  # cooling as a share of facility power
     draw_central = fac.it_load_mw * pue_central
@@ -327,7 +348,9 @@ def derive_power_basis(*, settings: Settings | None = None) -> PowerBasis | None
         method = "air-permit genset count x rating -> N+1 backup -> IT load"
 
     return PowerBasis(
-        generation=_generation_configs(fac.it_load_mw),
+        # Steam (bottoming) cycle condenser water is sized to the facility DRAW — the electricity
+        # on-site generation must supply is IT + mechanical, not IT alone (#1641 D5).
+        generation=_generation_configs(draw_central),
         genset_count=genset_count_pv,
         genset_rating=genset_rating_pv,
         backup_power=backup_pv,
@@ -337,7 +360,10 @@ def derive_power_basis(*, settings: Settings | None = None) -> PowerBasis | None
         pue=ProvenancedValue.assume(
             round(pue_central, 3),
             "ratio",
-            why=f"{_PUE_CITE} (band mean of {pue_lo:g} efficient .. {pue_hi:g} cooling-dominated)",
+            why=(
+                f"{_PUE_CITE}; {fac.cooling_model.value} archetype band "
+                f"{pue_lo:g}..{pue_hi:g}, central = band mean"
+            ),
             low=pue_lo,
             high=pue_hi,
         ),
@@ -349,14 +375,16 @@ def derive_power_basis(*, settings: Settings | None = None) -> PowerBasis | None
         facility_draw=ProvenancedValue.derived(
             round(draw_central, 1),
             "MW",
-            # Document the same (pue_lo, pue_hi) band that grounds this value's own low/high,
-            # not just the central PUE — matching how the sibling ``pue`` field's citation
-            # already documents its band.
+            # The band combines BOTH uncertainties (#1641 D3): the IT-load band (low..high)
+            # x the PUE band (pue_lo..pue_hi). Multiplying the central IT alone by the PUE band
+            # discarded the IT band that sits right beside it and artificially narrowed every
+            # downstream demand band (grid share, demand pressure). Central = central IT x central PUE.
             citation=(
-                f"{fac.it_load_mw:g} MW IT x PUE {pue_central:g} (band mean of {pue_lo:g} "
-                f"efficient .. {pue_hi:g} cooling-dominated) — total facility draw"
+                f"{fac.it_load_mw:g} MW IT (central) x PUE {pue_central:g} — total facility draw; "
+                f"band = {fac.it_load_low_mw:g}-{fac.it_load_high_mw:g} MW IT x PUE {pue_lo:g}-{pue_hi:g} "
+                "(efficient .. cooling-dominated)"
             ),
-            low=round(fac.it_load_mw * pue_lo, 1),
-            high=round(fac.it_load_mw * pue_hi, 1),
+            low=round(fac.it_load_low_mw * pue_lo, 1),
+            high=round(fac.it_load_high_mw * pue_hi, 1),
         ),
     )
