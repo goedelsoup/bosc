@@ -73,20 +73,26 @@ class RoutingTable(BaseModel):
             return None, ""
         return route.receiving_water, (route.citation or "")
 
-    def design_flow_for(self, node_id: str) -> float | None:
-        """The WWTP's permitted design flow (MGD), or ``None`` if not curated here.
+    def design_flow_for(self, node_id: str) -> tuple[float | None, str | None]:
+        """The WWTP's permitted design flow (MGD) *and its authoritative citation*.
 
-        ``None`` ⇒ the balance falls back to parsing the watch-items summary prose. This is
-        the structured analog of the ECHO ``design_flow_mgd`` column (WS-22, issue 1622)."""
+        Returns ``(None, None)`` if the plant isn't curated here ⇒ the balance falls back to
+        parsing the watch-items summary prose. This is the structured analog of the ECHO
+        ``design_flow_mgd`` column (WS-22, issue 1622); the citation (the plant's Ohio EPA
+        NPDES record) travels with the value so the evidence record names the real source
+        rather than a generic watch-item id."""
         route = self.wwtp_receiving.get(node_id)
-        return route.design_flow_mgd if route is not None else None
+        if route is None or route.design_flow_mgd is None:
+            return None, None
+        return route.design_flow_mgd, route.citation
 
-    def forcemain_design_flow(self, via: str) -> float | None:
-        """The industrial discharge (MGD) documented for a campus forcemain, or ``None``."""
+    def forcemain_design_flow(self, via: str) -> tuple[float | None, str | None]:
+        """The industrial discharge (MGD) documented for a campus forcemain and its citation,
+        or ``(None, None)`` if none is curated."""
         for route in self.bosc_routing:
             if route.via == via and route.design_flow_mgd is not None:
-                return route.design_flow_mgd
-        return None
+                return route.design_flow_mgd, route.citation
+        return None, None
 
     def confirmed_bosc_routes(self) -> list[BoscRoute]:
         return [r for r in self.bosc_routing if r.status == "confirmed"]

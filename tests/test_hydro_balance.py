@@ -77,21 +77,50 @@ def test_wwtp_design_flow_sourced_from_structured_field_not_prose(hydro_settings
     assert flows["watch-lima-wwtp"].value == pytest.approx(mgd_to_cfs(18.5))
     # The campus FM-2 discharge is structured too.
     assert flows["bosc-campus"].value == pytest.approx(mgd_to_cfs(2.5))
+    # The structured value's authoritative NPDES citation flows into the evidence record —
+    # not a generic watch-item id (WS-22 provenance).
+    assert "2PK00002" in (flows["watch-shawnee-ii-wwtp"].citation or "")
+    assert "2PE00000" in (flows["watch-lima-wwtp"].citation or "")
     # No regex-fallback expansion caveat survives now that the value is structured.
     assert not any("flow expansion" in w for w in balance.warnings)
     assert not any("used the first value" in w for w in balance.warnings)
 
 
 def test_design_mgd_prefers_structured_and_regex_is_a_fallback() -> None:
-    """The resolver prefers the structured value; the prose regex is only a fallback, and it
-    surfaces the multi-figure (expansion) heuristic only on that fallback path."""
-    # Structured wins outright — the prose isn't even consulted, so no expansion flag.
-    assert bal._design_mgd(3.0, "2.0 -> 3.0 MGD avg / 12.6 MGD peak", subject="x") == (3.0, False)
+    """The resolver prefers the structured value; the prose regex is only a fallback that
+    surfaces the multi-figure (expansion) heuristic, preserves the approximate ``~`` marker,
+    and emits a structured log so a regex-sourced number is never silent."""
+    import structlog
+
+    # Structured wins outright — the prose isn't even consulted, so no expansion/approx flags.
+    assert bal._design_mgd(3.0, "2.0 -> 3.0 MGD avg / 12.6 MGD peak", subject="x") == (
+        3.0,
+        False,
+        False,
+    )
     # No structured value -> first "N MGD" token; multiple figures raise the expansion flag.
-    assert bal._design_mgd(None, "2.0 -> 3.0 MGD avg / 12.6 MGD peak", subject="x") == (3.0, True)
-    assert bal._design_mgd(None, "1.5 MGD design", subject="x") == (1.5, False)
-    # No figure at all -> no value, no expansion.
-    assert bal._design_mgd(None, "no flow stated here", subject="x") == (None, False)
+    assert bal._design_mgd(None, "2.0 -> 3.0 MGD avg / 12.6 MGD peak", subject="x") == (
+        3.0,
+        True,
+        False,
+    )
+    assert bal._design_mgd(None, "1.5 MGD design", subject="x") == (1.5, False, False)
+    # An approximate transcription keeps its ``~`` provenance (returned as approximate=True).
+    assert bal._design_mgd(None, "~2.5 MGD design", subject="x") == (2.5, False, True)
+    # No figure at all -> no value, no expansion, not approximate.
+    assert bal._design_mgd(None, "no flow stated here", subject="x") == (None, False, False)
+
+    # The regex fallback emits `hydro.design_flow.regex_fallback` carrying subject, the selected
+    # mgd, the count of matched figures, and the approximation flag (finding 4 / issue 1622).
+    with structlog.testing.capture_logs() as logs:
+        bal._design_mgd(None, "~2.5 MGD avg / 4.0 MGD peak", subject="Foo WWTP")
+    events = [e for e in logs if e.get("event") == "hydro.design_flow.regex_fallback"]
+    assert len(events) == 1
+    ev = events[0]
+    assert ev["subject"] == "Foo WWTP"
+    assert ev["mgd"] == 2.5
+    assert ev["matches"] == 2
+    assert ev["approximate"] is True
 
 
 def test_provenance_invariant(hydro_settings: Settings) -> None:
