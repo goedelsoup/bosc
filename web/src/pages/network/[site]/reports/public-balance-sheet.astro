@@ -13,14 +13,25 @@ export const getStaticPaths = selectableSitePaths;
  */
 import BalanceSheet from "@watermark/viz/islands/BalanceSheet.tsx";
 import ReportShell from "~/layouts/ReportShell.astro";
-import { type BalanceUnit, buildBalanceSheet } from "@watermark/core/balanceSheet";
+import { type BalanceUnit, type GridItLoad, buildBalanceSheet } from "@watermark/core/balanceSheet";
 import { buildDilution } from "@watermark/core/dilution";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { FacilityItem } from "@watermark/core/feeds";
 import { fmtUsdM } from "@watermark/core/money";
 import { withSite } from "@watermark/core/site";
 
 const dc = buildDilution().discharge;
 const effluentCfs = dc.wwtpCfs + dc.campusFm2Cfs;
-const sheet = buildBalanceSheet(effluentCfs, dc.naturalCfs, Astro.locals.site);
+
+// #1632: source the grid row's IT-load from the facility feed so this sheet matches the load
+// report and /basin. Null ⇒ buildBalanceSheet falls back to the Lima GRID_PRIORS default.
+const facilities = hasFeed("facility") ? loadFeed<FacilityItem[]>("facility") : [];
+const primary = facilities.find((f) => f.is_primary) ?? facilities[0];
+const gridItLoad: GridItLoad | null =
+  primary?.it_load_mw != null
+    ? { central: primary.it_load_mw, low: primary.it_load_low_mw, high: primary.it_load_high_mw }
+    : null;
+const sheet = buildBalanceSheet(effluentCfs, dc.naturalCfs, Astro.locals.site, gridItLoad);
 
 const fmt = (n: number, unit: BalanceUnit): string =>
   unit === "usd" ? fmtUsdM(n) : unit === "mw" ? `${Math.round(n)} MW` : `${n.toFixed(0)}%`;
@@ -45,7 +56,7 @@ const e = sheet.econExposure;
       </p>
   </Fragment>
 
-    <BalanceSheet client:only="react" toxicsEffluentCfs={effluentCfs} toxicsNaturalCfs={dc.naturalCfs} site={Astro.locals.site} />
+    <BalanceSheet client:only="react" toxicsEffluentCfs={effluentCfs} toxicsNaturalCfs={dc.naturalCfs} site={Astro.locals.site} gridItLoad={gridItLoad} />
 
     <noscript>
       <article class="prose">

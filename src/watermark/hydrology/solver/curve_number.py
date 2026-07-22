@@ -3,11 +3,14 @@
 Excess (direct) rainfall from a storm depth and a curve number:
 
     S  = 1000/CN - 10          maximum retention (in)
-    Ia = 0.2 * S               initial abstraction (in)
+    Ia = lambda * S            initial abstraction (in), lambda = 0.2 by convention
     Q  = (P - Ia)^2 / (P - Ia + S)   for P > Ia, else 0
 
 Curve numbers come from :func:`cn_for` (NLCD class x hydrologic soil group, from the
-cited ``cn-lookup.yaml``); composite CN over a mixed area is area-weighted.
+cited ``cn-lookup.yaml``); composite CN over a mixed area is area-weighted. The
+initial-abstraction ratio ``lambda`` is the cited Tier-0 constant in
+``tier0-parameters.yaml`` (:mod:`watermark.hydrology.solver.parameters`), overridable
+per call via ``ia_ratio=``.
 """
 
 from __future__ import annotations
@@ -20,6 +23,7 @@ import yaml
 from numpy.typing import NDArray
 
 from watermark.config import Settings, get_settings
+from watermark.hydrology.solver.parameters import initial_abstraction_ratio
 
 _HSG = ("A", "B", "C", "D")
 
@@ -90,15 +94,23 @@ def storage_s(cn: float) -> float:
 def excess_rainfall(
     cumulative_p: NDArray[np.float64],
     cn: float,
+    *,
+    ia_ratio: float | None = None,
+    settings: Settings | None = None,
 ) -> NDArray[np.float64]:
     """Cumulative excess (direct) rainfall (in) from cumulative gross rainfall.
 
     Apply the CN equation to the *cumulative* depth at each step, so the result is
     a monotonic cumulative-excess series; differencing it gives the incremental
     runoff that feeds the unit hydrograph.
+
+    The initial-abstraction ratio ``Ia = ia_ratio * S`` defaults to the cited
+    ``tier0-parameters.yaml`` value (``lambda = 0.2``); pass ``ia_ratio=`` to override
+    (e.g. the Hawkins et al. ``lambda = 0.05`` convention).
     """
+    ratio = ia_ratio if ia_ratio is not None else initial_abstraction_ratio(settings=settings)
     s = storage_s(cn)
-    ia = 0.2 * s
+    ia = ratio * s
     eff = cumulative_p - ia
     q = np.where(eff > 0.0, eff**2 / (eff + s), 0.0)
     return np.asarray(q, dtype=np.float64)
@@ -107,6 +119,9 @@ def excess_rainfall(
 def weighted_excess_rainfall(
     cumulative_p: NDArray[np.float64],
     parts: list[tuple[float, float]],
+    *,
+    ia_ratio: float | None = None,
+    settings: Settings | None = None,
 ) -> NDArray[np.float64]:
     """Area-weighted cumulative excess rainfall over a mixed footprint — the TR-55
     *weighted-runoff* method: run each cover's own CN separately, then area-weight the
@@ -122,10 +137,12 @@ def weighted_excess_rainfall(
     """
     total = sum(a for a, _ in parts)
     if total <= 0.0:
-        return excess_rainfall(cumulative_p, 70.0)
+        return excess_rainfall(cumulative_p, 70.0, ia_ratio=ia_ratio, settings=settings)
     combined = np.zeros_like(cumulative_p, dtype=np.float64)
     for area, cn in parts:
         if area <= 0.0:
             continue
-        combined += (area / total) * excess_rainfall(cumulative_p, cn)
+        combined += (area / total) * excess_rainfall(
+            cumulative_p, cn, ia_ratio=ia_ratio, settings=settings
+        )
     return combined

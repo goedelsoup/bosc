@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-22T17:05:15.762086+00:00'
+reconciled_at: '2026-07-22T17:41:51.438078+00:00'
 entries:
   aedg:
     exists: true
@@ -452,10 +452,10 @@ entries:
     site_scope: lima-legacy
   hydrology:
     exists: true
-    sha256: d457dff8d5fc9b0f4f80d47607d107a2b48a80904c67edc2075fca85b840a89d
-    size_bytes: 104811
+    sha256: 940c9b7c555f6ac6da6d65b8327ce76514e43381a1aaf93db9be17d7fee2db68
+    size_bytes: 108691
     lfs_materialized: true
-    file_count: 18
+    file_count: 19
     missing: []
     asof: null
     stale: false
@@ -632,14 +632,14 @@ entries:
     site_scope: lima-legacy
   legal-records-legislation:
     exists: true
-    sha256: 2dd94cbfe95b7a5f957d8e0185d662c18166f37af44fb3e2bb2919330743ef52
-    size_bytes: 22950
+    sha256: 70d428fb3c6f8ebe196bae050b7f76db312811b89f0b22a437012ab19ec17ef2
+    size_bytes: 31430
     lfs_materialized: true
     file_count: 2
     missing: []
     asof: null
     stale: false
-    site_scope: basin-shared
+    site_scope: state:OH
   legal-select-committee-2026:
     exists: true
     sha256: edd1222c67b88e5bd6ab20b110c48990a7940f86255cd664c2e16e6eca60a405

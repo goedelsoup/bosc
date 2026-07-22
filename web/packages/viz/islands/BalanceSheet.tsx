@@ -6,7 +6,7 @@
  *
  * Reads as a map of what *isn't* known, not a verdict. Reuses the uncertainty grammar.
  */
-import { type BalanceUnit, buildBalanceSheet } from "@watermark/core/balanceSheet";
+import { type BalanceUnit, type GridItLoad, buildBalanceSheet } from "@watermark/core/balanceSheet";
 import { fmtMw } from "@watermark/core/format";
 import { fmtUsdM } from "@watermark/core/money";
 import { siteHref } from "@watermark/core/base";
@@ -22,13 +22,16 @@ export default function BalanceSheet({
   toxicsEffluentCfs,
   toxicsNaturalCfs,
   site = "lima",
+  gridItLoad,
 }: {
   toxicsEffluentCfs: number;
   toxicsNaturalCfs: number;
   /** Active site slug — the page passes it so in-island links resolve to this site (#740). */
   site?: string;
+  /** The facility feed's IT-load bracket, so the grid row is feed-sourced (#1632). */
+  gridItLoad?: GridItLoad | null;
 }): JSX.Element {
-  const sheet = buildBalanceSheet(toxicsEffluentCfs, toxicsNaturalCfs, site);
+  const sheet = buildBalanceSheet(toxicsEffluentCfs, toxicsNaturalCfs, site, gridItLoad);
   const e = sheet.econExposure;
 
   return (

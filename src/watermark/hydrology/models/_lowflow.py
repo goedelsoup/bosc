@@ -54,6 +54,9 @@ class AssimilativeCheck(BaseModel):
 # Screening thresholds on the dilution ratio (stream low-flow : effluent).
 # Below 1, the effluent dominates the stream at design low flow — effectively
 # undiluted. These are coarse screening bands, not regulatory mixing-zone rules.
+# The cited source of truth is `data/reference/hydrology/tier0-parameters.yaml`
+# (`dilution.violation_ratio` / `dilution.tight_ratio`); `assimilative.dilution_flag`
+# reads it (overridable via `bands=`), and a coupling test pins these constants to it.
 DILUTION_VIOLATION = 1.0
 DILUTION_TIGHT = 10.0
 

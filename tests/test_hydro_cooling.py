@@ -44,12 +44,16 @@ def test_basis_is_derived_from_cited_power() -> None:
 
 def test_basis_two_methods_bracket_demand() -> None:
     b = derive_cooling_basis()
-    # Power x WUE central vs the upper bound. The blowdown method (2.5 MGD x (CoC-1) = 10 MGD)
-    # implies ~5.7 L/kWh — unreachable for cooling — so WS-16 (#1616) caps the upper bound at
-    # the WUE ceiling (275 MW x 2.2 L/kWh = 3.84 MGD). Both bounds are derived.
-    assert b.consumptive_low.value == pytest.approx(3.14, abs=0.05)
-    assert b.consumptive_high.value == pytest.approx(3.84, abs=0.05)
+    # The bracket now spans the disclosed MW range (#1632): the low bound is the LOW IT load
+    # (250 MW x 1.8 L/kWh = 2.85 MGD), the central makeup/headline stay on the central 275 MW.
+    # The blowdown method (2.5 MGD x (CoC-1) = 10 MGD) implies ~5.3 L/kWh at the high IT —
+    # unreachable for cooling — so WS-16 (#1616) caps the upper bound at the WUE ceiling
+    # (300 MW high IT x 2.2 L/kWh = 4.18 MGD). Both bounds are derived.
+    assert b.consumptive_low.value == pytest.approx(2.85, abs=0.05)
+    assert b.consumptive_high.value == pytest.approx(4.18, abs=0.05)
     assert b.consumptive_low.value < b.consumptive_high.value
+    # The central headline sits inside the widened bracket.
+    assert b.consumptive_low.value < b.headline_consumptive().value < b.consumptive_high.value
     assert b.makeup_demand.source == "derived"
     # Evaporation/makeup fraction follows cycles of concentration: (CoC-1)/CoC.
     assert b.consumptive_fraction.value == pytest.approx(0.8)
@@ -60,6 +64,45 @@ def test_basis_scales_with_inputs() -> None:
     base = derive_cooling_basis()
     hotter = derive_cooling_basis(it_load_mw=350.0, wue_l_per_kwh=2.2)
     assert hotter.consumptive_low.value > base.consumptive_low.value
+
+
+def test_power_side_range_widens_the_consumptive_bracket(hydro_settings: Settings) -> None:
+    # #1632: the consumptive bracket must reflect the disclosed IT-load range, not only the
+    # WUE/CoC/blowdown axis. Same central load + WUE, a wider MW range → a wider consumptive
+    # bracket on the SAME central headline, and the low bound tracks LOW IT x WUE.
+    from watermark.hydrology.cooling_models import _consumptive_mgd_from_power
+
+    tower = COOLING_MODELS[CoolingModelType.EVAPORATIVE_TOWER]
+    wue = 1.8
+
+    def _fac(low: float, high: float) -> SiteFacility:
+        return _stub_facility(
+            cooling_model=CoolingModelType.EVAPORATIVE_TOWER,
+            it_load_mw=100.0,
+            it_load_low_mw=low,
+            it_load_high_mw=high,
+            wue_l_per_kwh=wue,
+            wue_citation="test WUE",
+        )
+
+    # Neither discloses a blowdown, so each bound is the power method at its low/high IT.
+    narrow = tower.derive(_fac(90.0, 110.0), CoolingParams(), hydro_settings)
+    wide = tower.derive(_fac(50.0, 150.0), CoolingParams(), hydro_settings)
+
+    assert narrow.consumptive_low.value == pytest.approx(
+        round(_consumptive_mgd_from_power(90.0, wue), 2)
+    )
+    assert narrow.consumptive_high.value == pytest.approx(
+        round(_consumptive_mgd_from_power(110.0, wue), 2)
+    )
+    # A wider MW range → a wider consumptive bracket, on the SAME central makeup/headline.
+    assert wide.consumptive_low.value < narrow.consumptive_low.value
+    assert wide.consumptive_high.value > narrow.consumptive_high.value
+    assert narrow.makeup_demand.value == pytest.approx(wide.makeup_demand.value)
+    assert narrow.headline_consumptive().value == pytest.approx(wide.headline_consumptive().value)
+    # The central headline sits inside each bracket.
+    for b in (narrow, wide):
+        assert b.consumptive_low.value < b.headline_consumptive().value < b.consumptive_high.value
 
 
 def test_lima_committed_buildout_figures_are_regression_locked(hydro_settings: Settings) -> None:
@@ -135,10 +178,13 @@ def test_once_through_headline_is_central_not_range_low() -> None:
     assert headline.value == pytest.approx(b.makeup_demand.value * b.consumptive_fraction.value)
     assert headline.value > b.consumptive_low.value  # central sits above the range low
     assert headline.value < b.consumptive_high.value
-    # The intake does not grow with the consumptive fraction: the high-bound makeup is the
-    # same withdrawal, so refill must not inflate it by dividing consumptive_high / fraction.
+    # The intake at the upper bound is the HIGH-IT withdrawal (#1632): it grows with the disclosed
+    # MW range, above the central makeup — but is NOT the inflated consumptive_high / fraction
+    # (the #1153 trap; the fraction and the withdrawal are incompatible bases).
     makeup_high = b.headline_makeup_high()
-    assert makeup_high is not None and makeup_high.value == pytest.approx(b.makeup_demand.value)
+    assert makeup_high is not None
+    assert makeup_high.value > b.makeup_demand.value
+    assert makeup_high.value < b.consumptive_high.value / b.consumptive_fraction.value
 
 
 # ---------------------------------------------------------------------------------------
@@ -303,17 +349,22 @@ def test_consumptive_high_pairs_with_makeup_high_not_makeup_demand() -> None:
     assert frac == pytest.approx(b.consumptive_fraction.value, abs=0.02)
 
 
-def test_ws16_blowdown_upper_bound_capped_at_wue_ceiling() -> None:
-    # WS-16 (#1616): the FM-2 blowdown implies ~5.7 L/kWh, physically unreachable for cooling,
-    # so the tower's upper bound is capped at the WUE ceiling instead of published at 10 MGD.
+def test_ws16_blowdown_upper_bound_capped_at_wue_ceiling(hydro_settings: Settings) -> None:
+    # WS-16 (#1616): the FM-2 blowdown implies ~5.3 L/kWh at the high IT, physically unreachable
+    # for cooling, so the tower's upper bound is capped at the WUE ceiling instead of published
+    # at 10 MGD. The cap now co-scales with the disclosed MW range (#1632): it is HIGH IT x the
+    # ceiling WUE, not central IT.
     from watermark.hydrology.cooling_models import (
         _WUE_CEILING_L_PER_KWH,
         _consumptive_mgd_from_power,
     )
+    from watermark.sites import active_profile
 
-    b = derive_cooling_basis(cooling_model="evaporative_tower")
-    ceiling = _consumptive_mgd_from_power(b.it_load.value, _WUE_CEILING_L_PER_KWH)
-    # The published upper bound is the ceiling, not the raw blowdown evaporation (10 MGD).
+    b = derive_cooling_basis(hydro_settings, cooling_model="evaporative_tower")
+    facility = active_profile(hydro_settings).facility
+    assert facility is not None and facility.it_load_high_mw is not None
+    ceiling = _consumptive_mgd_from_power(facility.it_load_high_mw, _WUE_CEILING_L_PER_KWH)
+    # The published upper bound is the ceiling (at the high IT), not the raw blowdown (10 MGD).
     assert b.consumptive_high.value == pytest.approx(round(ceiling, 2), abs=0.01)
     assert b.consumptive_high.value < 10.0
     # It stays a real upper bound: above the central power-method draw, below the raw blowdown.
@@ -326,16 +377,18 @@ def test_ws16_blowdown_upper_bound_capped_at_wue_ceiling() -> None:
     # The citation preserves the raw figure and the reason for the cap (auditable).
     cite = b.consumptive_high.citation or ""
     assert "capped" in cite and "2.2 L/kWh" in cite
-    assert "10 MGD" in cite and "5.7 L/kWh" in cite
+    assert "10 MGD" in cite and "5.3 L/kWh" in cite
     assert "not all cooling" in cite
 
 
 def test_ws16_no_cap_when_blowdown_implies_a_reachable_wue() -> None:
     # A disclosed blowdown whose implied cooling WUE is within the ceiling is NOT capped — the
-    # blowdown method still sets the upper bound (blowdown x (CoC-1)). 0.3 MGD blowdown at CoC 5
-    # => 1.2 MGD evaporation; at 275 MW that's ~0.7 L/kWh, well under the 2.2 ceiling.
-    b = derive_cooling_basis(cooling_model="evaporative_tower", blowdown_mgd=0.3)
-    assert b.consumptive_high.value == pytest.approx(0.3 * 4.0, abs=0.01)
+    # blowdown method sets the upper bound (blowdown x (CoC-1)). 1.0 MGD blowdown at CoC 5 =>
+    # 4.0 MGD evaporation; at the 300 MW high IT that's ~2.1 L/kWh, under the 2.2 ceiling — and
+    # above the high-IT power draw (300 MW x 1.8 = 3.42 MGD), so the blowdown method still wins
+    # the upper bound rather than the power-side floor (#1632).
+    b = derive_cooling_basis(cooling_model="evaporative_tower", blowdown_mgd=1.0)
+    assert b.consumptive_high.value == pytest.approx(1.0 * 4.0, abs=0.01)
     assert b.consumptive_high_capped is False
     cite = b.consumptive_high.citation or ""
     assert "capped" not in cite
@@ -348,7 +401,7 @@ def test_consumptive_range_label_collapses_point_estimates() -> None:
     dry = derive_cooling_basis(cooling_model="closed_loop_dry")
     assert consumptive_range_label(dry) == "0 MGD"
     tower = derive_cooling_basis(cooling_model="evaporative_tower")
-    assert consumptive_range_label(tower) == "3.14-3.84 MGD"
+    assert consumptive_range_label(tower) == "2.85-4.18 MGD"
 
 
 # ---------------------------------------------------------------------------------------
@@ -361,10 +414,16 @@ def test_hybrid_basis_is_seasonal_and_between_dry_and_tower(hydro_settings: Sett
     tower = derive_cooling_basis(hydro_settings, cooling_model="evaporative_tower")
     assert hybrid.cooling_model == CoolingModelType.HYBRID_ADIABATIC
     assert hybrid.seasonal_months  # the assist window is recorded
-    # Annual average sits strictly between closed_loop_dry (0) and the full-year tower.
+    # Annual average sits strictly between closed_loop_dry (0) and the full-year tower low bound.
     assert 0.0 < hybrid.consumptive_low.value < tower.consumptive_low.value
-    # The warm-season rate is the tower-like power x WUE draw.
-    assert hybrid.consumptive_high.value == tower.consumptive_low.value
+    # The warm-season rate is the tower-like CENTRAL power x WUE draw. Hybrid is deliberately
+    # not power-range-propagated (#1632), so this tracks the central IT x WUE, not the tower's
+    # widened low bound.
+    from watermark.hydrology.cooling_models import _consumptive_mgd_from_power
+
+    assert hybrid.consumptive_high.value == pytest.approx(
+        _consumptive_mgd_from_power(hybrid.it_load.value, hybrid.wue.value), abs=0.01
+    )
     frac = len(hybrid.seasonal_months) / 12.0
     assert hybrid.consumptive_low.value == pytest.approx(
         hybrid.consumptive_high.value * frac, abs=0.01

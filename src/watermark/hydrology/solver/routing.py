@@ -43,6 +43,9 @@ from typing import NamedTuple
 import numpy as np
 from numpy.typing import NDArray
 
+from watermark.config import Settings
+from watermark.hydrology.solver.parameters import default_manning_n
+
 _SECONDS_PER_HOUR = 3600.0
 # Compute guard (WS-09 / #1609): a very slow / flat reach (tiny celerity from a low slope or a
 # data-entry error) makes dx_per_step -> 0, so the Courant≈1 count ⌈L/(c·Δt)⌉ would explode and
@@ -209,11 +212,12 @@ def route_reach(
     *,
     length_ft: float,
     slope: float,
-    manning_n: float = 0.04,
+    manning_n: float | None = None,
     bottom_width_ft: float = 10.0,
     side_slope_z: float = 2.0,
     dt_hr: float = 0.1,
     subreaches: int | None = None,
+    settings: Settings | None = None,
 ) -> RoutedReach:
     """Route an inflow hydrograph through a reach, subdividing into Courant≈1 sub-reaches.
 
@@ -223,7 +227,12 @@ def route_reach(
     sub-reach step Δx, and the hydrograph is routed through the ``n`` sub-reaches in series.
     Returns the outflow series alongside the discretization (``subreaches``, ``dx_ft``,
     ``celerity_ft_s``, ``courant``) so the caller can record the routing's validity.
+
+    ``manning_n`` defaults to the cited natural-channel value in ``tier0-parameters.yaml``
+    (0.04) when a reach sets none; ``reaches.yaml`` overrides it per reach.
     """
+    if manning_n is None:
+        manning_n = default_manning_n(settings=settings)
     q_ref = float(inflow_cfs.max()) if inflow_cfs.size else 0.0
     if q_ref <= 0:
         return RoutedReach(inflow_cfs.copy(), 1, length_ft, 0.0, 0.0)
@@ -272,15 +281,17 @@ def route(
     *,
     length_ft: float,
     slope: float,
-    manning_n: float = 0.04,
+    manning_n: float | None = None,
     bottom_width_ft: float = 10.0,
     side_slope_z: float = 2.0,
     dt_hr: float = 0.1,
+    settings: Settings | None = None,
 ) -> NDArray[np.float64]:
     """Route an inflow hydrograph through a reach; returns the outflow series.
 
     Thin wrapper over :func:`route_reach` (Courant≈1 sub-reach subdivision) that drops the
-    discretization diagnostics — kept for callers that only need the routed series.
+    discretization diagnostics — kept for callers that only need the routed series. ``manning_n``
+    defaults to the cited ``tier0-parameters.yaml`` value (``reaches.yaml`` overrides per reach).
     """
     return route_reach(
         inflow_cfs,
@@ -290,4 +301,5 @@ def route(
         bottom_width_ft=bottom_width_ft,
         side_slope_z=side_slope_z,
         dt_hr=dt_hr,
+        settings=settings,
     ).outflow_cfs
