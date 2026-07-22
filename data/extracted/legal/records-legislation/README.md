@@ -8,8 +8,8 @@ corpus's public-records work rests on. Source bills live under
 
 | Path | What |
 |---|---|
-| `hb314-149-43.digest.yaml` | Provision-by-provision structured read of **Sub. H.B. 314 (136th G.A., As Passed by the House)** — the two new mechanisms (harass/disrupt action; voluminous-request contractor), what it leaves unchanged, the relevance-to-the-relator synthesis, and a `substitute_changes` block diffing the As-Introduced vs As-Passed versions. |
-| `hb314-149-43-analysis.md` | Narrative analysis: what the bill changes, what the committee substitute changed (introduced → passed), and why the tolling provision, the narrow requester exemptions, and the contractor-fee route matter to the corpus's PRR/mandamus posture. |
+| `hb314-149-43.digest.yaml` | Provision-by-provision structured read of **Sub. H.B. 314 (136th G.A., As Passed by the House)** — the three new mechanisms (harass/disrupt action; voluminous-request contractor; the hours-tier fee schedule), what it leaves unchanged, the relevance-to-the-relator synthesis, and a `substitute_changes` block diffing the As-Introduced vs As-Passed versions (including the stale (B)(11) cross-reference drafting error). |
+| `hb314-149-43.analysis.md` | Narrative analysis: what the bill changes, what the committee substitute changed (introduced → passed), and why the tolling provision, the fee meter, the narrow requester exemptions, and the contractor-fee route matter to the corpus's PRR/mandamus posture. |
 
 Two source versions are ingested under
 [`documents/legal/records-legislation/`](../../../documents/legal/records-legislation/README.md):

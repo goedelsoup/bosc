@@ -6,10 +6,11 @@ meta:
   note: >
     Per chain-of-custody rules (CLAUDE.md → Data discipline), source files keep their
     as-received names. The Ohio Legislature / LSC serves each bill version under a
-    coded filename ("hb314_02_PH" = House Bill 314, document sequence 02, "PH" = As
-    Passed by the House), retained as-received; the canonical name is recorded here.
-    content_verified is read from the document's own native text layer (the bill body
-    + the "As Passed by the House" running header), NOT the filename.
+    coded filename ("hb314_00_IN" = House Bill 314, document sequence 00, "IN" = As
+    Introduced; "hb314_02_PH" = sequence 02, "PH" = As Passed by the House), retained
+    as-received; the canonical name is recorded here. content_verified is read from
+    each document's own native text layer (the bill body + its running header — "As
+    Introduced" / "As Passed by the House"), NOT the filename.
 
 documents:
   - filename: hb314_00_IN.pdf
@@ -32,10 +33,13 @@ documents:
     notes: >
       The as-introduced text (no "Sub." prefix; no cosponsors yet). Superseded by the
       committee substitute (hb314_02_PH.pdf). Kept for the introduced→passed diff — the
-      committee grew the bill by 6 pages and added a 5-year cap + requester fee-shift +
-      anonymous-circumvention fine to the harass/disrupt action and a fee cap +
-      contractor-duties clause to the voluminous-request route (see the digest's
-      `substitute_changes`).
+      committee grew the bill by 6 pages: it added the entire (B)(1)(b) hours-tier fee
+      schedule (+ (A)(23) definition + anti-splitting power + (C)(1) counterweight), a
+      5-year cap + requester fee-shift + anonymous-circumvention fine on the
+      harass/disrupt action, a fee cap + contractor-duties clause on the
+      voluminous-request route, and the (B)(11) victim video-fee waiver whose insertion
+      left stale "(B)(11)" evidence cross-refs in (B)(2)(c)(vii)/(A)(1)(ccc) (see the
+      digest's `substitute_changes`).
   - filename: hb314_02_PH.pdf
     canonical: ohio-sub-hb314-136ga-as-passed-house-149-43-2026.pdf
     type: legislation

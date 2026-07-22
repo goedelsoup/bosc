@@ -9,9 +9,9 @@ producer:
     PRR/mandamus posture
 license: Public record (Ohio legislative document)
 access_tier: public
-site_scope: basin-shared
+site_scope: state:OH
 storage:
-- relpath: extracted/legal/records-legislation/hb314-149-43-analysis.md
+- relpath: extracted/legal/records-legislation/hb314-149-43.analysis.md
   media_type: text/markdown
   lfs: false
 - relpath: extracted/legal/records-legislation/hb314-149-43.digest.yaml
