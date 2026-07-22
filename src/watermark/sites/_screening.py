@@ -93,11 +93,21 @@ def _bands() -> dict[str, Any]:
 
 
 def _pair(band: tuple[float, float] | None, key: str) -> tuple[float, float]:
-    """The (low, high) band from ``band`` if given, else the committed ``key`` in the reference yaml."""
+    """The (low, high) band from ``band`` if given, else the committed ``key`` in the reference yaml.
+
+    Validates ``0 < low <= high`` for either source: a malformed override or a garbled reference
+    band would otherwise silently yield a nonsensical bracket (negative MW, or low above high).
+    """
     if band is not None:
-        return float(band[0]), float(band[1])
-    raw = _bands()[key]
-    return float(raw[0]), float(raw[1])
+        lo, hi = float(band[0]), float(band[1])
+        src = "override band"
+    else:
+        raw = _bands()[key]
+        lo, hi = float(raw[0]), float(raw[1])
+        src = f"reference band {key!r}"
+    if not 0.0 < lo <= hi:
+        raise ValueError(f"{src} must satisfy 0 < low <= high, got ({lo:g}, {hi:g})")
+    return lo, hi
 
 
 def _r(x: float) -> float:
@@ -162,6 +172,8 @@ def ceiling_screen(
     ``pue_ceiling`` to move it.
     """
     pue_hi = pue_ceiling if pue_ceiling is not None else _pair(None, "pue_band")[1]
+    if pue_hi <= 0.0:
+        raise ValueError(f"pue_ceiling must be strictly positive, got {pue_hi:g}")
     high = _r(announced_ceiling_mw)
     central = high
     low = _r(announced_ceiling_mw / pue_hi)
