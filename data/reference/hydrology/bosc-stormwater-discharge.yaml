@@ -104,9 +104,9 @@ routed_discharge:
     confidence: low
   at_outfall_peak_cfs: 350.0
   at_outfall_time_to_peak_hr: 12.3
-  routed_peak_cfs: 307.598
+  routed_peak_cfs: 310.0
   routed_time_to_peak_hr: 13.6
-  attenuation_pct: 12.11
+  attenuation_pct: 12.46
   lag_hr: 1.3
   method: Constant-parameter Muskingum-Cunge (watermark.hydrology.solver.routing)
     of the as-permitted post-development outfall hydrograph down the committed reaches.yaml

@@ -24,6 +24,7 @@ from pathlib import Path
 from typing import Any
 
 import yaml
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from watermark.config import Settings, get_settings
 
@@ -37,47 +38,79 @@ _DEFAULT_DILUTION_VIOLATION = 1.0
 _DEFAULT_DILUTION_TIGHT = 10.0
 
 
+class _Tier0Params(BaseModel):
+    """Validated Tier-0 solver constants — physically constrained so a bad edit to the reference
+    file (a non-finite factor, a negative ratio/roughness, reversed dilution bands) is rejected
+    loudly rather than silently propagated into a screen. ``allow_inf_nan=False`` rejects inf/nan;
+    the ``Field`` bounds reject non-positive (and out-of-range) values."""
+
+    model_config = ConfigDict(allow_inf_nan=False)
+
+    peak_factor: float = Field(gt=0)
+    initial_abstraction_ratio: float = Field(gt=0, le=1)  # Ia = ratio * S; ratio in (0, 1]
+    manning_n: float = Field(gt=0)
+    dilution_violation: float = Field(gt=0)
+    dilution_tight: float = Field(gt=0)
+
+    @model_validator(mode="after")
+    def _bands_ordered(self) -> _Tier0Params:
+        if self.dilution_violation >= self.dilution_tight:
+            raise ValueError(
+                f"dilution violation band ({self.dilution_violation}) must sit below the tight "
+                f"band ({self.dilution_tight})"
+            )
+        return self
+
+
 @lru_cache(maxsize=4)
-def _load_params(data_dir: str) -> dict[str, Any]:
+def _load_params(data_dir: str) -> _Tier0Params | None:
+    """The validated reference constants, or ``None`` when the file is absent (defaults apply).
+
+    A present-but-invalid file raises (``pydantic.ValidationError`` / ``KeyError``) rather than
+    being silently accepted — a bad physics constant must fail loudly, not skew a screen. Only a
+    *missing* file falls back to the documented defaults.
+    """
     path = Path(data_dir) / "reference" / "hydrology" / "tier0-parameters.yaml"
     if not path.is_file():
-        return {}
-    data: dict[str, Any] = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    return data
+        return None
+    raw: dict[str, Any] = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    return _Tier0Params(
+        peak_factor=raw["runoff"]["peak_factor"]["value"],
+        initial_abstraction_ratio=raw["runoff"]["initial_abstraction_ratio"]["value"],
+        manning_n=raw["routing"]["manning_n"]["value"],
+        dilution_violation=raw["dilution"]["violation_ratio"]["value"],
+        dilution_tight=raw["dilution"]["tight_ratio"]["value"],
+    )
 
 
-def _param(section: str, key: str, default: float, *, settings: Settings | None) -> float:
-    """The cited ``value`` for ``section.key`` from the reference file, else the default."""
-    settings = settings or get_settings()
-    table = _load_params(str(settings.data_dir))
-    entry = table.get(section, {}).get(key) if isinstance(table.get(section), dict) else None
-    if isinstance(entry, dict) and "value" in entry:
-        return float(entry["value"])
-    return default
+def _resolve(settings: Settings | None) -> _Tier0Params | None:
+    return _load_params(str((settings or get_settings()).data_dir))
 
 
 def peak_factor(*, settings: Settings | None = None) -> float:
     """SCS dimensionless unit-hydrograph peak factor (``Qp = peak_factor * A / Tp``)."""
-    return _param("runoff", "peak_factor", _DEFAULT_PEAK_FACTOR, settings=settings)
+    params = _resolve(settings)
+    return params.peak_factor if params is not None else _DEFAULT_PEAK_FACTOR
 
 
 def initial_abstraction_ratio(*, settings: Settings | None = None) -> float:
     """Initial abstraction as a fraction of maximum retention S (``Ia = ratio * S``)."""
-    return _param("runoff", "initial_abstraction_ratio", _DEFAULT_IA_RATIO, settings=settings)
+    params = _resolve(settings)
+    return params.initial_abstraction_ratio if params is not None else _DEFAULT_IA_RATIO
 
 
 def default_manning_n(*, settings: Settings | None = None) -> float:
     """Default natural-channel Manning ``n`` for a reach that sets none (``reaches.yaml`` wins)."""
-    return _param("routing", "manning_n", _DEFAULT_MANNING_N, settings=settings)
+    params = _resolve(settings)
+    return params.manning_n if params is not None else _DEFAULT_MANNING_N
 
 
 def dilution_bands(*, settings: Settings | None = None) -> tuple[float, float]:
     """``(violation, tight)`` screening bands on the 7Q10/discharge dilution ratio."""
-    violation = _param(
-        "dilution", "violation_ratio", _DEFAULT_DILUTION_VIOLATION, settings=settings
-    )
-    tight = _param("dilution", "tight_ratio", _DEFAULT_DILUTION_TIGHT, settings=settings)
-    return violation, tight
+    params = _resolve(settings)
+    if params is None:
+        return _DEFAULT_DILUTION_VIOLATION, _DEFAULT_DILUTION_TIGHT
+    return params.dilution_violation, params.dilution_tight
 
 
 def round_sig(x: float, sig: int = 2) -> float:

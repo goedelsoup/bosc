@@ -44,6 +44,7 @@ from watermark.hydrology.model import (
     StormRunoff,
 )
 from watermark.hydrology.solver.curve_number import cn_for, composite_cn
+from watermark.hydrology.solver.parameters import round_sig
 from watermark.hydrology.solver.routing import route
 from watermark.hydrology.solver.runoff import simulate_runoff
 from watermark.logging import get_logger
@@ -422,12 +423,15 @@ def _route_campus_outfall(
             length_ft=reach.length_ft.value,
             slope=reach.slope.value,
             dt_hr=_ROUTING_DT_HR,
+            settings=settings,  # hermetic: resolve the Manning default off the passed settings
             **_reach_route_kwargs(reach),
         )
         total_len += reach.length_ft.value
         segments.append(f"{node.id} ({reach.length_ft.value:,.0f} ft @ {reach.slope.value:g})")
 
-    at_peak = post.peak_cfs
+    # Attenuation is physics, so compare the RAW series peaks — not the display-rounded
+    # ``post.peak_cfs`` (2 sig figs), which would skew the percentage against the raw routed peak.
+    at_peak = float(inflow.max())
     at_ttp = post.time_to_peak_hr
     r_idx = int(np.argmax(outflow))
     routed_peak = float(outflow[r_idx])
@@ -447,9 +451,11 @@ def _route_campus_outfall(
                 f"travel — the outfall's entry point on {receiving_water} is not in the record"
             ),
         ),
-        at_outfall_peak_cfs=round(at_peak, 3),
+        # Reported peaks right-sized to 2 sig figs (Tier-0 inputs are ~2 sf), matching the
+        # DischargePeak scalars; the attenuation above stays on the raw peaks.
+        at_outfall_peak_cfs=round_sig(at_peak),
         at_outfall_time_to_peak_hr=round(at_ttp, 3),
-        routed_peak_cfs=round(routed_peak, 3),
+        routed_peak_cfs=round_sig(routed_peak),
         routed_time_to_peak_hr=round(routed_ttp, 3),
         attenuation_pct=atten,
         lag_hr=round(routed_ttp - at_ttp, 3),
