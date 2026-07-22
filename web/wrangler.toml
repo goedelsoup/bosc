@@ -33,15 +33,18 @@ compatibility_date = "2024-11-01"
 # 'No such module "node:events"'.
 compatibility_flags = ["nodejs_compat"]
 
-# Static config for the submissions Function. The Function also defaults these in code.
 [vars]
+
+# --- Repo target (submissions endpoint) -------------------------------------------
+# The GitHub owner/repo /api/submit files issues into (also defaulted in submit.ts).
 GITHUB_OWNER = "watermark-directory"
 GITHUB_REPO = "the-watermark-directory"
 
-# Feature toggles — MIRROR deploy/features.yaml (source of truth for the deployment; see the
-# header note on wrangler.toml precedence). Each *_ENABLED gates a Pages Function server-side;
-# each PUBLIC_* peer is read by the Astro build for build-time UI injection. Secrets/dynamic
-# Cognito values that some of these features also need are set out-of-band (see header).
+# --- Feature toggles — MIRROR deploy/features.yaml --------------------------------
+# Each *_ENABLED gates a Pages Function server-side; each PUBLIC_* peer is read by the Astro
+# build for build-time UI injection. wrangler.toml is authoritative on deploy, so a flag set
+# only by `pulumi up` never reaches the Functions — keep this list in sync with
+# deploy/features.yaml (see the file header on precedence).
 PRE_LAUNCH_ENABLED = "false"
 SUBMISSIONS_ENABLED = "true"
 ASK_ENABLED = "true"
@@ -49,27 +52,32 @@ DOCS_ENABLED = "true"
 MCP_ENABLED = "true"
 RUM_ENABLED = "true"
 PUBLIC_RUM_ENABLED = "true"
-AUTH_ENABLED = "true"
-# Cognito auth (#919) — non-secret plaintext identifiers Pulumi writes to the Pages project
-# (deploy/index.ts pageEnvVars, type: "plain_text"). `wrangler pages deploy` makes this file
-# authoritative and STRIPS any plaintext var not listed here (the same reason the *_ENABLED
-# flags moved into wrangler.toml in 680c37e6). AUTH_ENABLED="true" carried forward WITHOUT these
-# makes /api/submit return 500 "endpoint is misconfigured" (submit.ts:89) and breaks the OAuth
-# token/refresh flow. Not secrets — COGNITO_CLIENT_ID is also exposed to the browser as
-# PUBLIC_COGNITO_CLIENT_ID. REGION/DOMAIN/APP_BASE_URL are derived from committed Pulumi config
-# (deploy/Pulumi.prod.yaml: cognitoRegion=us-east-2, cognitoDomainPrefix=watermark-auth; siteDomain
-# unset ⇒ pages.dev). The two AWS-generated ids come from `pulumi stack output` — update them here
-# if the Cognito pool is ever recreated. The COGNITO_CLIENT_SECRET stays a Wrangler secret.
-COGNITO_REGION = "us-east-2"
-COGNITO_USER_POOL_ID = "REPLACE_ME"  # pulumi stack output cognitoUserPoolId  (us-east-2_XXXXXXXXX)
-COGNITO_CLIENT_ID = "REPLACE_ME"     # pulumi stack output cognitoClientId
-COGNITO_DOMAIN = "watermark-auth.auth.us-east-2.amazoncognito.com"
-APP_BASE_URL = "https://the-watermark-directory.pages.dev"
+AUTH_ENABLED = "true"               # Cognito gate — requires the identifiers in the next block
 STORIES_ENABLED = "false"
 PUBLIC_STORIES_ENABLED = "false"
 CONTACTS_ENABLED = "false"
 PUBLIC_CONTACTS_ENABLED = "false"
-# Optional rate-limit knobs (defaults in code: 5 / 3600s). Uncomment to override.
+
+# --- Cognito auth identifiers (#919) ----------------------------------------------
+# Non-secret plaintext ids AUTH_ENABLED depends on. `wrangler pages deploy` STRIPS any
+# plaintext var not listed here, so values set only by `pulumi up` get dropped — that omission
+# made /api/submit 500 "endpoint is misconfigured" (submit.ts:89) and broke the OAuth
+# token/refresh flow. Not secrets (COGNITO_CLIENT_ID also ships to the browser as
+# PUBLIC_COGNITO_CLIENT_ID). Pulumi still writes the same values to the project (deploy/index.ts)
+# — wrangler's copy wins on deploy; keep the two ids in sync with `pulumi stack output` if the
+# pool is recreated. The client SECRET stays a Wrangler secret; PUBLIC_COGNITO_* are build-time
+# CI vars (pages.yml), not runtime.
+# NOTE: APP_BASE_URL is the live origin AND the OAuth redirect_uri base — it must match a
+# callbackUrl on the Cognito app client, which Pulumi derives from `siteDomain` (deploy/index.ts).
+# Setting APP_BASE_URL here without `siteDomain` set in Pulumi ⇒ redirect_uri mismatch at login.
+COGNITO_REGION = "us-east-2"
+COGNITO_USER_POOL_ID = "us-east-2_2d6JQGMLo"                        # pulumi stack output cognitoUserPoolId
+COGNITO_CLIENT_ID = "45rgjn6tneevilq2de14ctk9il"                   # pulumi stack output cognitoClientId
+COGNITO_DOMAIN = "watermark-auth.auth.us-east-2.amazoncognito.com"  # Cognito Hosted UI domain
+APP_BASE_URL = "https://the.watermark.directory"                    # live site origin
+
+# --- Optional overrides (code has defaults; uncomment to change) ------------------
+# Per-IP submission rate limit — defaults 5 / 3600s:
 # RATE_LIMIT_MAX = "5"
 # RATE_LIMIT_WINDOW_SEC = "3600"
 
