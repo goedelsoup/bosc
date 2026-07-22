@@ -253,14 +253,27 @@ def resolve_cooling_model(
 # --- shared input resolution ------------------------------------------------------------
 
 
-def _resolve_it_load(facility: SiteFacility | None, params: CoolingParams) -> tuple[float, str]:
+def _resolve_it_load(
+    facility: SiteFacility | None, params: CoolingParams
+) -> tuple[float, float, float, str]:
+    """The IT load's central value + its disclosed low/high range + the load-basis citation.
+
+    The range is the **power-side uncertainty** the cooling-water bracket must reflect
+    (#1632): an air-permit-grounded load is a bracket (N+1 backup ≈ IT — Lima 250-300),
+    a floor-area screen is a density bracket. ``low``/``high`` fall back to ``central``
+    for a point override (``CoolingParams.it_load_mw``) or the module fallback, where
+    there is no range to widen the water bracket with. The ``SiteFacility`` validator
+    already enforces that the it-load triple is all-set or all-None.
+    """
     if params.it_load_mw is not None:
-        it = params.it_load_mw
+        it = it_low = it_high = params.it_load_mw
     elif facility is not None and facility.it_load_mw is not None:
         it = facility.it_load_mw
+        it_low = facility.it_load_low_mw if facility.it_load_low_mw is not None else it
+        it_high = facility.it_load_high_mw if facility.it_load_high_mw is not None else it
     else:
         # No facility, or a facility whose load is entirely [open] (#1628) → the module fallback.
-        it = _IT_LOAD_MW
+        it = it_low = it_high = _IT_LOAD_MW
     # A site-plan-grounded facility (Urbana) has no air permit; its IT load is a
     # floor-area screening bracket cited via ``it_load_citation``. Fall back to the
     # module cite only when there is no facility at all.
@@ -268,7 +281,7 @@ def _resolve_it_load(facility: SiteFacility | None, params: CoolingParams) -> tu
         cite = facility.air_permit_citation or facility.it_load_citation or _AIR_PERMIT_CITE
     else:
         cite = _AIR_PERMIT_CITE
-    return it, cite
+    return it, it_low, it_high, cite
 
 
 def _it_load_pv(it_load_mw: float, citation: str) -> ProvenancedValue:
@@ -332,7 +345,7 @@ def _derive_off(
 ) -> CoolingBasis:
     """No cooling-water load — every water quantity is an explicit zero, not an absence."""
     if facility is not None:
-        it, it_cite = _resolve_it_load(facility, params)
+        it, _it_low, _it_high, it_cite = _resolve_it_load(facility, params)
         it_load = _it_load_pv(it, it_cite)
     else:
         it_load = ProvenancedValue.assume(
@@ -360,7 +373,7 @@ def _derive_evaporative_tower(
     ``derive_cooling_basis`` math moved into its archetype (#1055) — Lima's committed
     figures are regression-locked against it.
     """
-    it_load_mw, it_load_cite = _resolve_it_load(facility, params)
+    it_load_mw, it_load_low, it_load_high, it_load_cite = _resolve_it_load(facility, params)
     wue_l_per_kwh, wue_cite = _resolve_wue(facility, params)
     cycles, cycles_cite = _resolve_cycles(facility, params)
     blowdown_mgd = params.blowdown_mgd
@@ -371,8 +384,17 @@ def _derive_evaporative_tower(
     )
 
     frac = (cycles - 1.0) / cycles  # evaporation / makeup
-    consumptive_low = _consumptive_mgd_from_power(it_load_mw, wue_l_per_kwh)
-    makeup = consumptive_low / frac if frac > 0 else consumptive_low
+    # Central power x WUE — drives the central intake (makeup_demand) and the headline
+    # consumptive. Kept on the CENTRAL IT load so the central figures stay stable while the
+    # low/high bracket widens with the disclosed MW range (#1632).
+    consumptive_central = _consumptive_mgd_from_power(it_load_mw, wue_l_per_kwh)
+    makeup = consumptive_central / frac if frac > 0 else consumptive_central
+    # Power-side uncertainty (#1632): the low bound is LOW IT x WUE, and the high bound is at
+    # least HIGH IT x WUE — so the consumptive bracket reflects the disclosed MW range even
+    # when no blowdown cross-check is on record (was: a degenerate low == high == central).
+    consumptive_low = _consumptive_mgd_from_power(it_load_low, wue_l_per_kwh)
+    consumptive_power_high = _consumptive_mgd_from_power(it_load_high, wue_l_per_kwh)
+    low_cite = f"{it_load_low:g} MW (low IT) x {wue_l_per_kwh:g} L/kWh (power x WUE)"
     consumptive_high_capped = False  # WS-16 (#1616): set when the WUE-ceiling cap binds
     if blowdown_mgd is not None:
         blowdown_consumptive = blowdown_mgd * (cycles - 1.0)  # blowdown x (CoC-1) = evaporation
@@ -380,16 +402,17 @@ def _derive_evaporative_tower(
         # discharge is a valid *cooling* upper bound only if it is all cooling-tower blowdown;
         # cross-check the cooling WUE it implies against the empirical evaporative ceiling
         # (never below the facility's own central WUE, so the cap can't invert the low/high
-        # bracket). Above the ceiling the discharge is unreachable for cooling alone — it
-        # bundles non-cooling (process/sanitary) flow — so cap the cooling-only bound to the
-        # ceiling rather than publish an evaporative loss cooling can't reach.
+        # bracket). The cross-check is at the HIGH IT load — the upper bound's energy
+        # denominator (#1632) — so the cap co-scales with the disclosed MW range. Above the
+        # ceiling the discharge is unreachable for cooling alone — it bundles non-cooling
+        # (process/sanitary) flow — so cap the cooling-only bound to the ceiling.
         ceiling_wue = max(wue_l_per_kwh, _WUE_CEILING_L_PER_KWH)
-        implied_wue = _wue_from_consumptive_mgd(it_load_mw, blowdown_consumptive)
+        implied_wue = _wue_from_consumptive_mgd(it_load_high, blowdown_consumptive)
         if implied_wue > ceiling_wue:
             consumptive_high_capped = True
-            consumptive_high = _consumptive_mgd_from_power(it_load_mw, ceiling_wue)
+            consumptive_high = _consumptive_mgd_from_power(it_load_high, ceiling_wue)
             high_cite = (
-                f"cooling upper bound capped at the WUE ceiling: {it_load_mw:g} MW x "
+                f"cooling upper bound capped at the WUE ceiling: {it_load_high:g} MW (high IT) x "
                 f"{ceiling_wue:g} L/kWh = {consumptive_high:.2f} MGD. The disclosed "
                 f"{blowdown_mgd:g} MGD blowdown x (CoC-1) = {blowdown_consumptive:g} MGD implies "
                 f"~{implied_wue:.1f} L/kWh cooling WUE, above the ~{ceiling_wue:g} L/kWh ceiling, "
@@ -413,16 +436,25 @@ def _derive_evaporative_tower(
                 f"upper-bound intake = {blowdown_mgd:g} MGD blowdown x CoC({cycles:g}) = "
                 f"{blowdown_mgd * cycles:g} MGD; {blowdown_cite}"
             )
+        # The high-IT power method is a floor on the upper bound (#1632): a disclosed blowdown
+        # below it must not shrink the bracket the MW range already opened. (Cannot fire when
+        # capped: the cap is HIGH IT x ceiling_wue >= HIGH IT x WUE = the power high.)
+        if consumptive_power_high > consumptive_high:
+            consumptive_high = consumptive_power_high
+            high_cite = (
+                f"{it_load_high:g} MW (high IT) x {wue_l_per_kwh:g} L/kWh (power x WUE) — "
+                "exceeds the disclosed-blowdown bound"
+            )
+            makeup_high_cite = "upper-bound intake = high-IT power-method makeup (power x WUE)"
     else:
-        # No disclosed discharge for this site — the power-method consumptive is the high bound,
-        # and the intake at that bound is unchanged from the central power-method makeup.
-        consumptive_high = consumptive_low
+        # No disclosed discharge for this site — the HIGH IT power method is the high bound,
+        # and the intake at that bound follows the same evap fraction (#1632).
+        consumptive_high = consumptive_power_high
         high_cite = (
-            f"{it_load_mw:g} MW x {wue_l_per_kwh:g} L/kWh (power x WUE; no disclosed blowdown)"
+            f"{it_load_high:g} MW (high IT) x {wue_l_per_kwh:g} L/kWh "
+            "(power x WUE; no disclosed blowdown)"
         )
-        makeup_high_cite = (
-            "upper-bound intake = central power-method makeup (no disclosed blowdown)"
-        )
+        makeup_high_cite = "upper-bound intake = high-IT power-method makeup (power x WUE)"
 
     if frac > 0:
         makeup_high_value = round(consumptive_high / frac, 2)
@@ -460,7 +492,7 @@ def _derive_evaporative_tower(
         consumptive_low=ProvenancedValue.derived(
             round(consumptive_low, 2),
             "MGD",
-            citation=f"{it_load_mw:g} MW x {wue_l_per_kwh:g} L/kWh (power x WUE)",
+            citation=low_cite,
         ),
         consumptive_high=ProvenancedValue.derived(
             round(consumptive_high, 2),
@@ -486,12 +518,17 @@ def _derive_once_through(
     evaporation induced by the thermal rise, ~1-2% of withdrawal (Diehl & Harris 2014).
     No tower, so no WUE/CoC.
     """
-    it_load_mw, it_load_cite = _resolve_it_load(facility, params)
+    it_load_mw, it_load_low, it_load_high, it_load_cite = _resolve_it_load(facility, params)
     mult, mult_cite = _resolve_heat_reject_mult(facility, params)
     reject_mw = it_load_mw * mult
     # Rejected heat -> withdrawal through the single-source per-MW flow factor, so the forward
     # and its inverse (it_load_mw_from_once_through_withdrawal) can never drift.
     withdrawal_mgd = _mgd_from_liters_per_day(reject_mw * _OT_LPD_PER_MW)
+    # Power-side uncertainty (#1632): the withdrawal (and its forced-evaporation share) scale
+    # with the IT load, so the low/high consumptive bounds use the LOW/HIGH IT withdrawals.
+    # ``makeup_demand`` (the central withdrawal) is unchanged.
+    withdrawal_low = _mgd_from_liters_per_day(it_load_low * mult * _OT_LPD_PER_MW)
+    withdrawal_high = _mgd_from_liters_per_day(it_load_high * mult * _OT_LPD_PER_MW)
     frac_central = (_OT_EVAP_FRAC_LOW + _OT_EVAP_FRAC_HIGH) / 2.0
     return CoolingBasis(
         cooling_model=CoolingModelType.ONCE_THROUGH,
@@ -509,14 +546,20 @@ def _derive_once_through(
             ),
         ),
         consumptive_low=ProvenancedValue.derived(
-            round(withdrawal_mgd * _OT_EVAP_FRAC_LOW, 2),
+            round(withdrawal_low * _OT_EVAP_FRAC_LOW, 2),
             "MGD",
-            citation=f"withdrawal x {_OT_EVAP_FRAC_LOW:g} forced evaporation; {_OT_EVAP_CITE}",
+            citation=(
+                f"low-IT ({it_load_low:g} MW) withdrawal x {_OT_EVAP_FRAC_LOW:g} forced "
+                f"evaporation; {_OT_EVAP_CITE}"
+            ),
         ),
         consumptive_high=ProvenancedValue.derived(
-            round(withdrawal_mgd * _OT_EVAP_FRAC_HIGH, 2),
+            round(withdrawal_high * _OT_EVAP_FRAC_HIGH, 2),
             "MGD",
-            citation=f"withdrawal x {_OT_EVAP_FRAC_HIGH:g} forced evaporation; {_OT_EVAP_CITE}",
+            citation=(
+                f"high-IT ({it_load_high:g} MW) withdrawal x {_OT_EVAP_FRAC_HIGH:g} forced "
+                f"evaporation; {_OT_EVAP_CITE}"
+            ),
         ),
         method=(
             "once-through pass-through: withdrawal = heat rejection / (rho x c x dT), "
@@ -536,7 +579,8 @@ def _derive_closed_loop_dry(
     performance), which is not a water quantity and is not fabricated into one. WUE and
     cycles-of-concentration do not apply — they stay ``None``, never faked.
     """
-    it_load_mw, it_load_cite = _resolve_it_load(facility, params)
+    # ~0 water: the power-side range (#1632) has no consumptive bracket to widen here.
+    it_load_mw, _it_low, _it_high, it_load_cite = _resolve_it_load(facility, params)
     zero_cite = (
         "sealed closed loop, dry/air heat rejection: ~0 consumptive at screening grade "
         "(initial fill + minor leakage makeup only)"
@@ -591,7 +635,11 @@ def _derive_hybrid_adiabatic(
     records the assist window so :func:`watermark.hydrology.scenario.evaluate_seasonal`
     can zero the winter months instead of smearing an annual average across the year.
     """
-    it_load_mw, it_load_cite = _resolve_it_load(facility, params)
+    # Deliberately not power-range-propagated (#1632): for hybrid, consumptive_low/high
+    # encode SEASON (annual average vs the warm-season assist rate that
+    # ``scenario.evaluate_seasonal`` reads as a point rate), not power-uncertainty bounds —
+    # folding the IT-load range into consumptive_high would corrupt that seasonal rate.
+    it_load_mw, _it_low, _it_high, it_load_cite = _resolve_it_load(facility, params)
     wue_l_per_kwh, wue_cite = _resolve_wue(facility, params)
     cycles, cycles_cite = _resolve_cycles(facility, params)
     months, window_cite = _assist_months(settings)

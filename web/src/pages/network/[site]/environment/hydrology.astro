@@ -8,6 +8,7 @@ import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type {
   AssimilativeCheck,
   CoolingModel,
+  FacilityItem,
   ProvenancedValue,
   ScenarioResult,
 } from "@watermark/core/feeds";
@@ -16,6 +17,16 @@ import { withSite } from "@watermark/core/site";
 import { fmtRanged } from "@watermark/core/format";
 
 const scenarios = hasFeed("hydrology-scenarios") ? loadFeed<ScenarioResult[]>("hydrology-scenarios") : [];
+
+// The primary facility's disclosed IT-load range (#1632), for the load→water chain head. The
+// range is the power-side uncertainty the consumptive bracket now reflects; it lives on the
+// `facility` feed (the same figure the load report and /basin source).
+const facilities = hasFeed("facility") ? loadFeed<FacilityItem[]>("facility") : [];
+const primaryFacility = facilities.find((f) => f.is_primary) ?? facilities[0];
+const itLoadRange =
+  primaryFacility?.it_load_low_mw != null && primaryFacility?.it_load_high_mw != null
+    ? `${primaryFacility.it_load_low_mw}–${primaryFacility.it_load_high_mw}`
+    : null;
 
 const numOf = (v: ProvenancedValue): string => (v.value == null ? "—" : v.value.toLocaleString("en-US"));
 // document/connector-sourced values are grounded; assumption/derived are inferred.
@@ -147,6 +158,9 @@ const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.valu
     {
       scenarios.filter((s) => !bracketed(s)).map((s) => {
         const river = s.receiving_water_name ?? riverName;
+        // The IT load that physically links load → cooling → water (#1632). Carried in the
+        // basis but never rendered before; surfaced here as the head of the derivation chain.
+        const itLoad = s.scenario.basis?.it_load ?? null;
         // The genuinely-scalar provenanced metrics (low flows are per-site and nullable).
         const stats: FigureStatData[] = [toStat("Consumptive loss", s.consumptive_loss)];
         if (s.receiving_7q10) stats.push(toStat(`${river} 7Q10`, s.receiving_7q10));
@@ -188,6 +202,35 @@ const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.valu
               Cooling demand: {fmt(s.scenario.cooling_demand)} · consumptive fraction{" "}
               {fmt(s.scenario.consumptive_fraction)}
             </p>
+            {itLoad?.value != null && (
+              <div class="derivation-chain">
+                <span class="dc-caption">Load → cooling → water</span>
+                <div class="dc-flow">
+                  <span class="dc-step">
+                    <strong>{numOf(itLoad)}&nbsp;{itLoad.unit ?? "MW"}</strong>
+                    {itLoadRange && <span class="dc-range">(~{itLoadRange} MW)</span>}
+                    <span class="dc-note">IT load <code>[inference]</code></span>
+                  </span>
+                  <span class="dc-arrow" aria-hidden="true">→</span>
+                  <span class="dc-step">
+                    <strong>{fmt(s.scenario.cooling_demand)}</strong>
+                    <span class="dc-note">cooling makeup</span>
+                  </span>
+                  <span class="dc-arrow" aria-hidden="true">→</span>
+                  <span class="dc-step">
+                    <strong>{numOf(s.consumptive_loss)}&nbsp;{s.consumptive_loss.unit ?? "cfs"}</strong>
+                    <span class="dc-note">net consumptive</span>
+                  </span>
+                </div>
+                <p class="dc-basis">
+                  The IT load is inferred from the facility's <strong>[verified]</strong> air-permit
+                  backup capacity (N+1), then carried through the cooling archetype's water math — one
+                  derivation, not two headlines. The disclosed MW range widens the consumptive bracket.
+                  {" "}
+                  <a href={withSite("/reports/the-load-and-the-grid")}>the load and the grid →</a>
+                </p>
+              </div>
+            )}
             <div class="fs-grid">
               {stats.map((st) => (
                 <FigureStat stat={st} size="lg" />
@@ -233,4 +276,16 @@ const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.valu
   .hydro-caveats li { font-size: 0.85rem; color: var(--bosc-muted); line-height: 1.5; margin-top: 4px; }
   .bracket-panel { border: 1px solid var(--bosc-rule); background: #efece2; padding: 16px 18px; margin: 14px 0; }
   .bracket-title { font-weight: 700; color: var(--bosc-ink); margin: 0 0 4px; }
+
+  /* The load → cooling → water derivation chain (#1632): the head is the IT load that was
+     carried in the basis but never rendered. Documentary: square corners, a thin rule, no shadow. */
+  .derivation-chain { border: 1px solid var(--bosc-rule); background: #efece2; padding: 12px 14px; margin: 12px 0; }
+  .dc-caption { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--bosc-muted); margin-bottom: 8px; }
+  .dc-flow { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; }
+  .dc-step { display: inline-flex; align-items: baseline; gap: 6px; }
+  .dc-step strong { color: var(--bosc-ink); font-size: 1.05rem; }
+  .dc-range, .dc-note { color: var(--bosc-muted); font-size: 0.82rem; }
+  .dc-note code { font-size: 0.76rem; }
+  .dc-arrow { color: var(--bosc-muted); font-weight: 700; }
+  .dc-basis { font-size: 0.8rem; color: var(--bosc-muted); line-height: 1.5; margin: 8px 0 0; }
 </style>

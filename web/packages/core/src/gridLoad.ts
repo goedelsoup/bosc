@@ -50,6 +50,34 @@ export const GRID_PRIORS: Prior[] = [
   },
 ];
 
+/**
+ * The grid priors with the IT-load prior sourced from the `facility` feed's disclosed
+ * range (#1632) instead of the hardcoded 250–300. This is the reconciliation: `/basin`
+ * sums the same feed-scoped `it_load_mw`, so the basin scalar and this report's band now
+ * trace to ONE sourced IT figure (the report additionally carries it through × PUE to the
+ * facility draw). The PUE prior is unchanged; the it-load key/label/resolvingRecord stay so
+ * the disclosure UI (`applyDisclosures`) still collapses it. Falls back to `GRID_PRIORS`
+ * (Lima) when a facility carries no disclosed load — `low`/`high` default to the central
+ * (the sampler treats a zero-width triangular as a point).
+ */
+export function gridPriorsFromFacility(
+  itCentral: number,
+  itLow?: number | null,
+  itHigh?: number | null,
+): Prior[] {
+  const pue = GRID_PRIORS.find((p) => p.key === "pue");
+  const itLoad: Prior = {
+    key: "it_load",
+    label: "IT load (disclosed range)",
+    register: "assumption",
+    unit: "MW",
+    dist: { kind: "triangular", low: itLow ?? itCentral, central: itCentral, high: itHigh ?? itCentral },
+    source: "disclosed IT-load bracket (facility feed) — the same figure /basin sums",
+    resolvingRecord: "the operating-load disclosure (metered IT load)",
+  };
+  return pue ? [itLoad, pue] : [itLoad];
+}
+
 /** Facility draw (MW) = IT load × PUE — the headline the inference chain produces. */
 export function facilityDrawModel(draw: Record<string, number>): number {
   return draw.it_load * draw.pue;

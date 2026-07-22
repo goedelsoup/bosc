@@ -14,11 +14,28 @@ export const getStaticPaths = selectableSitePaths;
 import GridLoadScreen from "@watermark/viz/islands/GridLoadScreen.tsx";
 import RedactionReveal from "~/components/RedactionReveal.astro";
 import ReportShell from "~/layouts/ReportShell.astro";
-import { facilityDrawOutcome } from "@watermark/core/gridLoad";
+import { GRID_PRIORS, facilityDrawOutcome, gridPriorsFromFacility } from "@watermark/core/gridLoad";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { FacilityItem } from "@watermark/core/feeds";
+import { buildDilution } from "@watermark/core/dilution";
+import { round } from "@watermark/core/format";
 import type { TeardownRedaction } from "@watermark/core/teardown";
-import { withBase } from "@watermark/core/site";
+import { withBase, withSite } from "@watermark/core/site";
 
-const draw = facilityDrawOutcome();
+// Reconcile the two MW figures (#1632): source the IT-load prior from the facility feed — the
+// same `it_load_mw` /basin sums — instead of a hardcoded band. Falls back to the Lima GRID_PRIORS
+// when a facility carries no disclosed load.
+const facilities = hasFeed("facility") ? loadFeed<FacilityItem[]>("facility") : [];
+const primary = facilities.find((f) => f.is_primary) ?? facilities[0];
+const priors =
+  primary?.it_load_mw != null
+    ? gridPriorsFromFacility(primary.it_load_mw, primary.it_load_low_mw, primary.it_load_high_mw)
+    : GRID_PRIORS;
+const draw = facilityDrawOutcome(priors);
+
+// The water bridge (#1632): the same draw drives the cooling water — surface the derivation
+// instead of leaving MW and MGD as two orphaned headlines. Figures from the hydrology feed.
+const dilution = buildDilution();
 
 // The per-engine redaction — the #220 reveal: the headline 313 MW rests on the draft.
 const redaction: TeardownRedaction = {
@@ -51,7 +68,20 @@ const redaction: TeardownRedaction = {
 
     <RedactionReveal redaction={redaction} />
 
-    <GridLoadScreen client:only="react" />
+    <GridLoadScreen client:only="react" priors={priors} />
+
+    <aside class="load-water-bridge">
+      <h2>The same load is a water draw</h2>
+      <p>
+        That electrical draw does not stop at the meter. At the cooling towers it becomes
+        water: the same disclosed IT load, at an evaporative water-use effectiveness, implies
+        <strong>~{round(dilution.maxCoolingMgd, 2)} MGD</strong> of makeup intake — about
+        {Math.round(dilution.consumptiveFraction * 100)}% of it evaporated, a net
+        <strong>~{round(dilution.drawAtBuildoutCfs, 2)} cfs</strong> permanent loss to the basin.
+        MW and MGD are one derivation, not two headlines.
+        <a href={withSite("/environment/hydrology")}>See the water screen →</a>
+      </p>
+    </aside>
 
     <noscript>
       <article class="prose">
@@ -71,3 +101,22 @@ const redaction: TeardownRedaction = {
       </article>
     </noscript>
 </ReportShell>
+
+<style>
+  /* The load→water bridge: a documentary callout — square corners, a thin rule, no shadow. */
+  .load-water-bridge {
+    margin: 2rem 0 0;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--rule, #d8d4c8);
+    border-left-width: 3px;
+    background: var(--paper-2, rgba(0, 0, 0, 0.02));
+  }
+  .load-water-bridge h2 {
+    margin: 0 0 0.4rem;
+    font-size: 1rem;
+    letter-spacing: 0.01em;
+  }
+  .load-water-bridge p {
+    margin: 0;
+  }
+</style>

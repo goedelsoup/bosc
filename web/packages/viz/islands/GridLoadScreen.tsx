@@ -20,6 +20,7 @@ import {
 } from "@watermark/core/gridLoad";
 import {
   DEFAULT_SEED,
+  type Prior,
   applyDisclosures,
   outcomeBand,
   priorCentral,
@@ -30,21 +31,24 @@ import { fmtMw } from "@watermark/core/format";
 import { DiscloseList, Line } from "./scenarioControls";
 import { DistributionStrip, RegisterMark } from "./uncertaintyGrammar";
 
-export default function GridLoadScreen(): JSX.Element {
+export default function GridLoadScreen({ priors = GRID_PRIORS }: { priors?: Prior[] } = {}): JSX.Element {
   const [disclosed, setDisclosed] = useState<Record<string, boolean>>({});
 
-  const effectivePriors = useMemo(() => applyDisclosures(GRID_PRIORS, disclosed), [disclosed]);
+  // `priors` is feed-sourced from the facility's disclosed IT-load range (#1632) when the page
+  // passes it; else the Lima default GRID_PRIORS. Either way the basin and this band share one
+  // sourced IT figure.
+  const effectivePriors = useMemo(() => applyDisclosures(priors, disclosed), [priors, disclosed]);
 
   const band = useMemo(() => outcomeBand(effectivePriors, facilityDrawModel), [effectivePriors]);
   const summary = useMemo(
     () => summarize(sample(effectivePriors, facilityDrawModel, 6000, DEFAULT_SEED), 24),
     [effectivePriors],
   );
-  const baseline = useMemo(() => outcomeBand(GRID_PRIORS, facilityDrawModel), []);
+  const baseline = useMemo(() => outcomeBand(priors, facilityDrawModel), [priors]);
 
   // The load-not-jobs figures, read off the central inferred facility draw + IT load.
   const gwh = annualGwh(band.central);
-  const itCentral = priorCentral(GRID_PRIORS, "it_load");
+  const itCentral = priorCentral(priors, "it_load");
   const halfWidth = (band.high - band.low) / 2;
 
   return (
@@ -90,7 +94,7 @@ export default function GridLoadScreen(): JSX.Element {
 
       <h4 className="unc-h4">Produce a record → collapse the inference</h4>
       <DiscloseList
-        priors={GRID_PRIORS}
+        priors={priors}
         disclosed={disclosed}
         onToggle={(key, value) => setDisclosed((d) => ({ ...d, [key]: value }))}
       />
