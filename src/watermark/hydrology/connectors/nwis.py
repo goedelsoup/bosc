@@ -33,6 +33,7 @@ from watermark.hydrology.model import ProvenancedValue
 
 DISCHARGE_CFS = "00060"
 GAGE_HEIGHT_FT = "00065"
+WATER_TEMP_C = "00010"  # NWIS water temperature, degrees Celsius
 DISSOLVED_OXYGEN_MG_L = "00300"
 TURBIDITY_FNU = "63680"
 PHYCOCYANIN_UG_L = "32319"  # fPC — cyanobacterial pigment fluorescence (NOT 32316 = chlorophyll-a)
@@ -353,6 +354,42 @@ def observed_min_discharge(
         "cfs",
         citation=f"NWIS {site_no} min instantaneous discharge over P{days}D (not 7Q10)",
         confidence="low",
+    )
+
+
+def observed_water_temperature(
+    site_no: str,
+    *,
+    days: int = 30,
+    settings: Settings | None = None,
+) -> ProvenancedValue | None:
+    """The warm-season peak observed water temperature (deg C) at a gage over the last ``days``.
+
+    A live ``connector`` reading of NWIS parameter ``00010`` — the background receiving-water
+    temperature the thermal-discharge screen (:mod:`watermark.hydrology.thermal`) adds a heat
+    load's fully-mixed rise onto. Returns the **maximum** over the window (the design-relevant
+    warm extreme, the peer of :func:`observed_min_discharge`'s low-flow minimum), tagged with
+    the reading's timestamp so a stale/off-season replay is legible. Returns ``None`` when the
+    gage carries no ``00010`` block (many small gages report only discharge) — the screen then
+    falls back to a stated design ambient rather than fabricating one.
+    """
+    settings = settings or get_settings()
+    params = {"sites": site_no, "parameterCd": WATER_TEMP_C, "period": f"P{days}D"}
+    payload = _iv_request(settings, params)
+    readings: list[tuple[str, float]] = []
+    for ts in _time_series(payload):
+        _, _, _, _, parameter_cd, _ = _site_info(ts)
+        if parameter_cd == WATER_TEMP_C:
+            readings.extend((t, v) for t, v, _ in _series(ts))
+    if not readings:
+        return None
+    asof, peak = max(readings, key=lambda tv: tv[1])
+    return ProvenancedValue.from_connector(
+        peak,
+        "degC",
+        citation=f"NWIS {site_no} peak instantaneous water temperature (00010) over P{days}D",
+        asof=asof,
+        confidence="medium",
     )
 
 

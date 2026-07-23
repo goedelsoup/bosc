@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import typer
+from rich.markup import escape
 from rich.table import Table
 
 from watermark.cli._base import (
@@ -86,6 +87,61 @@ def basin_screen() -> None:
         f"[dim]Unscreenable (reported, not guessed): {cov.no_receiving_water} no receiving "
         f"water in ECHO, {cov.no_7q10} ungaged tributary / no 7Q10, "
         f"{cov.no_design_flow} no design flow.[/]"
+    )
+
+
+@app.command(name="thermal")
+def thermal_cmd() -> None:
+    """Screen the site's cooling heat load against its receiving reach's temperature WQS / §316(a).
+
+    The heat-side peer of `watermark toxics`: carries each disclosed facility's condenser heat
+    rejection into the receiving water at its cited design low flows (1Q10 / 7Q10 / summer 30Q10)
+    and reads the fully-mixed in-stream temperature against Ohio's daily-maximum temperature
+    criterion and the Great Lakes RIS tolerances. Flags where a permit-level thermal / CWA
+    §316(a) analysis is warranted. Consumes the committed cooling / low-flow / criteria artifacts
+    (no network).
+    """
+    from watermark.hydrology import thermal
+
+    inv = thermal.build_screen(get_settings())
+    m = inv.meta
+    console.print(
+        f"[bold]{m['receiving_water'] or '—'}[/] · {m['zone_rule'] or 'no zone'} · "
+        f"daily-max [bold]{m['daily_max_c']}[/] degC ({m['design_period'] or '—'})"
+    )
+    for s in inv.screens:
+        color = {"critical": "red", "elevated": "yellow", "exempt": "cyan", "dry": "blue"}.get(
+            s.flag, "green"
+        )
+        reject = f"{s.reject_heat_mw.value:g} MW" if s.reject_heat_mw else "—"
+        console.print(
+            f"\n[{color}]{s.flag.upper()}[/] [bold]{s.facility}[/] "
+            f"[dim]({s.cooling_model}, ~{reject} rejected)[/]"
+        )
+        table = Table("design flow", "cfs", "capacity (MW)", "exceedance", "% exhausts cap", "flag")
+        for fs in s.flow_screens:
+            factor = thermal._format_factor(fs.exceedance_factor) if fs.exceedance_factor else "—"
+            frac = f"{fs.capacity_fraction * 100:.2g}%" if fs.capacity_fraction else "—"
+            fcolor = {"exceedance": "red", "no_capacity": "red", "approach": "yellow"}.get(
+                fs.flag, "green"
+            )
+            table.add_row(
+                fs.flow_label,
+                f"{fs.design_flow.value:g}",
+                f"{fs.thermal_capacity_mw:g}" if fs.thermal_capacity_mw is not None else "—",
+                factor,
+                frac,
+                f"[{fcolor}]{fs.flag}[/]",
+            )
+        console.print(table)
+        if s.blowdown_exempt_note:
+            console.print(f"[dim]{s.blowdown_exempt_note}[/]")
+        console.print(escape(s.detail), style="dim")
+    console.print(
+        f"\n[bold]{m['facility_count']}[/] facilities, "
+        f"[red]{m['critical_count']} critical[/] (heat load overwhelms the reach — a §316(a) / "
+        "thermal-mixing-zone trigger). [dim]Conservative once-through-equivalent screen; "
+        "the capacity ratio is robust to the heat-partition assumption.[/]"
     )
 
 
