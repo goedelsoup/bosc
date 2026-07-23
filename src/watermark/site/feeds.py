@@ -247,7 +247,16 @@ from watermark.sites import (
 #   Lima's FM-2). They surface figures already grounded in the balance / low-flow table so the
 #   frontend dilution model reads them per-site instead of hardcoding Lima's floors + FM-2 constant.
 #   All three default null (a scenario without them stays valid) — PATCH, back-compatible.
-CONTRACT_VERSION = "1.32.1"
+# 1.33.0: the `economics-baseline` feed is made honest about the federal / military employment the
+#   county QCEW cannot see (#1661, ME-B). `IndustryEmployment.latest` gains `government` — the
+#   federal/state/local ownership slices (QCEW own 1/2/3, agglvl 71) the private-ownership sector
+#   mix structurally cannot show, closing the total-vs-sectors reconciliation (at a federal enclave
+#   the federal row is the county's largest employer yet carries no NAICS sector). `EconomicBaseline`
+#   gains `unit_caveat` (the county-straddle caveat promoted from prose `note` to a structured field)
+#   and `coverage_note` (a standing caveat documenting the excluded uniformed active-duty military).
+#   All additive/optional (government defaults `[]`, unit_caveat null, coverage_note a model default),
+#   so a pre-1.33 economics-baseline.json stays valid — MINOR, back-compatible.
+CONTRACT_VERSION = "1.33.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

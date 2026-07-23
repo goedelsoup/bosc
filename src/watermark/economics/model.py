@@ -12,6 +12,21 @@ from pydantic import BaseModel, ConfigDict, model_validator
 
 from watermark.hydrology.model import ProvenancedValue
 
+# The QCEW coverage boundary (#1661) — a standing methodological caveat, not site-specific.
+# QCEW counts UI-covered private/state/local employment + federal-civilian (UCFE) jobs; it does
+# NOT count uniformed active-duty military, which is in neither ``total_employment`` (own 0) nor
+# any ownership row. At a federal enclave (WPAFB) the base's uniformed workforce is a large slice
+# of real local economic activity that this instrument structurally cannot see — so the total
+# itself understates the enclave, above and beyond the federal-civilian jobs now surfaced in
+# ``IndustryEmployment.government``. Stated so a reader never mistakes covered employment for the
+# base's full footprint.
+QCEW_COVERAGE_NOTE = (
+    "BLS QCEW counts UI-covered (private, state, local) plus federal-civilian (UCFE) employment. "
+    "Uniformed active-duty military is excluded — it appears in neither the county total nor any "
+    "ownership row — so at a federal enclave the covered total understates the base's real "
+    "employment footprint beyond even the federal-civilian jobs shown here."
+)
+
 
 class SectorEmployment(BaseModel):
     """One NAICS sector's county employment, with its export-orientation location quotient."""
@@ -34,8 +49,38 @@ class SectorEmployment(BaseModel):
     location_quotient: ProvenancedValue | None = None
 
 
+class OwnershipEmployment(BaseModel):
+    """One government-ownership slice of county employment (QCEW own 1/2/3, agglvl 71).
+
+    The federal / state / local government jobs the private-ownership ``sectors`` mix (own 5)
+    structurally cannot show (#1661). ``total_employment`` (all ownerships) reconciles as the
+    private sectors plus these government slices, so surfacing them closes the total-vs-sectors
+    gap. The federal row matters most: at a federal enclave it is the county's single largest
+    employer yet carries no NAICS sector of its own. Same connector-provenanced shape as
+    :class:`SectorEmployment`; a slice QCEW reports with no covered wages omits pay (never $0).
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    ownership: str  # QCEW own_code: "1" (federal), "2" (state), "3" (local)
+    ownership_name: str  # "Federal Government" | "State Government" | "Local Government"
+    annual_avg_employment: ProvenancedValue  # connector (QCEW)
+    establishments: ProvenancedValue | None = None
+    avg_annual_pay: ProvenancedValue | None = None
+    avg_weekly_wage: ProvenancedValue | None = None
+    # Government ownership carries a location quotient too (concentration vs. the national
+    # government-employment share) — a high federal LQ marks a procurement/enclave economy.
+    location_quotient: ProvenancedValue | None = None
+
+
 class IndustryEmployment(BaseModel):
-    """A county's employment by NAICS sector for one year (BLS QCEW)."""
+    """A county's employment for one year (BLS QCEW): private NAICS sectors + government ownership.
+
+    ``sectors`` is the **private-ownership** (own 5) NAICS mix; ``total_employment`` is **all
+    ownerships** (own 0). The unexplained total-minus-sectors gap is the federal / state / local
+    government employment, now surfaced in ``government`` (own 1/2/3) so the two reconcile (#1661).
+    QCEW excludes uniformed active-duty military entirely — see :data:`QCEW_COVERAGE_NOTE`.
+    """
 
     model_config = ConfigDict(extra="forbid")
 
@@ -49,7 +94,14 @@ class IndustryEmployment(BaseModel):
     avg_annual_pay: ProvenancedValue | None = None
     avg_weekly_wage: ProvenancedValue | None = None
     sectors: list[SectorEmployment]
-    source: str = "BLS QCEW (annual averages, private ownership by NAICS sector)"
+    # Federal / state / local government employment (QCEW own 1/2/3, agglvl 71) — the ownership
+    # slices the private ``sectors`` cannot show, closing the total-vs-sectors reconciliation
+    # (#1661). Empty for a pre-#1661 baseline or a county QCEW discloses no government rows for.
+    government: list[OwnershipEmployment] = []
+    source: str = (
+        "BLS QCEW (annual averages): private-ownership NAICS sectors + federal/state/local "
+        "government ownership; excludes uniformed active-duty military"
+    )
 
 
 class YearTotal(BaseModel):
@@ -260,4 +312,14 @@ class EconomicBaseline(BaseModel):
     # ACS5 median household income (B19013, #1110) — the energy-burden denominator; keyed live
     # fetch, so omitted (not faked) when unreachable. Optional keeps pre-#1110 baselines valid.
     median_household_income: ProvenancedValue | None = None
+    # The active site's economic-unit caveat, promoted from the prose ``note`` to a first-class
+    # field (#1661): when the single-county econ unit does not capture the signature the site's
+    # thesis rests on (WPAFB's Greene/Montgomery straddle — the defense-supplier concentration
+    # lives in the *other* county), this states it plainly. ``None`` = no caveat (sourced from
+    # ``SiteProfile.econ_unit_note``).
+    unit_caveat: str | None = None
+    # The QCEW coverage boundary (#1661) — a standing methodological caveat naming what the
+    # employment figures structurally exclude (uniformed active-duty military). A model default,
+    # so every baseline carries it; the same text as :data:`QCEW_COVERAGE_NOTE`.
+    coverage_note: str = QCEW_COVERAGE_NOTE
     note: str = ""

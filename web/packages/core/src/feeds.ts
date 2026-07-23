@@ -483,6 +483,18 @@ export interface EconSector {
   avg_weekly_wage?: ProvenancedValue | null; // QCEW average weekly wage (USD/week)
   location_quotient?: ProvenancedValue | null;
 }
+/** One government-ownership slice of county employment (QCEW own 1/2/3, agglvl 71, #1661) — the
+ *  federal/state/local jobs the private-only `sectors` mix cannot show; their sum plus the private
+ *  sectors reconciles the all-ownership total. Same provenanced shape as `EconSector`. */
+export interface EconOwnership {
+  ownership: string; // QCEW own_code: "1" (federal), "2" (state), "3" (local)
+  ownership_name: string; // "Federal Government" | "State Government" | "Local Government"
+  annual_avg_employment: ProvenancedValue;
+  establishments?: ProvenancedValue | null;
+  avg_annual_pay?: ProvenancedValue | null;
+  avg_weekly_wage?: ProvenancedValue | null;
+  location_quotient?: ProvenancedValue | null;
+}
 export interface EconTrendPoint {
   year: number;
   total_employment: ProvenancedValue;
@@ -503,10 +515,13 @@ export interface EconomicBaseline {
     avg_annual_pay?: ProvenancedValue | null; // county-wide average annual pay (all ownerships)
     avg_weekly_wage?: ProvenancedValue | null;
     sectors: EconSector[];
+    government?: EconOwnership[]; // federal/state/local ownership (QCEW own 1/2/3), #1661
   };
   trend: EconTrendPoint[];
   population?: { points: EconPopPoint[]; [k: string]: unknown } | null;
   median_household_income?: ProvenancedValue | null; // ACS5 B19013 (#1110)
+  unit_caveat?: string | null; // county-straddle caveat promoted from prose note (#1661)
+  coverage_note?: string | null; // QCEW coverage boundary — excludes active-duty military (#1661)
   note?: string | null;
 }
 

@@ -79,6 +79,27 @@ def test_reduce_csv_keeps_wage_columns() -> None:
     assert reduced["sectors"][0]["pay"] == 92000.0 and reduced["sectors"][0]["wkly"] == 1770.0
 
 
+def test_reduce_csv_parses_government_ownership_rows() -> None:
+    """`_reduce_csv` keeps the federal/state/local government-ownership rows (own 1/2/3 at agglvl 71,
+    the all-industries slice), by name, in own-code order — and ignores the by-domain agglvl-72 rows
+    (#1661). These are the slices the private-only sector mix cannot show."""
+    csv = (
+        "own_code,agglvl_code,industry_code,annual_avg_emplvl,annual_avg_estabs,"
+        "avg_annual_pay,annual_avg_wkly_wage,lq_annual_avg_emplvl\n"
+        "0,70,10,50000,2500,55000,1050,1.0\n"
+        "5,74,31-33,8000,140,92000,1770,2.0\n"
+        "1,71,10,300,16,83000,1600,0.3\n"  # federal government (all industries)
+        "2,71,10,900,17,79000,1520,0.6\n"  # state government
+        "3,71,10,4500,105,50000,970,1.0\n"  # local government
+        "1,72,102,300,16,83000,1600,0.3\n"  # federal by-DOMAIN (agglvl 72) — must be ignored
+    )
+    gov = _reduce_csv(csv)["government"]
+    assert [g["own"] for g in gov] == ["1", "2", "3"]  # federal first, then state, local
+    assert gov[0]["name"] == "Federal Government"
+    assert gov[0]["emp"] == 300.0 and gov[0]["pay"] == 83000.0 and gov[0]["lq"] == 0.3
+    assert len(gov) == 3  # the agglvl-72 by-domain federal row is not a government-total row
+
+
 def test_qcew_sets_asof_to_data_year(econ_settings: Settings) -> None:
     """Connector values carry the annual-average year as ``asof`` (issue #1107), so a stale
     baseline is machine-flaggable rather than buried in citation prose."""
@@ -223,6 +244,13 @@ def test_committed_baseline_loads() -> None:
     # The committed baseline carries median household income (#1110) — the energy-burden input.
     assert baseline.median_household_income is not None
     assert baseline.median_household_income.value > 0
+    # It also carries the government-ownership block (#1661) — federal/state/local, cited.
+    owns = [g.ownership for g in baseline.latest.government]
+    assert owns == ["1", "2", "3"]
+    assert baseline.latest.government[0].ownership_name == "Federal Government"
+    assert baseline.latest.government[0].annual_avg_employment.verified
+    # ...and documents the active-duty exclusion as a standing coverage caveat.
+    assert "military" in baseline.coverage_note.lower()
 
 
 def test_build_baseline_preserves_population_on_keyless_rerun(
@@ -275,3 +303,77 @@ def test_non_lima_baseline_write_load_roundtrip(tmp_path: Path) -> None:
     assert load_baseline(findlay) == payload
     # ...and a Lima-profile read of the same data dir finds nothing (per-site path isolation).
     assert load_baseline(Settings(data_dir=tmp_path, site="lima")) is None
+
+
+def test_qcew_surfaces_government_ownership_and_reconciles(econ_settings: Settings) -> None:
+    """The connector surfaces the federal/state/local government slices (QCEW own 1/2/3) the
+    private-only sector mix cannot show (#1661) — cited, wage-carrying, in own-code order — and
+    the private sectors plus government reconcile (within a small residual) to the all-ownership
+    total the model reports, closing the total-vs-sectors gap."""
+    ie = fetch_county_industries(year=2023, fips="39003", settings=econ_settings)
+    assert [g.ownership for g in ie.government] == ["1", "2", "3"]  # federal leads
+    fed = ie.government[0]
+    assert fed.ownership_name == "Federal Government"
+    assert fed.annual_avg_employment.value > 0 and fed.annual_avg_employment.verified
+    assert fed.annual_avg_employment.asof == "2023"  # data year carried for staleness (#1107)
+    assert fed.avg_annual_pay is not None and fed.avg_annual_pay.value > 0
+    assert fed.location_quotient is not None  # government carries an LQ too
+    # total (all ownerships) ≈ Σ private sectors + Σ government — the reconciliation the private
+    # mix alone leaves open (the small residual is unclassified/suppressed private employment).
+    sec = sum(s.annual_avg_employment.value for s in ie.sectors)
+    gov = sum(g.annual_avg_employment.value for g in ie.government)
+    total = ie.total_employment.value
+    assert abs(total - (sec + gov)) / total < 0.02
+    # Government is the bulk of what the private-only mix omits from the total.
+    assert gov > 0.5 * (total - sec)
+
+
+def test_qcew_omits_pay_for_zero_employment_government_slice() -> None:
+    """A government slice QCEW reports with no covered employment omits pay (never a fabricated $0),
+    exactly like a zero-employment sector (#1109 discipline, applied to the ownership rows)."""
+    from watermark.economics.connectors import qcew
+
+    reduced = _reduce_csv(
+        "own_code,agglvl_code,industry_code,annual_avg_emplvl,avg_annual_pay,lq_annual_avg_emplvl\n"
+        "0,70,10,50000,55000,1.0\n"
+        "1,71,10,0,83000,0.0\n"  # a nonzero avg pay on a 0-employment federal slice
+    )
+    settings = Settings(data_dir=REPO_ROOT / "data")
+    from unittest.mock import patch
+
+    with patch.object(qcew, "cached_get", lambda *a, **k: reduced):
+        ie = fetch_county_industries(year=2023, fips="39003", settings=settings)
+    assert ie.government[0].annual_avg_employment.value == 0
+    assert ie.government[0].avg_annual_pay is None  # "$83k pay, 0 jobs" would read as real
+
+
+def test_build_baseline_promotes_unit_caveat_out_of_prose(econ_settings: Settings) -> None:
+    """The county-straddle caveat is promoted from the prose ``note`` to the structured
+    ``unit_caveat`` field (#1661): a site without one leaves it ``None`` and its note carries no
+    caveat sentence; WPAFB's straddle caveat surfaces on ``unit_caveat`` and is *no longer*
+    concatenated into ``note``."""
+    # The default (lima / Allen County) profile declares no economic-unit caveat.
+    base = build_baseline(years=[2018, 2023], settings=econ_settings)
+    assert base.unit_caveat is None
+    assert "Economic-unit caveat" not in base.note
+
+    # WPAFB declares one (Greene/Montgomery straddle). Point its offline pull at the Allen fixtures
+    # (econ_fips explicit) so we exercise the profile→field wiring, not WPAFB's own county data.
+    wpafb = Settings(
+        data_dir=REPO_ROOT / "data",
+        site="wpafb",
+        econ_fips="39003",
+        econ_offline=True,
+        econ_fixtures_dir=FIXTURES / "economics",
+    )
+    wb = build_baseline(years=[2018, 2023], settings=wpafb)
+    assert wb.unit_caveat is not None and "straddles Greene + Montgomery" in wb.unit_caveat
+    assert "Economic-unit caveat" not in wb.note  # promoted OUT of the prose note
+
+
+def test_baseline_documents_active_duty_exclusion(econ_settings: Settings) -> None:
+    """The baseline documents the QCEW coverage boundary (#1661) — uniformed active-duty military is
+    excluded from the total and every ownership row — as a standing structured caveat, not just prose."""
+    base = build_baseline(years=[2018, 2023], settings=econ_settings)
+    note = base.coverage_note.lower()
+    assert "military" in note and ("active-duty" in note or "ucfe" in note)

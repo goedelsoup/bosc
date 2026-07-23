@@ -46,6 +46,20 @@ const orientation = (q: number | null): string =>
 const sectors = [...(eb?.latest.sectors ?? [])].sort(
   (a, b) => (b.annual_avg_employment.value ?? 0) - (a.annual_avg_employment.value ?? 0),
 );
+// Government ownership (QCEW own 1/2/3, #1661) — the federal/state/local slices the private-only
+// sector mix cannot show. Their sum plus the private sectors reconciles the all-ownership total;
+// the small residual is unclassified/suppressed private employment. Kept in own-code order so the
+// federal row (the county's largest single employer at an enclave) leads.
+const government = eb?.latest.government ?? [];
+const federal = government.find((g) => g.ownership === "1") ?? null;
+const sectorJobs = sectors.reduce((s, x) => s + (x.annual_avg_employment.value ?? 0), 0);
+const govJobs = government.reduce((s, g) => s + (g.annual_avg_employment.value ?? 0), 0);
+const totalJobs = eb?.latest.total_employment?.value ?? null;
+const govResidual = totalJobs == null ? null : Math.round(totalJobs - sectorJobs - govJobs);
+// The unit caveat is promoted from prose to a structured field (#1661); its text already opens
+// with "Economic-unit caveat:" so strip that prefix — the callout title carries it instead.
+const unitCaveat = eb?.unit_caveat?.replace(/^Economic-unit caveat:\s*/, "") ?? null;
+const jobsNum = (n: number): string => Math.round(n).toLocaleString("en-US");
 const trend = eb?.trend ?? [];
 const pop = eb?.population?.points ?? [];
 const first = trend[0];
@@ -126,6 +140,13 @@ const energyCharts = [
             sector's location quotient <strong>derived</strong> from them; the prose companion is
             <a href={withBase("/docs/economics")}> Economics — demand &amp; public benefits</a>.
           </p>
+
+          {unitCaveat && (
+            <div class="callout callout--note">
+              <p class="callout-title">Economic-unit caveat</p>
+              <p>{unitCaveat}</p>
+            </div>
+          )}
 
           {pop.length > 0 && (
             <>
@@ -211,6 +232,49 @@ const energyCharts = [
               ))}
             </tbody>
           </table>
+
+          {government.length > 0 && (
+            <>
+              <h2 id="government">Government employment — outside the private sector mix</h2>
+              <p>
+                The industry table above is <strong>private-ownership</strong> employment (BLS QCEW). Federal,
+                state and local government carry no NAICS sector of their own, so they appear in <em>no</em> row
+                above — yet the county total counts them.
+                {federal?.annual_avg_employment.value != null && (
+                  <>
+                    {" "}Federal civilian employment alone is <strong>{num(federal.annual_avg_employment)}</strong>{" "}
+                    jobs{federal.avg_annual_pay?.value != null && <> at <strong>{usd(federal.avg_annual_pay)}</strong> average pay</>};
+                    at a federal enclave it is the county's single largest employer with no page of its own.
+                  </>
+                )}
+              </p>
+              <table>
+                <thead>
+                  <tr><th>Ownership</th><th>Jobs</th><th>Establishments</th><th>Avg annual pay</th><th>Location quotient</th></tr>
+                </thead>
+                <tbody>
+                  {government.map((g) => (
+                    <tr>
+                      <td>{g.ownership_name}</td>
+                      <td>{num(g.annual_avg_employment)}</td>
+                      <td>{num(g.establishments)}</td>
+                      <td>{usd(g.avg_annual_pay)}</td>
+                      <td>{orientation(lq(g.location_quotient))}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {totalJobs != null && (
+                <p>
+                  Private sectors (<strong>{jobsNum(sectorJobs)}</strong>) + government
+                  (<strong>{jobsNum(govJobs)}</strong>) reconcile to the <strong>{jobsNum(totalJobs)}</strong>{" "}
+                  all-ownership total{govResidual ? <> — the {jobsNum(Math.abs(govResidual))}-job residual is
+                  unclassified or suppressed private employment</> : null}.
+                </p>
+              )}
+            </>
+          )}
+          {eb.coverage_note && <p class="card-meta">{eb.coverage_note}</p>}
           {eb.note && <p class="card-meta">{eb.note}</p>}
         </>
       )

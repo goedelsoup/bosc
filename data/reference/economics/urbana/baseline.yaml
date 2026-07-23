@@ -18,6 +18,8 @@ latest:
     citation: BLS QCEW 2023 annual averages, area 39021
     confidence: high
     asof: null
+  avg_annual_pay: null
+  avg_weekly_wage: null
   sectors:
   - naics: 31-33
     sector_name: Manufacturing
@@ -35,6 +37,8 @@ latest:
       citation: BLS QCEW 2023 annual averages, area 39021
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 4.14
       unit: ratio
@@ -58,6 +62,8 @@ latest:
       citation: BLS QCEW 2023 annual averages, area 39021
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.94
       unit: ratio
@@ -81,6 +87,8 @@ latest:
       citation: BLS QCEW 2023 annual averages, area 39021
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.57
       unit: ratio
@@ -104,6 +112,8 @@ latest:
       citation: BLS QCEW 2023 annual averages, area 39021
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.7
       unit: ratio
@@ -127,6 +137,8 @@ latest:
       citation: BLS QCEW 2023 annual averages, area 39021
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 1.5
       unit: ratio
@@ -150,6 +162,8 @@ latest:
       citation: BLS QCEW 2023 annual averages, area 39021
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.37
       unit: ratio
@@ -173,6 +187,8 @@ latest:
       citation: BLS QCEW 2023 annual averages, area 39021
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.58
       unit: ratio
@@ -196,6 +212,8 @@ latest:
       citation: BLS QCEW 2023 annual averages, area 39021
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.44
       unit: ratio
@@ -219,6 +237,8 @@ latest:
       citation: BLS QCEW 2023 annual averages, area 39021
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.38
       unit: ratio
@@ -242,6 +262,8 @@ latest:
       citation: BLS QCEW 2023 annual averages, area 39021
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.79
       unit: ratio
@@ -265,6 +287,8 @@ latest:
       citation: BLS QCEW 2023 annual averages, area 39021
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.43
       unit: ratio
@@ -288,6 +312,8 @@ latest:
       citation: BLS QCEW 2023 annual averages, area 39021
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.18
       unit: ratio
@@ -311,6 +337,8 @@ latest:
       citation: BLS QCEW 2023 annual averages, area 39021
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.05
       unit: ratio
@@ -334,6 +362,8 @@ latest:
       citation: BLS QCEW 2023 annual averages, area 39021
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.0
       unit: ratio
@@ -357,6 +387,8 @@ latest:
       citation: BLS QCEW 2023 annual averages, area 39021
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.0
       unit: ratio
@@ -380,6 +412,8 @@ latest:
       citation: BLS QCEW 2023 annual averages, area 39021
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.0
       unit: ratio
@@ -403,6 +437,8 @@ latest:
       citation: BLS QCEW 2023 annual averages, area 39021
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.0
       unit: ratio
@@ -426,6 +462,8 @@ latest:
       citation: BLS QCEW 2023 annual averages, area 39021
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.0
       unit: ratio
@@ -449,6 +487,8 @@ latest:
       citation: BLS QCEW 2023 annual averages, area 39021
       confidence: high
       asof: null
+    avg_annual_pay: null
+    avg_weekly_wage: null
     location_quotient:
       value: 0.0
       unit: ratio
@@ -456,6 +496,118 @@ latest:
       citation: BLS QCEW 2023 annual averages, area 39021
       confidence: high
       asof: null
+  government:
+  - ownership: '1'
+    ownership_name: Federal Government
+    annual_avg_employment:
+      value: 68.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39021
+      confidence: high
+      asof: '2023'
+    establishments:
+      value: 12.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39021
+      confidence: high
+      asof: '2023'
+    avg_annual_pay:
+      value: 56993.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39021
+      confidence: high
+      asof: '2023'
+    avg_weekly_wage:
+      value: 1096.0
+      unit: USD/week
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39021
+      confidence: high
+      asof: '2023'
+    location_quotient:
+      value: 0.34
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39021
+      confidence: high
+      asof: '2023'
+  - ownership: '2'
+    ownership_name: State Government
+    annual_avg_employment:
+      value: 50.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39021
+      confidence: high
+      asof: '2023'
+    establishments:
+      value: 7.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39021
+      confidence: high
+      asof: '2023'
+    avg_annual_pay:
+      value: 63829.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39021
+      confidence: high
+      asof: '2023'
+    avg_weekly_wage:
+      value: 1227.0
+      unit: USD/week
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39021
+      confidence: high
+      asof: '2023'
+    location_quotient:
+      value: 0.16
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39021
+      confidence: high
+      asof: '2023'
+  - ownership: '3'
+    ownership_name: Local Government
+    annual_avg_employment:
+      value: 1853.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39021
+      confidence: high
+      asof: '2023'
+    establishments:
+      value: 73.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39021
+      confidence: high
+      asof: '2023'
+    avg_annual_pay:
+      value: 45551.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39021
+      confidence: high
+      asof: '2023'
+    avg_weekly_wage:
+      value: 876.0
+      unit: USD/week
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39021
+      confidence: high
+      asof: '2023'
+    location_quotient:
+      value: 1.9
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2023 annual averages, area 39021
+      confidence: high
+      asof: '2023'
   source: BLS QCEW (annual averages, private ownership by NAICS sector)
 trend:
 - year: 2018
@@ -466,6 +618,7 @@ trend:
     citation: BLS QCEW 2018 annual averages, area 39021
     confidence: high
     asof: null
+  establishments: null
 - year: 2023
   total_employment:
     value: 10471.0
@@ -474,6 +627,7 @@ trend:
     citation: BLS QCEW 2023 annual averages, area 39021
     confidence: high
     asof: null
+  establishments: null
 population:
   fips: '39021'
   area_name: Champaign County, Ohio
@@ -511,6 +665,13 @@ population:
       confidence: high
       asof: null
   source: US Census ACS 5-year (B01003)
+median_household_income: null
+unit_caveat: null
+coverage_note: BLS QCEW counts UI-covered (private, state, local) plus federal-civilian
+  (UCFE) employment. Uniformed active-duty military is excluded — it appears in neither
+  the county total nor any ownership row — so at a federal enclave the covered total
+  understates the base's real employment footprint beyond even the federal-civilian
+  jobs shown here.
 note: Employment from BLS QCEW (keyless open data). Location quotient = county sector
   share / national share (export-orientation; the county-level proxy for an import/export
   ratio). Population from US Census ACS 5-year (B01003).

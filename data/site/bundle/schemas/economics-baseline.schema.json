@@ -2,7 +2,7 @@
   "$defs": {
     "IndustryEmployment": {
       "additionalProperties": false,
-      "description": "A county's employment by NAICS sector for one year (BLS QCEW).",
+      "description": "A county's employment for one year (BLS QCEW): private NAICS sectors + government ownership.\n\n``sectors`` is the **private-ownership** (own 5) NAICS mix; ``total_employment`` is **all\nownerships** (own 0). The unexplained total-minus-sectors gap is the federal / state / local\ngovernment employment, now surfaced in ``government`` (own 1/2/3) so the two reconcile (#1661).\nQCEW excludes uniformed active-duty military entirely — see :data:`QCEW_COVERAGE_NOTE`.",
       "properties": {
         "fips": {
           "title": "Fips",
@@ -59,8 +59,16 @@
           "title": "Sectors",
           "type": "array"
         },
+        "government": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/OwnershipEmployment"
+          },
+          "title": "Government",
+          "type": "array"
+        },
         "source": {
-          "default": "BLS QCEW (annual averages, private ownership by NAICS sector)",
+          "default": "BLS QCEW (annual averages): private-ownership NAICS sectors + federal/state/local government ownership; excludes uniformed active-duty military",
           "title": "Source",
           "type": "string"
         }
@@ -73,6 +81,74 @@
         "sectors"
       ],
       "title": "IndustryEmployment",
+      "type": "object"
+    },
+    "OwnershipEmployment": {
+      "additionalProperties": false,
+      "description": "One government-ownership slice of county employment (QCEW own 1/2/3, agglvl 71).\n\nThe federal / state / local government jobs the private-ownership ``sectors`` mix (own 5)\nstructurally cannot show (#1661). ``total_employment`` (all ownerships) reconciles as the\nprivate sectors plus these government slices, so surfacing them closes the total-vs-sectors\ngap. The federal row matters most: at a federal enclave it is the county's single largest\nemployer yet carries no NAICS sector of its own. Same connector-provenanced shape as\n:class:`SectorEmployment`; a slice QCEW reports with no covered wages omits pay (never $0).",
+      "properties": {
+        "ownership": {
+          "title": "Ownership",
+          "type": "string"
+        },
+        "ownership_name": {
+          "title": "Ownership Name",
+          "type": "string"
+        },
+        "annual_avg_employment": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "establishments": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "avg_annual_pay": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "avg_weekly_wage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "location_quotient": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "ownership",
+        "ownership_name",
+        "annual_avg_employment"
+      ],
+      "title": "OwnershipEmployment",
       "type": "object"
     },
     "PopulationPoint": {
@@ -359,6 +435,23 @@
         }
       ],
       "default": null
+    },
+    "unit_caveat": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Unit Caveat"
+    },
+    "coverage_note": {
+      "default": "BLS QCEW counts UI-covered (private, state, local) plus federal-civilian (UCFE) employment. Uniformed active-duty military is excluded — it appears in neither the county total nor any ownership row — so at a federal enclave the covered total understates the base's real employment footprint beyond even the federal-civilian jobs shown here.",
+      "title": "Coverage Note",
+      "type": "string"
     },
     "note": {
       "default": "",
