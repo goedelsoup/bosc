@@ -106,16 +106,23 @@ def thermal_cmd() -> None:
     inv = thermal.build_screen(get_settings())
     m = inv.meta
     console.print(
-        f"[bold]{m['receiving_water'] or '—'}[/] · {m['zone_rule'] or 'no zone'} · "
+        f"[bold]{escape(m['receiving_water'] or '—')}[/] · {m['zone_rule'] or 'no zone'} · "
         f"daily-max [bold]{m['daily_max_c']}[/] degC ({m['design_period'] or '—'})"
     )
     for s in inv.screens:
-        color = {"critical": "red", "elevated": "yellow", "exempt": "cyan", "dry": "blue"}.get(
-            s.flag, "green"
-        )
+        # Neither `context` (heat load, no computed exceedance) nor `uncharacterized` (unscreened —
+        # no receiving water / no resolvable load) is a clean bill of health, so neither reads green.
+        color = {
+            "critical": "red",
+            "elevated": "yellow",
+            "exempt": "cyan",
+            "dry": "blue",
+            "context": "white",
+            "uncharacterized": "magenta",
+        }.get(s.flag, "white")
         reject = f"{s.reject_heat_mw.value:g} MW" if s.reject_heat_mw else "—"
         console.print(
-            f"\n[{color}]{s.flag.upper()}[/] [bold]{s.facility}[/] "
+            f"\n[{color}]{s.flag.upper()}[/] [bold]{escape(s.facility)}[/] "
             f"[dim]({s.cooling_model}, ~{reject} rejected)[/]"
         )
         table = Table("design flow", "cfs", "capacity (MW)", "exceedance", "% exhausts cap", "flag")

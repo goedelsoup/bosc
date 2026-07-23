@@ -298,7 +298,7 @@ def _design_flows(
     out: list[tuple[str, ProvenancedValue]] = []
     one = ctx.get("one_q10_cfs")
     if one is not None:
-        out.append(("1Q10", _design_flow_pv(one, "driest-week 1Q10", q7)))
+        out.append(("1Q10", _design_flow_pv(one, "driest-day 1Q10", q7)))
     if q7 is not None:
         out.append(("7Q10", q7))
     summer = ctx.get("thirty_q10_summer_cfs")
