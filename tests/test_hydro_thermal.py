@@ -4,6 +4,8 @@ of test_hydro_toxics.py. Hermetic: runs against the committed cooling / low-flow
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
 from watermark.config import Settings
@@ -12,9 +14,19 @@ from watermark.hydrology.cooling_models import CoolingParams
 from watermark.hydrology.model import ProvenancedValue
 from watermark.sites import CoolingModelType
 
+_REPO_ROOT = Path(__file__).resolve().parents[1]
+_FIXTURES = Path(__file__).resolve().parent / "fixtures"
+
 
 def _offline(site: str = "lima") -> Settings:
-    return Settings(site=site, hydro_offline=True)
+    """Offline hydrology settings for ``site``: real repo data + committed connector fixtures, no
+    network — the site-parameterized peer of ``conftest.hydro_settings``."""
+    return Settings(
+        site=site,
+        data_dir=_REPO_ROOT / "data",
+        hydro_offline=True,
+        hydro_fixtures_dir=_FIXTURES / "hydrology",
+    )
 
 
 def _flow(s: thermal.ThermalDischargeScreen, label: str) -> thermal.ThermalFlowScreen:
