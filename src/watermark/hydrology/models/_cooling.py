@@ -170,7 +170,7 @@ class ScenarioResult(BaseModel):
     # Per-site seasonal design low flows, surfaced so the frontend reads them from the feed
     # instead of hardcoding Lima's floors (#1633). None when the cited table omits them.
     receiving_summer_30q10: ProvenancedValue | None = None  # growing-season 30Q10 (cfs)
-    receiving_1q10: ProvenancedValue | None = None  # absolute driest-week 1Q10 (cfs, often 0)
+    receiving_1q10: ProvenancedValue | None = None  # absolute driest-day 1Q10 (cfs, often 0)
     receiving_live: ProvenancedValue | None = None  # live receiving-water streamflow, for context
     receiving_water_name: str | None = None  # which receiving water the 7Q10 is for (#900)
     # The campus's own routed industrial discharge (cfs) — the demand node's return flow (Lima's

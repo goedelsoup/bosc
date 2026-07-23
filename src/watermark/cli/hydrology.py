@@ -106,8 +106,8 @@ def thermal_cmd() -> None:
     inv = thermal.build_screen(get_settings())
     m = inv.meta
     console.print(
-        f"[bold]{escape(m['receiving_water'] or '—')}[/] · {m['zone_rule'] or 'no zone'} · "
-        f"daily-max [bold]{m['daily_max_c']}[/] degC ({m['design_period'] or '—'})"
+        f"[bold]{escape(m['receiving_water'] or '—')}[/] · {escape(m['zone_rule'] or 'no zone')} · "
+        f"daily-max [bold]{m['daily_max_c']}[/] degC ({escape(m['design_period'] or '—')})"
     )
     for s in inv.screens:
         # Neither `context` (heat load, no computed exceedance) nor `uncharacterized` (unscreened —
@@ -120,15 +120,23 @@ def thermal_cmd() -> None:
             "context": "white",
             "uncharacterized": "magenta",
         }.get(s.flag, "white")
-        reject = f"{s.reject_heat_mw.value:g} MW" if s.reject_heat_mw else "—"
+        # The condenser rejection carries its own provenance (value + range + [calc] tag) via
+        # ProvenancedValue.__str__; escape it (the tag is bracketed) and drop the redundant "~".
+        reject = escape(str(s.reject_heat_mw)) if s.reject_heat_mw else "—"
         console.print(
             f"\n[{color}]{s.flag.upper()}[/] [bold]{escape(s.facility)}[/] "
-            f"[dim]({s.cooling_model}, ~{reject} rejected)[/]"
+            f"[dim]({s.cooling_model}, {reject} rejected)[/]"
         )
         table = Table("design flow", "cfs", "capacity (MW)", "exceedance", "% exhausts cap", "flag")
         for fs in s.flow_screens:
-            factor = thermal._format_factor(fs.exceedance_factor) if fs.exceedance_factor else "—"
-            frac = f"{fs.capacity_fraction * 100:.2g}%" if fs.capacity_fraction else "—"
+            # `is not None`, not truthiness: a genuine 0 metric (the no-capacity row's 0% capacity
+            # fraction) is a value to show, not a blank.
+            factor = (
+                thermal._format_factor(fs.exceedance_factor)
+                if fs.exceedance_factor is not None
+                else "—"
+            )
+            frac = f"{fs.capacity_fraction * 100:.2g}%" if fs.capacity_fraction is not None else "—"
             fcolor = {"exceedance": "red", "no_capacity": "red", "approach": "yellow"}.get(
                 fs.flag, "green"
             )
@@ -142,7 +150,7 @@ def thermal_cmd() -> None:
             )
         console.print(table)
         if s.blowdown_exempt_note:
-            console.print(f"[dim]{s.blowdown_exempt_note}[/]")
+            console.print(escape(s.blowdown_exempt_note), style="dim")
         console.print(escape(s.detail), style="dim")
     console.print(
         f"\n[bold]{m['facility_count']}[/] facilities, "
