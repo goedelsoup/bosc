@@ -115,7 +115,7 @@ def _seasonal_value(
 def seasonal_low_flows(
     receiving_water: str, *, settings: Settings | None = None
 ) -> tuple[ProvenancedValue | None, ProvenancedValue | None]:
-    """The cited summer 30Q10 and driest-week 1Q10 design low flows for a stream.
+    """The cited summer 30Q10 and driest-day 1Q10 design low flows for a stream.
 
     Both come from the same committed low-flow table's ``context`` block and carry the stream's
     fact-sheet citation; either is ``None`` when the table omits it — never guessed. This is the
@@ -137,6 +137,6 @@ def seasonal_low_flows(
         cite = entry.get("citation")
         note = ctx.get("note")
         summer = _seasonal_value(ctx.get("thirty_q10_summer_cfs"), "summer 30Q10", cite, note)
-        one = _seasonal_value(ctx.get("one_q10_cfs"), "driest-week 1Q10", cite, note)
+        one = _seasonal_value(ctx.get("one_q10_cfs"), "driest-day 1Q10", cite, note)
         return summer, one
     return None, None
