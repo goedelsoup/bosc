@@ -337,6 +337,45 @@ def _resolve_heat_reject_mult(
     return _OT_HEAT_REJECT_MULT, _OT_HEAT_REJECT_CITE
 
 
+def reject_heat_load(
+    facility: SiteFacility | None, params: CoolingParams | None = None
+) -> ProvenancedValue | None:
+    """The condenser heat-rejection load (MW), the heat-side peer of ``makeup_demand`` (#1717).
+
+    Already computed inside :func:`_derive_once_through` (``reject_mw = IT x heat_reject_multiplier``)
+    but discarded there after backing out a *water volume*; the thermal-discharge screen
+    (:mod:`watermark.hydrology.thermal`) needs the heat load itself. Rejected heat is the IT
+    (server) load **plus** the cooling-system work that moves it (~1.15 overhead), so it is
+    defined for *every* archetype with a resolvable IT load — the tower rejects it to the
+    atmosphere, once-through to the receiving water, a dry loop to the air — the split is the
+    thermal screen's concern, not this accessor's.
+
+    Carries the disclosed IT-load range (Lima 250-300 MW -> 287.5-345 MW rejected) as a
+    quantitative band, and is an ``[inference]`` (``derived``) like the IT load it scales — the
+    air permit discloses backup capacity, not the load, and never the heat rejection. Returns
+    ``None`` when there is no resolvable *facility* IT load (``facility is None``, or a
+    facility whose load is entirely ``[open]``) so the Lima module fallback (275 MW) is never
+    substituted into another site's screen — mirroring the guard in
+    :func:`watermark.hydrology.cooling.derive_cooling_basis`. A ``params.it_load_mw`` override
+    (sensitivity runs) supplies the load and lifts the guard.
+    """
+    params = params or CoolingParams()
+    if params.it_load_mw is None and (facility is None or facility.it_load_mw is None):
+        return None
+    it, it_low, it_high, it_cite = _resolve_it_load(facility, params)
+    mult, mult_cite = _resolve_heat_reject_mult(facility, params)
+    return ProvenancedValue.derived(
+        round(it * mult, 1),
+        "MW",
+        citation=(
+            f"condenser heat rejection = {it:g} MW IT x {mult:g} cooling overhead; "
+            f"{it_cite}; {mult_cite}"
+        ),
+        low=round(it_low * mult, 1),
+        high=round(it_high * mult, 1),
+    )
+
+
 # --- archetype derivations --------------------------------------------------------------
 
 
