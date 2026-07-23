@@ -27,7 +27,7 @@ from watermark.site.passages import (
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-_CV = "1.32.1"
+_CV = "1.33.0"
 
 
 def _doc(

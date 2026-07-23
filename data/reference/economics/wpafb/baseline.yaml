@@ -949,6 +949,148 @@ latest:
       asof: '2024'
       low: null
       high: null
+  government:
+  - ownership: '1'
+    ownership_name: Federal Government
+    annual_avg_employment:
+      value: 4747.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39113
+      confidence: high
+      asof: '2024'
+      low: null
+      high: null
+    establishments:
+      value: 50.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39113
+      confidence: high
+      asof: '2024'
+      low: null
+      high: null
+    avg_annual_pay:
+      value: 96729.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39113
+      confidence: high
+      asof: '2024'
+      low: null
+      high: null
+    avg_weekly_wage:
+      value: 1860.0
+      unit: USD/week
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39113
+      confidence: high
+      asof: '2024'
+      low: null
+      high: null
+    location_quotient:
+      value: 0.98
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39113
+      confidence: high
+      asof: '2024'
+      low: null
+      high: null
+  - ownership: '2'
+    ownership_name: State Government
+    annual_avg_employment:
+      value: 1053.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39113
+      confidence: high
+      asof: '2024'
+      low: null
+      high: null
+    establishments:
+      value: 28.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39113
+      confidence: high
+      asof: '2024'
+      low: null
+      high: null
+    avg_annual_pay:
+      value: 88161.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39113
+      confidence: high
+      asof: '2024'
+      low: null
+      high: null
+    avg_weekly_wage:
+      value: 1695.0
+      unit: USD/week
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39113
+      confidence: high
+      asof: '2024'
+      low: null
+      high: null
+    location_quotient:
+      value: 0.14
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39113
+      confidence: high
+      asof: '2024'
+      low: null
+      high: null
+  - ownership: '3'
+    ownership_name: Local Government
+    annual_avg_employment:
+      value: 25070.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39113
+      confidence: high
+      asof: '2024'
+      low: null
+      high: null
+    establishments:
+      value: 384.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39113
+      confidence: high
+      asof: '2024'
+      low: null
+      high: null
+    avg_annual_pay:
+      value: 60256.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39113
+      confidence: high
+      asof: '2024'
+      low: null
+      high: null
+    avg_weekly_wage:
+      value: 1159.0
+      unit: USD/week
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39113
+      confidence: high
+      asof: '2024'
+      low: null
+      high: null
+    location_quotient:
+      value: 1.06
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39113
+      confidence: high
+      asof: '2024'
+      low: null
+      high: null
   source: BLS QCEW (annual averages, private ownership by NAICS sector)
 trend:
 - year: 2014
@@ -1215,14 +1357,19 @@ median_household_income:
   asof: '2023'
   low: null
   high: null
-note: 'Employment from BLS QCEW (keyless open data). Location quotient = county sector
+unit_caveat: 'Economic-unit caveat: Wright-Patterson AFB straddles Greene + Montgomery
+  counties; this baseline is Montgomery County (39113) — the well-field / TCE-PFAS-plume
+  / Dayton-metro toxics context. The defense-supplier Professional/Scientific/Technical
+  concentration the WPAFB thesis rests on is NOT visible in this unit (Montgomery
+  NAICS 54 LQ 0.82, NAICS 51 LQ 0.85 — neither elevated); it lives in adjacent Greene
+  County (NAICS 54 LQ 2.11), covered by the Xenia baseline (Greene County, FIPS 39057).
+  Do not read this single-county unit as ''no defense concentration.'''
+coverage_note: BLS QCEW counts UI-covered (private, state, local) plus federal-civilian
+  (UCFE) employment. Uniformed active-duty military is excluded — it appears in neither
+  the county total nor any ownership row — so at a federal enclave the covered total
+  understates the base's real employment footprint beyond even the federal-civilian
+  jobs shown here.
+note: Employment from BLS QCEW (keyless open data). Location quotient = county sector
   share / national share (export-orientation; the county-level proxy for an import/export
   ratio). Population from US Census ACS 5-year (B01003). Median household income from
-  US Census ACS 5-year (B19013, 2023). Economic-unit caveat: Wright-Patterson AFB
-  straddles Greene + Montgomery counties; this baseline is Montgomery County (39113)
-  — the well-field / TCE-PFAS-plume / Dayton-metro toxics context. The defense-supplier
-  Professional/Scientific/Technical concentration the WPAFB thesis rests on is NOT
-  visible in this unit (Montgomery NAICS 54 LQ 0.82, NAICS 51 LQ 0.85 — neither elevated);
-  it lives in adjacent Greene County (NAICS 54 LQ 2.11), covered by the Xenia baseline
-  (Greene County, FIPS 39057). Do not read this single-county unit as ''no defense
-  concentration.'''
+  US Census ACS 5-year (B19013, 2023).

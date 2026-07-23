@@ -725,6 +725,118 @@ latest:
       citation: BLS QCEW 2024 annual averages, area 39003
       confidence: high
       asof: '2024'
+  government:
+  - ownership: '1'
+    ownership_name: Federal Government
+    annual_avg_employment:
+      value: 321.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: '2024'
+    establishments:
+      value: 15.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: '2024'
+    avg_annual_pay:
+      value: 83773.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: '2024'
+    avg_weekly_wage:
+      value: 1611.0
+      unit: USD/week
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: '2024'
+    location_quotient:
+      value: 0.33
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: '2024'
+  - ownership: '2'
+    ownership_name: State Government
+    annual_avg_employment:
+      value: 888.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: '2024'
+    establishments:
+      value: 16.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: '2024'
+    avg_annual_pay:
+      value: 84761.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: '2024'
+    avg_weekly_wage:
+      value: 1630.0
+      unit: USD/week
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: '2024'
+    location_quotient:
+      value: 0.57
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: '2024'
+  - ownership: '3'
+    ownership_name: Local Government
+    annual_avg_employment:
+      value: 4536.0
+      unit: jobs
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: '2024'
+    establishments:
+      value: 105.0
+      unit: establishments
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: '2024'
+    avg_annual_pay:
+      value: 53722.0
+      unit: USD/year
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: '2024'
+    avg_weekly_wage:
+      value: 1033.0
+      unit: USD/week
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: '2024'
+    location_quotient:
+      value: 0.97
+      unit: ratio
+      source: connector
+      citation: BLS QCEW 2024 annual averages, area 39003
+      confidence: high
+      asof: '2024'
   source: BLS QCEW (annual averages, private ownership by NAICS sector)
 trend:
 - year: 2014
@@ -937,6 +1049,12 @@ median_household_income:
     Ohio)
   confidence: high
   asof: '2023'
+unit_caveat: null
+coverage_note: BLS QCEW counts UI-covered (private, state, local) plus federal-civilian
+  (UCFE) employment. Uniformed active-duty military is excluded — it appears in neither
+  the county total nor any ownership row — so at a federal enclave the covered total
+  understates the base's real employment footprint beyond even the federal-civilian
+  jobs shown here.
 note: Employment from BLS QCEW (keyless open data). Location quotient = county sector
   share / national share (export-orientation; the county-level proxy for an import/export
   ratio). Population from US Census ACS 5-year (B01003). Median household income from

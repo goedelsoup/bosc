@@ -173,6 +173,35 @@
         "wkly": 3552.0,
         "lq": 0.0
       }
+    ],
+    "government": [
+      {
+        "own": "1",
+        "name": "Federal Government",
+        "emp": 321.0,
+        "estabs": 15.0,
+        "pay": 68210.0,
+        "wkly": 1312.0,
+        "lq": 0.33
+      },
+      {
+        "own": "2",
+        "name": "State Government",
+        "emp": 979.0,
+        "estabs": 16.0,
+        "pay": 62573.0,
+        "wkly": 1203.0,
+        "lq": 0.61
+      },
+      {
+        "own": "3",
+        "name": "Local Government",
+        "emp": 4534.0,
+        "estabs": 105.0,
+        "pay": 43470.0,
+        "wkly": 836.0,
+        "lq": 0.92
+      }
     ]
   }
 }

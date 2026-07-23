@@ -677,6 +677,170 @@
         }
       }
     ],
+    "government": [
+      {
+        "ownership": "1",
+        "ownership_name": "Federal Government",
+        "annual_avg_employment": {
+          "value": 66.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39149",
+          "confidence": "high",
+          "asof": "2023",
+          "low": null,
+          "high": null
+        },
+        "establishments": {
+          "value": 14.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39149",
+          "confidence": "high",
+          "asof": "2023",
+          "low": null,
+          "high": null
+        },
+        "avg_annual_pay": {
+          "value": 64766.0,
+          "unit": "USD/year",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39149",
+          "confidence": "high",
+          "asof": "2023",
+          "low": null,
+          "high": null
+        },
+        "avg_weekly_wage": {
+          "value": 1245.0,
+          "unit": "USD/week",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39149",
+          "confidence": "high",
+          "asof": "2023",
+          "low": null,
+          "high": null
+        },
+        "location_quotient": {
+          "value": 0.13,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39149",
+          "confidence": "high",
+          "asof": "2023",
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "ownership": "2",
+        "ownership_name": "State Government",
+        "annual_avg_employment": {
+          "value": 182.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39149",
+          "confidence": "high",
+          "asof": "2023",
+          "low": null,
+          "high": null
+        },
+        "establishments": {
+          "value": 7.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39149",
+          "confidence": "high",
+          "asof": "2023",
+          "low": null,
+          "high": null
+        },
+        "avg_annual_pay": {
+          "value": 79041.0,
+          "unit": "USD/year",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39149",
+          "confidence": "high",
+          "asof": "2023",
+          "low": null,
+          "high": null
+        },
+        "avg_weekly_wage": {
+          "value": 1520.0,
+          "unit": "USD/week",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39149",
+          "confidence": "high",
+          "asof": "2023",
+          "low": null,
+          "high": null
+        },
+        "location_quotient": {
+          "value": 0.22,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39149",
+          "confidence": "high",
+          "asof": "2023",
+          "low": null,
+          "high": null
+        }
+      },
+      {
+        "ownership": "3",
+        "ownership_name": "Local Government",
+        "annual_avg_employment": {
+          "value": 1987.0,
+          "unit": "jobs",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39149",
+          "confidence": "high",
+          "asof": "2023",
+          "low": null,
+          "high": null
+        },
+        "establishments": {
+          "value": 85.0,
+          "unit": "establishments",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39149",
+          "confidence": "high",
+          "asof": "2023",
+          "low": null,
+          "high": null
+        },
+        "avg_annual_pay": {
+          "value": 50152.0,
+          "unit": "USD/year",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39149",
+          "confidence": "high",
+          "asof": "2023",
+          "low": null,
+          "high": null
+        },
+        "avg_weekly_wage": {
+          "value": 964.0,
+          "unit": "USD/week",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39149",
+          "confidence": "high",
+          "asof": "2023",
+          "low": null,
+          "high": null
+        },
+        "location_quotient": {
+          "value": 0.79,
+          "unit": "ratio",
+          "source": "connector",
+          "citation": "BLS QCEW 2023 annual averages, area 39149",
+          "confidence": "high",
+          "asof": "2023",
+          "low": null,
+          "high": null
+        }
+      }
+    ],
     "source": "BLS QCEW (annual averages, private ownership by NAICS sector)"
   },
   "trend": [
@@ -769,5 +933,7 @@
     "source": "US Census ACS 5-year (B01003)"
   },
   "median_household_income": null,
+  "unit_caveat": null,
+  "coverage_note": "BLS QCEW counts UI-covered (private, state, local) plus federal-civilian (UCFE) employment. Uniformed active-duty military is excluded — it appears in neither the county total nor any ownership row — so at a federal enclave the covered total understates the base's real employment footprint beyond even the federal-civilian jobs shown here.",
   "note": "Employment from BLS QCEW (keyless open data). Location quotient = county sector share / national share (export-orientation; the county-level proxy for an import/export ratio). Population from US Census ACS 5-year (B01003)."
 }

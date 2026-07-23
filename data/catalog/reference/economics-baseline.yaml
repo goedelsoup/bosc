@@ -31,6 +31,7 @@ tags:
 - wages
 - income
 - baseline
+- government
 notes: Connector-regenerated county employment-by-NAICS with location quotients and QCEW wages
   (avg_annual_pay and avg_weekly_wage, on the county total and per sector) plus an ACS population
   series and ACS median household income — B19013, the energy-burden denominator (#1110); population
@@ -38,3 +39,7 @@ notes: Connector-regenerated county employment-by-NAICS with location quotients 
   Connector values carry asof (the QCEW annual-average year / ACS data year) for machine-checkable
   staleness (#1107). NAICS sector codes are decoded to the official 2-digit titles via the
   connector's _SECTOR_NAMES map, including the QCEW "99" residual → "Unclassified".
+  The latest year also carries a government-ownership breakdown (federal/state/local, QCEW own 1/2/3
+  at agglvl 71) that closes the total-vs-private-sectors reconciliation, plus a structured unit_caveat
+  (the county-straddle caveat, promoted from prose) and a coverage_note documenting the excluded
+  uniformed active-duty military (ME-B #1661).
