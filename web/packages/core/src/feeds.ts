@@ -252,7 +252,7 @@ export interface AssimilativeCheck {
   effluent_credited_flag?: DilutionFlag | null;
   // Acute pair (WS-08): the cited 1Q10 and the discharge's dilution against it — the design flow
   // matched to an acute aquatic-life criterion. null when the fact sheet omits the 1Q10; a cited
-  // 1Q10 = 0 cfs (the Ottawa) gives a 0:1 acute ratio (no acute assimilative capacity).
+  // 1Q10 = 0 cfs (a stream that runs dry at design low flow) gives a 0:1 ratio (no acute capacity).
   acute_low_flow?: ProvenancedValue | null; // the ACUTE design flow: cited 1Q10
   acute_dilution_ratio?: number | null; // cited 1Q10 / discharge
   acute_flag?: DilutionFlag | null; // band on `acute_dilution_ratio`

@@ -368,7 +368,9 @@ def _harmonic_mean(
     hmf, n_days, zero_days = harmonic_mean_flow(values_cfs)
     zero_note = f"; {zero_days} zero-flow day(s) excluded (no reciprocal)" if zero_days else ""
     computed = ProvenancedValue.derived(
-        round(hmf, 4) if not math.isnan(hmf) else 0.0,
+        # A finite mean is rounded; an all-zero record has an *undefined* harmonic mean —
+        # keep it NaN (as the LP3 quantiles do), never a fabricated 0.0 cfs (a real flow value).
+        round(hmf, 4),
         "cfs",
         citation=(
             f"harmonic mean N/Σ(1/Q) over {n_days} non-zero daily flows, NWIS {site_no} "

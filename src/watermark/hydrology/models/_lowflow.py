@@ -38,9 +38,9 @@ class AssimilativeCheck(BaseModel):
     the design flow to the criterion type — chronic aquatic-life limits at the 7Q10, **acute** at
     the **1Q10** — so ``acute_low_flow`` (the cited 1Q10) / ``acute_dilution_ratio`` /
     ``acute_flag`` band the same discharge against the sharper single-day floor. They are ``None``
-    when the fact sheet omits the 1Q10. A 1Q10 of 0 cfs (the Ottawa, which stops at design low
-    flow) yields a 0:1 acute ratio — the honest "no acute assimilative capacity" signal, the same
-    way the concentration screen (:mod:`watermark.hydrology.toxics`) treats a zero acute flow.
+    when the fact sheet omits the 1Q10. A cited 1Q10 of 0 cfs (a stream that runs dry at design
+    low flow) yields a 0:1 acute ratio — the honest "no acute assimilative capacity" signal, the
+    same way the concentration screen (:mod:`watermark.hydrology.toxics`) treats a zero acute flow.
     (Human-health limits are matched to the harmonic-mean flow in that concentration screen; the
     municipal check here is a flow-only hydraulic dilution, for which acute + chronic are the two
     ratios the fact sheets themselves report.)
