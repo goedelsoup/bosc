@@ -85,8 +85,10 @@ def test_summarize_actual_vs_design(hydro_settings: Settings) -> None:
     assert summary.flow_pct_of_design == pytest.approx(59.3, abs=0.1)
     assert summary.actual_flow_min_mgd == pytest.approx(30.304)
     assert summary.actual_flow_max_mgd == pytest.approx(79.287)
-    # 39 CSO/bypass outfalls beyond the continuous effluent point.
-    assert summary.cso_outfalls == 39
+    # 39 permitted overflow (CSO/SSO) outfalls beyond the continuous effluent point; 24 of them
+    # actually reported a non-null volume — the rest are permitted-but-inactive (WS-25 / #1625).
+    assert summary.overflow_outfalls == 39
+    assert summary.active_overflow_outfalls == 24
     # No ECHO-flagged effluent exceedance in the window — an empty list, never "unknown".
     assert summary.exceedances == []
 
@@ -473,7 +475,10 @@ def test_lima_wwtp_reports_effluent_exceedances(hydro_settings: Settings) -> Non
     assert summary.actual_flow_mean_mgd == pytest.approx(13.106, abs=0.01)
     assert summary.actual_flow_max_mgd == pytest.approx(19.671)
     assert summary.flow_pct_of_design == pytest.approx(70.8, abs=0.1)
-    assert summary.cso_outfalls == 5
+    # 5 permitted overflow (CSO/SSO) outfalls, but NONE reported a non-null volume in the window —
+    # the old `cso_outfalls` count would overstate the active overflow points (WS-25 / #1625).
+    assert summary.overflow_outfalls == 5
+    assert summary.active_overflow_outfalls == 0
 
     # The non-empty exceedance path: ECHO's own E90 flag on the mercury monthly average,
     # parsed verbatim (value/limit/percent), never computed by comparing value to limit.

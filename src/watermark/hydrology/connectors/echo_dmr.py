@@ -46,7 +46,10 @@ log = get_logger(__name__)
 
 # NPDES parameter codes we care about for a receiving-water characterization.
 FLOW_PARAM = "50050"  # "Flow, in conduit or thru treatment plant" (the effluent flow)
-OVERFLOW_PARAM = "74063"  # "Overflow volume [SSO volume, CSO volume]" (a CSO/bypass outfall)
+# "Overflow volume" — ICIS 74063 covers BOTH sanitary (SSO) and combined (CSO) sewer overflows;
+# the code does not distinguish them, so a count of features carrying it is "overflow outfalls",
+# not specifically CSO (WS-25 / #1625).
+OVERFLOW_PARAM = "74063"
 
 # ECHO returns multiple stat-base rows per period (e.g. a monthly average and a daily
 # maximum). Only the monthly-average series is meaningful for the mean-flow / utilisation
@@ -248,7 +251,13 @@ class DischargeSummary(BaseModel):
     actual_flow_min_mgd: float | None
     actual_flow_max_mgd: float | None
     flow_pct_of_design: float | None  # mean actual / design, %
-    cso_outfalls: int  # count of features carrying an overflow-volume parameter
+    # Overflow (CSO + SSO) outfalls — param 74063 covers both, so this is not CSO-specific; renamed
+    # from `cso_outfalls` (WS-25 / #1625). `overflow_outfalls` counts every permitted feature
+    # carrying the parameter; `active_overflow_outfalls` narrows to those that actually reported a
+    # non-null overflow volume (i.e. flowed), distinguishing a live overflow point from a
+    # permitted-but-inactive one.
+    overflow_outfalls: int
+    active_overflow_outfalls: int
     snc_status: str | None
     exceedances: list[DmrExceedance]
 
@@ -490,8 +499,15 @@ def summarize_discharge(
     mean = round(sum(flows) / len(flows), 3) if flows else None
     pct = round(100.0 * mean / design_flow_mgd, 1) if (mean and design_flow_mgd) else None
 
-    # CSO/bypass outfalls: features carrying the overflow-volume parameter.
-    cso = len({p.outfall for p in chart.series(OVERFLOW_PARAM)})
+    # Overflow outfalls (CSO + SSO — param 74063 covers both). `overflow` counts every permitted
+    # feature carrying the parameter; `active_overflow` narrows to those with >= 1 reported
+    # non-null overflow volume, so a live overflow point is distinguished from a permitted-but-
+    # inactive one (a permit can list an outfall that never actually overflowed in the window).
+    overflow_params = chart.series(OVERFLOW_PARAM)
+    overflow = len({p.outfall for p in overflow_params})
+    active_overflow = len(
+        {p.outfall for p in overflow_params if any(r.value is not None for r in p.rows)}
+    )
 
     # Exceedances: only rows ECHO itself flagged as an *effluent* over-limit — a positive
     # ExceedencePct, or an attached NPDESViolations entry ECHO classifies as an effluent
@@ -531,7 +547,8 @@ def summarize_discharge(
         actual_flow_min_mgd=round(min(flows), 3) if flows else None,
         actual_flow_max_mgd=round(max(flows), 3) if flows else None,
         flow_pct_of_design=pct,
-        cso_outfalls=cso,
+        overflow_outfalls=overflow,
+        active_overflow_outfalls=active_overflow,
         snc_status=chart.snc_status,
         exceedances=exceedances,
     )
@@ -593,7 +610,8 @@ def dmr_document(chart: EffluentChart, summary: DischargeSummary) -> dict[str, A
             "actual_flow_min_mgd": summary.actual_flow_min_mgd,
             "actual_flow_max_mgd": summary.actual_flow_max_mgd,
             "flow_pct_of_design": summary.flow_pct_of_design,
-            "cso_outfalls": summary.cso_outfalls,
+            "overflow_outfalls": summary.overflow_outfalls,
+            "active_overflow_outfalls": summary.active_overflow_outfalls,
             "reported_exceedances": len(summary.exceedances),
         },
         "flow_monthly": [

@@ -65,6 +65,17 @@ _COLUMNS: dict[str, str] = {
     "R": "note",
 }
 
+# High-confidence row-2 header tokens (case-insensitive substring) used to VALIDATE the
+# positional letter map above before trusting it (WS-25 / #1625). The letter map is only valid
+# while the workbook keeps its column layout; if the LSC re-orders/inserts a column, binding by
+# A1 letter would silently mislabel every field. Only a few near-certain anchors are checked so a
+# benign header re-wording warns (loud, auditable) rather than hard-failing the pull.
+_HEADER_ANCHORS: dict[str, str] = {
+    "C": "sponsor",  # merged "Primary Sponsor(s)" header (C/D)
+    "E": "title",  # short-title column
+    "R": "note",  # trailing running-note column
+}
+
 
 class ChamberProgress(BaseModel):
     """One chamber's milestone dates/codes, verbatim from the workbook.
@@ -188,6 +199,21 @@ def _col_letter(ref: str) -> str:
     return "".join(ch for ch in ref if ch.isalpha())
 
 
+def _header_mismatches(header_cells: dict[str, str]) -> list[str]:
+    """Anchor columns whose row-2 header doesn't carry the expected token (WS-25 / #1625).
+
+    Returns a human-readable mismatch per :data:`_HEADER_ANCHORS` anchor that fails, so the
+    caller can surface a column-layout shift before the letter map (:data:`_COLUMNS`) mislabels
+    every field. An empty list means the checked headers line up with the map.
+    """
+    out: list[str] = []
+    for col, token in _HEADER_ANCHORS.items():
+        label = (header_cells.get(col) or "").strip().lower()
+        if token not in label:
+            out.append(f"col {col}: expected header ~{token!r}, got {header_cells.get(col)!r}")
+    return out
+
+
 def parse_workbook(content: bytes) -> dict[str, Any]:
     """Parse an LSC status-report .xlsx into a JSON-serializable payload.
 
@@ -217,7 +243,10 @@ def parse_workbook(content: bytes) -> dict[str, Any]:
         if rownum == "1":  # banner: "Reflects legislative action through MM/DD/YYYY"
             as_of = next((v for v in cells.values() if v), None)
             continue
-        if rownum == "2":  # header row
+        if rownum == "2":  # header row — validate the letter map before trusting it (WS-25)
+            mismatches = _header_mismatches(cells)
+            if mismatches:
+                log.warning("lsc.header_layout_drift", mismatches=mismatches, header=cells)
             continue
         if not any(cells.values()):
             continue

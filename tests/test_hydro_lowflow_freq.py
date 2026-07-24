@@ -66,6 +66,35 @@ def test_low_flow_quantiles_wraps_both_estimates() -> None:
     assert zero_fraction == 0.0
 
 
+# ------------------------------------------------------ LP3 confidence band (WS-25 / #1625)
+
+
+def test_lp3_ci_brackets_the_quantile() -> None:
+    minima = [0.2, 0.4, 0.6, 0.9, 1.3, 2.0, 2.8, 4.1, 6.0, 9.0]
+    lp3 = lf._lp3_low_quantile(minima, 0.10)[0]
+    lo, hi = lf.lp3_confidence_interval(minima, 0.10)
+    assert lo is not None and hi is not None
+    assert 0.0 < lo < lp3 < hi  # the band straddles the point estimate
+
+
+def test_lp3_ci_narrows_with_a_larger_sample() -> None:
+    """The se ~ 1/sqrt(k), so a longer record gives a tighter band for the same distribution."""
+    short = [0.2, 0.4, 0.6, 0.9, 1.3, 2.0, 2.8, 4.1, 6.0, 9.0]
+    long = short * 5  # same shape, 5x the sample
+    lo_s, hi_s = lf.lp3_confidence_interval(short, 0.10)
+    lo_l, hi_l = lf.lp3_confidence_interval(long, 0.10)
+    assert None not in (lo_s, hi_s, lo_l, hi_l)
+    assert (hi_l - lo_l) < (hi_s - lo_s)  # tighter band on the larger sample
+
+
+def test_lp3_ci_is_none_in_the_zero_flow_mass() -> None:
+    # p=0.10 falls inside a 1/6 zero-flow mass -> the quantile is 0, no fitted band.
+    minima = [0.0, 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
+    assert lf.lp3_confidence_interval(minima, 0.10) == (None, None)
+    # A degenerate sample (fewer than two non-zero minima) also has no band.
+    assert lf.lp3_confidence_interval([5.0], 0.10) == (None, None)
+
+
 # --------------------------------------------------------------- harmonic mean (WS-08)
 
 

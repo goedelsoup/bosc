@@ -28,11 +28,22 @@ the routed hydrograph is a genuine convex combination (no oscillation to clamp) 
 peak is **grid-independent** — halving Δx moves the outlet peak by well under a percent. Each
 reach records its ``Cr`` as a validity flag.
 
-**Celerity assumption.** ``c = (5/3)·V`` is the *wide-channel* kinematic-wave celerity — exact
-for a wide rectangular section, and a mild over-estimate for the narrow trapezoidal default
-(10 ft bottom, 2:1 sides) where wetted-perimeter growth with depth is non-negligible. It is a
-stated Tier-0 assumption, not a calibrated value; a wide mainstem should override the channel
-geometry in ``reaches.yaml`` so the approximation is applied where it holds.
+**Celerity assumption (WS-25).** The exact kinematic-wave celerity is ``c = dQ/dA = (dQ/dy)/T``
+(``T`` the top width) for the *actual* section. ``c = (5/3)·V`` is its **wide-channel limit** —
+exact for a wide rectangular section (where ``dQ/dA → (5/3)·V``), and an **over-estimate** for the
+narrow trapezoidal default (10 ft bottom, 2:1 sides) because wetted-perimeter growth with depth
+holds the true ``dQ/dy`` below the wide-channel value. For that default section the exact
+Manning ``dQ/dA`` runs ~**15-20 % below** ``(5/3)·V`` across the loop's depth/slope range (deeper
+flow → larger gap), so the wide-channel form over-states celerity by ~1/0.82 ≈ 20 % there.
+
+This is a **stated Tier-0 assumption**, not a calibrated value, and it is kept deliberately: the
+routed peak is **grid-independent** by construction (the Courant≈1 sub-reach subdivision below),
+so the celerity choice moves the sub-reach *count* and the reach travel time ``K = Δx/c`` — not
+the qualitative attenuation the ``/basin`` screen reads — and a ~20 % celerity bias is well
+inside the Tier-0 screening band. Computing ``dQ/dA`` numerically per reach is the exact upgrade
+(it lengthens ``K`` on narrow reaches); it is not wired in here so the committed
+``routed-hydrograph`` reference/feed stays stable. A wide mainstem — where the assumption
+*holds* — should override the channel geometry in ``reaches.yaml``.
 """
 
 from __future__ import annotations
@@ -96,10 +107,10 @@ def reach_kinematics(
 ) -> tuple[float, float]:
     """``(celerity_ft_s, top_width_ft)`` at the reference discharge (wide-channel kinematic wave).
 
-    ``celerity = (5/3)·V`` is the wide-channel approximation (exact for a wide rectangular
-    section, a mild over-estimate for the narrow trapezoidal default) — a stated Tier-0
-    assumption, documented in the module docstring. ``0.0`` celerity signals a degenerate reach
-    (no flow / no area) that the callers pass through unrouted.
+    ``celerity = (5/3)·V`` is the wide-channel limit of the exact kinematic celerity ``c = dQ/dA``
+    (exact for a wide rectangular section, ~15-20 % over the true ``dQ/dA`` for the narrow
+    trapezoidal default) — a stated Tier-0 assumption, quantified in the module docstring. ``0.0``
+    celerity signals a degenerate reach (no flow / no area) that the callers pass through unrouted.
     """
     y = normal_depth(
         q_ref,

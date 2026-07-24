@@ -56,6 +56,57 @@ class HucBoundary(BaseModel):
     geometry: dict[str, Any]  # GeoJSON geometry (Polygon/MultiPolygon), WGS84 verbatim
 
 
+def _point_in_ring(lon: float, lat: float, ring: list[Any]) -> bool:
+    """Ray-casting point-in-ring test for a GeoJSON linear ring (``[[lon, lat], ...]``)."""
+    inside = False
+    n = len(ring)
+    j = n - 1
+    for i in range(n):
+        xi, yi = ring[i][0], ring[i][1]
+        xj, yj = ring[j][0], ring[j][1]
+        if (yi > lat) != (yj > lat) and lon < (xj - xi) * (lat - yi) / (yj - yi) + xi:
+            inside = not inside
+        j = i
+    return inside
+
+
+def _point_in_polygon(lon: float, lat: float, rings: list[Any]) -> bool:
+    """Inside the exterior ring and outside every hole (GeoJSON Polygon ring list)."""
+    if not rings or not _point_in_ring(lon, lat, rings[0]):
+        return False
+    return not any(_point_in_ring(lon, lat, hole) for hole in rings[1:])
+
+
+def _geometry_contains(geometry: dict[str, Any] | None, lon: float, lat: float) -> bool:
+    """Does a GeoJSON Polygon / MultiPolygon geometry contain the point ``(lon, lat)``?"""
+    if not geometry:
+        return False
+    coords = geometry.get("coordinates") or []
+    gtype = geometry.get("type")
+    if gtype == "Polygon":
+        return _point_in_polygon(lon, lat, coords)
+    if gtype == "MultiPolygon":
+        return any(_point_in_polygon(lon, lat, poly) for poly in coords)
+    return False
+
+
+def _select_boundary_feature(features: list[Any], lon: float, lat: float) -> Any:
+    """Pick the WBD feature for a point, disambiguating an HU-boundary tie (WS-25).
+
+    A point on (or numerically near) a shared HU edge ``esriSpatialRelIntersects`` returns
+    **both** adjacent units. Blindly taking ``features[0]`` can land on the neighbor; prefer the
+    polygon that actually **contains** the point over a mere edge intersection. Falls back to
+    ``features[0]`` when no polygon contains it (an exact on-edge point), recording the tie.
+    """
+    if len(features) == 1:
+        return features[0]
+    for feat in features:
+        if _geometry_contains(feat.get("geometry"), lon, lat):
+            return feat
+    log.warning("wbd.boundary_tie_no_container", n=len(features), lon=lon, lat=lat)
+    return features[0]
+
+
 def fetch_huc_at_point(
     lon: float, lat: float, *, level: int, settings: Settings | None = None
 ) -> HucBoundary | None:
@@ -103,7 +154,7 @@ def fetch_huc_at_point(
     features = payload.get("features") or []
     if not features:
         return None
-    feat = features[0]
+    feat = _select_boundary_feature(features, lon, lat)
     props = feat.get("properties") or {}
     geometry = feat.get("geometry")
     if not geometry:

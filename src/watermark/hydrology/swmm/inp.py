@@ -98,13 +98,23 @@ def stormwater_inp(
     dt_hr: float = 0.1,
     end_hr: float = 30.0,
     hsg: str = "C",
+    pct_slope: float | None = None,
+    s_perv_store_in: float = 0.05,
 ) -> tuple[str, str, str, str]:
     """Build a stormwater ``.inp``. Returns (text, outfall, orifice_link, storage_node).
 
     ``hsg`` selects the Horton infiltration (default "C" = the legacy assumption);
     pass a SSURGO-sourced group to ground the deck's soils.
+
+    ``pct_slope`` is the subcatchment surface slope (%). ``None`` keeps the generic ``1.0`` %
+    screening default; pass a value derived from the graded rim relief (WS-25 / #1625) to ground
+    it — a flat campus drains far slower than 1 % implies. ``s_perv_store_in`` is the pervious
+    depression storage (in); the SWMM-manual range is ~0.1-0.3 in, so the ``0.05`` default is a
+    conservative floor a grounded caller should raise (WS-25).
     """
     width = (area_acres * _SQFT_PER_ACRE) ** 0.5  # square-catchment width (ft)
+    # Preserve the exact "1.0" literal for the generic default so an ungrounded deck is byte-stable.
+    slope_str = "1.0" if pct_slope is None else f"{pct_slope:.3f}"
     outfall = "OUT1"
     storage = "DET"
     orifice = "OR1"
@@ -113,10 +123,10 @@ def stormwater_inp(
     inp = _header(end_hr, dt_hr)
     inp += f"""
 [SUBCATCHMENTS]
-S1 RG1 {drains_to} {area_acres:.2f} {pct_imperv:.1f} {width:.1f} 1.0 0
+S1 RG1 {drains_to} {area_acres:.2f} {pct_imperv:.1f} {width:.1f} {slope_str} 0
 
 [SUBAREAS]
-S1 0.015 0.10 0.05 0.05 25 OUTLET
+S1 0.015 0.10 0.05 {s_perv_store_in:g} 25 OUTLET
 
 [INFILTRATION]
 S1 {_horton_for(hsg)}

@@ -23,7 +23,7 @@ discharge_summary:
   actual_flow_min_mgd: 2.146
   actual_flow_max_mgd: 5.822
   flow_pct_of_design: 37.1
-  cso_outfalls: 0
+  overflow_outfalls: 0
   reported_exceedances: 4
 flow_monthly:
 - period_end: '2023-01-31'

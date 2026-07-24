@@ -53,3 +53,17 @@ def test_ordinal_suffix() -> None:
     assert lsc._ordinal_suffix("132") == "nd"
     assert lsc._ordinal_suffix("133") == "rd"
     assert lsc._ordinal_suffix("113") == "th"  # the teens are all "th"
+
+
+def test_header_anchors_validate_the_letter_map() -> None:
+    """A row-2 header matching the expected anchors passes; a column shift is surfaced (WS-25)."""
+    good = {"C": "Primary Sponsor(s)", "E": "Short Title", "R": "Note"}
+    assert lsc._header_mismatches(good) == []
+    # Case-insensitive substring, so wording variants still line up.
+    assert lsc._header_mismatches({"C": "SPONSOR", "E": "Title", "R": "Notes"}) == []
+    # A one-column shift (E now carries the House block) trips the title + sponsor anchors.
+    shifted = {"C": "Short Title", "E": "House Introduced", "R": "Note"}
+    mismatches = lsc._header_mismatches(shifted)
+    assert any("col C" in m for m in mismatches)
+    assert any("col E" in m for m in mismatches)
+    assert not any("col R" in m for m in mismatches)

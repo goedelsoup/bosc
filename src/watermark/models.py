@@ -799,7 +799,11 @@ class DmrDischargeSummary(BaseModel):
     actual_flow_min_mgd: float | None = None
     actual_flow_max_mgd: float | None = None
     flow_pct_of_design: float | None = None
-    cso_outfalls: int
+    # Overflow (CSO + SSO) outfalls — param 74063 covers both; renamed from `cso_outfalls`
+    # (WS-25 / #1625). `active_overflow_outfalls` (the subset with >= 1 reported non-null volume)
+    # is optional so a committed snapshot predating the field validates.
+    overflow_outfalls: int
+    active_overflow_outfalls: int | None = None
     reported_exceedances: int
 
 

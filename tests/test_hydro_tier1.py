@@ -56,6 +56,38 @@ def test_hyetograph_timeseries_conserves_depth() -> None:
     assert total == pytest.approx(4.0, abs=1e-6)
 
 
+def test_stormwater_inp_grounds_slope_and_s_perv() -> None:
+    """WS-25 (#1625): pct_slope + s_perv flow into the deck; the generic default stays byte-stable."""
+    default, *_ = inp.stormwater_inp(area_acres=340.0, pct_imperv=90.0, depth_in=4.0)
+    # Default: the generic 1.0 % slope and the 0.05 in pervious-depression floor, verbatim.
+    assert " 1.0 0\n" in default  # SUBCATCHMENTS %slope field
+    sub_default = next(ln for ln in default.splitlines() if ln.startswith("S1 0.015"))
+    assert sub_default.split() == ["S1", "0.015", "0.10", "0.05", "0.05", "25", "OUTLET"]
+    # Grounded: a derived flatter slope and a raised pervious depression store.
+    grounded, *_ = inp.stormwater_inp(
+        area_acres=340.0, pct_imperv=90.0, depth_in=4.0, pct_slope=0.214, s_perv_store_in=0.1
+    )
+    assert " 0.214 0\n" in grounded
+    assert next(ln for ln in grounded.splitlines() if ln.startswith("S1 0.015")).split()[4] == "0.1"
+
+
+def test_pct_slope_from_relief_is_grounded_and_clamped() -> None:
+    from watermark.hydrology.tier1 import (
+        _MAX_PCT_SLOPE,
+        _MIN_PCT_SLOPE,
+        _pct_slope_from_relief,
+    )
+
+    # Lima: 8.25 ft relief over ~340 ac -> ~0.21 %, far flatter than the fixed 1.0 % assumption.
+    slope = _pct_slope_from_relief(8.25, 340.0)
+    assert slope == pytest.approx(0.214, abs=0.01) and slope < 1.0
+    # Clamped: a near-zero relief floors at the minimum; an absurd one caps at the maximum.
+    assert _pct_slope_from_relief(0.001, 340.0) == _MIN_PCT_SLOPE
+    assert _pct_slope_from_relief(10_000.0, 1.0) == _MAX_PCT_SLOPE
+    # A degenerate area falls back to the generic default rather than dividing by zero.
+    assert _pct_slope_from_relief(8.25, 0.0) == pytest.approx(1.0)
+
+
 # --- sanitary surcharge: profile-threaded, no engine needed (#1159) ---
 
 

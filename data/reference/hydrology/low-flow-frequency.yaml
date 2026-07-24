@@ -3,7 +3,7 @@ meta:
   source: USGS NWIS daily-values service, gage 04187100
   method: climatic-year (Apr-Mar) annual n-day minima; log-Pearson III (method of moments, Wilson-Hilferty
     frequency factor) bracketed by Weibull plotting position; conditional-probability adjustment for zero-flow
-    years
+    years; at-site (station) skew only — no regional/generalized skew weighting (cf. Bulletin 17B/17C)
   discipline: Computed (derived) corroboration of the cited regulatory 7Q10 in low-flow-7q10.yaml — not
     a substitute for the cited statistic.
 frequency:
@@ -64,8 +64,8 @@ frequency:
       citation: log-Pearson III on 24 climatic-year 7-day minima, NWIS 04187100 1988-09-30—2024-12-31
       confidence: medium
       asof: null
-      low: null
-      high: null
+      low: 0.1224
+      high: 0.4657
     weibull_cfs:
       value: 0.15
       unit: cfs
@@ -101,8 +101,8 @@ frequency:
       citation: log-Pearson III on 24 climatic-year 30-day minima, NWIS 04187100 1988-09-30—2024-12-31
       confidence: medium
       asof: null
-      low: null
-      high: null
+      low: 0.9889
+      high: 2.361
     weibull_cfs:
       value: 1.9077
       unit: cfs
@@ -571,5 +571,11 @@ frequency:
     complete: false
   method: climatic-year (Apr-Mar) annual n-day minima; log-Pearson III (method of moments, Wilson-Hilferty
     frequency factor) bracketed by Weibull plotting position; conditional-probability adjustment for zero-flow
-    years
-  note: ''
+    years; at-site (station) skew only — no regional/generalized skew weighting (cf. Bulletin 17B/17C)
+  note: 'LP3 quantiles carry an approximate two-sided 90% confidence band (lp3_cfs.low / .high): a first-order
+    station-skew standard error se = s*sqrt((1 + K^2/2) / n) of the log-space quantile y_p = mean + K*s,
+    back-transformed as 10^(y_p +/- 1.645*se). It captures the mean and scale-estimation variance but
+    OMITS the skew-estimation and regional-skew uncertainty, so it is a screening band, not a Bulletin
+    17B/17C confidence limit. The Wilson-Hilferty frequency factor also degrades in the far low tail and
+    at large |skew|. The corroboration test uses a deliberately generous +/- factor-of-two to absorb this;
+    a quantile in the zero-flow probability mass carries no band.'
