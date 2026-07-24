@@ -97,9 +97,10 @@ def dmr(
     """Pull a permit's reported effluent record (DMRs) from EPA ECHO -> actual flow vs design.
 
     Reads ECHO's effluent-chart service for one NPDES permit over a window: the primary
-    outfall's reported monthly flow (vs. the permitted design flow), the CSO/bypass outfall
-    count, and any ECHO-flagged effluent exceedances. With ``--out`` it writes a regenerable
-    YAML; reported values are verbatim and exceedances are listed only where ECHO reports them.
+    outfall's reported monthly flow (vs. the permitted design flow), the overflow-outfall
+    count (CSO + SSO, param 74063), and any ECHO-flagged effluent exceedances. With ``--out``
+    it writes a regenerable YAML; reported values are verbatim and exceedances are listed only
+    where ECHO reports them.
     """
     import yaml
 
@@ -130,7 +131,10 @@ def dmr(
     if design_flow is not None:
         table.add_row("design flow (MGD)", f"{design_flow}")
         table.add_row("mean actual / design", f"{summary.flow_pct_of_design}%")
-    table.add_row("CSO/bypass outfalls", str(summary.cso_outfalls))
+    table.add_row(
+        "overflow outfalls (CSO/SSO)",
+        f"{summary.overflow_outfalls} ({summary.active_overflow_outfalls} active)",
+    )
     table.add_row("reported exceedances", str(len(summary.exceedances)))
     console.print(table)
     for r in summary.exceedances:

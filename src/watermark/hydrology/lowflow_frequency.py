@@ -18,8 +18,14 @@ auditable):
    ``complete=False`` and excluded from the fit — the exclusion is recorded, never
    silent.
 2. **Log-Pearson Type III** (the USGS-standard distribution) by method of moments
-   on ``log10`` of the annual minima, with the Wilson-Hilferty frequency factor.
-   The 10-year low flow is the value at non-exceedance probability ``1/10 = 0.10``.
+   on ``log10`` of the annual minima, with the Wilson-Hilferty frequency factor. The fit uses
+   the **at-site (station) skew** only — no regional/generalized skew weighting (cf. Bulletin
+   17B/17C) — a stated Tier-0 simplification. The 10-year low flow is the value at
+   non-exceedance probability ``1/10 = 0.10``. Each LP3 quantile carries an approximate 90%
+   confidence band (``lp3_cfs.low`` / ``.high``): a first-order station-skew standard error
+   (:func:`lp3_confidence_interval`) that omits skew-estimation uncertainty and the
+   Wilson-Hilferty tail limitation, which is why the corroboration test keeps a generous
+   ±factor-of-two band (WS-25 / #1625).
 3. **Conditional-probability adjustment** for dry years: if a fraction ``p0`` of
    the minima are zero, the quantile below ``p0`` is simply ``0``; above it the fit
    runs on the non-zero minima at the conditional probability ``(p - p0)/(1 - p0)``.
@@ -70,11 +76,26 @@ DEFAULT_COMPLETENESS_DAYS = 350
 # of two — genuinely strong agreement for a statistic with wide confidence bounds.
 _CORROB_LOW = 0.5
 _CORROB_HIGH = 2.0
+# Two-sided 90% confidence band on an LP3 quantile: z at the 0.95 non-exceedance (WS-25 / #1625).
+_CI_Z = 1.6448536269514722
 
 _METHOD = (
     "climatic-year (Apr-Mar) annual n-day minima; log-Pearson III "
     "(method of moments, Wilson-Hilferty frequency factor) bracketed by Weibull "
-    "plotting position; conditional-probability adjustment for zero-flow years"
+    "plotting position; conditional-probability adjustment for zero-flow years; "
+    "at-site (station) skew only — no regional/generalized skew weighting (cf. Bulletin 17B/17C)"
+)
+
+# Reader-facing caveat carried into the committed reference (LowFlowFrequency.note), WS-25 / #1625.
+_CI_NOTE = (
+    "LP3 quantiles carry an approximate two-sided 90% confidence band (lp3_cfs.low / .high): a "
+    "first-order station-skew standard error se = s*sqrt((1 + K^2/2) / n) of the log-space "
+    "quantile y_p = mean + K*s, back-transformed as 10^(y_p +/- 1.645*se). It captures the mean "
+    "and scale-estimation variance but OMITS the skew-estimation and regional-skew uncertainty, "
+    "so it is a screening band, not a Bulletin 17B/17C confidence limit. The Wilson-Hilferty "
+    "frequency factor also degrades in the far low tail and at large |skew|. The corroboration "
+    "test uses a deliberately generous +/- factor-of-two to absorb this; a quantile in the "
+    "zero-flow probability mass carries no band."
 )
 
 
@@ -137,6 +158,36 @@ def _probit(p: float) -> float:
     )
 
 
+def _lp3_fit(nonzero: list[float]) -> tuple[float, float, float, int]:
+    """Method-of-moments log-Pearson III fit of the non-zero minima.
+
+    Returns ``(log_mean, log_sd, log_skew, k)`` over ``log10`` of the ``k`` non-zero values —
+    the **at-site (station) skew** only, no regional/generalized skew weighting (cf. Bulletin
+    17B/17C). ``skew`` is ``0`` when ``k <= 2`` or the spread is degenerate.
+    """
+    x = [math.log10(m) for m in nonzero]
+    k = len(x)
+    mean = sum(x) / k
+    var = sum((xi - mean) ** 2 for xi in x) / (k - 1) if k > 1 else 0.0
+    sd = math.sqrt(var)
+    if k > 2 and sd > 0.0:
+        skew = (k / ((k - 1) * (k - 2))) * sum((xi - mean) ** 3 for xi in x) / sd**3
+    else:
+        skew = 0.0
+    return mean, sd, skew, k
+
+
+def _wh_factor(skew: float, z: float) -> float:
+    """Wilson-Hilferty frequency factor ``K`` for Pearson III at standard-normal deviate ``z``.
+
+    Reduces to ``z`` for a symmetric (zero-skew) log distribution; the cubic approximation
+    degrades in the far tail and at large ``|skew|`` (a stated screening limitation, WS-25).
+    """
+    if abs(skew) < 1e-6:
+        return z
+    return (2.0 / skew) * ((1.0 + skew * z / 6.0 - skew * skew / 36.0) ** 3 - 1.0)
+
+
 def _lp3_low_quantile(minima: list[float], p: float) -> tuple[float, float, float]:
     """Log-Pearson III low-flow quantile at non-exceedance probability ``p``.
 
@@ -152,22 +203,40 @@ def _lp3_low_quantile(minima: list[float], p: float) -> tuple[float, float, floa
         # The p-quantile falls inside the zero-flow probability mass.
         return 0.0, math.nan, zero_fraction
     p_cond = (p - zero_fraction) / (1.0 - zero_fraction)
-    x = [math.log10(m) for m in nonzero]
-    k = len(x)
-    mean = sum(x) / k
-    var = sum((xi - mean) ** 2 for xi in x) / (k - 1) if k > 1 else 0.0
-    sd = math.sqrt(var)
-    if k > 2 and sd > 0.0:
-        skew = (k / ((k - 1) * (k - 2))) * sum((xi - mean) ** 3 for xi in x) / sd**3
-    else:
-        skew = 0.0
-    z = _probit(p_cond)
-    if abs(skew) < 1e-6:
-        factor = z
-    else:
-        # Wilson-Hilferty approximation of the Pearson III frequency factor.
-        factor = (2.0 / skew) * ((1.0 + skew * z / 6.0 - skew * skew / 36.0) ** 3 - 1.0)
+    mean, sd, skew, _k = _lp3_fit(nonzero)
+    factor = _wh_factor(skew, _probit(p_cond))
     return 10.0 ** (mean + factor * sd), skew, zero_fraction
+
+
+def lp3_confidence_interval(
+    minima: list[float], p: float, *, z: float = _CI_Z
+) -> tuple[float | None, float | None]:
+    """Approximate ``(low, high)`` confidence bounds on the LP3 low-flow quantile (WS-25 / #1625).
+
+    A **first-order, station-skew** standard error of the log-space quantile
+    ``y_p = mean + K_p*s``: ``se(y_p) = s * sqrt((1 + K_p^2 / 2) / k)`` — the exact large-sample
+    variance of a *normal* quantile estimate (the ``s^2/k`` mean term plus the
+    ``K_p^2 * s^2 / (2k)`` scale-estimation term), evaluated over the ``k`` non-zero minima the
+    fit uses. It deliberately **omits** the skew-estimation variance (the at-site log skew is
+    treated as fixed) and any regional-skew uncertainty — see :data:`_CI_NOTE`. Bounds are
+    ``10^(y_p +/- z*se)``. Returns ``(None, None)`` when the quantile falls in the zero-flow mass
+    or the fit is degenerate (fewer than two non-zero minima, or zero spread).
+    """
+    n = len(minima)
+    if n == 0:
+        return None, None
+    nonzero = [m for m in minima if m > 0.0]
+    zero_fraction = (n - len(nonzero)) / n
+    if p <= zero_fraction:
+        return None, None  # the quantile is in the zero-flow mass — no fitted band
+    p_cond = (p - zero_fraction) / (1.0 - zero_fraction)
+    mean, sd, skew, k = _lp3_fit(nonzero)
+    if k < 2 or sd <= 0.0:
+        return None, None
+    factor = _wh_factor(skew, _probit(p_cond))
+    y_p = mean + factor * sd
+    se = sd * math.sqrt((1.0 + factor * factor / 2.0) / k)
+    return 10.0 ** (y_p - z * se), 10.0 ** (y_p + z * se)
 
 
 def _weibull_low_quantile(minima: list[float], p: float) -> float:
@@ -330,6 +399,12 @@ def _statistic(
     complete = [m.min_cfs for m in minima if m.complete]
     p = 1.0 / return_period_yr
     lp3, weibull, skew, zero_fraction = low_flow_quantiles(complete, nonexceedance_prob=p)
+    ci_low, ci_high = lp3_confidence_interval(complete, p)
+    lp3_value = round(lp3, 4)
+    # Clamp the rounded band so `low <= value <= high` holds after independent rounding (the
+    # ProvenancedValue validator enforces it); the band is None in the zero-flow mass (WS-25).
+    lp3_low = min(round(ci_low, 4), lp3_value) if ci_low is not None else None
+    lp3_high = max(round(ci_high, 4), lp3_value) if ci_high is not None else None
     label = f"{nday}Q{return_period_yr}"
     cited, basis = _cited_for(nday, receiving_water, settings=settings)
     return LowFlowStatistic(
@@ -339,9 +414,11 @@ def _statistic(
         nonexceedance_prob=p,
         n_years=len(complete),
         lp3_cfs=ProvenancedValue.derived(
-            round(lp3, 4),
+            lp3_value,
             "cfs",
             citation=f"log-Pearson III on {len(complete)} climatic-year {nday}-day minima, NWIS {site_no} {period}",
+            low=lp3_low,
+            high=lp3_high,
         ),
         weibull_cfs=ProvenancedValue.derived(
             round(weibull, 4),
@@ -463,6 +540,7 @@ def compute_low_flow_frequency(
         harmonic_mean=harmonic_mean,
         annual_minima=all_minima,
         method=_METHOD,
+        note=_CI_NOTE,
     )
     seven_q10 = lff.stat(f"7Q{return_period_yr}")
     log.info(

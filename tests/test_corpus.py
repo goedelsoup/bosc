@@ -105,7 +105,7 @@ discharge_summary:
   actual_flow_min_mgd: 2.146
   actual_flow_max_mgd: 5.822
   flow_pct_of_design: 37.1
-  cso_outfalls: 0
+  overflow_outfalls: 0
   reported_exceedances: 0
 flow_monthly:
 - period_end: '2023-01-31'
@@ -123,7 +123,7 @@ _MINIMAL_DMR_PAYLOAD = {
         "discipline": "Reported DMR values are verbatim from the permittee's submissions.",
     },
     "permit": {"npdes_id": "OH0027049", "window": "2023-01-01..2023-12-31"},
-    "discharge_summary": {"n_flow_months": 12, "cso_outfalls": 0, "reported_exceedances": 0},
+    "discharge_summary": {"n_flow_months": 12, "overflow_outfalls": 0, "reported_exceedances": 0},
     "flow_monthly": [],
     "exceedances": [],
 }

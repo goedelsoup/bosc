@@ -54,6 +54,32 @@ _BASIN_DEPTH_FT = 12.0
 # RDII fraction of rainfall entering the new sanitary system as inflow/infiltration.
 _RDII_R = 0.05
 
+# WS-25 (#1625): the campus subcatchment geometry is grounded in the extracted grading sheet
+# rather than left at the generic screening constants — %slope is derived from the graded rim
+# relief (a flat campus drains ~5x slower than the fixed 1 % assumes) and pervious depression
+# storage is raised off the 0.05 in floor toward the SWMM-manual 0.1-0.3 in range. Applied only
+# when a storm inventory is committed (Lima); a site without one keeps the generic defaults.
+_SQFT_PER_ACRE = 43560.0
+_MIN_PCT_SLOPE = 0.1  # SWMM needs slope > 0; a graded site is never truly flat
+_MAX_PCT_SLOPE = 10.0  # guard a bad relief/area pair from an absurd gradient
+_DEFAULT_PCT_SLOPE = 1.0  # the legacy generic value, kept as the no-inventory fallback
+_CAMPUS_S_PERV_IN = 0.1  # raised off the 0.05 in floor (SWMM-manual pervious depression range)
+
+
+def _pct_slope_from_relief(relief_ft: float, area_acres: float) -> float:
+    """Campus subcatchment %slope from the graded rim relief (WS-25 / #1625).
+
+    The lumped subcatchment's overland flow length is its width ``= sqrt(area)``; the average
+    surface gradient is the rim relief (``rim_max - rim_min``) over that length. Clamped to a
+    positive floor (SWMM needs slope > 0; a graded site is never truly flat) and a sane ceiling.
+    Replaces the generic fixed 1.0 % assumption wherever a real grading sheet has been extracted.
+    """
+    flow_len_ft: float = (max(area_acres, 0.0) * _SQFT_PER_ACRE) ** 0.5
+    if flow_len_ft <= 0.0 or relief_ft <= 0.0:
+        return _DEFAULT_PCT_SLOPE
+    return min(_MAX_PCT_SLOPE, max(_MIN_PCT_SLOPE, 100.0 * relief_ft / flow_len_ft))
+
+
 _SWMM_SUBDIR = "swmm"
 _FILENAME = "tier1-swmm.yaml"
 
@@ -73,22 +99,33 @@ def _design_depth_in(settings: Settings, *, return_period_yr: int, live: bool) -
 
 
 def _size_detention(
-    area: float, depth: float, pre_peak: float
+    area: float,
+    depth: float,
+    pre_peak: float,
+    *,
+    pct_slope: float | None,
+    s_perv_store_in: float,
 ) -> tuple[float, float, float, str, float, str, str]:
     """Bisect orifice diameter so the released peak ~= pre peak.
 
     Returns ``(diam, release, storage, inp_text, continuity_pct, outfall, storage_node)``
     for the *final* sized deck (rebuilt once after the search so the committed deck is
-    internally consistent with the reported numbers).
+    internally consistent with the reported numbers). ``pct_slope`` / ``s_perv_store_in`` carry
+    the grounded campus subcatchment geometry through to every sized deck (WS-25 / #1625).
     """
-    basin_area = area * 43560.0 * _BASIN_FRAC
+    basin_area = area * _SQFT_PER_ACRE * _BASIN_FRAC
     lo, hi = 0.25, 12.0
     diam = hi
     for _ in range(10):
         diam = 0.5 * (lo + hi)
         det = inp.DetentionGeom(basin_area, _BASIN_DEPTH_FT, diam)
         text, outfall, _orifice, sto = inp.stormwater_inp(
-            area_acres=area, pct_imperv=_POST_IMPERV, depth_in=depth, detention=det
+            area_acres=area,
+            pct_imperv=_POST_IMPERV,
+            depth_in=depth,
+            detention=det,
+            pct_slope=pct_slope,
+            s_perv_store_in=s_perv_store_in,
         )
         res = engine.simulate(text, nodes=[outfall], storages=[sto])
         release = res.node_peak_cfs.get(outfall, 0.0)
@@ -100,7 +137,12 @@ def _size_detention(
     # Rebuild + run the final deck so the committed .inp matches the reported numbers.
     det = inp.DetentionGeom(basin_area, _BASIN_DEPTH_FT, diam)
     text, outfall, _orifice, sto = inp.stormwater_inp(
-        area_acres=area, pct_imperv=_POST_IMPERV, depth_in=depth, detention=det
+        area_acres=area,
+        pct_imperv=_POST_IMPERV,
+        depth_in=depth,
+        detention=det,
+        pct_slope=pct_slope,
+        s_perv_store_in=s_perv_store_in,
     )
     res = engine.simulate(text, nodes=[outfall], storages=[sto])
     release = res.node_peak_cfs.get(outfall, 0.0)
@@ -234,9 +276,27 @@ def run_tier1(
     depth = _design_depth_in(settings, return_period_yr=return_period_yr, live=live)
     decks: list[SwmmDeck] = []
 
+    # Ground the campus subcatchment geometry in the extracted grading sheet (WS-25 / #1625):
+    # derive %slope from the rim relief and raise pervious depression storage. When no storm
+    # inventory is committed for the site, `pct_slope=None` keeps the generic 1.0 % / 0.05 in
+    # deck (so a non-Lima site is byte-unchanged). NOTE: changing these regenerates the committed
+    # `.inp` decks + `tier1-swmm.yaml` — re-run `watermark tier1 --write` where the SWMM engine
+    # loads (pyswmm is unavailable in some environments) so the committed artifact stays in sync.
+    from watermark.hydrology.stormplan import load_inventory
+
+    inventory = load_inventory(settings=settings)
+    campus_pct_slope = (
+        _pct_slope_from_relief(inventory.relief.value, area) if inventory is not None else None
+    )
+    campus_s_perv_in = _CAMPUS_S_PERV_IN if inventory is not None else 0.05
+
     # --- Stormwater detention sizing ---
     pre_text, pre_out, _o, _s = inp.stormwater_inp(
-        area_acres=area, pct_imperv=_PRE_IMPERV, depth_in=depth
+        area_acres=area,
+        pct_imperv=_PRE_IMPERV,
+        depth_in=depth,
+        pct_slope=campus_pct_slope,
+        s_perv_store_in=campus_s_perv_in,
     )
     pre_res = engine.simulate(pre_text, nodes=[pre_out])
     pre_peak = pre_res.node_peak_cfs.get(pre_out, 0.0)
@@ -252,7 +312,11 @@ def run_tier1(
     )
 
     post_text, post_out, _o, _s = inp.stormwater_inp(
-        area_acres=area, pct_imperv=_POST_IMPERV, depth_in=depth
+        area_acres=area,
+        pct_imperv=_POST_IMPERV,
+        depth_in=depth,
+        pct_slope=campus_pct_slope,
+        s_perv_store_in=campus_s_perv_in,
     )
     post_res = engine.simulate(post_text, nodes=[post_out])
     post_peak = post_res.node_peak_cfs.get(post_out, 0.0)
@@ -268,7 +332,7 @@ def run_tier1(
     )
 
     diam, controlled, storage, det_text, det_cont, det_out, _sto = _size_detention(
-        area, depth, pre_peak
+        area, depth, pre_peak, pct_slope=campus_pct_slope, s_perv_store_in=campus_s_perv_in
     )
     decks.append(
         _deck(
@@ -350,11 +414,7 @@ def run_tier1(
         receiver_names=prof.sanitary_receiver_names,
     )
 
-    # Ground the detention result in the real 95% SPS drainage design, if extracted.
-    from watermark.hydrology.stormplan import load_inventory
-
-    inventory = load_inventory(settings=settings)
-
+    # The 95% SPS drainage design (loaded above for the campus geometry) grounds the result.
     log.info(
         "hydro.tier1",
         pre_peak=detention.pre_peak_cfs,

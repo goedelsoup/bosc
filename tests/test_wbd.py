@@ -84,3 +84,44 @@ def test_committed_boundaries_are_valid_and_provenanced() -> None:
         feat = doc["features"][0]
         assert feat["properties"]["huc"] == meta["huc"]
         assert feat["geometry"]["type"] in ("Polygon", "MultiPolygon")
+
+
+# --- boundary-tie disambiguation (WS-25 / #1625) ---------------------------------
+
+_LEFT = [[[0.0, 0.0], [0.0, 10.0], [10.0, 10.0], [10.0, 0.0], [0.0, 0.0]]]
+_RIGHT = [[[10.0, 0.0], [10.0, 10.0], [20.0, 10.0], [20.0, 0.0], [10.0, 0.0]]]
+
+
+def _feat(rings: list[list[list[float]]], *, multi: bool = False) -> dict[str, object]:
+    geom = (
+        {"type": "MultiPolygon", "coordinates": [rings]}
+        if multi
+        else {"type": "Polygon", "coordinates": rings}
+    )
+    return {"geometry": geom, "properties": {"huc": "x"}}
+
+
+def test_geometry_contains_polygon_and_multipolygon() -> None:
+    assert wbd._geometry_contains(_feat(_LEFT)["geometry"], 5.0, 5.0) is True
+    assert wbd._geometry_contains(_feat(_LEFT)["geometry"], 15.0, 5.0) is False
+    # MultiPolygon: the same square wrapped one level deeper.
+    assert wbd._geometry_contains(_feat(_RIGHT, multi=True)["geometry"], 15.0, 5.0) is True
+    # A hole punched in the exterior excludes an interior point.
+    holed = {"type": "Polygon", "coordinates": [_LEFT[0], [[4, 4], [4, 6], [6, 6], [6, 4], [4, 4]]]}
+    assert wbd._geometry_contains(holed, 5.0, 5.0) is False  # inside the hole
+    assert wbd._geometry_contains(holed, 1.0, 1.0) is True  # inside exterior, outside hole
+
+
+def test_select_boundary_feature_prefers_container_not_first() -> None:
+    """A point in the LEFT unit must pick LEFT even when RIGHT is returned first (WS-25)."""
+    features = [_feat(_RIGHT), _feat(_LEFT)]
+    chosen = wbd._select_boundary_feature(features, 5.0, 5.0)
+    assert chosen is features[1]  # the containing polygon, not features[0]
+
+
+def test_select_boundary_feature_falls_back_to_first() -> None:
+    """No polygon contains the point (exact edge / offshore) -> keep features[0], never fabricate."""
+    features = [_feat(_LEFT), _feat(_RIGHT)]
+    assert wbd._select_boundary_feature(features, 50.0, 50.0) is features[0]
+    # A single feature is returned untouched (the common case; committed outputs unchanged).
+    assert wbd._select_boundary_feature([features[0]], 500.0, 500.0) is features[0]

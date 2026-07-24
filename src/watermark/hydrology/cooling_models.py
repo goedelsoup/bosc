@@ -101,7 +101,12 @@ _OT_EVAP_FRAC_LOW = 0.01
 _OT_EVAP_FRAC_HIGH = 0.02
 _OT_EVAP_CITE = (
     "forced-evaporation share of a once-through withdrawal ~1-2% (USGS SIR 2014-5184, "
-    "Diehl & Harris 2014, thermoelectric water-consumption coefficients)"
+    "Diehl & Harris 2014, thermoelectric water-consumption coefficients). The band is a "
+    f"fraction of *withdrawal*, so it is anchored to the assumed ~{_OT_DELTA_T_C:g} degC "
+    "condenser dT (WS-25): the withdrawal scales inversely with dT for the same rejected heat, "
+    "so a fixed %-of-withdrawal coefficient holds only at the dT it is defined at. The forced "
+    "evaporation itself is driven by the rejected heat, not the intake volume — at a wider dT "
+    "(smaller withdrawal) the same heat evaporates a larger *fraction* of it"
 )
 
 # --- hybrid_adiabatic parameters --------------------------------------------------------
@@ -556,6 +561,13 @@ def _derive_once_through(
     understates the withdrawal 10-40%. The consumptive share is the downstream forced
     evaporation induced by the thermal rise, ~1-2% of withdrawal (Diehl & Harris 2014).
     No tower, so no WUE/CoC.
+
+    **dT coupling (WS-25).** The ~1-2% band is a fraction of *withdrawal*, and the withdrawal
+    scales inversely with the condenser dT for a fixed rejected heat — so the coefficient is
+    only dT-independent at the assumed ~10 degC dT it is defined at (:data:`_OT_DELTA_T_C`).
+    Both the withdrawal and its forced-evaporation share are driven off that one dT here, so
+    the coupling is internally consistent; a facility that discloses a different dT would need
+    the coefficient re-anchored to its rejected heat rather than re-used verbatim.
     """
     it_load_mw, it_load_low, it_load_high, it_load_cite = _resolve_it_load(facility, params)
     mult, mult_cite = _resolve_heat_reject_mult(facility, params)
