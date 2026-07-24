@@ -1,0 +1,40 @@
+doc_id: sso-closure-amer-bath-2010
+source_path: data/documents/legal/prr-mandamus/prr-production-2026-07-24-sanitary/15/Directors
+  Final Findings & Orders/2005 Directors Findings and Orders Corr/12-9-10 OEPA Notice Closure
+  of Amer-Bath SSO.doc
+kind: order
+pages_read: []
+method: text extracted from the native Word letter (textutil). Author William L. Horvath,
+  Wastewater Collection Superintendent, on Sanitary Engineering letterhead (3230 N. Cole St.,
+  Lima); native-file mtime recorded in the batch-3 custody manifest.
+order:
+  confidence: high
+  warnings:
+  - >-
+    The letter identifies the Meadows Apartments SSO manhole as "MH AB-01-020"; the 2005 DFFO's
+    Finding 10 table prints "AB-03-020" for Meadow Apartments. Preserved as printed in each
+    source, unreconciled.
+  agency: Ohio EPA (notification TO the agency under the 2005-05-31 DFFO; addressed to Thomas
+    Poffenbarger, P.E., DSW Northwest District Office)
+  instrument: closure notice
+  respondent: Allen County Sanitary Engineering Department
+  facility: American Bath WWC system (Meadows Apartments SSO)
+  permit_no: 2PH00007
+  issued_date: '2010-12-09'
+  obligations:
+  - {requirement: 'American Bath — Meadows Apartments SSO (MH AB-01-020 as printed) permanently
+      removed; excavation/removal performed by county WWC staff 2010-11-09; OEPA inspection
+      requested', deadline: null, status: met}
+  status: closed (the SSO this letter notifies)
+  summary: >-
+    Official permanent-removal notification for the American Bath system's single remaining SSO
+    (Meadows Apartments), excavated 2010-11-09 — consistent with the 2011 extension letter's
+    "closed nearly six years ahead of schedule". cc: Kayatin, Niemeyer, Boerger.
+  note: >-
+    [verified] from the letter. Companion to the 2019 Cam Court closure
+    (sso-closure-cam-court-2019.order.yaml).
+relevance:
+  tags: [verified, enforcement, sso, closure, american-bath, prr-item-15]
+  cross_refs:
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2005.order.yaml
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/sso-closure-cam-court-2019.order.yaml

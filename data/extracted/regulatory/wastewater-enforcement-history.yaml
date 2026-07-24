@@ -97,6 +97,7 @@ dffo_chain:
     date: '1997-05-01'
     what: County General Plan + Schedule of Implementation, incorporated into NPDES 2PK00002*GD —
       eliminate ALL Shawnee POTW SSOs by 2003-05-01 (2005 DFFO Finding 7).
+    envelope: legal/prr-mandamus/prr-production-2026-07-24/dffo-2005.order.yaml   # the plan itself is not a standalone record; it is recited in the 2005 DFFO's findings
   dffo_2005:
     journalized: '2005-05-31'
     what: >-
@@ -127,7 +128,10 @@ dffo_chain:
       Cam Court SSO removed 2019-02-26 (notified 2019-03-07). Country Club Siphon (SH05-018)
       still overflowed 479,935 gal on 2019-01-23 and 51,504 gal on 2019-03-30 (county monthly
       SSO reports, batch-3 item 9).
-    envelope: legal/prr-mandamus/prr-production-2026-07-24/sso-closures.order.yaml
+    envelope:
+    - legal/prr-mandamus/prr-production-2026-07-24/sso-closure-amer-bath-2010.order.yaml
+    - legal/prr-mandamus/prr-production-2026-07-24/sso-closure-cam-court-2019.order.yaml
+    overflow_source: legal/prr-mandamus/prr-production-2026-07-24/sso-reports-2019.yaml   # the Country Club Siphon overflow figures come from the 2019 monthly SSO reports, not the closure letters
   extension_correspondence_2023:
     date: '2023-02-02'
     what: >-

@@ -10,10 +10,11 @@ award:
   confidence: high
   warnings:
   - >-
-    This is the APPLICATION (instrument: application), not an executed loan award. The
-    produced file carries no engineering attachments and no feasibility study — the item-11
-    ask's forcemain design-capacity (MGD) figure appears nowhere in it (see the batch-3
-    response index).
+    This is the APPLICATION (instrument: application), not an executed loan award. In the
+    reviewed pages 1-3, no engineering attachments, feasibility study, or forcemain
+    design-capacity (MGD) figure were observed; pages 4-11 (tabs/attachments) are not yet
+    transcribed, so their presence or absence is an OPEN lead pending that read (see the
+    batch-3 response index; leads FORCEMAIN-MGD / GH-161).
   - >-
     Amount reconciliation open: the application's $1,760,000 does not match either batch-2
     grant-authorization figure (Res 135-26 Hamlet of Hume $2.0M; Res 136-26 unincorporated
@@ -53,8 +54,9 @@ relevance:
   tags: [verified, finance, wpclf, hume-road, regionalization, prr-item-11]
   note: >-
     Batch-3 item 11's sole produced record. The "Regionalization" discount checkbox is the
-    county's own program characterization of the Hume/Shawnee corridor sewering; the absent
-    feasibility study and forcemain-MGD keep leads FORCEMAIN-MGD / GH-161 open.
+    county's own program characterization of the Hume/Shawnee corridor sewering; the
+    feasibility study and forcemain-MGD figure were not observed in the reviewed pages 1-3
+    (pages 4-11 unread), keeping leads FORCEMAIN-MGD / GH-161 open pending that transcription.
   cross_refs:
   - data/extracted/legal/prr-mandamus/bosc-prr-production-2026-07-24.response-index.yaml
   - data/extracted/commissioners/sanitary-economics.yaml

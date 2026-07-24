@@ -363,7 +363,7 @@
       ],
       "status": "granted in substance by the 2014 Modified DFFO (journalized 2014-01-06)",
       "summary": "The county's five-year-extension request that became the 2014 modification. Documents the strategic pivot from collection-system rehabilitation to COLLECT-PUMP-TREAT after the Seriff Sub-Basin pilot showed rehabilitation flows \"still too great and the cost ... too excessive\"; SECAPs for both POTWs approved by OEPA April 2009; the American-Bath trunk replacement (completed late 2009) closed that system's one SSO ~6 years early, and — per a 2011-09-26 county letter — OEPA authorized FOREGOING the American-Bath WWTP expansion after wet-weather monitoring, saving \"nearly $7,000,000\". Rates: +64% over the prior 6 years with a further 10% scheduled (\"80% higher than they were 6 years ago\"). The county argues designing Shawnee WWTP improvements from modeled rather than monitored flows risks \"overdesign of wastewater treatment plant improvements\".",
-      "note": "[verified] as the county's statements in its own letter. The overdesign concern and the design-from-actual-flows sequencing are the stated rationale for the five added years — context for evaluating the eventual Phase 2 sizing (3.0 MGD avg / 12.60 MGD peak per the later county website figure, which this production nowhere documents)."
+      "note": "[verified] as the county's statements in its own letter. The overdesign concern and the design-from-actual-flows sequencing are the stated rationale for the five added years — the letter defers Phase 2 WWTP sizing to a post-construction flow-monitoring period rather than stating any capacity figure."
     },
     "approximate_paths": [],
     "citation": {
@@ -432,7 +432,7 @@
       ],
       "penalty_usd": null,
       "stipulated_penalties": "none in this modification (the 2005 penalty/SEP terms stand unmodified)",
-      "status": "superseded in part by later correspondence (county's 2022-10-26 amendment request; OEPA 2023-02-02 response agreeing to a 2028-12-31 Phase 2 completion)",
+      "status": "active (the operative journalized instrument) — the county's 2022-10-26 amendment request and OEPA's 2023-02-02 response (agreeing to a 2028-12-31 Phase 2 completion) are pending correspondence on a draft revision that has not journalized",
       "summary": "The five-year extension the county requested on 2011-12-09: SSO elimination moves from 2015-12-31 to 2020-12-31, restructured as Phase 1 (collect-pump-treat: interceptor, pump station, headworks/EQ basin/UV by July 2015), a monitored-flow year, then Phase 2 WWTP capacity designed from actual flows. Signed by Director Scott J. Nally 2013-12-31 and Commissioner Jay Begg 2013-12-05; journalized 2014-01-06. Crucially, Order 1.A.iii designates the equalization-basin overflow as TEMPORARY, and Order 1.A.vii requires its elimination along with all SSOs by 2020-12-31 — the provision the county later argued against (\"the EQ 'bypass' ... was always part of the design\", per its 2022-10-26 letter quoted in OEPA's 2023-02-02 response).",
       "note": "[verified] from the journalized instrument. Six Shawnee SSOs and one American Bath SSO remained as of these findings (Finding 5)."
     },
@@ -497,39 +497,71 @@
     "source_doc_published": false
   },
   {
-    "rel": "legal/prr-mandamus/prr-production-2026-07-24/sso-closures.order.yaml",
+    "rel": "legal/prr-mandamus/prr-production-2026-07-24/sso-closure-amer-bath-2010.order.yaml",
     "group": "enforcement",
     "title": "closure notice",
     "confidence": "high",
     "warnings": [
-      "Two closure notifications recorded in ONE envelope (same genre, same author, same DFFO reference); the source_path carries the Cam Court letter, the American Bath letter is cited in method/summary. Note the American Bath letter identifies the Meadows Apartments SSO manhole as \"MH AB-01-020\" where the 2005 DFFO's Finding 10 table prints \"AB-03-020\" — preserved as printed in each source, unreconciled."
+      "The letter identifies the Meadows Apartments SSO manhole as \"MH AB-01-020\"; the 2005 DFFO's Finding 10 table prints \"AB-03-020\" for Meadow Apartments. Preserved as printed in each source, unreconciled."
     ],
     "fields": {
-      "agency": "Ohio EPA (notifications TO the agency under the 2005-05-31 DFFO)",
+      "agency": "Ohio EPA (notification TO the agency under the 2005-05-31 DFFO; addressed to Thomas Poffenbarger, P.E., DSW Northwest District Office)",
       "instrument": "closure notice",
       "respondent": "Allen County Sanitary Engineering Department",
-      "facility": "Shawnee No. 2 WWC system (Cam Court SSO); American Bath WWC system (Meadows Apartments SSO)",
-      "permit_no": "2PK00002*JD (Cam Court letter) / 2PH00007 (American Bath letter)",
-      "issued_date": "2019-03-07",
+      "facility": "American Bath WWC system (Meadows Apartments SSO)",
+      "permit_no": "2PH00007",
+      "issued_date": "2010-12-09",
       "obligations": [
         {
-          "requirement": "American Bath — Meadows Apartments SSO (MH AB-01-020 as printed) permanently removed; excavation/removal performed by county WWC staff 2010-11-09; OEPA inspection requested (letter to Thomas Poffenbarger, 2010-12-09)",
-          "deadline": null,
-          "status": "met"
-        },
-        {
-          "requirement": "Shawnee — Cam Court SSO permanently removed; excavation/removal performed 2019-02-26; before/after photos enclosed (letter to Peggy Christie, 2019-03-07)",
+          "requirement": "American Bath — Meadows Apartments SSO (MH AB-01-020 as printed) permanently removed; excavation/removal performed by county WWC staff 2010-11-09; OEPA inspection requested",
           "deadline": null,
           "status": "met"
         }
       ],
-      "status": "closed (the two SSOs these letters notify)",
-      "summary": "The county's official permanent-removal notifications under the 2005 DFFO: the American Bath system's single remaining SSO (Meadows Apartments) removed 2010-11-09 — consistent with the 2011 extension letter's \"closed nearly six years ahead of schedule\" — and the Shawnee Cam Court SSO (52 overflow days in the 2005 DFFO's 2001-2003 table) removed 2019-02-26, more than three years past the original 2015-12-31 eliminate-all deadline and within the extended 2020-12-31 one. cc: Kayatin, Niemeyer, Boerger/Santaguida.",
-      "note": "[verified] from the letters. The Cam Court date is a fixed point for the elimination timeline the analysis phase reconstructs from the 2019 SSO reports."
+      "status": "closed (the SSO this letter notifies)",
+      "summary": "Official permanent-removal notification for the American Bath system's single remaining SSO (Meadows Apartments), excavated 2010-11-09 — consistent with the 2011 extension letter's \"closed nearly six years ahead of schedule\". cc: Kayatin, Niemeyer, Boerger.",
+      "note": "[verified] from the letter. Companion to the 2019 Cam Court closure (sso-closure-cam-court-2019.order.yaml)."
     },
     "approximate_paths": [],
     "citation": {
-      "source": "legal/prr-mandamus/prr-production-2026-07-24/sso-closures.order.yaml",
+      "source": "legal/prr-mandamus/prr-production-2026-07-24/sso-closure-amer-bath-2010.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "legal/prr-mandamus/prr-production-2026-07-24-sanitary/15/Directors Final Findings & Orders/2005 Directors Findings and Orders Corr/12-9-10 OEPA Notice Closure of Amer-Bath SSO.doc",
+    "source_doc_render_class": "office",
+    "source_doc_published": false
+  },
+  {
+    "rel": "legal/prr-mandamus/prr-production-2026-07-24/sso-closure-cam-court-2019.order.yaml",
+    "group": "enforcement",
+    "title": "closure notice",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "agency": "Ohio EPA (notification TO the agency under the 2005-05-31 DFFO; addressed to Peggy Christie, Environmental Engineer, DSW Northwest District Office)",
+      "instrument": "closure notice",
+      "respondent": "Allen County Sanitary Engineering Department",
+      "facility": "Shawnee No. 2 WWC system (Cam Court SSO)",
+      "permit_no": "2PK00002*JD",
+      "issued_date": "2019-03-07",
+      "obligations": [
+        {
+          "requirement": "Shawnee — Cam Court SSO permanently removed; excavation/removal performed 2019-02-26; before/after photos enclosed",
+          "deadline": null,
+          "status": "met"
+        }
+      ],
+      "status": "closed (the SSO this letter notifies)",
+      "summary": "Official permanent-removal notification for the Shawnee Cam Court SSO (52 overflow days in the 2005 DFFO's 2001-2003 table), excavated 2019-02-26 — more than three years past the original 2015-12-31 eliminate-all deadline and within the extended 2020-12-31 one. cc: Kayatin, Niemeyer, Santaguida.",
+      "note": "[verified] from the letter. The Cam Court removal date is a fixed point for the elimination timeline the analysis phase reconstructs from the 2019 SSO reports. Companion to the 2010 American Bath closure (sso-closure-amer-bath-2010.order.yaml)."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "legal/prr-mandamus/prr-production-2026-07-24/sso-closure-cam-court-2019.order.yaml",
       "source_kind": "document",
       "page": null,
       "confidence": "high",
@@ -546,7 +578,7 @@
     "title": "Hume Road Sewer System",
     "confidence": "high",
     "warnings": [
-      "This is the APPLICATION (instrument: application), not an executed loan award. The produced file carries no engineering attachments and no feasibility study — the item-11 ask's forcemain design-capacity (MGD) figure appears nowhere in it (see the batch-3 response index).",
+      "This is the APPLICATION (instrument: application), not an executed loan award. In the reviewed pages 1-3, no engineering attachments, feasibility study, or forcemain design-capacity (MGD) figure were observed; pages 4-11 (tabs/attachments) are not yet transcribed, so their presence or absence is an OPEN lead pending that read (see the batch-3 response index; leads FORCEMAIN-MGD / GH-161).",
       "Amount reconciliation open: the application's $1,760,000 does not match either batch-2 grant-authorization figure (Res 135-26 Hamlet of Hume $2.0M; Res 136-26 unincorporated Shawnee Twp / Shawnee Oaks $1.6M). Whether this application implements 135-26, 136-26, or a revised scope is unresolved on the face of the produced records."
     ],
     "fields": {
