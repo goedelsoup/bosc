@@ -261,9 +261,9 @@ from watermark.sites import (
 #   the criterion type — chronic aquatic-life dilution at the cited 7Q10 (`dilution_ratio`,
 #   unchanged) and **acute** at the cited **1Q10** — because banding an acute limit with the
 #   chronic design flow understates the constraint (a standard reviewer objection). All three are
-#   null when the fact sheet omits the 1Q10; a cited 1Q10 = 0 cfs (the Ottawa) yields a 0:1 acute
-#   ratio (no acute assimilative capacity). Additive/optional, so an existing hydrology-scenarios.json
-#   row stays valid — PATCH, back-compatible.
+#   null when the fact sheet omits the 1Q10; a cited 1Q10 = 0 cfs (a stream that runs dry at design
+#   low flow) yields a 0:1 acute ratio (no acute capacity). Additive/optional, so an existing
+#   hydrology-scenarios.json row stays valid — PATCH, back-compatible.
 CONTRACT_VERSION = "1.33.1"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +

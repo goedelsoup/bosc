@@ -97,6 +97,23 @@ def test_harmonic_mean_all_zero_is_nan() -> None:
     assert n_days == 0 and zero_days == 2
 
 
+def test_harmonic_mean_undefined_record_stays_nan_not_zero(hydro_settings: Settings) -> None:
+    # An all-zero record has an *undefined* harmonic mean — it must stay NaN through the model,
+    # never a fabricated 0.0 cfs (which reads as a real design flow). Finite means round normally.
+    import math
+
+    hm = lf._harmonic_mean(
+        [0.0, 0.0, 0.0], site_no="TEST", receiving_water=None, period="p", settings=hydro_settings
+    )
+    assert math.isnan(hm.computed_cfs.value)
+    assert hm.n_days == 0 and hm.zero_days == 3
+
+    finite = lf._harmonic_mean(
+        [1.0, 2.0, 4.0], site_no="TEST", receiving_water=None, period="p", settings=hydro_settings
+    )
+    assert finite.computed_cfs.value == pytest.approx(round(3.0 / 1.75, 4))
+
+
 # ---------------------------------------------------------------- annual minima
 
 

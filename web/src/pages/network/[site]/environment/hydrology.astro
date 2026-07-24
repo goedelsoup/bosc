@@ -180,7 +180,11 @@ const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.valu
             warn: binding.flag !== "ok",
           });
         }
-        const violations = assim.filter((r) => r.flag === "violation").length;
+        // Fail the band if EITHER design flow is a violation — chronic (7Q10) or acute (1Q10)
+        // (WS-08); an acute-only violation still fails, matching the Python assimilative screen.
+        const violations = assim.filter(
+          (r) => r.flag === "violation" || r.acute_flag === "violation",
+        ).length;
         return (
           <div class="scenario">
             <h2>{s.scenario.name}</h2>
