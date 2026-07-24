@@ -1,0 +1,226 @@
+# Allen County — THIRD production batch in response to the BOSC public-records request.
+# This is the Sanitary Engineer's PER-ITEM production (items 9, 11, 13, 14, 15), delivered
+# via the Board of Commissioners on a USB flash drive received 2026-07-24. Unlike batches
+# 1-2 (assembled scan bundles), this batch is a NATIVE departmental file-tree copy: 1,610
+# files / ~1.04 GB of original Word/Excel/PDF/image/media files with as-received names,
+# folder structure, and file-server modification times (2003-2026) intact.
+#
+# Source tree: data/documents/legal/prr-mandamus/prr-production-2026-07-24-sanitary/
+# (item folders "9", "11", "13 - See 9", "14", "15" verbatim). Per-file sha256/mtime/
+# duplicate-group custody record: bosc-prr-production-2026-07-24.custody-manifest.yaml.
+# Survey-level reads below are cited to file paths within the production tree; the
+# item-adequacy sweep (does the produced tree actually answer the ask?) is tracked as a
+# follow-up analysis, not asserted here.
+meta:
+  subject: BOSC PRR — Allen County production batch 3 (Sanitary Engineer per-item trees, items 9/11/13/14/15)
+  production_date: 2026-07-24
+  cover_letter: none on the drive — five item-numbered folders at the volume root ("13 - See 9"
+    is the county's own cross-reference foldername).
+  custodian: Allen County Sanitary Engineering department (via the Board of Commissioners)
+  collection: legal
+  source_dir: data/documents/legal/prr-mandamus/prr-production-2026-07-24-sanitary/
+  as_received: USB flash drive, volume "STORE N GO", folder "Sanitary Records 7:24"
+  posture: >
+    Per-item follow-up to the batch-2 (2026-06-12) Category-B bundle: where batch 2 produced
+    an assembled 135-page scan of resolutions + instruments, batch 3 produces the department's
+    native working files for five of the Category-B items. First production in native formats;
+    Office author/last-saved metadata and original mtimes arrive with it. Several PDFs carry a
+    "_Redacted" suffix (county redactions applied at production time, 2026 mtimes).
+  relevance: >
+    The county-wastewater engineering universe the completeness audit tracks as the largest
+    substantive hole: the Shawnee & American-Bath SSO enforcement record (1997 General Plan
+    through the 2023 Shawnee II DFFO extension correspondence), the Phase 1 SECAP construction
+    and financing files, the 2019 SSO reports, the live Shawnee Oaks / Hume Road reroute-and-
+    WPCLF program feeding Shawnee II, and the Cridersville treatment-agreement record.
+
+request_response:
+  items:
+    - n: "9"
+      category: B
+      ask: >
+        Complete OWDA loan application, engineering reports, and capacity-justification
+        documents for the Shawnee II WWTP Phase 2 expansion — specifically every record
+        referencing the 12.6 MGD peak hydraulic capacity figure (county website) absent from
+        the draft NPDES permit / fact sheet for Shawnee II (2PK00002).
+      status: produced
+      produced: >
+        1,236-file native tree "SH & AB SSO Findings and Orders" (963 MB): 2019 SSO monthly
+        reports (xlsx); Phase 1 SECAP construction projects (Shawnee force main incl. the
+        Ottawa River crossing, Shawnee-Ft Amanda pump station, American-Bath trunk sewer/URS,
+        design + construction progress meetings 2012-2015); WPCLF/EPA Financing Loan No-6718
+        (WWTP Ph 1, FM and PS) incl. retainage records; construction photos/video and a
+        2015-09-18 audio recording under "S&S Force Main Issues".
+      still_outstanding: >
+        Adequacy sweep pending — the tree reads Phase-1-era (bulk mtimes 2008-2016). Whether it
+        contains the Phase 2 OWDA loan application, the Phase 2 capacity-justification
+        engineering, or any record referencing the 12.6 MGD peak figure is NOT yet verified;
+        that sweep is the core of the batch-3 analysis.
+    - n: "11"
+      category: B
+      ask: >
+        Complete feasibility study contracted under Res 113-26, incl. the proposed forcemain
+        design capacity in MGD; and the complete WPCLF loan application submitted under Res
+        136-26, incl. all engineering attachments and any reference to anticipated users beyond
+        the identified residential connections. (Batch 2 corrected the ask's premise: 113-26 is
+        the Shawnee Oaks ENGINEERING contract with Access Engineering Solutions, not an MS
+        Consultants feasibility study.)
+      status: partially-produced
+      produced: >
+        A single file, "WPCLF Application.pdf" (11 pp., dated 3/1/2026): Ohio EPA DEFA funding
+        application for the "Hume Road Sewer System" — new sewer for homes on septic along Hume
+        Road connecting into the county system; estimated loan $1,760,000; design + construction
+        loans, 30-yr term, first payment 7/1/2028; "Regionalization" interest-rate discount;
+        authorized rep Brad Niemeyer (Sanitary Engineer); consulting engineer Craig Mescher,
+        Access Engineering Solutions.
+      still_outstanding: >
+        No feasibility study, no forcemain design-capacity (MGD) record, and no engineering
+        attachments accompany the application; the $1.76M figure also needs reconciling against
+        the 135-26 ($2.0M Hume) / 136-26 ($1.6M Shawnee Twp) grant-authorization pair from
+        batch 2. The "anticipated users beyond residential" ask is unanswered by the produced
+        form (its project description names only homes presently on septics).
+    - n: "13"
+      category: B
+      ask: >
+        All MS Consultants contracts, task orders, scopes, invoices, and correspondence with
+        Allen County from 2024-01-01 to date, covering the BOSC pump station and forcemain, the
+        Shawnee II SECAP collection-system improvements, and the Hume/Shawnee Road feasibility
+        study — incl. any document referencing more than one of these projects.
+      status: cross-referenced
+      produced: >
+        An EMPTY folder named "13 - See 9" — the county answers item 13 by reference to the
+        item-9 tree.
+      still_outstanding: >
+        Adequacy of the cross-reference is unverified and doubtful at survey level: the item-9
+        tree is Phase-1-era (2008-2016) and the initial survey observed no 2024-onward MS
+        Consultants task orders, invoices, or BOSC pump-station/forcemain correspondence in it.
+        If the sweep confirms that, item 13 is effectively unanswered (constructive-denial
+        posture) — flag for the rolling-response follow-up.
+    - n: "14"
+      category: B
+      ask: >
+        All records relating to Ohio EPA's review of the Village of Cridersville wastewater
+        treatment agreement (per the 2025-05-29 Commissioner minutes), incl. any Prosecutor's
+        Office legal analysis, Cridersville correspondence, and any record relating to
+        termination of that agreement.
+      status: produced
+      produced: >
+        40-file native "Shawnee Oaks" tree: the 2014 Shawnee Oaks Wastewater Treatment Agreement
+        with the Village of Cridersville + renewal resolution; 1997 correspondence; and the live
+        2026 "Shawnee Oaks reroute to Shawnee WWTP" project — Buchanan land purchase (legal
+        description, exhibit, FMV, purchase agreement/resolution), Ricketts/Burgess/Cridersville
+        easements, WPCLF financing (BOCC grant app form, fund resolutions incl. "Signed Res
+        WPCLF Shawnee Rd - Hume"), Access Engineering acceptance + consultant-selection scoring,
+        property-owner database, New Fund Request 1-9-26, CERTIFICATE SHAWNEE OAKS 4-2-26.
+      still_outstanding: >
+        No Prosecutor's Office legal analysis and no explicit termination record observed at
+        survey level; no OEPA-review correspondence identified yet. Sweep pending. (The reroute
+        tree itself is the county's de-facto exit from the Cridersville agreement — the records
+        of REPLACING the agreement may be the county's answer to "termination".)
+    - n: "15"
+      category: B
+      ask: >
+        All county records relating to the 1996 federal CWA consent decree (N.D. Ohio 3:96 CV
+        7134), incl. any DFFOs modifying county obligations, compliance correspondence with
+        Ohio EPA or DOJ, and any record on the decree's relationship to the Shawnee II Phase 2
+        expansion.
+      status: produced
+      produced: >
+        333-file native "Directors Final Findings & Orders" tree (120 MB): 2005 DFFO
+        correspondence (cover letter, signed findings-and-orders, compliance schedule,
+        journalized orders, warning-signs letter), the 2014 Modified DFFO (+ the "(5yr
+        extension)" revision, resolution, Simcic/Poffenbarger/Wick OEPA email threads incl. the
+        7-29-15 "No SERP" clarification), the 2023-02-02 Shawnee II DFFO extension letter, SSO
+        closure notices (American-Bath 2010-12-09, Shawnee Cam Court 2019-03-07), and the SECAP
+        record (incl. "Final Report Secap_Redacted.pdf" and the 2007-08 URS SSO/flow-calculation
+        work duplicated from the item-9 tree).
+      still_outstanding: >
+        Whether the 1996 federal decree instrument itself or any DOJ correspondence appears in
+        the tree is unverified (the decree is already in-corpus from another source at
+        data/documents/regulatory/allen-co-cwa-consent-decree-1996.pdf); the decree-to-Phase-2
+        relationship records are exactly what the DFFO email threads should evidence — sweep
+        pending.
+
+new_findings:
+  - id: first-native-format-production
+    finding: >
+      Batch 3 is the first NATIVE-format production: 1,610 files (594 .doc, 472 .pdf, 192
+      .jpg/.JPG, 69 .docx, 57 .txt, 38 Thumbs.db, 35 .htm, 34 .xls, 33 .gif, 22 .bmp, 20
+      .xlsx, 10 .xml, 8 .MOV, 4 .zip, 1 .mp3, 3 extensionless, ...) with original file-server
+      modification times (2003-2026) and Office author/last-saved metadata intact (e.g. the
+      extensionless "3-3-16 Natale Revised Change Order" carries Author: NHugus / Last Saved
+      By: Andrew Natale / Last Printed 2015-03-24 in its OLE2 metadata).
+    implication: >
+      Metadata-bearing originals — authorship, edit times, and print history are now evidence
+      (recorded per-file in the custody manifest because git does not retain mtimes). Legacy
+      .doc/.xls/.htm are not yet machine-readable by the retrieval pipeline (follow-up filed).
+  - id: dffo-slippage-arc-documented
+    finding: >
+      The 2023-02-02 OEPA letter (15/Directors Final Findings & Orders/2023.02.02 Shawnee II
+      DFFO Ext. Letter.pdf, born-digital, read at survey) states the county's 1997-05-01
+      General Plan promised SSO elimination by 2003-05-01; the 2005 DFFOs (with a $49,226 civil
+      penalty) extended it to 2015-12-31; the 2014 modified DFFOs to 2020-12-31; and the
+      county's 2022-10-26 letter asks to complete Phase 2 by 2028-12-31 — which OEPA itself
+      characterizes as "25 years after the original proposal" while agreeing to the date and
+      REFUSING to drop stipulated-penalty language. OEPA is also "amenable" to removing the EQ
+      basin "bypass" language but keeps SSO-elimination language and will add post-construction
+      monitoring in the modified NPDES permit to determine whether the overflow can be
+      eliminated.
+    implication: >
+      The full 25-year compliance-slippage arc for the plant being expanded to receive the BOSC
+      corridor load is now a single citable primary document; Phase 2 completion 2028-12-31 is
+      an anchored deadline. Feeds wastewater-enforcement-history.yaml and the Shawnee II
+      public-meeting request's SECAP post-construction-monitoring thread.
+  - id: hume-road-wpclf-application
+    finding: >
+      Item 11's produced record is a 2026-03-01 Ohio EPA DEFA application for the "Hume Road
+      Sewer System" — $1,760,000, design + construction loans, Regionalization discount,
+      Access Engineering (Craig Mescher), Brad Niemeyer authorized representative, first
+      payment 2028-07-01 — with NO engineering attachments and NO forcemain design-capacity
+      figure.
+    implication: >
+      The produced application does not by itself answer the item-11 ask (feasibility study +
+      forcemain MGD + anticipated non-residential users); FORCEMAIN-MGD remains open. Amount
+      reconciliation against the batch-2 grant-authorization pair (135-26 $2.0M Hume / 136-26
+      $1.6M Shawnee Twp) is a follow-up.
+  - id: items-9-15-filing-overlap
+    finding: >
+      164 content-identical files appear under BOTH item 9 and item 15 (e.g. the American-Bath
+      trunk-sewer change-order correspondence and the 2008 URS flow-calculation work) — 411
+      duplicate groups / 464 redundant files (~140 MB) across the production overall, recorded
+      as dup_group ids in the custody manifest.
+    implication: >
+      The county's own filing treats the SECAP construction record as responsive to both the
+      SSO-enforcement ask (9) and the consent-decree/DFFO ask (15). Nothing was deduplicated:
+      the per-item placement is itself part of the production record.
+  - id: force-main-dispute-media
+    finding: >
+      The item-9 tree carries non-document evidence of the Shawnee force-main construction:
+      a 44 MB audio recording dated 2015-09-18 filed under "S&S Force Main Issues", 8 .MOV
+      videos incl. the April 2016 Ottawa River force-main crossing bore ("River crossing. Bore
+      head detection device strung above the river..."), and an S&P Apartments SSO video
+      (2010).
+    implication: >
+      First audio/video primary evidence in the corpus (media-review follow-up filed:
+      transcription + review). The 2015 recording sits amid the "Change Order Corr-Open Cut"
+      dispute correspondence — likely a recorded call/meeting during the S&S force-main
+      dispute.
+
+timeline_additions:
+  - {date: 2023-02-02, event: "OEPA letter to Sanitary Engineer — agrees to Shawnee II Phase 2
+      completion 2028-12-31 ('25 years after the original proposal'), keeps stipulated-penalty
+      language, amenable to dropping EQ-basin 'bypass' wording but adds post-construction
+      monitoring (batch-3 item 15)"}
+  - {date: 2026-03-01, event: "WPCLF loan application — Hume Road Sewer System, $1.76M, Access
+      Engineering (batch-3 item 11)"}
+  - {date: 2026-07-24, event: "Third production batch received — Sanitary Engineer per-item
+      native file trees for items 9/11/13/14/15 (1,610 files, ~1.04 GB)"}
+
+cross_refs:
+  - data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-05.response-index.yaml   # batch 1 (items 5-15 deferred)
+  - data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-12.response-index.yaml   # batch 2 (the Category-B bundle this batch itemizes)
+  - data/extracted/legal/prr-mandamus/bosc-prr-production-2026-07-24.custody-manifest.yaml # per-file sha256/mtime/dup-group custody record
+  - data/extracted/legal/cross-production-referral-map.yaml                                # the "See 9" referral pattern
+  - data/extracted/legal/corpus-completeness-audit.md                                      # items 5-15 row — batch 3 posture
+  - data/extracted/regulatory/wastewater-enforcement-history.yaml                          # 1996 decree + 2005 SSO arc — extend with the DFFO chain
+  - data/site/leads.yaml                                                                   # FORCEMAIN-MGD, GH-35, GH-161
+  - data/hypotheses/water/lima.yaml                                                        # capacity evidence for the water lens

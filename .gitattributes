@@ -16,11 +16,39 @@ data/documents/**/*.odg filter=lfs diff=lfs merge=lfs -text
 data/documents/**/*.mp3 filter=lfs diff=lfs merge=lfs -text
 data/documents/**/*.m4a filter=lfs diff=lfs merge=lfs -text
 data/documents/**/*.flac filter=lfs diff=lfs merge=lfs -text
+# Sanitary Engineer PRR production (2026-07-24): a native departmental file-tree copy,
+# so the corpus gains legacy Office/media/browser formats. Binary types → LFS.
+data/documents/**/*.gif filter=lfs diff=lfs merge=lfs -text
+data/documents/**/*.bmp filter=lfs diff=lfs merge=lfs -text
+data/documents/**/*.zip filter=lfs diff=lfs merge=lfs -text
+data/documents/**/*.pptx filter=lfs diff=lfs merge=lfs -text
+data/documents/**/*.thmx filter=lfs diff=lfs merge=lfs -text
+data/documents/**/*.dot filter=lfs diff=lfs merge=lfs -text
+data/documents/**/*.db filter=lfs diff=lfs merge=lfs -text
+data/documents/**/*.dbf filter=lfs diff=lfs merge=lfs -text
+data/documents/**/*.mov filter=lfs diff=lfs merge=lfs -text
+# As-received filenames keep their original upper-case extensions (chain of custody:
+# never rename a source file) and .gitattributes globs are case-sensitive — cover the
+# upper-case variants actually present in the corpus.
+data/documents/**/*.JPG filter=lfs diff=lfs merge=lfs -text
+data/documents/**/*.DOC filter=lfs diff=lfs merge=lfs -text
+data/documents/**/*.PDF filter=lfs diff=lfs merge=lfs -text
+data/documents/**/*.PNG filter=lfs diff=lfs merge=lfs -text
+data/documents/**/*.MP3 filter=lfs diff=lfs merge=lfs -text
+data/documents/**/*.MOV filter=lfs diff=lfs merge=lfs -text
+# Three as-received files carry no extension (never rename): bind their binary bytes
+# (PDF / OLE2 Word) to LFS by exact name, `?`-escaping spaces for the glob.
+data/documents/**/Flow?Calculations?American-Bath?feb?6,?2008 filter=lfs diff=lfs merge=lfs -text
+data/documents/**/3-3-16?Natale?Revised?Change?Order filter=lfs diff=lfs merge=lfs -text
 # Captured web evidence (HTML/text): preserve the exact response bytes, including
 # CRLF line endings — never normalize a source byte under data/documents (chain of
 # custody). Small enough to stay in-repo (not LFS), unlike the scans above.
 data/documents/**/*.html -text
 data/documents/**/*.txt -text
+# The sanitary production's native web/markup formats stay raw bytes like .html/.txt.
+data/documents/**/*.htm -text
+data/documents/**/*.HTM -text
+data/documents/**/*.xml -text
 # AOI-clipped satellite captures (`bosc imagery pull`) — committed reference evidence
 # GeoTIFFs; large binaries, so LFS like the scans above. (Small test-fixture COGs
 # under tests/fixtures/ deliberately stay in-repo so the suite is hermetic.)
