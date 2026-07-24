@@ -117,7 +117,7 @@
       "media_type": "application/json",
       "schema": "schemas/leads.schema.json",
       "kind": "collection",
-      "count": 8
+      "count": 7
     },
     {
       "name": "rsei",
@@ -229,7 +229,7 @@
       "media_type": "application/json",
       "schema": "schemas/open-questions.schema.json",
       "kind": "collection",
-      "count": 6
+      "count": 5
     },
     {
       "name": "catalog-index",
@@ -237,7 +237,7 @@
       "media_type": "application/json",
       "schema": "schemas/catalog-index.schema.json",
       "kind": "object",
-      "count": 1
+      "count": 0
     },
     {
       "name": "ask-embeddings",

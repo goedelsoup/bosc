@@ -4,6 +4,8 @@ import type { RecordItem } from "./feeds";
 /** Human labels for the contractor-agnostic record groups (mirrors nav.yaml). */
 export const RECORD_GROUP_LABELS: Record<string, string> = {
   deeds: "Deeds",
+  enforcement: "Enforcement — orders & decrees",
+  finance: "Financing — loans & awards",
   "permits-epa": "Permits — Ohio EPA / USACE",
   "permits-idem": "Permits — IDEM (Indiana)",
   "permits-npdes": "Permits — NPDES",

@@ -484,6 +484,77 @@ class EpaPermitAction(_Extracted):
     note: str | None = None
 
 
+class OrderObligation(ApproxModel):
+    """One requirement inside an enforcement instrument, with its deadline."""
+
+    model_config = ConfigDict(extra="allow")
+
+    requirement: str | None = None  # what the order requires, briefly
+    deadline: str | None = None  # ISO date if stated (e.g. an SSO-elimination date)
+    status: str | None = None  # met | missed | extended | pending, if the record says
+
+
+class EnforcementOrder(_Extracted):
+    """A regulatory enforcement instrument or its correspondence (#1746).
+
+    The wastewater-enforcement genre: a federal consent decree, an OEPA Director's
+    Final Findings and Orders (DFFO) / modified DFFO, an extension or closure
+    letter, a notice of violation. Captures the instrument header, the parties,
+    the obligations with their deadlines, and the penalty terms — the fields the
+    enforcement timeline reads. Distinct from :class:`EpaPermitAction` (a permit
+    action on an application), this is the compliance/orders genre.
+    """
+
+    agency: str | None = None  # e.g. "Ohio EPA", "U.S. EPA / DOJ"
+    instrument: str | None = (
+        None  # consent decree | DFFO | modified DFFO | extension letter | closure notice | NOV
+    )
+    case_no: str | None = None  # docket / civil-action / journal number as printed
+    respondent: str | None = None  # the ordered party (e.g. "Allen County Commissioners")
+    facility: str | None = None  # the facility/system the order concerns
+    permit_no: str | None = None  # associated NPDES / permit id, if referenced
+    issued_date: str | None = None  # ISO — signature / journalization / letter date
+    effective_date: str | None = None
+    supersedes: str | None = None  # the instrument this modifies or extends, if stated
+    obligations: list[OrderObligation] = Field(default_factory=list)
+    penalty_usd: Number = None  # civil penalty assessed, if any
+    stipulated_penalties: str | None = None  # stipulated-penalty terms, briefly
+    status: str | None = None  # active | modified | terminated | closed
+    summary: str | None = None  # 1-3 sentences on what the instrument does
+    note: str | None = None
+
+
+class FinanceAward(_Extracted):
+    """A public-finance award — a loan, grant, or cooperative agreement (#1746).
+
+    The project-financing genre: WPCLF / OWDA loans, principal-forgiveness
+    awards, federal grants (FEMA FMA, EPA), and their applications. Captures the
+    program, the instrument, the money, and the project it funds — the fields a
+    ratepayer-burden or capacity-financing read needs.
+    """
+
+    program: str | None = None  # e.g. "WPCLF", "OWDA", "FEMA FMA"
+    agency: str | None = None  # awarding body (e.g. "Ohio EPA DEFA", "OWDA", "FEMA")
+    instrument: str | None = (
+        None  # loan | principal-forgiveness loan | grant | cooperative agreement | application
+    )
+    award_no: str | None = None  # loan / grant / agreement number as printed
+    borrower: str | None = None  # borrower / recipient / grantee
+    project_name: str | None = None  # the funded project
+    facility: str | None = None  # the facility the project serves, if named
+    amount_usd: Number = None  # face amount (loan principal / grant total)
+    principal_forgiveness_usd: Number = None
+    interest_rate_pct: float | None = None
+    term_years: Number = None
+    application_date: str | None = None  # ISO
+    award_date: str | None = None  # ISO — award / agreement execution date
+    first_payment_date: str | None = None
+    repayment_source: str | None = None  # dedicated repayment (e.g. "sewer revenue funds")
+    resolution_refs: StrList = Field(default_factory=list)  # authorizing resolutions as printed
+    engineer: str | None = None  # consulting engineer of record, if named
+    note: str | None = None
+
+
 class WetlandDetermination(_Extracted):
     """A USACE Wetland Determination Data Form (routine on-site delineation).
 
@@ -792,6 +863,14 @@ class SosExtraction(DocExtraction):
 
 class EpaExtraction(DocExtraction):
     action: EpaPermitAction
+
+
+class OrderExtraction(DocExtraction):
+    order: EnforcementOrder
+
+
+class AwardExtraction(DocExtraction):
+    award: FinanceAward
 
 
 class WetlandExtraction(DocExtraction):

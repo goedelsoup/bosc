@@ -13,6 +13,8 @@
       "group": {
         "enum": [
           "deeds",
+          "enforcement",
+          "finance",
           "permits-epa",
           "permits-idem",
           "permits-npdes",
