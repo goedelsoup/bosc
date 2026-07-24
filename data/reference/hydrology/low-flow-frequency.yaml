@@ -125,6 +125,29 @@ frequency:
       high: null
     cited_basis: summer 30Q10
     corroborates: true
+  harmonic_mean:
+    computed_cfs:
+      value: 4.8232
+      unit: cfs
+      source: derived
+      citation: harmonic mean N/Σ(1/Q) over 9671 non-zero daily flows, NWIS 04187100 1988-09-30—2024-12-31;
+        63 zero-flow day(s) excluded (no reciprocal)
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    n_days: 9671
+    zero_days: 63
+    cited_cfs:
+      value: 4.8
+      unit: cfs
+      source: document
+      citation: cited harmonic mean for Ottawa River
+      confidence: high
+      asof: null
+      low: null
+      high: null
+    corroborates: true
   annual_minima:
   - climatic_year: 1988
     nday: 1

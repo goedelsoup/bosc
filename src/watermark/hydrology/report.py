@@ -219,6 +219,22 @@ def _render_lowflow_corroboration(emit: Callable[[str], None], settings: Setting
         "the cited regulatory statistic.\n"
     )
 
+    hm = lff.harmonic_mean
+    if hm is not None and hm.cited_cfs is not None:
+        agree = "lands on" if hm.corroborates else "diverges from"
+        emit(
+            "\n**The design flow is matched to the criterion type.** Acute aquatic-life criteria "
+            "are evaluated at the 1Q10, chronic at the 7Q10, and human-health (carcinogen) criteria "
+            "at the **harmonic-mean flow** — the whole-record statistic that weights the low tail "
+            "the way a lifetime exposure does. Computed from the same daily record "
+            f"(N/Σ(1/Q) over {hm.n_days} non-zero days"
+            + (f", {hm.zero_days} zero-flow days excluded" if hm.zero_days else "")
+            + f"), the harmonic mean is **{hm.computed_cfs.value:g} cfs** and {agree} the cited "
+            f"**{hm.cited_cfs.value:g} cfs** `[inference: derived]`. So each criterion in the "
+            "toxic screen is read against its own design flow, not a single 7Q10 pressed into "
+            "every service.\n"
+        )
+
 
 def _render_routed_network(emit: Callable[[str], None], settings: Settings) -> None:
     """The per-stream screen generalized to a routed system mass balance."""
@@ -901,9 +917,21 @@ def render_report(*, settings: Settings | None = None, live: bool = False) -> st
     for n in balance.nodes:
         flow = n.return_flow or n.inflow
         w(f"| {n.node.name} | {n.node.role} | {_ev(flow)} | {n.node.receiving_water or '—'} |")
-    w("\n**Low-flow assimilative screen** (discharge vs the receiving stream's cited 7Q10):\n")
+    w(
+        "\n**Low-flow assimilative screen** — each discharge against its receiving stream's cited "
+        "design low flows, the design flow matched to the criterion type (chronic aquatic-life at "
+        "the **7Q10**, acute at the **1Q10**):\n"
+    )
     for c in assim:
         mark = _flag_mark(c.flag)
+        # Acute (1Q10) dilution alongside the chronic (7Q10): using the chronic design flow to
+        # band an acute limit understates the constraint (WS-08). None where no 1Q10 is cited.
+        acute = ""
+        if c.acute_dilution_ratio is not None and c.acute_low_flow is not None:
+            acute = (
+                f" Against the acute **1Q10 {c.acute_low_flow.value:g} cfs** → "
+                f"**{c.acute_dilution_ratio:.2f}:1** ({c.acute_flag})."
+            )
         # The conservative default: cited natural 7Q10 only, crediting no effluent.
         credited = ""
         if c.effluent_credited_ratio is not None and c.upstream_returns is not None:
@@ -916,11 +944,11 @@ def render_report(*, settings: Settings | None = None, live: bool = False) -> st
                 f"**{c.effluent_credited_ratio:.2f}:1** ({c.effluent_credited_flag})."
             )
         w(
-            f"- {mark} **{c.discharger} → {c.receiving_water}**: 7Q10 "
+            f"- {mark} **{c.discharger} → {c.receiving_water}**: chronic 7Q10 "
             f"{c.design_low_flow.value:g} cfs vs discharge {c.discharge.value:.2f} cfs "
             f"→ {c.dilution_ratio:.2f}:1 dilution ({c.flag}). "
             f"`[{_TAG[c.design_low_flow.source]}]` {c.design_low_flow.citation}"
-            f"{credited}"
+            f"{acute}{credited}"
         )
     w(
         "\nAt design low flow the receiving streams carry less than the effluent they\n"

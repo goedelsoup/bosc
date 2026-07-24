@@ -21,7 +21,7 @@ gap is tracked as an open lead (``WWTP-PARAM-ASSIM`` in ``data/site/leads.yaml``
 from __future__ import annotations
 
 from watermark.config import Settings
-from watermark.hydrology.lowflow import _normalize, load_low_flows
+from watermark.hydrology.lowflow import _normalize, load_acute_low_flows, load_low_flows
 from watermark.hydrology.model import (
     AssimilativeCheck,
     Flag,
@@ -57,23 +57,33 @@ def dilution_flag(
 def check_assimilative(
     balance: WaterBalance,
     low_flows: dict[str, ProvenancedValue] | None = None,
+    acute_low_flows: dict[str, ProvenancedValue] | None = None,
 ) -> list[AssimilativeCheck]:
     """One dilution check per WWTP discharge with a cited receiving-water 7Q10.
 
-    Each check carries **two** dilution ratios (WS-15, #1615): the conservative
-    ``dilution_ratio`` (cited 7Q10 / discharge, crediting no effluent) and an
-    ``effluent_credited_ratio`` that credits the permitted effluent already in the reach —
-    the summed design discharge of the *other* WWTPs sharing this receiving water — into the
-    denominator. The credit is a co-reach sum keyed by receiving water, not a
-    longitudinal-position-resolved routing term (that is :class:`RoutedNetwork`'s job); a
-    plant alone on its stream has nothing to credit and stays at the conservative default.
+    The design flow is matched to the criterion type (WS-08, #1608). The **chronic** aquatic-life
+    dilution is ``dilution_ratio`` = cited **7Q10** / discharge; the **acute** dilution is
+    ``acute_dilution_ratio`` = cited **1Q10** / discharge (``acute_low_flows``, read from the
+    same table's context block). Using the chronic 7Q10 to band an acute limit is a standard
+    reviewer objection — the 1Q10 is the sharper single-day floor an acute criterion is set at.
+    The acute pair is ``None`` for a stream whose fact sheet omits the 1Q10 (never guessed).
+
+    Each check also carries the effluent-credited chronic ratio (WS-15, #1615): the conservative
+    ``dilution_ratio`` credits no effluent, while ``effluent_credited_ratio`` credits the
+    permitted effluent already in the reach — the summed design discharge of the *other* WWTPs
+    sharing this receiving water — into the denominator. The credit is a co-reach sum keyed by
+    receiving water, not a longitudinal-position-resolved routing term (that is
+    :class:`RoutedNetwork`'s job); a plant alone on its stream has nothing to credit and stays at
+    the conservative default.
     """
     flows = load_low_flows() if low_flows is None else low_flows
+    acute_flows = load_acute_low_flows() if acute_low_flows is None else acute_low_flows
     # Key and look up through the SAME normalizer the table was built with, so a
     # receiving water carrying a river-mile / place suffix ("Ottawa River at Lima")
     # still resolves its cited 7Q10 ("ottawa river"). `_normalize` is idempotent, so
     # this is safe whether `flows` arrives pre-normalized or not.
     norm = {_normalize(k): v for k, v in flows.items()}
+    acute_norm = {_normalize(k): v for k, v in acute_flows.items()}
 
     # First pass: the WWTP discharges that have a cited receiving-water 7Q10, grouped by the
     # normalized receiving water. The group is the "reach" whose standing permitted effluent a
@@ -102,6 +112,18 @@ def check_assimilative(
         ratio = q7.value / discharge.value if discharge.value else 0.0
         flag = dilution_flag(ratio)
 
+        # Acute pair (WS-08): the cited 1Q10 and the discharge's dilution against it — the design
+        # flow matched to an acute aquatic-life criterion, distinct from the chronic 7Q10 above.
+        # Absent when the fact sheet omits the 1Q10; a 1Q10 = 0 cfs gives a 0:1 (no acute capacity).
+        one_q10 = acute_norm.get(_normalize(water))
+        acute_low_flow: ProvenancedValue | None = None
+        acute_ratio: float | None = None
+        acute_flag: Flag | None = None
+        if one_q10 is not None:
+            acute_low_flow = one_q10
+            acute_ratio = one_q10.value / discharge.value if discharge.value else 0.0
+            acute_flag = dilution_flag(acute_ratio)
+
         # Co-reach permitted effluent already in the reach = Σ(other WWTPs on this receiving
         # water). None when this plant is the only permitted discharger on its stream.
         key = _normalize(water)
@@ -112,8 +134,12 @@ def check_assimilative(
         eff_flag: Flag | None = None
         detail = (
             f"{water} 7Q10 {q7.value:.2f} cfs vs discharge {discharge.value:.2f} cfs "
-            f"-> {ratio:.2f}:1 dilution ({flag})"
+            f"-> {ratio:.2f}:1 chronic dilution ({flag})"
         )
+        if acute_ratio is not None and acute_low_flow is not None:
+            detail += (
+                f"; acute 1Q10 {acute_low_flow.value:.2f} cfs -> {acute_ratio:.2f}:1 ({acute_flag})"
+            )
         if credited > 0.0 and others:
             upstream_returns = ProvenancedValue.derived(
                 credited,
@@ -144,6 +170,9 @@ def check_assimilative(
                 flag=flag,
                 effluent_credited_ratio=eff_ratio,
                 effluent_credited_flag=eff_flag,
+                acute_low_flow=acute_low_flow,
+                acute_dilution_ratio=acute_ratio,
+                acute_flag=acute_flag,
                 detail=detail,
             )
         )
@@ -151,14 +180,20 @@ def check_assimilative(
 
 
 def assimilative_findings(checks: list[AssimilativeCheck]) -> list[HydroFinding]:
-    """Render checks as :class:`HydroFinding`s (ok unless the band is a violation)."""
+    """Render checks as :class:`HydroFinding`s (ok unless a band is a violation).
+
+    A finding is not-ok when **either** the chronic (7Q10) or the acute (1Q10) dilution lands in
+    the violation band — the design flow is matched to the criterion type (WS-08), so an acute
+    violation at the 1Q10 is a real finding even where the chronic ratio would pass. The acute
+    band is only consulted when a 1Q10 is cited (``acute_flag`` is ``None`` otherwise).
+    """
     findings: list[HydroFinding] = []
     for c in checks:
         findings.append(
             HydroFinding(
                 subject=f"{c.discharger} -> {c.receiving_water}",
                 check="low-flow-dilution",
-                ok=c.flag != "violation",
+                ok=c.flag != "violation" and c.acute_flag != "violation",
                 detail=c.detail,
             )
         )

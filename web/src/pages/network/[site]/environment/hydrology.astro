@@ -240,16 +240,23 @@ const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.valu
               <p class="card-meta">
                 Assimilative screen · {violations} of {assim.length} receiving reaches fail the dilution
                 band at design low flow ({assim
-                  .map((r: AssimilativeCheck) =>
-                    // The conservative natural-7Q10 ratio, and — where the plant shares its reach
-                    // with other permitted dischargers — the effluent-credited ratio alongside it (WS-15).
-                    r.effluent_credited_ratio != null
-                      ? `${r.discharger} ${r.dilution_ratio.toFixed(2)}:1 (${r.effluent_credited_ratio.toFixed(2)}:1 effluent-credited)`
-                      : `${r.discharger} ${r.dilution_ratio.toFixed(2)}:1`,
-                  )
-                  .join(" · ")}). The natural-flow ratio is the conservative default; the effluent-credited
-                ratio counts the permitted effluent already in the reach. A screening band, not a permit
-                determination.
+                  .map((r: AssimilativeCheck) => {
+                    // The chronic 7Q10 ratio, then — matching the design flow to the criterion type
+                    // (WS-08) — the acute 1Q10 ratio where cited, and — where the plant shares its
+                    // reach with other permitted dischargers — the effluent-credited ratio (WS-15).
+                    const acute =
+                      r.acute_dilution_ratio != null
+                        ? `, acute ${r.acute_dilution_ratio.toFixed(2)}:1`
+                        : "";
+                    const credited =
+                      r.effluent_credited_ratio != null
+                        ? ` (${r.effluent_credited_ratio.toFixed(2)}:1 effluent-credited)`
+                        : "";
+                    return `${r.discharger} chronic ${r.dilution_ratio.toFixed(2)}:1${acute}${credited}`;
+                  })
+                  .join(" · ")}). The design flow is matched to the criterion type — chronic aquatic-life
+                dilution at the 7Q10, acute at the sharper 1Q10; the effluent-credited ratio counts the
+                permitted effluent already in the reach. A screening band, not a permit determination.
               </p>
             )}
             {s.balance.warnings.length > 0 && (

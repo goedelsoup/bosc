@@ -32,22 +32,39 @@ class AssimilativeCheck(BaseModel):
     co-reach sum (``derived``), not a longitudinal-position-resolved routing term; the routed
     accumulation lives in :class:`RoutedNetwork`. Both bands are heuristics, **not** permit
     determinations.
+
+    ``design_low_flow`` / ``dilution_ratio`` / ``flag`` are the **chronic** (7Q10) pair. The
+    screen also carries the **acute** dilution ratio (WS-08 / #1608): standard practice matches
+    the design flow to the criterion type — chronic aquatic-life limits at the 7Q10, **acute** at
+    the **1Q10** — so ``acute_low_flow`` (the cited 1Q10) / ``acute_dilution_ratio`` /
+    ``acute_flag`` band the same discharge against the sharper single-day floor. They are ``None``
+    when the fact sheet omits the 1Q10. A 1Q10 of 0 cfs (the Ottawa, which stops at design low
+    flow) yields a 0:1 acute ratio — the honest "no acute assimilative capacity" signal, the same
+    way the concentration screen (:mod:`watermark.hydrology.toxics`) treats a zero acute flow.
+    (Human-health limits are matched to the harmonic-mean flow in that concentration screen; the
+    municipal check here is a flow-only hydraulic dilution, for which acute + chronic are the two
+    ratios the fact sheets themselves report.)
     """
 
     model_config = ConfigDict(extra="forbid")
 
     receiving_water: str
     discharger: str
-    design_low_flow: ProvenancedValue  # the 7Q10 (cited)
+    design_low_flow: ProvenancedValue  # the CHRONIC design flow: 7Q10 (cited)
     discharge: ProvenancedValue
     # Permitted effluent already in the reach (Σ other WWTPs on this receiving water), credited
     # into `effluent_credited_ratio`. None when the discharger is alone on its stream (WS-15).
     upstream_returns: ProvenancedValue | None = None
-    dilution_ratio: float  # conservative: cited 7Q10 / discharge (no effluent credit)
+    dilution_ratio: float  # conservative CHRONIC: cited 7Q10 / discharge (no effluent credit)
     flag: Flag  # band on `dilution_ratio`
     # Effluent-credited: (7Q10 + upstream_returns) / discharge; None when nothing to credit.
     effluent_credited_ratio: float | None = None
     effluent_credited_flag: Flag | None = None
+    # Acute pair (WS-08): the cited 1Q10 and the discharge's dilution against it. None when the
+    # fact sheet omits the 1Q10; a cited 1Q10 = 0 gives a 0:1 acute ratio (no acute capacity).
+    acute_low_flow: ProvenancedValue | None = None  # the ACUTE design flow: 1Q10 (cited)
+    acute_dilution_ratio: float | None = None  # cited 1Q10 / discharge
+    acute_flag: Flag | None = None  # band on `acute_dilution_ratio`
     detail: str
 
 
@@ -106,6 +123,32 @@ class LowFlowStatistic(BaseModel):
     corroborates: bool | None = None  # LP3 within the screening band of the cited value
 
 
+class HarmonicMeanFlow(BaseModel):
+    """The computed harmonic-mean flow — EPA's design flow for human-health WQ criteria.
+
+    Where the 1Q10 / 7Q10 / 30Q10 are annual-minima return-period statistics (a low-flow
+    *extreme*), the harmonic-mean flow is a whole-record central statistic —
+    ``HMF = N / Σ(1/Qᵢ)`` over the daily discharge — that weights low flows far more than the
+    arithmetic mean, which is why EPA's *Technical Support Document for Water Quality-based
+    Toxics Control* pairs it to lifetime human-health (carcinogen) criteria (matched, in the
+    screens, at the harmonic mean rather than the 7Q10 or 1Q10; WS-08 / #1608).
+
+    Zero-flow days have no reciprocal, so the mean runs over the ``n_days`` **non-zero** daily
+    flows and records the ``zero_days`` excluded — the same auditable, omit-and-record discipline
+    the LP3 fit uses for dry years (its ``zero_fraction``), never a silent drop. ``computed_cfs``
+    is ``derived``; when the reach carries a cited harmonic mean in the low-flow table's context
+    block it is echoed in ``cited_cfs`` and ``corroborates`` bands the agreement.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    computed_cfs: ProvenancedValue  # derived, HMF = N / Σ(1/Q) over the non-zero daily flows
+    n_days: int  # non-zero daily values in the harmonic mean
+    zero_days: int  # daily values at exactly 0 cfs (no reciprocal — excluded, recorded)
+    cited_cfs: ProvenancedValue | None = None  # cited harmonic mean for the reach, if any
+    corroborates: bool | None = None  # computed HMF within the screening band of the cited value
+
+
 class LowFlowFrequency(BaseModel):
     """Independent low-flow frequency analysis of one USGS gage's daily record.
 
@@ -114,6 +157,11 @@ class LowFlowFrequency(BaseModel):
     work for. A second, self-standing line of evidence under the assimilative
     screen: when the computed 7Q10 lands on the cited value, the "effluent is
     undiluted at design low flow" finding no longer rests on a single number.
+
+    Alongside the return-period ``statistics`` it carries the computed ``harmonic_mean`` — the
+    human-health design flow the screens read carcinogen criteria against (WS-08 / #1608) — so
+    every criterion type's design flow (acute 1Q10 / chronic 7Q10 / human-health harmonic mean)
+    has an independent, derived corroboration of its cited value.
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -127,6 +175,7 @@ class LowFlowFrequency(BaseModel):
     complete_years: int  # climatic years that entered the fit
     completeness_threshold_days: int
     statistics: list[LowFlowStatistic]
+    harmonic_mean: HarmonicMeanFlow | None = None  # human-health design flow (WS-08)
     annual_minima: list[AnnualMinimum]  # the auditable per-year series (1/7/30-day)
     method: str
     note: str = ""

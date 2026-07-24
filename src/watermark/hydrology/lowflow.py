@@ -85,6 +85,42 @@ def low_flow_for(
     return load_low_flows(settings=settings).get(_normalize(receiving_water))
 
 
+def load_acute_low_flows(*, settings: Settings | None = None) -> dict[str, ProvenancedValue]:
+    """Return ``{normalized receiving water -> cited 1Q10 ProvenancedValue}``.
+
+    The **acute** aquatic-life design flow (the 1Q10, the lowest single-day flow expected once
+    in 10 years), read from each stream's ``context`` block in the same committed table
+    ``load_low_flows`` reads the 7Q10 from — the peer loader the assimilative screen uses to
+    match the acute criterion to its own design flow (WS-08 / #1608), the way chronic limits are
+    matched to the 7Q10. A stream whose fact sheet omits the 1Q10 is absent (never guessed), so
+    the acute dilution ratio is simply not computed for it. A cited 1Q10 of exactly 0 cfs (the
+    Ottawa mainstem, which stops at design low flow) is kept — it is the honest "zero acute
+    assimilative capacity" signal, not a missing value.
+    """
+    settings = settings or get_settings()
+    path = _reference_path(settings)
+    if not path.is_file():
+        return {}
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    out: dict[str, ProvenancedValue] = {}
+    for name, entry in (data.get("streams") or {}).items():
+        if not isinstance(entry, dict):
+            continue
+        ctx = entry.get("context")
+        one = ctx.get("one_q10_cfs") if isinstance(ctx, dict) else None
+        if one is None:
+            continue
+        cite = entry.get("citation")
+        out[_normalize(str(name))] = ProvenancedValue(
+            value=float(one),
+            unit="cfs",
+            source="document",
+            citation=f"1Q10 (acute design flow) — {cite}" if cite else "cited 1Q10",
+            confidence=str(entry.get("confidence", "high")),
+        )
+    return out
+
+
 def low_flow_context(receiving_water: str, *, settings: Settings | None = None) -> dict[str, Any]:
     """Return the cited ``context`` block (1Q10, summer 30Q10, ...) for a stream, or ``{}``."""
     settings = settings or get_settings()

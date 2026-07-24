@@ -104,10 +104,13 @@ async def test_hydrology_balance_populated_for_site_with_watch_items(
     assert "No committed hydrology_balance" not in text
     assert "Piqua WWTP" in text and "Upper Great Miami River" in text
     # The cited GMR-above-Sidney 7Q10 (24.0 cfs) screens the 13.46 cfs design discharge to a
-    # 1.78:1 dilution (24.00 / 13.46) — assert the full computed line so a miscomputed ratio fails.
+    # 1.78:1 chronic dilution (24.00 / 13.46), and the cited 1Q10 (19.4 cfs) to a 1.44:1 acute
+    # ratio (WS-08) — assert the full computed line so a miscomputed ratio fails.
     assert (
-        "Upper Great Miami River 7Q10 24.00 cfs vs discharge 13.46 cfs -> 1.78:1 dilution" in text
+        "Upper Great Miami River 7Q10 24.00 cfs vs discharge 13.46 cfs -> 1.78:1 chronic dilution"
+        in text
     )
+    assert "acute 1Q10 19.40 cfs -> 1.44:1" in text
     # No Lima bleed: no Ottawa/Shawnee/American WWTPs, no BOSC campus node or FM routing caveat.
     for leak in ("Shawnee II", "American", "Ottawa River", "BOSC data-center campus", "FM-3"):
         assert leak not in text

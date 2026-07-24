@@ -25,6 +25,14 @@ auditable):
    runs on the non-zero minima at the conditional probability ``(p - p0)/(1 - p0)``.
 4. A non-parametric **Weibull** plotting-position interpolation brackets the LP3
    estimate as a distribution-free check.
+
+Beside the return-period statistics it also computes the **harmonic-mean flow** —
+``HMF = N / Σ(1/Qᵢ)`` over the daily record — EPA's design flow for human-health (carcinogen)
+water-quality criteria (WS-08 / #1608). It is not an annual minimum but a whole-record central
+statistic that weights low flows heavily; the screens match it to human-health criteria the way
+they match the 1Q10 to acute and the 7Q10 to chronic. Zero-flow days have no reciprocal, so the
+mean runs over the non-zero days and records the zero-day count (the same omit-and-record
+discipline the LP3 fit applies to dry years).
 """
 
 from __future__ import annotations
@@ -42,6 +50,7 @@ from watermark.hydrology import lowflow
 from watermark.hydrology.connectors.nwis import DailyDischargeSeries, fetch_daily_discharge
 from watermark.hydrology.model import (
     AnnualMinimum,
+    HarmonicMeanFlow,
     HydroFinding,
     LowFlowFrequency,
     LowFlowStatistic,
@@ -192,6 +201,23 @@ def low_flow_quantiles(
     return lp3, weibull, skew, zero_fraction
 
 
+def harmonic_mean_flow(values_cfs: list[float]) -> tuple[float, int, int]:
+    """The harmonic-mean flow ``HMF = N / Σ(1/Qᵢ)`` over a daily discharge record.
+
+    EPA's design flow for human-health water-quality criteria (WS-08 / #1608). Returns
+    ``(hmf_cfs, n_nonzero_days, zero_days)``. A zero-flow day has no reciprocal, so the mean
+    runs over the ``n_nonzero_days`` positive daily flows and the ``zero_days`` excluded are
+    reported (never silently dropped) — the same discipline the LP3 fit applies to dry years.
+    ``hmf_cfs`` is ``nan`` when the record has no positive daily flow.
+    """
+    nonzero = [v for v in values_cfs if v > 0.0]
+    zero_days = len(values_cfs) - len(nonzero)
+    if not nonzero:
+        return math.nan, 0, zero_days
+    hmf = len(nonzero) / sum(1.0 / v for v in nonzero)
+    return hmf, len(nonzero), zero_days
+
+
 # ----------------------------------------------------------------------- minima
 
 
@@ -330,6 +356,41 @@ def _statistic(
     )
 
 
+def _harmonic_mean(
+    values_cfs: list[float],
+    *,
+    site_no: str,
+    receiving_water: str | None,
+    period: str,
+    settings: Settings,
+) -> HarmonicMeanFlow:
+    """The computed harmonic-mean flow, corroborated against the cited value when one exists."""
+    hmf, n_days, zero_days = harmonic_mean_flow(values_cfs)
+    zero_note = f"; {zero_days} zero-flow day(s) excluded (no reciprocal)" if zero_days else ""
+    computed = ProvenancedValue.derived(
+        round(hmf, 4) if not math.isnan(hmf) else 0.0,
+        "cfs",
+        citation=(
+            f"harmonic mean N/Σ(1/Q) over {n_days} non-zero daily flows, NWIS {site_no} "
+            f"{period}{zero_note}"
+        ),
+    )
+    cited: ProvenancedValue | None = None
+    if receiving_water is not None:
+        raw = lowflow.low_flow_context(receiving_water, settings=settings).get("harmonic_mean_cfs")
+        if raw is not None:
+            cited = ProvenancedValue.from_document(
+                float(raw), "cfs", f"cited harmonic mean for {receiving_water}"
+            )
+    return HarmonicMeanFlow(
+        computed_cfs=computed,
+        n_days=n_days,
+        zero_days=zero_days,
+        cited_cfs=cited,
+        corroborates=_corroborates(hmf, cited),
+    )
+
+
 def compute_low_flow_frequency(
     *,
     site_no: str,
@@ -380,6 +441,13 @@ def compute_low_flow_frequency(
             )
         )
 
+    harmonic_mean = _harmonic_mean(
+        series.values_cfs,
+        site_no=site_no,
+        receiving_water=receiving_water,
+        period=period,
+        settings=settings,
+    )
     lff = LowFlowFrequency(
         site_no=series.site_no,
         site_name=series.name,
@@ -390,6 +458,7 @@ def compute_low_flow_frequency(
         complete_years=complete_years,
         completeness_threshold_days=completeness_days,
         statistics=statistics,
+        harmonic_mean=harmonic_mean,
         annual_minima=all_minima,
         method=_METHOD,
     )
@@ -423,6 +492,21 @@ def low_flow_frequency_findings(lff: LowFlowFrequency) -> list[HydroFinding]:
                     f"vs cited {s.cited_basis} {s.cited_cfs.value:g} cfs over "
                     f"{s.n_years} climatic years — "
                     f"{'corroborates' if ok else 'diverges from'} the cited value"
+                ),
+            )
+        )
+    hm = lff.harmonic_mean
+    if hm is not None and hm.cited_cfs is not None:
+        ok = bool(hm.corroborates)
+        findings.append(
+            HydroFinding(
+                subject=f"{lff.site_name} harmonic mean",
+                check="lowflow-corroboration",
+                ok=ok,
+                detail=(
+                    f"computed harmonic-mean flow {hm.computed_cfs.value:g} cfs over "
+                    f"{hm.n_days} non-zero daily flows vs cited {hm.cited_cfs.value:g} cfs — "
+                    f"{'corroborates' if ok else 'diverges from'} the cited human-health design flow"
                 ),
             )
         )
