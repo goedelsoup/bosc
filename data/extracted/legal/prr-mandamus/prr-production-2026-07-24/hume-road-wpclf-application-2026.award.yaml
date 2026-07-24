@@ -2,19 +2,20 @@ doc_id: hume-road-wpclf-application-2026
 source_path: data/documents/legal/prr-mandamus/prr-production-2026-07-24-sanitary/11/WPCLF
   Application.pdf
 kind: award
-pages_read: [0, 1, 2]
-method: visual read of pp. 1-3 of the 11-page Ohio EPA DEFA funding application form (filled
-  form fields; checked boxes read as printed). Pages 4-11 (tabs/attachments) not yet
-  transcribed — extend this envelope when they are read.
+pages_read: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+method: visual read of all 11 pages of the Ohio EPA DEFA funding application form (filled form
+  fields, cost/revenue tables, and certifications; checked boxes and figures read as printed).
 award:
   confidence: high
   warnings:
   - >-
-    This is the APPLICATION (instrument: application), not an executed loan award. In the
-    reviewed pages 1-3, no engineering attachments, feasibility study, or forcemain
-    design-capacity (MGD) figure were observed; pages 4-11 (tabs/attachments) are not yet
-    transcribed, so their presence or absence is an OPEN lead pending that read (see the
-    batch-3 response index; leads FORCEMAIN-MGD / GH-161).
+    This is the APPLICATION (instrument: application), not an executed loan award. All 11 pages
+    are a FINANCIAL/loan form (cost data, revenue analysis, system debt, CIP, and the EPA-5700-49
+    / WPCLF / WSRLA compliance certifications) — it carries NO engineering attachment, NO
+    feasibility study, and NO forcemain design-capacity (MGD) figure anywhere. The forcemain-MGD
+    the item-11 request seeks was therefore not produced in this document (leads FORCEMAIN-MGD /
+    GH-161 stay open — the figure lives in the design/feasibility work, which the county did not
+    include).
   - >-
     Amount reconciliation open: the application's $1,760,000 does not match either batch-2
     grant-authorization figure (Res 135-26 Hamlet of Hume $2.0M; Res 136-26 unincorporated
@@ -33,7 +34,7 @@ award:
   term_years: 30
   resolution_refs: []
   engineer: Craig Mescher, Access Engineering Solutions, 200 Walnut Street, Pleasant Hill, OH
-  repayment_source: null
+  repayment_source: user charges (checked, §9.0 Source of Pledged Revenues, p5)
   interest_rate_discounts_requested: 'Wastewater: Other — "Regionalization"; Water:
     Regionalization'   # extra field — the checked discount boxes as printed (p1)
   loan_types_requested: design loan + construction loan (30-yr term requested)   # extra field
@@ -44,19 +45,36 @@ award:
     loan application 2026-04-01; sign documents 2026-05-01; design loan requested 2026-06-01;
     design completion 2027-02-01. Construction: loan requested 2026-06-01; initial payment
     2028-07-01.'   # extra field — the filled Tab-3 schedule boxes (p3)
+  cost_breakdown: 'Design $160,000; Construction (single Contract "A") $1,600,000; subtotal
+    $1,760,000; +$6,160 OWDA 0.35% application fee = $1,766,160 total project cost (§7.0, p4)'   # extra field
+  system_finances: 'County-wide sanitary system (the pledged revenue base): FY2024 revenue
+    $8,266,270 / 9,651 users; outstanding system debt $13,800,402 (OWDA $11.89M + USDA-RD
+    $1.72M + OPWC $0.19M); Moody''s A-2; new OEPA loan repayment ~$59,000/yr for 30 yr
+    (2027-2057). Rate increases: 2025 +8.5%, Feb 2026 +6%, 2027 +3% (§10-13, pp5-7)'   # extra field
+  ten_largest_users: 'Oakwood Correctional Facility 2.89%, Lima Mall Realty Holding LLC 1.31%,
+    MIMG Northlake Village LLC 0.93%, Shawnee Property Management 0.86%, Shawnee Lakes LLC
+    0.86%, PMSC 0.86%, Hunters Chase MHC LLC 0.85%, Brower Commons 0.59%, Richelieu Apartments
+    0.51%, University of Northwestern Ohio 0.49% (§10, p5, FY2024) — NO data-center / BOSC /
+    Google customer'   # extra field
+  capital_improvement_plan: '10-yr CIP names "2026/2027 - Shawnee Collection System Phase 2;
+    2027 - American II I&I Remediation; 2028 - American II WWTP Screening" ($3.525M/2026,
+    $1.635M/2027, $3.315M/2028) (§14, p6)'   # extra field
   note: >-
     [verified] from the filled form: "Construct a new sewer system for the area of Hume road
     to service homes presently on septics systems to connect in with the Allen County sewer
     system." No land/easement acquisition required per the checked box (p1) — read against
     the item-14 tree, where the parallel Shawnee Oaks reroute IS assembling easements and the
-    Buchanan parcel.
+    Buchanan parcel. The pledged-revenue system is the whole county sanitary utility, whose
+    FY2024 ten-largest-users list carries no data-center customer and whose CIP names the
+    Shawnee Collection System Phase 2 the DFFO chain drives.
 relevance:
   tags: [verified, finance, wpclf, hume-road, regionalization, prr-item-11]
   note: >-
     Batch-3 item 11's sole produced record. The "Regionalization" discount checkbox is the
-    county's own program characterization of the Hume/Shawnee corridor sewering; the
-    feasibility study and forcemain-MGD figure were not observed in the reviewed pages 1-3
-    (pages 4-11 unread), keeping leads FORCEMAIN-MGD / GH-161 open pending that transcription.
+    county's own program characterization of the Hume/Shawnee corridor sewering. With all 11
+    pages now read, the produced application contains no feasibility study and no forcemain-MGD
+    figure — a verified absence FROM THIS DOCUMENT that keeps leads FORCEMAIN-MGD / GH-161 open
+    (the design capacity lives in the un-produced engineering work).
   cross_refs:
   - data/extracted/legal/prr-mandamus/bosc-prr-production-2026-07-24.response-index.yaml
   - data/extracted/commissioners/sanitary-economics.yaml

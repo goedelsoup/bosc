@@ -578,7 +578,7 @@
     "title": "Hume Road Sewer System",
     "confidence": "high",
     "warnings": [
-      "This is the APPLICATION (instrument: application), not an executed loan award. In the reviewed pages 1-3, no engineering attachments, feasibility study, or forcemain design-capacity (MGD) figure were observed; pages 4-11 (tabs/attachments) are not yet transcribed, so their presence or absence is an OPEN lead pending that read (see the batch-3 response index; leads FORCEMAIN-MGD / GH-161).",
+      "This is the APPLICATION (instrument: application), not an executed loan award. All 11 pages are a FINANCIAL/loan form (cost data, revenue analysis, system debt, CIP, and the EPA-5700-49 / WPCLF / WSRLA compliance certifications) — it carries NO engineering attachment, NO feasibility study, and NO forcemain design-capacity (MGD) figure anywhere. The forcemain-MGD the item-11 request seeks was therefore not produced in this document (leads FORCEMAIN-MGD / GH-161 stay open — the figure lives in the design/feasibility work, which the county did not include).",
       "Amount reconciliation open: the application's $1,760,000 does not match either batch-2 grant-authorization figure (Res 135-26 Hamlet of Hume $2.0M; Res 136-26 unincorporated Shawnee Twp / Shawnee Oaks $1.6M). Whether this application implements 135-26, 136-26, or a revised scope is unresolved on the face of the produced records."
     ],
     "fields": {
@@ -594,12 +594,16 @@
       "term_years": 30,
       "resolution_refs": [],
       "engineer": "Craig Mescher, Access Engineering Solutions, 200 Walnut Street, Pleasant Hill, OH",
-      "repayment_source": null,
+      "repayment_source": "user charges (checked, §9.0 Source of Pledged Revenues, p5)",
       "interest_rate_discounts_requested": "Wastewater: Other — \"Regionalization\"; Water: Regionalization",
       "loan_types_requested": "design loan + construction loan (30-yr term requested)",
       "contacts": "Authorized representative: Brad Niemeyer, Sanitary Engineer (bniemeyer@allencountyohio.com); billing: Ron Meyer, Deputy Sanitary Engineer; disbursements: Jody Wells (all 3230 N. Cole St, Lima)",
       "schedule": "Design: facilities-planning info incl. complete I/I analysis 2026-03-01; complete loan application 2026-04-01; sign documents 2026-05-01; design loan requested 2026-06-01; design completion 2027-02-01. Construction: loan requested 2026-06-01; initial payment 2028-07-01.",
-      "note": "[verified] from the filled form: \"Construct a new sewer system for the area of Hume road to service homes presently on septics systems to connect in with the Allen County sewer system.\" No land/easement acquisition required per the checked box (p1) — read against the item-14 tree, where the parallel Shawnee Oaks reroute IS assembling easements and the Buchanan parcel."
+      "cost_breakdown": "Design $160,000; Construction (single Contract \"A\") $1,600,000; subtotal $1,760,000; +$6,160 OWDA 0.35% application fee = $1,766,160 total project cost (§7.0, p4)",
+      "system_finances": "County-wide sanitary system (the pledged revenue base): FY2024 revenue $8,266,270 / 9,651 users; outstanding system debt $13,800,402 (OWDA $11.89M + USDA-RD $1.72M + OPWC $0.19M); Moody's A-2; new OEPA loan repayment ~$59,000/yr for 30 yr (2027-2057). Rate increases: 2025 +8.5%, Feb 2026 +6%, 2027 +3% (§10-13, pp5-7)",
+      "ten_largest_users": "Oakwood Correctional Facility 2.89%, Lima Mall Realty Holding LLC 1.31%, MIMG Northlake Village LLC 0.93%, Shawnee Property Management 0.86%, Shawnee Lakes LLC 0.86%, PMSC 0.86%, Hunters Chase MHC LLC 0.85%, Brower Commons 0.59%, Richelieu Apartments 0.51%, University of Northwestern Ohio 0.49% (§10, p5, FY2024) — NO data-center / BOSC / Google customer",
+      "capital_improvement_plan": "10-yr CIP names \"2026/2027 - Shawnee Collection System Phase 2; 2027 - American II I&I Remediation; 2028 - American II WWTP Screening\" ($3.525M/2026, $1.635M/2027, $3.315M/2028) (§14, p6)",
+      "note": "[verified] from the filled form: \"Construct a new sewer system for the area of Hume road to service homes presently on septics systems to connect in with the Allen County sewer system.\" No land/easement acquisition required per the checked box (p1) — read against the item-14 tree, where the parallel Shawnee Oaks reroute IS assembling easements and the Buchanan parcel. The pledged-revenue system is the whole county sanitary utility, whose FY2024 ten-largest-users list carries no data-center customer and whose CIP names the Shawnee Collection System Phase 2 the DFFO chain drives."
     },
     "approximate_paths": [],
     "citation": {
@@ -607,10 +611,52 @@
       "source_kind": "document",
       "page": null,
       "confidence": "high",
-      "note": "pages [0, 1, 2]",
+      "note": "pages [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
       "verified": true
     },
     "source_doc_rel": "legal/prr-mandamus/prr-production-2026-07-24-sanitary/11/WPCLF Application.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "legal/prr-mandamus/prr-production-2026-07-24/owda-loan-6718.award.yaml",
+    "group": "finance",
+    "title": "Shawnee II WWTP, Pump Station and Force Main Improvements (SECAP Phase 1)",
+    "confidence": "high",
+    "warnings": [
+      "The Funding Application §9 subtotal ($14,006,830) + contingency ($1,357,683) = $15,364,513, the stated OWDA loan amount and Total Project Cost; the §10 cost-breakdown table separately totals $15,418,289 (it folds in $53,776 non-contract project costs / OWDA fee). Both printed figures preserved; the loan/agreement amount is $15,364,513."
+    ],
+    "fields": {
+      "program": "OWDA (Ohio Water Development Authority)",
+      "agency": "Ohio Water Development Authority",
+      "instrument": "cooperative financing agreement (construction loan)",
+      "award_no": "6718",
+      "borrower": "Allen County Commissioners / Allen County Sanitary Engineering (EIN 34-6400019)",
+      "project_name": "Shawnee II WWTP, Pump Station and Force Main Improvements (SECAP Phase 1)",
+      "facility": "Shawnee II WWTP (2PK00002) + Fort Amanda Pump Station + Ottawa River Force Main",
+      "amount_usd": 15364513,
+      "interest_rate_pct": null,
+      "term_years": 20,
+      "application_date": "2014-04-15",
+      "award_date": "2014-04",
+      "first_payment_date": "2016-01-01",
+      "repayment_source": "user charges",
+      "engineer": "URS (Mike Frommer), 277 West Nationwide Boulevard, Columbus",
+      "resolution_refs": [],
+      "last_repayment_date": "2035-07-01",
+      "construction_contracts": "S&S Directional Boring — Ottawa River Force Main $1,792,830; Peterson Construction — Fort Amanda Pump Station $2,524,000; Peterson Construction — Shawnee II WWTP Improvements $9,260,000; URS — construction administration $395,000; PSI — construction engineering $35,000; contingency $1,357,683 (§9, p4)",
+      "note": "[verified] OWDA Loan #6718 — the SECAP Phase 1 construction financing for the Shawnee II collect-pump-treat program the 2014 Modified DFFO ordered. The RCAP cover letter (Julie Ward, Ohio RCAP, 2014-04-15) requests a 1% interest-rate deduction from market, citing that the County is a pre-1992 borrower and the project addresses a health hazard \"re: the County is under a Findings and Orders to address CSO/SSO's\" — tying the loan directly to the enforcement chain. Equal-payment 20-yr term, user-charge-pledged (2013 revenue allocation: O&M 55%, debt service 25%, reserves 20%)."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "legal/prr-mandamus/prr-production-2026-07-24/owda-loan-6718.award.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5]",
+      "verified": true
+    },
+    "source_doc_rel": "legal/prr-mandamus/prr-production-2026-07-24-sanitary/9/SH & AB SSO Findings and Orders/Phase 1 SECAP Constr Projects/Financing Loan No-6718 WWTP Ph 1, FM and PS/OWDA application docs FM, PS & WWTP.pdf",
     "source_doc_render_class": "pdf",
     "source_doc_published": false
   },

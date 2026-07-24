@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "bb879f6965cf3d143b58a8ab070c309aad839dacbf30f1cafb9137b249e12d68",
+  "catalog_version": "41112bc37849e651c1d0890317d835af959ce071c2dbd3048ab1239471577106",
   "contract_version": "1.34.0",
   "atoms": [
     {
@@ -3065,6 +3065,14 @@
       "site": "lima",
       "local_id": "legal/prr-mandamus/prr-production-2026-07-24/hume-road-wpclf-application-2026.award.yaml",
       "title": "Hume Road Sewer System",
+      "feed": "records"
+    },
+    {
+      "handle": "record:lima:legal/prr-mandamus/prr-production-2026-07-24/owda-loan-6718.award.yaml",
+      "kind": "record",
+      "site": "lima",
+      "local_id": "legal/prr-mandamus/prr-production-2026-07-24/owda-loan-6718.award.yaml",
+      "title": "Shawnee II WWTP, Pump Station and Force Main Improvements (SECAP Phase 1)",
       "feed": "records"
     },
     {
