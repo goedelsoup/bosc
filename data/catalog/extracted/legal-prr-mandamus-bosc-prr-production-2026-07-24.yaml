@@ -1,0 +1,33 @@
+id: legal-prr-mandamus-bosc-prr-production-2026-07-24
+title: Allen County PRR Production — Batch 3, Sanitary Engineer Per-Item Trees (2026-07-24)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: Allen County Sanitary Engineering department (via the Board of Commissioners) — PRR
+    production batch 3 (per-item native file trees, items 9/11/13/14/15), received 2026-07-24
+    on USB flash drive
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: lima-legacy
+storage:
+- relpath: extracted/legal/prr-mandamus/bosc-prr-production-2026-07-24.response-index.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/legal/prr-mandamus/bosc-prr-production-2026-07-24.custody-manifest.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+  last_refreshed: '2026-07-24'
+provenance: document
+tags:
+- public-records
+- wastewater
+- production
+- chain-of-custody
+notes: 'Response index + per-file custody manifest (sha256 / bytes / as-received mtime /
+  request item / duplicate group over 1,610 files) for the County''s third PRR batch — the
+  Sanitary Engineer''s native per-item trees: SSO/SECAP/DFFO enforcement record, WPCLF
+  financing, and the Cridersville/Shawnee Oaks reroute file. Source tree at
+  documents/legal/prr-mandamus/prr-production-2026-07-24-sanitary/.'
