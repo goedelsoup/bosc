@@ -264,13 +264,29 @@ from watermark.sites import (
 #   null when the fact sheet omits the 1Q10; a cited 1Q10 = 0 cfs (a stream that runs dry at design
 #   low flow) yields a 0:1 acute ratio (no acute capacity). Additive/optional, so an existing
 #   hydrology-scenarios.json row stays valid — PATCH, back-compatible.
-CONTRACT_VERSION = "1.33.1"
+# 1.34.0: the `records` feed's closed RecordGroup enum gains two genres (#1746, epic #1744;
+#   fulfills the Findlay TAXONOMY-GRANTS lead): `enforcement` (an `order` payload block —
+#   consent decrees, OEPA Director's Final Findings & Orders, closure/extension letters) and
+#   `finance` (an `award` block — WPCLF/OWDA loans, principal-forgiveness awards, federal
+#   grants). Until now these genres had no honest bucket and were filed under `permits-epa`
+#   with a disclosed TAXONOMY NOTE. Enum growth is additive for feed READERS (a pre-1.34
+#   records.json remains valid) but a pre-1.34 records.schema.json rejects the new group
+#   values — MINOR, back-compatible for data, schema refresh required.
+CONTRACT_VERSION = "1.34.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
 # unchanged.
 RecordGroup = Literal[
-    "deeds", "permits-epa", "permits-idem", "permits-npdes", "permits-sos", "plans", "opc"
+    "deeds",
+    "enforcement",
+    "finance",
+    "permits-epa",
+    "permits-idem",
+    "permits-npdes",
+    "permits-sos",
+    "plans",
+    "opc",
 ]
 # What the frontend document viewer dispatches on — derived from the *real* file
 # (extension + content sniff), never from hand-authored genre metadata (epic #274).

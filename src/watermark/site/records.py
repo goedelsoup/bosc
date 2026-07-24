@@ -31,6 +31,8 @@ _DOC_ANCHOR = "data/documents/"
 _BLOCK_TO_GROUP: dict[str, str] = {
     "deed": "deeds",
     "action": "permits-epa",
+    "order": "enforcement",
+    "award": "finance",
     "permit": "permits-npdes",
     "filing": "permits-sos",
     "plan": "plans",
@@ -90,6 +92,8 @@ def _record_title(rec: _Record) -> str:
         "facility_name",
         "project_name",
         "instrument_type",
+        "instrument",  # enforcement orders / finance awards (#1746)
+        "facility",
         "name",
         "subject",
         "permit_number",

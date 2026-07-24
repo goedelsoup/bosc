@@ -75,16 +75,5 @@
     "source": "lrd.usace.army.mil article #3643262 (403 direct; reader-proxy recovered) · hancockcountyflooding.com/faq (2015 BCR) · data/extracted/findlay/flood/usace-blanchard-review-plan-2024.epa.yaml",
     "issue": 1465,
     "note": null
-  },
-  {
-    "id": "TAXONOMY-GRANTS",
-    "kind": "question",
-    "status": "low",
-    "tag": "open",
-    "title": "The record-group taxonomy has no federal-grant / disaster-mitigation bucket (network-level follow-up)",
-    "detail": "Findlay's flood chain surfaces a taxonomy gap the expanding network will hit repeatedly: the contract's RecordGroup enum (deeds, permits-epa, permits-idem, permits-npdes, permits-sos, plans, opc) has no home for a FEMA FMA grant, an FRA RAISE grant, an ODNR Dam Safety construction permit, or a floodplain LOMR. The FEMA $24M obligation is filed under permits-epa (\"Permits — Ohio EPA / USACE\") with a disclosed taxonomy warning, since only the USACE Review Plan is a clean fit for that bucket. OPEN — propose a dedicated grants / federal-award record group (feeds.py RecordGroup + records._BLOCK_TO_GROUP + web records.ts labels + the committed records.schema.json enums, likely a CONTRACT_VERSION bump) as a network-level change, not a per-site edit. Deferred out of this evidence-ingest issue on purpose.\n",
-    "source": "src/watermark/site/feeds.py RecordGroup · data/extracted/findlay/flood/fema-fma-obligation-2026.epa.yaml (warnings)",
-    "issue": null,
-    "note": "network-level (epic"
   }
 ]

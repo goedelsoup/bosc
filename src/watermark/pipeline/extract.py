@@ -32,21 +32,25 @@ from watermark.config import Settings, get_settings
 from watermark.documents import DEFAULT_DPI, PdfDocument, read_image_png, read_odg
 from watermark.logging import get_logger
 from watermark.models import (
+    AwardExtraction,
     BusinessFiling,
     Deed,
     DeedExtraction,
     DocExtraction,
+    EnforcementOrder,
     EngineeringExtraction,
     EngineeringRecord,
     EpaExtraction,
     EpaPermitAction,
     Estimate,
+    FinanceAward,
     NoticeExtraction,
     NoticeOfCommencement,
     NpdesExtraction,
     NpdesPermit,
     OPCMeta,
     OPCSummary,
+    OrderExtraction,
     PageExtraction,
     PlanExtraction,
     SectionSubtotals,
@@ -814,6 +818,137 @@ def extract_epa(
     )
 
 
+ORDER_INSTRUCTIONS = """\
+You are reading a regulatory ENFORCEMENT instrument or its correspondence — a
+federal consent decree, an Ohio EPA Director's Final Findings and Orders (DFFO)
+or modified DFFO, an extension / closure / violation letter. The text layer is
+usually reliable; verify against the page image. Record into the tool:
+  * agency (e.g. "Ohio EPA", "U.S. EPA / DOJ"); instrument: what the document IS —
+    consent decree | DFFO | modified DFFO | extension letter | closure notice | NOV
+    | correspondence.
+  * case_no exactly as printed (a civil-action number like "3:96 CV 7134", a DOJ
+    docket, or a journalization reference); respondent (the ordered party);
+    facility (the plant / sewer system concerned); permit_no if referenced
+    (e.g. an NPDES id like 2PK00002).
+  * issued_date: the signature / journalization / letter date (ISO);
+    effective_date if distinct; supersedes: the earlier instrument this modifies
+    or extends, if stated.
+  * obligations: one entry per requirement the instrument imposes or revises —
+    {requirement, deadline (ISO if stated), status if the record itself says
+    met/missed/extended}. Compliance-schedule rows and SSO-elimination dates go
+    here.
+  * penalty_usd: a civil penalty assessed (the figure only); stipulated_penalties:
+    the stipulated-penalty terms in a phrase; status: active | modified |
+    terminated | closed, if the record says.
+  * summary: 1-3 sentences on what the instrument does.
+Rules: copy case numbers, dates, dollar figures, and party names exactly; dates as
+ISO; leave a field null rather than inventing; set confidence and add warnings for
+strained reads.
+"""
+
+
+_ORDER_SPEC = DocSpec(
+    kind="order",
+    model=EnforcementOrder,
+    extraction_cls=OrderExtraction,
+    field="order",
+    instructions=ORDER_INSTRUCTIONS,
+    dpi=_EPA_DPI,
+    text_pages=6,
+    image_pages=1,
+    summary=lambda o: {
+        "instrument": o.instrument,
+        "respondent": o.respondent,
+        "issued": o.issued_date,
+    },
+)
+
+
+def extract_order(
+    doc: SourceDocument,
+    *,
+    extractor: StructuredExtractor | None = None,
+    pdf: PdfDocument | None = None,
+    dpi: int = _EPA_DPI,
+    settings: Settings | None = None,
+    text_pages: int = 6,
+) -> OrderExtraction:
+    """Extract an enforcement instrument (consent decree / DFFO / order letter), text-first."""
+    return cast(
+        "OrderExtraction",
+        _extract_doc(
+            _ORDER_SPEC,
+            doc,
+            extractor=extractor,
+            pdf=pdf,
+            dpi=dpi,
+            settings=settings,
+            text_pages=text_pages,
+        ),
+    )
+
+
+AWARD_INSTRUCTIONS = """\
+You are reading a public-finance AWARD record — a WPCLF / OWDA loan or its
+application, a principal-forgiveness grant authorization, a federal grant (FEMA
+FMA, EPA), or a cooperative agreement. The text layer is usually reliable; verify
+against the page image (application forms carry filled boxes — read the filled
+values). Record into the tool:
+  * program (e.g. "WPCLF", "OWDA", "FEMA FMA"); agency (the awarding body, e.g.
+    "Ohio EPA DEFA"); instrument: loan | principal-forgiveness loan | grant |
+    cooperative agreement | application.
+  * award_no exactly as printed; borrower (the borrower / recipient / grantee as
+    printed, e.g. "Allen County Commissioners"); project_name; facility if the
+    funded project serves a named plant/system.
+  * amount_usd (the face amount — loan principal or grant total; the figure only);
+    principal_forgiveness_usd; interest_rate_pct; term_years.
+  * application_date / award_date / first_payment_date as ISO; repayment_source
+    (the dedicated repayment, e.g. "sewer revenue funds"); resolution_refs: each
+    authorizing board resolution as printed (e.g. "Res #136-26"); engineer: the
+    consulting engineer of record if named.
+Rules: dollar figures and dates exactly as printed (dates ISO); a checked box is
+the value — never infer an unchecked one; leave a field null rather than
+inventing; set confidence and add warnings for strained reads.
+"""
+
+
+_AWARD_SPEC = DocSpec(
+    kind="award",
+    model=FinanceAward,
+    extraction_cls=AwardExtraction,
+    field="award",
+    instructions=AWARD_INSTRUCTIONS,
+    dpi=_EPA_DPI,
+    text_pages=6,
+    image_pages=2,
+    summary=lambda a: {"program": a.program, "borrower": a.borrower, "amount_usd": a.amount_usd},
+)
+
+
+def extract_award(
+    doc: SourceDocument,
+    *,
+    extractor: StructuredExtractor | None = None,
+    pdf: PdfDocument | None = None,
+    dpi: int = _EPA_DPI,
+    settings: Settings | None = None,
+    text_pages: int = 6,
+) -> AwardExtraction:
+    """Extract a public-finance award (WPCLF/OWDA loan, grant, application), text-first."""
+    return cast(
+        "AwardExtraction",
+        _extract_doc(
+            _AWARD_SPEC,
+            doc,
+            extractor=extractor,
+            pdf=pdf,
+            dpi=dpi,
+            settings=settings,
+            text_pages=text_pages,
+        ),
+    )
+
+
 _WETLAND_SPEC = DocSpec(
     kind="wetland",
     model=WetlandDetermination,
@@ -1037,6 +1172,8 @@ DOC_EXTRACTORS: dict[str, DocumentExtractor] = {
     "npdes": extract_npdes,
     "sos": extract_sos,
     "epa": extract_epa,
+    "order": extract_order,
+    "award": extract_award,
     "wetland": extract_wetland,
     "plan": extract_plan,
     "engineering": extract_engineering,

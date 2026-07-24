@@ -1,23 +1,24 @@
 [
   {
     "rel": "findlay/flood/fema-fma-obligation-2026.epa.yaml",
-    "group": "permits-epa",
+    "group": "finance",
     "title": "Hancock County Flood-Risk Reduction Program — Eagle Creek Dry Storage Basin + Blanchard River benching",
     "confidence": "high",
     "warnings": [
-      "TAXONOMY NOTE (not a data caveat): filed in the ``permits-epa`` record group, whose contract label is \"Permits — Ohio EPA / USACE\", because the bundle's RecordGroup taxonomy has no federal-grant / disaster-mitigation category. The ISSUING AGENCY is FEMA (U.S. Department of Homeland Security), Flood Mitigation Assistance program — NOT Ohio EPA and NOT USACE. A dedicated ``grants`` / federal-award record group is proposed as a network-level follow-up (data/site/findlay/leads.yaml · TAXONOMY-GRANTS). The record content states the true agency; only the coarse group heading is imperfect.",
       "The FEMA.gov primary release (and the City of Findlay obligation notice, News/1818) returned HTTP 403; all dollar/parcel/acre figures are corroborated across 13abc.com, spectrumlocalnews.com and Rep. Latta's release (wktn.com), not read byte-verbatim from FEMA.gov. High confidence, multiply sourced; re-capture the FEMA release + city notice from a non-datacenter IP to lock the primary text.",
       "FLOODWAY vs FLOODPLAIN — do not conflate. This FEMA release counts \"1,290 parcels and 1,500 acres removed from the regulatory FLOODWAY\" (13abc / spectrum). The Eagle Creek basin project page counts \"approximately 1,830 parcels and 1,400 acres from the regulatory FLOODPLAIN\" (hancockcountyflooding.com). Different regulatory zones AND different numbers; both preserved below. The Phase-I LOMR's SFHA accounting (375 removed / 985 reduced) is a third, separate metric.",
       "Do NOT merge the November-2024 CONDITIONAL-approval reporting (hometownstations/WLIO, \"November 15, 2024,\" funds \"within 6 to 9 months\") into this record. This is the 2026-04-22 FINAL obligation that unlocked summer-2026 bidding — a distinct event."
     ],
     "fields": {
-      "agency": "Federal Emergency Management Agency (FEMA), U.S. Department of Homeland Security, Region V",
       "program": "Flood Mitigation Assistance (FMA)",
-      "permit_no": "EMC-2023-FM-003-0004",
-      "action": "grant approved / funds obligated",
-      "action_date": "2026-04-22",
-      "applicant": "City of Findlay (subapplicant), in partnership with the Hancock County Commissioners and the Maumee Watershed Conservancy District (MWCD)",
+      "agency": "Federal Emergency Management Agency (FEMA), U.S. Department of Homeland Security, Region V",
+      "instrument": "grant",
+      "award_no": "EMC-2023-FM-003-0004",
+      "borrower": "City of Findlay (subapplicant), in partnership with the Hancock County Commissioners and the Maumee Watershed Conservancy District (MWCD)",
       "project_name": "Hancock County Flood-Risk Reduction Program — Eagle Creek Dry Storage Basin + Blanchard River benching",
+      "amount_usd": 24000000,
+      "award_date": "2026-04-22",
+      "action": "grant approved / funds obligated",
       "site_address": "Blanchard River watershed, Findlay / Hancock County, Ohio",
       "affected_resource": "Blanchard River regulatory floodway and floodplain; downtown Findlay businesses, agriculture, and residential neighborhoods (the 2007 flood event drove the program).",
       "note": "[verified] FEMA's Flood Mitigation Assistance (FMA) obligation of $24,000,000 to the City of Findlay, announced 2026-04-22 — 51% of the $46.8M eligible project cost, with the Ohio Department of Natural Resources providing the remaining 49% ($22.8M). The FMA grant is anticipated to provide $19M for the Eagle Creek Flood Basin and $5M for benching (city obligation notice, News/1818). The funds-obligation notification cleared the milestone that let the community bid the two cornerstone contracts (Downtown Phase 2 Benching + Eagle Creek Dry Storage Basin), opened 2026-06-30. This is the headline instrument of the flood-mitigation chain (issue #1465)."

@@ -74,7 +74,8 @@ relevance:
     The federal feasibility thread of the flood-mitigation instrument chain (issue #1465). Filed in
     the ``permits-epa`` record group, whose contract label is "Permits — Ohio EPA / USACE" — the
     agency here IS USACE, so this record is a clean fit for that bucket. Its companion FEMA FMA
-    obligation is not (see fema-fma-obligation-2026.epa.yaml). The 2024-01-11 posting's live-vs-
+    obligation now lives in the ``finance`` group added at contract 1.34.0 (#1746; see
+    fema-fma-obligation-2026.epa.yaml). The 2024-01-11 posting's live-vs-
     archival status is cross-filed as an open lead (data/site/findlay/leads.yaml · USACE-2024-REVIEW).
   cross_refs:
   - data/extracted/findlay/flood/fema-fma-obligation-2026.epa.yaml
