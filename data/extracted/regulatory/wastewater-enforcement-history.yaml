@@ -123,6 +123,15 @@ dffo_chain:
       monitored-flow year; Phase 2 from actual flows, complete 2020-12-31; eliminate the
       temporary EQ overflow AND all SSOs by 2020-12-31.
     envelope: legal/prr-mandamus/prr-production-2026-07-24/dffo-2014-modified.order.yaml
+  phase1_financing_owda_6718:
+    dated: '2014-04'
+    what: >-
+      OWDA Loan #6718 — the $15,364,513 construction financing for Shawnee II SECAP Phase 1
+      (Ottawa River Force Main $1.79M / Fort Amanda Pump Station $2.52M / Shawnee II WWTP
+      improvements $9.26M + contingency), 20-yr equal-payment, user-charge-pledged, first
+      repayment 2016-01-01. The RCAP cover letter ties the 1% rate-deduction request directly to
+      the county being "under a Findings and Orders to address CSO/SSO's".
+    envelope: legal/prr-mandamus/prr-production-2026-07-24/owda-loan-6718.award.yaml
   sso_closures:
     what: American Bath Meadows Apartments SSO removed 2010-11-09 (notified 2010-12-09); Shawnee
       Cam Court SSO removed 2019-02-26 (notified 2019-03-07). Country Club Siphon (SH05-018)

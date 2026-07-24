@@ -1,0 +1,76 @@
+# The 2014 Cridersville wastewater-treatment agreement (item 14). An intergovernmental service
+# contract — the RecordGroup taxonomy has no bucket for it, so it is a hand-authored corpus
+# artifact (RAG-indexed, cross-referenced) rather than a classified `records` row, per the repo
+# pattern for agreements/resolutions. Its TERMINATION mechanism is the direct answer to item 14's
+# "any record relating to termination of that agreement".
+meta:
+  subject: Wastewater Treatment Agreement — Allen County Commissioners <-> Village of Cridersville,
+    Shawnee Oaks Sewer Sub-District
+  source_path: data/documents/legal/prr-mandamus/prr-production-2026-07-24-sanitary/14/Shawnee
+    Oaks/Contracts & Agreements/Shawnee Oaks Wastewater Treatment Agreement with the Village of
+    Cridersville 2014.pdf
+  executed: '2014-03-10'
+  method: visual read of the 8-page scanned agreement (7 pp. text + Exhibit A service-area map);
+    figures/dates read as printed. Village Ordinance 1656 (2014-03-10) authorized the Village side.
+  content_verified: '2026-07-24'
+
+parties:
+  county: Board of County Commissioners, Allen County, Ohio (President + Jay Begg signing;
+    Prosecuting Attorney John Leahy Jr. approved as to form; Clerk/Attest Kelli Singhaus)
+  village: Village of Cridersville (Mayor + Village Solicitor signing)
+
+history:
+  - {date: '1966-08-15', event: original County<->Village agreement to treat Shawnee Oaks Sewer
+      Sub-District wastewater}
+  - {date: '1966-07-25', event: Shawnee Oaks Sewer Sub-District established (resolution, Jr. 53,
+      Page 364)}
+  - {date: '1967-05-08', event: Allen County Sewer District formed (R.C. 6117.01)}
+  - {date: '1975-06-09', event: sub-district boundaries amended to add Arthur's First and Freyer's
+      Second Subdivisions}
+
+terms:
+  structure: >-
+    The County owns/maintains the collection system (gravity mains, pumping station, force main)
+    up to the point of connection to the Village's system; the Village receives and TREATS the
+    County's wastewater at the Village WWTP under the Village's own NPDES permit. The County bills
+    and collects the Village's treatment fee from Service-Area customers and remits it to the
+    Village (quarterly invoice, paid within 30 days).
+  treatment_fee: 2014 flat rate of $24.71 per month per account (Village may raise per its Rules
+    & Regulations); 2013 connection charge $600 for new customers.
+  term: PERPETUAL agreement from the date of initial treatment (Section 3-... "Term of Contract").
+  customer_certification: County certifies the customer-account database to the Village by
+    January 15 each year (Exhibit B).
+  termination_mechanism: >-
+    [verified] Section 16 — the County may terminate "whenever ... the County determines in its
+    SOLE DISCRETION that it shall purchase treatment from any other entity or ... construct a
+    wastewater project" of its own. Procedure: the County first notifies the Village of its
+    intent with cost estimates/plans/specs; the Village then has 120 days to state (A) it has
+    sufficient capacity, (B) it is willing to serve, and (C) its estimated cost; after which the
+    County, again "in its sole discretion," may proceed with the purchase/project, terminating
+    the agreement 120 days from its notice. (Section 14 adds an ordinary default-and-90-day-cure
+    termination for either party; Section 15 routes disputes to non-binding mediation then
+    3-arbitrator binding arbitration.)
+
+bosc_relevance: >-
+  [verified] This is the agreement whose OEPA review + potential termination item 14 requests,
+  and Section 16 is precisely the mechanism the County's live 2026 "Shawnee Oaks reroute to
+  Shawnee WWTP" project (item-14 tree) invokes: rather than terminate for cause, the County is
+  building its OWN conveyance (pump station + force main to the Shawnee II WWTP) to move the
+  Shawnee Oaks flow off the Cridersville plant — the "construct a wastewater project ... in its
+  sole discretion" exit. [inference] The reroute ends the ~$102k/yr the County pays Cridersville
+  to treat Shawnee Oaks flow (sanitary-economics.yaml), redirecting that load to the same
+  Shawnee II plant being expanded through the DFFO chain.
+
+open:
+  - >-
+    [open] No standalone OEPA-review correspondence or Prosecutor's Office legal analysis of the
+    agreement was identified in the item-14 tree at survey level (item 14 requested both). The
+    reroute engineering/financing records ARE the county's de-facto termination trail; whether a
+    formal termination notice under Section 16 has issued is unconfirmed in the production.
+
+relevance:
+  tags: [verified, agreement, cridersville, shawnee-oaks, reroute, prr-item-14]
+  cross_refs:
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/shawnee-oaks-reroute-2026.yaml
+  - data/extracted/commissioners/sanitary-economics.yaml
+  - data/reference/hydrology/maumee-tmdl-budget.yaml   # Cridersville WWTP = NPDES OH0020222/2PB00048

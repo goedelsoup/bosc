@@ -32,6 +32,15 @@ storage:
 - relpath: extracted/legal/prr-mandamus/prr-production-2026-07-24/hume-road-wpclf-application-2026.award.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/legal/prr-mandamus/prr-production-2026-07-24/owda-loan-6718.award.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/legal/prr-mandamus/prr-production-2026-07-24/cridersville-treatment-agreement-2014.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/legal/prr-mandamus/prr-production-2026-07-24/shawnee-oaks-reroute-2026.yaml
+  media_type: application/x-yaml
+  lfs: false
 - relpath: extracted/legal/prr-mandamus/prr-production-2026-07-24/sso-reports-2019.yaml
   media_type: application/x-yaml
   lfs: false

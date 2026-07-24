@@ -1,0 +1,69 @@
+# The live 2026 "Shawnee Oaks reroute to Shawnee WWTP" project (item 14) — land + easements.
+# Corpus artifact (no RecordGroup fits a pre-recording purchase authorization / easement set);
+# the reroute is the county's de-facto exit from the 2014 Cridersville treatment agreement.
+meta:
+  subject: Shawnee Oaks reroute to Shawnee II WWTP — land acquisition + easements (2026)
+  source_dir: data/documents/legal/prr-mandamus/prr-production-2026-07-24-sanitary/14/Shawnee
+    Oaks/Shawnee Oaks reroute to Shawnee WWTP/
+  method: visual read of the Buchanan land-purchase packet (FMV memo PDF-equiv + purchase
+    resolution, via native .docx/textutil) and folder survey of the easements/financing;
+    figures/parcels read as printed.
+  content_verified: '2026-07-24'
+
+project: >-
+  A new County pump station + force main to convey Shawnee Oaks sanitary flow to the County's own
+  Shawnee II WWTP, replacing treatment at the Village of Cridersville plant. Engineering is the
+  batch-2 Res #113-26 contract (Access Engineering Solutions, $161,000); financing is the
+  batch-2 WPCLF Res #136-26 (unincorporated Shawnee Twp / Shawnee Oaks, $1.6M). This tree adds
+  the land + easement acquisition assembled for the corridor.
+
+land_purchase_buchanan:
+  parcel: 46-2610-04-012.000
+  owner: Eric B. Buchanan
+  address: Ft. Shawnee Ave., Lima
+  size: 0.095 acres (4,138.2 sq ft)
+  fair_market_value: >-
+    $1,903.57 — computed at an assumed $20,000/acre land value ($0.46/sq ft x 4,138.2 sq ft)
+    per the Sanitary Engineer's FMV memo (Brad Niemeyer, P.E.).
+  conveyance: quitclaim deed (authorizing resolution recites R.C. 6117.39 and 6103.25)
+  authorizing_resolution: >-
+    Board of County Commissioners resolution dated 2026-07-02 (Res #___-26, number blank on the
+    produced draft) ACCEPTS the land purchase for the Shawnee Oaks Reroute Sewer Project "for
+    the purpose of conveying untreated waste"; Auditor directed to issue the warrant.
+    Commissioners: Beth Siebert, Brian Winegardner, Cory Noonan; Clerk Brittany Woods.
+  note: >-
+    [verified] The Buchanan parcel is the corridor land acquisition for the reroute pump
+    station / force main. (An earlier commissioners-ledger note recorded "~.099 acres ... the
+    last piece of property" bought for the pump station; the FMV memo here prints 0.095 acres —
+    same parcel, the ledger figure was approximate.)
+
+easements_surveyed:   # folder-level survey; per-easement transcription deferred (item-14 follow-up)
+  - Ricketts Easement (sanitary-sewer easement + exhibit + FMV calc)
+  - Burgess Easement (sanitary-sewer easement + exhibit + FMV calc)
+  - Village of Cridersville easements (SKM scans)
+
+financing_and_certs:
+  - BOCC Grant App Form (WPCLF) for the reroute
+  - New Fund Request (2026-01-09); CERTIFICATE SHAWNEE OAKS (2026-04-02)
+  - Signed resolutions — accept Access Engineering (2026-02-19), WPCLF Shawnee Rd - Hume, Shawnee
+    Oaks Fund (2026-01-15)
+
+bosc_relevance: >-
+  [verified] The reroute is the concrete invocation of the 2014 Cridersville agreement's Section
+  16 "construct a wastewater project ... in the County's sole discretion" termination exit: the
+  County builds its own conveyance to the Shawnee II WWTP rather than keep paying Cridersville to
+  treat Shawnee Oaks flow. [inference] It concentrates yet more sanitary load onto the Shawnee II
+  plant already being expanded through the DFFO chain, while ending the ~$102k/yr Cridersville
+  treatment payment (sanitary-economics.yaml).
+
+open:
+  - '[open] The authorizing purchase resolution is a produced DRAFT (Res number blank); whether
+     it was adopted (and the quitclaim deed recorded) is unconfirmed in the production.'
+  - '[open] Per-easement terms (Ricketts / Burgess / Cridersville) not yet transcribed.'
+
+relevance:
+  tags: [verified, reroute, shawnee-oaks, land-acquisition, buchanan, prr-item-14]
+  cross_refs:
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/cridersville-treatment-agreement-2014.yaml
+  - data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-12.response-index.yaml   # Res #113-26 / #136-26
+  - data/extracted/commissioners/sanitary-economics.yaml

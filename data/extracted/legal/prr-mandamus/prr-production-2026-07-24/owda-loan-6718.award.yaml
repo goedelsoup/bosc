@@ -1,0 +1,60 @@
+doc_id: owda-loan-6718
+source_path: data/documents/legal/prr-mandamus/prr-production-2026-07-24-sanitary/9/SH & AB SSO
+  Findings and Orders/Phase 1 SECAP Constr Projects/Financing Loan No-6718 WWTP Ph 1, FM and
+  PS/OWDA application docs FM, PS & WWTP.pdf
+kind: award
+pages_read: [0, 1, 2, 3, 4, 5]
+method: >-
+  visual read of the OWDA Construction Loan Application packet (RCAP cover letter, OWDA
+  document checklist, Funding Application §§1-12, Borrower's Information Form). The folder also
+  holds OWDA Payment Instruction Form No. 6718 (loan-number confirmation), the amortization
+  schedule (xlsx), and the Water & Wastewater Construction Agreement; figures read as printed.
+award:
+  confidence: high
+  warnings:
+  - >-
+    The Funding Application §9 subtotal ($14,006,830) + contingency ($1,357,683) = $15,364,513,
+    the stated OWDA loan amount and Total Project Cost; the §10 cost-breakdown table separately
+    totals $15,418,289 (it folds in $53,776 non-contract project costs / OWDA fee). Both
+    printed figures preserved; the loan/agreement amount is $15,364,513.
+  program: OWDA (Ohio Water Development Authority)
+  agency: Ohio Water Development Authority
+  instrument: cooperative financing agreement (construction loan)
+  award_no: '6718'
+  borrower: Allen County Commissioners / Allen County Sanitary Engineering (EIN 34-6400019)
+  project_name: Shawnee II WWTP, Pump Station and Force Main Improvements (SECAP Phase 1)
+  facility: Shawnee II WWTP (2PK00002) + Fort Amanda Pump Station + Ottawa River Force Main
+  amount_usd: 15364513
+  interest_rate_pct: null   # RCAP requested a 1% deduction from market rate (see note); the awarded rate is not stated on these pages
+  term_years: 20
+  application_date: '2014-04-15'
+  award_date: '2014-04'   # "OWDA Agreement Dated Apr-14" (Borrower's Information Form)
+  first_payment_date: '2016-01-01'
+  repayment_source: user charges
+  engineer: URS (Mike Frommer), 277 West Nationwide Boulevard, Columbus
+  resolution_refs: []
+  last_repayment_date: '2035-07-01'   # extra field (20-yr equal-payment schedule)
+  construction_contracts: 'S&S Directional Boring — Ottawa River Force Main $1,792,830;
+    Peterson Construction — Fort Amanda Pump Station $2,524,000; Peterson Construction —
+    Shawnee II WWTP Improvements $9,260,000; URS — construction administration $395,000; PSI —
+    construction engineering $35,000; contingency $1,357,683 (§9, p4)'   # extra field
+  note: >-
+    [verified] OWDA Loan #6718 — the SECAP Phase 1 construction financing for the Shawnee II
+    collect-pump-treat program the 2014 Modified DFFO ordered. The RCAP cover letter (Julie
+    Ward, Ohio RCAP, 2014-04-15) requests a 1% interest-rate deduction from market, citing that
+    the County is a pre-1992 borrower and the project addresses a health hazard "re: the County
+    is under a Findings and Orders to address CSO/SSO's" — tying the loan directly to the
+    enforcement chain. Equal-payment 20-yr term, user-charge-pledged (2013 revenue allocation:
+    O&M 55%, debt service 25%, reserves 20%).
+relevance:
+  tags: [verified, finance, owda, secap, shawnee-ii, force-main, pump-station, prr-item-9]
+  note: >-
+    Batch-3 item 9's financing keystone: the $15.36M that built the Shawnee II Phase 1 force
+    main + Ft Amanda pump station + WWTP improvements. The Ottawa River Force Main contract
+    (S&S Directional Boring) is the same S&S work whose construction dispute the item-9 media
+    (2015-09-18 audio, Ottawa River crossing videos) documents; it feeds the ratepayer-burden
+    thread (the rate escalation in the enforcement chain and the Hume Road WPCLF application).
+  cross_refs:
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2014-modified.order.yaml
+  - data/extracted/regulatory/wastewater-enforcement-history.yaml
+  - data/extracted/commissioners/sanitary-economics.yaml
