@@ -17,6 +17,9 @@ storage:
 - relpath: extracted/legal/prr-mandamus/bosc-prr-production-2026-07-24.custody-manifest.yaml
   media_type: application/x-yaml
   lfs: false
+- relpath: extracted/legal/prr-mandamus/bosc-prr-production-2026-07-24.analysis.md
+  media_type: text/markdown
+  lfs: false
 refresh:
   cadence: static
   last_refreshed: '2026-07-24'

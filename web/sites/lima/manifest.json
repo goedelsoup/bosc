@@ -4,7 +4,7 @@
   "contract_version": "1.34.0",
   "generated_at": "2026-07-19T03:12:28+00:00",
   "feed_count": 47,
-  "row_total": 1534,
+  "row_total": 1536,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -125,7 +125,7 @@
       "media_type": "application/json",
       "schema": "schemas/leads.schema.json",
       "kind": "collection",
-      "count": 26
+      "count": 27
     },
     {
       "name": "contacts",
@@ -365,7 +365,7 @@
       "media_type": "application/json",
       "schema": "schemas/open-questions.schema.json",
       "kind": "collection",
-      "count": 25
+      "count": 26
     },
     {
       "name": "catalog-index",

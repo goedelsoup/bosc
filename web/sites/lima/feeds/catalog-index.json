@@ -1,6 +1,6 @@
 {
   "site": "lima",
-  "catalog_version": "41112bc37849e651c1d0890317d835af959ce071c2dbd3048ab1239471577106",
+  "catalog_version": "6454861595b0827ebf512cb102b482fae08c7cf9ccde772c14c2c9afe820feaf",
   "contract_version": "1.34.0",
   "atoms": [
     {
@@ -2609,6 +2609,14 @@
       "site": "lima",
       "local_id": "PTI-313MW",
       "title": "The per-engine output behind the 313 MW figure is trade-secret-redacted",
+      "feed": "leads"
+    },
+    {
+      "handle": "lead:lima:WWTP-PARAM-ASSIM",
+      "kind": "lead",
+      "site": "lima",
+      "local_id": "WWTP-PARAM-ASSIM",
+      "title": "The municipal-WWTP dilution check is hydraulic only — no per-parameter assimilative capacity on record",
       "feed": "leads"
     },
     {

@@ -107,9 +107,15 @@ leads:
   title: Nobody owns the forcemain's MGD design capacity
   detail: The Hume / Shawnee forcemain's design capacity (item 9) is disclaimed by every county body —
     each points to Ohio EPA or the townships. Batch 2 produced the financing and the engineering contract,
-    not the MGD figure. (Distinct from the City of Lima WWTP's own 18.5 MGD design flow, now in the
-    corpus via the public NPDES permit — see LIMA-WWTP-SHARE.)
-  source: Cross-production referral · item 9
+    not the MGD figure. **Batch 3 (2026-07-24) did not close it either:** the item-11 Hume Road WPCLF
+    application was produced in full (all 11 pages read) but is a financial/loan form end to end — no
+    forcemain design-capacity figure, no feasibility study, no engineering attachment anywhere in it (a
+    verified absence from the produced document). [inference] The design capacity would sit in the
+    project's design/feasibility work — Access Engineering is the named consulting engineer on the
+    application — which the county did not produce; the produced records establish neither that work's
+    contents nor who holds it. (Distinct from the City of Lima WWTP's own 18.5 MGD design flow, now in
+    the corpus via the public NPDES permit — see LIMA-WWTP-SHARE.)
+  source: Cross-production referral · item 9 · data/extracted/legal/prr-mandamus/prr-production-2026-07-24/hume-road-wpclf-application-2026.award.yaml
 - id: LIMA-WWTP-SHARE
   kind: question
   status: unanswered
@@ -258,7 +264,21 @@ leads:
     §1.
 
 
-    Source: `data/extracted/legal/corpus-completeness-audit.md` §1; `prr-mandamus/bosc-prr-production-2026-06-05.response-index.yaml`.'
+    ### Batch 3 (2026-07-24) — the Sanitary Engineer''s per-item production
+
+    The county produced native per-item file trees for items **9/11/13/14/15** (1,610 files; ingested +
+    extracted — see `bosc-prr-production-2026-07-24.response-index.yaml` and the `.analysis.md`). This
+    grounds the SSO/DFFO enforcement chain (1997→2028), the OWDA Loan 6718 Phase-1 financing ($15.36M),
+    the Cridersville treatment agreement + its Section-16 termination mechanism, and the Hume Road WPCLF
+    application. **Two responsiveness gaps remain outstanding:** (a) **item 13** — the county answered
+    the 2024→ MS Consultants / BOSC pump-station+forcemain ask with an empty "13 - See 9" folder, but
+    the item-9 tree is Phase-1-era (2008-2016) with no 2024-onward MS Consultants records; and (b) the
+    still-withheld **item 4** cost-benefit. Item 9''s literal ask — a record referencing the **12.6 MGD
+    peak** figure — was **not** produced (0 of 1,245 machine-readable files reference it).
+
+
+    Source: `data/extracted/legal/corpus-completeness-audit.md` §1; `prr-mandamus/bosc-prr-production-2026-06-05.response-index.yaml`;
+    `prr-mandamus/bosc-prr-production-2026-07-24.response-index.yaml`.'
   source: watermark-directory/the-watermark-directory#35
   issue: 35
 - id: GH-144
