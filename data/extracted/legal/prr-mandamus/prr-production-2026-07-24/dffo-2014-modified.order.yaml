@@ -1,0 +1,75 @@
+doc_id: dffo-2014-modified
+source_path: data/documents/legal/prr-mandamus/prr-production-2026-07-24-sanitary/15/Directors
+  Final Findings & Orders/2014 Modified Directors Findings & Orders/DFFO-Revised 2014.pdf
+kind: order
+pages_read: [0, 1, 2, 3, 4, 5, 6, 7]
+method: manual transcription from the scanned instrument + OEPA transmittal letter (visual read
+  of pp. 1-8; transmittal 2014-01-06 p1, certification 1-6-14 p2, signature page p8).
+order:
+  confidence: high
+  warnings:
+  - >-
+    The production also carries "DFFO-Revised 2014 (5yr extension).pdf" in the same folder —
+    verify whether it is a duplicate render of this instrument or a distinct draft before citing
+    it separately (the 2023 OEPA letter separately references a "draft revision ... dated May 3,
+    2019" that never journalized).
+  agency: Ohio EPA
+  instrument: modified DFFO
+  case_no: entered Director's Journal 2014-01-06 (journal stamp p2; certified copy 1-6-14)
+  respondent: Allen County Board of Commissioners, 301 North Main Street, Lima, Ohio
+  facility: Shawnee II POTW (Shawnee II WWTP 2.0 MGD -> Ottawa River); American Bath POTW
+    (1.5 MGD -> Pike Run) unchanged
+  permit_no: 2PK00002*ID (Shawnee, eff. 2011-04-01) / 2PH00007*KD (American Bath, eff. 2013-05-01)
+  issued_date: '2014-01-06'
+  effective_date: '2014-01-06'
+  supersedes: Order No. 1 (the Shawnee compliance schedule) of the 2005-05-31 DFFO; all other
+    2005 provisions remain in full force (Finding 9)
+  obligations:
+  - {requirement: 'Begin Phase 1 collection-system construction — new interceptor sewer + pump
+      station (Order 1.A.i)', deadline: '2014-01'}
+  - {requirement: 'Begin Phase 1 WWTP improvements — new headworks (pump, screening),
+      equalization basin with chemical addition, UV disinfection of secondary flows AND of the
+      equalization-basin overflow, replacing the chlorine contact tank (Order 1.A.ii)',
+     deadline: '2014-04'}
+  - {requirement: 'Complete ALL Phase 1 improvements; "a temporary equalization basin overflow
+      shall be permitted at the WWTP in an effort to maximize treatment of potential SSO flows"
+      (Order 1.A.iii)', deadline: '2015-07'}
+  - {requirement: 'Evaluate Shawnee POTW system flows for one year (Order 1.A.iv)',
+     deadline: '2015-07 through 2016-06'}
+  - {requirement: 'Submit updated WWTP + collection-system Basis of Design Report; initiate
+      Phase 2 detailed design (Order 1.A.v)', deadline: '2016-09'}
+  - {requirement: 'Begin Phase 2 construction by December 2018; complete by 2020-12-31
+      (Order 1.A.vi)', deadline: '2020-12-31'}
+  - {requirement: 'ELIMINATE the temporary equalization-basin overflow and ALL SSOs
+      (Order 1.A.vii)', deadline: '2020-12-31'}
+  - {requirement: 'Update MOM program: private-I/I strategy + flooding-area identification
+      (Order 1.B); MOM for treatment systems (Order 1.C)', deadline: null}
+  penalty_usd: null
+  stipulated_penalties: none in this modification (the 2005 penalty/SEP terms stand unmodified)
+  status: superseded in part by later correspondence (county's 2022-10-26 amendment request;
+    OEPA 2023-02-02 response agreeing to a 2028-12-31 Phase 2 completion)
+  summary: >-
+    The five-year extension the county requested on 2011-12-09: SSO elimination moves from
+    2015-12-31 to 2020-12-31, restructured as Phase 1 (collect-pump-treat: interceptor, pump
+    station, headworks/EQ basin/UV by July 2015), a monitored-flow year, then Phase 2 WWTP
+    capacity designed from actual flows. Signed by Director Scott J. Nally 2013-12-31 and
+    Commissioner Jay Begg 2013-12-05; journalized 2014-01-06. Crucially, Order 1.A.iii
+    designates the equalization-basin overflow as TEMPORARY, and Order 1.A.vii requires its
+    elimination along with all SSOs by 2020-12-31 — the provision the county later argued
+    against ("the EQ 'bypass' ... was always part of the design", per its 2022-10-26 letter
+    quoted in OEPA's 2023-02-02 response).
+  note: >-
+    [verified] from the journalized instrument. Six Shawnee SSOs and one American Bath SSO
+    remained as of these findings (Finding 5).
+relevance:
+  tags: [verified, enforcement, dffo, sso, shawnee-ii, eq-basin, secap, prr-item-15]
+  note: >-
+    Batch-3 item 15. The 2020 deadline here is the one that lapsed into the 2019-draft/2023
+    negotiation asking for 2028 — 25 years after the original 2003 promise. The "temporary"
+    designation of the EQ-basin overflow is the strongest [verified] counterpoint to the
+    county's later "always part of the design" characterization.
+  cross_refs:
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2005.order.yaml
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2011-extension-request.order.yaml
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2023-extension-letter.order.yaml
+  - data/extracted/regulatory/wastewater-enforcement-history.yaml

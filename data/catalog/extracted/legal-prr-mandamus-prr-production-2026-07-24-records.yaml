@@ -1,0 +1,50 @@
+id: legal-prr-mandamus-prr-production-2026-07-24-records
+title: Batch-3 Sanitary Production — Extracted Record Envelopes (DFFO chain, WPCLF, SSO reports)
+scope: extracted
+status: reviewed
+producer:
+  kind: extracted
+  source: manual/scripted transcription from the batch-3 per-item trees (items 9/11/15) —
+    born-digital text layers, scanned-instrument visual reads, textutil (.doc/.docx), and
+    openpyxl (.xlsx); figures copied as printed, negative meter readings preserved
+license: Public record (Ohio R.C. 149.43)
+access_tier: public
+site_scope: lima-legacy
+storage:
+- relpath: extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2005.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2011-extension-request.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2014-modified.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2023-extension-letter.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/legal/prr-mandamus/prr-production-2026-07-24/sso-closures.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/legal/prr-mandamus/prr-production-2026-07-24/hume-road-wpclf-application-2026.award.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/legal/prr-mandamus/prr-production-2026-07-24/sso-reports-2019.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: static
+  last_refreshed: '2026-07-24'
+provenance: document
+tags:
+- public-records
+- wastewater
+- enforcement
+- finance
+- sso
+notes: 'The instrument-level layer of the batch-3 production: the DFFO enforcement chain
+  (2005 DFFO, 2011 extension request, 2014 Modified DFFO, 2023 extension letter, SSO closure
+  notices) as `order` records, the Hume Road WPCLF application as an `award` record, and the
+  2019 monthly SSO reports as a structured corpus artifact. First records in the contract-1.34.0
+  `enforcement`/`finance` groups (#1746/#1747). The arc is summarized in
+  extracted/regulatory/wastewater-enforcement-history.yaml (`dffo_chain`).'

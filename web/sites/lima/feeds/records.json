@@ -245,6 +245,344 @@
     "source_doc_published": false
   },
   {
+    "rel": "legal/prr-mandamus/prr-production-2026-07-24/dffo-2005.order.yaml",
+    "group": "enforcement",
+    "title": "DFFO",
+    "confidence": "high",
+    "warnings": [
+      "The SSO overflow-day tables (Findings 6 and 10) are transcribed from a scan; counts are clearly printed and copied digit-for-digit, but verify against the page image before citing in publication."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "instrument": "DFFO",
+      "case_no": "entered Director's Journal May 31, 2005 (stamp p1)",
+      "respondent": "Allen County Board of Commissioners, 301 North Main Street, Lima, Ohio",
+      "facility": "Shawnee II POTW (Shawnee II WWTP, 2.0 MGD, 3640 Spencerville Road, Shawnee Township -> Ottawa River) and American Bath POTW (American Bath WWTP, 1.5 MGD, 3226 North Cole Street, American Township -> Pike Run), with their collection systems",
+      "permit_no": "2PK00002 (Shawnee; *GD expired 2004-03-31, renewal applied 2003-09-26) / 2PH00007*HD (American Bath, eff. 2004-12-01)",
+      "issued_date": "2005-05-31",
+      "effective_date": "2005-05-31",
+      "obligations": [
+        {
+          "requirement": "Shawnee: bid + award Seriff Sub-basin Pilot I/I Remediation contracts (Order 1.A)",
+          "deadline": "2005-01-31"
+        },
+        {
+          "requirement": "Shawnee: begin private-property investigation/remediation (Order 1.B)",
+          "deadline": "2006-12-31"
+        },
+        {
+          "requirement": "Shawnee: complete mainline/manhole replacement or rehabilitation, remaining portion (Order 1.C)",
+          "deadline": "2011-08-31"
+        },
+        {
+          "requirement": "Shawnee: complete private-property investigation/remediation (Order 1.D)",
+          "deadline": "2013-06-30"
+        },
+        {
+          "requirement": "Shawnee + American Bath: submit System Evaluation Capacity Assurance Plan (SECAP) with peak-flow estimates, key-component capacities, hydraulic deficiencies (Orders 1.E / 2.D)",
+          "deadline": "2009-07-01"
+        },
+        {
+          "requirement": "Shawnee: implement SECAP and eliminate ALL SSOs (Order 1.F)",
+          "deadline": "2015-12-31"
+        },
+        {
+          "requirement": "American Bath: complete flow monitoring (Order 2.A)",
+          "deadline": "2006-12-31"
+        },
+        {
+          "requirement": "American Bath: complete mainline/manhole replacement/rehabilitation (Order 2.B)",
+          "deadline": "2009-12-31"
+        },
+        {
+          "requirement": "American Bath: complete private-property investigation/remediation (Order 2.C)",
+          "deadline": "2011-12-31"
+        },
+        {
+          "requirement": "American Bath: implement SECAP and eliminate all SSOs (Order 2.E)",
+          "deadline": "2015-12-31"
+        },
+        {
+          "requirement": "Post warning signs at each SSO location, >= 12x18 in (Order 4)",
+          "deadline": "60 days from effective date"
+        }
+      ],
+      "penalty_usd": 49226,
+      "stipulated_penalties": "None as such — Order 8 allows completing the Findlay Road Phase II Sewer Improvement Area Project (~$557,000 Supplemental Environmental Project: replace on-site septic systems along Bluelick Road, Bath Township, with public sanitary sewer, eliminating a county-owned package plant; wastewater then treated by the City of Lima) IN LIEU of the $49,226 payment; failure to complete within 210 days revives the cash penalty (Order 9).",
+      "status": "modified (Order No. 1 modified by the 2014 Modified DFFO; see supersedes chain)",
+      "summary": "The foundational SSO-elimination consent instrument. Findings: the county's 1997-05-01 General Plan promised elimination of all Shawnee POTW SSOs by 2003-05-01 (Finding 7); the county violated the 2PK00002*GD compliance schedule on all four milestones (Finding 8); documented overflow days Jan 2001-Dec 2003 at eight Shawnee SSOs (Cam Court 52, Elmview Drive 28, Riverview Drive 44, Seriff Road 2, Shawnee Country Club 60, Shawnee Country Club Main 15, Shawnee Road 4, Zurmehly Road 58 - to the Ottawa River or unnamed tributaries; Findings 6) and two American Bath SSOs May 2002-Mar 2003 (Manhole T-45 1, Meadow Apartments AB-03-020 14 - to Pike Run; Finding 10). Seriff Road and Shawnee Road SSOs closed 2001 (Finding 9). Orders set the SECAP regime and a 2015-12-31 eliminate-all-SSOs deadline, assess $49,226 with the Findlay Road SEP alternative, and require warning signs at SSOs.",
+      "note": "[verified] All figures read from the journalized instrument itself. The compliance-schedule violations (Finding 8) date the original promises: detailed plans 1999-12-07, bids 2000-10-31, construction start 2000-11-03, completion + elimination 2003-05-01."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "legal/prr-mandamus/prr-production-2026-07-24/dffo-2005.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]",
+      "verified": true
+    },
+    "source_doc_rel": "legal/prr-mandamus/prr-production-2026-07-24-sanitary/15/Directors Final Findings & Orders/2005 Directors Findings and Orders Corr/2005 Correspondence/2005 DFFO - Journalized Orders.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "legal/prr-mandamus/prr-production-2026-07-24/dffo-2011-extension-request.order.yaml",
+    "group": "enforcement",
+    "title": "extension request letter (SECAP plan update, per DFFO Section V(1)(E)(iii))",
+    "confidence": "high",
+    "warnings": [
+      "This is the county's REQUEST letter, not an OEPA instrument — the relief it asks for was granted (in substance) by the 2014 Modified DFFO. Treat its factual assertions (rate percentages, $7M savings) as the county's own statements, not agency findings."
+    ],
+    "fields": {
+      "agency": "Ohio EPA (addressee — Justin Williams, DSW Northwest District Office)",
+      "instrument": "extension request letter (SECAP plan update, per DFFO Section V(1)(E)(iii))",
+      "case_no": null,
+      "respondent": "Allen County Sanitary Engineering Department (Stephen M. Kayatin, P.E., Sanitary Engineer) on behalf of the Board of Commissioners",
+      "facility": "Shawnee II POTW; American-Bath POTW (background)",
+      "permit_no": null,
+      "issued_date": "2011-12-09",
+      "supersedes": "requests modification of the 2005-05-31 DFFO SECAP schedule (2015-12-31 eliminate-all-SSOs deadline -> +5 years)",
+      "obligations": [
+        {
+          "requirement": "Proposed: complete Collection System Project (pump station, force main, trunk sewer replacement)",
+          "deadline": "2015-07"
+        },
+        {
+          "requirement": "Proposed: monitor and evaluate actual flow",
+          "deadline": "2015-07 through 2016-06"
+        },
+        {
+          "requirement": "Proposed: design WWTP Project from monitored flows",
+          "deadline": "2016-06 through 2018-12"
+        },
+        {
+          "requirement": "Proposed: construct WWTP Project",
+          "deadline": "2018-12 through 2020-12"
+        }
+      ],
+      "status": "granted in substance by the 2014 Modified DFFO (journalized 2014-01-06)",
+      "summary": "The county's five-year-extension request that became the 2014 modification. Documents the strategic pivot from collection-system rehabilitation to COLLECT-PUMP-TREAT after the Seriff Sub-Basin pilot showed rehabilitation flows \"still too great and the cost ... too excessive\"; SECAPs for both POTWs approved by OEPA April 2009; the American-Bath trunk replacement (completed late 2009) closed that system's one SSO ~6 years early, and — per a 2011-09-26 county letter — OEPA authorized FOREGOING the American-Bath WWTP expansion after wet-weather monitoring, saving \"nearly $7,000,000\". Rates: +64% over the prior 6 years with a further 10% scheduled (\"80% higher than they were 6 years ago\"). The county argues designing Shawnee WWTP improvements from modeled rather than monitored flows risks \"overdesign of wastewater treatment plant improvements\".",
+      "note": "[verified] as the county's statements in its own letter. The overdesign concern and the design-from-actual-flows sequencing are the stated rationale for the five added years — context for evaluating the eventual Phase 2 sizing (3.0 MGD avg / 12.60 MGD peak per the later county website figure, which this production nowhere documents)."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "legal/prr-mandamus/prr-production-2026-07-24/dffo-2011-extension-request.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "legal/prr-mandamus/prr-production-2026-07-24-sanitary/15/Directors Final Findings & Orders/2014 Modified Directors Findings & Orders/2011 OEPA Sched Ext Finding and Orders.docx",
+    "source_doc_render_class": "office",
+    "source_doc_published": false
+  },
+  {
+    "rel": "legal/prr-mandamus/prr-production-2026-07-24/dffo-2014-modified.order.yaml",
+    "group": "enforcement",
+    "title": "modified DFFO",
+    "confidence": "high",
+    "warnings": [
+      "The production also carries \"DFFO-Revised 2014 (5yr extension).pdf\" in the same folder — verify whether it is a duplicate render of this instrument or a distinct draft before citing it separately (the 2023 OEPA letter separately references a \"draft revision ... dated May 3, 2019\" that never journalized)."
+    ],
+    "fields": {
+      "agency": "Ohio EPA",
+      "instrument": "modified DFFO",
+      "case_no": "entered Director's Journal 2014-01-06 (journal stamp p2; certified copy 1-6-14)",
+      "respondent": "Allen County Board of Commissioners, 301 North Main Street, Lima, Ohio",
+      "facility": "Shawnee II POTW (Shawnee II WWTP 2.0 MGD -> Ottawa River); American Bath POTW (1.5 MGD -> Pike Run) unchanged",
+      "permit_no": "2PK00002*ID (Shawnee, eff. 2011-04-01) / 2PH00007*KD (American Bath, eff. 2013-05-01)",
+      "issued_date": "2014-01-06",
+      "effective_date": "2014-01-06",
+      "supersedes": "Order No. 1 (the Shawnee compliance schedule) of the 2005-05-31 DFFO; all other 2005 provisions remain in full force (Finding 9)",
+      "obligations": [
+        {
+          "requirement": "Begin Phase 1 collection-system construction — new interceptor sewer + pump station (Order 1.A.i)",
+          "deadline": "2014-01"
+        },
+        {
+          "requirement": "Begin Phase 1 WWTP improvements — new headworks (pump, screening), equalization basin with chemical addition, UV disinfection of secondary flows AND of the equalization-basin overflow, replacing the chlorine contact tank (Order 1.A.ii)",
+          "deadline": "2014-04"
+        },
+        {
+          "requirement": "Complete ALL Phase 1 improvements; \"a temporary equalization basin overflow shall be permitted at the WWTP in an effort to maximize treatment of potential SSO flows\" (Order 1.A.iii)",
+          "deadline": "2015-07"
+        },
+        {
+          "requirement": "Evaluate Shawnee POTW system flows for one year (Order 1.A.iv)",
+          "deadline": "2015-07 through 2016-06"
+        },
+        {
+          "requirement": "Submit updated WWTP + collection-system Basis of Design Report; initiate Phase 2 detailed design (Order 1.A.v)",
+          "deadline": "2016-09"
+        },
+        {
+          "requirement": "Begin Phase 2 construction by December 2018; complete by 2020-12-31 (Order 1.A.vi)",
+          "deadline": "2020-12-31"
+        },
+        {
+          "requirement": "ELIMINATE the temporary equalization-basin overflow and ALL SSOs (Order 1.A.vii)",
+          "deadline": "2020-12-31"
+        },
+        {
+          "requirement": "Update MOM program: private-I/I strategy + flooding-area identification (Order 1.B); MOM for treatment systems (Order 1.C)",
+          "deadline": null
+        }
+      ],
+      "penalty_usd": null,
+      "stipulated_penalties": "none in this modification (the 2005 penalty/SEP terms stand unmodified)",
+      "status": "superseded in part by later correspondence (county's 2022-10-26 amendment request; OEPA 2023-02-02 response agreeing to a 2028-12-31 Phase 2 completion)",
+      "summary": "The five-year extension the county requested on 2011-12-09: SSO elimination moves from 2015-12-31 to 2020-12-31, restructured as Phase 1 (collect-pump-treat: interceptor, pump station, headworks/EQ basin/UV by July 2015), a monitored-flow year, then Phase 2 WWTP capacity designed from actual flows. Signed by Director Scott J. Nally 2013-12-31 and Commissioner Jay Begg 2013-12-05; journalized 2014-01-06. Crucially, Order 1.A.iii designates the equalization-basin overflow as TEMPORARY, and Order 1.A.vii requires its elimination along with all SSOs by 2020-12-31 — the provision the county later argued against (\"the EQ 'bypass' ... was always part of the design\", per its 2022-10-26 letter quoted in OEPA's 2023-02-02 response).",
+      "note": "[verified] from the journalized instrument. Six Shawnee SSOs and one American Bath SSO remained as of these findings (Finding 5)."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "legal/prr-mandamus/prr-production-2026-07-24/dffo-2014-modified.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2, 3, 4, 5, 6, 7]",
+      "verified": true
+    },
+    "source_doc_rel": "legal/prr-mandamus/prr-production-2026-07-24-sanitary/15/Directors Final Findings & Orders/2014 Modified Directors Findings & Orders/DFFO-Revised 2014.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "legal/prr-mandamus/prr-production-2026-07-24/dffo-2023-extension-letter.order.yaml",
+    "group": "enforcement",
+    "title": "extension response letter (correspondence on a draft revised DFFO)",
+    "confidence": "high",
+    "warnings": [],
+    "fields": {
+      "agency": "Ohio EPA (Thomas Poffenbarger, P.E., Water Quality Engineer/Unit Supervisor, DSW Northwest District Office)",
+      "instrument": "extension response letter (correspondence on a draft revised DFFO)",
+      "case_no": null,
+      "respondent": "Allen County Sanitary Engineer (Brad T. Niemeyer, P.E., 3230 North Cole Street, Lima) — \"Re: Shawnee II WWTP / DFFO / Correspondence / NPDES / 2PK00002 / Allen County\"",
+      "facility": "Shawnee II WWTP",
+      "permit_no": "2PK00002",
+      "issued_date": "2023-02-02",
+      "supersedes": "responds to the county's 2022-10-26 letter proposing amendments to the 2014-01-06 DFFO via the draft revised DFFOs dated 2019-05-03",
+      "obligations": [
+        {
+          "requirement": "OEPA agrees: complete construction of Phase 2 improvements (third SBR, modified existing SBRs, additional SBR pump capacity, POTW control-software upgrade, solids-handling upgrade)",
+          "deadline": "2028-12-31",
+          "status": "agreed in principle (\"We agree* with the proposed completion date\")"
+        },
+        {
+          "requirement": "OEPA amenable to removing \"bypass\" language for the EQ basin, BUT SSO-elimination language remains AND a post-construction monitoring requirement will be added to the modified NPDES permit \"to determine whether the overflow can be eliminated\"",
+          "deadline": null
+        },
+        {
+          "requirement": "Stipulated-penalty language STAYS in the revised DFFOs (\"Due to the numerous delays from the original completion date, we feel that it is prudent to keep the proposed stipulated penalty language\")",
+          "deadline": null
+        }
+      ],
+      "status": "correspondence on a not-yet-journalized revision (as of the letter)",
+      "summary": "OEPA's response to the county's requested amendments to the draft 2019 revised DFFOs. It recites the whole slippage arc in the agency's own words: the 1997-05-01 General Plan promised all SSOs eliminated by 2003-05-01; the 2005 DFFOs (with a $49,226 civil penalty) extended elimination to 2015-12-31; the 2014 modified DFFOs to 2020-12-31; and the county's proposal moves construction completion to 2028-12-31 — \"25 years after the original proposal.\" OEPA agrees to the 2028 date but refuses to drop stipulated penalties, keeps SSO-elimination language while entertaining removal of the \"bypass\" label the county disputes (the county: the EQ overflow \"was always part of the design, stemming back to the OEPA agreed upon 2009 SECAP\"), and commits to post-construction monitoring of whether the EQ overflow can be eliminated. cc list spans NWDO + Central Office incl. William Fischbein (Attorney 5, Legal).",
+      "note": "[verified] quotes from the letter text layer. Read against the 2014 instrument: the same overflow OEPA is now asked to stop calling a \"bypass\" was ordered eliminated by 2020-12-31 as a \"temporary equalization basin overflow\" (2014 Order 1.A.vii)."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "legal/prr-mandamus/prr-production-2026-07-24/dffo-2023-extension-letter.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1]",
+      "verified": true
+    },
+    "source_doc_rel": "legal/prr-mandamus/prr-production-2026-07-24-sanitary/15/Directors Final Findings & Orders/2023.02.02 Shawnee II DFFO Ext. Letter.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
+    "rel": "legal/prr-mandamus/prr-production-2026-07-24/sso-closures.order.yaml",
+    "group": "enforcement",
+    "title": "closure notice",
+    "confidence": "high",
+    "warnings": [
+      "Two closure notifications recorded in ONE envelope (same genre, same author, same DFFO reference); the source_path carries the Cam Court letter, the American Bath letter is cited in method/summary. Note the American Bath letter identifies the Meadows Apartments SSO manhole as \"MH AB-01-020\" where the 2005 DFFO's Finding 10 table prints \"AB-03-020\" — preserved as printed in each source, unreconciled."
+    ],
+    "fields": {
+      "agency": "Ohio EPA (notifications TO the agency under the 2005-05-31 DFFO)",
+      "instrument": "closure notice",
+      "respondent": "Allen County Sanitary Engineering Department",
+      "facility": "Shawnee No. 2 WWC system (Cam Court SSO); American Bath WWC system (Meadows Apartments SSO)",
+      "permit_no": "2PK00002*JD (Cam Court letter) / 2PH00007 (American Bath letter)",
+      "issued_date": "2019-03-07",
+      "obligations": [
+        {
+          "requirement": "American Bath — Meadows Apartments SSO (MH AB-01-020 as printed) permanently removed; excavation/removal performed by county WWC staff 2010-11-09; OEPA inspection requested (letter to Thomas Poffenbarger, 2010-12-09)",
+          "deadline": null,
+          "status": "met"
+        },
+        {
+          "requirement": "Shawnee — Cam Court SSO permanently removed; excavation/removal performed 2019-02-26; before/after photos enclosed (letter to Peggy Christie, 2019-03-07)",
+          "deadline": null,
+          "status": "met"
+        }
+      ],
+      "status": "closed (the two SSOs these letters notify)",
+      "summary": "The county's official permanent-removal notifications under the 2005 DFFO: the American Bath system's single remaining SSO (Meadows Apartments) removed 2010-11-09 — consistent with the 2011 extension letter's \"closed nearly six years ahead of schedule\" — and the Shawnee Cam Court SSO (52 overflow days in the 2005 DFFO's 2001-2003 table) removed 2019-02-26, more than three years past the original 2015-12-31 eliminate-all deadline and within the extended 2020-12-31 one. cc: Kayatin, Niemeyer, Boerger/Santaguida.",
+      "note": "[verified] from the letters. The Cam Court date is a fixed point for the elimination timeline the analysis phase reconstructs from the 2019 SSO reports."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "legal/prr-mandamus/prr-production-2026-07-24/sso-closures.order.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": null,
+      "verified": true
+    },
+    "source_doc_rel": "legal/prr-mandamus/prr-production-2026-07-24-sanitary/15/Directors Final Findings & Orders/2005 Directors Findings and Orders Corr/3-7-19 OEPA Notice Closure Shawnee Cam Court SSO.doc",
+    "source_doc_render_class": "office",
+    "source_doc_published": false
+  },
+  {
+    "rel": "legal/prr-mandamus/prr-production-2026-07-24/hume-road-wpclf-application-2026.award.yaml",
+    "group": "finance",
+    "title": "Hume Road Sewer System",
+    "confidence": "high",
+    "warnings": [
+      "This is the APPLICATION (instrument: application), not an executed loan award. The produced file carries no engineering attachments and no feasibility study — the item-11 ask's forcemain design-capacity (MGD) figure appears nowhere in it (see the batch-3 response index).",
+      "Amount reconciliation open: the application's $1,760,000 does not match either batch-2 grant-authorization figure (Res 135-26 Hamlet of Hume $2.0M; Res 136-26 unincorporated Shawnee Twp / Shawnee Oaks $1.6M). Whether this application implements 135-26, 136-26, or a revised scope is unresolved on the face of the produced records."
+    ],
+    "fields": {
+      "program": "WPCLF (Water Pollution Control Loan Fund) — \"Wastewater\" funding type checked",
+      "agency": "Ohio EPA Division of Environmental & Financial Assistance (DEFA), Office of Financial Assistance",
+      "instrument": "application",
+      "award_no": null,
+      "borrower": "Allen County Commissioners (Borrower; County of Allen)",
+      "project_name": "Hume Road Sewer System",
+      "amount_usd": 1760000,
+      "application_date": "2026-03-01",
+      "first_payment_date": "2028-07-01",
+      "term_years": 30,
+      "resolution_refs": [],
+      "engineer": "Craig Mescher, Access Engineering Solutions, 200 Walnut Street, Pleasant Hill, OH",
+      "repayment_source": null,
+      "interest_rate_discounts_requested": "Wastewater: Other — \"Regionalization\"; Water: Regionalization",
+      "loan_types_requested": "design loan + construction loan (30-yr term requested)",
+      "contacts": "Authorized representative: Brad Niemeyer, Sanitary Engineer (bniemeyer@allencountyohio.com); billing: Ron Meyer, Deputy Sanitary Engineer; disbursements: Jody Wells (all 3230 N. Cole St, Lima)",
+      "schedule": "Design: facilities-planning info incl. complete I/I analysis 2026-03-01; complete loan application 2026-04-01; sign documents 2026-05-01; design loan requested 2026-06-01; design completion 2027-02-01. Construction: loan requested 2026-06-01; initial payment 2028-07-01.",
+      "note": "[verified] from the filled form: \"Construct a new sewer system for the area of Hume road to service homes presently on septics systems to connect in with the Allen County sewer system.\" No land/easement acquisition required per the checked box (p1) — read against the item-14 tree, where the parallel Shawnee Oaks reroute IS assembling easements and the Buchanan parcel."
+    },
+    "approximate_paths": [],
+    "citation": {
+      "source": "legal/prr-mandamus/prr-production-2026-07-24/hume-road-wpclf-application-2026.award.yaml",
+      "source_kind": "document",
+      "page": null,
+      "confidence": "high",
+      "note": "pages [0, 1, 2]",
+      "verified": true
+    },
+    "source_doc_rel": "legal/prr-mandamus/prr-production-2026-07-24-sanitary/11/WPCLF Application.pdf",
+    "source_doc_render_class": "pdf",
+    "source_doc_published": false
+  },
+  {
     "rel": "aedg/roundabouts.detail.opc.yaml",
     "group": "opc",
     "title": "roundabouts.detail.opc",

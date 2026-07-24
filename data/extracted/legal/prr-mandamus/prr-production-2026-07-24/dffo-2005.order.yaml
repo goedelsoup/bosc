@@ -1,0 +1,84 @@
+doc_id: dffo-2005-journalized
+source_path: data/documents/legal/prr-mandamus/prr-production-2026-07-24-sanitary/15/Directors
+  Final Findings & Orders/2005 Directors Findings and Orders Corr/2005 Correspondence/2005 DFFO
+  - Journalized Orders.pdf
+kind: order
+pages_read: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+method: manual transcription from the scanned journalized instrument (visual read of pp. 1-10;
+  OEPA journal stamp p1, certification stamp p1). Figures and dates copied as printed.
+order:
+  confidence: high
+  warnings:
+  - >-
+    The SSO overflow-day tables (Findings 6 and 10) are transcribed from a scan; counts are
+    clearly printed and copied digit-for-digit, but verify against the page image before citing
+    in publication.
+  agency: Ohio EPA
+  instrument: DFFO
+  case_no: entered Director's Journal May 31, 2005 (stamp p1)
+  respondent: Allen County Board of Commissioners, 301 North Main Street, Lima, Ohio
+  facility: >-
+    Shawnee II POTW (Shawnee II WWTP, 2.0 MGD, 3640 Spencerville Road, Shawnee Township ->
+    Ottawa River) and American Bath POTW (American Bath WWTP, 1.5 MGD, 3226 North Cole Street,
+    American Township -> Pike Run), with their collection systems
+  permit_no: 2PK00002 (Shawnee; *GD expired 2004-03-31, renewal applied 2003-09-26) / 2PH00007*HD
+    (American Bath, eff. 2004-12-01)
+  issued_date: '2005-05-31'
+  effective_date: '2005-05-31'
+  obligations:
+  - {requirement: 'Shawnee: bid + award Seriff Sub-basin Pilot I/I Remediation contracts (Order 1.A)',
+     deadline: '2005-01-31'}
+  - {requirement: 'Shawnee: begin private-property investigation/remediation (Order 1.B)',
+     deadline: '2006-12-31'}
+  - {requirement: 'Shawnee: complete mainline/manhole replacement or rehabilitation, remaining
+      portion (Order 1.C)', deadline: '2011-08-31'}
+  - {requirement: 'Shawnee: complete private-property investigation/remediation (Order 1.D)',
+     deadline: '2013-06-30'}
+  - {requirement: 'Shawnee + American Bath: submit System Evaluation Capacity Assurance Plan
+      (SECAP) with peak-flow estimates, key-component capacities, hydraulic deficiencies
+      (Orders 1.E / 2.D)', deadline: '2009-07-01'}
+  - {requirement: 'Shawnee: implement SECAP and eliminate ALL SSOs (Order 1.F)', deadline: '2015-12-31'}
+  - {requirement: 'American Bath: complete flow monitoring (Order 2.A)', deadline: '2006-12-31'}
+  - {requirement: 'American Bath: complete mainline/manhole replacement/rehabilitation (Order 2.B)',
+     deadline: '2009-12-31'}
+  - {requirement: 'American Bath: complete private-property investigation/remediation (Order 2.C)',
+     deadline: '2011-12-31'}
+  - {requirement: 'American Bath: implement SECAP and eliminate all SSOs (Order 2.E)', deadline: '2015-12-31'}
+  - {requirement: 'Post warning signs at each SSO location, >= 12x18 in (Order 4)', deadline: '60
+      days from effective date'}
+  penalty_usd: 49226
+  stipulated_penalties: >-
+    None as such — Order 8 allows completing the Findlay Road Phase II Sewer Improvement Area
+    Project (~$557,000 Supplemental Environmental Project: replace on-site septic systems along
+    Bluelick Road, Bath Township, with public sanitary sewer, eliminating a county-owned package
+    plant; wastewater then treated by the City of Lima) IN LIEU of the $49,226 payment; failure
+    to complete within 210 days revives the cash penalty (Order 9).
+  status: modified (Order No. 1 modified by the 2014 Modified DFFO; see supersedes chain)
+  summary: >-
+    The foundational SSO-elimination consent instrument. Findings: the county's 1997-05-01
+    General Plan promised elimination of all Shawnee POTW SSOs by 2003-05-01 (Finding 7);
+    the county violated the 2PK00002*GD compliance schedule on all four milestones (Finding 8);
+    documented overflow days Jan 2001-Dec 2003 at eight Shawnee SSOs (Cam Court 52, Elmview
+    Drive 28, Riverview Drive 44, Seriff Road 2, Shawnee Country Club 60, Shawnee Country Club
+    Main 15, Shawnee Road 4, Zurmehly Road 58 - to the Ottawa River or unnamed tributaries;
+    Findings 6) and two American Bath SSOs May 2002-Mar 2003 (Manhole T-45 1, Meadow Apartments
+    AB-03-020 14 - to Pike Run; Finding 10). Seriff Road and Shawnee Road SSOs closed 2001
+    (Finding 9). Orders set the SECAP regime and a 2015-12-31 eliminate-all-SSOs deadline,
+    assess $49,226 with the Findlay Road SEP alternative, and require warning signs at SSOs.
+  note: >-
+    [verified] All figures read from the journalized instrument itself. The compliance-schedule
+    violations (Finding 8) date the original promises: detailed plans 1999-12-07, bids
+    2000-10-31, construction start 2000-11-03, completion + elimination 2003-05-01.
+relevance:
+  tags: [verified, enforcement, dffo, sso, shawnee-ii, american-bath, ottawa-river, pike-run,
+    secap, prr-item-15]
+  note: >-
+    Batch-3 item 15. Anchor of the 1997->2028 enforcement arc; the 2011 extension request,
+    2014 Modified DFFO, and 2023 extension letter all modify or negotiate against this
+    instrument. The Findlay Road SEP (septic-to-sewer, treated by the City of Lima) is an
+    early instance of the same regionalization pattern as the 2026 Hume Road WPCLF project.
+  cross_refs:
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2011-extension-request.order.yaml
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2014-modified.order.yaml
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2023-extension-letter.order.yaml
+  - data/extracted/regulatory/wastewater-enforcement-history.yaml
