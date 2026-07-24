@@ -23,7 +23,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_contract_version_bumped() -> None:
-    """This feed landed at 1.22.0 (additive/MINOR); the contract has since advanced to 1.33.0
+    """This feed landed at 1.22.0 (additive/MINOR); the contract has since advanced to 1.33.1
     (ProvenancedValue range 1.23.0 #760, contacts feed 1.24.0, facts feed 1.25.0 #1587, the
     passages feed 1.26.0 #1589, the open-questions feed 1.27.0 #1568, DocumentItem version/dedup
     metadata 1.27.1 #1590, the corpus-index feed 1.28.0 #1573, the manifest exports block
@@ -31,9 +31,10 @@ def test_contract_version_bumped() -> None:
     the effluent-credited dilution ratio 1.30.2 #1615, the routed-hydrograph reach
     subreaches/courant 1.30.3 (WS-09 #1609), the facility feed 1.31.0 #1628, the
     defense-contractors federal-award join 1.32.0 #1662, the hydrology-scenarios
-    seasonal-floor + campus-discharge fields 1.32.1 #1633, then the economics-baseline
-    government-ownership + coverage/unit caveats 1.33.0 #1661)."""
-    assert CONTRACT_VERSION == "1.33.0"
+    seasonal-floor + campus-discharge fields 1.32.1 #1633, the economics-baseline
+    government-ownership + coverage/unit caveats 1.33.0 #1661, then the assimilative-check
+    acute (1Q10) dilution pair 1.33.1 (WS-08 #1608))."""
+    assert CONTRACT_VERSION == "1.33.1"
 
 
 @pytest.fixture(scope="module")
@@ -60,7 +61,7 @@ def test_reference_export_emits_the_seasonal_field(lima_bundle: Path) -> None:
     """The reference build ships `water-seasonal-field` with real months (climate normals are
     committed, so it does not degrade like the AERMOD field), `reference`-provenanced."""
     manifest = json.loads((lima_bundle / "manifest.json").read_text(encoding="utf-8"))
-    assert manifest["contract_version"] == "1.33.0"
+    assert manifest["contract_version"] == "1.33.1"
 
     field = _field(lima_bundle)
     assert field["site"] == "lima"

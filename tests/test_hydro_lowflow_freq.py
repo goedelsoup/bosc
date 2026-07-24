@@ -66,6 +66,37 @@ def test_low_flow_quantiles_wraps_both_estimates() -> None:
     assert zero_fraction == 0.0
 
 
+# --------------------------------------------------------------- harmonic mean (WS-08)
+
+
+def test_harmonic_mean_is_n_over_sum_of_reciprocals() -> None:
+    # HMF of {1, 2, 4} = 3 / (1 + 1/2 + 1/4) = 3 / 1.75 = 1.714...
+    hmf, n_days, zero_days = lf.harmonic_mean_flow([1.0, 2.0, 4.0])
+    assert hmf == pytest.approx(3.0 / 1.75)
+    assert n_days == 3 and zero_days == 0
+
+
+def test_harmonic_mean_weights_the_low_tail_below_arithmetic_mean() -> None:
+    values = [1.0, 10.0, 100.0, 1000.0]
+    hmf, _, _ = lf.harmonic_mean_flow(values)
+    assert hmf < sum(values) / len(values)  # the harmonic mean sits far below the arithmetic
+
+
+def test_harmonic_mean_excludes_and_records_zero_flow_days() -> None:
+    # Two zero-flow days have no reciprocal — excluded from the mean, but counted.
+    hmf, n_days, zero_days = lf.harmonic_mean_flow([0.0, 2.0, 0.0, 4.0])
+    assert hmf == pytest.approx(2.0 / (1 / 2.0 + 1 / 4.0))  # = 2 / 0.75
+    assert n_days == 2 and zero_days == 2
+
+
+def test_harmonic_mean_all_zero_is_nan() -> None:
+    import math
+
+    hmf, n_days, zero_days = lf.harmonic_mean_flow([0.0, 0.0])
+    assert math.isnan(hmf)
+    assert n_days == 0 and zero_days == 2
+
+
 # ---------------------------------------------------------------- annual minima
 
 
@@ -236,6 +267,20 @@ def test_computed_low_flow_is_derived_not_document(hydro_settings: Settings) -> 
         assert s.weibull_cfs.source == "derived"
         if s.cited_cfs is not None:
             assert s.cited_cfs.source == "document" and s.cited_cfs.verified
+
+
+def test_committed_harmonic_mean_reproduces_cited_value(hydro_settings: Settings) -> None:
+    # The human-health design flow (WS-08): the computed harmonic mean lands on the cited 4.8 cfs.
+    lff = lf.load_low_flow_frequency(settings=hydro_settings)
+    assert lff is not None
+    hm = lff.harmonic_mean
+    assert hm is not None, "the committed artifact must carry the harmonic-mean block"
+    assert hm.computed_cfs.value == pytest.approx(4.8, abs=0.2)
+    assert hm.computed_cfs.source == "derived" and not hm.computed_cfs.verified
+    assert hm.cited_cfs is not None and hm.cited_cfs.value == pytest.approx(4.8)
+    assert hm.corroborates is True
+    # Zero-flow days are excluded from the mean but recorded, never silently dropped.
+    assert hm.zero_days > 0 and hm.n_days > hm.zero_days
 
 
 def test_one_q10_is_zero_for_intermittent_mainstem(hydro_settings: Settings) -> None:

@@ -20,12 +20,12 @@ The Lima system is one closed loop on two rivers:
 | Lima WWTP | wwtp | 28.62 cfs `[verified: document]` | Ottawa River |
 | BOSC data-center campus | demand | 3.87 cfs `[verified: document]` | — |
 
-**Low-flow assimilative screen** (discharge vs the receiving stream's cited 7Q10):
+**Low-flow assimilative screen** — each discharge against its receiving stream's cited design low flows, the design flow matched to the criterion type (chronic aquatic-life at the **7Q10**, acute at the **1Q10**):
 
-- ❌ **Shawnee II WWTP → Ottawa River**: 7Q10 0.2 cfs vs discharge 4.64 cfs → 0.04:1 dilution (violation). `[verified]` Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021 Crediting the 28.62 cfs of permitted effluent already in the reach `[inference]` → **6.21:1** (tight).
-- ❌ **American Bath WWTP → Pike Run**: 7Q10 0.03 cfs vs discharge 2.32 cfs → 0.01:1 dilution (violation). `[verified]` Ohio EPA NPDES fact sheet 2PH00007 (American Bath WWTP), Stream Flows table — USGS Gauge 04186500 adjusted for drainage area
-- ❌ **American II WWTP → Dug Run**: 7Q10 0.78 cfs vs discharge 1.86 cfs → 0.42:1 dilution (violation). `[verified]` Ohio EPA NPDES fact sheet 2PH00006 (American II WWTP), Stream Flows table — USGS Station 04187500
-- ❌ **Lima WWTP → Ottawa River**: 7Q10 0.2 cfs vs discharge 28.62 cfs → 0.01:1 dilution (violation). `[verified]` Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021 Crediting the 4.64 cfs of permitted effluent already in the reach `[inference]` → **0.17:1** (violation).
+- ❌ **Shawnee II WWTP → Ottawa River**: chronic 7Q10 0.2 cfs vs discharge 4.64 cfs → 0.04:1 dilution (violation). `[verified]` Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021 Against the acute **1Q10 0 cfs** → **0.00:1** (violation). Crediting the 28.62 cfs of permitted effluent already in the reach `[inference]` → **6.21:1** (tight).
+- ❌ **American Bath WWTP → Pike Run**: chronic 7Q10 0.03 cfs vs discharge 2.32 cfs → 0.01:1 dilution (violation). `[verified]` Ohio EPA NPDES fact sheet 2PH00007 (American Bath WWTP), Stream Flows table — USGS Gauge 04186500 adjusted for drainage area Against the acute **1Q10 0.016 cfs** → **0.01:1** (violation).
+- ❌ **American II WWTP → Dug Run**: chronic 7Q10 0.78 cfs vs discharge 1.86 cfs → 0.42:1 dilution (violation). `[verified]` Ohio EPA NPDES fact sheet 2PH00006 (American II WWTP), Stream Flows table — USGS Station 04187500 Against the acute **1Q10 0.6 cfs** → **0.32:1** (violation).
+- ❌ **Lima WWTP → Ottawa River**: chronic 7Q10 0.2 cfs vs discharge 28.62 cfs → 0.01:1 dilution (violation). `[verified]` Ohio EPA NPDES fact sheet 2IG00001 (Lima Refining Co.), Stream Flows table — Ottawa River at Lima, USGS gage 04187100, 1989-2021 Against the acute **1Q10 0 cfs** → **0.00:1** (violation). Crediting the 4.64 cfs of permitted effluent already in the reach `[inference]` → **0.17:1** (violation).
 
 At design low flow the receiving streams carry less than the effluent they
 receive — the discharges are effectively undiluted by *natural* flow. Where a plant
@@ -46,6 +46,8 @@ the more honest system picture: it is diluted by standing effluent, not clean wa
 | 30Q10 (vs summer 30Q10) | 1.528 cfs | 1.9077 cfs | 1.6 cfs |
 
 The computed **7Q10 is 0.2387 cfs** against the cited **0.2 cfs** — agreement to within rounding, from an independent method on a longer record than the fact sheet used. The 1-day record is dry in **21%** of complete years, so the computed 1Q10 is **0 cfs** — the mainstem literally stops, matching the cited 1Q10. So the assimilative screen's denominator is not an Ohio EPA artifact to be argued with; it is what the river actually carries at design low flow, reproducible by anyone with the public gage record. These computed figures are `[inference: derived]` and corroborate — they do not replace — the cited regulatory statistic.
+
+**The design flow is matched to the criterion type.** Acute aquatic-life criteria are evaluated at the 1Q10, chronic at the 7Q10, and human-health (carcinogen) criteria at the **harmonic-mean flow** — the whole-record statistic that weights the low tail the way a lifetime exposure does. Computed from the same daily record (N/Σ(1/Q) over 9671 non-zero days, 63 zero-flow days excluded), the harmonic mean is **4.8232 cfs** and lands on the cited **4.8 cfs** `[inference: derived]`. So each criterion in the toxic screen is read against its own design flow, not a single 7Q10 pressed into every service.
 
 
 ### The whole loop at design low flow: a routed mass balance

@@ -74,6 +74,9 @@ from watermark.hydrology.models._lowflow import (
     Flag as Flag,
 )
 from watermark.hydrology.models._lowflow import (
+    HarmonicMeanFlow as HarmonicMeanFlow,
+)
+from watermark.hydrology.models._lowflow import (
     LowFlowFrequency as LowFlowFrequency,
 )
 from watermark.hydrology.models._lowflow import (
@@ -214,6 +217,7 @@ __all__ = [
     "DischargePeak",
     "DroughtDrawdown",
     "Flag",
+    "HarmonicMeanFlow",
     "HydroFinding",
     "Hydrograph",
     "LowFlowFrequency",

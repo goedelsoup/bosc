@@ -256,7 +256,15 @@ from watermark.sites import (
 #   and `coverage_note` (a standing caveat documenting the excluded uniformed active-duty military).
 #   All additive/optional (government defaults `[]`, unit_caveat null, coverage_note a model default),
 #   so a pre-1.33 economics-baseline.json stays valid — MINOR, back-compatible.
-CONTRACT_VERSION = "1.33.0"
+# 1.33.1: each `hydrology-scenarios` `AssimilativeCheck` gains the acute pair `acute_low_flow` +
+#   `acute_dilution_ratio` + `acute_flag` (WS-08 / #1608). The screen matches the design flow to
+#   the criterion type — chronic aquatic-life dilution at the cited 7Q10 (`dilution_ratio`,
+#   unchanged) and **acute** at the cited **1Q10** — because banding an acute limit with the
+#   chronic design flow understates the constraint (a standard reviewer objection). All three are
+#   null when the fact sheet omits the 1Q10; a cited 1Q10 = 0 cfs (the Ottawa) yields a 0:1 acute
+#   ratio (no acute assimilative capacity). Additive/optional, so an existing hydrology-scenarios.json
+#   row stays valid — PATCH, back-compatible.
+CONTRACT_VERSION = "1.33.1"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

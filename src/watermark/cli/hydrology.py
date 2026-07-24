@@ -39,7 +39,9 @@ def hydro(
         flow_table.add_row(n.node.name, n.node.role, flow, mgd, n.node.receiving_water or "—", src)
     console.print(flow_table)
 
-    console.print("\n[bold]Low-flow assimilative screen[/] [dim](7Q10 dilution)[/]")
+    console.print(
+        "\n[bold]Low-flow assimilative screen[/] [dim](chronic 7Q10 + acute 1Q10 dilution)[/]"
+    )
     violations = 0
     for f in findings:
         color = "green" if f.ok else "red"
@@ -1004,6 +1006,19 @@ def lowflow_freq(
             mark,
         )
     console.print(table)
+
+    hm = lff.harmonic_mean
+    if hm is not None:
+        cited = f"{hm.cited_cfs.value:g}" if hm.cited_cfs else "—"
+        mark = (
+            "—" if hm.corroborates is None else ("[green]✓[/]" if hm.corroborates else "[red]✗[/]")
+        )
+        console.print(
+            f"[bold]Harmonic mean[/] (human-health design flow): "
+            f"[bold]{hm.computed_cfs.value:g} cfs[/] over {hm.n_days} non-zero days"
+            + (f" ({hm.zero_days} zero-flow days excluded)" if hm.zero_days else "")
+            + f" — cited {cited} {mark}"
+        )
 
     if write:
         path = lf.write_low_flow_frequency(lff, settings=get_settings())

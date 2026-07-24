@@ -113,7 +113,7 @@
   "$defs": {
     "AssimilativeCheck": {
       "additionalProperties": false,
-      "description": "Low-flow dilution of one discharge into its receiving water.\n\nTwo dilution ratios are carried, and the honest picture is *both* (WS-15, #1615):\n\n* ``dilution_ratio`` (the **conservative default**) is ``design_low_flow / discharge``\n  — parts of the receiving stream's cited natural low flow per part of effluent. It\n  credits **no** upstream effluent; ``flag`` bands it.\n* ``effluent_credited_ratio`` is ``(design_low_flow + upstream_returns) / discharge``,\n  crediting the permitted effluent **already in the reach** into the denominator, with\n  ``effluent_credited_flag`` its band. It is ``None`` when there is no co-reach effluent\n  to credit (the discharger is alone on its stream), so a tributary-only plant is\n  untouched and stays at the conservative default.\n\n``upstream_returns`` is that credited term: the summed **permitted design discharge of the\nother WWTP(s) sharing this receiving water** — the loop's own thesis is that the Ottawa\n*is* effluent at design low flow (93-98%), so a plant discharging into it is diluted by\nthat standing effluent mass, not by the ~0.2 cfs of natural water. It is a screening\nco-reach sum (``derived``), not a longitudinal-position-resolved routing term; the routed\naccumulation lives in :class:`RoutedNetwork`. Both bands are heuristics, **not** permit\ndeterminations.",
+      "description": "Low-flow dilution of one discharge into its receiving water.\n\nTwo dilution ratios are carried, and the honest picture is *both* (WS-15, #1615):\n\n* ``dilution_ratio`` (the **conservative default**) is ``design_low_flow / discharge``\n  — parts of the receiving stream's cited natural low flow per part of effluent. It\n  credits **no** upstream effluent; ``flag`` bands it.\n* ``effluent_credited_ratio`` is ``(design_low_flow + upstream_returns) / discharge``,\n  crediting the permitted effluent **already in the reach** into the denominator, with\n  ``effluent_credited_flag`` its band. It is ``None`` when there is no co-reach effluent\n  to credit (the discharger is alone on its stream), so a tributary-only plant is\n  untouched and stays at the conservative default.\n\n``upstream_returns`` is that credited term: the summed **permitted design discharge of the\nother WWTP(s) sharing this receiving water** — the loop's own thesis is that the Ottawa\n*is* effluent at design low flow (93-98%), so a plant discharging into it is diluted by\nthat standing effluent mass, not by the ~0.2 cfs of natural water. It is a screening\nco-reach sum (``derived``), not a longitudinal-position-resolved routing term; the routed\naccumulation lives in :class:`RoutedNetwork`. Both bands are heuristics, **not** permit\ndeterminations.\n\n``design_low_flow`` / ``dilution_ratio`` / ``flag`` are the **chronic** (7Q10) pair. The\nscreen also carries the **acute** dilution ratio (WS-08 / #1608): standard practice matches\nthe design flow to the criterion type — chronic aquatic-life limits at the 7Q10, **acute** at\nthe **1Q10** — so ``acute_low_flow`` (the cited 1Q10) / ``acute_dilution_ratio`` /\n``acute_flag`` band the same discharge against the sharper single-day floor. They are ``None``\nwhen the fact sheet omits the 1Q10. A 1Q10 of 0 cfs (the Ottawa, which stops at design low\nflow) yields a 0:1 acute ratio — the honest \"no acute assimilative capacity\" signal, the same\nway the concentration screen (:mod:`watermark.hydrology.toxics`) treats a zero acute flow.\n(Human-health limits are matched to the harmonic-mean flow in that concentration screen; the\nmunicipal check here is a flow-only hydraulic dilution, for which acute + chronic are the two\nratios the fact sheets themselves report.)",
       "properties": {
         "receiving_water": {
           "title": "Receiving Water",
@@ -181,6 +181,46 @@
           ],
           "default": null,
           "title": "Effluent Credited Flag"
+        },
+        "acute_low_flow": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "acute_dilution_ratio": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Acute Dilution Ratio"
+        },
+        "acute_flag": {
+          "anyOf": [
+            {
+              "enum": [
+                "ok",
+                "tight",
+                "violation"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Acute Flag"
         },
         "detail": {
           "title": "Detail",

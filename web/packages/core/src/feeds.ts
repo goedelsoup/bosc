@@ -240,16 +240,22 @@ export interface WaterBalance {
 export interface AssimilativeCheck {
   receiving_water: string;
   discharger: string;
-  design_low_flow: ProvenancedValue; // the cited 7Q10
+  design_low_flow: ProvenancedValue; // the CHRONIC design flow: cited 7Q10
   discharge: ProvenancedValue;
   // Permitted effluent already in the reach (Σ other WWTPs on this receiving water),
   // credited into `effluent_credited_ratio`; null when the plant is alone on its stream (WS-15).
   upstream_returns?: ProvenancedValue | null;
-  dilution_ratio: number; // conservative: cited 7Q10 / discharge (no effluent credit)
+  dilution_ratio: number; // conservative CHRONIC: cited 7Q10 / discharge (no effluent credit)
   flag: DilutionFlag; // band on `dilution_ratio`
   // Effluent-credited: (7Q10 + upstream_returns) / discharge; null when nothing to credit.
   effluent_credited_ratio?: number | null;
   effluent_credited_flag?: DilutionFlag | null;
+  // Acute pair (WS-08): the cited 1Q10 and the discharge's dilution against it — the design flow
+  // matched to an acute aquatic-life criterion. null when the fact sheet omits the 1Q10; a cited
+  // 1Q10 = 0 cfs (the Ottawa) gives a 0:1 acute ratio (no acute assimilative capacity).
+  acute_low_flow?: ProvenancedValue | null; // the ACUTE design flow: cited 1Q10
+  acute_dilution_ratio?: number | null; // cited 1Q10 / discharge
+  acute_flag?: DilutionFlag | null; // band on `acute_dilution_ratio`
   detail: string;
 }
 

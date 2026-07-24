@@ -222,6 +222,63 @@ def test_effluent_credited_denominator_credits_co_reach_permitted_effluent() -> 
     assert lone.dilution_ratio == pytest.approx(0.78 / 2.0) and lone.flag == "violation"
 
 
+def test_acute_dilution_matches_the_1q10_design_flow() -> None:
+    """WS-08 (#1608): the screen matches the design flow to the criterion type — chronic dilution
+    at the 7Q10, acute at the sharper 1Q10. A cited 1Q10 = 0 cfs (a stream that stops at design
+    low flow) yields a 0:1 acute ratio — no acute assimilative capacity — and a stream with no
+    cited 1Q10 leaves the acute pair unset (omit, don't guess)."""
+    low_flows = {
+        "Ottawa River": ProvenancedValue.from_document(0.2, "cfs", citation="Ottawa 7Q10"),
+        "Dug Run": ProvenancedValue.from_document(0.78, "cfs", citation="Dug Run 7Q10"),
+    }
+    acute_low_flows = {
+        "Ottawa River": ProvenancedValue.from_document(0.0, "cfs", citation="Ottawa 1Q10"),
+        "Dug Run": ProvenancedValue.from_document(0.6, "cfs", citation="Dug Run 1Q10"),
+        # Deliberately no acute entry for Pike Run below.
+    }
+    balance = WaterBalance(
+        nodes=[
+            _wwtp("ott", "Ottawa WWTP", "Ottawa River", 4.0),
+            _wwtp("dug", "Dug WWTP", "Dug Run", 1.0),
+            _wwtp("pike", "Pike WWTP", "Pike Run", 2.0),
+        ],
+        warnings=[],
+    )
+    low_flows["Pike Run"] = ProvenancedValue.from_document(0.03, "cfs", citation="Pike 7Q10")
+    checks = {c.discharger: c for c in check_assimilative(balance, low_flows, acute_low_flows)}
+
+    # Ottawa: cited 1Q10 = 0 → 0:1 acute ratio, no acute assimilative capacity (violation).
+    ott = checks["Ottawa WWTP"]
+    assert ott.acute_low_flow is not None and ott.acute_low_flow.value == 0.0
+    assert ott.acute_dilution_ratio == 0.0
+    assert ott.acute_flag == "violation"
+
+    # Dug Run: acute ratio = 0.6 / 1.0, matched to the 1Q10, distinct from the 7Q10 chronic ratio.
+    dug = checks["Dug WWTP"]
+    assert dug.acute_dilution_ratio == pytest.approx(0.6 / 1.0)
+    assert dug.acute_flag == dilution_flag(0.6 / 1.0)
+    assert dug.dilution_ratio == pytest.approx(0.78 / 1.0)  # chronic still on the 7Q10
+
+    # Pike Run: no cited 1Q10 → the acute pair is left unset, never guessed.
+    pike = checks["Pike WWTP"]
+    assert pike.acute_low_flow is None
+    assert pike.acute_dilution_ratio is None and pike.acute_flag is None
+
+    # An acute violation registers as a not-ok finding even where it is the only violation.
+    findings = {f.subject: f for f in assimilative_findings(list(checks.values()))}
+    assert findings["Ottawa WWTP -> Ottawa River"].ok is False
+
+
+def test_load_acute_low_flows_reads_cited_1q10_from_context(hydro_settings: Settings) -> None:
+    """The acute loader lifts each stream's cited 1Q10 from the low-flow table's context block —
+    including the Ottawa's honest 0 cfs — and omits streams whose fact sheet gives no 1Q10."""
+    acute = lowflow.load_acute_low_flows(settings=hydro_settings)
+    assert "ottawa river" in acute
+    assert acute["ottawa river"].value == 0.0  # a cited 0, kept (not treated as missing)
+    assert acute["ottawa river"].source == "document"
+    assert acute["dug run"].value == pytest.approx(0.6)
+
+
 def test_baseline_credits_lima_effluent_into_shawnee_dilution(hydro_settings: Settings) -> None:
     """On the real Lima loop, Shawnee II discharges into the effluent-laden Ottawa: crediting the
     City of Lima WWTP's ~28.6 cfs standing effluent lifts its 0.04:1 natural ratio into the tight
