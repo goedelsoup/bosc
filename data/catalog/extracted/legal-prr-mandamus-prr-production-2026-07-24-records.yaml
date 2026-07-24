@@ -23,7 +23,10 @@ storage:
 - relpath: extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2023-extension-letter.order.yaml
   media_type: application/x-yaml
   lfs: false
-- relpath: extracted/legal/prr-mandamus/prr-production-2026-07-24/sso-closures.order.yaml
+- relpath: extracted/legal/prr-mandamus/prr-production-2026-07-24/sso-closure-amer-bath-2010.order.yaml
+  media_type: application/x-yaml
+  lfs: false
+- relpath: extracted/legal/prr-mandamus/prr-production-2026-07-24/sso-closure-cam-court-2019.order.yaml
   media_type: application/x-yaml
   lfs: false
 - relpath: extracted/legal/prr-mandamus/prr-production-2026-07-24/hume-road-wpclf-application-2026.award.yaml

@@ -61,13 +61,13 @@ observations:
   - >-
     [verified] The Country Club Siphon SSO (SH05-018) overflowed 479,935 gallons on 2019-01-23
     during a 1.15-inch rain day, and 51,504 gallons on 2019-03-30 during a 0.86-inch rain day —
-    three-plus years after the 2014 Modified DFFO's Phase-1 completion (July 2015) and within
-    the extended eliminate-all-SSOs window (2020-12-31). Sub-half-million-gallon overflows at
-    ~1 inch of rain quantify the residual wet-weather sensitivity of the Shawnee 2 system in
+    three-plus years past the 2014 Modified DFFO's Phase-1 completion DEADLINE (July 2015) and
+    within the extended eliminate-all-SSOs window (2020-12-31). Sub-half-million-gallon overflows
+    at ~1 inch of rain quantify the residual wet-weather sensitivity of the Shawnee 2 system in
     2019.
   - >-
     [verified] A Cam Crt Siphon row dated 2019-01-01 (negative reading) precedes the SSO's
-    2019-02-26 permanent removal (see sso-closures.order.yaml).
+    2019-02-26 permanent removal (see sso-closure-cam-court-2019.order.yaml).
   - >-
     [open] The 2005 DFFO's per-SSO ids (Cam Court, Riverview, Country Club...) map to the
     SH05-0xx ids used here; a full crosswalk (and the missing 2019 months) belongs to the
@@ -76,6 +76,6 @@ observations:
 relevance:
   tags: [verified, sso, shawnee-ii, wet-weather, prr-item-9]
   cross_refs:
-  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/sso-closures.order.yaml
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/sso-closure-cam-court-2019.order.yaml
   - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2014-modified.order.yaml
   - data/extracted/regulatory/wastewater-enforcement-history.yaml

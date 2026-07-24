@@ -1,0 +1,38 @@
+doc_id: sso-closure-cam-court-2019
+source_path: data/documents/legal/prr-mandamus/prr-production-2026-07-24-sanitary/15/Directors
+  Final Findings & Orders/2005 Directors Findings and Orders Corr/3-7-19 OEPA Notice Closure
+  Shawnee Cam Court SSO.doc
+kind: order
+pages_read: []
+method: text extracted from the native Word letter (textutil). Author William L. Horvath,
+  Wastewater Collection Superintendent, on Sanitary Engineering letterhead (3230 N. Cole St.,
+  Lima); native-file mtime recorded in the batch-3 custody manifest.
+order:
+  confidence: high
+  warnings: []
+  agency: Ohio EPA (notification TO the agency under the 2005-05-31 DFFO; addressed to Peggy
+    Christie, Environmental Engineer, DSW Northwest District Office)
+  instrument: closure notice
+  respondent: Allen County Sanitary Engineering Department
+  facility: Shawnee No. 2 WWC system (Cam Court SSO)
+  permit_no: 2PK00002*JD
+  issued_date: '2019-03-07'
+  obligations:
+  - {requirement: 'Shawnee — Cam Court SSO permanently removed; excavation/removal performed
+      2019-02-26; before/after photos enclosed', deadline: null, status: met}
+  status: closed (the SSO this letter notifies)
+  summary: >-
+    Official permanent-removal notification for the Shawnee Cam Court SSO (52 overflow days in
+    the 2005 DFFO's 2001-2003 table), excavated 2019-02-26 — more than three years past the
+    original 2015-12-31 eliminate-all deadline and within the extended 2020-12-31 one. cc:
+    Kayatin, Niemeyer, Santaguida.
+  note: >-
+    [verified] from the letter. The Cam Court removal date is a fixed point for the elimination
+    timeline the analysis phase reconstructs from the 2019 SSO reports. Companion to the 2010
+    American Bath closure (sso-closure-amer-bath-2010.order.yaml).
+relevance:
+  tags: [verified, enforcement, sso, closure, shawnee-ii, prr-item-15]
+  cross_refs:
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2005.order.yaml
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2014-modified.order.yaml
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/sso-closure-amer-bath-2010.order.yaml
