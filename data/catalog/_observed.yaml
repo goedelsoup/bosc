@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-24T17:12:26.335177+00:00'
+reconciled_at: '2026-07-24T18:16:52.446264+00:00'
 entries:
   aedg:
     exists: true
@@ -640,6 +640,16 @@ entries:
     asof: null
     stale: false
     site_scope: lima-legacy
+  legal-prr-mandamus-prr-production-2026-07-24-records:
+    exists: true
+    sha256: d00bc926d4da74755503810ee7716baec98564bcbf73a8749d1278c78bd6972c
+    size_bytes: 29590
+    lfs_materialized: true
+    file_count: 7
+    missing: []
+    asof: null
+    stale: false
+    site_scope: lima-legacy
   legal-records-legislation:
     exists: true
     sha256: 70d428fb3c6f8ebe196bae050b7f76db312811b89f0b22a437012ab19ec17ef2
@@ -1022,8 +1032,8 @@ entries:
     site_scope: lima-legacy
   regulatory:
     exists: true
-    sha256: 7509cb9c9fe58e0fddd667a57320a796bd6da07da72a523c4b045319ce98b5ad
-    size_bytes: 16996
+    sha256: b6631b6531f5d1a977ecfeff6d15f72334cab351d73fecf91452697ba6be7fdc
+    size_bytes: 21182
     lfs_materialized: true
     file_count: 2
     missing: []

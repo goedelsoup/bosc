@@ -6,7 +6,8 @@ provenance:
     - data/documents/regulatory/allen-co-cwa-consent-decree-1996.pdf      # the 1996 federal CWA consent decree
     - data/documents/regulatory/allen-co-sanitary-cna-2005.pdf            # 2005 10-Year Capital Needs Assessment
     - data/documents/sanitary/indianbrook-ps-asbuilt-2007.pdf             # Shawnee collection asset (image-only drawings)
-  content_verified: '2026-06-07'   # consent decree + CNA read from the OCR text layer; as-built title sheet read from the image
+    - data/documents/legal/prr-mandamus/prr-production-2026-07-24-sanitary/   # batch-3 per-item trees (the DFFO chain, items 9/15)
+  content_verified: '2026-07-24'   # decree + CNA 2026-06-07; the DFFO chain instruments read 2026-07-24 (batch 3)
   evidence: county-/court-produced records (consent decree is a federal court instrument)
 
 thesis: >-
@@ -87,6 +88,65 @@ capital_needs_assessment_2005:
     SSO/bypass history (raw sewage to the Ottawa watershed during storms) compounds the assimilative
     and drainage concerns; system upgrades are funded by DOUBLING sewer rates -- a ratepayer burden.
 
+# The state SSO-elimination enforcement chain, grounded in the batch-3 production (2026-07-24,
+# items 9/15). Instrument-level envelopes with obligations/penalties live at
+# data/extracted/legal/prr-mandamus/prr-production-2026-07-24/*.order.yaml — this section is
+# the arc.
+dffo_chain:
+  general_plan_1997:
+    date: '1997-05-01'
+    what: County General Plan + Schedule of Implementation, incorporated into NPDES 2PK00002*GD —
+      eliminate ALL Shawnee POTW SSOs by 2003-05-01 (2005 DFFO Finding 7).
+  dffo_2005:
+    journalized: '2005-05-31'
+    what: >-
+      DFFO for both POTWs: SECAP regime; eliminate all SSOs by 2015-12-31; $49,226 civil penalty
+      with a Findlay Road septic-to-sewer SEP (~$557K, wastewater to the City of Lima) in lieu.
+      Findings document 8 Shawnee SSOs (Cam Court, Elmview, Riverview, Seriff, Country Club x2,
+      Shawnee Rd, Zurmehly; 263 overflow-days Jan 2001-Dec 2003) + 2 American Bath SSOs.
+    envelope: legal/prr-mandamus/prr-production-2026-07-24/dffo-2005.order.yaml
+  extension_request_2011:
+    date: '2011-12-09'
+    what: >-
+      County requests +5 years: collect-pump-treat pivot after the Seriff rehabilitation pilot;
+      American Bath trunk (late 2009) closed that SSO ~6 yr early and OEPA let the county FOREGO
+      the American Bath WWTP expansion (~$7M saved) after wet-weather monitoring; design Shawnee
+      WWTP Phase 2 from monitored, not modeled, flows ("overdesign" concern). Rates +64%/6yr,
+      +10% scheduled.
+    envelope: legal/prr-mandamus/prr-production-2026-07-24/dffo-2011-extension-request.order.yaml
+  dffo_2014_modified:
+    journalized: '2014-01-06'
+    what: >-
+      Modifies 2005 Order No. 1 (Shawnee schedule) only: Phase 1 (interceptor + pump station +
+      headworks/EQ basin/UV) complete by 2015-07 with a TEMPORARY equalization-basin overflow;
+      monitored-flow year; Phase 2 from actual flows, complete 2020-12-31; eliminate the
+      temporary EQ overflow AND all SSOs by 2020-12-31.
+    envelope: legal/prr-mandamus/prr-production-2026-07-24/dffo-2014-modified.order.yaml
+  sso_closures:
+    what: American Bath Meadows Apartments SSO removed 2010-11-09 (notified 2010-12-09); Shawnee
+      Cam Court SSO removed 2019-02-26 (notified 2019-03-07). Country Club Siphon (SH05-018)
+      still overflowed 479,935 gal on 2019-01-23 and 51,504 gal on 2019-03-30 (county monthly
+      SSO reports, batch-3 item 9).
+    envelope: legal/prr-mandamus/prr-production-2026-07-24/sso-closures.order.yaml
+  extension_correspondence_2023:
+    date: '2023-02-02'
+    what: >-
+      OEPA responds to the county's 2022-10-26 amendments to the draft 2019 revised DFFOs:
+      agrees to Phase 2 completion 2028-12-31 ("25 years after the original proposal"), keeps
+      stipulated-penalty language, is amenable to dropping the EQ-basin "bypass" label the
+      county disputes, but keeps SSO-elimination language and adds post-construction monitoring
+      of whether the overflow can be eliminated (NPDES 2PK00002).
+    envelope: legal/prr-mandamus/prr-production-2026-07-24/dffo-2023-extension-letter.order.yaml
+  arc: >-
+    [verified] 1997 promise (2003) -> 2005 DFFO (2015, $49,226) -> 2014 modification (2020) ->
+    negotiated 2028 completion — a 25-year slippage documented in OEPA's own 2023 letter. The
+    EQ-basin overflow ordered ELIMINATED as "temporary" in 2014 is the same unit the county in
+    2022 recast as "always part of the design". [inference] The Phase 2 capacity being sized
+    through this chain (3.0 MGD avg / 12.60 MGD peak per the county website; 25 MGD influent
+    firm capacity per Res 220-24) is the receiving envelope for the corridor's new load — and
+    the batch-3 production contains NO record referencing the 12.6 MGD peak figure (text sweep,
+    2026-07-24).
+
 collection_asset_indianbrook_ps:
   source: data/documents/sanitary/indianbrook-ps-asbuilt-2007.pdf
   what: "Indianbrook Pump Station UPGRADE — construction/as-built drawings, Shawnee Twp., Allen County (March 2007; 'As Built' 2008-08-14)"
@@ -101,6 +161,8 @@ collection_asset_indianbrook_ps:
 
 cross_refs:
   - data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-05.response-index.yaml   # PRR items 8/9/14/15
+  - data/extracted/legal/prr-mandamus/bosc-prr-production-2026-07-24.response-index.yaml   # batch 3 — the per-item DFFO/SSO/WPCLF trees
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/                           # the instrument-level order/award envelopes
   - data/reference/hydrology/maumee-tmdl-responsiveness.yaml      # Shawnee #2 2.0 -> 3.0 MGD; the new-discharger 0.5 mg/L rule
   - data/reference/hydrology/maumee-tmdl-wla.yaml                 # the TP WLAs for these same plants
   - data/reference/hydrology/ottawa-lima-tmdl.yaml                # the Ottawa (Lima) receiving water + low-flow finding

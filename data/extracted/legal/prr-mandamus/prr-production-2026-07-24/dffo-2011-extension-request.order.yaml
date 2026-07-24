@@ -1,0 +1,61 @@
+doc_id: dffo-2011-extension-request
+source_path: data/documents/legal/prr-mandamus/prr-production-2026-07-24-sanitary/15/Directors
+  Final Findings & Orders/2014 Modified Directors Findings & Orders/2011 OEPA Sched Ext Finding
+  and Orders.docx
+kind: order
+pages_read: []
+method: text extracted from the native Word file (textutil); a duplicate copy sits under
+  15/.../2005 Directors Findings and Orders Corr/SECAP/Correspondence and Info/. Native-file
+  metadata (mtime) recorded in the batch-3 custody manifest.
+order:
+  confidence: high
+  warnings:
+  - >-
+    This is the county's REQUEST letter, not an OEPA instrument — the relief it asks for was
+    granted (in substance) by the 2014 Modified DFFO. Treat its factual assertions (rate
+    percentages, $7M savings) as the county's own statements, not agency findings.
+  agency: Ohio EPA (addressee — Justin Williams, DSW Northwest District Office)
+  instrument: extension request letter (SECAP plan update, per DFFO Section V(1)(E)(iii))
+  case_no: null
+  respondent: Allen County Sanitary Engineering Department (Stephen M. Kayatin, P.E., Sanitary
+    Engineer) on behalf of the Board of Commissioners
+  facility: Shawnee II POTW; American-Bath POTW (background)
+  permit_no: null
+  issued_date: '2011-12-09'
+  supersedes: requests modification of the 2005-05-31 DFFO SECAP schedule (2015-12-31
+    eliminate-all-SSOs deadline -> +5 years)
+  obligations:
+  - {requirement: 'Proposed: complete Collection System Project (pump station, force main,
+      trunk sewer replacement)', deadline: '2015-07'}
+  - {requirement: 'Proposed: monitor and evaluate actual flow', deadline: '2015-07 through 2016-06'}
+  - {requirement: 'Proposed: design WWTP Project from monitored flows', deadline: '2016-06 through 2018-12'}
+  - {requirement: 'Proposed: construct WWTP Project', deadline: '2018-12 through 2020-12'}
+  status: granted in substance by the 2014 Modified DFFO (journalized 2014-01-06)
+  summary: >-
+    The county's five-year-extension request that became the 2014 modification. Documents the
+    strategic pivot from collection-system rehabilitation to COLLECT-PUMP-TREAT after the
+    Seriff Sub-Basin pilot showed rehabilitation flows "still too great and the cost ...
+    too excessive"; SECAPs for both POTWs approved by OEPA April 2009; the American-Bath trunk
+    replacement (completed late 2009) closed that system's one SSO ~6 years early, and — per a
+    2011-09-26 county letter — OEPA authorized FOREGOING the American-Bath WWTP expansion after
+    wet-weather monitoring, saving "nearly $7,000,000". Rates: +64% over the prior 6 years with
+    a further 10% scheduled ("80% higher than they were 6 years ago"). The county argues
+    designing Shawnee WWTP improvements from modeled rather than monitored flows risks
+    "overdesign of wastewater treatment plant improvements".
+  note: >-
+    [verified] as the county's statements in its own letter. The overdesign concern and the
+    design-from-actual-flows sequencing are the stated rationale for the five added years —
+    context for evaluating the eventual Phase 2 sizing (3.0 MGD avg / 12.60 MGD peak per the
+    later county website figure, which this production nowhere documents).
+relevance:
+  tags: [verified, enforcement, correspondence, secap, shawnee-ii, american-bath, rates,
+    prr-item-15]
+  note: >-
+    Batch-3 item 15. Links the enforcement chain to the ratepayer-burden thread (sanitary
+    economics): the county's own framing is cost-minimization under rate pressure, and the
+    American-Bath monitor-then-decide precedent is the template later applied to Shawnee
+    Phase 2.
+  cross_refs:
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2005.order.yaml
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2014-modified.order.yaml
+  - data/extracted/commissioners/sanitary-economics.yaml

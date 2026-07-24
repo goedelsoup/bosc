@@ -1,0 +1,49 @@
+doc_id: sso-closure-notifications
+source_path: data/documents/legal/prr-mandamus/prr-production-2026-07-24-sanitary/15/Directors
+  Final Findings & Orders/2005 Directors Findings and Orders Corr/3-7-19 OEPA Notice Closure
+  Shawnee Cam Court SSO.doc
+kind: order
+pages_read: []
+method: text extracted from the two native Word letters (textutil); the companion letter is
+  15/.../2005 Directors Findings and Orders Corr/12-9-10 OEPA Notice Closure of Amer-Bath
+  SSO.doc. Both authored by William L. Horvath, Wastewater Collection Superintendent, on
+  Sanitary Engineering letterhead (3230 N. Cole St., Lima).
+order:
+  confidence: high
+  warnings:
+  - >-
+    Two closure notifications recorded in ONE envelope (same genre, same author, same DFFO
+    reference); the source_path carries the Cam Court letter, the American Bath letter is
+    cited in method/summary. Note the American Bath letter identifies the Meadows Apartments
+    SSO manhole as "MH AB-01-020" where the 2005 DFFO's Finding 10 table prints "AB-03-020" —
+    preserved as printed in each source, unreconciled.
+  agency: Ohio EPA (notifications TO the agency under the 2005-05-31 DFFO)
+  instrument: closure notice
+  respondent: Allen County Sanitary Engineering Department
+  facility: Shawnee No. 2 WWC system (Cam Court SSO); American Bath WWC system (Meadows
+    Apartments SSO)
+  permit_no: 2PK00002*JD (Cam Court letter) / 2PH00007 (American Bath letter)
+  issued_date: '2019-03-07'
+  obligations:
+  - {requirement: 'American Bath — Meadows Apartments SSO (MH AB-01-020 as printed) permanently
+      removed; excavation/removal performed by county WWC staff 2010-11-09; OEPA inspection
+      requested (letter to Thomas Poffenbarger, 2010-12-09)', deadline: null, status: met}
+  - {requirement: 'Shawnee — Cam Court SSO permanently removed; excavation/removal performed
+      2019-02-26; before/after photos enclosed (letter to Peggy Christie, 2019-03-07)',
+     deadline: null, status: met}
+  status: closed (the two SSOs these letters notify)
+  summary: >-
+    The county's official permanent-removal notifications under the 2005 DFFO: the American
+    Bath system's single remaining SSO (Meadows Apartments) removed 2010-11-09 — consistent
+    with the 2011 extension letter's "closed nearly six years ahead of schedule" — and the
+    Shawnee Cam Court SSO (52 overflow days in the 2005 DFFO's 2001-2003 table) removed
+    2019-02-26, more than three years past the original 2015-12-31 eliminate-all deadline and
+    within the extended 2020-12-31 one. cc: Kayatin, Niemeyer, Boerger/Santaguida.
+  note: >-
+    [verified] from the letters. The Cam Court date is a fixed point for the elimination
+    timeline the analysis phase reconstructs from the 2019 SSO reports.
+relevance:
+  tags: [verified, enforcement, sso, closure, shawnee-ii, american-bath, prr-item-15]
+  cross_refs:
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2005.order.yaml
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2014-modified.order.yaml

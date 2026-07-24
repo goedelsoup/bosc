@@ -1,0 +1,81 @@
+# Structured read of the two 2019 monthly SSO reports produced in batch 3 (item 9).
+# Native Excel workbooks, read cell-by-cell (openpyxl, data_only); gallons and times
+# copied as entered by the county. NOT a records-feed envelope (no classified payload
+# block) — a corpus artifact for the hydrology/story layer, like the meeting indexes.
+meta:
+  subject: Shawnee 2 monthly SSO reports — January and March 2019 (the only months produced)
+  source_dir: data/documents/legal/prr-mandamus/prr-production-2026-07-24-sanitary/9/SH & AB
+    SSO Findings and Orders/2019 SSO Reports/
+  files:
+  - SSO Report For Jan19.xlsx
+  - SSO REPORT March 19.xlsx
+  method: openpyxl cell read (values only); every non-empty event row transcribed, including
+    the negative-gallon rows the county's own monthly totals exclude
+  caveats:
+  - >-
+    Only two months were produced. Whether February and April-December 2019 reports exist
+    (Cam Court was removed 2019-02-26 mid-quarter) is a completeness question for the batch-3
+    responsiveness analysis, not evidence of absence.
+  - >-
+    Several rows carry NEGATIVE gallon figures (metering artifacts or reverse-flow readings;
+    the workbooks do not explain them). They are preserved verbatim below and excluded from
+    the county's printed monthly totals, which are also preserved.
+  - Rain attribution as printed in both workbooks — "All Rain Information From Amanda Lakes".
+
+reports:
+- month: 2019-01
+  report_header_date: '2019-01-01'
+  dated: '2019-01-19'
+  locations_listed: [Riverview (MH 1-140, SH05-006), Country Club Siphon (SH05-018), Cam Crt Siphon]
+  events:
+  - {location: Country Club Siphon, sso_id: SH05-018, date: '2019-01-23', from: '05:00',
+     to: '17:00', gallons: 479935}
+  - {location: Country Club Siphon, sso_id: SH05-018, date: '2019-01-23', from: '21:00',
+     to: '22:00', gallons: -8852, note: negative as printed; excluded from county total}
+  - {location: Country Club Siphon, sso_id: SH05-018, date: '2019-01-26', from: '05:00',
+     to: '21:00', gallons: -40974, note: negative as printed; excluded from county total}
+  - {location: Cam Crt Siphon, sso_id: null, date: '2019-01-01', from: '00:00', to: '01:00',
+     gallons: -3424, note: negative as printed; location total left blank}
+  county_month_total_gallons: 479935
+  rain_events: [{date: '2019-01-02', in: 0.01}, {date: '2019-01-07', in: 0.01},
+    {date: '2019-01-13', in: 0.02}, {date: '2019-01-14', in: 0.01}, {date: '2019-01-16', in: 0.01},
+    {date: '2019-01-17', in: 0.12}, {date: '2019-01-23', in: 1.15}, {date: '2019-01-28', in: 0.03}]
+  county_total_rainfall_in: 1.36
+- month: 2019-03
+  report_header_date: '2019-03-01'
+  dated: '2019-03-01'
+  locations_listed: [Riverview (MH 1-140, SH05-006), Country Club Siphon (SH05-018), Cam Crt Siphon]
+  events:
+  - {location: Country Club Siphon, sso_id: SH05-018, date: '2019-03-30', from: '09:00',
+     to: '16:00', gallons: 51504}
+  county_month_total_gallons: 51504
+  rain_events: [{date: '2019-03-03', in: 0.02}, {date: '2019-03-06', in: 0.01},
+    {date: '2019-03-09', in: 0.89}, {date: '2019-03-10', in: 0.13}, {date: '2019-03-13', in: 0.05},
+    {date: '2019-03-14', in: 0.56}, {date: '2019-03-15', in: 0.01}, {date: '2019-03-17', in: 0.09},
+    {date: '2019-03-20', in: 0.4}, {date: '2019-03-21', in: 0.2}, {date: '2019-03-22', in: 0.01},
+    {date: '2019-03-24', in: 0.12}, {date: '2019-03-25', in: 0.01}, {date: '2019-03-28', in: 0.1},
+    {date: '2019-03-29', in: 0.33}, {date: '2019-03-30', in: 0.86}, {date: '2019-03-31', in: 0.07}]
+  county_total_rainfall_in: 3.86
+
+observations:
+  - >-
+    [verified] The Country Club Siphon SSO (SH05-018) overflowed 479,935 gallons on 2019-01-23
+    during a 1.15-inch rain day, and 51,504 gallons on 2019-03-30 during a 0.86-inch rain day —
+    three-plus years after the 2014 Modified DFFO's Phase-1 completion (July 2015) and within
+    the extended eliminate-all-SSOs window (2020-12-31). Sub-half-million-gallon overflows at
+    ~1 inch of rain quantify the residual wet-weather sensitivity of the Shawnee 2 system in
+    2019.
+  - >-
+    [verified] A Cam Crt Siphon row dated 2019-01-01 (negative reading) precedes the SSO's
+    2019-02-26 permanent removal (see sso-closures.order.yaml).
+  - >-
+    [open] The 2005 DFFO's per-SSO ids (Cam Court, Riverview, Country Club...) map to the
+    SH05-0xx ids used here; a full crosswalk (and the missing 2019 months) belongs to the
+    batch-3 responsiveness analysis.
+
+relevance:
+  tags: [verified, sso, shawnee-ii, wet-weather, prr-item-9]
+  cross_refs:
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/sso-closures.order.yaml
+  - data/extracted/legal/prr-mandamus/prr-production-2026-07-24/dffo-2014-modified.order.yaml
+  - data/extracted/regulatory/wastewater-enforcement-history.yaml
