@@ -27,8 +27,8 @@ tags:
 - lima
 notes: 'Verbatim ECHO effluent-chart data for the City of Lima WWTP (OH0026069 / Ohio EPA
   2PE00000), outfall 001 → Ottawa River at River Mile 37.6. Design 18.5 MGD; actual mean
-  13.068 MGD (2023-01..2026-06 MO AVG, 70.6% utilization); max 19.671 MGD; CSO/bypass
-  outfalls: 5; 33 ECHO-flagged effluent exceedances (ammonia, E. coli, mercury, Ceriodaphnia
+  13.068 MGD (2023-01..2026-06 MO AVG, 70.6% utilization); max 19.671 MGD; overflow (CSO/SSO)
+  outfalls: 5, of which 0 reported a volume (WS-25); 33 ECHO-flagged effluent exceedances (ammonia, E. coli, mercury, Ceriodaphnia
   toxicity, pH, TSS). The un-requested municipal custodian record (issue #1536) — the
   municipal design flow the routed mass balance previously left uncounted. Regenerable via
   `watermark dmr OH0026069 --start 2023-01-01 --end 2026-06-30 --design-flow 18.5 --out
