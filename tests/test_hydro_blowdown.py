@@ -10,7 +10,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
 import yaml
+from pydantic import ValidationError
 
 from watermark.config import Settings
 from watermark.hydrology import blowdown
@@ -32,6 +34,12 @@ def test_general_permit_effective_property() -> None:
     # The committed OHD000001 constant is draft -> not effective (the coverage gate).
     assert blowdown.OHD000001.state is blowdown.GeneralPermitState.DRAFT
     assert blowdown.OHD000001.effective is False
+    assert (
+        blowdown.OHD000001.confidence == "high"
+    )  # lifecycle facts from the permit's public notice
+    # Frozen: the shared default must not be mutable in place (it backs resolve_coverage defaults).
+    with pytest.raises(ValidationError):
+        blowdown.OHD000001.asof = "2099-01-01"  # type: ignore[misc]
     # A permit is effective only when its state is EFFECTIVE *and* it carries an effective date.
     issued = blowdown.OHD000001.model_copy(
         update={"state": blowdown.GeneralPermitState.EFFECTIVE, "effective_date": "2026-09-01"}
@@ -47,6 +55,7 @@ def test_draft_permit_resolves_every_candidate_not_available() -> None:
     cov = blowdown.resolve_coverage(_candidate())
     assert cov.ohd000001_status is blowdown.CoverageStatus.NOT_AVAILABLE
     assert cov.tag == "[verified]"  # the draft-gated absence is a verified fact about the permit
+    assert cov.confidence == "high"  # tracks the tag strength (for A3 structural filtering)
     assert cov.facility_own_discharge is blowdown.FacilityOwnDischarge.UNKNOWN
     assert "draft general permit" in cov.finding
     assert "C2 records request" in cov.finding  # the absent-permit gap becomes a records lead
@@ -71,6 +80,7 @@ def test_effective_permit_leaves_authorization_lookup_as_open_seam() -> None:
     cov = blowdown.resolve_coverage(_candidate(), gp=issued)
     assert cov.ohd000001_status is blowdown.CoverageStatus.NO_RECORD
     assert cov.tag == "[open]"
+    assert cov.confidence == "low"  # unresolved seam -> low confidence
 
 
 def test_closed_loop_cohort_is_registry_derived() -> None:
@@ -93,6 +103,7 @@ def test_coverage_document_shape_and_cohort_resolution() -> None:
     doc = blowdown.coverage_document(gp, coverages)
     assert doc["general_permit"]["permit_id"] == "OHD000001"
     assert doc["general_permit"]["effective"] is False
+    assert doc["general_permit"]["confidence"] == "high"
     assert doc["meta"]["regenerate"] == "watermark oepa coverage --write"
     assert len(doc["candidates"]) == len(coverages)
     # Each candidate row round-trips back into the model (the artifact stays schema-valid).

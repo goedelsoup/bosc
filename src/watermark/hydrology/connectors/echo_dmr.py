@@ -42,6 +42,7 @@ from watermark.connectors import to_float, to_str
 from watermark.hydrology.connectors._cache import cached_get
 from watermark.hydrology.units import CFS_TO_MGD, mgd_to_cfs
 from watermark.logging import get_logger
+from watermark.provenance import Confidence, SourceKind
 
 log = get_logger(__name__)
 
@@ -266,6 +267,14 @@ class FlowSeasonality(BaseModel):
     peak_month: int | None  # calendar month (1-12) with the highest mean monthly-average flow
     peak_mean_mgd: float | None
     cv: float | None  # coefficient of variation across the per-month means (flat loop -> ~0)
+    # Provenance (the hydrology `ProvenancedValue` convention): the metric is `derived` from the
+    # permittee's [verified] monthly-average DMR values, so it is a `medium`-confidence [inference]
+    # shape — never a document-verbatim figure. `asof` is the latest month the series covers, so a
+    # consumer (A3) sees the data currency; `citation` records what it was computed over.
+    source: SourceKind
+    citation: str | None
+    confidence: Confidence
+    asof: str | None  # latest ISO period the series covers (data currency), None if unknown
 
 
 class DischargeSummary(BaseModel):
@@ -520,6 +529,11 @@ def flow_seasonality(
     loop. Returns ``None`` for a missing outfall or a series with no usable monthly value —
     never a fabricated shape. ``warm_ratio`` needs both a warm- and a cool-month observation;
     ``cv`` needs at least two distinct months.
+
+    Warm/cool means are computed over the **folded per-calendar-month means**, not the raw rows,
+    so a month with more observations (a multi-year window) contributes equal weight — the same
+    basis ``peak_month`` and ``cv`` already use; pooling the raw rows would let a heavily-reported
+    month dominate the season mean.
     """
     if param is None:
         return None
@@ -538,10 +552,11 @@ def flow_seasonality(
         by_month.setdefault(m, []).append(v)
     month_means = {m: sum(vs) / len(vs) for m, vs in by_month.items()}
 
-    warm_vals = [v for m, v in pairs if m in warm_months]
-    cool_vals = [v for m, v in pairs if m not in warm_months]
-    warm_mean = sum(warm_vals) / len(warm_vals) if warm_vals else None
-    cool_mean = sum(cool_vals) / len(cool_vals) if cool_vals else None
+    # Partition the folded month means (each calendar month once), not the raw pairs.
+    warm_means = [mean for m, mean in month_means.items() if m in warm_months]
+    cool_means = [mean for m, mean in month_means.items() if m not in warm_months]
+    warm_mean = sum(warm_means) / len(warm_means) if warm_means else None
+    cool_mean = sum(cool_means) / len(cool_means) if cool_means else None
     warm_ratio = (
         round(warm_mean / cool_mean, 3)
         if warm_mean is not None and cool_mean is not None and cool_mean > 0.0
@@ -556,6 +571,7 @@ def flow_seasonality(
         variance = sum((x - overall) ** 2 for x in means) / len(means)  # population variance
         cv = round(math.sqrt(variance) / overall, 3)
 
+    latest_period = max((r.period_end for r in param.rows if r.period_end), default=None)
     return FlowSeasonality(
         n_months=len(by_month),
         warm_months=sorted(warm_months),
@@ -565,6 +581,13 @@ def flow_seasonality(
         peak_month=peak_month,
         peak_mean_mgd=round(peak_mean, 4),
         cv=cv,
+        source="derived",
+        citation=(
+            f"warm/cool ratio + CV over outfall {param.outfall}'s reported monthly-average flow "
+            "(ECHO DMR, parameter 50050)"
+        ),
+        confidence="medium",
+        asof=latest_period,
     )
 
 
@@ -673,8 +696,10 @@ def summarize_discharge(
 def _seasonality_doc(s: FlowSeasonality | None) -> dict[str, Any] | None:
     """Render a :class:`FlowSeasonality` to a YAML-ready dict (``None`` stays ``None``).
 
-    Adds a human-readable ``peak_month_name`` and a one-line ``discipline`` restating that the
-    warm/cool ratio is an [inference] shape indicator, not a [verified] discharge figure.
+    Emits the provenance quad (``source``/``citation``/``confidence``/``asof``) so a present
+    seasonality block always carries its tag, plus a human-readable ``peak_month_name`` and a
+    one-line ``discipline`` restating that the warm/cool ratio is an [inference] shape indicator,
+    not a [verified] discharge figure.
     """
     if s is None:
         return None
@@ -688,6 +713,10 @@ def _seasonality_doc(s: FlowSeasonality | None) -> dict[str, Any] | None:
         "peak_month_name": _MONTH_NAMES.get(s.peak_month) if s.peak_month else None,
         "peak_mean_mgd": s.peak_mean_mgd,
         "cv": s.cv,
+        "source": s.source,
+        "citation": s.citation,
+        "confidence": s.confidence,
+        "asof": s.asof,
         "discipline": (
             "Warm/cool ratio and CV are a seasonality *shape* indicator ([inference]) over the "
             "permittee's [verified] monthly-average flow — a warm_ratio well above 1 is the "

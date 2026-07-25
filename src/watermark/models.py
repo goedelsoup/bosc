@@ -24,6 +24,8 @@ from pydantic import (
     model_validator,
 )
 
+from watermark.provenance import Confidence, SourceKind
+
 
 class _ApproxMarker:
     """Sentinel placed in an approximate-number type's ``Annotated`` metadata.
@@ -810,11 +812,14 @@ class DmrDischargeSummary(BaseModel):
 class DmrSeasonality(BaseModel):
     """The seasonality shape of the primary outfall's monthly flow (``dmr_document()``, #1678).
 
-    Optional (defaulted ``None`` on the parent) so a committed DMR artifact generated before the
-    seasonality block existed still validates — the same additive discipline that made
-    :attr:`DmrDischargeSummary.active_overflow_outfalls` optional. ``extra="allow"`` mirrors the
-    connector's own :class:`~watermark.hydrology.connectors.echo_dmr.FlowSeasonality`. Every value
-    can genuinely be ``None`` (a single-season or empty window), so the types stay optional.
+    Optional (defaulted ``None`` on the parent :class:`DmrExtraction`) so a committed DMR artifact
+    generated before the seasonality block existed still validates — the same additive discipline
+    that made :attr:`DmrDischargeSummary.active_overflow_outfalls` optional. But a block that IS
+    present must carry its provenance quad (``source``/``citation``/``confidence``/``asof``), so
+    those are required — ``dmr_document()`` always emits them, and no committed artifact predates
+    them. ``extra="allow"`` mirrors the connector's own
+    :class:`~watermark.hydrology.connectors.echo_dmr.FlowSeasonality`. A metric value can genuinely
+    be ``None`` (a single-season or empty window), so those types stay optional.
     """
 
     model_config = ConfigDict(extra="allow")
@@ -827,6 +832,12 @@ class DmrSeasonality(BaseModel):
     peak_month: int | None = None
     peak_mean_mgd: float | None = None
     cv: float | None = None
+    # Provenance quad (required on a present block; the metric is a `derived`, `medium`-confidence
+    # [inference] shape over the permittee's [verified] monthly-average flow).
+    source: SourceKind
+    citation: str | None
+    confidence: Confidence
+    asof: str | None
 
 
 class DmrFlowSample(BaseModel):

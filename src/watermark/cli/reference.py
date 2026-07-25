@@ -137,11 +137,12 @@ def dmr(
         f"{summary.overflow_outfalls} ({summary.active_overflow_outfalls} active)",
     )
     table.add_row("reported exceedances", str(len(summary.exceedances)))
-    if summary.seasonality is not None and summary.seasonality.warm_ratio is not None:
+    if summary.seasonality is not None:
         s = summary.seasonality
+        ratio = f"{s.warm_ratio}x" if s.warm_ratio is not None else "n/a"
         table.add_row(
             "seasonality (warm/cool, peak)",
-            f"{s.warm_ratio}x, peak month {s.peak_month} (cv {s.cv})",
+            f"{ratio}, peak month {s.peak_month} (cv {s.cv})",
         )
     console.print(table)
     for r in summary.exceedances:

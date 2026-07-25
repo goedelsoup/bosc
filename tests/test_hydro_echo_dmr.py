@@ -15,6 +15,7 @@ from watermark.config import Settings
 from watermark.hydrology.connectors import echo_dmr
 from watermark.hydrology.connectors._cache import HydroOfflineError
 from watermark.hydrology.units import CFS_TO_MGD
+from watermark.models import DmrSeasonality
 
 
 def _row(
@@ -534,6 +535,39 @@ def test_seasonality_folds_multiple_years_by_calendar_month() -> None:
     assert s.cool_mean_mgd == pytest.approx(5.0)
 
 
+def test_seasonality_weights_each_calendar_month_equally_under_uneven_coverage() -> None:
+    # A month reported in more years must NOT dominate the season mean: warm/cool means are taken
+    # over the folded per-calendar-month means, so July (3 obs) and August (1 obs) count once each.
+    param = _flow_param(
+        {
+            "2023-07-31": 12.0,  # July, three obs across years -> month-mean 12
+            "2024-07-31": 12.0,
+            "2025-07-31": 12.0,
+            "2023-08-31": 6.0,  # August, one obs -> month-mean 6
+            "2023-01-31": 3.0,  # January (cool), one obs -> month-mean 3
+        }
+    )
+    s = echo_dmr.flow_seasonality(param)
+    assert s is not None
+    assert s.n_months == 3
+    # Folded: mean(12, 6) = 9.0 — NOT the raw-pooled (12+12+12+6)/4 = 10.5.
+    assert s.warm_mean_mgd == pytest.approx(9.0)
+    assert s.cool_mean_mgd == pytest.approx(3.0)
+    assert s.warm_ratio == pytest.approx(3.0)  # 9/3, not the pooled 10.5/3 = 3.5
+
+
+def test_seasonality_carries_derived_provenance() -> None:
+    # Every present seasonality object is tagged: a `derived`, medium-confidence [inference] shape
+    # over the reported flow, with `asof` = the latest period covered.
+    param = _flow_param({f"2023-{m:02d}-28": float(m) for m in range(1, 13)})
+    s = echo_dmr.flow_seasonality(param)
+    assert s is not None
+    assert s.source == "derived"
+    assert s.confidence == "medium"
+    assert s.citation is not None and "50050" in s.citation
+    assert s.asof == "2023-12-28"  # the latest month the series covers
+
+
 def test_seasonality_ignores_daily_max_and_unconvertible_rows() -> None:
     # Only monthly-average, unit-reducible rows enter the shape — a DAILY MX row must not skew it.
     param = _flow_param({f"2023-{m:02d}-28": 3.0 for m in range(1, 13)})
@@ -586,6 +620,11 @@ def test_summarize_and_document_carry_seasonality(hydro_settings: Settings) -> N
     assert doc["seasonality"]["warm_ratio"] == pytest.approx(summary.seasonality.warm_ratio)
     assert doc["seasonality"]["peak_month_name"] is not None
     assert "[inference]" in doc["seasonality"]["discipline"]
+    # The document carries the provenance quad, and validates back into the DmrSeasonality model.
+    assert doc["seasonality"]["source"] == "derived"
+    assert doc["seasonality"]["confidence"] == "medium"
+    assert doc["seasonality"]["asof"] == "2023-12-31"
+    DmrSeasonality.model_validate(doc["seasonality"])
 
 
 def test_lima_wwtp_reports_effluent_exceedances(hydro_settings: Settings) -> None:

@@ -23,6 +23,7 @@ general_permit:
     blowdown, air-compressor condensate) and stormwater (data/catalog/reference/oepa-ohd000001-gp.yaml).
     Director's final action still pending as of the 2026-07-11 refresh (data/site/troy-piqua/leads.yaml,
     lead OHD000001).
+  confidence: high
   asof: '2026-07-11'
 candidates:
 - site: bowling-green
@@ -34,6 +35,7 @@ candidates:
   facility_npdes_id: null
   blowdown_dmr_relpath: null
   tag: '[verified]'
+  confidence: high
   finding: OHD000001 is a draft general permit (not effective as of 2026-07-11); no facility can be authorized
     under it, so Bowling Green Data Center (Project Accordion) cannot yet hold blowdown coverage under
     it. No facility-own discharge permit is wired — either genuinely dry, or blowdown goes to sewer under
@@ -52,6 +54,7 @@ candidates:
   facility_npdes_id: null
   blowdown_dmr_relpath: null
   tag: '[verified]'
+  confidence: high
   finding: OHD000001 is a draft general permit (not effective as of 2026-07-11); no facility can be authorized
     under it, so 5C Data Centers "CMH01" cannot yet hold blowdown coverage under it. No facility-own discharge
     permit is wired — either genuinely dry, or blowdown goes to sewer under a City sewer-use agreement
@@ -72,6 +75,7 @@ candidates:
   facility_npdes_id: null
   blowdown_dmr_relpath: null
   tag: '[verified]'
+  confidence: high
   finding: OHD000001 is a draft general permit (not effective as of 2026-07-11); no facility can be authorized
     under it, so Urbana Technology Hub cannot yet hold blowdown coverage under it. No facility-own discharge
     permit is wired — either genuinely dry, or blowdown goes to sewer under a City sewer-use agreement
@@ -89,6 +93,7 @@ candidates:
   facility_npdes_id: null
   blowdown_dmr_relpath: null
   tag: '[verified]'
+  confidence: high
   finding: OHD000001 is a draft general permit (not effective as of 2026-07-11); no facility can be authorized
     under it, so Van Wert Mega Site cannot yet hold blowdown coverage under it. No facility-own discharge
     permit is wired — either genuinely dry, or blowdown goes to sewer under a City sewer-use agreement
@@ -111,6 +116,7 @@ candidates:
   facility_npdes_id: null
   blowdown_dmr_relpath: null
   tag: '[verified]'
+  confidence: high
   finding: OHD000001 is a draft general permit (not effective as of 2026-07-11); no facility can be authorized
     under it, so Cosler Farm campus cannot yet hold blowdown coverage under it. No facility-own discharge
     permit is wired — either genuinely dry, or blowdown goes to sewer under a City sewer-use agreement

@@ -36,6 +36,7 @@ from pydantic import BaseModel, ConfigDict
 
 from watermark.config import Settings, get_settings
 from watermark.logging import get_logger
+from watermark.provenance import Confidence
 from watermark.sites import SITES, CoolingModelType
 
 log = get_logger(__name__)
@@ -61,9 +62,13 @@ class GeneralPermitState(StrEnum):
 
 
 class GeneralPermit(BaseModel):
-    """A general NPDES permit's identity + lifecycle state (the coverage gate)."""
+    """A general NPDES permit's identity + lifecycle state (the coverage gate).
 
-    model_config = ConfigDict(extra="forbid")
+    Frozen: the module-level :data:`OHD000001` default is shared as a default argument across
+    :func:`resolve_coverage`/:func:`resolve_cohort`, so it must not be mutable in place.
+    """
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
 
     permit_id: str
     title: str
@@ -72,6 +77,9 @@ class GeneralPermit(BaseModel):
     effective_date: str | None  # ISO date it took force (None while draft)
     comment_closed: str | None  # ISO date the comment period closed
     citation: str
+    confidence: (
+        Confidence  # strength of the lifecycle facts (high — from the permit's public notice)
+    )
     asof: str  # ISO date this lifecycle state was last confirmed
 
     @property
@@ -98,6 +106,7 @@ OHD000001 = GeneralPermit(
         "(data/catalog/reference/oepa-ohd000001-gp.yaml). Director's final action still pending "
         "as of the 2026-07-11 refresh (data/site/troy-piqua/leads.yaml, lead OHD000001)."
     ),
+    confidence="high",  # the lifecycle facts are [verified] from the permit's own public notice
     asof="2026-07-11",
 )
 
@@ -150,6 +159,10 @@ class BlowdownCoverage(BaseModel):
     facility_npdes_id: str | None
     blowdown_dmr_relpath: str | None
     tag: str  # evidentiary tag on this resolution ("[verified]" for the draft-gated absence)
+    # Strength of the coverage resolution, mapped from the tag (the ProvenancedValue convention),
+    # so A3 can filter/sort structurally: high for the [verified] draft-gated absence, low for the
+    # [open] effective-permit seam that still needs a per-facility authorization lookup.
+    confidence: Confidence
     finding: str  # one-line evidentiary read
     citation: str
 
@@ -194,9 +207,11 @@ def resolve_coverage(candidate: Candidate, *, gp: GeneralPermit = OHD000001) -> 
     (the gap the C2 records request fills) — never ``absent`` unless a search has actually
     established the absence.
     """
+    confidence: Confidence
     if not gp.effective:
         status = CoverageStatus.NOT_AVAILABLE
         tag = "[verified]"
+        confidence = "high"  # the draft-gated absence is a verified fact about the permit
         coverage_read = (
             f"{gp.permit_id} is a draft general permit (not effective as of {gp.asof}); no "
             f"facility can be authorized under it, so {candidate.facility} cannot yet hold "
@@ -208,6 +223,7 @@ def resolve_coverage(candidate: Candidate, *, gp: GeneralPermit = OHD000001) -> 
         # while the permit is draft — left as the seam rather than fabricating a covered/not-sought.
         status = CoverageStatus.NO_RECORD
         tag = "[open]"
+        confidence = "low"  # unresolved seam pending a per-facility authorization lookup
         coverage_read = (
             f"{gp.permit_id} is effective (as of {gp.effective_date}); a per-facility "
             f"authorization lookup is needed to resolve whether {candidate.facility} sought "
@@ -236,6 +252,7 @@ def resolve_coverage(candidate: Candidate, *, gp: GeneralPermit = OHD000001) -> 
         facility_npdes_id=candidate.facility_npdes_id,
         blowdown_dmr_relpath=candidate.blowdown_dmr_relpath,
         tag=tag,
+        confidence=confidence,
         finding=f"{coverage_read} {own_read}",
         citation=candidate.cooling_citation,
     )
@@ -288,6 +305,7 @@ def coverage_document(gp: GeneralPermit, coverages: list[BlowdownCoverage]) -> d
             "effective_date": gp.effective_date,
             "comment_closed": gp.comment_closed,
             "citation": gp.citation,
+            "confidence": gp.confidence,
             "asof": gp.asof,
         },
         "candidates": [c.model_dump(mode="json") for c in coverages],
