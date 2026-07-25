@@ -171,6 +171,21 @@ class Settings(BaseSettings):
     # (the reach-network the FlowLayer viz advects over). Served through the shared hydrology
     # cache/fixture path. The connector appends `/linked-data/...`.
     nldi_base_url: str = "https://api.water.usgs.gov/nldi"
+    # Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration Program
+    # (WWFRP; R.C. 1521.16): every facility able to withdraw >100,000 gpd registers and files an
+    # annual water-use report. Served as a public ArcGIS FeatureServer — a facility point layer
+    # (0) one-to-many to ground-water / surface-water / return annual-total tables (see
+    # OHIO_WWFRP_* layer ids in the `ohio_water_withdrawal` connector). This is the makeup-side
+    # source for the cooling-water account (epic #1676): a reported withdrawal is the strongest
+    # single tell of how much water a "closed-loop" facility actually spends. Shared hydro cache.
+    ohio_water_withdrawal_base_url: str = (
+        "https://services5.arcgis.com/ajRlmtxbNBjZggOT/arcgis/rest/services/"
+        "Water_Withdrawal_Facility/FeatureServer"
+    )
+    # Annual-total window kept in the committed reference dataset (older years stay live but are
+    # not persisted): recent reporting is what the makeup-side baseline needs, and it bounds the
+    # committed artifact. The registry (facility list) is kept in full regardless of this floor.
+    ohio_water_withdrawal_since_year: int = 2015
     # EPA RSEI Public Data Set. The current release — v2.3.12 (March 2024, TRI 1988-2022)
     # — ships as a single ~447 MB zip of per-table CSVs on EPA's public gaftp site, NOT
     # the frozen `epa-rsei-pds` S3 bucket, which stalled at v234/2016 (#1148). `watermark
