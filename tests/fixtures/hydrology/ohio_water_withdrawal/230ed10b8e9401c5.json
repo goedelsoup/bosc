@@ -1,0 +1,183 @@
+{
+  "params": {
+    "layer": 0,
+    "where": "RegistrationNumber = '00386'",
+    "outFields": "RegistrationNumber,Name,CountyName,FacilityPrimaryUseType,FacilityTotCapacity,GWSTotNumWells,GWSTotWellsWithdrawalCap,SWSTotNumIntakes,SWSTotIntakesWithdrawalCap,Status,RegistrationDate,InactiveDate,HUC12,LastAnnualReportYear,Latitude,Longitude",
+    "resultOffset": 0,
+    "resultRecordCount": 2000
+  },
+  "fetched_at": "2026-07-25T12:36:16.204666+00:00",
+  "payload": {
+    "objectIdFieldName": "OBJECTID",
+    "uniqueIdField": {
+      "name": "OBJECTID",
+      "isSystemMaintained": true
+    },
+    "globalIdFieldName": "",
+    "geometryType": "esriGeometryPoint",
+    "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+    },
+    "fields": [
+      {
+        "name": "RegistrationNumber",
+        "type": "esriFieldTypeString",
+        "alias": "RegistrationNumber",
+        "sqlType": "sqlTypeOther",
+        "length": 5,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Name",
+        "type": "esriFieldTypeString",
+        "alias": "Name",
+        "sqlType": "sqlTypeOther",
+        "length": 1073741822,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "CountyName",
+        "type": "esriFieldTypeString",
+        "alias": "CountyName",
+        "sqlType": "sqlTypeOther",
+        "length": 1073741822,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "FacilityPrimaryUseType",
+        "type": "esriFieldTypeString",
+        "alias": "FacilityPrimaryUseType",
+        "sqlType": "sqlTypeOther",
+        "length": 1073741822,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "FacilityTotCapacity",
+        "type": "esriFieldTypeDouble",
+        "alias": "FacilityTotCapacity",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "GWSTotNumWells",
+        "type": "esriFieldTypeInteger",
+        "alias": "GWSTotNumWells",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "GWSTotWellsWithdrawalCap",
+        "type": "esriFieldTypeDouble",
+        "alias": "GWSTotWellsWithdrawalCap",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "SWSTotNumIntakes",
+        "type": "esriFieldTypeInteger",
+        "alias": "SWSTotNumIntakes",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "SWSTotIntakesWithdrawalCap",
+        "type": "esriFieldTypeDouble",
+        "alias": "SWSTotIntakesWithdrawalCap",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Status",
+        "type": "esriFieldTypeString",
+        "alias": "Status",
+        "sqlType": "sqlTypeOther",
+        "length": 30,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "RegistrationDate",
+        "type": "esriFieldTypeDate",
+        "alias": "RegistrationDate",
+        "sqlType": "sqlTypeOther",
+        "length": 8,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "InactiveDate",
+        "type": "esriFieldTypeDate",
+        "alias": "InactiveDate",
+        "sqlType": "sqlTypeOther",
+        "length": 8,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "HUC12",
+        "type": "esriFieldTypeString",
+        "alias": "HUC12",
+        "sqlType": "sqlTypeOther",
+        "length": 1073741822,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "LastAnnualReportYear",
+        "type": "esriFieldTypeInteger",
+        "alias": "LastAnnualReportYear",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Latitude",
+        "type": "esriFieldTypeDouble",
+        "alias": "Latitude",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Longitude",
+        "type": "esriFieldTypeDouble",
+        "alias": "Longitude",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      }
+    ],
+    "features": [
+      {
+        "attributes": {
+          "RegistrationNumber": "00386",
+          "Name": "LIMA REFINING COMPANY",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Industry",
+          "FacilityTotCapacity": 3.41,
+          "GWSTotNumWells": 6,
+          "GWSTotWellsWithdrawalCap": 3.41,
+          "SWSTotNumIntakes": 0,
+          "SWSTotIntakesWithdrawalCap": null,
+          "Status": "Active",
+          "RegistrationDate": 631152000000,
+          "InactiveDate": null,
+          "HUC12": "041000070306",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.7138888,
+          "Longitude": -84.1347222
+        }
+      }
+    ]
+  }
+}

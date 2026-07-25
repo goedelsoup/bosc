@@ -367,3 +367,88 @@ def toxics_cmd(
             )
         else:
             console.print("[yellow]No RSEI inventory or GIS findings GeoJSON; skipped --map.[/]")
+
+
+@app.command(name="water-withdrawal")
+def water_withdrawal(
+    county: str | None = typer.Option(
+        None, "--county", help="Ohio county name (default: the active site's county)."
+    ),
+    since: int | None = typer.Option(
+        None, "--since", help="Earliest annual-report year to keep (default from settings)."
+    ),
+    offline: bool = typer.Option(
+        False, "--offline", help="Use cached WWFRP responses only; never touch the network."
+    ),
+    out_dir: str | None = typer.Option(
+        None, "--out", help="Output directory (default: data/reference/ohio-water-withdrawal)."
+    ),
+) -> None:
+    """Pull an Ohio county's Water Withdrawal Facilities registry (Ohio DNR WWFRP) -> YAML.
+
+    Queries the DNR Division of Water Resources FeatureServer for every facility registered
+    under R.C. 1521.16 (>100,000 gpd) in the county, joins each to its ground-water,
+    surface-water, and water-return annual totals, and writes a per-county YAML. This is the
+    makeup-side source for the cooling-water account (epic #1676): the reported withdrawal is
+    the strongest single tell of how much a "closed-loop" facility actually spends.
+    """
+    from watermark.catalog import output_dir_for_command
+    from watermark.hydrology.connectors import ohio_water_withdrawal as oww
+    from watermark.sites import active_profile
+
+    settings = offline_settings("hydro", offline)
+    profile = active_profile(settings)
+    if county is None:
+        # The WWFRP is Ohio's registry; a non-Ohio watershed point (Fort Wayne, IN) has its
+        # own state service — refuse cleanly rather than query the wrong state.
+        if profile.gnis_default_state != "OH":
+            raise typer.BadParameter(
+                f"the WWFRP is Ohio's registry, but site '{profile.slug}' is in "
+                f"{profile.gnis_default_state}. Pass --county for an Ohio county, or use that "
+                "state's own withdrawal source.",
+                param_hint="--county",
+            )
+        county = profile.county_name.split(" County")[0].strip()
+
+    target = (
+        Path(out_dir)
+        if out_dir
+        else (
+            output_dir_for_command("water-withdrawal", settings=settings)
+            or settings.reference_dir / "ohio-water-withdrawal"
+        )
+    )
+
+    registry = oww.fetch_county(county, since_year=since, settings=settings)
+    facilities = registry.facilities
+
+    table = Table("reg#", "facility", "use", "cap MGD", "status", "latest yr", "MGD")
+    for fac in facilities[:25]:
+        years = fac.reported_years()
+        latest = years[0] if years else None
+        mgd = fac.mean_daily_withdrawal_mgd() if years else None
+        table.add_row(
+            fac.registration_number,
+            (fac.name or "—")[:32],
+            (fac.primary_use_type or "—")[:12],
+            f"{fac.total_capacity_mgd:g}" if fac.total_capacity_mgd is not None else "—",
+            fac.status or "—",
+            str(latest) if latest is not None else "—",
+            f"{mgd:.3f}" if mgd is not None else "—",
+        )
+    console.print(table)
+
+    reporting = sum(1 for f in facilities if f.reported_years())
+    active = sum(1 for f in facilities if (f.status or "").lower() == "active")
+    console.print(
+        f"\n[bold]{len(facilities)}[/] registered facilities in {county} County "
+        f"([green]{active} active[/], {reporting} with a {registry.since_year}+ report)."
+    )
+
+    path = oww.write_registry(registry, target)
+    wrote(path)
+    console.print(
+        "[dim]Withdrawal/return amounts are million gallons, verbatim from the WWFRP annual "
+        "reports (self-reported). A registered capacity is not a reported withdrawal, and any "
+        r"IT-load inversion from a withdrawal is \[inference].[/]"
+    )

@@ -1,0 +1,823 @@
+{
+  "params": {
+    "layer": 0,
+    "where": "CountyName = 'Allen'",
+    "outFields": "RegistrationNumber,Name,CountyName,FacilityPrimaryUseType,FacilityTotCapacity,GWSTotNumWells,GWSTotWellsWithdrawalCap,SWSTotNumIntakes,SWSTotIntakesWithdrawalCap,Status,RegistrationDate,InactiveDate,HUC12,LastAnnualReportYear,Latitude,Longitude",
+    "resultOffset": 0,
+    "resultRecordCount": 2000
+  },
+  "fetched_at": "2026-07-25T12:28:35.171894+00:00",
+  "payload": {
+    "objectIdFieldName": "OBJECTID",
+    "uniqueIdField": {
+      "name": "OBJECTID",
+      "isSystemMaintained": true
+    },
+    "globalIdFieldName": "",
+    "geometryType": "esriGeometryPoint",
+    "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+    },
+    "fields": [
+      {
+        "name": "RegistrationNumber",
+        "type": "esriFieldTypeString",
+        "alias": "RegistrationNumber",
+        "sqlType": "sqlTypeOther",
+        "length": 5,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Name",
+        "type": "esriFieldTypeString",
+        "alias": "Name",
+        "sqlType": "sqlTypeOther",
+        "length": 1073741822,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "CountyName",
+        "type": "esriFieldTypeString",
+        "alias": "CountyName",
+        "sqlType": "sqlTypeOther",
+        "length": 1073741822,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "FacilityPrimaryUseType",
+        "type": "esriFieldTypeString",
+        "alias": "FacilityPrimaryUseType",
+        "sqlType": "sqlTypeOther",
+        "length": 1073741822,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "FacilityTotCapacity",
+        "type": "esriFieldTypeDouble",
+        "alias": "FacilityTotCapacity",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "GWSTotNumWells",
+        "type": "esriFieldTypeInteger",
+        "alias": "GWSTotNumWells",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "GWSTotWellsWithdrawalCap",
+        "type": "esriFieldTypeDouble",
+        "alias": "GWSTotWellsWithdrawalCap",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "SWSTotNumIntakes",
+        "type": "esriFieldTypeInteger",
+        "alias": "SWSTotNumIntakes",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "SWSTotIntakesWithdrawalCap",
+        "type": "esriFieldTypeDouble",
+        "alias": "SWSTotIntakesWithdrawalCap",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Status",
+        "type": "esriFieldTypeString",
+        "alias": "Status",
+        "sqlType": "sqlTypeOther",
+        "length": 30,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "RegistrationDate",
+        "type": "esriFieldTypeDate",
+        "alias": "RegistrationDate",
+        "sqlType": "sqlTypeOther",
+        "length": 8,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "InactiveDate",
+        "type": "esriFieldTypeDate",
+        "alias": "InactiveDate",
+        "sqlType": "sqlTypeOther",
+        "length": 8,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "HUC12",
+        "type": "esriFieldTypeString",
+        "alias": "HUC12",
+        "sqlType": "sqlTypeOther",
+        "length": 1073741822,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "LastAnnualReportYear",
+        "type": "esriFieldTypeInteger",
+        "alias": "LastAnnualReportYear",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Latitude",
+        "type": "esriFieldTypeDouble",
+        "alias": "Latitude",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Longitude",
+        "type": "esriFieldTypeDouble",
+        "alias": "Longitude",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      }
+    ],
+    "features": [
+      {
+        "attributes": {
+          "RegistrationNumber": "00054",
+          "Name": "SUTER STRAWBERRY FARM",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Agriculture",
+          "FacilityTotCapacity": 0.9,
+          "GWSTotNumWells": 0,
+          "GWSTotWellsWithdrawalCap": null,
+          "SWSTotNumIntakes": 1,
+          "SWSTotIntakesWithdrawalCap": 0.9,
+          "Status": "Inactive",
+          "RegistrationDate": 631152000000,
+          "InactiveDate": 915062400000,
+          "HUC12": "041000080405",
+          "LastAnnualReportYear": 1998,
+          "Latitude": 40.9083333,
+          "Longitude": -83.9513888
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "00180",
+          "Name": "SPENCERVILLE VILLAGE PWS",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Public",
+          "FacilityTotCapacity": 1.96,
+          "GWSTotNumWells": 5,
+          "GWSTotWellsWithdrawalCap": 1.96,
+          "SWSTotNumIntakes": 1,
+          "SWSTotIntakesWithdrawalCap": 0,
+          "Status": "Active",
+          "RegistrationDate": 631152000000,
+          "InactiveDate": null,
+          "HUC12": "041000070204",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.7125,
+          "Longitude": -84.3513888
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "00240",
+          "Name": "DELPHOS CITY PWS-SOUTH PLANT WELLFIELD",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Public",
+          "FacilityTotCapacity": 0.93,
+          "GWSTotNumWells": 3,
+          "GWSTotWellsWithdrawalCap": 0.93,
+          "SWSTotNumIntakes": 0,
+          "SWSTotIntakesWithdrawalCap": null,
+          "Status": "Inactive",
+          "RegistrationDate": 631152000000,
+          "InactiveDate": 1591660800000,
+          "HUC12": "041000070903",
+          "LastAnnualReportYear": 2020,
+          "Latitude": 40.8347222,
+          "Longitude": -84.3333333
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "00252",
+          "Name": "BLUFFTON STONE COMPANY",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Mineral Extraction",
+          "FacilityTotCapacity": 2.01,
+          "GWSTotNumWells": 1,
+          "GWSTotWellsWithdrawalCap": 2.01,
+          "SWSTotNumIntakes": 0,
+          "SWSTotIntakesWithdrawalCap": null,
+          "Status": "Active",
+          "RegistrationDate": 631152000000,
+          "InactiveDate": null,
+          "HUC12": "041000080404",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.8833333,
+          "Longitude": -83.8916666
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "00297",
+          "Name": "GOECKE, KENNETH",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Agriculture",
+          "FacilityTotCapacity": 0.3,
+          "GWSTotNumWells": 0,
+          "GWSTotWellsWithdrawalCap": null,
+          "SWSTotNumIntakes": 1,
+          "SWSTotIntakesWithdrawalCap": 0.3,
+          "Status": "Active",
+          "RegistrationDate": 631152000000,
+          "InactiveDate": null,
+          "HUC12": "041000070203",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.734068,
+          "Longitude": -84.300062
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "00374",
+          "Name": "TROYER, FREDERICK",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Agriculture",
+          "FacilityTotCapacity": 2.58,
+          "GWSTotNumWells": 0,
+          "GWSTotWellsWithdrawalCap": null,
+          "SWSTotNumIntakes": 3,
+          "SWSTotIntakesWithdrawalCap": 2.58,
+          "Status": "Inactive",
+          "RegistrationDate": 631152000000,
+          "InactiveDate": 1239667200000,
+          "HUC12": "041000070402",
+          "LastAnnualReportYear": 2008,
+          "Latitude": 40.8055555,
+          "Longitude": -84.2055555
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "00386",
+          "Name": "LIMA REFINING COMPANY",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Industry",
+          "FacilityTotCapacity": 3.41,
+          "GWSTotNumWells": 6,
+          "GWSTotWellsWithdrawalCap": 3.41,
+          "SWSTotNumIntakes": 0,
+          "SWSTotIntakesWithdrawalCap": null,
+          "Status": "Active",
+          "RegistrationDate": 631152000000,
+          "InactiveDate": null,
+          "HUC12": "041000070306",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.7138888,
+          "Longitude": -84.1347222
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "00622",
+          "Name": "SPRINGBROOK GOLF CLUB",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Golf Course",
+          "FacilityTotCapacity": 0.13,
+          "GWSTotNumWells": 2,
+          "GWSTotWellsWithdrawalCap": 0.03,
+          "SWSTotNumIntakes": 2,
+          "SWSTotIntakesWithdrawalCap": 0.1,
+          "Status": "Active",
+          "RegistrationDate": 631152000000,
+          "InactiveDate": null,
+          "HUC12": "041000070501",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.7986111,
+          "Longitude": -84.1055555
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "00937",
+          "Name": "TAMARAC GOLF CLUB",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Golf Course",
+          "FacilityTotCapacity": 0.36,
+          "GWSTotNumWells": 2,
+          "GWSTotWellsWithdrawalCap": 0.24,
+          "SWSTotNumIntakes": 1,
+          "SWSTotIntakesWithdrawalCap": 0.12,
+          "Status": "Active",
+          "RegistrationDate": 631152000000,
+          "InactiveDate": null,
+          "HUC12": "041000070305",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.735315,
+          "Longitude": -84.067927
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "00945",
+          "Name": "BLUFFTON VILLAGE PWS",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Public",
+          "FacilityTotCapacity": 0.56,
+          "GWSTotNumWells": 6,
+          "GWSTotWellsWithdrawalCap": 0.56,
+          "SWSTotNumIntakes": 0,
+          "SWSTotIntakesWithdrawalCap": null,
+          "Status": "Inactive",
+          "RegistrationDate": 631152000000,
+          "InactiveDate": 1270166400000,
+          "HUC12": "041000080403",
+          "LastAnnualReportYear": 2009,
+          "Latitude": 40.8861111,
+          "Longitude": -83.9
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "01075",
+          "Name": "NATIONAL LIME & STONE-LIMA PLANT 2",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Mineral Extraction",
+          "FacilityTotCapacity": 0.6,
+          "GWSTotNumWells": 1,
+          "GWSTotWellsWithdrawalCap": 0.6,
+          "SWSTotNumIntakes": 0,
+          "SWSTotIntakesWithdrawalCap": null,
+          "Status": "Inactive",
+          "RegistrationDate": 631152000000,
+          "InactiveDate": 820454400000,
+          "HUC12": "041000070306",
+          "LastAnnualReportYear": 1996,
+          "Latitude": 40.7666666,
+          "Longitude": -84.0236111
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "01079",
+          "Name": "NATIONAL LIME & STONE-LIMA PLANT 1",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Mineral Extraction",
+          "FacilityTotCapacity": 4.3,
+          "GWSTotNumWells": 1,
+          "GWSTotWellsWithdrawalCap": 4.3,
+          "SWSTotNumIntakes": 0,
+          "SWSTotIntakesWithdrawalCap": null,
+          "Status": "Active",
+          "RegistrationDate": 631152000000,
+          "InactiveDate": null,
+          "HUC12": "041000070306",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.7486111,
+          "Longitude": -84.0805555
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "01295",
+          "Name": "SUTER PRODUCE",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Agriculture",
+          "FacilityTotCapacity": 4.52,
+          "GWSTotNumWells": 1,
+          "GWSTotWellsWithdrawalCap": 0.2,
+          "SWSTotNumIntakes": 4,
+          "SWSTotIntakesWithdrawalCap": 4.32,
+          "Status": "Active",
+          "RegistrationDate": 667785600000,
+          "InactiveDate": null,
+          "HUC12": "041000080405",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.9111111,
+          "Longitude": -83.9652777
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "01320",
+          "Name": "LIMA CITY PWS-AUGLAIZE",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Public",
+          "FacilityTotCapacity": 161,
+          "GWSTotNumWells": 0,
+          "GWSTotWellsWithdrawalCap": null,
+          "SWSTotNumIntakes": 2,
+          "SWSTotIntakesWithdrawalCap": 161,
+          "Status": "Active",
+          "RegistrationDate": 673747200000,
+          "InactiveDate": null,
+          "HUC12": "041000070203",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.7305555,
+          "Longitude": -84.3013888
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "01321",
+          "Name": "LIMA CITY PWS-METZGER & LOST CREEK",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Public",
+          "FacilityTotCapacity": 174,
+          "GWSTotNumWells": 0,
+          "GWSTotWellsWithdrawalCap": null,
+          "SWSTotNumIntakes": 2,
+          "SWSTotIntakesWithdrawalCap": 174,
+          "Status": "Active",
+          "RegistrationDate": 673747200000,
+          "InactiveDate": null,
+          "HUC12": "041000070306",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.751443,
+          "Longitude": -84.049967
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "01347",
+          "Name": "MAARK V WATER COMPANY",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Public",
+          "FacilityTotCapacity": 0.2,
+          "GWSTotNumWells": 2,
+          "GWSTotWellsWithdrawalCap": 0.2,
+          "SWSTotNumIntakes": 0,
+          "SWSTotIntakesWithdrawalCap": null,
+          "Status": "Inactive",
+          "RegistrationDate": 677116800000,
+          "InactiveDate": 789004800000,
+          "HUC12": "041000070402",
+          "LastAnnualReportYear": 1993,
+          "Latitude": 40.7916666,
+          "Longitude": -84.2055555
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "01381",
+          "Name": "SHAWNEE COUNTRY CLUB",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Golf Course",
+          "FacilityTotCapacity": 1.5,
+          "GWSTotNumWells": 3,
+          "GWSTotWellsWithdrawalCap": 1.5,
+          "SWSTotNumIntakes": 0,
+          "SWSTotIntakesWithdrawalCap": null,
+          "Status": "Active",
+          "RegistrationDate": 677376000000,
+          "InactiveDate": null,
+          "HUC12": "041000070402",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.7138888,
+          "Longitude": -84.1569444
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "01396",
+          "Name": "BLUFFTON GOLF CLUB",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Golf Course",
+          "FacilityTotCapacity": 0.55,
+          "GWSTotNumWells": 3,
+          "GWSTotWellsWithdrawalCap": 0.5,
+          "SWSTotNumIntakes": 1,
+          "SWSTotIntakesWithdrawalCap": 0.05,
+          "Status": "Active",
+          "RegistrationDate": 677462400000,
+          "InactiveDate": null,
+          "HUC12": "041000080403",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.8652777,
+          "Longitude": -83.9347222
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "01398",
+          "Name": "COLONIAL GOLFERS CLUB",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Golf Course",
+          "FacilityTotCapacity": 12.14,
+          "GWSTotNumWells": 4,
+          "GWSTotWellsWithdrawalCap": 0.62,
+          "SWSTotNumIntakes": 2,
+          "SWSTotIntakesWithdrawalCap": 11.52,
+          "Status": "Active",
+          "RegistrationDate": 677721600000,
+          "InactiveDate": null,
+          "HUC12": "041000070303",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.7333333,
+          "Longitude": -83.8944444
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "01448",
+          "Name": "OAKS GOLF COURSE, THE",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Golf Course",
+          "FacilityTotCapacity": 0.29,
+          "GWSTotNumWells": 2,
+          "GWSTotWellsWithdrawalCap": 0.19,
+          "SWSTotNumIntakes": 1,
+          "SWSTotIntakesWithdrawalCap": 0.1,
+          "Status": "Active",
+          "RegistrationDate": 677808000000,
+          "InactiveDate": null,
+          "HUC12": "041000070203",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.6958333,
+          "Longitude": -84.2166666
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "01504",
+          "Name": "BEAVERDAM VILLAGE PWS",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Public",
+          "FacilityTotCapacity": 0.54,
+          "GWSTotNumWells": 3,
+          "GWSTotWellsWithdrawalCap": 0.54,
+          "SWSTotNumIntakes": 0,
+          "SWSTotIntakesWithdrawalCap": null,
+          "Status": "Active",
+          "RegistrationDate": 679622400000,
+          "InactiveDate": null,
+          "HUC12": "041000070501",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.8305555,
+          "Longitude": -83.9708333
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "01769",
+          "Name": "PCS NITROGEN OHIO",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Industry",
+          "FacilityTotCapacity": 14.71,
+          "GWSTotNumWells": 14,
+          "GWSTotWellsWithdrawalCap": 14.71,
+          "SWSTotNumIntakes": 0,
+          "SWSTotIntakesWithdrawalCap": null,
+          "Status": "Active",
+          "RegistrationDate": 744508800000,
+          "InactiveDate": null,
+          "HUC12": "041000070306",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.710138,
+          "Longitude": -84.136781
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "01843",
+          "Name": "MERIDIAN OIL-CENTRAL",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Mineral Extraction",
+          "FacilityTotCapacity": 0.35,
+          "GWSTotNumWells": 2,
+          "GWSTotWellsWithdrawalCap": 0.35,
+          "SWSTotNumIntakes": 0,
+          "SWSTotIntakesWithdrawalCap": null,
+          "Status": "Inactive",
+          "RegistrationDate": 797731200000,
+          "InactiveDate": 820368000000,
+          "HUC12": "041000070401",
+          "LastAnnualReportYear": 1995,
+          "Latitude": 40.6833333,
+          "Longitude": -84.1027777
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "01989",
+          "Name": "RUDOLPH FOODS COMPANY",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Industry",
+          "FacilityTotCapacity": 0.17,
+          "GWSTotNumWells": 2,
+          "GWSTotWellsWithdrawalCap": 0.17,
+          "SWSTotNumIntakes": 0,
+          "SWSTotIntakesWithdrawalCap": null,
+          "Status": "Inactive",
+          "RegistrationDate": 910569600000,
+          "InactiveDate": 1410480000000,
+          "HUC12": "041000070101",
+          "LastAnnualReportYear": 2014,
+          "Latitude": 40.6972222,
+          "Longitude": -83.9833333
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "02218",
+          "Name": "NATIONAL LIME & STONE-BLOOMLOCK",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Mineral Extraction",
+          "FacilityTotCapacity": 3,
+          "GWSTotNumWells": 1,
+          "GWSTotWellsWithdrawalCap": 3,
+          "SWSTotNumIntakes": 1,
+          "SWSTotIntakesWithdrawalCap": null,
+          "Status": "Active",
+          "RegistrationDate": 1213142400000,
+          "InactiveDate": null,
+          "HUC12": "041000070903",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.781799,
+          "Longitude": -84.360438
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "02258",
+          "Name": "HAWTHORNE HILLS GOLF COURSE",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Golf Course",
+          "FacilityTotCapacity": 1.44,
+          "GWSTotNumWells": 0,
+          "GWSTotWellsWithdrawalCap": null,
+          "SWSTotNumIntakes": 1,
+          "SWSTotIntakesWithdrawalCap": 1.44,
+          "Status": "Inactive",
+          "RegistrationDate": 1237334400000,
+          "InactiveDate": 1451433600000,
+          "HUC12": "041000070306",
+          "LastAnnualReportYear": 2016,
+          "Latitude": 40.755216,
+          "Longitude": -84.030384
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "02279",
+          "Name": "PROCTOR AND GAMBLE",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Misc",
+          "FacilityTotCapacity": 0.92,
+          "GWSTotNumWells": 2,
+          "GWSTotWellsWithdrawalCap": 0.92,
+          "SWSTotNumIntakes": 0,
+          "SWSTotIntakesWithdrawalCap": null,
+          "Status": "Active",
+          "RegistrationDate": 1245196800000,
+          "InactiveDate": null,
+          "HUC12": "041000070305",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.749234,
+          "Longitude": -84.003266
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "02293",
+          "Name": "CHEMTRADE LOGISTICS CAIRO PLANT",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Industry",
+          "FacilityTotCapacity": 1.86,
+          "GWSTotNumWells": 2,
+          "GWSTotWellsWithdrawalCap": 1.86,
+          "SWSTotNumIntakes": 0,
+          "SWSTotIntakesWithdrawalCap": null,
+          "Status": "Active",
+          "RegistrationDate": 1271980800000,
+          "InactiveDate": null,
+          "HUC12": "041000070502",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.8484,
+          "Longitude": -84.0803
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "02556",
+          "Name": "KOKOSING-ODOT PROJECT 2(13) I-75 ALLEN COUNTY",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Industry",
+          "FacilityTotCapacity": 0.35,
+          "GWSTotNumWells": 1,
+          "GWSTotWellsWithdrawalCap": null,
+          "SWSTotNumIntakes": 1,
+          "SWSTotIntakesWithdrawalCap": 0.35,
+          "Status": "Inactive",
+          "RegistrationDate": 1364947200000,
+          "InactiveDate": 1456099200000,
+          "HUC12": "041000070306",
+          "LastAnnualReportYear": 2016,
+          "Latitude": 40.748395,
+          "Longitude": -84.087265
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "02801",
+          "Name": "FORT AMANDA PUMP STATION DEWATERING",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Misc",
+          "FacilityTotCapacity": 6.9,
+          "GWSTotNumWells": 6,
+          "GWSTotWellsWithdrawalCap": 6.9,
+          "SWSTotNumIntakes": 0,
+          "SWSTotIntakesWithdrawalCap": null,
+          "Status": "Inactive",
+          "RegistrationDate": 1405641600000,
+          "InactiveDate": 1451520000000,
+          "HUC12": "041000070402",
+          "LastAnnualReportYear": 2016,
+          "Latitude": 40.705835,
+          "Longitude": -84.154491
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "03429",
+          "Name": "CITY OF LIMA - SCHOONOVER LAKE AUGMENTATON",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Misc",
+          "FacilityTotCapacity": 0.1,
+          "GWSTotNumWells": 0,
+          "GWSTotWellsWithdrawalCap": null,
+          "SWSTotNumIntakes": 1,
+          "SWSTotIntakesWithdrawalCap": 0.1,
+          "Status": "Inactive",
+          "RegistrationDate": 1625788800000,
+          "InactiveDate": 1640908800000,
+          "HUC12": "041000070306",
+          "LastAnnualReportYear": 2021,
+          "Latitude": 40.746428,
+          "Longitude": -84.09374
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "03625",
+          "Name": "Guardian Energy, Lima L.L.C.",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Industry",
+          "FacilityTotCapacity": 0.55,
+          "GWSTotNumWells": 1,
+          "GWSTotWellsWithdrawalCap": 0.55,
+          "SWSTotNumIntakes": 0,
+          "SWSTotIntakesWithdrawalCap": null,
+          "Status": "Active",
+          "RegistrationDate": 1733496295000,
+          "InactiveDate": null,
+          "HUC12": "041000070305",
+          "LastAnnualReportYear": 2025,
+          "Latitude": 40.705937,
+          "Longitude": -84.079282
+        }
+      },
+      {
+        "attributes": {
+          "RegistrationNumber": "03724",
+          "Name": "LMA1A Construction Dewatering - TEMP",
+          "CountyName": "ALLEN",
+          "FacilityPrimaryUseType": "Misc",
+          "FacilityTotCapacity": 5.66,
+          "GWSTotNumWells": 44,
+          "GWSTotWellsWithdrawalCap": 5.66,
+          "SWSTotNumIntakes": 0,
+          "SWSTotIntakesWithdrawalCap": null,
+          "Status": "Active",
+          "RegistrationDate": 1770797741000,
+          "InactiveDate": null,
+          "HUC12": "041000070404",
+          "LastAnnualReportYear": null,
+          "Latitude": 40.793303,
+          "Longitude": -84.121231
+        }
+      }
+    ]
+  }
+}
