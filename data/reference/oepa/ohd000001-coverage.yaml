@@ -1,0 +1,131 @@
+meta:
+  subject: 'Data-center blowdown discharge — OHD000001 general-permit coverage + facility-own DMR status
+    (closed-loop cooling cycling epic #1676, A2)'
+  source: watermark.hydrology.blowdown — the site registry's closed-loop cohort x the OHD000001 permit
+    lifecycle
+  regenerate: watermark oepa coverage --write
+  asof: '2026-07-11'
+  discipline: 'OHD000001 coverage is gated on the permit lifecycle: while the general permit is draft
+    (not effective) no facility can be authorized, so the per-candidate status is not_available — a [verified]
+    cited absence. Facility-own discharge presence is unknown until a search establishes it (the C2 records
+    request); an absence under a closed-loop-dry claim is a finding, never read as ''confirmed dry''.
+    No per-site over-cycling conclusion is asserted here (that is the B-review).'
+general_permit:
+  permit_id: OHD000001
+  title: Ohio EPA Draft General NPDES Permit for Data Center Facilities
+  state: draft
+  effective: false
+  issued: '2025-10-31'
+  effective_date: null
+  comment_closed: '2026-01-16'
+  citation: Ohio EPA Division of Surface Water — draft General NPDES permit OHD000001 (public notice No.
+    215991; public hearing 2025-12-17); covers cooling water, low-volume wastewaters (cooling-tower/boiler
+    blowdown, air-compressor condensate) and stormwater (data/catalog/reference/oepa-ohd000001-gp.yaml).
+    Director's final action still pending as of the 2026-07-11 refresh (data/site/troy-piqua/leads.yaml,
+    lead OHD000001).
+  confidence: high
+  asof: '2026-07-11'
+candidates:
+- site: bowling-green
+  facility: Bowling Green Data Center (Project Accordion)
+  cooling_claim: closed_loop_dry
+  cooling_source: reference
+  ohd000001_status: not_available
+  facility_own_discharge: unknown
+  facility_npdes_id: null
+  blowdown_dmr_relpath: null
+  tag: '[verified]'
+  confidence: high
+  finding: OHD000001 is a draft general permit (not effective as of 2026-07-11); no facility can be authorized
+    under it, so Bowling Green Data Center (Project Accordion) cannot yet hold blowdown coverage under
+    it. No facility-own discharge permit is wired — either genuinely dry, or blowdown goes to sewer under
+    a City sewer-use agreement not in ECHO (→ C2 records request).
+  citation: '[reference] company claim (NOT instrument-confirmed): Meta describes closed-loop, liquid-cooled
+    with dry coolers — ''no operational water'', with domestic/cleaning/fire use only. In tension with
+    the NWWSD wholesaling BG water to Meta (contract ceiling 1.5 MGD, Aug 2024; conflicting ~50k vs ~600k
+    GPD figures; a Meta-funded 2 MG tank + 16-in main) — that reconciliation is tracked at the water sub-issue
+    #1439, not decided here. Replace with a documented cooling design when an NPDES/water instrument lands.'
+- site: springfield
+  facility: 5C Data Centers "CMH01"
+  cooling_claim: closed_loop_dry
+  cooling_source: reference
+  ohd000001_status: not_available
+  facility_own_discharge: unknown
+  facility_npdes_id: null
+  blowdown_dmr_relpath: null
+  tag: '[verified]'
+  confidence: high
+  finding: OHD000001 is a draft general permit (not effective as of 2026-07-11); no facility can be authorized
+    under it, so 5C Data Centers "CMH01" cannot yet hold blowdown coverage under it. No facility-own discharge
+    permit is wired — either genuinely dry, or blowdown goes to sewer under a City sewer-use agreement
+    not in ECHO (→ C2 records request).
+  citation: '[reference] Closed-loop / direct-liquid recirculating cooling, disclosed ''not evaporative''
+    by the City of Springfield 5C FAQ (springfieldohio.gov/5c-data-center-faqs); up to 300,000 gal/day
+    permitted from the municipal system at an >80degF extreme-heat max (''near zero'' most of the year,
+    ~30k gal/day realistic), with an on-site reservoir under study to avoid the municipal tap. A largely
+    dry recirculating design undercuts the Mad River buried-valley abstraction thesis. Not a document
+    extraction; refine to [verified] on an ingested mechanical/plumbing permit. The receiving-water /
+    source-water screen is the water sub-issue (#1415).'
+- site: urbana
+  facility: Urbana Technology Hub
+  cooling_claim: closed_loop_dry
+  cooling_source: reference
+  ohd000001_status: not_available
+  facility_own_discharge: unknown
+  facility_npdes_id: null
+  blowdown_dmr_relpath: null
+  tag: '[verified]'
+  confidence: high
+  finding: OHD000001 is a draft general permit (not effective as of 2026-07-11); no facility can be authorized
+    under it, so Urbana Technology Hub cannot yet hold blowdown coverage under it. No facility-own discharge
+    permit is wired — either genuinely dry, or blowdown goes to sewer under a City sewer-use agreement
+    not in ECHO (→ C2 records request).
+  citation: '[reference] Closed-loop cooling disclosed at the Feb-2026 City of Urbana meeting — developer
+    stated water use ''comparable to a standard office building'' (Urbana Daily Citizen 2026-02-18). Undercuts
+    the buried-valley water-abstraction thesis. Not a document extraction; refine to [verified] on an
+    ingested mechanical/plumbing permit.'
+- site: van-wert
+  facility: Van Wert Mega Site
+  cooling_claim: closed_loop_dry
+  cooling_source: reference
+  ohd000001_status: not_available
+  facility_own_discharge: unknown
+  facility_npdes_id: null
+  blowdown_dmr_relpath: null
+  tag: '[verified]'
+  confidence: high
+  finding: OHD000001 is a draft general permit (not effective as of 2026-07-11); no facility can be authorized
+    under it, so Van Wert Mega Site cannot yet hold blowdown coverage under it. No facility-own discharge
+    permit is wired — either genuinely dry, or blowdown goes to sewer under a City sewer-use agreement
+    not in ECHO (→ C2 records request).
+  citation: '[reference] operator/developer claim (NOT instrument-confirmed): closed-loop cooling (Danfoss-patented
+    equipment); QTS states the campus ''does not consume water for cooling once operational'', characterizing
+    ongoing use as ''about what 4 households use per month'' (q.com/data-centers/van-wert; vanwert.org/water-treatment).
+    Same closed-loop pattern that undercut the Urbana water thesis (#1327). Carries an [open] discrepancy
+    on the initial closed-loop fill (~660,000 gal from the City of Van Wert — local press frames it ''annually''
+    while the 2026-06-11 event framed it as a one-time fill); reconciling the fill volume + the still-negotiated
+    water/sewer service agreement is the water-service instrument (#1407) / water-contradiction lead (#1409),
+    not this pin. Replace with a documented cooling design when an NPDES/mechanical instrument lands (the
+    OHD000001 draft data-center general permit is not yet linked to the facility by name, #1408).'
+- site: wilmington
+  facility: Cosler Farm campus
+  cooling_claim: hybrid_adiabatic
+  cooling_source: reference
+  ohd000001_status: not_available
+  facility_own_discharge: unknown
+  facility_npdes_id: null
+  blowdown_dmr_relpath: null
+  tag: '[verified]'
+  confidence: high
+  finding: OHD000001 is a draft general permit (not effective as of 2026-07-11); no facility can be authorized
+    under it, so Cosler Farm campus cannot yet hold blowdown coverage under it. No facility-own discharge
+    permit is wired — either genuinely dry, or blowdown goes to sewer under a City sewer-use agreement
+    not in ECHO (→ C2 records request).
+  citation: '[reference] DIRECT EVAPORATIVE cooling disclosed in the joint Port Authority / City Data
+    Center FAQs, with a projected ~6M gal/yr cooling-water CONSUMPTION and water-cooled operation only
+    ~11 days/yr (dry/free-cooling otherwise) — mapped to the HYBRID_ADIABATIC archetype (dry with seasonal
+    evaporative assist). The disclosed ~6M gal/yr at the screening IT load implies a very low water-use
+    effectiveness (near-dry operation), which UNDERCUTS a large-abstraction premise — the water-thesis
+    finding. Not a document extraction; the reserved withdrawal MGD, the Caesar Creek Lake source contract,
+    and the WUE/back-solve reconciliation are the water plan (#1472). Wastewater returns to the City WWTP
+    -> NPDES OH0028134 -> Lytle Creek -> Todd Fork -> Little Miami.'

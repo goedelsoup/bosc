@@ -27,4 +27,16 @@ Water-balance / stormwater modeling of the Lima municipal loop. Defers to the ro
   Add an archetype by registering a `CoolingModelSpec`, mirroring `watermark.profiles`.
   Lima's evaporative figures are regression-locked against the committed
   `data/scenarios/buildout.scenario.yaml` (`tests/test_hydro_cooling.py`).
+- **Closed-loop cycling reconciliation (epic #1676).** To test a "closed-loop" cooling
+  claim against records, two harness pieces live here. (1) `connectors.echo_dmr.flow_seasonality`
+  reduces a DMR flow outfall's monthly series to a **warm/cool ratio** — a temperature-driven
+  evaporative blowdown peaks in summer (ratio ≫ 1), a genuinely dry loop is flat (ratio ~ 1);
+  the ratio is an `[inference]` shape indicator, never a discharge magnitude, and rides on
+  `DischargeSummary.seasonality` / the `dmr_document()` `seasonality:` block. (2) `blowdown.py`
+  resolves **OHD000001** (Ohio's draft data-center NPDES general permit) coverage per closed-loop
+  candidate: while the permit is draft it is gated to `not_available` (a `[verified]` cited
+  absence), written to `data/reference/oepa/ohd000001-coverage.yaml` by `watermark oepa coverage
+  --write`. The cohort is registry-derived (`SiteFacility.cooling_model` in
+  {`closed_loop_dry`, `hybrid_adiabatic`}); a facility-own discharge absence stays an `[open]`
+  gap (→ a C2 records request), never read as "confirmed dry".
 - Sync throughout (`httpx.Client`) to match the rest of the pipeline.

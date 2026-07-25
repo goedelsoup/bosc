@@ -24,6 +24,8 @@ from pydantic import (
     model_validator,
 )
 
+from watermark.provenance import Confidence, SourceKind
+
 
 class _ApproxMarker:
     """Sentinel placed in an approximate-number type's ``Annotated`` metadata.
@@ -807,6 +809,37 @@ class DmrDischargeSummary(BaseModel):
     reported_exceedances: int
 
 
+class DmrSeasonality(BaseModel):
+    """The seasonality shape of the primary outfall's monthly flow (``dmr_document()``, #1678).
+
+    Optional (defaulted ``None`` on the parent :class:`DmrExtraction`) so a committed DMR artifact
+    generated before the seasonality block existed still validates — the same additive discipline
+    that made :attr:`DmrDischargeSummary.active_overflow_outfalls` optional. But a block that IS
+    present must carry its provenance quad (``source``/``citation``/``confidence``/``asof``), so
+    those are required — ``dmr_document()`` always emits them, and no committed artifact predates
+    them. ``extra="allow"`` mirrors the connector's own
+    :class:`~watermark.hydrology.connectors.echo_dmr.FlowSeasonality`. A metric value can genuinely
+    be ``None`` (a single-season or empty window), so those types stay optional.
+    """
+
+    model_config = ConfigDict(extra="allow")
+
+    n_months: int
+    warm_months: list[int]
+    warm_mean_mgd: float | None = None
+    cool_mean_mgd: float | None = None
+    warm_ratio: float | None = None
+    peak_month: int | None = None
+    peak_mean_mgd: float | None = None
+    cv: float | None = None
+    # Provenance quad (required on a present block; the metric is a `derived`, `medium`-confidence
+    # [inference] shape over the permittee's [verified] monthly-average flow).
+    source: SourceKind
+    citation: str | None
+    confidence: Confidence
+    asof: str | None
+
+
 class DmrFlowSample(BaseModel):
     """One reported monthly flow value for the primary (continuous-discharge) outfall.
 
@@ -854,6 +887,10 @@ class DmrExtraction(BaseModel):
     meta: DmrMeta
     permit: DmrPermit
     discharge_summary: DmrDischargeSummary
+    # Seasonality shape of the primary outfall's monthly flow (#1678). Optional/defaulted so a
+    # DMR artifact predating the block still validates; `None` when the window has no usable
+    # monthly series (`dmr_document()` writes `seasonality: null` there).
+    seasonality: DmrSeasonality | None = None
     # Required, not defaulted: `dmr_document()` always writes both keys (an empty list
     # for a window with no rows/exceedances) — a missing key means a truncated or hand-
     # edited artifact, which should fail validation rather than silently read as empty.

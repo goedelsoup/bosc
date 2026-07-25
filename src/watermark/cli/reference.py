@@ -98,9 +98,10 @@ def dmr(
 
     Reads ECHO's effluent-chart service for one NPDES permit over a window: the primary
     outfall's reported monthly flow (vs. the permitted design flow), the overflow-outfall
-    count (CSO + SSO, param 74063), and any ECHO-flagged effluent exceedances. With ``--out``
-    it writes a regenerable YAML; reported values are verbatim and exceedances are listed only
-    where ECHO reports them.
+    count (CSO + SSO, param 74063), any ECHO-flagged effluent exceedances, and a seasonality
+    shape (warm/cool ratio) that distinguishes a temperature-driven evaporative blowdown from a
+    flat, dry loop (#1678). With ``--out`` it writes a regenerable YAML; reported values are
+    verbatim and exceedances are listed only where ECHO reports them.
     """
     import yaml
 
@@ -136,6 +137,13 @@ def dmr(
         f"{summary.overflow_outfalls} ({summary.active_overflow_outfalls} active)",
     )
     table.add_row("reported exceedances", str(len(summary.exceedances)))
+    if summary.seasonality is not None:
+        s = summary.seasonality
+        ratio = f"{s.warm_ratio}x" if s.warm_ratio is not None else "n/a"
+        table.add_row(
+            "seasonality (warm/cool, peak)",
+            f"{ratio}, peak month {s.peak_month} (cv {s.cv})",
+        )
     console.print(table)
     for r in summary.exceedances:
         code = f" [{r.violations[0].code}]" if r.violations else ""

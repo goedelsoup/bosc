@@ -1,0 +1,44 @@
+id: oepa-ohd000001-coverage
+title: OHD000001 data-center general-permit coverage — closed-loop cohort
+scope: reference
+status: reviewed
+producer:
+  kind: derived
+  command: oepa coverage --write
+  connector_ref: watermark.hydrology.blowdown
+  source: watermark.hydrology.blowdown — site registry closed-loop cohort × the OHD000001 permit lifecycle
+  external_url: https://epa.ohio.gov
+license: Public records (Ohio state government)
+access_tier: public
+site_scope: state:OH
+storage:
+  - relpath: reference/oepa/ohd000001-coverage.yaml
+    media_type: application/x-yaml
+refresh:
+  cadence: on-demand
+  last_refreshed: '2026-07-11'
+provenance: derived
+schema_ref: watermark.hydrology.blowdown.BlowdownCoverage
+depends_on:
+  - oepa-ohd000001-gp
+tags:
+  - oepa
+  - npdes
+  - general-permit
+  - data-centers
+  - ohd000001
+  - cooling-water
+  - blowdown
+  - closed-loop
+notes: >-
+  Per-candidate resolution of whether each closed-loop-claiming data-center facility holds — or
+  can yet hold — coverage under Ohio EPA's statewide data-center NPDES general permit OHD000001,
+  the disclosure vehicle the closed-loop cooling cycling epic (#1676, sub-issue A2 #1678) predicts.
+  Derived: the candidate list is the site registry's closed-loop cohort (every `SiteFacility` whose
+  cooling_model is closed_loop_dry or hybrid_adiabatic), resolved against the OHD000001 permit
+  lifecycle constant in `watermark.hydrology.blowdown`. The gating fact is `[verified]`: OHD000001
+  is still a DRAFT general permit (issued 2025-10-31; comment closed 2026-01-16; Director's final
+  action pending as of the 2026-07-11 refresh), so no facility can be authorized under it and every
+  candidate resolves to `not_available`. `facility_own_discharge: unknown` is an `[open]` gap (→ a
+  C2 records request, #1688), never read as "confirmed dry". Depends on `oepa-ohd000001-gp` (the
+  permit documents). See data/reference/oepa/README.md.

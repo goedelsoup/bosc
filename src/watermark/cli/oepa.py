@@ -248,3 +248,49 @@ def fetch(
     console.print(
         "\n[dim]Run 'watermark ingest' then 'watermark extract' to process the new files.[/]"
     )
+
+
+@oepa_app.command(name="coverage")
+def coverage(
+    write: bool = typer.Option(
+        False,
+        "--write",
+        help="Persist to data/reference/oepa/ohd000001-coverage.yaml (else print only).",
+    ),
+    out: str | None = typer.Option(
+        None, "--out", help="Write the coverage artifact to this path instead of the default."
+    ),
+) -> None:
+    """Resolve OHD000001 general-permit coverage for the closed-loop cohort (#1678).
+
+    For each registered facility disclosing a recirculating/closed cooling archetype, reports
+    whether it can hold coverage under Ohio EPA's draft data-center general permit OHD000001 and
+    whether a facility-own discharge permit is on record. While OHD000001 is draft (not effective),
+    every candidate resolves to ``not_available`` — a [verified] cited absence, itself the finding.
+    """
+    from watermark.hydrology import blowdown
+
+    settings = get_settings()
+    gp, coverages = blowdown.resolve_cohort(settings=settings)
+
+    console.print(
+        f"[bold]{gp.permit_id}[/] — {gp.title}: state [yellow]{gp.state.value}[/] "
+        f"(effective: {gp.effective}), asof {gp.asof}"
+    )
+    table = Table("site", "facility", "cooling claim", "OHD000001", "facility-own", "tag")
+    for c in coverages:
+        table.add_row(
+            c.site,
+            c.facility,
+            c.cooling_claim,
+            c.ohd000001_status.value,
+            c.facility_own_discharge.value,
+            c.tag,
+        )
+    console.print(table)
+    console.print(f"[dim]{len(coverages)} candidate facilit(y/ies) in the closed-loop cohort.[/]")
+
+    if write or out:
+        document = blowdown.coverage_document(gp, coverages)
+        path = blowdown.write_coverage(document, settings=settings, out=Path(out) if out else None)
+        wrote(path)
