@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-24T20:08:48.224208+00:00'
+reconciled_at: '2026-07-25T16:27:07.519131+00:00'
 entries:
   aedg:
     exists: true
@@ -870,6 +870,16 @@ entries:
     asof: null
     stale: false
     site_scope: lima-legacy
+  oepa-ohd000001-coverage:
+    exists: true
+    sha256: 0edfccd39e9879431eccc13251ec55e0ab2566907b9bf90e946aacb18f91c99a
+    size_bytes: 8101
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: '2026-07-11'
+    stale: false
+    site_scope: state:OH
   oepa-ohd000001-gp:
     exists: true
     sha256: ad8b415ac2a8965109916fb65963983d3941d5a6fd8b3537f633d82ed82cbd44

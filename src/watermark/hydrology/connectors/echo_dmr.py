@@ -29,6 +29,7 @@ Synchronous (``httpx.Client``) to match BOSC's otherwise-sync pipeline layer.
 
 from __future__ import annotations
 
+import math
 import time
 from datetime import date
 from typing import Any, cast
@@ -81,6 +82,16 @@ _MONTHS = {
     "JAN": 1, "FEB": 2, "MAR": 3, "APR": 4, "MAY": 5, "JUN": 6,
     "JUL": 7, "AUG": 8, "SEP": 9, "OCT": 10, "NOV": 11, "DEC": 12,
 }  # fmt: skip
+_MONTH_NAMES = {v: k.title() for k, v in _MONTHS.items()}  # 1 -> "Jan", for readable output
+
+# Warm-season window for the discharge-seasonality diagnostic (#1678, closed-loop cycling epic
+# #1676). Months (May-Oct) match the network-wide Ohio EPA regulatory summer window
+# (``watermark.hydrology.lowflow.OEPA_SUMMER_MONTHS``, NPDES permit 2PH00006 Part II) — reused
+# here as the warm-season proxy for a temperature-driven evaporative signature, not as the
+# regulatory low-flow selector. Kept as month *numbers* (and overridable) so this connector stays
+# decoupled from the profile-aware ``lowflow`` module; a site whose cooling season differs passes
+# its own set. The resulting metric is a shape indicator ([inference]), never a [verified] figure.
+_WARM_SEASON_MONTHS: frozenset[int] = frozenset({5, 6, 7, 8, 9, 10})
 
 
 class EchoDmrError(RuntimeError):
@@ -229,6 +240,34 @@ class DmrExceedance(BaseModel):
     violations: list[DmrViolation]
 
 
+class FlowSeasonality(BaseModel):
+    """The seasonality shape of a flow outfall's reported monthly discharge (#1678).
+
+    Built by :func:`flow_seasonality` from the primary outfall's monthly-average flow series,
+    aggregated by calendar month (so a multi-year window folds together). It is the diagnostic
+    the closed-loop cycling epic (#1676) needs: an **evaporative** heat-rejection tower blows
+    down on a temperature-driven cycle (a summer peak, ``warm_ratio`` well above 1), while a
+    genuinely dry/sealed loop discharges flat (``warm_ratio`` ~ 1, ``cv`` ~ 0). The shape is
+    itself the finding and feeds the A3 reconciliation harness.
+
+    Every figure here is derived from the permittee's own [verified] DMR values, but the
+    *signature* it computes is an [inference] — a shape indicator, never a headline discharge.
+    ``warm_ratio`` is ``None`` unless the window carries both a warm-month and a cool-month
+    observation (a single season cannot show a ratio); ``cv`` needs >= 2 distinct months.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    n_months: int  # distinct calendar months with a reported monthly-average flow value
+    warm_months: list[int]  # the warm-season window used (1-12), carried for provenance
+    warm_mean_mgd: float | None  # mean monthly-average flow across warm-season months
+    cool_mean_mgd: float | None  # mean monthly-average flow across the remaining months
+    warm_ratio: float | None  # warm_mean / cool_mean — the temperature-driven-cycle diagnostic
+    peak_month: int | None  # calendar month (1-12) with the highest mean monthly-average flow
+    peak_mean_mgd: float | None
+    cv: float | None  # coefficient of variation across the per-month means (flat loop -> ~0)
+
+
 class DischargeSummary(BaseModel):
     """The computed receiving-water read on a permit's effluent record.
 
@@ -260,6 +299,9 @@ class DischargeSummary(BaseModel):
     active_overflow_outfalls: int
     snc_status: str | None
     exceedances: list[DmrExceedance]
+    # Seasonality shape of the primary outfall's monthly flow (#1678) — the closed-loop
+    # evaporative-vs-dry diagnostic. ``None`` when the primary outfall has no usable monthly series.
+    seasonality: FlowSeasonality | None = None
 
 
 # --------------------------------------------------------------------- fetch + parse
@@ -453,6 +495,79 @@ def _flow_mgd(row: DmrRow) -> float | None:
     return row.value * factor if factor is not None else None
 
 
+def _month_of(period_end: str | None) -> int | None:
+    """Calendar month (1-12) from an ISO ``YYYY-MM-DD`` period end, else ``None``."""
+    if not period_end or len(period_end) < 7:
+        return None
+    try:
+        month = int(period_end[5:7])
+    except ValueError:
+        return None
+    return month if 1 <= month <= 12 else None
+
+
+def flow_seasonality(
+    param: DmrParameter | None,
+    *,
+    warm_months: frozenset[int] = _WARM_SEASON_MONTHS,
+) -> FlowSeasonality | None:
+    """Summer-peak diagnostic on a flow outfall's monthly-average series (#1678).
+
+    Reduces the outfall's monthly-average flow rows to MGD (daily-max and unrecognized-unit
+    rows out, exactly as :func:`summarize_discharge`), groups them by calendar month so a
+    multi-year window folds together, and computes the warm/cool ratio and dispersion that
+    distinguish a temperature-driven evaporative blowdown (a summer peak) from a flat, dry
+    loop. Returns ``None`` for a missing outfall or a series with no usable monthly value —
+    never a fabricated shape. ``warm_ratio`` needs both a warm- and a cool-month observation;
+    ``cv`` needs at least two distinct months.
+    """
+    if param is None:
+        return None
+    pairs: list[tuple[int, float]] = [
+        (m, v)
+        for r in param.rows
+        if _is_monthly_avg(r)
+        and (m := _month_of(r.period_end)) is not None
+        and (v := _flow_mgd(r)) is not None
+    ]
+    if not pairs:
+        return None
+
+    by_month: dict[int, list[float]] = {}
+    for m, v in pairs:
+        by_month.setdefault(m, []).append(v)
+    month_means = {m: sum(vs) / len(vs) for m, vs in by_month.items()}
+
+    warm_vals = [v for m, v in pairs if m in warm_months]
+    cool_vals = [v for m, v in pairs if m not in warm_months]
+    warm_mean = sum(warm_vals) / len(warm_vals) if warm_vals else None
+    cool_mean = sum(cool_vals) / len(cool_vals) if cool_vals else None
+    warm_ratio = (
+        round(warm_mean / cool_mean, 3)
+        if warm_mean is not None and cool_mean is not None and cool_mean > 0.0
+        else None
+    )
+
+    peak_month, peak_mean = max(month_means.items(), key=lambda kv: kv[1])
+    means = list(month_means.values())
+    overall = sum(means) / len(means)
+    cv: float | None = None
+    if len(means) >= 2 and overall > 0.0:
+        variance = sum((x - overall) ** 2 for x in means) / len(means)  # population variance
+        cv = round(math.sqrt(variance) / overall, 3)
+
+    return FlowSeasonality(
+        n_months=len(by_month),
+        warm_months=sorted(warm_months),
+        warm_mean_mgd=round(warm_mean, 4) if warm_mean is not None else None,
+        cool_mean_mgd=round(cool_mean, 4) if cool_mean is not None else None,
+        warm_ratio=warm_ratio,
+        peak_month=peak_month,
+        peak_mean_mgd=round(peak_mean, 4),
+        cv=cv,
+    )
+
+
 def summarize_discharge(
     chart: EffluentChart, *, design_flow_mgd: float | None = None
 ) -> DischargeSummary:
@@ -551,7 +666,35 @@ def summarize_discharge(
         active_overflow_outfalls=active_overflow,
         snc_status=chart.snc_status,
         exceedances=exceedances,
+        seasonality=flow_seasonality(primary),
     )
+
+
+def _seasonality_doc(s: FlowSeasonality | None) -> dict[str, Any] | None:
+    """Render a :class:`FlowSeasonality` to a YAML-ready dict (``None`` stays ``None``).
+
+    Adds a human-readable ``peak_month_name`` and a one-line ``discipline`` restating that the
+    warm/cool ratio is an [inference] shape indicator, not a [verified] discharge figure.
+    """
+    if s is None:
+        return None
+    return {
+        "n_months": s.n_months,
+        "warm_months": s.warm_months,
+        "warm_mean_mgd": s.warm_mean_mgd,
+        "cool_mean_mgd": s.cool_mean_mgd,
+        "warm_ratio": s.warm_ratio,
+        "peak_month": s.peak_month,
+        "peak_month_name": _MONTH_NAMES.get(s.peak_month) if s.peak_month else None,
+        "peak_mean_mgd": s.peak_mean_mgd,
+        "cv": s.cv,
+        "discipline": (
+            "Warm/cool ratio and CV are a seasonality *shape* indicator ([inference]) over the "
+            "permittee's [verified] monthly-average flow — a warm_ratio well above 1 is the "
+            "temperature-driven signature of an evaporative heat-rejection tower; ~1 (flat, low "
+            "CV) is consistent with a dry/sealed loop. Not a discharge magnitude."
+        ),
+    }
 
 
 def dmr_document(chart: EffluentChart, summary: DischargeSummary) -> dict[str, Any]:
@@ -614,6 +757,7 @@ def dmr_document(chart: EffluentChart, summary: DischargeSummary) -> dict[str, A
             "active_overflow_outfalls": summary.active_overflow_outfalls,
             "reported_exceedances": len(summary.exceedances),
         },
+        "seasonality": _seasonality_doc(summary.seasonality),
         "flow_monthly": [
             {"period_end": r.period_end, "value_mgd": _flow_mgd(r), "stat_base": r.stat_base}
             for r in (primary.rows if primary else [])
