@@ -1,0 +1,19 @@
+{
+  "params": {
+    "layer": 2,
+    "where": "RegistrationNumber IN ('00386') AND Year >= 2015",
+    "outFields": "*",
+    "resultOffset": 0,
+    "resultRecordCount": 2000
+  },
+  "fetched_at": "2026-07-25T12:36:16.744874+00:00",
+  "payload": {
+    "objectIdFieldName": "OBJECTID",
+    "uniqueIdField": {
+      "name": "OBJECTID",
+      "isSystemMaintained": true
+    },
+    "globalIdFieldName": "",
+    "features": []
+  }
+}

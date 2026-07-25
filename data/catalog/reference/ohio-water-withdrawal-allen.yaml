@@ -1,0 +1,41 @@
+id: ohio-water-withdrawal-allen
+title: Allen County, OH water-withdrawal registry (Ohio DNR WWFRP)
+scope: reference
+status: reviewed
+producer:
+  kind: connector
+  command: water-withdrawal --county Allen
+  connector_ref: watermark.hydrology.connectors.ohio_water_withdrawal
+  source: >-
+    Ohio DNR, Division of Water Resources — Water Withdrawal Facilities Registration
+    Program (WWFRP), R.C. 1521.16 (>100,000 gpd registration + annual water-use reports)
+  external_url: https://ohiodnr.gov/wwfacilitylocator
+license: Ohio public record
+access_tier: public
+# The Allen-County registry is Lima's (its county); a peer site adds its own county
+# sibling (e.g. ohio-water-withdrawal-champaign, site:urbana) rather than sharing this one.
+site_scope: site:lima
+storage:
+- relpath: reference/ohio-water-withdrawal/allen.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: annual
+  ttl_days: 365
+provenance: connector
+schema_ref: watermark.hydrology.connectors.ohio_water_withdrawal.WithdrawalRegistry
+tags:
+- water-withdrawal
+- wwfrp
+- ohio-dnr
+- cooling
+- makeup
+notes: >-
+  Every WWFRP-registered facility in Allen County, OH (the Lima reference build), each
+  joined to its ground-water, surface-water, and water-return annual totals (million
+  gallons, verbatim from the DNR FeatureServer; a blank month is null). The makeup-side
+  source for the cooling-water account (epic #1676): a reported withdrawal is the strongest
+  single tell of how much a "closed-loop" facility actually spends, and the reported return
+  is its discharge peer. The facility registry is kept in full; annual series are floored at
+  2015. Ohio only — a non-Ohio point uses its own state service. See
+  data/reference/ohio-water-withdrawal/README.md.

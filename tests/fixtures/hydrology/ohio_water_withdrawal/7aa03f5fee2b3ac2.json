@@ -1,0 +1,387 @@
+{
+  "params": {
+    "layer": 3,
+    "where": "RegistrationNumber IN ('00386') AND Year >= 2015",
+    "outFields": "*",
+    "resultOffset": 0,
+    "resultRecordCount": 2000
+  },
+  "fetched_at": "2026-07-25T12:36:16.491120+00:00",
+  "payload": {
+    "objectIdFieldName": "OBJECTID",
+    "uniqueIdField": {
+      "name": "OBJECTID",
+      "isSystemMaintained": true
+    },
+    "globalIdFieldName": "",
+    "fields": [
+      {
+        "name": "OBJECTID",
+        "type": "esriFieldTypeOID",
+        "alias": "OBJECTID",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "TBLID",
+        "type": "esriFieldTypeInteger",
+        "alias": "TBLID",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "RegistrationNumber",
+        "type": "esriFieldTypeString",
+        "alias": "RegistrationNumber",
+        "sqlType": "sqlTypeOther",
+        "length": 5,
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Year",
+        "type": "esriFieldTypeInteger",
+        "alias": "Year",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "WellCount",
+        "type": "esriFieldTypeInteger",
+        "alias": "WellCount",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Jan",
+        "type": "esriFieldTypeDouble",
+        "alias": "Jan",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Feb",
+        "type": "esriFieldTypeDouble",
+        "alias": "Feb",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Mar",
+        "type": "esriFieldTypeDouble",
+        "alias": "Mar",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Apr",
+        "type": "esriFieldTypeDouble",
+        "alias": "Apr",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "May",
+        "type": "esriFieldTypeDouble",
+        "alias": "May",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Jun",
+        "type": "esriFieldTypeDouble",
+        "alias": "Jun",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Jul",
+        "type": "esriFieldTypeDouble",
+        "alias": "Jul",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Aug",
+        "type": "esriFieldTypeDouble",
+        "alias": "Aug",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Sep",
+        "type": "esriFieldTypeDouble",
+        "alias": "Sep",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Oct",
+        "type": "esriFieldTypeDouble",
+        "alias": "Oct",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Nov",
+        "type": "esriFieldTypeDouble",
+        "alias": "Nov",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Dec",
+        "type": "esriFieldTypeDouble",
+        "alias": "Dec",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      },
+      {
+        "name": "Total",
+        "type": "esriFieldTypeDouble",
+        "alias": "Total",
+        "sqlType": "sqlTypeOther",
+        "domain": null,
+        "defaultValue": null
+      }
+    ],
+    "features": [
+      {
+        "attributes": {
+          "OBJECTID": 7999,
+          "TBLID": 29920,
+          "RegistrationNumber": "00386",
+          "Year": 2015,
+          "WellCount": 1,
+          "Jan": 16.55,
+          "Feb": 17.96,
+          "Mar": 19.75,
+          "Apr": 34.06,
+          "May": 36.71,
+          "Jun": 34.46,
+          "Jul": 37.66,
+          "Aug": 39.3,
+          "Sep": 34.03,
+          "Oct": 20.94,
+          "Nov": 22.09,
+          "Dec": 22.81,
+          "Total": 336.32
+        }
+      },
+      {
+        "attributes": {
+          "OBJECTID": 8000,
+          "TBLID": 29914,
+          "RegistrationNumber": "00386",
+          "Year": 2016,
+          "WellCount": 1,
+          "Jan": 25.1,
+          "Feb": 25.29,
+          "Mar": 23.7,
+          "Apr": 25.12,
+          "May": 45.05,
+          "Jun": 48.56,
+          "Jul": 54.03,
+          "Aug": 58.07,
+          "Sep": 54.43,
+          "Oct": 42.74,
+          "Nov": 39.87,
+          "Dec": 44.83,
+          "Total": 486.79
+        }
+      },
+      {
+        "attributes": {
+          "OBJECTID": 8001,
+          "TBLID": 29913,
+          "RegistrationNumber": "00386",
+          "Year": 2017,
+          "WellCount": 1,
+          "Jan": 42.13,
+          "Feb": 41.93,
+          "Mar": 44.77,
+          "Apr": 57.56,
+          "May": 58.9,
+          "Jun": 57.56,
+          "Jul": 59.48,
+          "Aug": 59.48,
+          "Sep": 57.49,
+          "Oct": 44.83,
+          "Nov": 43.38,
+          "Dec": 44.54,
+          "Total": 612.05
+        }
+      },
+      {
+        "attributes": {
+          "OBJECTID": 8002,
+          "TBLID": 29915,
+          "RegistrationNumber": "00386",
+          "Year": 2018,
+          "WellCount": 1,
+          "Jan": 44.26,
+          "Feb": 41.94,
+          "Mar": 44.81,
+          "Apr": 55.25,
+          "May": 57.04,
+          "Jun": 55.26,
+          "Jul": 57.1,
+          "Aug": 57.05,
+          "Sep": 33.28,
+          "Oct": 0.87,
+          "Nov": 19.68,
+          "Dec": 23.89,
+          "Total": 490.43
+        }
+      },
+      {
+        "attributes": {
+          "OBJECTID": 8003,
+          "TBLID": 29922,
+          "RegistrationNumber": "00386",
+          "Year": 2019,
+          "WellCount": 1,
+          "Jan": 12.69,
+          "Feb": 12.24,
+          "Mar": 13.19,
+          "Apr": 36.68,
+          "May": 39.1,
+          "Jun": 38.3,
+          "Jul": 40.14,
+          "Aug": 41.12,
+          "Sep": 34.65,
+          "Oct": 2.47,
+          "Nov": 1.04,
+          "Dec": 4.18,
+          "Total": 275.8
+        }
+      },
+      {
+        "attributes": {
+          "OBJECTID": 8004,
+          "TBLID": 29917,
+          "RegistrationNumber": "00386",
+          "Year": 2020,
+          "WellCount": 1,
+          "Jan": 12.75,
+          "Feb": 13.32,
+          "Mar": 20.48,
+          "Apr": 16.54,
+          "May": 22.94,
+          "Jun": 30.21,
+          "Jul": 41.15,
+          "Aug": 32.53,
+          "Sep": 37.96,
+          "Oct": 24.22,
+          "Nov": 14.84,
+          "Dec": 14.62,
+          "Total": 281.56
+        }
+      },
+      {
+        "attributes": {
+          "OBJECTID": 8005,
+          "TBLID": 29918,
+          "RegistrationNumber": "00386",
+          "Year": 2021,
+          "WellCount": 1,
+          "Jan": 10.69,
+          "Feb": 12,
+          "Mar": 22.96,
+          "Apr": 23.35,
+          "May": 26.26,
+          "Jun": 26.76,
+          "Jul": 28.69,
+          "Aug": 31.66,
+          "Sep": 35.37,
+          "Oct": 21,
+          "Nov": 18.55,
+          "Dec": 20.66,
+          "Total": 277.95
+        }
+      },
+      {
+        "attributes": {
+          "OBJECTID": 8006,
+          "TBLID": 40944,
+          "RegistrationNumber": "00386",
+          "Year": 2022,
+          "WellCount": 6,
+          "Jan": 28.18,
+          "Feb": 16.63,
+          "Mar": 16.07,
+          "Apr": 14.5,
+          "May": 47.1,
+          "Jun": 34.23,
+          "Jul": 38.75,
+          "Aug": 45.62,
+          "Sep": 35.56,
+          "Oct": 23.92,
+          "Nov": 17.66,
+          "Dec": 15.99,
+          "Total": 334.21
+        }
+      },
+      {
+        "attributes": {
+          "OBJECTID": 8007,
+          "TBLID": 47519,
+          "RegistrationNumber": "00386",
+          "Year": 2023,
+          "WellCount": 6,
+          "Jan": 18.5,
+          "Feb": 15.8,
+          "Mar": 17.6,
+          "Apr": 74.1,
+          "May": 30.72,
+          "Jun": 36.3,
+          "Jul": 34.7,
+          "Aug": 31.6,
+          "Sep": 44.9,
+          "Oct": 34.08,
+          "Nov": 19.1,
+          "Dec": 15.3,
+          "Total": 372.7
+        }
+      },
+      {
+        "attributes": {
+          "OBJECTID": 8008,
+          "TBLID": 53505,
+          "RegistrationNumber": "00386",
+          "Year": 2024,
+          "WellCount": 6,
+          "Jan": 19.1,
+          "Feb": 17.08,
+          "Mar": 15.2,
+          "Apr": 24.6,
+          "May": 43.53,
+          "Jun": 35.52,
+          "Jul": 40.5,
+          "Aug": 31.41,
+          "Sep": 23.1,
+          "Oct": 22.6,
+          "Nov": 18.51,
+          "Dec": 24.48,
+          "Total": 315.63
+        }
+      }
+    ]
+  }
+}
