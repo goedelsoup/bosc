@@ -1,8 +1,8 @@
 meta:
   subject: 'Data-center cooling-cycling reconciliation — claimed cooling archetype vs the documented water
     account (closed-loop cooling cycling epic #1676, A3 #1679)'
-  source: watermark.hydrology.cooling_reconcile — the A2 closed-loop cohort × the archetype-predicted
-    water account (cooling_models) × documented makeup (A1) / blowdown (A2), plus the Intel evaporative
+  source: watermark.hydrology.cooling_reconcile — the A2 closed-loop cohort x the archetype-predicted
+    water account (cooling_models) x documented makeup (A1) / blowdown (A2), plus the Intel evaporative
     positive control
   regenerate: watermark cooling-reconcile --write
   asof: '2026-07-11'
@@ -10,7 +10,7 @@ meta:
     discrepancy: 0
     corroborated: 1
     gap: 5
-  discipline: The harness RECOMMENDS; it never mutates cooling_model — re-archetyping is a reviewed B1–B6
+  discipline: The harness RECOMMENDS; it never mutates cooling_model — re-archetyping is a reviewed B1-B6
     edit with the instrument cited. A back-solved cycles-of-concentration is an [inference] bracket, never
     a headline scalar. A gap (no documented makeup/blowdown) is an [open] records-request lead for C2
     (#1688), never read as 'confirmed dry'. The Intel row is a constructed positive control (openly evaporative)
@@ -73,7 +73,7 @@ candidates:
       value: 0.0
       unit: MGD
       source: derived
-      citation: predicted blowdown = makeup 0 − evaporation 0 MGD for the closed_loop_dry archetype
+      citation: predicted blowdown = makeup 0 - evaporation 0 MGD for the closed_loop_dry archetype
       confidence: medium
       asof: null
       low: null
@@ -164,7 +164,7 @@ candidates:
       value: 0.0
       unit: MGD
       source: derived
-      citation: predicted blowdown = makeup 0 − evaporation 0 MGD for the closed_loop_dry archetype
+      citation: predicted blowdown = makeup 0 - evaporation 0 MGD for the closed_loop_dry archetype
       confidence: medium
       asof: null
       low: null
@@ -256,7 +256,7 @@ candidates:
       value: 0.0
       unit: MGD
       source: derived
-      citation: predicted blowdown = makeup 0 − evaporation 0 MGD for the closed_loop_dry archetype
+      citation: predicted blowdown = makeup 0 - evaporation 0 MGD for the closed_loop_dry archetype
       confidence: medium
       asof: null
       low: null
@@ -355,7 +355,7 @@ candidates:
       value: 0.0
       unit: MGD
       source: derived
-      citation: predicted blowdown = makeup 0 − evaporation 0 MGD for the closed_loop_dry archetype
+      citation: predicted blowdown = makeup 0 - evaporation 0 MGD for the closed_loop_dry archetype
       confidence: medium
       asof: null
       low: null
@@ -455,7 +455,7 @@ candidates:
       value: 0.372
       unit: MGD
       source: derived
-      citation: predicted blowdown = makeup 1.86 − evaporation 1.488 MGD for the hybrid_adiabatic archetype
+      citation: predicted blowdown = makeup 1.86 - evaporation 1.488 MGD for the hybrid_adiabatic archetype
       confidence: medium
       asof: null
       low: null
@@ -534,7 +534,7 @@ candidates:
       value: 0.428
       unit: MGD
       source: derived
-      citation: predicted blowdown = makeup 2.14 − evaporation 1.712 MGD for the evaporative_tower archetype
+      citation: predicted blowdown = makeup 2.14 - evaporation 1.712 MGD for the evaporative_tower archetype
       confidence: medium
       asof: null
       low: null
@@ -592,5 +592,5 @@ candidates:
   lead: null
   tag: '[verified]'
   confidence: high
-  finding: Documented 0.45 MGD matches the evaporative_tower claim's 0.428 MGD prediction — corroborated
-    evaporative; upgrade source reference → document. Back-solved CoC 4.89 (4.1565–5.6235).
+  finding: Documented 0.45 MGD blowdown matches the evaporative_tower claim's 0.428 MGD prediction — corroborated
+    evaporative; upgrade source reference → document. Back-solved CoC 4.89 (4.1565-5.6235).

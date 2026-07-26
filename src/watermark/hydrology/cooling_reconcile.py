@@ -42,7 +42,7 @@ from __future__ import annotations
 
 from enum import StrEnum
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 import yaml
 from pydantic import BaseModel, ConfigDict
@@ -115,6 +115,28 @@ class WaterAccount(BaseModel):
     seasonality_warm_ratio: float | None = None
 
 
+class RecordsRequestLead(BaseModel):
+    """A C2 (#1688) records-request lead payload emitted for a gap facility.
+
+    A validated peer of the raw dict the harness used to carry (like ``AwardLead`` /
+    ``LeiLead``, a lead model lives with its producer — the reconciliation output models all
+    live here, not in ``watermark.models``, which is for corpus extractions). Structured so a
+    consumer (the C2 queue) reads typed fields, not free-form keys.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    kind: Literal["records-request"] = "records-request"
+    site: str
+    facility: str
+    subject: str
+    records_sought: list[str]
+    holder: str
+    rationale: str
+    epic_ref: str
+    tag: str  # evidentiary tag on the lead ("[open]" — the gap it fills)
+
+
 class ReconciliationRecord(BaseModel):
     """One facility's reconciliation: its water account, outcome, recommendation, provenance."""
 
@@ -135,13 +157,29 @@ class ReconciliationRecord(BaseModel):
     recommended_archetype: str | None = None
     recommended_source: str | None = None
     # The C2 records-request lead payload (#1688) — present only for a gap outcome.
-    lead: dict[str, Any] | None = None
+    lead: RecordsRequestLead | None = None
     tag: str  # evidentiary tag on the reconciliation ("[open]" gap / "[inference]" / "[verified]")
     confidence: Confidence
     finding: str  # one-line evidentiary read
 
 
 # --------------------------------------------------------------------- predicted water
+
+
+def _require(value: ProvenancedValue | None, what: str) -> ProvenancedValue:
+    """Enforce a cohort invariant that survives ``python -O`` (unlike a bare ``assert``).
+
+    ``headline_makeup``/``headline_consumptive`` return ``None`` only for a bracketed
+    (``unknown``) basis, and ``documented_*`` are non-``None`` on a non-gap outcome — invariants
+    the cohort upholds, but a stripped ``assert`` would let a violation surface as an opaque
+    ``AttributeError``. Raise explicitly, matching :func:`_predicted_basis`.
+    """
+    if value is None:
+        raise ValueError(
+            f"{what} is unexpectedly None — the reconciliation cohort is archetype-pinned "
+            "(never bracketed/unknown) and a non-gap outcome always carries a documented figure"
+        )
+    return value
 
 
 def _predicted_basis(fac: SiteFacility, settings: Settings) -> CoolingBasis:
@@ -171,9 +209,8 @@ def _predicted_blowdown(basis: CoolingBasis) -> ProvenancedValue:
     from rounding to 0. Bracketed (``unknown``) bases never reach here — the cohort is
     archetype-pinned.
     """
-    makeup = basis.headline_makeup()
-    consumptive = basis.headline_consumptive()
-    assert makeup is not None and consumptive is not None  # cohort is never `unknown`/bracketed
+    makeup = _require(basis.headline_makeup(), "predicted makeup")
+    consumptive = _require(basis.headline_consumptive(), "predicted consumptive")
     value = max(0.0, round(makeup.value - consumptive.value, 3))
     return ProvenancedValue.derived(
         value,
@@ -266,33 +303,32 @@ def _classify(
 _WET_ARCHETYPES = frozenset({CoolingModelType.EVAPORATIVE_TOWER, CoolingModelType.HYBRID_ADIABATIC})
 
 
-def _records_lead(site: str, fac: SiteFacility, claim_source: str) -> dict[str, Any]:
+def _records_lead(site: str, fac: SiteFacility, claim_source: str) -> RecordsRequestLead:
     """The C2 (#1688) records-request lead payload for a gap facility.
 
     A closed-loop claim with no documented makeup or blowdown is not "confirmed dry" — the
     blowdown may go to sewer under a City sewer-use / pretreatment agreement ECHO never sees.
     This is the structured ask that resolves it (R.C. 149.43), consumable by the C2 queue.
     """
-    return {
-        "kind": "records-request",
-        "site": site,
-        "facility": fac.name,
-        "subject": "cooling-water account — makeup + blowdown records",
-        "records_sought": [
+    return RecordsRequestLead(
+        site=site,
+        facility=fac.name,
+        subject="cooling-water account — makeup + blowdown records",
+        records_sought=[
             "industrial pretreatment / indirect-discharge (IU) permit",
             "sewer-use agreement + any cooling-tower blowdown authorization",
             "metered water-service use (makeup withdrawal)",
             "cooling-tower blowdown / low-volume-wastewater DMR",
         ],
-        "holder": f"City / municipal water-sewer authority serving {site}",
-        "rationale": (
+        holder=f"City / municipal water-sewer authority serving {site}",
+        rationale=(
             f"{fac.cooling_model.value} claim (source={claim_source}) with no facility-own "
             "discharge permit and no documented makeup — resolve whether blowdown goes to sewer "
             "under a City agreement not visible in ECHO/NPDES, or the loop is genuinely dry."
         ),
-        "epic_ref": "#1688 (C2)",
-        "tag": "[open]",
-    }
+        epic_ref="#1688 (C2)",
+        tag="[open]",
+    )
 
 
 def _finding(
@@ -310,9 +346,15 @@ def _finding(
             "'confirmed dry' (→ C2 records request #1688). Predicted makeup "
             f"{account.predicted_makeup.value:g} MGD."
         )
+    # A documented signal exists (DISCREPANCY / CORROBORATED) — pair it with the MATCHING
+    # predicted figure exactly as _classify does: the A2 blowdown record against predicted
+    # blowdown, else the A1 makeup record against predicted makeup (never cross the two).
+    if account.documented_blowdown is not None:
+        doc, predicted, kind = account.documented_blowdown, account.predicted_blowdown, "blowdown"
+    else:
+        doc = _require(account.documented_makeup, "documented water")
+        predicted, kind = account.predicted_makeup, "makeup"
     if outcome is ReconcileOutcome.DISCREPANCY:
-        doc = account.documented_blowdown or account.documented_makeup
-        assert doc is not None
         season = (
             f" Seasonality warm/cool ratio {account.seasonality_warm_ratio:g} (a summer-peak "
             "shape corroborates temperature-driven evaporation)."
@@ -320,14 +362,12 @@ def _finding(
             else ""
         )
         return (
-            f"Documented {doc.value:g} MGD {'blowdown' if account.documented_blowdown else 'makeup'} "
-            f"contradicts the {arche} claim's ~{account.predicted_blowdown.value:g} MGD prediction — "
-            f"re-archetype up with the instrument cited (B-review).{season}"
+            f"Documented {doc.value:g} MGD {kind} contradicts the {arche} claim's "
+            f"~{predicted.value:g} MGD prediction — re-archetype up with the instrument cited "
+            f"(B-review).{season}"
         )
     # corroborated
     if account.archetype in _WET_ARCHETYPES:
-        doc = account.documented_blowdown or account.documented_makeup
-        assert doc is not None
         coc = (
             f" Back-solved CoC {account.backsolved_cycles.value:g} "
             f"({account.backsolved_cycles.low_or_value:g}-{account.backsolved_cycles.high_or_value:g})."
@@ -335,8 +375,8 @@ def _finding(
             else ""
         )
         return (
-            f"Documented {doc.value:g} MGD matches the {arche} claim's "
-            f"{account.predicted_blowdown.value:g} MGD prediction — corroborated evaporative; "
+            f"Documented {doc.value:g} MGD {kind} matches the {arche} claim's "
+            f"{predicted.value:g} MGD prediction — corroborated evaporative; "
             f"upgrade source {claim_source} → document.{coc}"
         )
     return (
@@ -366,9 +406,8 @@ def reconcile_facility(
     C2 lead payload. Recommends only; it never mutates ``fac.cooling_model``.
     """
     basis = _predicted_basis(fac, settings)
-    predicted_makeup = basis.headline_makeup()
-    predicted_consumptive = basis.headline_consumptive()
-    assert predicted_makeup is not None and predicted_consumptive is not None
+    predicted_makeup = _require(basis.headline_makeup(), "predicted makeup")
+    predicted_consumptive = _require(basis.headline_consumptive(), "predicted consumptive")
     predicted_blowdown = _predicted_blowdown(basis)
 
     # A disclosed/stated CoC is reference-grade, not a self-verified measurement — `cooling_models`
@@ -412,7 +451,7 @@ def reconcile_facility(
 
     recommended_archetype: str | None = None
     recommended_source: str | None = None
-    lead: dict[str, Any] | None = None
+    lead: RecordsRequestLead | None = None
     if outcome is ReconcileOutcome.DISCREPANCY:
         # Re-archetype up: a summer-peak seasonality points at a continuously-evaporative tower;
         # otherwise recommend the evaporative upper bound and let B-review pin tower vs hybrid
