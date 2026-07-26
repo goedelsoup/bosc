@@ -697,12 +697,12 @@ candidates:
     holder: City / municipal water-sewer authority serving van-wert; Ohio EPA (NPDES / OHD000001); Ohio
       EPA / regional air agency (DAPC); SERC / LEPC
     rationale: A closed_loop_dry claim (source=reference) that 'does not consume water once operational',
-      with a disclosed ongoing draw (0.0018 MGD) consistent with a dry loop at screening scale — BUT a
-      single-source self-report, not a metered instrument (so it cannot upgrade the [reference] pin),
-      and the disclosed figure's fill-vs-annual framing is itself unresolved (#1409). The 'once operational'
-      wording also structurally excludes the initial closed-loop fill (a City-approved one-time withdrawal
-      of undisclosed volume). Pull the metered use + the fill authorization to resolve whether the loop
-      is genuinely dry or the fill / top-off is material.
+      with an UNVERIFIED disclosed ongoing draw (0.0018 MGD) consistent with a dry loop at screening scale
+      — a single-source self-report, not a metered instrument, so it neither corroborates nor re-archetypes
+      the claim and cannot upgrade the [reference] pin; the disclosed figure's fill-vs-annual framing
+      is itself unresolved (#1409). The 'once operational' wording also structurally excludes the initial
+      closed-loop fill (a City-approved one-time withdrawal of undisclosed volume). Pull the metered use
+      + the fill authorization to resolve whether the loop is genuinely dry or the fill / top-off is material.
     epic_ref: '#1688 (C2); #1409'
     tag: '[open]'
   corroborators:
@@ -735,13 +735,13 @@ candidates:
   tag: '[open]'
   confidence: low
   finding: 'No metered makeup or blowdown for Van Wert Mega Site to test the closed_loop_dry claim (source=reference)
-    — an [open] gap, not ''confirmed dry''. The operator DISCLOSES an ongoing draw of 0.0018 MGD, consistent
-    with a dry loop at screening scale, but it is a single-source self-report (not a metered instrument,
-    so it cannot upgrade the [reference] pin); the claim''s ''once operational'' wording also excludes
-    the initial closed-loop fill (a City-approved one-time withdrawal of undisclosed volume) — the specific
-    open quantity (→ C2 records request #1688). Keep the pin [reference]. Neither corroborator is on record
-    for Van Wert Mega Site (air permit + Tier II) — both are C2 records-request items, not read as confirming
-    the claim.'
+    — an [open] gap, not ''confirmed dry''. The operator DISCLOSES an UNVERIFIED ongoing draw of 0.0018
+    MGD, consistent with a dry loop at screening scale — either way a single-source self-report (not a
+    metered instrument), so it neither corroborates nor re-archetypes the claim and cannot upgrade the
+    [reference] pin; the claim''s ''once operational'' wording also excludes the initial closed-loop fill
+    (a City-approved one-time withdrawal of undisclosed volume) — the specific open quantity (→ C2 records
+    request #1688). Keep the pin [reference]. Neither corroborator is on record for Van Wert Mega Site
+    (air permit + Tier II) — both are C2 records-request items, not read as confirming the claim.'
 - site: wilmington
   facility: Cosler Farm campus
   is_control: false

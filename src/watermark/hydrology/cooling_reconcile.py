@@ -502,6 +502,15 @@ def _disclosed_gap_lead(
     disclosed_phrase = (
         f"{disclosed.value:g} MGD" if disclosed is not None else "the disclosed ongoing draw"
     )
+    # A non-classifying screening comparison (never fed to _classify): a disclosed self-report BELOW
+    # the ~0 floor is consistent-with-dry at screening scale; at/above it, the self-report does not
+    # read as dry — but either way it is unverified and neither corroborates nor re-archetypes.
+    below_floor = disclosed is not None and disclosed.value < _MEANINGFUL_FLOW_MGD
+    screen = (
+        "consistent with a dry loop at screening scale"
+        if below_floor
+        else "above the ~0 screening floor (it does not read as dry at screening scale)"
+    )
     records_sought = [
         "initial closed-loop fill volume + top-off / make-up rate (the fill-vs-annual figure)",
         "metered water-service use (actual makeup withdrawal vs the disclosed ongoing draw)",
@@ -527,13 +536,13 @@ def _disclosed_gap_lead(
         holder="; ".join(holders),
         rationale=(
             f"A {fac.cooling_model.value} claim (source={claim_source}) that 'does not consume water "
-            f"once operational', with a disclosed ongoing draw ({disclosed_phrase}) consistent with a "
-            "dry loop at screening scale — BUT a single-source self-report, not a metered instrument "
-            f"(so it cannot upgrade the [reference] pin), and the disclosed figure's fill-vs-annual "
-            f"framing is itself unresolved ({issue_ref}). The 'once operational' wording also "
-            "structurally excludes the initial closed-loop fill (a City-approved one-time withdrawal of "
-            "undisclosed volume). Pull the metered use + the fill authorization to resolve whether the "
-            "loop is genuinely dry or the fill / top-off is material."
+            f"once operational', with an UNVERIFIED disclosed ongoing draw ({disclosed_phrase}) {screen} "
+            "— a single-source self-report, not a metered instrument, so it neither corroborates nor "
+            f"re-archetypes the claim and cannot upgrade the [reference] pin; the disclosed figure's "
+            f"fill-vs-annual framing is itself unresolved ({issue_ref}). The 'once operational' wording "
+            "also structurally excludes the initial closed-loop fill (a City-approved one-time "
+            "withdrawal of undisclosed volume). Pull the metered use + the fill authorization to resolve "
+            "whether the loop is genuinely dry or the fill / top-off is material."
         ),
         epic_ref=f"#1688 (C2); {issue_ref}",
         tag="[open]",
@@ -628,19 +637,26 @@ def _finding(
     arche = account.archetype.value
     if outcome is ReconcileOutcome.GAP:
         if account.disclosed_makeup is not None:
-            # B2 (#1682): a gap the operator has DISCLOSED into. The self-reported ongoing draw is
-            # consistent with the dry claim at screening scale, but it is not a metered instrument
-            # (so it cannot upgrade the [reference] pin), and the claim's 'once operational' carve-out
-            # excludes the initial closed-loop fill — the specific open quantity.
+            # B2 (#1682): a gap the operator has DISCLOSED into. The self-reported draw is compared
+            # against the ~0 screening floor for description ONLY (never fed to _classify): below it
+            # is consistent-with-dry at screening scale, at/above it does not read as dry — but either
+            # way it is unverified (not a metered instrument), so it cannot upgrade the [reference] pin
+            # or re-archetype, and the claim's 'once operational' carve-out excludes the initial fill.
             disclosed = account.disclosed_makeup
+            screen = (
+                "consistent with a dry loop at screening scale"
+                if disclosed.value < _MEANINGFUL_FLOW_MGD
+                else "above the ~0 screening floor (it does not read as dry at screening scale)"
+            )
             return (
                 f"No metered makeup or blowdown for {fac.name} to test the {arche} claim "
                 f"(source={claim_source}) — an [open] gap, not 'confirmed dry'. The operator DISCLOSES "
-                f"an ongoing draw of {disclosed.value:g} MGD, consistent with a dry loop at screening "
-                "scale, but it is a single-source self-report (not a metered instrument, so it cannot "
-                "upgrade the [reference] pin); the claim's 'once operational' wording also excludes the "
-                "initial closed-loop fill (a City-approved one-time withdrawal of undisclosed volume) — "
-                "the specific open quantity (→ C2 records request #1688). Keep the pin [reference]."
+                f"an UNVERIFIED ongoing draw of {disclosed.value:g} MGD, {screen} — either way a "
+                "single-source self-report (not a metered instrument), so it neither corroborates nor "
+                "re-archetypes the claim and cannot upgrade the [reference] pin; the claim's 'once "
+                "operational' wording also excludes the initial closed-loop fill (a City-approved "
+                "one-time withdrawal of undisclosed volume) — the specific open quantity (→ C2 records "
+                "request #1688). Keep the pin [reference]."
             )
         return (
             f"No documented makeup or blowdown for {fac.name}: the {arche} claim "
