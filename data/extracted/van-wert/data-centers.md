@@ -79,7 +79,7 @@ to the Maumee (Lake Erie basin), distinct from the Great Miami / Scioto data-cen
   metered makeup (the Ohio DNR withdrawal registry has no Van Wert County pull built) and no
   facility-own blowdown (OHD000001 is a draft permit, unlinked to the facility by name), the
   outcome is a **`gap`** — the pin stays `closed_loop_dry` / `[reference]`, **not** upgraded to
-  `document`-grade. The disclosed ≈ 660,000 gal figure is a single-source self-report (not a
+  `document`-grade. The disclosed ~660,000 gal figure is a single-source self-report (not a
   metered instrument, so it cannot corroborate the operator's own claim), and the same number is
   framed both as an *annual* operational draw and a *one-time* initial fill — that fill-vs-annual
   ambiguity is the unresolved **#1409** discrepancy, quantified here, not settled. The initial-fill

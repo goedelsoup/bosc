@@ -457,6 +457,40 @@ def test_disclosed_near_zero_draw_does_not_corroborate_the_dry_claim() -> None:
     assert rec.account.backsolved_cycles is None
 
 
+def test_high_disclosed_draw_stays_unclassified_without_a_dry_loop_conclusion() -> None:
+    # A LARGE disclosed self-report (well above the ~0 screening floor) must NOT produce a
+    # "consistent with a dry loop" conclusion — the consistency wording is conditioned on a
+    # non-classifying screening comparison. It stays an unclassified GAP either way (a self-report is
+    # not a metered instrument, so it never corroborates or re-archetypes), pin kept [reference].
+    rec = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="x",
+        settings=Settings(),
+        disclosed_makeup=ProvenancedValue.from_reference(
+            5.0, "MGD", citation="large operator self-report"
+        ),
+        water_lead_ref="#1409",
+    )
+    assert (
+        rec.outcome is cr.ReconcileOutcome.GAP
+    )  # unclassified — never classified off a self-report
+    assert rec.recommended_archetype is None  # not re-archetyped
+    assert rec.recommended_source is None  # not upgraded to 'document'
+    # The finding does NOT claim the loop is dry, and flags the draw as above the screening floor.
+    assert "consistent with a dry loop" not in rec.finding
+    assert "above the ~0 screening floor" in rec.finding
+    assert "UNVERIFIED" in rec.finding
+    # The same neutral wording flows into the sharpened gap lead's rationale.
+    assert rec.lead is not None
+    assert "consistent with a dry loop" not in rec.lead.rationale
+    assert "above the ~0 screening floor" in rec.lead.rationale
+    # The disclosed figure is still recorded (on disclosed_makeup, not documented_*).
+    assert rec.account.disclosed_makeup is not None and rec.account.disclosed_makeup.value == 5.0
+    assert rec.account.documented_makeup is None
+
+
 def test_disclosed_makeup_is_kept_distinct_from_documented_and_reserved_slots() -> None:
     # A disclosed self-report never lands on documented_* (metered) or reserved_* (ceiling) — the
     # three provenance categories stay distinct so a self-report is never read as either downstream.
