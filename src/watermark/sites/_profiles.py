@@ -2130,6 +2130,9 @@ _TROY_PIQUA = SiteProfile(
             # Cooling archetype (#1054): deliberately left UNKNOWN — a real, unresolved conflict
             # between two public disclosures (not a case of "cooling method not disclosed"). #1486
             # (the standing water & regulatory watch) owns reconciling it; never pick a side here.
+            # B1 (#1681) RAN the A3 reconciliation harness on this conflict and KEPT UNKNOWN: the
+            # reservation is a ceiling, not a discharge/withdrawal instrument, so it cannot re-pin
+            # the archetype (see cooling_model_citation).
             cooling_model=CoolingModelType.UNKNOWN,
             cooling_model_source="reference",
             cooling_model_citation=(
@@ -2137,8 +2140,17 @@ _TROY_PIQUA = SiteProfile(
                 "closed-loop cooling with only an 'initial fill-up' + occasional top-offs "
                 "(domestic-only ongoing use), but the negotiated Water & Wastewater Agreement "
                 "(effective 2026-01-23) reserves up to 500,000 GPD (Tier I) scaling to 2.0 MGD "
-                "(Tier II / full operation) — these two public disclosures conflict. Tracked at #1486 "
-                "(the standing water & regulatory watch); see "
+                "(Tier II / full operation) — these two public disclosures conflict. B1 (#1681) ran "
+                "the A3 cooling-cycling reconciliation harness (watermark cooling-reconcile, epic "
+                "#1676) on this conflict: outcome reservation_conflict — the reserved 2.0 MGD makeup "
+                "+ ~1.0 MGD wastewater back-solve to cycles-of-concentration ~2.0 (1.7-2.3), an "
+                "[inference] bracket in evaporative-tower territory, inconsistent with a dry sealed "
+                "loop's ~0. But a reservation is a CEILING, not a metered use and not a discharge/"
+                "withdrawal instrument, so per the epic's re-archetype gate it CANNOT re-pin the "
+                "archetype: UNKNOWN stays, and #1486 is restated as a quantified [open] gap (the 2.0 "
+                "MGD is an upper-bound ceiling, never a headline consumptive). Tracked at #1486 (the "
+                "standing water & regulatory watch); evidence packet "
+                "data/reference/oepa/cooling-reconciliation.yaml (row troy-piqua); see "
                 "data/extracted/troy-piqua/data-centers.md, 'Water / hydrology hook'."
             ),
         ),

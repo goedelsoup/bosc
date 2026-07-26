@@ -60,9 +60,23 @@ leads:
     public FAQ describes a closed-loop cooling system with only an "initial fill-up," occasional
     top-offs, and domestic-only ongoing use. `[verified]`. These two framings conflict and neither has
     been reconciled against the actual agreement text — pin to the instrument itself, not either
-    summary, and record which framing governs the consumptive-use screen.
-  source: civiccapacity.com/p/water-world-what-was-negotiated · data/extracted/troy-piqua/data-centers.md "Water / hydrology hook"
+    summary, and record which framing governs the consumptive-use screen. **B1 (#1681) ran the A3
+    cooling-cycling reconciliation harness on this conflict (`watermark cooling-reconcile`):** the
+    outcome is a `reservation_conflict` — the 2.0 MGD makeup + ~1.0 MGD wastewater reservation
+    back-solves to cycles-of-concentration ≈ 2.0 (1.7–2.3), an `[inference]` bracket squarely in
+    evaporative-tower territory and flatly inconsistent with a dry sealed loop's ~0 makeup. **But a
+    reservation is a CEILING, not a metered use, and not a discharge/withdrawal instrument** — so per
+    the epic's re-archetype gate it cannot re-pin the archetype: `cooling_model` deliberately stays
+    `UNKNOWN`, and this stays a **quantified `[open]` gap**, not a resolution. The reserved 2.0 MGD is
+    an upper-bound ceiling, never collapsed into a headline consumptive. The next move is C2 (#1688):
+    pull the executed instrument + metered water-service use to establish whether the facility draws
+    near the ceiling (evaporative) or far below it (nearer dry).
+  source: civiccapacity.com/p/water-world-what-was-negotiated · data/extracted/troy-piqua/data-centers.md "Water / hydrology hook" · data/reference/oepa/cooling-reconciliation.yaml (troy-piqua, B1 #1681)
   issue: 1486
+  note: >-
+    B1 reconciliation (#1681) complete — restated as a quantified [open] gap (reservation_conflict,
+    back-solved CoC ≈ 2.0 [inference]); kept cooling_model=UNKNOWN. Next check → C2 (#1688): the
+    executed 2026-01-23 agreement text + metered water-service use vs the reserved ceiling.
 - id: OHD000001
   kind: signal
   status: unanswered

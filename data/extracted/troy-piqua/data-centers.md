@@ -116,6 +116,18 @@ Two further disambiguation guards apply to the governance record (§ *Opposition
   the executed agreement text** — the reserved figure and the closed-loop framing are each
   `[verified]` as *summaries*, but which one governs the consumptive-use screen is `[open]`. Pin to
   the instrument itself, not either summary. Tracked as standing lead `WATER-AGREEMENT` (#1486).
+- **B1 reconciliation (#1681) — reservation_conflict, `cooling_model` stays UNKNOWN.** The A3
+  cooling-cycling reconciliation harness (`watermark cooling-reconcile`, closed-loop epic #1676) was
+  run on this conflict, reconciling the FAQ's closed-loop (dry, ~0 makeup) *claim* against the
+  disclosed reservation. Outcome: a **`reservation_conflict`** — the reserved 2.0 MGD makeup + ~1.0
+  MGD wastewater back-solve to **cycles-of-concentration ≈ 2.0 (1.7–2.3)**, an `[inference]` bracket
+  in evaporative-tower territory and flatly inconsistent with a dry sealed loop's ~0. **But a
+  reservation is a ceiling, not a metered use, and not a discharge/withdrawal instrument** — so per
+  the epic's re-archetype gate it does *not* re-pin the archetype: `cooling_model` stays `UNKNOWN`,
+  and #1486 is **restated as a quantified `[open]` gap**, not resolved. The 2.0 MGD is an upper-bound
+  ceiling, `[inference]` — never collapsed into a headline consumptive. The evidence packet is
+  `data/reference/oepa/cooling-reconciliation.yaml` (row `troy-piqua`); the next move is C2 (#1688):
+  the executed 2026-01-23 agreement text + metered water-service use vs the reserved ceiling.
 - **WWTP headroom vs. the reserved wastewater draw:** Piqua WWTP (Ohio EPA 1PD00008\*WD / NPDES
   OH0027049; renewal eff. 2022-09-01 – 2027-08-31) is design **8.7 MGD** with an actual mean flow of
   **~3.224 MGD** (37.1% of design, 2023 DMR). `[verified]` Source: `1PD00008.fs.npdes.yaml`;

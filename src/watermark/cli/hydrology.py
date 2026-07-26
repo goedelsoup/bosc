@@ -196,10 +196,16 @@ def cooling_reconcile_cmd(
     console.print(
         f"[bold]Cooling-cycling reconciliation[/] — {len(records)} facilities "
         f"([red]{counts['discrepancy']} discrepancy[/], [green]{counts['corroborated']} "
-        f"corroborated[/], [yellow]{counts['gap']} gap[/]); documented-blowdown currency "
+        f"corroborated[/], [magenta]{counts['reservation_conflict']} reservation-conflict[/], "
+        f"[yellow]{counts['gap']} gap[/]); documented-blowdown currency "
         f"{blowdown.OHD000001.asof} (OHD000001 lifecycle)."
     )
-    color = {"discrepancy": "red", "corroborated": "green", "gap": "yellow"}
+    color = {
+        "discrepancy": "red",
+        "corroborated": "green",
+        "reservation_conflict": "magenta",
+        "gap": "yellow",
+    }
     # A4 (#1680) corroborator stance → glyph: contradicts (points to over-cycling) / corroborates /
     # silent (not on record). Secondary to the outcome — never re-archetypes on its own.
     stance_glyph = {
@@ -221,17 +227,27 @@ def cooling_reconcile_cmd(
     for r in records:
         a = r.account
         documented = a.documented_blowdown or a.documented_makeup
+        # A reservation_conflict has no metered figure — show the disclosed reservation ceiling
+        # instead, marked "(reserved)" so a ceiling is never read as a metered use.
+        reserved = a.reserved_makeup or a.reserved_blowdown
+        if documented is not None:
+            documented_cell = f"{documented.value:g} MGD"
+        elif reserved is not None:
+            documented_cell = f"{reserved.value:g} MGD (reserved)"
+        else:
+            documented_cell = "—"
         coc = (
             f"{a.backsolved_cycles.value:g} "
             f"({a.backsolved_cycles.low_or_value:g}-{a.backsolved_cycles.high_or_value:g})"
             if a.backsolved_cycles is not None
             else "—"
         )
-        recommend = (
-            f"→ {r.recommended_archetype}, source={r.recommended_source}"
-            if r.recommended_archetype is not None
-            else "records request (C2)"
-        )
+        if r.recommended_archetype is not None:
+            recommend = f"→ {r.recommended_archetype}, source={r.recommended_source}"
+        elif r.outcome is cooling_reconcile.ReconcileOutcome.RESERVATION_CONFLICT:
+            recommend = "keep unknown + records request (C2)"
+        else:
+            recommend = "records request (C2)"
         corrob = stance_glyph[r.corroborators.net_stance.value] if r.corroborators else "—"
         facility = f"{r.facility}{' [cyan](control)[/]' if r.is_control else ''}"
         table.add_row(
@@ -240,7 +256,7 @@ def cooling_reconcile_cmd(
             r.claimed_archetype,
             f"[{color[r.outcome.value]}]{r.outcome.value}[/]",
             f"{a.predicted_makeup.value:g}",
-            f"{documented.value:g} MGD" if documented is not None else "—",
+            documented_cell,
             coc,
             corrob,
             escape(recommend),
@@ -249,10 +265,13 @@ def cooling_reconcile_cmd(
     console.print(
         r"[dim]The harness recommends; it never mutates cooling_model (re-archetyping is a reviewed "
         r"B-review edit with the instrument cited). A back-solved CoC (CoC*) is an \[inference] "
-        r"bracket. A gap is an \[open] records-request lead for C2 (#1688), never 'confirmed dry'. "
-        r"corrob† = the A4 independent corroborators (air-permit cooling-tower PM + Tier II "
-        r"chemistry) reconciled against the claim — SECONDARY, never the sole basis for a re-"
-        r"archetype. The Intel row is a constructed positive control.[/]"
+        r"bracket. A gap is an \[open] records-request lead for C2 (#1688), never 'confirmed dry'. A "
+        r"reservation-conflict (Troy-Piqua B1, #1681) is a low-water claim contradicted by a reserved "
+        r"CEILING (the 'reserved' documented cell) — not a discharge/withdrawal instrument, so it "
+        r"keeps the UNKNOWN pin + sharpens lead #1486, never a headline consumptive. corrob† = the A4 "
+        r"independent corroborators (air-permit cooling-tower PM + Tier II chemistry) reconciled "
+        r"against the claim — SECONDARY, never the sole basis for a re-archetype. The Intel row is a "
+        r"constructed positive control.[/]"
     )
 
     if write or out:

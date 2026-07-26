@@ -42,10 +42,17 @@ notes: >-
   (A2 discharge), back-solves cycles-of-concentration where both are on record (an
   `[inference]` bracket, never a scalar), and classifies each into `discrepancy` (a low-water
   claim contradicted by documented flow → re-archetype up), `corroborated` (documented water
-  consistent with the claim), or `gap` (no documented water → a C2 records-request lead
-  payload, #1688). The harness RECOMMENDS; it never mutates `cooling_model` (re-archetyping is
-  a reviewed B1–B6 edit). Every live cohort facility resolves to `gap` today (no documented
-  makeup/blowdown while OHD000001 is draft and no facility-own DMR is on record). Each record
+  consistent with the claim), `reservation_conflict` (a low-water claim contradicted by a
+  disclosed RESERVATION CEILING — a will-serve / water-agreement figure, not a metered use and
+  not a discharge/withdrawal instrument → keep the pin, sharpen the site's water lead; B1
+  Troy-Piqua #1681), or `gap` (no documented water → a C2 records-request lead payload, #1688).
+  The harness RECOMMENDS; it never mutates `cooling_model` (re-archetyping is a reviewed B1–B6
+  edit). The **Troy-Piqua B1 reservation conflict** (#1681) is appended explicitly — it pins
+  `UNKNOWN` (so it is NOT in A2's registry-derived cohort) but its closed-loop-FAQ-vs-2.0-MGD-
+  reservation conflict is reconciled as a first-class live finding, back-solving CoC ≈ 2.0 off
+  the reservation ceilings (an `[inference]` bracket, never a headline consumptive). Every other
+  live cohort facility resolves to `gap` today (no documented makeup/blowdown while OHD000001 is
+  draft and no facility-own DMR is on record). Each record
   also carries the A4 (#1680) `corroborators` block — two independent tells reconciled against
   the claim (`watermark.hydrology.cooling_corroborators`): the facility's own air permit
   listing cooling towers as PM (drift) sources (read from `SiteFacility.air_permit_relpath`;
