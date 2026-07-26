@@ -1,9 +1,10 @@
 meta:
   subject: 'Data-center cooling-cycling reconciliation — claimed cooling archetype vs the documented water
-    account (closed-loop cooling cycling epic #1676, A3 #1679)'
+    account (closed-loop cooling cycling epic #1676, A3 #1679), plus the A4 (#1680) independent corroborators
+    (air-permit PM + Tier II chemistry)'
   source: watermark.hydrology.cooling_reconcile — the A2 closed-loop cohort x the archetype-predicted
-    water account (cooling_models) x documented makeup (A1) / blowdown (A2), plus the Intel evaporative
-    positive control
+    water account (cooling_models) x documented makeup (A1) / blowdown (A2) x the A4 corroborators (cooling_corroborators),
+    plus the Intel evaporative positive control
   regenerate: watermark cooling-reconcile --write
   asof: '2026-07-11'
   outcomes:
@@ -13,9 +14,11 @@ meta:
   discipline: The harness RECOMMENDS; it never mutates cooling_model — re-archetyping is a reviewed B1-B6
     edit with the instrument cited. A back-solved cycles-of-concentration is an [inference] bracket, never
     a headline scalar. A gap (no documented makeup/blowdown) is an [open] records-request lead for C2
-    (#1688), never read as 'confirmed dry'. The Intel row is a constructed positive control (openly evaporative)
-    the harness must classify corroborated, not a false discrepancy — it is a calibration vector, not
-    documented Intel data.
+    (#1688), never read as 'confirmed dry'. The A4 corroborators (air-permit cooling-tower PM, Tier II
+    / EPCRA-312 chemistry) are SECONDARY — recorded and reconciled against the claim, but never the sole
+    basis for a re-archetype and never changing the outcome. The Intel row is a constructed positive control
+    (openly evaporative) the harness must classify corroborated, not a false discrepancy — it is a calibration
+    vector, not documented Intel data.
 candidates:
 - site: bowling-green
   facility: Bowling Green Data Center (Project Accordion)
@@ -96,17 +99,51 @@ candidates:
     - sewer-use agreement + any cooling-tower blowdown authorization
     - metered water-service use (makeup withdrawal)
     - cooling-tower blowdown / low-volume-wastewater DMR
-    holder: City / municipal water-sewer authority serving bowling-green
+    - facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits
+    - Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)
+    holder: City / municipal water-sewer authority serving bowling-green; Ohio EPA / regional air agency
+      (DAPC); SERC / LEPC
     rationale: closed_loop_dry claim (source=reference) with no facility-own discharge permit and no documented
       makeup — resolve whether blowdown goes to sewer under a City agreement not visible in ECHO/NPDES,
       or the loop is genuinely dry.
     epic_ref: '#1688 (C2)'
     tag: '[open]'
+  corroborators:
+    air_permit:
+      state: not_on_record
+      stance: silent
+      tower_count: null
+      pm10_tpy: null
+      pm25_tpy: null
+      citation: no air permit wired for Bowling Green Data Center (Project Accordion) (SiteFacility.air_permit_relpath
+        is None)
+      tag: '[open]'
+      confidence: low
+      finding: 'No air permit on file for Bowling Green Data Center (Project Accordion): whether its cooling
+        towers are permitted PM (drift) sources cannot be checked against the closed_loop_dry claim —
+        a records-request item (facility air PTI/PTIO), never read as ''no cooling tower''.'
+    tier2_chemistry:
+      state: not_on_record
+      stance: silent
+      chemicals: []
+      citation: Tier II / EPCRA-312 cooling-water treatment inventory not on record (SERC/LEPC-held, not
+        published to ECHO)
+      tag: '[open]'
+      confidence: low
+      finding: 'No Tier II / EPCRA-312 cooling-chemistry inventory on file for Bowling Green Data Center
+        (Project Accordion): heavy biocide / scale-inhibitor treatment scales with evaporative cycling
+        and would corroborate over-cycling against the closed_loop_dry claim — a records-request item
+        (LEPC/SERC filing), not yet obtainable.'
+    net_stance: silent
+    summary: Neither corroborator is on record for Bowling Green Data Center (Project Accordion) (air
+      permit + Tier II) — both are C2 records-request items, not read as confirming the claim.
   tag: '[open]'
   confidence: low
   finding: 'No documented makeup or blowdown for Bowling Green Data Center (Project Accordion): the closed_loop_dry
     claim (source=reference) cannot yet be tested against records — an [open] gap, not ''confirmed dry''
-    (→ C2 records request #1688). Predicted makeup 0 MGD.'
+    (→ C2 records request #1688). Predicted makeup 0 MGD. Neither corroborator is on record for Bowling
+    Green Data Center (Project Accordion) (air permit + Tier II) — both are C2 records-request items,
+    not read as confirming the claim.'
 - site: springfield
   facility: 5C Data Centers "CMH01"
   is_control: false
@@ -187,17 +224,49 @@ candidates:
     - sewer-use agreement + any cooling-tower blowdown authorization
     - metered water-service use (makeup withdrawal)
     - cooling-tower blowdown / low-volume-wastewater DMR
-    holder: City / municipal water-sewer authority serving springfield
+    - facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits
+    - Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)
+    holder: City / municipal water-sewer authority serving springfield; Ohio EPA / regional air agency
+      (DAPC); SERC / LEPC
     rationale: closed_loop_dry claim (source=reference) with no facility-own discharge permit and no documented
       makeup — resolve whether blowdown goes to sewer under a City agreement not visible in ECHO/NPDES,
       or the loop is genuinely dry.
     epic_ref: '#1688 (C2)'
     tag: '[open]'
+  corroborators:
+    air_permit:
+      state: not_on_record
+      stance: silent
+      tower_count: null
+      pm10_tpy: null
+      pm25_tpy: null
+      citation: no air permit wired for 5C Data Centers "CMH01" (SiteFacility.air_permit_relpath is None)
+      tag: '[open]'
+      confidence: low
+      finding: 'No air permit on file for 5C Data Centers "CMH01": whether its cooling towers are permitted
+        PM (drift) sources cannot be checked against the closed_loop_dry claim — a records-request item
+        (facility air PTI/PTIO), never read as ''no cooling tower''.'
+    tier2_chemistry:
+      state: not_on_record
+      stance: silent
+      chemicals: []
+      citation: Tier II / EPCRA-312 cooling-water treatment inventory not on record (SERC/LEPC-held, not
+        published to ECHO)
+      tag: '[open]'
+      confidence: low
+      finding: 'No Tier II / EPCRA-312 cooling-chemistry inventory on file for 5C Data Centers "CMH01":
+        heavy biocide / scale-inhibitor treatment scales with evaporative cycling and would corroborate
+        over-cycling against the closed_loop_dry claim — a records-request item (LEPC/SERC filing), not
+        yet obtainable.'
+    net_stance: silent
+    summary: Neither corroborator is on record for 5C Data Centers "CMH01" (air permit + Tier II) — both
+      are C2 records-request items, not read as confirming the claim.
   tag: '[open]'
   confidence: low
   finding: 'No documented makeup or blowdown for 5C Data Centers "CMH01": the closed_loop_dry claim (source=reference)
     cannot yet be tested against records — an [open] gap, not ''confirmed dry'' (→ C2 records request
-    #1688). Predicted makeup 0 MGD.'
+    #1688). Predicted makeup 0 MGD. Neither corroborator is on record for 5C Data Centers "CMH01" (air
+    permit + Tier II) — both are C2 records-request items, not read as confirming the claim.'
 - site: urbana
   facility: Urbana Technology Hub
   is_control: false
@@ -279,17 +348,49 @@ candidates:
     - sewer-use agreement + any cooling-tower blowdown authorization
     - metered water-service use (makeup withdrawal)
     - cooling-tower blowdown / low-volume-wastewater DMR
-    holder: City / municipal water-sewer authority serving urbana
+    - facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits
+    - Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)
+    holder: City / municipal water-sewer authority serving urbana; Ohio EPA / regional air agency (DAPC);
+      SERC / LEPC
     rationale: closed_loop_dry claim (source=reference) with no facility-own discharge permit and no documented
       makeup — resolve whether blowdown goes to sewer under a City agreement not visible in ECHO/NPDES,
       or the loop is genuinely dry.
     epic_ref: '#1688 (C2)'
     tag: '[open]'
+  corroborators:
+    air_permit:
+      state: not_on_record
+      stance: silent
+      tower_count: null
+      pm10_tpy: null
+      pm25_tpy: null
+      citation: no air permit wired for Urbana Technology Hub (SiteFacility.air_permit_relpath is None)
+      tag: '[open]'
+      confidence: low
+      finding: 'No air permit on file for Urbana Technology Hub: whether its cooling towers are permitted
+        PM (drift) sources cannot be checked against the closed_loop_dry claim — a records-request item
+        (facility air PTI/PTIO), never read as ''no cooling tower''.'
+    tier2_chemistry:
+      state: not_on_record
+      stance: silent
+      chemicals: []
+      citation: Tier II / EPCRA-312 cooling-water treatment inventory not on record (SERC/LEPC-held, not
+        published to ECHO)
+      tag: '[open]'
+      confidence: low
+      finding: 'No Tier II / EPCRA-312 cooling-chemistry inventory on file for Urbana Technology Hub:
+        heavy biocide / scale-inhibitor treatment scales with evaporative cycling and would corroborate
+        over-cycling against the closed_loop_dry claim — a records-request item (LEPC/SERC filing), not
+        yet obtainable.'
+    net_stance: silent
+    summary: Neither corroborator is on record for Urbana Technology Hub (air permit + Tier II) — both
+      are C2 records-request items, not read as confirming the claim.
   tag: '[open]'
   confidence: low
   finding: 'No documented makeup or blowdown for Urbana Technology Hub: the closed_loop_dry claim (source=reference)
     cannot yet be tested against records — an [open] gap, not ''confirmed dry'' (→ C2 records request
-    #1688). Predicted makeup 0 MGD.'
+    #1688). Predicted makeup 0 MGD. Neither corroborator is on record for Urbana Technology Hub (air permit
+    + Tier II) — both are C2 records-request items, not read as confirming the claim.'
 - site: van-wert
   facility: Van Wert Mega Site
   is_control: false
@@ -378,17 +479,48 @@ candidates:
     - sewer-use agreement + any cooling-tower blowdown authorization
     - metered water-service use (makeup withdrawal)
     - cooling-tower blowdown / low-volume-wastewater DMR
-    holder: City / municipal water-sewer authority serving van-wert
+    - facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits
+    - Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)
+    holder: City / municipal water-sewer authority serving van-wert; Ohio EPA / regional air agency (DAPC);
+      SERC / LEPC
     rationale: closed_loop_dry claim (source=reference) with no facility-own discharge permit and no documented
       makeup — resolve whether blowdown goes to sewer under a City agreement not visible in ECHO/NPDES,
       or the loop is genuinely dry.
     epic_ref: '#1688 (C2)'
     tag: '[open]'
+  corroborators:
+    air_permit:
+      state: not_on_record
+      stance: silent
+      tower_count: null
+      pm10_tpy: null
+      pm25_tpy: null
+      citation: no air permit wired for Van Wert Mega Site (SiteFacility.air_permit_relpath is None)
+      tag: '[open]'
+      confidence: low
+      finding: 'No air permit on file for Van Wert Mega Site: whether its cooling towers are permitted
+        PM (drift) sources cannot be checked against the closed_loop_dry claim — a records-request item
+        (facility air PTI/PTIO), never read as ''no cooling tower''.'
+    tier2_chemistry:
+      state: not_on_record
+      stance: silent
+      chemicals: []
+      citation: Tier II / EPCRA-312 cooling-water treatment inventory not on record (SERC/LEPC-held, not
+        published to ECHO)
+      tag: '[open]'
+      confidence: low
+      finding: 'No Tier II / EPCRA-312 cooling-chemistry inventory on file for Van Wert Mega Site: heavy
+        biocide / scale-inhibitor treatment scales with evaporative cycling and would corroborate over-cycling
+        against the closed_loop_dry claim — a records-request item (LEPC/SERC filing), not yet obtainable.'
+    net_stance: silent
+    summary: Neither corroborator is on record for Van Wert Mega Site (air permit + Tier II) — both are
+      C2 records-request items, not read as confirming the claim.
   tag: '[open]'
   confidence: low
   finding: 'No documented makeup or blowdown for Van Wert Mega Site: the closed_loop_dry claim (source=reference)
     cannot yet be tested against records — an [open] gap, not ''confirmed dry'' (→ C2 records request
-    #1688). Predicted makeup 0 MGD.'
+    #1688). Predicted makeup 0 MGD. Neither corroborator is on record for Van Wert Mega Site (air permit
+    + Tier II) — both are C2 records-request items, not read as confirming the claim.'
 - site: wilmington
   facility: Cosler Farm campus
   is_control: false
@@ -478,17 +610,48 @@ candidates:
     - sewer-use agreement + any cooling-tower blowdown authorization
     - metered water-service use (makeup withdrawal)
     - cooling-tower blowdown / low-volume-wastewater DMR
-    holder: City / municipal water-sewer authority serving wilmington
+    - facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits
+    - Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)
+    holder: City / municipal water-sewer authority serving wilmington; Ohio EPA / regional air agency
+      (DAPC); SERC / LEPC
     rationale: hybrid_adiabatic claim (source=reference) with no facility-own discharge permit and no
       documented makeup — resolve whether blowdown goes to sewer under a City agreement not visible in
       ECHO/NPDES, or the loop is genuinely dry.
     epic_ref: '#1688 (C2)'
     tag: '[open]'
+  corroborators:
+    air_permit:
+      state: not_on_record
+      stance: silent
+      tower_count: null
+      pm10_tpy: null
+      pm25_tpy: null
+      citation: no air permit wired for Cosler Farm campus (SiteFacility.air_permit_relpath is None)
+      tag: '[open]'
+      confidence: low
+      finding: 'No air permit on file for Cosler Farm campus: whether its cooling towers are permitted
+        PM (drift) sources cannot be checked against the hybrid_adiabatic claim — a records-request item
+        (facility air PTI/PTIO), never read as ''no cooling tower''.'
+    tier2_chemistry:
+      state: not_on_record
+      stance: silent
+      chemicals: []
+      citation: Tier II / EPCRA-312 cooling-water treatment inventory not on record (SERC/LEPC-held, not
+        published to ECHO)
+      tag: '[open]'
+      confidence: low
+      finding: 'No Tier II / EPCRA-312 cooling-chemistry inventory on file for Cosler Farm campus: heavy
+        biocide / scale-inhibitor treatment scales with evaporative cycling and would corroborate over-cycling
+        against the hybrid_adiabatic claim — a records-request item (LEPC/SERC filing), not yet obtainable.'
+    net_stance: silent
+    summary: Neither corroborator is on record for Cosler Farm campus (air permit + Tier II) — both are
+      C2 records-request items, not read as confirming the claim.
   tag: '[open]'
   confidence: low
   finding: 'No documented makeup or blowdown for Cosler Farm campus: the hybrid_adiabatic claim (source=reference)
     cannot yet be tested against records — an [open] gap, not ''confirmed dry'' (→ C2 records request
-    #1688). Predicted makeup 1.86 MGD.'
+    #1688). Predicted makeup 1.86 MGD. Neither corroborator is on record for Cosler Farm campus (air permit
+    + Tier II) — both are C2 records-request items, not read as confirming the claim.'
 - site: new-albany
   facility: Intel evaporative control (New Albany)
   is_control: true
@@ -590,7 +753,42 @@ candidates:
   recommended_archetype: evaporative_tower
   recommended_source: document
   lead: null
+  corroborators:
+    air_permit:
+      state: pm_source_listed
+      stance: corroborates
+      tower_count: 125
+      pm10_tpy: 13.0
+      pm25_tpy: 4.5
+      citation: 'constructed calibration control (exemplar: Intel ''Ohio One'' / New Albany, openly evaporative,
+        ~125 cooling towers) — figures internally consistent with an evaporative tower at CoC≈5, NOT documented
+        Intel data; New Albany carries no pinned SiteFacility (B6 #1686). The harness must classify it
+        corroborated-evaporative (no false discrepancy).'
+      tag: '[verified]'
+      confidence: high
+      finding: Air permit lists ~125 cooling towers as permitted PM (drift) sources — corroborates the
+        evaporative_tower claim (constructed calibration control, not documented Intel data).
+    tier2_chemistry:
+      state: treatment_present
+      stance: corroborates
+      chemicals:
+      - biocide
+      - scale inhibitor
+      - corrosion inhibitor
+      citation: 'constructed calibration control (exemplar: Intel ''Ohio One'' / New Albany, openly evaporative,
+        ~125 cooling towers) — figures internally consistent with an evaporative tower at CoC≈5, NOT documented
+        Intel data; New Albany carries no pinned SiteFacility (B6 #1686). The harness must classify it
+        corroborated-evaporative (no false discrepancy).'
+      tag: '[verified]'
+      confidence: high
+      finding: Tier II / EPCRA-312 inventory carries cooling-water treatment chemistry (biocide, scale
+        / corrosion inhibitor) — the evaporative-cycling signature (constructed calibration).
+    net_stance: corroborates
+    summary: Both independent corroborators are consistent with the evaporative_tower claim — the positive-control
+      direction (no false contradiction).
   tag: '[verified]'
   confidence: high
   finding: Documented 0.45 MGD blowdown matches the evaporative_tower claim's 0.428 MGD prediction — corroborated
-    evaporative; upgrade source reference → document. Back-solved CoC 4.89 (4.1565-5.6235).
+    evaporative; upgrade source reference → document. Back-solved CoC 4.89 (4.1565-5.6235). Both independent
+    corroborators are consistent with the evaporative_tower claim — the positive-control direction (no
+    false contradiction).

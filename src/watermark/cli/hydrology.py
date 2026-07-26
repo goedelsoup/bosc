@@ -200,8 +200,23 @@ def cooling_reconcile_cmd(
         f"{blowdown.OHD000001.asof} (OHD000001 lifecycle)."
     )
     color = {"discrepancy": "red", "corroborated": "green", "gap": "yellow"}
+    # A4 (#1680) corroborator stance → glyph: contradicts (points to over-cycling) / corroborates /
+    # silent (not on record). Secondary to the outcome — never re-archetypes on its own.
+    stance_glyph = {
+        "contradicts": "[red]✗ contradicts[/]",
+        "corroborates": "[green]✓ corroborates[/]",
+        "silent": "[dim]· silent[/]",
+    }
     table = Table(
-        "site", "facility", "claim", "outcome", "pred makeup", "documented", "CoC*", "recommend"
+        "site",
+        "facility",
+        "claim",
+        "outcome",
+        "pred makeup",
+        "documented",
+        "CoC*",
+        "corrob†",
+        "recommend",
     )
     for r in records:
         a = r.account
@@ -217,6 +232,7 @@ def cooling_reconcile_cmd(
             if r.recommended_archetype is not None
             else "records request (C2)"
         )
+        corrob = stance_glyph[r.corroborators.net_stance.value] if r.corroborators else "—"
         facility = f"{r.facility}{' [cyan](control)[/]' if r.is_control else ''}"
         table.add_row(
             r.site,
@@ -226,6 +242,7 @@ def cooling_reconcile_cmd(
             f"{a.predicted_makeup.value:g}",
             f"{documented.value:g} MGD" if documented is not None else "—",
             coc,
+            corrob,
             escape(recommend),
         )
     console.print(table)
@@ -233,7 +250,9 @@ def cooling_reconcile_cmd(
         r"[dim]The harness recommends; it never mutates cooling_model (re-archetyping is a reviewed "
         r"B-review edit with the instrument cited). A back-solved CoC (CoC*) is an \[inference] "
         r"bracket. A gap is an \[open] records-request lead for C2 (#1688), never 'confirmed dry'. "
-        r"The Intel row is a constructed positive control.[/]"
+        r"corrob† = the A4 independent corroborators (air-permit cooling-tower PM + Tier II "
+        r"chemistry) reconciled against the claim — SECONDARY, never the sole basis for a re-"
+        r"archetype. The Intel row is a constructed positive control.[/]"
     )
 
     if write or out:

@@ -29,6 +29,15 @@ against what records *document*:
 reviewed B1-B6 edit landed with the instrument cited — this output is the evidence packet
 for that edit, not an auto-applied change (the epic's evidentiary rule).
 
+**A4 (#1680) independent corroborators.** Two orthogonal tells corroborate over-cycling
+*independently of the makeup/blowdown accounting* (:mod:`watermark.hydrology.cooling_corroborators`):
+the facility's own **air permit** listing cooling towers as PM (drift) sources, and its **Tier II /
+EPCRA-312** cooling-water treatment chemistry. Each :class:`ReconciliationRecord` carries a resolved
+:class:`~watermark.hydrology.cooling_corroborators.CoolingCorroborators`. They are SECONDARY: they
+sharpen the finding and the gap's records-request but **never change the classified outcome** — an
+air permit is not a discharge/withdrawal instrument, so a corroborator is never the sole basis for a
+re-archetype.
+
 **The Intel positive control** (:data:`INTEL_CONTROL`) is the calibration baseline: an
 openly-evaporative facility (exemplar New Albany / Intel, ~125 cooling towers) whose
 documented water *equals its evaporative-tower prediction*. The harness must classify it
@@ -49,6 +58,15 @@ from pydantic import BaseModel, ConfigDict
 
 from watermark.config import Settings, get_settings
 from watermark.hydrology import blowdown, cooling_models
+from watermark.hydrology.cooling_corroborators import (
+    AirPermitCorroborator,
+    AirPermitState,
+    CoolingCorroborators,
+    CorroboratorStance,
+    TierIIChemistryCorroborator,
+    TierIIState,
+    resolve_corroborators,
+)
 from watermark.hydrology.model import CoolingBasis, ProvenancedValue
 from watermark.logging import get_logger
 from watermark.provenance import Confidence
@@ -158,6 +176,11 @@ class ReconciliationRecord(BaseModel):
     recommended_source: str | None = None
     # The C2 records-request lead payload (#1688) — present only for a gap outcome.
     lead: RecordsRequestLead | None = None
+    # The A4 (#1680) independent corroborators — air-permit cooling-tower PM + Tier II chemistry.
+    # SECONDARY by construction: they sharpen the finding / records-request but NEVER change the
+    # ``outcome`` above (an air permit is not a discharge/withdrawal instrument, so it is never the
+    # sole basis for a re-archetype). ``None`` when not resolved (a bare ``reconcile_facility`` call).
+    corroborators: CoolingCorroborators | None = None
     tag: str  # evidentiary tag on the reconciliation ("[open]" gap / "[inference]" / "[verified]")
     confidence: Confidence
     finding: str  # one-line evidentiary read
@@ -303,24 +326,45 @@ def _classify(
 _WET_ARCHETYPES = frozenset({CoolingModelType.EVAPORATIVE_TOWER, CoolingModelType.HYBRID_ADIABATIC})
 
 
-def _records_lead(site: str, fac: SiteFacility, claim_source: str) -> RecordsRequestLead:
+def _records_lead(
+    site: str,
+    fac: SiteFacility,
+    claim_source: str,
+    corroborators: CoolingCorroborators | None = None,
+) -> RecordsRequestLead:
     """The C2 (#1688) records-request lead payload for a gap facility.
 
     A closed-loop claim with no documented makeup or blowdown is not "confirmed dry" — the
     blowdown may go to sewer under a City sewer-use / pretreatment agreement ECHO never sees.
-    This is the structured ask that resolves it (R.C. 149.43), consumable by the C2 queue.
+    This is the structured ask that resolves it (R.C. 149.43), consumable by the C2 queue. The A4
+    corroborators that are themselves not-on-record (#1680) add their own asks — the facility air
+    PTI/PTIO (its cooling-tower emission-unit list) and the Tier II / EPCRA-312 chemistry inventory.
     """
+    records_sought = [
+        "industrial pretreatment / indirect-discharge (IU) permit",
+        "sewer-use agreement + any cooling-tower blowdown authorization",
+        "metered water-service use (makeup withdrawal)",
+        "cooling-tower blowdown / low-volume-wastewater DMR",
+    ]
+    holders = [f"City / municipal water-sewer authority serving {site}"]
+    if corroborators is not None:
+        if corroborators.air_permit.state is AirPermitState.NOT_ON_RECORD:
+            records_sought.append(
+                "facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits"
+            )
+            holders.append("Ohio EPA / regional air agency (DAPC)")
+        if corroborators.tier2_chemistry.state is TierIIState.NOT_ON_RECORD:
+            records_sought.append(
+                "Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, "
+                "scale / corrosion inhibitor)"
+            )
+            holders.append("SERC / LEPC")
     return RecordsRequestLead(
         site=site,
         facility=fac.name,
         subject="cooling-water account — makeup + blowdown records",
-        records_sought=[
-            "industrial pretreatment / indirect-discharge (IU) permit",
-            "sewer-use agreement + any cooling-tower blowdown authorization",
-            "metered water-service use (makeup withdrawal)",
-            "cooling-tower blowdown / low-volume-wastewater DMR",
-        ],
-        holder=f"City / municipal water-sewer authority serving {site}",
+        records_sought=records_sought,
+        holder="; ".join(holders),
         rationale=(
             f"{fac.cooling_model.value} claim (source={claim_source}) with no facility-own "
             "discharge permit and no documented makeup — resolve whether blowdown goes to sewer "
@@ -329,6 +373,24 @@ def _records_lead(site: str, fac: SiteFacility, claim_source: str) -> RecordsReq
         epic_ref="#1688 (C2)",
         tag="[open]",
     )
+
+
+def _fold_corroborators(
+    finding: str, outcome: ReconcileOutcome, corroborators: CoolingCorroborators | None
+) -> str:
+    """Append the A4 corroborator read to the water-account finding (#1680), when it adds signal.
+
+    The corroborators are SECONDARY: this only *annotates* the finding, never changes the outcome.
+    A non-silent net stance always appends (an independent contradiction / corroboration is worth
+    surfacing); a silent one appends only for a gap (it names the extra records to request), since
+    on a discrepancy / corroborated outcome the water account already spoke.
+    """
+    if corroborators is None:
+        return finding
+    net = corroborators.net_stance
+    if net is CorroboratorStance.SILENT and outcome is not ReconcileOutcome.GAP:
+        return finding
+    return f"{finding} {corroborators.summary}"
 
 
 def _finding(
@@ -395,6 +457,7 @@ def reconcile_facility(
     documented_makeup: ProvenancedValue | None = None,
     documented_blowdown: ProvenancedValue | None = None,
     seasonality_warm_ratio: float | None = None,
+    corroborators: CoolingCorroborators | None = None,
     is_control: bool = False,
 ) -> ReconciliationRecord:
     """Reconcile one facility's cooling claim against its documented water account.
@@ -404,6 +467,11 @@ def reconcile_facility(
     climatology, not the active site's), and the documented figures are injected (the cohort
     resolver reads them from A1/A2). Emits the outcome, a recommendation, and — for a gap — a
     C2 lead payload. Recommends only; it never mutates ``fac.cooling_model``.
+
+    ``corroborators`` (A4, #1680) are the two independent tells (air-permit cooling-tower PM +
+    Tier II chemistry). Injected like the documented figures (the cohort resolver reads them via
+    :func:`~watermark.hydrology.cooling_corroborators.resolve_corroborators`). They are SECONDARY:
+    they sharpen the finding + the gap's records-request but NEVER change the classified ``outcome``.
     """
     basis = _predicted_basis(fac, settings)
     predicted_makeup = _require(basis.headline_makeup(), "predicted makeup")
@@ -466,7 +534,7 @@ def reconcile_facility(
         tag = "[verified]"
         confidence = "high"
     else:  # GAP
-        lead = _records_lead(site, fac, claim_source)
+        lead = _records_lead(site, fac, claim_source, corroborators)
         tag = "[open]"
         confidence = "low"
 
@@ -482,9 +550,12 @@ def reconcile_facility(
         recommended_archetype=recommended_archetype,
         recommended_source=recommended_source,
         lead=lead,
+        corroborators=corroborators,
         tag=tag,
         confidence=confidence,
-        finding=_finding(outcome, fac, account, claim_source),
+        finding=_fold_corroborators(
+            _finding(outcome, fac, account, claim_source), outcome, corroborators
+        ),
     )
 
 
@@ -526,12 +597,52 @@ INTEL_DOCUMENTED_MAKEUP = ProvenancedValue.from_reference(2.2, "MGD", citation=_
 INTEL_DOCUMENTED_BLOWDOWN = ProvenancedValue.from_reference(0.45, "MGD", citation=_INTEL_CITE)
 INTEL_SEASONALITY_WARM_RATIO = 1.6  # a temperature-driven summer peak — the evaporative shape
 
+# The A4 corroborators for the control (#1680): an openly-evaporative facility with ~125 cooling
+# towers has BOTH tells positive — its air permit lists the towers as PM (drift) sources and its
+# Tier II inventory carries cooling-water treatment chemistry. Both CORROBORATE its evaporative
+# claim (the no-false-contradiction direction). Constructed calibration values, NOT documented data.
+INTEL_CORROBORATORS = CoolingCorroborators(
+    air_permit=AirPermitCorroborator(
+        state=AirPermitState.PM_SOURCE_LISTED,
+        stance=CorroboratorStance.CORROBORATES,
+        tower_count=125,
+        pm10_tpy=13.0,
+        pm25_tpy=4.5,
+        citation=_INTEL_CITE,
+        tag="[verified]",
+        confidence="high",
+        finding=(
+            "Air permit lists ~125 cooling towers as permitted PM (drift) sources — corroborates the "
+            "evaporative_tower claim (constructed calibration control, not documented Intel data)."
+        ),
+    ),
+    tier2_chemistry=TierIIChemistryCorroborator(
+        state=TierIIState.TREATMENT_PRESENT,
+        stance=CorroboratorStance.CORROBORATES,
+        chemicals=["biocide", "scale inhibitor", "corrosion inhibitor"],
+        citation=_INTEL_CITE,
+        tag="[verified]",
+        confidence="high",
+        finding=(
+            "Tier II / EPCRA-312 inventory carries cooling-water treatment chemistry (biocide, scale "
+            "/ corrosion inhibitor) — the evaporative-cycling signature (constructed calibration)."
+        ),
+    ),
+    net_stance=CorroboratorStance.CORROBORATES,
+    summary=(
+        "Both independent corroborators are consistent with the evaporative_tower claim — the "
+        "positive-control direction (no false contradiction)."
+    ),
+)
+
 
 def intel_control(*, settings: Settings | None = None) -> ReconciliationRecord:
     """The Intel positive control, reconciled — the harness's calibration self-check.
 
     Evaporative_tower needs no climatology, so any settings resolves it; a fresh
-    ``Settings()`` is used when none is passed so the control is standalone-runnable.
+    ``Settings()`` is used when none is passed so the control is standalone-runnable. Its A4
+    corroborators (:data:`INTEL_CORROBORATORS`) are constructed positive — the calibration that an
+    openly-evaporative facility's air permit + Tier II chemistry CORROBORATE its wet claim.
     """
     settings = settings or Settings()
     return reconcile_facility(
@@ -543,6 +654,7 @@ def intel_control(*, settings: Settings | None = None) -> ReconciliationRecord:
         documented_makeup=INTEL_DOCUMENTED_MAKEUP,
         documented_blowdown=INTEL_DOCUMENTED_BLOWDOWN,
         seasonality_warm_ratio=INTEL_SEASONALITY_WARM_RATIO,
+        corroborators=INTEL_CORROBORATORS,
         is_control=True,
     )
 
@@ -610,8 +722,9 @@ def reconcile_cohort(*, settings: Settings | None = None) -> list[Reconciliation
     The cohort is A2's registry-derived closed-loop set (:func:`blowdown.closed_loop_candidates`
     — every ``SiteFacility`` pinning ``closed_loop_dry`` / ``hybrid_adiabatic``). Each facility
     is derived under its OWN site's settings so a cross-site cohort never leaks the active site's
-    climatology. The Intel control is appended and reconciled the same way. Ordered by
-    (is_control, site, facility) so the control sorts last after the live findings.
+    climatology, and its A4 corroborators (:func:`cooling_corroborators.resolve_corroborators`) are
+    resolved under the same settings. The Intel control is appended and reconciled the same way.
+    Ordered by (is_control, site, facility) so the control sorts last after the live findings.
     """
     settings = settings or get_settings()
     records: list[ReconciliationRecord] = []
@@ -620,6 +733,7 @@ def reconcile_cohort(*, settings: Settings | None = None) -> list[Reconciliation
         fac = next((f for f in profile.facilities if f.name == candidate.facility), None)
         if fac is None:  # pragma: no cover - the candidate list is built from these facilities
             continue
+        site_settings = _site_settings(candidate.site, settings)
         makeup, blowdown_pv, warm_ratio = _documented_water(candidate, settings)
         records.append(
             reconcile_facility(
@@ -627,10 +741,11 @@ def reconcile_cohort(*, settings: Settings | None = None) -> list[Reconciliation
                 site=candidate.site,
                 claim_source=candidate.cooling_source,
                 claim_citation=candidate.cooling_citation,
-                settings=_site_settings(candidate.site, settings),
+                settings=site_settings,
                 documented_makeup=makeup,
                 documented_blowdown=blowdown_pv,
                 seasonality_warm_ratio=warm_ratio,
+                corroborators=resolve_corroborators(fac, settings=site_settings),
             )
         )
     records.append(intel_control(settings=settings))
@@ -653,12 +768,14 @@ def reconciliation_document(records: list[ReconciliationRecord]) -> dict[str, An
         "meta": {
             "subject": (
                 "Data-center cooling-cycling reconciliation — claimed cooling archetype vs the "
-                "documented water account (closed-loop cooling cycling epic #1676, A3 #1679)"
+                "documented water account (closed-loop cooling cycling epic #1676, A3 #1679), plus "
+                "the A4 (#1680) independent corroborators (air-permit PM + Tier II chemistry)"
             ),
             "source": (
                 "watermark.hydrology.cooling_reconcile — the A2 closed-loop cohort x the "
                 "archetype-predicted water account (cooling_models) x documented makeup (A1) / "
-                "blowdown (A2), plus the Intel evaporative positive control"
+                "blowdown (A2) x the A4 corroborators (cooling_corroborators), plus the Intel "
+                "evaporative positive control"
             ),
             "regenerate": "watermark cooling-reconcile --write",
             # As current as the A2 permit-lifecycle refresh the documented-blowdown read gates on.
@@ -669,9 +786,12 @@ def reconciliation_document(records: list[ReconciliationRecord]) -> dict[str, An
                 "reviewed B1-B6 edit with the instrument cited. A back-solved cycles-of-"
                 "concentration is an [inference] bracket, never a headline scalar. A gap (no "
                 "documented makeup/blowdown) is an [open] records-request lead for C2 (#1688), "
-                "never read as 'confirmed dry'. The Intel row is a constructed positive control "
-                "(openly evaporative) the harness must classify corroborated, not a false "
-                "discrepancy — it is a calibration vector, not documented Intel data."
+                "never read as 'confirmed dry'. The A4 corroborators (air-permit cooling-tower PM, "
+                "Tier II / EPCRA-312 chemistry) are SECONDARY — recorded and reconciled against the "
+                "claim, but never the sole basis for a re-archetype and never changing the outcome. "
+                "The Intel row is a constructed positive control (openly evaporative) the harness "
+                "must classify corroborated, not a false discrepancy — it is a calibration vector, "
+                "not documented Intel data."
             ),
         },
         "candidates": [r.model_dump(mode="json") for r in records],
