@@ -2,9 +2,10 @@
 
 Two derived references for the closed-loop cooling cycling epic (#1676): the A2
 **OHD000001 coverage** resolution (#1678) and the A3 **cooling-cycling reconciliation**
-(#1679). Both are computed over the site registry's closed-loop cohort — data-center
-facilities disclosing a recirculating/closed cooling archetype — and the cited OHD000001
-permit lifecycle.
+(#1679), the latter now also carrying the A4 **independent corroborators** (#1680 —
+air-permit cooling-tower PM + Tier II / EPCRA-312 chemistry). Both are computed over the
+site registry's closed-loop cohort — data-center facilities disclosing a recirculating/
+closed cooling archetype — and the cited OHD000001 permit lifecycle.
 
 OHD000001's low-volume-wastewater coverage (cooling-tower blowdown, boiler blowdown,
 air-compressor condensate) is the disclosure the cycling thesis predicts. The permit
@@ -23,13 +24,15 @@ that reads it.
   `facility_own_discharge` status, and a one-line evidentiary `finding`. Regenerate with
   `watermark oepa coverage --write` (`watermark.hydrology.blowdown`).
 
-- [**`cooling-reconciliation.yaml`**](cooling-reconciliation.yaml) (A3) — the
+- [**`cooling-reconciliation.yaml`**](cooling-reconciliation.yaml) (A3 + A4) — the
   per-facility **water account**: the pinned archetype's PREDICTED makeup/blowdown
   (from `watermark.hydrology.cooling_models`) vs the DOCUMENTED makeup (A1 withdrawal) /
   blowdown (A2 discharge), a back-solved cycles-of-concentration (an `[inference]`
   bracket) where both are on record, and an `outcome` per facility — `discrepancy` /
   `corroborated` / `gap` — with a recommendation and, for a gap, a C2 records-request
-  `lead` payload. Regenerate with `watermark cooling-reconcile --write`
+  `lead` payload. Each record also carries the A4 `corroborators` block (air-permit
+  cooling-tower PM + Tier II chemistry — `watermark.hydrology.cooling_corroborators`).
+  Regenerate with `watermark cooling-reconcile --write`
   (`watermark.hydrology.cooling_reconcile`).
 
 ## Method & the gating fact
@@ -100,6 +103,38 @@ documented water equals its evaporative-tower prediction, which the harness must
 calibration vector built into the harness, **not** documented Intel data, and **not** a
 registered site (New Albany carries no pinned `SiteFacility` — that is B6 #1686's work).
 
+## The independent corroborators (A4, #1680)
+
+Two orthogonal tells corroborate over-cycling **independently of the makeup/blowdown
+accounting** — and are hard for an operator to reconcile with a "dry, sealed" claim.
+Each reconciliation record carries a `corroborators` block with both, plus a combined
+`net_stance` (`corroborates` / `contradicts` / `silent`) relative to the claim:
+
+- **Air permit** (`air_permit`) — an evaporative cooling tower emits PM (drift) and is a
+  permitted air source fitted with drift eliminators; a sealed/dry system is not. A
+  facility whose own air permit **lists cooling towers as PM emission units**
+  (`pm_source_listed`) therefore **contradicts** a `closed_loop_dry` claim and
+  **corroborates** an `evaporative_tower` / `hybrid_adiabatic` one. Read from the
+  committed extraction at `SiteFacility.air_permit_relpath` (the same seam
+  `watermark.air.emissions` grounds its rates on) — real today for any facility whose air
+  PTI/PTIO is on file (Lima's `permits/4132514.epa.yaml` lists 36 cooling towers as
+  ~4.0 tpy PM10 sources), `not_on_record` where none is wired.
+- **Tier II chemistry** (`tier2_chemistry`) — cooling-water treatment (biocide, scale /
+  corrosion inhibitor) scales with makeup and blowdown volume; a truly dry loop needs
+  little. Source is the **Tier II / EPCRA-312** inventory + LEPC filings, held by the
+  SERC/LEPC and **not on ECHO** — so for the live cohort this is a **forward seam**
+  (`not_on_record` → a C2 records-request item) until a filing lands.
+
+**Both are corroborators, never the sole basis for a re-archetype.** A re-archetype is
+`[verified]` only with the discharge/withdrawal *instrument* cited (the A3 water
+account), and an air permit is not such an instrument. So these signals sharpen a
+finding and the gap's records-request but **never change the `outcome`**. Each carries
+its own tag: an on-record listing/absence is `[verified]`; a not-on-record one is
+`[open]`. **Every live cohort facility is `silent` on both today** (no air permit / Tier
+II on file); the Intel positive control carries both `corroborates` (an openly-
+evaporative facility's air permit lists its towers and its Tier II inventory carries
+treatment chemistry — a constructed calibration vector, not documented Intel data).
+
 ## Evidentiary stance
 
 - OHD000001 non-coverage while the permit is draft is `[verified]` (the permit's own
@@ -117,7 +152,7 @@ registered site (New Albany carries no pinned `SiteFacility` — that is B6 #168
 
 ### `oepa-cooling-reconciliation` — Cooling-cycling reconciliation — closed-loop cohort water account
 
-Source: watermark.hydrology.cooling_reconcile — A2 closed-loop cohort × archetype-predicted water account × documented makeup (A1) / blowdown (A2) · License: Public records (Ohio state government) · Access: public · Site scope: state:OH · Refresh: on-demand, last 2026-07-11
+Source: watermark.hydrology.cooling_reconcile — A2 closed-loop cohort × archetype-predicted water account × documented makeup (A1) / blowdown (A2) × A4 independent corroborators (air-permit PM + Tier II chemistry) · License: Public records (Ohio state government) · Access: public · Site scope: state:OH · Refresh: on-demand, last 2026-07-11
 
 Regenerate: `watermark cooling-reconcile --write`
 

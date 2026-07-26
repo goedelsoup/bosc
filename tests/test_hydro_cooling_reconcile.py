@@ -240,6 +240,87 @@ def test_open_load_facility_cannot_be_predicted() -> None:
         )
 
 
+# --------------------------------------------------------------------- A4 corroborators (#1680)
+
+
+def _contradicting_corroborators() -> cr.CoolingCorroborators:
+    """A constructed corroborator set whose air-permit signal CONTRADICTS a dry claim."""
+    return cr.CoolingCorroborators(
+        air_permit=cr.AirPermitCorroborator(
+            state=cr.AirPermitState.PM_SOURCE_LISTED,
+            stance=cr.CorroboratorStance.CONTRADICTS,
+            tower_count=36,
+            citation="test permit lists cooling towers as PM sources",
+            tag="[verified]",
+            confidence="high",
+            finding="Air permit lists 36 cooling towers as PM sources — contradicts the dry claim.",
+        ),
+        tier2_chemistry=cr.TierIIChemistryCorroborator(
+            state=cr.TierIIState.NOT_ON_RECORD,
+            stance=cr.CorroboratorStance.SILENT,
+            citation="not on record",
+            tag="[open]",
+            confidence="low",
+            finding="Tier II not on record.",
+        ),
+        net_stance=cr.CorroboratorStance.CONTRADICTS,
+        summary="Independent corroborators contradict the closed_loop_dry claim.",
+    )
+
+
+def test_corroborators_never_change_the_primary_outcome() -> None:
+    # A gap (no documented water) with a CONTRADICTING air-permit corroborator stays a GAP — the
+    # corroborators are secondary and never the sole basis for a re-archetype (the epic's rule).
+    rec = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="x",
+        settings=Settings(),
+        corroborators=_contradicting_corroborators(),
+    )
+    assert rec.outcome is cr.ReconcileOutcome.GAP  # unchanged by the contradicting corroborator
+    assert rec.recommended_archetype is None  # still a records request, not a re-archetype
+    # But the contradiction is surfaced in the finding (its evidentiary value is not discarded).
+    assert rec.corroborators is not None
+    assert rec.corroborators.net_stance is cr.CorroboratorStance.CONTRADICTS
+    assert "contradict" in rec.finding
+
+
+def test_gap_lead_absorbs_not_on_record_corroborator_asks() -> None:
+    # When the corroborators are themselves not-on-record, the gap's C2 records request gains the
+    # air-permit (PTI/PTIO) and Tier II asks so C2 pulls them alongside the water records.
+    rec = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="x",
+        settings=Settings(),
+        corroborators=cr.resolve_corroborators(_dry_facility(), settings=Settings()),
+    )
+    assert rec.lead is not None
+    joined = " | ".join(rec.lead.records_sought)
+    assert "air permit (PTI/PTIO)" in joined
+    assert "Tier II / EPCRA-312" in joined
+    assert "LEPC" in rec.lead.holder
+
+
+def test_intel_control_corroborators_are_both_positive() -> None:
+    rec = cr.intel_control(settings=Settings())
+    assert rec.corroborators is not None
+    assert rec.corroborators.air_permit.stance is cr.CorroboratorStance.CORROBORATES
+    assert rec.corroborators.tier2_chemistry.stance is cr.CorroboratorStance.CORROBORATES
+    assert rec.corroborators.net_stance is cr.CorroboratorStance.CORROBORATES
+
+
+def test_cohort_every_record_carries_resolved_corroborators() -> None:
+    records = cr.reconcile_cohort(settings=Settings())
+    assert all(r.corroborators is not None for r in records)
+    # The live cohort has no air permit / Tier II on file today → silent corroborators (honest).
+    live = [r for r in records if not r.is_control]
+    assert all(r.corroborators.net_stance is cr.CorroboratorStance.SILENT for r in live)
+
+
 # --------------------------------------------------------------------- artifact
 
 
@@ -270,3 +351,6 @@ def test_committed_artifact_matches_the_resolver() -> None:
     control = [c for c in doc["candidates"] if c["is_control"]]
     assert len(control) == 1
     assert control[0]["outcome"] == "corroborated"
+    # Every committed row carries the A4 corroborators block (#1680); the control's are positive.
+    assert all(c.get("corroborators") is not None for c in doc["candidates"])
+    assert control[0]["corroborators"]["net_stance"] == "corroborates"

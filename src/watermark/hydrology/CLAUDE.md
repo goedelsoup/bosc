@@ -51,5 +51,14 @@ Water-balance / stormwater modeling of the Lima municipal loop. Defers to the ro
   `data/reference/oepa/cooling-reconciliation.yaml` by `watermark cooling-reconcile --write`; the
   cohort is A2's plus the **Intel evaporative positive control** (`INTEL_CONTROL_FACILITY`, a
   constructed calibration vector — NOT a registered site, NOT documented Intel data) the harness
-  must classify `corroborated`, the no-false-positive gate.
+  must classify `corroborated`, the no-false-positive gate. (4) `cooling_corroborators.py` (A4,
+  #1680) adds two **independent corroborators** to each A3 record — the facility's own **air
+  permit** listing cooling towers as PM (drift) sources (read from `SiteFacility.air_permit_relpath`;
+  a listing CONTRADICTS a `closed_loop_dry` claim, CORROBORATES an evaporative/hybrid one — Lima's
+  `permits/4132514.epa.yaml` lists 36) and its **Tier II / EPCRA-312** cooling-water treatment
+  chemistry (a forward seam, SERC/LEPC-held, `not_on_record` for the live cohort). They are
+  **SECONDARY**: recorded + reconciled against the claim (`CoolingCorroborators.net_stance`), folded
+  into the finding + the gap's C2 records-request, but **never change the A3 `outcome` and never the
+  sole basis for a re-archetype** (an air permit is not a discharge/withdrawal instrument). The Intel
+  control carries both `corroborates`.
 - Sync throughout (`httpx.Client`) to match the rest of the pipeline.

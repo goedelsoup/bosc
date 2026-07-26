@@ -6,7 +6,7 @@ producer:
   kind: derived
   command: cooling-reconcile --write
   connector_ref: watermark.hydrology.cooling_reconcile
-  source: watermark.hydrology.cooling_reconcile — A2 closed-loop cohort × archetype-predicted water account × documented makeup (A1) / blowdown (A2)
+  source: watermark.hydrology.cooling_reconcile — A2 closed-loop cohort × archetype-predicted water account × documented makeup (A1) / blowdown (A2) × A4 independent corroborators (air-permit PM + Tier II chemistry)
   external_url: https://epa.ohio.gov
 license: Public records (Ohio state government)
 access_tier: public
@@ -30,6 +30,9 @@ tags:
   - closed-loop
   - reconciliation
   - cycles-of-concentration
+  - air-permit
+  - tier-ii
+  - corroborators
 notes: >-
   Per-facility reconciliation of each closed-loop-claiming data-center facility's cooling
   archetype CLAIM against its DOCUMENTED water account — the A3 harness of the closed-loop
@@ -42,8 +45,15 @@ notes: >-
   consistent with the claim), or `gap` (no documented water → a C2 records-request lead
   payload, #1688). The harness RECOMMENDS; it never mutates `cooling_model` (re-archetyping is
   a reviewed B1–B6 edit). Every live cohort facility resolves to `gap` today (no documented
-  makeup/blowdown while OHD000001 is draft and no facility-own DMR is on record). The Intel
-  row is a constructed openly-evaporative POSITIVE CONTROL the harness must classify
-  `corroborated`, not a false `discrepancy` — a calibration vector, not documented Intel data.
-  Depends on `oepa-ohd000001-coverage` (the A2 blowdown-coverage resolution it reads). See
-  data/reference/oepa/README.md.
+  makeup/blowdown while OHD000001 is draft and no facility-own DMR is on record). Each record
+  also carries the A4 (#1680) `corroborators` block — two independent tells reconciled against
+  the claim (`watermark.hydrology.cooling_corroborators`): the facility's own air permit
+  listing cooling towers as PM (drift) sources (read from `SiteFacility.air_permit_relpath`;
+  `pm_source_listed` CONTRADICTS a `closed_loop_dry` claim, CORROBORATES an evaporative/hybrid
+  one) and its Tier II / EPCRA-312 cooling-water treatment chemistry (a SERC/LEPC-held forward
+  seam, `not_on_record` for the live cohort). They are SECONDARY — recorded + reconciled but
+  never changing the `outcome` and never the sole basis for a re-archetype. The Intel row is a
+  constructed openly-evaporative POSITIVE CONTROL the harness must classify `corroborated`, not
+  a false `discrepancy` — a calibration vector, not documented Intel data (its corroborators
+  are both constructed-positive). Depends on `oepa-ohd000001-coverage` (the A2 blowdown-coverage
+  resolution it reads). See data/reference/oepa/README.md.
