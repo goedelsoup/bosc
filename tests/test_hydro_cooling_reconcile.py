@@ -2,9 +2,10 @@
 
 Hermetic: the harness reads the site registry, the cited OHD000001 permit-lifecycle constant,
 and the archetype math — no network, no fixture. The properties under test are the classifier's
-three outcomes (discrepancy / corroborated / gap), the Intel positive control's no-false-positive
-guarantee, the back-solved CoC being an [inference] bracket (never a scalar), and that the
-committed artifact validates + matches the resolver.
+four outcomes (discrepancy / corroborated / reservation_conflict / gap), the Troy-Piqua B1
+reservation conflict (#1681), the Intel positive control's no-false-positive guarantee, the
+back-solved CoC being an [inference] bracket (never a scalar), and that the committed artifact
+validates + matches the resolver.
 """
 
 from __future__ import annotations
@@ -205,7 +206,7 @@ def test_wet_claim_makeup_only_compares_against_predicted_makeup() -> None:
 # --------------------------------------------------------------------- cohort
 
 
-def test_cohort_is_registry_derived_all_gap_today_plus_intel_control() -> None:
+def test_cohort_is_registry_derived_gaps_plus_troy_piqua_and_intel_control() -> None:
     records = cr.reconcile_cohort(settings=Settings())
     assert records
     control = [r for r in records if r.is_control]
@@ -214,14 +215,22 @@ def test_cohort_is_registry_derived_all_gap_today_plus_intel_control() -> None:
     assert len(control) == 1
     assert records[-1].is_control
     assert control[0].outcome is cr.ReconcileOutcome.CORROBORATED
-    # Every live cohort facility is a closed_loop / hybrid claim (A2's cohort), and — with no
-    # documented water on record while OHD000001 is draft — resolves to a gap today.
+    # Every live finding tests a closed_loop / hybrid claim (A2's cohort claims + the Troy-Piqua
+    # FAQ's closed_loop_dry claim under test).
     assert live
     assert all(r.claimed_archetype in {"closed_loop_dry", "hybrid_adiabatic"} for r in live)
-    assert all(r.outcome is cr.ReconcileOutcome.GAP for r in live)
-    # A known closed-loop pin is in the cohort; an UNKNOWN-cooling facility is not.
-    assert "urbana" in {r.site for r in live}
-    assert "troy-piqua" not in {r.site for r in live}
+    # A2's registry-derived cohort facilities resolve to a gap today (no documented water while
+    # OHD000001 is draft and no facility-own DMR is on record).
+    cohort = [r for r in live if r.site != "troy-piqua"]
+    assert cohort
+    assert all(r.outcome is cr.ReconcileOutcome.GAP for r in cohort)
+    assert "urbana" in {r.site for r in cohort}
+    # Troy-Piqua (B1 #1681) pins UNKNOWN so it is NOT in A2's cohort, but its FAQ-vs-reservation
+    # conflict is reconciled as an explicit live reservation_conflict — not a gap.
+    troy = [r for r in live if r.site == "troy-piqua"]
+    assert len(troy) == 1
+    assert troy[0].outcome is cr.ReconcileOutcome.RESERVATION_CONFLICT
+    assert not troy[0].is_control  # a real site, not a constructed control
 
 
 def test_open_load_facility_cannot_be_predicted() -> None:
@@ -238,6 +247,136 @@ def test_open_load_facility_cannot_be_predicted() -> None:
         cr.reconcile_facility(
             fac, site="x", claim_source="reference", claim_citation="x", settings=Settings()
         )
+
+
+# -------------------------------------------- B1 reservation conflict — Troy-Piqua (#1681)
+
+
+def test_reservation_ceiling_contradicts_a_dry_claim_without_a_re_archetype() -> None:
+    # A disclosed RESERVATION ceiling (a will-serve figure), not a metered use, contradicts the dry
+    # claim's ~0 prediction — but a ceiling is not a discharge/withdrawal instrument, so the outcome
+    # is a reservation_conflict that KEEPS the pin (no re-archetype), never a discrepancy.
+    rec = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="[reference] closed-loop FAQ claim",
+        settings=Settings(),
+        reserved_makeup=ProvenancedValue.from_reference(2.0, "MGD", citation="reserved ceiling"),
+        reserved_blowdown=ProvenancedValue.from_reference(
+            1.0, "MGD", citation="reserved wastewater"
+        ),
+        water_lead_ref="#1486",
+    )
+    assert rec.outcome is cr.ReconcileOutcome.RESERVATION_CONFLICT
+    assert rec.outcome is not cr.ReconcileOutcome.DISCREPANCY  # a ceiling is not an instrument
+    # Keeps the pin: no re-archetype recommendation, and the conflict stays [open].
+    assert rec.recommended_archetype is None
+    assert rec.recommended_source is None
+    assert rec.tag == "[open]"
+    assert rec.confidence == "medium"  # sharper than an empty gap, short of instrument-grade
+    # Emits a sharpened C2 lead that references the site's standing water lead (#1486) + the instrument.
+    assert rec.lead is not None
+    assert "#1486" in rec.lead.epic_ref
+    joined = " | ".join(rec.lead.records_sought)
+    assert "executed water & wastewater service agreement" in joined
+    assert "metered water-service use" in joined
+    # The finding is explicit that the reserved figure is a ceiling, not a headline consumptive.
+    assert "ceiling" in rec.finding
+    assert "NOT a headline consumptive" in rec.finding
+
+
+def test_reservation_backsolved_coc_is_a_labeled_inference_bracket() -> None:
+    rec = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="x",
+        settings=Settings(),
+        reserved_makeup=ProvenancedValue.from_reference(2.0, "MGD", citation="reserved ceiling"),
+        reserved_blowdown=ProvenancedValue.from_reference(
+            1.0, "MGD", citation="reserved wastewater"
+        ),
+    )
+    coc = rec.account.backsolved_cycles
+    assert coc is not None
+    assert coc.source == "derived"  # [inference]
+    assert coc.has_range  # a bracket, never a scalar
+    assert coc.value == 2.0  # 2.0 / 1.0
+    # The citation names the inputs as reservation ceilings, not metered use.
+    assert "RESERVATION CEILINGS" in (coc.citation or "")
+    assert "not metered use" in (coc.citation or "")
+
+
+def test_reservation_is_kept_distinct_from_documented_slots() -> None:
+    # The reservation ceiling never lands on the documented_* slots — so a will-serve ceiling is
+    # never read downstream as a metered withdrawal/discharge.
+    rec = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="x",
+        settings=Settings(),
+        reserved_makeup=ProvenancedValue.from_reference(2.0, "MGD", citation="reserved ceiling"),
+        reserved_blowdown=ProvenancedValue.from_reference(
+            1.0, "MGD", citation="reserved wastewater"
+        ),
+    )
+    a = rec.account
+    assert a.documented_makeup is None and a.documented_blowdown is None
+    assert a.reserved_makeup is not None and a.reserved_makeup.value == 2.0
+    assert a.reserved_blowdown is not None and a.reserved_blowdown.value == 1.0
+
+
+def test_documented_metered_flow_outranks_a_reservation_ceiling() -> None:
+    # A metered documented discharge (an instrument) adjudicates over a reservation ceiling: the
+    # outcome is a discrepancy (re-archetype up), NOT a reservation_conflict.
+    rec = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="x",
+        settings=Settings(),
+        documented_blowdown=ProvenancedValue.from_document(0.5, "MGD", citation="test DMR"),
+        reserved_makeup=ProvenancedValue.from_reference(2.0, "MGD", citation="reserved ceiling"),
+        reserved_blowdown=ProvenancedValue.from_reference(
+            1.0, "MGD", citation="reserved wastewater"
+        ),
+    )
+    assert rec.outcome is cr.ReconcileOutcome.DISCREPANCY
+    assert rec.recommended_archetype == CoolingModelType.EVAPORATIVE_TOWER.value
+    # A documented signal is present (blowdown, but no documented makeup) — so there is no metered
+    # pair to back-solve from, and the harness does NOT fall back to the reservation ceilings on a
+    # discrepancy (a discrepancy never carries a reservation-derived CoC).
+    assert rec.account.backsolved_cycles is None
+
+
+def test_troy_piqua_b1_reservation_conflict() -> None:
+    # The B1 case: the City closed-loop FAQ (a closed_loop_dry CLAIM under test) vs the negotiated
+    # Water & Wastewater Agreement's 2.0 MGD makeup + ~1.0 MGD wastewater reservation.
+    rec = cr.reconcile_troy_piqua(settings=Settings())
+    assert rec.site == "troy-piqua"
+    assert rec.facility == "Project Klondike"
+    assert rec.is_control is False  # a real registered site, not a constructed control
+    # The claim under test is the FAQ's dry framing; the profile itself stays UNKNOWN.
+    assert rec.claimed_archetype == "closed_loop_dry"
+    assert cr.SITES["troy-piqua"].facilities[0].cooling_model is CoolingModelType.UNKNOWN
+    assert rec.outcome is cr.ReconcileOutcome.RESERVATION_CONFLICT
+    # Keeps the UNKNOWN pin — no re-archetype — and sharpens lead #1486.
+    assert rec.recommended_archetype is None
+    assert "#1486" in (rec.lead.epic_ref if rec.lead else "")
+    # The reserved figures are the ceilings; nothing is collapsed into a documented/consumptive.
+    a = rec.account
+    assert a.reserved_makeup is not None and a.reserved_makeup.value == 2.0
+    assert a.reserved_blowdown is not None and a.reserved_blowdown.value == 1.0
+    assert a.documented_makeup is None
+    # Back-solved CoC ≈ 2.0 off the ceilings, an [inference] bracket.
+    assert a.backsolved_cycles is not None
+    assert a.backsolved_cycles.value == 2.0
+    assert a.backsolved_cycles.has_range
+    # No air permit on file (confirmed-negative PTI) → corroborators are silent (honest).
+    assert rec.corroborators is not None
+    assert rec.corroborators.net_stance is cr.CorroboratorStance.SILENT
 
 
 # --------------------------------------------------------------------- A4 corroborators (#1680)

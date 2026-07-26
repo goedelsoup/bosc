@@ -13,7 +13,7 @@ against what records *document*:
 3. Where both documented makeup *and* blowdown are on record, **back-solve cycles-of-
    concentration** (makeup / blowdown) — emitted as an ``[inference]`` bracket, never a
    headline scalar (the ratio of two self-reported figures is not a measurement).
-4. Classify each facility into one of three outcomes (:class:`ReconcileOutcome`):
+4. Classify each facility into one of four outcomes (:class:`ReconcileOutcome`):
 
    * **discrepancy** — a low-water claim (``closed_loop_dry``) contradicted by documented
      flow ≫ the archetype's ~0 prediction (or over-cycling even vs a wet claim). Recommends
@@ -24,6 +24,19 @@ against what records *document*:
      ``reference → document`` source upgrade.
    * **gap** — no documented makeup or blowdown to test against. Emits a records-request
      **lead payload** for C2 (#1688).
+
+   * **reservation_conflict** (B1, #1681) — a low-water claim contradicted **not** by a metered
+     use / DMR but by a disclosed **reservation ceiling** (a will-serve / water-service agreement
+     figure): Troy-Piqua's City closed-loop FAQ vs the negotiated Water & Wastewater Agreement's
+     up-to-2.0 MGD makeup + ~1.0 MGD wastewater reservation. A reservation is a *ceiling*, not a
+     measurement of use, and it is **not a discharge/withdrawal instrument** — so per the epic's
+     re-archetype gate it can never license a ``[verified]`` re-archetype. It **sharpens** the gap:
+     the harness back-solves the implied CoC from the reserved figures (an ``[inference]`` bracket,
+     explicitly labeled *ceilings, not metered use* — never collapsed into a headline consumptive),
+     keeps the archetype pin as-is (Troy-Piqua stays ``unknown``), and emits a sharpened records
+     request for the executed instrument + metered use. The ``reserved_makeup`` / ``reserved_blowdown``
+     account fields are kept **distinct** from ``documented_makeup`` / ``documented_blowdown`` so a
+     reservation is never read as a metered figure.
 
 **The harness recommends; it does not mutate.** Re-archetyping a ``SiteFacility`` is a
 reviewed B1-B6 edit landed with the instrument cited — this output is the evidence packet
@@ -99,8 +112,15 @@ _COC_REL_UNCERTAINTY = 0.15
 class ReconcileOutcome(StrEnum):
     """The reconciliation of a facility's cooling claim against documented water."""
 
-    DISCREPANCY = "discrepancy"  # low-water claim contradicted by documented flow
+    DISCREPANCY = (
+        "discrepancy"  # low-water claim contradicted by documented flow (a metered use / DMR)
+    )
     CORROBORATED = "corroborated"  # documented water consistent with the claimed archetype
+    # A low-water claim contradicted by a disclosed RESERVATION ceiling (a will-serve / water-service
+    # agreement figure), NOT a metered use / DMR — a ceiling is not a discharge/withdrawal instrument,
+    # so it sharpens the gap (keep the pin, records-request the instrument) without licensing a
+    # re-archetype. B1 (#1681): Troy-Piqua's closed-loop FAQ vs the 2.0 MGD water-agreement reservation.
+    RESERVATION_CONFLICT = "reservation_conflict"
     GAP = "gap"  # no documented makeup/blowdown to test against → a C2 records request
 
 
@@ -121,11 +141,22 @@ class WaterAccount(BaseModel):
     predicted_makeup: ProvenancedValue  # MGD, the claim's cooling intake
     predicted_consumptive: ProvenancedValue  # MGD, the claim's evaporative loss
     predicted_blowdown: ProvenancedValue  # MGD, the claim's blowdown (makeup - evaporation)
-    documented_makeup: ProvenancedValue | None = None  # MGD, A1 withdrawal record
-    documented_blowdown: ProvenancedValue | None = None  # MGD, A2 discharge DMR
+    documented_makeup: ProvenancedValue | None = None  # MGD, A1 withdrawal record (metered use)
+    documented_blowdown: ProvenancedValue | None = None  # MGD, A2 discharge DMR (metered discharge)
+    # A disclosed RESERVATION ceiling (a will-serve / water-service agreement figure) — kept DISTINCT
+    # from documented_* so a reserved-capacity ceiling is never read as a metered use (B1, #1681).
+    # A ceiling is not a discharge/withdrawal instrument, so it feeds a reservation_conflict, never a
+    # re-archetype. None unless the facility has a disclosed reservation on record.
+    reserved_makeup: ProvenancedValue | None = (
+        None  # MGD, disclosed makeup/withdrawal reservation ceiling
+    )
+    reserved_blowdown: ProvenancedValue | None = (
+        None  # MGD, disclosed wastewater/blowdown reservation ceiling
+    )
     disclosed_cycles: ProvenancedValue | None = None  # the operator's disclosed CoC, if any
     # The back-solved cycles-of-concentration (makeup / blowdown) — an [inference] BRACKET, never
-    # a headline scalar. None unless both documented makeup and blowdown are on record.
+    # a headline scalar. Present when both makeup and blowdown are on record — as documented (metered)
+    # figures, or (reservation_conflict) as reservation ceilings, in which case its citation says so.
     backsolved_cycles: ProvenancedValue | None = None
     # The A2 seasonality shape signal (warm/cool DMR-flow ratio) — a temperature-driven
     # evaporative blowdown peaks in summer (ratio ≫ 1), a dry loop is flat (~1). A shape
@@ -249,7 +280,7 @@ def _predicted_blowdown(basis: CoolingBasis) -> ProvenancedValue:
 
 
 def _backsolve_cycles(
-    documented_makeup: ProvenancedValue, documented_blowdown: ProvenancedValue
+    makeup: ProvenancedValue, blowdown: ProvenancedValue, *, kind: str = "documented"
 ) -> ProvenancedValue | None:
     """Back-solve cycles-of-concentration = makeup / blowdown, as an ``[inference]`` bracket.
 
@@ -258,16 +289,29 @@ def _backsolve_cycles(
     real uncertainty): the bracket comes from the inputs' own bands when present, else a
     ``±15%`` screening band. ``None`` when blowdown is ~0 (the ratio diverges — a non-physical
     input pair, not a cycling signal).
+
+    ``kind`` labels what the two inputs are — ``"documented"`` (metered use / DMR figures) or
+    ``"reserved"`` (reservation ceilings, a will-serve / water-agreement figure — a CoC read off
+    two ceilings is doubly not a measurement, and the citation says so; B1, #1681).
     """
-    bd = documented_blowdown.value
+    bd = blowdown.value
     if bd <= _MEANINGFUL_FLOW_MGD:
         return None
-    mk = documented_makeup.value
+    mk = makeup.value
     point = round(mk / bd, 2)
     citation = (
-        f"back-solved CoC = documented makeup {mk:g} MGD / documented blowdown {bd:g} MGD "
-        "([inference]: the ratio of two self-reported figures, a bracket not a measurement)"
+        (
+            f"back-solved CoC = documented makeup {mk:g} MGD / documented blowdown {bd:g} MGD "
+            "([inference]: the ratio of two self-reported figures, a bracket not a measurement)"
+        )
+        if kind == "documented"
+        else (
+            f"back-solved CoC = reserved makeup {mk:g} MGD / reserved wastewater {bd:g} MGD "
+            "([inference]: the ratio of two RESERVATION CEILINGS, not metered use — a bracket, and "
+            "an upper-bound shape only, never a headline consumptive)"
+        )
     )
+    documented_makeup, documented_blowdown = makeup, blowdown
     # Prefer the inputs' own bands (makeup_low/blowdown_high → CoC low, and vice-versa); fall
     # back to a relative screening band. Either way the result always carries a range.
     if documented_makeup.has_range or documented_blowdown.has_range:
@@ -290,15 +334,34 @@ def _classify(
     predicted_blowdown: float,
     documented_makeup: float | None,
     documented_blowdown: float | None,
+    reserved_makeup: float | None = None,
+    reserved_blowdown: float | None = None,
 ) -> ReconcileOutcome:
-    """Classify the claim↔document reconciliation into one of the three outcomes.
+    """Classify the claim↔document reconciliation into one of the outcomes.
 
     The false-positive guard (the Intel control): a **discrepancy** requires the *claimed*
     archetype to predict little/no water — high documented water only contradicts a low-water
     claim. A wet claim (evaporative/hybrid) whose documents show matching high water is
     ``corroborated``, never flagged discrepant for using a lot of water.
+
+    Instrument-grade documented flow (metered use / DMR) adjudicates first — it is stronger than a
+    reservation ceiling. Only when NO documented figure is on record does a disclosed **reservation
+    ceiling** get read: one disproportionate to a low-water claim is a ``reservation_conflict`` (B1,
+    #1681), never a ``discrepancy`` — a ceiling is not a discharge/withdrawal instrument, so it can't
+    license a re-archetype (the epic's gate). A reservation not disproportionate to the claim doesn't
+    corroborate USE either (a ceiling ≠ a measurement), so it stays a ``gap``.
     """
     if documented_makeup is None and documented_blowdown is None:
+        if reserved_makeup is not None or reserved_blowdown is not None:
+            # Prefer the wastewater (blowdown) reservation vs predicted blowdown; else the makeup
+            # reservation vs predicted makeup — the same matched pairing _classify uses below.
+            if reserved_blowdown is not None:
+                reserved, predicted = reserved_blowdown, predicted_blowdown
+            else:
+                assert reserved_makeup is not None
+                reserved, predicted = reserved_makeup, predicted_makeup
+            if predicted < _MEANINGFUL_FLOW_MGD and reserved >= _MEANINGFUL_FLOW_MGD:
+                return ReconcileOutcome.RESERVATION_CONFLICT
         return ReconcileOutcome.GAP
     # Prefer the blowdown signal (the A2 cooling-tower/low-volume-wastewater DMR — cooling-
     # specific). Fall back to makeup (A1 withdrawal) only when no blowdown is on record: a
@@ -375,6 +438,70 @@ def _records_lead(
     )
 
 
+def _reservation_conflict_lead(
+    site: str,
+    fac: SiteFacility,
+    claim_source: str,
+    account: WaterAccount,
+    issue_ref: str,
+    corroborators: CoolingCorroborators | None = None,
+) -> RecordsRequestLead:
+    """The sharpened C2 (#1688) records-request lead for a reservation_conflict (B1, #1681).
+
+    Unlike a bare gap, a reservation conflict already carries a quantified figure — a disclosed
+    reservation ceiling that contradicts the low-water claim. The ask is therefore sharper: pull the
+    **executed instrument** (the negotiated water-service agreement text, not the secondary summary of
+    it) and the **metered use** that would say whether the facility draws near the ceiling
+    (evaporative) or far below it (nearer dry). ``issue_ref`` is the site's own standing water lead
+    (Troy-Piqua's ``#1486``) the conflict sharpens. The silent A4 corroborators (#1680) add their own
+    not-on-record asks, as on a gap.
+    """
+    reserved = account.reserved_makeup or account.reserved_blowdown
+    reserved_phrase = f"{reserved.value:g} MGD" if reserved is not None else "the reserved figure"
+    records_sought = [
+        "executed water & wastewater service agreement (the instrument text, not a summary)",
+        "metered water-service use (actual makeup withdrawal vs the reserved ceiling)",
+        "cooling-tower blowdown / low-volume-wastewater DMR (facility-own or OHD000001 coverage)",
+        "industrial pretreatment / indirect-discharge (IU) permit + sewer-use agreement",
+    ]
+    holders = [
+        f"City / municipal water-sewer authority serving {site}",
+        "Ohio EPA (NPDES / OHD000001)",
+    ]
+    if corroborators is not None:
+        if corroborators.air_permit.state is AirPermitState.NOT_ON_RECORD:
+            records_sought.append(
+                "facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits"
+            )
+            holders.append("Ohio EPA / regional air agency (DAPC)")
+        if corroborators.tier2_chemistry.state is TierIIState.NOT_ON_RECORD:
+            records_sought.append(
+                "Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, "
+                "scale / corrosion inhibitor)"
+            )
+            holders.append("SERC / LEPC")
+    return RecordsRequestLead(
+        site=site,
+        facility=fac.name,
+        subject=(
+            f"cooling-water account — reconcile the reserved {reserved_phrase} makeup vs the "
+            "closed-loop claim"
+        ),
+        records_sought=records_sought,
+        holder="; ".join(holders),
+        rationale=(
+            f"A disclosed reservation ceiling ({reserved_phrase}) is disproportionate to the "
+            f"{fac.cooling_model.value} (source={claim_source}) low-water claim and contradicts it — "
+            "but a reservation is a ceiling, not a metered use, and not a discharge/withdrawal "
+            f"instrument, so it sharpens the standing water lead ({issue_ref}) without licensing a "
+            "re-archetype. Pull the executed instrument + metered use to resolve which framing governs "
+            "the consumptive screen."
+        ),
+        epic_ref=f"#1688 (C2); {issue_ref}",
+        tag="[open]",
+    )
+
+
 def _fold_corroborators(
     finding: str, outcome: ReconcileOutcome, corroborators: CoolingCorroborators | None
 ) -> str:
@@ -382,13 +509,18 @@ def _fold_corroborators(
 
     The corroborators are SECONDARY: this only *annotates* the finding, never changes the outcome.
     A non-silent net stance always appends (an independent contradiction / corroboration is worth
-    surfacing); a silent one appends only for a gap (it names the extra records to request), since
-    on a discrepancy / corroborated outcome the water account already spoke.
+    surfacing); a silent one appends only for an outcome whose move is a records request (a gap or a
+    reservation_conflict — it names the extra records to request), since on a discrepancy /
+    corroborated outcome the water account already spoke.
     """
     if corroborators is None:
         return finding
     net = corroborators.net_stance
-    if net is CorroboratorStance.SILENT and outcome is not ReconcileOutcome.GAP:
+    records_request_outcome = outcome in {
+        ReconcileOutcome.GAP,
+        ReconcileOutcome.RESERVATION_CONFLICT,
+    }
+    if net is CorroboratorStance.SILENT and not records_request_outcome:
         return finding
     return f"{finding} {corroborators.summary}"
 
@@ -407,6 +539,25 @@ def _finding(
             f"(source={claim_source}) cannot yet be tested against records — an [open] gap, not "
             "'confirmed dry' (→ C2 records request #1688). Predicted makeup "
             f"{account.predicted_makeup.value:g} MGD."
+        )
+    if outcome is ReconcileOutcome.RESERVATION_CONFLICT:
+        reserved = account.reserved_makeup or account.reserved_blowdown
+        reserved_phrase = (
+            f"{reserved.value:g} MGD" if reserved is not None else "the reserved figure"
+        )
+        coc = (
+            f" Back-solved CoC {account.backsolved_cycles.value:g} "
+            f"({account.backsolved_cycles.low_or_value:g}-{account.backsolved_cycles.high_or_value:g}) "
+            "off the reservation ceilings ([inference], not metered use)."
+            if account.backsolved_cycles is not None
+            else ""
+        )
+        return (
+            f"Reserved {reserved_phrase} makeup contradicts the {arche} FAQ claim's "
+            f"~{account.predicted_makeup.value:g} MGD prediction — but a reservation is a ceiling, not "
+            "a discharge/withdrawal instrument, so keep the archetype pin (no [verified] re-archetype) "
+            f"and sharpen the water lead (→ C2 records request #1688).{coc} The reserved figure is an "
+            "upper-bound ceiling, NOT a headline consumptive."
         )
     # A documented signal exists (DISCREPANCY / CORROBORATED) — pair it with the MATCHING
     # predicted figure exactly as _classify does: the A2 blowdown record against predicted
@@ -456,8 +607,11 @@ def reconcile_facility(
     settings: Settings,
     documented_makeup: ProvenancedValue | None = None,
     documented_blowdown: ProvenancedValue | None = None,
+    reserved_makeup: ProvenancedValue | None = None,
+    reserved_blowdown: ProvenancedValue | None = None,
     seasonality_warm_ratio: float | None = None,
     corroborators: CoolingCorroborators | None = None,
+    water_lead_ref: str = "#1688 (C2)",
     is_control: bool = False,
 ) -> ReconciliationRecord:
     """Reconcile one facility's cooling claim against its documented water account.
@@ -465,8 +619,15 @@ def reconcile_facility(
     Pure over its inputs: the predicted account comes from the pinned archetype (under
     ``settings`` — pass the facility's OWN site settings so a hybrid assist window reads its
     climatology, not the active site's), and the documented figures are injected (the cohort
-    resolver reads them from A1/A2). Emits the outcome, a recommendation, and — for a gap — a
-    C2 lead payload. Recommends only; it never mutates ``fac.cooling_model``.
+    resolver reads them from A1/A2). Emits the outcome, a recommendation, and — for a gap or a
+    reservation_conflict — a C2 lead payload. Recommends only; it never mutates ``fac.cooling_model``.
+
+    ``reserved_makeup`` / ``reserved_blowdown`` (B1, #1681) are disclosed **reservation ceilings** (a
+    will-serve / water-service agreement figure), kept distinct from the metered ``documented_*`` so a
+    ceiling is never read as a use. A reservation disproportionate to a low-water claim is a
+    ``reservation_conflict`` — it sharpens ``water_lead_ref`` (the site's standing water lead) and the
+    C2 records request, but never licenses a re-archetype (a ceiling is not a discharge/withdrawal
+    instrument).
 
     ``corroborators`` (A4, #1680) are the two independent tells (air-permit cooling-tower PM +
     Tier II chemistry). Injected like the documented figures (the cohort resolver reads them via
@@ -490,11 +651,21 @@ def reconcile_facility(
         if fac.cycles_of_concentration is not None
         else None
     )
-    backsolved_cycles = (
-        _backsolve_cycles(documented_makeup, documented_blowdown)
-        if documented_makeup is not None and documented_blowdown is not None
-        else None
-    )
+    # Back-solve CoC from the metered figures when both are on record; else from the reservation
+    # ceilings (labeled as such) but ONLY when there is no documented signal at all — a documented
+    # use adjudicates over a ceiling, so the two are never mixed and a discrepancy never carries a
+    # reservation-derived CoC.
+    if documented_makeup is not None and documented_blowdown is not None:
+        backsolved_cycles = _backsolve_cycles(documented_makeup, documented_blowdown)
+    elif (
+        documented_makeup is None
+        and documented_blowdown is None
+        and reserved_makeup is not None
+        and reserved_blowdown is not None
+    ):
+        backsolved_cycles = _backsolve_cycles(reserved_makeup, reserved_blowdown, kind="reserved")
+    else:
+        backsolved_cycles = None
 
     account = WaterAccount(
         archetype=fac.cooling_model,
@@ -504,6 +675,8 @@ def reconcile_facility(
         predicted_blowdown=predicted_blowdown,
         documented_makeup=documented_makeup,
         documented_blowdown=documented_blowdown,
+        reserved_makeup=reserved_makeup,
+        reserved_blowdown=reserved_blowdown,
         disclosed_cycles=disclosed_cycles,
         backsolved_cycles=backsolved_cycles,
         seasonality_warm_ratio=seasonality_warm_ratio,
@@ -515,6 +688,8 @@ def reconcile_facility(
         predicted_blowdown.value,
         documented_makeup.value if documented_makeup is not None else None,
         documented_blowdown.value if documented_blowdown is not None else None,
+        reserved_makeup.value if reserved_makeup is not None else None,
+        reserved_blowdown.value if reserved_blowdown is not None else None,
     )
 
     recommended_archetype: str | None = None
@@ -533,6 +708,19 @@ def reconcile_facility(
         recommended_source = "document"
         tag = "[verified]"
         confidence = "high"
+    elif outcome is ReconcileOutcome.RESERVATION_CONFLICT:
+        # A disclosed reservation ceiling contradicts the low-water claim but is NOT a discharge/
+        # withdrawal instrument — keep the archetype pin (no re-archetype recommendation), and
+        # sharpen the site's standing water lead + the C2 records request for the instrument.
+        recommended_archetype = None
+        recommended_source = None
+        lead = _reservation_conflict_lead(
+            site, fac, claim_source, account, water_lead_ref, corroborators
+        )
+        tag = "[open]"  # the conflict stays open; a ceiling is not [verified] proof of use
+        confidence = (
+            "medium"  # sharper than an empty gap (a quantified figure), short of instrument-grade
+        )
     else:  # GAP
         lead = _records_lead(site, fac, claim_source, corroborators)
         tag = "[open]"
@@ -713,6 +901,90 @@ def _documented_water(
     return None, documented_blowdown, seasonality_warm_ratio
 
 
+# ---------------------------------------------------- the Troy-Piqua B1 reservation conflict (#1681)
+
+# Troy-Piqua ("Project Klondike") is the sharpest documented conflict in the cohort, and the reason
+# the profile deliberately pins ``cooling_model=UNKNOWN``: the City's public FAQ claims closed-loop
+# (dry) cooling, while the negotiated Water & Wastewater Agreement reserves up to 2.0 MGD makeup +
+# ~1.0 MGD wastewater. Because the facility pins UNKNOWN it is NOT in A2's registry-derived cohort
+# (:func:`blowdown.closed_loop_candidates`) — so B1 reconciles it as an explicit, cited case: the
+# FAQ's closed_loop_dry CLAIM (a constructed dry-claim view, to get the ~0 prediction) against the
+# disclosed reservation ceilings. The reservation is a will-serve ceiling from secondary summaries,
+# NOT a metered use and NOT a discharge/withdrawal instrument — so the outcome is a
+# ``reservation_conflict`` that keeps the UNKNOWN pin and sharpens lead #1486; it never re-archetypes.
+_TROY_PIQUA_FAQ_CITE = (
+    "[reference] the City of Piqua's public FAQ describes closed-loop cooling with only an "
+    "'initial fill-up' + occasional top-offs (domestic-only ongoing use) — the low-water CLAIM under "
+    "test here. The profile itself deliberately pins cooling_model=UNKNOWN (the FAQ-vs-reservation "
+    "conflict is unresolved, lead #1486); this reconciliation TESTS the FAQ's dry framing, it does "
+    "not adopt it. See data/extracted/troy-piqua/data-centers.md 'Water / hydrology hook'."
+)
+# The disclosed reservation ceilings — [verified] as SUMMARIES (Miami Valley Today; civiccapacity.com),
+# but the executed 2026-01-23 agreement text is not yet in-corpus (a C2 pull target, #1486/#1688). A
+# reserved CAPACITY, never a metered withdrawal/discharge; kept off the documented_* slots so it is
+# never read as use.
+_TROY_PIQUA_RESERVED_MAKEUP = ProvenancedValue.from_reference(
+    2.0,
+    "MGD",
+    citation=(
+        "[verified summary] RESERVATION CEILING, not metered use: the negotiated City of Piqua Water "
+        "& Wastewater Agreement (effective 2026-01-23) reserves up to 500,000 GPD (Tier I) scaling to "
+        "2.0 MGD (Tier II / full operation) — ~30% of Piqua's ~6.75 MGD permitted intake. From "
+        "secondary summaries (Miami Valley Today; civiccapacity.com); the executed agreement text is a "
+        "C2 pull target (#1486/#1688). A reserved capacity ceiling, NOT a withdrawal record."
+    ),
+    confidence="high",
+)
+_TROY_PIQUA_RESERVED_WASTEWATER = ProvenancedValue.from_reference(
+    1.0,
+    "MGD",
+    citation=(
+        "[verified summary] RESERVATION CEILING, not metered discharge: ~1.0 MGD reserved wastewater "
+        "under the same Water & Wastewater Agreement (Miami Valley Today; civiccapacity.com) — a "
+        "reserved capacity that bundles domestic sewage (so it OVER-states cooling blowdown and the "
+        "back-solved CoC is a lower bound). Executed agreement text is a C2 pull target (#1486/#1688)."
+    ),
+    confidence="high",
+)
+
+
+def reconcile_troy_piqua(*, settings: Settings | None = None) -> ReconciliationRecord:
+    """The Troy-Piqua B1 reservation conflict (#1681) — FAQ closed-loop claim vs the 2.0 MGD reserve.
+
+    Not a control (a real registered site with a real conflict) and not in A2's cohort (it pins
+    ``UNKNOWN``): reconciled explicitly. The predicted ~0 water comes from a constructed
+    ``closed_loop_dry`` VIEW of the real ``Project Klondike`` facility (the FAQ's claim under test),
+    while the profile's actual ``UNKNOWN`` pin is what the recommendation keeps. Closed-loop-dry
+    needs no climatology, so a per-site ``Settings`` resolves it; the reservation ceilings feed the
+    ``reserved_*`` slots (never ``documented_*``) so a will-serve ceiling is not read as metered use.
+    """
+    base = settings or get_settings()
+    site_settings = _site_settings("troy-piqua", base)
+    profile = SITES["troy-piqua"]
+    klondike = next(f for f in profile.facilities if f.name == "Project Klondike")
+    # The FAQ CLAIM under test is closed_loop_dry; the profile itself stays UNKNOWN. model_copy keeps
+    # the real IT-load bracket (so the ~0 dry prediction is derived from the facility's own load).
+    faq_claim = klondike.model_copy(
+        update={
+            "cooling_model": CoolingModelType.CLOSED_LOOP_DRY,
+            "cooling_model_source": "reference",
+            "cooling_model_citation": _TROY_PIQUA_FAQ_CITE,
+        }
+    )
+    return reconcile_facility(
+        faq_claim,
+        site="troy-piqua",
+        claim_source="reference",
+        claim_citation=_TROY_PIQUA_FAQ_CITE,
+        settings=site_settings,
+        reserved_makeup=_TROY_PIQUA_RESERVED_MAKEUP,
+        reserved_blowdown=_TROY_PIQUA_RESERVED_WASTEWATER,
+        corroborators=resolve_corroborators(faq_claim, settings=site_settings),
+        water_lead_ref="#1486",
+        is_control=False,
+    )
+
+
 # --------------------------------------------------------------------- cohort
 
 
@@ -723,8 +995,11 @@ def reconcile_cohort(*, settings: Settings | None = None) -> list[Reconciliation
     — every ``SiteFacility`` pinning ``closed_loop_dry`` / ``hybrid_adiabatic``). Each facility
     is derived under its OWN site's settings so a cross-site cohort never leaks the active site's
     climatology, and its A4 corroborators (:func:`cooling_corroborators.resolve_corroborators`) are
-    resolved under the same settings. The Intel control is appended and reconciled the same way.
-    Ordered by (is_control, site, facility) so the control sorts last after the live findings.
+    resolved under the same settings. The **Troy-Piqua B1 reservation conflict** (#1681,
+    :func:`reconcile_troy_piqua`) is appended explicitly — it pins ``UNKNOWN`` so it is NOT in A2's
+    cohort, but its FAQ-vs-2.0-MGD-reservation conflict is reconciled as a first-class live finding.
+    The Intel control is appended and reconciled the same way. Ordered by (is_control, site, facility)
+    so the control sorts last after the live findings.
     """
     settings = settings or get_settings()
     records: list[ReconciliationRecord] = []
@@ -748,6 +1023,9 @@ def reconcile_cohort(*, settings: Settings | None = None) -> list[Reconciliation
                 corroborators=resolve_corroborators(fac, settings=site_settings),
             )
         )
+    records.append(
+        reconcile_troy_piqua(settings=settings)
+    )  # B1 (#1681) — pins UNKNOWN, not in A2's cohort
     records.append(intel_control(settings=settings))
     records.sort(key=lambda r: (r.is_control, r.site, r.facility))
     log.info(
@@ -774,8 +1052,8 @@ def reconciliation_document(records: list[ReconciliationRecord]) -> dict[str, An
             "source": (
                 "watermark.hydrology.cooling_reconcile — the A2 closed-loop cohort x the "
                 "archetype-predicted water account (cooling_models) x documented makeup (A1) / "
-                "blowdown (A2) x the A4 corroborators (cooling_corroborators), plus the Intel "
-                "evaporative positive control"
+                "blowdown (A2) x the A4 corroborators (cooling_corroborators), plus the Troy-Piqua "
+                "B1 reservation conflict (#1681) and the Intel evaporative positive control"
             ),
             "regenerate": "watermark cooling-reconcile --write",
             # As current as the A2 permit-lifecycle refresh the documented-blowdown read gates on.
@@ -786,12 +1064,17 @@ def reconciliation_document(records: list[ReconciliationRecord]) -> dict[str, An
                 "reviewed B1-B6 edit with the instrument cited. A back-solved cycles-of-"
                 "concentration is an [inference] bracket, never a headline scalar. A gap (no "
                 "documented makeup/blowdown) is an [open] records-request lead for C2 (#1688), "
-                "never read as 'confirmed dry'. The A4 corroborators (air-permit cooling-tower PM, "
-                "Tier II / EPCRA-312 chemistry) are SECONDARY — recorded and reconciled against the "
-                "claim, but never the sole basis for a re-archetype and never changing the outcome. "
-                "The Intel row is a constructed positive control (openly evaporative) the harness "
-                "must classify corroborated, not a false discrepancy — it is a calibration vector, "
-                "not documented Intel data."
+                "never read as 'confirmed dry'. A reservation_conflict (B1 Troy-Piqua, #1681) is a "
+                "low-water claim contradicted by a disclosed RESERVATION CEILING (a will-serve / "
+                "water-agreement figure), not a metered use — a ceiling is not a discharge/withdrawal "
+                "instrument, so it keeps the archetype pin (Troy-Piqua stays UNKNOWN) and sharpens "
+                "the site's water lead (#1486) + the C2 request; the reserved figure is never "
+                "collapsed into a headline consumptive. The A4 corroborators (air-permit cooling-tower "
+                "PM, Tier II / EPCRA-312 chemistry) are SECONDARY — recorded and reconciled against "
+                "the claim, but never the sole basis for a re-archetype and never changing the "
+                "outcome. The Intel row is a constructed positive control (openly evaporative) the "
+                "harness must classify corroborated, not a false discrepancy — it is a calibration "
+                "vector, not documented Intel data."
             ),
         },
         "candidates": [r.model_dump(mode="json") for r in records],

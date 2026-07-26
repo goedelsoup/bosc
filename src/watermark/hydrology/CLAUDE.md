@@ -43,14 +43,21 @@ Water-balance / stormwater modeling of the Lima municipal loop. Defers to the ro
   water account — the pinned archetype's PREDICTED makeup/blowdown (via `cooling_models`) vs the
   DOCUMENTED makeup (A1) / blowdown (A2) — back-solves cycles-of-concentration where both are on
   record (always an `[inference]` **bracket**, never a scalar), and classifies each as
-  `discrepancy` (a low-water claim contradicted by documented flow → re-archetype up),
-  `corroborated` (documents consistent with the claim), or `gap` (no documents → a C2 lead
-  payload). It **recommends, never mutates** `cooling_model` (re-archetyping is a reviewed
-  B1–B6 edit). Each facility is derived under its OWN site's `Settings` so a cross-site cohort
-  never leaks the active site's climatology. Written to
-  `data/reference/oepa/cooling-reconciliation.yaml` by `watermark cooling-reconcile --write`; the
-  cohort is A2's plus the **Intel evaporative positive control** (`INTEL_CONTROL_FACILITY`, a
-  constructed calibration vector — NOT a registered site, NOT documented Intel data) the harness
+  `discrepancy` (a low-water claim contradicted by a **metered** documented flow → re-archetype up),
+  `corroborated` (documents consistent with the claim), `reservation_conflict` (a low-water claim
+  contradicted by a disclosed **RESERVATION CEILING** — a will-serve / water-service agreement figure,
+  NOT a metered use and NOT a discharge/withdrawal instrument, so it keeps the pin + sharpens the
+  site's water lead, never re-archetyping; the reserved figures feed `reserved_makeup`/`reserved_blowdown`,
+  kept distinct from `documented_*`, and the back-solved CoC is labeled *ceilings, not metered use* —
+  never a headline consumptive), or `gap` (no documents → a C2 lead payload). It **recommends, never
+  mutates** `cooling_model` (re-archetyping is a reviewed B1–B6 edit). Each facility is derived under
+  its OWN site's `Settings` so a cross-site cohort never leaks the active site's climatology. Written
+  to `data/reference/oepa/cooling-reconciliation.yaml` by `watermark cooling-reconcile --write`; the
+  cohort is A2's registry-derived set, **plus the Troy-Piqua B1 reservation conflict**
+  (`reconcile_troy_piqua`, #1681 — Troy-Piqua pins `UNKNOWN` so it is NOT in A2's cohort, but its
+  closed-loop-FAQ-vs-2.0-MGD-reservation conflict is reconciled explicitly as a live
+  `reservation_conflict`), **plus the Intel evaporative positive control** (`INTEL_CONTROL_FACILITY`,
+  a constructed calibration vector — NOT a registered site, NOT documented Intel data) the harness
   must classify `corroborated`, the no-false-positive gate. (4) `cooling_corroborators.py` (A4,
   #1680) adds two **independent corroborators** to each A3 record — the facility's own **air
   permit** listing cooling towers as PM (drift) sources (read from `SiteFacility.air_permit_relpath`;
