@@ -96,6 +96,7 @@ candidates:
   outcome: gap
   recommended_archetype: null
   recommended_source: null
+  kept_archetype: null
   lead:
     kind: records-request
     site: bowling-green
@@ -223,6 +224,7 @@ candidates:
   outcome: gap
   recommended_archetype: null
   recommended_source: null
+  kept_archetype: null
   lead:
     kind: records-request
     site: springfield
@@ -352,7 +354,7 @@ candidates:
         summaries (Miami Valley Today; civiccapacity.com); the executed agreement text is a C2 pull target
         (#1486/#1688). A reserved capacity ceiling, NOT a withdrawal record.'
       confidence: high
-      asof: null
+      asof: '2026-01-23'
       low: null
       high: null
     reserved_blowdown:
@@ -364,7 +366,7 @@ candidates:
         capacity that bundles domestic sewage (so it OVER-states cooling blowdown and the back-solved
         CoC is a lower bound). Executed agreement text is a C2 pull target (#1486/#1688).'
       confidence: high
-      asof: null
+      asof: '2026-01-23'
       low: null
       high: null
     disclosed_cycles: null
@@ -383,6 +385,7 @@ candidates:
   outcome: reservation_conflict
   recommended_archetype: null
   recommended_source: null
+  kept_archetype: unknown
   lead:
     kind: records-request
     site: troy-piqua
@@ -512,6 +515,7 @@ candidates:
   outcome: gap
   recommended_archetype: null
   recommended_source: null
+  kept_archetype: null
   lead:
     kind: records-request
     site: urbana
@@ -645,6 +649,7 @@ candidates:
   outcome: gap
   recommended_archetype: null
   recommended_source: null
+  kept_archetype: null
   lead:
     kind: records-request
     site: van-wert
@@ -778,6 +783,7 @@ candidates:
   outcome: gap
   recommended_archetype: null
   recommended_source: null
+  kept_archetype: null
   lead:
     kind: records-request
     site: wilmington
@@ -932,6 +938,7 @@ candidates:
   outcome: corroborated
   recommended_archetype: evaporative_tower
   recommended_source: document
+  kept_archetype: null
   lead: null
   corroborators:
     air_permit:

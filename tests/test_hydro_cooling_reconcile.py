@@ -270,9 +270,11 @@ def test_reservation_ceiling_contradicts_a_dry_claim_without_a_re_archetype() ->
     )
     assert rec.outcome is cr.ReconcileOutcome.RESERVATION_CONFLICT
     assert rec.outcome is not cr.ReconcileOutcome.DISCREPANCY  # a ceiling is not an instrument
-    # Keeps the pin: no re-archetype recommendation, and the conflict stays [open].
+    # Keeps the pin: no re-archetype recommendation, and the conflict stays [open]. With no explicit
+    # kept_archetype, it defaults to the facility's own pin (this facility IS closed_loop_dry).
     assert rec.recommended_archetype is None
     assert rec.recommended_source is None
+    assert rec.kept_archetype == CoolingModelType.CLOSED_LOOP_DRY.value
     assert rec.tag == "[open]"
     assert rec.confidence == "medium"  # sharper than an empty gap, short of instrument-grade
     # Emits a sharpened C2 lead that references the site's standing water lead (#1486) + the instrument.
@@ -351,6 +353,25 @@ def test_documented_metered_flow_outranks_a_reservation_ceiling() -> None:
     assert rec.account.backsolved_cycles is None
 
 
+def test_zero_reservation_is_a_gap_not_a_conflict() -> None:
+    # A reservation that is NOT disproportionate to the dry claim (here ~0) does not corroborate USE
+    # (a ceiling is not a measurement) — it falls back to a gap, not a reservation_conflict.
+    rec = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="x",
+        settings=Settings(),
+        reserved_makeup=ProvenancedValue.from_reference(0.0, "MGD", citation="reserved ceiling"),
+        reserved_blowdown=ProvenancedValue.from_reference(
+            0.0, "MGD", citation="reserved wastewater"
+        ),
+    )
+    assert rec.outcome is cr.ReconcileOutcome.GAP
+    assert rec.confidence == "low"
+    assert rec.account.backsolved_cycles is None  # ~0 blowdown → no CoC to back-solve
+
+
 def test_troy_piqua_b1_reservation_conflict() -> None:
     # The B1 case: the City closed-loop FAQ (a closed_loop_dry CLAIM under test) vs the negotiated
     # Water & Wastewater Agreement's 2.0 MGD makeup + ~1.0 MGD wastewater reservation.
@@ -362,8 +383,10 @@ def test_troy_piqua_b1_reservation_conflict() -> None:
     assert rec.claimed_archetype == "closed_loop_dry"
     assert cr.SITES["troy-piqua"].facilities[0].cooling_model is CoolingModelType.UNKNOWN
     assert rec.outcome is cr.ReconcileOutcome.RESERVATION_CONFLICT
-    # Keeps the UNKNOWN pin — no re-archetype — and sharpens lead #1486.
+    # Keeps the UNKNOWN pin — no re-archetype — and sharpens lead #1486. The kept pin is the site's
+    # REAL profile archetype (UNKNOWN), carried on the record — not the closed_loop_dry claim view.
     assert rec.recommended_archetype is None
+    assert rec.kept_archetype == CoolingModelType.UNKNOWN.value
     assert "#1486" in (rec.lead.epic_ref if rec.lead else "")
     # The reserved figures are the ceilings; nothing is collapsed into a documented/consumptive.
     a = rec.account

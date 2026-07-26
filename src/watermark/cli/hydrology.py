@@ -179,9 +179,11 @@ def cooling_reconcile_cmd(
     water account — the pinned archetype's PREDICTED makeup/blowdown (via `cooling_models`) vs the
     DOCUMENTED makeup (A1 withdrawal) / blowdown (A2 discharge) — back-solves cycles-of-
     concentration where both are on record (an `[inference]` bracket, never a scalar), and
-    classifies each into discrepancy / corroborated / gap. It RECOMMENDS re-archetyping; it never
-    mutates `cooling_model`. Includes the Intel evaporative positive control, which must classify
-    corroborated (no false discrepancy). Read-only over the registry + committed artifacts.
+    classifies each into discrepancy / corroborated / reservation_conflict (a low-water claim
+    contradicted by a disclosed reservation ceiling — Troy-Piqua B1, #1681) / gap. It RECOMMENDS
+    re-archetyping; it never mutates `cooling_model`. Includes the Intel evaporative positive
+    control, which must classify corroborated (no false discrepancy). Read-only over the registry
+    + committed artifacts.
     """
     from pathlib import Path
 
@@ -242,10 +244,12 @@ def cooling_reconcile_cmd(
             if a.backsolved_cycles is not None
             else "—"
         )
-        if r.recommended_archetype is not None:
+        if r.outcome is cooling_reconcile.ReconcileOutcome.RESERVATION_CONFLICT:
+            # Keep the site's real pin (carried on the record — "unknown" for Troy-Piqua), never
+            # hardcoded, so a reservation_conflict site pinning a different archetype renders right.
+            recommend = f"keep {r.kept_archetype} + records request (C2)"
+        elif r.recommended_archetype is not None:
             recommend = f"→ {r.recommended_archetype}, source={r.recommended_source}"
-        elif r.outcome is cooling_reconcile.ReconcileOutcome.RESERVATION_CONFLICT:
-            recommend = "keep unknown + records request (C2)"
         else:
             recommend = "records request (C2)"
         corrob = stance_glyph[r.corroborators.net_stance.value] if r.corroborators else "—"

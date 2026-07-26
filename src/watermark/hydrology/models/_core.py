@@ -149,6 +149,7 @@ class ProvenancedValue(BaseModel):
         citation: str,
         *,
         confidence: Literal["high", "medium", "low"] = "medium",
+        asof: str | None = None,
         low: float | None = None,
         high: float | None = None,
         plus_minus: float | None = None,
@@ -159,7 +160,9 @@ class ProvenancedValue(BaseModel):
         Distinct from a record about *this* facility (``document``) and from an
         asserted modeling input (``assumption``): a published spec / table vendored
         under ``data/reference`` (e.g. an accelerator datasheet). Cite the file. May
-        carry a range (see the class docstring) when the reference states a band.
+        carry a range (see the class docstring) when the reference states a band, and
+        an optional ``asof`` when the reference figure is anchored to a dated instrument
+        (e.g. an agreement's effective date).
         """
         lo, hi = _resolve_bounds(value, low, high, plus_minus, rel_uncertainty)
         return cls(
@@ -168,6 +171,7 @@ class ProvenancedValue(BaseModel):
             source="reference",
             citation=citation,
             confidence=confidence,
+            asof=asof,
             low=lo,
             high=hi,
         )
