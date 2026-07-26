@@ -57,6 +57,8 @@ def test_lima_air_permit_lists_cooling_tower_pm_corroborates_its_evaporative_cla
     assert sig.pm10_tpy is not None and 3.5 <= sig.pm10_tpy <= 4.5  # ~4.0 tpy, approx marker parsed
     assert sig.tag == "[verified]"  # an on-record air-permit fact
     assert "P0138965" in sig.citation
+    # The permit states ~4.0 tpy PM10 (approximate) — the ``~`` marker must be preserved, not dropped.
+    assert "~4 tpy PM10" in sig.citation
 
 
 def test_same_cooling_tower_pm_listing_contradicts_a_dry_claim() -> None:
@@ -99,6 +101,37 @@ def test_air_permit_without_a_cooling_tower_block_is_a_cited_absence(tmp_path: P
     assert sig.stance is cc.CorroboratorStance.CORROBORATES  # a dry claim + no tower agree
     assert sig.tag == "[verified]"
     assert "P-NOTOWERS" in sig.finding
+
+
+def test_exact_permit_pm_figure_is_not_marked_approximate(tmp_path: Path) -> None:
+    # A permit that states an EXACT cooling-tower PM10 (no ``~``) must not gain a fabricated
+    # approximation marker — the inverse of the repo's approx-marker discipline (preserve ``~``
+    # where the source had it; never invent it). The regression for the display-provenance fix.
+    permit = tmp_path / "extracted" / "permits" / "exact-pm.epa.yaml"
+    permit.parent.mkdir(parents=True)
+    permit.write_text(
+        yaml.safe_dump(
+            {
+                "action": {
+                    "permit_no": "P-EXACT",
+                    "emission_unit_groups": {"cooling_towers": {"count": 12}},
+                    "cooling_tower_limits": {"combined_pm10_tpy": 5.0},  # EXACT, no ~
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+    settings = Settings(data_dir=tmp_path)
+    wet = _dry_facility(
+        air_permit_relpath="permits/exact-pm.epa.yaml",
+        cooling_model=CoolingModelType.EVAPORATIVE_TOWER,
+        cooling_model_citation="[reference] evaporative claim",
+    )
+    sig = cc.air_permit_corroborator(wet, settings=settings)
+    assert sig.state is cc.AirPermitState.PM_SOURCE_LISTED
+    assert sig.pm10_tpy == 5.0
+    assert "5 tpy PM10" in sig.citation  # the exact figure appears...
+    assert "~5" not in sig.citation  # ...unmarked — no fabricated approximation
 
 
 # --------------------------------------------------------------------- Tier II (forward seam)

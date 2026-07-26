@@ -149,18 +149,23 @@ class CoolingCorroborators(BaseModel):
 # --------------------------------------------------------------------- helpers
 
 
-def _approx_float(value: Any) -> float | None:
-    """Best-effort float from a permit figure, tolerating the ``~`` approx marker (YAML string).
+def _approx_float(value: Any) -> tuple[float, bool] | None:
+    """Best-effort ``(float, was_approximate)`` from a permit figure, tolerating the ``~`` marker.
 
     ``combined_pm10_tpy: ~4.0`` parses as the string ``"~4.0"`` (``~`` is the corpus approx marker,
-    :mod:`watermark.models`); a plain number parses as a float. Anything else → ``None`` (the PM
-    magnitude is a nice-to-have display field, never the presence signal).
+    :mod:`watermark.models`) → ``(4.0, True)``; a plain number is exact → ``(x, False)``. The
+    approximation flag is carried through so the display / citation marks a figure ``~`` only when
+    the source did — an exact permit figure must never gain a fabricated approximation, and an
+    approximate one must not silently lose the marker. ``None`` when unparseable (the PM magnitude
+    is a nice-to-have display field, never the presence signal).
     """
     if isinstance(value, (int, float)):
-        return float(value)
+        return float(value), False
     if isinstance(value, str):
+        stripped = value.strip()
+        approx = stripped.startswith("~")
         try:
-            return float(value.strip().lstrip("~").replace(",", ""))
+            return float(stripped.lstrip("~").replace(",", "")), approx
         except ValueError:
             return None
     return None
@@ -274,13 +279,17 @@ def air_permit_corroborator(
 
     count = towers.get("count") if towers is not None else None
     tower_count = int(count) if isinstance(count, (int, float)) else None
-    pm10 = _approx_float(limits.get("combined_pm10_tpy")) if limits is not None else None
-    pm25 = _approx_float(limits.get("combined_pm25_tpy")) if limits is not None else None
+    pm10_parsed = _approx_float(limits.get("combined_pm10_tpy")) if limits is not None else None
+    pm25_parsed = _approx_float(limits.get("combined_pm25_tpy")) if limits is not None else None
+    pm10, pm10_approx = pm10_parsed if pm10_parsed is not None else (None, False)
+    pm25 = pm25_parsed[0] if pm25_parsed is not None else None
     stance = _stance_for_positive(runs_tower)
     towers_phrase = (
         f"{tower_count} cooling tower(s)" if tower_count is not None else "cooling tower(s)"
     )
-    pm_phrase = f", ~{pm10:g} tpy PM10" if pm10 is not None else ""
+    # Mark the PM10 figure ``~`` only when the permit stated it approximately (never fabricate an
+    # approximation on an exact figure; never drop the marker on an approximate one).
+    pm_phrase = f", {'~' if pm10_approx else ''}{pm10:g} tpy PM10" if pm10 is not None else ""
     return AirPermitCorroborator(
         state=AirPermitState.PM_SOURCE_LISTED,
         stance=stance,
