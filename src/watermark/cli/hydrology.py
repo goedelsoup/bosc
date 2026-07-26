@@ -230,12 +230,16 @@ def cooling_reconcile_cmd(
         a = r.account
         documented = a.documented_blowdown or a.documented_makeup
         # A reservation_conflict has no metered figure — show the disclosed reservation ceiling
-        # instead, marked "(reserved)" so a ceiling is never read as a metered use.
+        # instead, marked "(reserved)" so a ceiling is never read as a metered use. A disclosed-fill
+        # gap (Van Wert B2, #1682) likewise shows the operator's self-reported ongoing draw marked
+        # "(disclosed)" so a self-report is never read as a metered use either.
         reserved = a.reserved_makeup or a.reserved_blowdown
         if documented is not None:
             documented_cell = f"{documented.value:g} MGD"
         elif reserved is not None:
             documented_cell = f"{reserved.value:g} MGD (reserved)"
+        elif a.disclosed_makeup is not None:
+            documented_cell = f"{a.disclosed_makeup.value:g} MGD (disclosed)"
         else:
             documented_cell = "—"
         coc = (
@@ -272,7 +276,10 @@ def cooling_reconcile_cmd(
         r"bracket. A gap is an \[open] records-request lead for C2 (#1688), never 'confirmed dry'. A "
         r"reservation-conflict (Troy-Piqua B1, #1681) is a low-water claim contradicted by a reserved "
         r"CEILING (the 'reserved' documented cell) — not a discharge/withdrawal instrument, so it "
-        r"keeps the UNKNOWN pin + sharpens lead #1486, never a headline consumptive. corrob† = the A4 "
+        r"keeps the UNKNOWN pin + sharpens lead #1486, never a headline consumptive. A 'disclosed' "
+        r"documented cell (Van Wert B2, #1682) is an operator SELF-REPORT (not a metered instrument): "
+        r"it sharpens the gap onto the initial-fill open quantity (#1409) but keeps the \[reference] "
+        r"pin, never upgraded. corrob† = the A4 "
         r"independent corroborators (air-permit cooling-tower PM + Tier II chemistry) reconciled "
         r"against the claim — SECONDARY, never the sole basis for a re-archetype. The Intel row is a "
         r"constructed positive control.[/]"

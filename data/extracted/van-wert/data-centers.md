@@ -74,6 +74,17 @@ to the Maumee (Lake Erie basin), distinct from the Great Miami / Scioto data-cen
 - **Cooling:** closed-loop (Danfoss-patented equipment); ongoing consumption small. Operational
   draw ≈ 660,000 gallons/yr (single local timeline source); QTS characterizes ongoing use as
   "about what 4 households use per month." `[reference]`
+- **Cooling-cycling reconciliation (B2, #1682):** the A3 harness
+  (`watermark cooling-reconcile`) tested the closed-loop-dry claim against the record. With no
+  metered makeup (the Ohio DNR withdrawal registry has no Van Wert County pull built) and no
+  facility-own blowdown (OHD000001 is a draft permit, unlinked to the facility by name), the
+  outcome is a **`gap`** — the pin stays `closed_loop_dry` / `[reference]`, **not** upgraded to
+  `document`-grade. The disclosed ≈ 660,000 gal figure is a single-source self-report (not a
+  metered instrument, so it cannot corroborate the operator's own claim), and the same number is
+  framed both as an *annual* operational draw and a *one-time* initial fill — that fill-vs-annual
+  ambiguity is the unresolved **#1409** discrepancy, quantified here, not settled. The initial-fill
+  volume + a metered water-service use are sharpened into a C2 records request (#1688 / #1409). See
+  `data/reference/oepa/cooling-reconciliation.yaml`. `[open]`
 - **Wastewater path / NPDES:** not disclosed for the facility; no facility-specific NPDES number
   found. `[open]`
 - **Receiving water:** Van Wert's stream is Town Creek → Little Auglaize River → Auglaize River →
