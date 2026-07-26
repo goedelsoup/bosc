@@ -1,0 +1,596 @@
+meta:
+  subject: 'Data-center cooling-cycling reconciliation — claimed cooling archetype vs the documented water
+    account (closed-loop cooling cycling epic #1676, A3 #1679)'
+  source: watermark.hydrology.cooling_reconcile — the A2 closed-loop cohort × the archetype-predicted
+    water account (cooling_models) × documented makeup (A1) / blowdown (A2), plus the Intel evaporative
+    positive control
+  regenerate: watermark cooling-reconcile --write
+  asof: '2026-07-11'
+  outcomes:
+    discrepancy: 0
+    corroborated: 1
+    gap: 5
+  discipline: The harness RECOMMENDS; it never mutates cooling_model — re-archetyping is a reviewed B1–B6
+    edit with the instrument cited. A back-solved cycles-of-concentration is an [inference] bracket, never
+    a headline scalar. A gap (no documented makeup/blowdown) is an [open] records-request lead for C2
+    (#1688), never read as 'confirmed dry'. The Intel row is a constructed positive control (openly evaporative)
+    the harness must classify corroborated, not a false discrepancy — it is a calibration vector, not
+    documented Intel data.
+candidates:
+- site: bowling-green
+  facility: Bowling Green Data Center (Project Accordion)
+  is_control: false
+  claimed_archetype: closed_loop_dry
+  claim_source: reference
+  claim_citation: '[reference] company claim (NOT instrument-confirmed): Meta describes closed-loop, liquid-cooled
+    with dry coolers — ''no operational water'', with domestic/cleaning/fire use only. In tension with
+    the NWWSD wholesaling BG water to Meta (contract ceiling 1.5 MGD, Aug 2024; conflicting ~50k vs ~600k
+    GPD figures; a Meta-funded 2 MG tank + 16-in main) — that reconciliation is tracked at the water sub-issue
+    #1439, not decided here. Replace with a documented cooling design when an NPDES/water instrument lands.'
+  account:
+    archetype: closed_loop_dry
+    it_load:
+      value: 180.0
+      unit: MW
+      source: derived
+      citation: '[reference] the disclosed ''up to ~180 MW at peak'' for the initial phase — reported
+        via the Apollo OPSB filings (25-0973-EL-BGN) in press (BG Independent, Data Center Dynamics),
+        NOT an air-permit or PJM-interconnection disclosure of the data center''s own load, so the official/interconnection
+        MW stays [open]. Carried as the it_load central per #1435; it is a design CEILING (peak), so downstream
+        figures (peak x PUE x load factor) run conservative-high. The low bound is a floor-area SCREENING
+        floor — the disclosed 715,000 sq ft initial building x 75 W/sq ft whole-building IT density (53.6
+        MW); the same screen at 250 W/sq ft yields 178.75 MW, closely corroborating the disclosed ~180
+        MW peak from just under it (a corroboration, not a second source). The campus is designed SELF-POWERED
+        behind the meter by the Apollo plant (350 MW gas + ~120 MW BESS, Will-Power OH LLC, OPSB 25-0973-EL-BGN,
+        approved 2026-02-03 — #1437); the ~2x 350-vs-180 MW oversizing signals Phase 2 (Meta''s 2026-01-07
+        trustees letter). Replace with the disclosed load when an air permit or interconnection filing
+        names it.'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    predicted_makeup:
+      value: 0.0
+      unit: MGD
+      source: derived
+      citation: 'sealed closed loop, dry/air heat rejection: ~0 consumptive at screening grade (initial
+        fill + minor leakage makeup only)'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    predicted_consumptive:
+      value: 0.0
+      unit: MGD
+      source: derived
+      citation: 'central consumptive = 0 MGD intake x 0 consumptive fraction (sealed closed loop, dry/air
+        heat rejection: ~0 consumptive at screening grade (initial fill + minor leakage makeup only))'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    predicted_blowdown:
+      value: 0.0
+      unit: MGD
+      source: derived
+      citation: predicted blowdown = makeup 0 − evaporation 0 MGD for the closed_loop_dry archetype
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    documented_makeup: null
+    documented_blowdown: null
+    disclosed_cycles: null
+    backsolved_cycles: null
+    seasonality_warm_ratio: null
+  outcome: gap
+  recommended_archetype: null
+  recommended_source: null
+  lead:
+    kind: records-request
+    site: bowling-green
+    facility: Bowling Green Data Center (Project Accordion)
+    subject: cooling-water account — makeup + blowdown records
+    records_sought:
+    - industrial pretreatment / indirect-discharge (IU) permit
+    - sewer-use agreement + any cooling-tower blowdown authorization
+    - metered water-service use (makeup withdrawal)
+    - cooling-tower blowdown / low-volume-wastewater DMR
+    holder: City / municipal water-sewer authority serving bowling-green
+    rationale: closed_loop_dry claim (source=reference) with no facility-own discharge permit and no documented
+      makeup — resolve whether blowdown goes to sewer under a City agreement not visible in ECHO/NPDES,
+      or the loop is genuinely dry.
+    epic_ref: '#1688 (C2)'
+    tag: '[open]'
+  tag: '[open]'
+  confidence: low
+  finding: 'No documented makeup or blowdown for Bowling Green Data Center (Project Accordion): the closed_loop_dry
+    claim (source=reference) cannot yet be tested against records — an [open] gap, not ''confirmed dry''
+    (→ C2 records request #1688). Predicted makeup 0 MGD.'
+- site: springfield
+  facility: 5C Data Centers "CMH01"
+  is_control: false
+  claimed_archetype: closed_loop_dry
+  claim_source: reference
+  claim_citation: '[reference] Closed-loop / direct-liquid recirculating cooling, disclosed ''not evaporative''
+    by the City of Springfield 5C FAQ (springfieldohio.gov/5c-data-center-faqs); up to 300,000 gal/day
+    permitted from the municipal system at an >80degF extreme-heat max (''near zero'' most of the year,
+    ~30k gal/day realistic), with an on-site reservoir under study to avoid the municipal tap. A largely
+    dry recirculating design undercuts the Mad River buried-valley abstraction thesis. Not a document
+    extraction; refine to [verified] on an ingested mechanical/plumbing permit. The receiving-water /
+    source-water screen is the water sub-issue (#1415).'
+  account:
+    archetype: closed_loop_dry
+    it_load:
+      value: 100.0
+      unit: MW
+      source: derived
+      citation: '[verified/inference] DISCLOSURE-anchored bracket — NOT an air-permit figure (the disclosed
+        interconnection/air-permit MW stays [open] until the Ohio EPA Air PTI lands, #1414). Anchored
+        on two disclosed hard figures: the City of Springfield 5C FAQ ''up to 150 MW max load'' (springfieldohio.gov/5c-data-center-faqs)
+        as the HIGH, and the announced first tranche — a 50 MW / 24,000-GPU AMD MI355X supercluster (2025-12)
+        — as the LOW; the 100 MW central is the midpoint of that disclosed 50-150 MW corridor. The register
+        (data/extracted/springfield/data-centers.md, hydrology hook) treats the 150 MW max as the IT-load
+        screening input. The ~900 MW ultimate buildout (datacentermap facility ''CMH01'') and the 75/200
+        MW interim-phase figures are [open] — unconfirmed by any primary instrument and DELIBERATELY EXCLUDED
+        from this band; the air permit settles the stack. Crusoe (75 MW, parcel undisclosed) is a SEPARATE
+        register and is not blended in. Replace with the disclosed load when the Ohio EPA Air PTI or a
+        PJM interconnection filing names 5C''s MW.'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    predicted_makeup:
+      value: 0.0
+      unit: MGD
+      source: derived
+      citation: 'sealed closed loop, dry/air heat rejection: ~0 consumptive at screening grade (initial
+        fill + minor leakage makeup only)'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    predicted_consumptive:
+      value: 0.0
+      unit: MGD
+      source: derived
+      citation: 'central consumptive = 0 MGD intake x 0 consumptive fraction (sealed closed loop, dry/air
+        heat rejection: ~0 consumptive at screening grade (initial fill + minor leakage makeup only))'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    predicted_blowdown:
+      value: 0.0
+      unit: MGD
+      source: derived
+      citation: predicted blowdown = makeup 0 − evaporation 0 MGD for the closed_loop_dry archetype
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    documented_makeup: null
+    documented_blowdown: null
+    disclosed_cycles: null
+    backsolved_cycles: null
+    seasonality_warm_ratio: null
+  outcome: gap
+  recommended_archetype: null
+  recommended_source: null
+  lead:
+    kind: records-request
+    site: springfield
+    facility: 5C Data Centers "CMH01"
+    subject: cooling-water account — makeup + blowdown records
+    records_sought:
+    - industrial pretreatment / indirect-discharge (IU) permit
+    - sewer-use agreement + any cooling-tower blowdown authorization
+    - metered water-service use (makeup withdrawal)
+    - cooling-tower blowdown / low-volume-wastewater DMR
+    holder: City / municipal water-sewer authority serving springfield
+    rationale: closed_loop_dry claim (source=reference) with no facility-own discharge permit and no documented
+      makeup — resolve whether blowdown goes to sewer under a City agreement not visible in ECHO/NPDES,
+      or the loop is genuinely dry.
+    epic_ref: '#1688 (C2)'
+    tag: '[open]'
+  tag: '[open]'
+  confidence: low
+  finding: 'No documented makeup or blowdown for 5C Data Centers "CMH01": the closed_loop_dry claim (source=reference)
+    cannot yet be tested against records — an [open] gap, not ''confirmed dry'' (→ C2 records request
+    #1688). Predicted makeup 0 MGD.'
+- site: urbana
+  facility: Urbana Technology Hub
+  is_control: false
+  claimed_archetype: closed_loop_dry
+  claim_source: reference
+  claim_citation: '[reference] Closed-loop cooling disclosed at the Feb-2026 City of Urbana meeting —
+    developer stated water use ''comparable to a standard office building'' (Urbana Daily Citizen 2026-02-18).
+    Undercuts the buried-valley water-abstraction thesis. Not a document extraction; refine to [verified]
+    on an ingested mechanical/plumbing permit.'
+  account:
+    archetype: closed_loop_dry
+    it_load:
+      value: 74.8
+      unit: MW
+      source: derived
+      citation: '[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/air-permit
+        MW is [open] (#1263 sub-lead: PJM queue position / air permit). Derived from the disclosed 460,000
+        sq ft gross floor area (Urbana Technology Hub site-plan application, Feb 2026) x a whole-building
+        IT power-density band of 75-250 W/sq ft (stated screening assumption): ~34.5 MW low, ~74.8 MW
+        central (MW-midpoint), 115 MW high (watermark.facility.screening — #1641 D2). The single-story
+        ~40 ft form factor + the disclosed CLOSED-LOOP DRY cooling (''water use comparable to a standard
+        office building'') argue against the max-density liquid-AI archetype, so the band is bounded well
+        below GB200-class rack densities. Replace with the disclosed load when a PJM interconnection application
+        or an air permit surfaces it. RETAINED after a documented NEGATIVE search (#1353, 2026-07-10):
+        the AES Ohio (Dayton) PJM TEAC large-load customer requests name Piqua/Adams/Marysville/Tipp City/Jeffersonville/Wilmington
+        — NOT Champaign County/Urbana; the only Champaign PJM-queue item is Woodstock Solar AE2-342 (40
+        MW, withdrawn); and US-EPA ECHO ICIS-AIR shows no campus air permit at the SR-55/US-68 site (7
+        pre-existing Urbana sources only). No MW was disclosed at the Feb-2026 city meeting; no figure
+        fabricated. NB: the 100 MW->1.3 GW AES Ohio figure is ADAMS COUNTY (Stuart substation) and the
+        ~500 MW figure is Thor''s VAN WERT campus — neither is Urbana. Full record: data/extracted/urbana/facility-power-instrument-search.md.'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    predicted_makeup:
+      value: 0.0
+      unit: MGD
+      source: derived
+      citation: 'sealed closed loop, dry/air heat rejection: ~0 consumptive at screening grade (initial
+        fill + minor leakage makeup only)'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    predicted_consumptive:
+      value: 0.0
+      unit: MGD
+      source: derived
+      citation: 'central consumptive = 0 MGD intake x 0 consumptive fraction (sealed closed loop, dry/air
+        heat rejection: ~0 consumptive at screening grade (initial fill + minor leakage makeup only))'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    predicted_blowdown:
+      value: 0.0
+      unit: MGD
+      source: derived
+      citation: predicted blowdown = makeup 0 − evaporation 0 MGD for the closed_loop_dry archetype
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    documented_makeup: null
+    documented_blowdown: null
+    disclosed_cycles: null
+    backsolved_cycles: null
+    seasonality_warm_ratio: null
+  outcome: gap
+  recommended_archetype: null
+  recommended_source: null
+  lead:
+    kind: records-request
+    site: urbana
+    facility: Urbana Technology Hub
+    subject: cooling-water account — makeup + blowdown records
+    records_sought:
+    - industrial pretreatment / indirect-discharge (IU) permit
+    - sewer-use agreement + any cooling-tower blowdown authorization
+    - metered water-service use (makeup withdrawal)
+    - cooling-tower blowdown / low-volume-wastewater DMR
+    holder: City / municipal water-sewer authority serving urbana
+    rationale: closed_loop_dry claim (source=reference) with no facility-own discharge permit and no documented
+      makeup — resolve whether blowdown goes to sewer under a City agreement not visible in ECHO/NPDES,
+      or the loop is genuinely dry.
+    epic_ref: '#1688 (C2)'
+    tag: '[open]'
+  tag: '[open]'
+  confidence: low
+  finding: 'No documented makeup or blowdown for Urbana Technology Hub: the closed_loop_dry claim (source=reference)
+    cannot yet be tested against records — an [open] gap, not ''confirmed dry'' (→ C2 records request
+    #1688). Predicted makeup 0 MGD.'
+- site: van-wert
+  facility: Van Wert Mega Site
+  is_control: false
+  claimed_archetype: closed_loop_dry
+  claim_source: reference
+  claim_citation: '[reference] operator/developer claim (NOT instrument-confirmed): closed-loop cooling
+    (Danfoss-patented equipment); QTS states the campus ''does not consume water for cooling once operational'',
+    characterizing ongoing use as ''about what 4 households use per month'' (q.com/data-centers/van-wert;
+    vanwert.org/water-treatment). Same closed-loop pattern that undercut the Urbana water thesis (#1327).
+    Carries an [open] discrepancy on the initial closed-loop fill (~660,000 gal from the City of Van Wert
+    — local press frames it ''annually'' while the 2026-06-11 event framed it as a one-time fill); reconciling
+    the fill volume + the still-negotiated water/sewer service agreement is the water-service instrument
+    (#1407) / water-contradiction lead (#1409), not this pin. Replace with a documented cooling design
+    when an NPDES/mechanical instrument lands (the OHD000001 draft data-center general permit is not yet
+    linked to the facility by name, #1408).'
+  account:
+    archetype: closed_loop_dry
+    it_load:
+      value: 500.0
+      unit: MW
+      source: derived
+      citation: '[reference] ''up to 500 MW'' — Thor Equities / Form8tion''s 2025-08-19 land-acquisition
+        release (GlobeNewswire; citybiz; Data Center Dynamics) and local press; NOT an air-permit or PJM-interconnection
+        disclosure of the campus''s own load. QTS''s own site DECLINES to state capacity (''we don''t
+        disclose specific power capacity'', q.com/data-centers/van-wert), so this stays a [reference]
+        bracket, never a point disclosure — the official/interconnection MW is [open]. Carried central
+        at the announced 500 MW ceiling per #1402 (like the Bowling Green disclosed-peak precedent, #1435):
+        500 is an ''up to''/campus-draw ceiling, so treating it as the IT load makes downstream figures
+        (facility_draw = IT x PUE, then x load factor) run conservative-high. The low bound reads the
+        same ''up to 500 MW'' as the ALL-IN campus/grid-interconnection draw and divides out the cooling-dominated
+        PUE ceiling (the announced-ceiling screen, watermark.facility.screening — #1629): 500 / 1.43 ~=
+        349.7 MW implied IT load — the bracket (349.7-500 MW) thus spans the campus-total-vs-IT-only interpretive
+        ambiguity. No floor-area screen is possible (gross floor area is not disclosed, unlike Urbana
+        #1327 / Troy-Piqua #1482 / Bowling Green #1435). Replace with the disclosed load when an OEPA
+        air PTI, a PJM interconnection filing, or the AEP Ohio load contract (PUCO tariff 24-508-EL-ATA)
+        surfaces it; the AEP Ohio Transco Van Wert-Haviland 138 kV LON (OPSB 25-0697-EL-BLN, $45M, in-service
+        Dec 2026) is a [reference] transmission signal whose stated need is generic (#1401).'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    predicted_makeup:
+      value: 0.0
+      unit: MGD
+      source: derived
+      citation: 'sealed closed loop, dry/air heat rejection: ~0 consumptive at screening grade (initial
+        fill + minor leakage makeup only)'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    predicted_consumptive:
+      value: 0.0
+      unit: MGD
+      source: derived
+      citation: 'central consumptive = 0 MGD intake x 0 consumptive fraction (sealed closed loop, dry/air
+        heat rejection: ~0 consumptive at screening grade (initial fill + minor leakage makeup only))'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    predicted_blowdown:
+      value: 0.0
+      unit: MGD
+      source: derived
+      citation: predicted blowdown = makeup 0 − evaporation 0 MGD for the closed_loop_dry archetype
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    documented_makeup: null
+    documented_blowdown: null
+    disclosed_cycles: null
+    backsolved_cycles: null
+    seasonality_warm_ratio: null
+  outcome: gap
+  recommended_archetype: null
+  recommended_source: null
+  lead:
+    kind: records-request
+    site: van-wert
+    facility: Van Wert Mega Site
+    subject: cooling-water account — makeup + blowdown records
+    records_sought:
+    - industrial pretreatment / indirect-discharge (IU) permit
+    - sewer-use agreement + any cooling-tower blowdown authorization
+    - metered water-service use (makeup withdrawal)
+    - cooling-tower blowdown / low-volume-wastewater DMR
+    holder: City / municipal water-sewer authority serving van-wert
+    rationale: closed_loop_dry claim (source=reference) with no facility-own discharge permit and no documented
+      makeup — resolve whether blowdown goes to sewer under a City agreement not visible in ECHO/NPDES,
+      or the loop is genuinely dry.
+    epic_ref: '#1688 (C2)'
+    tag: '[open]'
+  tag: '[open]'
+  confidence: low
+  finding: 'No documented makeup or blowdown for Van Wert Mega Site: the closed_loop_dry claim (source=reference)
+    cannot yet be tested against records — an [open] gap, not ''confirmed dry'' (→ C2 records request
+    #1688). Predicted makeup 0 MGD.'
+- site: wilmington
+  facility: Cosler Farm campus
+  is_control: false
+  claimed_archetype: hybrid_adiabatic
+  claim_source: reference
+  claim_citation: '[reference] DIRECT EVAPORATIVE cooling disclosed in the joint Port Authority / City
+    Data Center FAQs, with a projected ~6M gal/yr cooling-water CONSUMPTION and water-cooled operation
+    only ~11 days/yr (dry/free-cooling otherwise) — mapped to the HYBRID_ADIABATIC archetype (dry with
+    seasonal evaporative assist). The disclosed ~6M gal/yr at the screening IT load implies a very low
+    water-use effectiveness (near-dry operation), which UNDERCUTS a large-abstraction premise — the water-thesis
+    finding. Not a document extraction; the reserved withdrawal MGD, the Caesar Creek Lake source contract,
+    and the WUE/back-solve reconciliation are the water plan (#1472). Wastewater returns to the City WWTP
+    -> NPDES OH0028134 -> Lytle Creek -> Todd Fork -> Little Miami.'
+  account:
+    archetype: hybrid_adiabatic
+    it_load:
+      value: 312.1
+      unit: MW
+      source: derived
+      citation: '[inference] SCREENING bracket — NOT a disclosure; the disclosed interconnection/air-permit
+        MW stays [open] (#1469: OPSB 25-0871-EL-BLN 345kV build-out + the PJM-queue lead). No MW figure
+        is primary-sourced for the campus. Primary basis = the network floor-area screen (cf. Urbana #1327
+        / Troy-Piqua): the disclosed 9-building site plan''s 1,920,299 sq ft gross floor area (Nov/Dec
+        2025) x a whole-building IT power-density band of 75-250 W/sq ft (stated screening assumption)
+        -> 144.0 MW low, ~312 MW central (MW-midpoint; watermark.facility.screening — #1641 D2), 480.1
+        MW high. Corroborated (not a second source) by the investment screen (cf. Sidney): the [reported]
+        $4B campus / a hyperscale ~$8.5-20M-per-MW-IT construction-cost band -> ~200 MW ($20M/MW) .. ~470
+        MW ($8.5M/MW) — the two independent screens agree at an order-of-magnitude ~150-480 MW, so the
+        bracket is set there (central ~312 MW). Signals that point HIGHER but are NOT adopted into the
+        bracket: (a) the 9->12-building revision tabled 2026-03-27 is unreconciled [open] and would scale
+        the floor area up; (b) the [reported] 252 Tier-4 diesel gensets, at a typical hyperscale per-unit
+        rating (undisclosed), imply a larger N+1 backup envelope; (c) the widely repeated ''1.5 GW'' is
+        [reference] press analysis of PJM interconnection filings (interconnection capacity != near-term
+        IT load) — a lead tracked on #1469, not a document in hand. Replace with the disclosed load the
+        moment a PJM interconnection / OPSB / SWOAQA air-permit instrument names the campus MW. Full record:
+        data/extracted/wilmington/data-centers.md. Discipline: this Clinton-County thread is SELF-CONTAINED
+        — do NOT bridge the Lima/Allen Bistrozzi land-assembly graph.'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    predicted_makeup:
+      value: 1.86
+      unit: MGD
+      source: derived
+      citation: 'annual average: warm-season makeup x 5/12 assist months (JUN-OCT); assist window = ET0
+        > precip months from the committed NASA POWER normals + FAO-56 ET0 (see hydrology climatology
+        artifact)'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    predicted_consumptive:
+      value: 1.4880000000000002
+      unit: MGD
+      source: derived
+      citation: central consumptive = 1.86 MGD intake x 0.8 consumptive fraction ((CoC-1)/CoC at CoC=5,
+        during assist months only)
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    predicted_blowdown:
+      value: 0.372
+      unit: MGD
+      source: derived
+      citation: predicted blowdown = makeup 1.86 − evaporation 1.488 MGD for the hybrid_adiabatic archetype
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    documented_makeup: null
+    documented_blowdown: null
+    disclosed_cycles: null
+    backsolved_cycles: null
+    seasonality_warm_ratio: null
+  outcome: gap
+  recommended_archetype: null
+  recommended_source: null
+  lead:
+    kind: records-request
+    site: wilmington
+    facility: Cosler Farm campus
+    subject: cooling-water account — makeup + blowdown records
+    records_sought:
+    - industrial pretreatment / indirect-discharge (IU) permit
+    - sewer-use agreement + any cooling-tower blowdown authorization
+    - metered water-service use (makeup withdrawal)
+    - cooling-tower blowdown / low-volume-wastewater DMR
+    holder: City / municipal water-sewer authority serving wilmington
+    rationale: hybrid_adiabatic claim (source=reference) with no facility-own discharge permit and no
+      documented makeup — resolve whether blowdown goes to sewer under a City agreement not visible in
+      ECHO/NPDES, or the loop is genuinely dry.
+    epic_ref: '#1688 (C2)'
+    tag: '[open]'
+  tag: '[open]'
+  confidence: low
+  finding: 'No documented makeup or blowdown for Cosler Farm campus: the hybrid_adiabatic claim (source=reference)
+    cannot yet be tested against records — an [open] gap, not ''confirmed dry'' (→ C2 records request
+    #1688). Predicted makeup 1.86 MGD.'
+- site: new-albany
+  facility: Intel evaporative control (New Albany)
+  is_control: true
+  claimed_archetype: evaporative_tower
+  claim_source: reference
+  claim_citation: 'constructed calibration control (exemplar: Intel ''Ohio One'' / New Albany, openly
+    evaporative, ~125 cooling towers) — figures internally consistent with an evaporative tower at CoC≈5,
+    NOT documented Intel data; New Albany carries no pinned SiteFacility (B6 #1686). The harness must
+    classify it corroborated-evaporative (no false discrepancy).'
+  account:
+    archetype: evaporative_tower
+    it_load:
+      value: 150.0
+      unit: MW
+      source: derived
+      citation: 'constructed calibration control (exemplar: Intel ''Ohio One'' / New Albany, openly evaporative,
+        ~125 cooling towers) — figures internally consistent with an evaporative tower at CoC≈5, NOT documented
+        Intel data; New Albany carries no pinned SiteFacility (B6 #1686). The harness must classify it
+        corroborated-evaporative (no false discrepancy).'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    predicted_makeup:
+      value: 2.14
+      unit: MGD
+      source: derived
+      citation: 150 MW x 1.8 L/kWh / evap fraction
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    predicted_consumptive:
+      value: 1.7120000000000002
+      unit: MGD
+      source: derived
+      citation: central consumptive = 2.14 MGD intake x 0.8 consumptive fraction ((CoC-1)/CoC at CoC=5)
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    predicted_blowdown:
+      value: 0.428
+      unit: MGD
+      source: derived
+      citation: predicted blowdown = makeup 2.14 − evaporation 1.712 MGD for the evaporative_tower archetype
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    documented_makeup:
+      value: 2.2
+      unit: MGD
+      source: reference
+      citation: 'constructed calibration control (exemplar: Intel ''Ohio One'' / New Albany, openly evaporative,
+        ~125 cooling towers) — figures internally consistent with an evaporative tower at CoC≈5, NOT documented
+        Intel data; New Albany carries no pinned SiteFacility (B6 #1686). The harness must classify it
+        corroborated-evaporative (no false discrepancy).'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    documented_blowdown:
+      value: 0.45
+      unit: MGD
+      source: reference
+      citation: 'constructed calibration control (exemplar: Intel ''Ohio One'' / New Albany, openly evaporative,
+        ~125 cooling towers) — figures internally consistent with an evaporative tower at CoC≈5, NOT documented
+        Intel data; New Albany carries no pinned SiteFacility (B6 #1686). The harness must classify it
+        corroborated-evaporative (no false discrepancy).'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    disclosed_cycles:
+      value: 5.0
+      unit: ratio
+      source: reference
+      citation: 'constructed calibration control (exemplar: Intel ''Ohio One'' / New Albany, openly evaporative,
+        ~125 cooling towers) — figures internally consistent with an evaporative tower at CoC≈5, NOT documented
+        Intel data; New Albany carries no pinned SiteFacility (B6 #1686). The harness must classify it
+        corroborated-evaporative (no false discrepancy).'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    backsolved_cycles:
+      value: 4.89
+      unit: ratio
+      source: derived
+      citation: 'back-solved CoC = documented makeup 2.2 MGD / documented blowdown 0.45 MGD ([inference]:
+        the ratio of two self-reported figures, a bracket not a measurement)'
+      confidence: medium
+      asof: null
+      low: 4.156499999999999
+      high: 5.6235
+    seasonality_warm_ratio: 1.6
+  outcome: corroborated
+  recommended_archetype: evaporative_tower
+  recommended_source: document
+  lead: null
+  tag: '[verified]'
+  confidence: high
+  finding: Documented 0.45 MGD matches the evaporative_tower claim's 0.428 MGD prediction — corroborated
+    evaporative; upgrade source reference → document. Back-solved CoC 4.89 (4.1565–5.6235).

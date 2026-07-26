@@ -38,5 +38,18 @@ Water-balance / stormwater modeling of the Lima municipal loop. Defers to the ro
   absence), written to `data/reference/oepa/ohd000001-coverage.yaml` by `watermark oepa coverage
   --write`. The cohort is registry-derived (`SiteFacility.cooling_model` in
   {`closed_loop_dry`, `hybrid_adiabatic`}); a facility-own discharge absence stays an `[open]`
-  gap (→ a C2 records request), never read as "confirmed dry".
+  gap (→ a C2 records request), never read as "confirmed dry". (3) `cooling_reconcile.py` (A3,
+  #1679) is the **reconciliation harness** over (1)+(2): per cohort facility it assembles the
+  water account — the pinned archetype's PREDICTED makeup/blowdown (via `cooling_models`) vs the
+  DOCUMENTED makeup (A1) / blowdown (A2) — back-solves cycles-of-concentration where both are on
+  record (always an `[inference]` **bracket**, never a scalar), and classifies each as
+  `discrepancy` (a low-water claim contradicted by documented flow → re-archetype up),
+  `corroborated` (documents consistent with the claim), or `gap` (no documents → a C2 lead
+  payload). It **recommends, never mutates** `cooling_model` (re-archetyping is a reviewed
+  B1–B6 edit). Each facility is derived under its OWN site's `Settings` so a cross-site cohort
+  never leaks the active site's climatology. Written to
+  `data/reference/oepa/cooling-reconciliation.yaml` by `watermark cooling-reconcile --write`; the
+  cohort is A2's plus the **Intel evaporative positive control** (`INTEL_CONTROL_FACILITY`, a
+  constructed calibration vector — NOT a registered site, NOT documented Intel data) the harness
+  must classify `corroborated`, the no-false-positive gate.
 - Sync throughout (`httpx.Client`) to match the rest of the pipeline.

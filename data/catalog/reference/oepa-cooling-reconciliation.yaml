@@ -1,0 +1,49 @@
+id: oepa-cooling-reconciliation
+title: Cooling-cycling reconciliation — closed-loop cohort water account
+scope: reference
+status: reviewed
+producer:
+  kind: derived
+  command: cooling-reconcile --write
+  connector_ref: watermark.hydrology.cooling_reconcile
+  source: watermark.hydrology.cooling_reconcile — A2 closed-loop cohort × archetype-predicted water account × documented makeup (A1) / blowdown (A2)
+  external_url: https://epa.ohio.gov
+license: Public records (Ohio state government)
+access_tier: public
+site_scope: state:OH
+storage:
+  - relpath: reference/oepa/cooling-reconciliation.yaml
+    media_type: application/x-yaml
+refresh:
+  cadence: on-demand
+  last_refreshed: '2026-07-11'
+provenance: derived
+schema_ref: watermark.hydrology.cooling_reconcile.ReconciliationRecord
+depends_on:
+  - oepa-ohd000001-coverage
+tags:
+  - oepa
+  - npdes
+  - data-centers
+  - cooling-water
+  - blowdown
+  - closed-loop
+  - reconciliation
+  - cycles-of-concentration
+notes: >-
+  Per-facility reconciliation of each closed-loop-claiming data-center facility's cooling
+  archetype CLAIM against its DOCUMENTED water account — the A3 harness of the closed-loop
+  cooling cycling epic (#1676, sub-issue A3 #1679). For each facility it assembles the
+  predicted makeup/blowdown (running the pinned `SiteFacility.cooling_model` through
+  `watermark.hydrology.cooling_models`) against documented makeup (A1 withdrawal) / blowdown
+  (A2 discharge), back-solves cycles-of-concentration where both are on record (an
+  `[inference]` bracket, never a scalar), and classifies each into `discrepancy` (a low-water
+  claim contradicted by documented flow → re-archetype up), `corroborated` (documented water
+  consistent with the claim), or `gap` (no documented water → a C2 records-request lead
+  payload, #1688). The harness RECOMMENDS; it never mutates `cooling_model` (re-archetyping is
+  a reviewed B1–B6 edit). Every live cohort facility resolves to `gap` today (no documented
+  makeup/blowdown while OHD000001 is draft and no facility-own DMR is on record). The Intel
+  row is a constructed openly-evaporative POSITIVE CONTROL the harness must classify
+  `corroborated`, not a false `discrepancy` — a calibration vector, not documented Intel data.
+  Depends on `oepa-ohd000001-coverage` (the A2 blowdown-coverage resolution it reads). See
+  data/reference/oepa/README.md.
