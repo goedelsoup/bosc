@@ -162,6 +162,88 @@ def thermal_cmd() -> None:
     )
 
 
+@app.command(name="cooling-reconcile")
+def cooling_reconcile_cmd(
+    write: bool = typer.Option(
+        False,
+        "--write",
+        help="Persist data/reference/oepa/cooling-reconciliation.yaml (else print only).",
+    ),
+    out: str | None = typer.Option(
+        None, "--out", help="Write the reconciliation artifact to this path instead of the default."
+    ),
+) -> None:
+    """Reconcile each closed-loop facility's cooling claim against its documented water (#1679).
+
+    The A3 harness of the closed-loop cooling cycling epic (#1676). Per facility it assembles the
+    water account — the pinned archetype's PREDICTED makeup/blowdown (via `cooling_models`) vs the
+    DOCUMENTED makeup (A1 withdrawal) / blowdown (A2 discharge) — back-solves cycles-of-
+    concentration where both are on record (an `[inference]` bracket, never a scalar), and
+    classifies each into discrepancy / corroborated / gap. It RECOMMENDS re-archetyping; it never
+    mutates `cooling_model`. Includes the Intel evaporative positive control, which must classify
+    corroborated (no false discrepancy). Read-only over the registry + committed artifacts.
+    """
+    from pathlib import Path
+
+    from watermark.hydrology import blowdown, cooling_reconcile
+
+    settings = get_settings()
+    records = cooling_reconcile.reconcile_cohort(settings=settings)
+    counts = {
+        o.value: sum(1 for r in records if r.outcome is o)
+        for o in cooling_reconcile.ReconcileOutcome
+    }
+    console.print(
+        f"[bold]Cooling-cycling reconciliation[/] — {len(records)} facilities "
+        f"([red]{counts['discrepancy']} discrepancy[/], [green]{counts['corroborated']} "
+        f"corroborated[/], [yellow]{counts['gap']} gap[/]); documented-blowdown currency "
+        f"{blowdown.OHD000001.asof} (OHD000001 lifecycle)."
+    )
+    color = {"discrepancy": "red", "corroborated": "green", "gap": "yellow"}
+    table = Table(
+        "site", "facility", "claim", "outcome", "pred makeup", "documented", "CoC*", "recommend"
+    )
+    for r in records:
+        a = r.account
+        documented = a.documented_blowdown or a.documented_makeup
+        coc = (
+            f"{a.backsolved_cycles.value:g} "
+            f"({a.backsolved_cycles.low_or_value:g}-{a.backsolved_cycles.high_or_value:g})"
+            if a.backsolved_cycles is not None
+            else "—"
+        )
+        recommend = (
+            f"→ {r.recommended_archetype}, source={r.recommended_source}"
+            if r.recommended_archetype is not None
+            else "records request (C2)"
+        )
+        facility = f"{r.facility}{' [cyan](control)[/]' if r.is_control else ''}"
+        table.add_row(
+            r.site,
+            escape(facility) if not r.is_control else facility,
+            r.claimed_archetype,
+            f"[{color[r.outcome.value]}]{r.outcome.value}[/]",
+            f"{a.predicted_makeup.value:g}",
+            f"{documented.value:g} MGD" if documented is not None else "—",
+            coc,
+            escape(recommend),
+        )
+    console.print(table)
+    console.print(
+        r"[dim]The harness recommends; it never mutates cooling_model (re-archetyping is a reviewed "
+        r"B-review edit with the instrument cited). A back-solved CoC (CoC*) is an \[inference] "
+        r"bracket. A gap is an \[open] records-request lead for C2 (#1688), never 'confirmed dry'. "
+        r"The Intel row is a constructed positive control.[/]"
+    )
+
+    if write or out:
+        document = cooling_reconcile.reconciliation_document(records)
+        path = cooling_reconcile.write_reconciliation(
+            document, settings=settings, out=Path(out) if out else None
+        )
+        wrote(path)
+
+
 @app.command(name="basin-network")
 def basin_network(
     write: bool = typer.Option(

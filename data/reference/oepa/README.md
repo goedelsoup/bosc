@@ -1,27 +1,36 @@
-# OEPA general-permit coverage (OHD000001)
+# OEPA cooling-cycling reference (OHD000001 coverage + reconciliation)
 
-Derived reference tracking whether data-center facilities in the closed-loop cooling
-cohort hold — or can yet hold — coverage under **Ohio EPA's statewide data-center
-NPDES general permit, OHD000001**. Part of the closed-loop cooling cycling epic
-(#1676), sub-issue A2 (#1678).
+Two derived references for the closed-loop cooling cycling epic (#1676): the A2
+**OHD000001 coverage** resolution (#1678) and the A3 **cooling-cycling reconciliation**
+(#1679). Both are computed over the site registry's closed-loop cohort — data-center
+facilities disclosing a recirculating/closed cooling archetype — and the cited OHD000001
+permit lifecycle.
 
 OHD000001's low-volume-wastewater coverage (cooling-tower blowdown, boiler blowdown,
 air-compressor condensate) is the disclosure the cycling thesis predicts. The permit
 documents themselves (draft body + public notice + fact sheet) are catalogued
 separately under `oepa-ohd000001-gp` (`documents/oepa/OHD000001_Draft*.pdf`); this
-folder holds the **per-candidate coverage resolution** computed over them.
+folder holds the **coverage resolution** computed over them and the **reconciliation**
+that reads it.
 
 ## Files
 
-- [**`ohd000001-coverage.yaml`**](ohd000001-coverage.yaml) — `meta:` provenance, a
+- [**`ohd000001-coverage.yaml`**](ohd000001-coverage.yaml) (A2) — `meta:` provenance, a
   `general_permit:` lifecycle block (OHD000001's own draft/effective state, the gate
   on whether coverage is even possible), and a `candidates:` list: for each registered
   facility disclosing a recirculating/closed cooling archetype, its resolved
   `ohd000001_status` (`covered` / `not_sought` / `no_record` / `not_available`), its
-  `facility_own_discharge` status, and a one-line evidentiary `finding`.
+  `facility_own_discharge` status, and a one-line evidentiary `finding`. Regenerate with
+  `watermark oepa coverage --write` (`watermark.hydrology.blowdown`).
 
-Regenerate with `watermark oepa coverage --write`
-(`watermark.hydrology.blowdown`).
+- [**`cooling-reconciliation.yaml`**](cooling-reconciliation.yaml) (A3) — the
+  per-facility **water account**: the pinned archetype's PREDICTED makeup/blowdown
+  (from `watermark.hydrology.cooling_models`) vs the DOCUMENTED makeup (A1 withdrawal) /
+  blowdown (A2 discharge), a back-solved cycles-of-concentration (an `[inference]`
+  bracket) where both are on record, and an `outcome` per facility — `discrepancy` /
+  `corroborated` / `gap` — with a recommendation and, for a gap, a C2 records-request
+  `lead` payload. Regenerate with `watermark cooling-reconcile --write`
+  (`watermark.hydrology.cooling_reconcile`).
 
 ## Method & the gating fact
 
@@ -55,6 +64,42 @@ Deliberately **out** of the current cohort, and why:
   openly-evaporative positive control) — they enter automatically once B-review pins a
   facility + cooling archetype on the profile.
 
+## The reconciliation (A3)
+
+For each cohort facility, `cooling-reconciliation.yaml` runs the pinned
+`SiteFacility.cooling_model` archetype through `watermark.hydrology.cooling_models` to
+get the **predicted** makeup/blowdown for the claim, reads the **documented** makeup (A1
+withdrawal registry) and blowdown (A2 discharge coverage) where records exist, and
+classifies the reconciliation:
+
+- **discrepancy** — a low-water claim (`closed_loop_dry`) contradicted by documented
+  flow ≫ its ~0 prediction (or over-cycling even vs a wet claim). Recommends
+  re-archetyping up (`evaporative_tower` / `hybrid_adiabatic`, `source="document"`).
+- **corroborated** — documented water is consistent with the claimed archetype (a dry
+  claim with documented ≈ 0, or a wet claim whose documented water matches). Recommends
+  the `reference → document` source upgrade.
+- **gap** — no documented makeup or blowdown to test against. Emits a records-request
+  `lead` payload for C2 (#1688).
+
+Where **both** documented makeup and blowdown are on record, cycles-of-concentration is
+back-solved (makeup / blowdown) and emitted as an **`[inference]` bracket, never a
+headline scalar** — the ratio of two self-reported figures is not a measurement.
+
+**Every live cohort facility is a `gap` today**: while OHD000001 is a draft permit and
+no facility-own DMR is on record, there is no documented makeup or blowdown to test
+against. The seams auto-activate when the records land.
+
+**The harness recommends; it never mutates `cooling_model`.** Re-archetyping a facility
+is a reviewed B1–B6 edit landed with the instrument cited — the reconciliation record is
+the evidence packet for that edit.
+
+**The Intel row is a constructed positive control** (`is_control: true`; exemplar New
+Albany / Intel, openly evaporative, ~125 cooling towers): an evaporative facility whose
+documented water equals its evaporative-tower prediction, which the harness must classify
+`corroborated` — **not** a false `discrepancy` for using a lot of water. It is a
+calibration vector built into the harness, **not** documented Intel data, and **not** a
+registered site (New Albany carries no pinned `SiteFacility` — that is B6 #1686's work).
+
 ## Evidentiary stance
 
 - OHD000001 non-coverage while the permit is draft is `[verified]` (the permit's own
@@ -69,6 +114,16 @@ Deliberately **out** of the current cohort, and why:
 <!-- catalog:begin (generated by `watermark catalog render`; do not edit inside) -->
 
 **Cataloged datasets** — generated from `data/catalog/reference/`; run `watermark catalog render --apply` after editing an entry.
+
+### `oepa-cooling-reconciliation` — Cooling-cycling reconciliation — closed-loop cohort water account
+
+Source: watermark.hydrology.cooling_reconcile — A2 closed-loop cohort × archetype-predicted water account × documented makeup (A1) / blowdown (A2) · License: Public records (Ohio state government) · Access: public · Site scope: state:OH · Refresh: on-demand, last 2026-07-11
+
+Regenerate: `watermark cooling-reconcile --write`
+
+| file | type | lfs |
+| --- | --- | --- |
+| `reference/oepa/cooling-reconciliation.yaml` | application/x-yaml | no |
 
 ### `oepa-ohd000001-coverage` — OHD000001 data-center general-permit coverage — closed-loop cohort
 
