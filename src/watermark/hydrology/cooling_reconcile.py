@@ -201,10 +201,15 @@ class ReconciliationRecord(BaseModel):
     claim_citation: str
     account: WaterAccount
     outcome: ReconcileOutcome
-    # The harness RECOMMENDS (never mutates): for a discrepancy, the archetype to re-pin and
-    # the source grade it would carry; for a corroboration, the source upgrade. None for a gap.
+    # The harness RECOMMENDS (never mutates): for a discrepancy, the archetype to re-pin and the
+    # source grade it would carry; for a corroboration, the source upgrade. None for a gap and for a
+    # reservation_conflict (which keeps its pin — see ``kept_archetype`` — rather than re-pinning).
     recommended_archetype: str | None = None
     recommended_source: str | None = None
+    # The archetype pin the harness recommends KEEPING for a reservation_conflict (the site's real
+    # profile pin — "unknown" for Troy-Piqua, since a reservation ceiling is not an instrument and
+    # can't re-pin it). Populated only for a reservation_conflict; None for every other outcome.
+    kept_archetype: str | None = None
     # The C2 records-request lead payload (#1688) — present only for a gap outcome.
     lead: RecordsRequestLead | None = None
     # The A4 (#1680) independent corroborators — air-permit cooling-tower PM + Tier II chemistry.
@@ -280,7 +285,10 @@ def _predicted_blowdown(basis: CoolingBasis) -> ProvenancedValue:
 
 
 def _backsolve_cycles(
-    makeup: ProvenancedValue, blowdown: ProvenancedValue, *, kind: str = "documented"
+    makeup: ProvenancedValue,
+    blowdown: ProvenancedValue,
+    *,
+    kind: Literal["documented", "reserved"] = "documented",
 ) -> ProvenancedValue | None:
     """Back-solve cycles-of-concentration = makeup / blowdown, as an ``[inference]`` bracket.
 
@@ -311,12 +319,11 @@ def _backsolve_cycles(
             "an upper-bound shape only, never a headline consumptive)"
         )
     )
-    documented_makeup, documented_blowdown = makeup, blowdown
     # Prefer the inputs' own bands (makeup_low/blowdown_high → CoC low, and vice-versa); fall
     # back to a relative screening band. Either way the result always carries a range.
-    if documented_makeup.has_range or documented_blowdown.has_range:
-        lo = round(documented_makeup.low_or_value / documented_blowdown.high_or_value, 2)
-        hi = round(documented_makeup.high_or_value / documented_blowdown.low_or_value, 2)
+    if makeup.has_range or blowdown.has_range:
+        lo = round(makeup.low_or_value / blowdown.high_or_value, 2)
+        hi = round(makeup.high_or_value / blowdown.low_or_value, 2)
         return ProvenancedValue.derived(
             point, "ratio", citation=citation, low=min(lo, point), high=max(hi, point)
         )
@@ -389,6 +396,36 @@ def _classify(
 _WET_ARCHETYPES = frozenset({CoolingModelType.EVAPORATIVE_TOWER, CoolingModelType.HYBRID_ADIABATIC})
 
 
+def _corroborator_asks(
+    corroborators: CoolingCorroborators | None,
+) -> tuple[list[str], list[str]]:
+    """The extra ``(records_sought, holders)`` a records-request lead adds for A4 corroborators
+    that are themselves NOT on record (#1680).
+
+    A gap or a reservation_conflict lead pulls the water records; when the facility's own air
+    PTI/PTIO (its cooling-tower emission-unit list) or Tier II / EPCRA-312 chemistry inventory is
+    also not on record, those become their own asks alongside. Returns ``([], [])`` when there are
+    no corroborators or every one is already on record (nothing to add) — so a caller can always
+    ``extend`` unconditionally.
+    """
+    records_sought: list[str] = []
+    holders: list[str] = []
+    if corroborators is None:
+        return records_sought, holders
+    if corroborators.air_permit.state is AirPermitState.NOT_ON_RECORD:
+        records_sought.append(
+            "facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits"
+        )
+        holders.append("Ohio EPA / regional air agency (DAPC)")
+    if corroborators.tier2_chemistry.state is TierIIState.NOT_ON_RECORD:
+        records_sought.append(
+            "Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, "
+            "scale / corrosion inhibitor)"
+        )
+        holders.append("SERC / LEPC")
+    return records_sought, holders
+
+
 def _records_lead(
     site: str,
     fac: SiteFacility,
@@ -410,18 +447,9 @@ def _records_lead(
         "cooling-tower blowdown / low-volume-wastewater DMR",
     ]
     holders = [f"City / municipal water-sewer authority serving {site}"]
-    if corroborators is not None:
-        if corroborators.air_permit.state is AirPermitState.NOT_ON_RECORD:
-            records_sought.append(
-                "facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits"
-            )
-            holders.append("Ohio EPA / regional air agency (DAPC)")
-        if corroborators.tier2_chemistry.state is TierIIState.NOT_ON_RECORD:
-            records_sought.append(
-                "Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, "
-                "scale / corrosion inhibitor)"
-            )
-            holders.append("SERC / LEPC")
+    extra_records, extra_holders = _corroborator_asks(corroborators)
+    records_sought.extend(extra_records)
+    holders.extend(extra_holders)
     return RecordsRequestLead(
         site=site,
         facility=fac.name,
@@ -468,18 +496,9 @@ def _reservation_conflict_lead(
         f"City / municipal water-sewer authority serving {site}",
         "Ohio EPA (NPDES / OHD000001)",
     ]
-    if corroborators is not None:
-        if corroborators.air_permit.state is AirPermitState.NOT_ON_RECORD:
-            records_sought.append(
-                "facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits"
-            )
-            holders.append("Ohio EPA / regional air agency (DAPC)")
-        if corroborators.tier2_chemistry.state is TierIIState.NOT_ON_RECORD:
-            records_sought.append(
-                "Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, "
-                "scale / corrosion inhibitor)"
-            )
-            holders.append("SERC / LEPC")
+    extra_records, extra_holders = _corroborator_asks(corroborators)
+    records_sought.extend(extra_records)
+    holders.extend(extra_holders)
     return RecordsRequestLead(
         site=site,
         facility=fac.name,
@@ -612,6 +631,7 @@ def reconcile_facility(
     seasonality_warm_ratio: float | None = None,
     corroborators: CoolingCorroborators | None = None,
     water_lead_ref: str = "#1688 (C2)",
+    kept_archetype: CoolingModelType | None = None,
     is_control: bool = False,
 ) -> ReconciliationRecord:
     """Reconcile one facility's cooling claim against its documented water account.
@@ -627,7 +647,10 @@ def reconcile_facility(
     ceiling is never read as a use. A reservation disproportionate to a low-water claim is a
     ``reservation_conflict`` — it sharpens ``water_lead_ref`` (the site's standing water lead) and the
     C2 records request, but never licenses a re-archetype (a ceiling is not a discharge/withdrawal
-    instrument).
+    instrument). ``kept_archetype`` is the site's REAL profile pin recorded on a reservation_conflict
+    (the recommendation keeps it): pass it when ``fac`` is a constructed claim-under-test view whose
+    ``cooling_model`` differs from the profile's (Troy-Piqua's real pin is ``unknown``); it defaults
+    to ``fac.cooling_model`` when the facility passed IS the profile facility.
 
     ``corroborators`` (A4, #1680) are the two independent tells (air-permit cooling-tower PM +
     Tier II chemistry). Injected like the documented figures (the cohort resolver reads them via
@@ -694,6 +717,7 @@ def reconcile_facility(
 
     recommended_archetype: str | None = None
     recommended_source: str | None = None
+    kept_archetype_value: str | None = None
     lead: RecordsRequestLead | None = None
     if outcome is ReconcileOutcome.DISCREPANCY:
         # Re-archetype up: a summer-peak seasonality points at a continuously-evaporative tower;
@@ -711,9 +735,12 @@ def reconcile_facility(
     elif outcome is ReconcileOutcome.RESERVATION_CONFLICT:
         # A disclosed reservation ceiling contradicts the low-water claim but is NOT a discharge/
         # withdrawal instrument — keep the archetype pin (no re-archetype recommendation), and
-        # sharpen the site's standing water lead + the C2 records request for the instrument.
+        # sharpen the site's standing water lead + the C2 records request for the instrument. The
+        # kept pin is the site's REAL profile archetype (fac.cooling_model unless the caller passes
+        # the real pin — Troy-Piqua's fac is a constructed closed_loop_dry view of an UNKNOWN pin).
         recommended_archetype = None
         recommended_source = None
+        kept_archetype_value = (kept_archetype or fac.cooling_model).value
         lead = _reservation_conflict_lead(
             site, fac, claim_source, account, water_lead_ref, corroborators
         )
@@ -737,6 +764,7 @@ def reconcile_facility(
         outcome=outcome,
         recommended_archetype=recommended_archetype,
         recommended_source=recommended_source,
+        kept_archetype=kept_archetype_value,
         lead=lead,
         corroborators=corroborators,
         tag=tag,
@@ -923,6 +951,8 @@ _TROY_PIQUA_FAQ_CITE = (
 # but the executed 2026-01-23 agreement text is not yet in-corpus (a C2 pull target, #1486/#1688). A
 # reserved CAPACITY, never a metered withdrawal/discharge; kept off the documented_* slots so it is
 # never read as use.
+# asof = the agreement's effective date — the dated instrument the reservation ceiling is anchored to.
+_TROY_PIQUA_AGREEMENT_EFFECTIVE = "2026-01-23"
 _TROY_PIQUA_RESERVED_MAKEUP = ProvenancedValue.from_reference(
     2.0,
     "MGD",
@@ -934,6 +964,7 @@ _TROY_PIQUA_RESERVED_MAKEUP = ProvenancedValue.from_reference(
         "C2 pull target (#1486/#1688). A reserved capacity ceiling, NOT a withdrawal record."
     ),
     confidence="high",
+    asof=_TROY_PIQUA_AGREEMENT_EFFECTIVE,
 )
 _TROY_PIQUA_RESERVED_WASTEWATER = ProvenancedValue.from_reference(
     1.0,
@@ -945,6 +976,7 @@ _TROY_PIQUA_RESERVED_WASTEWATER = ProvenancedValue.from_reference(
         "back-solved CoC is a lower bound). Executed agreement text is a C2 pull target (#1486/#1688)."
     ),
     confidence="high",
+    asof=_TROY_PIQUA_AGREEMENT_EFFECTIVE,
 )
 
 
@@ -961,7 +993,12 @@ def reconcile_troy_piqua(*, settings: Settings | None = None) -> ReconciliationR
     base = settings or get_settings()
     site_settings = _site_settings("troy-piqua", base)
     profile = SITES["troy-piqua"]
-    klondike = next(f for f in profile.facilities if f.name == "Project Klondike")
+    klondike = next((f for f in profile.facilities if f.name == "Project Klondike"), None)
+    if klondike is None:  # pragma: no cover - the registered profile always carries this facility
+        raise ValueError(
+            "troy-piqua profile has no 'Project Klondike' facility — the B1 reservation conflict "
+            "reconciles that facility's FAQ claim; the profile must register it (watermark.sites)"
+        )
     # The FAQ CLAIM under test is closed_loop_dry; the profile itself stays UNKNOWN. model_copy keeps
     # the real IT-load bracket (so the ~0 dry prediction is derived from the facility's own load).
     faq_claim = klondike.model_copy(
@@ -981,6 +1018,7 @@ def reconcile_troy_piqua(*, settings: Settings | None = None) -> ReconciliationR
         reserved_blowdown=_TROY_PIQUA_RESERVED_WASTEWATER,
         corroborators=resolve_corroborators(faq_claim, settings=site_settings),
         water_lead_ref="#1486",
+        kept_archetype=klondike.cooling_model,  # the real profile pin (UNKNOWN), kept as-is
         is_control=False,
     )
 
