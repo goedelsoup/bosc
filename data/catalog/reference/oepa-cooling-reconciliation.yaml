@@ -50,7 +50,12 @@ notes: >-
   edit). The **Troy-Piqua B1 reservation conflict** (#1681) is appended explicitly — it pins
   `UNKNOWN` (so it is NOT in A2's registry-derived cohort) but its closed-loop-FAQ-vs-2.0-MGD-
   reservation conflict is reconciled as a first-class live finding, back-solving CoC ≈ 2.0 off
-  the reservation ceilings (an `[inference]` bracket, never a headline consumptive). Every other
+  the reservation ceilings (an `[inference]` bracket, never a headline consumptive). **Van Wert**
+  (B2 #1682) IS in A2's cohort but is reconciled explicitly so its operator-DISCLOSED ~660k gal
+  ongoing draw is recorded on `disclosed_makeup` (never `documented_*` — a self-report is not a
+  metered instrument): the outcome stays a `gap` that KEEPS the `[reference]` pin (never upgraded),
+  and its lead names the specific open quantity — the initial closed-loop fill, whose fill-vs-annual
+  framing is the #1409 discrepancy. Every other
   live cohort facility resolves to `gap` today (no documented makeup/blowdown while OHD000001 is
   draft and no facility-own DMR is on record). Each record
   also carries the A4 (#1680) `corroborators` block — two independent tells reconciled against

@@ -402,6 +402,126 @@ def test_troy_piqua_b1_reservation_conflict() -> None:
     assert rec.corroborators.net_stance is cr.CorroboratorStance.SILENT
 
 
+# -------------------------------------------- B2 disclosed-fill gap — Van Wert (#1682)
+
+
+def test_disclosed_ongoing_draw_sharpens_a_gap_without_upgrading() -> None:
+    # A dry claim with an operator-DISCLOSED ongoing draw (a self-report, not a metered instrument)
+    # stays a GAP that KEEPS the [reference] pin — the disclosed figure sharpens the lead onto the
+    # specific open quantity (the initial fill) but never upgrades the source.
+    rec = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="[reference] closed-loop claim",
+        settings=Settings(),
+        disclosed_makeup=ProvenancedValue.from_reference(
+            0.0018, "MGD", citation="operator self-report ~660k gal/yr"
+        ),
+        water_lead_ref="#1409",
+    )
+    assert rec.outcome is cr.ReconcileOutcome.GAP  # a self-report is not a metered instrument
+    assert rec.recommended_archetype is None  # kept [reference], no re-archetype
+    assert rec.recommended_source is None  # NOT upgraded to 'document'
+    assert rec.tag == "[open]"
+    assert rec.confidence == "low"
+    # The disclosed figure lands on disclosed_makeup, NEVER on documented_* (would read as metered).
+    assert rec.account.disclosed_makeup is not None and rec.account.disclosed_makeup.value == 0.0018
+    assert rec.account.documented_makeup is None and rec.account.documented_blowdown is None
+    # The lead names the specific open quantity (the initial fill) + the site's standing water lead.
+    assert rec.lead is not None
+    joined = " | ".join(rec.lead.records_sought)
+    assert "initial closed-loop fill volume" in joined
+    assert "#1409" in rec.lead.epic_ref
+    # The finding is explicit: consistent-with-dry but self-reported, pin stays [reference].
+    assert "self-report" in rec.finding
+    assert "cannot upgrade the [reference] pin" in rec.finding
+
+
+def test_disclosed_near_zero_draw_does_not_corroborate_the_dry_claim() -> None:
+    # The circularity guard: a self-reported ~0 ongoing draw must NOT be read as "corroborated dry"
+    # (which would upgrade source reference→document) — corroborating the operator's claim with the
+    # operator's own self-report is circular. It stays a GAP; the [reference] pin is kept.
+    rec = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="x",
+        settings=Settings(),
+        disclosed_makeup=ProvenancedValue.from_reference(0.0018, "MGD", citation="self-report ~0"),
+    )
+    assert rec.outcome is cr.ReconcileOutcome.GAP
+    assert rec.outcome is not cr.ReconcileOutcome.CORROBORATED  # never a self-corroboration
+    assert rec.recommended_source is None  # NOT upgraded to 'document'
+    # No blowdown pair to back-solve from; the disclosed figure never seeds a CoC either.
+    assert rec.account.backsolved_cycles is None
+
+
+def test_disclosed_makeup_is_kept_distinct_from_documented_and_reserved_slots() -> None:
+    # A disclosed self-report never lands on documented_* (metered) or reserved_* (ceiling) — the
+    # three provenance categories stay distinct so a self-report is never read as either downstream.
+    rec = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="x",
+        settings=Settings(),
+        disclosed_makeup=ProvenancedValue.from_reference(0.0018, "MGD", citation="self-report"),
+    )
+    a = rec.account
+    assert a.disclosed_makeup is not None and a.disclosed_makeup.value == 0.0018
+    assert a.documented_makeup is None and a.documented_blowdown is None
+    assert a.reserved_makeup is None and a.reserved_blowdown is None
+
+
+def test_van_wert_b2_disclosed_fill_gap() -> None:
+    # The B2 case: QTS's closed_loop_dry "does not consume water once operational" claim vs the record.
+    # It IS in A2's cohort (pins closed_loop_dry) but is reconciled explicitly so its disclosed ~660k
+    # gal figure is recorded and the #1409 initial-fill open quantity sharpens the gap.
+    rec = cr.reconcile_van_wert(settings=Settings())
+    assert rec.site == "van-wert"
+    assert rec.facility == "Van Wert Mega Site"
+    assert rec.is_control is False  # a real registered site, not a constructed control
+    assert rec.claimed_archetype == "closed_loop_dry"
+    assert rec.claim_source == "reference"
+    # No A1 withdrawal (Van Wert County not built) + no A2 blowdown (OHD000001 draft) → an [open] gap
+    # that KEEPS the [reference] pin — never silently promoted (the issue's acceptance).
+    assert rec.outcome is cr.ReconcileOutcome.GAP
+    assert rec.recommended_archetype is None
+    assert rec.recommended_source is None
+    assert rec.tag == "[open]"
+    # The disclosed ~660k gal ongoing draw (≈0.0018 MGD) is recorded as a self-report, not metered.
+    a = rec.account
+    assert a.disclosed_makeup is not None and a.disclosed_makeup.value == 0.0018
+    assert a.disclosed_makeup.source == "reference"  # a self-report, never 'document'
+    assert a.documented_makeup is None and a.documented_blowdown is None
+    assert a.reserved_makeup is None and a.reserved_blowdown is None
+    assert a.backsolved_cycles is None  # no blowdown pair to back-solve a CoC from
+    # The gap lead is sharpened onto the initial-fill open quantity + references #1409.
+    assert rec.lead is not None
+    assert "#1409" in rec.lead.epic_ref
+    assert rec.lead.records_sought[0].startswith("initial closed-loop fill volume")
+    # The finding keeps the pin [reference] and names the fill as the open quantity.
+    assert "not 'confirmed dry'" in rec.finding
+    assert "initial closed-loop fill" in rec.finding
+    assert "cannot upgrade the [reference] pin" in rec.finding
+    # No air permit / Tier II on file → corroborators silent (honest), and the pin is untouched.
+    assert rec.corroborators is not None
+    assert rec.corroborators.net_stance is cr.CorroboratorStance.SILENT
+    assert cr.SITES["van-wert"].facilities[0].cooling_model is CoolingModelType.CLOSED_LOOP_DRY
+
+
+def test_cohort_includes_van_wert_b2_disclosed_gap_exactly_once() -> None:
+    # Van Wert IS in A2's cohort but is reconciled explicitly (skipped in the generic loop) — so it
+    # appears exactly once, as a disclosed gap, not twice.
+    records = cr.reconcile_cohort(settings=Settings())
+    vw = [r for r in records if r.site == "van-wert"]
+    assert len(vw) == 1
+    assert vw[0].outcome is cr.ReconcileOutcome.GAP
+    assert vw[0].account.disclosed_makeup is not None
+    assert vw[0].is_control is False
+
+
 # --------------------------------------------------------------------- A4 corroborators (#1680)
 
 

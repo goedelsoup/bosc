@@ -23,7 +23,12 @@ against what records *document*:
      ``hybrid_adiabatic``) whose documented water matches its prediction. Recommends the
      ``reference → document`` source upgrade.
    * **gap** — no documented makeup or blowdown to test against. Emits a records-request
-     **lead payload** for C2 (#1688).
+     **lead payload** for C2 (#1688). B2 (#1682, Van Wert) SHARPENS the gap when the operator has
+     *disclosed* an ongoing draw (a self-reported figure, not a metered instrument): the disclosed
+     ``[reference]`` figure is recorded on ``WaterAccount.disclosed_makeup`` — never on
+     ``documented_*`` — so it cannot upgrade the source or read as a measurement; it stays a gap, but
+     the lead names the specific open quantity (Van Wert's **initial closed-loop fill volume**, whose
+     fill-vs-annual framing is the ``#1409`` discrepancy).
 
    * **reservation_conflict** (B1, #1681) — a low-water claim contradicted **not** by a metered
      use / DMR but by a disclosed **reservation ceiling** (a will-serve / water-service agreement
@@ -153,6 +158,13 @@ class WaterAccount(BaseModel):
     reserved_blowdown: ProvenancedValue | None = (
         None  # MGD, disclosed wastewater/blowdown reservation ceiling
     )
+    # An operator-DISCLOSED ongoing operational / fill draw (a self-reported figure — QTS's "about
+    # what 4 households use per month" ~660k gal, B2 #1682) — kept DISTINCT from documented_* (metered
+    # instrument) AND reserved_* (a negotiated ceiling). A self-report of the very claim under test is
+    # neither a measurement nor a will-serve ceiling, so it NEVER feeds _classify and never upgrades the
+    # source: it only SHARPENS a gap (the honest read stays [reference], not 'confirmed dry'). None
+    # unless the operator has disclosed an ongoing-use figure. MGD (annualized when reported per-year).
+    disclosed_makeup: ProvenancedValue | None = None
     disclosed_cycles: ProvenancedValue | None = None  # the operator's disclosed CoC, if any
     # The back-solved cycles-of-concentration (makeup / blowdown) — an [inference] BRACKET, never
     # a headline scalar. Present when both makeup and blowdown are on record — as documented (metered)
@@ -466,6 +478,68 @@ def _records_lead(
     )
 
 
+def _disclosed_gap_lead(
+    site: str,
+    fac: SiteFacility,
+    claim_source: str,
+    account: WaterAccount,
+    issue_ref: str,
+    corroborators: CoolingCorroborators | None = None,
+) -> RecordsRequestLead:
+    """The sharpened C2 (#1688) records-request lead for a gap the operator has *disclosed* into
+    (B2, #1682).
+
+    Unlike a bare gap, the operator has stated an ongoing-use figure (Van Wert: QTS's "about what 4
+    households use per month" ~660k gal) — but it is a single-source self-report, not a metered
+    instrument, and the closed-loop claim's "does not consume water *once operational*" wording
+    structurally excludes the **initial closed-loop fill** (a real, City-approved, one-time withdrawal
+    of undisclosed volume). So the ask can name the specific open quantity — the initial fill volume +
+    top-off rate (whose fill-vs-annual framing is the ``issue_ref`` discrepancy, Van Wert's ``#1409``)
+    — alongside the metered use that would confirm or refute the self-reported ongoing draw. The silent
+    A4 corroborators (#1680) add their own not-on-record asks, as on a plain gap.
+    """
+    disclosed = account.disclosed_makeup
+    disclosed_phrase = (
+        f"{disclosed.value:g} MGD" if disclosed is not None else "the disclosed ongoing draw"
+    )
+    records_sought = [
+        "initial closed-loop fill volume + top-off / make-up rate (the fill-vs-annual figure)",
+        "metered water-service use (actual makeup withdrawal vs the disclosed ongoing draw)",
+        "executed water & sewer service agreement (the City-approved fill authorization — the "
+        "instrument, not a press summary)",
+        "cooling-tower blowdown / low-volume-wastewater DMR (facility-own or OHD000001 coverage)",
+    ]
+    holders = [
+        f"City / municipal water-sewer authority serving {site}",
+        "Ohio EPA (NPDES / OHD000001)",
+    ]
+    extra_records, extra_holders = _corroborator_asks(corroborators)
+    records_sought.extend(extra_records)
+    holders.extend(extra_holders)
+    return RecordsRequestLead(
+        site=site,
+        facility=fac.name,
+        subject=(
+            "cooling-water account — reconcile the disclosed ongoing draw + the initial fill volume "
+            "vs the closed-loop claim"
+        ),
+        records_sought=records_sought,
+        holder="; ".join(holders),
+        rationale=(
+            f"A {fac.cooling_model.value} claim (source={claim_source}) that 'does not consume water "
+            f"once operational', with a disclosed ongoing draw ({disclosed_phrase}) consistent with a "
+            "dry loop at screening scale — BUT a single-source self-report, not a metered instrument "
+            f"(so it cannot upgrade the [reference] pin), and the disclosed figure's fill-vs-annual "
+            f"framing is itself unresolved ({issue_ref}). The 'once operational' wording also "
+            "structurally excludes the initial closed-loop fill (a City-approved one-time withdrawal of "
+            "undisclosed volume). Pull the metered use + the fill authorization to resolve whether the "
+            "loop is genuinely dry or the fill / top-off is material."
+        ),
+        epic_ref=f"#1688 (C2); {issue_ref}",
+        tag="[open]",
+    )
+
+
 def _reservation_conflict_lead(
     site: str,
     fac: SiteFacility,
@@ -553,6 +627,21 @@ def _finding(
     """A one-line evidentiary read for the reconciliation record."""
     arche = account.archetype.value
     if outcome is ReconcileOutcome.GAP:
+        if account.disclosed_makeup is not None:
+            # B2 (#1682): a gap the operator has DISCLOSED into. The self-reported ongoing draw is
+            # consistent with the dry claim at screening scale, but it is not a metered instrument
+            # (so it cannot upgrade the [reference] pin), and the claim's 'once operational' carve-out
+            # excludes the initial closed-loop fill — the specific open quantity.
+            disclosed = account.disclosed_makeup
+            return (
+                f"No metered makeup or blowdown for {fac.name} to test the {arche} claim "
+                f"(source={claim_source}) — an [open] gap, not 'confirmed dry'. The operator DISCLOSES "
+                f"an ongoing draw of {disclosed.value:g} MGD, consistent with a dry loop at screening "
+                "scale, but it is a single-source self-report (not a metered instrument, so it cannot "
+                "upgrade the [reference] pin); the claim's 'once operational' wording also excludes the "
+                "initial closed-loop fill (a City-approved one-time withdrawal of undisclosed volume) — "
+                "the specific open quantity (→ C2 records request #1688). Keep the pin [reference]."
+            )
         return (
             f"No documented makeup or blowdown for {fac.name}: the {arche} claim "
             f"(source={claim_source}) cannot yet be tested against records — an [open] gap, not "
@@ -628,6 +717,7 @@ def reconcile_facility(
     documented_blowdown: ProvenancedValue | None = None,
     reserved_makeup: ProvenancedValue | None = None,
     reserved_blowdown: ProvenancedValue | None = None,
+    disclosed_makeup: ProvenancedValue | None = None,
     seasonality_warm_ratio: float | None = None,
     corroborators: CoolingCorroborators | None = None,
     water_lead_ref: str = "#1688 (C2)",
@@ -647,7 +737,12 @@ def reconcile_facility(
     ceiling is never read as a use. A reservation disproportionate to a low-water claim is a
     ``reservation_conflict`` — it sharpens ``water_lead_ref`` (the site's standing water lead) and the
     C2 records request, but never licenses a re-archetype (a ceiling is not a discharge/withdrawal
-    instrument). ``kept_archetype`` is the site's REAL profile pin recorded on a reservation_conflict
+    instrument). ``disclosed_makeup`` (B2, #1682) is an operator-DISCLOSED ongoing-use figure (a
+    self-report — Van Wert's ~660k gal), kept distinct from BOTH: it never feeds the classifier and
+    never upgrades the source (a self-report of the very claim under test is not an instrument), it
+    only SHARPENS a gap — the lead names the specific open quantity (the initial closed-loop fill) and
+    references ``water_lead_ref`` (Van Wert's #1409). ``kept_archetype`` is the site's REAL profile pin
+    recorded on a reservation_conflict
     (the recommendation keeps it): pass it when ``fac`` is a constructed claim-under-test view whose
     ``cooling_model`` differs from the profile's (Troy-Piqua's real pin is ``unknown``); it defaults
     to ``fac.cooling_model`` when the facility passed IS the profile facility.
@@ -700,6 +795,7 @@ def reconcile_facility(
         documented_blowdown=documented_blowdown,
         reserved_makeup=reserved_makeup,
         reserved_blowdown=reserved_blowdown,
+        disclosed_makeup=disclosed_makeup,
         disclosed_cycles=disclosed_cycles,
         backsolved_cycles=backsolved_cycles,
         seasonality_warm_ratio=seasonality_warm_ratio,
@@ -749,7 +845,15 @@ def reconcile_facility(
             "medium"  # sharper than an empty gap (a quantified figure), short of instrument-grade
         )
     else:  # GAP
-        lead = _records_lead(site, fac, claim_source, corroborators)
+        # B2 (#1682): when the operator has disclosed an ongoing draw (a self-report, not an
+        # instrument), sharpen the gap's records request — name the initial-fill open quantity and
+        # reference the site's standing water lead (Van Wert's #1409). Otherwise the plain gap ask.
+        if disclosed_makeup is not None:
+            lead = _disclosed_gap_lead(
+                site, fac, claim_source, account, water_lead_ref, corroborators
+            )
+        else:
+            lead = _records_lead(site, fac, claim_source, corroborators)
         tag = "[open]"
         confidence = "low"
 
@@ -1023,6 +1127,74 @@ def reconcile_troy_piqua(*, settings: Settings | None = None) -> ReconciliationR
     )
 
 
+# ---------------------------------------------------- the Van Wert B2 disclosed-fill gap (#1682)
+
+# Van Wert (the QTS "Van Wert Mega Site") pins ``closed_loop_dry`` as a [reference] operator/developer
+# claim: "does not consume water for cooling once operational" (Danfoss-patented equipment). Unlike
+# Troy-Piqua it IS in A2's registry-derived cohort (it pins ``closed_loop_dry``), but a plain gap
+# undersells the record: the operator has DISCLOSED an ongoing draw (~660k gal, "about what 4
+# households use per month"), and the SAME ~660k gal figure is framed elsewhere as a ONE-TIME initial
+# fill — the unresolved #1409 fill-vs-annual discrepancy. B2 reconciles it explicitly so the disclosed
+# figure is recorded (as a self-report, never a metered instrument) and the gap's lead names the
+# specific open quantity (the initial closed-loop fill). Records A1 (no Van Wert County withdrawal
+# built) + A2 (OHD000001 draft, no facility-own DMR) are absent → the honest outcome stays a GAP with
+# the [reference] pin KEPT, never silently promoted (the issue's acceptance).
+#
+# 660,000 gal/yr / 365 ≈ 1,808 gal/day ≈ 0.0018 MGD — below the ~0 screening floor, so the disclosed
+# figure is consistent with a dry loop; but a single-source self-report cannot upgrade the source.
+_VAN_WERT_DISCLOSED_MAKEUP = ProvenancedValue.from_reference(
+    0.0018,
+    "MGD",
+    citation=(
+        "[reference] operator-DISCLOSED ongoing draw — NOT a metered use and NOT a discharge/"
+        "withdrawal instrument: QTS characterizes the campus's ongoing water use as 'about what 4 "
+        "households use per month', and local press reports ~660,000 gal (≈0.0018 MGD annualized) — a "
+        "SINGLE local-press source (thevwindependent.com; vanwert.org/water-treatment). Carried here as "
+        "the annualized ongoing-draw reading to test the 'does not consume water once operational' "
+        "claim; the SAME ~660,000 gal figure is elsewhere framed as a ONE-TIME initial fill (the "
+        "2026-06-11 City-approved closed-loop fill) — that fill-vs-annual ambiguity is the unresolved "
+        "#1409 discrepancy, not settled here. Self-reported (cannot upgrade the [reference] pin); the "
+        "metered water-service use + the fill authorization are C2 pull targets (#1407/#1409/#1688)."
+    ),
+    confidence="low",  # a single-source self-report of the very claim under test
+    asof="2026-06-11",  # the City-approved closed-loop fill event the figure is anchored to
+)
+
+
+def reconcile_van_wert(*, settings: Settings | None = None) -> ReconciliationRecord:
+    """The Van Wert B2 disclosed-fill gap (#1682) — the "no water once operational" claim vs the record.
+
+    A real registered site (not a control) that IS in A2's registry-derived cohort (it pins
+    ``closed_loop_dry``), reconciled explicitly rather than through the generic cohort loop so its
+    operator-disclosed ~660k gal figure is recorded (on ``disclosed_makeup`` — never ``documented_*``,
+    a self-report is not a metered instrument) and its gap lead is sharpened onto the initial-fill open
+    quantity (#1409). With no A1 withdrawal (Van Wert County is not built) and no A2 blowdown (OHD000001
+    is draft, no facility-own DMR), the honest outcome is a GAP that KEEPS the [reference] pin — the
+    disclosed figure is consistent with a dry loop at screening scale but cannot upgrade the source.
+    Closed-loop-dry needs no climatology, so a per-site ``Settings`` resolves it.
+    """
+    base = settings or get_settings()
+    site_settings = _site_settings("van-wert", base)
+    profile = SITES["van-wert"]
+    fac = next((f for f in profile.facilities if f.name == "Van Wert Mega Site"), None)
+    if fac is None:  # pragma: no cover - the registered profile always carries this facility
+        raise ValueError(
+            "van-wert profile has no 'Van Wert Mega Site' facility — the B2 disclosed-fill gap "
+            "reconciles that facility's closed-loop claim; the profile must register it (watermark.sites)"
+        )
+    return reconcile_facility(
+        fac,
+        site="van-wert",
+        claim_source=fac.cooling_model_source or "reference",
+        claim_citation=fac.cooling_model_citation or "[reference] operator closed-loop claim",
+        settings=site_settings,
+        disclosed_makeup=_VAN_WERT_DISCLOSED_MAKEUP,
+        corroborators=resolve_corroborators(fac, settings=site_settings),
+        water_lead_ref="#1409",
+        is_control=False,
+    )
+
+
 # --------------------------------------------------------------------- cohort
 
 
@@ -1036,12 +1208,18 @@ def reconcile_cohort(*, settings: Settings | None = None) -> list[Reconciliation
     resolved under the same settings. The **Troy-Piqua B1 reservation conflict** (#1681,
     :func:`reconcile_troy_piqua`) is appended explicitly — it pins ``UNKNOWN`` so it is NOT in A2's
     cohort, but its FAQ-vs-2.0-MGD-reservation conflict is reconciled as a first-class live finding.
-    The Intel control is appended and reconciled the same way. Ordered by (is_control, site, facility)
-    so the control sorts last after the live findings.
+    **Van Wert** (#1682, :func:`reconcile_van_wert`) IS in A2's cohort but is reconciled explicitly
+    (skipped in the generic loop) so its operator-disclosed ~660k gal figure + the #1409 initial-fill
+    open quantity sharpen the gap. The Intel control is appended and reconciled the same way. Ordered
+    by (is_control, site, facility) so the control sorts last after the live findings.
     """
     settings = settings or get_settings()
     records: list[ReconciliationRecord] = []
     for candidate in blowdown.closed_loop_candidates(settings=settings):
+        # Van Wert (B2, #1682) is a cohort member but is reconciled explicitly below so its disclosed
+        # ~660k gal figure + the initial-fill #1409 sharpening are carried — skip the generic gap here.
+        if candidate.site == "van-wert":
+            continue
         profile = SITES[candidate.site]
         fac = next((f for f in profile.facilities if f.name == candidate.facility), None)
         if fac is None:  # pragma: no cover - the candidate list is built from these facilities
@@ -1061,6 +1239,9 @@ def reconcile_cohort(*, settings: Settings | None = None) -> list[Reconciliation
                 corroborators=resolve_corroborators(fac, settings=site_settings),
             )
         )
+    records.append(
+        reconcile_van_wert(settings=settings)
+    )  # B2 (#1682) — disclosed ~660k gal + #1409 initial-fill gap
     records.append(
         reconcile_troy_piqua(settings=settings)
     )  # B1 (#1681) — pins UNKNOWN, not in A2's cohort
@@ -1107,7 +1288,13 @@ def reconciliation_document(records: list[ReconciliationRecord]) -> dict[str, An
                 "water-agreement figure), not a metered use — a ceiling is not a discharge/withdrawal "
                 "instrument, so it keeps the archetype pin (Troy-Piqua stays UNKNOWN) and sharpens "
                 "the site's water lead (#1486) + the C2 request; the reserved figure is never "
-                "collapsed into a headline consumptive. The A4 corroborators (air-permit cooling-tower "
+                "collapsed into a headline consumptive. A gap the operator has DISCLOSED into (B2 Van "
+                "Wert, #1682) records the self-reported ongoing draw on `disclosed_makeup` (never "
+                "`documented_*`) — it stays a gap with the [reference] pin KEPT (a single-source "
+                "self-report is not a metered instrument, so it cannot upgrade the source), and its "
+                "lead names the specific open quantity: the initial closed-loop fill, whose "
+                "fill-vs-annual framing is the #1409 discrepancy. The A4 corroborators (air-permit "
+                "cooling-tower "
                 "PM, Tier II / EPCRA-312 chemistry) are SECONDARY — recorded and reconciled against "
                 "the claim, but never the sole basis for a re-archetype and never changing the "
                 "outcome. The Intel row is a constructed positive control (openly evaporative) the "

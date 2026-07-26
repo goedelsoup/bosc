@@ -82,7 +82,12 @@ classifies the reconciliation:
   claim with documented ≈ 0, or a wet claim whose documented water matches). Recommends
   the `reference → document` source upgrade.
 - **gap** — no documented makeup or blowdown to test against. Emits a records-request
-  `lead` payload for C2 (#1688).
+  `lead` payload for C2 (#1688). **B2 (#1682, Van Wert)** sharpens the gap when the
+  operator has *disclosed* an ongoing draw (a self-report, not a metered instrument): the
+  disclosed `[reference]` figure is recorded on `disclosed_makeup` — never `documented_*`,
+  so it cannot corroborate the operator's own claim or upgrade the source — the pin stays
+  `[reference]`, and the lead names the specific open quantity (Van Wert's initial
+  closed-loop fill, whose fill-vs-annual framing is the #1409 discrepancy).
 
 Where **both** documented makeup and blowdown are on record, cycles-of-concentration is
 back-solved (makeup / blowdown) and emitted as an **`[inference]` bracket, never a
@@ -90,7 +95,8 @@ headline scalar** — the ratio of two self-reported figures is not a measuremen
 
 **Every live cohort facility is a `gap` today**: while OHD000001 is a draft permit and
 no facility-own DMR is on record, there is no documented makeup or blowdown to test
-against. The seams auto-activate when the records land.
+against — including Van Wert, whose operator-disclosed ~660k gal figure is a self-report,
+not an instrument (B2 #1682). The seams auto-activate when the records land.
 
 **The harness recommends; it never mutates `cooling_model`.** Re-archetyping a facility
 is a reviewed B1–B6 edit landed with the instrument cited — the reconciliation record is
