@@ -53,10 +53,11 @@ def test_dry_claim_with_no_documents_is_a_gap() -> None:
     assert rec.tag == "[open]"
     assert rec.confidence == "low"
     assert rec.recommended_archetype is None
-    # A gap emits a C2 records-request lead payload, never "confirmed dry".
+    # A gap emits a C2 records-request lead payload (a typed model), never "confirmed dry".
     assert rec.lead is not None
-    assert rec.lead["kind"] == "records-request"
-    assert rec.lead["epic_ref"] == "#1688 (C2)"
+    assert isinstance(rec.lead, cr.RecordsRequestLead)
+    assert rec.lead.kind == "records-request"
+    assert rec.lead.epic_ref == "#1688 (C2)"
     assert "confirmed dry" not in rec.finding or "not 'confirmed dry'" in rec.finding
 
 
@@ -140,27 +141,33 @@ def test_intel_control_backsolved_coc_is_a_bracket_not_a_scalar() -> None:
     assert 4.5 <= coc.value <= 5.2
 
 
+def _evap_facility(**kw: object) -> SiteFacility:
+    """An evaporative_tower facility (150 MW / WUE 1.8 / CoC 5 → ~2.14 MGD makeup, ~0.43 bd)."""
+    base: dict[str, object] = {
+        "name": "Test Evap Campus",
+        "status": "confirmed",
+        "it_load_mw": 150.0,
+        "it_load_low_mw": 120.0,
+        "it_load_high_mw": 180.0,
+        "it_load_citation": "test",
+        "it_load_source": "screening",
+        "cooling_model": CoolingModelType.EVAPORATIVE_TOWER,
+        "cooling_model_source": "reference",
+        "cooling_model_citation": "[reference] evaporative claim",
+        "wue_l_per_kwh": 1.8,
+        "wue_citation": "test",
+        "cycles_of_concentration": 5.0,
+        "cycles_citation": "test",
+    }
+    base.update(kw)
+    return SiteFacility(**base)  # type: ignore[arg-type]
+
+
 def test_a_wet_claim_over_the_band_is_a_discrepancy() -> None:
     # An evaporative claim whose documented blowdown is FAR above its prediction is over-cycling
     # — still a discrepancy, so the guard isn't "wet claims are never discrepant".
-    fac = SiteFacility(
-        name="Test Evap Campus",
-        status="confirmed",
-        it_load_mw=150.0,
-        it_load_low_mw=120.0,
-        it_load_high_mw=180.0,
-        it_load_citation="test",
-        it_load_source="screening",
-        cooling_model=CoolingModelType.EVAPORATIVE_TOWER,
-        cooling_model_source="reference",
-        cooling_model_citation="[reference] evaporative claim",
-        wue_l_per_kwh=1.8,
-        wue_citation="test",
-        cycles_of_concentration=5.0,
-        cycles_citation="test",
-    )
     rec = cr.reconcile_facility(
-        fac,
+        _evap_facility(),
         site="test-site",
         claim_source="reference",
         claim_citation="x",
@@ -168,6 +175,31 @@ def test_a_wet_claim_over_the_band_is_a_discrepancy() -> None:
         documented_blowdown=ProvenancedValue.from_document(5.0, "MGD", citation="test DMR"),
     )
     assert rec.outcome is cr.ReconcileOutcome.DISCREPANCY
+
+
+def test_wet_claim_makeup_only_compares_against_predicted_makeup() -> None:
+    # A wet claim with a documented WITHDRAWAL (A1 makeup) but no blowdown (A2) must reconcile
+    # the makeup against PREDICTED MAKEUP, never predicted blowdown — the finding would otherwise
+    # compare mismatched quantities (makeup vs blowdown).
+    rec = cr.reconcile_facility(
+        _evap_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="x",
+        settings=Settings(),
+        documented_makeup=ProvenancedValue.from_document(2.2, "MGD", citation="test withdrawal"),
+    )
+    assert rec.outcome is cr.ReconcileOutcome.CORROBORATED
+    # No blowdown on record → nothing to back-solve CoC from.
+    assert rec.account.backsolved_cycles is None
+    # The finding cites the predicted MAKEUP (~2.14), not the predicted blowdown (~0.43), and
+    # labels the documented signal as makeup.
+    pred_makeup = rec.account.predicted_makeup.value
+    pred_blowdown = rec.account.predicted_blowdown.value
+    assert pred_makeup != pred_blowdown  # the two are distinct, so the check is meaningful
+    assert f"{pred_makeup:g} MGD prediction" in rec.finding
+    assert f"{pred_blowdown:g} MGD prediction" not in rec.finding
+    assert "MGD makeup matches" in rec.finding
 
 
 # --------------------------------------------------------------------- cohort
