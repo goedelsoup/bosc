@@ -14,7 +14,7 @@ export const getStaticPaths = selectableSitePaths;
  */
 import EconLedgerSimulator from "@watermark/viz/islands/EconLedgerSimulator.tsx";
 import ReportShell from "~/layouts/ReportShell.astro";
-import { ledgerLines, ledgerProfiles } from "@watermark/core/econLedger";
+import { ledgerLines, ledgerProfiles, promisedJobs } from "@watermark/core/econLedger";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { EconomicBaseline } from "@watermark/core/feeds";
 import { fmtUsdM } from "@watermark/core/money";
@@ -28,6 +28,9 @@ const site = Astro.locals.site;
 const lines = ledgerLines(site);
 const profiles = ledgerProfiles(site);
 const net = lines?.find((l) => l.key === "net") ?? null;
+// The site's own non-binding job commitment (Lima's CRA ~50) — null where none is on the record,
+// which drops the whole jobs clause rather than asserting another site's promise (#1642, E4).
+const jobs = promisedJobs(site);
 
 // The county employment baseline the ~50 jobs is read against — the `economics-baseline` feed's
 // cited `total_employment` (QCEW, self-dating via `asof`), replacing a hand-copied constant that
@@ -56,10 +59,12 @@ const countyJobsAsof = eb?.latest.total_employment?.asof ?? null;
       <p class="section-lead unc-ssr-lead">
         Net 15-year public give:
         <strong>{net ? `${fmtUsdM(net.band.low)} – ${fmtUsdM(net.band.high)}` : "tens of millions"}</strong>
-        for ~50 jobs{countyJobs !== null && (
-          <Fragment> — about <strong>{((50 / countyJobs) * 100).toFixed(1)}%</strong> of the county's
-          {" "}{Math.round(countyJobs).toLocaleString("en-US")} covered jobs
-          {countyJobsAsof && <Fragment> ({countyJobsAsof})</Fragment>}</Fragment>
+        {jobs !== null && (
+          <Fragment> for ~{jobs} jobs{countyJobs !== null && (
+            <Fragment> — about <strong>{((jobs / countyJobs) * 100).toFixed(1)}%</strong> of the
+            county's {Math.round(countyJobs).toLocaleString("en-US")} covered jobs
+            {countyJobsAsof && <Fragment> ({countyJobsAsof})</Fragment>}</Fragment>
+          )}</Fragment>
         )}.
         Full essay: <a href={withBase("/docs/the-economic-ledger")}>the economic ledger →</a>
       </p>

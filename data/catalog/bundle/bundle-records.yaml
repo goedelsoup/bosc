@@ -147,5 +147,17 @@ notes: >-
   adds `usaspending` as a declared upstream (slug-scoped like `rsei-inventory`; Lima flat, a peer reads
   its own `<slug>/awards.yaml`); the seed list + parcel scan the feed also reads are curated site
   inputs, not catalog-tracked reference datasets.
+  The `grid` feed (#1642, GP-E E1, contract 1.35.0) lifts the committed `eia-grid-profile` artifact
+  — the per-site grid backdrop: the cited electric-service chain (serving utility / holding company /
+  balancing authority / wholesale RTO / retail regulator, each a `CitedFact`), the EIA-861 utility and
+  EIA-930 balancing-authority annual profiles, and, where a campus is disclosed, its `load_share`
+  against the utility / BA / state denominators — into the bundle for the first time. It was the
+  richest per-site grid artifact in the repo and reached only its reference file, so the presentation
+  tier carried its own hand-copied copy of the EIA denominators; there is now one source. Its upstream
+  (`eia-grid-profile`) is already a declared dependency, so it adds no new committed reference
+  upstream. Grid identity joins the **backdrop floor** (`watermark.site.readiness`): it describes the
+  place, not the campus, so a facility-less site carries it with `load_share: null` rather than a
+  fabricated share, and a stale profile with zeroed utility/BA denominators is dropped rather than
+  shipped as a `count == 1` shell (`GridProfile.has_real_denominators`, the #1364 rule on the grid axis).
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.

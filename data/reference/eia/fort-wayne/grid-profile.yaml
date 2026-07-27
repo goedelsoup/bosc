@@ -14,7 +14,8 @@ serving_utility:
   balancing_authority:
     value: PJM Interconnection
     source: reference
-    citation: Indiana Michigan Power's transmission zone is within the PJM RTO footprint
+    citation: PJM is the FERC-jurisdictional wholesale-market RTO for Indiana Michigan
+      Power
     confidence: high
   rto:
     value: PJM Interconnection (RTO/ISO)
@@ -28,8 +29,8 @@ serving_utility:
     citation: Indiana retail electric service is IURC-regulated (intrastate)
     confidence: high
   note: Serving utility is identified from the EIA-861 service-territory file; RTO=PJM
-    is authoritative. The retail service-territory boundary is formally confirmed
-    against the EIA-861 territory file / IURC map (#94).
+    Interconnection is authoritative. The retail service-territory boundary is formally
+    confirmed against the EIA-861 territory file / IURC map (#94).
 utility_profile:
   utility: Indiana Michigan Power Co
   ownership: Investor Owned
@@ -42,6 +43,8 @@ utility_profile:
       (#9324), IN; bundled + delivery total sales
     confidence: high
     asof: null
+    low: null
+    high: null
   customers:
     value: 482283.0
     unit: customers
@@ -50,6 +53,8 @@ utility_profile:
       (#9324), IN; bundled + delivery total customers
     confidence: high
     asof: null
+    low: null
+    high: null
   avg_price_cents_kwh:
     value: 11.62
     unit: cents/kWh
@@ -59,6 +64,8 @@ utility_profile:
       generation, so a blended price understates the all-in cost
     confidence: high
     asof: null
+    low: null
+    high: null
 ba_profile:
   ba: PJM Interconnection
   eia_source: EIA-930 daily demand sum, annual (connector)
@@ -69,15 +76,19 @@ ba_profile:
     citation: EIA-930 daily demand sum, PJM 2024 (366 days, Eastern tz)
     confidence: high
     asof: null
+    low: null
+    high: null
 load_share:
   campus_load_mw:
-    value: 113.9
+    value: 117.0
     unit: MW
     source: derived
-    citation: 'PowerBasis.facility_draw central (#87): 90 MW IT x PUE 1.265 (band
-      mean) — total facility draw'
+    citation: 'PowerBasis.facility_draw central (#87): 90 MW IT (central) x PUE 1.3
+      — total facility draw; band = 80-100 MW IT x PUE 1.1-1.5 (efficient .. cooling-dominated)'
     confidence: medium
     asof: null
+    low: null
+    high: null
   load_factor:
     value: 0.9
     unit: fraction
@@ -86,13 +97,17 @@ load_share:
       (cf. #91)'
     confidence: low
     asof: null
+    low: null
+    high: null
   annual_consumption_gwh:
-    value: 898.0
+    value: 922.4
     unit: GWh/yr
     source: derived
-    citation: 113.9 MW x 8760 h x 0.9 load factor
+    citation: 117 MW x 8760 h x 0.9 load factor
     confidence: medium
     asof: null
+    low: null
+    high: null
   utility_retail_gwh:
     value: 14997.9
     unit: GWh/yr
@@ -101,6 +116,8 @@ load_share:
       (#9324), IN; bundled + delivery total sales
     confidence: high
     asof: null
+    low: null
+    high: null
   ba_load_gwh:
     value: 815056.2
     unit: GWh/yr
@@ -108,6 +125,8 @@ load_share:
     citation: EIA-930 daily demand sum, PJM 2024 (366 days, Eastern tz)
     confidence: high
     asof: null
+    low: null
+    high: null
   state_retail_gwh:
     value: 103487.5
     unit: GWh/yr
@@ -115,28 +134,36 @@ load_share:
     citation: 'EIA ELEC.SALES.IN-ALL.A (2025); shared with #91'
     confidence: high
     asof: null
+    low: null
+    high: null
   share_of_utility_pct:
-    value: 5.99
+    value: 6.15
     unit: percent
     source: derived
-    citation: campus 898 GWh / Indiana Michigan Power Co 14,998 GWh (EIA-861 2024
+    citation: campus 922 GWh / Indiana Michigan Power Co 14,998 GWh (EIA-861 2024
       per-utility)
     confidence: medium
     asof: null
+    low: null
+    high: null
   share_of_ba_pct:
-    value: 0.11
+    value: 0.113
     unit: percent
     source: derived
-    citation: campus 898 GWh / PJM 815,056 GWh (EIA-930 annual demand)
+    citation: campus 922 GWh / PJM 815,056 GWh (EIA-930 annual demand)
     confidence: medium
     asof: null
+    low: null
+    high: null
   share_of_state_pct:
-    value: 0.87
+    value: 0.89
     unit: percent
     source: derived
-    citation: campus 898 GWh / Indiana 103488 GWh
+    citation: campus 922 GWh / Indiana 103488 GWh
     confidence: medium
     asof: null
+    low: null
+    high: null
 note: 'Grid foundation layer (#94). The state, Indiana Michigan Power Co, and PJM
   denominators are now all connector-sourced — Indiana retail from EIA (shared with
   #91), per-utility retail from the EIA-861 file, and PJM annual demand from EIA-930.
