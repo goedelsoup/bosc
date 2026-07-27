@@ -1,17 +1,17 @@
 {
   "site": "urbana",
   "bundle_version": "1.0.0",
-  "contract_version": "1.34.0",
+  "contract_version": "1.35.0",
   "generated_at": "2026-07-09T19:27:16+00:00",
-  "feed_count": 30,
-  "row_total": 389,
+  "feed_count": 31,
+  "row_total": 390,
   "readiness": {
     "tier": "case",
     "domains": {
       "backdrop": "live",
       "facility": "seeded",
       "places": "live",
-      "record": "live",
+      "record": "seeded",
       "story": "seeded"
     }
   },
@@ -140,6 +140,14 @@
       "path": "feeds/consumer-energy.json",
       "media_type": "application/json",
       "schema": "schemas/consumer-energy.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "grid",
+      "path": "feeds/grid.json",
+      "media_type": "application/json",
+      "schema": "schemas/grid.schema.json",
       "kind": "object",
       "count": 1
     },

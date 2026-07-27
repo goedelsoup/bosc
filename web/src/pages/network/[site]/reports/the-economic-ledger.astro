@@ -14,13 +14,27 @@ export const getStaticPaths = selectableSitePaths;
  */
 import EconLedgerSimulator from "@watermark/viz/islands/EconLedgerSimulator.tsx";
 import ReportShell from "~/layouts/ReportShell.astro";
-import { COUNTY_JOBS_2023, ledgerLines, ledgerProfiles } from "@watermark/core/econLedger";
+import { ledgerLines, ledgerProfiles } from "@watermark/core/econLedger";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { EconomicBaseline } from "@watermark/core/feeds";
 import { fmtUsdM } from "@watermark/core/money";
-import { withBase } from "@watermark/core/site";
+import { withBase, withSite } from "@watermark/core/site";
 
-const lines = ledgerLines();
-const profiles = ledgerProfiles();
-const net = lines.find((l) => l.key === "net");
+// Per-site (#1642, E4): the whole ledger is Allen County's CRA (Res #548-25's terms, ~63 local
+// mills, the 7.25% county sales-and-use rate). `ledgerLines`/`ledgerProfiles` answer only for the
+// site whose instrument it is — a peer reads null and this page asks for that site's agreement
+// rather than pricing its build off another county's mills.
+const site = Astro.locals.site;
+const lines = ledgerLines(site);
+const profiles = ledgerProfiles(site);
+const net = lines?.find((l) => l.key === "net") ?? null;
+
+// The county employment baseline the ~50 jobs is read against — the `economics-baseline` feed's
+// cited `total_employment` (QCEW, self-dating via `asof`), replacing a hand-copied constant that
+// had gone a vintage stale (#1642, E2).
+const eb = hasFeed("economics-baseline") ? loadFeed<EconomicBaseline>("economics-baseline") : null;
+const countyJobs = eb?.latest.total_employment?.value ?? null;
+const countyJobsAsof = eb?.latest.total_employment?.asof ?? null;
 ---
 
 <ReportShell
@@ -42,15 +56,21 @@ const net = lines.find((l) => l.key === "net");
       <p class="section-lead unc-ssr-lead">
         Net 15-year public give:
         <strong>{net ? `${fmtUsdM(net.band.low)} – ${fmtUsdM(net.band.high)}` : "tens of millions"}</strong>
-        for ~50 jobs — about <strong>0.1%</strong> of the county's
-        {COUNTY_JOBS_2023.toLocaleString("en-US")} covered jobs.
+        for ~50 jobs{countyJobs !== null && (
+          <Fragment> — about <strong>{((50 / countyJobs) * 100).toFixed(1)}%</strong> of the county's
+          {" "}{Math.round(countyJobs).toLocaleString("en-US")} covered jobs
+          {countyJobsAsof && <Fragment> ({countyJobsAsof})</Fragment>}</Fragment>
+        )}.
         Full essay: <a href={withBase("/docs/the-economic-ledger")}>the economic ledger →</a>
       </p>
   </Fragment>
 
-    <EconLedgerSimulator client:only="react" />
+    {profiles && countyJobs !== null ? (
+      <EconLedgerSimulator client:only="react" profiles={profiles} countyJobs={countyJobs} />
+    ) : null}
 
     {/* No-JS fallback: the essay's ledger in a band, computed from the same model. */}
+    {lines && profiles ? (
     <noscript>
       <article class="prose">
         <h2>The fifteen-year ledger, in a band</h2>
@@ -84,4 +104,18 @@ const net = lines.find((l) => l.key === "net");
         <p>The record pins none of these. Enable JavaScript to turn the knobs and collapse the band.</p>
       </article>
     </noscript>
-</ReportShell>
+    ) : (
+    /* No abatement instrument on this site's record (#1642, E4): the ledger is Allen County's CRA
+       — Res #548-25's terms and its local mills — so pricing this site's build off it would be
+       fabrication. Lock the ledger and ask for the agreement. */
+    <div class="callout callout--open">
+      <p class="callout-title">No abatement agreement on record for this site</p>
+      <p>
+        This ledger prices one specific instrument: the Allen County CRA (Res #548-25) — its
+        75%/15-year terms, its local effective mills, its county sales-and-use rate. Those are
+        that county's numbers, not a general model of an abatement, so the give for this site
+        stays <code>[open]</code> rather than being computed off another county's terms.
+        Have this site's agreement? <a href={withSite("/submit")}>Submit it →</a>
+      </p>
+    </div>
+    )}</ReportShell>

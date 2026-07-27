@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 import {
-  COUNTY_JOBS_2023,
   ECON_PRIORS,
   abatement,
   abatementPerJob,
@@ -10,7 +9,9 @@ import {
   netSubsidyModel,
   netSubsidyOutcome,
   netSubsidyPerJobModel,
+  promisedJobs,
   salesTaxExemption,
+  siteNetSubsidyOutcome,
 } from "./econLedger";
 import { buildAbatementPerJob } from "./moneyFlow";
 import { disclose, outcomeBand, tornado } from "./uncertainty";
@@ -18,7 +19,7 @@ import { disclose, outcomeBand, tornado } from "./uncertainty";
 describe("econLedger — no fork from the deployed model (#269)", () => {
   it("abatement-per-job matches buildAbatementPerJob for every profile", () => {
     const deployed = new Map(buildAbatementPerJob().profiles.map((p) => [p.key, p.perJobUsd]));
-    for (const p of ledgerProfiles()) {
+    for (const p of ledgerProfiles("lima") ?? []) {
       expect(p.abatementPerJobUsd).toBe(deployed.get(p.key));
     }
   });
@@ -28,7 +29,6 @@ describe("econLedger — no fork from the deployed model (#269)", () => {
     expect(Math.round(abatement(0.25) / 1e6)).toBe(31); // equipment ~$31M
     expect(Math.round(abatement(0.5) / 1e6)).toBe(62); // govcloud ~$62M
     expect(Math.round(keptByPublic(0.35) / 1e6)).toBe(14); // 25% kept ~$14.5M
-    expect(COUNTY_JOBS_2023).toBe(49_577);
   });
 
   it("abatement-per-job round-trips the formula", () => {
@@ -39,7 +39,7 @@ describe("econLedger — no fork from the deployed model (#269)", () => {
 
 describe("econLedger — the ledger bands", () => {
   it("the abatement line bands ~$31M–$62M (the essay's range)", () => {
-    const ab = ledgerLines().find((l) => l.key === "abatement");
+    const ab = ledgerLines("lima")?.find((l) => l.key === "abatement");
     expect(Math.round((ab?.band.low ?? 0) / 1e6)).toBe(31);
     expect(Math.round((ab?.band.high ?? 0) / 1e6)).toBe(62);
   });
@@ -85,5 +85,27 @@ describe("econLedger — the engine moves (#269)", () => {
     expect(bars.length).toBe(4); // building_share, jobs, refresh, school_comp
     expect(bars.every((b) => b.swing > 0)).toBe(true); // each knob has real leverage on per-job
     expect(bars[0].swing).toBeGreaterThanOrEqual(bars[bars.length - 1].swing);
+  });
+});
+
+// E4 (#1642). Every constant in this module is Allen County's CRA — Res #548-25's 75%/15-yr
+// terms, ~63 local effective mills, the 7.25% county sales-and-use rate, the non-binding ~50 jobs.
+// The report page renders on `selectableSitePaths`, so before this the moment a second site was
+// promoted it would have priced its build off that instrument under its own name.
+describe("econLedger — the CRA answers only for the site whose instrument it is (#1642 E4)", () => {
+  it("Lima resolves the full priced ledger", () => {
+    expect(ledgerProfiles("lima")).toHaveLength(4);
+    expect(ledgerLines("lima")).toHaveLength(4);
+    expect(siteNetSubsidyOutcome("lima")).not.toBeNull();
+    expect(promisedJobs("lima")).toBe(50);
+  });
+
+  it("another selectable site resolves nothing — it does not inherit Allen County's terms", () => {
+    for (const peer of ["fort-wayne", "urbana", "findlay"]) {
+      expect(ledgerProfiles(peer)).toBeNull();
+      expect(ledgerLines(peer)).toBeNull();
+      expect(siteNetSubsidyOutcome(peer)).toBeNull();
+      expect(promisedJobs(peer)).toBeNull();
+    }
   });
 });

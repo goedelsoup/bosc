@@ -40,8 +40,25 @@ describe("balanceSheet — composes every narrative's band (#273)", () => {
   });
 
   it("monetizes the public exposure as the economic net-subsidy band", () => {
-    expect(sheet.econExposure.low).toBeLessThan(sheet.econExposure.central);
-    expect(sheet.econExposure.central).toBeLessThan(sheet.econExposure.high);
-    expect(sheet.econExposure.high).toBeGreaterThan(30_000_000); // tens of millions
+    const e = sheet.econExposure;
+    if (e === null) throw new Error("Lima's sheet must price its CRA exposure");
+    expect(e.low).toBeLessThan(e.central);
+    expect(e.central).toBeLessThan(e.high);
+    expect(e.high).toBeGreaterThan(30_000_000); // tens of millions
+  });
+});
+
+describe("balanceSheet — a peer's sheet omits what its record doesn't hold (#1642 E4)", () => {
+  const peer = buildBalanceSheet(12.69, 1.01, "fort-wayne");
+
+  it("drops the economic row rather than pricing Allen County's CRA under another name", () => {
+    expect(peer.rows.map((r) => r.outcome.key)).toEqual(["grid_facility_draw", "toxics_effluent_share"]);
+    expect(peer.econExposure).toBeNull();
+  });
+
+  it("still composes the bands it can source, with their resolving records", () => {
+    expect(peer.rows.length).toBeGreaterThan(0);
+    expect(peer.resolvingRecords.length).toBeGreaterThan(0);
+    for (const r of peer.rows) expect(r.outcome.resolvingRecord).toBeTruthy();
   });
 });

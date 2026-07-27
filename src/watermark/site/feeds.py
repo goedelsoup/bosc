@@ -272,7 +272,23 @@ from watermark.sites import (
 #   with a disclosed TAXONOMY NOTE. Enum growth is additive for feed READERS (a pre-1.34
 #   records.json remains valid) but a pre-1.34 records.schema.json rejects the new group
 #   values — MINOR, back-compatible for data, schema refresh required.
-CONTRACT_VERSION = "1.34.0"
+# 1.35.0: adds the `grid` object feed (#1642, GP-E E1) — the per-site **grid backdrop**
+#   (`watermark.grid.model.GridProfile`): the cited electric-service chain (serving utility,
+#   holding company, balancing authority, wholesale RTO, retail regulator — each a `CitedFact`),
+#   the EIA-861 utility annual profile (retail sales / customers / average price), the EIA-930
+#   balancing-authority annual load, and, where a campus is disclosed, the `load_share` block
+#   expressing its draw as a share of the utility / BA / state denominators. This was the richest
+#   per-site grid artifact in the repo and it reached only a CLI-produced reference file
+#   (`SiteProfile.grid_relpath`), never the bundle — so the presentation tier had no feed carrying
+#   the grid backdrop and filled the vacuum with hand-copied Lima constants (`gridLoad.ts`'s
+#   `AEP_OHIO_RETAIL_GWH` / `OHIO_RETAIL_GWH`), a second uncontrolled copy of the EIA
+#   denominators. Grid identity joins the **backdrop floor** (`watermark.site.readiness`): it
+#   describes the *place*, not the campus, so a facility-less peer carries it with `load_share`
+#   null rather than nothing at all. Exported as its own already-provenanced Pydantic model like
+#   `rsei` / `economics-baseline` (`ProvenancedValue` + `CitedFact` carry the #60 discipline), so
+#   no new model is defined here. One new feed → MINOR, back-compatible (a reader that doesn't
+#   know `grid` is unaffected; a pre-1.35 bundle simply has no grid backdrop to render).
+CONTRACT_VERSION = "1.35.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

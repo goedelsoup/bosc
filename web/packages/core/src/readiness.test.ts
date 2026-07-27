@@ -87,7 +87,8 @@ describe("domain activation (manifest readiness block)", () => {
     expect(siteTier("lima")).toBe("reference");
     expect(siteTier("fort-wayne")).toBe("case");
     // Urbana is a Case site after the Highland55 land-assembly sourcing (#1328): the floor plus a
-    // committed parcel footprint (places) and its scoped permit/OEPA document corpus (record).
+    // committed parcel footprint (`places` live) is enough — the tier holds even though `record`
+    // reads `seeded` rather than the stale `live` its manifest used to claim (#1642).
     expect(siteTier("urbana")).toBe("case");
   });
 
@@ -98,7 +99,14 @@ describe("domain activation (manifest readiness block)", () => {
     }
     const urbana = siteDomainStates("urbana");
     expect(urbana.backdrop).toBe("live"); // the floor is real
-    expect(urbana.record).toBe("live"); // Highland55/OEPA document corpus, scoped in (#1328)
+    // `seeded`, not `live` — corrected when the bundle was re-derived for the grid feed (#1642).
+    // The committed manifest had been asserting `record: live` while its own `records` feed was
+    // zero-length: Urbana's scoped corpus is analyses + a land-assembly/litigation table, none of
+    // which validate as `RecordItem` genres, so only `documents` (2 collections) signals — which
+    // SEEDS the domain and never lifts it (#1364). The stale claim survived because only WPAFB's
+    // committed readiness is pinned to a fresh export; the record section still opens (`seeded` is
+    // present), it just no longer over-reads its own evidence.
+    expect(urbana.record).toBe("seeded");
     expect(urbana.places).toBe("live"); // committed parcel footprint (parcel-assemblage.geojson)
     // The Urbana Technology Hub facility is SCREENING-only (floor-area [inference] load, MW [open]) →
     // `seeded`, distinguished from a permit-grounded facility, not floated to `live` (#1630).

@@ -12,12 +12,11 @@
  */
 import { useMemo, useState } from "react";
 import {
-  COUNTY_JOBS_2023,
   ECON_PRIORS,
+  type LedgerProfile,
   abatement,
   abatementPerJob,
   keptByPublic,
-  ledgerProfiles,
   netSubsidyModel,
   netSubsidyPerJobModel,
   salesTaxExemption,
@@ -35,9 +34,20 @@ import { DiscloseList, Line, Slider } from "./scenarioControls";
 import { DistributionStrip, RegisterMark, TornadoChart } from "./uncertaintyGrammar";
 
 const REFRESH_CENTRAL = 1.5;
-const PROFILES = ledgerProfiles();
 
-export default function EconLedgerSimulator(): JSX.Element {
+export interface EconLedgerSimulatorProps {
+  /** The site's priced CRA profiles (`econLedger.ledgerProfiles(site)`) — passed in rather than
+   *  computed at module scope so the island can never resolve them for the wrong site (#1642 E4). */
+  profiles: LedgerProfile[];
+  /** The county's covered-employment baseline, read from the `economics-baseline` feed's cited
+   *  `total_employment` (#1642 E2 — was the stale hardcoded `countyJobs`). */
+  countyJobs: number;
+}
+
+export default function EconLedgerSimulator({
+  profiles: PROFILES,
+  countyJobs,
+}: EconLedgerSimulatorProps): JSX.Element {
   const [mode, setMode] = useState<"discrete" | "distribution">("discrete");
 
   // Discrete-mode point inputs (default = the "stated" profile).
@@ -68,9 +78,9 @@ export default function EconLedgerSimulator(): JSX.Element {
       exemption: ex,
       net: ab + ex - schoolComp,
       perJob: abatementPerJob(share, jobs),
-      jobsPct: (jobs / COUNTY_JOBS_2023) * 100,
+      jobsPct: (jobs / countyJobs) * 100,
     };
-  }, [share, jobs, schoolComp, dcte]);
+  }, [share, jobs, schoolComp, dcte, countyJobs]);
 
   // --- distribution: priors with disclosed knobs collapsed to their central ---
   const effectivePriors = useMemo(() => applyDisclosures(ECON_PRIORS, disclosed), [disclosed]);
@@ -191,7 +201,7 @@ export default function EconLedgerSimulator(): JSX.Element {
             <Line label="Per job (abatement)" value={fmtUsdM(point.perJob)} register="open" />
             <Line
               label="Jobs vs. the county"
-              value={`${jobs} ≈ ${point.jobsPct.toFixed(2)}% of ${COUNTY_JOBS_2023.toLocaleString("en-US")}`}
+              value={`${jobs} ≈ ${point.jobsPct.toFixed(2)}% of ${countyJobs.toLocaleString("en-US")}`}
               register="verified"
             />
           </dl>

@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-27T10:42:22.523492+00:00'
+reconciled_at: '2026-07-27T14:01:59.950783+00:00'
 entries:
   aedg:
     exists: true
@@ -312,10 +312,10 @@ entries:
     site_scope: slug-scoped
   eia-demand-pressure:
     exists: true
-    sha256: 9ae735cf4863accfa24a72d2d61f19c8b6aa132a2bf24770bed27a8f05704d93
-    size_bytes: 27989
+    sha256: 92e0814c7284e409826a2481cb713c94614eff2e0518362c87ab1c2841813ec5
+    size_bytes: 31093
     lfs_materialized: true
-    file_count: 9
+    file_count: 10
     missing: []
     asof: null
     stale: false

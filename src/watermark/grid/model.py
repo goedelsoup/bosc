@@ -128,6 +128,28 @@ class GridProfile(BaseModel):
     load_share: GridLoadShare | None = None
     note: str = ""
 
+    @property
+    def has_real_denominators(self) -> bool:
+        """True when the profile carries the nonzero load denominators it exists to establish.
+
+        The grid backdrop's job is to say *whose* grid a site sits on and *how big* it is —
+        the serving utility's retail sales and the balancing authority's annual load. A
+        profile carrying zeros for both establishes neither: it is a shell.
+
+        ``derive_grid_profile`` cannot produce one (A1/#1638 made the denominators live
+        connector pulls that raise rather than zero-fill), but a stale or hand-authored
+        ``grid-profile.yaml`` round-tripped through :func:`~watermark.grid.utility.load_grid_profile`
+        can. Since the ``grid`` object feed is a **backdrop floor** signal (#1642, GP-E E1),
+        such a shell must be dropped rather than shipped as a ``count == 1`` row that floats
+        the backdrop domain to ``live`` — the #1364 present-but-empty rule, applied on the
+        grid axis exactly as :attr:`FacilityDemandPressure.has_material_load` applies it on
+        the facility axis (#1631).
+        """
+        return (
+            self.utility_profile.retail_sales_gwh.value > 0
+            and self.ba_profile.annual_load_gwh.value > 0
+        )
+
 
 class BAInterchange(BaseModel):
     """Reduced EIA-930 hourly interchange profile for one balancing authority (#95).

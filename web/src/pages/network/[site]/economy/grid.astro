@@ -1,0 +1,250 @@
+---
+import { selectableSitePaths } from "@watermark/core/sites";
+export const getStaticPaths = selectableSitePaths;
+/**
+ * The grid backdrop — whose grid this site sits on, and what a campus load is against it
+ * (GP-E #1642, E1/E2).
+ *
+ * The gap this page fills: the platform computed the richest per-site grid artifact it has —
+ * the cited electric-service chain plus the EIA-861/930/state load denominators — wrote it to a
+ * CLI reference file, and never fed it to the site. Nothing rendered it. Meanwhile the
+ * facility-gated `economics-demand-pressure` feed shipped in every facility site's bundle, gated
+ * readiness, and was **also** rendered by nothing, while the frontend filled the vacuum with
+ * Lima's denominators hand-copied into `gridLoad.ts` as TS literals. Both feeds land here.
+ *
+ * Two bands, deliberately separate:
+ *  - **The backdrop** (`grid` feed) is a *backdrop-floor* read — a property of the place, not of
+ *    any campus. It renders for any site carrying the feed, including a facility-less peer, whose
+ *    `load_share` is legitimately null.
+ *  - **The demand pressure** (`economics-demand-pressure`) is facility-gated and additionally
+ *    gated on `facilityLoadAvailable` (#1630): a screening-only (`seeded`) facility does not get
+ *    to present a bracketed load as a settled pressure on consumer prices.
+ *
+ * Register discipline: the demand share and households-equivalent are the EIA-cited headline; the
+ * price-pressure band is a STYLIZED screening sensitivity off a stated transmission coefficient,
+ * and the campus buys at wholesale, not the residential rate the band is applied to. The feed
+ * carries those caveats as data and this page renders them — it does not headline the band.
+ */
+import BackLink from "~/components/BackLink.astro";
+import Base from "~/layouts/Base.astro";
+import SectionLocked from "~/components/SectionLocked.astro";
+import EvidenceTag from "~/components/EvidenceTag.astro";
+import { buildDemandPressure, buildGridBackdrop } from "@watermark/core/gridBackdrop";
+import { facilityLoadAvailable } from "@watermark/core/readiness";
+import type { ProvenancedValue } from "@watermark/core/feeds";
+import { withBase, withSite } from "@watermark/core/site";
+
+const { slug } = Astro.props as { slug: string };
+const backdrop = buildGridBackdrop(slug);
+// Facility-gated twice over: the feed is absent without a disclosed campus, and a screening-only
+// facility withholds the load read entirely (#1630) rather than presenting a bracket as settled.
+const pressure = facilityLoadAvailable(slug) ? buildDemandPressure(slug) : null;
+
+const num = (v?: ProvenancedValue | null, digits = 0): string =>
+  v?.value == null ? "—" : v.value.toLocaleString("en-US", { maximumFractionDigits: digits });
+const gwh = (n: number): string => n.toLocaleString("en-US", { maximumFractionDigits: 0 });
+// The transmission coefficient's own uncertainty band (#760's low/high on the ProvenancedValue) —
+// shown only when the feed carries it, so the stylized band's own width is visible.
+const kappa = pressure?.transmission_coefficient;
+const kappaBand =
+  kappa?.low != null && kappa.high != null ? `${kappa.low.toFixed(2)}–${kappa.high.toFixed(2)}` : null;
+---
+
+<Base title="The grid backdrop" section="economy">
+  <article class="prose">
+    <BackLink href={withSite("/economy/")} label="The economy" />
+    <h1>The grid backdrop</h1>
+
+    {backdrop === null ? (
+      <SectionLocked
+        section="economy"
+        holds="the grid backdrop — which utility serves this site, within which balancing authority, and how big each of those loads is"
+        note="Run the grid foundation step for this site (watermark --site <slug> grid) and it lands here."
+      />
+    ) : (
+      <>
+        <p class="section-lead">
+          Every megawatt figure about a data center is a number over a denominator, and the
+          denominator is somebody's grid. This is that grid for this site: who delivers the retail
+          power, which balancing authority keeps it in balance, who regulates the rate — each one
+          <strong> cited, not asserted</strong> — and how much electricity those systems already
+          move in a year. It describes the <em>place</em>, so it stands whether or not a campus is
+          ever built here. The prose companion is
+          <a href={withBase("/docs/economics")}> Economics — demand &amp; public benefits</a>.
+        </p>
+
+        <h2 id="chain">The electric-service chain</h2>
+        <table>
+          <thead><tr><th>Link</th><th>Identification</th><th>Evidence</th></tr></thead>
+          <tbody>
+            {backdrop.chain.map((row) => (
+              <tr>
+                <td>{row.label}</td>
+                <td>
+                  <strong>{row.value}</strong>
+                  <span class="gb-cite">{row.cite}</span>
+                </td>
+                <td><EvidenceTag kind={row.verified ? "verified" : "reference"} /></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <h2 id="denominators">What those systems already carry</h2>
+        <p>
+          The load denominators, connector-sourced from the EIA. These are the figures a campus
+          share is expressed against — and the only copy of them: the load report divides by this
+          same feed rather than its own constants.
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>System</th>
+              <th>Annual load</th>
+              {/* The share column exists only where a campus does — an empty column would read
+                  as a missing number rather than an absent facility. */}
+              {backdrop.campus && <th>Campus share</th>}
+            </tr>
+          </thead>
+          <tbody>
+            {backdrop.denominators.map((d) => (
+              <tr>
+                <td>
+                  {d.label}
+                  <span class="gb-cite">{d.cite}</span>
+                </td>
+                <td>{gwh(d.gwh)} GWh/yr</td>
+                {backdrop.campus && (
+                  <td>{d.sharePct == null ? "—" : `${d.sharePct.toFixed(2)}%`}</td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {(backdrop.customers !== null || backdrop.avgPriceCentsKwh !== null || backdrop.ownership) && (
+          <p>
+            {backdrop.ownership && (
+              <Fragment>{backdrop.utilityName} is <strong>{backdrop.ownership}</strong> (EIA-861). </Fragment>
+            )}
+            {backdrop.customers !== null && (
+              <Fragment>It serves ~{Math.round(backdrop.customers).toLocaleString("en-US")} retail
+              customers. </Fragment>
+            )}
+            {backdrop.avgPriceCentsKwh !== null && (
+              <Fragment>Its average retail price is {backdrop.avgPriceCentsKwh.toFixed(2)}¢/kWh.</Fragment>
+            )}
+          </p>
+        )}
+
+        {backdrop.campus === null ? (
+          <div class="callout callout--open">
+            <p class="callout-title">No campus load to express as a share</p>
+            <p>
+              The backdrop above is this site's real, per-site data. But no data-center facility is
+              disclosed here, so there is no campus load to size against it — and this page will
+              not invent one to fill the column. The share appears when a facility does.
+              Know of one? <a href={withSite("/submit")}>Submit the record →</a>
+            </p>
+          </div>
+        ) : (
+          <p>
+            The disclosed campus draws <strong>~{Math.round(backdrop.campus.loadMw)} MW</strong>,
+            which at a {backdrop.campus.loadFactor} load factor is
+            <strong> ~{gwh(backdrop.campus.annualGwh)} GWh/yr</strong> — the numerator of every
+            share in the table above. That draw is itself an <code>[inference]</code>; the
+            <a href={withSite("/reports/the-load-and-the-grid")}> load report</a> walks the chain
+            that produces it.
+          </p>
+        )}
+
+        {backdrop.note && <p class="gb-note">{backdrop.note}</p>}
+
+        <h2 id="demand-pressure">The campus against consumer prices</h2>
+        {pressure === null ? (
+          <p class="stub-note">
+            The demand → consumer-price sensitivity needs an <strong>instrument-grounded</strong>
+            campus load — an air permit or a filed disclosure. This site has none yet (a screening
+            estimate is a bracket, not a load), so the sensitivity is withheld rather than computed
+            off an inference. <a href={withSite("/submit")}>Have the disclosure? Submit it →</a>
+          </p>
+        ) : (
+          <>
+            <p>
+              How the campus's demand sits against the state's whole retail electricity market. The
+              two figures below are the defensible headline — both EIA-cited, both plain division.
+            </p>
+            <table>
+              <thead><tr><th>Figure</th><th>Value</th><th>Register</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td>Campus annual demand</td>
+                  <td>{num(pressure.annual_consumption_gwh, 1)} GWh/yr</td>
+                  <td><EvidenceTag kind="inference" /></td>
+                </tr>
+                <tr>
+                  <td>State retail electricity sales ({pressure.area})</td>
+                  <td>{num(pressure.state_retail_sales_gwh)} GWh/yr</td>
+                  <td><EvidenceTag kind="verified" /></td>
+                </tr>
+                <tr>
+                  <td><strong>Share of state retail sales</strong></td>
+                  <td><strong>{num(pressure.demand_share_pct, 2)}%</strong></td>
+                  <td><EvidenceTag kind="inference" /></td>
+                </tr>
+                <tr>
+                  <td><strong>Households-equivalent</strong></td>
+                  <td>
+                    <strong>~{num(pressure.households_equivalent)} homes</strong>
+                    <span class="gb-cite">at {num(pressure.avg_household_kwh_yr)} kWh/household/yr</span>
+                  </td>
+                  <td><EvidenceTag kind="inference" /></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="callout callout--note">
+              <p class="callout-title">
+                The price-pressure band is a screening sensitivity, not a forecast
+              </p>
+              <p>
+                Applying a stated short-run transmission coefficient of
+                {" "}{num(pressure.transmission_coefficient, 2)} %price/%demand
+                {kappaBand && <Fragment> (banded {kappaBand})</Fragment>} to that demand share gives
+                <strong> {num(pressure.price_pressure_pct_low, 2)}–{num(pressure.price_pressure_pct_high, 2)}%</strong>
+                {" "}on the {num(pressure.residential_price, 2)}¢/kWh residential price. That is
+                <strong> deliberately stylized</strong>: retail price formation is far more complex
+                than one coefficient, and the campus buys at wholesale, not the residential rate.
+                Read it as an order of magnitude, never as anyone's bill.
+              </p>
+            </div>
+
+            {pressure.caveats && pressure.caveats.length > 0 && (
+              <>
+                <h3>Carried caveats</h3>
+                <ul>{pressure.caveats.map((c) => <li>{c}</li>)}</ul>
+              </>
+            )}
+            {pressure.method && <p class="gb-note">Method: {pressure.method}</p>}
+          </>
+        )}
+      </>
+    )}
+  </article>
+</Base>
+
+<style>
+  /* A citation under the value it supports — small, quiet, always present. The evidence palette
+     is reserved for the evidence tag itself; this is plain secondary ink. */
+  .gb-cite {
+    display: block;
+    margin-top: 0.2rem;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.72rem;
+    line-height: 1.35;
+    color: var(--ink-2, #55524a);
+  }
+  .gb-note {
+    font-size: 0.85rem;
+    color: var(--ink-2, #55524a);
+  }
+</style>
