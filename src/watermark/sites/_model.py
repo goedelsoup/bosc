@@ -415,6 +415,12 @@ class SiteFacility(BaseModel):
                 "site-plan disclosure fields (facility_type / gross_floor_area_sqft / "
                 "disclosed_investment_usd) and disclosure_citation must be set together"
             )
+        # A disclosed blowdown carries the SAME pairing duty as the overrides below: uncited, it
+        # would reach `_derive_evaporative_tower` and pick up the override citation ("not a
+        # disclosed discharge for this facility"), mislabelling a real disclosure as a sweep input.
+        _require_together(
+            ("blowdown_mgd", self.blowdown_mgd), ("blowdown_citation", self.blowdown_citation)
+        )
         _require_together(
             ("wue_l_per_kwh", self.wue_l_per_kwh), ("wue_citation", self.wue_citation)
         )

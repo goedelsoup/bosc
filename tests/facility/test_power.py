@@ -137,6 +137,24 @@ def test_site_facility_gensets_are_paired() -> None:
         )
 
 
+def test_site_facility_blowdown_requires_a_citation() -> None:
+    """A disclosed blowdown can't pass uncited: the cooling derivation would attach the
+    sensitivity-override citation to it, labelling a real discharge as a sweep input."""
+    from watermark.sites._model import SiteFacility
+
+    with pytest.raises(ValueError, match="blowdown_mgd and blowdown_citation must be set together"):
+        SiteFacility(
+            name="Test",
+            status="confirmed",
+            it_load_mw=70.0,
+            it_load_low_mw=35.0,
+            it_load_high_mw=115.0,
+            it_load_citation="screening",
+            it_load_source="screening",
+            blowdown_mgd=2.5,  # disclosed discharge, no citation
+        )
+
+
 def test_site_facility_refuses_the_default_cooling_citation_on_a_pinned_archetype() -> None:
     """The default cooling citation asserts the record discloses NO method (#1634) — a facility
     that pins an archetype, or claims a document/connector/reference source, must cite it."""
