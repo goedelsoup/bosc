@@ -167,9 +167,18 @@ candidates:
     by the City of Springfield 5C FAQ (springfieldohio.gov/5c-data-center-faqs); up to 300,000 gal/day
     permitted from the municipal system at an >80degF extreme-heat max (''near zero'' most of the year,
     ~30k gal/day realistic), with an on-site reservoir under study to avoid the municipal tap. A largely
-    dry recirculating design undercuts the Mad River buried-valley abstraction thesis. Not a document
-    extraction; refine to [verified] on an ingested mechanical/plumbing permit. The receiving-water /
-    source-water screen is the water sub-issue (#1415).'
+    dry recirculating design undercuts the Mad River buried-valley abstraction thesis. B3 (#1683) ran
+    the A3 cooling-cycling reconciliation harness (`watermark cooling-reconcile`) on this claim: with
+    no matching makeup record on file (the Ohio DNR WWFRP water-withdrawal registry has no Clark County
+    withdrawal pull built) and no matching facility-own discharge record on file (OHD000001 still draft,
+    unlinked to the facility by name; no facility-specific NPDES/DMR located) — an absence of records,
+    not evidence of zero use — the outcome is a `gap` that KEEPS this [reference] pin. The 300,000 gal/day
+    is a permitted-withdrawal CEILING self-disclosed by this same FAQ — NOT an independently-negotiated
+    reservation, so (unlike Troy-Piqua B1) it is not a reservation_conflict: a dry loop sits far below
+    it, and a self-report cannot corroborate its own claim. The actual metered withdrawal vs the ceiling
+    is sharpened into a C2 records request (#1688/#1415). Not a document extraction; refine to [verified]
+    on an ingested mechanical/plumbing permit. The receiving-water / source-water screen is the water
+    sub-issue (#1415).'
   account:
     archetype: closed_loop_dry
     it_load:
@@ -285,8 +294,10 @@ candidates:
       own source, NOT an independently-negotiated reservation, so it is not a reservation conflict: a
       genuinely dry loop sits far below it. But a self-report is not a metered instrument, so it can neither
       confirm ''not evaporative'' nor re-archetype. Pull the actual metered withdrawal to test whether
-      use approaches the 0.3 MGD (300,000 gal/day) ceiling (which would contradict ''not evaporative'')
-      or sits far below it (dry), plus the blowdown / OHD000001 to complete the account (#1415).'
+      use approaches the 0.3 MGD (300,000 gal/day) ceiling or sits far below it — a screening signal only,
+      not proof of mechanism: evaporative vs. dry is established by an ingested mechanical/plumbing permit
+      or a facility-own blowdown/discharge record (an on-site reservoir could also supply cooling), not
+      the withdrawal figure alone — plus the blowdown / OHD000001 to complete the account (#1415).'
     epic_ref: '#1688 (C2); #1415'
     tag: '[open]'
   corroborators:
