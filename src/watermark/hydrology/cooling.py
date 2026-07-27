@@ -22,15 +22,8 @@ from __future__ import annotations
 from watermark.config import Settings, get_settings
 from watermark.hydrology import cooling_models
 from watermark.hydrology.cooling_models import (
-    _AIR_PERMIT_CITE,
-    _BACKUP_MW,
     _CYCLES,
     _CYCLES_CITE,
-    _FM2_BLOWDOWN_MGD,
-    _FM2_CITE,
-    _GENSET_COUNT,
-    _GENSET_MW,
-    _IT_LOAD_MW,
     _WUE_CITE,
     _WUE_L_PER_KWH,
     CoolingParams,
@@ -38,17 +31,13 @@ from watermark.hydrology.cooling_models import (
 from watermark.hydrology.model import CoolingBasis
 from watermark.sites import CoolingModelType, active_profile
 
-# The evaporative_tower defaults are re-exported for legacy consumers (#1055).
+# The generic evaporative_tower ARCHETYPE defaults are re-exported for legacy consumers
+# (#1055). The Lima-specific genset / IT-load / air-permit / FM-2 constants that used to
+# ride along here are gone (#1634): they were a second copy of Lima's ``SiteFacility``, and
+# a site's own figures come from ``SiteProfile.facility`` — the single source.
 __all__ = [
-    "_AIR_PERMIT_CITE",
-    "_BACKUP_MW",
     "_CYCLES",
     "_CYCLES_CITE",
-    "_FM2_BLOWDOWN_MGD",
-    "_FM2_CITE",
-    "_GENSET_COUNT",
-    "_GENSET_MW",
-    "_IT_LOAD_MW",
     "_WUE_CITE",
     "_WUE_L_PER_KWH",
     "derive_cooling_basis",
@@ -82,12 +71,11 @@ def derive_cooling_basis(
     settings = settings or get_settings()
     facility = active_profile(settings).facility
     model = cooling_models.resolve_cooling_model(facility, override=cooling_model)
-    # Only `off` is derivable without a resolvable IT load. The module-level fallback constants
-    # are the *Lima* air-permit basis (275 MW + the P0138965 citation); substituting them for
-    # another site — whether it has no facility at all, OR a facility whose load is entirely
-    # `[open]` (a rezoning-only campus, now representable per #1628) — would leak Lima provenance
-    # into that site's figures. A keyword ``it_load_mw`` override (sensitivity sweeps) supplies the
-    # load and is exempt.
+    # Only `off` is derivable without a resolvable IT load — whether the site has no facility at
+    # all, OR a facility whose load is entirely `[open]` (a rezoning-only campus, representable
+    # per #1628). There is nothing to fall back to: since #1634 this subsystem carries no site's
+    # constants, so an unresolvable load is refused rather than filled from another site's air
+    # permit. A keyword ``it_load_mw`` override (sensitivity sweeps) supplies the load and is exempt.
     if (
         model is not CoolingModelType.OFF
         and it_load_mw is None

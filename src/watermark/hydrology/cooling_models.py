@@ -34,26 +34,18 @@ log = get_logger(__name__)
 
 _L_PER_GAL = 3.785411784
 
-# --- Lima-era module fallbacks (used only when a site has no SiteProfile.facility) -----
-# These are the evaporative_tower defaults (#1055): disclosed / cited inputs for the
-# reference build, kept as the last-resort fallback so the legacy call path is unchanged.
-_GENSET_COUNT = 114
-_GENSET_MW = 2.75  # ekW each, per the air permit
-_BACKUP_MW = _GENSET_COUNT * _GENSET_MW  # ~313 MW
-_IT_LOAD_MW = 275.0  # [inference] midpoint of the 250-300 MW N+1 estimate (IT ~= backup net of
-# mechanical overhead) — derived from the disclosed ~313 MW backup, NOT a permit disclosure (#1697)
-_AIR_PERMIT_CITE = (
-    "OEPA Air PTI P0138965 (Facility 0302022054), committed "
-    "data/extracted/permits/4132514.epa.yaml (final, 2026-05-28): "
-    "114 hall gensets x 2.75 ekW = ~313 MW backup; IT ~250-300 MW (N+1). "
-    "Per-engine ekW is from the draft public notice (3987141/3987144) — engine "
-    "size is CBI-redacted in the final permit under a formal Ohio EPA trade-secret "
-    "grant (OAC 3745-49-03, 2025-10-08; data/extracted/permits/3859883.epa.yaml), "
-    "which also withholds cooling-system flowrates."
-)
-
+# --- Generic archetype defaults (used when a facility discloses no override) -------------
+# These are ARCHETYPE reference values, not any one site's disclosure (#1634): a facility's
+# own disclosed figures live on ``SiteProfile.facility`` and win here. Nothing site-specific
+# belongs in this module — the genset/IT-load/permit/FM-2 constants that used to sit here
+# were a second copy of Lima's ``SiteFacility``, so a site that disclosed none of them
+# silently inherited Lima's basis. They are gone; the profile is the single source.
 _WUE_L_PER_KWH = 1.8  # evaporative hyperscale; Google fleet avg ~1.1, evaporative higher
-_WUE_CITE = "evaporative-cooled hyperscale WUE ~1.8 L/kWh (Google fleet avg ~1.1; 36 cooling towers on the air permit)"
+_WUE_CITE = (
+    "evaporative-cooled hyperscale WUE ~1.8 L/kWh archetype default (Google fleet avg ~1.1, "
+    "evaporative plants higher) — not a facility disclosure; a site that discloses its own "
+    "WUE overrides this via SiteFacility.wue_l_per_kwh + wue_citation"
+)
 
 # The empirical ceiling on evaporative-hyperscale water-use effectiveness (WS-16, #1616). The
 # blowdown-method upper bound (blowdown x (CoC-1)) is a valid *cooling* bound only if the
@@ -74,9 +66,18 @@ _WUE_CEILING_CITE = (
 _CYCLES = 5.0  # cooling-tower cycles of concentration (typical 4-6)
 _CYCLES_CITE = "cooling-tower cycles of concentration ~5 (typical 4-6)"
 
-_FM2_BLOWDOWN_MGD = 2.5  # documented FM-2 industrial discharge, as a blowdown upper bound
-_FM2_CITE = (
-    "bosc-fm2 2.5 MGD industrial discharge (CMAR RFQ §A.6), taken as cooling blowdown upper bound"
+# The blowdown cross-check's citation when the figure came from a sensitivity OVERRIDE rather
+# than a facility disclosure — it names the override, never a documented discharge. (A
+# disclosed blowdown always carries the facility's own ``blowdown_citation``.)
+_BLOWDOWN_OVERRIDE_CITE = (
+    "blowdown supplied as a sensitivity override (CoolingParams.blowdown_mgd) — not a "
+    "disclosed discharge for this facility"
+)
+# Its peer for an IT load supplied the same way, with no facility disclosure behind it — it
+# names the override, never another site's air permit.
+_IT_LOAD_OVERRIDE_CITE = (
+    "IT load supplied as a sensitivity override (CoolingParams.it_load_mw) — not a disclosed "
+    "or derived load for this facility"
 )
 
 # --- once_through parameters ------------------------------------------------------------
@@ -260,15 +261,21 @@ def resolve_cooling_model(
 
 def _resolve_it_load(
     facility: SiteFacility | None, params: CoolingParams
-) -> tuple[float, float, float, str]:
+) -> tuple[float, float, float, str] | None:
     """The IT load's central value + its disclosed low/high range + the load-basis citation.
 
     The range is the **power-side uncertainty** the cooling-water bracket must reflect
     (#1632): an air-permit-grounded load is a bracket (N+1 backup ≈ IT — Lima 250-300),
     a floor-area screen is a density bracket. ``low``/``high`` fall back to ``central``
-    for a point override (``CoolingParams.it_load_mw``) or the module fallback, where
-    there is no range to widen the water bracket with. The ``SiteFacility`` validator
-    already enforces that the it-load triple is all-set or all-None.
+    for a point override (``CoolingParams.it_load_mw``), where there is no range to widen
+    the water bracket with. The ``SiteFacility`` validator already enforces that the
+    it-load triple is all-set or all-None.
+
+    ``None`` when there is **no resolvable load** — no facility, or one whose load is
+    entirely ``[open]`` (#1628). There is no module fallback to stand in: substituting one
+    site's air-permit basis for another's silence is the leak this module refuses (#1634).
+    ``derive_cooling_basis`` rejects that case for every archetype but ``off``, which
+    reports an explicit zero instead.
     """
     if params.it_load_mw is not None:
         it = it_low = it_high = params.it_load_mw
@@ -277,16 +284,29 @@ def _resolve_it_load(
         it_low = facility.it_load_low_mw if facility.it_load_low_mw is not None else it
         it_high = facility.it_load_high_mw if facility.it_load_high_mw is not None else it
     else:
-        # No facility, or a facility whose load is entirely [open] (#1628) → the module fallback.
-        it = it_low = it_high = _IT_LOAD_MW
-    # A site-plan-grounded facility (Urbana) has no air permit; its IT load is a
-    # floor-area screening bracket cited via ``it_load_citation``. Fall back to the
-    # module cite only when there is no facility at all.
-    if facility is not None:
-        cite = facility.air_permit_citation or facility.it_load_citation or _AIR_PERMIT_CITE
-    else:
-        cite = _AIR_PERMIT_CITE
-    return it, it_low, it_high, cite
+        return None
+    # A site-plan-grounded facility (Urbana) has no air permit; its IT load is a floor-area
+    # screening bracket cited via ``it_load_citation``. A load supplied purely as an override
+    # names the override as its basis — it is not this facility's disclosure.
+    cite = (facility.air_permit_citation or facility.it_load_citation) if facility else None
+    return it, it_low, it_high, cite or _IT_LOAD_OVERRIDE_CITE
+
+
+def _require_it_load(
+    facility: SiteFacility | None, params: CoolingParams
+) -> tuple[float, float, float, str]:
+    """:func:`_resolve_it_load` for the archetypes that cannot be derived without a load.
+
+    ``derive_cooling_basis`` already refuses these upstream; this is the type-level guarantee
+    for a spec invoked directly, and it names the same refusal rather than falling back.
+    """
+    resolved = _resolve_it_load(facility, params)
+    if resolved is None:
+        raise ValueError(
+            "no resolvable IT load (no facility, or the facility's load is entirely [open]) — "
+            "only `off` is derivable without one; another site's constants are never substituted"
+        )
+    return resolved
 
 
 def _it_load_pv(it_load_mw: float, citation: str) -> ProvenancedValue:
@@ -359,15 +379,15 @@ def reject_heat_load(
     quantitative band, and is an ``[inference]`` (``derived``) like the IT load it scales — the
     air permit discloses backup capacity, not the load, and never the heat rejection. Returns
     ``None`` when there is no resolvable *facility* IT load (``facility is None``, or a
-    facility whose load is entirely ``[open]``) so the Lima module fallback (275 MW) is never
-    substituted into another site's screen — mirroring the guard in
+    facility whose load is entirely ``[open]``) — mirroring the guard in
     :func:`watermark.hydrology.cooling.derive_cooling_basis`. A ``params.it_load_mw`` override
     (sensitivity runs) supplies the load and lifts the guard.
     """
     params = params or CoolingParams()
-    if params.it_load_mw is None and (facility is None or facility.it_load_mw is None):
+    resolved = _resolve_it_load(facility, params)
+    if resolved is None:
         return None
-    it, it_low, it_high, it_cite = _resolve_it_load(facility, params)
+    it, it_low, it_high, it_cite = resolved
     mult, mult_cite = _resolve_heat_reject_mult(facility, params)
     return ProvenancedValue.derived(
         round(it * mult, 1),
@@ -388,13 +408,19 @@ def _derive_off(
     facility: SiteFacility | None, params: CoolingParams, settings: Settings
 ) -> CoolingBasis:
     """No cooling-water load — every water quantity is an explicit zero, not an absence."""
-    if facility is not None:
-        it, _it_low, _it_high, it_cite = _resolve_it_load(facility, params)
+    resolved = _resolve_it_load(facility, params)
+    if resolved is not None:
+        it, _it_low, _it_high, it_cite = resolved
         it_load = _it_load_pv(it, it_cite)
     else:
-        it_load = ProvenancedValue.assume(
-            0.0, "MW", why="no identified cooling-water facility (SiteProfile.facility is None)"
+        # No facility at all, or one whose load is entirely [open] (#1628). Either way this
+        # site has no IT figure of its own — report the absence, never another site's (#1634).
+        why = (
+            "no identified cooling-water facility (SiteProfile.facility is None)"
+            if facility is None
+            else "the disclosed facility's IT load is entirely [open] — no load figure on record"
         )
+        it_load = ProvenancedValue.assume(0.0, "MW", why=why)
     zero_cite = "cooling model `off`: no cooling-water load"
     return CoolingBasis(
         cooling_model=CoolingModelType.OFF,
@@ -416,15 +442,24 @@ def _derive_evaporative_tower(
     (upper bound); consumptive fraction = (CoC-1)/CoC. This is the pre-taxonomy
     ``derive_cooling_basis`` math moved into its archetype (#1055) — Lima's committed
     figures are regression-locked against it.
+
+    **The two methods are independent of each other, not of the water balance (#1634).**
+    The blowdown the bottom-up bound rests on is the SAME documented discharge the balance
+    carries as the campus ``return_flow`` (Lima: the ~2.5 MGD FM-2 industrial discharge —
+    see :func:`watermark.hydrology.balance._campus_node`). It cross-checks the power basis,
+    but an error in that one document moves the upper bound and the routed return flow
+    together — never read the pair as two independent observations of the campus.
     """
-    it_load_mw, it_load_low, it_load_high, it_load_cite = _resolve_it_load(facility, params)
+    it_load_mw, it_load_low, it_load_high, it_load_cite = _require_it_load(facility, params)
     wue_l_per_kwh, wue_cite = _resolve_wue(facility, params)
     cycles, cycles_cite = _resolve_cycles(facility, params)
     blowdown_mgd = params.blowdown_mgd
     if blowdown_mgd is None and facility is not None:
         blowdown_mgd = facility.blowdown_mgd
     blowdown_cite = (
-        facility.blowdown_citation if (facility and facility.blowdown_citation) else _FM2_CITE
+        facility.blowdown_citation
+        if (facility and facility.blowdown_citation)
+        else _BLOWDOWN_OVERRIDE_CITE  # an override, never another site's documented discharge
     )
 
     frac = (cycles - 1.0) / cycles  # evaporation / makeup
@@ -569,7 +604,7 @@ def _derive_once_through(
     the coupling is internally consistent; a facility that discloses a different dT would need
     the coefficient re-anchored to its rejected heat rather than re-used verbatim.
     """
-    it_load_mw, it_load_low, it_load_high, it_load_cite = _resolve_it_load(facility, params)
+    it_load_mw, it_load_low, it_load_high, it_load_cite = _require_it_load(facility, params)
     mult, mult_cite = _resolve_heat_reject_mult(facility, params)
     reject_mw = it_load_mw * mult
     # Rejected heat -> withdrawal through the single-source per-MW flow factor, so the forward
@@ -643,7 +678,7 @@ def _derive_closed_loop_dry(
     cycles-of-concentration do not apply — they stay ``None``, never faked.
     """
     # ~0 water: the power-side range (#1632) has no consumptive bracket to widen here.
-    it_load_mw, _it_low, _it_high, it_load_cite = _resolve_it_load(facility, params)
+    it_load_mw, _it_low, _it_high, it_load_cite = _require_it_load(facility, params)
     zero_cite = (
         "sealed closed loop, dry/air heat rejection: ~0 consumptive at screening grade "
         "(initial fill + minor leakage makeup only)"
@@ -702,7 +737,7 @@ def _derive_hybrid_adiabatic(
     # encode SEASON (annual average vs the warm-season assist rate that
     # ``scenario.evaluate_seasonal`` reads as a point rate), not power-uncertainty bounds —
     # folding the IT-load range into consumptive_high would corrupt that seasonal rate.
-    it_load_mw, _it_low, _it_high, it_load_cite = _resolve_it_load(facility, params)
+    it_load_mw, _it_low, _it_high, it_load_cite = _require_it_load(facility, params)
     wue_l_per_kwh, wue_cite = _resolve_wue(facility, params)
     cycles, cycles_cite = _resolve_cycles(facility, params)
     months, window_cite = _assist_months(settings)

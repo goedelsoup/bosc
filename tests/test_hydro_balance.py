@@ -151,6 +151,28 @@ def test_campus_consumptive_is_derived_not_placeholder(hydro_settings: Settings)
     assert "tbd" not in joined
 
 
+def test_fm2_grounds_both_the_return_flow_and_the_blowdown_bound(hydro_settings: Settings) -> None:
+    """The FM-2 figure plays two roles from ONE document, so they are not independent (#1634).
+
+    The campus ``return_flow`` (the routed discharge to Lima) and the cooling bracket's
+    bottom-up upper bound (``SiteFacility.blowdown_mgd`` taken as tower blowdown) are the same
+    ~2.5 MGD CMAR RFQ §A.6 discharge, held as two copies. Lock them to one figure: a silent
+    divergence between the copies would otherwise read as two agreeing observations.
+    """
+    from watermark.hydrology.units import mgd_to_cfs
+    from watermark.sites import active_profile
+
+    facility = active_profile(hydro_settings).facility
+    assert facility is not None and facility.blowdown_mgd is not None
+    balance = build_water_balance(settings=hydro_settings, live=False)
+    campus = balance.node("bosc-campus")
+    assert campus is not None and campus.return_flow is not None
+    assert campus.return_flow.value == pytest.approx(mgd_to_cfs(facility.blowdown_mgd), abs=0.01)
+    # Both trace to the same FM-2 discharge — the shared provenance the coupling rests on.
+    assert "fm2" in (campus.return_flow.citation or "").lower()
+    assert "fm2" in (facility.blowdown_citation or "").lower()
+
+
 def test_assimilative_matches_suffixed_receiving_water(hydro_settings: Settings) -> None:
     # A receiving water carrying a river-mile / place suffix ("Dug Run at River Mile 3.1")
     # must still resolve its cited 7Q10 ("dug run"): the lookup normalizes the same way

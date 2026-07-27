@@ -292,6 +292,9 @@ def _stub_facility(**overrides: object) -> SiteFacility:
         "it_load_low_mw": 15.0,
         "it_load_high_mw": 25.0,
         "air_permit_citation": "stub permit",
+        # A stub that PINS an archetype must cite it: the default citation asserts the record
+        # discloses no method, and SiteFacility refuses that contradiction (#1634).
+        "cooling_model_citation": "stub cooling disclosure",
     }
     base.update(overrides)
     return SiteFacility(**base)  # type: ignore[arg-type]
