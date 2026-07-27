@@ -53,6 +53,22 @@ const doors: Door[] = [
     desc: `What ${area}'s economy actually is — employment by NAICS sector with each sector's location quotient, and population. BLS QCEW + US Census, every figure connector-sourced.`,
     note: "BLS · Census",
   },
+  // The grid backdrop (#1642, E1/E2) — a BACKDROP-floor door, not facility-gated: it names the
+  // utility, balancing authority, and regulator for the *place*, so a facility-less peer opens it
+  // too (its campus-share column is honestly empty). The page itself locks if the feed is absent.
+  ...(hasFeed("grid")
+    ? [
+        {
+          id: "grid",
+          kind: "Baseline data",
+          href: withSite("/economy/grid"),
+          count: "—",
+          title: "The grid backdrop",
+          desc: `Whose grid this site sits on — the cited service chain (serving utility, balancing authority, wholesale market, rate regulator) and how much electricity each of those systems already moves in a year. The denominator under every megawatt figure.`,
+          note: "EIA-861 · EIA-930",
+        },
+      ]
+    : []),
   // Facility-gated (#1630): the campus-load read renders only where the facility is `live`
   // (instrument-grounded load), not for a screening-only or facility-less site — a `live → seeded`
   // regression drops this door rather than presenting a screening bracket as a settled load.

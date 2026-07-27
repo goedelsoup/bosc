@@ -240,6 +240,91 @@ def test_degenerate_demand_pressure_feed_is_dropped(
     assert manifest["readiness"]["domains"]["facility"] == "live"
 
 
+# --- the grid backdrop feed (GP-E E1 / #1642) -----------------------------------------------
+def test_grid_backdrop_feed_carries_the_cited_service_chain(bundle: Path) -> None:
+    """The `grid` feed is the backdrop the frontend used to hardcode (#1642, E1/E2).
+
+    Before this, the richest per-site grid artifact went only to a CLI reference file, so
+    `gridLoad.ts` carried hand-copied Lima constants (`AEP_OHIO_RETAIL_GWH = 48_653`). This pins
+    what the feed must deliver so the presentation tier can read the denominators instead of
+    re-declaring them: the *cited* service chain, and the utility/BA figures themselves.
+    """
+    by_name = _feeds_by_name(bundle)
+    assert "grid" in by_name, "the reference build must carry the grid backdrop feed"
+    assert by_name["grid"]["kind"] == "object"
+    grid = _rows(bundle, by_name["grid"])[0]
+
+    # The service chain is cited, never asserted — every identification carries its source.
+    chain = grid["serving_utility"]
+    for field in ("utility", "holding_company", "balancing_authority", "rto", "retail_regulator"):
+        fact = chain[field]
+        assert fact["value"], f"serving_utility.{field} is empty"
+        assert fact["citation"], f"serving_utility.{field} carries no citation"
+
+    # The denominators the report's "% of the utility's entire retail sales" line divides by.
+    assert grid["utility_profile"]["retail_sales_gwh"]["value"] > 0
+    assert grid["ba_profile"]["annual_load_gwh"]["value"] > 0
+    # Lima has a disclosed campus, so the load-share block is present and cited.
+    share = grid["load_share"]
+    assert share is not None
+    assert share["share_of_utility_pct"]["value"] > 0
+    assert share["state_retail_gwh"]["value"] > 0
+
+
+def test_grid_backdrop_is_present_for_a_facility_less_peer(
+    tmp_path_factory: pytest.TempPathFactory,
+) -> None:
+    """The grid backdrop describes the *place*, not the campus — so a facility-less peer carries
+    it with `load_share` null (#1642). This is why it can sit on the backdrop floor at all: a
+    thin site gets the real electric-service chain rather than a lock."""
+    out = tmp_path_factory.mktemp("grid-peer") / "b"
+    settings = Settings(data_dir=REPO_ROOT / "data", site="toledo")  # no disclosed facility
+    export_bundle(
+        settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
+    )
+    by_name = _feeds_by_name(out)
+    assert "grid" in by_name, "a facility-less peer still carries its grid backdrop"
+    grid = _rows(out, by_name["grid"])[0]
+    assert grid["serving_utility"]["utility"]["value"], "the peer's serving utility is identified"
+    assert grid["load_share"] is None, "no disclosed campus ⇒ no fabricated load share"
+    # And the floor it belongs to is intact — grid joining BACKDROP_FLOOR_FEEDS must not have
+    # knocked a real backdrop site down a tier.
+    assert _manifest(out)["readiness"]["domains"]["backdrop"] == "live"
+
+
+def test_degenerate_grid_profile_feed_is_dropped(
+    tmp_path_factory: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The #1364 present-but-empty guard on the grid axis (#1642). A stale YAML with zeroed
+    utility/BA denominators establishes neither whose grid nor how big, so it must be DROPPED —
+    not shipped as a `count == 1` shell that floats the backdrop domain to `live`. Since `grid`
+    is a floor feed, dropping it correctly costs the site its `live` backdrop."""
+    from watermark.grid.utility import load_grid_profile
+    from watermark.site import export as export_mod
+
+    settings = Settings(data_dir=REPO_ROOT / "data")
+    real = load_grid_profile(settings)
+    assert real is not None and real.has_real_denominators
+
+    degenerate = real.model_copy(deep=True)
+    degenerate.utility_profile.retail_sales_gwh.value = 0.0
+    degenerate.ba_profile.annual_load_gwh.value = 0.0
+    assert not degenerate.has_real_denominators
+    monkeypatch.setattr(export_mod, "load_grid_profile", lambda *a, **k: degenerate)
+
+    out = tmp_path_factory.mktemp("degenerate-grid") / "b"
+    export_mod.export_bundle(
+        settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
+    )
+    manifest = _manifest(out)
+    assert "grid" not in {f["name"] for f in manifest["feeds"]}, (
+        "a zeroed-denominator grid profile was shipped as a feed"
+    )
+    assert manifest["readiness"]["domains"]["backdrop"] == "seeded", (
+        "a dropped floor feed must cost the backdrop domain its `live` grade, not pass silently"
+    )
+
+
 def test_documents_carry_version_cluster_metadata(bundle: Path) -> None:
     """The exported documents feed carries the #1590 version/dedup metadata from the curated
     manifest: the OEPA permit triad clusters, its final permit canonical + superseding the draft
@@ -457,7 +542,7 @@ def test_backdrop_staged_site_exports_at_backdrop_tier(
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.34.0"
+    assert manifest["contract_version"] == "1.35.0"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "backdrop", f"{slug} should be a Backdrop site, got {readiness}"
     domains = readiness["domains"]
@@ -488,7 +573,7 @@ def test_findlay_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) 
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.34.0"
+    assert manifest["contract_version"] == "1.35.0"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "case", f"findlay should be a Case site, got {readiness}"
     domains = readiness["domains"]
@@ -530,7 +615,7 @@ def test_wpafb_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) ->
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.34.0"
+    assert manifest["contract_version"] == "1.35.0"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "case", f"wpafb should be a Case site, got {readiness}"
     domains = readiness["domains"]
@@ -572,7 +657,7 @@ def test_troy_piqua_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactor
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.34.0"
+    assert manifest["contract_version"] == "1.35.0"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "case", f"troy-piqua should be a Case site, got {readiness}"
     domains = readiness["domains"]
@@ -615,7 +700,7 @@ def test_sidney_exports_at_backdrop_tier(tmp_path_factory: pytest.TempPathFactor
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.34.0"
+    assert manifest["contract_version"] == "1.35.0"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "backdrop", f"sidney should be a Backdrop site, got {readiness}"
     domains = readiness["domains"]

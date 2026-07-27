@@ -10,9 +10,15 @@
  *
  * Discipline: a map of what *isn't* known, not a verdict. The aggregate is a band; every
  * row carries its register and the specific record whose disclosure would collapse it.
+ *
+ * Per-site (#1642, GP-E E4): a row appears only where that narrative has something on **this**
+ * site's record. The economic row is Allen County's CRA (`siteNetSubsidyOutcome`), so a peer's
+ * sheet simply omits it rather than pricing another county's abatement — and `econExposure` is
+ * then null, so the page states the exposure it can actually source. The sheet is a composition
+ * of narratives; where a narrative is silent for a site, the honest sheet is shorter.
  */
 import { reportUrl } from "./reports";
-import { netSubsidyOutcome } from "./econLedger";
+import { siteNetSubsidyOutcome } from "./econLedger";
 import { facilityDrawOutcome, gridPriorsFromFacility } from "./gridLoad";
 import { assimilativeOutcome } from "./toxicsDilution";
 import type { UncertainOutcome } from "./uncertainty";
@@ -40,14 +46,17 @@ export interface BalanceSheetData {
   /** Distinct withheld records that, produced, would collapse one or more bands — the
    *  mandamus tie-in (each is a record the county has not disclosed). */
   resolvingRecords: string[];
-  /** The monetized public exposure: the economic net-subsidy band ($). */
-  econExposure: { low: number; high: number; central: number };
+  /** The monetized public exposure: the economic net-subsidy band ($). **Null** for a site with
+   *  no abatement instrument on the record — there is no exposure to price, and the page says so
+   *  rather than showing another county's (#1642, E4). */
+  econExposure: { low: number; high: number; central: number } | null;
 }
 
 /**
  * Compose the balance sheet. `toxicsEffluentCfs` / `toxicsNaturalAnnualCfs` come from the
  * hydrology feed (`buildDilution().discharge`) so the toxics band matches its narrative.
- * `siteSlug` scopes each band's narrative companion link to the active site (#1145).
+ * `siteSlug` scopes each band's narrative companion link to the active site (#1145) **and** gates
+ * which bands exist for it at all (#1642).
  */
 export function buildBalanceSheet(
   toxicsEffluentCfs: number,
@@ -55,7 +64,8 @@ export function buildBalanceSheet(
   siteSlug: string,
   gridItLoad?: GridItLoad | null,
 ): BalanceSheetData {
-  const econ = netSubsidyOutcome();
+  // The economic band is the site's own abatement instrument — absent for a site with none.
+  const econ = siteNetSubsidyOutcome(siteSlug);
   // #1632: source the grid band's IT-load prior from the facility feed when supplied, so this
   // sheet's load row matches the-load-and-the-grid and /basin (one sourced IT figure, not a
   // hardcoded band). Falls back to the Lima GRID_PRIORS default when absent.
@@ -66,12 +76,16 @@ export function buildBalanceSheet(
   const toxics = assimilativeOutcome(toxicsEffluentCfs, toxicsNaturalAnnualCfs);
 
   const rows: BalanceRow[] = [
-    {
-      outcome: econ,
-      unit: "usd",
-      href: reportUrl("the-economic-ledger", siteSlug),
-      narrative: "The economic ledger",
-    },
+    ...(econ
+      ? [
+          {
+            outcome: econ,
+            unit: "usd" as BalanceUnit,
+            href: reportUrl("the-economic-ledger", siteSlug),
+            narrative: "The economic ledger",
+          },
+        ]
+      : []),
     {
       outcome: grid,
       unit: "mw",
@@ -99,6 +113,6 @@ export function buildBalanceSheet(
   return {
     rows,
     resolvingRecords: [...records],
-    econExposure: { low: econ.low, high: econ.high, central: econ.central },
+    econExposure: econ ? { low: econ.low, high: econ.high, central: econ.central } : null,
   };
 }

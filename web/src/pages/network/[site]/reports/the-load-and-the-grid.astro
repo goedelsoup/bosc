@@ -14,7 +14,16 @@ export const getStaticPaths = selectableSitePaths;
 import GridLoadScreen from "@watermark/viz/islands/GridLoadScreen.tsx";
 import RedactionReveal from "~/components/RedactionReveal.astro";
 import ReportShell from "~/layouts/ReportShell.astro";
-import { GRID_PRIORS, facilityDrawOutcome, gridPriorsFromFacility } from "@watermark/core/gridLoad";
+import {
+  GRID_PRIORS,
+  annualGwh,
+  backupRecord,
+  facilityDrawOutcome,
+  gridPriorsFromFacility,
+  pctOfUtilityRetail,
+} from "@watermark/core/gridLoad";
+import { buildGridBaseline } from "@watermark/core/gridBackdrop";
+import { promisedJobs } from "@watermark/core/econLedger";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type { FacilityItem } from "@watermark/core/feeds";
 import { buildDilution } from "@watermark/core/dilution";
@@ -32,6 +41,18 @@ const priors =
     ? gridPriorsFromFacility(primary.it_load_mw, primary.it_load_low_mw, primary.it_load_high_mw)
     : GRID_PRIORS;
 const draw = facilityDrawOutcome(priors);
+
+// The grid the load lands on, from the `grid` feed (#1642, E1/E2) — the utility name and the
+// retail-sales denominator this page's "% of the utility's entire retail electricity" line divides
+// by. These were TS literals (`AEP_OHIO_RETAIL_GWH = 48_653`) tagged as connector-sourced; now
+// there is one copy, in the reference data. Null ⇒ the readouts are withheld, not defaulted.
+const site = Astro.locals.site;
+const baseline = buildGridBaseline(site);
+const backup = backupRecord(site);
+const jobs = promisedJobs(site);
+// The no-JS fallback's figures, computed from the same feed-sourced baseline as the island.
+const gwh = annualGwh(draw.central);
+const pctOfUtility = baseline ? pctOfUtilityRetail(gwh, baseline.utilityRetailGwh) : null;
 
 // The water bridge (#1632): the same draw drives the cooling water — surface the derivation
 // instead of leaving MW and MGD as two orphaned headlines. Figures from the hydrology feed.
@@ -68,7 +89,24 @@ const redaction: TeardownRedaction = {
 
     <RedactionReveal redaction={redaction} />
 
-    <GridLoadScreen client:only="react" priors={priors} />
+    <GridLoadScreen
+      client:only="react"
+      priors={priors}
+      gridBaseline={baseline}
+      backup={backup}
+      promisedJobs={jobs}
+    />
+
+    {/* The grid the load lands on — the feed the site never rendered until #1642. A door rather
+        than a duplicate: the full cited service chain + denominators live on the economy page. */}
+    {baseline && (
+      <p class="load-grid-backdrop">
+        The grid it lands on is <strong>{baseline.utilityLabel}</strong>'s —
+        {" "}{baseline.utilityRetailGwh.toLocaleString("en-US")} GWh/yr of retail sales, the
+        denominator every share on this page divides by.
+        <a href={withSite("/economy/grid")}>See the grid backdrop →</a>
+      </p>
+    )}
 
     <aside class="load-water-bridge">
       <h2>The same load is a water draw</h2>
@@ -89,14 +127,26 @@ const redaction: TeardownRedaction = {
         <table>
           <thead><tr><th>Step</th><th>Figure</th><th>Register</th></tr></thead>
           <tbody>
-            <tr><td>Backup generation (114 gensets)</td><td>313 MW</td><td><code>[verified: draft]</code></td></tr>
+            {backup && (
+              <tr>
+                <td>Backup generation ({backup.nEngines} gensets)</td>
+                <td>{backup.backupMw} MW</td>
+                <td><code>[verified: draft]</code></td>
+              </tr>
+            )}
             <tr><td>IT load (N+1 backup ≈ IT)</td><td>~250–300 MW</td><td><code>[inference]</code></td></tr>
             <tr><td>Facility draw (IT × PUE)</td><td>~{Math.round(draw.low)}–{Math.round(draw.high)} MW</td><td><code>[inference]</code></td></tr>
           </tbody>
         </table>
+        {/* Feed-sourced (#1642): the share and its denominator both come from the `grid` feed, so
+            this fallback can never drift from the island or from the reference data. */}
         <p>
-          ~2,740 GWh/yr — about <strong>5.6%</strong> of AEP Ohio's entire retail electricity,
-          ~260k homes, for ~50 jobs. Load, not jobs. Enable JavaScript to collapse the band by disclosure.
+          ~{Math.round(gwh).toLocaleString("en-US")} GWh/yr
+          {pctOfUtility !== null && baseline && (
+            <Fragment> — about <strong>{pctOfUtility.toFixed(1)}%</strong> of {baseline.utilityLabel}'s
+            entire retail electricity ({baseline.utilityRetailGwh.toLocaleString("en-US")} GWh)</Fragment>
+          )}{jobs !== null && <Fragment>, for ~{jobs} jobs</Fragment>}. Load, not jobs.
+          Enable JavaScript to collapse the band by disclosure.
         </p>
       </article>
     </noscript>
@@ -118,5 +168,15 @@ const redaction: TeardownRedaction = {
   }
   .load-water-bridge p {
     margin: 0;
+  }
+  /* The grid-backdrop line: a quiet caption under the simulator naming the denominator's source. */
+  .load-grid-backdrop {
+    margin: 0.75rem 0 0;
+    font-size: 0.9rem;
+    color: var(--ink-2, #55524a);
+  }
+  .load-grid-backdrop a {
+    margin-left: 0.4rem;
+    white-space: nowrap;
   }
 </style>

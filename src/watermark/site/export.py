@@ -59,6 +59,7 @@ from watermark.economics.energy import (
     load_demand_pressure,
 )
 from watermark.gleif import load_inventory as load_lei_inventory
+from watermark.grid.utility import load_grid_profile
 from watermark.hydrology.hydrograph_routing import build_routed_hydrograph
 from watermark.hydrology.model import ScenarioResult
 from watermark.hypotheses import HYPOTHESES, Hypothesis, HypothesisAssessment, load_assessments
@@ -141,6 +142,7 @@ from watermark.site.readiness import (
     DOCUMENTS_FEED,
     ECONOMICS_BASELINE_FEED,
     FACILITY_FEED,
+    GRID_FEED,
     LEADS_FEED,
     PLACES_RECORD_FEED,
     RECORD_LIVE_FEED,
@@ -709,6 +711,10 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
     econ = load_econ_baseline(settings)
     econ_energy = load_consumer_energy(settings)
     econ_demand = load_demand_pressure(settings)
+    # The grid backdrop (#1642, GP-E E1): whose utility serves this site, within which balancing
+    # authority, and how big each is. A backdrop-floor read — present for any site that has run
+    # `watermark grid`, with `load_share=None` where no campus is disclosed.
+    grid = load_grid_profile(settings)
     # Household energy burden (#1110): a fully derived metric from the committed baseline's
     # Census median household income + the committed EIA prices — no live pull. Absent when a
     # site hasn't onboarded income yet OR its consumer-energy dataset lacks a residential
@@ -802,6 +808,21 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
                 if econ_energy and econ_energy.prices
                 else None
             ),
+        ),
+        # The grid backdrop (#1642, GP-E E1): the serving utility / holding company / balancing
+        # authority / RTO / retail regulator the site's power actually comes through, the EIA-861
+        # utility + EIA-930 BA annual profiles, and — where a campus is disclosed — its load as a
+        # share of each. Until now this was the richest per-site grid artifact and it reached only
+        # a CLI reference file, never the bundle, which is why the presentation tier hardcoded
+        # Lima's AEP-Ohio denominators. A **backdrop floor** feed: it describes the place, not the
+        # campus, so a facility-less peer carries it with ``load_share`` null. The
+        # ``has_real_denominators`` guard applies the #1364 present-but-empty rule — a stale YAML
+        # with zeroed utility/BA denominators is dropped, not shipped as a ``count == 1`` shell
+        # that floats the backdrop domain to ``live`` on a profile establishing nothing.
+        (
+            GRID_FEED,
+            None,
+            lambda: grid if grid is not None and grid.has_real_denominators else None,
         ),
         # The facility demand→consumer-price-pressure sensitivity (#1105): households-equivalent,
         # demand share, and the STYLIZED price-pressure band. Facility-gated — absent (feed skipped)

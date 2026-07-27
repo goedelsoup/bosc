@@ -11,11 +11,23 @@
  * (`data/reference/datacenter-industry/priors.yaml`), "industry reference, NOT this
  * campus." GovCloud is a what-if profile, not a defense finding. The output is a band,
  * not a verdict; every band carries the record whose disclosure would collapse it.
+ *
+ * Per-site (#1642, GP-E E4). Every constant below is **Allen County's CRA**: the $500M
+ * good-faith capex, Res #548-25's 75%/15-yr terms, ~63 effective commercial mills, the 7.25%
+ * Allen County sales-and-use rate, the ~50 non-binding jobs. Those are one county's instrument,
+ * not a model of an abatement — so the site-facing builders (`ledgerProfiles`, `ledgerLines`,
+ * `netSubsidyOutcome`, `promisedJobs`) take the active site and answer **null** for any other,
+ * exactly as `buildEndUse` does for the committee-record taxonomy (#1633). The report then locks
+ * and asks for that site's agreement instead of pricing it off Allen County's mills. The pure
+ * math (`abatement`, `salesTaxExemption`, the models) stays site-agnostic — it is a function of
+ * its arguments.
  */
 import { CRA_PROFILES } from "./craProfiles";
+import { LIMA_SLUG } from "./routes";
 import { type Model, type Prior, type UncertainOutcome, outcomeBand } from "./uncertainty";
 
 // --- the deployed abatement constants (pinned to moneyFlow by the test) -------
+// ALL Allen County / Res #548-25. Reached only through the site-gated builders below (#1642 E4).
 const CAPEX = 500_000_000; // CRA §2 good-faith estimate (not a cap) [verified]
 const ASSESS = 0.35; // Ohio real-property assessment ratio [verified]
 const MILLS = 0.063; // ~63 effective commercial mills [assumption — exact local rate not in corpus]
@@ -121,7 +133,23 @@ export interface LedgerProfile {
 
 const REFRESH_CENTRAL = 1.5;
 
-export function ledgerProfiles(): LedgerProfile[] {
+/**
+ * The site's non-binding promised job count, or null where no such commitment is on the record
+ * (#1642, E4). Lima's is the CRA's ~50 ("actuals may differ significantly") — the denominator of
+ * the load-not-jobs and abatement-per-job ratios, so it must never be assumed for another site.
+ */
+export function promisedJobs(site: string): number | null {
+  return site === LIMA_SLUG ? 50 : null;
+}
+
+/**
+ * The four CRA what-if profiles, priced — or null for a site with no such agreement on the record.
+ *
+ * The caller passes the active site; a non-Lima site locks rather than pricing its build off Allen
+ * County's mills and Res #548-25's terms.
+ */
+export function ledgerProfiles(site: string): LedgerProfile[] | null {
+  if (site !== LIMA_SLUG) return null;
   return CRA_PROFILES.map((p) => {
     const ab = abatement(p.buildingShare);
     const ex = salesTaxExemption(p.buildingShare, REFRESH_CENTRAL);
@@ -137,8 +165,10 @@ export function ledgerProfiles(): LedgerProfile[] {
 }
 
 // --- the SSR ledger lines (bands; match the essay's "ledger in a band") --------
-function profileBand(pick: (p: LedgerProfile) => number): { low: number; high: number; central: number } {
-  const profiles = ledgerProfiles();
+function profileBand(
+  profiles: LedgerProfile[],
+  pick: (p: LedgerProfile) => number,
+): { low: number; high: number; central: number } {
   const vals = profiles.map(pick);
   const stated = profiles.find((p) => p.key === "stated");
   return { low: Math.min(...vals), high: Math.max(...vals), central: stated ? pick(stated) : vals[0] };
@@ -152,34 +182,37 @@ export interface LedgerLine {
   note: string;
 }
 
-/** The fifteen-year ledger, every line a band over the four profiles (the SSR table). */
-export function ledgerLines(): LedgerLine[] {
+/** The fifteen-year ledger, every line a band over the four profiles (the SSR table) — or null
+ *  for a site with no CRA on the record (#1642, E4). */
+export function ledgerLines(site: string): LedgerLine[] | null {
+  const profiles = ledgerProfiles(site);
+  if (profiles === null) return null;
   return [
     {
       key: "abatement",
       label: "Property-tax abatement",
-      band: profileBand((p) => p.abatementUsd),
+      band: profileBand(profiles, (p) => p.abatementUsd),
       register: "inference",
       note: "75%/15-yr on the real-property share of the $500M",
     },
     {
       key: "exemption",
       label: "Sales-tax exemption (if taken)",
-      band: profileBand((p) => p.exemptionUsd),
+      band: profileBand(profiles, (p) => p.exemptionUsd),
       register: "open",
       note: "DCTE on equipment + materials; application [open]",
     },
     {
       key: "kept",
       label: "Un-abated property tax (25%, public keeps)",
-      band: profileBand((p) => p.keptUsd),
+      band: profileBand(profiles, (p) => p.keptUsd),
       register: "inference",
       note: "the slice the abatement doesn't touch",
     },
     {
       key: "net",
       label: "Net public subsidy (gives)",
-      band: profileBand((p) => p.netSubsidyUsd),
+      band: profileBand(profiles, (p) => p.netSubsidyUsd),
       register: "inference",
       note: "abatement + exemption, before water / grid / school offset",
     },
@@ -187,6 +220,8 @@ export function ledgerLines(): LedgerLine[] {
 }
 
 // --- the headline band contract (for the public balance sheet, #273) ----------
+/** The 15-year net-subsidy band. Site-agnostic by construction (it is a function of the priors),
+ *  but the priors ARE Allen County's instrument — callers reach it via `siteNetSubsidyOutcome`. */
 export function netSubsidyOutcome(priors: Prior[] = ECON_PRIORS, dcteTaken = true): UncertainOutcome {
   const band = outcomeBand(priors, netSubsidyModel(dcteTaken));
   return {
@@ -203,5 +238,19 @@ export function netSubsidyOutcome(priors: Prior[] = ECON_PRIORS, dcteTaken = tru
   };
 }
 
-/** County employment baseline — the ~50 jobs against it (BLS QCEW / Census ACS). */
-export const COUNTY_JOBS_2023 = 49_577;
+/**
+ * The site's net-subsidy band, or null where no CRA is on the record (#1642, E4) — the gated
+ * entry point the balance sheet and the ledger report use.
+ */
+export function siteNetSubsidyOutcome(
+  site: string,
+  priors: Prior[] = ECON_PRIORS,
+  dcteTaken = true,
+): UncertainOutcome | null {
+  return site === LIMA_SLUG ? netSubsidyOutcome(priors, dcteTaken) : null;
+}
+
+// The county employment baseline the ~50 jobs is read against used to live here as
+// `COUNTY_JOBS_2023 = 49_577` — a hand-copied, one-vintage-stale duplicate of a figure the
+// `economics-baseline` feed already carries as a cited `total_employment` (QCEW, with its own
+// `asof`). It is read from the feed now (#1642, E2): one source, self-dating, per-site.

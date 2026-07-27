@@ -32,18 +32,36 @@ export default function BalanceSheet({
   gridItLoad?: GridItLoad | null;
 }): JSX.Element {
   const sheet = buildBalanceSheet(toxicsEffluentCfs, toxicsNaturalCfs, site, gridItLoad);
+  // Null for a site with no abatement instrument on the record (#1642 E4) — the headline then
+  // states the withheld-record count rather than another county's dollar exposure.
   const e = sheet.econExposure;
 
   return (
     <div className="unc unc-balance">
       <div className="unc-band-head">
         <div className="unc-band-figure">
-          {fmtUsdM(e.low)} – {fmtUsdM(e.high)}
+          {e ? (
+            <>
+              {fmtUsdM(e.low)} – {fmtUsdM(e.high)}
+            </>
+          ) : (
+            <>{sheet.resolvingRecords.length} withheld records</>
+          )}
         </div>
         <div className="unc-band-sub">
-          the public's monetized 15-year exposure rides on{" "}
-          <strong>{sheet.resolvingRecords.length} withheld records</strong> — produce them and the band
-          collapses to a number. <em>This is a map of what the record doesn't say, not a verdict.</em>
+          {e ? (
+            <>
+              the public's monetized 15-year exposure rides on{" "}
+              <strong>{sheet.resolvingRecords.length} withheld records</strong> — produce them and the band
+              collapses to a number.{" "}
+            </>
+          ) : (
+            <>
+              no abatement instrument is on this site's record, so there is no dollar exposure to price — what
+              stands are the bands below.{" "}
+            </>
+          )}
+          <em>This is a map of what the record doesn't say, not a verdict.</em>
         </div>
       </div>
 
@@ -89,11 +107,11 @@ export default function BalanceSheet({
         ))}
       </ul>
       <p className="unc-note">
-        Each band above is wide for one reason: a figure the county has not produced. The economic give is the
-        only line in dollars; the load and the river are bands the record never measures. Disclosure — not a
-        verdict from this page — is what narrows any of them. See the{" "}
-        <a href={siteHref(site, "/site/legal/corpus-completeness-audit")}>corpus-completeness audit</a> for
-        what's missing, and why.
+        Each band above is wide for one reason: a figure the county has not produced.
+        {e ? " The economic give is the only line in dollars; the" : " The"} load and the river are bands the
+        record never measures. Disclosure — not a verdict from this page — is what narrows any of them. See
+        the <a href={siteHref(site, "/site/legal/corpus-completeness-audit")}>corpus-completeness audit</a>{" "}
+        for what's missing, and why.
       </p>
     </div>
   );

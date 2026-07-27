@@ -1,15 +1,15 @@
 import { describe, expect, it } from "vitest";
+import { buildGridBaseline } from "./gridBackdrop";
 import {
-  AEP_OHIO_RETAIL_GWH,
-  BACKUP_MW,
   GRID_PRIORS,
   annualGwh,
+  backupRecord,
   equivalentHomes,
   facilityDrawModel,
   facilityDrawOutcome,
   gridPriorsFromFacility,
   mwPerJob,
-  pctOfAepRetail,
+  pctOfUtilityRetail,
 } from "./gridLoad";
 import { central, disclose, outcomeBand, priorCentral } from "./uncertainty";
 
@@ -22,17 +22,65 @@ describe("gridLoad — the inference chain reproduces the essay", () => {
     expect(o.register).toBe("assumption"); // a bounded inference chain (prose [inference])
   });
 
-  it("annual energy ~2,740 GWh ⇒ ~5.6% of AEP Ohio retail ⇒ ~260k homes", () => {
-    const gwh = annualGwh(348);
-    expect(Math.round(gwh / 10) * 10).toBe(2740);
-    expect(Number(pctOfAepRetail(gwh).toFixed(1))).toBe(5.6);
-    expect(Math.round(equivalentHomes(gwh) / 1000)).toBe(261); // ~260k
-    expect(AEP_OHIO_RETAIL_GWH).toBe(48_653);
+  it("load-not-jobs: ~5–6 MW of IT load per promised job", () => {
+    expect(mwPerJob(275, 50)).toBeCloseTo(5.5);
+    expect(backupRecord("lima")?.backupMw).toBe(313);
+  });
+});
+
+// The E2 drift guard (#1642). The essay's headline share used to rest on
+// `AEP_OHIO_RETAIL_GWH = 48_653` — a literal hand-copied from the EIA pull the Python tier
+// already did, with nothing tying the two together. Now the denominator comes from the committed
+// `grid` feed, and this test is the tie: if the reference data moves, the assertion moves with it
+// (it derives the expectation from the feed) but the *essay's* published figure is pinned, so a
+// drift big enough to change what the site says fails here instead of shipping silently.
+describe("gridLoad — the load baseline is feed-sourced, not a second copy (#1642)", () => {
+  const baseline = buildGridBaseline("lima");
+
+  it("Lima's grid feed supplies the utility denominator", () => {
+    expect(baseline).not.toBeNull();
+    expect(baseline?.utilityLabel).toMatch(/AEP Ohio/);
+    expect(baseline?.utilityRetailGwh).toBeGreaterThan(0);
+    expect(baseline?.utilityCite).toMatch(/EIA/i);
   });
 
-  it("load-not-jobs: ~5–6 MW of IT load per promised job", () => {
-    expect(mwPerJob(275)).toBeCloseTo(5.5);
-    expect(BACKUP_MW).toBe(313);
+  it("the essay's ~5.6%-of-retail headline reproduces off the feed", () => {
+    if (baseline === null) throw new Error("Lima's bundle must carry the grid feed");
+    const gwh = annualGwh(348);
+    expect(Math.round(gwh / 10) * 10).toBe(2740);
+    // The published figure, computed from the reference data rather than a duplicate of it.
+    expect(Number(pctOfUtilityRetail(gwh, baseline.utilityRetailGwh).toFixed(1))).toBe(5.6);
+  });
+
+  it("the equivalent-homes readout uses the demand-pressure feed's own household figure", () => {
+    if (baseline?.householdKwhYr == null) throw new Error("Lima must carry a household figure");
+    // ~10,500 kWh/household/yr — the same cited value the demand-pressure feed divides by, so the
+    // report and that feed can never disagree about how big a household is.
+    expect(baseline.householdKwhYr).toBeGreaterThan(5_000);
+    expect(Math.round(equivalentHomes(annualGwh(348), baseline.householdKwhYr) / 1000)).toBe(261);
+  });
+
+  it("a site with no grid feed yields no baseline — it never inherits Lima's utility", () => {
+    // Coshocton is a registered stub with no committed floor data at all.
+    expect(buildGridBaseline("coshocton")).toBeNull();
+  });
+});
+
+describe("gridLoad — the backup record answers only for the site whose permit it is (#1642)", () => {
+  it("Lima carries the cited 313 MW / 114-genset record", () => {
+    const r = backupRecord("lima");
+    expect(r).not.toBeNull();
+    expect(r?.backupMw).toBe(313);
+    expect(r?.nEngines).toBe(114);
+    // The per-engine rating survives on the draft only — the redaction the report is built on.
+    expect(r?.perEngineEkwDraft).toBe(2750);
+    expect(r?.finalPermit).toBe("4132514");
+    expect(r?.draftPermit).toBe("3987141");
+  });
+
+  it("another site gets null, not Lima's gensets", () => {
+    expect(backupRecord("fort-wayne")).toBeNull();
+    expect(backupRecord("urbana")).toBeNull();
   });
 });
 

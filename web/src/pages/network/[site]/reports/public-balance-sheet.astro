@@ -35,6 +35,8 @@ const sheet = buildBalanceSheet(effluentCfs, dc.naturalCfs, Astro.locals.site, g
 
 const fmt = (n: number, unit: BalanceUnit): string =>
   unit === "usd" ? fmtUsdM(n) : unit === "mw" ? `${Math.round(n)} MW` : `${n.toFixed(0)}%`;
+// Null for a site with no abatement instrument on the record (#1642, E4) — the lead then states
+// the withheld-record count instead of another county's dollar exposure.
 const e = sheet.econExposure;
 ---
 
@@ -47,10 +49,14 @@ const e = sheet.econExposure;
   <Fragment slot="lead">
       <p class="section-lead">
         Each report ends <code>[open]</code> for the same reason — a figure the record
-        withholds. Set them side by side and the pattern becomes a quantity: the public's
-        monetized 15-year exposure runs
-        <strong>{fmtUsdM(e.low)} – {fmtUsdM(e.high)}</strong>, and it rides on
-        <strong>{sheet.resolvingRecords.length} records the county has not produced</strong>.
+        withholds. Set them side by side and the pattern becomes a quantity:
+        {e ? (
+          <Fragment> the public's monetized 15-year exposure runs
+          <strong> {fmtUsdM(e.low)} – {fmtUsdM(e.high)}</strong>, and it rides on</Fragment>
+        ) : (
+          <Fragment> the bands below rest on</Fragment>
+        )}
+        <strong> {sheet.resolvingRecords.length} records the county has not produced</strong>.
         This page composes every band the narratives compute — it adds no new data, and it
         returns no verdict. It is a map of what isn't known, and what would close it.
       </p>

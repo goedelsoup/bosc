@@ -8,6 +8,10 @@ import type { FeatureCollection, Geometry } from "geojson";
 
 export type Confidence = "high" | "medium" | "low";
 
+/** Where a value came from (`bosc.provenance.SourceKind`) — the closed vocabulary the evidence
+ *  discipline keys on: `document`/`connector` are `[verified]`, the rest are asserted. */
+export type SourceKind = "document" | "connector" | "reference" | "assumption" | "derived";
+
 /** Shared provenance (`bosc.site.feeds.Citation`). */
 export interface Citation {
   source?: string | null;
@@ -575,6 +579,107 @@ export interface ConsumerEnergyCosts {
   area_name: string;
   prices: ConsumerEnergyPrice[];
   source?: string;
+  note?: string;
+}
+
+/**
+ * The facility demand → consumer-price-pressure sensitivity (`economics-demand-pressure` object
+ * feed; `bosc.economics.model.FacilityDemandPressure`, #1105). Facility-gated — absent for a site
+ * with no documented campus.
+ *
+ * Read the registers, not just the numbers (#1642, E2): `demand_share_pct` and
+ * `households_equivalent` are the EIA-cited headline; the `price_pressure_pct_*` band is a
+ * deliberately STYLIZED screening sensitivity off a stated transmission coefficient — never a
+ * forecast of anyone's bill, and the campus buys at wholesale, not the residential price shown.
+ * `caveats` carries that discipline as data; render it, don't drop it.
+ */
+export interface FacilityDemandPressure {
+  area: string;
+  facility_draw_mw: ProvenancedValue; // derived from PowerBasis.facility_draw (#87); carries low/high
+  load_factor: ProvenancedValue; // assumption
+  annual_consumption_gwh: ProvenancedValue; // derived
+  state_retail_sales_gwh: ProvenancedValue; // connector (EIA)
+  demand_share_pct: ProvenancedValue; // derived — the defensible headline
+  avg_household_kwh_yr: ProvenancedValue; // assumption
+  households_equivalent: ProvenancedValue; // derived — the defensible headline
+  residential_price: ProvenancedValue; // connector (EIA); the consumer reference, NOT the campus bill
+  transmission_coefficient: ProvenancedValue; // assumption (banded)
+  price_pressure_pct_low: ProvenancedValue; // derived — STYLIZED
+  price_pressure_pct_high: ProvenancedValue; // derived — STYLIZED
+  method?: string;
+  caveats?: string[];
+}
+
+// --- grid: the per-site grid backdrop (object feed; bosc.grid.model, #94 / GP-E #1642) ---
+
+/**
+ * A non-numeric identification carrying provenance (`bosc.grid.model.CitedFact`) — the string
+ * analogue of {@link ProvenancedValue}. A serving utility is *cited*, never asserted, so
+ * `citation` is always populated; `source` maps onto the same evidence discipline
+ * (`document`/`connector` → verified, `reference`/`assumption` → asserted).
+ */
+export interface CitedFact {
+  value: string;
+  source: SourceKind;
+  citation: string;
+  confidence?: Confidence;
+}
+
+/** EIA-861 annual profile for the serving utility (`bosc.grid.model.UtilityProfile`). */
+export interface UtilityProfile {
+  utility: string;
+  ownership?: string; // EIA-861 ownership ("Investor Owned" / "Municipal" / "Cooperative"); "" if unread
+  eia_source?: string;
+  retail_sales_gwh: ProvenancedValue; // THE utility denominator — the figure `gridLoad.ts` used to hardcode
+  customers?: ProvenancedValue | null;
+  avg_price_cents_kwh?: ProvenancedValue | null;
+}
+
+/** EIA-930 annual profile for the balancing authority / RTO (`bosc.grid.model.BalancingAuthorityProfile`). */
+export interface BalancingAuthorityProfile {
+  ba: string;
+  eia_source?: string;
+  annual_load_gwh: ProvenancedValue;
+}
+
+/** The campus load as a share of utility / BA / state load (`bosc.grid.model.GridLoadShare`). */
+export interface GridLoadShare {
+  campus_load_mw: ProvenancedValue; // total facility draw, central (#87)
+  load_factor: ProvenancedValue; // assumption
+  annual_consumption_gwh: ProvenancedValue; // derived
+  utility_retail_gwh: ProvenancedValue;
+  ba_load_gwh: ProvenancedValue;
+  state_retail_gwh: ProvenancedValue;
+  share_of_utility_pct: ProvenancedValue; // derived
+  share_of_ba_pct: ProvenancedValue; // derived
+  share_of_state_pct: ProvenancedValue; // derived — the most robust (connector-sourced denominator)
+}
+
+/** The cited electric-service chain (`bosc.grid.model.ServingUtility`): who delivers retail power,
+ *  within which balancing authority, under which regulator. */
+export interface ServingUtility {
+  utility: CitedFact;
+  holding_company: CitedFact;
+  balancing_authority: CitedFact;
+  rto: CitedFact;
+  retail_regulator: CitedFact;
+  note?: string;
+}
+
+/**
+ * The per-site **grid backdrop** (`grid` object feed; `bosc.grid.model.GridProfile`, #1642 E1).
+ *
+ * A backdrop-floor read: it describes the *place*, not any campus proposed on it — so
+ * `load_share` is **null** for a site with no disclosed facility rather than a fabricated share.
+ * This feed is why the presentation tier no longer needs Lima's denominators as literals: read
+ * `utility_profile.retail_sales_gwh` / `ba_profile.annual_load_gwh` /
+ * `load_share.state_retail_gwh` from here (see `gridBackdrop.ts`).
+ */
+export interface GridProfile {
+  serving_utility: ServingUtility;
+  utility_profile: UtilityProfile;
+  ba_profile: BalancingAuthorityProfile;
+  load_share?: GridLoadShare | null;
   note?: string;
 }
 

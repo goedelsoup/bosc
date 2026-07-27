@@ -12,21 +12,79 @@
  * `[open]`; "behind-the-meter" is a proponent claim `[open]` (the campus is a PUCO-regulated
  * retail customer of AEP Ohio); PJM dollar figures are `[reference]` / screening. The
  * resolving record is the operating-load disclosure + the un-redacted per-engine rating.
+ *
+ * Per-site (#1642, GP-E E2/E4). This module holds the *model*, never a site's numbers:
+ *  - the load denominators arrive as a {@link GridBaseline}, read from the `grid` feed by
+ *    `gridBackdrop.buildGridBaseline` — they used to be Lima's EIA figures hand-copied in as
+ *    literals (`AEP_OHIO_RETAIL_GWH = 48_653`) and tagged as if connector-sourced;
+ *  - the 313 MW / 114-genset backup record is reached through {@link backupRecord}, which
+ *    answers only for the site whose permit it is.
+ * So a second selectable site can no longer render Lima's grid as its own.
  */
+import { LIMA_SLUG } from "./routes";
 import { type Prior, type UncertainOutcome, outcomeBand, sample, summarize } from "./uncertainty";
 
-// --- the cited backup + its redaction -----------------------------------------
-export const BACKUP_MW = 313; // 114 emergency gensets × ~2,750 ekW [verified: DRAFT 3987141]
-export const N_ENGINES = 114;
-export const PER_ENGINE_EKW_DRAFT = 2750; // survives only on the draft public notice
+// --- the cited backup + its redaction (Lima's air-permit record) --------------
+// These are the *Lima* record's figures — permit 4132514's 114 emergency gensets and the
+// per-engine rating that survives only on draft 3987141. They are not a general property of a
+// data-center site, so they are reached through `backupRecord(site)` (#1642, E4): another site
+// gets null and its caller asks for that site's permit rather than inheriting Lima's gensets.
+const LIMA_BACKUP: BackupRecord = {
+  backupMw: 313, // 114 emergency gensets × ~2,750 ekW [verified: DRAFT 3987141]
+  nEngines: 114,
+  perEngineEkwDraft: 2750, // survives only on the draft public notice
+  finalPermit: "4132514",
+  draftPermit: "3987141",
+};
 
-// --- the load-vs-baseline constants (cited) -----------------------------------
+/** The cited backup-generation record behind a site's headline MW figure. */
+export interface BackupRecord {
+  backupMw: number;
+  nEngines: number;
+  /** The per-engine rating — redacted in the issued permit, surviving on the draft. */
+  perEngineEkwDraft: number;
+  finalPermit: string;
+  draftPermit: string;
+}
+
+/**
+ * The backup-generation record for a site, or null where none is on the record (#1642, E4).
+ *
+ * Mirrors `buildEndUse(site)` (#1633): the 313 MW / 114-genset / redacted-per-engine chain is
+ * Lima's air permit, so a different site reads null and its page asks for the source instead of
+ * republishing Lima's figures under another county's name.
+ */
+export function backupRecord(site: string): BackupRecord | null {
+  return site === LIMA_SLUG ? LIMA_BACKUP : null;
+}
+
+// --- the load-vs-baseline model ----------------------------------------------
 const LOAD_FACTOR = 0.9; // annual average ÷ peak (hyperscale runs near-flat)
 const HOURS_YR = 8760;
-export const AEP_OHIO_RETAIL_GWH = 48_653; // [connector: EIA-861, 2024]
-export const OHIO_RETAIL_GWH = 161_934; // [connector: EIA]
-const HOME_MWH_YR = 10.5; // avg Ohio home annual consumption (~10.5 MWh)
-export const PROMISED_JOBS = 50; // CRA ~50 (non-binding)
+
+/**
+ * The per-site denominators the "share of retail sales" / "equivalent homes" readouts divide by,
+ * read from the `grid` + `economics-demand-pressure` feeds by `gridBackdrop.buildGridBaseline`
+ * (#1642, E2).
+ *
+ * These used to live here as literals — `AEP_OHIO_RETAIL_GWH = 48_653`, `OHIO_RETAIL_GWH`,
+ * `HOME_MWH_YR` — hand-copied from the EIA pulls the Python tier already did and tagged as if
+ * connector-sourced, a second uncontrolled copy that could drift silently against the reference
+ * data. They are now inputs, so there is exactly one source for each figure.
+ */
+export interface GridBaseline {
+  /** The serving utility, as the feed names it ("AEP Ohio (Ohio Power Company)"). */
+  utilityLabel: string;
+  /** The utility's total annual retail sales, GWh — the share denominator (EIA-861). */
+  utilityRetailGwh: number;
+  utilityCite: string;
+  /** Average household annual electricity use, kWh — the cited figure the demand-pressure feed
+   *  divides by. Null when that feed is absent, in which case the homes readout is withheld. */
+  householdKwhYr: number | null;
+  householdCite: string | null;
+  /** The state the household/price figures are for ("OH"), when known. */
+  stateArea: string | null;
+}
 
 // --- the inference chain, as priors -------------------------------------------
 export const GRID_PRIORS: Prior[] = [
@@ -87,17 +145,19 @@ export function facilityDrawModel(draw: Record<string, number>): number {
 export function annualGwh(facilityMw: number): number {
   return (facilityMw * LOAD_FACTOR * HOURS_YR) / 1000;
 }
-/** Share of AEP Ohio's entire retail electricity sales (%). */
-export function pctOfAepRetail(gwh: number): number {
-  return (gwh / AEP_OHIO_RETAIL_GWH) * 100;
+/** Share of the serving utility's entire annual retail electricity sales (%), against the
+ *  feed-sourced denominator (#1642 — was hardcoded to AEP Ohio's 48,653 GWh). */
+export function pctOfUtilityRetail(gwh: number, utilityRetailGwh: number): number {
+  return (gwh / utilityRetailGwh) * 100;
 }
-/** Annual consumption expressed as equivalent Ohio homes. */
-export function equivalentHomes(gwh: number): number {
-  return (gwh * 1000) / HOME_MWH_YR;
+/** Annual consumption expressed as equivalent households, at the feed's cited household use. */
+export function equivalentHomes(gwh: number, householdKwhYr: number): number {
+  return (gwh * 1_000_000) / householdKwhYr;
 }
-/** Electrical load per promised job (MW/job) — the load-not-jobs ratio. */
-export function mwPerJob(itMw: number): number {
-  return itMw / PROMISED_JOBS;
+/** Electrical load per promised job (MW/job) — the load-not-jobs ratio. The job count is the
+ *  site's own non-binding commitment (Lima's CRA ~50), passed in rather than assumed. */
+export function mwPerJob(itMw: number, jobs: number): number {
+  return itMw / jobs;
 }
 
 /** The facility-draw band (MW), `[inference]` — the inference chain IS the uncertainty.

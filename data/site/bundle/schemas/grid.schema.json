@@ -1,0 +1,329 @@
+{
+  "$defs": {
+    "BalancingAuthorityProfile": {
+      "additionalProperties": false,
+      "description": "EIA-930 annual profile for the balancing authority / RTO (PJM).",
+      "properties": {
+        "ba": {
+          "title": "Ba",
+          "type": "string"
+        },
+        "eia_source": {
+          "default": "EIA-930 hourly grid monitor, annual demand (transcribed; verify)",
+          "title": "Eia Source",
+          "type": "string"
+        },
+        "annual_load_gwh": {
+          "$ref": "#/$defs/ProvenancedValue"
+        }
+      },
+      "required": [
+        "ba",
+        "annual_load_gwh"
+      ],
+      "title": "BalancingAuthorityProfile",
+      "type": "object"
+    },
+    "CitedFact": {
+      "additionalProperties": false,
+      "description": "A non-numeric identification carrying provenance — the string analogue of\n:class:`ProvenancedValue`. ``source`` maps onto the same evidence discipline\n(``document``/``connector`` → verified; ``reference``/``assumption`` → asserted).",
+      "properties": {
+        "value": {
+          "title": "Value",
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "document",
+            "connector",
+            "reference",
+            "assumption",
+            "derived"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "citation": {
+          "title": "Citation",
+          "type": "string"
+        },
+        "confidence": {
+          "default": "medium",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "source",
+        "citation"
+      ],
+      "title": "CitedFact",
+      "type": "object"
+    },
+    "GridLoadShare": {
+      "additionalProperties": false,
+      "description": "The campus load expressed as a share of utility / BA / state load.\n\nSizes the campus annual electricity demand (from the first-class\n``facility_draw``, :mod:`watermark.facility.power`, issue #87) against three cited\ndenominators. The state share is the most robust (the EIA state figure is\nconnector-sourced); the utility and BA shares use transcribed EIA-861/930 figures\nflagged for verification, so their confidence is lower.",
+      "properties": {
+        "campus_load_mw": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "load_factor": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "annual_consumption_gwh": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "utility_retail_gwh": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "ba_load_gwh": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "state_retail_gwh": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "share_of_utility_pct": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "share_of_ba_pct": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "share_of_state_pct": {
+          "$ref": "#/$defs/ProvenancedValue"
+        }
+      },
+      "required": [
+        "campus_load_mw",
+        "load_factor",
+        "annual_consumption_gwh",
+        "utility_retail_gwh",
+        "ba_load_gwh",
+        "state_retail_gwh",
+        "share_of_utility_pct",
+        "share_of_ba_pct",
+        "share_of_state_pct"
+      ],
+      "title": "GridLoadShare",
+      "type": "object"
+    },
+    "ProvenancedValue": {
+      "additionalProperties": false,
+      "description": "A single numeric quantity tagged with its provenance.\n\nConstruct via the classmethods (:meth:`from_document`, :meth:`from_connector`,\n:meth:`assume`, :meth:`derived`) so the ``source`` tag is never forgotten.\n\nA **measured or derived estimate** may also carry a quantitative uncertainty range\n(#760): optional absolute ``low``/``high`` bounds around the central ``value``,\n*orthogonal* to the qualitative ``confidence`` enum. The convention: a document- or\nconnector-verbatim figure is a single value (no band); an estimate whose honest\nrepresentation is \"226 ± ~35 ac\" carries ``low``/``high`` so downstream consumers\n(the bundle, the frontend, the Monte-Carlo engine #271) see the spread as data, not\nprose buried in the citation. The estimate constructors (:meth:`derived`,\n:meth:`assume`, :meth:`from_reference`) take the range inline; :meth:`with_range`\nattaches one to any value (e.g. a document-anchored central with a derived band).",
+      "properties": {
+        "value": {
+          "title": "Value",
+          "type": "number"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "document",
+            "connector",
+            "reference",
+            "assumption",
+            "derived"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "citation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Citation"
+        },
+        "confidence": {
+          "default": "medium",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "asof": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Asof"
+        },
+        "low": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Low"
+        },
+        "high": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "High"
+        }
+      },
+      "required": [
+        "value",
+        "unit",
+        "source"
+      ],
+      "title": "ProvenancedValue",
+      "type": "object"
+    },
+    "ServingUtility": {
+      "additionalProperties": false,
+      "description": "The cited identification of the campus's electric-service chain.\n\nBottom of the regulatory stack: who delivers retail power (the utility, PUCO-\nregulated), within which balancing authority / RTO (PJM, FERC-jurisdictional), and\nits holding company. Each field is a :class:`CitedFact` — the working identification\nis corpus- or authoritative-source-grounded, with the EIA-861 service territory /\nPUCO map named as the formal confirmation source.",
+      "properties": {
+        "utility": {
+          "$ref": "#/$defs/CitedFact"
+        },
+        "holding_company": {
+          "$ref": "#/$defs/CitedFact"
+        },
+        "balancing_authority": {
+          "$ref": "#/$defs/CitedFact"
+        },
+        "rto": {
+          "$ref": "#/$defs/CitedFact"
+        },
+        "retail_regulator": {
+          "$ref": "#/$defs/CitedFact"
+        },
+        "note": {
+          "default": "",
+          "title": "Note",
+          "type": "string"
+        }
+      },
+      "required": [
+        "utility",
+        "holding_company",
+        "balancing_authority",
+        "rto",
+        "retail_regulator"
+      ],
+      "title": "ServingUtility",
+      "type": "object"
+    },
+    "UtilityProfile": {
+      "additionalProperties": false,
+      "description": "EIA-861 annual profile for the serving utility (retail sales / customers / price).\n\nTranscribed published EIA-861 figures (``reference``), not a facility disclosure;\nthe per-utility EIA-861 entity file is the authoritative source (see the README) —\nfigures here are flagged for verification with a keyed/bulk pull.",
+      "properties": {
+        "utility": {
+          "title": "Utility",
+          "type": "string"
+        },
+        "ownership": {
+          "default": "",
+          "title": "Ownership",
+          "type": "string"
+        },
+        "eia_source": {
+          "default": "EIA-861 utility annual electric sales (transcribed; verify)",
+          "title": "Eia Source",
+          "type": "string"
+        },
+        "retail_sales_gwh": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "customers": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "avg_price_cents_kwh": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProvenancedValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "utility",
+        "retail_sales_gwh"
+      ],
+      "title": "UtilityProfile",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "The assembled grid foundation layer (issue #94): identity + profiles + load share.\n\n``load_share`` is ``None`` for a site with no documented data-center facility\n(``SiteProfile.facility is None``): the grid backdrop (serving utility + EIA utility/BA\nprofiles) is real per-site data, but there is no campus load to express as a share of it\nuntil that site's facility is disclosed (the data-center dimension).",
+  "properties": {
+    "serving_utility": {
+      "$ref": "#/$defs/ServingUtility"
+    },
+    "utility_profile": {
+      "$ref": "#/$defs/UtilityProfile"
+    },
+    "ba_profile": {
+      "$ref": "#/$defs/BalancingAuthorityProfile"
+    },
+    "load_share": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/GridLoadShare"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "note": {
+      "default": "",
+      "title": "Note",
+      "type": "string"
+    }
+  },
+  "required": [
+    "serving_utility",
+    "utility_profile",
+    "ba_profile"
+  ],
+  "title": "GridProfile",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

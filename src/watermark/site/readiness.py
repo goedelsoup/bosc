@@ -17,7 +17,7 @@ The domain model (the two problems #1220 fixes — see the epic):
 ============  ================================================  =========================
 domain        live when                                         signal
 ============  ================================================  =========================
-**backdrop**  every always-pull floor feed present              floor feeds (FIPS/state)
+**backdrop**  every always-pull floor feed present              floor feeds (FIPS/state/grid)
 **facility**  ``SiteProfile.facility`` instrument-grounded      profile facility grounding
 **places**    committed campus/footprint geometry exported      ``geo/campus`` feed
 **record**    extracted corpus over threshold                   records+documents+entities
@@ -50,21 +50,35 @@ Tier = Literal["stub", "backdrop", "case", "reference"]
 DOMAINS: tuple[Domain, ...] = get_args(Domain)
 
 # --- Activation signals (named constants so #1223 can mirror them exactly) -------------------
-# The always-pull floor: the connectors keyed only by coordinates / county FIPS / state, so
-# they carry zero curation and no fabrication risk. In the bundle these land as three feeds;
+# The always-pull floor: the connectors keyed only by coordinates / county FIPS / state / the
+# site's own EIA-861 utility number, so they carry zero curation and no fabrication risk.
 # NASA-POWER climatology / Atlas-14 / WBD / SSURGO feed hydrology but emit no distinct floor
-# feed of their own (``hydrology-scenarios`` is facility-gated), so RSEI stands as the third
-# FIPS-keyed floor signal alongside the two economic ones.
+# feed of their own (``hydrology-scenarios`` is facility-gated), so RSEI stands as a FIPS-keyed
+# floor signal alongside the two economic ones.
+#
+# ``grid`` joined the floor in #1642 (GP-E E1). The grid backdrop — *whose* utility serves the
+# site, within which balancing authority, and how big each is — is a **property of the place**,
+# not of any campus proposed on it: ``derive_grid_profile`` emits it with ``load_share=None`` for
+# a facility-less site precisely so a thin peer still gets the real electric-service chain. It is
+# the same always-pull shape as its neighbours here (state/utility-keyed connectors, no curation),
+# and until now it was written only to a CLI reference file and never reached the site at all,
+# which is why the frontend hardcoded Lima's denominators.
 #
 # These are object feeds, which serialize with ``count == 1`` when present — so ``_count(...) > 0``
 # tests *presence*, and presence must mean *content*. The exporter drops a genuinely-empty
 # inventory (``watermark.site.export``: an RSEI feed with zero facilities, an economic baseline
-# with no sectors) so it is absent, not a ``count == 1`` shell that floats backdrop to ``live`` on
-# an empty inventory (#1364).
+# with no sectors, a grid profile with zeroed utility/BA denominators) so it is absent, not a
+# ``count == 1`` shell that floats backdrop to ``live`` on an empty inventory (#1364).
 ECONOMICS_BASELINE_FEED = "economics-baseline"
 CONSUMER_ENERGY_FEED = "consumer-energy"
 RSEI_FEED = "rsei"
-BACKDROP_FLOOR_FEEDS: tuple[str, ...] = (ECONOMICS_BASELINE_FEED, CONSUMER_ENERGY_FEED, RSEI_FEED)
+GRID_FEED = "grid"
+BACKDROP_FLOOR_FEEDS: tuple[str, ...] = (
+    ECONOMICS_BASELINE_FEED,
+    CONSUMER_ENERGY_FEED,
+    RSEI_FEED,
+    GRID_FEED,
+)
 
 # The facility demand→price-pressure feed, present only where a facility is disclosed (#1220:
 # "demand-pressure missing across 22 sites is not a gap — it's facility-gated"). Since #1630 this
