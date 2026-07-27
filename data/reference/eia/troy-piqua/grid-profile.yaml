@@ -30,8 +30,8 @@ serving_utility:
   balancing_authority:
     value: PJM Interconnection
     source: reference
-    citation: Dayton Power & Light's (AES Ohio) DAY transmission zone is within the
-      PJM RTO footprint
+    citation: PJM is the FERC-jurisdictional wholesale-market RTO for Dayton Power
+      & Light (AES Ohio)
     confidence: high
   rto:
     value: PJM Interconnection (RTO/ISO)
@@ -45,8 +45,8 @@ serving_utility:
     citation: Ohio retail electric service is PUCO-regulated (intrastate)
     confidence: high
   note: Serving utility is identified from the EIA-861 service-territory file; RTO=PJM
-    is authoritative. The retail service-territory boundary is formally confirmed
-    against the EIA-861 territory file / PUCO map (#94).
+    Interconnection is authoritative. The retail service-territory boundary is formally
+    confirmed against the EIA-861 territory file / PUCO map (#94).
 utility_profile:
   utility: Dayton Power & Light Co
   ownership: Investor Owned
@@ -96,11 +96,12 @@ ba_profile:
     high: null
 load_share:
   campus_load_mw:
-    value: 143.9
+    value: 147.9
     unit: MW
     source: derived
-    citation: 'PowerBasis.facility_draw central (#87): 113.75 MW IT x PUE 1.265 (band
-      mean of 1.1 efficient .. 1.43 cooling-dominated) — total facility draw'
+    citation: 'PowerBasis.facility_draw central (#87): 113.8 MW IT (central) x PUE
+      1.3 — total facility draw; band = 52.5-175 MW IT x PUE 1.1-1.5 (efficient ..
+      cooling-dominated)'
     confidence: medium
     asof: null
     low: null
@@ -116,10 +117,10 @@ load_share:
     low: null
     high: null
   annual_consumption_gwh:
-    value: 1134.5
+    value: 1166.0
     unit: GWh/yr
     source: derived
-    citation: 143.9 MW x 8760 h x 0.9 load factor
+    citation: 147.9 MW x 8760 h x 0.9 load factor
     confidence: medium
     asof: null
     low: null
@@ -153,28 +154,28 @@ load_share:
     low: null
     high: null
   share_of_utility_pct:
-    value: 8.21
+    value: 8.44
     unit: percent
     source: derived
-    citation: campus 1135 GWh / Dayton Power & Light Co 13,818 GWh (EIA-861 2024 per-utility)
+    citation: campus 1166 GWh / Dayton Power & Light Co 13,818 GWh (EIA-861 2024 per-utility)
     confidence: medium
     asof: null
     low: null
     high: null
   share_of_ba_pct:
-    value: 0.139
+    value: 0.143
     unit: percent
     source: derived
-    citation: campus 1135 GWh / PJM 815,056 GWh (EIA-930 annual demand)
+    citation: campus 1166 GWh / PJM 815,056 GWh (EIA-930 annual demand)
     confidence: medium
     asof: null
     low: null
     high: null
   share_of_state_pct:
-    value: 0.7
+    value: 0.72
     unit: percent
     source: derived
-    citation: campus 1135 GWh / Ohio 161934 GWh
+    citation: campus 1166 GWh / Ohio 161934 GWh
     confidence: medium
     asof: null
     low: null

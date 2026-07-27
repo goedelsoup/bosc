@@ -14,7 +14,7 @@ serving_utility:
   balancing_authority:
     value: PJM Interconnection
     source: reference
-    citation: AEP's Ohio (AEP/APS) transmission zone is within the PJM RTO footprint
+    citation: PJM is the FERC-jurisdictional wholesale-market RTO for AEP Ohio
     confidence: high
   rto:
     value: PJM Interconnection (RTO/ISO)
@@ -27,8 +27,8 @@ serving_utility:
     citation: Ohio retail electric service is PUCO-regulated (intrastate)
     confidence: high
   note: Serving utility is identified from the EIA-861 service-territory file; RTO=PJM
-    is authoritative. The retail service-territory boundary is formally confirmed
-    against the EIA-861 territory file / PUCO map (#94).
+    Interconnection is authoritative. The retail service-territory boundary is formally
+    confirmed against the EIA-861 territory file / PUCO map (#94).
 utility_profile:
   utility: AEP Ohio (Ohio Power Company)
   ownership: Investor Owned
@@ -78,11 +78,11 @@ ba_profile:
     high: null
 load_share:
   campus_load_mw:
-    value: 632.5
+    value: 662.5
     unit: MW
     source: derived
-    citation: 'PowerBasis.facility_draw central (#87): 500 MW IT x PUE 1.265 (band
-      mean of 1.1 efficient .. 1.43 cooling-dominated) — total facility draw'
+    citation: 'PowerBasis.facility_draw central (#87): 500 MW IT (central) x PUE 1.325
+      — total facility draw; band = 349.7-500 MW IT x PUE 1.15-1.5 (efficient .. cooling-dominated)'
     confidence: medium
     asof: null
     low: null
@@ -98,10 +98,10 @@ load_share:
     low: null
     high: null
   annual_consumption_gwh:
-    value: 4986.6
+    value: 5223.1
     unit: GWh/yr
     source: derived
-    citation: 632.5 MW x 8760 h x 0.9 load factor
+    citation: 662.5 MW x 8760 h x 0.9 load factor
     confidence: medium
     asof: null
     low: null
@@ -135,29 +135,29 @@ load_share:
     low: null
     high: null
   share_of_utility_pct:
-    value: 10.25
+    value: 10.74
     unit: percent
     source: derived
-    citation: campus 4987 GWh / AEP Ohio (Ohio Power Company) 48,653 GWh (EIA-861
+    citation: campus 5223 GWh / AEP Ohio (Ohio Power Company) 48,653 GWh (EIA-861
       2024 per-utility)
     confidence: medium
     asof: null
     low: null
     high: null
   share_of_ba_pct:
-    value: 0.612
+    value: 0.641
     unit: percent
     source: derived
-    citation: campus 4987 GWh / PJM 815,056 GWh (EIA-930 annual demand)
+    citation: campus 5223 GWh / PJM 815,056 GWh (EIA-930 annual demand)
     confidence: medium
     asof: null
     low: null
     high: null
   share_of_state_pct:
-    value: 3.08
+    value: 3.23
     unit: percent
     source: derived
-    citation: campus 4987 GWh / Ohio 161934 GWh
+    citation: campus 5223 GWh / Ohio 161934 GWh
     confidence: medium
     asof: null
     low: null

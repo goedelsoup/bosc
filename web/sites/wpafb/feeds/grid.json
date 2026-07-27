@@ -15,7 +15,7 @@
     "balancing_authority": {
       "value": "PJM Interconnection",
       "source": "reference",
-      "citation": "Dayton Power & Light's (AES Ohio) DAY transmission zone is within the PJM RTO footprint",
+      "citation": "PJM is the FERC-jurisdictional wholesale-market RTO for Dayton Power & Light (AES Ohio)",
       "confidence": "high"
     },
     "rto": {
@@ -30,7 +30,7 @@
       "citation": "Ohio retail electric service is PUCO-regulated (intrastate)",
       "confidence": "high"
     },
-    "note": "Serving utility is identified from the EIA-861 service-territory file; RTO=PJM is authoritative. The retail service-territory boundary is formally confirmed against the EIA-861 territory file / PUCO map (#94)."
+    "note": "Serving utility is identified from the EIA-861 service-territory file; RTO=PJM Interconnection is authoritative. The retail service-territory boundary is formally confirmed against the EIA-861 territory file / PUCO map (#94)."
   },
   "utility_profile": {
     "utility": "Dayton Power & Light Co",

@@ -7,21 +7,22 @@ serving_utility:
       of Shelby'' (#17043, a Richland-County muni). [verified]'
     confidence: high
   holding_company:
-    value: Dayton Power & Light Co
+    value: The AES Corporation (AES Ohio)
     source: reference
-    citation: Dayton Power & Light Co parent/holding company — identified from the
-      EIA-861 record
+    citation: Dayton Power & Light Co does business as AES Ohio, the Ohio operating
+      company of The AES Corporation
     confidence: high
   balancing_authority:
     value: PJM Interconnection
     source: reference
-    citation: Dayton Power & Light Co's transmission zone is within the PJM RTO footprint
+    citation: PJM is the FERC-jurisdictional wholesale-market RTO for Dayton Power
+      & Light (AES Ohio)
     confidence: high
   rto:
     value: PJM Interconnection (RTO/ISO)
     source: reference
     citation: PJM is the FERC-jurisdictional wholesale-market RTO for Dayton Power
-      & Light Co
+      & Light (AES Ohio)
     confidence: high
   retail_regulator:
     value: Public Utilities Commission of Ohio (PUCO)
@@ -29,8 +30,8 @@ serving_utility:
     citation: Ohio retail electric service is PUCO-regulated (intrastate)
     confidence: high
   note: Serving utility is identified from the EIA-861 service-territory file; RTO=PJM
-    is authoritative. The retail service-territory boundary is formally confirmed
-    against the EIA-861 territory file / PUCO map (#94).
+    Interconnection is authoritative. The retail service-territory boundary is formally
+    confirmed against the EIA-861 territory file / PUCO map (#94).
 utility_profile:
   utility: Dayton Power & Light Co
   ownership: Investor Owned
@@ -43,6 +44,8 @@ utility_profile:
       OH; bundled + delivery total sales
     confidence: high
     asof: null
+    low: null
+    high: null
   customers:
     value: 540836.0
     unit: customers
@@ -51,6 +54,8 @@ utility_profile:
       OH; bundled + delivery total customers
     confidence: high
     asof: null
+    low: null
+    high: null
   avg_price_cents_kwh:
     value: 14.94
     unit: cents/kWh
@@ -60,6 +65,8 @@ utility_profile:
       so a blended price understates the all-in cost
     confidence: high
     asof: null
+    low: null
+    high: null
 ba_profile:
   ba: PJM Interconnection
   eia_source: EIA-930 daily demand sum, annual (connector)
@@ -70,9 +77,96 @@ ba_profile:
     citation: EIA-930 daily demand sum, PJM 2024 (366 days, Eastern tz)
     confidence: high
     asof: null
-load_share: null
-note: 'Grid foundation layer (#94): per-site grid backdrop only. This site has no
-  documented data-center facility, so there is no campus load to express as a share
-  — the utility/BA/state denominators are real connector-sourced data, but the campus
-  load share awaits the site''s facility disclosure (the data-center dimension onboarding
-  does not capture).'
+    low: null
+    high: null
+load_share:
+  campus_load_mw:
+    value: 326.8
+    unit: MW
+    source: derived
+    citation: 'PowerBasis.facility_draw central (#87): 251.4 MW IT (central) x PUE
+      1.3 — total facility draw; band = 150-352.9 MW IT x PUE 1.1-1.5 (efficient ..
+      cooling-dominated)'
+    confidence: medium
+    asof: null
+    low: null
+    high: null
+  load_factor:
+    value: 0.9
+    unit: fraction
+    source: assumption
+    citation: 'data-center capacity utilization ~0.9 (near-flat 24x7); assumption
+      (cf. #91)'
+    confidence: low
+    asof: null
+    low: null
+    high: null
+  annual_consumption_gwh:
+    value: 2576.5
+    unit: GWh/yr
+    source: derived
+    citation: 326.8 MW x 8760 h x 0.9 load factor
+    confidence: medium
+    asof: null
+    low: null
+    high: null
+  utility_retail_gwh:
+    value: 13817.6
+    unit: GWh/yr
+    source: connector
+    citation: EIA-861 2024 Sales to Ultimate Customers, Dayton Power & Light Co (#4922),
+      OH; bundled + delivery total sales
+    confidence: high
+    asof: null
+    low: null
+    high: null
+  ba_load_gwh:
+    value: 815056.2
+    unit: GWh/yr
+    source: connector
+    citation: EIA-930 daily demand sum, PJM 2024 (366 days, Eastern tz)
+    confidence: high
+    asof: null
+    low: null
+    high: null
+  state_retail_gwh:
+    value: 161934.0
+    unit: GWh/yr
+    source: connector
+    citation: 'EIA ELEC.SALES.OH-ALL.A (2025); shared with #91'
+    confidence: high
+    asof: null
+    low: null
+    high: null
+  share_of_utility_pct:
+    value: 18.65
+    unit: percent
+    source: derived
+    citation: campus 2576 GWh / Dayton Power & Light Co 13,818 GWh (EIA-861 2024 per-utility)
+    confidence: medium
+    asof: null
+    low: null
+    high: null
+  share_of_ba_pct:
+    value: 0.316
+    unit: percent
+    source: derived
+    citation: campus 2576 GWh / PJM 815,056 GWh (EIA-930 annual demand)
+    confidence: medium
+    asof: null
+    low: null
+    high: null
+  share_of_state_pct:
+    value: 1.59
+    unit: percent
+    source: derived
+    citation: campus 2576 GWh / Ohio 161934 GWh
+    confidence: medium
+    asof: null
+    low: null
+    high: null
+note: 'Grid foundation layer (#94). The state, Dayton Power & Light Co, and PJM denominators
+  are now all connector-sourced — Ohio retail from EIA (shared with #91), per-utility
+  retail from the EIA-861 file, and PJM annual demand from EIA-930. The campus is
+  a single load equal to a material fraction of its serving utility''s entire retail
+  sales.'

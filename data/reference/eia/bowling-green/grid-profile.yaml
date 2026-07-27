@@ -22,14 +22,12 @@ serving_utility:
   balancing_authority:
     value: PJM Interconnection
     source: reference
-    citation: City of Bowling Green - (OH)'s transmission zone is within the PJM RTO
-      footprint
+    citation: PJM Interconnection balancing authority / RTO (SiteProfile.ba_code='PJM')
     confidence: high
   rto:
     value: PJM Interconnection (RTO/ISO)
     source: reference
-    citation: PJM is the FERC-jurisdictional wholesale-market RTO for City of Bowling
-      Green - (OH)
+    citation: PJM Interconnection balancing authority / RTO (SiteProfile.ba_code='PJM')
     confidence: high
   retail_regulator:
     value: municipal (home rule, OH)
@@ -38,9 +36,9 @@ serving_utility:
       rule (not state-PUC rate-regulated)
     confidence: high
   note: Serving utility is identified from the EIA-861 service-territory file; RTO=PJM
-    is authoritative. The retail service area is the utility's own (home rule, OH),
-    not a PUC-certified IOU territory; it is confirmed against the EIA-861 service-territory
-    file (#94).
+    Interconnection is authoritative. The retail service area is the utility's own
+    (home rule, OH), not a PUC-certified IOU territory; it is confirmed against the
+    EIA-861 service-territory file (#94).
 utility_profile:
   utility: City of Bowling Green - (OH)
   ownership: Municipal
@@ -90,11 +88,11 @@ ba_profile:
     high: null
 load_share:
   campus_load_mw:
-    value: 227.7
+    value: 238.5
     unit: MW
     source: derived
-    citation: 'PowerBasis.facility_draw central (#87): 180 MW IT x PUE 1.265 (band
-      mean of 1.1 efficient .. 1.43 cooling-dominated) — total facility draw'
+    citation: 'PowerBasis.facility_draw central (#87): 180 MW IT (central) x PUE 1.325
+      — total facility draw; band = 53.6-180 MW IT x PUE 1.15-1.5 (efficient .. cooling-dominated)'
     confidence: medium
     asof: null
     low: null
@@ -110,10 +108,10 @@ load_share:
     low: null
     high: null
   annual_consumption_gwh:
-    value: 1795.2
+    value: 1880.3
     unit: GWh/yr
     source: derived
-    citation: 227.7 MW x 8760 h x 0.9 load factor
+    citation: 238.5 MW x 8760 h x 0.9 load factor
     confidence: medium
     asof: null
     low: null
@@ -147,29 +145,29 @@ load_share:
     low: null
     high: null
   share_of_utility_pct:
-    value: 346.43
+    value: 362.86
     unit: percent
     source: derived
-    citation: campus 1795 GWh / City of Bowling Green - (OH) 518 GWh (EIA-861 2024
+    citation: campus 1880 GWh / City of Bowling Green - (OH) 518 GWh (EIA-861 2024
       per-utility)
     confidence: medium
     asof: null
     low: null
     high: null
   share_of_ba_pct:
-    value: 0.22
+    value: 0.231
     unit: percent
     source: derived
-    citation: campus 1795 GWh / PJM 815,056 GWh (EIA-930 annual demand)
+    citation: campus 1880 GWh / PJM 815,056 GWh (EIA-930 annual demand)
     confidence: medium
     asof: null
     low: null
     high: null
   share_of_state_pct:
-    value: 1.11
+    value: 1.16
     unit: percent
     source: derived
-    citation: campus 1795 GWh / Ohio 161934 GWh
+    citation: campus 1880 GWh / Ohio 161934 GWh
     confidence: medium
     asof: null
     low: null

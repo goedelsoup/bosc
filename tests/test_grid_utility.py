@@ -169,6 +169,82 @@ def test_committed_grid_profiles_carry_real_denominators() -> None:
     assert checked >= 20, f"expected the committed grid profiles to be found, saw {checked}"
 
 
+# --- the committed-artifact staleness guard (#1769) -----------------------------------------
+# The committed grid profiles are CLI-produced artifacts, so they freeze whatever the code said
+# on the day they were written while the code keeps moving: `watermark grid` needs two live EIA
+# pulls, so nobody re-runs it when a facility lands or a citation is unified. Four classes of
+# drift had accumulated silently by #1769 — a facility registered after the profile (`load_share`
+# stuck at null on a site that HAS a campus), a pre-#1641 `campus_load_mw`, a pre-#1639
+# BA/RTO citation, and a pre-`ownership` utility block. The first is the one that reached the
+# site: `/network/urbana/economy/grid` rendered "no data-center facility is disclosed here" over
+# a disclosed campus. These two tests hold the committed artifacts to what the code derives today.
+
+_GRID_PROFILE_SITES = sorted(
+    slug for slug, prof in SITES.items() if (REPO_ROOT / "data" / prof.grid_relpath).is_file()
+)
+
+
+def _committed_grid_settings(slug: str) -> Settings:
+    return Settings(site=slug, data_dir=REPO_ROOT / "data", hydro_offline=True, econ_offline=True)
+
+
+def test_committed_load_share_tracks_the_facility_power_basis() -> None:
+    """A committed profile carries a campus ``load_share`` exactly when the site has a load basis.
+
+    ``derive_grid_profile`` omits ``load_share`` for a site whose ``derive_power_basis`` is
+    ``None`` — the honest degrade for a facility-less peer. But the profile is a *snapshot* and
+    ``has_facility_power_basis`` is a *standing* property of the registry, so a facility that
+    lands after the profile was written leaves a null share on a site that has a campus. The
+    page then reports the absence as a fact about the place ("no data-center facility is
+    disclosed here") rather than as the stale artifact it is. Both directions matter: a share
+    committed for a site that has since lost its load basis is equally wrong.
+    """
+    for slug in _GRID_PROFILE_SITES:
+        gp = load_grid_profile(_committed_grid_settings(slug))
+        assert gp is not None
+        expected = SITES[slug].has_facility_power_basis
+        assert (gp.load_share is not None) == expected, (
+            f"{slug}: committed grid profile has load_share="
+            f"{'set' if gp.load_share else 'null'} but has_facility_power_basis={expected} — "
+            f"re-run `watermark --site {slug} grid --write`"
+        )
+    assert len(_GRID_PROFILE_SITES) >= 20
+
+
+@pytest.mark.parametrize("slug", _GRID_PROFILE_SITES)
+def test_committed_grid_profile_matches_a_current_code_derivation(
+    slug: str, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Every committed grid profile equals what ``derive_grid_profile`` produces today.
+
+    The two connector pulls are substituted with the figures **the committed profile itself
+    carries** (its ``utility_profile`` block and its ``ba_profile.annual_load_gwh``), so this
+    stays hermetic and compares only what the code derives — the service chain, the campus load,
+    and the shares — against the committed bytes. The denominators are held fixed rather than
+    re-fetched on purpose: a change in the EIA vintage is a data decision that belongs in a
+    reviewed re-pull, not a test failure. Everything else is code, and code drift is exactly the
+    staleness this catches.
+    """
+    from watermark.grid import utility as grid_utility
+    from watermark.grid.model import UtilityProfile
+
+    settings = _committed_grid_settings(slug)
+    committed = load_grid_profile(settings)
+    assert committed is not None
+
+    monkeypatch.setattr(grid_utility, "fetch_utility_retail", lambda **_: committed.utility_profile)
+    monkeypatch.setattr(
+        grid_utility, "fetch_ba_annual_load", lambda **_: committed.ba_profile.annual_load_gwh
+    )
+    derived = derive_grid_profile(settings=settings)
+
+    assert isinstance(committed.utility_profile, UtilityProfile)
+    assert derived.model_dump() == committed.model_dump(), (
+        f"{slug}: the committed grid profile has fallen behind the code that produces it — "
+        f"re-run `watermark --site {slug} grid --write` (and refresh its bundle feed)"
+    )
+
+
 def test_zeroed_denominators_are_a_shell_not_a_backdrop() -> None:
     """A stale/hand-authored profile with zeroed utility + BA figures establishes nothing.
 
