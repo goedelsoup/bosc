@@ -1639,9 +1639,17 @@ _SPRINGFIELD = SiteProfile(
                 "faqs); up to 300,000 gal/day permitted from the municipal system at an >80degF "
                 "extreme-heat max ('near zero' most of the year, ~30k gal/day realistic), with an "
                 "on-site reservoir under study to avoid the municipal tap. A largely dry recirculating "
-                "design undercuts the Mad River buried-valley abstraction thesis. Not a document "
-                "extraction; refine to [verified] on an ingested mechanical/plumbing permit. The "
-                "receiving-water / source-water screen is the water sub-issue (#1415)."
+                "design undercuts the Mad River buried-valley abstraction thesis. B3 (#1683) ran the A3 "
+                "cooling-cycling reconciliation harness (`watermark cooling-reconcile`) on this claim: "
+                "with no metered makeup (the Ohio DNR registry has no Clark County withdrawal built) and "
+                "no facility-own blowdown (OHD000001 draft), the outcome is a `gap` that KEEPS this "
+                "[reference] pin. The 300,000 gal/day is a permitted-withdrawal CEILING self-disclosed by "
+                "this same FAQ — NOT an independently-negotiated reservation, so (unlike Troy-Piqua B1) "
+                "it is not a reservation_conflict: a dry loop sits far below it, and a self-report cannot "
+                "corroborate its own claim. The actual metered withdrawal vs the ceiling is sharpened "
+                "into a C2 records request (#1688/#1415). Not a document extraction; refine to [verified] "
+                "on an ingested mechanical/plumbing permit. The receiving-water / source-water screen is "
+                "the water sub-issue (#1415)."
             ),
         ),
     ),

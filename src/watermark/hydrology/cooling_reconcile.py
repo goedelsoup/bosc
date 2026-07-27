@@ -28,7 +28,14 @@ against what records *document*:
      ``[reference]`` figure is recorded on ``WaterAccount.disclosed_makeup`` — never on
      ``documented_*`` — so it cannot upgrade the source or read as a measurement; it stays a gap, but
      the lead names the specific open quantity (Van Wert's **initial closed-loop fill volume**, whose
-     fill-vs-annual framing is the ``#1409`` discrepancy).
+     fill-vs-annual framing is the ``#1409`` discrepancy). B3 (#1683, Springfield) sharpens a gap in a
+     third way: the claim's own source (the City 5C FAQ) self-discloses a **permitted withdrawal
+     CEILING** (300,000 gal/day at an >80degF extreme-heat max, "near zero" most of the year),
+     recorded on ``WaterAccount.disclosed_ceiling``. A permitted PEAK ceiling self-disclosed by the
+     claim's own source is **not** a ``reservation_conflict`` — unlike B1's independently-negotiated
+     reservation it is not a demand signal that can contradict the claim (a dry loop sits far below
+     it) — so it too never feeds ``_classify`` and never upgrades the source; the lead names the
+     actual-vs-ceiling denominator (pull the metered municipal withdrawal, ``#1415``).
 
    * **reservation_conflict** (B1, #1681) — a low-water claim contradicted **not** by a metered
      use / DMR but by a disclosed **reservation ceiling** (a will-serve / water-service agreement
@@ -165,6 +172,17 @@ class WaterAccount(BaseModel):
     # source: it only SHARPENS a gap (the honest read stays [reference], not 'confirmed dry'). None
     # unless the operator has disclosed an ongoing-use figure. MGD (annualized when reported per-year).
     disclosed_makeup: ProvenancedValue | None = None
+    # A self-disclosed permit / withdrawal CEILING (a permitted municipal-withdrawal maximum) — kept
+    # DISTINCT from BOTH ``reserved_*`` (an independently-negotiated will-serve / water-agreement
+    # reservation, B1) AND ``documented_*`` (a metered instrument). B3 (#1683, Springfield): the City
+    # 5C FAQ self-discloses "up to 300,000 gal/day permitted" at an >80degF extreme-heat max ("near
+    # zero" most of the year), from the SAME source that makes the "not evaporative" claim. A permitted
+    # PEAK ceiling self-disclosed by the claim's own source is NOT an independent demand signal that can
+    # contradict the claim (unlike B1's negotiated reservation) — a genuinely dry loop sits far below
+    # it — so, like ``disclosed_makeup``, it NEVER feeds ``_classify`` and never upgrades the source: it
+    # only SHARPENS a gap (name the actual-vs-ceiling denominator). None unless a self-disclosed
+    # permitted ceiling is on record. MGD.
+    disclosed_ceiling: ProvenancedValue | None = None
     disclosed_cycles: ProvenancedValue | None = None  # the operator's disclosed CoC, if any
     # The back-solved cycles-of-concentration (makeup / blowdown) — an [inference] BRACKET, never
     # a headline scalar. Present when both makeup and blowdown are on record — as documented (metered)
@@ -549,6 +567,76 @@ def _disclosed_gap_lead(
     )
 
 
+def _disclosed_ceiling_gap_lead(
+    site: str,
+    fac: SiteFacility,
+    claim_source: str,
+    account: WaterAccount,
+    issue_ref: str,
+    corroborators: CoolingCorroborators | None = None,
+) -> RecordsRequestLead:
+    """The sharpened C2 (#1688) records-request lead for a gap the operator has bounded with a
+    self-disclosed permit CEILING (B3, #1683).
+
+    Unlike a bare gap, the claim's own source (Springfield's City 5C FAQ) has self-disclosed a
+    permitted municipal-withdrawal ceiling — "up to 300,000 gal/day" at an >80degF extreme-heat max,
+    with "near zero" use most of the year (~30k gal/day realistic). That ceiling is a self-report from
+    the same source that makes the "not evaporative" claim, so — unlike an independently-negotiated
+    reservation (B1) — it is NOT a demand signal that contradicts the claim: a genuinely dry loop sits
+    far below it. The ask is therefore the missing measurement that would settle it: the **actual
+    metered municipal withdrawal** (does it approach the ceiling — evaporative — or sit far below it —
+    dry?), the closed-loop mechanical/plumbing permit that would confirm "not evaporative", and the
+    on-site reservoir / alternate-supply study the FAQ also discloses. ``issue_ref`` is the site's own
+    standing water sub-issue (Springfield's ``#1415``). The silent A4 corroborators (#1680) add their
+    own not-on-record asks, as on a plain gap.
+    """
+    ceiling = account.disclosed_ceiling
+    ceiling_phrase = (
+        f"{ceiling.value:g} MGD ({round(ceiling.value * 1_000_000):,} gal/day)"
+        if ceiling is not None
+        else "the disclosed permitted ceiling"
+    )
+    records_sought = [
+        "metered water-service use (actual municipal withdrawal vs the disclosed permitted ceiling "
+        "— is the ceiling approached, or does a dry loop sit far below it?)",
+        "the closed-loop / direct-liquid mechanical-plumbing permit (the instrument that would "
+        "confirm 'not evaporative')",
+        "cooling-tower / low-volume-wastewater blowdown DMR (facility-own or OHD000001 coverage)",
+        "on-site reservoir / alternate-supply plan (the disclosed municipal-tap-avoidance study)",
+        "industrial pretreatment / indirect-discharge (IU) permit + sewer-use agreement",
+    ]
+    holders = [
+        f"City / municipal water-sewer authority serving {site}",
+        "Ohio EPA (NPDES / OHD000001; Air PTI)",
+    ]
+    extra_records, extra_holders = _corroborator_asks(corroborators)
+    records_sought.extend(extra_records)
+    holders.extend(extra_holders)
+    return RecordsRequestLead(
+        site=site,
+        facility=fac.name,
+        subject=(
+            "cooling-water account — reconcile the actual municipal withdrawal vs the disclosed "
+            f"{ceiling_phrase} permitted ceiling for the 'not evaporative' claim"
+        ),
+        records_sought=records_sought,
+        holder="; ".join(holders),
+        rationale=(
+            f"A {fac.cooling_model.value} claim (source={claim_source}) disclosed EXPLICITLY 'not "
+            f"evaporative', with a SELF-DISCLOSED permitted municipal-withdrawal ceiling of "
+            f"{ceiling_phrase} (an >80degF extreme-heat peak, 'near zero' most of the year) — a "
+            "permitted PEAK ceiling from the claim's own source, NOT an independently-negotiated "
+            "reservation, so it is not a reservation conflict: a genuinely dry loop sits far below "
+            "it. But a self-report is not a metered instrument, so it can neither confirm 'not "
+            "evaporative' nor re-archetype. Pull the actual metered withdrawal to test whether use "
+            f"approaches the {ceiling_phrase} ceiling (which would contradict 'not evaporative') or "
+            f"sits far below it (dry), plus the blowdown / OHD000001 to complete the account ({issue_ref})."
+        ),
+        epic_ref=f"#1688 (C2); {issue_ref}",
+        tag="[open]",
+    )
+
+
 def _reservation_conflict_lead(
     site: str,
     fac: SiteFacility,
@@ -636,6 +724,33 @@ def _finding(
     """A one-line evidentiary read for the reconciliation record."""
     arche = account.archetype.value
     if outcome is ReconcileOutcome.GAP:
+        if account.disclosed_ceiling is not None:
+            # B3 (#1683, Springfield): a gap bounded by a self-disclosed permit CEILING. The claim's
+            # own source (the City 5C FAQ) discloses a permitted municipal-withdrawal max and an
+            # explicit "not evaporative" mechanism — but a self-disclosed PEAK ceiling from the claim's
+            # own source is not an independent demand signal (unlike B1's negotiated reservation), so it
+            # does not contradict the dry claim (a dry loop sits far below it) and cannot corroborate it
+            # (that would be circular). The actual metered withdrawal is the missing measurement.
+            ceiling = account.disclosed_ceiling
+            ceiling_gpd = f"{round(ceiling.value * 1_000_000):,} gal/day"
+            draw = account.disclosed_makeup
+            draw_phrase = (
+                f", ~{draw.value:g} MGD 'realistic' and near zero most of the year"
+                if draw is not None
+                else ""
+            )
+            return (
+                f"No metered makeup or blowdown for {fac.name} to test the {arche} 'not evaporative' "
+                f"claim (source={claim_source}) — an [open] gap, not 'confirmed dry'. The claim's own "
+                f"source self-discloses a permitted municipal-withdrawal CEILING of {ceiling.value:g} "
+                f"MGD ({ceiling_gpd}, an >80degF extreme-heat max){draw_phrase}; the pinned "
+                f"archetype predicts ~{account.predicted_makeup.value:g} MGD — far below the ceiling. "
+                "A permitted PEAK ceiling self-disclosed by the claim's OWN source is NOT a reservation "
+                "conflict (a genuinely dry loop sits far below it) and is a self-report, not a metered "
+                "instrument — so it can neither corroborate 'not evaporative' (circular) nor "
+                "re-archetype; the actual metered withdrawal against the ceiling is the missing "
+                "measurement (→ C2 records request #1688/#1415). Keep the pin [reference]."
+            )
         if account.disclosed_makeup is not None:
             # B2 (#1682): a gap the operator has DISCLOSED into. The self-reported draw is compared
             # against the ~0 screening floor for description ONLY (never fed to _classify): below it
@@ -734,6 +849,7 @@ def reconcile_facility(
     reserved_makeup: ProvenancedValue | None = None,
     reserved_blowdown: ProvenancedValue | None = None,
     disclosed_makeup: ProvenancedValue | None = None,
+    disclosed_ceiling: ProvenancedValue | None = None,
     seasonality_warm_ratio: float | None = None,
     corroborators: CoolingCorroborators | None = None,
     water_lead_ref: str = "#1688 (C2)",
@@ -757,7 +873,13 @@ def reconcile_facility(
     self-report — Van Wert's ~660k gal), kept distinct from BOTH: it never feeds the classifier and
     never upgrades the source (a self-report of the very claim under test is not an instrument), it
     only SHARPENS a gap — the lead names the specific open quantity (the initial closed-loop fill) and
-    references ``water_lead_ref`` (Van Wert's #1409). ``kept_archetype`` is the site's REAL profile pin
+    references ``water_lead_ref`` (Van Wert's #1409). ``disclosed_ceiling`` (B3, #1683) is a
+    self-disclosed permit / withdrawal CEILING (Springfield's "up to 300,000 gal/day permitted" at an
+    >80degF extreme-heat max) — a permitted PEAK ceiling from the claim's OWN source, NOT an
+    independently-negotiated reservation, so — unlike ``reserved_*`` — it is not a demand signal that
+    contradicts the claim and does NOT fire a ``reservation_conflict``: like ``disclosed_makeup`` it
+    never feeds the classifier and never upgrades the source, it only SHARPENS a gap onto the
+    actual-vs-ceiling denominator (``water_lead_ref`` = Springfield's #1415). ``kept_archetype`` is the site's REAL profile pin
     recorded on a reservation_conflict
     (the recommendation keeps it): pass it when ``fac`` is a constructed claim-under-test view whose
     ``cooling_model`` differs from the profile's (Troy-Piqua's real pin is ``unknown``); it defaults
@@ -812,6 +934,7 @@ def reconcile_facility(
         reserved_makeup=reserved_makeup,
         reserved_blowdown=reserved_blowdown,
         disclosed_makeup=disclosed_makeup,
+        disclosed_ceiling=disclosed_ceiling,
         disclosed_cycles=disclosed_cycles,
         backsolved_cycles=backsolved_cycles,
         seasonality_warm_ratio=seasonality_warm_ratio,
@@ -861,10 +984,17 @@ def reconcile_facility(
             "medium"  # sharper than an empty gap (a quantified figure), short of instrument-grade
         )
     else:  # GAP
-        # B2 (#1682): when the operator has disclosed an ongoing draw (a self-report, not an
-        # instrument), sharpen the gap's records request — name the initial-fill open quantity and
-        # reference the site's standing water lead (Van Wert's #1409). Otherwise the plain gap ask.
-        if disclosed_makeup is not None:
+        # Sharpen the gap's records request by what the claim's own source has self-disclosed. B3
+        # (#1683): a self-disclosed permit CEILING (Springfield's 300k gal/day permitted max) names the
+        # actual-vs-ceiling denominator (checked FIRST — Springfield discloses BOTH a ceiling and a
+        # realistic draw). B2 (#1682): a disclosed ongoing draw (a self-report, not an instrument) names
+        # the initial-fill open quantity + the site's standing water lead (Van Wert's #1409). Otherwise
+        # the plain gap ask. A self-report never re-archetypes or upgrades — the pin stays [reference].
+        if disclosed_ceiling is not None:
+            lead = _disclosed_ceiling_gap_lead(
+                site, fac, claim_source, account, water_lead_ref, corroborators
+            )
+        elif disclosed_makeup is not None:
             lead = _disclosed_gap_lead(
                 site, fac, claim_source, account, water_lead_ref, corroborators
             )
@@ -1211,6 +1341,100 @@ def reconcile_van_wert(*, settings: Settings | None = None) -> ReconciliationRec
     )
 
 
+# ---------------------------------------------------- the Springfield B3 disclosed-ceiling gap (#1683)
+
+# Springfield (5C Data Centers "CMH01", anchor tenant Vultr) pins ``closed_loop_dry`` as a [reference]
+# claim disclosed EXPLICITLY "not evaporative" by the City of Springfield 5C FAQ. Like Van Wert it IS
+# in A2's registry-derived cohort (pins ``closed_loop_dry``), but a plain gap undersells the record: the
+# SAME FAQ self-discloses a permitted municipal-withdrawal CEILING — "up to 300,000 gal/day" at an
+# >80degF extreme-heat max, "near zero" most of the year, ~30k gal/day realistic. B3 reconciles it
+# explicitly so both self-reported figures are recorded (the ceiling on ``disclosed_ceiling``, the
+# realistic draw on ``disclosed_makeup`` — never ``documented_*`` or ``reserved_*``) and the gap lead
+# names the actual-vs-ceiling denominator. A1 (no Clark County withdrawal built) + A2 (OHD000001 draft,
+# no facility-own DMR) are absent → the honest outcome stays a GAP with the [reference] pin KEPT.
+#
+# The pivotal B3 call (vs B1 Troy-Piqua): a permitted PEAK ceiling self-disclosed by the claim's OWN
+# source is NOT a reservation_conflict. Troy-Piqua's 2.0 MGD was an independently-negotiated reservation
+# (a demand signal SEPARATE from the dry FAQ, so it can contradict). Springfield's 300k gal/day is
+# disclosed BY the "not evaporative" FAQ, framed as rarely approached — a dry loop sits far below it —
+# so it belongs to the self-report family (``disclosed_*``, never feeds ``_classify``), not the
+# reservation family (``reserved_*``). "A dry loop should sit far below it" is the issue's own framing.
+#
+# 300,000 gal/day = 0.3 MGD exactly (the permitted extreme-heat peak). ~30,000 gal/day = 0.03 MGD (the
+# "realistic" ongoing draw). Even the permitted peak is far below what evaporative cooling at ~100-150
+# MW would require (~1 MGD+), so the whole disclosed range is consistent with "not evaporative" — but
+# it is all self-reported (from the very FAQ under test), so it cannot upgrade the [reference] pin.
+_SPRINGFIELD_DISCLOSED_CEILING = ProvenancedValue.from_reference(
+    0.3,
+    "MGD",
+    citation=(
+        "[reference] SELF-DISCLOSED permit CEILING, not metered use and not a negotiated reservation: "
+        "the City of Springfield 5C FAQ (springfieldohio.gov/5c-data-center-faqs) discloses 'up to "
+        "300,000 gal/day' (0.3 MGD) permitted from the municipal system at an >80degF extreme-heat "
+        "MAX, with use 'near zero' most of the year. A permitted PEAK ceiling from the SAME source that "
+        "makes the 'not evaporative' closed-loop claim (so it cannot corroborate the claim without "
+        "circularity), and a self-report rather than an independently-negotiated will-serve reservation "
+        "(so it is not a reservation_conflict — a genuinely dry loop sits far below it). The actual "
+        "metered municipal withdrawal against this ceiling is the missing measurement (C2, #1415/#1688)."
+    ),
+    confidence="high",  # a hard, well-attested permitted-max figure — but a ceiling, not metered use
+)
+# The FAQ's disclosed "realistic" ongoing draw (~30k gal/day), carried on ``disclosed_makeup`` as the
+# ongoing self-report distinct from the peak ceiling. A soft estimate ("~30k realistic"), so medium
+# confidence; ~0.03 MGD is trivial next to the ~1 MGD+ an evaporative tower at this load would draw.
+_SPRINGFIELD_DISCLOSED_MAKEUP = ProvenancedValue.from_reference(
+    0.03,
+    "MGD",
+    citation=(
+        "[reference] operator-DISCLOSED 'realistic' ongoing draw — NOT a metered use: the City of "
+        "Springfield 5C FAQ characterizes ongoing municipal-system use as ~30,000 gal/day (~0.03 MGD) "
+        "'realistic' with 'near zero' most of the year, under the up-to-300,000 gal/day permitted peak "
+        "ceiling. A self-report from the same source as the 'not evaporative' claim (cannot upgrade the "
+        "[reference] pin); ~0.03 MGD is a small fraction of the ~1 MGD+ an evaporative tower at ~100-150 "
+        "MW would draw — consistent with 'not evaporative', but unverified. Metered use is a C2 target."
+    ),
+    confidence="medium",
+)
+
+
+def reconcile_springfield(*, settings: Settings | None = None) -> ReconciliationRecord:
+    """The Springfield B3 disclosed-ceiling gap (#1683) — "not evaporative" vs the 300k gpd ceiling.
+
+    A real registered site (not a control) that IS in A2's registry-derived cohort (it pins
+    ``closed_loop_dry``), reconciled explicitly rather than through the generic cohort loop so both of
+    the City FAQ's self-reported figures are recorded — the permitted 300,000 gal/day peak CEILING on
+    ``disclosed_ceiling`` and the ~30k gal/day "realistic" ongoing draw on ``disclosed_makeup`` (never
+    ``documented_*`` (metered) or ``reserved_*`` (a negotiated reservation) — both are self-reports from
+    the claim's own source). With no A1 withdrawal (Clark County is not built) and no A2 blowdown
+    (OHD000001 is draft, no facility-own DMR), the honest outcome is a GAP that KEEPS the [reference]
+    pin: a self-disclosed permit ceiling from the claim's own source is not a ``reservation_conflict``
+    (a dry loop sits far below it) and cannot corroborate the claim (that would be circular). The lead
+    sharpens onto the actual-vs-ceiling denominator (#1415). Closed-loop-dry needs no climatology, so a
+    per-site ``Settings`` resolves it.
+    """
+    base = settings or get_settings()
+    site_settings = _site_settings("springfield", base)
+    profile = SITES["springfield"]
+    fac = next((f for f in profile.facilities if f.name == '5C Data Centers "CMH01"'), None)
+    if fac is None:  # pragma: no cover - the registered profile always carries this facility
+        raise ValueError(
+            "springfield profile has no '5C Data Centers \"CMH01\"' facility — the B3 disclosed-ceiling "
+            "gap reconciles that facility's closed-loop claim; the profile must register it (watermark.sites)"
+        )
+    return reconcile_facility(
+        fac,
+        site="springfield",
+        claim_source=fac.cooling_model_source or "reference",
+        claim_citation=fac.cooling_model_citation or "[reference] operator closed-loop claim",
+        settings=site_settings,
+        disclosed_makeup=_SPRINGFIELD_DISCLOSED_MAKEUP,
+        disclosed_ceiling=_SPRINGFIELD_DISCLOSED_CEILING,
+        corroborators=resolve_corroborators(fac, settings=site_settings),
+        water_lead_ref="#1415",
+        is_control=False,
+    )
+
+
 # --------------------------------------------------------------------- cohort
 
 
@@ -1224,17 +1448,22 @@ def reconcile_cohort(*, settings: Settings | None = None) -> list[Reconciliation
     resolved under the same settings. The **Troy-Piqua B1 reservation conflict** (#1681,
     :func:`reconcile_troy_piqua`) is appended explicitly — it pins ``UNKNOWN`` so it is NOT in A2's
     cohort, but its FAQ-vs-2.0-MGD-reservation conflict is reconciled as a first-class live finding.
-    **Van Wert** (#1682, :func:`reconcile_van_wert`) IS in A2's cohort but is reconciled explicitly
-    (skipped in the generic loop) so its operator-disclosed ~660k gal figure + the #1409 initial-fill
-    open quantity sharpen the gap. The Intel control is appended and reconciled the same way. Ordered
-    by (is_control, site, facility) so the control sorts last after the live findings.
+    **Van Wert** (#1682, :func:`reconcile_van_wert`) and **Springfield** (#1683,
+    :func:`reconcile_springfield`) ARE in A2's cohort but are reconciled explicitly (skipped in the
+    generic loop) so their self-disclosed figures sharpen the gap — Van Wert's operator-disclosed ~660k
+    gal draw + the #1409 initial-fill open quantity, Springfield's self-disclosed 300k gal/day permitted
+    ceiling + the #1415 actual-vs-ceiling denominator for its "not evaporative" claim. The Intel control
+    is appended and reconciled the same way. Ordered by (is_control, site, facility) so the control
+    sorts last after the live findings.
     """
     settings = settings or get_settings()
     records: list[ReconciliationRecord] = []
     for candidate in blowdown.closed_loop_candidates(settings=settings):
-        # Van Wert (B2, #1682) is a cohort member but is reconciled explicitly below so its disclosed
-        # ~660k gal figure + the initial-fill #1409 sharpening are carried — skip the generic gap here.
-        if candidate.site == "van-wert":
+        # Van Wert (B2, #1682) + Springfield (B3, #1683) are cohort members but are reconciled
+        # explicitly below so their self-disclosed figures are carried — Van Wert's ~660k gal draw +
+        # #1409 initial-fill, Springfield's 300k gal/day permitted ceiling + #1415 — skip the generic
+        # gap here to avoid a double row.
+        if candidate.site in {"van-wert", "springfield"}:
             continue
         profile = SITES[candidate.site]
         fac = next((f for f in profile.facilities if f.name == candidate.facility), None)
@@ -1258,6 +1487,9 @@ def reconcile_cohort(*, settings: Settings | None = None) -> list[Reconciliation
     records.append(
         reconcile_van_wert(settings=settings)
     )  # B2 (#1682) — disclosed ~660k gal + #1409 initial-fill gap
+    records.append(
+        reconcile_springfield(settings=settings)
+    )  # B3 (#1683) — disclosed 300k gal/day permitted ceiling + #1415 "not evaporative" gap
     records.append(
         reconcile_troy_piqua(settings=settings)
     )  # B1 (#1681) — pins UNKNOWN, not in A2's cohort

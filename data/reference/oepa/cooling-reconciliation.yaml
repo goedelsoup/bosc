@@ -95,6 +95,7 @@ candidates:
     reserved_makeup: null
     reserved_blowdown: null
     disclosed_makeup: null
+    disclosed_ceiling: null
     disclosed_cycles: null
     backsolved_cycles: null
     seasonality_warm_ratio: null
@@ -223,7 +224,36 @@ candidates:
     documented_blowdown: null
     reserved_makeup: null
     reserved_blowdown: null
-    disclosed_makeup: null
+    disclosed_makeup:
+      value: 0.03
+      unit: MGD
+      source: reference
+      citation: '[reference] operator-DISCLOSED ''realistic'' ongoing draw — NOT a metered use: the City
+        of Springfield 5C FAQ characterizes ongoing municipal-system use as ~30,000 gal/day (~0.03 MGD)
+        ''realistic'' with ''near zero'' most of the year, under the up-to-300,000 gal/day permitted peak
+        ceiling. A self-report from the same source as the ''not evaporative'' claim (cannot upgrade the
+        [reference] pin); ~0.03 MGD is a small fraction of the ~1 MGD+ an evaporative tower at ~100-150
+        MW would draw — consistent with ''not evaporative'', but unverified. Metered use is a C2 target.'
+      confidence: medium
+      asof: null
+      low: null
+      high: null
+    disclosed_ceiling:
+      value: 0.3
+      unit: MGD
+      source: reference
+      citation: '[reference] SELF-DISCLOSED permit CEILING, not metered use and not a negotiated reservation:
+        the City of Springfield 5C FAQ (springfieldohio.gov/5c-data-center-faqs) discloses ''up to 300,000
+        gal/day'' (0.3 MGD) permitted from the municipal system at an >80degF extreme-heat MAX, with use
+        ''near zero'' most of the year. A permitted PEAK ceiling from the SAME source that makes the ''not
+        evaporative'' closed-loop claim (so it cannot corroborate the claim without circularity), and
+        a self-report rather than an independently-negotiated will-serve reservation (so it is not a reservation_conflict
+        — a genuinely dry loop sits far below it). The actual metered municipal withdrawal against this
+        ceiling is the missing measurement (C2, #1415/#1688).'
+      confidence: high
+      asof: null
+      low: null
+      high: null
     disclosed_cycles: null
     backsolved_cycles: null
     seasonality_warm_ratio: null
@@ -235,20 +265,29 @@ candidates:
     kind: records-request
     site: springfield
     facility: 5C Data Centers "CMH01"
-    subject: cooling-water account — makeup + blowdown records
+    subject: cooling-water account — reconcile the actual municipal withdrawal vs the disclosed 0.3 MGD
+      (300,000 gal/day) permitted ceiling for the 'not evaporative' claim
     records_sought:
-    - industrial pretreatment / indirect-discharge (IU) permit
-    - sewer-use agreement + any cooling-tower blowdown authorization
-    - metered water-service use (makeup withdrawal)
-    - cooling-tower blowdown / low-volume-wastewater DMR
+    - metered water-service use (actual municipal withdrawal vs the disclosed permitted ceiling — is the
+      ceiling approached, or does a dry loop sit far below it?)
+    - the closed-loop / direct-liquid mechanical-plumbing permit (the instrument that would confirm 'not
+      evaporative')
+    - cooling-tower / low-volume-wastewater blowdown DMR (facility-own or OHD000001 coverage)
+    - on-site reservoir / alternate-supply plan (the disclosed municipal-tap-avoidance study)
+    - industrial pretreatment / indirect-discharge (IU) permit + sewer-use agreement
     - facility air permit (PTI/PTIO) — cooling-tower emission-unit list + PM drift limits
     - Tier II / EPCRA-312 chemical inventory — cooling-water treatment (biocide, scale / corrosion inhibitor)
-    holder: City / municipal water-sewer authority serving springfield; Ohio EPA / regional air agency
-      (DAPC); SERC / LEPC
-    rationale: closed_loop_dry claim (source=reference) with no facility-own discharge permit and no documented
-      makeup — resolve whether blowdown goes to sewer under a City agreement not visible in ECHO/NPDES,
-      or the loop is genuinely dry.
-    epic_ref: '#1688 (C2)'
+    holder: City / municipal water-sewer authority serving springfield; Ohio EPA (NPDES / OHD000001; Air
+      PTI); Ohio EPA / regional air agency (DAPC); SERC / LEPC
+    rationale: 'A closed_loop_dry claim (source=reference) disclosed EXPLICITLY ''not evaporative'', with
+      a SELF-DISCLOSED permitted municipal-withdrawal ceiling of 0.3 MGD (300,000 gal/day) (an >80degF
+      extreme-heat peak, ''near zero'' most of the year) — a permitted PEAK ceiling from the claim''s
+      own source, NOT an independently-negotiated reservation, so it is not a reservation conflict: a
+      genuinely dry loop sits far below it. But a self-report is not a metered instrument, so it can neither
+      confirm ''not evaporative'' nor re-archetype. Pull the actual metered withdrawal to test whether
+      use approaches the 0.3 MGD (300,000 gal/day) ceiling (which would contradict ''not evaporative'')
+      or sits far below it (dry), plus the blowdown / OHD000001 to complete the account (#1415).'
+    epic_ref: '#1688 (C2); #1415'
     tag: '[open]'
   corroborators:
     air_permit:
@@ -280,10 +319,16 @@ candidates:
       are C2 records-request items, not read as confirming the claim.
   tag: '[open]'
   confidence: low
-  finding: 'No documented makeup or blowdown for 5C Data Centers "CMH01": the closed_loop_dry claim (source=reference)
-    cannot yet be tested against records — an [open] gap, not ''confirmed dry'' (→ C2 records request
-    #1688). Predicted makeup 0 MGD. Neither corroborator is on record for 5C Data Centers "CMH01" (air
-    permit + Tier II) — both are C2 records-request items, not read as confirming the claim.'
+  finding: 'No metered makeup or blowdown for 5C Data Centers "CMH01" to test the closed_loop_dry ''not
+    evaporative'' claim (source=reference) — an [open] gap, not ''confirmed dry''. The claim''s own source
+    self-discloses a permitted municipal-withdrawal CEILING of 0.3 MGD (300,000 gal/day, an >80degF extreme-heat
+    max), ~0.03 MGD ''realistic'' and near zero most of the year; the pinned archetype predicts ~0 MGD
+    — far below the ceiling. A permitted PEAK ceiling self-disclosed by the claim''s OWN source is NOT
+    a reservation conflict (a genuinely dry loop sits far below it) and is a self-report, not a metered
+    instrument — so it can neither corroborate ''not evaporative'' (circular) nor re-archetype; the actual
+    metered withdrawal against the ceiling is the missing measurement (→ C2 records request #1688/#1415).
+    Keep the pin [reference]. Neither corroborator is on record for 5C Data Centers "CMH01" (air permit
+    + Tier II) — both are C2 records-request items, not read as confirming the claim.'
 - site: troy-piqua
   facility: Project Klondike
   is_control: false
@@ -376,6 +421,7 @@ candidates:
       low: null
       high: null
     disclosed_makeup: null
+    disclosed_ceiling: null
     disclosed_cycles: null
     backsolved_cycles:
       value: 2.0
@@ -517,6 +563,7 @@ candidates:
     reserved_makeup: null
     reserved_blowdown: null
     disclosed_makeup: null
+    disclosed_ceiling: null
     disclosed_cycles: null
     backsolved_cycles: null
     seasonality_warm_ratio: null
@@ -673,6 +720,7 @@ candidates:
       asof: '2026-06-11'
       low: null
       high: null
+    disclosed_ceiling: null
     disclosed_cycles: null
     backsolved_cycles: null
     seasonality_warm_ratio: null
@@ -818,6 +866,7 @@ candidates:
     reserved_makeup: null
     reserved_blowdown: null
     disclosed_makeup: null
+    disclosed_ceiling: null
     disclosed_cycles: null
     backsolved_cycles: null
     seasonality_warm_ratio: null
@@ -954,6 +1003,7 @@ candidates:
     reserved_makeup: null
     reserved_blowdown: null
     disclosed_makeup: null
+    disclosed_ceiling: null
     disclosed_cycles:
       value: 5.0
       unit: ratio

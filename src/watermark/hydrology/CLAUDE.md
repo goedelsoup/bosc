@@ -55,7 +55,15 @@ Water-balance / stormwater modeling of the Lima municipal loop. Defers to the ro
   (ceiling)): a self-report of the very claim under test is not an instrument, so it **never feeds the
   classifier and never upgrades the source** — it stays a `gap` with the `[reference]` pin KEPT, and
   its lead names the specific open quantity (Van Wert's initial closed-loop fill, whose fill-vs-annual
-  framing is the #1409 discrepancy). It **recommends, never
+  framing is the #1409 discrepancy). A gap the claim's own source has bounded with a self-disclosed
+  permit **CEILING** (B3 Springfield, #1683 — the City 5C FAQ's "up to 300,000 gal/day" permitted at a
+  >80 °F extreme-heat max, "near zero" most of the year) records it on `disclosed_ceiling` (a fourth
+  provenance slot): a permitted PEAK ceiling from the claim's OWN source is **not** a
+  `reservation_conflict` — unlike B1's independently-negotiated reservation it is not a demand signal
+  that contradicts the dry claim (a dry loop sits far below it) — so, like `disclosed_makeup`, it never
+  feeds the classifier or upgrades the source; it stays a `gap` with the `[reference]` pin KEPT, and its
+  lead names the actual-vs-ceiling denominator (the metered municipal withdrawal, #1415). It
+  **recommends, never
   mutates** `cooling_model` (re-archetyping is a reviewed B1–B6 edit). Each facility is derived under
   its OWN site's `Settings` so a cross-site cohort never leaks the active site's climatology. Written
   to `data/reference/oepa/cooling-reconciliation.yaml` by `watermark cooling-reconcile --write`; the
@@ -63,7 +71,10 @@ Water-balance / stormwater modeling of the Lima municipal loop. Defers to the ro
   (`reconcile_troy_piqua`, #1681 — Troy-Piqua pins `UNKNOWN` so it is NOT in A2's cohort, but its
   closed-loop-FAQ-vs-2.0-MGD-reservation conflict is reconciled explicitly as a live
   `reservation_conflict`), **plus Van Wert** (`reconcile_van_wert`, #1682 — a cohort member reconciled
-  explicitly so its disclosed ~660k gal figure + the #1409 initial-fill sharpen its gap), **plus the
+  explicitly so its disclosed ~660k gal figure + the #1409 initial-fill sharpen its gap), **plus
+  Springfield** (`reconcile_springfield`, #1683 — a cohort member reconciled explicitly so its
+  self-disclosed 300k gal/day permitted ceiling — not a `reservation_conflict` — + the #1415
+  actual-vs-ceiling denominator sharpen its "not evaporative" gap), **plus the
   Intel evaporative positive control** (`INTEL_CONTROL_FACILITY`,
   a constructed calibration vector — NOT a registered site, NOT documented Intel data) the harness
   must classify `corroborated`, the no-false-positive gate. (4) `cooling_corroborators.py` (A4,
