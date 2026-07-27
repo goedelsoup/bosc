@@ -88,6 +88,13 @@ classifies the reconciliation:
   so it cannot corroborate the operator's own claim or upgrade the source — the pin stays
   `[reference]`, and the lead names the specific open quantity (Van Wert's initial
   closed-loop fill, whose fill-vs-annual framing is the #1409 discrepancy).
+  **B3 (#1683, Springfield)** sharpens a gap the other way: the claim's own source (the City
+  5C FAQ) self-discloses a permitted-withdrawal **ceiling** (300,000 gal/day at a >80 °F
+  extreme-heat max, "near zero" most of the year), recorded on `disclosed_ceiling`. A permitted
+  PEAK ceiling from the claim's own source is **not** a `reservation_conflict` — unlike B1's
+  independently-negotiated reservation it is not a demand signal that contradicts the dry claim
+  (a dry loop sits far below it) — so it too never feeds the classifier or upgrades the source;
+  the lead names the actual-vs-ceiling denominator (pull the metered municipal withdrawal, #1415).
 
 Where **both** documented makeup and blowdown are on record, cycles-of-concentration is
 back-solved (makeup / blowdown) and emitted as an **`[inference]` bracket, never a
@@ -96,7 +103,8 @@ headline scalar** — the ratio of two self-reported figures is not a measuremen
 **Every live cohort facility is a `gap` today**: while OHD000001 is a draft permit and
 no facility-own DMR is on record, there is no documented makeup or blowdown to test
 against — including Van Wert, whose operator-disclosed ~660k gal figure is a self-report,
-not an instrument (B2 #1682). The seams auto-activate when the records land.
+not an instrument (B2 #1682), and Springfield, whose self-disclosed 300k gal/day is a
+permitted ceiling, not metered use (B3 #1683). The seams auto-activate when the records land.
 
 **The harness recommends; it never mutates `cooling_model`.** Re-archetyping a facility
 is a reviewed B1–B6 edit landed with the instrument cited — the reconciliation record is

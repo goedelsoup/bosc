@@ -118,6 +118,22 @@ cooling-draw input: **150 MW IT load + closed-loop + up to 300,000 gal/day (≈0
 in `data/reference/hydrology/low-flow-7q10.derived.yaml`, #455) and the sole-source aquifer. Confirm the
 air-permit power figure before relying on the draw. `[open]`
 
+**Cooling-cycling reconciliation (B3, #1683).** The A3 harness (`watermark cooling-reconcile`) tested
+the `closed_loop_dry` "not evaporative" claim against the record. With no metered makeup (the Ohio DNR
+withdrawal registry has no Clark County pull built) and no facility-own blowdown (OHD000001 is a draft
+permit, unlinked to the facility by name), the outcome is a **`gap`** — the pin stays `closed_loop_dry` /
+`[reference]`, **not** upgraded to `document`-grade. The pivotal call: the 300,000 gal/day figure is a
+**permitted withdrawal ceiling** (a >80 °F extreme-heat max, "near zero" most of the year, ~30k gal/day
+realistic) **self-disclosed by the same City FAQ that makes the claim** — so, unlike Troy-Piqua's
+independently-negotiated 2.0 MGD reservation (B1 #1681, a `reservation_conflict`), it is **not** a demand
+signal that contradicts the dry claim: *a dry loop should sit far below it*. It is recorded on
+`disclosed_ceiling` (with the ~30k realistic draw on `disclosed_makeup`) — never `documented_*` (metered)
+or `reserved_*` (negotiated) — a self-report that can neither corroborate "not evaporative" (circular)
+nor re-archetype. The missing measurement — the **actual metered municipal withdrawal against the 300k
+gal/day ceiling** (approached → evaporative; far below → dry) — plus the blowdown / OHD000001 coverage is
+sharpened into a C2 records request (#1688 / #1415). See `data/reference/oepa/cooling-reconciliation.yaml`.
+`[open]`
+
 ## Pinnable instruments to ingest (priority — the "pin" half of #454)
 
 1. **Ohio EPA Air PTI** — 5C, 601 Benjamin Drive generators (Ohio EPA eDocument System / Air Services,

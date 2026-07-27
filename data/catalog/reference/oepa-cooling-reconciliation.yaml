@@ -55,7 +55,14 @@ notes: >-
   ongoing draw is recorded on `disclosed_makeup` (never `documented_*` — a self-report is not a
   metered instrument): the outcome stays a `gap` that KEEPS the `[reference]` pin (never upgraded),
   and its lead names the specific open quantity — the initial closed-loop fill, whose fill-vs-annual
-  framing is the #1409 discrepancy. Every other
+  framing is the #1409 discrepancy. **Springfield** (B3 #1683) is likewise a cohort member reconciled
+  explicitly: the 300,000 gal/day figure is a permitted-withdrawal CEILING self-disclosed by the City
+  5C FAQ that makes the "not evaporative" claim, recorded on a new `disclosed_ceiling` slot. A permitted
+  PEAK ceiling from the claim's OWN source is NOT a `reservation_conflict` (unlike B1's
+  independently-negotiated reservation, a dry loop sits far below it) — so, like `disclosed_makeup`, it
+  never feeds the classifier and never upgrades the source; the outcome stays a `gap` with the
+  `[reference]` pin KEPT, and its lead names the actual-vs-ceiling denominator (pull the metered
+  municipal withdrawal, #1415). Every other
   live cohort facility resolves to `gap` today (no documented makeup/blowdown while OHD000001 is
   draft and no facility-own DMR is on record). Each record
   also carries the A4 (#1680) `corroborators` block — two independent tells reconciled against

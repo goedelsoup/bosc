@@ -230,14 +230,18 @@ def cooling_reconcile_cmd(
         a = r.account
         documented = a.documented_blowdown or a.documented_makeup
         # A reservation_conflict has no metered figure — show the disclosed reservation ceiling
-        # instead, marked "(reserved)" so a ceiling is never read as a metered use. A disclosed-fill
-        # gap (Van Wert B2, #1682) likewise shows the operator's self-reported ongoing draw marked
-        # "(disclosed)" so a self-report is never read as a metered use either.
+        # instead, marked "(reserved)" so a ceiling is never read as a metered use. A disclosed gap
+        # likewise shows what the claim's own source self-reported: a permitted-withdrawal CEILING
+        # marked "(ceiling)" (Springfield B3, #1683 — checked first, it is the actual-vs-ceiling
+        # denominator) or an ongoing draw marked "(disclosed)" (Van Wert B2, #1682) — so a self-report
+        # is never read as a metered use either.
         reserved = a.reserved_makeup or a.reserved_blowdown
         if documented is not None:
             documented_cell = f"{documented.value:g} MGD"
         elif reserved is not None:
             documented_cell = f"{reserved.value:g} MGD (reserved)"
+        elif a.disclosed_ceiling is not None:
+            documented_cell = f"{a.disclosed_ceiling.value:g} MGD (ceiling)"
         elif a.disclosed_makeup is not None:
             documented_cell = f"{a.disclosed_makeup.value:g} MGD (disclosed)"
         else:
@@ -279,7 +283,10 @@ def cooling_reconcile_cmd(
         r"keeps the UNKNOWN pin + sharpens lead #1486, never a headline consumptive. A 'disclosed' "
         r"documented cell (Van Wert B2, #1682) is an operator SELF-REPORT (not a metered instrument): "
         r"it sharpens the gap onto the initial-fill open quantity (#1409) but keeps the \[reference] "
-        r"pin, never upgraded. corrob† = the A4 "
+        r"pin, never upgraded. A 'ceiling' documented cell (Springfield B3, #1683) is a permitted "
+        r"withdrawal max the claim's OWN source self-disclosed — NOT a reservation conflict (a dry "
+        r"loop sits far below it) and not metered use, so it too keeps the \[reference] pin and "
+        r"sharpens the gap onto the actual-vs-ceiling denominator (#1415). corrob† = the A4 "
         r"independent corroborators (air-permit cooling-tower PM + Tier II chemistry) reconciled "
         r"against the claim — SECONDARY, never the sole basis for a re-archetype. The Intel row is a "
         r"constructed positive control.[/]"

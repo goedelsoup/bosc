@@ -556,6 +556,127 @@ def test_cohort_includes_van_wert_b2_disclosed_gap_exactly_once() -> None:
     assert vw[0].is_control is False
 
 
+# -------------------------------------------- B3 disclosed-ceiling gap — Springfield (#1683)
+
+
+def test_disclosed_permit_ceiling_does_not_fire_a_reservation_conflict() -> None:
+    # The pivotal B3 call: a self-disclosed permit CEILING (the claim's own source discloses a
+    # permitted-withdrawal max) is NOT a reservation_conflict — unlike B1's independently-negotiated
+    # reservation, a permitted peak ceiling from the claim's own source is not a demand signal that
+    # contradicts the dry claim (a dry loop sits far below it). It stays a GAP, [reference] pin KEPT.
+    rec = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="[reference] closed-loop claim, 'not evaporative'",
+        settings=Settings(),
+        disclosed_ceiling=ProvenancedValue.from_reference(
+            0.3, "MGD", citation="self-disclosed 300k gal/day permitted peak ceiling"
+        ),
+        water_lead_ref="#1415",
+    )
+    # 0.3 MGD is well above the ~0 floor and the dry claim predicts ~0 — a *reserved* figure of that
+    # size WOULD be a reservation_conflict (see the B1 tests), but a *disclosed* ceiling must not.
+    assert rec.outcome is cr.ReconcileOutcome.GAP
+    assert rec.outcome is not cr.ReconcileOutcome.RESERVATION_CONFLICT
+    assert rec.recommended_archetype is None  # never re-archetyped
+    assert rec.recommended_source is None  # NOT upgraded to 'document'
+    assert rec.kept_archetype is None  # a gap, not a reservation_conflict keep-the-pin
+    assert rec.tag == "[open]"
+
+
+def test_disclosed_ceiling_lands_on_its_own_slot_never_documented_or_reserved() -> None:
+    # A self-disclosed ceiling never lands on documented_* (metered) or reserved_* (a negotiated
+    # reservation) — the provenance categories stay distinct so it is never read as either downstream.
+    rec = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="x",
+        settings=Settings(),
+        disclosed_ceiling=ProvenancedValue.from_reference(0.3, "MGD", citation="permit ceiling"),
+    )
+    a = rec.account
+    assert a.disclosed_ceiling is not None and a.disclosed_ceiling.value == 0.3
+    assert a.disclosed_ceiling.source == "reference"  # a self-report, never 'document'
+    assert a.documented_makeup is None and a.documented_blowdown is None
+    assert a.reserved_makeup is None and a.reserved_blowdown is None
+    # It never seeds a back-solved CoC either (no metered/reservation pair to divide).
+    assert a.backsolved_cycles is None
+
+
+def test_disclosed_ceiling_gap_lead_names_the_actual_vs_ceiling_denominator() -> None:
+    # The sharpened gap lead names the missing measurement — the actual metered withdrawal against the
+    # disclosed ceiling — and references the site's standing water lead, not the generic gap ask.
+    rec = cr.reconcile_facility(
+        _dry_facility(),
+        site="test-site",
+        claim_source="reference",
+        claim_citation="x",
+        settings=Settings(),
+        disclosed_ceiling=ProvenancedValue.from_reference(0.3, "MGD", citation="permit ceiling"),
+        water_lead_ref="#1415",
+    )
+    assert rec.lead is not None
+    joined = " | ".join(rec.lead.records_sought)
+    assert "actual municipal withdrawal vs the disclosed permitted ceiling" in joined
+    assert "#1415" in rec.lead.epic_ref
+    # The finding is explicit that a self-disclosed ceiling is not a reservation conflict and cannot
+    # corroborate the claim (circular), and keeps the pin [reference].
+    assert "not a reservation conflict" in rec.finding.lower()
+    assert "Keep the pin [reference]" in rec.finding
+
+
+def test_reconcile_springfield_b3_disclosed_ceiling_gap() -> None:
+    # The B3 case: Springfield's closed_loop_dry "not evaporative" claim vs the record. It IS in A2's
+    # cohort (pins closed_loop_dry) but is reconciled explicitly so the FAQ's self-disclosed 300k
+    # gal/day permitted ceiling + the ~30k gal/day realistic draw are recorded and #1415 sharpens the gap.
+    rec = cr.reconcile_springfield(settings=Settings())
+    assert rec.site == "springfield"
+    assert rec.facility == '5C Data Centers "CMH01"'
+    assert rec.is_control is False  # a real registered site, not a constructed control
+    assert rec.claimed_archetype == "closed_loop_dry"
+    assert rec.claim_source == "reference"
+    # No A1 withdrawal (Clark County not built) + no A2 blowdown (OHD000001 draft) → an [open] gap that
+    # KEEPS the [reference] pin — never silently promoted, and NOT a reservation_conflict (the B3 call).
+    assert rec.outcome is cr.ReconcileOutcome.GAP
+    assert rec.recommended_archetype is None
+    assert rec.recommended_source is None
+    assert rec.tag == "[open]"
+    # Both self-reported figures are recorded — the permitted ceiling (0.3 MGD) + the realistic draw
+    # (0.03 MGD) — on the disclosed_* slots, never on documented_* (metered) or reserved_* (negotiated).
+    a = rec.account
+    assert a.disclosed_ceiling is not None and a.disclosed_ceiling.value == 0.3
+    assert a.disclosed_makeup is not None and a.disclosed_makeup.value == 0.03
+    assert a.disclosed_ceiling.source == "reference" and a.disclosed_makeup.source == "reference"
+    assert a.documented_makeup is None and a.documented_blowdown is None
+    assert a.reserved_makeup is None and a.reserved_blowdown is None
+    # The gap lead is sharpened onto the actual-vs-ceiling denominator + references #1415.
+    assert rec.lead is not None
+    assert "#1415" in rec.lead.epic_ref
+    assert "not evaporative" in rec.lead.subject
+    # The finding names the ceiling as a self-report that keeps the pin [reference] and is not a conflict.
+    assert "not 'confirmed dry'" in rec.finding
+    assert "300,000 gal/day" in rec.finding
+    assert "Keep the pin [reference]" in rec.finding
+    # The profile pin is untouched (the harness recommends, it does not mutate).
+    springfield_fac = next(
+        f for f in cr.SITES["springfield"].facilities if f.name == '5C Data Centers "CMH01"'
+    )
+    assert springfield_fac.cooling_model is CoolingModelType.CLOSED_LOOP_DRY
+
+
+def test_cohort_includes_springfield_b3_disclosed_ceiling_gap_exactly_once() -> None:
+    # Springfield IS in A2's cohort but is reconciled explicitly (skipped in the generic loop) — so it
+    # appears exactly once, as a disclosed-ceiling gap, not twice, and never as a reservation_conflict.
+    records = cr.reconcile_cohort(settings=Settings())
+    sp = [r for r in records if r.site == "springfield"]
+    assert len(sp) == 1
+    assert sp[0].outcome is cr.ReconcileOutcome.GAP
+    assert sp[0].account.disclosed_ceiling is not None
+    assert sp[0].is_control is False
+
+
 # --------------------------------------------------------------------- A4 corroborators (#1680)
 
 
