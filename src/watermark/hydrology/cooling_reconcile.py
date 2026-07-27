@@ -629,8 +629,11 @@ def _disclosed_ceiling_gap_lead(
             "reservation, so it is not a reservation conflict: a genuinely dry loop sits far below "
             "it. But a self-report is not a metered instrument, so it can neither confirm 'not "
             "evaporative' nor re-archetype. Pull the actual metered withdrawal to test whether use "
-            f"approaches the {ceiling_phrase} ceiling (which would contradict 'not evaporative') or "
-            f"sits far below it (dry), plus the blowdown / OHD000001 to complete the account ({issue_ref})."
+            f"approaches the {ceiling_phrase} ceiling or sits far below it — a screening signal only, "
+            "not proof of mechanism: evaporative vs. dry is established by an ingested mechanical/"
+            "plumbing permit or a facility-own blowdown/discharge record (an on-site reservoir could "
+            f"also supply cooling), not the withdrawal figure alone — plus the blowdown / OHD000001 "
+            f"to complete the account ({issue_ref})."
         ),
         epic_ref=f"#1688 (C2); {issue_ref}",
         tag="[open]",

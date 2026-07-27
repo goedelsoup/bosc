@@ -119,20 +119,25 @@ in `data/reference/hydrology/low-flow-7q10.derived.yaml`, #455) and the sole-sou
 air-permit power figure before relying on the draw. `[open]`
 
 **Cooling-cycling reconciliation (B3, #1683).** The A3 harness (`watermark cooling-reconcile`) tested
-the `closed_loop_dry` "not evaporative" claim against the record. With no metered makeup (the Ohio DNR
-withdrawal registry has no Clark County pull built) and no facility-own blowdown (OHD000001 is a draft
-permit, unlinked to the facility by name), the outcome is a **`gap`** — the pin stays `closed_loop_dry` /
-`[reference]`, **not** upgraded to `document`-grade. The pivotal call: the 300,000 gal/day figure is a
-**permitted withdrawal ceiling** (a >80 °F extreme-heat max, "near zero" most of the year, ~30k gal/day
-realistic) **self-disclosed by the same City FAQ that makes the claim** — so, unlike Troy-Piqua's
+the `closed_loop_dry` "not evaporative" claim against the record. **No matching makeup record is on file**
+(the Ohio DNR WWFRP water-withdrawal registry — the A1 connector — has no Clark County withdrawal pull
+built) and **no matching facility-own discharge record is on file** (OHD000001, the Ohio EPA draft
+data-center NPDES general permit, comment thru 2025-12-17, is still draft and not yet linked to the
+facility by name; no facility-specific NPDES/DMR located) — an **absence of records, not evidence of zero
+use or discharge**. So the outcome is a **`gap`** — the pin stays `closed_loop_dry` / `[reference]`,
+**not** upgraded to `document`-grade. The pivotal call: the 300,000 gal/day figure is a **permitted
+withdrawal ceiling** (a >80 °F extreme-heat max, "near zero" most of the year, ~30k gal/day realistic)
+**self-disclosed by the same City FAQ that makes the claim** — so, unlike Troy-Piqua's
 independently-negotiated 2.0 MGD reservation (B1 #1681, a `reservation_conflict`), it is **not** a demand
 signal that contradicts the dry claim: *a dry loop should sit far below it*. It is recorded on
 `disclosed_ceiling` (with the ~30k realistic draw on `disclosed_makeup`) — never `documented_*` (metered)
 or `reserved_*` (negotiated) — a self-report that can neither corroborate "not evaporative" (circular)
-nor re-archetype. The missing measurement — the **actual metered municipal withdrawal against the 300k
-gal/day ceiling** (approached → evaporative; far below → dry) — plus the blowdown / OHD000001 coverage is
-sharpened into a C2 records request (#1688 / #1415). See `data/reference/oepa/cooling-reconciliation.yaml`.
-`[open]`
+nor re-archetype. The metered municipal withdrawal against the 300k gal/day ceiling remains an
+**unresolved measurement**: it screens whether the permitted draw is approached, but a withdrawal figure
+alone does **not** establish the cooling mechanism — evaporative vs. dry is settled only by an ingested
+mechanical/plumbing permit or a facility-own blowdown/discharge record (an on-site reservoir could also
+supply cooling). That instrument set + the blowdown / OHD000001 coverage is sharpened into a C2 records
+request (#1688 / #1415). See `data/reference/oepa/cooling-reconciliation.yaml`. `[open]`
 
 ## Pinnable instruments to ingest (priority — the "pin" half of #454)
 
