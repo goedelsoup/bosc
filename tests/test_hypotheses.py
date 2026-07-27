@@ -29,7 +29,16 @@ _EXPECTED = {
     ("defense", "lima"): (
         "anchor",
         "arsenal",
-        {"nexus": "Lima Army Tank Plant (JSMC)", "linkage": "Co-located · Allen Co."},
+        {
+            "nexus": "Lima Army Tank Plant (JSMC)",
+            "linkage": "Co-located · Allen Co.",
+            # The capture sub-thesis (#1663) reads as a LIMIT here, not a confirmation: the
+            # arsenal is government-owned/contractor-operated, so its workforce books as private
+            # manufacturing and the county's federal-employment share sits at a third of the
+            # national one. A field that can carry a negative is the point of adding it.
+            "capture": "Federal payroll a third of the national share (LQ 0.33)",
+            "federal_flow": "321 federal-civilian jobs · $83.8k avg pay vs $58.8k county (QCEW 2024)",
+        },
     ),
     ("defense", "springfield"): (
         "moderate",
@@ -115,8 +124,10 @@ def test_get_hypothesis() -> None:
 
 
 def test_hypothesis_fields_and_groups() -> None:
-    assert HYPOTHESES["defense"].fields == ("nexus", "linkage")
-    assert HYPOTHESES["defense"].groups == ("arsenal", "federal", "supply", "watch")
+    # H2 carries BOTH readings (#1663, ME-D): nexus/linkage are the geographic one, and
+    # capture/federal_flow the economic one that used to be expressible only under H3.
+    assert HYPOTHESES["defense"].fields == ("nexus", "linkage", "capture", "federal_flow")
+    assert HYPOTHESES["defense"].groups == ("arsenal", "federal", "supply", "capture", "watch")
     assert HYPOTHESES["surveillance"].fields == ("operator", "capital", "end_use")
     # H1 CWA coercion cells use wwtp + gap; the basin network provides the rest.
     assert HYPOTHESES["water"].fields == ("wwtp", "gap")
@@ -272,3 +283,36 @@ def test_hypothesis_model_rejects_extra() -> None:
 
     with pytest.raises(ValidationError):
         Hypothesis(id="x", number="H9", name="x", claim="x", thesis="x", status="emerging", bogus=1)  # type: ignore[call-arg]
+
+
+def test_defense_capture_sub_thesis_is_expressible_under_h2() -> None:
+    """The economic-capture reading belongs to H2, not only to H3 (#1663, ME-D).
+
+    Before this, "defense distorts the local economy" had no H2 vocabulary — the lens exposed
+    only `nexus`/`linkage`, so capture had to be filed under H3 surveillance, whose `capital`
+    field is about private operators and public subsidy. The lint enforces the field set, so a
+    capture cell would have been rejected outright.
+    """
+    from watermark.hypotheses import HypothesisAssessment, lint_assessments
+
+    h2 = HYPOTHESES["defense"]
+    assert {"capture", "federal_flow"} <= set(h2.fields)
+    assert "capture" in h2.groups
+    # The fields are independent of the single `sub_thesis` frame, so a cell whose primary
+    # frame is the arsenal nexus can still state what the money does — Lima's does.
+    lima = next(c for c in assessments_for("defense") if c.site == "lima")
+    assert lima.group == "arsenal" and lima.fields["capture"]
+    # The capture reading names its own grounding, and is cited like any other claim.
+    assert any("QCEW" in (cit.note or "") for cit in lima.citations)
+
+    # A capture-framed cell is now structurally valid: right group, right fields, right frame.
+    cell = HypothesisAssessment(
+        site="lima",
+        hypothesis="defense",
+        group="capture",
+        sub_thesis="capture",
+        fields={"capture": "x", "federal_flow": "y"},
+    )
+    assert all(k in h2.fields for k in cell.fields) and cell.group in h2.groups
+    # And the committed store still lints clean with the new field set in place.
+    assert [f for f in lint_assessments() if f.kind != "untracked-site"] == []

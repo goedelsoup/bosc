@@ -104,7 +104,7 @@ DB) is deferred to a follow-up (needs the vector index, #1564).
 | `concepts` | collection | the wiki concept-glossary store (`data/concepts/*.md`); `related` links sibling concepts, body carries `[[wiki links]]` |
 | `places` | collection | curated POI profiles; `slug` is the cross-feed key; relationships link entity keys |
 | `candidates` | collection | demand-fit cloud-consumer candidates; `entity_key` set when matched in the graph |
-| `defense-contractors` | object | DoD prime seed list + corpus matches (entity keys) + the Allen County parcel scan |
+| `defense-contractors` | object | DoD prime seed list + corpus matches (entity keys) + the Allen County parcel scan; each contractor carries a `tag` register for its corridor-presence claim, each parcel a `record_tag` (GIS columns) kept distinct from its `attribution_tag` (what the scan says the parcel is) |
 | `meetings` | collection | corridor-relevant subdivision meeting summaries, each citing its source artifact |
 | `documents` | collection | the source-document catalog grouped by collection (as-received paths, chain of custody) |
 | `exhibits` | collection | the curated, published exhibit allowlist + availability |

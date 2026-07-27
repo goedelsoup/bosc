@@ -23,11 +23,41 @@ from watermark.site.feeds import (
 )
 
 if TYPE_CHECKING:
+    from watermark.connectors.gis_schema import GisDefenseMeta
     from watermark.pipeline.entities import Entity
+    from watermark.site.feeds import FactStatus
     from watermark.usaspending import RecipientAward, UsaSpendingInventory
 
 # nexus strength ordering for the rolled-up contractor nexus (strongest wins).
 _NEXUS_RANK = {"verified": 3, "context": 2, "open": 1}
+
+# --- the typed evidence registers this projection stamps (#1663, ME-D) --------------------------
+# The seed list's match method is a case-insensitive substring test on a party name, so a bare hit
+# is an `[inference]` by construction — a property of the method, identical at every site, hence a
+# module constant rather than a profile knob (unlike the per-jurisdiction enclave attribution,
+# which a peer states on its own `GisDefenseMeta`). A hit is upgraded to `[verified]` only when a
+# matched entity resolves to a UEI-pinned USASpending recipient whose *curated* nexus is
+# `verified` — an independent, reviewed corroboration of the corridor tie, not a second reading of
+# the same name. Nothing matched is `[open]`: the seed pattern was searched and the corpus did not
+# answer, which is a standing question, never a clearance.
+_MATCH_BASIS = (
+    "owner / party name-pattern match against this site's entity graph — a lead to verify, not a "
+    "classification and not an accusation"
+)
+_MATCH_VERIFIED_BASIS = (
+    "the name-pattern match is corroborated by a UEI-pinned USASpending recipient whose curated "
+    "corridor nexus is `verified`"
+)
+_MATCH_OPEN_BASIS = (
+    "the seed patterns were searched against this site's entity graph and matched nothing — an "
+    "unanswered question, not a clearance"
+)
+# A prime-owned row's attribution is the `matched_prime` the owner-name scan assigned it; the
+# enclave rows' attribution comes from the profile (see `GisDefenseMeta.enclave_attribution`).
+_PRIME_OWNED_BASIS = (
+    "the parcel's CAMA owner / deeded-owner / second-owner field matches this prime's name "
+    "pattern; ownership is verbatim from the county GIS, the prime attribution is the match"
+)
 
 # The defense cross-match runs against the whole entity graph, and the graph's LEI enrichment
 # folds a defense-operator overlay (the reference build's JSMC / General Dynamics operator chain +
@@ -129,12 +159,47 @@ def _contractor_award(entity_key: str, rec: RecipientAward) -> ContractorAward:
     )
 
 
+def _match_register(dc_awards: list[ContractorAward]) -> tuple[FactStatus, str]:
+    """The register of one contractor's corridor-presence claim, and why (#1663, ME-D).
+
+    Called only for a contractor that **matched** something, so the floor here is ``inference``:
+    an empty ``dc_awards`` means the matches resolved to no USASpending recipient, not that
+    nothing matched. The caller handles the nothing-matched case (``open``) before reaching this.
+    """
+    if any(a.nexus == "verified" for a in dc_awards):
+        return "verified", _MATCH_VERIFIED_BASIS
+    return "inference", _MATCH_BASIS
+
+
+def _scan_parcel(
+    row: dict[str, object], *, attribution: str | None, tag: FactStatus, basis: str | None
+) -> ScanParcel:
+    """One scan row as a :class:`ScanParcel`, with its two registers stamped separately.
+
+    ``record_tag`` is left at its ``verified`` default: every row here is a live pull from the
+    jurisdiction's public ArcGIS parcel service, verbatim. The attribution is the analyst claim
+    layered on top — and a row that names none asserts none, so it lands at ``open`` rather than
+    carrying a tag over an empty claim (a site with no defense profile, or a scan row the
+    owner-name pass left unattributed).
+    """
+    asserted = attribution is not None
+    return ScanParcel.model_validate(
+        {
+            **row,
+            "attribution": attribution,
+            "attribution_tag": tag if asserted else "open",
+            "attribution_basis": basis if asserted else None,
+        }
+    )
+
+
 def export_defense_contractors(
     dcl: DefenseContractorList,
     *,
     egraph: EntityGraph | None = None,
     scan: DefenseLandScan | None = None,
     awards: UsaSpendingInventory | None = None,
+    defense_meta: GisDefenseMeta | None = None,
 ) -> DefenseFeed:
     """Export the defense-contractor seed list + parcel scan as a :class:`DefenseFeed`.
 
@@ -144,6 +209,13 @@ def export_defense_contractors(
     that resolves to a USASpending recipient is joined onto the contractor's ``awards`` (with a
     rolled-up ``total_obligations`` + strongest ``nexus``), so the feed finally shows the federal
     dollars that already reached the entity graph (#1662, ME-C).
+
+    Every row also leaves here **tagged** (#1663, ME-D): a contractor carries the register of its
+    corridor-presence claim, and a scan parcel carries its GIS columns' register separately from
+    the register of what the scan says the parcel *is*. ``defense_meta`` is the active site
+    profile's :class:`~watermark.connectors.gis_schema.GisDefenseMeta` — the source of the enclave
+    attribution + its tag. Omitted (or absent on the profile), the enclave rows keep their verified
+    ownership and assert no attribution at all, rather than inheriting Lima's JSMC reading.
     """
     matches: dict[str, list[str]] = dcl.match(_corpus_names(egraph)) if egraph is not None else {}
     index = _award_index(awards)
@@ -168,6 +240,7 @@ def export_defense_contractors(
             if dc_awards
             else None
         )
+        tag, tag_basis = _match_register(dc_awards) if keys else ("open", _MATCH_OPEN_BASIS)
         contractors.append(
             DefenseContractorItem(
                 name=dc.name,
@@ -177,15 +250,33 @@ def export_defense_contractors(
                 awards=dc_awards,
                 total_obligations=total,
                 nexus=nexus,
+                tag=tag,
+                tag_basis=tag_basis,
             )
         )
     notes: dict[str, object] = dict(scan.meta) if scan is not None else {}
     notes[MATCH_PROVENANCE_KEY] = _MATCH_PROVENANCE_NOTE
     return DefenseFeed(
         contractors=contractors,
-        prime_owned=[ScanParcel.model_validate(r) for r in (scan.prime_owned if scan else [])],
+        prime_owned=[
+            _scan_parcel(
+                r,
+                attribution=str(r["matched_prime"]) if r.get("matched_prime") else None,
+                tag="inference",
+                basis=_PRIME_OWNED_BASIS,
+            )
+            for r in (scan.prime_owned if scan else [])
+        ],
         army_controlled=[
-            ScanParcel.model_validate(r) for r in (scan.army_controlled if scan else [])
+            _scan_parcel(
+                r,
+                # A site with no defense profile inherits nothing — no attribution, and so
+                # (per `_scan_parcel`) an `open` register rather than the reference build's.
+                attribution=defense_meta.enclave_attribution if defense_meta else None,
+                tag=defense_meta.enclave_attribution_tag if defense_meta else "open",
+                basis=defense_meta.army_controlled_note if defense_meta else None,
+            )
+            for r in (scan.army_controlled if scan else [])
         ],
         notes=notes,
     )

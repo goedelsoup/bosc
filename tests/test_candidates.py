@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from watermark import candidates
+from watermark.config import Settings
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 ENTITIES = REPO_ROOT / "data" / "entities"
@@ -112,3 +113,112 @@ def test_defense_feed_joins_federal_awards() -> None:
     # Without an awards inventory the join is a no-op (a peer with no watchlist).
     peer = export_defense_contractors(dcl, egraph=graph, awards=None)
     assert all(c.total_obligations is None for c in peer.contractors)
+
+
+def test_defense_feed_tags_every_contractor_with_its_register() -> None:
+    """The "leads, not verdicts" caveat is typed, not prose (#1663, ME-D).
+
+    Three registers, and the classifier must never collapse them: nothing matched is ``open``
+    (a standing question, not a clearance), a bare name-pattern hit is ``inference``, and only a
+    UEI-pinned award whose *curated* nexus is ``verified`` upgrades the corridor-presence claim.
+    """
+    from watermark.candidates import DefenseContractor, DefenseContractorList
+    from watermark.pipeline.entities import Entity, EntityGraph, normalize_name
+    from watermark.site.candidates import export_defense_contractors
+    from watermark.usaspending import RecipientAward, UsaSpendingInventory
+
+    gd_key = normalize_name("GENERAL DYNAMICS CORPORATION")
+    gd = Entity(key=gd_key, kind="corporate", classification="corporate")
+    gd.variants.add("GENERAL DYNAMICS CORPORATION")
+    gd.uei = "VF58HFRNGEL8"
+    ctx_key = normalize_name("CONTEXTUAL HOLDINGS LLC")
+    ctx = Entity(key=ctx_key, kind="corporate", classification="corporate")
+    ctx.variants.add("CONTEXTUAL HOLDINGS LLC")
+    ctx.uei = "CTX000000001"
+    graph = EntityGraph(entities={gd_key: gd, ctx_key: ctx})
+
+    dcl = DefenseContractorList(
+        defense_contractors=[
+            DefenseContractor(name="General Dynamics", patterns=["GENERAL DYNAMICS CORPORATION"]),
+            DefenseContractor(name="Contextual", patterns=["CONTEXTUAL HOLDINGS"]),
+            DefenseContractor(name="Boeing", patterns=["BOEING"]),  # no corpus match
+        ]
+    )
+    awards = UsaSpendingInventory(
+        meta={},
+        records=[
+            RecipientAward(
+                watchlist_name="General Dynamics Corp",
+                recipient_id="gd-P",
+                uei="VF58HFRNGEL8",
+                recipient_name="GENERAL DYNAMICS CORPORATION",
+                total_obligations=301e9,
+                nexus="verified",
+            ),
+            RecipientAward(
+                watchlist_name="Contextual Holdings",
+                recipient_id="ctx-P",
+                uei="CTX000000001",
+                recipient_name="CONTEXTUAL HOLDINGS LLC",
+                total_obligations=5e6,
+                nexus="context",  # dollars, but no verified corridor tie
+            ),
+        ],
+    )
+
+    by_name = {
+        c.name: c for c in export_defense_contractors(dcl, egraph=graph, awards=awards).contractors
+    }
+    assert by_name["General Dynamics"].tag == "verified"
+    # Federal dollars alone do NOT verify a corridor presence — the curated nexus governs.
+    assert by_name["Contextual"].tag == "inference"
+    assert by_name["Boeing"].tag == "open"
+    assert all(c.tag_basis for c in by_name.values()), "every register states its basis"
+
+    # Drop the award join and the verified upgrade evaporates: the same name-pattern hit is
+    # only ever a lead on its own.
+    unjoined = {c.name: c for c in export_defense_contractors(dcl, egraph=graph).contractors}
+    assert unjoined["General Dynamics"].tag == "inference"
+
+
+def test_defense_scan_parcels_separate_ownership_from_attribution() -> None:
+    """A parcel's GIS columns and the scan's claim about it carry DIFFERENT registers (#1663).
+
+    This is the whole point of ME-D: "UNITED STATES owns this parcel" is verbatim from the county
+    service, while "this is the JSMC" is an analyst reading. One tag for both would either
+    launder the inference or discard the verified ownership.
+    """
+    from watermark.candidates import DefenseContractorList, DefenseLandScan
+    from watermark.site.candidates import export_defense_contractors
+
+    meta = candidates.load_defense_meta(_lima_settings())
+    assert meta is not None, "Lima registers a defense GIS config"
+    scan = DefenseLandScan(
+        meta={},
+        prime_owned=[{"parcel_no": "1", "owner": "BOEING CO", "matched_prime": "Boeing"}],
+        army_controlled=[{"parcel_no": "2", "owner": "UNITED STATES"}],
+    )
+    feed = export_defense_contractors(DefenseContractorList(), scan=scan, defense_meta=meta)
+
+    enclave = feed.army_controlled[0]
+    assert enclave.record_tag == "verified"  # the ownership row is verbatim
+    assert enclave.attribution_tag == "inference"  # the JSMC identification is not
+    assert enclave.attribution is not None and "Joint Systems" in enclave.attribution
+    assert enclave.attribution_basis and "verify against the deed" in enclave.attribution_basis
+    # The GIS columns survive the projection untouched (extra="allow").
+    assert enclave.model_dump()["owner"] == "UNITED STATES"
+
+    owned = feed.prime_owned[0]
+    assert owned.record_tag == "verified" and owned.attribution_tag == "inference"
+    assert owned.attribution == "Boeing"
+
+    # A site with no defense profile inherits nothing: the enclave rows keep their verified
+    # ownership and assert no attribution rather than borrowing Lima's JSMC reading.
+    peerless = export_defense_contractors(DefenseContractorList(), scan=scan, defense_meta=None)
+    assert peerless.army_controlled[0].attribution is None
+    assert peerless.army_controlled[0].attribution_tag == "open"
+    assert peerless.army_controlled[0].record_tag == "verified"
+
+
+def _lima_settings() -> Settings:
+    return Settings(data_dir=REPO_ROOT / "data", site="lima")

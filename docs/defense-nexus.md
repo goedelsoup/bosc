@@ -115,6 +115,40 @@ leaves the question exactly where it was — open, and now with one door confirm
 
 ———
 
+## the money is a separate question
+
+Everything above reads the nexus as _geography_ — how close the plant is, what the
+developer is cleared for. There is a second reading the lens could not previously even
+state: whether the defense base **distorts the local economy** the campus lands in.
+It is worth running, because it comes back as a limit rather than a confirmation.
+
+On the payroll record it does not. BLS QCEW 2024 annual averages for Allen County put
+federal-government employment at **321 jobs** across **15 establishments**, averaging
+**$83,773** a year against the county-wide **$58,790** — a real wage premium on a very
+small base `[verified: data/reference/economics/baseline.yaml]`. The location quotient
+is **0.33**: the county's share of federal employment is a third of the national one.
+An enclave economy would show the opposite.
+
+The reason is structural, and it is why the number is a limit rather than a finding.
+The JSMC is government-owned and **contractor-operated** — the plant belongs to the
+Army, the workforce belongs to General Dynamics Land Systems. Those jobs book as
+private manufacturing, not federal employment, so the federal ownership row does not
+count the arsenal at all `[inference]`. QCEW also excludes uniformed active-duty
+entirely `[reference: the model's standing coverage caveat]`. The payroll series is
+simply not the instrument that would measure this.
+
+Two threads stay open, and they are the ones worth pulling. The **land** is off the
+tax rolls: the five federally-held parcels carry **$14,688,900** of assessed market
+value across **384.15 acres**, and the United States owes no local property tax on any
+of it `[verified: data/reference/allen-gis/parcels.defense.yaml]`. And no **abatement,
+PILOT, or public-benefit agreement** tied to the JSMC footprint has been searched for
+or found `[open]` — unlike the campus's own CRA, which is on record. The prime's
+federal dollars are real but are the wrong scale to attribute here: General Dynamics
+Corp's **$301B** in all-time prime-award obligations (88% defense-agency) is a
+_national_ total resolved by UEI, not a Lima figure `[verified: data/reference/usaspending/awards.yaml]`,
+and the same graph overlay that surfaces it appears on every site in the network. It
+is a cross-reference to follow, not a local finding.
+
 ## where this stops
 
 What would actually close it is small and specific: the facility's **authorization
@@ -161,4 +195,7 @@ honest end is the open one.
   `data/extracted/legal/select-committee-2026/select-committee-2026.hearing-index.yaml`
 - The "no records" defense-channel response — `data/extracted/legal/prr-mandamus/bosc-prr-production-2026-06-05.response-index.yaml` (item 2)
 - The #1480 documented negative search for a facility-naming federal-authorization instrument (FedRAMP / DoD IL / GSA-DoD award / cloud-region) — `data/extracted/lima/federal-authorization-instrument-search.md`
+- The county employment / wage baseline behind the capture reading (QCEW 2024, federal ownership row) — `data/reference/economics/baseline.yaml`
+- The federally-held parcels' assessed value + acreage, and the typed scan registers — `data/reference/allen-gis/parcels.defense.yaml`
+- The prime's federal obligations (national totals, resolved by verified UEI) — `data/reference/usaspending/awards.yaml`
 - The end-use frame this sits inside — [end-use-and-workloads.md](end-use-and-workloads.md), [DOSSIER.md](DOSSIER.md)

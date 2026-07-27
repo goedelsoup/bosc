@@ -52,6 +52,13 @@ def source_is_verified(source_kind: SourceKind) -> bool:
 # ``SourceKind`` — it marks an asserted-but-*unquantified* fact (a known predicate with no
 # value yet), so it lives on the caller, not here.
 EvidenceTag = Literal["verified", "inference", "reference"]
+# The **full** four-tag register, including ``open`` — the vocabulary a model carries when it
+# tags a claim rather than deriving the tag from a ``SourceKind`` (a defense parcel's
+# attribution, a normalized fact's status). Lives here, next to its three-tag
+# ``SourceKind``-derivable subset, so the four modules that speak it —
+# :data:`watermark.site.feeds.FactStatus`, :class:`watermark.connectors.gis_schema.GisDefenseMeta`,
+# ``watermark.site.corpus_nodes``, and the frontend's ``FactStatus`` — can't drift (#1663, ME-D).
+EvidenceRegister = Literal["verified", "inference", "reference", "open"]
 
 
 def evidence_tag(source_kind: SourceKind) -> EvidenceTag:

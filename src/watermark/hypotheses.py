@@ -8,7 +8,8 @@ data-center boom?* The platform holds several competing readings of that questio
   discharge backstop structurally compels municipal acceptance. The reference thesis,
   fully assembled at Lima.
 * **H2 Defense & Federal Enclave** — the build-out tracks arsenals, air bases, federal
-  research, and the CHIPS program. *Emerging — under test.*
+  research, and the CHIPS program; and a capture sub-thesis asks whether the defense base
+  distorts the local economy the datacenter lands in. *Emerging — under test.*
 * **H3 Consumer Surveillance** — the operators behind shell LLCs, the public-subsidy
   stack that pulls them in, and the consumer surveillance apparatus the compute serves.
   *Emerging — under test.*
@@ -187,16 +188,34 @@ HYPOTHESES: dict[str, Hypothesis] = {
             "A second reading: the same map tracks arsenals, air bases, federal research "
             "and the CHIPS build — enclaves where federal jurisdiction, clearance, and "
             "defense supply chains concentrate. Newly opened; most sites are not yet "
-            "assessed, and a federal nexus is a signal, not a verdict."
+            "assessed, and a federal nexus is a signal, not a verdict. "
+            "A capture sub-thesis (#1663): the enclave is not only geography, it is an "
+            "economic structure — federal payroll and prime-award obligations concentrated in "
+            "one county, land held by the United States and therefore off the local tax rolls, "
+            "and the abatement / PILOT / public-benefit instruments layered on the ground "
+            "around it. The reading it tests is whether the defense base *distorts* the local "
+            "economy the datacenter then lands in, or merely sits beside it."
         ),
         status="emerging",
-        groups=("arsenal", "federal", "supply", "watch"),
-        fields=("nexus", "linkage"),
-        related_docs=("docs/defense-nexus.md",),
+        # `capture` is the economic reading's own taxonomy group, added alongside the three
+        # geographic ones (#1663, ME-D) — a site whose defense story is economic rather than
+        # locational lands there rather than being forced into `supply` or dropped to `watch`.
+        groups=("arsenal", "federal", "supply", "capture", "watch"),
+        # `nexus`/`linkage` carry the geographic reading; `capture`/`federal_flow` carry the
+        # economic one. They are independent of the cell's single `sub_thesis` frame, so a cell
+        # whose primary frame is the arsenal nexus can still state what the money does.
+        fields=("nexus", "linkage", "capture", "federal_flow"),
+        related_docs=("docs/defense-nexus.md", "docs/ECONOMICS.md"),
         predicted_evidence=(
             "a co-located or adjacent arsenal, air base, or federal research lab",
             "a CHIPS / federal semiconductor or defense-supply designation",
             "a documented authorization posture (FedRAMP / DoD IL clearance level)",
+            "a federal-ownership QCEW employment / wage share the county's private-ownership "
+            "sector mix structurally cannot show (the ME-B blind spot, #1661)",
+            "prime-award obligations resolving to a corridor entity by verified UEI, with the "
+            "defense-vs-civilian split of those dollars (#1662)",
+            "a tax abatement, PILOT, or public-benefit agreement on defense-adjacent land — or "
+            "federally-held acreage carrying assessed value but no local tax duty",
         ),
     ),
     "surveillance": Hypothesis(

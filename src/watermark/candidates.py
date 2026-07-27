@@ -25,6 +25,7 @@ import yaml
 from pydantic import BaseModel, ConfigDict, Field
 
 from watermark.config import Settings
+from watermark.connectors.gis_schema import GisDefenseMeta
 from watermark.sites import active_profile
 
 # Curated inventories live under this subdirectory of ``settings.entities_dir``.
@@ -154,3 +155,16 @@ def load_defense_scan(settings: Settings) -> DefenseLandScan | None:
         return None
     data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     return DefenseLandScan.model_validate(data)
+
+
+def load_defense_meta(settings: Settings) -> GisDefenseMeta | None:
+    """The active site's defense-scan provenance block, or ``None`` if it registers none.
+
+    The scan YAML reproduces this block's *prose* into its ``meta``; the feed projection reads it
+    here instead, because the typed enclave attribution + register (#1663) live on the profile —
+    the single source — and are never parsed back out of the note's ``[inference]`` prefix.
+    """
+    prof = active_profile(settings)
+    if prof.gis_parcel is None or prof.gis_parcel.defense is None:
+        return None
+    return prof.gis_parcel.defense.meta

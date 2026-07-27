@@ -12,7 +12,9 @@
       "matched_entities": [],
       "awards": [],
       "total_obligations": null,
-      "nexus": null
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
     },
     {
       "name": "Boeing",
@@ -23,7 +25,9 @@
       "matched_entities": [],
       "awards": [],
       "total_obligations": null,
-      "nexus": null
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
     },
     {
       "name": "RTX (Raytheon Technologies)",
@@ -40,7 +44,9 @@
       "matched_entities": [],
       "awards": [],
       "total_obligations": null,
-      "nexus": null
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
     },
     {
       "name": "Northrop Grumman",
@@ -52,7 +58,9 @@
       "matched_entities": [],
       "awards": [],
       "total_obligations": null,
-      "nexus": null
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
     },
     {
       "name": "General Dynamics (broader)",
@@ -206,7 +214,9 @@
         }
       ],
       "total_obligations": 301282862963.3,
-      "nexus": "verified"
+      "nexus": "verified",
+      "tag": "verified",
+      "tag_basis": "the name-pattern match is corroborated by a UEI-pinned USASpending recipient whose curated corridor nexus is `verified`"
     },
     {
       "name": "L3Harris Technologies",
@@ -220,7 +230,9 @@
       "matched_entities": [],
       "awards": [],
       "total_obligations": null,
-      "nexus": null
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
     },
     {
       "name": "BAE Systems",
@@ -231,7 +243,9 @@
       "matched_entities": [],
       "awards": [],
       "total_obligations": null,
-      "nexus": null
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
     },
     {
       "name": "Booz Allen Hamilton",
@@ -244,7 +258,9 @@
       "matched_entities": [],
       "awards": [],
       "total_obligations": null,
-      "nexus": null
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
     },
     {
       "name": "Leidos",
@@ -255,7 +271,9 @@
       "matched_entities": [],
       "awards": [],
       "total_obligations": null,
-      "nexus": null
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
     },
     {
       "name": "SAIC (Science Applications International)",
@@ -269,7 +287,9 @@
       "matched_entities": [],
       "awards": [],
       "total_obligations": null,
-      "nexus": null
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
     },
     {
       "name": "CACI International",
@@ -282,7 +302,9 @@
       "matched_entities": [],
       "awards": [],
       "total_obligations": null,
-      "nexus": null
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
     },
     {
       "name": "ManTech",
@@ -293,7 +315,9 @@
       "matched_entities": [],
       "awards": [],
       "total_obligations": null,
-      "nexus": null
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
     },
     {
       "name": "Honeywell",
@@ -304,7 +328,9 @@
       "matched_entities": [],
       "awards": [],
       "total_obligations": null,
-      "nexus": null
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
     },
     {
       "name": "Huntington Ingalls Industries",
@@ -317,7 +343,9 @@
       "matched_entities": [],
       "awards": [],
       "total_obligations": null,
-      "nexus": null
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
     },
     {
       "name": "Textron",
@@ -333,7 +361,9 @@
       ],
       "awards": [],
       "total_obligations": null,
-      "nexus": null
+      "nexus": null,
+      "tag": "inference",
+      "tag_basis": "owner / party name-pattern match against this site's entity graph — a lead to verify, not a classification and not an accusation"
     },
     {
       "name": "Oshkosh Defense",
@@ -346,7 +376,9 @@
       "matched_entities": [],
       "awards": [],
       "total_obligations": null,
-      "nexus": null
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
     },
     {
       "name": "Anduril Industries",
@@ -357,7 +389,9 @@
       "matched_entities": [],
       "awards": [],
       "total_obligations": null,
-      "nexus": null
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
     },
     {
       "name": "Palantir Technologies",
@@ -368,7 +402,9 @@
       "matched_entities": [],
       "awards": [],
       "total_obligations": null,
-      "nexus": null
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
     },
     {
       "name": "Peraton",
@@ -379,12 +415,18 @@
       "matched_entities": [],
       "awards": [],
       "total_obligations": null,
-      "nexus": null
+      "nexus": null,
+      "tag": "open",
+      "tag_basis": "the seed patterns were searched against this site's entity graph and matched nothing — an unanswered question, not a clearance"
     }
   ],
   "prime_owned": [],
   "army_controlled": [
     {
+      "record_tag": "verified",
+      "attribution": "Joint Systems Manufacturing Center (Lima Army Tank Plant), operated by General Dynamics Land Systems",
+      "attribution_tag": "inference",
+      "attribution_basis": "[inference] the UNITED STATES-owned cluster in tax district L35 on Buckeye/Reed Rd is the Joint Systems Manufacturing Center (Lima Army Tank Plant; 1151 Buckeye Rd), operated by General Dynamics Land Systems. Ownership is verbatim from the GIS; the JSMC identification is an analyst inference — verify against the deed/lease before relying on it.",
       "parcel_no": "46110004005000",
       "owner": "UNITED STATES",
       "owner_2": "OF AMERICA",
@@ -405,6 +447,10 @@
       "valid_sale": "N"
     },
     {
+      "record_tag": "verified",
+      "attribution": "Joint Systems Manufacturing Center (Lima Army Tank Plant), operated by General Dynamics Land Systems",
+      "attribution_tag": "inference",
+      "attribution_basis": "[inference] the UNITED STATES-owned cluster in tax district L35 on Buckeye/Reed Rd is the Joint Systems Manufacturing Center (Lima Army Tank Plant; 1151 Buckeye Rd), operated by General Dynamics Land Systems. Ownership is verbatim from the GIS; the JSMC identification is an analyst inference — verify against the deed/lease before relying on it.",
       "parcel_no": "46140001001000",
       "owner": "UNITED STATES",
       "owner_2": "OF AMERICA",
@@ -425,6 +471,10 @@
       "valid_sale": "N"
     },
     {
+      "record_tag": "verified",
+      "attribution": "Joint Systems Manufacturing Center (Lima Army Tank Plant), operated by General Dynamics Land Systems",
+      "attribution_tag": "inference",
+      "attribution_basis": "[inference] the UNITED STATES-owned cluster in tax district L35 on Buckeye/Reed Rd is the Joint Systems Manufacturing Center (Lima Army Tank Plant; 1151 Buckeye Rd), operated by General Dynamics Land Systems. Ownership is verbatim from the GIS; the JSMC identification is an analyst inference — verify against the deed/lease before relying on it.",
       "parcel_no": "46140001002000",
       "owner": "UNITED STATES",
       "owner_2": "OF AMERICA",
@@ -445,6 +495,10 @@
       "valid_sale": "N"
     },
     {
+      "record_tag": "verified",
+      "attribution": "Joint Systems Manufacturing Center (Lima Army Tank Plant), operated by General Dynamics Land Systems",
+      "attribution_tag": "inference",
+      "attribution_basis": "[inference] the UNITED STATES-owned cluster in tax district L35 on Buckeye/Reed Rd is the Joint Systems Manufacturing Center (Lima Army Tank Plant; 1151 Buckeye Rd), operated by General Dynamics Land Systems. Ownership is verbatim from the GIS; the JSMC identification is an analyst inference — verify against the deed/lease before relying on it.",
       "parcel_no": "46150504001000",
       "owner": "UNITED STATES",
       "owner_2": "OF AMERICA",
@@ -465,6 +519,10 @@
       "valid_sale": "N"
     },
     {
+      "record_tag": "verified",
+      "attribution": "Joint Systems Manufacturing Center (Lima Army Tank Plant), operated by General Dynamics Land Systems",
+      "attribution_tag": "inference",
+      "attribution_basis": "[inference] the UNITED STATES-owned cluster in tax district L35 on Buckeye/Reed Rd is the Joint Systems Manufacturing Center (Lima Army Tank Plant; 1151 Buckeye Rd), operated by General Dynamics Land Systems. Ownership is verbatim from the GIS; the JSMC identification is an analyst inference — verify against the deed/lease before relying on it.",
       "parcel_no": "46150801002000",
       "owner": "UNITED STATES",
       "owner_2": "OF AMERICA",
@@ -497,6 +555,7 @@
     "caveats": [
       "Values are verbatim from the county GIS; null means the service had no value.",
       "A pattern match is a lead to verify, not a classification or accusation."
-    ]
+    ],
+    "matched_entities_provenance": "matched_entities are resolved against this site's entity graph, whose LEI enrichment folds a network-global defense-operator overlay — the reference build's JSMC / General Dynamics operator chain and its GLEIF ultimate parent — into every site's graph. A match here may reflect that shared overlay rather than any presence of the contractor in this site's own records; treat it as a cross-reference to follow up, not a site-local finding."
   }
 }

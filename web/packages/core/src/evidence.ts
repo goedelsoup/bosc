@@ -17,10 +17,12 @@ export type TagKind = "verified" | "inference" | "open";
 /** The render taxonomy `EvidenceTag` tints — `TagKind` + `reference` + the annotation-only kinds.
  *
  *  `reference` is the fourth canonical evidence class (an outside-published spec/dataset, not a
- *  record about this site). It is surfaced at the presentation layer — legend, tooltip — rather
- *  than carried as a data `TagKind`, because the feeds cite external datasets in prose, not as a
- *  stored tag. Keeping it here (not in `TagKind`) lets the documented four-tag vocabulary and the
- *  UI agree without forcing every chart/feed `Record<TagKind>` to carry a value the data lacks. */
+ *  record about this site). Most feeds cite external datasets in prose rather than as a stored tag,
+ *  so it lives here and not in `TagKind` — which lets the documented four-tag vocabulary and the UI
+ *  agree without forcing every chart/feed `Record<TagKind>` to carry a value those feeds lack. The
+ *  feeds that DO store all four (`FactStatus` in `feeds.ts` — the facts feed, and the defense
+ *  registers added in #1663) type against `FactStatus` and render through this taxonomy; that pair
+ *  is the intended seam, not a drift. */
 export type EvidenceKind = TagKind | "reference" | "filename" | "gap" | "key";
 
 /** The four canonical evidence classes, in reading order — what a legend should explain. */

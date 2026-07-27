@@ -70,7 +70,7 @@
     },
     "DefenseContractorItem": {
       "additionalProperties": false,
-      "description": "A seed prime defense contractor + the corpus entities its patterns matched.\n\nWhen a matched entity resolves to a USASpending recipient, its awards are stamped here (#1662):\n``awards`` carries the per-entity federal records, and ``total_obligations`` / ``nexus`` roll\nthem up (the summed dollars + the strongest nexus). A contractor with no matched award keeps\nan empty ``awards`` and null totals.",
+      "description": "A seed prime defense contractor + the corpus entities its patterns matched.\n\nWhen a matched entity resolves to a USASpending recipient, its awards are stamped here (#1662):\n``awards`` carries the per-entity federal records, and ``total_obligations`` / ``nexus`` roll\nthem up (the summed dollars + the strongest nexus). A contractor with no matched award keeps\nan empty ``awards`` and null totals.\n\n``tag`` types the discipline the page previously carried only as a prose callout (#1663, ME-D):\nit is the register of the item's **corridor-presence claim**, not of the seed row (the seed list\nis curated, and a prime that matched nothing still ships so the search is visible). A bare\n``matched_entities`` hit is a case-insensitive substring match on a party name — a lead, so\n``inference``; a match corroborated by a UEI-pinned award whose curated ``nexus`` is\n``verified`` earns ``verified``; nothing matched leaves the question standing, so ``open``.",
       "properties": {
         "name": {
           "title": "Name",
@@ -132,6 +132,29 @@
           ],
           "default": null,
           "title": "Nexus"
+        },
+        "tag": {
+          "default": "open",
+          "enum": [
+            "verified",
+            "inference",
+            "reference",
+            "open"
+          ],
+          "title": "Tag",
+          "type": "string"
+        },
+        "tag_basis": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tag Basis"
         }
       },
       "required": [
@@ -187,8 +210,55 @@
     },
     "ScanParcel": {
       "additionalProperties": true,
-      "description": "A parcel row from the defense-land GIS scan (extra GIS columns allowed).",
-      "properties": {},
+      "description": "A parcel row from the defense-land GIS scan (extra GIS columns allowed).\n\nTwo registers travel with one row, and conflating them is the failure this model exists to\nprevent (#1663, ME-D). The GIS columns — owner, situs, acres, value — are verbatim from the\ncounty's public parcel service, so ``record_tag`` is ``verified``. What the scan *claims the\nparcel is* — a named prime's holding, the Joint Systems Manufacturing Center — is an analyst\nreading over those columns, carried in ``attribution`` and tagged separately by\n``attribution_tag``. Before this, the ``[inference]`` marker on the JSMC identification lived\nonly as a free-text prefix inside the scan's ``meta.army_controlled_note`` prose, so a consumer\ncould not tell a verified ownership row from an inferred attribution without parsing English.",
+      "properties": {
+        "record_tag": {
+          "default": "verified",
+          "enum": [
+            "verified",
+            "inference",
+            "reference",
+            "open"
+          ],
+          "title": "Record Tag",
+          "type": "string"
+        },
+        "attribution": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attribution"
+        },
+        "attribution_tag": {
+          "default": "inference",
+          "enum": [
+            "verified",
+            "inference",
+            "reference",
+            "open"
+          ],
+          "title": "Attribution Tag",
+          "type": "string"
+        },
+        "attribution_basis": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attribution Basis"
+        }
+      },
       "title": "ScanParcel",
       "type": "object"
     }
