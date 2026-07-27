@@ -933,6 +933,7 @@ def test_open_load_facility_has_no_power_basis_and_leaks_no_lima_figures(monkeyp
     (#1628 review — the parallel leak `derive_power_basis` was already guarded against)."""
     import watermark.sites as sites
     from watermark.config import Settings
+    from watermark.facility.power import derive_power_basis
     from watermark.hydrology.cooling import derive_cooling_basis
 
     open_primary = _fac(
@@ -944,6 +945,9 @@ def test_open_load_facility_has_no_power_basis_and_leaks_no_lima_figures(monkeyp
     stub = sites.SITES["toledo"].model_copy(update={"facilities": (open_primary,)})
     monkeypatch.setitem(sites.SITES, "toledo", stub)
     assert stub.facility is not None and not stub.has_facility_power_basis
+    # `derive_power_basis`'s it-load guard is NOT dead code (#1634 item 2 was filed before #1628
+    # made `it_load_mw` optional): a disclosed facility whose load is entirely [open] reaches it.
+    assert derive_power_basis(settings=Settings(site="toledo")) is None
     with pytest.raises(ValueError, match="no resolvable IT load"):
         derive_cooling_basis(Settings(site="toledo"), cooling_model="evaporative_tower")
 

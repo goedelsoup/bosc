@@ -216,6 +216,17 @@ def _campus_node(
     watch-items: a site that has not committed a data-center forcemain discharge carries
     no campus forcing node (``None``) rather than fabricating one from the facility alone
     (#829) — the balance stays the municipal WWTP loop + assimilative screen.
+
+    **The FM-2 figure plays two roles, and they are NOT independent (#1634).** The same
+    documented ~2.5 MGD industrial discharge (CMAR RFQ §A.6) is (a) this node's
+    ``return_flow`` — the campus's routed discharge to Lima — and (b) the basis for the
+    cooling bracket's bottom-up upper bound (``SiteFacility.blowdown_mgd`` read by
+    :func:`watermark.hydrology.cooling_models._derive_evaporative_tower`, which takes it as
+    tower blowdown and back-solves evaporation as blowdown x (CoC-1)). So the bottom-up
+    method corroborates the top-down power x WUE estimate **only** with respect to the power
+    basis: both it and the return flow inherit any error in the one document, and neither is
+    a check on the other. ``tests/test_hydro_balance.py`` locks the two to one figure so a
+    silent divergence between the copies surfaces instead of reading as agreement.
     """
     fm2_feat = next(
         (f for f in _features(path) if (f.get("properties") or {}).get("id") == "bosc-fm2"),

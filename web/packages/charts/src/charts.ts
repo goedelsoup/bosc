@@ -42,10 +42,13 @@ export const WITHHELD_STROKE = "var(--forest-line)";
 export const EVIDENCE_FILL: Record<TagKind, string> = {
   verified: "var(--ev-verified-fg)",
   inference: "var(--ev-inference-fg)",
-  // The live chart uses ink-ghost (#a8a596) for the "open" proportion — a receding light
-  // tone — NOT the evidence --ev-open-fg (#566159) the spec maps. Kept as-is (zero change);
-  // aligning it to --ev-open-fg is a deferred decision (see COMPONENT-AUDIT.md · StackedBar).
-  open: "var(--ink-ghost)",
+  // Aligned to the evidence grammar (#1634): the "open" proportion had been carried on
+  // ink-ghost (#a8a596) — a receding neutral — rather than the --ev-open-fg (#566159) the
+  // design system maps. The --ev-* palette is fixed and never recolored, so a chart that
+  // *encodes evidence* must spend the evidence token; the neutral also read as chrome
+  // (axis/tick grey) rather than as the third evidence state. StackedBar's segment fill and
+  // its legend swatch both read this map, so they move together.
+  open: "var(--ev-open-fg)",
 };
 
 /** A "nice" axis ceiling at or above `v` (1/2/2.5/5 × 10ⁿ). */

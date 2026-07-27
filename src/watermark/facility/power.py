@@ -6,14 +6,12 @@ disclosed inputs as :mod:`watermark.hydrology.cooling` — Ohio EPA Air PTI **P0
 (Facility 0302022054): 114 emergency generators at 2.75 ekW each ≈ 313 MW backup,
 which at hyperscale N+1 ratios implies a ~250-300 MW IT load.
 
-The genset count and IT-load constants are deliberately **duplicated** from
-``cooling.py``'s private constants here rather than imported, because ``cooling``
-hides them as module-private (``_GENSET_COUNT`` etc.) and importing private names
-across subsystems is brittle. To keep the two from silently diverging,
-``tests/facility/test_power.py`` asserts this module's IT load equals
-``cooling.py``'s ``_IT_LOAD_MW``. FUTURE DEDUP: lift the air-permit constants into a
-single shared module (e.g. ``watermark.facility.power`` re-exported into hydrology) once
-``cooling.py``'s tests can be migrated without churn.
+This module holds **no** facility constants of its own: the genset count/rating, the IT
+load and the disclosing permit citation all live on the active site's
+``SiteProfile.facility`` (#607), which is the single source :mod:`watermark.hydrology.cooling`
+reads too. The historical copy-vs-import duplication between the two subsystems (and the
+drift test that guarded it) is retired — a per-site figure is threaded through the profile,
+never re-declared in a subsystem (#1634).
 
 **On-site generation cycle (issue #90).** Beyond *how much* power, the basis carries
 *how* power is generated: the 2026-06-10 call's "single- vs double-phase" distinction
@@ -52,11 +50,9 @@ from watermark.hydrology.model import ProvenancedValue
 from watermark.sites import CoolingModelType, active_profile
 
 # The air-permit-disclosed facility constants (genset count/rating, IT load, the permit
-# citation) are now per-site: they live on ``SiteProfile.facility`` (Lima, from Air PTI
+# citation) are per-site: they live on ``SiteProfile.facility`` (Lima, from Air PTI
 # P0138965) and ``derive_power_basis`` reads them from the active site. A site with no
 # documented facility (``facility is None``) has no power basis — see ``derive_power_basis``.
-# (watermark.hydrology.cooling still mirrors the Lima constants; tests/facility/test_power.py
-# guards the two against drift.)
 
 # --- Cooling / mechanical overhead (issue #87) -------------------------------
 # PUE = total facility power / IT power, a banded ASSUMPTION read from the reference

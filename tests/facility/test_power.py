@@ -23,21 +23,26 @@ def test_power_basis_traces_to_air_permit() -> None:
     assert b.it_load.low < b.it_load.value < b.it_load.high
 
 
-def test_facility_power_matches_cooling_it_load() -> None:
-    """Guard against the duplicated air-permit constant silently diverging.
+def test_power_and_cooling_read_one_source_for_the_it_load() -> None:
+    """The power and cooling stacks read the SAME per-site figure — there is no second copy.
 
-    The Lima ``SiteProfile.facility`` now carries the air-permit IT load; cooling.py still
-    mirrors it as a private constant. This test is the seam that keeps them equal.
+    The air-permit constants used to be duplicated into ``hydrology.cooling_models`` and guarded
+    only by a drift test (#1634). They are gone: ``SiteProfile.facility`` is the single source,
+    so the two subsystems agree by construction rather than by assertion.
     """
-    from watermark.hydrology import cooling
+    from watermark.hydrology import cooling, cooling_models
     from watermark.sites import SITES
 
     lima_facility = SITES["lima"].facility
     assert lima_facility is not None
-    assert lima_facility.it_load_mw == cooling._IT_LOAD_MW
     basis = derive_power_basis()
     assert basis is not None
-    assert basis.it_load.value == pytest.approx(cooling._IT_LOAD_MW)
+    assert basis.it_load.value == pytest.approx(lima_facility.it_load_mw)
+    assert cooling.derive_cooling_basis().it_load.value == pytest.approx(lima_facility.it_load_mw)
+    # No site-specific figure may reappear as a module constant in the cooling engine: the
+    # archetype defaults it does carry (WUE / CoC) are generic reference values, not disclosures.
+    for gone in ("_IT_LOAD_MW", "_GENSET_COUNT", "_GENSET_MW", "_BACKUP_MW", "_AIR_PERMIT_CITE"):
+        assert not hasattr(cooling_models, gone), f"{gone} re-introduced a per-site constant"
 
 
 def test_power_basis_is_none_without_a_facility() -> None:
@@ -130,6 +135,33 @@ def test_site_facility_gensets_are_paired() -> None:
             it_load_source="screening",
             genset_count=34,  # rating omitted
         )
+
+
+def test_site_facility_refuses_the_default_cooling_citation_on_a_pinned_archetype() -> None:
+    """The default cooling citation asserts the record discloses NO method (#1634) — a facility
+    that pins an archetype, or claims a document/connector/reference source, must cite it."""
+    from watermark.sites import CoolingModelType
+    from watermark.sites._model import UNDISCLOSED_COOLING_CITATION, SiteFacility
+
+    base = {
+        "name": "Test",
+        "status": "confirmed",
+        "it_load_mw": 70.0,
+        "it_load_low_mw": 35.0,
+        "it_load_high_mw": 115.0,
+        "it_load_citation": "screening",
+        "it_load_source": "screening",
+    }
+    # A pinned archetype under "not disclosed in the record" is a self-contradiction.
+    with pytest.raises(ValueError, match="still the default"):
+        SiteFacility(**base, cooling_model=CoolingModelType.CLOSED_LOOP_DRY)
+    # So is a claimed [reference] source that names no record.
+    with pytest.raises(ValueError, match="still the default"):
+        SiteFacility(**base, cooling_model_source="reference")
+    # The honest case — undisclosed method, assumption source — still carries the default.
+    fac = SiteFacility(**base)
+    assert fac.cooling_model is CoolingModelType.UNKNOWN
+    assert fac.cooling_model_citation == UNDISCLOSED_COOLING_CITATION
 
 
 def test_compute_capacity_refuses_a_facility_less_site() -> None:

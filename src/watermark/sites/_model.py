@@ -153,6 +153,30 @@ def _facility_slug(text: str, *, max_len: int = 64) -> str:
     return s[:max_len].strip("-") or "facility"
 
 
+# The citation carried by a facility whose cooling method is **not on the record**. It is a
+# literal statement of ABSENCE, so it may only stand where that is true — the ``SiteFacility``
+# validator refuses it on a facility that pins an archetype or claims a non-``assumption``
+# source (either would ship a disclosed method under "not disclosed in the record").
+UNDISCLOSED_COOLING_CITATION = "cooling method not disclosed in the record"
+
+
+def _require_together(*fields: tuple[str, object], label: str = "", note: str = "") -> None:
+    """All-or-nothing pairing: every named field is set, or every one is left ``None``.
+
+    The single home for the :class:`SiteFacility` pairing discipline — a disclosed value and
+    its citation (or a value and its inseparable partner, e.g. genset count x rating) travel
+    together, so a disclosed value can never pass uncited and a half-set group can never
+    silently mix a disclosed dimension with an assumed one under one citation. ``label`` names
+    a multi-field group ("genset stack geometry") ahead of the field list; ``note`` appends the
+    field-specific gloss ("or both left None", the ``[open]`` reading, …).
+    """
+    if any(v is not None for _, v in fields) and any(v is None for _, v in fields):
+        names = [n for n, _ in fields]
+        joined = " and ".join(names) if len(names) == 2 else " / ".join(names)
+        subject = f"{label} ({joined})" if label else joined
+        raise ValueError(f"{subject} must be set together{f' {note}' if note else ''}")
+
+
 class SiteFacility(BaseModel):
     """A site's disclosed data-center facility power basis.
 
@@ -254,7 +278,10 @@ class SiteFacility(BaseModel):
     # instead). ``SiteProfile.facility is None`` resolves to ``off`` in
     # :func:`watermark.hydrology.cooling_models.resolve_cooling_model`.
     cooling_model: CoolingModelType = CoolingModelType.UNKNOWN
-    cooling_model_citation: str = "cooling method not disclosed in the record"
+    # The default is the ``unknown``-archetype citation and nothing else: it asserts that the
+    # record discloses no method, so the validator below refuses it on a facility that pins an
+    # archetype or claims a non-``assumption`` source (#1634).
+    cooling_model_citation: str = UNDISCLOSED_COOLING_CITATION
     cooling_model_source: Literal["document", "connector", "reference", "assumption"] = "assumption"
     # Per-archetype parameter overrides — a site cites disclosed values here instead of
     # inheriting the archetype defaults. ``None`` = use the spec default (with its cite).
@@ -305,12 +332,13 @@ class SiteFacility(BaseModel):
         # The IT-load triple moves together: all three set (a bracketed load) or all None (the
         # load is entirely [open] — a disclosed facility, e.g. a rezoning-only second campus,
         # whose MW/instruments are all undisclosed).
-        load_parts = (self.it_load_mw, self.it_load_low_mw, self.it_load_high_mw)
-        if any(v is not None for v in load_parts) and any(v is None for v in load_parts):
-            raise ValueError(
-                "it_load_mw / it_load_low_mw / it_load_high_mw must be set together (a bracketed "
-                "load) or all left None (the load is entirely [open])"
-            )
+        _require_together(
+            ("it_load_mw", self.it_load_mw),
+            ("it_load_low_mw", self.it_load_low_mw),
+            ("it_load_high_mw", self.it_load_high_mw),
+            label="the IT-load triple",
+            note="(a bracketed load) or all left None (the load is entirely [open])",
+        )
         # A disclosed load must be grounded by EXACTLY ONE basis: an air permit (Lima/Fort Wayne)
         # or a non-permit derivation cite (Urbana's floor-area screening). Neither ⇒ an uncited
         # load figure; both ⇒ an ambiguous ground (``derive_power_basis`` would silently drop
@@ -364,14 +392,17 @@ class SiteFacility(BaseModel):
             )
         # Operator / end-use each travel with their own citation (#1628): a disclosed value can
         # never pass uncited, and end_use=None keeps the end use honestly [open].
-        if (self.operator is None) != (self.operator_citation is None):
-            raise ValueError("operator and operator_citation must be set together")
-        if (self.end_use is None) != (self.end_use_citation is None):
-            raise ValueError("end_use and end_use_citation must be set together")
+        _require_together(
+            ("operator", self.operator), ("operator_citation", self.operator_citation)
+        )
+        _require_together(("end_use", self.end_use), ("end_use_citation", self.end_use_citation))
         # Gensets are paired: a count without a rating (or vice-versa) can't form a backup
         # figure. A site-plan-grounded facility with no disclosed generation leaves both None.
-        if (self.genset_count is None) != (self.genset_mw is None):
-            raise ValueError("genset_count and genset_mw must be set together (or both left None)")
+        _require_together(
+            ("genset_count", self.genset_count),
+            ("genset_mw", self.genset_mw),
+            note="(or both left None)",
+        )
         # Site-plan disclosure attributes (type / floor area / investment) carry
         # [reference]/[verified] claims — they travel with disclosure_citation (both or
         # neither), so a disclosed value can never pass uncited.
@@ -384,28 +415,43 @@ class SiteFacility(BaseModel):
                 "site-plan disclosure fields (facility_type / gross_floor_area_sqft / "
                 "disclosed_investment_usd) and disclosure_citation must be set together"
             )
-        if (self.wue_l_per_kwh is None) != (self.wue_citation is None):
-            raise ValueError("wue_l_per_kwh and wue_citation must be set together")
-        if (self.cycles_of_concentration is None) != (self.cycles_citation is None):
-            raise ValueError("cycles_of_concentration and cycles_citation must be set together")
-        if (self.heat_reject_multiplier is None) != (self.heat_reject_multiplier_citation is None):
-            raise ValueError(
-                "heat_reject_multiplier and heat_reject_multiplier_citation must be set together"
-            )
+        _require_together(
+            ("wue_l_per_kwh", self.wue_l_per_kwh), ("wue_citation", self.wue_citation)
+        )
+        _require_together(
+            ("cycles_of_concentration", self.cycles_of_concentration),
+            ("cycles_citation", self.cycles_citation),
+        )
+        _require_together(
+            ("heat_reject_multiplier", self.heat_reject_multiplier),
+            ("heat_reject_multiplier_citation", self.heat_reject_multiplier_citation),
+        )
         # Genset stack geometry is all-or-nothing: a partial set would silently mix a
         # disclosed dimension with an assumed one under one citation. Either the site
         # discloses the full geometry (+ its citation) or it leaves all five None.
-        stack = (
-            self.genset_stack_height_m,
-            self.genset_stack_diameter_m,
-            self.genset_stack_exit_velocity_ms,
-            self.genset_stack_exit_temp_k,
-            self.genset_stack_citation,
+        _require_together(
+            ("genset_stack_height_m", self.genset_stack_height_m),
+            ("genset_stack_diameter_m", self.genset_stack_diameter_m),
+            ("genset_stack_exit_velocity_ms", self.genset_stack_exit_velocity_ms),
+            ("genset_stack_exit_temp_k", self.genset_stack_exit_temp_k),
+            ("genset_stack_citation", self.genset_stack_citation),
+            label="genset stack geometry",
+            note="or all left None (assumed screening geometry)",
         )
-        if any(v is not None for v in stack) and any(v is None for v in stack):
+        # The default cooling citation asserts an ABSENCE ("not disclosed in the record"), so it
+        # may only stand where that is literally true. A facility that PINS an archetype
+        # (anything but `unknown`) or claims a document/connector/reference source while leaving
+        # the citation defaulted would publish a disclosed method under a statement that the
+        # record discloses none — the inverse of the pairing discipline enforced just above.
+        if self.cooling_model_citation == UNDISCLOSED_COOLING_CITATION and (
+            self.cooling_model is not CoolingModelType.UNKNOWN
+            or self.cooling_model_source != "assumption"
+        ):
             raise ValueError(
-                "genset stack geometry (height/diameter/exit_velocity/exit_temp) and its "
-                "citation must all be set together, or all left None (assumed screening geometry)"
+                f"cooling_model_citation is still the default {UNDISCLOSED_COOLING_CITATION!r}, "
+                f"which only holds for cooling_model=unknown + cooling_model_source=assumption "
+                f"(this facility declares {self.cooling_model.value}/{self.cooling_model_source}) "
+                "— cite the record that discloses the method"
             )
         return self
 
@@ -448,7 +494,25 @@ class SiteFacility(BaseModel):
 
 
 class SiteProfile(BaseModel):
-    """Everything specific to one watershed-point site. Frozen — a fixed reference value."""
+    """Everything specific to one watershed-point site. Frozen — a fixed reference value.
+
+    **"Corridor" names four unrelated things here (#1634).** The word is load-bearing in this
+    repo's vocabulary but not in one sense, so every field below states which one it means, and
+    no code should assume two of them refer to the same geography:
+
+    1. **Design-storm corridor** — a *rainfall* label, not a place: ``corridor_name`` (the
+       NOAA Atlas-14 subject) + ``corridor_ddf_relpath`` (its depth-duration-frequency
+       artifact). Anchored to ``design_lat``/``design_lon``, the stormwater design point.
+    2. **Corroboration geometry** — ``corridor_geo_relpath``, the frozen Periplus-era
+       ``corridor.geojson`` + centerline folded into the GIS findings. An actual line/polygon.
+    3. **Toxics screening window** — ``toxic_corridor_bbox``, a lat/lon bounding box for the
+       RSEI/toxics inference. A screening extent, deliberately coarser than (2).
+    4. **Civic subject vocabulary** — ``corridor_subjects``, the meeting *keywords* that put a
+       subdivision meeting on the project chronology. Not a geography at all.
+
+    A fifth, purely editorial sense ("the corridor" as the story's subject area) appears in
+    prose and report slugs; it is never a modeled value.
+    """
 
     model_config = ConfigDict(extra="forbid", frozen=True)
 
@@ -542,9 +606,11 @@ class SiteProfile(BaseModel):
     gis_flood: GisFloodSchema | None = None
 
     # --- Stormwater design point + cited assumptions (hydrology/stormwater.py) -----------
-    # The NOAA-Atlas-14 corridor point — distinct from the nasa_power loop centroid above.
+    # The NOAA-Atlas-14 design-storm point — distinct from the nasa_power loop centroid above.
     design_lat: float
     design_lon: float
+    # "Corridor" sense 1 (DESIGN-STORM): a rainfall subject label, not a place — unrelated to
+    # the corroboration geometry, the toxics bbox, or the civic vocabulary. See the class docstring.
     corridor_name: str  # the Atlas-14 design-storm corridor label (drainage.py meta.subject)
     dominant_hsg: str
     hsg_citation: str
@@ -569,10 +635,11 @@ class SiteProfile(BaseModel):
     noaa_fallback_24h_depth_in: dict[int, float]
     parcels_relpath: str  # relative to settings.data_dir
     footprint_relpath: str  # relative to settings.data_dir
-    # The frozen external-corroboration corridor geometry dir (corridor.geojson +
-    # corridor-centerline.geojson), relative to settings.data_dir — folded into the GIS
-    # findings by site/gismap.merge_corridor_layer. ``None`` = no corridor layer for this
-    # site (the merge then emits nothing rather than reading another site's geometry).
+    # "Corridor" sense 2 (CORROBORATION GEOMETRY): the frozen external-corroboration geometry
+    # dir (corridor.geojson + corridor-centerline.geojson), relative to settings.data_dir —
+    # folded into the GIS findings by site/gismap.merge_corridor_layer. Real line/polygon
+    # geometry, NOT the design-storm label above nor the toxics bbox below. ``None`` = no such
+    # layer for this site (the merge emits nothing rather than reading another site's geometry).
     corridor_geo_relpath: str | None = None
 
     # --- Per-site onboard reach outputs (point-specific writes; relative to data_dir) ----
@@ -582,7 +649,8 @@ class SiteProfile(BaseModel):
     # but kept per-site for uniformity, ba-interchange, federal) — the shared ones are NOT here.
     # Hydrology (#326):
     climatology_relpath: str  # NASA-POWER climatology (hydrology/climate.py)
-    corridor_ddf_relpath: str  # NOAA Atlas-14 corridor DDF (hydrology/drainage.py)
+    # "Corridor" sense 1 again (DESIGN-STORM): the DDF artifact for ``corridor_name``'s point.
+    corridor_ddf_relpath: str  # NOAA Atlas-14 design-storm DDF (hydrology/drainage.py)
     # Economics (per-site by county FIPS / state / utility):
     baseline_relpath: str  # Census+QCEW county baseline (economics/baseline.py)
     rsei_relpath: str  # EPA RSEI county toxics inventory (rsei.py)
@@ -594,7 +662,10 @@ class SiteProfile(BaseModel):
     demand_pressure_relpath: str | None = None
     grid_relpath: str  # EIA-861 utility + grid profile (grid/utility.py)
 
-    # --- Toxics corridor inference (hydrology/toxics.py) ---------------------------------
+    # --- Toxics screening inference (hydrology/toxics.py) --------------------------------
+    # "Corridor" sense 3 (TOXICS SCREENING WINDOW): a coarse lat/lon bounding box for the RSEI
+    # toxics inference — a screening extent, not the corroboration geometry (sense 2) and not
+    # co-extensive with it. Never substitute one for the other.
     toxic_corridor_bbox: tuple[float, float, float, float]  # lat_min, lat_max, lon_min, lon_max
     receiving_water_name: str = ""  # authoritative in data/sites.yaml; filled by _fill_from_yaml
 
@@ -731,8 +802,10 @@ class SiteProfile(BaseModel):
     # build that owns the un-slugged Allen-County-OH collections (keeps its bundle byte-identical).
     corpus_relpaths: tuple[str, ...] | None = None
 
-    # --- Civic corridor vocabulary (civic.keywords / pipeline.timeline, #1523) ------------
-    # The project-specific meeting subjects that put a subdivision meeting on the corridor
+    # --- Civic subject vocabulary (civic.keywords / pipeline.timeline, #1523) -------------
+    # "Corridor" sense 4 (CIVIC VOCABULARY): meeting KEYWORDS, not a geography — nothing here
+    # is spatial, and it never constrains or is constrained by senses 1-3.
+    # The project-specific meeting subjects that put a subdivision meeting on the project
     # timeline (``category: subdivision_meeting``) and select it for summarization: a meeting
     # whose index ``hits`` name one of these is corridor-relevant. Generic township topics
     # (rezoning/easement/annexation/solar/...) and ambiguous names (``hume``/``amazon``) stay
