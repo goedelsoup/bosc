@@ -17,13 +17,12 @@ serving_utility:
   balancing_authority:
     value: PJM Interconnection
     source: reference
-    citation: Ohio Edison Co's transmission zone is within the PJM RTO footprint
+    citation: PJM Interconnection balancing authority / RTO (SiteProfile.ba_code='PJM')
     confidence: high
   rto:
     value: PJM Interconnection (RTO/ISO)
     source: reference
-    citation: PJM is the FERC-jurisdictional wholesale-market RTO for Ohio Edison
-      Co
+    citation: PJM Interconnection balancing authority / RTO (SiteProfile.ba_code='PJM')
     confidence: high
   retail_regulator:
     value: Public Utilities Commission of Ohio (PUCO)
@@ -31,8 +30,8 @@ serving_utility:
     citation: Ohio retail electric service is PUCO-regulated (intrastate)
     confidence: high
   note: Serving utility is identified from the EIA-861 service-territory file; RTO=PJM
-    is authoritative. The retail service-territory boundary is formally confirmed
-    against the EIA-861 territory file / PUCO map (#94).
+    Interconnection is authoritative. The retail service-territory boundary is formally
+    confirmed against the EIA-861 territory file / PUCO map (#94).
 utility_profile:
   utility: Ohio Edison Co
   ownership: Investor Owned

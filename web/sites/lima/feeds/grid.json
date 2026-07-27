@@ -3,7 +3,7 @@
     "utility": {
       "value": "AEP Ohio (Ohio Power Company)",
       "source": "document",
-      "citation": "relator data appendix (data/extracted/legal/select-committee-2026/relator-testimony/bosc-data-appendix-2026-06-01.md): the 25 MW threshold 'matches the AEP Ohio tariff'; corroborated by Allen County commissioners' minutes (local AEP 3-phase service, Res #974-25). Formal confirmation: EIA-861 service territory / PUCO map.",
+      "citation": "relator data appendix (data/extracted/legal/select-committee-2026/relator-testimony/bosc-data-appendix-2026-06-01.md): the 25 MW threshold 'matches the AEP Ohio tariff'; corroborated by Allen County commissioners' minutes (local AEP 3-phase service, Res #974-25). Formal confirmation: EIA-861 service territory / PUCO map. Further corroborated (not newly established) by AEP Ohio's own 'Lyka Transmission Project' (345kV substation + line, same township; data/extracted/grid/aep-lyka-transmission-2026.project.yaml) — that project names no customer, so it does not by itself confirm the Bosc campus as the specific Lyka load (#1476).",
       "confidence": "high"
     },
     "holding_company": {
@@ -15,7 +15,7 @@
     "balancing_authority": {
       "value": "PJM Interconnection",
       "source": "reference",
-      "citation": "AEP's Ohio (AEP/APS) transmission zone is within the PJM RTO footprint",
+      "citation": "PJM is the FERC-jurisdictional wholesale-market RTO for AEP Ohio",
       "confidence": "high"
     },
     "rto": {
@@ -30,11 +30,11 @@
       "citation": "Ohio retail electric service is PUCO-regulated (intrastate)",
       "confidence": "high"
     },
-    "note": "Serving utility is corpus-grounded (AEP Ohio tariff referenced for this campus); RTO=PJM is authoritative. The retail service-territory boundary is formally confirmed against the EIA-861 territory file / PUCO map (#94)."
+    "note": "Serving utility is corpus-grounded (AEP Ohio tariff referenced for this campus); RTO=PJM Interconnection is authoritative. The retail service-territory boundary is formally confirmed against the EIA-861 territory file / PUCO map (#94)."
   },
   "utility_profile": {
     "utility": "AEP Ohio (Ohio Power Company)",
-    "ownership": "",
+    "ownership": "Investor Owned",
     "eia_source": "EIA-861 2024 per-utility retail (connector; bundled+delivery total)",
     "retail_sales_gwh": {
       "value": 48652.9,
@@ -86,7 +86,7 @@
       "value": 347.9,
       "unit": "MW",
       "source": "derived",
-      "citation": "PowerBasis.facility_draw central (#87): 275 MW IT x PUE 1.265 (band mean) — total facility draw",
+      "citation": "PowerBasis.facility_draw central (#87): 275 MW IT (central) x PUE 1.265 — total facility draw; band = 250-300 MW IT x PUE 1.1-1.43 (efficient .. cooling-dominated)",
       "confidence": "medium",
       "asof": null,
       "low": null,
@@ -146,7 +146,7 @@
       "value": 5.64,
       "unit": "percent",
       "source": "derived",
-      "citation": "campus 2743 GWh / AEP Ohio 48,653 GWh (EIA-861 2024 per-utility)",
+      "citation": "campus 2743 GWh / AEP Ohio (Ohio Power Company) 48,653 GWh (EIA-861 2024 per-utility)",
       "confidence": "medium",
       "asof": null,
       "low": null,
@@ -173,5 +173,5 @@
       "high": null
     }
   },
-  "note": "Grid foundation layer (#94). The state, AEP-Ohio, and PJM denominators are now all connector-sourced — Ohio retail from EIA (shared with #91), AEP-Ohio retail from the EIA-861 per-utility file, and PJM annual demand from EIA-930. The campus is a single load equal to a material fraction of its serving utility's entire retail sales."
+  "note": "Grid foundation layer (#94). The state, AEP Ohio (Ohio Power Company), and PJM denominators are now all connector-sourced — Ohio retail from EIA (shared with #91), per-utility retail from the EIA-861 file, and PJM annual demand from EIA-930. The campus is a single load equal to a material fraction of its serving utility's entire retail sales."
 }

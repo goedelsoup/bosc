@@ -292,7 +292,22 @@ def test_grid_backdrop_is_present_for_a_facility_less_peer(
     assert _manifest(out)["readiness"]["domains"]["backdrop"] == "live"
 
 
-@pytest.mark.parametrize("slug", ["lima", "fort-wayne"])
+def _bundles_carrying(*feeds: str) -> list[str]:
+    """The committed bundle fixtures whose manifest carries all of ``feeds``.
+
+    Discovered rather than listed so a bundle that *gains* a feed is covered the moment it
+    ships — Urbana joined this set only when #1769 un-stuck its `load_share`, and a hardcoded
+    list would have quietly left the new pairing unguarded.
+    """
+    wanted = set(feeds)
+    return sorted(
+        m.parent.name
+        for m in (REPO_ROOT / "web" / "sites").glob("*/manifest.json")
+        if wanted <= {f["name"] for f in json.loads(m.read_text(encoding="utf-8"))["feeds"]}
+    )
+
+
+@pytest.mark.parametrize("slug", _bundles_carrying("grid", "economics-demand-pressure"))
 def test_grid_and_demand_pressure_agree_on_the_campus_load(slug: str) -> None:
     """The `grid` and `economics-demand-pressure` feeds must not fork the campus load.
 

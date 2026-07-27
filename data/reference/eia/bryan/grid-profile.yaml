@@ -18,8 +18,7 @@ serving_utility:
   balancing_authority:
     value: PJM Interconnection
     source: reference
-    citation: Bryan's municipal load is scheduled into the PJM RTO footprint via American
-      Municipal Power (EIA-861S BA Code PJM)
+    citation: PJM is the FERC-jurisdictional wholesale-market RTO for Bryan (AMP/PJM)
     confidence: high
   rto:
     value: PJM Interconnection (RTO/ISO)
@@ -33,9 +32,9 @@ serving_utility:
       rule (not state-PUC rate-regulated)
     confidence: high
   note: Serving utility is identified from the EIA-861 service-territory file; RTO=PJM
-    is authoritative. The retail service area is the utility's own (home rule, OH),
-    not a PUC-certified IOU territory; it is confirmed against the EIA-861 service-territory
-    file (#94).
+    Interconnection is authoritative. The retail service area is the utility's own
+    (home rule, OH), not a PUC-certified IOU territory; it is confirmed against the
+    EIA-861 service-territory file (#94).
 utility_profile:
   utility: City of Bryan - (OH)
   ownership: Municipal
@@ -48,6 +47,8 @@ utility_profile:
       total sales
     confidence: high
     asof: null
+    low: null
+    high: null
   customers:
     value: 5814.0
     unit: customers
@@ -56,6 +57,8 @@ utility_profile:
       total customers
     confidence: high
     asof: null
+    low: null
+    high: null
   avg_price_cents_kwh:
     value: 10.75
     unit: cents/kWh
@@ -64,6 +67,8 @@ utility_profile:
       municipal/cooperative retail (short form has no service-type split)
     confidence: high
     asof: null
+    low: null
+    high: null
 ba_profile:
   ba: PJM Interconnection
   eia_source: EIA-930 daily demand sum, annual (connector)
@@ -74,6 +79,8 @@ ba_profile:
     citation: EIA-930 daily demand sum, PJM 2024 (366 days, Eastern tz)
     confidence: high
     asof: null
+    low: null
+    high: null
 load_share: null
 note: 'Grid foundation layer (#94): per-site grid backdrop only. This site has no
   documented data-center facility, so there is no campus load to express as a share
