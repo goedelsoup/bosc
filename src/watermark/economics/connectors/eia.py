@@ -31,6 +31,7 @@ from watermark.config import Settings, get_settings
 from watermark.connectors import cached_get
 from watermark.economics.model import ConsumerEnergyCosts, ConsumerEnergyPrice, EnergyPricePoint
 from watermark.hydrology.model import ProvenancedValue
+from watermark.states import state_name
 
 # EIA data-column metadata. ``col`` is the data-column name the value lives under on the
 # /v2/seriesid route (it varies by series; the route does NOT expose a uniform ``value`` field);
@@ -38,9 +39,8 @@ from watermark.hydrology.model import ProvenancedValue
 #
 # State consumer-energy series are templated by the two-letter state code — the same EIA legacy
 # ids with the state substituted (OH-RES/OH-ALL/N3010OH3 → IN-RES/IN-ALL/N3010IN3). A new state
-# is config (its name in _STATE_NAME), not a new hardcoded series; only the US-national backdrop
-# series (#98) are static, below.
-_STATE_NAME: dict[str, str] = {"OH": "Ohio", "IN": "Indiana"}
+# is config (its name in watermark.states.STATE_NAME, the one map the grid stack reads too —
+# H2/#1645), not a new hardcoded series; only the US-national backdrop series (#98) are static.
 
 # Version of the *cached payload shape*. Part of the cache key (below), so a shape change
 # invalidates prior entries by producing a new key rather than a hit on an incompatible
@@ -49,13 +49,9 @@ _STATE_NAME: dict[str, str] = {"OH": "Ohio", "IN": "Indiana"}
 _PAYLOAD_SCHEMA = 2
 
 
-def _state_name(state: str) -> str:
-    return _STATE_NAME.get(state, state)
-
-
 def _state_consumer_series(state: str) -> dict[str, dict[str, str]]:
     """The state's residential-electricity, retail-sales, and residential-gas series (by id)."""
-    name = _state_name(state)
+    name = state_name(state)
     return {
         f"ELEC.PRICE.{state}-RES.A": {
             "label": f"{name} residential electricity price",
@@ -266,7 +262,7 @@ def fetch_consumer_energy(
 ) -> ConsumerEnergyCosts:
     """Assemble the state's consumer energy-cost dataset (price + sales) from EIA."""
     settings = settings or get_settings()
-    name = _state_name(settings.eia_state)
+    name = state_name(settings.eia_state)
     ids = series_ids or list(_consumer_series_ids(settings.eia_state))
     prices = [fetch_eia_series(sid, settings=settings) for sid in ids]
     return ConsumerEnergyCosts(

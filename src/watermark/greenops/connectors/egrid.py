@@ -49,6 +49,7 @@ from watermark.hydrology.model import ProvenancedValue
 from watermark.logging import get_logger
 
 from . import GreenopsOfflineError
+from ._readme import write_reference_yaml
 
 log = get_logger(__name__)
 
@@ -423,14 +424,11 @@ own consumption. Nothing here is `verified`; the derivation that applies these s
 
 
 def _write_yaml(out: Path, table: EgridFactors | WueTable) -> Path:
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(
-        yaml.safe_dump(table.model_dump(mode="json"), sort_keys=False, allow_unicode=True),
-        encoding="utf-8",
+    # The factor tables live in their own `factors/` dir, so they carry _FACTORS_README rather
+    # than the shared `data/reference/greenops/` one.
+    return write_reference_yaml(
+        out, table, log=log, event="greenops.egrid.wrote", readme=_FACTORS_README
     )
-    (out.parent / "README.md").write_text(_FACTORS_README, encoding="utf-8")
-    log.info("greenops.egrid.wrote", path=str(out))
-    return out
 
 
 def write_egrid_factors(factors: EgridFactors, *, settings: Settings | None = None) -> Path:

@@ -41,16 +41,16 @@ from watermark.config import Settings, get_settings
 from watermark.economics.connectors.eia import fetch_eia_series
 from watermark.facility.consumption import HOURS_PER_YEAR as _HOURS_PER_YEAR
 from watermark.facility.consumption import LOAD_FACTOR as _LOAD_FACTOR
-from watermark.facility.consumption import annual_consumption_gwh
+from watermark.facility.consumption import annual_consumption_gwh, load_factor_cite
 from watermark.facility.power import derive_power_basis
 from watermark.grid.model import CitedFact
 from watermark.hydrology.model import ProvenancedValue
 from watermark.logging import get_logger
-from watermark.sites import active_profile
+from watermark.sites import active_profile, site_reference_path
 
 log = get_logger(__name__)
 
-_LOAD_FACTOR_CITE = "data-center capacity utilization ~0.9 (near-flat 24x7); assumption (cf. #91)"
+_LOAD_FACTOR_CITE = load_factor_cite(refs="#91")
 
 # --- Federal output / statistics ----------------------------------------------
 # US total net generation + US avg retail price are LIVE EIA seriesid pulls (#98/#120):
@@ -335,9 +335,12 @@ def _reference_path(settings: Settings) -> Path:
     """The active site's federal-backdrop path (#1639/B1). Per-site because the backdrop embeds
     the campus-vs-national load shares — a slug-scoped default unless the profile pins one
     (Lima keeps the un-slugged legacy path)."""
-    prof = active_profile(settings)
-    rel = prof.federal_relpath or f"reference/federal/{prof.slug}/federal-energy.yaml"
-    return settings.data_dir / rel
+    return site_reference_path(
+        settings,
+        active_profile(settings).federal_relpath,
+        subdir="federal",
+        filename="federal-energy.yaml",
+    )
 
 
 def write_federal_backdrop(backdrop: FederalBackdrop, *, settings: Settings | None = None) -> str:

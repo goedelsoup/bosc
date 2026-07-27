@@ -8,6 +8,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
+from pydantic import BaseModel
 
 from watermark.config import Settings
 from watermark.facility.power import derive_power_basis
@@ -17,6 +18,7 @@ from watermark.grid.utility import (
     derive_grid_profile,
     load_grid_profile,
 )
+from watermark.hydrology.model import ProvenancedValue
 from watermark.sites import SITES
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -108,22 +110,24 @@ def test_serving_utility_municipal_is_home_rule_not_puco() -> None:
 
 def test_ba_confirmed_map_site_is_pjm_high() -> None:
     """B2/#1639: a serving utility in the confirmed per-utility map resolves PJM at high conf."""
-    from watermark.grid.utility import _balancing_authority, _utility_grid
+    from watermark.grid._registry import utility_identity
+    from watermark.grid.utility import _balancing_authority
     from watermark.sites import get_profile
 
-    prof = get_profile("lima")  # #14006 is in _UTILITY_GRID
-    ba = _balancing_authority(prof, _utility_grid(prof.eia861_utility_number, "AEP Ohio"))
+    prof = get_profile("lima")  # #14006 is in the shared registry
+    ba = _balancing_authority(prof, utility_identity(prof.eia861_utility_number, "AEP Ohio"))
     assert ba.confirmed is True and ba.ba_code == "PJM" and ba.confidence == "high"
 
 
 def test_ba_unlisted_utility_is_unconfirmed_not_pjm() -> None:
     """B2/#1639: an off-map serving utility with no ba_code pin reports the RTO as unconfirmed,
     NOT PJM at high confidence — Portsmouth (#0, unpinned) is the stub case."""
-    from watermark.grid.utility import _balancing_authority, _utility_grid
+    from watermark.grid._registry import utility_identity
+    from watermark.grid.utility import _balancing_authority
     from watermark.sites import get_profile
 
     prof = get_profile("portsmouth")
-    ba = _balancing_authority(prof, _utility_grid(prof.eia861_utility_number, "serving utility"))
+    ba = _balancing_authority(prof, utility_identity(prof.eia861_utility_number, "serving utility"))
     assert ba.confirmed is False
     assert ba.ba_code == "" and "PJM" not in ba.rto_name
     assert ba.confidence == "low"
@@ -131,11 +135,14 @@ def test_ba_unlisted_utility_is_unconfirmed_not_pjm() -> None:
 
 def test_ba_off_map_pinned_site_uses_pin() -> None:
     """B2/#1639: an off-map but ba_code-pinned site (Hamilton/Duke) resolves its pinned BA."""
-    from watermark.grid.utility import _balancing_authority, _utility_grid
+    from watermark.grid._registry import utility_identity
+    from watermark.grid.utility import _balancing_authority
     from watermark.sites import get_profile
 
     prof = get_profile("hamilton-middletown")
-    ba = _balancing_authority(prof, _utility_grid(prof.eia861_utility_number, "Duke Energy Ohio"))
+    ba = _balancing_authority(
+        prof, utility_identity(prof.eia861_utility_number, "Duke Energy Ohio")
+    )
     assert ba.confirmed is True and ba.ba_code == "PJM"
 
 
@@ -262,3 +269,57 @@ def test_zeroed_denominators_are_a_shell_not_a_backdrop() -> None:
     half = gp.model_copy(deep=True)
     half.ba_profile.annual_load_gwh.value = 0.0
     assert not half.has_real_denominators
+
+
+# --- G1/#1644: vintage markers on connector values --------------------------------------------
+
+
+def _connector_values(model: object, prefix: str = "") -> list[tuple[str, ProvenancedValue]]:
+    """Every ``source == "connector"`` :class:`ProvenancedValue` reachable on ``model``."""
+    found: list[tuple[str, ProvenancedValue]] = []
+    for name, value in getattr(model, "__dict__", {}).items():
+        path = f"{prefix}{name}"
+        if isinstance(value, ProvenancedValue):
+            if value.source == "connector":
+                found.append((path, value))
+        elif isinstance(value, BaseModel):
+            found.extend(_connector_values(value, f"{path}."))
+    return found
+
+
+def test_grid_profile_actually_pulls_its_denominators_from_connectors(
+    grid_settings: Settings,
+) -> None:
+    """The premise of the vintage assertion below: these values are live pulls, not literals.
+
+    If a future refactor turned a denominator back into a transcribed constant, the ``asof`` gap
+    would "close" by the value ceasing to be connector-sourced at all — the wrong way to pass.
+    """
+    gp = derive_grid_profile(settings=grid_settings)
+    paths = {p for p, _ in _connector_values(gp)}
+    assert {
+        "utility_profile.retail_sales_gwh",
+        "ba_profile.annual_load_gwh",
+        "load_share.state_retail_gwh",
+    } <= paths, f"the grid denominators are no longer connector-sourced; got {sorted(paths)}"
+
+
+@pytest.mark.xfail(
+    strict=True,
+    reason=(
+        "G1/#1644 (GP-G, open): the grid stack never got the economics layer's #1107 vintage "
+        "treatment — every connector-sourced value in the grid profile carries asof=None, so a "
+        "stale EIA-861/EIA-930 pull is not machine-flaggable. The economics peer already passes "
+        "the same assertion (test_eia_demand_pressure). Delete this marker when #1644 lands."
+    ),
+)
+def test_connector_values_carry_a_vintage_marker(grid_settings: Settings) -> None:
+    """H3/#1645: ``asof`` is the marker that makes a stale live pull visible (#1107 discipline).
+
+    ``ProvenancedValue.asof`` is documented as "ISO datetime, for connector (live) values". A
+    connector value without one cannot be aged by the catalog's staleness check, so a profile
+    regenerated from a year-old cache reads exactly like a fresh one.
+    """
+    gp = derive_grid_profile(settings=grid_settings)
+    undated = [path for path, v in _connector_values(gp) if not getattr(v, "asof", None)]
+    assert not undated, f"connector values missing an asof vintage marker: {undated}"

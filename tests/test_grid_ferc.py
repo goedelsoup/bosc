@@ -11,6 +11,7 @@ from pathlib import Path
 import pytest
 
 from watermark.config import Settings
+from watermark.grid._registry import SERVING_UTILITIES, is_registered, utility_identity
 from watermark.grid.ferc import (
     derive_ferc_seam,
     load_ferc_seam,
@@ -95,21 +96,47 @@ def test_seam_note_cross_references_economics(grid_settings: Settings) -> None:
     assert "FERC wholesale" in seam.note
 
 
-def test_form1_and_utility_grid_maps_cover_the_same_utilities() -> None:
-    """A5/#1638: the ferc _FORM1_FILER and utility _UTILITY_GRID maps must stay reconciled.
+def test_every_registered_utility_carries_both_halves_of_its_identity() -> None:
+    """H2/#1645: the FERC + grid halves of a utility's identity are one record, not two maps.
 
-    They are two per-utility dicts keyed by the same EIA-861 utility number; a key present in
-    one but not the other (which lost WPAFB/Xenia — #4922 — their FERC filer) is a silent
-    drift. Enforce keyset equality until GP-H/#1645 collapses them into one source.
+    A5/#1638 could only bolt keyset equality across ``_FORM1_FILER`` and ``_UTILITY_GRID``; the
+    collapse into :data:`SERVING_UTILITIES` makes a keyset drift unrepresentable, so what is
+    still worth asserting is that no entry is *half*-filled — an empty FERC filer or an empty
+    zone citation would reintroduce the WPAFB/Xenia failure (#4922 falling back to "the serving
+    utility") from inside a registered row rather than from a missing key.
     """
-    from watermark.grid.ferc import _FORM1_FILER
-    from watermark.grid.utility import _UTILITY_GRID
+    assert SERVING_UTILITIES, "the serving-utility registry must not be empty"
+    for number, ident in SERVING_UTILITIES.items():
+        blank = [
+            f for f in ident._fields if isinstance(getattr(ident, f), str) and not getattr(ident, f)
+        ]
+        assert not blank, f"utility #{number} has empty identity fields: {blank}"
+        assert ident.operating_company != "the serving utility", (
+            f"utility #{number} is registered but names no FERC filer — that is the unlisted "
+            "fallback's wording, which a registered row must never carry"
+        )
 
-    assert set(_FORM1_FILER) == set(_UTILITY_GRID), (
-        "grid _FORM1_FILER (ferc) and _UTILITY_GRID (utility) have drifted: "
-        f"only in FORM1={set(_FORM1_FILER) - set(_UTILITY_GRID)}, "
-        f"only in UTILITY_GRID={set(_UTILITY_GRID) - set(_FORM1_FILER)}"
-    )
+
+def test_every_registered_site_resolves_a_named_serving_utility_or_a_clean_fallback() -> None:
+    """H2/#1645: sweep all 26 profiles — each either hits the registry or degrades honestly.
+
+    The multi-site oracle A5's keyset check couldn't be: it compared the two maps to each other,
+    so both could go stale together against the site registry. This compares them to the sites
+    that actually exist. A profile whose ``eia861_utility_number`` is registered must name a real
+    operating company; one that is not must land on the neutral fallback — never a half-state,
+    and never another site's utility.
+    """
+    from watermark.sites import SITES
+
+    for slug, prof in SITES.items():
+        ident = utility_identity(prof.eia861_utility_number)
+        if is_registered(prof.eia861_utility_number):
+            assert ident.operating_company != "the serving utility", slug
+            assert ident.holding_company, slug
+        else:
+            # An unregistered number must not silently borrow a registered utility's identity.
+            assert ident.operating_company == "the serving utility", slug
+            assert "not confirmed" in ident.rto_citation, slug
 
 
 def test_aes_ohio_sites_name_their_ferc_filer(grid_settings: Settings) -> None:

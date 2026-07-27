@@ -35,19 +35,17 @@ from watermark.config import Settings, get_settings
 from watermark.connectors import OfflineError
 from watermark.facility.consumption import HOURS_PER_YEAR as _HOURS_PER_YEAR
 from watermark.facility.consumption import LOAD_FACTOR as _LOAD_FACTOR
-from watermark.facility.consumption import annual_consumption_gwh
+from watermark.facility.consumption import annual_consumption_gwh, load_factor_cite
 from watermark.facility.power import derive_power_basis
 from watermark.grid.lmp import PjmLmpError, fetch_zonal_lmp
 from watermark.grid.model import CitedFact
 from watermark.hydrology.model import ProvenancedValue
 from watermark.logging import get_logger
-from watermark.sites import SiteProfile, active_profile
+from watermark.sites import SiteProfile, active_profile, site_reference_path
 
 log = get_logger(__name__)
 
-_LOAD_FACTOR_CITE = (
-    "data-center capacity utilization ~0.9 (near-flat 24x7); assumption (cf. #91/#94/#95)"
-)
+_LOAD_FACTOR_CITE = load_factor_cite(refs="#91/#94/#95")
 _DAYS_PER_YEAR = 365.0
 
 # --- Transcribed PJM published figures (verify / regenerate via PJM Data Miner 2) ----
@@ -318,9 +316,9 @@ def _reference_path(settings: Settings) -> Path:
     """The active site's PJM-market path (#1639/B1). Per-site because the reference embeds the
     site's LMP pricing zone (AEP→ATSI→DAY) — a slug-scoped default unless the profile pins one
     (Lima keeps the un-slugged legacy path)."""
-    prof = active_profile(settings)
-    rel = prof.pjm_relpath or f"reference/pjm/{prof.slug}/pjm-market.yaml"
-    return settings.data_dir / rel
+    return site_reference_path(
+        settings, active_profile(settings).pjm_relpath, subdir="pjm", filename="pjm-market.yaml"
+    )
 
 
 def write_pjm_market(reference: PjmMarketReference, *, settings: Settings | None = None) -> str:

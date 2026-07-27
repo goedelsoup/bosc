@@ -59,7 +59,7 @@ from watermark.hydrology.model import ProvenancedValue
 from watermark.logging import get_logger
 
 from . import GreenopsOfflineError
-from ._readme import write_reference_readme
+from ._readme import write_reference_yaml
 
 log = get_logger(__name__)
 
@@ -464,14 +464,7 @@ _CARBON_RELPATH = Path("reference") / "greenops" / "aws-carbon.yaml"
 
 
 def _write_yaml(out: Path, report: AwsCostReport | AwsCarbonReport) -> Path:
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(
-        yaml.safe_dump(report.model_dump(mode="json"), sort_keys=False, allow_unicode=True),
-        encoding="utf-8",
-    )
-    write_reference_readme(out.parent)
-    log.info("greenops.aws.wrote", path=str(out))
-    return out
+    return write_reference_yaml(out, report, log=log, event="greenops.aws.wrote")
 
 
 def write_aws_costs(report: AwsCostReport, *, settings: Settings | None = None) -> Path:

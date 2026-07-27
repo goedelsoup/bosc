@@ -188,6 +188,22 @@ def effective_corpus_scope(profile: SiteProfile) -> CorpusScope:
     return CorpusScope(include=(profile.slug,))
 
 
+def site_reference_path(
+    settings: Settings, pinned: str | None, *, subdir: str, filename: str
+) -> Path:
+    """A per-site committed-reference artifact's path — the profile pin, else slug-scoped.
+
+    The ``#762``/``#780`` safe-default idiom for the writers whose output is per-site content
+    (``watermark ferc`` / ``pjm`` / ``federal``): ``pinned`` is the profile's explicit relpath —
+    Lima pins its un-slugged legacy paths — and ``None`` resolves to
+    ``reference/<subdir>/<slug>/<filename>``. Built here once (H2/#1645) so the clobber-safety
+    that B1/#1639 established can't be re-derived slightly differently per writer: a non-Lima
+    run must never write over, or read back, the reference build's committed file.
+    """
+    prof = active_profile(settings)
+    return settings.data_dir / (pinned or f"reference/{subdir}/{prof.slug}/{filename}")
+
+
 def site_scoped_path(path: Path, slug: str, *, is_dir: bool) -> Path:
     """A curated store's per-site location (#762).
 

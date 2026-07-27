@@ -39,10 +39,12 @@ import yaml
 from pydantic import BaseModel, ConfigDict
 
 from watermark.config import Settings, get_settings
+from watermark.grid._registry import utility_identity
 from watermark.grid.model import CitedFact
 from watermark.hydrology.model import ProvenancedValue
 from watermark.logging import get_logger
-from watermark.sites import active_profile
+from watermark.sites import active_profile, site_reference_path
+from watermark.states import state_name, state_puc
 
 log = get_logger(__name__)
 
@@ -57,38 +59,11 @@ _FPA_CITE = (
 # site. They are resolved from the active ``SiteProfile`` (eia_state + eia861_utility_number),
 # never hardcoded to Ohio/PUCO/AEP — running ``watermark ferc`` under a non-OH site must emit that
 # site's regulator (e.g. IN retail = IURC) and serving utility, not Lima's.
-
-# State retail regulator, keyed by EIA state. OH + IN cover registered sites; an unlisted
-# state falls back to a generic "<ST> PUC".
-_STATE_PUC: dict[str, tuple[str, str]] = {
-    "OH": ("PUCO", "Public Utilities Commission of Ohio (PUCO)"),
-    "IN": ("IURC", "Indiana Utility Regulatory Commission (IURC)"),
-}
-_STATE_NAME: dict[str, str] = {"OH": "Ohio", "IN": "Indiana"}
-
-
-class _Form1Filer(NamedTuple):
-    """A serving utility's FERC identity (the FERC Form-1 filer / IOU operating company)."""
-
-    short: str  # short label woven into the seam prose, e.g. "AEP Ohio"
-    operating_company: str  # FERC Form-1 filer (IOU operating company), e.g. "Ohio Power Company"
-    files_form1: bool  # IOUs file FERC Form 1; municipal / cooperative systems do not
-
-
-# Serving-utility FERC identity, keyed by EIA-861 utility number (profile-only — mirrors
-# watermark.grid.utility._UTILITY_GRID; the two maps MUST cover the same utilities — a keyset
-# drift is what lost WPAFB/Xenia their FERC filer, A5/#1638, and is now CI-guarded. GP-H/#1645
-# is the deeper fix: collapse the two into one source). Lima/Findlay/Van Wert = Ohio Power
-# (#14006); Fort Wayne = Indiana Michigan Power (#9324); Toledo = Toledo Edison (#18997); the
-# Miami-basin sites (WPAFB/Xenia/Troy-Piqua/Sidney/Greenville/Wilmington) = Dayton P&L / AES
-# Ohio (#4922); Bryan = a municipal system (#2439), not a FERC Form-1 filer.
-_FORM1_FILER: dict[int, _Form1Filer] = {
-    14006: _Form1Filer("AEP Ohio", "Ohio Power Company", True),
-    9324: _Form1Filer("AEP I&M", "Indiana Michigan Power Company", True),
-    18997: _Form1Filer("FirstEnergy (Toledo Edison)", "The Toledo Edison Company", True),
-    4922: _Form1Filer("AES Ohio (Dayton P&L)", "The Dayton Power and Light Company", True),
-    2439: _Form1Filer("Bryan Municipal Utilities", "Bryan Municipal Utilities", False),
-}
+#
+# Both registries are shared, not local (H2/#1645): the state regulator + readable name come from
+# ``watermark.states``, and the Form-1 filer from ``watermark.grid._registry``, which
+# ``watermark.grid.utility`` reads for the same utilities' parent/zone provenance. They were two
+# hand-synced dicts until a keyset drift lost WPAFB/Xenia their FERC filer (A5/#1638).
 
 
 class _Jurisdiction(NamedTuple):
@@ -106,19 +81,13 @@ class _Jurisdiction(NamedTuple):
 def _jurisdiction(settings: Settings) -> _Jurisdiction:
     prof = active_profile(settings)
     state = prof.eia_state
-    state_name = _STATE_NAME.get(state, state)
-    puc_short, puc_full = _STATE_PUC.get(
-        state, (f"{state} PUC", f"the {state} state public utilities commission")
-    )
-    filer = _FORM1_FILER.get(
-        prof.eia861_utility_number,
-        _Form1Filer("the serving utility", "the serving utility", True),
-    )
+    puc = state_puc(state)
+    filer = utility_identity(prof.eia861_utility_number)
     return _Jurisdiction(
         state=state,
-        state_name=state_name,
-        puc_short=puc_short,
-        puc_full=puc_full,
+        state_name=state_name(state),
+        puc_short=puc.short,
+        puc_full=puc.full,
         utility_short=filer.short,
         form1_filer=filer.operating_company,
         files_form1=filer.files_form1,
@@ -410,9 +379,9 @@ def _reference_path(settings: Settings) -> Path:
     """The active site's FERC-seam path (#1639/B1). Per-site because the seam embeds per-site
     content (the FERC↔state-PUC jurisdiction, the serving utility) — a slug-scoped default
     unless the profile pins one (Lima keeps the un-slugged legacy path)."""
-    prof = active_profile(settings)
-    rel = prof.ferc_relpath or f"reference/ferc/{prof.slug}/ferc-seam.yaml"
-    return settings.data_dir / rel
+    return site_reference_path(
+        settings, active_profile(settings).ferc_relpath, subdir="ferc", filename="ferc-seam.yaml"
+    )
 
 
 def write_ferc_seam(seam: FercSeam, *, settings: Settings | None = None) -> str:

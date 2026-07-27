@@ -385,9 +385,9 @@ def grid_cmd(
             f"[dim](facility draw {ls.campus_load_mw.value:g} MW x {ls.load_factor.value:g} "
             f"→ {ls.annual_consumption_gwh.value:,.0f} GWh/yr)[/]"
         )
-        from watermark.economics.connectors.eia import _state_name
+        from watermark.states import state_name
 
-        state_name = _state_name(active_profile(settings).eia_state)
+        state_label = state_name(active_profile(settings).eia_state)
         table = Table("denominator", "annual load (GWh)", "campus share", "basis")
         table.add_row(
             f"{su.utility.value} retail (EIA-861)",
@@ -402,7 +402,7 @@ def grid_cmd(
             "connector",
         )
         table.add_row(
-            f"{state_name} retail (EIA, shared #91)",
+            f"{state_label} retail (EIA, shared #91)",
             f"{ls.state_retail_gwh.value:,.0f}",
             f"{ls.share_of_state_pct.value:g}%",
             "connector",

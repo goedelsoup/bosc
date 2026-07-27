@@ -137,3 +137,55 @@ def test_vcpu_and_runner_helpers() -> None:
     assert _runner_cores("Actions Linux") == 2
     assert _runner_cores("Actions macOS") == 3
     assert _runner_cores("Actions Linux 8-core") == 8
+
+
+# --- H3/#1645: the scale oracle the formula tests couldn't be ---------------------------------
+
+
+def test_committed_footprint_is_fixture_scale_not_platform_scale(repo_settings: Settings) -> None:
+    """The committed exports are sample-sized, and the headline figures say so out loud.
+
+    Every other test here asserts the derivation is *internally consistent* — 6366 vCPU-hrs times
+    the stated W/vCPU and PUE. All of them pass on the current ~53 kWh/yr electricity total, which
+    is roughly a household refrigerator for a month and cannot be a year of running this platform.
+    That is not a derivation bug; it is GP-F/F3 (#1643, open): ``data/reference/greenops/*`` holds
+    sample/fixture exports, so the figures downstream are fixture-scale by construction.
+
+    This test refuses to let that read as a real footprint by accident. It fails in **both**
+    directions: if the numbers stay fixture-scale after #1643 says they are real, and — more
+    usefully — the moment a genuine export lands and the totals jump, forcing whoever lands it to
+    come back here and to `/about/sustainability` and state which regime the page is describing.
+    """
+    headline = {h.key: h.value for h in derive_footprint(repo_settings).headline}
+    electricity_kwh = headline["electricity"].value * 1000.0  # the headline is MWh
+
+    # A real always-on platform is at minimum tens of MWh/yr. This is three orders below that.
+    assert electricity_kwh < 1_000.0, (
+        f"electricity is {electricity_kwh:.0f} kWh/yr — no longer fixture-scale. If the committed "
+        "greenops exports are now real (GP-F/#1643), delete this test and give the sustainability "
+        "page a plausibility band; do not simply widen the bound."
+    )
+    # Sanity in the other direction: fixture-scale is still a positive, finite, ordered chain.
+    assert electricity_kwh > 0.0
+    assert headline["compute"].value > 0.0
+    assert headline["water"].value > 0.0
+    assert headline["ai_inferences"].value > 0.0
+
+
+def test_headline_units_are_internally_ordered(repo_settings: Settings) -> None:
+    """Unit-slip oracle: the chain's magnitudes must keep their expected ordering.
+
+    Independent of absolute scale — this survives the fixture→real cutover above. vCPU-hours are
+    a much larger number than the MWh they imply (a vCPU is single-digit watts), and the modeled
+    water total is larger than the MWh figure (litres per kWh is > 1). A MW↔kW or Wh↔MWh slip in
+    the derivation inverts one of these long before it changes any formula test.
+    """
+    report = derive_footprint(repo_settings)
+    headline = {h.key: h.value for h in report.headline}
+    assert headline["compute"].value > headline["electricity"].value * 1000.0
+    assert headline["water"].value > headline["electricity"].value
+    # The two water bases are reported separately and never summed across bases.
+    assert report.water.direct.unit == report.water.indirect.unit
+    assert report.water.total == pytest.approx(
+        report.water.direct.value + report.water.indirect.value, rel=1e-6
+    )

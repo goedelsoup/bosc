@@ -53,7 +53,7 @@ from watermark.hydrology.model import ProvenancedValue
 from watermark.logging import get_logger
 
 from . import GreenopsOfflineError
-from ._readme import write_reference_readme
+from ._readme import write_reference_yaml
 
 log = get_logger(__name__)
 
@@ -298,14 +298,7 @@ def write_github_usage(report: GithubUsageReport, *, settings: Settings | None =
     """Persist the report as committed reference YAML + the shared README; return the YAML path."""
     settings = settings or get_settings()
     out = settings.data_dir / _REFERENCE_RELPATH
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(
-        yaml.safe_dump(report.model_dump(mode="json"), sort_keys=False, allow_unicode=True),
-        encoding="utf-8",
-    )
-    write_reference_readme(out.parent)
-    log.info("greenops.github.wrote", path=str(out))
-    return out
+    return write_reference_yaml(out, report, log=log, event="greenops.github.wrote")
 
 
 def load_github_usage(path: Path) -> GithubUsageReport:
