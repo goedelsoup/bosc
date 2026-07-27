@@ -1,14 +1,23 @@
-"""The one README for ``data/reference/greenops/`` — covering every connector's artifact.
+"""The one README for ``data/reference/greenops/`` — and the one write path beneath it.
 
 Each connector's ``write_*`` regenerates its own YAML **and** this shared README, so the
 folder's documentation stays whole no matter which ``--write`` ran last (a per-connector
 README would clobber its siblings'). Add a section here when a new GreenOps connector
 lands (#1078-#1082).
+
+The write itself is :func:`write_reference_yaml`, shared since H2/#1645: four connectors had
+copied the same mkdir → ``yaml.safe_dump`` → README → log sequence, so a change to the dump
+convention (``sort_keys``, ``allow_unicode``) had to be made in four places to keep the
+committed bytes consistent, and only *happened* to be.
 """
 
 from __future__ import annotations
 
 from pathlib import Path
+
+import structlog
+import yaml
+from pydantic import BaseModel
 
 REFERENCE_README = """\
 # GreenOps — provider usage, cost & carbon exports
@@ -94,3 +103,29 @@ def write_reference_readme(reference_dir: Path) -> Path:
     path = reference_dir / "README.md"
     path.write_text(REFERENCE_README, encoding="utf-8")
     return path
+
+
+def write_reference_yaml(
+    out: Path,
+    model: BaseModel,
+    *,
+    log: structlog.stdlib.BoundLogger,
+    event: str,
+    readme: str = REFERENCE_README,
+) -> Path:
+    """Persist a connector artifact as committed reference YAML + its folder README.
+
+    The one dump convention for every GreenOps reference artifact — ``sort_keys=False``
+    (schema order, so a diff reads as a data change rather than a re-sort) and
+    ``allow_unicode=True``. ``readme`` defaults to the shared folder README; the eGRID factor
+    tables live in their own ``factors/`` dir and pass their own. ``log``/``event`` stay the
+    caller's so the structured log still names the connector that wrote.
+    """
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(
+        yaml.safe_dump(model.model_dump(mode="json"), sort_keys=False, allow_unicode=True),
+        encoding="utf-8",
+    )
+    (out.parent / "README.md").write_text(readme, encoding="utf-8")
+    log.info(event, path=str(out))
+    return out

@@ -22,7 +22,7 @@ from watermark.economics.connectors.eia import fetch_consumer_energy
 from watermark.economics.model import ConsumerEnergyCosts, EnergyBurden, FacilityDemandPressure
 from watermark.facility.consumption import HOURS_PER_YEAR as _HOURS_PER_YEAR
 from watermark.facility.consumption import LOAD_FACTOR as _LOAD_FACTOR
-from watermark.facility.consumption import annual_consumption_gwh
+from watermark.facility.consumption import annual_consumption_gwh, load_factor_cite
 from watermark.facility.power import derive_power_basis
 from watermark.hydrology.model import ProvenancedValue
 from watermark.logging import get_logger
@@ -30,7 +30,7 @@ from watermark.sites import active_profile
 
 log = get_logger(__name__)
 
-_LOAD_FACTOR_CITE = "data-center capacity utilization ~0.9 (near-flat 24x7 load); assumption"
+_LOAD_FACTOR_CITE = load_factor_cite(subject="load")
 # EIA: US average annual residential electricity consumption ~10,500 kWh/household.
 _AVG_HOUSEHOLD_KWH_YR = 10500.0
 _HOUSEHOLD_CITE = "US avg residential use ~10,500 kWh/household/yr (EIA FAQ); assumption"

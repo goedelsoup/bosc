@@ -26,8 +26,9 @@ from watermark.config import Settings, get_settings
 from watermark.economics.energy import load_consumer_energy
 from watermark.facility.consumption import HOURS_PER_YEAR as _HOURS_PER_YEAR
 from watermark.facility.consumption import LOAD_FACTOR as _LOAD_FACTOR
-from watermark.facility.consumption import annual_consumption_gwh
+from watermark.facility.consumption import annual_consumption_gwh, load_factor_cite
 from watermark.facility.power import derive_power_basis
+from watermark.grid._registry import UtilityIdentity, is_registered, utility_identity
 from watermark.grid.eia861 import fetch_utility_retail
 from watermark.grid.interchange import fetch_ba_annual_load
 from watermark.grid.model import (
@@ -40,10 +41,11 @@ from watermark.grid.model import (
 from watermark.hydrology.model import ProvenancedValue
 from watermark.logging import get_logger
 from watermark.sites import SiteProfile, active_profile
+from watermark.states import state_name, state_puc
 
 log = get_logger(__name__)
 
-_LOAD_FACTOR_CITE = "data-center capacity utilization ~0.9 (near-flat 24x7); assumption (cf. #91)"
+_LOAD_FACTOR_CITE = load_factor_cite(refs="#91")
 
 # All three load denominators are now LIVE connector pulls — fetch_utility_retail
 # (watermark.grid.eia861), fetch_ba_annual_load (watermark.grid.interchange), and the state
@@ -53,31 +55,11 @@ _LOAD_FACTOR_CITE = "data-center capacity utilization ~0.9 (near-flat 24x7); ass
 # raises on the identical condition.
 
 
-# Full state name for prose/citation labels (keyed by EIA state). Keeps the readable form
-# in per-site citations (Lima "Ohio", Fort Wayne "Indiana") rather than the bare abbreviation;
-# an unlisted state falls back to its abbreviation.
-_STATE_NAME: dict[str, str] = {"OH": "Ohio", "IN": "Indiana"}
-
-
-# Per-state retail electric regulator (the serving-utility chain). OH + IN cover the sites
-# registered today; an unlisted state falls back to a generic state-regulator label.
-_RETAIL_REGULATOR: dict[str, tuple[str, str]] = {
-    "OH": (
-        "Public Utilities Commission of Ohio (PUCO)",
-        "Ohio retail electric service is PUCO-regulated (intrastate)",
-    ),
-    "IN": (
-        "Indiana Utility Regulatory Commission (IURC)",
-        "Indiana retail electric service is IURC-regulated (intrastate)",
-    ),
-}
-
-
 def _retail_regulator(state: str, ownership: str) -> tuple[str, str]:
     """The retail rate regulator for a utility's ownership in ``state`` (value, citation).
 
-    Investor-owned utilities are state-PUC rate-regulated (:data:`_RETAIL_REGULATOR`); a
-    municipal electric system sets its own retail rates under **home rule** (not PUC-
+    Investor-owned utilities are state-PUC rate-regulated (:func:`watermark.states.state_puc`);
+    a municipal electric system sets its own retail rates under **home rule** (not PUC-
     regulated), and a cooperative's rates are member/board-regulated — so the regulator is a
     function of ownership, not just the state. ``ownership`` is the EIA-861 ownership string.
     """
@@ -94,91 +76,8 @@ def _retail_regulator(state: str, ownership: str) -> tuple[str, str]:
             f"{state} electric cooperatives set retail rates by member/board governance "
             "(not state-PUC rate-regulated)",
         )
-    return _RETAIL_REGULATOR.get(
-        state,
-        (
-            f"{state} state utility regulator",
-            f"{state} retail electric service is state-regulated (intrastate)",
-        ),
-    )
-
-
-class _UtilityGrid(NamedTuple):
-    """A serving utility's parent + PJM market-zone provenance (the non-connector chain)."""
-
-    holding_company: str
-    holding_citation: str
-    ba_citation: str
-    rto_citation: str
-
-
-# Per-utility holding company + PJM transmission-zone provenance, keyed by EIA-861 utility
-# number. The AEP-family utilities (Ohio Power #14006 for Lima/Findlay/Van Wert, Indiana
-# Michigan Power #9324 for Fort Wayne) share the AEP parent; The Toledo Edison Co #18997 is
-# FirstEnergy (the PJM **ATSI** zone, not AEP) — the first registered non-AEP utility; Dayton
-# Power & Light / AES Ohio #4922 (WPAFB/Xenia) is the AES-parent, PJM **DAY** zone IOU. An
-# unlisted utility falls back to a zone-agnostic PJM phrasing keyed off the EIA-861 name.
-_UTILITY_GRID: dict[int, _UtilityGrid] = {
-    14006: _UtilityGrid(
-        holding_company="American Electric Power (AEP)",
-        holding_citation="AEP Ohio is the Ohio operating company of American Electric Power",
-        ba_citation="AEP's Ohio (AEP/APS) transmission zone is within the PJM RTO footprint",
-        rto_citation="PJM is the FERC-jurisdictional wholesale-market RTO for AEP Ohio",
-    ),
-    9324: _UtilityGrid(
-        holding_company="American Electric Power (AEP)",
-        holding_citation="Indiana Michigan Power (I&M) is an AEP operating company",
-        ba_citation="Indiana Michigan Power's transmission zone is within the PJM RTO footprint",
-        rto_citation="PJM is the FERC-jurisdictional wholesale-market RTO for Indiana Michigan Power",
-    ),
-    18997: _UtilityGrid(
-        holding_company="FirstEnergy Corp",
-        holding_citation="Toledo Edison is an Ohio operating company of FirstEnergy Corp",
-        ba_citation="Toledo Edison's ATSI (FirstEnergy) transmission zone is within the PJM RTO footprint",
-        rto_citation="PJM is the FERC-jurisdictional wholesale-market RTO for Toledo Edison (ATSI zone)",
-    ),
-    2439: _UtilityGrid(
-        # The network's first MUNICIPAL utility (Bryan, OH) — no IOU holding company; its
-        # wholesale power + PJM scheduling are through American Municipal Power (AMP).
-        holding_company="City of Bryan (municipal; American Municipal Power member)",
-        holding_citation="Bryan Municipal Utilities is a municipally-owned electric system "
-        "with no IOU holding company; its wholesale power and PJM scheduling are through "
-        "American Municipal Power (AMP), the Ohio municipal joint-action agency",
-        ba_citation="Bryan's municipal load is scheduled into the PJM RTO footprint via "
-        "American Municipal Power (EIA-861S BA Code PJM)",
-        rto_citation="PJM is the FERC-jurisdictional wholesale-market RTO for Bryan (AMP/PJM)",
-    ),
-    4922: _UtilityGrid(
-        # The Miami-basin serving IOU (WPAFB #442, Xenia #444) — Dayton Power & Light,
-        # d/b/a AES Ohio, the AES Corporation operating company; its transmission zone is
-        # PJM's **DAY** zone, the network's first non-AEP/non-ATSI IOU zone.
-        holding_company="The AES Corporation (AES Ohio)",
-        holding_citation="Dayton Power & Light Co does business as AES Ohio, the Ohio "
-        "operating company of The AES Corporation",
-        ba_citation="Dayton Power & Light's (AES Ohio) DAY transmission zone is within the "
-        "PJM RTO footprint",
-        rto_citation="PJM is the FERC-jurisdictional wholesale-market RTO for Dayton Power "
-        "& Light (AES Ohio)",
-    ),
-}
-
-
-def _utility_grid(utility_number: int, utility_name: str) -> _UtilityGrid:
-    """Parent/zone provenance for a utility; a neutral fallback for an unlisted one.
-
-    An unlisted utility no longer asserts PJM (B2/#1639): its balancing authority / RTO is
-    resolved separately by :func:`_balancing_authority` (profile pin → confirmed map →
-    unconfirmed), so the fallback carries only the holding-company chain, not an RTO claim.
-    """
-    known = _UTILITY_GRID.get(utility_number)
-    if known is not None:
-        return known
-    return _UtilityGrid(
-        holding_company=utility_name,
-        holding_citation=f"{utility_name} parent/holding company — identified from the EIA-861 record",
-        ba_citation=f"{utility_name}'s balancing authority / RTO is not confirmed (see SiteProfile.ba_code)",
-        rto_citation=f"{utility_name}'s wholesale-market RTO is not confirmed (see SiteProfile.ba_code)",
-    )
+    puc = state_puc(state)
+    return (puc.full, puc.retail_clause)
 
 
 class _BalancingAuthority(NamedTuple):
@@ -191,14 +90,14 @@ class _BalancingAuthority(NamedTuple):
     confirmed: bool  # True when a fact (profile pin or confirmed utility map), not a guess
 
 
-def _balancing_authority(prof: SiteProfile, grid: _UtilityGrid) -> _BalancingAuthority:
+def _balancing_authority(prof: SiteProfile, grid: UtilityIdentity) -> _BalancingAuthority:
     """The site's BA / RTO — profile pin → confirmed per-utility map → unconfirmed (B2/#1639).
 
     PJM was previously hardcoded at high confidence for **every** utility, including the
     unlisted generic fallback — wrong for the Indiana MISO footprint or any future MISO/SPP
     site. Resolution order: an explicit ``SiteProfile.ba_code`` (a MISO/SPP site pins it);
-    else a serving utility in the confirmed :data:`_UTILITY_GRID` map is PJM (the map encodes
-    the transmission zone); else the BA is **unconfirmed** — never assumed PJM.
+    else a serving utility the shared registry confirms (:func:`is_registered`) is PJM — the
+    entry encodes the transmission zone; else the BA is **unconfirmed** — never assumed PJM.
     """
     if prof.ba_code:
         rto = prof.rto_name or prof.ba_code
@@ -209,7 +108,7 @@ def _balancing_authority(prof: SiteProfile, grid: _UtilityGrid) -> _BalancingAut
             citation=f"{rto} balancing authority / RTO (SiteProfile.ba_code={prof.ba_code!r})",
             confirmed=True,
         )
-    if prof.eia861_utility_number in _UTILITY_GRID:
+    if is_registered(prof.eia861_utility_number):
         return _BalancingAuthority(
             ba_code="PJM",
             rto_name="PJM Interconnection",
@@ -237,7 +136,8 @@ def _serving_utility(
     EIA-861 service-territory record for a site without corpus coverage. The retail regulator
     is ownership-aware (:func:`_retail_regulator`): a state PUC for an IOU, home rule for a
     municipal, member-regulated for a cooperative. The holding company / market zone are
-    per-utility (:data:`_UTILITY_GRID`): AEP for Lima/Findlay/Van Wert (#14006) and Fort
+    per-utility (:data:`watermark.grid._registry.SERVING_UTILITIES`, the one registry the FERC
+    seam reads too): AEP for Lima/Findlay/Van Wert (#14006) and Fort
     Wayne's I&M (#9324), FirstEnergy/ATSI for Toledo's Toledo Edison (#18997), AMP/PJM for
     Bryan's municipal system (#2439). The RTO is resolved by :func:`_balancing_authority`
     (profile pin → confirmed utility map → unconfirmed), **not** assumed PJM (B2/#1639).
@@ -248,7 +148,7 @@ def _serving_utility(
     reg_short = (
         reg_value[reg_value.find("(") + 1 : reg_value.rfind(")")] if "(" in reg_value else reg_value
     )
-    grid = _utility_grid(prof.eia861_utility_number, utility_name)
+    grid = utility_identity(prof.eia861_utility_number, utility_name)
     ba = _balancing_authority(prof, grid)
     # Provenance grounding follows the per-site serving_utility source: Lima's is a corpus
     # document (the AEP-Ohio tariff in the relator appendix); a site without corpus coverage is
@@ -359,7 +259,7 @@ def derive_grid_profile(*, settings: Settings | None = None) -> GridProfile:
     # The BA is resolved per-site (B2/#1639), not assumed PJM — a MISO/SPP site would pull its
     # own respondent. Confirmed sites resolve "PJM"; the connector default backstops the rest.
     ba = _balancing_authority(
-        prof, _utility_grid(prof.eia861_utility_number, utility_profile.utility)
+        prof, utility_identity(prof.eia861_utility_number, utility_profile.utility)
     )
     ba_code = ba.ba_code or "PJM"
     ba_load = fetch_ba_annual_load(ba=ba_code, settings=settings)
@@ -373,7 +273,7 @@ def derive_grid_profile(*, settings: Settings | None = None) -> GridProfile:
         # facility-less site skips it and never trips the A1 raise for an absent dataset).
         state_retail = _state_retail_gwh(settings)
         eia_state = active_profile(settings).eia_state
-        state_name = _STATE_NAME.get(eia_state, eia_state)
+        state_label = state_name(eia_state)
 
         def _share(denom: float, *, of: str) -> float:
             # A zero/absent denominator means a broken upstream (empty connector, fixture
@@ -419,7 +319,7 @@ def derive_grid_profile(*, settings: Settings | None = None) -> GridProfile:
                 round(_share(state_retail.value, of="state retail (EIA)"), 2),
                 "percent",
                 citation=f"campus {consumption_gwh:.0f} GWh / "
-                f"{state_name} {state_retail.value:.0f} GWh",
+                f"{state_label} {state_retail.value:.0f} GWh",
             ),
         )
 
@@ -430,7 +330,7 @@ def derive_grid_profile(*, settings: Settings | None = None) -> GridProfile:
         consumption_gwh=(load_share.annual_consumption_gwh.value if load_share else None),
         share_utility_pct=(load_share.share_of_utility_pct.value if load_share else None),
     )
-    state_label = _STATE_NAME.get(prof.eia_state, prof.eia_state)
+    state_label = state_name(prof.eia_state)
     note = (
         f"Grid foundation layer (#94). The state, {utility_profile.utility}, and {ba_code} "
         f"denominators are now all connector-sourced — {state_label} retail from EIA (shared with "

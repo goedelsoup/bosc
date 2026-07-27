@@ -46,6 +46,13 @@ values instead of baking in Lima's. Defers to the root [`CLAUDE.md`](../../../CL
   legacy paths are pre-#325; **a new site slug-scopes all six `PER_SITE_OUTPUT_FIELDS`**
   (`output_path_collisions(slug)` is the CI guard — outputs must be unique across sites, but
   corpus geometry inputs like `parcels_relpath` are per-site *authored* inputs, a different rule).
+- **An *optional* per-site output resolves through `site_reference_path`** (#1645/H2) — the
+  `ferc_relpath`/`pjm_relpath`/`federal_relpath` writers, whose field is `None` for every site
+  but Lima. `None` means "slug-scope the default" (`reference/<subdir>/<slug>/<file>`), so those
+  fields carry no value for `output_path_collisions` to compare and are deliberately **not** in
+  `PER_SITE_OUTPUT_FIELDS`; the collision guard for them asserts the *resolved* paths are unique
+  across the network (`tests/test_shared_registries.py`). Build the path with the helper rather
+  than re-deriving the default — that default is the B1/#1639 clobber-safety property.
 - **`is_reference_site(slug)` (Lima) gates the reference-only surface** — the whole-corpus
   reads, the cross-site hypothesis matrix, Lima's flat committed layout. `effective_corpus_scope`
   returns a `CorpusScope` (`_scope.py`, `include`/`exclude`): Lima's is `include=None` (whole tree)

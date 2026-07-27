@@ -12,6 +12,8 @@ from pathlib import Path
 import pytest
 
 from watermark.config import Settings
+from watermark.facility.consumption import HOURS_PER_YEAR as _HOURS_PER_YEAR
+from watermark.facility.consumption import LOAD_FACTOR as _LOAD_FACTOR
 from watermark.facility.power import derive_power_basis
 from watermark.grid.market import (
     derive_pjm_market_scenario,
@@ -51,16 +53,25 @@ def test_lmp_is_connector_sourced_capacity_is_reference(market_settings: Setting
 def test_scenario_links_facility_draw(market_settings: Settings) -> None:
     sc = derive_pjm_market_scenario(settings=market_settings)
     power = derive_power_basis(settings=market_settings)
+    assert power is not None
     # The campus load IS the first-class PowerBasis.facility_draw (#87).
     assert sc.campus_load_mw.value == pytest.approx(power.facility_draw.value, abs=0.1)
-    # Annual consumption follows the shared convention (draw x 8760 x 0.9).
-    expected_gwh = power.facility_draw.value * 8760.0 * sc.load_factor.value / 1000.0
+    # Annual consumption follows the shared convention (draw x 8760 x 0.9). H3/#1645: the hours
+    # and load factor are spelled out here rather than read back off `sc.load_factor`, so this
+    # tests the convention instead of restating whatever the scenario happened to use.
+    expected_gwh = power.facility_draw.value * _HOURS_PER_YEAR * _LOAD_FACTOR / 1000.0
     assert sc.annual_consumption_gwh.value == pytest.approx(expected_gwh, rel=0.01)
+    assert sc.load_factor.value == pytest.approx(_LOAD_FACTOR)
+    # Plausibility, not just self-consistency: a few-hundred-MW campus run near-flat lands in
+    # the low thousands of GWh/yr. A unit slip (MW↔kW, GWh↔MWh) leaves this band immediately.
+    assert 1_000.0 < sc.annual_consumption_gwh.value < 10_000.0
 
 
 def test_annual_capacity_cost_is_draw_times_price_times_365(market_settings: Settings) -> None:
     sc = derive_pjm_market_scenario(settings=market_settings)
-    draw = sc.campus_load_mw.value
+    power = derive_power_basis(settings=market_settings)
+    assert power is not None
+    draw = power.facility_draw.value  # the input, not the scenario's echo of it
     price = sc.rpm_clearing_usd_mw_day.value
     # annual_capacity_cost ($M/yr) == draw (MW) x price ($/MW-day) x 365 / 1e6.
     expected_musd = draw * price * 365.0 / 1_000_000.0
@@ -71,21 +82,36 @@ def test_annual_capacity_cost_is_draw_times_price_times_365(market_settings: Set
 
 
 def test_annual_energy_cost_is_consumption_times_lmp(market_settings: Settings) -> None:
+    """H3/#1645: re-derive the energy cost from the *inputs*, not from the scenario's own outputs.
+
+    The prior form multiplied ``sc.annual_consumption_gwh`` by ``sc.zonal_lmp_usd_mwh`` — both
+    read back off the object under test, so it restated the code's arithmetic and would have
+    passed on any consumption figure at all. Here the chain starts at the facility draw and the
+    stated convention, and ends at an order-of-magnitude claim about the real world.
+    """
     sc = derive_pjm_market_scenario(settings=market_settings)
-    consumption_mwh = sc.annual_consumption_gwh.value * 1000.0
+    power = derive_power_basis(settings=market_settings)
+    assert power is not None
+    consumption_mwh = power.facility_draw.value * _HOURS_PER_YEAR * _LOAD_FACTOR
     expected_musd = consumption_mwh * sc.zonal_lmp_usd_mwh.value / 1_000_000.0
     assert sc.annual_energy_cost_musd.value == pytest.approx(expected_musd, rel=0.01)
     assert sc.annual_energy_cost_musd.source == "derived"
+    # A few-thousand-GWh campus at a ~$45/MWh zonal LMP is a low-hundreds-of-$M/yr energy bill —
+    # and strictly larger than the capacity charge, which is the point the scenario makes.
+    assert 50.0 < sc.annual_energy_cost_musd.value < 400.0
+    assert sc.annual_energy_cost_musd.value > sc.annual_capacity_cost_musd.value
 
 
 def test_campus_is_small_slice_of_queue(market_settings: Settings) -> None:
     sc = derive_pjm_market_scenario(settings=market_settings)
-    draw = sc.campus_load_mw.value
+    power = derive_power_basis(settings=market_settings)
+    assert power is not None
     queue_gw = sc.large_load_queue_gw.value
-    expected_pct = draw / (queue_gw * 1000.0) * 100.0
+    expected_pct = power.facility_draw.value / (queue_gw * 1000.0) * 100.0
     assert sc.campus_share_of_queue_pct.value == pytest.approx(expected_pct, rel=0.01)
     # One campus is a small single-digit-percent slice of a tens-of-GW pipeline.
     assert 0.0 < sc.campus_share_of_queue_pct.value < 5.0
+    assert 10.0 < queue_gw < 500.0  # the denominator is a real GW-scale queue, not a stray unit
 
 
 def test_caveats_present(market_settings: Settings) -> None:

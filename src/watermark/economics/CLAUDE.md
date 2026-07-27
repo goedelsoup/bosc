@@ -12,8 +12,10 @@ costs, plus the stylized facility→price-pressure sensitivity. Defers to the ro
   retail sales, residential natural-gas price). All go through the shared
   `watermark.connectors.cached_get` (on-disk cache + fixture fallback); an **API key is never part
   of a cache key**; an offline miss raises `OfflineError` naming the key; columns are read **by
-  name, not index** (defends against upstream format drift). New state → add it to `eia.py`'s
-  `_STATE_NAME` map (the three series are templated by state code).
+  name, not index** (defends against upstream format drift). New state → add it to
+  **`watermark.states`**'s `STATE_NAME` map (the three series are templated by state code). That
+  module is the one home for per-state jurisdiction facts — the readable name and the retail PUC —
+  shared with the grid stack, which used to keep its own copies (H2/#1645).
 - **`baseline.py` → `EconomicBaseline`.** QCEW across two trend years (default 2018/2023) folded
   with an optional ACS5 population series → the newest year's full sector mix (`latest`), the
   employment `trend`, `population` (omitted, not faked, when no Census key/fixture), and a
