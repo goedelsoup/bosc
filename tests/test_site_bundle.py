@@ -298,13 +298,23 @@ def _bundles_carrying(*feeds: str) -> list[str]:
     Discovered rather than listed so a bundle that *gains* a feed is covered the moment it
     ships — Urbana joined this set only when #1769 un-stuck its `load_share`, and a hardcoded
     list would have quietly left the new pairing unguarded.
+
+    Empty is an error, not an empty parametrization: a moved bundle root or a renamed feed
+    would otherwise collect zero cases and report green, disarming the guard in exactly the
+    silent way #1769 is about.
     """
     wanted = set(feeds)
-    return sorted(
+    found = sorted(
         m.parent.name
         for m in (REPO_ROOT / "web" / "sites").glob("*/manifest.json")
         if wanted <= {f["name"] for f in json.loads(m.read_text(encoding="utf-8"))["feeds"]}
     )
+    if not found:
+        raise AssertionError(
+            f"no committed bundle under {REPO_ROOT / 'web' / 'sites'} carries all of "
+            f"{sorted(wanted)} — the guard would collect zero cases and pass vacuously"
+        )
+    return found
 
 
 @pytest.mark.parametrize("slug", _bundles_carrying("grid", "economics-demand-pressure"))
