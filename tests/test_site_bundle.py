@@ -292,6 +292,44 @@ def test_grid_backdrop_is_present_for_a_facility_less_peer(
     assert _manifest(out)["readiness"]["domains"]["backdrop"] == "live"
 
 
+@pytest.mark.parametrize("slug", ["lima", "fort-wayne"])
+def test_grid_and_demand_pressure_agree_on_the_campus_load(slug: str) -> None:
+    """The `grid` and `economics-demand-pressure` feeds must not fork the campus load.
+
+    Both express the SAME quantity — ``PowerBasis.facility_draw`` central (#87) — and both are
+    rendered on `/economy/grid`, the grid backdrop's denominators table directly above the
+    demand-pressure block. They are produced by different modules (`watermark.grid.utility` vs
+    `watermark.economics.energy`) from committed artifacts regenerated at different times, so
+    they drift silently: Fort Wayne shipped 113.9 MW / 898.0 GWh on one and 117.0 MW / 922.4 GWh
+    on the other, a visible contradiction one scroll apart, because its grid profile predated
+    GP-D's power-basis work (#1641) while its demand-pressure was freshly derived (#1642, E3).
+
+    This pins the shared figures across the committed bundles so the next divergence fails here
+    rather than on the page. It is deliberately an EQUALITY, not a tolerance: both round the same
+    float to one decimal, so any difference at all means one artifact is stale.
+    """
+    fixture = REPO_ROOT / "web" / "sites" / slug
+    by_name = _feeds_by_name(fixture)
+    grid = _rows(fixture, by_name["grid"])[0]
+    pressure = _rows(fixture, by_name["economics-demand-pressure"])[0]
+
+    share = grid["load_share"]
+    assert share is not None, f"{slug} has a demand-pressure feed, so its campus load must exist"
+    assert share["campus_load_mw"]["value"] == pressure["facility_draw_mw"]["value"], (
+        f"{slug}: grid campus_load_mw != demand-pressure facility_draw_mw — one artifact is "
+        "stale; regenerate both from the current power basis"
+    )
+    assert (
+        share["annual_consumption_gwh"]["value"] == pressure["annual_consumption_gwh"]["value"]
+    ), f"{slug}: the two feeds disagree on annual consumption at the same load factor"
+    assert share["load_factor"]["value"] == pressure["load_factor"]["value"]
+    # The state share is the one denominator both feeds resolve independently — pin it too, so a
+    # divergence in the *state* retail series (not just the campus load) is caught as well.
+    assert share["share_of_state_pct"]["value"] == pressure["demand_share_pct"]["value"], (
+        f"{slug}: grid share_of_state_pct != demand-pressure demand_share_pct"
+    )
+
+
 def test_degenerate_grid_profile_feed_is_dropped(
     tmp_path_factory: pytest.TempPathFactory, monkeypatch: pytest.MonkeyPatch
 ) -> None:
