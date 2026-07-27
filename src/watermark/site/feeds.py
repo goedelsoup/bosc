@@ -29,8 +29,8 @@ from typing import Any, Literal
 from pydantic import BaseModel, ConfigDict, Field, HttpUrl, computed_field
 
 from watermark.provenance import Confidence as Confidence
+from watermark.provenance import EvidenceRegister, source_is_verified
 from watermark.provenance import SourceKind as SourceKind
-from watermark.provenance import source_is_verified
 from watermark.site.readiness import State, Tier  # the readiness vocabulary SSOT (#1220)
 from watermark.sites import (
     CoolingModelType,
@@ -288,7 +288,20 @@ from watermark.sites import (
 #   `rsei` / `economics-baseline` (`ProvenancedValue` + `CitedFact` carry the #60 discipline), so
 #   no new model is defined here. One new feed → MINOR, back-compatible (a reader that doesn't
 #   know `grid` is unaffected; a pre-1.35 bundle simply has no grid backdrop to render).
-CONTRACT_VERSION = "1.35.0"
+# 1.36.0: the `defense-contractors` feed carries its evidence discipline in the type system
+#   instead of in prose (#1663, ME-D). `DefenseContractorItem` gains `tag` + `tag_basis` — the
+#   register of the item's corridor-presence claim (`open` when nothing matched, `inference` for a
+#   bare owner/party name-pattern hit, `verified` only when a UEI-pinned award's curated `nexus`
+#   corroborates it), retiring the page's "leads, not verdicts" callout as the *only* carrier of
+#   that caveat. `ScanParcel` gains the pair the old scan conflated: `record_tag` for the GIS
+#   columns themselves (verbatim from the county service → `verified`) and
+#   `attribution` / `attribution_tag` / `attribution_basis` for what the scan claims the parcel IS
+#   — at Lima, the `[inference]` JSMC identification that previously existed only as a free-text
+#   prefix inside `meta.army_controlled_note`. The attribution text + register are sourced from the
+#   site profile's `GisDefenseMeta` (never parsed out of the note), so a peer states its own.
+#   All six fields carry defaults, so a pre-1.36 defense-contractors.json stays valid — MINOR,
+#   back-compatible.
+CONTRACT_VERSION = "1.36.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
@@ -357,8 +370,10 @@ class Figure(BaseModel):
 # `source_kind` maps to (`watermark.provenance.evidence_tag`), plus `open` for an asserted-
 # but-unquantified fact (a known predicate with no value yet — a lead). A projection over the
 # provenanced feeds yields only verified/inference/reference; `open` rides along for the
-# readiness/leads tie-in (deferred).
-FactStatus = Literal["verified", "inference", "reference", "open"]
+# readiness/leads tie-in (deferred). Aliased to the shared `watermark.provenance.EvidenceRegister`
+# (#1663) rather than re-spelled, so the vocabulary can't drift from the peer that
+# `watermark.connectors.gis_schema` — which can't import this heavy module — speaks.
+FactStatus = EvidenceRegister
 
 
 class FactEvidence(BaseModel):
@@ -654,9 +669,29 @@ class CandidateItem(BaseModel):
 
 
 class ScanParcel(BaseModel):
-    """A parcel row from the defense-land GIS scan (extra GIS columns allowed)."""
+    """A parcel row from the defense-land GIS scan (extra GIS columns allowed).
+
+    Two registers travel with one row, and conflating them is the failure this model exists to
+    prevent (#1663, ME-D). The GIS columns — owner, situs, acres, value — are verbatim from the
+    county's public parcel service, so ``record_tag`` is ``verified``. What the scan *claims the
+    parcel is* — a named prime's holding, the Joint Systems Manufacturing Center — is an analyst
+    reading over those columns, carried in ``attribution`` and tagged separately by
+    ``attribution_tag``. Before this, the ``[inference]`` marker on the JSMC identification lived
+    only as a free-text prefix inside the scan's ``meta.army_controlled_note`` prose, so a consumer
+    could not tell a verified ownership row from an inferred attribution without parsing English.
+    """
 
     model_config = ConfigDict(extra="allow")
+
+    # The register of the row's OWN columns (owner/situs/acres/value). `verified` for a live
+    # ArcGIS pull; a site that vendors a downloaded parcel extract instead sets `reference`.
+    record_tag: FactStatus = "verified"
+    # What the scan claims this parcel IS, and the register of that claim — never derived by
+    # regexing `attribution_basis` for a `[tag]` prefix. `attribution` is null on a row the scan
+    # merely lists (it asserts nothing beyond the ownership already in `record_tag`).
+    attribution: str | None = None
+    attribution_tag: FactStatus = "inference"
+    attribution_basis: str | None = None  # why that register — the reasoning, per row
 
 
 class FederalAnnualFlow(BaseModel):
@@ -706,6 +741,13 @@ class DefenseContractorItem(BaseModel):
     ``awards`` carries the per-entity federal records, and ``total_obligations`` / ``nexus`` roll
     them up (the summed dollars + the strongest nexus). A contractor with no matched award keeps
     an empty ``awards`` and null totals.
+
+    ``tag`` types the discipline the page previously carried only as a prose callout (#1663, ME-D):
+    it is the register of the item's **corridor-presence claim**, not of the seed row (the seed list
+    is curated, and a prime that matched nothing still ships so the search is visible). A bare
+    ``matched_entities`` hit is a case-insensitive substring match on a party name — a lead, so
+    ``inference``; a match corroborated by a UEI-pinned award whose curated ``nexus`` is
+    ``verified`` earns ``verified``; nothing matched leaves the question standing, so ``open``.
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -717,6 +759,8 @@ class DefenseContractorItem(BaseModel):
     awards: list[ContractorAward] = Field(default_factory=list)
     total_obligations: float | None = None  # Σ distinct matched awards (USD); null if none
     nexus: str | None = None  # strongest matched nexus (verified > context > open); null if none
+    tag: FactStatus = "open"  # register of the corridor-presence claim (#1663)
+    tag_basis: str | None = None  # why that register — what carried (or failed to carry) it
 
 
 class DefenseFeed(BaseModel):

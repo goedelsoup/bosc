@@ -431,7 +431,10 @@ export interface ContractorAward {
 }
 
 /** A DoD-prime pattern match (`defense-contractors` feed) — leads, not verdicts. Each match that
- *  resolves to a USASpending recipient carries the federal dollars it already reached (#1662). */
+ *  resolves to a USASpending recipient carries the federal dollars it already reached (#1662),
+ *  and `tag` types the "lead, not verdict" caveat that used to live only in the page's prose
+ *  callout (#1663): `open` when the patterns matched nothing, `inference` for a bare name-pattern
+ *  hit, `verified` only when a UEI-pinned award's curated nexus corroborates it. */
 export interface DefenseContractor {
   name: string;
   note?: string | null;
@@ -440,11 +443,25 @@ export interface DefenseContractor {
   awards?: ContractorAward[];
   total_obligations?: number | null; // Σ distinct matched awards (USD); null if none
   nexus?: string | null; // strongest matched nexus (verified > context > open); null if none
+  tag?: FactStatus; // register of the corridor-presence claim (#1663)
+  tag_basis?: string | null; // why that register
 }
+
+/** A parcel row from the defense-land GIS scan (#1663). The GIS columns arrive as extra keys and
+ *  are verbatim from the county service (`record_tag`); what the scan claims the parcel *is* —
+ *  a prime's holding, the JSMC — is a separate claim with its own register. Reading one tag for
+ *  both is the mistake the pair exists to prevent. */
+export interface ScanParcel extends Record<string, unknown> {
+  record_tag?: FactStatus; // register of the row's own GIS columns
+  attribution?: string | null; // what the scan claims this parcel IS
+  attribution_tag?: FactStatus; // and the register of that claim
+  attribution_basis?: string | null;
+}
+
 export interface DefenseContractors {
   contractors: DefenseContractor[];
-  prime_owned: Record<string, unknown>[];
-  army_controlled: Record<string, unknown>[];
+  prime_owned: ScanParcel[];
+  army_controlled: ScanParcel[];
   notes?: { subject?: string; source?: string; finding?: string; [k: string]: unknown } | null;
 }
 

@@ -60,7 +60,7 @@ export const PHASE_PILL: Record<SiteStatus, Swatch> = {
 // --- The defense (H2) and surveillance (H3) reading of each site --------------------------------
 // A site appears in a thesis group ONLY with a real, public, on-the-record fact; `group: "watch"`
 // (the default) means "not yet assessed under this thesis" — it lands in the chip group, not a row.
-export type DefGroup = "arsenal" | "federal" | "supply" | "watch";
+export type DefGroup = "arsenal" | "federal" | "supply" | "capture" | "watch";
 export type SurvGroup = "onrecord" | "subsidy" | "watch";
 
 export interface DefFact {
@@ -68,6 +68,11 @@ export interface DefFact {
   nexus: string;
   /** How the site relates to it (adjacency, supply chain, …), or "—". */
   linkage: string;
+  /** The economic-capture reading (#1663) — what the federal money does here, or "—". Distinct
+   *  from H3's `capital`, which is about private operators and public subsidy. */
+  capture: string;
+  /** The dollars or jobs the capture reading rests on, or "—". */
+  federal_flow: string;
   signal: Signal;
   group: DefGroup;
   /** Investigative-frame tag (#905): what kind of claim the cell is making. */
@@ -84,7 +89,14 @@ export interface SurvFact {
   sub_thesis?: string | null;
 }
 
-const DEF0: DefFact = { nexus: "—", linkage: "—", signal: "watch", group: "watch" };
+const DEF0: DefFact = {
+  nexus: "—",
+  linkage: "—",
+  capture: "—",
+  federal_flow: "—",
+  signal: "watch",
+  group: "watch",
+};
 const SURV0: SurvFact = { operator: "—", capital: "—", signal: "watch", group: "watch" };
 
 /**
@@ -101,7 +113,7 @@ const asSignal = (s: string | null | undefined): Signal =>
 // Narrow the feed's free `group` string to its union (an out-of-union value falls back
 // to "watch" rather than passing silently through a bare cast) (#585).
 const asDefGroup = (g: string | null | undefined): DefGroup =>
-  g === "arsenal" || g === "federal" || g === "supply" ? g : "watch";
+  g === "arsenal" || g === "federal" || g === "supply" || g === "capture" ? g : "watch";
 const asSurvGroup = (g: string | null | undefined): SurvGroup =>
   g === "onrecord" || g === "subsidy" ? g : "watch";
 
@@ -115,6 +127,8 @@ export function indexAssessments(cells: readonly HypothesisAssessmentItem[]): Le
       entry.def = {
         nexus: c.fields.nexus ?? "—",
         linkage: c.fields.linkage ?? "—",
+        capture: c.fields.capture ?? "—",
+        federal_flow: c.fields.federal_flow ?? "—",
         signal: asSignal(c.signal),
         group: asDefGroup(c.group),
         sub_thesis: c.sub_thesis,
@@ -214,7 +228,7 @@ export const LENSES: Record<DirLens, LensConfig> = {
     statusKind: "new",
     claim: "Where the build-out meets federal land and the defense base.",
     blurb:
-      "A second reading: the same map tracks arsenals, air bases, federal research and the CHIPS build — enclaves where federal jurisdiction, clearance, and defense supply chains concentrate. Newly opened; most sites are not yet assessed, and a federal nexus is a signal, not a verdict.",
+      "A second reading: the same map tracks arsenals, air bases, federal research and the CHIPS build — enclaves where federal jurisdiction, clearance, and defense supply chains concentrate. Newly opened; most sites are not yet assessed, and a federal nexus is a signal, not a verdict. A capture sub-thesis (#1663): the enclave is not only geography, it is an economic structure — federal payroll and prime-award obligations concentrated in one county, land held by the United States and off the local tax rolls, and the abatement / PILOT instruments layered around it. Whether the defense base distorts the local economy the datacenter lands in, or merely sits beside it.",
     axisTitle: "Assessment so far",
     scoreTitle: "Every site, by federal nexus",
     scoreNote: "Signal is inference until a federal nexus is documented.",
@@ -224,10 +238,11 @@ export const LENSES: Record<DirLens, LensConfig> = {
       { label: "Site" },
       { label: "Federal / defense nexus" },
       { label: "Linkage" },
+      { label: "Economic capture" },
       { label: "Signal" },
       { label: "Facility status" },
     ],
-    fr: ["1.4fr", "1.8fr", "1.0fr", "1.05fr", "1.15fr"],
+    fr: ["1.3fr", "1.6fr", "0.95fr", "1.5fr", "1.0fr", "1.1fr"],
   },
   surveillance: {
     key: "surveillance",
@@ -416,11 +431,20 @@ export function buildLens(
     const dat = lensDatum(s.slug, data);
     const defTag = dat.def.sub_thesis ? ` · [${dat.def.sub_thesis}]` : "";
     const survTag = dat.surv.sub_thesis ? ` · [${dat.surv.sub_thesis}]` : "";
+    // The capture cell reads as "<what the money does> · <the figure it rests on>" so the
+    // reading and its grounding never separate; "—" stays a single dash, never a fabricated pair.
+    const cap =
+      dat.def.capture === "—"
+        ? "—"
+        : dat.def.federal_flow === "—"
+          ? dat.def.capture
+          : `${dat.def.capture} · ${dat.def.federal_flow}`;
     const cells = isDef
       ? [
           siteCell(s),
           textCell(dat.def.nexus + defTag),
           textCell(dat.def.linkage, true),
+          textCell(cap, true),
           pillCell(SIGNAL_META[dat.def.signal]),
           facPill(facilityStatusOf(s.slug)),
         ]
@@ -441,6 +465,7 @@ export function buildLens(
         ["arsenal", "MIL", "Arsenals & air bases", "Arsenals"],
         ["federal", "FED", "Federal semiconductor & research", "Federal semiconductor"],
         ["supply", "SUP", "Defense supply corridors", "Defense supply corridors"],
+        ["capture", "CAP", "Federal economic capture", "Economic capture"],
       ]
     : [
         ["onrecord", "OPR", "Operator & subsidy on record", "Operator"],

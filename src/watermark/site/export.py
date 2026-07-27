@@ -48,6 +48,7 @@ from watermark.air.scenario import AirScenarioResult
 from watermark.candidates import (
     load_cloud_consumer_candidates,
     load_defense_contractors,
+    load_defense_meta,
     load_defense_scan,
 )
 from watermark.civic.summarize import load_committed_summaries
@@ -768,7 +769,11 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
                 None
                 if defense is None
                 else candidates_mod.export_defense_contractors(
-                    defense, egraph=egraph, scan=load_defense_scan(settings), awards=federal_awards
+                    defense,
+                    egraph=egraph,
+                    scan=load_defense_scan(settings),
+                    awards=federal_awards,
+                    defense_meta=load_defense_meta(settings),
                 )
             ),
         ),

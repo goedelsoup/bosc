@@ -1,7 +1,8 @@
 ---
 import Base from "~/layouts/Base.astro";
+import EvidenceTag from "~/components/EvidenceTag.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
-import { slugify, type DefenseContractors } from "@watermark/core/feeds";
+import { slugify, type DefenseContractors, type FactStatus, type ScanParcel } from "@watermark/core/feeds";
 import { withBase, withSite } from "@watermark/core/site";
 
 const dc = hasFeed("defense-contractors") ? loadFeed<DefenseContractors>("defense-contractors") : null;
@@ -10,6 +11,11 @@ const primeOwned = dc?.prime_owned ?? [];
 const armyControlled = dc?.army_controlled ?? [];
 const field = (row: Record<string, unknown>, key: string): string =>
   row[key] == null ? "—" : String(row[key]);
+// A pre-1.36 bundle carries no tags; fall back to the register that row WOULD have had rather
+// than rendering nothing (the discipline is the point of the column) (#1663).
+const regOf = (t: FactStatus | undefined, fallback: FactStatus): FactStatus => t ?? fallback;
+// Any parcel scan that states what a row IS turns on the attribution column.
+const hasAttribution = (rows: ScanParcel[]): boolean => rows.some((r) => r.attribution != null);
 const usd = (n: number): string =>
   n >= 1e9
     ? `$${(n / 1e9).toFixed(1)}B`
@@ -40,6 +46,13 @@ const hasAwards = contractors.some((c) => (c.awards?.length ?? 0) > 0);
               <strong>not</strong> a classification and <strong>not</strong> an accusation. It does not change
               an entity's graph classification; a hit on a dual-use firm may be a purely commercial holding.
             </p>
+            <p>
+              That caveat is now carried in the data, not only here: every row below states its own
+              register. <EvidenceTag kind="open" /> means the seed patterns were searched and matched
+              nothing — a standing question, never a clearance. <EvidenceTag kind="inference" /> is a bare
+              name-pattern hit. <EvidenceTag kind="verified" /> is reserved for a match corroborated by a
+              UEI-pinned federal award whose curated corridor nexus is itself verified.
+            </p>
           </div>
 
           <h2>Prime-contractor patterns</h2>
@@ -57,6 +70,7 @@ const hasAwards = contractors.some((c) => (c.awards?.length ?? 0) > 0);
                 <th>Prime</th>
                 <th>Name patterns</th>
                 <th>Matched corridor entities</th>
+                <th>Register</th>
                 {hasAwards && <th>Federal awards (USASpending)</th>}
               </tr>
             </thead>
@@ -74,6 +88,12 @@ const hasAwards = contractors.some((c) => (c.awards?.length ?? 0) > 0);
                             <a href={`${withBase("/wiki/entities/")}${slugify(k)}/`}>{k}</a>
                           </>
                         ))}
+                  </td>
+                  <td>
+                    <EvidenceTag
+                      kind={regOf(c.tag, c.matched_entities.length === 0 ? "open" : "inference")}
+                      title={c.tag_basis ?? undefined}
+                    />
                   </td>
                   {hasAwards && (
                     <td>
@@ -103,14 +123,27 @@ const hasAwards = contractors.some((c) => (c.awards?.length ?? 0) > 0);
           {primeOwned.length > 0 && (
             <>
               <h2>Prime-owned parcels ({primeOwned.length})</h2>
+              <p class="card-meta">
+                Owner, situs, and acreage are verbatim from the county parcel service
+                (<EvidenceTag kind="verified" />). The prime named in the first column is the
+                owner-name pattern the scan matched — a separate claim, tagged separately.
+              </p>
               <table>
                 <thead>
-                  <tr><th>Prime</th><th>Parcel</th><th>Owner</th><th>Situs</th><th>Acres</th></tr>
+                  <tr>
+                    <th>Prime</th><th>Register</th><th>Parcel</th><th>Owner</th><th>Situs</th><th>Acres</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {primeOwned.map((r) => (
                     <tr>
-                      <td>{field(r, "matched_prime")}</td>
+                      <td>{r.attribution ?? field(r, "matched_prime")}</td>
+                      <td>
+                        <EvidenceTag
+                          kind={regOf(r.attribution_tag, "inference")}
+                          title={r.attribution_basis ?? undefined}
+                        />
+                      </td>
                       <td>{field(r, "parcel_no")}</td>
                       <td>{field(r, "owner")}</td>
                       <td>{field(r, "situs_address")}</td>
@@ -125,9 +158,18 @@ const hasAwards = contractors.some((c) => (c.awards?.length ?? 0) > 0);
           {armyControlled.length > 0 && (
             <>
               <h2>Army-controlled defense land ({armyControlled.length})</h2>
+              <p class="card-meta">
+                Two registers, kept apart. The ownership columns are verbatim from the county
+                parcel service (<EvidenceTag kind="verified" />); what the cluster is
+                <em>identified as</em> is an analyst reading over them, and carries its own tag —
+                hover it for the basis.
+              </p>
               <table>
                 <thead>
-                  <tr><th>Parcel</th><th>Owner</th><th>Situs</th><th>Acres</th><th>Tax district</th></tr>
+                  <tr>
+                    <th>Parcel</th><th>Owner</th><th>Situs</th><th>Acres</th><th>Tax district</th>
+                    {hasAttribution(armyControlled) && <th>Identified as</th>}
+                  </tr>
                 </thead>
                 <tbody>
                   {armyControlled.map((r) => (
@@ -137,6 +179,15 @@ const hasAwards = contractors.some((c) => (c.awards?.length ?? 0) > 0);
                       <td>{field(r, "situs_address")}</td>
                       <td>{field(r, "acres")}</td>
                       <td>{field(r, "tax_district")}</td>
+                      {hasAttribution(armyControlled) && (
+                        <td>
+                          {r.attribution ?? "—"}{" "}
+                          <EvidenceTag
+                            kind={regOf(r.attribution_tag, "inference")}
+                            title={r.attribution_basis ?? undefined}
+                          />
+                        </td>
+                      )}
                     </tr>
                   ))}
                 </tbody>

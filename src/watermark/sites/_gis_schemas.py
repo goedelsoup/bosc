@@ -106,6 +106,11 @@ LIMA_PARCEL_SCHEMA = GisParcelSchema(
             "(Lima Army Tank Plant; 1151 Buckeye Rd), operated by General Dynamics Land "
             "Systems. Ownership is verbatim from the GIS; the JSMC identification is an "
             "analyst inference — verify against the deed/lease before relying on it.",
+            # The same claim as data (#1663) — stamped per-parcel onto the feed so the
+            # `[inference]` above is a typed field, not a prefix a consumer has to parse.
+            enclave_attribution="Joint Systems Manufacturing Center (Lima Army Tank Plant), "
+            "operated by General Dynamics Land Systems",
+            enclave_attribution_tag="inference",
             caveats=(
                 "Values are verbatim from the county GIS; null means the service had no value.",
                 "A pattern match is a lead to verify, not a classification or accusation.",

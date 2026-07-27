@@ -159,5 +159,18 @@ notes: >-
   place, not the campus, so a facility-less site carries it with `load_share: null` rather than a
   fabricated share, and a stale profile with zeroed utility/BA denominators is dropped rather than
   shipped as a `count == 1` shell (`GridProfile.has_real_denominators`, the #1364 rule on the grid axis).
+  The `defense-contractors` feed carries its evidence discipline in the type system as of ME-D
+  (issue 1663, contract 1.36.0). `DefenseContractorItem` gains `tag`/`tag_basis` — the register of
+  the corridor-presence claim, classified from data already in the feed (`open` when the seed
+  patterns matched nothing, `inference` for a bare name-pattern hit, `verified` only when a
+  UEI-pinned award's curated `nexus` corroborates it) — and `ScanParcel` gains `record_tag` for the
+  GIS columns themselves alongside `attribution`/`attribution_tag`/`attribution_basis` for what the
+  scan claims a parcel *is*, so a verified ownership row is no longer indistinguishable from an
+  inferred enclave identification. The attribution text + register come from the active site
+  profile's `GisDefenseMeta` (`watermark.candidates.load_defense_meta`) rather than being parsed out
+  of the scan note's `[inference]` prefix, and a site registering no defense GIS config asserts no
+  attribution at all instead of inheriting the reference build's. All six fields are projected at
+  the feed seam from inputs already declared above — the committed `parcels.defense.yaml` scan is
+  unchanged and no new committed upstream is added.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.

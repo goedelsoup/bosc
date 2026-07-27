@@ -6,6 +6,8 @@ group: arsenal
 fields:
   nexus: Lima Army Tank Plant (JSMC)
   linkage: Co-located · Allen Co.
+  capture: Federal payroll a third of the national share (LQ 0.33)
+  federal_flow: 321 federal-civilian jobs · $83.8k avg pay vs $58.8k county (QCEW 2024)
 citations:
   - source: docs/defense-nexus.md
     source_kind: reference
@@ -25,3 +27,21 @@ citations:
       facility-scoped instrument cannot exist by construction. The authorization posture stays
       undisclosed and the JSMC co-location stays coincidental geography — no supply/authorization
       link was found or forced (cf. Urbana #1353).
+  - source: data/reference/economics/baseline.yaml
+    source_kind: connector
+    confidence: high
+    note: >-
+      The capture reading, and its limit (ME-D, issue 1663). BLS QCEW 2024 annual averages for
+      Allen County (area 39003) put federal-government employment at 321 jobs across 15
+      establishments, averaging $83,773 a year against the county-wide $58,790 — a real wage
+      premium on a small base. The location quotient is 0.33: the county's federal-employment
+      share is a third of the national one. So the enclave does NOT read as a procurement economy
+      on the payroll record, and the arsenal's own workforce is not what these numbers count —
+      the JSMC is government-owned and contractor-operated, so its General Dynamics staff fall
+      under private manufacturing, not the federal ownership row. QCEW also excludes uniformed
+      active-duty entirely (the model's standing coverage caveat). What remains open is the
+      instrument side: no abatement, PILOT, or public-benefit agreement tied to the JSMC footprint
+      has been searched for or found, and the five federally-held parcels carry $14,688,900 of
+      assessed market value across 384.15 acres with no local tax duty
+      (data/reference/allen-gis/parcels.defense.yaml). Capture is a live question here, not a
+      finding.

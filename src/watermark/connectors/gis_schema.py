@@ -9,7 +9,8 @@ on its :class:`watermark.sites.SiteProfile` — rather than a copied connector. 
 ``Profile`` idiom (:mod:`watermark.profiles`): the data carries the field names; the connector
 code is jurisdiction-agnostic.
 
-These are pure pydantic models (only ``pydantic`` imported), and they live under the
+These are pure pydantic models (only ``pydantic`` plus the dependency-free
+:mod:`watermark.provenance` core imported), and they live under the
 **neutral** :mod:`watermark.connectors` package — *not* ``watermark.hydrology.connectors`` — so
 :mod:`watermark.sites` can carry the schema *constants* without an import cycle (the chain
 ``config → sites → here`` stays acyclic; ``watermark.hydrology.connectors`` would pull in
@@ -22,6 +23,8 @@ from __future__ import annotations
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
+
+from watermark.provenance import EvidenceRegister
 
 _IdNormalize = Literal["dashless", "verbatim"]
 _HttpMethod = Literal["GET", "POST"]
@@ -39,7 +42,16 @@ class GisMeta(BaseModel):
 
 
 class GisDefenseMeta(BaseModel):
-    """Provenance prose for the (jurisdiction-specific) defense-industry land scan."""
+    """Provenance prose for the (jurisdiction-specific) defense-industry land scan.
+
+    ``army_controlled_note`` is the reader-facing paragraph; ``enclave_attribution`` +
+    ``enclave_attribution_tag`` are the same claim as *data* (#1663, ME-D) — what the
+    federally-held cluster is identified as, and the register of that identification. The pair is
+    stamped onto every ``ScanParcel`` the enclave filter returns, so a consumer keys on a typed
+    field instead of parsing the note's ``[inference]`` prefix. It is per-jurisdiction and required
+    rather than defaulted: a site whose enclave identity comes from a base-boundary record, not an
+    owner+tax-district read, states ``verified`` and must say so deliberately.
+    """
 
     model_config = ConfigDict(extra="forbid", frozen=True)
 
@@ -49,6 +61,8 @@ class GisDefenseMeta(BaseModel):
     scan: str
     finding: str
     army_controlled_note: str
+    enclave_attribution: str  # what the federally-held cluster is identified AS
+    enclave_attribution_tag: EvidenceRegister  # and the register of that identification
     caveats: tuple[str, ...]
 
 
