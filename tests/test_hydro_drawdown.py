@@ -10,6 +10,8 @@ from __future__ import annotations
 from math import isclose
 from pathlib import Path
 
+import pytest
+
 from watermark.config import Settings
 from watermark.hydrology import drawdown as dd
 from watermark.hydrology.aquifer import compute_aquifer_parameters
@@ -71,13 +73,21 @@ def test_radius_of_influence_formula() -> None:
 # --- scenario provenance ----------------------------------------------------------------
 
 
-def test_scenario_pumping_is_a_bracketed_assumption(hydro_settings: Settings) -> None:
+def test_scenario_pumping_is_an_assumption_bracketed_when_given(hydro_settings: Settings) -> None:
     params, _ = _params(hydro_settings)
-    scen = dd.cooling_makeup_scenario(params)
+    scen = dd.cooling_makeup_scenario(params, makeup_mgd=3.92, low_mgd=2.6, high_mgd=5.2)
     q = scen.pumping_mgd
     assert q.source == "assumption"  # [inference], never documented
-    assert q.has_range and q.low is not None and q.low <= q.value <= q.high
+    assert q.has_range and q.low is not None and q.low <= q.value <= q.high  # band only when given
     assert "SURFACE water" in q.citation and "[open]" in q.citation
+
+
+def test_site_scenario_resolves_makeup_from_cooling_basis(hydro_settings: Settings) -> None:
+    """The site scenario pulls makeup from the active site's cooling basis — no baked-in value."""
+    params, _ = _params(hydro_settings)
+    q = dd.site_cooling_makeup_scenario(params, settings=hydro_settings).pumping_mgd
+    assert q.value == 3.92 and q.source == "assumption"  # Lima's derived cooling makeup
+    assert not q.has_range  # the committed makeup carries no uncertainty band (none fabricated)
 
 
 # --- the Allen outcome ------------------------------------------------------------------
@@ -87,7 +97,7 @@ def test_allen_limestone_dewaters(hydro_settings: Settings) -> None:
     params, inv = _params(hydro_settings)
     r = dd.compute_drawdown(
         params,
-        dd.cooling_makeup_scenario(params),
+        dd.site_cooling_makeup_scenario(params, settings=hydro_settings),
         inventory=inv,
         campus_lat=40.797,
         campus_lon=-84.123,
@@ -117,7 +127,7 @@ def test_dewatering_finding_is_surfaced(hydro_settings: Settings) -> None:
     params, inv = _params(hydro_settings)
     r = dd.compute_drawdown(
         params,
-        dd.cooling_makeup_scenario(params),
+        dd.site_cooling_makeup_scenario(params, settings=hydro_settings),
         inventory=inv,
         campus_lat=40.797,
         campus_lon=-84.123,
@@ -143,3 +153,35 @@ def test_load_drawdown_via_active_profile(hydro_settings: Settings) -> None:
     assert r is not None and r.county == "Allen"
     assert r.dewaters is True  # Lima -> Allen limestone, cooling-makeup scenario
     assert len(r.profile) > 2  # a cone profile for the AquiferSection figure
+
+
+def test_absent_material_raises_not_silent_dominant(hydro_settings: Settings) -> None:
+    """A scenario naming an absent material raises -- never silently uses the dominant one."""
+    params, _ = _params(hydro_settings)
+    scen = dd.cooling_makeup_scenario(
+        params, makeup_mgd=1.0, low_mgd=None, high_mgd=None, material="SANDSTONE"
+    )
+    with pytest.raises(ValueError, match="not present"):
+        dd.compute_drawdown(params, scen)
+
+
+def test_drawdown_cli_completes(hydro_settings: Settings, monkeypatch: pytest.MonkeyPatch) -> None:
+    """End-to-end CLI: the command runs to exit 0 with no formatting errors on both branches.
+
+    (A ``saturated_thickness_ft is None`` result is unreachable via the API -- transmissivity and
+    thickness are coupled in ``aquifer.py`` and ``compute_drawdown`` raises when T is None -- so the
+    CLI's None guard is exercised by construction, not through a real screen. Both real branches --
+    the site-default dewatering path and a sustainable override with a real thickness -- are run.)
+    """
+    from typer.testing import CliRunner
+
+    import watermark.cli.hydrology as cli_hydro
+    from watermark.cli import app
+
+    monkeypatch.setattr(cli_hydro, "get_settings", lambda: hydro_settings)
+    runner = CliRunner()
+    dewater = runner.invoke(app, ["drawdown"])  # site cooling makeup -> Allen limestone dewaters
+    assert dewater.exit_code == 0, dewater.output
+    assert "DEWATERS" in dewater.output
+    sustainable = runner.invoke(app, ["drawdown", "--makeup-mgd", "0.05", "--material", "GRAVEL"])
+    assert sustainable.exit_code == 0, sustainable.output
