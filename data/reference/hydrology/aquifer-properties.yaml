@@ -1,0 +1,81 @@
+# Literature hydraulic properties by aquifer material, for the groundwater-drawdown screen.
+#
+# The ODNR well-log census (data/reference/ohio-waterwells/) carries the driller-reported
+# geometry — static water level, total depth, test yield, aquifer material — but NOT the
+# pumping water level during the yield test, so a true specific capacity (and thus a
+# per-well transmissivity) is NOT derivable from the census alone. This table supplies the
+# missing hydraulic properties as PUBLISHED REFERENCE ranges by material (never a single
+# value): hydraulic conductivity K (ft/day), specific yield Sy (unconfined), and storativity
+# S (confined). `watermark.hydrology.aquifer` combines these with a census-derived saturated
+# thickness b to estimate transmissivity T = K*b as an [inference] BRACKET (K spans orders of
+# magnitude by material, so T does too — that width is the honest screening result, not a
+# defect). Loaded by `watermark.hydrology.aquifer.load_aquifer_properties`, which falls back
+# to the same values hard-coded as _DEFAULT_PROPERTIES so a data_dir without this file still
+# runs; a coupling test (test_hydro_aquifer.py) pins the two together.
+#
+# K ranges are the canonical material ranges of Freeze & Cherry (1979), *Groundwater*,
+# Table 2.2 (hydraulic conductivity) and Table 2.4 (specific yield), converted from cm/s to
+# ft/day (1 cm/s = 2835 ft/day) and rounded to one significant figure. They are order-of-
+# magnitude literature values for a SCREENING estimate, not Allen-County measurements — a
+# site-specific aquifer (pumping) test is the [open] record that would replace them. The
+# ODNR county ground-water-resources map series (Ground Water Resources of Allen County) is
+# the corroborating regional source and a documented lead.
+
+meta:
+  subject: Hydraulic properties by aquifer material (screening reference)
+  source: >-
+    Freeze, R.A. & Cherry, J.A. (1979). Groundwater. Prentice-Hall. Table 2.2 (hydraulic
+    conductivity by material) + Table 2.4 (specific yield); K converted cm/s -> ft/day.
+  units: "K in ft/day; specific_yield and storativity dimensionless"
+  tag: reference
+  caveats:
+    - "Order-of-magnitude literature ranges by material — NOT Allen-County measurements."
+    - "K spans orders of magnitude, so any derived transmissivity/drawdown is a wide bracket."
+    - "A site-specific pumping (aquifer) test is the [open] record that would tighten these."
+
+# The AQUIFER_TYPE strings are the ODNR well-log census's own material labels (uppercase).
+materials:
+  LIMESTONE:
+    confinement: confined      # NW Ohio Silurian-Devonian carbonate: secondary (fracture) porosity
+    k_ft_day_low: 0.03
+    k_ft_day_high: 300.0
+    specific_yield: 0.01       # fractured carbonate matrix drains little
+    storativity: 5.0e-4
+    citation: >-
+      Freeze & Cherry (1979) Table 2.2 (limestone & dolomite, incl. fractured/karstic) +
+      Table 2.4. NW Ohio carbonate aquifer is fracture-controlled (confined behavior).
+  DOLOMITE:
+    confinement: confined
+    k_ft_day_low: 0.03
+    k_ft_day_high: 300.0
+    specific_yield: 0.01
+    storativity: 5.0e-4
+    citation: "Freeze & Cherry (1979) Table 2.2 (dolomite) — same carbonate family as LIMESTONE."
+  SHALE:
+    confinement: confined      # aquitard / very low yield
+    k_ft_day_low: 3.0e-7
+    k_ft_day_high: 0.03
+    specific_yield: 0.02
+    storativity: 1.0e-4
+    citation: "Freeze & Cherry (1979) Table 2.2 (unfractured/fractured shale) — an aquitard."
+  "SAND & GRAVEL":
+    confinement: unconfined    # glacial outwash / buried-valley aquifer
+    k_ft_day_low: 3.0
+    k_ft_day_high: 3000.0
+    specific_yield: 0.20
+    storativity: 0.20
+    citation: "Freeze & Cherry (1979) Table 2.2 (glacial outwash / clean sand & gravel) + Table 2.4."
+  GRAVEL:
+    confinement: unconfined
+    k_ft_day_low: 300.0
+    k_ft_day_high: 30000.0
+    specific_yield: 0.23
+    storativity: 0.23
+    citation: "Freeze & Cherry (1979) Table 2.2 (gravel) + Table 2.4 (Sy 0.20-0.25)."
+  SAND:
+    confinement: unconfined
+    k_ft_day_low: 3.0
+    k_ft_day_high: 300.0
+    specific_yield: 0.25
+    storativity: 0.25
+    citation: "Freeze & Cherry (1979) Table 2.2 (silty->clean sand) + Table 2.4 (Sy 0.22-0.27)."

@@ -453,3 +453,72 @@ def water_withdrawal(
         "reports (self-reported). A registered capacity is not a reported withdrawal, and any "
         r"IT-load inversion from a withdrawal is \[inference].[/]"
     )
+
+
+@app.command(name="waterwells")
+def waterwells(
+    county: str | None = typer.Option(
+        None, "--county", help="Ohio county name (default: the active site's county)."
+    ),
+    offline: bool = typer.Option(
+        False, "--offline", help="Use cached ODNR responses only; never touch the network."
+    ),
+    out_dir: str | None = typer.Option(
+        None, "--out", help="Output directory (default: data/reference/ohio-waterwells)."
+    ),
+) -> None:
+    """Pull an Ohio county's water-well-log census (Ohio DNR, R.C. 1521.05) -> CSV.
+
+    Queries the DNR Division of Water Resources water-wells MapServer (layer 0) for every
+    logged well in the county — use type, aquifer, total depth, static water level, reported
+    test yield, casing, coordinates — and writes a flat per-county CSV. This is the
+    groundwater peer of the surface-water supply model and the empirical basis for the
+    aquifer-parameter / well-drawdown thread (the "area well concerns"). Owner/name/street
+    columns are not ingested (private-resident PII the model does not need).
+    """
+    from watermark.catalog import output_dir_for_command
+    from watermark.hydrology.connectors import ohio_waterwells as oww
+    from watermark.sites import active_profile
+
+    settings = offline_settings("hydro", offline)
+    profile = active_profile(settings)
+    if county is None:
+        # Ohio's well-log service; a non-Ohio watershed point (Fort Wayne, IN) has its own
+        # state service — refuse cleanly rather than query the wrong state.
+        if profile.gnis_default_state != "OH":
+            raise typer.BadParameter(
+                f"the ODNR well-log census is Ohio's service, but site '{profile.slug}' is in "
+                f"{profile.gnis_default_state}. Pass --county for an Ohio county, or use that "
+                "state's own well-log source.",
+                param_hint="--county",
+            )
+        county = profile.county_name.split(" County")[0].strip()
+
+    target = (
+        Path(out_dir)
+        if out_dir
+        else (
+            output_dir_for_command("waterwells", settings=settings)
+            or settings.reference_dir / "ohio-waterwells"
+        )
+    )
+
+    inventory = oww.fetch_county(county, settings=settings)
+    wells = inventory.wells
+
+    table = Table("use", "n")
+    for use, n in list(inventory.use_counts().items())[:10]:
+        table.add_row(use, str(n))
+    console.print(table)
+    console.print(
+        f"\n[bold]{len(wells)}[/] logged wells in {county} County "
+        f"([green]{inventory.use_counts().get('DOMESTIC', 0)} domestic[/])."
+    )
+
+    path = oww.write_inventory(inventory, target)
+    wrote(path)
+    console.print(
+        "[dim]Driller-reported figures are verbatim from the ODNR well-log database "
+        r"(self-reported \[verified] for what the log states). There is no pumping-level "
+        r"column, so a specific capacity / transmissivity / drawdown cone is \[inference].[/]"
+    )

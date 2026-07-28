@@ -55,6 +55,7 @@ Source: Mixed-provenance hydrology working set — USGS NWIS, Ohio EPA TMDL docu
 
 | file | type | lfs |
 | --- | --- | --- |
+| `reference/hydrology/aquifer-properties.yaml` | application/x-yaml | no |
 | `reference/hydrology/bosc-stormwater-discharge.yaml` | application/x-yaml | no |
 | `reference/hydrology/campus-floodzone.yaml` | application/x-yaml | no |
 | `reference/hydrology/cn-lookup.yaml` | application/x-yaml | no |

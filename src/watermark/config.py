@@ -186,6 +186,16 @@ class Settings(BaseSettings):
     # not persisted): recent reporting is what the makeup-side baseline needs, and it bounds the
     # committed artifact. The registry (facility list) is kept in full regardless of this floor.
     ohio_water_withdrawal_since_year: int = 2015
+    # Ohio DNR, Division of Water Resources — the water-well-log census (R.C. 1521.05): every
+    # contractor files a completion/sealing log, published as a public ArcGIS MapServer (layer 0,
+    # one point per well: use type, aquifer, total depth, static water level, reported test yield,
+    # casing, coordinates). The *groundwater* peer of the surface-water supply model and the
+    # empirical basis for the aquifer-parameter / well-drawdown thread (the "area well concerns" in
+    # the PAAC record). Distinct from the WWFRP registry above (withdrawal registration, not wells).
+    # Shared hydro cache/offline/fixture path.
+    ohio_waterwells_base_url: str = (
+        "https://gis2.ohiodnr.gov/arcgis/rest/services/DSW_Services/waterwells/MapServer"
+    )
     # EPA RSEI Public Data Set. The current release — v2.3.12 (March 2024, TRI 1988-2022)
     # — ships as a single ~447 MB zip of per-table CSVs on EPA's public gaftp site, NOT
     # the frozen `epa-rsei-pds` S3 bucket, which stalled at v234/2016 (#1148). `watermark
