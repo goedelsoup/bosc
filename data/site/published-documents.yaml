@@ -55,6 +55,22 @@ documents:        # exact data/documents rels, e.g.  - recorder/bistrozzi-deeds/
   - aedg/data-center-updates/google-data-center-website-now-live-for-allen-county-community.html
   - aedg/data-center-updates/google-to-build-data-center-in-lima-ohio-with-500-million-capital-investment.html
   - aedg/data-center-updates/what-is-a-data-center-and-why-does-it-matter-for-communities-like-ours.html
+  # The BOSC PRR productions produced TO the relator (Cory Parent) by Allen County and the Allen
+  # Soil & Water Conservation District — the two June-12 batches. Published on the disclosed-PRR-
+  # production basis (the same basis as aedg/PRR-01-bundle.ocr.pdf per #1301): these are public
+  # agency records already disclosed by their producing agencies in response to an R.C. 149.43
+  # request, and each producing agency did its OWN withholding/redaction before producing (the
+  # County asserted no §9.66(D) withholding on the 06-12 batch; the SWCD withheld the plan sets
+  # under §149.433 + §1333.61 and redacted the trade-secret plan-share links). They carry the
+  # relator's own contact info plus third-party business contacts (engineers, contractors, county
+  # officials) as disclosed public record — an operator decision to publish whole, NOT the outcome
+  # of a passed C2 PII sweep (cf. the #1301 basis). Listed per-document so a future file added to
+  # these production dirs is reviewed rather than auto-published; the sibling 06-05 and 07-24
+  # batches stay unpublished until separately reviewed.
+  # review: { by: goedelsoup, date: 2026-07-28, result: publish, basis: disclosed-prr-production }
+  - "legal/prr-mandamus/prr-production-2026-06-12/Parent Records June 12.pdf"
+  - "legal/prr-mandamus/prr-production-2026-06-12-aswcd/Mr. Parent Records request.pdf"
+  - "legal/prr-mandamus/prr-production-2026-06-12-aswcd/Parent Records Request.pdf"
 
 # DECLARATIVE OPT-OUT — carve specific rels back out of the cleared scope above. A withhold
 # rule WINS over everything, including the auto-included exhibits, so this is the authoritative
