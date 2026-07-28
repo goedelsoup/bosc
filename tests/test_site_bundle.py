@@ -23,6 +23,9 @@ from watermark.sites import effective_corpus_scope, get_profile
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 COMMITTED_SCHEMAS = REPO_ROOT / "data" / "site" / "bundle" / "schemas"
+# The expected bundle contract version (kept in step with `watermark.site.feeds.CONTRACT_VERSION`);
+# the fresh-export assertions below pin it so a bump lands here in one place.
+_CV = "1.39.0"
 # The per-site offline bundle (#727): the committed Lima bundle the frontend build reads
 # (`web/sites/<slug>/`, a full `watermark export` per registered site).
 FRONTEND_SAMPLE = REPO_ROOT / "web" / "sites" / "lima"
@@ -605,7 +608,7 @@ def test_backdrop_staged_site_exports_at_backdrop_tier(
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.39.0"
+    assert manifest["contract_version"] == _CV
     readiness = manifest["readiness"]
     assert readiness["tier"] == "backdrop", f"{slug} should be a Backdrop site, got {readiness}"
     domains = readiness["domains"]
@@ -636,7 +639,7 @@ def test_findlay_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) 
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.39.0"
+    assert manifest["contract_version"] == _CV
     readiness = manifest["readiness"]
     assert readiness["tier"] == "case", f"findlay should be a Case site, got {readiness}"
     domains = readiness["domains"]
@@ -678,7 +681,7 @@ def test_wpafb_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) ->
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.39.0"
+    assert manifest["contract_version"] == _CV
     readiness = manifest["readiness"]
     assert readiness["tier"] == "case", f"wpafb should be a Case site, got {readiness}"
     domains = readiness["domains"]
@@ -720,7 +723,7 @@ def test_troy_piqua_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactor
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.39.0"
+    assert manifest["contract_version"] == _CV
     readiness = manifest["readiness"]
     assert readiness["tier"] == "case", f"troy-piqua should be a Case site, got {readiness}"
     domains = readiness["domains"]
@@ -763,7 +766,7 @@ def test_sidney_exports_at_backdrop_tier(tmp_path_factory: pytest.TempPathFactor
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.39.0"
+    assert manifest["contract_version"] == _CV
     readiness = manifest["readiness"]
     assert readiness["tier"] == "backdrop", f"sidney should be a Backdrop site, got {readiness}"
     domains = readiness["domains"]

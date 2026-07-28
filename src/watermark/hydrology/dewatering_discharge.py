@@ -366,19 +366,21 @@ def load_reservoir_recharge(*, settings: Settings | None = None) -> ReservoirRec
     base_q = [q for _, q in base.points()]
     win_refill = sum(1 for q in win_q if q > passby)
     base_refill = sum(1 for q in base_q if q > passby)
+    passby_cfs = round(passby, 1)
+    window_median = round(_median(win_q), 1)
     return ReservoirRecharge(
         gage=win.site_no,
         gage_name=win.name,
-        passby_cfs=round(passby, 1),
-        window_median_cfs=round(_median(win_q), 1),
+        passby_cfs=passby_cfs,
+        window_median_cfs=window_median,
         baseline_median_cfs=round(_median(base_q), 1),
         window_refill_days=win_refill,
         baseline_refill_days=base_refill,
         window_days=len(win_q),
         baseline_days=len(base_q),
         note=(
-            f"Over the pumping window the {win.name} ran a median {round(_median(win_q)):g} cfs with "
-            f"{win_refill} of {len(win_q)} days above the {round(passby):g} cfs pumping passby "
+            f"Over the pumping window the {win.name} ran a median {window_median:g} cfs with "
+            f"{win_refill} of {len(win_q)} days above the {passby_cfs:g} cfs pumping passby "
             f"(vs {base_refill} of {len(base_q)} the prior year) -- the days Lima could pump the "
             "off-stream reservoirs full. Recharge context, not a dewatering effect: the reservoirs "
             "refill from the rivers at high flow, independent of the campus grading."

@@ -520,6 +520,20 @@ class DischargeReach(BaseModel):
     downstream_da_sqmi: float
     citation: str = "USGS NWIS site service (published drainage areas)"
 
+    @model_validator(mode="after")
+    def _drainage_areas_are_ordered(self) -> DischargeReach:
+        # The DA-ratio residual (downstream - downstream/upstream * upstream) is only meaningful for a
+        # gaining reach with a positive upstream area — guard both before compute_discharge_screen
+        # can divide by / rank them.
+        if self.upstream_da_sqmi <= 0:
+            raise ValueError(f"upstream_da_sqmi must be positive, got {self.upstream_da_sqmi}")
+        if self.downstream_da_sqmi <= self.upstream_da_sqmi:
+            raise ValueError(
+                "downstream_da_sqmi must exceed upstream_da_sqmi (the reach gains drainage "
+                f"downstream): {self.downstream_da_sqmi} <= {self.upstream_da_sqmi}"
+            )
+        return self
+
 
 class SiteProfile(BaseModel):
     """Everything specific to one watershed-point site. Frozen — a fixed reference value.
