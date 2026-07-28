@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from pathlib import Path
 
 import pytest
@@ -31,6 +32,26 @@ def hydro_settings() -> Settings:
         hydro_offline=True,
         hydro_fixtures_dir=FIXTURES / "hydrology",
     )
+
+
+@pytest.fixture
+def hydro_settings_for() -> Callable[[str], Settings]:
+    """Factory for offline per-site hydrology settings (the ``hydro_settings`` wiring + a slug).
+
+    A factory rather than a params-parameterized fixture because the consuming tests are
+    site-specific — e.g. the dewatering-discharge screen is Lima-scoped (`not_separable`) and
+    degrades to ``None`` on a peer, so lima and fort-wayne can't share one parameterized body.
+    """
+
+    def _make(site: str) -> Settings:
+        return Settings(
+            data_dir=REPO_ROOT / "data",
+            site=site,
+            hydro_offline=True,
+            hydro_fixtures_dir=FIXTURES / "hydrology",
+        )
+
+    return _make
 
 
 @pytest.fixture

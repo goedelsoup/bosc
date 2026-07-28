@@ -188,6 +188,13 @@ const VERDICT: Record<string, string> = {
             <strong>[inference]</strong>. The discharge's rate and receiving water are an{" "}
             <strong>[open]</strong> owed record — the construction-dewatering NPDES authorization.
           </p>
+          {discharge.caveats.length > 0 && (
+            <ul class="caveats">
+              {discharge.caveats.map((c) => (
+                <li>{c}</li>
+              ))}
+            </ul>
+          )}
         </Fragment>
       )
     }
@@ -195,8 +202,15 @@ const VERDICT: Record<string, string> = {
     {
       recharge && (
         <Fragment>
-          <h3>Reservoir recharge over the same window</h3>
+          <h2>Reservoir recharge over the same window</h2>
           <p class="card-meta">{recharge.note}</p>
+          {recharge.caveats.length > 0 && (
+            <ul class="caveats">
+              {recharge.caveats.map((c) => (
+                <li>{c}</li>
+              ))}
+            </ul>
+          )}
         </Fragment>
       )
     }
@@ -270,5 +284,17 @@ const VERDICT: Record<string, string> = {
   .discharge-table th:nth-child(3) {
     font-family: var(--font-mono);
     text-align: right;
+  }
+
+  /* Backend-provided caveats (provisional-data / directional-screen limitations) — always visible. */
+  .caveats {
+    margin: 8px 0 0;
+    padding-left: 1.1rem;
+  }
+  .caveats li {
+    font-size: 0.8rem;
+    color: var(--bosc-muted);
+    line-height: 1.5;
+    margin-top: 4px;
   }
 </style>

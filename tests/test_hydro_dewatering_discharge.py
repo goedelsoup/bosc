@@ -8,7 +8,9 @@ gages), the committed report round-trips byte-stable from the recorded NWIS fixt
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -17,22 +19,12 @@ from watermark.hydrology import dewatering_discharge as dd
 from watermark.hydrology.dewatering import DATASET_ASOF, load_dewatering_impact
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-FIXTURES = REPO_ROOT / "tests" / "fixtures"
 COMMITTED_REPORT = REPO_ROOT / "data" / "reference" / "hydrology" / "dewatering-discharge.yaml"
 
 
-def _settings(site: str) -> Settings:
-    return Settings(
-        data_dir=REPO_ROOT / "data",
-        site=site,
-        hydro_offline=True,
-        hydro_fixtures_dir=FIXTURES / "hydrology",
-    )
-
-
 @pytest.fixture
-def lima() -> Settings:
-    return _settings("lima")
+def lima(hydro_settings_for: Callable[[str], Settings]) -> Settings:
+    return hydro_settings_for("lima")
 
 
 def test_discharge_screen_is_not_separable(lima: Settings) -> None:
@@ -87,7 +79,101 @@ def test_dewatering_feed_carries_the_screen(lima: Settings) -> None:
     assert impact.reservoir_recharge is not None
 
 
-def test_site_without_a_reach_has_no_screen() -> None:
+def test_site_without_a_reach_has_no_screen(
+    hydro_settings_for: Callable[[str], Settings],
+) -> None:
     # Fort Wayne has no dewatering wellfield / bracketing reach -> no screen (degrades, never fakes).
-    assert dd.load_discharge_screen(settings=_settings("fort-wayne")) is None
-    assert dd.read_discharge_report(settings=_settings("fort-wayne")) is None
+    fw = hydro_settings_for("fort-wayne")
+    assert dd.load_discharge_screen(settings=fw) is None
+    assert dd.read_discharge_report(settings=fw) is None
+
+
+# --- CLI smoke tests (the report builder is mocked; report-building coverage stays above) --------
+
+
+def _fake_report(*, screen: bool = True, recharge: bool = True) -> SimpleNamespace:
+    sc = (
+        SimpleNamespace(
+            separable=False,
+            upstream_name="Ottawa River at Lima OH",
+            downstream_name="Ottawa River near Kalida OH",
+            expected_discharge_cfs=SimpleNamespace(value=7.6),
+            baseflow_resid_delta_cfs=0.2,
+            upstream_floor_delta_cfs=0.9,
+            note="NOT SEPARABLE: the discharge does not register in the reach.",
+        )
+        if screen
+        else None
+    )
+    rr = (
+        SimpleNamespace(
+            gage_name="Auglaize River near Fort Jennings OH",
+            window_median_cfs=44.0,
+            window_refill_days=150,
+            window_days=164,
+            passby_cfs=2.5,
+            baseline_refill_days=164,
+            baseline_days=164,
+        )
+        if recharge
+        else None
+    )
+    return SimpleNamespace(screen=sc, reservoir_recharge=rr)
+
+
+def test_cli_offline_prints_screen_and_recharge(monkeypatch: pytest.MonkeyPatch) -> None:
+    from typer.testing import CliRunner
+
+    from watermark.cli import app
+
+    monkeypatch.setattr(dd, "build_discharge_report", lambda *, as_of, settings: _fake_report())
+    result = CliRunner().invoke(app, ["dewatering-discharge", "--offline"])
+    assert result.exit_code == 0, result.output
+    assert "discharge screen" in result.output
+    assert "recharge" in result.output
+
+
+def test_cli_no_reach_reports_cleanly(monkeypatch: pytest.MonkeyPatch) -> None:
+    from typer.testing import CliRunner
+
+    from watermark.cli import app
+
+    monkeypatch.setattr(dd, "build_discharge_report", lambda *, as_of, settings: None)
+    result = CliRunner().invoke(app, ["dewatering-discharge", "--offline"])
+    assert result.exit_code == 0, result.output
+    assert "No dewatering discharge reach configured" in result.output
+
+
+def test_cli_write_invokes_the_writer(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    from typer.testing import CliRunner
+
+    from watermark.cli import app
+
+    out = tmp_path / "dewatering-discharge.yaml"
+    written: dict[str, Path] = {}
+    monkeypatch.setattr(dd, "build_discharge_report", lambda *, as_of, settings: _fake_report())
+    monkeypatch.setattr(dd, "discharge_report_path", lambda settings: out)
+    monkeypatch.setattr(
+        dd, "write_discharge_report", lambda report, path: written.setdefault("path", path)
+    )
+    result = CliRunner().invoke(app, ["dewatering-discharge", "--write", "--offline"])
+    assert result.exit_code == 0, result.output
+    assert "Wrote" in result.output
+    assert written["path"] == out
+
+
+def test_cli_write_without_relpath_is_clean(monkeypatch: pytest.MonkeyPatch) -> None:
+    from typer.testing import CliRunner
+
+    from watermark.cli import app
+
+    calls: dict[str, bool] = {}
+    monkeypatch.setattr(dd, "build_discharge_report", lambda *, as_of, settings: _fake_report())
+    monkeypatch.setattr(dd, "discharge_report_path", lambda settings: None)  # no relpath configured
+    monkeypatch.setattr(
+        dd, "write_discharge_report", lambda report, path: calls.setdefault("wrote", True)
+    )
+    result = CliRunner().invoke(app, ["dewatering-discharge", "--write", "--offline"])
+    assert result.exit_code == 0, result.output
+    assert "dewatering_discharge_relpath" in result.output
+    assert "wrote" not in calls  # the writer must not be called when there is no destination
