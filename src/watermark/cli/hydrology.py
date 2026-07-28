@@ -1483,7 +1483,14 @@ def dewatering_cmd(
     from watermark.hydrology import dewatering as dw
 
     settings = get_settings()
-    when = _date.fromisoformat(asof) if asof else _date.today()
+    if asof:
+        try:
+            when = _date.fromisoformat(asof)
+        except ValueError:
+            console.print(f"[red]Invalid --asof date {asof!r}; expected YYYY-MM-DD.[/]")
+            raise typer.Exit(1) from None
+    else:
+        when = _date.today()
     impact = dw.load_dewatering_impact(asof=when, settings=settings)
     if impact is None:
         console.print(

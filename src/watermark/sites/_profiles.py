@@ -96,6 +96,7 @@ _LIMA = SiteProfile(
     parcels_relpath="reference/periplus/bosc-parcels.geojson",
     footprint_relpath="extracted/plans/bosc-site-footprint.yaml",
     corridor_geo_relpath="reference/periplus",  # the frozen Periplus corridor study area + centerline
+    dewatering_wellfield_relpath="reference/ohio-waterwells/lima-campus-dewatering.csv",
     # per-site onboard reach outputs (Lima = legacy un-slugged paths)
     climatology_relpath="reference/hydrology/nasa-power-climatology.yaml",
     corridor_ddf_relpath="reference/hydrology/atlas14-corridor-ddf.yaml",
