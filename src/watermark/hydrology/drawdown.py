@@ -153,18 +153,19 @@ class DrawdownResult(BaseModel):
 def cooling_makeup_scenario(
     params: AquiferParameters,
     *,
-    makeup_mgd: float = 3.92,
-    low_mgd: float | None = 2.6,
-    high_mgd: float | None = 5.2,
+    makeup_mgd: float,
+    low_mgd: float | None,
+    high_mgd: float | None,
     duration_days: float = 365.0,
     material: str | None = None,
 ) -> DrawdownScenario:
     """The headline hypothetical: the campus cooling makeup, *as if* pumped from groundwater.
 
-    Defaults to the committed buildout cooling-demand central estimate (3.92 MGD;
-    ``data/scenarios/buildout.scenario.yaml``) with a bracket. The campus actually draws this
-    as treated municipal (surface) water -- the note records that this is a hypothetical
-    groundwater stress, not a documented withdrawal.
+    ``makeup_mgd`` (+ any ``low_mgd``/``high_mgd`` band) is the caller-supplied pumping stress —
+    resolved from the ACTIVE SITE's cooling basis by :func:`site_cooling_makeup_scenario`, never
+    baked in here, so no site's figure leaks into another's and no uncertainty band is fabricated.
+    The campus actually draws this as treated municipal (surface) water -- the note records that
+    this is a hypothetical groundwater stress, not a documented withdrawal.
     """
     dom = params.dominant()
     mat = (material or (dom.material if dom else "LIMESTONE")).upper()
@@ -186,6 +187,37 @@ def cooling_makeup_scenario(
             "Hypothetical: what a well field supplying the campus cooling makeup would do to the "
             f"{mat} aquifer. Bounds the 'area well concerns'; not a documented groundwater use."
         ),
+    )
+
+
+def site_cooling_makeup_scenario(
+    params: AquiferParameters,
+    *,
+    settings: Settings | None = None,
+    makeup_mgd: float | None = None,
+    material: str | None = None,
+) -> DrawdownScenario:
+    """The cooling-makeup scenario for the ACTIVE SITE (makeup from its cooling basis, or override).
+
+    Resolves the campus cooling makeup (MGD + any committed uncertainty band) from the active
+    site's :func:`~watermark.hydrology.cooling.derive_cooling_basis` — the SITES / active-profile
+    framework — so no Lima figure is hardcoded and no band is fabricated. ``makeup_mgd`` overrides
+    the resolved value (a bare figure, no band) for a sensitivity sweep.
+    """
+    settings = settings or get_settings()
+    if makeup_mgd is not None:
+        return cooling_makeup_scenario(
+            params, makeup_mgd=makeup_mgd, low_mgd=None, high_mgd=None, material=material
+        )
+    from watermark.hydrology.cooling import derive_cooling_basis
+
+    makeup = derive_cooling_basis(settings).makeup_demand
+    return cooling_makeup_scenario(
+        params,
+        makeup_mgd=makeup.value,
+        low_mgd=makeup.low,
+        high_mgd=makeup.high,
+        material=material,
     )
 
 
@@ -218,9 +250,15 @@ def compute_drawdown(
     threshold_ft: float = _AFFECTED_THRESHOLD_FT,
 ) -> DrawdownResult:
     """Screen the Theis cone for one scenario against one aquifer material's parameters."""
-    material = params.material(scenario.aquifer_material) or params.dominant()
+    # The scenario always names a concrete material (defaulted to the dominant one upstream in
+    # cooling_makeup_scenario), so an unresolved name is a real error — never silently substitute
+    # the dominant material's parameters for the one the caller asked for.
+    material = params.material(scenario.aquifer_material)
     if material is None:
-        raise ValueError(f"no aquifer material to screen (asked for {scenario.aquifer_material})")
+        raise ValueError(
+            f"aquifer material {scenario.aquifer_material!r} is not present in {params.county} "
+            f"(present: {[m.material for m in params.materials]})"
+        )
 
     t_pv = material.transmissivity_ft2_day
     if t_pv is None:
@@ -244,7 +282,10 @@ def compute_drawdown(
     s_deep = apex(q_high, t_pv.low_or_value)
     s_shallow = apex(q_low, t_pv.high_or_value)
 
-    dewaters = b is not None and s_central > b
+    # Dewatering is a BRACKET-level verdict: flag it whenever the deepest plausible cone (highest
+    # Q, lowest transmissivity) exceeds the saturated thickness -- consistent with the capped
+    # bracket high below, and conservative for a screen that bounds the "area well concerns".
+    dewaters = b is not None and s_deep > b
 
     # Report capped at the saturated thickness: past b the analytical value is unphysical
     # (the aquifer is dewatered), so cap and flag rather than print an impossible number.
@@ -258,8 +299,8 @@ def compute_drawdown(
             f"Theis cone apex (r={well_radius_ft} ft, t={t_days:g} d) on the {material.material} "
             f"aquifer, Q={scenario.pumping_mgd.value:g} MGD [inference]. "
             + (
-                "CAPPED at the saturated thickness -- drawdown exceeds it, i.e. the aquifer "
-                "DEWATERS and cannot sustain this rate."
+                "CAPPED at the saturated thickness -- the low-transmissivity end of the bracket "
+                "exceeds it, i.e. the aquifer DEWATERS and cannot sustain this rate."
                 if dewaters
                 else "Bracket spans the transmissivity range."
             )
@@ -302,9 +343,9 @@ def compute_drawdown(
     if dewaters:
         caveats.insert(
             1,
-            "At the central transmissivity the cone exceeds the saturated thickness: the local "
-            "aquifer CANNOT sustain this rate -- corroborating the campus's reliance on municipal "
-            "surface water.",
+            "The low-transmissivity end of the bracket drives the cone past the saturated "
+            "thickness: the local aquifer CANNOT sustain this rate -- corroborating the campus's "
+            "reliance on municipal surface water.",
         )
 
     return DrawdownResult(
@@ -340,7 +381,7 @@ def load_drawdown(
     slug = oww.county_slug(profile.county_name)
     path = settings.data_dir / "reference" / "ohio-waterwells" / f"{slug}.csv"
     inventory = oww.read_inventory(path, settings=settings) if path.is_file() else None
-    scen = scenario or cooling_makeup_scenario(params)
+    scen = scenario or site_cooling_makeup_scenario(params, settings=settings)
     return compute_drawdown(
         params,
         scen,
@@ -365,9 +406,9 @@ def drawdown_findings(result: DrawdownResult) -> list[HydroFinding]:
             detail=(
                 (
                     f"Hypothetical {result.scenario.pumping_mgd.value:g} MGD groundwater pumping "
-                    "DEWATERS the aquifer (apex drawdown exceeds the "
-                    f"{result.saturated_thickness_ft:g} ft saturated thickness) -- it cannot "
-                    "sustain this rate; the campus is on municipal surface water."
+                    "DEWATERS the aquifer: the low-transmissivity end of the bracket drives apex "
+                    f"drawdown past the {result.saturated_thickness_ft:g} ft saturated thickness -- "
+                    "it cannot sustain this rate; the campus is on municipal surface water."
                 )
                 if result.dewaters
                 else (

@@ -1388,8 +1388,10 @@ def drawdown_cmd(
     material: str | None = typer.Option(
         None, "--material", help="Aquifer material to screen (default: the dominant one)."
     ),
-    makeup_mgd: float = typer.Option(
-        3.92, "--makeup-mgd", help="Hypothetical groundwater pumping stress (MGD)."
+    makeup_mgd: float | None = typer.Option(
+        None,
+        "--makeup-mgd",
+        help="Override the hypothetical pumping stress (MGD); default = the site's cooling makeup.",
     ),
 ) -> None:
     """Groundwater aquifer characterization + a Theis drawdown screen (the well-drawdown thread).
@@ -1435,17 +1437,21 @@ def drawdown_cmd(
     for f in aq.aquifer_findings(params):
         console.print(f"[{'green' if f.ok else 'yellow'}]{escape(str(f))}[/]")
 
-    scen = dd.cooling_makeup_scenario(params, makeup_mgd=makeup_mgd, material=material)
+    scen = dd.site_cooling_makeup_scenario(
+        params, settings=settings, makeup_mgd=makeup_mgd, material=material
+    )
     result = dd.load_drawdown(scenario=scen, settings=settings)
     if result is None:
         return
     verdict = "[red]DEWATERS[/]" if result.dewaters else "[green]sustainable[/]"
     s = result.drawdown_at_well_ft
     r0 = result.radius_of_influence_ft
+    b = result.saturated_thickness_ft
+    b_txt = f"{b:g}" if b is not None else "n/a"
     console.print(
         f"\n[bold]Drawdown screen[/] — {result.material} aquifer, hypothetical "
         f"{scen.pumping_mgd.value:g} MGD: {verdict}. Apex drawdown "
-        f"{s.low_or_value:g}-{s.high_or_value:g} ft (b={result.saturated_thickness_ft:g} ft); "
+        f"{s.low_or_value:g}-{s.high_or_value:g} ft (b={b_txt} ft); "
         f"radius of influence {r0.value:g} ft; "
         f"{result.affected_domestic_wells} domestic wells within it."
     )
