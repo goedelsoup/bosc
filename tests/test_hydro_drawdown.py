@@ -70,6 +70,18 @@ def test_radius_of_influence_formula() -> None:
     )
 
 
+def test_cooper_jacob_declines_to_zero_at_r0() -> None:
+    """Cooper-Jacob reaches exactly 0 at the radius of influence and is floored beyond it."""
+    t, s, days = 141.0, 5e-4, 365.0
+    q = dd.mgd_to_ft3_day(3.92)
+    r0 = dd.radius_of_influence_ft(t, s, days)
+    assert dd.cooper_jacob_drawdown(q, t, s, r0, days) == 0.0  # zero at r0 (log argument = 1)
+    assert dd.cooper_jacob_drawdown(q, t, s, r0 * 2, days) == 0.0  # floored beyond r0
+    near = dd.cooper_jacob_drawdown(q, t, s, r0 * 0.1, days)
+    far = dd.cooper_jacob_drawdown(q, t, s, r0 * 0.9, days)
+    assert near > far > 0  # declines with radius
+
+
 # --- scenario provenance ----------------------------------------------------------------
 
 
@@ -153,6 +165,17 @@ def test_load_drawdown_via_active_profile(hydro_settings: Settings) -> None:
     assert r is not None and r.county == "Allen"
     assert r.dewaters is True  # Lima -> Allen limestone, cooling-makeup scenario
     assert len(r.profile) > 2  # a cone profile for the AquiferSection figure
+
+
+def test_profile_is_a_declining_cone_capped_only_near_the_well(hydro_settings: Settings) -> None:
+    """The cone profile declines with radius (Cooper-Jacob) and reaches 0 at r0, capped near the well."""
+    r = dd.load_drawdown(settings=hydro_settings)
+    assert r is not None and r.saturated_thickness_ft is not None
+    vals = [p.drawdown_ft for p in r.profile]
+    assert all(vals[i] >= vals[i + 1] for i in range(len(vals) - 1))  # monotonic non-increasing
+    assert vals[0] == r.saturated_thickness_ft  # near field dewatered → capped at b, not above
+    assert vals[-1] == 0.0  # declines to zero at the radius of influence
+    assert vals[0] > vals[-1]  # a genuine cone, not a flat line
 
 
 def test_absent_material_raises_not_silent_dominant(hydro_settings: Settings) -> None:

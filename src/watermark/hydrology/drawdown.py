@@ -90,6 +90,24 @@ def radius_of_influence_ft(t_ft2_day: float, storativity: float, t_days: float) 
     return sqrt(2.25 * t_ft2_day * t_days / storativity)
 
 
+def cooper_jacob_drawdown(
+    q_ft3_day: float, t_ft2_day: float, storativity: float, r_ft: float, t_days: float
+) -> float:
+    """Cooper-Jacob (late-time Theis) drawdown (ft): ``s = Q/(4*pi*T) * ln(2.25*T*t/(r^2*S))``.
+
+    The log-linear approximation of Theis. Unlike the full Theis solution it reaches **exactly
+    zero** at the radius of influence ``r0 = sqrt(2.25*T*t/S)`` (the argument of the log is 1
+    there) and is floored at 0 beyond it — so it is the right form for the **cone profile**,
+    which must decline to zero at ``r0``. The apex headline stays on the full Theis solution.
+    """
+    if t_ft2_day <= 0 or storativity <= 0 or r_ft <= 0 or t_days <= 0 or q_ft3_day <= 0:
+        return 0.0
+    arg = 2.25 * t_ft2_day * t_days / (r_ft * r_ft * storativity)
+    if arg <= 1.0:  # at or beyond the radius of influence
+        return 0.0
+    return q_ft3_day / (4.0 * 3.141592653589793 * t_ft2_day) * ln(arg)
+
+
 def _haversine_ft(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
     """Great-circle distance in feet between two lon/lat points."""
     p1, p2 = radians(lat1), radians(lat2)
@@ -324,13 +342,16 @@ def compute_drawdown(
             inventory, lat=campus_lat, lon=campus_lon, radius_ft=r0_central
         )
 
-    # A coarse cone profile for the AquiferSection figure (apex -> radius of influence).
+    # A coarse cone profile for the AquiferSection figure (apex -> radius of influence). Uses
+    # Cooper-Jacob so the cone DECLINES with radius and reaches ~0 at r0 (the full Theis solution
+    # stays finite there, which would render as a flat, uninformative line); the saturated-
+    # thickness cap then bites only in the near field, where the local drawdown exceeds it.
     profile: list[DrawdownPoint] = []
     steps = 24
     for i in range(steps + 1):
         frac = i / steps
         r = well_radius_ft + frac * max(r0_central - well_radius_ft, 0.0)
-        s = theis_drawdown(q_central, t_pv.value, s_val, max(r, well_radius_ft), t_days)
+        s = cooper_jacob_drawdown(q_central, t_pv.value, s_val, max(r, well_radius_ft), t_days)
         profile.append(DrawdownPoint(radius_ft=round(r, 1), drawdown_ft=cap(s)))
 
     caveats = [
