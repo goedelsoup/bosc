@@ -154,7 +154,9 @@ output:
     citation: 'EIA ELEC.GEN.ALL-US-99.A (2025): 4,429,502 thousand MWh = 4,430 TWh
       (US total net generation, all sectors)'
     confidence: high
-    asof: null
+    asof: '2025'
+    low: null
+    high: null
   datacenter_use_2023_twh:
     value: 176.0
     unit: TWh/yr
@@ -164,6 +166,8 @@ output:
       of US load by 2028; transcribed published figure - verify'
     confidence: medium
     asof: null
+    low: null
+    high: null
   datacenter_share_pct_2023:
     value: 4.4
     unit: percent
@@ -173,6 +177,8 @@ output:
       of US load by 2028; transcribed published figure - verify'
     confidence: medium
     asof: null
+    low: null
+    high: null
   datacenter_share_pct_2028_proj:
     value: 9.5
     unit: percent
@@ -182,6 +188,8 @@ output:
       of US load by 2028; transcribed published figure - verify'
     confidence: medium
     asof: null
+    low: null
+    high: null
   us_avg_retail_price_cents_kwh:
     value: 13.63
     unit: cents/kWh
@@ -189,17 +197,21 @@ output:
     citation: 'EIA ELEC.PRICE.US-ALL.A (2025): US average retail electricity price,
       all sectors'
     confidence: high
-    asof: null
+    asof: '2025'
+    low: null
+    high: null
   source: EIA national net generation + avg retail price (connector, live) + LBNL/DOE
     2024 data-center report (reference)
 campus_load_mw:
   value: 347.9
   unit: MW
   source: derived
-  citation: 'PowerBasis.facility_draw central (#87): 275 MW IT x PUE 1.265 (band mean)
-    — total facility draw'
+  citation: 'PowerBasis.facility_draw central (#87): 275 MW IT (central) x PUE 1.265
+    — total facility draw; band = 250-300 MW IT x PUE 1.1-1.43 (efficient .. cooling-dominated)'
   confidence: medium
   asof: null
+  low: null
+  high: null
 load_factor:
   value: 0.9
   unit: fraction
@@ -208,6 +220,8 @@ load_factor:
     #91)'
   confidence: low
   asof: null
+  low: null
+  high: null
 annual_consumption_gwh:
   value: 2742.8
   unit: GWh/yr
@@ -215,6 +229,8 @@ annual_consumption_gwh:
   citation: 347.9 MW x 8760 h x 0.9 load factor
   confidence: medium
   asof: null
+  low: null
+  high: null
 share_of_us_datacenter_pct:
   value: 1.558
   unit: percent
@@ -223,6 +239,8 @@ share_of_us_datacenter_pct:
     2023)
   confidence: medium
   asof: null
+  low: null
+  high: null
 share_of_us_generation_pct:
   value: 0.0619
   unit: percent
@@ -231,6 +249,8 @@ share_of_us_generation_pct:
     EIA)
   confidence: medium
   asof: null
+  low: null
+  high: null
 note: Federal backdrop (#98), the top of the grid stack. The policy levers map the
   IRA section 45/48 (and tech-neutral 45Y/48E) clean-generation credits, section 45V/45X,
   and DOE LPO / grid-resilience programs to what they apply to and their direction

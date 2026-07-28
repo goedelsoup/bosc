@@ -36,7 +36,7 @@
     "source": "connector",
     "citation": "EIA ELEC.SALES.IN-ALL.A (2025); 103487 million kWh",
     "confidence": "high",
-    "asof": null,
+    "asof": "2025",
     "low": null,
     "high": null
   },
@@ -76,7 +76,7 @@
     "source": "connector",
     "citation": "EIA ELEC.PRICE.IN-RES.A (2025)",
     "confidence": "high",
-    "asof": null,
+    "asof": "2025",
     "low": null,
     "high": null
   },

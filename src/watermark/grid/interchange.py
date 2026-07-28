@@ -149,28 +149,41 @@ def fetch_ba_interchange(
         )
     cite = f"EIA-930 region-data {ba} {start}..{end} ({hours} h)"
     import_frac = payload["import_hours"] / hours if hours else 0.0
+    # The window's last day is how current these aggregates are (G1/#1644) — the same #1107
+    # marker the NWIS reads carry. The window is deliberately fixed (cache determinism), which
+    # is exactly why it has to be dated: nothing else about a re-run would reveal its age.
+    asof = end
     return BAInterchange(
         ba=ba,
         period_start=start,
         period_end=end,
         hours=hours,
         demand_mean_mw=ProvenancedValue.from_connector(
-            round(float(payload["demand_mean"])), "MW", citation=cite
+            round(float(payload["demand_mean"])), "MW", citation=cite, asof=asof
         ),
         demand_peak_mw=ProvenancedValue.from_connector(
-            round(float(payload["demand_peak"])), "MW", citation=cite
+            round(float(payload["demand_peak"])), "MW", citation=cite, asof=asof
         ),
         net_generation_mean_mw=ProvenancedValue.from_connector(
-            round(float(payload["netgen_mean"])), "MW", citation=cite
+            round(float(payload["netgen_mean"])), "MW", citation=cite, asof=asof
         ),
         total_interchange_mean_mw=ProvenancedValue.from_connector(
-            round(float(payload["ti_mean"])), "MW", citation=f"{cite}; + exports / - imports"
+            round(float(payload["ti_mean"])),
+            "MW",
+            citation=f"{cite}; + exports / - imports",
+            asof=asof,
         ),
         interchange_min_mw=ProvenancedValue.from_connector(
-            round(float(payload["ti_min"])), "MW", citation=f"{cite}; most-importing hour"
+            round(float(payload["ti_min"])),
+            "MW",
+            citation=f"{cite}; most-importing hour",
+            asof=asof,
         ),
         interchange_max_mw=ProvenancedValue.from_connector(
-            round(float(payload["ti_max"])), "MW", citation=f"{cite}; most-exporting hour"
+            round(float(payload["ti_max"])),
+            "MW",
+            citation=f"{cite}; most-exporting hour",
+            asof=asof,
         ),
         net_import_hours_fraction=ProvenancedValue.derived(
             round(import_frac, 3),
@@ -185,7 +198,7 @@ def fetch_ba_interchange(
 
 
 def fetch_ba_annual_load(
-    *, ba: str = "PJM", year: int = 2024, settings: Settings | None = None
+    *, ba: str = "PJM", year: int | None = None, settings: Settings | None = None
 ) -> ProvenancedValue:
     """The BA's total annual demand (GWh) from EIA-930 daily demand, summed (cached).
 
@@ -193,8 +206,14 @@ def fetch_ba_annual_load(
     route reports each day under five timezone conventions (Arizona/Central/Eastern/
     Mountain/Pacific), so without the filter every day is counted 5x. 365-366 daily MWh
     demand values are summed to the annual total inside the fetch (tiny cached payload).
+
+    ``year`` defaults to ``settings.eia930_year`` rather than a literal in this signature
+    (G2/#1644). This figure is one of three load-share denominators, each on its own
+    publication schedule; a vintage that only exists as a call-site default is one nobody
+    finds when the others move ahead of it.
     """
     settings = settings or get_settings()
+    year = year if year is not None else settings.eia930_year
     params = {
         "connector": "eia930",
         "route": "daily-region-data",
@@ -266,6 +285,9 @@ def fetch_ba_annual_load(
         "GWh/yr",
         citation=f"EIA-930 daily demand sum, {payload['ba']} {payload['year']} "
         f"({payload['days']} days, Eastern tz)",
+        # The data year is the vintage (G1/#1644) — and the one the load-share drift guard
+        # reads back off this value, so it must be the payload's year, not the request's.
+        asof=str(payload["year"]),
     )
 
 

@@ -220,6 +220,10 @@ def _federal_output(settings: Settings) -> FederalEnergyOutput:
             "TWh/yr",
             citation=f"EIA {gen.series_id} ({gen.period}): {gen.value.value:,.0f} thousand MWh "
             f"= {net_gen_twh:,.0f} TWh (US total net generation, all sectors)",
+            # G1/#1644: carry the series vintage, don't leave it in the prose. The national
+            # backdrop is compared against a facility figure of its own vintage, so a stale
+            # denominator here has to be machine-flaggable too.
+            asof=gen.vintage,
         ),
         datacenter_use_2023_twh=ProvenancedValue.from_reference(
             _DC_USE_2023_TWH, "TWh/yr", citation=_DC_CITE, confidence="medium"
@@ -235,6 +239,7 @@ def _federal_output(settings: Settings) -> FederalEnergyOutput:
             "cents/kWh",
             citation=f"EIA {price.series_id} ({price.period}): "
             "US average retail electricity price, all sectors",
+            asof=price.vintage,
         ),
         source=(
             "EIA national net generation + avg retail price (connector, live) + "

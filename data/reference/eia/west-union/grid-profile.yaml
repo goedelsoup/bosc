@@ -48,7 +48,7 @@ utility_profile:
     citation: EIA-861 2024 Sales to Ultimate Customers, Ohio Power Co (#14006), OH;
       bundled + delivery total sales
     confidence: high
-    asof: null
+    asof: '2024'
     low: null
     high: null
   customers:
@@ -58,7 +58,7 @@ utility_profile:
     citation: EIA-861 2024 Sales to Ultimate Customers, Ohio Power Co (#14006), OH;
       bundled + delivery total customers
     confidence: high
-    asof: null
+    asof: '2024'
     low: null
     high: null
   avg_price_cents_kwh:
@@ -66,10 +66,14 @@ utility_profile:
     unit: cents/kWh
     source: connector
     citation: EIA-861 2024 Sales to Ultimate Customers, Ohio Power Co (#14006), OH;
-      bundled (full-service) revenue/sales — delivery-only rows exclude generation,
-      so a blended price understates the all-in cost
+      COHORT PRICE — bundled (standard-service-offer) revenue/sales only. Delivery-only
+      rows are excluded because they carry just the wires charge (generation is paid
+      to a competitive supplier), but the remaining bundled cohort is the customers
+      who never shopped, which in a restructured state skews residential. NOT the
+      utility's all-sector average and NOT an industrial/data-center rate — compare
+      the state all-sector price (EIA ELEC.PRICE.<state>-ALL.A) for that
     confidence: high
-    asof: null
+    asof: '2024'
     low: null
     high: null
 ba_profile:
@@ -81,7 +85,7 @@ ba_profile:
     source: connector
     citation: EIA-930 daily demand sum, PJM 2024 (366 days, Eastern tz)
     confidence: high
-    asof: null
+    asof: '2024'
     low: null
     high: null
 load_share: null

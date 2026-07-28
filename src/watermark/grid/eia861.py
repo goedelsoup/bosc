@@ -303,24 +303,45 @@ def fetch_utility_retail(
         f"EIA-861 {payload['year']} {form_label}, {payload['utility_name']} "
         f"(#{payload['utility_number']}), {payload['state']}"
     )
+    # The EIA-861 data year IS the vintage of every figure below (G1/#1644, the #1107
+    # machine-flaggable-staleness marker). It rode only in the citation prose before, so a
+    # profile regenerated against a years-old bulk file read exactly like a fresh one. Matches
+    # how the QCEW connector dates its annual averages: `asof` = the data year.
+    asof = str(payload["year"])
     # Average price = bundled (full-service) revenue/sales. Thousand$/MWh == $/kWh, so
     # cents/kWh = (revenue_thousand$ / sales_MWh) * 100. On the full form, delivery-only rows
     # carry only the wires charge (generation paid to a competitive supplier), so a blended
     # price would understate the all-in cost; the short form has no such split (a full-service
     # municipal/coop), so its single total IS the all-in price.
+    #
+    # G3/#1644 — this figure is a COHORT price and the citation has to say so. On the full form
+    # the bundled rows are the customers who never shopped, which in a restructured state skews
+    # residential; the resulting number runs above even the state residential price and well
+    # above the ~12-13 c/kWh all-sector rate, so publishing it as "the utility's average price"
+    # invites the reader to take it as what an industrial campus pays. It is not. The short form
+    # carries no such skew — a full-service municipal/coop's single line IS its all-customer
+    # average — so the two cases are qualified differently rather than with one blanket hedge.
     bundled_sales = payload["bundled_sales_mwh"]
     avg_price = None
     if bundled_sales:
         price_note = (
-            "full-service municipal/cooperative retail (short form has no service-type split)"
+            "all-customer average for this utility — the short form has no service-type "
+            "split, so a full-service municipal/cooperative's single total is its whole "
+            "retail cohort (no bundled-vs-shopping skew)"
             if is_short
-            else "bundled (full-service) revenue/sales — delivery-only rows exclude "
-            "generation, so a blended price understates the all-in cost"
+            else "COHORT PRICE — bundled (standard-service-offer) revenue/sales only. "
+            "Delivery-only rows are excluded because they carry just the wires charge "
+            "(generation is paid to a competitive supplier), but the remaining bundled "
+            "cohort is the customers who never shopped, which in a restructured state "
+            "skews residential. NOT the utility's all-sector average and NOT an "
+            "industrial/data-center rate — compare the state all-sector price "
+            "(EIA ELEC.PRICE.<state>-ALL.A) for that"
         )
         avg_price = ProvenancedValue.from_connector(
             round(payload["bundled_revenue_thousand_usd"] / bundled_sales * 100.0, 2),
             "cents/kWh",
             citation=f"{cite}; {price_note}",
+            asof=asof,
         )
     total_label = "annual total" if is_short else "bundled + delivery total"
     source_label = "861S short-form total" if is_short else "bundled+delivery total"
@@ -332,11 +353,13 @@ def fetch_utility_retail(
             round(sales_gwh, 1),
             "GWh/yr",
             citation=f"{cite}; {total_label} sales",
+            asof=asof,
         ),
         customers=ProvenancedValue.from_connector(
             round(payload["total_customers"]),
             "customers",
             citation=f"{cite}; {total_label} customers",
+            asof=asof,
         ),
         avg_price_cents_kwh=avg_price,
     )

@@ -182,7 +182,7 @@ def test_fetch_utility_retail_offline(econ_settings: Settings) -> None:
     # Bundled full-service avg price (delivery-only excluded) — a sane residential-ish ¢/kWh.
     assert up.avg_price_cents_kwh is not None
     assert 10.0 < up.avg_price_cents_kwh.value < 30.0
-    assert "delivery-only" in (up.avg_price_cents_kwh.citation or "")
+    assert "delivery-only" in (up.avg_price_cents_kwh.citation or "").lower()
 
 
 def test_fetch_utility_retail_offline_miss_raises(tmp_path: Path) -> None:
@@ -198,3 +198,95 @@ def test_pjm_annual_load_offline(econ_settings: Settings) -> None:
     # PJM ~ 800 TWh/yr; sanity band in GWh.
     assert 700_000 < load.value < 950_000
     assert "EIA-930" in load.citation and "Eastern" in load.citation
+    assert load.asof == "2024"  # the data year, for staleness (#1107 / G1/#1644)
+
+
+# --- G1/#1644: the EIA-861 data year rides on every value ------------------------------------
+
+
+def test_eia861_values_carry_the_data_year_as_asof(econ_settings: Settings) -> None:
+    """Every EIA-861 figure is dated by the bulk file's data year, so a profile regenerated
+    against a years-old zip is machine-flaggable rather than indistinguishable from a fresh one.
+    """
+    up = fetch_utility_retail(settings=econ_settings)
+    assert up.retail_sales_gwh.asof == "2024"
+    assert up.customers is not None and up.customers.asof == "2024"
+    assert up.avg_price_cents_kwh is not None and up.avg_price_cents_kwh.asof == "2024"
+
+
+def test_eia861_asof_follows_the_requested_year_not_a_constant(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The marker must track the year actually read. Hardcoding "2024" would pass the test above
+    and still mis-date every future vintage, so pull a different year and watch it move."""
+    import watermark.grid.eia861 as eia861
+
+    def _zip_for(_settings: Settings, year: int) -> bytes:
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws.title = "States"
+        for _ in range(3):
+            ws.append(["header"])
+        ws.append(_sales_row(14006, "Ohio Power Co", "Bundled", "OH", 1_000, 10_000, 100))
+        buf = io.BytesIO()
+        wb.save(buf)
+        zbuf = io.BytesIO()
+        with zipfile.ZipFile(zbuf, "w") as z:
+            z.writestr(f"Sales_Ult_Cust_{year}.xlsx", buf.getvalue())
+        return zbuf.getvalue()
+
+    monkeypatch.setattr(eia861, "_ensure_zip", _zip_for)
+    up = fetch_utility_retail(
+        utility_number=14006,
+        state="OH",
+        year=2021,
+        settings=Settings(data_dir=tmp_path, econ_offline=False),
+    )
+    assert up.retail_sales_gwh.asof == "2021"
+    assert "2021" in up.retail_sales_gwh.citation
+
+
+# --- G3/#1644: the average price is a cohort, and says so -------------------------------------
+
+
+def test_bundled_price_citation_names_its_cohort(econ_settings: Settings) -> None:
+    """18.61 c/kWh is bundled-SSO revenue/sales — in restructured Ohio a residential-skewed
+    cohort, published on the live site as "the average retail price". It sits above even Ohio
+    residential and far above the ~12-13 c all-sector rate, and it is emphatically not what an
+    industrial campus pays. The citation is the one place that travels with the number
+    everywhere it is rendered, so the qualification has to live there.
+    """
+    up = fetch_utility_retail(settings=econ_settings)
+    assert up.avg_price_cents_kwh is not None
+    cite = up.avg_price_cents_kwh.citation or ""
+    assert "COHORT PRICE" in cite
+    assert "not the utility's all-sector average" in cite.lower()
+    assert "industrial" in cite.lower() and "data-center" in cite.lower()
+    # The reader is pointed at the figure that IS all-sector, not just warned off this one.
+    assert "ELEC.PRICE.<state>-ALL.A" in cite
+    # The cohort claim has to be true of the number: a residential-skewed cohort in a
+    # restructured state runs above the all-sector rate, not at it.
+    assert up.avg_price_cents_kwh.value > 15.0
+
+
+def test_short_form_price_is_not_mislabelled_as_a_skewed_cohort(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The short-form case genuinely has no bundled-vs-shopping split — a full-service
+    municipal's single line IS its whole retail cohort. Qualifying it with the restructured-IOU
+    warning would be its own inaccuracy, so the two cases are worded differently.
+    """
+    import watermark.grid.eia861 as eia861
+
+    monkeypatch.setattr(
+        eia861, "_ensure_zip", lambda settings, year: _short_form_zip(with_full_sheet=True)
+    )
+    up = fetch_utility_retail(
+        utility_number=2439,
+        state="OH",
+        year=2024,
+        settings=Settings(data_dir=tmp_path, econ_offline=False),
+    )
+    assert up.avg_price_cents_kwh is not None
+    cite = up.avg_price_cents_kwh.citation or ""
+    assert "all-customer average" in cite and "COHORT PRICE" not in cite

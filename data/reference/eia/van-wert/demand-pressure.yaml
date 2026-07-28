@@ -4,10 +4,10 @@ facility_draw_mw:
   unit: MW
   source: derived
   citation: 'PowerBasis.facility_draw central (#87): 500 MW IT (central) x PUE 1.325
-    — total facility draw; band = 350-500 MW IT x PUE 1.15-1.5 (efficient .. cooling-dominated)'
+    — total facility draw; band = 349.7-500 MW IT x PUE 1.15-1.5 (efficient .. cooling-dominated)'
   confidence: medium
   asof: null
-  low: 402.5
+  low: 402.2
   high: 750.0
 load_factor:
   value: 0.9
@@ -33,7 +33,7 @@ state_retail_sales_gwh:
   source: connector
   citation: EIA ELEC.SALES.OH-ALL.A (2025); 161934 million kWh
   confidence: high
-  asof: null
+  asof: '2025'
   low: null
   high: null
 demand_share_pct:
@@ -69,7 +69,7 @@ residential_price:
   source: connector
   citation: EIA ELEC.PRICE.OH-RES.A (2025)
   confidence: high
-  asof: null
+  asof: '2025'
   low: null
   high: null
 transmission_coefficient:

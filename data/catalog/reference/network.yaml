@@ -38,3 +38,6 @@ notes: topology.yaml is curated/cited; basin-network.yaml is the computed, regen
   now carries the primary campus's disclosed lifecycle — `facility_status` / `operator` / `end_use` /
   `facility_count` (#1628) — so the pure frontend basin/directory builders read data-center status off
   this feed instead of a hardcoded per-slug dict; regenerate basin-network.yaml after a facilities change.
+  Each node's `grid.avg_price_cents_kwh` is the EIA-861 bundled standard-service-offer COHORT price
+  (#1644) — comparable node-to-node because every node reads the same cohort definition, but NOT an
+  all-sector average and NOT an industrial/data-center rate.

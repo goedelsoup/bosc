@@ -71,6 +71,11 @@ class NodeGrid(BaseModel):
     holding_company: str | None = None
     balancing_authority: str | None = None
     retail_regulator: str | None = None
+    # The EIA-861 bundled standard-service-offer COHORT price, NOT the utility's all-sector
+    # average and NOT an industrial/data-center rate (G3/#1644; the qualification rides on the
+    # source value's citation — see `watermark.grid.model.UtilityProfile`). Comparable
+    # node-to-node because every node reads the same cohort definition, which is what this
+    # cross-site table uses it for.
     avg_price_cents_kwh: float | None = None
 
 
