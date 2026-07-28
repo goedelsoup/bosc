@@ -1,0 +1,1411 @@
+{
+  "county": "Allen",
+  "well_count": 44,
+  "active_count": 1,
+  "total_capacity_mgd": 4.9,
+  "operating_window": "2025-12-16 to 2026-05-28",
+  "as_of": "2026-07-28",
+  "centroid_lat": 40.795445,
+  "centroid_lon": -84.120922,
+  "cones": [
+    {
+      "record_no": "3027940",
+      "aquifer_type": "GRAVEL & SAND",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 24.0,
+      "operating_days": 161,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 2276.8,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 72.0,
+        "high": 72000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 2031.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=161 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 361.0,
+        "high": 11420.0
+      }
+    },
+    {
+      "record_no": "3027941",
+      "aquifer_type": "GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 25.0,
+      "operating_days": 160,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 75000.0,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 7500.0,
+        "high": 750000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 10835.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=160 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 3426.0,
+        "high": 34262.0
+      }
+    },
+    {
+      "record_no": "3027943",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 19.0,
+      "operating_days": 160,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 1802.5,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 57.0,
+        "high": 57000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1801.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=160 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 320.0,
+        "high": 10129.0
+      }
+    },
+    {
+      "record_no": "3027944",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 19.0,
+      "operating_days": 160,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 1802.5,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 57.0,
+        "high": 57000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1801.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=160 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 320.0,
+        "high": 10129.0
+      }
+    },
+    {
+      "record_no": "3027945",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 18.5,
+      "operating_days": 160,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 1755.1,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 55.5,
+        "high": 55500.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1777.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=160 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 316.0,
+        "high": 9995.0
+      }
+    },
+    {
+      "record_no": "3027946",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 21.5,
+      "operating_days": 159,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 2039.7,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 64.5,
+        "high": 64500.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1910.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=159 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 340.0,
+        "high": 10741.0
+      }
+    },
+    {
+      "record_no": "3027947",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 21.5,
+      "operating_days": 159,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 2039.7,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 64.5,
+        "high": 64500.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1910.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=159 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 340.0,
+        "high": 10741.0
+      }
+    },
+    {
+      "record_no": "3027948",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 18.0,
+      "operating_days": 159,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 1707.6,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 54.0,
+        "high": 54000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1748.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=159 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 311.0,
+        "high": 9828.0
+      }
+    },
+    {
+      "record_no": "3027949",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 19.0,
+      "operating_days": 221,
+      "active": true,
+      "transmissivity_ft2_day": {
+        "value": 1802.5,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 57.0,
+        "high": 57000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 2117.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=221 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 376.0,
+        "high": 11904.0
+      }
+    },
+    {
+      "record_no": "3027950",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 23.0,
+      "operating_days": 141,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 2182.0,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 69.0,
+        "high": 69000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1860.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=141 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 331.0,
+        "high": 10462.0
+      }
+    },
+    {
+      "record_no": "3027951",
+      "aquifer_type": "SAND",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 40.0,
+      "operating_days": 140,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 1200.0,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 120.0,
+        "high": 12000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1230.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=140 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 389.0,
+        "high": 3888.0
+      }
+    },
+    {
+      "record_no": "3027952",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 24.0,
+      "operating_days": 140,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 2276.8,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 72.0,
+        "high": 72000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1894.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=140 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 337.0,
+        "high": 10649.0
+      }
+    },
+    {
+      "record_no": "3027953",
+      "aquifer_type": "SAND",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 28.0,
+      "operating_days": 140,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 840.0,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 84.0,
+        "high": 8400.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1029.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=140 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 325.0,
+        "high": 3253.0
+      }
+    },
+    {
+      "record_no": "3027969",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 25.0,
+      "operating_days": 140,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 2371.7,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 75.0,
+        "high": 75000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1933.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=140 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 344.0,
+        "high": 10869.0
+      }
+    },
+    {
+      "record_no": "3027970",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 22.5,
+      "operating_days": 139,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 2134.5,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 67.5,
+        "high": 67500.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1827.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=139 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 325.0,
+        "high": 10274.0
+      }
+    },
+    {
+      "record_no": "3027971",
+      "aquifer_type": "SAND",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 18.0,
+      "operating_days": 139,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 540.0,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 54.0,
+        "high": 5400.0
+      },
+      "radius_of_influence_ft": {
+        "value": 822.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=139 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 260.0,
+        "high": 2599.0
+      }
+    },
+    {
+      "record_no": "3027973",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 22.0,
+      "operating_days": 139,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 2087.1,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 66.0,
+        "high": 66000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1807.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=139 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 321.0,
+        "high": 10159.0
+      }
+    },
+    {
+      "record_no": "3027976",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 14.0,
+      "operating_days": 139,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 1328.2,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 42.0,
+        "high": 42000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1441.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=139 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 256.0,
+        "high": 8104.0
+      }
+    },
+    {
+      "record_no": "3027977",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 16.5,
+      "operating_days": 138,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 1565.3,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 49.5,
+        "high": 49500.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1559.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=138 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 277.0,
+        "high": 8766.0
+      }
+    },
+    {
+      "record_no": "3028002",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 10.0,
+      "operating_days": 139,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 948.7,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 30.0,
+        "high": 30000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1218.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=139 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 217.0,
+        "high": 6849.0
+      }
+    },
+    {
+      "record_no": "3028003",
+      "aquifer_type": "SAND",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 12.0,
+      "operating_days": 140,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 360.0,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 36.0,
+        "high": 3600.0
+      },
+      "radius_of_influence_ft": {
+        "value": 673.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=140 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 213.0,
+        "high": 2130.0
+      }
+    },
+    {
+      "record_no": "3028004",
+      "aquifer_type": "SAND",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 16.0,
+      "operating_days": 140,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 480.0,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 48.0,
+        "high": 4800.0
+      },
+      "radius_of_influence_ft": {
+        "value": 778.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=140 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 246.0,
+        "high": 2459.0
+      }
+    },
+    {
+      "record_no": "3028005",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 14.0,
+      "operating_days": 140,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 1328.2,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 42.0,
+        "high": 42000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1446.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=140 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 257.0,
+        "high": 8133.0
+      }
+    },
+    {
+      "record_no": "3028006",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 14.0,
+      "operating_days": 139,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 1328.2,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 42.0,
+        "high": 42000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1441.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=139 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 256.0,
+        "high": 8104.0
+      }
+    },
+    {
+      "record_no": "3028007",
+      "aquifer_type": "SAND",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 16.0,
+      "operating_days": 136,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 480.0,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 48.0,
+        "high": 4800.0
+      },
+      "radius_of_influence_ft": {
+        "value": 766.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=136 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 242.0,
+        "high": 2424.0
+      }
+    },
+    {
+      "record_no": "3028008",
+      "aquifer_type": "SAND",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 15.0,
+      "operating_days": 136,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 450.0,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 45.0,
+        "high": 4500.0
+      },
+      "radius_of_influence_ft": {
+        "value": 742.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=136 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 235.0,
+        "high": 2347.0
+      }
+    },
+    {
+      "record_no": "3028009",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 16.0,
+      "operating_days": 136,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 1517.9,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 48.0,
+        "high": 48000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1524.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=136 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 271.0,
+        "high": 8570.0
+      }
+    },
+    {
+      "record_no": "3028130",
+      "aquifer_type": "SAND",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 13.0,
+      "operating_days": 134,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 390.0,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 39.0,
+        "high": 3900.0
+      },
+      "radius_of_influence_ft": {
+        "value": 686.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=134 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 217.0,
+        "high": 2169.0
+      }
+    },
+    {
+      "record_no": "3028131",
+      "aquifer_type": "SAND",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 15.0,
+      "operating_days": 134,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 450.0,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 45.0,
+        "high": 4500.0
+      },
+      "radius_of_influence_ft": {
+        "value": 737.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=134 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 233.0,
+        "high": 2330.0
+      }
+    },
+    {
+      "record_no": "3028132",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 19.0,
+      "operating_days": 135,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 1802.5,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 57.0,
+        "high": 57000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1655.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=135 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 294.0,
+        "high": 9304.0
+      }
+    },
+    {
+      "record_no": "3028133",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 19.0,
+      "operating_days": 135,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 1802.5,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 57.0,
+        "high": 57000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1655.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=135 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 294.0,
+        "high": 9304.0
+      }
+    },
+    {
+      "record_no": "3028134",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 17.0,
+      "operating_days": 135,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 1612.8,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 51.0,
+        "high": 51000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1565.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=135 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 278.0,
+        "high": 8801.0
+      }
+    },
+    {
+      "record_no": "3028135",
+      "aquifer_type": "GRAVEL & SAND",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 17.0,
+      "operating_days": 135,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 1612.8,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 51.0,
+        "high": 51000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1565.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=135 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 278.0,
+        "high": 8801.0
+      }
+    },
+    {
+      "record_no": "3028136",
+      "aquifer_type": "SAND",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 14.0,
+      "operating_days": 133,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 420.0,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 42.0,
+        "high": 4200.0
+      },
+      "radius_of_influence_ft": {
+        "value": 709.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=133 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 224.0,
+        "high": 2242.0
+      }
+    },
+    {
+      "record_no": "3028138",
+      "aquifer_type": "SAND",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 14.0,
+      "operating_days": 134,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 420.0,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 42.0,
+        "high": 4200.0
+      },
+      "radius_of_influence_ft": {
+        "value": 712.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=134 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 225.0,
+        "high": 2251.0
+      }
+    },
+    {
+      "record_no": "3028141",
+      "aquifer_type": "SAND",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 13.0,
+      "operating_days": 133,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 390.0,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 39.0,
+        "high": 3900.0
+      },
+      "radius_of_influence_ft": {
+        "value": 683.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=133 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 216.0,
+        "high": 2161.0
+      }
+    },
+    {
+      "record_no": "3028143",
+      "aquifer_type": "SAND",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 13.0,
+      "operating_days": 133,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 390.0,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 39.0,
+        "high": 3900.0
+      },
+      "radius_of_influence_ft": {
+        "value": 683.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=133 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 216.0,
+        "high": 2161.0
+      }
+    },
+    {
+      "record_no": "3028145",
+      "aquifer_type": "SAND",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 12.5,
+      "operating_days": 133,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 375.0,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 37.5,
+        "high": 3750.0
+      },
+      "radius_of_influence_ft": {
+        "value": 670.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=133 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 212.0,
+        "high": 2119.0
+      }
+    },
+    {
+      "record_no": "3028146",
+      "aquifer_type": "SAND",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 16.0,
+      "operating_days": 133,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 480.0,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 48.0,
+        "high": 4800.0
+      },
+      "radius_of_influence_ft": {
+        "value": 758.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=133 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 240.0,
+        "high": 2397.0
+      }
+    },
+    {
+      "record_no": "3028148",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 75.0,
+      "saturated_thickness_ft": 17.5,
+      "operating_days": 133,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 1660.2,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 52.5,
+        "high": 52500.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1576.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=133 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 280.0,
+        "high": 8863.0
+      }
+    },
+    {
+      "record_no": "3029170",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 100.0,
+      "saturated_thickness_ft": 20.0,
+      "operating_days": 104,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 1897.4,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 60.0,
+        "high": 60000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1490.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=104 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 265.0,
+        "high": 8379.0
+      }
+    },
+    {
+      "record_no": "3029171",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 100.0,
+      "saturated_thickness_ft": 25.0,
+      "operating_days": 104,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 2371.7,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 75.0,
+        "high": 75000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1666.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=104 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 296.0,
+        "high": 9367.0
+      }
+    },
+    {
+      "record_no": "3029172",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 100.0,
+      "saturated_thickness_ft": 27.0,
+      "operating_days": 104,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 2561.4,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 81.0,
+        "high": 81000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1731.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=104 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 308.0,
+        "high": 9735.0
+      }
+    },
+    {
+      "record_no": "3029174",
+      "aquifer_type": "SAND & GRAVEL",
+      "q_gpm": 100.0,
+      "saturated_thickness_ft": 24.0,
+      "operating_days": 104,
+      "active": false,
+      "transmissivity_ft2_day": {
+        "value": 2276.8,
+        "unit": "ft^2/day",
+        "source": "reference",
+        "citation": "literature K (Freeze & Cherry 1979) x saturated thickness, per aquifer material",
+        "confidence": "medium",
+        "asof": null,
+        "low": 72.0,
+        "high": 72000.0
+      },
+      "radius_of_influence_ft": {
+        "value": 1632.0,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Cooper-Jacob r0 = sqrt(2.25*T*t/S), t=104 d [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 290.0,
+        "high": 9178.0
+      }
+    }
+  ],
+  "impacted_wells": [
+    {
+      "object_id": "381914",
+      "well_use": "DOMESTIC",
+      "aquifer_type": "GRAVEL",
+      "distance_ft": 2098.0,
+      "composite_drawdown_ft": {
+        "value": 9.9,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Superposition of every dewatering well's Cooper-Jacob cone [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 0.4,
+        "high": 9.9
+      }
+    },
+    {
+      "object_id": "381126",
+      "well_use": "DOMESTIC",
+      "aquifer_type": "GRAVEL",
+      "distance_ft": 2073.0,
+      "composite_drawdown_ft": {
+        "value": 9.4,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Superposition of every dewatering well's Cooper-Jacob cone [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 0.4,
+        "high": 9.4
+      }
+    },
+    {
+      "object_id": "366691",
+      "well_use": "DOMESTIC",
+      "aquifer_type": "GRAVEL",
+      "distance_ft": 2222.0,
+      "composite_drawdown_ft": {
+        "value": 9.1,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Superposition of every dewatering well's Cooper-Jacob cone [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 0.3,
+        "high": 9.1
+      }
+    },
+    {
+      "object_id": "232791",
+      "well_use": "DOMESTIC",
+      "aquifer_type": "SAND & GRAVEL",
+      "distance_ft": 2056.0,
+      "composite_drawdown_ft": {
+        "value": 8.9,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Superposition of every dewatering well's Cooper-Jacob cone [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 0.4,
+        "high": 8.9
+      }
+    },
+    {
+      "object_id": "419138",
+      "well_use": "DOMESTIC",
+      "aquifer_type": "SAND & GRAVEL",
+      "distance_ft": 2168.0,
+      "composite_drawdown_ft": {
+        "value": 5.9,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Superposition of every dewatering well's Cooper-Jacob cone [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 0.4,
+        "high": 5.9
+      }
+    },
+    {
+      "object_id": "142899",
+      "well_use": "DOMESTIC",
+      "aquifer_type": "GRAVEL",
+      "distance_ft": 2380.0,
+      "composite_drawdown_ft": {
+        "value": 5.8,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Superposition of every dewatering well's Cooper-Jacob cone [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 0.2,
+        "high": 5.8
+      }
+    },
+    {
+      "object_id": "6973",
+      "well_use": "DOMESTIC",
+      "aquifer_type": "GRAVEL",
+      "distance_ft": 2415.0,
+      "composite_drawdown_ft": {
+        "value": 5.2,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Superposition of every dewatering well's Cooper-Jacob cone [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 0.2,
+        "high": 5.2
+      }
+    },
+    {
+      "object_id": "367471",
+      "well_use": "DOMESTIC",
+      "aquifer_type": "GRAVEL",
+      "distance_ft": 2280.0,
+      "composite_drawdown_ft": {
+        "value": 4.5,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Superposition of every dewatering well's Cooper-Jacob cone [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 0.4,
+        "high": 4.5
+      }
+    },
+    {
+      "object_id": "247897",
+      "well_use": "DOMESTIC",
+      "aquifer_type": "SAND & GRAVEL",
+      "distance_ft": 2599.0,
+      "composite_drawdown_ft": {
+        "value": 3.1,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Superposition of every dewatering well's Cooper-Jacob cone [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 0.2,
+        "high": 3.1
+      }
+    },
+    {
+      "object_id": "339443",
+      "well_use": "DOMESTIC",
+      "aquifer_type": null,
+      "distance_ft": 2495.0,
+      "composite_drawdown_ft": {
+        "value": 1.1,
+        "unit": "ft",
+        "source": "derived",
+        "citation": "Superposition of every dewatering well's Cooper-Jacob cone [inference].",
+        "confidence": "medium",
+        "asof": null,
+        "low": 0.3,
+        "high": 1.8
+      }
+    }
+  ],
+  "tag": "inference",
+  "caveats": [
+    "Hypothetical-free but screening-grade: the wells/rates/dates are [verified] ODNR records; every drawdown is [inference] (literature K, Cooper-Jacob, unconfined).",
+    "test_rate_gpm is yield-test capacity, an upper bound on the sustained dewatering rate; installs/sealings were staged, so a simultaneous-full-rate composite bounds concurrency."
+  ]
+}

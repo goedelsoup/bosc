@@ -46,6 +46,8 @@ export const LAYER_ORDER = [
   "jsmc",
   "roadwork",
   "wwtp",
+  "dewatering",
+  "dewatering-impacted",
   "rsei",
 ] as const;
 
@@ -58,6 +60,8 @@ export const LAYER_LABELS: Record<string, string> = {
   jsmc: "JSMC (US-owned)",
   roadwork: "Roadwork centerline",
   wwtp: "WWTP NPDES points",
+  dewatering: "Dewatering wellfield",
+  "dewatering-impacted": "Wells drawn down (inference)",
   rsei: "RSEI facilities",
 };
 

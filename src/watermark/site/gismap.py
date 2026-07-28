@@ -42,6 +42,11 @@ _LAYER_COLORS = {
 # stay in sync, like the gis-findings layers above.
 _WATERSHED_COLOR = "#0097a7"  # cyan — the watershed boundary fill/outline
 _IMAGERY_AOI_COLOR = "#37474f"  # blue-grey — a neutral footprint frame for the AOI
+# The dewatering wellfield layers (#well-drawdown), kept as two `layer` values in one feed so the
+# map gives each its own toggle/legend: the stressor wells vs. the domestic wells they draw down.
+# The impacted wells wear the evidence-grammar gap oxblood — the concern made visible.
+_DEWATERING_WELL_COLOR = "#00695c"  # deep teal — the construction-dewatering wells (the stressor)
+_DEWATERING_IMPACT_COLOR = "#7a2230"  # oxblood (the evidence gap hue) — the impacted domestic wells
 
 
 def _rsei_radius(score: float) -> int:
@@ -436,6 +441,114 @@ def export_imagery_geo(settings: Settings | None = None) -> GeoFeatureCollection
                 ),
                 "releases": [{"date": label, "release": rel} for label, rel in _WAYBACK],
             },
+        },
+        features=features,
+    )
+
+
+def _dewatering_radius(rate_gpm: float | None) -> int:
+    """Marker radius (px) for a dewatering well, graduated by yield-test rate on a log scale."""
+    if not rate_gpm or rate_gpm <= 0:
+        return 5
+    return max(5, min(16, round(4.0 + 2.2 * math.log10(rate_gpm))))
+
+
+def export_dewatering_geo(settings: Settings | None = None) -> GeoFeatureCollection | None:
+    """The ``dewatering`` map feed — the construction-dewatering wellfield + the domestic wells it
+    draws down (the documented "area well concerns"), for the frontend DeckGL map.
+
+    Two ``layer`` values within one feed (so the map gives each its own toggle/legend): the
+    ``dewatering`` well points (the stressor, sized by yield-test rate, popup-carrying the
+    ``[inference]`` radius of influence) and the ``dewatering-impacted`` domestic census wells
+    inside the composite cone (popup-carrying their ``[inference]`` superimposed drawdown). Well
+    points/coords are ``[verified]`` ODNR records; the radii/drawdowns are ``[inference]``.
+    Returns ``None`` when the active site commits no dewatering wellfield
+    (``SiteProfile.dewatering_wellfield_relpath`` — only Lima today).
+    """
+    settings = settings or get_settings()
+    from watermark.hydrology import dewatering as dw
+    from watermark.hydrology.connectors import ohio_waterwells as oww
+
+    wells = dw.load_dewatering_wells(settings=settings)
+    if not wells:
+        return None
+    impact = dw.load_dewatering_impact(asof=dw.DATASET_ASOF, settings=settings)
+    if impact is None:
+        return None
+    cone_r0 = {c.record_no: c.radius_of_influence_ft for c in impact.cones}
+
+    features: list[GeoFeature] = []
+    for w in wells:
+        if w.latitude is None or w.longitude is None:
+            continue
+        r0 = cone_r0.get(w.record_no)
+        props: dict[str, Any] = {
+            "layer": "dewatering",
+            "label": f"Dewatering well {w.record_no}"
+            + (f" ({w.test_rate_gpm:g} gpm)" if w.test_rate_gpm else ""),
+            "color": _DEWATERING_WELL_COLOR,
+            "role": "point",
+            "radius": _dewatering_radius(w.test_rate_gpm),
+            "record_no": w.record_no,
+            "rate_gpm": w.test_rate_gpm,
+            "active": w.active,
+            "aquifer": w.aquifer_type,
+            "radius_of_influence_ft": r0.value if r0 is not None else None,
+            "radius_of_influence_low_ft": r0.low_or_value if r0 is not None else None,
+            "radius_of_influence_high_ft": r0.high_or_value if r0 is not None else None,
+            "tag": "verified",  # the well point itself is a verified ODNR record
+        }
+        features.append(
+            GeoFeature(
+                geometry={"type": "Point", "coordinates": [w.longitude, w.latitude]},
+                properties=GeoProperties.model_validate(props),
+            )
+        )
+
+    # The impacted domestic wells: join the census coordinates back by object_id (the composite
+    # cone is computed in `load_dewatering_impact`; here we only re-attach the point geometry).
+    slug = oww.county_slug(active_profile(settings).county_name)
+    census_path = settings.data_dir / "reference" / "ohio-waterwells" / f"{slug}.csv"
+    coords_by_id: dict[str, tuple[float, float]] = {}
+    if census_path.is_file():
+        for c in oww.read_inventory(census_path, settings=settings).wells:
+            if c.latitude is not None and c.longitude is not None:
+                coords_by_id[str(c.object_id)] = (c.longitude, c.latitude)
+    for iw in impact.impacted_wells:
+        lonlat = coords_by_id.get(iw.object_id)
+        if lonlat is None:
+            continue
+        s = iw.composite_drawdown_ft
+        ipoint: dict[str, Any] = {
+            "layer": "dewatering-impacted",
+            "label": f"Domestic well {iw.object_id} — {s.value:g} ft drawdown [inference]",
+            "color": _DEWATERING_IMPACT_COLOR,
+            "role": "point",
+            "radius": 6,
+            "object_id": iw.object_id,
+            "drawdown_ft": s.value,
+            "drawdown_low_ft": s.low_or_value,
+            "drawdown_high_ft": s.high_or_value,
+            "distance_ft": iw.distance_ft,
+            "aquifer": iw.aquifer_type,
+            "tag": "inference",
+        }
+        features.append(
+            GeoFeature(
+                geometry={"type": "Point", "coordinates": [lonlat[0], lonlat[1]]},
+                properties=GeoProperties.model_validate(ipoint),
+            )
+        )
+
+    if not features:
+        return None
+    return GeoFeatureCollection(
+        feed="dewatering",
+        meta={
+            "crs": "WGS84 (EPSG:4326)",
+            "subject": "Construction-dewatering wellfield + the domestic wells it draws down",
+            "as_of": impact.as_of,
+            "layers": ["dewatering", "dewatering-impacted"],
         },
         features=features,
     )

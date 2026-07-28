@@ -1,0 +1,1355 @@
+{
+  "type": "FeatureCollection",
+  "feed": "dewatering",
+  "meta": {
+    "crs": "WGS84 (EPSG:4326)",
+    "subject": "Construction-dewatering wellfield + the domestic wells it draws down",
+    "as_of": "2026-07-28",
+    "layers": [
+      "dewatering",
+      "dewatering-impacted"
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.125418,
+          40.794892
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3027940 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3027940",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "GRAVEL & SAND",
+        "radius_of_influence_ft": 2031.0,
+        "radius_of_influence_low_ft": 361.0,
+        "radius_of_influence_high_ft": 11420.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.125196,
+          40.79492
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3027941 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3027941",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "GRAVEL",
+        "radius_of_influence_ft": 10835.0,
+        "radius_of_influence_low_ft": 3426.0,
+        "radius_of_influence_high_ft": 34262.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.124698,
+          40.794865
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3027943 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3027943",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1801.0,
+        "radius_of_influence_low_ft": 320.0,
+        "radius_of_influence_high_ft": 10129.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.124442,
+          40.794824
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3027944 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3027944",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1801.0,
+        "radius_of_influence_low_ft": 320.0,
+        "radius_of_influence_high_ft": 10129.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.123996,
+          40.794881
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3027945 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3027945",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1777.0,
+        "radius_of_influence_low_ft": 316.0,
+        "radius_of_influence_high_ft": 9995.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.123647,
+          40.79489
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3027946 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3027946",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1910.0,
+        "radius_of_influence_low_ft": 340.0,
+        "radius_of_influence_high_ft": 10741.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.123251,
+          40.794904
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3027947 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3027947",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1910.0,
+        "radius_of_influence_low_ft": 340.0,
+        "radius_of_influence_high_ft": 10741.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.122533,
+          40.794909
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3027948 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3027948",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1748.0,
+        "radius_of_influence_low_ft": 311.0,
+        "radius_of_influence_high_ft": 9828.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.122032,
+          40.794948
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3027949 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3027949",
+        "rate_gpm": 75.0,
+        "active": true,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 2117.0,
+        "radius_of_influence_low_ft": 376.0,
+        "radius_of_influence_high_ft": 11904.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.121823,
+          40.794938
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3027950 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3027950",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1860.0,
+        "radius_of_influence_low_ft": 331.0,
+        "radius_of_influence_high_ft": 10462.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.121455,
+          40.794893
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3027951 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3027951",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND",
+        "radius_of_influence_ft": 1230.0,
+        "radius_of_influence_low_ft": 389.0,
+        "radius_of_influence_high_ft": 3888.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.121137,
+          40.794932
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3027952 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3027952",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1894.0,
+        "radius_of_influence_low_ft": 337.0,
+        "radius_of_influence_high_ft": 10649.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.120767,
+          40.794975
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3027953 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3027953",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND",
+        "radius_of_influence_ft": 1029.0,
+        "radius_of_influence_low_ft": 325.0,
+        "radius_of_influence_high_ft": 3253.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.120767,
+          40.794975
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3027969 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3027969",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1933.0,
+        "radius_of_influence_low_ft": 344.0,
+        "radius_of_influence_high_ft": 10869.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.120461,
+          40.794907
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3027970 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3027970",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1827.0,
+        "radius_of_influence_low_ft": 325.0,
+        "radius_of_influence_high_ft": 10274.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.119799,
+          40.794939
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3027971 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3027971",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND",
+        "radius_of_influence_ft": 822.0,
+        "radius_of_influence_low_ft": 260.0,
+        "radius_of_influence_high_ft": 2599.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.119477,
+          40.794929
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3027973 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3027973",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1807.0,
+        "radius_of_influence_low_ft": 321.0,
+        "radius_of_influence_high_ft": 10159.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.119108,
+          40.794918
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3027976 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3027976",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1441.0,
+        "radius_of_influence_low_ft": 256.0,
+        "radius_of_influence_high_ft": 8104.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.118759,
+          40.79494
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3027977 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3027977",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1559.0,
+        "radius_of_influence_low_ft": 277.0,
+        "radius_of_influence_high_ft": 8766.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.118798,
+          40.795319
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028002 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028002",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1218.0,
+        "radius_of_influence_low_ft": 217.0,
+        "radius_of_influence_high_ft": 6849.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.118727,
+          40.795833
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028003 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028003",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND",
+        "radius_of_influence_ft": 673.0,
+        "radius_of_influence_low_ft": 213.0,
+        "radius_of_influence_high_ft": 2130.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.118722,
+          40.796142
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028004 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028004",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND",
+        "radius_of_influence_ft": 778.0,
+        "radius_of_influence_low_ft": 246.0,
+        "radius_of_influence_high_ft": 2459.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.118666,
+          40.796444
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028005 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028005",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1446.0,
+        "radius_of_influence_low_ft": 257.0,
+        "radius_of_influence_high_ft": 8133.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.118713,
+          40.795597
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028006 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028006",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1441.0,
+        "radius_of_influence_low_ft": 256.0,
+        "radius_of_influence_high_ft": 8104.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.118767,
+          40.796661
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028007 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028007",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND",
+        "radius_of_influence_ft": 766.0,
+        "radius_of_influence_low_ft": 242.0,
+        "radius_of_influence_high_ft": 2424.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.118776,
+          40.796922
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028008 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028008",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND",
+        "radius_of_influence_ft": 742.0,
+        "radius_of_influence_low_ft": 235.0,
+        "radius_of_influence_high_ft": 2347.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.118828,
+          40.797166
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028009 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028009",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1524.0,
+        "radius_of_influence_low_ft": 271.0,
+        "radius_of_influence_high_ft": 8570.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.118721,
+          40.794469
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028130 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028130",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND",
+        "radius_of_influence_ft": 686.0,
+        "radius_of_influence_low_ft": 217.0,
+        "radius_of_influence_high_ft": 2169.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.118708,
+          40.794723
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028131 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028131",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND",
+        "radius_of_influence_ft": 737.0,
+        "radius_of_influence_low_ft": 233.0,
+        "radius_of_influence_high_ft": 2330.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.118775,
+          40.797996
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028132 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028132",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1655.0,
+        "radius_of_influence_low_ft": 294.0,
+        "radius_of_influence_high_ft": 9304.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.11879,
+          40.797723
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028133 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028133",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1655.0,
+        "radius_of_influence_low_ft": 294.0,
+        "radius_of_influence_high_ft": 9304.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.11879,
+          40.797448
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028134 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028134",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1565.0,
+        "radius_of_influence_low_ft": 278.0,
+        "radius_of_influence_high_ft": 8801.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.118777,
+          40.798297
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028135 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028135",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "GRAVEL & SAND",
+        "radius_of_influence_ft": 1565.0,
+        "radius_of_influence_low_ft": 278.0,
+        "radius_of_influence_high_ft": 8801.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.118692,
+          40.794164
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028136 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028136",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND",
+        "radius_of_influence_ft": 709.0,
+        "radius_of_influence_low_ft": 224.0,
+        "radius_of_influence_high_ft": 2242.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.118718,
+          40.7969
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028138 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028138",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND",
+        "radius_of_influence_ft": 712.0,
+        "radius_of_influence_low_ft": 225.0,
+        "radius_of_influence_high_ft": 2251.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.118669,
+          40.793654
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028141 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028141",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND",
+        "radius_of_influence_ft": 683.0,
+        "radius_of_influence_low_ft": 216.0,
+        "radius_of_influence_high_ft": 2161.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.118662,
+          40.793355
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028143 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028143",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND",
+        "radius_of_influence_ft": 683.0,
+        "radius_of_influence_low_ft": 216.0,
+        "radius_of_influence_high_ft": 2161.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.11867,
+          40.79309
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028145 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028145",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND",
+        "radius_of_influence_ft": 670.0,
+        "radius_of_influence_low_ft": 212.0,
+        "radius_of_influence_high_ft": 2119.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.11867,
+          40.792718
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028146 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028146",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND",
+        "radius_of_influence_ft": 758.0,
+        "radius_of_influence_low_ft": 240.0,
+        "radius_of_influence_high_ft": 2397.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.118673,
+          40.792347
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3028148 (75 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3028148",
+        "rate_gpm": 75.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1576.0,
+        "radius_of_influence_low_ft": 280.0,
+        "radius_of_influence_high_ft": 8863.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.127064,
+          40.797793
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3029170 (100 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3029170",
+        "rate_gpm": 100.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1490.0,
+        "radius_of_influence_low_ft": 265.0,
+        "radius_of_influence_high_ft": 8379.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.127178,
+          40.797519
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3029171 (100 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3029171",
+        "rate_gpm": 100.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1666.0,
+        "radius_of_influence_low_ft": 296.0,
+        "radius_of_influence_high_ft": 9367.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.127178,
+          40.797246
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3029172 (100 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3029172",
+        "rate_gpm": 100.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1731.0,
+        "radius_of_influence_low_ft": 308.0,
+        "radius_of_influence_high_ft": 9735.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.127076,
+          40.796677
+        ]
+      },
+      "properties": {
+        "layer": "dewatering",
+        "label": "Dewatering well 3029174 (100 gpm)",
+        "color": "#00695c",
+        "role": "point",
+        "radius": 8,
+        "record_no": "3029174",
+        "rate_gpm": 100.0,
+        "active": false,
+        "aquifer": "SAND & GRAVEL",
+        "radius_of_influence_ft": 1632.0,
+        "radius_of_influence_low_ft": 290.0,
+        "radius_of_influence_high_ft": 9178.0,
+        "tag": "verified"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.12836,
+          40.79662
+        ]
+      },
+      "properties": {
+        "layer": "dewatering-impacted",
+        "label": "Domestic well 381914 — 9.9 ft drawdown [inference]",
+        "color": "#7a2230",
+        "role": "point",
+        "radius": 6,
+        "object_id": "381914",
+        "drawdown_ft": 9.9,
+        "drawdown_low_ft": 0.4,
+        "drawdown_high_ft": 9.9,
+        "distance_ft": 2098.0,
+        "aquifer": "GRAVEL",
+        "tag": "inference"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.12835,
+          40.79626
+        ]
+      },
+      "properties": {
+        "layer": "dewatering-impacted",
+        "label": "Domestic well 381126 — 9.4 ft drawdown [inference]",
+        "color": "#7a2230",
+        "role": "point",
+        "radius": 6,
+        "object_id": "381126",
+        "drawdown_ft": 9.4,
+        "drawdown_low_ft": 0.4,
+        "drawdown_high_ft": 9.4,
+        "distance_ft": 2073.0,
+        "aquifer": "GRAVEL",
+        "tag": "inference"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.12839,
+          40.797709999999995
+        ]
+      },
+      "properties": {
+        "layer": "dewatering-impacted",
+        "label": "Domestic well 366691 — 9.1 ft drawdown [inference]",
+        "color": "#7a2230",
+        "role": "point",
+        "radius": 6,
+        "object_id": "366691",
+        "drawdown_ft": 9.1,
+        "drawdown_low_ft": 0.3,
+        "drawdown_high_ft": 9.1,
+        "distance_ft": 2222.0,
+        "aquifer": "GRAVEL",
+        "tag": "inference"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.12834,
+          40.795919999999995
+        ]
+      },
+      "properties": {
+        "layer": "dewatering-impacted",
+        "label": "Domestic well 232791 — 8.9 ft drawdown [inference]",
+        "color": "#7a2230",
+        "role": "point",
+        "radius": 6,
+        "object_id": "232791",
+        "drawdown_ft": 8.9,
+        "drawdown_low_ft": 0.4,
+        "drawdown_high_ft": 8.9,
+        "distance_ft": 2056.0,
+        "aquifer": "SAND & GRAVEL",
+        "tag": "inference"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.12874,
+          40.79492
+        ]
+      },
+      "properties": {
+        "layer": "dewatering-impacted",
+        "label": "Domestic well 419138 — 5.9 ft drawdown [inference]",
+        "color": "#7a2230",
+        "role": "point",
+        "radius": 6,
+        "object_id": "419138",
+        "drawdown_ft": 5.9,
+        "drawdown_low_ft": 0.4,
+        "drawdown_high_ft": 5.9,
+        "distance_ft": 2168.0,
+        "aquifer": "SAND & GRAVEL",
+        "tag": "inference"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.12841999999999,
+          40.79866
+        ]
+      },
+      "properties": {
+        "layer": "dewatering-impacted",
+        "label": "Domestic well 142899 — 5.8 ft drawdown [inference]",
+        "color": "#7a2230",
+        "role": "point",
+        "radius": 6,
+        "object_id": "142899",
+        "drawdown_ft": 5.8,
+        "drawdown_low_ft": 0.2,
+        "drawdown_high_ft": 5.8,
+        "distance_ft": 2380.0,
+        "aquifer": "GRAVEL",
+        "tag": "inference"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.12841999999999,
+          40.79885
+        ]
+      },
+      "properties": {
+        "layer": "dewatering-impacted",
+        "label": "Domestic well 6973 — 5.2 ft drawdown [inference]",
+        "color": "#7a2230",
+        "role": "point",
+        "radius": 6,
+        "object_id": "6973",
+        "drawdown_ft": 5.2,
+        "drawdown_low_ft": 0.2,
+        "drawdown_high_ft": 5.2,
+        "distance_ft": 2415.0,
+        "aquifer": "GRAVEL",
+        "tag": "inference"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.12911,
+          40.79465
+        ]
+      },
+      "properties": {
+        "layer": "dewatering-impacted",
+        "label": "Domestic well 367471 — 4.5 ft drawdown [inference]",
+        "color": "#7a2230",
+        "role": "point",
+        "radius": 6,
+        "object_id": "367471",
+        "drawdown_ft": 4.5,
+        "drawdown_low_ft": 0.4,
+        "drawdown_high_ft": 4.5,
+        "distance_ft": 2280.0,
+        "aquifer": "GRAVEL",
+        "tag": "inference"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.12845,
+          40.79972
+        ]
+      },
+      "properties": {
+        "layer": "dewatering-impacted",
+        "label": "Domestic well 247897 — 3.1 ft drawdown [inference]",
+        "color": "#7a2230",
+        "role": "point",
+        "radius": 6,
+        "object_id": "247897",
+        "drawdown_ft": 3.1,
+        "drawdown_low_ft": 0.2,
+        "drawdown_high_ft": 3.1,
+        "distance_ft": 2599.0,
+        "aquifer": "SAND & GRAVEL",
+        "tag": "inference"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.12889,
+          40.79222
+        ]
+      },
+      "properties": {
+        "layer": "dewatering-impacted",
+        "label": "Domestic well 339443 — 1.1 ft drawdown [inference]",
+        "color": "#7a2230",
+        "role": "point",
+        "radius": 6,
+        "object_id": "339443",
+        "drawdown_ft": 1.1,
+        "drawdown_low_ft": 0.3,
+        "drawdown_high_ft": 1.8,
+        "distance_ft": 2495.0,
+        "aquifer": null,
+        "tag": "inference"
+      }
+    }
+  ]
+}

@@ -61,6 +61,7 @@ from watermark.economics.energy import (
 )
 from watermark.gleif import load_inventory as load_lei_inventory
 from watermark.grid.utility import load_grid_profile
+from watermark.hydrology.dewatering import DATASET_ASOF, load_dewatering_impact
 from watermark.hydrology.drawdown import load_drawdown
 from watermark.hydrology.hydrograph_routing import build_routed_hydrograph
 from watermark.hydrology.model import ScenarioResult
@@ -910,6 +911,15 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         # census + a resolvable cooling basis (only Lima today), so the feed self-skips elsewhere.
         # All [inference], bracketed; the headline is that the aquifer dewaters under the load.
         ("drawdown", None, lambda: load_drawdown(settings=settings)),
+        # The DOCUMENTED peer of `drawdown` (the "area well concerns" made concrete) — the
+        # construction-dewatering wellfield the developer installed to lower the water table for
+        # site grading, as a superposition of Cooper-Jacob cones over the ODNR well-log census.
+        # Wells/rates/dates are [verified] ODNR records; every drawdown is [inference], bracketed.
+        # Site-gated by construction: `load_dewatering_impact` returns None unless the active site
+        # has a committed dewatering wellfield (SiteProfile.dewatering_wellfield_relpath — only Lima
+        # today), so the feed self-skips elsewhere. Computed as-of the records-pull snapshot for
+        # determinism (the one still-active well would otherwise drift the feed daily).
+        ("dewatering", None, lambda: load_dewatering_impact(asof=DATASET_ASOF, settings=settings)),
         # The published data catalog (epic #631 Phase 3 / #659) — the data tier /about/data reads.
         ("catalog", CatalogItem, lambda: catalog_mod.export_catalog(settings)),
     ]
@@ -942,6 +952,13 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
     imagery = gismap_mod.export_imagery_geo(settings)
     if imagery is not None:
         feeds.append(_geo_feed(imagery))
+    # The construction-dewatering wellfield as a deck.gl map layer (the documented "area well
+    # concerns"): the 44 dewatering well points sized by their [inference] radius of influence,
+    # plus the impacted domestic census wells. Site-gated by construction (None unless the active
+    # site commits a dewatering wellfield — only Lima today), so a peer carries no layer.
+    dewatering_geo = gismap_mod.export_dewatering_geo(settings)
+    if dewatering_geo is not None:
+        feeds.append(_geo_feed(dewatering_geo))
 
     return feeds
 

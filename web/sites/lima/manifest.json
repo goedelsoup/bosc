@@ -1,10 +1,10 @@
 {
   "site": "lima",
   "bundle_version": "1.0.0",
-  "contract_version": "1.37.0",
+  "contract_version": "1.38.0",
   "generated_at": "2026-07-19T03:12:28+00:00",
-  "feed_count": 49,
-  "row_total": 1538,
+  "feed_count": 51,
+  "row_total": 1593,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -296,6 +296,14 @@
       "count": 1
     },
     {
+      "name": "dewatering",
+      "path": "feeds/dewatering.json",
+      "media_type": "application/json",
+      "schema": "schemas/dewatering.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
       "name": "catalog",
       "path": "feeds/catalog.json",
       "media_type": "application/json",
@@ -350,6 +358,14 @@
       "schema": "schemas/geo.schema.json",
       "kind": "geojson",
       "count": 3
+    },
+    {
+      "name": "geo/dewatering",
+      "path": "feeds/geo/dewatering.geojson",
+      "media_type": "application/geo+json",
+      "schema": "schemas/geo.schema.json",
+      "kind": "geojson",
+      "count": 54
     },
     {
       "name": "geo/watershed",

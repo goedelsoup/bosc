@@ -44,6 +44,14 @@ GPM_TO_FT3_DAY = 0.133680556 * 1440.0  # ~192.5 ft^3/day per gpm
 # Composite drawdown (ft) below which a domestic well is treated as effectively unaffected.
 _AFFECTED_THRESHOLD_FT = 1.0
 
+# The dewatering wellfield is a point-in-time ODNR records snapshot: the WaterWell / SealingReport
+# CSV exports were pulled 2026-07-28 (43 wells sealed 2026-05-26..28, 1 still active). The committed
+# bundle feed is computed as-of that pull date so it is deterministic (the one active well's
+# operating span would otherwise drift daily) and honest about the field's documented state; the
+# interactive `watermark dewatering` CLI still defaults to today. Move this with the dataset on a
+# re-pull.
+DATASET_ASOF = date(2026, 7, 28)
+
 KBand = Literal["low", "central", "high"]
 
 
@@ -138,6 +146,7 @@ class DewateringImpact(BaseModel):
     active_count: int
     total_capacity_mgd: float
     operating_window: str
+    as_of: str  # ISO date the cone was evaluated (the ODNR records-pull snapshot date)
     centroid_lat: float
     centroid_lon: float
     cones: list[WellCone]
@@ -353,6 +362,7 @@ def compute_dewatering_impact(
         active_count=sum(1 for w in wells if w.active),
         total_capacity_mgd=round(total_gpm * 1440.0 / 1e6, 2),
         operating_window=window,
+        as_of=asof.isoformat(),
         centroid_lat=round(clat, 6),
         centroid_lon=round(clon, 6),
         cones=cones,
