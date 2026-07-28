@@ -69,6 +69,15 @@ _DC_CITE = (
     "electricity use ~176 TWh in 2023 (~4.4% of US total), projected to ~6.7-12% of "
     "US load by 2028; transcribed published figure - verify"
 )
+# The OBSERVATION year of the two measured LBNL/DOE figures (#1644 review). `asof` dates when a
+# quantity was true, so the two 2023 observations carry 2023 — sitting beside 2025 EIA values,
+# an undated pair invites the reader to take them as equally current.
+#
+# The 2028 projection deliberately stays UNDATED. Its target year is not a vintage: stamping
+# asof=2028 would assert data that does not exist yet, and asof=2024 (the report's publication)
+# would read as a measurement made that year. A projection's currency is its report, which the
+# citation already names — this is the one figure here for which no `asof` is the honest answer.
+_DC_OBSERVED_YEAR = "2023"
 
 # --- Statute citations for the policy levers (IRA / DOE) -----------------------
 _IRA = "Inflation Reduction Act of 2022 (Pub. L. 117-169) / IRS guidance"
@@ -226,10 +235,18 @@ def _federal_output(settings: Settings) -> FederalEnergyOutput:
             asof=gen.vintage,
         ),
         datacenter_use_2023_twh=ProvenancedValue.from_reference(
-            _DC_USE_2023_TWH, "TWh/yr", citation=_DC_CITE, confidence="medium"
+            _DC_USE_2023_TWH,
+            "TWh/yr",
+            citation=_DC_CITE,
+            confidence="medium",
+            asof=_DC_OBSERVED_YEAR,
         ),
         datacenter_share_pct_2023=ProvenancedValue.from_reference(
-            _DC_SHARE_2023_PCT, "percent", citation=_DC_CITE, confidence="medium"
+            _DC_SHARE_2023_PCT,
+            "percent",
+            citation=_DC_CITE,
+            confidence="medium",
+            asof=_DC_OBSERVED_YEAR,
         ),
         datacenter_share_pct_2028_proj=ProvenancedValue.from_reference(
             _DC_SHARE_2028_PROJ_PCT, "percent", citation=_DC_CITE, confidence="medium"

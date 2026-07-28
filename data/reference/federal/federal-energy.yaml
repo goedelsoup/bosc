@@ -165,7 +165,7 @@ output:
       electricity use ~176 TWh in 2023 (~4.4% of US total), projected to ~6.7-12%
       of US load by 2028; transcribed published figure - verify'
     confidence: medium
-    asof: null
+    asof: '2023'
     low: null
     high: null
   datacenter_share_pct_2023:
@@ -176,7 +176,7 @@ output:
       electricity use ~176 TWh in 2023 (~4.4% of US total), projected to ~6.7-12%
       of US load by 2028; transcribed published figure - verify'
     confidence: medium
-    asof: null
+    asof: '2023'
     low: null
     high: null
   datacenter_share_pct_2028_proj:

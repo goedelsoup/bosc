@@ -64,6 +64,11 @@ _SF_COL_TOT_SALES = 8  # Total Sales (MWh)
 _SF_COL_TOT_CUST = 9  # Total Customers
 _SF_DATA_FIRST_ROW = 2
 
+# The EIA seriesid route's all-sector state retail price — the figure the bundled-SSO cohort
+# price is NOT (G3/#1644). Templated by state so the citation names a series a reader can
+# actually pull, mirroring how watermark.economics.connectors.eia templates its state trio.
+_ALL_SECTOR_PRICE_SERIES = "ELEC.PRICE.{state}-ALL.A"
+
 
 class Eia861Error(RuntimeError):
     """The EIA-861 bulk file was missing the expected sheet/utility (format drift)."""
@@ -334,8 +339,11 @@ def fetch_utility_retail(
             "(generation is paid to a competitive supplier), but the remaining bundled "
             "cohort is the customers who never shopped, which in a restructured state "
             "skews residential. NOT the utility's all-sector average and NOT an "
-            "industrial/data-center rate — compare the state all-sector price "
-            "(EIA ELEC.PRICE.<state>-ALL.A) for that"
+            "industrial/data-center rate — for that, compare the all-sector price "
+            # The utility's OWN state, templated like the connector's other series ids
+            # (#1644 review): a citation naming a `<state>` placeholder is not a citation —
+            # a reader can't look the series up, which is the whole point of pointing at it.
+            f"EIA {_ALL_SECTOR_PRICE_SERIES.format(state=payload['state'])}"
         )
         avg_price = ProvenancedValue.from_connector(
             round(payload["bundled_revenue_thousand_usd"] / bundled_sales * 100.0, 2),

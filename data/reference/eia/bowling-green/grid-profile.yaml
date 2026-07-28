@@ -73,7 +73,7 @@ utility_profile:
       is paid to a competitive supplier), but the remaining bundled cohort is the
       customers who never shopped, which in a restructured state skews residential.
       NOT the utility's all-sector average and NOT an industrial/data-center rate
-      — compare the state all-sector price (EIA ELEC.PRICE.<state>-ALL.A) for that
+      — for that, compare the all-sector price EIA ELEC.PRICE.OH-ALL.A
     confidence: high
     asof: '2024'
     low: null
