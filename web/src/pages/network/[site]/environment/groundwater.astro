@@ -1,0 +1,274 @@
+---
+import { selectableSitePaths } from "@watermark/core/sites";
+export const getStaticPaths = selectableSitePaths;
+import Base from "~/layouts/Base.astro";
+import AquiferSection from "~/components/charts/AquiferSection.astro";
+import { hasFeed, loadFeed } from "@watermark/core/bundle";
+import type { DewateringReport, DrawdownReport, ProvenancedValue } from "@watermark/core/feeds";
+import { withSite } from "@watermark/core/site";
+import { fmtRanged } from "@watermark/core/format";
+
+const fmt = (v: ProvenancedValue): string => fmtRanged(v);
+
+// The hypothetical cone (#well-drawdown): a Theis screen over the ODNR census. Its headline is the
+// inverse finding — a hyperscale groundwater stress dewaters the aquifer, corroborating the campus's
+// reliance on municipal surface water. Gated on the feed (reference-only today).
+const drawdown = hasFeed("drawdown") ? loadFeed<DrawdownReport>("drawdown") : null;
+const ddFt = drawdown?.drawdown_at_well_ft.value ?? 0;
+const ddRadius = drawdown?.radius_of_influence_ft.value ?? null;
+const ddPumping = drawdown?.scenario.pumping_mgd.value ?? null;
+const ddWellsN = drawdown?.affected_domestic_wells ?? null;
+const ddLabel = drawdown == null ? "" : drawdown.dewaters ? `${ddFt} ft — dewaters` : `${ddFt} ft`;
+const ddWells = [
+  { x: 0.12, depthFrac: 0.35, label: "domestic wells" },
+  { x: 0.34, depthFrac: 0.52 },
+  { x: 0.72, depthFrac: 0.42 },
+];
+const ddCaption =
+  drawdown == null
+    ? ""
+    : `${ddWellsN?.toLocaleString("en-US") ?? "—"} domestic census wells within the ${ddRadius?.toLocaleString("en-US") ?? "—"} ft radius of influence, for a hypothetical ${ddPumping ?? "—"} MGD groundwater stress. The campus draws municipal surface water; no groundwater withdrawal is on record.`;
+
+// The DOCUMENTED wellfield (#well-drawdown): a superposition of Cooper-Jacob cones over the census.
+const dewatering = hasFeed("dewatering") ? loadFeed<DewateringReport>("dewatering") : null;
+const dwOver5 = dewatering
+  ? dewatering.impacted_wells.filter((w) => (w.composite_drawdown_ft.value ?? 0) > 5).length
+  : 0;
+const dwMiles = (ft: number): string => (ft / 5280).toFixed(2);
+
+// Where did the pumped water go? The surface-water discharge screen + reservoir-recharge context
+// (contract 1.39.0), read off the same `dewatering` feed. Both absent for a site with no reach.
+const discharge = dewatering?.discharge_screen ?? null;
+const recharge = dewatering?.reservoir_recharge ?? null;
+const VERDICT: Record<string, string> = {
+  not_separable: "Not separable",
+  elevated_gain: "Elevated reach gain",
+  elevated_floor: "Elevated low-flow floor",
+};
+---
+
+<Base title="Groundwater" section="environment">
+  <article class="prose">
+    <nav class="topic-switch" aria-label="Hydrology topics">
+      <a href={withSite("/environment/hydrology")}>← Surface water balance</a>
+      <span class="topic-current">Groundwater</span>
+    </nav>
+
+    <h1>Groundwater — the area well concerns</h1>
+    <p class="section-lead">
+      The record trail shows residents raised <em>well-drawdown</em> concerns as the campus was
+      built. This page holds the groundwater evidence three ways: a <strong>hypothetical</strong>
+      cone (what a well field supplying the campus would do to the aquifer), the
+      <strong>documented</strong> construction-dewatering wellfield the developer actually installed,
+      and a screen of the river record for where that pumped water went. The surface-water dilution
+      screen lives on the <a href={withSite("/environment/hydrology")}>water balance</a> page.
+    </p>
+
+    {
+      drawdown && (
+        <Fragment>
+          <h2>The hypothetical cone</h2>
+          <p class="card-meta">
+            What would a well field supplying the campus makeup do to the aquifer the county's{" "}
+            <strong>{drawdown.affected_domestic_wells?.toLocaleString("en-US") ?? "—"}</strong>{" "}
+            nearby domestic wells tap? A Theis cone of depression over the ODNR well-log census.
+          </p>
+          <AquiferSection
+            title={`Groundwater drawdown — ${drawdown.material} aquifer cone of depression`}
+            drawdownFt={ddFt}
+            drawdownLabel={ddLabel}
+            wells={ddWells}
+            evidence="inference"
+            source={drawdown.scenario.pumping_mgd.citation ?? undefined}
+            caption={ddCaption}
+          />
+          <p class="card-meta">
+            {drawdown.dewaters
+              ? `At the low-transmissivity end of the bracket the cone exceeds the ${drawdown.saturated_thickness_ft ?? "—"} ft saturated thickness — the aquifer cannot sustain this rate, which is exactly why the campus is on municipal surface water.`
+              : "The cone stays within the saturated thickness at this stress."}{" "}
+            Pumping is a hypothetical <strong>[inference]</strong> stress, bracketed by the aquifer's
+            transmissivity uncertainty; it is not a documented groundwater withdrawal.
+          </p>
+        </Fragment>
+      )
+    }
+
+    {
+      dewatering && (
+        <Fragment>
+          <h2>The documented dewatering</h2>
+          <p class="card-meta">
+            The cone above is hypothetical. This one is on the record: to grade the campus the
+            developer installed <strong>{dewatering.well_count}</strong> construction-dewatering
+            wells (~{dewatering.total_capacity_mgd} MGD of combined yield-test capacity), pumped{" "}
+            {dewatering.operating_window}. As a superposition of their Cooper-Jacob cones over the
+            ODNR well-log census, <strong>{dewatering.impacted_wells.length}</strong> nearby domestic
+            wells fall inside the composite cone with more than a foot of <strong>[inference]</strong>{" "}
+            drawdown
+            {dwOver5 > 0 ? ` (${dwOver5} with more than five feet)` : ""}. The wells, rates, and
+            dates are <strong>[verified]</strong> ODNR well-log and sealing records; every drawdown
+            is <strong>[inference]</strong>, bracketed by the aquifer's transmissivity uncertainty.
+          </p>
+          {dewatering.impacted_wells.length > 0 && (
+            <table class="dewatering-table">
+              <thead>
+                <tr>
+                  <th>Domestic well</th>
+                  <th>Distance</th>
+                  <th>Drawdown (ft) [inference]</th>
+                  <th>Aquifer</th>
+                </tr>
+              </thead>
+              <tbody>
+                {dewatering.impacted_wells.map((w) => (
+                  <tr>
+                    <td>{w.object_id}</td>
+                    <td>{dwMiles(w.distance_ft)} mi</td>
+                    <td>{fmt(w.composite_drawdown_ft)}</td>
+                    <td>{w.aquifer_type ?? "—"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+          <p class="card-meta">
+            {dewatering.active_count > 0
+              ? `${dewatering.active_count} of the ${dewatering.well_count} wells remained active as of the ${dewatering.as_of} records pull; the rest were sealed at the close of grading. `
+              : ""}
+            See the wellfield and the wells it draws down on the{" "}
+            <a href={withSite("/environment/map")}>campus map →</a>. The yield-test rate is an upper
+            bound on the sustained dewatering rate, and installs and sealings were staged, so a
+            simultaneous-full-rate composite bounds concurrency rather than metering it.
+          </p>
+        </Fragment>
+      )
+    }
+
+    {
+      discharge && (
+        <Fragment>
+          <h2>Where did the pumped water go?</h2>
+          <p class="card-meta">
+            The wellfield pumped up to <strong>{fmt(discharge.expected_discharge_cfs)}</strong> of
+            groundwater. If it was discharged to surface water it would ride in the Ottawa River's
+            reach gain between the <strong>{discharge.upstream_name}</strong> gage (upstream) and the{" "}
+            <strong>{discharge.downstream_name}</strong> gage (downstream). We screened that gain over
+            the pumping window against the prior year, restricted to baseflow days.
+          </p>
+          <div class={`screen-verdict verdict-${discharge.outcome}`}>
+            <span class="verdict-tag">{VERDICT[discharge.outcome] ?? discharge.outcome}</span>
+            <p>{discharge.note}</p>
+          </div>
+          <table class="discharge-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Pumping window</th>
+                <th>Prior-year baseline</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Baseflow reach gain (DA-adjusted)</td>
+                <td>{discharge.window.baseflow_resid_median_cfs} cfs</td>
+                <td>{discharge.baseline.baseflow_resid_median_cfs} cfs</td>
+              </tr>
+              <tr>
+                <td>Upstream low-flow floor</td>
+                <td>{discharge.window.upstream_min_cfs} cfs</td>
+                <td>{discharge.baseline.upstream_min_cfs} cfs</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="card-meta">
+            The reach adds <strong>{discharge.incremental_da_sqmi} sq mi</strong> of drainage between
+            the two gages, so its baseflow gain naturally runs tens of cfs — a{" "}
+            {fmt(discharge.expected_discharge_cfs)} point source sits inside that variability. Gage
+            flow is <strong>[verified]</strong> USGS daily values; the attribution is{" "}
+            <strong>[inference]</strong>. The discharge's rate and receiving water are an{" "}
+            <strong>[open]</strong> owed record — the construction-dewatering NPDES authorization.
+          </p>
+        </Fragment>
+      )
+    }
+
+    {
+      recharge && (
+        <Fragment>
+          <h3>Reservoir recharge over the same window</h3>
+          <p class="card-meta">{recharge.note}</p>
+        </Fragment>
+      )
+    }
+
+    {
+      !drawdown && !dewatering && (
+        <p class="stub-note">No groundwater screen has been modeled for this site yet.</p>
+      )
+    }
+  </article>
+</Base>
+
+<style>
+  .topic-switch {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .topic-current {
+    color: var(--bosc-ink);
+    font-weight: 700;
+    border-bottom: 2px solid var(--forest, #1f6f4a);
+  }
+
+  .dewatering-table {
+    font-size: 0.85rem;
+  }
+  .dewatering-table td:nth-child(2),
+  .dewatering-table td:nth-child(3) {
+    font-family: var(--font-mono);
+    text-align: right;
+  }
+  .dewatering-table td:nth-child(3) {
+    color: var(--ev-inference-fg);
+  }
+
+  /* The discharge screen: a documentary verdict box (square, hairline, no shadow). The
+     not-separable outcome is an honest inconclusive — muted, with the [inference] amber rule. */
+  .screen-verdict {
+    border: 1px solid var(--bosc-rule);
+    border-left: 3px solid var(--ev-inference-fg);
+    background: #efece2;
+    padding: 12px 16px;
+    margin: 14px 0;
+  }
+  .verdict-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: var(--ev-inference-fg);
+    margin-bottom: 6px;
+  }
+  .screen-verdict p {
+    margin: 0;
+    font-size: 0.88rem;
+  }
+  .discharge-table {
+    font-size: 0.85rem;
+  }
+  .discharge-table td:nth-child(2),
+  .discharge-table td:nth-child(3),
+  .discharge-table th:nth-child(2),
+  .discharge-table th:nth-child(3) {
+    font-family: var(--font-mono);
+    text-align: right;
+  }
+</style>

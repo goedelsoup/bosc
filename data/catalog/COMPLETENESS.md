@@ -4,12 +4,12 @@
 
 The **mechanical** half of the corpus-completeness audit: every dataset registered in the data catalog (`data/catalog/`) checked for existence and freshness against the committed reconcile snapshot (`data/catalog/_observed.yaml`). The **substantive** half — records an authority has *withheld* — stays human-authored in [`data/extracted/legal/corpus-completeness-audit.md`](../extracted/legal/corpus-completeness-audit.md).
 
-Snapshot reconciled: **2026-07-28T17:57:14.074384+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
+Snapshot reconciled: **2026-07-28T20:12:22.330806+00:00**. Regenerate with `watermark catalog audit --apply` after `watermark catalog reconcile`.
 
 ## Headline
 
-- **129** catalogued datasets — **128** reviewed.
-- **129** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
+- **130** catalogued datasets — **129** reviewed.
+- **130** present and fresh · **0** stale · **0** LFS pointer (not materialized in this checkout).
 - **0** missing (declared files absent) · **0** unobserved (no snapshot record).
 
 ## Coverage by collection
@@ -62,7 +62,7 @@ Snapshot reconciled: **2026-07-28T17:57:14.074384+00:00**. Regenerate with `wate
 | reference | findlay-gis | 1 | 1 | 0 | 0 |
 | reference | gleif | 1 | 1 | 0 | 0 |
 | reference | greenops | 5 | 5 | 0 | 0 |
-| reference | hydrology | 9 | 9 | 0 | 0 |
+| reference | hydrology | 10 | 10 | 0 | 0 |
 | reference | lima-gis | 1 | 1 | 0 | 0 |
 | reference | lsc | 1 | 1 | 0 | 0 |
 | reference | network | 1 | 1 | 0 | 0 |
@@ -97,7 +97,7 @@ Snapshot reconciled: **2026-07-28T17:57:14.074384+00:00**. Regenerate with `wate
 | fort-wayne | 41 | 33 | 8 |
 | greenville | 49 | 41 | 8 |
 | hamilton-middletown | 50 | 43 | 7 |
-| lima | 100 | 96 | 4 |
+| lima | 101 | 97 | 4 |
 | mansfield | 49 | 42 | 7 |
 | new-albany | 48 | 41 | 7 |
 | ottawa | 50 | 42 | 8 |

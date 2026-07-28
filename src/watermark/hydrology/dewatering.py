@@ -33,6 +33,11 @@ from watermark.connectors import to_float, to_str
 from watermark.hydrology._geo import haversine_ft
 from watermark.hydrology.aquifer import load_aquifer_properties
 from watermark.hydrology.connectors import ohio_waterwells as oww
+from watermark.hydrology.dewatering_discharge import (
+    DischargeScreen,
+    ReservoirRecharge,
+    read_discharge_report,
+)
 from watermark.hydrology.drawdown import cooper_jacob_drawdown, radius_of_influence_ft
 from watermark.hydrology.model import HydroFinding, ProvenancedValue
 from watermark.logging import get_logger
@@ -151,6 +156,11 @@ class DewateringImpact(BaseModel):
     centroid_lon: float
     cones: list[WellCone]
     impacted_wells: list[ImpactedWell]  # domestic census wells over the drawdown threshold
+    # Where did the pumped water go? The surface-water discharge-signal screen (reach gain across the
+    # bracketing gages) + the reservoir-recharge context over the pumping window. Both None for a
+    # site with no bracketing gage reach / supply gage, or when the gage record is unavailable.
+    discharge_screen: DischargeScreen | None = None
+    reservoir_recharge: ReservoirRecharge | None = None
     tag: str = "inference"
     caveats: list[str] = []
 
@@ -391,7 +401,19 @@ def load_dewatering_impact(
     census = (
         oww.read_inventory(census_path, settings=settings).wells if census_path.is_file() else []
     )
-    return compute_dewatering_impact(wells, asof=asof, census=census, settings=settings)
+    impact = compute_dewatering_impact(wells, asof=asof, census=census, settings=settings)
+    # Attach the committed 'where did the water go?' report (offline read; None until it is
+    # generated with `watermark dewatering-discharge --write`), so the feed carries the reach
+    # discharge screen + reservoir-recharge context alongside the cone.
+    report = read_discharge_report(settings=settings)
+    if report is not None:
+        impact = impact.model_copy(
+            update={
+                "discharge_screen": report.screen,
+                "reservoir_recharge": report.reservoir_recharge,
+            }
+        )
+    return impact
 
 
 # --- findings ---------------------------------------------------------------------------

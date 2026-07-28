@@ -1,0 +1,1371 @@
+{
+  "params": {
+    "_service": "dv",
+    "format": "json",
+    "sites": "04188100",
+    "parameterCd": "00060",
+    "statCd": "00003",
+    "startDT": "2025-12-16",
+    "endDT": "2026-05-28"
+  },
+  "fetched_at": "2026-07-28T20:03:31.082293+00:00",
+  "payload": {
+    "name": "ns1:timeSeriesResponseType",
+    "declaredType": "org.cuahsi.waterml.TimeSeriesResponseType",
+    "scope": "javax.xml.bind.JAXBElement$GlobalScope",
+    "value": {
+      "queryInfo": {
+        "queryURL": "http://waterservices.usgs.gov/nwis/dv/format=json&sites=04188100&parameterCd=00060&statCd=00003&startDT=2025-12-16&endDT=2026-05-28",
+        "criteria": {
+          "locationParam": "[ALL:04188100]",
+          "variableParam": "[00060]",
+          "timeParam": {
+            "beginDateTime": "2025-12-16T00:00:00.000",
+            "endDateTime": "2026-05-28T00:00:00.000"
+          },
+          "parameter": []
+        },
+        "note": [
+          {
+            "value": "[ALL:04188100]",
+            "title": "filter:sites"
+          },
+          {
+            "value": "[mode=RANGE, modifiedSince=null] interval={INTERVAL[2025-12-16T00:00:00.000-05:00/2026-05-28T00:00:00.000-04:00]}",
+            "title": "filter:timeRange"
+          },
+          {
+            "value": "methodIds=[ALL]",
+            "title": "filter:methodId"
+          },
+          {
+            "value": "2026-07-28T20:03:31.096Z",
+            "title": "requestDT"
+          },
+          {
+            "value": "67da6a70-8abf-11f1-8621-2cea7f5e5ede",
+            "title": "requestId"
+          },
+          {
+            "value": "Provisional data are subject to revision. Go to http://waterdata.usgs.gov/nwis/help/?provisional for more information.",
+            "title": "disclaimer"
+          },
+          {
+            "value": "sdas01",
+            "title": "server"
+          }
+        ]
+      },
+      "timeSeries": [
+        {
+          "sourceInfo": {
+            "siteName": "Ottawa River near Kalida OH",
+            "siteCode": [
+              {
+                "value": "04188100",
+                "network": "NWIS",
+                "agencyCode": "USGS"
+              }
+            ],
+            "timeZoneInfo": {
+              "defaultTimeZone": {
+                "zoneOffset": "-05:00",
+                "zoneAbbreviation": "EST"
+              },
+              "daylightSavingsTimeZone": {
+                "zoneOffset": "-04:00",
+                "zoneAbbreviation": "EDT"
+              },
+              "siteUsesDaylightSavingsTime": true
+            },
+            "geoLocation": {
+              "geogLocation": {
+                "srs": "EPSG:4326",
+                "latitude": 40.9903287,
+                "longitude": -84.2266132
+              },
+              "localSiteXY": []
+            },
+            "note": [],
+            "siteType": [],
+            "siteProperty": [
+              {
+                "value": "ST",
+                "name": "siteTypeCd"
+              },
+              {
+                "value": "04100007",
+                "name": "hucCd"
+              },
+              {
+                "value": "39",
+                "name": "stateCd"
+              },
+              {
+                "value": "39137",
+                "name": "countyCd"
+              }
+            ]
+          },
+          "variable": {
+            "variableCode": [
+              {
+                "value": "00060",
+                "network": "NWIS",
+                "vocabulary": "NWIS:UnitValues",
+                "variableID": 45807197,
+                "default": true
+              }
+            ],
+            "variableName": "Streamflow, ft&#179;/s",
+            "variableDescription": "Discharge, cubic feet per second",
+            "valueType": "Derived Value",
+            "unit": {
+              "unitCode": "ft3/s"
+            },
+            "options": {
+              "option": [
+                {
+                  "value": "Mean",
+                  "name": "Statistic",
+                  "optionCode": "00003"
+                }
+              ]
+            },
+            "note": [],
+            "noDataValue": -999999.0,
+            "variableProperty": [],
+            "oid": "45807197"
+          },
+          "values": [
+            {
+              "value": [
+                {
+                  "value": "39.8",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2025-12-16T00:00:00.000"
+                },
+                {
+                  "value": "43.4",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2025-12-17T00:00:00.000"
+                },
+                {
+                  "value": "46.0",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2025-12-18T00:00:00.000"
+                },
+                {
+                  "value": "54.7",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2025-12-19T00:00:00.000"
+                },
+                {
+                  "value": "152",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2025-12-20T00:00:00.000"
+                },
+                {
+                  "value": "128",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2025-12-21T00:00:00.000"
+                },
+                {
+                  "value": "80.3",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2025-12-22T00:00:00.000"
+                },
+                {
+                  "value": "56.7",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2025-12-23T00:00:00.000"
+                },
+                {
+                  "value": "41.7",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2025-12-24T00:00:00.000"
+                },
+                {
+                  "value": "37.4",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2025-12-25T00:00:00.000"
+                },
+                {
+                  "value": "43.3",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2025-12-26T00:00:00.000"
+                },
+                {
+                  "value": "44.5",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2025-12-27T00:00:00.000"
+                },
+                {
+                  "value": "42.4",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2025-12-28T00:00:00.000"
+                },
+                {
+                  "value": "50.4",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2025-12-29T00:00:00.000"
+                },
+                {
+                  "value": "118",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2025-12-30T00:00:00.000"
+                },
+                {
+                  "value": "78.9",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2025-12-31T00:00:00.000"
+                },
+                {
+                  "value": "60.9",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-01T00:00:00.000"
+                },
+                {
+                  "value": "48.2",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-02T00:00:00.000"
+                },
+                {
+                  "value": "43.0",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-03T00:00:00.000"
+                },
+                {
+                  "value": "46.2",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-04T00:00:00.000"
+                },
+                {
+                  "value": "33.9",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-05T00:00:00.000"
+                },
+                {
+                  "value": "39.1",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-06T00:00:00.000"
+                },
+                {
+                  "value": "38.8",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-07T00:00:00.000"
+                },
+                {
+                  "value": "39.6",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-08T00:00:00.000"
+                },
+                {
+                  "value": "44.8",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-09T00:00:00.000"
+                },
+                {
+                  "value": "61.0",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-10T00:00:00.000"
+                },
+                {
+                  "value": "78.0",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-11T00:00:00.000"
+                },
+                {
+                  "value": "78.9",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-12T00:00:00.000"
+                },
+                {
+                  "value": "60.8",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-13T00:00:00.000"
+                },
+                {
+                  "value": "47.3",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-14T00:00:00.000"
+                },
+                {
+                  "value": "41.4",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-15T00:00:00.000"
+                },
+                {
+                  "value": "38.5",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-16T00:00:00.000"
+                },
+                {
+                  "value": "43.8",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-17T00:00:00.000"
+                },
+                {
+                  "value": "28.0",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-18T00:00:00.000"
+                },
+                {
+                  "value": "31.5",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-19T00:00:00.000"
+                },
+                {
+                  "value": "27.0",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-20T00:00:00.000"
+                },
+                {
+                  "value": "30.1",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-21T00:00:00.000"
+                },
+                {
+                  "value": "32.8",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-22T00:00:00.000"
+                },
+                {
+                  "value": "29.0",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-23T00:00:00.000"
+                },
+                {
+                  "value": "26.3",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-24T00:00:00.000"
+                },
+                {
+                  "value": "28.3",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-25T00:00:00.000"
+                },
+                {
+                  "value": "30.7",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-26T00:00:00.000"
+                },
+                {
+                  "value": "32.9",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-27T00:00:00.000"
+                },
+                {
+                  "value": "41.1",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-28T00:00:00.000"
+                },
+                {
+                  "value": "45.9",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-29T00:00:00.000"
+                },
+                {
+                  "value": "44.6",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-30T00:00:00.000"
+                },
+                {
+                  "value": "47.0",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-01-31T00:00:00.000"
+                },
+                {
+                  "value": "45.5",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-01T00:00:00.000"
+                },
+                {
+                  "value": "44.6",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-02T00:00:00.000"
+                },
+                {
+                  "value": "46.9",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-03T00:00:00.000"
+                },
+                {
+                  "value": "48.0",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-04T00:00:00.000"
+                },
+                {
+                  "value": "49.3",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-05T00:00:00.000"
+                },
+                {
+                  "value": "47.0",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-06T00:00:00.000"
+                },
+                {
+                  "value": "46.7",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-07T00:00:00.000"
+                },
+                {
+                  "value": "47.4",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-08T00:00:00.000"
+                },
+                {
+                  "value": "46.6",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-09T00:00:00.000"
+                },
+                {
+                  "value": "49.3",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-10T00:00:00.000"
+                },
+                {
+                  "value": "51.7",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-11T00:00:00.000"
+                },
+                {
+                  "value": "61.7",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-12T00:00:00.000"
+                },
+                {
+                  "value": "65.4",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-13T00:00:00.000"
+                },
+                {
+                  "value": "58.5",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-14T00:00:00.000"
+                },
+                {
+                  "value": "65.4",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-15T00:00:00.000"
+                },
+                {
+                  "value": "86.9",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-16T00:00:00.000"
+                },
+                {
+                  "value": "180",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-17T00:00:00.000"
+                },
+                {
+                  "value": "235",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-18T00:00:00.000"
+                },
+                {
+                  "value": "166",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-19T00:00:00.000"
+                },
+                {
+                  "value": "137",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-20T00:00:00.000"
+                },
+                {
+                  "value": "191",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-21T00:00:00.000"
+                },
+                {
+                  "value": "137",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-22T00:00:00.000"
+                },
+                {
+                  "value": "81.7",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-23T00:00:00.000"
+                },
+                {
+                  "value": "52.3",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-24T00:00:00.000"
+                },
+                {
+                  "value": "52.6",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-25T00:00:00.000"
+                },
+                {
+                  "value": "46.6",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-26T00:00:00.000"
+                },
+                {
+                  "value": "46.4",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-27T00:00:00.000"
+                },
+                {
+                  "value": "45.8",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-02-28T00:00:00.000"
+                },
+                {
+                  "value": "41.5",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-01T00:00:00.000"
+                },
+                {
+                  "value": "41.0",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-02T00:00:00.000"
+                },
+                {
+                  "value": "38.0",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-03T00:00:00.000"
+                },
+                {
+                  "value": "34.3",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-04T00:00:00.000"
+                },
+                {
+                  "value": "53.5",
+                  "qualifiers": [
+                    "A",
+                    "e"
+                  ],
+                  "dateTime": "2026-03-05T00:00:00.000"
+                },
+                {
+                  "value": "780",
+                  "qualifiers": [
+                    "A",
+                    "e"
+                  ],
+                  "dateTime": "2026-03-06T00:00:00.000"
+                },
+                {
+                  "value": "635",
+                  "qualifiers": [
+                    "A",
+                    "e"
+                  ],
+                  "dateTime": "2026-03-07T00:00:00.000"
+                },
+                {
+                  "value": "263",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-08T00:00:00.000"
+                },
+                {
+                  "value": "192",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-09T00:00:00.000"
+                },
+                {
+                  "value": "118",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-10T00:00:00.000"
+                },
+                {
+                  "value": "105",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-11T00:00:00.000"
+                },
+                {
+                  "value": "569",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-12T00:00:00.000"
+                },
+                {
+                  "value": "591",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-13T00:00:00.000"
+                },
+                {
+                  "value": "214",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-14T00:00:00.000"
+                },
+                {
+                  "value": "131",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-15T00:00:00.000"
+                },
+                {
+                  "value": "84.6",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-16T00:00:00.000"
+                },
+                {
+                  "value": "131",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-17T00:00:00.000"
+                },
+                {
+                  "value": "102",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-18T00:00:00.000"
+                },
+                {
+                  "value": "70.1",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-19T00:00:00.000"
+                },
+                {
+                  "value": "50.0",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-20T00:00:00.000"
+                },
+                {
+                  "value": "43.1",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-21T00:00:00.000"
+                },
+                {
+                  "value": "40.6",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-22T00:00:00.000"
+                },
+                {
+                  "value": "55.0",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-23T00:00:00.000"
+                },
+                {
+                  "value": "74.3",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-24T00:00:00.000"
+                },
+                {
+                  "value": "51.7",
+                  "qualifiers": [
+                    "A"
+                  ],
+                  "dateTime": "2026-03-25T00:00:00.000"
+                },
+                {
+                  "value": "49.0",
+                  "qualifiers": [
+                    "A",
+                    "e"
+                  ],
+                  "dateTime": "2026-03-26T00:00:00.000"
+                },
+                {
+                  "value": "1430",
+                  "qualifiers": [
+                    "A",
+                    "e"
+                  ],
+                  "dateTime": "2026-03-27T00:00:00.000"
+                },
+                {
+                  "value": "2110",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-03-28T00:00:00.000"
+                },
+                {
+                  "value": "891",
+                  "qualifiers": [
+                    "P",
+                    "e"
+                  ],
+                  "dateTime": "2026-03-29T00:00:00.000"
+                },
+                {
+                  "value": "300",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-03-30T00:00:00.000"
+                },
+                {
+                  "value": "200",
+                  "qualifiers": [
+                    "P",
+                    "e"
+                  ],
+                  "dateTime": "2026-03-31T00:00:00.000"
+                },
+                {
+                  "value": "1550",
+                  "qualifiers": [
+                    "P",
+                    "e"
+                  ],
+                  "dateTime": "2026-04-01T00:00:00.000"
+                },
+                {
+                  "value": "4130",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-02T00:00:00.000"
+                },
+                {
+                  "value": "4190",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-03T00:00:00.000"
+                },
+                {
+                  "value": "2870",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-04T00:00:00.000"
+                },
+                {
+                  "value": "2670",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-05T00:00:00.000"
+                },
+                {
+                  "value": "1030",
+                  "qualifiers": [
+                    "P",
+                    "e"
+                  ],
+                  "dateTime": "2026-04-06T00:00:00.000"
+                },
+                {
+                  "value": "333",
+                  "qualifiers": [
+                    "P",
+                    "e"
+                  ],
+                  "dateTime": "2026-04-07T00:00:00.000"
+                },
+                {
+                  "value": "180",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-08T00:00:00.000"
+                },
+                {
+                  "value": "141",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-09T00:00:00.000"
+                },
+                {
+                  "value": "118",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-10T00:00:00.000"
+                },
+                {
+                  "value": "98.3",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-11T00:00:00.000"
+                },
+                {
+                  "value": "69.5",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-12T00:00:00.000"
+                },
+                {
+                  "value": "54.8",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-13T00:00:00.000"
+                },
+                {
+                  "value": "48.3",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-14T00:00:00.000"
+                },
+                {
+                  "value": "169",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-15T00:00:00.000"
+                },
+                {
+                  "value": "403",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-16T00:00:00.000"
+                },
+                {
+                  "value": "157",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-17T00:00:00.000"
+                },
+                {
+                  "value": "113",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-18T00:00:00.000"
+                },
+                {
+                  "value": "98.4",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-19T00:00:00.000"
+                },
+                {
+                  "value": "80.3",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-20T00:00:00.000"
+                },
+                {
+                  "value": "68.5",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-21T00:00:00.000"
+                },
+                {
+                  "value": "52.5",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-22T00:00:00.000"
+                },
+                {
+                  "value": "221",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-23T00:00:00.000"
+                },
+                {
+                  "value": "380",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-24T00:00:00.000"
+                },
+                {
+                  "value": "145",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-25T00:00:00.000"
+                },
+                {
+                  "value": "114",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-04-26T00:00:00.000"
+                },
+                {
+                  "value": "80.9",
+                  "qualifiers": [
+                    "P",
+                    "e"
+                  ],
+                  "dateTime": "2026-04-27T00:00:00.000"
+                },
+                {
+                  "value": "946",
+                  "qualifiers": [
+                    "P",
+                    "e"
+                  ],
+                  "dateTime": "2026-04-28T00:00:00.000"
+                },
+                {
+                  "value": "-999999",
+                  "qualifiers": [
+                    "P",
+                    "Eqp"
+                  ],
+                  "dateTime": "2026-04-29T00:00:00.000"
+                },
+                {
+                  "value": "480",
+                  "qualifiers": [
+                    "P",
+                    "e"
+                  ],
+                  "dateTime": "2026-04-30T00:00:00.000"
+                },
+                {
+                  "value": "-999999",
+                  "qualifiers": [
+                    "P",
+                    "Eqp"
+                  ],
+                  "dateTime": "2026-05-01T00:00:00.000"
+                },
+                {
+                  "value": "-999999",
+                  "qualifiers": [
+                    "P",
+                    "Eqp"
+                  ],
+                  "dateTime": "2026-05-02T00:00:00.000"
+                },
+                {
+                  "value": "-999999",
+                  "qualifiers": [
+                    "P",
+                    "Eqp"
+                  ],
+                  "dateTime": "2026-05-03T00:00:00.000"
+                },
+                {
+                  "value": "-999999",
+                  "qualifiers": [
+                    "P",
+                    "Eqp"
+                  ],
+                  "dateTime": "2026-05-04T00:00:00.000"
+                },
+                {
+                  "value": "-999999",
+                  "qualifiers": [
+                    "P",
+                    "Eqp"
+                  ],
+                  "dateTime": "2026-05-05T00:00:00.000"
+                },
+                {
+                  "value": "1760",
+                  "qualifiers": [
+                    "P",
+                    "e"
+                  ],
+                  "dateTime": "2026-05-06T00:00:00.000"
+                },
+                {
+                  "value": "-999999",
+                  "qualifiers": [
+                    "P",
+                    "Eqp"
+                  ],
+                  "dateTime": "2026-05-07T00:00:00.000"
+                },
+                {
+                  "value": "748",
+                  "qualifiers": [
+                    "P",
+                    "e"
+                  ],
+                  "dateTime": "2026-05-08T00:00:00.000"
+                },
+                {
+                  "value": "-999999",
+                  "qualifiers": [
+                    "P",
+                    "Eqp"
+                  ],
+                  "dateTime": "2026-05-09T00:00:00.000"
+                },
+                {
+                  "value": "-999999",
+                  "qualifiers": [
+                    "P",
+                    "Eqp"
+                  ],
+                  "dateTime": "2026-05-10T00:00:00.000"
+                },
+                {
+                  "value": "-999999",
+                  "qualifiers": [
+                    "P",
+                    "Eqp"
+                  ],
+                  "dateTime": "2026-05-11T00:00:00.000"
+                },
+                {
+                  "value": "-999999",
+                  "qualifiers": [
+                    "P",
+                    "Eqp"
+                  ],
+                  "dateTime": "2026-05-12T00:00:00.000"
+                },
+                {
+                  "value": "-999999",
+                  "qualifiers": [
+                    "P",
+                    "Eqp"
+                  ],
+                  "dateTime": "2026-05-13T00:00:00.000"
+                },
+                {
+                  "value": "-999999",
+                  "qualifiers": [
+                    "P",
+                    "Eqp"
+                  ],
+                  "dateTime": "2026-05-14T00:00:00.000"
+                },
+                {
+                  "value": "98.4",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-05-15T00:00:00.000"
+                },
+                {
+                  "value": "79.6",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-05-16T00:00:00.000"
+                },
+                {
+                  "value": "65.4",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-05-17T00:00:00.000"
+                },
+                {
+                  "value": "60.3",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-05-18T00:00:00.000"
+                },
+                {
+                  "value": "94.3",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-05-19T00:00:00.000"
+                },
+                {
+                  "value": "407",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-05-20T00:00:00.000"
+                },
+                {
+                  "value": "791",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-05-21T00:00:00.000"
+                },
+                {
+                  "value": "349",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-05-22T00:00:00.000"
+                },
+                {
+                  "value": "611",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-05-23T00:00:00.000"
+                },
+                {
+                  "value": "1460",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-05-24T00:00:00.000"
+                },
+                {
+                  "value": "839",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-05-25T00:00:00.000"
+                },
+                {
+                  "value": "344",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-05-26T00:00:00.000"
+                },
+                {
+                  "value": "208",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-05-27T00:00:00.000"
+                },
+                {
+                  "value": "157",
+                  "qualifiers": [
+                    "P"
+                  ],
+                  "dateTime": "2026-05-28T00:00:00.000"
+                }
+              ],
+              "qualifier": [
+                {
+                  "qualifierCode": "e",
+                  "qualifierDescription": "Value has been estimated.",
+                  "qualifierID": 0,
+                  "network": "NWIS",
+                  "vocabulary": "uv_rmk_cd"
+                },
+                {
+                  "qualifierCode": "Eqp",
+                  "qualifierDescription": "Value affected by equipment malfunction.",
+                  "qualifierID": 1,
+                  "network": "NWIS",
+                  "vocabulary": "uv_rmk_cd"
+                },
+                {
+                  "qualifierCode": "A",
+                  "qualifierDescription": "Approved for publication -- Processing and review completed.",
+                  "qualifierID": 2,
+                  "network": "NWIS",
+                  "vocabulary": "uv_rmk_cd"
+                },
+                {
+                  "qualifierCode": "P",
+                  "qualifierDescription": "Provisional data subject to revision.",
+                  "qualifierID": 3,
+                  "network": "NWIS",
+                  "vocabulary": "uv_rmk_cd"
+                }
+              ],
+              "qualityControlLevel": [],
+              "method": [
+                {
+                  "methodDescription": "",
+                  "methodID": 238137
+                }
+              ],
+              "source": [],
+              "offset": [],
+              "sample": [],
+              "censorCode": []
+            }
+          ],
+          "name": "USGS:04188100:00060:00003"
+        }
+      ]
+    },
+    "nil": false,
+    "globalScope": true,
+    "typeSubstituted": false
+  }
+}

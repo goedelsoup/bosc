@@ -387,13 +387,76 @@ export interface DewateringImpactedWell {
   composite_drawdown_ft: ProvenancedValue;
 }
 
+/** One period's baseflow reach statistics (`bosc.hydrology.dewatering_discharge.ReachWindow`). */
+export interface DischargeReachWindow {
+  label: string; // "dewatering" | "baseline"
+  start: string;
+  end: string;
+  n_days: number;
+  upstream_median_cfs: number;
+  upstream_min_cfs: number;
+  baseflow_days: number;
+  baseflow_gain_median_cfs: number;
+  baseflow_resid_median_cfs: number;
+  provisional_fraction: number;
+}
+
+/**
+ * The dewatering discharge-signal screen (`bosc.hydrology.dewatering_discharge.DischargeScreen`) —
+ * can the pumped water be seen in the river? Compares the reach gain between two USGS gages over the
+ * pumping window vs. a prior-year baseline. `outcome: "not_separable"` is the honest Lima headline:
+ * the ~7.6 cfs discharge is swamped by the incremental drainage. Gage flow is `[verified]`; every
+ * attribution is `[inference]`.
+ */
+export interface DischargeScreen {
+  upstream_gage: string;
+  upstream_name: string;
+  downstream_gage: string;
+  downstream_name: string;
+  incremental_da_sqmi: number;
+  expected_discharge_cfs: ProvenancedValue;
+  window: DischargeReachWindow;
+  baseline: DischargeReachWindow;
+  baseflow_gain_delta_cfs: number;
+  baseflow_resid_delta_cfs: number;
+  upstream_floor_delta_cfs: number;
+  separable: boolean;
+  outcome: "not_separable" | "elevated_gain" | "elevated_floor";
+  tag: string;
+  note: string;
+  caveats: string[];
+}
+
+/**
+ * Reservoir-recharge context over the pumping window
+ * (`bosc.hydrology.dewatering_discharge.ReservoirRecharge`) — the primary supply gage's flow regime
+ * (median + days above the pumping passby). Recharge is independent of the campus grading; this is
+ * context, not a dewatering effect.
+ */
+export interface ReservoirRecharge {
+  gage: string;
+  gage_name: string;
+  passby_cfs: number;
+  window_median_cfs: number;
+  baseline_median_cfs: number;
+  window_refill_days: number;
+  baseline_refill_days: number;
+  window_days: number;
+  baseline_days: number;
+  tag: string;
+  note: string;
+  caveats: string[];
+}
+
 /**
  * The DOCUMENTED peer of `DrawdownReport` (`bosc.hydrology.dewatering.DewateringImpact`) — the
  * construction-dewatering wellfield the developer installed to lower the water table for site
  * grading, as a superposition of Cooper-Jacob cones over the ODNR well-log census. The wells,
  * rates, and dates are `[verified]` ODNR records; every drawdown is `[inference]`, bracketed.
  * `impacted_wells` are the domestic census wells the composite cone draws down more than a foot.
- * `as_of` is the ODNR records-pull snapshot date the cone was evaluated at.
+ * `as_of` is the ODNR records-pull snapshot date the cone was evaluated at. `discharge_screen` +
+ * `reservoir_recharge` (1.39.0) answer "where did the pumped water go?" and are absent for a site
+ * with no bracketing gage reach.
  */
 export interface DewateringReport {
   county: string;
@@ -406,6 +469,8 @@ export interface DewateringReport {
   centroid_lon: number;
   cones: DewateringCone[];
   impacted_wells: DewateringImpactedWell[];
+  discharge_screen?: DischargeScreen | null;
+  reservoir_recharge?: ReservoirRecharge | null;
   tag: string;
   caveats: string[];
 }

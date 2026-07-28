@@ -605,7 +605,7 @@ def test_backdrop_staged_site_exports_at_backdrop_tier(
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.38.0"
+    assert manifest["contract_version"] == "1.39.0"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "backdrop", f"{slug} should be a Backdrop site, got {readiness}"
     domains = readiness["domains"]
@@ -636,7 +636,7 @@ def test_findlay_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) 
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.38.0"
+    assert manifest["contract_version"] == "1.39.0"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "case", f"findlay should be a Case site, got {readiness}"
     domains = readiness["domains"]
@@ -678,7 +678,7 @@ def test_wpafb_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactory) ->
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.38.0"
+    assert manifest["contract_version"] == "1.39.0"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "case", f"wpafb should be a Case site, got {readiness}"
     domains = readiness["domains"]
@@ -720,7 +720,7 @@ def test_troy_piqua_exports_at_case_tier(tmp_path_factory: pytest.TempPathFactor
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.38.0"
+    assert manifest["contract_version"] == "1.39.0"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "case", f"troy-piqua should be a Case site, got {readiness}"
     domains = readiness["domains"]
@@ -763,7 +763,7 @@ def test_sidney_exports_at_backdrop_tier(tmp_path_factory: pytest.TempPathFactor
         settings, out_dir=out, generated_at="2026-01-01T00:00:00+00:00", skip_embeddings=True
     )
     manifest = _manifest(out)
-    assert manifest["contract_version"] == "1.38.0"
+    assert manifest["contract_version"] == "1.39.0"
     readiness = manifest["readiness"]
     assert readiness["tier"] == "backdrop", f"sidney should be a Backdrop site, got {readiness}"
     domains = readiness["domains"]

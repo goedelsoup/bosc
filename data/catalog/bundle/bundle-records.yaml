@@ -13,6 +13,7 @@ site_scope: slug-scoped
 depends_on:
 - air-emission-factors
 - air-naaqs
+- dewatering-discharge
 - echo-maumee-npdes
 - economics-baseline
 - eia-consumer-energy

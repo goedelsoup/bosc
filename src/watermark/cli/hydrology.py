@@ -473,6 +473,60 @@ def derive_low_flows(
         )
 
 
+@app.command(name="dewatering-discharge")
+def dewatering_discharge_cmd(
+    write: bool = typer.Option(
+        False, "--write", help="Regenerate the committed dewatering-discharge report YAML."
+    ),
+    offline: bool = typer.Option(
+        False, "--offline", help="Use cached/fixture NWIS records only; never fetch."
+    ),
+) -> None:
+    """Screen the USGS gage record for the dewatering discharge + reservoir-recharge context.
+
+    Compares the reach gain between the campus's bracketing gages (Ottawa @ Lima -> near Kalida)
+    over the documented pumping window vs. a prior-year baseline. Gage discharge is [verified] USGS
+    daily values; every reach-gain attribution is [inference]. `--write` refreshes the committed
+    report the `dewatering` bundle feed reads offline.
+    """
+    from watermark.hydrology import dewatering_discharge as dd
+    from watermark.hydrology.dewatering import DATASET_ASOF
+
+    settings = offline_settings("hydro", offline)
+    report = dd.build_discharge_report(as_of=DATASET_ASOF.isoformat(), settings=settings)
+    if report is None:
+        console.print("[yellow]No dewatering discharge reach configured for the active site.[/]")
+        return
+    sc = report.screen
+    if sc is not None:
+        verdict = "[green]not separable[/]" if not sc.separable else "[red]elevated[/]"
+        console.print(
+            f"[bold]{sc.upstream_name} -> {sc.downstream_name}[/] discharge screen: {verdict}"
+        )
+        console.print(
+            f"  expected discharge up to {sc.expected_discharge_cfs.value:g} cfs; baseflow residual "
+            f"delta {sc.baseflow_resid_delta_cfs:+g} cfs, low-flow floor delta "
+            f"{sc.upstream_floor_delta_cfs:+g} cfs"
+        )
+        console.print(f"  [dim]{sc.note}[/]")
+    rr = report.reservoir_recharge
+    if rr is not None:
+        console.print(
+            f"[bold]{rr.gage_name}[/] recharge: median {rr.window_median_cfs:g} cfs, "
+            f"{rr.window_refill_days}/{rr.window_days} days above the {rr.passby_cfs:g} cfs passby "
+            f"(baseline {rr.baseline_refill_days}/{rr.baseline_days})"
+        )
+    if write:
+        path = dd.discharge_report_path(settings)
+        if path is None:
+            console.print(
+                "[yellow]Active site has no dewatering_discharge_relpath; not written.[/]"
+            )
+            return
+        dd.write_discharge_report(report, path)
+        console.print(f"[green]Wrote[/] {path}")
+
+
 @app.command()
 def storm(
     return_period: int = typer.Option(
