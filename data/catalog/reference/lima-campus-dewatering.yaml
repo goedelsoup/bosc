@@ -1,0 +1,39 @@
+id: lima-campus-dewatering
+title: Lima campus construction-dewatering wellfield (Ohio DNR)
+scope: reference
+status: reviewed
+producer:
+  kind: manual
+  source: >-
+    Ohio DNR Water Well Locator (waterwells.ohiodnr.gov) — well-log export reconciled with the
+    sealing-report export, both pulled 2026-07-28. Not connector-regenerable: the live MapServer
+    now shows only the 1 active DEWATERING WELL (the 43 sealed wells dropped off the active layer).
+  external_url: https://waterwells.ohiodnr.gov/
+license: Ohio public record
+access_tier: public
+site_scope: site:lima
+storage:
+- relpath: reference/ohio-waterwells/lima-campus-dewatering.csv
+  media_type: text/csv
+  lfs: false
+refresh:
+  cadence: on-demand
+  last_refreshed: '2026-07-28'
+provenance: reference
+schema_ref: watermark.hydrology.dewatering.DewateringWell
+tags:
+- waterwells
+- dewatering
+- groundwater
+- ohio-dnr
+- data-centers
+notes: >-
+  The 44 construction-dewatering wells the developer ("LMA") installed along North Cole Street at
+  the BOSC/data-center campus (American Township, Allen County, OH) to lower the water table for
+  site grading — shallow (23-41 ft) unconfined sand & gravel, 75-100 gpm each (~4.9 MGD combined
+  capacity). Installed 2025-12-16 to 2026-02-12; 43 sealed 2026-05-26..28, one active (3027949).
+  Driller figures are [verified]; the cone-of-impact drawdowns derived from them
+  (watermark.hydrology.dewatering, per-well Cooper-Jacob cones superimposed) are [inference].
+  The documented groundwater stress behind the residents' "area well concerns", distinct from the
+  county census (ohio-waterwells-allen) and the hypothetical cooling-makeup drawdown scenario. See
+  data/reference/ohio-waterwells/README.md.

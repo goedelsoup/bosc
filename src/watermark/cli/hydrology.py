@@ -1462,3 +1462,60 @@ def drawdown_cmd(
         r"surface water; no withdrawal permit is on record \[open]. The cone is a screen, "
         "never a headline.[/]"
     )
+
+
+@app.command(name="dewatering")
+def dewatering_cmd(
+    asof: str | None = typer.Option(
+        None, "--asof", help="Analysis date (YYYY-MM-DD) for active-well duration; default: today."
+    ),
+) -> None:
+    """The campus construction-dewatering cone of impact -- the documented 'area well concerns'.
+
+    Models the committed wellfield (data/reference/ohio-waterwells/lima-campus-dewatering.csv): the
+    developer's 44 dewatering wells that lowered the water table for site grading. Each well is a
+    Cooper-Jacob cone; the field's impact is their superposition, evaluated at each nearby domestic
+    census well. Wells/rates/dates are [verified] ODNR records; every drawdown is [inference]
+    (literature K, unconfined screening) -- an upper bound on concurrency, never a metered figure.
+    """
+    from datetime import date as _date
+
+    from watermark.hydrology import dewatering as dw
+
+    settings = get_settings()
+    when = _date.fromisoformat(asof) if asof else _date.today()
+    impact = dw.load_dewatering_impact(asof=when, settings=settings)
+    if impact is None:
+        console.print(
+            "[yellow]No dewatering wellfield committed for the active site "
+            "(data/reference/ohio-waterwells/lima-campus-dewatering.csv).[/]"
+        )
+        raise typer.Exit(1)
+
+    r0s = sorted(c.radius_of_influence_ft.value for c in impact.cones)
+    med = r0s[len(r0s) // 2] if r0s else 0.0
+    console.print(
+        f"[bold]{impact.well_count}[/] construction-dewatering wells at the campus "
+        f"([green]{impact.active_count} still active[/]) -- ~[bold]{impact.total_capacity_mgd} MGD[/] "
+        f"combined capacity, operated {impact.operating_window}.\n"
+        f"per-well cone of impact r0 (central): {r0s[0]:.0f}-{med:.0f}-{r0s[-1]:.0f} ft "
+        f"(median {med / 5280:.2f} mi)."
+    )
+
+    table = Table("domestic well", "distance ft", "drawdown ft [inference]", "aquifer")
+    for w in impact.impacted_wells[:15]:
+        d = w.composite_drawdown_ft
+        table.add_row(
+            w.object_id,
+            f"{w.distance_ft:.0f}",
+            f"{d.value:g} ({d.low_or_value:g}-{d.high_or_value:g})",
+            w.aquifer_type or "-",
+        )
+    console.print(table)
+    for f in dw.dewatering_findings(impact):
+        console.print(f"[{'green' if f.ok else 'red'}]{escape(str(f))}[/]")
+    console.print(
+        r"[dim]Wells/rates/dates are \[verified] ODNR records; drawdowns are \[inference] "
+        "(literature K, Cooper-Jacob superposition on an unconfined aquifer). test_rate_gpm is "
+        "yield capacity -- an upper bound on the sustained dewatering rate.[/]"
+    )

@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-28T13:30:56.175081+00:00'
+reconciled_at: '2026-07-28T17:57:14.074384+00:00'
 entries:
   aedg:
     exists: true
@@ -754,6 +754,16 @@ entries:
     exists: true
     sha256: 34fd95a7446e55343da159443e2b71093b588786c5fbe1e7f04f6764f7f7247e
     size_bytes: 13935
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: site:lima
+  lima-campus-dewatering:
+    exists: true
+    sha256: 2f42ff12bf330038fb7d092a70009ee59ab8140342fc375c9e233f6daf409369
+    size_bytes: 4312
     lfs_materialized: true
     file_count: 1
     missing: []
