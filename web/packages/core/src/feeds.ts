@@ -365,6 +365,51 @@ export interface DrawdownReport {
   caveats: string[];
 }
 
+/** One dewatering well's cone of impact (`bosc.hydrology.dewatering.WellCone`), all `[inference]`. */
+export interface DewateringCone {
+  record_no: string;
+  aquifer_type: string | null;
+  q_gpm: number | null;
+  saturated_thickness_ft: number | null;
+  operating_days: number;
+  active: boolean;
+  transmissivity_ft2_day: ProvenancedValue;
+  radius_of_influence_ft: ProvenancedValue;
+}
+
+/** A domestic census well inside the composite cone (`bosc.hydrology.dewatering.ImpactedWell`). */
+export interface DewateringImpactedWell {
+  object_id: string;
+  well_use: string | null;
+  aquifer_type: string | null;
+  distance_ft: number;
+  /** Sum of every dewatering well's Cooper-Jacob cone at this point, bracketed (`[inference]`). */
+  composite_drawdown_ft: ProvenancedValue;
+}
+
+/**
+ * The DOCUMENTED peer of `DrawdownReport` (`bosc.hydrology.dewatering.DewateringImpact`) — the
+ * construction-dewatering wellfield the developer installed to lower the water table for site
+ * grading, as a superposition of Cooper-Jacob cones over the ODNR well-log census. The wells,
+ * rates, and dates are `[verified]` ODNR records; every drawdown is `[inference]`, bracketed.
+ * `impacted_wells` are the domestic census wells the composite cone draws down more than a foot.
+ * `as_of` is the ODNR records-pull snapshot date the cone was evaluated at.
+ */
+export interface DewateringReport {
+  county: string;
+  well_count: number;
+  active_count: number;
+  total_capacity_mgd: number;
+  operating_window: string;
+  as_of: string;
+  centroid_lat: number;
+  centroid_lon: number;
+  cones: DewateringCone[];
+  impacted_wells: DewateringImpactedWell[];
+  tag: string;
+  caveats: string[];
+}
+
 /** One dated Esri Wayback aerial release (the `geo/imagery` feed's `meta.wayback`). */
 export interface WaybackRelease {
   date: string; // e.g. "2014-12"

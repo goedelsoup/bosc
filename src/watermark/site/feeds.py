@@ -313,7 +313,22 @@ from watermark.sites import (
 #   `None` otherwise → feed skipped), and exported as its own already-provenanced model like `grid`
 #   / `rsei`, so no new model is defined here. One new feed → MINOR, back-compatible (a reader that
 #   doesn't know `drawdown` is unaffected; a pre-1.37 bundle simply has no cone to render).
-CONTRACT_VERSION = "1.37.0"
+# 1.38.0: adds the `dewatering` object feed + the `geo/dewatering` map layer — the DOCUMENTED peer
+#   of `drawdown`. Where `drawdown` screens a single HYPOTHETICAL cooling-makeup well, `dewatering`
+#   models the real, documented wellfield the developer installed to lower the water table for site
+#   grading (`watermark.hydrology.dewatering.DewateringImpact`): 44 [verified] ODNR well-log/sealing
+#   records as a superposition of Cooper-Jacob cones, evaluated at each nearby domestic census well.
+#   Carries the per-well cones (transmissivity-bracketed T + radius of influence), the domestic
+#   census wells inside the composite cone with their [inference] superimposed drawdown, the field
+#   capacity / operating window / `as_of` snapshot date, and caveats. The wells/rates/dates are
+#   [verified]; every drawdown is [inference], bracketed. The `geo/dewatering` layer projects the
+#   same wellfield onto the deck.gl map (well points sized by radius of influence + the impacted
+#   domestic wells), reusing the shared `geo.schema.json`. Site-gated by construction (only a site
+#   with a committed `SiteProfile.dewatering_wellfield_relpath` produces them; both self-skip
+#   elsewhere), and the object feed is exported as its own already-provenanced model like `grid` /
+#   `drawdown`, so no new model is defined here. One object feed + one geo layer → MINOR,
+#   back-compatible (a pre-1.38 bundle simply has no wellfield to render).
+CONTRACT_VERSION = "1.38.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

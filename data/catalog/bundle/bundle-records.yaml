@@ -24,6 +24,7 @@ depends_on:
 - hydrology-low-flow-7q10
 - hydrology-reaches
 - hydrology-wbd
+- lima-campus-dewatering
 - ohio-waterwells-allen
 - rsei-inventory
 - usaspending
@@ -185,5 +186,18 @@ notes: >-
   `hydrology` bundle's `aquifer-properties` table already declared. Reference-gated by construction:
   `load_drawdown` returns None without a committed census + a resolvable cooling basis, so the feed
   self-skips elsewhere.
+  The `dewatering` object feed + the `geo/dewatering` map layer (contract 1.38.0) are the DOCUMENTED
+  peer of `drawdown` — the construction-dewatering wellfield the developer installed to lower the
+  water table for site grading (`watermark.hydrology.dewatering.DewateringImpact`, exported as its own
+  already-provenanced model like `drawdown`), as a superposition of Cooper-Jacob cones over the ODNR
+  well-log census. The object feed carries the per-well cones (transmissivity-bracketed T + radius of
+  influence), the domestic census wells inside the composite cone with their `[inference]` superimposed
+  drawdown, and the field capacity / operating window / `as_of` snapshot; the geo layer projects the
+  same wellfield onto the map. It adds the committed `lima-campus-dewatering` wellfield (a `manual`
+  ODNR well-log + sealing snapshot — the sealed wells are absent from the live MapServer, so it is not
+  connector-regenerable) as a declared upstream, joined to the `ohio-waterwells-allen` census already
+  declared above. Wells/rates/dates are `[verified]`; every drawdown is `[inference]`, bracketed.
+  Site-gated by construction: `load_dewatering_impact` returns None without a committed
+  `SiteProfile.dewatering_wellfield_relpath`, so both feeds self-skip elsewhere.
   `watermark export` pre-flights this chain and warns when an upstream is downstream-stale;
   regenerate with `watermark catalog run bundle-records --site <slug>`.
