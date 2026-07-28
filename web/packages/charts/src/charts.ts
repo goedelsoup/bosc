@@ -568,10 +568,18 @@ const AQ_X0 = 20;
 const AQ_X1 = 340;
 const AQ_WELLX = 180;
 const AQ_MAX_DIP = 98; // the drawn-down surface can dip no deeper than the aquifer floor
+/**
+ * The fixed cross-section geometry occupies `[0, AQ_STATIC + AQ_MAX_DIP + 10]` (= 200) px
+ * vertically — the cone floor plus the 10px bottom margin the component draws to. The canvas
+ * height is clamped up to this minimum so the returned geometry never extends past the declared
+ * canvas; a larger `height` just adds empty space below. (Scaling the fixed geometry to an
+ * arbitrary height was not needed — every caller uses the default.)
+ */
+export const AQ_MIN_HEIGHT = AQ_STATIC + AQ_MAX_DIP + 10; // 200
 
 /** Cone-of-depression geometry from a drawdown (ft) + optional domestic-well casings. */
 export function buildAquiferSection(input: AquiferSectionInput): AquiferSectionGeom {
-  const height = input.height ?? 200;
+  const height = Math.max(input.height ?? AQ_MIN_HEIGHT, AQ_MIN_HEIGHT);
   const dip = Math.min(AQ_MAX_DIP, Math.max(0, input.drawdownFt) * 1.57);
   const coneBottom = round(AQ_STATIC + dip, 1);
   const conePath = `M${AQ_X0} ${AQ_STATIC} C120 ${AQ_STATIC} 150 ${coneBottom} ${AQ_WELLX} ${coneBottom} C210 ${coneBottom} 260 ${AQ_STATIC} ${AQ_X1} ${AQ_STATIC}`;

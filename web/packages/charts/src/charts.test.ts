@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  AQ_MIN_HEIGHT,
   buildAquiferSection,
   buildBullet,
   buildDonut,
@@ -218,5 +219,17 @@ describe("charts geometry (#306)", () => {
     }
     expect(g.wells[0].label).toBe("domestic");
     expect(g.wells[1].label).toBeUndefined();
+  });
+
+  it("buildAquiferSection: clamps a too-small height so geometry stays within the canvas", () => {
+    // A requested height below the fixed geometry's extent is clamped up to the minimum.
+    const g = buildAquiferSection({ drawdownFt: 100, height: 120 });
+    expect(g.height).toBe(AQ_MIN_HEIGHT);
+    expect(g.coneBottom).toBeLessThanOrEqual(g.height);
+    expect(g.casing.y + g.casing.h).toBeLessThanOrEqual(g.height);
+    // A larger height is honored (empty space below); geometry still contained.
+    const tall = buildAquiferSection({ drawdownFt: 100, height: 300 });
+    expect(tall.height).toBe(300);
+    expect(tall.coneBottom).toBeLessThanOrEqual(tall.height);
   });
 });
