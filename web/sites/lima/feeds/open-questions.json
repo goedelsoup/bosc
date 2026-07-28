@@ -13,6 +13,19 @@
     "signal": null
   },
   {
+    "id": "DEWATERING-DRYWELL-NW",
+    "origin": "lead",
+    "question": "A reportedly dry-and-replaced shallow well sits ~3.7 mi down-gradient of the dewatering field",
+    "detail": "A shallow domestic well near 40.83613, -84.16757 (about 3.7 mi northwest of the construction-dewatering wellfield centroid) was reported to have run dry and needed replacement. Our Cooper-Jacob screen puts zero [inference] drawdown there — the modeled radius of influence is ~2,000 ft and no defensible homogeneous cone reaches 3.7 mi in this aquifer, so the field's cone AS MODELED is not the mechanism. Two facts keep it a lead rather than a dismissal — the site sits DOWN-gradient of the field (the regional water table falls ~12 ft/mi toward compass ~315 deg, the direction a dewatering field's influence preferentially extends), and the nearest census well is a marginal bedrock well (57 ft deep, 56.5 ft static — only ~0.5 ft of water column) that could fail under drought alone. Distinguishing a preferential (buried-valley) pathway from an independently marginal well needs site hydrogeology the record does not carry.",
+    "source": "Reported (uncorroborated) · coordinate + neighbor from the ODNR census (data/reference/ohio-waterwells/allen.csv)",
+    "kind": "signal",
+    "status": "unanswered",
+    "issue": null,
+    "hypothesis": null,
+    "hypothesis_label": null,
+    "signal": null
+  },
+  {
     "id": "LIMA-LIMEDUST",
     "origin": "lead",
     "question": "Ohio EPA is monitoring lime-kiln dust drifting off the data-center construction site",

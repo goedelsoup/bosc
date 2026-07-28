@@ -11,6 +11,7 @@ from datetime import date
 
 from watermark.config import Settings
 from watermark.hydrology import dewatering as dw
+from watermark.hydrology.connectors import ohio_waterwells as oww
 
 ASOF = date(2026, 7, 28)
 
@@ -79,3 +80,78 @@ def test_findings_surface_the_impact(hydro_settings: Settings) -> None:
     assert "4.9 MGD" in field.detail and field.ok is True
     dom = next(f for f in findings if f.check == "dewatering-domestic-impact")
     assert dom.ok is False and "domestic census wells" in dom.detail  # a surfaced impact
+
+
+# --- vulnerability (goes-dry) + hydraulic gradient (up/down-gradient), 1.40.0 -------------------
+
+
+def _census_well(
+    oid: int,
+    lat: float,
+    lon: float,
+    *,
+    use: str = "DOMESTIC",
+    depth: float = 200.0,
+    static: float = 8.0,
+    aquifer: str = "LIMESTONE",
+) -> oww.WaterWell:
+    return oww.WaterWell(
+        object_id=oid,
+        record_type="WELL",
+        well_use=use,
+        longitude=lon,
+        latitude=lat,
+        coord_source="GPS",
+        county="ALLEN",
+        township="BATH",
+        completion_date=None,
+        total_depth_ft=depth,
+        dem_elev_ft=850.0,
+        aquifer_type=aquifer,
+        drill_type=None,
+        test_rate_gpm=None,
+        static_water_level_ft=static,
+        case_length_ft=None,
+        bedrock_depth_ft=None,
+        well_no=None,
+    )
+
+
+def test_hydraulic_gradient_and_positions(hydro_settings: Settings) -> None:
+    impact = dw.load_dewatering_impact(asof=ASOF, settings=hydro_settings)
+    assert impact is not None
+    grad = impact.hydraulic_gradient
+    assert grad is not None
+    assert 0.0 <= grad.flow_bearing_deg < 360.0
+    assert grad.magnitude_ft_per_mi > 0 and 0.0 <= grad.r2 <= 1.0 and grad.n_wells > 20
+    positions = [w.gradient_position for w in impact.impacted_wells]
+    assert positions and all(
+        p in {"down-gradient", "up-gradient", "cross-gradient"} for p in positions
+    )
+    # The flagged wells cluster down-gradient of the field (toward the Ottawa) — the point of the lens.
+    assert sum(1 for p in positions if p == "down-gradient") >= len(positions) // 2
+
+
+def test_gradient_position_classifier() -> None:
+    # Flow toward compass 90 deg (due east): a well east of the field is down-gradient, west up.
+    assert dw._gradient_position(1000.0, 0.0, 90.0) == "down-gradient"
+    assert dw._gradient_position(-1000.0, 0.0, 90.0) == "up-gradient"
+    assert dw._gradient_position(0.0, 1000.0, 90.0) == "cross-gradient"
+
+
+def test_goes_dry_flags_a_shallow_well_but_not_a_deep_one(hydro_settings: Settings) -> None:
+    wells = dw.load_dewatering_wells(settings=hydro_settings)
+    located = [w for w in wells if w.latitude is not None and w.longitude is not None]
+    w0 = located[0]
+    lat, lon = w0.latitude + 0.0006, w0.longitude  # ~220 ft from a dewatering well -> big drawdown
+    shallow = _census_well(9_000_001, lat, lon, depth=20.0, static=19.0)  # 1 ft water column
+    deep = _census_well(9_000_002, lat, lon, depth=200.0, static=8.0)  # 192 ft water column
+    impact = dw.compute_dewatering_impact(
+        wells, asof=ASOF, census=[shallow, deep], settings=hydro_settings
+    )
+    by_id = {w.object_id: w for w in impact.impacted_wells}
+    # Same location, same drawdown — but the shallow well is dewatered and the deep one is not.
+    assert by_id["9000001"].available_column_ft == 1.0
+    assert by_id["9000001"].goes_dry is True
+    assert by_id["9000002"].goes_dry is False
+    assert (by_id["9000002"].column_consumed_frac or 0) < 1.0

@@ -1,10 +1,10 @@
 {
   "site": "lima",
   "bundle_version": "1.0.0",
-  "contract_version": "1.39.0",
+  "contract_version": "1.40.0",
   "generated_at": "2026-07-19T03:12:28+00:00",
   "feed_count": 51,
-  "row_total": 1593,
+  "row_total": 1595,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -125,7 +125,7 @@
       "media_type": "application/json",
       "schema": "schemas/leads.schema.json",
       "kind": "collection",
-      "count": 27
+      "count": 28
     },
     {
       "name": "contacts",
@@ -397,7 +397,7 @@
       "media_type": "application/json",
       "schema": "schemas/open-questions.schema.json",
       "kind": "collection",
-      "count": 26
+      "count": 27
     },
     {
       "name": "catalog-index",

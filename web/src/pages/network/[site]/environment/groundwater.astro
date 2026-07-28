@@ -35,6 +35,14 @@ const dwOver5 = dewatering
   ? dewatering.impacted_wells.filter((w) => (w.composite_drawdown_ft.value ?? 0) > 5).length
   : 0;
 const dwMiles = (ft: number): string => (ft / 5280).toFixed(2);
+// Two vulnerability lenses (1.40.0): each well's own "goes dry" buffer, and its place along the
+// regional groundwater gradient (the groundwater analog of upstream/downstream).
+const dwGrad = dewatering?.hydraulic_gradient ?? null;
+const dwDry = dewatering ? dewatering.impacted_wells.filter((w) => w.goes_dry).length : 0;
+const dwDown = dewatering
+  ? dewatering.impacted_wells.filter((w) => w.gradient_position === "down-gradient").length
+  : 0;
+const pct = (f: number | null | undefined): string => (f == null ? "—" : `${Math.round(f * 100)}%`);
 
 // Where did the pumped water go? The surface-water discharge screen + reservoir-recharge context
 // (contract 1.39.0), read off the same `dewatering` feed. Both absent for a site with no reach.
@@ -116,20 +124,38 @@ const VERDICT: Record<string, string> = {
                   <th>Domestic well</th>
                   <th>Distance</th>
                   <th>Drawdown (ft) [inference]</th>
+                  <th>Column used</th>
+                  <th>Position</th>
                   <th>Aquifer</th>
                 </tr>
               </thead>
               <tbody>
                 {dewatering.impacted_wells.map((w) => (
-                  <tr>
+                  <tr class={w.goes_dry ? "goes-dry" : undefined}>
                     <td>{w.object_id}</td>
                     <td>{dwMiles(w.distance_ft)} mi</td>
                     <td>{fmt(w.composite_drawdown_ft)}</td>
+                    <td>{w.goes_dry ? "dewatered" : pct(w.column_consumed_frac)}</td>
+                    <td>{w.gradient_position ?? "—"}</td>
                     <td>{w.aquifer_type ?? "—"}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
+          )}
+          {dwGrad && (
+            <p class="card-meta">
+              <strong>Direction matters.</strong> A radial cone is direction-blind, but groundwater
+              isn't. Fit to {dwGrad.n_wells.toLocaleString("en-US")} shallow census wells (R²=
+              {dwGrad.r2}), the regional water table falls ~{dwGrad.magnitude_ft_per_mi} ft/mi toward
+              compass {dwGrad.flow_bearing_deg}° — so <strong>{dwDown}</strong> of the{" "}
+              {dewatering.impacted_wells.length} flagged wells sit <strong>down-gradient</strong> of
+              the field, the direction a dewatering field's drawdown and capture preferentially
+              extend.{" "}
+              {dwDry > 0
+                ? `${dwDry} would be dewatered outright — the drawdown meets or exceeds the well's own water column.`
+                : "None would be dewatered outright: the flagged wells are deep enough that the drawdown eats only part of their water column, so the shallow-well 'ran dry' failure mode belongs to a different, more marginal population."}
+            </p>
           )}
           <p class="card-meta">
             {dewatering.active_count > 0
@@ -139,6 +165,13 @@ const VERDICT: Record<string, string> = {
             <a href={withSite("/environment/map")}>campus map →</a>. The yield-test rate is an upper
             bound on the sustained dewatering rate, and installs and sealings were staged, so a
             simultaneous-full-rate composite bounds concurrency rather than metering it.
+          </p>
+          <p class="card-meta">
+            The cone screens by <strong>distance only</strong>, in the dewatering wells' own aquifer
+            — it can't reach a far well through a preferential (buried-valley) pathway, nor cross from
+            sand &amp; gravel into a bedrock well. A reported impact beyond the modeled radius stays an{" "}
+            <strong>[open]</strong> lead (see the <a href={withSite("/leads")}>leads board</a>), not a
+            modeled result.
           </p>
         </Fragment>
       )
@@ -244,12 +277,18 @@ const VERDICT: Record<string, string> = {
     font-size: 0.85rem;
   }
   .dewatering-table td:nth-child(2),
-  .dewatering-table td:nth-child(3) {
+  .dewatering-table td:nth-child(3),
+  .dewatering-table td:nth-child(4) {
     font-family: var(--font-mono);
     text-align: right;
   }
   .dewatering-table td:nth-child(3) {
     color: var(--ev-inference-fg);
+  }
+  /* A well the drawdown would dewater outright wears the evidence-gap oxblood. */
+  .dewatering-table tr.goes-dry td:nth-child(4) {
+    color: var(--ev-gap-fg);
+    font-weight: 700;
   }
 
   /* The discharge screen: a documentary verdict box (square, hairline, no shadow). The

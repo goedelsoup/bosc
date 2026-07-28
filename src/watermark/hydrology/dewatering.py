@@ -22,7 +22,7 @@ from __future__ import annotations
 import csv
 import io
 from datetime import date
-from math import sqrt
+from math import atan2, cos, degrees, radians, sin, sqrt
 from pathlib import Path
 from typing import Any, Literal
 
@@ -48,6 +48,9 @@ log = get_logger(__name__)
 GPM_TO_FT3_DAY = 0.133680556 * 1440.0  # ~192.5 ft^3/day per gpm
 # Composite drawdown (ft) below which a domestic well is treated as effectively unaffected.
 _AFFECTED_THRESHOLD_FT = 1.0
+# Feet per degree of latitude (~69 mi); longitude scales by cos(lat). For the local flat-earth ENU
+# frame the gradient plane fit + the up/down-gradient classification work in.
+_FT_PER_DEG_LAT = 364_000.0
 
 # The dewatering wellfield is a point-in-time ODNR records snapshot: the WaterWell / SealingReport
 # CSV exports were pulled 2026-07-28 (43 wells sealed 2026-05-26..28, 1 still active). The committed
@@ -130,7 +133,14 @@ class WellCone(BaseModel):
 
 
 class ImpactedWell(BaseModel):
-    """A census well inside the composite cone, with its superimposed drawdown."""
+    """A census well inside the composite cone, with its superimposed drawdown.
+
+    Beyond the drawdown MAGNITUDE, two vulnerability lenses: (1) ``goes_dry`` compares the drawdown to
+    the well's OWN available water column (``available_column_ft`` = total depth - static level) — a
+    very shallow well is dewatered by a decline a deep well shrugs off; (2) ``gradient_position`` is
+    the well's place relative to the field along the regional groundwater gradient (a down-gradient
+    well sees the field ~upstream of it in flow terms). Both ``[inference]``.
+    """
 
     model_config = ConfigDict(extra="forbid")
 
@@ -139,6 +149,27 @@ class ImpactedWell(BaseModel):
     aquifer_type: str | None
     distance_ft: float  # from the wellfield centroid
     composite_drawdown_ft: ProvenancedValue  # sum of every well's cone at this point
+    available_column_ft: float | None = None  # total depth - static level (the buffer before dry)
+    column_consumed_frac: float | None = None  # drawdown / available column (>=1 => dewatered)
+    goes_dry: bool = False  # the composite drawdown meets/exceeds the well's own available column
+    gradient_position: str | None = None  # down-gradient | up-gradient | cross-gradient
+
+
+class HydraulicGradient(BaseModel):
+    """The regional water-table gradient near the field, fit from census head (all ``[inference]``).
+
+    Head = ``dem_elev_ft - static_water_level_ft`` per shallow census well; a plane fit gives the
+    direction groundwater flows (down-gradient) + its steepness. The groundwater analog of the
+    surface-water upstream/downstream — a radial cone is direction-blind, but real flow is not.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    flow_bearing_deg: float  # compass bearing groundwater flows TOWARD (down-gradient)
+    magnitude_ft_per_mi: float  # head drop per mile along the flow direction
+    n_wells: int  # shallow census wells the plane was fit to
+    r2: float  # plane-fit quality (0..1)
+    note: str
 
 
 class DewateringImpact(BaseModel):
@@ -156,6 +187,9 @@ class DewateringImpact(BaseModel):
     centroid_lon: float
     cones: list[WellCone]
     impacted_wells: list[ImpactedWell]  # domestic census wells over the drawdown threshold
+    # The regional groundwater gradient near the field (from census head) — makes the flagged wells
+    # directional. None when too few shallow census wells carry head to fit a plane.
+    hydraulic_gradient: HydraulicGradient | None = None
     # Where did the pumped water go? The surface-water discharge-signal screen (reach gain across the
     # bracketing gages) + the reservoir-recharge context over the pumping window. Both None for a
     # site with no bracketing gage reach / supply gage, or when the gage record is unavailable.
@@ -294,6 +328,100 @@ def composite_drawdown_at(
     return total
 
 
+# --- vulnerability + gradient -----------------------------------------------------------
+
+
+def _available_column_ft(c: oww.WaterWell) -> float | None:
+    """The water column a well can lose before going dry: total depth - static level (ft)."""
+    if c.total_depth_ft is None or c.static_water_level_ft is None:
+        return None
+    column = c.total_depth_ft - c.static_water_level_ft
+    return round(column, 1) if column > 0 else None
+
+
+def _enu_ft(clat: float, clon: float, lat: float, lon: float) -> tuple[float, float]:
+    """(east, north) offset in feet from ``(clat, clon)`` in a local flat-earth frame."""
+    east = (lon - clon) * _FT_PER_DEG_LAT * cos(radians(clat))
+    north = (lat - clat) * _FT_PER_DEG_LAT
+    return east, north
+
+
+def compute_hydraulic_gradient(
+    census: list[oww.WaterWell],
+    clat: float,
+    clon: float,
+    *,
+    radius_mi: float = 5.0,
+    max_depth_ft: float = 80.0,
+    min_wells: int = 20,
+) -> HydraulicGradient | None:
+    """Fit the regional water-table gradient near the field from shallow census head.
+
+    Head = ``dem_elev_ft - static_water_level_ft`` per shallow (``< max_depth_ft``) census well within
+    ``radius_mi``; a least-squares plane gives the flow direction (down-gradient) + steepness. Returns
+    ``None`` when too few wells carry head to fit a plane.
+    """
+    import numpy as np
+
+    rows: list[tuple[float, float, float]] = []
+    for w in census:
+        if (
+            w.latitude is None
+            or w.longitude is None
+            or w.dem_elev_ft is None
+            or w.static_water_level_ft is None
+            or w.total_depth_ft is None
+            or w.total_depth_ft > max_depth_ft
+        ):
+            continue
+        east, north = _enu_ft(clat, clon, w.latitude, w.longitude)
+        if sqrt(east * east + north * north) > radius_mi * 5280.0:
+            continue
+        rows.append((east, north, w.dem_elev_ft - w.static_water_level_ft))
+    if len(rows) < min_wells:
+        return None
+    a = np.array([[1.0, e, n] for e, n, _ in rows])
+    b = np.array([h for _, _, h in rows])
+    coef, *_ = np.linalg.lstsq(a, b, rcond=None)
+    _a0, grad_e, grad_n = (float(x) for x in coef)  # head = a0 + grad_e*east + grad_n*north
+    flow_e, flow_n = -grad_e, -grad_n  # groundwater flows DOWN-gradient (toward falling head)
+    mag = sqrt(flow_e * flow_e + flow_n * flow_n)  # ft head per ft distance
+    if mag <= 0:
+        return None
+    bearing = (degrees(atan2(flow_e, flow_n)) + 360.0) % 360.0  # compass: 0=N, 90=E
+    pred = a @ coef
+    ss_res = float(((b - pred) ** 2).sum())
+    ss_tot = float(((b - b.mean()) ** 2).sum())
+    r2 = 1.0 - ss_res / ss_tot if ss_tot > 0 else 0.0
+    ft_per_mi = round(mag * 5280.0, 1)
+    return HydraulicGradient(
+        flow_bearing_deg=round(bearing, 0),
+        magnitude_ft_per_mi=ft_per_mi,
+        n_wells=len(rows),
+        r2=round(r2, 2),
+        note=(
+            f"The regional water table falls ~{ft_per_mi:g} ft/mi toward compass {round(bearing):g} "
+            f"deg (fit to {len(rows)} shallow census wells, R^2={round(r2, 2)}); groundwater flows "
+            "that way, so a down-gradient well sees the field ~upstream of it in flow terms "
+            "[inference]."
+        ),
+    )
+
+
+def _gradient_position(east: float, north: float, flow_bearing_deg: float) -> str:
+    """Classify a well offset ``(east, north)`` relative to the down-gradient flow direction."""
+    dist = sqrt(east * east + north * north)
+    if dist < 1.0:
+        return "cross-gradient"
+    flow_e, flow_n = sin(radians(flow_bearing_deg)), cos(radians(flow_bearing_deg))
+    cos_angle = (east * flow_e + north * flow_n) / dist
+    if cos_angle > 0.5:  # within ~60 deg of the flow direction -> down-gradient of the field
+        return "down-gradient"
+    if cos_angle < -0.5:
+        return "up-gradient"
+    return "cross-gradient"
+
+
 def compute_dewatering_impact(
     wells: list[DewateringWell],
     *,
@@ -323,6 +451,9 @@ def compute_dewatering_impact(
     seals = sorted(w.sealed_date for w in wells if w.sealed_date)
     window = f"{dates[0]} to {seals[-1]}" if dates and seals else (dates[0] if dates else "?")
 
+    # The regional groundwater gradient near the field (once), to place each flagged well up/down it.
+    gradient = compute_hydraulic_gradient(census or [], clat, clon)
+
     impacted: list[ImpactedWell] = []
     for c in census or []:
         if (
@@ -346,9 +477,14 @@ def compute_dewatering_impact(
         # Gate on the CENTRAL best-estimate: the "impacted (>1 ft)" list stays honest. Gating on
         # max-of-bands would list wells whose central estimate is well below threshold and only
         # cross at the extreme literature-K end; the per-well bracket (low/high) carries that.
+        # A very shallow well is dewatered by a decline a deep one shrugs off, so a well the drawdown
+        # would push past its OWN available column (``goes_dry``) is included even below the 1 ft gate.
         s_mid = bands[1]
-        if s_mid <= threshold_ft:
+        column = _available_column_ft(c)
+        goes_dry = column is not None and s_mid >= column
+        if s_mid <= threshold_ft and not goes_dry:
             continue
+        east, north = _enu_ft(clat, clon, c.latitude, c.longitude)
         impacted.append(
             ImpactedWell(
                 object_id=str(c.object_id),
@@ -361,6 +497,16 @@ def compute_dewatering_impact(
                     "Superposition of every dewatering well's Cooper-Jacob cone [inference].",
                     low=round(min(bands), 1),
                     high=round(max(bands), 1),
+                ),
+                available_column_ft=column,
+                column_consumed_frac=(
+                    round(min(s_mid / column, 9.99), 2) if column and column > 0 else None
+                ),
+                goes_dry=goes_dry,
+                gradient_position=(
+                    _gradient_position(east, north, gradient.flow_bearing_deg)
+                    if gradient is not None
+                    else None
                 ),
             )
         )
@@ -377,11 +523,16 @@ def compute_dewatering_impact(
         centroid_lon=round(clon, 6),
         cones=cones,
         impacted_wells=impacted,
+        hydraulic_gradient=gradient,
         caveats=[
             "Hypothetical-free but screening-grade: the wells/rates/dates are [verified] ODNR "
             "records; every drawdown is [inference] (literature K, Cooper-Jacob, unconfined).",
             "test_rate_gpm is yield-test capacity, an upper bound on the sustained dewatering rate; "
             "installs/sealings were staged, so a simultaneous-full-rate composite bounds concurrency.",
+            "The cone is radially symmetric + homogeneous: it screens by DISTANCE only, in the "
+            "dewatering wells' own aquifer. It cannot reach a far well through a preferential "
+            "(buried-valley) pathway, nor cross from sand & gravel into a bedrock well -- so a "
+            "reported impact beyond the modeled radius stays an [open] lead, not a modeled result.",
         ],
     )
 
@@ -424,7 +575,9 @@ def dewatering_findings(impact: DewateringImpact) -> list[HydroFinding]:
     subject = f"{impact.county} campus dewatering"
     over5 = sum(1 for w in impact.impacted_wells if w.composite_drawdown_ft.value > 5)
     worst = impact.impacted_wells[0].composite_drawdown_ft.value if impact.impacted_wells else 0.0
-    return [
+    dry = sum(1 for w in impact.impacted_wells if w.goes_dry)
+    down = sum(1 for w in impact.impacted_wells if w.gradient_position == "down-gradient")
+    findings = [
         HydroFinding(
             subject=subject,
             check="dewatering-wellfield",
@@ -445,4 +598,22 @@ def dewatering_findings(impact: DewateringImpact) -> list[HydroFinding]:
                 "population a wellfield of this size could measurably draw down."
             ),
         ),
+        HydroFinding(
+            subject=subject,
+            check="dewatering-well-vulnerability",
+            ok=dry == 0,  # a surfaced vulnerability, not an error
+            detail=(
+                f"{dry} of the flagged wells would be DEWATERED (the [inference] drawdown meets or "
+                "exceeds the well's own available water column); a very shallow well runs dry from a "
+                f"decline a deep one shrugs off. {down} sit down-gradient of the field"
+                + (
+                    f", where the water table falls ~{impact.hydraulic_gradient.magnitude_ft_per_mi:g} "
+                    f"ft/mi toward compass {impact.hydraulic_gradient.flow_bearing_deg:g} deg -- the "
+                    "direction a dewatering field's influence preferentially extends."
+                    if impact.hydraulic_gradient is not None
+                    else "."
+                )
+            ),
+        ),
     ]
+    return findings
