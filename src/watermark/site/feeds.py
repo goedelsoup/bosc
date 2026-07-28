@@ -301,7 +301,19 @@ from watermark.sites import (
 #   site profile's `GisDefenseMeta` (never parsed out of the note), so a peer states its own.
 #   All six fields carry defaults, so a pre-1.36 defense-contractors.json stays valid — MINOR,
 #   back-compatible.
-CONTRACT_VERSION = "1.36.0"
+# 1.37.0: adds the `drawdown` object feed (groundwater well-drawdown thread) — the reference
+#   site's Theis cone-of-depression screen (`watermark.hydrology.drawdown.DrawdownResult`) over the
+#   ODNR well-log census + the literature aquifer parameters. Carries the `[inference]` apex
+#   drawdown (a transmissivity-bracketed `ProvenancedValue`), the radius of influence, the count of
+#   domestic census wells within it, the cone profile for the AquiferSection figure, and the
+#   hypothetical-pumping scenario + caveats. Its headline is the inverse finding: a hyperscale
+#   groundwater stress DEWATERS the low-transmissivity limestone aquifer — corroborating the
+#   campus's reliance on municipal surface water. Reference-gated by construction (only a site with
+#   a committed well-log census + a resolvable cooling basis produces it; `load_drawdown` returns
+#   `None` otherwise → feed skipped), and exported as its own already-provenanced model like `grid`
+#   / `rsei`, so no new model is defined here. One new feed → MINOR, back-compatible (a reader that
+#   doesn't know `drawdown` is unaffected; a pre-1.37 bundle simply has no cone to render).
+CONTRACT_VERSION = "1.37.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are

@@ -324,6 +324,47 @@ export interface ScenarioResult {
   assimilative: AssimilativeCheck[];
 }
 
+/** One (radius, drawdown) sample of the cone profile (`bosc.hydrology.drawdown.DrawdownPoint`). */
+export interface DrawdownPoint {
+  radius_ft: number;
+  drawdown_ft: number;
+}
+
+/** The hypothetical pumping stress behind a drawdown cone (`bosc.hydrology.drawdown.DrawdownScenario`). */
+export interface DrawdownScenario {
+  name: string;
+  pumping_mgd: ProvenancedValue;
+  duration_days: number;
+  aquifer_material: string;
+  note: string;
+}
+
+/**
+ * The groundwater well-drawdown screen (`bosc.hydrology.drawdown.DrawdownResult`) — a Theis
+ * cone of depression over the ODNR well-log census + literature aquifer parameters, all
+ * `[inference]` (`tag`). `dewaters` is the headline: at the low-transmissivity end of the
+ * bracket the cone exceeds the saturated thickness (the aquifer cannot sustain the load).
+ * The pumping stress is HYPOTHETICAL — the campus draws municipal surface water; no
+ * groundwater withdrawal is on record.
+ */
+export interface DrawdownReport {
+  county: string;
+  scenario: DrawdownScenario;
+  material: string;
+  confinement: string;
+  transmissivity_ft2_day: ProvenancedValue;
+  storativity: ProvenancedValue;
+  saturated_thickness_ft: number | null;
+  drawdown_at_well_ft: ProvenancedValue;
+  radius_of_influence_ft: ProvenancedValue;
+  dewaters: boolean;
+  sustainable: boolean;
+  affected_domestic_wells: number | null;
+  profile: DrawdownPoint[];
+  tag: string;
+  caveats: string[];
+}
+
 /** One dated Esri Wayback aerial release (the `geo/imagery` feed's `meta.wayback`). */
 export interface WaybackRelease {
   date: string; // e.g. "2014-12"

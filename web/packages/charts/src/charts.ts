@@ -527,3 +527,78 @@ export function buildSparkline(values: number[]): Sparkline {
     dot: pts[pts.length - 1] ?? { x: x0, y: y0 },
   };
 }
+
+// --- AquiferSection: the groundwater cone of depression (#well-drawdown) ---------------
+// Pure geometry for the hydrology cross-section schematic. The forest dashed line is the
+// static (rest) water level; the amber curve is the drawn-down surface during pumping (an
+// [inference] mark); the oxblood dimension labels the drawdown, which caps at the aquifer
+// floor when it dewaters. Ported from design/components/hydrology/AquiferSection.jsx.
+
+/** A domestic-well casing placed at `x` (0..1 across the section), optionally labeled. */
+export interface AquiferWellInput {
+  x: number;
+  depthFrac?: number;
+  label?: string;
+}
+export interface AquiferSectionInput {
+  drawdownFt: number;
+  wells?: AquiferWellInput[];
+  height?: number;
+}
+export interface AquiferSectionGeom {
+  width: number;
+  height: number;
+  groundY: number;
+  staticY: number;
+  x0: number;
+  x1: number;
+  wellX: number;
+  coneBottom: number;
+  conePath: string;
+  coneFillPath: string;
+  wells: { x: number; y: number; h: number; label?: string }[];
+  casing: { x: number; y: number; w: number; h: number };
+  dimension: { x: number; y1: number; y2: number; labelY: number };
+}
+
+const AQ_W = 360;
+const AQ_GROUND = 40;
+const AQ_STATIC = 92;
+const AQ_X0 = 20;
+const AQ_X1 = 340;
+const AQ_WELLX = 180;
+const AQ_MAX_DIP = 98; // the drawn-down surface can dip no deeper than the aquifer floor
+
+/** Cone-of-depression geometry from a drawdown (ft) + optional domestic-well casings. */
+export function buildAquiferSection(input: AquiferSectionInput): AquiferSectionGeom {
+  const height = input.height ?? 200;
+  const dip = Math.min(AQ_MAX_DIP, Math.max(0, input.drawdownFt) * 1.57);
+  const coneBottom = round(AQ_STATIC + dip, 1);
+  const conePath = `M${AQ_X0} ${AQ_STATIC} C120 ${AQ_STATIC} 150 ${coneBottom} ${AQ_WELLX} ${coneBottom} C210 ${coneBottom} 260 ${AQ_STATIC} ${AQ_X1} ${AQ_STATIC}`;
+  const wells = (input.wells ?? []).map((w) => ({
+    x: round(AQ_X0 + (AQ_X1 - AQ_X0) * w.x, 1),
+    y: AQ_GROUND - 2,
+    h: round(40 + (w.depthFrac ?? 0.4) * 80, 1),
+    ...(w.label ? { label: w.label } : {}),
+  }));
+  return {
+    width: AQ_W,
+    height,
+    groundY: AQ_GROUND,
+    staticY: AQ_STATIC,
+    x0: AQ_X0,
+    x1: AQ_X1,
+    wellX: AQ_WELLX,
+    coneBottom,
+    conePath,
+    coneFillPath: `${conePath} L${AQ_X1} ${AQ_STATIC} Z`,
+    wells,
+    casing: { x: AQ_WELLX - 6, y: AQ_GROUND - 6, w: 12, h: round(coneBottom - AQ_GROUND + 6, 1) },
+    dimension: {
+      x: AQ_WELLX,
+      y1: AQ_STATIC,
+      y2: coneBottom,
+      labelY: round((AQ_STATIC + coneBottom) / 2 + 4, 1),
+    },
+  };
+}

@@ -1,0 +1,125 @@
+---
+/**
+ * AquiferSection — the groundwater cone of depression in cross-section (#well-drawdown).
+ * SSR SVG, no JS. Forest dashed = the static (rest) water level (data); the amber curve is
+ * the drawn-down surface during pumping (an `[inference]` mark); the oxblood dimension labels
+ * the drawdown, which caps at the aquifer floor when it dewaters. Domestic-well casings sit
+ * inside the cone. Geometry lives in `buildAquiferSection` (unit-tested); this is the template.
+ * Ported from design/components/hydrology/AquiferSection.jsx.
+ */
+import { type AquiferWellInput, buildAquiferSection } from "@watermark/charts/charts";
+import type { TagKind } from "@watermark/core/teardown";
+import EvidenceTag from "../EvidenceTag.astro";
+
+interface Props {
+  drawdownFt: number;
+  /** Overrides the dimension text (e.g. "≥47 ft (dewaters)"); defaults to "<n> ft". */
+  drawdownLabel?: string;
+  wellLabel?: string;
+  staticLabel?: string;
+  surfaceLabel?: string;
+  wells?: AquiferWellInput[];
+  height?: number;
+  kicker?: string;
+  title: string;
+  evidence?: TagKind;
+  source?: string;
+  caption?: string;
+}
+const {
+  drawdownFt,
+  drawdownLabel,
+  wellLabel = "pumping well",
+  staticLabel = "static water level",
+  surfaceLabel = "ground surface",
+  wells = [],
+  height = 200,
+  kicker = "Section · groundwater",
+  title,
+  evidence,
+  source,
+  caption,
+} = Astro.props;
+
+const g = buildAquiferSection({ drawdownFt, wells, height });
+const subFloorH = g.height - g.groundY - 10;
+const satH = g.height - g.staticY - 10;
+const wellCaptionY = Math.min(g.coneBottom + 16, g.height - 4);
+const dimLabel = drawdownLabel ?? `${drawdownFt} ft`;
+---
+
+<figure class="chart-card">
+  <figcaption class="chart-head">
+    <span class="chart-kicker">{kicker}</span>
+    <span class="chart-title">{title}</span>
+  </figcaption>
+  <svg viewBox={`0 0 ${g.width} ${g.height}`} class="chart-svg aquifer" role="img" aria-label={title}>
+    <!-- subsurface + saturated zone -->
+    <rect x={g.x0} y={g.groundY} width={g.x1 - g.x0} height={subFloorH} fill="#efe9da" />
+    <rect x={g.x0} y={g.staticY} width={g.x1 - g.x0} height={satH} fill="var(--data-1)" fill-opacity="0.10" />
+    <!-- carve the dewatered cone back to bone, then stroke the drawn-down surface (inference) -->
+    <path d={g.coneFillPath} fill="#efe9da" />
+    <path d={g.conePath} fill="none" stroke="var(--ev-inference-fg)" stroke-width="2" />
+    <!-- static (rest) level — the one data mark -->
+    <line x1={g.x0} y1={g.staticY} x2={g.x1} y2={g.staticY} stroke="var(--data-1)" stroke-width="1.5" stroke-dasharray="5 3" />
+    <!-- ground surface -->
+    <line x1={g.x0} y1={g.groundY} x2={g.x1} y2={g.groundY} stroke="var(--ink)" stroke-width="1.5" />
+    <!-- domestic well casings -->
+    {g.wells.map((w) => <rect x={w.x - 3} y={w.y} width="6" height={w.h} fill="var(--ink-muted)" />)}
+    <!-- pumping well casing -->
+    <rect x={g.casing.x} y={g.casing.y} width={g.casing.w} height={g.casing.h} fill="var(--ink)" />
+    <!-- drawdown dimension -->
+    <line x1={g.dimension.x} y1={g.dimension.y1} x2={g.dimension.x} y2={g.dimension.y2} stroke="var(--ev-gap-fg)" stroke-width="1.5" />
+    <text x={g.dimension.x + 8} y={g.dimension.labelY} class="aq-t aq-dim">{dimLabel}</text>
+    <!-- labels -->
+    <text x={g.x0 + 4} y={g.groundY + 12} class="aq-t aq-surface">{surfaceLabel}</text>
+    <text x={g.x0 + 4} y={g.staticY - 4} class="aq-t aq-static">{staticLabel}</text>
+    <text x={g.wellX} y={wellCaptionY} text-anchor="middle" class="aq-t aq-well">{wellLabel}</text>
+    {
+      g.wells.map((w) =>
+        w.label ? (
+          <text x={w.x} y={g.groundY + 60} text-anchor="middle" class="aq-t aq-welllabel">
+            {w.label}
+          </text>
+        ) : null,
+      )
+    }
+  </svg>
+  {
+    (evidence || source || caption) && (
+      <figcaption class="chart-foot">
+        {evidence && <EvidenceTag kind={evidence} title={source} />}
+        {caption && <span class="chart-caption">{caption}</span>}
+        {source && !caption && <span class="chart-caption">{source}</span>}
+      </figcaption>
+    )
+  }
+</figure>
+
+<style>
+  .aq-t {
+    font-family: var(--font-mono);
+  }
+  .aq-surface {
+    font-size: 9px;
+    fill: var(--ink-muted);
+  }
+  .aq-static {
+    font-size: 9px;
+    font-weight: 600;
+    fill: var(--data-1);
+  }
+  .aq-well {
+    font-size: 8.5px;
+    fill: var(--ev-inference-fg);
+  }
+  .aq-welllabel {
+    font-size: 8px;
+    fill: var(--ink-faint);
+  }
+  .aq-dim {
+    font-size: 11px;
+    font-weight: 700;
+    fill: var(--ev-gap-fg);
+  }
+</style>

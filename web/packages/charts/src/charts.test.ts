@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  buildAquiferSection,
   buildBullet,
   buildDonut,
   buildHBars,
@@ -179,5 +180,43 @@ describe("charts geometry (#306)", () => {
     // connectors run from each bar to the next, except the last
     expect(c.bars[0].connectorX2).not.toBeNull();
     expect(c.bars[2].connectorX2).toBeNull();
+  });
+
+  it("buildAquiferSection: the cone dips below the static level and deepens with drawdown", () => {
+    const shallow = buildAquiferSection({ drawdownFt: 10 });
+    const deep = buildAquiferSection({ drawdownFt: 47 });
+    // the drawn-down surface dips below the static (rest) level
+    expect(shallow.coneBottom).toBeGreaterThan(shallow.staticY);
+    // a deeper drawdown drives a deeper cone, and the dimension tracks the cone bottom
+    expect(deep.coneBottom).toBeGreaterThan(shallow.coneBottom);
+    expect(deep.conePath.startsWith("M")).toBe(true);
+    expect(deep.dimension.y2).toBe(deep.coneBottom);
+    expect(deep.casing.h).toBeGreaterThan(0);
+  });
+
+  it("buildAquiferSection: the cone caps at the aquifer floor when it dewaters", () => {
+    // dip = min(98, drawdownFt*1.57); past ~62.4 ft it saturates at the floor
+    const huge = buildAquiferSection({ drawdownFt: 400 });
+    const alsoHuge = buildAquiferSection({ drawdownFt: 100 });
+    expect(huge.coneBottom).toBe(alsoHuge.coneBottom);
+    expect(huge.coneBottom).toBe(huge.staticY + 98);
+  });
+
+  it("buildAquiferSection: wells land within the section and carry a casing depth + label", () => {
+    const g = buildAquiferSection({
+      drawdownFt: 30,
+      wells: [
+        { x: 0.2, label: "domestic" },
+        { x: 0.8, depthFrac: 0.6 },
+      ],
+    });
+    expect(g.wells).toHaveLength(2);
+    for (const w of g.wells) {
+      expect(w.x).toBeGreaterThanOrEqual(g.x0);
+      expect(w.x).toBeLessThanOrEqual(g.x1);
+      expect(w.h).toBeGreaterThan(0);
+    }
+    expect(g.wells[0].label).toBe("domestic");
+    expect(g.wells[1].label).toBeUndefined();
   });
 });

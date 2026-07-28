@@ -61,6 +61,7 @@ from watermark.economics.energy import (
 )
 from watermark.gleif import load_inventory as load_lei_inventory
 from watermark.grid.utility import load_grid_profile
+from watermark.hydrology.drawdown import load_drawdown
 from watermark.hydrology.hydrograph_routing import build_routed_hydrograph
 from watermark.hydrology.model import ScenarioResult
 from watermark.hypotheses import HYPOTHESES, Hypothesis, HypothesisAssessment, load_assessments
@@ -903,6 +904,12 @@ def _collect_feeds(settings: Settings) -> list[_Feed]:
         # #1235) — real NHDPlus geometry, reference-site gated; absent when the committed
         # centerline file is missing (the frontend degrades to the routed-hydrograph table).
         ("reach-network", None, lambda: _reach_network(settings)),
+        # The groundwater well-drawdown screen (the "area well concerns" thread) — a Theis cone of
+        # depression over the ODNR well-log census + literature aquifer parameters. Reference-gated
+        # by construction: `load_drawdown` returns None unless the site has a committed well-log
+        # census + a resolvable cooling basis (only Lima today), so the feed self-skips elsewhere.
+        # All [inference], bracketed; the headline is that the aquifer dewaters under the load.
+        ("drawdown", None, lambda: load_drawdown(settings=settings)),
         # The published data catalog (epic #631 Phase 3 / #659) — the data tier /about/data reads.
         ("catalog", CatalogItem, lambda: catalog_mod.export_catalog(settings)),
     ]

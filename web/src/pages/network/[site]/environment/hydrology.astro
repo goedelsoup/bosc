@@ -3,11 +3,13 @@ import { selectableSitePaths } from "@watermark/core/sites";
 export const getStaticPaths = selectableSitePaths;
 import Base from "~/layouts/Base.astro";
 import FigureStat from "~/components/FigureStat.astro";
+import AquiferSection from "~/components/charts/AquiferSection.astro";
 import BulletChart from "~/components/charts/BulletChart.astro";
 import { hasFeed, loadFeed } from "@watermark/core/bundle";
 import type {
   AssimilativeCheck,
   CoolingModel,
+  DrawdownReport,
   FacilityItem,
   ProvenancedValue,
   ScenarioResult,
@@ -81,6 +83,28 @@ const liveV = worst?.receiving_live ?? null;
 const riverName = scenarios.map((s) => s.receiving_water_name).find(Boolean) ?? "receiving water";
 const showScreen = worst != null && (drawV?.value ?? 0) > 0 && (lowV?.value ?? 0) > 0;
 const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.value as number)) : 0;
+
+// The groundwater peer of the reservoir-drawdown screen (#well-drawdown): a Theis cone of
+// depression over the ODNR well-log census. All [inference], bracketed — its headline is the
+// inverse finding, that a hyperscale groundwater stress dewaters the aquifer, corroborating
+// the campus's reliance on municipal surface water. Gated on the feed (reference-only today).
+const drawdown = hasFeed("drawdown") ? loadFeed<DrawdownReport>("drawdown") : null;
+const ddFt = drawdown?.drawdown_at_well_ft.value ?? 0;
+const ddRadius = drawdown?.radius_of_influence_ft.value ?? null;
+const ddPumping = drawdown?.scenario.pumping_mgd.value ?? null;
+const ddWellsN = drawdown?.affected_domestic_wells ?? null;
+const ddLabel = drawdown == null ? "" : drawdown.dewaters ? `${ddFt} ft — dewaters` : `${ddFt} ft`;
+// Illustrative domestic-well casings (a schematic cross-section, not a map); the real count
+// is carried in the caption. Placed inside the cone to read as "wells near the pumping well".
+const ddWells = [
+  { x: 0.12, depthFrac: 0.35, label: "domestic wells" },
+  { x: 0.34, depthFrac: 0.52 },
+  { x: 0.72, depthFrac: 0.42 },
+];
+const ddCaption =
+  drawdown == null
+    ? ""
+    : `${ddWellsN?.toLocaleString("en-US") ?? "—"} domestic census wells within the ${ddRadius?.toLocaleString("en-US") ?? "—"} ft radius of influence, for a hypothetical ${ddPumping ?? "—"} MGD groundwater stress. The campus draws municipal surface water; no groundwater withdrawal is on record.`;
 ---
 
 <Base title="Hydrology" section="environment">
@@ -123,6 +147,37 @@ const drawRatio = showScreen ? Math.round((drawV!.value as number) / (lowV!.valu
           ]}
           note={`The modeled ${worst.scenario.name} cooling draw (${fmt(drawV)}) is about ${drawRatio}× the ${riverName}'s 7Q10 design low flow (${fmt(lowV)}) — the drought flow Ohio writes discharge permits at. This is a basin-scale worst-case bound, not a river withdrawal: Lima draws treated water from five off-stream reservoirs (~15 BG) filled from the Auglaize and Ottawa at high flow, so the operating constraint is reservoir drawdown, not instantaneous river depletion.${liveV?.value != null ? ` Live flow today (${fmt(liveV)}) is far higher, but the screen is written for the dry floor.` : ""}`}
         />
+      )
+    }
+
+    {
+      drawdown && (
+        <Fragment>
+          <h2>Groundwater — the area well concerns</h2>
+          <p class="card-meta">
+            The screen above is the <em>surface-water</em> constraint. Its groundwater peer asks
+            what a well field supplying the campus makeup would do to the aquifer the county's{" "}
+            <strong>{drawdown.affected_domestic_wells?.toLocaleString("en-US") ?? "—"}</strong>{" "}
+            nearby domestic wells tap — a Theis cone of depression over the ODNR well-log census.
+          </p>
+          <AquiferSection
+            title={`Groundwater drawdown — ${drawdown.material} aquifer cone of depression`}
+            drawdownFt={ddFt}
+            drawdownLabel={ddLabel}
+            wells={ddWells}
+            evidence="inference"
+            source={drawdown.scenario.pumping_mgd.citation ?? undefined}
+            caption={ddCaption}
+          />
+          <p class="card-meta">
+            {drawdown.dewaters
+              ? `At the low-transmissivity end of the bracket the cone exceeds the ${drawdown.saturated_thickness_ft ?? "—"} ft saturated thickness — the aquifer cannot sustain this rate, which is exactly why the campus is on municipal surface water.`
+              : "The cone stays within the saturated thickness at this stress."}{" "}
+            Pumping is a hypothetical{" "}
+            <strong>[inference]</strong> stress, bracketed by the aquifer's transmissivity
+            uncertainty; it is not a documented groundwater withdrawal.
+          </p>
+        </Fragment>
       )
     }
 

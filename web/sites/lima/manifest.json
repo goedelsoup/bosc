@@ -1,10 +1,10 @@
 {
   "site": "lima",
   "bundle_version": "1.0.0",
-  "contract_version": "1.36.0",
+  "contract_version": "1.37.0",
   "generated_at": "2026-07-19T03:12:28+00:00",
-  "feed_count": 48,
-  "row_total": 1537,
+  "feed_count": 49,
+  "row_total": 1538,
   "readiness": {
     "tier": "reference",
     "domains": {
@@ -284,6 +284,14 @@
       "path": "feeds/reach-network.json",
       "media_type": "application/json",
       "schema": "schemas/reach-network.schema.json",
+      "kind": "object",
+      "count": 1
+    },
+    {
+      "name": "drawdown",
+      "path": "feeds/drawdown.json",
+      "media_type": "application/json",
+      "schema": "schemas/drawdown.schema.json",
       "kind": "object",
       "count": 1
     },
