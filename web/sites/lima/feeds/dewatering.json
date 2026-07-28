@@ -1403,6 +1403,76 @@
       }
     }
   ],
+  "discharge_screen": {
+    "upstream_gage": "04187100",
+    "upstream_name": "Ottawa River at Lima OH",
+    "downstream_gage": "04188100",
+    "downstream_name": "Ottawa River near Kalida OH",
+    "incremental_da_sqmi": 222.0,
+    "expected_discharge_cfs": {
+      "value": 7.6,
+      "unit": "cfs",
+      "source": "derived",
+      "citation": "Dewatering field capacity 4.9 MGD x 1.54723 cfs/MGD [inference]; an upper bound (staged installs/sealings + unknown routing) -> bracket [0, capacity].",
+      "confidence": "medium",
+      "asof": null,
+      "low": 0.0,
+      "high": 7.6
+    },
+    "window": {
+      "label": "dewatering",
+      "start": "2025-12-16",
+      "end": "2026-05-28",
+      "n_days": 151,
+      "upstream_median_cfs": 26.1,
+      "upstream_min_cfs": 2.9,
+      "baseflow_days": 38,
+      "baseflow_gain_median_cfs": 38.9,
+      "baseflow_resid_median_cfs": 26.5,
+      "provisional_fraction": 0.66
+    },
+    "baseline": {
+      "label": "baseline",
+      "start": "2024-12-16",
+      "end": "2025-05-28",
+      "n_days": 164,
+      "upstream_median_cfs": 54.2,
+      "upstream_min_cfs": 2.0,
+      "baseflow_days": 42,
+      "baseflow_gain_median_cfs": 40.0,
+      "baseflow_resid_median_cfs": 26.3,
+      "provisional_fraction": 0.0
+    },
+    "baseflow_gain_delta_cfs": -1.1,
+    "baseflow_resid_delta_cfs": 0.2,
+    "upstream_floor_delta_cfs": 0.9,
+    "separable": false,
+    "outcome": "not_separable",
+    "tag": "inference",
+    "note": "NOT SEPARABLE: the dewatering discharge (up to ~7.6 cfs) does not register in the Ottawa River at Lima OH -> Ottawa River near Kalida OH reach. The baseflow reach gain is +0.2 cfs vs the prior-year baseline and the upstream low-flow floor +0.9 cfs -- both within noise, swamped by the 222 sq mi of incremental drainage. The surface-water record can neither confirm nor exclude the discharge; its rate + receiving water are the [open] owed record.",
+    "caveats": [
+      "Gage discharge is [verified] USGS daily values; the reach-gain ATTRIBUTION to dewatering is [inference] -- a screen, never a metered discharge.",
+      "The 222 sq mi of incremental drainage between the gages produces a baseflow gain of ~40 cfs, so a ~7.6 cfs point source sits inside the reach's natural variability.",
+      "The discharge point + rate are not on record (the construction-dewatering NPDES authorization is an [open] owed record), so 'to this reach' is itself an assumption -- the water may have gone to a storm sewer, infiltration, or another receiving water.",
+      "Recent water-years are NWIS provisional (unreviewed); the screen is directional only."
+    ]
+  },
+  "reservoir_recharge": {
+    "gage": "04186500",
+    "gage_name": "Auglaize River near Fort Jennings OH",
+    "passby_cfs": 2.5,
+    "window_median_cfs": 44.0,
+    "baseline_median_cfs": 125.5,
+    "window_refill_days": 150,
+    "baseline_refill_days": 164,
+    "window_days": 164,
+    "baseline_days": 164,
+    "tag": "inference",
+    "note": "Over the pumping window the Auglaize River near Fort Jennings OH ran a median 44 cfs with 150 of 164 days above the 2 cfs pumping passby (vs 164 of 164 the prior year) -- the days Lima could pump the off-stream reservoirs full. Recharge context, not a dewatering effect: the reservoirs refill from the rivers at high flow, independent of the campus grading.",
+    "caveats": [
+      "Supply-gage flow is [verified] USGS daily values; the refill-day count is [inference] (the pumping passby is the modeling minimum, not a metered diversion schedule)."
+    ]
+  },
   "tag": "inference",
   "caveats": [
     "Hypothetical-free but screening-grade: the wells/rates/dates are [verified] ODNR records; every drawdown is [inference] (literature K, Cooper-Jacob, unconfined).",

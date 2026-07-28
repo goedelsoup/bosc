@@ -101,6 +101,17 @@ if (hasFeed("reach-network")) {
     note: "animated flow",
   });
 }
+if (hasFeed("drawdown") || hasFeed("dewatering")) {
+  doors.push({
+    id: "groundwater",
+    kind: "Analysis",
+    href: withSite("/environment/groundwater"),
+    count: num(count("dewatering")),
+    title: "Groundwater",
+    desc: "The area well concerns — the hypothetical drawdown cone, the documented construction-dewatering wellfield and the domestic wells it drew down, and a river-record screen for where that pumped water went.",
+    note: "well drawdown",
+  });
+}
 // The economics baseline is economic ground, not environmental — its door lives on the economy
 // hub (#1323), so it's intentionally absent here even though the feed is present.
 ---

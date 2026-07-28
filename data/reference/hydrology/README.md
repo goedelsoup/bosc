@@ -49,6 +49,16 @@ value — the computed one only shows the cited value is reproducible from publi
 
 **Cataloged datasets** — generated from `data/catalog/reference/`; run `watermark catalog render --apply` after editing an entry.
 
+### `dewatering-discharge` — Dewatering Discharge-Signal Screen + Reservoir-Recharge Context (Derived)
+
+Source: USGS NWIS daily discharge (00060) for the campus's bracketing gages (Ottawa @ Lima, near Kalida) + the primary supply gage (Auglaize @ Fort Jennings); the reach-gain screen is derived [inference] · License: U.S. Government work (USGS NWIS) · Access: public · Site scope: lima-legacy · Refresh: on-demand
+
+Regenerate: `watermark dewatering-discharge --write`
+
+| file | type | lfs |
+| --- | --- | --- |
+| `reference/hydrology/dewatering-discharge.yaml` | application/x-yaml | no |
+
 ### `hydrology` — Hydrology Reference Bundle (Water Balance · TMDL · Routing · Stormwater)
 
 Source: Mixed-provenance hydrology working set — USGS NWIS, Ohio EPA TMDL documents, SSURGO/document-derived stormwater inputs, and BOSC-derived routing/water-supply artifacts (per-file provenance tagged) · License: Mixed (USGS public domain · Ohio public-record TMDL values · BOSC-derived); per-file provenance tagged · Access: public · Site scope: basin:maumee · Refresh: on-demand

@@ -31,6 +31,7 @@ from watermark.sites._gis_schemas import (
 from watermark.sites._model import (
     CoolingModelType,
     DcEndUse,
+    DischargeReach,
     FacilityLifecycle,
     ItLoadGrounding,
     SiteFacility,
@@ -97,6 +98,18 @@ _LIMA = SiteProfile(
     footprint_relpath="extracted/plans/bosc-site-footprint.yaml",
     corridor_geo_relpath="reference/periplus",  # the frozen Periplus corridor study area + centerline
     dewatering_wellfield_relpath="reference/ohio-waterwells/lima-campus-dewatering.csv",
+    # The Ottawa River reach bracketing the campus: gains from the Lima gage (upstream, 128 sq mi)
+    # to the Kalida gage (downstream, 350 sq mi). A dewatering discharge to the Ottawa would ride in
+    # the reach gain, but the 222 sq mi of incremental drainage between them swamps a ~7.6 cfs source.
+    dewatering_discharge_reach=DischargeReach(
+        upstream_gage="04187100",
+        upstream_name="Ottawa River at Lima OH",
+        upstream_da_sqmi=128.0,
+        downstream_gage="04188100",
+        downstream_name="Ottawa River near Kalida OH",
+        downstream_da_sqmi=350.0,
+    ),
+    dewatering_discharge_relpath="reference/hydrology/dewatering-discharge.yaml",
     # per-site onboard reach outputs (Lima = legacy un-slugged paths)
     climatology_relpath="reference/hydrology/nasa-power-climatology.yaml",
     corridor_ddf_relpath="reference/hydrology/atlas14-corridor-ddf.yaml",

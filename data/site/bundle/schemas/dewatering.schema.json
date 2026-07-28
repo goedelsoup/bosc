@@ -1,5 +1,100 @@
 {
   "$defs": {
+    "DischargeScreen": {
+      "additionalProperties": false,
+      "description": "Whether the dewatering discharge is separable in the gage record (all ``[inference]``).",
+      "properties": {
+        "upstream_gage": {
+          "title": "Upstream Gage",
+          "type": "string"
+        },
+        "upstream_name": {
+          "title": "Upstream Name",
+          "type": "string"
+        },
+        "downstream_gage": {
+          "title": "Downstream Gage",
+          "type": "string"
+        },
+        "downstream_name": {
+          "title": "Downstream Name",
+          "type": "string"
+        },
+        "incremental_da_sqmi": {
+          "title": "Incremental Da Sqmi",
+          "type": "number"
+        },
+        "expected_discharge_cfs": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "window": {
+          "$ref": "#/$defs/ReachWindow"
+        },
+        "baseline": {
+          "$ref": "#/$defs/ReachWindow"
+        },
+        "baseflow_gain_delta_cfs": {
+          "title": "Baseflow Gain Delta Cfs",
+          "type": "number"
+        },
+        "baseflow_resid_delta_cfs": {
+          "title": "Baseflow Resid Delta Cfs",
+          "type": "number"
+        },
+        "upstream_floor_delta_cfs": {
+          "title": "Upstream Floor Delta Cfs",
+          "type": "number"
+        },
+        "separable": {
+          "title": "Separable",
+          "type": "boolean"
+        },
+        "outcome": {
+          "enum": [
+            "not_separable",
+            "elevated_gain",
+            "elevated_floor"
+          ],
+          "title": "Outcome",
+          "type": "string"
+        },
+        "tag": {
+          "default": "inference",
+          "title": "Tag",
+          "type": "string"
+        },
+        "note": {
+          "title": "Note",
+          "type": "string"
+        },
+        "caveats": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Caveats",
+          "type": "array"
+        }
+      },
+      "required": [
+        "upstream_gage",
+        "upstream_name",
+        "downstream_gage",
+        "downstream_name",
+        "incremental_da_sqmi",
+        "expected_discharge_cfs",
+        "window",
+        "baseline",
+        "baseflow_gain_delta_cfs",
+        "baseflow_resid_delta_cfs",
+        "upstream_floor_delta_cfs",
+        "separable",
+        "outcome",
+        "note"
+      ],
+      "title": "DischargeScreen",
+      "type": "object"
+    },
     "ImpactedWell": {
       "additionalProperties": false,
       "description": "A census well inside the composite cone, with its superimposed drawdown.",
@@ -138,6 +233,139 @@
       "title": "ProvenancedValue",
       "type": "object"
     },
+    "ReachWindow": {
+      "additionalProperties": false,
+      "description": "One period's baseflow reach statistics (upstream + downstream aligned by date).",
+      "properties": {
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "start": {
+          "title": "Start",
+          "type": "string"
+        },
+        "end": {
+          "title": "End",
+          "type": "string"
+        },
+        "n_days": {
+          "title": "N Days",
+          "type": "integer"
+        },
+        "upstream_median_cfs": {
+          "title": "Upstream Median Cfs",
+          "type": "number"
+        },
+        "upstream_min_cfs": {
+          "title": "Upstream Min Cfs",
+          "type": "number"
+        },
+        "baseflow_days": {
+          "title": "Baseflow Days",
+          "type": "integer"
+        },
+        "baseflow_gain_median_cfs": {
+          "title": "Baseflow Gain Median Cfs",
+          "type": "number"
+        },
+        "baseflow_resid_median_cfs": {
+          "title": "Baseflow Resid Median Cfs",
+          "type": "number"
+        },
+        "provisional_fraction": {
+          "title": "Provisional Fraction",
+          "type": "number"
+        }
+      },
+      "required": [
+        "label",
+        "start",
+        "end",
+        "n_days",
+        "upstream_median_cfs",
+        "upstream_min_cfs",
+        "baseflow_days",
+        "baseflow_gain_median_cfs",
+        "baseflow_resid_median_cfs",
+        "provisional_fraction"
+      ],
+      "title": "ReachWindow",
+      "type": "object"
+    },
+    "ReservoirRecharge": {
+      "additionalProperties": false,
+      "description": "The primary supply gage's flow regime over the window -- reservoir-recharge context.",
+      "properties": {
+        "gage": {
+          "title": "Gage",
+          "type": "string"
+        },
+        "gage_name": {
+          "title": "Gage Name",
+          "type": "string"
+        },
+        "passby_cfs": {
+          "title": "Passby Cfs",
+          "type": "number"
+        },
+        "window_median_cfs": {
+          "title": "Window Median Cfs",
+          "type": "number"
+        },
+        "baseline_median_cfs": {
+          "title": "Baseline Median Cfs",
+          "type": "number"
+        },
+        "window_refill_days": {
+          "title": "Window Refill Days",
+          "type": "integer"
+        },
+        "baseline_refill_days": {
+          "title": "Baseline Refill Days",
+          "type": "integer"
+        },
+        "window_days": {
+          "title": "Window Days",
+          "type": "integer"
+        },
+        "baseline_days": {
+          "title": "Baseline Days",
+          "type": "integer"
+        },
+        "tag": {
+          "default": "inference",
+          "title": "Tag",
+          "type": "string"
+        },
+        "note": {
+          "title": "Note",
+          "type": "string"
+        },
+        "caveats": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Caveats",
+          "type": "array"
+        }
+      },
+      "required": [
+        "gage",
+        "gage_name",
+        "passby_cfs",
+        "window_median_cfs",
+        "baseline_median_cfs",
+        "window_refill_days",
+        "baseline_refill_days",
+        "window_days",
+        "baseline_days",
+        "note"
+      ],
+      "title": "ReservoirRecharge",
+      "type": "object"
+    },
     "WellCone": {
       "additionalProperties": false,
       "description": "One dewatering well's cone of impact (all ``[inference]``).",
@@ -256,6 +484,28 @@
       },
       "title": "Impacted Wells",
       "type": "array"
+    },
+    "discharge_screen": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DischargeScreen"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "reservoir_recharge": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ReservoirRecharge"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
     },
     "tag": {
       "default": "inference",

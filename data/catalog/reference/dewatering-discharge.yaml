@@ -1,0 +1,35 @@
+id: dewatering-discharge
+title: Dewatering Discharge-Signal Screen + Reservoir-Recharge Context (Derived)
+scope: reference
+status: reviewed
+producer:
+  kind: derived
+  command: dewatering-discharge --write
+  connector_ref: watermark.hydrology.connectors.nwis
+  source: USGS NWIS daily discharge (00060) for the campus's bracketing gages (Ottawa @ Lima, near
+    Kalida) + the primary supply gage (Auglaize @ Fort Jennings); the reach-gain screen is derived
+    [inference]
+  external_url: https://waterservices.usgs.gov/
+depends_on:
+- lima-campus-dewatering
+license: U.S. Government work (USGS NWIS)
+# Lima-specific derived screen over the campus dewatering window — Lima's own un-slugged reference
+# file, not network-shared (like the derived low-flow set).
+site_scope: lima-legacy
+storage:
+- relpath: reference/hydrology/dewatering-discharge.yaml
+  media_type: application/x-yaml
+  lfs: false
+refresh:
+  cadence: on-demand
+provenance: derived
+tags:
+- dewatering
+- usgs-nwis
+- reach-gain
+- discharge
+notes: 'A snapshot over the fixed documented dewatering window (2025-12-16..2026-05-28) vs. a
+  prior-year baseline; the honest result is NEGATIVE (outcome: not_separable) -- the ~7.6 cfs
+  discharge is swamped by the 222 sq mi of incremental drainage between the Lima and Kalida gages,
+  so the surface-water record can neither confirm nor exclude it (the NPDES authorization is the
+  [open] owed record).'

@@ -1,4 +1,4 @@
-reconciled_at: '2026-07-28T17:57:14.074384+00:00'
+reconciled_at: '2026-07-28T20:12:22.330806+00:00'
 entries:
   aedg:
     exists: true
@@ -250,6 +250,16 @@ entries:
     asof: null
     stale: false
     site_scope: basin-shared
+  dewatering-discharge:
+    exists: true
+    sha256: cbac71b3f86e04245552aa9f9dda8ef26869e97cad7ca44f7eb02026b832bc54
+    size_bytes: 3448
+    lfs_materialized: true
+    file_count: 1
+    missing: []
+    asof: null
+    stale: false
+    site_scope: lima-legacy
   echo-great-miami-wwtp:
     exists: true
     sha256: 2cfc98655fe07a9da4cf0b3592744502d1a435f6f06510f93df36c6062adab8d
