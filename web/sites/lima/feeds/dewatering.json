@@ -1256,7 +1256,11 @@
         "asof": null,
         "low": 0.4,
         "high": 9.9
-      }
+      },
+      "available_column_ft": 55.0,
+      "column_consumed_frac": 0.18,
+      "goes_dry": false,
+      "gradient_position": "down-gradient"
     },
     {
       "object_id": "381126",
@@ -1272,7 +1276,11 @@
         "asof": null,
         "low": 0.4,
         "high": 9.4
-      }
+      },
+      "available_column_ft": 53.0,
+      "column_consumed_frac": 0.18,
+      "goes_dry": false,
+      "gradient_position": "down-gradient"
     },
     {
       "object_id": "366691",
@@ -1288,7 +1296,11 @@
         "asof": null,
         "low": 0.3,
         "high": 9.1
-      }
+      },
+      "available_column_ft": 57.0,
+      "column_consumed_frac": 0.16,
+      "goes_dry": false,
+      "gradient_position": "down-gradient"
     },
     {
       "object_id": "232791",
@@ -1304,7 +1316,11 @@
         "asof": null,
         "low": 0.4,
         "high": 8.9
-      }
+      },
+      "available_column_ft": 19.0,
+      "column_consumed_frac": 0.47,
+      "goes_dry": false,
+      "gradient_position": "down-gradient"
     },
     {
       "object_id": "419138",
@@ -1320,7 +1336,11 @@
         "asof": null,
         "low": 0.4,
         "high": 5.9
-      }
+      },
+      "available_column_ft": 45.0,
+      "column_consumed_frac": 0.13,
+      "goes_dry": false,
+      "gradient_position": "down-gradient"
     },
     {
       "object_id": "142899",
@@ -1336,7 +1356,11 @@
         "asof": null,
         "low": 0.2,
         "high": 5.8
-      }
+      },
+      "available_column_ft": 39.0,
+      "column_consumed_frac": 0.15,
+      "goes_dry": false,
+      "gradient_position": "down-gradient"
     },
     {
       "object_id": "6973",
@@ -1352,7 +1376,11 @@
         "asof": null,
         "low": 0.2,
         "high": 5.2
-      }
+      },
+      "available_column_ft": 56.0,
+      "column_consumed_frac": 0.09,
+      "goes_dry": false,
+      "gradient_position": "down-gradient"
     },
     {
       "object_id": "367471",
@@ -1368,7 +1396,11 @@
         "asof": null,
         "low": 0.4,
         "high": 4.5
-      }
+      },
+      "available_column_ft": 40.0,
+      "column_consumed_frac": 0.11,
+      "goes_dry": false,
+      "gradient_position": "down-gradient"
     },
     {
       "object_id": "247897",
@@ -1384,7 +1416,11 @@
         "asof": null,
         "low": 0.2,
         "high": 3.1
-      }
+      },
+      "available_column_ft": null,
+      "column_consumed_frac": null,
+      "goes_dry": false,
+      "gradient_position": "down-gradient"
     },
     {
       "object_id": "339443",
@@ -1400,9 +1436,20 @@
         "asof": null,
         "low": 0.3,
         "high": 1.8
-      }
+      },
+      "available_column_ft": 25.0,
+      "column_consumed_frac": 0.04,
+      "goes_dry": false,
+      "gradient_position": "cross-gradient"
     }
   ],
+  "hydraulic_gradient": {
+    "flow_bearing_deg": 315.0,
+    "magnitude_ft_per_mi": 11.8,
+    "n_wells": 760,
+    "r2": 0.83,
+    "note": "The regional water table falls ~11.8 ft/mi toward compass 315 deg (fit to 760 shallow census wells, R^2=0.83); groundwater flows that way, so a down-gradient well sees the field ~upstream of it in flow terms [inference]."
+  },
   "discharge_screen": {
     "upstream_gage": "04187100",
     "upstream_name": "Ottawa River at Lima OH",
@@ -1476,6 +1523,7 @@
   "tag": "inference",
   "caveats": [
     "Hypothetical-free but screening-grade: the wells/rates/dates are [verified] ODNR records; every drawdown is [inference] (literature K, Cooper-Jacob, unconfined).",
-    "test_rate_gpm is yield-test capacity, an upper bound on the sustained dewatering rate; installs/sealings were staged, so a simultaneous-full-rate composite bounds concurrency."
+    "test_rate_gpm is yield-test capacity, an upper bound on the sustained dewatering rate; installs/sealings were staged, so a simultaneous-full-rate composite bounds concurrency.",
+    "The cone is radially symmetric + homogeneous: it screens by DISTANCE only, in the dewatering wells' own aquifer. It cannot reach a far well through a preferential (buried-valley) pathway, nor cross from sand & gravel into a bedrock well -- so a reported impact beyond the modeled radius stays an [open] lead, not a modeled result."
   ]
 }

@@ -531,6 +531,9 @@ def export_dewatering_geo(settings: Settings | None = None) -> GeoFeatureCollect
             "drawdown_high_ft": s.high_or_value,
             "distance_ft": iw.distance_ft,
             "aquifer": iw.aquifer_type,
+            "available_column_ft": iw.available_column_ft,
+            "goes_dry": iw.goes_dry,
+            "gradient_position": iw.gradient_position,
             "tag": "inference",
         }
         features.append(

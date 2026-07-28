@@ -385,6 +385,28 @@ export interface DewateringImpactedWell {
   distance_ft: number;
   /** Sum of every dewatering well's Cooper-Jacob cone at this point, bracketed (`[inference]`). */
   composite_drawdown_ft: ProvenancedValue;
+  /** The well's own buffer before going dry: total depth − static level (ft). */
+  available_column_ft?: number | null;
+  /** drawdown / available column (≥ 1 ⇒ the drawdown would dewater this well). */
+  column_consumed_frac?: number | null;
+  /** The composite drawdown meets/exceeds the well's own available column. */
+  goes_dry?: boolean;
+  /** Position relative to the field along the regional gradient. */
+  gradient_position?: "down-gradient" | "up-gradient" | "cross-gradient" | null;
+}
+
+/**
+ * The regional water-table gradient near the field (`bosc.hydrology.dewatering.HydraulicGradient`),
+ * fit from census head (`dem_elev − static`). The groundwater analog of upstream/downstream: a
+ * radial cone is direction-blind, but a down-gradient well sees the field ~upstream of it. All
+ * `[inference]`.
+ */
+export interface HydraulicGradient {
+  flow_bearing_deg: number; // compass bearing groundwater flows TOWARD (down-gradient)
+  magnitude_ft_per_mi: number;
+  n_wells: number;
+  r2: number;
+  note: string;
 }
 
 /** One period's baseflow reach statistics (`bosc.hydrology.dewatering_discharge.ReachWindow`). */
@@ -469,6 +491,8 @@ export interface DewateringReport {
   centroid_lon: number;
   cones: DewateringCone[];
   impacted_wells: DewateringImpactedWell[];
+  /** The regional groundwater gradient near the field (1.40.0) — makes the flagged wells directional. */
+  hydraulic_gradient?: HydraulicGradient | null;
   discharge_screen?: DischargeScreen | null;
   reservoir_recharge?: ReservoirRecharge | null;
   tag: string;

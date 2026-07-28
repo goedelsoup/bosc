@@ -95,9 +95,44 @@
       "title": "DischargeScreen",
       "type": "object"
     },
+    "HydraulicGradient": {
+      "additionalProperties": false,
+      "description": "The regional water-table gradient near the field, fit from census head (all ``[inference]``).\n\nHead = ``dem_elev_ft - static_water_level_ft`` per shallow census well; a plane fit gives the\ndirection groundwater flows (down-gradient) + its steepness. The groundwater analog of the\nsurface-water upstream/downstream — a radial cone is direction-blind, but real flow is not.",
+      "properties": {
+        "flow_bearing_deg": {
+          "title": "Flow Bearing Deg",
+          "type": "number"
+        },
+        "magnitude_ft_per_mi": {
+          "title": "Magnitude Ft Per Mi",
+          "type": "number"
+        },
+        "n_wells": {
+          "title": "N Wells",
+          "type": "integer"
+        },
+        "r2": {
+          "title": "R2",
+          "type": "number"
+        },
+        "note": {
+          "title": "Note",
+          "type": "string"
+        }
+      },
+      "required": [
+        "flow_bearing_deg",
+        "magnitude_ft_per_mi",
+        "n_wells",
+        "r2",
+        "note"
+      ],
+      "title": "HydraulicGradient",
+      "type": "object"
+    },
     "ImpactedWell": {
       "additionalProperties": false,
-      "description": "A census well inside the composite cone, with its superimposed drawdown.",
+      "description": "A census well inside the composite cone, with its superimposed drawdown.\n\nBeyond the drawdown MAGNITUDE, two vulnerability lenses: (1) ``goes_dry`` compares the drawdown to\nthe well's OWN available water column (``available_column_ft`` = total depth - static level) — a\nvery shallow well is dewatered by a decline a deep well shrugs off; (2) ``gradient_position`` is\nthe well's place relative to the field along the regional groundwater gradient (a down-gradient\nwell sees the field ~upstream of it in flow terms). Both ``[inference]``.",
       "properties": {
         "object_id": {
           "title": "Object Id",
@@ -131,6 +166,47 @@
         },
         "composite_drawdown_ft": {
           "$ref": "#/$defs/ProvenancedValue"
+        },
+        "available_column_ft": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Available Column Ft"
+        },
+        "column_consumed_frac": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Column Consumed Frac"
+        },
+        "goes_dry": {
+          "default": false,
+          "title": "Goes Dry",
+          "type": "boolean"
+        },
+        "gradient_position": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Gradient Position"
         }
       },
       "required": [
@@ -484,6 +560,17 @@
       },
       "title": "Impacted Wells",
       "type": "array"
+    },
+    "hydraulic_gradient": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/HydraulicGradient"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
     },
     "discharge_screen": {
       "anyOf": [

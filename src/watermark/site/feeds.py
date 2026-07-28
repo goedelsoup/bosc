@@ -342,7 +342,18 @@ from watermark.sites import (
 #   dewatering-discharge --write`), so the export stays offline/deterministic. Two additive optional
 #   fields on an existing model → MINOR, back-compatible (a pre-1.39 bundle carries a cone with no
 #   discharge screen; a reader that doesn't know the fields is unaffected).
-CONTRACT_VERSION = "1.39.0"
+# 1.40.0: the `dewatering` feed's impacted wells become vulnerability-aware + directional (the "why
+#   does a shallow dry well slip past us?" thread). Each `ImpactedWell` gains `available_column_ft`
+#   (the well's own buffer before going dry = total depth - static level), `column_consumed_frac`,
+#   and `goes_dry` — because a very shallow well is dewatered by a decline a deep one shrugs off, so
+#   the flat >1 ft threshold under- and over-states real risk; the screen now also admits a well the
+#   drawdown would push past its OWN column even below 1 ft. And `DewateringImpact` gains a
+#   `hydraulic_gradient` (regional water-table gradient fit from census head `dem_elev - static`) +
+#   a per-well `gradient_position` (up/down/cross-gradient) — the groundwater analog of the discharge
+#   screen's upstream/downstream, since a radial cone is direction-blind but a down-gradient well sees
+#   the field ~upstream of it. All `[inference]`. Additive optional fields on an existing model →
+#   MINOR, back-compatible (a pre-1.40 reader is unaffected).
+CONTRACT_VERSION = "1.40.0"
 
 # SourceKind / Confidence now live in watermark.provenance (shared with watermark.hypotheses +
 # hydrology.ProvenancedValue, #605); re-exported here so importers of watermark.site.feeds are
