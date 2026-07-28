@@ -143,6 +143,13 @@ const VERDICT: Record<string, string> = {
               </tbody>
             </table>
           )}
+          {dewatering.impacted_wells.length > 0 && (
+            <p class="card-meta">
+              {dwDry > 0
+                ? `${dwDry} would be dewatered outright — the drawdown meets or exceeds the well's own water column.`
+                : "None would be dewatered outright: the flagged wells are deep enough that the drawdown eats only part of their water column, so the shallow-well 'ran dry' failure mode belongs to a different, more marginal population."}
+            </p>
+          )}
           {dwGrad && (
             <p class="card-meta">
               <strong>Direction matters.</strong> A radial cone is direction-blind, but groundwater
@@ -151,10 +158,7 @@ const VERDICT: Record<string, string> = {
               compass {dwGrad.flow_bearing_deg}° — so <strong>{dwDown}</strong> of the{" "}
               {dewatering.impacted_wells.length} flagged wells sit <strong>down-gradient</strong> of
               the field, the direction a dewatering field's drawdown and capture preferentially
-              extend.{" "}
-              {dwDry > 0
-                ? `${dwDry} would be dewatered outright — the drawdown meets or exceeds the well's own water column.`
-                : "None would be dewatered outright: the flagged wells are deep enough that the drawdown eats only part of their water column, so the shallow-well 'ran dry' failure mode belongs to a different, more marginal population."}
+              extend.
             </p>
           )}
           <p class="card-meta">
@@ -285,9 +289,10 @@ const VERDICT: Record<string, string> = {
   .dewatering-table td:nth-child(3) {
     color: var(--ev-inference-fg);
   }
-  /* A well the drawdown would dewater outright wears the evidence-gap oxblood. */
+  /* "Dewatered" is a data outcome, so it wears the indigo data color — the evidence palette (the
+     amber [inference] on the drawdown value) is reserved for evidence register, not emphasis. */
   .dewatering-table tr.goes-dry td:nth-child(4) {
-    color: var(--ev-gap-fg);
+    color: var(--data-1);
     font-weight: 700;
   }
 

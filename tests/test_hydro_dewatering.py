@@ -128,8 +128,9 @@ def test_hydraulic_gradient_and_positions(hydro_settings: Settings) -> None:
     assert positions and all(
         p in {"down-gradient", "up-gradient", "cross-gradient"} for p in positions
     )
-    # The flagged wells cluster down-gradient of the field (toward the Ottawa) — the point of the lens.
-    assert sum(1 for p in positions if p == "down-gradient") >= len(positions) // 2
+    # The flagged wells cluster down-gradient of the field (toward the Ottawa) — the point of the
+    # lens: a STRICT majority (more than half) must be down-gradient.
+    assert 2 * sum(1 for p in positions if p == "down-gradient") > len(positions)
 
 
 def test_gradient_position_classifier() -> None:
@@ -154,4 +155,5 @@ def test_goes_dry_flags_a_shallow_well_but_not_a_deep_one(hydro_settings: Settin
     assert by_id["9000001"].available_column_ft == 1.0
     assert by_id["9000001"].goes_dry is True
     assert by_id["9000002"].goes_dry is False
-    assert (by_id["9000002"].column_consumed_frac or 0) < 1.0
+    deep_frac = by_id["9000002"].column_consumed_frac
+    assert deep_frac is not None and deep_frac < 1.0

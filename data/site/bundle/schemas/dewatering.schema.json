@@ -192,13 +192,25 @@
           "title": "Column Consumed Frac"
         },
         "goes_dry": {
-          "default": false,
-          "title": "Goes Dry",
-          "type": "boolean"
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Goes Dry"
         },
         "gradient_position": {
           "anyOf": [
             {
+              "enum": [
+                "down-gradient",
+                "up-gradient",
+                "cross-gradient"
+              ],
               "type": "string"
             },
             {

@@ -389,8 +389,8 @@ export interface DewateringImpactedWell {
   available_column_ft?: number | null;
   /** drawdown / available column (≥ 1 ⇒ the drawdown would dewater this well). */
   column_consumed_frac?: number | null;
-  /** The composite drawdown meets/exceeds the well's own available column. */
-  goes_dry?: boolean;
+  /** The composite drawdown meets/exceeds the well's own available column; null when the column is unknown. */
+  goes_dry?: boolean | null;
   /** Position relative to the field along the regional gradient. */
   gradient_position?: "down-gradient" | "up-gradient" | "cross-gradient" | null;
 }
