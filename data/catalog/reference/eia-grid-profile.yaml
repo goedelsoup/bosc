@@ -39,3 +39,11 @@ notes: >-
   Michigan Power / Indiana; the Miami-basin sites WPAFB/Xenia = Dayton Power & Light / AES Ohio,
   #4922, PJM DAY zone). Fort Wayne's load_share is now populated from the IDEM-air-permit power
   basis (#360); a site with no documented facility carries the grid backdrop without a load share.
+  MIXED VINTAGE (#1644): the three load-share denominators publish on different schedules — the
+  EIA seriesid state route runs ahead of the EIA-861 bulk file (`eia861_year`) and the EIA-930
+  annual sum (`eia930_year`), so today's shares divide a campus figure by 2025 / 2024 / 2024
+  grids. Each denominator carries its data year as `asof`, each share's citation names the
+  vintage it divided by, and the profile note states the spread; `derive_grid_profile` refuses
+  to derive the block once the spread passes `grid_vintage_max_spread_years`. The utility
+  `avg_price_cents_kwh` is a bundled-SSO COHORT price, NOT an all-sector or industrial rate —
+  the qualification rides on the value's own citation.

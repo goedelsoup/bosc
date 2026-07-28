@@ -11,8 +11,12 @@ import pytest
 from pydantic import BaseModel
 
 from watermark.config import Settings
+from watermark.connectors import OfflineError
 from watermark.facility.power import derive_power_basis
+from watermark.grid.interchange import fetch_ba_annual_load
 from watermark.grid.utility import (
+    GridVintageDriftError,
+    _load_share_vintages,
     _retail_regulator,
     _serving_utility,
     derive_grid_profile,
@@ -304,17 +308,8 @@ def test_grid_profile_actually_pulls_its_denominators_from_connectors(
     } <= paths, f"the grid denominators are no longer connector-sourced; got {sorted(paths)}"
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason=(
-        "G1/#1644 (GP-G, open): the grid stack never got the economics layer's #1107 vintage "
-        "treatment — every connector-sourced value in the grid profile carries asof=None, so a "
-        "stale EIA-861/EIA-930 pull is not machine-flaggable. The economics peer already passes "
-        "the same assertion (test_eia_demand_pressure). Delete this marker when #1644 lands."
-    ),
-)
 def test_connector_values_carry_a_vintage_marker(grid_settings: Settings) -> None:
-    """H3/#1645: ``asof`` is the marker that makes a stale live pull visible (#1107 discipline).
+    """H3/#1645, closed by G1/#1644: ``asof`` makes a stale live pull visible (#1107 discipline).
 
     ``ProvenancedValue.asof`` is documented as "ISO datetime, for connector (live) values". A
     connector value without one cannot be aged by the catalog's staleness check, so a profile
@@ -323,3 +318,122 @@ def test_connector_values_carry_a_vintage_marker(grid_settings: Settings) -> Non
     gp = derive_grid_profile(settings=grid_settings)
     undated = [path for path, v in _connector_values(gp) if not getattr(v, "asof", None)]
     assert not undated, f"connector values missing an asof vintage marker: {undated}"
+
+
+def test_vintage_markers_are_the_data_year_not_the_run_date(grid_settings: Settings) -> None:
+    """The marker has to be the DATA's vintage, not "when we fetched it" — otherwise a re-pull
+    of a five-year-old bulk file would stamp itself fresh and the staleness check would be worse
+    than useless. Each ``asof`` must be the year its own citation names.
+    """
+    gp = derive_grid_profile(settings=grid_settings)
+    for path, value in _connector_values(gp):
+        assert value.asof is not None
+        year = value.asof[:4]
+        assert year.isdigit(), f"{path}: asof {value.asof!r} is not a data year"
+        assert year in (value.citation or ""), (
+            f"{path}: asof {value.asof!r} is not the vintage its citation names "
+            f"({value.citation!r}) — the marker must date the DATA, not the run"
+        )
+
+
+# --- G2/#1644: mixed denominator vintages, surfaced and gated ----------------------------------
+
+
+def test_each_load_share_denominator_names_its_own_vintage(grid_settings: Settings) -> None:
+    """The load-share table divides one campus figure by three denominators of DIFFERENT years.
+
+    Before G2 only the utility share named a vintage; the BA share said "EIA-930 annual demand"
+    with no year and the state share named none at all. A reader comparing 5.64% / 0.337% / 1.69%
+    could not tell they were struck against 2024 / 2024 / 2025 grids. Each citation now carries
+    the year of the denominator it actually divided by — asserted against that denominator's own
+    ``asof`` rather than a literal, so this cannot pass by naming the wrong year confidently.
+    """
+    ls = derive_grid_profile(settings=grid_settings).load_share
+    assert ls is not None
+    for share, denom in (
+        (ls.share_of_utility_pct, ls.utility_retail_gwh),
+        (ls.share_of_ba_pct, ls.ba_load_gwh),
+        (ls.share_of_state_pct, ls.state_retail_gwh),
+    ):
+        assert denom.asof is not None
+        assert denom.asof[:4] in (share.citation or ""), (
+            f"share citation {share.citation!r} does not name its denominator's "
+            f"{denom.asof!r} vintage"
+        )
+    # The mixed vintage is stated once, in prose, where a reader meets the table — not left to
+    # be reassembled from three citations.
+    note = derive_grid_profile(settings=grid_settings).note
+    assert "vintages differ" in note.lower()
+    assert ls.state_retail_gwh.asof is not None and ls.state_retail_gwh.asof[:4] in note
+
+
+def test_the_committed_denominators_really_are_mixed_vintage(grid_settings: Settings) -> None:
+    """The premise of the test above: if all three ever landed on one year, that assertion would
+    pass trivially and stop testing anything. Pin the condition it exists to describe."""
+    ls = derive_grid_profile(settings=grid_settings).load_share
+    assert ls is not None
+    years = {
+        v.asof[:4]
+        for v in (ls.utility_retail_gwh, ls.ba_load_gwh, ls.state_retail_gwh)
+        if v.asof is not None
+    }
+    assert len(years) > 1, (
+        f"all three denominators are now vintage {years} — the mixed-vintage reconciliation is "
+        "no longer describing a real condition; revisit G2/#1644 rather than deleting it"
+    )
+
+
+def test_vintage_drift_past_the_tolerance_refuses_to_derive_a_share() -> None:
+    """A forgotten vintage bump must fail loudly, not ship a share against a stale grid.
+
+    The whole point of G2: ``eia861_year`` / ``eia930_year`` are knobs someone has to remember,
+    and a forgotten one shows up only as a slowly widening gap that three printed percentages
+    hide completely. Drive the guard directly with denominators three years apart — past the
+    default 2-year tolerance — and it must raise rather than divide.
+    """
+    settings = _committed_grid_settings("lima")
+    fresh = ProvenancedValue.from_connector(100.0, "GWh/yr", citation="state", asof="2025")
+    stale = ProvenancedValue.from_connector(100.0, "GWh/yr", citation="utility", asof="2022")
+    with pytest.raises(GridVintageDriftError) as exc:
+        _load_share_vintages(settings, utility_retail=stale, ba_load=fresh, state_retail=fresh)
+    assert "3 years" in str(exc.value)
+    # It names the knobs to bump — a guard that only says "no" costs more than it saves.
+    assert "EIA861_YEAR" in str(exc.value) and "EIA930_YEAR" in str(exc.value)
+
+    # Inside the tolerance the same call reconciles rather than raising: a one-year spread is
+    # the normal upstream publication lag, and refusing it would break every re-pull.
+    ok = _load_share_vintages(
+        settings,
+        utility_retail=ProvenancedValue.from_connector(1.0, "GWh/yr", citation="u", asof="2024"),
+        ba_load=ProvenancedValue.from_connector(1.0, "GWh/yr", citation="b", asof="2024"),
+        state_retail=fresh,
+    )
+    assert ok.spread_years == 1 and ok.state == "2025" and ok.utility == "2024"
+
+
+def test_undated_denominators_fall_back_to_config_not_to_year_zero() -> None:
+    """A pre-G1 committed profile round-trips with ``asof: null``. Reading that as "year 0" would
+    make the guard raise on every legacy artifact, so an undated value reads the configured
+    vintage instead — undated is unknown, not ancient."""
+    settings = _committed_grid_settings("lima")
+    undated = ProvenancedValue.from_connector(1.0, "GWh/yr", citation="legacy")
+    v = _load_share_vintages(
+        settings, utility_retail=undated, ba_load=undated, state_retail=undated
+    )
+    assert v.utility == str(settings.eia861_year) and v.ba == str(settings.eia930_year)
+    assert v.spread_years == 0
+
+
+def test_the_eia930_vintage_is_a_config_knob_not_a_call_site_literal() -> None:
+    """G2: the BA denominator's year lived only as a default in ``fetch_ba_annual_load``'s
+    signature, beside an ``eia861_year`` that WAS config — so half the vintage set was
+    invisible to anyone bumping the other half. Changing the setting must change the pull."""
+    settings = Settings(
+        data_dir=REPO_ROOT / "data",
+        econ_offline=True,
+        econ_fixtures_dir=REPO_ROOT / "tests" / "fixtures" / "economics",
+        eia930_year=1999,
+    )
+    with pytest.raises(OfflineError) as exc:  # no fixture for 1999 — the key names the year
+        fetch_ba_annual_load(ba="PJM", settings=settings)
+    assert "1999" in str(exc.value)

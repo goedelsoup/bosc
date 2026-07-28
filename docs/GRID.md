@@ -42,11 +42,11 @@ transmission zone, FERC-jurisdictional); retail service is **PUCO**-regulated.
 (`watermark.facility.power`, [#87](COMPUTE.md) — IT load × PUE, ~348 MW central) at a ~0.9
 load factor is **~2,740 GWh/yr**:
 
-| Denominator | Annual load | Campus share | Basis |
-|---|--:|--:|---|
-| AEP Ohio retail (EIA-861) | ~48,653 GWh | **~5.6%** | `[connector]` EIA-861 per-utility (2024) |
-| PJM total load (EIA-930) | ~815,056 GWh | ~0.34% | `[connector]` EIA-930 annual demand (2024) |
-| Ohio retail (EIA) | ~161,934 GWh | ~1.7% | `[connector]` (shared with [#91](ECONOMICS.md)) |
+| Denominator | Annual load | Campus share | Basis | Vintage |
+|---|--:|--:|---|--:|
+| AEP Ohio retail (EIA-861) | ~48,653 GWh | **~5.6%** | `[connector]` EIA-861 per-utility | 2024 |
+| PJM total load (EIA-930) | ~815,056 GWh | ~0.34% | `[connector]` EIA-930 annual demand | 2024 |
+| Ohio retail (EIA) | ~161,934 GWh | ~1.7% | `[connector]` (shared with [#91](ECONOMICS.md)) | 2025 |
 
 The headline: **a single campus equals a material fraction (~5–6%) of its serving
 utility's entire retail electricity sales.** All three denominators are now
@@ -54,6 +54,24 @@ connector-sourced — AEP-Ohio retail from the EIA-861 per-utility "Sales to Ult
 Customers" bulk file, PJM annual demand from EIA-930 (Eastern-tz daily sum), and Ohio
 retail shared with [#91](ECONOMICS.md) (see the
 [reference README](../data/reference/eia/README.md)).
+
+**The three shares are not struck against one common year** (G2/[#1644](https://github.com/watermark-directory/the-watermark-directory/issues/1644)).
+The EIA seriesid state route publishes ahead of the EIA-861 bulk file and the EIA-930
+annual sum, so the vintage column above is a real property of the upstream data, not a
+lapse — which is why it is a column rather than a footnote. Each denominator carries its
+data year as `asof` (the [#1107](https://github.com/watermark-directory/the-watermark-directory/issues/1107)
+staleness marker), each share's citation names the vintage it divided by, and the profile
+note states the spread. The two config knobs (`WATERMARK_EIA861_YEAR`,
+`WATERMARK_EIA930_YEAR`) have to be bumped by hand when EIA publishes; past
+`grid_vintage_max_spread_years` (default 2) `derive_grid_profile` **raises** rather than
+shipping a share that compares a current campus against a stale grid.
+
+A note on the utility's **average price** (EIA-861, ~18.6 ¢/kWh for AEP Ohio): that is the
+**bundled standard-service-offer cohort** — in restructured Ohio, the customers who never
+shopped for a competitive supplier, which skews residential. It is not the utility's
+all-sector average, and it is **not** what a large industrial or data-center load pays
+(the all-sector Ohio rate is ~12–13 ¢/kWh). The qualification travels on the value's own
+citation; don't quote the figure without it.
 
 ## #95 — interchange layer (EIA-930)
 

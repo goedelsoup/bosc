@@ -307,6 +307,18 @@ class Settings(BaseSettings):
     # reduced payloads (which ride cached_get's TTL), the raw zip is a plain file download;
     # a stale/poisoned body is otherwise cached forever (A4/#1638), so age it out.
     eia861_cache_ttl_hours: int = DEFAULT_CACHE_TTL_HOURS
+    # EIA-930 Hourly Electric Grid Monitor — the balancing authority's annual demand, summed
+    # from the daily route (#95/#120). The vintage lives here beside `eia861_year` rather than
+    # as a call-site default (G2/#1644): the load-share table divides one campus figure by three
+    # denominators of DIFFERENT vintages, so each vintage has to be a visible knob someone can
+    # bump, not a literal buried in a connector signature.
+    eia930_year: int = 2024  # latest complete EIA-930 annual demand vintage
+    # How far apart the load-share denominators' vintages may drift before `watermark grid`
+    # refuses to derive a share (G2/#1644). The three EIA denominators publish on different
+    # schedules — the state seriesid route runs ahead of the EIA-861 bulk file — so a small
+    # spread is normal and stating it is enough. A LARGE one means a vintage knob was forgotten,
+    # and the resulting share silently compares a campus against a stale grid.
+    grid_vintage_max_spread_years: int = 2
     # Per-site (from the active SiteProfile): the retail utility (Lima = AEP Ohio 14006).
     eia861_utility_number: int = 0
     # Per-site (from the active SiteProfile): the county FIPS (Lima = Allen County 39003).

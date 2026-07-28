@@ -61,9 +61,19 @@ class ServingUtility(BaseModel):
 class UtilityProfile(BaseModel):
     """EIA-861 annual profile for the serving utility (retail sales / customers / price).
 
-    Transcribed published EIA-861 figures (``reference``), not a facility disclosure;
-    the per-utility EIA-861 entity file is the authoritative source (see the README) —
-    figures here are flagged for verification with a keyed/bulk pull.
+    **Connector-sourced**, not transcribed: :func:`watermark.grid.eia861.fetch_utility_retail`
+    reduces the EIA-861 annual bulk zip's Sales-to-Ultimate-Customers sheet (or the 861S short
+    form for a utility that files it) to this one utility's rows, so every value below is a
+    ``connector`` :class:`ProvenancedValue` carrying the data year as its ``asof`` (G1/#1644).
+    Not a facility disclosure — a published federal figure about the utility.
+
+    ``avg_price_cents_kwh`` is a **cohort** price, not the utility's all-sector average (G3/#1644):
+    on the full form it is bundled (standard-service-offer) revenue over bundled sales, i.e. the
+    customers who never shopped, which in a restructured state skews residential and runs well
+    above the all-sector rate. It is emphatically **not** what a large industrial / data-center
+    customer pays — the value's own citation says so, and any surface that renders it must carry
+    that qualification with it. (The short-form case has no such skew: a full-service
+    municipal/cooperative's single line IS its whole retail cohort.)
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -72,30 +82,44 @@ class UtilityProfile(BaseModel):
     ownership: str = (
         ""  # EIA-861 ownership ("Investor Owned" / "Municipal" / "Cooperative"); "" if unread
     )
-    eia_source: str = "EIA-861 utility annual electric sales (transcribed; verify)"
-    retail_sales_gwh: ProvenancedValue  # reference
-    customers: ProvenancedValue | None = None  # reference
-    avg_price_cents_kwh: ProvenancedValue | None = None  # reference
+    # Overwritten by the connector with the form + total actually read; this default only
+    # survives on a hand-authored profile.
+    eia_source: str = "EIA-861 utility annual electric sales (connector)"
+    retail_sales_gwh: ProvenancedValue  # connector (EIA-861)
+    customers: ProvenancedValue | None = None  # connector (EIA-861)
+    avg_price_cents_kwh: ProvenancedValue | None = None  # connector; bundled-SSO COHORT, see above
 
 
 class BalancingAuthorityProfile(BaseModel):
-    """EIA-930 annual profile for the balancing authority / RTO (PJM)."""
+    """EIA-930 annual profile for the balancing authority / RTO (PJM).
+
+    Connector-sourced (:func:`watermark.grid.interchange.fetch_ba_annual_load` sums the EIA-930
+    daily demand route over the configured ``eia930_year``); the load carries that year as its
+    ``asof``.
+    """
 
     model_config = ConfigDict(extra="forbid")
 
     ba: str  # "PJM Interconnection"
-    eia_source: str = "EIA-930 hourly grid monitor, annual demand (transcribed; verify)"
-    annual_load_gwh: ProvenancedValue  # reference
+    eia_source: str = "EIA-930 hourly grid monitor, annual demand (connector)"
+    annual_load_gwh: ProvenancedValue  # connector (EIA-930)
 
 
 class GridLoadShare(BaseModel):
     """The campus load expressed as a share of utility / BA / state load.
 
-    Sizes the campus annual electricity demand (from the first-class
-    ``facility_draw``, :mod:`watermark.facility.power`, issue #87) against three cited
-    denominators. The state share is the most robust (the EIA state figure is
-    connector-sourced); the utility and BA shares use transcribed EIA-861/930 figures
-    flagged for verification, so their confidence is lower.
+    Sizes the campus annual electricity demand (from the first-class ``facility_draw``,
+    :mod:`watermark.facility.power`, issue #87) against three cited denominators. All three are
+    connector pulls (A1/#1638 replaced the last transcribed ones and made a missing denominator
+    raise rather than zero-fill), so the confidence ordering that once separated them is gone.
+
+    **They are not the same vintage** (G2/#1644). The EIA state seriesid route publishes ahead of
+    the EIA-861 bulk file and the EIA-930 annual sum, so the three percentages here are struck
+    against three different years' grids. That is a real property of the upstream data, not a
+    defect — but it has to be visible: each denominator carries its year as ``asof``, each share's
+    citation names the vintage it divided by, and :class:`GridProfile.note` states the spread.
+    :func:`watermark.grid.utility._load_share_vintages` refuses to derive the block at all once
+    the spread passes ``Settings.grid_vintage_max_spread_years``.
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -103,9 +127,9 @@ class GridLoadShare(BaseModel):
     campus_load_mw: ProvenancedValue  # total facility draw, central (#87)
     load_factor: ProvenancedValue  # assumption: capacity utilization
     annual_consumption_gwh: ProvenancedValue  # derived: draw x 8760 x load factor
-    utility_retail_gwh: ProvenancedValue  # AEP Ohio retail sales (reference)
-    ba_load_gwh: ProvenancedValue  # PJM annual load (reference)
-    state_retail_gwh: ProvenancedValue  # Ohio retail sales (connector, shared with #91)
+    utility_retail_gwh: ProvenancedValue  # serving-utility retail sales (connector, EIA-861)
+    ba_load_gwh: ProvenancedValue  # BA annual load (connector, EIA-930)
+    state_retail_gwh: ProvenancedValue  # state retail sales (connector, shared with #91)
     share_of_utility_pct: ProvenancedValue  # derived
     share_of_ba_pct: ProvenancedValue  # derived
     share_of_state_pct: ProvenancedValue  # derived

@@ -50,7 +50,7 @@ utility_profile:
     citation: EIA-861 2024 Sales to Ultimate Customers, City of Bowling Green - (OH)
       (#2054), OH; bundled + delivery total sales
     confidence: high
-    asof: null
+    asof: '2024'
     low: null
     high: null
   customers:
@@ -60,7 +60,7 @@ utility_profile:
     citation: EIA-861 2024 Sales to Ultimate Customers, City of Bowling Green - (OH)
       (#2054), OH; bundled + delivery total customers
     confidence: high
-    asof: null
+    asof: '2024'
     low: null
     high: null
   avg_price_cents_kwh:
@@ -68,10 +68,14 @@ utility_profile:
     unit: cents/kWh
     source: connector
     citation: EIA-861 2024 Sales to Ultimate Customers, City of Bowling Green - (OH)
-      (#2054), OH; bundled (full-service) revenue/sales — delivery-only rows exclude
-      generation, so a blended price understates the all-in cost
+      (#2054), OH; COHORT PRICE — bundled (standard-service-offer) revenue/sales only.
+      Delivery-only rows are excluded because they carry just the wires charge (generation
+      is paid to a competitive supplier), but the remaining bundled cohort is the
+      customers who never shopped, which in a restructured state skews residential.
+      NOT the utility's all-sector average and NOT an industrial/data-center rate
+      — compare the state all-sector price (EIA ELEC.PRICE.<state>-ALL.A) for that
     confidence: high
-    asof: null
+    asof: '2024'
     low: null
     high: null
 ba_profile:
@@ -83,7 +87,7 @@ ba_profile:
     source: connector
     citation: EIA-930 daily demand sum, PJM 2024 (366 days, Eastern tz)
     confidence: high
-    asof: null
+    asof: '2024'
     low: null
     high: null
 load_share:
@@ -123,7 +127,7 @@ load_share:
     citation: EIA-861 2024 Sales to Ultimate Customers, City of Bowling Green - (OH)
       (#2054), OH; bundled + delivery total sales
     confidence: high
-    asof: null
+    asof: '2024'
     low: null
     high: null
   ba_load_gwh:
@@ -132,7 +136,7 @@ load_share:
     source: connector
     citation: EIA-930 daily demand sum, PJM 2024 (366 days, Eastern tz)
     confidence: high
-    asof: null
+    asof: '2024'
     low: null
     high: null
   state_retail_gwh:
@@ -141,7 +145,7 @@ load_share:
     source: connector
     citation: 'EIA ELEC.SALES.OH-ALL.A (2025); shared with #91'
     confidence: high
-    asof: null
+    asof: '2025'
     low: null
     high: null
   share_of_utility_pct:
@@ -158,7 +162,7 @@ load_share:
     value: 0.231
     unit: percent
     source: derived
-    citation: campus 1880 GWh / PJM 815,056 GWh (EIA-930 annual demand)
+    citation: campus 1880 GWh / PJM 815,056 GWh (EIA-930 2024 annual demand)
     confidence: medium
     asof: null
     low: null
@@ -167,7 +171,7 @@ load_share:
     value: 1.16
     unit: percent
     source: derived
-    citation: campus 1880 GWh / Ohio 161934 GWh
+    citation: campus 1880 GWh / Ohio 161934 GWh (EIA 2025 retail)
     confidence: medium
     asof: null
     low: null
@@ -176,4 +180,7 @@ note: 'Grid foundation layer (#94). The state, City of Bowling Green - (OH), and
   denominators are now all connector-sourced — Ohio retail from EIA (shared with #91),
   per-utility retail from the EIA-861 file, and PJM annual demand from EIA-930. The
   campus is a single load equal to a material fraction of its serving utility''s entire
-  retail sales.'
+  retail sales. Denominator vintages differ (utility EIA-861 2024 / BA EIA-930 2024
+  / state EIA 2025 (1-year spread)): the EIA state seriesid route publishes ahead
+  of the EIA-861 bulk file and the EIA-930 annual sum, so the three shares are not
+  struck against one common year.'

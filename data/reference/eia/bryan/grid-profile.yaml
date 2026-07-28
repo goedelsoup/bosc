@@ -46,7 +46,7 @@ utility_profile:
     citation: EIA-861 2024 861S Short Form, City of Bryan - (OH) (#2439), OH; annual
       total sales
     confidence: high
-    asof: null
+    asof: '2024'
     low: null
     high: null
   customers:
@@ -56,17 +56,19 @@ utility_profile:
     citation: EIA-861 2024 861S Short Form, City of Bryan - (OH) (#2439), OH; annual
       total customers
     confidence: high
-    asof: null
+    asof: '2024'
     low: null
     high: null
   avg_price_cents_kwh:
     value: 10.75
     unit: cents/kWh
     source: connector
-    citation: EIA-861 2024 861S Short Form, City of Bryan - (OH) (#2439), OH; full-service
-      municipal/cooperative retail (short form has no service-type split)
+    citation: EIA-861 2024 861S Short Form, City of Bryan - (OH) (#2439), OH; all-customer
+      average for this utility — the short form has no service-type split, so a full-service
+      municipal/cooperative's single total is its whole retail cohort (no bundled-vs-shopping
+      skew)
     confidence: high
-    asof: null
+    asof: '2024'
     low: null
     high: null
 ba_profile:
@@ -78,7 +80,7 @@ ba_profile:
     source: connector
     citation: EIA-930 daily demand sum, PJM 2024 (366 days, Eastern tz)
     confidence: high
-    asof: null
+    asof: '2024'
     low: null
     high: null
 load_share: null

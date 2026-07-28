@@ -2,14 +2,14 @@
   "$defs": {
     "BalancingAuthorityProfile": {
       "additionalProperties": false,
-      "description": "EIA-930 annual profile for the balancing authority / RTO (PJM).",
+      "description": "EIA-930 annual profile for the balancing authority / RTO (PJM).\n\nConnector-sourced (:func:`watermark.grid.interchange.fetch_ba_annual_load` sums the EIA-930\ndaily demand route over the configured ``eia930_year``); the load carries that year as its\n``asof``.",
       "properties": {
         "ba": {
           "title": "Ba",
           "type": "string"
         },
         "eia_source": {
-          "default": "EIA-930 hourly grid monitor, annual demand (transcribed; verify)",
+          "default": "EIA-930 hourly grid monitor, annual demand (connector)",
           "title": "Eia Source",
           "type": "string"
         },
@@ -68,7 +68,7 @@
     },
     "GridLoadShare": {
       "additionalProperties": false,
-      "description": "The campus load expressed as a share of utility / BA / state load.\n\nSizes the campus annual electricity demand (from the first-class\n``facility_draw``, :mod:`watermark.facility.power`, issue #87) against three cited\ndenominators. The state share is the most robust (the EIA state figure is\nconnector-sourced); the utility and BA shares use transcribed EIA-861/930 figures\nflagged for verification, so their confidence is lower.",
+      "description": "The campus load expressed as a share of utility / BA / state load.\n\nSizes the campus annual electricity demand (from the first-class ``facility_draw``,\n:mod:`watermark.facility.power`, issue #87) against three cited denominators. All three are\nconnector pulls (A1/#1638 replaced the last transcribed ones and made a missing denominator\nraise rather than zero-fill), so the confidence ordering that once separated them is gone.\n\n**They are not the same vintage** (G2/#1644). The EIA state seriesid route publishes ahead of\nthe EIA-861 bulk file and the EIA-930 annual sum, so the three percentages here are struck\nagainst three different years' grids. That is a real property of the upstream data, not a\ndefect — but it has to be visible: each denominator carries its year as ``asof``, each share's\ncitation names the vintage it divided by, and :class:`GridProfile.note` states the spread.\n:func:`watermark.grid.utility._load_share_vintages` refuses to derive the block at all once\nthe spread passes ``Settings.grid_vintage_max_spread_years``.",
       "properties": {
         "campus_load_mw": {
           "$ref": "#/$defs/ProvenancedValue"
@@ -239,7 +239,7 @@
     },
     "UtilityProfile": {
       "additionalProperties": false,
-      "description": "EIA-861 annual profile for the serving utility (retail sales / customers / price).\n\nTranscribed published EIA-861 figures (``reference``), not a facility disclosure;\nthe per-utility EIA-861 entity file is the authoritative source (see the README) —\nfigures here are flagged for verification with a keyed/bulk pull.",
+      "description": "EIA-861 annual profile for the serving utility (retail sales / customers / price).\n\n**Connector-sourced**, not transcribed: :func:`watermark.grid.eia861.fetch_utility_retail`\nreduces the EIA-861 annual bulk zip's Sales-to-Ultimate-Customers sheet (or the 861S short\nform for a utility that files it) to this one utility's rows, so every value below is a\n``connector`` :class:`ProvenancedValue` carrying the data year as its ``asof`` (G1/#1644).\nNot a facility disclosure — a published federal figure about the utility.\n\n``avg_price_cents_kwh`` is a **cohort** price, not the utility's all-sector average (G3/#1644):\non the full form it is bundled (standard-service-offer) revenue over bundled sales, i.e. the\ncustomers who never shopped, which in a restructured state skews residential and runs well\nabove the all-sector rate. It is emphatically **not** what a large industrial / data-center\ncustomer pays — the value's own citation says so, and any surface that renders it must carry\nthat qualification with it. (The short-form case has no such skew: a full-service\nmunicipal/cooperative's single line IS its whole retail cohort.)",
       "properties": {
         "utility": {
           "title": "Utility",
@@ -251,7 +251,7 @@
           "type": "string"
         },
         "eia_source": {
-          "default": "EIA-861 utility annual electric sales (transcribed; verify)",
+          "default": "EIA-861 utility annual electric sales (connector)",
           "title": "Eia Source",
           "type": "string"
         },

@@ -55,8 +55,19 @@ export interface GridBackdropData {
   baName: string;
   /** Retail customers served by the utility (EIA-861), when the profile carries it. */
   customers: number | null;
-  /** The utility's average retail price, cents/kWh (EIA-861), when carried. */
+  /**
+   * The utility's **bundled standard-service (SSO) cohort** price, cents/kWh (EIA-861), when
+   * carried — NOT an all-sector average and NOT an industrial/data-center rate (G3/#1644).
+   *
+   * On the full EIA-861 form this is bundled revenue over bundled sales: the customers who
+   * never shopped, which in a restructured state skews residential and lands above even the
+   * state residential price (Lima: 18.61¢ against a ~12-13¢ all-sector rate). Rendering it as
+   * "the average retail price" invites a reader to take it as the campus's bill. Any surface
+   * showing `avgPriceCentsKwh` must name the cohort; `avgPriceCite` is the value's own citation,
+   * which carries the full qualification.
+   */
   avgPriceCentsKwh: number | null;
+  avgPriceCite: string | null;
   /** The utility / BA / state load denominators, largest story first. */
   denominators: GridDenominator[];
   /** The campus load block — **null for a site with no disclosed facility** (#1642). */
@@ -157,6 +168,7 @@ export function buildGridBackdrop(slug?: string): GridBackdropData | null {
     baName: gp.ba_profile.ba,
     customers: gp.utility_profile.customers?.value ?? null,
     avgPriceCentsKwh: gp.utility_profile.avg_price_cents_kwh?.value ?? null,
+    avgPriceCite: gp.utility_profile.avg_price_cents_kwh?.citation ?? null,
     denominators,
     campus:
       share === null || share.campus_load_mw.value == null || share.annual_consumption_gwh.value == null

@@ -8,21 +8,27 @@ demand_mean_mw:
   source: connector
   citation: EIA-930 region-data PJM 2024-06-01..2024-06-30 (720 h)
   confidence: high
-  asof: null
+  asof: '2024-06-30'
+  low: null
+  high: null
 demand_peak_mw:
   value: 147976.0
   unit: MW
   source: connector
   citation: EIA-930 region-data PJM 2024-06-01..2024-06-30 (720 h)
   confidence: high
-  asof: null
+  asof: '2024-06-30'
+  low: null
+  high: null
 net_generation_mean_mw:
   value: 107884.0
   unit: MW
   source: connector
   citation: EIA-930 region-data PJM 2024-06-01..2024-06-30 (720 h)
   confidence: high
-  asof: null
+  asof: '2024-06-30'
+  low: null
+  high: null
 total_interchange_mean_mw:
   value: 5753.0
   unit: MW
@@ -30,7 +36,9 @@ total_interchange_mean_mw:
   citation: EIA-930 region-data PJM 2024-06-01..2024-06-30 (720 h); + exports / -
     imports
   confidence: high
-  asof: null
+  asof: '2024-06-30'
+  low: null
+  high: null
 interchange_min_mw:
   value: -837.0
   unit: MW
@@ -38,7 +46,9 @@ interchange_min_mw:
   citation: EIA-930 region-data PJM 2024-06-01..2024-06-30 (720 h); most-importing
     hour
   confidence: high
-  asof: null
+  asof: '2024-06-30'
+  low: null
+  high: null
 interchange_max_mw:
   value: 11509.0
   unit: MW
@@ -46,7 +56,9 @@ interchange_max_mw:
   citation: EIA-930 region-data PJM 2024-06-01..2024-06-30 (720 h); most-exporting
     hour
   confidence: high
-  asof: null
+  asof: '2024-06-30'
+  low: null
+  high: null
 net_import_hours_fraction:
   value: 0.006
   unit: fraction
@@ -54,6 +66,8 @@ net_import_hours_fraction:
   citation: 4/720 hours with net imports (TI < 0)
   confidence: medium
   asof: null
+  low: null
+  high: null
 source: 'EIA-930 Hourly Electric Grid Monitor (region-data: D / NG / TI)'
 note: EIA-930 hourly D/NG/TI reduced to window means; sign convention + = net exports,
   - = net imports. A representative window, not the full year.

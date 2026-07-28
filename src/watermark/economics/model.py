@@ -173,6 +173,19 @@ class ConsumerEnergyPrice(BaseModel):
     value: ProvenancedValue  # latest point; connector; native units in .unit
     points: list[EnergyPricePoint] = []  # full annual series, oldest→newest (issue #1111)
 
+    @property
+    def vintage(self) -> str:
+        """The series' data vintage — its own ``asof``, else the latest period it reported.
+
+        Anything that re-wraps this series into a new :class:`ProvenancedValue` (the
+        demand-pressure sensitivity, the energy burden, the grid state denominator, the
+        federal backdrop) must carry this through as that value's ``asof``, or the #1107
+        staleness marker dies at the re-wrap and a figure derived from a years-old cached
+        series reads exactly like one derived this morning (G1/#1644). The ``period``
+        fallback covers a committed dataset written before the connector set ``asof``.
+        """
+        return self.value.asof or self.period
+
     @model_validator(mode="after")
     def _latest_mirrors_points(self) -> ConsumerEnergyPrice:
         """Enforce the documented invariant: when a series is present, ``period``/``value``

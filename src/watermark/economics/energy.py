@@ -131,6 +131,7 @@ def derive_demand_pressure(
             round(sales_gwh, 1),
             "GWh/yr",
             citation=f"EIA {sales.series_id} ({sales.period}); {sales.value.value:g} million kWh",
+            asof=sales.vintage,
         ),
         demand_share_pct=ProvenancedValue.derived(
             round(share_pct, 2),
@@ -152,6 +153,7 @@ def derive_demand_pressure(
             price.value.value,
             price.value.unit,
             citation=f"EIA {price.series_id} ({price.period})",
+            asof=price.vintage,
         ),
         transmission_coefficient=ProvenancedValue.assume(
             # The central is the band mean; carry the 0.5-1.0 spread as data (#760) instead
@@ -236,7 +238,10 @@ def derive_energy_burden(
             _AVG_HOUSEHOLD_KWH_YR, "kWh/yr", why=_HOUSEHOLD_CITE
         ),
         residential_electricity_price=ProvenancedValue.from_connector(
-            elec_price, elec.value.unit, citation=f"EIA {elec.series_id} ({elec.period})"
+            elec_price,
+            elec.value.unit,
+            citation=f"EIA {elec.series_id} ({elec.period})",
+            asof=elec.vintage,
         ),
         electricity_annual_cost=ProvenancedValue.derived(
             round(elec_cost, 2),
@@ -252,7 +257,10 @@ def derive_energy_burden(
             _AVG_HOUSEHOLD_MCF_YR, "Mcf/yr", why=_HOUSEHOLD_GAS_CITE
         ),
         residential_gas_price=ProvenancedValue.from_connector(
-            gas_price, gas.value.unit, citation=f"EIA {gas.series_id} ({gas.period})"
+            gas_price,
+            gas.value.unit,
+            citation=f"EIA {gas.series_id} ({gas.period})",
+            asof=gas.vintage,
         ),
         gas_annual_cost=ProvenancedValue.derived(
             round(gas_cost, 2),

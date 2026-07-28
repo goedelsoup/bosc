@@ -35,4 +35,6 @@ notes: The headline consumer-impact numbers for a site with a documented facilit
   (robust, EIA-cited) plus a STYLIZED price-pressure band from a stated short-run transmission
   coefficient (a screening sensitivity, not a forecast). Facility-gated — written only for sites
   whose SiteProfile carries a documented facility; thin sites omit it. Exposed as the
-  economics-demand-pressure bundle feed.
+  economics-demand-pressure bundle feed. The EIA-sourced values (state retail sales, residential
+  price) carry the series' own data year as `asof` (#1644), so a sensitivity derived from a
+  years-old cached series is machine-flaggable rather than indistinguishable from a fresh one.

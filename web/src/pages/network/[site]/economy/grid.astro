@@ -121,7 +121,7 @@ const kappaBand =
             ))}
           </tbody>
         </table>
-        {(backdrop.customers !== null || backdrop.avgPriceCentsKwh !== null || backdrop.ownership) && (
+        {(backdrop.customers !== null || backdrop.ownership) && (
           <p>
             {backdrop.ownership && (
               <Fragment>{backdrop.utilityName} is <strong>{backdrop.ownership}</strong> (EIA-861). </Fragment>
@@ -130,9 +130,20 @@ const kappaBand =
               <Fragment>It serves ~{Math.round(backdrop.customers).toLocaleString("en-US")} retail
               customers. </Fragment>
             )}
-            {backdrop.avgPriceCentsKwh !== null && (
-              <Fragment>Its average retail price is {backdrop.avgPriceCentsKwh.toFixed(2)}¢/kWh.</Fragment>
-            )}
+          </p>
+        )}
+        {/* The EIA-861 price is a COHORT figure, not the utility's average and not the campus's
+            rate (G3/#1644) — on the full form it is the bundled standard-service customers, who
+            in restructured Ohio skew residential. Published bare as "its average retail price",
+            18.61¢ read as what a data center pays. It gets its own qualified line and carries the
+            value's own citation. */}
+        {backdrop.avgPriceCentsKwh !== null && (
+          <p>
+            Its <strong>bundled standard-service</strong> customers pay an average of{" "}
+            {backdrop.avgPriceCentsKwh.toFixed(2)}¢/kWh. That is a cohort price — the customers who
+            never shopped for a competitive supplier, which skews residential — not the utility's
+            all-sector average, and not the rate a large industrial or data-center load pays.
+            {backdrop.avgPriceCite && <span class="gb-cite">{backdrop.avgPriceCite}</span>}
           </p>
         )}
 

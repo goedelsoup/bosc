@@ -239,7 +239,86 @@ def _state_retail_gwh(settings: Settings) -> ProvenancedValue:
         round(sales.value.value, 1),
         "GWh/yr",
         citation=f"EIA {sales.series_id} ({sales.period}); shared with #91",
+        # G1/#1644: the series vintage, carried rather than left in the citation prose. This
+        # denominator runs AHEAD of the other two (the seriesid route publishes before the
+        # EIA-861 bulk file), which is precisely what the drift guard below reads it for.
+        asof=sales.vintage,
     )
+
+
+class GridVintageDriftError(RuntimeError):
+    """The load-share denominators' vintages have drifted further apart than allowed (G2/#1644)."""
+
+
+class _Vintages(NamedTuple):
+    """The three load-share denominators' data vintages, and how far apart they sit."""
+
+    utility: str  # EIA-861 data year
+    ba: str  # EIA-930 data year
+    state: str  # EIA seriesid latest period
+    spread_years: int
+
+    @property
+    def summary(self) -> str:
+        return (
+            f"utility EIA-861 {self.utility} / BA EIA-930 {self.ba} / state EIA {self.state} "
+            f"({self.spread_years}-year spread)"
+        )
+
+
+def _vintage_year(value: ProvenancedValue, *, fallback: int) -> int:
+    """The four-digit year on a denominator's ``asof``, or ``fallback`` when it carries none.
+
+    Every denominator is dated as of G1, but a committed profile written before that lands
+    here through :func:`load_grid_profile` with ``asof: null`` — read the configured vintage
+    rather than treating "undated" as a drift of thousands of years.
+    """
+    asof = (value.asof or "")[:4]
+    return int(asof) if asof.isdigit() else fallback
+
+
+def _load_share_vintages(
+    settings: Settings,
+    *,
+    utility_retail: ProvenancedValue,
+    ba_load: ProvenancedValue,
+    state_retail: ProvenancedValue,
+) -> _Vintages:
+    """Reconcile the three denominators' vintages; refuse a share that mixes stale ones.
+
+    G2/#1644: the load-share table divides ONE campus figure by three EIA denominators that
+    publish on different schedules — the state seriesid route (2025 today) runs ahead of the
+    EIA-861 bulk file and the EIA-930 annual sum (both 2024). That spread is normal and the
+    honest fix is to *state* it, which the citations and the profile note now do.
+
+    What is not normal is the spread growing quietly. Each vintage is a knob
+    (``eia861_year`` / ``eia930_year``) that someone has to remember to bump; the state one
+    moves by itself when the series publishes. So a forgotten bump shows up only as a slowly
+    widening gap between the numerator's year and the denominators' — invisible in a table
+    that prints three percentages. Past ``grid_vintage_max_spread_years`` this raises rather
+    than shipping a share that compares a current campus against a stale grid. It fires on
+    ``watermark grid --write`` (the deliberate re-pull), never on reading a committed profile.
+    """
+    utility_year = _vintage_year(utility_retail, fallback=settings.eia861_year)
+    ba_year = _vintage_year(ba_load, fallback=settings.eia930_year)
+    state_year = _vintage_year(state_retail, fallback=utility_year)
+    years = (utility_year, ba_year, state_year)
+    spread = max(years) - min(years)
+    vintages = _Vintages(
+        utility=str(utility_year), ba=str(ba_year), state=str(state_year), spread_years=spread
+    )
+    if spread > settings.grid_vintage_max_spread_years:
+        raise GridVintageDriftError(
+            f"site {settings.site!r}: the load-share denominators span {spread} years "
+            f"({vintages.summary}), past the {settings.grid_vintage_max_spread_years}-year "
+            "grid_vintage_max_spread_years tolerance — a campus share against denominators "
+            "this far apart compares one year's load to another year's grid. Bump "
+            "WATERMARK_EIA861_YEAR / WATERMARK_EIA930_YEAR to the latest published vintages "
+            "(and re-pull), or widen the tolerance if the lag is genuinely upstream."
+        )
+    if spread:
+        log.info("grid.vintage_spread", site=settings.site, **vintages._asdict())
+    return vintages
 
 
 def derive_grid_profile(*, settings: Settings | None = None) -> GridProfile:
@@ -265,6 +344,7 @@ def derive_grid_profile(*, settings: Settings | None = None) -> GridProfile:
     ba_load = fetch_ba_annual_load(ba=ba_code, settings=settings)
 
     load_share: GridLoadShare | None = None
+    vintages: _Vintages | None = None
     if power is not None:
         draw_mw = power.facility_draw.value
         consumption_gwh = annual_consumption_gwh(draw_mw)
@@ -274,6 +354,15 @@ def derive_grid_profile(*, settings: Settings | None = None) -> GridProfile:
         state_retail = _state_retail_gwh(settings)
         eia_state = active_profile(settings).eia_state
         state_label = state_name(eia_state)
+        # G2/#1644: reconcile the three denominators' vintages before dividing by them. Each
+        # citation below then names its own vintage — a reader who sees three percentages in
+        # one table can tell they are not all measured against the same year's grid.
+        vintages = _load_share_vintages(
+            settings,
+            utility_retail=utility_retail,
+            ba_load=ba_load,
+            state_retail=state_retail,
+        )
 
         def _share(denom: float, *, of: str) -> float:
             # A zero/absent denominator means a broken upstream (empty connector, fixture
@@ -307,19 +396,19 @@ def derive_grid_profile(*, settings: Settings | None = None) -> GridProfile:
                 round(_share(utility_retail.value, of="utility retail (EIA-861)"), 2),
                 "percent",
                 citation=f"campus {consumption_gwh:.0f} GWh / {utility_profile.utility} "
-                f"{utility_retail.value:,.0f} GWh (EIA-861 {settings.eia861_year} per-utility)",
+                f"{utility_retail.value:,.0f} GWh (EIA-861 {vintages.utility} per-utility)",
             ),
             share_of_ba_pct=ProvenancedValue.derived(
                 round(_share(ba_load.value, of="BA annual load (EIA-930)"), 3),
                 "percent",
                 citation=f"campus {consumption_gwh:.0f} GWh / {ba_code} {ba_load.value:,.0f} GWh "
-                "(EIA-930 annual demand)",
+                f"(EIA-930 {vintages.ba} annual demand)",
             ),
             share_of_state_pct=ProvenancedValue.derived(
                 round(_share(state_retail.value, of="state retail (EIA)"), 2),
                 "percent",
                 citation=f"campus {consumption_gwh:.0f} GWh / "
-                f"{state_label} {state_retail.value:.0f} GWh",
+                f"{state_label} {state_retail.value:.0f} GWh (EIA {vintages.state} retail)",
             ),
         )
 
@@ -331,12 +420,22 @@ def derive_grid_profile(*, settings: Settings | None = None) -> GridProfile:
         share_utility_pct=(load_share.share_of_utility_pct.value if load_share else None),
     )
     state_label = state_name(prof.eia_state)
+    # G2/#1644: the shares are not all measured against the same year's grid, so say which year
+    # each denominator is — a mixed-vintage comparison stated is defensible, one left implicit
+    # is not. The spread itself is gated by _load_share_vintages before we get here.
+    vintage_note = (
+        f" Denominator vintages differ ({vintages.summary}): the EIA state seriesid route "
+        f"publishes ahead of the EIA-861 bulk file and the EIA-930 annual sum, so the three "
+        f"shares are not struck against one common year."
+        if vintages is not None
+        else ""
+    )
     note = (
         f"Grid foundation layer (#94). The state, {utility_profile.utility}, and {ba_code} "
         f"denominators are now all connector-sourced — {state_label} retail from EIA (shared with "
         f"#91), per-utility retail from the EIA-861 file, and {ba_code} annual demand from EIA-930. "
         "The campus is a single load equal to a material fraction of its serving utility's entire "
-        "retail sales."
+        f"retail sales.{vintage_note}"
         if load_share is not None
         else (
             "Grid foundation layer (#94): per-site grid backdrop only. This site has no "

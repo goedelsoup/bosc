@@ -327,7 +327,10 @@ def basin_network(
         "-> downstream",
         "regime",
         "screen",
-        "grid (holding . c/kWh)",
+        # c/kWh is the EIA-861 bundled-SSO COHORT price, not an all-sector or industrial
+        # rate (G3/#1644) — the header says which cohort so the column can't be read as
+        # "what a campus pays here".
+        "grid (holding . SSO c/kWh)",
         "jobs chg",
         "mfg/info LQ",
     )

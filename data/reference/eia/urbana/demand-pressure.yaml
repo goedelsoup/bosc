@@ -33,7 +33,7 @@ state_retail_sales_gwh:
   source: connector
   citation: EIA ELEC.SALES.OH-ALL.A (2025); 161934 million kWh
   confidence: high
-  asof: null
+  asof: '2025'
   low: null
   high: null
 demand_share_pct:
@@ -69,7 +69,7 @@ residential_price:
   source: connector
   citation: EIA ELEC.PRICE.OH-RES.A (2025)
   confidence: high
-  asof: null
+  asof: '2025'
   low: null
   high: null
 transmission_coefficient:
