@@ -1,0 +1,247 @@
+{
+  "$defs": {
+    "DrawdownPoint": {
+      "additionalProperties": false,
+      "description": "One (radius, drawdown) sample of the cone profile, for the AquiferSection figure.",
+      "properties": {
+        "radius_ft": {
+          "title": "Radius Ft",
+          "type": "number"
+        },
+        "drawdown_ft": {
+          "title": "Drawdown Ft",
+          "type": "number"
+        }
+      },
+      "required": [
+        "radius_ft",
+        "drawdown_ft"
+      ],
+      "title": "DrawdownPoint",
+      "type": "object"
+    },
+    "DrawdownScenario": {
+      "additionalProperties": false,
+      "description": "A hypothetical pumping stress on the aquifer (never a documented withdrawal).",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "pumping_mgd": {
+          "$ref": "#/$defs/ProvenancedValue"
+        },
+        "duration_days": {
+          "title": "Duration Days",
+          "type": "number"
+        },
+        "aquifer_material": {
+          "title": "Aquifer Material",
+          "type": "string"
+        },
+        "note": {
+          "title": "Note",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "pumping_mgd",
+        "duration_days",
+        "aquifer_material",
+        "note"
+      ],
+      "title": "DrawdownScenario",
+      "type": "object"
+    },
+    "ProvenancedValue": {
+      "additionalProperties": false,
+      "description": "A single numeric quantity tagged with its provenance.\n\nConstruct via the classmethods (:meth:`from_document`, :meth:`from_connector`,\n:meth:`assume`, :meth:`derived`) so the ``source`` tag is never forgotten.\n\nA **measured or derived estimate** may also carry a quantitative uncertainty range\n(#760): optional absolute ``low``/``high`` bounds around the central ``value``,\n*orthogonal* to the qualitative ``confidence`` enum. The convention: a document- or\nconnector-verbatim figure is a single value (no band); an estimate whose honest\nrepresentation is \"226 ± ~35 ac\" carries ``low``/``high`` so downstream consumers\n(the bundle, the frontend, the Monte-Carlo engine #271) see the spread as data, not\nprose buried in the citation. The estimate constructors (:meth:`derived`,\n:meth:`assume`, :meth:`from_reference`) take the range inline; :meth:`with_range`\nattaches one to any value (e.g. a document-anchored central with a derived band).",
+      "properties": {
+        "value": {
+          "title": "Value",
+          "type": "number"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "document",
+            "connector",
+            "reference",
+            "assumption",
+            "derived"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "citation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Citation"
+        },
+        "confidence": {
+          "default": "medium",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "asof": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Asof"
+        },
+        "low": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Low"
+        },
+        "high": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "High"
+        }
+      },
+      "required": [
+        "value",
+        "unit",
+        "source"
+      ],
+      "title": "ProvenancedValue",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "A screening drawdown cone for one scenario x aquifer material (all ``[inference]``).",
+  "properties": {
+    "county": {
+      "title": "County",
+      "type": "string"
+    },
+    "scenario": {
+      "$ref": "#/$defs/DrawdownScenario"
+    },
+    "material": {
+      "title": "Material",
+      "type": "string"
+    },
+    "confinement": {
+      "title": "Confinement",
+      "type": "string"
+    },
+    "transmissivity_ft2_day": {
+      "$ref": "#/$defs/ProvenancedValue"
+    },
+    "storativity": {
+      "$ref": "#/$defs/ProvenancedValue"
+    },
+    "saturated_thickness_ft": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Saturated Thickness Ft"
+    },
+    "drawdown_at_well_ft": {
+      "$ref": "#/$defs/ProvenancedValue"
+    },
+    "radius_of_influence_ft": {
+      "$ref": "#/$defs/ProvenancedValue"
+    },
+    "dewaters": {
+      "title": "Dewaters",
+      "type": "boolean"
+    },
+    "sustainable": {
+      "title": "Sustainable",
+      "type": "boolean"
+    },
+    "affected_domestic_wells": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Affected Domestic Wells"
+    },
+    "profile": {
+      "items": {
+        "$ref": "#/$defs/DrawdownPoint"
+      },
+      "title": "Profile",
+      "type": "array"
+    },
+    "tag": {
+      "default": "inference",
+      "title": "Tag",
+      "type": "string"
+    },
+    "caveats": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Caveats",
+      "type": "array"
+    }
+  },
+  "required": [
+    "county",
+    "scenario",
+    "material",
+    "confinement",
+    "transmissivity_ft2_day",
+    "storativity",
+    "saturated_thickness_ft",
+    "drawdown_at_well_ft",
+    "radius_of_influence_ft",
+    "dewaters",
+    "sustainable",
+    "affected_domestic_wells",
+    "profile"
+  ],
+  "title": "DrawdownResult",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}
